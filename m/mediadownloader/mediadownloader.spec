@@ -1,15 +1,15 @@
 %define		_giconsdir %_iconsdir/hicolor/128x128/apps
 
-%define		git 20110226
+%define		git 20111026
 
-Version:	1.5.0
+Version:	1.5.2
 Name:		mediadownloader
-Release:	alt0.1.%git.1
+Release:	alt0.1.%git
 Summary:	Media Downloader
 License: 	GPLv3+
 Group: 		Graphics
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
-Url:		http://mediadownloader.cz.cc/
+Url:		http://marcobavagnoli.wordpress.com/mediadownloader-desktop/
 Source0:	http://kent.dl.sourceforge.net/project/googleimagedown/project/v1.4/%name-v%version-src.tar.bz2
 Source1:	%name.desktop
 Patch0:		%name-v1.4.1-alt_phonondir.diff
@@ -63,6 +63,14 @@ convert -resize 16x16 icons/%name.png %buildroot%_miconsdir/%name.png
 %_giconsdir/%name.png
 
 %changelog
+* Sat Nov 05 2011 Motsyo Gennadi <drool@altlinux.ru> 1.5.2-alt0.1.20111026
+- 1.5.2 released
+- git snapshot from 20111026
+
+* Sat Aug 20 2011 Motsyo Gennadi <drool@altlinux.ru> 1.5.1.3-alt0.1.20110908
+- 1.5.1-3 released
+- git snapshot from 20110908
+
 * Tue Apr 26 2011 Motsyo Gennadi <drool@altlinux.ru> 1.5.0-alt0.1.20110226.1
 - fix build
 
