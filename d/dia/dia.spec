@@ -1,17 +1,21 @@
 Name: dia
-Version: 0.97.1
-Release: alt2.2
+Version: 0.97.2
+Release: alt1
+
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
+
 License: GPL
 Group: Office
 Url: http://www.gnome.org/projects/dia
+
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 %py_provides dia
 Obsoletes: %name-gnome %name-python
 
 Source: %name-%version.tar
+
 Patch: %name-%version-%release.patch
 
 BuildRequires: dblatex docbook-style-xsl docbook-utils gcc-c++ intltool libart_lgpl-devel libgtk+2-devel libxslt-devel
@@ -41,7 +45,7 @@ PostScript(TM), SVG, CGM или PNG.
 %add_findprov_lib_path %_libdir/%name
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 install -m644 data/icons/48x48/apps/%name.png app/pixmaps/%name-app.png
@@ -52,8 +56,8 @@ intltoolize --force
 %configure  \
 	--enable-db2html \
 	--with-hardbooks \
-	--with-python \
 	--disable-gnome \
+	--without-python \
 %ifarch x86_64
 	--disable-libemf \
 %endif
@@ -61,7 +65,7 @@ intltoolize --force
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -82,6 +86,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Sat May 26 2012 Vitaly Lipatov <lav@altlinux.ru> 0.97.2-alt1
+- build new version (ALT bug #27156)
+
 * Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.97.1-alt2.2
 - Fixed build with new glib2
 
