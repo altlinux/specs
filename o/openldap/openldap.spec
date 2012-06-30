@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.31
-Release: alt4
+Release: alt5
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -92,6 +92,13 @@ Patch14: %_bname-2.4.25-rh-reentrant-gethostby.patch
 Patch15: %_bname-2.4.28-rh-dns-priority.patch
 Patch16: %_bname-2.4.28-rh-syncrepl-unset-tls-options.patch
 Patch17: %_bname-2.4.30-rh-constraint-count.patch
+Patch18: %_bname-2.4.31-rh-nss-allow-ca-dbdir-pemfile.patch
+Patch19: %_bname-2.4.31-rh-tls-unbind-shutdown-order.patch
+Patch20: %_bname-2.4.31-rh-nss-dont-overwrite-verify-cert-error.patch
+Patch21: %_bname-2.4.31-rh-nss-clean-memory-for-token-pin.patch
+Patch22: %_bname-2.4.31-rh-cve-nss-cipher-suite-ignored.patch
+Patch23: %_bname-2.4.31-rh-nss-default-cipher-suite-always-selected.patch
+Patch24: %_bname-2.4.31-rh-nss-multiple-tls-contexts.patch
 
 ### REQUIRE Section
 
@@ -690,6 +697,10 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Sat Jun 30 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.4.31-alt5
+- update rh patches
+- CVE-2012-2668
+
 * Wed May 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.4.31-alt4
 - remove TimeoutSec from unit file
 
