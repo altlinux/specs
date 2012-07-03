@@ -1,5 +1,5 @@
 Name: mdadm
-Version: 3.2.3
+Version: 3.2.5
 Release: alt1
 
 Summary: A tool for managing Soft RAID under Linux
@@ -9,6 +9,8 @@ Url: http://neil.brown.name/blog/mdadm
 
 # http://git.altlinux.org/gears/m/mdadm.git
 Source: %name-%version-%release.tar
+
+BuildRequires: binutils-devel
 
 # due to /lib/udev/rules.d/64-md-raid.rules
 Conflicts: udev < 151
@@ -61,6 +63,9 @@ install -pD -m644 alt/mdadm.crond %buildroot%_sysconfdir/cron.d/mdadm
 %doc TODO ChangeLog.bz2 mdadm.conf-example ANNOUNCE-%version alt/README*
 
 %changelog
+* Tue Jul 03 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.2.5-alt1
+- 3.2.5
+
 * Tue Jan 31 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.2.3-alt1
 - 3.2.3
 
