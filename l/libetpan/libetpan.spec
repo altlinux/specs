@@ -1,43 +1,60 @@
-Name:		libetpan 
-Version: 0.58
-Release: alt2
+Name: libetpan
+Version: 1.1
+Release: alt1
 
-Summary:	this mail library  provide a portable, efficient middleware for different kinds of mail access.
-License: 	Artistic
-Group: 		Development/C
+Summary: This mail library  provide a portable, efficient middleware for different kinds of mail access.
+License: %bsdstyle
+Group: Development/C
 
-Url:		http://%name.sourceforge.net/
+Url: http://%name.sourceforge.net/
 
-Packager: Alexey Rusakov <ktirf@altlinux.org>
-Source: http://downloads.sf.net/%name/%name/%version/%name-%version.tar.gz
+Source: %name-%version.tar
 
-# Automatically added by buildreq on Wed Jul 13 2005
-BuildRequires: gcc-c++ libgnutls-devel libgnutls-openssl-devel libgpg-error libstdc++-devel 
+%def_with gnutls
+%def_without openssl
 
-%package        devel
-Summary:        Development environment for %name library.
-Group:          Development/C
-Requires:	%name = %version-%release
-Requires:   libgnutls-devel
+BuildRequires(pre): rpm-build-licenses
+
+# FIXME: Is it really needed g++?
+BuildRequires: gcc-c++
+
+%{?_with_gnutls:BuildRequires: libgnutls-devel libgcrypt-devel libgpg-error-devel zlib-devel}
+%{?_with_openssl:BuildRequires: libssl-devel}
+BuildRequires: libsasl2-devel libdb4.7-devel
+BuildRequires: liblockfile-devel libexpat-devel libcurl-devel
+
+%package devel
+Summary: Development environment for %name library.
+Group: Development/C
+Requires: %name = %version-%release
+%{?_with_gnutls:Requires: libgnutls-devel libgcrypt-devel libgpg-error-devel zlib-devel}
+%{?_with_gnutls:Requires: libssl-devel}
+Requires: libsasl2-devel libdb4.7-devel
+Requires: liblockfile-devel
 
 %description
-The purpose of this mail library is to provide a portable, efficient middleware 
-for different kinds of mail access. When using the drivers interface, 
-the interface is the same for all kinds of mail access, remote and local mailboxes.
+The purpose of this mail library is to provide a portable, efficient
+middleware for different kinds of mail access. When using the drivers
+interface, the interface is the same for all kinds of mail access,
+remote and local mailboxes.
 
 %description devel
-This package contains the header files and libraries for building program which
-use lib%name.
+This package contains the header files and libraries for building
+program which use lib%name.
 
 %prep
-%setup -q  
+%setup
 
 %build
-%configure --with-openssl --with-gnutls
+%configure \
+	--disable-static \
+	%{subst_with openssl} \
+	%{subst_with gnutls} \
+	--enable-ipv6
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %files
 %doc ChangeLog NEWS COPYRIGHT README AUTHORS
@@ -51,6 +68,10 @@ use lib%name.
 %_libdir/%name.so
 
 %changelog
+* Mon Jul 02 2012 Mikhail Efremov <sem@altlinux.org> 1.1-alt1
+- Fix License.
+- Updated to 1.1.
+
 * Mon Nov 01 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.58-alt2
 - Rebuilt for soname set-versions
 

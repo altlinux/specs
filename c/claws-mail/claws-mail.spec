@@ -7,7 +7,7 @@
 %def_disable 	debug
 Name:	 	%_newname
 Version: 3.8.1
-Release: alt1
+Release: alt2
 
 Summary:	The bleeding edge branch of Sylpheed, a GTK+ based, lightweight, and fast e-mail client	 
 License: 	%gpl3plus
@@ -180,18 +180,20 @@ BuildPreReq:	perl-XML-SimpleObject
 BuildPreReq:	perl-URI
 BuildPreReq: 	perl-libwww
 BuildPreReq: 	perl-Text-CSV_XS
+
+BuildArch: noarch
+
 Obsoletes:	%_name-%branch-tools < %version
 Provides:	%_name-%branch-tools
 
 %description	tools
 additional tools for %name.
 
-
 %package -n rpm-macros-%{name}
 Summary: Set of RPM macros for packaging %name-based applications
 Group: Development/Other
 # uncomment if macroses are platform-neutral
-#BuildArch: noarch
+BuildArch: noarch
 # helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
 Conflicts: claws-mail-devel <= 3.7.9-alt1
 
@@ -327,6 +329,10 @@ EOF
 
 
 %changelog
+* Tue Jul 03 2012 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt2
+- Subpackages tools and rpm-macros-claws-mail are noarch.
+- Rebuild against libetpan.so.16.0.0.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt1
 - Updated to 3.8.1.
 
