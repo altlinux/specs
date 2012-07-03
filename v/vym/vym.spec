@@ -1,5 +1,5 @@
 Name: vym
-Version: 2.2.0
+Version: 2.2.2
 Release: alt1
 
 Summary: QT based MindMap editor
@@ -64,6 +64,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Jul 03 2012 Alex Karpov <karpov@altlinux.ru> 2.2.2-alt1
+- new version
+
 * Thu Jun 21 2012 Alex Karpov <karpov@altlinux.ru> 2.2.0-alt1
 - new version
 
