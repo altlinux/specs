@@ -1,0 +1,62 @@
+%define dist JSON-XS
+Name: perl-%dist
+Version: 2.32
+Release: alt2
+Epoch: 1
+
+Summary: JSON serialising/deserialising, done correctly and fast
+License: GPL or Artistic
+Group: Development/Perl
+
+URL: %CPAN %dist
+Source: %dist-%version.tar.gz
+
+# Automatically added by buildreq on Fri Oct 07 2011
+BuildRequires: perl-Encode perl-common-sense perl-devel
+
+%description
+This module converts Perl data structures to JSON and vice versa. Its
+primary goal is to be *correct* and its secondary goal is to be
+*fast*. To reach the latter goal it was written in C.
+
+%prep
+%setup -q -n %dist-%version
+
+%build
+%perl_vendor_build
+
+%install
+%perl_vendor_install
+
+%files
+%doc Changes README
+%_bindir/json_xs
+%perl_vendor_archlib/JSON
+%perl_vendor_autolib/JSON
+
+%changelog
+* Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1:2.32-alt2
+- rebuilt for perl-5.14
+
+* Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 1:2.32-alt1
+- automated CPAN update
+
+* Fri Nov 12 2010 Vladimir Lettiev <crux@altlinux.ru> 1:2.3-alt2
+- new release
+
+* Mon Sep 20 2010 Alexey Tourbin <at@altlinux.ru> 1:2.3-alt1
+- 2.24 -> 2.3
+- build for perl-5.12
+
+* Sun Jul 12 2009 Michael Bochkaryov <misha@altlinux.ru> 2.2400-alt1
+- 2.24 version build
+
+* Sat Sep 06 2008 Michael Bochkaryov <misha@altlinux.ru> 2.2222-alt1
+- 2.2222 version build
+- fix directory ownership violation
+
+* Thu Jul 17 2008 Michael Bochkaryov <misha@altlinux.ru> 2.22-alt1
+- 2.22 version build
+
+* Sun Apr 13 2008 Michael Bochkaryov <misha@altlinux.ru> 2.1-alt1
+- first build for ALT Linux Sisyphus

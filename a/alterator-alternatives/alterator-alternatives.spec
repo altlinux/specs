@@ -1,0 +1,226 @@
+%define _altdata_dir %_datadir/alterator
+
+Name: alterator-alternatives
+Version: 3.0
+Release: alt1
+
+Packager: Stanislav Ievlev <inger@altlinux.org>
+
+BuildArch:	noarch
+
+Source:%name-%version.tar
+
+Summary: alterator module for alternatives package
+License: GPL
+Group: System/Configuration/Other
+
+Requires: alterator >= 4.16-alt1, alternatives >= 0.4, alterator-sh-functions >= 0.13-alt1
+Requires: alterator-l10n >= 1.1-alt3
+Conflicts: alterator-fbi < 5.15-alt1
+Conflicts: alterator-lookout < 2.0-alt1
+
+BuildPreReq: alterator >= 4.6-alt3
+# Automatically added by buildreq on Mon Jul 11 2005 (-bi)
+BuildRequires: alterator
+
+%description
+alterator module for alternatives package
+
+%prep
+%setup -q
+
+%build
+%make_build
+
+%install
+%makeinstall
+
+%files
+%_altdata_dir/applications/*
+%_altdata_dir/ui/*/
+%_alterator_backend3dir/*
+
+%changelog
+* Fri Nov 13 2009 Stanislav Ievlev <inger@altlinux.org> 3.0-alt1
+- use alterator_export_proc
+
+* Thu May 07 2009 Stanislav Ievlev <inger@altlinux.org> 2.0-alt1
+- share callbacks between html and qt interfaces
+
+* Thu Apr 30 2009 Stanislav Ievlev <inger@altlinux.org> 1.2-alt1
+- replace card-index with modern form library
+
+* Mon Jan 26 2009 Stanislav Ievlev <inger@altlinux.org> 1.1-alt1
+- use help and translation directly from alterator-l10n
+
+* Wed Jan 21 2009 Mikhail Efremov <sem@altlinux.org> 1.0-alt6
+- move templates/* -> ui/
+
+* Sat Jan 17 2009 Stanislav Ievlev <inger@altlinux.org> 1.0-alt5
+- update for latest alternatives
+
+* Fri Dec 05 2008 Vladislav Zavjalov <slazav@altlinux.org> 1.0-alt4
+- rebuild with new l10n
+
+* Tue Nov 18 2008 Vladislav Zavjalov <slazav@altlinux.org> 1.0-alt3
+- remove <title> and <h1> from html template
+
+* Wed Nov 05 2008 Stanislav Ievlev <inger@altlinux.org> 1.0-alt2
+- minor module updates
+
+* Tue Sep 30 2008 Stanislav Ievlev <inger@altlinux.org> 1.0-alt1
+- add unit-tests
+
+* Tue Jun 24 2008 Stanislav Ievlev <inger@altlinux.org> 0.9-alt1
+- use effectDisable
+- backend: update for alterator_api_version=1
+- ui: use enumref, remove explicit include of the JS helpers
+- remove po files, use module.mak
+
+* Sun May 04 2008 Stanislav Ievlev <inger@altlinux.org> 0.8-alt6
+- don't use obsolete attribute "inactive"
+
+* Sat Apr 19 2008 Stanislav Ievlev <inger@altlinux.org> 0.8-alt5
+- merge-po
+
+* Thu Apr 17 2008 Stanislav Ievlev <inger@altlinux.org> 0.8-alt4
+- join to common dictionary project
+
+* Thu Apr 17 2008 Stanislav Ievlev <inger@altlinux.org> 0.8-alt3
+- little interface improvements
+
+* Tue Mar 11 2008 Stanislav Ievlev <inger@altlinux.org> 0.8-alt2
+- fix uris for scripts
+- improve scm ui
+
+* Sun Mar 09 2008 Stanislav Ievlev <inger@altlinux.org> 0.8-alt1
+- remove template-*
+
+* Fri Feb 29 2008 Vladislav Zavjalov <slazav@altlinux.org> 0.7-alt2
+- use alterator-sh-functions
+
+* Thu Jan 10 2008 Stanislav Ievlev <inger@altlinux.org> 0.7-alt1
+- update module to new help system
+
+* Wed Jun 13 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt13
+- add desktop file
+
+* Fri May 25 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt12
+- switch to new card-index scripts
+
+* Wed May 02 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt11
+- update Ukrainian translation
+
+* Mon Apr 23 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt10
+- update Ukrainian translation
+
+* Thu Apr 19 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt9
+- little CSS optimizations
+
+* Thu Apr 05 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt8
+- remove config-*
+- remove deps on alterator-standalone
+
+* Tue Apr 03 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt7
+- help improvements from kirill@
+
+* Mon Apr 02 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt6
+- add documentation
+
+* Tue Mar 27 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt5
+- add Ukrainian translation
+
+* Fri Mar 23 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt4
+- improve po template autogeneration
+- assign group 'System'
+
+* Wed Mar 07 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt3
+- more translations
+- remove "layout-policy" attributes
+
+* Thu Feb 15 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt2
+- add top-level menu
+
+* Thu Feb 08 2007 Stanislav Ievlev <inger@altlinux.org> 0.6-alt1
+- add fbi data
+
+* Mon Jan 29 2007 Stanislav Ievlev <inger@altlinux.org> 0.5-alt2
+- add label constraints
+
+* Wed Dec 13 2006 Stanislav Ievlev <inger@altlinux.org> 0.5-alt1
+- enable constraints
+
+* Fri Nov 10 2006 Stanislav Ievlev <inger@altlinux.org> 0.4-alt0.3
+- fix translation
+
+* Wed Nov 08 2006 Stanislav Ievlev <inger@altlinux.org> 0.4-alt0.2
+- use native messageboxes
+
+* Fri Oct 27 2006 Stanislav Ievlev <inger@altlinux.org> 0.4-alt0.1
+- update backend (from mvc project)
+
+* Fri Sep 29 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.10
+- update build system
+
+* Mon Sep 25 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.9
+- move icons to separate package (alterator-icons)
+
+* Wed Sep 06 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.8
+- use autogenerated profile and menu files
+
+* Wed Aug 23 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.7
+- update build system
+
+* Wed May 31 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.6
+- minor updates to new alterator
+
+* Mon May 15 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.5
+- build from git
+
+* Fri May 05 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.4
+- minor improvements
+
+* Tue Apr 04 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.3
+- fixed backend, use checked groupbox now
+
+* Thu Mar 16 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.2.3
+- move icons to right place
+
+* Thu Feb 09 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.2.2
+- makefile improvements
+
+* Thu Feb 02 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.2.1
+- added support for on-{leave,apply}
+
+* Mon Jan 23 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.2
+- move to new frame scheme
+
+* Fri Jan 20 2006 Stanislav Ievlev <inger@altlinux.org> 0.3-alt0.1
+- move to profile based standalone scheme
+
+* Tue Dec 20 2005 Stanislav Ievlev <inger@altlinux.org> 0.2-alt0.2
+- locale improvements
+
+* Mon Dec 19 2005 Stanislav Ievlev <inger@altlinux.org> 0.2-alt0.1
+- adopted to new alterator's lookout
+
+* Wed Oct 19 2005 Stanislav Ievlev <inger@altlinux.org> 0.1.1.2-alt4
+- added icons
+
+* Mon Sep 12 2005 Stanislav Ievlev <inger@altlinux.org> 0.1.1.2-alt3
+- removed acc hook
+
+* Mon Aug 01 2005 Stanislav Ievlev <inger@altlinux.org> 0.1.1.2-alt2
+- Belarusian translation
+
+* Wed Jul 20 2005 Stanislav Ievlev <inger@altlinux.org> 0.1.1.2-alt1
+- updates
+
+* Thu Jul 07 2005 Stanislav Ievlev <inger@altlinux.org> 0.1.1.1-alt1
+- little modernizarions
+
+* Wed Jul 06 2005 Alexey Gladkov <legion@altlinux.ru> 0.1.1-alt1
+- new version;
+
+* Thu Jun 30 2005 Alexey Gladkov <legion@altlinux.ru> 0.1-alt1
+- Initial release

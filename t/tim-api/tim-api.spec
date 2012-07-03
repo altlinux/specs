@@ -1,0 +1,181 @@
+Packager: Igor Vlasenko <viy@altlinux.ru>
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+# Copyright (c) 2000-2010, JPackage Project
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+# 1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+# 2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the
+#    distribution.
+# 3. Neither the name of the JPackage Project nor the names of its
+#    contributors may be used to endorse or promote products derived
+#    from this software without specific prior written permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+
+
+# If you don't want to build with maven, and use straight ant instead,
+# give rpmbuild option '--without maven'
+
+%define with_maven %{!?_without_maven:1}%{?_without_maven:0}
+%define without_maven %{?_without_maven:1}%{!?_without_maven:0}
+
+Name:           tim-api
+Version:        1.3.0
+Release:        alt2_1jpp6
+Epoch:          0
+Summary:        Terracotta Integration API
+License:        Terracotta Public License
+Group:          Development/Java
+URL:            http://www.terracotta.org/
+Source0:        %{name}-%{version}.tgz
+# svn export http://svn.terracotta.org/svn/tc/tim-api/tags/release-1.3.0/ tim-api-1.3.0
+# tar czf tim-api-1.3.0.tgz tim-api-1.3.0/
+
+Source2:        %{name}-%{version}-jpp-depmap.xml
+Source3:        %{name}-%{version}-settings.xml
+#
+Source4:        tc-forge-parent-2.0.pom 
+# curl -o tc-forge-parent-2.0.pom http://svn.terracotta.org/svn/forge/projects/forge-parent/tags/release-2.0/pom.xml
+
+
+BuildArch:      noarch
+BuildRequires: jpackage-utils >= 0:1.7.5
+BuildRequires: ant >= 0:1.7
+%if %{with_maven}
+BuildRequires: maven2-common-poms
+BuildRequires: maven2 >= 0:2.0.8
+BuildRequires: maven2-plugin-ant
+BuildRequires: maven2-plugin-antrun
+BuildRequires: maven2-plugin-compiler
+BuildRequires: maven2-plugin-dependency
+BuildRequires: maven2-plugin-install
+BuildRequires: maven2-plugin-jar
+BuildRequires: maven2-plugin-javadoc
+BuildRequires: maven2-plugin-source
+BuildRequires: maven2-plugin-remote-resources
+BuildRequires: maven2-plugin-resources
+BuildRequires: maven-surefire-plugin
+BuildRequires: maven-release
+BuildRequires: maven-forge-plugin
+BuildRequires: apache-commons-parent
+BuildRequires: terracotta-license-resource-bundle
+%endif
+BuildRequires: subversion
+BuildRequires: knopflerfish
+
+
+Requires(post): jpackage-utils >= 0:1.7.5
+Requires(postun): jpackage-utils >= 0:1.7.5
+Source44: import.info
+
+%description
+Terracotta integration api.
+
+%package javadoc
+Summary:        Javadoc for %{name}
+Group:          Development/Documentation
+BuildArch: noarch
+
+%description javadoc
+%{summary}.
+
+%prep
+%setup -q 
+cp %{SOURCE3} settings.xml
+sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
+sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
+sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
+%build
+export LANG=en_US.ISO8859-1
+%if %{with_maven}
+export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
+mkdir external_repo
+ln -s %{_javadir} external_repo/JPP
+mkdir  -p $MAVEN_REPO_LOCAL/org/terracotta/forge/forge-parent/2.0/
+cp %{SOURCE4} $MAVEN_REPO_LOCAL/org/terracotta/forge/forge-parent/2.0/forge-parent-2.0.pom
+
+export M2_SETTINGS=$(pwd)/settings.xml
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+        -e \
+        -s $M2_SETTINGS \
+        -Daggregate=true \
+        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
+        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
+        ant:ant forge:manifest install javadoc:javadoc
+%else
+export CLASSPATH=
+#export CLASSPATH=$(build-classpath \
+#)
+CLASSPATH=$CLASSPATH:target/classes:target/test-classes
+ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+%endif
+
+%install
+# jars/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+
+%add_to_maven_depmap org.terracotta.forge forge-parent 2.0 JPP tc-forge-parent
+install -m 644 %{SOURCE4} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-tc-forge-parent.pom
+
+%add_to_maven_depmap org.terracotta.api tim-api-root %{version} JPP tim-api-root
+install -m 644 pom.xml $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-tim-api-root.pom
+
+install -m 644 tim-api/target/tim-api-%{version}.jar \
+               $RPM_BUILD_ROOT%{_javadir}/tim-api-%{version}.jar
+%add_to_maven_depmap org.terracotta.api tim-api %{version} JPP tim-api
+install -m 644 tim-api/pom.xml $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-tim-api.pom
+
+install -m 644 dso-cluster-api/target/dso-cluster-api-%{version}.jar \
+               $RPM_BUILD_ROOT%{_javadir}/dso-cluster-api-%{version}.jar
+%add_to_maven_depmap org.terracotta.api dso-cluster-api %{version} JPP dso-cluster-api
+install -m 644 dso-cluster-api/pom.xml $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-dso-cluster-api.pom
+
+install -m 644 thirdparty-api/target/thirdparty-api-%{version}.jar \
+               $RPM_BUILD_ROOT%{_javadir}/thirdparty-api-%{version}.jar
+%add_to_maven_depmap org.terracotta.api thirdparty-api %{version} JPP thirdparty-api
+install -m 644 thirdparty-api/pom.xml $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-thirdparty-api.pom
+
+(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
+
+# javadoc
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -pr target/site/apidocs/* \
+                    $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+
+%files 
+%{_javadir}/*
+%{_datadir}/maven2/poms/*
+%{_mavendepmapfragdir}/*
+
+%files javadoc
+%doc %{_javadocdir}/%{name}-%{version}
+%doc %{_javadocdir}/%{name}
+
+%changelog
+* Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt2_1jpp6
+- fixed build with java 7
+
+* Mon Oct 18 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt1_1jpp6
+- new version
+

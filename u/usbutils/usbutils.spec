@@ -1,0 +1,128 @@
+Name: usbutils
+Version: 0.90
+Release: alt2
+
+Summary: Linux USB utilities
+License: GPLv2+
+Group: System/Kernel and hardware
+
+Url: http://sourceforge.net/projects/linux-usb/
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
+Packager: Andrey Rahmatullin <wrar@altlinux.org>
+
+Requires: usbids
+
+BuildPreReq: libusb-compat-devel zlib-devel
+
+
+%description
+usbutils contains an utility (lsusb) for inspecting devices connected to
+the USB bus.
+
+
+%prep
+%setup
+%patch -p1
+%autoreconf
+
+%build
+%configure --datadir=%_datadir/misc
+%make_build
+
+%install
+%makeinstall
+rm -f %buildroot%_sbindir/update-usbids.sh
+
+%files
+%_bindir/*
+%_sbindir/*
+%_datadir/pkgconfig/%name.pc
+%_man1dir/*
+%_man8dir/*
+%doc AUTHORS ChangeLog NEWS README
+
+
+%changelog
+* Tue Sep 07 2010 Andrey Rahmatullin <wrar@altlinux.org> 0.90-alt2
+- use usbids instead of hwdatabase
+
+* Fri Aug 13 2010 Andrey Rahmatullin <wrar@altlinux.org> 0.90-alt1
+- 0.90
+
+* Mon Apr 26 2010 Andrey Rahmatullin <wrar@altlinux.ru> 0.87-alt1
+- 0.87
+
+* Thu Aug 20 2009 Andrey Rahmatullin <wrar@altlinux.ru> 0.86-alt1
+- 0.86
+
+* Thu Jun 25 2009 Andrey Rahmatullin <wrar@altlinux.ru> 0.84-alt1
+- 0.84
+
+* Fri May 08 2009 Andrey Rahmatullin <wrar@altlinux.ru> 0.82-alt1
+- 0.82
+
+* Tue Apr 28 2009 Andrey Rahmatullin <wrar@altlinux.ru> 0.81-alt1
+- 0.81
+- drop usbtree
+
+* Mon Apr 06 2009 Andrey Rahmatullin <wrar@altlinux.ru> 0.73-alt2
+- fix buildreqs
+- fix the parsing of bus number >= 08 in tree mode (Debian)
+
+* Wed Oct 24 2007 Andrey Rahmatullin <wrar@altlinux.ru> 0.73-alt1
+- 0.73
+
+* Mon Oct 02 2006 Andrey Rahmatullin <wrar@altlinux.ru> 0.72-alt1
+- NMU:
+  + 0.72
+  + add Url
+
+* Tue Feb 01 2005 Anton Farygin <rider@altlinux.ru> 0.70-alt1
+- new version
+
+* Thu Dec 23 2004 Anton Farygin <rider@altlinux.ru> 0.11-alt5
+- usb.ids moved to hwdatabase
+- added patches from fedora:
+    * usbutils-0214.patch - fix various brokenness
+    * usbutils-0.11-hidcc.patch - patch from Aurelien Jarno for unknown 
+      HID Country Code entries in usb.ids
+
+* Thu Sep 09 2004 Alexey Gladkov <legion@altlinux.ru> 0.11-alt3
+- update usb.ids;
+- usbtree script added;
+- the latest usb.ids contain entries that usbutils doesn't handle (HCC lines);
+
+* Mon Oct 28 2002 Konstantin Volckov <goldhead@altlinux.ru> 0.11-alt1
+- 0.11
+- Updated usb.ids file
+- Rebuilt in new environment
+
+* Thu Dec 06 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.9-alt1
+- 0.9
+- Updated usb.ids file
+
+* Wed Nov 08 2001 Konstantin Volckov <goldhead@altlinux.ru> 0.8-alt1
+- First build for Sisyphus
+
+* Thu Oct 11 2001 Pixel <pixel@mandrakesoft.com> 0.8-3mdk
+- s/Copyright/License/
+
+* Mon Sep 10 2001 Pixel <pixel@mandrakesoft.com> 0.8-2mdk
+- the latest usb.ids contain entries that usbutils doesn't handle (PHY lines),
+  remove them
+
+* Mon Aug 13 2001 Pixel <pixel@mandrakesoft.com> 0.8-1mdk
+- new version
+- get the latest usb.ids from http://www.linux-usb.org/usb.ids
+- remove the hotplug patch which is included by default
+
+* Mon Jul  2 2001 Pixel <pixel@mandrakesoft.com> 0.7-3mdk
+- fix description
+
+* Tue Jun 12 2001 Chmouel Boudjnah <chmouel@mandrakesoft.com> 0.7-2mdk
+- Add hotplug patch.
+
+* Sat Dec 16 2000 Pixel <pixel@mandrakesoft.com> 0.7-1mdk
+- initial spec

@@ -1,0 +1,484 @@
+Name: phpMyAdmin
+Version: 3.3.10
+Release: alt1
+Summary: phpMyAdmin - web-based MySQL administration
+License: GPL
+Group: System/Servers
+
+Url: http://www.phpmyadmin.net
+Source0: http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar.bz2
+Source1: config.inc.php
+Source2: %name-README.ALT
+Source3: %name.htaccess
+Source5: %name.conf
+Source6: %name.A.conf
+Source7: %name-apache.control
+Source8: %name-apache2.control
+
+Provides: phpmyadmin
+Obsoletes: %name-common
+
+BuildArch: noarch
+Packager: Dmitriy Kulik <lnkvisitor@altlinux.org>
+
+Requires: pwgen webserver-common control
+
+BuildPreReq: rpm-macros-fillup rpm-macros-apache rpm-macros-apache2 rpm-macros-webserver-common
+
+BuildRequires: apache-base apache2-base control
+
+%description
+phpMyAdmin can administer a whole MySQL-server (needs a super-user)
+but also a single database. To accomplish the latter you'll need a
+properly set up MySQL-user who can read/write only the desired
+database. It's up to you to look up the appropiate part in the MySQL
+manual. Currently phpMyAdmin can:
+  - create and drop databases
+  - create, copy, drop and alter tables
+  - delete, edit and add fields
+  - execute any SQL-statement, even batch-queries
+  - manage keys on fields
+  - load text files into tables
+  - create (*) and read dumps of tables
+  - export (*) and import data to CSV values
+  - administer multiple servers and single databases
+  - communicate in more than 20 different languages
+
+%package apache
+Summary: phpMyAdmin - web-based MySQL administration (for apache 1.3 and php5)
+Group: System/Servers
+Requires: %name = %version-%release
+Requires: apache-mod_php5
+Requires: php5-mysql
+Requires: php5-mcrypt
+Requires: php5-mbstring
+Requires: php5-gd2
+Requires: php5-ctype
+
+%description apache
+phpMyAdmin can administer a whole MySQL-server (needs a super-user)
+but also a single database. To accomplish the latter you'll need a
+properly set up MySQL-user who can read/write only the desired
+database. It's up to you to look up the appropiate part in the MySQL
+manual. Currently phpMyAdmin can:
+  - create and drop databases
+  - create, copy, drop and alter tables
+  - delete, edit and add fields
+  - execute any SQL-statement, even batch-queries
+  - manage keys on fields
+  - load text files into tables
+  - create (*) and read dumps of tables
+  - export (*) and import data to CSV values
+  - administer multiple servers and single databases
+  - communicate in more than 20 different languages
+
+Install this package if you need phpMyAdmin for apache 1.3 and php5.
+
+%package apache2
+Summary: phpMyAdmin - web-based MySQL administration (for apache 2.0 and php5)
+Group: System/Servers
+Requires: %name = %version-%release
+Requires: apache2-mod_php5 >= 5.2.0
+Requires: php5-mysql
+Requires: php5-mcrypt
+Requires: php5-mbstring
+Requires: php5-gd2
+
+%description apache2
+phpMyAdmin can administer a whole MySQL-server (needs a super-user)
+but also a single database. To accomplish the latter you'll need a
+properly set up MySQL-user who can read/write only the desired
+database. It's up to you to look up the appropiate part in the MySQL
+manual. Currently phpMyAdmin can:
+  - create and drop databases
+  - create, copy, drop and alter tables
+  - delete, edit and add fields
+  - execute any SQL-statement, even batch-queries
+  - manage keys on fields
+  - load text files into tables
+  - create (*) and read dumps of tables
+  - export (*) and import data to CSV values
+  - administer multiple servers and single databases
+  - communicate in more than 20 different languages
+
+Install this package if you need phpMyAdmin for apache 2.0 and php5.
+
+%prep
+%setup -q -n %name-%version-all-languages
+
+%install
+install -m755 -d %buildroot%webserver_webappsdir/%name/{lang,js{/mooRainbow{/images,},},themes,libraries{/auth,},css}
+install -m644 *.php *.html *.css favicon.ico %buildroot%webserver_webappsdir/%name/
+install -m644 js/*.js %buildroot%webserver_webappsdir/%name/js/
+install -m644 js/mooRainbow/*.* %buildroot%webserver_webappsdir/%name/js/mooRainbow
+install -m644 js/mooRainbow/images/*.* %buildroot%webserver_webappsdir/%name/js/mooRainbow/images
+
+install -m644 lang/*.php %buildroot%webserver_webappsdir/%name/lang/
+cp -a libraries/ %buildroot%webserver_webappsdir/%name/
+cp -a themes %buildroot%webserver_webappsdir/%name/
+
+cp -a %SOURCE3 %buildroot%webserver_webappsdir/%name/.htaccess
+cp %SOURCE2 .
+cp %SOURCE1 %buildroot%webserver_webappsdir/%name/
+
+#make httpd config
+%__mkdir_p %buildroot%apache_addonconfdir
+%__mkdir_p %buildroot%apache_modconfdir
+cp %SOURCE5 %buildroot%apache_addonconfdir/%name.conf
+%__subst 's|--dir--|%webserver_webappsdir/%name|g' %buildroot%apache_addonconfdir/%name.conf
+ln -s %apache_addonconfdir/%name.conf %buildroot%apache_modconfdir/%name.conf
+
+%__mkdir_p %buildroot%apache2_extra_available
+%__mkdir_p %buildroot%apache2_extra_enabled
+cp %SOURCE6 %buildroot%apache2_extra_available/%name.conf
+%__subst 's|--dir--|%webserver_webappsdir/%name|g' %buildroot%apache2_extra_available/%name.conf
+ln -s %apache2_extra_available/%name.conf %buildroot%apache2_extra_enabled/%name.conf
+
+#make control modules
+%__mkdir_p %buildroot%_controldir
+cp %SOURCE7 %buildroot%_controldir/%name-apache
+%__subst 's|--dir--|%apache_addonconfdir|g' %buildroot%_controldir/%name-apache
+cp %SOURCE8 %buildroot%_controldir/%name-apache2
+%__subst 's|--dir--|%apache2_extra_available|g' %buildroot%_controldir/%name-apache2
+
+%post
+replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
+
+%pre apache
+%pre_control %name-apache
+
+%post apache
+%post_control -s restricted %name-apache
+%_initdir/httpd condreload
+
+%postun apache
+%_initdir/httpd condreload
+
+%pre apache2
+%pre_control %name-apache2
+
+%post apache2
+%post_control -s restricted %name-apache2
+%_initdir/httpd2 condreload
+
+%postun apache2
+%_initdir/httpd2 condreload
+
+%files
+%doc scripts contrib documentation-gsoc phpMyAdmin-README.ALT
+%doc Documentation.html docs.css README TODO ChangeLog translators.html Documentation.txt
+%dir %webserver_webappsdir/%name/
+%webserver_webappsdir/%name/lang/
+%webserver_webappsdir/%name/libraries/
+%webserver_webappsdir/%name/themes/
+%webserver_webappsdir/%name/js/
+%webserver_webappsdir/%name/favicon.ico
+%webserver_webappsdir/%name/.htaccess
+%webserver_webappsdir/%name/*.html
+%webserver_webappsdir/%name/*.css
+%webserver_webappsdir/%name/[^c]*.php
+%webserver_webappsdir/%name/c[^o]*.php
+%webserver_webappsdir/%name/config.sample.inc.php
+%attr(640,root,%webserver_group) %config(noreplace) %webserver_webappsdir/%name/config.inc.php
+%exclude %webserver_webappsdir/%name/phpinfo.php
+
+%files apache
+%apache_addonconfdir/%name.conf
+%apache_modconfdir/%name.conf
+%attr(755,root,root) %_controldir/%name-apache
+
+%files apache2
+%apache2_extra_available/%name.conf
+%apache2_extra_enabled/%name.conf
+%attr(755,root,root) %_controldir/%name-apache2
+
+%changelog
+* Tue Mar 22 2011 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.3.10-alt1
+- 3.3.7 -> 3.3.10
+- FIX #24423
+- security bug fix
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2010-7.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2010-8.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2010-9.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2010-10.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-1.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-2.php
+
+* Fri Sep 10 2010 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.3.7-alt1
+- 3.3.5 -> 3.3.7
+- security bug fix
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2010-5.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2010-6.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2010-7.php
+
+* Wed Aug 11 2010 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.3.5-alt1
+- 3.3.3 -> 3.3.5
+- Fix alias for apache2 (phpMyAdmin)
+
+* Wed May 26 2010 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.3.3-alt2
+- fixed php_value for php5
+
+* Wed May 26 2010 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.3.3-alt1
+- 3.3.2-rc1 -> 3.3.3
+
+* Mon Apr 19 2010 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.3.2-alt0.1
+- 3.2.4 -> 3.3.2-rc1
+
+* Sun Jan 10 2010 Dmitriy Kulik <lnkvisitor at altlinux.org> 3.2.4-alt3.1
+- fix chmod for control modules
+- fix pach in control modules
+- fix requires
+
+* Sun Jan 10 2010 Dmitriy Kulik <lnkvisitor at altlinux.org> 3.2.4-alt3
+- rebased with WebPolicy
+- added control modules
+- removed common package
+- relocated to group System/Servers
+
+* Fri Dec 25 2009 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.2.4-alt2
+- (ALT #22561)
+
+* Wed Dec 23 2009 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.2.4-alt1
+- 3.1.1 -> 3.2.4
+- security bug fix (ALT #20402, #20647)
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2009-1.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2009-2.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2009-3.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2009-4.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2009-5.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2009-6.php
+
+* Sat Dec 13 2008 Dmitriy Kulik  <lnkvisitor@altlinux.org> 3.1.1-alt1
+- 3.1.0 -> 3.1.1
+- security bug fix:
+  + SQL injection through XSRF on several pages
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2008-10.php
+
+* Fri Dec 12 2008 Dmitriy Kulik  <lnkvisitor@altlinux.org> 3.1.0-alt1
+- 2.11.9.3 -> 3.1.0
+- removed subpackage phpMyAdmin-apache-php4
+- removed subpackage phpMyAdmin-apache2-php4
+- renamed subpackage phpMyAdmin-apache-php5 to phpMyAdmin-apache
+- renamed subpackage phpMyAdmin-apache2-php5 to phpMyAdmin-apache2
+
+* Sun Nov 02 2008 Dmitriy Kulik  <lnkvisitor@altlinux.org> 2.11.9.3-alt1
+- 2.11.8.1 -> 2.11.9.3
+- Added apache config for alias /phpMyAdmin (bugfix #17713)
+- Added phpMyAdmin default configuration file and generate blowfish_secret
+- security bug fix:
+  + Code execution vulnerability
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-7
+  + XSS in MSIE using NUL byte
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-8
+  + XSS on a Designer component
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-9
+
+* Sat Aug 02 2008 Igor Zubkov <icesik@altlinux.org> 2.11.8.1-alt1
+- 2.11.7.1 -> 2.11.8.1
+- this is security bug fix release:
+  + Cross-site Framing; XSS in setup.php
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-6
+
+* Sun Jul 20 2008 Igor Zubkov <icesik@altlinux.org> 2.11.7.1-alt1
+- 2.11.7 -> 2.11.7.1
+- this is security bug fix release:
+  + XSRF/CSRF for creating a database and modifying user charset
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-5
+
+* Wed Jun 25 2008 Igor Zubkov <icesik@altlinux.org> 2.11.7-alt1
+- 2.11.6 -> 2.11.7
+- this is security bug fix release:
+  + XSS on plausible insecure PHP installation
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-4
+
+* Wed Apr 30 2008 Igor Zubkov <icesik@altlinux.org> 2.11.6-alt1
+- 2.11.5.2 -> 2.11.6
+
+* Wed Apr 23 2008 Igor Zubkov <icesik@altlinux.org> 2.11.5.2-alt1
+- 2.11.5.1 -> 2.11.5.2
+- this is security bug fix release:
+  + File disclosure on shared hosts via a crafted HTTP POST request
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-3
+
+* Sun Mar 30 2008 Igor Zubkov <icesik@altlinux.org> 2.11.5.1-alt1
+- 2.11.5 -> 2.11.5.1
+- this is security bug fix release:
+  + Credentials disclosure on shared hosts via session data
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-2
+
+* Tue Mar 04 2008 Igor Zubkov <icesik@altlinux.org> 2.11.5-alt1
+- 2.11.4 -> 2.11.5
+- this is security bug fix release:
+  + SQL injection vulnerability (Delayed Cross Site Request Forgery)
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2008-1
+
+* Tue Jan 15 2008 Igor Zubkov <icesik@altlinux.org> 2.11.4-alt1
+- 2.11.3 -> 2.11.4
+- this is security bug fix release:
+  + path disclosure on darkblue_orange/layout.inc.php
+
+* Wed Dec 12 2007 Igor Zubkov <icesik@altlinux.org> 2.11.3-alt1
+- 2.11.2.2 -> 2.11.3
+
+* Wed Nov 21 2007 Igor Zubkov <icesik@altlinux.org> 2.11.2.2-alt1
+- 2.11.2.1 -> 2.11.2.2
+- this is security bug fix release, see:
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2007-8
+
+* Sun Nov 11 2007 Igor Zubkov <icesik@altlinux.org> 2.11.2.1-alt1
+- 2.11.2 -> 2.11.2.1
+- this is security bug fix release, see:
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2007-7
+
+* Tue Oct 30 2007 Igor Zubkov <icesik@altlinux.org> 2.11.2-alt1
+- 2.11.1.2 -> 2.11.2
+
+* Tue Oct 23 2007 Igor Zubkov <icesik@altlinux.org> 2.11.1.2-alt1
+- 2.11.1.1 -> 2.11.1.2
+- this is security bug fix release, see:
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2007-6
+
+* Tue Oct 23 2007 Igor Zubkov <icesik@altlinux.org> 2.11.1.1-alt1
+- 2.10.3 -> 2.11.1.1
+- this is security bug fix release, see:
+  + http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2007-5
+
+* Fri Jul 20 2007 Igor Zubkov <icesik@altlinux.org> 2.10.3-alt1
+- 2.10.2 -> 2.10.3
+
+* Mon Jun 18 2007 Igor Zubkov <icesik@altlinux.org> 2.10.2-alt3
+- add configure tutorial (closes #11719)
+
+* Sat Jun 16 2007 Igor Zubkov <icesik@altlinux.org> 2.10.2-alt2
+- 2.10.2-rc1 -> 2.10.2 (bugfix release)
+
+* Sun Jun 10 2007 Igor Zubkov <icesik@altlinux.org> 2.10.2-alt1.rc1
+- 2.10.1 -> 2.10.2-rc1 (bugfix release)
+
+* Tue Apr 24 2007 Igor Zubkov <icesik@altlinux.org> 2.10.1-alt3
+- 2.10.1-rc1 -> 2.10.1
+- this is security bug fix release, see:
+  + http://secunia.com/advisories/24952/ (cross-site scripting)
+
+* Sat Apr 21 2007 Igor Zubkov <icesik@altlinux.org> 2.10.1-alt2.rc1
+- new subpackage -> phpMyAdmin-apache2-php4
+
+* Sun Apr 15 2007 Igor Zubkov <icesik@altlinux.org> 2.10.1-alt1.rc1
+- 2.10.0.2 -> 2.10.1-rc1
+- fix requires (closes #11498)
+  + add php-mcrypt and php-mbstring to phpMyAdmin-apache-php4
+  + add php5-mcrypt and php5-mbstring to phpMyAdmin-apache-php5
+  + add php5-mcrypt and php5-mbstring to phpMyAdmin-apache2-php5
+
+* Sat Mar 03 2007 Igor Zubkov <icesik@altlinux.org> 2.10.0.2-alt1
+- http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2007-3
+  + aka CVE-2006-1549
+
+* Thu Mar 01 2007 Igor Zubkov <icesik@altlinux.org> 2.10.0.1-alt1
+- 2.9.2 -> 2.10.0.1
+
+* Wed Feb 21 2007 Igor Zubkov <icesik@altlinux.org> 2.9.2-alt1
+- 2.9.1.1 -> 2.9.2 (security bug fix)
+- http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2007-1
+- http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2007-2
+
+* Mon Nov 20 2006 Igor Zubkov <icesik@altlinux.org> 2.9.1.1-alt1
+- 2.9.1-rc2 -> 2.9.1.1 (security bug fix)
+- http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2006-7
+- http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2006-8
+- http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2006-9
+
+* Wed Nov 01 2006 Igor Zubkov <icesik@altlinux.org> 2.9.1-alt1.rc2
+- 2.9.1-rc1 -> 2.9.1-rc2 (security bug fix)
+- http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2006-6
+- remove from phpMyAdmin requires mod_php and php-mysql
+- add to phpMyAdmin package requires phpMyAdmin-engine
+- add contribs to phpMyAdmin package
+
+* Thu Sep 28 2006 Igor Zubkov <icesik@altlinux.ru> 2.9.1-alt1.rc1
+- 2.9.0-beta1 -> 2.9.1-rc1
+
+* Fri Sep 08 2006 Igor Zubkov <icesik@altlinux.ru> 2.9.0-alt1.beta1
+- 2.8.2.4 -> 2.9.0-beta1
+
+* Fri Sep 08 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.2.4-alt3
+- realy fix #9743
+
+* Wed Aug 23 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.2.4-alt2
+- #9743
+
+* Wed Aug 23 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.2.4-alt1
+- 2.8.2.3 -> 2.8.2.4
+
+* Tue Aug 22 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.2.3-alt1
+- 2.8.2.2 -> 2.8.2.3
+
+* Tue Aug 15 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.2.2-alt1
+- 2.8.2.1 -> 2.8.2.2
+
+* Fri Aug 04 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.2.1-alt1
+- 2.8.2.1
+
+* Fri Jun 30 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.2-alt1
+- 2.8.2 (security bug fix)
+- http://www.phpmyadmin.net/home_page/security.php?issue=PMASA-2006-4
+
+* Thu May 25 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.1-alt1
+- 2.8.1
+- security bug fix
+
+* Wed May 17 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.0.4-alt1
+- 2.8.0.4
+- security bug fix
+
+* Sat Apr 08 2006 Igor Zubkov <icesik@altlinux.ru> 2.8.0.3-alt1
+- 2.8.0.3
+- security bug fix
+
+* Tue Aug 31 2004 Michael Shigorin <mike@altlinux.ru> 2.5.7-alt2pl1
+- added Provides: phpmyadmin (#5100)
+
+* Thu Jul 01 2004 Michael Shigorin <mike@altlinux.ru> 2.5.7-alt1pl1
+- 2.5.7pl1 (major security fixes)
+
+* Sat Jan 31 2004 Michael Shigorin <mike@altlinux.ru> 2.5.5-alt1pl1
+- 2.5.5pl1
+- removed unneeded mysql dependency
+
+* Mon Oct 20 2003 Michael Shigorin <mike@altlinux.ru> 2.5.4-alt1
+- 2.5.4 (minor bugfixes)
+
+* Wed Sep 24 2003 Michael Shigorin <mike@altlinux.ru> 2.5.3-alt3
+- #3031 fixed; thanks to Alex Murygin (murygin@)
+  (hmm... should I "copy what's needed and remove what's not"
+  to avoid such situations?)
+
+* Tue Sep 23 2003 Michael Shigorin <mike@altlinux.ru> 2.5.3-alt2
+- #3031 fixed; thanks to Dmitry Lebkov (dlebkov@)
+- file layout somewhat straightened/updated
+- perms updated (mostly -x)
+
+* Mon Sep 08 2003 Michael Shigorin <mike@altlinux.ru> 2.5.3-alt1
+- 2.5.3
+- we've no "webmaster" user -- let it be root for now since rpm would
+  get it that way anyways
+
+* Thu Jul 31 2003 Michael Shigorin <mike@altlinux.ru> 2.5.2pl1-alt1
+- 2.5.2-pl1 (security fixes)
+
+* Mon May 26 2003 Michael Shigorin <mike@altlinux.ru> 2.3.3pl1-alt2
+- killed phpinfo.php (crazy people!)
+
+* Tue Feb 11 2003 Michael Shigorin <mike@altlinux.ru> 2.3.3pl1-alt1
+- 2.3.3pl1
+- default access control implemented (from TODO) -- don't use 2.3.1-alt1
+- fixed config.inc.php owner (root->webmaster)
+
+* Fri Oct 04 2002 Michael Shigorin <mike@altlinux.ru> 2.3.1-alt1
+- built for ALT Linux
+- spec adapted from PLD
+
+* Mon Oct  1 2002 PLD Team <feedback@pld.org.pl> 2.3.1-1
+All persons listed below can be reached at <cvs_login>@pld.org.pl
+ppv, blues, kloczek, orzech, pioklo, qboosh, tiwek

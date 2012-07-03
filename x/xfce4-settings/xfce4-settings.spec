@@ -1,0 +1,149 @@
+Name: xfce4-settings
+Version: 4.10.0
+Release: alt1
+Summary: Settings Manager for Xfce
+Summary (ru_RU.UTF-8): Менеджер настроек Xfce
+
+License: %gpl2plus
+Url: http://www.xfce.org/
+Group: Graphical desktop/XFce
+Packager: XFCE Team <xfce@packages.altlinux.org>
+
+# Upstream: git://git.xfce.org/xfce/xfce4-settings
+Source: %name-%version.tar
+Source1: xfce4-fixkeyboard
+Patch: %name-%version-%release.patch
+
+BuildRequires(pre): rpm-build-licenses
+
+BuildPreReq: rpm-build-xfce4 xfce4-dev-tools > 4.5 libxfce4ui-devel libexo-devel >= 0.6.0 libxfconf-devel libgarcon-devel >= 0.1.10
+BuildRequires: intltool libICE-devel libXcursor-devel libXi-devel libXrandr-devel libglade-devel libnotify-devel libwnck-devel libxklavier-devel
+
+Requires: libgarcon-settings-manager-menu
+
+Obsoletes: xfce4-mcs-manager xfce4-mcs-plugins
+
+%description
+This package provides the settings manager applications
+for the Xfce desktop.
+
+%description -l ru_RU.UTF-8
+Данный пакет содержит в себе менеджер настроек для окружения рабочего
+стола Xfce.
+
+%prep
+%setup
+%patch -p1
+
+%build
+%xfce4reconf
+%configure  \
+	--enable-debug=no \
+	--enable-maintainer-mode \
+	--enable-libnotify \
+	--enable-xcursor \
+	--enable-libxklavier \
+	--enable-sound-settings \
+	--enable-pluggable-dialogs
+%make
+
+%install
+%makeinstall_std
+%find_lang %name
+install -pDm0755 %SOURCE1 %buildroot%_bindir/xfce4-fixkeyboard
+
+%files -f %name.lang
+%doc README TODO NEWS INSTALL COPYING AUTHORS
+%_bindir/*
+%_libdir/xfce4/*
+%config(noreplace) %_sysconfdir/xdg/autostart/*
+%config(noreplace) %_sysconfdir/xdg/xfce4/xfconf/xfce-perchannel-xml/xsettings.xml
+%_sysconfdir/xdg/menus/xfce-settings-manager.menu
+%_desktopdir/*.desktop
+
+%changelog
+* Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
+- Updated to 4.10.0.
+
+* Tue Apr 17 2012 Mikhail Efremov <sem@altlinux.org> 4.9.5-alt1
+- Updated to 4.9.5.
+
+* Mon Apr 02 2012 Mikhail Efremov <sem@altlinux.org> 4.9.4-alt1
+- Require libgarcon-settings-manager-menu.
+- Updated to 4.9.4.
+
+* Mon Feb 13 2012 Mikhail Efremov <sem@altlinux.org> 4.9.2-alt1
+- Updated to 4.9.2.
+
+* Mon Jan 23 2012 Mikhail Efremov <sem@altlinux.org> 4.9.1-alt1
+- Updated to 4.9.1.
+
+* Mon Dec 12 2011 Mikhail Efremov <sem@altlinux.org> 4.9.0-alt4
+- Some fixes from upstream.
+- Updated transations.
+
+* Mon Dec 12 2011 Mikhail Efremov <sem@altlinux.org> 4.9.0-alt3
+- Updated Russian translation.
+
+* Wed Nov 30 2011 Mikhail Efremov <sem@altlinux.org> 4.9.0-alt2
+- Add xfce4-fixkeyboard script.
+
+* Fri Nov 25 2011 Mikhail Efremov <sem@altlinux.org> 4.9.0-alt1
+- Updated to 4.9.0.
+
+* Fri Oct 07 2011 Mikhail Efremov <sem@altlinux.org> 4.8.3-alt1
+- Drop obsoleted patches.
+- Updated to 4.8.3.
+
+* Wed Aug 31 2011 Mikhail Efremov <sem@altlinux.org> 4.8.2-alt3
+- Updated Russian translation.
+
+* Mon Aug 15 2011 Mikhail Efremov <sem@altlinux.org> 4.8.2-alt2
+- Updated Russian translation (by Artem Zolochevskiy).
+
+* Thu Jun 23 2011 Mikhail Efremov <sem@altlinux.org> 4.8.2-alt1
+- Don't use freed memory (patch from upstream).
+- Updated to 4.8.2.
+
+* Tue Feb 15 2011 Mikhail Efremov <sem@altlinux.org> 4.8.1-alt1
+- Updated to 4.8.1.
+
+* Thu Jan 20 2011 Mikhail Efremov <sem@altlinux.org> 4.8.0-alt1
+- Update summary and description.
+- Fix license.
+- Drop debian-libxklavier-5.0-API.patch (fixed in upstream).
+- Spec cleanup.
+- Updated to 4.8.0.
+- remove xkl-config-registry-load.patch.
+
+* Wed Jul 14 2010 Mikhail Efremov <sem@altlinux.org> 4.6.4-alt2
+- fix build: add debian-libxklavier-5.0-API.patch.
+
+* Tue Jan 26 2010 Denis Koryavov <dkoryavov@altlinux.org> 4.6.4-alt1
+- Version update.
+
+* Wed Nov 25 2009 Denis Koryavov <dkoryavov@altlinux.org> 4.6.1-alt4
+- Added xkl-config-registry-load.patch.
+
+* Fri Oct 02 2009 Denis Koryavov <dkoryavov@altlinux.org> 4.6.1-alt3
+- Russian translation update.
+
+* Wed Aug 19 2009 Denis Koryavov <dkoryavov@altlinux.org> 4.6.1-alt2
+- Added Obsoletes for xfce4-mcs-manager and xfce4-mcs-plugins
+- Updated Russian translation
+
+* Sun Apr 19 2009 Denis Koryavov <dkoryavov@altlinux.org> 4.6.1-alt1
+Xfce 4.6.1
+
+* Sun Apr 12 2009 Denis Koryavov <dkoryavov@altlinux.org> 4.6.0-alt1
+Xfce 4.6.0
+
+* Tue Jan 27 2009 Eugene Ostapets <eostapets@altlinux.ru> 4.5.99.1-alt1
+- Xfce 4.6rc1
+
+* Thu Jan 22 2009 Eugene Ostapets <eostapets@altlinux.ru> 4.5.93-alt1
+- Xfce 4.6 beta 3
+
+* Fri Oct 24 2008 Eugene Ostapets <eostapets@altlinux.org> 4.5.91-alt1
+- Xfce 4.6 beta1
+- First build for ALTLinux

@@ -1,0 +1,26 @@
+Name: xemacs-cedet-common
+Version: 1.01
+Release: alt1
+
+%define_xemacs_package cedet-common
+
+Summary: Common files for CEDET development environment.
+License: GPL
+Group: Editors
+
+%description
+Common files for CEDET development environment.
+
+%prep
+%setup -qc
+
+%install
+%xemacs_package_install
+%xemacs_package_find_files
+
+%files -f %name-files
+
+%changelog
+* Fri May 22 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.01-alt1
+- 1.01
+
