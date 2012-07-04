@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 %define babelver 1.4.0
 
 Name: cca-spec-babel
 Version: 0.8.6
-Release: alt4.svn20090721.1
+Release: alt5.svn20090721
 Summary: The Common Component Architecture Specification for Babel
 License: LGPL
 Group: Sciences/Mathematics
@@ -208,6 +208,9 @@ done
 %_docdir/%name
 
 %changelog
+* Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.6-alt5.svn20090721
+- Rebuilt with OpenMPI 1.6
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.6-alt4.svn20090721.1
 - Rebuild to remove redundant libpython2.7 dependency
 
