@@ -1,7 +1,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: berkeley_upc_translator
-Version: 2.14.0
+Version: 2.14.2
 Release: alt1
 Summary: Berkeley Unified Parallel C (UPC) Translator
 License: BSD
@@ -23,13 +23,16 @@ Berkeley Unified Parallel C (UPC) Translator.
 %make
 
 %install
-%makeinstall_std PREFIX=%buildroot%_libexecdir/%name
+%makeinstall_std PREFIX=%buildroot%_libdir/%name
 
 %files
 %doc LICENSE.TXT README
-%_libexecdir/%name
+%_libdir/%name
 
 %changelog
+* Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.2-alt1
+- Version 2.14.2
+
 * Thu Dec 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt1
 - Version 2.14.0
 

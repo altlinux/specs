@@ -1,11 +1,11 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define somver 0
 %define sover %somver.0.0
 
 Name: berkeley_upc
-Version: 2.14.0
+Version: 2.14.2
 Release: alt1
 Summary: Berkeley Unified Parallel C (UPC)
 License: BSD
@@ -52,6 +52,10 @@ This package contains documentation for Berkeley UPC.
 %setup
 sed -i 's|@LIBDIR@|%_libdir|' \
 	detect-upc/upcppp.pl profile/dump/upcc-dump upcc.pl
+%ifarch x86_64
+LIB64=64
+%endif
+sed -i "s|@64@|$LIB64|" multiconf.conf.in
 
 sed -i 's|^STRIP.*\=.*|STRIP=echo|' \
 	Makefile.in configure
@@ -68,7 +72,7 @@ source %mpidir/bin/mpivars.sh
 	--enable-smp \
 	--enable-mpi \
 	--enable-ibv \
-	--with-translator=%_libexecdir/%{name}_translator/targ \
+	--with-translator=%_libdir/%{name}_translator/targ \
 	--enable-allow-gcc4 \
 	--disable-aligned-segments \
 	--with-multiconf=+opt_inst
@@ -131,6 +135,9 @@ rm -fR %buildroot%prefix/man
 %_docdir/*
 
 %changelog
+* Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.2-alt1
+- Version 2.14.2
+
 * Thu Dec 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.14.0-alt1
 - Version 2.14.0
 
