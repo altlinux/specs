@@ -7,7 +7,7 @@
 %def_disable debug
 
 Name: bacula
-Version: 5.2.6
+Version: 5.2.10
 Release: alt1
 
 License: AGPLv3
@@ -629,6 +629,12 @@ use appropriate %_datadir/bacula/scripts/update_*_tables script"
 
 %files
 %changelog
+* Wed Jul 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.2.10-alt1
+- 5.2.10
+
+* Fri Jun 15 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.2.9-alt1
+- 5.2.9
+
 * Mon Feb 27 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.2.6-alt1
 - 5.2.6
 
