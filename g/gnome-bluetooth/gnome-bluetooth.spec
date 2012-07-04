@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: gnome-bluetooth
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
@@ -168,6 +168,9 @@ find %buildroot -name "*.la" -delete
 %endif
 
 %changelog
+* Wed Jul 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Wed Jun 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
