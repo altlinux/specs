@@ -1,11 +1,11 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define somver 0
 %define sover %somver.5.8
 Name: dsdp
 Version: 5.8
-Release: alt8
+Release: alt9
 Summary: Implementation of an interior-point method for semidefinite programming
 License: BSD-like
 Group: Sciences/Mathematics
@@ -91,27 +91,6 @@ interface.
 
 This package contains development files of DSDP.
 
-%package -n lib%name-devel-static
-Summary: Static development files of DSDP
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
-
-%description -n lib%name-devel-static
-The DSDP software is a free open source implementation of an interior-point
-method for semidefinite programming. It provides primal and dual solutions,
-exploits low-rank structure and sparsity in the data, and has relatively low
-memory requirements for an interior-point method. It allows feasible and
-infeasible starting points and provides approximate certificates of
-infeasibility when no feasible solution exists. The dual-scaling algorithm
-implemented in this package has a convergence proof and worst-case polynomial
-complexity under mild assumptions on the data. The software can be used as a set
-of subroutines, or by reading and writing to data files. Furthermore, the solver
-offers scalable parallel performance for large problems and a well documented
-interface.
-
-This package contains static development files of DSDP.
-
 %package -n lib%name-devel-doc
 Summary: Development documentation for DSDP
 Group: Development/Documentation
@@ -139,7 +118,7 @@ rm -f $(find ./ -name '*.o')
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 sed -i "s|(PWD)|$PWD|g" make.include
 sed -i "s|(MPIDIR)|%mpidir|g" make.include
@@ -163,7 +142,7 @@ popd
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 install -d %buildroot%_bindir
 install -d %buildroot%_datadir/%name
@@ -200,7 +179,7 @@ pushd tmp
 ar x ../lib%name.a
 mpicc -shared * \
 	-lscalapack -lblacs -larpack_LINUX -llapack -lgoto2 \
-	-Wl,-R%mpidir/lib \
+	-Wl,-rpath,%mpidir/lib \
 	-Wl,-soname,lib%name.so.%somver -o ../lib%name.so.%sover
 rm -f *
 popd
@@ -224,13 +203,13 @@ popd
 %_libdir/*.so
 %_includedir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files -n lib%name-devel-doc
 %_docdir/lib%name-devel
 
 %changelog
+* Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.8-alt9
+- Rebuilt with OpenMPI 1.6
+
 * Wed Dec 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.8-alt8
 - Fixed RPATH
 
