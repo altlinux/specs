@@ -1,6 +1,6 @@
 %define lo_name libreoffice
 %define ver_major 3.5
-%define lo_ver %ver_major.5.2
+%define lo_ver %ver_major.5.3
 %define src_url http://download.documentfoundation.org/libreoffice/src/%ver_major.2/
 %define with_lang ru de fr uk pt-BR es
 
@@ -316,6 +316,9 @@ unset RPM_PYTHON
 %files langpack-es -f %name.es.files
 
 %changelog
+* Wed Jul 04 2012 Valery Inozemtsev <shrek@altlinux.ru> 3.5.5.3-alt1
+- 3.5.5 RC3
+
 * Wed Jun 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 3.5.5.2-alt1
 - 3.5.5 RC2
 
