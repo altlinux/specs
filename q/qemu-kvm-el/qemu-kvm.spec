@@ -18,7 +18,7 @@
 %define rulenum 90
 Name: qemu-kvm-el
 Version: 0.12.1.2
-Release: alt13
+Release: alt14
 Summary: Kernel Virtual Machine virtualization environment
 Group: Emulators
 License: %gpl2plus
@@ -151,6 +151,9 @@ fi
 %_man1dir/qemu-img.*
 
 %changelog
+* Wed Jul 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.12.1.2-alt14
+- qemu-kvm-0.12.1.2-2.295.el6
+
 * Tue Jan 24 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.12.1.2-alt13
 - qemu-kvm-0.12.1.2-2.209.el6_2.4
 
