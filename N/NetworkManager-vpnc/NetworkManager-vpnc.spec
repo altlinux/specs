@@ -1,16 +1,17 @@
-%define nm_version 0.9.4.0
-%define nm_applet_version 0.9.4.0
+%define nm_version 0.9.5.95
+%define nm_applet_version 0.9.5.95
 %define git_date %nil
 #define git_date .git20110510
 %define gtkver 3
 
 Name: NetworkManager-vpnc
-Version: 0.9.4.0
+Version: 0.9.5.95
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for vpnc
 Url: http://www.gnome.org/projects/NetworkManager/
+# git://git.gnome.org/network-manager-vpnc
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -91,6 +92,10 @@ fi
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Jul 04 2012 Mikhail Efremov <sem@altlinux.org> 0.9.5.95-alt1
+- Updated from upstream git (9fb8461cc0).
+- Updated to 0.9.5.95 (0.9.6-rc1).
+
 * Thu Apr 05 2012 Mikhail Efremov <sem@altlinux.org> 0.9.4.0-alt1
 - Updated from upstream git (3658221c15).
 - 0.9.4.0.

@@ -13,12 +13,13 @@
 %def_enable introspection
 
 Name: NetworkManager
-Version: 0.9.4.0
-Release: alt3%git_date
+Version: 0.9.5.95
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
 Url: http://www.gnome.org/projects/NetworkManager/
+# git://git.freedesktop.org/git/NetworkManager/NetworkManager.git
 Source: %name-%version.tar
 Source1: %name.conf
 Source2: 50-ntpd
@@ -170,7 +171,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 	--with-session-tracking=ck \
 %endif
     --enable-introspection=auto \
-    --enable-more-warnings=no
+    --enable-more-warnings=error
 
 %make_build
 
@@ -302,6 +303,11 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Jul 03 2012 Mikhail Efremov <sem@altlinux.org> 0.9.5.95-alt1
+- Treat warrnings as errors again.
+- Updated from upstream git (18b0ba499c).
+- Updated to 0.9.5.95 (0.9.6-rc1).
+
 * Mon May 21 2012 Mikhail Efremov <sem@altlinux.org> 0.9.4.0-alt3
 - Use libsystemd-login if systemd support is enabled (closes: #27339).
 - atcnet-alt: Fix test's DSO linking.
