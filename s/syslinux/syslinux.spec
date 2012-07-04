@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt2
+Release: alt3
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -33,10 +33,26 @@ Syslinux is a simple kernel loader. It normally loads the kernel (and an
 optional initrd image) from a FAT filesystem. It can also be used as a
 PXE bootloader during network boots.
 
+%package extlinux
+Group: System/Kernel and hardware
+Summary: The EXTLINUX bootloader, for booting the local system.
+Requires: %name = %serial:%version-%release
+%description extlinux
+The EXTLINUX bootloader, for booting the local system, as well as all
+the SYSLINUX/PXELINUX modules in /boot.
+
+%package tftpboot
+Group: System/Kernel and hardware
+Summary: SYSLINUX modules in /tftpboot, available for network booting
+Requires: %name = %serial:%version-%release
+%description tftpboot
+All the SYSLINUX/PXELINUX modules directly available for network
+booting in the /tftpboot directory.
+
 %package devel
 Summary: Simple kernel loader which boots from a FAT filesystem, devel path
 Group: System/Kernel and hardware
-Requires: %name = %version
+Requires: %name = %serial:%version
 
 %description devel
 Read main packages description 
@@ -61,7 +77,7 @@ export CFLAGS="%optflags"
 
 
 %install
-%make install-all \
+%make \
 	INSTALLDIR=%buildroot \
 	INSTALLROOT=%buildroot \
 	BINDIR=%_bindir \
@@ -69,10 +85,15 @@ export CFLAGS="%optflags"
 	DATADIR=%_libexecdir \
 	INCDIR=%_includedir \
 	MANDIR=%_mandir \
-	install
-rm -rf %buildroot/boot
+	EXTLINUXDIR=/boot/extlinux \
+	install-all
+#	TFTPBOOT=/tftpboot \
+
 rm -rf %buildroot/tftpboot
 rm -rf %buildroot/%_libexecdir/%name/com32
+
+mkdir -p %_sysconfdir
+#ln -s `relative /boot/extlinux/extlinux.conf %_sysconfdir/extlinux.conf` %buildroot/%_sysconfdir/extlinux.conf
 
 for f in ldlinux.sys ldlinux.bss
 do
@@ -83,13 +104,21 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 
 
 %files
-%doc NEWS README* doc
+%doc NEWS README* doc/* sample/sample.*
 %_bindir/*
+%exclude %_bindir/extlinux
 %dir %_libexecdir/%name/
 %_libexecdir/%name/*
 %_man1dir/*.1.*
 
+%files extlinux
+%_bindir/extlinux
+/boot/extlinux
+
 %changelog
+* Wed Jul 04 2012 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt3
+- package extlinux separately
+
 * Mon May 14 2012 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt2
 - use external ext2_fs.h from libe2fs
 
