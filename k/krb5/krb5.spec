@@ -1,8 +1,8 @@
 %def_without test
 
 Name: krb5
-Version: 1.10.1
-Release: alt3
+Version: 1.10.2
+Release: alt1
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -27,13 +27,15 @@ Patch6: krb5-1.10-fedora-doublelog.patch
 Patch7: krb5-1.10-fedora-gcc47.patch
 Patch8: krb5-1.10-fedora-kpasswd_tcp.patch
 Patch9: krb5-1.10-fedora-kprop-mktemp.patch
-Patch10: krb5-1.10-fedora-manpaths.patch
-Patch11: krb5-1.10-fedora-selinux-label.patch
+Patch10: krb5-1.10.2-fedora-manpaths.patch
+Patch11: krb5-1.10.2-fedora-selinux-label.patch
 Patch12: krb5-fedora-kvno-230379.patch
 Patch13: krb5-fedora-trunk-7046.patch
 Patch14: krb5-fedora-trunk-7047.patch
 Patch15: krb5-fedora-trunk-7048.patch
 Patch16: krb5-1.10-alt-avoid-preprocessor-loop.patch
+Patch17: krb5-1.10.2-fedora-keytab-etype.patch
+Patch18: krb5-fedora-trunk-pkinit-anchorsign.patch
 
 BuildRequires: /dev/pts /proc
 %{?_with_test:buildrequires: tcsh dejagnu telnet}
@@ -152,6 +154,8 @@ MIT Kerberos.
 %patch14 -p2
 %patch15 -p2
 %patch16 -p3
+%patch17 -p2
+%patch18 -p2
 
 cat %SOURCE10 | while read manpage ; do
         mv "$manpage" "$manpage".in
@@ -358,6 +362,10 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Wed Jul 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.10.2-alt1
+- 1.10.2
+- CVE-2012-1013
+
 * Fri May 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.10.1-alt3
 - Add systemd unit files
 
