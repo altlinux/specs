@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 %define babelver 1.4.0
 
 Name: cca-spec-neo
 Version: 0.2.8
-Release: alt10
+Release: alt11
 Summary: Neoclassic binding of the CCA specification and design pattern
 License: LGPL
 Group: Sciences/Mathematics
@@ -44,17 +44,6 @@ Neoclassic binding of the CCA specification and design pattern.
 
 This package contains development files of NEO CCA Specification.
 
-%package -n lib%name-devel-static
-Summary: Static libraries of NEO CCA Specification
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Requires: libbabel-devel-static = %babelver
-
-%description -n lib%name-devel-static
-Neoclassic binding of the CCA specification and design pattern.
-
-This package contains static libraries of NEO CCA Specification.
-
 %package common
 Summary: Architecture independent files of NEO CCA Specification
 Group: Development/Other
@@ -81,13 +70,14 @@ This package contains development documentation for NEO CCA Specification.
 %install
 export INSTALL_ROOT=%buildroot%prefix
 source %mpidir/bin/mpivars.sh
-export LIBS="-Wl,-R%mpidir/lib -L%mpidir/lib -lmpi"
+export LIBS="-Wl,-rpath,%mpidir/lib -L%mpidir/lib -lmpi"
+export MPIDIR=%mpidir
 %configure \
 	--with-boost=%prefix \
 	--with-babel-libtool=%_bindir/babel-libtool \
-	--with-mpi=%_libexecdir/%mpiimpl \
-	--with-mpi-cxx=%_libexecdir/%mpiimpl/bin/mpicxx \
-	--with-mpi-inc=%_libexecdir/%mpiimpl/include \
+	--with-mpi=%mpidir \
+	--with-mpi-cxx=%mpidir/bin/mpicxx \
+	--with-mpi-inc=%mpidir/include \
 	--with-cca-neo=%buildroot%prefix \
 	--with-xml2-config=%_bindir/xml2-config \
 	--with-dot=%_bindir \
@@ -125,9 +115,6 @@ install doc/README.NEO %buildroot%_docdir/%name-%version
 %_libdir/*.so
 %_includedir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files common
 %_datadir/*
 %exclude %_docdir
@@ -136,6 +123,9 @@ install doc/README.NEO %buildroot%_docdir/%name-%version
 %_docdir/*
 
 %changelog
+* Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt11
+- Rebuilt with OpenMPI 1.6
+
 * Tue Dec 13 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.8-alt10
 - Disabled devel-static package
 
