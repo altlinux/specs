@@ -1,4 +1,4 @@
-%def_without dakota
+%def_with dakota
 %def_without petsc
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -19,7 +19,7 @@ implement all abstract interfaces.
 %define oname trilinos
 Name: %oname%somver
 Version: 10.10.0
-Release: alt3
+Release: alt4
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL
 Group: Sciences/Mathematics
@@ -2376,6 +2376,9 @@ popd
 %endif
 
 %changelog
+* Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.10.0-alt4
+- Rebuilt with Dakota
+
 * Sun Jul 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.10.0-alt3
 - Rebuilt with OpenMPI 1.6 (without Dakota)
 
