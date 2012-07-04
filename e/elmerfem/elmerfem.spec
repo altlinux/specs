@@ -1,5 +1,5 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define somver 0
 %define sover %somver.0.0
@@ -8,7 +8,7 @@
 
 Name: elmerfem
 Version: 6.2
-Release: alt3.%svn
+Release: alt4.%svn
 
 Summary: Open Source Finite Element Software for Multiphysical Problems
 License: GPLv2+
@@ -138,7 +138,8 @@ sed -i 's|@PYVER@|%_python_version|g' \
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+export MPIDIR=%mpidir
 
 function shareIt() {
 	if [ "$1" == "libelmerparam" ]; then
@@ -197,7 +198,7 @@ pushd elmergrid
 %autoreconf
 %configure \
 	--with-metis=%prefix \
-	--with-metis-include=%_libexecdir/metis/include/metis \
+	--with-metis-include=%_includedir/metis \
 	--with-metis-libs=%_libdir \
 	--with-matc=$PWD/../matc/src/libmatc.so
 %make_build_ext
@@ -256,7 +257,8 @@ popd
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+export MPIDIR=%mpidir
 
 install -d %buildroot%_includedir
 install -d %buildroot%_libdir
@@ -329,6 +331,9 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %_niconsdir/document-save-as.png
 
 %changelog
+* Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2-alt4.svn5602
+- Rebuilt with OpenMPI 1.6
+
 * Sat Jun 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2-alt3.svn5602
 - Rebuilt with VTK 5.10.0
 
