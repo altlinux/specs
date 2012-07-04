@@ -1,9 +1,9 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 Name: openfoam
 Version: 1.7.1
-Release: alt0.7
+Release: alt0.8
 Summary: Free, open source computational fluid dynamics (CFD) software
 License: GPL v3 or later
 Group: Sciences/Physics
@@ -112,7 +112,7 @@ sed -i 's|@BITS@|32|' %name.sh
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
 export FOAM_INST_DIR=$PWD
 . etc/bashrc
@@ -153,7 +153,7 @@ export WM_NCOMPPROCS=2
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
 install -d %buildroot%_bindir
 install -m755 applications/bin/*/* \
@@ -167,7 +167,7 @@ install -m644 lib/*/openmpi-system/*.so %buildroot%_libdir
 
 for i in %buildroot%_libdir/*.so %buildroot%_bindir/*
 do
-	chrpath -r %mpidir/lib $i ||:
+	chrpath -r %mpidir/lib $i || chrpath -d $i ||:
 done
 
 install -d %buildroot%_sysconfdir/profile.d
@@ -204,6 +204,9 @@ rm -f %buildroot%_libdir/libvtkPV3Foam.so
 # - PV3FoamReader
 
 %changelog
+* Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt0.8
+- Rebuilt with OpenMPI 1.6
+
 * Sat Jun 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt0.7
 - Rebuilt with VTK 5.10.0
 
