@@ -1,6 +1,6 @@
 Name: ghc7.4.2-common
 Version: 7.4.2
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 Summary: Glasgow Haskell Compilation system
@@ -13,6 +13,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Requires: haskell-filetrigger
 Requires: rpm-build-haskell
 Conflicts: ghc <= 7.0.1-alt1
+Conflicts: ghc7.4.1-common
 
 Source: %name-%version.tar
 
@@ -57,6 +58,9 @@ done
 %_bindir/*
 
 %changelog
+* Wed Jul 04 2012 Denis Smirnov <mithraen@altlinux.ru> 7.4.2-alt2
+- add conflict to ghc7.4.1-common (CLoses: 27516)
+
 * Sat Mar 17 2012 Denis Smirnov <mithraen@altlinux.ru> 7.4.2-alt1
 - first build for Sisyphus
 
