@@ -1,5 +1,5 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define _ver 0_8_8
 %define somver 0
@@ -7,7 +7,7 @@
 %define classic_ver 0.5.7
 Name: ccaffeine
 Version: %sover
-Release: alt5.svn20100330
+Release: alt6.svn20100330
 Summary: CCA framework compliant with the CCA specification
 License: LGPL
 Group: Sciences/Mathematics
@@ -321,6 +321,9 @@ popd
 #_includedir/python%_python_version/llnl_babel_ccafe*
 
 %changelog
+* Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8-alt6.svn20100330
+- Rebuilt with OpenMPI 1.6
+
 * Mon May 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8-alt5.svn20100330
 - Fixed build
 
