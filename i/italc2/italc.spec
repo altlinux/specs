@@ -9,7 +9,14 @@
 %define keysdir %confdir/keys
 %define xinitdir %_sysconfdir/X11/xinit.d
 
-%define master_group %{name}master
+%define program_name %(echo '%name'|sed -r 's/^(.*[^0-9]+)[0-9]+$/\\1/')
+%define master_group %{program_name}master
+
+# set %%{program_name}-* groups
+%define admin_group %{program_name}-admin
+%define supporter_group %{program_name}-supporter
+%define teacher_group %{program_name}-teacher
+%define other_group %{program_name}-admin
 
 # macros for icons
 %define iconshicolordir %_iconsdir/hicolor
@@ -36,7 +43,7 @@
 
 Name: italc2
 Version: 2.0.1
-Release: %branch_release alt2
+Release: %branch_release alt3
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -48,6 +55,7 @@ Url: http://italc.sourceforge.net/
 Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 Source0: %name-%version.tar
+Source10: iTALC.conf
 Patch10: %name-alt-all.patch
 #Patch20: %name-%version-ubuntu.patch
 
@@ -207,7 +215,7 @@ Netzwerk finden Sie in /usr/share/italc/doc/INSTALL.
 %patch10 -p1
 
 %build
-%cmake -DDOC_DIR:PATCH='%docdir'
+%cmake -DCMAKE_INSTALL_DOCDIR:PATCH='%docdir'
 #%%cmake_insource
 pushd BUILD
 %make_build update-locales # VERBOSE=1
@@ -220,6 +228,10 @@ pushd BUILD
 %makeinstall_std
 install -m 644 -pD italc.spec %buildroot%docdir/%name.origin.spec
 popd
+
+# Install iTALC.conf
+install -m 644 -pD %SOURCE10 "%buildroot%_sysconfdir/xdg/iTALC Solutions/iTALC.conf"
+ln -snf "$(relative "%buildroot%_sysconfdir/xdg/iTALC Solutions" %buildroot%_sysconfdir/xdg/iTALC)" %buildroot%_sysconfdir/xdg/iTALC
 
 # Create key dirs
 mkdir -p %buildroot%keysdir/private/teacher
@@ -239,6 +251,10 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 
 %pre client
 %_sbindir/groupadd -r -f %master_group 2>/dev/null ||:
+%_sbindir/groupadd -r -f %admin_group 2>/dev/null ||:
+%_sbindir/groupadd -r -f %supporter_group 2>/dev/null ||:
+%_sbindir/groupadd -r -f %teacher_group 2>/dev/null ||:
+%_sbindir/groupadd -r -f %other_group 2>/dev/null ||:
 
 %ifndef filetriggers
 %post master
@@ -253,7 +269,8 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 
 %files client
 %_bindir/ica
-%_bindir/italc_auth_helper
+%attr(4711,root,root) %_bindir/italc_auth_helper
+%_man1dir/italc_auth_helper.1.gz
 %_libdir/*.so
 %_man1dir/ica.1.gz
 #%%_bindir/ica-launcher
@@ -262,22 +279,24 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 %dir %keysdir
 %attr(2750,root,%master_group) %dir %keysdir/private
 %attr(2755,root,%master_group) %dir %keysdir/public
-%attr(2750,root,%master_group) %dir %keysdir/private/teacher
-%attr(2750,root,%master_group) %dir %keysdir/private/admin
-%attr(2750,root,%master_group) %dir %keysdir/private/supporter
-%attr(2750,root,%master_group) %dir %keysdir/private/other
-%attr(2755,root,%master_group) %dir %keysdir/public/teacher
-%attr(2755,root,%master_group) %dir %keysdir/public/admin
-%attr(2755,root,%master_group) %dir %keysdir/public/supporter
-%attr(2755,root,%master_group) %dir %keysdir/public/other
-%ghost %attr(0440,root,%master_group) %config(noreplace) %keysdir/private/teacher/key
-%ghost %attr(0440,root,%master_group) %config(noreplace) %keysdir/private/admin/key
-%ghost %attr(0440,root,%master_group) %config(noreplace) %keysdir/private/supporter/key
-%ghost %attr(0440,root,%master_group) %config(noreplace) %keysdir/private/other/key
-%ghost %attr(0444,root,%master_group) %config(noreplace) %keysdir/public/teacher/key
-%ghost %attr(0444,root,%master_group) %config(noreplace) %keysdir/public/admin/key
-%ghost %attr(0444,root,%master_group) %config(noreplace) %keysdir/public/supporter/key
-%ghost %attr(0444,root,%master_group) %config(noreplace) %keysdir/public/other/key
+%attr(2750,root,%teacher_group) %dir %keysdir/private/teacher
+%attr(2750,root,%admin_group) %dir %keysdir/private/admin
+%attr(2750,root,%supporter_group) %dir %keysdir/private/supporter
+%attr(2750,root,%other_group) %dir %keysdir/private/other
+%attr(2755,root,%teacher_group) %dir %keysdir/public/teacher
+%attr(2755,root,%admin_group) %dir %keysdir/public/admin
+%attr(2755,root,%supporter_group) %dir %keysdir/public/supporter
+%attr(2755,root,%other_group) %dir %keysdir/public/other
+%ghost %attr(0440,root,%teacher_group) %config(noreplace) %keysdir/private/teacher/key
+%ghost %attr(0440,root,%admin_group) %config(noreplace) %keysdir/private/admin/key
+%ghost %attr(0440,root,%supporter_group) %config(noreplace) %keysdir/private/supporter/key
+%ghost %attr(0440,root,%other_group) %config(noreplace) %keysdir/private/other/key
+%ghost %attr(0444,root,%teacher_group) %config(noreplace) %keysdir/public/teacher/key
+%ghost %attr(0444,root,%admin_group) %config(noreplace) %keysdir/public/admin/key
+%ghost %attr(0444,root,%supporter_group) %config(noreplace) %keysdir/public/supporter/key
+%ghost %attr(0444,root,%other_group) %config(noreplace) %keysdir/public/other/key
+%config(noreplace) "%_sysconfdir/xdg/iTALC Solutions"
+%config(noreplace) %_sysconfdir/xdg/iTALC
 
 %files master
 %_bindir/imc
@@ -285,7 +304,7 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 #%%_bindir/italc-launcher
 %_man1dir/imc.1.gz
 %_man1dir/italc.1.gz
-#%%_desktopdir/italc.desktop
+%_desktopdir/italc.desktop
 %icons128x128dir/italc.png
 %icons128x128dir/imc.png
 %icons64x64dir/italc.png
@@ -297,6 +316,25 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 %icons16x16dir/imc.png
 
 %changelog
+* Thu Jul 05 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt3
+- Fix name italc master group
+- Set setuid for italc_auth_helper
+- Create %%{program_name}-* groups:
+  + %%admin_group
+  + %%supporter_group
+  + %%teacher_group
+  + %%other_group
+- Sets %%{program_name}-* groups for %%keysdir subdirs
+- Use Debian patches:
+  + 002_use-v4l-videodev2.patch
+  + 004_x2go-nx-noxdamage.patch
+  + 011_qt-signals.patch
+  + 021_man-page-patch-in.patch
+- Add %%_sysconfdir/xdg/iTALC Solutions/iTALC.conf config file
+- Add:
+  + italc.desktop
+  + man pages for ica, italc, imc and italc_auth_helper
+
 * Tue Jun 19 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt2
 - Add icons for:
   + italc
