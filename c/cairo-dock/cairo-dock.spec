@@ -1,18 +1,13 @@
-%define ver_major 3
-%define ver_minor 0
-%define ver_micro 0.0rc1
-
-Summary: A light and eye-candy dock to launch your programs easily
 Name: cairo-dock
-Version: %ver_major.%ver_minor
-Release: alt%ver_micro.1
+Version: 3.0.2
+Release: alt1
+Summary: A light and eye-candy dock to launch your programs easily
 License: GPLv3+
 Group: Graphical desktop/Other
 Url: https://launchpad.net/cairo-dock-core
 
-Source: http://launchpad.net/cairo-dock-core/%version/%version.%ver_micro/+download/%name-%version.%ver_micro.tar
+Source: http://launchpad.net/cairo-dock-core/3.0/%version/+download/%name-%version.tar
 #.gz
-Patch2: cairo-dock-alt-glib2-2.32.0.patch
 
 # Automatically added by buildreq on Thu Apr 12 2012 (-bi)
 # optimized out: GraphicsMagick GraphicsMagick-common cmake-modules elfutils fontconfig fontconfig-devel glib2-devel libGL-devel libX11-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libstdc++-devel libwayland-client libwayland-server pkg-config python-base xorg-compositeproto-devel xorg-fixesproto-devel xorg-inputproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -40,8 +35,7 @@ easily plug applets into it.
 This package provides the include files and library for cairo-dock functions.
 
 %prep
-%setup -n %name-%version.%ver_micro
-%patch2 -p3
+%setup -n %name-%version
 
 %build
 %cmake
@@ -82,6 +76,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jun 28 2012 Ildar Mulyukov <ildar@altlinux.ru> 3.0.2-alt1
+- new version
+- cairo-dock-alt-glib2-2.32.0.patch removed
+
 * Thu Apr 12 2012 Ildar Mulyukov <ildar@altlinux.ru> 3.0-alt0.0rc1.1
 - new version
 - switch to gtk+3

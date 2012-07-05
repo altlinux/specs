@@ -1,19 +1,17 @@
 %define packagename cairo-dock
-%define ver_major 3
-%define ver_minor 0
-%define ver_micro 0.0rc1
 
 Summary: Plugins for cairo-dock
 Name: cairo-dock-plugins
-Version: %ver_major.%ver_minor
-Release: alt%ver_micro.1
+Version: 3.0.2
+Release: alt1
 License: GPLv3+
 Group: Graphical desktop/Other
 Packager: Alexey Shabalin <shaba@altlinux.ru>
 Url: https://launchpad.net/cairo-dock-plug-ins
 
-Source: http://launchpad.net/cairo-dock-plug-ins/%version/%version.%ver_micro/+download/%name-%version.%ver_micro.tar
+Source: http://launchpad.net/cairo-dock-plug-ins/3.0/%version/+download/%name-%version.tar
 #.gz
+Patch: %name-alt-deps.patch
 
 Requires: cairo-dock >= %version
 
@@ -888,7 +886,8 @@ This applet allows you to write texts and monitor your system with a "text style
 #---------------------------------------------------------------------
 
 %prep
-%setup -q -n %name-%version.%ver_micro
+%setup
+%patch -p1
 
 %build
 # Need dbusmenu-* for extra plugins
@@ -907,6 +906,10 @@ This applet allows you to write texts and monitor your system with a "text style
 %find_lang %name
 
 %changelog
+* Thu Jun 28 2012 Ildar Mulyukov <ildar@altlinux.ru> 3.0.2-alt1
+- new version
+- fixed %packagename-common deps
+
 * Thu Apr 12 2012 Ildar Mulyukov <ildar@altlinux.ru> 3.0-alt0.0rc1.1
 - removed:
   - compiz-icon
