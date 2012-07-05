@@ -1,9 +1,9 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 Name: freefem3d
 Version: 1.0pre10
-Release: alt4
+Release: alt5
 Summary: 3D solver of partial differential equations
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -53,7 +53,7 @@ This package contains documentation for freefem3d.
 
 %build
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PATH=%_qt4dir/bin:$PATH
 
 %add_optflags -I%_includedir/vtk-5.10
@@ -67,7 +67,7 @@ export PATH=%_qt4dir/bin:$PATH
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
@@ -80,6 +80,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
 %_docdir/%name
 
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0pre10-alt5
+- Rebuilt with OpenMPI 1.6
+
 * Sat Jun 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0pre10-alt4
 - Rebuilt with VTK 5.10.0
 
