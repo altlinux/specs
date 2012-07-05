@@ -1,7 +1,7 @@
 %define srcname AriaSrc
 
 Name: AriaMaestosa
-Version: 1.4.1
+Version: 1.4.2
 Release: alt1
 
 Summary: Aria Maestosa is an opensource (GPL) midi tracker/editor
@@ -37,6 +37,9 @@ python scons/scons.py install prefix=%buildroot/usr
 %_datadir/Aria
 
 %changelog
+* Tue Jul 03 2012 Alex Karpov <karpov@altlinux.ru> 1.4.2-alt1
+- new version
+
 * Mon May 21 2012 Alex Karpov <karpov@altlinux.ru> 1.4.1-alt1
 - new version
 
