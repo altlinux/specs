@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.0
-Release: alt4
+Release: alt4.1
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -677,6 +677,9 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Thu Jul 05 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 7.1.0-alt4.1
+- Rebuild with libkyotocabinet.so.16
+
 * Fri Jun 29 2012 Radik Usupov <radik@altlinux.org> 7.1.0-alt4
 - New upstreame snapshot (7.1.0rc1)
 - Drop zarafa-7.0.6-alt-boost-1.49.0.patch
