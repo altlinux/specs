@@ -1,6 +1,6 @@
 Name: mpfr
-Version: 3.1.0
-Release: alt2
+Version: 3.1.1
+Release: alt1
 
 Summary: Multiple Precision Floating-Point library
 License: LGPLv2.1+
@@ -105,6 +105,9 @@ install -pm644 %_sourcedir/mpfrxx.h %buildroot%_includedir/
 %endif
 
 %changelog
+* Wed Jul 04 2012 Dmitry V. Levin <ldv@altlinux.org> 3.1.1-alt1
+- Updated to v3.1.1.
+
 * Wed Jun 06 2012 Dmitry V. Levin <ldv@altlinux.org> 3.1.0-alt2
 - Updated to v3.1.0-p10.
 - Renamed libmpfr to libmpfr4.
