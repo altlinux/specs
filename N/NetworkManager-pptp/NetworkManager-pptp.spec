@@ -1,17 +1,18 @@
-%define nm_version 0.9.4.0
-%define nm_applet_version 0.9.4.0
+%define nm_version 0.9.5.95
+%define nm_applet_version 0.9.5.95
 %define git_date %nil
 #define git_date .git20110314
 %define ppp_version 2.4.5
 %define gtkver 3
 
 Name: NetworkManager-pptp
-Version: 0.9.4.0
+Version: 0.9.5.95
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
 Url: http://www.gnome.org/projects/NetworkManager/
+# git://git.gnome.org/network-manager-pptp
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -90,6 +91,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Jul 04 2012 Mikhail Efremov <sem@altlinux.org> 0.9.5.95-alt1
+- Updated to 0.9.5.95 (0.9.6-rc1).
+
 * Thu Apr 05 2012 Mikhail Efremov <sem@altlinux.org> 0.9.4.0-alt1
 - Updated from upstream git (ae94fad666).
 - 0.9.4.0.

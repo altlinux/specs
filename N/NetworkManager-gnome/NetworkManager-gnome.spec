@@ -1,11 +1,11 @@
-%define nm_version 0.9.4.0
+%define nm_version 0.9.5.95
 #define git_date .git20120315
 %define git_date %nil
 %define gtkver 3
 
 Name: NetworkManager-gnome
-Version: 0.9.4.1
-Release: alt3%git_date
+Version: 0.9.5.95
+Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: GNOME applications for use with NetworkManager
@@ -24,6 +24,7 @@ BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: NetworkManager-glib-devel >= %nm_version
 BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iso-codes-devel
+BuildRequires: gnome-common
 
 Requires: NetworkManager >= %nm_version
 Requires: libnm-gtk = %version-%release
@@ -68,7 +69,7 @@ only by nm-applet and the GNOME control center.
     --libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
     --with-gtkver=%gtkver \
-    --enable-more-warnings=no
+    --enable-more-warnings=error
 
 %make_build
 
@@ -94,7 +95,10 @@ fi
 %_datadir/nm-applet
 %_iconsdir/hicolor/*/apps/*
 %_sysconfdir/xdg/autostart/nm-applet.desktop
-%_sysconfdir/gconf/schemas/nm-applet.schemas
+%_libexecdir/NetworkManager/nm-applet-migration-tool
+%_datadir/GConf/gsettings/nm-applet.convert
+%_datadir/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
+
 %_datadir/applications/*.desktop
 %dir %_datadir/gnome-vpn-properties
 %_libdir/gnome-bluetooth/plugins/*.so
@@ -111,6 +115,11 @@ fi
 %_pkgconfigdir/libnm-gtk.pc
 
 %changelog
+* Tue Jul 03 2012 Mikhail Efremov <sem@altlinux.org> 0.9.5.95-alt1
+- Treat warrnings as errors again.
+- Updated from upstream git (7e1c118eee).
+- Updated to 0.9.5.95.
+
 * Fri Apr 27 2012 Mikhail Efremov <sem@altlinux.org> 0.9.4.1-alt3
 - Updated translations from upstream git.
 - Add gcr to requires.
