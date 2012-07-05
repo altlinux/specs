@@ -1,12 +1,12 @@
-%define path_to_mpihome %_libexecdir/mpitests
+%define path_to_mpihome %_libdir/mpitests
 %define test_home %path_to_mpihome/tests
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 Summary: MPI Benchmarks and tests
 Name: mpitests
 Version: 3.2
-Release: alt3
+Release: alt4
 License: BSD
 Group: Networking/Other
 Source: %name-%version.tar.gz
@@ -32,18 +32,21 @@ mv osu_benchmarks-3.1.1/README README_osu_benchmarks
 mv presta-1.4.0/README README_presta
 
 %install
-%make_install MPIHOME=%buildroot%_libexecdir install
+%make_install MPIHOME=%buildroot%_libdir install
 
-for i in %buildroot%_libexecdir/mpitests/*/*
+for i in %buildroot%_libdir/mpitests/*/*
 do
 	chrpath -r %mpidir/lib $i ||:
 done
 
 %files 
 %doc IMB-3.2/doc/* README*
-%_libexecdir/%name
+%_libdir/%name
 
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt4
+- Rebuilt with OpenMPI 1.6
+
 * Wed Dec 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt3
 - Fixed RPATH
 
