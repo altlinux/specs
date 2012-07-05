@@ -7,9 +7,9 @@
 %def_without  static_client
 
 Name: nbd
-Version: 3.1.1
-Release: alt5
-Summary: Tools for using the Network Block Device
+Version: 3.2
+Release: alt1
+Summary: Network Block Device user space tools
 License: GPL
 Group: Networking/Other
 URL: http://%name.sourceforge.net/
@@ -22,47 +22,44 @@ BuildRequires: glib2-devel docbook-utils
 %{?_enable_sdp:BuildRequires: libsdp-devel}
 
 %description
-NBD contains the tools needed to export a network block device and to
-use a network block device. The nbd module is part of the 2.2 kernels
-and higher.
-You can use the network block device to swap over the net, which is
-particularly useful for diskless workstations.
+Tools for the Linux Kernel's network block device, allowing you to use
+remote block devices over a TCP/IP network.
 
 %package doc
-Summary: NBD docs
+Summary: Network Block Device user space tools documentation
 Group: Documentation
 BuildArch: noarch
 
 %description doc
-NBD docs.
+This package contains basic documentation for Network Block Device
+user space tools.
 
 %package server
-Summary: NBD server
+Summary: Network Block Device server
 Group: Networking/Other
+Requires: %name-doc = %version-%release
 
 %description server
-NBD server needed to export a network block device.
+This package contains nbd-server - a user space daemon to serve files
+for Network Block Devices on remote hosts.
 
 %package client
-Summary: NBD client
+Summary: Network Block Device client
 Group: Networking/Other
+Requires: %name-doc = %version-%release
 
 %description client
-NBD client needed to use a network block device.
-You can use the network block device to swap over the net, which is
-particularly useful for diskless workstations.
+This package contains nbd-client - a user space tool needed to manage
+a Network Block Device.
 
 %if_with static_client
 %package client-static
-Summary: NBD client
+Summary: Network Block Device static client
 Group: Networking/Other
+Requires: %name-doc = %version-%release
 
 %description client-static
-NBD client needed to use a network block device.
-You can use the network block device to swap over the net, which is
-particularly useful for diskless workstations.
-
-This package contains static %name-client (can be used for initrd).
+This package contains a statically linked edition of nbd-client.
 %endif
 
 %prep
@@ -99,6 +96,10 @@ install -pD -m755 %name.service %buildroot%_unitdir/nbd.service
 install -pD -m644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/nbd-server
 install -pD %name-server.conf %buildroot%_sysconfdir/%name-server/config
 
+%define docdir %_docdir/%name-%version
+mkdir -p %buildroot%docdir
+install -pm644 README simple_test %buildroot%docdir/
+
 %pre server
 %_sbindir/groupadd -r -f _nbd
 %_sbindir/useradd -r -g _nbd -d /dev/null -s /dev/null -n _nbd > /dev/null 2>&1 ||:
@@ -110,7 +111,7 @@ install -pD %name-server.conf %buildroot%_sysconfdir/%name-server/config
 %preun_service %name
 
 %files doc
-%doc README simple_test
+%docdir
 
 %files server
 %_bindir/*
@@ -132,6 +133,11 @@ install -pD %name-server.conf %buildroot%_sysconfdir/%name-server/config
 %endif
 
 %changelog
+* Fri Jul 06 2012 Dmitry V. Levin <ldv@altlinux.org> 3.2-alt1
+- Updated to 3.2.
+- Updated package decriptions.
+- Enhanced interpackage dependencies.
+
 * Tue Jun 19 2012 Dmitry V. Levin <ldv@altlinux.org> 3.1.1-alt5
 - nbd-server:
   + fixed several memory leaks in connection handling code;
