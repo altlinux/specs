@@ -1,5 +1,5 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 %ifarch %ix86
 %define barch IA32
 %endif
@@ -11,7 +11,7 @@
 %define sover %somver.3.3
 Name: mpip
 Version: 3.3
-Release: alt3.svn20120216
+Release: alt4.svn20120216
 Summary: Lightweight profiling library for MPI applications
 License: BSD
 Group: Development/Tools
@@ -73,23 +73,6 @@ file.
 
 This package contains development files of mpiP.
 
-%package -n lib%name-devel-static
-Summary: Static libraries of mpiP (MPI profiling library)
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
-
-%description -n lib%name-devel-static
-mpiP is a lightweight profiling library for MPI applications. Because
-it only collects statistical information about MPI functions, mpiP
-generates considerably less overhead and much less data than tracing
-tools. All the information captured by mpiP is task-local. It only uses
-communication during report generation, typically at the end of the
-experiment, to merge results from all of the tasks into one output
-file.
-
-This package contains static libraries of mpiP.
-
 %package -n libfarg
 Summary: Fortran command line arguments library for MPI applications
 Group: System/Libraries
@@ -109,18 +92,6 @@ needed for some MPI applications.
 
 This package contains development files of this library.
 
-%package -n libfarg-devel-static
-Summary: Static version of fortran command line arguments library for MPI applications
-Group: Development/Other
-Requires: libfarg-devel = %version-%release
-Conflicts: libfarg-devel < %version-%release
-
-%description -n libfarg-devel-static
-This small library provides fortran functions `f__xargc' and `f__xargv'
-needed for some MPI applications.
-
-This package contains static version of this library.
-
 %prep
 %setup
 install -m644 %SOURCE1 .
@@ -129,7 +100,7 @@ install -m644 %SOURCE1 .
 mpi-selector --set %mpiimpl
 source %_sysconfdir/profile.d/mpi-selector.sh
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 f77 -fno-underscoring -fPIC -c farg.f
 ar r libfarg.a farg.o
@@ -146,7 +117,7 @@ ln -s libfarg.so.%somver libfarg.so
 	--enable-getarg \
 	--with-include=-I%mpidir/include \
 	--with-ldflags=-L%mpidir/lib \
-	--with-libs="-lmpi -lmpi_f77 -lgfortran -Wl,-R%mpidir/lib" \
+	--with-libs="-lmpi -lmpi_f77 -lgfortran -Wl,-rpath,%mpidir/lib" \
 	--with-binutils-dir=%prefix \
 	--with-libunwind=%prefix \
 	--with-wtime \
@@ -155,7 +126,7 @@ ln -s libfarg.so.%somver libfarg.so
 %make _ARCH=%barch OS=Linux SOMVER=%somver SOVER=%sover all
 
 %install
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 install -d %buildroot%_bindir
 install -d %buildroot%_libdir
@@ -187,10 +158,6 @@ install -m644 mpip_timers/linux_posix.h %buildroot%_includedir/mpip_timers
 %exclude %_libdir/libfarg.so
 %_includedir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-#exclude %_libdir/libfarg.a
-
 %files -n libfarg
 %_libdir/libfarg.so.*
 
@@ -198,10 +165,10 @@ install -m644 mpip_timers/linux_posix.h %buildroot%_includedir/mpip_timers
 %doc farg.f
 %_libdir/libfarg.so
 
-#files -n libfarg-devel-static
-#_libdir/libfarg.a
-
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt4.svn20120216
+- Rebuilt with OpenMPI 1.6
+
 * Tue Feb 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt3.svn20120216
 - New snapshot
 
