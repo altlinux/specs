@@ -1,12 +1,12 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 %define hdf5dir %mpidir
 %define petsc_dir %_libexecdir/petsc-real
 
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
 Version: 2.5.1
-Release: alt4.svn20100906
+Release: alt5.svn20100906
 Group: Graphics
 License: GPL v2
 URL: http://www.geuz.org/gmsh/
@@ -76,7 +76,7 @@ sed -i 's|defs\.h|chaco_defs.h|' $CHACO_FILES
 %build
 mpi-selector --set %mpiimpl
 source %_bindir/petsc-real.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib:%_libdir/oski -L%mpidir/lib -L%_libdir/oski"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib -L%_libdir/oski"
 export LD_LIBRARY_PATH=%_libdir/oski
 
 cmake .
@@ -84,7 +84,7 @@ cmake .
 %make info
 
 %install
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib:%_libdir/oski -L%mpidir/lib -l%_libdir/oski"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib -l%_libdir/oski"
 export LD_LIBRARY_PATH=%_libdir/oski
 
 %makeinstall_std
@@ -117,6 +117,9 @@ rm -fR %buildroot%_includedir
 %_docdir/%name/tutorial
 
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt5.svn20100906
+- Rebuilt with OpenMPI 1.6
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt4.svn20100906
 - Fixed build
 
