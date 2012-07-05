@@ -1,11 +1,11 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define sover 0
 
 Name: mct
 Version: 2.6.0
-Release: alt5
+Release: alt6
 Summary: The Model Coupling Toolkit
 License: MIT
 Group: Development/Tools
@@ -117,11 +117,11 @@ rm -f $(find ./ -name .cvsignore)
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 #autoreconf
-MPILIBS="-L%mpidir/lib -Wl,--no-as-needed -lmpi_f90 -Wl,--as-needed"
-MPILIBS="$MPILIBS -lmpi_f77 -lmpi -Wl,-R%mpidir/lib"
+MPILIBS="-L%mpidir/lib -lmpi_f90"
+MPILIBS="$MPILIBS -lmpi_f77 -lmpi -Wl,-rpath,%mpidir/lib"
 %configure \
 	MPILIBS="$MPILIBS" \
 	MPIHEADER="-I%mpidir/include" \
@@ -138,7 +138,7 @@ popd
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall
 
@@ -160,7 +160,7 @@ install -m644 doc/*.dvi %buildroot%_docdir/lib%name-devel
 pushd %buildroot%_libdir
 for i in libmpeu libmct; do
 	mpif90 -shared -Wl,--whole-archive $i.a -Wl,--no-whole-archive \
-		-Wl,-R%mpidir/lib \
+		-Wl,-rpath,%mpidir/lib \
 		-o $i.so.%sover -Wl,-soname,$i.so.%sover -L$PWD $LIB -Wl,-z,defs
 	ln -s $i.so.%sover $i.so
 	LIB=-lmpeu
@@ -179,13 +179,16 @@ popd
 %_libdir/*.so
 %_includedir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
+#files -n lib%name-devel-static
+#_libdir/*.a
 
 %files -n lib%name-devel-doc
 %_docdir/lib%name-devel
 
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt6
+- Rebuilt with OpenMPI 1.6
+
 * Wed Dec 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt5
 - Fixed RPATH
 - Disabled devel-static package
