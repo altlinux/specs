@@ -1,12 +1,12 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %def_enable docs
 
 %define oname hermes
 Name: %{oname}xd
 Version: 20110822
-Release: alt6
+Release: alt7
 Summary: hp-FEM library
 License: GPL, BSD
 Group: Sciences/Mathematics
@@ -142,10 +142,10 @@ This package contains documentation for hermes.
 
 %build
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 FLAGS="%optflags -I%mpidir/include -I%_includedir/suitesparse"
-FLAGS="$FLAGS -I%_includedir/exodusii -I%_includedir/vtk-5.8"
+FLAGS="$FLAGS -I%_includedir/exodusii -I%_includedir/vtk-5.10"
 FLAGS="$FLAGS -fno-strict-aliasing"
 cmake -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_C_FLAGS:STRING="$FLAGS" \
@@ -161,14 +161,15 @@ cmake -DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DJUDY_LIBRARY:STRING="Judy" \
 	-DWITH_UMFPACK:BOOL=ON \
 	-DWITH_MPI:BOOL=ON \
-	-DMPI_LIBRARIES:STRING="-L%mpidir/lib -Wl,-R%mpidir/lib -lmpi" \
+	-DMPIDIR:PATH=%mpidir \
+	-DMPI_LIBRARIES:STRING="-L%mpidir/lib -Wl,-rpath,%mpidir/lib -lmpi" \
 	-DMPI_INCLUDE_PATH:PATH="%mpidir/include" \
 	.
 %make VERBOSE=1
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
@@ -221,6 +222,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110822-alt7
+- Rebuilt with OpenMPI 1.6
+
 * Sun May 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110822-alt6
 - Fixed build
 
