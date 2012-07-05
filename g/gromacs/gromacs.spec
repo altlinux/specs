@@ -1,12 +1,12 @@
 %define fftw_major_ver 3
 %define fftw_ver %fftw_major_ver.0.1
 %define mpi_impl openmpi
-%define mpidir %_libexecdir/%mpi_impl
+%define mpidir %_libdir/%mpi_impl
 %def_disable static
 
 Name: gromacs
 Version: 4.0.7
-Release: alt6
+Release: alt7
 
 Summary: Molecular dynamics package
 License: GPL
@@ -187,6 +187,9 @@ This package contains documentation for GROMACS.
 %prep
 %setup
 %patch -p0
+%ifarch x86_64
+sed -i 's|lib/openmpi|lib64/openmpi|' configure.ac
+%endif
 
 sed -i 's|^\(AM_CPPFLAGS.*\)|\1 -g|' $(find ./ -name Makefile.am)
 
@@ -194,7 +197,7 @@ sed -i 's|^\(AM_CPPFLAGS.*\)|\1 -g|' $(find ./ -name Makefile.am)
 # Set MPI environment
 mpi-selector --set `mpi-selector --list | grep %mpi_impl`
 source %_sysconfdir/profile.d/mpi-selector.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=|g' acinclude.m4
 %autoreconf
@@ -251,7 +254,7 @@ buildThis double enable _mpi_d
 popd
 
 %install
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 # Single precision
 pushd single
@@ -397,6 +400,9 @@ done
 %_datadir/%name/html
 
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.7-alt7
+- Rebuilt with OpenMPI 1.6
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.7-alt6
 - Fixed RPATH
 
