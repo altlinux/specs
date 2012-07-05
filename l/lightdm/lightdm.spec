@@ -6,7 +6,7 @@
 
 Name: lightdm
 Version: 1.2.2
-Release: alt1
+Release: alt1.1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -23,6 +23,7 @@ Patch1: %name-%version-%release.patch
 
 # Requires: %name-greeter
 Requires: accountsservice
+Requires: dbus-tools-gui
 
 BuildRequires: gcc-c++ intltool gnome-common
 BuildRequires: glib2-devel libgio-devel >= 2.26
@@ -135,7 +136,7 @@ This package provides a Qt-based LightDM greeter engine.
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 mkdir -p %buildroot%_sysconfdir/%name/sessions
 mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
@@ -209,6 +210,9 @@ install -m755 %SOURCE5 %buildroot%_libexecdir/%name/%name-greeter-session
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Jul 05 2012 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1.1
+- NMU: lightdm-greeter-session expects dbus-launch (closes: #27438)
+
 * Thu May 17 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.2-alt1
 - 1.2.2
 
