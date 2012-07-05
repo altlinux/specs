@@ -1,12 +1,12 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 %define ARCH LINUXgcc
 
 %define somver 0
 %define sover %somver.2.4
 Name: freepooma
 Version: 2.4.1
-Release: alt2.cvs20090410
+Release: alt3.cvs20090410
 Summary: Element-wise, data-parallel, and stencil-based physics computations
 License: MIT
 Group: Sciences/Mathematics
@@ -174,6 +174,9 @@ mv docs/reference/reference %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt3.cvs20090410
+- Rebuilt with OpenMPI 1.6
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt2.cvs20090410
 - Fixed build
 
