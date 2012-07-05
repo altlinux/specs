@@ -1,6 +1,6 @@
 Name: xfdesktop
 Version: 4.10.0
-Release: alt3
+Release: alt4
 
 Summary: Desktop manager for the XFce Desktop Environment
 Summary (ru_RU.UTF-8): Менеджер рабочего стола Xfce
@@ -59,6 +59,10 @@ BuildRequires: libICE-devel libnotify-devel libdbus-glib-devel
 %_datadir/backgrounds/xfce
 
 %changelog
+* Thu Jul 05 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt4
+- fix use-after-free in xfdesktop_regular_file_icon_peek_tooltip
+  (by Stefan Seyfried, patch from Xfce bug #9059).
+
 * Tue Jun 26 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt3
 - Really fix backgrounds search path.
 
