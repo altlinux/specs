@@ -16,7 +16,7 @@
 %define admin_group %{program_name}-admin
 %define supporter_group %{program_name}-supporter
 %define teacher_group %{program_name}-teacher
-%define other_group %{program_name}-admin
+%define other_group %{program_name}-other
 
 # macros for icons
 %define iconshicolordir %_iconsdir/hicolor
@@ -43,7 +43,7 @@
 
 Name: italc2
 Version: 2.0.1
-Release: %branch_release alt3
+Release: %branch_release alt4
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -316,6 +316,9 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 %icons16x16dir/imc.png
 
 %changelog
+* Thu Jul 05 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt4
+- Fix %%other_group name
+
 * Thu Jul 05 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt3
 - Fix name italc master group
 - Set setuid for italc_auth_helper
