@@ -7,8 +7,8 @@
 %endif
 
 Name: squid
-Version: 3.1.19
-Release: alt2
+Version: 3.1.20
+Release: alt1
 
 Summary: The Squid proxy caching server
 Summary(ru_RU.KOI8-R): Кэширующий прокси-сервер Squid
@@ -386,6 +386,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Thu Jul 05 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.20-alt1
+- 3.1.20
+
 * Fri May 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.19-alt2
 - Add systemd unit file
 
