@@ -1,9 +1,9 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 Name: freefemxx
 Version: 3.18
-Release: alt1
+Release: alt2
 Summary: Implementation of a language dedicated to the finite element method
 License: LGPL v2.1+
 Group: Sciences/Mathematics
@@ -82,7 +82,8 @@ done
 
 %build
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
+export MPIDIR=%mpidir
 
 INCS="-I%_includedir/suitesparse -I%mpidir/include"
 INCS="$INCS -I%mpidir/include/metis -I%_includedir/fftw3-mpi"
@@ -98,6 +99,7 @@ INCS="$INCS -I%mpidir/include/metis -I%_includedir/fftw3-mpi"
 	--with-x \
 	--enable-opengl \
 	--enable-default-fltk=yes \
+	--with-mpipath=%mpidir \
 	--with-mpi=mpic++ \
 	--with-blas="-lgoto2" \
 	--with-lapack="-llapack" \
@@ -109,11 +111,12 @@ INCS="$INCS -I%mpidir/include/metis -I%_includedir/fftw3-mpi"
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
+export MPIDIR=%mpidir
 
 %makeinstall_std
 
-chrpath -r %mpidir/lib %buildroot%_bindir/FreeFem++-mpi
+#chrpath -r %mpidir/lib %buildroot%_bindir/FreeFem++-mpi
 
 %files
 %doc AUTHORS BUGS ChangeLog COPYING HISTORY* INNOVATION TODO NEWS README
@@ -129,6 +132,9 @@ chrpath -r %mpidir/lib %buildroot%_bindir/FreeFem++-mpi
 %doc DOC/*.pdf
 
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.18-alt2
+- Rebuilt with OpenMPI 1.6
+
 * Fri Jan 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.18-alt1
 - Version 3.18
 
