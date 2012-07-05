@@ -1,5 +1,5 @@
 Name: bacula-docs
-Version: 5.2.5
+Version: 5.2.10
 Release: alt1
 
 License: AGPLv3
@@ -48,6 +48,9 @@ cp -a manuals/en/utility/utility.pdf %buildroot%_datadir/%name
 %_datadir/%name/*
 
 %changelog
+* Wed Jul 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.2.10-alt1
+- 5.2.10
+
 * Sat Jan 28 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.2.5-alt1
 - 5.2.5
 
