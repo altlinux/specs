@@ -1,6 +1,6 @@
 Name: alterator-squid
 Version: 1.2
-Release: alt16
+Release: alt17
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -186,6 +186,9 @@ cp -rp caterva/* %buildroot%_sysconfdir/caterva/squid/
 EOF
 
 %changelog
+* Fri Jul 06 2012 Cronbuild Service <cronbuild@altlinux.org> 1.2-alt17
+- repocop cronbuild 20120706. At your service.
+
 * Mon Apr 23 2012 Cronbuild Service <cronbuild@altlinux.org> 1.2-alt16
 - repocop cronbuild 20120423. At your service.
 
