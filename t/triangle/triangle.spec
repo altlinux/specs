@@ -1,6 +1,6 @@
 Name: triangle
 Version: 1.6
-Release: alt6
+Release: alt7
 Summary: A Two-Dimensional Quality Mesh Generator and Delaunay Triangulator
  
 License: MIT
@@ -98,10 +98,14 @@ ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
 %_libdir/*.so
 %_includedir/*
 
-%files -n lib%name-devel-static
-%_libdir/*.a
+#files -n lib%name-devel-static
+#_libdir/*.a
 
 %changelog
+* Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt7
+- Added necessary definitions in %_includedir/triangle/triangle.h
+- Disabled devel-static subpackage
+
 * Tue Mar 22 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt6
 - Added -g into compiler flags
 
