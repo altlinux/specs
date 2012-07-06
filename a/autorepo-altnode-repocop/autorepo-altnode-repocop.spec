@@ -1,6 +1,6 @@
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.01
+Version: 0.02
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,5 +32,8 @@ cp repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Fri Jul 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- support for repocop-report-prometeus2-sqlite
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
 - First build for Sisyphus.
