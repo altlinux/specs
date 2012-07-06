@@ -1,5 +1,5 @@
 Name: repocop-report-prometeus
-Version: 0.29
+Version: 0.30
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -53,6 +53,9 @@ install -m 755 repocop-report-prometeus* %buildroot/%_bindir/
 %_bindir/repocop-report-prometeus2*
 
 %changelog
+* Fri Jul 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- added sqlite report
+
 * Thu Dec 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
 - bugfix release (closes: 26741)
 
