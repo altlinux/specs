@@ -1,5 +1,5 @@
 Name: perl-Dancer
-Version: 1.3095
+Version: 1.3096
 Release: alt1
 Summary: lightweight yet powerful web application framework
 
@@ -12,7 +12,7 @@ BuildArch: noarch
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-devel perl-Encode perl-MIME-Types perl-HTTP-Body perl-URI perl-HTTP-Server-Simple-PSGI perl-Plack perl-YAML perl-Clone perl-podlators perl-Try-Tiny
+BuildRequires: perl-devel perl-Encode perl-MIME-Types perl-HTTP-Body perl-URI perl-HTTP-Server-Simple-PSGI perl-Plack perl-YAML perl-Clone perl-podlators perl-Try-Tiny perl-Test-TCP perl-Template perl-Test-Output perl-JSON perl-Test-Pod
 Requires: perl-Clone
 
 %description
@@ -38,6 +38,10 @@ to scale to much more complex applications.
 %doc TODO LICENSE CHANGES README
 
 %changelog
+* Fri Jul 06 2012 Vladimir Lettiev <crux@altlinux.ru> 1.3096-alt1
+- New version 1.3096
+- Added some test dependencies
+
 * Tue Apr 10 2012 Vladimir Lettiev <crux@altlinux.ru> 1.3095-alt1
 - New version 1.3095
 
