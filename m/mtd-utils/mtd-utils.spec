@@ -1,5 +1,5 @@
 Name: mtd-utils
-Version: 1.4.9
+Version: 1.5.0
 Release: alt1
 
 Summary: Tools for maintaining Memory Technology Devices
@@ -33,5 +33,8 @@ make DESTDIR=%buildroot install
 %_man1dir/mkfs.jffs2.*
 
 %changelog
+* Fri Jul 06 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0-alt1
+- 1.5.0 released
+
 * Mon Apr 02 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.9-alt1
 - 1.4.9 released
