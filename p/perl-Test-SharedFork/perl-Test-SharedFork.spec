@@ -1,18 +1,16 @@
-%define m_distro Test-SharedFork
 Name: perl-Test-SharedFork
-Version: 0.16
+Version: 0.20
 Release: alt1
+
 Summary: Test::SharedFork - fork test
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
-
 Group: Development/Perl
 License: Perl
-Url: http://search.cpan.org/~tokuhirom/Test-SharedFork/
+
+Url: %CPAN Test-SharedFork
+Source: %name-%version.tar
 
 BuildArch: noarch
-Source: %m_distro-%version.tar
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl-Test-Requires
 
 %description
 Test::SharedFork is utility module for Test::Builder. This module makes
@@ -20,7 +18,7 @@ forking test!
 This module merges test count with parent process & child process.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q
 
 %build
 %perl_vendor_build
@@ -33,6 +31,10 @@ This module merges test count with parent process & child process.
 %doc Changes README 
 
 %changelog
+* Fri Jul 06 2012 Vladimir Lettiev <crux@altlinux.ru> 0.20-alt1
+- New version 0.20
+- Added perl-Test-Requires test dependency
+
 * Thu Mar 03 2011 Vladimir Lettiev <crux@altlinux.ru> 0.16-alt1
 - New version 0.16
 - Updated buildrequires
