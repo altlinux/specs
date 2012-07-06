@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: owncloud
-Version: 4.0.0
+Version: 4.0.4
 Release: alt1
 
 Summary: Cloud platform
@@ -60,7 +60,8 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %doc COPYING-README
 %doc README
 %installdir/3rdparty
-%installdir/apps
+%dir %attr(0775,root,_webserver) %installdir/apps
+%installdir/apps/*
 %dir %attr(0770,root,_webserver) %_sysconfdir/owncloud
 %installdir/config
 %_sysconfdir/owncloud/*.php
@@ -81,6 +82,9 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Wed Jun 27 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 4.0.4-alt1
+- 4.0.4
+
 * Tue May 22 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 4.0.0-alt1
 - 4.0.0
 
