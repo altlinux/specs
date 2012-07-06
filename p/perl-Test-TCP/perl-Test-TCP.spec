@@ -1,24 +1,22 @@
-%define m_distro Test-TCP
 Name: perl-Test-TCP
-Version: 1.12
+Version: 1.16
 Release: alt1
+
 Summary: Test::TCP - testing TCP program
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
-
 Group: Development/Perl
 License: Perl
-Url: http://search.cpan.org/~tokuhirom/Test-TCP/
+
+Url: %CPAN Test-TCP
+Source: %name-%version.tar
 
 BuildArch: noarch
-Source: %m_distro-%version.tar
 BuildRequires: perl-devel perl-Test-SharedFork
 
 %description
 Test::TCP is test utilities for TCP/IP program.
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q
 
 %build
 %perl_vendor_build
@@ -31,6 +29,9 @@ Test::TCP is test utilities for TCP/IP program.
 %doc Changes README 
 
 %changelog
+* Fri Jul 06 2012 Vladimir Lettiev <crux@altlinux.ru> 1.16-alt1
+- New version 1.16
+
 * Thu Mar 03 2011 Vladimir Lettiev <crux@altlinux.ru> 1.12-alt1
 - New version 1.12
 
