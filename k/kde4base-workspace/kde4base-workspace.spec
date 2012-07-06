@@ -1,5 +1,11 @@
 %define _kde_alternate_placement 1
+%define polkit_ver %{get_version libpolkit-devel}
 
+%_K_if_ver_gteq %polkit_ver 0.105
+%def_enable systemd
+%else
+%def_disable systemd
+%endif
 %def_disable google
 %ifarch arm
 %def_disable desktop
@@ -21,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -42,6 +48,7 @@ Source2: pam-kde4-np
 Source3: pam-kde4-kscreensaver
 
 # upstream
+Patch1: kde-workspace-4.8.0-systemd-shutdown.patch
 # RH
 Patch21: kdebase-workspace-4.5.80-battery-plasmoid-showremainingtime.patch
 Patch22: kdebase-workspace-4.5.0-plasma-konsole.patch
@@ -99,16 +106,18 @@ Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
 Patch1041: kdebase-workspace-4.8.0-alt-def-gllegacy.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
+BuildRequires(pre): NetworkManager-devel
+BuildRequires(pre): libpolkit-devel
+BuildRequires: libConsoleKit-devel
 %if_enabled google
 BuildRequires: google-gadgets-devel
 %endif
-BuildRequires(pre): NetworkManager-devel
 BuildRequires: bzlib-devel gcc-c++ libXft-devel
 BuildRequires: libbluez-devel libkrb5-devel libpam-devel libaudit-devel
 BuildRequires: libqimageblitz-devel libraw1394-devel libsensors3-devel libgps-devel
-BuildRequires: libstrigi-devel libusb-compat-devel xml-utils libConsoleKit-devel
+BuildRequires: libstrigi-devel libusb-compat-devel xml-utils
 BuildRequires: libalternatives-devel libqedje-devel libeet-devel libqzion-devel
-BuildRequires: polkit-qt-1-devel libpolkit1-devel libdbusmenu-qt-devel
+BuildRequires: polkit-qt-1-devel libpolkit-devel libdbusmenu-qt-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel
 BuildRequires: libqalculate-devel libjpeg-devel prison-devel
 BuildRequires: kde4pimlibs-devel akonadi-devel libraw1394-devel libpci-devel
@@ -185,7 +194,12 @@ Core files for %name package
 Summary: KDE Display Manager (KDM)
 Group: Graphical desktop/KDE
 PreReq(post,preun): alternatives >= 0.2
-Requires: design-graphics >= 11.0.0 ConsoleKit-x11 xinitrc
+Requires: design-graphics >= 11.0.0 xinitrc
+%if_enabled systemd
+#Requires: systemd
+%else
+Requires: ConsoleKit-x11
+%endif
 Requires: %name-common = %version-%release
 Provides: kde4base-kdm = %version-%release
 Provides: kde4-kdm = %version-%release
@@ -478,6 +492,9 @@ if(POLKITQT-1_FOUND)
 endif(POLKITQT-1_FOUND)
 __EOF__
 
+%if_enabled systemd
+%patch1 -p1
+%endif
 #
 %patch21 -p1
 %patch22 -p1
@@ -548,6 +565,9 @@ grep -q X-KDE-SubstituteUID kdm/kcm/kdm.desktop \
     -DKDM_CONFIG_INSTALL_DIR=%x11confdir/kdm4 \
     -DKDE4_KSCREENSAVER_PAM_SERVICE=kde4-kscreensaver \
     -DPYTHON_SITE_PACKAGES_INSTALL_DIR:PATH=%python_sitelibdir \
+%if_enabled systemd
+    -DKWORKSPACE_USE_SYSTEMD=ON \
+%endif
     -DKDE_DEFAULT_HOME:STRING=".kde4"
 %K4make
 
@@ -889,6 +909,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jul 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2
+- add systemd support
+
+* Mon Jun 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Tue Jun 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 
