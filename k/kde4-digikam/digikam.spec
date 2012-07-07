@@ -4,8 +4,8 @@
 %define label digiKam
 Name: kde4-%rname
 %define lname lib%name
-Version: 2.5.0
-Release: alt2
+Version: 2.6.0
+Release: alt1
 
 Summary: digiKam is an advanced digital photo management application for linux
 License: %gpl2plus
@@ -40,7 +40,7 @@ Patch2: i18n.patch
 Patch3: digikam-boost-1.48.patch
 Patch4: digikam-old-libkipi.patch
 Patch5: digikam-arm-cast-to-qreal.patch
-
+                                                 
 %description
 DigiKam is an advanced digital photo management application for KDE.
 Photos can be collected into albums which can be sorted chronologically,
@@ -139,9 +139,9 @@ Marble support for %lname.
 %setup -q -n %rname-%version
 %patch1 -p2
 %patch2 -p2
-%patch3 -p0
-%patch4 -p1
-%patch5 -p1
+#%%patch3 -p0
+#%%patch4 -p1
+%patch5 -p2
 
 %build
 %K4build -DENABLE_INTERNALMYSQL=no
@@ -192,7 +192,7 @@ rm -rf %buildroot%_man1dir
 %_K4srv/digikamnepomukservice.desktop
 %_K4iconsdir/hicolor/*/apps/%rname.*
 %_K4iconsdir/hicolor/*/apps/showfoto.*
-
+%_K4conf_update/*
 
 %files i18n -f %rname.lang
 
@@ -206,6 +206,9 @@ rm -rf %buildroot%_man1dir
 %_K4link/*.so
 
 %changelog
+* Sat Jul 07 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Fri May 04 2012 Sergey V Turchin <zerg@altlinux.org> 2.5.0-alt2
 - fix compile on arm; thanks sbolshakov@alt
 
