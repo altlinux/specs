@@ -1,6 +1,6 @@
 Name: starman
-Version: 0.29_90
-Release: alt2
+Version: 0.3001
+Release: alt1
 Serial: 1
 Summary: High-performance preforking PSGI/Plack web server
 
@@ -86,6 +86,9 @@ mkdir -p %buildroot/var/log/%name
 %doc Changes README
 
 %changelog
+* Sat Jul 07 2012 Eugene Prokopiev <enp@altlinux.ru> 1:0.3001-alt1
+- New version 0.3001
+
 * Fri Feb 17 2012 Eugene Prokopiev <enp@altlinux.ru> 1:0.29_90-alt2
 - add serial
 - add initscript and logrotate configuration
