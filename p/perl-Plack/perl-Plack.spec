@@ -1,5 +1,5 @@
 Name: perl-Plack
-Version: 0.9985
+Version: 0.9989
 Release: alt1
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
 
@@ -11,7 +11,7 @@ Url: http://search.cpan.org/~miyagawa/Plack/
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-File-ShareDir perl-parent perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI perl-libapreq apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose perl-Net-FastCGI perl-Module-Refresh perl-Module-Install perl-podlators
+BuildRequires: perl-unicore perl-devel perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-File-ShareDir perl-parent perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI perl-libapreq apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose perl-Net-FastCGI perl-Module-Refresh perl-Module-Install perl-podlators
 
 %description
 Plack is a set of tools for using the PSGI stack. It contains middleware
@@ -85,6 +85,9 @@ FastCGI daemon or a .fcgi script.
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Sat Jul 07 2012 Eugene Prokopiev <enp@altlinux.ru> 0.9989-alt1
+- New version 0.9989
+
 * Thu Feb 16 2012 Eugene Prokopiev <enp@altlinux.ru> 0.9985-alt1
 - New version 0.9985
 
