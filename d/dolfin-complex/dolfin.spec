@@ -3,10 +3,10 @@
 
 %define oname dolfin
 %define scalar_type complex
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.0.0
-Release: alt8.bzr20120511
+Release: alt9.bzr20120511
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -42,6 +42,7 @@ BuildPreReq: petsc-%scalar_type-sources python-module-sphinx-devel
 #BuildPreReq: texlive-latex-extra ghostscript-utils
 BuildPreReq: ghostscript-utils libhwloc-devel libzoltan10-devel
 #BuildPreReq: libgomp-devel
+BuildPreReq: libmumps-devel
 
 %description
 DOLFIN is the C++/Python interface of FEniCS, providing a consistent PSE
@@ -159,7 +160,6 @@ This package contains Python module of DOLFIN.
 %package -n python-module-%{name}_utils
 Summary: Utils Python module of DOLFIN
 Group: Development/Python
-BuildArch: noarch
 %add_python_lib_path %ldir/python
 Requires: libpetsc-%scalar_type >= 3.0.0_p7-alt3
 Requires: lib%name = %epoch:%version-%release
@@ -348,6 +348,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt9.bzr20120511
+- Changed native directory: %%_libexecdir/%name -> %%_libdir/%name
+
 * Thu Jun 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt8.bzr20120511
 - Rebuilt with OpenMPI 1.6
 
@@ -530,4 +533,3 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus
-

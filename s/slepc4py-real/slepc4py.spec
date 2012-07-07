@@ -1,15 +1,15 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname slepc4py
 %define scalar_type real
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 
 %def_enable docs
 
 Name: %oname-%scalar_type
 Version: 1.2
-Release: alt2.hg20111105
+Release: alt3.hg20111105
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -102,7 +102,7 @@ sed -i 's|@PYVER@|%_python_version|' docs/source/Makefile
 %build
 mpi-selector --set %mpiimpl
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %add_optflags %optflags_shared
 %make_ext config
@@ -111,7 +111,7 @@ python conf/cythonize.py
 
 %install
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %python_install --optimize=2
 
@@ -193,6 +193,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Fri Jul 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt3.hg20111105
+- Rebuilt with OpenMPI 1.6
+
 * Sat Jun 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.hg20111105
 - Rebuilt with new SLEPc
 

@@ -1,15 +1,15 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define scalar_type complex
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 
 %define somver 0
 %define sover %somver.2.2
 %define oname oofem
 Name: oofem-%scalar_type
 Version: 2.2
-Release: alt3.svn20111202
+Release: alt4.svn20111202
 Summary: Object Oriented Finite Element Code
 License: %gpl2plus
 Group: Sciences/Mathematics
@@ -63,7 +63,6 @@ This package contains shared libraries of OOFEM.
 %package -n lib%name-devel
 Summary: Shared libraries of Object Oriented Finite Element Code
 Group: Development/C++
-BuildArch: noarch
 Requires: lib%name = %version-%release
 Requires: libpetsc-%scalar_type-devel
 
@@ -125,7 +124,6 @@ comfortably.
 %package -n libckit-%scalar_type-devel
 Summary: Development files of C Programmer's Toolbox
 Group: Development/C
-BuildArch: noarch
 Provides: libckit-devel = %version-%release
 Requires: libckit-%scalar_type = %version-%release
 
@@ -206,7 +204,8 @@ popd
 %build
 mpi-selector --set %mpiimpl
 source /usr/bin/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib:%ldir/lib -L%mpidir/lib -L%ldir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%ldir/lib -L%mpidir/lib -L%ldir/lib"
+export MPIDIR=%mpidir
 
 export PETSC_INCLUDE=$PETSC_DIR/include
 export SLEPC_LIB="-lslepc"
@@ -445,6 +444,9 @@ done
 %endif
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt4.svn20111202
+- Rebuilt with OpenMPI 1.6
+
 * Mon May 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt3.svn20111202
 - Fixed build
 
@@ -497,3 +499,4 @@ done
 
 * Sun Oct 11 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.svn20091001
 - Initial build for Sisyphus
+

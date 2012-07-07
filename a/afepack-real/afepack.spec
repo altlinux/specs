@@ -1,13 +1,13 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname afepack
 %define scalar_type real
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 
 Name: %oname-%scalar_type
 Version: 1.8
-Release: alt12
+Release: alt13
 Summary: C++ library for (adaptive) finite element developping (%scalar_type scalars)
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -96,7 +96,8 @@ done
 
 %build
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+export MPIDIR=%mpidir
 
 %autoreconf
 %configure
@@ -110,7 +111,8 @@ popd
 
 %install
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+export MPIDIR=%mpidir
 
 %makeinstall_std prefix=%buildroot%ldir
 
@@ -168,6 +170,9 @@ done
 %endif
 
 %changelog
+* Sun Jul 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt13
+- Rebuilt with OpenMPI 1.6
+
 * Fri Feb 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt12
 - New snapshot
 

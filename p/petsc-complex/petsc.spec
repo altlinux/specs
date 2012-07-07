@@ -10,7 +10,7 @@
 
 %define oname petsc
 %define scalar_type complex
-%define ldir %_libexecdir/%oname-%scalar_type
+%define ldir %_libdir/%oname-%scalar_type
 %if "%scalar_type" == "real"
 %define alttype complex
 %else
@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.2_p7
-Release: alt2
+Release: alt3
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -517,6 +517,10 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--FOPTFLAGS="$OPTFLAGS" \
 	--LIBS="-L$PWD -L%_libdir/oski -llmpe -lmpe $CCAS $DUMMY"
 
+%ifarch x86_64
+sed -i 's|%_libexecdir|%_libdir|g' conf/petscvariables
+%endif
+
 %make all SOMVER=%somver SOVER=%sover
 #make alldoc LOC=$PETSC_DIR
 
@@ -620,9 +624,11 @@ export PETSC_CONFIG_DIR=%ldir/python/%{oname}_config
 export TAU_MAKEFILE=$(rpm -ql libtau-common|grep Makefile)
 export SLEPC_DIR=%ldir
 PATH="\`echo \$PATH|sed 's|:%_libexecdir/%oname-%alttype/bin||g'\`"
+PATH="\`echo \$PATH|sed 's|:%_libdir/%oname-%alttype/bin||g'\`"
 PATH="\`echo \$PATH|sed 's|:%ldir/bin||g'\`"
 export PATH="\$PATH:%ldir/bin"
 PYPATH="\`echo \$PYTHONPATH|sed 's|:%_libexecdir/%oname-%alttype/python||g'\`"
+PYPATH="\`echo \$PYTHONPATH|sed 's|:%_libdir/%oname-%alttype/python||g'\`"
 PYPATH="\`echo \$PYPATH|sed 's|:%python_sitelibdir/%oname-%alttype/python||g'\`"
 PYPATH="\`echo \$PYPATH|sed 's|:%ldir/python||g'\`"
 PYPATH="\`echo \$PYPATH|sed 's|:%python_sitelibdir/%oname-%scalar_type/python||g'\`"
@@ -771,6 +777,9 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 %ldir/sources
 
 %changelog
+* Fri Jul 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p7-alt3
+- Changed native directory: %%_libexecdir/%name -> %%_libdir/%name
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p7-alt2
 - Rebuilt with OpenMPI 1.6
 
@@ -927,4 +936,3 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
-

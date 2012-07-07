@@ -3,11 +3,11 @@
 
 %define oname dealii
 %define scalar_type real
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 
 Name: %oname-%scalar_type
 Version: 7.2
-Release: alt4.pre.svn20120224
+Release: alt5.pre.svn20120224
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -63,7 +63,6 @@ This package contains development common files for deal.II.
 %package data
 Summary: Data files for deal.II (%scalar_type scalars)
 Group: Sciences/Mathematics
-BuildArch: noarch
 Conflicts: lib%name < %version-%release
 
 %description data
@@ -90,7 +89,6 @@ This package contains shared libraries of deal.II.
 %package -n lib%name-devel
 Summary: Development files of deal.II (%scalar_type scalars)
 Group: Development/C++
-BuildArch: noarch
 Requires: lib%name = %version-%release
 Requires: %name-devel-common = %version-%release
 Requires: libpetsc-%scalar_type-devel
@@ -105,38 +103,6 @@ uses state-of-the-art programming techniques to offer you a modern
 interface to the complex data structures and algorithms required.
 
 This package contains development files of deal.II.
-
-%package -n lib%name-debug
-Summary: Shared debug libraries of deal.II (%scalar_type scalars)
-Group: System/Libraries
-Requires: %name-data = %version-%release
-
-%description -n lib%name-debug
-deal.II is a C++ program library targeted at the computational solution
-of partial differential equations using adaptive finite elements. It
-uses state-of-the-art programming techniques to offer you a modern
-interface to the complex data structures and algorithms required.
-
-This package contains shared debug libraries of deal.II.
-
-%package -n lib%name-debug-devel
-Summary: Debug development files of deal.II (%scalar_type scalars)
-Group: Development/C++
-BuildArch: noarch
-Requires: lib%name-debug = %version-%release
-Requires: %name-devel-common = %version-%release
-Requires: libpetsc-%scalar_type-devel
-Requires: libslepc-%scalar_type-devel
-Requires: libtrilinos10-devel
-Requires: libtbb-debug-devel
-
-%description -n lib%name-debug-devel
-deal.II is a C++ program library targeted at the computational solution
-of partial differential equations using adaptive finite elements. It
-uses state-of-the-art programming techniques to offer you a modern
-interface to the complex data structures and algorithms required.
-
-This package contains debug development files of deal.II.
 
 %package -n lib%oname-devel-doc
 Summary: Documentation and examples for deal.II
@@ -160,7 +126,7 @@ sed -i 's|@PETSC_DIR@|%ldir|g' configure.in
 
 %build
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PATH=$PATH:%_qt4dir/bin
 export MPIDIR=%mpidir
 
@@ -198,7 +164,7 @@ mkdir -p lib/optimized
 
 %install
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 install -d %buildroot$PETSC_DIR/bin
 install -d %buildroot$PETSC_DIR/lib
@@ -249,6 +215,10 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 %endif
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.2-alt5.pre.svn20120224
+- Changed native directory: %%_libexecdir/petsc-%scalar_type ->
+  %%_libdir/petsc-%scalar_type
+
 * Sat Jun 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.2-alt4.pre.svn20120224
 - Rebuilt with OpenMPI 1.6
 

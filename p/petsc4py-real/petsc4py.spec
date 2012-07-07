@@ -1,5 +1,5 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 #set_gcc_version 4.5
 
 %def_enable docs
@@ -12,11 +12,11 @@
 %endif
 
 %define oname petsc4py
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.2
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt1.hg20120531
+Release: alt2.hg20120531
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -107,7 +107,7 @@ rm -f src/petsc4py.PETSc.c
 %install
 mpi-selector --set %mpiimpl
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 #sed -i 's|@MPIDIR@|%mpidir|g' conf/core/confutils.py
 #sed -i 's|@MPIIMPL@|%mpiimpl|g' conf/core/confutils.py
@@ -205,6 +205,9 @@ done
 %endif
 
 %changelog
+* Fri Jul 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.hg20120531
+- Changed native directory: %%_libexecdir/%name -> %%_libdir/%name
+
 * Sat Jun 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.hg20120531
 - New snapshot
 

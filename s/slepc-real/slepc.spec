@@ -1,15 +1,15 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname slepc
 %define scalar_type real
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 
 %define somver 3
 %define sover %somver.2.0
 Name: %oname-%scalar_type
 Version: 3.2_p5
-Release: alt1
+Release: alt2
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -106,25 +106,6 @@ Networking and Computing Group (GRyCAP) of Universidad Politecnica de Valencia
 
 This package contains development files of SLEPc.
 
-%package -n lib%name-devel-static
-Summary: Static library of SLEPc (%scalar_type scalars)
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-SLEPc is a software library for the solution of large scale sparse eigenvalue
-problems on parallel computers. It is an extension of PETSc and can be used for
-either standard or generalized eigenproblems, with real or complex arithmetic.
-It can also be used for computing a partial SVD of a large, sparse, rectangular
-matrix.
-
-SLEPc is based on the PETSc data structures and it employs the MPI standard for
-message-passing communication. It is being developed by the High Performance
-Networking and Computing Group (GRyCAP) of Universidad Politecnica de Valencia
-(Spain).
-
-This package contains static development library of SLEPc.
-
 %package -n lib%oname-devel-doc
 Summary: Documentation for SLEPc
 Group: Development/Documentation
@@ -172,11 +153,16 @@ for i in $(find ./ -name makefile); do
 	sed -i 's|@\$|$|' $i
 done
 
+%ifarch x86_64
+LIB64=64
+%endif
+sed -i "s|@64@|$LIB64|" config/primme.py
+
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 export SLEPC_DIR=$PWD
 %if "%scalar_type" == "real"
@@ -208,7 +194,7 @@ export PETSC_ARCH=linux-gnu
 %install
 source %mpidir/bin/mpivars.sh
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 export SLEPC_DIR=$PWD
 export PETSC_ARCH=linux-gnu
@@ -255,9 +241,6 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %ldir/conf/*
 %_pkgconfigdir/*
 
-#files -n lib%name-devel-static
-#ldir/lib/*.a
-
 %if "%scalar_type" == "real"
 %files -n lib%oname-devel-doc
 %doc %dir %_docdir/lib%oname-%version
@@ -270,6 +253,9 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Fri Jul 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p5-alt2
+- Rebuilt with OpenMPI 1.6
+
 * Sat Jun 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p5-alt1
 - Version 3.2-p5
 

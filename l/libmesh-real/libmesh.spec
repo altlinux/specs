@@ -3,12 +3,12 @@
 
 %define scalar_type real
 %define oname libmesh
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 0.7.2
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt5.svn20120228
+Release: alt6.svn20120228
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -128,7 +128,6 @@ This package contains contrib libraries for libMesh.
 %package contrib-devel
 Summary: Development files of contrib libraries for libMesh
 Group: Development/C++
-BuildArch: noarch
 Requires: %name-devel = %version-%release
 
 %description contrib-devel
@@ -245,6 +244,8 @@ rm -fR contrib/nemesis contrib/exodusii contrib/netcdf \
 LIB64=64
 %endif
 sed -i "s|@64@|$LIB64|g" m4/netcdf.m4 m4/metis.m4
+
+sed -i 's|@PETSC_DIR@|%ldir|g' m4/slepc.m4
 
 %build
 mpi-selector --set %mpiimpl
@@ -473,6 +474,10 @@ popd
 %endif
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt6.svn20120228
+- Changed native directory: %%_libexecdir/petsc-%scalar_type ->
+  %%_libdir/petsc-%scalar_type
+
 * Fri Jun 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt5.svn20120228
 - Rebuilt with OpenMPI 1.6
 
