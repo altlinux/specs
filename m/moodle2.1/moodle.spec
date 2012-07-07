@@ -3,9 +3,9 @@
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
-%define packagversion 2.1.6
-%define packagedate 20120701
-%define packagemoodleversion 2011070106.08
+%define packagversion 2.1.7
+%define packagedate 20120706
+%define packagemoodleversion 2011070107.00
 %define moodlebranch 2.1
 %define moodlepackagename %moodle_name%moodlebranch
 
@@ -411,6 +411,10 @@ exit 0
 %moodle_authdir/pam/
 
 %changelog
+* Sat Jul 07 2012 Cronbuild Service <cronbuild@altlinux.org> 2.1.7.20120706-alt1
+- repocop cronbuild 20120707. At your service.
+- 2.1.7 (Build: 20120706)
+
 * Tue Jul 03 2012 Cronbuild Service <cronbuild@altlinux.org> 2.1.6.20120701-alt1
 - repocop cronbuild 20120703. At your service.
 - 2.1.6+ (Build: 20120701)
