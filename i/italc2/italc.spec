@@ -13,10 +13,10 @@
 %define master_group %{program_name}master
 
 # set %%{program_name}-* groups
-%define admin_group %{program_name}-admin
-%define supporter_group %{program_name}-supporter
-%define teacher_group %{program_name}-teacher
-%define other_group %{program_name}-other
+%define admin_group %{program_name}-admins
+%define supporter_group %{program_name}-supporters
+%define teacher_group %{program_name}-teachers
+%define other_group %{program_name}-others
 
 # macros for icons
 %define iconshicolordir %_iconsdir/hicolor
@@ -43,7 +43,7 @@
 
 Name: italc2
 Version: 2.0.1
-Release: %branch_release alt4
+Release: %branch_release alt5
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -216,16 +216,13 @@ Netzwerk finden Sie in /usr/share/italc/doc/INSTALL.
 
 %build
 %cmake -DCMAKE_INSTALL_DOCDIR:PATCH='%docdir'
-#%%cmake_insource
-pushd BUILD
-%make_build update-locales # VERBOSE=1
-%make_build finalize-locales # VERBOSE=1
-%make_build # VERBOSE=1
-popd
+%cmake_build update-locales # VERBOSE=1
+%cmake_build finalize-locales # VERBOSE=1
+%cmake_build # VERBOSE=1
 
 %install
+%cmakeinstall_std
 pushd BUILD
-%makeinstall_std
 install -m 644 -pD italc.spec %buildroot%docdir/%name.origin.spec
 popd
 
@@ -247,6 +244,7 @@ mkdir -p %buildroot%xinitdir
 ln -snf $(relative %buildroot%_bindir/ica-launcher %buildroot%xinitdir/ica-launcher) %buildroot%xinitdir/ica-launcher
 find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 	| xargs -r0 -i touch "{}/key"
+
 %find_lang %name
 
 %pre client
@@ -277,26 +275,27 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 #%%xinitdir/ica-launcher
 %dir %confdir
 %dir %keysdir
-%attr(2750,root,%master_group) %dir %keysdir/private
-%attr(2755,root,%master_group) %dir %keysdir/public
-%attr(2750,root,%teacher_group) %dir %keysdir/private/teacher
-%attr(2750,root,%admin_group) %dir %keysdir/private/admin
-%attr(2750,root,%supporter_group) %dir %keysdir/private/supporter
-%attr(2750,root,%other_group) %dir %keysdir/private/other
-%attr(2755,root,%teacher_group) %dir %keysdir/public/teacher
-%attr(2755,root,%admin_group) %dir %keysdir/public/admin
-%attr(2755,root,%supporter_group) %dir %keysdir/public/supporter
-%attr(2755,root,%other_group) %dir %keysdir/public/other
-%ghost %attr(0440,root,%teacher_group) %config(noreplace) %keysdir/private/teacher/key
-%ghost %attr(0440,root,%admin_group) %config(noreplace) %keysdir/private/admin/key
-%ghost %attr(0440,root,%supporter_group) %config(noreplace) %keysdir/private/supporter/key
-%ghost %attr(0440,root,%other_group) %config(noreplace) %keysdir/private/other/key
-%ghost %attr(0444,root,%teacher_group) %config(noreplace) %keysdir/public/teacher/key
-%ghost %attr(0444,root,%admin_group) %config(noreplace) %keysdir/public/admin/key
-%ghost %attr(0444,root,%supporter_group) %config(noreplace) %keysdir/public/supporter/key
-%ghost %attr(0444,root,%other_group) %config(noreplace) %keysdir/public/other/key
-%config(noreplace) "%_sysconfdir/xdg/iTALC Solutions"
-%config(noreplace) %_sysconfdir/xdg/iTALC
+%attr(0770,root,%master_group) %dir %keysdir/private
+%attr(0775,root,%master_group) %dir %keysdir/public
+%attr(2770,root,%teacher_group) %dir %keysdir/private/teacher
+%attr(2770,root,%admin_group) %dir %keysdir/private/admin
+%attr(2770,root,%supporter_group) %dir %keysdir/private/supporter
+%attr(2770,root,%other_group) %dir %keysdir/private/other
+%attr(2775,root,%teacher_group) %dir %keysdir/public/teacher
+%attr(2775,root,%admin_group) %dir %keysdir/public/admin
+%attr(2775,root,%supporter_group) %dir %keysdir/public/supporter
+%attr(2775,root,%other_group) %dir %keysdir/public/other
+%ghost %attr(0660,root,%teacher_group) %config(noreplace) %keysdir/private/teacher/key
+%ghost %attr(0660,root,%admin_group) %config(noreplace) %keysdir/private/admin/key
+%ghost %attr(0660,root,%supporter_group) %config(noreplace) %keysdir/private/supporter/key
+%ghost %attr(0660,root,%other_group) %config(noreplace) %keysdir/private/other/key
+%ghost %attr(0664,root,%teacher_group) %config(noreplace) %keysdir/public/teacher/key
+%ghost %attr(0664,root,%admin_group) %config(noreplace) %keysdir/public/admin/key
+%ghost %attr(0664,root,%supporter_group) %config(noreplace) %keysdir/public/supporter/key
+%ghost %attr(0664,root,%other_group) %config(noreplace) %keysdir/public/other/key
+%dir %config(noreplace) "%_sysconfdir/xdg/iTALC Solutions"
+%config(noreplace) %attr(0664,root,%master_group)  "%_sysconfdir/xdg/iTALC Solutions/iTALC.conf"
+%_sysconfdir/xdg/iTALC
 
 %files master
 %_bindir/imc
@@ -316,6 +315,13 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 %icons16x16dir/imc.png
 
 %changelog
+* Sun Jul 08 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt5
+- Fix permissions for:
+  + key dirs and key files
+  + %%_sysconfdir/xdg/iTALC Solutions/iTALC.conf file
+- Fix %%{program_name}-* groups names
+- Fix Exec in italc.desktop file
+
 * Thu Jul 05 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt4
 - Fix %%other_group name
 
