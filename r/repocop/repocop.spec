@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.57
+Version: 0.58
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -103,6 +103,9 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/fixscripts/
 %dir %_datadir/repocop/fixscripts
 
 %changelog
+* Sun Jul 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
+- pluggable acl support
+
 * Tue Jun 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.57-alt1
 - maintainance release
 
