@@ -1,6 +1,6 @@
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.02
+Version: 0.03
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -11,7 +11,7 @@ License: GPL2+
 #Url: 
 Source: %name-%version.tar
 
-Requires: repocop
+Requires: repocop > 0.57
 
 %description
 %summary
@@ -32,6 +32,9 @@ cp repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Sun Jul 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
+- repocop 0.58 support
+
 * Fri Jul 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
 - support for repocop-report-prometeus2-sqlite
 
