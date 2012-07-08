@@ -5,7 +5,7 @@
 
 Summary: A very fast and reliable SQL database engine
 Name: mariadb
-Version: 5.5.23
+Version: 5.5.25
 Release: alt1
 Group: Databases
 License: GPLv2 with exceptions
@@ -300,7 +300,7 @@ install -Dm 644 %SOURCE11 %buildroot/lib/systemd/system/mysqld.service
 install -Dm 644 support-files/mysql-log-rotate.sh %buildroot%_sysconfdir/logrotate.d/mysql
 
 # bork
-mv %buildroot%_bindir/mysqlaccess.conf %buildroot%_sysconfdir/
+#mv %buildroot%_bindir/mysqlaccess.conf %buildroot%_sysconfdir/
 #chmod 644 %buildroot%_sysconfdir/mysqlaccess.conf
 mv %buildroot%prefix/scripts/mysql_install_db %buildroot%_sbindir/
 mv %buildroot%_datadir/mysql/aclocal %buildroot%_datadir/aclocal
@@ -504,7 +504,7 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_mandir/man1/myisamlog.1*
 %_mandir/man1/myisampack.1*
 %_mandir/man1/my_print_defaults.1*
-%_mandir/man1/mysqlbug.1*
+#_mandir/man1/mysqlbug.1*
 %_mandir/man1/mysql_convert_table_format.1*
 %_mandir/man1/mysqld_multi.1*
 %_mandir/man1/mysqld_safe.1*
@@ -546,7 +546,7 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_libdir/mysql/plugin/ha_sphinx.so
 
 %files client
-%config(noreplace) %_sysconfdir/mysqlaccess.conf
+#config(noreplace) %_sysconfdir/mysqlaccess.conf
 %_bindir/msql2mysql
 %_bindir/mysql
 %_bindir/mysqlaccess
@@ -587,7 +587,7 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_bindir/mysql_client_test_embedded
 %_bindir/mysqltest_embedded
 %_datadir/mysql/sql-bench
-%attr(-,mysql,mysql) %_datadir/mysql/mysql-test
+#attr(-,mysql,mysql) %_datadir/mysql/mysql-test
 %perl_vendor_privlib/*
 %_mandir/man1/mysql-stress-test.pl.1*
 %_mandir/man1/mysql-test-run.pl.1*
@@ -606,7 +606,7 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_libdir/libmysqlclient_r.so
 %_libdir/libmysqlclient.so
 %_includedir/mysql
-%_mandir/man1/comp_err.1*
+#_mandir/man1/comp_err.1*
 %_mandir/man1/mysql_config.1*
 %_datadir/aclocal/mysql.m4
 # mysqlservices library is static, because it doesn't contain any code
@@ -622,6 +622,12 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_libdir/libmysqld.so
 
 %changelog
+* Sun Jul 08 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.25-alt1
+- New version
+
+* Fri Jun 01 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.24-alt1
+- New version
+
 * Fri Apr 13 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.23-alt1
 - New version
 
