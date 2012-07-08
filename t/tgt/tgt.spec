@@ -1,6 +1,6 @@
 Summary: iSCSI utilities
 Name: tgt
-Version: 1.0.24
+Version: 1.0.29
 Release: alt1
 License: %gpl2only
 Group: System/Configuration/Networking
@@ -10,7 +10,7 @@ URL: http://stgt.berlios.de/
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: libssl-devel perl-Config-General librdmacm-devel libibverbs-devel xsltproc docbook-style-xsl
+BuildRequires: libssl-devel perl-Config-General librdmacm-devel libibverbs-devel xsltproc docbook-style-xsl libaio-devel
 
 Summary: iSCSI utilities
 
@@ -53,6 +53,10 @@ This package provides utils to create an iSCSI storage.
 %_man8dir/*
 
 %changelog
+* Sun Jul 08 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.29-alt1
+- New version
+- Add libaio-devel to BuildRequires (Closes: #27526)
+
 * Sun Feb 26 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.24-alt1
 - New version
 
