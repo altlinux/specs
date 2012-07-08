@@ -1,5 +1,5 @@
 Name: perl-Mojolicious
-Version: 2.80
+Version: 3.05
 Release: alt1
 Summary: Real-time web framework
 
@@ -54,6 +54,12 @@ Features:
 %doc LICENSE Changes README.pod
 
 %changelog
+* Sun Jul 08 2012 Eugene Prokopiev <enp@altlinux.ru> 3.05-alt1
+- New version 3.05
+
+* Sat Jul 07 2012 Eugene Prokopiev <enp@altlinux.ru> 3.03-alt1
+- New version 3.03
+
 * Thu Apr 12 2012 Vladimir Lettiev <crux@altlinux.ru> 2.80-alt1
 - New version 2.80
 
