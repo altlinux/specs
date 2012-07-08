@@ -1,12 +1,12 @@
 %define oname meshbuilder
 %define scalar_type real
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 Name: %oname-%scalar_type
 Version: 0.2.0
-Release: alt3.bzr20110620
+Release: alt4.bzr20110620
 Summary: A tool for viewing and marking meshes, especially for use with DOLFIN
 License: LGPL v2.1
 Group: Graphics
@@ -45,7 +45,7 @@ especially for use with DOLFIN.
 %build
 mpi-selector --set %mpiimpl
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib:%ldir/lib -L%mpidir/lib:%ldir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%ldir/lib -L%mpidir/lib:%ldir/lib"
 
 FLAGS="%optflags"
 cmake \
@@ -60,7 +60,10 @@ cmake \
 %make all VERBOSE=1
 
 %install
+source %_bindir/petsc-%scalar_type.sh
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%ldir/lib -L%mpidir/lib:%ldir/lib"
 %makeinstall_std
+
 chrpath -r %mpidir/lib:%ldir/lib src/%oname
 cp -f src/%oname %buildroot%_bindir/%name
 rm -f %buildroot%_bindir/%oname
@@ -84,6 +87,9 @@ cp -fR sample_data %buildroot%_datadir/%oname/
 %endif
 
 %changelog
+* Sun Jul 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt4.bzr20110620
+- Rebuilt with OpenMPI 1.6
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt3.bzr20110620
 - Rebuilt with updated NumPy
 

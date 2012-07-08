@@ -1,13 +1,13 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
-%define pdir %_libexecdir/petsc-real
+%define mpidir %_libdir/%mpiimpl
+%define pdir %_libdir/petsc-real
 
 %define somver 0
 %define sover %somver.0
 
 Name: phaml
 Version: 1.10.0
-Release: alt2
+Release: alt3
 Summary: The Parallel Hierarchical Adaptive MultiLevel Project
 License: Public domain
 Group: Sciences/Mathematics
@@ -149,6 +149,9 @@ cp -fR examples %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.0-alt3
+- Rebuilt with OpenMPI 1.6
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.0-alt2
 - Rebuilt with gcc 4.6
 

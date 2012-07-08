@@ -1,9 +1,9 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 Name: tritetmesh
 Version: 0.0.1
-Release: alt2.bzr20100630
+Release: alt3.bzr20100630
 Summary: TriTetMesh provides an intuitive interface to Triangle and Tetgen
 Group: Development/Tools
 License: GPL v3
@@ -103,11 +103,16 @@ sed -i 's|@BUILDLIB@|%buildroot%_libdir|g' *.pc
 sed -i 's|^libdir.*|libdir=%_libdir|' *.pc
 install -m755 %SOURCE3 .
 
+%ifarch x86_64
+LIB64=64
+%endif
+sed -i "s|@64@|$LIB64|g" mpic++
+
 %install
 # Prepare environments
 
 source %_bindir/petsc-real.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PATH=$PWD:$PATH
 
 install -d $PWD/pkgconfig
@@ -226,6 +231,9 @@ rm -fR %buildroot%prefix%prefix
 %_libdir/%name/
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt3.bzr20100630
+- Rebuilt with OpenMPI 1.6
+
 * Wed Dec 07 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt2.bzr20100630
 - Rebuilt with Dolfin 1.0.rc2
 

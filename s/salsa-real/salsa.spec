@@ -7,7 +7,7 @@
 %define sover %somver.2.0
 Name: %oname-%scalar_type
 Version: 2.01
-Release: alt4.svn20100714
+Release: alt5.svn20100714
 Summary: Self-Adapting Large-scale Solver Architecture (%scalar_type scalars)
 License: LGPL
 Group: Sciences/Mathematics
@@ -58,7 +58,6 @@ This package contains shared libraries of SALSA.
 %package -n lib%name-devel
 Summary: Development files of SALSA
 Group: Development/C++
-BuildArch: noarch
 Requires: lib%name = %version-%release
 Requires: libslepc-%scalar_type-devel
 
@@ -204,18 +203,18 @@ for i in $(find %buildroot%_docdir -name '*.html'); do
 done
 
 %files -n lib%name
-%_libexecdir/petsc-%scalar_type/lib/*.so.*
+%_libdir/petsc-%scalar_type/lib/*.so.*
 
 %files -n lib%name-devel
-%_libexecdir/petsc-%scalar_type/lib/*.so
-%_libexecdir/petsc-%scalar_type/include/*
+%_libdir/petsc-%scalar_type/lib/*.so
+%_libdir/petsc-%scalar_type/include/*
 
 %files -n lib%name-devel-static
-%_libexecdir/petsc-%scalar_type/lib/*.a
+%_libdir/petsc-%scalar_type/lib/*.a
 
 %files tests
-%dir %_libexecdir/petsc-%scalar_type/testing
-%_libexecdir/petsc-%scalar_type/testing/*
+%dir %_libdir/petsc-%scalar_type/testing
+%_libdir/petsc-%scalar_type/testing/*
 
 %if "%scalar_type" == "real"
 %files -n lib%oname-devel-doc-html
@@ -228,6 +227,10 @@ done
 %endif
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.01-alt5.svn20100714
+- Changed native directory: %%_libexecdir/petsc-%scalar_type ->
+  %%_libdir/petsc-%scalar_type
+
 * Fri Jun 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.01-alt4.svn20100714
 - Rebuilt with OpenMPI 1.6
 

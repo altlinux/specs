@@ -1,8 +1,8 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define scalar_type complex
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 
 %define oname petscfem
 %define somver 0
@@ -10,7 +10,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt3.beta
+Release: alt4.beta
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -58,7 +58,6 @@ This package contains shared library of PETSc-FEM.
 %package -n lib%name-devel
 Summary: Development files of PETSc-FEM (%scalar_type scalars)
 Group: Development/C++
-BuildArch: noarch
 Requires: lib%name = %version-%release
 Requires: libpetsc-%scalar_type-devel
 
@@ -97,7 +96,8 @@ ln -s /usr/share/doc/libhypre-devel-doc/docxx.sty doc/manual
 
 %build
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib:%ldir/lib -L%mpidir/lib -L%ldir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%ldir/lib -L%mpidir/lib -L%ldir/lib"
+export MPIDIR=%mpidir
 
 %add_optflags -I%_includedir/gotoblas
 %make_ext -C src amplidl.o
@@ -120,15 +120,16 @@ install -d %buildroot%ldir/lib
 install -d %buildroot%ldir/include/%name
 
 install -m755 applications/*/*.bin %buildroot%ldir/bin
-for i in %buildroot%ldir/bin/*; do
-	chrpath -r %mpidir/lib:$PETSC_DIR/lib $i
-done
 
 install -m644 *.so.* %buildroot%ldir/lib
 ln -s lib%oname.so.%sover %buildroot%ldir/lib/lib%oname.so.%somver
 ln -s lib%oname.so.%somver %buildroot%ldir/lib/lib%oname.so
 
 install -p -m644 src/*.h %buildroot%ldir/include/%name
+
+for i in %buildroot%ldir/bin/* %buildroot%ldir/lib/*.so; do
+	chrpath -r %mpidir/lib:$PETSC_DIR/lib $i
+done
 
 %files
 %doc README* PROJECTS TODO
@@ -147,6 +148,9 @@ install -p -m644 src/*.h %buildroot%ldir/include/%name
 %endif
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt4.beta
+- Rebuilt with OpenMPI 1.6
+
 * Wed Dec 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt3.beta
 - Fixed RPATH
 
@@ -176,3 +180,4 @@ install -p -m644 src/*.h %buildroot%ldir/include/%name
 
 * Fri Dec 17 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt1.beta
 - Initial build for Sisyphus
+

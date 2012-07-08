@@ -1,8 +1,8 @@
 %define scalar_type complex
 
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
-%define ldir %_libexecdir/petsc-%scalar_type
+%define mpidir %_libdir/%mpiimpl
+%define ldir %_libdir/petsc-%scalar_type
 
 %define oname blopex
 %define lname libBLOPEX
@@ -11,7 +11,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.1
-Release: alt4.svn20101114
+Release: alt6.svn20101114
 %if %scalar_type == real
 Provides: %oname = %version-%release
 Obsoletes: %oname < %version-%release
@@ -28,7 +28,7 @@ Source2: BLOPEX.html
 Source3: blopex_petsc.tar.gz
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: liblapack-goto-devel libpetsc-%scalar_type-devel
+BuildPreReq: liblapack-devel libpetsc-%scalar_type-devel
 BuildPreReq: libtrilinos10-devel libamesos10-devel
 BuildPreReq: libepetraext10-devel libifpack10-devel
 
@@ -64,20 +64,6 @@ eigenxolver, Locally Optimal Block Preconditioned Conjugate Gradient Method
 layer.
 
 This package contains development files of BLOPEX.
-
-%package -n lib%oname-devel-static
-Summary: Static library of BLOPEX
-Group: Development/C
-Requires: lib%oname-devel = %version-%release
-Conflicts: lib%oname-devel < %version-%release
-
-%description -n lib%oname-devel-static
-BLOPEX is a package, written in C, that at present includes only one
-eigenxolver, Locally Optimal Block Preconditioned Conjugate Gradient Method
-(LOBPCG). BLOPEX supports parallel MPI-based computations through an abstract
-layer.
-
-This package contains static library of BLOPEX.
 
 %package -n lib%oname-petsc-%scalar_type-interface
 Summary: BLOPEX interface library with PETSc (%scalar_type scalars)
@@ -127,7 +113,7 @@ install %SOURCE2 .
 
 %build
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 pushd %{oname}_abstract
 %make_build
@@ -138,7 +124,7 @@ popd
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 install -d %buildroot%_bindir
 install -d %buildroot%_libdir
@@ -224,9 +210,6 @@ popd
 %_libdir/*.so
 %exclude %_libdir/lib%oname-petsc-%scalar_type-interface.so
 %_includedir/*
-
-#files -n lib%oname-devel-static
-#_libdir/*.a
 %endif
 
 %files -n lib%oname-petsc-%scalar_type-interface
@@ -244,6 +227,13 @@ popd
 # TODO: build driver_fortran, blopex_hypre
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt6.svn20101114
+- Changed PETSc's directory: %%_libexecdir/petsc-%scalar_type ->
+  %%_libdir/petsc-%scalar_type
+
+* Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt5.svn20101114
+- Rebuilt with OpenMPI 1.6
+
 * Mon May 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt4.svn20101114
 - Fixed build
 
@@ -300,3 +290,4 @@ popd
 
 * Sat Apr 25 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
 - Initial build for Sisyphus
+

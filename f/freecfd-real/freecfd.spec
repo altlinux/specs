@@ -1,12 +1,12 @@
 %define oname freecfd
 %define scalar_type real
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 Name: %oname-%scalar_type
 Version: 1.0.1
-Release: alt7
+Release: alt8
 Summary: Computational fluid dynamics (CFD) code (%scalar_type scalars)
 
 Group: Sciences/Mathematics
@@ -69,9 +69,14 @@ This package contains examples for Free CFD.
 %setup
 install -m644 %SOURCE1 .
 
+%ifarch x86_64
+LIB64=64
+%endif
+sed -i "s|@64@|$LIB64|" src/CMakeLists.txt
+
 %build
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 pushd src
 FLAGS="-I$PETSC_DIR/include -I%mpidir/include/metis -DLEGACY_SUPPORT"
@@ -95,7 +100,7 @@ popd
 
 %install
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std -C src
 
@@ -133,6 +138,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %endif
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt8
+- Rebuilt with OpenMPI 1.6
+
 * Mon Dec 05 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt7
 - Rebuilt with PETSc 3.2
 

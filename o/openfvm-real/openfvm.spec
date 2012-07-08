@@ -1,13 +1,13 @@
 %define oname openfvm
 %define scalar_type real
-%define ldir %_libexecdir/petsc-%scalar_type
+%define ldir %_libdir/petsc-%scalar_type
 
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 Name: openfvm-%scalar_type
 Version: 1.3
-Release: alt2.svn20110401
+Release: alt3.svn20110401
 Summary: General three-dimensional Computational Fluid Dynamics (CFD) solver
 
 Group: Sciences/Mathematics
@@ -99,13 +99,15 @@ sed -i 's|@SUFF@|.ser|' %oname.ser
 %build
 mpi-selector --set %mpiimpl
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+export MPIDIR=%mpidir
 
 %make_build -C Flow
 
 %install
 source %_bindir/petsc-%scalar_type.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
+export MPIDIR=%mpidir
 
 %makeinstall_std -C Flow
 
@@ -138,6 +140,9 @@ done
 %endif
 
 %changelog
+* Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt3.svn20110401
+- Rebuilt with OpenMPI 1.6
+
 * Sat Dec 10 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt2.svn20110401
 - Rebuilt with PETSc 3.2
 
