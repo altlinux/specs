@@ -1,7 +1,7 @@
 %define testname unmet-dependency
 
 Name: repocop-unittest-%testname
-Version: 0.08
+Version: 0.09
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -23,9 +23,9 @@ The test warns packages that contain unmet dependencies.
 %build
 
 %install
-for i in *.posttest; do
-    testname=`echo $i | sed -e s,.posttest\$,,`
-    install -pD -m 755 $testname.posttest %buildroot%_datadir/repocop/pkgtests/$testname/posttest
+for i in *.distrotest; do
+    testname=`echo $i | sed -e s,.distrotest\$,,`
+    install -pD -m 755 $testname.distrotest %buildroot%_datadir/repocop/pkgtests/$testname/distrotest
 done
 
 install -m 755 archdiff %buildroot%_datadir/repocop/pkgtests/unmet-dependency-build-missing-package/_archdiff
@@ -34,11 +34,14 @@ install -m 755 archdiff %buildroot%_datadir/repocop/pkgtests/unmet-dependency-bu
 %_datadir/repocop/pkgtests/%testname-*/
 
 %changelog
+* Mon Jul 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- introduced distrotests
+
 * Tue Jan 05 2010 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - optimized archdiff script.
 
 * Wed Sep 30 2009 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
-- posttests migration
+- distrotests migration
 
 * Sat Aug 01 2009 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - fixed bug in substr
