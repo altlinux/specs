@@ -43,7 +43,7 @@
 
 Name: italc2
 Version: 2.0.1
-Release: %branch_release alt5
+Release: %branch_release alt6
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -57,7 +57,8 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 Source0: %name-%version.tar
 Source10: iTALC.conf
 Patch10: %name-alt-all.patch
-#Patch20: %name-%version-ubuntu.patch
+
+Conflicts: %program_name < 2.0.0
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: /proc
@@ -150,6 +151,8 @@ Summary(de_DE.UTF-8): Software fuer iTALC-Clients
 Summary(ru_RU.UTF-8): iTALC-клиент
 Group: Networking/Remote access
 Requires: %name = %version-%release
+Conflicts: %program_name-client < 2.0.0
+
 
 %description client
 This package contains the software, needed by iTALC-clients.
@@ -183,6 +186,7 @@ Requires: rpm >= %rpm_min_ver
 %ifdef menu_min_ver
 Requires: menu >= %menu_min_ver
 %endif
+Conflicts: %program_name-master < 2.0.0
 
 Requires: %icons128x128dir
 Requires: %icons64x64dir
@@ -244,6 +248,9 @@ mkdir -p %buildroot%xinitdir
 ln -snf $(relative %buildroot%_bindir/ica-launcher %buildroot%xinitdir/ica-launcher) %buildroot%xinitdir/ica-launcher
 find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 	| xargs -r0 -i touch "{}/key"
+
+# Move JavaViewer to %%docdir
+mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 
 %find_lang %name
 
@@ -315,6 +322,10 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 %icons16x16dir/imc.png
 
 %changelog
+* Mon Jul 09 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt6
+- Add conflicts for italc < 2.0.0
+- Add JavaViewer to %%docdir
+
 * Sun Jul 08 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt5
 - Fix permissions for:
   + key dirs and key files
