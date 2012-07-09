@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname Alps
 Name: Coin%oname
 Version: 1.4
-Release: alt1.svn20120128
+Release: alt2.svn20120128
 Summary: Framework for implementing parallel graph search algorithms
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -107,7 +107,7 @@ This package contains examples for COIN-OR Alps.
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %autoreconf
 %configure \
@@ -122,7 +122,7 @@ doxygen doxydoc/doxygen.conf
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
@@ -149,6 +149,9 @@ done
 %doc %oname/examples/*
 
 %changelog
+* Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.svn20120128
+- Rebuilt with OpenMPI 1.6
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.svn20120128
 - Version 1.4
 
