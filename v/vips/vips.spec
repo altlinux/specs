@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: vips
-Version: 7.28.5
-Release: alt1.1
+Version: 7.28.9
+Release: alt1
 %define majorver %(echo %version |cut -d. -f1,2)
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -106,6 +106,9 @@ Static libraries for developing statically linked VIPS applications.
 # - package python bindings
 
 %changelog
+* Mon Jul 09 2012 Michael Shigorin <mike@altlinux.org> 7.28.9-alt1
+- new version (watch file uupdate)
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 7.28.5-alt1.1
 - Rebuild with new libImageMagick
 
