@@ -1,7 +1,7 @@
 #define testname spec-has-obsolete-macroses
 
 Name: repocop-unittest-altlinux-java
-Version: 0.12
+Version: 0.13
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ License: GPL or Artistic
 #Url: 
 Source: %name-%version.tar
 
-Requires: repocop >= 0.40
+Requires: repocop >= 0.59
 
 %description
 set of ALTLinux-specific integration tests for repocop test platform.
@@ -30,6 +30,11 @@ for i in *.posttest; do
     install -pD -m 755 $testname.posttest %buildroot%_datadir/repocop/pkgtests/$testname/posttest
 done
 
+for i in *.distrotest; do
+    testname=`echo $i | sed -e s,.distrotest\$,,`
+    install -pD -m 755 $testname.distrotest %buildroot%_datadir/repocop/pkgtests/$testname/distrotest
+done
+
 install -d -m 755 %buildroot%_datadir/repocop/fixscripts/
 #install -m 644 *.pl %buildroot%_datadir/repocop/fixscripts/
 
@@ -39,6 +44,9 @@ install -d -m 755 %buildroot%_datadir/repocop/fixscripts/
 #%_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Jul 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- added distrotest
+
 * Wed Nov 09 2011 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - updated tests
 
