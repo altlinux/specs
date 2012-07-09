@@ -7,8 +7,8 @@
 %define lang_config_dir %_sysconfdir/ejudge/lang.d
 
 Name: ejudge
-Version: 2.3.22
-Release: alt4
+Version: 2.3.23
+Release: alt1
 
 Summary: Ejudge is a programming contest managment system
 Summary(ru_RU.UTF-8): Ejudge это система для проведения соревнований по программированию
@@ -18,7 +18,7 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: %name-svn6890.tar.bz2
+Source0: %name-svn6956.tar.bz2
 Source1: %name.rc
 Source2: ejudge-install.sh
 Source3: ejudge-README-ALT.utf8
@@ -129,6 +129,9 @@ install -d %buildroot%lang_config_dir
 %doc ejudge-*.pdf
 
 %changelog
+* Mon Jul 09 2012 Denis Kirienko <dk@altlinux.org> 2.3.23-alt1
+- Version 2.3.23 (SVN 6956)
+
 * Sat Jun 16 2012 Denis Kirienko <dk@altlinux.org> 2.3.22-alt4
 - SVN 6890
 
