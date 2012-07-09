@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname MOCHA
 Name: Coin%oname
 Version: 1.0.0
-Release: alt2.svn20091122
+Release: alt3.svn20091122
 Summary: Matroid Optimization: Combinatorial Heuristics and Algorithms
 License: Eclipse Public License v1.0
 Group: Sciences/Mathematics
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
-BuildPreReq: libCoinUtils-devel liblapack-goto-devel
+BuildPreReq: libCoinUtils-devel liblapack-devel
 BuildPreReq: libgmp_cxx-devel %mpiimpl-devel
 
 %description
@@ -60,7 +60,7 @@ rm -f *.m4
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 #autoreconf
 %configure \
@@ -74,7 +74,7 @@ doxygen doxydoc/doxygen.conf
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
@@ -101,6 +101,9 @@ cp -fR %oname/Instances %buildroot%_datadir/%oname/
 %_datadir/%oname
 
 %changelog
+* Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt3.svn20091122
+- Rebuilt with OpenMPI 1.6
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.svn20091122
 - Fixed build
 
