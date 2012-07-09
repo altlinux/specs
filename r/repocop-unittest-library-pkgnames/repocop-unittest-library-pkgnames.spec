@@ -1,12 +1,12 @@
 %define testname library-pkgnames
 
 Name: repocop-unittest-%testname
-Version: 0.09
+Version: 0.10
 Release: alt1
 BuildArch: noarch
-Requires: repocop >= 0.19
+Requires: repocop > 0.59
 
-Summary: %testname intergration tests for repocop test platform.
+Summary: %testname integration tests for repocop test platform.
 Group: Development/Other
 License: GPLv2+
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -20,10 +20,10 @@ appropriately.
 
 %build
 
-cat > %testname.posttest <<'EOF'
+cat > %testname.distrotest <<'EOF'
 #!/bin/sh
 sqlite3 "$REPOCOP_TEST_TMPDIR/tmp.db" <<EOSQL
-attach database '$REPOCOP_TEST_DBDIR/rpm.db' as rpm;
+attach database '$REPOCOP_DISTROTEST_DBDIR/rpm.db' as rpm;
 .mode tabs
 .output $REPOCOP_TEST_TMPDIR/info
 -- select distinct a.pkgid from rpm_provides as a LEFT JOIN rpm as c ON a.pkgid=c.pkgid LEFT JOIN rpm as e ON c.sourceid=e.pkgid, rpm_requires as b LEFT JOIN rpm as d ON b.pkgid=d.pkgid LEFT JOIN rpm as f ON f.pkgid=d.sourceid where a.pkgid!=b.pkgid AND providename glob 'lib*.so*' AND a.pkgid NOT glob 'lib*' AND a.pkgid NOT glob 'glib*' AND c.name NOT glob '*lib' AND providename = requirename AND e.name!=f.name;
@@ -33,10 +33,10 @@ for i in `cat $REPOCOP_TEST_TMPDIR/info`; do repocop-test-info -k $i "package co
 rm $REPOCOP_TEST_TMPDIR/*
 EOF
 
-cat > %testname-static.posttest <<'EOF'
+cat > %testname-static.distrotest <<'EOF'
 #!/bin/sh
 sqlite3 "$REPOCOP_TEST_TMPDIR/tmp.db" <<EOSQL
-attach database '$REPOCOP_TEST_DBDIR/rpm.db' as rpm;
+attach database '$REPOCOP_DISTROTEST_DBDIR/rpm.db' as rpm;
 CREATE TEMPORARY TABLE static_list (alibpkgid TEXT, alib TEXT, soliblikepatt TEXT, alibname TEXT);
 INSERT INTO static_list select a.pkgid, filename, substr(a.filename,1,length(a.filename)-2)||'.so*', NAME from rpm_files as a, rpm as b where a.filename glob '*.a' and not a.pkgid glob '*-devel-static-*' and not a.filename glob '/lib/*/*' and not a.filename glob '/usr/lib/*/*' and not a.filename glob '/usr/lib64/*/*' AND a.pkgid=b.pkgid;
 
@@ -56,14 +56,17 @@ EOF
 
 
 %install
-install -pD -m 755 %testname.posttest %buildroot%_datadir/repocop/pkgtests/%testname/posttest
-install -pD -m 755 %testname-static.posttest %buildroot%_datadir/repocop/pkgtests/%testname-static/posttest
+install -pD -m 755 %testname.distrotest %buildroot%_datadir/repocop/pkgtests/%testname/distrotest
+install -pD -m 755 %testname-static.distrotest %buildroot%_datadir/repocop/pkgtests/%testname-static/distrotest
 
 %files
 %_datadir/repocop/pkgtests/%testname/
 %_datadir/repocop/pkgtests/%testname-static/
 
 %changelog
+* Mon Jul 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- moved to distrotest
+
 * Wed Sep 30 2009 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - posttests migration
 
