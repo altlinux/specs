@@ -43,7 +43,7 @@
 
 Name: italc2
 Version: 2.0.1
-Release: %branch_release alt6
+Release: %branch_release alt7
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -56,6 +56,7 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 Source0: %name-%version.tar
 Source10: iTALC.conf
+Source20: ica-launcher.sh
 Patch10: %name-alt-all.patch
 
 Conflicts: %program_name < 2.0.0
@@ -244,8 +245,11 @@ mkdir -p %buildroot%keysdir/public/admin
 mkdir -p %buildroot%keysdir/public/supporter
 mkdir -p %buildroot%keysdir/public/other
 
-mkdir -p %buildroot%xinitdir
-ln -snf $(relative %buildroot%_bindir/ica-launcher %buildroot%xinitdir/ica-launcher) %buildroot%xinitdir/ica-launcher
+# mkdir -p %buildroot%xinitdir
+# ln -snf $(relative %buildroot%_bindir/ica-launcher %buildroot%xinitdir/ica-launcher) %buildroot%xinitdir/ica-launcher
+# For autostart ica only
+install -m 755 -pD %SOURCE10 %buildroot%xinitdir/ica-launcher
+
 find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 	| xargs -r0 -i touch "{}/key"
 
@@ -279,7 +283,7 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 %_libdir/*.so
 %_man1dir/ica.1.gz
 #%%_bindir/ica-launcher
-#%%xinitdir/ica-launcher
+%config %attr(0755,root,root) %xinitdir/ica-launcher
 %dir %confdir
 %dir %keysdir
 %attr(0770,root,%master_group) %dir %keysdir/private
@@ -322,6 +326,9 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 %icons16x16dir/imc.png
 
 %changelog
+* Mon Jul 09 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt7
+- Fix ica autostart
+
 * Mon Jul 09 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt6
 - Add conflicts for italc < 2.0.0
 - Add JavaViewer to %%docdir
