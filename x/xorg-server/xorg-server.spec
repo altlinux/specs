@@ -1,5 +1,5 @@
 %define mesaversion 8.0
-%define xorgversion 7.6.0
+%define xorgversion 7.7.0
 
 %define _libexecdir /usr/libexec
 %define _modulesdir %_libdir/X11/modules
@@ -18,7 +18,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.12.2
+Version: 1.12.3
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -309,6 +309,15 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Mon Jul 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.3-alt1
+- 1.12.3
+
+* Mon Jul 02 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.2.902-alt1
+- 1.12.3 RC2
+
+* Fri Jun 15 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.2.901-alt1
+- 1.12.3 RC1
+
 * Wed May 30 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.2-alt1
 - 1.12.2
 
