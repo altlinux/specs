@@ -2,7 +2,7 @@
 
 Name: blueman
 Version: 1.23
-Release: alt1
+Release: alt2
 Summary: The GTK+ bluetooth management utility
 License: GPLv3
 Group: System/Libraries
@@ -13,6 +13,8 @@ Requires: GConf polkit-gnome
 Provides: bluez-gnome
 
 Source: %name-%version.tar
+
+Patch1: blueman-1.23-alt-fix-icon-tray-name.patch
 
 BuildRequires: intltool libbluez-devel libgtk+2-devel libstartup-notification-devel python-module-Pyrex
 BuildRequires: python-module-dbus python-module-pygobject-devel python-module-pygtk-devel python-module-notify
@@ -39,6 +41,7 @@ Features:
 
 %prep
 %setup
+%patch1 -p1
 
 subst 's/DBusServiceUnknownError/DBusException/' blueman/*/*.py
 find -name Makefile.am | xargs sed -i 's,pythondir,pyexecdir,'
@@ -83,6 +86,9 @@ EOF
 %_man1dir/%name-*.1*
 
 %changelog
+* Mon Jul 09 2012 Mikhail Pluzhnikov <amike@altlinux.ru> 1.23-alt2
+- Fix tray icon name (Closes bug: 27523)
+
 * Wed Jun 20 2012 Mikhail Pluzhnikov <amike@altlinux.ru> 1.23-alt1
 - New release 1.23
 - Build "sendto" plugin for nautilus
