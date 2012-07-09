@@ -1,11 +1,11 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define sover 0.0.0
 %define oname Couenne
 Name: Coin%oname
 Version: 0.4.2
-Release: alt1.svn20120211
+Release: alt2.svn20120211
 Summary: Convex Over and Under ENvelopes for Nonlinear Estimation
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -77,7 +77,7 @@ This package contains development documentation for COIN-OR Couenne.
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %autoreconf
 %add_optflags -I%_includedir/coin
@@ -91,7 +91,7 @@ sed -i 's|\(wl=\).*|\1"-Wl,"|' libtool
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std TOPDIR=$PWD
 
@@ -121,6 +121,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/doc/*.pdf
 
 %changelog
+* Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2.svn20120211
+- Rebuilt with OpenMPI 1.6
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt1.svn20120211
 - Version 0.4.2
 
