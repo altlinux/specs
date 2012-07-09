@@ -1,7 +1,7 @@
 %define testname alt-alternatives-xml
 
 Name: repocop-unittest-%testname
-Version: 0.06
+Version: 0.07
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -10,22 +10,22 @@ Summary: repocop test for alternatives in old xml format.
 Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org 
-Requires: repocop >= 0.19
+Requires: repocop >= 0.59
 Requires: repocop-collector-altlinux-alternatives > 0.01
 Requires: sqlite3
 
 
 %description
-Repocop intergration test for alternatives in old xml format.
+Repocop integration test for alternatives in old xml format.
 ALT Linux specific.
 
 %prep
 
 %build
-cat > %testname.posttest <<'EOF'
+cat > %testname.distrotest <<'EOF'
 #!/bin/sh
 #--select rpm_files.pkgid, group_concat(FILENAME), group_concat(altlinux_alternatives.pkgid) from altlinux_alternatives, rpm_files WHERE ALTALTERNATIVE=FILENAME GROUP BY rpm_files.pkgid;
-sqlite3 "$REPOCOP_TEST_DBDIR/altlinux-alternatives.db" <<EOSQL
+sqlite3 "$REPOCOP_DISTROTEST_DBDIR/altlinux-alternatives.db" <<EOSQL
 .mode tabs
 .output $REPOCOP_TEST_TMPDIR/msg
 select distinct pkgid from altlinux_alternatives where altisxml>0;
@@ -37,13 +37,16 @@ EOF
 %install
 
 mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
-%__install -m 755 %testname.posttest $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/posttest
+%__install -m 755 %testname.distrotest $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/distrotest
 
 %files
 #doc README ChangeLog
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Mon Jul 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- moved to distrotests
+
 * Wed Sep 30 2009 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - posttests migration
 
