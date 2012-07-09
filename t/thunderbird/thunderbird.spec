@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	12.0.1
+Version:	13.0.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -61,7 +61,7 @@ BuildRequires: libffi-devel
 BuildRequires:	libnspr-devel       >= 4.9.0-alt1
 BuildRequires:	libnss-devel        >= 3.13.4-alt1
 BuildRequires:	libnss-devel-static >= 3.13.4-alt1
-BuildRequires:	xulrunner-devel     >= 11.0-alt1
+BuildRequires:	xulrunner-devel     >= 13.0.2-alt1
 
 Provides:	mailclient
 Obsoletes:	thunderbird-calendar
@@ -256,9 +256,13 @@ MOZ_SMP_FLAGS=-j1
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
 
 %if_with enigmail
-dir="$PWD"
 cd mailnews/extensions/enigmail
 	./makemake -r
+cd -
+
+dir="$PWD/objdir"
+
+cd $dir/mailnews/extensions/enigmail
 	%make_build
 	%make_build xpi
 	mv -f -- \
@@ -306,6 +310,8 @@ cd -
 %install
 cd mozilla
 
+dir="$PWD/objdir"
+
 %__mkdir_p \
 	%buildroot/%_bindir \
 	%buildroot/%tbird_arch_extensionsdir \
@@ -315,7 +321,7 @@ cd mozilla
 	%buildroot/%_datadir/applications \
 	#
 
-%makeinstall \
+%makeinstall -C objdir \
 	idldir=%buildroot/%tbird_idldir \
 	includedir=%buildroot/%tbird_includedir \
 	mozappdir=%buildroot/%tbird_prefix \
@@ -367,10 +373,10 @@ rm -rf -- \
 	%buildroot/%tbird_prefix/README.txt \
 	#
 
-#sed -i \
-#	-e 's,^\(MinVersion\)=.*,\1=6.0,g' \
-#	-e 's,^\(MaxVersion\)=.*,\1=10.*,g' \
-#	%buildroot/%tbird_prefix/application.ini
+ver=%version
+sed -i \
+	-e "s,^\\(MaxVersion\\)=.*,\\1=${ver%%.*}.*,g" \
+	%buildroot/%tbird_prefix/application.ini
 
 # desktop file
 install -D -m 644 %SOURCE3 %buildroot/%_datadir/applications/thunderbird.desktop
@@ -408,21 +414,21 @@ sed -i \
 %if_with enigmail
 mkdir -p %buildroot/%enigmail_ciddir
 unzip -q -u -d %buildroot/%enigmail_ciddir -- \
-	mozilla/dist/xpi-stage/enigmail.xpi
+	$dir/mozilla/dist/xpi-stage/enigmail.xpi
 %endif
 
 %if_with lightning
 mkdir -p %buildroot/%lightning_ciddir
 unzip -q -u -d %buildroot/%lightning_ciddir -- \
-	mozilla/dist/xpi-stage/lightning.xpi
+	$dir/mozilla/dist/xpi-stage/lightning.xpi
 
 mkdir -p %buildroot/%google_calendar_ciddir
 unzip -q -u -d %buildroot/%google_calendar_ciddir -- \
-	mozilla/dist/xpi-stage/gdata-provider.xpi
+	$dir/mozilla/dist/xpi-stage/gdata-provider.xpi
 
 mkdir -p %buildroot/%calendar_timezones_ciddir
 unzip -q -u -d %buildroot/%calendar_timezones_ciddir -- \
-	mozilla/dist/xpi-stage/calendar-timezones.xpi
+	$dir/mozilla/dist/xpi-stage/calendar-timezones.xpi
 
 rm -rf -- %buildroot/%tbird_arch_extensionsdir/calendar-timezones@mozilla.org
 rm -f -- %buildroot/%lightning_ciddir/application.ini
@@ -499,6 +505,17 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Jul 05 2012 Alexey Gladkov <legion@altlinux.ru> 13.0.1-alt1
+- New version (13.0.1).
+- Fixed:
+  + MFSA 2012-40 Buffer overflow and use-after-free issues found using Address Sanitizer
+  + MFSA 2012-39 NSS parsing errors with zero length items
+  + MFSA 2012-38 Use-after-free while replacing/inserting a node in a document
+  + MFSA 2012-37 Information disclosure though Windows file shares and shortcut files
+  + MFSA 2012-36 Content Security Policy inline-script bypass
+  + MFSA 2012-35 Privilege escalation through Mozilla Updater and Windows Updater Service
+  + MFSA 2012-34 Miscellaneous memory safety hazards
+
 * Wed May 09 2012 Alexey Gladkov <legion@altlinux.ru> 12.0.1-alt1
 - New version (12.0.1).
 - Use internal libcairo.

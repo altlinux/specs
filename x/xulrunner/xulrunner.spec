@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	12.0
+Version:	13.0.2
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -29,7 +29,6 @@ Source4:	xpi-mimeinfo.xml
 
 Patch0:		xulrunner-no-version.patch
 Patch2:		xulrunner-noarch-extensions.patch
-#Patch9:		xulrunner-gio-protocol-handler.patch
 
 Patch100:	mozilla-192-path.patch
 #Patch101:	mozilla-pkgconfig.patch
@@ -136,7 +135,6 @@ tar -xf %SOURCE1
 
 %patch0 -p1
 %patch2 -p1
-#patch9 -p2
 
 %patch100 -p1
 #patch101 -p1
@@ -148,6 +146,32 @@ tar -xf %SOURCE1
 #echo 5.0.1 > config/milestone.txt
 
 cp -f %SOURCE3 .mozconfig
+
+%ifarch armv7hl
+echo "ac_add_options --with-arch=armv7-a" >> .mozconfig
+echo "ac_add_options --with-float-abi=hard" >> .mozconfig
+echo "ac_add_options --with-fpu=vfpv3-d16" >> .mozconfig
+echo "ac_add_options --disable-elf-hack" >> .mozconfig
+%endif
+%ifarch armv7hnl
+echo "ac_add_options --with-arch=armv7-a" >> .mozconfig
+echo "ac_add_options --with-float-abi=hard" >> .mozconfig
+echo "ac_add_options --with-fpu=neon" >> .mozconfig
+echo "ac_add_options --disable-elf-hack" >> .mozconfig
+%endif
+%ifarch armv5tel
+echo "ac_add_options --with-arch=armv5te" >> .mozconfig
+echo "ac_add_options --with-float-abi=soft" >> .mozconfig
+echo "ac_add_options --disable-elf-hack" >> .mozconfig
+%endif
+
+%ifnarch %{ix86} x86_64
+echo "ac_add_options --disable-methodjit" >> .mozconfig
+echo "ac_add_options --disable-monoic" >> .mozconfig
+echo "ac_add_options --disable-polyic" >> .mozconfig
+echo "ac_add_options --disable-tracejit" >> .mozconfig
+%endif
+
 
 %build
 %add_optflags %optflags_shared
@@ -199,7 +223,7 @@ MOZ_SMP_FLAGS=-j1
 [ "%__nprocs" -ge 4 ] && MOZ_SMP_FLAGS=-j4
 %endif
 
-%make_build -f client.mk build \
+make -f client.mk build \
 	mozappdir=%xulr_prefix \
 	STRIP="/bin/true" \
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
@@ -211,7 +235,7 @@ cd %_builddir/%name-%version/mozilla
 	%buildroot/%_datadir/mime/packages \
 	#
 
-%makeinstall \
+%makeinstall -C objdir \
 	idldir=%buildroot/%xulr_idldir \
 	includedir=%buildroot/%xulr_includedir \
 	mozappdir=%buildroot/%xulr_prefix \
@@ -337,6 +361,17 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Tue Jun 26 2012 Alexey Gladkov <legion@altlinux.ru> 13.0.2-alt1
+- New release (13.0.2).
+- Fixed:
+  + MFSA 2012-40 Buffer overflow and use-after-free issues found using Address Sanitizer
+  + MFSA 2012-39 NSS parsing errors with zero length items
+  + MFSA 2012-38 Use-after-free while replacing/inserting a node in a document
+  + MFSA 2012-37 Information disclosure though Windows file shares and shortcut files
+  + MFSA 2012-36 Content Security Policy inline-script bypass
+  + MFSA 2012-35 Privilege escalation through Mozilla Updater and Windows Updater Service
+  + MFSA 2012-34 Miscellaneous memory safety hazards 
+
 * Wed Apr 25 2012 Alexey Gladkov <legion@altlinux.ru> 12.0-alt1
 - New release (12.0).
 - Use internal libcairo.
