@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname Bonmin
 Name: Coin%oname
 Version: 1.6
-Release: alt1.svn20120208
+Release: alt2.svn20120208
 Summary: Basic Open-source Nonlinear Mixed INteger programming
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -15,13 +15,13 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
-BuildPreReq: liblapack-goto-devel libmetis-devel
+BuildPreReq: liblapack-devel libmetis-devel
 BuildPreReq: %mpiimpl-devel libmumps-devel CoinMiplib3-devel
 BuildPreReq: CoinNetlib-devel libCoinOsi-devel libCoinUtils-devel
 BuildPreReq: CoinSample-devel libCoinCbc-devel libCoinCgl-devel
 BuildPreReq: libCoinClp-devel libipopt-devel libCoinDyLP-devel
 BuildPreReq: libCoinVol-devel libCoinSYMPHONY-devel libCoinBcp-devel
-#BuildPreReq: libCoinCouenne-devel
+BuildPreReq: libCoinCouenne-devel
 
 %description
 BONMIN (Basic Open-source Nonlinear Mixed INteger programming) is an
@@ -69,7 +69,7 @@ This package contains development documentation for COIN-OR BONMIN.
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %autoreconf
 DEFS="-DCOIN_HAS_BCP=1 -DCOIN_HAS_BLAS=1 -DCOIN_HAS_LAPACK=1"
@@ -97,7 +97,7 @@ popd
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
@@ -122,6 +122,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/doc/*.pdf %oname/examples doxydoc/Doc/html
 
 %changelog
+* Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt2.svn20120208
+- Rebuilt with OpenMPI 1.6
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt1.svn20120208
 - Version 1.6
 
