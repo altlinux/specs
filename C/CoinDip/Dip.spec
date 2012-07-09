@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname Dip
 Name: Coin%oname
 Version: 0.83.1
-Release: alt1.svn20110910
+Release: alt2.svn20110910
 Summary: COIN-OR Decomposition for Integer Programming
 License: Eclipse Public License v1.0
 Group: Sciences/Mathematics
@@ -18,7 +18,7 @@ BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
 BuildPreReq: libCoinUtils-devel libCoinAlps-devel libCoinBcps-devel
 BuildPreReq: libCoinBlis-devel libCoinCbc-devel libCoinCgl-devel
 BuildPreReq: libCoinOsi-devel libCoinClp-devel
-BuildPreReq: liblapack-goto-devel %mpiimpl-devel chrpath
+BuildPreReq: liblapack-devel %mpiimpl-devel chrpath
 
 %description
 DIP (Decomposition for Integer Programming) is an open-source extensible
@@ -147,7 +147,7 @@ Programming.
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %autoreconf
 %configure \
@@ -161,7 +161,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
@@ -190,6 +190,9 @@ done
 %doc %oname/examples/*
 
 %changelog
+* Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.83.1-alt2.svn20110910
+- Rebuilt with OpenMPI 1.6
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.83.1-alt1.svn20110910
 - Version 0.83.1
 
