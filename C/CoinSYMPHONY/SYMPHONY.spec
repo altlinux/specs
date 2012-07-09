@@ -1,12 +1,12 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname SYMPHONY
 %define somver 0
 %define sover %somver.0.0
 Name: Coin%oname
 Version: 5.4.4
-Release: alt1.svn20120204
+Release: alt2.svn20120204
 Summary: Open-source solver for mixed-integer linear programs (MILPs) written in C
 License: CPL v1.o
 Group: Sciences/Mathematics
@@ -97,7 +97,7 @@ This package contains documentation for COIN-OR SYMPHONY.
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %autoreconf
 %add_optflags -pthread
@@ -122,7 +122,7 @@ TOPDIR=$PWD
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 ln -s libSym.la SYMPHONY/src/.libs/libSym.lai
 ln -s libSymAppl.la SYMPHONY/src/.libs/libSymAppl.lai
@@ -174,6 +174,9 @@ popd
 %doc %oname/Doc/*
 
 %changelog
+* Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.4-alt2.svn20120204
+- Rebuilt with OpenMPI 1.6
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.4-alt1.svn20120204
 - Version 5.4.4
 
