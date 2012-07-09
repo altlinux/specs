@@ -5,7 +5,7 @@
 
 %define kversion	3.4.4
 %define krelease	alt1
-%define flavour		std-def
+%define flavour		un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
@@ -113,7 +113,7 @@ EOF
 
 %changelog
 * Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1.197636.1
-- Build for kernel-image-std-def-3.4.4-alt1.
+- Build for kernel-image-un-def-3.4.4-alt1.
 
 * Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1
 - 5.4.4
