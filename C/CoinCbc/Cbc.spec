@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname Cbc
 Name: Coin%oname
 Version: 2.7.6
-Release: alt1.svn20120208
+Release: alt2.svn20120208
 Summary: COIN-OR Branch-and-Cut MIP Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -86,7 +86,7 @@ This package contains examples for COIN-OR Branch-and-Cut MIP Solver.
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %autoreconf
 %configure \
@@ -109,7 +109,7 @@ popd
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-Rpath=%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std TOPDIR=$PWD
 
@@ -147,6 +147,9 @@ rm -fR %buildroot%_docdir/coin \
 #_bindir/%oname-driver
 
 %changelog
+* Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.6-alt2.svn20120208
+- Rebuilt with OpenMPI 1.6
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.6-alt1.svn20120208
 - Version 2.7.6
 
