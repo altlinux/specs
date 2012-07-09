@@ -1,6 +1,6 @@
 Name: bind9.8
-Version: 9.8.2
-Release: alt2
+Version: 9.8.3
+Release: alt1
 
 %def_enable ipv6
 %def_with openssl
@@ -10,8 +10,8 @@ License: BSD-style
 Group: System/Servers
 
 Url: http://www.isc.org/products/BIND/
-#define vsuffix -P1
-%define vsuffix %nil
+%define vsuffix -P1
+#define vsuffix %nil
 %define srcname %name-%version%vsuffix
 Source0: ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
 Source3: bind.README.bind-devel
@@ -40,6 +40,8 @@ Source51: ldap2zone.1
 Source52: zonetodb.1
 Source53: zone2sqlite.1
 Source54: bind-9.3.1rc1-sdb_tools-Makefile.in
+
+Source100: bind9.8.watch
 
 Patch1: bind-9.5-PIE.patch
 Patch2: bind-9.5-overflow.patch
@@ -526,6 +528,13 @@ fi
 %exclude %docdir/README.bind-devel
 
 %changelog
+* Mon Jul 09 2012 Michael Shigorin <mike@altlinux.org> 9.8.3-alt1
+- new version (watch file uupdate)
+  + 9.8.3-P1
+
+* Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 9.8.2-alt3
+- added watch file
+
 * Sat May 05 2012 Michael Shigorin <mike@altlinux.org> 9.8.2-alt2
 - dropped patch2
 - doc/{draft,rfc} are there no more
