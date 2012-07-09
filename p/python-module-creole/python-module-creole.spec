@@ -1,7 +1,7 @@
 
 Name: python-module-creole
 Version: 0.3.3
-Release: alt1.1
+Release: alt1.2
 
 Summary: python-creole is an open-source creole2html and html2creole converter in pure Python.
 License: GPLv3+
@@ -32,11 +32,14 @@ The creole2html part based on the creole markup parser and emitter from the Moin
 
 %files
 %python_sitelibdir/creole
-%python_sitelibdir/tests
+%exclude %python_sitelibdir/tests
 %python_sitelibdir/python_creole-*.egg-info
 %doc AUTHORS README LICENSE
 
 %changelog
+* Mon Jul 09 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.3-alt1.2
+- exclude tests from package
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.3-alt1.1
 - Rebuild with Python-2.7
 
