@@ -1,5 +1,5 @@
 Name: kernel-source-pf_ring
-Version: 4.4.1
+Version: 5.4.4
 Release: alt1
 
 Summary: Packet capture acceleration by means of a ring buffer
@@ -40,7 +40,7 @@ programs that use PF_RING.
 mkdir -p %kernel_srcdir
 mkdir -p %buildroot%_includedir/linux-default/include/linux
 tar -cjf %kernel_srcdir/%name-%version.tar.bz2 %name-%version
-cp -r %name-%version/linux/pf_ring.h %buildroot%_includedir/linux-default/include/linux
+cp -r %name-%version/kernel/linux/pf_ring.h %buildroot%_includedir/linux-default/include/linux
 
 %files
 %attr(0644,root,root) %kernel_src/%name-%version.tar.bz2
@@ -49,6 +49,12 @@ cp -r %name-%version/linux/pf_ring.h %buildroot%_includedir/linux-default/includ
 %_includedir/linux-default/include/linux/pf_ring.h
 
 %changelog
+* Sun Jul 08 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1
+- 5.4.4
+
+* Sun Feb 05 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.2.1-alt1
+- 5.2.1
+
 * Thu Oct 14 2010 Alexey Shabalin <shaba@altlinux.ru> 4.4.1-alt1
 - 4.4.1
 

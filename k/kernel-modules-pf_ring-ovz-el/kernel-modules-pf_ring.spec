@@ -3,16 +3,16 @@
 %define module_release	alt1
 %define modules_list intel/e1000e/e1000e-2.0.0.1 intel/igb/igb-3.4.7
 
-%define kversion	3.4.4
-%define krelease	alt1
-%define flavour		std-def
+%define kversion	2.6.32
+%define krelease	alt71
+%define flavour		ovz-el
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Summary: pf_ring kernel modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197636.1
+Release: %module_release.132640.71
 License: GPL
 Group: System/Kernel and hardware
 
@@ -112,8 +112,8 @@ EOF
 
 
 %changelog
-* Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1.197636.1
-- Build for kernel-image-std-def-3.4.4-alt1.
+* Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1.132640.71
+- Build for kernel-image-ovz-el-2.6.32-alt71.
 
 * Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1
 - 5.4.4
