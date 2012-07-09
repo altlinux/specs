@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname Bcp
 Name: Coin%oname
 Version: 1.3.4
-Release: alt1.svn20120210
+Release: alt2.svn20120210
 Summary: COIN-OR Branch-Cut-Price Framework
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -79,17 +79,17 @@ Branch-Cut-Price Framework.
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %autoreconf
 %configure \
 	--with-mpi-incdir=%mpidir/include \
-	--with-mpi-lib="-L%mpidir/lib -Wl,-R%mpidir/lib -lmpi"
+	--with-mpi-lib="-L%mpidir/lib -Wl,-rpath,%mpidir/lib -lmpi"
 %make_build
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std
 
@@ -109,6 +109,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/examples
 
 %changelog
+* Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt2.svn20120210
+- Rebuilt with OpenMPI 1.6
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.4-alt1.svn20120210
 - Version 1.3.4
 
