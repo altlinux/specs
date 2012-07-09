@@ -1,6 +1,6 @@
 Summary: 389 Administration Server
 Name: 389-admin
-Version: 1.1.23
+Version: 1.1.30
 Release: alt1
 License: GPLv2
 Url: http://port389.org/
@@ -33,10 +33,10 @@ export icu_lib=-L%_libdir/
 export adminutil_lib=-L%_libdir/
 export adminutil_inc=/usr/include/libadminutil/
 
-./configure --prefix=/usr --exec-prefix=/usr --bindir=%_bindir --sbindir=%_sbindir --sysconfdir=%_sysconfdir \
- --datadir=%_datadir --includedir=%_includedir --libdir=%_libdir --libexecdir=%_libexecdir --localstatedir=/var \
- --sharedstatedir=/usr/com --mandir=/usr/share/man --infodir=/usr/share/info --with-modnss-lib=%_libdir/apache2/modules/ \
- --with-httpd=%_sbindir/httpd2.worker --with-apxs=%_sbindir/apxs2
+%configure --localstatedir=/var --with-modnss-lib=%_libdir/apache2/modules/ \
+           --with-httpd=%_sbindir/httpd2.worker --with-apxs=%_sbindir/apxs2 \
+           --with-openldap --with-selinux
+
 %make
 
 %install
@@ -67,6 +67,15 @@ export adminutil_inc=/usr/include/libadminutil/
 %_man8dir/*.gz
 
 %changelog
+* Thu Jul 05 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.30-alt1
+- 1.1.30
+
+* Sat May 05 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.29-alt1
+- 1.1.29
+
+* Tue Mar 27 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.28-alt1
+- 1.1.28
+
 * Sat Sep 10 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.23-alt1
 - 1.1.23
 

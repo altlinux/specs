@@ -1,7 +1,6 @@
 Name: 389-adminutil
-Version: 1.1.14
+Version: 1.1.15
 Release: alt1
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 License: LGPLv2
 Url: http://port389.org
 Group: System/Libraries
@@ -10,7 +9,7 @@ Summary: Utility library for directory server administration
 # Automatically added by buildreq on Mon Aug 17 2009
 BuildRequires: gcc-c++ libicu-devel mozldap-devel
 
-BuildRequires: libsvrcore-devel
+BuildRequires: libsvrcore-devel libsasl2-devel openldap-devel
 
 Provides: fedora-ds-adminutil = %version-%release
 Obsoletes: fedora-ds-adminutil < %version-%release
@@ -43,8 +42,8 @@ that use %name.
 %setup
 
 %build
-%configure --disable-tests
-%__make
+%configure --disable-test- --with-openldap
+%make
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -63,6 +62,9 @@ rm -f %buildroot%_libdir/lib*.la
 %_includedir/libadmsslutil
 
 %changelog
+* Tue Mar 27 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.15-alt1
+- 1.1.15
+
 * Fri Aug 05 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.1.14-alt1
 - 1.1.14
 

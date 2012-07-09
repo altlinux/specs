@@ -1,7 +1,7 @@
 Summary: 389 Directory Server
 Name: 389-ds
-Version: 1.2.9.10
-Release: alt1.1
+Version: 1.2.10.12
+Release: alt1
 License: GPLv2
 Url: http://port389.org
 Group: System/Servers
@@ -113,7 +113,17 @@ find %buildroot%_libdir -name "*.la" -delete
 %preun_service fedora-ds
 %preun_service fedora-ds-snmp
 
+%triggerpostun -- 389-ds < 1.2.10.0-alt1
+echo "Upgrading 389-ds < 1.2.10.0, manual Offline upgrade is required!
+Turn 389-ds off and make 'setup-ds -u' then"
+
 %changelog
+* Mon Jul 09 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.10.12-alt1
+- 1.2.10.12
+
+* Fri Jul 06 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.10.0-alt1
+- 1.2.10.0
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.9.10-alt1.1
 - Rebuild with Python-2.7
 
