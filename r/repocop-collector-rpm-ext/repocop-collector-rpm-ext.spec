@@ -1,7 +1,7 @@
 %define testname rpm-ext
 
 Name: repocop-collector-%testname
-Version: 0.06
+Version: 0.07
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -10,7 +10,7 @@ Summary: repocop postcollector for extended rpm database.
 Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
-Requires: repocop > 0.40
+Requires: repocop > 0.59
 Requires: sqlite3
 
 
@@ -22,12 +22,12 @@ with the following tables:
 %prep
 
 %build
-cat > %testname.posttest <<'EOF'
+cat > %testname.distrotest <<'EOF'
 #!/bin/sh
 #--select rpm_files.pkgid, group_concat(FILENAME), group_concat(altlinux_alternatives.pkgid) from altlinux_alternatives, rpm_files WHERE ALTALTERNATIVE=FILENAME GROUP BY rpm_files.pkgid;
-rm -f "$REPOCOP_TEST_DBDIR/rpm-ext.db"
-repocop-sqlite "$REPOCOP_TEST_DBDIR/rpm-ext.db" <<EOSQL
-attach database '$REPOCOP_TEST_DBDIR/rpm.db' as rpm;
+rm -f "$REPOCOP_DISTROTEST_DBDIR/rpm-ext.db"
+repocop-sqlite "$REPOCOP_DISTROTEST_DBDIR/rpm-ext.db" <<EOSQL
+attach database '$REPOCOP_DISTROTEST_DBDIR/rpm.db' as rpm;
 CREATE TABLE EXPLICIT_CONFLICT (CONFLICTER TEXT, CONFLICTEE TEXT);
 -- note: asymmetric;
 insert INTO EXPLICIT_CONFLICT select distinct a.pkgid, b.pkgid FROM rpm_conflicts as a, rpm_provides as b WHERE a.pkgid<>b.pkgid AND b.providename = a.conflictname;
@@ -45,13 +45,16 @@ EOSQL
 EOF
 
 %install
-install -D -m 755 %testname.posttest $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%testname/posttest
+install -D -m 755 %testname.distrotest $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%testname/distrotest
 
 %files
 #doc README ChangeLog
 %_datadir/repocop/pkgcollectors/%testname
 
 %changelog
+* Mon Jul 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- support for distrotests
+
 * Thu Feb 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - spec cleanup
 
