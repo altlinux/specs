@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname OS
 Name: Coin%oname
 Version: 2.4.2
-Release: alt1.svn20120210
+Release: alt2.svn20120210
 Summary: COIN-OR Optimization Services (OS)
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -20,8 +20,8 @@ BuildPreReq: libCoinCgl-devel libCoinCppAD-devel libCoinDyLP-devel
 BuildPreReq: libipopt-devel libCoinOsi-devel libCoinSYMPHONY-devel
 BuildPreReq: libCoinVol-devel libCoinBcp-devel libCoinBonmin-devel
 BuildPreReq: libCoinCouenne-devel CoinSample-devel
-BuildPreReq: liblapack-goto-devel libmumps-devel
-BuildPreReq: libgomp-devel %mpiimpl-devel boost-devel chrpath
+BuildPreReq: liblapack-devel libmumps-devel
+BuildPreReq: %mpiimpl-devel boost-devel chrpath
 
 Requires: lib%name = %version-%release
 
@@ -92,7 +92,7 @@ This package contains examples for COIN-OR Optimization Services
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %autoreconf
 DEFS="-DCOIN_HAS_BONMIN=1 -DCOIN_HAS_COUENNE=1 -DCOIN_HAS_CPPAD=1"
@@ -100,7 +100,7 @@ DEFS="$DEFS -DCOIN_HAS_BCP=1"
 %add_optflags $DEFS -I%_includedir/coin -I%mpidir/include
 %configure \
 	--enable-debug \
-	--enable-openmp \
+	--disable-openmp \
 	--with-boncouenne \
 	--with-cppad-incdir=%_includedir/cppad \
 	--with-cppad-lib=-lcppad_ipopt \
@@ -115,7 +115,7 @@ sed -i 's|\(wl=\).*|\1"-Wl,"|' libtool
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std OSSRCDIR=$PWD/%oname
 
@@ -147,6 +147,9 @@ done
 %doc %oname/applications
 
 %changelog
+* Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt2.svn20120210
+- Rebuilt with OpenMPI 1.6
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1.svn20120210
 - Version 2.4.2
 
