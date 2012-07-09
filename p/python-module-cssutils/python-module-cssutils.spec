@@ -1,7 +1,7 @@
 %define oname cssutils
 Name: python-module-cssutils
 Version: 0.9.9
-Release: alt1
+Release: alt2
 Summary: CSS Cascading Style Sheets library for Python
 
 Group: Development/Python
@@ -42,11 +42,15 @@ This package contains documentation for %name.
 %doc *.txt PKG-INFO
 %_bindir/*
 %python_sitelibdir_noarch/*
+%exclude %python_sitelibdir_noarch/tests
 
 %files doc
 %doc examples docs/*
 
 %changelog
+* Mon Jul 09 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.9-alt2
+- exclude tests from package
+
 * Tue Jul 03 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.9-alt1
 - 0.9.9
 
