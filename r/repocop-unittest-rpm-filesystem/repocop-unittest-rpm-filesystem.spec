@@ -1,5 +1,5 @@
 Name: repocop-unittest-rpm-filesystem
-Version: 0.11
+Version: 0.12
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -8,9 +8,9 @@ Summary: test for filesystem conflicts in rpm packages.
 Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
-Requires: repocop > 0.19
-Requires: perl-RPM-Source-Editor >= 0.40
-Requires: repocop-collector-rpm-ext >= 0.02
+Requires: repocop > 0.59
+Requires: perl-RPM-Source-Editor >= 0.70
+Requires: repocop-collector-rpm-ext >= 0.07
 
 Source: %name-%version.tar
 
@@ -23,9 +23,9 @@ integration test for repocop test platform.
 %build
 
 %install
-for i in *.posttest; do
-    testname=`echo $i | sed -e s,.posttest\$,,`
-    install -pD -m 755 $testname.posttest %buildroot%_datadir/repocop/pkgtests/$testname/posttest
+for i in *.distrotest; do
+    testname=`echo $i | sed -e s,.distrotest\$,,`
+    install -pD -m 755 $testname.distrotest %buildroot%_datadir/repocop/pkgtests/$testname/distrotest
 done
 
 #mkdir -p %buildroot%_datadir/repocop/fixscripts/
@@ -36,6 +36,9 @@ done
 #%_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Jul 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- introduced distrotests
+
 * Thu Jan 14 2010 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
 - increased level of all filesystem conflict tests.
 
