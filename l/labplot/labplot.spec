@@ -2,7 +2,7 @@
 %define pre .alpha2
 Name: labplot
 Version: 2.0.0
-Release: alt5.svn20090921
+Release: alt6.svn20090921
 
 Summary: Function and Data Plotter
 
@@ -64,6 +64,11 @@ sed -i 's|@LIBDIR@|%_libdir|g' src/qtfrontend/config.pri
 install -p -m644 %SOURCE2 .
 sed -i "s|@PWD@|$PWD|g" CMakeCache.txt
 
+%ifarch x86_64
+LIB64=64
+%endif
+sed -i "s|@64@|$LIB64|" CMakeLists.txt
+
 %build
 cmake -Wdev --debug-output -DCMAKE_INSTALL_PREFIX=%prefix .
 
@@ -112,6 +117,9 @@ popd
 %_libdir/scidavis
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt6.svn20090921
+- Rebuilt with libhdf5-7-seq 1.8.8-alt2
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt5.svn20090921
 - Fixed build
 
