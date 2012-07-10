@@ -5,7 +5,7 @@
 %define sover %somver.2.6
 Name: hypre
 Version: 2.8.0b
-Release: alt3
+Release: alt4
 Summary: Scalable algorithms for solving linear systems of equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -18,12 +18,12 @@ Source1: babel_files
 Requires: lib%name-devel = %version-%release
 
 BuildRequires(pre): rpm-build-python rpm-build-java /proc
-BuildPreReq: gcc-fortran gcc-c++ %mpiimpl-devel emacs23-nox
+BuildPreReq: gcc-fortran gcc-c++ %mpiimpl-devel emacs24-nox
 BuildPreReq: liblapack-devel w3c-libwww-devel
 BuildPreReq: libsuperlu-devel babel
 BuildPreReq: java-devel-default libchasm-devel chasm python-devel
 BuildPreReq: libnumpy-devel libxml2-devel python-module-libxml2
-BuildPreReq: libltdl-devel libgomp-devel
+BuildPreReq: libltdl-devel
 
 %description
 The goal of the Scalable Linear Solvers project is to develop scalable
@@ -107,7 +107,7 @@ FLAGS="%optflags %optflags_shared -I%_includedir/numpy"
 	--with-MPI-libs="mpi_f90 mpi_f77 mpi mpi_cxx" \
 	--with-MPI-lib-dirs="%mpidir/lib" \
 	--with-timing \
-	--with-openmp \
+	--without-openmp \
 	--with-babel \
 	--with-chasm=%prefix \
 	--with-blas-libs=-lgoto2 \
@@ -158,7 +158,7 @@ for i in $LIBS; do
 	then
 		ar x ../$i.a
 		mpic++ -shared * -L.. $ADDLIB \
-			-lsidl -llapack -lgoto2 -lgomp \
+			-lsidl -llapack -lgoto2 \
 			-Wl,-rpath,%mpidir/lib \
 			-Wl,-soname,$i.so.%somver -o ../$i.so.%sover
 		ln -s $i.so.%sover ../$i.so.%somver
@@ -188,6 +188,9 @@ popd
 %_docdir/lib%name-devel-doc
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0b-alt4
+- Rebuilt with emacs 24.1
+
 * Sun Jun 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0b-alt3
 - Rebuilt with OpenMPI 1.6
 
