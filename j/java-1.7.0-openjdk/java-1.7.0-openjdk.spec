@@ -14,9 +14,10 @@ BuildRequires(pre): rpm-build-java
 %set_compress_method none
 %define with_systemtap 0
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
-%define version 1.7.0.3
+BuildRequires: jpackage-compat
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.7.0-openjdk
+%define version 1.7.0.3
 # If gcjbootstrap is 1 OpenJDK is bootstrapped against
 # java-1.6.0-sun-devel.  If gcjbootstrap is 0 OpenJDK is built against
 # java-1.6.0-openjdk-devel.
@@ -28,21 +29,13 @@ BuildRequires: jpackage-generic-compat
 # If runtests is 0 test suites will not be run.
 %global runtests 0
 
-%global openjdkver 147
-%global openjdkbuildver b%{openjdkver}
-%global openjdkdate 27_jun_2011
-
-%global icedtea_version 2.1
-%global hg_tag icedtea-{icedtea_version}-branchpoint
+%global icedtea_version 2.2.1
+%global hg_tag icedtea-{icedtea_version}
 
 %global accessmajorver 1.23
 %global accessminorver 0
 %global accessver %{accessmajorver}.%{accessminorver}
 %global accessurl http://ftp.gnome.org/pub/GNOME/sources/java-access-bridge/
-
-%global openjdkurlbase http://www.java.net/download/openjdk/jdk7/promoted/
-%global openjdkurl %{openjdkurlbase}%{openjdkbuildver}/
-%global openjdkzip  openjdk-7-fcs-src-%{openjdkbuildver}-%{openjdkdate}.zip
 
 %global mauvedate 2008-10-22
 
@@ -57,16 +50,14 @@ BuildRequires: jpackage-generic-compat
 %ifarch ppc
 %global archbuild ppc
 %global archinstall ppc
+%global archdef PPC
 %endif
 %ifarch ppc64
 %global archbuild ppc64
 %global archinstall ppc64
+%global archdef PPC
 %endif
-%ifarch %ix86
-%global archbuild i586
-%global archinstall i386
-%endif
-%ifarch i686
+%ifarch %{ix86}
 %global archbuild i586
 %global archinstall i386
 %endif
@@ -75,8 +66,19 @@ BuildRequires: jpackage-generic-compat
 %global archinstall ia64
 %endif
 %ifarch s390
+%global archbuild s390
+%global archinstall s390
+%global archdef S390
+%endif
+%ifarch s390x
 %global archbuild s390x
 %global archinstall s390x
+%global archdef S390
+%endif
+%ifarch %{arm}
+%global archbuild arm
+%global archinstall arm
+%global archdef ARM
 %endif
 # 32 bit sparc, optimized for v9
 %ifarch sparcv9
@@ -169,7 +171,7 @@ BuildRequires: jpackage-generic-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt2_2.1.1jpp7
+Release: alt2_2.2.1.8jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -186,16 +188,20 @@ Group:   Development/Java
 License:  ASL 1.1 and ASL 2.0 and GPL+ and GPLv2 and GPLv2 with exceptions and LGPL+ and LGPLv2 and MPLv1.0 and MPLv1.1 and Public Domain and W3C
 URL:      http://openjdk.java.net/
 
-# hg clone http://icedtea.classpath.org/hg/release/icedtea7-forest/ openjdk -r %{hg_tag}
-# hg clone http://icedtea.classpath.org/hg/release/icedtea7-forest/corba/ openjdk/corba -r %{hg_tag}
-# hg clone http://icedtea.classpath.org/hg/release/icedtea7-forest/hotspot/ openjdk/hotspot -r %{hg_tag}
-# hg clone http://icedtea.classpath.org/hg/release/icedtea7-forest/jaxp/ openjdk/jaxp -r %{hg_tag}
-# hg clone http://icedtea.classpath.org/hg/release/icedtea7-forest/jaxws/ openjdk/jaxws -r %{hg_tag}
-# hg clone http://icedtea.classpath.org/hg/release/icedtea7-forest/jdk/ openjdk/jdk -r %{hg_tag}
-# hg clone http://icedtea.classpath.org/hg/release/icedtea7-forest/langtools/ openjdk/langtools -r %{hg_tag}
+#head
+#REPO=http://icedtea.classpath.org/hg/icedtea7-forest
+#current release
+#REPO=http://icedtea.classpath.org/hg/release/icedtea7-forest-2.2
+# hg clone $REPO/ openjdk -r %{hg_tag}
+# hg clone $REPO/corba/ openjdk/corba -r %{hg_tag}
+# hg clone $REPO/hotspot/ openjdk/hotspot -r %{hg_tag}
+# hg clone $REPO/jaxp/ openjdk/jaxp -r %{hg_tag}
+# hg clone $REPO/jaxws/ openjdk/jaxws -r %{hg_tag}
+# hg clone $REPO/jdk/ openjdk/jdk -r %{hg_tag}
+# hg clone $REPO/langtools/ openjdk/langtools -r %{hg_tag}
 # find openjdk -name ".hg" -exec rm -rf '{}' \;
 # find openjdk -name ".hgtags" -exec rm -rf '{}' \;
-# tar czf openjdk-%{icedtea_version}.tar.gz openjdk
+# tar czf openjdk-icedtea-%{icedtea_version}.tar.gz openjdk
 Source0:  openjdk-icedtea-%{icedtea_version}.tar.gz
 
 # Gnome access bridge
@@ -219,7 +225,7 @@ Source5: javac-wrapper
 # tar czf generated-files.tar.gz generated
 Source6: generated-files.tar.gz
 
-# Class rewrite to rewrite rhino heirarchy
+# Class rewrite to rewrite rhino hierarchy
 Source7: class-rewriter.tar.gz
 
 # Systemtap tapsets. Zipped up to keep it small.
@@ -258,18 +264,23 @@ Patch5:   java-1.7.0-openjdk-debugdocs.patch
 # Add debuginfo where missing
 Patch6:   %{name}-debuginfo.patch
 
-# Fix bug in jdk_generic_profile.sh
-Patch7:   %{name}-system-zlib.patch
-
-# Remove option no longer accepted by GCC
-Patch8:   %{name}-remove-mimpure-opt.patch
-
 #
 # OpenJDK specific patches
 #
 
 # Add rhino support
 Patch100: rhino.patch
+
+# Type fixing for s390
+Patch101: %{name}-bitmap.patch
+Patch102: %{name}-size_t.patch
+
+# Patches for Arm
+Patch103: %{name}-arm-fixes.patch
+
+# Patch for PPC/PPC64
+Patch104: %{name}-ppc-zero-jdk.patch
+Patch105: %{name}-ppc-zero-hotspot.patch
 
 #
 # Bootstrap patches (code with this is never shipped)
@@ -396,13 +407,12 @@ Patch300: pulse-soundproperties.patch
 
 # SystemTap support
 # Workaround for RH613824
-Patch301: systemtap-alloc-size-workaround.patch
 Patch302: systemtap.patch
 
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libalsa-devel
-BuildRequires: libcups-devel
+BuildRequires: cups-devel
 BuildRequires: desktop-file-utils
 BuildRequires: libungif-devel
 BuildRequires: liblcms2-devel
@@ -414,18 +424,18 @@ BuildRequires: libXtst-devel
 BuildRequires: libjpeg-devel
 BuildRequires: libpng-devel
 BuildRequires: wget
-BuildRequires: xalan-j2
-BuildRequires: xerces-j2
+BuildRequires: xsltproc libxslt
 BuildRequires: xorg-x11-proto-devel
 BuildRequires: mercurial
 BuildRequires: ant
 BuildRequires: ant-nodeps
 BuildRequires: libXinerama-devel
 BuildRequires: rhino
+BuildRequires: zip
 %if %{gcjbootstrap}
 BuildRequires: java-1.6.0-sun-devel
 %else
-BuildRequires: java-1.6.0-openjdk-devel
+BuildRequires: java-1.7.0-openjdk-devel
 %endif
 # Mauve build requirements.
 BuildRequires: xorg-x11-xvfb
@@ -446,21 +456,20 @@ BuildRequires: pulseaudio >= 0.9.11
 %endif
 # Zero-assembler build requirement.
 %ifnarch %{jit_arches}
-BuildRequires: libffi-devel
+BuildRequires: libffi-devel >= 3.0.10
 %endif
-
-ExclusiveArch: x86_64 %ix86
 
 # cacerts build requirement.
 BuildRequires: openssl
 # execstack build requirement.
+# no prelink on ARM yet
+%ifnarch %{arm}
 BuildRequires: prelink
+%endif
 %if_enabled systemtap
 #systemtap build requirement.
 BuildRequires: systemtap-sdt-devel
 %endif
-# visualvm build requirements.
-BuildRequires: jakarta-commons-logging
 
 Requires: rhino
 Requires: liblcms2
@@ -496,6 +505,13 @@ Provides: jce = %{epoch}:%{version}
 Provides: jdbc-stdext = 4.1
 Provides: java-sasl = %{epoch}:%{version}
 Provides: java-fonts = %{epoch}:%{version}
+
+# Obsolete older 1.6 packages as it cannot use the new bytecode
+Obsoletes: java-1.6.0-openjdk
+Obsoletes: java-1.6.0-openjdk-demo
+Obsoletes: java-1.6.0-openjdk-devel
+Obsoletes: java-1.6.0-openjdk-javadoc
+Obsoletes: java-1.6.0-openjdk-src
 Source44: import.info
 
 %define altname %name
@@ -529,7 +545,7 @@ Summary: OpenJDK Development Environment
 Group:   Development/Java
 
 # Require base package.
-Requires:         %{name} = %{epoch}:%{version}-%{release}
+Requires:         java-1.7.0-openjdk = %{epoch}:%{version}-%{release}
 # Post requires alternatives to install tool alternatives.
 Requires(post):   alternatives
 # Postun requires alternatives to uninstall tool alternatives.
@@ -552,7 +568,7 @@ The OpenJDK development tools.
 Summary: OpenJDK Demos
 Group:   Development/Java
 
-Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires: java-1.7.0-openjdk = %{epoch}:%{version}-%{release}
 
 %description demo
 The OpenJDK demos.
@@ -561,7 +577,7 @@ The OpenJDK demos.
 Summary: OpenJDK Source Bundle
 Group:   Development/Java
 
-Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires: java-1.7.0-openjdk = %{epoch}:%{version}-%{release}
 
 %description src
 The OpenJDK source bundle.
@@ -580,6 +596,8 @@ Requires(postun): alternatives
 # Standard JPackage javadoc provides.
 Provides: java-javadoc = %{epoch}:%{version}-%{release}
 Provides: java-%{javaver}-javadoc = %{epoch}:%{version}-%{release}
+# fc provides
+Provides: java-javadoc = 1:1.7.0
 
 %description javadoc
 The OpenJDK API documentation.
@@ -601,7 +619,6 @@ cp %{SOURCE4} .
 
 # Add systemtap patches if enabled
 %if_enabled systemtap
-%patch301
 %patch302
 %endif
 
@@ -695,7 +712,7 @@ export NUM_PROC=`/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :`
 export NUM_PROC=${NUM_PROC:-1}
 
 # Build IcedTea and OpenJDK.
-%ifarch sparc64 alpha
+%ifarch s390x sparc64 alpha ppc64
 export ARCH_DATA_MODEL=64
 %endif
 %ifarch alpha
@@ -710,8 +727,22 @@ patch -l -p0 < %{PATCH5}
 patch -l -p0 < %{PATCH6}
 %endif
 
-patch -l -p0 < %{PATCH7}
-patch -l -p0 < %{PATCH8}
+# Type fixes for s390
+%ifarch s390 s390x
+patch -l -p0 < %{PATCH101}
+#patch -l -p0 < %{PATCH102} # size_t patch disabled for now as it has conflicts
+%endif
+
+# Arm fixes
+%ifarch %{arm}
+patch -l -p0 < %{PATCH103}
+%endif
+
+%ifarch ppc ppc64
+# PPC fixes
+patch -l -p0 < %{PATCH104}
+patch -l -p0 < %{PATCH105}
+%endif
 
 # Add a "-icedtea" tag to the version
 sed -i "s#BUILD_VARIANT_RELEASE)#BUILD_VARIANT_RELEASE)-icedtea#" openjdk/jdk/make/common/shared/Defs.gmk
@@ -820,7 +851,20 @@ make MEMORY_LIMIT=-J-Xmx512m \
   DISABLE_NIMBUS="true" \
   XSLT="/usr/bin/xsltproc" \
   FT2_CFLAGS="-I/usr/include/freetype2 " \
-  FT2_LIBS="-lfreetype "
+  FT2_LIBS="-lfreetype " \
+%ifnarch %{jit_arches}
+  LIBFFI_CFLAGS="`pkg-config --cflags libffi` " \
+  LIBFFI_LIBS="-lffi " \
+  ZERO_BUILD="true" \
+  ZERO_LIBARCH="%{archbuild}" \
+  ZERO_ARCHDEF="%{archdef}" \
+%ifarch ppc ppc64 s390 s390x
+  ZERO_ENDIANNESS="big" \
+%else
+  ZERO_ENDIANNESS="little" \
+%endif
+%endif
+  %{nil}
 
 export JDK_TO_BUILD_WITH=$PWD/build/linux-%{archbuild}/j2sdk-image
 
@@ -837,14 +881,20 @@ pushd openjdk >& /dev/null
 export ALT_DROPS_DIR=$PWD/../drops
 export ALT_BOOTDIR="$JDK_TO_BUILD_WITH"
 
+# Save old umask as jdk_generic_profile overwrites it
+oldumask=`umask`
+
 # Set generic profile
 source jdk/make/jdk_generic_profile.sh
+
+# Restore old umask
+umask $oldumask
 
 make MEMORY_LIMIT=-J-Xmx512m \
   ANT="/usr/bin/ant" \
   DISTRO_NAME="Fedora" \
   DISTRO_PACKAGE_VERSION="ALTLinux-%{release}-%{_arch}" \
-  JDK_UPDATE_VERSION="%{openjdkbuildver}" \
+  JDK_UPDATE_VERSION=`printf "%02d" %{buildver}` \
   MILESTONE="fcs" \
   HOTSPOT_BUILD_JOBS="$NUM_PROC" \
   STATIC_CXX="false" \
@@ -854,6 +904,19 @@ make MEMORY_LIMIT=-J-Xmx512m \
   FT2_LIBS="-lfreetype " \
   DEBUG_CLASSFILES="true" \
   DEBUG_BINARIES="true" \
+  ALT_STRIP_POLICY="no_strip" \
+%ifnarch %{jit_arches}
+  LIBFFI_CFLAGS="`pkg-config --cflags libffi` " \
+  LIBFFI_LIBS="-lffi " \
+  ZERO_BUILD="true" \
+  ZERO_LIBARCH="%{archbuild}" \
+  ZERO_ARCHDEF="%{archdef}" \
+%ifarch ppc ppc64 s390 s390x
+  ZERO_ENDIANNESS="big" \
+%else
+  ZERO_ENDIANNESS="little" \
+%endif
+%endif
   %{debugbuild}
 
 popd >& /dev/null
@@ -880,6 +943,7 @@ pushd java-access-bridge-%{accessver}
 make MEMORY_LIMIT=-J-Xmx512m
   export PATH=$OLD_PATH
   cp -a bridge/accessibility.properties $JAVA_HOME/jre/lib
+  chmod 644 gnome-java-bridge.jar
   cp -a gnome-java-bridge.jar $JAVA_HOME/jre/lib/ext
 popd
 %endif
@@ -1243,6 +1307,7 @@ done
 %{_mandir}/man1/javah-%{name}.1*
 %{_mandir}/man1/javap-%{name}.1*
 %{_mandir}/man1/jconsole-%{name}.1*
+%{_mandir}/man1/jcmd-%{name}.1*
 %{_mandir}/man1/jdb-%{name}.1*
 %{_mandir}/man1/jhat-%{name}.1*
 %{_mandir}/man1/jinfo-%{name}.1*
@@ -1284,6 +1349,9 @@ done
 %doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
 
 %changelog
+* Tue Jul 10 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.3-alt2_2.2.1.8jpp7
+- new version 2.2
+
 * Mon Apr 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.3-alt2_2.1.1jpp7
 - dropped libat-spi dependency
 
