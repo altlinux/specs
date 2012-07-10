@@ -1,6 +1,6 @@
 Name: djvu
 Version: 3.5.22
-Release: alt1.1
+Release: alt1.2
 
 Summary: DjVu viewers, encoders and utilities
 License: GPLv2+
@@ -9,6 +9,7 @@ Url: http://djvu.sourceforge.net/
 Packager: Evgeny Sinelnikov <sin@altlinux.org>
 # http://download.sourceforge.net/djvu/djvulibre-%version.tar.gz
 Source: djvulibre-%version.tar
+Patch: djvu-3.5.22-alt-glibc-2.11.3.patch
 
 BuildRequires: browser-plugins-npapi-devel chrpath
 # Automatically added by buildreq on Fri Nov 19 2010
@@ -146,6 +147,7 @@ technology.
 
 %prep
 %setup -n djvulibre-%version
+%patch -p2
 
 %build
 # hack for NPAPI location
@@ -220,6 +222,9 @@ rm -rf %buildroot%_mandir/ja
 %endif #static
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.22-alt1.2
+- Fixed build
+
 * Sat Mar 12 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.22-alt1.1
 - Rebuilt for debuginfo
 
