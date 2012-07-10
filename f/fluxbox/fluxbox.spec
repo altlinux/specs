@@ -5,7 +5,7 @@
 
 Name: fluxbox
 Version: 1.3.1
-Release: alt2
+Release: alt2.1
 
 Summary: Fast and lightweight window manager
 Summary(ru_RU.UTF-8): Легкий и быстрый оконный менеджер
@@ -29,6 +29,7 @@ Patch1: fluxbox-alt-style-disable_fonts.patch
 Patch2: fluxbox-alt-scripts-find_requires_protect.patch
 Patch3: fluxbox-alt-configure-use_pkgconfig.patch
 Patch4: fluxbox-alt-doc-drop_outdated_url.patch
+Patch5: fluxbox-alt-gcc4.6.patch
 
 # Explanation:
 # - xmessages uses by fbsetbg plus can be invoked from menu
@@ -75,6 +76,7 @@ VIm syntax for fluxbox apps, keys and menu files.
 %patch2 -p2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 # Using mouse wheel for changes Tabs
 sed -i '22a\
@@ -150,6 +152,9 @@ install -pD -m 644 %SOURCE6 %buildroot%_datadir/%name/styles/Cthulhain
 %vim_ftdetect_dir/%name.vim
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt2.1
+- Fixed build
+
 * Sun May 08 2011 Slava Semushin <php-coder@altlinux.ru> 1.3.1-alt2
 - Mark subpackage vim-plugin-fluxbox-syntax as noarch (noted by repocop)
 - I not maintain this package anymore
