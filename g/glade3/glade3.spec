@@ -2,7 +2,7 @@
 
 Name:    glade3
 Version: %ver_major.0
-Release: alt2.2
+Release: alt2.3
 
 Summary: GTK+ / GNOME widget builder
 Group:   Development/GNOME and GTK+
@@ -12,6 +12,7 @@ URL:     http://glade.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
+Patch: glade3-3.7.0-alt-DSO.patch
 
 # Sonames of libgladeui don't change with each release. Although ABI does
 # not change either, it is better to upgrade libgladeui along with glade3.
@@ -66,6 +67,7 @@ This package contains development files for library.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure --disable-dependency-tracking \
@@ -115,6 +117,9 @@ bzip2 -fk9 ChangeLog
 %exclude %_libdir/glade3/modules/*.la
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.0-alt2.3
+- Fixed build
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.0-alt2.2
 - Removed bad RPATH
 
