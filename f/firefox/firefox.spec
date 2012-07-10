@@ -1,7 +1,7 @@
 #set_verify_elf_method relaxed
 
 %define firefox_cid                    \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
-%define firefox_version                12.0
+%define firefox_version                13.0.1
 %define firefox_prefix                 %_libdir/firefox
 %define firefox_datadir                %_datadir/firefox
 %define firefox_arch_extensionsdir     %firefox_prefix/extensions
@@ -11,7 +11,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        12.0
+Version:        13.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -257,6 +257,17 @@ done
 %_sysconfdir/rpm/macros.d/firefox
 
 %changelog
+* Sun Jul 01 2012 Alexey Gladkov <legion@altlinux.ru> 13.0.1-alt1
+- New release (13.0.1).
+- Fixed:
+  + MFSA 2012-40 Buffer overflow and use-after-free issues found using Address Sanitizer
+  + MFSA 2012-39 NSS parsing errors with zero length items
+  + MFSA 2012-38 Use-after-free while replacing/inserting a node in a document
+  + MFSA 2012-37 Information disclosure though Windows file shares and shortcut files
+  + MFSA 2012-36 Content Security Policy inline-script bypass
+  + MFSA 2012-35 Privilege escalation through Mozilla Updater and Windows Updater Service
+  + MFSA 2012-34 Miscellaneous memory safety hazards
+
 * Tue May 08 2012 Alexey Gladkov <legion@altlinux.ru> 12.0-alt1
 - New release (12.0).
 - Fixed:
