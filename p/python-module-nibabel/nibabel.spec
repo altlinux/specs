@@ -5,12 +5,12 @@
 Name: python-module-%oname
 URL:http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
-Version: 1.0.0
-Release: alt2.git20101014
+Version: 1.3.0
+Release: alt1.git20120609
 License: MIT
 Group: Development/Python
 
-# git://git.debian.org/git/pkg-exppsy/pynifti.gi
+# http://anonscm.debian.org/git/pkg-exppsy/pynifti.git
 Source: %oname-%version.tar.gz
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -131,6 +131,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %python_sitelibdir/nisext/test*
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20120609
+- Version 1.3.0
+
 * Mon Nov 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.git20101014
 - Enabled docs (except pdf)
 
