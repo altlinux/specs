@@ -1,5 +1,5 @@
 Name: foomatic-filters
-Version: 4.0.15
+Version: 4.0.17
 Release: alt1
 
 Summary: Foomatic filters needed to run print queues with Foomatic PPDs
@@ -46,6 +46,9 @@ make \
 %config(noreplace) %_sysconfdir/foomatic/filter.conf
 
 %changelog
+* Tue Jul 10 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 4.0.17-alt1
+- 4.0.17
+
 * Wed Apr 04 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 4.0.15-alt1
 - 4.0.15
 
