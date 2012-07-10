@@ -1,10 +1,10 @@
 %define oname nipy
 
-%def_enable docs
+%def_disable docs
 
 Name: python-module-%oname
-Version: 0.1.2
-Release: alt2.git20110404.1
+Version: 0.2.0
+Release: alt1.git20120705
 Summary: The neuroimaging in python (NIPY) project
 License: MIT
 Group: Development/Python
@@ -94,6 +94,8 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 %prepare_sphinx .
 %endif
 
+rm -f doc/labs/image_registration.rst
+
 %build
 %python_build_debug
 
@@ -134,9 +136,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/*/testing
 %exclude %python_sitelibdir/*/*/tests
 %exclude %python_sitelibdir/*/*/*/tests
-#exclude %python_sitelibdir/*/*/*/testing
+%exclude %python_sitelibdir/*/*/*/testing
 %exclude %python_sitelibdir/*/*/*/*/tests
-%exclude %python_sitelibdir/*/*/*/*/*/tests
+#exclude %python_sitelibdir/*/*/*/*/*/tests
 %exclude %python_sitelibdir/*/*/*/test
 
 %if_enabled docs
@@ -157,11 +159,15 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*/testing
 %python_sitelibdir/*/*/tests
 %python_sitelibdir/*/*/*/tests
-#python_sitelibdir/*/*/*/testing
+%python_sitelibdir/*/*/*/testing
 %python_sitelibdir/*/*/*/*/tests
-%python_sitelibdir/*/*/*/*/*/tests
+#python_sitelibdir/*/*/*/*/*/tests
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20120705
+- Version 0.2.0
+- Disabled docs (what's wrong in girar-builder?)
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.2-alt2.git20110404.1
 - Rebuild to remove redundant libpython2.7 dependency
 
