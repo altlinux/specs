@@ -1,6 +1,6 @@
 Name: gdk-pixbuf
 Version: 0.22.0
-Release: alt10
+Release: alt10.1
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -25,6 +25,7 @@ Patch9: %name-0.22.0-rh-noexecstack.patch
 Patch10: %name-0.22.0-rh-alt-bound.patch
 Patch11: %name-0.22.0-alt-linkage.patch
 Patch12: %name-0.22.0-alt-libs.patch
+Patch13: %name-0.22.0-alt-DSO.patch
 
 Provides: %name-loaders = %version-%release
 Obsoletes: %name-loaders < %version-%release
@@ -91,6 +92,7 @@ for Gdk.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p2
 find -type f -name \*.orig -delete -print
 
 %build
@@ -143,6 +145,9 @@ install -pm755 %name/pixops/timescale $RPM_BUILD_ROOT%_bindir/
 %doc %_datadir/gnome/html/*
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22.0-alt10.1
+- Fixed build
+
 * Fri Sep 23 2011 Alexey Tourbin <at@altlinux.ru> 0.22.0-alt10
 - rebuilt for debuginfo
 - merged gdk-pixbuf-loaders subpackage into gdk-pixbuf
