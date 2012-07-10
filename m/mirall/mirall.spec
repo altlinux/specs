@@ -1,12 +1,13 @@
 Name: mirall
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
 Group: Networking/Other
 Summary: Applet for ownflowd files syncronization
 License: GPL
 
 Source: %name-%version.tar
+Patch1: mirall-1.0.2-alt-notwarn-notconfigured.patch
 
 BuildRequires: rpm-macros-cmake cmake libqt4-devel gcc-c++ libcsync-devel
 
@@ -15,6 +16,7 @@ Applet for file syncronization via owncloud.
 
 %prep
 %setup
+%patch1 -p1
 
 %build
 %cmake
@@ -35,6 +37,9 @@ install -m0644 mirall.desktop %buildroot/%_sysconfdir/xdg/autostart
 %_iconsdir/hicolor/48x48/apps/*
 
 %changelog
+* Tue Jul 10 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt2
+- don't show warning if not configured
+
 * Thu May 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.2-alt1
 - 1.0.2
 
