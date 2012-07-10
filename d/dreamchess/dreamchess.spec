@@ -1,6 +1,6 @@
 Name:    dreamchess
 Version: 0.2.0
-Release: alt5
+Release: alt5.1
 
 Summary: DreamChess is a user interface for playing chess.
 License: GPL
@@ -13,6 +13,7 @@ Source1: %name.desktop
 Source2: %name-16.png
 Source3: %name-32.png
 Source4: %name-48.png
+Patch: dreamchess-0.2.0-alt-DSO.patch
 
 Packager: Evgeny V. Shishkov <shev@altlinux.org>
 
@@ -54,6 +55,7 @@ This package contains data files for DreamChess game
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure --datadir=%_gamesdatadir/
@@ -80,6 +82,9 @@ This package contains data files for DreamChess game
 %_gamesdatadir/*
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt5.1
+- Fixed build
+
 * Wed May 12 2010 Evgeny V. Shishkov <shev@altlinux.org> 0.2.0-alt5
 - add Requires. Sorry.
 
