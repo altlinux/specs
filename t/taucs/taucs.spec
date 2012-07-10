@@ -1,6 +1,6 @@
 Name: taucs
 Version: 2.2
-Release: alt9
+Release: alt10
 Summary: C library of sparse linear solvers
 License: MIT
 Group: Sciences/Mathematics
@@ -11,7 +11,7 @@ Source: %name-%version.tar.gz
 
 Requires: lib%name = %version-%release
 
-BuildPreReq: liblapack-goto-devel libmetis-devel
+BuildPreReq: liblapack-devel libmetis-devel
 BuildPreReq: gcc-fortran
 
 %description
@@ -119,6 +119,9 @@ install -p -m644 doc/%name.pdf %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt10
+- Fixed build
+
 * Sat Sep 10 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt9
 - Rebuilt with metis 5.0.1
 - Disabled devel-static package
