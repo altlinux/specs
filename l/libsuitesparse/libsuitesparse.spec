@@ -1,6 +1,6 @@
 Name: libsuitesparse
 Version: 3.6.1
-Release: alt2
+Release: alt3
 
 Summary: Shared libraries for sparse matrix calculations
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -103,6 +103,9 @@ done
 %_libdir/%name/demos
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt3
+- Rebuilt with libmetis0 4.0.3-alt3
+
 * Fri Sep 09 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt2
 - Rebuilt with libmetis0 instead of libmetis
 
