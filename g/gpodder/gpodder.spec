@@ -1,5 +1,5 @@
 Name: gpodder
-Version: 3.0.3
+Version: 3.1.2
 Release: alt1
 
 Summary: podcast receiver/catcher in PyGTK
@@ -29,6 +29,7 @@ or played back on the user's desktop.
 %make DESTDIR=%buildroot install
 
 rm -f %buildroot%python_sitelibdir/gpodder/gtkui/macosx.*
+rm -f %buildroot%_datadir/%name/extensions/ubuntu_*
 
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -41,12 +42,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 %_datadir/dbus-1/services/org.gpodder.service
 %_datadir/%name
-%_iconsdir/hicolor/*/apps/%name.png
-%_iconsdir/hicolor/scalable/apps/%name.svg
-%_pixmapsdir/%name.png
+%_iconsdir/hicolor/*/apps/%name.svg
+%_iconsdir/hicolor/*/%name.png
 %_man1dir/*
 
 %changelog
+* Tue Jul 10 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.2-alt1
+- 3.1.2
+
 * Thu Jan 19 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.0.3-alt1
 - 3.0.3
 
