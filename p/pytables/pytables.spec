@@ -1,11 +1,11 @@
-%define hdf5dir %_libexecdir/hdf5-seq
+%define hdf5dir %_libdir/hdf5-seq
 %define oname tables
 
 %def_without python3
 
 Name: py%oname
 Version: 2.3.1
-Release: alt1.git20120318
+Release: alt1.git20120613
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://github.com/PyTables/PyTables.git
 Source: %name-%version.tar.gz
 
-Requires: python-module-%oname = %version-%release
+Requires: python-module-%oname = %{?epoch:%epoch:}%version-%release
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-module-numpydoc python-module-numpy-addons
@@ -56,7 +56,7 @@ relational or object oriented databases.
 %package py3
 Summary: Managing hierarchical datasets (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %{?epoch:%epoch:}%version-%release
 
 %description py3
 PyTables is a package for managing hierarchical datasets and designed
@@ -327,6 +327,10 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.3.1-alt1.git20120613
+- New snapshot
+- Applied repocop patch
+
 * Sun May 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.3.1-alt1.git20120318
 - New snapshot
 
