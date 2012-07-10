@@ -1,10 +1,10 @@
 %define mpiimpl openmpi
-%define mpidir %_libexecdir/%mpiimpl
+%define mpidir %_libdir/%mpiimpl
 
 %define oname mayavi
 Name:           Mayavi
 Version:        4.1.1
-Release:        alt2.git20120411
+Release:        alt3.git20120411
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -178,6 +178,9 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %doc docs/*.txt docs/pdf examples docs/build/tvtk docs/build/mayavi
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt3.git20120411
+- Rebuilt with OpenMPI 1.6
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt2.git20120411
 - New snapshot
 
