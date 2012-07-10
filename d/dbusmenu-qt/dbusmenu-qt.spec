@@ -1,7 +1,7 @@
 %define lib_major 2
 
 Name: dbusmenu-qt
-Version: 0.9.0
+Version: 0.9.2
 Release: alt1
 
 Group: System/Libraries
@@ -9,7 +9,7 @@ Summary: A Qt implementation of the DBusMenu protocol
 License: LGPLv2+
 URL: http://gitorious.org/dbusmenu/
 
-Source: dbusmenu-qt-%{version}.tar
+Source: libdbusmenu-qt-%{version}.tar
 
 # Automatically added by buildreq on Tue Jan 18 2011 (-bi)
 #BuildRequires: cmake gcc-c++ libqt3-devel qjson-devel qt4-designer
@@ -38,7 +38,7 @@ Requires: libdbusmenu-qt%lib_major = %{version}-%{release}
 Development files for %{name}
 
 %prep
-%setup -q
+%setup -qn lib%name-%version
 
 
 %build
@@ -58,6 +58,12 @@ Development files for %{name}
 %_pkgconfigdir/dbusmenu-qt.pc
 
 %changelog
+* Tue Jul 10 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt1
+- new version
+
+* Mon Feb 27 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt0.M60P.1
+- built for M60P
+
 * Sat Jan 28 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
 - new version
 
