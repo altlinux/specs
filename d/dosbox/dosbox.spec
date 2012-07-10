@@ -2,7 +2,7 @@
 
 Name: dosbox
 Version: 0.74
-Release: alt2
+Release: alt2.1
 
 Summary: i8086/DOS/VGA software emulator for running old games
 Summary(ru_RU.UTF8): Программный эмулятор i8086/DOS/VGA для запуска старых игр
@@ -29,6 +29,8 @@ Source6: %name.desktop
 # fix #24306 bug
 Source7: %name-%version.conf
 Source8: README_ru.ALT
+
+Patch: dosbox-0.74-alt-gcc4.6.patch
 
 Requires: shadow-utils unarj unzip unrar menu
 
@@ -92,6 +94,7 @@ DOSBox позволяет запускать на современном ком�
 
 %prep
 %setup
+%patch -p2
 
 %build
 %configure \
@@ -193,6 +196,9 @@ EOF
 rm -f %_bindir/%name-set-lang
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.74-alt2.1
+- Fixed build
+
 * Mon Nov 8 2010 Anton Chernyshov <ach@altlinux.org> 0.74-alt2
 - closes #24306 bug (completely):
   + add to package script dosbox-set-lang to help users set language
