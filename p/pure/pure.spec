@@ -1,7 +1,7 @@
 Name: pure
 Summary: PURE - The Pure programming language
 License: GPL
-Version: 0.45
+Version: 0.55
 Release: alt1
 Group: Development/Functional
 Url: http://pure-lang.googlecode.com/
@@ -13,7 +13,7 @@ Source90: %name-rpmlintrc
 #Requires: w3m
 
 # Automatically added by buildreq on Sat Mar 28 2009
-BuildRequires: gcc-c++ libelf-devel libgmp-devel libgsl-devel libreadline-devel llvm-devel
+BuildRequires: gcc-c++ libelf-devel libgmp-devel libgsl-devel libreadline-devel llvm-devel libmpfr-devel
 
 %description
 Pure is a functional programming language based on term rewriting.
@@ -85,6 +85,8 @@ export LIBS=-ldl
 
 %install
 make install DESTDIR=%buildroot
+rm -f %buildroot%_pkgconfigdir/%name.pc
+mv %buildroot%_pkgconfigdir/%name-%version.pc %buildroot%_pkgconfigdir/%name.pc
 
 %check
 make check
@@ -108,6 +110,7 @@ make check
 %_libdir/%name-%version/*.?
 %dir %_includedir/%name-%version
 %_includedir/%name-%version/runtime.h
+%_pkgconfigdir/%name.pc
 
 #%files complete
 #%doc COPYING ChangeLog NEWS README
@@ -116,6 +119,9 @@ make check
 %doc examples
 
 %changelog
+* Tue Jul 10 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.55-alt1
+- Version up
+
 * Sat Nov 06 2010 Fr. Br. George <george@altlinux.ru> 0.45-alt1
 - Version up
 
