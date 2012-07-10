@@ -8,7 +8,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 1.8.0
-Release: alt1.3.1
+Release: alt1.4
 Group: Sciences/Geosciences
 
 License: MIT
@@ -114,7 +114,7 @@ Perl modules for GDAL/OGR.
 	--with-gif \
 	--with-jpeg \
 	--with-ogr \
-	--with-hdf5=/usr/lib/hdf5-seq/\
+	--with-hdf5=%_libdir/hdf5-seq/\
 	--with-geos \
 	--with-jasper\
 	--with-odbc \
@@ -187,6 +187,9 @@ done
 %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.4
+- Rebuilt with libhdf5-7-seq 1.8.8-alt2
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.8.0-alt1.3.1
 - Rebuild to remove redundant libpython2.7 dependency
 
