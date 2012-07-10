@@ -1,11 +1,12 @@
 BuildArch: noarch
 Name: ec2-api-tools
-Version: 1.5.5.0
+Version: 1.5.6.0
 Release: alt1
 License: Amazon Software License
 Group: Networking/Other
 Summary: EC2 utilites
 
+URL: http://aws.amazon.com/developertools/
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
@@ -29,6 +30,9 @@ install -m 755 -D bin/*  %buildroot/usr/bin
 %doc license.txt notice.txt
 
 %changelog
+* Tue Jul 10 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.6.0-alt1
+- 1.5.6.0
+
 * Mon Jun 18 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.5.0-alt1
 - 1.5.5.0
 
