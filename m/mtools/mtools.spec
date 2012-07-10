@@ -2,7 +2,7 @@
 
 Name: mtools
 Version: 4.0.17
-Release: alt2
+Release: alt3
 
 Summary: Programs for accessing FAT formatted media without mounting it
 License: GPLv3
@@ -20,11 +20,11 @@ Patch3: mtools-3.9.7-texinfo.patch
 Patch4: mtools-3.9.10-alt-no-x.patch
 Patch5: mtools-4.0.10-alt-buffer.patch
 
-%if_with floppyd
+Requires: glibc-gconv-modules
 
+%if_with floppyd
 # Automatically added by buildreq on Tue Apr 07 2009 (-bi)
 BuildRequires: imake libSM-devel libX11-devel libXau-devel xorg-cf-files
-
 %endif
 
 %define inetd_dir     %_sysconfdir/xinetd.d
@@ -126,6 +126,9 @@ find %buildroot -name floppyd\* -print0 | xargs -r0 rm -fv --
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Tue Jul 10 2012 Michael Shigorin <mike@altlinux.org> 4.0.17-alt3
+- added Requires: glibc-gconv-modules (closes: #27525)
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 4.0.17-alt2
 - added watch file
 
