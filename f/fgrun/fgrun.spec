@@ -1,6 +1,6 @@
 Name: fgrun
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Graphical launcher for the FlightGear flight simulator
 License: GPL
@@ -8,7 +8,8 @@ Group: Games/Other
 
 Url: http://sourceforge.net/projects/fgrun
 Source: %name-%version.tar.gz
-Patch: alt-fgrun-fgfs-location-fix.patch
+Patch0: alt-fgrun-fgfs-location-fix.patch
+Patch1: fgrun-1.6.1-alt-cmake.patch
 Packager: Andrew Clark <andyc@altlinux.org>
 
 # Automatically added by buildreq on Sat Mar 03 2012
@@ -20,7 +21,8 @@ fgrun is a graphical launcher for the FlightGear flight simulator.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p2
 
 %build
 %cmake
@@ -35,6 +37,9 @@ fgrun is a graphical launcher for the FlightGear flight simulator.
 %_bindir/*
 
 %changelog
+* Tue Jul 10 2012 Michael Shigorin <mike@altlinux.org> 1.6.1-alt2
+- fixed FTBFS (underlinking against libpthread)
+
 * Sat Mar 03 2012 Michael Shigorin <mike@altlinux.org> 1.6.1-alt1
 - 1.6.1
   + cmake build
