@@ -5,7 +5,7 @@
 %define altver 1115
 
 Name: %realname%dialect
-Version: 1.11.5
+Version: 1.11.6
 Release: alt1
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
@@ -99,6 +99,9 @@ install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
 %docdir
 
 %changelog
+* Mon Jul 09 2012 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt1
+- Updated to v1.11.6.
+
 * Fri Apr 13 2012 Dmitry V. Levin <ldv@altlinux.org> 1.11.5-alt1
 - Updated to v1.11.5.
 - Reintroduced dependencies on perl-threads.
