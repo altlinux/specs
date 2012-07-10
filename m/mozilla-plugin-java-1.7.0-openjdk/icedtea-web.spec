@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(x11) zlib-devel
+BuildRequires: /usr/bin/xsltproc gcc-c++ pkgconfig(x11) zlib-devel
 # END SourceDeps(oneline)
 %def_enable javaws
 %def_enable moz_plugin
@@ -9,7 +9,7 @@ BuildRequires(pre): rpm-build-java
 %set_compress_method none
 %define oldname icedtea-web
 BuildRequires: /proc
-BuildRequires: jpackage-generic-compat
+BuildRequires: jpackage-compat
 
 # We require at the least the first release java-1.6.0-openjdk 
 # with IcedTea6 1.10
@@ -52,25 +52,24 @@ BuildRequires: jpackage-generic-compat
 %define binsuffix      .itweb
 
 Name:		mozilla-plugin-java-1.7.0-openjdk
-Version:	1.1.4
-Release:	alt2_4jpp7
+Version:	1.2
+Release:	alt1_2jpp7
 Summary:	Additional Java components for OpenJDK
 
 Group:      Development/Java
 License:    LGPLv2+ and GPLv2 with exceptions
 URL:        http://icedtea.classpath.org/wiki/IcedTea-Web
 Source0:    http://icedtea.classpath.org/download/source/%{oldname}-%{version}.tar.gz
-Patch0:     %{oldname}-%{version}-npapi-fix.patch
 
-BuildRequires:  java-%{javaver}-openjdk-devel
+BuildRequires:  java-1.7.0-openjdk-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  xulrunner-devel
-BuildRequires:  libglib2-devel
-BuildRequires:  libgtk+2-devel
+BuildRequires:  glib2-devel
+BuildRequires:  gtk2-devel
 BuildRequires:  xulrunner-devel
 
 # For functionality and the OpenJDK dirs
-Requires:      java-%{javaver}-openjdk
+Requires:      java-1.7.0-openjdk
 
 # For the mozilla plugin dir
 Requires:       browser-plugins-npapi
@@ -86,7 +85,7 @@ Provides: java-plugin = %{javaver}
 
 
 # IcedTea is only built on these archs for now
-ExclusiveArch: x86_64 %ix86
+ExclusiveArch: x86_64 %ix86 %{arm}
 Source44: import.info
 
 %define altname java-%{javaver}-openjdk
@@ -142,8 +141,6 @@ This package contains Javadocs for the IcedTea-Web project.
 
 %prep
 %setup -q -n %{oldname}-%{version}
-
-%patch0
 
 %build
 autoconf
@@ -289,6 +286,9 @@ done
 
 
 %changelog
+* Tue Jul 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_2jpp7
+- new version (closes: 27532)
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.4-alt2_4jpp7
 - added security policy
 
