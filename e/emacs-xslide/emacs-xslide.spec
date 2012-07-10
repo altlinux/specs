@@ -1,7 +1,7 @@
 %define modename xslide
 Name: emacs-%modename
 Version: 0.2.2
-Release: alt6
+Release: alt7
 
 Summary: A GNU Emacs major mode for editing XSL stylesheets.
 Group: Editors
@@ -25,7 +25,7 @@ BuildArch: noarch
 PreReq: emacs
 
 # Automatically added by buildreq on Tue Sep 09 2008 (-bi)
-BuildRequires: emacs-nox
+BuildRequires: emacs-nox emacs-gnus
 
 %description
 Emacs is an advanced and extensible editor. An Emacs major mode
@@ -95,6 +95,9 @@ done
 %modedir/*.el
 
 %changelog
+* Wed Jul 11 2012 Terechkov Evgenii <evg@altlinux.org> 0.2.2-alt7
+- Fix build with emacs24
+
 * Tue Sep 09 2008 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt6
 - resurrected from orphaned
 
