@@ -3,7 +3,7 @@
 Summary: Base library for gmerlin applications
 Name: gmerlin
 Version: 1.0.0
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Development/C++
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -12,6 +12,7 @@ Source: %name-%version.tar.gz
 Source90: %name-rpmlintrc
 Patch: %name-0.4.3-conf.patch
 Patch1: gmerlin-0.4.3-package.patch
+Patch2: gmerlin-1.0.0-alt-DSO.patch
 #Patch5: %name-0.4.3-alt-camelot.patch
 
 Url: http://gmerlin.sourceforge.net/
@@ -386,6 +387,7 @@ Gavl plugins for gmerlin.
 %setup gmerlin-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 #patch5 -p2
 
 %build
@@ -639,6 +641,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_niconsdir/%name-plugincfg.png
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.1
+- Fixed build
+
 * Sat Sep 24 2011 Hihin Ruslan <ruslandh@altlinux.ru> 1.0.0-alt1
 - New version
 
