@@ -1,7 +1,7 @@
 Summary: Utilities for working with md5sum implanted in ISO images
 Name: isomd5sum
 Version: 1.0.4
-Release: alt0.20080218.1.1
+Release: alt0.20080218.2
 License: %gpl2plus
 Group: System/Base 
 Packager:  Andriy Stepanov <stanv@altlinux.ru>
@@ -9,6 +9,7 @@ Packager:  Andriy Stepanov <stanv@altlinux.ru>
 #URL: http://git.altlinux.org/people/stanv/packages/
 #Source0: http://fedorahosted.org/releases/i/s/isomd5sum/%{name}-%{version}.tar.bz2
 Source0: %{name}-%{version}.tar
+Patch0: isomd5sum-1.0.4-alt-no-Werror.patch
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 # Automatically added by buildreq on Tue Feb 19 2008
 BuildRequires: libpopt-devel python-devel
@@ -29,6 +30,7 @@ implanting and checking.
 
 %prep
 %setup -q
+%patch0 -p2
 
 %build
 %make
@@ -50,6 +52,9 @@ implanting and checking.
 %{_libdir}/*.a
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt0.20080218.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.4-alt0.20080218.1.1
 - Rebuild with Python-2.7
 
