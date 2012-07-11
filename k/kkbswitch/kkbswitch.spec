@@ -7,7 +7,7 @@
 
 Name: kkbswitch
 Version: 1.4.3
-Release: alt12
+Release: alt12.1
 
 Summary: Keyboard layout indicator for KDE
 Group: Graphical desktop/KDE
@@ -25,6 +25,7 @@ Patch1: kkbswitch-1.4.3-alt-defaults.patch
 Patch2: kkbswitch-1.4.3-alt-add-dcop-kscreensaver.patch
 Patch3: kkbswitch.desktop.patch
 Patch4: kkbswitch-1.4.3-alt-singlewindowwatcher-fixes.patch
+Patch5: kkbswitch-1.4.3-alt-DSO.patch
 
 BuildRequires: gcc-c++
 BuildRequires: libjpeg-devel libpng-devel libxkbfile-devel
@@ -45,6 +46,7 @@ tar xfj %SOURCE1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 make -f admin/Makefile.common cvs ||:
 
@@ -85,6 +87,9 @@ export QTDIR=%qtdir KDEDIR=%kdedir
 %_K3start/*.desktop
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt12.1
+- Fixed build
+
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 1.4.3-alt12
 - Rebuild for TDE 3.5.13 release
 
