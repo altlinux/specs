@@ -3,7 +3,7 @@
 
 Name: libcacard
 Version: 0.1.2
-Release: alt1
+Release: alt1.1
 Summary: Common Access Card (CAC) Emulation
 Group: System/Libraries
 License: LGPLv2+
@@ -11,6 +11,7 @@ Url: http://www.spice-space.org/download
 
 Source: http://www.spice-space.org/download/libcacard/libcacard-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-0.1.2-alt-DSO.patch
 BuildRequires: libnss-devel
 %{?_enable_passthru:BuildRequires: libpcsclite-devel}
 
@@ -36,6 +37,7 @@ CAC emulation development files.
 %prep
 %setup
 %patch -p1
+%patch1 -p0
 
 %build
 %autoreconf
@@ -61,6 +63,9 @@ CAC emulation development files.
 %_bindir/vscclient
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1.1
+- Fixed build
+
 * Wed Feb 16 2011 Alexey Shabalin <shaba@altlinux.ru> 0.1.2-alt1
 - 0.1.2
 
