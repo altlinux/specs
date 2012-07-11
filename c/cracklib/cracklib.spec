@@ -1,18 +1,18 @@
 Name: cracklib
-Version: 2.8.18
-Release: alt1.1
+Version: 2.8.19
+Release: alt1
 
 Summary: A password-checking library.
 License: %gpl2plus
 Group: System/Libraries
 Url: http://sourceforge.net/projects/%name
 
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
-
 Source: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 
-BuildPreReq: rpm-build-licenses python-devel libX11-devel libICE-devel
-BuildPreReq: zlib-devel
+Requires: %name-utils = %version-%release
+
+BuildRequires: rpm-build-licenses python-devel libX11-devel libICE-devel
+BuildRequires: zlib-devel
 
 %package utils
 Summary: The CrackLib utilities for the build dictionaries.
@@ -33,9 +33,9 @@ Requires: %name = %version-%release
 CrackLib tests passwords to determine whether they match certain
 security-oriented characteristics. You can use CrackLib to stop
 users from choosing passwords which would be easy to guess. CrackLib
-performs certain tests: 
+performs certain tests:
 
-* It tries to generate words from a username and gecos entry and 
+* It tries to generate words from a username and gecos entry and
   checks those words against the password;
 * It checks for simplistic patterns in passwords;
 * It checks for the password in a dictionary.
@@ -66,7 +66,7 @@ This package includes Python module for Cracklib.
 %setup
 
 %build
-./autogen.sh
+%autoreconf
 %configure \
 	--disable-static \
 	--with-x
@@ -82,11 +82,24 @@ mv %buildroot%python_sitelibdir_noarch/* \
 
 rm -f %buildroot%python_sitelibdir/*.la
 
+# create words database
+touch %buildroot%_datadir/%name/pw_dict.{hwm,pwd,pwi}
+
+cat > %name.filetrigger << _EOF_
+#!/bin/sh -e
+
+dir=%_datadir/%name
+grep -qs '^'\$dir'' && %_sbindir/%name-format \$dir/%{name}* | %_sbindir/%name-packer \$dir/pw_dict ||:
+_EOF_
+
+install -pD -m 755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
+
 %find_lang cracklib
 
 %files -f %name.lang
 %_libdir/*.so.*
-%_datadir/%name
+%_datadir/%name/
+%_rpmlibdir/%name.filetrigger
 %doc AUTHORS ChangeLog NEWS README*
 
 %files devel
@@ -100,6 +113,11 @@ rm -f %buildroot%python_sitelibdir/*.la
 %python_sitelibdir/*
 
 %changelog
+* Wed Jul 11 2012 Yuri N. Sedunov <aris@altlinux.org> 2.8.19-alt1
+- 2.8.19
+- created empty words database in %install, implemented posttrans filetrigger
+  for automatic update words database (ALT #27519).
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.8.18-alt1.1
 - Rebuild with Python-2.7
 
