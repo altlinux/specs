@@ -2,7 +2,7 @@ Summary: guake - a drop-down terminal
 Summary(ru.UTF-8):guake — выпадающий эмулятор терминала
 Name: guake
 Version: 0.4.2
-Release: alt2.qa1.1
+Release: alt2.qa2
 License: GPL v2+
 Group: Terminals
 URL: http://guake.org/
@@ -18,6 +18,7 @@ Requires: python-module-pygtk-libglade notification-daemon
 
 Patch1: guake-add_tab-focus.patch
 Patch2: guake-repocop-desktop.patch
+Patch3: guake-0.4.2-alt-glib2.patch
 BuildRequires: desktop-file-utils
 
 %description
@@ -29,6 +30,7 @@ just need to press a key to invoke him, and press again to hide.
 
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 libtoolize
@@ -80,6 +82,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %gnome_autostartdir/guake.desktop
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2.qa2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4.2-alt2.qa1.1
 - Rebuild with Python-2.7
 
