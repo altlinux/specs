@@ -6,7 +6,7 @@ Name: python-module-%oname
 URL:http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
 Version: 1.3.0
-Release: alt1.git20120609
+Release: alt2.git20120609
 License: MIT
 Group: Development/Python
 
@@ -111,9 +111,8 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %exclude %python_sitelibdir/%oname/pickle
 %endif
 %exclude %python_sitelibdir/%oname/testing
-%exclude %python_sitelibdir/%oname/tests
-%exclude %python_sitelibdir/%oname/nicom/tests
-%exclude %python_sitelibdir/nisext/test*
+%exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/%oname/*/test*
 
 %if_enabled docs
 %files doc
@@ -126,11 +125,13 @@ rm -f %buildroot%python_sitelibdir/conf.py
 
 %files tests
 %python_sitelibdir/%oname/testing
-%python_sitelibdir/%oname/tests
-%python_sitelibdir/%oname/nicom/tests
-%python_sitelibdir/nisext/test*
+%python_sitelibdir/*/test*
+%python_sitelibdir/%oname/*/test*
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.git20120609
+- Moved all tests into tests subpackage
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20120609
 - Version 1.3.0
 
