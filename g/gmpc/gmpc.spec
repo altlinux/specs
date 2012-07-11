@@ -7,13 +7,15 @@
 %define Name GMPC
 Name: gmpc
 Version: 0.18.0
-Release: alt2
+Release: alt2.1
 Summary: A frontend for the mpd (Music Player Daemon)
 License: %gpl2plus
 Group: Sound
 Url: http://%{name}wiki.sarine.nl/index.php/%Name
 Source: http://download.sarine.nl/Programs/%name/%version/%name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: gmpc-0.18.0-alt-glib2.patch
+Patch2: gmpc-0.18.0-alt-DSO.patch
 Packager: Alexey Rusakov <ktirf@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses rpm-build-gmpc
@@ -49,6 +51,8 @@ use %name (e.g. plugins for %name).
 %prep
 %setup
 %patch -p1
+%patch1 -p0
+%patch2 -p0
 
 
 %build
@@ -85,6 +89,9 @@ install -d -m 0755 %buildroot%gmpc_plugin_libdir
 %_includedir/%name
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18.0-alt2.1
+- Fixed build
+
 * Mon Mar 16 2009 Alexey Rusakov <ktirf@altlinux.org> 0.18.0-alt2
 - use system libsexy instead of a bundled one
 - use rpm-build-gmpc for the GMPC plugins directory macro
