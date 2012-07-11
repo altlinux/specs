@@ -3,7 +3,7 @@
 
 Name: libhid
 Version: 0.2.16
-Release: alt2.1
+Release: alt2.2
 
 Summary: A user-space USB HID access library
 License: GPL
@@ -58,7 +58,7 @@ Python bindings for %name
 
 %build
 %__subst "s/get_config_vars('LIBPL',/get_config_vars('LIBDIR',/" configure
-%configure %{subst_enable static}
+%configure %{subst_enable static} --enable-werror=no
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
@@ -88,6 +88,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.16-alt2.2
+- Fixed build
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.16-alt2.1
 - Removed bad RPATH
 
