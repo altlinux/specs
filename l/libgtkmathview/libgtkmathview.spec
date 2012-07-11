@@ -3,7 +3,7 @@
 
 Name: lib%real_name
 Version: %ver_major.0
-Release: alt4
+Release: alt4.1
 
 Summary: A MathML rendering library
 License: LGPL
@@ -20,6 +20,7 @@ Patch3: gtkmathview-0.7.7-link-backends-fix.patch
 Patch4: gtkmathview-0.8.0-alt-fix-linking.patch
 Patch5: gtkmathview-0.8.0-alt-fix-pkgconfig.patch
 Patch6: libgtkmathview-0.8.0-debian-gcc43-fix.patch
+Patch7: gtkmathview-0.8.0-alt-DSO.patch
 
 %define gtk_ver 2.2.4
 %define libxml2_ver 2.5.6
@@ -55,6 +56,7 @@ Libraries, headers, and support files needed for using gtkmathview.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p2
 
 %build
 autoreconf -fisv
@@ -86,6 +88,9 @@ autoreconf -fisv
 
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt4.1
+- Fixed build
+
 * Wed Nov 10 2010 Damir Shayhutdinov <damir@altlinux.ru> 0.8.0-alt4
 - Rebuilt to generate symbol provides
 - Cleaned up spec a bit
