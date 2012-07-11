@@ -53,7 +53,7 @@ BuildRequires: jpackage-compat
 
 Name:		mozilla-plugin-java-1.7.0-openjdk
 Version:	1.2
-Release:	alt1_2jpp7
+Release:	alt2.hg467_2jpp7
 Summary:	Additional Java components for OpenJDK
 
 Group:      Development/Java
@@ -286,6 +286,9 @@ done
 
 
 %changelog
+* Wed Jul 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2.hg467_2jpp7
+- hg snapshot 467:1ced587420b8 (closes: 27532)
+
 * Tue Jul 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_2jpp7
 - new version (closes: 27532)
 
