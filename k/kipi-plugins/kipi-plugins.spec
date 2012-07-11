@@ -2,7 +2,7 @@
 
 Name: kipi-plugins
 Version: 0.1.6
-Release: alt6.1
+Release: alt6.2
 Serial: 3
 
 Group: Graphics
@@ -23,7 +23,7 @@ Requires: icc-profiles
 
 # Automatically added by buildreq on Sun Jan 07 2007
 BuildRequires: doxygen gcc-c++ graphviz kdelibs-devel kdepim-devel libXext-devel libXrender-devel libXt-devel
-BuildRequires: libXrandr-devel libexiv2-devel libgphoto2-devel libjpeg-devel libOSMesa-devel libqt3-devel
+BuildRequires: libXrandr-devel libexiv2-devel libgphoto2-devel libjpeg-devel libqt3-devel
 BuildRequires: libtiff-devel xml-utils libxslt-devel libkipi-devel libgpod-devel libkexiv2-devel libkdcraw-devel
 BuildRequires: libical-devel
 
@@ -75,6 +75,9 @@ done
 %lang(pt_BR) %_K3doc/pt_BR/%name
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3:0.1.6-alt6.2
+- Rebuilt without libOSMesa
+
 * Mon Apr 25 2011 Andrey Cherepanov <cas@altlinux.org> 3:0.1.6-alt6.1
 - Remove xorg-devel requirement
 
