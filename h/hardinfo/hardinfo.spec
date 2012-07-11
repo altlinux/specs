@@ -1,6 +1,6 @@
 Name: hardinfo
 Version: 0.4.2.3
-Release: alt3
+Release: alt3.1
 
 Summary: Information on your hardware devices
 
@@ -14,6 +14,7 @@ Source: http://download.berlios.de/hardinfo/%name-%version.tar.bz2
 Source1: %name.desktop
 Patch: %name.patch
 Patch1: %name-lib64.patch
+Patch2: %name-0.4.2.3-alt-DSO.patch
 
 # Automatically added by buildreq on Tue Jan 22 2008
 BuildRequires: libgtk+2-devel libsoup-devel pciutils zlib-devel
@@ -25,6 +26,7 @@ HardInfo is a system information and benchmark tool for Linux systems.
 %setup -q
 %patch
 %patch1
+%patch2 -p2
 
 %build
 %set_automake_version 1.10
@@ -45,6 +47,9 @@ install -D -m644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2.3-alt3.1
+- Fixed build
+
 * Thu Sep 03 2009 Ilya Mashkin <oddity@altlinux.ru> 0.4.2.3-alt3
 - fix desktop file
 - add requires (Closes: #18700)
