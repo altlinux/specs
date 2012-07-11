@@ -1,7 +1,7 @@
 %define _gtkdocdir %_datadir/gtk-doc/html
 Name: gwyddion
 Version: 2.25
-Release: alt1.1
+Release: alt1.2
 Summary: An SPM data visualization and analysis tool
 Group: Sciences/Other
 License: GNU GPL
@@ -9,6 +9,7 @@ Url: http://gwyddion.net/
 Packager: Boris Savelev <boris@altlinux.org>
 Source: %name-%version.tar
 Patch0: fix-rpath-issue.patch
+Patch1: gwyddion-2.25-alt-glib2.patch
 BuildRequires(pre): rpm-build-compat libGConf-devel
 BuildRequires: libgtk+2-devel pkg-config libgtkglext-devel libfftw3-devel python-module-pygtk-devel gcc-c++
 BuildRequires: libgtksourceview-devel libxml2-devel libruby-devel python libGConf-devel chrpath kde4libs-devel
@@ -92,6 +93,7 @@ Python tools for Gwyddion module development
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 # Don't install .la files.
 %__subst '/# Install the pseudo-library/,/^$/d' ltmain.sh
@@ -248,6 +250,9 @@ mv %buildroot%pkglibdir/modules/pygwy.so %buildroot%python_sitelibdir/gwy.so
 %python_sitelibdir/*
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.25-alt1.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.25-alt1.1
 - Rebuild with Python-2.7
 
