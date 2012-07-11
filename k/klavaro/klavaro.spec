@@ -1,6 +1,6 @@
 Name: klavaro
 Version: 1.9.3
-Release: alt3
+Release: alt3.1
 
 Summary: Yet another touch typing tutor
 License: GPLv3+
@@ -9,6 +9,7 @@ Group: Education
 Url: http://klavaro.sourceforge.net/en/
 Source: http://downloads.sourceforge.net/klavaro/klavaro-%version.tar.bz2
 Source1: ru.po
+Patch: klavaro-1.9.3-alt-DSO.patch
 
 # Automatically added by buildreq on Wed Feb 23 2011
 BuildRequires: intltool libcurl-devel libgtkdatabox-devel
@@ -19,6 +20,7 @@ be keyboard and language independent, saving memory and time.
 
 %prep
 %setup
+%patch -p2
 cp %SOURCE1 po/
 subst 's#/usr/share/icons/hicolor/24x24/apps/klavaro.png#klavaro#' data/klavaro.desktop.in
 subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
@@ -40,6 +42,9 @@ subst 's/Education/Education;Science;ComputerScience/' data/klavaro.desktop.in
 %_iconsdir/hicolor/*/apps/klavaro.png
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.3-alt3.1
+- Fixed build
+
 * Mon Aug 15 2011 Andrey Cherepanov <cas@altlinux.org> 1.9.3-alt3
 - Update Russian translation (closes: #26055)
 
