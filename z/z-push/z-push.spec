@@ -1,8 +1,8 @@
 %define with_ldap 0
 
 Name: z-push
-Version: 1.5.7
-Release: alt2
+Version: 2.0
+Release: alt1
 
 Summary: ActiveSync over-the-air implementation for mobile syncing
 License: AGPLv3 with exceptions
@@ -37,7 +37,7 @@ regular Z-Push package.
 %setup -T -c -a 0
 
 # Correct wrong file permissions
-chmod 644 %name/{include/z_RFC822,streamer}.php
+chmod 644 %name/include/z_RFC822.php
 
 %build
 %install
@@ -76,7 +76,7 @@ rm -rf %buildroot%_datadir/%name/backend/{searchbackend.php,searchldap/}
 %endif
 
 # Install Zarafa-related command line tool
-install -p -m 755 backend/zarafa/z-push-admin.php %buildroot%_bindir/z-push-admin
+#install -p -m 755 backend/zarafa/z-push-admin.php %buildroot%_bindir/z-push-admin
 
 popd
 
@@ -93,10 +93,12 @@ rm -f %buildroot%_datadir/%name/{INSTALL,LICENSE,{config,debug}.php.{package,zar
 %if %with_ldap
 %config(noreplace) %_sysconfdir/zarafa/%name/searchldap.php
 %endif
-%_bindir/z-push-admin
 %_datadir/%name/
 
 %changelog
+* Wed Jul 11 2012 Radik Usupov <radik@altlinux.org> 2.0-alt1
+- New version (2.0-1346)
+
 * Fri Mar 16 2012 Radik Usupov <radik@altlinux.org> 1.5.7-alt2
 - Fixed state path (tnx ainur@)
 
