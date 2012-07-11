@@ -1,12 +1,13 @@
 Name: libgoogle-sparsehash
 Summary: hash_map and hash_set classes with minimal space overhead
 Version: 1.5.2
-Release: alt1
+Release: alt1.1
 Group: Development/C++
 URL: http://code.google.com/p/google-sparsehash
 License: BSD
 Packager: Maxim Ivanov <redbaron@altlinux.org>
 Source: %name-%version.tar
+Patch: libgoogle-sparsehash-1.5.2-alt-gcc4.6.patch
 Buildarch: noarch
 BuildRequires: gcc-c++
 
@@ -20,6 +21,7 @@ of these classes.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %configure
@@ -33,6 +35,9 @@ of these classes.
 %_includedir/google
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.2-alt1.1
+- Fixed build
+
 * Wed Nov 11 2009 Maxim Ivanov <redbaron at altlinux.org> 1.5.2-alt1
 - Initial build for ALT Linux
 
