@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 Summary:        Broadcom Crystal HD device interface library
 Name:           libcrystalhd
 Version:        3.5.1
-Release:        alt2_1
+Release:        alt2_1.1
 License:        LGPLv2
 Group:          System/Libraries
 #Source:         http://www.broadcom.com/docs/support/crystalhd/crystalhd_linux_20100703.zip
@@ -21,6 +21,7 @@ Requires:       firmware-crystalhd
 URL:            http://www.broadcom.com/support/crystal_hd/
 # Patch generated from http://git.wilsonet.com/crystalhd.git/
 Patch0:         libcrystalhd-updates.patch
+Patch1:         libcrystalhd-3.5.1-alt-no-Werror.patch
 ExcludeArch:    s390 s390x
 BuildRequires:  autoconf automake
 Source44: import.info
@@ -69,6 +70,7 @@ Gstreamer crystalhd decoder plugin
 %prep
 %setup -q -n 07032010
 %patch0 -p1
+%patch1 -p2
 cp %{SOURCE1} %{SOURCE4} .
 
 %build
@@ -112,6 +114,9 @@ cp -p %{SOURCE3} $RPM_BUILD_ROOT/lib/firmware/
 
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.1-alt2_1.1
+- Fixed build
+
 * Fri Dec 23 2011 Igor Vlasenko <viy@altlinux.ru> 3.5.1-alt2_1
 - spec cleanup thanks to ldv@
 
