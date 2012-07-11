@@ -1,5 +1,5 @@
 Name: codeblocks
-%define revision 7966
+%define revision 8086
 Version: 10.05.%revision
 Release: alt1
 
@@ -234,6 +234,9 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jul 11 2012 Denis Kirienko <dk@altlinux.org> 10.05.8086-alt1
+- SVN snapshot 8086
+
 * Thu May 17 2012 Denis Kirienko <dk@altlinux.org> 10.05.7966-alt1
 - SVN snapshot 7966
 
