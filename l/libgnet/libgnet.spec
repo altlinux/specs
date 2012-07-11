@@ -4,7 +4,7 @@
 
 Name: lib%oname
 Version: %ver_major.8
-Release: alt4
+Release: alt4.1
 
 Summary: GNet is a simple network library
 License: LGPL
@@ -15,6 +15,7 @@ Source: %gnome_ftp/%oname/%ver_major/%oname-%version.tar.bz2
 Source1: %name-%ver_major.map
 Patch1: %name-%version-alt-versioning.patch
 Patch2: libgnet-fix-move_define.patch
+Patch3: libgnet-2.0.8-alt-DSO.patch
 
 BuildRequires: rpm-build-gnome
 BuildRequires: gtk-doc libcheck-devel
@@ -73,6 +74,7 @@ use the Gnet library.
 %setup -q -n %oname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 install -p -m644 %SOURCE1 src/libgnet-2.0.map
 
 %build
@@ -107,6 +109,9 @@ rm -Rf %buildroot%_docdir
 %endif
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.8-alt4.1
+- Fixed build
+
 * Mon Nov 29 2010 Alexey Shabalin <shaba@altlinux.ru> 2.0.8-alt4
 - fix build by moving a #define before it's used (tnx debian)
 
