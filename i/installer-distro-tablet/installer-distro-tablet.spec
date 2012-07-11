@@ -1,7 +1,7 @@
 %define distro tablet
 Name: installer-distro-%distro
 Version: 6.0
-Release: alt2
+Release: alt3
 
 Summary: Installer files for Tablet distros 
 License: GPL
@@ -65,6 +65,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Jul 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt3
+- dictd disabled
+
 * Sat May 12 2012 Paul Wolneykien <manowar@altlinux.ru> 6.0-alt2
 - Turn on the sensord service.
 - Fix/rename the spec file.
