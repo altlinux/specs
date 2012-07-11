@@ -1,5 +1,5 @@
-%define dversion	6.7.7
-%define drelease	7
+%define dversion	6.7.8
+%define drelease	2
 %define qlev		Q16
 %define mgkdir		ImageMagick
 %define soname		4
@@ -213,6 +213,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
 %endif
 
 %changelog
+* Wed Jul 11 2012 Anton Farygin <rider@altlinux.ru> 6.7.8.2-alt1
+- new version
+
 * Fri Jun 15 2012 Anton Farygin <rider@altlinux.ru> 6.7.7.7-alt1
 - new version
 
