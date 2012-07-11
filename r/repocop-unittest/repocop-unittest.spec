@@ -1,5 +1,5 @@
 Name: repocop-unittest
-Version: 0.22
+Version: 0.23
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -9,9 +9,7 @@ Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org 
 
-Requires: repocop
-#Requires: repocop-unittest-altdesktop >= 0.07
-#Requires: repocop-unittest-freedesktop-mime-test
+Requires: repocop > 0.59
 Requires: repocop-unittest-alt-alternatives-master-slave-conflict
 Requires: repocop-unittest-alt-alternatives-vs-filesystem
 Requires: repocop-unittest-alt-alternatives-vs-ghost
@@ -24,10 +22,11 @@ Requires: repocop-unittest-altlinux-python
 Requires: repocop-unittest-bin-permissions
 Requires: repocop-unittest-buildreq
 Requires: repocop-unittest-buildroot >= 0.04
-#Requires: repocop-unittest-checkbashisms
+Requires: repocop-unittest-checkbashisms
 Requires: repocop-unittest-docdir-is-not-owned
 Requires: repocop-unittest-fonts.alias
 Requires: repocop-unittest-freedesktop
+Requires: repocop-unittest-init-but-no-native-systemd
 Requires: repocop-unittest-init-condrestart
 Requires: repocop-unittest-init-lsb
 Requires: repocop-unittest-init-x-functions
@@ -38,8 +37,10 @@ Requires: repocop-unittest-rpm-filetriggers >= 0.06
 Requires: repocop-unittest-rpm-recursive-symlink
 Requires: repocop-unittest-rpm-tags
 Requires: repocop-unittest-sisyphus_check-check-dirlist
-#Requires: repocop-unittest-spec-has-obsolete-macroses
-#Requires: repocop-unittest-spec-missing-packager
+Requires: repocop-unittest-subdirs-in-usr-games
+## NO MORE
+##Requires: repocop-unittest-spec-has-obsolete-macroses
+##Requires: repocop-unittest-spec-missing-packager
 Requires: repocop-unittest-unmet-dependency
 Requires: repocop-unittest-unsafe-tmp-usage-in-scripts
 
@@ -69,6 +70,12 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Wed Jul 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- added:
+  + repocop-unittest-checkbashisms
+  + repocop-unittest-init-but-no-native-systemd
+  + repocop-unittest-subdirs-in-usr-games
+
 * Mon Aug 15 2011 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - removed repocop-unittest-spec-has-obsolete-macroses
 
