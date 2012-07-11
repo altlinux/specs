@@ -1,12 +1,13 @@
 Name: jackbeat
 Version: 0.7.6
-Release: alt1
+Release: alt1.1
 Summary: Jackbeat is an audio sequencer
 License: GPLv2+
 Group: Sound
 Url: http://jackbeat.samalyse.org/
 Packager: Egor Glukhov <kaman@altlinux.org>
 Source0: %name-%version.tar
+Patch0: jackbeat-0.7.6-alt-DSO.patch
 
 BuildRequires: libalsa-devel libgtk+2-devel libjack-devel liblo-devel
 BuildRequires: libportaudio2-devel libpulseaudio-devel libsamplerate-devel
@@ -25,6 +26,7 @@ and sound artists:
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %autoreconf
@@ -69,6 +71,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1.1
+- Fixed build
+
 * Mon May 30 2011 Egor Glukhov <kaman@altlinux.org> 0.7.6-alt1
 - 0.7.6
 
