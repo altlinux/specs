@@ -1,5 +1,5 @@
 Name: azure-sdk-for-node
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 Summary: Windows Azure Client Library for node
 
@@ -36,5 +36,8 @@ ln -s "../lib/node_modules/azure/bin/azure" %buildroot/%_bindir/azure
 %node_modules/azure
 
 %changelog
+* Wed Jul 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.1-alt1
+- 0.6.1
+
 * Fri Jun 29 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.0-alt1
 - initial
