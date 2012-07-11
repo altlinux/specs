@@ -11,7 +11,7 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 
 Group: Graphics
@@ -127,6 +127,7 @@ done
 %_K4bindir/scangui
 %_K4lib/kipiplugin_*.so
 #%_K4lib/photolayoutseditor*plugin_*.so
+%_K4apps/kipi/
 %_K4apps/kipiplugin_*/
 %_K4apps/gpssync/
 %_K4apps/photolayoutseditor/
@@ -162,6 +163,12 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Wed Jul 11 2012 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt1
+- new version
+
+* Thu Jun 28 2012 Sergey V Turchin <zerg@altlinux.org> 2.6.0-alt0.M60P.1
+- built for M60P
+
 * Thu Jun 14 2012 Sergey V Turchin <zerg@altlinux.org> 2.6.0-alt1
 - new version
 
