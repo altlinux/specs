@@ -2,7 +2,7 @@
 %define major 2.32
 
 Name: libglibmm
-Version: %major.0
+Version: %major.1
 Release: alt1
 Summary: C++ wrapper for GLib
 License: LGPL
@@ -34,7 +34,7 @@ when trying to develop or compile applications which need glibmm.
 
 %package doc
 Summary: glibmm documentation
-Group: Books/Other
+Group: Development/Documentation
 BuildArch: noarch
 
 %description doc
@@ -76,6 +76,9 @@ This package contains all API documentation for glibmm.
 %_docdir/%rname-2.4
 
 %changelog
+* Wed Jul 11 2012 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1
+- 2.32.1
+
 * Tue Apr 10 2012 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt1
 - 2.32.0
 
