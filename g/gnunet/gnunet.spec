@@ -1,7 +1,7 @@
 %define oname GNUnet
 Name: gnunet
 Version: 0.8.1
-Release: alt3
+Release: alt3.1
 
 Summary: Peer-to-peer framework
 
@@ -15,6 +15,7 @@ Source: http://gnunet.org/download/%oname-%version.tar
 Patch: %name-disable-ltdl-detect.patch
 Patch1: %name-fix-pointer.patch
 Patch2: %{name}d-service.patch
+Patch3: %name-0.8.1-alt-DSO.patch
 
 # manually removed: libqt3-devel libqt4-devel  xorg-cf-files
 # Automatically added by buildreq on Mon Feb 01 2010
@@ -56,6 +57,7 @@ applications which will use %name.
 %patch -p2
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 %autoreconf
@@ -121,6 +123,9 @@ install -D -m0755 gnunetd.service %buildroot%_initdir/gnunetd
 %_libdir/*.so
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt3.1
+- Fixed build
+
 * Thu Apr 21 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.1-alt3
 - fix build
 
