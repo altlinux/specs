@@ -1,5 +1,5 @@
 Name: libidn
-Version: 1.24
+Version: 1.25
 Release: alt1
 
 Summary: Internationalized Domain Name support library
@@ -123,6 +123,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %endif #emacs
 
 %changelog
+* Wed Jul 11 2012 Dmitry V. Levin <ldv@altlinux.org> 1.25-alt1
+- Updated to 1.25.
+
 * Thu Jan 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1.24-alt1
 - Updated to 1.24.
 
