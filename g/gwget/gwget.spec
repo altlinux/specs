@@ -3,7 +3,7 @@
 
 Name: gwget
 Version: %ver_major.4
-Release: alt4
+Release: alt4.1
 
 Summary: Gwget - Gnome2 wget Front-end
 License: %gpl2plus
@@ -12,6 +12,7 @@ URL: http://gnome.org/projects/gwget
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
 Patch1: %name-%version-git.patch
 Patch2: %name-%version-alt-fixes.patch
+Patch3: %name-1.0.4-alt-glib2.patch
 
 Provides: gwget2
 
@@ -53,6 +54,7 @@ Extention Gwget for Epiphany browser
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p0
 
 rm -f COPYING
 ln -s %_licensedir/GPL-2 COPYING
@@ -100,6 +102,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt4.1
+- Fixed build
+
 * Tue Jun 07 2011 Alexey Shabalin <shaba@altlinux.ru> 1.0.4-alt4
 - disable epiphany extension
 - fix build with libnotify 0.7
