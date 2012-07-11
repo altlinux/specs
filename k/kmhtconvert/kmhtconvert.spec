@@ -1,11 +1,12 @@
 Name:         kmhtconvert
 Version:      0.6
-Release:      alt2
+Release:      alt2.1
 URL:          http://users.otenet.gr/~geosp/kmhtconvert/
 License:      GPL
 Group:        Networking/WWW
 Summary:      convert mht files to war files.
 Source:       %name-%version.tar.gz
+Patch:        kmhtconvert-0.6-alt-DSO.patch
 
 BuildRequires: gcc-c++ kdelibs-devel
 
@@ -20,6 +21,7 @@ mht files by email.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %add_optflags -I%_includedir/tqtinterface
@@ -49,6 +51,9 @@ fi
 %_kde3_iconsdir/*/*/*/*
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.1
+- Fixed build
+
 * Wed Apr 20 2011 Andrey Cherepanov <cas@altlinux.org> 0.6-alt2
 - Adapt to new KDE3 placement
 - Cleanup requires
