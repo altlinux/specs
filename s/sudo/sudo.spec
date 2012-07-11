@@ -1,6 +1,6 @@
 Name: sudo
 Version: 1.6.8p12
-Release: alt9
+Release: alt10
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -18,7 +18,7 @@ Requires: vitmp
 Provides: %_sysconfdir/sudo.d
 
 # Automatically added by buildreq on Wed Apr 09 2003
-BuildRequires: flex libpam-devel
+BuildRequires: flex libpam-devel perl-podlators
 
 %define _libexecdir %_prefix/libexec/sudo
 %define timedir /var/lib/sudo
@@ -110,6 +110,9 @@ rm %buildroot%_libexecdir/*.la
 %doc TROUBLESHOOTING UPGRADE sample.sudoers rpminst.sudoers
 
 %changelog
+* Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.8p12-alt10
+- Fixed generation of man pages (by george@; closes: #27479).
+
 * Thu May 24 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.8p12-alt9
 - Relocated sudo timestamp directory: /var/run/sudo -> /var/lib/sudo.
 
