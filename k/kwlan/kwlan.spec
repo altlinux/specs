@@ -2,12 +2,13 @@
 Summary: Network manager for kde
 Name: kwlan
 Version: 0.6.3
-Release: alt3
+Release: alt3.1
 License: GPL
 Group: Networking/Other
 Packager: Boris Savelev <boris@altlinux.org>
 Url: http://sourceforge.net/projects/kwlan/
 Source: %name-%version.tar.gz
+Patch: kwlan-0.6.3-alt-DSO.patch
 
 # Automatically added by buildreq on Mon Sep 22 2008
 BuildRequires: doxygen gcc-c++ gcc-fortran graphviz imake kdelibs-devel libXt-devel libjpeg-devel libwireless-devel qt3-designer qt3-doc-html xml-utils xorg-cf-files
@@ -21,6 +22,7 @@ Systray icons show connection statistics per interface (can be disabled).
 
 %prep
 %setup
+%patch -p2
 
 %build
 %add_optflags -I%_includedir/tqtinterface
@@ -40,6 +42,9 @@ Systray icons show connection statistics per interface (can be disabled).
 /usr/share/kde/icons/hicolor/*/*/*/*.png
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3-alt3.1
+- Fixed build
+
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.6.3-alt3
 - Build for TDE 3.5.13 release
 
