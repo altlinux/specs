@@ -4,7 +4,7 @@
 
 Name: %_name
 Version: 2.2.11
-Release: alt3
+Release: alt3.1
 
 Summary: gnubiff is a mail notifier that displays headers when new mail has arrived.
 License: %gpl3plus w/exception for OpenSSL
@@ -16,6 +16,7 @@ Source2: %name.desktop
 Patch: %_name-2.2.9-alt-tls-support.patch
 #Patch1: %_name-2.2.9-fix-build.patch
 Patch3: %_name-2.2.11-fix-building.patch
+Patch4: gnubiff-2.2.11-alt-DSO.patch
 
 BuildPreReq: rpm-build-licenses
 
@@ -55,6 +56,7 @@ gnubiff features include:
 %patch -p1 -b .alt-tls-support
 #patch1 -p0 -b .fix-build
 %patch3 -p0 -b .fix-building
+%patch4 -p2
 
 %build
 %configure \
@@ -82,6 +84,9 @@ install -pD -m644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 %doc README ChangeLog COPYING THANKS TODO NEWS AUTHORS
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.11-alt3.1
+- Fixed build
+
 * Tue Nov 10 2009 Alexey Rusakov <ktirf@altlinux.org> 2.2.11-alt3
 - Removed obsolete (un)install_info invocations.
 
