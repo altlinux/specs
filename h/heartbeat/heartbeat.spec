@@ -13,13 +13,15 @@
 Summary: Heartbeat subsystem for High-Availability Linux
 Name: heartbeat
 Version: 2.1.3
-Release: alt5.1
+Release: alt5.2
 License: GPL/LGPL
 Url: http://linux-ha.org/
 Group: System/Servers
 Source: http://linux-ha.org/download/%name-%version.tar
 Source1: heartbeat.init.alt
 Source2: ldirectord.init.alt
+Patch: heartbeat-2.1.3-alt-glib2.patch
+Patch1: heartbeat-2.1.3-alt-DSO.patch
 
 BuildRequires(pre): rpm-build-linux-ha
 # Automatically added by buildreq on Thu Oct 16 2008
@@ -86,7 +88,8 @@ Heartbeat static libs.
 
 %prep
 %setup -q
-#%%patch0 -p1
+%patch -p2
+%patch1 -p2
 
 %build
 %autoreconf
@@ -360,6 +363,9 @@ install -d %buildroot/%_var/lib/%name/pengine
 %endif #static
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.3-alt5.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.3-alt5.1
 - Rebuild with Python-2.7
 
