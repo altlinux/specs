@@ -1,6 +1,6 @@
 Name: gshutdown
 Version: 0.3
-Release: alt0.svn634
+Release: alt0.svn634.1
 License: GPL
 Group: Graphical desktop/Other
 Url: http://gshutdown.tuxfamily.org
@@ -11,6 +11,7 @@ Summary: An advanced shutdown utility
 Source: %name-%version.tar.gz
 Patch1: gshutdown-0.3-alt-libnotify-api.patch
 Patch2: gshutdown-0.3-alt-fix-linking.patch
+Patch3: gshutdown-0.3-alt-glib2.patch
 
 BuildRequires: intltool libXau-devel libX11-devel libdbus-glib-devel libglade-devel libnotify-devel
 
@@ -34,6 +35,7 @@ Features :
 %setup -q
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 %autoreconf
@@ -54,6 +56,9 @@ Features :
 %_mandir/*/*
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt0.svn634.1
+- Fixed build
+
 * Thu Sep 01 2011 Alexey Shabalin <shaba@altlinux.ru> 0.3-alt0.svn634
 - NMU
 - svn snapshot 634
