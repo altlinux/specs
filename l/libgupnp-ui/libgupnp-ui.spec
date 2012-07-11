@@ -2,7 +2,7 @@
 
 Name: lib%oname
 Version: 0.1.1
-Release: alt2
+Release: alt2.1
 Summary: GUPnP-UI is a collection of helpers for adding ui to upnp apps 
 
 Group: System/Libraries
@@ -72,6 +72,9 @@ glib-gettextize --force --copy
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt2.1
+- Fixed build
+
 * Thu Jun 23 2011 Alexey Shabalin <shaba@altlinux.ru> 0.1.1-alt2
 - rebuild with new libgupnp
 
