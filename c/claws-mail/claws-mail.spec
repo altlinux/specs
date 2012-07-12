@@ -7,7 +7,7 @@
 %def_disable 	debug
 Name:	 	%_newname
 Version: 3.8.1
-Release: alt2
+Release: alt3
 
 Summary:	The bleeding edge branch of Sylpheed, a GTK+ based, lightweight, and fast e-mail client	 
 License: 	%gpl3plus
@@ -20,6 +20,8 @@ Patch1:	%name-alt-filters-conv.patch
 Patch6: claws-mail-3.7.6-fix-undo-redo-replace.patch
 Patch7: claws-mail-alt-textviewer.patch
 Patch8: claws-mail-alt-textviewer-pl.patch
+# http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2697
+Patch9: claws-mail-3.8.1-alt-fix-procmime.patch
 
 # ALT Specific
 Patch119: claws-mail-alt-masquerade-deps.patch
@@ -218,6 +220,7 @@ echo "Libs: -lenchant -lgnutls" >>%name.pc.in
 %patch6 -p0
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %patch119 -p1
 
@@ -329,6 +332,9 @@ EOF
 
 
 %changelog
+* Thu Jul 12 2012 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt3
+- Fix segfault in parse_parameters().
+
 * Tue Jul 03 2012 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt2
 - Subpackages tools and rpm-macros-claws-mail are noarch.
 - Rebuild against libetpan.so.16.0.0.
