@@ -1,6 +1,6 @@
 Name: magicpoint
 Version: 1.13a
-Release: alt1
+Release: alt1.1
 
 Summary: Presentation tool
 Group: Office
@@ -24,6 +24,7 @@ Patch11: magicpoint-1.13a-xft-rendering-fix.patch
 Patch12: magicpoint-1.13a-lib64.patch
 Patch13: magicpoint-1.13a-warnings.patch
 Patch14: magicpoint-1.13a-m17n.patch
+Patch15: magicpoint-1.13a-alt-DSO.patch
 
 Requires: ghostscript-classic, netpbm, sharutils, /bin/gunzip
 
@@ -57,6 +58,7 @@ favorite editor (e.g. Emacs).
 %patch12 -p0 -b .fix12
 #patch13 -p0 -b .fix13
 %patch14 -p2 -b .fix14
+%patch15 -p2
 
 %build
 %add_optflags -D__SABER__ -DFREETYPEFONTDIR=\"%_ttffontsdir\"
@@ -88,6 +90,9 @@ make
 %doc COPYRIGHT FAQ README* RELNOTES SYNTAX USAGE sample
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.13a-alt1.1
+- Fixed build
+
 * Sun Dec 06 2009 Alexey Gladkov <legion@altlinux.ru> 1.13a-alt1
 - New version (1.13a).
 - Build with libm17n (utf8 support).
