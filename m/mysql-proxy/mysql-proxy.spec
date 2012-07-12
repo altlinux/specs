@@ -2,7 +2,7 @@
 
 Name: mysql-proxy
 Version: 0.8.2
-Release: alt1
+Release: alt1.1
 
 Summary: MySQL Proxy
 License: GPLv2
@@ -16,6 +16,7 @@ Source3: mysql-proxy.conf
 Source4: admin-1.lua
 
 Patch1: mysql-proxy-installexamples.patch
+Patch2: mysql-proxy-0.8.2-alt-DSO.patch
 
 # Automatically added by buildreq on Wed Jun 15 2011
 BuildRequires: MySQL-client flex glib2-devel libevent-devel liblua5-devel libmysqlclient-devel
@@ -29,6 +30,7 @@ failover; query analysis; query filtering and modification; and many more.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
 # Upstream does not care about 64-bit library path, so fix it:
@@ -93,6 +95,9 @@ rm -rf %buildroot%_pkgconfigdir
 %attr(750,root,%username) %dir /var/log/mysql-proxy
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.1
+- Fixed build
+
 * Tue Dec 27 2011 Victor Forsiuk <force@altlinux.org> 0.8.2-alt1
 - 0.8.2
 
