@@ -4,7 +4,7 @@
 %define modules_list intel/e1000e/e1000e-2.0.0.1 intel/igb/igb-3.4.7
 
 %define kversion	2.6.32
-%define krelease	alt37
+%define krelease	alt38
 %define flavour		el-smp
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -12,7 +12,7 @@
 Summary: pf_ring kernel modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.37
+Release: %module_release.132640.38
 License: GPL
 Group: System/Kernel and hardware
 
@@ -112,8 +112,8 @@ EOF
 
 
 %changelog
-* Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1.132640.37
-- Build for kernel-image-el-smp-2.6.32-alt37.
+* Thu Jul 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.4.4-alt1.132640.38
+- Build for kernel-image-el-smp-2.6.32-alt38.
 
 * Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1
 - 5.4.4

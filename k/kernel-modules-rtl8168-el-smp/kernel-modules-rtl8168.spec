@@ -3,14 +3,14 @@
 %define module_release	alt1
 
 %define kversion	2.6.32
-%define krelease	alt37
+%define krelease	alt38
 %define flavour		el-smp
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/kernel/drivers/net
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.37
+Release: %module_release.132640.38
 
 Summary: Linux driver for RealTek Ethernet controllers
 License: GPLv2+
@@ -64,8 +64,8 @@ install -Dp -m0744 src/r8168.ko %buildroot/%module_dir/r8168.ko
 %module_dir
 
 %changelog
-* Fri Jun 22 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 8.026.00-alt1.132640.37
-- Build for kernel-image-el-smp-2.6.32-alt37.
+* Wed Jul 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 8.026.00-alt1.132640.38
+- Build for kernel-image-el-smp-2.6.32-alt38.
 
 * Sat Oct 29 2011 Nazarov Denis <nenderus@altlinux.org> 8.026.00-alt1
 - Version 8.026.00
