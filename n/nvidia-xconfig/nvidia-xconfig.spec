@@ -1,5 +1,5 @@
 Name: nvidia-xconfig
-Version: 295.20
+Version: 302.17
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -23,10 +23,10 @@ Command line tool for setup X11 for the NVIDIA driver
 
 %build
 %add_optflags -I XF86Config-parser
-%make_build CC=gcc LOCAL_CFLAGS="%optflags" LOCAL_LDFLAGS="-L/usr/lib -L/usr/lib64"
+%make_build PREFIX=%prefix CC=gcc LOCAL_CFLAGS="%optflags" LOCAL_LDFLAGS="-L/usr/lib -L/usr/lib64"
 
 %install
-make install bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
+make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
 #mkdir -p %buildroot/%_bindir
 #install -m 0755 nvidia-xconfig %buildroot/%_bindir
 
@@ -36,6 +36,15 @@ make install bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
 
 
 %changelog
+* Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 302.17-alt1
+- new version
+
+* Thu Apr 12 2012 Sergey V Turchin <zerg@altlinux.org> 295.40-alt1
+- new version
+
+* Wed Feb 15 2012 Sergey V Turchin <zerg@altlinux.org> 295.20-alt0.M60P.1
+- built for M60P
+
 * Wed Feb 15 2012 Sergey V Turchin <zerg@altlinux.org> 295.20-alt1
 - new version
 
