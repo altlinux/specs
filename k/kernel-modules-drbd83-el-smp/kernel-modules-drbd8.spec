@@ -5,7 +5,7 @@
 %define module_version	8.3.8
 
 %define kversion	2.6.32
-%define krelease	alt37
+%define krelease	alt38
 %define flavour		el-smp
 
 %define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
@@ -15,7 +15,7 @@
 Summary:	Linux %{module_name} kernel modules for DRBD.
 Name:		kernel-modules-%module_name-%flavour
 Version:	%module_version
-Release:	%module_release.132640.37
+Release:	%module_release.132640.38
 License:	GPL
 Group:		System/Kernel and hardware
 
@@ -87,8 +87,8 @@ KDIR=%_usrsrc/linux-%kversion-%flavour/
 %module_dir
 
 %changelog
-* Fri Jun 22 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 8.3.8-alt2.132640.37
-- Build for kernel-image-el-smp-2.6.32-alt37.
+* Wed Jul 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 8.3.8-alt2.132640.38
+- Build for kernel-image-el-smp-2.6.32-alt38.
 
 * Mon Jan 24 2011 Anton Protopopov <aspsk@altlinux.org> 8.3.8-alt2
 - Do apply kernel-image-el-smp-compliance.patch to ovz-el kernel
