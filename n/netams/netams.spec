@@ -5,7 +5,7 @@
 
 Name: netams
 Version: 3.4.5
-Release: alt3
+Release: alt3.1
 
 Summary: Network Traffic Accounting and Management Service (NeTAMS)
 Summary(ru_RU.UTF-8): NeTAMS - сервис контроля и учета сетевого трафика.
@@ -38,6 +38,8 @@ Patch10: %prog_name-schedule_fix.patch
 Patch11: %prog_name-image_fix-3.4.3.patch
 Patch12: %prog_name-image_fix2-3.4.5.patch
 Patch13: %prog_name-configure_glib-3.4.5.patch
+Patch14: %prog_name-3.4.5-alt-glib2.patch
+Patch15: %prog_name-3.4.5-alt-DSO.patch
 
 BuildPreReq: webserver-common rpm-macros-apache2 rpm-macros-apache
 
@@ -168,6 +170,8 @@ Metapackage gives needed provides.
 %patch11 -p1
 %patch12 -p2
 %patch13 -p1
+%patch14 -p2
+%patch15 -p2
 # cp %SOURCE8 ./Rules.make
 chmod -x doc/*
 
@@ -322,6 +326,9 @@ echo '---------------------------------------------'
 %post_service httpd
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.5-alt3.1
+- Fixed build
+
 * Thu Apr 21 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.4.5-alt3
 - fix build
 
