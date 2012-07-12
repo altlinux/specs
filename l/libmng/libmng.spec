@@ -1,6 +1,6 @@
 Name: libmng
 Version: 1.0.10
-Release: alt2
+Release: alt2.1
 
 Summary: A library for handling MNG files
 License: Distributable (see LICENSE)
@@ -101,6 +101,9 @@ popd
 %_bindir/*
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.10-alt2.1
+- Fixed build
+
 * Mon Apr 18 2011 Dmitry V. Levin <ldv@altlinux.org> 1.0.10-alt2
 - Dropped libmng-devel-static.
 - Updated build dependencies.
