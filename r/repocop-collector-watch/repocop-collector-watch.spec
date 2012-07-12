@@ -1,7 +1,7 @@
 %define testname watch
 
 Name: repocop-collector-%testname
-Version: 0.01
+Version: 0.02
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -10,7 +10,7 @@ Summary: repocop collector for debian watch files.
 Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
-Requires: repocop > 0.59
+Requires: repocop > 0.60
 Requires: sqlite3
 
 
@@ -45,5 +45,8 @@ install -D -m 644 %testname.filepattern $RPM_BUILD_ROOT%_datadir/repocop/srccoll
 %_datadir/repocop/srccollectors/%testname
 
 %changelog
+* Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.02-alt1
+- proper dependency on repocop version
+
 * Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.01-alt1
 - First build for Sisyphus.
