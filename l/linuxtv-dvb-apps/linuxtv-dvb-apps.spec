@@ -1,6 +1,6 @@
 Name: linuxtv-dvb-apps
 Version: 1.1.1
-Release: alt2
+Release: alt2.1
 
 Summary: LinuxTV DVB utils for setup and manage different devices for recieve DVB broadcasting
 Summary(ru_RU.UTF-8): Утилиты LinuxTV для настройки и управления различными устройствами приёма DVB вещания
@@ -11,6 +11,9 @@ Group: System/Configuration/Hardware
 Source0: http://linuxtv.org/download/dvb/%name-%version.tar.gz
 Source1: CHANGES
 Patch1: %name-makefile.patch
+Patch2: %name-1.1.1-alt-v4l.patch
+
+BuildPreReq: libv4l-devel
 
 Provides: dvb-modules-apps
 Conflicts: dvb-tools
@@ -28,6 +31,7 @@ Conflicts: dvb-tools
 %prep
 %setup -q -n %name-%version
 %patch1 -p1
+%patch2 -p2
 %__cp %SOURCE1 ./
 
 %build
@@ -71,6 +75,9 @@ done
 %_datadir/dvb/*
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt2.1
+- Fixed build
+
 * Sun Oct 21 2007 Andrew Kornilov <hiddenman@altlinux.ru> 1.1.1-alt2
 - Removed /usr/bin/evtest (it's in the input-utils package now: #13178)
 
