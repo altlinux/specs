@@ -1,5 +1,5 @@
 Name: maintenance-utils
-Version: 1.4
+Version: 1.5
 Release: alt1
 
 Summary: Utilities for package maintenance
@@ -31,6 +31,10 @@ and git.alt build server.
 %_mandir/ru/man?/*
 
 %changelog
+* Thu Jul 12 2012 Paul Wolneykien <manowar@altlinux.ru> 1.5-alt1
+- Take the committer name from the git config by default.
+- Implement the --closes option for autoclose of bugs.
+
 * Thu Dec 08 2011 Paul Wolneykien <manowar@altlinux.ru> 1.4-alt1
 - Update the Russian manual page.
 - Use `gear --describe' as a better way to obtain version/release.
