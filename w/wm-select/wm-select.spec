@@ -1,11 +1,10 @@
 Name: wm-select
-Version: 0.8
+Version: 0.8.1
 Release: alt1
 
 Summary: Application for selecting window manager at startup
-License: GPL
+License: GPLv2+
 Group: Graphical desktop/Other
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -16,7 +15,7 @@ wm-select is a small Gtk application for selecting a window manager
 at X startup.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build CFLAGS="%optflags"
@@ -33,6 +32,9 @@ done
 %_bindir/*
 
 %changelog
+* Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 0.8.1-alt1
+- Fixed build with new gcc.
+
 * Tue Oct 17 2006 Dmitry V. Levin <ldv@altlinux.org> 0.8-alt1
 - Fixed build with -D_FORTIFY_SOURCE=2 -Werror.
 
