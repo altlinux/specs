@@ -1,6 +1,6 @@
 Name: pax
 Version: 3.4
-Release: alt3
+Release: alt3.1
 
 Summary: POSIX File System Archiver
 License: BSD
@@ -12,6 +12,7 @@ Patch1: pax-3.4-rdtruncate.patch
 Patch2: pax-3.4-abs100.patch
 Patch3: pax-3.4-PATHMAX.patch
 Patch4: pax-3.4-rh-gcc46.patch
+Patch5: pax-3.4-alt-no-Werror.patch
 
 %description
 'pax' is the POSIX standard archive tool. It supports the two most
@@ -23,6 +24,7 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 %configure
@@ -36,6 +38,9 @@ common forms of standard Unix archive (backup) files - CPIO and TAR.
 %_man1dir/*
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt3.1
+- Removed -Werror from compiler flags
+
 * Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 3.4-alt3
 - Fixed build with new gcc.
 
