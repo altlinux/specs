@@ -1,6 +1,6 @@
 Name: mbrowse
 Version: 0.3.1
-Release: alt6.qa3
+Release: alt6.qa4
 
 Summary: SNMP MIB browser
 License: GPL
@@ -14,6 +14,7 @@ Patch0: %name-0.3.1-alt-snmpdetect.patch
 Patch1: %name-0.3.1-alt-snmpconf.patch
 Patch2: %name-0.3.1-alt-gcc34.patch
 Patch3: %name-0.3.1-alt-x86-64-build.patch
+Patch4: %name-0.3.1-alt-DSO.patch
 
 # Automatically added by buildreq on Sun Apr 22 2007
 BuildRequires: gtk+-devel libnet-snmp-devel
@@ -27,6 +28,7 @@ Mbrowse is an SNMP MIB browser based on GTK and net-snmp.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 %build
 %configure
@@ -59,6 +61,9 @@ install -m644 %SOURCE1 %buildroot/%_niconsdir/
 %_niconsdir/%name.xpm
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt6.qa4
+- Fixed build
+
 * Sat Apr 23 2011 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt6.qa3
 - NMU: converted menu to desktop file
 
