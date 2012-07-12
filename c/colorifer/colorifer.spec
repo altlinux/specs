@@ -1,11 +1,9 @@
-%set_gcc_version 4.1
-
 Name: colorifer
 Version: 1.0.1
-Release: alt14.1
+Release: alt15
 
 Summary: Simple program output colorifer
-License: GPL
+License: GPLv2+
 Group: Text tools
 
 Packager: Stanislav Ievlev <inger@altlinux.ru>
@@ -18,7 +16,7 @@ Requires: lib%name = %version-%release
 #BuildPreReq: libncursesw
 
 # Automatically added by buildreq on Mon Mar 22 2004 (-bi)
-BuildRequires: boost-devel gcc4.1-c++ help2man libncurses-devel libncursesxx-devel libpcre-devel libstdc++4.1-devel
+BuildRequires: boost-devel gcc-c++ help2man libncurses-devel libncursesxx-devel libpcre-devel
 
 %description
 This package contains simple wrapper to colorize output from any programs.
@@ -34,7 +32,6 @@ Color stream substitution filter
 %package -n lib%name
 Summary: shared library between colorifer tools
 Group: System/Libraries
-Requires: libncursesxx >= 0.0.1-alt6
 
 %description -n lib%name
 Shared library between colorifer tools
@@ -68,6 +65,9 @@ mkdir -p %buildroot%_datadir/%name/
 %_libdir/*.so.*
 
 %changelog
+* Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.1-alt15
+- Fixed build with new gcc and ld.
+
 * Sun Oct 24 2010 Denis Smirnov <mithraen@altlinux.ru> 1.0.1-alt14.1
 - rebuild (with the help of girar-nmu utility)
 
