@@ -3,7 +3,7 @@
 Summary: Tool used to mount local media on an Xterminal from the terminals server
 Name: ltspfsd
 Version: 0.3
-Release: alt0.2.1
+Release: alt0.2.2
 License: GPL
 Group: Networking/Other
 URL: http://wiki.ltsp.org/twiki/bin/view/Ltsp/LtspFS
@@ -17,6 +17,7 @@ Source1: %name.1
 Source2: ltspfs_mount.sh
 Source3: ltspfs_umount.sh
 Patch: %name-0.3-mount_hal+info.patch
+Patch1: %name-0.3-alt-DSO.patch
 Requires: fuse >= 2.5.2
 
 BuildRequires: libX11-devel libXau-devel
@@ -43,6 +44,7 @@ The goals of ltspfs are:
 %prep
 %setup %{?cvsdate:-n %name-cvs-20070416}
 %patch0 -p1
+%patch1 -p2
 
 %build
 %define _optlevel s
@@ -66,6 +68,9 @@ install -m 0700 %SOURCE3 %buildroot/sbin/ltspfs_umount
 
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt0.2.2
+- Fixed build
+
 * Mon Feb 23 2009 Michael Shigorin <mike@altlinux.org> 0.3-alt0.2.1
 - NMU: updated BuildRequires
 
