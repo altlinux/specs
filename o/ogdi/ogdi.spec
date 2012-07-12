@@ -1,6 +1,6 @@
 Name: ogdi
 Version: 3.2.0
-Release: alt1.beta2
+Release: alt1.beta2.1
 Summary: Open Geographic Datastore Interface
 Group: Sciences/Geosciences
 License: BSD
@@ -59,8 +59,9 @@ TOPDIR=`pwd`; TARGET=Linux; export TOPDIR TARGET
 INST_LIB=%_libdir/;export INST_LIB
 export CFG=debug # for -g
 
+%add_optflags -I$PWD/proj
 # do not compile with ssp. it will trigger internal bugs (to_fix_upstream)
-OPT_FLAGS=`echo $RPM_OPT_FLAGS|sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
+OPT_FLAGS=`echo %optflags|sed -e 's/-Wp,-D_FORTIFY_SOURCE=2//g'`
 export CFLAGS="$OPT_FLAGS -fPIC -DPIC -DDONT_TD_VOID -DUSE_TERMIO"
 %configure \
         --with-binconfigs \
@@ -166,6 +167,9 @@ touch -r ogdi-config.in %buildroot%_bindir/%name-config
 %_libdir/%name/libecs_tcl.so
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.0-alt1.beta2.1
+- Fixed build
+
 * Sun Dec 12 2010 Ilya Mashkin <oddity@altlinux.ru> 3.2.0-alt1.beta2
 - Build for ALT Linux
 
