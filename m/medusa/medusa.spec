@@ -1,6 +1,6 @@
 Name: medusa
 Version: 2.0
-Release: alt1.4
+Release: alt1.5
 
 Summary: Medusa is intended to be a speedy, massively parallel, modular, login brute-forcer
 License: GPLv2
@@ -8,6 +8,7 @@ Group: Networking/Other
 Url: http://www.foofus.net
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Source0: %name-%version.tar.gz
+Patch0: medusa-2.0-alt-DSO.patch
 
 # Automatically added by buildreq on Tue May 26 2009
 BuildRequires: libssh2-devel libncp-devel libssl-devel libapr1-devel postgresql-devel librtmp-devel libsubversion-devel postfix telnet perl-LWPx-ParanoidAgent
@@ -83,6 +84,7 @@ Brute force module for svn
 
 %prep
 %setup
+%patch0 -p2
 sed -i "s|/include/postgresql|/include/pgsql|g" configure.in
 sed -i "s|/usr/local/include|/usr/include|g" configure.in
 sed -i "s|/usr/local/ssl/include|/usr/include/openssl|g" configure.in
@@ -144,6 +146,9 @@ install -m644 src/modsrc/wrapper/sample-stdin.pl %buildroot%perl_vendor_privlib/
 %_libdir/%name/modules/svn.mod
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.5
+- Fixed build
+
 * Thu Jul 14 2011 Dmitry V. Levin <ldv@altlinux.org> 2.0-alt1.4
 - Blind rebuild with postfix-2.5.14.
 
