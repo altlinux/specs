@@ -4,7 +4,7 @@
 
 Name: nss-ldapd
 Version: 0.6.8
-Release: alt1.1
+Release: alt1.2
 
 Summary: NSS module for name lookups using LDAP
 License: LGPL
@@ -15,6 +15,7 @@ Url: http://ch.tudelft.nl/~arthur/nss-ldapd/
 Source: %name-%version.tar
 Source1: nslcd.init
 Source2: nslcd.sysconfig
+Patch: nss-ldapd-0.6.8-alt-DSO.patch
 
 Requires: nscd
 Requires(post): %post_service
@@ -52,6 +53,7 @@ for those platforms that need it.
 
 %prep
 %setup
+%patch -p2
 
 %build
 autoreconf -fisv
@@ -110,6 +112,9 @@ mksock %buildroot/var/run/nslcd/socket
 %doc %_man8dir/*
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.8-alt1.2
+- Fixed build
+
 * Thu Sep 24 2009 ALT QA Team Robot <ldv@altlinux.org> 0.6.8-alt1.1
 - Automated blind dumb rebuild with libldap-devel-2.4.16-alt4.4.
 
