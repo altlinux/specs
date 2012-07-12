@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.61
+Version: 0.62
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -67,6 +67,7 @@ for i in \
   %_datadir/repocop/pkgcollectors \
   %_datadir/repocop/srccollectors \
   %_datadir/repocop/sqlite-functions \
+  %_datadir/repocop/common \
 ; do mkdir -p $RPM_BUILD_ROOT$i
 done
 mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/rpm/
@@ -74,6 +75,8 @@ install -m644 pkgcollectors/rpm/*.sql.* $RPM_BUILD_ROOT%_datadir/repocop/pkgcoll
 
 mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/fixscripts/
 #install -m644 fixscripts/*.pl $RPM_BUILD_ROOT%_datadir/repocop/fixscripts/
+
+install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 
 %files
 #doc README ChangeLog
@@ -89,6 +92,7 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/fixscripts/
 %dir %_datadir/repocop/pkgcollectors
 %dir %_datadir/repocop/srccollectors
 %dir %_datadir/repocop/sqlite-functions
+%_datadir/repocop/common
 %perl_vendor_privlib/T*
 #perl_vendor_man3dir/*
 %_datadir/repocop/pkgcollectors/rpm
@@ -103,6 +107,9 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/fixscripts/
 %dir %_datadir/repocop/fixscripts
 
 %changelog
+* Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1
+- added generic purge script
+
 * Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
 - support for extra source collectors
 
