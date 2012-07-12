@@ -3,7 +3,7 @@
 
 Name: pachi
 Version: 1.0
-Release: alt3.qa2
+Release: alt3.qa3
 
 Summary: Cool 2D game like Manic Miner, Jet set Willy and more from the 80s
 License: GPLv2
@@ -41,7 +41,7 @@ Architecture-independent data files for Pachi game.
 
 %build
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
-%make_build --silent --no-print-directory CXXFLAGS="%optflags -Werror"
+%make_build --silent --no-print-directory CXXFLAGS="%optflags"
 
 %install
 %make_install --silent --no-print-directory DESTDIR=%buildroot install
@@ -85,6 +85,9 @@ install -pD -m644 Tgfx/%name-48.png %buildroot%_liconsdir/%name.png
 %_gamesdatadir/%name
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt3.qa3
+- Disabled -Werror from compiler flags
+
 * Wed Apr 06 2011 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3.qa2
 - NMU: converted debian menu to freedesktop
 
