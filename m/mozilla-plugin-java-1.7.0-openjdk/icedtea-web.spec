@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/xsltproc gcc-c++ pkgconfig(x11) zlib-devel
+BuildRequires: gcc-c++ pkgconfig(x11) zlib-devel
 # END SourceDeps(oneline)
 %def_enable javaws
 %def_enable moz_plugin
@@ -9,7 +9,7 @@ BuildRequires(pre): rpm-build-java
 %set_compress_method none
 %define oldname icedtea-web
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-generic-compat
 
 # We require at the least the first release java-1.6.0-openjdk 
 # with IcedTea6 1.10
@@ -52,24 +52,24 @@ BuildRequires: jpackage-compat
 %define binsuffix      .itweb
 
 Name:		mozilla-plugin-java-1.7.0-openjdk
-Version:	1.2
-Release:	alt2.hg467_2jpp7
+Version:	1.3
+Release:	alt1.hg468_2jpp7
 Summary:	Additional Java components for OpenJDK
 
 Group:      Development/Java
 License:    LGPLv2+ and GPLv2 with exceptions
 URL:        http://icedtea.classpath.org/wiki/IcedTea-Web
-Source0:    http://icedtea.classpath.org/download/source/%{oldname}-%{version}.tar.gz
+Source0:    http://icedtea.classpath.org/download/source/%{oldname}-1.4pre.tar.gz
 
-BuildRequires:  java-1.7.0-openjdk-devel
+BuildRequires:  java-%{javaver}-openjdk-devel
 BuildRequires:  desktop-file-utils
 BuildRequires:  xulrunner-devel
-BuildRequires:  glib2-devel
-BuildRequires:  gtk2-devel
+BuildRequires:  libglib2-devel
+BuildRequires:  libgtk+2-devel
 BuildRequires:  xulrunner-devel
 
 # For functionality and the OpenJDK dirs
-Requires:      java-1.7.0-openjdk
+Requires:      java-%{javaver}-openjdk
 
 # For the mozilla plugin dir
 Requires:       browser-plugins-npapi
@@ -85,7 +85,7 @@ Provides: java-plugin = %{javaver}
 
 
 # IcedTea is only built on these archs for now
-ExclusiveArch: x86_64 %ix86 %{arm}
+ExclusiveArch: x86_64 %ix86
 Source44: import.info
 
 %define altname java-%{javaver}-openjdk
@@ -140,10 +140,10 @@ BuildArch:  noarch
 This package contains Javadocs for the IcedTea-Web project.
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -q -n %{oldname}-1.4pre
 
 %build
-autoconf
+./autogen.sh
 ./configure \
     --with-pkgversion=ALTLinux-%{release}-%{_arch} \
     --docdir=%{_datadir}/javadoc/%{oldname} \
@@ -286,6 +286,10 @@ done
 
 
 %changelog
+* Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1.hg468_2jpp7
+- updated to the latest tip version from the upstream Mercurial repository.
+  thanks to (GalaxyMaster) <gm.outside+altlinux@gmail.com>.
+
 * Wed Jul 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2.hg467_2jpp7
 - hg snapshot 467:1ced587420b8 (closes: 27532)
 
