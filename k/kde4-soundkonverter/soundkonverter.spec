@@ -5,7 +5,7 @@
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde4-soundkonverter
-Version: 1.4.0
+Version: 1.6.2
 Release: alt1
 
 Summary: A frontend to various audio converters
@@ -44,7 +44,7 @@ Supported formats are: (encode/decode)
 %setup -qn %tname-%version
 #%patch1 -p0
 
-install -m 0644 %SOURCE1 po/
+[ -e po/ru.po ] || install -m 0644 %SOURCE1 po/
 
 for f in po/*/*.po; do
     newname=`echo $f| sed 's|\(.*/\)[[:alpha:]]*\(\.po\)|\1%tname\2|'`
@@ -61,8 +61,7 @@ done
 
 
 %files -f %tname.lang
-#doc AUTHORS ChangeLog*
-%doc README TODO
+%doc README CHANGELOG
 #%_K4doc/*/%tname
 %_kde4_bindir/%tname
 %_K4libdir/libsoundkonvertercore.so*
@@ -75,6 +74,12 @@ done
 %_K4srvtyp/%{tname}_*.desktop
 
 %changelog
+* Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1
+- new version
+
+* Thu May 03 2012 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt0.M60P.1
+- build for M60P
+
 * Thu May 03 2012 Sergey V Turchin <zerg@altlinux.org> 1.4.0-alt1
 - new version
 
