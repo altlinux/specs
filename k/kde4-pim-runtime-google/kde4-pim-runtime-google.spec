@@ -7,15 +7,15 @@
 %define bugfix 0
 Name: kde4-pim-runtime-google
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi Google contacts and calendar resources
 License: GPLv2
 Url: http://www.kde.org
 
-Provides: akonadi-googledata = %version-%release
-Obsoletes: akonadi-googledata < %version-%release
+#Provides: akonadi-googledata = %version-%release
+#Obsoletes: akonadi-googledata < %version-%release
 
 Source: %rname-%version.tar
 Source1: CMakeLists.txt
@@ -80,5 +80,8 @@ __EOF__
 
 
 %changelog
+* Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.0-alt0.2
+- don't obsolete akonadi-googledata
+
 * Tue Jul 10 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.0-alt0.1
 - initial build
