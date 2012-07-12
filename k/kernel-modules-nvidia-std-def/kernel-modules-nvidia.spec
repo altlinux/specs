@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	295.59
+%define module_version	302.17
 %define module_release	alt1
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
@@ -193,8 +193,11 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Mon Jun 25 2012 Anton Protopopov <aspsk@altlinux.org> 295.59-alt1.197636.1
+* Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 302.17-alt1.197636.1
 - Build for kernel-image-std-def-3.4.4-alt1.
+
+* Thu Jul 12 2012 Sergey V Turchin <zerg at altlinux dot org> 302.17-alt1
+- new release (302.17)
 
 * Thu Jun 14 2012 Sergey V Turchin <zerg at altlinux dot org> 295.59-alt1
 - new release (295.59)
