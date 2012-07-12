@@ -1,6 +1,6 @@
 Name: myrulib
 Version: 0.28.7
-Release: alt1
+Release: alt1.1
 
 Summary: Tool for maintaining fb2 files collection
 Url: http://myrulib.lintest.ru/
@@ -20,7 +20,7 @@ export and so on.
 %setup
 
 %build
-%configure
+%configure --with-expat
 %make_build CFLAGS="%optflags" CXXFLAGS="%optflags"
 
 %install
@@ -38,6 +38,9 @@ install sources/MyRuLib/desktop/home-64x64.png %buildroot/usr/share/icons/hicolo
 /usr/share/icons/hicolor/64x64/apps/myrulib.png
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.28.7-alt1.1
+- Fixed build
+
 * Tue Jul 12 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.28.7-alt1
 - new version
 
