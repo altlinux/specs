@@ -1,6 +1,6 @@
 Name: libjingle
 Version: 0.3.12
-Release: alt4.1
+Release: alt4.2
 
 Summary: GoogleTalk implementation of Jingle
 Group: System/Libraries
@@ -14,6 +14,7 @@ Patch1: libjingle-0.3.12-fix-gcc4.4-build.patch
 Patch2: libjingle-0.3.12-alt-unique-install.patch
 #debian patches
 Patch6: libjingle-0.3.11-deb-03_fix_bsd_ftbfs.patch
+Patch7: libjingle-0.3.12-alt-glibc-2.11.3.patch
 
 Packager: Afanasov Dmitry <ender@altlinux.org>
 
@@ -49,6 +50,7 @@ developing applications that use %name.
 %patch2 -p1
 # debian patches
 %patch6
+%patch7 -p2
 
 %build
 %autoreconf
@@ -71,6 +73,9 @@ developing applications that use %name.
 %_pkgconfigdir/jinglep2p-0.3.pc
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.12-alt4.2
+- Fixed build
+
 * Mon Nov 08 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.12-alt4.1
 - Rebuilt for soname set-versions
 
