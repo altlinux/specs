@@ -171,7 +171,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt2_2.2.1.8jpp7
+Release: alt3_2.2.1.8jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -507,11 +507,11 @@ Provides: java-sasl = %{epoch}:%{version}
 Provides: java-fonts = %{epoch}:%{version}
 
 # Obsolete older 1.6 packages as it cannot use the new bytecode
-Obsoletes: java-1.6.0-openjdk
-Obsoletes: java-1.6.0-openjdk-demo
-Obsoletes: java-1.6.0-openjdk-devel
-Obsoletes: java-1.6.0-openjdk-javadoc
-Obsoletes: java-1.6.0-openjdk-src
+#Obsoletes: java-1.6.0-openjdk
+#Obsoletes: java-1.6.0-openjdk-demo
+#Obsoletes: java-1.6.0-openjdk-devel
+#Obsoletes: java-1.6.0-openjdk-javadoc
+#Obsoletes: java-1.6.0-openjdk-src
 Source44: import.info
 
 %define altname %name
@@ -1349,6 +1349,9 @@ done
 %doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
 
 %changelog
+* Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.3-alt3_2.2.1.8jpp7
+- removed Obsoletes: on java-1.6.0-openjdk
+
 * Tue Jul 10 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.3-alt2_2.2.1.8jpp7
 - new version 2.2
 
