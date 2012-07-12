@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.60
+Version: 0.61
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -103,6 +103,9 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/fixscripts/
 %dir %_datadir/repocop/fixscripts
 
 %changelog
+* Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- support for extra source collectors
+
 * Mon Jul 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - support for external meged REPOCOP_DISTROTEST_DBDIR
 
