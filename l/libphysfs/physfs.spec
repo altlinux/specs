@@ -1,7 +1,7 @@
 %define uname physfs
 Name: libphysfs
 Version: 2.0.2
-Release: alt1
+Release: alt1.1
 
 Summary: PhysicsFS file abstraction layer for games
 License: zlib license
@@ -11,6 +11,7 @@ Provides: %uname = %version
 Source0: http://icculus.org/physfs/downloads/physfs-%version.tar.gz
 
 Patch0: physfs-1.0.2-alt-interface.patch
+Patch1: physfs-2.0.2-alt-no-Werror.patch
 
 # Automatically added by buildreq on Sat Oct 24 2009
 BuildRequires: doxygen gcc-c++ libncurses-devel libreadline-devel zlib-devel cmake
@@ -46,6 +47,7 @@ build programs using PhysicsFS.
 
 %prep
 %setup -q -n %uname-%version
+%patch1 -p2
 
 %build
 %cmake \
@@ -71,6 +73,9 @@ cd BUILD
 %_includedir/physfs.h
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1.1
+- Fixed build
+
 * Tue Feb 22 2011 Fr. Br. George <george@altlinux.ru> 2.0.2-alt1
 - Autobuild version bump to 2.0.2
 
