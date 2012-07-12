@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 295.40
+Version: 302.17
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -57,11 +57,11 @@ rm -f libXNVCtrl.a
 gcc %optflags -I/usr/include/X11/extensions -c NVCtrl.c
 ar rcs libXNVCtrl.a NVCtrl.o
 popd
-%make_build LOCAL_CFLAGS="%optflags"
+%make_build PREFIX=%prefix LOCAL_CFLAGS="%optflags"
 
 
 %install
-make install bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
+make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildroot/%_man1dir
 
 #mkdir -p %buildroot/%_bindir
 #install -m 0755 nvidia-settings %buildroot/%_bindir
@@ -98,6 +98,12 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 302.17-alt1
+- new version
+
+* Thu Apr 12 2012 Sergey V Turchin <zerg@altlinux.org> 295.40-alt0.M60P.1
+- built for M60P
+
 * Thu Apr 12 2012 Sergey V Turchin <zerg@altlinux.org> 295.40-alt1
 - new version
 
