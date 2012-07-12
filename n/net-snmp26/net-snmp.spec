@@ -7,7 +7,7 @@
 
 Name: %_name%abiversion
 Version: 5.6.1.1
-Release: alt5.1
+Release: alt5.2
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -18,11 +18,12 @@ Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Source0: http://prdownloads.sourceforge.net/net-snmp/net-snmp-%version.tar
 
 Patch: %name-%version-%release.patch
+Patch1: %name-5.6.1.1-alt-DSO.patch
 
 %define persistentdir %_localstatedir/%_name
 
 %def_enable static
-BuildPreReq: librpm-devel >= 4.0.4 libssl-devel chrpath
+BuildPreReq: librpm-devel >= 4.0.4 libssl-devel
 # Automatically added by buildreq on Wed Oct 13 2010
 BuildRequires: libnl-devel librpm-devel libsensors3-devel libwrap-devel pdksh perl-devel python-module-setuptools perl-Tk perl-Term-ReadLine-Gnu perl-libnet perl-XML-Simple
 %{?_enable_static:BuildPreReq: glibc-devel-static}
@@ -73,6 +74,7 @@ UCD-SNMP software.
 %prep
 %setup -q -n %_name-%version
 %patch -p1
+%patch1 -p0
 
 %__subst "s|LIB_LD_LIBS)|LIB_LD_LIBS) \$\{ADD_HELPER\}|g" agent/Makefile.in
 #Fix for compile with lmsensors_v3
@@ -123,12 +125,6 @@ rm -f `find ./ -name 'libnetsnmpagent*'`
 %install
 %make DESTDIR=%buildroot install
 
-#for i in %buildroot%perl_vendor_autolib/SNMP/*.so \
-#	%buildroot%perl_vendor_autolib/NetSNMP/*/*.so \
-#	%buildroot%perl_vendor_autolib/NetSNMP/*/*/*.so
-#do
-#	chrpath -r %perl_vendor_archlib/CORE $i
-#done
 rm -fR %buildroot%perl_vendor_autolib
 
 %check
@@ -148,6 +144,9 @@ echo "===== start test ====="
 %_libdir/libsnmp.so.*
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.1.1-alt5.2
+- Fixed build
+
 * Fri Feb 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.1.1-alt5.1
 - Fixed build
 
