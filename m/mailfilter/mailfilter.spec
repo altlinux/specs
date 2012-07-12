@@ -3,7 +3,7 @@
 
 Name: mailfilter
 Version: 0.8.2
-Release: alt1
+Release: alt1.1
 
 Summary: A program that filters your incoming e-mail to help remove spam
 License: GPLv2+
@@ -32,6 +32,7 @@ like to remove spam from your POP mail accounts.
 sed -n '/^3\./,/^4\./p' INSTALL | grep -v '^[34]\.' > doc/rcfile.example
 
 %build
+%add_optflags -fpermissive
 %configure
 %make_build
 
@@ -50,6 +51,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %_mandir/*/*
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.1
+- Fixed build
+
 * Thu Dec 16 2010 Dmitry V. Levin <ldv@altlinux.org> 0.8.2-alt1
 - Updated to 0.8.2 with upstream fix for gcc-4.5.
 
