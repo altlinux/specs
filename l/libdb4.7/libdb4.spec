@@ -1,7 +1,7 @@
 %define _sover 4.7
 Name: libdb%_sover
 Version: %_sover.25
-Release: alt7
+Release: alt8
 %define srcname db-%version
 
 Summary: Berkeley database library
@@ -347,7 +347,7 @@ pushd build_unix
 		xargs -r0 grep -lZ '^sys_lib_dlsearch_path_spec="' -- |
 		xargs -r0 sed -i 's|^\(sys_lib_dlsearch_path_spec="\).*|\1/%_lib %_libdir"|' --
 	# SMP-incompatible build.
-	make LDFLAGS=--no-allow-shlib-undefined
+	make LDFLAGS=-Wl,--no-undefined
 popd
 
 rm -f examples_*/tags
@@ -499,6 +499,9 @@ done
 %_libdir/libdb-[0-9]*.a
 
 %changelog
+* Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 4.7.25-alt8
+- Fixed build with new gcc.
+
 * Tue Feb 15 2011 Dmitry V. Levin <ldv@altlinux.org> 4.7.25-alt7
 - Rebuilt for debuginfo.
 
