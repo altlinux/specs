@@ -1,6 +1,6 @@
 Name: logjam
 Version: 4.5.3
-Release: alt9.qa1
+Release: alt9.qa2
 
 Summary: LogJam is a client for LiveJournal.com
 Summary(ru_RU.UTF-8): LogJam - клиент для LiveJournal.com
@@ -124,6 +124,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc doc/TODO doc/README COPYING ChangeLog
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.3-alt9.qa2
+- Fixed build
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 4.5.3-alt9.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
