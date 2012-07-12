@@ -7,13 +7,14 @@
 Summary: Virus scanning transparent proxy server for POP3
 Name: p3scan
 Version: 3.0
-Release: alt0.3.rc1
+Release: alt0.3.rc1.1
 License: GPLv2+
 Group: Networking/Mail
 Url: http://p3scan.sourceforge.net/
 Packager: Alexey Shabalin <shaba@altlinux.org>
 Source: http://prdownloads.sourceforge.net/%name/%name-%{version}_rc1.tar.gz
 Source1: %name.init
+Patch: p3scan-3.0-alt-DSO.patch
 
 %{?_enable_clamav:BuildRequires: libclamav-devel}
 %{?_enable_pop3s:BuildRequires: libssl-devel}
@@ -32,6 +33,7 @@ Proxy servers.
 
 %prep
 %setup -q -n %name-%{version}_rc1
+%patch -p2
 
 %build
 %configure \
@@ -96,6 +98,9 @@ rm -rf %buildroot/etc/init.d
 %attr(775,mail,mail) %dir %_var/run/%name
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt0.3.rc1.1
+- Fixed build
+
 * Tue Oct 05 2010 Alexey Shabalin <shaba@altlinux.ru> 3.0-alt0.3.rc1
 - rebuild with new openssl
 
