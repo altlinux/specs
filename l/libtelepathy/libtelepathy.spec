@@ -1,6 +1,6 @@
 Name: libtelepathy
 Version: 0.3.3
-Release: alt2.1
+Release: alt2.2
 
 Summary: Telepathy Client Library
 License: LGPL
@@ -8,6 +8,7 @@ Group: System/Libraries
 Url: http://telepathy.freedesktop.org/wiki/
 
 Source0: http://telepathy.freedesktop.org/releases/libtelepathy/%name-%version.tar.gz
+Patch0: libtelepathy-0.3.3-alt-DSO.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -40,6 +41,7 @@ Development libraries and header files for %name.
 
 %prep
 %setup -q
+%patch0 -p2
 
 %build
 %configure \
@@ -61,6 +63,9 @@ Development libraries and header files for %name.
 %_includedir/telepathy-1.0/libtelepathy/*.h
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt2.2
+- Fixed build
+
 * Fri Nov 06 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.3.3-alt2.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libtelepathy
