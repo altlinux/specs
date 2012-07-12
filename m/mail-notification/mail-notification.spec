@@ -1,7 +1,7 @@
 %def_disable evolution
 Name: mail-notification
 Version: 5.4
-Release: alt4
+Release: alt4.1
 
 Summary: A mail notification icon for the system tray
 License: GPL3
@@ -79,7 +79,8 @@ that uses Mail Notification applet.
 %patch6 -p1
 
 %build
-./jb configure prefix=/usr sysconfdir=/etc destdir=%buildroot
+./jb configure prefix=/usr sysconfdir=/etc destdir=%buildroot \
+	libs="-lX11"
 touch build/src/* ||:
 ./jb build
 
@@ -118,6 +119,9 @@ fi
 %endif
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4-alt4.1
+- Fixed build
+
 * Tue Nov 29 2011 Ildar Mulyukov <ildar@altlinux.ru> 5.4-alt4
 - update ru.po by Evgeniya Sinichenkova (closes #26637)
 
