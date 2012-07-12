@@ -1,6 +1,6 @@
 Name: sudo
 Version: 1.6.8p12
-Release: alt10
+Release: alt11
 Epoch: 1
 
 Summary: Allows command execution as another user
@@ -16,6 +16,7 @@ Patch: sudo-%version-%release.patch
 PreReq: control
 Requires: vitmp
 Provides: %_sysconfdir/sudo.d
+Provides: %_sysconfdir/sudoers.d
 
 # Automatically added by buildreq on Wed Apr 09 2003
 BuildRequires: flex libpam-devel perl-podlators
@@ -77,6 +78,7 @@ rm lex.yy.c sudo.tab.h sudo.tab.c
 %makeinstall_std sudoers_uid=`id -un` sudoers_gid=`id -gn`
 install -pD -m600 sample.pam %buildroot%_sysconfdir/pam.d/sudo
 mkdir -p %buildroot%_sysconfdir/sudo.d
+mkdir -p %buildroot%_sysconfdir/sudoers.d
 mkdir -p %buildroot%timedir
 chmod u+rwx %buildroot%prefix/*bin/*
 install -pD -m755 sudo.control %buildroot/etc/control.d/facilities/sudo
@@ -105,11 +107,16 @@ rm %buildroot%_libexecdir/*.la
 %attr(755,root,root) %_sbindir/visudo
 %attr(700,root,root) %timedir
 %attr(700,root,root) %_sysconfdir/sudo.d
+%attr(700,root,root) %_sysconfdir/sudoers.d
 %_mandir/man?/*
 %doc BUGS CHANGES.bz2 HISTORY LICENSE PORTING README TODO
 %doc TROUBLESHOOTING UPGRADE sample.sudoers rpminst.sudoers
 
 %changelog
+* Thu Jul 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1:1.6.8p12-alt11
+- Implemented /etc/sudoers.d support to provide upstream-compatibility
+  /etc/sudo.d support left for backward compatibility.
+
 * Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.6.8p12-alt10
 - Fixed generation of man pages (by george@; closes: #27479).
 
