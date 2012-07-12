@@ -4,7 +4,7 @@
 
 Name: loudmouth
 Version: 1.4.3
-Release: alt4
+Release: alt4.1
 
 Summary: Jabber library for C
 Group: System/Libraries
@@ -31,6 +31,8 @@ Patch102: %name-1.4.3-async_assertion.patch
 # Drop stanzas that can't be parsed instead of blocking the 
 # parser. Patch from upstream bug tracker. 
 Patch103: %name-1.4.3-drop-stanzas-on-fail.patch
+
+Patch104: %name-1.4.3-alt-glib2.patch
 
 BuildRequires: glib2-devel gtk-doc libcheck-devel libgnutls-devel libidn-devel
 
@@ -91,6 +93,7 @@ and yet extensible to let you do anything the Jabber protocol allows.
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch104 -p2
 
 %build
 %autoreconf
@@ -127,6 +130,9 @@ and yet extensible to let you do anything the Jabber protocol allows.
 %endif # enabled static
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt4.1
+- Fixed build
+
 * Thu Nov 11 2010 Yuri N. Sedunov <aris@altlinux.org> 1.4.3-alt4
 - rebuild for soname set-versions
 
