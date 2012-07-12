@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 %define modulever  2.5
 %define version    2.5
-%define release    alt1.1
+%define release    alt2
 %define sourcename pycrypto
 %define oname Crypto
 
@@ -190,6 +190,9 @@ python setup.py test
 %endif
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt2
+- Rebuilt with gmp 5.0.5 (ALT #27535)
+
 * Mon Jun 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1.1
 - Added module for Python 3
 
