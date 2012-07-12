@@ -1,6 +1,6 @@
 Name: lprng
 Version: 3.8.A
-Release: alt3.1
+Release: alt3.2
 
 Summary: The LPRng print spooler
 License: %gpl2plus, %artistic_license
@@ -11,6 +11,7 @@ Packager: Yury Yurevich <anarresti@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-3.8.A-alt-DSO.patch
 
 Provides: lpr
 Conflicts: gtklp cups foomatic-db-engine
@@ -43,6 +44,7 @@ to add.
 %prep
 %setup
 %patch -p1
+%patch1 -p2
 
 %build
 %add_optflags -I/usr/include/krb5
@@ -124,6 +126,9 @@ mv %buildroot/%_sysconfdir/%name/*.sample examples
 %doc examples
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.A-alt3.2
+- Fixed build
+
 * Fri May 15 2009 Yury Yurevich <anarresti@altlinux.org> 3.8.A-alt3.1
 - make /etc/lprng be owned by package
 
