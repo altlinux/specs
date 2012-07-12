@@ -4,7 +4,7 @@
 
 Name:		%libname%sffx
 Version:	0.7.1
-Release:	alt3
+Release:	alt3.1
 
 Group:		Networking/Other
 Summary:	oRTP - a Real-time Transport Protocol stack
@@ -13,6 +13,7 @@ License:	LGPL
 Provides: %libname = %version-%release
 
 Source:		ortp-%version.tar.gz
+Patch: libortp0.7-0.7.1-alt-DSO.patch
 
 BuildRequires: gcc-c++ glibc-devel-static pkg-config glib2-devel
 
@@ -52,6 +53,7 @@ This package contains static library build for the oRTP.
 
 %prep
 %setup -n %rname-%version
+%patch -p2
 %autoreconf
 
 %build
@@ -78,6 +80,9 @@ rm -rf %buildroot/usr/share/gtk-doc
 %_libdir/*.a
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt3.1
+- Fixed build
+
 * Tue Dec 07 2010 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt3
 - rebuilt
 
