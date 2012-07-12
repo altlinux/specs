@@ -1,6 +1,6 @@
 Name:		nuclearchess
 Version:	1.0.0
-Release:	alt2
+Release:	alt2.1
 Summary:	NuclearChess is a chess variant
 License:	GPLv2
 Group:		Games/Boards
@@ -8,6 +8,7 @@ Url:		http://user.cs.tu-berlin.de/~karlb/nuclearchess
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://user.cs.tu-berlin.de/~karlb/nuclearchess/%name-%version.tar.gz
 Source1:	%name.desktop
+Patch0: nuclearchess-1.0.0-alt-DSO.patch
 
 # Automatically added by buildreq on Thu Jun 19 2008 (-bi)
 BuildRequires: ImageMagick libSDL-devel libSDL_image-devel
@@ -19,6 +20,7 @@ short and fun even for people who usually don't play chess.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
@@ -48,6 +50,9 @@ convert -resize 48x48 gfx/atom.png %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.1
+- Fixed build
+
 * Thu Nov 20 2008 Motsyo Gennadi <drool@altlinux.ru> 1.0.0-alt2
 - delete post/postun scripts (new rpm)
 
