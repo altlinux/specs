@@ -1,7 +1,7 @@
 %def_disable gui
 Name: mldonkey
 Version: 3.1.0
-Release: alt1
+Release: alt1.1
 
 %define ml_ver %version
 
@@ -14,6 +14,7 @@ Source1: mldonkey_client.sh
 Source3: mldonkey_server.sh
 
 Patch: alt-site-lib.patch
+Patch1: mldonkey-3.1.0-alt-DSO.patch
 
 # Automatically added by buildreq on Sat Sep 03 2005
 BuildRequires: bzlib-devel camlp4 fontconfig libfreetype-devel glib2-devel libatk-devel libgd2-devel libjpeg-devel libncurses-devel libpango-devel libpng-devel librsvg-devel libXpm-devel ocaml-runtime pkgconfig wget zlib-devel
@@ -61,6 +62,7 @@ way.
 %prep
 %setup -q
 %patch -p2
+%patch1 -p2
 
 %build
 cd config
@@ -135,6 +137,9 @@ EOF
 %endif
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt1.1
+- Fixed build
+
 * Wed Jan 18 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 3.1.0-alt1
 - 3.1.0
 - build without gtk2 gui
