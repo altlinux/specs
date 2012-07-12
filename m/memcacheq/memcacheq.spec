@@ -3,7 +3,7 @@
 
 Name: memcacheq
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 Summary: MemcacheQ - Simple Queue Service over Memcache
 License: GPL
 Group: Communications
@@ -12,6 +12,7 @@ URL: http://memcachedb.org/memcacheq/
 Source: memcacheq-%version.tar.bz2
 Source1: memcacheq.init
 Source2: memcacheq.monit
+Patch: memcacheq-0.2.0-alt-DSO.patch
 
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
@@ -34,6 +35,7 @@ Features:
 
 %prep
 %setup -n %name-%version
+%patch -p2
 
 %build
 %configure
@@ -68,6 +70,9 @@ install -m 755 %SOURCE2 %buildroot%_sysconfdir/monitrc.d/memcacheq
 %doc AUTHORS INSTALL TODO ChangeLog LICENSE README INSTALL README
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.1
+- Fixed build
+
 * Tue Mar 29 2011 Michael Bochkaryov <misha@altlinux.ru> 0.2.0-alt1
 - Updated to 0.2.0 version
 - Added configuration parameter for listening IP address
