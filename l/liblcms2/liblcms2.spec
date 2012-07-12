@@ -3,7 +3,7 @@
 
 Name: lib%rname
 Version: 2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Little cms color engine, version 2
 License: %mit
@@ -13,6 +13,7 @@ Url: http://www.littlecms.com
 Packager: Yuriy Al. Shirokov <yushi@altlinux.org>
 
 Source: %rname-%version.tar
+Patch: liblcms2-2.2-alt-DSO.patch
 
 BuildRequires(pre): rpm-build-licenses
 # Automatically added by buildreq on Sat Nov 06 2010
@@ -62,6 +63,7 @@ This package contains various %name-based utilities
 
 %prep
 %setup -n %rname-%version
+%patch -p2
 find . -type f -exec chmod -x {} ';'
 chmod a+x ./configure
 %autoreconf
@@ -92,6 +94,9 @@ chmod a+x ./configure
 %endif
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.1
+- Fixed build
+
 * Mon Jun 20 2011 Yuriy Shirokov <yushi@altlinux.org> 2.2-alt1
 - new version 2.2
 
