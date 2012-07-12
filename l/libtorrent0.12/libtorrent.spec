@@ -2,8 +2,9 @@
 %define abiversion 0.12
 
 Name: libtorrent%{abiversion}
+Epoch: 3
 Version: 0.12.7
-Release: alt1
+Release: alt1.1
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -13,6 +14,7 @@ Packager: Alexey Morsov <swi@altlinux.ru>
 
 %define full_version %version
 Source0: %name-%version.tar
+Patch0: libtorrent0.12-alt-gcc4.6.patch
 
 BuildRequires: gcc-c++ libsigc++2.0-devel libssl-devel
 BuildRequires: cppunit-devel
@@ -45,7 +47,7 @@ that other clients and libraries suffer from. libTorrent features:
 %package -n libtorrent-devel
 Summary: Development libraries and header files for libTorrent
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 Conflicts: libtorrent-rasterbar0.13-devel
 
 %description -n libtorrent-devel
@@ -54,6 +56,7 @@ to develop applications using libTorrent.
 
 %prep
 %setup -q -n %name-%full_version
+%patch0 -p1
 mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -78,6 +81,9 @@ rm %buildroot%_libdir/*.la
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3:0.12.7-alt1.1
+- Fixed build
+
 * Sat Nov 13 2010 Alexey Morsov <swi@altlinux.ru> 0.12.7-alt1
 - new version
 - reformatted description
