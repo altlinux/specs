@@ -1,6 +1,6 @@
 Name: manedit
 Version: 1.2.1
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: Manual page viewer and editor
 Summary(ru_RU.CP1251): ѕрограмма дл€ редактировани€ и просмотра документации
@@ -19,6 +19,7 @@ Patch1: manedit-alt-path.patch
 Patch2: manedit-alt-bzip2_detection_fix.patch
 Patch3: manedit-alt-x86_64.patch
 Patch4: manedit-alt-manpage.patch
+Patch5: manedit-1.2.1-alt-DSO.patch
 
 # Automatically added by buildreq on Fri Mar 16 2007
 BuildRequires: bzlib-devel gcc-c++ gtk+-devel zlib-devel
@@ -56,6 +57,7 @@ ManEdit использует набор виджетов GTK+ и требует дл€ работы X Window Systems.
 %patch2 -p2
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 ./configure Linux --CFLAGS="%optflags"
@@ -99,6 +101,9 @@ EOF
 %doc AUTHORS README INSTALL LICENSE
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.qa3
+- Fixed build
+
 * Thu Apr 07 2011 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1.qa2
 - NMU: converted debian menu to freedesktop
 
