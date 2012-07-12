@@ -3,7 +3,7 @@
 
 Name: libircclient
 Version: 1.6
-Release: alt1
+Release: alt2
 
 Summary: Library that implements the client-server IRC protocol
 License: %lgpl2plus
@@ -15,6 +15,7 @@ Patch: %name-%version-%release.patch
 Patch1: libircclient-1.6-fedora-install.patch
 Patch2: libircclient-1.6-fedora-rfc.patch
 Patch3: libircclient-1.6-fedora-shared.patch
+Patch4: libircclient-1.6-alt-fix-install-headers.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++
@@ -41,6 +42,7 @@ developing applications that use %name.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 export CFLAGS="%optflags -fPIC"
@@ -68,6 +70,9 @@ cp -a doc/man/man3/* %buildroot/%_man3dir/
 %_man3dir/*
 
 %changelog
+* Thu Jul 12 2012 Mikhail Efremov <sem@altlinux.org> 1.6-alt2
+- Install headers in %%_includedir/libircclient/ again.
+
 * Fri Jul 06 2012 Mikhail Efremov <sem@altlinux.org> 1.6-alt1
 - Updated to 1.6.
 - Updated URL.
