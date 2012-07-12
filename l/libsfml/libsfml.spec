@@ -1,12 +1,13 @@
 Name:		libsfml
 Version:	1.6
-Release:	alt2
+Release:	alt2.1
 Group:		System/Libraries
 License:	zlib
 Summary:	Multimedia C++ API that provides low and high level access to graphics, input, audio, etc.
 Source:		SFML-%version-sdk-linux-32.tar.gz
 Patch:		SFML-1.6-reqlibs.patch
 Patch1:		SFML-1.6-make_build.patch
+patch2: libsfml-1.6-alt-gcc4.6.patch
 
 # /*G*/ Gosh, too many dependencies are optimized out!
 BuildRequires: zlib-devel libXrandr-devel libqt4-devel
@@ -41,6 +42,7 @@ Examples applications of %name
 %setup -n SFML-%version
 %patch -p0
 %patch1 -p0
+%patch2 -p2
 
 # Binaries
 rm -f lib/*
@@ -81,6 +83,9 @@ cp -r samples/bin %buildroot%_libdir/%name-samples
 %_libdir/%name-samples
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt2.1
+- Fixed build
+
 * Tue May 29 2012 Fr. Br. George <george@altlinux.ru> 1.6-alt2
 - DSO list completion
 
