@@ -6,7 +6,7 @@
 
 Name: katrin
 Version: 1.5.0
-Release: alt4.1
+Release: alt4.2
 
 Summary: Modular billing system
 
@@ -94,7 +94,7 @@ install -pD -m 755 src/auth/katrin-auth-example %buildroot%_datadir/%name/katrin
 install -pD -m 744 src/init.d/katrind %buildroot%_initdir/katrind
 install -pD -m 744 src/init.d/katrin-dropd %buildroot%_initdir/katrin-dropd
 install -pD -m 744 src/tc/ppp/katrin-tc-ppp.sh %buildroot%_sysconfdir/ppp/ip-up.d/katrin-tc-ppp.sh
-install -pD -m 0400 sudo.d/katrin %buildroot%_sysconfdir/sudo.d/katrin
+install -pD -m 0400 sudoers.d/katrin %buildroot%_sysconfdir/sudoers.d/katrin
 
 install -pD -m 644 monitrc.d/katrind %buildroot%_sysconfdir/monitrc.d/katrind
 mkdir -p %buildroot%_var/run/katrin
@@ -139,7 +139,7 @@ useradd -g %katrin_group -c 'Katrin billing system' -d /var/empty -s '/dev/null'
 %_datadir/%name/
 %_initdir/*
 %_sysconfdir/ppp/ip-up.d/*
-%_sysconfdir/sudo.d/katrin
+%_sysconfdir/sudoers.d/katrin
 
 %dir %_sysconfdir/%name
 %config(noreplace) %attr(640,root,%katrin_group) %_sysconfdir/%name/*
@@ -157,6 +157,9 @@ useradd -g %katrin_group -c 'Katrin billing system' -d /var/empty -s '/dev/null'
 %config(noreplace) %attr(640,root,root) %_sysconfdir/%name/kcdr-sender.conf
 
 %changelog
+* Thu Jul 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.0-alt4.2
+- move sudo config to /etc/sudoers.d
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt4.1
 - Removed bad RPATH
 

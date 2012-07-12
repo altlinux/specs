@@ -7,7 +7,7 @@
 
 Name: zabbix
 Version: 1.8.12
-Release: alt1.prerc1
+Release: alt2.prerc1
 #Release: alt1.svn.%svnrev.1
 
 Serial: 1
@@ -305,7 +305,7 @@ install -pDm0755 sources/%{name}_proxy.init %buildroot%_initdir/%{name}_proxy
 install -m0755 sources/zabbix.migrate.sh migrate.sh
 
 # sudo entry
-install -pDm0400 sources/%name.sudo %buildroot%_sysconfdir/sudo.d/%name
+install -pDm0400 sources/%name.sudo %buildroot%_sysconfdir/sudoers.d/%name
 
 # database upgrades
 mkdir -p upgrades-{mysql,postgresql}
@@ -415,7 +415,7 @@ fi
 %exclude %_sbindir/%{name}_agent
 
 %files agent-sudo
-%config(noreplace) %attr(0400,root,root) %_sysconfdir/sudo.d/%name
+%config(noreplace) %attr(0400,root,root) %_sysconfdir/sudoers.d/%name
 
 %files phpfrontend-engine
 %webserver_webappsdir/%name
@@ -438,6 +438,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Thu Jul 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1:1.8.12-alt2.prerc1
+- move sudo config to /etc/sudoers.d
+
 * Sat Mar 31 2012 Vladimir V. Kamarzin <vvk@altlinux.org> 1:1.8.12-alt1.prerc1
 - Update to 1.8.12 pre-rc1 (Closes: #26865).
 - Revert e54e00bf8c2bcee6659222d2beee7cace69749c0 (buggy).
