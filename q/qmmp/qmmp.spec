@@ -1,10 +1,10 @@
 %define branch 0.6
-%define svn svn2762
+%define svn svn2793
 
 Version: %branch.0
 Epoch: 1
 Name: qmmp
-Release: alt2
+Release: alt2.%svn
 Summary: QMMP - Qt-based multimedia player
 Summary(ru_RU.UTF8): Qmmp - мультимедиа проигрыватель на базе Qt
 Summary(uk_UA.UTF8): Qmmp - мультимедіа програвач на базі Qt
@@ -610,7 +610,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 
 %files -n lib%name
 %_libdir/*.so.0
-%_libdir/*.so.0.6*
+%_libdir/*.so.0.7*
 
 # Output plugins
 %files -n %name-out-pulseaudio
@@ -746,6 +746,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Thu Jul 12 2012 Motsyo Gennadi <drool@altlinux.ru> 1:0.6.0-alt2.svn2793
+- 0.6.0 svn2793 version
+
 * Sat Jun 30 2012 Motsyo Gennadi <drool@altlinux.ru> 1:0.6.0-alt2
 - 0.6.0 released (svn 2762)
 
