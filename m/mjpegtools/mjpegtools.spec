@@ -3,7 +3,7 @@
 
 Name: mjpegtools
 Version: 1.9.0
-Release: alt4
+Release: alt5
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPL
@@ -14,6 +14,7 @@ Packager: Pavlov Konstantin <thresh@altlinux.ru>
 Source: http://prdownloads.sourceforge.net/mjpeg/%name-%version.tar.gz
 Patch4: 0003-Fix-path-to-transcode.patch
 Patch5: 0001-Fix-build-with-new-gcc.patch
+Patch6: mjpegtools-1.9.0-alt-v4l.patch
 
 %define quicktime_ver 0.9.7
 %define libdv_ver 0.9
@@ -27,7 +28,7 @@ BuildPreReq: libdv >= %libdv_ver
 
 BuildRequires: glibc-kernheaders libjpeg-devel libSDL_gfx-devel gcc-c++
 BuildRequires: libpng-devel libXxf86dga-devel libgtk+2-devel libSDL-devel
-BuildRequires: libXt-devel
+BuildRequires: libXt-devel libv4l-devel
 
 #BuildRequires: libICE-devel libSDL-devel libSM-devel libX11-devel libXext-devel libXt-devel libXxf86dga-devel libatk-devel libcairo-devel libdv-devel libgtk+2-devel libpango-devel libpng-devel libquicktime-devel libstdc++-devel pkg-config xorg-cf-files xorg-x11-proto-devel zlib-devel libjpeg-mmx-devel
    
@@ -91,6 +92,7 @@ This binaries does ***NOT*** compatible with a K6 or Pentium CPU
 %setup -q
 %patch4 -p2
 %patch5 -p2
+%patch6 -p2
 
 %build
 %configure \
@@ -130,6 +132,9 @@ rm -f %buildroot%_infodir/dir
 %_libdir/*.a
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt5
+- Fixed build
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt4
 - Removed bad RPATH
 
