@@ -1,6 +1,6 @@
 Name: libwpd
 Version: 0.8.14
-Release: alt3
+Release: alt3.1
 Summary: Library for reading and converting WordPerfect(tm) documents.
 License: LGPL
 Group: System/Libraries
@@ -9,6 +9,7 @@ URL: http://libwpd.sf.net/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: %name-%version.tar.bz2
+Patch: libwpd-0.8.14-alt-gcc4.6.patch
 
 # Automatically added by buildreq on Thu Oct 05 2006
 BuildRequires: doxygen gcc-c++ libgsf-devel
@@ -35,10 +36,12 @@ Includes and definitions for developing with libwpd.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure \
     --disable-static
+sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
 %install
@@ -59,6 +62,9 @@ find %buildroot%_docdir/%name-%version -type f -exec chmod -x {} \;
 %_pkgconfigdir/*
 
 %changelog
+* Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.14-alt3.1
+- Fixed build
+
 * Tue Nov 23 2010 Valery Inozemtsev <shrek@altlinux.ru> 0.8.14-alt3
 - rebuild
 
