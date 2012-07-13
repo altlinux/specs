@@ -3,7 +3,7 @@
 Summary: AntMon monitoring system
 Name: antmon
 Version: 3.2
-Release: alt5
+Release: alt6
 Requires: libstatgrab >= 0214
 Packager: Sergey Zhumatiy <zhum@altlinux.org>
 
@@ -213,13 +213,15 @@ make DESTDIR=$RPM_BUILD_ROOT PLUGDIR=%antmon_plugindir install
 %antmon_plugindir/action-logrrd
 
 %changelog
+* Fri Jul 13 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 3.2-alt6
+- Rebuild with new libnet-snmp
+
 * Sun Oct 17 2010 Slava Dubrovskiy <dubrsl@altlinux.org> 3.2-alt5
 - Rebuild with new libnet-snmp
 - Fix (ALT #18107)
 
 * Fri May 29 2009 Sergey Zhumatiy <zhum@altlinux.org> 3.2-alt3
 - fictive version increment for libstatgrab compiling with git.alt
-
 
 * Mon Sep 22 2008 Sergey Zhumatiy <zhum@altlinux.org> 3.2-alt2
 - Startup procedure cleanup
