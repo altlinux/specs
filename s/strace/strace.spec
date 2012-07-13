@@ -1,6 +1,6 @@
 Name: strace
 Version: 4.7
-Release: alt3
+Release: alt4
 
 Summary: Tracks and displays system calls associated with a running process
 License: BSD-style
@@ -58,6 +58,9 @@ make check
 %_bindir/strace-graph
 
 %changelog
+* Fri Jul 13 2012 Dmitry V. Levin <ldv@altlinux.org> 4.7-alt4
+- Updated to v4.7-16-gcf53436.
+
 * Tue Jul 10 2012 Dmitry V. Levin <ldv@altlinux.org> 4.7-alt3
 - Updated to v4.7-15-g26bc060.
 
