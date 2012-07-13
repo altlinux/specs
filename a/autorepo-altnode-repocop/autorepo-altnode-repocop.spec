@@ -1,6 +1,6 @@
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.04
+Version: 0.05
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -32,6 +32,9 @@ cp repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Fri Jul 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- export of watch files
+
 * Sun Jul 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - repocop 0.59 distrotest support
 
