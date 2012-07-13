@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.0.0 
-Release: alt4
+Release: alt5
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -420,6 +420,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Jul 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt5
+- autoboot from usb fixed
+
 * Thu May 17 2012 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt4
 - Set appropriate product logo
 - Modernize appearance of Alterator web interface
