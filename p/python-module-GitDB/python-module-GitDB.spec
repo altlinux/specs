@@ -1,6 +1,6 @@
 Name: python-module-GitDB
-Version: 0.5.1
-Release: alt1.1.1
+Version: 0.5.4
+Release: alt1
 
 Summary: IO of git-style object databases
 
@@ -34,6 +34,9 @@ IO of git-style object databases.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Jul 13 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.4-alt1
+- 0.5.4
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.1-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
