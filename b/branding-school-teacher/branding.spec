@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.0.0
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -400,6 +400,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Fri Jul 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt2
+- autoboot from usb
+
 * Tue Nov 22 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt1
 - school variant
 
