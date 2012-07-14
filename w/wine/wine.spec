@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.5.5
+Version: 1.5.8
 Release: alt1
 Epoch: 1
 
@@ -79,7 +79,8 @@ BuildRequires: libXres-devel libXScrnSaver-devel libXinerama-devel libXt-devel
 BuildRequires: libXxf86dga-devel libXxf86misc-devel libXcomposite-devel
 BuildRequires: libXxf86vm-devel libfontenc-devel libXdamage-devel
 BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
-BuildRequires: libudev-devel
+# udev needed for udev version detect
+BuildRequires: libudev-devel udev
 
 BuildRequires: perl-XML-Simple
 
@@ -110,7 +111,7 @@ Requires: fonts-ttf-core
 %endif
 
 # We need predownloaded Gecko engine
-Requires: wine-gecko = 1.5
+Requires: wine-gecko = 1.6
 
 Requires: lib%name = %epoch:%version-%release
 Provides: %name-utils
@@ -436,6 +437,10 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Sun Jul 15 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.8-alt1
+- new build 1.5.8 (use wine-gecko 1.6)
+- fix udev rules (ALT bug #23380)
+
 * Mon May 28 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.5-alt1
 - new build 1.5.5
 - use wine-gecko 1.5
