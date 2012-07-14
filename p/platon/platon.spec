@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: platon
-Version: 20120704
+Version: 20120713
 Release: alt1
 
 Summary: PLATON is a versatile SHELX97 compatible multipurpose crystallographic tool
@@ -100,56 +100,12 @@ cp -a %SOURCE3 .
 
 %build
 # -O2 or -O1 cannot be used because of crashes (see #21582)
-# switch on each optimization flag manually
-g77 %optflags -O0 \
- -falign-functions \
- -falign-jumps \
- -falign-labels \
- -fcaller-saves \
- -fcprop-registers \
- -fcrossjumping \
- -fcse-follow-jumps \
- -fdefer-pop \
- -fexpensive-optimizations \
- -fforward-propagate \
- -fgcse \
- -fguess-branch-probability \
- -fif-conversion \
- -fif-conversion2 \
- -finline-small-functions \
- -fipa-cp \
- -fipa-pure-const \
- -fipa-reference \
- -fipa-sra \
- -fmerge-constants \
- -fomit-frame-pointer \
- -foptimize-register-move \
- -foptimize-sibling-calls \
- -fpeephole2 \
- -fregmove \
- -freorder-blocks \
- -freorder-functions \
- -frerun-cse-after-loop \
- -fschedule-insns2 \
- -fsplit-wide-types \
- -fstrict-aliasing \
- -fthread-jumps \
- -ftree-builtin-call-dce \
- -ftree-ccp \
- -ftree-ch \
- -ftree-copy-prop \
- -ftree-copyrename \
- -ftree-dce \
- -ftree-dominator-opts \
- -ftree-dse \
- -ftree-fre \
- -ftree-pre \
- -ftree-sink \
- -ftree-sra \
- -ftree-switch-conversion \
- -ftree-ter \
- -ftree-vrp \
- -o platon platon.f xdrvr.c -lX11
+#g77 %optflags -O0 -o platon platon.f xdrvr.c -lX11
+
+# separated compilation of platon.f and xdrvr.c
+g77 %optflags -c platon.f
+gcc %optflags -O0 -c xdrvr.c
+g77 -o platon platon.o xdrvr.o -lX11
 
 %install
 install -d %buildroot%_bindir
@@ -200,6 +156,11 @@ install -pm644 doc/PLATON-MANUAL.data/* %buildroot%_defaultdocdir/%name/PLATON-M
 %_defaultdocdir/%name
 
 %changelog
+
+* Sun Jul 15 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120713-alt1
+- new version
+- separated compilation of platon.f (with optimizations) and xdrvr.c (without optimizations)
+
 * Mon Jul 09 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120704-alt1
 - new version
 - optimization flags added
