@@ -1,6 +1,6 @@
 Name:		boinc
 Version:	7.0.31
-Release:	alt1
+Release:	alt2
 Packager:	Paul Wolneykien <manowar@altlinux.ru>
 License:	GPLv3+/LGPLv3+
 Group:		Sciences/Other
@@ -311,14 +311,15 @@ popd
       %buildroot%{_sysconfdir}/bash_completion.d/boinc
 
 # Install BOIC client default configuration files
-    install -D -m 0644 ../%name-conffiles-%version/cc_config.xml \
-      %buildroot%{_sysconfdir}/boinc-client/cc_config.xml
-    install -D -m 0644 ../%name-conffiles-%version/global_prefs_override.xml \
-      %buildroot%{_sysconfdir}/boinc-client/global_prefs_override.xml
-    install -D -m 0644 ../%name-conffiles-%version/gui_rpc_auth.cfg \
-      %buildroot%{_sysconfdir}/boinc-client/gui_rpc_auth.cfg
+#    install -D -m 0644 ../%name-conffiles-%version/cc_config.xml \
+#      %buildroot%{_sysconfdir}/boinc-client/cc_config.xml
+#    install -D -m 0644 ../%name-conffiles-%version/global_prefs_override.xml \
+#      %buildroot%{_sysconfdir}/boinc-client/global_prefs_override.xml
+#    install -D -m 0644 ../%name-conffiles-%version/gui_rpc_auth.cfg \
+#      %buildroot%{_sysconfdir}/boinc-client/gui_rpc_auth.cfg
     install -D -m 0644 ../%name-conffiles-%version/remote_hosts.cfg \
-      %buildroot%{_sysconfdir}/boinc-client/remote_hosts.cfg
+       %buildroot%_localstatedir/boinc/remote_hosts.cfg
+#      %buildroot%{_sysconfdir}/boinc-client/remote_hosts.cfg
 
 # Install the icons.
     mkdir -p -m0755 %buildroot%{_datadir}/icons/hicolor/16x16/apps
@@ -474,9 +475,9 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 
 %files client -f BOINC-Client.lang
 %{_sysconfdir}/bash_completion.d/boinc
-%dir %{_sysconfdir}/boinc-client
-%config(noreplace) %{_sysconfdir}/boinc-client/*.xml
-%config(noreplace) %{_sysconfdir}/boinc-client/*.cfg
+#%dir %{_sysconfdir}/boinc-client
+#%config(noreplace) %{_sysconfdir}/boinc-client/*.xml
+#%config(noreplace) %{_sysconfdir}/boinc-client/*.cfg
 %attr(0644, root, root) %config(noreplace) %{_sysconfdir}/sysconfig/boinc-client
 %{_initrddir}/boinc-client
 %{_bindir}/boinc_client
@@ -490,6 +491,7 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %{_mandir}/man1/boinc.1.gz
 %{_mandir}/man1/boinc-client.1.gz
 %attr(0750, boinc, boinc) %{_localstatedir}/boinc
+%attr(0644, boinc, boinc) %config(noreplace) %{_localstatedir}/boinc/remote_hosts.cfg
 
 %files manager -f BOINC-Manager.lang
 #%{_bindir}/boinc_gui
@@ -519,6 +521,10 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %{_libdir}/libsched.so
 
 %changelog
+* Sun Jul 15 2012 Paul Wolneykien <manowar@altlinux.ru> 7.0.31-alt2
+- Install the remote host ACL template into the BOINC home directory.
+- Do not install the configuration files into the /etc/boinc.
+
 * Tue Jul 03 2012 Cronbuild Service <cronbuild@altlinux.org> 7.0.31-alt1
 - repocop cronbuild 20120703. At your service.
 
