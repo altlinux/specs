@@ -1,6 +1,6 @@
 Name: binutils
-Version: 2.22.52.0.3
-Release: alt2
+Version: 2.22.52.0.4
+Release: alt1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -15,25 +15,29 @@ Source2: gxx.sh
 Source3: output-format.sed
 
 # RH
-Patch01: binutils-2.20.51.0.7-rh-libtool-lib64.patch
+#Patch01: binutils-2.20.51.0.7-rh-libtool-lib64.patch
 Patch02: binutils-2.20.51.0.10-rh-ppc64-pie.patch
-Patch03: binutils-2.20.51.0.2-rh-ia64-lib64.patch
+#Patch03: binutils-2.20.51.0.2-rh-ia64-lib64.patch
 Patch04: binutils-2.20.51.0.2-rh-alt-version.patch
 Patch05: binutils-2.20.51.0.2-rh-set-long-long.patch
 Patch06: binutils-2.20.51.0.10-rh-copy-osabi.patch
 Patch07: binutils-2.20.51.0.10-rh-sec-merge-emit.patch
-
-# Rebased RH patches
-#Patch50: ...
+#Patch08: binutils-2.22.52.0.1-rh-relro-on-by-default.patch
+#Patch09: binutils-2.22.52.0.1-rh-export-demangle.h.patch
+Patch10: binutils-2.22.52.0.4-rh-dwz.patch
+Patch11: binutils-2.22.52.0.4-rh-ar-4Gb.patch
+Patch12: binutils-2.22.52.0.4-rh-arm-plt-refcount.patch
 
 # ALT
 Patch100: binutils-2.22.52.0.3-alt-configure.patch
 Patch101: binutils-2.22.52.0.3-alt-texinfo.patch
-Patch102: binutils-2.22.52.0.3-alt-no-warn-shared-textrel.patch
+Patch102: binutils-2.22.52.0.4-alt-no-warn-shared-textrel.patch
 Patch103: binutils-2.22.52.0.3-alt-ld-defaults.patch
-Patch104: binutils-2.22.52.0.3-alt-ld-testsuite.patch
+Patch104: binutils-2.22.52.0.4-alt-ld-testsuite.patch
 Patch105: binutils-2.22.52.0.3-alt-gold-testsuite.patch
 Patch106: binutils-2.22.52.0.3-alt-export-headers.patch
+Patch107: binutils-2.22.52.0.4-alt-ld-testsuite-gcc-workaround.patch
+Patch108: binutils-2.22.52.0.4-alt-gold-testsuite-gcc-workaround.patch
 
 PreReq: alternatives >= 0:0.4
 Conflicts: libbfd
@@ -72,7 +76,7 @@ for development software based on Binary File Descriptor library and
 libiberty.
 
 %prep
-%setup -q
+%setup
 
 #patch01 -p0
 %patch02 -p0
@@ -81,8 +85,11 @@ libiberty.
 %patch05 -p0
 %patch06 -p0
 %patch07 -p0
-
-#patch50 -p2
+#patch08 -p0
+#patch09 -p0
+%patch10 -p0
+%patch11 -p0
+%patch12 -p0
 
 %patch101 -p1
 %patch102 -p1
@@ -90,6 +97,8 @@ libiberty.
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
+%patch107 -p1
+%patch108 -p1
 
 grep -Fl 'x86_64-*kfreebsd*-gnu)' */configure |while read f; do
 	patch "$f" < %PATCH100
@@ -230,7 +239,7 @@ done
 %check
 [ -w /dev/ptmx -a -f /proc/self/maps ] || exit
 RUNTESTFLAGS=
-make -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/gxx.sh" RUNTESTFLAGS="$RUNTESTFLAGS"
+%make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/gxx.sh" RUNTESTFLAGS="$RUNTESTFLAGS"
 
 %files devel
 %_libdir/*.a
@@ -249,6 +258,9 @@ make -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/gxx.sh" RUNTESTFLAGS="$RU
 %doc NEWS*
 
 %changelog
+* Mon Jul 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.22.52.0.4-alt1
+- Updated to 2.22.52.0.4.
+
 * Fri May 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.22.52.0.3-alt2
 - Added -ldl to libbfd.so.
 
