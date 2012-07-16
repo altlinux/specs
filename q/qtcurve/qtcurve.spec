@@ -2,7 +2,7 @@
 
 Name: qtcurve
 Version: 1.6.3
-Release: alt1
+Release: alt1.1
 Serial: 1
 
 Summary: QtCurve (KDE and GTK2 style)
@@ -16,6 +16,7 @@ Source: %name-%version.tar
 Patch1: QtCurve-Gtk2-1.0.0-alt-qtrc.patch
 Patch2: QtCurve-Gtk2-0.62.4-alt-icons.patch
 Patch3: QtCurve-KDE3-1.0.2-alt-link-fixes.patch
+Patch4: qtcurve-1.6.3-alt-glib2.patch
 
 BuildRequires(pre): kde-common-devel rpm-macros-qt3 rpm-macros-qt4
 BuildPreReq: gcc-c++ libgtk+2-devel libqt3-devel kde4libs-devel
@@ -64,6 +65,7 @@ The QtCurve engine for GTK2
 %patch1 -p1
 %patch2 -p0
 %patch3 -p1
+%patch4 -p1
 
 %build
 pushd QtCurve-KDE4
@@ -136,6 +138,9 @@ install -pD -m644 QtCurve-KDE4/BUILD-%_target_platform-qt/style/%name.so %buildr
 
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.6.3-alt1.1
+- Fixed build
+
 * Sun Sep 26 2010 Andrey Rahmatullin <wrar@altlinux.org> 1:1.6.3-alt1
 - 1.6.3 (KDE4 & Gtk2), 1.6.2 (KDE3)
 
