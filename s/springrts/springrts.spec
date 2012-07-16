@@ -3,7 +3,7 @@
 
 Name: springrts
 Version: 0.81.2.1
-Release: alt1.4
+Release: alt1.5
 
 Summary: Real time strategy game engine with many mods
 License: GPL2+ or Artistic
@@ -30,6 +30,8 @@ BuildRequires: libvorbis-devel  python-devel libSDL-devel
 Requires: %name-data = %version-%release
 Source0: %name-%version.tar
 Patch0: %name-0.81.2.1-alt-glibc.patch
+Patch1: %name-0.81.2.1-alt-gcc4.6.patch
+Patch2: %name-0.81.2.1-alt-DSO.patch
 
 %description
 Spring is an open source RTS (Real time Strategy) engine originally
@@ -59,6 +61,8 @@ springrts dedicated server
 %prep
 %setup 
 %patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %cmake \
@@ -112,6 +116,9 @@ mkdir %buildroot%_gamesdatadir/spring/{mods,maps}
   echo " ===================================================================="
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.81.2.1-alt1.5
+- Fixed build
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.81.2.1-alt1.4
 - Rebuilt with Boost 1.49.0
 
