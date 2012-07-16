@@ -1,6 +1,6 @@
 Name: powermanga
 Version: 0.90
-Release: alt3
+Release: alt3.1
 Summary: Shoot them up with 3d graphics
 
 License: %gpl3plus
@@ -16,6 +16,7 @@ Source100: %name.desktop
 Source200: %name.16.png
 Source201: %name.32.png
 Source202: %name.48.png
+Patch: powermanga-0.90-alt-DSO.patch
 
 Requires: %name-data
 
@@ -41,6 +42,7 @@ description). To play the game, you should install both %name and %name-data pac
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure --mandir=%_man6dir
@@ -69,6 +71,9 @@ install -Dpm 644 %SOURCE202 %buildroot/%_liconsdir/%name.png
 %_datadir/games/%name
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.90-alt3.1
+- Fixed build
+
 * Sun Dec 28 2008 Alexey Rusakov <ktirf@altlinux.org> 0.90-alt3
 - Removed deprecated stuff from the .desktop file.
 - Removed no more needed post/postun scripts.
