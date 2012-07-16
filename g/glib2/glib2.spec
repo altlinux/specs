@@ -13,7 +13,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -347,7 +347,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %_man1dir/glib-compile-resources.1*
 %_man1dir/gdbus.*
 %_man1dir/gio-querymodules.*
-%_sysconfdir/bash_completion.d/gresource-bash-completion.sh
+%_datadir/bash-completion/completions/gresource
 
 %files -n libgio-devel
 %_bindir/gdbus-codegen
@@ -366,14 +366,17 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 %files -n libgio-doc
 %doc %_datadir/gtk-doc/html/gio
 
-%exclude %_sysconfdir/bash_completion.d/gdbus-bash-completion.sh
-%exclude %_sysconfdir/bash_completion.d/gsettings-bash-completion.sh
+%exclude %_datadir/bash-completion/completions/gdbus
+%exclude %_datadir/bash-completion/completions/gsettings
 %exclude %_datadir/gdb/auto-load/%_libdir/libglib-2.0.so.0.*-gdb.py
 %exclude %_datadir/gdb/auto-load/%_libdir/libgobject-2.0.so.0.*-gdb.py
 %exclude %_datadir/glib-2.0/gdb/
 
 
 %changelog
+* Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 2.32.4-alt1
+- 2.32.4
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 2.32.3-alt1
 - 2.32.3
 - built with intenrnal PCRE as recommended

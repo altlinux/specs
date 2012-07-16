@@ -1,4 +1,4 @@
-%def_enable snapshot
+%def_disable snapshot
 
 %define _name gtk+
 %define api_ver 2.0
@@ -18,7 +18,7 @@
 
 Name: libgtk+2
 Version: %ver_major.11
-Release: alt0.1
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
 License: %lgpl2plus
@@ -369,6 +369,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk-icon-cache.filetrigger
 %_datadir/gir-1.0/*
 
 %changelog
+* Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 2.24.11-alt1
+- 2.24.11 release
+
 * Sat May 19 2012 Yuri N. Sedunov <aris@altlinux.org> 2.24.11-alt0.1
 - 2.24.11 snapshot (43c9a702c7)
 - linked libgtk-x11-2.0 against libgmodule-2.0 explicitly
