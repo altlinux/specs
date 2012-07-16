@@ -1,6 +1,6 @@
 Name: screen
 Version: 4.0.3
-Release: alt9
+Release: alt10
 
 Summary: A screen manager that supports multiple sessions on one terminal
 License: GPLv2+
@@ -115,6 +115,9 @@ ln -f %_libexecdir/utempter/utempter %_libexecdir/screen/
 %doc NEWS README FAQ doc/README.DOTSCREEN doc/*.ps.*
 
 %changelog
+* Mon Jul 16 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.3-alt10
+- Fixed build with gcc 4.6.
+
 * Thu Dec 01 2011 Dmitry V. Levin <ldv@altlinux.org> 4.0.3-alt9
 - Added a %%preun script removing hardlinks created in %%post script.
 - Moved screen sockets to /var/run/screen/ (closes: #25106).
