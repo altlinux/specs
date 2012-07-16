@@ -2,7 +2,7 @@
 
 Name: pfstools
 Version: 1.8.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -76,6 +76,9 @@ using the GDAL library.
 %patch2 -p1
 
 %build
+%add_optflags $(pkg-config hdf5-seq --cflags)
+export CFLAGS="%optflags"
+export CXXFLAGS="%optflags"
 %autoreconf
 # We can not use %%configure macro when build with octave in current repo...
 ./configure --prefix=/usr --libdir=%_libdir --disable-static --with-qtdir=%_libdir/qt4
@@ -184,6 +187,9 @@ using the GDAL library.
 %_man1dir/pfsingdal.*
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.5-alt1.2
+- Fixed build
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 1.8.5-alt1.1
 - Rebuild with new libImageMagick
 
