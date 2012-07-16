@@ -1,6 +1,6 @@
 Name: sven
 Version: 0.6
-Release: alt2.1.qa1
+Release: alt2.1.qa2
 
 Summary: Sven - multimedia keyboard daemon
 License: GPL
@@ -24,6 +24,7 @@ Patch9: %name-0.6-alt-fix-sentinel.patch
 Patch10: %name-0.6-alt-warnings-2.patch
 Patch11: %name-0.6-alt-translation.patch
 Patch12: %name-0.6-alt-doc-bugs.patch
+Patch13: %name-0.6-alt-DSO.patch
 
 # Automatically added by buildreq on Tue Jan 23 2007
 BuildRequires: libgtk+2-devel libpcre-devel libX11-devel libXext-devel libXi-devel libXmu-devel libXtst-devel xorg-cf-files
@@ -55,6 +56,7 @@ Contains development files you'll need to build plugins for %name.
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p2
 
 %build
 ./autogen.sh
@@ -97,6 +99,9 @@ install -pD -m644 %SOURCE2 %buildroot%_datadir/applications/
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2.1.qa2
+- Fixed build
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.6-alt2.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
