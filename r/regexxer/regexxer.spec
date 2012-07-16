@@ -1,10 +1,11 @@
 Name: regexxer
 Version: 0.9
-Release: alt0.1
+Release: alt0.2
 
 Summary: regexxer is a nifty search/replace tool for the desktop user.
 Group: Text tools
 Source: %name-%version.tar.gz
+Patch: regexxer-0.9-alt-glib2.patch
 License: GPL
 Packager: Eugene Ostapets <eostapets@altlinux.org>
 
@@ -25,6 +26,7 @@ typing find/grep/sed/awk/perl command lines.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %configure 
@@ -43,6 +45,9 @@ typing find/grep/sed/awk/perl command lines.
 %_sysconfdir/gconf/schemas/%name.schemas
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt0.2
+- Fixed build
+
 * Sun May 06 2007 Eugene Ostapets <eostapets@altlinux.ru> 0.9-alt0.1
 - first build
 
