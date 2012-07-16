@@ -1,6 +1,6 @@
 Name: qjoypad
 Version: 4.1.0
-Release: alt4
+Release: alt4.1
 
 Summary: A joystick-keyboard mapper
 Summary(ru_RU.UTF-8): Программа для превращения событий джойстика в события клавиатуры
@@ -12,6 +12,7 @@ Packager: Yuriy Al. Shirokov <yushi@altlinux.org>
 Source0: %name-%version.tar
 Source1: qjoypad.desktop
 Patch0: %name-4.1.0-alt-configure-fixes.patch
+Patch1: %name-4.1.0-alt-DSO.patch
 
 Requires: libqt4-core
 Requires(post,postun): desktop-file-utils
@@ -39,6 +40,7 @@ X Window System. QJoyPad поддерживает несколько вариа�
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 %build
 cd src
@@ -67,6 +69,9 @@ convert -resize 16x16 %buildroot/%_pixmapsdir/%name/gamepad4-64x64.png %buildroo
 %_liconsdir/%name.png
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.0-alt4.1
+- Fixed build
+
 * Tue Sep 21 2010 Yuriy Al. Shirokov <yushi@altlinux.org> 4.1.0-alt4
 - Spec error fixed.
 
