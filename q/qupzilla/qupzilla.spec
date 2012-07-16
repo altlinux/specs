@@ -8,7 +8,7 @@
 # file, is the same license as for the pristine package itself.
 
 Name: qupzilla
-Version: 1.1.8
+Version: 1.3.1
 Release: alt1
 
 Summary: A very fast open source browser based on WebKit core
@@ -16,10 +16,8 @@ License: GPLv3+
 Group: Networking/WWW
 
 Url: http://qupzilla.com
-# Sources are available on github
-# git clone https://github.com/nowrep/QupZilla.git qupzilla && cd qupzilla
-# git archive v1.1.8 --prefix=qupzilla-1.1.8/ | bzip2 > ../qupzilla-1.1.8.tar.bz2
-Source: %name-%version.tar.bz2
+# https://github.com/QupZilla/qupzilla
+Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Tue Mar 13 2012
@@ -37,29 +35,24 @@ support, Speed Dial and SSL Certificate manager.
 
 %prep
 %setup
-# remove BUILDTIME usage from build
-sed -i '/static const QString BUILDTIME/d' src/app/qupzilla.h
-sed -i '/QupZilla::BUILDTIME/d' -i \
-	src/other/aboutdialog.cpp \
-	src/app/commandlineoptions.cpp \
-	src/app/qupzilla.cpp \
-	src/network/qupzillaschemehandler.cpp
 
 %build
 export USE_WEBGL="true"
-# enables better oxygen icons in Preferences.
+export NONBLOCK_JS_DIALOGS="true"
 export KDE="true"
-pushd src
-echo "CONFIG += debug" >> src.pro
+export USE_LIBPATH="%_libdir"
+echo "CONFIG += debug" >> src/defines.pri
 qmake-qt4
 %make_build
 
 %install
-make -C src INSTALL_ROOT=%buildroot install
+make INSTALL_ROOT=%buildroot install
 
 %files
 %doc AUTHORS FAQ TODO
 %_bindir/%name
+%_libdir/%name
+%_libdir/*.so.*
 %_desktopdir/%name.desktop
 %_pixmapsdir/%name.png
 %_iconsdir/hicolor/*/*/*.png
@@ -67,7 +60,20 @@ make -C src INSTALL_ROOT=%buildroot install
 %_datadir/%name/locale
 %_datadir/%name/themes
 
+# TODO:
+# - move shared libraries to a subpackage?
+
 %changelog
+* Mon Jul 16 2012 Michael Shigorin <mike@altlinux.org> 1.3.1-alt1
+- 1.3.1
+  + dropped desktop file patch (merged upstream)
+- fixed x86_64 build (thx led@ for a hint)
+
+* Sun Jul 15 2012 Michael Shigorin <mike@altlinux.org> 1.3.0-alt1
+- 1.3.0
+  + enabled nonblocking js dialogs
+  + added desktop file patch from gentoo
+
 * Tue Mar 13 2012 Michael Shigorin <mike@altlinux.org> 1.1.8-alt1
 - initial build for ALT Linux Sisyphus (based on opensuse package)
 - considerable cleanup of otherwise quite nice spec
