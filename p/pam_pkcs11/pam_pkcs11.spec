@@ -2,14 +2,12 @@
 
 Name: pam_pkcs11
 Version: 0.6.4
-Release: alt1.1
+Release: alt2
 
 Summary: PKCS #11 PAM Module and Login Tools
 Group: System/Base
 License: LGPL
 Url: http://www.opensc-project.org/pam_pkcs11/
-
-Packager: Alexey I. Froloff <raorn@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -130,6 +128,9 @@ done
 /%_lib/%name/ldap_mapper.so
 
 %changelog
+* Mon Jul 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.4-alt2
+- fix build
+
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
