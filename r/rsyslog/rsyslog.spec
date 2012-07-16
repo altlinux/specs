@@ -2,7 +2,7 @@
 
 Name: rsyslog
 Version: 6.2.2
-Release: alt1
+Release: alt2
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+
@@ -366,6 +366,9 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %doc html_docs/*
 
 %changelog
+* Tue Jul 17 2012 Alexey Shabalin <shaba@altlinux.ru> 6.2.2-alt2
+- fix unit file for systemd-186
+
 * Fri Jun 22 2012 Alexey Shabalin <shaba@altlinux.ru> 6.2.2-alt1
 - 6.2.2
 

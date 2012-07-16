@@ -4,12 +4,14 @@
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
-%def_disable gdm
+%def_enable libdrm_intel
+%def_enable libdrm_radeon
+%def_enable libdrm_nouveau
 
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
-Version: 0.8.3
-Release: alt19.git20110406
+Version: 0.8.6.1
+Release: alt1
 License: GPLv2+
 Group: System/Base
 
@@ -20,10 +22,11 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 Requires(post): plymouth-scripts
+Requires: lib%name = %version-%release
 
 BuildRequires: libdrm-devel
 Conflicts: bootsplash
-
+Conflicts: systemd < 186-alt1
 
 %description
 Plymouth provides an attractive graphical boot animation in
@@ -118,6 +121,7 @@ graphical boot splashes using pango and cairo.
 Summary: Plymouth "Fade-Throbber" plugin
 Group: System/Base
 Requires: lib%name = %version-%release
+Requires: lib%name-graphics = %version-%release
 
 %description plugin-fade-throbber
 This package contains the "Fade-In" boot splash plugin for
@@ -140,7 +144,8 @@ while stars twinkle around the logo during system boot up.
 Summary: Plymouth "Throbgress" plugin
 Group: System/Base
 Requires: lib%name = %version-%release
-Requires: plymouth-plugin-label
+Requires: lib%name-graphics = %version-%release
+Requires: plymouth-plugin-label = %version-%release
 
 %description plugin-throbgress
 This package contains the "throbgress" boot splash plugin for
@@ -163,7 +168,8 @@ spins in the shape of an infinity sign.
 Summary: Plymouth "space-flares" plugin
 Group: System/Base
 Requires: lib%name = %version-%release
-Requires: plymouth-plugin-label
+Requires: lib%name-graphics = %version-%release
+Requires: plymouth-plugin-label = %version-%release
 
 %description plugin-space-flares
 This package contains the "space-flares" boot splash plugin for
@@ -184,7 +190,8 @@ Plymouth. It features a blue flamed sun with animated solar flares.
 Summary: Plymouth "two-step" plugin
 Group: System/Base
 Requires: lib%name = %version-%release
-Requires: plymouth-plugin-label
+Requires: lib%name-graphics = %version-%release
+Requires: plymouth-plugin-label = %version-%release
 
 %description plugin-two-step
 This package contains the "two-step" boot splash plugin for
@@ -216,6 +223,7 @@ This package contains the "Glow" boot splash theme for Plymouth.
 Summary: Plymouth "script" plugin
 Group: System/Base
 Requires: lib%name = %version-%release
+Requires: lib%name-graphics = %version-%release
 
 %description plugin-script
 This package contains the "script" boot splash plugin for
@@ -234,6 +242,16 @@ This package contains the "script" boot splash theme for
 Plymouth. It it is a simple example theme the uses the "script"
 plugin.
 
+%package theme-spinner
+Summary: Plymouth "Spinner" theme
+Group: System/Base
+Requires: %name-plugin-two-step = %version-%release
+Requires(post): %name-scripts = %version-%release
+
+%description theme-spinner
+This package contains the "spinner" boot splash theme for
+Plymouth. It features a small spinner on a dark background.
+
 %prep
 %setup -q
 %patch -p1
@@ -246,27 +264,26 @@ plugin.
 %configure \
 	--enable-tracing				\
 	--disable-libkms				\
+	--enable-drm-renderer				\
+	%{subst_enable libdrm_intel}			\
+	%{subst_enable libdrm_radeon}			\
+	%{subst_enable libdrm_nouveau}			\
 	--disable-tests					\
 	--without-default-plugin			\
 	--with-logo=%_pixmapsdir/altlinux.png		\
 	--with-background-start-color-stop=0x0073B3	\
 	--with-background-end-color-stop=0x00457E	\
 	--with-background-color=0x3391cd		\
-%if_enabled gdm
-	--enable-gdm-transition				\
-	--with-gdm-autostart-file			\
-%else
 	--disable-gdm-transition			\
 	--without-gdm-autostart-file			\
-%endif
 	--without-rhgb-compat-link			\
 	--with-system-root-install			\
 	--with-log-viewer				\
+	--enable-systemd-integration			\
 	--with-release-file=/etc/altlinux-release
 
 #	--with-boot-tty=tty7				\
 #	--with-shutdown-tty=tty1			\
-
 
 %make
 
@@ -299,16 +316,26 @@ cp %buildroot%_datadir/plymouth/themes/glow/{box,bullet,entry,lock}.png %buildro
 mkdir -p %buildroot/%_sysconfdir/sysconfig
 install -m 0640 sysconfig %buildroot/%_sysconfdir/sysconfig/bootsplash
 install plymouth-update %buildroot/%plymouthdaemon_execdir/
-mkdir -p %buildroot/%_initdir/init.d/
+mkdir -p %buildroot/%_initdir
 install init %buildroot/%_initdir/plymouth
+
+ln -s plymouth-quit.service %buildroot%_unitdir/plymouth.service
 
 %post
 if [ $1 = 1 ]; then
          /sbin/chkconfig --add %name
 fi
+if [ $1 = 2 ]; then
+         /sbin/chkconfig %name resetpriorities
+fi
+
 [ -f %_localstatedir/lib/plymouth/boot-duration ] || cp -f %_datadir/plymouth/default-boot-duration %_localstatedir/lib/plymouth/boot-duration
 [ -f %_localstatedir/lib/plymouth/shutdown-duration ] || cp -f %_datadir/plymouth/default-shutdown-duration %_localstatedir/lib/plymouth/shutdown-duration
 
+%preun
+if [ $1 = 0 ]; then
+         /sbin/chkconfig --del %name
+fi
 
 %define theme_scripts() \
 %post -n %name-theme-%{1} \
@@ -369,6 +396,7 @@ fi \
 %_localstatedir/spool/plymouth
 %_mandir/man?/*
 %ghost %_localstatedir/lib/plymouth/boot-duration
+%_unitdir/*
 
 %files devel
 %plymouth_libdir/libply.so
@@ -440,9 +468,18 @@ fi \
 %files theme-glow
 %_datadir/plymouth/themes/glow
 
+%files theme-spinner
+%_datadir/plymouth/themes/spinner
+
 %files system-theme
 
 %changelog
+* Tue Jul 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.8.6.1-alt1
+- 0.8.6.1
+- ship systemd service files
+- add theme-spinner
+- change stop level (ALT#27444)
+
 * Wed Aug 24 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8.3-alt19.git20110406
 - changed 'unexpectedly disconnected' from error to trace (closes: 25817)
 
