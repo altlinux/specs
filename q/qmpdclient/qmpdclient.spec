@@ -1,6 +1,6 @@
 Name: qmpdclient
 Version: 1.1.3
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: Qt4-based mpd client
 License: %gpl2plus
@@ -11,6 +11,7 @@ Packager: Andrey Rahmatullin <wrar@altlinux.ru>
 
 # git://github.com/Voker57/qmpdclient-ne.git
 Source0: %name-%version.tar
+Patch0: qmpdclient-1.1.3-patch-DSO.patch
 
 BuildRequires(pre): rpm-build-licenses libqt4-devel >= 4.4.0
 BuildPreReq: gcc-c++ unzip cmake
@@ -24,6 +25,7 @@ QMPDClient is an easy to use MPD client written in Qt 4.
 
 %prep
 %setup
+%patch0 -p1
 sed -i 's,/home/h/Projects/qmpdclient/qmpdclient/icons/qmpdclient22.png,%_iconsdir/hicolor/22x22/apps/%name.png,' \
 	src/notifications_dbus.cpp
 sed -i 's,Icon=%{name}64.png,Icon=%name,' %name.desktop
@@ -63,6 +65,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS Changelog INSTALL README THANKSTO
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt2.qa2
+- Fixed build
+
 * Wed May 18 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.1.3-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
