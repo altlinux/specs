@@ -6,7 +6,7 @@
 %def_disable gtk_doc
 
 Name: %_name
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Map view library for Clutter
@@ -195,6 +195,9 @@ This package provides Vala language bindings for the Libchamplain library
 %endif
 
 %changelog
+* Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt1
+- 0.12.3
+
 * Mon Mar 12 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.2-alt1
 - 0.12.2
 
