@@ -1,5 +1,5 @@
 Name: intel-gen4asm
-Version: 1.1
+Version: 1.2
 Release: alt1
 Summary: intel-gen4asm
 License: MIT/X11
@@ -35,6 +35,9 @@ the 2d driver.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Jul 16 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.2-alt1
+- 1.2
+
 * Tue Jan 25 2011 Valery Inozemtsev <shrek@altlinux.ru> 1.1-alt1
 - 1.1
 
