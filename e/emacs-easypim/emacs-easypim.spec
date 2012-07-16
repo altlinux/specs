@@ -1,13 +1,13 @@
 
 Name: emacs-easypim
 Version: 20110323
-Release: alt1
+Release: alt2
 Summary: The simple tool to store personal address book in emacs
 Group: Editors
 License: GPL
 BuildArch: noarch
 Packager: Michael Pozhidaev <msp@altlinux.ru>
-BuildRequires: emacs23 emacs-devel
+BuildRequires: emacs-nox emacs-devel
 Requires: emacs-base
 
 Source: %name-%version.tar.gz
@@ -39,6 +39,9 @@ simplifies service operations.
 %_sysconfdir/profile.d/*
 
 %changelog
+* Tue Jul 17 2012 Terechkov Evgenii <evg@altlinux.org> 20110323-alt2
+- Fix build with emacs24
+
 * Wed Mar 23 2011 Michael Pozhidaev <msp@altlinux.ru> 20110323-alt1
 - Initial package
 
