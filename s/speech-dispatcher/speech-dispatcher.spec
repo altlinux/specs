@@ -1,7 +1,7 @@
 
 Name: speech-dispatcher
 Version: 0.6.7
-Release: alt5.2.1
+Release: alt5.3
 License: %gpl2plus
 Group: Sound
 Summary: Speech dispatcher is a speech output processing service
@@ -18,6 +18,7 @@ Source0: %name-%version.tar.gz
 Patch1: speech-dispatcher-0.6.7-alt-flite.patch
 Patch2: speech-dispatcher-0.6.7-alt-python.patch
 Patch3: speech-dispatcher-0.6.7-alt-getline.patch
+Patch4: speech-dispatcher-0.6.7-alt-DSO.patch
 
 %add_python_req_skip speechd_config
 
@@ -55,6 +56,7 @@ Speech Dispatcher service and send text data to it.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 %build
 %autoreconf
@@ -92,6 +94,9 @@ fi
 %python_sitelibdir/*
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.7-alt5.3
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.7-alt5.2.1
 - Rebuild with Python-2.7
 
