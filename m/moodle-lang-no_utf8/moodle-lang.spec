@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename no_utf8
 %define packagversion 1.9.10
-%define packagedate 20120205
+%define packagedate 20120714
 %define moodlebranch %nil
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Norwegian
@@ -54,6 +54,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Mon Jul 16 2012 Cronbuild Service <cronbuild@altlinux.org> 1.9.10.20120714-alt1
+- repocop cronbuild 20120716. At your service.
+- no_utf8.zip build 2012-07-14
+
 * Thu Feb 09 2012 Cronbuild Service <cronbuild@altlinux.org> 1.9.10.20120205-alt1
 - repocop cronbuild 20120209. At your service.
 - no_utf8.zip build 2012-02-05
