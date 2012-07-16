@@ -1,5 +1,5 @@
 Name: foo2zjs
-Version: 20120404
+Version: 20120601
 Release: alt1
 
 Summary: ZJS (some HP/Minolta) printer driver
@@ -20,8 +20,8 @@ Source5: hplj1020-32.png
 Source6: hplj1020-48.png
 Source7: hplj10xx.rules
 
-Patch1: foo2zjs.make_20120501.patch
-Patch2: foo2zjs.hplj1000_20111229.patch
+Patch1: foo2zjs.make_20120714.patch
+Patch2: foo2zjs.hplj1000_20120714.patch
 Patch3: hplj10xx_gui.tcl_20100505.patch
 Patch4: foo2zjs.getweb_20120501.patch
 
@@ -248,6 +248,10 @@ rm -rf %buildroot%_docdir/%name/
 %exclude %_localstatedir/foo2zjs/hplj10xx_gui.tcl
 
 %changelog
+* Mon Jul 16 2012 Evgeny V Shishkov <shev@altlinux.org> 20120601-alt1
+- 2012-06-01 tarball
+- fix #25798 again
+
 * Tue May 01 2012 Evgeny V Shishkov <shev@altlinux.org> 20120404-alt1
 - 2012-04-04 tarball
 - fix #27255
