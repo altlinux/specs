@@ -1,6 +1,6 @@
 Name: smc
 Version: 2.0.0
-Release: alt2.git20110510
+Release: alt2.git20110510.1
 Summary: 2D platform game that uses OpenGL in a style similar to Super Mario
 Group: Games/Arcade
 License: GPLv3
@@ -10,6 +10,7 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 Source: http://downloads.sourceforge.net/smclone/%name-%version.tar.bz2
 Source1: smc.sh
 Source2: dochelper.pl
+Patch: smc-2.0.0-alt-DSO.patch
 
 # Automatically added by buildreq on Thu Aug 20 2009
 BuildRequires: boost-filesystem-devel cegui-devel gcc-c++ libGL-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel libpng-devel
@@ -31,6 +32,7 @@ Data files for Secret Maryo Chronicles game
 
 %prep
 %setup -q
+%patch -p2
 
 #Fix EOL chars
 sed -i 's/\r//' docs/style.css docs/*.html docs/*.txt
@@ -89,6 +91,9 @@ desktop-file-install --vendor dribble \
 %doc credits.txt docs/*.html docs/license.txt docs/style.css
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2.git20110510.1
+- Fixed build
+
 * Fri Apr 06 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.0-alt2.git20110510
 - rebuild with boost-1.49
 
