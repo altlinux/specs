@@ -8,7 +8,7 @@
 
 Name: ejudge
 Version: 2.3.23
-Release: alt1
+Release: alt2
 
 Summary: Ejudge is a programming contest managment system
 Summary(ru_RU.UTF-8): Ejudge это система для проведения соревнований по программированию
@@ -28,8 +28,9 @@ Source6: ejudge-refmanual.pdf
 Patch1: ejudge-stylecheck.patch
 Patch2: ejudge-tsc.c.patch
 Patch3: ejudge-fpc-version.patch
+Patch4: ejudge-libzip.patch
 
-BuildPreReq: flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libMySQL-devel, libcurl-devel
+BuildPreReq: flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libMySQL-devel, libcurl-devel, autoconf
 
 Requires: sharutils, apache2, iconv, gawk, a2ps
 
@@ -70,12 +71,13 @@ User and contest administrator manual for ejudge system.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 cp %SOURCE2 %SOURCE3 %SOURCE5 %SOURCE6 .
 
 bzip2 -9k ChangeLog NEWS NEWS.RUS
 
 %build
-
+autoconf
 %configure                                                                \
 --enable-charset=utf-8                                                    \
 --enable-socket-path=%ejudge_socket_dir/userlist-socket                   \
@@ -129,6 +131,9 @@ install -d %buildroot%lang_config_dir
 %doc ejudge-*.pdf
 
 %changelog
+* Mon Jul 16 2012 Denis Kirienko <dk@altlinux.org> 2.3.23-alt2
+- Fixed build with libzip
+
 * Mon Jul 09 2012 Denis Kirienko <dk@altlinux.org> 2.3.23-alt1
 - Version 2.3.23 (SVN 6956)
 
