@@ -1,6 +1,6 @@
 Name: SimplePAMApps
 Version: 0.60
-Release: alt29
+Release: alt32
 
 %def_with login
 %def_with su
@@ -8,9 +8,9 @@ Release: alt29
 Summary: Simple PAM-based Applications
 License: BSD or GPL
 Group: System/Base
-Url: http://parc.power.net/morgan/Linux-PAM/index.html
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Url: http://www.linux-pam.org/pre/applications/
 
+# http://www.linux-pam.org/pre/applications/%name-%version.tar.bz2
 Source0: %name-0.60.tar
 Source1: login.pamd
 Source2: su.pamd
@@ -28,6 +28,7 @@ Patch9: %name-0.60-owl-su-pam_acct_mgmt.patch
 Patch10: %name-0.60-alt-makefile-passwd.patch
 Patch11: %name-0.60-alt-openpam.patch
 Patch12: %name-0.60-alt-audit.patch
+Patch13: %name-0.60-alt-utmp_do_close_session.patch
 
 BuildPreReq: libpam-devel libaudit-devel
 
@@ -44,10 +45,10 @@ Group: System/Base
 Requires: pam >= 0.75-alt12
 
 %description -n login
-The login application opens an interactive session with a Linux workstation.
-It is one of the first applications a user interacts with, but is generally
-not invoked by a normal user.  Instead some program like mingetty(8) will
-invoke login.
+The login application opens an interactive session with a Linux
+workstation.  It is one of the first applications a user interacts with,
+but is generally not invoked by a normal user.  Instead some program
+like mingetty(8) will invoke login.
 
 %package -n su
 Summary: Assume a user's identity
@@ -55,9 +56,9 @@ Group: System/Base
 PreReq: control
 
 %description -n su
-Su invokes the preferred shell of another user.  The identity of the new user
-can be specified with the username argument.  The default username is that of
-the local superuser (UID=0).
+Su invokes the preferred shell of another user.  The identity of the new
+user can be specified with the username argument.  The default username
+is that of the local superuser (UID=0).
 
 %prep
 %setup -q
@@ -73,6 +74,10 @@ the local superuser (UID=0).
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
+find -type f -print0 |
+	xargs -r0 fgrep -lZ PAM_DATA_QUIET -- |
+	xargs -r0 sed -i s/PAM_DATA_QUIET/PAM_DATA_SILENT/ --
 
 %build
 autoheader
@@ -143,6 +148,16 @@ fi
 %endif #with su
 
 %changelog
+* Mon Jul 16 2012 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt32
+- login: reenabled GOODBYE_MESSAGE.
+
+* Thu May 31 2012 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt31
+- Made utmp_do_close_session() propagate write_wtmp() return value.
+- Updated URL.
+
+* Wed Dec 29 2010 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt30
+- Fixed parameter passed to pam_end() call in the child process.
+
 * Fri Jul 02 2010 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt29
 - Rebuilt with libaudit.so.1.
 
