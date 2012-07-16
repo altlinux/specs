@@ -1,6 +1,6 @@
 Name: psi-plus-plugin-psimedia
 Version: 1.0.3
-Release: alt2
+Release: alt2.1
 
 Summary: PsiMedia plugin for Psi+
 License: GPLv2.1
@@ -16,6 +16,7 @@ Patch1: 0020-psimedia-win32-compilation-paths.diff
 Patch2: 0030-psimedia-uvcvideo-fix.diff
 Patch3: 0040-psimedia-2.6.38-compilation-fix.diff
 Patch4: 0050-psimedia-drop-v4lsrc-gst-plugin.diff
+Patch5: psi-plus-plugin-psimedia-1.0.3-alt-glib2.patch
 
 Requires: psi-plus
 
@@ -40,6 +41,7 @@ The implementation is based on GStreamer.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 qconf
@@ -54,6 +56,9 @@ install -Dp -m 0644 gstprovider/libgstprovider.so %buildroot%_libdir/psi-plus/pl
 %_libdir/psi-plus/plugins/libgstprovider.so
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt2.1
+- Fixed build
+
 * Thu Jun 23 2011 Nazarov Denis <nenderus@altlinux.org> 1.0.3-alt2
 - Add 5 patches
 
