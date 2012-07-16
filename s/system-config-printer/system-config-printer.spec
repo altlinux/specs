@@ -1,7 +1,7 @@
 Summary: A printer administration tool
 Name: system-config-printer
 Version: 1.3.7
-Release: alt1.1
+Release: alt1.2
 License: GPLv2+
 Url: http://cyberelk.net/tim/software/system-config-printer/
 Group: System/Configuration/Printing
@@ -18,6 +18,7 @@ Patch8: system-config-printer-select-nonexistent-printer.patch
 Patch9: system-config-printer-ink-levels.patch
 Patch10: system-config-printer-auth-no-pw.patch
 Patch11: system-config-printer-copy-crash.patch
+Patch12: system-config-printer-1.3.7-alt-udev-185.patch
 
 BuildRequires: python-devel
 BuildRequires: desktop-file-utils
@@ -55,6 +56,7 @@ Python module to configure a CUPS print server
 
 %prep
 %setup -q
+%patch12 -p1
 
 %build
 ./bootstrap
@@ -95,6 +97,9 @@ exit 0
 %python_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt1.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.7-alt1.1
 - Rebuild with Python-2.7
 
