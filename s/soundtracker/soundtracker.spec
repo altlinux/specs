@@ -1,6 +1,6 @@
 Name: soundtracker
 Version: 0.6.8
-Release: alt5.qa2
+Release: alt5.qa3
 
 Summary: Sound modules editor/player
 License: GPL
@@ -19,6 +19,7 @@ Patch2: %name-0.6.8-translation-alt.patch
 Patch3: %name-0.6.8-gccwarnings-up.patch.bz2
 Patch4: %name-0.6.8-utf8overflow-alt.patch.bz2
 Patch5: %name-0.6.8-fixjack-alt.patch
+Patch6: %name-0.6.8-alt-DSO.patch
 
 Summary(ru_RU.KOI8-R): Редактор/проигрыватель модулей
 Summary(uk_UA.KOI8-U): Редактор/трекер модул╕в
@@ -51,6 +52,7 @@ GNOME (опц╕онально).
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p2
 
 %build
 unset CC CXX
@@ -91,6 +93,9 @@ install -pD -m755 %SOURCE4 %buildroot%_man1dir/%name.1
 
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.8-alt5.qa3
+- Fixed build
+
 * Thu Apr 07 2011 Igor Vlasenko <viy@altlinux.ru> 0.6.8-alt5.qa2
 - NMU: converted debian menu to freedesktop
 
