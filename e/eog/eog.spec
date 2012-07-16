@@ -5,7 +5,7 @@
 %def_enable introspection
 
 Name: eog
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -142,6 +142,9 @@ GObject introspection devel data for the Eye of GNOME
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
 * Sat Jun 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 
