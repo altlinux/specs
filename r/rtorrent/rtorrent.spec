@@ -2,7 +2,7 @@
 
 Name: rtorrent
 Version: 0.8.7
-Release: alt1
+Release: alt1.1
 
 Summary: rTorrent - rakshasa's ncurses BitTorrent client using librTorrent
 Group: Networking/File transfer
@@ -12,6 +12,7 @@ Packager: Alexey Morsov <swi@altlinux.ru>
 
 Source0: %name-%version.tar
 Patch0: %name-man-alt.patch
+Patch1: %name-0.8.7-alt-DSO.patch
 
 BuildRequires: gcc-c++ libcurl-devel libidn-devel libncursesw-devel libsigc++2.0-devel libssl-devel libstdc++-devel libtinfo-devel zlib-devel libgssapi-devel
 BuildRequires: cppunit-devel
@@ -36,6 +37,7 @@ screen. rTorrent features:
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p2
 mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -55,6 +57,9 @@ ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %_man1dir/*
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.7-alt1.1
+- Fixed build
+
 * Sat Nov 13 2010 Alexey Morsov <swi@altlinux.ru> 0.8.7-alt1
 - new version
 - clean spec-file
