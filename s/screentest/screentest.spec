@@ -1,6 +1,6 @@
 Name: screentest
 Version: 2.0
-Release: alt2
+Release: alt2.1
 
 Summary: The CRT screen quality testing utility
 Summary(ru_RU.KOI8-R): Утилита для тестирования качества ЭЛТ-монитора
@@ -9,6 +9,7 @@ License: GPL
 Url: http://www.fi.muni.cz/~kas/screentest/
 
 Source0: ftp://ftp.fi.muni.cz/pub/linux/people/jan_kasprzak/screentest/%name-%version.tar.gz
+Patch0: screentest-2.0-alt-DSO.patch
 
 BuildRequires: libgtk+2-devel libglade-devel glib2-devel
 
@@ -24,6 +25,7 @@ Screentest - простая программа, которая отображает различные образцы
 
 %prep
 %setup -q
+%patch0 -p2
 
 %build
 %configure
@@ -56,6 +58,9 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2.1
+- Fixed build
+
 * Tue Mar 29 2011 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2
 - .desktop comment clean-up
 
