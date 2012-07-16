@@ -1,7 +1,7 @@
 
 Name: emacs-rbook
 Version: 1.3.5
-Release: alt1
+Release: alt2
 
 License: Public domain
 Group: Accessibility
@@ -9,7 +9,7 @@ Summary: The emacs plugin to read text files with Text-to-Speech engine (ru_tts)
 
 BuildArch: noarch
 Requires: emacs-common ru_tts sox lame
-BuildRequires: emacs-devel emacs23 
+BuildRequires: emacs-devel emacs-nox
 Url: ftp://ftp.rakurs.spb.ru/pub/Goga/projects/rbook
 Packager: Emacs Maintainers Team <emacs@packages.altlinux.org>
 
@@ -52,6 +52,9 @@ Currently, mp3 files generation does not work properly.
 %doc ChangeLog README.txt
 
 %changelog
+* Tue Jul 17 2012 Terechkov Evgenii <evg@altlinux.org> 1.3.5-alt2
+- Fix build with emacs24
+
 * Tue Sep 20 2011 Michael Pozhidaev <msp@altlinux.ru> 1.3.5-alt1
 - New version
 
