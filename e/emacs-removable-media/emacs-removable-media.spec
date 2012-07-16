@@ -1,13 +1,13 @@
 
 Name: emacs-removable-media
 Version: 20110427
-Release: alt0.1
+Release: alt1
 Summary: The simple tool for emacs users to mount removable devices
 Group: Editors
 License: GPL
 BuildArch: noarch
 Packager: Michael Pozhidaev <msp@altlinux.ru>
-BuildRequires: emacs23 emacs-devel
+BuildRequires: emacs-nox emacs-devel
 Requires: emacs-base emacs-elib
 
 Source: %name-%version.tar.gz
@@ -37,6 +37,9 @@ Source1: site-start.el
 %_emacs_sitestart_dir/*
 
 %changelog
+* Tue Jul 17 2012 Terechkov Evgenii <evg@altlinux.org> 20110427-alt1
+- Fix build with emacs24
+
 * Wed Apr 27 2011 Michael Pozhidaev <msp@altlinux.ru> 20110427-alt0.1
 - Added site-start script with autoloac declarations
 
