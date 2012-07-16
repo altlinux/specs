@@ -1,7 +1,7 @@
 %define base_name rox-filer
 Name: rox-base
 Version: 2.5
-Release: alt1
+Release: alt1.1
 
 Summary: ROX desktop enviroment
 License: GNU GPL
@@ -19,6 +19,7 @@ Patch3: rox-fix-help-path.patch
 
 Patch50: rox-2.3-rootmenu.patch
 Patch51: rox-2.3-workplace.patch
+Patch52: rox-2.5-alt-DSO.patch
 
 # Automatically added by buildreq on Thu Oct 05 2006
 BuildRequires: fontconfig imake libXt-devel libgtk+2-devel libxml2-devel xorg-cf-files pkgconfig 
@@ -34,6 +35,7 @@ ROX is a desktop environment, like GNOME, KDE and XFCE.  It is an attempt to bri
 
 #%%patch50 -p1
 #%%patch51 -p1
+%patch52 -p2
 
 %build
 %__mkdir ROX-Filer/build
@@ -98,6 +100,9 @@ ln -s %buildroot%_mandir/man1/rox.1 %buildroot%_mandir/man1/ROX-Filer.1
 %doc ROX-Filer/Help/README ROX-Filer/Help/TODO ROX-Filer/Help/Changes
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1.1
+- Fixed build
+
 * Thu Oct 05 2006 Eugene Ostapets <eostapets@altlinux.ru> 2.5-alt1
 - new version
 
