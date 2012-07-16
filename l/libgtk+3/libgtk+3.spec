@@ -12,7 +12,7 @@
 %def_disable wayland
 
 Name: libgtk+3
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -348,6 +348,12 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
+- 3.4.4 release
+
+* Wed May 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt2
+- updated from upsream git
+
 * Sat May 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
