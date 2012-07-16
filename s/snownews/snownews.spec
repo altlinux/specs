@@ -1,6 +1,6 @@
 Name: snownews
 Version: 1.5.10
-Release: alt3
+Release: alt3.1
 
 Summary: Text mode RSS newsreader
 License: GPL2
@@ -13,6 +13,7 @@ Source1: %name.desktop
 
 # add more html entities
 Patch1: %name-1.5.1-alt-html_entities.patch
+Patch2: %name-1.5.10-alt-DSO.patch
 
 # Automatically added by buildreq on Mon Dec 15 2008 (-bi)
 BuildRequires: common-licenses libncursesw-devel libxml2-devel perl-XML-LibXML zlib-devel
@@ -25,6 +26,7 @@ ncurses and uses libxml2 for XML parsing.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
 mv doc/man/ru_RU.KOI8-R doc/man/ru
@@ -51,6 +53,9 @@ install -m 644 %SOURCE1 %buildroot%_desktopdir/
 %doc --no-dereference COPYING
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.10-alt3.1
+- Fixed build
+
 * Sun Apr 17 2011 Lenar Shakirov <snejok@altlinux.ru> 1.5.10-alt3
 - Fixed build: zlib-devel added to BuildReqs
 - Spec cleaned: thanks to rpmcs!
