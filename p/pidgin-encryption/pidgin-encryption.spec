@@ -4,12 +4,13 @@
 Summary:    Encription Plugin for Gaim
 Name:       pidgin-encryption
 Version:    3.1
-Release:    alt2
+Release:    alt2.1
 
 License:    GPL
 Group:      Networking/Instant messaging
 Url:        http://gaim-encryption.sourceforge.net/
 Source:     %name-%version.tar.gz
+Patch: pidgin-encryption-3.1-alt-glib2.patch
 
 Requires:	pidgin => %pidgin_ver
 Requires:	libnspr libnss
@@ -27,6 +28,7 @@ Pidgin-Encryption uses NSS to provide transparent RSA encryption as a Pidgin plu
 
 %prep
 %setup -q -n %name-%version
+%patch -p2
 
 %build
 %configure %{subst_enable static} \
@@ -50,6 +52,9 @@ Pidgin-Encryption uses NSS to provide transparent RSA encryption as a Pidgin plu
 %_datadir/pixmaps/pidgin-encryption/*
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt2.1
+- Fixed build
+
 * Thu Aug 12 2010 Alexey Shabalin <shaba@altlinux.ru> 3.1-alt2
 - update buildreq
 
