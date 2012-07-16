@@ -2,7 +2,7 @@ Name:       sensorfw
 Summary:    Sensor Framework
 Version:    0.7.2
 Group:      System/Kernel and hardware
-Release:    alt1.83.2
+Release:    alt1.83.2.1
 License:    LGPLv2+
 URL:        http://gitorious.org/sensorfw
 Source0:    %{name}-%{version}.tar.gz
@@ -24,6 +24,7 @@ Patch4:     sensorfw-0.7.1-oemtablet-als.patch
 Patch5:     sensorfw-0.7.1-oemtablet-gyroscope.patch
 Patch6:     sensorfw-0.7.1-alsadaptor-ascii-rangefile.patch
 Patch7:     fix-initctl.patch
+Patch8:     sensorfw-0.7.2-alt-DSO.patch
 #Requires:   qt
 #Requires:   GConf-dbus
 Requires:   %{name}-configs
@@ -125,6 +126,9 @@ Sensorfw configuration files.
 %patch6 -p1
 # fix-initctl.patch
 %patch7 -p2
+# sensorfw-0.7.2-alt-DSO.patch
+%patch8 -p2
+
 # >> setup
 # << setup
 find . -type f -name \*.pr\? | while read f; do sed -i 's|/usr/lib|%_libdir|' $f; done
@@ -252,6 +256,9 @@ SYSCONFDIR="%buildroot%_sysconfdir" %{SOURCE9}
 # << files configs
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.83.2.1
+- Fixed build
+
 * Fri May 11 2012 Paul Wolneykien <manowar@altlinux.ru> 0.7.2-alt1.83.2
 - Take own of the directories, skip the startup-setup script.
 
