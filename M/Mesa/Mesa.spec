@@ -1,11 +1,10 @@
 %def_enable egl
-%def_disable gles1
 %def_enable gles2
 %def_enable wayland_egl
 
 Name: Mesa
 Version: 9.0
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -18,8 +17,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: gcc-c++ indent flex libXdamage-devel libXext-devel libXft-devel libXmu-devel libXi-devel libXrender-devel libXxf86vm-devel
-BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel
-BuildRequires: python-module-libxml2 libSM-devel libudev-devel llvm-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel
+BuildRequires: libdrm-devel libexpat-devel xorg-glproto-devel xorg-dri2proto-devel python-modules libselinux-devel libxcb-devel libSM-devel
+BuildRequires: python-module-libxml2 libudev-devel llvm3.1-devel libXdmcp-devel libwayland-client-devel libwayland-server-devel
 
 %description
 Mesa is an OpenGL compatible 3D graphics library
@@ -169,6 +168,10 @@ framerate information to stdout
 subst "s|mesa_version|%version|" configure.ac
 subst "s|^\(#define MESA_VERSION_STRING \"\).*|#define MESA_VERSION_STRING \"%version\"|" src/mesa/main/version.h
 
+ln -s %_bindir %_builddir/
+ln -s %_libdir %_builddir/
+ln -s %_includedir %_builddir/
+
 %build
 %autoreconf
 %configure \
@@ -189,13 +192,12 @@ subst "s|^\(#define MESA_VERSION_STRING \"\).*|#define MESA_VERSION_STRING \"%ve
 %endif
 %endif
 %ifarch %ix86 x86_64
-	--with-gallium-drivers=swrast,r300,r600,nouveau \
+	--with-gallium-drivers=swrast,r300,r600,nouveau,radeonsi \
 %endif
 	--enable-texture-float \
 	--enable-shared-glapi \
 	--disable-gallium-egl \
 	%{subst_enable egl} \
-	%{subst_enable gles1} \
 	%{subst_enable gles2} \
 	--enable-texture-float \
 	--enable-glx-tls \
@@ -270,20 +272,12 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 
 %if_enabled gles2
 %files -n libGLES
-%if_enabled glse1
-%_libdir/libGLESv1_CM.so.*
-%endif
 %_libdir/libGLESv2.so.*
 
 %files -n libGLES-devel
 %_includedir/GLES2
 %_libdir/libGLESv2.so
 %_pkgconfigdir/glesv2.pc
-%if_enabled glse1
-%_includedir/GLES
-%_libdir/libGLESv1_CM.so
-%_pkgconfigdir/glesv1_cm.pc
-%endif
 %endif
 
 %if_enabled wayland_egl
@@ -325,6 +319,10 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Tue Oct 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0-alt2
+- enabled radeonsi gallium driver
+- rebuild with wayland 1.0.0
+
 * Tue Oct 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0-alt1
 - 9.0 release
 

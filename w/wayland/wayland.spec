@@ -2,7 +2,7 @@
 %def_enable scanner
 
 Name: wayland
-Version: 0.95.0
+Version: 1.0.0
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -12,8 +12,9 @@ Url: http://%name.freedesktop.org/
 
 # git://anongit.freedesktop.org/wayland/wayland
 Source: wayland-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildRequires: libffi-devel libexpat-devel
+BuildRequires: doxygen libexpat-devel libffi-devel xsltproc docbook-style-xsl
 
 %description
 Wayland is a project to define a protocol for a compositor to talk to
@@ -87,6 +88,7 @@ This package provides development files for Wayland cursor helper library.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -97,13 +99,15 @@ This package provides development files for Wayland cursor helper library.
 
 %install
 %make DESTDIR=%buildroot install
+mkdir -p %buildroot%_docdir/%name-devel/
+mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-devel/
 
 %files devel
+%doc %_docdir/%name-devel
 %_bindir/%name-scanner
 %_includedir/%name-util.h
 %_includedir/%name-version.h
 %_datadir/aclocal/%name-scanner.*
-%doc README TODO
 
 %files -n lib%name-client
 %_libdir/lib%name-client.so.*
@@ -131,6 +135,9 @@ This package provides development files for Wayland cursor helper library.
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Tue Oct 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+
 * Mon Sep 10 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.95.0-alt1
 - 0.95.0
 
