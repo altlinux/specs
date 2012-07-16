@@ -1,6 +1,6 @@
 Name:          taskjuggler
 Version:       2.4.3
-Release:       alt1
+Release:       alt1.1
 Summary:       Project management tool
 
 Group:         Office
@@ -8,6 +8,7 @@ License:       GPLv2
 URL:           http://www.taskjuggler.org
 Source0:       http://www.taskjuggler.org/download/%{name}-%{version}.tar.bz2
 Source1:       %{name}.xml
+Patch:         taskjuggler-2.4.3-alt-DSO.patch
 
 BuildRequires(pre): rpm-macros-kde-common-devel
 BuildRequires: gcc-c++
@@ -26,6 +27,7 @@ communication management.
 
 %prep
 %setup -q
+%patch -p2
 #/foo/bar timezone is completely valid and interpreted as UTC,skipping test
 rm -f TestSuite/Syntax/Errors/Timezone.tjp
 
@@ -68,6 +70,9 @@ install %SOURCE1 -Dpm 644 %buildroot%_K3xdg_mime/%name.xml
 %_mandir/man1/*
 
 %changelog
+* Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.3-alt1.1
+- Fixed build
+
 * Sat Mar 05 2011 Andrey Cherepanov <cas@altlinux.org> 2.4.3-alt1
 - Return to Sisyphus
 
