@@ -1,6 +1,6 @@
 Name: binutils
 Version: 2.22.52.0.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -137,6 +137,8 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 
 %install
 %makeinstall_std tooldir=%_prefix install-info
+sed -i '/PR 14072: Ensure that config.h is included first/,/^#endif/ d' \
+	%buildroot%_includedir/bfd.h
 
 # Add alternatives files
 install -d %buildroot%_altdir
@@ -258,6 +260,9 @@ RUNTESTFLAGS=
 %doc NEWS*
 
 %changelog
+* Mon Jul 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.22.52.0.4-alt2
+- %_includedir/bfd/bfd.h: removed unsuitable checks.
+
 * Mon Jul 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.22.52.0.4-alt1
 - Updated to 2.22.52.0.4.
 
