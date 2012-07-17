@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt5.qa1
+Release: alt5.qa2
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -13,6 +13,7 @@ Packager: Sir Raorn <raorn@altlinux.ru>
 # git://git.altlinux.org/people/raorn/packages/%name.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-0.4.5-alt-gc4.6.patch
 
 Requires: libapt
 
@@ -48,6 +49,7 @@ the English version of the aptitude user's manual in HTML format.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -85,6 +87,9 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt5.qa2
+- Fixed build
+
 * Wed May 18 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.4.5-alt5.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
