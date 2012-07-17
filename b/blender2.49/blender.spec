@@ -2,7 +2,7 @@
 
 Name: %{orig_name}2.49
 Version: 2.49b
-Release: alt11
+Release: alt11.1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -20,6 +20,7 @@ Patch4: %{orig_name}-2.49b-alt-qhull.patch
 Patch5: %{orig_name}-2.49b-alt-libav.patch
 Patch6: %{orig_name}-2.49b-alt-i18n.patch
 Patch7: %{orig_name}-2.49b-alt-rename.patch
+Patch8: %orig_name-2.49b-alt-gcc4.6.patch
 
 Provides: python%_python_version(Blender)
 Provides: python%_python_version(bpy)
@@ -66,6 +67,7 @@ Languages support for blender
 %patch5 -p2
 %patch6 -p1
 %patch7 -p1
+%patch8 -p2
 
 sed -i 's|\(CFLAGS\=\"\)|\1 -g |' release/plugins/bmake
 sed -i '36a\#include <GL/gl.h>' \
@@ -125,7 +127,7 @@ BF_OPENGL_LIB = 'GLEW GL GLU X11 Xi'
 BF_BUILDDIR = 'build/linux'
 BF_INSTALLDIR='release/linux'
 
-CPPFLAGS = '-g -I%_includedir/python%_python_version'
+CPPFLAGS = '-g -I%_includedir/python%_python_version -fpermissive'
 __EOF__
 scons -j %__nprocs BF_QUIET=0
 
@@ -194,6 +196,9 @@ popd
 %_datadir/%name/.Blanguages
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.49b-alt11.1
+- Fixed build
+
 * Wed Apr 04 2012 Sergei Epiphanov <serpiph@altlinux.ru> 2.49b-alt11
 - Fix spec
 
