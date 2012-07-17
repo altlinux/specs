@@ -3,7 +3,7 @@
 
 Name: chuck
 Version: 1.2.1.3
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: Strongly-timed, Concurrent, and On-the-fly Audio Programming Language
 License: %gpl2plus
@@ -18,6 +18,7 @@ Source3: chuck-jack.alternatives
 Source4: miniAudicle-alsa.alternatives
 Source5: miniAudicle-jack.alternatives
 Source6: miniAudicle.desktop
+Patch: chuck-1.2.1.3-alt-DSO.patch
 
 BuildPreReq: rpm-build-licenses
 BuildRequires: gcc-c++ flex libsndfile-devel libalsa-devel jackit-devel wxGTK-devel wxGTK-contrib-stc-devel libpango-devel ImageMagick-tools
@@ -167,6 +168,7 @@ This package contains JACK version of miniAudicle
 
 %prep
 %setup -a 1
+%patch -p2
 cd miniAudicle
 ln -sf .. chuck
 
@@ -282,6 +284,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_altdir/%mAname-jack
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1.3-alt2.qa2
+- Fixed build
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.2.1.3-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
