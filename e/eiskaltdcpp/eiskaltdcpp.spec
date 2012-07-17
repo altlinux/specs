@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.5
-Release: alt1
+Release: alt1.1
 Summary: EiskaltDC++ - Direct Connect client
 License: GPLv3
 Group: Networking/File transfer
@@ -8,6 +8,7 @@ Url: http://code.google.com/p/eiskaltdc/
 Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 
 Source: %name-%version.tar
+Patch: eiskaltdcpp-2.2.5-alt-DSO.patch
 
 BuildRequires: cmake gcc-c++ libqt4-devel bzlib-devel libaspell-devel liblua5-devel
 BuildRequires: libgtk+2-devel libglade-devel glib2-devel libpango-devel libnotify-devel 
@@ -87,6 +88,7 @@ command line interface for XML-RPC Daemon
 
 %prep
 %setup
+%patch -p2
 
 %build
 mkdir -p BUILD
@@ -168,6 +170,9 @@ popd
 %_datadir/%name/cli
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.5-alt1.1
+- Fixed build
+
 * Tue Jan 03 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 2.2.5-alt1
 - 2.2.5 release
 
