@@ -1,6 +1,6 @@
 Name: cvsgraph
 Version: 1.7.0
-Release: alt1
+Release: alt1.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -10,6 +10,7 @@ Group: System/Servers
 
 URL: http://www.akhphd.au.dk/~bertho/cvsgraph
 Source: %url/release/%name-%version.tar.gz
+Patch: cvsgraph-1.7.0-alt-DSO.patch
 
 # Automatically added by buildreq on Thu May 22 2008
 BuildRequires: flex libfreetype-devel libgd2-devel
@@ -22,6 +23,7 @@ branches of a file in a CVS/RCS repository.
 
 %prep
 %setup
+%patch -p2
 
 %__subst 's@bitstream-vera@ttf/TrueType-vera@g' cvsgraph.conf
 
@@ -42,6 +44,9 @@ install -Dpm644 cvsgraph.conf.5 %buildroot%_man5dir/cvsgraph.conf.5
 %_man5dir/*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.1
+- Fixed build
+
 * Thu May 22 2008 Victor Forsyuk <force@altlinux.org> 1.7.0-alt1
 - 1.7.0
 
