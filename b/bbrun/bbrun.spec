@@ -1,6 +1,6 @@
 Name: bbrun
 Version: 1.4
-Release: alt3.2
+Release: alt3.3
 
 Summary: A simple run window with dropdown history list
 License: GPL
@@ -9,6 +9,7 @@ Group: File tools
 Url: http://www.dwave.net/~jking/bbrun/
 Source: %name-%version.tar.bz2
 Patch: %name-1.4-alt-make.patch
+Patch1: %name-1.4-alt-DSO.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
@@ -23,6 +24,7 @@ It also features a history list of the most recent commands.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p2
 
 %build
 %make_build -C %name
@@ -65,6 +67,9 @@ EOF
 %_miconsdir/%name.xpm
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt3.3
+- Fixed build
+
 * Mon Mar 28 2011 Igor Vlasenko <viy@altlinux.ru> 1.4-alt3.2
 - NMU: converted debian menu to freedesktop
 
