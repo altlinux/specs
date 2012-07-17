@@ -1,6 +1,6 @@
 Name:           chrontel
 Version:        1.0
-Release:        alt11203.1.4.3
+Release:        alt11203.1.4.3.1
 Summary:        Control Tool for Chrontel CH7036 HDMI chip
 License:        Public Domain
 
@@ -9,6 +9,7 @@ BuildRequires: libqt4-devel gcc-c++
 Source:		chrontel-1.0.tar.bz2
 Source1:	tiitoo-hdmi-daemon.init
 Source2:	modprobe
+Patch: chrontel-1.0-alt-DSO.patch
 Group: System/Configuration/Hardware
 Requires: firmware-chrontel-7036
 
@@ -25,6 +26,7 @@ Firmware for Chrontel CH7036 HDMI chip
 
 %prep
 %setup -q
+%patch -p2
 %_libdir/qt4/bin/qmake tiitoo-hdmi-daemon.pro
 
 %build
@@ -57,6 +59,9 @@ rm -rf $RPM_BUILD_ROOT
 /lib/firmware/chrontel/fw7036.bin
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt11203.1.4.3.1
+- Fixed build
+
 * Sun Mar 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0-alt11203.1.4.3
 - initscript fixed
 - modprobe conf file installation fixed
