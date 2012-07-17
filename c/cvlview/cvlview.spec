@@ -1,6 +1,6 @@
 Name: cvlview
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -12,6 +12,7 @@ Url: http://cvtool.sourceforge.net/cvlview.html
 Source: http://downloads.sourceforge.net/cvtool/cvlview-%version.tar.bz2
 Patch1: cvlview-0.3.1-gcc43.patch
 Patch2: cvlview-0.3.2-include.patch
+Patch3: cvlview-1.0.1-alt-DSO.patch
 
 # Automatically added by buildreq on Mon Jul 06 2009
 # libcvl-devel requires versioned, configure checks for this
@@ -26,6 +27,7 @@ useful for many types of data.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 %configure
@@ -40,6 +42,9 @@ useful for many types of data.
 %_infodir/*.info*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.1
+- Fixed build
+
 * Mon Aug 30 2010 Victor Forsiuk <force@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
