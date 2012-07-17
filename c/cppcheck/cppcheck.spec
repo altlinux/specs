@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.50
+Version: 1.55
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -52,6 +52,9 @@ install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.55-alt1
+- Version 1.55
+
 * Sat Sep 17 2011 Slava Semushin <php-coder@altlinux.ru> 1.50-alt1
 - Updated to 1.50
 
