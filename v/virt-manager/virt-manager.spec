@@ -4,11 +4,12 @@
 %define preferred_distros "altlinux,fedora,rhel"
 %define kvm_packages "qemu-kvm,qemu-system"
 %define libvirt_packages "libvirt"
+%define askpass_package "openssh-askpass"
 %define default_graphics "vnc"
 %def_without tui
 
 Name: virt-manager
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 Summary: Virtual Machine Manager
 
@@ -23,9 +24,9 @@ Source: %name-%version.tar
 %add_python_req_skip sparkline virtManager
 %add_python_compile_include %_datadir/%name
 
-# ALT#15494
-Requires: python-module-pygtk-libglade
-Requires: python-module-virtinst >= 0.600.0
+Requires: python-module-pygnome-gconf python-module-pygnome-gnome-keyring
+Requires: python-module-vte python-module-spice-gtk python-module-gtkvnc
+Requires: python-module-virtinst >= 0.600.2
 PreReq: GConf2
 
 # Automatically added by buildreq on Thu Jul 02 2009
@@ -50,6 +51,7 @@ Uses libvirt as the backend management API.
 	--with-libvirt-package-names=%libvirt_packages \
 	--with-kvm-packages=%kvm_packages \
 	--with-preferred-distros=%preferred_distros \
+	--with-askpass-package=%askpass_package \
 	--with-default-graphics=%default_graphics
 
 %make_build
@@ -80,6 +82,9 @@ fi
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Tue Jul 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.3-alt1
+- 0.9.3
+
 * Mon Apr 09 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.1-alt1
 - 0.9.1
 
