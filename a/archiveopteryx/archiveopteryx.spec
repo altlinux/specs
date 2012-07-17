@@ -1,6 +1,6 @@
 Name: archiveopteryx
 Version: 3.1.3
-Release: alt2
+Release: alt2.1
 
 Summary: %name stores email in a database and provides access to it through IMAP and more.
 Group: System/Servers
@@ -11,6 +11,8 @@ Url: http://www.archiveopteryx.org
 Packager: Denis Baranov <baraka@altlinux.org>
 
 Source: %name-%version.tar
+Patch: archiveopteryx-3.1.3-alt-DSO.patch
+Patch1: archiveopteryx-3.1.3-alt-no-Werror.patch
 
 # Manual removed MySQL-server 
 # Automatically added by buildreq on Mon Sep 06 2010
@@ -23,6 +25,8 @@ therein on a daily basis instead of relegating it to offline storage.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
 
 %build
 %__subst "s|\$(PREFIX)/lib/%name|%_libdir/%name|g" Jamsettings
@@ -48,6 +52,9 @@ mkdir -p %buildroot/var/lib/%name/
 #%_sbindir/tlsproxy
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt2.1
+- Fixed build
+
 * Thu Nov 18 2010 Denis Baranov <baraka@altlinux.org> 3.1.3-alt2
 - fix build on 64bit platform
 
