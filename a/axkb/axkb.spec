@@ -1,6 +1,6 @@
 Name: axkb
 Version: 0.4.3
-Release: alt1.85c44479
+Release: alt1.85c44479.1
 
 Summary: Antico XKB configuration utility
 Group: Graphical desktop/Other
@@ -10,6 +10,7 @@ URL: http://github.com/disels/axkb
 Packager: Boris Savelev <boris@altlinux.org>
 
 Source0: %name-%version.tar
+Patch0: axkb-0.4.3-alt-DSO.patch
 
 # Automatically added by buildreq on Fri May 01 2009
 BuildRequires: gcc-c++ libX11-devel libqt4-devel libxkbfile-devel
@@ -24,6 +25,7 @@ Depends only on Qt and X-server
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 qmake-qt4
@@ -41,6 +43,9 @@ qmake-qt4
 %_datadir/qt4/translations/%{name}*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt1.85c44479.1
+- Fixed build
+
 * Sat Dec 19 2009 Terechkov Evgenii <evg@altlinux.ru> 0.4.3-alt1.85c44479
 - update from upstream
 
