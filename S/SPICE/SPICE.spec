@@ -1,6 +1,6 @@
 Name: SPICE
 Version: 0.10.1
-Release: alt1
+Release: alt1.1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -8,6 +8,7 @@ Url: http://www.spice-space.org/
 
 Source: http://www.spice-space.org/download/releases/%name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-0.10.1-alt-DSO.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=613529
 ExclusiveArch: %ix86 x86_64
@@ -65,6 +66,7 @@ using spice-server, you will need to install spice-server-devel.
 %prep
 %setup
 %patch -p1
+%patch1 -p0
 
 %build
 rm -f GITVERSION
@@ -92,6 +94,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt1.1
+- Fixed build
+
 * Fri Feb 03 2012 Alexey Shabalin <shaba@altlinux.ru> 0.10.1-alt1
 - 0.10.1
 
