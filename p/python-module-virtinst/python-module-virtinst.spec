@@ -1,5 +1,5 @@
-Version: 0.600.1
-Release: alt1
+Version: 0.600.2
+Release: alt0.1
 %setup_python_module virtinst
 Name: python-module-virtinst
 Packager: Anton Protopopov <aspsk@altlinux.ru>
@@ -43,6 +43,9 @@ and install new VMs) and virt-clone (clone an existing virtual machine).
 %_man5dir/*
 
 %changelog
+* Tue Jul 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.600.2-alt0.1
+- pre 0.600.2
+
 * Fri Feb 03 2012 Alexey Shabalin <shaba@altlinux.ru> 0.600.1-alt1
 - 0.600.1
 
