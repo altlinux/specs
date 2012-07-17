@@ -1,6 +1,6 @@
 Name: libxml2
-Version: 2.7.8
-Release: alt8
+Version: 2.8.0
+Release: alt1
 Epoch: 1
 
 Summary: The library for manipulating XML files
@@ -9,7 +9,7 @@ Group: System/Libraries
 Url: http://xmlsoft.org/
 
 %def_disable static
-%define srcname libxml2-v2.7.8-41-g81809d5
+%define srcname libxml2-v2.8.0-3-g549f06a
 
 Source: %srcname.tar
 # http://www.w3.org/XML/Test/xmlts20080827.tar.gz
@@ -19,7 +19,7 @@ Patch: libxml2-%version-%release.patch
 Requires: xml-common
 
 # Automatically added by buildreq on Sun Feb 27 2011
-BuildRequires: python-devel python-modules-compiler python-modules-xml zlib-devel
+BuildRequires: liblzma-devel python-devel python-modules-compiler python-modules-xml zlib-devel
 
 %package devel
 Summary: Development environment for building applications manipulating XML files
@@ -96,7 +96,8 @@ statically linked applications manipulating XML files.
 %description -n xml-utils
 This package contains xml tools:
 + xmllint - utility for parsing and validating XML files;
-+ xmlcatalog - command line tool to parse and manipulate XML or SGML catalog files.
++ xmlcatalog - command line tool to parse and manipulate XML or SGML
+catalog files.
 
 %description -n python-module-%name
 This package contains a module that permits applications
@@ -130,11 +131,10 @@ mkdir -p m4
     %{subst_enable static} \
     --disable-silent-rules
 
-# SMP-incompatible.
-make
+%make_build
 
 %check
-make check
+%make_build -k check
 
 %install
 %makeinstall_std
@@ -196,6 +196,10 @@ install -p -m644 doc/*.html %buildroot%pkgdocdir/
 %doc %_datadir/gtk-doc/html/libxml2/
 
 %changelog
+* Tue Jul 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.8.0-alt1
+- Updated to v2.8.0-3-g549f06a.
+- Unexported 13 internal functions which are not supposed to be exported.
+
 * Thu Feb 09 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.7.8-alt8
 - Updated to v2.7.8-48-gca03efc.
 
