@@ -1,6 +1,6 @@
 Name: rsh
 Version: 0.17
-Release: alt3
+Release: alt4
 Serial: 1
 
 Summary: Clients for remote access commands (rsh, rlogin, rcp)
@@ -15,6 +15,8 @@ Source4: rexec-1.5.tar.bz2
 Source5: rsh-xinetd
 Source6: rlogin-xinetd
 Source7: rexec-xinetd
+Source8: rshd.control
+Source9: rsh.control
 
 Patch1: netkit-rsh-0.17-sectty.patch
 # Make rexec installation process working
@@ -90,9 +92,15 @@ between machines (rsh, rlogin and rcp).  All three of these commands
 use rhosts style authentication.  This package contains the clients
 needed for all of these services.
 
-The rsh package should be installed to enable remote access to other
-machines (but make sure you at least considered crypto approach
-like openssh implements).
+The rsh package might be installed to enable remote access to some
+legacy network eqipment lacking encrypted access means (so make sure
+you have at least considered crypto approach like openssh implements).
+
+*** PLEASE NOTE ***
+
+Due to the binaries installed SUID root the access to those
+is limited to "netadmin" group by default; use control(8)
+when amending accordinging to the site policy.
 
 %package server
 Summary: Servers for remote access commands (rsh, rlogin, rcp)
@@ -108,6 +116,20 @@ servers needed for all of these services.  It also contains a server
 for rexec, an alternate method of executing remote commands.
 All of these servers are run by xinetd and configured using
 /etc/xinetd.d/ and PAM (but are disabled by default).
+
+*** PLEASE NOTE ***
+
+Most probably you don't want this package installed,
+it's pretty hard to use it securely enough (or to provide
+a trusted enough environment so it's not an issue).
+
+One might be way better off using OpenSSH (probably with
+shared connections configured to lower the new connection
+setup latency) or maybe HPN-SSH.
+
+To (hopefully) ensure that the sysadmin understands this,
+the binaries are shipped with no execute permissions;
+control(8) facility is provided to regulate those.
 
 %prep
 %setup -n netkit-rsh-%version -a 4
@@ -181,35 +203,58 @@ perl -pi -e '
 %make_build
 
 %install
-mkdir -p %buildroot/%_sysconfdir/{pam.d,xinetd.d}
-mkdir -p %buildroot/{%_bindir,%_sbindir}
-mkdir -p %buildroot/%_mandir/{man1,man8}
+#mkdir -p %buildroot%_sysconfdir/{pam.d,xinetd.d}
+mkdir -p %buildroot{%_bindir,%_sbindir}
+mkdir -p %buildroot%_mandir/{man1,man8}
 
 %make INSTALLROOT=%buildroot MANDIR=%_mandir install
 
-install -pm644 %SOURCE1 %buildroot/%_sysconfdir/pam.d/rexec
-install -pm644 %SOURCE2 %buildroot/%_sysconfdir/pam.d/rlogin
-install -pm644 %SOURCE3 %buildroot/%_sysconfdir/pam.d/rsh
+install -pDm644 %SOURCE1 %buildroot/%_sysconfdir/pam.d/rexec
+install -pDm644 %SOURCE2 %buildroot/%_sysconfdir/pam.d/rlogin
+install -pDm644 %SOURCE3 %buildroot/%_sysconfdir/pam.d/rsh
 
-install -pm644 %SOURCE5 %buildroot/%_sysconfdir/xinetd.d/rsh
-install -pm644 %SOURCE6 %buildroot/%_sysconfdir/xinetd.d/rlogin
-install -pm644 %SOURCE7 %buildroot/%_sysconfdir/xinetd.d/rexec
+install -pDm644 %SOURCE5 %buildroot/%_sysconfdir/xinetd.d/rsh
+install -pDm644 %SOURCE6 %buildroot/%_sysconfdir/xinetd.d/rlogin
+install -pDm644 %SOURCE7 %buildroot/%_sysconfdir/xinetd.d/rexec
+
+install -pDm755 %SOURCE8 %buildroot%_controldir/rshd
+install -pDm755 %SOURCE9 %buildroot%_controldir/rsh
+
+%pre
+%_sbindir/groupadd -r -f netadmin >/dev/null 2>&1
+%pre_control rsh
+
+%post
+%post_control -s netadmin rsh
+
+%pre server
+%pre_control rshd
+
+%post server
+%post_control -s disabled rshd
 
 %files
-%attr(4711,root,root) %_bindir/rcp
-%attr(4711,root,root) %_bindir/rlogin
-%attr(4711,root,root) %_bindir/rsh
+%_controldir/rsh
+%attr(4710,root,netadmin) %_bindir/rcp
+%attr(4710,root,netadmin) %_bindir/rlogin
+%attr(4710,root,netadmin) %_bindir/rsh
 %_bindir/rexec
 %_mandir/man1/*
 %doc README
 
 %files server
+%_controldir/rshd
+%attr(600,root,root) %_sbindir/in.*
 %config(noreplace) %_sysconfdir/xinetd.d/*
 %config(noreplace) %_sysconfdir/pam.d/*
 %_mandir/man8/*
-%_sbindir/in.*
 
 %changelog
+* Tue Jul 17 2012 Michael Shigorin <mike@altlinux.org> 1:0.17-alt4
+- added control(8) facilities for both server and client side;
+  server binaries come disabled by default and clients are only
+  accessible to "netadmin" group as per discussion with ldv@
+
 * Fri Jul 13 2012 Michael Shigorin <mike@altlinux.org> 1:0.17-alt3
 - rebuilt for Sisyphus on request by Denis Nazarov
   + quote a percent sign in a 12 y old changelog record by jbj@
