@@ -2,7 +2,7 @@
 
 Name: aeskulap
 Version: 0.2.2
-Release: alt2.1.qa1
+Release: alt2.1.qa2
 
 Summary: Medial image viewer for DICOM images
 License: GPL/LGPL
@@ -15,6 +15,7 @@ Source: %name-%version.tar.gz
 Patch0: aeskulap-gcc4.patch
 Patch1: aeskulap-dcmtk.patch
 Patch2: aeskulap-i18n_pt.patch
+Patch3: aeskulap-0.2.2-alt-DSO.patch
 
 Requires: dcmtk, libdcmtk
 BuildPreReq: gcc-c++, zlib-devel, libpng-devel, libtiff-devel
@@ -39,6 +40,7 @@ any platform were these packages are available.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 rm -rf COPYING.DCMTK dcmtk
@@ -65,6 +67,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc ABOUT-NLS AUTHORS ChangeLog COPYING COPYING.LIB NEWS README
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt2.1.qa2
+- Fixed build
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.2.2-alt2.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
