@@ -1,6 +1,6 @@
 Name: dansguardian
 Version: 2.10.1.1
-Release: alt3
+Release: alt3.1
 
 Summary: Content filter
 Summary(ru_RU.UTF-8): Фильтр WEB-содержимого
@@ -12,6 +12,7 @@ Packager: Avramenko Andrew <liks at altlinux.ru>
 Source0: %name-%version.tar
 Patch1: %name-%version-%release.patch
 Patch2: %name-lists-2.9.8.1.patch
+Patch3: %name-2.10.1.1-alt-gcc4.6.patch
 
 BuildRequires: gcc-c++ libpcre-devel zlib-devel
 
@@ -31,6 +32,7 @@ DansGuardian - фильтр WEB содержимого, который испо�
 %setup -q
 %patch1 -p1
 %patch2
+%patch3 -p2
 
 %build
 %autoreconf
@@ -77,6 +79,9 @@ rm -rf %buildroot/usr/share/doc/%name
 %attr(2775,root,%name) /var/run/%name
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10.1.1-alt3.1
+- Fixed build
+
 * Sun Jul 19 2009 Sergey Y. Afonin <asy@altlinux.ru> 2.10.1.1-alt3
 - NMU
 - ClamAV support disabled (can not build with new libclamav)
