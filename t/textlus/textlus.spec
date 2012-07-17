@@ -1,63 +1,37 @@
 
 Name: textlus
-Version: 0.5.0
+Version: 0.99
 Release: alt1
 Summary: The utility to read large text files with speech synthesizer
 Group: Sound
 License: %gpl3plus
+URL: http://www.marigostra.ru/projects/textlus/
 Packager: Michael Pozhidaev <msp@altlinux.ru>
-BuildRequires: emacs23 emacs-devel
-BuildRequires: rpm-build-licenses
-BuildRequires: gcc-c++
-Requires: RHVoice aplay
+BuildRequires: rpm-build-licenses gcc-c++ make
 
 Source: %name-%version.tar.gz
-Source1: site-start.el
-Source2: read-book
-
-%package -n emacs-%name
-Summary: The tool for emacs to keep list of books to read with %name
-Group: Sound
-License: %gpl3plus
-BuildArch: noarch
-Requires: emacs-base emacs-elib
-Requires: %name = %version-%release aplay
 
 %description 
-The utility to read large text files with speech synthesizer
-
-%description -n emacs-%name
-The tool for emacs to keep list of books to read with %name
+The utility to read large text files with speech synthesizer.
 
 %prep
 %setup -q
 %build
-%configure
-%make_build
-%byte_compile_file eemacs/textlus.el
+make
 
 %install
-make DESTDIR=%buildroot install
-%__rm -f %buildroot%_datadir/%name/replacements
-%__install -pD -m 644 data/replacements.rus %buildroot%_datadir/%name/replacements
-
-%__install -d %buildroot%_emacslispdir
-%__install -pD -m644 emacs/textlus.* %buildroot%_emacslispdir
-%__install -d %buildroot%_emacs_sitestart_dir
-%__install -pD -m 644 %SOURCE1 %buildroot%_emacs_sitestart_dir/textlus.el
-
-%__install -pD -m 755 %SOURCE2 %buildroot%_bindir/read-book
+%__install -pD -m755 textlus %buildroot%_bindir/textlus
 
 %files
-%doc AUTHOR ChangeLog COPYING NEWS README
+%doc AUTHOR COPYING
 %_bindir/*
-%_datadir/%name
-
-%files -n emacs-%name
-%_emacslispdir/*
-%_emacs_sitestart_dir/*
 
 %changelog
+* Thu Jun 28 2012 Michael Pozhidaev <msp@altlinux.ru> 0.99-alt1
+- New version
+- RHVoice related scripts removed (will be moved into separate package)
+- No more emacs subpackage (emacs add-ons will be part of Homeros scripts)
+
 * Fri Sep 30 2011 Michael Pozhidaev <msp@altlinux.ru> 0.5.0-alt1
 - New version
 
