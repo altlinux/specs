@@ -1,6 +1,6 @@
 Name: cvltonemap
 Version: 0.2.4
-Release: alt2
+Release: alt2.1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -10,6 +10,7 @@ Group: Graphics
 
 Url: http://cvtool.sourceforge.net/cvltonemap.html
 Source: http://download.sourceforge.net/cvtool/cvltonemap-%version.tar.bz2
+Patch: cvltonemap-0.2.4-alt-DSO.patch
 
 # Automatically added by buildreq on Mon Nov 08 2010
 # See configure.ac for required libcvl-devel version
@@ -23,6 +24,7 @@ changes.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %configure
@@ -37,6 +39,9 @@ changes.
 %_infodir/cvl*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.4-alt2.1
+- Fixed build
+
 * Mon Nov 08 2010 Victor Forsiuk <force@altlinux.org> 0.2.4-alt2
 - Renew build requirements (libGLU-devel was optimized out and lost due to
   changes in dependency chain).
