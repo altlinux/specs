@@ -1,6 +1,6 @@
 Name: bomberclone
 Version: 0.11.8
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: BomberClone is a Puzzle game clone of bomberman
 License: GPL
@@ -13,6 +13,7 @@ Source0: %name-%version.tar.bz2
 Source2: %name.xpm
 
 Patch0: bomberclone-0.11.7-alt-path.patch
+Patch1: bomberclone-0.11.8-alt-DSO.patch
 
 Requires: %name-data = %version
 
@@ -54,7 +55,9 @@ This is package contains data files for BomberClone.
 %prep
 %setup -q
 %patch0 -p1
-%configure --prefix=%buildroot%prefix --disable-debug
+%patch1 -p2
+%configure --prefix=%buildroot%prefix --disable-debug \
+	--enable-werror=no
 
 %build
 %make_build
@@ -90,6 +93,9 @@ EOF
 %_gamesdatadir/%name
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.8-alt2.qa2
+- Fixed build
+
 * Mon Mar 28 2011 Igor Vlasenko <viy@altlinux.ru> 0.11.8-alt2.qa1
 - NMU: converted debian menu to freedesktop
 
