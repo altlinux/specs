@@ -1,6 +1,6 @@
 Name: amide
 Version: 0.9.2
-Release: alt1.2
+Release: alt1.3
 
 Summary: amide is a program for viewing and analyzing medical image data sets
 License: GPL
@@ -10,6 +10,7 @@ Url: http://amide.sourceforge.net
 Packager: Andrey Yurkovsky <anyr@altlinux.org>
 Source0: %name-%version.tgz
 Patch0: amide-avcodec.patch
+Patch1: amide-0.9.2-alt-DSO.patch
 
 Requires: xmedcon, dcmtk, libdcmtk, volpack
 Requires: libgtkmm2, gnome-vfs, gsl
@@ -33,10 +34,12 @@ alignments.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 %build
 %configure --enable-gtk-doc=yes
-%make_build
+# parallel build is broken
+%make
 
 %install
 %makeinstall_std
@@ -54,6 +57,9 @@ alignments.
 %_man1dir/*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1.3
+- Fixed build
+
 * Tue Jan 31 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.2-alt1.2
 - artificial deps on ffmpeg removed
 
