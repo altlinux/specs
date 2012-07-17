@@ -1,6 +1,6 @@
 Name:		FreeTumble
 Version:	1.0
-Release:	alt1
+Release:	alt1.1
 Summary:	Remove same color stones zones to prevent the stones to reach the top
 Group:		Games/Puzzles
 License:	GPLv3
@@ -8,6 +8,7 @@ URL:		http://sourceforge.net/projects/freetumble/
 Source:		%{name}V%{version}_src.tar.gz
 Source1:	%{name}V%{version}_Linux32.tar.gz
 Source2:	%name.png
+Patch:    FreeTumble-1.0-alt-gcc4.6.patch
 Requires:	%name-data
 
 # Automatically added by buildreq on Sun Jun 05 2011
@@ -39,6 +40,7 @@ Licensed under CC-BY-NC-SA 2.5 and 3.0
 
 %prep
 %setup -n %name
+%patch -p2
 
 cat > %name.sh <<@@@
 #!/bin/sh
@@ -105,6 +107,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/data/media/music
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.1
+- Fixed build
+
 * Mon Jun 06 2011 Fr. Br. George <george@altlinux.ru> 1.0-alt1
 - Initial build from scratch
 
