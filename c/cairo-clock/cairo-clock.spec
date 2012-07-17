@@ -1,6 +1,6 @@
 Name: cairo-clock
 Version: 0.3.4
-Release: alt1.qa3
+Release: alt1.qa4
 
 Summary: MacSlow's Cairo-Clock
 
@@ -11,6 +11,7 @@ Group: Office
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://macslow.thepimp.net/projects/cairo-clock/%{name}-%version.tar.bz2
+Patch: cairo-clock-0.3.4-alt-export-dynamic.patch
 
 # manually removed: libnss-mysql 
 # Automatically added by buildreq on Thu Jan 03 2008
@@ -25,6 +26,7 @@ librsvg 2.14.0 to produce a time-display with pretty-pixels.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure
@@ -47,6 +49,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt1.qa4
+- Fixed build
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.3.4-alt1.qa3
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
