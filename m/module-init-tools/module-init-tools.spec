@@ -1,6 +1,6 @@
 Name: module-init-tools
 Version: 3.16
-Release: alt5
+Release: alt6
 
 Summary: Kernel module management utilities
 License: GPL
@@ -35,7 +35,6 @@ well as other module management programs.
 %package initramfs
 Summary: Module management utilities for use in initramfs images
 Group: System/Kernel and hardware
-Requires: %name = %version-%release
 PreReq: mkinitrd-initramfs
 
 %description initramfs
@@ -76,59 +75,18 @@ subst 's|getc_unlocked|getc|g' *.c
 %make_build modprobe
 subst 's|getc|getc_unlocked|g' *.c
 mv build/modprobe modprobe.mkinitrd
-make clean distclean
-
-%configure \
-	--bindir=/bin \
-	--sbindir=/sbin \
-	--enable-zlib-dynamic \
-	--enable-lzma-dynamic \
-	\
-	CPPFLAGS="-DCONFIG_NO_BACKWARDS_COMPAT"
-%make_build
 
 %install
-%make_install install DESTDIR=%buildroot
-
-# lsmod was in /sbin before
-ln -s ../bin/lsmod %buildroot/sbin/lsmod
-
-mkdir -p %buildroot%_sysconfdir/{depmod.d,modprobe.d}
-find rpm/extra/modprobe.d -maxdepth 1 -type f -print0 | \
-	xargs -r0 install -m644 -p -t %buildroot%_sysconfdir/modprobe.d/ --
-%ifarch %ix86 x86_64
-install -m644 -p rpm/extra/modprobe.d/arch/i386.conf \
-	%buildroot%_sysconfdir/modprobe.d/arch.conf
-%endif
-
 mkdir -p %buildroot/lib/mkinitrd/%name/sbin
 install -p modprobe.mkinitrd %buildroot/lib/mkinitrd/%name/sbin/modprobe
-install -p build/modindex %buildroot/sbin/modindex
-install -p rpm/generate-modprobe.conf %buildroot/sbin/generate-modprobe.conf
-
-%files
-%config(noreplace) %_sysconfdir/depmod.d
-%config(noreplace) %_sysconfdir/modprobe.d
-/bin/lsmod
-/sbin/depmod
-/sbin/insmod
-%exclude /sbin/insmod.static
-/sbin/lsmod
-/sbin/modinfo
-/sbin/modprobe
-/sbin/rmmod
-/sbin/modindex
-%_man5dir/*
-%_man8dir/*
-%doc AUTHORS ChangeLog.bz2
 
 %files initramfs
 /lib/mkinitrd/%name
 
-%files compat
-/sbin/generate-modprobe.conf
-
 %changelog
+* Fri Aug 03 2012 Alexey Gladkov <legion@altlinux.ru> 3.16-alt6
+- All files are replaced by kmod except the module-init-tools-initramfs.
+
 * Fri Apr 27 2012 Dmitry V. Levin <ldv@altlinux.org> 3.16-alt5
 - /etc/modprobe.d/install.conf: fixed potential deadlock.
 
