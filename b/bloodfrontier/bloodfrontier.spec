@@ -1,7 +1,7 @@
 %define rev svn6200
 Name: bloodfrontier
 Version: 0.84
-Release: alt2.%rev
+Release: alt2.%rev.1
 Summary: Blood Frontier is a free multiplayer/singleplayer FPS
 Group: Games/Arcade
 License: Zlib
@@ -14,6 +14,7 @@ Source3: %name.desktop
 Source4: %name.png
 
 Patch0: bloodfrontier-makefile.patch
+Patch1: bloodfrontier-0.84-alt-DSO.patch
 
 Requires: %name-data = %version
 
@@ -29,6 +30,7 @@ while maintaining a general theme of tactics and low gravity.
 %prep
 %setup -q -n %name
 %patch0 -p1
+%patch1 -p2
 
 %build
 %make_build -C src/ CFLAGS="%optflags" CXXOPTFLAGS="%optflags"
@@ -54,6 +56,9 @@ install -pD -m 755 %_builddir/%name/src/bfserver %buildroot%_bindir/
 %_liconsdir/*.png
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.84-alt2.svn6200.1
+- Fixed build
+
 * Sat Jun 12 2010 Andrew Clark <andyc@altlinux.org> 0.84-alt2.svn6200
 - spec cleanup
 
