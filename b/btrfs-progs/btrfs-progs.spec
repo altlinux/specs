@@ -1,6 +1,6 @@
 Name: btrfs-progs
 Version: 0.19
-Release: alt3
+Release: alt3.1
 
 Summary: Utilities for managing the Btrfs filesystem
 License: GPLv2
@@ -9,6 +9,7 @@ Url: btrfs.wiki.kernel.org/
 Packager: Kiriil A. Shutemov <kas@altlinux.org>
 
 Source: %name-%version-%release.tar
+Patch: btrfs-progs-0.19-alt-no-Werror.patch
 
 BuildRequires: libacl-devel libe2fs-devel libuuid-devel zlib-devel
 
@@ -26,6 +27,7 @@ This package contains utilities for managing the Btrfs filesystem
 
 %prep
 %setup -q -n %name-%version-%release
+%patch -p1
 
 %build
 %make_build all convert
@@ -38,6 +40,9 @@ This package contains utilities for managing the Btrfs filesystem
 %_man8dir/*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.19-alt3.1
+- Fixed build
+
 * Sun Feb 20 2011 Kirill A. Shutemov <kas@altlinux.org> 0.19-alt3
 - v0.19-35-g1b444cd
 - Relocate binaries to /sbin
