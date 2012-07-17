@@ -1,6 +1,6 @@
 Name: cube3d
 Version: 2005.08.29
-Release: alt2.qa2
+Release: alt2.qa3
 
 Summary: First person shooter game
 License: Zlib license
@@ -8,6 +8,7 @@ Group: Games/Arcade
 
 URL: http://www.cubeengine.com/
 Source: cube-src-%version.tar
+Patch: cube3d-2005.08.29-alt-DSO.patch
 
 Requires: cube3d-data >= 2005
 
@@ -25,6 +26,7 @@ fps & graphic detail on most machines. Uses OpenGL & SDL.
 
 %prep
 %setup -q -n cube-src-%version
+%patch -p2
 
 %build
 cd ./enet
@@ -69,6 +71,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2005.08.29-alt2.qa3
+- Fixed build
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 2005.08.29-alt2.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
