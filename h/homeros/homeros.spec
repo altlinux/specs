@@ -1,5 +1,5 @@
 Name: homeros
-Version: 20110527
+Version: 20120718
 Release: alt1
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 BuildArch: noarch
@@ -11,16 +11,17 @@ Group: Accessibility
 %package -n speech-default
 Group: Sound
 License: GPL
-Summary: Installs VoiceMan speech server with default set of speech synthesizers
-Requires: voiceman voiceman-server voiceman-tools espeak ru_tts RHVoice
+Summary: Installs default speech output engine
+Requires: voiceman voiceman-server voiceman-tools espeak RHVoice textlus-rhvoice
 
 %package emacspeak
 Group: Accessibility
 License: GPL
 Summary: Installs accessible environment based on emacspeak audio desktop
 Requires: speech-default
-Requires: etcskel-homeros homeros-tools homeros-media homeros-emacs-menu emacs-easypim yasr
-Requires: emacs23-X11-athena emacspeak emacs23-gnus w3m emacs-w3m
+Requires: yasr
+Requires: etcskel-homeros homeros-tools homeros-media homeros-emacs-menu emacs-removable-media
+Requires: emacs-nox emacspeak emacs24-gnus w3m emacs-w3m
 
 %package orca
 Group: Accessibility
@@ -55,6 +56,12 @@ It also prepares general Homeros-specific instruments.
 %files orca
 
 %changelog
+* Wed Jul 18 2012 Michael Pozhidaev <msp@altlinux.ru> 20120718-alt1
+- emacs23 req changed to emacs-nox
+- ru_tts removed from speech-default
+- Textlus added to speech-default
+- emacs-easypim removed from emacspeak subpackage
+
 * Fri May 27 2011 Michael Pozhidaev <msp@altlinux.ru> 20110527-alt1
 - Remove dependencies to gnome-default and gnome-a11y from homeros-orca package (by aris@ ask)
 
