@@ -29,7 +29,7 @@
 
 Name: collectd
 Version: 5.1.0
-Release: alt3
+Release: alt4
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -498,7 +498,7 @@ mkdir libltdl
 	--disable-ascent \
 	--disable-java \
 	--without-java \
-	--enable-debug \
+	--disable-debug \
 	--enable-perl \
 	%{subst_enable apache} \
 	%{subst_enable curl} \
@@ -802,6 +802,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Tue Jul 17 2012 Michael Shigorin <mike@altlinux.org> 5.1.0-alt4
+- disabled debug which breaks nagios plugin (closes: #27548)
+
 * Wed Jun 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.1.0-alt3
 - rebuild with libmemcached-1.0.8
 
