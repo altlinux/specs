@@ -1,6 +1,6 @@
 Name: cegui06
 Version: 0.6.2
-Release: alt6
+Release: alt6.1
 
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Libraries
@@ -14,6 +14,7 @@ Patch0: cegui-0.6.0-userverso.patch
 Patch1: cegui-0.6.0-release-as-so-ver.patch
 Patch2: cegui-0.6.1-libdl-alt.patch
 Patch3: CEGUI-pld-new-tinyxml.patch
+Patch4: cegui-0.6.2-alt-gcc4.6.patch
 
 BuildRequires: gcc-c++
 BuildRequires: expat-devel
@@ -45,6 +46,7 @@ Development files for cegui
 %patch1 -p1
 %patch2 -p1
 %patch3 -p2
+%patch4 -p2
 
 # Permission fixes for debuginfo RPM
 chmod -x include/falagard/*.h
@@ -106,6 +108,9 @@ done
 %_datadir/CEGUI-0.6
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt6.1
+- Fixed build
+
 * Fri Dec 23 2011 Alexey Shabalin <shaba@altlinux.ru> 0.6.2-alt6
 - fix load module TGAImageCodec (#26483)
 
