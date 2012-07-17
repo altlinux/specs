@@ -1,6 +1,6 @@
 Name: dump
 Version: 0.4b44
-Release: alt1
+Release: alt1.1
 
 Summary: Programs for backing up and restoring ext2/ext3 filesystems
 License: BSD
@@ -10,6 +10,7 @@ URL: http://dump.sourceforge.net/
 Source: http://downloads.sourceforge.net/dump/dump-%version.tar.gz
 Patch1: dump-0.4b28-alt-makefile.patch
 Patch2: dump-0.4b40-include.patch
+Patch3: dump-0.4b44-alt-DSO.patch
 
 Requires: rmt = %version-%release
 
@@ -40,6 +41,7 @@ backup) and tar (an archiving program).
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 subst s,termcap,tinfo,g ./configure.in
 
@@ -87,6 +89,9 @@ popd
 %doc COPYRIGHT
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4b44-alt1.1
+- Fixed build
+
 * Tue Jun 28 2011 Victor Forsiuk <force@altlinux.org> 0.4b44-alt1
 - 0.4b44
 
