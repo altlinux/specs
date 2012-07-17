@@ -1,6 +1,6 @@
 Name: clearsilver
 Version: 0.10.5
-Release: alt1.1.1
+Release: alt1.2
 
 Summary: Neotonic ClearSilver
 License: Open Source - Neotonic ClearSilver License (Apache 1.1 based)
@@ -14,7 +14,7 @@ BuildPreReq: zlib-devel
 BuildPreReq: python-devel >= %__python_version
 
 %def_disable static
-%set_verify_elf_method strict
+#set_verify_elf_method strict
 %define _unpackaged_files_terminate_build 1
 
 # Automatically added by buildreq on Sun Oct 17 2004
@@ -99,6 +99,9 @@ rm -rf %buildroot{%_libdir/*.a,%_includedir/*,%_man3dir/*}
 %python_sitelibdir/neo_cgi.so
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.5-alt1.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.10.5-alt1.1.1
 - Rebuild with Python-2.7
 
