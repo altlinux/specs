@@ -11,7 +11,7 @@
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt1
+Release: alt2
 
 Group: Publishing
 Summary: A program for printing sheet music
@@ -33,7 +33,7 @@ BuildPreReq: zlib-devel
 BuildPreReq: perl-Math-Complex
 BuildPreReq: fontforge >= 20060125
 BuildPreReq: guile-devel >= 1.6.7
-BuildPreReq: emacs-devel emacs23
+BuildPreReq: emacs-devel emacs24
 BuildPreReq: rpm-build-licenses
 
 # Automatically added by buildreq on Tue Mar 17 2009
@@ -186,6 +186,9 @@ done
 #%_datadir/omf/*
 
 %changelog
+* Wed Jul 18 2012 Michael Pozhidaev <msp@altlinux.ru> 2.14.2-alt2
+- emacs23 req changed to emacs24
+
 * Fri Jan 06 2012 Michael Pozhidaev <msp@altlinux.ru> 2.14.2-alt1
 - New version
 
