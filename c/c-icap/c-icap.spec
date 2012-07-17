@@ -1,6 +1,6 @@
 Name: c-icap
 Version: 20080706.01
-Release: alt2.2
+Release: alt2.3
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: ICAP server
@@ -45,7 +45,7 @@ ICAP module for scanning content with ClamAV.
 aclocal
 autoconf
 autoheader
-cp /usr/share/libtool-2.2/config/ltmain.sh ltmain.sh
+cp /usr/share/libtool/config/ltmain.sh ltmain.sh
 automake --add-missing --copy
 cp INSTALL INSTALL.txt
 
@@ -105,6 +105,9 @@ mkdir -p %buildroot{%_var/run/%name,%_cachedir/%name}
 %_libdir/%name/srv_clamav.so
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080706.01-alt2.3
+- Fixed build
+
 * Mon Apr 05 2010 Anton Pischulin <letanton@altlinux.ru> 20080706.01-alt2.2
 - Fix base64.c
 
