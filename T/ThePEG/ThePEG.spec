@@ -5,7 +5,7 @@
 
 Name:         ThePEG
 Version:      1.5.0
-Release:      alt3
+Release:      alt3.1
 
 Summary:      Toolkit for High Energy Physics Event Generation.
 License:      GPL
@@ -14,6 +14,7 @@ Url:	      http://projects.hepforge.org/thepeg
 
 Source:	      %name-%version.tar.gz
 Source1:      thepeg.png
+Patch:        ThePEG-1.5.0-alt-gcc4.6.patch
 
 BuildRequires: gcc-c++ libgsl-devel libreadline-devel 
 BuildRequires: java-devel-default
@@ -39,6 +40,7 @@ Requires: %name = %version-%release
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
@@ -111,6 +113,9 @@ EOF
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt3.1
+- Fixed build
+
 * Fri Oct 23 2009 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3
 - add *.la due to the non-standard lib location.
 
