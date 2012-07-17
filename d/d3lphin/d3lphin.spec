@@ -9,13 +9,15 @@
 %define Name D3lphin
 Name: d3lphin
 Version: 0.9.2
-Release: alt4
+Release: alt4.1
 Summary: A file manager for KDE focusing on usability
 License: %gpl2plus
 Group: File tools
 URL: https://marrat.homelinux.org/%Name
 Source: %{url}?action=AttachFile&do=get&target=/%name-%version.tar
 Patch: %name-%version-alt.patch
+Patch1: %name-0.9.2-alt-gcc4.6.patch
+Patch2: %name-0.9.2-alt-DSO.patch
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
@@ -34,6 +36,9 @@ optimize the user interface for the task of file management.
 %prep
 %setup
 %patch -p1
+%patch1 -p2
+%patch2 -p2
+rm -fR autom4te.cache
 
 
 %build
@@ -68,6 +73,9 @@ rm -rf %buildroot%_datadir/locale/%name
 
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt4.1
+- Fixed build
+
 * Tue Apr 19 2011 Ilya Mashkin <oddity@altlinux.ru> 0.9.2-alt4
 - build without arts
 
