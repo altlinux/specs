@@ -2,12 +2,13 @@
 
 Name: antico-deluxe
 Version: 0.1.96
-Release: alt1
+Release: alt1.1
 Summary: Antico Deluxe is a Qt4 Window/Desktop manager
 Source: http://anticodeluxe.googlecode.com/files/%srcname-%version.tar.bz2
 Source1: 07antico-deluxe
 Packager: Boris Savelev <boris@altlinux.org>
 Patch: %srcname-0.1.96-link.patch
+Patch1: antico-deluxe-0.1.96-alt-DSO.patch
 Url: http://code.google.com/p/anticodeluxe/
 Group: Graphical desktop/Other
 License: GPLv2 Artistic
@@ -49,6 +50,7 @@ programs which make use of Antico Deluxe.
 %prep
 %setup -q -n %srcname
 %patch0 -p1
+%patch1 -p2
 
 find -type f -name \*.pro | xargs subst "s|/usr/lib|%_libdir|g"
 
@@ -82,6 +84,9 @@ convert -resize 32x32 wm/theme/default/appicon.png %buildroot%_niconsdir/%name.p
 %_includedir/ame/*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.96-alt1.1
+- Fixed build
+
 * Tue May 12 2009 Boris Savelev <boris@altlinux.org> 0.1.96-alt1
 - initial build for Sisyphus
 
