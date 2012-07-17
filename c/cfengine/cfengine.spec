@@ -3,7 +3,7 @@
 
 Name: cfengine
 Version: 3.1.1
-Release: alt3.2
+Release: alt3.3
 Group: System/Base
 Summary: Atomation framework for system administration or IT Management.
 License: %gpl3only
@@ -16,6 +16,7 @@ Source4: cf-serverd
 Source5: users_managment.cf
 Patch1: cfengine-3-alt-config.patch
 Patch2: cfengine-3-alt-build.patch
+Patch3: cfengine-3.1.1-alt-DSO.patch
 
 BuildRequires: flex libacl-devel libssl-devel glibc-devel-static libdb4-devel libgraphviz-devel libmysqlclient-devel libpcre-devel
 BuildRequires: rpm-build-licenses
@@ -31,6 +32,7 @@ common platforms, and designed with security in mind, from the ground up.
 %setup -q -n %name-%version
 %patch1
 %patch2 -p1
+%patch3 -p0
 
 %build
 
@@ -102,8 +104,11 @@ fi
 %_initdir/*
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt3.3
+- Fixed build
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt3.2
-- Removed bad RPAYJ
+- Removed bad RPATH
 
 * Sun Sep 25 2011 Michael Shigorin <mike@altlinux.org> 3.1.1-alt3.1
 - NMU: rebuilt with current graphviz
