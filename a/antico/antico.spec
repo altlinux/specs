@@ -1,6 +1,6 @@
 Name: antico
 Version: 0.2
-Release: alt6.gcbed547
+Release: alt6.gcbed547.1
 
 Summary: Antico is a Qt4/X11 Desktop/Window Manager
 Group: Graphical desktop/Other
@@ -10,6 +10,7 @@ URL: http://www.antico.netsons.org/
 Packager: Boris Savelev <boris@altlinux.org>
 
 Source0: %name-%version.tar
+Patch0: antico-0.2-alt-DSO.patch
 
 # Automatically added by buildreq on Fri May 01 2009
 BuildRequires: gcc-c++ libX11-devel libqt4-devel xorg-xextproto-devel
@@ -21,6 +22,7 @@ The whole project is based only on Qt4 libraries, without any other external dep
 
 %prep
 %setup
+%patch -p1
 
 %build
 qmake-qt4
@@ -38,6 +40,9 @@ install -m644 %name-alt.wm %buildroot%_sysconfdir/X11/wmsession.d/50%name
 %_datadir/%name
 
 %changelog
+* Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt6.gcbed547.1
+- Fixed build
+
 * Sat Jun 06 2009 Boris Savelev <boris@altlinux.org> 0.2-alt6.gcbed547
 - update from upstream
 
