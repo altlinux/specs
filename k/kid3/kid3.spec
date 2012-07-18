@@ -1,6 +1,6 @@
 Name:		kid3
 Version:	1.3
-Release:	alt2
+Release:	alt2.1
 Summary:	Kid3 - Efficient ID3 tag editor
 License:	GPLv2+
 Group:		Sound
@@ -10,6 +10,7 @@ Source0:	http://kent.dl.sourceforge.net/sourceforge/kid3/%name-%version.tar.gz
 Patch0:		%name-1.3-desktopdir.diff
 Patch1:		%name-1.3-alt_scalabledir.diff
 Patch2:		%name-1.3-desktop_ru_uk.diff
+Patch3:   %name-1.3-alt-DSO.patch
 
 # Automatically added by buildreq on Tue May 05 2009 (-bi)
 BuildRequires: gcc-c++ id3lib-devel imake kdelibs-devel libXt-devel libflac++-devel libmpeg4ip-devel libqt3-devel libtag-devel libtunepimp-devel xml-utils xorg-cf-files libvorbis-devel
@@ -43,7 +44,9 @@ With Kid3 you can:
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 sed -i -e 's|/lib /usr/lib\b|/%_lib %_libdir|g' configure # lib64 rpaths
+sed -i -e 's|/usr/lib/|%_libdir/|g' configure
 
 %build
 %add_optflags -I%_includedir/tqtinterface
@@ -64,6 +67,9 @@ sed -i -e 's|/lib /usr/lib\b|/%_lib %_libdir|g' configure # lib64 rpaths
 %_K3datadir/apps/%name/*
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt2.1
+- Fixed build
+
 * Fri Mar 04 2011 Timur Aitov <timonbl4@altlinux.org> 1.3-alt2
 - move to alternate place
 
