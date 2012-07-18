@@ -1,6 +1,6 @@
 Name: kmobiletools
 Version: 0.4.3.3
-Release: alt4.1
+Release: alt4.2
 
 Summary: KMobileTools is a nice KDE-based application that allows to control mobile phones with your PC.
 License: GPL
@@ -12,6 +12,7 @@ Source0: %name-%version.tar.bz2
 Source1: %name.mo
 #Patch0: kmt_kde_3.2-1.patch
 #Patch1: kmt_kde_3.2-2.patch
+Patch2: kmobiletools-0.4.3.3-alt-DSO.patch
 
 BuildRequires: flex fontconfig freetype2 gcc-c++ gcc-g77 kdelibs-devel libjpeg-devel libpng-devel libqt3-devel libqt3-settings libstdc++-devel qt3-designer xml-utils zlib-devel
 
@@ -25,6 +26,7 @@ Nokia and Ericsson phones.
 %setup -q
 #%patch0 -p1
 #%patch1 -p1
+%patch2 -p2
 
 make -f admin/Makefile.common cvs
 
@@ -49,6 +51,9 @@ install -pD -m644 %SOURCE1 %buildroot/%_K3i18n/ru/LC_MESSAGES/
 %_kde3_iconsdir/hicolor/*/apps/%name.*
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3.3-alt4.2
+- Fixed build
+
 * Wed Feb 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3.3-alt4.1
 - Removed bad RPATH
 
