@@ -1,6 +1,6 @@
 Name: gossip
 Version: 0.32
-Release: alt4.git20090422
+Release: alt4.git20090422.1
 
 %def_enable dbus
 %def_enable libnotify
@@ -95,7 +95,8 @@ gnome-doc-prepare --copy --force
 	%{?_enable_gnome_keyring:--enable-gnome-keyring=yes} \
 	%{subst_enable ebook} \
 	--disable-schemas-install \
-	--disable-scrollkeeper
+	--disable-scrollkeeper \
+	--with-compile-warnings=yes
 %make_build
 
 %install
@@ -131,6 +132,9 @@ fi
 %endif
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.32-alt4.git20090422.1
+- Fixed build
+
 * Mon May 30 2011 Alexey Shabalin <shaba@altlinux.ru> 0.32-alt4.git20090422
 - fix build with libnotify-0.7
 
