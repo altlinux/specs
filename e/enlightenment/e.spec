@@ -1,6 +1,6 @@
 Name: enlightenment
 Version: 0.16.8.9
-Release: alt2
+Release: alt2.1
 %define prefix %_x11dir
 Serial: 1
 
@@ -19,6 +19,7 @@ Source5: %name-menu.method
 Source6: %name.xpm
 Source7: %name-32.xpm
 Source8: winter.tar
+Patch: enlightenment-0.16.8.9-alt-DSO.patch
 
 # Automatically added by buildreq on Tue Dec 14 2004
 BuildRequires: esound-devel freetype2-devel imlib2-devel libaudiofile-devel zlib-devel
@@ -42,6 +43,7 @@ This package will install the Enlightenment window manager.
 
 %prep
 %setup -q -n %name-%version.2
+%patch -p2
 %setup -q -T -D -c -n %name-%version.2 -a 8
 
 perl -pi -e 's,/\$\(datadir\),%_datadir,g' po/Makefile.in.in
@@ -120,6 +122,9 @@ EOF
 %_datadir/xsessions/*
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.16.8.9-alt2.1
+- Fixed build
+
 * Tue Apr 19 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1:0.16.8.9-alt2
 - fix build
 
