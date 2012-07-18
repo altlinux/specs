@@ -1,6 +1,6 @@
 Name: 	kdirstat
 Version: 2.5.3
-Release: alt3.1
+Release: alt3.2
 Summary: Graphical Directory Statistics for Used Disk Space
 License: GPLv2
 Group: File tools
@@ -9,6 +9,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: %name-%version.tar.bz2
 Patch0:           kdirstat-2.5.3-desktop.patch
 Patch1:           kdirstat-2.5.3-gcc43.patch
+Patch2:           kdirstat-2.5.3-alt-DSO.patch
 
 
 BuildPreReq: perl-Encode perl-URI
@@ -27,6 +28,7 @@ It can also help you clean up used space.
 
 %patch0 -p0 -b kdirstat.desktop
 %patch1 -p1 -b .gcc43
+%patch2 -p2
 
 
 %build
@@ -62,6 +64,9 @@ rm -rf %buildroot
 %_datadir/locale/??/LC_MESSAGES/kdirstat.mo
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.3-alt3.2
+- Fixed build
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.3-alt3.1
 - Removed bad RPATH
 
