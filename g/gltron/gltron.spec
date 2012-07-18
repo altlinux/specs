@@ -1,7 +1,7 @@
 # SPEC file for gltron game
 
 %define version 0.70
-%define release alt4
+%define release alt4.1
 
 Name: gltron
 Version: %version
@@ -22,6 +22,8 @@ Source2: armagetronad-16.png
 Source3: armagetronad-32.png
 Source4: armagetronad-48.png
 Patch0:  %name-0.70-alt-build_warnings_fix.patch
+Patch1: %name-0.70-alt-no-Werror.patch
+Patch2: %name-0.70-alt-no-conflict-decl.patch
 
 BuildRequires: gcc-c++ libSDL-devel libSDL_sound-devel libsmpeg-devel libmikmod-devel libpng-devel libvorbis-devel
 
@@ -46,6 +48,8 @@ wall while avoiding hitting the AI's own wall themselves.
 %prep
 %setup
 %patch0
+%patch1 -p2
+%patch2 -p2
 
 /bin/mv -f COPYING COPYING.GPL.orig
 /bin/ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -80,6 +84,9 @@ wall while avoiding hitting the AI's own wall themselves.
 
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.70-alt4.1
+- Fixed build
+
 * Tue May 03 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.70-alt4
 - fix build
 
