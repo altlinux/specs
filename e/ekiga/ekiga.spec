@@ -3,7 +3,7 @@
 
 Name: ekiga
 Version: 3.3.0
-Release: alt2
+Release: alt2.1
 
 Summary: IP phone client with full SIP and H.323 support
 
@@ -20,6 +20,7 @@ Requires: libpt >= %req_ptlib_ver libopal >= %req_opal_ver libpt-plugins
 # Source-git: git://git.gnome.org/ekiga
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-3.3.0-alt-DSO.patch
 
 BuildRequires(Pre): libGConf-devel
 BuildRequires: libpt-devel >= %req_ptlib_ver libopal-devel >= %req_opal_ver
@@ -33,6 +34,7 @@ Ekiga is an IP phone client with full SIP and H.323 support.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
 
 %build
 gnome-doc-prepare -f
@@ -82,6 +84,9 @@ fi
 %_man1dir/*.1*
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.0-alt2.1
+- Fixed build
+
 * Fri Apr 06 2012 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt2
 - cleanup spec and build to Sisyphus again
 
