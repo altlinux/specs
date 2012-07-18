@@ -1,6 +1,6 @@
 %define dist XML-LibXML
 Name: perl-%dist
-Version: 1.96
+Version: 2.0002
 Release: alt1
 
 Summary: Perl binding for libxml2
@@ -46,6 +46,9 @@ providing access to the XPath API in libxml2.
 	%perl_vendor_autolib/XML
 
 %changelog
+* Wed Jul 18 2012 Dmitry V. Levin <ldv@altlinux.org> 2.0002-alt1
+- 1.96 -> 2.0002
+
 * Wed Apr 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1.96-alt1
 - 1.88 -> 1.96
 - enabled build dependency on XML::SAX
