@@ -5,7 +5,7 @@
 %define		rname kvkbd
 Name:		kde4-%rname
 Version:	0.6
-Release:	alt1.1
+Release:	alt1.2
 
 Group:		Accessibility
 Summary:	Virtual Keyboard for KDE4
@@ -18,6 +18,7 @@ Provides:	%rname = %version-%release
 Requires:	kde4libs >= %{get_version kde4libs}
 
 Source0:	http://www.kde-apps.org/CONTENT/content-files/%content-%rname-%version.tar.bz2
+Patch0:   kde4-kvkbd-0.6-alt-DSO.patch
 
 BuildRequires(pre): kde4libs-devel
 
@@ -39,6 +40,7 @@ Kvkbd - виртуальная клавиатура для KDE4, обладаю�
 
 %prep
 %setup -q -n %rname-%version
+%patch0 -p2
 
 %build
 %K4cmake \
@@ -58,6 +60,9 @@ Kvkbd - виртуальная клавиатура для KDE4, обладаю�
 %_K4apps/%rname
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.2
+- Fixed build
+
 * Sat Nov 21 2009 Motsyo Gennadi <drool@altlinux.ru> 0.6-alt1.1
 - added russian description and summary (fixed #22160). Thanks to Phantom.
 
