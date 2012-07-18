@@ -1,7 +1,7 @@
 %define		srcname tempest
 Name:		kde-screensaver-%srcname
 Version:	20070726
-Release:	alt1.1
+Release:	alt1.2
 Summary:	Tempest Screensaver for KDE
 License:	GPL
 Group:		Graphical desktop/KDE
@@ -26,7 +26,7 @@ it can produce some very neat effects.
 %patch0 -p1
 
 %build
-gcc %optflags -o tempest tempest.c -lGL -lm
+gcc %optflags -o tempest tempest.c -lGL -lX11 -lm
 
 %install
 %__install -Dp -m 0755 %srcname %buildroot%_bindir/%srcname.kss
@@ -38,6 +38,9 @@ gcc %optflags -o tempest tempest.c -lGL -lm
 %_datadir/applnk/System/ScreenSavers/%srcname.desktop
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20070726-alt1.2
+- Fixed build
+
 * Mon Dec 01 2008 Motsyo Gennadi <drool@altlinux.ru> 20070726-alt1.1
 - fix BuildRequires (new libX*-devel)
 
