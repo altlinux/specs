@@ -27,7 +27,7 @@
 %define audio_card_list ac97 es1370 sb16 adlib cs4231a gus hda
 
 Name: qemu-kvm
-Version: 1.0.1
+Version: 1.1.1
 Release: alt1
 Summary: Kernel Virtual Machine virtualization environment
 Group: Emulators
@@ -42,7 +42,7 @@ Provides: kvm
 Obsoletes: kvm
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: zlib-devel libcurl-devel libpci-devel libcheck-devel libattr-devel glibc-kernheaders
+BuildRequires: zlib-devel libcurl-devel libpci-devel libattr-devel libcap-devel libcap-ng-devel glibc-kernheaders
 %{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel}
 %{?_enable_curses:BuildRequires: libncurses-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
@@ -55,10 +55,10 @@ BuildRequires: zlib-devel libcurl-devel libpci-devel libcheck-devel libattr-deve
 %{?_enable_vnc_png:BuildRequires: libpng-devel}
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
-%{?_enable_spice:BuildRequires: libspice-server-devel >= 0.6.0 spice-protocol}
+%{?_enable_spice:BuildRequires: libspice-server-devel >= 0.8.2 spice-protocol}
 %{?_enable_uuid:BuildRequires: libuuid-devel}
 %{?_enable_smartcard_nss:BuildRequires: libnss-devel >= 3.12.8}
-%{?_enable_usb_redir:BuildRequires: libusbredir-devel}
+%{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.3.4}
 %{?_enable_opengl:BuildRequires: libGL-devel libX11-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel python-base}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel}
@@ -115,14 +115,16 @@ ln -s %_bindir/qemu-kvm %buildroot%_bindir/kvm
 #install -m 0755 %name %buildroot%_bindir/
 
 # save kvm roms
-cp -p %buildroot%_datadir/qemu/vapic.bin %buildroot/
+# cp -p %buildroot%_datadir/qemu/vapic.bin %buildroot/
 
 # cleanup - use from qemu-common and qemu-img packages
 rm -rf %buildroot%_datadir/qemu/* %buildroot%_sysconfdir
 rm -f %buildroot%_bindir/qemu-{img,io,nbd}
+rm -f %buildroot%_bindir/virtfs-proxy-helper
+rm -rf %buildroot/usr/libexec
 
 # move back kvm roms
-mv %buildroot/vapic.bin %buildroot%_datadir/qemu/
+# mv %buildroot/vapic.bin %buildroot%_datadir/qemu/
 
 cd %buildroot
 # Add alternatives for qemu-kvm
@@ -134,9 +136,12 @@ printf '%_bindir/qemu-system-x86_64\t%_bindir/qemu-kvm-system-x86_64\t100\n' >./
 %_bindir/qemu-kvm
 %_bindir/kvm
 %_bindir/qemu-kvm-system-*
-%_datadir/qemu/*.bin
+# %_datadir/qemu/*.bin
 
 %changelog
+* Wed Jul 18 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt1
+- 1.1.1
+
 * Wed Apr 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
 - 1.0.1
 - enable libiscsi support
