@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 2.1.12
-Release: alt1.1.1
+Release: alt1.2
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -13,6 +13,7 @@ Source102: freeradius-logrotate
 Source103: freeradius-pam-conf
 
 Patch1: %name-%version-%release.patch
+Patch2: %name-2.1.12-alt-libtool_2.4.patch
 
 BuildPreReq: libtool_1.5
 BuildRequires: gcc-c++ libmysqlclient-devel libcom_err-devel libgdbm-devel libldap-devel libltdl-devel libpam-devel libreadline-devel libstdc++-devel-static libunixODBC-devel mailx net-snmp-utils perl-DBI perl-devel postgresql-devel python-devel slocate libssl-devel
@@ -121,6 +122,7 @@ This plugin provides the unixODBC support for the FreeRADIUS server project.
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p1
 
 %build
 %set_libtool_version 1.5
@@ -447,6 +449,9 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.12-alt1.2
+- Fixed build
+
 * Mon Nov 07 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.12-alt1.1.1
 - Rebuild with Python-2.7
 
