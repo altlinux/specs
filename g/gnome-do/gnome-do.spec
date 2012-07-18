@@ -1,7 +1,7 @@
 
 Name: gnome-do
 Version: 0.8.5
-Release: alt1
+Release: alt1.1
 Summary: Quick launch and search
 
 License: %gpl3plus
@@ -9,6 +9,7 @@ Group: Graphical desktop/GNOME
 Url: http://do.davebsd.com/
 Source: http://launchpad.net/do/trunk/%version/+download/%name-%version.tar
 Patch1: gnome-do-0.8.1-alt-mono-nunit.patch
+Patch2: gnome-do-0.8.5-alt-glib2.patch
 
 Provides: mono(Do.Platform) = 0.10.0.0
 Provides: mono(Do.Platform.Linux) = 0.10.0.0
@@ -50,6 +51,7 @@ Development files for GNOME Do
 %prep
 %setup -q
 %patch1 -p1
+%patch2 -p2
 
 %build
 rm -f *.m4
@@ -85,6 +87,9 @@ fi
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.5-alt1.1
+- Fixed build
+
 * Mon Feb 20 2012 Alexey Shabalin <shaba@altlinux.ru> 0.8.5-alt1
 - 0.8.5
 
