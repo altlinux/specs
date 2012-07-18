@@ -1,7 +1,7 @@
 Summary:	is a program for the fast creation of covers for cd/dvd cases and boxes
 Name:		koverartist
 Version:	0.5
-Release:	alt3.1
+Release:	alt3.2
 License:	GPLv2
 Packager:       Motsyo Gennadi <drool@altlinux.ru>
 Group:		Publishing
@@ -10,6 +10,7 @@ Source0:	http://members.inode.at/499177/software/koverartist/%name-%version.tar.
 Patch0:		%name-0.5-alt_desktopdir.diff 
 Patch1:		%name-0.5-alt_freedesktop.diff
 Patch2:		%name-0.5-gcc43.patch
+Patch3:   %name-0.5-alt-DSO.patch
 
 BuildRequires: gcc-c++ imake kdelibs-devel libXext-devel libXt-devel libjpeg-devel libqt3-devel linux-libc-headers xml-utils xorg-cf-files
 
@@ -28,6 +29,8 @@ covers on the fly to use cases that can house more discs.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
+sed -i 's|/usr/lib/|%_libdir/|' configure
 
 %build
 %K3configure
@@ -46,6 +49,9 @@ covers on the fly to use cases that can house more discs.
 %_K3datadir/icons/hicolor/*/apps/%name.png
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt3.2
+- Fixed build
+
 * Wed Apr 20 2011 Motsyo Gennadi <drool@altlinux.ru> 0.5-alt3.1
 - fix build for KDE3 from Sisyphus
 
