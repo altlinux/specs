@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt23
+Release: alt23.1
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -164,6 +164,9 @@ EOF
 %endif
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.5-alt23.1
+- Fixed build
+
 * Thu Feb 09 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt23
 - btrfs plugin: fixed test for mkfs.btrfs
 
