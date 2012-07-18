@@ -1,6 +1,6 @@
 Name: icfs
 Version: 1.4
-Release: alt8
+Release: alt9
 Summary: An Incomplete Cholesky Factorization with Limited Memory
 License: BSD
 Group: Sciences/Mathematics
@@ -48,27 +48,15 @@ memory that is available; there is no need to specify a drop tolerance.
 
 This package contains development files of ICFS.
 
-%package -n lib%name-devel-static
-Summary: Static library of ICFS
-Group: Development/Other
-Requires: libgfortran-devel lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
-
-%description -n lib%name-devel-static
-ICFS  is an incomplete Cholesky factorization for the solution of large-scale
-trust region subproblems and positive definite systems of linear equations. This
-factorization depends on a parameter p that specifies the amount of additional
-memory that is available; there is no need to specify a drop tolerance.
-
-This package contains static library of ICFS.
-
 %prep
 %setup
 
 %build
 export ARCH=linux
 %make install
+%ifnarch %ix86
 ./icf
+%endif
 
 %install
 install -d %buildroot%_bindir
@@ -108,10 +96,10 @@ popd
 %files -n lib%name-devel
 %_libdir/*.so
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt9
+- Fixed build
+
 * Thu Apr 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt8
 - Disabled requirement of libatlas-devel for devel package
 
