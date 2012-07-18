@@ -1,6 +1,6 @@
 Name: xxkb
 Version: 1.11
-Release: alt3
+Release: alt4
 
 Summary: Switcher and indicator of current keyboard layout
 Summary(ru_RU.UTF-8): Индикатор и переключатель состояния клавиатуры
@@ -86,6 +86,9 @@ install -pD -m644 %{SOURCE3} %buildroot%_desktopdir/%name.desktop
 %doc CHANGES.koi8 README.koi8 XXkb.ad
 
 %changelog
+* Wed Jul 18 2012 Michael Shigorin <mike@altlinux.org> 1.11-alt4
+- Ignore KDE desktop/panel (closes: #610).
+
 * Thu Jul 14 2011 Dmitry V. Levin <ldv@altlinux.org> 1.11-alt3
 - Converted debian menu to freedesktop (by Igor Vlasenko).
 
