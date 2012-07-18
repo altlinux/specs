@@ -1,11 +1,12 @@
 Name: genetic-invasion
 Version: 0.4.1
-Release: alt1.1
+Release: alt1.2
 Summary: A tower defence game with enemy genetic adaptation
 License: GPLv3
 Group: Games/Arcade
 # git://haxx.es/genetic-invasion.git
 Source: %name-%version.tar
+Patch: genetic-invasion-0.4.1-alt-gcc4.6.patch
 Requires: %name-data
 
 BuildRequires:	libgomp-devel
@@ -37,6 +38,7 @@ Data files and music for %name
 
 %prep
 %setup
+%patch -p2
 cat > %name.sh <<@@@
 #!/bin/sh
 mkdir -p "\$HOME/.%name"
@@ -66,6 +68,9 @@ cp -a data %buildroot%_gamesdatadir/%name/
 %_gamesdatadir/%name
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.2
+- Fixed build
+
 * Tue Jun 19 2012 Fr. Br. George <george@altlinux.ru> 0.4.1-alt1.1
 - Fix funny libgomp misversion
 
