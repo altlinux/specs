@@ -2,7 +2,7 @@
 %define gtk2_prefix gtk2-theme
 
 Name: %gtk2_prefix-%real_name
-Version: 1.2.5
+Version: 1.3.0
 Release: alt1
 
 Group: Graphical desktop/GNOME
@@ -47,6 +47,12 @@ This is GTK2 port of default KDE4 Oxygen style.
 %_datadir/themes/%real_name
 
 %changelog
+* Wed Jul 18 2012 Sergey V Turchin <zerg@altlinux.org> 1.3.0-alt1
+- new version
+
+* Tue Jun 19 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.5-alt0.M60P.1
+- built for M60P
+
 * Tue Jun 19 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.5-alt1
 - new version
 
