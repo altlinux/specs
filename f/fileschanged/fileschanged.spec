@@ -1,7 +1,7 @@
 Summary: The fileschanged utility reports when files have been altered
 Name: fileschanged
 Version: 0.6.9
-Release: alt2
+Release: alt2.1
 License: GPL
 Group: File tools
 Url: http://savannah.nongnu.org/projects/%name/
@@ -9,6 +9,7 @@ Packager: Boris Savelev <boris@altlinux.org>
 
 Source: http://download.savannah.gnu.org/releases/%name/%name-%version.tar.gz
 Patch: fileschanged-info-dircategory.patch
+Patch1: fileschanged-0.6.9-alt-no-Werror.patch
 
 # Automatically added by buildreq on Sat Oct 04 2008
 BuildRequires: gcc-c++ libgamin-devel help2man
@@ -23,6 +24,7 @@ it displays the filename on the standard-output.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p2
 
 %build
 %configure
@@ -41,6 +43,9 @@ it displays the filename on the standard-output.
 %_datadir/info/*
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.9-alt2.1
+- Fixed build
+
 * Mon May 25 2009 Boris Savelev <boris@altlinux.org> 0.6.9-alt2
 - fix build
 
