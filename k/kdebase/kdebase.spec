@@ -34,7 +34,7 @@
 %define bugfix 13
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -861,8 +861,11 @@ __EOF__
 ln -s %_K3bindir/kdm_greet %buildroot/%_K3exec/kdm_greet
 ln -s %_K3bindir/krootimage %buildroot/%_K3exec/krootimage
 
-%__mkdir_p %buildroot/%x11confdir/kdm
-cp kdm/syscfg/* %buildroot/%x11confdir/kdm
+cp -f kdm/syscfg/* %buildroot/%_K3conf/kdm
+ln -s %_K3conf/kdm %buildroot/%x11confdir/kdm
+
+#__mkdir_p %buildroot/%x11confdir/kdm
+#cp kdm/syscfg/* %buildroot/%x11confdir/kdm
 
 %endif
 #
@@ -1024,6 +1027,7 @@ fi
 
 %files common
 %config(noreplace) %_Kconfig/*
+%config(noreplace) %_K3conf/*
 %config(noreplace) %_sysconfdir/pam.d/kde
 %config(noreplace) %_sysconfdir/pam.d/kde-np
 %config %_sysconfdir/ksysguarddrc
@@ -1036,7 +1040,6 @@ fi
 %_K3apps/kdisplay/color-schemes/
 %_K3iconsdir/*/*/*/*.*
 %_kde3_iconsdir/*/*/*/*.*
-%_K3conf/*
 %_K3cfg/*
 
 %files kwrite
@@ -1740,8 +1743,9 @@ fi
 
 %if %with_kdm
 %files kdm
-%dir %x11confdir/kdm
-%config %x11confdir/kdm/*
+%x11confdir/kdm
+#dir %x11confdir/kdm
+#config %x11confdir/kdm/*
 %config %_sysconfdir/alternatives/packages.d/kde-kdm
 %config %_sysconfdir/firsttime.d/kdm
 %config %_sysconfdir/logrotate.d/kdm
@@ -1939,6 +1943,9 @@ fi
 
 
 %changelog
+* Mon Jul 16 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt6
+- kdm config directory doubling is fixed by main store into /usr/share/kde/config/kdm and link to it from /etc/X11/kdm.
+
 * Mon May 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt5
 - SmoothScrolling store fix.
 
