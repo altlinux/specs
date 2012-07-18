@@ -2,7 +2,7 @@ Name: gargoyle
 Version: 0
 %define rel_date 2009-08-25
 %define rel      2009.08.25
-Release: alt1.%rel
+Release: alt1.%rel.1
 
 Summary: a typography-aware Glk-based interactive fiction interpreter suite
 License: Distributable (see documentation)
@@ -14,6 +14,7 @@ Packager: Alexander Myltsev <avm@altlinux.ru>
 Source: %name-%version.tar
 Source2: garglk.ini
 Patch1: %name-2006-04-28-alt-launcher.patch
+Patch2: %name-2009-08-25-alt-DSO.patch
 
 BuildPreReq: libgtk+2-devel libpng-devel libjpeg-devel libfreetype-devel
 BuildPreReq: libogg-devel libvorbis-devel libsmpeg-devel
@@ -34,6 +35,7 @@ and plenty of spacing.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
 ln -s tads/tads2 tads2
@@ -63,6 +65,9 @@ mv build/dist/* %buildroot%_libdir/%name/
 %_libdir/libgarglk.so
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0-alt1.2009.08.25.1
+- Fixed build
+
 * Sun Jan 03 2010 Alexander Myltsev <avm@altlinux.ru> 0-alt1.2009.08.25
 - New version.
 
