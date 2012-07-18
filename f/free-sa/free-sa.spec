@@ -2,13 +2,14 @@
 
 Name: free-sa
 Version: 1.6.2
-Release: alt3
+Release: alt3.1
 
 Packager: Avramenko Andrew <liks@altlinux.ru>
 Summary: Squid report generator per user/ip/name
 URL: http://free-sa.sourceforge.net/
 Source: %name-%version.tar
 Patch0: %name-%version-%release.patch
+Patch1: %name-1.6.2-alt-no-strip.patch
 ExclusiveArch: i586 x86_64
 
 License: GPL
@@ -23,6 +24,8 @@ HTML/CSS reports code.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p2
+sed -i 's|\(\-\-relax\)|-Wl,\1|' configs/*.mk
 
 %build
 %make OSTYPE=altlinux-%_target_cpu-gcc4
@@ -50,6 +53,9 @@ subst "s,%buildroot,," %buildroot/%_sysconfdir/%name/%name.conf
 %dir /var/cache/%name
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt3.1
+- Fixed build
+
 * Mon May 25 2009 Anton Farygin <rider@altlinux.ru> 1.6.2-alt3
 - remove buildroot path from comments in default config
 
