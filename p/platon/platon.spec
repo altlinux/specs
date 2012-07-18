@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: platon
-Version: 20120713
+Version: 20120718
 Release: alt1
 
 Summary: PLATON is a versatile SHELX97 compatible multipurpose crystallographic tool
@@ -94,18 +94,11 @@ rm -f doc/index.html
 chmod -c -Rf u+rwX,go-w doc
 mv TEST test
 cp -a %SOURCE1 .
-#subst 's/VERSION/%version/' %name.sh
 cp -a %SOURCE2 .
 cp -a %SOURCE3 .
 
 %build
-# -O2 or -O1 cannot be used because of crashes (see #21582)
-#g77 %optflags -O0 -o platon platon.f xdrvr.c -lX11
-
-# separated compilation of platon.f and xdrvr.c
-g77 %optflags -c platon.f
-gcc %optflags -O0 -c xdrvr.c
-g77 -o platon platon.o xdrvr.o -lX11
+g77 %optflags -o platon platon.f xdrvr.c -lX11
 
 %install
 install -d %buildroot%_bindir
@@ -156,6 +149,10 @@ install -pm644 doc/PLATON-MANUAL.data/* %buildroot%_defaultdocdir/%name/PLATON-M
 %_defaultdocdir/%name
 
 %changelog
+* Thu Jul 19 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120718-alt1
+- new version
+- fixed zdate function in xdrvr.c leading to buffer overflow (see #21582)
+- come back to compilation of platon.f and xdrvr.c together with optimizations
 
 * Sun Jul 15 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120713-alt1
 - new version
