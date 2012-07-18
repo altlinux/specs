@@ -1,17 +1,21 @@
 Name:		knetdockapp
 Version:	0.82.3
-Release:	alt3
+Release:	alt3.1
 Summary:	Network Monitor Systray Application
 Source:		http://www.kde-apps.org/CONTENT/content-files/29398-%name-%version.tar.bz2
 Patch0:		%name-0.82-alt_doc.diff
 Patch1:		%name-0.82.3-admin-new-autotools.diff
+Patch2:   %name-0.82.3-alt-DSO.patch
 Url:		http://www.kde-apps.org/content/show.php/KNetDockApp?content=29398
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Group:		Networking/Other
 License:	GPLv2
 
+%set_gcc_version 4.5
+BuildPreReq: gcc4.5-c++
+
 # Automatically added by buildreq on Mon Jul 30 2007 (-bi)
-BuildRequires: gcc-c++ imake kdelibs-devel libXext-devel libXt-devel libqt3-devel xorg-cf-files
+BuildRequires: imake kdelibs-devel libXext-devel libXt-devel libqt3-devel xorg-cf-files
 
 %description
 A small application that docks in the systray and monitors the activity of the
@@ -24,6 +28,7 @@ Supports session management, and runs on next logins.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 %__subst 's/\.la\>/.so/g' admin/acinclude.m4.in
 %__subst 's/\(-Wl,--no-undefined\)/-Wl,--warn-unresolved-symbols \1/g' admin/acinclude.m4.in
 
@@ -47,6 +52,9 @@ make -f admin/Makefile.common
 %_kde3_iconsdir/*/*/apps/%name.png
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.82.3-alt3.1
+- Fixed build
+
 * Fri Mar 04 2011 Timur Aitov <timonbl4@altlinux.org> 0.82.3-alt3
 - move to alternate place
 
