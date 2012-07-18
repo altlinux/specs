@@ -1,6 +1,6 @@
 Name: frescobaldi
 Version: 1.0.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: LilyPond music score editor for KDE4
 License: %gpl2plus
@@ -52,9 +52,9 @@ features:
 %K4install
 %K4find_lang --with-kde %name
 install -d %buildroot%_liconsdir/
-rsvg -w 48 -h 48  \
+rsvg-convert -w 48 -h 48  \
   %buildroot%_K4iconsdir/hicolor/scalable/apps/%name.svgz \
-  %buildroot%_liconsdir/%name.png
+  -o %buildroot%_liconsdir/%name.png
 
 %files -f %name.lang
 %doc ChangeLog README THANKS TODO
@@ -65,6 +65,9 @@ rsvg -w 48 -h 48  \
 %_liconsdir/%name.png
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.2-alt1.1
 - Rebuild with Python-2.7
 
