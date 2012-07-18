@@ -3,11 +3,12 @@ Summary: Intel ASL compiler/decompiler
 Summary(ru_RU.UTF-8): Компилятор/декомпилятор ASL от Intel
 Name: iasl
 Version: 20100806
-Release: alt1
+Release: alt1.1
 License: Distributable
 Group: System/Kernel and hardware
 URL: http://www.acpica.org/downloads/unix_source_code.php
 Source: http://www.acpica.org/download/%sname-%{version}.tar
+Patch: iasl-20100806-alt-no-Werror.patch
 Conflicts: pmtools < 20071116-alt0.M50.1
 # Automatically added by buildreq on Wed Jun 02 2004
 BuildRequires: flex
@@ -25,6 +26,7 @@ Machine Language). Результирующий AML может быть испо
 
 %prep
 %setup -q -n %sname-%version
+%patch -p2
 # convert all UpperCased directories to LowerCase (fix for tarball from Intel)
 #for i in `find * -type d|sort -r`;do newi=`echo $i|sed 's,/\?[a-z]*$,\L\0,i'`; [ "$i" = "$newi" ] || mv $i $newi;done
 
@@ -54,6 +56,9 @@ install -m0755 tools/acpiexec/acpiexec %buildroot%_bindir/
 %_bindir/acpiexec
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100806-alt1.1
+- Fixed build
+
 * Tue Sep 14 2010 Anton Farygin <rider@altlinux.ru> 20100806-alt1
 - new version
 
