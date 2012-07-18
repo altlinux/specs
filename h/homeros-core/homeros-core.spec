@@ -1,7 +1,7 @@
 %define skeldir %_sysconfdir/skel.homeros.ru_RU.UTF-8
 
 Name: homeros-core
-Version: 20120203
+Version: 20120718
 Release: alt1
 Summary: The set of scripts and predefined settings for ALT Linux Homeros distribution
 Group: System/Configuration/Other
@@ -9,7 +9,7 @@ URL: http://homeros.altlinux.org
 License: GPL
 BuildArch: noarch
 Packager: Michael Pozhidaev <msp@altlinux.ru>
-BuildRequires: etcskel emacs23 emacs-devel
+BuildRequires: etcskel emacs-nox emacs-devel
 
 Source: %name-%version.tar.gz
 
@@ -114,6 +114,9 @@ The package with various data files for ALT Linux Homeros LiveCD system
 %_datadir/homeros-live
 
 %changelog
+* Wed Jul 18 2012 Michael Pozhidaev <msp@altlinux.ru> 20120718-alt1
+- emacs23 req changed to emacs-nox
+
 * Fri Feb 03 2012 Michael Pozhidaev <msp@altlinux.ru> 20120203-alt1
 - Fixed emacs default configuration to be suited for updated w3m
 
