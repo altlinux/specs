@@ -1,5 +1,5 @@
 Name: libjpeg-turbo
-Version: 1.1.1
+Version: 1.2.1
 Release: alt1
 Epoch: 2
 
@@ -15,7 +15,7 @@ Source3: exifautotran
 Source4: jpeginfo.c
 
 Patch1: libjpeg-6b-suse-int32.patch
-Patch2: libjpeg-turbo-fedora-jpgtest.patch
+Patch2: libjpeg-turbo-1.2.0-fedora-noinst.patch
 Patch3: libjpeg-turbo-alt-rdjpgcom-i18n.patch
 Patch4: libjpeg-turbo-alt-versioning.patch
 Patch5: libjpeg-turbo-alt-libturbojpeg.patch
@@ -118,6 +118,7 @@ sed -n 's/^EXTERN([^()]*)[[:space:]]*\([^[:space:]]\+\).*/\1/p' jpegint.h \
 	| egrep -v '^(jinit_|jzero_far)' >> libjpeg.sym
 # extra symbols required by packages
 cat >> libjpeg.sym <<'EOF'
+jinit_c_master_control
 jpeg_std_message_table
 EOF
 sort -u -o libjpeg.sym{,}
@@ -144,7 +145,7 @@ find %buildroot -name 'libturbojpeg.*a' -delete
 %define docdir %_docdir/%name
 rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
-install -pm644 README* ChangeLog.txt LICENSE.txt change.log example.c \
+install -pm644 README* ChangeLog.txt change.log example.c \
 	coderules.txt libjpeg.txt.bz2 structure.txt.bz2 usage.txt.bz2 wizard.txt \
 	%buildroot%docdir/
 
@@ -176,6 +177,9 @@ install -pm644 README* ChangeLog.txt LICENSE.txt change.log example.c \
 %_includedir/turbojpeg.h
 
 %changelog
+* Wed Jul 18 2012 Dmitry V. Levin <ldv@altlinux.org> 2:1.2.1-alt1
+- Updated to 1.2.1 (fixes CVE-2012-2806).
+
 * Tue Jul 19 2011 Dmitry V. Levin <ldv@altlinux.org> 2:1.1.1-alt1
 - Updated to 1.1.1 (closes: #25369).
 
