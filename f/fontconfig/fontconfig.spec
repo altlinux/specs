@@ -1,6 +1,6 @@
 Name: fontconfig
-Version: 2.9.0
-Release: alt2
+Version: 2.10.0
+Release: alt1
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -38,7 +38,7 @@ documentation required for development of fontconfig-based software.
 %autoreconf
 %configure \
 	--disable-static \
-	--with-freetype-config='pkg-config freetype2' \
+	--with-baseconfigdir=%_sysconfdir/fonts \
 	--with-default-fonts=%_datadir/fonts \
 	--with-cache-dir=%_var/cache/%name \
 	--docdir=%docdir
@@ -53,6 +53,10 @@ install -pm644 AUTHORS README %buildroot%docdir/
 install -Dp -m755 fontconfig-firsttime %buildroot%_sysconfdir/firsttime.d/%name
 install -Dp -m755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
+for f in $(ls %buildroot%_datadir/%name/conf.avail/1*.conf | sed -ne 's|\(.*/\)\(.*conf\)|\2|p'); do
+	ln -sf ../../../%_datadir/%name/conf.avail/$f %buildroot%_sysconfdir/fonts/conf.d/$f
+done
+
 %post
 [ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/%name
 
@@ -60,12 +64,14 @@ install -Dp -m755 %name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 find %_datadir/fonts -depth -type f -name fonts.cache-1 -delete
 find %_var/cache/%name -depth -type f -name \*.cache-\[12\] -delete
 
+%triggerpostun -- %name < 2.10.0-alt1
+find -L %_sysconfdir/fonts/conf.d -type l -delete
+
 %files
 %_sysconfdir/firsttime.d/%name
 %dir %_sysconfdir/fonts
 %dir %_sysconfdir/fonts/conf.d
 %dir %_sysconfdir/fonts/conf.avail
-%config %_sysconfdir/fonts/fonts.dtd
 %config %_sysconfdir/fonts/fonts.conf
 %config(noreplace) %_sysconfdir/fonts/conf.avail/*.conf
 %_sysconfdir/fonts/conf.d/README
@@ -75,6 +81,8 @@ find %_var/cache/%name -depth -type f -name \*.cache-\[12\] -delete
 %_bindir/fc-*
 %_libdir/*.so.*
 %_rpmlibdir/%name.filetrigger
+%_datadir/%name
+%_datadir/xml/%name
 %_man1dir/*
 %_man5dir/*
 %dir %_var/cache/%name
@@ -90,6 +98,9 @@ find %_var/cache/%name -depth -type f -name \*.cache-\[12\] -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Jul 18 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.10.0-alt1
+- 2.10.0
+
 * Wed Mar 28 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.9.0-alt2
 - updated to master git.fe6ba5e
 
