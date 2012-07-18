@@ -2,7 +2,7 @@
 %define develdocdir %_docdir/%name-devel-%version
 
 Name: libfreetype
-Version: 2.4.9
+Version: 2.4.10
 Release: alt1
 
 Summary: The FreeType2 library
@@ -139,6 +139,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Wed Jul 18 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.4.10-alt1
+- 2.4.10
+
 * Sun Apr 01 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.4.9-alt1
 - 2.4.9
 
