@@ -1,10 +1,11 @@
 %define oname networkx
 
-%def_enable docs
+%def_disable docs
+%def_with python3
 
 Name:           python-module-%oname
-Version:        1.7
-Release:        alt1.hg20111126
+Version:        1.8
+Release:        alt1.hg20120708
 Summary:        Creates and Manipulates Graphs and Networks
 Group:          Development/Python
 License:        LGPLv2+
@@ -20,6 +21,10 @@ BuildPreReq: python-module-pydot python-module-matplotlib
 BuildPreReq: python-module-yaml python-module-scipy python-module-pyparsing
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: graphviz
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel python-tools-2to3
+%endif
 
 Requires: python-module-pygraphviz ipython python-module-numpy
 Requires: python-module-pydot python-module-matplotlib
@@ -30,6 +35,29 @@ Requires: %name-tests = %version-%release
 %description
 NetworkX is a Python package for the creation, manipulation, and
 study of the structure, dynamics, and functions of complex networks.
+
+%if_with python3
+%package -n python3-module-%oname
+Summary: Creates and Manipulates Graphs and Networks (Python 3)
+Group: Development/Python3
+Requires: python3-module-%oname-tests = %version-%release
+%add_python3_req_skip tests
+
+%description -n python3-module-%oname
+NetworkX is a Python package for the creation, manipulation, and
+study of the structure, dynamics, and functions of complex networks.
+
+%package -n python3-module-%oname-tests
+Summary: Tests for NetworkX (Python 3)
+Group: Development/Python3
+Requires: python3-module-%oname = %version-%release
+
+%description -n python3-module-%oname-tests
+NetworkX is a Python package for the creation, manipulation, and
+study of the structure, dynamics, and functions of complex networks.
+
+This package contains tests for NetworkX.
+%endif
 
 %if_enabled docs
 
@@ -72,6 +100,12 @@ This package contains tests for NetworkX.
 chmod -x examples/*/*.py
 chmod -x examples/*/*.bz2
 sed -i '1,1d' networkx/tests/test.py
+
+%if_with python3
+rm -rf ../python3
+cp -a . ../python3
+%endif
+
 %if_enabled docs
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 %prepare_sphinx .
@@ -83,11 +117,26 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 #python_build
 #popd
 
+%if_with python3
+pushd ../python3
+for i in $(find ./ -name '*.py'); do
+	2to3 -w -n $i
+done
+%python3_build_debug
+popd
+%endif
+
 %install
 %python_install -O1
 #pushd nose_plugin
 #python_install -O1
 #popd
+
+%if_with python3
+pushd ../python3
+%python3_install
+popd
+%endif
 
 %if_enabled docs
 export PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir
@@ -96,6 +145,7 @@ export PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir
 #	doc/build/doctrees/
 %make -C doc html
 
+mkdir installed-docs
 mv %buildroot%_docdir/%oname-%{version}* ./installed-docs
 
 cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
@@ -129,7 +179,26 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 
 %endif
 
+%if_with python3
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+%exclude %python3_sitelibdir/*.egg-info
+%exclude %python3_sitelibdir/*/tests
+%exclude %python3_sitelibdir/*/*/tests
+%exclude %python3_sitelibdir/*/*/*/tests
+
+%files -n python3-module-%oname-tests
+%python3_sitelibdir/*/tests
+%python3_sitelibdir/*/*/tests
+%python3_sitelibdir/*/*/*/tests
+%endif
+
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt1.hg20120708
+- Version 1.8
+- Added module for Python 3
+- Disabled docs
+
 * Mon Nov 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.hg20111126
 - Version 1.7
 
