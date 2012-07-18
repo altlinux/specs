@@ -2,7 +2,7 @@
 
 Name: fmio
 Version: 2.0.8
-Release: alt2.1
+Release: alt2.2
 
 Summary: fmio, FM radio card manipulation utility
 License: BSD
@@ -18,9 +18,12 @@ Patch2: fmio-2.0.8-dyn.asp.patch
 # Do not build drivers with direct I/O by default
 # (https://bugzilla.redhat.com/bugzilla/show_bug.cgi?id=205721)
 Patch3: fmio-2.0.8-nodirectio.patch
+Patch4: fmio-2.0.8-alt-v4l.patch
 
 # Automatically added by buildreq on Sat Nov 06 2010
 BuildRequires: libXext-devel libXpm-devel
+
+BuildPreReq: libv4l-devel
 
 ExclusiveArch: %ix86 x86_64
 
@@ -52,6 +55,7 @@ wmfmio is a WindowMaker dockapp to manipulate FM radio card.
 
 %prep
 %setup
+%patch4 -p2
 %patch0 -p1 -b .build
 %patch1 -p1 -b .sysconfdir
 %patch2 -p1 -b .dyn
@@ -98,6 +102,9 @@ install -pm644 %SOURCE2 README.fedora
 %config(noreplace) %_sysconfdir/wmfmiorc
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.8-alt2.2
+- Fixed build
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.8-alt2.1
 - Rebuild with Python-2.7
 
