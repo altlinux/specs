@@ -2,7 +2,7 @@
 
 Name: knetstats
 Version: 1.6.2
-Release: alt4
+Release: alt4.1
 
 Group: Monitoring
 Summary: Network monitor applet for KDE
@@ -19,10 +19,14 @@ Patch2: knetstats-1.6.1-alt-autostart.patch
 Patch3: knetstats-1.6.1-alt-uniqueapp.patch
 Patch4: knetstats-1.6.2-alt-gcc43.patch
 Patch5: knetstats-1.6.2-alt-automake.patch
+Patch6: knetstats-1.6.2-alt-DSO.patch
+
+%set_gcc_version 4.5
+BuildPreReq: gcc4.5-c++
 
 # Automatically added by buildreq on Fri Jan 26 2007
 BuildRequires(pre): kdelibs-devel
-BuildRequires: gcc-c++ libstdc++-devel libjpeg-devel xml-utils
+BuildRequires: libstdc++-devel libjpeg-devel xml-utils
 
 %description
 A simple KDE network monitor that show rx/tx LEDs of any network interface
@@ -35,6 +39,7 @@ on a system tray icon
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p2
 
 # update Russian translation
 cat %SOURCE1 > translations/ru/messages/knetstats.po
@@ -88,6 +93,9 @@ install -m 0644 %buildroot/%_K3xdg_apps/%name.desktop %buildroot/%_K3start/%name
 %_K3start/%name.desktop
 
 %changelog
+* Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt4.1
+- Fixed build
+
 * Tue Apr 26 2011 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt4
 - move to alternate place
 
