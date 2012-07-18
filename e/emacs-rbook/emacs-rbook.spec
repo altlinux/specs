@@ -1,10 +1,10 @@
 
 Name: emacs-rbook
 Version: 1.3.5
-Release: alt2
+Release: alt3
 
 License: Public domain
-Group: Accessibility
+Group: Sound
 Summary: The emacs plugin to read text files with Text-to-Speech engine (ru_tts)
 
 BuildArch: noarch
@@ -52,6 +52,9 @@ Currently, mp3 files generation does not work properly.
 %doc ChangeLog README.txt
 
 %changelog
+* Wed Jul 18 2012 Michael Pozhidaev <msp@altlinux.ru> 1.3.5-alt3
+- Group changed to Sound
+
 * Tue Jul 17 2012 Terechkov Evgenii <evg@altlinux.org> 1.3.5-alt2
 - Fix build with emacs24
 
