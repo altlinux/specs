@@ -7,7 +7,7 @@
 
 Name: ddccontrol
 Version: 0.4.2
-Release: alt13.git%ddcreleasedate
+Release: alt14.git%ddcreleasedate
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -21,6 +21,10 @@ Source1: http://dl.sf.net/ddccontrol/ddccontrol-db-%dbreleasedate.tar
 Patch1: ddccontrol-0.3-fixasneeded.patch
 Patch2: ddccontrol-0.4.2-desktop-alt11.patch
 Patch3: ddccontrol-0.4.2-alt-buffer-overflow.patch
+
+# dell3011 https://bugzilla.altlinux.org/show_bug.cgi?id=27551
+Patch4: ddccontrol-0.4.2-dell3011.patch
+Patch5: ddccontrol-0.4.2-russian.patch
 
 # Automatically added by buildreq on Thu Oct 21 2010
 BuildRequires: intltool libICE-devel libpci-devel libxml2-devel libgtk+2-devel
@@ -88,6 +92,9 @@ GNOME applet for ddccontrol.
 %patch2 -p1
 %patch3 -p1
 
+%patch4 -p1
+%patch5 -p1
+
 %build
 pushd ddccontrol-db
 # explicitly instruct gettextize to be non-interactive:
@@ -151,6 +158,9 @@ sed -i -e s,xdg-su,beesu, %buildroot/%_desktopdir/*.desktop
 %endif
 
 %changelog
+* Wed Jul 18 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt14.git20101010
+- added support for dell u3011 thanks to slava@ (closes: 27551)
+
 * Sun Aug 28 2011 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt13.git20101010
 - fixed buffer overflow (closes: 26177)
 
