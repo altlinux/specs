@@ -1,8 +1,10 @@
 Summary(ko): 한글 은글꼴 Core 모음
 Summary(ko): 한글 은글꼴 Core 모음
+Summary(ko): 한글 은글꼴 Core 모음
 %define oldname un-core-fonts
-%define version 1.0.2
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name un-core-fonts
+%define version 1.0.2
 %global fontname un-core
 %global fontconf 65-1-%{fontname}
 
@@ -37,7 +39,7 @@ Core 모음: \
 
 Name:           fonts-ttf-un-core
 Version:        1.0.2
-Release:        alt3_0.18.080608
+Release:        alt3_0.19.080608
 Summary:        Un Core family of Korean TrueType fonts
 Summary(ko):    한글 은글꼴 Core 모음
 
@@ -220,9 +222,9 @@ for fconf in %{fontconf}-batang.conf \
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -259,6 +261,9 @@ fi
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.19.080608
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.18.080608
 - rebuild to get rid of #27020
 
