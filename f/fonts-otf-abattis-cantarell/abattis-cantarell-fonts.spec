@@ -8,7 +8,7 @@
 %global archivename2 Cantarell-Regular
 
 Name: fonts-otf-abattis-cantarell
-Version: 0.0.8
+Version: 0.0.9
 Release: alt1_1
 Summary: Cantarell, a Humanist sans-serif font family
 
@@ -47,9 +47,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -87,6 +87,9 @@ fi
 %doc COPYING NEWS README
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.9-alt1_1
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.8-alt1_1
 - update to new release by fcimport
 
