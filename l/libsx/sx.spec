@@ -1,0 +1,66 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python
+# END SourceDeps(oneline)
+%add_optflags %optflags_shared
+%define oldname sx
+%{!?python_sitelib: %define python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
+
+Summary: Tool to extract reports and run plug-ins against those extracted reports
+Name: libsx
+Version: 2.10
+Release: alt1_1
+URL: http://fedorahosted.org/sx
+# tar.gz archive created from a tagged git tree:
+# $ git clone http://git.fedorahosted.org/git/sx.git
+# $ cd sx
+# $ git archive --format=tar --prefix=sx-2.10/ sx-2.10 | gzip > sx-2.10.tar.gz
+Source0: %{oldname}-%{version}.tar.gz
+License: GPLv2
+Group: System/Libraries
+BuildArch: noarch
+BuildRequires: python-devel python-module-setuptools
+Requires: python-module-pycurl
+Source44: import.info
+Provides: sx = %{version}-%{release}
+
+%description
+sxconsole is a tool used to extract various report types and then
+analyze those extracted reports with plug-ins. The tool also provides
+an archiving structure so that all the compressed and extracted
+reports are saved to a directory. This tool was developed for
+sysreport/sosreports but has been expanded to include any report that
+has a class defined.
+
+%prep
+%setup -q -n %{oldname}-%{version}
+
+%build
+%{__python} setup.py build
+
+%install
+%{__rm} -rf ${RPM_BUILD_ROOT}
+%{__python} setup.py install --optimize 1 --root=${RPM_BUILD_ROOT}
+
+%files
+%doc LICENSE AUTHORS PKG-INFO CHANGELOG
+%doc doc/*
+%{_bindir}/sxconsole
+%{python_sitelibdir_noarch}/*
+
+
+%changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_1
+- update to new release by fcimport
+
+* Wed Jun 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.05-alt3_20
+- fixed build
+
+* Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.05-alt2_20
+- update to new release by fcimport
+
+* Fri Dec 23 2011 Igor Vlasenko <viy@altlinux.ru> 2.05-alt2_19
+- spec cleanup thanks to ldv@
+
+* Sat Dec 17 2011 Igor Vlasenko <viy@altlinux.ru> 2.05-alt1_19
+- initial import by fcimport
+
