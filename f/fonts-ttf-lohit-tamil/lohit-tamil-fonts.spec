@@ -3,8 +3,8 @@
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-tamil
-Version:        2.5.0
-Release:        alt2_3
+Version:        2.5.1
+Release:        alt1_2
 Summary:        Free Tamil font
 
 Group:          System/Fonts/True type
@@ -15,9 +15,8 @@ BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
 Obsoletes: lohit-fonts-common < %{version}-%{release}
-Patch1: bug-820478.patch
+Patch1:	bug-829143.patch
 Source44: import.info
-
 
 %description
 This package provides a free Tamil truetype/opentype font.
@@ -25,8 +24,8 @@ This package provides a free Tamil truetype/opentype font.
 
 %prep
 %setup -q -n %{fontname}-%{version}
+%patch1 -p1 -b .1-resolved-ra-ri-rii-problem
 mv 66-lohit-tamil.conf 65-0-lohit-tamil.conf
-%patch1 -p1 -b .1-autohint
 
 
 %build
@@ -47,9 +46,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -90,6 +89,9 @@ fi
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_2
+- update to new release by fcimport
+
 * Fri May 11 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.0-alt2_3
 - update to new release by fcimport
 
