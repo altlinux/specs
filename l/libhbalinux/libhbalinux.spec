@@ -1,18 +1,13 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gtkdocize gcc-c++ glib2-devel imlib2-devel libXext-devel libfreetype-devel pkgconfig(freetype2) pkgconfig(gobject-2.0)
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libhbalinux
-Version:        1.0.13
-Release:        alt2_3
+Version:        1.0.14
+Release:        alt1_1
 Summary:        FC-HBAAPI implementation using scsi_transport_fc interfaces
 Group:          System/Libraries
 License:        LGPLv2
 URL:            http://www.open-fcoe.org
 Source0:        %{name}-%{version}.tar.gz
 Patch0:         libhbalinux-1.0.13-conf.patch
-Patch1:         libhbalinux-1.0.13-Set-SerialNumber-to-Unknown-if-not-found.patch
 BuildRequires:  libhbaapi-devel libpciaccess-devel libtool automake
 Requires:       libhbaapi
 Source44: import.info
@@ -23,7 +18,7 @@ SNIA HBAAPI vendor library built on top of the scsi_transport_fc interfaces.
 %package devel
 Summary:        A file needed for libhbalinux application development
 Group:          Development/C
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       libhbalinux = %{version}-%{release}
 
 %description devel
 The libhbalinux-devel package contains the library pkgconfig file.
@@ -31,7 +26,6 @@ The libhbalinux-devel package contains the library pkgconfig file.
 %prep
 %setup -q
 %patch0 -p1 -b .conf
-%patch1 -p1 -b .sn-unknown
 
 %build
 ./bootstrap.sh
@@ -71,6 +65,9 @@ fi
 %{_libdir}/pkgconfig/%{name}.pc
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.14-alt1_1
+- update to new release by fcimport
+
 * Tue Feb 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt2_3
 - update to new release by fcimport
 
