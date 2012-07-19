@@ -1,7 +1,7 @@
 Summary: A printer administration tool
 Name: system-config-printer
-Version: 1.3.7
-Release: alt1.2
+Version: 1.3.9
+Release: alt1
 License: GPLv2+
 Url: http://cyberelk.net/tim/software/system-config-printer/
 Group: System/Configuration/Printing
@@ -31,6 +31,7 @@ BuildRequires: xmlto
 
 %py_requires gtk.glade
 Requires: python-module-cupshelpers = %version-%release
+Requires: python-module-cups >= 1.9.61-alt1
 
 %description
 system-config-printer is a graphical user interface that allows
@@ -63,7 +64,8 @@ Python module to configure a CUPS print server
 %configure --with-udev-rules --with-polkit-1
 
 %install
-%makeinstall_std
+%makeinstall_std udevrulesdir=/lib/udev/rules.d \
+		 udevhelperdir=/lib/udev
 
 mkdir -p %buildroot%_localstatedir/run/udev-configure-printer
 touch %buildroot%_localstatedir/run/udev-configure-printer/usb-uris
@@ -97,6 +99,10 @@ exit 0
 %python_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Thu Jul 19 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.9-alt1
+- 1.3.9 (ALT #25875)
+- fix '&mdash' in ru.po (ALT #26123)
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt1.2
 - Fixed build
 
