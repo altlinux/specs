@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++ unzip
+BuildRequires: /usr/bin/dot /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libpgf
-Version:        6.11.42
-Release:        alt3_2
+Version:        6.12.24
+Release:        alt1_2
 Summary:        PGF (Progressive Graphics File) library
 
 Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://www.libpgf.org
-Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-src.zip
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-src.tar.gz
 
 BuildRequires:  doxygen
 BuildRequires:  libtool
@@ -52,7 +52,7 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %files
 %doc COPYING README
-%{_libdir}/libpgf.so.4*
+%{_libdir}/libpgf.so.6*
 
 %files devel
 %doc html
@@ -63,6 +63,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 6.12.24-alt1_2
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 6.11.42-alt3_2
 - fixed build
 
