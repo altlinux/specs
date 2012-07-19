@@ -6,7 +6,7 @@
 
 Name:		fonts-bitmap-knm-new-fixed
 Version:	1.1
-Release:	alt4_15
+Release:	alt4_16
 
 Summary:	12x12 JIS X 0208 Bitmap fonts
 Group:		System/Fonts/True type
@@ -54,9 +54,9 @@ mkfontdir $RPM_BUILD_ROOT%{_fontdir}
 ln -s -f %{_fontdir} $RPM_BUILD_ROOT%{catalogue}/%{fontname}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -100,6 +100,9 @@ fi
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_16
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_15
 - rebuild to get rid of #27020
 
