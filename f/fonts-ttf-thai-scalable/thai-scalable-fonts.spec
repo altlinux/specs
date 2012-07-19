@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mk
 
 Name:      fonts-ttf-thai-scalable
 Version:   0.5.0
-Release:   alt2_1
+Release:   alt2_2
 Summary:   Thai TrueType fonts
 Group:     System/Fonts/True type
 License:   GPLv2+
@@ -22,7 +22,7 @@ Source1:   %{fontconf}-garuda.conf
 Source2:   %{fontconf}-kinnari.conf
 Source3:   %{fontconf}-umpush.conf
 BuildArch: noarch
-BuildRequires: fontforge >= 20071110 ttmkfdir xorg-font-utils
+BuildRequires: fontforge >= 20071110 ttmkfdir xorg-x11-font-utils
 BuildRequires: fontpackages-devel
 Source44: import.info
 Provides: fonts-ttf-thai = 0.1-alt7
@@ -281,9 +281,9 @@ for fconf in %{fontconf}-garuda.conf \
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -324,6 +324,9 @@ fi
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_2
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_1
 - rebuild to get rid of #27020
 
