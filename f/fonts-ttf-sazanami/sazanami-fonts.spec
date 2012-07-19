@@ -10,7 +10,7 @@ They also contains some embedded Japanese bitmap fonts.
 
 Name:		fonts-ttf-sazanami
 Version:	0.20040629
-Release:	alt8_17
+Release:	alt8_18
 BuildArch:	noarch
 BuildRequires:	ttmkfdir >= 3.0.6
 BuildRequires:	mkfontdir fonts-bitmap-misc
@@ -124,9 +124,9 @@ ln -sf %{_fontdir}/mincho $RPM_BUILD_ROOT%{catalogue}/%{oldname}-mincho
 sed -i -e '/jisx0201.1976-0/d' `find %buildroot%_datadir -type f -name fonts.alias`
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -185,6 +185,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt8_18
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt8_17
 - rebuild to get rid of #27020
 
