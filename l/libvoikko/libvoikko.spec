@@ -1,13 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-# python macros required
-BuildRequires(pre): rpm-build-python
 %{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 Name:           libvoikko
-Version:        3.4.1
-Release:        alt1_2
+Version:        3.5
+Release:        alt1_1
 Summary:        Voikko is a library for spellcheckers and hyphenators
 
 Group:          System/Libraries
@@ -100,9 +99,11 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{_bindir}/voikkospell
 %{_bindir}/voikkohyphenate
 %{_bindir}/voikkogc
+%{_bindir}/voikkovfstc
 %{_mandir}/man1/voikkohyphenate.1.*
 %{_mandir}/man1/voikkospell.1.*
 %{_mandir}/man1/voikkogc.1.*
+%{_mandir}/man1/voikkovfstc.1.*
 
 %files devel
 %doc
@@ -114,6 +115,9 @@ install -pm 0644 python/libvoikko.py $RPM_BUILD_ROOT%{python_sitelibdir_noarch}/
 %{python_sitelibdir_noarch}/%{name}.py*
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_1
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 3.4.1-alt1_2
 - update to new release by fcimport
 
