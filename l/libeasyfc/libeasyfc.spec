@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/gtkdocize pkgconfig(freetype2)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libeasyfc
-Version:	0.7
+Version:	0.8
 Release:	alt1_1
 Summary:	Easy configuration generator interface for fontconfig
 
@@ -12,8 +12,9 @@ License:	LGPLv3+
 URL:		http://github.com/tagoh/libeasyfc
 Source0:	https://github.com/downloads/tagoh/libeasyfc/libeasyfc-%{version}.tar.bz2
 
-BuildRequires:	glib2-devel gobject-introspection-devel libxml2-devel fontconfig-devel
+BuildRequires:	glib2-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.9.91
 BuildRequires:	gettext
+Requires:	fontconfig >= 2.9.91
 Source44: import.info
 
 %description
@@ -91,6 +92,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gir-*/Easyfc-*.gir
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_1
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_1
 - update to new release by fcimport
 
