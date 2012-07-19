@@ -1,42 +1,35 @@
 %define oldname google-droid-fonts
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name google-droid-fonts
+%define version 20120715
 %global fontname google-droid
-
-%global download_root http://android.git.kernel.org/?p=platform/frameworks/base.git;a=blob_plain;f=data/fonts/
+%global archivename %{oldname}-%{version}
 
 %global common_desc \
 The Droid typeface family was designed in the fall of 2006 by Ascender's \
 Steve Matteson, as a commission from Google to create a set of system fonts \
 for its Android platform. The goal was to provide optimal quality and comfort \
 on a mobile handset when rendered in application menus, web browsers and for \
-other screen text.
+other screen text. \
+The family was later extended in collaboration with other designers such as \
+Pascal Zoghbi of 29ArabicLetters.
 
 Name:    fonts-ttf-google-droid
-# No sane versionning upstream, use the most recent file datestamp
-Version: 20100409
-Release: alt2_3
+# No sane versionning upstream, use git clone timestamp
+Version: 20120715
+Release: alt1_3
 Summary: General-purpose fonts released by Google as part of Android
 
 Group:     System/Fonts/True type
 License:   ASL 2.0
-URL:       http://android.git.kernel.org/?p=platform/frameworks/base.git;a=tree;f=data/fonts
-Source0:   %{download_root}NOTICE
-Source1:   %{download_root}README.txt
-Source10:  %{download_root}DroidSans.ttf
-Source11:  %{download_root}DroidSans-Bold.ttf
-Source12:  %{download_root}DroidSansJapanese.ttf
-#DroidSansFallbackLegacy.ttf is an old version with less coverage
-Source13:  %{download_root}DroidSansFallback.ttf
-Source14:  %{download_root}DroidSansArabic.ttf
-Source15:  %{download_root}DroidSansHebrew.ttf
-Source16:  %{download_root}DroidSansThai.ttf
-Source20:  %{download_root}DroidSansMono.ttf
-Source30:  %{download_root}DroidSerif-Regular.ttf
-Source31:  %{download_root}DroidSerif-Bold.ttf
-Source32:  %{download_root}DroidSerif-Italic.ttf
-Source33:  %{download_root}DroidSerif-BoldItalic.ttf
-Source41:  %{oldname}-sans-fontconfig.conf
-Source42:  %{oldname}-sans-mono-fontconfig.conf
-Source43:  %{oldname}-serif-fontconfig.conf
+URL:       https://android.googlesource.com/
+Source0:   %{archivename}.tar.xz
+#Brutal script used to pull sources from upstream git
+Source1:   getdroid.sh
+Source10:  %{oldname}-sans-fontconfig.conf
+Source11:  %{oldname}-sans-mono-fontconfig.conf
+Source12:  %{oldname}-serif-fontconfig.conf
+Source13:  %{oldname}-kufi-fontconfig.conf
 
 
 BuildArch:     noarch
@@ -61,14 +54,9 @@ electronic communication.
 %files -n fonts-ttf-google-droid-sans
 %{_fontconfig_templatedir}/??-%{fontname}-sans.conf
 %config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-sans.conf
-%{_fontbasedir}/*/%{_fontstem}/DroidSans.ttf
-%{_fontbasedir}/*/%{_fontstem}/DroidSans-Bold.ttf
-%{_fontbasedir}/*/%{_fontstem}/DroidSansArabic.ttf
-%{_fontbasedir}/*/%{_fontstem}/DroidSansHebrew.ttf
-%{_fontbasedir}/*/%{_fontstem}/DroidSansJapanese.ttf
-%{_fontbasedir}/*/%{_fontstem}/DroidSansThai.ttf
-%{_fontbasedir}/*/%{_fontstem}/DroidSansFallback.ttf
-%doc *.txt
+%{_fontbasedir}/*/%{_fontstem}/DroidSans*ttf
+%exclude %{_fontbasedir}/*/%{_fontstem}/DroidSansMono*ttf
+%doc README.txt NOTICE
 
 %package -n fonts-ttf-google-droid-sans-mono
 Group: System/Fonts/True type
@@ -84,11 +72,12 @@ interfaces and electronic communication.
 %{_fontconfig_templatedir}/??-%{fontname}-sans-mono.conf
 %config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-sans-mono.conf
 %{_fontbasedir}/*/%{_fontstem}/DroidSansMono.ttf
-%doc *.txt
+%doc README.txt NOTICE
 
 %package -n fonts-ttf-google-droid-serif
 Group: System/Fonts/True type
 Summary:  A contemporary serif typeface
+Provides: %{fontname}-naskh-fonts = %{version}-%{release}
 
 %description -n fonts-ttf-google-droid-serif
 %common_desc
@@ -98,17 +87,36 @@ reading on screen. Droid Serif is slightly condensed to maximize the amount of
 text displayed on small screens. Vertical stress and open forms contribute to
 its readability while its proportion and overall design complement its
 companion Droid Sans.
+The Arabic block was designed by Pascal Zoghbi of 29ArabicLetters under the
+Droid Naskh name.
 
 %files -n fonts-ttf-google-droid-serif
 %{_fontconfig_templatedir}/??-%{fontname}-serif.conf
 %config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-serif.conf
 %{_fontbasedir}/*/%{_fontstem}/DroidSerif*ttf
-%doc *.txt
+%{_fontbasedir}/*/%{_fontstem}/DroidNaskh*ttf
+%doc README.txt NOTICE
+
+%package -n fonts-ttf-google-droid-kufi
+Group: System/Fonts/True type
+Summary:  A kufi Arabic titling typeface designed to complement Droid Sans
+Requires: fonts-ttf-google-droid-kufi
+
+%description -n fonts-ttf-google-droid-kufi
+%common_desc
+
+Droid Kufi is a stylized display font suitable for titles and short runs of
+text, and designed to complement Droid Sans. It was initialy designed by
+Steve Matteson of Ascender with consulting by Pascal Zoghbi of 29ArabicLetters
+to finalize the font family.
+
+%files -n fonts-ttf-google-droid-kufi
+%{_fontconfig_templatedir}/??-%{fontname}-kufi.conf
+%config(noreplace) %{_fontconfig_confdir}/??-%{fontname}-kufi.conf
+%{_fontbasedir}/*/%{_fontstem}/DroidKufi*ttf
 
 %prep
-%setup -q -c -T
-install -m 0644 -p %{SOURCE0} notice.txt
-install -m 0644 -p %{SOURCE1} readme.txt
+%setup -q -n %{archivename}
 
 
 %build
@@ -119,33 +127,35 @@ rm -fr %{buildroot}
 
 install -m 0755 -d %{buildroot}%{_fontdir}
 
-install -m 0644 -p  %{SOURCE10} %{SOURCE11} %{SOURCE12} %{SOURCE13} \
-                    %{SOURCE14} %{SOURCE15} %{SOURCE16} \
-                    %{SOURCE20} \
-                    %{SOURCE30} %{SOURCE31} %{SOURCE32} %{SOURCE33}\
+install -m 0644 -p $(ls *ttf | grep -v DroidSansFallbackFull\
+                             | grep -v DroidSansFallbackLegacy\
+                             | grep -v DroidNaskh-Regular-SystemUI) \
                     %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE41} \
+install -m 0644 -p %{SOURCE10} \
         %{buildroot}%{_fontconfig_templatedir}/65-%{fontname}-sans.conf
-install -m 0644 -p %{SOURCE42} \
+install -m 0644 -p %{SOURCE11} \
         %{buildroot}%{_fontconfig_templatedir}/60-%{fontname}-sans-mono.conf
-install -m 0644 -p %{SOURCE43} \
-        %{buildroot}%{_fontconfig_templatedir}/59-%{fontname}-serif.conf
+install -m 0644 -p %{SOURCE12} \
+        %{buildroot}%{_fontconfig_templatedir}/65-%{fontname}-serif.conf
+install -m 0644 -p %{SOURCE13} \
+        %{buildroot}%{_fontconfig_templatedir}/65-%{fontname}-kufi.conf
 
 for fontconf in 65-%{fontname}-sans.conf \
                 60-%{fontname}-sans-mono.conf \
-                59-%{fontname}-serif.conf ; do
+                65-%{fontname}-serif.conf \
+                65-%{fontname}-kufi.conf ; do
   ln -s %{_fontconfig_templatedir}/$fontconf \
         %{buildroot}%{_fontconfig_confdir}/$fontconf
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -178,6 +188,9 @@ fi
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 20120715-alt1_3
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 20100409-alt2_3
 - rebuild to get rid of #27020
 
