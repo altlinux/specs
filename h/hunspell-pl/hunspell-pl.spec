@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-pl
 Summary: Polish hunspell dictionaries
-%define upstreamid 20120309
+%define upstreamid 20120613
 Version: 0.%{upstreamid}
 Release: alt1_1
 Source: http://sjp.pl/slownik/ort/sjp-myspell-pl-%{upstreamid}.zip
@@ -33,6 +33,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.20120613-alt1_1
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.20120309-alt1_1
 - update to new release by fcimport
 
