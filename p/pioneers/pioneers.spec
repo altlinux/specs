@@ -1,18 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/convert /usr/bin/pngtopnm /usr/bin/scrollkeeper-config pkgconfig(glib-2.0)
+BuildRequires: /usr/bin/convert /usr/bin/pngtopnm /usr/bin/rsvg-convert /usr/bin/scrollkeeper-config pkgconfig(avahi-client) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libnotify)
 # END SourceDeps(oneline)
 Name:           pioneers
-Version:        0.12.3
-Release:        alt5_3
+Version:        14.1
+Release:        alt1_1
 Summary:        Turnbased board strategy game (colonize an island)
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://pio.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/pio/%{name}-%{version}.tar.gz
-Patch0:         pioneers-0.12.1-sanitize.patch
+Patch0:         pioneers-14.1-sanitize.patch
 Patch1:		pioneers-0.12.3-dso.patch
-Patch2:		pioneers-0.12.2-namechange.patch
-BuildRequires:  libgnome-devel libgtk+2-devel gettext scrollkeeper intltool
+BuildRequires:  libgnome-devel gtk2-devel gettext scrollkeeper intltool
 BuildRequires:  perl(XML/Parser.pm) desktop-file-utils
 Requires:       icon-theme-hicolor
 Requires(post): scrollkeeper
@@ -44,9 +43,8 @@ edited graphically.
 
 %prep
 %setup -q
-%patch0 -p1 -z .sanitize
+#%patch0 -p1 -z .sanitize
 %patch1 -p1 -z .dso
-%patch2 -p1 -z .namechange
 	
 
 %build
@@ -64,7 +62,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}/splash.png
 
 # Reinstall the .desktop files
-desktop-file-install --vendor fedora --delete-original \
+desktop-file-install  --delete-original \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-editor.desktop \
@@ -90,18 +88,26 @@ fi
 %{_datadir}/omf/%{name}
 %{_datadir}/gnome/help/%{name}
 %{_mandir}/man6/%{name}*.6.*
-%{_datadir}/applications/fedora-%{name}.desktop
-%{_datadir}/applications/fedora-%{name}-server.desktop
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/%{name}-server.desktop
 %{_datadir}/pixmaps/%{name}.png
 %{_datadir}/pixmaps/%{name}-server.png
+%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
+%{_datadir}/icons/hicolor/48x48/apps/%{name}-server.png
+%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
+%{_datadir}/icons/hicolor/scalable/apps/%{name}-server.svg
 
 %files editor
 %{_bindir}/%{name}-editor
-%{_datadir}/applications/fedora-%{name}-editor.desktop
+%{_datadir}/applications/%{name}-editor.desktop
 %{_datadir}/pixmaps/%{name}-editor.png
-
+%{_datadir}/icons/hicolor/48x48/apps/%{name}-editor.png
+%{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 14.1-alt1_1
+- update to new release by fcimport
+
 * Mon Apr 16 2012 Igor Vlasenko <viy@altlinux.ru> 0.12.3-alt5_3
 - fixed build
 
