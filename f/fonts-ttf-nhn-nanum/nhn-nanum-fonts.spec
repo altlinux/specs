@@ -13,7 +13,7 @@ publisher is NHN Corporation.
 
 Name:		fonts-ttf-nhn-nanum
 Version:	3.020
-Release:	alt4_1
+Release:	alt4_3
 Summary:	Nanum family of Korean TrueType fonts
 
 Group:		System/Fonts/True type
@@ -131,9 +131,9 @@ for fconf in %{fontconf}-brush.conf \
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -166,6 +166,9 @@ fi
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 3.020-alt4_3
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 3.020-alt4_1
 - rebuild to get rid of #27020
 
