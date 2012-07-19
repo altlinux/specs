@@ -1,6 +1,7 @@
 %define oldname baekmuk-ttf-fonts
-%define version 2.2
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name baekmuk-ttf-fonts
+%define version 2.2
 %global priority    65-2
 %global fontname    baekmuk-ttf
 %define archivename %{fontname}-%{version}
@@ -12,7 +13,7 @@ This package provides the free Korean TrueType fonts.
 
 Name:           fonts-ttf-baekmuk
 Version:        2.2
-Release:        alt2_32
+Release:        alt2_33
 Summary:        Free Korean TrueType fonts
 
 Group:          System/Fonts/True type
@@ -29,7 +30,7 @@ Source6:        baekmuk-ttf-hline.conf
 Provides:       fonts-ttf-korean = %{version}-%{release}
 
 BuildArch:      noarch
-BuildRequires:  fontpackages-devel >= 1.13 xorg-font-utils
+BuildRequires:  fontpackages-devel >= 1.13 xorg-x11-font-utils
 BuildRequires:  ttmkfdir >= 3.0.6
 Source44: import.info
 
@@ -181,9 +182,9 @@ cd -
 sed -i -e s,%{_datadir}/fonts/%{fontname},%{_datadir}/fonts/ttf/%{fontname},g %buildroot/usr/share/ghostscript/conf.d/*
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -215,6 +216,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_33
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_32
 - rebuild to get rid of #27020
 
