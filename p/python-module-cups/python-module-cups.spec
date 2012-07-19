@@ -1,7 +1,7 @@
 
 Name:          python-module-cups
-Version:       1.9.55
-Release:       alt1.1.1
+Version:       1.9.61
+Release:       alt1
 %setup_python_module cups
 
 Group:         Development/Python
@@ -37,11 +37,8 @@ use the CUPS API (managing printers, jobs, etc) in Python.
 %python_sitelibdir/*
 
 %changelog
-* Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.9.55-alt1.1.1
-- Rebuild to remove redundant libpython2.7 dependency
-
-* Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.9.55-alt1.1
-- Rebuild with Python-2.7
+* Thu Jul 19 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.9.61-alt1
+- 1.9.61
 
 * Tue Mar 29 2011 Sergey V Turchin <zerg@altlinux.org> 1.9.55-alt1
 - new version
