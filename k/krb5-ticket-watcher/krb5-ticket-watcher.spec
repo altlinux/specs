@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.2
-Release: alt3.qa1
+Release: alt3.qa2
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -12,6 +12,7 @@ Packager: Andriy Stepanov <stanv@altlinux.ru>
 Source: %name-%version.tar
 Patch1: 0001-made-default-realm-the-first-one-in-list.patch
 Patch2: krb5-ticket-watcher-1.0-alt-date-fix.patch
+Patch3: krb5-ticket-watcher-1.0.2-alt-krb5-1.10.2.patch
 
 BuildRequires: kde-common-devel rpm-build-licenses libkrb5-devel libkeyutils-devel
 # Automatically added by buildreq on Thu Mar 19 2009
@@ -25,6 +26,7 @@ tickets.
 %setup
 %patch1 -p2
 %patch2 -p1
+%patch3 -p2
 
 %build
 %add_optflags -I%_includedir/krb5
@@ -44,6 +46,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc COPYING Changes News TODO 
 
 %changelog
+* Thu Jul 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt3.qa2
+- Fixed build
+
 * Tue Jun 07 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.2-alt3.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
