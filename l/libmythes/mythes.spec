@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl gcc-c++ unzip
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %define oldname mythes
 Name:      libmythes
 Summary:   A thesaurus library
-Version:   1.2.2
-Release:   alt1_2
+Version:   1.2.3
+Release:   alt1_1
 Source:    http://downloads.sourceforge.net/hunspell/%{oldname}-%{version}.tar.gz
 Group:     System/Libraries
 URL:       http://hunspell.sourceforge.net/
@@ -56,6 +56,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_bindir}/th_gen_idx.pl
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.3-alt1_1
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2
 - update to new release by fcimport
 
