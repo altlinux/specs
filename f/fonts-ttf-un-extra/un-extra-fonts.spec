@@ -1,5 +1,6 @@
 Summary(ko): 한글 은글꼴 Extra 모음
 Summary(ko): 한글 은글꼴 Extra 모음
+Summary(ko): 한글 은글꼴 Extra 모음
 %define oldname un-extra-fonts
 %global fontname    un-extra
 %global fontconf    66-%{fontname}
@@ -39,7 +40,7 @@ Extra 모음 \
 
 Name:        fonts-ttf-un-extra
 Version:     1.0.2
-Release:     alt3_0.14.080608
+Release:     alt3_0.15.080608
 Summary:     Un Extra family of Korean TrueType fonts
 Summary(ko): 한글 은글꼴 Extra 모음
 
@@ -334,9 +335,9 @@ for fconf in %{fontconf}-bom.conf \
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -369,6 +370,9 @@ fi
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.15.080608
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.14.080608
 - rebuild to get rid of #27020
 
