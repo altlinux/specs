@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.47.3
+Version: 0.48
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -64,14 +64,6 @@ BuildArch: noarch
 obsync is a tool to synchronize objects between cloud object
 storage providers, such as Amazon S3 (or compatible services), a
 Ceph RADOS cluster, or a local directory.
-
-%package gcephtool
-Summary: Ceph graphical monitoring tool
-Group: Monitoring
-License: LGPLv2
-%description gcephtool
-gcephtool is a graphical monitor for the clusters running the Ceph distributed
-file system.
 
 %package resource-agents
 Summary: OCF-compliant resource agents for Ceph daemons
@@ -195,7 +187,8 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/ceph-debugpack
 %_bindir/boto_tool
 %_bindir/ceph-coverage
-%_bindir/ceph-kdump-copy
+%_sbindir/ceph-disk-activate
+%_sbindir/ceph-disk-prepare
 %_sbindir/mkcephfs
 %_sbindir/mount.ceph
 %_sbindir/rcceph
@@ -267,10 +260,6 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %preun radosgw
 %preun_service ceph-radosgw
 
-%files gcephtool
-%_bindir/gceph
-%_datadir/ceph_tool/
-
 %files resource-agents
 %defattr(0755,root,root,-)
 /usr/lib/ocf/resource.d/%name/
@@ -288,6 +277,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Jul 19 2012 Alexei Takaseev <taf@altlinux.org> 0.48-alt1
+- 0.48
+
 * Sat Jun 23 2012 Alexei Takaseev <taf@altlinux.org> 0.47.3-alt1
 - 0.47.3
 
