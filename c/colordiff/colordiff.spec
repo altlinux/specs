@@ -1,15 +1,18 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(IPC/Open2.pm)
+# END SourceDeps(oneline)
+Group: Text tools
 Name:           colordiff
-Version:        1.0.9
-Release:        alt2_5
+Version:        1.0.10
+Release:        alt1_1
 Summary:        Color terminal highlighter for diff files
 
-Group:          Text tools
 License:        GPLv2+
 URL:            http://colordiff.sourceforge.net/
 Source0:        http://colordiff.sourceforge.net/%{name}-%{version}.tar.gz
 # Non-upstream, better default colors for Fedora default desktop themes
 Patch0:         %{name}-1.0.6-colors.patch
-# Sent upstream 2009-07-21
+# Sent upstream 2009-07-21, resent 2012-06-04
 Patch1:         %{name}-1.0.9-cdiff-xz.patch
 
 BuildArch:      noarch
@@ -60,6 +63,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_1
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt2_5
 - rebuild to get rid of #27020
 
