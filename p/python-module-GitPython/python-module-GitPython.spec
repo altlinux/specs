@@ -2,7 +2,7 @@
 
 Name: python-module-GitPython
 Version: 0.3.2
-Release: alt0rc1.1
+Release: alt1rc1.1
 
 Summary: GitPython is a python library used to interact with Git repositories
 
@@ -39,6 +39,9 @@ python setup.py test
 %exclude %python_sitelibdir/git/test
 
 %changelog
+* Mon Jul 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.2-alt1rc1.1
+- merge upstream/master
+
 * Fri Jul 13 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.2-alt0rc1.1
 - 0.3.2-rc1
 
