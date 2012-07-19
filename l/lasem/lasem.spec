@@ -1,6 +1,6 @@
 Name: lasem
 Version: 0.3.0
-Release: alt1
+Release: alt1.1
 Summary: C/Gobject based SVG/Mathml renderer and editor - tools
 
 Group: Graphics
@@ -8,6 +8,7 @@ License: GPL
 Url: http://blogs.gnome.org/emmanuel/category/lasem
 
 Source: %name-%version.tar
+Patch: lasem-0.3.0-alt-glib2.patch
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildRequires: glib2-devel libgio-devel libgtk+2-devel libxml2-devel libpango-devel libcairo-devel autogen intltool flex libgtk+2-gir-devel
@@ -52,6 +53,7 @@ Requires: lib%name-gir = %version-%release
 
 %prep
 %setup
+%patch -p2
 
 %build
 NOCONOFIGURE=true ./autogen.sh
@@ -80,6 +82,9 @@ NOCONOFIGURE=true ./autogen.sh
 %_datadir/gir-1.0/Lasem-0.4.gir
 
 %changelog
+* Thu Jul 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.1
+- Fixed build
+
 * Sat Sep 11 2010 Vladimir Lettiev <crux@altlinux.ru> 0.3.0-alt1
 - New version 0.3.0
 - Added gir subpackages
