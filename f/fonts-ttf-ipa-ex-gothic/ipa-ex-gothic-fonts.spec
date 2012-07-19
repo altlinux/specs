@@ -10,7 +10,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-ipa-ex-gothic
 Version:	001.02
-Release:	alt3_3
+Release:	alt3_4
 Summary:	Japanese Gothic-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -50,9 +50,9 @@ ln -s	%{_fontconfig_templatedir}/%{fontconf}	\
 	$RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 001.02-alt3_4
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 001.02-alt3_3
 - rebuild to get rid of #27020
 
