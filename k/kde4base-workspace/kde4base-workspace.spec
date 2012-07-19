@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -909,6 +909,10 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jul 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt3
+- update from 4.8 branch
+- use icontasks taskbar by default
+
 * Fri Jul 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2
 - add systemd support
 
