@@ -1,6 +1,7 @@
 %define oldname cjkuni-uming-fonts
-%define version 0.2.20080216.1
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cjkuni-uming-fonts
+%define version 0.2.20080216.1
 %global fontname cjkuni-uming
 %global fontconf 65-0-ttf-arphic-uming.conf
 #%global fontconf2 25-ttf-arphic-uming-render.conf
@@ -17,7 +18,7 @@ the CJK Unifonts project.
 
 Name:           fonts-ttf-cjkuni-uming
 Version:        0.2.20080216.1
-Release:        alt4_48
+Release:        alt4_49
 Summary:        Chinese Unicode TrueType font in Ming face
 
 Group:          System/Fonts/True type
@@ -72,9 +73,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf3} \
 install -m 0755 -d %{buildroot}%{catalogue}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -119,6 +120,9 @@ fi
 %doc ../%{umingbuilddir}/README
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_49
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_48
 - rebuild to get rid of #27020
 
