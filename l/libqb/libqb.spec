@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ pkgc
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libqb
-Version:        0.13.0
+Version:        0.14.1
 Release:        alt1_1
 Summary:        An IPC library for high performance servers
 
@@ -41,6 +41,7 @@ rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 
 %files
 %doc COPYING
+%{_sbindir}/qb-blackbox
 %{_libdir}/libqb.so.*
 
 %package        devel
@@ -58,8 +59,12 @@ developing applications that use %{name}.
 %{_libdir}/libqb.so
 %{_libdir}/pkgconfig/libqb.pc
 %{_mandir}/man3/qb*3*
+%{_mandir}/man8/qb-blackbox.8.*
 
 %changelog
+* Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.14.1-alt1_1
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.13.0-alt1_1
 - update to new release by fcimport
 
