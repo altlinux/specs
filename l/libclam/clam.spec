@@ -1,15 +1,18 @@
 Summary: CLAM - C++ Library for Audio and Music
 Name: libclam
 Version: 1.3.0
-Release: alt1.2.1
+Release: alt1.3
 License: GPL
 Url: http://clam.iua.upf.edu
 Group: System/Libraries
 Packager: Timur Batyrshin <erthad@altlinux.org>
 Source0: %name-%version.tar.bz2
+Patch0: libclam-1.3.0-alt-gcc4.6.patch
 
 
 BuildRequires: doxygen gcc-c++ graphviz id3lib-devel ladspa_sdk libfftw3-devel libmad-devel libsndfile-devel libvorbis-devel libxerces-c28-devel scons texlive-latex-recommended libalsa-devel
+
+BuildPreReq: libjack-devel /proc
 
 %description
 CLAM stands for C++ Library for Audio and Music and in Catalan means something
@@ -55,6 +58,7 @@ This package contains the framework documentation and some example programs.
 ##########################################
 %prep
 %setup 
+%patch -p2
 
 %build
 install -dm 755 %buildroot%_prefix
@@ -68,8 +72,8 @@ scons 	-j$NPROCS configure \
 	xmlbackend=xercesc \
 	with_ladspa_support=1 \
 	with_osc_support=1 \
-	with_jack=no \
-	with_jack_support=0 \
+	with_jack=yes \
+	with_jack_support=1 \
 	with_fftw=1 \
 	with_fftw3=1 \
 	with_nr_fft=1 \
@@ -107,6 +111,9 @@ mv %buildroot%_prefix/libX/* %buildroot%_libdir
 %doc doxygen/*
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.3
+- Enabled jack support
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.0-alt1.2.1
 - Rebuild with Python-2.7
 
