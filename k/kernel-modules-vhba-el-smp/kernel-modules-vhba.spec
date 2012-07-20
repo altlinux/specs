@@ -3,14 +3,14 @@
 %define module_release  alt1
 
 %define kversion        2.6.32
-%define krelease        alt38
+%define krelease        alt39
 %define flavour         el-smp
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/extra
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.38
+Release: %module_release.132640.39
 
 Summary: VHBA virtual host bus adapter module
 License: GPLv2
@@ -73,8 +73,8 @@ install -Dp -m0755 %SOURCE2 %buildroot%_initrddir/%module_name
 %attr(0755,root,root) %_initrddir/%module_name
 
 %changelog
-* Wed Jul 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 20120422-alt1.132640.38
-- Build for kernel-image-el-smp-2.6.32-alt38.
+* Fri Jul 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 20120422-alt1.132640.39
+- Build for kernel-image-el-smp-2.6.32-alt39.
 
 * Wed Apr 25 2012 Nazarov Denis <nenderus@altlinux.org> 20120422-alt1
 - Version 20120422

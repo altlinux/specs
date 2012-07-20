@@ -34,7 +34,7 @@
 %define upstream_module_name	NVIDIA_kernel
 
 %define kversion	2.6.32
-%define krelease	alt38
+%define krelease	alt39
 %define flavour		el-smp
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
@@ -49,7 +49,7 @@
 Summary:	nVidia video card drivers
 Name:		kernel-modules-%module_name-%flavour
 Version:	%module_version
-Release:	%module_release.132640.38
+Release:	%module_release.132640.39
 License:	Proprietary
 Group:		System/Kernel and hardware
 URL:		http://www.nvidia.com
@@ -193,8 +193,8 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Thu Jul 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 302.17-alt1.132640.38
-- Build for kernel-image-el-smp-2.6.32-alt38.
+* Fri Jul 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 302.17-alt1.132640.39
+- Build for kernel-image-el-smp-2.6.32-alt39.
 
 * Thu Jul 12 2012 Sergey V Turchin <zerg at altlinux dot org> 302.17-alt1
 - new release (302.17)
