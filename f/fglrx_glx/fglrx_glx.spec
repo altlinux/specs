@@ -1,4 +1,4 @@
-%define cat_ver 12-4
+%define cat_ver 12-6
 
 # main switch :)
 # before 11-2:
@@ -26,7 +26,7 @@
 %define ati_rel 1
 
 Name: fglrx_glx
-Version: 8.96.1
+Version: 8.98
 Release: alt1
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
@@ -336,6 +336,9 @@ sh %SOURCE14 -x %buildroot%_datadir/hwdatabase/videoaliases/fglrx.xinf -f %build
 %_usrsrc/*
 
 %changelog
+* Mon Jul 09 2012 Ilya Mashkin <oddity@altlinux.ru> 8.98-alt1
+- Version 8.98 (Catalyst 12.6)
+
 * Fri Apr 27 2012 Ilya Mashkin <oddity@altlinux.ru> 8.96.1-alt1
 - Version 8.96.1 (Catalyst 12.4)
 
