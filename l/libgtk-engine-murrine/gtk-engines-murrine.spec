@@ -3,7 +3,7 @@
 
 Name: %engine_prefix-%_name
 Version: 0.98.1.1
-Release: alt0.1
+Release: alt0.1.1
 
 Summary: Murrine GTK2 engine
 Summary(ru_RU.UTF-8):Модуль прорисовки Murrine для GTK2
@@ -12,6 +12,7 @@ Group: Graphical desktop/GNOME
 Url: http://cimi.netsons.org/pages/murrine.php
 Source0: %name-%version.tar
 Patch0: %name-%version-cppflags-alt.patch
+Patch1: gtk-engines-murrine-0.98.1.1-alt-glib2.patch
 Packager: Denis Koryavov <dkoryavov@altlinux.org>
 
 %define gtk_ver 2.10.0
@@ -34,6 +35,7 @@ Murrine - использующий cairo быстрый модуль прори�
 %prep
 %setup -q 
 %patch0 -p1
+%patch1 -p0
 
 %build
 %autoreconf
@@ -53,6 +55,9 @@ export CPPFLAGS+="-I %_includedir/pixman-1/"
 %exclude %engines_dir/*.la
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.98.1.1-alt0.1.1
+- Fixed build
+
 * Tue Nov 02 2010 Alexey Morsov <swi@altlinux.ru> 0.98.1.1-alt0.1
 - new git version
 
