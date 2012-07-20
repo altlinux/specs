@@ -10,7 +10,7 @@
 %def_disable coredump
 
 Name: systemd
-Version: 186
+Version: 187
 Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
@@ -775,6 +775,9 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Fri Jul 20 2012 Alexey Shabalin <shaba@altlinux.ru> 187-alt1
+- 187
+
 * Mon Jul 16 2012 Alexey Shabalin <shaba@altlinux.ru> 186-alt1
 - 186
 - fix path to udev binary in init script (ALT#27471)
