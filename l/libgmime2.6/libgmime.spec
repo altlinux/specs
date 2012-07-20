@@ -3,7 +3,7 @@
 %define ver_major 2.6
 
 Name: lib%_name%ver_major
-Version: %ver_major.9
+Version: %ver_major.10
 Release: alt1
 
 Summary: MIME library
@@ -116,6 +116,9 @@ gtkdocize --copy
 %endif
 
 %changelog
+* Fri Jul 20 2012 Alexey Shabalin <shaba@altlinux.ru> 2.6.10-alt1
+- 2.6.10
+
 * Mon Apr 23 2012 Alexey Shabalin <shaba@altlinux.ru> 2.6.9-alt1
 - 2.6.9
 - rename from libgmime to libgmime2.6
