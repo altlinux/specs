@@ -1,25 +1,27 @@
 %define zabbix_user	zabbix
 %define zabbix_group	zabbix
-%define	zabbix_home	/dev/null
+%define zabbix_home	/dev/null
 %define svnrev 16759
 
 %def_with pgsql
 
 Name: zabbix
-Version: 1.8.12
-Release: alt2.prerc1
-#Release: alt1.svn.%svnrev.1
+Version: 2.0.2
+Release: alt1
+
+Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Serial: 1
 
 Summary: A network monitor
-License: GPL
+License: GPLv2
 Group: Monitoring
 
 Url: http://www.zabbix.com
 
 # http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tar.gz
 Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 BuildPreReq: /proc
 BuildPreReq: libelf-devel
@@ -196,6 +198,7 @@ zabbix web frontend, edition for php5
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 # fix ZABBIX_REVISION
@@ -204,9 +207,9 @@ sed -i -e "s,{ZABBIX_REVISION},%svnrev," include/common.h
 %autoreconf
 
 # we must call this for produce dbsync.h
-pushd create/schema
-./gen.pl c >../../include/dbsync.h
-popd
+#pushd create/schema
+#./gen.pl c >../../include/dbsync.h
+#popd
 
 %configure --with-mysql \
 	--with-net-snmp \
@@ -215,7 +218,8 @@ popd
 	--with-ldap \
 	--with-libcurl \
 	--with-jabber \
-	--with-openipmi
+	--with-openipmi \
+	--sysconfdir=/etc/zabbix
 %make dbschema
 %make
 
@@ -223,14 +227,15 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_mysql
 %make clean
 
 %if_with pgsql
-%configure --with-pgsql \
+%configure --with-postgresql \
 	--with-net-snmp \
 	--enable-server \
 	--enable-ipv6 \
 	--with-ldap \
 	--with-libcurl \
 	--with-jabber \
-	--with-openipmi
+	--with-openipmi \
+	--sysconfdir=/etc/zabbix
 %make dbschema
 %make
 
@@ -246,7 +251,8 @@ mv src/%{name}_server/%{name}_server src/%{name}_server/%{name}_pgsql
 	--with-ldap \
 	--enable-agent \
 	--with-jabber \
-	--with-openipmi
+	--with-openipmi \
+	--sysconfdir=/etc/zabbix
 %make
 
 # create database upgrades
@@ -256,7 +262,7 @@ mkdir dbpatches-final
 popd
 
 # adjust in several files /home/zabbix
-find misc/conf -type f -print0 | xargs -0 sed -i \
+find conf -type f -print0 | xargs -0 sed -i \
 	-e "s,/home/zabbix/bin,/usr/sbin,g" \
 	-e "s,PidFile=/tmp,PidFile=%_var/run/zabbix,g" \
 	-e "s,LogFile=/tmp,LogFile=%_logdir/zabbix,g" \
@@ -280,7 +286,7 @@ install -m0755 src/%{name}_server/%{name}_pgsql %buildroot%_sbindir
 %endif
 
 # conf files
-install -m0640 misc/conf/%{name}_{server,agentd,proxy}.conf %buildroot%_sysconfdir/%name
+install -m0640 conf/%{name}_{server,agentd,proxy}.conf %buildroot%_sysconfdir/%name
 #install -m0640 misc/conf/%{name}_agentd/userparameter_{examples,mysql}.conf %buildroot%_sysconfdir/%name
 
 # frontends
@@ -311,8 +317,10 @@ install -pDm0400 sources/%name.sudo %buildroot%_sysconfdir/sudoers.d/%name
 mkdir -p upgrades-{mysql,postgresql}
 mv upgrades/dbpatches-final/dbpatches/1.6/mysql upgrades-mysql/1.6
 mv upgrades/dbpatches-final/dbpatches/1.8/mysql upgrades-mysql/1.8
+mv upgrades/dbpatches-final/dbpatches/2.0/mysql upgrades-mysql/2.0
 mv upgrades/dbpatches-final/dbpatches/1.6/postgresql upgrades-postgresql/1.6
 mv upgrades/dbpatches-final/dbpatches/1.8/postgresql upgrades-postgresql/1.8
+mv upgrades/dbpatches-final/dbpatches/2.0/postgresql upgrades-postgresql/2.0
 
 # UPGRADING
 cp sources/UPGRADING.ALT .
@@ -330,7 +338,6 @@ bzip2 ChangeLog
 
 %preun server-mysql
 %preun_service zabbix_mysql
-
 %if_with pgsql
 %post server-pgsql
 %post_service zabbix_pgsql
@@ -344,7 +351,6 @@ bzip2 ChangeLog
 
 %preun proxy
 %preun_service zabbix_proxy
-
 %post agent
 %post_service zabbix_agentd
 if [ $1 -eq 1 ]; then
@@ -359,7 +365,6 @@ fi
 
 %preun agent
 %preun_service zabbix_agentd
-
 %post phpfrontend-apache
 %_initdir/httpd reload >/dev/null 2>&1 ||:
 
@@ -385,7 +390,7 @@ fi
 %files server-mysql
 %_sbindir/%{name}_mysql
 %_initdir/%{name}_mysql
-%doc create/schema/mysql.sql create/data/data.sql create/data/images_mysql.sql
+%doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql
 %doc upgrades-mysql
 %doc UPGRADING.ALT
 
@@ -393,7 +398,7 @@ fi
 %files server-pgsql
 %_sbindir/%{name}_pgsql
 %_initdir/%{name}_pgsql
-%doc create/schema/postgresql.sql create/data/data.sql create/data/images_pgsql.sql
+%doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql
 %doc upgrades-postgresql
 %doc UPGRADING.ALT
 %endif
@@ -422,7 +427,6 @@ fi
 %exclude %webserver_webappsdir/%name/frontends/php/conf/COPYING
 
 %files phpfrontend-php5
-
 %files phpfrontend-apache
 %config(noreplace) %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
 
@@ -430,7 +434,6 @@ fi
 %config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %files phpfrontend-apache2-mod_php5
-
 %files doc
 %doc AUTHORS NEWS README UPGRADING.ALT INSTALL ChangeLog.bz2
 
@@ -438,8 +441,11 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
-* Thu Jul 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1:1.8.12-alt2.prerc1
-- move sudo config to /etc/sudoers.d
+* Fri Jul 20 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.2-alt1
+- 2.0.2 release
+
+* Mon Jul 16 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.2-alt0.rc1.2
+- 2.0.2rc1
 
 * Sat Mar 31 2012 Vladimir V. Kamarzin <vvk@altlinux.org> 1:1.8.12-alt1.prerc1
 - Update to 1.8.12 pre-rc1 (Closes: #26865).
