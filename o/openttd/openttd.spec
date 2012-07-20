@@ -1,5 +1,5 @@
 Name: openttd
-Version: 1.0.4
+Version: 1.2.1
 Release: alt1
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe".
@@ -15,7 +15,7 @@ Source: %name-%version-%release.tar
 
 Patch0: %name-%version-%release.patch
 
-BuildRequires: libSDL-devel libpng-devel libfreetype-devel fontconfig-devel gcc-c++ liblzo2-devel
+BuildRequires: libSDL-devel libpng-devel libfreetype-devel fontconfig-devel gcc-c++ liblzo2-devel liblzma-devel
 
 
 %description
@@ -46,14 +46,14 @@ Data files for %name
 %patch0 -p1
 
 %build
+echo "1.2.1	24306	0	1.2.1" >.ottdrev
 ./configure \
     --prefix-dir=%_prefix \
     --with-sdl \
     --with-png \
     --with-freetype \
     --with-fontconfig \
-    --without-libtimidity \
-    --revision=%version
+    --without-libtimidity
     
 %make_build WITH_SDL=1 UNIX=1 RELEASE=%version INSTALL=1 WITH_NETWORK=1 \
     USE_HOMEDIR=1 VERBOSE=1 PERSONAL_DIR=.%name \
@@ -67,9 +67,9 @@ Data files for %name
 
 %__install -m755 -s bin/%name %buildroot%_prefix/games/%name
 %__install -m755 %name-installer %buildroot%_prefix/games/%name-installer
-%__cp -a bin/data %buildroot%_datadir/games/%name
+%__cp -a bin/baseset %buildroot%_datadir/games/%name
 %__cp -a bin/lang/*.lng %buildroot%_datadir/games/%name/lang
-%__chmod -x %buildroot%_datadir/games/%name/data/*
+%__chmod -x %buildroot%_datadir/games/%name/baseset/*
 
 #menu
 
@@ -98,6 +98,9 @@ Data files for %name
 %_man6dir/*
 
 %changelog
+* Fri Jul 20 2012 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
+- new version
+
 * Sun Sep 19 2010 Anton Farygin <rider@altlinux.ru> 1.0.4-alt1
 - new version
 
