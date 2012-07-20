@@ -1,6 +1,6 @@
 Name: lush
 Version: 2.0.1
-Release: alt2
+Release: alt3
 Summary: Object-oriented programming language for large-scale numerical and graphic applications
 License: LGPL v2.0+
 Group: Development/Lisp
@@ -29,6 +29,7 @@ integration of code written in C, C++, or other languages.
 
 %build
 %autoreconf
+%add_optflags -include stddef.h
 export CPPFLAGS="%optflags"
 %configure \
 	--bindir=%_libdir/%name/bin \
@@ -51,6 +52,9 @@ ln -s lush2 %buildroot%_bindir/lush
 %_man1dir/*
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt3
+- Fixed build
+
 * Mon May 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt2
 - Fixed build
 
