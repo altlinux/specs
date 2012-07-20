@@ -3,7 +3,7 @@
 
 
 Name: accountsservice
-Version: 0.6.21
+Version: 0.6.22
 Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
@@ -112,6 +112,10 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Fri Jul 20 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.22-alt1
+- 0.6.22
+- Correct CVE-2012-2737, local file disclosure.
+
 * Mon May 21 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.21-alt1
 - 0.6.21
 
