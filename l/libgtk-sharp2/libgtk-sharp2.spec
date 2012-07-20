@@ -4,7 +4,7 @@
 Summary: GTK+ and GNOME bindings for Mono
 Name: lib%{realname}2
 Version: 2.12.11
-Release: alt1
+Release: alt1.1
 License: LGPLv2+
 Group: Development/Other
 Packager: Mono Maintainers Team <mono@packages.altlinux.org>
@@ -12,6 +12,7 @@ Url: http://www.mono-project.com/
 Source: http://ftp.gnome.org/pub/GNOME/sources/%realname/2.12/%name-%version.tar
 
 Patch0: %name-%version-%release.patch
+Patch1: %name-2.12.11-alt-glib2.patch
 
 Requires: libglade libgtk+2 >= 2.12.0
 
@@ -71,6 +72,7 @@ for use with monodoc / monodoc Gtk# (from mono-tools) / monodevelop.
 %setup -q
 
 %patch0 -p1
+%patch1 -p0
 
 %build
 NOCONFIGURE=1 ./bootstrap-2.12
@@ -105,6 +107,9 @@ NOCONFIGURE=1 ./bootstrap-2.12
 %endif
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.12.11-alt1.1
+- Fixed build
+
 * Wed Oct 12 2011 Alexey Shabalin <shaba@altlinux.ru> 2.12.11-alt1
 - 2.12.11
 - build with mono-2.10.x
