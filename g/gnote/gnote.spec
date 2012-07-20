@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: gnote
-Version: 0.8.1
+Version: 0.9.1
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -13,10 +13,10 @@ Source0: http://ftp.gnome.org/pub/GNOME/sources/gnote/%version/%name-%version.ta
 Patch0: %name-%version-%release.patch
 
 %define gtk_ver 3.0
-%define gtkmm_ver 3.0
+%define gtkmm_ver 3.4
 %define glibmm_ver 2.28
-%define libpanelapplet_ver 3.0
 %define gtkspell_ver 2.0.9
+%define gnome_keyring_ver 3.0
 
 BuildRequires: gcc-c++ boost-devel
 BuildRequires: gnome-common gnome-doc-utils intltool
@@ -24,8 +24,8 @@ BuildRequires: libxml2-devel libxslt-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libglibmm-devel >= %glibmm_ver
 BuildRequires: libgtkmm3-devel >= %gtkmm_ver
-BuildRequires: libgnome-panel-devel >= %libpanelapplet_ver
 # BuildRequires: libgtkspell-devel >= %gtkspell_ver
+BuildRequires: libgnome-keyring-devel >= %gnome_keyring_ver
 BuildRequires: libpcrecpp-devel
 BuildRequires: libuuid-devel
 BuildRequires: desktop-file-utils
@@ -42,7 +42,7 @@ and consumes fewer resources.
 
 %build
 NOCONFIGURE=1 ./autogen.sh
-%configure --disable-static --enable-applet
+%configure --disable-static
 
 %make_build
 
@@ -58,6 +58,7 @@ desktop-file-install \
 %files -f %name.lang
 %doc COPYING README TODO NEWS AUTHORS
 %_bindir/%name
+%_libdir/libgnote-*.so.*
 %_man1dir/%name.*
 %_desktopdir/%name.desktop
 %_datadir/%name
@@ -67,12 +68,11 @@ desktop-file-install \
 %_datadir/dbus-1/services/org.gnome.Gnote.service
 %_datadir/glib-2.0/schemas/*.xml
 
-# applet
-%_datadir/dbus-1/services/org.gnome.panel.applet.GnoteAppletFactory.service
-%_libexecdir/gnote-applet
-%_datadir/gnome-panel/4.0/applets/org.gnome.gnote.panel-applet
-
 %changelog
+* Fri Jul 20 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.1-alt1
+- 0.9.1
+- upstream drop support for panel applet
+
 * Mon Oct 31 2011 Alexey Shabalin <shaba@altlinux.ru> 0.8.1-alt1
 - 0.8.1
 
