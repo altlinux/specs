@@ -1,6 +1,6 @@
 Name: libsmbios
 Version: 2.2.28
-Release: alt1
+Release: alt1.1
 License: GPLv2+ or OSL 2.1
 Summary: Libsmbios C/C++ shared libraries
 Group: System/Libraries
@@ -76,6 +76,7 @@ make check
 install -pD -m755 doc/pkgheader.sh %buildroot%_sbindir/pkgheader.sh
 
 #Install headers
+install -d %buildroot%_includedir
 cp -a src/include/*  %buildroot%_includedir/
 cp -a out/public-include/*  %buildroot%_includedir/
 
@@ -110,6 +111,9 @@ rm -rf %buildroot%_libdir/*.a
 %python_sitelibdir_noarch/*
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.28-alt1.1
+- Fixed build
+
 * Tue Jan 03 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2.28-alt1
 - Build for ALT
 
