@@ -4,7 +4,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: libpw1.11
 Version: 1.11.2
-Release: alt0.9cvs20061011.1
+Release: alt0.9cvs20061011.2
 
 Summary: Portable Windows Libary
 Summary(ru_RU.KOI8-R): Переносимая Windows-библиотека
@@ -17,6 +17,7 @@ Url: http://snapshots.gnomemeeting.net/
 #Source: http://www.openh323.org/bin/pwlib-%version.tar.bz2
 Source: http://snapshots.ekiga.net/cvs/%_name-cvs.tar.bz2
 #Source: http://www.ekiga.org/downloads/beta2/sources/pwlib-%version.tar.bz2
+Patch: libpw-1.11.2-alt-v4l.patch
 
 %def_without dc
 %def_without avc
@@ -24,7 +25,7 @@ Source: http://snapshots.ekiga.net/cvs/%_name-cvs.tar.bz2
 # Automatically added by buildreq on Sat Jan 21 2006
 BuildRequires: aalib-devel flex gcc-c++ libSDL_sound-devel libalsa-devel libexpat-devel libldap-devel libsasl2-devel libssl-devel libstdc++-devel xorg-proto-devel
 
-BuildPreReq: bison
+BuildPreReq: bison libv4l-devel
 BuildPreReq: libexpat-devel > 1.95.6-alt1
 
 Conflicts: libpw-devel
@@ -97,6 +98,7 @@ This package contains the AVC plugin for pwlib
 
 %prep
 %setup -q -n %_name
+%patch -p2
 sed -i "s|LIBRARIES = |LIBRARIES=|" ./configure
 
 %build
@@ -158,6 +160,9 @@ ln -snf %_datadir/%_name/make/ptlib-config %buildroot%_bindir/ptlib-config
 %endif
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.2-alt0.9cvs20061011.2
+- Fixed build
+
 * Wed May 25 2011 Denis Smirnov <mithraen@altlinux.ru> 1.11.2-alt0.9cvs20061011.1
 - rebuild
 
