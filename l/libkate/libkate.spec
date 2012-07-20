@@ -1,6 +1,6 @@
 Name: libkate
 Version: 0.4.1
-Release: alt1.1
+Release: alt1.2
 Summary: kate is a karaoke and text codec for embedding in ogg
 License: BSD-style
 Group: Video
@@ -61,7 +61,7 @@ new Kate streams to an Ogg file.
 %make
 
 %install
-%make DESTDIR=%buildroot install
+%make DESTDIR=%buildroot pythondir=%python_sitelibdir_noarch install
 
 %files
 %doc AUTHORS THANKS
@@ -79,10 +79,13 @@ new Kate streams to an Ogg file.
 
 %files -n KateDJ
 %_bindir/KateDJ
-%_prefix/lib/python*/site-packages/kdj
+%python_sitelibdir_noarch/kdj
 %_man1dir/KateDJ.1*
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4.1-alt1.1
 - Rebuild with Python-2.7
 
