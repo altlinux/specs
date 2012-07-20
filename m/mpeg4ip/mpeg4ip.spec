@@ -4,7 +4,7 @@
 
 Name: mpeg4ip
 Version: 1.5.0.1
-Release: alt13.2
+Release: alt13.3
 
 Summary: Set of linux video stream processing utilities
 License: MPL
@@ -14,12 +14,16 @@ Packager: Afanasov Dmitry <ender@altlinux.org>
 
 Source: http://download.sourceforge.net/mpeg4ip/%name-%version.tar.gz
 Patch: %name-ffmpeg-0.7.1.patch
+Patch1: %name-1.5.0.1-alt-v4l.patch
+Patch2: %name-1.5.0.1-alt-v4l-libav.patch
+Patch3: %name-1.5.0.1-alt-DSO.patch
 
 # Automatically added by buildreq on Thu Dec 15 2005
 BuildRequires: esound-devel fontconfig-devel freetype2-devel gcc-c++ glib2-devel id3lib-devel libSDL-devel liba52-devel libalsa-devel libatk-devel libaudio-devel libaudiofile-devel libcairo-devel libfaad-devel libglitz-devel libgtk+2-devel liblame-devel libmad-devel libmpeg2-devel libpango-devel libpng-devel libstdc++-devel libvorbis-devel nasm xvid-devel zlib-devel libx264-devel
 
 BuildPreReq: libICE-devel libavformat-devel libpostproc-devel
 BuildPreReq: libswscale-devel libavdevice-devel libavfilter-devel
+BuildPreReq: libv4l-devel
 
 %{?_enable_faac:BuildRequires: libfaac-devel}
 
@@ -117,6 +121,9 @@ MPEG4IP Static development files
 %prep
 %setup -n %name-%version
 %patch0 -p2
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
 touch bootstrapped
 # build player plugins as plugins, not libraries.
 find ./player -name Makefile\* -print0 | xargs -r0 subst 's,\(\-module\),\1 -avoid-version,' --
@@ -134,6 +141,7 @@ touch {common/video/iso-mpeg4,lib/{rtp,SDLAudio}}/{NEWS,AUTHORS,ChangeLog}
 	--enable-mp4live \
 	--without-arts \
 	--enable-warns-as-err=no \
+	--enable-ffmpeg=%prefix \
 %ifarch %ix86 x86_64	
 	--enable-mmx \
 %endif
@@ -203,6 +211,9 @@ rm -rf %buildroot%_datadir/doc/%name-%version/{mp4v2,programs}
 # TODO: fix checking of x264, when x264 will upgraded
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0.1-alt13.3
+- Fixed build
+
 * Fri Apr 27 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.5.0.1-alt13.2
 - rebuilt on arm
 
