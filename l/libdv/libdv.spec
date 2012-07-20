@@ -13,13 +13,14 @@
 
 Name: libdv
 Version: 1.0.0
-Release: alt5.5
+Release: alt5.6
 Summary: DV software video codec
 License: %lgpl2plus
 Group: System/Libraries
 URL: http://%name.sourceforge.net
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-1.0.0-alt-DSO.patch
 %define popt_ver 1.7-alt5
 Requires: libpopt >= %popt_ver
 Packager: Led <led@altlinux.ru>
@@ -94,6 +95,7 @@ and SMPTE 314M.
 %prep
 %setup
 %patch -p1
+%patch1 -p0
 
 
 %build
@@ -160,6 +162,9 @@ bzip2 --best --keep --force ChangeLog
 
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt5.6
+- Fixed build
+
 * Sun Feb 26 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.0-alt5.5
 - built on arm
 
