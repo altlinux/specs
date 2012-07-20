@@ -17,6 +17,9 @@
 %def_disable server_drivers
 %endif
 
+# Always build with dlopen'd modules
+%def_with driver_modules
+
 %if_enabled server_drivers
 # First the daemon itself
 %def_with libvirtd
@@ -45,6 +48,7 @@
 %def_with storage_lvm
 %def_with storage_iscsi
 %def_with storage_disk
+%def_with storage_rbd
 %def_with storage_mpath
 %def_with numactl
 %def_with selinux
@@ -57,7 +61,7 @@
 %def_without sanlock
 
 
-%endif #endif server_drivers
+%endif #server_drivers
 
 %if_with  qemu
 %def_with qemu_tcg
@@ -91,7 +95,7 @@
 %def_with sasl
 
 Name: libvirt
-Version: 0.9.12
+Version: 0.9.13
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -108,7 +112,7 @@ Patch1: %name-%version-%release.patch
 %{?_with_qemu:Requires: libvirt-qemu-common = %version-%release}
 Requires: libvirt-client = %version-%release
 
-%{?_with_xen:BuildRequires: xen-devel}
+%{?_with_xen:BuildRequires: xen-devel xen-runtime}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_udev:BuildRequires: libudev-devel libpciaccess-devel}
 %{?_with_yajl:BuildRequires: libyajl-devel}
@@ -124,9 +128,9 @@ Requires: libvirt-client = %version-%release
 %{?_with_polkit:BuildRequires: polkit}
 %{?_with_storage_fs:BuildRequires: util-linux}
 %{?_with_qemu:BuildRequires: qemu-img}
-%{?_with_xen:BuildRequires: xen-runtime}
 %{?_with_storage_lvm:BuildRequires: lvm2}
 %{?_with_storage_disk:BuildRequires: libparted-devel parted}
+%{?_with_storage_rbd:BuildRequires: ceph-devel}
 %{?_with_storage_iscsi:BuildRequires: open-iscsi}
 %{?_with_storage_mpath:BuildRequires: libdevmapper-devel}
 %{?_with_numactl:BuildRequires: libnuma-devel}
@@ -173,8 +177,12 @@ for specific drivers.
 %package daemon-config-network
 Summary: Default configuration files for the libvirtd daemon
 Group: System/Servers
+BuildArch: noarch
 Requires: %name-daemon = %version-%release
 Requires: bridge-utils
+%if_with driver_modules
+Requires: %name-daemon-driver-network = %version-%release
+%endif
 
 %description daemon-config-network
 Default configuration files for setting up NAT based networking
@@ -182,17 +190,162 @@ Default configuration files for setting up NAT based networking
 %package daemon-config-nwfilter
 Summary: Network filter configuration files for the libvirtd daemon
 Group: System/Servers
+BuildArch: noarch
 Requires: %name-daemon = %version-%release
+%if_with driver_modules
+Requires: %name-daemon-driver-nwfilter = %version-%release
+%endif
 
 %description daemon-config-nwfilter
 Network filter configuration files for cleaning guest traffic
 
+%if_with driver_modules
+%if_with network
+%package daemon-driver-network
+Summary: Network driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+
+%description daemon-driver-network
+The network driver plugin for the libvirtd daemon, providing
+an implementation of the virtual network APIs using the Linux
+bridge capabilities.
+%endif
+
+%if_with nwfilter
+%package daemon-driver-nwfilter
+Summary: Nwfilter driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+Requires: ebtables
+
+%description daemon-driver-nwfilter
+The nwfilter driver plugin for the libvirtd daemon, providing
+an implementation of the firewall APIs using the ebtables,
+iptables and ip6tables capabilities
+%endif
+
+%if_with udev
+%package daemon-driver-nodedev
+Summary: Nodedev driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+
+%description daemon-driver-nodedev
+The nodedev driver plugin for the libvirtd daemon, providing
+an implementation of the node device APIs using the udev
+capabilities.
+%endif
+
+
+%if_with netcf
+%package daemon-driver-interface
+Summary: Interface driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+
+%description daemon-driver-interface
+The interface driver plugin for the libvirtd daemon, providing
+an implementation of the network interface APIs using the
+netcf library
+%endif
+
+%package daemon-driver-secret
+Summary: Secret driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+
+%description daemon-driver-secret
+The secret driver plugin for the libvirtd daemon, providing
+an implementation of the secret key APIs.
+
+%package daemon-driver-storage
+Summary: Storage driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+
+%description daemon-driver-storage
+The storage driver plugin for the libvirtd daemon, providing
+an implementation of the storage APIs using LVM, iSCSI,
+parted and more.
+
+%if_with qemu
+%package daemon-driver-qemu
+Summary: Qemu driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+Requires: %name-daemon-driver-network = %version-%release
+
+%description daemon-driver-qemu
+The qemu driver plugin for the libvirtd daemon, providing
+an implementation of the hypervisor driver APIs using
+QEMU
+%endif
+
+%if_with lxc
+%package daemon-driver-lxc
+Summary: LXC driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+Requires: %name-daemon-driver-network = %version-%release
+
+%description daemon-driver-lxc
+The LXC driver plugin for the libvirtd daemon, providing
+an implementation of the hypervisor driver APIs using
+the Linux kernel
+%endif
+
+%if_with uml
+%package daemon-driver-uml
+Summary: Uml driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+
+%description daemon-driver-uml
+The UML driver plugin for the libvirtd daemon, providing
+an implementation of the hypervisor driver APIs using
+User Mode Linux
+%endif
+
+%if_with xen
+%package daemon-driver-xen
+Summary: Xen driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+
+%description daemon-driver-xen
+The Xen driver plugin for the libvirtd daemon, providing
+an implementation of the hypervisor driver APIs using
+Xen
+%endif
+
+
+%if_with libxl
+%package daemon-driver-libxl
+Summary: Libxl driver plugin for the libvirtd daemon
+Group: System/Libraries
+Requires: %name-daemon = %version-%release
+
+%description daemon-driver-libxl
+The Libxl driver plugin for the libvirtd daemon, providing
+an implementation of the hypervisor driver APIs using
+Libxl
+%endif
+%endif #driver_modules
+
 %package qemu-common
 Summary: Server side daemon, driver & default configs required to run QEMU or KVM guests
 Group: System/Servers
+BuildArch: noarch
 Requires: %name-daemon-config-network = %version-%release
 Requires: %name-daemon-config-nwfilter = %version-%release
 Requires: %name-daemon = %version-%release
+%if_with driver_modules
+Requires: %name-daemon-driver-qemu = %version-%release
+Requires: %name-daemon-driver-nodedev = %version-%release
+Requires: %name-daemon-driver-secret = %version-%release
+Requires: %name-daemon-driver-storage = %version-%release
+%endif
 
 %description qemu-common
 Server side daemon, driver and default network & firewall configs
@@ -201,6 +354,7 @@ required to manage the virtualization capabilities of QEMU or KVM.
 %package qemu
 Summary: Server side daemon, driver & default configs required to run QEMU guests
 Group: System/Servers
+BuildArch: noarch
 Requires: %name-qemu-common = %version-%release
 Requires: qemu
 
@@ -211,6 +365,7 @@ required to manage the virtualization capabilities of QEMU.
 %package kvm
 Summary: Server side daemon, driver & default configs required to run KVM guests
 Group: System/Servers
+BuildArch: noarch
 Requires: %name-qemu-common = %version-%release
 Requires: qemu-kvm
 
@@ -225,6 +380,12 @@ Requires: %name-daemon-config-network = %version-%release
 Requires: %name-daemon-config-nwfilter = %version-%release
 Requires: %name-daemon = %version-%release
 Requires: lxc
+%if_with driver_modules
+Requires: %name-daemon-driver-lxc = %version-%release
+Requires: %name-daemon-driver-nodedev = %version-%release
+Requires: %name-daemon-driver-secret = %version-%release
+Requires: %name-daemon-driver-storage = %version-%release
+%endif
 
 %description lxc
 Server side daemon, driver and default network & firewall configs
@@ -236,6 +397,12 @@ Group: System/Servers
 Requires: %name-daemon-config-network = %version-%release
 Requires: %name-daemon-config-nwfilter = %version-%release
 Requires: %name-daemon = %version-%release
+%if_with driver_modules
+Requires: %name-daemon-driver-uml = %version-%release
+Requires: %name-daemon-driver-nodedev = %version-%release
+Requires: %name-daemon-driver-secret = %version-%release
+Requires: %name-daemon-driver-storage = %version-%release
+%endif
 
 %description uml
 Server side daemon, driver and default network & firewall configs
@@ -244,10 +411,22 @@ required to manage the virtualization capabilities of UML.
 %package xen
 Summary: Server side daemon, driver & default configs required to run XEN guests
 Group: System/Servers
+BuildArch: noarch
 Requires: %name-daemon-config-network = %version-%release
 Requires: %name-daemon-config-nwfilter = %version-%release
 Requires: %name-daemon = %version-%release
 Requires: xen
+%if_with driver_modules
+%if_with xen
+Requires: %name-daemon-driver-xen = %version-%release
+%endif
+%if_with libxl
+Requires: %name-daemon-driver-libxl = %version-%release
+%endif
+Requires: %name-daemon-driver-nodedev = %version-%release
+Requires: %name-daemon-driver-secret = %version-%release
+Requires: %name-daemon-driver-storage = %version-%release
+%endif #driver_modules
 
 %description xen
 Server side daemon, driver and default network & firewall configs
@@ -329,11 +508,12 @@ sed -i 's/virnetsockettest //' tests/Makefile.am
 		%{subst_with hyperv} \
 		%{subst_with xenapi} \
 		%{subst_with network} \
-		%{subst_with storage_fs} \
-		%{subst_with storage_lvm} \
-		%{subst_with storage_iscsi} \
-		%{subst_with storage_disk} \
-		%{subst_with storage_mpath} \
+		%{?_with_storage_fs:--with-storage-fs} \
+		%{?_with_storage_lvm:--with-storage-lvm} \
+		%{?_with_storage_iscsi:--with-storage-iscsi} \
+		%{?_with_storage_disk:--with-storage-disk} \
+		%{?_with_storage_rbd:--with-storage-rbd} \
+		%{?_with_storage_mpath:--with-storage-mpath} \
 		%{subst_with numactl} \
 		%{subst_with selinux} \
 		%{subst_with netcf} \
@@ -347,6 +527,7 @@ sed -i 's/virnetsockettest //' tests/Makefile.am
 		%{subst_with libpcap} \
 		%{subst_with macvtap} \
 		%{subst_with audit} \
+		%{?_with_driver_modules:--with-driver-modules} \
 		%{subst_with dtrace} \
 		%{subst_with python} \
 		%{subst_with sasl}
@@ -364,8 +545,9 @@ do
 done
 
 install -d -m 0755 %buildroot%_localstatedir/run/libvirt/
-rm -f %buildroot%{_libdir}/*.{a,la}
-rm -f %buildroot%{_libdir}/python*/site-packages/*.{a,la}
+rm -f %buildroot%_libdir/*.{a,la}
+rm -f %buildroot%_libdir/%name/*/*.{a,la}
+rm -f %buildroot%_libdir/python*/site-packages/*.{a,la}
 
 %if_with network
 # We don't want to install /etc/libvirt/qemu/networks in the main %files list
@@ -532,7 +714,6 @@ fi
 %_datadir/polkit-1/actions/org.libvirt.unix.policy
 %endif
 
-
 %if_with network
 %files daemon-config-network
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/qemu
@@ -549,6 +730,60 @@ fi
 %files daemon-config-nwfilter
 %_sysconfdir/libvirt/nwfilter/*.xml
 %endif
+
+%if_with driver_modules
+%if_with netcf
+%files daemon-driver-interface
+%_libdir/%name/connection-driver/libvirt_driver_interface.so
+%endif
+
+%if_with network
+%files daemon-driver-network
+%_libdir/%name/connection-driver/libvirt_driver_network.so
+%endif
+
+%if_with udev
+%files daemon-driver-nodedev
+%_libdir/%name/connection-driver/libvirt_driver_nodedev.so
+%endif
+
+%if_with nwfilter
+%files daemon-driver-nwfilter
+%_libdir/%name/connection-driver/libvirt_driver_nwfilter.so
+%endif
+
+%files daemon-driver-secret
+%_libdir/%name/connection-driver/libvirt_driver_secret.so
+
+%files daemon-driver-storage
+%_libdir/%name/connection-driver/libvirt_driver_storage.so
+%endif
+
+%if_with qemu
+%files daemon-driver-qemu
+%_libdir/%name/connection-driver/libvirt_driver_qemu.so
+%endif
+
+%if_with lxc
+%files daemon-driver-lxc
+%_libdir/%name/connection-driver/libvirt_driver_lxc.so
+%endif
+
+%if_with uml
+%files daemon-driver-uml
+%_libdir/%name/connection-driver/libvirt_driver_uml.so
+%endif
+
+%if_with xen
+%files daemon-driver-xen
+%_libdir/%name/connection-driver/libvirt_driver_xen.so
+%endif
+
+%if_with libxl
+%files daemon-driver-libxl
+%_libdir/%name/connection-driver/libvirt_driver_libxl.so
+%endif
+%endif #driver_modules
 
 %if_with qemu
 %files qemu-common
@@ -568,7 +803,7 @@ fi
 %files kvm
 %endif
 
-%endif
+%endif #qemu
 
 %if_with lxc
 %files lxc
@@ -597,8 +832,6 @@ fi
 %dir %attr(0700, root, root) %_localstatedir/lib/libvirt/libxl
 %endif
 
-%endif
-
 %endif #if_with libvirtd
 
 %files devel
@@ -616,6 +849,11 @@ fi
 %doc examples/python
 
 %changelog
+* Wed Jul 18 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.13-alt1
+- 0.9.13
+- build drivers as loadable modules; split driver packages
+- add storage backend RBD (RADOS Block Device) support
+
 * Thu May 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.12-alt1
 - 0.9.12
 
