@@ -6,8 +6,8 @@
 %define libgudev_version 143
 
 Name: ModemManager
-Version: 0.5.2
-Release: alt2%git_date
+Version: 0.5.3.96
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Mobile broadband modem management service
@@ -74,6 +74,9 @@ make check
 %exclude %_includedir/mm/mm-modem.h
 
 %changelog
+* Fri Jul 20 2012 Mikhail Efremov <sem@altlinux.org> 0.5.3.96-alt1
+- Updated to 0.5.3.96 (0.5.4-rc2).
+
 * Tue Apr 03 2012 Mikhail Efremov <sem@altlinux.org> 0.5.2-alt2
 - Patches from upstream git:
   + option: hso_get_cid() always returns >= 0.
