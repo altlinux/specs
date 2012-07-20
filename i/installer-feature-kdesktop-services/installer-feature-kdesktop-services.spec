@@ -1,5 +1,5 @@
 Name: installer-feature-kdesktop-services
-Version: 0.3.3
+Version: 0.4.0
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Jul 20 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
+- add systemd support
+
 * Thu May 17 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.3-alt1
 - turn off clamd by default
 
