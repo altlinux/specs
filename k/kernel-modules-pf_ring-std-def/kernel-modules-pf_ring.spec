@@ -3,7 +3,7 @@
 %define module_release	alt1
 %define modules_list intel/e1000e/e1000e-2.0.0.1 intel/igb/igb-3.4.7
 
-%define kversion	3.4.4
+%define kversion	3.4.6
 %define krelease	alt1
 %define flavour		std-def
 
@@ -12,7 +12,7 @@
 Summary: pf_ring kernel modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197636.1
+Release: %module_release.197638.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -56,6 +56,7 @@ Standard drivers that have been enhanced with PF_RING native support
 rm -rf kernel-source-%module_name-%module_version
 tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
+
 
 %build
 pushd kernel
@@ -112,14 +113,17 @@ EOF
 
 
 %changelog
-* Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1.197636.1
-- Build for kernel-image-std-def-3.4.4-alt1.
+* Mon Jul 23 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.4.4-alt1.197638.1
+- Build for kernel-image-std-def-3.4.6-alt1.
 
 * Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1
 - 5.4.4
 
 * Sun Feb 05 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.2.1-alt1
 - 5.2.1
+
+* Fri Apr 08 2011 Anton Protopopov <aspsk@altlinux.org> 4.4.1-alt2
+- Use %ix86 x86_64
 
 * Fri Oct 15 2010 Alexey Shabalin <shaba@altlinux.ru> 4.4.1-alt1
 - 4.4.1
