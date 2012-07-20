@@ -1,5 +1,5 @@
 Name: xz
-Version: 5.0.3
+Version: 5.0.4
 Release: alt1
 
 Summary: LZMA/XZ compression programs
@@ -15,7 +15,7 @@ Requires: liblzma = %version-%release
 Provides: lzma-utils = 4.32.9
 Obsoletes: lzma-utils < 4.32.9
 
-# Automatically added by buildreq on Mon May 30 2011
+# Automatically added by buildreq on Fri Jul 20 2012
 # optimized out: xz
 BuildRequires: glibc-devel-static
 
@@ -128,6 +128,9 @@ make -k check
 %_libdir/liblzma.a
 
 %changelog
+* Fri Jul 20 2012 Alexey Tourbin <at@altlinux.ru> 5.0.4-alt1
+- 5.0.3 -> 5.0.4
+
 * Mon May 30 2011 Alexey Tourbin <at@altlinux.ru> 5.0.3-alt1
 - Updated to v5.0.3.
 
