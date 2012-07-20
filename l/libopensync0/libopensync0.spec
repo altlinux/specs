@@ -1,6 +1,6 @@
 Name: libopensync0
 Version: 0.22
-Release: alt4.1
+Release: alt4.2
 
 Summary: A Platform and Distribution Independent Synchronization Framework
 License: %lgpl2plus
@@ -15,6 +15,7 @@ Patch73: libopensync-vformat-infinite-loop.diff
 Patch74: alt-libopensync-linkage_fix.diff
 Patch75: alt-libopensync-python-lib-check-lib64.patch
 Patch76: libopensync-wrapper-err.patch
+Patch77: libopensync0-0.22-alt-no-Werror.patch
 
 # Automatically added by buildreq on Thu Oct 16 2008
 BuildRequires: gcc-c++ glib2-devel libsqlite3-devel libxml2-devel python-devel swig
@@ -65,6 +66,7 @@ Python module for %name.
 %patch74 -p1
 %patch75 -p1
 %patch76 -p0
+%patch77 -p2
 
 %build
 # echo > acinclude.m4
@@ -97,6 +99,9 @@ mkdir -p %buildroot%_datadir/opensync/defaults
 %dir %python_sitelibdir/*
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt4.2
+- Fixed build
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.22-alt4.1
 - Rebuild with Python-2.7
 
