@@ -1,7 +1,7 @@
 %define oname gtkhotkey
 Name: lib%oname
 Version: 0.1
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Cross Platform Library For Using Desktop Wide Hotkeys
 
@@ -11,6 +11,7 @@ Url: http://www.grillbar.org/wordpress/?p=250
 
 Source: http://grillbar-org/%oname-%version/%oname-%version.tar.gz
 Patch: %oname-%version-notest-alt.patch
+Patch1: libgtkhotkey-0.1-alt-glib2.patch
 
 BuildRequires: libgtk+2-devel >= 2.13 glib2-devel >= 2.15.6 gtk-doc perl-XML-Parser
 
@@ -34,6 +35,7 @@ in development of the lib%name-based applications.
 %prep
 %setup -q -n %oname-%version
 %patch -p1
+%patch1 -p2
 
 %build
 %configure --disable-static
@@ -53,6 +55,9 @@ in development of the lib%name-based applications.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.qa2
+- Fixed build
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
