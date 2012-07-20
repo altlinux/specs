@@ -1,6 +1,6 @@
 Name: kernel-image-el-smp
 Version: 2.6.32
-Release: alt38
+Release: alt39
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -601,6 +601,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/ -name "*.o*" -delete
 %modules_dir/kernel/drivers/media/
 
 %changelog
+* Fri Jul 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.6.32-alt39
+- 2.6.32-279.2.1.el6
+
 * Wed Jul 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.6.32-alt38
 - 2.6.32-279.1.1.el6
 

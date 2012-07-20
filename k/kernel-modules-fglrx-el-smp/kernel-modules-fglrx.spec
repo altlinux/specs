@@ -1,9 +1,9 @@
 %define module_name	fglrx
-%define module_version	8.96.1
+%define module_version	8.98
 %define module_release	alt1
 
 %define kversion       2.6.32
-%define krelease       alt38
+%define krelease       alt39
 %define flavour                el-smp
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -12,7 +12,7 @@
 Summary:	AMD/ATI Proprietary Linux Display Driver
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.132640.38
+Release:	%module_release.132640.39
 License:	Proprietary
 Group:		System/Kernel and hardware
 
@@ -47,6 +47,10 @@ Patch7: fglrx-2.6.38.patch
 Patch8: fglrx-3.2.8-build.patch
 %endif
 
+%if "%kversion" >= "3.4"
+Patch9: fglrx-3.4.2-build.patch
+%endif
+
 %description
 Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite
 
@@ -72,6 +76,10 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %patch8 -p1
 %endif
 
+%if "%kversion" >= "3.4"
+%patch9 -p1
+%endif
+
 sed -i 's|COMPAT_ALLOC_USER_SPACE|arch_compat_alloc_user_space|' kcl_ioctl.c
 
 %build
@@ -95,8 +103,14 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Wed Jul 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.8.96.1-alt1.132640.38
-- Build for kernel-image-el-smp-2.6.32-alt38.
+* Fri Jul 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.8.98-alt1.132640.39
+- Build for kernel-image-el-smp-2.6.32-alt39.
+
+* Fri Jul 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.8.98-alt1
+- 8.98
+
+* Mon Jun 11 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.96.1-alt2
+- Fix build with 3.4 kernel
 
 * Wed May 02 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.96.1-alt1
 - 8.96.1

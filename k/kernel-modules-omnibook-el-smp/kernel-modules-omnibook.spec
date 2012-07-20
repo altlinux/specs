@@ -3,7 +3,7 @@
 %define module_release	alt1
 
 %define kversion	2.6.32
-%define krelease	alt38
+%define krelease	alt39
 %define flavour		el-smp
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -11,7 +11,7 @@
 Summary: Kernel module for some Toshiba and HP laptops
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.38
+Release: %module_release.132640.39
 License: GPL
 Group: System/Kernel and hardware
 
@@ -70,8 +70,8 @@ cp -pr misc %buildroot%_docdir/%name-%version-%release
 %doc %_docdir/%name-%version-%release
 
 %changelog
-* Wed Jul 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 20090714-alt1.132640.38
-- Build for kernel-image-el-smp-2.6.32-alt38.
+* Fri Jul 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 20090714-alt1.132640.39
+- Build for kernel-image-el-smp-2.6.32-alt39.
 
 * Thu Sep 02 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20090714-alt1
 - updated from git
