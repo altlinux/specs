@@ -10,8 +10,8 @@
 %def_disable coredump
 
 Name: systemd
-Version: 185
-Release: alt3
+Version: 186
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -19,7 +19,6 @@ License: LGPLv2.1+
 
 Source:%name-%version.tar
 Source2: rc-local.service
-Source3: sysinit.service
 Source4: prefdm.service
 Source5: altlinux-loadmodules.service
 Source6: altlinux-idetune.service
@@ -188,7 +187,7 @@ Requires: libudev1 = %version-%release
 Requires: udev-rule-generator = %version-%release
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
-Conflicts: systemd < 28
+Conflicts: systemd < %version-%release
 
 %description -n udev
 Starting with the 2.5 kernel, all physical and virtual devices in a
@@ -238,8 +237,7 @@ This package contains CD/Net rule generator for udev
 Summary: Shared library to access udev device information
 Group: System/Libraries
 License: LGPLv2.1+
-Provides: libudev = %version-%release
-Obsoletes: libudev < 185-alt3
+Conflicts: libudev < 181-alt5
 
 %description -n libudev1
 This package provides shared library to access udev device information
@@ -320,8 +318,6 @@ intltoolize --force --automake
 %make DESTDIR=%buildroot install
 install -m644 %SOURCE2 %buildroot%_unitdir/rc-local.service
 ln -s rc-local.service %buildroot%_unitdir/local.service
-#install -m644 %SOURCE3 %buildroot%_unitdir/sysinit.service
-#ln -s ../sysinit.service %buildroot%_unitdir/sysinit.target.wants/sysinit.service
 install -m644 %SOURCE4 %buildroot%_unitdir/prefdm.service
 ln -s prefdm.service %buildroot%_unitdir/dm.service
 ln -s prefdm.service %buildroot%_unitdir/display-manager.service
@@ -374,7 +370,7 @@ rm -rf %buildroot%_docdir/systemd
 # add defaults services
 ln -s ../rc-local.service %buildroot%_unitdir/multi-user.target.wants/rc-local.service
 ln -s ../remote-fs.target %buildroot%_unitdir/multi-user.target.wants/remote-fs.target
-ln -s ../quotacheck.service %buildroot%_unitdir/local-fs.target.wants/quotacheck.service
+ln -s ../systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants/systemd-quotacheck.service
 ln -s ../quotaon.service %buildroot%_unitdir/local-fs.target.wants/quotaon.service
 mkdir -p %buildroot%_unitdir/getty.target.wants
 ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty1.service
@@ -389,7 +385,6 @@ ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty6.servic
 ln -s /dev/null %buildroot%_unitdir/fbsetfont.service
 ln -s /dev/null %buildroot%_unitdir/keytable.service
 ln -s /dev/null %buildroot%_unitdir/killall.service
-ln -s /dev/null %buildroot%_unitdir/plymouth.service
 
 # Use mingetty as default
 #%__subst 's,/sbin/agetty,/sbin/mingetty,'  %buildroot%_unitdir/getty@.service
@@ -406,6 +401,10 @@ rm -f %buildroot%_sysconfdir/systemd/system/default.target
 # Add example file for module load
 mkdir -p %buildroot%_sysconfdir/modules-load.d
 install -m644 %SOURCE9 %buildroot%_sysconfdir/modules-load.d/modules.conf
+
+# Make sure the NTP units dir exists
+mkdir -p %buildroot/lib/systemd/ntp-units.d
+mkdir -p %buildroot%_sysconfdir/systemd/ntp-units.d
 
 # Add completion for bash3
 rm -f %buildroot%_sysconfdir/bash_completion.d/*
@@ -431,15 +430,6 @@ touch %buildroot%_sysconfdir/os-release
 touch %buildroot%_sysconfdir/machine-id
 touch %buildroot%_sysconfdir/machine-info
 
-# The following services are currently executed by rc.sysinit
-#pushd %buildroot%_unitdir/basic.target.wants && {
-#	rm -f sysctl.service
-#	rm -f systemd-modules-load.service
-#	rm -f systemd-tmpfiles.service
-#	rm -f systemd-tmpfiles-clean.timer
-#popd
-#}
-
 # The following services are currently installed by initscripts
 #pushd %buildroot%_unitdir/graphical.target.wants && {
 #	rm -f display-manager.service
@@ -447,69 +437,9 @@ touch %buildroot%_sysconfdir/machine-info
 #popd
 #}
 
-# The following services are currently executed by rc.sysinit
-#pushd %buildroot%_unitdir/local-fs.target.wants && {
-#	rm -f cryptsetup.target
-#	rm -f fsck-root.service
-#	rm -f remount-rootfs.service
-#	rm -f systemd-remount-api-vfs.service
-#	rm -f var-lock.mount
-#	rm -f var-run.mount
-#popd
-#}
-
-# ALTLinux not ready for /var/lock and /var/run on tmpfs
-#pushd %buildroot%_unitdir/local-fs.target.wants && {
-#	rm -f var-lock.mount
-#	rm -f var-run.mount
-#popd
-#}
-
-# The following services are currently installed by initscripts
-#pushd %buildroot%_unitdir/multi-user.target.wants && {
-#	rm -f rc-local.service
-#	rm -f systemd-ask-password-wall.path
-#popd
-#}
-
-# plymoth run from initrd
-pushd %buildroot%_unitdir/sysinit.target.wants && {
-	rm -f plymouth-start.service
-popd
-}
-
-# The following services are currently executed by rc.sysinit
-#pushd %buildroot%_unitdir/sysinit.target.wants && {
-#	rm -f systemd-ask-password-console.path
-#	rm -f systemd-modules-load.service
-#	rm -f systemd-random-seed-load.service
-#	rm -f systemd-sysctl.service
-#	rm -f systemd-tmpfiles-setup.service
-#popd
-#}
-
-# The following services are currently part of initscripts
-#pushd %buildroot/lib/systemd/system && {
-#	rm -f default.target
-#	rm -f display-manager.service
-#	rm -f prefdm.service
-#	rm -f rc-local.service
-#	rm -f single.service
-#	rm -f sysinit.service
-#popd
-#}
-
-# disable legacy output to console, it just messes things up
-sed -i -e 's/^#SysVConsole=yes$/SysVConsole=no/' \
-	%buildroot%_sysconfdir/systemd/system.conf
-
 # disable swap enable, use altlinux-swap.service
 sed -i -e 's/^#SwapAuto=yes$/SwapAuto=no/' \
 	%buildroot%_sysconfdir/systemd/system.conf
-
-# Let syslog read from /proc/kmsg for now
-sed -i -e 's/\#ImportKernel=yes/ImportKernel=no/' \
-	%buildroot%_sysconfdir/systemd/journald.conf
 
 
 # ALTlinux specific changes
@@ -523,7 +453,7 @@ mkdir -p %buildroot%_initdir
 install -p -m755 %SOURCE19 %buildroot%_initdir/udevd
 #install -p -m755 %SOURCE20 %buildroot%_initdir/udevd-final
 
-ln -s systemd-udev.service %buildroot%_unitdir/udevd.service
+ln -s systemd-udevd.service %buildroot%_unitdir/udevd.service
 #ln -s systemd-udev-settle.service %buildroot%_unitdir/udevd-final.service
 
 # compatibility symlinks to udevd binary
@@ -634,6 +564,7 @@ fi
 %dir %_sysconfdir/systemd
 %dir %_sysconfdir/systemd/system
 %dir %_sysconfdir/systemd/user
+%dir %_sysconfdir/systemd/ntp-units.d
 
 %_sysconfdir/bash_completion.d/systemd
 /lib/tmpfiles.d/*.conf
@@ -844,6 +775,11 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Mon Jul 16 2012 Alexey Shabalin <shaba@altlinux.ru> 186-alt1
+- 186
+- fix path to udev binary in init script (ALT#27471)
+- change Obsoletes to Conflicts for libudev
+
 * Wed Jun 20 2012 Alexey Shabalin <shaba@altlinux.ru> 185-alt3
 - fix install - add Obsoletes: libudev < 185-alt3 (ALT#27472)
 
