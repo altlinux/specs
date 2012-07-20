@@ -1,6 +1,6 @@
 Name: lordsawar
 Version: 0.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Turn-based strategy game in a fantasy setting
 License: GPLv2+
@@ -9,6 +9,7 @@ Group: Games/Arcade
 Url: http://www.nongnu.org/lordsawar/
 Source: http://download.savannah.gnu.org/releases-noredirect/lordsawar/lordsawar-%version.tar.gz
 Patch1: lordsawar-0.1.7-asneeded.patch
+Patch2: lordsawar-0.2.0-alt-DSO.patch
 
 # Automatically added by buildreq on Sat Mar 12 2011
 BuildRequires: boost-devel-headers gcc-c++ intltool libSDL_mixer-devel libexpat-devel libgnet-devel libgtkmm2-devel libtar-devel zlib-devel
@@ -33,6 +34,7 @@ Data files for lordsawar game.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
 %configure
@@ -55,6 +57,9 @@ subst 's/.png//' %buildroot%_desktopdir/lordsawar.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.1
+- Fixed build
+
 * Sat Mar 26 2011 Victor Forsiuk <force@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
