@@ -1,6 +1,6 @@
 Name: pmacct
 Version: 0.14.0
-Release: alt3.rc3
+Release: alt4
 License: GPLv2
 Summary: pcap-based accounting tools
 Group: System/Servers
@@ -253,12 +253,14 @@ memory table or a SQLite database.
 %patch -p1
 
 %build
-#autoreconf
+%autoreconf
 %define common_opts \\\
 	--with-pgsql-includes=%_includedir/pgsql \\\
-	--enable-64bit \\\
 	--enable-threads \\\
-	--enable-ulog
+	--enable-ulog \\\
+	--enable-64bit \\\
+	--enable-v4-mapped \\\
+	--enable-ipv6
 
 %configure \
 	%common_opts \
@@ -535,6 +537,9 @@ __EOF__
 %_altdir/uacct-sqlite3
 
 %changelog
+* Mon Jul 16 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.0-alt4
+- New release
+
 * Thu Dec 15 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.0-alt3.rc3
 - Add --enable-ulog (#26714)
 
