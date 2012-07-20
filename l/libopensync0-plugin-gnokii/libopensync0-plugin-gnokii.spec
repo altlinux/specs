@@ -3,7 +3,7 @@
 
 Name: libopensync0-plugin-gnokii
 Version: 0.22
-Release: alt2.3
+Release: alt2.4
 
 Summary: Gnokii plugin for OpenSync
 License: GPL
@@ -14,6 +14,7 @@ Source: %orig_name-%version.tar.bz2
 Patch0: libopensync-plugin-gnokii-add_new_entries.diff
 Patch1: alt-build.diff
 Patch2: libopensync-plugin-gnokii_enum.patch
+Patch3: libopensync0-plugin-gnokii-0.22-alt-no-Werror.patch
 Packager: Mobile Development Team <mobile@packages.altlinux.org>
 
 Requires: libgnokii 
@@ -34,6 +35,7 @@ It is recommended to use the latest version of gnokii.
 %patch0 -p0
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 %configure
@@ -50,6 +52,9 @@ rm -f %buildroot%_libdir/opensync/*/*.la
 %_datadir/opensync/defaults/*
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt2.4
+- Fixed build
+
 * Fri Aug 06 2010 Michael Shigorin <mike@altlinux.org> 0.22-alt2.3
 - *rebuilt* with Fedora patch
 
