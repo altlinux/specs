@@ -1,6 +1,6 @@
 Name: libgtk-engine-equinox
 Version: 1.30.2
-Release: alt1
+Release: alt1.1
 Summary: Equinox GTK Engine
 
 Group: Graphical desktop/GNOME
@@ -8,6 +8,7 @@ License: GPL
 Url: http://gnome-look.org/content/show.php/Equinox+GTK+Engine?content=121881
 
 Source: equinox-%version.tar
+Patch: libgtk-engine-equinox-1.30.2-alt-glib2.patch
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 BuildRequires: libgtk+2-devel
@@ -40,6 +41,7 @@ Equinox GTK2 themes:
 %setup -q -n equinox-%version
 tar xzf equinox-gtk-engine.tar.gz
 tar xzf equinox-themes.tar.gz
+%patch -p0
 
 %build
 pushd equinox-1.30 > /dev/null
@@ -65,6 +67,9 @@ cp -R Equinox* %buildroot%_datadir/themes
 %_datadir/themes/*
 
 %changelog
+* Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.30.2-alt1.1
+- Fixed build
+
 * Mon Jan 24 2011 Vladimir Lettiev <crux@altlinux.ru> 1.30.2-alt1
 - initial build
 
