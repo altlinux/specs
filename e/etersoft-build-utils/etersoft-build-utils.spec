@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.12
+Version: 2.0.13
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -66,6 +66,19 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Sat Jul 21 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.13-alt1
+- fix build with udev, check support for Mandriva and ROSA
+- gamend: add support for commit separate files
+- major pkgrepl rewrite
+- rpmreqs: never require rpm
+- add SLED/SLES pkgrepls
+- repl: one package name per line
+- estrlist: add list command
+- repl: restore correct + (plus sign) in package names
+- introduce rpmreq command (get binary package requires)
+- introduce estrlist for sets operations, use it partially
+- rpm: check for any spec name
+
 * Sat Jun 02 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.12-alt1
 - rpmlog: disable sort -u for changelog items
 - gpull: get tags for gpull -c too
