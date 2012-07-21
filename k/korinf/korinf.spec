@@ -1,5 +1,5 @@
 Name: korinf
-Version: 1.9.6
+Version: 1.9.7
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -43,6 +43,27 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Sat Jul 21 2012 Vitaly Lipatov <lav@altlinux.ru> 1.9.7-alt1
+- makeiso-selta: actualize script
+- add wine-mono script
+- add some hacks for package reqs (Ubuntu/12.04 and mandriva)
+- use new rpmreqs for dependence generation
+- improve tests
+- install_req: use parse_dist_name inside
+- use mount_linux with distr name as first arg
+- introduce assert_var function and use it
+- fix external get_distro_list using
+- korinf: fix build_package return status
+- checkreqs: add rules for Mandriva and SUSE
+- improve get_bin_package: do not use MAILFILESLIST var
+- install: do not ask for install from apt
+- add build-any-package.sh, add prevcommit support
+- remove debug packages from install list if already install it in /extra
+- message: introduce error message function and use it
+- make license file for RX@Etersoft
+- fixed #8487 for Gentoo ebuild generation
+- korinf: use -v for set version
+
 * Tue May 22 2012 Vitaly Lipatov <lav@altlinux.ru> 1.9.6-alt1
 - major rewrite
 - add autobuild script for wine private
