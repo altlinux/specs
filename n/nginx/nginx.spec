@@ -11,7 +11,7 @@
 %def_enable cache_purge
 
 Name: nginx
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 Summary: Fast HTTP server
@@ -241,6 +241,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Sat Jul 21 2012 Anton Farygin <rider@altlinux.ru> 1.2.2-alt1
+- new version
+
 * Wed Jun 06 2012 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
 - new version
 
