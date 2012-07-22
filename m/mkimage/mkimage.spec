@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: Simple image creator
@@ -34,6 +34,11 @@ files (called `templates').
 %doc examples doc/README.ru
 
 %changelog
+* Sun Jul 22 2012 Alexey Gladkov <legion@altlinux.ru> 0.2.3-alt1
+- mki-count-cpu: Get the number of processors in different ways (ALT#27136).
+- mki-pack-squash: do not need no recovery info.
+- mki-pack-ubifs: Allow ubifs image packing.
+
 * Tue Jan 17 2012 Michael Shigorin <mike@altlinux.org> 0.2.2-alt1
 - tools/mki-pack-{isodata,isoboot,yaboot}: added mkisofs -sort support
 
