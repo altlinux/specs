@@ -1,6 +1,6 @@
 Name: netpolice-filter
 Version: 1.01
-Release: alt2.4
+Release: alt2.5
 Packager: Anton Pischulin <letanton@altlinux.ru>
 
 Summary: url filter for c-icap server
@@ -31,7 +31,7 @@ ICAP module for checking URL against blacklist.
 aclocal
 autoconf  
 autoheader
-cp /usr/share/libtool-2.2/config/ltmain.sh ltmain.sh
+cp /usr/share/libtool/config/ltmain.sh ltmain.sh
 automake --add-missing --copy  
 cp INSTALL INSTALL.txt
 
@@ -48,6 +48,9 @@ mv %buildroot%_libdir/%name/ %buildroot%_libdir/c-icap
 %_libdir/c-icap/srv_url_filter.so
 
 %changelog
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.01-alt2.5
+- Fixed build
+
 * Mon Mar 1 2010 Anton Pischulin <letanton@altlinux.ru> 1.01-alt2.4
 - Delete Requires: name = version-release.
 * Mon Mar 1 2010 Anton Pischulin <letanton@altlinux.ru> 1.01-alt2.3
