@@ -6,7 +6,7 @@
 
 Name: teeworlds-tdtw
 Version: 0.5.2
-Release: alt1
+Release: alt1.1
 
 Packager: Vladimir V. Kamarzin <vvk@altlinux.org>
 
@@ -16,6 +16,7 @@ Group: Games/Arcade
 
 Url: http://code.google.com/p/tdtw
 Source: %name-%version.tar
+Patch: teeworlds-tdtw-alt-gcc4.6.patch
 
 Requires: teeworlds-tdtw-gamedata = %version-%release
 # Automatically added by buildreq on Wed Jan 14 2009
@@ -55,6 +56,7 @@ Teeworlds dedicated server
 
 %prep
 %setup
+%patch -p1
 
 %build
 cd bam
@@ -122,6 +124,9 @@ install -pDm644 altlinux/server-zm.cfg %buildroot%_sysconfdir/%name/server-zm.cf
 %_datadir/%name
 
 %changelog
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt1.1
+- Fixed build
+
 * Tue Oct 27 2009 Vladimir V. Kamarzin <vvk@altlinux.org> 0.5.2-alt1
 - Update to git 58b4e5ac1cf774918323fd188cf8add2a0c1bef9
 - Sync with upstream 0.5.2.
