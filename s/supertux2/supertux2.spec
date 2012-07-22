@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.3.3
-Release: alt3
+Release: alt3.1
 
 Summary: SuperTux is a classic 2D jump'n run sidescroller game in a Super Mario style
 
@@ -18,6 +18,7 @@ Source3: supertux-48x48.png
 
 Patch0: supertux-alt-desktop-file.patch
 Patch1: supertux-0.3.3-alt-curl.patch
+Patch2: supertux2-0.3.3-alt-gcc4.6.patch
 
 Conflicts: supertux
 
@@ -59,6 +60,7 @@ This is package contains data files for supertux2.
 %setup -q -n supertux-%version
 %patch0
 %patch1 -p1
+%patch2 -p2
 
 %build
 cmake \
@@ -98,6 +100,9 @@ install -D -m 644 man/man6/%name.6 %buildroot/%_man6dir/%name.6
 %_gamesdatadir/supertux2/*
 
 %changelog
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt3.1
+- Fixed build
+
 * Thu Apr 12 2012 Igor Zubkov <icesik@altlinux.org> 0.3.3-alt3
 - Build with libcurl for addons manager
 
