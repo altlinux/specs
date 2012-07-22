@@ -1,5 +1,5 @@
 %define module_name	fglrx
-%define module_version	8.96.1
+%define module_version	8.98
 %define module_release	alt1
 
 %define kversion       2.6.32
@@ -47,6 +47,10 @@ Patch7: fglrx-2.6.38.patch
 Patch8: fglrx-3.2.8-build.patch
 %endif
 
+%if "%kversion" >= "3.4"
+Patch9: fglrx-3.4.2-build.patch
+%endif
+
 %description
 Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite
 
@@ -72,6 +76,10 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %patch8 -p1
 %endif
 
+%if "%kversion" >= "3.4"
+%patch9 -p1
+%endif
+
 sed -i 's|COMPAT_ALLOC_USER_SPACE|arch_compat_alloc_user_space|' kcl_ioctl.c
 
 %build
@@ -95,13 +103,19 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Thu May 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.96.1-alt1.132640.24
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.98-alt1.132640.24
 - Build for kernel-image-hpc-skif-2.6.32-alt24.
 
-* Thu May 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.96.1-alt1
+* Fri Jul 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.8.98-alt1
+- 8.98
+
+* Mon Jun 11 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.96.1-alt2
+- Fix build with 3.4 kernel
+
+* Wed May 02 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.96.1-alt1
 - 8.96.1
 
-* Fri Mar 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.95.1-alt1
+* Thu Apr 05 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.95.1-alt1
 - 8.95.1
 
 * Tue Mar 13 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.93-alt3
