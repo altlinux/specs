@@ -1,5 +1,5 @@
 Name: scummvm
-Version: 1.4.1
+Version: 1.5.0
 Release: alt1
 
 Summary: Graphic adventure game interpreter
@@ -71,6 +71,9 @@ install -D icons/scummvm.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.sv
 %_datadir/%name/*
 
 %changelog
+* Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 1.5.0-alt1
+- Autobuild version bump to 1.5.0
+
 * Fri Feb 10 2012 Fr. Br. George <george@altlinux.ru> 1.4.1-alt1
 - Autobuild version bump to 1.4.1
 
