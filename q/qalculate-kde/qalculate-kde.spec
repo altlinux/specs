@@ -2,7 +2,7 @@
 
 Name: qalculate-kde
 Version: 0.9.7
-Release: alt3
+Release: alt3.1
 
 Summary: A very versatile desktop calculator - KDE version.
 Group: Office
@@ -12,16 +12,21 @@ Packager: Alexey Morsov <swi@altlinux.ru>
 Requires: %shortname-common
 
 Source: %name-%version.tar
+Patch: qalculate-kde-0.9.7-alt-DSO.patch
 
-BuildRequires: fontconfig freetype2 gcc-c++ glib2-devel kdelibs-devel libcln-devel libgmp-devel libjpeg-devel libpng-devel 
+%set_gcc_version 4.5
+BuildPreReq: gcc4.5-c++ libstdc++4.5-devel
+
+BuildRequires: fontconfig freetype2 glib2-devel kdelibs-devel libcln-devel libgmp-devel libjpeg-devel libpng-devel 
 BuildRequires: libqalculate-devel = %version
-BuildRequires: libqt3-devel libqt3-settings libstdc++-devel libxml2-devel xml-utils zlib-devel
+BuildRequires: libqt3-devel libqt3-settings libxml2-devel xml-utils zlib-devel
 
 %description
 KDE graphical interface for Qalculate!
 
 %prep
 %setup
+%patch -p0
 sed -i "s/\(Wl,--no-undefined\)/ -Wl,--allow-shlib-undefined \1/g" admin/acinclude.m4.in
 sed -i "s/\-lkdeui/-lkdeui -lpthread/g" admin/acinclude.m4.in
 sed -i "s/\.la/.so/g" admin/acinclude.m4.in
@@ -50,6 +55,9 @@ rm -rf %buildroot/%_datadir/locale
 %_K3doc/en/qalculate_kde
 
 %changelog
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7-alt3.1
+- Fixed build
+
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.9.7-alt3
 - Build for TDE 3.5.13 release
 
