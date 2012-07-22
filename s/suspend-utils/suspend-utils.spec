@@ -1,6 +1,6 @@
 Name:           suspend-utils
 Version:        0.8
-Release:        alt1
+Release:        alt1.1
 Summary:        A Set Of Tools To Support Sleep Modes
 License:        GPLv2+
 Url:            http://sourceforge.net/projects/suspend
@@ -25,11 +25,15 @@ autoreconf -fisv
 %make
 
 %install
+install -d %buildroot%_sysconfdir
 make install DESTDIR=$RPM_BUILD_ROOT
 
 %files
 /usr/sbin/s2ram
 
 %changelog
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.1
+- Fixed build
+
 * Thu Sep 09 2010 Anton Farygin <rider@altlinux.ru> 0.8-alt1
 - first build for Sisyphus
