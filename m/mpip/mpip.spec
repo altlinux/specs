@@ -11,7 +11,7 @@
 %define sover %somver.3.3
 Name: mpip
 Version: 3.3
-Release: alt4.svn20120216
+Release: alt4.svn20120626
 Summary: Lightweight profiling library for MPI applications
 License: BSD
 Group: Development/Tools
@@ -111,6 +111,7 @@ ln -s libfarg.so.%sover libfarg.so.%somver
 ln -s libfarg.so.%somver libfarg.so
 
 %add_optflags %optflags_shared
+%autoreconf
 %configure \
 	--enable-fortranweak \
 	--enable-bfd \
@@ -123,7 +124,10 @@ ln -s libfarg.so.%somver libfarg.so
 	--with-wtime \
 	--enable-stackdepth=16
 
-%make _ARCH=%barch OS=Linux SOMVER=%somver SOVER=%sover all
+%make _ARCH=%barch OS=Linux SOMVER=%somver SOVER=%sover all ||:
+rm -f libmpiP.*
+%make _ARCH=%barch OS=Linux SOMVER=%somver SOVER=%sover all \
+	ADDLIB=-lmpiPg77
 
 %install
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
@@ -166,6 +170,9 @@ install -m644 mpip_timers/linux_posix.h %buildroot%_includedir/mpip_timers
 %_libdir/libfarg.so
 
 %changelog
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt4.svn20120626
+- New snapshot
+
 * Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt4.svn20120216
 - Rebuilt with OpenMPI 1.6
 
