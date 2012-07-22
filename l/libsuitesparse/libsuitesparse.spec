@@ -1,6 +1,6 @@
 Name: libsuitesparse
 Version: 3.6.1
-Release: alt3
+Release: alt4
 
 Summary: Shared libraries for sparse matrix calculations
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -75,6 +75,8 @@ install -m755 %SOURCE2 .
 %install
 %makeinstall NAME=%name VERSION=%version
 
+install -p -m644 CXSparse/Include/cs.h \
+	%buildroot%_includedir/suitesparse/cx_cs.h
 install -d %buildroot%_pkgconfigdir
 install -m644 *.pc %buildroot%_pkgconfigdir
 
@@ -103,6 +105,9 @@ done
 %_libdir/%name/demos
 
 %changelog
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt4
+- Added cs.h for CXSparse as cx_cs.h
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt3
 - Rebuilt with libmetis0 4.0.3-alt3
 
