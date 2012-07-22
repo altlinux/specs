@@ -3,7 +3,7 @@
 
 Name: hal
 Version: 0.5.14
-Release: alt8
+Release: alt8.1
 Summary: Hardware Abstraction Layer
 Group: System/Servers
 License: AFL/GPL
@@ -16,6 +16,8 @@ Conflicts: hal-fstab-sync < 0.0.1-alt7
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Patch1: hal-0.5.14-alt-ntfs-options.patch
+Patch2: hal-0.5.14-alt-v4l.patch
+Patch3: hal-0.5.14-alt-glib2.patch
 
 AutoReq: yes, noshell
 BuildPreReq: libblkid-devel >= 1.43
@@ -24,6 +26,7 @@ BuildRequires: python-devel gperf python-modules-compiler python-modules-encodin
 %ifarch %ix86 x86_64
 BuildRequires: libpci-devel zlib-devel
 %endif
+BuildPreReq: libv4l-devel
 
 %description
 HAL is daemon for collection and maintaining information from several
@@ -52,6 +55,8 @@ Headers for HAL
 %setup -q
 %patch -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 rm -f gtk-doc.make acinclude.m4
 
@@ -120,6 +125,9 @@ mkdir -p %buildroot%_sysconfdir/hal/fdi/{information,policy,preprobe}
 %_pkgconfigdir/*
 
 %changelog
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.14-alt8.1
+- Fixed build
+
 * Thu Oct 27 2011 Sergey V Turchin <zerg@altlinux.org> 0.5.14-alt8
 - fix ntfs mount options (ALT#26513)
 
