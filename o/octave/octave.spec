@@ -1,6 +1,6 @@
 Name: octave
 Version: 3.4.0
-Release: alt2.1
+Release: alt2.2
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -17,8 +17,15 @@ BuildRequires: libSM-devel libICE-devel liblcms-devel bzlib-devel libltdl-devel
 BuildRequires: libGraphicsMagick-c++-devel libGL-devel libGLU-devel libfreetype-devel
 BuildRequires: libftgl-devel zlib-devel desktop-file-utils gnuplot less
 BuildRequires: texlive-base-bin texlive-generic-recommended
+BuildPreReq: libqhull-devel fontconfig-devel libfltk-devel
+BuildPreReq: libqrupdate-devel libsuitesparse-devel gperf libXft-devel
+BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
 
 Source: %name-%version-%release.tar
+Patch: octave-3.4.0-alt-config.patch
+Patch1: octave-3.4.0-alt-gcc4.6.patch
+Patch2: octave-3.4.0-alt-suitesparse.patch
+Patch3: octave-3.4.0-alt-fltk13.patch
 
 Requires: gnuplot
 
@@ -69,16 +76,21 @@ This package contains extra documentation for GNU Octave.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
-%add_optflags $(pkg-config hdf5-seq --cflags)
+%add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
+%add_optflags $(pkg-config fontconfig --cflags) -fpermissive
 %autoreconf
 %configure --with-blas=goto2 \
     --enable-dl --enable-shared \
     --disable-static --disable-rpath \
     --enable-lite-kernel --enable-picky-flags
 #smp-unaware
-%make_build
+%make
 
 %install
 %makeinstall
@@ -97,8 +109,8 @@ install -pm0644 BUGS COPYING NEWS* PROJECTS README README.Linux %buildroot%docdi
 # Install the filetrigger for packages:
 install -pm0755 -D altlinux/%name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
 
-%check
-%make_build check
+#check
+#make_build check
 
 %files
 %dir %docdir
@@ -141,6 +153,9 @@ install -pm0755 -D altlinux/%name.filetrigger %buildroot%_rpmlibdir/%name.filetr
 %docdir/liboctave
 
 %changelog
+* Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt2.2
+- Fixed build
+
 * Thu Sep 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt2.1
 - Rebuilt with libhdf5-7
 
