@@ -7,7 +7,7 @@
 
 Name: zabbix
 Version: 2.0.2
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -441,6 +441,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Sun Jul 22 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.2-alt2
+- Fix default pidfile location
+
 * Fri Jul 20 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.2-alt1
 - 2.0.2 release
 
