@@ -1,6 +1,6 @@
 Name: udev-alsa
 Version: 0.3
-Release: alt1
+Release: alt1.1
 Summary: The system sound initialization
 License: GPL
 Group: System/Base
@@ -12,6 +12,7 @@ Obsoletes: rhsound sound-scripts
 Provides: sound-scripts = 20091231:3.0-alt1
 
 Source: %name-%version.tar
+Patch: udev-alsa-0.3-alt-udev-187.patch
 
 BuildRequires: libalsa-devel libudev-devel
 
@@ -20,6 +21,7 @@ The %name package contains the udev rules used to setup sound devices
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %autoreconf
@@ -51,6 +53,9 @@ done
 %ghost %_localstatedir/alsa/controlC*
 
 %changelog
+* Mon Jul 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.1
+- Fixed build
+
 * Thu Mar 31 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.3-alt1
 - 0.3
 
