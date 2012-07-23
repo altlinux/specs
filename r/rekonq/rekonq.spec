@@ -1,5 +1,5 @@
 Name:         rekonq
-Version:      0.9.2
+Version:      1.0
 Release:      alt1
 
 Group:        Networking/WWW
@@ -14,11 +14,12 @@ Source:      %name-%version.tar
 
 # Automatically added by buildreq on Wed Mar 23 2011 (-bi)
 #BuildRequires: cvs gcc-c++ git-core glib2-devel kde4libs-devel libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libqt3-devel libxkbfile-devel mercurial openssh-common qt4-designer subversion valgrind zlib-devel-static
-BuildRequires: gcc-c++ glib2-devel kde4libs-devel libqt4-devel zlib-devel
+BuildRequires: gcc-c++ glib2-devel kde4libs-devel libqt4-devel zlib-devel qoauth-devel libqca2-devel
 BuildRequires: libalternatives-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel
 BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildRequires: libxkbfile-devel desktop-file-utils
+BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel
 
 %description
 Web browser easy for use.
@@ -52,7 +53,7 @@ desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-hand
 %doc AUTHORS ChangeLog TODO
 %config %_sysconfdir/alternatives/packages.d/%name
 %_K4bindir/%name
-#%_K4bindir/kwebapp
+%_K4bindir/kwebapp
 %_K4libdir/libkdeinit4_rekonq.so
 %_K4xdg_apps/%name.desktop
 %_K4apps/%name/
@@ -60,6 +61,12 @@ desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-hand
 %_K4cfg/%name.kcfg
 
 %changelog
+* Mon Jul 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1
+- new version
+
+* Fri Jun 15 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt0.M60P.1
+- built for M60P
+
 * Thu Jun 14 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt1
 - new version
 
