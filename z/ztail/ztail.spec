@@ -6,8 +6,8 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: ztail
-Version: 1.0.1
-Release: alt2
+Version: 1.0.2
+Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -18,8 +18,8 @@ Summary: Multi-file, colored, filtered log tailer.
 Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Fri Mar 23 2012 (-bb)
-# optimized out: elfutils ghc7.4.1 ghc7.4.1-common ghc7.4.1-mtl ghc7.4.1-regex-base ghc7.4.1-regex-posix ghc7.4.1-transformers libgmp-devel pkg-config python-base
-BuildRequires: ghc7.4.1-alex ghc7.4.1-c2hs ghc7.4.1-cpphs ghc7.4.1-happy ghc7.4.1-hinotify ghc7.4.1-regex-compat
+# optimized out: elfutils ghc7.4.2 ghc7.4.2-common ghc7.4.2-mtl ghc7.4.2-regex-base ghc7.4.2-regex-posix ghc7.4.2-transformers libgmp-devel pkg-config python-base
+BuildRequires: ghc7.4.2-alex ghc7.4.2-c2hs ghc7.4.2-cpphs ghc7.4.2-happy ghc7.4.2-hinotify ghc7.4.2-regex-compat
 
 %description
 An even more improved version of xtail/tail -f, including inotify support,
@@ -40,6 +40,9 @@ runghc Setup copy --destdir=%buildroot
 %_bindir/ztail
 
 %changelog
+* Mon Jul 23 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
 * Fri Mar 23 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0.1-alt2
 - fix build with new ghc + hinotify
 
