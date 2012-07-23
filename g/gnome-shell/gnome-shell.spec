@@ -4,7 +4,7 @@
 %def_with systemd
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -166,6 +166,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.shell.evolution.calendar.gschema.xml
 %_man1dir/*
 %doc README NEWS
 
@@ -174,6 +175,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Sat Jul 21 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Tue Apr 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
