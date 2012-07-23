@@ -7,7 +7,7 @@
 
 Name: %f_pkg_name
 Version: 0.1.2
-Release: alt9
+Release: alt10
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -15,8 +15,8 @@ URL: http://www.haskell.org/haskellwiki/Xmonad-utils
 Source: %name-%version.tar
 Summary: A small collection of X utilities
 # Automatically added by buildreq on Mon Mar 19 2012 (-bb)
-# optimized out: elfutils ghc7.4.1 ghc7.4.1-common ghc7.4.1-syb libX11-devel libgmp-devel pkg-config
-BuildRequires: ghc7.4.1-random ghc7.4.1-x11 libXext-devel libXinerama-devel
+# optimized out: elfutils ghc7.4.2 ghc7.4.2-common ghc7.4.2-syb libX11-devel libgmp-devel pkg-config
+BuildRequires: ghc7.4.2-random ghc7.4.2-x11 libXext-devel libXinerama-devel
 
 %description
 A small collection of X utilities useful when running XMonad. It includes:
@@ -44,6 +44,9 @@ runghc Setup copy --destdir=%buildroot
 %_bindir/*
 
 %changelog
+* Mon Jul 23 2012 Denis Smirnov <mithraen@altlinux.ru> 0.1.2-alt10
+- rebuild with ghc 7.4.2
+
 * Mon Mar 19 2012 Denis Smirnov <mithraen@altlinux.ru> 0.1.2-alt9
 - rebuild with ghc 7.4.1
 
