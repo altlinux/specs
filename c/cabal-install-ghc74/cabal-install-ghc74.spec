@@ -7,7 +7,7 @@
 
 Name: cabal-install-ghc74
 Version: 0.10.4
-Release: alt1
+Release: alt2
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -20,8 +20,8 @@ Obsoletes: cabal-install < %version-%release
 Conflicts: cabal-install < %version-%release
 
 # Automatically added by buildreq on Tue Mar 20 2012 (-bb)
-# optimized out: elfutils ghc7.4.1 ghc7.4.1-common ghc7.4.1-mtl ghc7.4.1-network ghc7.4.1-parsec ghc7.4.1-text ghc7.4.1-transformers libgmp-devel pkg-config python-base
-BuildRequires: ghc7.4.1-alex ghc7.4.1-happy ghc7.4.1-http ghc7.4.1-random ghc7.4.1-zlib zlib-devel
+# optimized out: elfutils ghc7.4.2 ghc7.4.2-common ghc7.4.2-mtl ghc7.4.2-network ghc7.4.2-parsec ghc7.4.2-text ghc7.4.2-transformers libgmp-devel pkg-config python-base
+BuildRequires: ghc7.4.2-alex ghc7.4.2-happy ghc7.4.2-http ghc7.4.2-random ghc7.4.2-zlib zlib-devel
 
 %description
 This is a naive adaption of cabal-install-ghc72 for ghc 7.4.1. Don't
@@ -60,5 +60,8 @@ rm -rf doc LICENSE examples
 %_bindir/cabal
 
 %changelog
+* Mon Jul 23 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10.4-alt2
+- rebuild with ghc 7.4.2
+
 * Sat Mar 17 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10.4-alt1
 - Spec created by cabal2rpm 0.20_08
