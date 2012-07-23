@@ -4,7 +4,7 @@
 
 Name: abiword
 Version: 2.8.6
-Release: alt1.2
+Release: alt1.3
 
 Summary: Lean and fast full-featured word processor
 Group: Office
@@ -23,6 +23,7 @@ Source11: abiword.mime
 
 Patch: %name-2.8.6-headers.patch
 Patch1: %name-2.8.6-alt-glib2-2.32.0.patch
+Patch2: %name-2.8.6-alt-gcc4.6.patch
 
 #AutoReq: yes, noshell
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
@@ -75,6 +76,7 @@ Headers and pkgconfig support for  Abiword plugin building.
 %setup -q
 %patch -p1 -b .headers
 %patch1 -p2
+%patch2 -p2
 %autoreconf
 %build
 %configure %{subst_with gnomevfs} \
@@ -131,6 +133,9 @@ install -D %SOURCE1 %buildroot%_desktopdir/
 #TODO: apply %%lang tags to localized files /usr/share/abiword-2.8/strings/*.strings (5 Mb)
 
 %changelog
+* Mon Jul 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.6-alt1.3
+- Fixed build with gcc 4.6
+
 * Fri Apr 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.6-alt1.2
 - Fixed build with new glib2
 
