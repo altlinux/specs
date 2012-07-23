@@ -1,6 +1,6 @@
 Name: sjog
 Version: cvs20040812
-Release: alt4
+Release: alt4.1
 
 Summary: A program to use the "Jog Dial" on Sony Vaio Laptops
 Summary (ru_RU.UTF-8): Программа, позволяющая использовать ручку прокрутки на портативных компьютерах Sony Vaio
@@ -11,7 +11,10 @@ Source0: %name-%version.tar.gz
 Source1: setbrightness.pamd
 Source2: setbrightness.apps
 Source3: sjog
+Patch: sjog-cvs20040812-alt-DSO.patch
 BuildRequires: imake libgtk+2-devel libXt-devel libXtst-devel xorg-cf-files
+
+Requires: /proc
 
 %description
 The aim of S-Jog is to give Linux a nice graphical application to manage
@@ -36,6 +39,7 @@ background.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure
@@ -49,7 +53,7 @@ background.
 %__mkdir_p $RPM_BUILD_ROOT%_bindir
 %__mkdir_p $RPM_BUILD_ROOT%_sbindir
 %__mv $RPM_BUILD_ROOT%_bindir/setbrightness $RPM_BUILD_ROOT%_sbindir/setbrightness
-%__ln_s %_libdir/helper/consolehelper $RPM_BUILD_ROOT%_bindir/setbrightness
+%__ln_s /usr/lib/consolehelper/helper $RPM_BUILD_ROOT%_bindir/setbrightness
 # autorun
 %__install -pD -m755 %SOURCE3 $RPM_BUILD_ROOT%_sysconfdir/X11/xinit.d/sjog
 
@@ -57,7 +61,9 @@ background.
 
 %post
 if ! [ -c /dev/sonypi ]; then
-   mknod /dev/sonypi c 10 63
+   mknod /dev/sonypi c 10 63 2> /dev/null || \
+	 	echo 'Creating /dev/sonypi: failed.' \
+	 	Please run \'mknod /dev/sonypi c 10 63\' manually.
 fi
 
 %files -f %name.lang
@@ -72,6 +78,9 @@ fi
 %doc README TODO AUTHORS COPYING ChangeLog NEWS
 
 %changelog
+* Mon Jul 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> cvs20040812-alt4.1
+- Fixed build
+
 * Fri Jan 05 2007 Vyacheslav Dikonov <slava@altlinux.ru> cvs20040812-alt4
 - buildfix
 
