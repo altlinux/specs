@@ -1,6 +1,6 @@
 Name: osec
 Version: 1.2.4
-Release: alt2
+Release: alt3
 
 Summary: Lightweight file permission checker
 License: GPL3
@@ -66,9 +66,9 @@ add name of rpm packages for files in report.
 
 cd %buildroot
 #cron job file
-mkdir -p -- etc/cron.daily
-mv -- .%_datadir/osec.cron etc/cron.daily/osec
-chmod 700 -- etc/cron.daily/osec
+mkdir -p -- etc/cron.d .%_datadir/osec
+mv -- .%_datadir/osec.cron .%_datadir/osec/
+echo '0 0 * * * root %_datadir/osec/osec.cron' > etc/cron.d/osec
 
 #configs
 mkdir -pm700 -- etc/osec
@@ -94,7 +94,8 @@ rm -f %osec_statedir/osec.db.*
 %_man1dir/*
 
 %files cronjob
-%config(noreplace) /etc/cron.daily/osec
+%config(noreplace) /etc/cron.d/osec
+%attr(700,root,root) %_datadir/osec/osec.cron
 %defattr(600,root,root,700)
 %config(noreplace) /etc/osec
 
@@ -105,6 +106,9 @@ rm -f %osec_statedir/osec.db.*
 %attr(770,root,%osec_group) %osec_statedir
 
 %changelog
+* Mon Jul 23 2012 Alexey Gladkov <legion@altlinux.ru> 1.2.4-alt3
+- Move cronjob from cron.daily to cron.d.
+
 * Wed Oct 14 2009 Alexey Gladkov <legion@altlinux.ru> 1.2.4-alt2
 - osec.cron: Add number of added, deleted and changed files;
 - osec.cron, osec_mailer: Add IGNORE_NO_CHANGES option.
