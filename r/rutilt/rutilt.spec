@@ -1,6 +1,6 @@
 Name: rutilt
 Version: 0.18
-Release: alt2
+Release: alt2.1
 
 Summary: Configure your wireless network devices with special support for rt2400/rt2500/rt2570
 
@@ -16,6 +16,8 @@ Source: RutilTv%version.tar.bz2
 Patch: %name-0.18-alt-set_ip.patch
 Patch2: %name-0.13.patch
 Patch1: %name-0.16.patch
+Patch3: %name-0.18-alt-DSO.patch
+Patch4: %name-0.18-alt-no-double-slash.patch
 
 # Automatically added by buildreq on Thu Jan 18 2007
 BuildRequires: gcc-c++ libgtk+2-devel
@@ -29,9 +31,14 @@ It also features special support for rt2400, rt2500 and rt2570 devices.
 %prep
 %setup -q -n RutilTv%version
 %patch -b .orig
+%patch3 -p2
+%patch4 -p2
 
 %build
-./configure.sh --kernel_sources=%_includedir/linux-default/ --prefix=%prefix
+./configure.sh \
+	--kernel_sources=%_includedir/linux-default/ \
+	--prefix=%prefix \
+	--cflags="-pipe -Wall -g -O2 -fpermissive"
 %make_build
 
 %install
@@ -50,6 +57,9 @@ It also features special support for rt2400, rt2500 and rt2570 devices.
 %_man1dir/*
 
 %changelog
+* Mon Jul 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt2.1
+- Fixed build
+
 * Thu Dec 18 2008 Vitaly Lipatov <lav@altlinux.ru> 0.18-alt2
 - change summary
 - remove dhclient requires (bug #18240)
