@@ -1,5 +1,5 @@
 Name: libogg
-Version: 1.2.2
+Version: 1.3.0
 Release: alt1
 
 Summary: Ogg Bitstream Library
@@ -77,6 +77,9 @@ install -pm644 AUTHORS CHANGES COPYING %buildroot%docdir/
 %endif
 
 %changelog
+* Mon Jul 23 2012 L.A. Kostis <lakostis@altlinux.ru> 1.3.0-alt1
+- Updated to 1.3.0.
+
 * Fri Feb 25 2011 Dmitry V. Levin <ldv@altlinux.org> 1.2.2-alt1
 - Updated to 1.2.2.
 
