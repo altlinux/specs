@@ -1,5 +1,5 @@
 Name: git
-Version: 1.7.10.5
+Version: 1.7.11.3
 Release: alt1
 
 Summary: Git core and tools
@@ -44,7 +44,7 @@ BuildRequires: hardlink, libssl-devel, perl-devel, perl(Error.pm), zlib-devel >=
 %{!?_disable_curl:BuildRequires: libcurl-devel}
 %{!?_disable_expat:BuildRequires: libexpat-devel}
 %{!?_without_email:BuildRequires: perl(Error.pm) perl(Net/SMTP/SSL.pm) perl(Term/ReadLine.pm)}
-%{!?_without_svn:BuildRequires: perl(Encode.pm) perl(Memoize.pm) perl(SVN/Core.pm) perl(Term/ReadKey.pm) subversion subversion-server-common}
+%{!?_without_svn:BuildRequires: perl(Encode.pm) perl(Memoize.pm) perl(SVN/Core.pm) perl(Term/ReadKey.pm) perl(YAML/Any.pm) subversion subversion-server-common}
 %{!?_without_doc:BuildRequires: asciidoc > 0:6.0.3, xmlto}
 %{?!_without_emacs:BuildRequires: emacs-devel emacs-nox}
 %{?!_without_gitweb:BuildRequires: perl(charnames.pm) perl(CGI.pm) perl(Encode.pm)}
@@ -399,6 +399,7 @@ popd
 %_man1dir/git-relink.*
 %perl_vendor_privlib/Git/
 %perl_vendor_privlib/Git.pm
+%exclude %perl_vendor_privlib/Git/SVN
 
 %if_with email
 %files email
@@ -414,6 +415,7 @@ popd
 %if_with doc
 %_man1dir/git-svn*.1*
 %endif #doc
+%perl_vendor_privlib/Git/SVN
 %endif #svn
 
 %if_with tk
@@ -463,6 +465,9 @@ popd
 %endif #emacs
 
 %changelog
+* Tue Jul 24 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.11.3-alt1
+- Updated to maint 1.7.11.3.
+
 * Mon Jun 18 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.10.5-alt1
 - Updated to maint 1.7.10.5.
 
