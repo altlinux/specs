@@ -2,13 +2,12 @@
 
 Summary: Package maintenance system for Debian Linux
 Name: dpkg
-Version: 1.16.3
+Version: 1.16.4.3
 Release: alt1
 License: GPLv2+
 Group: System/Configuration/Packaging
 Url: http://packages.debian.org/unstable/base/dpkg.html
 Source0: ftp://ftp.debian.org/debian/pool/main/d/dpkg/%{name}_%version.tar.bz2
-Patch3: gentoo-bug-289094.patch
 
 # Automatically added by buildreq on Mon Dec 13 2010
 BuildRequires: dpkg perl-podlators po4a zlib-devel
@@ -30,7 +29,6 @@ This module provides dpkg functionalities.
 
 %prep
 %setup
-%patch3 -p1
 
 %build
 %configure \
@@ -90,6 +88,10 @@ cat dpkg-dev.lang >> %name.lang
 %perl_vendorlib/Dpkg.pm
 
 %changelog
+* Tue Jul 24 2012 Fr. Br. George <george@altlinux.ru> 1.16.4.3-alt1
+- Autobuild version bump to 1.16.4.3
+- Remove inactual patch
+
 * Thu May 03 2012 Fr. Br. George <george@altlinux.ru> 1.16.3-alt1
 - Autobuild version bump to 1.16.3
 - Fix build (kick dselect back off)
