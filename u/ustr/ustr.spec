@@ -1,6 +1,6 @@
 Name: ustr
 Version: 1.0.4
-Release: alt2
+Release: alt3
 Summary: String library, very low memory overhead, simple to import
 Group: System/Libraries
 License: MIT or LGPLv2+ or BSD
@@ -107,6 +107,9 @@ Requires: lib%name-devel-debug = %version-%release
 %_libdir/libustr-debug.a
 
 %changelog
+* Tue Jul 24 2012 Anton Farygin <rider@altlinux.ru> 1.0.4-alt3
+- rebuild for set-versions
+
 * Sat Dec 20 2008 Anton Farygin <rider@altlinux.ru> 1.0.4-alt2
 - requires fixed
 
