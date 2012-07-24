@@ -1,8 +1,8 @@
 %define shortname indi
 
 Name: indilib
-Version: 0.8.0
-Release: alt3
+Version: 0.9.1
+Release: alt1
 
 Group: Development/C
 Summary: Library to control astronomical devices
@@ -91,6 +91,12 @@ sed -i 's|lib\${LIB_POSTFIX}|lib\${LIB_SUFFIX}|' CMakeLists.txt
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt1
+- new version
+
+* Tue Nov 01 2011 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt2.M60P.1
+- built for M60P
+
 * Wed Oct 19 2011 Sergey V Turchin <zerg@altlinux.org> 0.8.0-alt3
 - rebuilt whith new libnova
 
