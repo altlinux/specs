@@ -1,6 +1,6 @@
 Name: ganglia
 Version: 3.1.7
-Release: alt1
+Release: alt1.1
 
 License: BSD
 Summary: Ganglia Distributed Monitoring System
@@ -170,6 +170,9 @@ cp -a web/* %buildroot%_var/www/apache2/html/%name
 %_var/www/apache2/html/%name
 
 %changelog
+* Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.7-alt1.1
+- Rebuilt for debuginfo
+
 * Sun Nov 21 2010 Denis Pynkin <dans@altlinux.ru> 3.1.7-alt1
 - new version
 - fixed autoreconf macro
