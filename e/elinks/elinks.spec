@@ -1,6 +1,6 @@
 Name: elinks
 Version: 0.12
-Release: alt0.10
+Release: alt0.11
 
 Summary: Lynx-like text WWW browser with many features
 License: GPLv2
@@ -30,7 +30,7 @@ language. This project aims to provide feature-rich version of Links,
 with more open patches/features inclusion policy.
 
 %prep
-%setup -q -n elinks-0.12pre5
+%setup -n elinks-0.12pre5
 %patch -p1
 
 %build
@@ -83,6 +83,9 @@ install -pD -m644 elinks.conf %buildroot/etc/elinks/elinks.conf
 %doc doc/manual.html
 
 %changelog
+* Tue Jul 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.12-alt0.11
+- Fixed build with gcc 4.6.
+
 * Mon Nov 08 2010 Dmitry V. Levin <ldv@altlinux.org> 0.12-alt0.10
 - Fixed build with gcc 4.5.
 
