@@ -7,7 +7,7 @@
 
 Name: lib%oname
 Version: 3.1.0
-Release: alt7
+Release: alt7.1
 Summary: The GLE Tubing and Extrusion Library for OpenGL
 License: GPL
 Group: System/Libraries
@@ -95,6 +95,9 @@ mv %buildroot%_docdir/%oname %buildroot%_docdir/%name-%version
 %doc %_docdir/%name-%version/html
 
 %changelog
+* Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.0-alt7.1
+- Rebuilt for set-versions
+
 * Mon Nov 09 2009 Alexey I. Froloff <raorn@altlinux.org> 3.1.0-alt7
 - spec cleanup
 
