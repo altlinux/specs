@@ -2,7 +2,7 @@
 
 Name: libdockapp
 Version: 0.6.2
-Release: alt1
+Release: alt1.1
 
 Summary: DockApp Making Standard Library
 Group: System/Libraries
@@ -12,7 +12,7 @@ Url: http://solfertje.student.utwente.nl/~dalroi/libdockapp/
 Packager: Sir Raorn <raorn@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt1.patch
 
 # Automatically added by buildreq on Thu Jun 19 2008
 BuildRequires: libXext-devel libXpm-devel libXt-devel
@@ -66,6 +66,9 @@ This package contains header files needed for development.
 %_includedir/*.h
 
 %changelog
+* Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt1.1
+- Rebuilt for set-versions
+
 * Thu Jun 19 2008 Sir Raorn <raorn@altlinux.ru> 0.6.2-alt1
 - [0.6.2]
 - Updated [build]deps for "modular X" (closes: #9922)
