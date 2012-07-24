@@ -1,6 +1,6 @@
 Name: 		log4c
 Version: 	1.2.1
-Release: 	alt1
+Release: 	alt1.1
 
 Summary: 	Log for C
 License:	LGPL
@@ -57,6 +57,9 @@ The %name-doc package contains the %name documentation
 %doc  doc/html
 
 %changelog
+* Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt1.1
+- Rebuilt for set-versions
+
 * Tue Feb 16 2010 Maxim Ivanov <redbaron at altlinux.org> 1.2.1-alt1
 - Initial build for ALT Linux
 
