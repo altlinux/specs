@@ -1,5 +1,5 @@
-%define branch 0.6
-%define svn svn2793
+%define branch 0.7
+%define svn svn2827
 
 Version: %branch.0
 Epoch: 1
@@ -746,6 +746,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Tue Jul 24 2012 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn2827
+- 0.7.0 svn2827 version
+
 * Thu Jul 12 2012 Motsyo Gennadi <drool@altlinux.ru> 1:0.6.0-alt2.svn2793
 - 0.6.0 svn2793 version
 
