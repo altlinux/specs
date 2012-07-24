@@ -1,7 +1,7 @@
 
 Name: libnova
-Version: 0.14.0
-Release: alt2
+Version: 0.15.0
+Release: alt1
 
 Summary: General purpose astronomy & astrodynamics library
 Group: System/Libraries
@@ -46,6 +46,9 @@ Contains library and header files for %name
 %_libdir/libnova.so
 
 %changelog
+* Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.15.0-alt1
+- new version
+
 * Tue Dec 13 2011 Sergey V Turchin <zerg@altlinux.org> 0.14.0-alt2
 - fix to build without rpath
 

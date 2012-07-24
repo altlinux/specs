@@ -2,7 +2,7 @@
 
 Name: indilib
 Version: 0.9.1
-Release: alt1
+Release: alt2
 
 Group: Development/C
 Summary: Library to control astronomical devices
@@ -91,6 +91,9 @@ sed -i 's|lib\${LIB_POSTFIX}|lib\${LIB_SUFFIX}|' CMakeLists.txt
 %_pkgconfigdir/libindi.pc
 
 %changelog
+* Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt2
+- rebuilt whith new libnova
+
 * Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt1
 - new version
 
