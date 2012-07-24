@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.48
+Version: 0.49
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -238,7 +238,6 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 
 %files devel
 %_includedir/cephfs/
-%_includedir/crush/
 %_includedir/rados/
 %_includedir/rbd/
 %_libdir/libcephfs.so
@@ -277,6 +276,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Jul 24 2012 Alexei Takaseev <taf@altlinux.org> 0.49-alt1
+- 0.49
+
 * Thu Jul 19 2012 Alexei Takaseev <taf@altlinux.org> 0.48-alt1
 - 0.48
 
