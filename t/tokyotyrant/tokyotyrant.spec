@@ -11,7 +11,7 @@ Name: tokyotyrant
 %define lname lib%name
 Summary: A network interface of Tokyo Cabinet
 Version: 1.1.40
-Release: alt1
+Release: alt1.1
 License: %lgpl2plus
 Group: System/Libraries
 Group: Databases
@@ -172,6 +172,9 @@ install -m 0644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/%name
 
 
 %changelog
+* Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.40-alt1.1
+- Rebuilt for set-versions
+
 * Thu Jan 21 2010 Led <led@altlinux.ru> 1.1.40-alt1
 - 1.1.40
 
