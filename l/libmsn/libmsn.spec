@@ -2,8 +2,8 @@
 %define msn_sover 0.3
 %define beta %nil
 Name: libmsn
-Version: 4.1
-Release: alt2
+Version: 4.2.1
+Release: alt1
 
 Group: Development/C++
 Summary: Reusable, open-source and fully documented library for MSN
@@ -11,10 +11,9 @@ Url: http://sourceforge.net/projects/libmsn
 License: GPLv2+
 
 Source: %name-%version%beta.tar.bz2
-Patch1: libmsn-4.1-alt-fix-compile.patch
 
-# Automatically added by buildreq on Mon Jan 19 2009 (-bi)
 BuildRequires: cmake gcc-c++ libcom_err-devel libssl-devel
+BuildRequires: kde-common-devel
 
 %description
 Libmsn is a reusable, open-source, fully documented library for
@@ -42,28 +41,13 @@ Files needed to build applications based on %name.
 
 %prep
 %setup -q -n %name-%version%beta
-%patch1 -p1
 
 
 %build
-mkdir -p build
-pushd build
-cmake ../ \
-	-DCMAKE_INSTALL_PREFIX=%_prefix \
-%ifarch x86_64
-        -DLIB_SUFFIX=64 \
-%endif		
-	-DCMAKE_SKIP_RPATH=YES \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_BUILD_TYPE="Release" \
-	-DENABLE_INOTIFY:BOOL=ON \
-	-DENABLE_DBUS:BOOL=ON
-popd
-%make_build -C build VERBOSE=1
-
+%Kbuild
 
 %install
-%make -C build install DESTDIR=%buildroot
+%Kinstall
 
 
 %files -n libmsn%msn_sover
@@ -79,6 +63,9 @@ popd
 %_libdir/libmsn.so
 
 %changelog
+* Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 4.2.1-alt1
+- new version
+
 * Tue Oct 05 2010 Sergey V Turchin <zerg@altlinux.org> 4.1-alt2
 - rebuilt with new ssl
 
