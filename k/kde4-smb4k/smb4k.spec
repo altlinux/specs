@@ -1,18 +1,20 @@
 
 %define _kde_alternate_placement 1
+%define sover 4
+%define libsmb4kcore libsmb4kcore%sover
 
 %define rname smb4k
 Name: kde4-%rname
-Version: 0.10.9
-Release: alt2
+Version: 1.0.3
+Release: alt1
 
 Group: Networking/Other
 Summary: A KDE SMB/CIFS share browser
 License: GPLv2+
-Url: http://smb4k.berlios.de
+Url: http://smb4k.sourceforge.net/
 
 Requires: samba-client
-Requires: libsmb4kcore3 = %version-%release
+Requires: %libsmb4kcore = %version-%release
 
 Source: %rname-%version.tar
 # FC
@@ -29,11 +31,11 @@ access the SMB/CIFS shares of the local network neighborhood. Its purpose is to
 provide a program that's easy to use and has as many features as possible.
 
 
-%package -n libsmb4kcore3
+%package -n %libsmb4kcore
 Summary: %name core library
 Group: System/Libraries
 Requires: kde4libs >= %{get_version kde4libs}
-%description -n libsmb4kcore3
+%description -n %libsmb4kcore
 %name core library
 
 %package devel
@@ -45,8 +47,7 @@ Developemnt files for %name
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
-mv po/pt/pt.po po/pt/%rname.po
+#%patch1 -p1
 
 
 %build
@@ -60,20 +61,28 @@ mv po/pt/pt.po po/pt/%rname.po
 
 %files -f %rname.lang
 %_kde4_bindir/*
+%_K4exec/mounthelper
 %_K4conf_update/*
 %_K4lib/*.so
-%_K4libdir/libsmb4kdialogs.so
+%_K4libdir/libsmb4ktooltips.so
 %_kde4_xdg_apps/smb4k.desktop
 %_K4apps/smb4k
 %_K4cfg/smb4k.kcfg
 %_kde4_iconsdir/hicolor/*/*/*.*
 %_K4iconsdir/oxygen/*/apps/*.*
+%_K4dbus_system/de.berlios.smb4k.mounthelper.conf
+%_K4dbus_sys_services/de.berlios.smb4k.mounthelper.service
+%_datadir/polkit-1/actions/de.berlios.smb4k.mounthelper.policy
 
-%files -n libsmb4kcore3
-%_K4libdir/libsmb4kcore.so.*
+%files -n %libsmb4kcore
+%_K4libdir/libsmb4kcore.so.%sover
+%_K4libdir/libsmb4kcore.so.%sover.*
 
 
 %changelog
+* Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt1
+- new version
+
 * Mon Apr 25 2011 Sergey V Turchin <zerg@altlinux.org> 0.10.9-alt2
 - fix build requires
 
