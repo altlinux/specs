@@ -1,7 +1,7 @@
 %define node_name      node
-%define node_version  0.6.19
-%define node_release   alt4
-%define npmver 1.1.24
+%define node_version  0.8.3
+%define node_release   alt1
+%define npmver 1.1.43
 
 Name: %node_name
 Version: %node_version
@@ -13,7 +13,7 @@ Url: http://nodejs.org/
 Source: node-source.tar
 Source1: node.macros
 
-BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel
+BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-devel gyp
 Provides: nodejs = %version-%release
 Provides: node.js = %version-%release
 Obsoletes: nodejs < %version-%release
@@ -42,7 +42,7 @@ Summary:        Devel package for Node.js
 Group:          Development/Other
 License:        GPL
 BuildArch:      noarch
-Requires:	%node_name = %node_version gcc-c++
+Requires:	%node_name = %node_version gcc-c++ gyp
 
 %description devel
 Node.js header and build tools
@@ -65,15 +65,16 @@ node programs. It manages dependencies and does other cool stuff.
 
 %build
 ./configure --no-ssl2 \
-    --prefix=/usr \
-    --libdir=%_libexecdir
-#    --shared-cares \
-#    --shared-zlib
-#    --shared-v8 \
-#    --without-snapshot
+    --prefix=%_prefix \
+    --shared-zlib \
+    --shared-v8 \
+    --shared-v8-includes=%_includedir \
+    --openssl-includes=%_includedir \
+    --openssl-use-sys
 
 %make_build
 %make doc
+%make jslint
 
 %install
 %makeinstall_std
@@ -95,7 +96,7 @@ subst 's,@node_release@,%node_release,'     %buildroot%_rpmmacrosdir/%node_name
 %doc AUTHORS ChangeLog LICENSE README.md out/doc
 %_bindir/node
 %dir %_libexecdir/node_modules/
-%_man1dir/*.1.gz
+%_man1dir/*
 %_sysconfdir/profile.d/*
 
 %files devel
@@ -112,6 +113,12 @@ subst 's,@node_release@,%node_release,'     %buildroot%_rpmmacrosdir/%node_name
 %_rpmmacrosdir/%node_name
 
 %changelog
+* Mon Jul 23 2012 Mikhail Pokidko <pma@altlinux.org> 0.8.3-alt1
+- v0.8.3
+
+* Tue Jun 26 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Thu Jun 21 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.6.19-alt4
 - Fix BuildRequires
 - Added rpm-build-node subpackage
