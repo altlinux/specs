@@ -1,8 +1,8 @@
 %define qt4_ver %{get_version libqt4-devel}
 
 Name: qtscriptgenerator
-Version: 0.1.0
-Release: alt3
+Version: 0.2.0
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Qt bindings for Qt Script
@@ -19,8 +19,7 @@ Patch3: qtscriptgenerator-src-0.1.0-fix-strings.patch
 Patch50: qtscriptgenerator-0.1.0-gcc44.patch
 Patch51: memory_alignment_fix.diff
 Patch52: qtscriptgenerator-kde_phonon443.patch
-Patch53: qtscriptgenerator-src-0.1.0-no_QFileOpenEvent.patch
-Patch54: qtscriptgenerator-src-0.1.0-qmake_target.path.patch
+Patch53: qtscriptgenerator-src-0.1.0-qmake_target.path.patch
 
 BuildRequires(pre): libqt4-devel kde-common-devel
 BuildRequires: gcc-c++ phonon-devel xsltproc
@@ -47,10 +46,7 @@ from within Qt Script.
 %patch50 -p0
 %patch51 -p1
 %patch52 -p1
-%_K_if_ver_gteq %qt4_ver 4.8
 %patch53 -p1
-%endif
-%patch54 -p1
 
 cat >>qtbindings/qtbindingsbase.pri <<__EOF__
 CONFIG -= debug_ang_release
@@ -114,6 +110,9 @@ cp -a tools/qsexec/README.TXT README.qsexec
 %_qt4dir/plugins/script/libqtscript*
 
 %changelog
+* Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.2.0-alt1
+- new version
+
 * Tue Jan 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.1.0-alt3
 - fix to build with qt-4.8
 
