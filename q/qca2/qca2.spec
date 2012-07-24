@@ -5,7 +5,7 @@ Name: qca2
 %define minor 0
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -19,7 +19,7 @@ Patch1: qca-2.0.3-alt-paths.patch
 # Automatically added by buildreq on Fri Feb 25 2011 (-bi)
 #BuildRequires: cmake gcc-c++ glibc-devel-static libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgcrypt-devel libnss-devel libqt4-devel libqt4-gui libqt4-network libsasl2-devel libxkbfile-devel rpm-build-ruby
 BuildRequires: cmake gcc-c++ glibc-devel kde-common-devel ca-certificates
-BuildRequires: libgcrypt-devel libnss-devel libqt4-devel libsasl2-devel
+BuildRequires: libgcrypt-devel libnss-devel libqt4-devel libsasl2-devel pkcs11-helper-devel
 
 
 %package -n lib%name
@@ -152,6 +152,18 @@ utilize the Qt Cryptographic Architecture (QCA)
 * Хеширование - SHA1, SHA256, SHA384, SHA512
 * Симметричное шифрование - AES128
 
+%package pkcs11
+Group: System/Libraries
+Summary: QCA pkcs11 smartcard integration
+%description pkcs11
+This plugin supports the following features:
+ - Multiple providers
+ - Multiple tokens
+ - Private key signature and decryption
+ - Keystore objects serialization
+ - Keystore update notifications
+ - Asker integration for token and PIN
+
 %package logger
 Group: System/Libraries
 Summary: QCA Logger Plugin
@@ -223,6 +235,8 @@ popd
 %_qt4dir/plugins/crypto/libqca-gcrypt.so
 %files nss
 %_qt4dir/plugins/crypto/libqca-nss.so
+%files pkcs11
+%_qt4dir/plugins/crypto/libqca-pkcs11.so
 
 %files -n lib%name-devel
 %_libdir/lib*.so
@@ -233,6 +247,9 @@ popd
 %_includedir/qt4/QtCrypto
 
 %changelog
+* Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt3
+- built pkcs11 plugin
+
 * Wed Apr 20 2011 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt2
 - fix build requires
 
