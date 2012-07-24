@@ -1,6 +1,6 @@
 Name: libesmtp
 Version: 1.0.6
-Release: alt1
+Release: alt1.1
 
 Summary: LibESMTP is a library to manage posting email using SMTP
 License: GPL
@@ -59,6 +59,9 @@ rm %buildroot%_libdir/esmtp-plugins/*.la
 %_libdir/*.so
 
 %changelog
+* Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.1
+- Rebuilt for debuginfo
+
 * Tue Oct 05 2010 Vladimir Lettiev <crux@altlinux.ru> 1.0.6-alt1
 - New version 1.0.6:
   + Fixed CVE-2010-1192, CVE-2010-1194 (certificate validation flaws)
