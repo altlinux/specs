@@ -6,7 +6,7 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 %define bname coredumper
 Name: lib%bname
 Version: 1.2.1
-Release: alt2.1
+Release: alt2.2
 Summary: Library to create core dumps of the running program
 Group: System/Libraries
 License: %bsdstyle
@@ -122,6 +122,9 @@ install -m 0644 examples/* %buildroot%_docdir/%name-%version/examples/
 
 
 %changelog
+* Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.2
+- Rebuilt for set-versions
+
 * Wed Nov 04 2009 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2.1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libcoredumper
