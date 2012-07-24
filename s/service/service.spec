@@ -1,5 +1,5 @@
 Name: service
-Version: 0.5.22
+Version: 0.5.23
 Release: alt1
 
 Summary: The service start/stop scripts
@@ -92,8 +92,11 @@ fi
 %config(noreplace) %_sysconfdir/sysconfig/limits
 
 %changelog
+* Tue Jul 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.5.23-alt1
+- Fixed build with new gcc.
+
 * Thu Jan 26 2012 Dmitry V. Levin <ldv@altlinux.org> 0.5.22-alt1
-- start-stop-daemon: implemented support of /proc/%d/exe pointing
+- start-stop-daemon: implemented support of /proc/pid/exe pointing
   to names with " (deleted)" prefix.
 - minilogd: changed to create /dev/log socket world writable
   (closes: #12564).
