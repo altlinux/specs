@@ -1,7 +1,7 @@
 Name: fvwm
 Version: 2.6.5
 #define cvsdate 20031019
-Release: alt1
+Release: alt2
 
 %def_with fribidi
 %def_with libstroke
@@ -262,10 +262,10 @@ export FVWM_BUGADDR='%packager'
 	--enable-htmldoc \
 	--without-gnome
 
-%make_build
+%make_build GTK_LIBS="$(pkg-config --libs gtk+)"
 
 %install
-%make_install install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 # Prepare sample configs.
 rm -rf fvwmrc.sample
@@ -421,6 +421,9 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_miconsdir/*.xpm
 
 %changelog
+* Tue Jul 24 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt2
+- Fixed build with new ld.
+
 * Thu May 10 2012 Sergey Vlasov <vsu@altlinux.ru> 2.6.5-alt1
 - Updated to 2.6.5.
 - Changed XFT fonts in the default config to generic "serif".
