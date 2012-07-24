@@ -2,7 +2,7 @@
 
 Name: cpufrequtils
 Version: 008
-Release: alt1
+Release: alt1.1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -67,6 +67,9 @@ subst 's/--mode=/--tag=CC --mode=/' Makefile
 %_libdir/libcpufreq.so
 
 %changelog
+* Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 008-alt1.1
+- Rebuilt for set-versions
+
 * Thu Aug 05 2010 Victor Forsiuk <force@altlinux.org> 008-alt1
 - Version 008.
 
