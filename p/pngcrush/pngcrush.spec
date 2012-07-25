@@ -1,14 +1,14 @@
 Name: pngcrush
-Version: 1.6.4
+Version: 1.7.31
 Release: alt1
 
 Summary: Utility to compress PNG files
-License: BSD-like
+License: BSD-style
 Group: Graphics
 Url: http://pmt.sourceforge.net/pngcrush/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-Source: pngcrush-%version.tar
+# http://download.sourceforge.net/pmt/%name-%version.tar.xz
+Source: %name-%version.tar
 
 BuildPreReq: libpng-devel
 
@@ -20,21 +20,28 @@ be used to remove unwanted ancillary chunks, or to add certain chunks
 including gAMA, tRNS, and textual chunks.
 
 %prep
-%setup -q
+%setup
+find -name \*.h -type f -not \( -name cexcept.h -or -name pngcrush.h \) -delete
 
 %build
-%__cc pngcrush.c -lpng -o pngcrush %optflags -I. \
-	-DPNG_INTERNAL -DPNG_USE_LOCAL_ARRAYS -DPNG_USE_PNGGCCRD \
-	-DGAS_VERSION="\"$(as --version |grep 'GNU assembler' |sed -e 's/GNU assembler //' -e 's/ .*//')\""
+%__cc %optflags pngcrush.c -o pngcrush \
+	-DPNG_INTERNAL -DPNG_USE_LOCAL_ARRAYS \
+	$(pkg-config --cflags --libs libpng) -lz
 
 %install
 install -Dpm755 pngcrush %buildroot%_bindir/pngcrush
 
 %files
 %_bindir/*
-%doc ChangeLog.txt
+%doc ChangeLog.*
 
 %changelog
+* Wed Jul 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.31-alt1
+- Updated to 1.7.31.
+
+* Wed Jul 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.13-alt1
+- Updated to 1.7.13.
+
 * Sun Nov 26 2006 Dmitry V. Levin <ldv@altlinux.org> 1.6.4-alt1
 - Updated to 1.6.4.
 
