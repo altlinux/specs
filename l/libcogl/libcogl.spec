@@ -5,7 +5,7 @@
 
 
 Name: libcogl
-Version: 1.10.2
+Version: 1.10.4
 Release: alt1
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
@@ -124,6 +124,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Jul 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.4-alt1
+- 1.10.4
+
 * Mon Apr 23 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.2-alt1
 - 1.10.2
 
