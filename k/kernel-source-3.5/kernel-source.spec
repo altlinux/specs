@@ -14,7 +14,7 @@
 # 0.0.X -- preX
 # 0.X.0 -- rcX, testX
 # 1.0.0 -- release
-%define patch_level_numeric     0.7.0
+%define patch_level_numeric     1.0.0
 
 Name: kernel-source-%kernel_version
 Version: %patch_level_numeric
@@ -51,6 +51,9 @@ tar --owner=root --group=root --mode=u+w,go-w,go+rX -cjf \
 %kernel_src/kernel-source-%kernel_version.tar.bz2
 
 %changelog
+* Wed Jul 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.0-alt1
+- 3.5 release
+
 * Sun Jul 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7.0-alt1
 - 3.5-rc7
 
