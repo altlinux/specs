@@ -124,7 +124,7 @@
 
 Name: qemu
 Version: 1.1.0
-Release: alt1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -409,11 +409,8 @@ cd %buildroot
 mkdir -p ./%_altdir
 printf '%_bindir/qemu-system-x86_64\t%_bindir/qemu-std-system-x86_64\t50\n' >./%_altdir/qemu
 
-# WTF on i586?
-#GTESTER check-qtest-x86_64
-#hasher-priv: master: idle time limit (3600 seconds) exceeded
-#%check
-#%make check
+%check
+%make V=1 check
 
 %pre common
 %_sbindir/groupadd -r -f %_group
@@ -486,6 +483,9 @@ fi
 %_defaultdocdir/%name-%version
 
 %changelog
+* Wed Jul 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt2
+- reverted make check
+
 * Fri Jul 20 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt1
 - git snapshot of stable-1.1 branch (b7093f294c330c4db789c077dac9d8611e4f8ee0)
 - add systemd unit files
