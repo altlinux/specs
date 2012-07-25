@@ -6,17 +6,15 @@
 %def_enable introspection
 
 Name: %{_name}2
-Version: 1.98.0
-Release: alt1
+Version: 1.99.0
+Release: alt0.1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
-# while glibc-kernheaders is outdated (#26907)
-Patch: %_name-1.91.0-alt-LOOP_CTL_GET_FREE.hack
+Source: http://udisks.freedesktop.org/releases/%_name-%version.tar
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
 Requires: lib%name = %version-%release
@@ -92,7 +90,6 @@ This package contains development documentation for lib%name.
 
 %prep
 %setup -n %_name-%version
-%patch
 %patch1
 
 %build
@@ -153,6 +150,9 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %endif
 
 %changelog
+* Wed Jul 25 2012 Yuri N. Sedunov <aris@altlinux.org> 1.99.0-alt0.1
+- 1.99.0 snapshot
+
 * Mon Jun 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1.98.0-alt1
 - 1.98.0
 
