@@ -1,18 +1,16 @@
 Name: ffmpeg2theora
-Version: 0.26
-Release: alt1.1
+Version: 0.29
+Release: alt1
 
 Summary: Theora video encoder using ffmpeg
-License: GPLv3+
+License: GPLv2+
 Group: Video
 Url: http://www.v2v.cc/~j/ffmpeg2theora/
 # http://www.v2v.cc/~j/ffmpeg2theora/downloads/%name-%version.tar.bz2
 Source: %name-%version.tar
-Patch0: ffmpeg2theora-0.24-deb-alt-man.patch
-Patch1: ffmpeg2theora-0.26-alt-libav07.patch
 
 # Automatically added by buildreq on Tue Jun 15 2010
-BuildRequires: gcc-c++ libavdevice-devel libavformat-devel libkate-devel libpostproc-devel libswscale-devel libtheora-devel libvorbis-devel scons
+BuildRequires: gcc-c++ libavdevice-devel libavformat-devel libavutil-devel libkate-devel libpostproc-devel libswscale-devel libtheora-devel libvorbis-devel scons
 
 %description
 This package provides a command-line tool to encode/recode various
@@ -21,8 +19,7 @@ the free video codec.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p2
+sed -ri '/"(libswresample|libavfilter)"/d' SConstruct
 
 %build
 scons APPEND_CCFLAGS='%optflags'
@@ -37,6 +34,12 @@ install -pDm644 %name.1 %buildroot%_man1dir/%name.1
 %doc AUTHORS ChangeLog
 
 %changelog
+* Tue Jul 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.29-alt1
+- Updated to 0.29.
+
+* Thu Nov 03 2011 Dmitry V. Levin <ldv@altlinux.org> 0.28-alt1
+- Updated to 0.28.
+
 * Mon Oct 24 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.26-alt1.1
 - rebuilt with libav-0.7
 
