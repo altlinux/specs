@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2012c
+Version: 2012d
 Release: alt1
 
 Summary: Timezone data
@@ -126,6 +126,9 @@ fi
 %endif #with java
 
 %changelog
+* Wed Jul 25 2012 Dmitry V. Levin <ldv@altlinux.org> 2012d-alt1
+- Updated tzdata to 2012d.
+
 * Mon Apr 09 2012 Dmitry V. Levin <ldv@altlinux.org> 2012c-alt1
 - Updated tzdata to 2012c.
 
