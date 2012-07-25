@@ -1,16 +1,15 @@
 Name: xfce4-weather-plugin
-Version: 0.7.4
-Release: alt4
+Version: 0.8.0
+Release: alt1
 
 Summary: Weather plugin for the XFce panel
 License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 Packager: XFCE Team <xfce@packages.altlinux.org>
-
+# git://git.xfce.org/panel-plugins/xfce4-weather-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: xfce4-weather-plugin-0.7.4-debian-license.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -27,7 +26,6 @@ Requires: xfce4-panel >= 4.8.0
 %prep
 %setup
 %patch -p1
-%patch1 -p1
 
 %build
 %xfce4reconf
@@ -48,6 +46,10 @@ Requires: xfce4-panel >= 4.8.0
 %_liconsdir/*.png
 
 %changelog
+* Tue Jul 24 2012 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
+- Drop obsoleted patch.
+- Updated to 0.8.0.
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 0.7.4-alt4
 - Change the license key for the one from CTW (patch from Debian).
 - Port xfce4-weather-plugin to libxfce4ui (Xfce bug #7956).
