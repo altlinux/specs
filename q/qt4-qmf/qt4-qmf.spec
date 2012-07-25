@@ -4,7 +4,7 @@
 %define sover 1
 Name: qt4-qmf
 Version: 1.0.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt Messaging Framework
@@ -149,6 +149,9 @@ cp -ar doc/html/* %buildroot/%qt4_docdir/html/qmf/
 %_libdir/libqmfutil.so.%sover.*
 
 %changelog
+* Wed Jul 25 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt3
+- update to 2012W09
+
 * Tue Feb 07 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt2
 - revert to 2011W47
 
