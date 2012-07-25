@@ -1,6 +1,6 @@
 Name: tatham-puzzles
 Version: 9558
-Release: alt1
+Release: alt1.1
 License: MIT
 Group: Games/Puzzles
 Url: http://www.chiark.greenend.org.uk/~sgtatham/puzzles/
@@ -80,7 +80,7 @@ END-INFO-DIR-ENTRY\
 %install
 mkdir -p %buildroot/%_gamesbindir %buildroot%_desktopdir %buildroot%_miconsdir %buildroot%_liconsdir %buildroot%_niconsdir %buildroot%_pixmapsdir/%name %buildroot%_infodir
 %makeinstall -f Makefile.linux
-install -s *solver %buildroot/%_gamesbindir/
+install -m755 *solver %buildroot/%_gamesbindir/
 install -m 755 %name %buildroot/%_gamesbindir/
 install *.desktop %buildroot%_desktopdir/
 install icons/16/*.png %buildroot%_miconsdir/
@@ -105,6 +105,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Wed Jul 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9558-alt1.1
+- Avoid strip
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 9558-alt1
 - Autobuild version bump to 9558
 
