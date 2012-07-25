@@ -1,5 +1,6 @@
+%define major 1.4
 Name: libcue
-Version: 1.3.0
+Version: %major.0
 Release: alt1
 
 Summary: Cue sheet parser library
@@ -11,7 +12,7 @@ Url: http://libcue.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
+Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar
 
 # Automatically added by buildreq on Sat Dec 05 2009
 BuildRequires: flex gcc-c++
@@ -44,11 +45,14 @@ rm -f %buildroot%_libdir/libcue.la
 %doc AUTHORS COPYING NEWS
 
 %files devel
-%_includedir/%name-1.3/
+%_includedir/%name-%major/
 %_libdir/%name.so
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Wed Jul 25 2012 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
+- new version 1.4.0 (with rpmrb script)
+
 * Sat Dec 05 2009 Vitaly Lipatov <lav@altlinux.ru> 1.3.0-alt1
 - initial build for ALT Linux Sisyphus
 
