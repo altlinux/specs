@@ -1,5 +1,5 @@
 Name: libldb
-Version: 1.1.4
+Version: 1.1.8
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -28,6 +28,7 @@ Header files needed to develop programs that link against the LDB library.
 %package -n ldb-tools
 Group: Development/Tools
 Summary: Tools to manage LDB files
+Requires: %name = %version-%release
 
 %description -n ldb-tools
 Tools to manage LDB files
@@ -44,6 +45,7 @@ Python bindings for the LDB library
 Group: Development/Python
 Summary: Development files for the Python bindings for the LDB library
 Requires: python-module-pyldb = %version-%release
+Requires: %name-devel = %version-%release
 
 %description -n python-module-pyldb-devel
 Development files for the Python bindings for the LDB library
@@ -54,11 +56,10 @@ Development files for the Python bindings for the LDB library
 %build
 %undefine _configure_gettext
 %configure	\
-		--prefix=%_usr \
 		--disable-rpath \
 		--disable-rpath-install \
 		--bundled-libraries=NONE \
-		--builtin-libraries=tdb_compat,ccan,replace \
+		--builtin-libraries=replace \
 		--with-modulesdir=%_libdir/ldb/modules \
 		--with-privatelibdir=%_libdir/ldb
 %make
@@ -67,6 +68,7 @@ Development files for the Python bindings for the LDB library
 %makeinstall_std
 
 rm -f %buildroot%_libdir/*.a
+rm -f %buildroot/%_man3dir/_*
 
 %files
 %_libdir/libldb.so.*
@@ -99,6 +101,9 @@ rm -f %buildroot%_libdir/*.a
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Thu Jul 26 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.8-alt1
+- 1.1.8
+
 * Tue Feb 14 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.4-alt1
 - 1.1.4
 

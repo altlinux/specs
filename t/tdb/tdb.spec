@@ -1,6 +1,6 @@
 Name: tdb
-Version: 1.2.9
-Release: alt1.1
+Version: 1.2.10
+Release: alt1
 
 Summary: A trivial database system
 License: GPL
@@ -8,7 +8,6 @@ Group: Databases
 Url: http://tdb.samba.org/
 
 Source: http://samba.org/ftp/tdb/%name-%version.tar.gz
-Patch1: 0001-Install-python-bindings-in-the-arch-specific-locatio.patch
 
 BuildRequires: docbook-dtds docbook-style-xsl xsltproc python-devel
 
@@ -94,11 +93,9 @@ Python bindings for libtdb
 
 %prep
 %setup
-%patch1 -p1
 
 %build
 %undefine _configure_gettext
-./autogen.sh
 %configure --disable-rpath
 %make_build
 
@@ -106,7 +103,6 @@ Python bindings for libtdb
 %make_install DESTDIR=%buildroot install
 
 rm -f %buildroot%_libdir/libtdb.a
-
 
 %files utils
 %_bindir/*
@@ -128,6 +124,9 @@ rm -f %buildroot%_libdir/libtdb.a
 %python_sitelibdir/tdb.so
 
 %changelog
+* Thu Jul 26 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.10-alt1
+- 1.2.10
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.9-alt1.1
 - Rebuild with Python-2.7
 
