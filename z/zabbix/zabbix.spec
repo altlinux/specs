@@ -7,7 +7,7 @@
 
 Name: zabbix
 Version: 2.0.2
-Release: alt2
+Release: alt3
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -28,7 +28,8 @@ BuildPreReq: libelf-devel
 BuildRequires(pre): rpm-build-webserver-common
 
 # Automatically added by buildreq on Fri Feb 27 2009 (-bi)
-BuildRequires: libMySQL-devel libcurl-devel libiksemel-devel libldap-devel libnet-snmp-devel libsqlite3-devel perl-Switch libopenipmi-devel
+BuildRequires: libMySQL-devel libcurl-devel libiksemel-devel libldap-devel
+BuildRequires: libnet-snmp-devel libsqlite3-devel perl-Switch libopenipmi-devel gettext-tools
 
 %if_with pgsql
 BuildRequires: postgresql-devel
@@ -270,6 +271,13 @@ find conf -type f -print0 | xargs -0 sed -i \
 	-e "s,/tmp/mysql.sock,%_localstatedir/mysql/mysql.sock,g" --
 
 %install
+
+# Generate *.mo files
+for pofile in `find frontends/php/locale -type f ! -wholename '*/.svn*' -name '*.po'`
+do
+    msgfmt --use-fuzzy -c -o ${pofile%%po}mo $pofile
+done
+
 %makeinstall
 
 # create directory structure
@@ -441,6 +449,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Thu Jul 26 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.2-alt3
+- Generate *.mo files
+
 * Sun Jul 22 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.2-alt2
 - Fix default pidfile location
 
