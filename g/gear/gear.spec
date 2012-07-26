@@ -1,7 +1,7 @@
 # Copyright (C) 2006-2011  Dmitry V. Levin <ldv@altlinux.org>
 
 Name: gear
-Version: 1.7.3.1
+Version: 1.7.4
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -58,6 +58,10 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Thu Jul 26 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.4-alt1
+- gear: allowed path separators in tar base names (closes: #27400).
+- test suite: updated for git >= 1.7.11.
+
 * Thu Apr 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.3.1-alt1
 - test suite: updated for zip >= 3.0.
 
