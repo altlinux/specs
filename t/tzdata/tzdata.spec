@@ -1,9 +1,11 @@
 Name: tzdata
 Version: 2012d
-Release: alt1
+Release: alt2
 
 Summary: Timezone data
-License: Public Domain
+# tzdata itself is Public Domain, but tzupdate is GPLv2+,
+# so it is OK to release the whole as GPLv2+.
+License: GPLv2+
 Group: System/Base
 Url: http://www.iana.org/time-zones
 BuildArch: noarch
@@ -17,14 +19,16 @@ BuildArch: noarch
 Source0: tzdata-base-0.tar
 
 # These are official upstream.
-# ftp://munnari.oz.au/pub/tzdata%version.tar.gz
+# ftp://ftp.iana.org/tz/releases/tzdata%version.tar.gz
 Source1: tzdata%version.tar
-# ftp://munnari.oz.au/pub/tzcode%version.tar.gz
+# ftp://ftp.iana.org/tz/releases/tzcode%version.tar.gz
 Source2: tzcode%version.tar
+
+Source9: tzupdate
 
 Patch1: javazic-fixup.patch
 
-Provides: zoneinfo
+Provides: zoneinfo, /usr/sbin/tzupdate
 Obsoletes: zoneinfo
 Conflicts: glibc-timezones <= 6:2.5.1-alt7
 
@@ -100,21 +104,18 @@ make install
 cp -pr zoneinfo/java %buildroot%_datadir/javazi
 %endif #with java
 
+install -pDm755 %_sourcedir/tzupdate %buildroot%_sbindir/tzupdate
+
 # Hardlink identical files together.
 %define __spec_install_custom_post hardlink -vc %buildroot
 
 %check
 make -k check
 
-%post
-if [ -s /etc/localtime -a -f %_initdir/clock ] &&
-   mv /etc/localtime /etc/localtime.rpmsave; then
-	/sbin/service clock tzset &&
-	[ -s /etc/localtime ] ||
-		mv /etc/localtime.rpmsave /etc/localtime
-fi
+%post -p %_sbindir/tzupdate
 
 %files
+%_sbindir/tzupdate
 %_datadir/zoneinfo
 %doc tzcode%version/README
 %doc tzcode%version/Theory
@@ -126,6 +127,9 @@ fi
 %endif #with java
 
 %changelog
+* Fri Jul 27 2012 Dmitry V. Levin <ldv@altlinux.org> 2012d-alt2
+- Packaged and made use of %_sbindir/tzupdate (closes: #27568).
+
 * Wed Jul 25 2012 Dmitry V. Levin <ldv@altlinux.org> 2012d-alt1
 - Updated tzdata to 2012d.
 
