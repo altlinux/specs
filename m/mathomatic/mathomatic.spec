@@ -1,5 +1,5 @@
 Name: mathomatic
-Version: 15.8.5
+Version: 16.0.1
 Release: alt1
 Summary: Small, portable symbolic math program
 License: LGPL
@@ -7,7 +7,7 @@ Group: Sciences/Mathematics
 Url: http://www.mathomatic.org/
 
 Source: %name-%version.tar.bz2
-Patch: %name-15.8.2-m4.patch
+Patch: %name-16.0.1-m4.patch
 
 # Automatically added by buildreq on Thu Jun 24 2010
 BuildRequires: libncurses-devel libreadline-devel
@@ -49,6 +49,10 @@ make test
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Jul 26 2012 Fr. Br. George <george@altlinux.ru> 16.0.1-alt1
+- Autobuild version bump to 16.0.1
+- Fix patch
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 15.8.5-alt1
 - Autobuild version bump to 15.8.5
 
