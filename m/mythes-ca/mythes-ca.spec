@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: mythes-ca
 Summary: Catalan thesaurus
 Version: 1.5.0
-Release: alt1_6
+Release: alt1_7
 Source: http://www.softcatala.org/diccionaris/actualitzacions/sinonims/thesaurus-ca.oxt
 Group: Text tools
 URL: http://www.softcatala.org/wiki/Projectes/Openthesaurus-ca
@@ -43,6 +43,9 @@ popd
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_7
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_6
 - update to new release by fcimport
 
