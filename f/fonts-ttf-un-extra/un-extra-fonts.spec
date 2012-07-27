@@ -1,6 +1,7 @@
 Summary(ko): 한글 은글꼴 Extra 모음
 Summary(ko): 한글 은글꼴 Extra 모음
 Summary(ko): 한글 은글꼴 Extra 모음
+Summary(ko): 한글 은글꼴 Extra 모음
 %define oldname un-extra-fonts
 %global fontname    un-extra
 %global fontconf    66-%{fontname}
@@ -40,7 +41,7 @@ Extra 모음 \
 
 Name:        fonts-ttf-un-extra
 Version:     1.0.2
-Release:     alt3_0.15.080608
+Release:     alt3_0.16.080608
 Summary:     Un Extra family of Korean TrueType fonts
 Summary(ko): 한글 은글꼴 Extra 모음
 
@@ -370,6 +371,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.16.080608
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.15.080608
 - update to new release by fcimport
 
