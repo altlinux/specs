@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/adonthell python-devel
 # END SourceDeps(oneline)
 Name:           wastesedge
 Version:        0.3.4
-Release:        alt2_0.17
+Release:        alt2_0.18
 Summary:        Official game package for Adonthell
 
 Group:          Games/Other
@@ -67,9 +67,9 @@ desktop-file-install --vendor=""                      \
 %find_lang %{name}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -111,6 +111,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt2_0.18
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt2_0.17
 - rebuild with fixed sourcedep analyser (#27020)
 
