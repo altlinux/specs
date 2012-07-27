@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
+BuildRequires: gcc-c++ libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
 # END SourceDeps(oneline)
 Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_2
+Release:	alt2_3
 Summary:	2-D drawing tool
 Group:		Graphics
 
@@ -164,6 +164,9 @@ desktop-file-install \
 %{_datadir}/applications/*-%{name}.desktop
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_3
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_2
 - rebuild to get rid of #27020
 
