@@ -1,6 +1,6 @@
 Name:           manaworld-music
 Version:        0.3
-Release:        alt2_2
+Release:        alt2_3
 Summary:        Music files for the Manaworld game
 
 Group:          Games/Other
@@ -28,9 +28,9 @@ install -p -d $RPM_BUILD_ROOT%{_datadir}/mana/data/music/
 install -p -m 0644 data/music/*.ogg $RPM_BUILD_ROOT%{_datadir}/mana/data/music/
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -69,6 +69,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_3
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.3-alt2_2
 - rebuild with fixed sourcedep analyser (#27020)
 
