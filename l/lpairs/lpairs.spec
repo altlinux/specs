@@ -1,7 +1,7 @@
 Name:		lpairs
 Summary:	Classical memory game with cards
 Version:	1.0.4
-Release:	alt3_9
+Release:	alt3_10
 License:	GPLv2+ and CC-BY-SA and Freely redistributable without restriction
 Group: 		Games/Other
 URL:		http://lgames.sourceforge.net/index.php?project=LPairs
@@ -45,9 +45,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications \
 	lpairs.desktop
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -90,6 +90,9 @@ fi
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_10
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt3_9
 - rebuild with fixed sourcedep analyser (#27020)
 
