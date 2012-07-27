@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/pkg-config pkgconfig(x11)
 # END SourceDeps(oneline)
 Name:           amora
 Version:        1.1
-Release:        alt2_7
+Release:        alt2_8
 Summary:        A mobile remote assistant
 
 Group:          Communications
@@ -47,6 +47,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 %{_mandir}/man8/amorad.8.*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_8
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_7
 - rebuild to get rid of #27020
 
