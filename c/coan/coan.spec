@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ perl(Exporter.pm)
 # END SourceDeps(oneline)
 BuildRequires: /usr/bin/pod2man /usr/bin/pod2html
 Name:		coan
 Version: 	5.1
-Release: 	alt1_2
+Release: 	alt1_3
 Summary: 	A command line tool for simplifying the pre-processor conditionals in source code
 Group: 		Development/Tools
 License: 	BSD       
@@ -56,6 +56,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 %{_mandir}/man1/%{name}.1.*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 5.1-alt1_3
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 5.1-alt1_2
 - rebuild to get rid of #27020
 
