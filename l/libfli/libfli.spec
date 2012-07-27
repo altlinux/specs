@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/pkg-config /usr/bin/valgrind cppunit-devel gcc-c++ gcc-fortran glib2-devel guile18-devel imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libflac-devel libfreetype-devel liboggz-devel libreadline-devel libspeex-devel libuuid-devel libvorbis-devel pkgconfig(dbus-1) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel unzip zlib-devel
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: libfli
 Version: 1.7
-Release: alt2_8
+Release: alt2_9
 Summary: Library for FLI CCD Camera & Filter Wheels
 
 %define majorver 1
@@ -30,7 +30,7 @@ line of CCDs and Filter wheels
 %package devel
 Summary: Libraries, includes, etc. used to develop an application with %{name}
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: libfli = %{version}-%{release}
 %description devel
 These are the header files needed to develop a %{name} application
 
@@ -56,6 +56,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_9
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_8
 - update to new release by fcimport
 
