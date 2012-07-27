@@ -1,6 +1,6 @@
 Name: bombardier
 Version:  0.8.2.2
-Release:  alt2_12
+Release:  alt2_13
 Summary: The GNU Bombing utility
 
 Group: Games/Other
@@ -12,7 +12,7 @@ Source2: bombardier-logo.png
 Patch0: bombardier-height.patch
 Patch1: bombardier-rpm_opt_flags.patch
 Patch2: bombardier-hof-open-mode.patch
-BuildRequires: libncurses-devel desktop-file-utils
+BuildRequires: ncurses-devel desktop-file-utils
 Requires: icon-theme-hicolor
 Source44: import.info
 
@@ -58,6 +58,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.2.2-alt2_13
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.2.2-alt2_12
 - rebuild with fixed sourcedep analyser (#27020)
 
