@@ -4,7 +4,7 @@
 
 Name:           aspell-mr
 Version:        0.10
-Release:        alt2_8
+Release:        alt2_9
 Summary:        GNU Aspell Marathi Dictionary Package
 
 Group:          Text tools
@@ -55,6 +55,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_9
+- update to new release by fcimport
+
 * Sun Feb 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_8
 - update to new release by fcimport
 
