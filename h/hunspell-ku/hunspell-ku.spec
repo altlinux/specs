@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-ku
 Summary: Kurdish hunspell dictionaries
 Version: 0.21
-Release: alt2_8
+Release: alt2_9
 #http://hunspell-ku.googlecode.com/files/ku_TR-021_source.zip ?
 Source0: http://downloads.sourceforge.net/myspellkurdish/ku_TR-021.zip
 Group: Text tools
@@ -50,6 +50,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.21-alt2_9
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.21-alt2_8
 - update to new release by fcimport
 
