@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: mythes-el
 Summary: Greek thesaurus
 %define upstreamid 20070412
 Version: 0.%{upstreamid}
-Release: alt1_8
+Release: alt1_9
 Source: http://www.ellak.gr/pub/oo_extras/th_el.zip
 Group: Text tools
 URL: http://www.openthesaurus.gr/
@@ -48,6 +48,9 @@ done
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20070412-alt1_9
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20070412-alt1_8
 - update to new release by fcimport
 
