@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-gd
 Summary: Scots Gaelic hunspell dictionaries
 Version: 2.3
-Release: alt1_1
+Release: alt1_2
 Source: http://extensions.services.openoffice.org/e-files/4587/6/hunspell-gd-2.3.oxt
 Group: Text tools
 URL: http://extensions.services.openoffice.org/en/project/faclair-afb
@@ -31,6 +31,9 @@ cp -p dictionaries/gd_GB.dic dictionaries/gd_GB.aff $RPM_BUILD_ROOT/%{_datadir}/
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_2
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_1
 - update to new release by fcimport
 
