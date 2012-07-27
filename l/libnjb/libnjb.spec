@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/doxygen libncurses-devel
 
 Name:		libnjb
 Version:	2.2.7
-Release:	alt3_2
+Release:	alt3_3
 Summary:	A software library for talking to the Creative Nomad Jukeboxes and Dell DJs
 URL:		http://libnjb.sourceforge.net/
 
@@ -93,6 +93,9 @@ touch -r configure.ac \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_3
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_2
 - fixed build
 
