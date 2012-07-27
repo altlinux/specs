@@ -2,8 +2,9 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname hanazono-fonts
-%define version 20120202
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name hanazono-fonts
+%define version 20120202
 %define	fontname	hanazono
 %define archivename	%{fontname}-%{version}
 %define	priority	65-1
@@ -11,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-hanazono
 Version:	20120202
-Release:	alt2_1
+Release:	alt2_2
 Summary:	Japanese Mincho-typeface TrueType font
 
 Group:		System/Fonts/True type
@@ -60,9 +61,9 @@ install -pm 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf
 ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -102,6 +103,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20120202-alt2_2
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 20120202-alt2_1
 - rebuild to get rid of #27020
 
