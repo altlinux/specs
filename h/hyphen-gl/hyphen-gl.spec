@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hyphen-gl
 Summary: Galician hyphenation rules
 Version: 0.99
-Release: alt1_4
+Release: alt1_5
 Source: http://extensions.services.openoffice.org/files/2004/0/hyph_gl.oxt
 Group: Text tools
 URL: https://forxa.mancomun.org/projects/hyphenation-gl
@@ -31,6 +31,9 @@ cp -p hyph_gl_ANY.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_gl_ES.dic
 %{_datadir}/hyphen/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1_5
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1_4
 - update to new release by fcimport
 
