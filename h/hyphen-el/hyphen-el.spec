@@ -5,7 +5,7 @@ Name: hyphen-el
 Summary: Greek hyphenation rules
 %define upstreamid 20051018
 Version: 0.%{upstreamid}
-Release: alt1_6
+Release: alt1_7
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_el_GR.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -38,6 +38,9 @@ done
 %{_datadir}/hyphen/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20051018-alt1_7
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20051018-alt1_6
 - update to new release by fcimport
 
