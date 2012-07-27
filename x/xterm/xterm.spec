@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xterm
-Version: 279
+Version: 281
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -72,14 +72,18 @@ install -pm755 %_sourcedir/uxterm .
 %patch12 -p2
 %patch13 -p0
 
-sed -i 's|Exec=xterm|& -name XTerm|' %name.desktop
+sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
+sed -i 's|_48x48||' *.desktop
+sed -i '/^Comment=/s/$/ (UTF8 forced)/' uxterm.desktop
+
+## Do we need this?
+## sed '/^Exec=xterm/s/-name XTerm/ -tn xterm-color -name XTerm-color/' %name.desktop > xterm-color.desktop
 
 # Remove deprecated Encoding key
-sed -i '/^Encoding=/d' {u,}xterm.desktop
+sed -i '/^Encoding=/d' *.desktop
 
 %build
 export ac_cv_path_XTERM_PATH=%_bindir/%name
-export DESKTOP_FLAGS='--vendor="" --dir=%buildroot%_desktopdir --add-category="TerminalEmulator"'
 %configure \
 	--with-app-defaults=%_sysconfdir/X11/app-defaults \
 	--with-utempter \
@@ -91,13 +95,28 @@ export DESKTOP_FLAGS='--vendor="" --dir=%buildroot%_desktopdir --add-category="T
 	--disable-echo \
 	--enable-256-color \
 	--enable-dublechars \
+	--with-icondir=%_iconsdir \
 	#
 
 %make_build all ctlseqs.txt
 bzip2 -9fk ctlseqs.txt
 
 %install
-%makeinstall_std install-desktop --silent --no-print-directory
+%makeinstall_std
+# TODO this getting strange (some "=auto" in desktop-file-install)
+# but may be improved later (see icon theme configure option)
+# install-desktop --silent --no-print-directory
+install -D %name.desktop %buildroot/%_desktopdir/%name.desktop
+## Do we need this?
+## install -D %name-color.desktop %buildroot/%_desktopdir/%name-color.desktop
+
+for n in xterm xterm-color; do
+  for s in 48 32; do
+    install -D icons/${n}_${s}x${s}.xpm %buildroot%_iconsdir/hicolor/${s}x${s}/apps/$n.xpm
+  done
+  install -D icons/%name.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+  ## install -D icons/terminal*.* %buildroot%_pixmapsdir/
+done
 
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
@@ -118,8 +137,13 @@ EOF
 %_altdir/%name
 %_desktopdir/*.desktop
 %_pixmapsdir/*.xpm
+%_iconsdir/hicolor/*/apps/xterm*
 
 %changelog
+* Thu Jul 26 2012 Fr. Br. George <george@altlinux.ru> 281-alt1
+- Autobuild version bump to 281
+- Native icons added
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 279-alt1
 - Autobuild version bump to 279
 
