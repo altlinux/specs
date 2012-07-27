@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           puzzle-master
 Version:        2.0.0
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Fun and addictive jigsaw puzzle game
 
 Group:          Games/Other
@@ -44,9 +44,9 @@ make INSTALL_ROOT=$RPM_BUILD_ROOT install
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -85,6 +85,9 @@ fi
 %doc LICENSE-DOCS
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_2
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_1
 - rebuild with fixed sourcedep analyser (#27020)
 
