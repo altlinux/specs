@@ -3,7 +3,7 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           seahorse-adventures
 Version:        1.0
-Release:        alt4_9
+Release:        alt4_10
 Summary:        Help barbie the seahorse float on bubbles to the moon
 Group:          Games/Other
 License:        GPL+
@@ -15,7 +15,7 @@ Patch0:         seahorse-adventures-1.0-symlink.patch
 Patch1:         seahorse-adventures-1.0-build.patch
 BuildRequires:  desktop-file-utils
 BuildArch:      noarch
-Requires:       icon-theme-hicolor python-module-pygame fonts-ttf-dejavu
+Requires:       icon-theme-hicolor pygame fonts-ttf-dejavu
 Source44: import.info
 
 %description
@@ -59,9 +59,9 @@ install -p -m 644 data/images/player/right.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -102,6 +102,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_10
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_9
 - rebuild with fixed sourcedep analyser (#27020)
 
