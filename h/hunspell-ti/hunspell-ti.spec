@@ -5,7 +5,7 @@ Name: hunspell-ti
 Summary: Tigrigna hunspell dictionaries
 %define upstreamid 20090911
 Version: 0.%{upstreamid}
-Release: alt2_3
+Release: alt2_4
 Source: http://www.cs.ru.nl/~biniam/geez/dict/ti_ER.zip
 Group: Text tools
 URL: http://www.cs.ru.nl/~biniam/geez/index.php
@@ -41,6 +41,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20090911-alt2_4
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20090911-alt2_3
 - update to new release by fcimport
 
