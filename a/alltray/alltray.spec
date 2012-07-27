@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libX11-devel pkgconfig(gdk-pixbuf-xlib-2.0)
+BuildRequires: libX11-devel pkgconfig(gdk-2.0) pkgconfig(gdk-pixbuf-xlib-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name:           alltray
 Version:        0.71b
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Dock any application in the tray
 
 Group:          Accessibility
@@ -12,7 +12,7 @@ URL:            http://alltray.sourceforge.net/
 Source0:        http://dl.sourceforge.net/alltray/%{name}-%{version}.tar.gz
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  libgtk+2-devel
+BuildRequires:  gtk2-devel
 BuildRequires:  libGConf-devel
 Source44: import.info
 Patch33: alltray-0.65-message-fix.patch
@@ -53,6 +53,9 @@ desktop-file-install  \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_4
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_3
 - rebuild to get rid of #27020
 
