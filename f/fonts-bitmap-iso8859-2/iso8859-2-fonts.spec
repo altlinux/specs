@@ -6,7 +6,7 @@
 
 Name: fonts-bitmap-iso8859-2
 Version: 1.0
-Release: alt2_26
+Release: alt2_27
 License: MIT
 # Upstream url http://www.biz.net.pl/images/ISO8859-2-bdf.tar.gz is dead now.
 Source: ISO8859-2-bdf.tar.gz
@@ -15,7 +15,7 @@ Patch0: XFree86-ISO8859-2-1.0-redhat.patch
 BuildArch: noarch
 Group: System/Fonts/X11 bitmap
 Summary: Central European language fonts for the X Window System
-Buildrequires: xorg-font-utils
+Buildrequires: xorg-x11-font-utils
 BuildRequires: fontpackages-devel
 Requires: mkfontdir
 Source44: import.info
@@ -89,9 +89,9 @@ ln -sf %{_fontdir}/75dpi $RPM_BUILD_ROOT%{catalogue}/%{fontname}-75dpi-fonts
 ln -sf %{_fontdir}/100dpi $RPM_BUILD_ROOT%{catalogue}/%{fontname}-100dpi-fonts
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -167,6 +167,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_27
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_26
 - rebuild to get rid of #27020
 
