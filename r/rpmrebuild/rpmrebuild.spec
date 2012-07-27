@@ -1,6 +1,6 @@
 Name: rpmrebuild
-Version: 2.7
-Release: alt2
+Version: 2.8
+Release: alt1
 License: GPLv2+
 Group: Development/Other
 Summary: A tool to build rpm file from rpm database
@@ -46,13 +46,14 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %_bindir/*
 %dir %prefix/lib/%name
 %prefix/lib/%name/*
-
 %files un_prelink
 %_man1dir/un_prelink.plug*
 %_mandir/*/*/un_prelink.plug*
 %prefix/lib/%name/plugins/un_prelink*
-
 %changelog
+* Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 2.8-alt1
+- Autobuild version bump to 2.8
+
 * Tue Jun 19 2012 Dmitry V. Levin <ldv@altlinux.org> 2.7-alt2
 - Fixed package requirements.
 
