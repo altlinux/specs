@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:		fonts-bitmap-jisksp16-1990
 Version:	0.983
-Release:	alt4_7
+Release:	alt4_8
 Summary:	16x16 JIS X 0212:1990 Bitmap font
 Group:		System/Fonts/True type
 License:	Public Domain
@@ -16,7 +16,7 @@ URL:		http://kanji.zinbun.kyoto-u.ac.jp/~yasuoka/ftp/fonts/
 Source0:	http://kanji.zinbun.kyoto-u.ac.jp/~yasuoka/ftp/fonts/jisksp16-1990.bdf.Z
 
 BuildArch:	noarch
-BuildRequires:	gzip mkfontdir xorg-font-utils fontpackages-devel
+BuildRequires:	gzip mkfontdir xorg-x11-font-utils fontpackages-devel
 
 Provides:	jisksp16-1990 = 0.1-16
 Obsoletes:	jisksp16-1990 <= 0.1-16
@@ -48,9 +48,9 @@ install -m 0644 -p jisksp16-1990.pcf.gz $RPM_BUILD_ROOT%{_fontdir}/
 ln -sf %{_fontdir} $RPM_BUILD_ROOT%{catalogue}/%{oldname}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -89,6 +89,9 @@ fi
 %{catalogue}/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.983-alt4_8
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.983-alt4_7
 - rebuild to get rid of #27020
 
