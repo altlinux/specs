@@ -2,10 +2,11 @@
 BuildRequires: /usr/bin/bison gcc-c++ pkgconfig(libcurl) zlib-devel
 # END SourceDeps(oneline)
 BuildRequires: chrpath
+%add_optflags %optflags_shared
 Name: libdap
 Summary: The C++ DAP2 library from OPeNDAP
 Version: 3.11.3
-Release: alt1_1
+Release: alt1_2
 
 License: LGPLv2+
 Group: Development/C
@@ -120,6 +121,9 @@ done
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.11.3-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 3.11.3-alt1_1
 - update to new release by fcimport
 
