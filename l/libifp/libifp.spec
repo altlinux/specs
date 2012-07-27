@@ -1,13 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/pkg-config /usr/bin/swig /usr/bin/valgrind cppunit-devel gcc-fortran glib2-devel guile18-devel imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libflac-devel libfreetype-devel libglibmm-devel libgmp-devel libhocr-devel libhspell-devel libifp-devel libmpfr-devel liboggz-devel libreadline-devel libspeex-devel libtiff-devel libuuid-devel libvorbis-devel pkgconfig(dbus-1) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel unzip zlib-devel
+BuildRequires: /usr/bin/doxygen
 # END SourceDeps(oneline)
 BuildRequires: chrpath
 BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libifp
 Version:        1.0.0.2
-Release:        alt2_11
+Release:        alt2_12
 Summary:        A general-purpose library-driver for iRiver's iFP portable audio players
 
 Group:          System/Base
@@ -29,7 +28,7 @@ Also included is a console app that uses the library.
 %package        devel
 Summary:        Headers and libraries for developing with libifp
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libifp = %{version}-%{release}
 
 %description    devel
 This package contains headers and libraries for developing apps that use
@@ -66,6 +65,9 @@ done
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_12
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0.2-alt2_11
 - update to new release by fcimport
 
