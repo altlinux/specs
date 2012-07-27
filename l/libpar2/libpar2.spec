@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name: libpar2
 Version: 0.2       
-Release: alt2_12
+Release: alt2_13
 Summary: Library for performing comman tasks related to PAR recovery sets
      
 Group: System/Libraries
@@ -68,6 +68,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}/include/
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_13
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_12
 - update to new release by fcimport
 
