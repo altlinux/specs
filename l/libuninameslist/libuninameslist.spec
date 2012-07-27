@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libuninameslist
 Version:        20091231
-Release:        alt3_3
+Release:        alt3_4
 
 Summary:        A library providing Unicode character names and annotations
 
@@ -48,6 +48,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20091231-alt3_4
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 20091231-alt3_3
 - fixed build
 
