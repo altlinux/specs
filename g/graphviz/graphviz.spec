@@ -8,7 +8,7 @@
 
 Name: graphviz
 Version: 2.28.0
-Release: alt2
+Release: alt3
 
 Summary: Graphs visualization tools
 License: Common Public License 1.0
@@ -19,6 +19,7 @@ Url: http://www.graphviz.org
 Source0: %name-%version.tar
 Source1: graphviz-2.2-alt-libpath.patch
 Patch0:  graphviz-2.24.0-alt-perl-5.12.patch
+Patch1:  graphviz-2.28.0-alt-string_h_trhow.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: lib%name = %version-%release
@@ -147,6 +148,7 @@ This package makes %name functionality accessible from Tcl
 %prep
 %setup
 %patch0 -p1
+%patch1
 
 %build
 %add_optflags -DNDEBUG %optflags_fastmath
@@ -299,6 +301,9 @@ rm -f %buildroot%gvlibdir/libgvplugin_*.la
 # - enable/fix/test language bindings
 
 %changelog
+* Fri Jul 27 2012 Fr. Br. George <george@altlinux.ru> 2.28.0-alt3
+- Fix string.h incorrect functions redefinition
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 2.28.0-alt2
 - rebuilt against current liblasi
 
