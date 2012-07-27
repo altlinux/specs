@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libirman
 Version:        0.4.5
-Release:        alt3_6
+Release:        alt3_7
 Summary:        Library for IRMAN hardware
 
 Group:          System/Libraries
@@ -64,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt3_7
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt3_6
 - fixed build
 
