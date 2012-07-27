@@ -1,10 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 Name: hunspell-se
 Summary: Northern Saami hunspell dictionaries
 Version: 1.0
-Release: alt2_0.4.beta7
+Release: alt2_0.5.beta7
 Source: http://divvun.no/static_files/hunspell-se.tar.gz
 Group: Text tools
 URL: http://www.divvun.no/index.html
@@ -39,6 +36,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.5.beta7
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.4.beta7
 - update to new release by fcimport
 
