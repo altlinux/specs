@@ -1,5 +1,5 @@
 Name: devscripts
-Version: 2.11.8
+Version: 2.12.1
 Release: alt1
 Source: %{name}_%version.tar.gz
 Patch: devscripts-uscan-no_ssl_namecheck.patch
@@ -103,6 +103,9 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %python_sitelibdir_noarch/*
 
 %changelog
+* Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 2.12.1-alt1
+- Autobuild version bump to 2.12.1
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 2.11.8-alt1
 - Autobuild version bump to 2.11.8
 
