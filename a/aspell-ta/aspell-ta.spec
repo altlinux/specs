@@ -1,13 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl
-# END SourceDeps(oneline)
 %define debug_package %{nil}
 %define lang ta
 %define langrelease 1
 
 Name:           aspell-ta
 Version:        20040424
-Release:        alt2_7
+Release:        alt2_8
 Summary:        GNU Aspell Tamil Dictionary Package
 
 Group:          Text tools
@@ -53,6 +50,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20040424-alt2_8
+- update to new release by fcimport
+
 * Fri Feb 10 2012 Igor Vlasenko <viy@altlinux.ru> 20040424-alt2_7
 - update to new release by fcimport
 
