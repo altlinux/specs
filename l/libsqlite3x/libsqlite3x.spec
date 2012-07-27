@@ -8,7 +8,7 @@ BuildRequires: gcc-c++
 %global namesq3 libsq3
 Name:           libsqlite3x
 Version:        %{veryear}%{vermon}%{verday}
-Release:        alt3_11
+Release:        alt3_12
 Summary:        A C++ Wrapper for the SQLite3 embeddable SQL database engine
 
 Group:          System/Libraries
@@ -102,6 +102,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libsq3.pc
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_12
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_11
 - fixed build
 
