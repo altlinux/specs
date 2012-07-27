@@ -1,5 +1,5 @@
 Name: powdertoy
-Version: 80.3
+Version: 81.3
 Release: alt1
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
@@ -80,6 +80,9 @@ install -D src/Resources/Icon-32.png %buildroot%_niconsdir/%name.png
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 81.3-alt1
+- Autobuild version bump to 81.3
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 80.3-alt1
 - Autobuild version bump to 80.3
 
