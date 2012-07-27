@@ -25,7 +25,7 @@ named "WenQuanYi Zen Hei Mono".
 
 Name:           fonts-ttf-wqy-zenhei
 Version:        0.9.46
-Release:        alt3_4
+Release:        alt3_5
 Summary:        WenQuanYi Zen Hei CJK Font
 
 Group:          System/Fonts/True type
@@ -116,6 +116,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_5
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_4
 - update to new release by fcimport
 
