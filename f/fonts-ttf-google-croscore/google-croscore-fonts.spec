@@ -12,7 +12,7 @@ portability across platforms.
 
 Name:           fonts-ttf-google-croscore
 Version:        1.21.0
-Release:        alt1_3
+Release:        alt1_4
 Summary:        The width-compatible fonts for improved on-screen readability
 
 Group:          Graphical desktop/Other
@@ -188,6 +188,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.21.0-alt1_4
+- update to new release by fcimport
+
 * Wed Jun 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.21.0-alt1_3
 - fc import
 
