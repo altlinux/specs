@@ -1,5 +1,5 @@
 Name: screencaster
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Screencaster
@@ -30,5 +30,8 @@ cp -a recstop %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Fri Jul 27 2012 Ildar Mulyukov <ildar@altlinux.ru> 0.2-alt1
+- new snapshot
+
 * Sun Jan 30 2011 Dmitry Derjavin <dd@altlinux.org> 0.1-alt1
 - Initial release. Spec file by sin@altlinux.org.
