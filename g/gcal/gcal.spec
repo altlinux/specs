@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/less /usr/bin/perl /usr/bin/pg /usr/sbin/zdump libncurse
 
 Name:		gcal
 Version:	3.6.2
-Release:	alt1_1
+Release:	alt1_2
 Summary:	GNU Gregorian calendar program
 
 Group:		Text tools
@@ -68,6 +68,9 @@ rm -f %{buildroot}%{_infodir}/dir
 %{_mandir}/man1/*.1*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 3.6.2-alt1_1
 - update to new release by fcimport
 
