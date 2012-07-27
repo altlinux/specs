@@ -5,7 +5,7 @@ Name: hunspell-tl
 Summary: Tagalog hunspell dictionaries
 %define upstreamid 20050109
 Version: 0.%{upstreamid}
-Release: alt2_6
+Release: alt2_7
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/tl_PH.zip
 Group: Text tools
 URL: http://borel.slu.edu/crubadan/apps.html
@@ -49,6 +49,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_7
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20050109-alt2_6
 - update to new release by fcimport
 
