@@ -3,7 +3,7 @@
 Name: hunspell-bn
 Summary: Bengali hunspell dictionaries
 Version: %{upstreamver}
-Release: alt1_1
+Release: alt1_2
 #Epoch: 1
 Group:          Text tools
 Source: http://sourceforge.net/projects/bengalinux/files/bengali-spellcheck/%{name}-%{version}.tar.bz2
@@ -51,6 +51,9 @@ popd
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_2
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1_1
 - update to new release by fcimport
 
