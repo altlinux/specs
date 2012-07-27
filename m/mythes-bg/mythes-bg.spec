@@ -1,10 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 Name: mythes-bg
 Summary: Bulgarian thesaurus
 Version: 4.3
-Release: alt1_3
+Release: alt1_4
 Source: http://downloads.sourceforge.net/sourceforge/bgoffice/OOo-thes-bg-%{version}.zip
 Requires: libmythes
 Group: Text tools
@@ -48,6 +45,9 @@ cp -p th_bg_BG.idx $RPM_BUILD_ROOT/%{_datadir}/mythes/th_bg_BG_v2.idx
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_4
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_3
 - update to new release by fcimport
 
