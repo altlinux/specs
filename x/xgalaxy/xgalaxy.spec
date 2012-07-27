@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libICE-devel libSM-devel libX11-devel libXext-devel
+BuildRequires: libICE-devel libSM-devel libX11-devel libXext-devel perl(find.pl)
 # END SourceDeps(oneline)
 Name:           xgalaxy
 Version:        2.0.34
-Release:        alt2_16
+Release:        alt2_17
 Summary:        Arcade game: shoot down the space ships attacking the planet
 Group:          Games/Other
 License:        GPL+
@@ -91,9 +91,9 @@ install -p -m 644 %{name}.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/22x22/apps
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -136,6 +136,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_17
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_16
 - rebuild with fixed sourcedep analyser (#27020)
 
