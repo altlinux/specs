@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-nl
 Summary: Dutch hunspell dictionaries
 Version: 2.10
-Release: alt1_2
+Release: alt1_3
 #http://www.opentaal.org/bestanden/doc_download/20-woordenlijst-v-210g-voor-openofficeorg-3
 #annoying click through makes direct link apparently impossible
 Source: OpenTaal-210G-LO.oxt
@@ -41,6 +41,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_3
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_2
 - update to new release by fcimport
 
