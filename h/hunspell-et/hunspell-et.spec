@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 Name: hunspell-et
 Summary: Estonian hunspell dictionaries
 %define upstreamid 20030606
 Version: 0.%{upstreamid}
-Release: alt2_8
+Release: alt2_9
 Source: http://www.meso.ee/~jjpp/speller/ispell-et_%{upstreamid}.tar.gz
 Group: Text tools
 URL: http://www.meso.ee/~jjpp/speller/
@@ -49,6 +46,9 @@ cp -p hyph_et.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_et_EE.dic
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20030606-alt2_9
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20030606-alt2_8
 - update to new release by fcimport
 
