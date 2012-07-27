@@ -5,7 +5,7 @@ Summary: Italian dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 2.2_20050523
-Release: alt2_6
+Release: alt2_7
 License: GPLv2+
 Group: Text tools
 URL: http://aspell.net/
@@ -35,6 +35,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2_20050523-alt2_7
+- update to new release by fcimport
+
 * Fri Feb 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.2_20050523-alt2_6
 - update to new release by fcimport
 
