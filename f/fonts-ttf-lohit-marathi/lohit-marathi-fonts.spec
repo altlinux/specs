@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-lohit-marathi
 Version:        2.5.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Free Marathi font
 
 Group:          Graphical desktop/Other
@@ -82,6 +82,9 @@ fi
 %doc ChangeLog OFL.txt COPYRIGHT AUTHORS README ChangeLog.old
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_2
+- update to new release by fcimport
+
 * Wed Jun 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_1
 - fc import
 
