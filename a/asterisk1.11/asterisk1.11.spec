@@ -1,11 +1,11 @@
-%define svn_revision 337970
+%define svn_revision 370515
 Name: asterisk1.11
 Summary: Open source PBX
 Version: 1.11
 Release: alt0.%svn_revision
 License: GPL
 Group: System/Servers
-BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenh323_1.19-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
+BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
 BuildRequires: libtiff-devel
 BuildRequires: libiksemel-devel
 BuildRequires: libradiusclient-ng-devel
@@ -52,12 +52,11 @@ BuildPreReq: libss7-devel
 BuildPreReq: libtonezone-dahdi-devel
 BuildPreReq: dahdi-linux-headers
 BuildPreReq: libpri-devel
-BuildPreReq: libopenh323_1.19-devel libpw1.11-devel
-BuildPreReq: libSDL_sound-devel libexpat-devel
 BuildRequires: libmISDN-devel
 BuildPreReq: libspeex-devel
 BuildRequires: libcurl-devel
 BuildPreReq: libspandsp6-devel
+BuildRequires: libexpat-devel
 BuildPreReq: jackit-devel
 BuildPreReq: libldap-devel
 BuildRequires: libMySQL-devel
@@ -65,7 +64,8 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 337970
+%define svn_revision 370515
+%add_verify_elf_skiplist %_libdir/libasteriskssl*
 %def_with debug
 %def_enable debug
 %def_without		hoard
@@ -76,7 +76,6 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %def_with			postgresql
 %def_with			misdn
 %def_with			odbc
-%def_with			h323
 %def_with			ss7
 %def_with			ldap
 %def_with   			jack
@@ -99,6 +98,7 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %_docdir/%name-%version/samples/%1.conf
 %nil
 Url: http://www.asterisk.org/
+Requires: libasteriskssl
 Requires: asterisk-files-all
 Requires: asterisk-initscript
 Requires(pre): asterisk-initscript
@@ -185,14 +185,6 @@ Requires: %name = %version-%release
 %description cdr_sqlite
 Asterisk sqlite CDR support
 
-%package cdr_sqlite3
-Summary: Asterisk sqlite3 CDR support
-Group: %group
-Requires: %name = %version-%release
-
-%description cdr_sqlite3
-Asterisk sqlite3 CDR support
-
 %package cdr_tds
 Summary: Asterisk FreeTDS CDR support
 Group: %group
@@ -227,7 +219,6 @@ Requires: %name = %version-%release
 ZAP channel module for Asterisk
 %endif
 
-%if_with h323
 %package chan_h323
 Summary: H.323 channel support for Asterisk
 Group: System/Servers
@@ -236,7 +227,6 @@ Requires: %name = %version
 %description chan_h323
 H.323 channel support for Asterisk PBX
 
-%endif
 
 %package chan_iax2
 Summary: IAX2 channel module for Asterisk
@@ -246,15 +236,6 @@ Requires: %name-res_crypto = %version-%release
 
 %description chan_iax2
 IAX2 channel module for Asterisk
-
-
-%package chan_jingle
-Summary: Jingle channel module for Asterisk
-Group: %group
-Requires: %name = %version-%release
-
-%description chan_jingle
-mISDN channel module for Asterisk
 
 
 %if_with misdn
@@ -342,7 +323,7 @@ Requires: %name-app_voicemail = %version-%release
 Requires: %name-calendar = %version-%release
 Requires: %name-cdr_radius = %version-%release
 Requires: %name-chan_iax2 = %version-%release
-Requires: %name-chan_jingle = %version-%release
+Requires: %name-jabber = %version-%release
 %if_with misdn
 Requires: %name-chan_misdn = %version-%release
 %endif
@@ -369,15 +350,13 @@ Requires: %name-res_crypto = %version-%release
 Requires: %name-res_snmp = %version-%release
 %endif
 Requires: %name-sms = %version-%release
-%if_with h323
 Requires: %name-chan_h323 = %version-%release
-%endif
 Requires: %name-mysql = %version-%release
 Requires: %name-fax = %version-%release
 Requires: %name-sources = %version-%release
 Requires: %name-app_minivm   = %version-%release
 Requires: %name-cdr_sqlite   = %version-%release
-Requires: %name-cdr_sqlite3  = %version-%release
+Requires: %name-sqlite3  = %version-%release
 Requires: %name-cdr_tds      = %version-%release
 Requires: %name-chan_console = %version-%release
 Requires: %name-chan_vpb     = %version-%release
@@ -471,6 +450,14 @@ Requires: %name = %version-%release
 %description httpd
 Asterisk internal static httpd data for monitoring
 
+
+%package jabber
+Summary: Jingle and Google Talk channel module for Asterisk
+Group: %group
+Requires: %name = %version-%release
+
+%description jabber
+Jingle and Google Talk channel module for Asterisk
 
 %if_with jack
 %package jack
@@ -588,6 +575,14 @@ protocols, and can interoperate with almost all standard-based telephony
 equipment using relatively inexpensive hardware.
 
 
+%package sqlite3
+Summary: Asterisk sqlite3 support
+Group: %group
+Requires: %name = %version-%release
+
+%description sqlite3
+Asterisk sqlite3 support
+
 %package -n conf2ael1.11
 Summary: extensions.conf -> ael2 converter
 Group: %group
@@ -596,6 +591,13 @@ Requires: asterisk1.11-common
 %description -n conf2ael1.11
 extensions.conf -> ael2 converter
 
+
+%package -n libasteriskssl
+Summary: Asterisk SSL functions
+Group: %group
+
+%description -n libasteriskssl
+Asterisk SSL functions
 
 %description
 Asterisk is a complete PBX in software. It provides all of the features
@@ -608,6 +610,7 @@ equipment using relatively inexpensive hardware.
 %setup -c -T
 %setup -a2 -D
 tar cjf ../%name.tar.bz2 .
+sed -i "s!ASTMODDIR[[:space:]]*=.*!ASTMODDIR=%modules_dir!" makeopts.in
 sed -i "s!MODULES_DIR=.*!MODULES_DIR=%modules_dir!" Makefile
 sed -i "s!AGI_DIR=.*!AGI_DIR=%agi_dir!" Makefile
 sed -i 's!^[[:space:]]*ASTVARRUNDIR=.*!ASTVARRUNDIR=$(INSTALL_PREFIX)/var/run/asterisk!' Makefile
@@ -622,19 +625,12 @@ rm -f */.makeopts
 export CC=gcc
 %autoreconf -I autoconf
 ./configure --build=%_build_alias --host=%_host_alias \
-	--libdir=%_libdir \
-	--enable-dev-mode \
 %if_with hoard
     --with-hoard=/usr/include/hoard \
 %endif
-%if_with h323
-	--with-h323
-%else
-	--without-h323
-%endif
-pushd menuselect
-make libdir=%_libdir
-popd
+	--libdir=%_libdir \
+	--enable-dev-mode
+make -C menuselect libdir=%_libdir
 make menuselect.makeopts \
     libdir=%_libdir ||:
 menuselect/menuselect  \
@@ -643,7 +639,11 @@ menuselect/menuselect  \
     --enable DETECT_DEADLOCKS \
     --enable DO_CRASH \
     --enable chan_usbradio \
-    --enable chan_misdn
+    --enable chan_misdn \
+    --enable res_jabber \
+    --enable chan_gtalk \
+    --enable chan_jingle \
+    --disable chan_h323
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
 make libdir=%_libdir NOISY_BUILD=yes
@@ -685,6 +685,7 @@ mkdir -p %buildroot/var/lib/asterisk/documentation/
 ln -s ../../../../usr/share/asterisk/documentation/1.11 %buildroot/var/lib/asterisk/documentation
 mv %buildroot/var/lib/asterisk/documentation/*.xml %buildroot/usr/share/asterisk/documentation/1.11/
 mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk/documentation/1.11/
+ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 
 %preun
 %preun_service asterisk
@@ -731,9 +732,6 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astmodule res_phoneprov
 %astmodule res_realtime
 %astmodule app_zapateller
-%ifnarch %arm
-%astmodule app_rpt
-%endif
 %astmodule app_chanspy
 %astmodule pbx_dundi
 %astmodule format_g723
@@ -912,7 +910,6 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %exclude %_docdir/%name-%version/lang/hebrew.ods
 %exclude %_docdir/%name-%version/lang/urdu.ods
 %exclude %_docdir/%name-%version/lang/vietnamese.ods
-%astsample ais
 %astsample asterisk
 %astsample ccss
 %astsample cdr_syslog
@@ -921,26 +918,28 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astsample cel_sqlite3_custom
 %astsample cel_tds
 %astsample chan_mobile
-%astsample chan_ooh323
 %astsample cli_aliases
 %astsample cli_permissions
 %astsample dbsep
 %astsample dsp
 %astsample meetme
 %_docdir/%name-%version/samples/extensions.lua
-%astmodule chan_usbradio
-%astsample usbradio
 %astsample res_config_sqlite
 %astsample phoneprov
 %astsample queuerules
 %astmodule app_saycountpl
 %astmodule chan_mobile
-%exclude %astmodule chan_h323
 %astmodule app_saycounted
 %astmodule func_jitterbuffer
 %astmodule res_format_attr_celt
 %astmodule res_format_attr_silk
 %astmodule res_http_post
+%astmodule func_hangupcause
+%astmodule func_presencestate
+%astmodule res_format_attr_h263
+%astmodule res_format_attr_h264
+%astmodule res_http_websocket
+%astsample acl
 %exclude %_docdir/%name-%version/Makefile
 
 %files -n aelparse1.11
@@ -982,11 +981,6 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astmodule cdr_sqlite
 %astmodule res_config_sqlite
 
-%files cdr_sqlite3
-%astmodule cel_sqlite3_custom
-%astmodule cdr_sqlite3_custom
-%astsample cdr_sqlite3_custom
-
 %files cdr_tds
 %astmodule cdr_tds
 %astmodule cel_tds
@@ -1010,25 +1004,14 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astsample chan_dahdi
 %endif
 
-%if_with h323
 %files chan_h323
 %astmodule chan_ooh323
-%astsample h323
-%endif
+%astsample ooh323
 
 %files chan_iax2
 %astmodule chan_iax2
 %dir %_docdir/%name-%version/samples
 %astsample iax
-
-%files chan_jingle
-%astmodule chan_jingle
-%astmodule chan_gtalk
-%astmodule res_jabber
-%dir %_docdir/%name-%version/samples
-%astsample jabber
-%astsample jingle
-%astsample gtalk
 
 %if_with misdn
 %files chan_misdn
@@ -1079,6 +1062,7 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 
 %files devel
 %_includedir/asterisk-%version
+%_libdir/libasteriskssl.so
 
 %files docs
 %dir %_docdir/%name-%version
@@ -1099,7 +1083,6 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astsample smdi
 %astsample followme
 %astsample mgcp
-%astsample rpt
 %astsample rtp
 %astsample adsi
 %astsample alarmreceiver
@@ -1141,6 +1124,19 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %files httpd
 %astsample http
 %_datadir/asterisk/static-http-%version
+
+%files jabber
+%astmodule chan_jingle
+%astmodule chan_gtalk
+%astmodule res_jabber
+%astmodule chan_motif
+%astmodule res_xmpp
+%dir %_docdir/%name-%version/samples
+%astsample jabber
+%astsample jingle
+%astsample gtalk
+%astsample xmpp
+%astsample motif
 
 %if_with jack
 %files jack
@@ -1213,11 +1209,24 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %files sources
 %_usrsrc/%name.tar.bz2
 
+%files sqlite3
+%astmodule cel_sqlite3_custom
+%astmodule cdr_sqlite3_custom
+%astmodule res_config_sqlite3
+%astsample cdr_sqlite3_custom
+%astsample res_config_sqlite3
+
 %files -n conf2ael1.11
 %_sbindir/conf2ael-%version
 %_altdir/conf2ael-%version
 
+%files -n libasteriskssl
+%_libdir/libasteriskssl.so.1
+
 %changelog
+* Thu Jul 26 2012 Denis Smirnov <mithraen@altlinux.ru> 1.11-alt0.370515
+- update from svn revision 370515
+
 * Sun Sep 25 2011 Cronbuild Service <cronbuild@altlinux.org> 1.11-alt0.337970
 - update from svn revision 337970
 
