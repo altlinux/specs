@@ -8,7 +8,7 @@ Name: kde4plasma-addons
 %define minor 8
 %define bugfix 4
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4
@@ -1230,6 +1230,12 @@ based on %name
 %_K4link/*.so
 
 %changelog
+* Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2
+- rebuilt with new attica
+
+* Fri Jun 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Thu Jun 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 

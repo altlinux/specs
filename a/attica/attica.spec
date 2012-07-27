@@ -1,5 +1,8 @@
+%define sover 0.4
+%define libattica libattica%sover
+
 Name: attica
-Version: 0.3.0
+Version: 0.4.0
 Release: alt1
 
 Summary: Open Collaboration Service providers library
@@ -21,16 +24,16 @@ BuildRequires: cmake gcc-c++ glib2-devel glibc-devel phonon-devel libqt4-devel
 A library to access Open Collaboration Service providers
 Required to access OSC providers in get hot new stuff.
 
-%package -n libattica
+%package -n %libattica
 Summary: KDE 4 library
 Group: System/Libraries
-%description -n libattica
+%description -n %libattica
 KDE 4 library
 
 %package devel
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
-Requires: libattica = %version-%release
+Requires: %libattica = %version-%release
 Provides: libattica-devel-%version-%release
 %description devel
 This package contains header files needed if you wish to build applications
@@ -48,8 +51,9 @@ based on %name.
 
 %find_lang %name
 
-%files -n libattica
-%_libdir/libattica.so.*
+%files -n %libattica
+%_libdir/libattica.so.%sover
+%_libdir/libattica.so.%sover.*
 
 %files devel
 %_includedir/attica
@@ -57,6 +61,12 @@ based on %name.
 %_libdir/pkgconfig/libattica.pc
 
 %changelog
+* Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
+- new version
+
+* Tue Feb 07 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt0.M60P.1
+- built for M60P
+
 * Thu Jan 26 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - new version
 
