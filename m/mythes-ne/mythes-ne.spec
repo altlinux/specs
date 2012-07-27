@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: mythes-ne
 Summary: Nepali thesaurus
 Version: 1.1
-Release: alt1_3
+Release: alt1_4
 Source0: http://hg.services.openoffice.org/hg/DEV300/raw-file/tip/dictionaries/ne_NP/th_ne_NP_v2.zip
 Source1: http://hg.services.openoffice.org/hg/DEV300/raw-file/tip/dictionaries/ne_NP/README_th_ne_NP_v2.txt
 Group: Text tools
@@ -34,6 +34,9 @@ cp -p th_ne_NP_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes/
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_4
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3
 - update to new release by fcimport
 
