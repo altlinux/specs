@@ -4,7 +4,7 @@ BuildRequires: pkgconfig(python)
 # END SourceDeps(oneline)
 Name: btparser
 Version: 0.17
-Release: alt1_1
+Release: alt1_2
 Summary: Parser and analyzer for backtraces produced by GDB
 Group: Development/C
 License: GPLv2+
@@ -79,6 +79,9 @@ make check
 %{python_sitelibdir}/%{name}/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_2
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_1
 - update to new release by fcimport
 
