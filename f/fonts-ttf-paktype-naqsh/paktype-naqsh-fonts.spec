@@ -5,7 +5,7 @@
 
 Name:	fonts-ttf-paktype-naqsh
 Version:     3.0
-Release:     alt3_6
+Release:     alt3_7
 Summary:     Fonts for Arabic from PakType
 
 Group:	System/Fonts/True type
@@ -60,9 +60,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf}-naqsh.conf \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}-naqsh.conf
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -101,6 +101,9 @@ fi
 %doc PakType_Naqsh_License.txt Naqsh-3.0/Readme.txt
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.0-alt3_7
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 3.0-alt3_6
 - rebuild to get rid of #27020
 
