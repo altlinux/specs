@@ -1,6 +1,7 @@
 %define oldname cjkuni-ukai-fonts
-%define version 0.2.20080216.1
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cjkuni-ukai-fonts
+%define version 0.2.20080216.1
 %global fontname cjkuni-ukai
 #%global fontconf2 25-ttf-arphic-ukai-render.conf
 %global fontconf3 90-ttf-arphic-ukai-embolden.conf
@@ -16,7 +17,7 @@ the CJK Unifonts project.
 
 Name:           fonts-ttf-cjkuni-ukai
 Version:        0.2.20080216.1
-Release:        alt4_48
+Release:        alt4_49
 Summary:        Chinese Unicode TrueType font in Kai face
 
 Group:          System/Fonts/True type
@@ -64,9 +65,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf3} \
 install -m 0755 -d %{buildroot}%{catalogue}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -113,6 +114,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_49
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_48
 - rebuild to get rid of #27020
 
