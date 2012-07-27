@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hyphen-bg
 Summary: Bulgarian hyphenation rules
 Version: 4.3
-Release: alt1_3
+Release: alt1_4
 Source: http://downloads.sourceforge.net/bgoffice/OOo-hyph-bg-%{version}.zip
 Group: Text tools
 URL: http://bgoffice.sourceforge.net/
@@ -44,6 +44,9 @@ cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_4
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.3-alt1_3
 - update to new release by fcimport
 
