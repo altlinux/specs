@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-gu
 Summary: Gujarati hunspell dictionaries
 Version: 20061015 
-Release: alt2_7
+Release: alt2_8
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/gu_IN.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -32,6 +32,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20061015-alt2_8
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 20061015-alt2_7
 - update to new release by fcimport
 
