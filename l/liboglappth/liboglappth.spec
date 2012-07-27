@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/ar gcc-c++
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           liboglappth
 Summary:        An OpenGL wrapper library
 Version:        0.98
-Release:        alt2_9
+Release:        alt2_10
 License:        GPLv2+
 Group:          Engineering
 URL:            http://www.uku.fi/~thassine/ghemical
@@ -51,6 +51,9 @@ find %{buildroot}%{_libdir} -name *.la -exec rm -rf {} \;
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.98-alt2_10
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.98-alt2_9
 - update to new release by fcimport
 
