@@ -8,6 +8,8 @@ Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C �
 Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
 Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
 Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C 函式庫
+Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
+Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C 函式庫
 %add_optflags %optflags_shared
 ###
 # This file is generated, please modified the .spec.in file instead!
@@ -16,7 +18,7 @@ Name:           libUnihan
 %define         libUnihan_ver_major 0
 %define         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt3_7
+Release:        alt3_8
 Group:          System/Libraries
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
@@ -88,6 +90,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %doc doc/html
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt3_8
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt3_7
 - fixed build
 
