@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin
 # END SourceDeps(oneline)
 Name:       alleyoop
 Version:    0.9.7
-Release:    alt2_6
+Release:    alt2_7
 License:    GPLv2+
 Group:      Development/Tools
 Summary:    Graphical front-end to the Valgrind memory checker for x86
@@ -67,6 +67,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schem
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt2_7
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt2_6
 - update to new release by fcimport
 
