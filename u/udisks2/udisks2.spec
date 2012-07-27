@@ -7,14 +7,14 @@
 
 Name: %{_name}2
 Version: 1.99.0
-Release: alt0.1
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-Source: http://udisks.freedesktop.org/releases/%_name-%version.tar
+Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
 Requires: lib%name = %version-%release
@@ -150,6 +150,9 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %endif
 
 %changelog
+* Fri Jul 27 2012 Yuri N. Sedunov <aris@altlinux.org> 1.99.0-alt1
+- 1.99.0 release
+
 * Wed Jul 25 2012 Yuri N. Sedunov <aris@altlinux.org> 1.99.0-alt0.1
 - 1.99.0 snapshot
 
