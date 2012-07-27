@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/pkg-config /usr/bin/valgrind cppunit-devel gcc-c++ gcc-fortran glib2-devel guile18-devel imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libfreetype-devel libreadline-devel libuuid-devel pkgconfig(dbus-1) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel unzip zlib-devel
+BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -32,7 +31,7 @@ and Ogg Vorbis files.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libfishsound = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -42,7 +41,7 @@ developing applications that use %{name}.
 Summary:        Documentation for %{name}
 Group:          Documentation
 # note: intentionally not noarch; contains a target-specific Makefile
-Requires:       %{name} = %{version}-%{release}
+Requires:       libfishsound = %{version}-%{release}
 
 %description    doc
 The %{name}-doc package contains the documentation for %{name}.
@@ -50,7 +49,7 @@ The %{name}-doc package contains the documentation for %{name}.
 %package        tools
 Summary:        Sample programs bundled with %{name}
 Group:          Sound
-Requires:       %{name} = %{version}-%{release}
+Requires:       libfishsound = %{version}-%{release}
 
 %description    tools
 The %{name}-tools package contains sample programs that use %{name}.
@@ -108,6 +107,9 @@ mv src/examples .
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_5
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_4
 - update to new release by fcimport
 
