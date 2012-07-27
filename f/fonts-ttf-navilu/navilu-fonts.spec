@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-navilu
 Version:        1.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Free Kannada opentype sans-serif font
 
 Group:          Graphical desktop/Other
@@ -85,6 +85,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2
+- update to new release by fcimport
+
 * Wed Jun 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
 - fc import
 
