@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-eo
 Summary: Esperanto hunspell dictionaries
 Version: 1.0
-Release: alt2_0.4.dev
+Release: alt2_0.5.dev
 Group: Text tools
 Source: http://extensions.services.openoffice.org/files/3377/1/1.0-dev.oxt
 URL: http://extensions.services.openoffice.org/project/literumilo
@@ -32,6 +32,9 @@ cp -p literumilo.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/eo.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.5.dev
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.4.dev
 - update to new release by fcimport
 
