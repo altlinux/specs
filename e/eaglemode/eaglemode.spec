@@ -1,5 +1,5 @@
 Name: eaglemode
-Version: 0.83.0
+Version: 0.84.0
 Release: alt1
 Group: Graphical desktop/Other
 Summary: Futuristic desktop allowing user to visit almost everything by zooming in
@@ -15,7 +15,7 @@ Requires: arj p7zip lzop lha zip unzip unrar htmldoc
 %set_perl_req_method relaxed
 #set_verify_elf_method unresolved=relaxed
 
-BuildRequires:	libpoppler-glib-devel
+BuildRequires: libpoppler-glib-devel
 
 # Automatically added by buildreq on Thu Jun 24 2010
 BuildRequires: gcc-c++ libgio-devel libgtk+2-common-devel libjpeg-devel librsvg-devel libtiff-devel libxine-devel perl-threads libpng-devel
@@ -63,6 +63,9 @@ mv %buildroot%_libdir/%name/include %buildroot%_includedir/%name && ln -s %_incl
 %_includedir/%name/*
 
 %changelog
+* Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 0.84.0-alt1
+- Autobuild version bump to 0.84.0
+
 * Fri Jan 13 2012 Fr. Br. George <george@altlinux.ru> 0.83.0-alt1
 - Autobuild version bump to 0.83.0
 - Buildreq fix
