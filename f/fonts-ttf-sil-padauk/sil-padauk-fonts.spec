@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Digest/MD5.pm) perl(FileHandle.pm) perl(Font/TTF/Font.pm) perl(Font/TTF/Table.pm) perl(IO/File.pm) perl(Pod/Usage.pm)
+# END SourceDeps(oneline)
 %define oldname sil-padauk-fonts
 %global fontname sil-padauk
 %global fontconf 65-%{fontname}.conf
@@ -5,7 +8,7 @@
 
 Name:    fonts-ttf-sil-padauk
 Version: 2.4
-Release: alt3_8
+Release: alt3_9
 Summary: A font for Burmese and the Myanmar script
 
 Group:   System/Fonts/True type
@@ -58,9 +61,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -101,6 +104,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.4-alt3_9
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.4-alt3_8
 - rebuild to get rid of #27020
 
