@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ pkgconfig(gthread-2.0) pkgconfig(libxml++-2.6)
 # END SourceDeps(oneline)
 Name:		arpage
 Version:	0.3.3
-Release:	alt2_9
+Release:	alt2_10
 Summary:	A JACK MIDI arpeggiator
 
 Group:		Sound
@@ -62,6 +62,9 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_10
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_9
 - update to new release by fcimport
 
