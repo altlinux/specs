@@ -3,7 +3,7 @@
 
 Name: aspell-%{lang}
 Version: 0.03
-Release: alt2_6
+Release: alt2_7
 Summary: GNU Aspell Malayalam Dictionary Package
 
 Group: Text tools
@@ -50,6 +50,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_7
+- update to new release by fcimport
+
 * Sun Feb 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.03-alt2_6
 - update to new release by fcimport
 
