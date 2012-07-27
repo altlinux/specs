@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-nhn-nanum-gothic-coding
 Version:	1.500
-Release:	alt3_3
+Release:	alt3_4
 Summary:	Nanum Gothic Coding family of Korean TrueType fonts
 
 Group:		System/Fonts/True type
@@ -93,6 +93,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.500-alt3_4
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.500-alt3_3
 - update to new release by fcimport
 
