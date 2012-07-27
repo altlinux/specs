@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libSDL-devel
+BuildRequires: gcc-c++ libSDL-devel perl(FileHandle.pm) perl(SDL/Rect.pm) perl(SDL/Surface.pm)
 # END SourceDeps(oneline)
 Name:           nazghul
 Version:        0.7.1
-Release:        alt2_2.20120228gitb0a402a
+Release:        alt2_3.20120228gitb0a402a
 Summary:        A computer role-playing game (CRPG) engine
 
 License:        GPLv2+
@@ -82,6 +82,40 @@ desktop-file-install             \
     haxima.desktop
 
 install -D -m 644 icons/haxima.png %{buildroot}/%{_datadir}/pixmaps/haxima.png
+# generic fedora font import transformations
+# move fonts to corresponding subdirs if any
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
+    case "$fontpatt" in 
+	pcf*|bdf*) type=bitmap;;
+	tt*|TT*) type=ttf;;
+	otf|OTF) type=otf;;
+	afm*|pf*) type=type1;;
+    esac
+    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
+	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
+	install -Dm644 "$i" "$j";
+	rm -f "$i";
+	olddir=`dirname "$i"`;
+	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
+	rmdir -p "$olddir" 2>/dev/null ||:
+    done
+done
+# kill invalid catalogue links
+if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
+    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
+    # relink catalogue
+    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
+	pri=10;
+	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
+	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
+	case "$type" in 
+	    bitmap) pri=10;;
+	    ttf|ttf) pri=50;;
+	    type1) pri=40;;
+	esac
+	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
+    done ||:
+fi
 
 
 %files
@@ -100,6 +134,9 @@ install -D -m 644 icons/haxima.png %{buildroot}/%{_datadir}/pixmaps/haxima.png
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_3.20120228gitb0a402a
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_2.20120228gitb0a402a
 - update to new release by fcimport
 
