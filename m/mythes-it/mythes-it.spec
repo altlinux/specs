@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: mythes-it
 Summary: Italian thesaurus
 Version: 2.0.9l
-Release: alt1_7
+Release: alt1_8
 Source: http://downloads.sourceforge.net/sourceforge/linguistico/thesaurus2_it_02_09_l_2008_11_29.zip
 Group: Text tools
 URL: http://linguistico.sourceforge.net/pages/thesaurus_italiano.html
@@ -49,6 +49,9 @@ done
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.9l-alt1_8
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.9l-alt1_7
 - update to new release by fcimport
 
