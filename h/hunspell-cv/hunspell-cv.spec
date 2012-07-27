@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-cv
 Summary: Chuvash hunspell dictionaries
 Version: 1.02
-Release: alt2_3
+Release: alt2_4
 Group: Text tools
 Source: http://hunspell.chv.su/files/dict-cv.oxt
 URL: http://hunspell.chv.su/download.shtml
@@ -35,6 +35,9 @@ cp -p cv_RU.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_4
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_3
 - update to new release by fcimport
 
