@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/valgrind imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libfreetype-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) unzip zlib-devel
+BuildRequires: /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/valgrind libexpat-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libcmml
 Version:        0.9.1
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Library for handling Continuous Media Markup Language
 
 Group:          System/Libraries
@@ -14,7 +13,7 @@ URL:		http://www.annodex.net/
 Source:		http://www.annodex.net/software/libcmml/download/%{name}-%{version}.tar.gz
 
 BuildRequires:	doxygen
-BuildRequires:	libexpat-devel
+BuildRequires:	expat-devel
 
 # libtool
 BuildRequires:	gcc-c++
@@ -83,6 +82,9 @@ rm -f $RPM_BUILD_ROOT%{_datadir}/doc/libcmml/doxygen-build.stamp
 %{_includedir}/cmml.h
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_11
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_10
 - update to new release by fcimport
 
