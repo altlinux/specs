@@ -11,7 +11,7 @@ software and support an extended character set. \
 
 Name:		fonts-bitmap-artwiz-aleczapka
 Version:	1.3
-Release:	alt2_12
+Release:	alt2_13
 Summary:	Very small futuristic font family
 Group:		System/Fonts/True type
 License:	GPLv2
@@ -37,7 +37,7 @@ Source17:	artwiz-aleczapka-fonts-snap-fontconfig.conf
 Patch0:		artwiz-aleczapka-fkp-cleanups.patch
 Patch1:		artwiz-aleczapka-fonts-1.3-fix-makepcf.patch
 BuildArch:	noarch
-BuildRequires:	xorg-font-utils fontpackages-devel
+BuildRequires:	xorg-x11-font-utils fontpackages-devel
 Requires:	fonts-bitmap-artwiz-aleczapka-anorexia = %{version}-%{release}
 Requires:	fonts-bitmap-artwiz-aleczapka-aqui = %{version}-%{release}
 Requires:	fonts-bitmap-artwiz-aleczapka-cure = %{version}-%{release}
@@ -335,9 +335,9 @@ do
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -380,6 +380,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_13
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_12
 - rebuild to get rid of #27020
 
