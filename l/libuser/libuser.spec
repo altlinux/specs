@@ -1,15 +1,14 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python
 BuildRequires: /usr/bin/bison /usr/bin/gtkdocize /usr/sbin/nscd libldap-devel libpam0-devel libpopt-devel
 # END SourceDeps(oneline)
 BuildRequires: OpenSP
 %add_optflags %optflags_shared
-# python macros required
-BuildRequires(pre): rpm-build-python
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name: libuser
 Version: 0.57.6
-Release: alt1_1
+Release: alt1_2
 Group: System/Base
 License: LGPLv2+
 URL: https://fedorahosted.org/libuser/
@@ -101,6 +100,9 @@ python -c "import libuser"
 %{_datadir}/gtk-doc/html/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.57.6-alt1_2
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.57.6-alt1_1
 - update to new release by fcimport
 
