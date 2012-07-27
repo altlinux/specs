@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           alienblaster
 Version:        1.1.0
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Action-loaded 2D arcade shooter game
 Group:          Games/Other
 License:        GPLv2+
@@ -72,6 +72,9 @@ install -p -m 644 %{SOURCE5} \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_10
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_9
 - update to new release by fcimport
 
