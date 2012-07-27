@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(FindBin.pm) perl(sigtrap.pm)
+# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: libhugetlbfs
 Version: 2.13
-Release: alt1_1
+Release: alt1_2
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
@@ -95,6 +98,9 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %exclude /usr/lib/perl5/TLBC
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_2
+- update to new release by fcimport
+
 * Fri May 11 2012 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_1
 - update to new release by fcimport
 
