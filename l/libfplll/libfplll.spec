@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libfplll
 Version:        3.0.12
-Release:        alt2_4.2
+Release:        alt2_5.2
 Summary:        LLL-reduces euclidian lattices
 Group:          System/Libraries
 License:        LGPLv2+
@@ -76,6 +76,9 @@ make check
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.12-alt2_5.2
+- update to new release by fcimport
+
 * Fri May 11 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.12-alt2_4.2
 - update to new release by fcimport
 
