@@ -7,7 +7,7 @@
 
 Name:		fonts-ttf-motoya-lmaru
 Version:	1.00
-Release:	alt3_0.5.20110406git
+Release:	alt3_0.6.20110406git
 Summary:	Japanese Round Gothic-typeface TrueType fonts by MOTOYA Co,LTD
 
 License:	ASL 2.0
@@ -89,6 +89,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.6.20110406git
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.00-alt3_0.5.20110406git
 - update to new release by fcimport
 
