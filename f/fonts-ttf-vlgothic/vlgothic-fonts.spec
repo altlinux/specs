@@ -15,7 +15,7 @@ but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
 Version:	20120629
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
@@ -132,6 +132,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20120629-alt1_2
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 20120629-alt1_1
 - update to new release by fcimport
 
