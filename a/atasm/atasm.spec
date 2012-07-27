@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           atasm
 Version:        1.07d
-Release:        alt2_3
+Release:        alt2_4
 Summary:        6502 cross-assembler
 
 Group:          Development/Tools
@@ -58,6 +58,9 @@ popd
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_4
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.07d-alt2_3
 - rebuild to get rid of #27020
 
