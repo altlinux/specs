@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: mythes-pl
 Summary: Polish thesaurus
 Version: 1.5
-Release: alt1_7
+Release: alt1_8
 Source: http://downloads.sourceforge.net/synonimy/OOo2-Thesaurus-%{version}.zip
 Group: Text tools
 URL: http://synonimy.ux.pl/
@@ -41,6 +41,9 @@ cp -p th_pl_PL_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_8
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_7
 - update to new release by fcimport
 
