@@ -5,7 +5,7 @@ Name: hunspell-vi
 Summary: Vietnamese hunspell dictionaries
 %define upstreamid 20080604
 Version: 0.%{upstreamid}
-Release: alt2_5
+Release: alt2_6
 Source: http://hunspell-spellcheck-vi.googlecode.com/files/vi_VN.zip
 Group: Text tools
 URL: http://code.google.com/p/hunspell-spellcheck-vi
@@ -32,6 +32,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20080604-alt2_6
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20080604-alt2_5
 - update to new release by fcimport
 
