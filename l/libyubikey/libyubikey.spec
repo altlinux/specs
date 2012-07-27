@@ -1,10 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ pkgconfig(glib-2.0) unzip
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libyubikey
 Version:        1.7
-Release:        alt2_2
+Release:        alt2_3
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
 Group:          Development/C
@@ -20,7 +17,7 @@ authentication device, the Yubikey.
 %package devel
 Summary:        Development files for libyubikey
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libyubikey = %{version}-%{release}
 
 %description devel
 This package contains the header file needed to develop applications that use
@@ -55,6 +52,9 @@ libyubikey.
 %{_libdir}/libyubikey.so
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_3
+- update to new release by fcimport
+
 * Wed Jan 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_2
 - update to new release by fcimport
 
