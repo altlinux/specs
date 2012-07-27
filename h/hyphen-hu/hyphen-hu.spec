@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 Name: hyphen-hu
 Summary: Hungarian hyphenation rules
 %define upstreamid 20090612
 Version: 0.%{upstreamid}
-Release: alt1_6
+Release: alt1_7
 Source: http://download.github.com/nagybence-huhyphn-aa3fc85.tar.gz
 Group: Text tools
 URL: http://www.tipogral.hu/
@@ -36,6 +33,9 @@ cp -p hyph_hu.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen/hyph_hu_HR.dic
 %{_datadir}/hyphen/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20090612-alt1_7
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20090612-alt1_6
 - update to new release by fcimport
 
