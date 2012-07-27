@@ -2,8 +2,9 @@
 BuildRequires: /usr/bin/afm2tfm /usr/bin/fontforge /usr/bin/mktexlsr /usr/bin/vptovf
 # END SourceDeps(oneline)
 %define oldname thai-arundina-fonts
-%define version 0.2.0
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name thai-arundina-fonts
+%define version 0.2.0
 %global fontname thai-arundina
 %global fontconf 67-%{fontname}
 %global archivename fonts-sipa-arundina-%{version}
@@ -16,7 +17,7 @@ compatibility and OpenType conformance.
 
 Name:		fonts-ttf-thai-arundina
 Version:	0.2.0
-Release:	alt2_1
+Release:	alt2_2
 Summary:	Thai Arundina fonts
 
 Group:		System/Fonts/True type
@@ -133,9 +134,9 @@ for fconf in %{fontconf}-sans.conf \
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -172,6 +173,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_2
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_1
 - rebuild to get rid of #27020
 
