@@ -1,6 +1,7 @@
 Summary(ko): 한글 은글꼴 Core 모음
 Summary(ko): 한글 은글꼴 Core 모음
 Summary(ko): 한글 은글꼴 Core 모음
+Summary(ko): 한글 은글꼴 Core 모음
 %define oldname un-core-fonts
 # %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name un-core-fonts
@@ -39,7 +40,7 @@ Core 모음: \
 
 Name:           fonts-ttf-un-core
 Version:        1.0.2
-Release:        alt3_0.19.080608
+Release:        alt3_0.20.080608
 Summary:        Un Core family of Korean TrueType fonts
 Summary(ko):    한글 은글꼴 Core 모음
 
@@ -261,6 +262,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.20.080608
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt3_0.19.080608
 - update to new release by fcimport
 
