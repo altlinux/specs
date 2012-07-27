@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           liblzf
 Version:        3.6
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Small data compression library
 
 Group:          System/Libraries
@@ -72,6 +72,9 @@ rm -f %{buildroot}%{_libdir}/liblzf.la
 %{_libdir}/pkgconfig/liblzf.pc
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_4
+- update to new release by fcimport
+
 * Fri May 11 2012 Igor Vlasenko <viy@altlinux.ru> 3.6-alt2_3
 - update to new release by fcimport
 
