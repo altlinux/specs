@@ -14,7 +14,7 @@ Special character &#x2708; ( a'. ) depicts two cats.
 
 Name:		fonts-otf-beteckna
 Version:	0.3
-Release:	alt3_8
+Release:	alt3_9
 Summary:	Beteckna sans-serif fonts
 
 Group:		System/Fonts/True type
@@ -49,34 +49,34 @@ This package consists of files used by other %{oldname} packages.
 
 
 # 1 Lower Case
-%package -n	%{fontname}-lower-case-fonts
+%package -n beteckna-lower-case-fonts
 Group: System/Fonts/True type
 Summary:	Beteckna lower case sfd fonts
 Requires:	%{name}-common = %{version}-%{release}
 
-%description -n	%{fontname}-lower-case-fonts
+%description -n beteckna-lower-case-fonts
 %common_desc
 
 These are lower case Beteckna Fonts.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%name}-lower-case-fonts
+%files -n beteckna-lower-case-fonts
 %{_fontconfig_templatedir}/%{fontconf}-lower-case.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-lower-case.conf
 %{_fontbasedir}/*/%{_fontstem}/BetecknaLowerCase*.otf
 
 
 # 1 Small Caps
-%package -n	%{fontname}-small-caps-fonts
+%package -n beteckna-small-caps-fonts
 Group: System/Fonts/True type
 Summary:	Beteckna small caps sfd fonts
 Requires:	%{name}-common = %{version}-%{release}
 
-%description -n	%{fontname}-small-caps-fonts
+%description -n beteckna-small-caps-fonts
 %common_desc
 
 These are small caps Beteckna Fonts.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%name}-small-caps-fonts
+%files -n beteckna-small-caps-fonts
 %{_fontconfig_templatedir}/%{fontconf}-small-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-small-caps.conf
 %{_fontbasedir}/*/%{_fontstem}/BetecknaSmallCaps.otf
@@ -124,9 +124,9 @@ do
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -161,6 +161,9 @@ fi
 %doc AUTHORS LICENSE CHANGELOG readme.html
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3-alt3_9
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.3-alt3_8
 - rebuild to get rid of #27020
 
