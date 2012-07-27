@@ -7,7 +7,7 @@ BuildRequires: gcc-c++
 Summary: Collection of text-based games
 Name: bsd-games
 Version: 2.17
-Release: alt2_36
+Release: alt2_37
 License: BSD and BSD with advertising
 Group: Games/Other
 URL: ftp://metalab.unc.edu/pub/Linux/games/
@@ -38,7 +38,7 @@ Patch14: bsd-games-2.17-bogglewords.patch
 Patch15: bsd-games-2.17-wtfupdate.patch
 Patch16: bsd-games-2.17-backgammonsize.patch
 Patch17: bsd-games-2.17-adventurecrc.patch
-BuildRequires: libncurses-devel words flex flex bison
+BuildRequires: ncurses-devel words flex flex bison
 Requires(pre): shadow-utils
 Source44: import.info
 
@@ -190,6 +190,9 @@ exit 0
 %doc AUTHORS COPYING ChangeLog ChangeLog.0 THANKS YEAR2000 README.hunt trek/USD.doc/trek.me
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_37
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 2.17-alt2_36
 - rebuild with fixed sourcedep analyser (#27020)
 
