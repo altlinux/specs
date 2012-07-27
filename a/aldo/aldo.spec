@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           aldo
 Version:        0.7.6
-Release:        alt1_6
+Release:        alt1_7
 Summary:        A morse tutor
 
 Group:          Communications
@@ -46,6 +46,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.6-alt1_7
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.6-alt1_6
 - rebuild to get rid of #27020
 
