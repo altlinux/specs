@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gtkdocize gcc-c++ pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) unzip
+BuildRequires: gcc-c++ pkgconfig(glib-2.0) pkgconfig(gobject-2.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libaccounts-qt
 Version:	0.31
-Release:	alt2_5
+Release:	alt2_6
 Summary:	Accounts framework
 Group:		System/Libraries
 License:	LGPLv2
@@ -24,8 +24,8 @@ Framework to provide accounts.
 %package devel
 Summary:	Development files for accounts-qt
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
-Requires:	libqt4-devel
+Requires:	libaccounts-qt = %{version}-%{release}
+Requires:	qt4-devel
 
 %description devel
 Headers, development libraries and documentation for accounts-qt.
@@ -71,6 +71,9 @@ mv %{buildroot}%{_docdir}/accounts-qt %{buildroot}%{_docdir}/libaccounts-qt
 %{_docdir}/libaccounts-qt
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.31-alt2_6
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.31-alt2_5
 - update to new release by fcimport
 
