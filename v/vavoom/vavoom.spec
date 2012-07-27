@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           vavoom
 Version:        1.33
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Enhanced Doom, Heretic, Hexen and Strife source port
 Source0:        http://downloads.sourceforge.net/vavoom/%{name}-%{version}.tar.bz2
 Source1:        doom.autodlrc
@@ -28,7 +28,7 @@ Group:          Games/Other
 License:        GPLv2+
 BuildRequires:  libSDL_mixer-devel libSDL_net-devel libpng-devel libjpeg-devel
 BuildRequires:  libvorbis-devel libmikmod-devel libflac-devel libopenal-devel
-BuildRequires:  libGLU-devel libwxGTK-devel desktop-file-utils ctest cmake
+BuildRequires:  libGLU-devel wxGTK-devel desktop-file-utils ctest cmake
 Requires:       timidity-instruments icon-theme-hicolor autodownloader
 Source44: import.info
 
@@ -94,9 +94,9 @@ install -p -m 644 %{SOURCE13} %{SOURCE14} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -135,6 +135,9 @@ fi
 %{_datadir}/icons/hicolor/48x48/apps/*.png
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_4
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_3
 - rebuild with fixed sourcedep analyser (#27020)
 
