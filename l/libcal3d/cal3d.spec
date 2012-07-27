@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define oldname cal3d
 Name:           libcal3d
 Version:        0.11.0
-Release:        alt1_12
+Release:        alt1_13
 Summary:        Skeletal based 3-D character animation library
 
 License:        LGPLv2+
@@ -33,7 +33,7 @@ in a platform-/graphic API-independent way.
 %package devel
 Summary:        Header files, libraries and development documentation for Cal3D
 Group:          Development/C++
-Requires:       libcal3d = %{version}-%{release}
+Requires:       cal3d = %{version}-%{release}
 Provides: cal3d-devel = %{version}-%{release}
 
 %description devel
@@ -43,7 +43,7 @@ for Cal3D.
 %package doc
 Summary:        Documentation files for Cal3D
 Group:          Documentation
-Requires:       libcal3d = %{version}-%{release}
+Requires:       cal3d = %{version}-%{release}
 Provides: cal3d-doc = %{version}-%{release}
 
 %description doc
@@ -92,6 +92,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.11.0-alt1_13
+- update to new release by fcimport
+
 * Thu Mar 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.11.0-alt1_12
 - rebuild to get rid of #27020
 
