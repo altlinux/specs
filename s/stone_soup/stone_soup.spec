@@ -1,5 +1,5 @@
 Name: stone_soup
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 Summary: Roguelike with tiled and ascii interfaces
 License: GPLv2
@@ -103,6 +103,9 @@ install ../crawl %buildroot/%_bindir/crawl
 %_bindir/crawl
 
 %changelog
+* Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 0.10.3-alt1
+- Autobuild version bump to 0.10.3
+
 * Thu May 03 2012 Fr. Br. George <george@altlinux.ru> 0.10.2-alt1
 - Autobuild version bump to 0.10.2
 - Fix build
