@@ -3,9 +3,10 @@ Summary(sv): Mah-Jong-program med nätmöjlighet
 Summary(sv): Mah-Jong-program med nätmöjlighet
 Summary(sv): Mah-Jong-program med nätmöjlighet
 Summary(sv): Mah-Jong-program med nätmöjlighet
+Summary(sv): Mah-Jong-program med nätmöjlighet
 Name:        mj
 Version:     1.12
-Release:     alt2_1
+Release:     alt2_2
 Summary:     Mah-Jong program with network option
 Summary(sv): Mah-Jong-program med nätmöjlighet
 
@@ -24,8 +25,8 @@ Source0:     %name-GPL-%version-src.tar.bz2
 Source1:     remove-non-GPL.sh
 
 BuildRequires: perl
-BuildRequires: libgtk+2-devel
-BuildRequires: kde4games
+BuildRequires: gtk2-devel
+BuildRequires: kdegames
 BuildRequires: inkscape
 BuildRequires: ImageMagick
 BuildRequires: desktop-file-utils
@@ -114,9 +115,9 @@ mkdir -p %buildroot%icondir
 convert icon.ico %buildroot%icondir/%name.png
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -165,6 +166,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.12-alt2_2
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.12-alt2_1
 - rebuild with fixed sourcedep analyser (#27020)
 
