@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-mai
 Summary: Maithili hunspell dictionaries
 Version: 1.0.1
-Release: alt2_4
+Release: alt2_5
 Group: Text tools
 Source: http://bhashaghar.googlecode.com/files/mai_IN.oxt
 URL: http://bhashaghar.googlecode.com
@@ -32,6 +32,9 @@ cp -p mai_IN.* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_5
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_4
 - update to new release by fcimport
 
