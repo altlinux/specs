@@ -5,7 +5,7 @@ Name: hunspell-nso
 Summary: Northern Sotho hunspell dictionaries
 %define upstreamid 20091201
 Version: 0.%{upstreamid}
-Release: alt2_3
+Release: alt2_4
 Source: http://extensions.services.openoffice.org/files/3139/1/dict-ns_ZA-2009.12.01.oxt
 Group: Text tools
 URL: http://www.translate.org.za/
@@ -43,6 +43,9 @@ cp -p ns_ZA.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/nso_ZA.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20091201-alt2_4
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20091201-alt2_3
 - update to new release by fcimport
 
