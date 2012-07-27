@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-lohit-kannada
 Version:        2.5.1
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Free Kannada font
 
 Group:          System/Fonts/True type
@@ -88,6 +88,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_3
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_2
 - update to new release by fcimport
 
