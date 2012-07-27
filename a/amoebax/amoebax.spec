@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
 Name:           amoebax
 Version:        0.2.0
-Release:        alt5_9
+Release:        alt5_10
 Summary:        Action-Puzzle Game
 Group:          Games/Other
 License:        GPLv2+ and Free Art
@@ -68,6 +68,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.svg \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_10
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_9
 - update to new release by fcimport
 
