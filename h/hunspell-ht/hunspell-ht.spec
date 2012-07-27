@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-ht
 Summary: Haitian Creole hunspell dictionaries
 Version: 0.06
-Release: alt2_3
+Release: alt2_4
 Group: Text tools
 Source: http://extensions.services.openoffice.org/files/3247/3/%{name}-%{version}.oxt
 URL: http://kok.logipam.org/
@@ -31,6 +31,9 @@ cp -p dictionaries/ht_HT.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_4
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2_3
 - update to new release by fcimport
 
