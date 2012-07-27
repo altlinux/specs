@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(glib-2.0) pkgconfig(gmodule-no-export-2.0) pkgconfig(gobject-2.0)
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libxnm
 Version:        0.1.3
-Release:        alt3_6
+Release:        alt3_7
 Summary:        A library for parsing the XNM format
 
 Group:          System/Libraries
@@ -12,7 +12,7 @@ License:        GPLv2+
 URL:            http://xnm.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/xnm/%{name}-%{version}.tar.gz
 
-BuildRequires:  libglib2-devel
+BuildRequires:  glib2-devel
 Source44: import.info
 
     
@@ -24,7 +24,7 @@ and communicating of complex data structures
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libxnm = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -57,6 +57,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_7
+- update to new release by fcimport
+
 * Wed Jun 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_6
 - fixed build
 
