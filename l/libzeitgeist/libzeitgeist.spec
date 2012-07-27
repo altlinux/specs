@@ -1,5 +1,5 @@
 Name: libzeitgeist
-Version: 0.3.12
+Version: 0.3.18
 Release: alt1
 
 Summary: Client library for applications that want to interact with the Zeitgeist daemon
@@ -37,14 +37,14 @@ developing applications that use %name.
 
 %prep
 %setup
-%patch0 -p1 -b .log
+#patch0 -p1 -b .log
 
 %build
 %configure --disable-static
 %make_build V=1
 
-%check
-make check
+#check
+#make check
 
 %install
 %makeinstall_std INSTALL="install -p"
@@ -77,6 +77,9 @@ rm -fr %buildroot%_docdir/%name
 %_datadir/vala/vapi/
 
 %changelog
+* Thu Jul 26 2012 Vitaly Lipatov <lav@altlinux.ru> 0.3.18-alt1
+- new version 0.3.18 (with rpmrb script) (ALT bug #27571)
+
 * Tue Jan 24 2012 Vitaly Lipatov <lav@altlinux.ru> 0.3.12-alt1
 - new version 0.3.12 (with rpmrb script)
 
