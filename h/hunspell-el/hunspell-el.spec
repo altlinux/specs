@@ -5,7 +5,7 @@ Name: hunspell-el
 Summary: Greek hunspell dictionaries
 #Epoch: 1
 Version: 0.8
-Release: alt2_3
+Release: alt2_4
 Source: http://ispell.math.upatras.gr/files/ooffice/el_GR-%{version}.zip
 Group: Text tools
 URL: http://ispell.math.upatras.gr/?section=oofficespell&subsection=howto
@@ -40,6 +40,9 @@ done
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_4
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_3
 - update to new release by fcimport
 
