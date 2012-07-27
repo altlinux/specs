@@ -1,6 +1,9 @@
 Name: ant
 Version: 1.8.3
-Release: alt3
+Release: alt4
+# optional py and pl scripts in /usr/share/ant/bin
+%filter_from_requires /perl/d
+%filter_from_requires /python/d
 
 %def_enable check
 %def_disable debug
@@ -1045,6 +1048,10 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # --------------------------------
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt4
+- dropped parasyte perl & python deps due to optional py
+  and pl scripts in /usr/share/ant/bin/
+
 * Tue Jun 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt3
 - added ant: jpp depmaps
 
