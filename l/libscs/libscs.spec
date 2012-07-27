@@ -2,10 +2,10 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
-%define fedora 15
+%define fedora 16
 Name:           libscs
 Version:        1.4.1
-Release:        alt3_5.2
+Release:        alt3_6.2
 Summary:        Software Carry-Save Multiple-Precision Library
 
 Group:          System/Libraries
@@ -54,7 +54,7 @@ operations on most architectures.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libscs = %{version}-%{release}
 %if 0%{?fedora} > 0 || 0%{?rhel} > 5
 %endif
 
@@ -96,6 +96,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_6.2
+- update to new release by fcimport
+
 * Wed Jun 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.1-alt3_5.2
 - fixed build
 
