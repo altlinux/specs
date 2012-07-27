@@ -1,13 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl
-# END SourceDeps(oneline)
 %define debug_package %{nil}
 %define lang te
 %define langrelease 2
 
 Name:           aspell-te
 Version:        0.01
-Release:        alt2_7
+Release:        alt2_8
 Summary:        GNU Aspell Telugu Dictionary Package
 
 Group:          Text tools
@@ -53,6 +50,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_8
+- update to new release by fcimport
+
 * Fri Feb 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.01-alt2_7
 - update to new release by fcimport
 
