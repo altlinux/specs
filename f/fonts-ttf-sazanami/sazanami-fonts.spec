@@ -10,7 +10,7 @@ They also contains some embedded Japanese bitmap fonts.
 
 Name:		fonts-ttf-sazanami
 Version:	0.20040629
-Release:	alt8_18
+Release:	alt8_19
 BuildArch:	noarch
 BuildRequires:	ttmkfdir >= 3.0.6
 BuildRequires:	mkfontdir fonts-bitmap-misc
@@ -185,6 +185,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt8_19
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.20040629-alt8_18
 - update to new release by fcimport
 
