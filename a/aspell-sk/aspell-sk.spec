@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl
-# END SourceDeps(oneline)
 %define aspellversion 6
 %define lang sk
 %define langrelease 2
@@ -8,7 +5,7 @@ BuildRequires: /usr/bin/perl
 
 Name:           aspell-%{lang}
 Version:        2.01
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Slovak dictionaries for Aspell
 
 Group:          Text tools
@@ -46,6 +43,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_6
+- update to new release by fcimport
+
 * Fri Feb 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.01-alt2_5
 - update to new release by fcimport
 
