@@ -1,6 +1,6 @@
 Name:		ath_info
 Version:	0
-Release:	alt2_0.4.20100708svn
+Release:	alt2_0.5.20100708svn
 Summary:	Tool to get detailed information from Atheros WLAN cards
 
 Group:		File tools
@@ -34,6 +34,9 @@ make install PREFIX=%{_prefix} DESTDIR=%{buildroot}
 %{_mandir}/man8/ath_info.*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.5.20100708svn
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.4.20100708svn
 - rebuild to get rid of #27020
 
