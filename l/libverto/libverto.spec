@@ -1,12 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/splint /usr/sbin/nscd gcc-c++ glib2-devel imlib2-devel libXext-devel libfreetype-devel libldap-devel libpam0-devel libpopt-devel libsasl2-devel pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gmodule-no-export-2.0) pkgconfig(gobject-2.0) python-devel
-# END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
 Name:           libverto
 Version:        0.2.4
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Main loop abstraction library
 
 License:        MIT
@@ -15,7 +11,7 @@ Source0:        http://fedorahosted.org/releases/l/i/%{name}/%{name}-%{version}.
 # From upstream, will be in next release
 Patch1:         libverto-0.2.4-fix-libev.patch
 
-BuildRequires:  libglib2-devel
+BuildRequires:  glib2-devel
 BuildRequires:  libev-devel
 BuildRequires:  libevent-devel
 BuildRequires:  libtevent-devel
@@ -37,7 +33,7 @@ glib will support signal in the future.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       libverto = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -46,7 +42,7 @@ developing applications that use %{name}.
 %package        glib
 Group: Development/C
 Summary:        glib module for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       libverto = %{version}-%{release}
 
 %description    glib
 Module for %{name} which provides integration with glib.
@@ -56,8 +52,8 @@ This package does NOT yet provide %{name}-module-base.
 %package        glib-devel
 Group: Development/C
 Summary:        Development files for %{name}-glib
-Requires:       %{name}-glib%{?_isa} = %{version}-%{release}
-Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
+Requires:       libverto-glib = %{version}-%{release}
+Requires:       libverto-devel = %{version}-%{release}
 
 %description    glib-devel
 The %{name}-glib-devel package contains libraries and header files for
@@ -66,7 +62,7 @@ developing applications that use %{name}-glib.
 %package        libev
 Group: Development/C
 Summary:        libev module for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       libverto = %{version}-%{release}
 Provides:       %{name}-module-base = %{version}-%{release}
 
 %description    libev
@@ -78,8 +74,8 @@ and signal.
 %package        libev-devel
 Group: Development/C
 Summary:        Development files for %{name}-libev
-Requires:       %{name}-libev%{?_isa} = %{version}-%{release}
-Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
+Requires:       libverto-libev = %{version}-%{release}
+Requires:       libverto-devel = %{version}-%{release}
 
 %description    libev-devel
 The %{name}-libev-devel package contains libraries and header files for
@@ -91,7 +87,7 @@ and signal.
 %package        libevent
 Group: Development/C
 Summary:        libevent module for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       libverto = %{version}-%{release}
 Provides:       %{name}-module-base = %{version}-%{release}
 
 %description    libevent
@@ -100,8 +96,8 @@ Module for %{name} which provides integration with libevent.
 %package        libevent-devel
 Group: Development/C
 Summary:        Development files for %{name}-libevent
-Requires:       %{name}-libevent%{?_isa} = %{version}-%{release}
-Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
+Requires:       libverto-libevent = %{version}-%{release}
+Requires:       libverto-devel = %{version}-%{release}
 
 %description    libevent-devel
 The %{name}-libevent-devel package contains libraries and header files for
@@ -110,7 +106,7 @@ developing applications that use %{name}-libevent.
 %package        tevent
 Group: Development/C
 Summary:        tevent module for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       libverto = %{version}-%{release}
 Provides:       %{name}-module-base = %{version}-%{release}
 
 %description    tevent
@@ -122,8 +118,8 @@ and signal.
 %package        tevent-devel
 Group: Development/C
 Summary:        Development files for %{name}-tevent
-Requires:       %{name}-tevent%{?_isa} = %{version}-%{release}
-Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
+Requires:       libverto-tevent = %{version}-%{release}
+Requires:       libverto-devel = %{version}-%{release}
 
 %description    tevent-devel
 The %{name}-tevent-devel package contains libraries and header files for
@@ -184,6 +180,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/%{name}-tevent.pc
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_3
+- update to new release by fcimport
+
 * Tue Feb 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_2
 - update to new release by fcimport
 
