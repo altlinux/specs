@@ -1,5 +1,5 @@
 Name: pentobi
-Version: 2.0
+Version: 2.1
 Release: alt1
 License: GPLv3
 Summary: A computer program that plays the board game Blokus
@@ -50,6 +50,9 @@ mv %buildroot/usr/etc/gconf %buildroot%_sysconfdir/
 %_man6dir/*
 
 %changelog
+* Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 2.1-alt1
+- Autobuild version bump to 2.1
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 2.0-alt1
 - Autobuild version bump to 2.0
 
