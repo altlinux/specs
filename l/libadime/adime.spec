@@ -1,7 +1,7 @@
 %define oldname adime
 Name:           libadime
 Version:        2.2.1
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Allegro Dialogs Made Easy
 Group:          System/Libraries
 License:        zlib
@@ -67,6 +67,9 @@ ln -s libadime.so.0 $RPM_BUILD_ROOT%{_libdir}/libadime.so
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_13
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_12
 - rebuild to get rid of #27020
 
