@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/pkg-config /usr/bin/swig /usr/bin/valgrind cppunit-devel gcc-c++ gcc-fortran glib2-devel guile18-devel imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libflac-devel libfreetype-devel libglibmm-devel libgmp-devel libhocr-devel libhspell-devel libmpfr-devel liboggz-devel libreadline-devel libspeex-devel libtiff-devel libuuid-devel libvorbis-devel pkgconfig(dbus-1) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel unzip zlib-devel
+BuildRequires: /usr/bin/gtkdocize
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
 Version:          0.8
-Release:          alt1_1
+Release:          alt1_2
 License:          GPLv3+
 Group:            System/Libraries
 URL:              http://www.gnu.org/software/libidn/#libidn2
@@ -22,7 +21,7 @@ It is a standalone library, without any dependency on libidn.
 %package devel
 Summary:          Development files for libidn2
 Group:            Development/C
-Requires:         %{name}%{?_isa} = %{version}-%{release}
+Requires:         libidn2 = %{version}-%{release}
 
 %description devel
 The libidn2-devel package contains libraries and header files for
@@ -71,6 +70,9 @@ make %{?_smp_mflags} -C tests check
 %{_datadir}/gtk-doc/
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_2
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_1
 - update to new release by fcimport
 
