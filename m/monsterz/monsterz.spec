@@ -1,6 +1,6 @@
 Name:           monsterz
 Version:        0.7.1
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Puzzle game, similar to Bejeweled or Zookeeper
 Group:          Games/Other
 License:        WTFPL
@@ -11,7 +11,7 @@ Patch0:         %{name}-0.7.1-userpmopts.patch
 Patch1:         %{name}-0.7.1-64bitfix.patch
 Patch2:         %{name}-0.7.1-blit-crash.patch
 BuildRequires:  desktop-file-utils
-Requires:       python-module-pygame
+Requires:       pygame
 Requires:       icon-theme-hicolor
 Provides:       %{name}-data = %{version}-%{release}
 Obsoletes:      %{name}-data < 0.7.1
@@ -74,9 +74,9 @@ desktop-file-install  \
 install -pm0644 graphics/icon.png %{buildroot}%{_datadir}/icons/hicolor/64x64/apps/%{name}.png
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -118,6 +118,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_9
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_8
 - rebuild with fixed sourcedep analyser (#27020)
 
