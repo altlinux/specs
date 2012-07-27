@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-fj
 Summary: Fijian hunspell dictionaries
 Version: 1.2
-Release: alt2_4
+Release: alt2_5
 Group: Text tools
 #Source: http://www.foss.usp.ac.fj/OOo_fj/OOo_fj_FJ.zip
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/12115/fijian_spelling_dictionary-%{version}-fx+tb+sm.xpi
@@ -41,6 +41,9 @@ cp -p dictionaries/fj_FJ.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/fj.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_5
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_4
 - update to new release by fcimport
 
