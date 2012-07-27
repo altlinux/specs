@@ -1,6 +1,7 @@
 %define oldname apanov-heuristica-fonts
-%define version 0.2.2
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apanov-heuristica-fonts
+%define version 0.2.2
 %global fontname apanov-heuristica
 %global fontconf 61-%{fontname}.conf
 
@@ -9,7 +10,7 @@
 
 Name:    fonts-ttf-apanov-heuristica
 Version: 0.2.2
-Release: alt3_4
+Release: alt3_5
 Epoch:   1
 Summary: A serif latin & cyrillic font
 
@@ -60,9 +61,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -102,6 +103,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1:0.2.2-alt3_5
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1:0.2.2-alt3_4
 - rebuild to get rid of #27020
 
