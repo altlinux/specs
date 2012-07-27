@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 Name: hunspell-mt
 Summary: Maltese hunspell dictionaries
 %define upstreamid 20020708
 Version: 0.%{upstreamid}
-Release: alt2_6
+Release: alt2_7
 Group: Text tools
 Source: http://linux.org.mt/downloads/spellcheck-mt-0.3.tar.gz
 URL: http://linux.org.mt/node/62
@@ -36,6 +33,9 @@ cp -p mt_MT.dic mt_MT.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20020708-alt2_7
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20020708-alt2_6
 - update to new release by fcimport
 
