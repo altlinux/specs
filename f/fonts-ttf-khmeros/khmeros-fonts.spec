@@ -20,7 +20,7 @@ They were created by Danh Hong of the Cambodian Open Institute.
 
 Name:           fonts-ttf-khmeros
 Version:        5.0
-Release:        alt3_13
+Release:        alt3_14
 Summary:        Khmer font set created by Danh Hong of the Cambodian Open Institute
 
 Group:          System/Fonts/True type
@@ -236,6 +236,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 5.0-alt3_14
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 5.0-alt3_13
 - update to new release by fcimport
 
