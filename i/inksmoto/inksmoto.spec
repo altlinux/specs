@@ -3,7 +3,7 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name: inksmoto
 Version: 0.7.0
-Release:  alt2_6
+Release:  alt2_7
 Summary: The new xmoto level editor for Inkscape
 
 Group: Games/Other
@@ -40,9 +40,9 @@ chmod 644 %{buildroot}%{_datadir}/inkscape/extensions/*
 cp -pr inksmoto %{buildroot}%{_datadir}/inkscape/extensions/
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -78,6 +78,9 @@ fi
 %doc AUTHORS COPYING INSTALL README
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_7
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt2_6
 - rebuild with fixed sourcedep analyser (#27020)
 
