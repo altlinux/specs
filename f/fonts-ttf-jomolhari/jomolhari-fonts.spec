@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-jomolhari
 Version:	0.003
-Release:	alt3_11
+Release:	alt3_12
 Summary:	Jomolhari a Bhutanese style font for Tibetan and Dzongkha
 
 Group:		System/Fonts/True type
@@ -43,9 +43,9 @@ do
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -81,6 +81,9 @@ fi
 %doc FONTLOG.txt OFL-FAQ.txt OFL.txt
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_12
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_11
 - rebuild to get rid of #27020
 
