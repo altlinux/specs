@@ -31,7 +31,7 @@ different weights.
 
 Name:       fonts-ttf-mplus
 Version:    028 
-Release:    alt3_3
+Release:    alt3_4
 Summary:    The Mplus fonts is a superfamily of fonts designed by Coji Morishita
 
 Group:      System/Fonts/True type
@@ -159,9 +159,9 @@ install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -196,6 +196,9 @@ fi
 %doc LICENSE_{E,J} README_{E,J}
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 028-alt3_4
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 028-alt3_3
 - rebuild to get rid of #27020
 
