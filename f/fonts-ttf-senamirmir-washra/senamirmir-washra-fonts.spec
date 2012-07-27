@@ -2,8 +2,9 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname senamirmir-washra-fonts
-%define version 4.1
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name senamirmir-washra-fonts
+%define version 4.1
 %global fontname senamirmir-washra
 %global fontconf 65-%{fontname}
 
@@ -17,7 +18,7 @@ Eritrean languages (Amharic, Blin, GeE.ez, Harari, MeE.en, Tigre, Tigrinyaa..).
 
 Name:    fonts-ttf-senamirmir-washra
 Version: 4.1
-Release: alt3_7
+Release: alt3_8
 Summary: Fonts for the GeE.ez (Ethiopic) script
 
 Group:   System/Fonts/True type
@@ -231,9 +232,9 @@ for fconf in %{fontconf}.conf \
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -270,6 +271,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.1-alt3_8
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.1-alt3_7
 - rebuild to get rid of #27020
 
