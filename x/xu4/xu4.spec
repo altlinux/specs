@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 
 Name:           xu4
 Version:        1.1
-Release:        alt2_0.17.20120106svn2999
+Release:        alt2_0.18.20120106svn2999
 Summary:        Ultima IV recreated
 Group:          Games/Other
 License:        GPLv2+
@@ -77,9 +77,9 @@ mv %{buildroot}/%{_datadir}/pixmaps/u4.png \
   %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -122,6 +122,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.18.20120106svn2999
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.17.20120106svn2999
 - rebuild with fixed sourcedep analyser (#27020)
 
