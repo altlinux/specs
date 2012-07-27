@@ -1,11 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
-# END SourceDeps(oneline)
 Name: mythes-ga
 Summary: Irish thesaurus
 %define upstreamid 20071001
 Version: 0.%{upstreamid}
-Release: alt1_8
+Release: alt1_9
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/thes_ga_IE_v2.zip
 Group: Text tools
 URL: http://borel.slu.edu/lsg/index-en.html
@@ -42,6 +39,9 @@ cp -p th_ga_IE_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20071001-alt1_9
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20071001-alt1_8
 - update to new release by fcimport
 
