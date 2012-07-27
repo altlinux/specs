@@ -7,7 +7,7 @@ BuildRequires: python
 
 Name:      fonts-ttf-gnu-freefont
 Version:   20100919
-Release:   alt3_5
+Release:   alt3_6
 Summary:   Free UCS Outline Fonts
 Group:     System/Fonts/True type
 # Standard font exception
@@ -183,6 +183,9 @@ fi
 %doc AUTHORS ChangeLog CREDITS COPYING README Untitled1.ttf
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20100919-alt3_6
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 20100919-alt3_5
 - rebuild for fontlang provides
 
