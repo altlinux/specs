@@ -4,12 +4,13 @@ BuildRequires: pkgconfig(check)
 %add_optflags %optflags_shared
 Summary: A pipeline manipulation library
 Name: libpipeline
-Version: 1.2.0
-Release: alt3_2
+Version: 1.2.1
+Release: alt1_1
 License: GPLv3+
 Group: Development/C
 URL: http://libpipeline.nongnu.org/
 Source0: http://download.savannah.gnu.org/releases/libpipeline/%{name}-%{version}.tar.gz
+Patch0: libpipeline-1.2.1-gnulib.patch
 BuildRequires: libtool
 Provides: bundled(gnulib)
 Source44: import.info
@@ -32,6 +33,7 @@ to develop programs that use libpipeline library.
 
 %prep
 %setup -q
+%patch0 -p1 -b .gnulibpatch
 
 %build
 ./configure --libdir=%{_libdir}
@@ -53,6 +55,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_libdir}/pkgconfig/libpipeline.pc
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_1
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt3_2
 - fixed build
 
