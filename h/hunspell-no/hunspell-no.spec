@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-no
 Summary: Norwegian hunspell dictionaries
 Version: 2.0.10
-Release: alt1_10
+Release: alt1_11
 Source: http://alioth.debian.org/frs/download.php/2357/no_NO-pack2-%{version}.zip
 Group: Text tools
 URL: http://spell-norwegian.alioth.debian.org
@@ -118,6 +118,9 @@ cp -p th_nb_NO_v2.dat th_nb_NO_v2.idx th_nn_NO_v2.dat th_nn_NO_v2.idx $RPM_BUILD
 %{_datadir}/mythes/th_nn_NO_v2.*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_11
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.10-alt1_10
 - update to new release by fcimport
 
