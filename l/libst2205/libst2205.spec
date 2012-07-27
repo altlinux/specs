@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libst2205
 Version:        1.4.3
-Release:        alt3_3
+Release:        alt3_4
 Summary:        Library for accessing the display of hacked st2205 photo frames
 Group:          System/Libraries
 License:        GPLv3+
@@ -79,6 +79,9 @@ install -p -m 644 libst2205/st2205.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_4
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt3_3
 - fixed build
 
