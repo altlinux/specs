@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ perl(Shell.pm)
 # END SourceDeps(oneline)
 %define apricotsdir %{_datadir}/apricots
 Name: apricots
 Version:  0.2.6
-Release:  alt2_8
+Release:  alt2_9
 Summary: 2D air combat game
 
 Group: Games/Other
@@ -85,6 +85,9 @@ install -p -m 644 %{SOURCE1} \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_9
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt2_8
 - update to new release by fcimport
 
