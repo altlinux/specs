@@ -3,7 +3,7 @@
 %global fontconf   67-%{fontname}.conf 
 Name:		fonts-ttf-nafees-pakistani-web-naskh
 Version:	2.0
-Release:	alt1_3
+Release:	alt1_4
 Summary:	Nafees pakistani web naskh font for writing Urdu 
 
 Group:		Graphical desktop/Other
@@ -89,6 +89,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_4
+- update to new release by fcimport
+
 * Wed Jun 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_3
 - fc import
 
