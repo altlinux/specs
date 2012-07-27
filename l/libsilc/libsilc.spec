@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/ar /usr/bin/bison /usr/bin/dot /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/ld /usr/bin/nasm /usr/bin/pkg-config /usr/bin/valgrind /usr/bin/yasm cppunit-devel gcc-c++ gcc-fortran glib2-devel guile18-devel libGL-devel libGLU-devel libSDL-devel libSDL_image-devel libX11-devel libaccounts-glib-devel libexpat-devel libflac-devel libgcrypt-devel libglibmm-devel libgmp-devel libgpgme-devel libifp-devel libmpfr-devel libmutil-devel libncurses-devel liboggz-devel libreadline-devel libsigc++2-devel libsilc-devel libspeex-devel libtinfo-devel libusb-compat-devel libuuid-devel libvorbis-devel libxml2-devel pkgconfig(check) pkgconfig(dbus-1) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gnutls-extra) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) python-module-pygobject-devel pkgconfig(pygtk-2.0) python-devel unzip zlib-devel
+BuildRequires: /usr/bin/nasm /usr/bin/yasm gcc-c++ libncurses-devel libsilc-devel libtinfo-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Summary: SILC Client Library
 Name:    libsilc
 Version: 1.1.10
-Release: alt2_6.1
+Release: alt2_7
 License: GPLv2 or BSD
 Group:   System/Libraries
 URL:     http://www.silcnet.org/
@@ -123,6 +122,9 @@ iconv -f iso-8859-15 -t utf8 -o CREDITS CREDITS.orig
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt2_7
+- update to new release by fcimport
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.10-alt2_6.1
 - Fixed build
 
