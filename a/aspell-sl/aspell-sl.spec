@@ -1,14 +1,11 @@
 Epoch: 50
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl
-# END SourceDeps(oneline)
 %define lang sl
 %define langrelease 0
 Summary: Slovenian dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.50
-Release: alt2_7
+Release: alt2_8
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -38,6 +35,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 50:0.50-alt2_8
+- update to new release by fcimport
+
 * Fri Feb 10 2012 Igor Vlasenko <viy@altlinux.ru> 50:0.50-alt2_7
 - update to new release by fcimport
 
