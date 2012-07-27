@@ -5,7 +5,7 @@ Name: mythes-sk
 Summary: Slovak thesaurus
 %define upstreamid 20120612
 Version: 0.%{upstreamid}
-Release: alt1_1
+Release: alt1_2
 Source: http://www.sk-spell.sk.cx/thesaurus/download/OOo-Thesaurus2-sk_SK.zip
 Group: Text tools
 URL: http://www.sk-spell.sk.cx/thesaurus/
@@ -37,6 +37,9 @@ cp -p th_sk_SK_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20120612-alt1_2
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.20120612-alt1_1
 - update to new release by fcimport
 
