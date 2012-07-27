@@ -1,6 +1,6 @@
 Name:		avoision
 Version:	0.6
-Release:	alt2_5
+Release:	alt2_6
 Summary:	Arcade style game of evade and capture
 Group:		Text tools
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -42,6 +42,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications	%{SOURCE2}
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_6
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_5
 - rebuild with fixed sourcedep analyser (#27020)
 
