@@ -1,17 +1,18 @@
 
 Summary: Graphical tool for designing finite state machine
-Name:    qfsm	
-Version: 0.52.0
-Release: alt2
-Group:   Education
+Name: qfsm
+Version: 0.53.0
+Release: alt1
+Group: Education
 
 License: GPL
-Url:     http://qfsm.sourceforge.net/
-Source:  http://prdownloads.sourceforge.net/%name/%name-%version-Source.tar.gz
-Patch:	 %name.desktop.patch
+Url: http://qfsm.sourceforge.net/
+Source: %name-%version-Source.tar.bz2
+Patch: %name.desktop.patch
 
-# Automatically added by buildreq on Mon Mar 30 2009
-BuildRequires: cmake gcc-c++ libSM-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libqt4-devel
+# Automatically added by buildreq on Thu Jul 26 2012
+# optimized out: cmake-modules fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel pkg-config
+BuildRequires: cmake gcc-c++ libgraphviz-devel phonon-devel
 
 %description
 Qfsm is a graphical tool for designing finite state machine.
@@ -57,6 +58,9 @@ ln -s %name-%version/user %buildroot%_defaultdocdir/%name
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Thu Jul 26 2012 Fr. Br. George <george@altlinux.ru> 0.53.0-alt1
+- Autobuild version bump to 0.53.0
+
 * Tue May 11 2010 Fr. Br. George <george@altlinux.ru> 0.52.0-alt2
 - Fix repocop warnings
 
