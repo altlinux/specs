@@ -1,5 +1,5 @@
 Name: bluefish
-Version: 2.2.2
+Version: 2.2.3
 Release: alt1
 
 Summary: A GTK2 web development application for experienced users
@@ -73,6 +73,9 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 2:2.2.3-alt1
+- Autobuild version bump to 2.2.3
+
 * Wed Mar 21 2012 Fr. Br. George <george@altlinux.ru> 2:2.2.2-alt1
 - Autobuild version bump to 2.2.2
 
