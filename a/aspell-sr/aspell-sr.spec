@@ -1,13 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl
-# END SourceDeps(oneline)
 %define lang sr
 %define langrelease 0
 Summary: Serbian dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.02
-Release: alt2_8
+Release: alt2_9
 License: LGPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -39,6 +36,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_9
+- update to new release by fcimport
+
 * Fri Feb 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.02-alt2_8
 - update to new release by fcimport
 
