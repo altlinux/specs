@@ -1,7 +1,7 @@
 Summary: A Z80 cross compiler
 Name: z88dk
 Version: 1.9
-Release: alt2_4
+Release: alt2_5
 License: Artistic clarified
 Group: Development/Tools
 Source: http://downloads.sourceforge.net/z88dk/z88dk-src-%{version}.tgz
@@ -75,6 +75,9 @@ export ZCCCFG=%{_datadir}/z88dk-%{version}/lib/config/
 %{_mandir}/man3z/
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.9-alt2_5
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.9-alt2_4
 - rebuild to get rid of #27020
 
