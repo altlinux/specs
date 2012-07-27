@@ -6,7 +6,7 @@ Name: hunspell-te
 Summary: Telugu hunspell dictionaries
 %define upstreamid 20050929
 Version: 0.%{upstreamid}
-Release: alt2_8
+Release: alt2_9
 Group:          Text tools
 ##Upstream is unresponsive so unable to verify license version
 License:        GPL+
@@ -40,6 +40,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20050929-alt2_9
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.20050929-alt2_8
 - update to new release by fcimport
 
