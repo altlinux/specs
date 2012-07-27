@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: perl(Encode.pm)
 # END SourceDeps(oneline)
 Name: hunspell-uz
 Summary: Uzbek hunspell dictionaries
 Version: 0.6
-Release: alt2_5
+Release: alt2_6
 Source0: http://www-user.uni-bremen.de/~kmashrab/uzbek-word-list/uzbek-wordlist-%{version}.tar.bz2
 Group: Text tools
 URL: http://www-user.uni-bremen.de/~kmashrab/uzbek-word-list
@@ -34,6 +34,9 @@ cp -p hunspell/uz_UZ* $RPM_BUILD_ROOT/%{_datadir}/myspell/
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_6
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_5
 - update to new release by fcimport
 
