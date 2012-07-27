@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           glyph-keeper
 Version:        0.32
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Library for text rendering
 Group:          System/Libraries
 License:        zlib
@@ -119,6 +119,9 @@ install -m 644 include/glyph.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_11
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.32-alt2_10
 - rebuild to get rid of #27020
 
