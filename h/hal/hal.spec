@@ -3,7 +3,7 @@
 
 Name: hal
 Version: 0.5.14
-Release: alt8.1
+Release: alt8.2
 Summary: Hardware Abstraction Layer
 Group: System/Servers
 License: AFL/GPL
@@ -87,11 +87,12 @@ mkdir -p %buildroot%_var/{run,cache}/hald
 mkdir -p %buildroot%_sysconfdir/hal/fdi/{information,policy,preprobe}
 
 %pre
-%_sbindir/groupadd -r -f haldaemon >/dev/null 2>&1 || :
-%_sbindir/useradd -r -g haldaemon -d '/' -s /sbin/nologin -c "HAL daemon" haldaemon >/dev/null 2>&1 ||:
+#_sbindir/groupadd -r -f haldaemon >/dev/null 2>&1 || :
+#_sbindir/useradd -r -g haldaemon -d '/' -s /sbin/nologin -c "HAL daemon" haldaemon >/dev/null 2>&1 ||:
+service haldaemon stop ||:
 
-%post
-%post_service haldaemon
+#post
+#post_service haldaemon
 
 %preun
 %preun_service haldaemon
@@ -100,7 +101,7 @@ mkdir -p %buildroot%_sysconfdir/hal/fdi/{information,policy,preprobe}
 %doc AUTHORS NEWS README doc/TODO
 %_sysconfdir/dbus*/system.d/hal.conf
 /lib/udev/rules.d/90-hal.rules
-%_initdir/haldaemon
+#_initdir/haldaemon
 %dir %_sysconfdir/hal
 %dir %_sysconfdir/hal/fdi
 %dir %_sysconfdir/hal/fdi/information
@@ -125,6 +126,9 @@ mkdir -p %buildroot%_sysconfdir/hal/fdi/{information,policy,preprobe}
 %_pkgconfigdir/*
 
 %changelog
+* Fri Jul 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.14-alt8.2
+- Disabled haldaemon service
+
 * Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.14-alt8.1
 - Fixed build
 
