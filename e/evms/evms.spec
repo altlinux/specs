@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt23.1
+Release: alt24
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -164,6 +164,9 @@ EOF
 %endif
 
 %changelog
+* Fri Jul 27 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt24
+- dos plugin: fix creating logical partition on zero ptable (by Alexey Knyshev)
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.5-alt23.1
 - Fixed build
 
