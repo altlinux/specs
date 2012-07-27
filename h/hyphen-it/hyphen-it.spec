@@ -5,7 +5,7 @@ Name: hyphen-it
 Summary: Italian hyphenation rules
 %define upstreamid 20071127
 Version: 0.%{upstreamid}
-Release: alt1_7
+Release: alt1_8
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_it_IT.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -40,6 +40,9 @@ done
 %{_datadir}/hyphen/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20071127-alt1_8
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20071127-alt1_7
 - update to new release by fcimport
 
