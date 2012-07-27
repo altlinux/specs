@@ -4,7 +4,7 @@ BuildRequires: pkgconfig(x11)
 %add_optflags %optflags_shared
 Name:           libXcm
 Version:        0.5.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        X Color Management Library
 
 Group:          System/Libraries
@@ -67,6 +67,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_3
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_2
 - update to new release by fcimport
 
