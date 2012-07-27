@@ -5,7 +5,7 @@ Name: hunspell-sc
 Summary: Sardinian hunspell dictionaries
 %define upstreamid 20081101
 Version: 0.%{upstreamid}
-Release: alt2_6
+Release: alt2_7
 Group: Text tools
 Source: http://extensions.services.openoffice.org/files/1446/2/Dict_sc_IT03.oxt
 URL: http://extensions.services.openoffice.org/project/Dict_sc
@@ -33,6 +33,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20081101-alt2_7
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20081101-alt2_6
 - update to new release by fcimport
 
