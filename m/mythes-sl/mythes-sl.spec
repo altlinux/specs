@@ -5,7 +5,7 @@ Name: mythes-sl
 Summary: Slovenian thesaurus
 %define upstreamid 20120613
 Version: 0.%{upstreamid}
-Release: alt1_1
+Release: alt1_2
 Source: http://193.2.66.133:85/download/thes_sl_SI_v2.zip
 Group: Text tools
 URL: http://www.tezaver.si/
@@ -39,6 +39,9 @@ cp -p th_sl_SI_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20120613-alt1_2
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.20120613-alt1_1
 - update to new release by fcimport
 
