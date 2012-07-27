@@ -6,12 +6,12 @@
 #
 # Spec file for Fedora modified by Eric Smith <eric@brouhaha.com>
 
-%global patchlevel bld82
+%global patchlevel bld83
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.10.bld82
+Release:        alt2_0.11.bld83
 Group:          Development/Tools
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -32,7 +32,9 @@ used in workstations and PCs in the target list.
 %prep
 # It's a shame that the directory name has 142 instead of 1.42, and Bld82
 # instead of bld82. Makes use of variable substitution difficult.
-%setup -q -n asl-142-Bld82
+# Also, sometimes the directory name is just "asl-current"
+#%setup -q -n asl-142-Bld82
+%setup -q -n asl-current
 
 %patch0 -p0 -b .m-def
 %patch1 -p0 -b .sysdefs
@@ -80,6 +82,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.11.bld83
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.10.bld82
 - rebuild to get rid of #27020
 
