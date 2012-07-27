@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/doxygen
 Summary:  Thai language support routines
 Name: libthai
 Version: 0.1.14
-Release: alt3_5
+Release: alt3_6
 License: LGPLv2+
 Group: System/Libraries
 Source: ftp://linux.thai.net/pub/thailinux/software/libthai/libthai-%{version}.tar.gz
@@ -106,6 +106,9 @@ rm $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_mandir}/man3/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.14-alt3_6
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.14-alt3_5
 - fixed build
 
