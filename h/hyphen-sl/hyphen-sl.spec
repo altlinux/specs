@@ -5,7 +5,7 @@ Name: hyphen-sl
 Summary: Slovenian hyphenation rules
 %define upstreamid 20070127 
 Version: 0.%{upstreamid}
-Release: alt1_5
+Release: alt1_6
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/hyph_sl_SI.zip
 Group: Text tools
 URL: http://wiki.services.openoffice.org/wiki/Dictionaries
@@ -32,6 +32,9 @@ cp -p hyph_sl_SI.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 %{_datadir}/hyphen/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20070127-alt1_6
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20070127-alt1_5
 - update to new release by fcimport
 
