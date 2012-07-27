@@ -10,7 +10,7 @@
 
 Name:       fonts-bitmap-taipei
 Version:    1.2
-Release:    alt1_14
+Release:    alt1_15
 Summary:    %common_desc
 
 Group:      Graphical desktop/Other
@@ -77,6 +77,9 @@ fi
 %{catalogue}/%{oldname}*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_15
+- update to new release by fcimport
+
 * Wed Jun 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_14
 - fc import
 
