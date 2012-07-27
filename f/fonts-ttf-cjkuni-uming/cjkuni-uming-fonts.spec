@@ -18,7 +18,7 @@ the CJK Unifonts project.
 
 Name:           fonts-ttf-cjkuni-uming
 Version:        0.2.20080216.1
-Release:        alt4_49
+Release:        alt4_50
 Summary:        Chinese Unicode TrueType font in Ming face
 
 Group:          System/Fonts/True type
@@ -120,6 +120,9 @@ fi
 %doc ../%{umingbuilddir}/README
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_50
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_49
 - update to new release by fcimport
 
