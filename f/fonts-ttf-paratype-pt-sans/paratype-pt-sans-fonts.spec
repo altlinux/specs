@@ -33,7 +33,7 @@ A. A a.'titlea.' language is named after an ethnic group.
 
 Name:           fonts-ttf-paratype-pt-sans
 Version:        20100408
-Release:        alt3_3
+Release:        alt3_4
 Summary:        A pan-Cyrillic typeface
 
 Group:          System/Fonts/True type
@@ -118,9 +118,9 @@ for fconf in %{fontconf}.conf \
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -153,6 +153,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20100408-alt3_4
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 20100408-alt3_3
 - rebuild to get rid of #27020
 
