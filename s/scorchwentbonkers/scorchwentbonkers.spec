@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           scorchwentbonkers
 Version:        1.1
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Realtime remake of Scorched Earth
 Group:          Games/Other
 License:        zlib
@@ -20,7 +20,7 @@ Patch2:         %{name}-unixify.patch
 Patch3:         %{name}-fullscreen.patch
 Patch4:         %{name}-divbyzero.patch
 Patch5:         %{name}-1.1-al-4.4.patch
-BuildRequires:  liballegro-devel liballegro-devel dumb-devel libAllegroOGG-devel
+BuildRequires:  liballegro-devel liballegro-devel dumb-devel AllegroOGG-devel
 BuildRequires:  libGLU-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
@@ -62,9 +62,9 @@ install -p -m 644 %{SOURCE2} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_12
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_11
 - rebuild with fixed sourcedep analyser (#27020)
 
