@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 Summary: Utility to create fonts.scale files for truetype fonts
 Name: ttmkfdir
 Version: 3.0.9
-Release: alt1_35
+Release: alt1_36
 # This is a Red Hat maintained package which is specific to
 # our distribution.  Thus the source is only available from
 # within this srpm.
@@ -62,6 +62,9 @@ make DESTDIR=$RPM_BUILD_ROOT install
 %{_bindir}/ttmkfdir
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt1_36
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt1_35
 - rebuild to get rid of #27020
 
