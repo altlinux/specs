@@ -6,14 +6,14 @@ BuildRequires: python
 %global fontconf 60-%{fontname}.conf
 
 Name:           fonts-ttf-tulrich-tuffy
-Version:        1.27
-Release:        alt2_2
+Version:        1.28
+Release:        alt1_1
 Summary:        Generic sans font
 
 Group:          System/Fonts/True type
 License:        Public Domain
 URL:            http://tulrich.com/fonts/
-Source0:        http://tulrich.com/fonts/tuffy-20110822.tar.gz
+Source0:        http://tulrich.com/fonts/tuffy-20120614.tar.gz
 Source1:        %{oldname}-fontconfig.conf
 
 BuildArch:      noarch
@@ -25,7 +25,7 @@ Source44: import.info
 Tuffy is an innocuous looking sans font.
 
 %prep
-%setup -q -n tuffy-20110822
+%setup -q -n tuffy-20120614
 
 %build
 # be really sure that we don't package pre-generated ttf files
@@ -60,9 +60,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -103,6 +103,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.28-alt1_1
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.27-alt2_2
 - rebuild to get rid of #27020
 
