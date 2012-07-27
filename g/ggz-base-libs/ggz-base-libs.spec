@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libexpat-devel
+# END SourceDeps(oneline)
 
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt2_10
+Release: alt2_11
 
 License: LGPLv2+ and GPLv2+
 Group:   System/Libraries
@@ -24,10 +27,10 @@ Source1: ggz.modules
 # see http://fedoraproject.org/wiki/PackagingDrafts/GGZ
 Source2: macros.ggz
 
-BuildRequires: libexpat-devel
+BuildRequires: expat-devel
 BuildRequires: gettext
 BuildRequires: libgcrypt-devel >= 1.4
-BuildRequires: libnss-devel
+BuildRequires: nss-devel
 Source44: import.info
 
 
@@ -43,7 +46,7 @@ Obsoletes: libggz-devel < 1:0.99.5
 Obsoletes: ggz-client-libs-devel < 1:0.99.5
 Provides: libggz-devel = 1:%{version}-%{release}
 Provides: ggz-client-libs-devel = 1:%{version}-%{release}
-Requires: %{name} = %{version}-%{release}
+Requires: ggz-base-libs = %{version}-%{release}
 # %{_sysconfdir}/rpm ownership
 Requires: rpm
 %description devel
@@ -144,6 +147,9 @@ make check ||:
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt2_11
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt2_10
 - rebuild to get rid of #27020
 
