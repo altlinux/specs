@@ -1,9 +1,9 @@
-%define rel 1
+%define rel 2
 Summary: 2D Platform Game
 Name: edgar
-Version: 1.01
+Version: 1.02
 Release: alt1
-Source: %name-%version-1.tar.gz
+Source: %name-%version-2.tar.gz
 Url: http://www.parallelrealities.co.uk/p/legend-of-edgar.html
 Group: Games/Arcade
 License: GPL
@@ -62,6 +62,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_gamesdatadir/%name/*
 
 %changelog
+* Thu Jul 26 2012 Fr. Br. George <george@altlinux.ru> 1.02-alt1
+- Autobuild version bump to 1.02
+
 * Thu May 03 2012 Fr. Br. George <george@altlinux.ru> 1.01-alt1
 - Autobuild version bump to 1.01
 
