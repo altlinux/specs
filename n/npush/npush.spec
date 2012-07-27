@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:		npush
 Version:	0.7
-Release:	alt2_6
+Release:	alt2_7
 Summary:	A logic game similar to Sokoban
 
 Group:		Games/Other
@@ -13,7 +13,7 @@ Source0:	http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tgz
 # patch npush.cpp to fix an issue with level path
 Patch0:		npush-0.7-level.patch
 
-BuildRequires:	libncurses-devel desktop-file-utils
+BuildRequires:	ncurses-devel desktop-file-utils
 Source44: import.info
 
 %description
@@ -62,9 +62,9 @@ install -p -m 0644 %{name}.png				\
 	$RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -104,6 +104,9 @@ fi
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_7
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_6
 - rebuild with fixed sourcedep analyser (#27020)
 
