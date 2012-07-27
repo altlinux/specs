@@ -7,7 +7,7 @@ BuildRequires: fontpackages-devel
 
 Name:           fonts-bitmap-baekmuk
 Version:        2.2
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Korean bitmap fonts
 
 Group:          System/Fonts/True type
@@ -16,7 +16,7 @@ URL:            http://kldp.net/projects/baekmuk/
 Source:  http://kldp.net/frs/download.php/1428/%{fontname}-%{version}.tar.gz
 Patch0:	 baekmuk-bdf-fonts-fix-fonts-alias.patch
 BuildArch:      noarch
-BuildRequires:  xorg-font-utils
+BuildRequires:  xorg-x11-font-utils
 Source44: import.info
 
 %description
@@ -50,9 +50,9 @@ mkfontdir $RPM_BUILD_ROOT%{fontdir}
 iconv -f EUC-KR -t UTF-8 COPYRIGHT.ks > COPYRIGHT.ko
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_12
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_11
 - rebuild to get rid of #27020
 
