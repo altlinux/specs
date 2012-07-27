@@ -2,8 +2,9 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname conakry-fonts
-%define version 20070829
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name conakry-fonts
+%define version 20070829
 %global fontname conakry
 %global fontconf 65-%{fontname}.conf
 
@@ -11,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-conakry
 Version:	20070829
-Release:	alt3_5
+Release:	alt3_6
 Summary:	N'Ko font by Michael Everson
 
 Group:		System/Fonts/True type
@@ -54,9 +55,9 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
 	%{buildroot}%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -96,6 +97,9 @@ fi
 %doc *.txt
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_6
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 20070829-alt3_5
 - rebuild to get rid of #27020
 
