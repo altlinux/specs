@@ -1,10 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: unzip
-# END SourceDeps(oneline)
 Name: hunspell-ko
 Summary: Korean hunspell dictionaries
 Version: 0.5.5
-Release: alt1_2
+Release: alt1_3
 Source: http://spellcheck-ko.googlecode.com/files/hunspell-dict-ko-%{version}.tar.gz
 Group: Text tools
 URL: http://code.google.com/p/spellcheck-ko/
@@ -36,6 +33,9 @@ make test
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1_3
+- update to new release by fcimport
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.5-alt1_2
 - update to new release by fcimport
 
