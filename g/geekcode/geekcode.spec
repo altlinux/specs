@@ -1,9 +1,10 @@
 Summary(pl): Generator Geek Code
 Summary(pl): Generator Geek Code
 Summary(pl): Generator Geek Code
+Summary(pl): Generator Geek Code
 Name:           geekcode
 Version:        1.7.3
-Release:        alt2_8
+Release:        alt2_9
 Summary:        Geek Code generator
 Summary(pl):    Generator Geek Code
 Group:          Games/Other
@@ -34,9 +35,9 @@ mkdir -p %{buildroot}%{_bindir}
 install -m 755 geekcode %{buildroot}%{_bindir}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -72,6 +73,9 @@ fi
 %{_bindir}/%{name}
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_9
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.7.3-alt2_8
 - rebuild with fixed sourcedep analyser (#27020)
 
