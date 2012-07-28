@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libmodelfile
 Version:        0.1.92
-Release:        alt3_9
+Release:        alt3_10
 Summary:        Library for accessing various model file formats
 
 Group:          Development/C
@@ -65,6 +65,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_10
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.92-alt3_9
 - fixed build
 
