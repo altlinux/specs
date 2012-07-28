@@ -1,4 +1,4 @@
-%define ghc_version 7.4.1
+%define ghc_version 7.4.2
 %define hsc_name ghc
 %define hsc_version %ghc_version
 %define hsc_namever %hsc_name
@@ -7,7 +7,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: pandoc
-Version: 1.9.2
+Version: 1.9.4.2
 Release: alt1
 Summary: Markup conversion tool for markdown
 
@@ -48,6 +48,9 @@ runghc Setup copy --destdir=%buildroot
 %attr(644,root,root) %_man5dir/*
 
 %changelog
+* Sat Jul 28 2012 Denis Smirnov <mithraen@altlinux.ru> 1.9.4.2-alt1
+- 1.9.4.2
+
 * Wed May 02 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.9.2-alt1
 - 1.9.2
 
