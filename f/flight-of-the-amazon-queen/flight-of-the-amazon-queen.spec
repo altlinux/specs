@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           flight-of-the-amazon-queen
 Version:        1.0
-Release:        alt4_6
+Release:        alt4_7
 Summary:        Flight of the Amazon Queen - Adventure Game
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -54,9 +54,9 @@ desktop-file-install             \
   %{SOURCE1}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -95,6 +95,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_7
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt4_6
 - rebuild with fixed sourcedep analyser (#27020)
 
