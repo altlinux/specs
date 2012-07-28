@@ -1,6 +1,6 @@
 Name:           autojump
 Version:        20
-Release:        alt1_1
+Release:        alt1_2
 
 Summary:        A fast way to navigate your filesystem from the command line
 
@@ -69,6 +69,9 @@ sed -i -e 's,^#!/usr/bin/env python2,#!/usr/bin/env python,' `pcregrep -rl '^#!/
 %{_datadir}/zsh/site-functions/_j
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20-alt1_2
+- update to new release by fcimport
+
 * Fri May 11 2012 Igor Vlasenko <viy@altlinux.ru> 20-alt1_1
 - update to new release by fcimport
 
