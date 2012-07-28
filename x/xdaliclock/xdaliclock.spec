@@ -1,7 +1,7 @@
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.25
-Release: alt2_6
+Release: alt2_7
 Group: Graphics
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
@@ -54,6 +54,9 @@ desktop-file-install --vendor fedora \
 %{_datadir}/applications/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.25-alt2_7
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.25-alt2_6
 - rebuild to get rid of #27020
 
