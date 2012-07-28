@@ -6,9 +6,10 @@ Summary(ru): Видеоплеер с поддержкой 3D и многомон
 Summary(ru): Видеоплеер с поддержкой 3D и многомониторных конфигураций
 Summary(ru): Видеоплеер с поддержкой 3D и многомониторных конфигураций
 Summary(ru): Видеоплеер с поддержкой 3D и многомониторных конфигураций
+Summary(ru): Видеоплеер с поддержкой 3D и многомониторных конфигураций
 Name:               bino
 Version:            1.3.4
-Release:            alt2_1
+Release:            alt3_1
 Summary:            Video Player with 3D and Multi-Display Video Support
 Summary(ru):        Видеоплеер с поддержкой 3D и многомониторных конфигураций
 
@@ -77,6 +78,9 @@ rm -f %{buildroot}%{_datadir}/icons/hicolor/icon-theme.cache
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt3_1
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.4-alt2_1
 - update to new release by fcimport
 
