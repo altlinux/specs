@@ -1,6 +1,6 @@
 Name: docbook-simple
 Version: 1.1
-Release: alt3_9
+Release: alt3_10
 Group: Text tools
 Summary: Simplified DocBook is a small subset of the DocBook XML DTD
 License: Freely redistributable without restriction
@@ -140,6 +140,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_10
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_9
 - rebuild to get rid of #27020
 
