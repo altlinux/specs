@@ -2,7 +2,7 @@
 Summary: Firmware for Marvell Libertas USB 8388 Network Adapter
 Name:    firmware-libertas-usb8388
 Version: 5.110.22.p23
-Release: alt2_6
+Release: alt2_7
 # up the Epoch because the Marvel version scheme is less than Cozybit's
 Epoch:   2
 License: Redistributable, no modification permitted
@@ -32,9 +32,9 @@ mkdir -p $RPM_BUILD_ROOT/lib/firmware
 sed -i 's/\r//' $RPM_BUILD_ROOT/lib/firmware/LICENSE.usb8388
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -71,6 +71,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2:5.110.22.p23-alt2_7
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2:5.110.22.p23-alt2_6
 - rebuild to get rid of #27020
 
