@@ -1,6 +1,6 @@
 Name:           bcrypt
 Version:        1.1
-Release:        alt2_6
+Release:        alt2_7
 Summary:        File encryption utility
 
 Group:          File tools
@@ -45,6 +45,9 @@ Bruce Schneier in 1993.
 %{_bindir}/bcrypt
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_7
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_6
 - rebuild to get rid of #27020
 
