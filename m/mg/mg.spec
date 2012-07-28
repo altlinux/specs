@@ -1,6 +1,6 @@
 Name:		mg
 Version:	20110905
-Release:	alt2_2
+Release:	alt2_3
 Summary:	Tiny Emacs-like editor
 
 Group:		Editors
@@ -8,7 +8,7 @@ License:	BSD and ISC and MirOS
 URL:		http://homepage.boetes.org/software/mg/
 Source0:	http://homepage.boetes.org/software/mg/%{name}-%{version}.tar.gz
 
-BuildRequires:	libncurses-devel
+BuildRequires:	ncurses-devel
 Source44: import.info
 
 %description
@@ -35,6 +35,9 @@ make install DESTDIR=%{buildroot} prefix=%{_prefix} mandir=%{_mandir} \
 %{_mandir}/man1/mg.1.*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20110905-alt2_3
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 20110905-alt2_2
 - rebuild to get rid of #27020
 
