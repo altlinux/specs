@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           arrows
 Version:        0.6
-Release:        alt3_11
+Release:        alt3_12
 Summary:        Neat little maze game
 Group:          Games/Other
 License:        GPLv2+
@@ -12,7 +12,7 @@ Source0:        http://noreason.ca/data/arrows-%{version}.tar.gz
 Source1:        arrows.desktop
 Source2:        arrows.png
 Patch0:         arrows-level-5.patch 
-BuildRequires:  libgtk+2-devel desktop-file-utils
+BuildRequires:  gtk2-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -57,6 +57,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_12
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_11
 - rebuild with fixed sourcedep analyser (#27020)
 
