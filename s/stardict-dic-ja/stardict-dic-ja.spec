@@ -1,7 +1,7 @@
 Name: stardict-dic-ja
 Summary: Japanese(ja) dictionaries for StarDict
 Version: 2.4.2
-Release: alt2_8
+Release: alt2_9
 Group: Text tools
 # Upstream calls this the "EDRDG" license
 # but it is just CC-BY-SA
@@ -41,6 +41,9 @@ cp -rf stardict-* ${RPM_BUILD_ROOT}%{_datadir}/stardict/dic/
 %{_datadir}/stardict/dic/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_9
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.2-alt2_8
 - rebuild to get rid of #27020
 
