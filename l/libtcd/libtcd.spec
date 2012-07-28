@@ -12,7 +12,7 @@ BuildRequires: scheme48-prescheme
 
 Name:		libtcd
 Version:	%{mainver}
-Release:	alt3_4.%(echo "-r2" | sed -e 's|-|.|g' | sed -e 's|^\.||')
+Release:	alt3_4.%(echo "-r2" | sed -e 's|-|.|g' | sed -e 's|^\.||').1
 Summary:	Tide Constituent Database Library
 
 Group:		System/Libraries
@@ -63,6 +63,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/lib*.{a,la}
 %{_libdir}/*.so
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt3_4.%(echo "-r2" | sed -e 's|-|.|g' | sed -e 's|^\.||').1
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt3_4.%(echo "-r2" | sed -e 's|-|.|g' | sed -e 's|^\.||')
 - fixed build
 
