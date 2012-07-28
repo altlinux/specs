@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           anchorman
 Version:        0.0.1
-Release:        alt2_2
+Release:        alt2_3
 Summary:        The recording-studio-in-a-box
 
 Group:          Sound
@@ -12,7 +12,7 @@ License:        GPLv2+
 URL:            https://fedorahosted.org/anchorman/
 Source0:        https://fedorahosted.org/released/anchorman/%{name}-%{version}.tar.gz
 
-BuildRequires:  gstreamer-devel libglib2-devel libgudev-devel ctest cmake
+BuildRequires:  gstreamer-devel glib2-devel libgudev-devel ctest cmake
 Requires:       gst-plugins-good
 Source44: import.info
 
@@ -42,6 +42,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt2_3
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.1-alt2_2
 - rebuild to get rid of #27020
 
