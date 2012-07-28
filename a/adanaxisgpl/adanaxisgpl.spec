@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/find /usr/bin/sdl-config gcc-c++ libGL-devel libGLU-devel libICE-devel libSDL-devel libSM-devel libXext-devel libogg-devel
+BuildRequires: /usr/bin/find /usr/bin/sdl-config gcc-c++ libGL-devel libGLU-devel libICE-devel libSDL-devel libSM-devel libXext-devel libexpat-devel libogg-devel libpcre-devel perl(Digest/MD5.pm) perl(DirHandle.pm)
 # END SourceDeps(oneline)
 Summary:        Action game in four spatial dimensions
 Name:           adanaxisgpl
 Version:        1.2.5
-Release:        alt4_10
+Release:        alt4_11
 License:        GPLv2
 Group:          Games/Other
 URL:            http://www.mushware.com/
@@ -13,11 +13,11 @@ Patch0:         adanaxisgpl-1.2.5-const.patch
 Patch1:         adanaxisgpl-1.2.5-gcc47.patch
 BuildRequires:  desktop-file-utils
 BuildRequires:  libfreeglut-devel
-BuildRequires:  libexpat-devel
+BuildRequires:  expat-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libtiffxx-devel libtiff-devel
 BuildRequires:  libvorbis-devel
-BuildRequires:  libpcre-devel
+BuildRequires:  pcre-devel
 BuildRequires:  libSDL_mixer-devel
 Source44: import.info
 Patch33: adanaxisgpl-1.2.5-alt-nomessages.patch
@@ -108,6 +108,9 @@ install -p -m 644 x11/icons/%{name}-48.png %{buildroot}%{_datadir}/icons/hicolor
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_11
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.5-alt4_10
 - rebuild with fixed sourcedep analyser (#27020)
 
