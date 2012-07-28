@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 
 Name:		libgdamm
 Version:	4.1.3
-Release:	alt2_3
+Release:	alt2_4
 Summary:	C++ wrappers for libgda
 Group:		System/Libraries
 License:	LGPLv2+
@@ -70,6 +70,9 @@ find $RPM_BUILD_ROOT -type f -name "*.la" -exec rm -f {} ';'
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt2_4
+- update to new release by fcimport
+
 * Fri May 11 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt2_3
 - update to new release by fcimport
 
