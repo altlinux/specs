@@ -1,6 +1,6 @@
 Name: geeqie
 Version: 1.0
-Release: alt4
+Release: alt5
 
 Summary: Graphics file browser utility
 License: GPLv2+
@@ -14,8 +14,9 @@ Source: http://download.sourceforge.net/geeqie/geeqie-%version.tar.gz
 Patch1: geeqie-1.0-libdir-fix.patch
 Patch2: geeqie-1.0-largefile.patch
 
-# Automatically added by buildreq on Thu Oct 21 2010
-BuildRequires: doxygen gcc-c++ gnome-doc-utils graphviz intltool libexiv2-devel libgtk+2-devel liblcms-devel liblirc-devel perl-Encode-CN
+# Automatically added by buildreq on Sat Jul 28 2012 (-bb)
+# optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnome-doc-utils-xslt libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libstdc++-devel libwayland-client libwayland-server perl-XML-Parser pkg-config python-base shared-mime-info xml-common xml-utils xsltproc
+BuildRequires: ImageMagick-tools doxygen exiftran exiv2 gcc-c++ gnome-doc-utils intltool libexiv2-devel libgtk+2-devel liblcms-devel liblirc-devel ufraw zenity
 
 %description
 Geeqie is a lightweight image viewer. It was forked from GQview. The development
@@ -34,6 +35,7 @@ ExifTool.
 %make_build
 
 %install
+mkdir -p %buildroot/usr/share/geeqie/html
 %makeinstall_std
 install -pD -m644 geeqie.png %buildroot%_liconsdir/geeqie.png
 
@@ -49,6 +51,9 @@ install -pD -m644 geeqie.png %buildroot%_liconsdir/geeqie.png
 %_man1dir/*
 
 %changelog
+* Sat Jul 28 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt5
+- rebuild
+
 * Wed Nov 02 2011 Yuri N. Sedunov <aris@altlinux.org> 1.0-alt4
 - rebuilt against libexiv2.so.11
 
