@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libQGLViewer
 Version:        2.3.9
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Qt based OpenGL generic 3D viewer library
 
 Group:          System/Libraries
@@ -126,6 +126,9 @@ make -e INSTALL_ROOT=$RPM_BUILD_ROOT install
 %doc examples
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.9-alt2_5
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.9-alt2_4
 - update to new fc release
 
