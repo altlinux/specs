@@ -1,6 +1,6 @@
 Name:           pmars
 Version:        0.9.2
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Portable corewar system with ICWS'94 extensions
 
 Group:          Games/Other
@@ -49,9 +49,9 @@ install -D -p -m 755 src/pmars %{buildroot}%{_bindir}/pmars
 install -D -p -m 644 doc/pmars.6 %{buildroot}%{_mandir}/man6/pmars.6
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -89,6 +89,9 @@ fi
 %{_mandir}/man6/pmars.6.*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt2_7
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt2_6
 - rebuild with fixed sourcedep analyser (#27020)
 
