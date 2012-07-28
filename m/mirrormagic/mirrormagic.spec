@@ -1,6 +1,6 @@
 Name:           mirrormagic
 Version:        2.0.2
-Release:        alt5_9
+Release:        alt5_10
 Summary:        Puzzle game where you steer a beam of light using mirrors
 Group:          Games/Other
 License:        GPL+
@@ -54,9 +54,9 @@ install -p -m 644 %{SOURCE2} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -97,6 +97,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_10
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt5_9
 - rebuild with fixed sourcedep analyser (#27020)
 
