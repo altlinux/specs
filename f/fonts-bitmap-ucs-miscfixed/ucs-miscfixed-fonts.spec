@@ -4,7 +4,7 @@
 
 Name: fonts-bitmap-ucs-miscfixed
 Version: 0.3
-Release: alt1_8
+Release: alt1_9
 License: Public Domain
 URL: http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
 Source0: http://www.cl.cam.ac.uk/~mgk25/download/ucs-fonts.tar.gz
@@ -85,6 +85,9 @@ fi
 %doc README	
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_9
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_8
 - update to new fc release
 
