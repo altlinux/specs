@@ -3,7 +3,7 @@ BuildRequires: pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 Name:           gweled
 Version:        0.9.1
-Release:        alt2_4
+Release:        alt2_5
 
 Summary:        Swapping gem game
 
@@ -71,9 +71,9 @@ desktop-file-install  --delete-original \
 %find_lang %{name}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -115,6 +115,9 @@ fi
 %{_datadir}/sounds/%{name}/
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_5
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt2_4
 - rebuild with fixed sourcedep analyser (#27020)
 
