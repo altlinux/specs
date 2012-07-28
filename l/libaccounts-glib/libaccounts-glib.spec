@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gtkdocize pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfi
 %add_optflags %optflags_shared
 Name:		libaccounts-glib
 Version:	0.45
-Release:	alt3_3
+Release:	alt3_4
 Group:		System/Libraries
 Summary:	Nokia Maemo Accounts base library
 License:	LGPLv2
@@ -72,6 +72,9 @@ rm -rf %{buildroot}%{_datadir}/libaccounts-glib0-test
 %{_includedir}/%{name}
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.45-alt3_4
+- update to new release by fcimport
+
 * Wed Jun 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.45-alt3_3
 - fixed build
 
