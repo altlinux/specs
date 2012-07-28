@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/allegro-config /usr/bin/sdl-config gcc-c++
 %define oldname compat-guichan05
 Name:           libguichan05
 Version:        0.5.0
-Release:        alt1_12
+Release:        alt1_13
 Summary:        Compatibility libraries for older guichan versions
 
 Group:          Development/C++
@@ -88,6 +88,9 @@ done
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_13
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_12
 - update to new fc release
 
