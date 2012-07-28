@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ pkgconfig(glib-2.0) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 Group: Development/C
 %add_optflags %optflags_shared
 Name:           libtpcmisc
 Version:        1.4.8
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Miscellaneous PET functions
 
 License:        LGPLv2+
@@ -27,7 +27,7 @@ data processing.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       libtpcmisc = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -91,6 +91,9 @@ popd
 %{_libdir}/%{name}.a
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_6
+- update to new release by fcimport
+
 * Wed Jan 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.8-alt2_5
 - update to new release by fcimport
 
