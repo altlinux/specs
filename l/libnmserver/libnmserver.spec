@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:		libnmserver
 Version:	0.0.92
-Release:	alt3_2
+Release:	alt3_3
 Summary:	This library exposes various information from NetworkManager
 
 Group:		System/Libraries
@@ -49,6 +49,9 @@ rm -f $RPM_BUILD_ROOT/%{_bindir}/libnmserver
 %{_libdir}/libnmserver.so
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.92-alt3_3
+- update to new release by fcimport
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.92-alt3_2
 - fixed build
 
