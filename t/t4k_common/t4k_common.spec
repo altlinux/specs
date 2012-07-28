@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libSDL_ttf-devel pkgconfig(SDL_ttf)
 # END SourceDeps(oneline)
 Name: t4k_common
 Version: 0.1.1
-Release: alt2_7
+Release: alt2_8
 URL: http://tux4kids.alioth.debian.org/
 Summary: Library for Tux4Kids applications
 License: GPLv3+
@@ -61,6 +61,9 @@ chmod 755 $RPM_BUILD_ROOT%{_libdir}/lib%{name}.so
 %{_libdir}/pkgconfig/t4k_common.pc
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_8
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_7
 - converted by srpmconvert script
 
