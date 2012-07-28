@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libGL-devel libICE-devel libSM-devel libX11-devel
+BuildRequires: gcc-c++ libGL-devel libICE-devel libSM-devel libX11-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname sage
 Name:           libsage
 Version:        0.2.0
-Release:        alt2_7
+Release:        alt2_8
 Summary:        OpenGL extensions library using SDL
 
 Group:          Development/C++
@@ -26,7 +26,7 @@ checking for and loading OpenGL extensions in an application.
 %package devel
 Summary:        Development files for sage
 Group:   Development/C++
-Requires: libsage = %{version}-%{release}
+Requires: sage = %{version}-%{release}
 Provides: sage-devel = %{version}-%{release}
 
 
@@ -74,6 +74,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_8
+- update to new release by fcimport
+
 * Thu Mar 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_7
 - rebuild to get rid of #27020
 
