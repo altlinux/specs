@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gtkdocize gcc-c++ libaccounts-glib-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libaesgm
 Version:	20090429
-Release:	alt2_5
+Release:	alt2_6
 License:	BSD
 Summary:	Library implementation of AES (Rijndael) cryptographic methods
 URL:		http://gladman.plushost.co.uk/oldsite/AES/index.php
@@ -23,7 +22,7 @@ Library implementation of AES (Rijndael) cryptographic methods.
 %package devel
 Summary:	Development files for libaesgm
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	libaesgm = %{version}-%{release}
 
 %description devel
 Development headers and libraries for libaesgm.
@@ -49,6 +48,9 @@ make DESTDIR="%{buildroot}" LIBDIR="%{_libdir}" install
 %{_libdir}/libaesgm.so
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20090429-alt2_6
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 20090429-alt2_5
 - update to new release by fcimport
 
