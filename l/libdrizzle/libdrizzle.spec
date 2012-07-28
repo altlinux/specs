@@ -1,13 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/valgrind cppunit-devel gcc-c++ gcc-fortran guile18-devel imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libfreetype-devel libreadline-devel libuuid-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel unzip zlib-devel
+BuildRequires: python-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 
 Summary: Drizzle Client & Protocol Library
 Name: libdrizzle
 Version: 0.8
-Release: alt2_8
+Release: alt2_9
 # All code is BSD, except libdrizzle/sha1.{c,h} which are Public Domain
 License: BSD and Public Domain
 Group: System/Libraries
@@ -28,7 +27,7 @@ communication (like proxies). Other language interfaces (PHP extensions, SWIG,
 %package devel
 Group: Development/C
 Summary: Drizzle Client & Protocol Library - Header files
-Requires: %{name} = %{version}-%{release}
+Requires: libdrizzle = %{version}-%{release}
 
 %description devel
 Development files for the Drizzle Client & Protocol Library
@@ -36,7 +35,7 @@ Development files for the Drizzle Client & Protocol Library
 %package doc 
 Group: Documentation 
 Summary: Drizzle Client & Protocol Library Documentation
-Requires: %{name} = %{version}-%{release}
+Requires: libdrizzle = %{version}-%{release}
 
 %description doc 
 Documentation files for the Drizzle Client & Protocol Library
@@ -71,6 +70,9 @@ rm -f %{buildroot}/%{_libdir}/libdrizzle.la
 %doc docs/api docs/dev
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_9
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_8
 - update to new release by fcimport
 
