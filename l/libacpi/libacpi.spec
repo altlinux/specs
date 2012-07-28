@@ -1,11 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gtkdocize gcc-c++ libaccounts-glib-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) unzip
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libacpi
 Version:        0.2
-Release:        alt2_16
+Release:        alt2_17
 Summary:        General purpose library for ACPI 
 
 Group:          System/Libraries
@@ -27,7 +23,7 @@ Note: This is no portable code, it will only run on i386/x86_64 Linux systems.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libacpi = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -70,6 +66,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_17
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_16
 - update to new release by fcimport
 
