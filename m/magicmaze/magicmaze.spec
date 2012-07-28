@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ perl(Archive/Tar.pm) perl(Archive/Zip.pm)
 # END SourceDeps(oneline)
 Name:           magicmaze
 Version:        1.0.2
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Board game featuring a maze which the players change each turn
 Group:          Games/Other
 License:        zlib and Redistributable, no modification permitted
@@ -15,7 +15,7 @@ Patch1:         maze-1.0-no-sound.patch
 Patch2:         maze-1.0-fhs.patch
 Patch3:         magicmaze-1.0.2-license-clarification.patch
 Patch4:         magicmaze-1.0.2-trademarks.patch
-BuildRequires:  libgstream-devel dumb-devel desktop-file-utils
+BuildRequires:  gstream-devel dumb-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -61,9 +61,9 @@ install -p -m 644 %{name}.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -104,6 +104,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_8
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt2_7
 - rebuild with fixed sourcedep analyser (#27020)
 
