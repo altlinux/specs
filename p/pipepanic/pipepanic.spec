@@ -1,6 +1,6 @@
 Name: pipepanic
 Version: 0.1.3
-Release: alt4_9
+Release: alt4_10
 Summary: A pipe connecting game       
 
 Group: Games/Other
@@ -71,9 +71,9 @@ desktop-file-install          \
   %{SOURCE1}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -117,6 +117,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_10
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_9
 - rebuild with fixed sourcedep analyser (#27020)
 
