@@ -6,7 +6,7 @@
 
 Name:		fonts-bitmap-knm-new-fixed
 Version:	1.1
-Release:	alt4_16
+Release:	alt4_17
 
 Summary:	12x12 JIS X 0208 Bitmap fonts
 Group:		System/Fonts/True type
@@ -100,6 +100,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_17
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_16
 - update to new release by fcimport
 
