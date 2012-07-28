@@ -1,7 +1,7 @@
 Summary:	A text-mode maze game
 Name:		lsnipes
 Version:	0.9.4
-Release:	alt2_8
+Release:	alt2_9
 License:	GPLv2+
 Group:		Games/Other
 Source:		http://www.ugcs.caltech.edu/~boultonj/snipes/%{name}-%{version}.tgz
@@ -10,7 +10,7 @@ Patch1:		lsnipes-adapt-CFLAGS-LIBS.patch
 # Man page update about levels from Debian package
 Patch2:		lsnipes-man-levels-doc.patch
 
-BuildRequires:	libncurses-devel
+BuildRequires:	ncurses-devel
 Source44: import.info
 
 %description
@@ -40,9 +40,9 @@ sed -i -e 's,${LIBS} ${OBJS},${OBJS} ${LIBS},' Makefile
 %{__install} -p -m 0644 snipes.6 %{buildroot}%{_mandir}/man6/snipes.6
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -79,6 +79,9 @@ fi
 %{_mandir}/man6/snipes.6*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt2_9
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.4-alt2_8
 - rebuild with fixed sourcedep analyser (#27020)
 
