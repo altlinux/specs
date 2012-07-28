@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gtkdocize gcc-c++ imlib2-devel libXext-devel libaccounts-glib-devel libfreetype-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) unzip zlib-devel
+BuildRequires: zlib-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libax25
 Version:	0.0.12
-Release:	alt2_0.3.rc2
+Release:	alt2_0.4.rc2
 Summary:	AX.25 library for hamradio applications
 
 Group:		System/Libraries
@@ -27,7 +26,7 @@ config file parsing, etc.
 
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	libax25 = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -65,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.12-alt2_0.4.rc2
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.12-alt2_0.3.rc2
 - update to new release by fcimport
 
