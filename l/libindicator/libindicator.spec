@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gmodule-2.0)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 BuildRequires: chrpath
+%add_optflags %optflags_shared
 Summary:	Shared functions for Ayatana indicators
 Name:		libindicator
 Version:	0.4.94
-Release:	alt1_2
+Release:	alt1_3
 License:	GPLv3
 Group:		System/Libraries
 URL:		https://launchpad.net/libindicator
@@ -13,7 +14,7 @@ Source0:	http://launchpad.net/libindicator/0.5/%{version}/+download/%{name}-%{ve
 BuildRequires:	gtk-doc
 BuildRequires:	libtool
 BuildRequires:	libdbus-glib-devel
-BuildRequires:	libgtk+2-devel
+BuildRequires:	gtk2-devel
 BuildRequires:	libgtk+3-devel
 Source44: import.info
 
@@ -32,7 +33,7 @@ Ayatana indicators system.
 %package	devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	%{name}%{?_isa} = %{version}-%{release}
+Requires:	libindicator = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -59,7 +60,7 @@ tools for the GTK+3 build of %{name}.
 %package	gtk3-devel
 Summary:	Development files for %{name}-gtk3
 Group:		Development/C
-Requires:	%{name}-gtk3%{?_isa} = %{version}-%{release}
+Requires:	libindicator-gtk3 = %{version}-%{release}
 
 %description	gtk3-devel
 The %{name}-gtk3-devel package contains libraries and header files for
@@ -135,6 +136,9 @@ done
 %{_libdir}/pkgconfig/indicator3-0.4.pc
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.94-alt1_3
+- update to new release by fcimport
+
 * Mon Apr 16 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.94-alt1_2
 - new version
 
