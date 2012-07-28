@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gconftool-2 pkgconfig(gmodule-2.0) zlib-devel
+BuildRequires: /usr/bin/gconftool-2 pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(libpcre) zlib-devel
 # END SourceDeps(oneline)
 Name:		gnome-mud
 Version:	0.11.2
-Release:	alt2_10
+Release:	alt2_11
 Summary:	A MUD client for GNOME
 
 Group:		Games/Other
@@ -17,14 +17,14 @@ Patch0:		gnome-mud-desktop.patch
 Patch1:		gnome-mud-vte.patch
 
 BuildRequires: gettext
-BuildRequires: libgtk+2-devel
-BuildRequires: libpcre-devel
+BuildRequires: gtk2-devel
+BuildRequires: pcre-devel
 BuildRequires: gstreamer-devel
 BuildRequires: libgnet-devel
 BuildRequires: libvte-devel
 BuildRequires: desktop-file-utils
 BuildRequires: intltool
-BuildRequires: libglade-devel
+BuildRequires: libglade2-devel
 BuildRequires: libGConf-devel
 
 Requires(pre): GConf2
@@ -55,9 +55,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 %find_lang %{name}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -120,6 +120,9 @@ fi
 %{_mandir}/man6/%{name}.6.*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_11
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_10
 - rebuild with fixed sourcedep analyser (#27020)
 
