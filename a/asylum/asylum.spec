@@ -1,7 +1,7 @@
 BuildRequires: gcc-c++
 Name:           asylum
 Version:        0.3.2
-Release:        alt1_2
+Release:        alt1_4
 Summary:        SDL port of the game Asylum, originally for the Archimedes
 Group:          Games/Other
 # For detailed licensing, see the README
@@ -9,6 +9,7 @@ License:        GPLv3 and Public Domain
 URL:            http://sdl-asylum.sourceforge.net
 Source0:        http://downloads.sourceforge.net/sdl-%{name}/%{name}-%{version}.tar.gz
 Source1:        %{name}.png
+Patch0:		asylum-0.3.2-paths.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libSDL_mixer-devel
@@ -26,6 +27,8 @@ pulsating neurons scattered through the immense map.
 
 %prep
 %setup -q
+
+%patch0 -p0
 
 # Character encoding fixes
 iconv -f iso8859-1 README -t utf8 > README.conv \
@@ -64,7 +67,7 @@ install -m0755 %{name} %{buildroot}%{_bindir}
 cp -a data/* %{buildroot}%{_datadir}/%{name}
 
 install -m0644 %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
-desktop-file-install --vendor fedora \
+desktop-file-install  \
                      --dir %{buildroot}%{_datadir}/applications \
                      %{name}.desktop
 
@@ -72,7 +75,7 @@ desktop-file-install --vendor fedora \
 %files
 # Note the game is SETGID games for the hi-scores.
 %{_datadir}/%{name}
-%{_datadir}/applications/fedora-%{name}.desktop
+%{_datadir}/applications/%{name}.desktop
 %attr(0775,root,games) %dir %{_var}/games/%{name}
 %attr(2711,root,games) %{_bindir}/%{name}
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
@@ -84,6 +87,9 @@ desktop-file-install --vendor fedora \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_4
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_2
 - update to new version
 
