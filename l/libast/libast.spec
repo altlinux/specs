@@ -11,7 +11,7 @@ BuildRequires: libXext-devel libfreetype-devel
 Summary:        Library of Assorted Spiffy Things
 Name:           libast
 Version:        0.7.1
-Release:        alt2_0.11.20080502cvs
+Release:        alt2_0.12.20080502cvs
 Group:          System/Libraries
 License:        BSD
 URL:            http://www.eterm.org/
@@ -21,7 +21,7 @@ URL:            http://www.eterm.org/
 # $ tar czvf libast-20080502.tar.gz libast-20080502
 Source:        libast-%{cvs}.tar.gz
 Source1:       libast-wrapper.h
-BuildRequires: imlib2-devel libpcre-devel libXt-devel
+BuildRequires: imlib2-devel pcre-devel libXt-devel
 BuildRequires: automake autoconf libtool
 Source44: import.info
 
@@ -37,7 +37,7 @@ version number that begins with 0.
 %package devel
 Summary:  Header files, libraries and development documentation for %{name}
 Group:    Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: libast = %{version}-%{release}
 
 %description devel
 This package contains the header files, static libraries and development
@@ -82,6 +82,9 @@ touch -r ChangeLog %{buildroot}%{_bindir}/%{name}-config
 %exclude %{_libdir}/*.a
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_0.12.20080502cvs
+- update to new release by fcimport
+
 * Tue Feb 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_0.11.20080502cvs
 - update to new release by fcimport
 
