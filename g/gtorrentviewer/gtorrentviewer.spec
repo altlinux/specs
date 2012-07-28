@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/curl-config
+BuildRequires: /usr/bin/curl-config libgtk+2-devel
 # END SourceDeps(oneline)
 Name:		gtorrentviewer
 Version:	0.2b
-Release:	alt4_24
+Release:	alt4_25
 Summary:	A GTK2-based viewer and editor for BitTorrent meta files
 Group:		Networking/File transfer
 License:	GPL+
@@ -14,7 +14,7 @@ Patch1:		gtorrentviewer-0.2b-dso-linking.patch
 Patch2:		GTorrentViewer-0.2b-tracker-details-refresh.patch
 Patch3:		gtorrentviewer-0.2b-trackerdetails.patch
 Patch4:		GTorrentViewer-0.2b-curl-types.patch
-BuildRequires:	libcurl-devel libgtk+2-devel >= 2.4 desktop-file-utils gettext intltool
+BuildRequires:	curl-devel gtk2-devel >= 2.4 desktop-file-utils gettext intltool
 
 Requires(post):	  desktop-file-utils
 Requires(postun): desktop-file-utils
@@ -77,6 +77,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %{_mandir}/man1/gtorrentviewer.1*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_25
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_24
 - rebuild to get rid of #27020
 
