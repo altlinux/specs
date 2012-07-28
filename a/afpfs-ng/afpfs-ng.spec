@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: libncurses-devel
+BuildRequires: gcc-c++ libncurses-devel libreadline-devel
 # END SourceDeps(oneline)
 # No FUSE on RHEL5
 %if %{?el5:1}0
@@ -8,7 +8,7 @@ BuildRequires: libncurses-devel
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt2_9.3
+Release:        alt2_10.3
 Summary:        Apple Filing Protocol client
 
 Group:          System/Base
@@ -19,7 +19,7 @@ Patch0:         afpfs-ng-0.8.1-overflows.patch
 Patch1:         afpfs-ng-0.8.1-pointer.patch
 
 %{?!_without_fuse:BuildRequires: libfuse-devel}
-BuildRequires: libgcrypt-devel libgmp-devel libgmp_cxx-devel libreadline-devel
+BuildRequires: libgcrypt-devel libgmp-devel libgmp_cxx-devel readline-devel
 Source44: import.info
 
 %description
@@ -43,7 +43,7 @@ The command line client for AFP is in fuse-afp package
 %package devel
 Summary:        Development files for afpfs-ng
 Group:          Development/C
-Requires:       %{name} = %{version}
+Requires:       afpfs-ng = %{version}
 
 %description devel
 Library for dynamic linking and header files of afpfs-ng.
@@ -100,6 +100,9 @@ cp -p include/* $RPM_BUILD_ROOT%{_includedir}/afpfs-ng
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt2_10.3
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt2_9.3
 - rebuild to get rid of #27020
 
