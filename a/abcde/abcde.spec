@@ -4,7 +4,7 @@ BuildRequires: perl(Digest/SHA.pm) perl(encoding.pm)
 Group: Sound
 Name:           abcde
 Version:        2.5.3
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A Better CD Encoder
 
 # Public domain after 2010-01-01, see comments in abcde and cddb-tool
@@ -57,6 +57,9 @@ rm $RPM_BUILD_ROOT%{_bindir}/abcde-musicbrainz-tool # optional, some deps N/A
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_2
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
 - update to new release by fcimport
 
