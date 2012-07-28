@@ -2,8 +2,9 @@
 BuildRequires: /usr/bin/awk /usr/bin/gawk /usr/bin/mkfontdir /usr/bin/perl unzip
 # END SourceDeps(oneline)
 %define oldname japanese-bitmap-fonts
-%define version 0.20080710
+# %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name japanese-bitmap-fonts
+%define version 0.20080710
 %global	fontname        japanese-bitmap
 %define cataloguedir    %{_sysconfdir}/X11/fontpath.d
 %define cidmapdir       %{_datadir}/ghostscript/conf.d
@@ -21,11 +22,11 @@ BuildRequires: /usr/bin/awk /usr/bin/gawk /usr/bin/mkfontdir /usr/bin/perl unzip
 
 Name:           fonts-bitmap-japanese
 Version:        0.20080710
-Release:        alt2_11
+Release:        alt2_12
 License:        Public Domain and BSD and mplus
 Group:          System/Fonts/True type
 BuildArch:      noarch
-BuildRequires:  xorg-font-utils mkfontdir gawk fontpackages-devel
+BuildRequires:  xorg-x11-font-utils mkfontdir gawk fontpackages-devel
 
 ## files in ttfonts-ja
 Source2:        FAPIcidfmap.ja
@@ -329,9 +330,9 @@ sed -i -e s,%{_datadir}/fonts/,%{_datadir}/fonts/ttf/,g %buildroot/usr/share/gho
 sed -i -e 's,\(^.*$\),\L\1,' `find %buildroot/usr/share/fonts -name fonts.alias`
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -377,6 +378,9 @@ fi
 %{cataloguedir}/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_12
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.20080710-alt2_11
 - rebuild to get rid of #27020
 
