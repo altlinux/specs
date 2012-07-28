@@ -1,7 +1,9 @@
-BuildRequires: perl(Pod/Man.pm) perl(Config/General.pm) perl(Term/ReadLine.pm) perl(Term/Size.pm)
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/pod2man
+# END SourceDeps(oneline)
 Name:           acheck-rules
 Version:        0.3.1
-Release:        alt2_5
+Release:        alt2_6
 Summary:        Rules for acheck
 
 Group:          Text tools
@@ -47,6 +49,9 @@ rm -f $RPM_BUILD_ROOT/pod2man.pl
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_6
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_5
 - rebuild to get rid of #27020
 
