@@ -4,7 +4,7 @@ BuildRequires: perl(IPC/Open2.pm)
 Group: Text tools
 Name:           colordiff
 Version:        1.0.10
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
@@ -63,6 +63,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_2
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_1
 - update to new release by fcimport
 
