@@ -7,7 +7,7 @@
 
 Name:           cdogs-data
 Version:        %{cdogs_sdl_version}
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Data files for the CDogs game
 Group:          Games/Other
 License:        Redistributable, no modification permitted
@@ -38,9 +38,9 @@ mv $RPM_BUILD_ROOT%{_datadir}/%{name}/cdogs_icon.png \
 rm $RPM_BUILD_ROOT%{_datadir}/%{name}/cdogs?icon.*
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -78,6 +78,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_8
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_7
 - rebuild with fixed sourcedep analyser (#27020)
 
