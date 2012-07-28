@@ -6,7 +6,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           blobby
 Version:        1.0
-Release:        alt2_0.1.rc1
+Release:        alt2_0.2.rc1
 Summary:        Volley-ball game
 Group:          Games/Other
 License:        GPLv2+
@@ -40,7 +40,7 @@ install -p -m 644 -D blobby.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/a
 
 # Desktop file
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install  --vendor "fedora" \
+desktop-file-install   \
         --dir $RPM_BUILD_ROOT%{_datadir}/applications \
         %{SOURCE1}
 
@@ -52,6 +52,9 @@ desktop-file-install  --vendor "fedora" \
 %{_datadir}/applications/*.desktop
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.2.rc1
+- update to new release by fcimport
+
 * Tue Jun 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.1.rc1
 - fixed build
 
