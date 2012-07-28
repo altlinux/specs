@@ -3,7 +3,7 @@ BuildRequires: cppunit-devel gcc-c++ libICE-devel libSDL-devel libSM-devel libX1
 # END SourceDeps(oneline)
 Name:           pinball
 Version:        0.3.1
-Release:        alt2_19
+Release:        alt2_20
 Summary:        Emilia arcade game
 Group:          Games/Other
 License:        GPL+
@@ -16,7 +16,7 @@ Patch1:         pinball-0.3.1-hiscore.patch
 Patch2:		pinball-0.3.1-strictproto.patch
 Patch3:		pinball-0.3.1-lacomment.patch
 Patch4:		pinball-0.3.1-cstddef.patch
-BuildRequires:  libXt-devel freeglut-devel libSDL_image-devel libSDL_mixer-devel
+BuildRequires:  libXt-devel libfreeglut-devel libSDL_image-devel libSDL_mixer-devel
 BuildRequires:  libpng-devel libvorbis-devel libltdl7-devel
 BuildRequires:  desktop-file-utils
 Requires:       icon-theme-hicolor opengl-games-utils
@@ -71,6 +71,40 @@ desktop-file-install             \
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -p -m 644 %{SOURCE2} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
+# generic fedora font import transformations
+# move fonts to corresponding subdirs if any
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
+    case "$fontpatt" in 
+	pcf*|bdf*) type=bitmap;;
+	tt*|TT*) type=ttf;;
+	otf|OTF) type=otf;;
+	afm*|pf*) type=type1;;
+    esac
+    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
+	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
+	install -Dm644 "$i" "$j";
+	rm -f "$i";
+	olddir=`dirname "$i"`;
+	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
+	rmdir -p "$olddir" 2>/dev/null ||:
+    done
+done
+# kill invalid catalogue links
+if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
+    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
+    # relink catalogue
+    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
+	pri=10;
+	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
+	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
+	case "$type" in 
+	    bitmap) pri=10;;
+	    ttf|ttf) pri=50;;
+	    type1) pri=40;;
+	esac
+	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
+    done ||:
+fi
 
 
 %files
@@ -83,6 +117,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_20
+- update to new release by fcimport
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_19
 - update to new release by fcimport
 
