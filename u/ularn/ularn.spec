@@ -1,6 +1,6 @@
 Name:           ularn
 Version:        1.5p4
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Simple roguelike game
 
 Group:          Games/Other
@@ -15,7 +15,7 @@ Patch1:         ularn-euid.patch
 Patch2:         ularn-datadir.patch
 Patch3:         ularn-drop-setgid.patch
 
-BuildRequires:  libncurses-devel
+BuildRequires:  ncurses-devel
 BuildRequires:  desktop-file-utils
 Requires:       ncompress
 Requires(post): coreutils
@@ -65,9 +65,9 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/apps/
 install -p -m 644 %{SOURCE3} $RPM_BUILD_ROOT/%{_datadir}/icons/hicolor/32x32/apps/
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -108,6 +108,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_18
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.5p4-alt2_17
 - rebuild with fixed sourcedep analyser (#27020)
 
