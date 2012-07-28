@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(IO/Handle.pm)
+BuildRequires: gcc-c++ perl(IO/Handle.pm)
 # END SourceDeps(oneline)
 %define oldname zfs-fuse
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.0
-Release:          alt1_5
+Release:          alt1_6
 Summary:          ZFS ported to Linux FUSE
 Group:            System/Base
 License:          CDDL
@@ -113,6 +113,9 @@ fi
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_6
+- update to new release by fcimport
+
 * Mon May 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_5
 - resurrected from orphaned using fc import
 
