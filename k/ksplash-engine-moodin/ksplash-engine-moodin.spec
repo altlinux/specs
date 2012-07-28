@@ -1,10 +1,11 @@
 %undefine __libtoolize
-%define qtdir %_libdir/qt3
+%define qtdir %_qt3dir
+%define kdedir %_K3prefix
 %define ename moodin
 
 Name: ksplash-engine-%ename
 Version: 0.4.2
-Release: alt2.qa2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: Splash Screen Engine for KDE
@@ -16,7 +17,8 @@ Requires: kdelibs >= %{get_version kdelibs}
 
 Source: ksplash-engine-%{ename}_%version.tar.gz
 Source1: ksplash%ename.desktop
-Patch: ksplash-engine-moodin-0.4.2-alt-DSO.patch
+
+Patch0: ksplash-engine-moodin-0.4.2-alt-DSO.patch
 
 BuildRequires: automake autoconf
 BuildRequires: gcc-c++
@@ -27,9 +29,18 @@ Heavily customizable engine for various types of themes
 
 %prep
 %setup -q -n %ename
-%patch -p2
+%patch0 -p2
+
+# cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
+# cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
+# make -f admin/Makefile.common
 
 %build
+export QTDIR=%qtdir
+export KDEDIR=%kdedir
+
+export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
+
 %add_optflags -I%_includedir/tqtinterface
 %K3configure \
 	--without-arts \
@@ -52,8 +63,8 @@ cp -f %SOURCE1 %buildroot%_K3srv/
 %_K3srv/*.desktop
 
 %changelog
-* Thu Jul 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2.qa2
-- Fixed build
+* Mon Jul 23 2012 Roman Savochenko <rom_as@altlinux.org> 0.4.2-alt3
+- Rebuild for TDE 3.5.13 environment.
 
 * Tue May 10 2011 Andrey Cherepanov <cas@altlinux.org> 0.4.2-alt2.qa1
 - Disable aRts support
