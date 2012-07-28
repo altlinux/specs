@@ -1,6 +1,6 @@
 Name:		auto-nng
 Version:	1.7
-Release:	alt2_2
+Release:	alt2_3
 Summary:	A software for analysis and classification of data, using AI NN
 
 Group:		Engineering
@@ -48,6 +48,9 @@ install auto-nng %{buildroot}/%{_bindir}/
 %{_bindir}/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_3
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.7-alt2_2
 - rebuild to get rid of #27020
 
