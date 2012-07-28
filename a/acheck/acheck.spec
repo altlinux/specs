@@ -1,7 +1,10 @@
-BuildRequires: perl(Pod/Man.pm) perl(Config/General.pm) perl(Term/ReadLine.pm) perl(Term/Size.pm)
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: /usr/bin/pod2man perl(Config/General.pm) perl(Exporter.pm) perl(File/Spec/Functions.pm) perl(IO/File.pm) perl(Term/ANSIColor.pm) perl(Term/ReadLine.pm) perl(Term/Size.pm) perl-podlators
+# END SourceDeps(oneline)
 Name:           acheck
 Version:        0.5.1
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Check common localisation mistakes
 
 Group:          Text tools
@@ -12,7 +15,7 @@ BuildRequires:  gettext
 BuildArch:      noarch
 Requires:       perl
 Requires:       perl(Text/Aspell.pm) perl(Config/General.pm) perl(Term/Size.pm) perl(Locale/gettext.pm)
-Requires:       perl(Locale/PO.pm) perl(Term/ReadLine/Gnu.pm) perl(Term/UI.pm) %{name}-rules
+Requires:       perl(Locale/PO.pm) perl(Term/ReadLine/Gnu.pm) perl(Term/UI.pm) acheck-rules
 Source44: import.info
 
 
@@ -33,9 +36,9 @@ checks.
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_bindir}/
 install -p -m 755 %{name} $RPM_BUILD_ROOT/%{_bindir}/
-mkdir -p $RPM_BUILD_ROOT%{perl_vendorlib}/ACheck/
+mkdir -p $RPM_BUILD_ROOT%{perl_vendor_privlib}/ACheck/
 install -p -m 644 Common.pm FileType.pm Parser.pm \
- $RPM_BUILD_ROOT%{perl_vendorlib}/ACheck/
+ $RPM_BUILD_ROOT%{perl_vendor_privlib}/ACheck/
 cd po;make;cd ..
 
 echo """
@@ -72,7 +75,7 @@ install -p -m 644 po/sv.mo $RPM_BUILD_ROOT/%{_datadir}/locale/sv/LC_MESSAGES/%{n
 %doc debian/changelog debian/copyright
 %doc misc/bash_completion
 %{_bindir}/%{name}
-%{perl_vendorlib}/*
+%{perl_vendor_privlib}/*
 %{_mandir}/man1/*.1*
 %{_mandir}/man5/*.5*
 %{_mandir}/man1/fr/*.1*
@@ -82,6 +85,9 @@ install -p -m 644 po/sv.mo $RPM_BUILD_ROOT/%{_datadir}/locale/sv/LC_MESSAGES/%{n
 %{_datadir}/locale/sv/LC_MESSAGES/%{name}.mo
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_7
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_6
 - rebuild to get rid of #27020
 
