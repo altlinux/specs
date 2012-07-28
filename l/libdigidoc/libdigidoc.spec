@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/valgrind cppunit-devel gcc-c++ guile18-devel imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libfreetype-devel libreadline-devel libuuid-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) unzip
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libdigidoc
 Version:        2.7.0
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Library for handling digitally signed documents
 
 Group:          System/Libraries
@@ -17,7 +17,7 @@ BuildRequires:  ctest cmake
 BuildRequires:  libxml2-devel
 BuildRequires:  libssl-devel
 BuildRequires:  zlib-devel
-Requires:       opensc%{?_isa}
+Requires:       opensc
 Source44: import.info
 
 %description
@@ -29,7 +29,7 @@ It allows to create, sign, verify, and modify digidoc XML containers.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libdigidoc = %{version}-%{release}
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -65,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT -C %{_target_platform}
 %{_libdir}/*.so
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_4
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_3
 - update to new release by fcimport
 
