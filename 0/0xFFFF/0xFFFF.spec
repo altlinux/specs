@@ -1,6 +1,6 @@
 Name:           0xFFFF
 Version:        0.3.9
-Release:        alt2_6
+Release:        alt2_7
 Summary:        The Open Free Fiasco Firmware Flasher
 
 Group:          File tools
@@ -38,6 +38,9 @@ install -m0755 logotool/logotool $RPM_BUILD_ROOT%{_bindir}/logotool
 %{_bindir}/*
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt2_7
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt2_6
 - rebuild to get rid of #27020
 
