@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gconftool-2 ElectricFence gcc-c++ libreadline-devel pkgconfig(glib-2.0) python-devel
+BuildRequires: /usr/bin/gconftool-2 ElectricFence gcc-c++ libreadline-devel perl(Text/Wrap.pm) python-devel
 # END SourceDeps(oneline)
 Name:           teg
 Version:        0.11.2
-Release:        alt2_27
+Release:        alt2_28
 Summary:        Turn based strategy game
 Group:          Games/Other
 License:        GPLv2
@@ -16,7 +16,7 @@ Patch0:         teg_libxml.patch
 Patch3:		teg_fixwording.patch
 Source2:         teg-fix-help.patch
 
-BuildRequires:  tidy libglib2-devel libxml2-devel libgnomeui-devel
+BuildRequires:  tidy glib2-devel libxml2-devel libgnomeui-devel
 BuildRequires:  gettext
 BuildRequires:  perl(XML/Parser.pm)
 BuildRequires:  desktop-file-utils
@@ -58,9 +58,9 @@ mv -f $RPM_BUILD_DIR/%{?buildsubdir}/docs/gnome-help/C/teg.sgml $RPM_BUILD_ROOT/
 %find_lang %{name}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -122,6 +122,9 @@ gconftool-2 --makefile-install-rule \
   %{_sysconfdir}/gconf/schemas/teg.schemas > /dev/null || :
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_28
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.11.2-alt2_27
 - rebuild with fixed sourcedep analyser (#27020)
 
