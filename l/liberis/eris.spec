@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-pod
 %define oldname eris
 Name:           liberis
 Version:        1.3.19
-Release:        alt3_4
+Release:        alt3_5
 Summary:        Client-side session layer for Atlas-C++
 
 Group:          Development/C++
@@ -84,6 +84,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt3_5
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt3_4
 - rebuild with new libmercator
 
