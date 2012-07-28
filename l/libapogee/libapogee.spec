@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gtkdocize gcc-c++ libaccounts-glib-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) unzip
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: libapogee
 Version: 2.2
-Release: alt2_7
+Release: alt2_8
 Summary: Library for Apogee CCD Cameras
 
 %define majorver 2
@@ -33,7 +33,7 @@ Apogee library is used by applications to control Apogee CCDs.
 %package devel
 Summary: Libraries, includes, etc. used to develop an application with %{name}
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: libapogee = %{version}-%{release}
 %description devel
 These are the header files needed to develop a %{name} application
 
@@ -64,6 +64,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_8
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_7
 - update to new release by fcimport
 
