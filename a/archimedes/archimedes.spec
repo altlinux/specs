@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dvipdf /usr/bin/dvips gcc-c++
+BuildRequires: /usr/bin/dvipdf gcc-c++ texlive-base-bin
 # END SourceDeps(oneline)
 Summary:	      2D Quantum Monte Carlo simulator for semiconductor devices
 Name:		      archimedes
 Version:	      2.0.0
-Release:	      alt2_2
+Release:	      alt2_3
 License:	      GPLv3+
 Group:		   Engineering
 URL:		      http://www.gnu.org/software/archimedes/
@@ -58,6 +58,9 @@ rm -f ${buildroot}%{_docdir}/%{name}.{dvi,ps}
 %{_bindir}/%{name}
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_3
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_2
 - rebuild to get rid of #27020
 
