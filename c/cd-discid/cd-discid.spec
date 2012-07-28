@@ -1,7 +1,7 @@
 Group: Sound
 Name:           cd-discid
 Version:        1.3.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Utility to get CDDB discid information
 
 # Also "Larry Wall's Artistic" upstream, but that's not accepted in Fedora
@@ -38,6 +38,9 @@ make install PREFIX=$RPM_BUILD_ROOT%{_prefix} STRIP=:
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_2
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt1_1
 - update to new release by fcimport
 
