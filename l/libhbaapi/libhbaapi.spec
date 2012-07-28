@@ -1,13 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/pkg-config /usr/bin/valgrind cppunit-devel gcc-c++ gcc-fortran glib2-devel guile18-devel imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libflac-devel libfreetype-devel libglibmm-devel libgmp-devel libmpfr-devel liboggz-devel libreadline-devel libspeex-devel libuuid-devel libvorbis-devel pkgconfig(dbus-1) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) python-devel unzip zlib-devel
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define buildversion 2.2.5
 
 Name:           libhbaapi
 Version:        2.2
-Release:        alt2_14
+Release:        alt2_15
 Summary:        SNIA HBAAPI library
 Group:          System/Libraries
 License:        SNIA
@@ -20,6 +16,7 @@ Source0:        http://downloads.sourceforge.net/hbaapi/hbaapi_src_%{version}.tg
 # cd .. && gzip hbaapi_build.tar
 Source1:        hbaapi_build_%{buildversion}.tar.gz
 Patch0:         libhbaapi-2.2-9-dl-linking.patch
+Patch1:         libhbaapi-2.2-archiver.patch
 BuildRequires:  automake libtool
 Source44: import.info
 
@@ -30,7 +27,7 @@ Fibre Channel Host Bus Adapters.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libhbaapi = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -40,6 +37,7 @@ developing applications that use %{name}.
 %setup -q -n hbaapi_src_2.2
 %setup -q -T -D -a 1 -n hbaapi_src_2.2
 %patch0 -p1 -b .ld-linking
+%patch1 -p1 -b .archiver
 
 %build
 ./bootstrap.sh
@@ -61,6 +59,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_15
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_14
 - update to new release by fcimport
 
