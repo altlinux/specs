@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/zip gcc-c++
 %define oldname skstream
 Name:           libskstream
 Version:        0.3.8
-Release:        alt1_3
+Release:        alt1_4
 Summary:        C++ I/O library for WorldForge clients/servers
 
 Group:          Development/C++
@@ -27,7 +27,7 @@ connections for both clients and servers.
 %package devel
 Summary:        Development files for skstream
 Group:   Development/C++
-Requires: libskstream = %{version}-%{release}
+Requires: skstream = %{version}-%{release}
 Provides: skstream-devel = %{version}-%{release}
 
 
@@ -76,6 +76,9 @@ make %{?_smp_mflags} check || :
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.8-alt1_4
+- update to new release by fcimport
+
 * Thu Mar 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.8-alt1_3
 - rebuild to get rid of #27020
 
