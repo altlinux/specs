@@ -1,11 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/ld /usr/bin/pkg-config /usr/bin/swig /usr/bin/valgrind cppunit-devel gcc-c++ glib2-devel imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libflac-devel libfreetype-devel libgcrypt-devel libglibmm-devel libgmp-devel libgpgme-devel libhocr-devel libhspell-devel libifp-devel libmpfr-devel liboggz-devel libreadline-devel libspeex-devel libtiff-devel libusb-compat-devel libuuid-devel libvorbis-devel libxml2-devel pkgconfig(dbus-1) pkgconfig(freetype2) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) python-module-pygobject-devel pkgconfig(pygtk-2.0) python-devel unzip zlib-devel
+BuildRequires: guile18-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libmatheval
 Version:        1.1.8
-Release:        alt1_2.1
+Release:        alt1_3
 Summary:        Library for parsing and evaluating symbolic expressions input as text
 
 Group:          System/Libraries
@@ -14,7 +13,7 @@ URL:            http://www.gnu.org/software/libmatheval/
 Source0:        http://ftp.gnu.org/gnu/libmatheval/libmatheval-%{version}.tar.gz
 
 
-BuildRequires:  gcc-fortran guile18-devel bison flex flex texinfo
+BuildRequires:  gcc-fortran guile-devel bison flex flex texinfo
 Source44: import.info
 
 
@@ -30,7 +29,7 @@ expressions to strings.
 %package devel
 Summary:        Development files for libmatheval
 Group:          Development/C
-Requires:       %{name} = %{version}-%{release}
+Requires:       libmatheval = %{version}-%{release}
 
 %description devel
 This package contains the development files for libmatheval.
@@ -66,6 +65,9 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_3
+- update to new release by fcimport
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.8-alt1_2.1
 - Fixed build
 
