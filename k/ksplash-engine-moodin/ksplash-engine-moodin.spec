@@ -5,7 +5,7 @@
 
 Name: ksplash-engine-%ename
 Version: 0.4.2
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: Splash Screen Engine for KDE
@@ -63,7 +63,7 @@ cp -f %SOURCE1 %buildroot%_K3srv/
 %_K3srv/*.desktop
 
 %changelog
-* Mon Jul 23 2012 Roman Savochenko <rom_as@altlinux.org> 0.4.2-alt3
+* Mon Jul 23 2012 Roman Savochenko <rom_as@altlinux.org> 0.4.2-alt4
 - Rebuild for TDE 3.5.13 environment.
 
 * Tue May 10 2011 Andrey Cherepanov <cas@altlinux.org> 0.4.2-alt2.qa1
