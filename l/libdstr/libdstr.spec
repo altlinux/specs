@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/bison cppunit-devel gcc-c++ libuuid-devel zlib-devel
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libdstr
 Version:	20080124
-Release:	alt2_5
+Release:	alt2_6
 Summary:	Dave's String class
 
 Group:		System/Libraries
@@ -20,7 +20,7 @@ libdstr is a library containing Dstr, Dave's String class.
 %package	devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	libdstr = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -63,6 +63,9 @@ find $RPM_BUILD_ROOT -name '*.la' \
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20080124-alt2_6
+- update to new release by fcimport
+
 * Tue Jan 10 2012 Igor Vlasenko <viy@altlinux.ru> 20080124-alt2_5
 - update to new release by fcimport
 
