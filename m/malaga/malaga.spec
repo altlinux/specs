@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ libreadline-devel
+# END SourceDeps(oneline)
 Name:           malaga
 Version:        7.12 
-Release:        alt2_11
+Release:        alt2_12
 Summary:        A programming language for automatic language analysis
 
 Group:          Development/Other
@@ -16,8 +19,8 @@ Patch0:         malaga-rename-map_file.diff
 # linking anymore
 Patch1:         malaga-malshow-lm.patch
 
-BuildRequires:  libgtk+2-devel libreadline-devel
-Requires: lib%{name} = %{version}-%{release}
+BuildRequires:  gtk2-devel readline-devel
+Requires: libmalaga = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -34,7 +37,7 @@ University of Erlangen, Germany.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/Other
-Requires:       lib%{name} = %{version}-%{release}
+Requires:       libmalaga = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -94,6 +97,9 @@ chmod 0755 $RPM_BUILD_ROOT%{_libdir}/libmalaga.so*
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_12
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 7.12-alt2_11
 - rebuild to get rid of #27020
 
