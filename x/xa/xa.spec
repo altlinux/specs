@@ -1,6 +1,6 @@
 Name:           xa
 Version:        2.3.5
-Release:        alt2_6
+Release:        alt2_7
 Summary:        6502/65816 cross-assembler
 
 Group:          Development/Tools
@@ -60,6 +60,9 @@ make install DESTDIR=$RPM_BUILD_ROOT PREFIX=%{_prefix} INSTALL="install -p"
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt2_7
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.5-alt2_6
 - rebuild to get rid of #27020
 
