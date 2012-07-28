@@ -1,6 +1,6 @@
 Name:           opengl-games-utils
 Version:        0.2
-Release:        alt2_2
+Release:        alt2_3
 Summary:        Utilities to check proper 3d support before launching 3d games
 Group:          Games/Other
 License:        Public Domain
@@ -35,9 +35,9 @@ install -p -m 755 %{SOURCE0} $RPM_BUILD_ROOT%{_bindir}
 install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/%{name}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -76,6 +76,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_3
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_2
 - rebuild with fixed sourcedep analyser (#27020)
 
