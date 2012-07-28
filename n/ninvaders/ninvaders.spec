@@ -1,6 +1,6 @@
 Name:           ninvaders
 Version:        0.1.1
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Space Invaders clone written in ncurses for cli gaming
 
 Group:          Games/Other
@@ -10,7 +10,7 @@ Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.
 Patch0:         ninvaders-0.1.1-fedora.patch
 
 
-BuildRequires:  libncurses-devel
+BuildRequires:  ncurses-devel
 Source44: import.info
 
 %description
@@ -31,9 +31,9 @@ make %{?_smp_mflags}
 install -Dp -m0755 nInvaders %{buildroot}%{_bindir}/nInvaders
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -70,6 +70,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_7
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_6
 - rebuild with fixed sourcedep analyser (#27020)
 
