@@ -1,12 +1,8 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/bison /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /usr/bin/gtkdocize /usr/bin/guile /usr/bin/guile-config /usr/bin/indent /usr/bin/valgrind cppunit-devel gcc-c++ guile18-devel imlib2-devel libGL-devel libX11-devel libXext-devel libaccounts-glib-devel libexpat-devel libfreetype-devel libreadline-devel libuuid-devel pkgconfig(dbus-1) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) unzip zlib-devel
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Summary: A library for accessing deltacloud
 Name: libdeltacloud
 Version: 0.9
-Release: alt2_2
+Release: alt2_3
 License: LGPLv2+
 Group: System/Libraries
 URL: http://people.redhat.com/clalance/libdeltacloud
@@ -23,7 +19,7 @@ convenient C API.
 Summary: Header files for libdeltacloud library
 License: LGPLv2+
 Group: Development/C
-Requires: %{name} = %{version}-%{release}
+Requires: libdeltacloud = %{version}-%{release}
 
 %description devel
 The libdeltacloud-devel package contains the files needed for developing
@@ -77,6 +73,9 @@ rm -f $RPM_BUILD_ROOT/%{_lib}/libdeltacloud.a
 %{_libdir}/pkgconfig/libdeltacloud.pc
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_3
+- update to new release by fcimport
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_2
 - update to new release by fcimport
 
