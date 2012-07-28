@@ -1,14 +1,16 @@
+# BEGIN SourceDeps(oneline):
 BuildRequires: perl(SOAP/Lite.pm)
+# END SourceDeps(oneline)
 Name:         amtterm
 License:      GPLv2+
 Version:      1.3
-Release:      alt2_3
+Release:      alt2_4
 Summary:      Serial-over-lan (sol) client for Intel AMT
 Group:        Networking/Other
 URL:          http://www.kraxel.org/blog/linux/amtterm/
 Source:       http://www.kraxel.org/releases/%{name}/%{name}-%{version}.tar.gz
 Requires:     xdg-utils
-BuildRequires: libgtk+2-devel libvte-devel desktop-file-utils
+BuildRequires: gtk2-devel libvte-devel desktop-file-utils
 Source44: import.info
 
 %description
@@ -39,6 +41,9 @@ desktop-file-install \
 /usr/share/applications/*.desktop
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_4
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2_3
 - rebuild to get rid of #27020
 
