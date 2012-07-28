@@ -2,7 +2,7 @@
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.10.b7
+Release:        alt2_0.11.b7
 Summary:        HTML to PostScript converter
 
 Group:          Publishing
@@ -102,6 +102,9 @@ desktop-file-install --vendor="fedora"               \
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.11.b7
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.10.b7
 - update to new release by fcimport
 
