@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	295.59
+%define module_version	302.17
 %define module_release	alt1
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
@@ -33,7 +33,7 @@
 
 %define upstream_module_name	NVIDIA_kernel
 
-%define kversion	3.4.6
+%define kversion	3.5.0
 %define krelease	alt1
 %define flavour		un-def
 
@@ -49,7 +49,7 @@
 Summary:	nVidia video card drivers
 Name:		kernel-modules-%module_name-%flavour
 Version:	%module_version
-Release:	%module_release.197638.1
+Release:	%module_release.197888.1
 License:	Proprietary
 Group:		System/Kernel and hardware
 URL:		http://www.nvidia.com
@@ -193,8 +193,11 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Fri Jul 20 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 295.59-alt1.197638.1
-- Build for kernel-image-un-def-3.4.6-alt1.
+* Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 302.17-alt1.197888.1
+- Build for kernel-image-un-def-3.5.0-alt1.
+
+* Thu Jul 12 2012 Sergey V Turchin <zerg at altlinux dot org> 302.17-alt1
+- new release (302.17)
 
 * Thu Jun 14 2012 Sergey V Turchin <zerg at altlinux dot org> 295.59-alt1
 - new release (295.59)
