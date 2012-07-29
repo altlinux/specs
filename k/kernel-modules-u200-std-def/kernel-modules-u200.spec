@@ -2,7 +2,7 @@
 %define module_version	1.0
 %define module_release	alt2
 
-%define kversion       3.4.6
+%define kversion       3.4.7
 %define krelease       alt1
 %define flavour        std-def
 
@@ -11,7 +11,7 @@
 Summary:	u200 kernel module
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.197638.1
+Release:	%module_release.197639.1
 License:	GPL
 Group:		System/Kernel and hardware
 Patch1:	u200-build-kernel3.2.patch
@@ -63,8 +63,8 @@ install -p -m644 %module_name.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Mon Jul 23 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.1.0-alt2.197638.1
-- Build for kernel-image-std-def-3.4.6-alt1.
+* Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.1.0-alt2.197639.1
+- Build for kernel-image-std-def-3.4.7-alt1.
 
 * Fri Jan 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.1.0-alt2
 - fix to build with 3.2 kernel

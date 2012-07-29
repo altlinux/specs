@@ -2,7 +2,7 @@
 %define module_version	8.98
 %define module_release	alt2
 
-%define kversion       3.4.6
+%define kversion       3.4.7
 %define krelease       alt1
 %define flavour                std-def
 
@@ -12,7 +12,7 @@
 Summary:	AMD/ATI Proprietary Linux Display Driver
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.197638.1
+Release:	%module_release.197639.1
 License:	Proprietary
 Group:		System/Kernel and hardware
 
@@ -43,9 +43,6 @@ Patch4: http://www.cosmicencounter.net/mirror/patch/sema_init.patch
 Patch5: http://aur.archlinux.org/packages/catalyst-generator/catalyst-generator/makefile_compat.patch
 
 Patch7: fglrx-2.6.38.patch
-%if "%kversion" >= "3.2"
-Patch8: fglrx-3.2.8-build.patch
-%endif
 
 %if "%kversion" >= "3.4"
 Patch9: fglrx-3.4.2-build.patch
@@ -110,8 +107,8 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Fri Jul 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.98-alt2.197638.1
-- Build for kernel-image-std-def-3.4.6-alt1.
+* Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.8.98-alt2.197639.1
+- Build for kernel-image-std-def-3.4.7-alt1.
 
 * Fri Jul 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.98-alt2
 - Fixed build for kernel 3.4.6+
