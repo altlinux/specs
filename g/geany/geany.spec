@@ -2,8 +2,8 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: geany
-Version: 0.21
-Release: alt2
+Version: 1.22
+Release: alt1
 
 Summary: A fast and lightweight IDE using GTK2
 License: GPLv2
@@ -77,6 +77,9 @@ bzip2 %buildroot%_defaultdocdir/%name-%version/ChangeLog
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 1.22-alt1
+- Autobuild version bump to 1.22
+
 * Mon May 21 2012 Fr. Br. George <george@altlinux.ru> 0.21-alt2
 - DSO linking (@glebfm)
 

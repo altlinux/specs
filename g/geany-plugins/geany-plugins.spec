@@ -1,7 +1,7 @@
-%define geany_ver 0.21
+%define geany_ver 1.22
 Name: geany-plugins
-Version: 0.21.1
-Release: alt2
+Version: 1.22
+Release: alt1
 
 Summary: Plugins for Geany
 
@@ -15,6 +15,10 @@ Obsoletes: geanygdb
 BuildRequires(pre): geany geany-devel intltool
 
 Requires: geany-plugins-vc
+
+# Automatically added by buildreq on Thu Jul 26 2012
+# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgpg-error-devel libgtk+2-devel libjavascriptcoregtk2-devel libpango-devel libsoup-devel perl-XML-Parser pkg-config xorg-xproto-devel zlib-devel
+BuildRequires: geany-devel intltool libGConf-devel libcheck-devel libenchant-devel libgpgme-devel libgtkspell-devel liblua5-devel libvte-devel libwebkitgtk2-devel libwnck-devel libxml2-devel vala
 
 %description
 This is Geany plugin collection
@@ -39,7 +43,7 @@ Various VCS integration (Git, SVN, ...) for Geany
 %setup
 
 %build
-%configure
+%configure --enable-geanygdb
 %make_build
 
 %install
@@ -49,10 +53,14 @@ Various VCS integration (Git, SVN, ...) for Geany
 %files
 %doc %_defaultdocdir/%name
 %_libdir/geany/*
+%_libdir/geany-plugins/*
+%_datadir/geany-plugins/*
 %dir %_libexecdir/geany-plugins
 %_libexecdir/geany-plugins/*
+%_iconsdir/hicolor/*/apps/gproject*
 %exclude %_libdir/geany/geanyvc*
 %exclude %_libdir/geany/*.la
+%exclude %_libdir/geany-plugins/*/*.la
 
 %files common -f %name.lang
 %files vc
@@ -60,6 +68,10 @@ Various VCS integration (Git, SVN, ...) for Geany
 %exclude %_libdir/geany/*.la
 
 %changelog
+* Thu Jul 26 2012 Fr. Br. George <george@altlinux.ru> 1.22-alt1
+- Autobuild version bump to 1.22
+- Update BuildRequires for more plugins to build
+
 * Thu May 24 2012 Fr. Br. George <george@altlinux.ru> 0.21.1-alt2
 - Remove release dependency
 
