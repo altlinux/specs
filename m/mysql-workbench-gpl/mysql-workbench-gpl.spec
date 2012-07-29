@@ -1,6 +1,6 @@
 Name: mysql-workbench-gpl
-Version: 5.2.33
-Release: alt2.2
+Version: 5.2.41
+Release: alt1
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
 Summary: A MySQL visual database modeling tool
@@ -11,9 +11,7 @@ Url: http://wb.mysql.com
 Source0: %name-%version.tar.gz
 
 Patch1: mysql-workbench-gpl-5.2.33-alt-build.patch
-Patch2: mysql-workbench-gpl-5.2.33-MySQLWorkbench.desktop.in.patch
-Patch3: mysql-workbench-gpl-5.2.31a-alt-libgtkmm2-2.24-fix-build.patch
-Patch4: mysql-workbench-gpl-5.2.33-alt-glib2-2.32.0.patch
+Patch4: mysql-workbench-gpl-5.2.41-alt-glib2-2.30.3.patch
 
 Provides: mysql-workbench-oss = %version-%release
 Obsoletes: mysql-workbench-oss < %version-%release
@@ -25,10 +23,10 @@ Provides: mysql-query-browser = %version-%release
 Obsoletes: mysql-query-browser < %version-%release
 
 # "_mforms" and "grt" are accessable from "MySQL Workbench GRT Shell" only.
-%add_python_req_skip _mforms grt
+%add_python_req_skip _mforms grt mforms
 
 # internal Workbench's libraries
-%add_python_req_skip db_utils wb
+%add_python_req_skip db_utils wb workbench _cairo
 
 # shell_snippets.py is not pure Python
 %add_findreq_skiplist */mysql-workbench/shell_snippets.py
@@ -50,8 +48,11 @@ BuildRequires(pre): rpm-build-licenses
 # - boost-devel-headers changed to boost-devel
 BuildRequires: boost-devel gcc-c++ libglade-devel libgnome-devel libgtkmm2-devel liblua5-devel libmysqlclient-devel libpcre-devel libsqlite3-devel libuuid-devel libxml2-devel libzip-devel python-devel
 
+BuildRequires: boost-signals-devel
 
 BuildRequires: libGL-devel
+BuildRequires: libctemplate-devel
+BuildRequires: libiodbc-devel
 
 %description
 MySQL Workbench is modeling tool that allows you to design
@@ -72,8 +73,6 @@ Architecture independent files for %name
 %setup -q
 
 %patch1 -p1
-%patch2 -p0
-%patch3 -p2
 %patch4 -p2
 
 %set_verify_elf_method unresolved=relaxed
@@ -92,6 +91,13 @@ export LIBS="-lgthread-2.0"
 
 %makeinstall_std
 
+mkdir -p %buildroot%_niconsdir
+cp images/icons/MySQLWorkbench-32.png %buildroot%_niconsdir/mysql-workbench.png
+
+mkdir -p %buildroot%_iconsdir/hicolor/32x32/mimetypes
+cp images/icons/MySQLPlugin-32.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/application-vnd.mysql-workbench-plugin.png
+cp images/icons/MySQLWorkbenchDocIcon32x32.png %buildroot%_iconsdir/hicolor/32x32/mimetypes/application-vnd.mysql-workbench-model.png
+
 %files
 %exclude %_libdir/mysql-workbench/*.*a
 %exclude %_libdir/mysql-workbench/plugins/*.*a
@@ -107,6 +113,7 @@ export LIBS="-lgthread-2.0"
 
 %_bindir/mysql-workbench
 %_bindir/mysql-workbench-bin
+%_bindir/wbcopytables
 %dir %_libdir/mysql-workbench
 %_libdir/mysql-workbench/*
 
@@ -114,8 +121,26 @@ export LIBS="-lgthread-2.0"
 %_datadir/applications/*.desktop
 %dir %_datadir/mysql-workbench
 %_datadir/mysql-workbench/*
+%_miconsdir/*
+%_niconsdir/*
+%_liconsdir/*
+%_iconsdir/hicolor/128x128/apps/*
+%_iconsdir/hicolor/16x16/mimetypes/*
+%_iconsdir/hicolor/32x32/mimetypes/*
+%_iconsdir/hicolor/48x48/mimetypes/*
+%_iconsdir/hicolor/128x128/mimetypes/*
+%_xdgmimedir/packages/*.xml
+%_xdgdatadir/mime-info/*.mime
 
 %changelog
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 5.2.41-alt1
+- Update to last release
+
+* Thu Apr 26 2012 Evgeny Sinelnikov <sin@altlinux.ru> 5.2.39-alt1
+- Update to last release
+- Fix and delete unneeded old patches
+- Add icon and mime files
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.2.33-alt2.2
 - Rebuilt with new glib2
 
