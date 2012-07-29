@@ -1,4 +1,6 @@
-BuildRequires: gcc-c++
+# BEGIN SourceDeps(oneline):
+BuildRequires: glib2-devel libSDL-devel libesd-devel libgtk+2-devel libncurses-devel
+# END SourceDeps(oneline)
 # State dir for savegames
 %global _localstatedir /var/lib/games
 # SVN release
@@ -7,7 +9,7 @@ BuildRequires: gcc-c++
 Summary:	A drug dealing game
 Name:		dopewars
 Version:	1.5.12
-Release:	alt1_10.1033svn
+Release:	alt1_11.1033svn
 URL:		http://dopewars.sourceforge.net/
 License:	GPLv2+
 Group:		Games/Other
@@ -45,7 +47,7 @@ switches (via dopewars -h) for further information.
 %package sdl
 Summary:	SDL sound support for dopewars
 Group:		Games/Other
-Requires:	%{name} = %{version}-%{release}
+Requires:	dopewars = %{version}-%{release}
 %description sdl
 This package adds a plugin to dopewars to allow sound to be output via.
 the Simple DirectMedia Layer mixer (SDL_mixer).
@@ -83,12 +85,12 @@ desktop-file-install --vendor="" \
 rm -rf %{buildroot}%{_docdir}
 
 %post
-%{_bindir}/dopewars -C %{_localstatedir}/dopewars.sco
+%{_bindir}/dopewars -C %{_var}/dopewars.sco
 
 %files -f %{name}.lang
 %doc ChangeLog LICENCE NEWS README doc/*.html doc/example-cfg
 # Score file needs to be writable by games group
-%attr(0664,root,games) %{_localstatedir}/dopewars.sco
+%attr(0664,root,games) %{_var}/lib/games/dopewars.sco
 # Bin file needs to be able to write into score file
 %attr(2711,root,games) %{_bindir}/dopewars
 %{_mandir}/man6/*
@@ -102,6 +104,9 @@ rm -rf %{buildroot}%{_docdir}
 %{_libdir}/dopewars/libsound_sdl.so
 
 %changelog
+* Sun Jul 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_11.1033svn
+- new release
+
 * Mon May 23 2011 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_10.1033svn
 - converted from Fedora by srpmconvert script
 
