@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           qascade
 Version:        0.1
-Release:        alt2_14
+Release:        alt2_15
 Summary:        Classic puzzle game
 
 Group:          Games/Other
@@ -13,7 +13,7 @@ Source0:        http://www.bitsnpieces.org.uk/qascade/%{name}-%{version}.tar.bz2
 Source1:        %{name}.desktop
 Patch0:         %{name}-dblsep.patch
 
-BuildRequires:  libqt3-devel
+BuildRequires:  qt3-devel
 BuildRequires:  desktop-file-utils
 Source44: import.info
 
@@ -48,9 +48,9 @@ install -D -p -m 644 blue.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps/qascade.png
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -91,6 +91,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_15
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_14
 - rebuild with fixed sourcedep analyser (#27020)
 
