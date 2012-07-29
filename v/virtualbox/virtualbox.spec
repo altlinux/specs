@@ -15,14 +15,17 @@
 %define modnamevfs kernel-source-vboxsf
 %define modnamevideo kernel-source-vboxvideo
 
-%define vboxdir %_libdir/virtualbox
-%define vboxdatadir %_datadir/virtualbox
-%define vboxadddir %vboxdir/additions
-
-%set_verify_elf_method textrel=relaxed
-%add_findprov_lib_path %vboxdir
-
 %define distname VirtualBox
+%define distarchive %distname-%{version}_OSE
+
+%def_disable debug
+
+%def_without manual
+%def_with additions
+%def_without webservice
+%def_without java
+%def_with vnc
+%def_with vde
 
 %ifarch %ix86
 %define vbox_platform linux.x86
@@ -30,15 +33,25 @@
 %ifarch x86_64
 %define vbox_platform linux.amd64
 %endif
-%define build_manual 0
-%define build_additions 1
-%define build_webservice 0
-%def_without java
-%def_with vnc
+
+%if_enabled debug
+%define vboxdir %_builddir/%distarchive/out/%vbox_platform/release/bin
+%define vboxdbg vbox-debug.sh
+%define vboxdbg_file %_builddir/%distarchive/%vboxdbg
+%else
+%define vboxdir %_libdir/virtualbox
+%endif
+
+%define vboxdatadir %_datadir/virtualbox
+%define vboxadddir %vboxdir/additions
+
+%set_verify_elf_method textrel=relaxed
+%add_findprov_lib_path %vboxdir
+
 
 Name: virtualbox
-Version: 4.1.12
-Release: alt2
+Version: 4.1.18
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -49,7 +62,6 @@ ExclusiveArch: %ix86 x86_64
 
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
-%define distarchive %distname-%{version}_OSE
 Source: %distarchive.tar
 
 Source1:	%name.control
@@ -69,6 +81,10 @@ Source19:	xorg-vboxmouse.conf
 Source20:	http://download.virtualbox.org/%name/%version/SDKRef.pdf
 Source21:	%distname-HTML-%{version}_OSE.tar
 
+%if_enabled debug
+Source99:	%vboxdbg.in
+%endif
+
 Patch0:		%name-%version-%release.patch
 
 BuildPreReq: dev86 iasl gcc4.3-c++ libstdc++4.3-devel-static
@@ -85,17 +101,17 @@ BuildRequires: libXdamage-devel libXcomposite-devel
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
 BuildRequires: xorg-sdk
 BuildPreReq: yasm kBuild >= 0.1.999
-%if %build_webservice
+%if_with webservice
 BuildRequires: libgsoap-devel-static
 %endif
 BuildRequires: libpam-devel
-%if %build_manual
+%if_with manual
 BuildRequires: texlive-latex-recommended
 %endif
 %if_with vnc
 BuildRequires: libvncserver-devel
 %endif
-BuildRequires: rpm-build-xdg
+BuildRequires: rpm-build-xdg rpm-macros-pam
 
 PreReq: %name-common = %version-%release
 
@@ -250,7 +266,7 @@ cp %SOURCE15 %SOURCE16 src/VBox/Frontends/VirtualBox/images
 export GCC_VERSION=4.3
 ./configure --ose \
     --disable-kmods \
-%if %build_webservice
+%if_with webservice
     --enable-webservice \
 %endif
 %if_without java
@@ -259,15 +275,18 @@ export GCC_VERSION=4.3
 %if_with vnc
     --enable-vnc \
 %endif
-%if "%build_manual" == "0"
+%if_with vde
+    --enable-vde \
+%endif
+%if_without manual
     --disable-docs \
 %endif
     --with-qt-dir=%_qt4dir \
     --with-kbuild=%_bindir
-%if "%build_additions" == "0"
+%if_without additions
 echo "VBOX_WITH_X11_ADDITIONS    := " >> LocalConfig.kmk
 %endif
-%if %build_webservice
+%if_with webservice
 echo "VBOX_WITHOUT_SPLIT_SOAPC   := 1" >> LocalConfig.kmk
 %endif
 # don't build testcases to save time, they are not needed for the package
@@ -290,7 +309,16 @@ source env.sh
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
 kmk -j$NPROCS VBOXDIR=%vboxdir
 
+%if_enabled debug
+sed 's|@VBOX_BUILD_DIR@|%vboxdir|g' %SOURCE99 >%vboxdbg_file
+chmod u+x %vboxdbg_file
+%endif
+
 %install
+%if_enabled debug
+echo -e "\nVirtualBox not installable due debug build enabled\nRun: %vboxdbg_file\n  or %vboxdbg_file ./VirtualBox\n"
+false
+%endif
 
 source env.sh
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
@@ -304,7 +332,7 @@ install -Dp %SOURCE2 %buildroot%_initdir/%name
 install -Dp -m644 %SOURCE4 \
 	%buildroot%_sysconfdir/udev/rules.d/90-%name.rules
 
-%if %build_additions
+%if_with additions
 # install additions from src
 install -Dp %SOURCE7 %buildroot%_initdir/vboxadd
 install -Dp %SOURCE8 %buildroot%_initdir/vboxadd-service
@@ -399,22 +427,16 @@ cd additions >/dev/null
     %buildroot%kernel_src/%modnamevideo-%version.tar.bz2
   rm -rf %buildroot%kernel_src/%modnamevideo-%version
 
-%if %build_additions
-  mkdir -p %buildroot%vboxadddir
-
+%if_with additions
 # install additions
-  cp -a \
-    VBoxClient \
-    VBoxControl \
-    VBoxService \
-    VBox*.so \
-    %buildroot%vboxadddir
+  install -d %buildroot/%_bindir
+  install -m755 VBoxClient VBoxControl VBoxService %buildroot/%_bindir/
+
+  install -d %buildroot/%vboxadddir
+  install -m644 VBoxOGL*.so %buildroot/%vboxadddir/
 
 # create links
-  for n in VBoxClient VBoxControl VBoxService; do
-    ln -s $(relative %vboxadddir/$n %_bindir/$n) %buildroot%_bindir
-  done
-  ln -s $(relative %vboxadddir/VBoxService %_sbindir/) %buildroot%_sbindir/vboxadd-service
+  ln -s $(relative %_bindir/VBoxService %_sbindir/) %buildroot%_sbindir/vboxadd-service
 
 # install sysconfig for vboxadd-service
   mkdir -p %buildroot%_sysconfdir/sysconfig
@@ -431,6 +453,12 @@ cd additions >/dev/null
   install -d %buildroot%_x11modulesdir/{input,drivers}
   install ../vboxmouse_drv.so %buildroot%_x11modulesdir/input/vboxmouse_drv.so
   install vboxvideo_drv.so %buildroot%_x11modulesdir/drivers/vboxvideo_drv.so
+
+  mkdir -p %buildroot%_x11modulesdir/dri/
+  ln -s $(relative %vboxadddir/VBoxOGL.so %_x11modulesdir/dri/) %buildroot%_x11modulesdir/dri/vboxvideo_dri.so
+
+  mkdir -p %buildroot%_pam_modules_dir/
+  install -m644 pam_vbox.so %buildroot%_pam_modules_dir/
 %endif
 cd - >/dev/null
 
@@ -466,10 +494,12 @@ tar -xf %SOURCE21 -C %buildroot%_defaultdocdir/%name-doc-%version/
 %post_control -s vboxusers %name
 
 %pre common
+%pre_control %name
 /usr/sbin/groupadd -r -f vboxusers
 
 %post common
 %post_service %name
+%post_control -s vboxusers %name
 
 %preun common
 %preun_service %name
@@ -487,11 +517,10 @@ mountpoint -q /dev || {
 %files
 %_bindir/*
 %exclude %_bindir/xpidl
-%if %build_additions
+%if_with additions
 %exclude %_bindir/VBoxClient
 %exclude %_bindir/VBoxControl
 %exclude %_bindir/VBoxService
-%exclude %vboxadddir
 %endif
 %dir %vboxdir
 %dir %vboxdir/ExtensionPacks
@@ -511,7 +540,6 @@ mountpoint -q /dev || {
 %_iconsdir/hicolor/128x128/apps/*.png
 %_xdgmimedir/packages/*.xml
 %_desktopdir/*.desktop
-%_controldir/%name
 
 %files -n %modname
 %kernel_src/%modname-%version.tar.bz2
@@ -534,7 +562,7 @@ mountpoint -q /dev || {
 %files -n %modnamevideo
 %kernel_src/%modnamevideo-%version.tar.bz2
 
-%if %build_additions
+%if_with additions
 %files -n xorg-drv-vboxmouse
 %_x11modulesdir/input/vboxmouse_drv.so
 
@@ -551,22 +579,22 @@ mountpoint -q /dev || {
 %_sbindir/vboxadd-service
 %_bindir/VBoxControl
 %_bindir/VBoxService
+%_pam_modules_dir/*.so
 %_sysconfdir/security/console.perms.d/60-vboxadd.perms
-%dir %vboxadddir
-%vboxadddir/VBoxControl
-%vboxadddir/VBoxService
 
 %files guest-additions
 %_sysconfdir/X11/xinit.d/98vboxadd-xclient
 %config %_sysconfdir/udev/rules.d/70-xorg-vboxmouse.rules
 %config %_x11sysconfdir/xorg.conf.d/50-vboxmouse.conf
 %_bindir/VBoxClient
-%vboxadddir/VBoxClient
-%vboxadddir/*.so
+%dir %vboxadddir
+%vboxadddir/VBoxOGL*.so
+%_x11modulesdir/dri/vboxvideo_dri.so
 %endif
 
 %files common
 %_initdir/%name
+%_controldir/%name
 %config %_sysconfdir/udev/rules.d/90-%name.rules
 %dir %vboxdatadir
 %vboxdatadir/VBoxCreateUSBNode.sh
@@ -580,6 +608,13 @@ mountpoint -q /dev || {
 %vboxdir/sdk
 
 %changelog
+* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
+- Update to new release for Sisyphus
+- Enable Virtual Distributed Ethernet (VDE) support
+- Create /dev/vboxusb at startup (Closes: 26953)
+- Fix virtualbox control facility restore during upgrade (Closes: 25150)
+- Fix OpenGL installation for guest additions (Closes: 27340)
+
 * Wed Apr 04 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.12-alt2
 - Enable the built in VNC server
 - Avoid conflict with renamed xorg-drv modules

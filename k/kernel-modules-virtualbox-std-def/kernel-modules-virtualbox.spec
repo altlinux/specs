@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	4.1.12
+%define module_version	4.1.18
 
-%define module_release	alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -101,8 +101,11 @@ cp kernel-source-%drv_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Tue Jul 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.12-alt2.197638.1
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1.197638.1
 - Build for kernel-image-std-def-3.4.6-alt1.
+
+* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
+- Update to new release
 
 * Fri Apr 06 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt2
 - Technical

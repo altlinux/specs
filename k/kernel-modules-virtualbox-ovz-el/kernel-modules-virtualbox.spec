@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	4.1.12
+%define module_version	4.1.18
 
-%define module_release	alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -101,8 +101,11 @@ cp kernel-source-%drv_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Wed Jun 27 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt2.132640.71
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1.132640.71
 - Build for kernel-image-ovz-el-2.6.32-alt71.
+
+* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
+- Update to new release
 
 * Fri Apr 06 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt2
 - Technical
