@@ -5,7 +5,7 @@ BuildRequires: liballegro-devel
 %define oldname ants
 Name:           Ants
 Version:        1.4
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Guide your ants safely home before they drop of the cliff
 Group:          Games/Other
 License:        Public Domain
@@ -85,6 +85,9 @@ install -p -m 644 %{SOURCE3} \
 
 
 %changelog
+* Sun Jul 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_11
+- new release
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_10
 - rebuild with fixed sourcedep analyser (#27020)
 
