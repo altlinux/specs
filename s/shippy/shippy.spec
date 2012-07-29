@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           shippy
 Version:        1.3.3.7
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Space invaders / Galaxians like game with powerups
 Group:          Games/Other
 License:        GPL+
@@ -14,7 +14,7 @@ Source2:        shippy.desktop
 Source3:        shippy.sh
 Patch0:         shippy-merged.patch
 BuildRequires:  dumb-devel libSDL_mixer-devel desktop-file-utils
-Requires:       %{name}-common = %{version} icon-theme-hicolor
+Requires:       shippy-common = %{version} icon-theme-hicolor
 Provides:       %{name}-engine = %{version}
 Source44: import.info
 
@@ -29,7 +29,7 @@ No longer! Shippy1984 is the game you have been waiting for!
 %package allegro
 Summary:	Shippy1984 Allegro version
 Group:		Games/Other
-Requires:	%{name}-common = %{version}
+Requires:	shippy-common = %{version}
 Provides:       %{name}-engine = %{version}
 
 %description allegro
@@ -39,7 +39,7 @@ Alternative version of Shippy1984 compiled to use the allegro display library.
 %package common
 Summary:	Shippy1984 common files
 Group:		Games/Other
-Requires:       %{name}-engine = %{version}
+Requires:       shippy-engine = %{version}
 
 %description common
 Data files, desktop entry and icon, docs and wrapper-script for the
@@ -90,9 +90,9 @@ install -p -m 644 %{SOURCE1} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -140,6 +140,9 @@ fi
 
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_13
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.3.7-alt2_12
 - rebuild with fixed sourcedep analyser (#27020)
 
