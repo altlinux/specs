@@ -1,8 +1,10 @@
+%define SVN r36
 Name: qxkb
 Version: 0.4.4
-Release: alt1
+Release: alt1%SVN
 License: GPLv2
 Url: http://qxkb.googlecode.com
+# svn checkout http://qxkb.googlecode.com/svn/trunk/ qxkb-read-only 
 Source: %name-%version.tar.bz2
 Group: System/X11
 Summary: Qt keyboard layout switcher
@@ -15,6 +17,7 @@ BuildRequires: cmake gcc-c++ libXScrnSaver-devel libXcomposite-devel libXdamage-
 The keypad switch written on Qt4.
 Uses setxkbmap; The interface repeats kxkb;
 Can use svg icon for indicate language layer.
+This is bugfix %SVN build.
 
 %prep
 %setup
@@ -34,6 +37,9 @@ Can use svg icon for indicate language layer.
 %_datadir/pixmaps/%name.png
 
 %changelog
+* Sun Jul 29 2012 Fr. Br. George <george@altlinux.ru> 0.4.4-alt1r36
+Bugfix SVN r63 update
+
 * Sun Jul 29 2012 Fr. Br. George <george@altlinux.ru> 0.4.4-alt1
 - Initial build from Mageia spec
 
