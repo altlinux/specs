@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
-%define module_version	4.1.12
-%define module_release	alt3
+%define module_version	4.1.18
+%define module_release	alt1
 
 %define kversion	3.4.4
 %define krelease	alt1
@@ -102,8 +102,11 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Mon Jun 25 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt3.197636.1
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1.197636.1
 - Build for kernel-image-std-pae-3.4.4-alt1.
+
+* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
+- Update to new release
 
 * Sun Jun 24 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt3
 - Fix build on el-smp

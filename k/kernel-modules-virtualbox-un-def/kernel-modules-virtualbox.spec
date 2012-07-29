@@ -1,5 +1,5 @@
 %define module_name	virtualbox
-%define module_version	4.1.12
+%define module_version	4.1.18
 
 %define module_release	alt1
 
@@ -36,7 +36,6 @@ BuildRequires: kernel-source-%drv_module_name = %module_version
 BuildRequires: kernel-source-%pci_module_name = %module_version
 BuildRequires: kernel-source-%net_module_name = %module_version
 BuildRequires: kernel-source-%net_module_adaptor_name = %module_version
-Patch1:	virtualbox-build-kernel3.2.patch
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -60,11 +59,6 @@ or in your /etc/modules.conf file.
 %setup -T -c -n kernel-source-%module_name-%module_version
 %__tar jxvf %kernel_src/kernel-source-%drv_module_name-%module_version.tar.bz2
 %__tar jxvf %kernel_src/kernel-source-%pci_module_name-%module_version.tar.bz2
-%if "%kversion" >= "3.2"
-#pushd kernel-source-%pci_module_name-%module_version
-#%patch1 -p0
-#popd
-%endif
 %__tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
 %__tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
 
@@ -107,11 +101,20 @@ cp kernel-source-%drv_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Fri Jul 20 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.12-alt1.197638.1
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1.197638.1
 - Build for kernel-image-un-def-3.4.6-alt1.
 
-* Sun Apr 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.12-alt1
-- 4.1.12
+* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
+- Update to new release
+
+* Fri Apr 06 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt2
+- Technical
+
+* Tue Apr 03 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.12-alt1
+- Update to new release
+
+* Sun Apr 01 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.10-alt1
+- Update to new release with 3.2 kernel support
 
 * Sat Jan 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt2
 - fix to build with 3.2 kernel

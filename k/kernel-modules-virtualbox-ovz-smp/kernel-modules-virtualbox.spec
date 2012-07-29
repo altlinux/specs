@@ -1,5 +1,5 @@
 %define module_name	virtualbox
-%define module_version	4.1.12
+%define module_version	4.1.18
 
 %define module_release	alt1
 
@@ -101,8 +101,14 @@ cp kernel-source-%drv_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Wed Apr 04 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.12-alt1.132640.8
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1.132640.8
 - Build for kernel-image-ovz-smp-2.6.32-alt8.
+
+* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
+- Update to new release
+
+* Fri Apr 06 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt2
+- Technical
 
 * Tue Apr 03 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.12-alt1
 - Update to new release

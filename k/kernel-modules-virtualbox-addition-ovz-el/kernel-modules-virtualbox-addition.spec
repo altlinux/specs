@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
-%define module_version	4.1.12
-%define module_release	alt3
+%define module_version	4.1.18
+%define module_release	alt1
 
 %define kversion	2.6.32
 %define krelease	alt71
@@ -102,8 +102,11 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Wed Jun 27 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt3.132640.71
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1.132640.71
 - Build for kernel-image-ovz-el-2.6.32-alt71.
+
+* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
+- Update to new release
 
 * Sun Jun 24 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt3
 - Fix build on el-smp

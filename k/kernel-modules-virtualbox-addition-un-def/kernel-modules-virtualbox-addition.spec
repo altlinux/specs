@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
-%define module_version	4.1.12
-%define module_release	alt4
+%define module_version	4.1.18
+%define module_release	alt1
 
 %define kversion	3.4.6
 %define krelease	alt1
@@ -33,8 +33,6 @@ BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
 BuildRequires: kernel-source-%guest_module_name = %module_version
 BuildRequires: kernel-source-%vfs_module_name = %module_version
 BuildRequires: kernel-source-%video_module_name = %module_version
-Patch1:	virtualbox-additions-build-kernel3.2.patch
-Patch2:	virtualbox-addition-build3.3.patch
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -56,7 +54,7 @@ Requires(postun): kernel-image-%flavour = %kversion-%krelease
 ExclusiveArch: %ix86 x86_64
 
 %if "%flavour" == "el-smp"
-Patch1: patch-el-smp-2.6.32-28
+Patch1: fix-build-on-el-smp.patch
 %endif
 
 %description
@@ -67,21 +65,7 @@ that are needed for additonal guests support for VirtualBox.
 %setup -T -c -n kernel-source-%module_name-%module_version
 %__tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
 %__tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
-#if "%kversion" >= "3.2"
-#pushd kernel-source-%vfs_module_name-%module_version
-#patch1 -p0
-#popd
-#%endif
 %__tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
-#%if "%kversion" >= "3.3"
-#pushd kernel-source-%video_module_name-%module_version
-#%patch2 -p0
-#popd
-#%endif
-%if "%flavour" == "el-smp" || "%flavour" == "ovz-el"
-sed -i "s,.get_map_ofs,// .get_map_ofs," kernel-source-vboxvideo-%module_version/vboxvideo_drm.c
-sed -i "s,.get_reg_ofs,// .get_reg_ofs," kernel-source-vboxvideo-%module_version/vboxvideo_drm.c
-%endif
 
 %if "%flavour" == "el-smp"
 %patch1 -p1
@@ -118,14 +102,23 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Fri Jul 20 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.12-alt4.197638.1
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1.197638.1
 - Build for kernel-image-un-def-3.4.6-alt1.
 
-* Sun Apr 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.12-alt4
-- 4.1.12
+* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
+- Update to new release
 
-* Mon Mar 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt4
-- fix to build with 3.3 kernel
+* Sun Jun 24 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt3
+- Fix build on el-smp
+
+* Fri Apr 06 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt2
+- Technical
+
+* Wed Apr 04 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.12-alt1
+- Update to new release
+
+* Sun Apr 01 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.10-alt1
+- Update to new release with 3.2 kernel support
 
 * Sat Jan 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt3
 - fix to build with 3.2 kernel
