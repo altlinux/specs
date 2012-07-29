@@ -1,18 +1,15 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl
-# END SourceDeps(oneline)
+%define lang nl
+%define langrelease 2
 Summary: Dutch dictionaries for Aspell
-Name: aspell-nl
+Name: aspell-%{lang}
 # Have to bump this to make it newer than the old, bad version.
 #Epoch: 51
-Version: 0.1e
-Release: alt2_10
+Version: 0.50
+Release: alt1_1
 License: GPLv2+
 Group: Text tools
-URL: http://packages.debian.org/unstable/text/%{name}
-Source0: http://ftp.debian.org/debian/pool/main/d/dutch/dutch_%{version}.orig.tar.gz
-Patch0: dutch-debian.patch
-Patch2: dutch-0.1e-nl.patch
+URL: http://aspell.net/
+Source0: ftp://ftp.gnu.org/gnu/aspell/dict/%{lang}/aspell-%{lang}-%{version}-%{langrelease}.tar.bz2
 Buildrequires: aspell >= 0.60
 Requires: aspell >= 0.60
 
@@ -23,31 +20,24 @@ Source44: import.info
 Provides the word list/dictionaries for the following: Dutch
 
 %prep
-%setup -q -n dutch-%{version}
-%patch0 -p1
-%patch2 -p1 -b .nl
-cp ./aspell/dutch.dat ./aspell/nl_affix.dat
+%setup -q -n aspell-%{lang}-%{version}-%{langrelease}
 
 %build
-./configure prefix=/usr 
+./configure prefix=/usr
 make
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT libdir=%{_libdir}
-rm $RPM_BUILD_ROOT/usr/share/ispell/dutch.aff
-rm $RPM_BUILD_ROOT/usr/dict/dutch
-rm $RPM_BUILD_ROOT/usr/info/*
-cp $RPM_BUILD_ROOT%{_libdir}/aspell/nl.dat $RPM_BUILD_ROOT%{_libdir}/aspell/nl_affix.dat
-
-mkdir -p %buildroot%{_datadir}/aspell/
-mv %buildroot%{_libdir}/aspell/*.dat %buildroot%{_datadir}/aspell/
 
 %files
-%doc COPYING README ChangeLog
+%doc Copyright README
 %{_libdir}/aspell/*
 %{_datadir}/aspell/*
 
 %changelog
+* Sun Jul 29 2012 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1_1
+- new release
+
 * Sun Feb 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.1e-alt2_10
 - update to new release by fcimport
 
