@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:		sergueis-destiny
 Version:	1.1
-Release:	alt4_8
+Release:	alt4_9
 Summary:	Serguei's Destiny, an AGI adventure game
 
 Group:		Games/Other
@@ -54,9 +54,9 @@ install -d %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
 install -p -m 0644 %{SOURCE3} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%{name}.xpm
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -95,6 +95,9 @@ fi
 %{_bindir}/sergueis-destiny-wrapper.sh
 
 %changelog
+* Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_9
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt4_8
 - rebuild with fixed sourcedep analyser (#27020)
 
