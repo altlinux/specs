@@ -1,6 +1,6 @@
 Name: tatham-puzzles
-Version: 9558
-Release: alt1.1
+Version: 9561
+Release: alt1
 License: MIT
 Group: Games/Puzzles
 Url: http://www.chiark.greenend.org.uk/~sgtatham/puzzles/
@@ -105,6 +105,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Sun Jul 29 2012 Fr. Br. George <george@altlinux.ru> 9561-alt1
+- Autobuild version bump to 9561
+
 * Wed Jul 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9558-alt1.1
 - Avoid strip
 
