@@ -1,4 +1,4 @@
-%define svn_revision 370526
+%define svn_revision 370540
 Name: asterisk11
 Summary: Open source PBX
 Version: 11
@@ -64,7 +64,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 370526
+%define svn_revision 370540
 %add_verify_elf_skiplist %_libdir/libasteriskssl*
 %def_with debug
 %def_enable debug
@@ -1224,6 +1224,9 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl.so.1
 
 %changelog
+* Mon Jul 30 2012 Denis Smirnov <mithraen@altlinux.ru> 11-alt0.370540
+- update from svn revision 370540
+
 * Sat Jul 28 2012 Denis Smirnov <mithraen@altlinux.ru> 11-alt0.370526
 - rename asterisk1.11 -> asterisk11
 
