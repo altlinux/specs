@@ -4,7 +4,7 @@
 %def_disable telepathy
 
 Name: pidgin-sipe
-Version: 1.13.1
+Version: 1.13.2
 Release: alt1
 Summary: Pidgin plugin for connecting to MS Communications Server
 
@@ -33,7 +33,7 @@ Live Communications Server 2003/2005 and Office Communications Server 2007.
 
 %prep
 %setup -q
-%patch1 -p1
+# %patch1 -p1
 
 %build
 export KRB5_CFLAGS=`krb5-config --cflags`
@@ -58,6 +58,9 @@ rm -f %buildroot%_libdir/purple-2/*.la
 %_pixmapsdir/pidgin/protocols/*/sipe.*
 
 %changelog
+* Mon Jul 30 2012 Alexey Shabalin <shaba@altlinux.ru> 1.13.2-alt1
+- 1.13.2
+
 * Fri May 18 2012 Alexey Shabalin <shaba@altlinux.ru> 1.13.1-alt1
 - 1.13.1
 
