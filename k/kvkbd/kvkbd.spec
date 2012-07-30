@@ -3,7 +3,7 @@
 
 Name:		kvkbd
 Version:	0.5
-Release:	alt4
+Release:	alt5
 Summary:	Virtual Keyboard for KDE
 Source0:	http://www.kde-apps.org/CONTENT/content-files/56019-%name-%version.tar.bz2
 Source1:	hi48-app-%name.png
@@ -15,12 +15,12 @@ Patch1:		%name-0.5-alt_desktopdir.patch
 Patch2:		%name-0.4.7-alt_desktop.patch
 Patch3:		%name-0.5-gcc43.patch
 Patch4:		%name-0.5-admin-new-autotools.patch
-Patch5:		tde-3.5.13-build-defdir-autotool.patch
+Patch5:		%name-0.5-DSO.patch
 Patch6:		%name-0.5-shift-togle.patch
 
 # Automatically added by buildreq on Thu Apr 21 2011 (-bi)
 # optimized out: elfutils fontconfig kdelibs libICE-devel libSM-devel libX11-devel libXext-devel libXi-devel libXrender-devel libXt-devel libart_lgpl-devel libidn-devel libpng-devel libqt3-devel libqt3-settings libstdc++-devel libtqt-devel libutempter-devel xorg-inputproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: gcc-c++ imake kdelibs-devel libXtst-devel xml-utils xorg-cf-files
+BuildRequires: gcc4.5-c++ imake kdelibs-devel libXtst-devel xml-utils xorg-cf-files
 
 %description
 A nice virtual keyboard for KDE with systray and dock widget
@@ -32,7 +32,7 @@ support.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p1
+%patch4
 %patch5
 %patch6 -p1
 
@@ -49,6 +49,7 @@ export KDEDIR=%kdedir
 
 export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 
+%add_optflags -I%_includedir/tqtinterface
 %K3configure
 %make_build
 
@@ -63,6 +64,9 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_kde3_iconsdir/*/*/apps/%name.png
 
 %changelog
+* Mon Jul 30 2012 Roman Savochenko <rom_as@altlinux.ru> 0.5-alt5
+- Real version 0.5 build.
+
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.5-alt4
 - Build for TDE 3.5.13 release
 - Shift toggle fix patch by Roman Savochenko is added.
