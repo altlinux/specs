@@ -1,6 +1,6 @@
 %define requires_ant               ant >= 1.6.5 ant-junit >= 1.6.5 ant-trax >= 1.6.5 ant-nodeps >= 1.6.5 ant-optional >= 1.6.5
 %define requires_antlr             antlr
-%define requires_apache_commons    jakarta-commons-validator jakarta-commons-logging jakarta-commons-collections  jakarta-commons-digester jakarta-commons-beanutils jakarta-commons-lang jakarta-commons-fileupload jakarta-commons-io
+%define requires_apache_commons    sh
 %define requires_aspectj           aspectj
 %define requires_asm               asm
 %define requires_bsh               bsh
@@ -23,7 +23,7 @@
 %define requires_nekohtml          nekohtml
 %define requires_openoffice        openoffice.org
 %define requires_odmg              odmg
-%define requires_portal_bridges    portals-bridges-struts
+%define requires_portal_bridges    sh
 %define requires_perlcgi           perl-CGI
 %define requires_struts            struts struts-taglib
 %define requires_struts_test       strutstestcase
@@ -70,7 +70,7 @@
 
 Name: runawfe
 Version: 3.4.2.2
-Release: alt1.svn3824
+Release: alt2.svn3794
 Summary: RUNA WFE Workflow/BPM management system
 License: LGPL
 Group: Office
@@ -261,7 +261,6 @@ installWFEConf(){
         mv -f %JBOSS_ROOT_RPM/server/default/deploy %JBOSS_ROOT_RPM/server/$2
         mkdir %JBOSS_ROOT_RPM/server/$2/data
         cp -Rf data %JBOSS_ROOT_RPM/server/$2/
-        rm -Rf %JBOSS_ROOT_RPM/bin/*.dll
 }
 
 rm -Rf %JBOSS_ROOT_RPM
@@ -863,6 +862,6 @@ rm -f %_sbindir/runawfe-start.sh
 
 
 %changelog
-* Sun Jun 17 2012 Konstantinov Aleksey <kana@altlinux.org> 3.4.2.2-alt1.svn3824
+* Sun Jun 10 2012 Konstantinov Aleksey <kana@altlinux.org> 3.4.2.2-alt2.svn3794
 - New release
 
