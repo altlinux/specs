@@ -1,6 +1,6 @@
 Name: libtevent
-Version: 0.9.15
-Release: alt2.1
+Version: 0.9.16
+Release: alt1
 Summary: The tevent library
 License: LGPLv3+
 Group: System/Libraries
@@ -68,9 +68,12 @@ rm -f %buildroot%_libdir/*.a
 
 %files -n python-module-tevent
 %python_sitelibdir/_tevent.so
-%python_sitelibdir_noarch/tevent.py*
+%python_sitelibdir/tevent.py*
 
 %changelog
+* Fri Jul 27 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.16-alt1
+- 0.9.16
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.15-alt2.1
 - Rebuild to remove redundant libpython2.7 dependency
 
