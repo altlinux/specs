@@ -1,6 +1,6 @@
 Name: accel-ppp
-Version: 1.7.0
-Release: alt2
+Version: 1.7.1
+Release: alt1
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -87,6 +87,9 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %preun_service %name
 
 %changelog
+* Mon Jul 30 2012 Alexei Takaseev <taf@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Sat Jun 30 2012 Alexei Takaseev <taf@altlinux.org> 1.7.0-alt2
 - Build git 20120630
 
