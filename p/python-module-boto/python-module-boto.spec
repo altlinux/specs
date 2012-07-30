@@ -2,7 +2,7 @@
 
 Summary: A simple lightweight interface to Amazon Web Services
 Name: python-module-boto
-Version: 2.4.1
+Version: 2.5.2
 Release: alt1
 License: MIT
 Group: Development/Python
@@ -37,6 +37,9 @@ rm -rf %buildroot{%_bindir,%python_sitelibdir/tests}
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Mon Jul 30 2012 Mykola Grechukh <gns@altlinux.ru> 2.5.2-alt1
+- 2.5.2
+
 * Fri May 18 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.4.1-alt1
 - 2.4.1
 
