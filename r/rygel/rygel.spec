@@ -10,7 +10,7 @@
 %def_with ui
 
 Name: rygel
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Summary: A UPnP v2 Media Server
 
@@ -46,6 +46,7 @@ BuildRequires: libgio-devel >= %gio_ver
 BuildRequires: libgee-devel >= %gee_ver
 BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup-devel >= %libsoup_ver
+BuildRequires: libunistring-devel
 %{?_enable_media_export_plugin:BuildRequires: libsqlite3-devel >= %libsqlite3_ver gst-plugins-devel >= %gstreamer_plugins_ver}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver libgupnp-vala >= %gupnp_vala_ver}
 %{?_with_ui:BuildRequires: libgtk+3-devel >= %gtk_ver}
@@ -126,6 +127,9 @@ echo %version > .tarball-version
 %_datadir/vala/vapi/*
 
 %changelog
+* Mon Jul 30 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.2-alt1
+- 0.14.2
+
 * Tue May 22 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.1-alt1
 - 0.14.1
 
