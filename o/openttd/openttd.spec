@@ -1,14 +1,15 @@
 Name: openttd
 Version: 1.2.1
-Release: alt1
+Release: alt2
 
 Summary: An open source clone of the Microprose game "Transport Tycoon Deluxe".
 License: GPL
 Group: Games/Strategy
 URL: http://www.openttd.com/
 Requires: TiMidity++
-Requires: fonts-ttf-dejavu Xdialog
+Requires: fonts-ttf-dejavu
 Requires: %name-data = %version-%release
+Requires: openttd-3rd-party
 Packager: Anton Farygin <rider@altlinux.com>
 
 Source: %name-%version-%release.tar
@@ -20,16 +21,6 @@ BuildRequires: libSDL-devel libpng-devel libfreetype-devel fontconfig-devel gcc-
 
 %description
 An open source clone of the Microprose game "Transport Tycoon Deluxe".
-
-You need following files from TTD Win version:
-  - sample.cat
-  - trg1r.grf
-  - trgcr.grf
-  - trghr.grf
-  - trgir.grf
-  - trgtr.grf
-
-To play music tracks you need files from gm directory
 
 %package data
 Buildarch: noarch
@@ -60,33 +51,32 @@ echo "1.2.1	24306	0	1.2.1" >.ottdrev
     PREFIX=%_prefix DATA_DIR=share/games/%name \
 	
 %install
-%__mkdir_p %buildroot%_prefix/games
-%__mkdir_p %buildroot%_datadir/games/%name/gm
-%__mkdir_p %buildroot%_datadir/games/%name/lang
-%__mkdir_p %buildroot%_man6dir
+mkdir -p %buildroot%_prefix/games
+mkdir -p %buildroot%_datadir/games/%name/gm
+mkdir -p %buildroot%_datadir/games/%name/lang
+mkdir -p %buildroot%_datadir/games/%name/ai
+mkdir -p %buildroot%_man6dir
 
-%__install -m755 -s bin/%name %buildroot%_prefix/games/%name
-%__install -m755 %name-installer %buildroot%_prefix/games/%name-installer
-%__cp -a bin/baseset %buildroot%_datadir/games/%name
-%__cp -a bin/lang/*.lng %buildroot%_datadir/games/%name/lang
-%__chmod -x %buildroot%_datadir/games/%name/baseset/*
+install -m755 -s bin/%name %buildroot%_prefix/games/%name
+cp -a bin/baseset %buildroot%_datadir/games/%name
+cp -a bin/ai/*.nut %buildroot%_datadir/games/%name/ai/
+cp -a bin/lang/*.lng %buildroot%_datadir/games/%name/lang
+chmod -x %buildroot%_datadir/games/%name/baseset/*
 
 #menu
 
-%__install -dm 755 %buildroot%_datadir/applications
-%__install -m644 media/%name.desktop %buildroot%_datadir/applications/%name.desktop
-%__subst "s,Exec=openttd,Exec=openttd-installer," %buildroot%_datadir/applications/%name.desktop
+install -dm 755 %buildroot%_datadir/applications
+install -m644 media/%name.desktop %buildroot%_datadir/applications/%name.desktop
 
 # icons
-%__install -pD -m644 media/%name.16.png %buildroot%_miconsdir/%name.png
-%__install -pD -m644 media/%name.32.png %buildroot%_niconsdir/%name.png
-%__install -pD -m644 media/%name.48.png %buildroot%_liconsdir/%name.png
-%__install -pD -m644 docs/%name.6 %buildroot%_man6dir/
+install -pD -m644 media/%name.16.png %buildroot%_miconsdir/%name.png
+install -pD -m644 media/%name.32.png %buildroot%_niconsdir/%name.png
+install -pD -m644 media/%name.48.png %buildroot%_liconsdir/%name.png
+install -pD -m644 docs/%name.6 %buildroot%_man6dir/
 
 
 %files
 %_prefix/games/%name
-%_prefix/games/%name-installer
 
 %files data
 %doc docs/* bin/scripts readme.txt known-bugs.txt changelog.txt COPYING
@@ -98,6 +88,10 @@ echo "1.2.1	24306	0	1.2.1" >.ottdrev
 %_man6dir/*
 
 %changelog
+* Mon Jul 30 2012 Anton Farygin <rider@altlinux.ru> 1.2.1-alt2
+- added compat libs for AI
+- removed openttd-installer (obsoleted by openttd-3rd-party)
+
 * Fri Jul 20 2012 Anton Farygin <rider@altlinux.ru> 1.2.1-alt1
 - new version
 
