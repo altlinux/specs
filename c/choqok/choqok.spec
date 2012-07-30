@@ -5,7 +5,7 @@
 
 Name: choqok
 Version: 1.3
-Release: alt1
+Release: alt2
 
 Group: Office
 Summary: KDE Micro-Blogging Client
@@ -100,6 +100,12 @@ based on %name.
 
 
 %changelog
+* Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 1.3-alt2
+- rebuilt with new attica
+
+* Sat May 05 2012 Sergey V Turchin <zerg@altlinux.org> 1.3-alt0.M60P.1
+- new version
+
 * Sat May 05 2012 Sergey V Turchin <zerg@altlinux.org> 1.3-alt1
 - new version
 

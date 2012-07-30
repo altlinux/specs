@@ -9,7 +9,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -107,7 +107,7 @@ Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
 # security
 
-BuildRequires(pre): kde-common-devel libqt4-devel libsoprano-devel >= 2.7.56 libstrigi-devel attica-devel
+BuildRequires(pre): kde-common-devel libqt4-devel libsoprano-devel libstrigi-devel attica-devel
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
 BuildRequires: bzlib-devel cmake libalsa-devel
 BuildRequires: herqq-devel
@@ -306,6 +306,12 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt6
+- rebuilt with new attica
+
+* Wed Jun 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt4.M60P.1
+- built for M60P
+
 * Wed Jun 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt5
 - use 4.8.x branch
 

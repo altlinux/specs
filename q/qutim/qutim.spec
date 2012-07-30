@@ -1,7 +1,7 @@
 %define qversion 0.3.1.0
-%define qrelease alt1
+%define qrelease alt2
 %define jversion 1.1.0
-%define jrelease alt1
+%define jrelease alt2
 
 Name: qutim
 Epoch: 5
@@ -971,6 +971,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS COPYING README.* ChangeLog
 
 %changelog
+* Mon Jul 30 2012 Sergey V Turchin <zerg@altlinux.org> 5:0.3.1.0-alt2
+- rebuilt with new attica
+
 * Sun Apr 15 2012 Nazarov Denis <nenderus@altlinux.org> 5:0.3.1.0-alt1
 - qutim version 0.3.1.0
 - jreen version 1.1.0

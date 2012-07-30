@@ -10,7 +10,7 @@
 %define bugfix 4
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Runtime
@@ -254,6 +254,12 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt4
+- rebuilt with new attica
+
+* Mon Jun 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2.M60P.1
+- built for M60P
+
 * Mon Jun 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt3
 - turn on nepomuk autobackup by default
 
