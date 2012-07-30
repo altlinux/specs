@@ -4,11 +4,11 @@
 %define cgi_bin_dir /var/www/cgi-bin
 %define httpd_htdocs_dir /var/www/html
 %define ejudge_socket_dir /var/run/ejudge
-%define lang_config_dir %_sysconfdir/ejudge/lang.d
+%define lang_config_dir %{_sysconfdir}/ejudge/lang.d
 
 Name: ejudge
 Version: 2.3.23
-Release: alt2
+Release: alt3
 
 Summary: Ejudge is a programming contest managment system
 Summary(ru_RU.UTF-8): Ejudge это система для проведения соревнований по программированию
@@ -18,7 +18,7 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: %name-svn6956.tar.bz2
+Source0: %name-svn6966.tar.bz2
 Source1: %name.rc
 Source2: ejudge-install.sh
 Source3: ejudge-README-ALT.utf8
@@ -28,10 +28,9 @@ Source6: ejudge-refmanual.pdf
 Patch1: ejudge-stylecheck.patch
 Patch2: ejudge-tsc.c.patch
 Patch3: ejudge-fpc-version.patch
-Patch4: ejudge-libzip.patch
 
 BuildPreReq: flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libMySQL-devel, libcurl-devel, autoconf
-
+BuildRequires: libzip-devel
 Requires: sharutils, apache2, iconv, gawk, a2ps
 
 Obsoletes: libreuse
@@ -71,13 +70,11 @@ User and contest administrator manual for ejudge system.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 cp %SOURCE2 %SOURCE3 %SOURCE5 %SOURCE6 .
 
 bzip2 -9k ChangeLog NEWS NEWS.RUS
 
 %build
-autoconf
 %configure                                                                \
 --enable-charset=utf-8                                                    \
 --enable-socket-path=%ejudge_socket_dir/userlist-socket                   \
@@ -85,30 +82,31 @@ autoconf
 --enable-new-server-socket=%ejudge_socket_dir/new-server-socket           \
 --enable-contests-home-dir=%ejudge_home                                   \
 --enable-local-dir=%ejudge_socket_dir                                     \
---libexec=%_libexecdir                                                    \
---enable-cgi-bin-dir=%_libexecdir/%name/cgi-bin                           \
---enable-conf-dir=%ejudge_home/data                                       \
+--libexec=%{_libexecdir}                                                  \
+--enable-cgi-bin-dir=%{_libexecdir}/%name/cgi-bin                         \
+--enable-conf-dir=%{ejudge_home}/data                                     \
 --enable-cgi-conf-dir=../cgi-data                                         \
 --enable-hidden-server-bins                                               \
 --with-httpd-cgi-bin-dir=%cgi_bin_dir                                     \
 --with-httpd-htdocs-dir=%httpd_htdocs_dir                                 \
 --enable-ajax                                                             \
 --enable-lang-config-dir=%lang_config_dir                                 \
---disable-rpath
+--disable-rpath                                                           \
+CPPFLAGS="-I%{_includedir}/libzip -I%{_libdir}/libzip/include"
 
-%make_build RELEASE=1
+%make_build RELEASE=1 CEXTRAFLAGS="-I%{_includedir}/libzip -I%{_libdir}/libzip/include"
 
 %install
 %make_install DESTDIR=%buildroot install
-install -p -m755 -D %SOURCE1 %buildroot%_initdir/%name
+install -p -m755 -D %SOURCE1 %buildroot%{_initdir}/%name
 install -d %buildroot%ejudge_home
 install -d %buildroot%ejudge_socket_dir
 install -d %buildroot%lang_config_dir
 %find_lang %name
 
 %pre
-%_sbindir/groupadd -r -f %ejudge_group 2>/dev/null || :
-%_sbindir/useradd -g %ejudge_group -c 'Ejudge server' -d %ejudge_home -r %ejudge_user 2>/dev/null || :
+%{_sbindir}/groupadd -r -f %ejudge_group 2>/dev/null || :
+%{_sbindir}/useradd -g %ejudge_group -c 'Ejudge server' -d %ejudge_home -r %ejudge_user 2>/dev/null || :
 
 %post
 %post_service ejudge
@@ -117,20 +115,23 @@ install -d %buildroot%lang_config_dir
 %preun_service ejudge
 
 %files -f %name.lang
-%_sysconfdir/ejudge
+%{_sysconfdir}/ejudge
 %attr(2775,%ejudge_user,%ejudge_group) %dir %ejudge_home
-%_initdir/%name
-%_bindir/*
-%_includedir/*
-%_libdir/libchecker*
-%_libexecdir/%name
-%_datadir/%name
+%{_initdir}/%name
+%{_bindir}/*
+%{_includedir}/*
+%{_libdir}/libchecker*
+%{_libexecdir}/%name
+%{_datadir}/%name
 %doc AUTHORS ChangeLog.bz2 NEWS.bz2 NEWS.RUS.bz2 ejudge-install.sh ejudge-README-ALT.utf8
 
 %files doc
 %doc ejudge-*.pdf
 
 %changelog
+* Mon Jul 30 2012 Denis Kirienko <dk@altlinux.org> 2.3.23-alt3
+- SVN 6966
+
 * Mon Jul 16 2012 Denis Kirienko <dk@altlinux.org> 2.3.23-alt2
 - Fixed build with libzip
 
