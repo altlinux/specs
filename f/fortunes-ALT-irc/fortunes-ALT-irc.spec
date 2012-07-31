@@ -1,7 +1,7 @@
 %define pkgname ALT-irc
 
 Name: fortunes-ALT-irc
-Version: 20120724
+Version: 20120731
 Release: alt2
 
 Summary: Quotes from IRC channel #altlinux (freenode network)
@@ -32,6 +32,9 @@ strfile %buildroot%_gamesdatadir/fortune/%pkgname %buildroot%_gamesdatadir/fortu
 %_gamesdatadir/fortune/*
 
 %changelog
+* Tue Jul 31 2012 Cronbuild Service <cronbuild@altlinux.org> 20120731-alt2
+- repocop cronbuild 20120731. At your service.
+
 * Tue Jul 24 2012 Cronbuild Service <cronbuild@altlinux.org> 20120724-alt2
 - repocop cronbuild 20120724. At your service.
 
