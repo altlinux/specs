@@ -5,7 +5,7 @@
 
 Name: branding-%brand-schoolmaster
 Version: 6.0.0
-Release: alt1
+Release: alt40
 BuildArch: noarch
 
 %define theme %name
@@ -418,5 +418,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Jul 31 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt40
+- fix bootloader menu items color
+- bump release
+
 * Wed Jul 04 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt1
 - convert from KDesktop branding
