@@ -1,6 +1,6 @@
 Name: postfix
-Version: 2.5.14
-Release: alt1
+Version: 2.9.3
+Release: alt2
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -191,8 +191,8 @@ sed -i 's/col -bx |/LANG=en_US &/' proto/Makefile.in
 
 # More std/tls tweaks for filelist.
 sed -i 's,^.*/\(smtp\|smtpd\),&-std,' conf/%name-files
-# comment out tlsmgr
-sed -i 's/[^#]*tlsmgr/#&/' conf/%name-files
+# comment out tls.*
+sed -i 's/[^#]*tls/#&/' conf/%name-files
 
 if [ "%_libexecdir" != "/usr/libexec" ]; then
 	find -type f -print0 |
@@ -206,6 +206,9 @@ touch conf/mydestination
 
 # Set executable bit on scripts we are going to execute later.
 chmod a+x postfix-install %_buildaltdir/*.sh
+
+# Force documentation re-generation
+touch -t 01010000 man/*/* html/*
 
 ### BUILD ###
 %build
@@ -271,7 +274,7 @@ DICTS="$DICTS \$(DICT_PGSQL)"
 # USE_TLS is used by smtp, smtpd, tls and tlsmgr
 TLS_ARGS="-DUSE_TLS $(pkg-config libssl --cflags)"
 TLS_LIBS='-lssl -lcrypto'
-TLS_DIRS='src/tls src/tlsmgr src/smtp-tls src/smtpd-tls'
+TLS_DIRS='src/tls src/tlsmgr src/tlsproxy src/smtp-tls src/smtpd-tls'
 %endif #with tls
 
 ## Shared build model; suggested by mjt.
@@ -440,7 +443,7 @@ done
 rln smtp %daemon_directory/lmtp
 
 %if_with tls
-install -pm755 libexec/{*-tls,tlsmgr} %buildroot%daemon_directory/
+install -pm755 libexec/{*-tls,tlsmgr,tlsproxy} %buildroot%daemon_directory/
 %endif #with tls
 
 # Finish postqueue install.
@@ -542,7 +545,7 @@ if [ $1 = 1 ]; then
 	/sbin/chkconfig --add %name
 fi
 rm -f %config_directory/{access,aliases,canonical,relocated,transport,virtual}.{,c}db
-%config_directory/post-install \
+%_libexecdir/postfix/post-install \
 	config_directory=%config_directory \
 	daemon_directory=%daemon_directory \
 	upgrade-package
@@ -571,15 +574,15 @@ fi
 for n in smtp smtpd; do
       ln -snf "$n"-tls %daemon_directory/"$n"
 done
-sed -i 's/^#\(.*tlsmgr\)/\1/' %config_directory/%name-files
-%config_directory/post-install upgrade-package
+sed -i 's/^#\(.*tls\)/\1/' %daemon_directory/%name-files
+%_libexecdir/postfix/post-install upgrade-package
 
 %preun tls
 if [ $1 = 0 ]; then
 	for n in smtp smtpd; do
 	      ln -snf "$n"-std %daemon_directory/"$n"
 	done
-	sed -i 's/[^#]*tlsmgr/#&/' %config_directory/%name-files
+	sed -i 's/[^#]*tls/#&/' %daemon_directory/%name-files
 fi
 %endif #with tls
 
@@ -672,11 +675,21 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %dir %daemon_directory
 %daemon_directory/*-tls
 %daemon_directory/tlsmgr
+%daemon_directory/tlsproxy
 %dir %docdir
 %docdir/TLS_*
 %endif #with tls
 
 %changelog
+* Tue Jul 31 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.3-alt2
+- Fix postscreen open after close + chroot misfeature
+
+* Mon Jun 18 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.3-alt1
+- Version up to 2.9.3 (4 middle-version jumps!)
+- Reverting generated files patches
+- Settle tlsproxy on postfix-tls
+- Heavy merge of old ALT patches
+
 * Thu Jul 14 2011 Dmitry V. Levin <ldv@altlinux.org> 1:2.5.14-alt1
 - Updated to 2.5.14.
 
