@@ -1,10 +1,10 @@
 Name: asterisk1.8
 Summary: Open source PBX
-Version: 1.8.12.0
+Version: 1.8.14.1
 Release: alt1
 License: GPL
 Group: System/Servers
-BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenh323_1.19-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
+BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
 BuildRequires: libtiff-devel
 BuildRequires: libiksemel-devel
 BuildRequires: libradiusclient-ng-devel
@@ -47,12 +47,11 @@ BuildPreReq: libpopt-devel
 BuildPreReq: libreadline-devel
 BuildPreReq: libssl-devel libstdc++-devel libtiff-devel libtinfo-devel libunixODBC-devel
 BuildPreReq: tcl-devel
+BuildRequires: libexpat-devel
 BuildPreReq: libss7-devel
 BuildPreReq: libtonezone-dahdi-devel
 BuildPreReq: dahdi-linux-headers
 BuildPreReq: libpri-devel
-BuildPreReq: libopenh323_1.19-devel libpw1.11-devel
-BuildPreReq: libSDL_sound-devel libexpat-devel
 BuildRequires: libmISDN-devel
 BuildPreReq: libspeex-devel
 BuildRequires: libcurl-devel
@@ -74,7 +73,7 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %def_with			postgresql
 %def_with			misdn
 %def_with			odbc
-%def_with			h323
+%def_without			h323
 %def_with			ss7
 %def_with			ldap
 %def_with   			jack
@@ -639,7 +638,6 @@ menuselect/menuselect  \
     --enable DEBUG_THREADS \
     --enable DETECT_DEADLOCKS \
     --enable DO_CRASH \
-    --enable chan_usbradio \
     --enable chan_misdn
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
@@ -920,13 +918,13 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astsample dsp
 %astsample meetme
 %_docdir/%name-%version/samples/extensions.lua
-%astsample usbradio
 %astsample res_config_sqlite
 %astsample phoneprov
 %astsample queuerules
 %astmodule app_saycountpl
 %astmodule chan_mobile
 %astmodule chan_ooh323
+%astmodule res_http_post
 
 %files -n aelparse1.8
 %_sbindir/aelparse-%version
@@ -1084,7 +1082,6 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astsample smdi
 %astsample followme
 %astsample mgcp
-%astsample rpt
 %astsample rtp
 %astsample adsi
 %astsample alarmreceiver
@@ -1111,6 +1108,8 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astsample phone
 %astsample say
 %astsample vpb
+%_docdir/%name-%version/Asterisk-Admin-Guide.pdf
+%_docdir/%name-%version/Asterisk-Admin-Guide
 
 %files fax
 %dir %attr(3770,root,_asterisk) /var/spool/asterisk/fax
@@ -1203,6 +1202,9 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %_altdir/conf2ael-%version
 
 %changelog
+* Tue Jul 31 2012 Denis Smirnov <mithraen@altlinux.ru> 1.8.14.1-alt1
+- 1.8.14.1
+
 * Sat May 05 2012 Denis Smirnov <mithraen@altlinux.ru> 1.8.12.0-alt1
 - 1.8.12.0
 
