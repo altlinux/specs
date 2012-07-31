@@ -1,6 +1,6 @@
 Name: hfsprogs
 Version: 332.25
-Release: alt1
+Release: alt2
 
 Summary: mkfs and fsck for HFS and HFS+ file systems
 Summary(ru_RU.UTF-8): Утилиты для работы с файловыми системами Linux
@@ -70,6 +70,8 @@ systems since the beginning.
 %patch12 -p1
 
 %build
+# DeallocateFile at SExtents.c:701:8: call to __builtin___memset_chk will always overflow destination buffer
+%add_optflags -U_FORTIFY_SOURCE
 %add_optflags -DDEBUG_BUILD=0 -D_FILE_OFFSET_BITS=64 -D LINUX=1 -D BSD=1 -I$(pwd)/include
 %make_build -f Makefile.lnx CFLAGS="%optflags"
 
@@ -88,6 +90,9 @@ install -m 644 fsck_hfs.tproj/fsck_hfs.8   %buildroot%_man8dir/fsck.hfsplus.8
 %_man8dir/*
 
 %changelog
+* Tue Jul 31 2012 Vitaly Lipatov <lav@altlinux.ru> 332.25-alt2
+- fix build: disable FORTIFY_SOURCE
+
 * Fri Dec 16 2011 Vitaly Lipatov <lav@altlinux.ru> 332.25-alt1
 - initial build for ALT Linux Sisyphus
 
