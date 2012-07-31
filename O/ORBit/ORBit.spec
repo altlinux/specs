@@ -1,6 +1,6 @@
 Name: ORBit
 Version: 0.5.17
-Release: alt3.qa2
+Release: alt3.qa3
 
 Summary: High-performance CORBA Object Request Broker
 License: LGPL/GPL
@@ -85,6 +85,8 @@ rm -f .now
 
 %build
 %configure
+sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
+export LD_LIBRARY_PATH=$PWD/libIDL/.libs
 #NO SMP
 %make
 
@@ -122,6 +124,9 @@ mkdir -p $RPM_BUILD_ROOT%prefix
 %_libdir/libORBit*.a
 
 %changelog
+* Tue Jul 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.17-alt3.qa3
+- Removed bad RPATH
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.5.17-alt3.qa2
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
