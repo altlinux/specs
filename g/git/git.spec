@@ -1,5 +1,5 @@
 Name: git
-Version: 1.7.11.3
+Version: 1.7.11.4
 Release: alt1
 
 Summary: Git core and tools
@@ -465,6 +465,9 @@ popd
 %endif #emacs
 
 %changelog
+* Tue Jul 31 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.11.4-alt1
+- Updated to maint 1.7.11.4.
+
 * Tue Jul 24 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.11.3-alt1
 - Updated to maint 1.7.11.3.
 
