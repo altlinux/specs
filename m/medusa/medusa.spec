@@ -1,6 +1,6 @@
 Name: medusa
 Version: 2.0
-Release: alt1.5
+Release: alt1.6
 
 Summary: Medusa is intended to be a speedy, massively parallel, modular, login brute-forcer
 License: GPLv2
@@ -146,6 +146,9 @@ install -m644 src/modsrc/wrapper/sample-stdin.pl %buildroot%perl_vendor_privlib/
 %_libdir/%name/modules/svn.mod
 
 %changelog
+* Tue Jul 31 2012 Fr. Br. George <george@altlinux.ru> 2.0-alt1.6
+- Blind rebuild with postfix 2.9.3
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.5
 - Fixed build
 
