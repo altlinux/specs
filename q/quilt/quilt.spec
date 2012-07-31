@@ -1,11 +1,13 @@
 Name: quilt
-Version: 0.48
+Version: 0.60
 Release: alt1
 
 Summary: Scripts for working with series of patches
 License: GPLv2+
 Group: Text tools
 Url: http://savannah.nongnu.org/projects/quilt/
+BuildArch: noarch
+
 Provides: bash-completion-quilt = %version-%release
 Obsoletes: bash-completion-quilt
 Requires: diffstat
@@ -26,14 +28,15 @@ found at http://userweb.kernel.org/~akpm/stuff/patch-scripts.tar.gz.
 
 %prep
 %setup -n %name-%version-%release
-sed -i s/libdir/libexecdir/g Makefile.in
 rm doc/*.pdf
 
 %build
+%define docdir %_docdir/%name-%version
 %configure \
 	--with-awk=gawk \
 	--with-diffstat=diffstat \
-	--with-sendmail=%_sbindir/sendmail
+	--with-sendmail=%_sbindir/sendmail \
+	--docdir=%_docdir/%name-%version
 %make_build COMPAT_SYMLINKS=sendmail RELEASE=%release
 %make_build -C doc
 # rerun to get right cross-references
@@ -41,8 +44,7 @@ rm doc/*.pdf
 %make_build -C doc
 
 %install
-%make_install install COMPAT_SYMLINKS=sendmail BUILD_ROOT=%buildroot
-%define docdir %_docdir/%name-%version
+%makeinstall_std COMPAT_SYMLINKS=sendmail BUILD_ROOT=%buildroot
 install -pm644 AUTHORS TODO quilt.changes doc/README.EMACS doc/*.pdf \
 	%buildroot%docdir/
 %find_lang %name
@@ -55,12 +57,17 @@ install -pm644 AUTHORS TODO quilt.changes doc/README.EMACS doc/*.pdf \
 %config /etc/bash_completion.d/*
 %_bindir/*
 %_man1dir/*
-%_libexecdir/%name/
 %_datadir/%name/
 %_datadir/emacs/site-lisp/*.el*
 %docdir/
 
 %changelog
+* Wed Feb 29 2012 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt1
+- Updated to v0.60.
+
+* Sat Jan 21 2012 Dmitry V. Levin <ldv@altlinux.org> 0.50-alt1
+- Updated to v0.50-17-gb2245d7.
+
 * Wed Jul 21 2010 Dmitry V. Levin <ldv@altlinux.org> 0.48-alt1
 - Updated to v0.48-77-g5876294.
 - Rewrote specfile.
