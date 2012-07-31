@@ -1,6 +1,6 @@
 Name: iptables
-Version: 1.4.14
-Release: alt2
+Version: 1.4.15
+Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
 License: GPLv2+
@@ -8,7 +8,7 @@ Group: System/Kernel and hardware
 Url: http://www.netfilter.org/projects/iptables/
 
 # git://git.netfilter.org/iptables
-# http://git.altlinux.org/people/ldv/packages/?p=iptables.git
+# git://git.altlinux.org/gears/i/iptables
 Source: %name-%version-%release.tar
 
 Requires: lib%name = %version-%release
@@ -20,7 +20,7 @@ Provides: libipq.so.0.0%lib_suffix
 %def_disable static
 
 %description
-Iptables is used to set up, maintain, and inspect the tables of IP
+iptables is used to set up, maintain, and inspect the tables of IP
 packet filter rules in the Linux kernel.  Several different tables may
 be defined.  Each table contains a number of built-in chains and may
 also contain user-defined chains.
@@ -48,16 +48,16 @@ called a `target', which may be a jump to a user-defined chain in
 the same table.
 
 %package -n lib%name
-Summary: iptables dhared libraries
+Summary: iptables shared libraries
 Group: Development/C
 # lib%name was introduced since 1.4.13.
 Conflicts: %name < 1.4.13
 
 %description -n lib%name
-Iptables is used to set up, maintain, and inspect the tables of IP
+iptables is used to set up, maintain, and inspect the tables of IP
 packet filter rules in the Linux kernel.
 
-This package contains libip4tc, libip6tc, libxtables, libipq and libiptc
+This package contains libip4tc, libip6tc, libxtables and libipq
 shared libraries.
 
 %package -n lib%name-devel
@@ -68,7 +68,7 @@ Provides: %name-devel = %version-%release
 Obsoletes: %name-devel < %version-%release
 
 %description -n lib%name-devel
-Iptables is used to set up, maintain, and inspect the tables of IP
+iptables is used to set up, maintain, and inspect the tables of IP
 packet filter rules in the Linux kernel.
 
 This package contains development files required to build software that
@@ -82,7 +82,7 @@ Provides: %name-devel-static = %version-%release
 Obsoletes: %name-devel-static < %version-%release
 
 %description -n lib%name-devel-static
-Iptables is used to set up, maintain, and inspect the tables of IP
+iptables is used to set up, maintain, and inspect the tables of IP
 packet filter rules in the Linux kernel.
 
 This package contains static library required to build software that
@@ -214,6 +214,10 @@ fi
 %endif
 
 %changelog
+* Tue Jul 31 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.15-alt1
+- Updated to v1.4.15.
+- Fixed typos in summary and descriptions (closes: #27383).
+
 * Mon May 28 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.14-alt2
 - libiptc.so: fix on %%_lib != lib64.
 
