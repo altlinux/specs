@@ -1,6 +1,6 @@
 Name: gnome-libs
 Version: 1.4.2
-Release: alt11
+Release: alt11.1
 
 Summary: Main GNOME libraries
 License: LGPL
@@ -56,6 +56,7 @@ Patch35: %name-1.4.2-gnome-config-cflags.patch
 Patch36: %name-%version-configure_in-libs-alt.patch
 Patch37: %name-%version-makefile_am-libs-alt.patch
 Patch38: %name-%version-gcc41fix-alt.patch
+Patch39: %name-1.4.2-alt-linking.patch
 
 Requires: gtk+ >= 1.2.8, ORBit, imlib, pulseaudio-daemon, alsa-plugins-pulse
 
@@ -115,6 +116,8 @@ develop statically linked GNOME applications. You don't need to install
 %prep
 %setup -q
 
+%patch39 -p2
+
 # Applying RH patches.
 %patch1 -p1 -b .rhsnddefs
 %patch2 -p1 -b .bghack
@@ -164,6 +167,7 @@ autoconf
 popd
 libtoolize --copy --force
 
+sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' configure
 DOCDIR=$RPM_BUILD_ROOT%_docdir %configure \
 %if_enabled static
     --enable-static \
@@ -177,6 +181,7 @@ DOCDIR=$RPM_BUILD_ROOT%_docdir %configure \
 %endif
 
 %install
+export LD_LIBRARY_PATH=%buildroot%_libdir
 %makeinstall
 
 cp %{SOURCE1} $RPM_BUILD_ROOT%_bindir
@@ -236,6 +241,9 @@ cp %{SOURCE1} $RPM_BUILD_ROOT%_bindir
 %endif	# enabled static
 
 %changelog
+* Tue Jul 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt11.1
+- Fixed build
+
 * Wed Aug 17 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt11
 - Rebuilt with new libjpeg
 
