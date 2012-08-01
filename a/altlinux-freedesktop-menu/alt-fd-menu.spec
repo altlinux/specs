@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.51
+Version: 0.52
 %if_without backport
 %def_with gnome3
 %def_without gnome2
@@ -35,6 +35,7 @@ Group: Graphical desktop/Other
 Requires(pre): %name-icon-theme
 Requires: %name-icon-theme
 Requires: wm-common-freedesktop
+#Conflicts: altlinux-menus < 0.5.2
 
 %description common
 %summary
@@ -250,6 +251,8 @@ mkdir -p %buildroot%_sysconfdir/xdg/menus/{,mate-}settings-merged
 
 install -D -m644 layout/kde4-merged.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/50-kde4-merged.menu
 
+install -m0644 altlinux-directories/*.directory %buildroot/%_datadir/desktop-directories/
+
 # alternatives
 mkdir -p %buildroot%_altdir
 cat <<EOF >>%buildroot%_altdir/%name-nested-menu
@@ -335,6 +338,9 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Wed Aug 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
+- merged directories from altlinux-menus
+
 * Tue May 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.51-alt1
 - added menu for MATE (Gnome 2)
 
