@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.5.8
+Version: 1.5.10
 Release: alt1
 Epoch: 1
 
@@ -111,7 +111,7 @@ Requires: fonts-ttf-core
 %endif
 
 # We need predownloaded Gecko engine
-Requires: wine-gecko = 1.6
+Requires: wine-gecko = 1.7
 
 Requires: lib%name = %epoch:%version-%release
 Provides: %name-utils
@@ -437,6 +437,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Wed Aug 01 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.10-alt1
+- new build 1.5.10 (use wine-gecko 1.7)
+
 * Sun Jul 15 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.8-alt1
 - new build 1.5.8 (use wine-gecko 1.6)
 - fix udev rules (ALT bug #23380)
