@@ -3,7 +3,7 @@
 
 %define rname kactivities
 Name: kde4-kactivities
-Version: 4.8.4
+Version: 4.8.5
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -21,7 +21,7 @@ Patch1: alt-fix-install.patch
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby shared-desktop-ontologies shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4libs-devel libqt3-devel python-module-distribute rpm-build-ruby soprano zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel kde-common-devel
-#BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
+BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
 
 %description
 KDE activity manager
@@ -75,6 +75,12 @@ sed -i 's|^\(INCLUDE.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4link/*.so
 
 %changelog
+* Wed Aug 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
+* Mon Jun 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Tue Jun 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 
