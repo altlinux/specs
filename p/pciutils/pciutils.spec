@@ -1,8 +1,8 @@
 %define libname libpci
 
 Name: pciutils
-Version: 3.1.9
-Release: alt2
+Version: 3.1.10
+Release: alt1
 
 Summary: Linux PCI utilities
 License: GPL
@@ -93,6 +93,9 @@ mv %buildroot%_sbindir %buildroot%_bindir
 %_man7dir/pcilib*
 
 %changelog
+* Wed Aug 01 2012 Michael Shigorin <mike@altlinux.org> 3.1.10-alt1
+- 3.1.10
+
 * Sat Apr 21 2012 Michael Shigorin <mike@altlinux.org> 3.1.9-alt2
 - updated an Url:
 
