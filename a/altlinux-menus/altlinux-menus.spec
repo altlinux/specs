@@ -1,6 +1,6 @@
 
 Name: altlinux-menus
-Version: 0.5.1
+Version: 0.6.0
 Release: alt1
 
 Summary: ALT Linux menu
@@ -11,10 +11,12 @@ Url: http://www.altlinux.ru
 BuildArch: noarch
 
 Source: %name-%version.tar.gz
+Requires: altlinux-freedesktop-menu-common > 0.51
 
 %description
-The package contains an implementation of the draft "Desktop Menu
+The package contains an old implementation of the draft "Desktop Menu
 Specification" from http://www.freedesktop.org/Standards/menu-spec/
+This package is deprecated.
 
 %prep
 %setup -q
@@ -33,14 +35,6 @@ install -m0644 applications-merged.menu %buildroot/%_sysconfdir/xdg/menus/applic
 install -m0644 applications-merged.menu %buildroot/%_sysconfdir/xdg/menus/applications-altlinux-merged/applications-altlinux.menu
 touch %buildroot/%_desktopdir/defaults.list
 
-# install directories
-for f in *.directory
-do
-    install -m0644 "$f" %buildroot/%_datadir/desktop-directories/
-done
-#install -m0644 altlinux-main.directory %buildroot/%_datadir/desktop-directories/altlinux-main.directory
-
-
 %files
 %config %_sysconfdir/xdg/menus/applications.menu
 %config %_sysconfdir/xdg/menus/applications-altlinux.menu
@@ -50,9 +44,11 @@ done
 %ghost %_sysconfdir/xdg/menus/applications-altlinux-merged/applications-altlinux.menu
 #
 %_desktopdir/defaults.list
-%_datadir/desktop-directories/altlinux-*.directory
 
 %changelog
+* Wed Aug 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1
+- desktop directories moved to altlinux-freedesktop-menu-common
+
 * Mon Aug 02 2010 Sergey V Turchin <zerg@altlinux.org> 0.5.1-alt1
 - add %_desktopdir/defaults.list
 
