@@ -1,6 +1,6 @@
 %def_with original
 Name: kde4-menu-common
-Version: 0.03
+Version: 0.04
 Release: alt1
 License: BSD
 
@@ -20,6 +20,7 @@ Conflicts: kde4base-runtime-core <= 4.6.2-alt1
 Summary: Original KDE4 menu.
 Group: Graphical desktop/KDE
 Requires: altlinux-menus
+Requires: altlinux-freedesktop-menu-common > 0.51
 Requires: kde4-menu-resources
 Requires: kde4-menu-common
 Provides: kde4-freedesktop-menu = 0.02
@@ -57,6 +58,9 @@ mv etc %buildroot/
 %endif
 
 %changelog
+* Wed Aug 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- original menu use altlinux-freedesktop-menu-common
+
 * Fri Apr 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - added versioned provides for original menu
 
