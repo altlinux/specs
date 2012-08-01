@@ -5,11 +5,11 @@
 
 %define major 4
 %define minor 8
-%define bugfix 4
+%define bugfix 5
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -306,6 +306,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Wed Aug 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
 * Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt6
 - rebuilt with new attica
 
