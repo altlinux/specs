@@ -1,10 +1,11 @@
 Summary:       Multi-tenant cloud management system client tools
 Name:          rhc
-Version:       0.90.4
+Version:       0.96.2
 Release:       alt1
 Group:         System/Servers
-License:       MIT
+License:       ASL 2.0
 URL:           http://openshift.redhat.com
+Packager:      Evgeny Sinelnikov <sin@altlinux.ru>
 Source0:       rhc-%version.tar
 Patch0:        rhc-%version-%release.patch
 
@@ -12,6 +13,8 @@ BuildArch:     noarch
 
 BuildRequires: rpm-build-ruby ruby-test-spec ruby-rake
 Requires:      git ruby-parseconfig ruby-json
+
+Obsoletes:     rhc-rest
 
 %def_without doc
 
@@ -62,19 +65,24 @@ mkdir -p %buildroot%_bindir
 cp bin/* %buildroot%_bindir/
 
 mkdir -p %buildroot%ruby_sitelibdir
-cp lib/rhc-common.rb %buildroot%ruby_sitelibdir/
+cp -a lib/* %buildroot%ruby_sitelibdir/
+
+# Copy the bash autocompletion script
+mkdir -p %buildroot%_sysconfdir/bash_completion.d
+cp autocomplete/rhc %buildroot%_sysconfdir/bash_completion.d/rhc
 
 %if_with doc
 %rdoc lib/
 %endif
 
 %files
-%doc doc/USAGE.txt
+%doc doc/USAGE.txt LICENSE COPYRIGHT
 %_bindir/rhc*
 %_man1dir/rhc*
 %_man5dir/express*
 %ruby_sitelibdir/*
 %config(noreplace) %_sysconfdir/openshift/express.conf
+%_sysconfdir/bash_completion.d/rhc
 
 %if_with doc
 %files doc
@@ -82,6 +90,11 @@ cp lib/rhc-common.rb %buildroot%ruby_sitelibdir/
 %endif
 
 %changelog
+* Wed Aug 01 2012 Evgeny Sinelnikov <sin@altlinux.ru> 0.96.2-alt1
+- Update for new release
+- Add bash autocompletion support
+- Obsolete rhc-rest package due includes it
+
 * Fri Apr 13 2012 Evgeny Sinelnikov <sin@altlinux.ru> 0.90.4-alt1
 - Update for new release
 
