@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 8
-%define bugfix 4
+%define bugfix 5
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -909,6 +909,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Aug 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
+* Mon Jul 30 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt3.M60P.1
+- built for M60P
+
 * Mon Jul 30 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt4
 - fix adding extra tasks widget ot panel by default
 
