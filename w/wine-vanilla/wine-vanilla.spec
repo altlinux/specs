@@ -9,7 +9,7 @@
 %endif
 
 Name: wine-vanilla
-Version: 1.5.8
+Version: 1.5.10
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -31,7 +31,7 @@ AutoReq: yes, noperl
 %define freetype_ver 2.1.9
 
 # General dependencies
-BuildRequires: rpm-build-compat >= 1.0
+BuildRequires: rpm-build-intro >= 1.0
 BuildRequires: gcc util-linux flex bison
 BuildRequires: fontconfig-devel libfreetype-devel >= %freetype_ver
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
@@ -69,7 +69,7 @@ Requires: glibc-pthread glibc-nss
 #ExclusiveArch:  %{ix86}
 Requires: webclient
 
-Requires: wine-gecko = 1.6
+Requires: wine-gecko = 1.7
 
 BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
@@ -355,6 +355,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Wed Aug 01 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.10-alt1
+- new version 1.5.10, requires wine-gecko 1.7
+
 * Sat Jul 14 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.8-alt1
 - new version 1.5.8
 
