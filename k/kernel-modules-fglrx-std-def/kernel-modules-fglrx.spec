@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	8.98
-%define module_release	alt2
+%define module_release	alt3
 
 %define kversion       3.4.7
 %define krelease       alt1
@@ -48,6 +48,7 @@ Patch7: fglrx-2.6.38.patch
 Patch9: fglrx-3.4.2-build.patch
 %endif
 Patch10: fglrx-3.4.6-build.patch
+Patch11: fglrx-3.4.6-old_rsp.patch
 
 %description
 Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite
@@ -81,6 +82,7 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %patch9 -p1
 %else
 %patch10 -p0
+%patch11 -p6
 %endif
 %endif
 
@@ -107,8 +109,11 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.8.98-alt2.197639.1
+* Wed Aug 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.98-alt3.197639.1
 - Build for kernel-image-std-def-3.4.7-alt1.
+
+* Wed Aug 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.98-alt3
+- Fixed 'old_rsp' undefined build
 
 * Fri Jul 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.98-alt2
 - Fixed build for kernel 3.4.6+
