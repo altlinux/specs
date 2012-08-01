@@ -18,7 +18,7 @@
 
 Name: kernel-source-%kernel_version
 Version: %patch_level_numeric
-Release: alt1
+Release: alt2
 
 Summary: Linux kernel %kernel_fullversion sources
 License: GPL
@@ -51,6 +51,9 @@ tar --owner=root --group=root --mode=u+w,go-w,go+rX -cjf \
 %kernel_src/kernel-source-%kernel_version.tar.bz2
 
 %changelog
+* Wed Aug 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.0-alt2
+- right version in gear/rules
+
 * Wed Jul 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.0-alt1
 - 3.5 release
 
