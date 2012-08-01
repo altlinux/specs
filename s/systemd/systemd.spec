@@ -11,7 +11,7 @@
 
 Name: systemd
 Version: 187
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -40,6 +40,9 @@ Source21: 40-ignore-remove.rules
 Source22: scsi_id.config
 Source23: var-lock.mount
 Source24: var-run.mount
+Source25: altlinux-storage-init-late.service
+Source26: altlinux-update_chrooted.service
+Source27: altlinux-first_time.service
 
 # udev rule generator
 Source31: rule_generator.functions
@@ -188,6 +191,7 @@ Requires: udev-rule-generator = %version-%release
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Conflicts: systemd < %version-%release
+Conflicts: hal
 
 %description -n udev
 Starting with the 2.5 kernel, all physical and virtual devices in a
@@ -321,37 +325,43 @@ ln -s rc-local.service %buildroot%_unitdir/local.service
 install -m644 %SOURCE4 %buildroot%_unitdir/prefdm.service
 ln -s prefdm.service %buildroot%_unitdir/dm.service
 ln -s prefdm.service %buildroot%_unitdir/display-manager.service
-ln -s ../display-manager.service %buildroot%_unitdir/graphical.target.wants/display-manager.service
+ln -s ../display-manager.service %buildroot%_unitdir/graphical.target.wants
 install -m644 %SOURCE5 %buildroot%_unitdir/altlinux-loadmodules.service
-ln -s ../altlinux-loadmodules.service %buildroot%_unitdir/sysinit.target.wants/altlinux-loadmodules.service
+ln -s ../altlinux-loadmodules.service %buildroot%_unitdir/sysinit.target.wants
 install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-idetune.service
-ln -s ../altlinux-idetune.service %buildroot%_unitdir/sysinit.target.wants/altlinux-idetune.service
+ln -s ../altlinux-idetune.service %buildroot%_unitdir/sysinit.target.wants
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-update_chrooted.service
-ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/sysinit.target.wants/altlinux-update_chrooted.service
+ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/sysinit.target.wants
 install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
-ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants/altlinux-clock-setup.service
+ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants
 ln -s altlinux-clock-setup.service %buildroot%_unitdir/clock.service
 install -m644 %SOURCE10 %buildroot%_unitdir/altlinux-swap.service
-ln -s ../altlinux-swap.service %buildroot%_unitdir/sysinit.target.wants/altlinux-swap.service
+ln -s ../altlinux-swap.service %buildroot%_unitdir/basic.target.wants
 install -m755 %SOURCE11 %buildroot/lib/systemd/altlinux-storage-init
 install -m644 %SOURCE12 %buildroot%_unitdir/altlinux-storage-init.service
-ln -s ../altlinux-storage-init.service %buildroot%_unitdir/local-fs.target.wants/altlinux-storage-init.service
+ln -s ../altlinux-storage-init.service %buildroot%_unitdir/local-fs.target.wants
+install -m644 %SOURCE25 %buildroot%_unitdir/altlinux-storage-init-late.service
+ln -s ../altlinux-storage-init-late.service %buildroot%_unitdir/local-fs.target.wants
 install -m644 %SOURCE13 %buildroot%_unitdir/altlinux-wait-storage.service
-ln -s ../altlinux-wait-storage.service %buildroot%_unitdir/local-fs.target.wants/altlinux-wait-storage.service
+ln -s ../altlinux-wait-storage.service %buildroot%_unitdir/local-fs.target.wants
 install -m644 %SOURCE15 %buildroot%_unitdir/network.service
-ln -s ../network.service %buildroot%_unitdir/multi-user.target.wants/network.service
+ln -s ../network.service %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE16 %buildroot%_unitdir/altlinux-kmsg-loglevel.service
-ln -s ../altlinux-kmsg-loglevel.service %buildroot%_unitdir/sysinit.target.wants/altlinux-kmsg-loglevel.service
+ln -s ../altlinux-kmsg-loglevel.service %buildroot%_unitdir/sysinit.target.wants
 install -m755 %SOURCE18 %buildroot/lib/systemd/altlinux-save-dmesg
 install -m644 %SOURCE17 %buildroot%_unitdir/altlinux-save-dmesg.service
-ln -s ../altlinux-save-dmesg.service %buildroot%_unitdir/sysinit.target.wants/altlinux-save-dmesg.service
+ln -s ../altlinux-save-dmesg.service %buildroot%_unitdir/basic.target.wants
+install -m644 %SOURCE26 %buildroot%_unitdir/altlinux-update_chrooted.service
+ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/basic.target.wants
+install -m644 %SOURCE27 %buildroot%_unitdir/altlinux-first_time.service
+ln -s ../altlinux-first_time.service %buildroot%_unitdir/basic.target.wants
 
 # restore bind-mounts /var/run -> run and /var/lock -> /run/lock
 # we don't have those directories symlinked
 install -m644 %SOURCE23 %buildroot%_unitdir/var-lock.mount
 install -m644 %SOURCE24 %buildroot%_unitdir/var-run.mount
-ln -s ../var-lock.mount %buildroot%_unitdir/local-fs.target.wants/var-lock.mount
-ln -s ../var-run.mount %buildroot%_unitdir/local-fs.target.wants/var-run.mount
+ln -s ../var-lock.mount %buildroot%_unitdir/local-fs.target.wants
+ln -s ../var-run.mount %buildroot%_unitdir/local-fs.target.wants
 
 ln -s systemd-random-seed-load.service %buildroot%_unitdir/random.service
 
@@ -368,10 +378,9 @@ ln -s ../bin/systemctl %buildroot/sbin/runlevel
 rm -rf %buildroot%_docdir/systemd
 
 # add defaults services
-ln -s ../rc-local.service %buildroot%_unitdir/multi-user.target.wants/rc-local.service
-ln -s ../remote-fs.target %buildroot%_unitdir/multi-user.target.wants/remote-fs.target
-ln -s ../systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants/systemd-quotacheck.service
-ln -s ../quotaon.service %buildroot%_unitdir/local-fs.target.wants/quotaon.service
+ln -s ../remote-fs.target %buildroot%_unitdir/multi-user.target.wants
+ln -s ../systemd-quotacheck.service %buildroot%_unitdir/local-fs.target.wants
+ln -s ../quotaon.service %buildroot%_unitdir/local-fs.target.wants
 mkdir -p %buildroot%_unitdir/getty.target.wants
 ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty1.service
 ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty2.service
@@ -775,6 +784,16 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Wed Aug 01 2012 Alexey Shabalin <shaba@altlinux.ru> 187-alt2
+- update network.service
+- add a storage setup after cryptsetup.target
+- cleanup spec
+- update ALTLinux specific unit files
+- add unit file for run scripts from /etc/firsttime.d after install distro
+- add unit for update /etc/issue and /etc/issue.net files
+- add systemd-rc-local-generator for ALTLinux
+- add Conflicts: hal
+
 * Fri Jul 20 2012 Alexey Shabalin <shaba@altlinux.ru> 187-alt1
 - 187
 
