@@ -7,10 +7,10 @@
 %define rname kdebase-runtime
 %define major 4
 %define minor 8
-%define bugfix 4
+%define bugfix 5
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Runtime
@@ -37,7 +37,8 @@ BuildRequires: gcc-c++ cmake bzlib-devel liblzma-devel xml-utils
 BuildRequires: libalsa-devel libclucene-core-devel libjpeg-devel libpcre-devel
 BuildRequires: libqt4-devel libsmbclient-devel NetworkManager-glib-devel
 BuildRequires: soprano soprano-backend-redland soprano-backend-virtuoso libsoprano-devel libstrigi-devel
-BuildRequires: libungif-devel libxine-devel libcanberra-devel libxkbfile-devel openexr-devel
+BuildRequires: libungif-devel libxine-devel libxkbfile-devel openexr-devel
+#BuildRequires: libcanberra-devel
 BuildRequires: libpulseaudio-devel libopenslp-devel libqzeitgeist-devel libqca2-devel
 %{?_enable_ntrack:BuildRequires: libntrack-qt4-devel}
 BuildRequires: libexiv2-devel exiv2 libssh-devel phonon-devel
@@ -254,6 +255,10 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Aug 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+- built without libcanberra
+
 * Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt4
 - rebuilt with new attica
 
