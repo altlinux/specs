@@ -5,7 +5,7 @@
 Name: kde4multimedia
 %define major 4
 %define minor 8
-%define bugfix 4
+%define bugfix 5
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -48,7 +48,8 @@ BuildRequires: libxine-devel >= 1.1.9
 BuildRequires: libsamplerate-devel libtag-devel libfreebob-devel
 BuildRequires: libjpeg-devel bzlib-devel libpulseaudio-devel glib2-devel libxine-devel
 #BuildRequires: libcdda-devel
-BuildRequires: libalsa-devel libcanberra-devel
+BuildRequires: libalsa-devel
+#BuildRequires: libcanberra-devel
 BuildRequires: libavcodec-devel libavformat-devel libavutil-devel libswscale-devel
 #BuildRequires: libgstreamer-plugins-base-devel
 BuildRequires: kde4base-workspace-devel >= %version
@@ -272,6 +273,12 @@ install -m 0644 %SOURCE105 cmake/modules/
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
+* Fri Jun 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Fri Jun 08 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 
