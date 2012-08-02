@@ -3,14 +3,14 @@
 %define module_release  alt1
 
 %define kversion        3.5.0
-%define krelease        alt1
+%define krelease        alt2
 %define flavour         un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/extra
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197888.1
+Release: %module_release.197888.2
 
 Summary: VHBA virtual host bus adapter module
 License: GPLv2
@@ -73,8 +73,8 @@ install -Dp -m0755 %SOURCE2 %buildroot%_initrddir/%module_name
 %attr(0755,root,root) %_initrddir/%module_name
 
 %changelog
-* Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20120422-alt1.197888.1
-- Build for kernel-image-un-def-3.5.0-alt1.
+* Thu Aug 02 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20120422-alt1.197888.2
+- Build for kernel-image-un-def-3.5.0-alt2.
 
 * Wed Apr 25 2012 Nazarov Denis <nenderus@altlinux.org> 20120422-alt1
 - Version 20120422
