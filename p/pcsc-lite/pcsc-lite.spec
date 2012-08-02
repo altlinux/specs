@@ -4,7 +4,7 @@
 
 Name: pcsc-lite
 Version: 1.7.4
-Release: alt2
+Release: alt3
 
 Summary: Muscle PCSC Framework for Linux
 License: %bsd
@@ -124,6 +124,9 @@ mkdir -p %buildroot%_libdir/pcsc/drivers
 %endif
 
 %changelog
+* Thu Aug 02 2012 Michael Shigorin <mike@altlinux.org> 1.7.4-alt3
+- disabled verbose logs by default (sysconfig)
+
 * Thu Aug 02 2012 Michael Shigorin <mike@altlinux.org> 1.7.4-alt2
 - fixed initscript
 - minor spec cleanup
