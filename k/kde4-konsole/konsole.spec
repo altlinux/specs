@@ -4,10 +4,11 @@
 %define rname konsole
 %define major 4
 %define minor 8
-%define bugfix 4
+%define bugfix 5
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
 Release: alt1
+
 Group: Terminals
 Summary: Terminal emulator for KDE
 Url: http://www.kde.org/
@@ -83,6 +84,12 @@ __EOF__
 
 
 %changelog
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
+* Mon Jun 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Tue Jun 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 
