@@ -10,10 +10,10 @@
 %define rname kate
 %define major 4
 %define minor 8
-%define bugfix 4
+%define bugfix 5
 Name: kde4-kate
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Editors
 Summary: Advanced text editor
@@ -263,6 +263,12 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
+* Tue Jun 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1.M60P.1
+- built for M60P
+
 * Tue Jun 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2
 - update from 4.8 branch
 
