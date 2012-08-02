@@ -4,16 +4,17 @@
 
 Name: pcsc-lite
 Version: 1.7.4
-Release: alt1
+Release: alt2
 
-Group: System/Servers
 Summary: Muscle PCSC Framework for Linux
 License: %bsd
-URL: http://pcsclite.alioth.debian.org/
+Group: System/Servers
+
+Url: http://pcsclite.alioth.debian.org/
 
 Source0: pcsc-lite-%version.tar
 
-Source1: pcscd.startup
+Source1: pcscd.init
 Source2: pcsc-lite-pcscd.sysconfig
 
 Conflicts: libpcsclite < %version-%release
@@ -29,14 +30,14 @@ BuildRequires: glibc-devel-static
 %endif
 
 %description
-pcscd is the daemon program for PC/SC Lite. It is a resource 
-manager that coorinates communications with Smart Card readers and Smart 
+pcscd is the daemon program for PC/SC Lite. It is a resource
+manager that coorinates communications with Smart Card readers and Smart
 Cards that are connected to the system.
-The purpose of PCSC Lite is to provide a Windows(R) SCard interface in a 
-very small form factor for communicating to smartcards and readers.
+The purpose of PCSC Lite is to provide a Windows(R) SCard interface
+in a very small form factor for communicating to smartcards and readers.
 PCSC Lite uses the same winscard api as used under Windows(R)
 
-This package contains daemon program for PC/SC Lite
+This package contains the service for PC/SC Lite.
 
 %package -n libpcsclite
 Group: System/Libraries
@@ -68,7 +69,7 @@ Requires: libpcsclite-devel = %version-%release
 Static libraries for libpcsclite
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -88,10 +89,8 @@ Static libraries for libpcsclite
 %install
 %makeinstall_std
 
-mkdir -p %buildroot/%_initdir/
-install -m 755 %SOURCE1 %buildroot/%_initdir/pcscd
-mkdir -p %buildroot/%_sysconfdir/sysconfig
-install -m 644 %SOURCE2 %buildroot/%_sysconfdir/sysconfig/pcscd
+install -pDm755 %SOURCE1 %buildroot/%_initdir/pcscd
+install -pDm644 %SOURCE2 %buildroot/%_sysconfdir/sysconfig/pcscd
 
 mkdir -p %buildroot%_sysconfdir/reader.conf.d
 mkdir -p %buildroot/var/run/pcscd
@@ -103,7 +102,7 @@ mkdir -p %buildroot%_libdir/pcsc/drivers
 %config(noreplace) %_sysconfdir/sysconfig/pcscd
 %_initdir/pcscd
 %_sbindir/pcscd
-#%_bindir/make_hash_link.sh
+#_bindir/make_hash_link.sh
 %_man5dir/*
 %_man8dir/*
 %dir %_libdir/pcsc
@@ -125,6 +124,10 @@ mkdir -p %buildroot%_libdir/pcsc/drivers
 %endif
 
 %changelog
+* Thu Aug 02 2012 Michael Shigorin <mike@altlinux.org> 1.7.4-alt2
+- fixed initscript
+- minor spec cleanup
+
 * Tue Mar 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.7.4-alt1
 - [1.7.4]
 
