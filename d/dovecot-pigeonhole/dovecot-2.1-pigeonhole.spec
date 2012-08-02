@@ -1,9 +1,8 @@
 %define dovecot_version 2.1
-%define dovecot_nextversion 2.2
 Name: dovecot-pigeonhole
 Version: 0.3.1
 Serial: 1
-Release: alt1
+Release: alt2
 Summary: Sieve language and the ManageSieve protocol for the Dovecot Secure IMAP Server
 Group: System/Servers
 License: LGPL v2.1
@@ -11,9 +10,9 @@ Source: dovecot-2.1-pigeonhole-%version.tar.gz
 Source1: postfix+sieve.patch
 Url: http://pigeonhole.dovecot.org/
 
-Requires: dovecot >= %dovecot_version, dovecot < %dovecot_nextversion
+Requires: dovecot = %dovecot_version.8
 
-BuildRequires: dovecot-devel >= %dovecot_version, dovecot-devel < %dovecot_nextversion
+BuildRequires: dovecot-devel = %dovecot_version.8
 
 %description
 This package is part of the Pigeonhole project
@@ -81,6 +80,9 @@ install -pD -m 644 %buildroot/%_defaultdocdir/dovecot-%dovecot_version/example-c
 %_libdir/dovecot/lib*.so
 
 %changelog
+* Thu Aug 02 2012 Fr. Br. George <george@altlinux.ru> 1:0.3.1-alt2
+- Rebuild with dovecot 2.1.8
+
 * Tue Jun 05 2012 Fr. Br. George <george@altlinux.ru> 1:0.3.1-alt1
 - Autobuild version bump to 0.3.1
 - Add patchfile as a documentation
