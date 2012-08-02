@@ -2,7 +2,7 @@
 
 %define rname gwenview
 Name: kde4-gwenview
-Version: 4.8.4
+Version: 4.8.5
 Release: alt1
 
 Group: Graphics
@@ -74,6 +74,12 @@ KDE 4 core library.
 
 
 %changelog
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
+* Thu Jun 21 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Wed Jun 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 
