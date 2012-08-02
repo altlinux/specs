@@ -8,10 +8,10 @@
 %define rname kdebase
 %define major 4
 %define minor 8
-%define bugfix 4
+%define bugfix 5
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -609,6 +609,12 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
+* Thu Jun 21 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1.M60P.1
+- built for M60P
+
 * Thu Jun 21 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2
 - update from 4.8 branch
 
