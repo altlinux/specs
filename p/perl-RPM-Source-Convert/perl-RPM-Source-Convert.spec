@@ -5,7 +5,7 @@ BuildRequires: perl(Carp.pm) perl(File/Basename.pm) perl(File/Path.pm) perl(File
 
 Name: perl-%module
 Version: 0.46
-Release: alt6
+Release: alt7
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -44,6 +44,9 @@ Conflicts: perl-RPM-Source-Editor < 0.73
 %perl_vendor_privlib/RPM*
 
 %changelog
+* Thu Aug 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.46-alt7
+- improved fc support
+
 * Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.46-alt6
 - development release
 
