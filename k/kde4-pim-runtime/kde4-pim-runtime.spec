@@ -4,10 +4,10 @@
 %define rname kdepim-runtime
 %define major 4
 %define minor 8
-%define bugfix 4
+%define bugfix 5
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi resources
@@ -223,6 +223,12 @@ based on kdepim.
 
 
 %changelog
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
+* Wed Jun 27 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2.M60P.1
+- built for M60P
+
 * Tue Jun 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt3
 - update from 4.8 branch
 
