@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 20110706
-Release: alt2
+Release: alt3
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -150,7 +150,6 @@ KDE3 settings for %Brand %version %Theme
 Summary: GNOME settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/GNOME
-Requires: altlinux-menus
 Requires: gtk2-theme-mist
 Provides: gnome-theme-%brand-%theme = %version-%release
 Provides: metacity-theme-%brand-%theme = %version-%release
@@ -441,6 +440,9 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Thu Aug 02 2012 Michael Shigorin <mike@altlinux.org> 20110706-alt3
+- *dropped* R: altlinux-menus (closes: #27585)
+
 * Fri Jun 01 2012 Michael Shigorin <mike@altlinux.org> 20110706-alt2
 - bootsplash subpackage provides plymouth(system-theme)
 
