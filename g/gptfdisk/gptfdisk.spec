@@ -1,6 +1,6 @@
 Summary: GPT partitioning and MBR repair software
 Name: gptfdisk
-Version: 0.8.1
+Version: 0.8.5
 Release: alt1
 License: GPLv2
 Group: System/Configuration/Hardware
@@ -80,6 +80,9 @@ install -D fixparts.8 %buildroot%_man8dir/fixparts.8
 
 
 %changelog
+* Thu Aug 02 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.8.5-alt1
+- New version
+
 * Sat Oct 08 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 0.8.1-alt1
 - New version
 - Add subpackage cgdisk
