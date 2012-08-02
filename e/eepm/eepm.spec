@@ -1,5 +1,5 @@
 Name: eepm
-Version: 0.9
+Version: 0.9.3
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -39,6 +39,22 @@ with various distros.
 %_bindir/distr_info
 
 %changelog
+* Thu Aug 02 2012 Vitaly Lipatov <lav@altlinux.ru> 0.9.3-alt1
+- use slackpkg instead pkgtool for Slackware package manager name
+- add missed command for Gentoo, Slackware, FreeBSD improve repo management commands
+- fix using local with dash
+- add --nodeps support for rpm in install/remove
+
+* Wed Aug 01 2012 Vitaly Lipatov <lav@altlinux.ru> 0.9.2-alt1
+- remove: try remove via low level command first
+- install: drop DISTRNAME using
+- add Slackware and add more distr in search
+
+* Sat Jul 28 2012 Vitaly Lipatov <lav@altlinux.ru> 0.9.1-alt1
+- epm-simulate: add support for --skip-installed
+- add more distr in epm -i, epm -e and add some bugs in epm -e
+- add initial Slackware support (pkgtool)
+
 * Fri Jul 27 2012 Vitaly Lipatov <lav@altlinux.ru> 0.9-alt1
 - epm: add --nodeps options recognize
 - add showcmd in addition to docmd
