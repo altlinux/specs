@@ -3,7 +3,7 @@
 
 Name: hddtemp
 Version: 0.3
-Release: alt10.beta%beta
+Release: alt11.beta%beta
 Epoch: 20110629
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -70,6 +70,9 @@ cat %SOURCE5 >> %buildroot%_datadir/misc/hddtemp.db
 # - find someone to do privsep/chroot on hddtemp?
 
 %changelog
+* Thu Aug 02 2012 Michael Shigorin <mike@altlinux.org> 20110629:0.3-alt11.beta15
+- added several WD/Hitachi drives (closes: #27586, #27587, #27588)
+
 * Mon Apr 09 2012 Michael Shigorin <mike@altlinux.org> 20110629:0.3-alt10.beta15
 - added WDC WD1003FBYX-01Y7B0 (closes: #27186)
   and KINGSTON SNVP325S2128GB (just in case)
