@@ -3,7 +3,7 @@
 %define sname vacuum
 
 Name: %sname-im
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 
 Summary: Crossplatform Jabber/XMPP client
@@ -46,6 +46,9 @@ rm -rf %buildroot%_datadir/%name/resources/emoticons/kolobok*
 %doc README CHANGELOG AUTHORS TRANSLATORS
 
 %changelog
+* Fri Aug  3 2012 Terechkov Evgenii <evg@altlinux.org> 1.2.0-alt1
+- 1.2.0 (ALT#27591)
+
 * Sat Jan 28 2012 Terechkov Evgenii <evg@altlinux.org> 1.1.2-alt1
 - 1.1.2 (ALT#26867)
 
