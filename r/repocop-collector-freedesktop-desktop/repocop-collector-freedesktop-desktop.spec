@@ -1,7 +1,7 @@
 %define collectorname freedesktop-desktop
 
 Name: repocop-collector-%collectorname
-Version: 0.12
+Version: 0.13
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -11,7 +11,7 @@ Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org 
 Requires: repocop >= 0.40 perl-DBI perl-DBD-SQLite
-Requires: desktop-file-utils >= 0.18
+Requires: desktop-file-utils >= 0.20
 BuildRequires: perl-DBI
 
 Source0: %name-%version.tar
@@ -36,6 +36,9 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/pkgcollectors/%collectorname/
 %_datadir/repocop/pkgcollectors/%collectorname
 
 %changelog
+* Fri Aug 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- desktop-file-validate >= 0.20
+
 * Fri Apr 01 2011 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - handling of lost thumbnailers
 
