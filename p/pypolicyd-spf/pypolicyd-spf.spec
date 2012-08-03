@@ -2,12 +2,12 @@
 %define pypolicy_owner policyd-spf
 
 Name: pypolicyd-spf
-Version: 0.8.1
-Release: alt0.1.1
+Version: 1.1
+Release: alt1
 
 Summary: Postfix policy server for SPF checking
 
-License: GPL
+License: Apache 2.0
 Group: System/Servers
 Url: https://launchpad.net/pypolicyd-spf
 Source: %name-%version.tar
@@ -54,9 +54,12 @@ subst '/\/share\/man/d' INSTALLED_FILES
 %dir %_sysconfdir/postfix-policyd-spf-python
 %_sysconfdir/postfix-policyd-spf-python/*.commented
 %exclude %python_sitelibdir/*.egg-info
-%doc README* TODO CHANGES LICENSE
+%doc README* TODO CHANGES COPYING
 
 %changelog
+* Fri Aug 03 2012 L.A. Kostis <lakostis@altlinux.ru> 1.1-alt1
+- 1.1.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.1-alt0.1.1
 - Rebuild with Python-2.7
 
