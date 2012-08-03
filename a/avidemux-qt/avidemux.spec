@@ -2,8 +2,8 @@
 %define rname avidemux
 
 Name: avidemux-qt
-Version: 2.5.5
-Release: alt2
+Version: 2.5.6
+Release: alt1
 
 Group: Video
 Summary: Avidemux is a graphical AVI files editor
@@ -17,12 +17,14 @@ Provides: avidemux = %version-%release
 Conflicts: avidemux
 
 Source: avidemux-%version.tar
+Source1: ffmpeg.tar.bz2
 Source2: avidemux.desktop
 
 Patch1: plugins-compile.patch
 Patch2: avidemux-2.5.4-alt-x264-test.patch
 Patch3: avidemux-2.5.4-alt-i18n-qm-path.patch
 Patch4: avidemux-2.5.4-alt-x264-115.patch
+Patch5: avidemux-2.5.6-alt-ffmpeg-0.9.2.patch
 #
 Patch100: avidemux-2.5.1-opencore-check.patch
 
@@ -83,8 +85,11 @@ Common files for %name
 %patch1 -p0
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#%patch4 -p1
+%patch5 -p1
 %patch100 -p1
+
+install -m 0644 %SOURCE1 avidemux/ADM_libraries/
 
 # disable gtk ui
 #sed -i 's|SET.*ADM_UI_GTK[[:space:]].*||' CMakeLists.txt
@@ -103,6 +108,7 @@ BUILDDIR=$PWD
     -DAVIDEMUX_CORECONFIG_DIR=$BUILDDIR/BUILD-%_target_platform/config \
     -DAVIDEMUX_SOURCE_DIR=$BUILDDIR \
     -DAVIDEMUX_INSTALL_PREFIX=$BUILDDIR/BUILD-%_target_platform \
+    -DPULSEAUDIOSIMPLE:BOOL=TRUE \
     -DGTK:BOOL=FALSE \
     -DUSE_ARTS:BOOL=FALSE \
     -DUSE_ESD:BOOL=FALSE \
@@ -144,8 +150,18 @@ ln -s avidemux2_qt4 %buildroot%_bindir/%rname
 %_datadir/avidemux
 
 %changelog
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 2.5.6-alt1
+- new version
+- built with internal ffmpeg-0.9.2
+
+* Mon Apr 30 2012 Andrey Cherepanov <cas@altlinux.org> 2.5.5-alt0.M60P.2
+- rebuilt with recent libx264
+
 * Mon Jan 30 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.5-alt2
 - rebuilt with recent libvpx and libx264
+
+* Thu Sep 01 2011 Sergey V Turchin <zerg@altlinux.org> 2.5.5-alt0.M60P.1
+- built for M60P
 
 * Thu Aug 11 2011 Sergey V Turchin <zerg@altlinux.org> 2.5.5-alt1
 - new version
