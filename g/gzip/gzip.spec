@@ -1,19 +1,16 @@
 Name: gzip
-Version: 1.4
-Release: alt3
+Version: 1.5
+Release: alt1
 
 Summary: The GNU data compression program
 License: GPLv3+
 Group: Archiving/Compression
 Url: http://www.gnu.org/software/gzip/
 
-# http://git.altlinux.org/people/ldv/packages/?p=gzip.git
-Source0: gzip-%version-%release.tar
-Source1: gnulib-%version-%release.tar
-Source2: zme.sh
-Source3: zme.1
+%define srcname %name-%version-%release
+Source0: %srcname.tar
 
-Patch: gzip-%version-%release.patch
+BuildRequires: gnulib >= 0.0.7557.ee60576
 
 # for test suite
 %{?!_without_check:%{?!_disable_check:BuildRequires: less}}
@@ -38,19 +35,23 @@ This package contains additional utilities for the popular
 GNU gzip, bzip2, lzma and xz data compression programs.
 
 %prep
-%setup -q -n gzip-%version-%release -a1
-%patch -p1
-echo -n %version >.tarball-version
+%setup -n %srcname
 
-# Unset the variable gl_printf_safe to indicate that we do not need
-# a safe handling of non-IEEE-754 'long double' values.
-sed -i 's/gl_printf_safe=yes/gl_printf_safe=/' \
-	gnulib-%version-%release/modules/printf-safe
+# Use fresh bootstrap from gnulib
+install -pm755 %_datadir/gnulib/build-aux/bootstrap .
+
+# Build scripts expect to find the gzip version in this file.
+echo -n %version > .tarball-version
 
 %build
 %define _optlevel 3
 %add_optflags -DGNU_STANDARD=0 %optflags_notraceback
-./bootstrap --skip-po --gnulib-srcdir=gnulib-%version-%release
+./bootstrap --skip-po --gnulib-srcdir=%_datadir/gnulib
+
+# Unset the variable gl_printf_safe to indicate that we do not need
+# a safe handling of non-IEEE-754 'long double' values.
+sed -i 's/gl_printf_safe=yes/gl_printf_safe=/' m4/gnulib-comp.m4 configure
+
 %configure --bindir=/bin --disable-silent-rules
 %make_build
 ln -snf zdiff zcmp
@@ -58,7 +59,7 @@ cp -p gzip.1 gzip.doc
 
 %install
 mkdir -p %buildroot%_bindir
-%makeinstall bindir=%buildroot/bin
+%makeinstall_std bindir=/bin
 
 # uncompress is a part of ncompress package
 rm %buildroot/bin/uncompress
@@ -87,7 +88,7 @@ for c in b l x; do
 	ln -s zgrep %buildroot%_bindir/${c}zegrep
 	ln -s zgrep %buildroot%_bindir/${c}zfgrep
 done
-install -pm755 %_sourcedir/zme.sh %buildroot%_bindir/zme
+install -pm755 zme.sh %buildroot%_bindir/zme
 ln -s zme %buildroot%_bindir/bzme
 
 # Additional manpages.
@@ -100,7 +101,7 @@ for c in b l x; do
 	echo '.so man1/zdiff.1' >%buildroot%_man1dir/${c}zcmp.1
 	echo '.so man1/zdiff.1' >%buildroot%_man1dir/${c}zdiff.1
 done
-install -pm755 %_sourcedir/zme.1 %buildroot%_man1dir/
+install -pm755 zme.1 %buildroot%_man1dir/
 ln -s zme.1 %buildroot%_man1dir/bzme.1
 
 # Our zless and zmore live in less package.
@@ -127,6 +128,10 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 %exclude %_man1dir/zcat.*
 
 %changelog
+* Fri Aug 03 2012 Dmitry V. Levin <ldv@altlinux.org> 1.5-alt1
+- Updated gzip to v1.5-3-gc8ae982.
+- Built with gnulib v0.0-7557-gee60576.
+
 * Fri Feb 04 2011 Dmitry V. Levin <ldv@altlinux.org> 1.4-alt3
 - Updated gzip to v1.4-70-g70b7874.
 - Updated gnulib to v0.0-4672-ga2e8447.
@@ -278,4 +283,3 @@ rm %buildroot{/bin/z{less,more},%_man1dir/z{less,more}.1}
 
 * Tue Apr 22 1997 Marc Ewing <marc@redhat.com>
 - (Entry added for Marc by Erik) fixed gzexe to use /bin/gzip
-
