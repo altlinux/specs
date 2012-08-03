@@ -7,7 +7,7 @@
 Name: kde4utils
 %define major 4
 %define minor 8
-%define bugfix 4
+%define bugfix 5
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -474,7 +474,7 @@ done
 %_K4srv/ark_dndextract.desktop
 %_K4srvtyp/kerfufflePlugin.desktop
 %_K4xdg_apps/ark.desktop
-#%_K4iconsdir/hicolor/*/apps/ark.*
+%_K4iconsdir/hicolor/*/apps/ark.*
 %_K4doc/*/ark
 %_man1dir/ark.*
 
@@ -506,6 +506,12 @@ done
 
 
 %changelog
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- new version
+
+* Fri Jun 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Fri Jun 08 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 
