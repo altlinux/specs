@@ -1,6 +1,6 @@
 Name: sed
 Version: 4.2.1
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: A GNU stream text editor
@@ -19,7 +19,7 @@ Patch: %srcname.patch
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.0.6780.bfacc22
+BuildRequires: gnulib >= 0.0.7557.ee60576
 
 # for acl copying support.
 BuildRequires: libacl-devel
@@ -45,7 +45,10 @@ sed -i 's/^\(AM_GNU_GETTEXT_VERSION\).*/\1('"$(gettext --version | sed -n 's/^ge
 
 # Generate LINGUAS file.
 ls po/*.po 2>/dev/null |
-	sed 's|.*/||; s|\.po$||' >po/LINGUAS
+	sed 's|.*/||; s|\.po$||' > po/LINGUAS
+
+# Use bootstrap from gnulib
+install -pm755 %_datadir/gnulib/build-aux/bootstrap autoboot
 
 # Compress docs for packaging.
 bzip2 -9 doc/*.txt
@@ -56,7 +59,7 @@ bzip2 -9k NEWS
 ./subst/subst -p 's,@DOCDIR@,%_docdir/%name-%version,' \
 	doc/sed-in.texi doc/sed.x
 
-./autoboot --skip-po --gnulib-srcdir=%_datadir/gnulib
+./autoboot --force --skip-po --gnulib-srcdir=%_datadir/gnulib
 %configure --bindir=/bin --without-included-regex %{subst_enable selinux}
 %make_build -C po update-po
 %make_build
@@ -66,6 +69,7 @@ bzip2 -9k NEWS
 %makeinstall_std -C subst
 
 %check
+%make_build -C testsuite -f Makefile.tests
 %make_build -k check
 
 %find_lang %name
@@ -78,6 +82,11 @@ bzip2 -9k NEWS
 %doc BUGS NEWS.bz2 README THANKS doc/*.txt.bz2
 
 %changelog
+* Fri Aug 03 2012 Dmitry V. Levin <ldv@altlinux.org> 1:4.2.1-alt4
+- Updated sed to 4.2.1-57-gfc99910.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.0-7557-gee60576.
+
 * Thu Jan 19 2012 Dmitry V. Levin <ldv@altlinux.org> 1:4.2.1-alt3
 - Updated sed to 4.2.1-42-g727d6fa.
 - Updated translations from translationproject.org.
