@@ -1,10 +1,10 @@
-%define version 2.0.5
+%define version 2.0.7
 %define release alt0.1
 %setup_python_module pyspf
 
 Name: %{packagename}
 Version: %version
-Release: %release.1
+Release: %release
 Summary: Python module and programs for SPF (Sender Policy Framework)
 
 Group: Development/Python
@@ -38,6 +38,9 @@ should be done during the MAIL FROM:<...> command.
 %doc CHANGELOG PKG-INFO README test
 
 %changelog
+* Fri Aug 03 2012 L.A. Kostis <lakostis@altlinux.ru> 2.0.7-alt0.1
+- 2.0.7.
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.5-alt0.1.1
 - Rebuild with Python-2.7
 
