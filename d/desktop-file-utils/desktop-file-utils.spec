@@ -2,7 +2,7 @@
 %define _emacs_startscriptsdir %_sysconfdir/emacs/site-start.d
 
 Name: desktop-file-utils
-Version: 0.18.0.patchset4
+Version: 0.20.0.patchset4
 Release: alt1
 
 Summary: Utilities for manipulating .desktop files
@@ -105,6 +105,9 @@ touch %buildroot/%_desktopdir/mimeinfo.cache
 %_emacslispdir/%emacs_mode-mode.el
 
 %changelog
+* Fri Aug 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.20.0.patchset4-alt1
+- sync with 20.0
+
 * Fri May 20 2011 Igor Vlasenko <viy@altlinux.ru> 0.18.0.patchset4-alt1
 - patchset4 (liberal treatment of Science as main category)
 
