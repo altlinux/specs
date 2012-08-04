@@ -1,7 +1,7 @@
 %define oname rasqal
 Name: lib%oname
-Version: 0.9.20
-Release: alt1.1
+Version: 0.9.29
+Release: alt1
 
 Summary: Rasqal RDF Query Library
 
@@ -14,8 +14,9 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://download.librdf.org/source/%oname-%version.tar
 
 # Automatically added by buildreq on Mon Jan 07 2008
-BuildRequires: flex gcc-c++ gtk-doc libmpfr-devel libpcre-devel libraptor-devel libxml2-devel
+BuildRequires: flex gcc-c++ gtk-doc libmpfr-devel libpcre-devel libxml2-devel
 
+BuildRequires: raptor2-devel  >= 2.0.2
 BuildRequires: rpm-build-intro
 
 %description
@@ -66,7 +67,6 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %files devel
 %_bindir/rasqal-config
 %_libdir/librasqal.so
-#%_libdir/librasqal.la
 %_includedir/rasqal/
 %_pkgconfigdir/rasqal.pc
 %_man1dir/rasqal-config.1*
@@ -77,6 +77,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 #%_libdir/librasqal.a
 
 %changelog
+* Sat Aug 04 2012 Vitaly Lipatov <lav@altlinux.ru> 0.9.29-alt1
+- new version 0.9.29 (with rpmrb script)
+- rebuild with new libmpr
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.20-alt1.1
 - Removed bad RPATH
 
