@@ -1,7 +1,7 @@
 %define pre %nil
 Name: inkscape
 Version: 0.48.2
-Release: alt3.1.1
+Release: alt4
 
 Summary: A Vector Drawing Application
 
@@ -23,6 +23,10 @@ Patch6: inkscape-0.48.0-spell.patch
 Patch7: inkscape-0.48.0-poppler-0.16.patch
 Patch8: inkscape-0.48.2-alt-glib2-2.32.0.patch
 
+# from Fedora
+Patch10: inkscape-0.48.2-gcc47.patch
+Patch12: inkscape-0.48.2-poppler_020.patch
+
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
 #BuildPreReq: menu-devel
@@ -30,8 +34,10 @@ BuildPreReq: desktop-file-utils
 
 %add_findreq_skiplist %_datadir/%name/extensions/*
 
-# Automatically added by buildreq on Mon Jul 06 2009 (-bi)
-BuildRequires: boost-devel gcc-c++ gnome-vfs-devel intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms-devel libpoppler-glib-devel libpopt-devel libssl-devel libwpg2-devel libxslt-devel perl-devel python-devel rpm-build-ruby subversion
+# Automatically added by buildreq on Sat Aug 04 2012
+# optimized out: fontconfig fontconfig-devel glib2-devel gnome-vfs libGConf-devel libX11-devel libatk-devel libatkmm-devel libavahi-glib libcairo-devel libcairomm-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgpg-error libgtk+2-devel libp11-kit libpango-devel libpangomm-devel libpng-devel libpoppler-devel libpoppler8-glib libsigc++2-devel libstdc++-devel libwpd9-devel libxml2-devel perl-Encode perl-XML-Parser pkg-config python-base python-devel python-module-distribute python-module-peak python-module-zope python-modules xorg-xproto-devel zlib-devel
+BuildRequires: boost-devel-headers bzr gcc-c++ gnome-vfs-devel intltool libImageMagick-devel libaspell-devel libgc-devel libgsl-devel libgtkmm2-devel libgtkspell-devel liblcms-devel libpoppler-glib-devel libpopt-devel libwpg2-devel libxslt-devel perl-devel python-module-mwlib python-module-paste
+
 BuildRequires: libpng-devel
 BuildRequires: libpoppler-devel
 
@@ -69,13 +75,22 @@ inkview is standalone viewer for Inkscape files (SVG)
 %patch6 -p1
 #patch7 -p0
 %patch8 -p2
+
+%patch10 -p0
+%patch12 -p1
+
 cat %SOURCE1 >po/ru.po
 
 %build
-#autoreconf
-subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%__python_version|" ./configure
-%add_optflags -fno-strict-aliasing
-%configure --with-python --with-perl --enable-inkboard
+%autoreconf
+%__subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%__python_version|" ./configure
+%configure \
+        --with-gnome-vfs        \
+        --with-python           \
+        --with-perl             \
+        --with-xft              \
+        --enable-lcms           \
+        --enable-poppler-cairo
 %make_build
 
 %install
@@ -108,6 +123,10 @@ rm -rf %buildroot%_mandir/fr/
 %_man1dir/inkview*
 
 %changelog
+* Sat Aug 04 2012 Vitaly Lipatov <lav@altlinux.ru> 0.48.2-alt4
+- fix build (thanks, Fedora!)
+- update buildreq
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 0.48.2-alt3.1.1
 - Rebuild with new libImageMagick
 
