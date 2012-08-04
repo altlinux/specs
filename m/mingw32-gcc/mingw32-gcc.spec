@@ -3,7 +3,7 @@
 
 Name: mingw32-gcc
 Version: 4.4.2
-Release: alt1
+Release: alt3
 Summary: MinGW Windows cross-compiler (GCC) for C
 
 License: GPLv3+ and GPLv2+ with exceptions
@@ -266,7 +266,7 @@ sed -i "s|\\(^INCLUDE_PATH[[:space:]]\\+=\\)[[:space:]]*$|\\1 $PWD/%buildtarget/
 %build
 libtoolize --copy --install --force
 install -pm644 %_datadir/libtool/aclocal/*.m4 .
-patch -p0 <%_sourcedir/libtool.m4-gcj.patch
+#patch -p0 <%_sourcedir/libtool.m4-gcj.patch
 
 # Regenerate configure scripts.
 for f in */aclocal.m4; do
@@ -378,6 +378,7 @@ popd
 %dir %_libdir/gcc/%_mingw32_target/%version
 %dir %_libexecdir/gcc/%_mingw32_target
 %dir %_libexecdir/gcc/%_mingw32_target/%version
+%_libdir/gcc/%_mingw32_target/%version/SYSCALLS.c.X
 %_libdir/gcc/%_mingw32_target/%version/crtbegin.o
 %_libdir/gcc/%_mingw32_target/%version/crtend.o
 %_libdir/gcc/%_mingw32_target/%version/crtfastmath.o
@@ -449,6 +450,9 @@ popd
 %_libexecdir/gcc/%_mingw32_target/%version/f951
 
 %changelog
+* Sat Aug 04 2012 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt3
+- fix build, rebuild with new libgmp
+
 * Sat Mar 13 2010 Boris Savelev <boris@altlinux.org> 4.4.2-alt1
 - new version
 - build libgomp
