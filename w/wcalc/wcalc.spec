@@ -1,9 +1,9 @@
 Name: wcalc
 Version: 2.4
-Release: alt2
+Release: alt3
 
 Summary: A flexible command-line calculator
-Summary(ru_RU.KOI8-R): Гибкий калькулятор командной строки
+Summary(ru_RU.UTF-8): п⌠п╦п╠п╨п╦п╧ п╨п╟п╩я▄п╨я┐п╩я▐я┌п╬я─ п╨п╬п╪п╟п╫п╢п╫п╬п╧ я│я┌я─п╬п╨п╦
 
 License: GPL
 Group: Office
@@ -11,7 +11,7 @@ Url: http://w-calc.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/w-calc/%name-%version.tar.bz2
+Source: http://prdownloads.sf.net/w-calc/%name-%version.tar
 
 # Automatically added by buildreq on Sun Jul 17 2005
 BuildRequires: flex libgmp-devel libmpfr-devel libreadline-devel
@@ -21,10 +21,10 @@ Wcalc is a command-line calculator designed to accept all valid mathematical exp
 It supports all standart mathematical operations, parenthesis, brackets, braces,
 trigonometric functions, hyperbolic functions, logs, and most boolean operators.
 
-%description -l KOI8-R
-Wcalc - это консольный калькулятор, работающий со всеми допустимыми математическими
-выражениями. Он поддерживает все стандартные математические операции, тригонометрические
-и гиперболические функции, логарифмы и большинство логических операторов.
+%description -l UTF-8
+Wcalc - я█я┌п╬ п╨п╬п╫я│п╬п╩я▄п╫я▀п╧ п╨п╟п╩я▄п╨я┐п╩я▐я┌п╬я─, я─п╟п╠п╬я┌п╟я▌я┴п╦п╧ я│п╬ п╡я│п╣п╪п╦ п╢п╬п©я┐я│я┌п╦п╪я▀п╪п╦ п╪п╟я┌п╣п╪п╟я┌п╦я┤п╣я│п╨п╦п╪п╦
+п╡я▀я─п╟п╤п╣п╫п╦я▐п╪п╦. п·п╫ п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣я┌ п╡я│п╣ я│я┌п╟п╫п╢п╟я─я┌п╫я▀п╣ п╪п╟я┌п╣п╪п╟я┌п╦я┤п╣я│п╨п╦п╣ п╬п©п╣я─п╟я├п╦п╦, я┌я─п╦пЁп╬п╫п╬п╪п╣я┌я─п╦я┤п╣я│п╨п╦п╣
+п╦ пЁп╦п©п╣я─п╠п╬п╩п╦я┤п╣я│п╨п╦п╣ я└я┐п╫п╨я├п╦п╦, п╩п╬пЁп╟я─п╦я└п╪я▀ п╦ п╠п╬п╩я▄я┬п╦п╫я│я┌п╡п╬ п╩п╬пЁп╦я┤п╣я│п╨п╦я┘ п╬п©п╣я─п╟я┌п╬я─п╬п╡.
 
 %prep
 %setup
@@ -42,6 +42,10 @@ Wcalc - это консольный калькулятор, работающий со всеми допустимыми математическ
 %_man1dir/*
 
 %changelog
+* Sat Aug 04 2012 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt3
+- rebuild with new libgmp
+- cleanup spec
+
 * Tue Mar 24 2009 Vitaly Lipatov <lav@altlinux.ru> 2.4-alt2
 - fix russian description (bug #19305)
 
