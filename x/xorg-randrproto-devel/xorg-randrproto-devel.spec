@@ -1,5 +1,5 @@
 Name: xorg-randrproto-devel
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 Serial: 1
 Summary: X Resize and Rotate protocol headers
@@ -39,6 +39,12 @@ X Resize and Rotate protocol headers
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Sat Aug 04 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.4.0-alt1
+- 1.4.0
+
+* Tue Dec 07 2010 Valery Inozemtsev <shrek@altlinux.ru> 1:1.3.2-alt2
+- updated to master git.0d32bb0
+
 * Sat Oct 30 2010 Valery Inozemtsev <shrek@altlinux.ru> 1:1.3.2-alt1
 - 1.3.2
 

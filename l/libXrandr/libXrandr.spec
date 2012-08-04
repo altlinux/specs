@@ -1,5 +1,5 @@
 Name: libXrandr
-Version: 1.3.2
+Version: 1.4.0
 Release: alt1
 
 Summary: X RandR Library
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Sat Aug 04 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Thu Jun 30 2011 Valery Inozemtsev <shrek@altlinux.ru> 1.3.2-alt1
 - 1.3.2
 
