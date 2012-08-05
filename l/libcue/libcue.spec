@@ -1,7 +1,7 @@
 %define major 1.4
 Name: libcue
 Version: %major.0
-Release: alt1
+Release: alt2
 
 Summary: Cue sheet parser library
 
@@ -50,6 +50,9 @@ rm -f %buildroot%_libdir/libcue.la
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sun Aug 05 2012 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt2
+- rebuild for enable debuginfo
+
 * Wed Jul 25 2012 Vitaly Lipatov <lav@altlinux.ru> 1.4.0-alt1
 - new version 1.4.0 (with rpmrb script)
 
