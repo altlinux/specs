@@ -1,27 +1,17 @@
-%define module_name	madwifi
-%define module_version	0.9.4
-%define module_release	alt1
+Name: madwifi-utils
+Version: 0.9.4
+Release: alt2
+Epoch: 1
 
 Summary: Utilities for Atheros-based WiFi .11a/b/g adapters
-Name: madwifi-utils
-Version: %module_version
-Release: alt1
-Serial: 1
 License: Dual: GPL or BSD
 Group: System/Kernel and hardware
-Url: http://www.madwifi.org/
-
-BuildRequires: perl sharutils
-BuildRequires: kernel-build-tools >= 0.7
-BuildRequires: kernel-source-%module_name = %module_version
-BuildRequires: glibc-kernheaders
-
-
-PreReq: coreutils
-PreReq: modutils
-Patch0: %name-0.9.2-alt.patch
-
+Url: http://madwifi-project.org/
 Packager: Konstantin A. Lepikhov <lakostis@altlinux.org>
+
+%define srcname madwifi-0.9.4-r4180-20120803
+Source: http://snapshots.madwifi-project.org/%srcname.tar.gz
+Patch: %name-0.9.2-alt.patch
 
 %description
 This software contains a utilites for Atheros-based Wireless LAN devices.
@@ -30,25 +20,24 @@ A full list of product solutions utilizing Atheros chips can be found
 at http://www.atheros.com/partners/solutions.html
 
 %prep
-rm -rf kernel-source-%module_name-%module_version
-
-tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
-
-%setup -D -T -n kernel-source-%module_name-%module_version
-%patch0 -p1
+%setup -n %srcname
+%patch -p1
 
 %build
 %make_build -C tools
 
 %install
-%makeinstall -C tools DESTDIR=%buildroot
+%makeinstall_std -C tools STRIP=:
 
 %files
 %_sbindir/*
 %_mandir/man8/*
-%doc docs/users-guide.pdf docs/WEP-HOWTO.txt COPYRIGHT README THANKS
+%doc COPYRIGHT README SNAPSHOT THANKS
 
 %changelog
+* Sun Aug 05 2012 Dmitry V. Levin <ldv@altlinux.org> 1:0.9.4-alt2
+- Rebuilt.
+
 * Sat Mar 08 2008 L.A. Kostis <lakostis@altlinux.ru> 1:0.9.4-alt1
 - rebuild for 0.9.4.
 

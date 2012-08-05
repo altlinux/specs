@@ -1,6 +1,6 @@
 Name:		net-scripts
 Version:	0.5.6
-Release:	alt1
+Release:	alt2
 Summary:	The system network scripts
 Summary(ru_RU.KOI8-R): Системные сценарии для управления сетью
 License:	GPL
@@ -110,6 +110,9 @@ done
 %doc ifcfg-pentanet0.example config-pentanet0.example
 
 %changelog
+* Sun Aug 05 2012 Dmitry V. Levin <ldv@altlinux.org> 0.5.6-alt2
+- Rebuilt.
+
 * Mon Jan 22 2007 Dmitry V. Levin <ldv@altlinux.org> 0.5.6-alt1
 - Removed -Werror from CFLAGS.
 - Replaced absolute symlinks with relative.
