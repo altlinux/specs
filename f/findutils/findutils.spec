@@ -1,22 +1,18 @@
 Name: findutils
 Version: 4.5.10
-Release: alt1
+Release: alt2
 
 Summary: The GNU versions of find utilities (find and xargs)
 License: GPLv3+
 Group: File tools
 Url: http://www.gnu.org/software/findutils/
 
-# http://git.altlinux.org/people/ldv/packages/?p=gnulib.git;a=shortlog;h=refs/heads/findutils
 # git://git.altlinux.org/gears/f/findutils.git
-Source0: %name-%version-%release.tar
-# a snapshot from git://git.sv.gnu.org/gnulib refs/heads/master
-Source1: gnulib-%version-%release.tar
-
-Patch: %name-%version-%release.patch
+Source: %name-%version-%release.tar
 
 %def_enable selinux
 
+BuildRequires: gnulib >= 0.0.7557.ee60576
 BuildRequires: glibc-devel-static
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
@@ -40,14 +36,12 @@ your system:
 This package contains statically linked version of the GNU find program.
 
 %prep
-%setup -n %name-%version-%release -a1
-%patch -p1
+%setup -n %name-%version-%release
 
 # Build scripts expect to find findutils version in this file.
 echo -n %version > .tarball-version
 
-# The regex.h must be kept in sync with --without-included-regex.
-install -pm644 %_includedir/regex.h gnulib-%version-%release/lib/
+sed -i '/build-aux\/missing/d' import-gnulib.config
 
 # Do not build locate.
 sed -i 's/ locate / /' Makefile*
@@ -57,7 +51,11 @@ echo '@set LOCATE_DB /var/lib/locate/locatedb' >locate/dblocation.texi
 bzip2 -9k NEWS
 
 %build
-./import-gnulib.sh -d gnulib-%version-%release
+./import-gnulib.sh -d %_datadir/gnulib
+
+# The regex.h must be kept in sync with --without-included-regex.
+install -pm644 %_includedir/regex.h gl/lib/
+
 %define _configure_script ../configure
 mkdir dynamic static
 
@@ -113,6 +111,10 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_bindir/find.static
 
 %changelog
+* Sun Aug 05 2012 Dmitry V. Levin <ldv@altlinux.org> 4.5.10-alt2
+- Updated to v4.5.10-100-g003c8e6.
+- Built with gnulib v0.0-7557-gee60576.
+
 * Tue Jun 28 2011 Dmitry V. Levin <ldv@altlinux.org> 4.5.10-alt1
 - find: updated to v4.5.10-86-g41ebd53.
 - gnulib: updated to v0.0-5838-g414111a.
