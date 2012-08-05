@@ -1,6 +1,6 @@
 Name: simh
-Version: 3.8.1
-Release: alt0.6
+Version: 3.9.0
+Release: alt0.1
 Summary: A highly portable, multi-system emulator
 
 Group: Emulators
@@ -13,12 +13,6 @@ Url: http://simh.trailing-edge.com/
 Packager: Andrey Bergman <vkni@altlinux.org>
 
 Source: %name-%version.tar
-
-# prefer default gnu89 (ISO C90) as C99 is not fully supported by cc
-# and add fedora optflags
-Patch: simh-3.8.0-gcc.patch
-Patch1: simh-3.8.1-altair-segfault.patch
-Patch2: simh-alt-ldflags.patch
 
 BuildRequires: libpcap-devel recode
 
@@ -71,9 +65,6 @@ http://pdp-11.org.ru
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 mkdir -p BIN
@@ -89,14 +80,17 @@ for i in `find -iname "*.txt"`; do recode cp1251/CR-LF.. $i; done
 
 %files
 %_bindir/*
-%doc ALTAIR/altair.txt NOVA/eclipse.txt 0readme_38.txt 0readme_ethernet.txt
+%doc ALTAIR/altair.txt NOVA/eclipse.txt 0readme_ethernet.txt
 %doc HP2100/hp2100_diag.txt I7094/i7094_bug_history.txt Interdata/id_diag.txt
 %doc PDP1/pdp1_diag.txt PDP10/pdp10_bug_history.txt PDP18B/pdp18b_diag.txt
 %doc S3/haltguide.txt S3/readme_s3.txt S3/system3.txt SDS/sds_diag.txt
 %doc VAX/vax780_bug_history.txt
-%doc DOC/*.pdf
+#%%doc DOC/*.pdf
 
 %changelog
+* Sun Aug 05 2012 Andrey Bergman <vkni@altlinux.org> 3.9.0-alt0.1
+- Version update.
+
 * Tue Dec 07 2010 Andrey Bergman <vkni@altlinux.org> 3.8.1-alt0.6
 - Added detailed documentation.
 
@@ -104,7 +98,7 @@ for i in `find -iname "*.txt"`; do recode cp1251/CR-LF.. $i; done
 - Added russian description.
 
 * Wed Dec 01 2010 Andrey Bergman <vkni@altlinux.org> 3.8.1-alt0.4
-- Added proper build requires. 
+- Added proper build requires.
 
 * Wed Dec 01 2010 Andrey Bergman <vkni@altlinux.org> 3.8.1-alt0.3
 - Group changed to Emulators.
