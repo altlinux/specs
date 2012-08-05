@@ -1,21 +1,26 @@
 Name: diffutils
 Version: 3.2
-Release: alt1
+Release: alt2
+%define srcname %name-%version-%release
 
 Summary: A GNU collection of diff utilities
 License: GPLv3+
 Group: File tools
 Url: http://www.gnu.org/software/diffutils/
-# http://git.altlinux.org/people/ldv/packages/?p=gnulib.git refs/heads/diffutils
+
 # git://git.sv.gnu.org/diffutils refs/heads/master
-Source0: diffutils-%version-%release.tar
-# git://git.sv.gnu.org/gnulib refs/heads/master
-Source1: gnulib-%version-%release.tar
-# translationproject.org::tp/latest/%name/
-Source2: po-%version-%release.tar
+# git://git.altlinux.org/people/ldv/packages/diffutils refs/heads/diffutils-current
+Source0: %srcname.tar
+# translationproject.org::tp/latest/diffutils/
+# git://git.altlinux.org/people/ldv/packages/diffutils refs/heads/po-current
+Source1: po-%version-%release.tar
+
+# git://git.altlinux.org/people/ldv/packages/diffutils diffutils-current..diffutils-alt
+Patch: %name-%version-%release.patch
 
 Conflicts: man-pages <= 1.52-alt1
 
+BuildRequires: gnulib >= 0.0.7557.ee60576
 BuildRequires: gperf help2man
 
 %description
@@ -31,15 +36,23 @@ Diffutils includes four utilities: diff, cmp, diff3 and sdiff:
   results.
 
 %prep
-%setup -n %name-%version-%release -a1 -a2
+%setup -n %srcname -a1
+%patch -p1
+
+# Build scripts expect to find the diffutils version in this file.
 echo -n %version > .tarball-version
+
 # git and rsync aren't needed for build.
 sed -i '/^\(git\|rsync\)[[:space:]]/d' bootstrap.conf
+
 # Generate LINGUAS file.
 ls po/*.po | sed 's|.*/||; s|\.po$||' > po/LINGUAS
 
+# Use bootstrap from gnulib
+install -pm755 %_datadir/gnulib/build-aux/bootstrap .
+
 %build
-./bootstrap --skip-po --gnulib-srcdir=gnulib-%version-%release
+./bootstrap --skip-po --gnulib-srcdir=%_datadir/gnulib
 # Predefine location of the pr utility.
 export PR_PROGRAM=%_bindir/pr
 %configure --disable-silent-rules
@@ -59,6 +72,11 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Sun Aug 05 2012 Dmitry V. Levin <ldv@altlinux.org> 3.2-alt2
+- Updated to v3.2-28-g1f281b3.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.0-7557-gee60576.
+
 * Sun Sep 04 2011 Dmitry V. Levin <ldv@altlinux.org> 3.2-alt1
 - Updated to v3.2.
 
