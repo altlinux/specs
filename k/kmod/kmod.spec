@@ -1,6 +1,6 @@
 Name:		kmod
-Version:	8
-Release:	alt2
+Version:	9
+Release:	alt1
 Summary:	Linux kernel module management utilities
 
 Group:		System/Kernel and hardware
@@ -14,8 +14,9 @@ Patch0:		%name-manpage.patch
 
 BuildRequires:	docbook-dtds docbook-style-xsl glibc-devel-static liblzma-devel xsltproc zlib-devel
 
-#Provides:	module-init-tools = 3.17-alt1
-#Obsoletes:	module-init-tools < 3.17-alt1
+Provides:	module-init-tools = 3.17-alt1
+Obsoletes:	module-init-tools
+Conflicts:	module-init-tools-compat
 
 %description
 The kmod package provides various programs needed for automatic
@@ -89,7 +90,21 @@ ln -s kmod %buildroot/bin/lsmod
 
 
 %files
+%dir %_sysconfdir/depmod.d
+%dir %_sysconfdir/modprobe.d
+%dir /lib/depmod.d
+%dir /lib/modprobe.d
+/lib/modprobe.d/*.conf
 /bin/kmod
+/bin/lsmod
+/sbin/depmod
+/sbin/insmod
+/sbin/lsmod
+/sbin/modinfo
+/sbin/modprobe
+/sbin/rmmod
+%_man5dir/*
+%_man8dir/*
 %doc NEWS README TODO COPYING
 
 %files -n lib%name
@@ -101,6 +116,11 @@ ln -s kmod %buildroot/bin/lsmod
 %_libdir/libkmod.so
 
 %changelog
+* Tue Jul 17 2012 Alexey Gladkov <legion@altlinux.ru> 9-alt1
+- Version (9).
+- Replace the module-init-tools package (again).
+- Add compatibility symlinks (again).
+
 * Thu May 10 2012 Alexey Gladkov <legion@altlinux.ru> 8-alt2
 - Fix rename kmod-devel to libkmod-devel.
 - Fix libkmod-devel requires.
