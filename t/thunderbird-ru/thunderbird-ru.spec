@@ -1,7 +1,7 @@
 %define ciddir	%tbird_noarch_extensionsdir/langpack-ru@thunderbird.mozilla.org
 
 Name:		thunderbird-ru
-Version:	13.0.1
+Version:	14.0
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Thunderbird
 
@@ -39,6 +39,9 @@ rm -rf -- %buildroot/%ciddir/dictionaries
 %ciddir
 
 %changelog
+* Sun Aug 05 2012 Alexey Gladkov <legion@altlinux.ru> 14.0-alt1
+- New version (14.0).
+
 * Tue Jul 10 2012 Alexey Gladkov <legion@altlinux.ru> 13.0.1-alt1
 - New version (13.0.1).
 

@@ -11,7 +11,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        13.0.1
+Version:        14.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -30,7 +30,7 @@ Source8:	firefox-prefs.js
 Patch6:		firefox3-alt-disable-werror.patch
 Patch14:	firefox-fix-install.patch
 Patch16:	firefox-cross-desktop.patch
-#Patch17:	mozilla-703633.patch
+Patch17:	firefox-disable-installer.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -104,7 +104,7 @@ tar -xf %SOURCE2
 %patch6 -p1 -b .fix6
 %patch14 -p1 -b .fix14
 %patch16 -p1 -b .fix16
-#patch17 -p1 -b .fix17
+%patch17 -p1 -b .fix17
 
 #echo %firefox_version > browser/config/version.txt
 
@@ -151,6 +151,7 @@ MOZ_SMP_FLAGS=-j1
 %endif
 
 make -f client.mk \
+	MAKENSISU= \
 	build STRIP="/bin/true" \
 	MOZ_MAKE_FLAGS="$MOZ_SMP_FLAGS"
 
@@ -257,6 +258,24 @@ done
 %_sysconfdir/rpm/macros.d/firefox
 
 %changelog
+* Sun Jul 29 2012 Alexey Gladkov <legion@altlinux.ru> 14.0.1-alt1
+- New release (14.0.1).
+- Fixed:
+  + MFSA 2012-56 Code execution through javascript: URLs
+  + MFSA 2012-55 feed: URLs with an innerURI inherit security context of page
+  + MFSA 2012-53 Content Security Policy 1.0 implementation errors cause data leakage
+  + MFSA 2012-52 JSDependentString::undepend string conversion results in memory corruption
+  + MFSA 2012-51 X-Frame-Options header ignored when duplicated
+  + MFSA 2012-50 Out of bounds read in QCMS
+  + MFSA 2012-49 Same-compartment Security Wrappers can be bypassed
+  + MFSA 2012-48 use-after-free in nsGlobalWindow::PageHidden
+  + MFSA 2012-47 Improper filtering of javascript in HTML feed-view
+  + MFSA 2012-46 XSS through data: URLs
+  + MFSA 2012-45 Spoofing issue with location
+  + MFSA 2012-44 Gecko memory corruption
+  + MFSA 2012-43 Incorrect URL displayed in addressbar through drag and drop
+  + MFSA 2012-42 Miscellaneous memory safety hazards (rv:14.0/ rv:10.0.6)
+
 * Sun Jul 01 2012 Alexey Gladkov <legion@altlinux.ru> 13.0.1-alt1
 - New release (13.0.1).
 - Fixed:
