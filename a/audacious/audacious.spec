@@ -1,8 +1,8 @@
 #%define rel -beta4
 %define rel %nil
 Name: audacious
-Version: 2.5.0
-Release: alt1.qa2
+Version: 3.3
+Release: alt1
 
 Summary: Media player which uses a skinned interface
 
@@ -12,7 +12,7 @@ Url: http://audacious-media-player.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://distfiles.atheme.org/%name-%version%rel.tar
+Source: http://distfiles.audacious-media-player.org/%name-%version%rel.tar
 
 Patch: audacious-0.1.2-default-alsa.patch
 Patch1: %name-as-needed.patch
@@ -26,16 +26,9 @@ BuildPreReq: desktop-file-utils
 %{?_with_gconf:BuildRequires: GConf2-devel}
 %{?_with_vfs:BuildRequires: gnome-vfs2-devel}
 
-# due
-# verify-elf: ERROR: ./usr/lib/libaudid3tag.so.1.0.0: undefined symbol: _audvt
-#set_verify_elf_method unresolved=relaxed
-
-# manually removed: audacious
-# Automatically added by buildreq on Mon Apr 18 2011
-# optimized out: fontconfig fontconfig-devel glib2-devel libICE-devel libX11-devel libatk-devel libcairo-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libmowgli-devel libpango-devel pkg-config termutils xorg-xproto-devel
-BuildRequires: gcc-c++ libSM-devel libdbus-glib-devel libgtk+2-devel libmcs-devel
-
-BuildRequires: libgtk+2-devel >= 2.6
+# Automatically added by buildreq on Sun Aug 05 2012
+# optimized out: fontconfig fontconfig-devel glib2-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config termutils
+BuildRequires: gcc-c++ libdbus-glib-devel libgtk+3-devel
 
 Requires: %name-plugins
 
@@ -69,16 +62,11 @@ Development files required to develop plugins for audacious.
 
 
 %prep
-%setup -q -n %name-%version%rel
-#%patch -p1 -b .default-alsa
-#%patch2
-%patch3 -p2
-#bzip ChangeLog
+%setup -n %name-%version%rel
 
 %build
-#__autoreconf -I m4
-#__autoconf -I m4
 %configure \
+    --with-buildstamp="ALT Linux package"  \
     --disable-rpath \
     %{?_with_gconf:--enable-gconf} \
     %{?_with_vfs:--enable-gnome-vfs} \
@@ -88,7 +76,6 @@ Development files required to develop plugins for audacious.
 %endif
     --enable-chardet
 
-# compile with midi support without see in /proc
 %make_build
 
 %install
@@ -96,15 +83,13 @@ Development files required to develop plugins for audacious.
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS README
+%doc AUTHORS
 %_bindir/%name
 %_bindir/audtool
 %_desktopdir/*.desktop
 %_datadir/%name/
 %_iconsdir/hicolor/48x48/apps/audacious.png
 %_iconsdir/hicolor/scalable/apps/audacious.svg
-%_pixmapsdir/%name.png
-%_pixmapsdir/%name.svg
 %_man1dir/*
 
 %files -n lib%name
@@ -125,6 +110,10 @@ Development files required to develop plugins for audacious.
 %_libdir/*.so
 
 %changelog
+* Sun Aug 05 2012 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
+- new version 3.3 (with rpmrb script)
+- update buildreqs
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt1.qa2
 - Fixed build
 
