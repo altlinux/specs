@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	13.0.1
+Version:	14.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -24,7 +24,6 @@ Patch6:		01_locale.patch
 Patch7:		xulrunner-noarch-extensions.patch
 #Patch8:	thunderbird-asm-directive.patch
 Patch9:		thunderbird-install-paths.patch
-Patch10:	mozilla-check-libvpx.patch
 
 # https://bugzilla.mozilla.org/show_bug.cgi?id=537089
 Patch15:	thunderbird-with-system-mozldap.patch
@@ -61,7 +60,7 @@ BuildRequires: libffi-devel
 BuildRequires:	libnspr-devel       >= 4.9.0-alt1
 BuildRequires:	libnss-devel        >= 3.13.4-alt1
 BuildRequires:	libnss-devel-static >= 3.13.4-alt1
-BuildRequires:	xulrunner-devel     >= 13.0.2-alt1
+BuildRequires:	xulrunner-devel     >= 14.0.1-alt1
 
 Provides:	mailclient
 Obsoletes:	thunderbird-calendar
@@ -101,7 +100,7 @@ Summary: Enigmail - GPG support for Mozilla Thunderbird
 Group: Networking/Mail
 Url: http://enigmail.mozdev.org/
 
-Provides: %name-enigmail = 1.4.1
+Provides: %name-enigmail = 1.4.3
 Requires: %name = %version-%release
 
 Obsoletes: thunderbird-enigmail < 0.95.7-alt2
@@ -119,7 +118,7 @@ Summary: An integrated calendar for Thunderbird
 Group: Office
 Url: http://www.mozilla.org/projects/calendar/lightning/
 
-Provides: %name-lightning = 1.3b1
+Provides: %name-lightning = 1.6b1
 Requires: %name = %version-%release
 
 %description lightning
@@ -192,10 +191,7 @@ tar -xf %SOURCE2
 %patch7 -p1
 #patch8 -p1
 %patch9 -p1
-%patch10 -p1 -b .fix10
 %patch15 -p1 -b .mozldap
-#patch16 -p1
-#patch17 -p1
 
 #echo %version > mail/config/version.txt
 
@@ -505,6 +501,21 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Mon Jul 30 2012 Alexey Gladkov <legion@altlinux.ru> 14.0-alt1
+- New version (14.0).
+- Fixed:
+  + MFSA 2012-56 Code execution through javascript: URLs
+  + MFSA 2012-53 Content Security Policy 1.0 implementation errors cause data leakage
+  + MFSA 2012-52 JSDependentString::undepend string conversion results in memory corruption
+  + MFSA 2012-51 X-Frame-Options header ignored when duplicated
+  + MFSA 2012-50 Out of bounds read in QCMS
+  + MFSA 2012-49 Same-compartment Security Wrappers can be bypassed
+  + MFSA 2012-48 use-after-free in nsGlobalWindow::PageHidden
+  + MFSA 2012-47 Improper filtering of javascript in HTML feed-view
+  + MFSA 2012-45 Spoofing issue with location
+  + MFSA 2012-44 Gecko memory corruption
+  + MFSA 2012-42 Miscellaneous memory safety hazards (rv:14.0/ rv:10.0.6)
+
 * Thu Jul 05 2012 Alexey Gladkov <legion@altlinux.ru> 13.0.1-alt1
 - New version (13.0.1).
 - Fixed:

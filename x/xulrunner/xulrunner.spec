@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	13.0.2
+Version:	14.0.1
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -34,9 +34,6 @@ Patch100:	mozilla-192-path.patch
 #Patch101:	mozilla-pkgconfig.patch
 Patch104:	mozilla-nongnome-proxies.patch
 Patch105:	mozilla-libjpeg-turbo.patch
-Patch106:	mozilla-check-libvpx.patch
-#Patch106:	mozilla-omnijar.patch
-#Patch107:	firefox-4.0-gnome3.patch
 
 Requires:	%name-libs = %version-%release
 
@@ -73,6 +70,7 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
+BuildRequires: gstreamer-devel gst-plugins-devel
 
 BuildRequires: libnspr-devel       >= 4.8.7-alt1
 BuildRequires: libnss-devel        >= 3.13.4-alt2
@@ -140,8 +138,6 @@ tar -xf %SOURCE1
 #patch101 -p1
 %patch104 -p1
 %patch105 -p1
-%patch106 -p1
-#patch107 -p1
 
 #echo 5.0.1 > config/milestone.txt
 
@@ -341,14 +337,12 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_bindir/%xulr_name
 %xulr_prefix
 %_datadir/mime/packages/*.xml
-%exclude %xulr_prefix/xpcshell
 
 %files libs
 %_libdir/*.so*
 
 %files devel
 %_libdir/pkgconfig/*
-%xulr_prefix/xpcshell
 %xulr_includedir
 %xulr_develdir
 %xulr_idldir
@@ -361,6 +355,24 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Mon Jul 23 2012 Alexey Gladkov <legion@altlinux.ru> 14.0.1-alt1
+- New release (14.0.1).
+- Fixed:
+  + MFSA 2012-56 Code execution through javascript: URLs
+  + MFSA 2012-55 feed: URLs with an innerURI inherit security context of page
+  + MFSA 2012-53 Content Security Policy 1.0 implementation errors cause data leakage
+  + MFSA 2012-52 JSDependentString::undepend string conversion results in memory corruption
+  + MFSA 2012-51 X-Frame-Options header ignored when duplicated
+  + MFSA 2012-50 Out of bounds read in QCMS
+  + MFSA 2012-49 Same-compartment Security Wrappers can be bypassed
+  + MFSA 2012-48 use-after-free in nsGlobalWindow::PageHidden
+  + MFSA 2012-47 Improper filtering of javascript in HTML feed-view
+  + MFSA 2012-46 XSS through data: URLs
+  + MFSA 2012-45 Spoofing issue with location
+  + MFSA 2012-44 Gecko memory corruption
+  + MFSA 2012-43 Incorrect URL displayed in addressbar through drag and drop
+  + MFSA 2012-42 Miscellaneous memory safety hazards (rv:14.0/ rv:10.0.6)
+
 * Tue Jun 26 2012 Alexey Gladkov <legion@altlinux.ru> 13.0.2-alt1
 - New release (13.0.2).
 - Fixed:
