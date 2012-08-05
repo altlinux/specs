@@ -2,8 +2,8 @@
 %define rel %nil
 %define oname audacious
 Name: audacious-plugins
-Version: 2.5.0
-Release: alt2
+Version: 3.3
+Release: alt1
 
 Summary: Plugins for Audacious
 
@@ -13,7 +13,8 @@ Url: http://audacious-media-player.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://distfiles.atheme.org/%name-%version%rel.tar
+Source: http://distfiles.audacious-media-player.org/%name-%version%rel.tar
+
 Patch: audacious2-plugins.patch
 Patch1: audacious-plugins-1.5.1-gentoo-libmtp.patch
 
@@ -35,9 +36,11 @@ Patch8: audacious-plugins-ffmpeg-0.7.1.patch
 
 Requires: %oname = %version
 
-# Automatically added by buildreq on Mon Apr 18 2011
-# optimized out: fontconfig fontconfig-devel glib2-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXfixes-devel libXmu-devel libXrender-devel libXt-devel libalsa-devel libatk-devel libavcodec-devel libavcore-devel libavutil-devel libcairo-devel libdbus-devel libdbus-glib libdbus-glib-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libmcs-devel libmowgli-devel libogg-devel libpango-devel libsndfile-devel libstdc++-devel libusb-compat libusb-compat-devel pkg-config termutils xorg-compositeproto-devel xorg-fixesproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libavformat-devel libbinio-devel libcddb-devel libcdio-devel libcue-devel libcurl-devel libfaad-devel libflac-devel libfluidsynth-devel libgtkglext-devel liblame-devel liblirc-devel libmms-devel libmtp-devel libneon-devel libnotify4-devel libprojectM-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel libxml2-devel zlib-devel
+# Automatically added by buildreq on Sun Aug 05 2012
+# optimized out: fontconfig fontconfig-devel glib2-devel libX11-devel libXfixes-devel libXrender-devel libalsa-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libpango-devel libsndfile-devel libstdc++-devel pkg-config termutils xorg-compositeproto-devel xorg-fixesproto-devel xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
+BuildRequires: gcc-c++ libSDL-devel libXcomposite-devel libaudacious-devel libbinio-devel libbs2b-devel libcddb-devel libcdio-devel libcue-devel libcurl-devel libdbus-glib-devel libfaad-devel libflac-devel libfluidsynth-devel libgtk+3-devel liblame-devel liblirc-devel libmms-devel libmpg123-devel libneon-devel libnotify-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel libxml2-devel zlib-devel
+
+BuildRequires: lib%oname-devel = %version
 
 # wait for altbug #20165
 # libsidplay2-devel
@@ -60,27 +63,16 @@ This package contains the base I/O plugins:
   * Disk writer output
 
 %prep
-%setup -q -n %name-%version%rel
+%setup -n %name-%version%rel
 %patch
-# do not include glib headers separately
-find -name "*.c" | xargs %__subst "s|#include <glib/gmacros.h>|#include <glib.h>|g"
-#%patch2 -p1
-#%patch3 -p1
-#%patch4
-
-#%patch5 -p1
-#%patch6 -p1
-#%patch7 -p1
-%patch8 -p2
 
 %build
-#autoconf -f -I m4
-#autoheader
 %configure \
 	--enable-amidiplug --enable-sid \
+	--enable-gio  \
 	--disable-jack --enable-pulse \
 %ifnarch x86_64
-    --disable-sse2 \
+	--disable-sse2 \
 %endif
 	--disable-esd
 %make_build
@@ -96,6 +88,10 @@ find -name "*.c" | xargs %__subst "s|#include <glib/gmacros.h>|#include <glib.h>
 %_libdir/%oname/*
 
 %changelog
+* Sun Aug 05 2012 Vitaly Lipatov <lav@altlinux.ru> 3.3-alt1
+- new version 3.3 (with rpmrb script)
+- update buildreqs
+
 * Sat Apr 21 2012 Vitaly Lipatov <lav@altlinux.ru> 2.5.0-alt2
 - fix build without extra glib headers
 
