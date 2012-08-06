@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: usbredir
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 Summary: USB network redirection protocol libraries
 Group: System/Libraries
@@ -95,6 +95,9 @@ A simple usb-host tcp server, using libusbredirhost.
 %_sbindir/usbredirserver
 
 %changelog
+* Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.3-alt1
+- 0.4.3
+
 * Sun Mar 11 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.2-alt1
 - 0.4.2
 
