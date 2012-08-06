@@ -28,7 +28,7 @@
 
 Summary: Web browser engine
 Name: libwebkitgtk2
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
@@ -293,6 +293,9 @@ mkdir -p DerivedSources/InjectedBundle
 %endif
 
 %changelog
+* Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1
+- 1.8.2
+
 * Fri May 11 2012 Alexey Shabalin <shaba@altlinux.ru> 1.8.1-alt1
 - 1.8.1
 - sync spec with libwebkitgtk3
