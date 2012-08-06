@@ -1,10 +1,10 @@
-%define nm_version 0.9.4.0
-%define nm_applet_version 0.9.4.0
+%define nm_version 0.9.5.95
+%define nm_applet_version 0.9.5.95
 %define gtkver 3
 
 Name: NetworkManager-openconnect
-Version: 0.9.4.0
-Release: alt2
+Version: 0.9.5.95
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN integration for openconnect
@@ -23,7 +23,7 @@ BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: NetworkManager-glib-devel >= %nm_version
 BuildRequires: libgtk+%gtkver-devel
 BuildRequires: libdbus-glib-devel >= 0.74
-BuildRequires: libGConf-devel
+BuildRequires: libGConf-devel libgnome-keyring-devel
 BuildRequires: libssl-devel
 BuildRequires: intltool gettext
 BuildRequires: libxml2-devel
@@ -86,6 +86,9 @@ fi
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.5.95-alt1
+- 0.9.5.95
+
 * Tue May 22 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.4.0-alt2
 - upstream snapshot 12e173e93b1fc2559c24d870bcf1d0aba41e3d32
 
