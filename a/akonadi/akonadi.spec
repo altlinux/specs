@@ -1,6 +1,6 @@
 
 Name: akonadi
-Version: 1.7.2
+Version: 1.8.0
 Release: alt1
 
 Group: Databases
@@ -190,6 +190,12 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Mon Aug 06 2012 Sergey V Turchin <zerg@altlinux.org> 1.8.0-alt1
+- new version
+
+* Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 1.7.2-alt0.M60P.1
+- built for M60P
+
 * Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 1.7.2-alt1
 - new version
 
