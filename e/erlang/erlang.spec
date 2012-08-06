@@ -54,8 +54,8 @@
 Name: erlang
 %define subver 1
 Version: %ver.%subver
-%define plevel c
-Release: alt6
+%define plevel d
+Release: alt7
 Summary: A programming language developed by Ericsson
 License: %epl
 Group: Development/Erlang
@@ -1284,6 +1284,9 @@ symlinks -scdr %buildroot
 
 
 %changelog
+* Mon Aug 06 2012 Sergey Shilov <hsv@altlinux.org> R15B.1-alt7
+- fix ( thanks for the patch led@ )  strip of chunk Attr (ALT #27603)
+
 * Fri Apr 13 2012 Sergey Shilov <hsv@altlinux.org> R15B.1-alt6
 - revert upstream source to OTP_R15B01 tag (ALT #27216).
 
