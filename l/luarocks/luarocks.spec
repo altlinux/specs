@@ -1,67 +1,102 @@
-%define luaver 5.1
-%define download_helper curl
+#%luarocks_dbdir is defined in rpm-macros-lua package
+
+#TODO:
+#   1. fix manifest coping (maybe)
+#   2. fix install = { bin = {} } package.path
 
 Name: luarocks
-Version: 2.1.2
-Release: alt1
-
+Version: 2.2.0
+Release: alt0.rc1
 Summary: A deployment and management system for Lua modules
 License: MIT
 Group: Development/Tools
-Url: http://luarocks.org
+Url: http://www.luarocks.org
+Packager: Ildar Mulyukov <ildar@altlinux.ru>
+#%%luarocks_dbdir
+Provides: %_prefix/lib/luarocks/rocks
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: http://luarocks.org/releases/%name-%version.tar
+#.gz
+Source1: %name.filetrigger
+Source2: %name-files.req.list
+Patch: %name-alt-build.patch
 
-Requires: lua5 %download_helper
-
-BuildRequires: liblua5-devel >= %luaver
-BuildRequires: lua5 >= %luaver
-BuildRequires: %download_helper
-
-BuildArch: noarch
+Requires: wget p7zip
+BuildPreReq: rpm-macros-lua
+# Automatically added by buildreq on Wed Dec 15 2010
+BuildRequires: liblua5-devel lua5 lua5.1-alt-compat wget p7zip
 
 %description
-LuaRocks allows you to install Lua modules as self-contained packages
-called "rocks", which also contain version dependency
-information. This information is used both during installation, so
-that when one rock is requested all rocks it depends on are installed
-as well, and at run time, so that when a module is required, the
-correct version is loaded. LuaRocks supports both local and remote
-repositories, and multiple local rocks trees.
+LuaRocks allows you to install Lua modules as self-contained
+packages called "rocks", which also contain version dependency
+information. This information is used both during installation,
+so that when one rock is requested all rocks it depends on are
+installed as well, and at run time, so that when a module is
+required, the correct version is loaded. LuaRocks supports both
+local and remote repositories, and multiple local rocks trees.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 
 %build
-./configure --prefix=%{_prefix} \
-            --lua-version=%{luaver} \
-            --with-lua-dir=%{_datadir}/lua5 \
-            --with-downloader=%download_helper
-%make_build
+./configure --prefix=%prefix
+make
 
 %install
-%make DESTDIR=%buildroot install 
-        
-# fix symlinks to versioned binaries
-for f in luarocks{,-admin};
-do
-  mv -f $RPM_BUILD_ROOT%{_bindir}/$f{-%{luaver},}
-done
+%makeinstall_std
+mkdir -p %buildroot{%lua_modulesdir/%name/,%luarocks_dbdir/,%_rpmlibdir/}
 
+#move arch-dependent parts
+# pending https://github.com/keplerproject/luarocks/issues/86
+mv %buildroot%lua_modulesdir_noarch/%name/\
+site_config.lua \
+	%buildroot%lua_modulesdir/%name
+#enable lib -> lib64 right path settings
+LIBSUBDIR=`echo %_libdir | sed 's|/usr/||'`
+echo 'lib_modules_path = "/lib/lua/"..lua_version' | \
+	sed "s|/lib/|/$LIBSUBDIR/|" >> \
+	`eval echo "%buildroot%_sysconfdir/%name/config-*.lua"`
+SITECFG_ADDITION="site_config.LUAROCKS_EXTERNAL_DEPS_SUBDIRS =\\
+    {\\
+      bin = \"bin\",\\
+      lib = \"$LIBSUBDIR\",\\
+      include = \"include\"\\
+    }\\
+"
+sed -i "/^return/ i $SITECFG_ADDITION" \
+	%buildroot%lua_modulesdir/%name/site_config.lua
+
+#%%ghost
+touch %buildroot%luarocks_dbdir/{index.html,manifest}
+# RPM triggers
+install -m755 %SOURCE1 %buildroot%_rpmlibdir/
+install -m644 %SOURCE2 %buildroot%_rpmlibdir/
 
 %files
-%doc COPYING* README.md
-%dir %{_sysconfdir}/luarocks
-%config(noreplace) %{_sysconfdir}/luarocks/config-%{luaver}.lua
-%{_bindir}/luarocks
-%{_bindir}/luarocks-admin
-%_datadir/lua5/luarocks
+%_sysconfdir/%name
+%_bindir/%{name}*
+%dir %_prefix/lib/luarocks
+%dir %luarocks_dbdir
+%ghost %luarocks_dbdir/index.html
+%ghost %luarocks_dbdir/manifest
+%_rpmlibdir/%{name}*
+%lua_modulesdir/%name
+%lua_modulesdir_noarch/%name
+%doc COPYING README*
 
 %changelog
+* Fri Aug 15 2014 Ildar Mulyukov <ildar@altlinux.ru> 2.2.0-alt0.rc1
+- new version
+- ignored Vladimir Didenko's <cow@> releases
+
 * Fri Jul 4 2014 Vladimir Didenko <cow@altlinux.org> 2.1.2-alt1
 - new version
 
-* Sat Aug 31 2013 Vladimir Didenko <cow@altlinux.org> 2.1.0-alt1
-- Initial build
+* Thu Jul 12 2012 Ildar Mulyukov <ildar@altlinux.ru> 2.0.9-alt0.rc1
+- new version
+- convert lib64 fix into a configuration
+- add ghost files for proper clean on uninstall
+
+* Tue Jan 11 2011 Ildar Mulyukov <ildar@altlinux.ru> 2.0.4-alt0.rc3
+- initial build for ALT Linux Sisyphus
