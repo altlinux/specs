@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -100,7 +100,7 @@ Patch1034: kdebase-workspace-4.7.1-alt-systemsettings-desktop.patch
 Patch1035: kdebase-workspace-4.6.0-alt-disable-effect-startupfeedback.patch
 Patch1036: kdebase-workspace-4.6.3-alt-kdm-apply-colors.patch
 Patch1037: kdebase-workspace-4.6.4-alt-hide-printer-config.patch
-#
+Patch1038: kdebase-workspace-4.8.5-alt-session-exclude.patch
 Patch1039: kdebase-workspace-4.8.4-alt-digitalclock-compactdate.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
 Patch1041: kdebase-workspace-4.8.0-alt-def-gllegacy.patch
@@ -544,7 +544,7 @@ __EOF__
 %patch1035 -p1
 %patch1036 -p1
 %patch1037 -p1
-#
+%patch1038 -p1
 %patch1039 -p1
 %patch1040 -p1
 %patch1041 -p1
@@ -909,6 +909,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Aug 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2
+- don't save mirall in session by default
+
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Wed Aug 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 
