@@ -1,5 +1,5 @@
 Name: nautilus-sound-converter
-Version: 3.0.1
+Version: 3.0.2
 Release: alt1
 Summary: Nautilus extension to convert audio files
 
@@ -57,5 +57,8 @@ fi
 %exclude %nautilus_extdir/*.la
 
 %changelog
+* Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 3.0.2-alt1
+- 3.0.2
+
 * Wed Mar 14 2012 Alexey Shabalin <shaba@altlinux.ru> 3.0.1-alt1
 - Initial build.
