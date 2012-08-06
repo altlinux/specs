@@ -4,7 +4,7 @@
 %define beta %nil
 
 Name: wget
-Version: 1.13.4
+Version: 1.14
 Release: alt1
 
 Summary: An utility for retrieving files using the HTTP, HTTPS or FTP protocols
@@ -13,7 +13,7 @@ Group: Networking/WWW
 
 Url: http://www.gnu.org/software/wget/wget.html
 Source: ftp://ftp.gnu.org/gnu/wget/%name-%version.tar
-Patch1: %name-1.9.1-alt-texinfo.patch
+Patch1: %name-1.14-alt-texinfo.patch
 Patch2: %name-1.6-mdk-passive_ftp.patch
 Patch3: %name-1.7-alt-locale.patch
 Patch10: wget-1.10.1-alt-ntlm-buffer.patch
@@ -106,7 +106,7 @@ GNU Wget - це утил╕та командного рядка для отримання файл╕в по
 прокс╕-сервер╕в, налаштовуван╕сть.
 
 %prep
-%setup -n %name-%version
+%setup
 
 # Fix docs and samples.
 rm -f doc/*.info*
@@ -114,7 +114,7 @@ find doc -type f -print0 |
 	xargs -r0 grep -FZl /usr/local/ -- |
 	xargs -r0 sed -i 's,/usr/local/,/,g' --
 
-%patch1 -p1
+%patch1 -p2
 %patch10 -p1
 
 %build
@@ -141,6 +141,9 @@ find doc -type f -print0 |
 #   so far it's a bit too churny
 
 %changelog
+* Mon Aug 06 2012 Michael Shigorin <mike@altlinux.org> 1.14-alt1
+- 1.14 (thx opennet.ru for heads-up)
+
 * Sun Sep 25 2011 Michael Shigorin <mike@altlinux.org> 1.13.4-alt1
 - 1.13.4 (NB: moved to gnutls by default)
 - built with openssl specifically
