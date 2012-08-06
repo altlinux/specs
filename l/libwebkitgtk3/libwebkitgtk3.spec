@@ -35,8 +35,8 @@
 
 Summary: Web browser engine
 Name: libwebkitgtk3
-Version: 1.8.1
-Release: alt2
+Version: 1.8.2
+Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
 Url: http://www.webkitgtk.org/
@@ -57,7 +57,7 @@ BuildRequires: flex >= 2.5.33
 BuildRequires: gperf libjpeg-devel libpng-devel
 BuildRequires: libxml2-devel >= 2.6
 BuildRequires: libXt-devel
-BuildRequires: libgtk+3-devel >= 3.0
+BuildRequires: libgtk+3-devel >= 3.4.0
 BuildRequires: libgail3-devel >= 3.0
 BuildRequires: libenchant-devel >= 0.22
 BuildRequires: libsqlite3-devel >= 3.0
@@ -329,6 +329,9 @@ mkdir -p DerivedSources/InjectedBundle
 %endif
 
 %changelog
+* Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1
+- 1.8.2
+
 * Fri May 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1.8.1-alt2
 - update and cleanup configure option
 - enable some features:
