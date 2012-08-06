@@ -1,6 +1,6 @@
 
 Name: openconnect
-Version: 3.20
+Version: 4.06
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -10,12 +10,12 @@ Url: http://www.infradead.org/openconnect.html
 
 Source: %name-%version.tar
 Patch0: openconnect-snapshot.patch
-Patch1: %name-%version-alt-fix.patch
 
 Requires: lib%name = %version-%release
 
 BuildRequires: libssl-devel >= 0.9.8l-alt4
 BuildRequires: libxml2-devel libproxy-devel zlib-devel
+BuildRequires: libp11-kit-devel
 BuildRequires: vpnc-script
 BuildRequires: python-modules python-modules-xml groff-extra
 Requires: vpnc-script
@@ -44,11 +44,10 @@ developing applications that use %name.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 
 %build
 %autoreconf
-%configure --enable-static=no
+%configure --enable-static=no --with-system-cafile=/usr/share/ca-certificates/ca-bundle.crt
 echo "const char *openconnect_version_str = \"v%version\";" > version.c
 %make_build
 
@@ -70,6 +69,9 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 4.06-alt1
+- 4.06
+
 * Tue May 22 2012 Alexey Shabalin <shaba@altlinux.ru> 3.20-alt1
 - 3.20
 
