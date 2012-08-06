@@ -1,5 +1,5 @@
 Name: repocop-unittest-altlinux-policy
-Version: 0.28
+Version: 0.29
 Release: alt1
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Aug 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt1
+- added altlinux-policy-rpm-macros-packaging-rpm4
+
 * Thu Nov 10 2011 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
 - adapted for new fixscript syntax
 
