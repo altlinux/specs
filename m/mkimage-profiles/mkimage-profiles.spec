@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -61,6 +61,9 @@ cp -a * %buildroot%mpdir
 %doc README QUICKSTART
 
 %changelog
+* Mon Aug 06 2012 Michael Shigorin <mike@altlinux.org> 0.7.6-alt1
+- minor improvements
+
 * Mon Jul 30 2012 Michael Shigorin <mike@altlinux.org> 0.7.5-alt1
 - a bunch of fixups and cleanups
 
