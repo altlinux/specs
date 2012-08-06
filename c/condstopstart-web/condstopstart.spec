@@ -4,7 +4,7 @@
 #%%define branch_switch Mxx
 
 Name: condstopstart-web
-Version: 0.1
+Version: 0.2
 Release: %branch_release alt1
 
 Summary: Condstopstart for web serwers
@@ -15,6 +15,7 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 BuildArch: noarch
 
 Source: web-command.sh
+Source10: tmpfiles.conf
 
 Requires: %condstopstart_subsysdir
 Requires: %condstopstart_subsysrundir
@@ -43,11 +44,20 @@ for condcommand in condstop condstart condstop-rpm condstart-rpm; do
 	" $condcommandfile
 done
 
+install -D %SOURCE10 %buildroot%_sysconfdir/%name
+sed -i "
+	s|@RUNDIR@|%condstopstart_webrundir|g
+" %buildroot%_sysconfdir/%name
+
 %files
+%config %_sysconfdir/%name
 %attr(755,root,root) %dir %condstopstart_webdir/
 %attr(755,root,root) %dir %condstopstart_webrundir/
 %_sbindir/*
 
 %changelog
+* Mon Aug 06 2012 Aleksey Avdeev <solo@altlinux.ru> 0.2-alt1
+- Add %%_sysconfdir/%%name (Closes: #27608)
+
 * Mon Feb 13 2012 Aleksey Avdeev <solo@altlinux.ru> 0.1-alt1
 - Initial build for ALT Linux Sisyphus
