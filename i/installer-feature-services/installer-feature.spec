@@ -1,5 +1,5 @@
 Name: installer-feature-services
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Setup services for start/not start on boot
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Aug 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
+- direct systemctl call
+
 * Tue May 24 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
 - put errors to log, but not to console
 
