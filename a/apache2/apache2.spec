@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt2
+Release: %branch_release alt3
 
 License: %asl
 Group: System/Servers
@@ -60,6 +60,7 @@ Source11: apache2-alt-configs-2.1.tar
 Source12: README.ALT.ru_RU.KOI8-R
 Source13: apache2-alt-alternatives-0.3.0.tar
 Source14: README.ALT.ru_RU.UTF8
+Source15: tmpfiles.conf
 
 Source35: httpd2.init.Sisyphus
 Source36: htcacheclean.init
@@ -1082,6 +1083,9 @@ ln -s %apache2_dname-condstop %buildroot%condstopstart_webdir/%apache2_dname-con
 install -pD %SOURCE62 %buildroot%condstopstart_webdir/%apache2_dname-condstart
 install -pD %SOURCE63 %buildroot%condstopstart_webdir/%apache2_dname-condstart-rpm
 
+# Install config for tempfiles
+install -pD %SOURCE15 %buildroot%_sysconfdir/tmpfiles.d/%name
+
 # Substitute the real paths in configs
 find %buildroot%_sysconfdir original  %buildroot%_rpmlibdir %buildroot%condstopstart_webdir\
 		-type f -print0 \
@@ -1363,6 +1367,8 @@ exit 0
 %triggerpostun_webserver_cgi_bin_control -s symlink_root_noexec cgi-bin_printenv
 
 %files common
+%config %_sysconfdir/tmpfiles.d/%name
+
 %attr(2770,root,%apache2_group) %dir %apache2_proxycachedir/
 %attr(750,root,%apache2_group) %dir %apache2_spooldir/
 %attr(2770,root,%apache2_group) %dir %apache2_spooldir/tmp/
@@ -1395,6 +1401,7 @@ exit 0
 %dir %apache2_libdir/
 %dir %apache2_moduledir/
 %attr(0750,root,%apache2_group) %dir %apache2_logfiledir/
+
 %dir %apache2_runtimedir/
 
 %config(noreplace) %apache2_confdir_inc/*.conf
@@ -1665,6 +1672,9 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Tue Aug 07 2012 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt3
+- Add %%_sysconfdir/tmpfiles.d/%%name (Closes: #27604)
+
 * Tue Feb 14 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt2
 - Add scripts for condstopstart-web
 
