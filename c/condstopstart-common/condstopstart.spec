@@ -4,7 +4,7 @@
 #%%define branch_switch Mxx
 
 Name: condstopstart-common
-Version: 0.2
+Version: 0.3
 Release: %branch_release alt1
 
 Summary: Common dirs for condstopstart-*
@@ -30,17 +30,20 @@ BuildPreReq: rpm-build-licenses
 install -d %buildroot%condstopstart_subsysdir/
 install -d %buildroot%condstopstart_subsysrundir/
 
-install -D %SOURCE10 %buildroot%_sysconfdir/%name
+install -D %SOURCE10 %buildroot%_sysconfdir/tmpfiles.d/%name
 sed -i "
 	s|@RUNDIR@|%condstopstart_subsysrundir|g
-" %buildroot%_sysconfdir/%name
+" %buildroot%_sysconfdir/tmpfiles.d/%name
 
 %files
-%config %_sysconfdir/%name
+%config %_sysconfdir/tmpfiles.d/%name
 %attr(755,root,root) %dir %condstopstart_subsysdir/
 %attr(755,root,root) %dir %condstopstart_subsysrundir/
 
 %changelog
+* Tue Aug  07 2012 Aleksey Avdeev <solo@altlinux.ru> 0.3-alt1
+- Fix: move %%_sysconfdir/%%name to %%_sysconfdir/tmpfiles.d/%%name
+
 * Mon Aug 06 2012 Aleksey Avdeev <solo@altlinux.ru> 0.2-alt1
 - Add %%_sysconfdir/%%name (Closes: #27607)
 
