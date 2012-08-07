@@ -2,7 +2,7 @@
 
 Summary: A syslog data viewer for the web
 Name: LogAnalyzer
-Version: 3.4.1
+Version: 3.4.4
 Release: alt1
 License: GPLv3+
 Group: Monitoring
@@ -46,6 +46,9 @@ ln -s ../../..%_sysconfdir/%name/config.php %buildroot%wwwdir/config.php
 %wwwdir/*
 
 %changelog
+* Tue Aug 07 2012 Michael Shigorin <mike@altlinux.org> 3.4.4-alt1
+- 3.4.4
+
 * Mon Mar 12 2012 Alexey Shabalin <shaba@altlinux.ru> 3.4.1-alt1
 - 3.4.1
 
