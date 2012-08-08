@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.52
+Release: alt100.53
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -506,6 +506,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Wed Aug 08 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.53
+- brp-fix-perms: fixed "find -perm" syntax.
+
 * Thu Jul 12 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.52
 - 0common-files.req.list: added /etc/sudoers.d directory.
 
