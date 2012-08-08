@@ -4,7 +4,7 @@
 
 Name: %base_name-%distro
 Version: 6.0.0
-Release: alt6
+Release: alt7
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
@@ -43,6 +43,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Wed Aug 08 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt7
+- add x86_64-i586 repo
+
 * Thu Jun 16 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt6
 - fixed x86_32 repo live generation
 
