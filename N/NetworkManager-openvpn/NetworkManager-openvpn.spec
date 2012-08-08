@@ -1,11 +1,11 @@
-%define nm_version 0.9.5.95
-%define nm_applet_version 0.9.5.95
+%define nm_version 0.9.6.0
+%define nm_applet_version 0.9.6.0
 %define git_date %nil
 #define git_date .git20111101
 %define gtkver 3
 
 Name: NetworkManager-openvpn
-Version: 0.9.5.95
+Version: 0.9.6.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -88,6 +88,9 @@ fi
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Wed Aug 08 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt1
+- Updated to 0.9.6.0.
+
 * Wed Jul 04 2012 Mikhail Efremov <sem@altlinux.org> 0.9.5.95-alt1
 - Updated to 0.9.5.95 (0.9.6-rc1).
 

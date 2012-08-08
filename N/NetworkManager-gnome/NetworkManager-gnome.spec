@@ -1,10 +1,10 @@
-%define nm_version 0.9.5.95
+%define nm_version 0.9.6.0
 #define git_date .git20120315
 %define git_date %nil
 %define gtkver 3
 
 Name: NetworkManager-gnome
-Version: 0.9.5.95
+Version: 0.9.6.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -115,6 +115,10 @@ fi
 %_pkgconfigdir/libnm-gtk.pc
 
 %changelog
+* Wed Aug 08 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt1
+- Fix some leaks (patch from upstream git).
+- Updated to 0.9.6.0.
+
 * Tue Jul 03 2012 Mikhail Efremov <sem@altlinux.org> 0.9.5.95-alt1
 - Treat warrnings as errors again.
 - Updated from upstream git (7e1c118eee).

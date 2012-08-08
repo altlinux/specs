@@ -1,12 +1,12 @@
-%define nm_version 0.9.5.95
-%define nm_applet_version 0.9.5.95
+%define nm_version 0.9.6.0
+%define nm_applet_version 0.9.6.0
 %define git_date %nil
 #define git_date .git20110314
 %define ppp_version 2.4.5
 %define gtkver 3
 
 Name: NetworkManager-pptp
-Version: 0.9.5.95
+Version: 0.9.6.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -91,6 +91,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Aug 08 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt1
+- Updated to 0.9.6.0.
+
 * Wed Jul 04 2012 Mikhail Efremov <sem@altlinux.org> 0.9.5.95-alt1
 - Updated to 0.9.5.95 (0.9.6-rc1).
 
