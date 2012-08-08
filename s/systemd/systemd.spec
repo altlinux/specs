@@ -11,7 +11,7 @@
 
 Name: systemd
 Version: 187
-Release: alt4
+Release: alt5
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -20,11 +20,10 @@ License: LGPLv2.1+
 Source:%name-%version.tar
 Source2: rc-local.service
 Source4: prefdm.service
-Source5: altlinux-loadmodules.service
 Source6: altlinux-idetune.service
 Source7: altlinux-update_chrooted.service
 Source8: altlinux-clock-setup.service
-Source9: modules.conf
+Source9: rtc.conf
 Source10: altlinux-swap.service
 Source11: altlinux-storage-init
 Source12: altlinux-storage-init.service
@@ -41,7 +40,6 @@ Source22: scsi_id.config
 Source23: var-lock.mount
 Source24: var-run.mount
 Source25: altlinux-storage-init-late.service
-Source26: altlinux-update_chrooted.service
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
 
@@ -327,8 +325,6 @@ install -m644 %SOURCE4 %buildroot%_unitdir/prefdm.service
 ln -s prefdm.service %buildroot%_unitdir/dm.service
 ln -s prefdm.service %buildroot%_unitdir/display-manager.service
 ln -s ../display-manager.service %buildroot%_unitdir/graphical.target.wants
-install -m644 %SOURCE5 %buildroot%_unitdir/altlinux-loadmodules.service
-ln -s ../altlinux-loadmodules.service %buildroot%_unitdir/sysinit.target.wants
 install -m644 %SOURCE6 %buildroot%_unitdir/altlinux-idetune.service
 ln -s ../altlinux-idetune.service %buildroot%_unitdir/sysinit.target.wants
 install -m644 %SOURCE7 %buildroot%_unitdir/altlinux-update_chrooted.service
@@ -352,8 +348,6 @@ ln -s ../altlinux-kmsg-loglevel.service %buildroot%_unitdir/sysinit.target.wants
 install -m755 %SOURCE18 %buildroot/lib/systemd/altlinux-save-dmesg
 install -m644 %SOURCE17 %buildroot%_unitdir/altlinux-save-dmesg.service
 ln -s ../altlinux-save-dmesg.service %buildroot%_unitdir/basic.target.wants
-install -m644 %SOURCE26 %buildroot%_unitdir/altlinux-update_chrooted.service
-ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/basic.target.wants
 install -m644 %SOURCE27 %buildroot%_unitdir/altlinux-first_time.service
 ln -s ../altlinux-first_time.service %buildroot%_unitdir/basic.target.wants
 
@@ -408,9 +402,13 @@ rm -f %buildroot%_sysconfdir/systemd/system/display-manager.service
 # And the default symlink we generate automatically based on inittab
 rm -f %buildroot%_sysconfdir/systemd/system/default.target
 
-# Add example file for module load
+# create modules.conf as a symlink to /etc/modules
 mkdir -p %buildroot%_sysconfdir/modules-load.d
-install -m644 %SOURCE9 %buildroot%_sysconfdir/modules-load.d/modules.conf
+ln -s ../modules %buildroot%_sysconfdir/modules-load.d/modules.conf
+
+# add load rtc module at boot time
+mkdir -p %buildroot/lib/modules-load.d
+install -m644 %SOURCE9 %buildroot/lib/modules-load.d/rtc.conf
 
 # Make sure the NTP units dir exists
 mkdir -p %buildroot/lib/systemd/ntp-units.d
@@ -581,11 +579,12 @@ fi
 
 %_sysconfdir/bash_completion.d/systemd
 /lib/tmpfiles.d/*.conf
+/lib/modules-load.d/*.conf
+%_sysconfdir/modules-load.d/modules.conf
 %_sysconfdir/xdg/systemd
 
 %config(noreplace) %_sysconfdir/dbus-1/system.d/*.conf
 %config(noreplace) %_sysconfdir/systemd/*.conf
-%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/modules-load.d/*.conf
 %ghost %config(noreplace) %_sysconfdir/hostname
 %ghost %config(noreplace) %_sysconfdir/vconsole.conf
 %ghost %config(noreplace) %_sysconfdir/locale.conf
@@ -789,6 +788,12 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Wed Aug 08 2012 Alexey Shabalin <shaba@altlinux.ru> 187-alt5
+- add rtc.conf to modules-load.d for load rtc kernel module at boot time
+- drop altlinux-loadmodules.service
+  add symlink /etc/modules-load.d/modules.conf -> /etc/modules
+- add export SYSTEMD_LOG_TARGET=syslog in udev init script for don't log to kmsg (ALT#27610)
+
 * Wed Aug 08 2012 Alexey Shabalin <shaba@altlinux.org> 187-alt4
 - call multipath and kpartx with -u
 - fix typo in altlinux-storage-init
