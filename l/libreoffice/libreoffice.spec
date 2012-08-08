@@ -1,6 +1,6 @@
 %define lo_name libreoffice
 %define ver_major 3.5
-%define lo_ver %ver_major.5.3
+%define lo_ver %ver_major.6.2
 %define src_url http://download.documentfoundation.org/libreoffice/src/%ver_major.2/
 %define with_lang ru de fr uk pt-BR es
 
@@ -18,7 +18,7 @@ Requires: java xdg-utils hunspell-en hyphen-en mythes-en
 Requires: gst-plugins-base gst-plugins-good gst-plugins-ugly gst-plugins-bad gst-ffmpeg
 Conflicts: openoffice.org < 3.3.0
 
-Source10: libreoffice-src-3.5.5.2.tar
+Source10: libreoffice-src-3.5.6.2.tar
 Source11: biblio.tar.bz2
 Source12: extras-3.1.tar.bz2
 
@@ -41,7 +41,6 @@ Source501: extras-templates.tar.bz2
 Patch11: openoffice.org-2.4.0-alt15443-sc-crach.patch
 Patch13: openoffice.org-2.3.0-alt-helpcontent2-default-css.patch
 Patch14: openoffice.org-2.3.1.1-alt-helpcontent2-default-css.patch
-Patch15: libreoffice-3.5.0.3-alt-ant.patch
 Patch16: libreoffice-3.5.0.3-alt-sysuserconfigdir.patch
 Patch17: openoffice.org-3.2.0-alt-disable-old-excel-word.patch
 Patch19: libreoffice-3.5.1.2-alt-basic-cur.patch
@@ -142,7 +141,6 @@ ln -s %_builddir/../SOURCES/%name-*-%version.tar.xz ext_sources/
 %patch11 -p1
 %patch13 -p0
 %patch14 -p0
-%patch15 -p1
 %patch16 -p1
 %patch17 -p0
 %patch19 -p0
@@ -316,6 +314,9 @@ unset RPM_PYTHON
 %files langpack-es -f %name.es.files
 
 %changelog
+* Wed Aug 08 2012 Valery Inozemtsev <shrek@altlinux.ru> 3.5.6.2-alt1
+- 3.5.6 RC2
+
 * Wed Jul 04 2012 Valery Inozemtsev <shrek@altlinux.ru> 3.5.5.3-alt1
 - 3.5.5 RC3
 
