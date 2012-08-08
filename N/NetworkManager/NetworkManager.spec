@@ -13,7 +13,7 @@
 %def_enable introspection
 
 Name: NetworkManager
-Version: 0.9.5.95
+Version: 0.9.6.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -303,6 +303,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Aug 08 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt1
+- Updated to 0.9.6.0.
+
 * Tue Jul 03 2012 Mikhail Efremov <sem@altlinux.org> 0.9.5.95-alt1
 - Treat warrnings as errors again.
 - Updated from upstream git (18b0ba499c).
