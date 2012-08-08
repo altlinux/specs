@@ -1,6 +1,6 @@
 Name: asterisk1.8
 Summary: Open source PBX
-Version: 1.8.14.1
+Version: 1.8.15.0
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -160,6 +160,7 @@ VoiceMail for Asterisk
 %package calendar
 Summary: Calendar support for Asterisk
 Group: %group
+Requires: %name = %version-%release
 
 %description calendar
 Calendar support for Asterisk
@@ -1202,6 +1203,9 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %_altdir/conf2ael-%version
 
 %changelog
+* Wed Aug 08 2012 Denis Smirnov <mithraen@altlinux.ru> 1.8.15.0-alt1
+- 1.8.15.0
+
 * Tue Jul 31 2012 Denis Smirnov <mithraen@altlinux.ru> 1.8.14.1-alt1
 - 1.8.14.1
 
