@@ -1,6 +1,6 @@
 Name: patch
 Version: 2.6.1
-Release: alt7
+Release: alt8
 
 Summary: The GNU patch command, for modifying/upgrading files
 License: GPLv3+
@@ -43,6 +43,10 @@ echo -n %version > .tarball-version
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Aug 08 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.1-alt8
+- Updated to v2.6.1-187-g9a37354 to fix another
+  git-style diff concatenation regression.
+
 * Fri Aug 03 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.1-alt7
 - Updated patch to v2.6.1-181-g1e6c0d0 (closes: #27359).
 - Built with gnulib v0.0-7557-gee60576.
