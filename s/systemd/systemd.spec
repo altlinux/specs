@@ -11,7 +11,7 @@
 
 Name: systemd
 Version: 187
-Release: alt3
+Release: alt4
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -789,6 +789,10 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Wed Aug 08 2012 Alexey Shabalin <shaba@altlinux.org> 187-alt4
+- call multipath and kpartx with -u
+- fix typo in altlinux-storage-init
+
 * Wed Aug 08 2012 Alexey Shabalin <shaba@altlinux.org> 187-alt3
 - run prefdm after getty.target
 - add rpm filetrigger for create tmpfiles
