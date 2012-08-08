@@ -12,8 +12,8 @@ Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet
 %def_disable halacl
 
 Name: hplip
-Version: 3.11.10
-Release: alt2
+Version: 3.12.6
+Release: alt1
 License: GPL/MIT/BSD
 Group: Publishing
 URL: http://hplip.sourceforge.net
@@ -85,9 +85,9 @@ Source201: hp-toolbox.wrapper
 Source202: hpijs.1
 
 #Patch0: 
-Patch1: hplip-2.8.5-alt-urlhandler.patch
+Patch1: hplip-3.12.6-alt-urlhandler.patch
 Patch2: hplip-3.9.12-alt-fix-udev-rules-ppdev.patch
-Patch3: hplip-3.11.5-alt-fix-udev-rules-usbdev.patch
+Patch3: hplip-3.12.6-alt-fix-udev-rules-usbdev.patch
 Patch4: hplip-3.9.12-alt-hplip-desktop.patch
 
 Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.patch
@@ -95,41 +95,37 @@ Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 
 # fedora patches
-Patch101: fedora-3.11.10-11-hplip-pstotiff-is-rubbish.patch
-Patch102: fedora-3.11.10-11-hplip-strstr-const.patch
-Patch103: fedora-3.11.10-11-hplip-ui-optional.patch
-Patch104: fedora-3.11.10-11-hplip-no-asm.patch
-Patch105: fedora-3.11.10-11-hplip-deviceIDs-drv.patch
-Patch106: fedora-3.11.10-11-hplip-mucks-with-spooldir.patch
-Patch107: fedora-3.11.10-11-hplip-udev-rules.patch
-Patch108: fedora-3.11.10-11-hplip-retry-open.patch
-Patch109: fedora-3.11.10-11-hplip-snmp-quirks.patch
-Patch110: fedora-3.11.10-11-hplip-discovery-method.patch
-Patch111: fedora-3.11.10-11-hplip-hpijs-marker-supply.patch
-Patch112: fedora-3.11.10-11-hplip-clear-old-state-reasons.patch
-Patch113: fedora-3.11.10-11-hplip-systray-dbus-exception.patch
-Patch114: fedora-3.11.10-11-hplip-hpcups-sigpipe.patch
-Patch115: fedora-3.11.10-11-hplip-fax-ppd.patch
-Patch116: fedora-3.11.10-11-hplip-bad-low-ink-warning.patch
-Patch117: fedora-3.11.10-11-hplip-deviceIDs-ppd.patch
-Patch118: fedora-3.11.10-11-hplip-skip-blank-lines.patch
-Patch119: fedora-3.11.10-11-hplip-dbglog-newline.patch
-Patch120: fedora-3.11.10-11-hplip-no-system-tray.patch
-Patch122: fedora-3.11.10-11-hplip-ppd-ImageableArea.patch
-Patch125: fedora-3.11.10-11-hplip-raw_deviceID-traceback.patch
-Patch126: fedora-3.11.10-11-hplip-UnicodeDecodeError.patch
-Patch127: fedora-3.11.10-11-hplip-emit-SIGNAL.patch
-Patch128: fedora-3.11.10-11-hplip-fab-root-crash.patch
-Patch129: fedora-3.11.10-11-hplip-addprinter.patch
-Patch130: fedora-3.11.10-11-hplip-dbus-exception.patch
-Patch131: fedora-3.11.10-11-hplip-hpaio-segfault.patch
-Patch132: fedora-3.11.10-11-hplip-newline.patch
-Patch133: fedora-3.11.10-11-hplip-dbus-threads.patch
-Patch134: fedora-3.11.10-11-hplip-notification-exception.patch
-Patch135: fedora-3.11.10-11-hplip-CVE-2010-4267.patch
-Patch136: fedora-3.11.10-11-hplip-wifisetup.patch
-Patch137: fedora-3.11.10-11-hplip-hpaio-localonly.patch
-Patch138: fedora-3.11.10-11-hplip-top-margins-not-respected.patch
+Patch101: fedora-3.12.6-2-hplip-pstotiff-is-rubbish.patch
+Patch102: fedora-3.12.6-2-hplip-strstr-const.patch
+Patch103: fedora-3.12.6-2-hplip-ui-optional.patch
+Patch104: fedora-3.12.6-2-hplip-no-asm.patch
+Patch105: fedora-3.12.6-2-hplip-deviceIDs-drv.patch
+Patch106: fedora-3.12.6-2-hplip-mucks-with-spooldir.patch
+Patch107: fedora-3.12.6-2-hplip-udev-rules.patch
+Patch108: fedora-3.12.6-2-hplip-retry-open.patch
+Patch109: fedora-3.12.6-2-hplip-snmp-quirks.patch
+Patch110: fedora-3.12.6-2-hplip-discovery-method.patch
+Patch111: fedora-3.12.6-2-hplip-hpijs-marker-supply.patch
+Patch112: fedora-3.12.6-2-hplip-clear-old-state-reasons.patch
+Patch113: fedora-3.12.6-2-hplip-systray-dbus-exception.patch
+Patch114: fedora-3.12.6-2-hplip-hpcups-sigpipe.patch
+Patch115: fedora-3.12.6-2-hplip-fax-ppd.patch
+Patch116: fedora-3.12.6-2-hplip-bad-low-ink-warning.patch
+Patch117: fedora-3.12.6-2-hplip-deviceIDs-ppd.patch
+Patch118: fedora-3.12.6-2-hplip-skip-blank-lines.patch
+Patch119: fedora-3.12.6-2-hplip-dbglog-newline.patch
+Patch120: fedora-3.12.6-2-hplip-release-parport.patch
+Patch121: fedora-3.12.6-2-hplip-ppd-ImageableArea.patch
+Patch122: fedora-3.12.6-2-hplip-raw_deviceID-traceback.patch
+Patch123: fedora-3.12.6-2-hplip-UnicodeDecodeError.patch
+Patch124: fedora-3.12.6-2-hplip-addprinter.patch
+Patch125: fedora-3.12.6-2-hplip-dbus-exception.patch
+Patch126: fedora-3.12.6-2-hplip-notification-exception.patch
+Patch127: fedora-3.12.6-2-hplip-CVE-2010-4267.patch
+Patch128: fedora-3.12.6-2-hplip-wifisetup.patch
+Patch129: fedora-3.12.6-2-hplip-makefile-chgrp.patch
+Patch130: fedora-3.12.6-2-hplip-hpaio-localonly.patch
+
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -149,9 +145,9 @@ Group: Publishing
 Requires: %name-common = %version-%release
 
 %description hpcups
-Hpcups driver is a raster driver that produces printer-ready-bits. 
+Hpcups driver is a raster driver that produces printer-ready-bits.
 The hpcups driver only works CUPS. Hpcups does not use the APDK, but
-is based on re-purposed APDK code. 
+is based on re-purposed APDK code.
 
 %if_enabled python_code
 %package gui
@@ -184,12 +180,15 @@ Requires: %name-PPDs >= %version-%release
 %endif
 
 %description gui
-HPLIP is an HP developed solution for printing, scanning, and faxing with HP inkjet and laser based printers in Linux.
+HPLIP is an HP developed solution for printing, scanning, and faxing
+with HP inkjet and laser based printers in Linux.
 
-The HPLIP project provides printing support for nearly 1000 printer models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy), Business Inkjet, LaserJet, and LaserJet MFP.
+The HPLIP project provides printing support for nearly 1000 printer
+models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
+Business Inkjet, LaserJet, and LaserJet MFP.
 
 This package contains the gui toolbox application for HPLIP,
-with which several tasks such as memory card access, 
+with which several tasks such as memory card access,
 ink/toner/battery/consumable level checking, and inkjet printer
 maintenance can be done.
 
@@ -202,12 +201,15 @@ Requires: %name-gui = %version-%release
 BuildArch: noarch
 
 %description gui-autostart
-HPLIP is an HP developed solution for printing, scanning, and faxing with HP inkjet and laser based printers in Linux.
+HPLIP is an HP developed solution for printing, scanning, and faxing
+with HP inkjet and laser based printers in Linux.
 
-The HPLIP project provides printing support for nearly 1000 printer models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy), Business Inkjet, LaserJet, and LaserJet MFP.
+The HPLIP project provides printing support for nearly 1000 printer
+models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
+Business Inkjet, LaserJet, and LaserJet MFP.
 
-This package contains the HPLIP gui toolbox application autostart file for GNOME, KDE
-and other freedesktop compatible desktop environments.
+This package contains the HPLIP gui toolbox application autostart file
+for GNOME, KDE and other freedesktop compatible desktop environments.
 %endif
 %endif
 
@@ -222,9 +224,11 @@ Requires: %name = %version-%release
 BuildArch: noarch
 
 %description recommends
-HPLIP is an HP developed solution for printing, scanning, and faxing with HP inkjet and laser based printers in Linux.
+HPLIP is an HP developed solution for printing, scanning, and faxing
+with HP inkjet and laser based printers in Linux.
 
-The HPLIP project provides printing support for nearly 1000 printer models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy), Business Inkjet, LaserJet, and LaserJet MFP.
+The HPLIP project provides printing support for nearly 1000 printer
+models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 
 This package is a virtual package that installs packages
 recommended for use with hplip.
@@ -238,9 +242,11 @@ Conflicts: udev-extras < 0.20090516-alt4
 %endif
 
 %description common
-HPLIP is an HP developed solution for printing, scanning, and faxing with HP inkjet and laser based printers in Linux.
+HPLIP is an HP developed solution for printing, scanning, and faxing
+with HP inkjet and laser based printers in Linux.
 
-The HPLIP project provides printing support for nearly 1000 printer models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy), Business Inkjet, LaserJet, and LaserJet MFP.
+The HPLIP project provides printing support for nearly 1000 printer
+models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 
 This package contains common libraries for
 The Hewlett-Packard  Inkjet  Driver  Project.
@@ -265,9 +271,11 @@ Requires:	foomatic-filters > 3.0.2-alt5
 BuildArch: noarch
 
 %description PPDs
-HPLIP is an HP developed solution for printing, scanning, and faxing with HP inkjet and laser based printers in Linux.
+HPLIP is an HP developed solution for printing, scanning, and faxing
+with HP inkjet and laser based printers in Linux.
 
-The HPLIP project provides printing support for nearly 1000 printer models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy), Business Inkjet, LaserJet, and LaserJet MFP.
+The HPLIP project provides printing support for nearly 1000 printer
+models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 
 
 %package ps-PPDs
@@ -280,9 +288,11 @@ Conflicts: %name-PPDs < %version
 BuildArch: noarch
 
 %description ps-PPDs
-HPLIP is an HP developed solution for printing, scanning, and faxing with HP inkjet and laser based printers in Linux.
+HPLIP is an HP developed solution for printing, scanning, and faxing
+with HP inkjet and laser based printers in Linux.
 
-The HPLIP project provides printing support for nearly 1000 printer models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy), Business Inkjet, LaserJet, and LaserJet MFP.
+The HPLIP project provides printing support for nearly 1000 printer
+models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 
 This package contains postscript printer definition files (PPDs) for postscript HP printers.
 
@@ -297,9 +307,11 @@ Conflicts: %name-PPDs < %version
 BuildArch: noarch
 
 %description hpcups-PPDs
-HPLIP is an HP developed solution for printing, scanning, and faxing with HP inkjet and laser based printers in Linux.
+HPLIP is an HP developed solution for printing, scanning, and faxing
+with HP inkjet and laser based printers in Linux.
 
-The HPLIP project provides printing support for nearly 1000 printer models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy), Business Inkjet, LaserJet, and LaserJet MFP.
+The HPLIP project provides printing support for nearly 1000 printer
+models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 
 This package contains postscript printer definition files (PPDs) for hpcups cups driver.
 
@@ -314,9 +326,11 @@ Conflicts: %name-PPDs < %version
 BuildArch: noarch
 
 %description hpijs-PPDs
-HPLIP is an HP developed solution for printing, scanning, and faxing with HP inkjet and laser based printers in Linux.
+HPLIP is an HP developed solution for printing, scanning, and faxing
+with HP inkjet and laser based printers in Linux.
 
-The HPLIP project provides printing support for nearly 1000 printer models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy), Business Inkjet, LaserJet, and LaserJet MFP.
+The HPLIP project provides printing support for nearly 1000 printer
+models, including Deskjet, Officejet, Photosmart, PSC (Print Scan Copy),
 
 This package contains postscript printer definition files (PPDs) for hpijs cups driver.
 %endif
@@ -400,13 +414,30 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 %patch104 -p1 -b .no-asm
 
 # Corrected several IEEE 1284 Device IDs using foomatic data.
-# HP LaserJet P1007 (bug #585272).
-# HP Color LaserJet CM1312nfi (bug #581005).
-# HP Color LaserJet 3800 (bug #581935).
-# HP Color LaserJet 2840 (bug #582215).
-# HP Color LaserJet CP1518ni (bug #613689).
-# HP Color LaserJet 2600n (bug #613712).
-# HP LaserJet Professional P1606dn (bug #708472).
+# Color LaserJet CM1312nfi (bug #581005)
+# Color LaserJet 3800 (bug #581935)
+# Color LaserJet 2840 (bug #582215)
+# Color LaserJet CP1518ni (bug #613689)
+# Color LaserJet 2600n (bug #613712)
+# Color LaserJet 2500/3700/4550/4600/4650/4700/5550/CP1515n/CP2025n
+#                CP3525/CP4520 Series/CM2320nf (bug #659040)
+# Color LaserJet CP2025dn (bug #651509)
+# Color LaserJet CM4730 MFP (bug #658831)
+# Color LaserJet CM3530 MFP (bug #659381)
+# LaserJet 4050 Series/4100 Series/2100 Series/4350/5100 Series/8000 Series
+#          P3005/P3010 Series/P4014/P4515 (bug #659039)
+# LaserJet Professional P1606dn (bug #708472)
+# LaserJet Professional M1212nf MFP (bug #742490)
+# LaserJet M1536dnf MFP (bug #743915)
+# LaserJet M1522nf MFP (bug #745498)
+# LaserJet M1319f MFP (bug #746614)
+# LaserJet M1120 MFP (bug #754139).
+# LaserJet P1007 (bug #585272)
+# LaserJet P1505 (bug #680951)
+# LaserJet P2035 (Ubuntu #917703)
+# PSC 1600 series (bug #743821)
+# Officejet 6300 series (bug #689378)
+# LaserJet Professional P1102w (bug #795958)
 %patch105 -p1 -b .deviceIDs-drv
 chmod +x %{SOURCE102}
 mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
@@ -466,55 +497,49 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # Added missing newline to string argument in dbglog() call (bug #585275).
 %patch119 -p1 -b .dbglog-newline
 
-# Wait longer to see if a system tray becomes available (bug #569969).
-%patch120 -p1 -b .no-system-tray
+# Release parport if unsupported model connected (bug #699052).
+%patch120 -p1 -b .release-parport
 
 # Fix ImageableArea for Laserjet 8150/9000 (bug #596298).
-%patch122 -p1 -b .ImageableArea
+for ppd_file in $(grep '^diff' %{PATCH21} | cut -d " " -f 4);
+do
+  gunzip ${ppd_file#*/}.gz
+done
+%patch121 -p1 -b .ImageableArea
+for ppd_file in $(grep '^diff' %{PATCH21} | cut -d " " -f 4);
+do
+  gzip -n ${ppd_file#*/}
+done
 
 # Fixed traceback on error condition in device.py (bug #628125).
-%patch125 -p1 -b .raw_deviceID-traceback
+%patch122 -p1 -b .raw_deviceID-traceback
 
 # Avoid UnicodeDecodeError in printsettingstoolbox.py (bug #645739).
-%patch126 -p1 -b .UnicodeDecodeError
-
-# Don't emit SIGNALs in ui4.setupdialog.SetupDialog the PyQt3 way (bug #623834).
-%patch127 -p1 -b .emit-SIGNAL
-
-# Prevent hp-fab traceback when run as root.
-%patch128 -p1 -b .fab-root-crash
+%patch123 -p1 -b .UnicodeDecodeError
 
 # Call cupsSetUser in cupsext's addPrinter method before connecting so
 # that we can get an authentication callback (bug #538352).
-%patch129 -p1 -b .addprinter
+%patch124 -p1 -b .addprinter
 
 # Catch D-Bus exceptions in fax dialog (bug #645316).
-%patch130 -p1 -b .dbus-exception
-
-# Prevent hpaio segfaulting on invalid URIs (bug #649092).
-%patch131 -p1 -b .hpaio-segfault
-
-# Another missing newline in filter output (Ubuntu #418053).
-%patch132 -p1 -b .newline
-
-# Enable D-Bus threading (and require pygobject2) (bug #600932).
-%patch133 -p1 -b .dbus-threads
+%patch125 -p1 -b .dbus-exception
 
 # Catch GError exception when notification showing failed (bug #665577).
-%patch134 -p1 -b .notification-exception
+%patch126 -p1 -b .notification-exception
 
 # Applied patch to fix CVE-2010-4267, remote stack overflow
 # vulnerability (bug #670252).
-%patch135 -p1 -b .CVE-2010-4267
+%patch127 -p1 -b .CVE-2010-4267
 
 # Avoid KeyError in ui4/wifisetupdialog.py (bug #680939).
-%patch136 -p1 -b .wifisetup
+%patch128 -p1 -b .wifisetup
+
+# Don't run 'chgrp lp /var/log/hp' in makefile
+%patch129 -p1 -b .chgrp
 
 # Pay attention to the SANE localOnly flag in hpaio (bug #743593).
-%patch137 -p1 -b .hpaio-localonly
+%patch130 -p1 -b .hpaio-localonly
 
-# revert prnt/hpcups/HPCupsFilter.cpp 3.11.5->3.11.7 change (bug #738089).
-%patch138 -p1 -b .top-margins-not-respected
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -673,6 +698,16 @@ rm -f $RPM_BUILD_ROOT%_datadir/%name/%name
 rm -f $RPM_BUILD_ROOT%_datadir/%name/hplip_readme.html
 rm -f $RPM_BUILD_ROOT%_datadir/%name/hplip_overview.png
 rm -f $RPM_BUILD_ROOT%_datadir/%name/COPYING
+
+# fedora
+rm -f %{buildroot}%{_datadir}/hplip/hplip-install
+rm -rf %{buildroot}%{_datadir}/hplip/install.*
+rm -f %{buildroot}%{_datadir}/hplip/uninstall.*
+rm -f %{buildroot}%{_bindir}/hp-uninstall
+rm -f %{buildroot}%{_datadir}/hplip/upgrade.*
+rm -f %{buildroot}%{_bindir}/hp-upgrade
+rm -f %{buildroot}%{_bindir}/hp-config_usb_printer
+rm -f %{buildroot}%{_datadir}/hplip/config_usb_printer.*
 %endif # python_code
 
 # Install other files for HPIJS
@@ -722,6 +757,10 @@ echo hpaio > %{buildroot}%{_sysconfdir}/sane.d/dll.d/hpaio
 # SELinux file context (bug #564551).
 mkdir -p %{buildroot}%{_datadir}/hplip/prnt/plugins
 
+# traditional place for udev rules
+mkdir -p %{buildroot}/lib
+mv %{buildroot}/usr/lib/udev %{buildroot}/lib/
+
 %pre
 # no more services
 if [ -f %_initrddir/%name ]; then
@@ -765,9 +804,12 @@ fi
 %_prefix/lib/cups/backend/hpfax
 # python
 %{_bindir}/hp-align
+%{_bindir}/hp-check-plugin
 %{_bindir}/hp-clean
 %{_bindir}/hp-colorcal
 %{_bindir}/hp-devicesettings
+%{_bindir}/hp-diagnose_plugin
+%{_bindir}/hp-diagnose_queues
 %{_bindir}/hp-fab
 %{_bindir}/hp-faxsetup
 %{_bindir}/hp-firmware
@@ -795,9 +837,12 @@ fi
 # Files
 %dir %{_datadir}/hplip
 %{_datadir}/hplip/align.py*
+%{_datadir}/hplip/check-plugin.py*
 %{_datadir}/hplip/clean.py*
 %{_datadir}/hplip/colorcal.py*
 %{_datadir}/hplip/devicesettings.py*
+%{_datadir}/hplip/diagnose_plugin.py*
+%{_datadir}/hplip/diagnose_queues.py*
 %{_datadir}/hplip/fab.py*
 %{_datadir}/hplip/fax
 #exclude %{_datadir}/hplip/fax/pstotiff*
@@ -845,7 +890,8 @@ fi
 %{_datadir}/hplip/prnt
 %{_datadir}/hplip/scan
 %dir %_localstatedir/hp
-%_localstatedir/hp/hplip.state
+#%_localstatedir/hp/hplip.state
+%dir %attr(0775,root,lp) %{_var}/log/hp
 %endif
 
 %files hpcups
@@ -960,6 +1006,12 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Wed Aug 08 2012 Igor Vlasenko <viy@altlinux.ru> 3.12.6-alt1
+- new version
+
+* Tue Dec 20 2011 Igor Vlasenko <viy@altlinux.ru> 3.11.10-alt1.M60P.1
+- backport
+
 * Mon Dec 19 2011 Igor Vlasenko <viy@altlinux.ru> 3.11.10-alt2
 - updated fedora patches
 
