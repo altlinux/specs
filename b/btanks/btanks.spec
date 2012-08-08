@@ -2,7 +2,7 @@
 
 Name: btanks
 Version: 0.9.8083
-Release: alt4.1
+Release: alt5
 
 Summary: Battle Tanks is a funny battle on your desk
 
@@ -13,7 +13,7 @@ License: GPL
 Url: http://btanks.sourceforge.net/
 Source: %name-%version.tar
 
-BuildRequires: hd2u libalut-devel gcc-c++ ImageMagick  libSDL-devel libSDL_image-devel libsigc++2.0-devel libvorbis-devel pkgconfig scons zlib-devel libsmpeg-devel
+BuildRequires: hd2u libalut-devel gcc4.5-c++ ImageMagick  libSDL-devel libSDL_image-devel libsigc++2.0-devel libvorbis-devel pkgconfig scons zlib-devel libsmpeg-devel
 BuildRequires: liblua5-devel libexpat-devel libX11-devel libSM-devel libGL-devel libICE-devel
 BuildRequires: libopenal1-devel libXext-devel libXi-devel libXmu-devel
 BuildPreReq: chrpath
@@ -52,6 +52,10 @@ This package contains all data files for Battle Tanks
 
 %prep
 %setup -q -n %name-%version
+
+%set_gcc_version 4.5
+export CC=gcc-4.5 CXX=g++-4.5
+
 
 dos2unix     *.txt ChangeLog *.url LICENSE
 %__chmod 644 *.txt ChangeLog *.url LICENSE
@@ -145,6 +149,9 @@ done
 %_datadir/%name/data/*
 
 %changelog
+* Tue Aug 07 2012 Ilya Mashkin <oddity@altlinux.ru> 0.9.8083-alt5
+- fix build
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8083-alt4.1
 - Removed bad RPATH
 
