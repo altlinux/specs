@@ -6,7 +6,7 @@
 %define beta %nil
 
 Name: typo3_src
-Version: 4.5.16
+Version: 4.5.18
 Release: alt1
 
 Summary: A free, feature rich, Content Management Framework/System
@@ -90,6 +90,13 @@ ln -s %name-%version %buildroot%_datadir/%name-%t3branch
 %files -n typo3-apache2
 
 %changelog
+* Wed Aug 08 2012 Michael Shigorin <mike@altlinux.org> 4.5.18-alt1
+- 4.5.18: bugfixes
+
+* Wed Jul 04 2012 Michael Shigorin <mike@altlinux.org> 4.5.17-alt1
+- 4.5.17: security fixes (XSS in swfupload), see
+  https://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-003/
+
 * Tue May 22 2012 Michael Shigorin <mike@altlinux.org> 4.5.16-alt1
 - 4.5.16: bugfixes, see
   http://wiki.typo3.org/wiki/TYPO3_4.5.16#Changes
