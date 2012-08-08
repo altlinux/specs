@@ -1,7 +1,6 @@
 %define qversion 0.3.1.0
-%define qrelease alt2
 %define jversion 1.1.0
-%define jrelease alt2
+%define qrelease alt3
 
 Name: qutim
 Epoch: 5
@@ -91,7 +90,7 @@ IRC protocol support for qutIM
 Summary: Jabber protocol for %name
 Group: Networking/Instant messaging
 Requires: %name = %qversion-%qrelease
-Requires: libjreen >= %jversion-%jrelease
+Requires: libjreen >= %jversion-%qrelease
 
 %description -n %name-protocol-jabber
 Jabber protocol for qutIM
@@ -101,7 +100,6 @@ Jabber protocol for qutIM
 Summary: Jreen is extensible Qt-based asynchronious Jabber library
 Group: System/Libraries
 Version: %jversion
-Release: %jrelease
 
 %description -n libjreen
 Jreen is extensible Qt-based asynchronious Jabber library
@@ -111,8 +109,7 @@ Jreen is extensible Qt-based asynchronious Jabber library
 Summary: Jreen is extensible Qt-based asynchronious Jabber library
 Group: Development/C++
 Version: %jversion
-Release: %jrelease
-Requires: libjreen = %jversion-%jrelease
+Requires: libjreen = %jversion-%qrelease
 
 %description -n libjreen-devel
 Jreen is extensible Qt-based asynchronious Jabber library
@@ -971,6 +968,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS COPYING README.* ChangeLog
 
 %changelog
+* Wed Aug 08 2012 Nazarov Denis <nenderus@altlinux.org> 5:0.3.1.0-alt3
+- Remove release from subpackages (ALT #27622)
+
 * Mon Jul 30 2012 Sergey V Turchin <zerg@altlinux.org> 5:0.3.1.0-alt2
 - rebuilt with new attica
 
