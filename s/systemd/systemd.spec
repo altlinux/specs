@@ -11,7 +11,7 @@
 
 Name: systemd
 Version: 187
-Release: alt2
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -43,6 +43,7 @@ Source24: var-run.mount
 Source25: altlinux-storage-init-late.service
 Source26: altlinux-update_chrooted.service
 Source27: altlinux-first_time.service
+Source28: systemd-tmpfiles.filetrigger
 
 # udev rule generator
 Source31: rule_generator.functions
@@ -191,7 +192,7 @@ Requires: udev-rule-generator = %version-%release
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Conflicts: systemd < %version-%release
-Conflicts: hal
+Conflicts: hal DeviceKit
 
 %description -n udev
 Starting with the 2.5 kernel, all physical and virtual devices in a
@@ -517,6 +518,9 @@ install -p -m644 %SOURCE35 %buildroot/lib/udev/rules.d/
 
 echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
+# rpm posttrans filetriggers
+install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
+
 %post
 /bin/systemd-machine-id-setup > /dev/null 2>&1 || :
 /bin/systemctl daemon-reexec > /dev/null 2>&1 || :
@@ -608,6 +612,7 @@ fi
 /lib/udev/rules.d/73-seat-late.rules
 /lib/udev/rules.d/99-systemd.rules
 /%_lib/security/pam_systemd.so
+%_rpmlibdir/systemd-tmpfiles.filetrigger
 %_man1dir/*
 %exclude %_man1dir/init.*
 %_man5dir/*
@@ -784,6 +789,12 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Wed Aug 08 2012 Alexey Shabalin <shaba@altlinux.org> 187-alt3
+- run prefdm after getty.target
+- add rpm filetrigger for create tmpfiles
+- add Conflicts: DeviceKit (ALT#27612)
+- add ploop devices to skip rules (ALT#27083)
+
 * Wed Aug 01 2012 Alexey Shabalin <shaba@altlinux.ru> 187-alt2
 - update network.service
 - add a storage setup after cryptsetup.target
