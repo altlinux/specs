@@ -1,7 +1,7 @@
 Name: getstream
 Summary: DVB to multicast streamer
 Version: 20120411
-Release: alt1
+Release: alt2
 License: GPL
 Group: Networking/Other
 Source: %name-%version.tar
@@ -50,6 +50,9 @@ mkdir -p %buildroot%_localstatedir/%name
 %dir %_localstatedir/%name
 
 %changelog
+* Thu Aug 09 2012 Alexei Takaseev <taf@altlinux.org> 20120411-alt2
+- Add lsb-init headers to startscripts
+
 * Sat May 26 2012 Alexei Takaseev <taf@altlinux.org> 20120411-alt1
 - new version
 
