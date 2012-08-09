@@ -9,7 +9,7 @@
 %define net_module_adaptor_name	vboxnetadp
 
 %define kversion	2.6.32
-%define krelease	alt71
+%define krelease	alt73
 %define flavour		ovz-el
 
 %define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
@@ -19,7 +19,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.71
+Release: %module_release.132640.73
 License: GPL
 Group: System/Kernel and hardware
 
@@ -101,8 +101,8 @@ cp kernel-source-%drv_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1.132640.71
-- Build for kernel-image-ovz-el-2.6.32-alt71.
+* Wed Aug 08 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.18-alt1.132640.73
+- Build for kernel-image-ovz-el-2.6.32-alt73.
 
 * Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
 - Update to new release

@@ -1,9 +1,9 @@
 %define module_name	virtualbox-addition
 %define module_version	4.1.18
-%define module_release	alt1
+%define module_release	alt2
 
 %define kversion	2.6.32
-%define krelease	alt71
+%define krelease	alt73
 %define flavour		ovz-el
 
 %define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.71
+Release: %module_release.132640.73
 License: GPL
 Group: System/Kernel and hardware
 
@@ -53,8 +53,8 @@ PreReq: kernel-image-%flavour = %kversion-%krelease
 Requires(postun): kernel-image-%flavour = %kversion-%krelease
 ExclusiveArch: %ix86 x86_64
 
-%if "%flavour" == "el-smp"
-Patch1: fix-build-on-el-smp.patch
+%if "%flavour" == "ovz-el"
+Patch1: ovz-el-fix-build.patch
 %endif
 
 %description
@@ -67,7 +67,7 @@ that are needed for additonal guests support for VirtualBox.
 %__tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
 %__tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 
-%if "%flavour" == "el-smp"
+%if "%flavour" == "ovz-el"
 %patch1 -p1
 %endif
 
@@ -102,8 +102,11 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1.132640.71
-- Build for kernel-image-ovz-el-2.6.32-alt71.
+* Wed Aug 08 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.18-alt2.132640.73
+- Build for kernel-image-ovz-el-2.6.32-alt73.
+
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt2
+- Remove old patch for el-smp
 
 * Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
 - Update to new release

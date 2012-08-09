@@ -3,14 +3,14 @@
 %define module_release          alt1
 
 %define kversion	2.6.32
-%define krelease	alt71
+%define krelease	alt73
 %define flavour		ovz-el
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.71
+Release: %module_release.132640.73
 
 Summary: E1000E Driver
 License: GPL
@@ -60,8 +60,8 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %module_dir
 
 %changelog
-* Wed Jun 27 2012 Anton Protopopov <aspsk@altlinux.org> 1.6.3-alt1.132640.71
-- Build for kernel-image-ovz-el-2.6.32-alt71.
+* Wed Aug 08 2012 Anton Protopopov <aspsk@altlinux.org> 1.6.3-alt1.132640.73
+- Build for kernel-image-ovz-el-2.6.32-alt73.
 
 * Tue Nov 15 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.6.3-alt1
 - New version

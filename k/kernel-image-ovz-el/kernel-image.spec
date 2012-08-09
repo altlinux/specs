@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt71
+Release: alt73
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -662,6 +662,12 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Sun Jul 29 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.32-alt73
+- Update to 042stab059.7
+
+* Tue Jul 24 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.32-alt72
+- Update to 042stab059.4
+
 * Wed Jun 27 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.32-alt71
 - Update to 042stab057.1
 
