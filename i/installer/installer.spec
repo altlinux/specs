@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.5.1
+Version: 1.6
 Release: alt1
 
 Summary: Installer common parts
@@ -26,8 +26,14 @@ Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc 
 Requires: eject
 # initinstall.d/10-vt.sh
 Requires: bash console-vt-tools
-# initinstall.d/30-hal.sh initinstall.d/50-removable preinstall.d/01-hal.sh
-# Requires: dbus hal
+
+Provides: installer-feature-autohostname
+Obsoletes: installer-feature-autohostname
+Provides: installer-feature-services
+Obsoletes: installer-feature-services
+Provides: installer-feature-copy-udev-rules-stage3
+Obsoletes: installer-feature-copy-udev-rules-stage3
+Requires: udev-rule-generator
 
 Requires: xorg-xvfb
 
@@ -47,6 +53,7 @@ Obsoletes: %name-stage3 < %version-%release
 Requires: alterator-wizardface alterator-notes
 # stage2 and stage3 are mutually exclusive
 Conflicts: %name-common-stage2
+
 
 %description common-stage3
 This package contains common installer stage3 files and dependencies.
@@ -68,6 +75,10 @@ This package contains common installer stage3 files and dependencies.
 %files common-stage3
 
 %changelog
+* Tue Aug 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6-alt1
+- included installer features: services, copy-udev-rules, autohostname,
+  
+
 * Fri Mar 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.5.1-alt1
 - dont't copy xorg.conf to destdir
 
