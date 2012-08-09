@@ -10,8 +10,8 @@
 %def_disable coredump
 
 Name: systemd
-Version: 187
-Release: alt5
+Version: 188
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -618,7 +618,7 @@ fi
 %_man7dir/*
 %exclude %_man7dir/udev*
 %_man8dir/*
-%exclude %_man8dir/systemd-udevd.*
+%exclude %_man8dir/systemd-udevd*
 %exclude %_man8dir/udevadm.*
 %exclude %_man8dir/udevd.*
 %exclude %_man8dir/halt.*
@@ -788,6 +788,11 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Thu Aug 09 2012 Alexey Shabalin <shaba@altlinux.ru> 188-alt1
+- 188
+- update prefdm.service
+- fix rule_generator.functions for udev > 185
+
 * Wed Aug 08 2012 Alexey Shabalin <shaba@altlinux.ru> 187-alt5
 - add rtc.conf to modules-load.d for load rtc kernel module at boot time
 - drop altlinux-loadmodules.service
