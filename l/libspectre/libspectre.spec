@@ -1,6 +1,6 @@
 Name: libspectre
-Version: 0.2.6
-Release: alt2.1
+Version: 0.2.7
+Release: alt1
 Group: System/Libraries
 Summary: A PostScript rendering library
 License: GPLv2+
@@ -37,7 +37,7 @@ developing applications that use %name.
 %make_build
 
 %install
-%makeinstall_std
+%make DESTDIR=%buildroot install
 
 %files
 %doc AUTHORS NEWS README TODO
@@ -49,6 +49,9 @@ developing applications that use %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.2.7-alt1
+- 0.2.7
+
 * Wed Sep 28 2011 Dmitry V. Levin <ldv@altlinux.org> 0.2.6-alt2.1
 - Rebuilt for debuginfo.
 
