@@ -2,7 +2,7 @@
 
 Name: krb5
 Version: 1.10.2
-Release: alt1.1
+Release: alt2
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -36,6 +36,7 @@ Patch15: krb5-fedora-trunk-7048.patch
 Patch16: krb5-1.10-alt-avoid-preprocessor-loop.patch
 Patch17: krb5-1.10.2-fedora-keytab-etype.patch
 Patch18: krb5-fedora-trunk-pkinit-anchorsign.patch
+Patch19: krb5-1.10.2-cve-2012-1015.patch
 
 BuildRequires: /dev/pts /proc
 %{?_with_test:buildrequires: tcsh dejagnu telnet}
@@ -156,6 +157,7 @@ MIT Kerberos.
 %patch16 -p3
 %patch17 -p2
 %patch18 -p2
+%patch19 -p2
 
 cat %SOURCE10 | while read manpage ; do
         mv "$manpage" "$manpage".in
@@ -371,6 +373,9 @@ install -p -m644 include/krb5/authdata_plugin.h \
 # {{{ changelog
 
 %changelog
+* Tue Aug 07 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.10.2-alt2
+- CVE-2012-1015
+
 * Thu Jul 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.2-alt1.1
 - Added necessary headers into lib%name-devel (ALT #27467)
 
