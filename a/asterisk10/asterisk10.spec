@@ -1,10 +1,10 @@
 Name: asterisk10
 Summary: Open source PBX
-Version: 10.4.0
+Version: 10.6.1
 Release: alt1
 License: GPL
 Group: System/Servers
-BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenh323_1.19-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
+BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
 BuildRequires: libtiff-devel
 BuildRequires: libiksemel-devel
 BuildRequires: libradiusclient-ng-devel
@@ -51,8 +51,7 @@ BuildPreReq: libss7-devel
 BuildPreReq: libtonezone-dahdi-devel
 BuildPreReq: dahdi-linux-headers
 BuildPreReq: libpri-devel
-BuildPreReq: libopenh323_1.19-devel libpw1.11-devel
-BuildPreReq: libSDL_sound-devel libexpat-devel
+BuildRequires: libexpat-devel
 BuildRequires: libmISDN-devel
 BuildPreReq: libspeex-devel
 BuildRequires: libcurl-devel
@@ -224,17 +223,6 @@ Requires: %name = %version-%release
 ZAP channel module for Asterisk
 %endif
 
-%if_with h323
-%package chan_h323
-Summary: H.323 channel support for Asterisk
-Group: System/Servers
-Requires: %name = %version
-
-%description chan_h323
-H.323 channel support for Asterisk PBX
-
-%endif
-
 %package chan_iax2
 Summary: IAX2 channel module for Asterisk
 Group: %group
@@ -366,9 +354,6 @@ Requires: %name-res_crypto = %version-%release
 Requires: %name-res_snmp = %version-%release
 %endif
 Requires: %name-sms = %version-%release
-%if_with h323
-Requires: %name-chan_h323 = %version-%release
-%endif
 Requires: %name-mysql = %version-%release
 Requires: %name-fax = %version-%release
 Requires: %name-sources = %version-%release
@@ -624,11 +609,7 @@ export CC=gcc
 %if_with hoard
     --with-hoard=/usr/include/hoard \
 %endif
-%if_with h323
-	--with-h323
-%else
 	--without-h323
-%endif
 pushd menuselect
 make libdir=%_libdir
 popd
@@ -644,7 +625,6 @@ menuselect/menuselect  \
     --enable app_meetme \
     --enable cdr_sqlite \
     --enable chan_vpb \
-    --enable chan_h323 \
     --enable res_fax_spandsp \
     --enable res_fax \
     --enable app_page \
@@ -938,7 +918,6 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astsample dsp
 %astsample meetme
 %_docdir/%name-%version/samples/extensions.lua
-%astsample usbradio
 %astsample res_config_sqlite
 %astsample phoneprov
 %astsample queuerules
@@ -1017,12 +996,6 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astmodule app_dahdiras
 %astmodule app_flash
 %astsample chan_dahdi
-%endif
-
-%if_with h323
-%files chan_h323
-%astmodule chan_h323
-%astsample h323
 %endif
 
 %files chan_iax2
@@ -1108,7 +1081,6 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %astsample smdi
 %astsample followme
 %astsample mgcp
-%astsample rpt
 %astsample rtp
 %astsample adsi
 %astsample alarmreceiver
@@ -1227,6 +1199,10 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %_altdir/conf2ael-%version
 
 %changelog
+* Thu Aug 09 2012 Denis Smirnov <mithraen@altlinux.ru> 10.6.1-alt1
+- 10.6.1
+- not build chan_h323 (use chan_ooh323 instead)
+
 * Sat May 05 2012 Denis Smirnov <mithraen@altlinux.ru> 10.4.0-alt1
 - 10.4.0
 
