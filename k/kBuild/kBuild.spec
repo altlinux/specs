@@ -1,7 +1,8 @@
+%def_disable    bootstrap
 %define         short_version 0.1.9998
 
 Name:           kBuild
-Version:        %short_version.r2546
+Version:        %short_version.r2578
 Release:        alt1
 License:        %gpl3plus
 Group:          Development/Other
@@ -13,11 +14,14 @@ Source:         %name-%version.tar.bz2
 Patch:          kBuild-0.1.9-strlcpy-linux.patch
 Patch1:         kBuild-0.1.5-dprintf.patch
 Patch2:         kBuild-0.1.3-escape.patch
-Patch3:         kBuild-0.1.9-bin-threaded-linux.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires:  cvs flex libacl-devel
 BuildRequires: perl-podlators
+
+%if_disabled bootstrap
+BuildRequires: kBuild
+%endif
 
 %description
 This is a GNU make fork with a set of scripts to simplify
@@ -47,7 +51,8 @@ Authors:
 %patch -p2
 %patch1 -p1
 %patch2 -p1
-%patch3 -p2
+chmod a+x kBuild/env.sh
+chmod a+x src/sed/configure
 
 %build
 %define bootstrap_mflags %_smp_mflags   \\\
@@ -60,8 +65,12 @@ Authors:
         MY_INST_MODE=0644               \\\
         MY_INST_BIN_MODE=0755
 
+%if_enabled bootstrap
 kBuild/env.sh --full make -f bootstrap.gmk %bootstrap_mflags
 kBuild/env.sh kmk rebuild PATH_INS=`pwd` %mflags
+%else
+kBuild/env.sh kmk %mflags
+%endif
 pod2man -c 'kBuild for ALT Linux' -r %name-%version dist/debian/kmk.pod |sed -e 's/Debian/ALT Linux/' > kmk.1
 
 %install
@@ -76,6 +85,10 @@ chmod a-x %buildroot%_datadir/%name/*/*kmk
 %_datadir/%name
 
 %changelog
+* Thu Aug 09 2012 Evgeny Sinelnikov <sin@altlinux.ru> 0.1.9998.r2578-alt1
+- Update to last unstable release from svn trunk (r2578)
+- Build without bootstrap
+
 * Sun Oct 30 2011 Evgeny Sinelnikov <sin@altlinux.ru> 0.1.9998.r2546-alt1
 - Update to last unstable release from svn trunk (r2546)
 
