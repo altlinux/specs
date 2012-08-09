@@ -3,10 +3,10 @@
 %def_disable static
 
 Name: pcsc-lite
-Version: 1.7.4
-Release: alt3
+Version: 1.8.5
+Release: alt1
 
-Summary: Muscle PCSC Framework for Linux
+Summary: PC/SC Lite smart card framework and applications
 License: %bsd
 Group: System/Servers
 
@@ -16,12 +16,10 @@ Source0: pcsc-lite-%version.tar
 
 Source1: pcscd.init
 Source2: pcsc-lite-pcscd.sysconfig
+Source3: pcsc-lite.tmpfiles
 
 Conflicts: libpcsclite < %version-%release
 Conflicts: libpcsclite > %version-%release
-
-# Automatically added by buildreq on Thu Sep 10 2009
-BuildRequires: flex tetex-latex
 
 BuildRequires: rpm-build-licenses libudev-devel perl-podlators
 
@@ -70,16 +68,16 @@ Static libraries for libpcsclite
 
 %prep
 %setup
+%__subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.in
 
 %build
 %autoreconf
 %configure \
     %{subst_enable static} \
-    --disable-libhal \
     --enable-debugatr \
     --enable-ipcdir=/var/run/pcscd \
     --enable-usbdropdir=%_libdir/pcsc/drivers \
-    #
+    --with-systemdsystemunitdir=%_unitdir
 
 %make_build
 
@@ -96,27 +94,45 @@ mkdir -p %buildroot%_sysconfdir/reader.conf.d
 mkdir -p %buildroot/var/run/pcscd
 mkdir -p %buildroot%_libdir/pcsc/drivers
 
+# enable pcscd socket activation
+mkdir -p %buildroot%_unitdir/sockets.target.wants
+ln -s ../pcscd.socket %buildroot%_unitdir/sockets.target.wants
+mkdir -p %buildroot/lib/tmpfiles.d
+install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
+
+%preun
+%preun_service pcscd
+
+%post
+%post_service pcscd
+
 %files
 %doc AUTHORS COPYING DRIVERS HELP NEWS README SECURITY TODO doc/README.DAEMON
 %dir %_sysconfdir/reader.conf.d/
 %config(noreplace) %_sysconfdir/sysconfig/pcscd
 %_initdir/pcscd
+%_unitdir/*
+/lib/tmpfiles.d/pcsc-lite.conf
 %_sbindir/pcscd
 #_bindir/make_hash_link.sh
 %_man5dir/*
 %_man8dir/*
 %dir %_libdir/pcsc
 %dir %_libdir/pcsc/drivers
-%dir /var/run/pcscd
+%ghost %dir /var/run/pcscd
 
 %files -n libpcsclite
 %_libdir/libpcsclite.so.*
 
 %files -n libpcsclite-devel
 %doc ChangeLog
+%_bindir/pcsc-spy
 %_libdir/libpcsclite.so
+%_libdir/libpcsclite.so
+%_libdir/libpcscspy.so*
 %_includedir/PCSC/
 %_libdir/pkgconfig/libpcsclite.pc
+%_man1dir/pcsc-spy.*
 
 %if_enabled static
 %files -n libpcsclite-devel-static
@@ -124,6 +140,10 @@ mkdir -p %buildroot%_libdir/pcsc/drivers
 %endif
 
 %changelog
+* Wed Aug 08 2012 Alexey Shabalin <shaba@altlinux.ru> 1.8.5-alt1
+- 1.8.5
+- add preun/post service scripts
+
 * Thu Aug 02 2012 Michael Shigorin <mike@altlinux.org> 1.7.4-alt3
 - disabled verbose logs by default (sysconfig)
 
