@@ -1,7 +1,7 @@
 Summary: Data and udev-rules for usb-modeswitch
 Name: usb-modeswitch-data 
-Version: 20110619
-Release: alt2
+Version: 20120531 
+Release: alt1
 License: GPL
 
 Group:  System/Configuration/Hardware
@@ -30,6 +30,9 @@ DESTDIR=%buildroot make install
 /lib/udev/rules.d/*
 
 %changelog
+* Thu Aug 09 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20120531-alt1
+- 2012-05-31
+
 * Tue Jul 12 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20110619-alt2
 - added "change" event processing (manowar@)
 
