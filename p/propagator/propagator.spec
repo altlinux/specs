@@ -3,7 +3,7 @@
 
 Name: propagator
 Version: 20101130
-Release: alt17
+Release: alt18
 
 Summary: 'Early userspace' set of binaries
 License: GPL
@@ -45,6 +45,9 @@ make \
 %_libdir/%name
 
 %changelog
+* Fri Aug 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20101130-alt18
+- modprobe --list changed to find
+
 * Mon May 28 2012 Mikhail Efremov <sem@altlinux.org> 20101130-alt17
 - init: Use devtmpfs for /dev if possible.
 
