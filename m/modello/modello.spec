@@ -1,11 +1,9 @@
-BuildRequires: xmlunit
-Patch33: modello-alt-maven3.patch
-BuildRequires: jaxb_2_1_api
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define version 1.3
-%define name modello
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,93 +33,73 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
-
-%define repo_dir    .m2/repository
-
-%define namedversion 1.3
-%define maven_settings_file %{_builddir}/%{name}-%{namedversion}/settings.xml
-
 Name:           modello
-Version:        1.3
-Release:        alt3_1jpp6
+Version:        1.5
+Release:        alt1_3jpp7
 Epoch:          0
 Summary:        Modello Data Model toolkit
-License:        MIT  
+License:        MIT
 Group:          Development/Java
 URL:            http://modello.codehaus.org/
-Source0:        %{name}-%{namedversion}.tgz
-# svn export https://svn.codehaus.org/modello/tags/modello-1.3/
-# tar czf modello-1.3.tgz modello-1.3/
-Source1:        modello.script
+Source0:        http://repo2.maven.org/maven2/org/codehaus/%{name}/%{name}/%{version}/%{name}-%{version}-source-release.zip
+
 Source2:        %{name}-jpp-depmap.xml
-Patch0:         modello-1.1-ModelloConvertersMojoTest.patch
-Patch1:         modello-1.1-ModelloJavaMojoTest.patch
-Patch99:        modello-maven-plugin-pom.patch
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-%if ! %{gcj_support}
+
+
 BuildArch:      noarch
-%endif
 
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: ant >= 0:1.7
-BuildRequires: maven2 >= 2.0.8
-BuildRequires: maven2-plugin-assembly
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven-doxia
-BuildRequires: maven-doxia-sitetools
-BuildRequires: maven2-plugin-plugin
-BuildRequires: apache-commons-parent
-BuildRequires: classworlds >= 0:1.1
-BuildRequires: dtdparser
-BuildRequires: geronimo-jpa-3.0-api
-BuildRequires: plexus-build-api
-BuildRequires: plexus-containers-container-default
-BuildRequires: plexus-containers-component-api
-BuildRequires: plexus-utils
-BuildRequires: plexus-velocity
-BuildRequires: excalibur-avalon-framework
-BuildRequires: stax_1_0_api
-BuildRequires: stax-utils
-BuildRequires: velocity
-BuildRequires: wstx
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  jpackage-utils >= 0:1.7.2
+BuildRequires:  maven
+BuildRequires:  maven-assembly-plugin
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-plugin-plugin
+BuildRequires:  maven-shared-reporting-impl
+BuildRequires:  maven-shared-invoker
+BuildRequires:  classworlds >= 0:1.1
+BuildRequires:  plexus-container-default
+BuildRequires:  plexus-utils
+BuildRequires:  plexus-velocity
+BuildRequires:  velocity
+BuildRequires:  maven-doxia
+BuildRequires:  maven-doxia-sitetools
+BuildRequires:  maven-doxia-tools
+BuildRequires:  plexus-build-api
+BuildRequires:  ws-jaxme
+BuildRequires:  xmlunit
+BuildRequires:  jpa_api = 3.0
+BuildRequires:  geronimo-parent-poms
 
+Requires:       classworlds >= 0:1.1
+Requires:       plexus-containers-container-default
+Requires:       plexus-build-api
+Requires:       plexus-utils
+Requires:       plexus-velocity
+Requires:       velocity
+Requires:       guava
+Requires:       xbean
 
-Requires: classworlds >= 0:1.1
-Requires: dtdparser
-Requires: jpa_3_0_api
-Requires: plexus-build-api
-Requires: plexus-container-default
-Requires: plexus-utils
-Requires: plexus-velocity
-Requires: stax_1_0_api
-Requires: stax-utils
-Requires: velocity
-
-
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
+Requires:          jpackage-utils
+Requires(post):    jpackage-utils
+Requires(postun):  jpackage-utils
 
 Provides:       modello-maven-plugin = %{epoch}:%{version}-%{release}
 Obsoletes:      modello-maven-plugin < 0:1.0-0.a8.3jpp
 Source44: import.info
 
 %description
-Modello is a Data Model toolkit in use by the 
+Modello is a Data Model toolkit in use by the
 http://maven.apache.org/maven2.
-It all starts with the Data Model. Once a data model is defined, 
-the toolkit can be used to generate any of the following at compile 
+It all starts with the Data Model. Once a data model is defined,
+the toolkit can be used to generate any of the following at compile
 time.
 Java POJOs of the model.
 Java POJOs to XML Writer (provided via xpp3 or dom4j).
@@ -134,98 +112,70 @@ Java model to [JPOX|http://www.jpox.org/] Mapping.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
-%patch0 -b .sav0
-%patch1 -b .sav1
-%patch99 -b .sav99
-find . -name release-pom.xml -exec rm -f '{}' \;
-for p in $(find . -name pom.xml); do
-    sed -i -e 's|<groupId>plexus</groupId>|<groupId>org.codehaus.plexus</groupId>|' $p
-done
-
-%patch33
+%setup -q 
 
 %build
 
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
-
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        -Dmaven.test.failure.ignore=true \
-        install
-
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        -Daggregate=true \
-        javadoc:javadoc
+# skip tests because we have too old xmlunit in Fedora now (1.0.8)
+mvn-rpmbuild \
+        -Dmaven.local.depmap.file=%{SOURCE2} \
+        -Dmaven.test.skip=true \
+        install javadoc:aggregate
 
 %install
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-for i in `find . -name pom.xml | grep -v \\\./pom.xml`; do
-        cp -p $i $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.`basename \`dirname $i\``.pom
-done
-
-# Depmap fragments
-for i in `find . -name pom.xml | grep -v \\\./pom.xml |  grep -v modello-plugins-sandbox`; do
+# poms and depmap fragments
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+for i in `find . -name pom.xml -not -path ./pom.xml -not -path "*src/it/*"`; do
     # i is in format ..../artifactid/pom.xml
-    artifactname=`basename \`dirname $i\` | sed -e s:^modello-::g`
+    cp -p $i $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.`basename \`dirname $i\``.pom
 
-    %add_to_maven_depmap org.codehaus.modello modello-$artifactname %{namedversion} JPP/%{name} $artifactname
+    artifactname=`basename \`dirname $i\` | sed -e s:^modello-::g`
+    %add_to_maven_depmap org.codehaus.modello modello-$artifactname %{version} JPP/%{name} $artifactname
 done
 
-cp -p pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.modello-modello.pom
-%add_to_maven_depmap org.codehaus.modello modello %{namedversion} JPP/%{name} modello
+cp -p pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.modello-modello.pom
+%add_maven_depmap JPP.modello-modello.pom
 
 # script
 install -d -m 755 $RPM_BUILD_ROOT%{_bindir}
-install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{_bindir}/%{name}
+%jpackage_script org.codehaus.modello.ModelloCli "" ""  "modello/core:modello/plugin-xpp3:modello/plugin-xml:guava:xbean:plexus/containers-container-default:plexus/utils:plexus/classworlds)" %{name} true
 
 # jars
+
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-for jar in $(find -type f -name "*.jar" | grep -E target/.*.jar); do 
-        install -m 644 $jar $RPM_BUILD_ROOT%{_javadir}/%{name}/`basename $jar |sed -e s:modello-::g`
+for jar in $(find -type f -name "*-%{version}.jar" | grep -E target/.*.jar); do
+        install -m 644 $jar $RPM_BUILD_ROOT%{_javadir}/%{name}/`basename $jar |sed -e s:modello-::g|sed -e s:-%{version}::g`
 done
 
-(cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{namedversion}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{namedversion}||g"`; done)
-
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/%{name}.conf`
+touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 
 %files
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/*.jar
-%attr(755,root,root) %{_bindir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
+%{_javadir}/%{name}
+%{_bindir}/*
 %{_mavendepmapfragdir}/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/*.jar.*
-%endif
+%config(noreplace,missingok) /etc/java/%{name}.conf
 
 %files javadoc
-%doc %{_javadocdir}/*
+%{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 10 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_3jpp7
+- new version
+
 * Fri Apr 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_1jpp6
 - fixed build with new plexus-containers
 
