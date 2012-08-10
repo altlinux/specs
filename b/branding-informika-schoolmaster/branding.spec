@@ -5,7 +5,7 @@
 
 Name: branding-%brand-schoolmaster
 Version: 6.0.0
-Release: alt40
+Release: alt41
 BuildArch: noarch
 
 %define theme %name
@@ -418,6 +418,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Aug 10 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt41
+- gix license content-type (ALT#27521)
+
+* Tue Jul 31 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt39.M60P.1
+- built for M60P
+
 * Tue Jul 31 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt40
 - fix bootloader menu items color
 - bump release
