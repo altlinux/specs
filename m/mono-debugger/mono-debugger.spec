@@ -2,7 +2,7 @@
 
 Name: mono-debugger
 Version: 2.10
-Release: alt1
+Release: alt2
 License: %mit
 URL: http://www.go-mono.com/
 Group: Development/Other
@@ -74,6 +74,9 @@ Libraries and header files for developing against mono-debugger.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Aug 10 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10-alt2
+- fix build (glib include)
+
 * Thu Feb 09 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10-alt1
 - 2.10
 
