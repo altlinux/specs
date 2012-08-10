@@ -1,5 +1,5 @@
 Name: zerofree
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: Utility to force unused ext2 inodes and blocks to zero
@@ -7,11 +7,10 @@ License: GPLv2
 Group: File tools
 
 Url: http://intgat.tigress.co.uk/rmy/uml/
-Source: http://intgat.tigress.co.uk/rmy/uml/%name-%version.tgz
-Source1: http://intgat.tigress.co.uk/rmy/uml/sparsify.c
-Source2: http://intgat.tigress.co.uk/rmy/uml/index.html
+Source0: %url/%name-%version.tgz
+Source1: %url/sparsify.c
+Source2: %url/index.html
 Source3: zerofree.sgml
-Patch: zerofree-1.0.2-alt-asneeded.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: libe2fs-devel
@@ -36,7 +35,6 @@ should be careful.
 
 %prep
 %setup
-%patch -p1
 cp -p %SOURCE1 .
 cp -p %SOURCE2 .
 
@@ -58,6 +56,10 @@ install -Dm644 zerofree.8 %buildroot%_man8dir/zerofree.8
 %_man8dir/zerofree.8*
 
 %changelog
+* Fri Aug 10 2012 Michael Shigorin <mike@altlinux.org> 1.0.3-alt1
+- dropped patch (merged upstream)
+- minor spec cleanup
+
 * Thu Aug 09 2012 Michael Shigorin <mike@altlinux.org> 1.0.2-alt1
 - initial build for ALT Linux Sisyphus
   + spec based on fedora and opensuse packages
