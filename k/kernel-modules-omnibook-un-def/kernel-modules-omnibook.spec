@@ -2,8 +2,8 @@
 %define module_version  20090714
 %define module_release	alt4
 
-%define kversion	3.5.0
-%define krelease	alt2
+%define kversion	3.5.1
+%define krelease	alt1
 %define flavour		un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -11,7 +11,7 @@
 Summary: Kernel module for some Toshiba and HP laptops
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197888.2
+Release: %module_release.197889.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -79,8 +79,8 @@ cp -pr misc %buildroot%_docdir/%name-%version-%release
 %doc %_docdir/%name-%version-%release
 
 %changelog
-* Thu Aug 02 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20090714-alt4.197888.2
-- Build for kernel-image-un-def-3.5.0-alt2.
+* Fri Aug 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20090714-alt4.197889.1
+- Build for kernel-image-un-def-3.5.1-alt1.
 
 * Tue Nov 15 2011 Anton Protopopov <aspsk@altlinux.org> 20090714-alt4
 - Fix build with 3.1.1

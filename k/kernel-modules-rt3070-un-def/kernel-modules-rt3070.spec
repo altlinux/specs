@@ -2,15 +2,15 @@
 %define module_release	alt3
 %define module_version	2.5.0.2
 
-%define kversion	3.5.0
-%define krelease	alt2
+%define kversion	3.5.1
+%define krelease	alt1
 %define flavour		un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197888.2
+Release: %module_release.197889.1
 
 Summary: Kernel module for Ralink rt3070 chipset
 
@@ -65,8 +65,8 @@ install -m644 -D os/linux/%{module_name}sta.ko %buildroot/%module_dir/%{module_n
 %module_dir
 
 %changelog
-* Thu Aug 02 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.5.0.2-alt3.197888.2
-- Build for kernel-image-un-def-3.5.0-alt2.
+* Fri Aug 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.5.0.2-alt3.197889.1
+- Build for kernel-image-un-def-3.5.1-alt1.
 
 * Mon Feb 06 2012 Anton Protopopov <aspsk@altlinux.org> 2.5.0.2-alt3
 - Fix build with 3+ kernels

@@ -2,8 +2,8 @@
 %define module_version	4.1.18
 %define module_release	alt1
 
-%define kversion	3.5.0
-%define krelease	alt2
+%define kversion	3.5.1
+%define krelease	alt1
 %define flavour		un-def
 
 %define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197888.2
+Release: %module_release.197889.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -118,8 +118,8 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Thu Aug 02 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.18-alt1.197888.2
-- Build for kernel-image-un-def-3.5.0-alt2.
+* Fri Aug 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.18-alt1.197889.1
+- Build for kernel-image-un-def-3.5.1-alt1.
 
 * Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.18-alt1
 - 4.1.18
