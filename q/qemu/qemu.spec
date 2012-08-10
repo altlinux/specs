@@ -124,7 +124,7 @@
 
 Name: qemu
 Version: 1.1.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -292,9 +292,21 @@ export CFLAGS="%optflags"
 	--disable-smartcard-nss \
 	--disable-usb-redir \
 	--disable-linux-aio
+
+# Please do not touch this
+sed -i "/TARGET_ARM/ {
+N
+/cpu_model/ s,any,cortex-a8,
+}" linux-user/main.c
+
+%make_build
+mv arm-linux-user/qemu-arm arm-linux-user/qemu-armh
+
+sed -i '/cpu_model =/ s,cortex-a8,arm926,' linux-user/main.c
 %make_build
 find -regex '.*linux-user/qemu.*' -perm 755 -exec mv '{}' '{}'.static ';'
 %make_build clean
+sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 %endif
 
 # non-GNU configure
@@ -483,6 +495,9 @@ fi
 %_defaultdocdir/%name-%version
 
 %changelog
+* Thu Aug 09 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt3
+- binfmt_misc: package two arm flavours, with defaults to armv5 and armv7
+
 * Wed Jul 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.0-alt2
 - reverted make check
 
