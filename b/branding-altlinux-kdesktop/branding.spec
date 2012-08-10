@@ -5,7 +5,7 @@
 
 Name: branding-%brand-kdesktop
 Version: 6.0.2
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 %define theme %name
@@ -418,6 +418,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Aug 10 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt4
+- gix license content-type
+
+* Wed Jul 18 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt2.M60P.1
+- built for M60P
+
 * Wed Jul 18 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt3
 - cleanup browser-qt colors
 
