@@ -2,7 +2,7 @@
 
 Name: mediawiki-extensions-%ShortName
 Version: 1.11
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
@@ -15,6 +15,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 License: GPLv2
 
 Requires: mediawiki-common >= 1.15.1-alt4
+
+Requires: dia
 
 Source: http://tools.wikimedia.de/~daniel/misc/Dia.tar
 
@@ -36,6 +38,7 @@ cat > %buildroot%_datadir/mediawiki/config/LocalSettings.d/50-%ShortName.php << 
 
 require_once("\$IP/extensions/%ShortName/%ShortName.php");
 
+$wgFileExtensions[] = 'dia';
 # The nominal width of a Dia file when rendered to png (default: 300px).
 # $wgDIANominalSize
 
@@ -50,6 +53,9 @@ EOF
 %_datadir/mediawiki/config/LocalSettings.d/50-%ShortName.php
 
 %changelog
+* Fri Aug 10 2012 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt2
+- add dia to requires
+
 * Fri Aug 10 2012 Vitaly Lipatov <lav@altlinux.ru> 1.11-alt1
 - initial build for ALT Linux Sisyphus
 
