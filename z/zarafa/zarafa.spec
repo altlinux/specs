@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.0
-Release: alt5
+Release: alt6
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -555,10 +555,14 @@ export LDFLAGS=-lphp-%_php5_version
 %_bindir/%name-fsck
 %_bindir/%name-passwd
 %_bindir/%name-stats
+%_bindir/%name-mailbox-permissions
+%_bindir/%name-set-oof
 %_man1dir/%name-admin.1*
 %_man1dir/%name-fsck.1*
 %_man1dir/%name-passwd.1*
 %_man1dir/%name-stats.1*
+%_man1dir/%name-mailbox-permissions.1*
+%_man1dir/%name-set-oof.1*
 %_man1dir/za-restore.1*
 %dir %licensepath/%name-utils
 %licensepath/%name-utils/LICENSE
@@ -677,6 +681,9 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Fri Aug 10 2012 Radik Usupov <radik@altlinux.org> 7.1.0-alt6
+- New upstreame snapshot (7.1.0rc3)
+
 * Thu Jul 19 2012 Radik Usupov <radik@altlinux.org> 7.1.0-alt5
 - New upstreame snapshot (7.1.0rc2)
 
