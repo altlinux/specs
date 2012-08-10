@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt3
+Release: %branch_release alt4
 
 License: %asl
 Group: System/Servers
@@ -85,7 +85,7 @@ Source63: server-condstart-rpm.sh
 # + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-%version-alt-all-0.1.patch
+Patch1: apache2-%version-alt-all-0.2.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2 >= 3.7
@@ -834,6 +834,7 @@ s|@LOCKFILE@|%apache2_httpdlockfile|g
 s|@RPMTRIGGERDIR@|%apache2_rpmfiletriggerdir|g
 s|@RPMTRIGGERSTARTFILE@|%apache2_rpmhttpdstartfile|g
 s|@RUNDIR@|%condstopstart_webrundir|g
+s|%%apache2_branch|%apache2_branch|g
 ' >> SetMacros.sed
 
 # Classify ab and logresolve as section 1 commands, as they are in /usr/bin
@@ -872,6 +873,8 @@ install -m 755 $WDIR/%apache2_dname %buildroot%apache2_sbindir/%apache2_dname.pe
 # Tune up executibles to co-exist with apache-ru
 #
 pushd %buildroot%apache2_sbindir
+#fix attributes of suexec for rpm build
+chmod 755 suexec
 %if "%apache2_branch" != ""
 #rename suexec binary to be named that apache is expect it to be
 mv suexec suexec%apache2_branch
@@ -879,13 +882,13 @@ mv suexec suexec%apache2_branch
 # rename tools
 # Maybe it's better to push ru-apache-devel before installing devel package
 rm envvars-std
-for tool in apxs checkgid dbmmanage envvars rotatelogs httxt2dbm; do
+for tool in apachectl apxs checkgid dbmmanage envvars rotatelogs httxt2dbm; do
     mv ${tool} ${tool}%apache2_branch
 done
-#fix apxs
+#fix apachectl and apxs
 sed -i -e 's|\(\/envvars\)"|\1%apache2_branch"|
 s|\(apachectl\)|\1%apache2_branch|
-' apxs%apache2_branch
+' apachectl%apache2_branch apxs%apache2_branch
 %endif
 # move&rename utilities to /usr/bin
 TOOLS="ab htdbm logresolve htpasswd htdigest"
@@ -1022,12 +1025,6 @@ echo "# Set HTTPD=%apache2_dname.worker to use a server
 " > %buildroot%_sysconfdir/sysconfig/%apache2_dname
 
 
-# replace the "official" apachectl by a symlink to the init script
-rm -f %buildroot%apache2_sbindir/apachectl*
-ln -s -f $(relative %buildroot%_initdir/%apache2_dname \
-        %buildroot%apache2_sbindir/apachectl%apache2_branch) \
-	%buildroot%apache2_sbindir/apachectl%apache2_branch
-
 # Generate logrotate file
 mkdir -p %buildroot%_sysconfdir/logrotate.d
 echo '%apache2_logfiledir/*log {
@@ -1051,7 +1048,6 @@ mkdir -p %buildroot%apache2_compat_manualaddonsdir/
 rm -f %buildroot%apache2_installbuilddir/config.nice \
 	%buildroot%apache2_moduledir/httpd.exp \
 	%buildroot%apache2_installbuilddir/mkdir.sh \
-	%buildroot%apache2_mandir/man8/apachectl* \
 	%buildroot%apache2_errordir/README
 
 # create old apache2 dirs
@@ -1087,10 +1083,10 @@ install -pD %SOURCE63 %buildroot%condstopstart_webdir/%apache2_dname-condstart-r
 install -pD %SOURCE15 %buildroot%_sysconfdir/tmpfiles.d/%name
 
 # Substitute the real paths in configs
-find %buildroot%_sysconfdir original  %buildroot%_rpmlibdir %buildroot%condstopstart_webdir\
+find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
 		-type f -print0 \
 	| xargs -r0i %_datadir/rpm-build-rpm-eval/rpm-eval.sh "{}"
-find %buildroot%_sysconfdir original  %buildroot%_rpmlibdir %buildroot%condstopstart_webdir\
+find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
 		-type f -print0 \
 	| xargs -r0 sed -i -f SetMacros.sed
 
@@ -1672,6 +1668,13 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Fri Aug 10 2012 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt4
+- %%apache2_sbindir/apachectl%%apache2_branch replaced by the "official"
+  apachectl (patched) (Closes: #27086)
+- The function stop() in %%_initdir/%%apache2_dname now waiting
+  (maximum 300 seconds) of the actual completion of the demon
+  (Closes: #11531, #27091)
+
 * Tue Aug 07 2012 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt3
 - Add %%_sysconfdir/tmpfiles.d/%%name (Closes: #27604)
 
