@@ -1,6 +1,6 @@
 Name: mpb
 Version: 1.4.2
-Release: alt1
+Release: alt2
 Summary: MIT Photonic Bands
 License: GPLv2+
 Group: Sciences/Physics
@@ -54,7 +54,7 @@ export CPPFLAGS="%optflags"
 %autoreconf
 
 %configure \
-	--with-blas=-lgoto2 \
+	--with-blas=-lopenblas \
 	--with-lapack=-llapack \
 	--with-inv-symmetry \
 	--with-hermitian-eps \
@@ -74,6 +74,9 @@ export CPPFLAGS="%optflags"
 %doc doc/*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt2
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Mar 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1
 - Initial build for Sisyphus
 
