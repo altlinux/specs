@@ -1,7 +1,7 @@
 %define oname Csdp
 Name: Coin%oname
 Version: 6.1.1
-Release: alt1.svn20101110.3
+Release: alt2.svn20101110
 Summary: A C Library for Semidefinite Programming
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildPreReq: gcc-fortran libgomp-devel
-BuildPreReq: liblapack-goto-devel
+BuildPreReq: liblapack-devel
 
 Requires: lib%name = %version-%release
 
@@ -97,7 +97,7 @@ This package contains documentation for COIN-OR CSDP.
 %ifarch x86_64
 ADDFLAG=-DBIT64
 %endif
-ADDFLAG="$ADDFLAG -I%_includedir/gotoblas -DXDOUBLE"
+ADDFLAG="$ADDFLAG -I%_includedir/openblas"
 sed -i "s|@ADDFLAG@|$ADDFLAG|" */Makefile
 
 %build
@@ -131,6 +131,9 @@ mv %buildroot%_bindir/theta %buildroot%_bindir/theta.%oname
 %_bindir/csdp-example
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.1.1-alt2.svn20101110
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Apr 13 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.1.1-alt1.svn20101110.3
 - Built with GotoBLAS2 instead of ATLAS
 
