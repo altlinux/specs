@@ -3,7 +3,7 @@
 %define sys_db		/var/lib/clamav-db
 
 Name: clamav-db
-Version: 20120521
+Version: 20120811
 Release: alt1
 
 Summary: Antivirus database for ClamAV
@@ -25,11 +25,9 @@ Requires: clamav
 
 %description
 Database for ClamAV virus scanner.
-Last update: May 21, 2012
 
 %description -l ru_RU.UTF-8
 База для антивирусного сканера ClamAV
-Последнее обновление: 21.05.2012
 
 %prep
 
@@ -56,6 +54,9 @@ done
 %attr(664,mail,root) %config(noreplace) /%dir/safebrowsing.cvd
 
 %changelog
+* Sat Aug 11 2012 Andrey Cherepanov <cas@altlinux.org> 20120811-alt1
+- Update database (11.08.2012)
+
 * Mon May 21 2012 Andrey Cherepanov <cas@altlinux.org> 20120521-alt1
 - Update database
 
