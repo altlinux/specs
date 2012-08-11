@@ -1,7 +1,7 @@
 %define rname getfem
 Name: getfemxx
 Version: 4.1.1
-Release: alt1.1
+Release: alt2
 %setup_python_module getfem
 
 Group: Development/C++
@@ -60,7 +60,7 @@ export CFLAGS="%optflags" CXXFLAGS="%optflags"
     --enable-boost \
 		--enable-mumps \
 		--enable-qhull \
-		--with-blas=goto2 \
+		--with-blas=openblas \
 		--with-pic \
     --with-matlab-toolbox-dir=%_datadir/getfem_toolbox
 CUT_CFLAGS=`grep "^CXXFLAGS" Makefile | head -n 1| sed "s|^CXXFLAGS[[:space:]][[:space:]]*=||"`
@@ -90,6 +90,9 @@ mv %buildroot%python_sitelibdir_noarch/getfem/* \
 %python_sitelibdir/getfem
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt2
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 4.1.1-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
