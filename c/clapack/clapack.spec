@@ -2,7 +2,7 @@
 
 Name: clapack
 Version: 3.2.1
-Release: alt1
+Release: alt2
 Summary: C version of LAPACK
 License: BSD
 Group: Sciences/Mathematics
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 Source1: make.inc
 
-BuildPreReq: libgotoblas-devel liblapack-devel libxblas-devel
+BuildPreReq: liblapack-devel libxblas-devel
 
 %description
 The CLAPACK library was built using a Fortran to C conversion utility
@@ -61,7 +61,7 @@ install -p -m644 %SOURCE1 .
 
 gcc -shared -Wl,--whole-archive lib%name.a -Wl,--no-whole-archive \
 	-Wl,-soname,lib%name.so.%sover -o lib%name.so.%sover \
-	F2CLIBS/libf2c.a -lgoto2 -lxblas -lm
+	F2CLIBS/libf2c.a -lopenblas -lxblas -lm
 
 %install
 install -d %buildroot%_includedir
@@ -80,6 +80,9 @@ ln -s lib%name.so.%sover %buildroot%_libdir/lib%name.so
 %_libdir/*.so
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt2
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Dec 21 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
 - Initial build for Sisyphus
 
