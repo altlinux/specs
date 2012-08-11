@@ -5,7 +5,7 @@ Summary: The Matrix Template Library, Version 4
 License: BSD-like
 Group: Sciences/Mathematics
 Version: 4.r%rev
-Release: alt3.beta1
+Release: alt4.beta1
 Url: http://www.osl.iu.edu/research/mtl/mtl4/
 
 # https://simunova.zih.tu-dresden.de/svn/mtl4/trunk/
@@ -170,7 +170,7 @@ pushd mtl
 %configure \
 	--with-exceptions=yes \
 	--with-matlab=no \
-	--with-lapack="-llapack -lgoto2"
+	--with-lapack="-llapack -lopenblas"
 popd
 
 export BOOST_ROOT=%prefix
@@ -269,6 +269,9 @@ popd
 %_docdir/libmtl2-devel-doc
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.r7628-alt4.beta1
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.r7628-alt3.beta1
 - Fixed build
 
