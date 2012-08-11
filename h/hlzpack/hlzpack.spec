@@ -2,7 +2,7 @@
 %define sover %somver.4.0
 Name: hlzpack
 Version: 04.00
-Release: alt7
+Release: alt8
 Summary: Hermitian LancZos PACKage
 License: BSD
 Group: Sciences/Mathematics
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://crd.lbl.gov/~osni/Codes/hlzpack.zip
 
-BuildPreReq: liblapack-goto-devel libparmetis-devel
+BuildPreReq: liblapack-devel libparmetis-devel
 BuildPreReq: gcc-fortran unzip
 
 %description
@@ -126,6 +126,9 @@ install -p -m644 src/double/*.f \
 %_libdir/%name/examples
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 04.00-alt8
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Apr 13 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 04.00-alt7
 - Built with GotoBLAS2 instead of ATLAS
 - Disabled devel-static package
