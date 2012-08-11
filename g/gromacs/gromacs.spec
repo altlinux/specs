@@ -6,7 +6,7 @@
 
 Name: gromacs
 Version: 4.0.7
-Release: alt7
+Release: alt8
 
 Summary: Molecular dynamics package
 License: GPL
@@ -222,7 +222,7 @@ function buildThis() {
 		--with-gsl \
 		--$2-mpi \
 		--program-suffix=$3 \
-		--with-external-blas=-lgoto2
+		--with-external-blas=-lopenblas
 	sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
 		libtool
 	sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
@@ -400,6 +400,9 @@ done
 %_datadir/%name/html
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.7-alt8
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.7-alt7
 - Rebuilt with OpenMPI 1.6
 
