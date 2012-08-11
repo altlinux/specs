@@ -1,6 +1,6 @@
 Name: wipefreespace
 Version: 1.6.1
-Release: alt1
+Release: alt3
 
 Summary: Program for secure cleaning of free space on file systems
 License: GPLv2
@@ -8,6 +8,7 @@ Group: File tools
 
 Url: http://wipefreespace.sf.net
 Source: %name-%version.tar.gz
+Patch: wipefreespace-1.6.1-infodir.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: xfsprogs
@@ -33,6 +34,7 @@ FAT12/16/32, MinixFSv1/2, JFS, HFS+ and OCFS.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %configure --disable-XFS
@@ -42,14 +44,18 @@ FAT12/16/32, MinixFSv1/2, JFS, HFS+ and OCFS.
 %makeinstall_std
 %find_lang %name
 
-# FIXME: no info dir entry
-rm -f %buildroot%_infodir/%name.info*
-
 %files -f %name.lang
 %_bindir/%name
-%doc %_man1dir/%name.1*
+%_infodir/%name.*
+%_man1dir/%name.1*
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Sat Aug 11 2012 Michael Shigorin <mike@altlinux.org> 1.6.1-alt3
+- added upstream proposed patch to add info-dir entry
+
+* Thu Aug 09 2012 Michael Shigorin <mike@altlinux.org> 1.6.1-alt2
+- enabled info file installation (needs fixup though)
+
 * Thu Aug 09 2012 Michael Shigorin <mike@altlinux.org> 1.6.1-alt1
 - initial build for ALT Linux Sisyphus
