@@ -5,7 +5,7 @@
 %define sover %somver.10.0
 Name: mumps
 Version: 4.10.0
-Release: alt5
+Release: alt6
 Summary: MUltifrontal Massively Parallel sparse direct Solver
 License: Free
 Group: Sciences/Mathematics
@@ -16,7 +16,7 @@ Source: MUMPS_%version.tar.gz
 Source1: Makefile.inc
 Source2: Makefile.inc.seq
 
-BuildPreReq: %mpiimpl-devel libgotoblas2-devel
+BuildPreReq: %mpiimpl-devel libopenblas-devel
 BuildPreReq: libpastix-devel libscotch-devel libparmetis-devel
 BuildPreReq: libscalapack-devel libblacs-devel libarpack-devel
 
@@ -214,7 +214,7 @@ function makeShared() {
 		LIBS="$ADDLIB_SEQ"
 	fi
 	if [ "$1" = "libdmumps" -o "$1" = "libsmumps" ]; then
-		FINLIB=-lgoto2
+		FINLIB=-lopenblas
 	elif [ "$1" = "libmumps_common" ]; then
 		FINLIB=-lpthread
 	else
@@ -279,6 +279,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.10.0-alt6
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sun Jun 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.10.0-alt5
 - Rebuilt with OpenMPI 1.6
 
