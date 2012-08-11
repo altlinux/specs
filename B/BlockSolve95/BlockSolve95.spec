@@ -5,7 +5,7 @@
 %define sover %somver.3.0
 Name: BlockSolve95
 Version: 3.0
-Release: alt10
+Release: alt11
 Summary: Solving large sparse symmetric systems of linear equations
 License: MIT
 Group: Sciences/Mathematics
@@ -120,7 +120,7 @@ pushd %buildroot%_libdir
 mkdir tmp
 pushd tmp
 ar x ../libBS95.a
-mpicc -shared * -llapack -lgoto2 \
+mpicc -shared * -llapack -lopenblas \
 	-Wl,-rpath,%mpidir/lib \
 	-Wl,-soname,libBS95.so.%somver -o ../libBS95.so.%sover
 rm -f *
@@ -151,6 +151,9 @@ popd
 %_mandir/manh/*
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt11
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt10
 - Rebuilt with OpenMPI 1.6
 
