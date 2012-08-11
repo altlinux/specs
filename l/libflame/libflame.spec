@@ -5,7 +5,7 @@
 
 Name: libflame
 Version: r6025
-Release: alt1
+Release: alt2
 Summary: Formal Linear Algebra Method Environment
 License: LGPL v2.1
 Group: System/Libraries
@@ -32,7 +32,7 @@ implementation and analysis of algorithms and implementations.
 Summary: Development files of Formal Linear Algebra Method Environment
 Group: Development/Other
 Requires: %name = %version-%release
-Requires: liblapack-goto-devel
+Requires: liblapack-devel
 
 %description devel
 The objective of the FLAME project is to transform the development of dense
@@ -141,6 +141,9 @@ mv doxygen/html %buildroot%_docdir/%name/
 %doc examples
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r6025-alt2
+- Rebuilt with OpenBLAS instead of GotoBLAS2
+
 * Wed Apr 27 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r6025-alt1
 - Version r6025
 

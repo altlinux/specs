@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.2_p7
-Release: alt3
+Release: alt4
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -50,7 +50,7 @@ BuildRequires(pre): rpm-build-python
 BuildPreReq: chrpath python-module-Pyro4 python-module-Scientific
 BuildPreReq: %mpiimpl-devel gcc-fortran libgfortran-devel
 BuildPreReq: libstdc++-devel libsz2-devel libarpack-devel
-BuildPreReq: liblapack-goto-devel gcc-c++ libscalapack-devel libX11-devel
+BuildPreReq: liblapack-devel gcc-c++ libscalapack-devel libX11-devel
 BuildPreReq: libXt-devel libsowing-devel boost-devel python-module-fiat
 BuildPreReq: libparmetis-devel libblacs-devel libspooles-devel
 BuildPreReq: libtetgen-devel zlib-devel libblocksolve95-devel
@@ -125,7 +125,7 @@ Requires: lib%name = %version-%release
 Requires: %oname-common >= %version-%release
 Requires: %mpiimpl-devel gcc-fortran libgfortran-devel
 Requires: libstdc++-devel libsz2-devel libarpack-devel
-Requires: liblapack-goto-devel gcc-c++ libscalapack-devel libX11-devel
+Requires: liblapack-devel gcc-c++ libscalapack-devel libX11-devel
 Requires: libXt-devel libsowing-devel boost-devel python-module-fiat
 Requires: libparmetis-devel libblacs-devel libspooles-devel
 Requires: libtetgen-devel zlib-devel libblocksolve95-devel
@@ -350,7 +350,7 @@ OPTFLAGS="%optflags %optflags_shared -DPETSC_HAVE_MPE -I$PETSC_DIR/include/sieve
 OPTFLAGS="$OPTFLAGS -DPETSC_HAVE_NETCDF"
 %endif
 OPTFLAGS="$OPTFLAGS -DTETLIBRARY -I%mpidir/include/netcdf-3"
-BLASLAPACK="[libxerbla.a,liblapack.so,libgoto2.so]"
+BLASLAPACK="[libxerbla.a,liblapack.so,libopenblas.so]"
 MUMPS="[libcmumps.so,libdmumps.so,libsmumps.so,libzmumps.so,libmumps_common.so"
 MUMPS="$MUMPS,libpord.so,libesmumps.so,libptscotch.so,libscotch.so]"
 MUMPS="$MUMPS,libscotcherr.so]"
@@ -777,6 +777,9 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 %ldir/sources
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p7-alt4
+- Rebuilt with OpenBLAS instead of GotoBLAS2
+
 * Fri Jul 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p7-alt3
 - Changed native directory: %%_libexecdir/%name -> %%_libdir/%name
 

@@ -1,6 +1,6 @@
 Name: lapackpp
 Version: 2.5.4
-Release: alt1.svn20110615
+Release: alt2.svn20110615
 Summary: LAPACK++ is a library for high performance linear algebra computations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # https://lapackpp.svn.sourceforge.net/svnroot/lapackpp/lapackpp/trunk
 Source: %name-%version.tar.gz
 
-BuildPreReq: gcc-fortran liblapack-goto-devel gcc-c++
+BuildPreReq: gcc-fortran liblapack-devel gcc-c++
 BuildPreReq: doxygen graphviz
 
 %description
@@ -33,7 +33,7 @@ This package contains shared libraries of LAPACK++.
 Summary: Development files of LAPACK++
 Group: Development/C++
 Requires: lib%name = %version-%release
-Requires: liblapack-goto-devel
+Requires: liblapack-devel
 
 %description -n lib%name-devel
 LAPACK++ is a library for high performance linear algebra computations.
@@ -61,7 +61,7 @@ This package contains development documentation for LAPACK++.
 ./autogen.sh
 %configure \
 	--with-lapackpp-prefix=%prefix \
-	--with-blas=goto2
+	--with-blas=openblas
 %make_build
 
 %make_build -C testing tCmplxSolve tEigSolve tGenSolve tSpdSolve tSymmSolve
@@ -90,6 +90,9 @@ popd
 %doc api-doc/html/*
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.4-alt2.svn20110615
+- Rebuilt with OpenBLAS instead of GotoBLAS2
+
 * Fri Dec 16 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.4-alt1.svn20110615
 - New snapshot
 

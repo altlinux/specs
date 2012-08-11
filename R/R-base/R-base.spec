@@ -1,5 +1,5 @@
 Name: R-base
-Version: 2.14.1
+Version: 2.15.1
 Release: alt1
 
 Summary: A language for data analysis and graphics
@@ -14,7 +14,7 @@ Packager: Alexey Tourbin <at@altlinux.ru>
 # Automatically added by buildreq on Thu Mar 03 2011
 BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-fonts-recommended texlive-generic-recommended texlive-xetex tk-devel zlib-devel
 
-BuildPreReq: liblapack-goto-devel libicu-devel
+BuildPreReq: liblapack-devel libicu-devel
 
 %description
 R is `GNU S' - A language and environment for statistical computing
@@ -53,7 +53,7 @@ export	lt_cv_prog_cc_static_works=no \
 	--enable-prebuilt-html \
 	--enable-R-shlib --with-x \
 	--with-system-{zlib,bzlib,pcre,xz} \
-	--with-blas=goto2 --with-lapack=lapack \
+	--with-blas=openblas --with-lapack=lapack \
 	--with-tcl-config=%_libdir/tclConfig.sh --with-tk-config=%_libdir/tkConfig.sh \
 	--libdir='${prefix}/%_lib' rincludedir='${prefix}/include/R' \
 	rdocdir='${prefix}/share/doc/R-%verid'
@@ -118,6 +118,7 @@ make check
 %endif
 
 %files
+	%doc NEWS README
 	%_bindir/R
 	%_bindir/Rscript
 	%_man1dir/R.*
@@ -134,7 +135,7 @@ make check
 
 	%Rbindir/BATCH
 	%Rbindir/Rcmd
-	%Rbindir/Rd2dvi
+	%Rbindir/Rd2pdf
 	%Rbindir/Rdconv
 	%Rbindir/Rprof
 	%Rbindir/pager
@@ -320,6 +321,10 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.15.1-alt1
+- Version 2.15.1
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jan 17 2012 Kirill Maslinsky <kirill@altlinux.org> 2.14.1-alt1
 - 2.12.2 -> 2.14.1
 
