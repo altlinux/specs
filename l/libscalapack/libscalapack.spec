@@ -6,7 +6,7 @@
 %define sover %somver.8.0
 Name: lib%origname
 Version: 1.8.0
-Release: alt16
+Release: alt17
 Summary: Scalable LAPACK library
 License: LGPL
 Group: Sciences/Mathematics
@@ -270,7 +270,7 @@ function createScalapack() {
 	mpif77 -shared -o ../$LNAME.0 * \
 		-Wl,-soname,$LNAME.0 \
 		-Wl,-R%mpidir/lib -lmpi_f77 -lmpi \
-		-llapack -lgoto2
+		-llapack -lopenblas
 	popd
 	rm -fR tmp
 	ln -s $LNAME.0 $LNAME
@@ -294,7 +294,7 @@ LIB=%{name}_LINUX-0
 ar x ../$LIB.a
 mpif77 -shared -o ../%name.so.%sover * \
 	-Wl,-soname,%name.so.%somver \
-	-Wl,-R%mpidir/lib -lblacs -larpack_LINUX -llapack -lgoto2
+	-Wl,-R%mpidir/lib -lblacs -larpack_LINUX -llapack -lopenblas
 ln -s %name.so.%sover ../%name.so.%somver
 ln -s %name.so.%somver ../%name.so
 ln -s %name.so ../$LIB.so
@@ -377,6 +377,9 @@ popd
 #_includedir/%origname
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt17
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt16
 - Rebuilt with OpenMPI 1.6
 
