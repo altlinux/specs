@@ -5,7 +5,7 @@
 %define sover %somver.5.8
 Name: dsdp
 Version: 5.8
-Release: alt9
+Release: alt10
 Summary: Implementation of an interior-point method for semidefinite programming
 License: BSD-like
 Group: Sciences/Mathematics
@@ -178,7 +178,7 @@ mkdir tmp
 pushd tmp
 ar x ../lib%name.a
 mpicc -shared * \
-	-lscalapack -lblacs -larpack_LINUX -llapack -lgoto2 \
+	-lscalapack -lblacs -larpack_LINUX -llapack -lopenblas \
 	-Wl,-rpath,%mpidir/lib \
 	-Wl,-soname,lib%name.so.%somver -o ../lib%name.so.%sover
 rm -f *
@@ -207,6 +207,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.8-alt10
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.8-alt9
 - Rebuilt with OpenMPI 1.6
 
