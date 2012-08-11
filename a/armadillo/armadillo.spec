@@ -1,6 +1,6 @@
 Name:           armadillo
 Version:        2.4.2
-Release:        alt1.svn20111208
+Release:        alt2.svn20111208
 Summary:        Fast C++ matrix library with interfaces to LAPACK and ATLAS
 Group:          Sciences/Mathematics
 License:        LGPLv3+
@@ -160,6 +160,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc examples docs_user/*
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt2.svn20111208
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Dec 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1.svn20111208
 - Version 2.4.2
 
