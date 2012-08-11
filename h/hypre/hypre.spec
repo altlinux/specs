@@ -5,7 +5,7 @@
 %define sover %somver.2.6
 Name: hypre
 Version: 2.8.0b
-Release: alt4
+Release: alt5
 Summary: Scalable algorithms for solving linear systems of equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -110,7 +110,7 @@ FLAGS="%optflags %optflags_shared -I%_includedir/numpy"
 	--without-openmp \
 	--with-babel \
 	--with-chasm=%prefix \
-	--with-blas-libs=-lgoto2 \
+	--with-blas-libs=-lopenblas \
 	--with-blas-lib-dirs=%_libdir \
 	--with-lapack \
 	--with-mli \
@@ -158,7 +158,7 @@ for i in $LIBS; do
 	then
 		ar x ../$i.a
 		mpic++ -shared * -L.. $ADDLIB \
-			-lsidl -llapack -lgoto2 \
+			-lsidl -llapack -lopenblas \
 			-Wl,-rpath,%mpidir/lib \
 			-Wl,-soname,$i.so.%somver -o ../$i.so.%sover
 		ln -s $i.so.%sover ../$i.so.%somver
@@ -188,6 +188,9 @@ popd
 %_docdir/lib%name-devel-doc
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0b-alt5
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0b-alt4
 - Rebuilt with emacs 24.1
 
