@@ -1,5 +1,7 @@
 Name: lapack
-Version: 3.4.0
+%define sover 4
+%define soname lib%name.so.%sover
+Version: 3.4.1
 Epoch: 1
 Release: alt1
 
@@ -17,15 +19,16 @@ Source5: dla_rpvgrw.f
 Patch: lapack-3.1.1-alt3.qa1.patch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires: gcc-fortran libgotoblas-devel cmake libgomp-devel
+BuildRequires: gcc-fortran libopenblas-devel cmake
 BuildPreReq: libsuperlu-devel
 
 BuildPreReq: libxblas-devel
+# for %%check
+BuildPreReq: ctest python-modules
 
 %package -n lib%name
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 Group: System/Libraries
-Provides: lib%name-goto = %epoch:%version-%release
 Conflicts: lib%name-goto < %epoch:%version-%release
 Obsoletes: lib%name-goto < %epoch:%version-%release
 Obsoletes: liblapack3
@@ -33,13 +36,12 @@ Obsoletes: liblapack3
 %package -n lib%name-devel
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
 Group: Development/Other
-Provides: lib%name-goto-devel = %epoch:%version-%release
-Requires: libgotoblas-devel
+Requires: libopenblas-devel
 Requires: lib%name = %epoch:%version-%release
 Conflicts: lib%name-devel < %epoch:%version-%release
 Obsoletes: lib%name-devel < %epoch:%version-%release
-Conflicts: lib%name-goto-devel < %epoch:%version-%release
-Obsoletes: lib%name-goto-devel < %epoch:%version-%release
+Conflicts: lib%name-goto-devel
+Obsoletes: lib%name-goto-devel
 
 %package -n blas-man
 Summary: BLAS and LAPACK Fortran libraries for numerical linear algebra (with GotoBLAS2)
@@ -132,9 +134,6 @@ rm blas.manpages lapack.manpages dup.manpages
 rm -fR BLAS
 
 %build
-# whether to use the ALTAS optimized routines
-%def_with atlas
-%define soname liblapack.so.4
 
 # for rpm -bc --short-circuit, rebuild test suite with liblapack.a
 rm -f TESTING/x*
@@ -148,48 +147,18 @@ cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DUSEXBLAS:BOOL=ON \
+	-DUSE_XBLAS:BOOL=ON \
+	-DBUILD_SHARED_LIBS:BOOL=ON \
+	-DBUILD_STATIC_LIBS:BOOL=OFF \
+	-DSOVER:STRING=%sover \
+%ifarch x86_64
+	-DLIB_SUFFIX:STRING=64 \
+%endif
 	.
 %make_build
-grep -r --include='*.out' -i fail . |tee 1.err
-
-# liblapack.a is now ready; if we use the ATLAS optimized routines,
-# we want to exclude certain *.o from the shared library and make it
-# link with -llapack_atlas
-
-%if_with atlas
-rm -f *.o
-ar x lib/liblapack.a
-nm -D %_libdir/libgoto2.so >sym
-awk 'NF==3&&sub(/_$/,"",$3)&&$3!~/_/{print$3".o"}' <sym >dups
-rm -fv `sort -u dups`
-g77 -shared *.o \
-	-o %soname -Wl,-soname=%soname -Wl,--version-script=liblapack.map \
-	-lgoto2 -lxblas -Wl,-z,defs
-#rm SRC/liblapack.a
-#ar rcu SRC/liblapack.a *.o
-#ranlib SRC/liblapack.a
-rm *.o
-
-# rerun test suite against the shared library combo
-#LD_LIBRARY_PATH=$PWD make -C BLAS/TESTING LAPACKLIB='%soname -lgoto2'
-#grep -r --include='*.out' -i fail . |tee 2.err
-
-%else # without atlas
-g77 -shared -Wl,--whole-archive SRC/liblapack.a -Wl,--no-whole-archive \
-	-o %soname -Wl,-soname=%soname -Wl,--version-script=liblapack.map \
-	-lgoto2 -lxblas -Wl,-z,defs
-%endif
 
 %install
-install -pD -m755 %soname %buildroot%_libdir/%soname
-%if_with atlas
-#install -pD -m644 SRC/liblapack.a %buildroot%_libdir/liblapack_.a
-ln -s %soname %buildroot%_libdir/liblapack.so
-#echo 'GROUP(%_libdir/liblapack_.a %_libdir/liblapack_atlas.a)' >%buildroot%_libdir/liblapack.a
-%else
-#install -pD -m644 SRC/liblapack.a %buildroot%_libdir/liblapack.a
-ln -s %soname %buildroot%_libdir/liblapack.so
-%endif
+%makeinstall_std
 
 for f in manpages/blas/man/manl/*.l; do
 	m=$(basename "$f" .l).3f
@@ -209,6 +178,9 @@ for f in manpages/man/manl/*.l; do
 	echo %_man3dir/"$m*"
 done >lapack-man.files
 
+%check
+ctest --force-new-ctest-process
+
 %files -n lib%name
 %define _customdocdir %_docdir/lapack-3.1
 %doc LICENSE README
@@ -216,11 +188,18 @@ done >lapack-man.files
 
 %files -n lib%name-devel
 %_libdir/liblapack.so
+%dir %_libdir/cmake
+%_libdir/cmake/*
+%_pkgconfigdir/*
 
 %files -n blas-man -f blas-man.files
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.4.1-alt1
+- Version 3.4.1
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sun Dec 04 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.4.0-alt1
 - Version 3.4.0
 
