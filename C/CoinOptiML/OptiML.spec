@@ -4,7 +4,7 @@
 %define oname OptiML
 Name: Coin%oname
 Version: 1.0
-Release: alt1.svn20090212.5
+Release: alt2.svn20090212
 Summary: Optimization methods in Machine Learning
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildPreReq: gcc-c++ gcc-fortran
-BuildPreReq: liblapack-goto-devel
+BuildPreReq: liblapack-devel
 
 %description
 Optimization for Machine learning, interior point, active set method and
@@ -134,7 +134,7 @@ pushd %buildroot%_libdir/tmp
 for i in libsvmqp; do
 	ar x ../$i.a
 	gfortran -shared * -Wl,-soname,$i.so.%somver \
-		-o ../$i.so.%sover -llapack -lgoto2
+		-o ../$i.so.%sover -llapack -lopenblas
 	ln -s $i.so.%sover ../$i.so.%somver
 	ln -s $i.so.%somver ../$i.so
 	rm -f *
@@ -165,6 +165,9 @@ rmdir %buildroot%_libdir/tmp
 %_includedir/*
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.svn20090212
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Apr 13 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.svn20090212.5
 - Built with GotoBLAS2 instead of ATLAS
 
