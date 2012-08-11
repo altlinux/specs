@@ -1,8 +1,10 @@
 %define gcc_branch 4.6
 
+%define if_gcc_arch() %if %(A='%{?_cross_platform:%_cross_platform}%{!?_cross_platform:%_target_platform}'; [ %1 = ${A%%%%-*} ] && echo 1 || echo 0)
+
 Name: gcc%gcc_branch
 Version: 4.6.3
-Release: alt3
+Release: alt4
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -15,6 +17,7 @@ Url: http://gcc.gnu.org/
 # On ppc32, we build a 64-bit compiler with default 32-bit mode.
 %define _target_platform ppc64-alt-linux
 %endif
+
 %define priority 463
 %define snapshot 20120306
 %define srcver %version-%snapshot
@@ -23,8 +26,18 @@ Url: http://gcc.gnu.org/
 %define os_release %distribution, build %version-%release
 %define psuffix -%gcc_branch
 %define _libexecdir /usr/libexec
+
+%ifdef _cross_platform
+%define _cross_lib %_prefix/lib
+%define gcc_target_libdir %_cross_lib/gcc/%_cross_platform/%version
+%define gcc_target_libexecdir %_libexecdir/gcc/%_cross_platform/%version
+%define gcc_target_platform %_cross_platform
+%else
 %define gcc_target_libdir %_libdir/gcc/%_target_platform/%version
 %define gcc_target_libexecdir %_libexecdir/gcc/%_target_platform/%version
+%define gcc_target_platform %_target_platform
+%endif
+
 %define gcc_gdb_auto_load %_libdir/gdb/auto-load/%_libdir/
 %define gcc_doc_dir %_docdir/gcc%psuffix
 %define alternatives_deps alternatives >= 0:0.4
@@ -45,6 +58,20 @@ Url: http://gcc.gnu.org/
 %set_libtool_version 2.4
 
 # Build parameters.
+%ifdef _cross_platform
+
+%def_enable compat
+%def_disable multilib
+%def_with cxx
+%def_without fortran
+%def_without objc
+%def_disable objc_gc
+%def_without java
+%def_without ada
+%define REQ >=
+
+%else # _cross_platform
+
 %def_disable compat
 %def_enable multilib
 %def_with cxx
@@ -73,11 +100,14 @@ Url: http://gcc.gnu.org/
 %else
 %def_without ada
 %endif
+
+%endif # _cross_platform
+
 %def_without pdf
 %def_disable doxygen
 %def_disable check
 
-%define buildtarget obj-%_target_platform
+%define buildtarget obj-%gcc_target_platform
 
 Source: %srcfilename.tar
 Source1: gcc-extra.tar
@@ -144,27 +174,32 @@ Patch714: gcc44-alt-escalate-always-overflow.patch
 Patch715: gcc44-alt-arm-pr41684-workaround.patch
 Patch716: gcc46-alt-no-copy-dt-needed-entries.patch
 Patch717: gcc45-alt-autoconf-ver.patch
+Patch718: gcc46-alt-armhf.patch
 
 Patch800: libtool.m4-gcj.patch
 
-Provides: gcc = %version-%release, %_bindir/%_target_platform-gcc, %_bindir/gcc
+Provides: gcc = %version-%release, %_bindir/%gcc_target_platform-gcc, %_bindir/gcc
+
 Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
 PreReq: %alternatives_deps, gcc-common >= 1.4.7
-Requires: libgcc1 %REQ %version-%release
 Requires: cpp%gcc_branch = %version-%release
 Requires: %binutils_deps, glibc-devel
-
+%ifndef _cross_platform
+Requires: libgcc1 %REQ %version-%release
+%endif
 BuildPreReq: rpm-build >= 4.0.4-alt39, %alternatives_deps, %binutils_deps
 BuildPreReq: coreutils, flex, libmpfr-devel, libmpc-devel, libelf-devel
 # due to manpages
 BuildPreReq: perl-Pod-Parser
+BuildPreReq: zlib-devel
 %{?_with_ada:BuildPreReq: gcc-gnat}
-%{?_with_java:BuildPreReq: %{?_without_java_bootstrap: jdkgcj} /usr/share/java/ecj.jar fastjar imake libXext-devel libXt-devel libXtst-devel libalsa-devel libart_lgpl-devel libgtk+2-devel libltdl-devel sharutils xorg-cf-files xorg-inputproto-devel unzip zip zlib-devel}
+%{?_with_java:BuildPreReq: %{?_without_java_bootstrap: jdkgcj} /usr/share/java/ecj.jar fastjar imake libXext-devel libXt-devel libXtst-devel libalsa-devel libart_lgpl-devel libgtk+2-devel libltdl-devel sharutils xorg-cf-files xorg-inputproto-devel unzip zip}
 %{?_with_objc:%{?_enable_objc_gc:BuildPreReq: libgc-devel}}
 %{?_enable_doxygen:BuildPreReq: doxygen graphviz tetex-latex}
 %{?_with_pdf:BuildPreReq: tetex-dvips}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu, glibc-devel-static, /proc, /dev/pts}}
+%{?_cross_platform:BuildPreReq: %_cross_platform-binutils}
 
 ####################################################################
 # GCC Compiler
@@ -835,6 +870,7 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 #patch715 -p1
 #patch716 -p2
 %patch717 -p2
+%patch718 -p1
 
 # This testcase does not compile.
 rm libjava/testsuite/libjava.lang/PR35020*
@@ -890,6 +926,9 @@ find libstdc++-v3/doc/ -type f -print0 |
 sed -i "s|\\(^INCLUDE_PATH[[:space:]]\\+=\\)[[:space:]]*$|\\1 $PWD/%buildtarget/%_target_platform/libstdc++-v3/include|" \
 	libstdc++-v3/doc/doxygen/user.cfg.in
 
+
+###"font-lock-sucks
+
 %build
 libtoolize --copy --install --force
 install -pm644 %_datadir/libtool/aclocal/*.m4 .
@@ -919,6 +958,13 @@ perl -pi -e 's/^check: check-recursive/ifeq (\$(MULTISUBDIR),)\ncheck: check-rec
 
 ./contrib/gcc_update --touch
 
+%ifdef _cross_platform
+# Pretend this isn't cross-compiler
+sed -i -e '/^INTERNAL_CFLAGS/ s,@CROSS@,,' -e 's,^\(CROSS_SYSTEM_HEADER_DIR\).\+$,\1 = %_includedir,' gcc/Makefile.in
+# Do not try to build libgcc_s.so, supplemental libgcc*.a are still needed
+sed -i -e '/^all: libgcc_eh.a/ s,libgcc_s$(SHLIB_EXT),,' -e 's,$(SHLIB_INSTALL),,' libgcc/Makefile.in
+%endif
+
 rm -rf %buildtarget
 mkdir %buildtarget
 pushd %buildtarget
@@ -944,7 +990,7 @@ fi
 %endif #with_java
 
 %define _configure_script ../configure
-%define _configure_target --host=%_target_platform --build=%_target_platform --target=%_target_platform
+%define _configure_target --host=%_target_platform --build=%_target_platform --target=%gcc_target_platform
 %remove_optflags %optflags_nocpp %optflags_notraceback
 export CC=%__cc \
 	CFLAGS="%optflags" \
@@ -957,11 +1003,21 @@ export CC=%__cc \
 	#
 
 %configure \
+	--enable-shared \
+%ifdef _cross_platform
+	--libdir=%_cross_lib \
+	--disable-libssp \
+	--disable-libgomp \
+	--disable-libmudflap \
+	--disable-libquadmath \
+	--disable-libgfortran \
+	--disable-libstdc++-v3 \
+%else
+	--enable-bootstrap \
+%endif
 	--program-suffix=%psuffix \
 	--with-slibdir=/%_lib \
 	--with-bugurl=http://bugzilla.altlinux.org \
-	--enable-bootstrap \
-	--enable-shared \
 	--enable-__cxa_atexit \
 	--enable-threads=posix \
 	--enable-checking=release \
@@ -982,6 +1038,7 @@ export CC=%__cc \
 	--disable-libjava-multilib \
 	%{?_without_java_bootstrap:--enable-java-maintainer-mode} \
 %endif
+%ifndef	_cross_platform
 %ifarch %ix86
 	--with-arch=%_target_cpu --with-tune=generic \
 %endif
@@ -995,12 +1052,19 @@ export CC=%__cc \
 %ifarch ppc
 	--with-cpu=default32 \
 %endif
-%ifarch %arm
+%endif #_cross_platform
+%if_gcc_arch armh
+	--with-cpu=cortex-a8 --with-tune=cortex-a8 --with-arch=armv7-a \
+	--with-float=hard --with-fpu=vfpv3-d16 --with-abi=aapcs-linux \
+	--disable-sjlj-exceptions \
+%endif
+%if_gcc_arch arm
+	--with-arch=armv5te --with-float=soft --with-abi=aapcs-linux \
 	--disable-sjlj-exceptions \
 %endif
 	#
 
-%make_build BOOT_CFLAGS="%optflags" bootstrap
+%make_build BOOT_CFLAGS="%optflags" %{?!_cross_platform:bootstrap}
 
 %if_enabled doxygen
 %make_build -C %_target_platform/libstdc++-v3/doc doc-html-doxygen
@@ -1112,7 +1176,7 @@ rm -r %buildroot{%gcc_target_libdir,%gcc_target_libexecdir}/install-tools
 
 # Rename binaries which will be packaged under alternatives control.
 pushd %buildroot%_bindir
-	rm %_target_platform-gcc-%version {%_target_platform-,}c++%psuffix
+	rm -vf %gcc_target_platform-gcc-%version {%gcc_target_platform-,}c++%psuffix
 	%{?_with_java:rm gnative2ascii*}
 	for n in \
 	  cpp \
@@ -1121,13 +1185,23 @@ pushd %buildroot%_bindir
 	  %{?_with_fortran:gfortran} \
 	  %{?_with_java:gappletviewer gcj gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert} \
 	  ; do
-		[ -f "%_target_platform-$n%psuffix" ] ||
-			mv -v "$n%psuffix" "%_target_platform-$n%psuffix"
-		ln -snf "%_target_platform-$n%psuffix" "$n%psuffix"
+		[ -f "%gcc_target_platform-$n%psuffix" ] ||
+			mv -v "$n%psuffix" "%gcc_target_platform-$n%psuffix"
+		ln -snf "%gcc_target_platform-$n%psuffix" "$n%psuffix"
 	done
 	%{?_with_ada:ln -s gcc%psuffix gnatgcc}
 popd
 
+%ifdef _cross_platform
+rm %buildroot%_libdir/libiberty.a
+rm -rf %buildroot/%_lib
+cat > %buildroot%gcc_target_libdir/libgcc_s.so << 'E_O_F'
+/* GNU ld script
+   Use the shared library, but some functions are only in
+   the static library.  */
+GROUP ( libgcc_s.so.1 libgcc.a )
+E_O_F
+%else
 pushd %buildroot%_libdir
 	rm lib*.la %{?_with_java:*/lib*.la}
 	rm libssp* libiberty.a
@@ -1154,6 +1228,7 @@ popd
 # Relocate gomp and gfortran files.
 mv %buildroot%_libdir/libgomp.spec %buildroot%gcc_target_libdir/
 mv %buildroot%_libdir/libgfortran.spec %buildroot%gcc_target_libdir/
+%endif
 
 # Package fixed *limits.h
 mv %buildroot%gcc_target_libdir/include{-fixed,}/limits.h
@@ -1203,6 +1278,7 @@ mkdir -p %buildroot%_libdir/gcj%psuffix/classmap.db.d \
 make DESTDIR=%buildroot -C %buildtarget/%_target_platform/libjava install-src.zip
 %endif #with_java
 
+%ifndef _cross_platform
 %ifarch x86_64
 mkrel32()
 {
@@ -1217,6 +1293,7 @@ mkrel32 %gcc_target_lib32dir %gcc_target_libdir
 mkrel32 %gxx32idir %gxx64idir
 %endif
 %endif # x86_64
+%endif # _cross_platform
 
 # buildreq substitution rules.
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
@@ -1249,6 +1326,7 @@ EOF
 rm %buildroot%_man1dir/g++%psuffix.1
 ln -s gcc%psuffix.1.bz2 %buildroot%_man1dir/g++%psuffix.1.bz2
 
+%ifndef _cross_platform
 mkdir -p %buildroot%gcc_gdb_auto_load
 mv -f %buildroot%_libdir/libstdc++*gdb.py* %buildroot%gcc_gdb_auto_load
 pushd libstdc++-v3/python
@@ -1257,6 +1335,7 @@ for i in `find . -name \*.py`; do
 done
 touch -r hook.in %buildroot%gcc_gdb_auto_load/libstdc++*gdb.py
 popd
+%endif
 %endif #with_cxx
 
 %find_lang gcc%psuffix
@@ -1266,39 +1345,39 @@ popd
 #install alternatives stuff
 install -d %buildroot%_altdir
 cat >%buildroot%_altdir/cpp%gcc_branch <<EOF
-%_bindir/%_target_platform-cpp	%_bindir/%_target_platform-cpp%psuffix	%priority
-%_man1dir/cpp.1.bz2	%_man1dir/cpp%psuffix.1.bz2	%_bindir/%_target_platform-cpp%psuffix
+%_bindir/%gcc_target_platform-cpp	%_bindir/%gcc_target_platform-cpp%psuffix	%priority
+%_man1dir/cpp.1.bz2	%_man1dir/cpp%psuffix.1.bz2	%_bindir/%gcc_target_platform-cpp%psuffix
 EOF
 
 cat >%buildroot%_altdir/%name <<EOF
-%_bindir/%_target_platform-gcc	%_bindir/%_target_platform-gcc%psuffix	%priority
-%_bindir/%_target_platform-gcov	%_bindir/%_target_platform-gcov%psuffix	%_bindir/%_target_platform-gcc%psuffix
-%_man1dir/gcc.1.bz2	%_man1dir/gcc%psuffix.1.bz2	%_bindir/%_target_platform-gcc%psuffix
-%_man1dir/gcov.1.bz2	%_man1dir/gcov%psuffix.1.bz2	%_bindir/%_target_platform-gcc%psuffix
+%_bindir/%gcc_target_platform-gcc	%_bindir/%gcc_target_platform-gcc%psuffix	%priority
+%_bindir/%gcc_target_platform-gcov	%_bindir/%gcc_target_platform-gcov%psuffix	%_bindir/%gcc_target_platform-gcc%psuffix
+%_man1dir/gcc.1.bz2	%_man1dir/gcc%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
+%_man1dir/gcov.1.bz2	%_man1dir/gcov%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcc%psuffix
 EOF
 
 %if_with cxx
 cat >%buildroot%_altdir/c++%gcc_branch <<EOF
-%_bindir/%_target_platform-g++	%_bindir/%_target_platform-g++%psuffix	%priority
-%_man1dir/g++.1.bz2	%_man1dir/g++%psuffix.1.bz2	%_bindir/%_target_platform-g++%psuffix
+%_bindir/%gcc_target_platform-g++	%_bindir/%gcc_target_platform-g++%psuffix	%priority
+%_man1dir/g++.1.bz2	%_man1dir/g++%psuffix.1.bz2	%_bindir/%gcc_target_platform-g++%psuffix
 EOF
 %endif #with_cxx
 
 %if_with fortran
 cat >%buildroot%_altdir/gfortran%gcc_branch <<EOF
-%_bindir/%_target_platform-gfortran	%_bindir/%_target_platform-gfortran%psuffix	%priority
-%_man1dir/gfortran.1.bz2	%_man1dir/gfortran%psuffix.1.bz2	%_bindir/%_target_platform-gfortran%psuffix
+%_bindir/%gcc_target_platform-gfortran	%_bindir/%gcc_target_platform-gfortran%psuffix	%priority
+%_man1dir/gfortran.1.bz2	%_man1dir/gfortran%psuffix.1.bz2	%_bindir/%gcc_target_platform-gfortran%psuffix
 EOF
 %endif #with_fortran
 
 %if_with java
 cat >%buildroot%_altdir/java%gcc_branch <<EOF
-%_bindir/%_target_platform-gcj	%_bindir/%_target_platform-gcj%psuffix	%priority
+%_bindir/%gcc_target_platform-gcj	%_bindir/%gcc_target_platform-gcj%psuffix	%priority
 $(for i in gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert; do
-	echo "%_bindir/%_target_platform-$i	%_bindir/%_target_platform-$i%psuffix	%_bindir/%_target_platform-gcj%psuffix"
+	echo "%_bindir/%gcc_target_platform-$i	%_bindir/%gcc_target_platform-$i%psuffix	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
 $(for i in gcj gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert; do
-	echo "%_man1dir/$i.1.bz2	%_man1dir/$i%psuffix.1.bz2	%_bindir/%_target_platform-gcj%psuffix"
+	echo "%_man1dir/$i.1.bz2	%_man1dir/$i%psuffix.1.bz2	%_bindir/%gcc_target_platform-gcj%psuffix"
 done)
 EOF
 %endif #with_java
@@ -1313,8 +1392,8 @@ EOF
 %gcc_doc_dir/README.Bugs
 %_bindir/gcc%psuffix
 %_bindir/gcov%psuffix
-%_bindir/%_target_platform-gcc%psuffix
-%_bindir/%_target_platform-gcov%psuffix
+%_bindir/%gcc_target_platform-gcc%psuffix
+%_bindir/%gcc_target_platform-gcov%psuffix
 %_man1dir/gcc%psuffix.*
 %_man1dir/gcov%psuffix.*
 %dir %gcc_target_libdir
@@ -1331,10 +1410,15 @@ EOF
 %gcc_target_libdir/include/syslimits.h
 %gcc_target_libdir/include/unwind.h
 %gcc_target_libdir/include/varargs.h
-%ifarch %arm
+%if_gcc_arch arm
 %gcc_target_libdir/include/arm_neon.h
 %gcc_target_libdir/include/mmintrin.h
 %endif
+%if_gcc_arch armh
+%gcc_target_libdir/include/arm_neon.h
+%gcc_target_libdir/include/mmintrin.h
+%endif
+%ifndef _cross_platform
 %ifarch %ix86 x86_64
 %gcc_target_libdir/include/*intrin*.h
 %gcc_target_libdir/include/cpuid.h
@@ -1352,15 +1436,17 @@ EOF
 %gcc_target_libdir/include/spu2vmx.h
 %gcc_target_libdir/include/vec_types.h
 %endif
+%endif
 %gcc_target_libdir/libgcc_s.so
 %gcc_target_libdir/crt*.o
 %gcc_target_libdir/libgcc*.a
 %gcc_target_libdir/libgcov.a
+%ifndef _cross_platform
 %ifarch x86_64
 %dir %gcc_target_lib32dir
 %gcc_target_libdir/32
 %endif
-#%gcc_target_libdir/specs
+%endif
 %dir %gcc_target_libexecdir
 %gcc_target_libexecdir/collect2
 %gcc_target_libexecdir/lto-wrapper
@@ -1377,6 +1463,8 @@ EOF
 %files -n libmudflap0
 %_libdir/libmudflap*.so.*
 %endif #compat
+
+%ifndef _cross_platform
 
 %files plugin-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/gcc%gcc_branch-plugin-devel
@@ -1428,11 +1516,13 @@ EOF
 %gcc_target_libdir/libquadmath.a
 %endif
 
+%endif # _cross_platform
+
 %files -n cpp%gcc_branch
 %config %_sysconfdir/buildreqs/packages/substitute.d/cpp%gcc_branch
 %_altdir/cpp%gcc_branch
 %_bindir/cpp%psuffix
-%_bindir/%_target_platform-cpp%psuffix
+%_bindir/%gcc_target_platform-cpp%psuffix
 %_man1dir/cpp%psuffix.*
 %dir %gcc_target_libexecdir
 %gcc_target_libexecdir/cc1
@@ -1446,6 +1536,8 @@ EOF
 %dir %_datadir/gcc-%version
 %_datadir/gcc-%version/python
 %endif # compat
+
+%ifndef _cross_platform
 
 %files -n libstdc++%gcc_branch-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/libstdc++%gcc_branch-devel
@@ -1465,13 +1557,15 @@ EOF
 %dir %gcc_target_libdir
 %gcc_target_libdir/libstdc++.a
 
+%endif # _cross_platform
+
 %files c++
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-c++
 %_altdir/c++%gcc_branch
 %dir %gcc_doc_dir
 %gcc_doc_dir/g++
 %_bindir/g++%psuffix
-%_bindir/%_target_platform-g++%psuffix
+%_bindir/%gcc_target_platform-g++%psuffix
 %_man1dir/g++%psuffix.*
 %dir %gcc_target_libexecdir
 %gcc_target_libexecdir/cc1plus
@@ -1518,6 +1612,8 @@ EOF
 %_libdir/libgfortran.so.*
 %endif # compat
 
+%ifndef _cross_platform
+
 %files -n libgfortran%gcc_branch-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgfortran%gcc_branch-devel
 %dir %gcc_doc_dir
@@ -1531,13 +1627,15 @@ EOF
 %dir %gcc_target_libdir
 %gcc_target_libdir/libgfortran.a
 
+%endif # _cross_platform
+
 %files fortran
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name-fortran
 %_altdir/gfortran%gcc_branch
 %dir %gcc_doc_dir
 %gcc_doc_dir/gfortran
 %_bindir/gfortran%psuffix
-%_bindir/%_target_platform-gfortran%psuffix
+%_bindir/%gcc_target_platform-gfortran%psuffix
 %_man1dir/gfortran%psuffix.*
 %dir %gcc_target_libdir
 %gcc_target_libdir/libgfortran.spec
@@ -1672,11 +1770,13 @@ EOF
 
 %files locales -f gcc%psuffix.lang
 
+%ifndef _cross_platfoem
+
 %files doc
 %{?_enable_doxygen:%_man3dir/*}
 %_infodir/cpp*.info*
 %_infodir/gcc*.info*
-%_infodir/libgomp*.info*
+%{!?_cross_platform:%_infodir/libgomp*.info*}
 %{?_with_fortran:%_infodir/gfortran.info*}
 %{?_with_java:%_infodir/gcj.info*}
 %{?_with_java:%_infodir/cp-tools.info*}
@@ -1689,7 +1789,13 @@ EOF
 %{?_with_ada:%doc gcc/doc/gnat*.pdf}
 %endif #with_pdf
 
+%endif $ _cross_platform
+
 %changelog
+* Mon Jul 30 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6.3-alt4
+- armh: use ld-linux-armhf.so.3 as dynamic linker
+- armh: set defaults to hard-float for armv7
+
 * Fri Jun 15 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6.3-alt3
 - fixed enforced FORTIFY_SOURCE with no opt-out
 
