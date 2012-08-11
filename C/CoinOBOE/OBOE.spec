@@ -5,7 +5,7 @@
 %define oname OBOE
 Name: Coin%oname
 Version: 1.0.3
-Release: alt3.svn20100530
+Release: alt4.svn20100530
 Summary: COIN-OR Oracle Based Optimization Engine (OBOE)
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -91,7 +91,7 @@ export LAPACKCPP_LIB=-llapackpp
 	--with-glpk=yes \
 	--with-glpk-incdir=%_includedir/glpk \
 	--with-glpk-lib=-lglpk \
-	--with-blas=-lgoto2 \
+	--with-blas=-lopenblas \
 	--enable-serialization=yes
 %make_build
 
@@ -110,7 +110,7 @@ for i in ../*.a; do
 done
 g++ -shared *.o -Wl,-soname,%libname.so.%somver \
 	-o ../%libname.so.%sover -lOsiGlpk -lOsiClp -lCoinUtils -llapackpp \
-	-llapack -lgoto2 -lboost_serialization-mt -lm
+	-llapack -lopenblas -lboost_serialization-mt -lm
 ln -s %libname.so.%sover ../%libname.so.%somver
 ln -s %libname.so.%somver ../%libname.so
 popd
@@ -128,6 +128,9 @@ rm -fR %buildroot%_libdir/tmp
 %doc doc/html doc/*.html doc/userguide
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt4.svn20100530
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt3.svn20100530
 - Rebuilt with Boost 1.49.0
 
