@@ -3,7 +3,7 @@
 
 Name: ipopt
 Version: 3.10.1
-Release: alt3.svn20120128
+Release: alt4.svn20120128
 Summary: Large-Scale Nonlinear Optimization Solver (Interior Point OPTimizer)
 License: CPL 1.0
 Group: Sciences/Mathematics
@@ -103,7 +103,7 @@ sed -i "s|@TOPDIR@|$PWD|g" Ipopt/configure.ac
 
 #pushd Ipopt
 MUMPS="-lcmumps -ldmumps -lsmumps -lzmumps -lmumps_common -lpord"
-BLASLAPACK="-llapack -lgoto2"
+BLASLAPACK="-llapack -lopenblas"
 %configure \
 	--disable-mumps-libcheck \
 	--with-blas="$BLASLAPACK" \
@@ -168,6 +168,9 @@ rm -fR %buildroot%_datadir/coin/doc
 %_docdir/coin/Ipopt/examples
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.1-alt4.svn20120128
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.1-alt3.svn20120128
 - Rebuilt with OpenMPI 1.6
 
