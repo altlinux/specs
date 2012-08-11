@@ -3,7 +3,7 @@
 
 Name: CoinUtils
 Version: 2.8.6
-Release: alt3.svn20120129
+Release: alt4.svn20120129
 Summary: Open-source collection of classes and functions for COIN-OR project
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -94,7 +94,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 	--with-coin-instdir=%prefix \
 	--with-glpk-lib=-lglpk \
 	--with-glpk-incdir=%_includedir/glpk \
-	--with-blas-lib=-lgoto2 \
+	--with-blas-lib=-lopenblas \
 	--with-lapack-lib=-llapack \
 	--with-dot
 %make_build
@@ -125,6 +125,9 @@ rm -fR %buildroot%_datadir/coin/doc \
 %doc %name/doxydoc/doxydoc/html/*
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.6-alt4.svn20120129
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.6-alt3.svn20120129
 - Rebuilt with OpenMPI 1.6
 
