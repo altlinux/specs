@@ -1,6 +1,6 @@
 Name: icfs
 Version: 1.4
-Release: alt9
+Release: alt10
 Summary: An Incomplete Cholesky Factorization with Limited Memory
 License: BSD
 Group: Sciences/Mathematics
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: http://www.mcs.anl.gov/~more/icfs/icfs-1.4.tar.gz
 
 Requires: lib%name = %version-%release
-BuildPreReq: gcc-fortran liblapack-goto-devel
+BuildPreReq: gcc-fortran liblapack-devel
 
 %description
 ICFS  is an incomplete Cholesky factorization for the solution of large-scale
@@ -54,9 +54,7 @@ This package contains development files of ICFS.
 %build
 export ARCH=linux
 %make install
-%ifnarch %ix86
 ./icf
-%endif
 
 %install
 install -d %buildroot%_bindir
@@ -79,7 +77,7 @@ rm -f *.o
 ar x lib%name.a
 install -m644 lib%name.a %buildroot%_libdir
 f77 -shared  *.o -Wl,-soname,lib%name.so.0 \
-	-o %buildroot%_libdir/lib%name.so.0.0.0 -llapack -lgoto2
+	-o %buildroot%_libdir/lib%name.so.0.0.0 -llapack -lopenblas
 ln -s lib%name.so.0.0.0 %buildroot%_libdir/lib%name.so.0
 ln -s lib%name.so.0 %buildroot%_libdir/lib%name.so
 rm -f *.o
@@ -97,6 +95,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt10
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt9
 - Fixed build
 
