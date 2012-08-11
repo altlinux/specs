@@ -2,7 +2,7 @@
 %define sover 0
 Name: fiatxx
 Version: 3.14159
-Release: alt9
+Release: alt10
 Summary: FInite element Automatic Tabulator (C++ implementation)
 License: LGPL
 Group: Sciences/Mathematics
@@ -53,7 +53,7 @@ rm -fR autom4te.cache
 
 %build
 %add_optflags -pthread %optflags_shared
-%configure --with-blas=goto2
+%configure --with-blas=openblas
 %make_build
 
 %install
@@ -65,7 +65,7 @@ pushd tmp
 ar x %buildroot%_libdir/%lname.a
 g++ -shared -o %lname.so.%sover \
 	-Wl,-soname,%lname.so.%sover \
-	* -llapack -lgoto2
+	* -llapack -lopenblas
 
 install -m644 %lname.so.%sover %buildroot%_libdir
 ln -s %lname.so.%sover %buildroot%_libdir/%lname.so
@@ -82,6 +82,9 @@ popd
 #_libdir/*.a
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.14159-alt10
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Aug 24 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.14159-alt9
 - Fixed build
 
