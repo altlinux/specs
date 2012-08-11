@@ -1,6 +1,6 @@
 Name: libsuitesparse
 Version: 3.6.1
-Release: alt4
+Release: alt5
 
 Summary: Shared libraries for sparse matrix calculations
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -16,7 +16,7 @@ Source3: umfpack.pc
 BuildPreReq: libmetis0-devel gcc-c++
 
 # Automatically added by buildreq on Sun Sep 14 2008
-BuildRequires: gcc-fortran liblapack-goto-devel texlive-latex-base
+BuildRequires: gcc-fortran liblapack-devel texlive-latex-base
 
 %package devel
 Summary: Development files of SuiteSparse
@@ -105,6 +105,9 @@ done
 %_libdir/%name/demos
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt5
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt4
 - Added cs.h for CXSparse as cx_cs.h
 
