@@ -5,7 +5,7 @@
 %define sover %somver.4.0
 Name: blzpack
 Version: 04.00
-Release: alt9
+Release: alt10
 Summary: Block LancZos PACKage
 License: BSD
 Group: Sciences/Mathematics
@@ -156,7 +156,7 @@ mkdir tmp
 pushd tmp
 ar x ../lib%name.a
 mpif77 -shared * \
-	-Wl,-rpath,%mpidir/lib -lgoto2 \
+	-Wl,-rpath,%mpidir/lib -lopenblas \
 	-Wl,-soname,lib%name.so.%somver -o ../lib%name.so.%sover
 rm -f *
 popd
@@ -188,6 +188,9 @@ popd
 %doc %_docdir/lib%name-%version/examples
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 04.00-alt10
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 04.00-alt9
 - Rebuilt with OpenMPI 1.6
 
