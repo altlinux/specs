@@ -5,7 +5,7 @@
 
 Name: libpsblas
 Version: 2.4.0.4
-Release: alt2
+Release: alt3
 Summary: Parallel Sparse Basic Linear Algebra Subroutines
 License: BSD
 Group: System/Libraries
@@ -75,7 +75,7 @@ chmod +x autogen.sh
 	--with-ccopt="%optflags %optflags_shared" \
 	--with-fcopt="%optflags %optflags_shared" \
 	--with-f90copt="%optflags %optflags_shared" \
-	--with-blas="-lgoto2" \
+	--with-blas="-lopenblas" \
 	--with-lapack="-llapack" \
 	--with-blacs="-lblacs" \
 	--with-metis="-lmetis -lm"
@@ -102,7 +102,7 @@ pushd tmp
 for i in $LIBS; do
 	ar x ../lib$i.a
 	mpif90 -shared -Wl,-soname,lib$i.so.%somver * -Wl,-rpath,%mpidir/lib \
-		-o ../lib$i.so.%sover $LINKS -lmetis -llapack -lgoto2
+		-o ../lib$i.so.%sover $LINKS -lmetis -llapack -lopenblas
 	ln -s lib$i.so.%sover ../lib$i.so.%somver
 	ln -s lib$i.so.%somver ../lib$i.so
 	rm -f *
@@ -129,6 +129,9 @@ sed -i 's|^\(INSTALL_DOCSDIR\).*|\1=%_docdir/%name|' \
 %doc test
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0.4-alt3
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0.4-alt2
 - Rebuilt with OpenMPI 1.6
 
