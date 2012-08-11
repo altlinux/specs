@@ -1,7 +1,7 @@
 %define oname soundtouch
 Name: libsoundtouch
 Version: 1.3.1
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: SoundTouch audio processing library
 
@@ -69,6 +69,9 @@ rm -rf %buildroot/usr/doc
 %_pkgconfigdir/*
 
 %changelog
+* Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt2.qa2
+- Rebuilt for debuginfo
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 1.3.1-alt2.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
