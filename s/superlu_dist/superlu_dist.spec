@@ -6,7 +6,7 @@
 %define sover %somver.5
 Name: superlu_dist
 Version: 3.1
-Release: alt1
+Release: alt2
 Summary: Solve a sparse linear system A*X=B for distributed memory
 License: BSD-like
 Group: Sciences/Mathematics
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %{name}_%version.tar.gz
 Source1: superlu_sort_perm.c
 
-BuildPreReq: libgotoblas-devel liblapack-devel
+BuildPreReq: liblapack-devel
 BuildPreReq: csh libparmetis-devel %mpiimpl-devel
 #BuildPreReq: texlive-latex-base texlive-extra-utils
 #BuildPreReq: doxygen graphviz ghostscript-utils
@@ -188,7 +188,7 @@ install -p -m644 FORTRAN/*.c FORTRAN/*.f90 \
 TOPDIR=$PWD
 pushd %buildroot%_libdir
 ar x libsuperlu_dist_%over.a
-mpif77 -shared *.o -lparmetis -lm -lgoto2 \
+mpif77 -shared *.o -lparmetis -lm -lopenblas \
 	-Wl,-R%mpidir/lib \
 	-Wl,-soname,libsuperlu_dist_%over.so.%somver -o \
 	libsuperlu_dist_%over.so.%sover
@@ -230,6 +230,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 #exclude %_bindir/test*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt2
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt1
 - Version 3.1
 
