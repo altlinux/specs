@@ -19,7 +19,7 @@ implement all abstract interfaces.
 %define oname trilinos
 Name: %oname%somver
 Version: 10.10.0
-Release: alt5
+Release: alt6
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL
 Group: Sciences/Mathematics
@@ -2376,6 +2376,9 @@ popd
 %endif
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.10.0-alt6
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.10.0-alt5
 - Fixed build
 
