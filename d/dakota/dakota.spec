@@ -7,7 +7,7 @@ Name: dakota
 Version: 5.2
 %define somver 0
 %define sover %somver.0.0
-Release: alt4
+Release: alt5
 Epoch: 1
 Summary: Design Analysis Kit for Optimization and Terascale Applications
 License: LGPL v2.1
@@ -123,7 +123,7 @@ INCS="$INCS -I%_includedir/plplot -I%_includedir/fftw3-mpi"
 INCS="$INCS -I%_includedir/plplot"
 %add_optflags $INCS -fno-strict-aliasing $DEFS %optflags_shared
 LIBS="-larprec -lexpat -lxml2 -ldl -lXmu -lXm -lXt -lpthread -lm"
-LIBS="$LIBS -lteuchos -llapack -lgoto2 -lgfortran"
+LIBS="$LIBS -lteuchos -llapack -lopenblas -lgfortran"
 LIBS="$LIBS -L%mpidir/lib -lmpi_cxx -lmpi -Wl,-R%mpidir/lib -lstdc++"
 export MPIDIR=%mpidir
 export LIBTOOLDIR=$PWD
@@ -139,7 +139,7 @@ export LIBTOOLDIR=$PWD
        --with-teuchos-include=%_includedir \
        --with-teuchos-lib=%_libdir \
        --with-incdirs="$INCS" \
-       --with-blas=goto2 \
+       --with-blas=openblas \
        --with-lapack=lapack \
        --enable-f77 \
        --with-boost=%_includedir \
@@ -186,7 +186,7 @@ for i in libncsuopt libnidr
 do
 	mpic++ -shared -Wl,--whole-archive $i.a -Wl,--no-whole-archive \
 		-o $i.so.%sover -Wl,-soname,$i.so.%somver  -L. -ldakota \
-		-llapack -lgoto2 -lm \
+		-llapack -lopenblas -lm \
 		-L%mpidir/lib -Wl,-rpath,%mpidir/lib -lgfortran -Wl,-z,defs
 	ln -s $i.so.%sover $i.so.%somver
 	ln -s $i.so.%somver $i.so
@@ -371,6 +371,9 @@ ln -s ../../macros.hpp \
 %_includedir/*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.2-alt5
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.2-alt4
 - Rebuilt with OpenMPI 1.6
 
