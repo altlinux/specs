@@ -11,7 +11,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.0.1h
-Release: alt5
+Release: alt6
 Summary: BeBOP Optimized Sparse Kernel Interface (OSKI) Library (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -21,7 +21,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 # cvs -z3 -d:pserver:anonymous@oski.cvs.sourceforge.net:/cvsroot/oski co -P oski
 Source: %oname-%version.tar.gz
 
-BuildPreReq: liblapack-goto-devel libfftw3-devel
+BuildPreReq: liblapack-devel libfftw3-devel
 BuildPreReq: libltdl-devel gcc-c++ gcc-fortran
 BuildPreReq: doxygen graphviz texlive-latex-base texlive-lang-german
 
@@ -100,7 +100,7 @@ sed -i 's|@SCALAR_TYPE@||' src/Makefile.common
 	--enable-MBCSR-ata \
 	--enable-MBCSR-a_and_at \
 	--without-papi \
-	--with-blas="-llapack -lgoto2" \
+	--with-blas="-llapack -lopenblas" \
 	--with-index-binding=int \
 	--with-value-binding=%value_binding
 
@@ -141,6 +141,9 @@ sed -i 's|@SCALAR_TYPE@||' src/Makefile.common
 %endif
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1h-alt6
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Fri Apr 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1h-alt5
 - Rebuilt with GotoBLAS2 1.13-alt3
 
