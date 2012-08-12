@@ -6,7 +6,7 @@ Name: python-module-%oname
 URL:http://niftilib.sf.net/pynifti/
 Summary: Easy access to NIfTI images from within Python
 Version: 1.3.0
-Release: alt2.git20120609
+Release: alt3.git20120609
 License: MIT
 Group: Development/Python
 
@@ -15,7 +15,7 @@ Source: %oname-%version.tar.gz
 BuildArch: noarch
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildRequires: libnumpy-devel liblapack-goto-devel python-module-nose
+BuildRequires: libnumpy-devel liblapack-devel python-module-nose
 BuildRequires: python-devel swig libniftilib-devel zlib-devel
 BuildRequires: gcc-c++ python-module-sphinx-devel python-module-Pygments
 BuildPreReq: python-module-pydicom
@@ -129,6 +129,9 @@ rm -f %buildroot%python_sitelibdir/conf.py
 %python_sitelibdir/%oname/*/test*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt3.git20120609
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.git20120609
 - Moved all tests into tests subpackage
 
