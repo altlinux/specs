@@ -5,7 +5,7 @@
 %define sover %somver.2.0
 Name: parms
 Version: 3.2
-Release: alt7
+Release: alt8
 Summary: parallel Algebraic Recursive Multilevel Solvers 
 License: MIT
 Group: Sciences/Mathematics
@@ -144,7 +144,7 @@ pushd %buildroot%_libdir
 mkdir tmp
 pushd tmp
 ar x ../lib%name.a
-mpif77 -shared * -llapack -lgoto2 \
+mpif77 -shared * -llapack -lopenblas \
 	-Wl,-rpath,%mpidir/lib \
 	-Wl,-soname,lib%name.so.%somver -o ../lib%name.so.%sover
 rm -f *
@@ -170,6 +170,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt8
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt7
 - Rebuilt with OpenMPI 1.6
 
