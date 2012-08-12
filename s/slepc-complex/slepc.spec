@@ -9,7 +9,7 @@
 %define sover %somver.2.0
 Name: %oname-%scalar_type
 Version: 3.2_p5
-Release: alt2
+Release: alt3
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-python
 BuildPreReq: chrpath libpetsc-%scalar_type-devel
 BuildPreReq: %mpiimpl-devel gcc-fortran libgfortran-devel
 BuildPreReq: libstdc++-devel libatlas-devel libsz2-devel libparpack-mpi-devel
-BuildPreReq: liblapack-goto-devel gcc-c++ libscalapack-devel libX11-devel
+BuildPreReq: liblapack-devel gcc-c++ libscalapack-devel libX11-devel
 BuildPreReq: libXt-devel libsowing-devel boost-devel python-module-fiat
 BuildPreReq: libparmetis-devel libblacs-devel libspooles-devel
 BuildPreReq: libtetgen-devel zlib-devel libblocksolve95-devel
@@ -252,6 +252,9 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p5-alt3
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Fri Jul 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p5-alt2
 - Rebuilt with OpenMPI 1.6
 
@@ -325,3 +328,4 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 
 * Mon Jul 13 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p4-alt1
 - Initial build for Sisyphus
+
