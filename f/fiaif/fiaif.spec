@@ -21,8 +21,10 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
+%def_with  systemd
+
 Name: fiaif
-Version: 1.21.1
+Version: 1.22.1
 Release: alt1
 
 Summary: FIAIF is an Intelligent Firewall for iptables based Linux systems
@@ -35,10 +37,12 @@ URL: http://www.fiaif.net/
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
 
-Source0: http://www.fiaif.net/dist/%{name}_%version.tar.gz
+Source0: %{name}_%version.tar
 Source1: zone.venet
-
-Patch0: %name-1.21.1-alt-reserved_networks.patch
+Source2: reserved_networks
+%if_with systemd
+Source3: fiaif.service
+%endif
 
 Patch1: %name-1.19.2-alt-fiaif_update.patch
 Patch2: %name-1.19.2-alt-test_location.patch
@@ -47,20 +51,10 @@ Patch4: %name-1.21.1-alt-CBQ-legacy_support.patch
 Patch5: %name-1.21.1-alt-LSB_init.patch
 Patch6: %name-1.21.1-alt-autonumbering_note.patch
 Patch7: %name-1.21.1-alt-fiaif_venet_zone.patch
-
-Patch20: %name-1.21.1-debian-02-debug_documentation.patch
-Patch21: %name-1.21.1-debian-03-configuration_grammar.patch
-Patch22: %name-1.21.1-debian-04-improved_error_msg.patch
-Patch23: %name-1.21.1-debian-05-fiaif_scan_IN_spaces.patch
-Patch24: %name-1.21.1-debian-07-disable_ext_igmp.patch
-Patch25: %name-1.21.1-debian-08-use_fancyhdr.patch
-Patch26: %name-1.21.1-debian-09-fiaif_update_network_errors.patch
-Patch27: %name-1.21.1-debian-10-correct_voip_rule_typo.patch
-Patch28: %name-1.21.1-debian-11-man_pages_title.patch
-Patch29: %name-1.21.1-debian-12-allow_bash_array_length.patch
-Patch30: %name-1.21.1-debian-13-modprobe_remove_modules.patch
-
-
+Patch8: %name-1.22.1-log_level.patch
+Patch9: %name-1.22.1-btime.patch
+Patch10: %name-1.22.1-cleanup_rules.patch
+Patch11: %name-1.22.1-vlan_devices.patch
 
 Requires: iptables >= 1.2.6a, bash >= 2.04
 BuildRequires(pre): rpm-build-licenses
@@ -113,9 +107,6 @@ FIAIF написан на BASH.  Хотя bash - не самый  оптимал
 Summary: FIAIF documentation
 Summary(ru_RU.UTF-8): документация к FIAIF
 Group: Books/Other
-Requires: %name = %version
-Provides: %name-doc = %version-%release
-Obsoletes: %name-doc
 
 %description doc
 FIAIF is  an  Intellegent  Firewall. The Goal of  FIAIF  is to
@@ -135,50 +126,66 @@ FIAIF - скрипт с широкими возможностями настро
 
 %prep
 %setup
-%patch0 -p0
 %patch1 -p0
 %patch2 -p0
 %patch3 -p0
 %patch4 -p0
 %patch5 -p0
 %patch6 -p0
-
-%patch20 -p0
-%patch21 -p0
-%patch22 -p0
-%patch23 -p0
-%patch24 -p0
-%patch25 -p0
-%patch26 -p0
-%patch27 -p0
-%patch28 -p0
-%patch29 -p0
-%patch30 -p0
+%patch7 -p0
+%patch8 -p0
+%patch9 -p0
+%patch10 -p0
+%patch11 -p0
 
 # Fix path to fiaif main script
-%__subst 's@/etc/init.d@/etc/rc.d/init.d@' cron/fiaif
+subst 's@/etc/init.d@/etc/rc.d/init.d@' cron/fiaif
 
 # Install sample config for VENET zone
 install -m 0644 %SOURCE1 conf/zone.venet
-%__subst 's#CONF_FILES=fiaif.conf#CONF_FILES=fiaif.conf zone.venet#' Makefile
+subst 's#CONF_FILES=fiaif.conf#CONF_FILES=fiaif.conf zone.venet#' Makefile
+
+# Install fresh reserved_networks
+install -m 0644 %SOURCE2 conf/reserved_networks
 
 %build
-DISPLAY=0:0 LANG=RU_ru.KOI8-R %__make fiaif.ps
+DISPLAY=0:0 LANG=RU_ru.UTF-8   make fiaif.ps
 [ -f fiaif.ps ] && gzip -9 fiaif.ps
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 make install-config DESTDIR=$RPM_BUILD_ROOT
-install -d -- $RPM_BUILD_ROOT{%_sbindir,%_mandir/man8} \
-              $RPM_BUILD_ROOT%_sysconfdir/rc.d/init.d
+install -d -- $RPM_BUILD_ROOT{%_sbindir,%_mandir/man8,%_initdir}
 install -- prog/fiaif $RPM_BUILD_ROOT%_initdir/fiaif
+# Creating link /usr/sbin/fiaif -> %_initdir/fiaif
+ln -s %_initdir/%name $RPM_BUILD_ROOT%_sbindir/%name
 
 # Removing unnecessary but installed files
 rm -rf -- $RPM_BUILD_ROOT%_sysconfdir/init.d/%name
 rm -rf -- $RPM_BUILD_ROOT%_defaultdocdir/%name
 
+%if_with systemd
+# Installing systemd unit file
+mkdir -p  %buildroot%_unitdir
+install -m 0755 %SOURCE3 %buildroot%_unitdir/%name.service
+%endif
+
 %post
 %post_service %name
+
+# Fix fiaif.conf - replace log level from CRIT to crit, and etc.
+# The support of upper-case log levels names had been dropped in iptables >= 1.4.15
+# Older iptables versions can handle both upper and lower case names,
+# newly ones - only lower case.
+sed -e 's/LOG_LEVEL=ALERT/LOG_LEVEL=alert/'     -i %fiaif_conf/fiaif.conf
+sed -e 's/LOG_LEVEL=CRIT/LOG_LEVEL=crit/'       -i %fiaif_conf/fiaif.conf
+sed -e 's/LOG_LEVEL=DEBUG/LOG_LEVEL=debug/'     -i %fiaif_conf/fiaif.conf
+sed -e 's/LOG_LEVEL=EMERG/LOG_LEVEL=emerg/'     -i %fiaif_conf/fiaif.conf
+sed -e 's/LOG_LEVEL=ERROR/LOG_LEVEL=error/'     -i %fiaif_conf/fiaif.conf
+sed -e 's/LOG_LEVEL=INFO/LOG_LEVEL=info/'       -i %fiaif_conf/fiaif.conf
+sed -e 's/LOG_LEVEL=NOTICE/LOG_LEVEL=notice/'   -i %fiaif_conf/fiaif.conf
+sed -e 's/LOG_LEVEL=PANIC/LOG_LEVEL=panic/'     -i %fiaif_conf/fiaif.conf
+sed -e 's/LOG_LEVEL=WARNING/LOG_LEVEL=warning/' -i %fiaif_conf/fiaif.conf
 
 %preun
 %preun_service %name
@@ -197,19 +204,30 @@ rm -rf -- $RPM_BUILD_ROOT%_defaultdocdir/%name
 %config(noreplace) %fiaif_conf/private_networks
 %config(noreplace) %fiaif_conf/type_of_services
 
-     %attr(0700,root,root) %_sysconfdir/cron.daily/%name
-     %_initdir/%name
-     %_sbindir/*
+%if_with systemd
+%_unitdir/%name.service
+%endif
+
+%attr(0700,root,root) %_sysconfdir/cron.daily/%name
+%_initdir/%name
+%_sbindir/*
 
 %dir %_datadir/%name/
-     %_datadir/%name/*
+%_datadir/%name/*
 
-     %_mandir/man?/*
+%_mandir/man?/*
 
 %files doc
 %doc fiaif.ps.gz doc/faq.txt
 
 %changelog
+* Sun Aug 12 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.22.1-alt1
+- New version 1.22.1
+- Fix code to work with iptables >= 1.4.15
+- Fix code to work with OpenVZ kernel >= 2.6.32-ovz-el-alt70
+- Add systemd unit file
+- Add support for VLAN interfaces
+
 * Fri Aug 01 2008 Nikolay A. Fetisov <naf@altlinux.ru> 1.21.1-alt1
 - New version 1.21.1
 - Add auto-numbering feature for rule's lists
