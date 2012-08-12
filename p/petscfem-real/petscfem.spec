@@ -10,7 +10,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt4.beta
+Release: alt5.beta
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -99,7 +99,7 @@ source %_bindir/petsc-%scalar_type.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%ldir/lib -L%mpidir/lib -L%ldir/lib"
 export MPIDIR=%mpidir
 
-%add_optflags -I%_includedir/gotoblas
+%add_optflags -I%_includedir/openblas
 %make_ext -C src amplidl.o
 for i in depend libpetscfem; do
 	%make_ext $i SOMVER=%somver SOVER=%sover
@@ -148,6 +148,9 @@ done
 %endif
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt5.beta
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt4.beta
 - Rebuilt with OpenMPI 1.6
 
