@@ -5,7 +5,7 @@
 %define sover %somver.1.1
 Name: primme
 Version: 1.1
-Release: alt10
+Release: alt11
 Summary: PReconditioned Iterative MultiMethod Eigensolver
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -16,7 +16,7 @@ Source: http://www.cs.wm.edu/~andreas/software/primme_v1.1.tar.gz
 Source1: http://www.cs.wm.edu/~andreas/software/doc.pdf
 
 BuildPreReq: liblapack-devel libhypre-devel
-BuildPreReq: %mpiimpl-devel chrpath
+BuildPreReq: %mpiimpl-devel
 
 %description
 PRIMME finds a number of eigenvalues and their corresponding eigenvectors of a 
@@ -52,20 +52,6 @@ eigenvalues are supported. Preconditioning can be used to accelarate
 convergence.
 
 This package contains development files of PRIMME.
-
-%package -n lib%name-devel-static
-Summary: Static libraries of PRIMME
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
-
-%description -n lib%name-devel-static
-PRIMME finds a number of eigenvalues and their corresponding eigenvectors of a 
-real symmetric, or complex hermitian matrix A. Largest, smallest and interior 
-eigenvalues are supported. Preconditioning can be used to accelarate
-convergence.
-
-This package contains static libraries of PRIMME.
 
 %package examples
 Summary: Examples for PRIMME
@@ -112,11 +98,10 @@ cp -fR DTEST ZTEST %buildroot%_libdir/%name-%version/examples/
 pushd %buildroot%_libdir
 for i in libprimme libdprimme libzprimme; do
 	mpicc -shared -Wl,--whole-archive $i.a -Wl,--no-whole-archive \
-		-L. $ADDLIB -llapack -lgoto2 -Wl,-rpath,%mpidir/lib \
+		-L. $ADDLIB -llapack -lopenblas -Wl,-rpath,%mpidir/lib \
 		-Wl,-soname,$i.so.%somver -o $i.so.%sover -Wl,-z,defs
 	ln -s $i.so.%sover $i.so.%somver
 	ln -s $i.so.%somver $i.so
-	#chrpath -r %mpidir/lib $i.so
 	ADDLIB="-lprimme"
 done
 popd
@@ -132,14 +117,14 @@ popd
 %_libdir/*.so
 %_includedir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files examples
 %dir %_libdir/%name-%version
 %_libdir/%name-%version/examples
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt11
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt10
 - Rebuilt witht OpenMPI 1.6
 
