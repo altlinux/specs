@@ -2,7 +2,7 @@
 
 Name:           ocaml-lacaml
 Version:        5.5.2
-Release:        alt1
+Release:        alt1.1
 Summary:        BLAS/LAPACK-interface for OCaml
 Summary(ru_RU.UTF-8): Интерфейс библиотек BLAS/LAPACK для OCaml
 License:        LGPLv2 with exceptions
@@ -11,7 +11,7 @@ Url:            http://ocaml.info/home/ocaml_sources.html#lacaml
 Packager:	Andrey Bergman <vkni@altlinux.org>
 
 Source:         lacaml-%{version}.tar.bz2
-Patch: ocaml-lacaml-alt-gotoblas2.patch
+Patch: ocaml-lacaml-alt-openblas.patch
 
 BuildRequires: liblapack-devel ocaml ocamlfind-mini
 
@@ -66,6 +66,9 @@ install -pm644 TODO %buildroot%docdir/
 %ocamlsitelib/lacaml/*.ml
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.5.2-alt1.1
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Fri Dec 23 2011 Alexey Shabalin <shaba@altlinux.ru> 5.5.2-alt1
 - 5.5.2
 
