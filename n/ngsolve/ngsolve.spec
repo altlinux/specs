@@ -3,7 +3,7 @@
 
 Name: ngsolve
 Version: 4.9.14
-Release: alt4.svn20120228
+Release: alt5.svn20120228
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -88,7 +88,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--enable-mpi-threads \
 	--enable-mumps \
 	--with-netgen=%prefix \
-	--with-lapack="-llapack -lgoto2" \
+	--with-lapack="-llapack -lopenblas" \
 	-with-superlu=-I%_includedir \
 	CXX=mpic++
 %make_build
@@ -155,6 +155,9 @@ popd
 %doc %_datadir/%name
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.14-alt5.svn20120228
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.14-alt4.svn20120228
 - Rebuilt with OpenMPI 1.6
 
