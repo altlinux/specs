@@ -4,7 +4,7 @@ BuildRequires: gcc-fortran
 %define octave_descr_name Control
 Name: octave-%octave_pkg_name
 Version: 2.2.1
-Release: alt1
+Release: alt1.1
 Summary: Control Systems
 
 Group: Sciences/Mathematics
@@ -49,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt1.1
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Nov 17 2011 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1
 - initial import by octave-package-builder
 
