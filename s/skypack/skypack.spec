@@ -2,7 +2,7 @@
 %define sover %somver.4.0
 Name: skypack
 Version: 04.00
-Release: alt5
+Release: alt6
 Summary: SKYline PACKage - computations with matrices stored in a skyline form
 License: BSD
 Group: Sciences/Mathematics
@@ -11,7 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://crd.lbl.gov/~osni/Codes/skypack.zip
 
-BuildPreReq: gcc-fortran liblapack-goto-devel
+BuildPreReq: gcc-fortran liblapack-devel
 BuildPreReq: unzip tcsh
 
 %description
@@ -118,6 +118,9 @@ rm -f sources/*.o
 %_libdir/%name/examples
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 04.00-alt6
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Apr 11 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 04.00-alt5
 - Built with GotoBLAS instead of ATLAS
 - Disabled devel-static package
