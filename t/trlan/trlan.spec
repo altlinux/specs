@@ -5,7 +5,7 @@
 %define sover %somver.0.0
 Name: trlan
 Version: 20100901
-Release: alt3
+Release: alt4
 Summary: The thick-restart Lanczos method
 License: BSD-like
 Group: Sciences/Mathematics
@@ -107,21 +107,6 @@ done through calls to BLAS and LAPACK.
 
 This package contains development files of TRLan.
 
-%package -n lib%name-devel-static
-Summary: Static libraries of TRLan
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
-
-%description -n lib%name-devel-static
-This software package implements the thick-restart Lanczos method. It can be
-used on either a single address space machine or a distributed parallel machine.
-The user can choose to implement or use a matrix-vector multiplication routine
-in any form convenient. Most of the arithmetic computations in the software are
-done through calls to BLAS and LAPACK.
-
-This package contains static libraries of TRLan.
-
 %prep
 %setup
 install -p -m644 %SOURCE1 .
@@ -167,8 +152,8 @@ mkdir tmp
 pushd tmp
 for i in $LIBS; do
 	ar x ../$i.a
-	mpif77 -shared * -llapack -lgoto2 \
-		-Wl,-R%mpidir/lib \
+	mpif77 -shared * -llapack -lopenblas \
+		-Wl,-rpath,%mpidir/lib \
 		-Wl,-soname,$i.so.%somver -o ../$i.so.%sover
 	ln -s $i.so.%sover ../$i.so.%somver
 	ln -s $i.so.%somver ../$i.so
@@ -191,9 +176,6 @@ popd
 %_libdir/*.so
 %_includedir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files doc
 %doc %dir %_docdir/%name-%version
 %doc %_docdir/%name-%version/*.html
@@ -208,6 +190,9 @@ popd
 %_infodir/*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100901-alt4
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100901-alt3
 - Rebuilt with OpenMPI 1.6
 
