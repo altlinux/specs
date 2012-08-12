@@ -7,7 +7,7 @@
 Name: pswarm
 %define pyname %{name}_py
 Version: 1.5
-Release: alt9
+Release: alt10
 Summary: Global optimization solver for bound and linear constrained problems
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -209,6 +209,9 @@ install -p -m644 *.py %buildroot%python_sitelibdir/pswarm_test
 %doc *.r
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt10
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt9
 - Rebuilt with OpenMPI 1.6
 
