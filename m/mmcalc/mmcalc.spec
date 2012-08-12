@@ -1,6 +1,6 @@
 Name: mmcalc
 Summary: Molar Mass Calculator
-Version: 20120808
+Version: 20120811
 Release: alt1
 Group: Sciences/Chemistry
 License: LGPL
@@ -13,11 +13,9 @@ Source1: %name.svg
 
 BuildArch: noarch
 
-#BuildPreReq: perl-Glib
 BuildPreReq: perl-Module-Build >= 0.36
 
-# Automatically added by buildreq on Mon Jul 26 2010 (-bi)
-BuildRequires: perl-Encode perl-File-BaseDir perl-Gtk2 perl-Module-Build
+BuildRequires: perl-File-BaseDir perl-Gtk2-Ex-Simple-List perl-Module-Build
 
 %description
 This program calculates molar mass and percent of each
@@ -75,6 +73,9 @@ install -m 644 %SOURCE1 %buildroot%_datadir/icons/hicolor/scalable/apps/%name.sv
 %_desktopdir/%name.desktop
 
 %changelog
+
+* Sun Aug 12 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120811-alt1
+- new version
 
 * Wed Aug 08 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120808-alt1
 - new version
