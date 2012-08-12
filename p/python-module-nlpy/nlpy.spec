@@ -1,7 +1,7 @@
 %define oname nlpy
 Name: python-module-%oname
 Version: 20090325
-Release: alt6.1
+Release: alt7
 Summary: Python package for numerical optimization
 License: LGPL v2.1 or later
 Group: Development/Python
@@ -17,7 +17,7 @@ Requires: libcsrch libicfs libmcsrch
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel libcsrch-devel libnumpy-devel
 BuildPreReq: python-module-pysparse gcc-c++ gcc-fortran libicfs-devel
-BuildPreReq: libmetis-devel libcsrch-devel liblapack-goto-devel
+BuildPreReq: libmetis-devel libcsrch-devel liblapack-devel
 %setup_python_module %oname
 %add_python_req_skip amplpy _amplpy
 
@@ -109,6 +109,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20090325-alt7
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 20090325-alt6.1
 - Rebuild with Python-2.7
 
