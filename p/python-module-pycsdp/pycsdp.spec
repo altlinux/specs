@@ -1,7 +1,7 @@
 %define oname pycsdp
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.beta.git20100908.2.1.1
+Release: alt2.beta.git20100908
 Summary: Python/Numpy interface to the semidefinite programming library CSDP
 License: GPL v3 or later
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildPreReq: libCoinCsdp-devel python-devel libnumpy-devel gcc-c++
-BuildPreReq: liblapack-goto-devel
+BuildPreReq: liblapack-devel
 
 Conflicts: libmpeg4ip
 Requires: libCoinCsdp
@@ -38,6 +38,9 @@ sed -i 's|@LIBDIR@|%_libdir|' setup.py
 %python_sitelibdir/*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt2.beta.git20100908
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.0-alt1.beta.git20100908.2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
