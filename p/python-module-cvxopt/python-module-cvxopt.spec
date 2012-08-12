@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.5
-Release: alt1
+Release: alt2
 Summary: Python Software for Convex Optimization
 License: GPL v3 or higher/GPL v2 of higher
 Group: Development/Python
@@ -178,6 +178,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt2
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed May 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt1
 - Version 1.1.5
 - Added module for Python 3
