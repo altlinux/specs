@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.2
-Release: alt2.svn20110511.1
+Release: alt3.svn20110511
 Summary: Fast sparse matrix library for Python
 License: MIT
 Group: Development/Python
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python rpm-macros-sphinx
-BuildPreReq: python-devel libnumpy-devel liblapack-goto-devel
+BuildPreReq: python-devel libnumpy-devel liblapack-devel
 BuildPreReq: gcc-c++ gcc-fortran libsuperlu-devel libsuitesparse-devel
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 %setup_python_module %oname
@@ -126,6 +126,9 @@ install -p -m644 %oname/include/* \
 %python_sitelibdir/%oname/test
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt3.svn20110511
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2-alt2.svn20110511.1
 - Rebuild to remove redundant libpython2.7 dependency
 
