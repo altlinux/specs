@@ -2,7 +2,7 @@
 %define sover %somver.2.0
 Name: sparskit
 Version: 2.0
-Release: alt6
+Release: alt7
 Summary: A basic tool-kit for sparse matrix computations (Version 2)
 License: LGPL
 Group: Sciences/Mathematics
@@ -13,7 +13,7 @@ Source: http://www-users.cs.umn.edu/~saad/software/SPARSKIT/SPARSKIT2.tar.gz
 Source1: funcs.f
 
 Requires: lib%name = %version-%release
-BuildPreReq: gcc-fortran liblapack-goto-devel
+BuildPreReq: gcc-fortran liblapack-devel
 
 %description
 SPARSKIT is a package of FORTRAN subroutines for working with sparse
@@ -110,6 +110,9 @@ popd
 %_docdir/lib%name-devel
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt7
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Fri Apr 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt6
 - Rebuilt with GotoBLAS2 1.13-alt3
 
