@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%oname
 Version: 0.11.0
-Release: alt4.git20120508
+Release: alt5.git20120508
 
 Summary: SciPy is the library of scientific codes
 
@@ -453,6 +453,9 @@ done
 %endif
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.0-alt5.git20120508
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sun Jun 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.0-alt4.git20120508
 - Fixed build
 
