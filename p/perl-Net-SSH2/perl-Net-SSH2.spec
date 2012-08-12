@@ -1,13 +1,13 @@
 Name: perl-Net-SSH2
-Version: 0.39
-Release: alt2
+Version: 0.45
+Release: alt1
 
 Summary: Support for the SSH 2 protocol via libssh2
 License: Perl
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/Net-SSH2/
-Source: Net-SSH2-%version.tar.gz
+Source: Net-SSH2-%version.tar
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: libssh2-devel libssl-devel perl-Module-Install-CheckLib zlib-devel
@@ -19,7 +19,6 @@ with all of the key exchanges, ciphers, and compression of libssh2.
 
 %prep
 %setup -q -n Net-SSH2-%version
-rm -rv inc/
 
 %build
 %perl_vendor_build
@@ -28,11 +27,14 @@ rm -rv inc/
 %perl_vendor_install
 
 %files
-%doc Changes README 
+%doc TODO Changes README
 %perl_vendor_archlib/Net
 %perl_vendor_autolib/Net
 
 %changelog
+* Sun Aug 12 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.45-alt1
+- New version 0.45 (support for ssh-agent, fix memory leak in password auth)
+
 * Tue Oct 11 2011 Alexey Tourbin <at@altlinux.ru> 0.39-alt2
 - rebilt for perl-5.14
 
