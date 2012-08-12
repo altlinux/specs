@@ -3,7 +3,7 @@
 
 Name: p4est
 Version: 0.3.4
-Release: alt3
+Release: alt4
 Summary: Parallel AMR on Forests of Octrees
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -72,8 +72,9 @@ export MPIDIR=%mpidir
 mkdir _ex
 cp -fR example _ex/
 
+./bootstrap
 %configure \
-	--with-blas=-lgoto2 \
+	--with-blas=-lopenblas \
 	--enable-vtk-doubles \
 	--enable-mpi \
 	--enable-mpiio \
@@ -110,6 +111,9 @@ chrpath -r %mpidir/lib %buildroot%_bindir/* ||:
 %doc _ex/*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt4
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.4-alt3
 - Rebuilt with OpenMPI 1.6
 
