@@ -5,7 +5,7 @@
 %define oname Couenne
 Name: Coin%oname
 Version: 0.4.2
-Release: alt2.svn20120211
+Release: alt3.svn20120211
 Summary: Convex Over and Under ENvelopes for Nonlinear Estimation
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
-BuildPreReq: libCoinUtils-devel liblapack-goto-devel
+BuildPreReq: libCoinUtils-devel liblapack-devel
 BuildPreReq: libmumps-devel libCoinCgl-devel libCoinBonmin-devel
 BuildPreReq: libCoinClp-devel libipopt-devel CoinMiplib3-devel
 BuildPreReq: libCoinCbc-devel %mpiimpl-devel CoinSample-devel
@@ -84,7 +84,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %configure \
 	--with-bonmin-incdir=%_includedir/coin \
 	--with-mumps-lib=-ldmumps \
-	--with-blas-lib=-lgoto2 \
+	--with-blas-lib=-lopenblas \
 	--with-lapack-lib=-llapack
 sed -i 's|\(wl=\).*|\1"-Wl,"|' libtool
 %make_build TOPDIR=$PWD
@@ -121,6 +121,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/doc/*.pdf
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt3.svn20120211
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.2-alt2.svn20120211
 - Rebuilt with OpenMPI 1.6
 
