@@ -5,7 +5,7 @@
 %define iversion 1.0.0
 Name: sundials
 Version: 2.6.0
-Release: alt11
+Release: alt12
 Summary: SUite of Nonlinear and DIfferential/ALgebraic equation Solvers
 License: BSD
 Group: Sciences/Mathematics
@@ -171,7 +171,7 @@ function buildIt() {
 			--with-mpi-root=%mpidir \
 			--with-mpi-libs="-lmpi" \
 			--with-precision=$p \
-			--with-blas="-lgoto2" \
+			--with-blas="-lopenblas" \
 			--with-lapack="-llapack" \
 			--enable-examples
 		sed -i -e 's/^\(available_tags\).*/\1=/' libtool
@@ -271,6 +271,9 @@ cp pvode/fcmix/examples/*.f _ex-src/pvode/fcmix/
 %doc _ex-doc/*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt12
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sun Jun 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt11
 - Rebuilt with OpenMPI 1.6
 
