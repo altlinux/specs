@@ -7,7 +7,7 @@
 
 Name: phaml
 Version: 1.10.0
-Release: alt3
+Release: alt4
 Summary: The Parallel Hierarchical Adaptive MultiLevel Project
 License: Public domain
 Group: Sciences/Mathematics
@@ -16,7 +16,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: gcc-fortran %mpiimpl-devel libgotoblas-devel
+BuildPreReq: gcc-fortran %mpiimpl-devel
 BuildPreReq: liblapack-devel libslepc-real-devel libparpack-mpi-devel
 BuildPreReq: libexodusii-devel libGLUT-devel libf90gl-devel
 BuildPreReq: libXaw-devel libXmu-devel libXi-devel libXext-devel
@@ -126,7 +126,7 @@ pushd %buildroot%_libdir
 mpif90 -shared $TOPDIR/*.o \
 	-o lib%name.so.%sover -Wl,-soname,lib%name.so.%somver \
 	-lpetsc -lslepc -lHYPRE -lzoltan -lf90glut -lf90GLU -lf90GL \
-	-lglut -lGLU -lGL -llapack -lgoto2
+	-lglut -lGLU -lGL -llapack -lopenblas
 	ln -s lib%name.so.%sover lib%name.so.%somver
 	ln -s lib%name.so.%somver lib%name.so
 popd
@@ -149,6 +149,9 @@ cp -fR examples %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.0-alt4
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.0-alt3
 - Rebuilt with OpenMPI 1.6
 
