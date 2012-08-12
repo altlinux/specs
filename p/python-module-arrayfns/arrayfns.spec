@@ -3,7 +3,7 @@
 Summary: arrayfns from Numerical Extension to Python
 Name: python-module-%oname
 Version: 24.2
-Release: alt6.1.1
+Release: alt7
 Source0: Numeric-%version.tar.gz
 License: Python License
 Group: Development/Python
@@ -14,7 +14,7 @@ Url: http://www.pfdubois.com/numpy/
 
 %setup_python_module %oname
 # Automatically added by buildreq on Tue Jul 18 2006
-BuildRequires: liblapack-goto-devel python-devel python-modules 
+BuildRequires: liblapack-devel python-devel python-modules 
 BuildRequires: python-modules-compiler python-modules-encodings
 BuildPreReq: libnumpy-devel
 
@@ -29,7 +29,7 @@ This package contains %oname module from Numeric Extension.
 %setup -n Numeric-%version 
 
 %build
-%add_optflags -I%_includedir/gotoblas -DXDOUBLE
+%add_optflags -I%_includedir/openblas
 %python_build_debug
 
 %install
@@ -41,6 +41,9 @@ This package contains %oname module from Numeric Extension.
 %exclude %python_sitelibdir/arrayfns-*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 24.2-alt7
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 24.2-alt6.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
