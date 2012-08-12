@@ -4,7 +4,7 @@
 %define sover %somver.2.0
 Name: %oname%over
 Version: 4.3
-Release: alt1
+Release: alt2
 Summary: A set of subroutines to solve a sparse linear system A*X=B
 License: BSD-like
 Group: Sciences/Mathematics
@@ -19,7 +19,7 @@ Source3: http://www.netlib.org/clapack/CLAPACK-3.1.1/TESTING/MATGEN/blaswrap.h
 Provides: %oname = %version-%release
 Requires: lib%name = %version-%release
 
-BuildPreReq: gcc-fortran gcc-c++ libgotoblas-devel liblapack-devel
+BuildPreReq: gcc-fortran gcc-c++ liblapack-devel
 BuildPreReq: csh doxygen graphviz ghostscript-utils
 #BuildPreReq: texlive-latex-recommended texlive-extra-utils
 
@@ -134,7 +134,7 @@ for i in libsuperlu_%over libtmglib; do
 		ADDLIB="-L. -lsuperlu_%over"
 	fi
 	ar x $i.a
-	g++ -shared *.o $ADDLIB -llapack -lgoto2 -lgfortran -lm \
+	g++ -shared *.o $ADDLIB -llapack -lopenblas -lgfortran -lm \
 		-Wl,-soname,$i.so.%somver -o $i.so.%sover
 	ln -s $i.so.%sover $i.so.%somver
 	ln -s $i.so.%somver $i.so
@@ -158,6 +158,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3-alt2
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Dec 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3-alt1
 - Version 4.3
 
