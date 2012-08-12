@@ -2,7 +2,7 @@
 %define sover %somver.3.2
 Name: spai
 Version: 3.2
-Release: alt6
+Release: alt7
 Summary: SParse Approximate Inverse Preconditioner
 License: GPL v2
 Group: Sciences/Mathematics
@@ -14,7 +14,7 @@ Source: http://www.computational.unibas.ch/software/spai/spai-3.2.tar.gz
 Requires: lib%name = %version-%release
 
 BuildPreReq: gcc-fortran openmpi-devel
-BuildPreReq: liblapack-goto-devel
+BuildPreReq: liblapack-devel
 
 %description
 Given a sparse matrix A the SPAI Algorithm computes a sparse approximate inverse
@@ -66,20 +66,6 @@ method.
 
 This package contains development files of SPAI.
 
-%package -n lib%name-devel-static
-Summary: Static library of SPAI
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
-
-%description -n lib%name-devel-static
-Given a sparse matrix A the SPAI Algorithm computes a sparse approximate inverse
-M by minimizing || AM - I || in the Frobenius norm. The approximate inverse is
-computed explicitly and can then be applied as a preconditioner to an iterative
-method.
-
-This package contains static library of SPAI.
-
 %package -n lib%name-devel-doc
 Summary: Documentation for SPAI
 Group: Development/Documentation
@@ -100,7 +86,7 @@ This package contains development documentation for SPAI.
 %add_optflags %optflags_shared
 %autoreconf
 %configure \
-	--with-blas="-lgoto2" \
+	--with-blas="-lopenblas" \
 	--with-lapack="-llapack" \
 	--with-mpi
 %make_build
@@ -122,7 +108,7 @@ pushd %buildroot%_libdir
 mkdir tmp
 pushd tmp
 ar x ../lib%name.a
-gcc -shared * -llapack -lgoto2 -lm \
+gcc -shared * -llapack -lopenblas -lm \
 	-Wl,-soname,lib%name.so.%somver -o ../lib%name.so.%sover
 rm -f *
 popd
@@ -143,13 +129,13 @@ popd
 %_includedir/*
 %_libdir/*.so
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files -n lib%name-devel-doc
 %_docdir/%name
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt7
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sun Apr 10 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt6
 - Built with GotoBLAS2 instead of ATLAS
 - Disabled devel-static package
