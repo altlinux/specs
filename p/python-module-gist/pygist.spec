@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-build-python
 Name: python-module-%oname
 Version: 1.5.28
 %define cflags %optflags %optflags_shared -I%_builddir/%name-%version/src/gist
-Release: alt6.1.1
+Release: alt7
 Summary: Scientific graphics (plotting) library
 License: Free for non-commercial using
 Group: Development/Python
@@ -18,7 +18,7 @@ Source1: http://hifweb.lbl.gov/public/software/gist/pygist.pdf
 Source2: sigfpe.h
 
 BuildPreReq: python-devel libX11-devel libreadline-devel
-BuildPreReq: libnumpy-devel liblapack-goto-devel
+BuildPreReq: libnumpy-devel liblapack-devel
 BuildPreReq: python-module-arrayfns
 %setup_python_module %oname
 %py_requires numpy
@@ -59,7 +59,7 @@ This package contains documentation for Gist.
 
 %prep
 %setup
-sed -i 's|@PYVER@|%__python_version|g' src/Makepyg
+sed -i 's|@PYVER@|%_python_version|g' src/Makepyg setup.py
 sed -i 's|@GISTPATH@|%gistpath|g' \
 	src/gist/Makefile \
 	src/Makefile.gist \
@@ -115,6 +115,9 @@ mv %buildroot%_includedir/config.h \
 %_docdir/%name
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.28-alt7
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.28-alt6.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
