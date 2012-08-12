@@ -1,6 +1,6 @@
 Name: libslatec
 Version: 4.1
-Release: alt6
+Release: alt7
 Summary: SLATEC Common Mathematical Library
 License: GPL
 Group: Sciences/Mathematics
@@ -12,7 +12,7 @@ Source1: http://www.netlib.org/slatec/slatec4linux.tar.gz
 Source2: http://www.netlib.org/slatec/guide
 Source3: http://www.netlib.org/slatec/gams
 
-BuildPreReq: gcc-fortran liblapack-goto-devel
+BuildPreReq: gcc-fortran liblapack-devel
 
 %description
 SLATEC Common Mathematical Library, Version 4.1, July 1993
@@ -34,19 +34,6 @@ a comprehensive software library containing over
 written in Fortran 77.
 
 This package contains shared library of SLATEC and gams.
-
-%package devel-static
-Summary: SLATEC Common Mathematical Library (static)
-Group: Development/Other
-Requires: %name-devel = %version-%release
-
-%description devel-static
-SLATEC Common Mathematical Library, Version 4.1, July 1993
-a comprehensive software library containing over
-1400 general purpose mathematical and statistical routines
-written in Fortran 77.
-
-This package contains static library of SLATEC.
 
 %package devel-docs
 Summary: Documentation for ARPACK
@@ -95,14 +82,14 @@ popd
 %_libdir/*.so
 %_datadir/%name
 
-#files devel-static
-#_libdir/*.a
-
 %files devel-docs
 %doc guide
 %_mandir/manf/*
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt7
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Apr 13 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1-alt6
 - Built with GotoBLAS2 instead of ATLAS
 - Disabled devel-static package
