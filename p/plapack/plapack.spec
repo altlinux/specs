@@ -5,7 +5,7 @@
 %define sover %somver.3.2
 Name: plapack
 Version: 3.2
-Release: alt12
+Release: alt13
 Summary: Parallel Linear Algebra Package (PLAPACK)
 License: LGPL
 Group: Sciences/Mathematics
@@ -19,7 +19,7 @@ Source3: LGPL
 
 BuildPreReq: libsuperlu-devel %mpiimpl-devel
 BuildPreReq: gcc-fortran liblapack-devel
-BuildPreReq: libibumad-devel libibverbs-devel chrpath
+BuildPreReq: libibumad-devel libibverbs-devel
 
 %description
 PLAPACK: High Performance through High Level Abstraction.
@@ -77,26 +77,6 @@ that by coding at a higher level of abstraction, more sophisticated algorithms
 can be implemented, which allows high levels of performance to be regained.
 
 This package contains development files of PLAPACK.
-
-%package -n lib%name-devel-static
-Summary: Static library of PLAPACK
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
-
-%description -n lib%name-devel-static
-PLAPACK: High Performance through High Level Abstraction.
-
-Coding parallel algorithms is generally regarded as a formidable task. To make
-this task manageable in the arena of linear algebra algorithms, we have
-developed the Parallel Linear Algebra Package (PLAPACK), an infrastructure for
-coding such algorithms at a high level of abstraction. It is often believed that
-by raising the level of abstraction in this fashion, performance is sacrificed.
-Throughout, we have maintained that indeed there is a performance penalty, but
-that by coding at a higher level of abstraction, more sophisticated algorithms
-can be implemented, which allows high levels of performance to be regained.
-
-This package contains static library of PLAPACK.
 
 %package doc
 Summary: Documentation and examples for PLAPACK
@@ -160,18 +140,13 @@ cp -fR EXAMPLES/* %buildroot%_docdir/%name/examples/
 install -p -m644 $(find ./ -name '*.h') %buildroot%_includedir/%name
 install -m644 %SOURCE1 %SOURCE2 %buildroot%_docdir/%name
 
-#for i in %buildroot%_bindir/*
-#do
-#	chrpath -r %mpidir/lib $i ||:
-#done
-
 # shared library
 
 pushd %buildroot%_libdir
 mkdir tmp
 pushd tmp
 ar x ../libPLAPACK.a
-mpif77 -shared * -llapack -lgoto2 \
+mpif77 -shared * -llapack -lopenblas \
 	-Wl,-R%mpidir/lib \
 	-Wl,-soname,libPLAPACK.so.%somver -o ../libPLAPACK.so.%sover
 rm -f *
@@ -179,7 +154,6 @@ popd
 rmdir tmp
 ln -s libPLAPACK.so.%sover libPLAPACK.so.%somver
 ln -s libPLAPACK.so.%somver libPLAPACK.so
-#chrpath -r %mpidir/lib libPLAPACK.so
 popd
 
 %files
@@ -193,13 +167,13 @@ popd
 %_libdir/*.so
 %_includedir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files doc
 %_docdir/%name
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt13
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt12
 - Rebuilt with OpenMPI 1.6
 
