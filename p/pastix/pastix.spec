@@ -6,7 +6,7 @@
 Name: pastix
 %define ldir %_libdir/%name
 Version: 3184
-Release: alt4
+Release: alt5
 Summary: Parallel Sparse matriX package
 License: CeCILL
 Group: Sciences/Mathematics
@@ -19,7 +19,7 @@ Source1: config.in
 Requires: lib%name = %version-%release
 
 BuildPreReq: libscotch-devel libmetis0-devel %mpiimpl-devel
-BuildPreReq: libgotoblas-devel chrpath
+BuildPreReq: libopenblas-devel chrpath
 
 %description
 PaStiX (Parallel Sparse matriX package) is a scientific library that
@@ -153,7 +153,7 @@ simpleShare()
 	fi
 	rm -f lib$1$3.so*
 	mpif77 -shared $2 -L%buildroot%_libdir \
-		$ADDLIB -lesmumps -lscotchmetis -lptscotch $FINALIB -lgoto2 -lrt \
+		$ADDLIB -lesmumps -lscotchmetis -lptscotch $FINALIB -lopenblas -lrt \
 		-Wl,-R%mpidir/lib \
 		-Wl,-soname,lib$1$3.so.%somver -o lib$1$3.so.%sover
 	ln -s lib$1$3.so.%sover lib$1$3.so.%somver
@@ -237,6 +237,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3184-alt5
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3184-alt4
 - Rebuilt with OpenMPI 1.6
 
