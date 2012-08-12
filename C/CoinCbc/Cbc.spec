@@ -4,7 +4,7 @@
 %define oname Cbc
 Name: Coin%oname
 Version: 2.7.6
-Release: alt2.svn20120208
+Release: alt3.svn20120208
 Summary: COIN-OR Branch-and-Cut MIP Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -15,7 +15,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildPreReq: doxygen graphviz libglpk-devel CoinBuildTools gcc-c++
-BuildPreReq: libCoinUtils-devel liblapack-goto-devel
+BuildPreReq: libCoinUtils-devel liblapack-devel
 BuildPreReq: libCoinCgl-devel libCoinClp-devel libCoinOsi-devel
 BuildPreReq: libCoinVol-devel libCoinDyLP-devel %mpiimpl-devel
 BuildPreReq: CoinMiplib3-devel chrpath
@@ -91,7 +91,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %autoreconf
 %configure \
 	--with-coin-instdir=%prefix \
-	--with-blas-lib=-lgoto2 \
+	--with-blas-lib=-lopenblas \
 	--with-lapack-lib=-llapack \
 	--with-glpk-incdir=%_includedir \
 	--with-dot
@@ -147,6 +147,9 @@ rm -fR %buildroot%_docdir/coin \
 #_bindir/%oname-driver
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.6-alt3.svn20120208
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.6-alt2.svn20120208
 - Rebuilt with OpenMPI 1.6
 
