@@ -1,6 +1,6 @@
 Name: taucs
 Version: 2.2
-Release: alt10
+Release: alt11
 Summary: C library of sparse linear solvers
 License: MIT
 Group: Sciences/Mathematics
@@ -55,16 +55,6 @@ TAUCS is a C library of sparse linear solvers.
 
 This package contains development files of TAUCS.
 
-%package -n lib%name-devel-static
-Summary: Static library of TAUCS
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-TAUCS is a C library of sparse linear solvers.
-
-This package contains static library of TAUCS.
-
 %prep
 %setup
 rm -fR $(find ./ -name CVS) external/lib
@@ -78,7 +68,7 @@ mkdir -p lib/linux/tmp
 pushd lib/linux/tmp
 ar x ../lib%name.a
 g77 -shared * \
-	-lmetis -llapack -lgoto2 \
+	-lmetis -llapack -lopenblas \
 	-Wl,-soname,lib%name.so.0 -o ../lib%name.so.0.0.0
 ln -s lib%name.so.0.0.0 ../lib%name.so.0
 ln -s lib%name.so.0 ../lib%name.so
@@ -112,13 +102,13 @@ install -p -m644 doc/%name.pdf %buildroot%_docdir/%name
 %_libdir/*.so
 %_includedir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files doc
 %_docdir/%name
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt11
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt10
 - Fixed build
 
