@@ -1,6 +1,6 @@
 Name: octave
 Version: 3.4.0
-Release: alt2.2
+Release: alt2.3
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -11,7 +11,7 @@ Url: http://www.octave.org
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 
 BuildRequires: flex gcc-c++ gcc-fortran libcurl-devel libfftw3-devel libglpk-devel
-BuildRequires: libhdf5-devel liblapack-goto-devel libncurses-devel libpcre-devel
+BuildRequires: libhdf5-devel liblapack-devel libncurses-devel libpcre-devel
 BuildRequires: libreadline-devel libstdc++-devel libtinfo-devel libX11-devel libXext-devel
 BuildRequires: libSM-devel libICE-devel liblcms-devel bzlib-devel libltdl-devel
 BuildRequires: libGraphicsMagick-c++-devel libGL-devel libGLU-devel libfreetype-devel
@@ -85,7 +85,7 @@ This package contains extra documentation for GNU Octave.
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
 %add_optflags $(pkg-config fontconfig --cflags) -fpermissive
 %autoreconf
-%configure --with-blas=goto2 \
+%configure --with-blas=openblas \
     --enable-dl --enable-shared \
     --disable-static --disable-rpath \
     --enable-lite-kernel --enable-picky-flags
@@ -153,6 +153,9 @@ install -pm0755 -D altlinux/%name.filetrigger %buildroot%_rpmlibdir/%name.filetr
 %docdir/liboctave
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt2.3
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt2.2
 - Fixed build
 
