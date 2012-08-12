@@ -1,10 +1,10 @@
 %define oname nipy
 
-%def_disable docs
+%def_enable docs
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt1.git20120705
+Release: alt2.git20120705
 Summary: The neuroimaging in python (NIPY) project
 License: MIT
 Group: Development/Python
@@ -17,9 +17,9 @@ Source: %oname-%version.tar.gz
 Requires: %oname-data
 
 BuildPreReq: python-devel python-module-nifti python-module-scipy
-BuildPreReq: python-module-sympy liblapack-goto-devel python-module-matplotlib
+BuildPreReq: python-module-sympy liblapack-devel python-module-matplotlib
 BuildPreReq: /proc gcc-fortran %oname-data libnumpy-devel sympy
-BuildPreReq: python-module-sympy dvipng libniftilib-devel
+BuildPreReq: dvipng libniftilib-devel
 BuildPreReq: python-module-nibabel python-module-Cython
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: graphviz ghostscript-utils
@@ -164,6 +164,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 #python_sitelibdir/*/*/*/*/*/tests
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2.git20120705
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.git20120705
 - Version 0.2.0
 - Disabled docs (what's wrong in girar-builder?)
