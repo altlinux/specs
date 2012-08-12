@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt5.git20120502
+Release: alt6.git20120502
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -41,7 +41,6 @@ Obsoletes: libsyfi-devel < 0.6.1-alt3.hg20090822
 
 BuildPreReq: /proc
 
-BuildPreReq: libgotoblas2
 BuildPreReq: gcc-fortran liblapack-devel python-module-Pyrex
 BuildPreReq: python-modules-compiler python-modules-encodings
 BuildPreReq: libfftw3-devel scons gcc-c++
@@ -58,7 +57,6 @@ BuildPreReq: texmf-latex-preview
 #BuildPreReq: libnumpy-devel
 #%endif
 #BuildPreReq: python-module-stsci
-BuildPreReq: libgotoblas-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -1039,6 +1037,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt6.git20120502
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Sun May 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt5.git20120502
 - Fixed headers for libnumpy-py3-devel
 
