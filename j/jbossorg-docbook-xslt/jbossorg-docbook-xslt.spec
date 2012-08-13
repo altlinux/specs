@@ -46,7 +46,7 @@ BuildRequires: jpackage-compat
 
 Name:           jbossorg-docbook-xslt
 Version:        1.1.0
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        JBoss.org DocBook XSLT
 License:        LGPLv2+
@@ -98,25 +98,24 @@ can be extracted through rpm2cpio.
 %patch0 -p0 -b .sav0
 %patch1 -p0 -b .sav1
 
-cp -p %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" settings.xml
-
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 
 %build
 export LANG=en_US.UTF-8
-export M2_SETTINGS=$(pwd)/settings.xml
-export MAVEN_REPO_LOCAL=$(pwd)/m2_repo/repository
+export MAVEN_REPO_LOCAL=$(pwd)/maven2-brew
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s ${M2_SETTINGS} \
         -Dmaven2.jpp.depmap.file=%{SOURCE2} \
         -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
-        -DaltDeploymentRepository=jboss-releases::default::file://$(pwd)/maven2-brew \
-        deploy
+	install:install-file -DgroupId=net.sf.docbook -DartifactId=docbook-xsl \
+	-Dversion=1.75.2 -Dpackaging=zip -Dclassifier=ns-resources -Dfile=/usr/share/java/docbook-xsl-ns-resources.zip
+
+mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+        -e \
+        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
+        -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
+        install
 
 %install
 
@@ -147,6 +146,9 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
 %endif
 
 %changelog
+* Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt3_2jpp6
+- fixed build
+
 * Mon Feb 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt2_2jpp6
 - new jpp relase
 
