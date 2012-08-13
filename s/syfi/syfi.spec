@@ -1,6 +1,6 @@
 Name: syfi
 Version: 1.0.0
-Release: alt1.bzr20120323
+Release: alt1.bzr20120702
 Summary: Symbolic Finite Elements (SyFi) and The SyFi Form Compiler (SFC)
 License: GPL v2
 Group: Sciences/Mathematics
@@ -185,6 +185,9 @@ chrpath -d %buildroot%python_sitelibdir/_SyFi.so
 %_datadir/%name/demo
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.bzr20120702
+- New snapshot
+
 * Sun May 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.bzr20120323
 - New snapshot
 
