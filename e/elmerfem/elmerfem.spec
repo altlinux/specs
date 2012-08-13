@@ -8,7 +8,7 @@
 
 Name: elmerfem
 Version: 6.2
-Release: alt4.%svn
+Release: alt5.%svn
 
 Summary: Open Source Finite Element Software for Multiphysical Problems
 License: GPLv2+
@@ -155,7 +155,7 @@ function shareIt() {
 			fi
 			ar x ../$i.a
 			g++ -shared * -Wl,-soname,$i.so.%somver \
-				-o ../$i.so.%sover $ADDLIB -lgoto2 -lgfortran
+				-o ../$i.so.%sover $ADDLIB -lopenblas -lgfortran
 			ln -s $i.so.%sover ../$i.so.%somver
 			ln -s $i.so.%somver ../$i.so
 			rm -f * ../$i.a
@@ -212,7 +212,7 @@ pushd fem
 	--with-mpi-dir=%mpidir \
 	--with-mpi-lib-dir=%mpidir/lib \
 	--with-mpi-inc-dir=%mpidir/include \
-	--with-blas=-lgoto2 \
+	--with-blas=-lopenblas \
 	--with-lapack=-llapack \
 	--with-huti=$PWD/../hutiter/src/libhuti.so \
 	--with-eiof=$PWD/../eio/src/libeiof.so \
@@ -331,6 +331,9 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %_niconsdir/document-save-as.png
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2-alt5.svn5602
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2-alt4.svn5602
 - Rebuilt with OpenMPI 1.6
 
