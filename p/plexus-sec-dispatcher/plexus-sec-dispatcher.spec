@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-sec-dispatcher
 Version:        1.4
-Release:        alt1_4jpp7
+Release:        alt1_7jpp7
 Summary:        Plexus Security Dispatcher Component
 
 Group:          Development/Java
@@ -27,6 +27,7 @@ BuildRequires: maven-surefire-maven-plugin
 BuildRequires: plexus-utils
 BuildRequires: plexus-cipher
 BuildRequires: plexus-container-default
+BuildRequires: plexus-containers-component-metadata
 BuildRequires: junit
 BuildRequires: forge-parent
 BuildRequires: spice-parent
@@ -34,9 +35,6 @@ BuildRequires: maven-surefire-provider-junit
 
 Requires:       jpackage-utils
 Requires:       spice-parent
-
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
 Source44: import.info
 
 %description
@@ -54,7 +52,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
+%patch0 -p1
 
 %build
 mvn-rpmbuild install javadoc:javadoc
@@ -78,13 +76,16 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %{_javadir}/plexus/*
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%{_mavenpomdir}/JPP.plexus-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_7jpp7
+- fixed build
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_4jpp7
 - complete build
 
