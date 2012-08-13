@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-help-plugin
 Version:        2.1.1
-Release:        alt2_4jpp7
+Release:        alt2_7jpp7
 Summary:        Plugin to to get relative information about a project or the system
 
 Group:          Development/Java
@@ -15,7 +15,7 @@ URL:            http://maven.apache.org/plugins/maven-help-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 Patch0:         add-compat.patch
 Patch1:         reduce-exception.patch
-
+Patch2:         %{name}-migration-to-component-metadata.patch
 BuildArch: noarch
 
 BuildRequires: plexus-utils
@@ -32,6 +32,7 @@ BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: xstream
 BuildRequires: jpackage-utils
+BuildRequires: plexus-containers-component-metadata
 Requires: ant
 Requires: maven
 Requires: jpackage-utils
@@ -43,9 +44,9 @@ Source44: import.info
 
 %description
 The Maven Help Plugin is used to get relative information about a project
- or the system. It can be used to get a description of a particular plugin, 
+ or the system. It can be used to get a description of a particular plugin,
 including the plugin's mojos with their parameters and component requirements,
-the effective POM and effective settings of the current build, 
+the effective POM and effective settings of the current build,
 and the profiles applied to the current project being built.
 
 %package javadoc
@@ -59,9 +60,10 @@ API documentation for %{name}.
 
 
 %prep
-%setup -q 
+%setup -q
 %patch0
 %patch1
+%patch2 -p1
 
 %build
 # no junit-addons, skip test
@@ -93,6 +95,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt2_7jpp7
+-  new release
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt2_4jpp7
 - fixed build with xpp3
 
