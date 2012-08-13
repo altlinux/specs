@@ -1,5 +1,5 @@
 Name: coreutils
-Version: 8.17
+Version: 8.18
 Release: alt1
 %define srcname %name-%version-%release
 
@@ -50,7 +50,7 @@ Conflicts: rpm-utils < 0:0.7.6-alt1
 # due to hostname
 Conflicts: net-tools < 0:1.60-alt9
 
-BuildRequires: gnulib >= 0.0.7557.ee60576
+BuildRequires: gnulib >= 0.0.7575.d22f151
 
 # for ACL support in ls/dir/vdir, cp, mv and install utilities
 BuildRequires: libacl-devel
@@ -206,6 +206,11 @@ install -pm644 %_sourcedir/{runas,usleep}.1 %buildroot%_man1dir/
 %doc AUTHORS NEWS.bz2 README THANKS.bz2 TODO
 
 %changelog
+* Mon Aug 13 2012 Dmitry V. Levin <ldv@altlinux.org> 8.18-alt1
+- Updated coreutils to v8.18.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.0-7575-gd22f151.
+
 * Fri Aug 03 2012 Dmitry V. Levin <ldv@altlinux.org> 8.17-alt1
 - Updated coreutils to v8.17-62-g74a1c05.
 - Updated translations from translationproject.org.

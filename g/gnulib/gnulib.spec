@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.0.7557.ee60576
+Version: 0.0.7575.d22f151
 Release: alt1
 
 Summary: GNU Portability Library
@@ -41,6 +41,9 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Mon Aug 13 2012 Dmitry V. Levin <ldv@altlinux.org> 0.0.7575.d22f151-alt1
+- Updated to gnulib snapshot v0.0-7575-gd22f151.
+
 * Fri Aug 03 2012 Dmitry V. Levin <ldv@altlinux.org> 0.0.7557.ee60576-alt1
 - Updated to gnulib snapshot v0.0-7557-gee60576.
 
