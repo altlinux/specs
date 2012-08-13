@@ -8,7 +8,7 @@ Name: kde4plasma-addons
 %define minor 8
 %define bugfix 4
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4
@@ -18,8 +18,7 @@ Url: http://www.kde.org
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdeplasma-addons-4.5.0-alt-lancelot-new-document.patch
 Patch2: kdeplasma-addons-4.5.0-alt-lancelot-services.patch
-# MDK
-
+Patch3: kdeplasma-addons-4.8.0-alt-news.patch
 
 
 Requires: plasma-applet-blackboard = %version-%release
@@ -790,6 +789,7 @@ based on %name
 %setup -q -n %rname-%version
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 
 %build
@@ -1230,6 +1230,12 @@ based on %name
 %_K4link/*.so
 
 %changelog
+* Mon Aug 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt3
+- add altlinux to news applet by default
+
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1.M60P.1
+- built for M60P
+
 * Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2
 - rebuilt with new attica
 
