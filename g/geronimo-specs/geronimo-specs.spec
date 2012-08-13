@@ -86,7 +86,7 @@ Summary:        Geronimo J2EE server J2EE specifications
 URL:            http://geronimo.apache.org/
 Name:           geronimo-specs
 Version:        1.2
-Release:        alt8_16jpp6
+Release:        alt9_16jpp6
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -235,6 +235,7 @@ Patch33: geronimo-specs-1.2-pom_xml-alt-kill-parent.patch
 Provides:  geronimo-specs-poms = %version-%release
 Conflicts: geronimo-specs-poms < 1.2-alt4_17jpp6
 Obsoletes: geronimo-specs-poms < 1.2-alt4_17jpp6
+Requires:  geronimo-parent-poms
 
 %description
 Geronimo is Apache's ASF-licenced J2EE server project.
@@ -2335,8 +2336,8 @@ ln -s %{_sysconfdir}/alternatives/jta %{_javadir}/jta.jar
 %{_javadir}*/geronimo/spec-stax-1.0.jar
 %{_javadir}*/geronimo/spec-ws-metadata-2.0-*.jar
 %{_javadir}*/geronimo/spec-ws-metadata-2.0.jar
-%{_datadir}/maven2/poms/JPP-geronimo-specs.pom
-%{_mavendepmapfragdir}/%{name}
+#%{_datadir}/maven2/poms/JPP-geronimo-specs.pom
+#%{_mavendepmapfragdir}/%{name}
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
@@ -2956,6 +2957,9 @@ ln -s %{_sysconfdir}/alternatives/jta %{_javadir}/jta.jar
 %{_mavendepmapfragdir}/geronimo-ws-metadata-2.0-api
 
 %changelog
+* Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt9_16jpp6
+- split off geronimo-parent-poms
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt8_16jpp6
 - fixed build with maven3
 
