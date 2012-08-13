@@ -2,7 +2,7 @@
 %define module_version  20090714
 %define module_release	alt4
 
-%define kversion	3.4.4
+%define kversion	3.4.8
 %define krelease	alt1
 %define flavour		std-pae
 
@@ -11,7 +11,7 @@
 Summary: Kernel module for some Toshiba and HP laptops
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197636.1
+Release: %module_release.197640.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -79,8 +79,8 @@ cp -pr misc %buildroot%_docdir/%name-%version-%release
 %doc %_docdir/%name-%version-%release
 
 %changelog
-* Mon Jun 25 2012 Anton Protopopov <aspsk@altlinux.org> 20090714-alt4.197636.1
-- Build for kernel-image-std-pae-3.4.4-alt1.
+* Mon Aug 13 2012 Anton Protopopov <aspsk@altlinux.org> 20090714-alt4.197640.1
+- Build for kernel-image-std-pae-3.4.8-alt1.
 
 * Tue Nov 15 2011 Anton Protopopov <aspsk@altlinux.org> 20090714-alt4
 - Fix build with 3.1.1

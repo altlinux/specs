@@ -1,9 +1,9 @@
 %define module_name	pf_ring
 %define module_version	5.4.4
-%define module_release	alt1
+%define module_release	alt2
 %define modules_list intel/e1000e/e1000e-2.0.0.1 intel/igb/igb-3.4.7
 
-%define kversion	3.4.4
+%define kversion	3.4.8
 %define krelease	alt1
 %define flavour		std-pae
 
@@ -12,7 +12,7 @@
 Summary: pf_ring kernel modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197636.1
+Release: %module_release.197640.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -112,6 +112,12 @@ EOF
 
 
 %changelog
+* Mon Aug 13 2012 Anton Protopopov <aspsk@altlinux.org> 5.4.4-alt2.197640.1
+- Build for kernel-image-std-pae-3.4.8-alt1.
+
+* Thu Aug 09 2012 Anton Protopopov <aspsk@altlinux.org> 5.4.4-alt2
+- Fix build
+
 * Mon Jul 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.4.4-alt1.197636.1
 - Build for kernel-image-std-pae-3.4.4-alt1.
 

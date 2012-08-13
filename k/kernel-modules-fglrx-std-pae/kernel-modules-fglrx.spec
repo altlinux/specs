@@ -1,8 +1,8 @@
 %define module_name	fglrx
-%define module_version	8.96.1
-%define module_release	alt2
+%define module_version	8.98
+%define module_release	alt3
 
-%define kversion       3.4.4
+%define kversion       3.4.8
 %define krelease       alt1
 %define flavour                std-pae
 
@@ -12,7 +12,7 @@
 Summary:	AMD/ATI Proprietary Linux Display Driver
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.197636.1
+Release:	%module_release.197640.1
 License:	Proprietary
 Group:		System/Kernel and hardware
 
@@ -43,13 +43,12 @@ Patch4: http://www.cosmicencounter.net/mirror/patch/sema_init.patch
 Patch5: http://aur.archlinux.org/packages/catalyst-generator/catalyst-generator/makefile_compat.patch
 
 Patch7: fglrx-2.6.38.patch
-%if "%kversion" >= "3.2"
-Patch8: fglrx-3.2.8-build.patch
-%endif
 
 %if "%kversion" >= "3.4"
 Patch9: fglrx-3.4.2-build.patch
 %endif
+Patch10: fglrx-3.4.6-build.patch
+Patch11: fglrx-3.4.6-old_rsp.patch
 
 %description
 Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite
@@ -73,11 +72,18 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 #patch7 -p1
 
 %if "%kversion" >= "3.2"
+%if "%kversion" < "3.4.6"
 %patch8 -p1
+%endif
 %endif
 
 %if "%kversion" >= "3.4"
+%if "%kversion" < "3.4.6"
 %patch9 -p1
+%else
+%patch10 -p0
+%patch11 -p6
+%endif
 %endif
 
 sed -i 's|COMPAT_ALLOC_USER_SPACE|arch_compat_alloc_user_space|' kcl_ioctl.c
@@ -103,8 +109,17 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Mon Jun 25 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.96.1-alt2.197636.1
-- Build for kernel-image-std-pae-3.4.4-alt1.
+* Mon Aug 13 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.98-alt3.197640.1
+- Build for kernel-image-std-pae-3.4.8-alt1.
+
+* Wed Aug 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.98-alt3
+- Fixed 'old_rsp' undefined build
+
+* Fri Jul 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.98-alt2
+- Fixed build for kernel 3.4.6+
+
+* Fri Jul 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.8.98-alt1
+- 8.98
 
 * Mon Jun 11 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.96.1-alt2
 - Fix build with 3.4 kernel
