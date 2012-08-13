@@ -12,7 +12,7 @@
 
 Name:           chromium
 Version:        21.0.1158.0
-Release:        alt3.r%rev
+Release:        alt4.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -24,7 +24,7 @@ Source30:       master_preferences
 Source31:       default_bookmarks.html
 Source99:       chrome-wrapper
 Source100:      %name.sh
-Source101:      chromium-browser.desktop
+Source101:      chromium.desktop
 Source102:      chromium-browser.xml
 Source104:      chromium-icons.tar.bz2
 Source200:      %name.default
@@ -69,6 +69,9 @@ Patch67:        chromium_use_gold.patch
 Patch68:        chromium-gcc47.patch
 # ALT: Fix krb5 includes path
 Patch69:	chromium-alt-krb5-fix-path.patch
+# Fix crash on Print
+Patch70:	chromium-21.0.1158.0-fix-print-dialog.patch
+
 # Upstream Patches 
 Patch500:       sqlite-3.7.6.3-fix-out-of-scope-memory-reference.patch
 
@@ -207,6 +210,7 @@ to Gnome's Keyring.
 %patch67 -p1
 %patch68 -p1
 %patch69 -p2
+%patch70 -p2
 %patch500 -p1
 
 echo "svn%rev" > src/build/LASTCHANGE.in
@@ -378,6 +382,11 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Mon Aug 13 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1158.0-alt4.r139751
+- Fix crash when displaying system print dialog on Linux
+  (http://code.google.com/p/chromium/issues/detail?id=130095)
+- Rename .desktop file and add localization strings
+
 * Fri Aug 10 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1158.0-alt3.r139751
 - Add missing file chrome_sandbox
 
