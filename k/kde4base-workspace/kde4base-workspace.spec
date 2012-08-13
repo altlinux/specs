@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -104,6 +104,7 @@ Patch1038: kdebase-workspace-4.8.5-alt-session-exclude.patch
 Patch1039: kdebase-workspace-4.8.4-alt-digitalclock-compactdate.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
 Patch1041: kdebase-workspace-4.8.0-alt-def-gllegacy.patch
+Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -548,6 +549,7 @@ __EOF__
 %patch1039 -p1
 %patch1040 -p1
 %patch1041 -p1
+%patch1042 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -909,6 +911,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Aug 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt3
+- include all menu groups in SaL widget by default
+
+* Mon Aug 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1.M60P.1
+- built for M60P
+
 * Mon Aug 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2
 - don't save mirall in session by default
 
