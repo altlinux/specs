@@ -36,7 +36,7 @@ BuildRequires: jpackage-1.5.0-compat
 Summary:        Triactive JDO
 Name:           tjdo
 Version:        2.2
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 License:        Apache Software License
 URL:            http://tjdo.sourceforge.net/
@@ -117,9 +117,8 @@ rm src/com/triactive/jdo/store/adapter/Oracle*.java
 
 %build
 export LANG=C
-ant jar javadoc unit-tests -Ddb=derby
-#ant jar javadoc
-
+#ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc unit-tests -Ddb=derby
+ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc -Ddb=derby
 
 %install
 
@@ -159,6 +158,9 @@ cp -pr docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt2_1jpp5
+- fixed build
+
 * Wed May 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_1jpp5
 - selected java5 compiler explicitly
 
