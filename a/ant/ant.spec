@@ -1,6 +1,6 @@
 Name: ant
-Version: 1.8.3
-Release: alt4
+Version: 1.8.4
+Release: alt1
 # optional py and pl scripts in /usr/share/ant/bin
 %filter_from_requires /perl/d
 %filter_from_requires /python/d
@@ -13,6 +13,13 @@ Release: alt4
 %def_without antlibhack
 %def_without manifest_only
 %def_without style_xsl
+
+# no need for them in modern JVMs
+%if_with ext_xml_apis
+%define xml_commons_apis xml-commons-apis
+%else
+%define xml_commons_apis %nil
+%endif
 
 Summary: Platform-independent build tool for Java
 Group: Development/Java
@@ -30,7 +37,10 @@ Packager: Java Maintainers Team <java at packages.altlinux.org>
 
 Requires: java-devel /proc
 Requires: jpackage-utils java-common
-Requires: jaxp_parser_impl xml-commons-apis
+Requires: jaxp_parser_impl 
+%if_with ext_xml_apis
+Requires: xml-commons-apis
+%endif
 
 BuildArch: noarch
 
@@ -176,13 +186,15 @@ Requires: %name-apache-resolver = %version-%release
 Requires: %name-apache-bsf = %version-%release
 
 BuildRequires: jaxp_parser_impl 
+%if_with ext_xml_apis
 BuildRequires: xml-commons-jaxp-1.3-apis
+%endif
 BuildRequires: antlr
 BuildRequires: bcel
 BuildRequires: jaf
 BuildRequires: jai
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-net
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-net
 BuildRequires: jakarta-oro
 BuildRequires: regexp
 BuildRequires: javamail
@@ -244,7 +256,7 @@ BCEL task support for ant, a platform-independent build tool for Java.
 Summary: Jakarta Commons Logging task support for Ant
 Group: Development/Java
 Requires: %name = %version
-Requires: jakarta-commons-logging
+Requires: apache-commons-logging
 
 %description -n %{name}-commons-logging
 Jakarta Commons Logging task support for ant,
@@ -254,7 +266,7 @@ a platform-independent build tool for Java.
 Summary: Jakarta Commons Net task support for Ant
 Group: Development/Java
 Requires: %name = %version
-Requires: jakarta-commons-net
+Requires: apache-commons-net
 
 %description -n %{name}-commons-net
 Jakarta Commons Net task support for ant,
@@ -478,12 +490,12 @@ rm src/script/*.cmd
 
 mkdir -p lib/optional
 %if_with bootstrap
-CLASSPATH=$CLASSPATH:$(build-classpath jaxp_parser_impl xml-commons-apis junit junit4)
-for jars in jaxp_parser_impl xml-commons-apis junit junit4; do
+CLASSPATH=$CLASSPATH:$(build-classpath jaxp_parser_impl %xml_commons_apis junit junit4)
+for jars in jaxp_parser_impl %xml_commons_apis junit junit4; do
 %else
 for jars in \
 xerces-j2 \
-xml-commons-jaxp-1.3-apis \
+%xml_commons_apis \
 antlr \
 bcel \
 jaf \
@@ -768,8 +780,8 @@ ln -s nodeps %{buildroot}%{_sysconfdir}/%{name}.d/trax
 echo "antlr %{name}/ant-antlr" > %{buildroot}%{_sysconfdir}/%{name}.d/antlr
 echo "bsf %{name}/ant-apache-bsf" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-bsf
 echo "xml-commons-resolver12 %{name}/ant-apache-resolver" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-resolver
-echo "jakarta-commons-logging %{name}/ant-commons-logging" > %{buildroot}%{_sysconfdir}/%{name}.d/commons-logging
-echo "jakarta-commons-net %{name}/ant-commons-net" > %{buildroot}%{_sysconfdir}/%{name}.d/commons-net
+echo "apache-commons-logging %{name}/ant-commons-logging" > %{buildroot}%{_sysconfdir}/%{name}.d/commons-logging
+echo "apache-commons-net %{name}/ant-commons-net" > %{buildroot}%{_sysconfdir}/%{name}.d/commons-net
 echo "jai %{name}/ant-jai" > %{buildroot}%{_sysconfdir}/%{name}.d/jai
 echo "bcel %{name}/ant-apache-bcel" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-bcel
 echo "log4j %{name}/ant-apache-log4j" > %{buildroot}%{_sysconfdir}/%{name}.d/apache-log4j
@@ -1048,6 +1060,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # --------------------------------
 
 %changelog
+* Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1
+- new version
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.3-alt4
 - dropped parasyte perl & python deps due to optional py
   and pl scripts in /usr/share/ant/bin/
