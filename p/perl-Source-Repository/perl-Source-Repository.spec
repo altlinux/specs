@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.07
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ Requires: perl-RPM-Source-Convert > 0.40
 %perl_vendor_privlib/Source*
 
 %changelog
+* Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2
+- bugfix relase
+
 * Sun May 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - more strategies
 
