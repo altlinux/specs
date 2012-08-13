@@ -8,8 +8,8 @@
 %def_enable docs
 
 Name: %oname-%scalar_type
-Version: 1.2
-Release: alt3.hg20111105
+Version: 3.3
+Release: alt1.hg20120803
 Summary: SLEPc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -126,7 +126,7 @@ install -d %buildroot%_docdir/%oname-%version/examples
 %make docs
 pushd docs/source
 %make_build latex
-cp -fR build/html %buildroot%_docdir/%oname-%version/
+cp -fR _build/html %buildroot%_docdir/%oname-%version/
 popd
 %make epydoc
 
@@ -151,7 +151,7 @@ popd
 %endif
 %endif
 %if_enabled docs
-cp -fR docs/source/build/pickle %buildroot%ldir/python/%oname/
+cp -fR docs/source/_build/pickle %buildroot%ldir/python/%oname/
 %endif
 
 chrpath -r %mpidir/lib:%ldir/lib \
@@ -193,6 +193,9 @@ rm -f %ldir/python/%oname/lib/SLEPc.so
 %endif
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.hg20120803
+- Version 3.3
+
 * Fri Jul 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt3.hg20111105
 - Rebuilt with OpenMPI 1.6
 

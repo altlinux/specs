@@ -8,8 +8,8 @@
 %define somver 3
 %define sover %somver.2.0
 Name: %oname-%scalar_type
-Version: 3.2_p5
-Release: alt3
+Version: 3.3_p1
+Release: alt1
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -253,6 +253,9 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p1-alt1
+- Version 3.3-p1
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p5-alt3
 - Built with OpenBLAS instead of GotoBLAS2
 

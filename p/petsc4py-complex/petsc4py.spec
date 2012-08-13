@@ -14,9 +14,9 @@
 %define oname petsc4py
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 1.2
+Version: 3.3
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt2.hg20120531
+Release: alt1.hg20120726
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -116,7 +116,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %add_optflags %optflags_shared -fno-strict-aliasing
 #python_build
 %make_ext config
-%make_ext cython
+#make_ext cython
+python ./conf/cythonize.py
 for i in SNESPythonGetContext PCPythonGetContext \
 	PetscPythonRegisterAll MatPythonGetContext \
 	KSPPythonGetContext TSPythonGetContext
@@ -165,7 +166,7 @@ install -m644 *.so %buildroot%ldir/python
 popd
 pushd demo/poisson3d
 #f2py -m del2lib -c del2lib.f90
-%make_build_ext run del2lib.so poisson3d
+%make_build_ext del2lib.so poisson3d
 install -m644 *.so %buildroot%ldir/python
 install -d %buildroot%ldir/bin
 install -m755 poisson3d %buildroot%ldir/bin
@@ -211,6 +212,9 @@ done
 %endif
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.hg20120726
+- Version 3.3
+
 * Fri Jul 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt2.hg20120531
 - Changed native directory: %%_libexecdir/%name -> %%_libdir/%name
 
@@ -306,4 +310,3 @@ done
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
-

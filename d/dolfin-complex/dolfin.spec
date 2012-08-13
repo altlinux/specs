@@ -6,15 +6,15 @@
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.0.0
-Release: alt9.bzr20120511
+Release: alt9.bzr20120810
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
 Group: Sciences/Mathematics
-Url: http://www.fenics.org/
+Url: https://launchpad.net/dolfin
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://www.fenics.org/hg/dolfin
+# bzr branch lp:dolfin
 Source: %oname-%version.tar.gz
 Source1: CMakeCache.txt
 
@@ -348,6 +348,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt9.bzr20120810
+- New snapshot
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt9.bzr20120511
 - Changed native directory: %%_libexecdir/%name -> %%_libdir/%name
 
@@ -533,3 +536,4 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus
+

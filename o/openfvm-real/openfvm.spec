@@ -6,14 +6,14 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: openfvm-%scalar_type
-Version: 1.3
-Release: alt3.svn20110401
+Version: 1.4
+Release: alt1.svn20120521
 Summary: General three-dimensional Computational Fluid Dynamics (CFD) solver
 
 Group: Sciences/Mathematics
 License: GPL v2 or later
 URL: http://openfvm.sourceforge.net/
-# https://openfvm.svn.sourceforge.net/svnroot/openfvm
+# https://openfvm.svn.sourceforge.net/svnroot/openfvm/trunk/
 Source: %oname-%version.tar.gz
 Source1: openfvm
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -140,6 +140,9 @@ done
 %endif
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.svn20120521
+- Version 1.4
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt3.svn20110401
 - Rebuilt with OpenMPI 1.6
 

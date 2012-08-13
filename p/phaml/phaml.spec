@@ -6,8 +6,8 @@
 %define sover %somver.0
 
 Name: phaml
-Version: 1.10.0
-Release: alt4
+Version: 1.11.0
+Release: alt1
 Summary: The Parallel Hierarchical Adaptive MultiLevel Project
 License: Public domain
 Group: Sciences/Mathematics
@@ -143,12 +143,15 @@ cp -fR examples %buildroot%_libexecdir/%name/
 %_libdir/*.so
 
 %files doc
-%doc doc/*.pdf
+%doc doc/*.pdf doc/QUICKSTART
 
 %files examples
 %_libexecdir/%name
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1
+- Version 1.11.0
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.0-alt4
 - Built with OpenBLAS instead of GotoBLAS2
 
