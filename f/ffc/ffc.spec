@@ -1,11 +1,11 @@
 Name:           ffc
 Version:        1.0.0
-Release:        alt1.bzr20120507
+Release:        alt1.bzr20120530
 Epoch: 1
 Summary:        Compiler for finite element variational forms
 Group:          Development/Tools
 License:        LGPL v3
-URL:            http://www.fenics.org/
+URL:            https://launchpad.net/ffc
 # bzr branch lp:ffc
 Source: %name-%version.tar.gz
 Source1: http://www.fenics.org/pub/documents/ffc/ffc-user-manual/ffc-user-manual.pdf
@@ -90,6 +90,9 @@ install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 %python_sitelibdir_noarch/*
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt1.bzr20120530
+- New snapshot
+
 * Sun May 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt1.bzr20120507
 - New snapshot
 
