@@ -1,10 +1,16 @@
+# vim: set ft=spec: -*- rpm-spec -*-
 # hey Emacs, its -*- rpm-spec -*-
 
-%define repocop_testdatadir %_datadir/repocop/testdata.d
+# %%branch_switch set %%branch_release use
+#%%define branch_switch Mxx
 
-Name: rpm-macros-apache
+%define macrosname apache
+
+%define rpm_masrosdir %_sysconfdir/rpm/macros.d
+
+Name: rpm-macros-%macrosname
 Version: 0.2
-Release: alt2
+Release: %branch_release alt3
 
 Summary: RPM macros to Apache Web server
 Summary(ru_RU.KOI8-R): RPM макросы для веб-сервера Apache
@@ -14,8 +20,9 @@ Group: Development/Other
 Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 # rpm macro definitions
-Source1: apache.rpm-macros
+Source1: %macrosname.rpm-macros
 
+BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
 BuildPreReq: rpm-macros-webserver-common >= 1.1
 
@@ -35,35 +42,17 @@ according to the ALT Linux Web Packaging Policy.
 в соответствии с ALT Linux Web Packaging Policy.
 
 
-%package -n repocop-unittest-data-%name
-Summary: Data file for repocop test platform
-Summary(ru_RU.KOI8-R): Данные для тестов repocop
-Group: Development/Other
-
-Provides: %repocop_testdatadir/%name
-
-%description -n repocop-unittest-data-%name
-The package provide data file for repocop test platform.
-
-%description -n repocop-unittest-data-%name -l ru_RU.KOI8-R
-Пакет предоставляет данные для тестов repocop.
-
-
 %install
 
-install -pD -m644 %SOURCE1 %buildroot%_sysconfdir/rpm/macros.d/%name
-
-mkdir -p %buildroot%repocop_testdatadir/
-egrep '^[[:space:]]*%%[^%%[:space:]]+[[:space:]]' %SOURCE1 \
-	| sort -r > %buildroot%repocop_testdatadir/%name
+install -pD -m644 %SOURCE1 %buildroot%rpm_masrosdir/%name
 
 %files
-%_sysconfdir/rpm/macros.d/%name
-
-%files -n repocop-unittest-data-%name
-%repocop_testdatadir/%name
+%rpm_masrosdir/%name
 
 %changelog
+* Tue Aug 14 2012 Aleksey Avdeev <solo@altlinux.ru> 0.2-alt3
+- Remove repocop-unittest-data-%%name subpacage (Closes: #26075)
+
 * Mon Aug 04 2008 Aleksey Avdeev <solo@altlinux.ru> 0.2-alt2
 - Create repocop-unittest-data-%%name subpacage for repocop tests
 
