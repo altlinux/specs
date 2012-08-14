@@ -1,93 +1,58 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%define short_name commons-parent
-
 Name:           mojo-parent
-Version:        20
-Release:        alt1_2jpp6
-Epoch:          0
-Summary:        Codehaus Mojo Parent
-License:        MIT
+Version:        30
+Release:        alt1_1jpp7
+Summary:        Codehaus MOJO parent project pom file
+
 Group:          Development/Java
-URL:            http://svn.codehaus.org/mojo/tags/mojo-parent-20
-# svn -q export http://svn.codehaus.org/mojo/tags/mojo-parent-20/ && tar cjf mojo-parent-20.tar.bz2 mojo-parent-20
-Source0:        mojo-parent-20.tar.bz2
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires: maven2-plugin-antrun
-Requires: maven2-plugin-assembly
-Requires: maven2-plugin-checkstyle
-Requires: maven2-plugin-clean
-Requires: maven2-plugin-compiler
-Requires: maven2-plugin-deploy
-Requires: maven2-plugin-enforcer
-Requires: maven2-plugin-install
-Requires: maven2-plugin-invoker
-Requires: maven2-plugin-jar
-Requires: maven2-plugin-javadoc
-Requires: maven2-plugin-pmd
-Requires: maven2-plugin-source
-Requires: maven-surefire-plugin
-Requires: maven-release
-Requires: maven2-plugin-jxr
-Requires: maven2-plugin-project-info-reports
-Requires: maven2-plugin-site
-Requires: maven-surefire-report-maven-plugin
-Requires: mojo-maven2-plugin-cobertura
-Requires: mojo-maven2-plugin-taglist
-BuildRequires: jpackage-utils
+License:        ASL 2.0
+URL:            http://mojo.codehaus.org/
+Source0:        http://repo1.maven.org/maven2/org/codehaus/mojo/%{name}/%{version}/%{name}-%{version}-source-release.zip
 BuildArch:      noarch
 
+BuildRequires:  jpackage-utils
+BuildRequires:  codehaus-parent
+BuildRequires:  maven
+BuildRequires:  maven-enforcer-plugin
+BuildRequires:  maven-plugin-cobertura
+
+Requires:       plexus-containers-component-javadoc
+Requires:       maven-plugin-plugin
+Requires:       junit
+Requires:       codehaus-parent
+Requires:       jpackage-utils
+Source44: import.info
+
 %description
-Codehaus Mojo Parent.
+Codehaus MOJO parent project pom file
 
 %prep
 %setup -q
 
 %build
+mvn-rpmbuild install
 
 %install
+# poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml \
+    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.codehaus.mojo mojo-parent %{version} JPP %{name}
+%add_maven_depmap JPP-%{name}.pom
 
 %files
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %changelog
+* Tue Aug 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:30-alt1_1jpp7
+- new version
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:20-alt1_2jpp6
 - new version
 
