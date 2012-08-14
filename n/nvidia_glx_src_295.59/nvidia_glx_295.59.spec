@@ -15,9 +15,9 @@
 %define nv_version 295
 %define nv_release 59
 %define nv_minor %nil
-%define pkg_rel alt101
+%define pkg_rel alt102
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -361,6 +361,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 14 2012 Sergey V Turchin <zerg@altlinux.org> 295.59-alt102
+- don't package kernel-module sources
+
 * Wed Jun 13 2012 Sergey V Turchin <zerg@altlinux.org> 295.59-alt101
 - new version
 
