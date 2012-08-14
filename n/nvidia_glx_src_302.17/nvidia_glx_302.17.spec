@@ -15,9 +15,9 @@
 %define nv_version 302
 %define nv_release 17
 %define nv_minor %nil
-%define pkg_rel alt102
+%define pkg_rel alt103
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -361,6 +361,9 @@ fi
 %endif
 
 %changelog
+* Tue Aug 14 2012 Sergey V Turchin <zerg@altlinux.org> 302.17-alt103
+- don't package kernel module sources
+
 * Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 302.17-alt102
 - new version
 
