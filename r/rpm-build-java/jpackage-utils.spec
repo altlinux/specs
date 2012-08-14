@@ -34,7 +34,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt16
+Release:        alt17
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -43,6 +43,7 @@ Source0:        jpackage-utils-%{version}.tar
 
 Source1: rpm-build-java.tar
 Source2: jpackage-utils-safe.tar
+Source3: javapackages.tar
 # fedora utils - let us install them for compatibility
 Source22:        abs2rel.sh
 Source23:        abs2rel.lua
@@ -53,7 +54,7 @@ Patch2: jpackage-utils-1.7.4-alt-fix-typo-in-comments.patch
 Patch3: jpackage-utils-1.7.5-alt-rpmscript-safe-mode.patch
 Patch4: jpackage-utils-1.7.5-alt-hasher-support-hack.patch
 Patch5: jpackage-utils-1.7.5-alt-undefined-alternatives-during-transaction-hack.patch
-Patch6: jpackage-utils-javapackages-0.2.6-macros.fjava-alt-nopython.patch
+Patch6: javapackages-0.2.6-macros.fjava-alt-nopython.patch
 # macros.jpacage patches
 Patch10: jpackage-utils-enable-gcj-support.patch
 Patch11: jpackage-utils-1.7.5-alt-remove-duplication-of-sys-macros.patch
@@ -138,7 +139,7 @@ BuildArch:      noarch
 RPM build helpers for Java packages with OSGi dependencies
 
 %prep
-%setup -q -n jpackage-utils-%version -a1 -a2
+%setup -q -n jpackage-utils-%version -a1 -a2 -a3
 
 #patch0 -p0 -b .sav0
 %patch1 -p2
@@ -146,6 +147,7 @@ RPM build helpers for Java packages with OSGi dependencies
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
+%patch6
 %if_enabled gcj_support
 %patch10 -p0
 %endif
@@ -159,9 +161,6 @@ RPM build helpers for Java packages with OSGi dependencies
 %patch24 -p1
 %patch25 -p1
 
-pushd rpm-build-java
-%patch6
-popd
 
 cp -p %{SOURCE22} %{SOURCE23} .
 
@@ -352,7 +351,10 @@ popd
 
 install -D -m755 rpm-build-java/maven_depmap.pl %buildroot%{_datadir}/java-utils/maven_depmap
 echo '%%attr(755,root,root) %{_datadir}/java-utils/maven_depmap' >> jpackage-utils-%{version}.files
-install -pm 644 rpm-build-java/javapackages-0.2.6/macros.fjava ${RPM_BUILD_ROOT}%_rpmmacrosdir/jpackage-fjava
+install -pm 644 javapackages/macros.fjava ${RPM_BUILD_ROOT}%_rpmmacrosdir/jpackage-fjava
+install -D -m755 javapackages/scripts/pom_editor.sh %buildroot%{_datadir}/java-utils/pom_editor.sh
+echo '%%attr(755,root,root) %{_datadir}/java-utils/pom_editor.sh' >> jpackage-utils-%{version}.files
+
 
 # ------------- safe jpackage utils --------------------
 install -pm 644 jpackage-utils-safe/java-functions-safe ${RPM_BUILD_ROOT}${_javadir}-utils
@@ -398,6 +400,9 @@ echo '%%dir /usr/lib/java' >> jpackage-utils-%{version}.files
 /usr/lib/rpm/osgi.*
 
 %changelog
+* Wed Aug 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt17
+- sync with javapackges-utils 0.6.0
+
 * Wed Jun 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt16
 - sync with fc jpackage-utils 1.7.5-18
 
