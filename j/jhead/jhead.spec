@@ -1,5 +1,5 @@
 Name: jhead
-Version: 2.95
+Version: 2.96
 Release: alt1
 
 Summary: Tool for handling EXIF data in JPEG image files
@@ -36,6 +36,9 @@ install -pD -m644 jhead.1 %buildroot%_man1dir/jhead.1
 %_man1dir/*
 
 %changelog
+* Tue Aug 14 2012 Victor Forsiuk <force@altlinux.org> 2.96-alt1
+- 2.96
+
 * Sat Mar 17 2012 Victor Forsiuk <force@altlinux.org> 2.95-alt1
 - 2.95
 
