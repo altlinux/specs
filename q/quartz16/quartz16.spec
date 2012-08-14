@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 Summary:        Quartz Enterprise Job Scheduler
 Name:           quartz16
 Version:        1.6.5
-Release:        alt1_2jpp6
+Release:        alt2_2jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://www.opensymphony.com/quartz/
@@ -159,7 +159,8 @@ popd
 %patch0 -b .sav0
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dskip.checkstyle=true
+
 %install
 
 # jars
@@ -216,6 +217,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name} # ghost symlink
 
 
 %changelog
+* Tue Aug 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.5-alt2_2jpp6
+- fixed build
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.5-alt1_2jpp6
 - new jpp relase
 
