@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 5.5.6
-Release: alt1
+Release: alt2
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -62,6 +62,9 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Tue Aug 14 2012 Mikhail Efremov <sem@altlinux.org> 1:5.5.6-alt2
+- resolv.conf hook: Don't use metric.
+
 * Thu Mar 29 2012 Mikhail Efremov <sem@altlinux.org> 1:5.5.6-alt1
 - Updated to 5.5.6.
 
