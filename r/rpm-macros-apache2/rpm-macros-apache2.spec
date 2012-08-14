@@ -6,14 +6,13 @@
 
 %define macrosname apache2
 
-%define repocop_testdatadir %_datadir/repocop/testdata.d
 %define rpm_masrosdir %_sysconfdir/rpm/macros.d
 
 # do we need to co-exist with apache-ru ?
 %def_enable apache_ru_compat
 
 Name: rpm-macros-%macrosname
-Version: 3.7
+Version: 3.8
 Release: %branch_release alt1
 
 Summary: RPM macros to Apache2 Web server
@@ -25,8 +24,8 @@ Packager: Aleksey Avdeev <solo@altlinux.ru>
 BuildArch: noarch
 
 # rpm macro definitions
-Source1: apache2.rpm-macros
-Source2: apache2-compat.rpm-macros
+Source1: %macrosname.rpm-macros
+Source2: %macrosname-compat.rpm-macros
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
@@ -64,21 +63,6 @@ according to the ALT Linux Web Packaging Policy.
 в соответствии с ALT Linux Web Packaging Policy.
 
 
-%package -n repocop-unittest-data-%name
-Summary: Data file for repocop test platform
-Summary(ru_RU.KOI8-R): Данные для тестов repocop
-Group: Development/Other
-
-Provides: %repocop_testdatadir/%name
-Provides: %repocop_testdatadir/%name-compat
-
-%description -n repocop-unittest-data-%name
-The package provide data file for repocop test platform.
-
-%description -n repocop-unittest-data-%name -l ru_RU.KOI8-R
-Пакет предоставляет данные для тестов repocop.
-
-
 %install
 install -pD -m644 %SOURCE1 %buildroot%rpm_masrosdir/%name
 install -pD -m644 %SOURCE2 %buildroot%rpm_masrosdir/%name-compat
@@ -90,25 +74,21 @@ find %buildroot%rpm_masrosdir/ -type f -print0 \
 "
 %endif
 
-mkdir -p %buildroot%repocop_testdatadir/
-egrep '^[[:space:]]*%%[^%%[:space:]]+[[:space:]]' \
-		%buildroot%rpm_masrosdir/%name \
-	| sort -r > %buildroot%repocop_testdatadir/%name
-egrep '^[[:space:]]*%%[^%%[:space:]]+[[:space:]]' \
-		%buildroot%rpm_masrosdir/%name-compat \
-	| sort -r > %buildroot%repocop_testdatadir/%name-compat
-
 %files
 %rpm_masrosdir/%name
 
 %files compat
 %rpm_masrosdir/%name-compat
 
-%files -n repocop-unittest-data-%name
-%repocop_testdatadir/%name
-%repocop_testdatadir/%name-compat
-
 %changelog
+* Tue Aug 14 2012 Aleksey Avdeev <solo@altlinux.ru> 3.8-alt1
+- Remove repocop-unittest-data-%%name subpacage (Closes: #26076)
+- Add new macros:
+  + %%apache2_apachectl_name
+  + %%apache2_apachectl
+  + %%apache2_apxs_name
+  + %%apache2_envconf
+
 * Fri Jul 15 2011 Aleksey Avdeev <solo@altlinux.ru> 3.7-alt1
 - Add new macros %%apache2_rpmhtcachecleanrestartfile
 
