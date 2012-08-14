@@ -1,12 +1,12 @@
 Name: sendmail-common
 Version: 1.7
-Release: alt1
+Release: alt2
 
 Summary: Common files for sendmail-compatible MTAs
 License: GPL
 Group: System/Base
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 BuildArch: noarch
+AutoReq: yes, nosymlinks
 
 Source: %name-%version.tar
 
@@ -17,7 +17,7 @@ This package contains files common for sendmail-compatible
 Mail Transport Agent packages, e.g. postfix and sendmail.
 
 %prep
-%setup -q
+%setup
 
 %install
 mkdir -p %buildroot
@@ -35,6 +35,9 @@ done
 %_datadir/%name
 
 %changelog
+* Tue Aug 14 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7-alt2
+- Disabled /usr/sbin/sendmail requirement.
+
 * Tue May 06 2008 Dmitry V. Levin <ldv@altlinux.org> 1.7-alt1
 - make_aliases: Fixed space sensitivity (#15549).
 
