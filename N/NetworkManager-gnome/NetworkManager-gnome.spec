@@ -4,7 +4,7 @@
 %define gtkver 3
 
 Name: NetworkManager-gnome
-Version: 0.9.6.0
+Version: 0.9.6.2
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -115,6 +115,9 @@ fi
 %_pkgconfigdir/libnm-gtk.pc
 
 %changelog
+* Tue Aug 14 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.2-alt1
+- Updated to 0.9.6.2.
+
 * Wed Aug 08 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt1
 - Fix some leaks (patch from upstream git).
 - Updated to 0.9.6.0.
