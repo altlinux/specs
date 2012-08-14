@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 302.17
+Version: 304.37
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -98,6 +98,9 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Tue Aug 14 2012 Sergey V Turchin <zerg@altlinux.org> 304.37-alt1
+- new version
+
 * Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 302.17-alt1
 - new version
 
