@@ -6,7 +6,7 @@
 %define packagetype lang
 %define packagename pt_utf8
 %define packagversion 1.9.10
-%define packagedate 20100814
+%define packagedate 20120807
 %define moodlebranch %nil
 %define moodlepackagename %moodle_name%moodlebranch
 %define langname Portuguese
@@ -14,9 +14,9 @@
 #Name: %moodlepackagename-%packagetype-%packagename
 Name: moodle-lang-pt_utf8
 Version: %packagversion.%packagedate
-Release: %branch_release alt6
+Release: %branch_release alt1
 
-Summary: Moodle %langname localozation
+Summary: Moodle %langname localization
 License: %gpl2plus
 Group: Networking/WWW
 
@@ -54,6 +54,10 @@ cp -rp * %buildroot%moodle_langdir/
 %moodle_langdir/*
 
 %changelog
+* Tue Aug 14 2012 Cronbuild Service <cronbuild@altlinux.org> 1.9.10.20120807-alt1
+- repocop cronbuild 20120814. At your service.
+- pt_utf8.zip build 2012-08-07
+
 * Mon Nov 14 2011 Aleksey Avdeev <solo@altlinux.ru> 1.9.10.20100814-alt6
 - Use moodle-lang-cronbuild for cronbuild
 
