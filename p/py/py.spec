@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: py
-Version: 1.4.7
-Release: alt2.hg20120217
+Version: 1.4.10.dev1
+Release: alt1.hg20120614
 Summary: Testing and distributed programming library
 License: MIT
 Group: Development/Tools
@@ -150,6 +150,9 @@ done
 %endif
 
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.10.dev1-alt1.hg20120614
+- Version 1.4.10.dev1
+
 * Fri Apr 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.7-alt2.hg20120217
 - Added module for Python 3
 
