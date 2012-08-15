@@ -5,7 +5,7 @@
 
 Name: branding-%brand-schoolmaster
 Version: 6.0.0
-Release: alt41
+Release: alt42
 BuildArch: noarch
 
 %define theme %name
@@ -418,6 +418,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Wed Aug 15 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt42
+- fix grub terminal-box background color
+
+* Fri Aug 10 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt40.M60P.1
+- built for M60P
+
 * Fri Aug 10 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt41
 - gix license content-type (ALT#27521)
 
