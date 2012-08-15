@@ -1,6 +1,6 @@
 Name: chemtool
 Version: 1.6.13
-Release: alt1
+Release: alt2
 
 %define pre %nil
 
@@ -81,6 +81,9 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/*.desktop
 
 %changelog
+* Wed Aug 15 2012 Michael Shigorin <mike@altlinux.org> 1.6.13-alt2
+- added GenericName for Russian/Ukrainian on request by cas@
+
 * Sat Dec 24 2011 Michael Shigorin <mike@altlinux.org> 1.6.13-alt1
 - 1.6.13
 
