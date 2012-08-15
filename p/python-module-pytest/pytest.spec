@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 2.2.4.dev2
-Release: alt1.hg20120331
+Version: 2.3.0.dev10
+Release: alt1.hg20120813
 Summary: Simple and popular testing tool for Python
 License: MIT
 Group: Development/Python
@@ -85,8 +85,8 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
-%prepare_sphinx .
-ln -s ../objects.inv doc/
+%prepare_sphinx doc
+ln -s ../objects.inv doc/en/
 
 %build
 %python_build
@@ -107,13 +107,13 @@ rm -f %buildroot%_bindir/py.test
 %python_install
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-pushd doc
+pushd doc/en
 %make html
 %make pickle
 popd
 
 install -d %buildroot%python_sitelibdir/%oname
-cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
+cp -fR doc/en/_build/pickle %buildroot%python_sitelibdir/%oname/
 
 %files
 %doc AUTHORS CHANGELOG LICENSE *.txt
@@ -127,7 +127,7 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %files docs
-%doc doc/_build/html/*
+%doc doc/en/_build/html/*
 
 %if_with python3
 %files -n python3-module-%oname
@@ -136,6 +136,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0.dev10-alt1.hg20120813
+- Version 2.3.0.dev10
+
 * Fri Apr 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.4.dev2-alt1.hg20120331
 - Version 2.2.4.dev2
 - Added module for Python 3
