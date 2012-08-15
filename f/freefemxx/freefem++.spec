@@ -1,9 +1,10 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
+%define over 3.19-1
 Name: freefemxx
-Version: 3.18
-Release: alt2
+Version: 3.19_1
+Release: alt1
 Summary: Implementation of a language dedicated to the finite element method
 License: LGPL v2.1+
 Group: Sciences/Mathematics
@@ -101,7 +102,7 @@ INCS="$INCS -I%mpidir/include/metis -I%_includedir/fftw3-mpi"
 	--enable-default-fltk=yes \
 	--with-mpipath=%mpidir \
 	--with-mpi=mpic++ \
-	--with-blas="-lgoto2" \
+	--with-blas="-lopenblas" \
 	--with-lapack="-llapack" \
 	--with-arpack="-larpack_LINUX -L%mpidir/lib -lmpi_cxx" \
 	--with-amd="-lamd" \
@@ -124,14 +125,17 @@ export MPIDIR=%mpidir
 
 %files examples
 %dir %_datadir/freefem++
-%dir %_datadir/freefem++/%version
-%_datadir/freefem++/%version/examples*
-%_datadir/freefem++/%version/*.zip
+%dir %_datadir/freefem++/%over
+%_datadir/freefem++/%over/examples*
+%_datadir/freefem++/%over/*.zip
 
 %files doc
 %doc DOC/*.pdf
 
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.19_1-alt1
+- Version 3.19-1
+
 * Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.18-alt2
 - Rebuilt with OpenMPI 1.6
 
