@@ -12,7 +12,7 @@
 
 Name:           chromium
 Version:        21.0.1158.0
-Release:        alt4.r%rev
+Release:        alt5.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -71,6 +71,8 @@ Patch68:        chromium-gcc47.patch
 Patch69:	chromium-alt-krb5-fix-path.patch
 # Fix crash on Print
 Patch70:	chromium-21.0.1158.0-fix-print-dialog.patch
+# Set appropriate desktop file name for default browser check
+Patch71:	chromium-21.0.1158.0-set-desktop-file-name.patch
 
 # Upstream Patches 
 Patch500:       sqlite-3.7.6.3-fix-out-of-scope-memory-reference.patch
@@ -211,6 +213,8 @@ to Gnome's Keyring.
 %patch68 -p1
 %patch69 -p2
 %patch70 -p2
+%patch71 -p2
+
 %patch500 -p1
 
 echo "svn%rev" > src/build/LASTCHANGE.in
@@ -382,6 +386,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Aug 15 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1158.0-alt5.r139751
+- Set appropriate desktop file name for default browser check
+
 * Mon Aug 13 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1158.0-alt4.r139751
 - Fix crash when displaying system print dialog on Linux
   (http://code.google.com/p/chromium/issues/detail?id=130095)
