@@ -1,7 +1,7 @@
 %define oname pyublasext
 Name: python-module-%oname
 Version: 0.92.4
-Release: alt3.git20100108
+Release: alt3.git20120406
 Summary: Added functionality for PyUblas
 License: BSD
 Group: Development/Python
@@ -15,6 +15,7 @@ BuildPreReq: gcc-c++ boost-python-devel python-module-pyublas-devel
 BuildPreReq: liblapack-devel libode-devel libnumpy-devel
 BuildPreReq: libarpack-devel libsuitesparse-devel gcc-fortran
 BuildPreReq: libmtl4-devel libdaskr-devel boost-numeric-bindings
+BuildPreReq: python-module-py python-module-pytest
 
 %description
 PyUblasExt is a companion to PyUblas and exposes a variety of useful
@@ -65,6 +66,9 @@ This package contains development files of PyUblasExt.
 %_includedir/*
 
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92.4-alt3.git20120406
+- New snapshot
+
 * Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92.4-alt3.git20100108
 - Rebuilt with Boost 1.49.0
 
