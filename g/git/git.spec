@@ -1,6 +1,6 @@
 Name: git
-Version: 1.7.11.4
-Release: alt2
+Version: 1.7.11.5
+Release: alt1
 
 Summary: Git core and tools
 License: GPLv2
@@ -465,6 +465,9 @@ popd
 %endif #emacs
 
 %changelog
+* Wed Aug 15 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.11.5-alt1
+- Updated to maint v1.7.11.5.
+
 * Tue Aug 14 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.11.4-alt2
 - Updated to maint v1.7.11.4-27-gb17a01d.
 - Disabled broken i18n (closes: #27590).
