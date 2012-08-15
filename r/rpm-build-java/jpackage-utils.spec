@@ -34,7 +34,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt17
+Release:        alt18
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -341,7 +341,8 @@ cat > ${RPM_BUILD_ROOT}%_rpmmacrosdir/libjvm << EOF
 %endif
 EOF
 
-%{__mkdir_p} ${RPM_BUILD_ROOT}/usr/lib/rpm/
+mkdir -p ${RPM_BUILD_ROOT}/usr/lib/rpm/
+install -pm 755 rpm-build-java/maven.prov* ${RPM_BUILD_ROOT}/usr/lib/rpm/
 install -pm 755 rpm-build-java/osgi.prov* ${RPM_BUILD_ROOT}/usr/lib/rpm/
 pushd ${RPM_BUILD_ROOT}/usr/lib/rpm/
 # un/comment ln's below to enable/disable osgi.req
@@ -395,11 +396,15 @@ echo '%%dir /usr/lib/java' >> jpackage-utils-%{version}.files
 %_rpmmacrosdir/jpackage
 %_rpmmacrosdir/jpackage-fjava
 %_rpmmacrosdir/libjvm
+/usr/lib/rpm/maven.*
 
 %files -n rpm-build-java-osgi
 /usr/lib/rpm/osgi.*
 
 %changelog
+* Wed Aug 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt18
+- added maven.prov
+
 * Wed Aug 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt17
 - sync with javapackges-utils 0.6.0
 
