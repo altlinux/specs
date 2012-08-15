@@ -4,7 +4,7 @@
 %define oname pyipopt
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.svn20110318.1.1
+Release: alt1.svn20120531
 Summary: Python interface to Ipopt
 License: Artistic License/GPL
 Group: Sciences/Mathematics
@@ -57,6 +57,9 @@ MCAS="-L$TOPDIR $MCAS -lmpi_f90 -lmpi -lopen-pal"
 
 
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.svn20120531
+- New snapshot
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0-alt1.svn20110318.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
