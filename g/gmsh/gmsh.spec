@@ -5,8 +5,8 @@
 
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
-Version: 2.5.1
-Release: alt7.svn20100906
+Version: 2.6.2
+Release: alt1.svn20120814
 Group: Graphics
 License: GPL v2
 URL: http://www.geuz.org/gmsh/
@@ -61,6 +61,7 @@ This package contains tutorial and demo files for Gmsh.
 
 %prep
 %setup
+
 install -p -m644 %SOURCE1 .
 sed -i 's|@LIBDIR@|%_libdir|g' CMakeCache.txt
 sed -i 's|@MPIDIR@|%mpidir|g' CMakeCache.txt
@@ -121,6 +122,9 @@ rm -fR %buildroot%_includedir
 %_docdir/%name/tutorial
 
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt1.svn20120814
+- Version 2.6.2
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt7.svn20100906
 - Fixed build
 
