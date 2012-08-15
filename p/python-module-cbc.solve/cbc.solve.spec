@@ -2,7 +2,7 @@
 %define oname %pyname.solve
 Name: python-module-%oname
 Version: 0.1.0
-Release: alt1.bzr20120505
+Release: alt1.bzr20120814
 Summary: Collection of FEniCS/DOLFIN-based solvers
 Group: Development/Python
 License: GPL v3
@@ -38,6 +38,19 @@ Research Laboratory in Oslo (http://www.simula.no).
 
 This package contains demos for CBC.Solve
 
+%package tests
+Summary: Tests for CBC.Solve
+Group: Development/Python
+Requires: %name = %version-%release
+Requires: %name-demo = %version-%release
+
+%description tests
+CBC.Solve is a collection of FEniCS/DOLFIN-based solvers developed
+primarily at the Center for Biomedical Computing hosted by Simula
+Research Laboratory in Oslo (http://www.simula.no).
+
+This package contains tests for CBC.Solve
+
 %prep
 %setup
 
@@ -47,7 +60,8 @@ This package contains demos for CBC.Solve
 %install
 %python_install
 
-cp -fR demo %buildroot%python_sitelibdir/%pyname/
+rm -f test/swing/fsinewton/convergence_tests/test_analytic_light.py*
+cp -fR demo test %buildroot%python_sitelibdir/%pyname/
 for i in $(find %buildroot%python_sitelibdir/%pyname -type d)
 do
 	touch $i/__init__.py
@@ -57,11 +71,18 @@ done
 %doc AUTHORS COPYING README TODO
 %python_sitelibdir/*
 %exclude %python_sitelibdir/%pyname/demo
+%exclude %python_sitelibdir/%pyname/test
 
 %files demo
 %python_sitelibdir/%pyname/demo
 
+%files tests
+%python_sitelibdir/%pyname/test
+
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.bzr20120814
+- New snapshot
+
 * Mon May 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt1.bzr20120505
 - New snapshot
 
