@@ -1,11 +1,11 @@
 Name: sphinx
-Version: 2.0.4
+Version: 2.0.5
 Release: alt1
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
 License: GPLv2+
-Url: http:/sphinxsearch.com
+Url: http://sphinxsearch.com
 Source0: http://sphinxsearch.com/downloads/%name-%version.tar.gz
 Source1: %name.init
 Patch0: sphinx-client-static.patch
@@ -167,6 +167,9 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Wed Aug 15 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.0.5-alt1
+- 2.0.5
+
 * Sun Jun 17 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.0.4-alt1
 - 2.0.4
 - compiled with libstemmer
