@@ -1,6 +1,6 @@
 Name: mmcalc
 Summary: Molar Mass Calculator
-Version: 20120814
+Version: 20120815
 Release: alt1
 Group: Sciences/Chemistry
 License: LGPL
@@ -76,6 +76,10 @@ install -m 644 %SOURCE1 %buildroot%_datadir/icons/hicolor/scalable/apps/%name.sv
 
 %changelog
 
+* Wed Aug 15 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120815-alt1
+- new version
+
+# should be 'Tue Aug 14'; to fix in next time
 * Tue Aug 13 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120814-alt1
 - new version
 
