@@ -1,7 +1,7 @@
 %define sover 2
 
 Name: ltilib2
-Version: 2.120208
+Version: 2.120814
 Release: alt1
 Summary: Algorithms and data structures frequently used in image processing and computer vision
 License: BSD
@@ -131,7 +131,7 @@ DEFS="-U_USE_PHILIPS_TOUCAM -DHAVE_GTK=1"
 	--with-x \
 	--with-gtk \
 	--enable-gtk \
-	--with-blas=goto2 \
+	--with-blas=openblas \
 	--with-lapack-lib=lapack \
 	--with-lapack-path-lib=lapack
 sed -i 's|.*HAVE_GTK.*|#define HAVE_GTK 1|' ../src/basics/config.h
@@ -152,8 +152,8 @@ for i in $(ls *.a|sort -r); do
 	g++ -shared -Wl,--whole-archive $i -Wl,--no-whole-archive \
 		-o ../$LIB.so.%sover -Wl,-soname,$LIB.so.%sover $ADDLIBS \
 		$(pkg-config gdk-2.0 --libs) $(pkg-config gtk+-2.0 --libs) \
-		-llapack -lgoto2 -lpng -ljpeg -lXext -lX11 -ldc1394 -lz \
-		-lpthread -z -Wl,-z,defs
+		-llapack -lopenblas -lpng -ljpeg -lXext -lX11 -ldc1394 -lz \
+		-lpthread -lgthread-2.0 -z -Wl,-z,defs
 	ln -s $LIB.so.%sover ../$LIB.so
 	ADDLIBS="$ADDLIBS $PWD/../$LIB.so"
 done
@@ -175,6 +175,9 @@ popd
 %doc data/* examples/*
 
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.120814-alt1
+- Version 2_120814
+
 * Tue Feb 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.120208-alt1
 - Version 2.120208
 
