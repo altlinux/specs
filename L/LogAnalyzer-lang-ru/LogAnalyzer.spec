@@ -1,6 +1,6 @@
 Name: LogAnalyzer-lang-ru
 Version: 3.4.4
-Release: alt2
+Release: alt3
 
 Summary: Russian interfacetranslation for LogAnalyzer
 License: GPLv3+
@@ -34,6 +34,9 @@ echo %langinfo > %buildroot%langdir/info.txt
 %langdir/*
 
 %changelog
+* Wed Aug 15 2012 Michael Shigorin <mike@altlinux.org> 3.4.4-alt3
+- revert two more strings (jpgraph related)
+
 * Mon Aug 13 2012 Michael Shigorin <mike@altlinux.org> 3.4.4-alt2
 - workaround php5-jpgraph/fonts-ttf-vera deficiency wrt cyrillics
 
