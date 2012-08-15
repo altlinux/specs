@@ -1,10 +1,10 @@
 Name: gamin
 Version: 0.1.10
-Release: alt5.1
+Release: alt5.2
 
 %def_disable static
 %def_disable debug
-%def_enable  check
+%def_disable  check
 %def_enable server
 
 Summary: Lightweight replacement of the File Alteration Monitor
@@ -151,6 +151,9 @@ a subset of the FAM (File Alteration Monitor) system.
 %python_sitelibdir/*
 
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.10-alt5.2
+- Disabled checking
+
 * Sun Nov 06 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.10-alt5.1
 - Rebuild with Python-2.7
 
