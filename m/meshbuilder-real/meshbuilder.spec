@@ -6,7 +6,7 @@
 
 Name: %oname-%scalar_type
 Version: 0.2.0
-Release: alt4.bzr20110620
+Release: alt5.bzr20110620
 Summary: A tool for viewing and marking meshes, especially for use with DOLFIN
 License: LGPL v2.1
 Group: Graphics
@@ -87,6 +87,9 @@ cp -fR sample_data %buildroot%_datadir/%oname/
 %endif
 
 %changelog
+* Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt5.bzr20110620
+- Rebuilt with updated Dolfin
+
 * Sun Jul 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt4.bzr20110620
 - Rebuilt with OpenMPI 1.6
 

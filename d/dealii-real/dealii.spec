@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 7.2
-Release: alt5.pre.svn20120224
+Release: alt5.pre.svn20120813
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -121,7 +121,7 @@ deal.II.
 %prep
 %setup
 
-rm -fR contrib/tbb contrib/boost contrib/umfpack contrib/dx
+rm -fR contrib/tbb contrib/boost* contrib/umfpack contrib/dx
 sed -i 's|@PETSC_DIR@|%ldir|g' configure.in
 
 %build
@@ -133,6 +133,7 @@ export MPIDIR=%mpidir
 %autoreconf
 INCS="-I%_includedir/hypre -I%_includedir/gsl -I%_includedir/tbb"
 DEFS="-DBOOST_FILESYSTEM_VERSION=2 -DHAS_C99_TR1_CMATH"
+DEFS="$DEFS -DDEAL_II_USE_EXTERNAL_BOOST"
 %add_optflags $INCS $DEFS -fno-strict-aliasing -std=gnu99
 %configure \
 	--enable-mpi \
@@ -148,7 +149,7 @@ DEFS="-DBOOST_FILESYSTEM_VERSION=2 -DHAS_C99_TR1_CMATH"
 	--with-mumps=%prefix \
 	--with-scalapack=%prefix \
 	--with-blacs=%prefix \
-	--with-blas=goto2 \
+	--with-blas=openblas \
 	--with-zlib=z \
 	--with-netcdf=%mpidir \
 	--with-netcdf-include=%mpidir/include/netcdf-3 \
@@ -215,6 +216,9 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 %endif
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.2-alt5.pre.svn20120813
+- New snapshot
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.2-alt5.pre.svn20120224
 - Changed native directory: %%_libexecdir/petsc-%scalar_type ->
   %%_libdir/petsc-%scalar_type

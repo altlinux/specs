@@ -7,7 +7,7 @@
 %define sover %somver.2.0
 Name: %oname-%scalar_type
 Version: 2.01
-Release: alt5.svn20100714
+Release: alt5.svn20120408
 Summary: Self-Adapting Large-scale Solver Architecture (%scalar_type scalars)
 License: LGPL
 Group: Sciences/Mathematics
@@ -127,8 +127,9 @@ export MPIDIR=%mpidir
 
 install -d %buildroot$PETSC_DIR/lib
 
-DEFFLAGS="%optflags %optflags_shared -DPETSC_USE_EXTERN_CXX"
+DEFFLAGS="%optflags %optflags_shared"
 DEFFLAGS="$DEFFLAGS -I$PETSC_DIR/include -I%mpidir/include"
+export DEFFLAGS="$DEFFLAGS -fpermissive"
 
 export ANAMOD_LIB_DIR=%buildroot$PETSC_DIR/lib
 for i in nmd anamod syspro
@@ -227,6 +228,9 @@ done
 %endif
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.01-alt5.svn20120408
+- New snapshot
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.01-alt5.svn20100714
 - Changed native directory: %%_libexecdir/petsc-%scalar_type ->
   %%_libdir/petsc-%scalar_type
@@ -278,4 +282,3 @@ done
 
 * Sun Oct 04 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
 - Initial build for Sisyphus
-

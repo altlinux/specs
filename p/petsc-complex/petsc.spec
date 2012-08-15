@@ -24,15 +24,15 @@
 %define topsover %topsomver.0.0
 
 Name: %oname-%scalar_type
-Version: 3.2_p7
-Release: alt4
+Version: 3.3_p2
+Release: alt1
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
 Url: http://www.mcs.anl.gov/petsc/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-3.2-p5.tar.gz
+# http://ftp.mcs.anl.gov/pub/petsc/release-snapshots/petsc-3.3-p2.tar.gz
 Source: %oname-%version.tar.gz
 Source1: ftp://ftp.mcs.anl.gov/pub/petsc/externalpackages/Generator.tar.gz
 Source3: gen_makefile
@@ -359,6 +359,7 @@ ML="$ML,libepetra.so,libteuchos.so,liby12m.so]"
 #SUNDIALS="[libsundials_cvode.so,libsundials_nvecserial.so"
 SUNDIALS="[libsundials_cvode.so"
 SUNDIALS="$SUNDIALS,libsundials_nvecparallel.so]"
+PASTIX_LIBS="[libpastix_d.so,libpastix.so,libparmetis.so,libptscotch.so,librt.so]"
 %if_with tops
 CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 %endif
@@ -394,6 +395,8 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-parmetis=1 \
 	--with-parmetis-include=%mpidir/include/metis \
 	--with-parmetis-lib=[libparmetis.so] \
+	--with-metis-include=%mpidir/include/metis \
+	--with-metis-lib=[libparmetis.so] \
 	--with-blacs=1 \
 	--with-blacs-include=%_includedir \
 	--with-blacs-lib=[libblacs.so] \
@@ -412,9 +415,6 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-umfpack=1 \
 	--with-umfpack-include=%_includedir/suitesparse \
 	--with-umfpack-lib=[libumfpack.so,libamd.so] \
-	--with-tetgen=1 \
-	--with-tetgen-include=%_includedir \
-	--with-tetgen-lib=[libtetgen.so] \
 	--with-spooles=1 \
 	--with-spooles-include=%_libdir/spooles/include \
 	--with-spooles-lib=[libspoolesMPI.so,libspooles.so] \
@@ -473,6 +473,9 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-sprng=1 \
 	--with-sprng-include=%_includedir/sprng1 \
 	--with-sprng-lib=[libcmrg.so,liblcg64.so,liblcg.so,liblfg.so,libmlfg.so] \
+	--with-tetgen=1 \
+	--with-tetgen-include=%_includedir \
+	--with-tetgen-lib=[libtetgen.so] \
 %if_with mpi4py
 	--with-mpi4py=1 \
 	--with-mpi4py-dir=%prefix \
@@ -503,7 +506,7 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-ptscotch-include=%_includedir \
 	--with-pastix=1 \
 	--with-pastix-include=%_includedir \
-	--with-pastix-lib=[libpastix.so,libparmetis.so,libptscotch.so,librt.so] \
+	--with-pastix-lib=$PASTIX_LIBS \
 %endif
 %if_with tops
 	--with-babel=1 \
@@ -511,11 +514,14 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-ccafe=1 \
 	--with-ccafe-dir=%prefix \
 %endif
-	--CC=mpicc --CXX=mpicxx --FC=mpif90 \
 	--COPTFLAGS="$OPTFLAGS" \
 	--CXXOPTFLAGS="$OPTFLAGS" \
 	--FOPTFLAGS="$OPTFLAGS" \
 	--LIBS="-L$PWD -L%_libdir/oski -llmpe -lmpe $CCAS $DUMMY"
+
+%ifarch x86_64
+sed -i 's|%_libexecdir|%_libdir|g' conf/petscvariables
+%endif
 
 %ifarch x86_64
 sed -i 's|%_libexecdir|%_libdir|g' conf/petscvariables
@@ -535,7 +541,7 @@ install -d %buildroot%ldir/examples
 install -d %buildroot%_docdir/%oname/include/adic
 install -d %buildroot%_docdir/%oname/include/finclude
 install -d %buildroot%_docdir/%oname/include/mpiuni
-install -d %buildroot%_docdir/%oname/include/private
+install -d %buildroot%_docdir/%oname/include/petsc-private
 install -d %buildroot%_docdir/%oname/include/sieve
 install -d %buildroot%_datadir/%name
 install -d %buildroot%_datadir/%oname
@@ -564,7 +570,7 @@ popd
 
 pushd %buildroot%ldir/include
 mv *.html %buildroot%_docdir/%oname/include/
-for i in adic finclude mpiuni private sieve; do
+for i in adic finclude mpiuni petsc-private sieve; do
 	mv $i/*.html %buildroot%_docdir/%oname/include/$i/
 done
 #cp $PETSC_DIR/src/dm/mesh/sieve/Filter.hh sieve/
@@ -647,7 +653,7 @@ pyexecdir=%ldir/python
 Name: %name
 Description: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 Version: %version
-Libs: -L%ldir/lib -lpetsc -Wl,-R%mpidir/lib:%ldir/lib
+Libs: -L%ldir/lib -lpetsc -Wl,-rpath,%mpidir/lib:%ldir/lib
 Cflags: -I%mpidir/include -I%ldir/include
 EOF
 
@@ -744,6 +750,7 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 %_bindir/*
 %exclude %_bindir/%name.sh
 %exclude %_bindir/slepc-%scalar_type.sh
+%exclude %_bindir/julia
 %_datadir/%oname
 %if_with tops
 %exclude %_bindir/TOPS*
@@ -770,13 +777,16 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 %files -n %oname-examples
 %dir %ldir
 %ldir/examples
-%exclude %ldir/examples/tops
+#exclude %ldir/examples/tops
 %endif
 
 %files sources
 %ldir/sources
 
 %changelog
+* Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p2-alt1
+- Version 3.3-p2
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2_p7-alt4
 - Rebuilt with OpenBLAS instead of GotoBLAS2
 
@@ -939,4 +949,3 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
-

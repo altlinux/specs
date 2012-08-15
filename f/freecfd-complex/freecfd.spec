@@ -6,7 +6,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.0.1
-Release: alt8
+Release: alt9
 Summary: Computational fluid dynamics (CFD) code (%scalar_type scalars)
 
 Group: Sciences/Mathematics
@@ -138,6 +138,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %endif
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt9
+- Rebuilt with PETSc 3.3
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt8
 - Rebuilt with OpenMPI 1.6
 
@@ -173,3 +176,4 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 
 * Mon Oct 19 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1
 - Initial build for Sisyphus
+

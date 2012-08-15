@@ -9,7 +9,7 @@
 %define oname oofem
 Name: oofem-%scalar_type
 Version: 2.2
-Release: alt4.svn20111202
+Release: alt5.svn20111202
 Summary: Object Oriented Finite Element Code
 License: %gpl2plus
 Group: Sciences/Mathematics
@@ -214,7 +214,7 @@ COMPLEX_FLAGS="-fno-strict-aliasing"
 %endif
 FLAGS="-I$PETSC_INCLUDE -I%_includedir/boost -I%mpidir/include/metis"
 FLAGS="$FLAGS -I$PWD/targets/default/include -DBOOST_PYTHON"
-%add_optflags %optflags_shared $FLAGS $COMPLEX_FLAGS
+%add_optflags %optflags_shared $FLAGS $COMPLEX_FLAGS -fpermissive
 TOP=$PWD
 
 mkdir -p targets/default/include
@@ -444,6 +444,9 @@ done
 %endif
 
 %changelog
+* Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt5.svn20111202
+- Rebuilt with PETSc 3.3
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt4.svn20111202
 - Rebuilt with OpenMPI 1.6
 
@@ -499,4 +502,3 @@ done
 
 * Sun Oct 11 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.svn20091001
 - Initial build for Sisyphus
-
