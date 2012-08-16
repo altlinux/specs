@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.13
+Version: 2.0.14
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -21,6 +21,8 @@ BuildArchitectures: noarch
 
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
+
+Requires: eepm >= 1.0
 
 Requires: rpm-build
 Requires: rpm-build-compat >= %altcompat_ver
@@ -66,6 +68,19 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Aug 17 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.14-alt1
+- introduce rpmbk: short command for build package from repo in any system
+- set EPMCMD, update version to 2014
+- remove get_install_package_command (use epm install instead)
+- rpmgp: use epm install and rpmreqs for build requires install
+- rpmU, rpmqf - put redirect to eepm
+- repl: remove -devel requires for Slackware and FreeBSD
+- major update pkgrepls
+- tolocal_anyrepl: fix x86_64 Mandriva convert, add ArchLinux rules
+- add pkgrepls for Arch
+- gpull: do not use origin as default
+- rpmbph: fix case for freebsd
+
 * Sat Jul 21 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.13-alt1
 - fix build with udev, check support for Mandriva and ROSA
 - gamend: add support for commit separate files
