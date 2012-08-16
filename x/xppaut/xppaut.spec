@@ -2,7 +2,7 @@ Summary: xppaut -- Phase Plane Plus Auto: Solves many kinds of equations
 
 Name: xppaut
 Version: 6.10
-Release: alt1
+Release: alt2
 
 License: GPL
 Group: Sciences/Mathematics
@@ -51,8 +51,10 @@ cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=XPPAut
+Name=XPPAUT
 Comment=%{summary}
+Comment[ru]=Инструмент для решения уравнений высшей математики.
+Comment[uk]=Інструмент для розв'язку рівнянь вищої математики.
 Icon=%{name}
 Exec=%{name}
 Terminal=false
@@ -74,6 +76,9 @@ pushd $RPM_BUILD_ROOT%_docdir; %__ln_s %{name}-%{version} %{name}; popd
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 6.10-alt2
+- localized .desktop file
+
 * Sun Oct 02 2011 Igor Vlasenko <viy@altlinux.ru> 6.10-alt1
 - new version
 
