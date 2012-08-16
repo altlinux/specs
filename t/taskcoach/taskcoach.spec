@@ -1,7 +1,7 @@
 %define oname TaskCoach
 Name: taskcoach
-Version: 0.71.5
-Release: alt1.1.1
+Version: 1.3.17
+Release: alt1
 
 Summary: Your friendly task manager
 
@@ -11,7 +11,7 @@ Url: http://taskcoach.niessink.com/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://prdownloads.sf.net/%name/%oname-%version.tar.bz2
+Source: http://prdownloads.sf.net/%name/%oname-%version.tar
 Patch: %name.patch
 
 BuildArch: noarch
@@ -20,11 +20,12 @@ BuildArch: noarch
 # Automatically added by buildreq on Tue Jan 06 2009
 BuildRequires: libcurl python-module-PyXML python-module-wx
 
-BuildPreReq: rpm-build-compat >= 1.2
+BuildPreReq: rpm-build-intro
 
 AutoProv: no
 # wait for correct build python-module-pysyncml
-%add_python_req_skip _pysyncml
+%add_python_req_skip _pysyncml _growl _powermgt
+%add_python_req_skip _winreg pywintypes win32api win32com win32con win32gui
 
 %description
 Task Coach is a simple open source todo manager to manage personal
@@ -35,8 +36,8 @@ things todo consist of several activities. Task Coach is designed to
 deal with composite tasks.
 
 %prep
-%setup -q -n %oname-%version
-%patch
+%setup -n %oname-%version
+%patch -p2
 
 %build
 %python_build
@@ -45,6 +46,7 @@ deal with composite tasks.
 %python_install
 %__subst "s|/usr/bin/python|%_bindir/env python|" %buildroot/%_bindir/%name.py
 ln -s %name.py %buildroot/%_bindir/%name
+rm -rf %buildroot%python_sitelibdir/buildlib/
 
 %find_lang %name
 
@@ -55,8 +57,12 @@ ln -s %name.py %buildroot/%_bindir/%name
 %_desktopdir/*
 %_pixmapsdir/*
 %python_sitelibdir/taskcoachlib/
+%python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Aug 16 2012 Vitaly Lipatov <lav@altlinux.ru> 1.3.17-alt1
+- new version 1.3.17 (with rpmrb script) (ALT bug #27633)
+
 * Fri Oct 28 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.71.5-alt1.1.1
 - Rebuild with Python-2.7
 
