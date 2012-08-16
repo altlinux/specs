@@ -1,9 +1,9 @@
 Name: screentest
 Version: 2.0
-Release: alt2.1
+Release: alt3
 
 Summary: The CRT screen quality testing utility
-Summary(ru_RU.KOI8-R): Утилита для тестирования качества ЭЛТ-монитора
+Summary(ru_RU.UTF-8): пёя┌п╦п╩п╦я┌п╟ п╢п╩я▐ я┌п╣я│я┌п╦я─п╬п╡п╟п╫п╦я▐ п╨п╟я┤п╣я│я┌п╡п╟ п╜п⌡п╒-п╪п╬п╫п╦я┌п╬я─п╟
 Group: System/Configuration/Hardware
 License: GPL
 Url: http://www.fi.muni.cz/~kas/screentest/
@@ -18,10 +18,10 @@ Screentest is a simple program which displays various patterns
 (colors, circles, grids, text) on your screen in order to allow you to
 evaluate the quality of your CRT monitor (sharpness, linearity, etc).
 
-%description -l ru_RU.KOI8-R
-Screentest - простая программа, которая отображает различные образцы
-(цвета, окружности, сетки, текст) на экране с целью оценки качества
-ЭЛТ-монитора (чёткости, линейности и т.д.).
+%description -l ru_RU.UTF-8
+Screentest - п©я─п╬я│я┌п╟я▐ п©я─п╬пЁя─п╟п╪п╪п╟, п╨п╬я┌п╬я─п╟я▐ п╬я┌п╬п╠я─п╟п╤п╟п╣я┌ я─п╟п╥п╩п╦я┤п╫я▀п╣ п╬п╠я─п╟п╥я├я▀
+(я├п╡п╣я┌п╟, п╬п╨я─я┐п╤п╫п╬я│я┌п╦, я│п╣я┌п╨п╦, я┌п╣п╨я│я┌) п╫п╟ я█п╨я─п╟п╫п╣ я│ я├п╣п╩я▄я▌ п╬я├п╣п╫п╨п╦ п╨п╟я┤п╣я│я┌п╡п╟
+п╜п⌡п╒-п╪п╬п╫п╦я┌п╬я─п╟ (я┤я▒я┌п╨п╬я│я┌п╦, п╩п╦п╫п╣п╧п╫п╬я│я┌п╦ п╦ я┌.п╢.).
 
 %prep
 %setup -q
@@ -41,7 +41,11 @@ Version=1.0
 Type=Application
 Name=Screentest
 GenericName=CRT screen test
+GenericName[ru]=п÷я─п╬п╡п╣я─п╨п╟ п╪п╬п╫п╦я┌п╬я─п╟
+GenericName[uk]=п÷п╣я─п╬п╡я√я─п╨п╟ п╪п╬п╫я√я┌п╬я─п╟
 Comment=The CRT screen quality testing utility
+Comment[ru]=пёя┌п╦п╩п╦я┌п╟ я┌п╣я│я┌п╦я─п╬п╡п╟п╫п╦я▐ п╨п╟я┤п╣я│я┌п╡п╟ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦я▐ п╪п╬п╫п╦я┌п╬я─п╟
+Comment[uk]=пёя┌п╦п╩я√я┌п╟ я┌п╣я│я┌я┐п╡п╟п╫п╫я▐ я▐п╨п╬я│я┌я√ п╥п╬п╠я─п╟п╤п╣п╫п╫я▐ п╪п╬п╫я√я┌п╬я─п╟
 Icon=%{name}
 Exec=%name
 Terminal=false
@@ -58,6 +62,9 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3
+- added localization to .desktop file
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2.1
 - Fixed build
 
