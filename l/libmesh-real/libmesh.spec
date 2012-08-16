@@ -5,10 +5,10 @@
 %define oname libmesh
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 0.7.2
+Version: 0.7.3
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt6.svn20120228
+Release: alt1.svn20120228
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -21,14 +21,14 @@ Requires: libslepc-%scalar_type
 
 BuildPreReq: python-module-Pyro4 eigen2
 BuildPreReq: %mpiimpl-devel libscalapack-devel chrpath
-BuildPreReq: liblapack-devel libX11-devel
+BuildPreReq: liblapack-devel libX11-devel boost-devel
 BuildPreReq: gcc-c++ gcc-fortran libpetsc-%scalar_type-devel libxdrfile-devel
 BuildPreReq: libtau-devel libmpe2-devel libparpack-mpi-devel libarprec-devel
 BuildPreReq: libslepc-%scalar_type-devel sfc zlib-devel libxml2-devel
-BuildPreReq: bzlib-devel libtetgen-devel libparmetis0-devel libnetcdf-mpi-devel
+BuildPreReq: bzlib-devel libtetgen-devel libparmetis-devel libnetcdf-mpi-devel
 BuildPreReq: libvtk-devel libtrilinos10-devel libnox10-devel libtaucs-devel
 #BuildPreReq: doxygen graphviz texlive-latex-extra
-BuildPreReq: libfftw3-mpi-devel libexodusii-devel
+BuildPreReq: libfftw3-mpi-devel libexodusii-devel libparmetis0-devel
 BuildPreReq: libgmp-devel libgmp_cxx-devel libblitz-devel getfemxx
 BuildPreReq: libtbb-devel python-module-sphinx-devel python-module-Pygments
 BuildPreReq: libglpk-devel libaztecoo10-devel libloca10-devel libbelos10-devel
@@ -41,7 +41,7 @@ BuildPreReq: liboptipack10-devel libpliris10-devel libpamgen10-devel
 BuildPreReq: libseacas10-devel libseacas10-apps-devel libkomplex10-devel
 BuildPreReq: libfei10-devel libteko10-devel libtrikota10-devel
 BuildPreReq: libintrepid10-devel libphalanx10-devel libmoertel10-devel
-BuildPreReq: libstokhos10-devel
+BuildPreReq: libstokhos10-devel liblaspack-devel
 
 %description
 The libMesh library provides a framework for the numerical simulation of
@@ -238,7 +238,7 @@ for i in $(find ./ -name Makefile) Make.common.in; do
 done
 
 rm -fR contrib/nemesis contrib/exodusii contrib/netcdf \
-	contrib/tetgen contrib/metis contrib/parmetis
+	contrib/tetgen contrib/metis contrib/parmetis contrib/boost
 
 %ifarch x86_64
 LIB64=64
@@ -306,7 +306,10 @@ sed -i 's|@BLIBDIR@|%blibdir|g' Makefile
 	--with-glpk-include=%_includedir/glpk \
 	--with-glpk-lib=%_libdir \
 	--with-lapack=lapack \
-	--with-eigen-include=%_includedir/eigen2
+	--with-eigen-include=%_includedir/eigen2 \
+	--enable-triangle=yes \
+	--with-boost=yes \
+	--with-boost-libdir=%_libdir
 
 pushd contrib
 %make_build
@@ -474,6 +477,9 @@ popd
 %endif
 
 %changelog
+* Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.svn20120228
+- Version 0.7.3
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt6.svn20120228
 - Changed native directory: %%_libexecdir/petsc-%scalar_type ->
   %%_libdir/petsc-%scalar_type
