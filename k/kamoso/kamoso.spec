@@ -1,12 +1,15 @@
 Name:           kamoso
 Version:        2.0.2
-Release:        alt2
+Release:        alt3
 Summary:        Application for taking pictures and videos from a webcam
 
 Group:          Video
 License:        GPLv2+
 URL:            https://projects.kde.org/projects/extragear/multimedia/kamoso/
 Source0:        ftp://ftp.kde.org/pub/kde/stable/kamoso/%{version}/src/%{name}-%{version}.tar.bz2
+Source100: 	kamosoplugin.desktop
+Source101: 	kipiplugin_youtube.desktop
+Source102: 	kamoso.desktop
 
 BuildRequires(pre): kde4libs-devel >= 4.6.0
 BuildRequires:  gcc-c++ 
@@ -20,6 +23,9 @@ Kamoso is an application to take pictures and videos out of your webcam.
 
 %prep
 %setup -q
+cp %SOURCE100 src/kamosoplugin.desktop
+cp %SOURCE101 src/plugins/youtube/kipiplugin_youtube.desktop
+cp %SOURCE102 src/kamoso.desktop
 
 %build
 %K4build
@@ -40,6 +46,9 @@ Kamoso is an application to take pictures and videos out of your webcam.
 %_iconsdir/hicolor/*/actions/youtube.*
 
 %changelog
+* Thu Aug 16 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt3
+- Translate dekstop files on Russian
+
 * Mon Jun 18 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.2-alt2
 - fix build requires
 
