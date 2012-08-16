@@ -2,16 +2,17 @@ Name:		qshare
 Summary:	qShare is a FTP server
 License:	GPLv3
 Group:		Networking/File transfer
-Version:	1.3
-Release:	alt1
+Version:	2.1.3
+Release:	alt2
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
-URL:		http://qt-apps.org/content/show.php/qShare?content=116612
+URL:		http://www.zuzuf.net/qshare/
 
-Source0:	http://qt-apps.org/CONTENT/content-files/116612-%name-%version-src.tar.gz
+Source0:	http://www.zuzuf.net/qshare/files/%name-%version-src.tar.gz
 Source1:	%name.desktop
 
-# Automatically added by buildreq on Thu Dec 17 2009 (-bi)
-BuildRequires: ImageMagick-tools gcc-c++ libqt4-devel
+Patch0:		%name-2.1.3-russian_update.diff
+
+BuildRequires:	/usr/bin/convert gcc-c++ libqt4-devel libavahi-devel
 
 %description
 qShare is a FTP server with a service discovery feature
@@ -23,6 +24,7 @@ list, enable/disable the built-in FTP server.
 
 %prep
 %setup -n %name
+%patch0 -p1
 
 %build
 export PATH=$PATH:%_qt4dir/bin
@@ -32,7 +34,7 @@ qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" %name.pro
 
 %install
 %__install -Dp -m 0755 %name %buildroot%_bindir/%name
-%__install -pD -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+%__install -Dp -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 # Icons
 %__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
@@ -41,7 +43,7 @@ convert -resize 32x32 icons/%name.png %buildroot%_niconsdir/%name.png
 convert -resize 16x16 icons/%name.png %buildroot%_miconsdir/%name.png
 
 %files
-%doc docs
+%doc docs/*
 %_bindir/*
 %_desktopdir/%name.desktop
 %_miconsdir/%name.png
@@ -49,6 +51,12 @@ convert -resize 16x16 icons/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Aug 17 2012 Motsyo Gennadi <drool@altlinux.ru> 2.1.3-alt2
+- update BuildRequires
+
+* Thu Aug 16 2012 Motsyo Gennadi <drool@altlinux.ru> 2.1.3-alt1
+- 2.1.3
+
 * Mon May 24 2010 Motsyo Gennadi <drool@altlinux.ru> 1.3-alt1
 - 1.3
 
