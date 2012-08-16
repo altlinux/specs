@@ -1,6 +1,6 @@
 Name:           kamoso
 Version:        2.0.2
-Release:        alt3
+Release:        alt4
 Summary:        Application for taking pictures and videos from a webcam
 
 Group:          Video
@@ -46,6 +46,9 @@ cp %SOURCE102 src/kamoso.desktop
 %_iconsdir/hicolor/*/actions/youtube.*
 
 %changelog
+* Thu Aug 16 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt4
+- Add Russian localization of program
+
 * Thu Aug 16 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt3
 - Translate dekstop files on Russian
 
