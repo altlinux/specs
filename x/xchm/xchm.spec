@@ -1,6 +1,6 @@
 Name: xchm
 Version: 1.20
-Release: alt1.2
+Release: alt1.3
 
 Summary: xCHM - the CHM viewer for UNIX
 License: GPLv2+
@@ -44,6 +44,9 @@ install -pD -m644 art/xchm-48.xpm %buildroot%_liconsdir/xchm.xpm
 %_liconsdir/*
 
 %changelog
+* Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.20-alt1.3
+- Rebuilt with wxGKT2.9 2.9.5
+
 * Fri May 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.20-alt1.2
 - Rebuilt with new wxGTK 2.9
 

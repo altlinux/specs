@@ -1,7 +1,7 @@
 %define oname	cryptopp
 Name: libcryptopp
 Version: 5.6.0
-Release: alt3.qa1
+Release: alt3.qa2
 
 # convert 5.6.0 -> 560 format
 %define orig_version	%(echo %version | sed -e "s/\\.//g")
@@ -110,6 +110,9 @@ EOF
 #%_datadir/cryptopp/
 
 %changelog
+* Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.0-alt3.qa2
+- Rebuilt for debuginfo
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 5.6.0-alt3.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
