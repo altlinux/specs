@@ -1,14 +1,14 @@
 %define origname wxPython-src
 %define major 2.9
-%define wxdir wx-%major.4-gtk2
+%define wxdir wx-%major.5-gtk2
 %define oname wx%major
 
 %def_enable docs
 %def_without python3
 
 Name: python-module-%oname
-Version: %major.4.0
-Release: alt1.svn20120517
+Version: %major.5.0
+Release: alt1.svn20120812
 
 # Enable/disable GLcanvas
 %def_enable glcanvas
@@ -369,6 +369,9 @@ rm -rf %python_sitelibdir/{wx,wxPython} || :
 %endif
 
 %changelog
+* Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.5.0-alt1.svn20120812
+- Version 2.9.5.0
+
 * Sun May 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.4.0-alt1.svn20120517
 - Version 2.9.4.0
 

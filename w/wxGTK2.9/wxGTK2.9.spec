@@ -8,8 +8,8 @@
 %endif
 
 Name: wxGTK2.9
-Version: %wxbranch.4
-Release: alt1.svn20120523
+Version: %wxbranch.5
+Release: alt1.svn20120816
 Epoch: 2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -134,7 +134,7 @@ mkdir $dist && cd $dist
 %define _configure_script ../configure
 GST_CFLAGS="$(pkg-config --cflags gstreamer-0.10)"
 export LIBS="-lX11"
-DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1 -DwxUSE_UNICODE_UTF8=1"
+DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1"
 %add_optflags -fno-strict-aliasing $GST_CFLAGS $DEFS
 %configure $CONF_FLAG \
 	--with-sdl \
@@ -157,7 +157,9 @@ DEFS="-DUNICODE=1 -DwxUSE_UNICODE=1 -DwxUSE_UNICODE_UTF8=1"
 	--enable-gui \
 	--with-xresources \
 	--without-gnomeprint \
-	--enable-graphics_ctx
+	--enable-graphics_ctx \
+	--enable-utf8=yes \
+	--enable-utf8only=no
 
 %make_build SHARED_LD_CXX='perl %SOURCE2 $(CXX) -shared -fPIC -g -o'
 cd ..
@@ -318,6 +320,9 @@ ln -sf ../..%_libdir/wx/config/$wx_config_filename %buildroot%_bindir/wx-config
 %_datadir/wx/examples
 
 %changelog
+* Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.9.5-alt1.svn20120816
+- Version 2.9.5
+
 * Thu May 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.9.4-alt1.svn20120523
 - Version 2.9.4
 
