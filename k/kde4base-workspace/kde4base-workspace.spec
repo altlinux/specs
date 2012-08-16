@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -105,6 +105,7 @@ Patch1039: kdebase-workspace-4.8.4-alt-digitalclock-compactdate.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
 Patch1041: kdebase-workspace-4.8.0-alt-def-gllegacy.patch
 Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
+Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -550,6 +551,7 @@ __EOF__
 %patch1040 -p1
 %patch1041 -p1
 %patch1042 -p1
+%patch1043 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -911,6 +913,13 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Aug 16 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt4
+- set default plasma-netbook panel applets
+- fix SaL widget default menu groups
+
+* Tue Aug 14 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2.M60P.1
+- built for M60P
+
 * Mon Aug 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt3
 - include all menu groups in SaL widget by default
 
