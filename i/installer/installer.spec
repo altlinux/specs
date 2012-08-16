@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.6
+Version: 1.6.1
 Release: alt1
 
 Summary: Installer common parts
@@ -29,11 +29,19 @@ Requires: bash console-vt-tools
 
 Provides: installer-feature-autohostname
 Obsoletes: installer-feature-autohostname
+Provides: installer-feature-autohostname-stage2
+Obsoletes: installer-feature-autohostname-stage2
+
 Provides: installer-feature-services
 Obsoletes: installer-feature-services
+
 Provides: installer-feature-copy-udev-rules-stage3
 Obsoletes: installer-feature-copy-udev-rules-stage3
 Requires: udev-rule-generator
+
+
+Provides: installer-feature-systemd
+Obsoletes: installer-feature-systemd
 
 Requires: xorg-xvfb
 
@@ -54,6 +62,8 @@ Requires: alterator-wizardface alterator-notes
 # stage2 and stage3 are mutually exclusive
 Conflicts: %name-common-stage2
 
+Provides: installer-feature-eth-by-mac-stage3
+Obsoletes: installer-feature-eth-by-mac-stage3
 
 %description common-stage3
 This package contains common installer stage3 files and dependencies.
@@ -75,9 +85,12 @@ This package contains common installer stage3 files and dependencies.
 %files common-stage3
 
 %changelog
+* Thu Aug 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.1-alt1
+- included installer feature: systemd
+- additional provides/obsoletes added for features from prev release
+
 * Tue Aug 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6-alt1
 - included installer features: services, copy-udev-rules, autohostname,
-  
 
 * Fri Mar 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.5.1-alt1
 - dont't copy xorg.conf to destdir
