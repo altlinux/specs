@@ -5,7 +5,7 @@
 
 Name: branding-%brand-kdesktop
 Version: 6.0.2
-Release: alt4
+Release: alt5
 BuildArch: noarch
 
 %define theme %name
@@ -418,6 +418,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Thu Aug 16 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt5
+- make grub terminal box background flat
+
+* Fri Aug 10 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt3.M60P.1
+- built for M60P
+
 * Fri Aug 10 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt4
 - gix license content-type
 
