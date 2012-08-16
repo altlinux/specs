@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt4
+Release: %branch_release alt5
 
 License: %asl
 Group: System/Servers
@@ -1668,6 +1668,9 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Fri Aug 17 2012 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt5
+- Fix %%_initdir/%%apache2_dname return status
+
 * Fri Aug 10 2012 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt4
 - %%apache2_sbindir/apachectl%%apache2_branch replaced by the "official"
   apachectl (patched) (Closes: #27086)
