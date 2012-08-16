@@ -4,7 +4,7 @@ Name: open-%bname
 %define module_name %name
 Version: 2.0.871
 License: %gpl2plus
-Release: alt5
+Release: alt6
 Summary: Utils to operate with %Name
 Group: System/Kernel and hardware
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
@@ -77,6 +77,9 @@ fi
 %_usrsrc/kernel/sources/*.tar.bz2
 
 %changelog
+* Wed Aug 15 2012 Terechkov Evgenii <evg@altlinux.org> 2.0.871-alt6
+- Fix LSB header to work with systemd
+
 * Wed Jan  4 2012 Terechkov Evgenii <evg@altlinux.org> 2.0.871-alt5
 - Fixes fot ALT#23676 (thanks to naf@) and ALT#26775
 
