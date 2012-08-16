@@ -20,7 +20,7 @@ under OSI-approved licenses.
 
 Name: %oname
 Version: 2267
-Release: alt5.1
+Release: alt6
 Summary: Add-on packages for SciPy
 License: OSI-approved licenses
 Group: Sciences/Other
@@ -45,7 +45,7 @@ BuildPreReq: python-module-sphinx-devel /usr/bin/latex
 BuildPreReq: python-devel python-module-scipy swig gcc-c++ gcc-fortran
 BuildPreReq: libsuitesparse-devel libann-devel libsndfile-devel boost-devel
 BuildPreReq: libglpk-devel >= 4.38 python-module-cvxopt python-module-pswarm_py
-BuildPreReq: python-module-pyipopt python-module-pywrapper libgotoblas-devel
+BuildPreReq: python-module-pyipopt python-module-pywrapper libopenblas-devel
 BuildPreReq: libsamplerate-devel python-module-Cython python-module-tables
 BuildPreReq: python-module-h5py python-module-BeautifulSoup libalsa-devel
 #BuildPreReq: python-module-pyproj python-module-rpy libnumpy-devel
@@ -644,6 +644,9 @@ done
 %endif
 
 %changelog
+* Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt6
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2267-alt5.1
 - Rebuild to remove redundant libpython2.7 dependency
 
