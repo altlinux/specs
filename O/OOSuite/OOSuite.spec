@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-build-python
 %define dirs DerApproximator FuncDesigner OpenOpt SpaceFuncs
 
 Name: OOSuite
-Version: 0.37
-Release: alt2.svn20120206
+Version: 0.39
+Release: alt1.svn20120816
 Summary: OpenOpt Suite
 License: BSD
 Group: Sciences/Mathematics
@@ -20,7 +20,7 @@ BuildPreReq: python-module-matplotlib
 BuildPreReq: libglpk-devel
 BuildPreReq: python-module-cvxopt python-module-pswarm_py
 BuildPreReq: python-module-pyipopt python-module-pywrapper
-BuildPreReq: python-module-scipy libgotoblas-devel
+BuildPreReq: python-module-scipy libopenblas-devel
 
 %description
 OpenOpt is a free optimization framework that was created in June of
@@ -194,7 +194,7 @@ This package contains examples for SpaceFuncs.
 f2py --opt="%optflags" --f90exec=="f95" \
 	-m toms587 \
 	-c OpenOpt/openopt/solvers/Standalone/toms587.f \
-	-lgoto2
+	-lopenblas
 export PYTHONPATH=$PWD
 for dir in %dirs; do
 	pushd $dir
@@ -279,6 +279,9 @@ touch %buildroot%python_sitelibdir/SpaceFuncs/examples/__init__.py
 %python_sitelibdir/SpaceFuncs/examples
 
 %changelog
+* Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.39-alt1.svn20120816
+- Version 0.39
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.37-alt2.svn20120206
 - Avoide requirement on python-module-matplotlib-gtk
 
