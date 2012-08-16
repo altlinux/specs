@@ -1,6 +1,6 @@
 Name: algencan
 Version: 2.3.7
-Release: alt2
+Release: alt3
 Summary: Solving extremely large problems with moderate computer time
 License: GPL v2 or later
 Group: Sciences/Mathematics
@@ -11,7 +11,7 @@ Source: %name-%version.tar.gz
 
 #BuildPreReq: libatlas-devel liblapack-devel
 BuildPreReq: gcc-c++ gcc-fortran R-devel python-devel
-BuildPreReq: libparmetis-devel libgotoblas-devel libnumpy-devel
+BuildPreReq: libparmetis-devel libopenblas-devel libnumpy-devel
 
 %description
 Fortran code for general nonlinear programming that does not use matrix
@@ -147,6 +147,9 @@ done
 %files -n R-%name -f INSTALL_R
 
 %changelog
+* Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.7-alt3
+- Built with OpenBLAS instead of GotoBLAS2
+
 * Thu Nov 24 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.7-alt2
 - Rebuilt
 
