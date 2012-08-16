@@ -34,7 +34,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt18
+Release:        alt19
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -373,11 +373,13 @@ __TRIGGER__
 echo '%%attr(755,root,root) %_rpmlibdir/update-maven-depmap.filetrigger' >> jpackage-utils-%{version}.files
 echo '%%attr(755,root,root) %_sbindir/update-maven-depmap' >> jpackage-utils-%{version}.files
 # -------- end update-maven-depmap.filetrigger ---------------
-# TMP hack for maven1 dep on /usr/lib/java - remove
-#if ! %_libdir = /usr/lib
-mkdir -p %buildroot/usr/lib/java
-echo '%%dir /usr/lib/java' >> jpackage-utils-%{version}.files
-#endif
+
+install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jpackage-eclipse
+## TMP hack for maven1 dep on /usr/lib/java - remove
+##if ! %_libdir = /usr/lib
+#mkdir -p %buildroot/usr/lib/java
+#echo '%%dir /usr/lib/java' >> jpackage-utils-%{version}.files
+##endif
 
 %post -n jpackage-utils
 %{_sbindir}/update-maven-depmap
@@ -402,6 +404,9 @@ echo '%%dir /usr/lib/java' >> jpackage-utils-%{version}.files
 /usr/lib/rpm/osgi.*
 
 %changelog
+* Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt19
+- added macros.eclipse
+
 * Wed Aug 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt18
 - added maven.prov
 
