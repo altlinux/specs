@@ -1,11 +1,11 @@
 Name: hasher
-Version: 1.3.23
+Version: 1.3.24
 Release: alt1
 
 Summary: Modern safe package building technology
 License: GPLv2+
 Group: Development/Other
-Url: ftp://ftp.altlinux.org/pub/people/ldv/hasher
+Url: http://en.altlinux.org/Hasher
 BuildArch: noarch
 
 Source: %url/%name-%version.tar
@@ -56,6 +56,12 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Fri Aug 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1.3.24-alt1
+- hsh-mkchroot: use generic qemu-arm static helper name for arm
+  flavours (by Sergey Bolshakov).
+- Allowed install of packages from incompatible architectures
+  (by Sergey Bolshakov).
+
 * Tue Jun 05 2012 Dmitry V. Levin <ldv@altlinux.org> 1.3.23-alt1
 - hsh-mkchroot: create /dev/shm directory with permissions 01777.
 - Updated package description (closes: #18853).
