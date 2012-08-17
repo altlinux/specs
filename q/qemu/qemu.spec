@@ -124,7 +124,7 @@
 
 Name: qemu
 Version: 1.1.0
-Release: alt3
+Release: alt4
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -495,6 +495,9 @@ fi
 %_defaultdocdir/%name-%version
 
 %changelog
+* Fri Aug 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1.1.0-alt4
+- Fixed emulation of getdents.
+
 * Thu Aug 09 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1.0-alt3
 - binfmt_misc: package two arm flavours, with defaults to armv5 and armv7
 
