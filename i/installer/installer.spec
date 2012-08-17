@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 
 Summary: Installer common parts
@@ -32,6 +32,9 @@ Obsoletes: installer-feature-autohostname
 Provides: installer-feature-autohostname-stage2
 Obsoletes: installer-feature-autohostname-stage2
 
+Provides: installer-feature-cmdline-parameters-stage2
+Obsoletes: installer-feature-cmdline-parameters-stage2
+
 Provides: installer-feature-services
 Obsoletes: installer-feature-services
 
@@ -42,6 +45,13 @@ Requires: udev-rule-generator
 
 Provides: installer-feature-systemd
 Obsoletes: installer-feature-systemd
+
+Provides: installer-feature-setup-network-stage2
+Obsoletes: installer-feature-setup-network-stage2
+Requires: hostinfo iproute2
+
+Provides: installer-feature-setup-bootloader-stage2
+Obsoletes: installer-feature-setup-bootloader-stage2
 
 Requires: xorg-xvfb
 
@@ -65,6 +75,10 @@ Conflicts: %name-common-stage2
 Provides: installer-feature-eth-by-mac-stage3
 Obsoletes: installer-feature-eth-by-mac-stage3
 
+Provides: installer-feature-setup-network-stage3
+Obsoletes: installer-feature-setup-network-stage3
+Requires: alterator-net-eth chkconfig etcnet
+
 %description common-stage3
 This package contains common installer stage3 files and dependencies.
 
@@ -81,10 +95,16 @@ This package contains common installer stage3 files and dependencies.
 %_bindir/*
 %_sbindir/*
 %_datadir/install2
+%exclude %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %files common-stage3
+%_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Aug 17 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.2-alt1
+- included installer features: cmdline-parameters, setup-bootloader,
+  setup-network
+
 * Thu Aug 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.1-alt1
 - included installer feature: systemd
 - additional provides/obsoletes added for features from prev release
