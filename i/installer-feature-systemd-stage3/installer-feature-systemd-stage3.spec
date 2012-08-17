@@ -1,5 +1,5 @@
 Name: installer-feature-systemd-stage3
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Set up systemd support
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Aug 17 2012 Michael Shigorin <mike@altlinux.org> 0.3-alt1
+- scripts made idempotent in case these get used with installer
+
 * Wed Nov 16 2011 Michael Shigorin <mike@altlinux.org> 0.2-alt1
 - ported from stage2 to stage3 (now suitable for livecd as well)
 
