@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -913,6 +913,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Aug 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt5
+- fix SaL widget settings app groups list
+
+* Thu Aug 16 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt3.M60P.1
+- built for M60P
+
 * Thu Aug 16 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt4
 - set default plasma-netbook panel applets
 - fix SaL widget default menu groups
