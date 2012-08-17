@@ -1,5 +1,5 @@
 Name: korinf
-Version: 1.9.7
+Version: 2.0.0
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -16,8 +16,9 @@ Source: %name-%version.tar
 
 BuildArchitectures: noarch
 
-Requires: etersoft-build-utils >= 2.0.11
-Requires: alien
+Requires: eepm >= 1.0
+Requires: etersoft-build-utils >= 2.0.14
+Requires: alien >= 8.86-alt3
 
 %description
 This package contains Korinf multidistro build system.
@@ -43,6 +44,31 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Fri Aug 17 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
+- release 2.0
+- fast add epm support to run-script.sh
+- install: use one-line args
+- install: add packages from minimal build environment
+- introduce -I for force install, -i now installs only for failed builds
+- rewrite run_in_chroot: simpled and correct return state
+- install: use direct install only for eepm and only if preinstalled epm is failed
+- introduce -B (force build and install), change -b: now do things only if build needed
+- cleanup and fix ArchLinux build
+- install: use epm install instead internal case
+- update/add install wine/gecko-mono script
+- cront/build: always use -f
+
+* Wed Aug 01 2012 Vitaly Lipatov <lav@altlinux.ru> 1.9.8-alt1
+- check_reqs: use epm --skip-installed simulate instead filter_out_internal_packages
+- fix run from logit before log initialization
+- fix x86_64 linked
+- introduce set_destlogdir and use it
+- install_req: use epm --skip-installed install instead internal code
+- check_reqs: drop try_install_by_list (use epm simulate)
+- check_integrity: use epm integrity
+- check-reqs: use epm instead run-script
+- separate run in chroot in standalone func
+
 * Sat Jul 21 2012 Vitaly Lipatov <lav@altlinux.ru> 1.9.7-alt1
 - makeiso-selta: actualize script
 - add wine-mono script
