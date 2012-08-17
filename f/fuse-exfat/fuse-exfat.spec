@@ -1,6 +1,6 @@
 Name: fuse-exfat
 Summary: Free exFAT file system implementation
-Version: 0.9.7
+Version: 0.9.8
 Release: alt1
 License: GPLv3+
 Group: System/Kernel and hardware
@@ -8,7 +8,7 @@ URL: http://code.google.com/p/exfat/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source0: http://exfat.googlecode.com/files/%name-%version.tar.gz
-Patch0: fuse-exfat-0.9.4-alt-getopt.patch
+Patch0: fuse-exfat-0.9.8-alt-getopt.patch
 
 BuildRequires: libfuse-devel python-modules-email scons
 
@@ -36,6 +36,9 @@ install -pD -m644 fuse/mount.exfat-fuse.8 %buildroot%_man8dir/mount.exfat-fuse.8
 %_man8dir/*.8*
 
 %changelog
+* Fri Aug 17 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.9.8-alt1
+- 0.9.8
+
 * Tue Mar 20 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.9.7-alt1
 - 0.9.7
 
