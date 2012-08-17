@@ -1,6 +1,6 @@
 Name: wipefreespace
 Version: 1.6.1
-Release: alt3
+Release: alt4
 
 Summary: Program for secure cleaning of free space on file systems
 License: GPLv2
@@ -37,7 +37,7 @@ FAT12/16/32, MinixFSv1/2, JFS, HFS+ and OCFS.
 %patch -p1
 
 %build
-%configure --disable-XFS
+%configure --disable-XFS --bindir=/bin
 %make_build
 
 %install
@@ -45,12 +45,15 @@ FAT12/16/32, MinixFSv1/2, JFS, HFS+ and OCFS.
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/%name
+/bin/%name
 %_infodir/%name.*
 %_man1dir/%name.1*
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Wed Aug 15 2012 Michael Shigorin <mike@altlinux.org> 1.6.1-alt4
+- moved %_bindir/%name to /bin
+
 * Sat Aug 11 2012 Michael Shigorin <mike@altlinux.org> 1.6.1-alt3
 - added upstream proposed patch to add info-dir entry
 
