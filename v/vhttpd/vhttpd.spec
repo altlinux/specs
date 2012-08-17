@@ -1,5 +1,5 @@
 Name: vhttpd
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Source:%name-%version.tar
@@ -87,6 +87,12 @@ guile bindings for %name
 %_libdir/libguile-*
 
 %changelog
+* Fri Aug 17 2012 Mikhail Efremov <sem@altlinux.org> 0.7.3-alt1
+- tests: Increase delay after server's process start.
+- tests: Add create_server_from_socket() test.
+- Use IPv6 if possible.
+- Create channels from an existing socket.
+
 * Thu Mar 24 2011 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
 - tests: fix for glib >= 2.28.
 
