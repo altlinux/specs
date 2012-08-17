@@ -1,11 +1,11 @@
 %define Theme School Master
 %define codename Chariot
 %define brand informika
-%define Brand Informika
+%define Brand Informika Linux
 
 Name: branding-%brand-schoolmaster
 Version: 6.0.0
-Release: alt42
+Release: alt43
 BuildArch: noarch
 
 %define theme %name
@@ -26,6 +26,8 @@ BuildRequires: libqt4-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
+%define Theme_ru Школьный Мастер
+%define Brand_ru Информика Линукс
 %define status %nil
 %define status_en %nil
 %define variants altlinux-kdesktop altlinux-desktop altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-gnome-desktop
@@ -229,7 +231,7 @@ ALT Linux index.html welcome page.
 
 %build
 autoconf
-THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version X86='%x86' ./configure 
+THEME=%theme NAME='%Theme' NAME_RU='%Theme_ru' BRAND_FNAME='%Brand' BRAND_FNAME_RU='%Brand_ru' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version X86='%x86' ./configure 
 make
 
 %install
@@ -418,6 +420,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Fri Aug 17 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt43
+- translate indexhtml and indexhtml.desktop titles into russian
+
+* Wed Aug 15 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt41.M60P.1
+- built for M60P
+
 * Wed Aug 15 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt42
 - fix grub terminal-box background color
 
