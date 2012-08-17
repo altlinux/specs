@@ -1,66 +1,56 @@
 Name: rdesktop
-Version: 1.6.0
-Release: alt4.1
+Version: 1.7.1
+Release: alt1
 
-Summary: Powerful tool for remote desktop connection
-License: GPL
+Summary: A RDP client for accessing Windows Remote Desktop Services
+License: GPLv3+
 Group: Networking/Remote access
 
 Url: http://www.rdesktop.org/
-Source0: %name-%version.tar.gz
-Source1: ru.fixed
-Patch0: rdesktop-1.5.0-rawkeyboard_nofreespace_kbswitch.patch
-Patch1: rdesktop-1.6_auto_raw_keyboard.patch
-Patch2: rdesktop-alt-man.patch
-Patch3: rdesktop.long.names.on.redirect.drives.patch
-Packager: Vitaly Lipatov <lav@altlinux.ru>
+Source0: %name-%version.tar
+Patch0: %{name}-pcsc.patch
+Patch1: %{name}-libao.patch
+Patch2: Raw-keyboard-patch-for-1.7.1.patch
 
-# Automatically added by buildreq on Mon Jan 25 2010
-BuildRequires: imake libICE-devel libX11-devel libalsa-devel libsamplerate-devel libssl-devel xorg-cf-files
-# optimized out: glibc-pthread perl-threads pkg-config xorg-kbproto-devel xorg-xproto-devel
-
-Summary(ru_RU.KOI8-R): Удалённое графическое подключение к Windows по протоколу RDP
+BuildRequires:  libao-devel
+BuildRequires:  libX11-devel
+BuildRequires:  openssl-devel
+BuildRequires:  libpcsclite-devel
 
 %description
-Powerful tool for remote desktop connection. It can be used to
-access Windows NT and Windows 2000 terminal servers. Unlike Citrix ICA
-it doesn't require any additional software to be setup on server.
-
-%description -l ru_RU.KOI8-R
-Программа для удалённого графического подключения к Windows по протоколу RDP.
-Может быть использовано для доступа к Windows NT и Windows 2002
-терминальным серверам, а также Windows XP PE. В отличие от Citrix ICA
-эта программа не требует установки дополнительного ПО на сервер.
+Rdesktop is an open source client for Windows Remote Desktop Services,
+capable of natively speaking Remote Desktop Protocol (RDP) in order to
+present the user's Windows desktop. Rdesktop is known to work with
+Windows versions such as NT 4 Terminal Server, 2000, XP, 2003, 2003 R2,
+Vista, 2008, 7, and 2008 R2.
 
 %prep
-%setup
+%setup -q
+#patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
+%patch2 -p2
 
 %build
 %autoreconf
-%add_optflags -DSAVE_LICENSE
 %configure \
-	--prefix=%prefix \
-	--mandir=%prefix/share/man \
-	--with-openssl=%prefix \
 	--with-ipv6 \
-	--with-sound=alsa
-# --with-libvncserver
-# --with-debug-kbd
+	--with-sound=libao \
+	--enable-smartcard
 %make_build
 
 %install
-%makeinstall_std
-install -pm644 %SOURCE1 %buildroot%_datadir/%name/keymaps/
+%makeinstall
 
 %files
-%_bindir/*
-%_man1dir/*
+%doc COPYING README doc/{AUTHORS,ChangeLog,HACKING,TODO,*.txt}
+%_bindir/%name
 %_datadir/%name
+%_man1dir/*
 
 %changelog
+* Mon Aug 13 2012 Michael A. Kangin <prividen@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
 * Tue Dec 07 2010 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt4.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
