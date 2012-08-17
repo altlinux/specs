@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.0.0 
-Release: alt5
+Release: alt6
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -420,6 +420,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Aug 17 2012 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt6
+- Remove background from product logo
+- Fix distro name
+- Fix attribute name for meta http-equiv
+- Fix grub background color
+
 * Fri Jul 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt5
 - autoboot from usb fixed
 
