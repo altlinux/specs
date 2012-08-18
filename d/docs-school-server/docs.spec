@@ -4,11 +4,11 @@
 %define _documentationdir %_defaultdocdir/documentation
 %define _docsinstalldir %_defaultdocdir/%variant
 
-%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux
+%define variants docs-office-server docs-backup-server docs-desktop docs-school-master docs-school-junior docs-school-lite docs-school-server docs-kdesktop docs-school-terminal docs-school-newlite docs-centaurus docs-simply-linux docs-lxdesktop docs-lxdesktop-lite
 
 Name: docs-%variant
-Version: 5.0
-Release: alt16
+Version: 6.0
+Release: alt1
 
 Summary: %Variant documentation
 License: %fdl
@@ -42,6 +42,9 @@ ln -s $(relative %_docsinstalldir %_documentationdir) %buildroot%_documentationd
 %_documentationdir
 
 %changelog
+* Sat Aug 18 2012 Artem Zolochevskiy <azol@altlinux.ru> 6.0-alt1
+- initial Informika 6.0 School Server version
+
 * Fri Jun 10 2011 Artem Zolochevskiy <azol@altlinux.ru> 5.0-alt16
 - add docs-simply-linux to Conflicts list
 
