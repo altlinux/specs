@@ -1,5 +1,5 @@
-%define lvm2version 2.02.96
-%define dmversion 1.02.75
+%define lvm2version 2.02.97
+%define dmversion 1.02.76
 
 %def_disable cluster
 %def_enable selinux
@@ -17,11 +17,7 @@ Source: %name-%version.tar
 Source1: dmcontrol_update
 Source3: lvm2-monitor.init
 
-Patch3: device-mapper.1.02.64-alt-verbose.patch
-Patch4: device-mapper.1.02.54-alt-LIB_VERSION.patch
-
-Patch11: lvm2-2.02.73-alt-dmeventd-lvm-weak.patch
-Patch14: lvm2-2.02.95-alt-systemd-units.patch
+Patch: %name-%version-%release.patch
 
 Conflicts: liblvm
 
@@ -32,7 +28,7 @@ Requires: liblvm2  = %{lvm2version}-%{release}
 %define _sbindir /sbin
 %def_enable static
 
-BuildRequires: libreadline-devel, libtinfo-devel libudev-devel
+BuildRequires: libreadline-devel, libtinfo-devel libudev-devel CUnit-devel
 %{?_enable_static:BuildRequires: libreadline-devel-static libtinfo-devel-static}
 %{?_enable_cluster:BuildRequires: libcman-devel libdlm-devel}
 %{?_enable_selinux:BuildRequires: libselinux-devel}
@@ -165,11 +161,7 @@ the device-mapper event library.
 %prep
 %setup
 
-%patch3 -p2
-%patch4 -p2
-%patch11 -p2
-%patch14 -p1
-%__subst -p 's/ncurses/tinfo &/' configure*
+%patch -p1
 
 %build
 %autoreconf
@@ -180,7 +172,6 @@ export ac_cv_path_MODPROBE_CMD=/sbin/modprobe
 	--disable-readline \
 	--disable-selinux \
 	--disable-nls \
-	--enable-jobs=%__nprocs \
 	--enable-lvm1_fallback \
 	--enable-static_link \
 	ac_cv_lib_dl_dlopen=no \
@@ -192,8 +183,7 @@ export ac_cv_path_MODPROBE_CMD=/sbin/modprobe
 	--with-device-uid=0 \
 	--with-device-gid=6 \
 	--with-device-mode=0660 \
-	--with-dmeventd-path="/sbin/dmeventd" \
-	LDFLAGS="-lc_stubs"
+	--with-dmeventd-path="/sbin/dmeventd"
 	#
 %__make libdm
 %__make lib
@@ -208,7 +198,6 @@ mv libdm/ioctl/libdevmapper.a .
 %configure \
 	%{subst_enable selinux} \
 	--disable-static_link \
-	--enable-jobs=%__nprocs \
 	--enable-lvm1_fallback \
 	--enable-readline \
 	--with-group= \
@@ -217,6 +206,7 @@ mv libdm/ioctl/libdevmapper.a .
 	--with-device-uid=0 \
 	--with-device-gid=6 \
 	--with-device-mode=0660 \
+	--enable-write_install \
 %if_enabled cluster
 	--with-clvmd=cman \
 %endif
@@ -226,7 +216,9 @@ mv libdm/ioctl/libdevmapper.a .
 	--enable-dmeventd \
 	--with-udevdir=/lib/udev/rules.d \
 	--enable-udev_sync \
-	--with-dmeventd-path="/sbin/dmeventd"
+	--with-dmeventd-path="/sbin/dmeventd" \
+	--with-systemdsystemunitdir=%_unitdir \
+	--with-tmpfilesdir=/lib/tmpfiles.d
 	#
 %__make
 
@@ -254,12 +246,13 @@ for f in `ls %buildroot%_libdir/libdevmapper.so`; do
 done
 
 mv %buildroot%_libdir/libdevmapper.so.1.00 %buildroot/%_lib/
-
 mv %buildroot%_libdir/libdevmapper-event.so.1.00 %buildroot/%_lib/
+mv %buildroot%_libdir/liblvm2app.so.2.2 %buildroot/%_lib/
 
 pushd %buildroot%_libdir
-rm -f libdevmapper-event.so
+rm -f libdevmapper-event.so liblvm2app.so
 ln -sf ../../%_lib/libdevmapper-event.so.1.00 ./libdevmapper-event.so
+ln -sf ../../%_lib/liblvm2app.so.2.2 ./liblvm2app.so
 popd
 
 # Fix pkgconfig file.
@@ -278,6 +271,7 @@ install -pm755 scripts/lvmconf.sh %buildroot/sbin/lvmconf
 mkdir -p %buildroot%_initdir
 install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 
+%make install_systemd_generators DESTDIR=%buildroot
 %make install_systemd_units DESTDIR=%buildroot
 %make install_tmpfiles_configuration DESTDIR=%buildroot
 
@@ -305,7 +299,8 @@ install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 %config(noreplace) /etc/lvm/lvm.conf
 %_initdir/lvm2-monitor
 %_unitdir/lvm2-monitor.service
-%config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
+/lib/systemd/system-generators/lvm2-activation-generator
+/lib/tmpfiles.d/%name.conf
 %dir /etc/lvm/
 %defattr(600,root,root,700)
 /etc/lvm/backup/
@@ -327,7 +322,7 @@ install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 %endif
 
 %files -n liblvm2
-%_libdir/liblvm2app.so.*
+/%_lib/liblvm2app.so.*
 %_libdir/liblvm2cmd.so.*
 
 %files -n liblvm2-devel
@@ -377,6 +372,9 @@ install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 %_pkgconfigdir/devmapper-event.pc
 
 %changelog
+* Sat Aug 18 2012 Alexey Shabalin <shaba@altlinux.ru> 2.02.97-alt1
+- 2.02.97
+
 * Wed Jun 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.02.96-alt1
 - 2.02.96
 
