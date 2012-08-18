@@ -5,7 +5,7 @@ Name: exodusii
 Version: 5.14.0
 %define somver 0
 %define sover %somver.%version
-Release: alt6
+Release: alt7
 Summary: A model developed to store and retrieve transient data for finite element analyses
 License: BSD
 Group: Sciences/Mathematics
@@ -139,9 +139,13 @@ mv nemesis/README README.Nemesis
 %_includedir/*
 
 %files -n lib%name-devel-doc
-%doc exodus/html exodus/doc/* nemesis/doc/*
+#doc exodus/html exodus/doc/* nemesis/doc/*
+%doc exodus/html exodus/doc/*
 
 %changelog
+* Sat Aug 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.14.0-alt7
+- New snapshot
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.14.0-alt6
 - Rebuilt with OpenMPI 1.6
 
