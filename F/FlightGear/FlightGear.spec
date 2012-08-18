@@ -1,8 +1,8 @@
-%define branch 2.6
+%define branch 2.8
 
 Name: FlightGear
-Version: 2.6.0
-Release: alt4
+Version: 2.8.0
+Release: alt1
 
 Summary: open-source flight simulator
 License: GPL
@@ -91,6 +91,9 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Aug 18 2012 Michael Shigorin <mike@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Mon Jun 25 2012 Michael Shigorin <mike@altlinux.org> 2.6.0-alt4
 - applied fedora patches for CVE-2012-2090 and CVE-2012-2091
 
