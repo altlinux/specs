@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.7.3
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt1.svn20120228
+Release: alt2.svn20120228
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -262,7 +262,7 @@ done
 sed -i 's|@BLIBDIR@|%blibdir|g' Makefile
 
 ./bootstrap
-%add_optflags -DOMPI_IGNORE_CXX_SEEK -DHAVE_NOX -fpermissive -I%_includedir/exodusii
+%add_optflags -DOMPI_IGNORE_CXX_SEEK -DHAVE_NOX -I%_includedir/exodusii
 %add_optflags -I%mpidir/include/netcdf-3
 %autoreconf
 %configure \
@@ -478,6 +478,9 @@ popd
 %endif
 
 %changelog
+* Sat Aug 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt2.svn20120228
+- Rebuilt with Trilinos 10.12.2
+
 * Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.svn20120228
 - Version 0.7.3
 
@@ -575,3 +578,4 @@ popd
 
 * Thu Aug 27 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3_rc1-alt1
 - Initial build for Sisyphus
+
