@@ -1,6 +1,6 @@
 Summary: Vargus - the video surveillance program
 Name: vargus
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 License: %gpl2plus
 Group: Video
@@ -18,8 +18,8 @@ BuildPreReq: apache2-devel
 BuildPreReq: rpm-build-webserver-common
 BuildPreReq: perl-devel
 BuildPreReq: perl-Filesys-Df perl-Proc-Daemon perl-Privileges-Drop perl-DBI perl-Net-Telnet
-BuildPreReq: perl-Module-Load perl-Encode
-Requires: MySQL-server ffmpeg mediainfo perl-DBD-mysql xawtv4-common dbus-tools-gui
+BuildPreReq: perl-Module-Load perl-Encode perl-File-Sync
+Requires: MySQL-server avconv mediainfo perl-DBD-mysql xawtv4-common dbus-tools-gui
 Requires: vlc-plugin-v4l vlc-plugin-ts vlc-plugin-mpeg2 vlc-plugin-live555 vlc-plugin-h264 
 Requires: vlc-plugin-freetype vlc-plugin-ffmpeg vlc-plugin-dbus vlc-mini
 Requires: mp4box v4l-utils
@@ -34,7 +34,7 @@ Summary: Web interfaces for %name
 Group: Networking/WWW
 Requires: %name = %version-%release
 Requires: apache2-mod_php5 >= 5 
-Requires: apache2-common >= 2.2.0 apache2-base php5-mysql
+Requires: apache2-common >= 2.2.0 apache2-base php5-mysql php5-mbstring
 
 %description web
 Web interfaces for %name
@@ -51,11 +51,13 @@ Web interfaces for %name
 %define webappdir %webserver_webappsdir/vargus
 
 mkdir -p %buildroot%_bindir
+mkdir -p %buildroot%_sbindir
 mkdir -p %buildroot%_sysconfdir/vargus
 mkdir -p %buildroot%_initrddir
 mkdir -p %buildroot%_runtimedir/vargus
 mkdir -p %buildroot%vargus_cache
 mkdir -p %buildroot%webappdir
+mkdir -p %buildroot%webappdir/modules-enabled
 mkdir -p %buildroot%perl_vendor_privlib
 
 
@@ -63,6 +65,7 @@ install -m 0755 vargus.pl %buildroot%_bindir/vargus
 install -m 0755 vargus-informer.pl %buildroot%_bindir/vargus-informer
 install -m 0755 vargus-get-archive.pl %buildroot%_bindir/vargus-get-archive
 install -m 0755 events-collector.pl %buildroot%_bindir/vargus-events
+install -m 0755 vargus-simple-setup.pl %buildroot%_sbindir/vargus-simple-setup
 install -m 0755 vargus.init %buildroot%_initrddir/vargus
 install -m 0755 vargus-informer.init %buildroot%_initrddir/vargus-informer
 install -m 0755 vargus-events.init %buildroot%_initrddir/vargus-events
@@ -71,6 +74,7 @@ install -m 0644 docs/get-archive.cfg %buildroot%_sysconfdir/vargus/
 
 cp -r web/* %buildroot%webappdir/
 cp -r Vargus %buildroot%perl_vendor_privlib/
+mkdir -p %buildroot%perl_vendor_privlib/Vargus/Events
 
 mkdir -p %buildroot%apache2_confdir
 pushd %buildroot%apache2_confdir
@@ -109,12 +113,14 @@ exit 0
 
 %files
 %_bindir/vargus*
+%_sbindir/vargus*
 %_initrddir/vargus*
 %attr(0750,root,%vargus_group) %dir %_sysconfdir/vargus
 %config(noreplace) %_sysconfdir/vargus/*
 %attr(0755,%vargus_user,%vargus_group) %dir %_runtimedir/vargus
 %attr(0755,%vargus_user,%vargus_group) %dir %vargus_cache
 %perl_vendor_privlib/Vargus
+%perl_vendor_privlib/Vargus/Events
 %doc docs/*
 
 %files web
@@ -126,6 +132,14 @@ exit 0
 
 
 %changelog
+* Sat Aug 18 2012 Michael A. Kangin <prividen@altlinux.org> 0.9.5-alt1
+- Alerts support
+- libav support
+- Events enhancements: UDP support, multiple listeners, text preprocessor
+- Web interface modules
+- Autoconfiguration script
+
+
 * Mon Jan 23 2012 Michael A. Kangin <prividen@altlinux.org> 0.9.4-alt1
 - New postprocess model
 - Text events support
