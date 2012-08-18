@@ -1,4 +1,5 @@
-%def_with dakota
+%def_without docs
+%def_without dakota
 %def_without petsc
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -12,14 +13,14 @@ interchanging, and provides a full-featured set of concrete classes that \
 implement all abstract interfaces.
 
 %define somver 10
-%define sover %somver.10.0
+%define sover %somver.12.2
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 
 %define oname trilinos
 Name: %oname%somver
-Version: 10.10.0
-Release: alt6
+Version: 10.12.2
+Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL
 Group: Sciences/Mathematics
@@ -58,7 +59,7 @@ BuildPreReq: ghostscript-utils chrpath python-module-pyMPI
 BuildPreReq: libtbb-devel libqt4-devel boost-program_options-devel
 BuildPreReq: chaco libnetcdf-mpi-devel libexodusii-devel libnewmat-devel
 BuildPreReq: libsparskit-devel boost-signals-devel tinyxml-devel Xdmf-devel
-BuildPreReq: python-module-mpi4py-devel
+BuildPreReq: python-module-mpi4py-devel libparmetis-devel
 %if_with dakota
 BuildPreReq: libdakota-devel
 %endif
@@ -1806,7 +1807,7 @@ popd
 
 # docs
 
-%ifnarch x86_64
+%if_with docs
 pushd doc
 ./build_docs.pl
 popd
@@ -1861,7 +1862,7 @@ install -p -m644 src/*.h \
 	%buildroot%_includedir/PyTrilinos
 popd
 
-%ifnarch x86_64
+%if_with docs
 pushd ../packages/PyTrilinos/doc
 install -d %buildroot%_libdir/%name/doc/PyTrilinos
 cp -fR DevelopersGuide OverviewOfPyTrilinos/*.ps \
@@ -1889,7 +1890,7 @@ install -p -m644 src/*.py src/*.so \
 	%buildroot%python_sitelibdir/PySundance
 rm -f %buildroot%python_sitelibdir/PySundance/setup.py
 
-%ifnarch x86_64
+%if_with docs
 install -d %buildroot%_docdir/PySundance
 cp -fR example \
 	%buildroot%_docdir/PySundance/
@@ -1900,7 +1901,7 @@ popd # BUILD
 
 # docs
 
-%ifnarch x86_64
+%if_with docs
 install -d %buildroot%_man3dir
 for i in $(find ./ -name man3);
 do
@@ -1986,14 +1987,16 @@ mv %buildroot%prefix/site-packages/*PerceptMesh* \
 
 # fix file conflict with libmesh-doc
 
-%ifnarch x86_64
+%if_with docs
 pushd %buildroot%_man3dir
 mv todo.3 trilinos.todo.3
 popd
 %endif
 
+%if_without docs
+
 %files
-%doc README RELEASE_NOTES *.txt
+%doc CHANGELOG README RELEASE_NOTES *.txt
 
 %files headers
 %_includedir/*
@@ -2200,14 +2203,6 @@ popd
 %files -n libzoltan%somver-devel
 %_libdir/libzoltan*.so
 
-%ifnarch x86_64
-%files -n lib%name-devel-doc
-%_docdir/%name/
-%exclude %_docdir/%name/examples
-%_man3dir/*
-%exclude %_man3dir/deprecated.3*
-%endif
-
 %files -n libpytrilinos%somver
 %_libdir/libpytrilinos.so.*
 
@@ -2226,24 +2221,6 @@ popd
 
 %files -n python-module-PySundance
 %python_sitelibdir/PySundance*
-
-%ifnarch x86_64
-%files -n python-module-PyTrilinos%somver-examples
-%python_sitelibdir/PyTrilinos/example
-%python_sitelibdir/PyTrilinos/test
-
-%files -n python-module-PyTrilinos%somver-doc
-%dir %_libdir/%name/doc
-%_libdir/%name/doc/PyTrilinos
-
-%files examples
-%dir %_docdir/%name
-%_docdir/%name/examples
-
-%files -n python-module-PySundance-examples
-%dir %_docdir/PySundance
-%_docdir/PySundance/example
-%endif
 
 %files -n libshards%somver
 %_libdir/libshards.so.*
@@ -2375,7 +2352,36 @@ popd
 %files -n libtrikota%somver-devel
 %endif
 
+%endif
+
+%if_with docs
+%files -n lib%name-devel-doc
+%_docdir/%name/
+%exclude %_docdir/%name/examples
+%_man3dir/*
+%exclude %_man3dir/deprecated.3*
+
+%files -n python-module-PyTrilinos%somver-examples
+%python_sitelibdir/PyTrilinos/example
+%python_sitelibdir/PyTrilinos/test
+
+%files -n python-module-PyTrilinos%somver-doc
+%dir %_libdir/%name/doc
+%_libdir/%name/doc/PyTrilinos
+
+%files examples
+%dir %_docdir/%name
+%_docdir/%name/examples
+
+%files -n python-module-PySundance-examples
+%dir %_docdir/PySundance
+%_docdir/PySundance/example
+%endif
+
 %changelog
+* Sat Aug 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt1
+- Version 10.12.2 (without Dakota)
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.10.0-alt6
 - Built with OpenBLAS instead of GotoBLAS2
 
