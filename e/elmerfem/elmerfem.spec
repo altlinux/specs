@@ -4,11 +4,11 @@
 %define somver 0
 %define sover %somver.0.0
 
-%define svn svn5602
+%define svn svn5812
 
 Name: elmerfem
-Version: 6.2
-Release: alt5.%svn
+Version: 7.0
+Release: alt1.%svn
 
 Summary: Open Source Finite Element Software for Multiphysical Problems
 License: GPLv2+
@@ -130,7 +130,20 @@ rm -fR hutiter/examples/ex1/hutiex \
 
 %ifarch x86_64
 sed -i 's|^\(BITS\).*|\1 = 64|' ElmerGUI/ElmerGUI.pri
+LIB_SUFFIX=64
 %endif
+sed -i "s|@LIB_SUFFIX@|$LIB_SUFFIX|g" \
+	fem/src/ModelDescription.src \
+	fem/src/Load.c \
+	fem/src/elmerf90.in \
+	fem/src/elmerf90-nosh.in \
+	fem/src/ElementDescription.src \
+	buildtools/installer/elmer.nsi \
+	front/src/ecif_userinterface_TCL.cpp \
+	ElmerGUItester/src/tester.cpp \
+	ElmerGUI/Application/src/main.cpp \
+	post/src/ElmerPost.c \
+	ElmerGUIlogger/src/mainwindow.cpp
 sed -i 's|@PYVER@|%_python_version|g' \
 	ElmerGUI/ElmerGUI.pri \
 	ElmerGUI/Application/Application.pro
@@ -140,6 +153,9 @@ mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export MPIDIR=%mpidir
+%ifarch x86_64
+export LIB_SUFFIX=64
+%endif
 
 function shareIt() {
 	if [ "$1" == "libelmerparam" ]; then
@@ -259,9 +275,13 @@ popd
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export MPIDIR=%mpidir
+%ifarch x86_64
+export LIB_SUFFIX=64
+%endif
 
 install -d %buildroot%_includedir
 install -d %buildroot%_libdir
+install -d %buildroot%_libexecdir
 cp -P */src/lib*.so* misc/tetgen_plugin/plugin/*.so* \
 	%buildroot%_libdir/
 export LD_LIBRARY_PATH=%buildroot%_libdir
@@ -287,7 +307,7 @@ install -m644 eio/config.h %buildroot%_includedir/eio_config.h
 sed -i 's|\.\.\/config\.h|eio_config.h|' \
 	%buildroot%_includedir/eio_api.h
 
-pushd %buildroot%_libexecdir/elmerpost/fonts/TrueType
+pushd %buildroot%_libdir/elmerpost/fonts/TrueType
 for i in Free*.ttf; do
 	rm -f $i
 	ln -s %_datadir/fonts/ttf/freefont/$i .
@@ -301,19 +321,19 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %doc LICENSES
 %_bindir/*
 %exclude %_bindir/ElmerGUI*
-%_libexecdir/elmersolver
-%exclude %_libexecdir/elmersolver/include
-%_libexecdir/elmerfront
-%_libexecdir/elmerpost
+%_libdir/elmersolver
+%exclude %_libdir/elmersolver/include
+%_libdir/elmerfront
+%_libdir/elmerpost
 
 %files -n lib%name
 %_libdir/*.so.*
-%_libdir/libelmersolver-6.1.so
+%_libdir/libelmersolver-7.0.so
 
 %files -n lib%name-devel
 %_libdir/*.so
-%exclude %_libdir/libelmersolver-6.1.so
-%_libexecdir/elmersolver/include
+%exclude %_libdir/libelmersolver-7.0.so
+%_libdir/elmersolver/include
 %_includedir/*
 
 %files -n ElmerGUI
@@ -331,6 +351,9 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %_niconsdir/document-save-as.png
 
 %changelog
+* Sat Aug 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt1.svn5812
+- Version 7.0
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.2-alt5.svn5602
 - Built with OpenBLAS instead of GotoBLAS2
 
