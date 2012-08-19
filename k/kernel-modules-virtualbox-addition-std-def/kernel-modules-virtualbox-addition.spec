@@ -3,7 +3,7 @@
 %define module_release	alt2
 
 %define kversion	3.5.2
-%define krelease	alt1
+%define krelease	alt2
 %define flavour		std-def
 
 %define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197890.1
+Release: %module_release.197890.2
 License: GPL
 Group: System/Kernel and hardware
 
@@ -102,8 +102,8 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Sat Aug 18 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.18-alt2.197890.1
-- Build for kernel-image-std-def-3.5.2-alt1.
+* Sun Aug 19 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.18-alt2.197890.2
+- Build for kernel-image-std-def-3.5.2-alt2.
 
 * Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt2
 - Remove old patch for el-smp

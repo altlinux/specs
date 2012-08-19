@@ -1,5 +1,5 @@
 Name:    kernel-image-std-def
-Release: alt1
+Release: alt2
 Epoch:   1
 %define kernel_base_version	3.5
 %define kernel_sublevel	.2
@@ -623,6 +623,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Sun Aug 19 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.2-alt2
+- Fix stupid bug which led to kernel panic on boot
+
 * Fri Aug 17 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.2-alt1
 - Update to 3.5.2
 - Add -b option to modprobe
