@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           libmatthew-java
 Version:        0.8
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Summary:        A few useful Java libraries
 Group:          Development/Java
 License:        MIT
@@ -96,6 +96,9 @@ make install \
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_4jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_3jpp7
 - fc build
 
