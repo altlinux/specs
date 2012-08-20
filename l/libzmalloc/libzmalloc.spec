@@ -1,7 +1,7 @@
 
 Name: libzmalloc
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Packager: Packager: Andriy Stepanov <stanv@altlinux.ru>
 
@@ -45,6 +45,9 @@ echo "WARNING: zmalloc-disable & zmalloc-enable deprecated! Use zmalloc-ctrl ins
 /bin/*
 
 %changelog
+* Mon Aug 20 2012 Andriy Stepanov <stanv@altlinux.ru> 0.2-alt2
+- Add '-ed' to enable/disable (control)
+
 * Wed Aug 15 2012 Andriy Stepanov <stanv@altlinux.ru> 0.2-alt1
 - Use "control" system. Use one ctrl binary.
 
