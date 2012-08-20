@@ -34,7 +34,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt20
+Release:        alt21
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -404,6 +404,9 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 /usr/lib/rpm/osgi.*
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt21
+- bugfix release
+
 * Fri Aug 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt20
 - maven.prov fixes (provide valid versions only)
 
