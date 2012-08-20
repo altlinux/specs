@@ -1,3 +1,4 @@
+BuildRequires: google-collections
 Patch33: jetty6-maven3-alt.patch
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -92,7 +93,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty6
 Version:        6.1.26
-Release:        alt5_1jpp6
+Release:        alt6_1jpp6
 Epoch:          0
 Summary:        Webserver and Servlet Container
 Group:          Development/Java
@@ -1698,6 +1699,9 @@ fi
 # ========= End of Jetty Webapps Subpackage Files
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt6_1jpp6
+- fixed build: added BR: google-collections
+
 * Sun Jun 10 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt5_1jpp6
 - build with maven-enforcer-api
 
