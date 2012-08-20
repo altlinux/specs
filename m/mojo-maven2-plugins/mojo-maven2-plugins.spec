@@ -1,4 +1,8 @@
-BuildRequires: geronimo-jpa-3.0-api javacc3 sun-ws-metadata-2.0-api sun-annotation-1.0-api
+# tmp plexus-maven-plugin
+BuildRequires: plexus-maven-plugin
+
+BuildRequires: velocity14
+BuildRequires: geronimo-jpa-3.0-api javacc3 sun-ws-metadata-2.0-api sun-annotation-1.0-api maven-plugin-cobertura gmaven-runtime-1.5
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2011, JPackage Project
@@ -36,31 +40,31 @@ BuildRequires: jpackage-compat
 %define repo_dir    m2_repo/repository
 
 %define antlr_namedversion 2.2-SNAPSHOT
-%define antlr_include 1
+%define antlr_include 0
 %define appassembler_namedversion 1.0-SNAPSHOT
-%define appassembler_include 1
+%define appassembler_include 0
 %define aspectj_namedversion 1.1-SNAPSHOT
-%define aspectj_include 1
+%define aspectj_include 0
 %define axistools_namedversion 1.2-SNAPSHOT
 %define axistools_include 1
 %define build_helper_namedversion 1.5
-%define build_helper_include 1
+%define build_helper_include 0
 %define buildnumber_namedversion 1.0-beta-2-SNAPSHOT
 %define buildnumber_include 1
 %define castor_namedversion 2.0-SNAPSHOT
-%define castor_include 1
+%define castor_include 0
 %define clirr_namedversion 2.3-SNAPSHOT
-%define clirr_include 1
+%define clirr_include 0
 %define cobertura_namedversion 2.3-SNAPSHOT
-%define cobertura_include 1
+%define cobertura_include 0
 %define commons_attributes_namedversion 1.1-SNAPSHOT
 %define commons_attributes_include 1
 %define dbunit_namedversion 1.0-beta-2-SNAPSHOT
 %define dbunit_include 1
 %define docbook_namedversion 1.0.0-alpha-2-SNAPSHOT
-%define docbook_include 1
+%define docbook_include 0
 %define exec_namedversion 1.1-beta-2-SNAPSHOT
-%define exec_include 1
+%define exec_include 0
 %define findbugs_namedversion 2.3.1
 %define findbugs_include 1
 
@@ -68,7 +72,7 @@ BuildRequires: jpackage-compat
 %define groovy_include 0
 
 %define hibernate2_namedversion 1.0-alpha-1-SNAPSHOT
-%define hibernate2_include 1
+%define hibernate2_include 0
 %define hibernate3_namedversion 2.2-SNAPSHOT
 %define hibernate3_include 0
 %define idlj_namedversion 1.1-SNAPSHOT
@@ -76,13 +80,13 @@ BuildRequires: jpackage-compat
 %define jalopy_namedversion 1.0-alpha-2-SNAPSHOT
 %define jalopy_include 1
 %define jasperreports_namedversion 1.0-beta-2-SNAPSHOT
-%define jasperreports_include 1
+%define jasperreports_include 0
 %define javacc_namedversion 2.5-SNAPSHOT
 %define javacc_include 1
 %define javancss_namedversion 2.0-beta-3-SNAPSHOT
 %define javancss_include 1
 %define jaxb2_namedversion 1.3-SNAPSHOT
-%define jaxb2_include 1
+%define jaxb2_include 0
 %define jboss_namedversion 1.3.2-SNAPSHOT
 %define jboss_include 1
 %define jboss_packaging_namedversion 2.0-SNAPSHOT
@@ -90,11 +94,11 @@ BuildRequires: jpackage-compat
 %define jdepend_namedversion 2.0-SNAPSHOT
 %define jdepend_include 1
 %define jdiff_namedversion 0.1-SNAPSHOT
-%define jdiff_include 1
+%define jdiff_include 0
 %define jpox_namedversion 1.1.8-SNAPSHOT
 %define jpox_include 1
 %define jruby_namedversion 1.0-beta-5-SNAPSHOT
-%define jruby_include 1
+%define jruby_include 0
 %define jruby_stdlib_namedversion 1.8.5
 %define jruby_stdlib_include 1
 %define jspc_namedversion 2.0-alpha-3
@@ -112,7 +116,7 @@ BuildRequires: jpackage-compat
 %define mojo_archetypes_netbeans_include 0
 
 %define native_namedversion 1.0-alpha-3-SNAPSHOT
-%define native_include 1
+%define native_include 0
 %define minijar_namedversion 1.0-alpha-3
 %define minijar_include 1
 
@@ -121,11 +125,11 @@ BuildRequires: jpackage-compat
 %define appfuse_namedversion 2.0.0-SNAPSHOT
 %define appfuse_include 1
 %define apt_namedversion 1.0-alpha-3-SNAPSHOT
-%define apt_include 1
+%define apt_include 0
 %define batik_namedversion 1.0-SNAPSHOT
 %define batik_include 1
 %define cis_namedversion 1.0-alpha-1-SNAPSHOT
-%define cis_include 1
+%define cis_include 0
 %define cruisecontrol_namedversion 1.0-SNAPSHOT
 %define cruisecontrol_include 1
 %define dashboard_namedversion 1.0-SNAPSHOT
@@ -137,7 +141,7 @@ BuildRequires: jpackage-compat
 %define ejbdoclet_namedversion 1.0-beta-1-SNAPSHOT
 %define ejbdoclet_include 1
 %define emma_namedversion 1.0-SNAPSHOT
-%define emma_include 1
+%define emma_include 0
 %define fileutils_namedversion 1.0-SNAPSHOT
 %define fileutils_include 1
 %define fit_namedversion 2.0-beta-4-SNAPSHOT
@@ -147,17 +151,17 @@ BuildRequires: jpackage-compat
 %define ganalytics_namedversion 1.0-SNAPSHOT
 %define ganalytics_include 1
 %define graphing_namedversion 0.1-SNAPSHOT
-%define graphing_include 1
+%define graphing_include 0
 %define hibernatedoclet_namedversion 1.0-beta-1-SNAPSHOT
 %define hibernatedoclet_include 1
 %define ibatis_namedversion 1.0-alpha-1-SNAPSHOT
 %define ibatis_include 0
 %define j2me_namedversion 0.1.0-alpha-SNAPSHOT
-%define j2me_include 1
+%define j2me_include 0
 %define jardiff_namedversion 1.0-SNAPSHOT
-%define jardiff_include 1
+%define jardiff_include 0
 %define jaxws_namedversion 1.0-beta-1-SNAPSHOT
-%define jaxws_include 1
+%define jaxws_include 0
 #
 %define jellyapi_namedversion 2.0-SNAPSHOT
 %define jellyapi_include 0
@@ -165,7 +169,7 @@ BuildRequires: jpackage-compat
 %define jellymojo_include 0
 #
 %define jettybin_namedversion 0.1-SNAPSHOT
-%define jettybin_include 1
+%define jettybin_include 0
 %define jetty_namedversion 1.0.0-alpha-1-SNAPSHOT
 %define jetty_include 1
 #%%define legaltools_namedversion 1.0-alpha-1-SNAPSHOT
@@ -175,9 +179,9 @@ BuildRequires: jpackage-compat
 #%%define mojo_was5_plugin_namedversion 1.1.3
 %define mojo_was5_plugin_include 0
 %define mojo_was_plugin_anttasks_namedversion 1.1
-%define mojo_was_plugin_anttasks_include 1
+%define mojo_was_plugin_anttasks_include 0
 %define buildinfo_namedversion 1.0-SNAPSHOT
-%define buildinfo_include 1
+%define buildinfo_include 0
 %define changes_namedversion 2.0-SNAPSHOT
 %define changes_include 1
 %define diagram_maker_namedversion 0.1-SNAPSHOT
@@ -191,11 +195,11 @@ BuildRequires: jpackage-compat
 #%%define testing_simple_namedversion 1.0-SNAPSHOT
 %define testing_simple_include 0
 %define pomtools_namedversion 1.0-SNAPSHOT
-%define pomtools_include 1
+%define pomtools_include 0
 %define properties_namedversion 1.0-SNAPSHOT
 %define properties_include 1
 %define push_namedversion 1.0-alpha-1-SNAPSHOT
-%define push_include 1
+%define push_include 0
 %define retroweaver_namedversion 1.0-SNAPSHOT
 %define retroweaver_include 1
 #%%define rspec_namedversion 1.0-SNAPSHOT
@@ -205,7 +209,7 @@ BuildRequires: jpackage-compat
 %define runtime_builder_namedversion 0.1-SNAPSHOT
 %define runtime_builder_include 1
 %define script_namedversion 1.0-SNAPSHOT
-%define script_include 1
+%define script_include 0
 %define shade_namedversion 1.0-alpha-11-SNAPSHOT
 %define shade_include 1
 %define shell_namedversion 1.0-SNAPSHOT
@@ -213,7 +217,7 @@ BuildRequires: jpackage-compat
 %define springdoclet_namedversion 1.0-beta-1
 %define springdoclet_include 1
 %define visibroker_namedversion 1.0-alpha-1-SNAPSHOT
-%define visibroker_include 1
+%define visibroker_include 0
 %define wagon_namedversion 1.0-SNAPSHOT
 %define wagon_include 1
 %define webdoclet_namedversion 1.0-beta-1
@@ -234,15 +238,15 @@ BuildRequires: jpackage-compat
 %define osxappbundle_namedversion 1.0-alpha-2-SNAPSHOT
 %define osxappbundle_include 1
 %define ounce_namedversion 1.1-SNAPSHOT
-%define ounce_include 1
+%define ounce_include 0
 #%%define pde_namedversion 1.0-alpha-2-SNAPSHOT
 %define pde_include 0
 %define plugin_support_namedversion 1.0-alpha-2-SNAPSHOT
-%define plugin_support_include 1
+%define plugin_support_include 0
 %define retrotranslator_namedversion 1.0-beta-1-SNAPSHOT
 %define retrotranslator_include 1
 %define rat_namedversion 1.0-alpha-4-SNAPSHOT
-%define rat_include 1
+%define rat_include 0
 %define rmic_namedversion 1.0-SNAPSHOT
 %define rmic_include 1
 %define rpm_namedversion 2.0-beta-2-SNAPSHOT
@@ -252,7 +256,7 @@ BuildRequires: jpackage-compat
 %define selenium_namedversion 1.0-beta-3-SNAPSHOT
 %define selenium_include 1
 %define shitty_namedversion 1.0-alpha-2-SNAPSHOT
-%define shitty_include 1
+%define shitty_include 0
 %define smc_namedversion 1.0-alpha-2-SNAPSHOT
 %define smc_include 1
 %define solaris_namedversion 1.0-alpha-2-SNAPSHOT
@@ -260,7 +264,7 @@ BuildRequires: jpackage-compat
 %define sql_namedversion 1.1-SNAPSHOT
 %define sql_include 1
 %define sysdeo_tomcat_namedversion 1.1-SNAPSHOT
-%define sysdeo_tomcat_include 1
+%define sysdeo_tomcat_include 0
 %define taglist_namedversion 2.3-SNAPSHOT
 %define taglist_include 1
 %define tomcat_namedversion 1.0-alpha-2-SNAPSHOT
@@ -268,7 +272,7 @@ BuildRequires: jpackage-compat
 %define pack200_anttasks_namedversion 1.2-SNAPSHOT
 %define pack200_anttasks_include 1
 %define webstart_namedversion 1.0-beta-1-SNAPSHOT
-%define webstart_include 1
+%define webstart_include 0
 %define webstart_servlet_namedversion 1.0-6.0.02_ea_b02.1-SNAPSHOT
 %define webstart_servlet_include 1
 %define wsdl2java_namedversion 0.4-SNAPSHOT
@@ -276,7 +280,7 @@ BuildRequires: jpackage-compat
 %define xdoclet_namedversion 1.0-beta-1-SNAPSHOT
 %define xdoclet_include 0
 %define xmlbeans_namedversion 2.3.2-SNAPSHOT
-%define xmlbeans_include 1
+%define xmlbeans_include 0
 %define xml_namedversion 1.0-beta-3-SNAPSHOT
 %define xml_include 1
 %define xslt_namedversion 1.1-SNAPSHOT
@@ -343,7 +347,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt20_8jpp6
+Release:        alt21_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -514,7 +518,7 @@ BuildRequires:    maven2-plugin-resources
 BuildRequires:    maven2-plugin-site
 BuildRequires:    maven2-plugin-war
 BuildRequires:    maven-doxia
-BuildRequires:    maven-embedder
+#BuildRequires:    maven-embedder
 BuildRequires:    maven-jxr
 BuildRequires:    maven-plugin-tools
 BuildRequires:    maven-release
@@ -539,7 +543,7 @@ BuildRequires:    maven-surefire-report-plugin
 BuildRequires:    maven-wagon
 BuildRequires:    apache-jar-resource-bundle
 BuildRequires:    easymock
-BuildRequires:    plexus-maven-plugin
+#BuildRequires:    plexus-maven-plugin
 BuildRequires:    modello
 BuildRequires:    modello-maven-plugin
 BuildRequires:    geronimo-genesis
@@ -2987,15 +2991,54 @@ done
 %endif
 %patch50 -p0
 
-sed -i 's,<module>dashboard-maven-plugin</module>,<!--2.0.8 nocompile<module>dashboard-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>dashboard-maven-plugin</module>,<!-- 2.0.8 nocompile<module>dashboard-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 
-sed -i 's,<module>wagon-cifs</module>,<!--tmp nocompile<module>wagon-cifs</module>-->,' maven-extensions/pom.xml
+sed -i 's,<module>wagon-cifs</module>,<!-- tmp nocompile<module>wagon-cifs</module>-->,' maven-extensions/pom.xml
 
-sed -i 's,<module>ibatis-maven-plugin</module>,<!--tmp nocompile<module>ibatis-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>ibatis-maven-plugin</module>,<!-- tmp nocompile<module>ibatis-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 
-sed -i 's,<module>xfire-maven-plugin</module>,<!--tmp nocompile<module>xfire-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>xfire-maven-plugin</module>,<!-- tmp nocompile<module>xfire-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+
+# maven3
+sed -i 's,<module>docbook-maven-plugin</module>,<!-- tmp nocompile<module>docbook-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>rat-maven-plugin</module>,<!-- tmp nocompile<module>rat-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>antlr-maven-plugin</module>,<!-- tmp nocompile<module>antlr-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>appassembler</module>,<!-- tmp nocompile<module>appassembler</module>-->,' pom.xml
+sed -i 's,<module>apt-maven-plugin</module>,<!-- tmp nocompile<module>apt-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>aspectj-maven-plugin</module>,<!-- tmp nocompile<module>aspectj-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>build-helper-maven-plugin</module>,<!-- tmp nocompile<module>build-helper-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>castor-maven-plugin</module>,<!-- tmp nocompile<module>castor-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>clirr-maven-plugin</module>,<!-- tmp nocompile<module>clirr-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>exec-maven-plugin</module>,<!-- tmp nocompile<module>exec-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>hibernate2-maven-plugin</module>,<!-- tmp nocompile<module>hibernate2-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>jasperreports-maven-plugin</module>,<!-- tmp nocompile<module>jasperreports-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>jaxb2-maven-plugin</module>,<!-- tmp nocompile<module>jaxb2-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>jruby-maven-plugin</module>,<!-- tmp nocompile<module>jruby-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>maven-native</module>,<!-- tmp nocompile<module>maven-native</module>-->,' pom.xml
+sed -i 's,<module>ounce-maven-plugin</module>,<!-- tmp nocompile<module>ounce-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>plugin-support</module>,<!-- tmp nocompile<module>plugin-support</module>-->,' pom.xml
+sed -i 's,<module>shitty-maven-plugin</module>,<!-- tmp nocompile<module>shitty-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>sysdeo-tomcat-maven-plugin</module>,<!-- tmp nocompile<module>sysdeo-tomcat-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>was6-maven-plugin</module>,<!-- tmp nocompile<module>was6-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>webstart</module>,<!-- tmp nocompile<module>webstart</module>-->,' pom.xml
+sed -i 's,<module>xmlbeans-maven-plugin</module>,<!-- tmp nocompile<module>xmlbeans-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>jdiff-maven-plugin</module>,<!-- tmp nocompile<module>jdiff-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>cis-maven-plugin</module>,<!-- tmp nocompile<module>cis-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>emma-maven-plugin</module>,<!-- tmp nocompile<module>emma-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>graphing-maven-plugin</module>,<!-- tmp nocompile<module>graphing-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>j2me-maven-plugin</module>,<!-- tmp nocompile<module>j2me-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>jardiff-maven-plugin</module>,<!-- tmp nocompile<module>jardiff-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>jaxws-maven-plugin</module>,<!-- tmp nocompile<module>jaxws-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>jettybin-maven-plugin</module>,<!-- tmp nocompile<module>jettybin-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>maven-buildinfo-plugin</module>,<!-- tmp nocompile<module>maven-buildinfo-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>pomtools-maven-plugin</module>,<!-- tmp nocompile<module>pomtools-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>push-maven-plugin</module>,<!-- tmp nocompile<module>push-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>script-maven-plugin</module>,<!-- tmp nocompile<module>script-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>visibroker-maven-plugin</module>,<!-- tmp nocompile<module>visibroker-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>-maven-plugin</module>,<!-- tmp nocompile<module>-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 
 %build
+export LANG=en_US.ISO8859-1
 export MAVEN_OPTS="-Xmx640m -XX:MaxPermSize=256m"
 export MAVEN_REPO_LOCAL=`pwd`/%{repo_dir}
 #mkdir -p $MAVEN_REPO_LOCAL/org.apache/
@@ -3050,27 +3093,29 @@ cp %{SOURCE12} $MAVEN_REPO_LOCAL/org/codehaus/mojo/mojo-parent/23/mojo-parent-23
 export SETTINGS=$(pwd)/maven2-settings.xml
 
 %if ! %{RHAT}
-pushd cobertura-maven-plugin
-cp pom.xml pom.xml.save
-cp %{SOURCE8} pom.xml
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-    -s ${SETTINGS} \
-    -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-    -Dmaven.test.failure.ignore=true \
-    -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-    install
+#pushd cobertura-maven-plugin
+#cp pom.xml pom.xml.save
+#cp %{SOURCE8} pom.xml
+#mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
+#    -s ${SETTINGS} \
+#    -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
+#    -Dmaven.test.failure.ignore=true \
+#    -Dmaven2.jpp.depmap.file=%{SOURCE2} \
+#    install
 
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-    -s ${SETTINGS} \
-    -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-    -Dmaven.test.failure.ignore=true \
-    -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-    javadoc:javadoc
+#mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
+#    -s ${SETTINGS} \
+#    -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
+#    -Dmaven.test.failure.ignore=true \
+#    -Dmaven2.jpp.depmap.file=%{SOURCE2} \
+#    javadoc:javadoc
 
-cp pom.xml.save pom.xml
-mkdir -p $MAVEN_REPO_LOCAL/JPP/maven2/default_poms/
-cp pom.xml $MAVEN_REPO_LOCAL/JPP/maven2/default_poms/JPP.mojo-cobertura-maven-plugin.pom
-popd
+#cp pom.xml.save pom.xml
+#mkdir -p $MAVEN_REPO_LOCAL/JPP/maven2/default_poms/
+#cp pom.xml $MAVEN_REPO_LOCAL/JPP/maven2/default_poms/JPP.mojo-cobertura-maven-plugin.pom
+#popd
+
+
 pushd jruby-stdlib
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
     -s ${SETTINGS} \
@@ -3095,6 +3140,7 @@ mvn-jpp -e \
     -Dmaven2.jpp.depmap.file=%{SOURCE2} \
     install:install-file -DgroupId=easymock -DartifactId=easymock -Dversion=1.1 -Dpackaging=jar -Dfile=$(build-classpath easymock)
 
+%if %{docbook_include}
 pushd docbook-maven-plugin
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
     -s ${SETTINGS} \
@@ -3103,6 +3149,7 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
     -Dmaven2.jpp.depmap.file=%{SOURCE2} \
     install
 popd
+%endif
 
 pushd taglist-maven-plugin
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
@@ -4076,7 +4123,7 @@ install -m 644 mojo-sandbox/runtime-maven-plugin/pom.xml $RPM_BUILD_ROOT%{_datad
 %add_to_maven_depmap org.codehaus.mojo ${nam} ${ver} JPP/mojo ${nam}
 %endif
 
-%if %{runtime_builder_include}
+%if %{script_include}
 ver=$(echo %{script_namedversion} | sed -e 's/-SNAPSHOT//')
 nam=script-maven-plugin
 install -m 644 mojo-sandbox/${nam}/target/${nam}-%{script_namedversion}.jar \
@@ -6036,6 +6083,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt21_8jpp6
+- fixed build
+
 * Sat Feb 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt20_8jpp6
 - fixed findbugs dependencies
 
