@@ -1,5 +1,6 @@
 %def_without docs
-%def_without dakota
+#ExclusiveArch: %ix86
+%def_with dakota
 %def_without petsc
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
@@ -18,24 +19,29 @@ implement all abstract interfaces.
 %define ldir %_libdir/petsc-%scalar_type
 
 %define oname trilinos
-Name: %oname%somver
+%define truename %oname%somver
+%if_with docs
+Name: %truename-docs
+%else
+Name: %truename
+%endif
 Version: 10.12.2
-Release: alt1
+Release: alt2
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL
 Group: Sciences/Mathematics
 Url: http://trilinos.sandia.gov/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://trilinos.sandia.gov/download/files/%oname-%version-Source.tar.gz
+Source: %oname-%version.tar
 Source1: CMakeCache.txt
 Source2: %oname.pc
-Source3: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_rules/sandia_rules.H
-Source4: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmg/sandia_sgmg.H
-Source5: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmga/sandia_sgmga.H
-Source6: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_rules/sandia_rules.C
-Source7: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmg/sandia_sgmg.C
-Source8: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmga/sandia_sgmga.C
+Source3: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_rules/sandia_rules.hpp
+Source4: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmg/sandia_sgmg.hpp
+Source5: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmga/sandia_sgmga.hpp
+Source6: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_rules/sandia_rules.cpp
+Source7: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmg/sandia_sgmg.cpp
+Source8: http://people.sc.fsu.edu/~jburkardt/cpp_src/sandia_sgmga/sandia_sgmga.cpp
 
 Requires: lib%name = %version-%release
 
@@ -1196,19 +1202,19 @@ including finite element methods, matrix operations, particle methods, and crash
 simulations. Zoltan also provides parallel graph coloring, matrix ordering,
 unstructured communication tools, and distributed data directories.
 
-%package examples
+%package -n %truename-examples
 Summary: Examples for Trilinos Project
 Group: Development/Documentation
 #BuildArch: noarch
 Provides: %oname-examples = %version-%release
-Requires: lib%name >= %version
+Requires: lib%truename >= %version
 
-%description examples
+%description -n %truename-examples
 %longdesc
 
 This package contains development documentation for Trilinos Project.
 
-%package -n lib%name-devel-doc
+%package -n lib%truename-devel-doc
 Summary: Documentation for Trilinos Project
 Group: Development/Documentation
 #BuildArch: noarch
@@ -1228,7 +1234,7 @@ Obsoletes: libphalanx-devel-doc
 Obsoletes: libpliris-devel-doc
 Obsoletes: libteuchos-devel-doc
 
-%description -n lib%name-devel-doc
+%description -n lib%truename-devel-doc
 %longdesc
 
 This package contains development documentation for Trilinos Project.
@@ -1733,7 +1739,7 @@ SEACAS is a set of additional libraries for Trilinos.
 This package contains SEACAS applications.
 
 %prep
-%setup
+%setup -n %oname-%version
 rm -fR packages/seacas/libraries/nemesis
 
 #sed -i 's|@LIBDIR@|%_libdir|g' \
@@ -1801,8 +1807,10 @@ cmake \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DMPI4PY_INCLUDE_DIR:PATH=%python_sitelibdir/mpi4py/include \
 	..
+%if_without docs
 %make -j2 VERBOSE=1
 #make VERBOSE=1
+%endif
 popd
 
 # docs
@@ -1834,12 +1842,14 @@ pushd BUILD
 
 mkdir -p packages/TriKota/Dakota/install/lib
 mkdir -p packages/TriKota/Dakota/install/include
+%if_without docs
 %makeinstall_std
 
 install -d %buildroot%_pkgconfigdir
 install -m644 ../%oname.pc %buildroot%_pkgconfigdir
 #install -p -m644 %SOURCE3 %SOURCE4 %SOURCE5 \
 #	%buildroot%_includedir
+%endif
 
 TOPDIR=$PWD
 
@@ -1848,33 +1858,41 @@ TOPDIR=$PWD
 pushd packages/PyTrilinos
 install -d %buildroot%python_sitelibdir/PyTrilinos/example
 install -d %buildroot%python_sitelibdir/PyTrilinos/test
+%if_without docs
 cp -fR src/PyTrilinos \
 	%buildroot%python_sitelibdir/
+%else
+%make -C example
+%make -C test
 install -m644 example/*.py \
 	%buildroot%python_sitelibdir/PyTrilinos/example
 install -m644 test/*.py \
 	%buildroot%python_sitelibdir/PyTrilinos/test
 touch %buildroot%python_sitelibdir/PyTrilinos/example/__init__.py
 touch %buildroot%python_sitelibdir/PyTrilinos/test/__init__.py
+%endif
 
+%if_without docs
 install -d %buildroot%_includedir/PyTrilinos
 install -p -m644 src/*.h \
 	%buildroot%_includedir/PyTrilinos
+%endif
 popd
 
 %if_with docs
 pushd ../packages/PyTrilinos/doc
-install -d %buildroot%_libdir/%name/doc/PyTrilinos
+install -d %buildroot%_libdir/%truename/doc/PyTrilinos
 cp -fR DevelopersGuide OverviewOfPyTrilinos/*.ps \
-	SciPy05 UsersGuide/*.ps \
+	SciPy05 UsersGuide/*.ps UsersGuide/*.pdf \
 	PyTrilinos-ACM-TOMS/*.pdf  PyTrilinos-ACM-TOMS/*test* \
-	%buildroot%_libdir/%name/doc/PyTrilinos/
+	%buildroot%_libdir/%truename/doc/PyTrilinos/
 popd
 %endif
 
 # PySundance
 
 install -d %buildroot%python_sitelibdir/PySundance
+%if_without docs
 cp -fR ../packages/Sundance/python/utils \
 	%buildroot%python_sitelibdir/PySundance/
 touch %buildroot%python_sitelibdir/PySundance/utils/__init__.py
@@ -1889,13 +1907,17 @@ install -d %buildroot%python_sitelibdir/PySundance
 install -p -m644 src/*.py src/*.so \
 	%buildroot%python_sitelibdir/PySundance
 rm -f %buildroot%python_sitelibdir/PySundance/setup.py
+popd
+%endif
 
 %if_with docs
+pushd packages/Sundance/python
 install -d %buildroot%_docdir/PySundance
+%make -C example
 cp -fR example \
 	%buildroot%_docdir/PySundance/
-%endif
 popd
+%endif
 
 popd # BUILD
 
@@ -1912,30 +1934,31 @@ done
 
 for i in $(find packages -name html |sort); do
 	if [ "$(ls $i |wc -l)" != "0" ]; then
-		install -d %buildroot%_docdir/%name/$i
-		cp -fR $i/* %buildroot%_docdir/%name/$i/
+		install -d %buildroot%_docdir/%truename/$i
+		cp -fR $i/* %buildroot%_docdir/%truename/$i/
 	fi
 done
-install -p -m644 doc/index.html %buildroot%_docdir/%name/html
+install -p -m644 doc/index.html %buildroot%_docdir/%truename/html
 
 pushd packages
 for i in $(find ./*.pdf) $(find ./*.ps); do
 	dir=$(echo $i |sed 's|\(.*\)\/.*|\1|')
-	install -d %buildroot%_docdir/%name/pdf_ps/$dir
+	install -d %buildroot%_docdir/%truename/pdf_ps/$dir
 	install -p -m644 $i \
-		%buildroot%_docdir/%name/pdf_ps/$dir
+		%buildroot%_docdir/%truename/pdf_ps/$dir
 done
 
 # examples
 
 for i in $(find ./ -name '*xampl*' -type d); do
-	install -d %buildroot%_docdir/%name/examples/$i
-	cp -fR $i/* %buildroot%_docdir/%name/examples/$i/
+	install -d %buildroot%_docdir/%truename/examples/$i
+	cp -fR $i/* %buildroot%_docdir/%truename/examples/$i/
 done
 %endif
 
 # clean buildroot
 
+%if_without docs
 pushd %buildroot
 rm -fR  $(find ./ -name '*.o') \
 	$(find ./%_docdir -name '*.so*') \
@@ -1952,9 +1975,11 @@ install -m755 $TOPDIR/packages/seacas/applications/aprepro/aprepro \
 	$TOPDIR/packages/seacas/applications/exodiff/exodiff \
 	$TOPDIR/packages/seacas/applications/exotxt/exotxt \
 	%buildroot%_bindir
+%endif
 
 # fix RPATH
 
+%if_without docs
 for i in $(find %buildroot -name '*.so') \
 	 $(find %buildroot -name '*.so.%sover') \
 	 $(find %buildroot -name '*.exe') \
@@ -1975,15 +2000,18 @@ do
 %endif
 	fi
 done
+%endif
 
 # fix for x86_64
 
+%if_without docs
 %ifarch x86_64
 mv %buildroot%_libexecdir/*.so* %buildroot%_libdir/
 %endif
 
 mv %buildroot%prefix/site-packages/*PerceptMesh* \
 	%buildroot%python_sitelibdir/
+%endif
 
 # fix file conflict with libmesh-doc
 
@@ -2355,9 +2383,9 @@ popd
 %endif
 
 %if_with docs
-%files -n lib%name-devel-doc
-%_docdir/%name/
-%exclude %_docdir/%name/examples
+%files -n lib%truename-devel-doc
+%_docdir/%truename/
+%exclude %_docdir/%truename/examples
 %_man3dir/*
 %exclude %_man3dir/deprecated.3*
 
@@ -2366,12 +2394,12 @@ popd
 %python_sitelibdir/PyTrilinos/test
 
 %files -n python-module-PyTrilinos%somver-doc
-%dir %_libdir/%name/doc
-%_libdir/%name/doc/PyTrilinos
+%dir %_libdir/%truename/doc
+%_libdir/%truename/doc/PyTrilinos
 
-%files examples
-%dir %_docdir/%name
-%_docdir/%name/examples
+%files -n %truename-examples
+%dir %_docdir/%truename
+%_docdir/%truename/examples
 
 %files -n python-module-PySundance-examples
 %dir %_docdir/PySundance
@@ -2379,6 +2407,9 @@ popd
 %endif
 
 %changelog
+* Mon Aug 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt2
+- Built with Dakota
+
 * Sat Aug 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt1
 - Version 10.12.2 (without Dakota)
 
