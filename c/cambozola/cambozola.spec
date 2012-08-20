@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cambozola
 Version:        0.92
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        A viewer for multipart jpeg streams
 
 Group:          Development/Java
@@ -72,6 +72,9 @@ cp -rp javadoc/*  \
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1_5jpp7
+- update to new release by jppimport
+
 * Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1_4jpp7
 - new version
 
