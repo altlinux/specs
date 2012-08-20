@@ -6,7 +6,7 @@
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.0.0
-Release: alt9.bzr20120810
+Release: alt9.bzr20120818
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -348,6 +348,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Mon Aug 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt9.bzr20120818
+- New snapshot
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt9.bzr20120810
 - New snapshot
 
@@ -536,4 +539,3 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus
-
