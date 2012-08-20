@@ -1,5 +1,5 @@
 Packager: Igor Vlasenko <viy@altlinux.ru>
-#BuildRequires(pre): velocity14
+BuildRequires: plexus-resources
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2008, JPackage Project
@@ -43,7 +43,7 @@ BuildRequires: jpackage-compat
 
 Name:           serp
 Version:        1.13.1
-Release:        alt7_1jpp5
+Release:        alt8_1jpp5
 Epoch:          0
 Summary:        Bytecode manipulation framework
 License:        BSD
@@ -221,6 +221,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.13.1-alt8_1jpp5
+- fixed build
+
 * Sat Mar 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.13.1-alt7_1jpp5
 - fixed build with maven3
 
