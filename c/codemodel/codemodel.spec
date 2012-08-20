@@ -1,8 +1,9 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: codemodel
 Version: 2.6
-Release: alt1_4jpp7
+Release: alt1_6jpp7
 Summary: Java library for code generators
 Group: Development/Java
 License: CDDL and GPLv2
@@ -21,6 +22,7 @@ BuildArch: noarch
 BuildRequires: jpackage-utils
 BuildRequires: maven
 BuildRequires: maven-compiler-plugin
+BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
@@ -106,6 +108,9 @@ cp -p codemodel-annotation-compiler/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{na
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_6jpp7
+- new release
+
 * Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_4jpp7
 - new version
 
