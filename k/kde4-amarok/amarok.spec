@@ -8,8 +8,8 @@
 
 %define rname amarok
 Name: kde4-%rname
-Version: 2.5.0
-Release: alt2
+Version: 2.6.0
+Release: alt1
 #define beta 20090812
 
 Summary: Amarok is a music player for KDE.
@@ -35,7 +35,7 @@ BuildRequires: dbus-tools-gui doxygen gcc-c++ glibc-devel groff-ps
 BuildRequires: libtag-devel >= 1.6 libtag-extras-devel >= 1.0
 BuildRequires: libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel
 BuildRequires: libloudmouth-devel libmtp-devel libncursesw-devel libqca2-devel libxml2-devel
-BuildRequires: qtscriptbindings rpm-build-ruby tetex-latex libofa-devel libgdk-pixbuf-devel glib2-devel
+BuildRequires: qtscriptbindings rpm-build-ruby libofa-devel libgdk-pixbuf-devel glib2-devel
 BuildRequires: libtunepimp-devel libusb-devel libvisual0.4-devel libSDL-devel
 BuildRequires: qjson-devel libavformat-devel libavcodec-devel libmygpo-qt-devel
 BuildRequires: /proc
@@ -215,7 +215,7 @@ fi
 %_K4lib/amarok_runnerscript_javascript.so
 #
 %_K4apps/desktoptheme/default/widgets/amarok-*.svg
-%_K4apps/desktoptheme/Amarok-Mockup/
+#%_K4apps/desktoptheme/Amarok-Mockup/
 %_K4apps/solid/actions/amarok-play-audiocd.desktop
 #
 %_K4srv/ServiceMenus/amarok_append.desktop
@@ -270,6 +270,12 @@ fi
 
 
 %changelog
+* Mon Aug 20 2012 Sergey V Turchin <zerg@altlinux.org> 2.6.0-alt1
+- new version
+
+* Fri May 04 2012 Sergey V Turchin <zerg@altlinux.org> 2.5.0-alt1.M60P.1
+- build for M60P
+
 * Mon Feb 06 2012 Sergey V Turchin <zerg@altlinux.org> 2.5.0-alt2
 - fix build requires
 
