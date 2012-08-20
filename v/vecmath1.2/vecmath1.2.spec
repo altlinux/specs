@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           vecmath1.2
 Version:        1.14
-Release:        alt1_7jpp7
+Release:        alt1_8jpp7
 Summary:        Free version of vecmath from the Java3D 1.2 specification
 Group:          System/Libraries
 License:        MIT
@@ -71,6 +71,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_8jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1_7jpp7
 - update to new release by jppimport
 
