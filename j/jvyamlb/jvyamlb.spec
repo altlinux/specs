@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           jvyamlb
 Version:        0.2.5
-Release:        alt1_5jpp6
+Release:        alt1_7jpp7
 Summary:        YAML processor for JRuby
 
 Group:          Development/Java
@@ -72,6 +72,9 @@ popd
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.2.5-alt1_7jpp7
+- new version
+
 * Tue Sep 13 2011 Igor Vlasenko <viy@altlinux.ru> 0:0.2.5-alt1_5jpp6
 - update to new release by jppimport
 
