@@ -4,7 +4,7 @@
 
 Name: avogadro
 Version: 1.0.3
-Release: alt3
+Release: alt4
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -20,6 +20,7 @@ Patch1: avogadro-1.0.3-mkspecs-dir.patch
 Patch2: avogadro-1.0.3-no-strip.patch
 # ALT
 Patch100: avogadro-1.0.3-alt-config.patch
+Patch101: avogadro-1.0.3-alt-desktopfile.patch
 
 %setup_python_module Avogadro
 
@@ -56,6 +57,7 @@ Development Avogadro files.
 %patch2 -p1
 #
 %patch100 -p1
+%patch101 -p1
 
 rm -f cmake/modules/FindPythonLibs.cmake
 sed -i 's|\${PYTHON_LIB_PATH}|%python_sitelibdir|g' libavogadro/src/python/CMakeLists.txt
@@ -105,6 +107,9 @@ done
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Mon Aug 20 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt4
+- fix desktopfile cetegories
+
 * Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt3
 - rebuild with new boost
 
