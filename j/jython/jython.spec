@@ -18,7 +18,7 @@ BuildRequires: jpackage-compat
 
 Name:                      jython
 Version:                   2.2.1
-Release:                   alt5_8jpp7
+Release:                   alt5_10jpp7
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -34,7 +34,8 @@ Patch0:                    %{name}-cachedir.patch
 # Also, copy python's license from source directory and not
 # ${python.home}
 Patch1:                    %{name}-nofullbuildpath.patch
-Requires:                  jpackage-utils >= 0:1.5
+Patch2:                    jython-dont-validate-pom.patch
+Requires:                  jpackage-utils
 Requires:                  jakarta-oro
 Requires:                  servlet
 Requires:                  libreadline-java >= 0.8.0-16
@@ -46,6 +47,7 @@ BuildRequires:             mysql-connector-java
 BuildRequires:             jakarta-oro
 BuildRequires:             python-module-PyXML >= %{pyxml_version}
 BuildRequires:             servlet
+BuildRequires:             jpackage-utils
 Group:                     Development/Java
 
 BuildArch:                 noarch
@@ -99,6 +101,7 @@ Demonstrations and samples for %{name}.
 %setup -q -n %{name}-svn-%{svn_tag}
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 export CLASSPATH=$(build-classpath mysql-connector-java oro servlet)
@@ -127,6 +130,11 @@ pushd dist
   done
 popd
 
+# Create Maven POM's
+pushd maven
+  ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dproject.version=%{version} install
+popd
+
 %install
 # jar
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -149,6 +157,12 @@ cp -pr dist/Demo $RPM_BUILD_ROOT%{_datadir}/%{name}
 rm -rf dist/Doc/javadoc
 mv dist/Doc %{name}-manual-%{version}
 
+# pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 build/maven/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+
+# depmap
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.python:jython-standalone"
 
 # registry
 install -m 644 registry $RPM_BUILD_ROOT%{_datadir}/%{name}
@@ -261,6 +275,8 @@ fi || :
 %{_datadir}/%{name}/Lib
 %{_datadir}/%{name}/Tools
 %{_datadir}/%{name}/registry
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 %config(noreplace,missingok) /etc/jython.conf
 
 %{_localstatedir}/jython
@@ -284,6 +300,9 @@ fi || :
 %doc %{_datadir}/%{name}/Demo
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt5_10jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt5_8jpp7
 - update to new release by jppimport
 
