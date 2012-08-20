@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cortado
 Version:        0.6.0
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Java media framework
 URL:            http://www.theora.org/cortado/
 # The codecs are all LGPLv2+, the jst framework is mixed, the player applet GPL
@@ -68,6 +68,9 @@ cp -a doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_6jpp7
+- update to new release by jppimport
+
 * Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_5jpp7
 - new version
 
