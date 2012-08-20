@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           bytelist
 Version:        1.0.8
-Release:        alt1_1jpp6
+Release:        alt1_3jpp7
 Summary:        A java library for lists of bytes
 
 Group:          Development/Java
@@ -45,7 +45,7 @@ echo "See %{url} for more info about the %{name} project." > README.txt
 
 export CLASSPATH=$(build-classpath junit jcodings)
 %__mkdir_p lib
-%ant
+%ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 
 
 %install
@@ -68,6 +68,9 @@ export CLASSPATH=$(build-classpath junit jcodings)
 %doc README.txt
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_3jpp7
+- new release
+
 * Sat Sep 03 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.8-alt1_1jpp6
 - update to new release by jppimport
 
