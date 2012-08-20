@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           jcodings
 Version:        1.0.5
-Release:        alt1_1jpp6
+Release:        alt1_3jpp7
 Summary:        Java-based codings helper classes for Joni and JRuby
 
 Group:          Development/Java
@@ -37,7 +37,7 @@ find -name '*.jar' -exec rm -f '{}' \;
 %build
 echo "See %{url} for more info about the %{name} project." > README.txt
 
-%{ant}
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 
 
 %install
@@ -55,6 +55,9 @@ popd
 %doc README.txt
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_3jpp7
+- new release
+
 * Sat Sep 03 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.5-alt1_1jpp6
 - update to new release by jppimport
 
