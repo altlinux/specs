@@ -1,5 +1,5 @@
 Name: gnu-config
-Version: 1.0.602.6f8e28f
+Version: 1.0.603.062587e
 Release: alt1
 
 Summary: GNU config.guess and config.sub files
@@ -30,6 +30,9 @@ install -pm755 config.guess config.sub %buildroot%_datadir/%name/
 %_datadir/%name/
 
 %changelog
+* Mon Aug 20 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.603.062587e-alt1
+- Updated to release-1-0-603-g062587e.
+
 * Fri Aug 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.602.6f8e28f-alt1
 - Built GNU config.git release-1-0-602-g6f8e28f for Sisyphus.
 - config.sub: Added armh support as proposed by Sergey Bolshakov.

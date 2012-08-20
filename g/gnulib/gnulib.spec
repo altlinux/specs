@@ -1,5 +1,5 @@
 Name: gnulib
-Version: 0.0.7575.d22f151
+Version: 0.0.7591.898f143
 Release: alt1
 
 Summary: GNU Portability Library
@@ -10,6 +10,7 @@ Url: http://www.gnu.org/software/gnulib/
 Source: %name-%version.tar
 Patch: gnulib-alt-utimens.patch
 AutoReqProv: no
+BuildRequires: gnu-config
 
 %description
 Gnulib is intended to be the canonical source for most of the important
@@ -23,6 +24,7 @@ source repository.
 %prep
 %setup
 %patch -p1
+install -pm755 %_datadir/gnu-config/config.{guess,sub} build-aux/
 
 %build
 make info
@@ -41,6 +43,10 @@ mv %buildroot%_datadir/%name/doc/*.info %buildroot%_infodir/
 %_datadir/%name/
 
 %changelog
+* Mon Aug 20 2012 Dmitry V. Levin <ldv@altlinux.org> 0.0.7591.898f143-alt1
+- Updated to gnulib snapshot v0.0-7591-g898f143.
+- Use config.{guess,sub} from gnu-config.
+
 * Mon Aug 13 2012 Dmitry V. Levin <ldv@altlinux.org> 0.0.7575.d22f151-alt1
 - Updated to gnulib snapshot v0.0-7575-gd22f151.
 
