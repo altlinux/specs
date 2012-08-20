@@ -4,8 +4,8 @@ BuildRequires: perl(IO/File.pm)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           tomcat-native
-Version:        1.1.23
-Release:        alt1_1jpp7
+Version:        1.1.24
+Release:        alt1_2jpp7
 Summary:        Tomcat native library
 
 Group:          System/Libraries
@@ -60,6 +60,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/pkgconfig
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.24-alt1_2jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.23-alt1_1jpp7
 - update to new release by jppimport
 
