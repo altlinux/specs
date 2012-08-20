@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-tools
 Version:        2.7
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Epoch:          0
 Summary:        Maven Plugin Tools
 
@@ -57,8 +57,8 @@ API documentation for %{name}.
 %package ant
 Summary: Maven Plugin Tool for Ant
 Group: Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: %{name}-api
+Requires: maven-plugin-tools = %{epoch}:%{version}-%{release}
+Requires: maven-plugin-tools-api
 Obsoletes: maven-shared-plugin-tools-ant < 0:%{version}-%{release}
 Provides: maven-shared-plugin-tools-ant = 0:%{version}-%{release}
 
@@ -68,7 +68,7 @@ Descriptor extractor for plugins written in Ant.
 %package api
 Summary: Maven Plugin Tools APIs
 Group: Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires: maven-plugin-tools = %{epoch}:%{version}-%{release}
 Obsoletes: maven-shared-plugin-tools-api < 0:%{version}-%{release}
 Provides: maven-shared-plugin-tools-api = 0:%{version}-%{release}
 
@@ -79,8 +79,8 @@ and generate documentation for Maven Plugins.
 %package beanshell
 Summary: Maven Plugin Tool for Beanshell
 Group: Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: %{name}-api
+Requires: maven-plugin-tools = %{epoch}:%{version}-%{release}
+Requires: maven-plugin-tools-api
 Requires: bsh
 Obsoletes: maven-shared-plugin-tools-beanshell < 0:%{version}-%{release}
 Provides: maven-shared-plugin-tools-beanshell = 0:%{version}-%{release}
@@ -91,8 +91,8 @@ Descriptor extractor for plugins written in Beanshell.
 %package java
 Summary: Maven Plugin Tool for Java
 Group: Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: %{name}-api
+Requires: maven-plugin-tools = %{epoch}:%{version}-%{release}
+Requires: maven-plugin-tools-api
 Obsoletes: maven-shared-plugin-tools-java < 0:%{version}-%{release}
 Provides: maven-shared-plugin-tools-java = 0:%{version}-%{release}
 
@@ -102,8 +102,8 @@ Descriptor extractor for plugins written in Java.
 %package javadoc
 Summary: Maven Plugin Tools Javadoc
 Group: Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: %{name}-java
+Requires: maven-plugin-tools = %{epoch}:%{version}-%{release}
+Requires: maven-plugin-tools-java
 BuildArch: noarch
 
 %description javadoc
@@ -112,8 +112,8 @@ The Maven Plugin Tools Javadoc provides several Javadoc taglets to be used when 
 %package model
 Summary: Maven Plugin Metadata Model
 Group: Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: %{name}-java
+Requires: maven-plugin-tools = %{epoch}:%{version}-%{release}
+Requires: maven-plugin-tools-java
 Obsoletes: maven-shared-plugin-tools-model < 0:%{version}-%{release}
 Provides: maven-shared-plugin-tools-model = 0:%{version}-%{release}
 
@@ -123,10 +123,10 @@ The Maven Plugin Metadata Model provides an API to play with the Metadata model.
 %package -n maven-plugin-plugin
 Summary: Maven Plugin Plugin
 Group: Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: %{name}-java
-Requires: %{name}-model
-Requires: %{name}-beanshell
+Requires: maven-plugin-tools = %{epoch}:%{version}-%{release}
+Requires: maven-plugin-tools-java
+Requires: maven-plugin-tools-model
+Requires: maven-plugin-tools-beanshell
 Requires: maven-doxia-sitetools
 Requires: maven-shared-reporting-impl
 Obsoletes: maven2-plugin-plugin < 0:%{version}-%{release}
@@ -207,6 +207,9 @@ mv -f %{buildroot}%{_mavendepmapfragdir}/%{name}-plugin %{buildroot}%{_mavendepm
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 
 cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/
+# compat for jetty6
+%add_to_maven_depmap_at %{name}-api org.apache.maven maven-plugin-tools-api %{version} JPP/%{name} api
+
 
 %pre javadoc
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
@@ -255,6 +258,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavendepmapfragdir}/maven-plugin-plugin
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_5jpp7
+- new release; added org.apache.maven:maven-plugin-tools-api
+
 * Wed Apr 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.7-alt1_4jpp7
 - complete build
 
