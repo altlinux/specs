@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             cookxml
 Version:          3.0.2
-Release:          alt1_3jpp7
+Release:          alt1_4jpp7
 Summary:          Dynamic XML data binding tool
 Group:            Development/Java
 License:          BSD
@@ -74,6 +74,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_4jpp7
+- update to new release by jppimport
+
 * Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.2-alt1_3jpp7
 - new version
 
