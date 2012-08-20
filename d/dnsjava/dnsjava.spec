@@ -6,8 +6,8 @@ BuildRequires: jpackage-compat
 %define do_not_test 1
 
 Name:		dnsjava
-Version:		2.0.6
-Release:		alt2_9jpp7
+Version:		2.1.3
+Release:		alt1_2jpp7
 Summary:		Java DNS implementation
 License:		BSD and MIT
 URL:			http://www.dnsjava.org/
@@ -24,8 +24,10 @@ BuildArch:	noarch
 
 # For tests
 BuildRequires:	ant-junit
-Source44: import.info
 
+# bz#842582
+Patch0:		dnsjava-2.0.6-java1.5.target.patch
+Source44: import.info
 
 %description
 dnsjava is an implementation of DNS in Java. It supports all of the common
@@ -59,6 +61,8 @@ Javadoc for %{name}.
 %prep
 %setup -q
 rm -rf doc/
+
+%patch0 -p1 -b .java1.5
 
 iconv -f iso8859-1 -t utf8 Changelog > Changelog.tmp
 touch -r Changelog Changelog.tmp
@@ -95,6 +99,9 @@ ant -Dj2se.javadoc=%{_javadocdir}/java run_tests
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_2jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.6-alt2_9jpp7
 - update to new release by jppimport
 
