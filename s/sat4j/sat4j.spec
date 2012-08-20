@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           sat4j
 Version:        2.3.0
-Release:        alt1_2jpp6
+Release:        alt1_4jpp7
 Summary:        A library of SAT solvers written in Java
 
 Group:          Development/Java
@@ -40,7 +40,7 @@ without worrying about the details.
 rm lib/commons-cli.jar
 
 %build
-ant -Dbuild.compiler=modern -Drelease=%{version} -DBUILD_DATE=%{qualifier} -Dtarget=1.5 p2 
+ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.compiler=modern -Drelease=%{version} -DBUILD_DATE=%{qualifier} -Dtarget=1.5 p2 
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -54,6 +54,9 @@ cp -rp dist/%{version}/org.sat4j.pb.jar \
 %{_javadir}/org.sat4j*
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_4jpp7
+- update to new release by jppimport
+
 * Thu Sep 08 2011 Igor Vlasenko <viy@altlinux.ru> 2.3.0-alt1_2jpp6
 - update to new release by jppimport
 
