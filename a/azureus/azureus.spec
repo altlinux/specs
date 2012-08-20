@@ -7,14 +7,14 @@ BuildRequires: jpackage-compat
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.7.0.2
-Release:	alt1_1jpp7
+Version:	4.7.1.2
+Release:	alt1_2jpp7
 Summary:	A BitTorrent Client
-Group:		Development/Java
+Group:		Networking/WWW
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4702_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4712_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -49,11 +49,11 @@ Patch58:	azureus-4.2.0.4-java5.patch
 
 
 BuildRequires:	ant jpackage-utils >= 1.5 xml-commons-apis
-BuildRequires:	jakarta-commons-cli log4j
+BuildRequires:	apache-commons-cli log4j
 BuildRequires:	bouncycastle >= 1.33-3
 BuildRequires:	eclipse-swt >= 3.5
 BuildRequires:	junit
-Requires:	jakarta-commons-cli log4j
+Requires:	apache-commons-cli log4j
 Requires:	eclipse-swt >= 3.5
 Requires:	 bouncycastle >= 1.33-3
 BuildRequires:	 desktop-file-utils
@@ -227,6 +227,9 @@ touch %{_datadir}/icons/hicolor
 %{_datadir}/azureus
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 4.7.1.2-alt1_2jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 4.7.0.2-alt1_1jpp7
 - update to new release by jppimport
 
