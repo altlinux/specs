@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		taggle
 Version:	1.0
-Release:	alt2_3jpp7
+Release:	alt2_4jpp7
 Summary:	An online french word game
 
 Group:		Games/Other
@@ -94,6 +94,9 @@ install -D -p -m 0755 %{S:4} %{buildroot}%{_bindir}/%{name}-server
 %{_bindir}/%{name}-server
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_4jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_3jpp7
 - update to new release by jppimport
 
