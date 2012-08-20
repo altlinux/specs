@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:    appframework
 Version: 1.03
-Release: alt2_8jpp7
+Release: alt2_9jpp7
 Summary: Swing Application Framework
 License: LGPLv2+
 URL:     https://appframework.dev.java.net/
@@ -71,6 +71,9 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 %{_javadocdir}/%{name}-%{version}/*
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_9jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_8jpp7
 - update to new release by jppimport
 
