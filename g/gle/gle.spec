@@ -1,17 +1,17 @@
 %define _unpackaged_files_terminate_build 1
-%def_disable backport
 %def_with qt
 %define truename gle-graphics
 Name: gle
-Version: 4.2.2
-Release: alt2
+Version: 4.2.4
+%define trueversion %{version}c
+Release: alt1
 Summary: GLE - Graphics language that produces ps/eps/pdf/png/jpg ouput
-Summary(ru_RU.CP1251): GLE - язык создания изображений. Вывод в ps/eps/pdf/png/jpg
+Summary(ru_RU.UTF-8): GLE - СЏР·С‹Рє СЃРѕР·РґР°РЅРёСЏ РёР·РѕР±СЂР°Р¶РµРЅРёР№. Р’С‹РІРѕРґ РІ ps/eps/pdf/png/jpg
 Copyright: GPL
 Group: Graphics
 Packager: Igor Vlasenko <viy@altlinux.org>
 URL: http://glx.sourceforge.net/
-Source: http://dl.sourceforge.net/glx/%{truename}-%{version}f-src.tar.gz
+Source: http://dl.sourceforge.net/glx/%{truename}-%{trueversion}-src.tar.gz
 Source2:gle.el
 Source3:http://dl.sourceforge.net/glx/gle-graphics-extrafonts-1.0.tar.gz
 Source7:http://glx.sourceforge.net/download/bbox_gle.sh
@@ -20,7 +20,7 @@ Source8:http://glx.sourceforge.net/download/makeani.pl
 #Source4:http://dl.sourceforge.net/glx/gle-manual-%version.pdf
 #Source5:http://dl.sourceforge.net/glx/GLEusersguide.pdf
 
-Patch: gle-graphics-4.2.2f-alt-autoconf.patch
+Patch: gle-graphics-4.2.4c-alt-autoconf.patch
 
 # Automatically added by buildreq on Thu Sep 21 2006
 BuildRequires: gcc-c++ libjpeg-devel libncurses-devel libtiff-devel libpng-devel libcairo-devel
@@ -60,7 +60,7 @@ This package contains QGLE - A Graphical Interface to GLE.
 
 %prep
 
-%setup -q -n %{truename}-%{version} -a3
+%setup -q -n %{truename}-%{trueversion} -a3
 %patch
 
 %build
@@ -106,8 +106,9 @@ install -m644 platform/autopackage/gle.png $RPM_BUILD_ROOT/%_liconsdir/
 %_bindir/gle
 %_bindir/manip
 %_bindir/bbox_gle
-%dir %_datadir/gle-graphics/%{version}
-%_datadir/gle-graphics/%{version}/*
+%_bindir/glebtool
+%dir %_datadir/gle-graphics/%{trueversion}
+%_datadir/gle-graphics/%{trueversion}/*
 %_emacslispdir/*
 /etc/emacs/site-start.d/*
 %_libdir/libgle-graphics*.so
@@ -123,6 +124,9 @@ install -m644 platform/autopackage/gle.png $RPM_BUILD_ROOT/%_liconsdir/
 %endif
 
 %changelog 
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.4-alt1
+- new version
+
 * Fri Feb 12 2010 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt2
 - fixed inittex.ini genaeraion
 - added lbcairo-devel
