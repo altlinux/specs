@@ -1,7 +1,8 @@
-%define svn_revision 371534
-Name: asterisk11
+%define svn_revision 371391
+
+Name: asterisk12
 Summary: Open source PBX
-Version: 11
+Version: 12
 Release: alt0.%svn_revision
 License: GPL
 Group: System/Servers
@@ -64,7 +65,6 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 371534
 %add_verify_elf_skiplist %_libdir/libasteriskssl*
 %def_with debug
 %def_enable debug
@@ -111,12 +111,12 @@ Source: %name-%version.tar
 Source2: %name-altlinux.tar
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-%package -n aelparse11
+%package -n aelparse12
 Summary: Asterisk AEL2 parser
 Group: %group
-Requires: asterisk11-common
+Requires: asterisk12-common
 
-%description -n aelparse11
+%description -n aelparse12
 aelparse utility needed for converting from AEL2 config file to
 old extensions.conf format.
 
@@ -316,7 +316,7 @@ Asterisk %version
 Summary: This virtual package requires all Asterisk subpackages
 Group: %group
 BuildArch: noarch
-Requires: aelparse11 = %version-%release
+Requires: aelparse12 = %version-%release
 Requires: %name-ael = %version-%release
 Requires: %name-fax = %version-%release
 Requires: %name-app_voicemail = %version-%release
@@ -366,7 +366,7 @@ Requires: %name-chan_alsa    = %version-%release
 Requires: %name-chan_oss     = %version-%release
 Requires: %name-meetme       = %version-%release
 Requires: %name-pbx_lua      = %version-%release
-Requires: conf2ael11
+Requires: conf2ael12
 Requires: pbx-agi-samples
 Requires: pbx-utils-all
 
@@ -397,7 +397,7 @@ CURL support for Asterisk
 %package devel
 Summary: C header files for Asterisk modules development
 Group: %group
-Requires: asterisk11-common
+Requires: asterisk12-common
 
 %description devel
 C header files for Asterisk modules development
@@ -406,7 +406,7 @@ C header files for Asterisk modules development
 Summary: asterisk documentation
 Group: System/Servers
 BuildArch: noarch
-Requires: asterisk11-common
+Requires: asterisk12-common
 
 %description docs
 Asterisk documentation and sample files
@@ -566,7 +566,7 @@ SMS over E1 support for Asterisk
 %package sources
 Summary: Open source PBX sources
 Group: System/Servers
-Requires: asterisk11-common
+Requires: asterisk12-common
 
 %description sources
 Asterisk is a complete PBX in software. It provides all of the features
@@ -583,12 +583,12 @@ Requires: %name = %version-%release
 %description sqlite3
 Asterisk sqlite3 support
 
-%package -n conf2ael11
+%package -n conf2ael12
 Summary: extensions.conf -> ael2 converter
 Group: %group
-Requires: asterisk11-common
+Requires: asterisk12-common
 
-%description -n conf2ael11
+%description -n conf2ael12
 extensions.conf -> ael2 converter
 
 
@@ -680,11 +680,11 @@ sed "s/@version@/%version/g" < altlinux/alternatives-conf2ael > %buildroot%_altd
 mkdir -p %buildroot%_includedir/asterisk-%version
 mv %buildroot%_includedir/asterisk   %buildroot%_includedir/asterisk-%version/asterisk
 mv %buildroot%_includedir/asterisk.h %buildroot%_includedir/asterisk-%version/asterisk.h
-mkdir -p %buildroot/usr/share/asterisk/documentation/11
+mkdir -p %buildroot/usr/share/asterisk/documentation/12
 mkdir -p %buildroot/var/lib/asterisk/documentation/
-ln -s ../../../../usr/share/asterisk/documentation/11 %buildroot/var/lib/asterisk/documentation
-mv %buildroot/var/lib/asterisk/documentation/*.xml %buildroot/usr/share/asterisk/documentation/11/
-mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk/documentation/11/
+ln -s ../../../../usr/share/asterisk/documentation/12 %buildroot/var/lib/asterisk/documentation
+mv %buildroot/var/lib/asterisk/documentation/*.xml %buildroot/usr/share/asterisk/documentation/12/
+mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk/documentation/12/
 ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 
 %preun
@@ -695,10 +695,10 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 
 %files
 %_altdir/asterisk-%version
-%dir /usr/share/asterisk/documentation/11
-/var/lib/asterisk/documentation/11
-/usr/share/asterisk/documentation/11/appdocsxml.dtd
-/usr/share/asterisk/documentation/11/core-en_US.xml
+%dir /usr/share/asterisk/documentation/12
+/var/lib/asterisk/documentation/12
+/usr/share/asterisk/documentation/12/appdocsxml.dtd
+/usr/share/asterisk/documentation/12/core-en_US.xml
 %exclude /var/lib/asterisk/images/asterisk-intro.jpg
 %exclude /var/lib/asterisk/images/kpad2.jpg
 %exclude %_docdir/%name-%version/core-en_US.xml
@@ -942,7 +942,7 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %astsample acl
 %exclude %_docdir/%name-%version/Makefile
 
-%files -n aelparse11
+%files -n aelparse12
 %_sbindir/aelparse-%version
 %_altdir/aelparse-%version
 
@@ -1216,7 +1216,7 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %astsample cdr_sqlite3_custom
 %astsample res_config_sqlite3
 
-%files -n conf2ael11
+%files -n conf2ael12
 %_sbindir/conf2ael-%version
 %_altdir/conf2ael-%version
 
@@ -1224,33 +1224,6 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl.so.1
 
 %changelog
-* Mon Aug 20 2012 Denis Smirnov <mithraen@altlinux.ru> 11-alt0.371534
-- update from svn revision 371534
-
-* Thu Aug 16 2012 Cronbuild Service <cronbuild@altlinux.org> 11-alt0.371391
-- update from svn revision 371391
-
-* Mon Aug 13 2012 Cronbuild Service <cronbuild@altlinux.org> 11-alt0.371240
-- update from svn revision 371240
-
-* Fri Aug 10 2012 Cronbuild Service <cronbuild@altlinux.org> 11-alt0.371168
-- update from svn revision 371168
-
-* Tue Aug 07 2012 Cronbuild Service <cronbuild@altlinux.org> 11-alt0.370886
-- update from svn revision 370886
-
-* Sat Aug 04 2012 Cronbuild Service <cronbuild@altlinux.org> 11-alt0.370795
-- update from svn revision 370795
-
-* Wed Aug 01 2012 Cronbuild Service <cronbuild@altlinux.org> 11-alt0.370732
-- update from svn revision 370732
-
-* Tue Jul 31 2012 Denis Smirnov <mithraen@altlinux.ru> 11-alt0.370603
-- update from svn revision 370603
-
-* Mon Jul 30 2012 Denis Smirnov <mithraen@altlinux.ru> 11-alt0.370540
-- update from svn revision 370540
-
-* Sat Jul 28 2012 Denis Smirnov <mithraen@altlinux.ru> 11-alt0.370526
-- rename asterisk1.11 -> asterisk11
+* Fri Aug 17 2012 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.371391
+- rename package with trunk to 'asterisk12'
 
