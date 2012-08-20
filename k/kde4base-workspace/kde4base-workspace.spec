@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -106,6 +106,7 @@ Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
 Patch1041: kdebase-workspace-4.8.0-alt-def-gllegacy.patch
 Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
 Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
+Patch1044: kdebase-workspace-4.8.5-alt-workspaceoptions.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -552,6 +553,7 @@ __EOF__
 %patch1041 -p1
 %patch1042 -p1
 %patch1043 -p1
+%patch1044 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -913,6 +915,13 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Aug 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt6
+- reload plasma-* autostart settings when apply (ALT#27635)
+- don't turn off krunner to don't disable screen lock (ALT#27636)
+
+* Fri Aug 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt4.M60P.1
+- built for M60P
+
 * Fri Aug 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt5
 - fix SaL widget settings app groups list
 
