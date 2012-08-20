@@ -7,7 +7,7 @@ Name:       simplevalidation
 # upstream is pretty bad about version numbering
 # this is a guess based on the version of a separate api "release" jar
 Version:    0.4
-Release:    alt1_1jpp6
+Release:    alt1_3jpp7
 Summary:    A library for adding user-interface input validation to Swing applications
 Group:      Development/Java
 License:    GPLv2 or CDDL
@@ -55,7 +55,7 @@ find -name '*.jar' -exec rm -f '{}' \;
 
 %build
 cd ValidationAPI
-ant -Dplatforms.JDK_1.5.home=/usr/lib/jvm/java jar
+ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dplatforms.JDK_1.5.home=/usr/lib/jvm/java jar
 
 dos2unix dist/javadoc/package-list
 dos2unix dist/javadoc/stylesheet.css
@@ -79,6 +79,9 @@ cp -a ValidationAPI/dist/javadoc %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_3jpp7
+- update to new release by jppimport
+
 * Fri Jan 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_1jpp6
 - new version
 
