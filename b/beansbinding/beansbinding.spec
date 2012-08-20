@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           beansbinding
 Version:        1.2.1
-Release:        alt1_7jpp7
+Release:        alt1_8jpp7
 Summary:        Beans Binding (JSR 295) reference implementation
 
 Group:          Development/Java
@@ -63,6 +63,9 @@ find . -type f \( -iname "*.jar" -o -iname "*.zip" \) -print0 | xargs -t -0 %{__
 %{_javadocdir}/%{name}-%{version}/*
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_8jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_7jpp7
 - update to new release by jppimport
 
