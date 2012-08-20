@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           automaton
 Version:        %{upver}r%{uprel}
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        A Java finite state automata/regular expression library
 
 Group:          Development/Java
@@ -36,7 +36,7 @@ symbolic representation based on intervals of Unicode characters.
 Summary:        A Java finite state automata/regular expression library
 Group:          Development/Documentation
 BuildArch:      noarch
-Requires:       %{name} = %{version}-%{release}
+Requires:       automaton = %{version}-%{release}
 
 %description javadoc
 Javadoc documentation for automaton.
@@ -63,6 +63,9 @@ mv doc $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_3jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.11r8-alt1_2jpp7
 - fc build
 
