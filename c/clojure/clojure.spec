@@ -1,17 +1,24 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# one of the sources is a zip file
-BuildRequires: unzip
+%global project     clojure
+%global groupId     org.clojure
+%global artifactId  clojure
+%global archivename %{project}-%{artifactId}
+%global commit_hash 0ba3ff1
+
 Name:           clojure
-Epoch:		1
-Version:     	1.3.0
-Release:        alt1_1jpp6
+Epoch:          1
+Version:        1.4.0
+Release:        alt1_3jpp7
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
 Group:          Development/Java
 License:        EPL
 URL:            http://clojure.org/
-Source0:        http://repo1.maven.org/maven2/org/clojure/clojure/%{version}/clojure-%{version}.zip
+# wget --content-disposition \
+#   https://github.com/clojure/clojure/tarball/clojure-%{version}
+Source0:        %{project}-%{archivename}-%{version}-0-g%{commit_hash}.tar.gz
+
 Source1:        clojure.sh
 
 BuildArch:      noarch
@@ -20,6 +27,7 @@ BuildRequires:  ant >= 1.6
 BuildRequires:  jpackage-utils >= 1.5
 BuildRequires:  objectweb-asm
 
+Requires:       jpackage-utils
 Requires:       objectweb-asm
 Source44: import.info
 
@@ -36,42 +44,41 @@ optional type hints and type inference, to ensure that calls to Java
 can avoid reflection.
 
 %prep
-%setup -q
-rm -f *.jar
+%setup -q -n %{archivename}-8306949
 
 %build
-ant
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 
 %install
-
-# prefix install
-install -p -d -m 755 %{buildroot}%{_datadir}/%{name}
-cp -ar src/clj/clojure/*  %{buildroot}%{_datadir}/%{name}/
-rm -f %{buildroot}%{_datadir}/%{name}/xml/\#*
-
 # jar - link to prefix'd jar so that java stuff knows where to look
 install -d -m 755 %{buildroot}%{_javadir}
-cp clojure.jar %{buildroot}%{_javadir}/%{name}.jar
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 %{name}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 # startup script
 install -d -m 755 %{buildroot}%{_bindir}
-cp %{SOURCE1} %{buildroot}%{_bindir}/clojure
+install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 
-install -d %{buildroot}%{_datadir}/maven2/poms
-%add_to_maven_depmap clojure clojur-lang %{version} JPP/%{name} clojure-lang
-install -m 644 pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-clojure-lang.pom
+%if 0%{?add_maven_depmap:1}
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%else
+# some systems like RHEL do not have add_maven_depmap defined
+# - probably don't need JPP/%{name} -- do we?
+%add_to_maven_depmap %{groupId} %{artifactId} %{version} JPP %{name}
+%endif
 
 %files
-%doc readme.txt epl-v10.html
-
-%attr(0755,root,root) %{_bindir}/clojure
-%{_javadir}/%{name}.jar
-%{_datadir}/%{name}
-%{_bindir}/clojure
-%{_datadir}/maven2/poms
+%doc epl-v10.html changes.md readme.txt 
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
+%{_javadir}/%{name}.jar
+%{_bindir}/%{name}
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.4.0-alt1_3jpp7
+- new release
+
 * Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 1:1.3.0-alt1_1jpp6
 - update to new release by jppimport
 
