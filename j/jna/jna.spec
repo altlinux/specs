@@ -1,10 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 15
-BuildRequires: gcc-c++
+%define fedora 16
 Name:           jna
-Version:        3.2.7
-Release:        alt1_12jpp6
+Version:        3.4.0
+Release:        alt1_5jpp7
 Summary:        Pure Java access to native libraries
 
 Group:          Development/Java
@@ -12,24 +14,27 @@ License:        LGPLv2+
 URL:            https://jna.dev.java.net/
 # The source for this package was pulled from upstream's vcs. Use the
 # following commands to generate the tarball:
-#   svn export https://jna.dev.java.net/svn/jna/tags/%{version}/jnalib/ --username guest jna-%{version}
-#   rm -rf jna-%{version}/dist/*
+#   https://github.com/twall/jna/tarball/%{version}
+#   tar xzf twall-jna-%{version}*.tar.gz
+#   mv twall-jna-* jna-%{version}
+#   rm -rf jna-%{version}/{dist,www}
 #   tar cjf ~/rpm/SOURCES/jna-%{version}.tar.bz2 jna-%{version}
 Source0:        %{name}-%{version}.tar.bz2
-Source1:	%{name}-pom.xml
+Source1:	pom-%{name}.xml
+Source2:	pom-platform.xml
+Patch0:         jna-3.4.0-build.patch
 # This patch is Fedora-specific for now until we get the huge
 # JNI library location mess sorted upstream
-Patch1:         jna-3.2.5-loadlibrary.patch
+Patch1:         jna-3.4.0-loadlibrary.patch
 # The X11 tests currently segfault; overall I think the X11 JNA stuff is just a 
 # Really Bad Idea, for relying on AWT internals, using the X11 API at all,
 # and using a complex API like X11 through JNA just increases the potential
 # for problems.
-Patch2:         jna-3.2.4-tests-headless.patch
-Patch3:         jna-3.2.7-javadoc.patch
+Patch2:         jna-3.4.0-tests-headless.patch
 # Build using GCJ javadoc
-Patch4:         jna-3.2.7-gcj-javadoc.patch
+Patch3:         jna-3.2.7-gcj-javadoc.patch
 # junit cames from rpm
-Patch5:         jna-3.2.5-junit.patch
+Patch4:         jna-3.4.0-junit.patch
 
 # We manually require libffi because find-requires doesn't work
 # inside jars.
@@ -70,7 +75,7 @@ This package contains the javadocs for %{name}.
 %package        contrib
 Summary:        Contrib for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       jna = %{version}-%{release}
 Obsoletes:      %{name}-examples
 %if 0%{?fedora} || 0%{?rhel} > 5
 BuildArch:      noarch
@@ -83,14 +88,13 @@ This package contains the contributed examples for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
+%patch0 -p1 -b .build
 sed -e 's|@JNIPATH@|%{_libdir}/%{name}|' %{PATCH1} | patch -p1
 %patch2 -p1 -b .tests-headless
-%patch3 -p1 -b .javadoc
-# temporary hach for patch3 on epel5
 chmod -Rf a+rX,u+w,g-w,o-w .
-%patch4 -p0 -b .gcj-javadoc
-%patch5 -p1 -b .junit
-cp %{SOURCE1} ./
+%patch3 -p0 -b .gcj-javadoc
+%patch4 -p1 -b .junit
+cp %{SOURCE1} %{SOURCE2} ./
 
 # UnloadTest fail during build since we modify class loading
 rm test/com/sun/jna/JNAUnloadTest.java
@@ -106,18 +110,18 @@ find . -name '*.class' -delete
 rm -rf native/libffi
 
 # clean LICENSE.txt
-sed -i 's/\r//' LICENSE.txt
+sed -i 's/\r//' LICENSE
 
-chmod -c 0644 LICENSE.txt OTHERS release-notes.html
+chmod -c 0644 LICENSE OTHERS CHANGES.md
 
 
 %build
 # We pass -Ddynlink.native which comes from our patch because
 # upstream doesn't want to default to dynamic linking.
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true -Dnomixedjar.native=true jar contrib-jars javadoc
+ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dcflags_extra.native="%{optflags}" -Ddynlink.native=true -Dnomixedjar.native=true jar contrib-jars javadoc
 # remove compiled contribs
 find contrib -name build -exec rm -rf {} \; || :
-sed -i "s/VERSION/%{version}/" %{name}-pom.xml
+sed -i "s/VERSION/%{version}/" pom-%{name}.xml pom-platform.xml
 
 %install
 
@@ -133,10 +137,12 @@ install -m 755 build*/native/libjnidispatch*.so %{buildroot}%{_libdir}/%{name}/
 
 %if 0%{?fedora} >= 9 || 0%{?rhel} > 5
 # install maven pom file
-install -Dm 644 %{name}-pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+install -Dm 644 pom-%{name}.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+install -Dm 644 pom-platform.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-platform.pom
 
 # ... and maven depmap
-%add_to_maven_depmap net.java.dev.jna %{name} %{version} JPP %{name}
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap JPP.%{name}-platform.pom -f platform %{name}/platform.jar
 %endif
 
 # javadocs
@@ -154,25 +160,32 @@ cp -a doc/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %files
-%doc LICENSE.txt OTHERS release-notes.html TODO
+%doc LICENSE OTHERS README.md CHANGES.md TODO
 %{_libdir}/%{name}
 %{_javadir}/%{name}.jar
 %if 0%{?fedora} >= 9 || 0%{?rhel} > 5
-%{_mavenpomdir}/*.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 %endif
 
 
 %files javadoc
-%doc LICENSE.txt
+%doc LICENSE
 %{_javadocdir}/%{name}
 
 
 %files contrib
 %{_javadir}/%{name}
+%if 0%{?fedora} >= 9 || 0%{?rhel} > 5
+%{_mavenpomdir}/JPP.%{name}-platform.pom
+%{_mavendepmapfragdir}/%{name}-platform
+%endif
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt1_5jpp7
+- update to new release by jppimport
+
 * Fri Sep 02 2011 Igor Vlasenko <viy@altlinux.ru> 3.2.7-alt1_12jpp6
 - update to new release by jppimport
 
