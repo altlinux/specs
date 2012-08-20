@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           clojure-compat
 Version:     	1.2.1
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        A dynamic programming language that targets the Java Virtual Machine
 
 Group:          Development/Java
@@ -80,6 +80,9 @@ install -pm 755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
 #{_datadir}/%{name}
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_3jpp7
+- update to new release by jppimport
+
 * Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_2jpp7
 - new version
 
