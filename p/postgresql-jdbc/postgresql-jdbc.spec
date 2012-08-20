@@ -36,12 +36,12 @@ BuildRequires: jpackage-compat
 %global gcj_support %{?_with_gcj_support:1}%{!?_with_gcj_support:%{?_without_gcj_support:0}%{!?_without_gcj_support:%{?_gcj_support:%{_gcj_support}}%{!?_gcj_support:0}}}
 
 %global section		devel
-%global upstreamver	9.1-901
+%global upstreamver	9.1-902
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	9.1.901
-Release:	alt1_1jpp6
+Version:	9.1.902
+Release:	alt1_1jpp7
 # ASL 2.0 applies only to postgresql-jdbc.pom file, the rest is BSD
 License:	BSD and ASL 2.0
 Group:		Databases
@@ -54,8 +54,6 @@ Source1:	postgresql-jdbc.pom
 %if ! %{gcj_support}
 BuildArch:	noarch
 %endif
-# We require Java 1.6 because we support JDBC 4.0, not 4.1
-BuildRequires:	java-1.6.0-openjdk-devel
 BuildRequires:	jpackage-utils
 BuildRequires:	ant
 BuildRequires:	ant-junit
@@ -83,7 +81,7 @@ Java programs to access a PostgreSQL database.
 %prep
 %setup -c -q
 mv -f %{name}-%{upstreamver}.src/* .
-rm -f %{name}-%{upstreamver}.src/.cvsignore
+rm -f %{name}-%{upstreamver}.src/.gitignore
 rmdir %{name}-%{upstreamver}.src
 
 # remove any binary libs
@@ -138,6 +136,9 @@ install -m 644 JPP-postgresql-jdbc.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-postgr
 %{_mavenpomdir}/JPP-%{name}.pom
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:9.1.902-alt1_1jpp7
+- new version
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 0:9.1.901-alt1_1jpp6
 - update to new release by jppimport
 
