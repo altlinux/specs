@@ -1,5 +1,5 @@
 Epoch: 0
-BuildRequires: oss-parent
+BuildRequires: oss-parent maven-enforcer-plugin
 Requires: oss-parent
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             testng
 Version:          6.0.1
-Release:          alt2_1jpp7
+Release:          alt2_4jpp7
 Summary:          Java-based testing framework
 License:          ASL 2.0
 Group:            Development/Java
@@ -17,7 +17,6 @@ URL:              http://testng.org/
 # cd testng
 # git archive --prefix="testng-6.0.1/" --format=tar testng-6.0.1 | xz > testng-6.0.1.tar.xz
 Source0:          %{name}-%{version}.tar.xz
-Source1:          %{name}.depmap
 
 Patch0:           %{name}-test-fails-workaround.patch
 
@@ -31,8 +30,6 @@ BuildRequires:    snakeyaml
 Requires:         beust-jcommander
 Requires:         snakeyaml
 Requires:         jpackage-utils
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
 Source44: import.info
 
 %description
@@ -90,9 +87,7 @@ iconv --from-code=ISO-8859-2 --to-code=UTF-8 CHANGES.txt > CHANGES.txt.utf8
 mv -f CHANGES.txt.utf8 CHANGES.txt
 
 %build
-# gdata-java has no maven support -> depmap file needed
-# http://code.google.com/p/gdata-java-client/issues/detail?id=328
-mvn-rpmbuild -Dmaven.local.depmap.file="%{SOURCE1}" -Dgpg.skip=true install javadoc:aggregate
+mvn-rpmbuild -Dmaven.local.debug=true -Dgpg.skip=true install javadoc:aggregate
 
 %install
 # jars
@@ -102,7 +97,7 @@ install -p -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap %{group_id} %{name} %{version} JPP %{name}
+%add_maven_depmap
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
@@ -119,6 +114,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.0.1-alt2_4jpp7
+- new release
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.0.1-alt2_1jpp7
 - added oss-parent pom dependency
 
