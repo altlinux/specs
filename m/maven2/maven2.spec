@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:	    maven2
 Version:	2.2.1
-Release:	alt1_32jpp7
+Release:	alt2_32jpp7
 Summary:	Java project management and project comprehension tool
 
 Group:		Development/Java
@@ -387,8 +387,8 @@ install -Dm 755 %{SOURCE45} $RPM_BUILD_ROOT%{_bindir}/mvn-jpp
 
 %post
 # clear the old links
-find %{_datadir}/%{name}/boot/ -type l -exec rm -f '{}' \; ||:
-find %{_datadir}/%{name}/lib/ -type l -exec rm -f '{}' \; ||:
+[ -d %{_datadir}/%{name}/boot/ ] && find %{_datadir}/%{name}/boot/ -type l -exec rm -f '{}' \; ||:
+[ -d %{_datadir}/%{name}/lib/ ] && find %{_datadir}/%{name}/lib/ -type l -exec rm -f '{}' \; ||:
 
 %postun
 # FIXME: This doesn't always remove the plugins dir. It seems that rpm doesn't
@@ -472,6 +472,9 @@ if [ -d %{_javadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_javadir
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt2_32jpp7
+- fixed verbose post
+
 * Fri Apr 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt1_32jpp7
 - complete build
 
