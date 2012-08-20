@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.0.0
-Release: alt3
+Release: alt4
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -400,6 +400,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Mon Aug 20 2012 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt4
+- Fix indexhtml menu and distro name
+
 * Mon Aug 20 2012 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt3
 - Fix attribute name for meta http-equiv
 - Fix grub background color and font
