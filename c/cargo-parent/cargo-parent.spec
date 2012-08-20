@@ -1,15 +1,18 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cargo-parent
-Version:        4.7
-Release:        alt1_1jpp7
+Version:        4.11
+Release:        alt1_2jpp7
 Summary:        Parent pom file for cargo.codehaus.org project
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://cargo.codehaus.org/
-#svn export http://svn.codehaus.org/cargo/pom/tags/cargo-parent-4.7/
+#svn export http://svn.codehaus.org/cargo/pom/tags/cargo-parent-4.11/
 Source0:        %{name}-%{version}.tar.gz
+# Remove wagon-webdav
+Patch0:         cargo-parent-wagon-webdav.patch
 
 BuildArch:      noarch
 
@@ -26,8 +29,6 @@ BuildRequires:    maven-surefire-plugin
 BuildRequires:  codehaus-parent
 
 Requires:       jpackage-utils
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
 Requires:       codehaus-parent
 Source44: import.info
 
@@ -36,6 +37,7 @@ This package contains the cargo parent pom.
 
 %prep
 %setup -q
+%patch0 -p1 -b .wagon-webdav
 
 
 %build
@@ -47,14 +49,17 @@ install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml  \
         $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_to_maven_depmap org.codehaus.cargo cargo-parent %{version} JPP %{name}
+%add_maven_depmap JPP-%{name}.pom
 
 
 %files
-%{_mavenpomdir}/*
-%{_mavendepmapfragdir}/*
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 4.11-alt1_2jpp7
+- new release
+
 * Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.7-alt1_1jpp7
 - new version
 
