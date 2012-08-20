@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 # camel-case name at the request of the upstream maintainers.
 Name: MegaMek
 Version: 0.30.11
-Release: alt2_8jpp7
+Release: alt2_9jpp7
 Summary: A portable, network-enabled BattleTech engine
 
 Group: Games/Other
@@ -142,6 +142,9 @@ install -pm 644 %{SOURCE1} \
 %{_libdir}/gcj/%{name}/MegaMek.jar.*
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.30.11-alt2_9jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.30.11-alt2_8jpp7
 - update to new release by jppimport
 
