@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       dbus-java
 Version:    2.7
-Release:    alt1_8jpp7
+Release:    alt1_9jpp7
 Summary:    Java implementation of the DBus protocol
 Group:      Development/Java
 License:    AFL or LGPLv2
@@ -132,6 +132,9 @@ make install \
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_9jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_8jpp7
 - fc build
 
