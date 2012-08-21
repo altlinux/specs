@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt2_12jpp7
+Release:          alt2_14jpp7
 License:          (LGPLv2+ or MPLv1.1) and ASL 2.0 and BSD and LGPLv2+
 URL:              http://www.lowagie.com/iText/
 Group:            Development/Java
@@ -31,17 +31,17 @@ Patch2:           itext-2.1.7-fixpomforbc.patch
 # an itext1 package, I have forward-ported these classes.  The doxia
 # developers have told me on IRC on 2009-08-27 that the iText dependency
 # will likely be deprecated meaning we won't have to keep these forever.
-# 
+#
 # I've opened a bug with iText:
-# 
-# https://sourceforge.net/tracker/?func=detail&aid=2846427&group_id=15255&atid=365255 
-# 
+#
+# https://sourceforge.net/tracker/?func=detail&aid=2846427&group_id=15255&atid=365255
+#
 # and commented on the Doxia but related to this:
 #
 # http://jira.codehaus.org/browse/DOXIA-53
 #
 # -- Andrew Overholt, 2009-08-28
-# 
+#
 # [1]
 # http://www.1t3xt.com/about/history.php?branch=history.10&node=14
 # [2]
@@ -136,7 +136,7 @@ iText is a free open source Java-PDF library released on SF under the MPL/LGPL;
 iText comes with a simple GUI: the iText toolbox. The original developers of
 iText want to publish this toolbox as a separate project under the more
 permissive MIT license. This is a utility that allows you to use a number of
-iText tools. 
+iText tools.
 
 
 %package javadoc
@@ -187,11 +187,13 @@ sed -i 's|debug="true"||g' src/ant/compile.xml
 
 # Specify encoding, otherwise javadoc blows
 sed -i 's|author|Encoding="ISO-8859-1" author|' src/ant/site.xml
+# and set max memory higher or we run out
+sed -i 's|maxmemory="128m"|maxmemory="512m"|' src/ant/site.xml
 
 %build
 export CLASSPATH=$(build-classpath bcprov bcmail bctsp pdf-renderer dom4j)
 pushd src
- ant -Ditext.jdk.core=1.5 \
+ ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Ditext.jdk.core=1.5 \
      -Ditext.jdk.rups=1.5 \
      -Ditext.jdk.toolbox=1.5 \
      jar jar.rups jar.rtf jar.toolbox javadoc
@@ -290,6 +292,9 @@ cp -pr JPP-itext.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_14jpp7
+- update to new release by jppimport
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_12jpp7
 - added obsoletes for itext2
 
