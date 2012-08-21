@@ -6,7 +6,7 @@
 %define dname transmission-daemon
 
 Name: transmission
-Version: 2.52
+Version: 2.61
 Release: alt1
 
 Group: Networking/File transfer
@@ -33,7 +33,7 @@ Source2: %dname.logrotate
 
 BuildPreReq: desktop-file-utils
 
-BuildRequires: gcc-c++ glibc-devel intltool libcurl-devel libevent-devel libnotify-devel libcanberra-devel libdbus-glib-devel libgtk+2-devel
+BuildRequires: gcc-c++ glibc-devel intltool libcurl-devel libevent-devel libnotify-devel libcanberra-devel libdbus-glib-devel libgtk+3-devel
 BuildRequires(pre): rpm-utils desktop-file-utils libalternatives-devel
 %if "%(rpmvercmp '%{get_version glibc-core}' '2.9')" >= "0"
 BuildRequires: libgio-devel
@@ -269,6 +269,9 @@ fi
 %dir %_logdir/%dname
 
 %changelog
+* Tue Aug 21 2012 Anton Farygin <rider@altlinux.ru> 2.61-alt1
+- new version
+
 * Wed May 30 2012 Anton Farygin <rider@altlinux.ru> 2.52-alt1
 - new version
 
