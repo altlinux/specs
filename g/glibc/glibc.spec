@@ -1,6 +1,6 @@
 Name: glibc
-Version: 2.11.3
-Release: alt8
+Version: 2.16
+Release: alt1
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -13,13 +13,12 @@ License: LGPLv2+, LGPLv2+ with exceptions, GPLv2+
 Group: System/Base
 Url: http://www.gnu.org/software/glibc/
 
+# Remove -s to get verbose output.
+%define PARALLELMFLAGS PARALLELMFLAGS='-j%__nprocs'
+
 %def_with optimization
-%def_disable archopt
 %def_enable langify
-%def_with tls
-%def_with __thread
-%def_disable profile
-%def_without debug
+%def_with locales
 
 %ifarch %ix86 x86_64
 %def_enable multiarch
@@ -27,30 +26,17 @@ Url: http://www.gnu.org/software/glibc/
 %def_disable multiarch
 %endif
 
-# Build arch-optimized subpackage only?
-%if_enabled archopt
-
-%define _optlevel 3
-%def_without locales
-
-%else #disabled archopt
-
-%def_with locales
-
-%endif #disabled archopt
-
 %define enablekernel 2.6.18
 
 %define basever 2.5.1
 
 # http://git.altlinux.org/gears/g/glibc.git
 Source: glibc-%version-%release.tar
-Source1: glibc-ports-%version-%release.tar
 
 Obsoletes: libc-static, libc-devel, libc-profile, libc-headers,
 Obsoletes: linuxthreads, gencat, ldconfig
 
-%define libc_locales_list aa af am an ar as ast az be ber bg bn bo br bs byn ca crh cs csb cy da de dv dz el en es et eu fa fi fil fo fr fur fy ga gd gez gl gu gv ha he hi hne hr hsb ht hu hy id ig ik is it iu iw ja ka kk kl km kn ko ks ku kw ky lg li lo lt lv mai mg mi mk ml mn mr ms mt my nan nb nds ne nl nn no nr nso oc om or pa pap pl ps pt ro ru rw sa sc sd se shs si sid sk sl so sq sr ss st sv ta te tg th ti tig tk tl tn tr ts tt ug uk ur uz ve vi wa wo xh yi yo zh zu
+%define libc_locales_list aa af am an ar as ast az be bem ber bg bho bn bo br brx bs byn ca crh cs csb cv cy da de dv dz el en es et eu fa ff fi fil fo fr fur fy ga gd gez gl gu gv ha he hi hne hr hsb ht hu hy id ig ik is it iu iw ja ka kk kl km kn ko kok ks ku kw ky lb lg li lij lo lt lv mag mai mg mhr mi mk ml mn mr ms mt my nan nb nds ne nl nn nr nso oc om or os pa pap pl ps pt ro ru rw sa sc sd se shs si sid sk sl so sq sr ss st sv sw ta te tg th ti tig tk tl tn tr ts tt ug uk unm ur uz ve vi wa wae wal wo xh yi yo yue zh zu
 %define libc_locales %(for i in %libc_locales_list;do echo -n "locale-$i locales-$i ";done)
 %define renamed_locales ru_RU.iso88595 ru_UA.koi8u uk_UA.koi8u
 
@@ -80,6 +66,7 @@ BuildPreReq: libgd2-devel
 # g++ and /proc are required for test suite.
 %{?!_without_check:%{?!_disable_check:BuildPreReq: gcc-c++ /proc}}
 
+%define _localstatedir /var
 %define _gconvdir %_libdir/gconv
 %define __find_provides %_builddir/%name-%version-%release/alt/find-provides.sh
 %define __find_requires %_builddir/%name-%version-%release/alt/find-requires.sh
@@ -97,8 +84,7 @@ AutoReq: no
 PreReq: setup
 PreReq: %name-preinstall >= %epoch:%version-%release
 Conflicts: %name < %epoch:%version-%release
-Conflicts: glibc-core-archopt < %epoch:%version-%release
-Conflicts: glibc-core-archopt > %epoch:%version-%release
+Conflicts: glibc-core-archopt
 Provides: linuxthreads, ldconfig
 Obsoletes: linuxthreads, ldconfig
 Provides: glibc-crypt_blowfish = 1.2
@@ -200,35 +186,11 @@ BuildArch: noarch
 PreReq: %name-pthread = %epoch:%version-%release
 Conflicts: texinfo < 3.11
 
-%package profile
-Summary: The GNU libc libraries, including support for gprof profiling
-Group: Development/C
-Requires: %name = %epoch:%version-%release
-Obsoletes: libc-profile
-
 %package debug
 Summary: The GNU libc utilities for software debugging
 Group: Development/C
 Requires: %name-devel = %epoch:%version-%release
 Obsoletes: libc-debug
-
-%package core-debug
-Summary: The GNU libc core libraries with debugging information
-Group: Development/C
-AutoProv: yes, nolib
-Requires: %name-pthread = %epoch:%version-%release
-
-%package nss-debug
-Summary: The GNU libc Name Service Switch libraries with debugging information
-Group: Development/C
-AutoProv: yes, nolib
-Requires: %name-nss = %epoch:%version-%release, %name-core-debug = %epoch:%version-%release
-
-%package devel-debug
-Summary: Static standard C libraries with debugging information
-Group: Development/C
-AutoProv: yes, nolib
-Requires: %name-devel = %epoch:%version-%release, %name-core-debug = %epoch:%version-%release, %name-nss-debug = %epoch:%version-%release
 
 %package -n nscd
 Summary: A Name Service Caching Daemon (nscd)
@@ -236,12 +198,6 @@ Group: System/Servers
 Conflicts: kernel < 2.2.0
 PreReq: shadow-utils
 PreReq: %name-pthread = %epoch:%version-%release
-
-%package core-%_target_cpu
-Summary: The GNU libc core libraries built with optimization for %_target_cpu processor
-Group: System/Libraries
-PreReq: %name-pthread = %epoch:%version-%release
-Provides: %name-core-archopt = %epoch:%version-%release
 
 %description
 The GNU C library defines all of the library functions that are specified
@@ -311,14 +267,6 @@ developing statically linked programs which use the standard C libraries.
 %description doc
 This package contains documentation distributed with GNU libc.
 
-%description profile
-This package includes the GNU libc libraries and support for profiling
-using the gprof program.  Profiling is analyzing a program's functions
-to see how much CPU time they use and determining which functions are
-calling other functions during execution.  To use gprof to profile a
-program, your program needs to use the GNU libc libraries from this
-package instead of the standard GNU libc libraries.
-
 %description debug
 This package contains utilities for software debugging,
 including:
@@ -327,73 +275,26 @@ including:
 + pcprofiledump
 + xtrace
 
-%description core-debug
-This package contains GNU libc core shared libraries with debugging
-information.  You need this if you want to step into C library routines
-during debugging.  To use these libraries, you need to set
-LD_LIBRARY_PATH=%_libdir/debug
-in your environment before starting debugger.  If you want to see glibc
-source files during debugging, you should
-rpm -i glibc-%version-%release.src.rpm
-rpm -bp %%_specdir/glibc.spec
-
-%description nss-debug
-This package contains GNU libc NSS libraries with debugging information.
-You need this if you want to step into C library routines during
-debugging.  To use these libraries, you need to set
-LD_LIBRARY_PATH=%_libdir/debug
-in your environment before starting debugger.  If you want to see glibc
-source files during debugging, you should
-rpm -i glibc-%version-%release.src.rpm
-rpm -bp %%_specdir/glibc.spec
-
-%description devel-debug
-This package contains GNU libc static libraries with debugging
-information.  You need this only if you want to step into C library
-routines during debugging programs statically linked against one or
-more of the standard C libraries.  To use this debugging information,
-you need to link binaries with -L%_libdir/debug compiler option.
-If you want to see glibc source files during debugging, you should
-rpm -i glibc-%version-%release.src.rpm
-rpm -bp %%_specdir/glibc.spec
-
 %description -n nscd
 Nscd caches name service lookups and can dramatically improve performance
 with NIS+, and may help with DNS as well.  Note that you can't use nscd
 with 2.0 kernels because of bugs in the kernel-side thread support.
 Unfortunately, nscd happens to hit these bugs particularly hard.
 
-%description core-%_target_cpu
-This package contains most essential GNU libc libraries, optimized for
-run on %_target_cpu processor.
-
 %prep
-%setup -q -n %name-%version-%release
-wordsize=`printf '#include <bits/wordsize.h>\n__WORDSIZE\n' |cpp -P -xc - |grep '^[1-9]'`
-sed -i "s/@BITS@/$wordsize/" include/stubs-biarch.h
-
-%ifarch %arm
-tar xf %SOURCE1
-%endif
+%setup -n %name-%version-%release
 
 find -type f -name configure -print0 |
 	xargs -r0 touch --
-touch locale/programs/*-kw.h
 
 ################################################################################
 %build
 %define buildtarget build-%_target
 
-%if %undefined parallelmflags
-%define parallelmflags %nil
-%endif # parallelmflags
-
 %if_without optimization
 %define _optlevel %nil
 %define optflags_optimization -O%_optlevel %optflags_debug
 %else #with optimization
-
-%add_optflags -U_FORTIFY_SOURCE -fno-stack-protector -fasynchronous-unwind-tables
 
 %endif #without optimization
 
@@ -402,79 +303,40 @@ touch locale/programs/*-kw.h
 # workaround
 unset LD_PRELOAD LD_ASSUME_KERNEL ||:
 
-export CC=%__cc CXX=%__cxx ac_cv_lib_audit_audit_log_avc=no
+export CC=%__cc CXX=%__cxx \
+	ac_cv_lib_audit_audit_log_avc=no \
+	ac_cv_path_BASH_SHELL=/bin/sh \
+	ac_cv_path_KSH=/bin/sh \
+	#
 
+AddOns=nptl,libidn
 %ifarch %arm
-# The configure fails some tests on ARM EABI due undefined reference to `__aeabi_unwind_cpp_pr0'
-# Workaround for it.
-export libc_cv_asm_set_directive=yes
-export libc_cv_Bgroup=yes
-export libc_cv_gcc_builtin_expect=yes
-export libc_cv_initfini_array=yes
-export libc_cv_ld_no_whole_archive=yes
+AddOns="$AddOns,ports"
 %endif
-
-AddOns=`echo */configure |sed -e 's!/configure!!g;s!\(linuxthreads\|nptl\|rtkaio\)\( \|$\)!!g;s! \+$!!;s! !,!g;s!^!,!;/^,\*$/d'`
-Ports=
-%ifarch %arm
-Ports=',ports'
-%endif
-
-Pthreads=nptl
 
 rm -rf %buildtarget
 mkdir %buildtarget
 pushd %buildtarget
 
 %configure \
-	%{?_disable_profile:%_disable_profile} \
-	--without-cvs \
+	--disable-profile \
 	--enable-bind-now \
-	--enable-add-ons=$Pthreads$AddOns$Ports \
-	%{subst_with tls} \
-	%{subst_with __thread} \
+	--enable-add-ons=$AddOns \
 	%{?_enable_multiarch:--enable-multi-arch} \
+	--enable-obsolete-rpc \
 	--enable-kernel=%enablekernel \
+	--localedir=%_prefix/lib/locale \
 	#
 
-%make_build -r PARALLELMFLAGS=%parallelmflags
+make %PARALLELMFLAGS
 
 popd #%buildtarget
 
 make -C alt enablekernel=%enablekernel CC=%__cc path_link=../%buildtarget
 
-%if_with debug
-rm -rf %buildtarget-debug
-mkdir %buildtarget-debug
-pushd %buildtarget-debug
-
-export CFLAGS="%optflags %optflags_debug"
-%configure \
-	--disable-profile \
-	--enable-bind-now \
-	--without-cvs \
-	--without-gd \
-	--enable-add-ons=$Pthreads$AddOns$Ports \
-	%{subst_with tls} \
-	%{subst_with __thread} \
-	--enable-kernel=%enablekernel \
-	#
-
-%make_build -r PARALLELMFLAGS=%parallelmflags
-
-popd #%buildtarget-debug
-%endif #with debug
-
-################################################################################
-%check
-cat /proc/self/maps >/dev/null
-export TIMEOUTFACTOR=10
-%make_build -C %buildtarget -r PARALLELMFLAGS=%parallelmflags -k check LDFLAGS=-Wl,--no-as-needed ||:
-
 ################################################################################
 %install
-[ -n "$NPROCS" ] || NPROCS=%__nprocs
-%make_install -j$NPROCS install install_root=%buildroot -C %buildtarget
+%makeinstall_std %PARALLELMFLAGS -C %buildtarget
 
 pushd %buildroot%_libdir
 %__cc -r -nostdlib -o libpthread.o -Wl,--whole-archive ./libpthread.a
@@ -490,58 +352,12 @@ mkdir -p %buildroot%_cachedir/ldconfig
 mv %buildroot/%_lib/lib{memusage,pcprofile,SegFault}.so \
 	%buildroot%_libdir/ ||:
 
-%if_with debug
-%make_install install install_root=%buildroot/debug -C %buildtarget-debug
-
-# NPTL <bits/stdio-lock.h> is not usable outside of glibc,
-# so include the generic one (RH#162634)
-cp -a bits/stdio-lock.h %buildroot%_includedir/bits/stdio-lock.h
-# And <bits/libc-lock.h> needs sanitizing as well.
-cp -a fedora/libc-lock.h %buildroot%_includedir/bits/libc-lock.h
-
-rm %buildroot/debug/%_lib/lib{memusage,pcprofile,SegFault}.so
-
-ls %buildroot/debug/%_lib/*.so* |
-	egrep -v '/libnss_([^f]|files\.so\.1)' |
-	sed -e "s|%buildroot/debug/%_lib|%_libdir/debug|g" >core-debug.files
-
-ls %buildroot/debug/%_lib/*.so* |
-	fgrep nss |
-	fgrep -v /libnss_files |
-	sed -e "s|%buildroot/debug/%_lib|%_libdir/debug|g" >nss-debug.files
-
-ls %buildroot/debug%_libdir/lib*.so |
-	sed -e "s|%buildroot/debug%_libdir|%_libdir/debug|g" >>devel-debug.files
-
-mkdir -p %buildroot%_libdir/debug
-mv %buildroot/debug/%_lib/* %buildroot/debug%_libdir/*.{so,a,o}* \
-	%buildroot%_libdir/debug/
-rm -rf %buildroot/debug
-for f in %buildroot%_libdir/debug/*.so; do
-	if [ -L "$f" ]; then
-		t=`readlink "$f"`
-		t=${t##*/}
-		ln -snf "$t" "$f"
-	fi
-done
-%endif #with debug
-
-%if_enabled archopt
-
-mkdir -p %buildroot/%_lib/%_target_cpu
-mv %buildroot/%_lib/*.so* %buildroot/%_lib/%_target_cpu/
-
-%else #disabled archopt
-
 # Install upgrade programs.
 make -C alt install
 
 %if_with locales
-pushd %buildtarget
-	%make_build install-locales -C ../localedata \
-		install_root=%buildroot \
-		objdir=`pwd`
-popd
+make -r %PARALLELMFLAGS -j%__nprocs install-locales -C localedata \
+	DESTDIR=%buildroot objdir=$PWD/%buildtarget
 
 # Hardlink identical locale files together.
 hardlink -vc %buildroot%_prefix/lib/locale
@@ -556,11 +372,17 @@ done
 
 ln -sf libbsd-compat.a %buildroot%_libdir/libbsd.a
 
-install -pD -m755 alt/nscd.init %buildroot%_initdir/nscd
-install -pD -m644 alt/nsswitch.conf %buildroot%_sysconfdir/nsswitch.conf
-install -pm644 alt/nscd.conf %buildroot%_sysconfdir/
+mkdir -p %buildroot{%_initdir,%_unitdir,/etc/sysconfig,/lib/tmpfiles.d}
+install -pm644 alt/nsswitch.conf %buildroot/etc/
+install -pm644 alt/nscd.conf %buildroot/etc/
+install -pm755 alt/nscd.init %buildroot%_initdir/nscd
+install -pm644 alt/nscd.{service,socket} %buildroot%_unitdir/
+install -pm644 alt/nscd.conf %buildroot/lib/tmpfiles.d/
+touch %buildroot/etc/sysconfig/nscd
 mkdir -pm711 %buildroot/var/{lib,run}/nscd
 mksock %buildroot/var/run/nscd/socket
+touch %buildroot/var/run/nscd/nscd.pid
+touch %buildroot/var/{lib,run}/nscd/{passwd,group,hosts,services}
 
 # Install nss.conf
 install -pm644 nis/nss %buildroot%_sysconfdir/nss.conf
@@ -581,10 +403,8 @@ install -pD -m644 /dev/null %buildroot%_sysconfdir/ld.so.cache
 # Include gconv-modules.cache
 install -pD -m644 /dev/null %buildroot%_gconvdir/gconv-modules.cache
 
-# Replace /etc/localtime symlink with the file for our default timezone.
-rm %buildroot%_sysconfdir/localtime
-cp -p %buildroot%_datadir/zoneinfo/UTC \
-	%buildroot%_sysconfdir/localtime
+# Create /etc/localtime
+touch %buildroot%_sysconfdir/localtime
 
 # zoneinfo now lives in tzdata package.
 rm -rf %buildroot%_datadir/zoneinfo
@@ -596,11 +416,9 @@ rm %buildroot{%_infodir/dir,%_datadir/locale/locale.alias}
 %define docdir %_docdir/%name-%version
 rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
-# BUGS removed from the list
-cp -pL LICENSES README* alt/README* NEWS INSTALL FAQ NOTES PROJECTS \
-	hesiod/README.hesiod crypt/README.ufc-crypt ChangeLog ChangeLog.?? \
+cp -pL LICENSES README* alt/README* NEWS \
+	crypt/README.ufc-crypt ChangeLog ChangeLog.?? \
 	%buildroot%docdir/
-cp -pL timezone/README %buildroot%docdir/README.timezone
 find %buildroot%docdir/ -type f -size +8k -print0 |
 	xargs -r0 bzip2 -9
 
@@ -642,18 +460,16 @@ for lang in $((cat alt/locales-add && cd %buildroot%_prefix/lib/locale && ls |se
 done |sort -u >>libc.lang
 %endif #with locales
 
-%endif #enabled archopt
-
 %brp_strip_debug */%_lib/ld-*.so* */%_lib/libpthread-*.so
 
 # due to libpthread.
 %set_verify_elf_method unresolved=relaxed
 
-%if_enabled archopt
-%post core-%_target_cpu -p /sbin/glibc_post_upgrade
-%postun core-%_target_cpu
-[ $1 -gt 0 ] || /sbin/glibc_post_upgrade
-%endif #enabled archopt
+################################################################################
+%check
+cat /proc/self/maps >/dev/null
+export TIMEOUTFACTOR=10
+make %PARALLELMFLAGS -C %buildtarget -k check fast-check=yes LDFLAGS=-Wl,--no-as-needed ||:
 
 %pre core -p /sbin/glibc_preinstall
 %post core -p /sbin/glibc_post_upgrade
@@ -710,14 +526,6 @@ fi
 
 %triggerpostun core -p /sbin/glibc_fix_nsswitch -- %name < 6:2.2.4-alt3, %name-nss < 6:2.2.4-alt4
 
-%if_enabled archopt
-
-%files core-%_target_cpu
-/%_lib/%_target_cpu/ld*
-/%_lib/%_target_cpu/lib[acdmpru]*
-
-%else #disabled archopt
-
 %files
 
 %files doc
@@ -742,10 +550,10 @@ fi
 %dir %_sysconfdir/ld.so.conf.d
 %dir %attr(700,root,root) %_cachedir/ldconfig
 %ghost %verify(not md5 size mtime) %attr(600,root,root) %config(noreplace,missingok) %_cachedir/ldconfig/aux-cache
+%ghost %verify(not md5 size mtime) %attr(644,root,root) %config(noreplace,missingok) %_sysconfdir/localtime
 %config(noreplace) %_sysconfdir/bindresvport.blacklist
 %config(noreplace) %_sysconfdir/gai.conf
 %config(noreplace) %_sysconfdir/ld.so.conf
-%config(noreplace) %_sysconfdir/localtime
 %config(noreplace) %_sysconfdir/nss.conf
 %config(noreplace) %_sysconfdir/nsswitch.conf
 %config(noreplace) %_sysconfdir/rpc
@@ -793,6 +601,8 @@ fi
 %exclude %_bindir/tzselect
 %exclude %_bindir/xtrace
 %_libexecdir/getconf
+%_libdir/audit/sotruss-lib.so
+%exclude /var/db/Makefile
 
 %files devel -f devel.files
 %_libdir/lib*.so
@@ -803,11 +613,6 @@ fi
 
 %files devel-static -f devel-static.files
 
-%if_enabled profile
-%files profile
-%_libdir/lib*_p.a
-%endif #enabled profile
-
 %files debug
 %_bindir/memusage*
 %_bindir/pcprofiledump
@@ -816,27 +621,33 @@ fi
 %_libdir/libpcprofile.so
 
 %files -n nscd
+%ghost %config(noreplace,missingok) /etc/sysconfig/nscd
 %config(noreplace) %_sysconfdir/nscd.conf
 %_initdir/nscd
+%_unitdir/nscd.service
+%_unitdir/nscd.socket
+/lib/tmpfiles.d/nscd.conf
 %_sbindir/nscd*
 %attr(711,root,root) %dir /var/run/nscd
-%attr(1770,root,nscd) %dir /var/lib/nscd
 %attr(666,root,root) %ghost /var/run/nscd/socket
+%attr(644,root,root) %ghost %config(noreplace,missingok) %verify(not md5 size mtime) /var/run/nscd/nscd.pid
+%attr(600,root,root) %ghost %config(noreplace,missingok) %verify(not md5 size mtime) /var/run/nscd/passwd
+%attr(600,root,root) %ghost %config(noreplace,missingok) %verify(not md5 size mtime) /var/run/nscd/group
+%attr(600,root,root) %ghost %config(noreplace,missingok) %verify(not md5 size mtime) /var/run/nscd/hosts
+%attr(600,root,root) %ghost %config(noreplace,missingok) %verify(not md5 size mtime) /var/run/nscd/services
+%attr(1770,root,nscd) %dir /var/lib/nscd
+%attr(600,root,root) %ghost %config(noreplace,missingok) %verify(not md5 size mtime) /var/lib/nscd/passwd
+%attr(600,root,root) %ghost %config(noreplace,missingok) %verify(not md5 size mtime) /var/lib/nscd/group
+%attr(600,root,root) %ghost %config(noreplace,missingok) %verify(not md5 size mtime) /var/lib/nscd/hosts
+%attr(600,root,root) %ghost %config(noreplace,missingok) %verify(not md5 size mtime) /var/lib/nscd/services
 
 %files i18ndata
 %_datadir/i18n
 
-%if_with debug
-%files core-debug -f core-debug.files
-%files nss-debug -f nss-debug.files
-%files devel-debug -f devel-debug.files
-%_libdir/debug/*.o
-%_libdir/debug/*.a
-%endif #with debug
-
-%endif #enabled archopt
-
 %changelog
+* Tue Aug 21 2012 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt1
+- Updated to 2.16.
+
 * Wed May 16 2012 Dmitry V. Levin <ldv@altlinux.org> 6:2.11.3-alt8
 - Backported upstream fixes to build with binutils >= 2.21.51.0.3.
 
