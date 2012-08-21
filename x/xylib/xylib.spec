@@ -1,5 +1,5 @@
 Name: xylib
-Version: 0.8
+Version: 1.0
 Release: alt1
 Summary: Library for reading x-y data
 License: LGPL v2.1
@@ -50,7 +50,8 @@ This package contains development files of xylib.
 %build
 %autoreconf
 %configure \
-	--enable-static=no
+	--enable-static=no \
+	--disable-silent-rules
 %make_build
 
 %install
@@ -69,6 +70,9 @@ This package contains development files of xylib.
 %_includedir/*
 
 %changelog
+* Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1
+- Version 1.0
+
 * Tue May 10 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1
 - Version 0.8
 
