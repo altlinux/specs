@@ -13,7 +13,7 @@ BuildRequires: jpackage-compat
 
 Name:           jemmy
 Version:        2.3.0.0
-Release:        alt1_6jpp7
+Release:        alt1_8jpp7
 Summary:        Java UI testing library
 
 Group:          Development/Java
@@ -28,6 +28,11 @@ URL:            https://jemmy.dev.java.net
 #
 # where <username> is a name of the user registered here: https://www.dev.java.net/servlets/Join
 Source0:        jemmy-2.3.0.0.tar.gz
+
+# POM based on one from maven.org, with version and license info modified:
+# http://central.maven.org/maven2/org/netbeans/jemmy/2.2.7.5/jemmy-2.2.7.5.pom
+Source1:        %{name}.pom
+
 
 BuildRequires:  ant >= 1.6.5
 BuildRequires:  jpackage-utils
@@ -58,7 +63,7 @@ This package contains the API documentation for %{name}.
 %prep
 %setup -q
 find . -type f -name '*.jar' | xargs -t rm
-echo "Please, visit https://jemmy.dev.java.net for more info about Jemmy." > README.txt
+echo "Please, visit http://jemmy.java.net for more info about Jemmy." > README.txt
 
 %build
 %ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
@@ -72,18 +77,29 @@ echo "Please, visit https://jemmy.dev.java.net for more info about Jemmy." > REA
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do \
 %__ln_s ${jar} ${jar/-%{version}/}; done)
 
+# POM
+install -d -m 0755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 0644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
 # javadoc
 %__mkdir_p %{buildroot}%{_javadocdir}/%{name}
 %__cp -a %{target_javadoc} %{buildroot}%{_javadocdir}/%{name}
 
+
 %files
 %doc README.txt
 %{_javadir}/*.jar
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt1_8jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.0.0-alt1_6jpp7
 - update to new release by jppimport
 
