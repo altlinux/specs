@@ -1,7 +1,7 @@
 %define installdir %webserver_webappsdir/%name
 
 Name: owncloud
-Version: 4.0.6
+Version: 4.0.7
 Release: alt1
 
 Summary: Cloud platform
@@ -82,6 +82,9 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Tue Aug 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.0.7-alt1
+- 4.0.7
+
 * Thu Aug 09 2012 Denis Baranov <baraka@altlinux.ru> 4.0.6-alt1
 - 4.0.6
 
