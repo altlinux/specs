@@ -1,8 +1,8 @@
 Name: libfreeimage
-Version: 3.12.0
-Release: alt2
+Version: 3.15.3
+Release: alt1
 
-Packager: Victor Forsyuk <force@altlinux.org>
+Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Summary: Multi-format image decoder library
 License: GPL and FIPL (see the license-fi.txt)
@@ -15,8 +15,10 @@ Patch0: freeimage-64bit-ftbfs.patch
 Patch1: FreeImage-3.10.0-syslibs.patch
 
 # Automatically added by buildreq on Tue Sep 08 2009
-BuildRequires: gcc-c++ libjpeg-devel libmng-devel libpng-devel libtiff-devel openexr-devel unzip
-BuildPreReq: rpm-macros-make
+BuildRequires: gcc-c++ libmng-devel libpng-devel openexr-devel unzip
+
+BuildPreReq: rpm-macros-make libopenjpeg-devel libraw-devel zlib-devel
+BuildPreReq: libtiff5-devel
 
 %description
 FreeImage is a library project for developers who would like to support
@@ -34,7 +36,7 @@ developing applications that use %name.
 
 %prep
 %setup -n FreeImage
-%patch1 -p1
+#patch1 -p1
 
 subst 's/\r//g' gensrclist.sh
 
@@ -43,20 +45,24 @@ subst 's/\r//g' gensrclist.sh
 # Only internal OpenJPEG is used as this library is not yet in our repo.
 
 # remove included libs to make sure these don't get used during compile
-rm -r Source/LibTIFF Source/LibPNG Source/LibMNG Source/LibJPEG Source/ZLib Source/OpenEXR
+rm -r Source/LibTIFF4 Source/LibPNG Source/ZLib Source/OpenEXR
+rm -fR Source/LibRawLite Source/LibOpenJPEG
 #rm -r Source/Lib* Source/ZLib Source/OpenEXR
 
 sh ./gensrclist.sh
 %add_optflags %optflags_shared
-%make_build_ext CXX="g++ -g -DPNG_iTXt_SUPPORTED `pkg-config --cflags OpenEXR`" LIBRARIES="-lstdc++ -lm -ltiff -lpng -lmng -lIlmImf"
+%make_build_ext \
+	CXX="g++ -g -fpermissive -DPNG_iTXt_SUPPORTED `pkg-config --cflags OpenEXR`" \
+	LIBRARIES="-lstdc++ -lm -ltiff -lpng -lmng -lIlmImf -lraw -lopenjpeg -lIex -lHalf -lz"
 
 %install
-install -pD -m644 Dist/FreeImage.h %buildroot%_includedir/FreeImage.h
-install -pD -m644 Dist/libfreeimage-%version.so %buildroot%_libdir/libfreeimage-%version.so
-ln -sf libfreeimage-%version.so %buildroot%_libdir/libfreeimage.so
+%ifarch x86_64
+LIB_SUFFIX=64
+%endif
+%makeinstall_std LIB_SUFFIX=$LIB_SUFFIX
 
 %files
-%doc license-fi.txt
+%doc license-fi.txt Whatsnew.txt
 %_libdir/libfreeimage.so.*
 %_libdir/libfreeimage-%version.so
 
@@ -65,6 +71,9 @@ ln -sf libfreeimage-%version.so %buildroot%_libdir/libfreeimage.so
 %_libdir/libfreeimage.so
 
 %changelog
+* Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.15.3-alt1
+- Version 3.15.3
+
 * Sat Mar 12 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.12.0-alt2
 - Rebuilt for debuginfo
 
