@@ -1,6 +1,6 @@
 Name: libopenjpeg
 Version: 1.3
-Release: alt1.1
+Release: alt1.2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -15,6 +15,7 @@ Source: http://www.openjpeg.org/openjpeg_v%{fversion}.tar.gz
 Patch1: openjpeg-1.3-libtiff.patch
 Patch2: openjpeg-1.3-cmake.patch
 Patch3: openjpeg-1.3-shlibname.patch
+Patch4: libopenjpeg-1.3-debuginfo.patch
 
 # Automatically added by buildreq on Mon Feb 22 2010
 BuildRequires: libstdc++-devel libtiff-devel
@@ -47,6 +48,7 @@ OpenJPEG is an open-source JPEG 2000 codec written in C.
 %patch1 -p1
 #%patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 # Delete Windows stuff
 rm -rf jp3d
@@ -85,6 +87,9 @@ install -pm755 codec/{image_to_j2k,j2k_to_image} %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.2
+- Rebuilt for debuginfo
+
 * Sat Nov 06 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.1
 - Rebuilt for soname set-versions
 
