@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           swing-layout
 Version:        1.0.4
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        Natural layout for Swing panels
 
 Group:          Development/Java
@@ -60,6 +60,9 @@ cp -pr dist/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_5jpp7
+- update to new release by jppimport
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_4jpp7
 - update to new release by jppimport
 
