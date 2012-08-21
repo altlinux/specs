@@ -40,7 +40,7 @@ Name:           fontbox
 Summary:        FontBox library
 Url:            http://sourceforge.net/projects/fontbox/
 Version:        0.1.0
-Release:        alt1_2jpp6
+Release:        alt1_2jpp6.qa1
 Epoch:          0
 License:        BSD
 Group:          Development/Java
@@ -110,6 +110,12 @@ install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 rm -rf docs/javadoc
 cp -pr docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
+# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
+# which is normally a Windows image thumbnail database. 
+# Such databases are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
+
 %files
 %{_javadir}/*.jar
 %{_datadir}/maven2/poms/*
@@ -123,6 +129,11 @@ cp -pr docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Wed Aug 22 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0:0.1.0-alt1_2jpp6.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * windows-thumbnail-database-in-package for fontbox-manual
+
 * Sat Jan 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.1.0-alt1_2jpp6
 - jpp 6 release
 
