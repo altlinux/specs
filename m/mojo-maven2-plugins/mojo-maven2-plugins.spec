@@ -1,5 +1,5 @@
 # tmp plexus-maven-plugin
-BuildRequires: plexus-maven-plugin
+#BuildRequires: plexus-maven-plugin
 
 BuildRequires: velocity14
 BuildRequires: geronimo-jpa-3.0-api javacc3 sun-ws-metadata-2.0-api sun-annotation-1.0-api maven-plugin-cobertura gmaven-runtime-1.5
@@ -211,7 +211,7 @@ BuildRequires: jpackage-compat
 %define script_namedversion 1.0-SNAPSHOT
 %define script_include 0
 %define shade_namedversion 1.0-alpha-11-SNAPSHOT
-%define shade_include 1
+%define shade_include 0
 %define shell_namedversion 1.0-SNAPSHOT
 %define shell_include 1
 %define springdoclet_namedversion 1.0-beta-1
@@ -260,7 +260,7 @@ BuildRequires: jpackage-compat
 %define smc_namedversion 1.0-alpha-2-SNAPSHOT
 %define smc_include 1
 %define solaris_namedversion 1.0-alpha-2-SNAPSHOT
-%define solaris_include 1
+%define solaris_include 0
 %define sql_namedversion 1.1-SNAPSHOT
 %define sql_include 1
 %define sysdeo_tomcat_namedversion 1.1-SNAPSHOT
@@ -347,7 +347,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt21_8jpp6
+Release:        alt22_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -556,6 +556,7 @@ Obsoletes:      mojo-maven2-plugin-jxr < 0:16
 Obsoletes:      mojo-maven2-archetypeng < 0:17-2
 Source44: import.info
 Patch50: mojo-maven2-plugins-17-alt-maven-wagon-a7-support.patch
+Patch333: mojo-maven2-plugins-jspc-migration-to-component-metadata.patch
 
 %description
 The Mojo project allows a bunch of people not necessarily 
@@ -2990,6 +2991,7 @@ done
 %patch105 -b .sav105
 %endif
 %patch50 -p0
+%patch333 -p0
 
 sed -i 's,<module>dashboard-maven-plugin</module>,<!-- 2.0.8 nocompile<module>dashboard-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 
@@ -3021,6 +3023,7 @@ sed -i 's,<module>shitty-maven-plugin</module>,<!-- tmp nocompile<module>shitty-
 sed -i 's,<module>sysdeo-tomcat-maven-plugin</module>,<!-- tmp nocompile<module>sysdeo-tomcat-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>was6-maven-plugin</module>,<!-- tmp nocompile<module>was6-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>webstart</module>,<!-- tmp nocompile<module>webstart</module>-->,' pom.xml
+sed -i 's,<module>solaris</module>,<!-- tmp nocompile<module>solaris</module>-->,' pom.xml
 sed -i 's,<module>xmlbeans-maven-plugin</module>,<!-- tmp nocompile<module>xmlbeans-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>jdiff-maven-plugin</module>,<!-- tmp nocompile<module>jdiff-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>cis-maven-plugin</module>,<!-- tmp nocompile<module>cis-maven-plugin</module>-->,' mojo-sandbox/pom.xml
@@ -3035,6 +3038,7 @@ sed -i 's,<module>pomtools-maven-plugin</module>,<!-- tmp nocompile<module>pomto
 sed -i 's,<module>push-maven-plugin</module>,<!-- tmp nocompile<module>push-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>script-maven-plugin</module>,<!-- tmp nocompile<module>script-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>visibroker-maven-plugin</module>,<!-- tmp nocompile<module>visibroker-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>shade-maven-plugin</module>,<!-- tmp nocompile<module>shade-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>-maven-plugin</module>,<!-- tmp nocompile<module>-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 
 %build
@@ -6083,6 +6087,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt22_8jpp6
+- dropped plexus-maven-plugin dependency
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt21_8jpp6
 - fixed build
 
