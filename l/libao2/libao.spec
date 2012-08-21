@@ -2,7 +2,7 @@
 
 Name: %{oname}2
 Version: 0.8.8
-Release: alt5
+Release: alt5.qa1
 Serial: 1
 Summary: Cross Platform Audio Output Library
 License: GPL
@@ -24,7 +24,7 @@ It currently supports ALSA and PULSE.
 %package pulse
 Summary: PulseAudio output plugin for libao
 Group: System/Libraries
-Requires: %oname-pulse %name = %version-%release
+Requires: %oname-pulse %name = %{?epoch:%epoch:}%version-%release
 
 %description pulse
 This is package contains PulseAudio output plugin for libao
@@ -61,6 +61,11 @@ This is package contains PulseAudio output plugin for libao
 %_libdir/ao/plugins-2/libpulse.so
 
 %changelog
+* Tue Aug 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.8.8-alt5.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for libao2
+
 * Fri Mar 26 2010 Valery Inozemtsev <shrek@altlinux.ru> 1:0.8.8-alt5
 - don't packaged devel subpackage
 
