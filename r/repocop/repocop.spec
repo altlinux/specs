@@ -1,6 +1,6 @@
 Name: repocop
 Version: 0.62
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -107,6 +107,9 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 %dir %_datadir/repocop/fixscripts
 
 %changelog
+* Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.62-alt2
+- maintainance release
+
 * Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1
 - added generic purge script
 
