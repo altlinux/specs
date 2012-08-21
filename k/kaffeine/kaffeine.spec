@@ -10,14 +10,14 @@
 Name: kaffeine
 Version: 0.8.8
 %define beta %nil
-Release: alt7
+Release: alt7.qa1
 
 Group: Video
 Summary: A Xine-based Media Player for KDE
 License: GPL
 Url: http://kaffeine.sourceforge.net/
 
-Requires: kdelibs >= %{get_version kdelibs}
+Requires: kdelibs
 Requires: lib%{name} = %version-%release
 Requires: %name-engine >= %version-%release
 
@@ -50,7 +50,7 @@ Kaffeine is a Xine-based Media Player for QT/KDE
 %package -n lib%{name}
 Group: System/Libraries
 Summary: Base libraries for %name
-Requires: kdelibs >= %{get_version kdelibs}
+Requires: kdelibs
 Conflicts: kaffeine < 0.8
 %description -n lib%{name}
 Base libraries for %name
@@ -163,6 +163,11 @@ export PATH=%qtdir/bin:%kdedir/bin:$PATH
 %endif
 
 %changelog
+* Tue Aug 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.8-alt7.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * specfile-macros-get_dep-is-deprecated for kaffeine
+
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt7
 - Build for TDE 3.5.13 release
 
