@@ -48,6 +48,16 @@
 
 %define label -%{name}
 
+Name:           %jppname
+Version:        %{javaver}.%{buildver}
+Release:        alt4
+Epoch:          0
+Summary:        Java 2 Runtime Environment, Standard Edition
+License:        Operating System Distributor License for Java version 1.1
+Group:          System/Base
+URL:            http://java.sun.com/j2se/%{javaver}
+Packager:       Igor Yu. Vlasenko <viy@altlinux.org>
+
 %define sdklnk          java-%{javaver}-%{origin}
 %define jrelnk          jre-%{javaver}-%{origin}
 %define sdkdir          %{jppname}-%{version}
@@ -101,16 +111,6 @@ Provides: /usr/lib/jvm/jre/lib/%libarch/client/libjvm.so(SUNWprivate_1.1)
 %define mozplugindir %{_jvmdir}/%{sdkdir}/jre/plugin/%libarch/ns7-gcc29
 %endif
 %define mozilla_java_plugin_so %mozplugindir/libjavaplugin_oji.so
-
-Name:           %jppname
-Version:        %{javaver}.%{buildver}
-Release:        alt3
-Epoch:          0
-Summary:        Java 2 Runtime Environment, Standard Edition
-License:        Operating System Distributor License for Java version 1.1
-Group:          System/Base
-URL:            http://java.sun.com/j2se/%{javaver}
-Packager:       Igor Yu. Vlasenko <viy@altlinux.org>
 
 # --- jpackage compatibility stuff starts here ---
 Provides:       jre-%{javaver}-%{origin} = %{epoch}:%{version}-%{release}
@@ -198,7 +198,7 @@ Summary:        Java 2 SDK, Standard Edition
 Group:          Development/Java
 Provides: /usr/bin/javac
 Provides: jdk = %javaver
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 Requires(post,preun): alternatives >= 0.4
 Obsoletes: jdk-%origin j2sdk-%origin
 # --------- rename stuff ------------------
@@ -264,7 +264,7 @@ Provides: j2se%major-%origin-plugin-mozilla
 Obsoletes: j2se%major-%origin-plugin-mozilla
 Provides: mozilla-plugin-j2se%major-%origin
 Obsoletes: mozilla-plugin-j2se%major-%origin
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 Requires: browser-plugins-npapi
 Requires(post,preun): alternatives >= 0.4
 # --- jpackage compatibility stuff starts here ---
@@ -282,7 +282,7 @@ This package contains Java(TM) 2 Plug-In for Mozilla family web browsers.
 %package        alsa
 Summary:        ALSA support for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    alsa
 This package contains Advanced Linux Sound Architecture (ALSA) support
@@ -293,7 +293,7 @@ libraries for %{name}.
 %package        jdbc
 Summary:        Native library for JDBC support in Java
 Group:          Development/Databases
-Requires:       %name = %version-%release
+Requires:       %name = %{?epoch:%epoch:}%version-%release
 
 %description    jdbc
 This package contains the JDBC/ODBC bridge driver for %{name}.
@@ -303,7 +303,7 @@ This package contains the JDBC/ODBC bridge driver for %{name}.
 %package javaws
 Summary: Java Web Start
 Group: Networking/Other
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 Requires(post,preun): alternatives >= 0.4
 # --- jpackage compatibility stuff starts here ---
 Provides:       javaws = %{epoch}:%{javaws_ver}
@@ -443,8 +443,8 @@ EOF
 
 %if_enabled moz_plugin
 # fix up ControlPanel APPHOME and bin locations
-%__subst 's|APPHOME=.*|APPHOME=%{_jvmdir}/%{jredir}|' jre/bin/ControlPanel
-%__subst 's|/usr/bin/||g' jre/bin/ControlPanel
+sed -i 's|APPHOME=.*|APPHOME=%{_jvmdir}/%{jredir}|' jre/bin/ControlPanel
+sed -i 's|/usr/bin/||g' jre/bin/ControlPanel
 # 1.6.0 compat symlink
 ln -s ControlPanel jre/bin/jcontrol
 
@@ -454,7 +454,7 @@ cat > bin/HtmlConverter << EOF
 EOF
 
 # fix up java-rmi.cgi PATH
-%__subst 's|PATH=.*|PATH=%{jrebindir}|' bin/java-rmi.cgi
+sed -i 's|PATH=.*|PATH=%{jrebindir}|' bin/java-rmi.cgi
 
 # # install java-rmi-cgi
 # install -D -m 755 bin/java-rmi.cgi $RPM_BUILD_ROOT%{cgibindir}/java-rmi-%{version}.cgi
@@ -532,8 +532,8 @@ cp -a demo sample %buildroot%{_jvmdir}/%{sdkdir}
 
 # Remove unpackaged files
 %if_with gcc32_abi
-%__rm -f %buildroot%{_jvmdir}/%{jredir}/lib/%libarch/*_gcc29.so
-%__rm -rf %buildroot%{_jvmdir}/%{jredir}/plugin/%libarch/*-gcc29
+rm -f %buildroot%{_jvmdir}/%{jredir}/lib/%libarch/*_gcc29.so
+rm -rf %buildroot%{_jvmdir}/%{jredir}/plugin/%libarch/*-gcc29
 %endif
 
 #####################################
@@ -646,10 +646,10 @@ install -m644 j2se-buildreq-substitute \
 install -m644 j2se-devel-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 
-%__install -d %buildroot%_altdir
+install -d %buildroot%_altdir
 
 # J2SE alternative
-%__cat <<EOF >%buildroot%_altdir/%name-java
+cat <<EOF >%buildroot%_altdir/%name-java
 %{_bindir}/java	%{_jvmdir}/%{jredir}/bin/java	%priority
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
@@ -657,14 +657,14 @@ EOF
 for i in keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  %__cat <<EOF >>%buildroot%_altdir/%name-java
+  cat <<EOF >>%buildroot%_altdir/%name-java
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
 done
 
 # ----- JPackage compatibility alternatives ------
-%__cat <<EOF >>%buildroot%_altdir/%name-java
+cat <<EOF >>%buildroot%_altdir/%name-java
 %{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
@@ -673,13 +673,13 @@ done
 %{_jvmjardir}/jre-%{javaver}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 EOF
 %if_enabled moz_plugin
-%__cat <<EOF >>%buildroot%_altdir/%name-java
+cat <<EOF >>%buildroot%_altdir/%name-java
 %{_bindir}/ControlPanel	%{_jvmdir}/%{jredir}/bin/ControlPanel	%{_jvmdir}/%{jredir}/bin/java
 %{_bindir}/jcontrol	%{_jvmdir}/%{jredir}/bin/jcontrol	%{_jvmdir}/%{jredir}/bin/java
 EOF
 %endif
 # JPackage specific: alternatives for security policy
-%__cat <<EOF >>%buildroot%_altdir/%name-java
+cat <<EOF >>%buildroot%_altdir/%name-java
 %{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
 %{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
 EOF
@@ -687,7 +687,7 @@ EOF
 
 
 # Javac alternative
-%__cat <<EOF >%buildroot%_altdir/%name-javac
+cat <<EOF >%buildroot%_altdir/%name-javac
 %_bindir/javac	%{_jvmdir}/%{sdkdir}/bin/javac	%priority
 %_man1dir/javac.1.gz	%_man1dir/javac%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
@@ -696,7 +696,7 @@ EOF
 for i in appletviewer extcheck idlj jar jarsigner javadoc javah javap jdb native2ascii rmic serialver apt jconsole jinfo jmap jps jsadebugd jstack jstat jstatd
 do
   if [ -e $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/bin/$i ]; then
-  %__cat <<EOF >>%buildroot%_altdir/%name-javac
+  cat <<EOF >>%buildroot%_altdir/%name-javac
 %_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
@@ -705,13 +705,13 @@ done
 # binaries w/o manuals
 for i in HtmlConverter
 do
-  %__cat <<EOF >>%buildroot%_altdir/%name-javac
+  cat <<EOF >>%buildroot%_altdir/%name-javac
 %_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
 done
 
 # ----- JPackage compatibility alternatives ------
-  %__cat <<EOF >>%buildroot%_altdir/%name-javac
+  cat <<EOF >>%buildroot%_altdir/%name-javac
 %{_jvmdir}/java	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmjardir}/java	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{origin}	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
@@ -724,19 +724,19 @@ EOF
 
 %if_enabled moz_plugin
 # Mozilla plugin alternative
-%__cat <<EOF >%buildroot%_altdir/%name-mozilla
+cat <<EOF >%buildroot%_altdir/%name-mozilla
 %browser_plugins_path/libjavaplugin_oji.so	%mozilla_java_plugin_so	%priority
 EOF
 %endif	# enabled moz_plugin
 
 %if_enabled javaws
 # Java Web Start alternative
-%__cat <<EOF >%buildroot%_altdir/%name-javaws
+cat <<EOF >%buildroot%_altdir/%name-javaws
 %_bindir/javaws	%{_jvmdir}/%{jredir}/bin/javaws	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/javaws.1.gz	%_man1dir/javaws%label.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
 # ----- JPackage compatibility alternatives ------
-%__cat <<EOF >>%buildroot%_altdir/%name-javaws
+cat <<EOF >>%buildroot%_altdir/%name-javaws
 %{_datadir}/javaws	%{_jvmdir}/%{jredir}/bin/javaws	%{_jvmdir}/%{jredir}/bin/java
 EOF
 # ----- end: JPackage compatibility alternatives ------
@@ -970,6 +970,9 @@ done
 
 
 %changelog
+* Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0.22-alt4
+- added epoch to strict Requires
+
 * Wed Feb 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.0.22-alt3
 - maintainance release - synced specs
 
