@@ -2,14 +2,14 @@
 
 Name: knetstats
 Version: 1.6.2
-Release: alt4.1
+Release: alt4.1.qa1
 
 Group: Monitoring
 Summary: Network monitor applet for KDE
 Url: http://knetstats.sourceforge.net/
 License: GPL
 
-Requires: kdelibs >= %{get_version kdelibs}
+Requires: kdelibs
 
 Source: %name-%version.tar.bz2
 Source1: knetstats-ru.po
@@ -44,11 +44,11 @@ on a system tray icon
 # update Russian translation
 cat %SOURCE1 > translations/ru/messages/knetstats.po
 
-#%__subst "s/\(Wl,--no-undefined\)/-Wl,--warn-unresolved-symbols \1/g" admin/acinclude.m4.in
-#%__subst "s/\-lkdeui/-lkdeui -lpthread/g" admin/acinclude.m4.in
-#%__subst "s/\-lkdecore/-lkdecore -lpthread/g" admin/acinclude.m4.in
-#%__subst "s/\-lkdefx/-lkdefx -lpthread/g" admin/acinclude.m4.in
-#%__subst 's,\.la,\.so,' admin/acinclude.m4.in
+#sed -i "s/\(Wl,--no-undefined\)/-Wl,--warn-unresolved-symbols \1/g" admin/acinclude.m4.in
+#sed -i "s/\-lkdeui/-lkdeui -lpthread/g" admin/acinclude.m4.in
+#sed -i "s/\-lkdecore/-lkdecore -lpthread/g" admin/acinclude.m4.in
+#sed -i "s/\-lkdefx/-lkdefx -lpthread/g" admin/acinclude.m4.in
+#sed -i 's,\.la,\.so,' admin/acinclude.m4.in
 %make -f admin/Makefile.common cvs
 #./autogen.sh
 
@@ -93,6 +93,12 @@ install -m 0644 %buildroot/%_K3xdg_apps/%name.desktop %buildroot/%_K3start/%name
 %_K3start/%name.desktop
 
 %changelog
+* Tue Aug 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.6.2-alt4.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * specfile-macros-get_dep-is-deprecated for knetstats
+  * postclean-03-private-rpm-macros for the spec file
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt4.1
 - Fixed build
 
