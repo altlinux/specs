@@ -1,14 +1,13 @@
 %define xf86 XFree86
 
 Name: xfs
-Version: 1.1.0
+Version: 1.1.2
 Release: alt1
 Serial: 1
 Summary: X font server
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Obsoletes: xtt %xf86-xfs xorg-x11-xfs
 Provides: %xf86-xfs = 4.4 xorg-x11-xfs = %serial:%version-%release
@@ -17,21 +16,26 @@ Requires: xfsinfo fslsfonts
 Requires: libXfont >= 1.3.0 fonts-bitmap-misc >= 7.0.0-alt2 setup >= 2.2.11-alt1
 PreReq: shadow-utils
 
-Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+Source: %name-%version.tar.bz2
 
-BuildRequires: libfreetype-devel libFS-devel libXfont-devel libfontenc-devel
-BuildRequires: xorg-proto-devel zlib-devel xorg-util-macros xorg-xtrans-devel
+Source1: %name.config
+Source2: %name.init
+Source3: %name.sysconfig
+
+BuildRequires: xorg-fontsproto-devel xorg-xproto-devel xorg-font-utils xorg-util-macros
+
+# Automatically added by buildreq on Mon Aug 20 2012
+# optimized out: pkg-config xorg-fontsproto-devel xorg-xproto-devel
+BuildRequires: libXfont-devel xorg-xtrans-devel
 
 %description
 Xfs is the X Window System font server.  It supplies fonts to X  Window
 System display servers.
 
-%def_disable ipv6
-
 %prep
-%setup -q
-%patch -p1
+%setup
+
+cp %SOURCE1 %SOURCE2 %SOURCE3 .
 
 %build
 %autoreconf
@@ -56,7 +60,6 @@ install -pD -m644 %name.config %buildroot%_sysconfdir/X11/fs/config
 
 %preun
 %preun_service %name
-
 %files
 %dir %_sysconfdir/X11/fs
 %config(noreplace) %_sysconfdir/X11/fs/config
@@ -66,6 +69,13 @@ install -pD -m644 %name.config %buildroot%_sysconfdir/X11/fs/config
 %_man1dir/*
 
 %changelog
+* Mon Aug 20 2012 Fr. Br. George <george@altlinux.ru> 1:1.1.2-alt1
+- Autobuild version bump to 1.1.2
+- Fix buildreq
+
+* Mon Aug 20 2012 Fr. Br. George <george@altlinux.ru> 1:1.1.0-alt2
+Moving to new build scheme
+
 * Fri Jun 19 2009 Valery Inozemtsev <shrek@altlinux.ru> 1:1.1.0-alt1
 - 1.1.0
 
