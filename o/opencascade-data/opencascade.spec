@@ -1,5 +1,5 @@
 Name: opencascade-data
-Version: 6.5.2
+Version: 6.5.3
 Release: alt1
 Summary: Data for Open CASCADE
 License: BSD-like
@@ -29,6 +29,9 @@ cp -fR * %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.3-alt1
+- Version 6.5.3
+
 * Wed Feb 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.2-alt1
 - Version 6.5.2
 
