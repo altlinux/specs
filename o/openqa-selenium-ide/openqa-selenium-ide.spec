@@ -1,4 +1,4 @@
-BuildRequires: gmaven maven-plugin-descriptor
+BuildRequires: gmaven maven-plugin-descriptor gmaven-runtime-1.5
 BuildRequires: mojo-parent
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 Summary:        Webapp Test IDE
 Name:           openqa-selenium-ide
 Version:        1.0.2
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://www.openqa.org/selenium-ide/
@@ -148,6 +148,9 @@ install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-selenium-ide.p
 %{_mavendepmapfragdir}
 
 %changelog
+* Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt4_1jpp6
+- fixed build
+
 * Thu Mar 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_1jpp6
 - fixed build with maven3
 
