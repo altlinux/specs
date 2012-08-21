@@ -1,5 +1,5 @@
 Name: xpa
-Version: 2.1.13
+Version: 2.1.14
 Release: alt1
 Summary: The XPA Messaging System
 License: LGPLv2.1
@@ -9,7 +9,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar
 
-BuildPreReq: libX11-devel libgtk+2-devel libXt-devel
+BuildPreReq: libX11-devel libgtk+2-devel libXt-devel tcl-devel
 
 Requires: lib%name = %version-%release
 
@@ -89,7 +89,7 @@ This package contains documentation for the XPA messaging system.
 %configure \
 	--enable-shared=link \
 	--with-x \
-	--with-threads \
+	--with-threads=1 \
 	--with-gtk=%_includedir/gtk-2.0
 %make_build
 
@@ -127,6 +127,9 @@ rm -f doc/Makefile
 %doc doc/*
 
 %changelog
+* Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.14-alt1
+- Version 2.1.14
+
 * Tue Dec 13 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.13-alt1
 - Initial build for Sisyphus
 
