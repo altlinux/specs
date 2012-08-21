@@ -8,7 +8,7 @@
 
 Name: ejudge
 Version: 2.3.23
-Release: alt6
+Release: alt7
 
 Summary: Ejudge is a programming contest managment system
 Summary(ru_RU.UTF-8): Ejudge это система для проведения соревнований по программированию
@@ -18,16 +18,17 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: %name-svn6979.tar.bz2
+Source0: %name-svn7000.tar.bz2
 Source1: %name.rc
-Source2: ejudge-install.sh
-Source3: ejudge-README-ALT.utf8
+Source2: %name.logrotate
+Source3: ejudge-install.sh
+Source4: ejudge-README-ALT.utf8
 Source5: ejudge-cntsguide.pdf
 Source6: ejudge-refmanual.pdf
 
 Patch1: ejudge-stylecheck.patch
 Patch2: ejudge-tsc.c.patch
-Patch3: ejudge-fpc-version.patch
+Patch3: ejudge-compilers.patch
 
 BuildPreReq: flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libMySQL-devel, libcurl-devel, autoconf
 BuildRequires: libzip-devel
@@ -70,7 +71,7 @@ User and contest administrator manual for ejudge system.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-cp %SOURCE2 %SOURCE3 %SOURCE5 %SOURCE6 .
+cp %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 .
 
 bzip2 -9k ChangeLog NEWS NEWS.RUS
 
@@ -94,11 +95,12 @@ bzip2 -9k ChangeLog NEWS NEWS.RUS
 --disable-rpath                                                           \
 CPPFLAGS="-I%{_includedir}/libzip -I%{_libdir}/libzip/include"
 
-%make_build RELEASE=1 CEXTRAFLAGS="-I%{_includedir}/libzip -I%{_libdir}/libzip/include"
+%make_build RELEASE=1 CEXTRAFLAGS="-I%{_includedir}/libzip -I%{_libdir}/libzip/include -Wno-pointer-sign"
 
 %install
 %make_install DESTDIR=%buildroot install
 install -p -m755 -D %SOURCE1 %buildroot%{_initdir}/%name
+install -p -m644 -D %SOURCE2 %buildroot%{_logrotatedir}/%name
 install -d %buildroot%ejudge_home
 install -d %buildroot%ejudge_socket_dir
 install -d %buildroot%lang_config_dir
@@ -118,6 +120,7 @@ install -d %buildroot%lang_config_dir
 %{_sysconfdir}/ejudge
 %attr(2775,%ejudge_user,%ejudge_group) %dir %ejudge_home
 %{_initdir}/%name
+%{_logrotatedir}/%name
 %{_bindir}/*
 %{_includedir}/*
 %{_libdir}/libchecker*
@@ -129,8 +132,13 @@ install -d %buildroot%lang_config_dir
 %doc ejudge-*.pdf
 
 %changelog
+* Tue Aug 21 2012 Denis Kirienko <dk@altlinux.org> 2.3.23-alt7
+- SVN 7000
+- Logrotate support
+- Added reload and condreload commands to initscript
+
 * Fri Aug 10 2012 Denis Kirienko <dk@altlinux.org> 2.3.23-alt6
-- SVN 6977
+- SVN 6979
 
 * Thu Aug 09 2012 Denis Kirienko <dk@altlinux.org> 2.3.23-alt5
 - SVN 6977
