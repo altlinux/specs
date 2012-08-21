@@ -5,7 +5,7 @@
 
 Name: branding-%brand-schoolmaster
 Version: 6.0.0
-Release: alt43
+Release: alt44
 BuildArch: noarch
 
 %define theme %name
@@ -420,6 +420,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Tue Aug 21 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt44
+- update indexhtml css
+
+* Fri Aug 17 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt42.M60P.1
+- built for M60P
+
 * Fri Aug 17 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt43
 - translate indexhtml and indexhtml.desktop titles into russian
 
