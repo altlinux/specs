@@ -2,18 +2,16 @@ Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           umlgraph
-Version:        5.4
-Release:        alt1_2jpp6
+Version:        5.6
+Release:        alt1_3jpp7
 Summary:        Automated Drawing of UML Diagrams
 
 Group:          Development/Java
 License:        BSD
 URL:            http://umlgraph.org/
 Source0:        http://umlgraph.org/UMLGraph-%{version}.tar.gz
-Source1:        http://repo2.maven.org/maven2/org/umlgraph/doclet/5.1/doclet-5.1.pom
-
-Requires(post):   jpackage-utils >= 0:1.7.4
-Requires(postun): jpackage-utils >= 0:1.7.4
+Source1:        http://repo2.maven.org/maven2/org/umlgraph/umlgraph/%{version}/%{name}-%{version}.pom
+Patch0:         fix-build.patch
 
 BuildRequires: ant
 BuildRequires: graphviz
@@ -42,9 +40,10 @@ sed -i -e 's|<attribute name=\"Class-Path\" value=\"tools.jar\"/>||g' build.xml
 for f in $(find . -name "*.jar"); do
     mv $f $f.no
 done
+%patch0 -b .sav
 
 %build
-ant compile test javadocs
+ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 compile test javadocs
 
 %install
 # jars
@@ -52,9 +51,9 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -m 644 lib/UmlGraph.jar \
     $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-%add_to_maven_depmap org.umlgraph doclet %{version} JPP %{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -72,6 +71,9 @@ cp -pr javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.6-alt1_3jpp7
+- update to new release by jppimport
+
 * Tue Sep 06 2011 Igor Vlasenko <viy@altlinux.ru> 0:5.4-alt1_2jpp6
 - update to new release by jppimport
 
