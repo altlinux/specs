@@ -1,7 +1,7 @@
 Name:		flush
 Summary:	GTK-based BitTorrent client
 Version:	0.9.11
-Release:	alt1.1
+Release:	alt2
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 License:	GPLv3+
 Group:		Networking/File transfer
@@ -11,6 +11,8 @@ Source0:	%name-%version.tar.bz2
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-signals-devel
 BuildRequires: doxygen gcc-c++ libconfig-c++-devel libexpat-devel
 BuildRequires: libglademm-devel libnotify-devel libssl-devel libtorrent-rasterbar-devel libdbus-devel
+
+Patch0:		%name-0.9.11-magnet_mime_support.patch
 
 %description
 Flush is a GTK-based BitTorrent client. You can use it to download files from
@@ -33,10 +35,7 @@ Flush uses Rasterbar's version of libtorrent.
 
 %prep
 %setup
-
-# adjust desktop-file
-%__sed -i -e 's|MimeType=application/x-bittorrent|MimeType=application/x-bittorrent;|g' \
-	flush.desktop.in
+%patch0 -p1
 
 %build
 export CXXFLAGS+=-DBOOST_FILESYSTEM_VERSION=2
@@ -72,6 +71,9 @@ cd ../..
 %_pixmapsdir/*
 
 %changelog
+* Wed Aug 22 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.11-alt2
+- add magnet support in desktop-file
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.11-alt1.1
 - Rebuilt with Boost 1.49.0
 
