@@ -6,7 +6,7 @@ BuildRequires: gcc-c++ libmutil-devel
 Summary:		Minisip library providing various C++ utility classes
 Name:			libmutil
 Version:		0.8.0
-Release:		alt2_0.7.20100319svn3760.1
+Release:		alt3_0.7.20100319svn3760.1
 License:		LGPLv2+
 URL:			http://www.minisip.org/
 Group:			System/Libraries
@@ -28,7 +28,7 @@ Summary:		Development files for the libmutil library
 # %%{_datadir}/aclocal/winfuncs.m4 is under GPLv2+
 License:		LGPLv2+ and GPLv2+
 Group:			Development/C
-Requires:		libmutil = %{version}-%{release}
+Requires:		libmutil = %{?epoch:%epoch:}%{version}-%{release}
 Requires:		automake
 
 
@@ -71,6 +71,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt3_0.7.20100319svn3760.1
+- applied repocop patches
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt2_0.7.20100319svn3760.1
 - update to new release by fcimport
 
