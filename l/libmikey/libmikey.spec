@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 Summary:		A C++ library implementing the Multimedia Internet KEYing protocol
 Name:			libmikey
 Version:		0.8.0
-Release:		alt2_0.5.20100127svn3750
+Release:		alt3_0.5.20100127svn3750
 License:		LGPLv2+
 URL:			http://www.minisip.org/
 Group:			System/Libraries
@@ -30,7 +30,7 @@ It is usually embedded in SIP or RTSP session setup.
 %package devel
 Summary:		Development files for the libmikey library
 Group:			Development/C
-Requires:		libmikey = %{version}-%{release}
+Requires:		libmikey = %{?epoch:%epoch:}%{version}-%{release}
 Requires:		automake
 
 
@@ -62,6 +62,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt3_0.5.20100127svn3750
+- applied repocop patches
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt2_0.5.20100127svn3750
 - update to new release by fcimport
 
