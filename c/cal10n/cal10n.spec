@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           cal10n
 Version:        0.7.4
-Release:        alt2_5jpp6
+Release:        alt3_5jpp6
 Epoch:          0
 Summary:        Compiler assisted localization library (CAL10N)
 Group:          Development/Java
@@ -57,7 +57,7 @@ API documentation for %{name}.
 Summary:    CAL10N maven plugin
 Group:      Development/Java
 Requires: maven2
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n maven-cal10n-plugin
 Maven plugin verifying that the codes defined in
@@ -122,6 +122,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.4-alt3_5jpp6
+- applied repocop patches
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.4-alt2_5jpp6
 - fixed build with java 7
 
