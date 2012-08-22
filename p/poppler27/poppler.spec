@@ -5,27 +5,27 @@
 %undefine __libtoolize
 
 %def_disable static
-%def_disable cpp
-%def_disable glib
-%def_disable qt4
+%def_enable cpp
+%def_enable glib
+%def_enable qt4
 %def_disable qt3
-%def_disable devel
-%def_disable utils
-%def_disable xpdfheaders
-%def_disable gir
+%def_enable devel
+%def_enable utils
+%def_enable xpdfheaders
+%def_enable gir
 
 %define rname poppler
-%define somajor 26
+%define somajor 27
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_glib 8
 %define major 0
 %define minor 20
-%define bugfix 2
+%define bugfix 3
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 %define poppler_devel_name lib%rname-devel
 %define poppler_cpp_devel_name lib%rname-cpp-devel
 %define poppler_glib_devel_name lib%rname-glib-devel
@@ -119,9 +119,6 @@ to break even.
 Summary: Qt4 frontend library for %name
 Group: System/Libraries
 Requires: lib%name = %version-%release
-%if_enabled qt4
-Requires: libqt4-core >= %{get_version libqt4-core}
-%endif
 %popIF_ver_gteq "%major.%minor" "0.10"
 Provides: libpoppler08-qt4 = %version-%release
 Obsoletes: libpoppler08-qt4 < %version-%release
@@ -339,8 +336,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Wed Aug 22 2012 Sergey V Turchin <zerg@altlinux.org> 0.20.2-alt2
-- disable all except libpoppler
+* Wed Aug 22 2012 Sergey V Turchin <zerg@altlinux.org> 0.20.3-alt1
+- new version
 
 * Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 0.20.2-alt1
 - new version
