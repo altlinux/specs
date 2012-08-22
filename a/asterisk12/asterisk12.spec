@@ -1,4 +1,4 @@
-%define svn_revision 371391
+%define svn_revision 371628
 
 Name: asterisk12
 Summary: Open source PBX
@@ -1224,6 +1224,9 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl.so.1
 
 %changelog
+* Wed Aug 22 2012 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.371628
+- update from svn revision 371628
+
 * Fri Aug 17 2012 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.371391
 - rename package with trunk to 'asterisk12'
 
