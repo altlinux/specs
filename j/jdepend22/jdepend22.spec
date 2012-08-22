@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jdepend22
 Version:        2.2
-Release:        alt1_5jpp5
+Release:        alt2_5jpp5
 Epoch:          0
 Summary:        Java Design Quality Metrics
 License:        Clarkware License
@@ -75,7 +75,7 @@ Javadoc for %{name}.
 %package demo
 Summary:        Demos for %{name}
 Group:          Development/Java
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
@@ -132,6 +132,9 @@ cp -pr sample $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt2_5jpp5
+- applied repocop patches
+
 * Tue May 19 2009 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_5jpp5
 - new jpp release
 
