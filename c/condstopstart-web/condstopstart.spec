@@ -5,7 +5,7 @@
 
 Name: condstopstart-web
 Version: 0.3
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 Summary: Condstopstart for web serwers
 License: %gpl2plus
@@ -44,19 +44,23 @@ for condcommand in condstop condstart condstop-rpm condstart-rpm; do
 	" $condcommandfile
 done
 
-install -D %SOURCE10 %buildroot%_sysconfdir/tmpfiles.d/%name
+install -pD -m 644 %SOURCE10 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 sed -i "
 	s|@RUNDIR@|%condstopstart_webrundir|g
-" %buildroot%_sysconfdir/tmpfiles.d/%name
+" %buildroot%_sysconfdir/tmpfiles.d/*
 
 %files
-%config %_sysconfdir/tmpfiles.d/%name
+%config %_sysconfdir/tmpfiles.d/*
 %attr(755,root,root) %dir %condstopstart_webdir/
 %attr(755,root,root) %dir %condstopstart_webrundir/
 %_sbindir/*
 
 %changelog
-* Tue Aug  07 2012 Aleksey Avdeev <solo@altlinux.ru> 0.3-alt1
+* Wed Aug 22 2012 Aleksey Avdeev <solo@altlinux.ru> 0.3-alt2
+- Rename %%_sysconfdir/tmpfiles.d/%%name to
+  %%_sysconfdir/tmpfiles.d/%%name.conf and fix permissions
+
+* Tue Aug 07 2012 Aleksey Avdeev <solo@altlinux.ru> 0.3-alt1
 - Fix: move %%_sysconfdir/%%name to %%_sysconfdir/tmpfiles.d/%%name
 
 * Mon Aug 06 2012 Aleksey Avdeev <solo@altlinux.ru> 0.2-alt1
