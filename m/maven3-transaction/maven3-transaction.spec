@@ -5,13 +5,11 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.2jpp
+Release: alt0.3jpp
 
-Requires: plexus-runtime-builder
+Requires: jbossts
 #Requires: maven-embedder
-Requires: maven-archetype2
 Requires: plexus-maven-plugin
-#Requires: plexus-container-artifact
 Requires: mojo-maven2-plugins
 Requires: maven-ant-tasks
 Requires: logback
@@ -19,7 +17,6 @@ Requires: hawtjni
 Requires: junit4
 Requires: jsontools
 Requires: gmaven
-Requires: jbossorg-docbook-xslt
 Requires: eclipse-mylyn-commons
 Requires: apache-commons-logging
 Requires: eclipse
@@ -38,6 +35,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.3jpp
+- updated dependencies
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.2jpp
 - updated dependencies
 
