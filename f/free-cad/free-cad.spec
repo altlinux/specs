@@ -1,9 +1,9 @@
 %define oname freecad
-%define ldir %_libexecdir/%oname
+%define ldir %_libdir/%oname
 
 Name: free-cad
-Version: 0.13.5438
-Release: alt3.svn20120226
+Version: 0.13.5443
+Release: alt1.svn20120331
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
 Group: Graphics
@@ -173,8 +173,8 @@ popd
 
 install -d %buildroot%_bindir
 install -d %buildroot%_libdir
-ln -s %_libexecdir/%oname/bin/FreeCAD %buildroot%_bindir/%oname
-ln -s %_libexecdir/%oname/bin/FreeCADCmd %buildroot%_bindir/%{oname}cmd
+ln -s %ldir/bin/FreeCAD %buildroot%_bindir/%oname
+ln -s %ldir/bin/FreeCADCmd %buildroot%_bindir/%{oname}cmd
 install -p -m755 package/debian/mime/%oname-thumbnailer \
 	src/Tools/ImageTools/ImageConv/ImageConv \
 	%buildroot%_bindir
@@ -214,18 +214,18 @@ install $(find ./ -name _coin.so) -m644 %buildroot%python_sitelibdir
 install $(find ./ -name _soqt.so) -m644 %buildroot%python_sitelibdir
 
 install -d %buildroot%_bindir
-install -d %buildroot%_libexecdir/%oname/bin
+install -d %buildroot%ldir/bin
 pushd %buildroot%ldir/bin
 for i in $(ls); do
 	ln -s %ldir/bin/$i %buildroot%_bindir/
 #ifarch x86_64
-#	ln -s %ldir/bin/$i %buildroot%_libdir/%oname/bin/
+#	ln -s %ldir/bin/$i %buildroot%ldir/bin/
 #endif
 done
 popd
 
 #ifarch x86_64
-#mv %buildroot%_libdir/%oname/lib/* %buildroot%ldir/lib/
+#mv %buildroot%ldir/lib/* %buildroot%ldir/lib/
 #endif
 
 for i in %python_sitelibdir/_coin.so \
@@ -248,10 +248,10 @@ fi
 %files -f %name.lang
 %doc ChangeLog.txt copying.lib package/debian/changelog
 %dir %ldir
-#exclude %_libdir/%oname/lib/Robot*
+#exclude %ldir/lib/Robot*
 %_bindir/*
 #ifarch x86_64
-#_libdir/%oname
+#ldir
 #endif
 %ldir/bin
 %ldir/Mod
@@ -288,6 +288,9 @@ fi
 %_libexecdir/qt4/plugins/designer/*
 
 %changelog
+* Wed Aug 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.5443-alt1.svn20120331
+- Version 0.13.5443
+
 * Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.5438-alt3.svn20120226
 - Rebuilt with Boost 1.49.0
 
