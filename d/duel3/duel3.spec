@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ unzip
 %define snapshot 20060225
 Name:           duel3
 Version:        0.1
-Release:        alt3_0.13.20060225
+Release:        alt3_0.13.20060225.qa1
 Summary:        One on one spaceship duel in a 2D arena
 Group:          Games/Other
 License:        BSD
@@ -115,6 +115,12 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
+# which is normally a Windows image thumbnail database. 
+# Such databases are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
+
 
 %files
 %doc Source/readme.txt license.txt music-credits.txt
@@ -125,6 +131,11 @@ fi
 
 
 %changelog
+* Wed Aug 22 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.1-alt3_0.13.20060225.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * windows-thumbnail-database-in-package for duel3
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_0.13.20060225
 - update to new release by fcimport
 
