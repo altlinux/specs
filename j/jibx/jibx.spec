@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: jibx		
 Version:	1.2.3	
-Release:	alt1_1jpp6
+Release:	alt2_1jpp6
 Summary:	Framework for binding XML data to Java objects 
 
 Group:		Development/Java
@@ -39,7 +39,7 @@ work with data from XML documents using your own class structures.
 %package javadoc
 Summary: Javadocs for %{name}
 Group: Development/Java
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires: jpackage-utils
 BuildArch: noarch
 
@@ -131,6 +131,9 @@ cp -rp %{_builddir}/%{name}/build/docs/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt2_1jpp6
+- applied repocop patches
+
 * Fri Jan 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt1_1jpp6
 - new version
 
