@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt6
+Release: %branch_release alt7
 
 License: %asl
 Group: System/Servers
@@ -533,7 +533,7 @@ This package contains the Apache server printenv scripts.
 
 %package cgi-bin
 Summary: cgi-bin for Apache
-Summary(ru_RU.KOI8-R): cgi-bin ??? Apache
+Summary(ru_RU.UTF-8): cgi-bin для Apache
 Group: System/Servers
 BuildArch: noarch
 Provides: webserver-cgi-bin
@@ -1673,6 +1673,9 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Wed Aug 22 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt7
+- Convert Summary(ru_RU.KOI8-R) for subpackage %%name-cgi-bin to ru_RU.UTF-8
+
 * Tue Aug 21 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt6
 - Add %%_unitdir/%%apache2_dname.service to %%name-base subpackage
 - Rename %%_sysconfdir/tmpfiles.d/%%name to
