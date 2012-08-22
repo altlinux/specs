@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           junit44
 Version:        4.4
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        Java regression test package
 License:        CPL
@@ -95,7 +95,7 @@ Javadoc for %{name}.
 %package demo
 Group:          Development/Java
 Summary:        Demos for %{name}
-Requires: %{name} = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %if %{gcj_support}
 BuildRequires: java-gcj-compat-devel
@@ -171,6 +171,9 @@ ln -s junit-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.4-alt2_1jpp6
+- applied repocop patches
+
 * Sat Mar 12 2011 Igor Vlasenko <viy@altlinux.ru> 0:4.4-alt1_1jpp6
 - jpp 6 release
 
