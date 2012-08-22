@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-mkimage
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Create distribution images
@@ -44,5 +44,8 @@ install -pDm755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Wed Aug 22 2012 Michael Shigorin <mike@altlinux.org> 0.2-alt1
+- UI improvements and a tiny reliability fix (thx dkr@)
+
 * Fri May 11 2012 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - initial release
