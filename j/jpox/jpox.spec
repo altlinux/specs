@@ -45,7 +45,7 @@ BuildRequires: jpackage-1.5.0-compat
 Name:           jpox
 Summary:        Java Persistent Objects
 Version:        1.1.1
-Release:        alt5_2jpp5
+Release:        alt6_2jpp5
 Epoch:          0
 URL:            http://www.jpox.org
 License:        Apache License, Version 2.0
@@ -195,7 +195,7 @@ Requires: log4j
 %package enhancer
 Group:          Development/Java
 Summary:        JPOX Enhancer
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: ant
 Requires: bcel
 Requires: jdo20
@@ -207,7 +207,7 @@ Requires: log4j
 %package c3p0
 Group:          Development/Java
 Summary:        JPOX C3P0 Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: c3p0
 Requires: jdo20
 Requires: log4j
@@ -218,7 +218,7 @@ Requires: log4j
 %package dbcp
 Group:          Development/Java
 Summary:        JPOX DBCP Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: jakarta-commons-collections
 Requires: jakarta-commons-dbcp
 Requires: jakarta-commons-pool
@@ -231,7 +231,7 @@ Requires: log4j
 %package ehcache
 Group:          Development/Java
 Summary:        JPOX Ehcache Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: ehcache
 Requires: jdo20
 Requires: log4j
@@ -242,7 +242,7 @@ Requires: log4j
 %package java5
 Group:          Development/Java
 Summary:        JPOX Java5 Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: jdo20
 Requires: log4j
 
@@ -252,7 +252,7 @@ Requires: log4j
 %package maven-plugin
 Group:          Development/Java
 Summary:        JPOX Maven1 Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: maven1
 Requires: jdo20
 
@@ -262,7 +262,7 @@ Requires: jdo20
 %package maven-faq-plugin
 Group:          Development/Java
 Summary:        JPOX Maven1 FAQ Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: maven1
 Requires: jdo20
 
@@ -272,7 +272,7 @@ Requires: jdo20
 %package oscache
 Group:          Development/Java
 Summary:        JPOX OSCache Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: oscache
 Requires: jdo20
 
@@ -282,7 +282,7 @@ Requires: jdo20
 %package spatial
 Group:          Development/Java
 Summary:        JPOX Spatial Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: jdo20
 Requires: log4j
 
@@ -292,7 +292,7 @@ Requires: log4j
 %package spring
 Group:          Development/Java
 Summary:        JPOX Spring Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: jdo20
 Requires: log4j
 Requires: spring-core
@@ -304,7 +304,7 @@ Requires: spring-beans
 %package swarmcache
 Group:          Development/Java
 Summary:        JPOX SwarmCache Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires: jdo20
 Requires: swarmcache
 
@@ -314,8 +314,8 @@ Requires: swarmcache
 %package tangosol
 Group:          Development/Java
 Summary:        JPOX TangosolCache Plugin
-Requires: %{name}-core = %{version}-%{release}
-Requires: %{name}-thirdparty = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-thirdparty = %{?epoch:%epoch:}%{version}-%{release}
 Requires: jdo20
 Requires: log4j
 
@@ -325,7 +325,7 @@ Requires: log4j
 %package thirdparty
 Group:          Development/Java
 Summary:        JPOX ThirdParty Plugin
-Requires: %{name}-core = %{version}-%{release}
+Requires: %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 
 %description thirdparty
 %{summary}.
@@ -798,6 +798,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt6_2jpp5
+- applied repocop patches
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt5_2jpp5
 - fixed build with moved maven1
 
