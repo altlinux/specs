@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 Summary:		A C++ library implementing the SIP protocol
 Name:			libmsip
 Version:		0.8.0
-Release:		alt2_0.4.20100629svn3775
+Release:		alt3_0.4.20100629svn3775
 License:		LGPLv2+
 URL:			http://www.minisip.org/
 Group:			System/Libraries
@@ -28,7 +28,7 @@ RFC3261.
 %package devel
 Summary:		Development files for the libmsip library
 Group:			Development/C
-Requires:		libmsip = %{version}-%{release}
+Requires:		libmsip = %{?epoch:%epoch:}%{version}-%{release}
 Requires:		automake
 
 
@@ -61,6 +61,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt3_0.4.20100629svn3775
+- applied repocop patches
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt2_0.4.20100629svn3775
 - update to new release by fcimport
 
