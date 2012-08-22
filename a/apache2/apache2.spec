@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt5
+Release: %branch_release alt6
 
 License: %asl
 Group: System/Servers
@@ -46,8 +46,8 @@ Url: http://httpd.apache.org/
 Packager: Aleksey Avdeev <solo@altlinux.ru>
 
 Summary: The most widely used Web server on the Internet
-Summary(ru_RU.KOI8-R): Самый популярный веб-сервер Internet
-Summary(uk_UA.KOI8-U): Найб╕льш популярний веб-сервер Internet
+Summary(ru_RU.UTF-8): п║п╟п╪я▀п╧ п©п╬п©я┐п╩я▐я─п╫я▀п╧ п╡п╣п╠-я│п╣я─п╡п╣я─ Internet
+Summary(uk_UA.UTF-8): п²п╟п╧п╠я√п╩я▄я┬ п©п╬п©я┐п╩я▐я─п╫п╦п╧ п╡п╣п╠-я│п╣я─п╡п╣я─ Internet
 
 # SVN URL: http://svn.apache.org/repos/asf/httpd/httpd/tags/2.2.4
 Source0: httpd-%version.tar
@@ -64,6 +64,7 @@ Source15: tmpfiles.conf
 
 Source35: httpd2.init.Sisyphus
 Source36: htcacheclean.init
+Source37: httpd.service
 
 # scripts for control
 Source40: cgi-bin_test-cgi.sh
@@ -85,10 +86,10 @@ Source63: server-condstart-rpm.sh
 # + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-%version-alt-all-0.2.patch
+Patch1: apache2-%version-alt-all-0.3.patch
 
 BuildRequires(pre): rpm-macros-branch
-BuildRequires(pre): rpm-macros-apache2 >= 3.7
+BuildRequires(pre): rpm-macros-apache2 >= 3.8
 BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
 BuildPreReq: %_datadir/rpm-build-rpm-eval/rpm-eval.sh
@@ -136,14 +137,14 @@ BuildPreReq: libtool >= 3:2.2.6
 Apache is a powerful, full-featured, efficient and freely-available
 Web server.
 
-%description -l ru_RU.KOI8-R
-Apache - мощный, функциональный, высокопроизводительный и
-свободно распространяемый веб-сервер.
+%description -l ru_RU.UTF-8
+Apache - п╪п╬я┴п╫я▀п╧, я└я┐п╫п╨я├п╦п╬п╫п╟п╩я▄п╫я▀п╧, п╡я▀я│п╬п╨п╬п©я─п╬п╦п╥п╡п╬п╢п╦я┌п╣п╩я▄п╫я▀п╧ п╦
+я│п╡п╬п╠п╬п╢п╫п╬ я─п╟я│п©я─п╬я│я┌я─п╟п╫я▐п╣п╪я▀п╧ п╡п╣п╠-я│п╣я─п╡п╣я─.
 
 %package base
 Summary: The most widely used Web server on the Internet (base)
-Summary(ru_RU.KOI8-R): Самый популярный веб-сервер Internet (база)
-Summary(uk_UA.KOI8-U): Найб╕льш популярний веб-сервер Internet (база)
+Summary(ru_RU.UTF-8): п║п╟п╪я▀п╧ п©п╬п©я┐п╩я▐я─п╫я▀п╧ п╡п╣п╠-я│п╣я─п╡п╣я─ Internet (п╠п╟п╥п╟)
+Summary(uk_UA.UTF-8): п²п╟п╧п╠я√п╩я▄я┬ п©п╬п©я┐п╩я▐я─п╫п╦п╧ п╡п╣п╠-я│п╣я─п╡п╣я─ Internet (п╠п╟п╥п╟)
 Group: System/Servers
 
 Provides: webserver
@@ -181,17 +182,17 @@ Web server.
 This package does not require a webserver-cgi-bin, webserver-html and
 webserver-icons.
 
-%description -l ru_RU.KOI8-R base
-Apache - мощный, функциональный, высокопроизводительный и
-свободно распространяемый веб-сервер.
+%description -l ru_RU.UTF-8 base
+Apache - п╪п╬я┴п╫я▀п╧, я└я┐п╫п╨я├п╦п╬п╫п╟п╩я▄п╫я▀п╧, п╡я▀я│п╬п╨п╬п©я─п╬п╦п╥п╡п╬п╢п╦я┌п╣п╩я▄п╫я▀п╧ п╦
+я│п╡п╬п╠п╬п╢п╫п╬ я─п╟я│п©я─п╬я│я┌я─п╟п╫я▐п╣п╪я▀п╧ п╡п╣п╠-я│п╣я─п╡п╣я─.
 
-Данный пакет не требует наличия webserver-cgi-bin, webserver-html и
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ п╫п╣ я┌я─п╣п╠я┐п╣я┌ п╫п╟п╩п╦я┤п╦я▐ webserver-cgi-bin, webserver-html п╦
 webserver-icons.
 
 %package full
 Summary: The most widely used Web server on the Internet (full)
-Summary(ru_RU.KOI8-R): Самый популярный веб-сервер Internet (full)
-Summary(uk_UA.KOI8-U): Найб╕льш популярний веб-сервер Internet (full)
+Summary(ru_RU.UTF-8): п║п╟п╪я▀п╧ п©п╬п©я┐п╩я▐я─п╫я▀п╧ п╡п╣п╠-я│п╣я─п╡п╣я─ Internet (full)
+Summary(uk_UA.UTF-8): п²п╟п╧п╠я√п╩я▄я┬ п©п╬п©я┐п╩я▐я─п╫п╦п╧ п╡п╣п╠-я│п╣я─п╡п╣я─ Internet (full)
 Group: System/Servers
 
 Requires: %name = %version-%release
@@ -205,16 +206,16 @@ Web server.
 
 This package requires a %name-cgi-bin, %name-html and %name-icons.
 
-%description -l ru_RU.KOI8-R full
-Apache - мощный, функциональный, высокопроизводительный и
-свободно распространяемый веб-сервер.
+%description -l ru_RU.UTF-8 full
+Apache - п╪п╬я┴п╫я▀п╧, я└я┐п╫п╨я├п╦п╬п╫п╟п╩я▄п╫я▀п╧, п╡я▀я│п╬п╨п╬п©я─п╬п╦п╥п╡п╬п╢п╦я┌п╣п╩я▄п╫я▀п╧ п╦
+я│п╡п╬п╠п╬п╢п╫п╬ я─п╟я│п©я─п╬я│я┌я─п╟п╫я▐п╣п╪я▀п╧ п╡п╣п╠-я│п╣я─п╡п╣я─.
 
-Данный пакет требует наличия %name-cgi-bin, %name-html и %name-icons.
+п■п╟п╫п╫я▀п╧ п©п╟п╨п╣я┌ я┌я─п╣п╠я┐п╣я┌ п╫п╟п╩п╦я┤п╦я▐ %name-cgi-bin, %name-html п╦ %name-icons.
 
 %package common
 Summary: Files common for %name installations
-Summary(ru_RU.KOI8-R): Общие файлы для инсталляции %name
-Summary(uk_UA.KOI8-U): Сп╕льн╕ файли для ╕нсталяц╕╖ %name
+Summary(ru_RU.UTF-8): п·п╠я┴п╦п╣ я└п╟п╧п╩я▀ п╢п╩я▐ п╦п╫я│я┌п╟п╩п╩я▐я├п╦п╦ %name
+Summary(uk_UA.UTF-8): п║п©я√п╩я▄п╫я√ я└п╟п╧п╩п╦ п╢п╩я▐ я√п╫я│я┌п╟п╩я▐я├я√я≈ %name
 Group: System/Servers
 Conflicts: %name < 2.2.4-alt17
 PreReq: webserver-common
@@ -255,17 +256,17 @@ Provides: %apache2_lockdir
 This package contains files required for both %name package
 installations. Install this if you want to install Apache.
 
-%description -l ru_RU.KOI8-R common
-В этом пакете находятся файлы, необходимые для %name.
-Установите, если собираетесь устанавливать Apache.
+%description -l ru_RU.UTF-8 common
+п▓ я█я┌п╬п╪ п©п╟п╨п╣я┌п╣ п╫п╟я┘п╬п╢я▐я┌я│я▐ я└п╟п╧п╩я▀, п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ %name.
+пёя│я┌п╟п╫п╬п╡п╦я┌п╣, п╣я│п╩п╦ я│п╬п╠п╦я─п╟п╣я┌п╣я│я▄ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟я┌я▄ Apache.
 
-%description -l uk_UA.KOI8-U common
-Цей пакунок м╕стить файли, як╕ необх╕дн╕ для %name.
-Встанов╕ть його, якщо збира╓тесь використовувати Apache.
+%description -l uk_UA.UTF-8 common
+п╕п╣п╧ п©п╟п╨я┐п╫п╬п╨ п╪я√я│я┌п╦я┌я▄ я└п╟п╧п╩п╦, я▐п╨я√ п╫п╣п╬п╠я┘я√п╢п╫я√ п╢п╩я▐ %name.
+п▓я│я┌п╟п╫п╬п╡я√я┌я▄ п╧п╬пЁп╬, я▐п╨я┴п╬ п╥п╠п╦я─п╟я■я┌п╣я│я▄ п╡п╦п╨п╬я─п╦я│я┌п╬п╡я┐п╡п╟я┌п╦ Apache.
 
 %package configs-A1PROXIED
 Summary: This is a hack to run proxified Apache2 in case Apache1 is running
-Summary(ru_RU.KOI8-R): Хак для поддержки проксирования Apache2 через Apache1, при его запуске
+Summary(ru_RU.UTF-8): п╔п╟п╨ п╢п╩я▐ п©п╬п╢п╢п╣я─п╤п╨п╦ п©я─п╬п╨я│п╦я─п╬п╡п╟п╫п╦я▐ Apache2 я┤п╣я─п╣п╥ Apache1, п©я─п╦ п╣пЁп╬ п╥п╟п©я┐я│п╨п╣
 Group: System/Servers
 BuildArch: noarch
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
@@ -275,12 +276,12 @@ Requires: %_initdir/%apache2_dname
 %description configs-A1PROXIED
 This is a hack to run proxified Apache2 in case Apache1 is running.
 
-%description -l ru_RU.KOI8-R configs-A1PROXIED
-Хак для поддержки проксирования Apache2 через Apache1, при его запуске.
+%description -l ru_RU.UTF-8 configs-A1PROXIED
+п╔п╟п╨ п╢п╩я▐ п©п╬п╢п╢п╣я─п╤п╨п╦ п©я─п╬п╨я│п╦я─п╬п╡п╟п╫п╦я▐ Apache2 я┤п╣я─п╣п╥ Apache1, п©я─п╦ п╣пЁп╬ п╥п╟п©я┐я│п╨п╣.
 
 %package httpd-worker
 Summary: High speed threaded model for Apache HTTPD 2.1
-Summary(ru_RU.KOI8-R): Высокоскоростная нитевая модель для Apache HTTPD 2.1
+Summary(ru_RU.UTF-8): п▓я▀я│п╬п╨п╬я│п╨п╬я─п╬я│я┌п╫п╟я▐ п╫п╦я┌п╣п╡п╟я▐ п╪п╬п╢п╣п╩я▄ п╢п╩я▐ Apache HTTPD 2.1
 Group: System/Servers
 PreReq: %name-common
 %if "%alternatives_min_ver" != ""
@@ -300,7 +301,7 @@ has a smaller memory footprint than the prefork MPM.
 
 %package httpd-prefork
 Summary: Traditional model for Apache HTTPD 2.1
-Summary(ru_RU.KOI8-R): Традиционная модель для Apache HTTPD 2.1
+Summary(ru_RU.UTF-8): п╒я─п╟п╢п╦я├п╦п╬п╫п╫п╟я▐ п╪п╬п╢п╣п╩я▄ п╢п╩я▐ Apache HTTPD 2.1
 Group: System/Servers
 PreReq: %name-common
 %if "%alternatives_min_ver" != ""
@@ -324,7 +325,7 @@ It is not as fast, but is considered to be more stable.
 
 %package httpd-event
 Summary: Event driven model for Apache HTTPD 2.1
-Summary(ru_RU.KOI8-R): Событийная модель для Apache HTTPD 2.1
+Summary(ru_RU.UTF-8): п║п╬п╠я▀я┌п╦п╧п╫п╟я▐ п╪п╬п╢п╣п╩я▄ п╢п╩я▐ Apache HTTPD 2.1
 Group: System/Servers
 PreReq: %name-common
 %if "%alternatives_min_ver" != ""
@@ -386,7 +387,7 @@ for your users, without kludges like PHP's safe_mode.
 
 %package -n rpm-build-%name
 Summary: RPM helper to rebuild Web servers and apps packages
-Summary(ru_RU.KOI8-R): Набор утилит для автоматической Web серверов и приложений
+Summary(ru_RU.UTF-8): п²п╟п╠п╬я─ я┐я┌п╦п╩п╦я┌ п╢п╩я▐ п╟п╡я┌п╬п╪п╟я┌п╦я┤п╣я│п╨п╬п╧ Web я│п╣я─п╡п╣я─п╬п╡ п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
 Group: Development/Other
 
 Requires: rpm-macros-apache2 >= 3.1
@@ -395,13 +396,13 @@ Requires: rpm-macros-apache2 >= 3.1
 These helper provide possibility to rebuild Web servers and applications
 packages by some ALT Linux Web Packaging Policy.
 
-%description -n rpm-build-%name -l ru_RU.KOI8-R
-Набор утилит для обеспечения сборки пакетов веб серверов и приложений
-в соответствии с ALT Linux Web Packaging Policy.
+%description -n rpm-build-%name -l ru_RU.UTF-8
+п²п╟п╠п╬я─ я┐я┌п╦п╩п╦я┌ п╢п╩я▐ п╬п╠п╣я│п©п╣я┤п╣п╫п╦я▐ я│п╠п╬я─п╨п╦ п©п╟п╨п╣я┌п╬п╡ п╡п╣п╠ я│п╣я─п╡п╣я─п╬п╡ п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
+п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ ALT Linux Web Packaging Policy.
 
 %package devel
 Summary: Module development tools for the Apache web server
-Summary(ru_RU.KOI8-R): Средства разработки модулей для веб-сервера Apache
+Summary(ru_RU.UTF-8): п║я─п╣п╢я│я┌п╡п╟ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п╪п╬п╢я┐п╩п╣п╧ п╢п╩я▐ п╡п╣п╠-я│п╣я─п╡п╣я─п╟ Apache
 Group: Development/C
 Obsoletes: secureweb-devel
 PreReq: %name-base = %version-%release
@@ -422,16 +423,16 @@ If you are installing the Apache Web server and
 you want to be able to compile or develop additional modules
 for Apache, you'll need to install this package.
 
-%description -l ru_RU.KOI8-R devel
-Пакет содержит заголовочные файлы из исходных текстов веб-сервера Apache,
-необходимые для сборки динамически подключаемых модулей (DSO).
+%description -l ru_RU.UTF-8 devel
+п÷п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╥п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀ п╦п╥ п╦я│я┘п╬п╢п╫я▀я┘ я┌п╣п╨я│я┌п╬п╡ п╡п╣п╠-я│п╣я─п╡п╣я─п╟ Apache,
+п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╢п╩я▐ я│п╠п╬я─п╨п╦ п╢п╦п╫п╟п╪п╦я┤п╣я│п╨п╦ п©п╬п╢п╨п╩я▌я┤п╟п╣п╪я▀я┘ п╪п╬п╢я┐п╩п╣п╧ (DSO).
 
-Если Вы устанавливаете веб-сервер Apache и собираетесь компилировать или
-разрабатывать для него дополнительные модули, Вам нужно установить этот пакет.
+п∙я│п╩п╦ п▓я▀ я┐я│я┌п╟п╫п╟п╡п╩п╦п╡п╟п╣я┌п╣ п╡п╣п╠-я│п╣я─п╡п╣я─ Apache п╦ я│п╬п╠п╦я─п╟п╣я┌п╣я│я▄ п╨п╬п╪п©п╦п╩п╦я─п╬п╡п╟я┌я▄ п╦п╩п╦
+я─п╟п╥я─п╟п╠п╟я┌я▀п╡п╟я┌я▄ п╢п╩я▐ п╫п╣пЁп╬ п╢п╬п©п╬п╩п╫п╦я┌п╣п╩я▄п╫я▀п╣ п╪п╬п╢я┐п╩п╦, п▓п╟п╪ п╫я┐п╤п╫п╬ я┐я│я┌п╟п╫п╬п╡п╦я┌я▄ я█я┌п╬я┌ п©п╟п╨п╣я┌.
 
 %package docs
 Summary: Apache Manual
-Summary(ru_RU.KOI8-R): Документация по Apache
+Summary(ru_RU.UTF-8): п■п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▐ п©п╬ Apache
 Group: Books/Other
 AutoReq: no
 BuildArch: noarch
@@ -439,12 +440,12 @@ BuildArch: noarch
 %description docs
 This package contains the Apache server documentation in HTML format.
 
-%description -l ru_RU.KOI8-R docs
-Этот пакет содержит документацию к веб-серверу Apache в формате HTML.
+%description -l ru_RU.UTF-8 docs
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▌ п╨ п╡п╣п╠-я│п╣я─п╡п╣я─я┐ Apache п╡ я└п╬я─п╪п╟я┌п╣ HTML.
 
 %package manual
 Summary: Apache Manual for www
-Summary(ru_RU.KOI8-R): Документация по Apache для www
+Summary(ru_RU.UTF-8): п■п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▐ п©п╬ Apache п╢п╩я▐ www
 Group: Books/Other
 Requires: %name-docs
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
@@ -458,13 +459,13 @@ BuildArch: noarch
 This package contains the Apache server documentation in HTML format,
 for www server using.
 
-%description -l ru_RU.KOI8-R manual
-Этот пакет содержит документацию к веб-серверу Apache в формате HTML,
-для применения на www сервере.
+%description -l ru_RU.UTF-8 manual
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▌ п╨ п╡п╣п╠-я│п╣я─п╡п╣я─я┐ Apache п╡ я└п╬я─п╪п╟я┌п╣ HTML,
+п╢п╩я▐ п©я─п╦п╪п╣п╫п╣п╫п╦я▐ п╫п╟ www я│п╣я─п╡п╣я─п╣.
 
 %package manual-addons
 Summary: manual-addons dir
-Summary(ru_RU.KOI8-R): Каталог manual-addons
+Summary(ru_RU.UTF-8): п п╟я┌п╟п╩п╬пЁ manual-addons
 Group: Books/Other
 BuildArch: noarch
 PreReq: webserver-common
@@ -472,12 +473,12 @@ PreReq: webserver-common
 %description manual-addons
 This package contains the manual-addons dir for Apache server.
 
-%description -l ru_RU.KOI8-R manual-addons
-Этот пакет содержит каталог manual-addons для веб-сервера Apache.
+%description -l ru_RU.UTF-8 manual-addons
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╨п╟я┌п╟п╩п╬пЁ manual-addons п╢п╩я▐ п╡п╣п╠-я│п╣я─п╡п╣я─п╟ Apache.
 
 %package datadirs
 Summary: data dirs for Apache
-Summary(ru_RU.KOI8-R): каталоги данных для Apache
+Summary(ru_RU.UTF-8): п╨п╟я┌п╟п╩п╬пЁп╦ п╢п╟п╫п╫я▀я┘ п╢п╩я▐ Apache
 Group: System/Servers
 BuildArch: noarch
 
@@ -487,12 +488,12 @@ Provides: %_datadir/%name/cgi-bin
 %description datadirs
 This package contains the Apache server data dirs.
 
-%description -l ru_RU.KOI8-R datadirs
-Этот пакет содержит каталоги данных к веб-серверу Apache.
+%description -l ru_RU.UTF-8 datadirs
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╨п╟я┌п╟п╩п╬пЁп╦ п╢п╟п╫п╫я▀я┘ п╨ п╡п╣п╠-я│п╣я─п╡п╣я─я┐ Apache.
 
 %package cgi-bin-test-cgi
 Summary: cgi-bin/test-cgi for Apache
-Summary(ru_RU.KOI8-R): cgi-bin/test-cgi для Apache
+Summary(ru_RU.UTF-8): cgi-bin/test-cgi п╢п╩я▐ Apache
 Group: System/Servers
 BuildArch: noarch
 PreReq: webserver-common
@@ -507,12 +508,12 @@ Requires: %_datadir/%name/cgi-bin
 %description cgi-bin-test-cgi
 This package contains the Apache server test-cgi scripts.
 
-%description -l ru_RU.KOI8-R cgi-bin-test-cgi
-Этот пакет содержит test-cgi скрипт для веб-сервера Apache.
+%description -l ru_RU.UTF-8 cgi-bin-test-cgi
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ test-cgi я│п╨я─п╦п©я┌ п╢п╩я▐ п╡п╣п╠-я│п╣я─п╡п╣я─п╟ Apache.
 
 %package cgi-bin-printenv
 Summary: cgi-bin/printenv for Apache
-Summary(ru_RU.KOI8-R): cgi-bin/printenv для Apache
+Summary(ru_RU.UTF-8): cgi-bin/printenv п╢п╩я▐ Apache
 Group: System/Servers
 BuildArch: noarch
 PreReq: webserver-common
@@ -527,12 +528,12 @@ Requires: %_datadir/%name/cgi-bin
 %description cgi-bin-printenv
 This package contains the Apache server printenv scripts.
 
-%description -l ru_RU.KOI8-R cgi-bin-printenv
-Этот пакет содержит printenv скрипт для веб-сервера Apache.
+%description -l ru_RU.UTF-8 cgi-bin-printenv
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ printenv я│п╨я─п╦п©я┌ п╢п╩я▐ п╡п╣п╠-я│п╣я─п╡п╣я─п╟ Apache.
 
 %package cgi-bin
 Summary: cgi-bin for Apache
-Summary(ru_RU.KOI8-R): cgi-bin для Apache
+Summary(ru_RU.KOI8-R): cgi-bin ??? Apache
 Group: System/Servers
 BuildArch: noarch
 Provides: webserver-cgi-bin
@@ -544,12 +545,12 @@ Conflicts: apache-cgi-bin
 %description cgi-bin
 This package contains the Apache server cgi-bin dir and cgi scripts.
 
-%description -l ru_RU.KOI8-R cgi-bin
-Этот пакет содержит каталог cgi-bin с типовыми скриптами к веб-серверу Apache.
+%description -l ru_RU.UTF-8 cgi-bin
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╨п╟я┌п╟п╩п╬пЁ cgi-bin я│ я┌п╦п©п╬п╡я▀п╪п╦ я│п╨я─п╦п©я┌п╟п╪п╦ п╨ п╡п╣п╠-я│п╣я─п╡п╣я─я┐ Apache.
 
 %package html
 Summary: html for Apache
-Summary(ru_RU.KOI8-R): html для Apache
+Summary(ru_RU.UTF-8): html п╢п╩я▐ Apache
 Group: System/Servers
 BuildArch: noarch
 PreReq: webserver-common
@@ -560,12 +561,12 @@ Conflicts: apache-html
 %description html
 This package contains the Apache server html dir.
 
-%description -l ru_RU.KOI8-R html
-Этот пакет содержит каталог html для веб-сервера Apache.
+%description -l ru_RU.UTF-8 html
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╨п╟я┌п╟п╩п╬пЁ html п╢п╩я▐ п╡п╣п╠-я│п╣я─п╡п╣я─п╟ Apache.
 
 %package icons
 Summary: icons for Apache
-Summary(ru_RU.KOI8-R): icons для Apache
+Summary(ru_RU.UTF-8): icons п╢п╩я▐ Apache
 Group: System/Servers
 BuildArch: noarch
 PreReq: webserver-common
@@ -576,8 +577,8 @@ Conflicts: apache-icons
 %description icons
 This package contains the Apache server icons dir.
 
-%description -l ru_RU.KOI8-R icons
-Этот пакет содержит каталог icons для веб-сервера Apache.
+%description icons
+This package contains the Apache server icons dir.
 
 %package mod_ssl
 Group: System/Servers
@@ -641,8 +642,8 @@ a certain limit. This tool can run either manually or in daemon mode.
 
 %package suexec
 Summary: Suexec binary for Apache
-Summary(ru_RU.KOI8-R): Программа suexec для Apache
-Summary(uk_UA.KOI8-U): Програма suexec для Apache
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ suexec п╢п╩я▐ Apache
+Summary(uk_UA.UTF-8): п÷я─п╬пЁя─п╟п╪п╟ suexec п╢п╩я▐ Apache
 Group: System/Servers
 PreReq: %name-common
 Requires: %name-mmn = %mmn
@@ -656,19 +657,19 @@ to run CGI and SSI programs under user IDs different from the user ID of the
 calling web-server. Normally, when a CGI or SSI program executes, it runs as
 the same user who is running the web server.
 
-%description -l ru_RU.KOI8-R suexec
-Этот пакет добавляет к Apache suexec. Эта программа позволяет запускать CGI-
-и SSI-программы под идентификаторами пользователя, отличными от UID
-веб-сервера.
+%description -l ru_RU.UTF-8 suexec
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ п╢п╬п╠п╟п╡п╩я▐п╣я┌ п╨ Apache suexec. п╜я┌п╟ п©я─п╬пЁя─п╟п╪п╪п╟ п©п╬п╥п╡п╬п╩я▐п╣я┌ п╥п╟п©я┐я│п╨п╟я┌я▄ CGI-
+п╦ SSI-п©я─п╬пЁя─п╟п╪п╪я▀ п©п╬п╢ п╦п╢п╣п╫я┌п╦я└п╦п╨п╟я┌п╬я─п╟п╪п╦ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▐, п╬я┌п╩п╦я┤п╫я▀п╪п╦ п╬я┌ UID
+п╡п╣п╠-я│п╣я─п╡п╣я─п╟.
 
-%description -l uk_UA.KOI8-U suexec
-Цей пакунок дода╓ до Apache suexec. Ця програма дозволя╓ запускати CGI-
-та SSI-програми п╕д ╕дентиф╕каторами користувача, що в╕др╕зняються в╕д
-UID веб-серверу.
+%description -l uk_UA.UTF-8 suexec
+п╕п╣п╧ п©п╟п╨я┐п╫п╬п╨ п╢п╬п╢п╟я■ п╢п╬ Apache suexec. п╕я▐ п©я─п╬пЁя─п╟п╪п╟ п╢п╬п╥п╡п╬п╩я▐я■ п╥п╟п©я┐я│п╨п╟я┌п╦ CGI-
+я┌п╟ SSI-п©я─п╬пЁя─п╟п╪п╦ п©я√п╢ я√п╢п╣п╫я┌п╦я└я√п╨п╟я┌п╬я─п╟п╪п╦ п╨п╬я─п╦я│я┌я┐п╡п╟я┤п╟, я┴п╬ п╡я√п╢я─я√п╥п╫я▐я▌я┌я▄я│я▐ п╡я√п╢
+UID п╡п╣п╠-я│п╣я─п╡п╣я─я┐.
 
 %package compat
 Summary: Set DocumentRoot in %apache2_serverdatadir
-Summary(ru_RU.KOI8-R): Установка DocumentRoot в %apache2_serverdatadir
+Summary(ru_RU.UTF-8): пёя│я┌п╟п╫п╬п╡п╨п╟ DocumentRoot п╡ %apache2_serverdatadir
 Group: System/Servers
 BuildArch: noarch
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
@@ -683,12 +684,12 @@ Provides: %apache2_compat_iconssmalldir
 %description compat
 Set DocumentRoot in %apache2_serverdatadir to support the old configurations.
 
-%description -l ru_RU.KOI8-R compat
-Установка DocumentRoot в %apache2_serverdatadir для поддержки старых конфигураций.
+%description -l ru_RU.UTF-8 compat
+пёя│я┌п╟п╫п╬п╡п╨п╟ DocumentRoot п╡ %apache2_serverdatadir п╢п╩я▐ п©п╬п╢п╢п╣я─п╤п╨п╦ я│я┌п╟я─я▀я┘ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╧.
 
 %package mod_ssl-compat
 Summary: Set DocumentRoot in %apache2_serverdatadir (for https)
-Summary(ru_RU.KOI8-R): Установка DocumentRoot в %apache2_serverdatadir (для https)
+Summary(ru_RU.UTF-8): пёя│я┌п╟п╫п╬п╡п╨п╟ DocumentRoot п╡ %apache2_serverdatadir (п╢п╩я▐ https)
 Group: System/Servers
 BuildArch: noarch
 Requires: %name-compat
@@ -699,8 +700,8 @@ Requires: %apache_config_tool_name >= %apache_config_tool_branch
 %description mod_ssl-compat
 Set DocumentRoot in %apache2_serverdatadir (for https) to support the old configurations.
 
-%description -l ru_RU.KOI8-R mod_ssl-compat
-Установка DocumentRoot в %apache2_serverdatadir для поддержки старых конфигураций (https).
+%description -l ru_RU.UTF-8 mod_ssl-compat
+пёя│я┌п╟п╫п╬п╡п╨п╟ DocumentRoot п╡ %apache2_serverdatadir п╢п╩я▐ п©п╬п╢п╢п╣я─п╤п╨п╦ я│я┌п╟я─я▀я┘ п╨п╬п╫я└п╦пЁя┐я─п╟я├п╦п╧ (https).
 
 
 %add_findprov_lib_path %apache2_libdir
@@ -888,7 +889,7 @@ done
 #fix apachectl and apxs
 sed -i -e 's|\(\/envvars\)"|\1%apache2_branch"|
 s|\(apachectl\)|\1%apache2_branch|
-' apachectl%apache2_branch apxs%apache2_branch
+' %apache2_apachectl_name %apache2_apxs_name
 %endif
 # move&rename utilities to /usr/bin
 TOOLS="ab htdbm logresolve htpasswd htdigest"
@@ -1001,11 +1002,12 @@ touch %buildroot%_docdir/%apache2_name-docs-%version/manual
 ln -snf $(relative %buildroot%_docdir/%apache2_name-docs-%version/manual %buildroot%apache2_manualdir) %buildroot%apache2_manualdir
 
 # install the init scripts
-mkdir -p %buildroot%_initdir
-install -m755 %SOURCE35 \
+install -pD -m755 %SOURCE35 \
         %buildroot%_initdir/%apache2_dname
-install -m755 %SOURCE36 \
+install -pD -m755 %SOURCE36 \
         %buildroot%_initdir/%apache2_htcacheclean_dname
+install -pD %SOURCE37 \
+        %buildroot%_unitdir/%apache2_dname.service
 
 # generate sysconfig settings file
 mkdir -p %buildroot%_sysconfdir/sysconfig
@@ -1022,7 +1024,7 @@ echo "# Set HTTPD=%apache2_dname.worker to use a server
 # If you want to force proxied (for example by Apache1) mode, which is
 # autodetected by default you could add "-DA1PROXIED"
 #OPTIONS="-DA1PROXIED"
-" > %buildroot%_sysconfdir/sysconfig/%apache2_dname
+" > %buildroot%apache2_envconf
 
 
 # Generate logrotate file
@@ -1080,13 +1082,15 @@ install -pD %SOURCE62 %buildroot%condstopstart_webdir/%apache2_dname-condstart
 install -pD %SOURCE63 %buildroot%condstopstart_webdir/%apache2_dname-condstart-rpm
 
 # Install config for tempfiles
-install -pD %SOURCE15 %buildroot%_sysconfdir/tmpfiles.d/%name
+install -pD -m 644 %SOURCE15 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 
 # Substitute the real paths in configs
 find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
+		%buildroot%_unitdir \
 		-type f -print0 \
 	| xargs -r0i %_datadir/rpm-build-rpm-eval/rpm-eval.sh "{}"
 find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
+		%buildroot%_unitdir \
 		-type f -print0 \
 	| xargs -r0 sed -i -f SetMacros.sed
 
@@ -1363,7 +1367,7 @@ exit 0
 %triggerpostun_webserver_cgi_bin_control -s symlink_root_noexec cgi-bin_printenv
 
 %files common
-%config %_sysconfdir/tmpfiles.d/%name
+%config %_sysconfdir/tmpfiles.d/*
 
 %attr(2770,root,%apache2_group) %dir %apache2_proxycachedir/
 %attr(750,root,%apache2_group) %dir %apache2_spooldir/
@@ -1493,7 +1497,8 @@ exit 0
 %dir %apache2_addonconfdir/
 %config %_initdir/%apache2_dname
 %apache2_sbindir/apachectl*
-%attr(0600,root,root) %config(noreplace) %_sysconfdir/sysconfig/%apache2_dname
+%attr(0600,root,root) %config(noreplace) %apache2_envconf
+%_unitdir/%apache2_dname.service
 
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/logrotate.d/%apache2_name
 
@@ -1668,17 +1673,22 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
-* Fri Aug 17 2012 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt5
+* Tue Aug 21 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt6
+- Add %%_unitdir/%%apache2_dname.service to %%name-base subpackage
+- Rename %%_sysconfdir/tmpfiles.d/%%name to
+  %%_sysconfdir/tmpfiles.d/%%name.conf and fix permissions
+
+* Fri Aug 17 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt5
 - Fix %%_initdir/%%apache2_dname return status
 
-* Fri Aug 10 2012 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt4
+* Fri Aug 10 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt4
 - %%apache2_sbindir/apachectl%%apache2_branch replaced by the "official"
   apachectl (patched) (Closes: #27086)
 - The function stop() in %%_initdir/%%apache2_dname now waiting
   (maximum 300 seconds) of the actual completion of the demon
   (Closes: #11531, #27091)
 
-* Tue Aug 07 2012 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt3
+* Tue Aug 07 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt3
 - Add %%_sysconfdir/tmpfiles.d/%%name (Closes: #27604)
 
 * Tue Feb 14 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt2
