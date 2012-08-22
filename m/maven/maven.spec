@@ -6,7 +6,7 @@
 %add_findreq_skiplist /usr/share/maven/bin/*
 
 BuildRequires(pre): rpm-build-java
-#BuildArch: noarch
+BuildArch: noarch
 Epoch: 0
 Name: maven
 Version: 3.0.4
@@ -14,7 +14,6 @@ Summary: Java project management and project comprehension tool
 License: ASL 2.0 and MIT and BSD
 Url: http://maven.apache.org/
 Packager: Igor Vlasenko <viy@altlinux.ru>
-#Requires: /bin/sh
 
 # to fix builds, tmp?
 #Requires: maven-clean-plugin maven-dependency-plugin
@@ -37,23 +36,24 @@ Requires: hamcrest
 Requires: maven-parent
 Requires: maven-wagon
 
-####Requires: maven3-common-poms
 Requires: maven2-common-poms
 
-#Requires: mojo-parent
+Requires: mojo-parent
 #Requires: nekohtml
 Requires: plexus-classworlds
 Requires: plexus-containers-component-annotations
 Requires: plexus-containers-container-default
 Requires: plexus-interpolation
 Requires: plexus-utils
-#Requires: sonatype-oss-parent
-#Requires: xbean
+Requires: sonatype-oss-parent
+Requires: xbean
 #Requires: xerces-j2
 
-#BuildArch: noarch
+BuildArch: noarch
+Requires: maven-filesystem
+
 Group: Development/Java
-Release: alt0.3jpp
+Release: alt0.4jpp
 Source: maven-3.0.4-2.fc17.cpio
 
 Source8: maven3bs-jarlist.txt
@@ -70,7 +70,7 @@ reporting and documentation from a central piece of information.
 cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+cpio --list < %{SOURCE0} | sed -e 's,^\.,,' | egrep -v '^/usr/share/maven/repository-jni/JPP$' > %name-list
 
 %install
 mkdir -p $RPM_BUILD_ROOT
@@ -86,13 +86,16 @@ popd
 #touch %buildroot/etc/mavenrc
 
 rm %buildroot/usr/share/maven/repository-jni/JPP
-ln -sf %_jnidir %buildroot/usr/share/maven/repository-jni/JPP
+#ln -sf %_jnidir %buildroot/usr/share/maven/repository-jni/JPP
 
 %files -f %name-list
 #exclude 
 #%config(noreplace,missingok) /etc/mavenrc
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt0.4jpp
+- require maven-filesystem; now noarch
+
 * Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt0.3jpp
 - restored mvn
 
