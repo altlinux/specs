@@ -6,7 +6,7 @@
 %define rpm_ver %{get_version rpm}
 
 Name: kde-common-devel
-Version: 4.8.4
+Version: 4.8.5
 Release: alt1
 
 Group: Development/KDE and QT
@@ -58,6 +58,9 @@ install -D -m 0755 find-lang %buildroot/%_bindir/kde-devel-find-lang
 %_rpmmacrosdir/%name
 
 %changelog
+* Wed Aug 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
+- set default CMAKE_BUILD_TYPE to Release (-g provided by rpm flags)
+
 * Tue Jun 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - fix to build with rpm-4.0.4-alt100.51
 
