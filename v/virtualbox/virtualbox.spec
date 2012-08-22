@@ -50,7 +50,7 @@
 
 
 Name: virtualbox
-Version: 4.1.18
+Version: 4.1.20
 Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
@@ -109,7 +109,8 @@ BuildRequires: libpam-devel
 BuildRequires: texlive-latex-recommended
 %endif
 %if_with vnc
-BuildRequires: libvncserver-devel
+BuildRequires: libvncserver-devel < 0.9.9
+%define libvncserver_version 98
 %endif
 BuildRequires: rpm-build-xdg rpm-macros-pam
 
@@ -304,6 +305,10 @@ echo "VBOX_PATH_PACKAGE_DOCS     := \$(VBOX_PATH_APP_DOCS)" >> LocalConfig.kmk
 echo "VBOX_VENDOR                := ALT Linux Team" >> LocalConfig.kmk
 echo "VBOX_VENDOR_SHORT          := ALT" >> LocalConfig.kmk
 echo "VBOX_PRODUCT               := VM VirtualBox OSE" >> LocalConfig.kmk
+
+%if_with vnc
+echo "LIBVNCSERVER_VERSION_NR    := %libvncserver_version" >> LocalConfig.kmk
+%endif
 
 source env.sh
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
@@ -521,6 +526,7 @@ mountpoint -q /dev || {
 %exclude %_bindir/VBoxClient
 %exclude %_bindir/VBoxControl
 %exclude %_bindir/VBoxService
+%exclude %vboxadddir
 %endif
 %dir %vboxdir
 %dir %vboxdir/ExtensionPacks
@@ -608,6 +614,11 @@ mountpoint -q /dev || {
 %vboxdir/sdk
 
 %changelog
+* Wed Aug 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1
+- Update to new stable release
+- Revert exclude for vboxadddir to main virtualbox package
+- Fix VBoxCreateUSBNode.sh empty class with --create option
+
 * Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
 - Update to new release for Sisyphus
 - Enable Virtual Distributed Ethernet (VDE) support
