@@ -2,16 +2,17 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: netgen
-Version: 4.9.14
-Release: alt4.svn20120215
+Version: 5.0
+Release: alt1.svn20120820
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
 Url: http://www.hpfem.jku.at/netgen/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: %name-%version.tar.gz
-Source1: demoapp.tar.gz
+Source: %name-%version.tar
+Source1: demoapp.tar
+Source2: dropsexport.tar
 
 Requires: lib%name = %version-%release tcl-tix
 BuildRequires(pre): rpm-build-tcl
@@ -107,6 +108,7 @@ sed -i "s|@UINT64_C@|ULL|" ng/ngpkg.cpp
 %endif
 
 tar -xf %SOURCE1
+tar -xf %SOURCE2
 
 %build
 mpi-selector --set %mpiimpl
@@ -145,6 +147,16 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export MPIDIR=%mpidir
 %makeinstall_std TCLLIBDIR=%_tcllibdir TOPDIR=$PWD
 
+pushd dropsexport
+%autoreconf
+%configure \
+	--enable-static=no \
+	--with-netgen=%buildroot \
+	--with-netgensrc=$PWD/..
+%make_build
+%makeinstall_std
+popd
+
 for i in %buildroot%_libdir/*.so %buildroot%_bindir/*; do
 	chrpath -r %mpidir/lib:%_tcllibdir $i ||:
 done
@@ -170,6 +182,9 @@ done
 %doc demoapp
 
 %changelog
+* Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.svn20120820
+- Version 5.0
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.14-alt4.svn20120215
 - Rebuilt with OpenMPI 1.6
 

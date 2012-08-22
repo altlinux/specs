@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: ngsolve
-Version: 4.9.14
-Release: alt5.svn20120228
+Version: 5.0
+Release: alt1.svn20120821
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -155,6 +155,9 @@ popd
 %doc %_datadir/%name
 
 %changelog
+* Wed Aug 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.svn20120821
+- Version 5.0
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.14-alt5.svn20120228
 - Built with OpenBLAS instead of GotoBLAS2
 

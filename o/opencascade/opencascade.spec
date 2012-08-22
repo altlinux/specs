@@ -1,6 +1,6 @@
 Name: opencascade
-Version: 6.5.2
-Release: alt3
+Version: 6.5.3
+Release: alt1
 Summary: Development platform for 3D modeling and numerical simulation
 License: BSD-like
 Group: Development/Tools
@@ -18,7 +18,7 @@ BuildPreReq: gcc-c++ libX11-devel libGL-devel libGLU-devel
 BuildPreReq: tcl-devel tcl-tix libfltk-devel tk-devel libXmu-devel
 BuildPreReq: java-devel-default libcoin3d-devel libfreetype-devel
 BuildPreReq: python-module-gist libtbb-devel libftgl-devel
-BuildPreReq: libgl2ps-devel
+BuildPreReq: libgl2ps-devel zlib-devel libfreeimage-devel
 
 %description
 Open CASCADE Technology version 6.3., a minor release, which introduces quite a
@@ -52,6 +52,7 @@ modeling and numerical simulation applications.
 Summary: Architecture independent files of Open CASCADE
 Group: Development/C++
 BuildArch: noarch
+AutoReq: yes, noshebang
 
 %description common
 Architecture independent files of Open CASCADE, development platform for 3D
@@ -79,10 +80,10 @@ DEFS="$DEFS -DSEMOP_NO_REFERENCE=1 -UDECOSF1"
 	--with-tk=%_libdir \
 	--with-x \
 	--with-tbb-include=%_includedir/tbb \
-	--with-tbb-library==%_libdir \
+	--with-tbb-library=%_libdir \
 	--with-freetype=%prefix \
+	--with-freeimage=%prefix \
 	--with-ftgl=%prefix \
-	--disable-debug \
 	--disable-static \
 	--enable-debug \
 	--enable-production \
@@ -106,18 +107,18 @@ sed -i 's|define VERSION|define OCCVERSION|' config.h
 
 %install
 %makeinstall
-sed -i \
-	-e '1s/ksh\ \-f/sh/' \
-	-e '1a\export CASROOT=%_datadir/%name' \
-	-e 's/\/\$OS_NAME//g' \
-	%buildroot%prefix/env_DRAW.sh
-sed -i 's|src|share/%name/src|g' %buildroot%prefix/env_DRAW.sh
-%ifarch x86_64
-sed -i 's|/lib|/lib64|g' %buildroot%prefix/env_DRAW.sh
-%endif
+#sed -i \
+#	-e '1s/ksh\ \-f/sh/' \
+#	-e '1a\export CASROOT=%_datadir/%name' \
+#	-e 's/\/\$OS_NAME//g' \
+#	%buildroot%prefix/env_DRAW.sh
+#sed -i 's|src|share/%name/src|g' %buildroot%prefix/env_DRAW.sh
+#ifarch x86_64
+#sed -i 's|/lib|/lib64|g' %buildroot%prefix/env_DRAW.sh
+#endif
 
 install -d %buildroot%_datadir/%name
-mv %buildroot%prefix/env_DRAW.sh %buildroot%_datadir/%name/
+#mv %buildroot%prefix/env_DRAW.sh %buildroot%_datadir/%name/
 mv %buildroot%prefix/src %buildroot%_datadir/%name/
 mv %buildroot%prefix/inc %buildroot%_includedir
 #install -d %buildroot%_datadir/%name/src/jcas
@@ -129,7 +130,7 @@ install -p -m644 src/OSD/OSD_Common.hxx %buildroot%_includedir
 pushd %buildroot%_includedir
 rm -f config.h
 mv ../config.h %name/
-for i in Xw_Extension.h Standard_values.h Standard_Macro.hxx
+for i in $(egrep -R 'config\.h' ./ |awk -F : '{print $1}')
 do
 	sed -i 's|<config.h>|<%name/config.h>|' $i
 done
@@ -137,20 +138,22 @@ popd
 #sed -i 's|^\(CONFIG_HEADER\).*|\1 = %_includedir/%name/config.h|' \
 #	%buildroot%_datadir/%name/src/WOKTclLib/template.min*
 
-mv %buildroot%_bindir/DRAWEXE  %buildroot%_bindir/DRAWEXE_
-cat <<EOF >%buildroot%_bindir/DRAWEXE
-#!/bin/bash
+#mv %buildroot%_bindir/DRAWEXE  %buildroot%_bindir/DRAWEXE_
+#cat <<EOF >%buildroot%_bindir/DRAWEXE
+##!/bin/bash
+#
+#export TCLHOME=%prefix
+#source %_datadir/%name/env_DRAW.sh
+#DRAWEXE_ "\$@"
+#EOF
+#chmod +x %buildroot%_bindir/DRAWEXE
 
-export TCLHOME=%prefix
-source %_datadir/%name/env_DRAW.sh
-DRAWEXE_ "\$@"
-EOF
-chmod +x %buildroot%_bindir/DRAWEXE
+mv %buildroot%prefix/*.sh %buildroot%_bindir/
 
 %files
 %doc LICENSE
 %_bindir/*
-%_datadir/%name/env_DRAW.sh
+#_datadir/%name/env_DRAW.sh
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -164,6 +167,9 @@ chmod +x %buildroot%_bindir/DRAWEXE
 %_datadir/%name/src
 
 %changelog
+* Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.3-alt1
+- Version 6.5.3
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.2-alt3
 - Fixed build
 
