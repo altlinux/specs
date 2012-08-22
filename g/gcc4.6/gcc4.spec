@@ -1,10 +1,15 @@
 %define gcc_branch 4.6
 
+# this package can be compiled as cross tool, by defining _cross_platform
+# i.e. rpmbuild -ba --define '_cross_platform armh-alt-linux-gnueabi' gcc4.spec
+# note though, resulting packages aren't usual cross tools and not supposed
+# to be used nor even installed on build host.
+
 %define if_gcc_arch() %if %(A='%{?_cross_platform:%_cross_platform}%{!?_cross_platform:%_target_platform}'; [ %1 = ${A%%%%-*} ] && echo 1 || echo 0)
 
 Name: gcc%gcc_branch
 Version: 4.6.3
-Release: alt4
+Release: alt5
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -68,6 +73,7 @@ Url: http://gcc.gnu.org/
 %def_disable objc_gc
 %def_without java
 %def_without ada
+%def_without go
 %define REQ >=
 
 %else # _cross_platform
@@ -93,9 +99,11 @@ Url: http://gcc.gnu.org/
 %define REQ =
 %ifarch %ix86 x86_64
 %def_with ada
+%def_with go
 %else
 %define REQ >=
 %def_without ada
+%def_without go
 %endif
 %else
 %def_without ada
@@ -184,6 +192,7 @@ Obsoletes: egcs gcc3.0 gcc3.1
 Conflicts: glibc-devel < 2.2.6
 PreReq: %alternatives_deps, gcc-common >= 1.4.7
 Requires: cpp%gcc_branch = %version-%release
+Requires: libgcov%gcc_branch-devel = %version-%release
 Requires: %binutils_deps, glibc-devel
 %ifndef _cross_platform
 Requires: libgcc1 %REQ %version-%release
@@ -233,6 +242,16 @@ Obsoletes: libgcc libgcc3.0 libgcc3.1 libgcc3.2 libgcc3.3 libgcc3.4 libgcc4.1 li
 %description -n libgcc1
 This package contains GCC shared support library which is needed
 e.g. for exception handling support.
+
+####################################################################
+# GCOV libray
+%package -n libgcov%gcc_branch-devel
+Summary: GCC profiling support library
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description -n libgcov%gcc_branch-devel
+This package contains GCC profiling support library.
 
 ####################################################################
 # GCC plugin
@@ -589,6 +608,7 @@ Obsoletes: gcc-g77 gcc3.0-g77 gcc3.1-g77
 PreReq: %alternatives_deps, gcc-fortran-common >= 1.4.7
 Requires: %name = %version-%release
 Requires: libgfortran%gcc_branch-devel = %version-%release
+
 %description fortran
 This package provides support for compiling GNU Fortran
 programs with the GNU Compiler Collection.
@@ -772,6 +792,55 @@ gnat%psuffix
 in order to explicitly use the GNU Ada compiler version %version.
 
 ####################################################################
+# Go Libraries
+
+%package -n libgo0
+Summary: Go runtime libraries
+Group: System/Libraries
+Requires: libgcc1 %REQ %version-%release
+
+%description -n libgo0
+This package contains the shared libraries required to run programs
+compiled with the GNU Go compiler if they are compiled to use
+shared libraries.
+
+%package -n libgo%gcc_branch-devel
+Summary: Header files and libraries for Go development
+Group: Development/Other
+PreReq: gcc-common >= 1.4.7
+Requires: libgo0 %REQ %version-%release
+
+%description -n libgo%gcc_branch-devel
+This package includes the include files and libraries needed for
+Go development.
+
+%package -n libgo%gcc_branch-devel-static
+Summary: Static libraries for Go development
+Group: Development/Other
+PreReq: gcc-common >= 1.4.7
+Requires: libgo%gcc_branch-devel = %version-%release
+
+%description -n libgo%gcc_branch-devel-static
+This package includes the static libraries needed for Go development.
+
+####################################################################
+# Go Compiler
+%package go
+Summary: Go support for GCC
+Group: Development/Other
+PreReq: %alternatives_deps, gcc-go-common >= 1.4.15
+Requires: %name = %version-%release
+Requires: libgo%gcc_branch-devel = %version-%release
+
+%description go
+This package provides support for compiling Go
+programs with the GNU Compiler Collection.
+
+If you have multiple versions of the GNU Compiler Collection
+installed on your system, you may want to execute
+go%psuffix
+in order to explicitly use the GNU Go compiler version %version.
+####################################################################
 # GCC localization
 
 %package locales
@@ -875,6 +944,9 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 # This testcase does not compile.
 rm libjava/testsuite/libjava.lang/PR35020*
 
+# This test causes fork failures, because it spawns way too many threads
+rm -f gcc/testsuite/go.test/test/chan/goroutines.go
+
 %if_with java_bootstrap
 tar xjf %SOURCE2
 %endif
@@ -934,6 +1006,14 @@ libtoolize --copy --install --force
 install -pm644 %_datadir/libtool/aclocal/*.m4 .
 patch -p0 <%_sourcedir/libtool.m4-gcj.patch
 
+%ifdef _cross_platform
+# Pretend this isn't cross-compiler
+sed -i -e 's/^[[:blank:]]\+libstdcxx_incdir.\+target_alias.\+libstdcxx_incdir.\+$/:/' gcc/configure.ac 
+sed -i -e '/^INTERNAL_CFLAGS/ s,@CROSS@,,' -e 's,^\(CROSS_SYSTEM_HEADER_DIR\).\+$,\1 = %_includedir,' gcc/Makefile.in
+# Do not try to build libgcc_s.so, supplemental libgcc*.a are still needed
+sed -i -e '/^all: libgcc_eh.a/ s,libgcc_s$(SHLIB_EXT),,' -e 's,$(SHLIB_INSTALL),,' libgcc/Makefile.in
+%endif
+
 # Regenerate configure scripts.
 for f in */aclocal.m4; do
 	d="${f%%/*}"
@@ -957,13 +1037,6 @@ perl -pi -e 's/^install: install-recursive/ifeq (\$(MULTISUBDIR),)\ninstall: ins
 perl -pi -e 's/^check: check-recursive/ifeq (\$(MULTISUBDIR),)\ncheck: check-recursive\nelse\ncheck:\n\techo Multilib libjava check disabled\nendif/' libjava/Makefile.in
 
 ./contrib/gcc_update --touch
-
-%ifdef _cross_platform
-# Pretend this isn't cross-compiler
-sed -i -e '/^INTERNAL_CFLAGS/ s,@CROSS@,,' -e 's,^\(CROSS_SYSTEM_HEADER_DIR\).\+$,\1 = %_includedir,' gcc/Makefile.in
-# Do not try to build libgcc_s.so, supplemental libgcc*.a are still needed
-sed -i -e '/^all: libgcc_eh.a/ s,libgcc_s$(SHLIB_EXT),,' -e 's,$(SHLIB_INSTALL),,' libgcc/Makefile.in
-%endif
 
 rm -rf %buildtarget
 mkdir %buildtarget
@@ -1000,6 +1073,7 @@ export CC=%__cc \
 	TCFLAGS="%optflags" \
 	XCFLAGS="%optflags" \
 	ac_cv_file__proc_self_exe=yes \
+	gcc_cv_libc_provides_ssp=yes \
 	#
 
 %configure \
@@ -1026,7 +1100,7 @@ export CC=%__cc \
 	%{subst_enable multilib} \
 	--enable-gnu-unique-object \
 	--enable-linker-build-id \
-	--enable-languages="c%{?_with_cxx:,c++}%{?_with_fortran:,fortran}%{?_with_objc:,objc%{?_with_cxx:,obj-c++}}%{?_with_java:,java}%{?_with_ada:,ada},lto" \
+	--enable-languages="c%{?_with_cxx:,c++}%{?_with_fortran:,fortran}%{?_with_objc:,objc%{?_with_cxx:,obj-c++}}%{?_with_java:,java}%{?_with_ada:,ada}%{?_with_go:,go},lto" \
 	--enable-plugin \
 	%{?_with_objc:%{?_enable_objc_gc:--enable-objc-gc}} \
 %if_with java
@@ -1165,6 +1239,10 @@ CopyDocs libjava libjava
 CopyDocs ada gcc/ada
 %endif #with_ada
 
+%if_with go
+CopyDocs libgo gcc/go
+%endif #with_go
+
 install -pv -m644 gcc-extra/* %buildroot%gcc_doc_dir/
 
 pushd %buildtarget
@@ -1184,6 +1262,7 @@ pushd %buildroot%_bindir
 	  %{?_with_cxx:g++} \
 	  %{?_with_fortran:gfortran} \
 	  %{?_with_java:gappletviewer gcj gcj-dbtool gcjh gij gjar gjarsigner gjavah gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert} \
+	  %{?_with_go:gccgo} \
 	  ; do
 		[ -f "%gcc_target_platform-$n%psuffix" ] ||
 			mv -v "$n%psuffix" "%gcc_target_platform-$n%psuffix"
@@ -1306,6 +1385,7 @@ for n in \
     %{?_with_ada:gcc-gnat libgnat libgnat-devel libgnat-devel-static} \
     %{?_with_java:gcc-java libgcj libgcj-plugins libgcj-devel} \
     %{?_with_objc:gcc-objc libobjc-devel libobjc-devel-static %{?_with_cxx:gcc-objc++}} \
+    %{?_with_go:gcc-go libgo libgo-devel libgo-devel-static} \
     ; do
 	pref="${n%%%%-*}"
 	suf="${n#$pref}"
@@ -1382,6 +1462,13 @@ done)
 EOF
 %endif #with_java
 
+%if_with go
+cat >%buildroot%_altdir/gccgo%gcc_branch <<EOF
+%_bindir/%gcc_target_platform-gccgo	%_bindir/%gcc_target_platform-gccgo%psuffix	%priority
+%_man1dir/gccgo.1.bz2	%_man1dir/gccgo%psuffix.1.bz2	%_bindir/%gcc_target_platform-gccgo%psuffix
+EOF
+%endif #with_go
+
 %files
 %config %_sysconfdir/buildreqs/packages/substitute.d/%name
 %config %_sysconfdir/buildreqs/files/ignore.d/%name
@@ -1440,7 +1527,6 @@ EOF
 %gcc_target_libdir/libgcc_s.so
 %gcc_target_libdir/crt*.o
 %gcc_target_libdir/libgcc*.a
-%gcc_target_libdir/libgcov.a
 %ifndef _cross_platform
 %ifarch x86_64
 %dir %gcc_target_lib32dir
@@ -1465,6 +1551,9 @@ EOF
 %endif #compat
 
 %ifndef _cross_platform
+
+%files -n libgcov%gcc_branch-devel
+%gcc_target_libdir/libgcov.a
 
 %files plugin-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/gcc%gcc_branch-plugin-devel
@@ -1768,6 +1857,33 @@ EOF
 %gcc_target_libdir/libgna*.a
 %endif #with_ada
 
+%if_with go
+%files go
+%config %_sysconfdir/buildreqs/packages/substitute.d/%name-go
+%_altdir/gccgo%gcc_branch
+%_bindir/gccgo%psuffix
+%_bindir/%gcc_target_platform-gccgo%psuffix
+%_man1dir/gccgo%psuffix.*
+%dir %gcc_target_libexecdir
+%gcc_target_libexecdir/go1
+
+%files -n libgo0
+%_libdir/libgo.so.0*
+
+%files -n libgo%gcc_branch-devel
+%dir %gcc_doc_dir
+%gcc_doc_dir/libgo
+%config %_sysconfdir/buildreqs/packages/substitute.d/libgo%gcc_branch-devel
+%dir %gcc_target_libdir
+%gcc_target_libdir/libgo.so
+%gcc_target_libdir/libgobegin.a
+%_libdir/go/%version
+
+%files -n libgo%gcc_branch-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/libgo%gcc_branch-devel-static
+%gcc_target_libdir/libgo.a
+%endif #with_go
+
 %files locales -f gcc%psuffix.lang
 
 %ifndef _cross_platfoem
@@ -1789,9 +1905,12 @@ EOF
 %{?_with_ada:%doc gcc/doc/gnat*.pdf}
 %endif #with_pdf
 
-%endif $ _cross_platform
+%endif # _cross_platform
 
 %changelog
+* Mon Aug 20 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6.3-alt5
+- Go language support packaged (closes: #27654)
+
 * Mon Jul 30 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6.3-alt4
 - armh: use ld-linux-armhf.so.3 as dynamic linker
 - armh: set defaults to hard-float for armv7

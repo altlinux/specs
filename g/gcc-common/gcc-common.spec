@@ -1,5 +1,5 @@
 Name: gcc-common
-Version: 1.4.14
+Version: 1.4.15
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
@@ -30,6 +30,12 @@ PreReq: alternatives >= 0:0.4
 Summary: Common symlinks for the GNU C++ Compiler
 License: GPL
 Group: Development/C++
+PreReq: %name = %version-%release
+
+%package -n gcc-go-common
+Summary: Common symlinks for the Go Compiler
+License: GPL
+Group: Development/Other
 PreReq: %name = %version-%release
 
 %package -n gcc-fortran-common
@@ -74,6 +80,9 @@ utility for the GNU Compiler Collection.
 %description -n gcc-c++-common
 This package contains common symlinks for the GNU C++ Compiler.
 
+%description -n gcc-go-common
+This package contains common symlinks for the Go Compiler.
+
 %description -n gcc-fortran-common
 This package contains common symlinks for the GNU Fortran 77 Compiler.
 
@@ -109,7 +118,7 @@ install -p -m644 {classpath,libgcj}.security %buildroot%_libdir/security/
 
 ln -s gcc_wrapper %buildroot%_bindir/gcc
 
-for n in cc cpp g++ gcj gcov gfortran gtreelang protoize unprotoize; do
+for n in cc cpp g++ gccgo gcj gcov gfortran gtreelang protoize unprotoize; do
 	ln -s gcc "%buildroot%_bindir/$n"
 done
 for n in gappletviewer gcj-dbtool gcjh gij gjar gjarsigner gjavah gjnih gkeytool gorbd grmic grmid grmiregistry gserialver gtnameserv jcf-dump jv-convert jv-scan; do
@@ -157,6 +166,9 @@ EOF
 %_bindir/g77
 %_bindir/gfortran
 
+%files -n gcc-go-common
+%_bindir/gccgo
+
 %files -n gcc-treelang-common
 %_bindir/gtreelang
 %_bindir/tree1
@@ -187,6 +199,9 @@ EOF
 %_libdir/security
 
 %changelog
+* Tue Aug 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.15-alt1
+- go compiler support added
+
 * Fri Nov 21 2008 Dmitry V. Levin <ldv@altlinux.org> 1.4.14-alt1
 - Switched to alternatives-0.4.
 
