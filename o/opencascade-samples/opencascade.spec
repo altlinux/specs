@@ -1,5 +1,5 @@
 Name: opencascade-samples
-Version: 6.5.2
+Version: 6.5.3
 Release: alt1
 Summary: Samples for Open CASCADE
 License: BSD-like
@@ -36,6 +36,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %_datadir/%name/samples
 
 %changelog
+* Wed Aug 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.3-alt1
+- Version 6.5.3
+
 * Wed Feb 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.2-alt1
 - Version 6.5.2
 
