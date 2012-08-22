@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
-Version: 2.2.5
-Release: alt1.1
+Version: 2.2.7
+Release: alt1
 Summary: EiskaltDC++ - Direct Connect client
 License: GPLv3
 Group: Networking/File transfer
@@ -8,13 +8,13 @@ Url: http://code.google.com/p/eiskaltdc/
 Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 
 Source: %name-%version.tar
-Patch: eiskaltdcpp-2.2.5-alt-DSO.patch
+#Patch: eiskaltdcpp-2.2.5-alt-DSO.patch
 
 BuildRequires: cmake gcc-c++ libqt4-devel bzlib-devel libaspell-devel liblua5-devel
 BuildRequires: libgtk+2-devel libglade-devel glib2-devel libpango-devel libnotify-devel 
 BuildRequires: boost-devel boost-signals-devel boost-interprocess-devel
-BuildRequires: phonon-devel libssl-devel libidn-devel libxmlrpc-devel
-BuildRequires: aspell perl-RPC-XML perl-Term-ShellUI
+BuildRequires: phonon-devel libssl-devel libidn-devel
+BuildRequires: aspell perl-JSON-RPC perl-Term-ShellUI
 
 %add_findreq_skiplist *xmms2_audacious2.ru_RU.UTF-8.php
 %add_findreq_skiplist *commands.ru_RU.UTF-8.php
@@ -88,7 +88,7 @@ command line interface for XML-RPC Daemon
 
 %prep
 %setup
-%patch -p2
+#%%patch -p2
 
 %build
 mkdir -p BUILD
@@ -116,8 +116,8 @@ cmake .. \
  -DWITH_SOUNDS=ON \
  -DUSE_QT_SQLITE=ON \
  -DNO_UI_DAEMON=ON \
- -DXMLRPC_DAEMON=ON \
- -DUSE_CLI_XMLRPC=ON
+ -DJSONRPC_DAEMON=ON \
+ -DUSE_CLI_JSONRPC=ON
 popd
 %make_build -C BUILD
 
@@ -165,11 +165,15 @@ popd
 %_man1dir/%name-daemon*
 
 %files cli
-%_bindir/%name-cli
+%_bindir/%name-cli-jsonrpc
 %_man1dir/%name-cli*
 %_datadir/%name/cli
 
 %changelog
+* Wed Aug 22 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 2.2.7-alt1
+- 2.2.7 release (ALT#27653)
+- daemon and cli use json
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.5-alt1.1
 - Fixed build
 
