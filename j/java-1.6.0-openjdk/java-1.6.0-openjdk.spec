@@ -156,7 +156,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt19_65.1.11jpp6
+Release: alt20_65.1.11jpp6
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -636,8 +636,8 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/javadocdir_ja
 %{_javadocdir}/java	%{_javadocdir}/%{name}/api	%{priority}
 EOF
 
-%__subst 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/policytool.desktop
-%__subst 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/jconsole.desktop
+sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/policytool.desktop
+sed -i 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/jconsole.desktop
 
 # HACK around find-requires
 %define __find_requires    $RPM_BUILD_ROOT/.find-requires
@@ -703,10 +703,10 @@ install -m644 j2se-buildreq-substitute \
 install -m644 j2se-devel-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 
-%__install -d %buildroot%_altdir
+install -d %buildroot%_altdir
 
 # J2SE alternative
-%__cat <<EOF >%buildroot%_altdir/%altname-java
+cat <<EOF >%buildroot%_altdir/%altname-java
 %{_bindir}/java	%{_jvmdir}/%{jredir}/bin/java	%priority
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
@@ -714,14 +714,14 @@ EOF
 for i in keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  %__cat <<EOF >>%buildroot%_altdir/%altname-java
+  cat <<EOF >>%buildroot%_altdir/%altname-java
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
 done
 
 # ----- JPackage compatibility alternatives ------
-%__cat <<EOF >>%buildroot%_altdir/%altname-java
+cat <<EOF >>%buildroot%_altdir/%altname-java
 %{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
@@ -730,14 +730,14 @@ done
 %{_jvmjardir}/jre-%{javaver}	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 EOF
 %if_enabled moz_plugin
-%__cat <<EOF >>%buildroot%_altdir/%altname-java
+cat <<EOF >>%buildroot%_altdir/%altname-java
 %{_bindir}/ControlPanel	%{_jvmdir}/%{jredir}/bin/ControlPanel	%{_jvmdir}/%{jredir}/bin/java
 %{_bindir}/jcontrol	%{_jvmdir}/%{jredir}/bin/jcontrol	%{_jvmdir}/%{jredir}/bin/java
 EOF
 %endif
 # JPackage specific: alternatives for security policy
 if [ -e %buildroot%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar ]; then
-    %__cat <<EOF >>%buildroot%_altdir/%altname-java
+    cat <<EOF >>%buildroot%_altdir/%altname-java
 %{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
 %{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
 EOF
@@ -746,7 +746,7 @@ fi
 
 
 # Javac alternative
-%__cat <<EOF >%buildroot%_altdir/%altname-javac
+cat <<EOF >%buildroot%_altdir/%altname-javac
 %_bindir/javac	%{_jvmdir}/%{sdkdir}/bin/javac	%priority
 %_prefix/lib/jdk	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 %_man1dir/javac.1.gz	%_man1dir/javac%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
@@ -757,7 +757,7 @@ for i in appletviewer extcheck idlj jar jarsigner javadoc javah javap jdb native
 jhat jrunscript jvisualvm schemagen wsgen wsimport xjc
 do
   if [ -e $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/bin/$i ]; then
-  %__cat <<EOF >>%buildroot%_altdir/%altname-javac
+  cat <<EOF >>%buildroot%_altdir/%altname-javac
 %_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
@@ -767,14 +767,14 @@ done
 for i in HtmlConverter
 do
   if [ -e $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/bin/$i ]; then
-  %__cat <<EOF >>%buildroot%_altdir/%altname-javac
+  cat <<EOF >>%buildroot%_altdir/%altname-javac
 %_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
 fi
 done
 
 # ----- JPackage compatibility alternatives ------
-  %__cat <<EOF >>%buildroot%_altdir/%altname-javac
+  cat <<EOF >>%buildroot%_altdir/%altname-javac
 %{_jvmdir}/java	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmjardir}/java	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{origin}	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
@@ -786,19 +786,19 @@ EOF
 
 %if_enabled moz_plugin
 # Mozilla plugin alternative
-%__cat <<EOF >%buildroot%_altdir/%name-mozilla
+cat <<EOF >%buildroot%_altdir/%name-mozilla
 %browser_plugins_path/libjavaplugin_oji.so	%mozilla_java_plugin_so	%priority
 EOF
 %endif	# enabled moz_plugin
 
 %if_enabled javaws
 # Java Web Start alternative
-%__cat <<EOF >%buildroot%_altdir/%altname-javaws
+cat <<EOF >%buildroot%_altdir/%altname-javaws
 %_bindir/javaws	%{_jvmdir}/%{jredir}/bin/javaws	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/javaws.1.gz	%_man1dir/javaws%label.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
 # ----- JPackage compatibility alternatives ------
-%__cat <<EOF >>%buildroot%_altdir/%altname-javaws
+cat <<EOF >>%buildroot%_altdir/%altname-javaws
 %{_datadir}/javaws	%{_jvmdir}/%{jredir}/bin/javaws	%{_jvmdir}/%{jredir}/bin/java
 EOF
 # ----- end: JPackage compatibility alternatives ------
@@ -931,6 +931,9 @@ done
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt20_65.1.11jpp6
+- applied repocop patches
+
 * Mon Apr 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.0-alt19_65.1.11jpp6
 - dropped libat-spi dependency
 
