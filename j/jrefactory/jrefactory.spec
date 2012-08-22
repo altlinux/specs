@@ -52,7 +52,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           jrefactory
 Version:        2.9.19
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        JRefactory and Pretty Print
 License:        ASL-like
@@ -115,6 +115,14 @@ cp -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
 %{_bindir}/aot-compile-rpm
 %endif
 
+# The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
+# It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
+# usually don't belong in releases. 
+# When packaging a CVS/SVN snapshot, export from CVS/SVN rather than use a checkout.
+find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
+# the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
+find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
+
 %files
 %doc docs/{*.html,*.jpg,*.gif,*.txt} settings/sample
 %{_javadir}/%{name}-%{version}.jar
@@ -127,6 +135,9 @@ cp -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
 %endif
 
 %changelog
+* Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9.19-alt3_1jpp6
+- applied repocop patches
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9.19-alt2_1jpp6
 - built with java 6 due to com.sun.image.codec.jpeg
 
