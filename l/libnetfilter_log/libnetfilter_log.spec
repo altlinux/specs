@@ -1,6 +1,6 @@
 Name: libnetfilter_log
 Version: 0.0.15
-Release: alt1.1
+Release: alt1.1.qa1
 Serial: 1
 
 Summary: libnfnetlink receive to-be-logged packets from the kernel nfnetlink_log subsystem
@@ -21,7 +21,7 @@ syslog/dmesg based packet logging.
 %package devel
 Summary: Development part of libnetfilter_log.
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 
 %description devel 
 Development part of libnetfilter_log.
@@ -50,6 +50,11 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Aug 23 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.0.15-alt1.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for libnetfilter_log
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.0.15-alt1.1
 - Removed bad RPATH
 
