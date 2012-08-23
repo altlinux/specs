@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:      brazil
 Version:   2.3
-Release:   alt2_8jpp7
+Release:   alt3_8jpp7
 Summary:   Extremely small footprint Java HTTP stack
 Group:     Development/Java
 License:   SPL
@@ -38,7 +38,7 @@ any other external Java libraries.
 %package javadoc
 Summary:   Javadocs for %{name}
 Group:     Development/Java
-Requires:  %{name} = %{version}-%{release}
+Requires:  %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:  jpackage-utils
 BuildArch: noarch
 
@@ -48,7 +48,7 @@ API documentation for %{name}.
 %package demo
 Summary:   Demos for %{name}
 Group:     Development/Java
-Requires:  %{name} = %{version}-%{release}
+Requires:  %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:  tcl
 
 %description demo
@@ -97,6 +97,9 @@ cp -pr samples %{buildroot}%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt3_8jpp7
+- applied repocop patches
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_8jpp7
 - fc version
 
