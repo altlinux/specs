@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt7
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -915,6 +915,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt7
+- don't save owncloud-client in session by default
+
+* Mon Aug 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt5.M60P.2
+- built for M60P
+
 * Mon Aug 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt6
 - reload plasma-* autostart settings when apply (ALT#27635)
 - don't turn off krunner to don't disable screen lock (ALT#27636)
