@@ -34,7 +34,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt21
+Release:        alt22
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -55,6 +55,8 @@ Patch3: jpackage-utils-1.7.5-alt-rpmscript-safe-mode.patch
 Patch4: jpackage-utils-1.7.5-alt-hasher-support-hack.patch
 Patch5: jpackage-utils-1.7.5-alt-undefined-alternatives-during-transaction-hack.patch
 Patch6: javapackages-0.2.6-macros.fjava-alt-nopython.patch
+Patch7: javapackages-0.6.0-alt-macros-rpm404.patch
+
 # macros.jpacage patches
 Patch10: jpackage-utils-enable-gcj-support.patch
 Patch11: jpackage-utils-1.7.5-alt-remove-duplication-of-sys-macros.patch
@@ -148,6 +150,7 @@ RPM build helpers for Java packages with OSGi dependencies
 %patch4 -p2
 %patch5 -p2
 %patch6
+%patch7 -p1
 %if_enabled gcj_support
 %patch10 -p0
 %endif
@@ -404,6 +407,9 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 /usr/lib/rpm/osgi.*
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt22
+- fjava macros fixes
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt21
 - bugfix release
 

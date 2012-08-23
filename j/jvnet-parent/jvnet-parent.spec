@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jvnet-parent
 Version:        3
-Release:        alt1_1jpp7
+Release:        alt1_4jpp7
 Summary:        Java.net parent POM file
 
 Group:          Development/Java
@@ -17,7 +17,6 @@ BuildRequires:  maven
 BuildRequires:  maven-enforcer-plugin
 
 Requires:       jpackage-utils
-Requires:       maven
 Source44: import.info
 
 %description
@@ -26,6 +25,8 @@ Glassfish
 
 %prep
 cp %{SOURCE0} pom.xml
+# we provide correct version of maven, no need to enforce and pull in dependencies
+%pom_remove_plugin org.apache.maven.plugins:maven-enforcer-plugin
 
 %build
 mvn-rpmbuild install
@@ -44,6 +45,9 @@ install -pm 644 pom.xml \
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 3-alt1_4jpp7
+- new release
+
 * Thu Jun 21 2012 Igor Vlasenko <viy@altlinux.ru> 3-alt1_1jpp7
 - new version
 
