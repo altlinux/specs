@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           groovy
 Version:        1.8.6
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Dynamic language for the Java Platform
 
 Group:          Development/Java
@@ -68,7 +68,7 @@ you can use Java.
 %package javadoc
 Summary:        API Documentation for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 %description javadoc
@@ -154,6 +154,9 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/groovy.conf
 
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.6-alt2_2jpp7
+- applied repocop patches
+
 * Mon Mar 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.6-alt1_2jpp7
 - new version
 
