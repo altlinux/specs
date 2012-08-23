@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-license-plugin
 Version:        1.8.0
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        Maven plugin to update header licenses of source files
 
 Group:          Development/Java
@@ -68,7 +68,7 @@ possibility to update / reformat missing license headers.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 BuildArch:      noarch
 
@@ -114,6 +114,9 @@ install -pm 644 pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt2_5jpp7
+- applied repocop patches
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.0-alt1_5jpp7
 - dropped obsoletes on mojo-maven2-plugin-cobertura
 
