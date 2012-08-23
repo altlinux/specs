@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-release
 Version:        2.2.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Release a project updating the POM and tagging in the SCM
 
 Group:          Development/Java
@@ -49,7 +49,7 @@ prepare and perform.
 %package manager
 Summary:        Release a project updating the POM and tagging in the SCM
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 
 %description manager
@@ -59,7 +59,7 @@ This package contains %{name}-manager needed by %{name}-plugin.
 %package plugin
 Summary:        Release a project updating the POM and tagging in the SCM
 Group:          Development/Java
-Requires:       %{name}-manager = %{version}-%{release}
+Requires:       %{name}-manager = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 Provides: maven2-plugin-release = %version
 
@@ -72,7 +72,7 @@ prepare and perform.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 Obsoletes:      %{name}-manager-javadoc <= 2.0-1
 Obsoletes:      %{name}-plugin-javadoc <= 2.0-1
@@ -140,6 +140,9 @@ install -pm 644 %{name}-plugin/pom.xml  \
 
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt2_2jpp7
+- applied repocop patches
+
 * Wed Apr 04 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt1_2jpp7
 - complete build
 
