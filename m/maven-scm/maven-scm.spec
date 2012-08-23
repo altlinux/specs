@@ -1,5 +1,3 @@
-BuildRequires: javacvs-lib
-Requires: javacvs-lib
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -37,8 +35,8 @@ BuildRequires: jpackage-compat
 #
 
 Name:           maven-scm
-Version:        1.5
-Release:        alt3_4jpp7
+Version:        1.7
+Release:        alt1_3jpp7
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 Group:          Development/Java
@@ -47,14 +45,12 @@ URL:            http://maven.apache.org/scm
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/scm/%{name}/%{version}/%{name}-%{version}-source-release.zip
 Source1:        %{name}-jpp-depmap.xml
 
-# remove dependency on mockito per accurev provider tests
-Patch0:         001_maven-scm_remove-mockito-test-dep.patch
-# fix a missing cast (plexus-container-default version mismatch?)
-Patch1:         004_maven-scm_fix-svn-provider-java.patch
 # fix modello configuration in vss provider pom and the cast as above
-Patch2:         005_maven-scm_fix-vss-provider-pom.patch
-Patch3:         006_maven-scm_fix-vss-provider-java.patch
-Patch4:         007_maven-scm_migration-to-component-metadata.patch
+Patch0:         005_maven-scm_fix-vss-provider-pom.patch
+# replace plexus-maven-plugin for plexus-component-metadata
+Patch1:         007_maven-scm_migration-to-component-metadata.patch
+# plexus-maven-plugin -> plexus-component-metadata
+Patch5:         012-plexus-component-metadata.patch
 
 BuildArch:      noarch
 
@@ -74,7 +70,6 @@ BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  maven2-common-poms >= 0:1.0-21
 BuildRequires:  modello >= 1.1
-#BuildRequires:  netbeans-cvsclient
 BuildRequires:  plexus-utils >= 1.5.6
 BuildRequires:  maven-plugin-testing-harness
 BuildRequires:  maven-doxia-sitetools
@@ -87,19 +82,15 @@ BuildRequires:  plexus-classworlds
 Requires:       junit >= 3.8.2
 Requires:       apache-commons-collections >= 3.1
 Requires:       modello >= 1.0-0.a8
-#Requires:       netbeans-cvsclient >= 6.9
 Requires:       jakarta-oro >= 2.0.8
 Requires:       plexus-utils >= 1.2
 Requires:       velocity >= 1.4
 Requires:       maven
-
-Requires(post):    jpackage-utils >= 0:1.7.2
-Requires(postun):  jpackage-utils >= 0:1.7.2
 Source44: import.info
 
 %description
 Maven SCM supports Maven plugins (e.g. maven-release-plugin) and other
-tools (e.g. Continum) in providing them a common API for doing SCM operations.
+tools (e.g. Continuum) in providing them a common API for doing SCM operations.
 
 %package test
 Summary:        Tests for %{name}
@@ -122,19 +113,26 @@ Javadoc for %{name}.
 %setup -q
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch5 -p1
 
-# We dont have mockito, needed for accurev tests, disable for now
-find maven-scm-providers/maven-scm-provider-accurev/src/test/java/org/apache/maven/scm/provider/accurev -type f -name "*Test*" -exec rm -f '{}' \;
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:animal-sniffer-maven-plugin maven-scm-plugin
+
+# remove providers-integrity from build (we don't have mks-api)
+%pom_remove_dep org.apache.maven.scm:maven-scm-provider-integrity maven-scm-providers/maven-scm-providers-standard
+%pom_disable_module maven-scm-provider-integrity maven-scm-providers
+
+# Partially remove cvs support for removal of netbeans-cvsclient
+# It still works with cvsexe provider
+%pom_remove_dep org.apache.maven.scm:maven-scm-provider-cvsjava maven-scm-client
+%pom_remove_dep org.apache.maven.scm:maven-scm-provider-cvsjava maven-scm-providers/maven-scm-providers-standard
+%pom_disable_module maven-scm-provider-cvsjava maven-scm-providers/maven-scm-providers-cvs
+
 
 %build
-export LANG=en_US.ISO8859-1
-
-#        -Dmaven.test.skip=true \
-mvn-rpmbuild \
-        -Dmaven.test.failure.ignore=true \
+# we don't have all test dependencies to run full testsuite anyway
+mvn-rpmbuild -Dproject.build.sourceEncoding=ISO-8859-1 \
+        -Dmaven.test.skip=true \
         -Dmaven.local.depmap.file=%{SOURCE1} \
         install javadoc:aggregate
 
@@ -150,7 +148,10 @@ for jar in `find . -type f -name "*.jar" | grep -E "target/.*.jar$"`; do
         install -pm 644 $jar $RPM_BUILD_ROOT%{_javadir}/%{name}/$versionless_jar
 done
 
-#poms (exclude the svn/cvstest poms. They are unnecessary)
+#remove maven-scm CLI jar-with-dependencies created by maven-assembly-plugin
+rm $RPM_BUILD_ROOT%{_javadir}/%{name}/client-jar-with-dependencies.jar
+
+#poms (exclude the svn/cvs test poms. They are unnecessary)
 # ignore
 #  1) poms in target/ (they are either copies, or temps)
 #  2) poms in src/test/ (they are poms needed for tests only)
@@ -189,6 +190,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_3jpp7
+- new release
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt3_4jpp7
 - applied repocop patches
 
