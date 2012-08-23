@@ -171,7 +171,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt3_2.2.1.8jpp7
+Release: alt4_2.2.1.8jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -1136,8 +1136,8 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/javadocdir_ja
 %{_javadocdir}/java	%{_javadocdir}/%{name}/api	%{priority}
 EOF
 
-%__subst 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
-%__subst 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
+sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
+sed -i 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
 
 
 ##################################################
@@ -1155,10 +1155,10 @@ install -m644 j2se-buildreq-substitute \
 install -m644 j2se-devel-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 
-%__install -d %buildroot%_altdir
+install -d %buildroot%_altdir
 
 # J2SE alternative
-%__cat <<EOF >%buildroot%_altdir/%altname-java
+cat <<EOF >%buildroot%_altdir/%altname-java
 %{_bindir}/java	%{_jvmdir}/%{jredir}/bin/java	%priority
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
@@ -1166,14 +1166,14 @@ EOF
 for i in keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  %__cat <<EOF >>%buildroot%_altdir/%altname-java
+  cat <<EOF >>%buildroot%_altdir/%altname-java
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
 done
 
 # ----- JPackage compatibility alternatives ------
-%__cat <<EOF >>%buildroot%_altdir/%altname-java
+cat <<EOF >>%buildroot%_altdir/%altname-java
 %{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
@@ -1183,7 +1183,7 @@ done
 EOF
 # JPackage specific: alternatives for security policy
 if [ -e %buildroot%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar ]; then
-    %__cat <<EOF >>%buildroot%_altdir/%altname-java
+    cat <<EOF >>%buildroot%_altdir/%altname-java
 %{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
 %{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
 EOF
@@ -1192,7 +1192,7 @@ fi
 
 
 # Javac alternative
-%__cat <<EOF >%buildroot%_altdir/%altname-javac
+cat <<EOF >%buildroot%_altdir/%altname-javac
 %_bindir/javac	%{_jvmdir}/%{sdkdir}/bin/javac	%priority
 %_prefix/lib/jdk	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 %_man1dir/javac.1.gz	%_man1dir/javac%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
@@ -1203,7 +1203,7 @@ for i in appletviewer extcheck idlj jar jarsigner javadoc javah javap jdb native
 jhat jrunscript jvisualvm schemagen wsgen wsimport xjc
 do
   if [ -e $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/bin/$i ]; then
-  %__cat <<EOF >>%buildroot%_altdir/%altname-javac
+  cat <<EOF >>%buildroot%_altdir/%altname-javac
 %_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
@@ -1213,14 +1213,14 @@ done
 for i in HtmlConverter
 do
   if [ -e $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/bin/$i ]; then
-  %__cat <<EOF >>%buildroot%_altdir/%altname-javac
+  cat <<EOF >>%buildroot%_altdir/%altname-javac
 %_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
 fi
 done
 
 # ----- JPackage compatibility alternatives ------
-  %__cat <<EOF >>%buildroot%_altdir/%altname-javac
+  cat <<EOF >>%buildroot%_altdir/%altname-javac
 %{_jvmdir}/java	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmjardir}/java	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{origin}	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
@@ -1349,6 +1349,9 @@ done
 %doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.3-alt4_2.2.1.8jpp7
+- applied repocop patches
+
 * Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.3-alt3_2.2.1.8jpp7
 - removed Obsoletes: on java-1.6.0-openjdk
 
