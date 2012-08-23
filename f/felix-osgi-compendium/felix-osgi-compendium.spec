@@ -3,47 +3,47 @@ BuildRequires: jpackage-compat
 # Prevent brp-java-repack-jars from being run.
 %define __jar_repack %{nil}
 
-%global project felix
 %global bundle org.osgi.compendium
-%global groupId org.apache.felix
-%global artifactId %{bundle}
+%global felixdir %{_javadir}/felix
+%global POM %{_mavenpomdir}/JPP.felix-%{bundle}.pom
 
-Name:    %{project}-osgi-compendium
+Name:    felix-osgi-compendium
 Version: 1.4.0
-Release: alt2_3jpp6
+Release: alt2_12jpp7
 Summary: Felix OSGi R4 Compendium Bundle
 
 Group:   Development/Java
 License: ASL 2.0
 URL:     http://felix.apache.org
 Source0: http://www.apache.org/dist/felix/%{bundle}-%{version}-project.tar.gz
-Source1: %{name}.demap
 
-# Remove <parent>
-Patch0: %{bundle}-%{version}~pom.xml.patch
+Patch0:         0001-Fix-servlet-api-dependency.patch
+Patch1:         0002-Fix-compile-target.patch
+Patch2:         0003-Add-CM_LOCATION_CHANGED-property-to-ConfigurationEve.patch
+Patch3:         0004-Add-TARGET-property-to-ConfigurationPermission.patch
+# This is an ugly patch that adds getResourceURL method. This prevents jbosgi-framework
+# package from bundling osgi files. Once the jbosgi-framework will be updated
+# to a new version without the need for this patch, REMOVE it!
+Patch4:         0005-Add-getResourceURL-method-to-make-jbosgi-framework-h.patch
 
-BuildArch: noarch
+BuildArch:      noarch
 
 BuildRequires: jpackage-utils
-BuildRequires: maven2
-BuildRequires:    maven2-plugin-compiler
-BuildRequires:    maven2-plugin-install
-BuildRequires:    maven2-plugin-jar
-BuildRequires:    maven2-plugin-javadoc
-BuildRequires:    maven2-plugin-release
-BuildRequires:    maven2-plugin-resources
-BuildRequires:    maven-surefire-plugin
-BuildRequires:    maven-plugin-bundle
+BuildRequires: maven
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-surefire-provider-junit4
 BuildRequires: felix-osgi-core
-BuildRequires: tomcat6-servlet-2.5-api
 BuildRequires: felix-osgi-foundation
+BuildRequires: tomcat-servlet-3.0-api
 
 Requires: felix-osgi-core
 Requires: felix-osgi-foundation
-#Requires: tomcat6-servlet-2.5-api
-
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
+Requires: tomcat-servlet-3.0-api
 Source44: import.info
 
 %description
@@ -58,55 +58,54 @@ BuildArch: noarch
 %description javadoc
 API documentation for %{name}.
 
-%global POM %{_mavenpomdir}/JPP.%{project}-%{name}.pom
-
 %prep
 %setup -q -n %{bundle}-%{version}
-%patch0 -p1 -b .sav
+
+# fix servlet api properly
+%patch0 -p1
+# fix compile source/target
+%patch1 -p1
+# add CM_LOCATION_CHANGED property
+%patch2 -p1
+# add TARGET property
+%patch3 -p1
+# add getResourceURL method
+%patch4 -p1
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-%__mkdir_p $MAVEN_REPO_LOCAL
-mvn-jpp -e \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file="%{SOURCE1}" \
-        install javadoc:javadoc
+mvn-rpmbuild install javadoc:javadoc
 
 %install
-%__rm -rf %{buildroot}
+# jar
+install -pD -T -m 644 target/%{bundle}-%{version}.jar \
+  %{buildroot}%{felixdir}/%{bundle}.jar
 
-# jars
-install -d -m 0755 %{buildroot}%{_javadir}/%{project}
-install -m 644 target/%{bundle}-%{version}.jar \
-        %{buildroot}%{_javadir}/%{project}/%{bundle}-%{version}.jar
-
-# versionless symlinks to jars
-(cd %{buildroot}%{_javadir}/%{project} && for jar in *-%{version}*.jar; \
-    do %__ln_s -f $jar `echo $jar| sed "s|-%{version}||g"`; done)
-
-%add_to_maven_depmap %{groupId} %{artifactId} %{version} JPP/%{project} %{bundle}
-
-# poms
-install -d -m 755 %{buildroot}%{_mavenpomdir}
-install -pm 644 pom.xml %{buildroot}%{POM}
+# pom
+install -pD -T -m 644 pom.xml %{buildroot}%{POM}
+%add_maven_depmap JPP.felix-%{bundle}.pom felix/%{bundle}.jar -a "org.osgi:%{bundle}"
 
 # javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-%__cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}-%{version}/
-%__ln_s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-%__rm -rf target/site/api*
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
+%__cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
+
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %doc LICENSE
-%{_javadir}/%{project}/*
+%{_mavendepmapfragdir}/%{name}
+%{felixdir}
 %{POM}
-%config(noreplace) %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_12jpp7
+- new release
+
 * Mon Sep 05 2011 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_3jpp6
 - dropped tomcat6-servlet-2.5-api dep to fix apache-commons-chain
 
