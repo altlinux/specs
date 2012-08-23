@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jarjar
 Version:        1.0
-Release:        alt3_5jpp7
+Release:        alt3_6jpp7
 Summary:        Jar Jar Links
 License:        ASL 2.0
 URL:            http://code.google.com/p/jarjar/
@@ -81,7 +81,7 @@ another library.
 Summary:        Maven plugin for %{name}
 Group:          Development/Java
 Requires:       maven
-Requires:       %{name} = %{version}-%{release}
+Requires:       jarjar = %{?epoch:%epoch:}%{version}-%{release}
 Obsoletes: %{name}-maven2-plugin <= 1.0
 Provides: %{name}-maven2-plugin = %{version}-%{release}
 
@@ -113,7 +113,7 @@ ln -sf $(build-classpath maven/maven-plugin-api) maven-plugin-api.jar
 popd
 export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=$(build-classpath ant)
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar jar-util javadoc mojo test
+ant jar jar-util javadoc mojo test
 
 %install
 # jars
@@ -172,6 +172,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_6jpp7
+- new release
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_5jpp7
 - fc version
 
