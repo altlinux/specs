@@ -5,7 +5,7 @@
 %define subver b6
 
 Version: 2.0
-Release: alt5.%subver
+Release: alt5.%subver.qa1
 Epoch: 20070423
 Name: emacs-%pkg_name
 License: GPL
@@ -40,7 +40,7 @@ multitude of other purposes.
 %package el
 Summary: The Emacs Lisp sources for bytecode included in %name
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 
 %description el
 %name-el contains the Emacs Lisp sources for the bytecode
@@ -52,7 +52,7 @@ You need to install %name-el only if you intend to modify any of the
 %package pieces
 Summary: Additional pieces sets for %name
 Group: Editors
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 
 %description pieces
 %name-pieces contains additional pieces sets for %name
@@ -60,7 +60,7 @@ Requires: %name = %version-%release
 %package sounds
 Summary: Additional WAV files for announce moves verbally
 Group: Editors
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 
 %description sounds
 %name-sounds contains additional WAV files for announce your opponent's
@@ -112,6 +112,11 @@ install -m 644 %SOURCE1 %buildroot%_sysconfdir/emacs/site-start.d/%pkg_name.el
 
 
 %changelog
+* Thu Aug 23 2012 Repocop Q. A. Robot <repocop@altlinux.org> 20070423:2.0-alt5.b6.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for emacs-chess
+
 * Sat Oct 24 2009 Igor Vlasenko <viy@altlinux.ru> 20070423:2.0-alt5.b6
 - applied repocop patch: removed obsolete (un)install_info macros
 
