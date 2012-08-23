@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		jcharts
 Version:	0.7.5
-Release:	alt2_7jpp7
+Release:	alt3_7jpp7
 Summary:	A java based charts library
 
 Group:		Publishing
@@ -34,7 +34,7 @@ volunteers for displaying charts via Servlets, JSP's, and Swing apps.
 %package	javadoc
 Summary:	Javadoc for %{name}
 Group:		Development/Java
-Requires:	%{name} = %{version}-%{release}
+Requires:	%{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:	jpackage-utils
 BuildArch: noarch
 
@@ -78,6 +78,9 @@ ln -s %{_javadocdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.5-alt3_7jpp7
+- applied repocop patches
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.5-alt2_7jpp7
 - fc version
 
