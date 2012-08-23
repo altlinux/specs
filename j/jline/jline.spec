@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jline
 Version:        1.0
-Release:        alt2_1jpp7
+Release:        alt3_1jpp7
 Summary:        Java library for reading and editing user input in console applications
 License:        BSD
 URL:            http://jline.sourceforge.net/
@@ -75,7 +75,7 @@ chain to other console applications.
 %package        demo
 Summary:        Demos for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    demo
 Demonstrations and samples for %{name}.
@@ -147,6 +147,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/*
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_1jpp7
+- applied repocop patches
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_1jpp7
 - fc version
 
