@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           felix-osgi-obr
 Version:        1.0.2
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Felix OSGi OBR Service API
 
 Group:          Development/Java
@@ -75,6 +75,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_6jpp7
+- new release
+
 * Wed Apr 04 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0.2-alt1_5jpp7
 - fc package
 
