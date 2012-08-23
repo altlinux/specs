@@ -1,3 +1,4 @@
+BuildRequires: buildnumber-maven-plugin maven-dependency-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -45,7 +46,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-javaflow
 Version:        1.0
-Release:        alt4_0.r618928.1jpp5
+Release:        alt5_0.r618928.1jpp5
 Epoch:          0
 Summary:        Commons JavaFlow
 License:        Apache License 2.0
@@ -261,6 +262,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.r618928.1jpp5
+- fixed build w/new commons-parent
+
 * Wed Apr 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.r618928.1jpp5
 - fixed build with new asm
 
