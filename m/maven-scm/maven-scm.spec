@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-scm
 Version:        1.5
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Common API for doing SCM operations
 License:        ASL 2.0
 Group:          Development/Java
@@ -104,7 +104,7 @@ tools (e.g. Continum) in providing them a common API for doing SCM operations.
 %package test
 Summary:        Tests for %{name}
 Group:          Development/Java
-Requires:       maven-scm = %{version}-%{release}
+Requires:       maven-scm = %{?epoch:%epoch:}%{version}-%{release}
 
 %description test
 Tests for %{name}.
@@ -189,6 +189,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt3_4jpp7
+- applied repocop patches
+
 * Fri Mar 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_4jpp7
 - restored maven-scm-cvsjava (reverted to rel4)
 
