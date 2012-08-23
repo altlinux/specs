@@ -1,16 +1,17 @@
 %define oname comedilib
 Name: libcomedi
-Version: 0.8.1
-Release: alt2.2.1
+Version: 0.10.0
+Release: alt1
 
 Summary: Data Acquisition library for the Comedi DAQ driver
-Summary(ru_RU.KOI8-R): Библиотека получения данных для драйвера Comedi DAQ.
+Summary(ru_RU.UTF-8): п▒п╦п╠п╩п╦п╬я┌п╣п╨п╟ п©п╬п╩я┐я┤п╣п╫п╦я▐ п╢п╟п╫п╫я▀я┘ п╢п╩я▐ п╢я─п╟п╧п╡п╣я─п╟ Comedi DAQ.
 
 License: LGPL
 Group: Development/Other
 Url: http://www.comedi.org
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
+AutoReq: noshell
 
 Source: http://www.comedi.org/download/%oname-%version.tar.bz2
 Source1: http://www.comedi.org/download/comedi_examples.tar.gz
@@ -18,7 +19,7 @@ Patch: %name-as-needed.patch
 
 # manually removed: hostinfo eric gcc-g77
 # Automatically added by buildreq on Sun Nov 07 2004
-BuildRequires: docbook-utils-print flex gcc-c++ libstdc++-devel python-devel python-modules-encodings swig
+BuildRequires: docbook-utils-print xmlto dblatex flex gcc-c++ libstdc++-devel python-devel python-modules-encodings swig
 
 %description
 The Linux Control and Measurement Device Interface Library.
@@ -26,14 +27,14 @@ Comedilib is the library for the Comedi data acquisition driver
 for Linux.  It allows Linux processes to acquire data from
 supported DAQ cards, such as those from National Instruments.
 
-%description -l ru_RU.KOI8-R
-Comedilib -- это библиотека для драйвера получения данных Comedi под Linux.
-Она позволяет пользовательским процессам получать данные от поддерживаемых
-карт DAQ, например, производимых National Instruments.
+%description -l ru_RU.UTF-8
+Comedilib -- я█я┌п╬ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ п╢п╩я▐ п╢я─п╟п╧п╡п╣я─п╟ п©п╬п╩я┐я┤п╣п╫п╦я▐ п╢п╟п╫п╫я▀я┘ Comedi п©п╬п╢ Linux.
+п·п╫п╟ п©п╬п╥п╡п╬п╩я▐п╣я┌ п©п╬п╩я▄п╥п╬п╡п╟я┌п╣п╩я▄я│п╨п╦п╪ п©я─п╬я├п╣я│я│п╟п╪ п©п╬п╩я┐я┤п╟я┌я▄ п╢п╟п╫п╫я▀п╣ п╬я┌ п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣п╪я▀я┘
+п╨п╟я─я┌ DAQ, п╫п╟п©я─п╦п╪п╣я─, п©я─п╬п╦п╥п╡п╬п╢п╦п╪я▀я┘ National Instruments.
 
 %package devel
 Summary: The files needed for %name application development
-Summary(ru_RU.KOI8-R): Файлы, требующиеся для разработки приложений с использованием %name
+Summary(ru_RU.UTF-8): п╓п╟п╧п╩я▀, я┌я─п╣п╠я┐я▌я┴п╦п╣я│я▐ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧ я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ %name
 Group: Development/C
 Requires: %name = %version-%release
 
@@ -41,9 +42,9 @@ Requires: %name = %version-%release
 The %name-devel package contains the necessary include files
 for developing applications with %name
 
-%description devel -l ru_RU.KOI8-R
-Пакет %name-devel содержит необходимые заголовочные файлы
-для разработки приложений, которые используют %name.
+%description devel -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ %name-devel я│п╬п╢п╣я─п╤п╦я┌ п╫п╣п╬п╠я┘п╬п╢п╦п╪я▀п╣ п╥п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀
+п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧, п╨п╬я┌п╬я─я▀п╣ п╦я│п©п╬п╩я▄п╥я┐я▌я┌ %name.
 
 %package -n python-module-comedi
 Summary: Python interface for %name
@@ -58,24 +59,24 @@ Python interface for %name
 
 %package devel-static
 Summary: Static library for %name application development
-Summary(ru_RU.KOI8-R): Статическая библиотека для разработки приложений с использованием %name
+Summary(ru_RU.UTF-8): п║я┌п╟я┌п╦я┤п╣я│п╨п╟я▐ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╟ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧ я│ п╦я│п©п╬п╩я▄п╥п╬п╡п╟п╫п╦п╣п╪ %name
 Group: Development/C
 Requires: %name-devel = %version-%release
 
 %description devel-static
 The %name-devel-static package contains the static library
 for developing applications with %name
-%description devel-static -l ru_RU.KOI8-R
-Пакет %name-devel-static содержит статическую библиотеку
-для разработки приложений, которые используют %name.
+%description devel-static -l ru_RU.UTF-8
+п÷п╟п╨п╣я┌ %name-devel-static я│п╬п╢п╣я─п╤п╦я┌ я│я┌п╟я┌п╦я┤п╣я│п╨я┐я▌ п╠п╦п╠п╩п╦п╬я┌п╣п╨я┐
+п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌п╨п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧, п╨п╬я┌п╬я─я▀п╣ п╦я│п©п╬п╩я▄п╥я┐я▌я┌ %name.
 
 %prep
 %setup -q -n comedilib-%version
 %patch
 # unpack examples
 #tar xfz %SOURCE1
-#%__subst 's|comedi_data_read_n|comedi_data_read_n_obsolete|' ./comedi_examples/monitor/sv.c
-#%__subst 's|demo doc|demo|' Makefile.in
+#__subst 's|comedi_data_read_n|comedi_data_read_n_obsolete|' ./comedi_examples/monitor/sv.c
+#__subst 's|demo doc|demo|' Makefile.in
 
 %build
 %autoreconf
@@ -103,20 +104,24 @@ for developing applications with %name
 %doc AUTHORS README ChangeLog NEWS doc/FAQ
 %_libdir/%name.so.*
 %_sbindir/comedi_config
-#%exclude %_bindir/%{name}_monitor
+#exclude %_bindir/%{name}_monitor
+%_bindir/comedi_board_info
 %_bindir/comedi_test
-#%_sysconfdir/hotplug/usb/*
-#%_sysconfdir/pcmcia/*
+#_sysconfdir/hotplug/usb/*
+%dir %_sysconfdir/pcmcia
+%config(noreplace) %_sysconfdir/pcmcia/*
+#_sysconfdir/pcmcia/*
+%_man1dir/*
 %_man7dir/*
 %_man8dir/*
 
 %files -n python-module-comedi
 %python_sitelibdir/*.so
-%python_sitelibdir/comedi.py
+%python_sitelibdir/comedi.py*
 
 %files devel
 %doc demo
-#%_bindir/comedi_monitor
+#_bindir/comedi_monitor
 %_includedir/comedi*
 %_libdir/%name.so
 %_docdir/%oname/
@@ -127,6 +132,11 @@ for developing applications with %name
 %_libdir/%name.a
 
 %changelog
+* Thu Aug 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.10.0-alt1
+- new version 0.10.0
+- all available files included
+- spec translated to UTF-8
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.1-alt2.2.1
 - Rebuild with Python-2.7
 
