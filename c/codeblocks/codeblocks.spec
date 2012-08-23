@@ -1,5 +1,5 @@
 Name: codeblocks
-%define revision 8086
+%define revision 8247
 Version: 10.05.%revision
 Release: alt1
 
@@ -164,6 +164,7 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %{pkgdata}/DoxyBlocks.zip
 %{pkgdata}/dragscroll.zip
 %{pkgdata}/EditorTweaks.zip
+%{pkgdata}/EditorConfig.zip
 %{pkgdata}/envvars.zip
 %{pkgdata}/exporter.zip
 %{pkgdata}/FileManager.zip
@@ -205,6 +206,7 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %{_libdir}/%{name}/plugins/libDoxyBlocks.*
 %{_libdir}/%{name}/plugins/libdragscroll.*
 %{_libdir}/%{name}/plugins/libEditorTweaks.*
+%{_libdir}/%{name}/plugins/libEditorConfig.*
 %{_libdir}/%{name}/plugins/libenvvars.*
 %{_libdir}/%{name}/plugins/libexporter.*
 %{_libdir}/%{name}/plugins/libFileManager.*
@@ -234,6 +236,10 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 23 2012 Denis Kirienko <dk@altlinux.org> 10.05.8247-alt1
+- SVN snapshot 8247
+- Added EditorConfig plugin
+
 * Wed Jul 11 2012 Denis Kirienko <dk@altlinux.org> 10.05.8086-alt1
 - SVN snapshot 8086
 
