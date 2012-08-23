@@ -93,7 +93,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty6
 Version:        6.1.26
-Release:        alt6_1jpp6
+Release:        alt7_1jpp6
 Epoch:          0
 Summary:        Webserver and Servlet Container
 Group:          Development/Java
@@ -151,7 +151,7 @@ BuildRequires:  geronimo-ejb-3.0-api
 BuildRequires:  geronimo-jta-1.0.1B-api
 BuildRequires:  geronimo-j2ee-management-1.0-api
 BuildRequires:  jakarta-commons-el
-BuildRequires:  jakarta-commons-parent >= 0:9
+BuildRequires:  apache-commons-parent
 BuildRequires:  jakarta-slide-webdavclient
 BuildRequires:  javamail_1_4_api
 BuildRequires:  jaf_1_1_api
@@ -1699,6 +1699,9 @@ fi
 # ========= End of Jetty Webapps Subpackage Files
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt7_1jpp6
+- fixed build w/new commons-parent
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt6_1jpp6
 - fixed build: added BR: google-collections
 
