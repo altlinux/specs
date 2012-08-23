@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:       plexus-compiler
 Version:    1.8.3
-Release:    alt1_1jpp7
+Release:    alt2_1jpp7
 Epoch:      0
 Summary:    Compiler call initiators for Plexus
 License:    MIT
@@ -76,7 +76,7 @@ Summary:        Extra compiler support for %{name}
 Group:          Development/Java
 Requires:       jpackage-utils
 Requires:       eclipse-ecj
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description extras
 Additional support for csharp, eclipse and jikes compilers
@@ -178,6 +178,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.3-alt2_1jpp7
+- applied repocop patches
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.3-alt1_1jpp7
 - complete build
 
