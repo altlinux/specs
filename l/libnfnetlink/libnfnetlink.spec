@@ -1,6 +1,6 @@
 Name: libnfnetlink
 Version: 1.0.0
-Release: alt1.2
+Release: alt1.2.qa1
 Serial: 1
 
 Summary: libnfnetlink - low-level nfnetlink message processing functions
@@ -20,7 +20,7 @@ and their respective users and/or management tools in userspace.
 %package devel
 Summary: development part of libnfnetlink
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 
 %description devel
 Development part of libnfnetlink
@@ -48,6 +48,11 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Aug 23 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:1.0.0-alt1.2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for libnfnetlink
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt1.2
 - Rebuilt for debuginfo
 
