@@ -1,9 +1,10 @@
+BuildRequires: desktop-file-utils
 %define ver 3.5.0
 %define subver 7
 
 Name: nxclient
 Version: %ver.%subver
-Release: alt3
+Release: alt3.qa1
 
 Summary: NoMachine.com's NX client
 
@@ -101,6 +102,18 @@ desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=RemoteAccess \
 	%buildroot%_desktopdir/nxclient-admin.desktop
 %endif
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=RemoteAccess \
+	%buildroot%_desktopdir/nxclient-help.desktop
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=RemoteAccess \
+	%buildroot%_desktopdir/nxclient-wizard.desktop
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=RemoteAccess \
+	%buildroot%_desktopdir/nxclient.desktop
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=RemoteAccess \
+	%buildroot%_desktopdir/nxclient-admin.desktop
 
 %files
 %_bindir/%name
@@ -111,6 +124,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/*
 
 %changelog
+* Thu Aug 23 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.5.0.7-alt3.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for nxclient
+
 * Wed Dec 21 2011 Michael Shigorin <mike@altlinux.org> 3.5.0.7-alt3
 - drop RPATH
 
