@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:           jruby
 Version:        1.6.3
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        Pure Java implementation of the Ruby interpreter
 Group:          Development/Java
 License:        (CPL or GPLv2+ or LGPLv2+) and ASL 1.1 and MIT and Ruby
@@ -96,7 +96,7 @@ Standard Libraries.
 %package        javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch: noarch
 
 %description    javadoc
@@ -109,7 +109,7 @@ Summary:        Bindings used to load yecht in jruby
 Group:          Development/Java
 BuildRequires:  yecht
 Requires:       yecht
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description yecht
 The bindings for the yecht library for internal use in jruby
@@ -238,6 +238,9 @@ ln -s %{_datadir}/%{name}/lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_javadir}/%{name}-yecht.jar
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt2_3jpp7
+- applied repocop patches
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.3-alt1_3jpp7
 - fc build
 
