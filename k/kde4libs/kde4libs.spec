@@ -9,7 +9,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -67,8 +67,8 @@ Patch106: kdelibs-4.7.4-SOLID_UPNP.patch
 Patch201: 14_hardcode_ptm_device.diff
 Patch202: 30_kfileshare_kdesu_fileshareset.diff
 Patch203: 31_relax_plugin_kde_version_check.diff
-# Ubuntu
-# MDK
+# SuSE
+Patch301: desktop-translations.diff
 # upstream
 # ALT
 Patch1000: kdelibs-4.8.4-alt-xdg-dirs.patch
@@ -102,6 +102,7 @@ Patch1027: kdelibs-4.7.4-alt-revert-5960ae9846c333ef381a817af9d63776c4ddc201.pat
 Patch1028: kdelibs-4.8.1-alt-kdesu-export-user-var.patch
 Patch1029: kdelibs-4.8.1-alt-fix-build.patch
 Patch1030: kdelibs-4.8.2-alt-platform-profile.patch
+Patch1031: kdelibs-4.8.5-alt-add-desktop-translations.patch
 
 Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
@@ -157,6 +158,8 @@ applications for KDE 4.
 %patch202 -p1
 %patch203 -p1
 #
+%patch301 -p0
+#
 %patch1000 -p1 -b .xdg-dirs
 %patch1001 -p1 -b .custom-kdedir
 %patch1002 -p1 -b .exists_ext
@@ -188,6 +191,7 @@ applications for KDE 4.
 %patch1028 -p1
 %patch1029 -p1
 %patch1030 -p1
+%patch1031 -p1
 
 %patch3000 -p1
 
@@ -306,6 +310,12 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2
+- add for global desktop-files translation support
+
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Wed Aug 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 
