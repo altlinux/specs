@@ -50,7 +50,7 @@ BuildRequires: jpackage-compat
 
 Name:           htmlunit
 Version:        1.14
-Release:        alt5_4jpp6
+Release:        alt6_4jpp6
 Epoch:          0
 Summary:        Browser for Java programs
 License:        ASL 2.0
@@ -105,7 +105,7 @@ BuildRequires: jakarta-commons-httpclient >= 0:3.0.1
 BuildRequires: jakarta-commons-io >= 0:1.3.1
 BuildRequires: commons-lang
 BuildRequires: jakarta-commons-logging >= 0:1.1
-BuildRequires: jakarta-commons-parent
+BuildRequires: apache-commons-parent
 BuildRequires: jaxen >= 0:1.1
 BuildRequires: jetty6
 BuildRequires: nekohtml >= 0:0.9.5
@@ -256,6 +256,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt6_4jpp6
+- fixed build w/new commons-parent
+
 * Thu May 10 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt5_4jpp6
 - fixed build
 
