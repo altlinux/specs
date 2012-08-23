@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.6.3
-Release: alt5
+Release: alt6
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -172,7 +172,7 @@ Patch704: gcc46-alt-libgfortran-makefile.patch
 Patch705: gcc46-alt-libjava-makefile.patch
 Patch706: gcc45-alt-ada-link.patch
 Patch707: gcc43-alt-spp-buffer-size.patch
-Patch708: gcc46-deb-alt-defaults-FORTIFY_SOURCE.patch
+Patch708: gcc46-alt-defaults-FORTIFY_SOURCE.patch
 Patch709: gcc46-alt-defaults-stack-protector.patch
 Patch710: gcc46-alt-defaults-relro.patch
 Patch711: gcc43-alt-fixinc.patch
@@ -573,7 +573,7 @@ Provides: libgfortran-devel = %version-%release
 PreReq: gcc-fortran-common >= 1.4.7
 Requires: libgfortran3 %REQ %version-%release
 %ifarch %ix86 x86_64 ia64
-Requires: libquadmath-devel %REQ %version-%release
+Requires: libquadmath%gcc_branch-devel = %version-%release
 %endif
 Requires: glibc-devel
 
@@ -1008,7 +1008,7 @@ patch -p0 <%_sourcedir/libtool.m4-gcj.patch
 
 %ifdef _cross_platform
 # Pretend this isn't cross-compiler
-sed -i -e 's/^[[:blank:]]\+libstdcxx_incdir.\+target_alias.\+libstdcxx_incdir.\+$/:/' gcc/configure.ac 
+sed -i -e 's/^[[:blank:]]\+libstdcxx_incdir.\+target_alias.\+libstdcxx_incdir.\+$/:/' gcc/configure.ac
 sed -i -e '/^INTERNAL_CFLAGS/ s,@CROSS@,,' -e 's,^\(CROSS_SYSTEM_HEADER_DIR\).\+$,\1 = %_includedir,' gcc/Makefile.in
 # Do not try to build libgcc_s.so, supplemental libgcc*.a are still needed
 sed -i -e '/^all: libgcc_eh.a/ s,libgcc_s$(SHLIB_EXT),,' -e 's,$(SHLIB_INSTALL),,' libgcc/Makefile.in
@@ -1385,7 +1385,7 @@ for n in \
     %{?_with_ada:gcc-gnat libgnat libgnat-devel libgnat-devel-static} \
     %{?_with_java:gcc-java libgcj libgcj-plugins libgcj-devel} \
     %{?_with_objc:gcc-objc libobjc-devel libobjc-devel-static %{?_with_cxx:gcc-objc++}} \
-    %{?_with_go:gcc-go libgo libgo-devel libgo-devel-static} \
+    %{?_with_go:gcc-go libgo-devel libgo-devel-static} \
     ; do
 	pref="${n%%%%-*}"
 	suf="${n#$pref}"
@@ -1908,6 +1908,10 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 4.6.3-alt6
+- Define _FORTIFY_SOURCE only for optimization level 2 or higher.
+- libgfortran4.6-devel: fixed non-strict dependency on libquadmath4.6-devel.
+
 * Mon Aug 20 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6.3-alt5
 - Go language support packaged (closes: #27654)
 
