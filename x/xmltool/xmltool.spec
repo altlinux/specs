@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xmltool
 Version:        3.3
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Tool to manage XML documents through a Fluent Interface
 
 Group:          Development/Java
@@ -36,7 +36,7 @@ together, using the Fluent Interface pattern to facilitate XML manipulations.
 %package javadoc
 Summary:        Javadocs for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 BuildArch: noarch
 
@@ -82,6 +82,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt2_4jpp7
+- applied repocop patches
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt1_4jpp7
 - dropped obsoletes on mojo-maven2-plugin-cobertura
 
