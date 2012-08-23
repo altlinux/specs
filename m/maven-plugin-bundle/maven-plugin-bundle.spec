@@ -1,54 +1,56 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%global site_name maven-bundle-plugin
+
 Name:           maven-plugin-bundle
-Version:        2.0.0
-Release:        alt1_12jpp6
+Version:        2.3.7
+Release:        alt1_4jpp7
 Summary:        Maven Bundle Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://felix.apache.org
-Source0:        http://www.apache.org/dist/felix/maven-bundle-plugin-2.0.0-project.tar.gz
-# Apply the following patch for newer bndlibs
-Patch0:         %{name}-BundlePlugin.patch
-Patch1:         %{name}-ManifestPlugin.patch
-Patch2:         %{name}-pom.patch
-BuildRequires:  aqute-bndlib >= 0:0.0.311
-BuildRequires:  plexus-utils >= 0:1.4.7
-BuildRequires:  felix-osgi-core >= 0:1.0.0
-BuildRequires:  felix-osgi-obr >= 0:1.0.1
-BuildRequires:  kxml2 >= 0:2.2.2
-BuildRequires:  maven-shared-dependency-tree >= 1.1
-BuildRequires:  maven-wagon >= 1.0-0.2.b2
-BuildRequires:  maven2-plugin-compiler
-BuildRequires:  maven2-plugin-install
-BuildRequires:  maven2-plugin-jar
-BuildRequires:  maven2-plugin-javadoc
-BuildRequires:  maven2-plugin-plugin
-BuildRequires:  maven2-plugin-resources
-BuildRequires:  maven-surefire-plugin >= 2.3
-BuildRequires:  maven-surefire-provider-junit4 >= 2.3
-BuildRequires:  maven-doxia-sitetools
-BuildRequires:  felix-parent
-# XXX: 1.0-alpha-7
-BuildRequires: plexus-archiver >= 0:1.0
-# XXX: 1.0-alpha-9-stable-1
-BuildRequires: plexus-containers-container-default >= 0:1.0
-Requires: aqute-bndlib >= 0:0.0.311
-Requires: plexus-utils >= 0:1.4.5
-Requires: felix-osgi-core >= 0:1.0.0
-Requires: felix-osgi-obr >= 0:1.0.1
-Requires: kxml2 >= 0:2.2.2
-Requires: maven2
-Requires: maven-shared-archiver
+Source0:        http://apache.tradebit.com/pub/felix/%{site_name}-%{version}-source-release.tar.gz
+
+Patch0:         %{site_name}-dependency.patch
+Patch1:         %{site_name}-unreported-exception.patch
+
+BuildRequires: aqute-bndlib >= 1.50.0
+BuildRequires: plexus-utils >= 1.4.5
+BuildRequires: felix-osgi-obr
+BuildRequires: kxml2
+BuildRequires: maven
+BuildRequires: maven-shared-dependency-tree >= 1.1-3
+BuildRequires: maven-wagon >= 1.0-0.2.b2
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-plugin-plugin
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-surefire-plugin >= 2.3
+BuildRequires: maven-surefire-provider-junit4 >= 2.3
+BuildRequires: maven-doxia-sitetools
+BuildRequires: maven-shared-osgi
+BuildRequires: maven-archiver
+BuildRequires: plexus-archiver
+BuildRequires: plexus-containers-container-default
+BuildRequires: felix-parent
+BuildRequires: felix-bundlerepository
+
+Requires: aqute-bndlib >= 1.50.0
+Requires: plexus-utils >= 1.4.5
+Requires: felix-osgi-obr
+Requires: kxml2
+Requires: maven
+Requires: maven-archiver
 Requires: maven-shared-dependency-tree
-Requires: maven-shared-osgi
 Requires: maven-wagon
-# XXX: 1.0-alpha-7
-Requires: plexus-archiver >= 0:1.0
-# XXX: 1.0-alpha-9-stable-1
-Requires: plexus-containers-container-default >= 0:1.0
+Requires: maven-shared-osgi
+Requires: plexus-archiver
+Requires: plexus-containers-container-default
 Requires: felix-parent
+Requires: felix-bundlerepository
 
 BuildArch: noarch
 Source44: import.info
@@ -69,45 +71,48 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q -n maven-bundle-plugin-%{version}
-%patch1 -p0 -b .sav1
-%patch2 -p0 -b .sav2
+%setup -q -n %{site_name}-%{version}
+
+%patch0 -p1
+%patch1 -p1
+
+# remove bundled stuff
+#rm -rf src/main/java/org/apache/maven
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-%{_bindir}/mvn-jpp -e -Dmaven.repo.local=${MAVEN_REPO_LOCAL} package javadoc:aggregate
+# tests can't be built (seems like a MavenProjectStub incompatibility with MavenProject)
+mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip=true
 
 %install
-
 # jars
 install -d -m 0755 %{buildroot}%{_javadir}
-install -p -m 644 target/maven-bundle-plugin-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-
-%add_to_maven_depmap org.apache.felix maven-bundle-plugin %{version} JPP %{name}
+install -m 644 target/maven-bundle-plugin-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # poms
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -pm 644 pom.xml \
-    %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 # javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
+rm -rf target/site/api*
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
+%doc LICENSE NOTICE DEPENDENCIES
 %{_javadir}/%{name}.jar
-%{_javadir}/%{name}-%{version}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.7-alt1_4jpp7
+- new version
+
 * Mon Sep 05 2011 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_12jpp6
 - fixed buildrequires
 
