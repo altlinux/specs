@@ -4,7 +4,7 @@
 %define naplet plasma_applet_yawp
 
 Name: kde4plasma-addon-yawp
-Version: 0.4.0
+Version: 0.4.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -59,9 +59,12 @@ There is nothing wrong with the ones that exist, I just wanted something more
 %_K4libdir/kde4/*.so
 %_K4srv/*.desktop
 %_K4apps/desktoptheme/default/widgets/*
-%_K4apps/ion_accuweather/
+#%_K4apps/ion_accuweather/
 
 %changelog
+* Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.3-alt1
+- new version
+
 * Tue Nov 15 2011 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
 - new version
 
