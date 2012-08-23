@@ -1,9 +1,9 @@
 %define rname mirall
 Name: owncloud-client
 Version: 1.0.2
-Release: alt1
+Release: alt2
 
-Group: Networking/Other
+Group: Networking/File transfer
 Summary: Applet for owncloud files syncronization
 License: GPLv2
 
@@ -46,5 +46,11 @@ desktop-file-install \
 %_iconsdir/hicolor/*/apps/owncloud.*
 
 %changelog
+* Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt2
+- fix menu item
+
+* Wed Aug 22 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt0.M60P.1
+- built for M60P
+
 * Wed Aug 22 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt1
 - initial build
