@@ -10,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:    %{project}-main
 Version: 2.0.5
-Release: alt3_6jpp6
+Release: alt3_8jpp7
 Summary: Apache Felix Main
 
 Group:   Development/Java
@@ -30,19 +30,19 @@ BuildRequires: felix-osgi-compendium
 BuildRequires: felix-osgi-core
 BuildRequires: felix-framework
 BuildRequires: maven2
-BuildRequires:    maven2-plugin-antrun
-BuildRequires:    maven2-plugin-compiler
-BuildRequires:    maven2-plugin-dependency
-BuildRequires:    maven2-plugin-install
-BuildRequires:    maven2-plugin-invoker
-BuildRequires:    maven2-plugin-jar
-BuildRequires:    maven2-plugin-javadoc
-BuildRequires:    maven2-plugin-release
-BuildRequires:    maven2-plugin-resources
+BuildRequires:    maven-antrun-plugin
+BuildRequires:    maven-compiler-plugin
+BuildRequires:    maven-dependency-plugin
+BuildRequires:    maven-install-plugin
+BuildRequires:    maven-invoker-plugin
+BuildRequires:    maven-jar-plugin
+BuildRequires:    maven-javadoc-plugin
+BuildRequires:    maven-release-plugin
+BuildRequires:    maven-resources-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    maven-surefire-provider-junit4
 # TODO check availability and use new names
-#BuildRequires:    maven2-plugin-bundle
+#BuildRequires:    maven-bundle-plugin
 # instead of
 BuildRequires:    maven-plugin-bundle
 
@@ -76,7 +76,7 @@ API documentation for %{name}.
 %build
 export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
 %__mkdir_p $MAVEN_REPO_LOCAL
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.compile.source=1.5 -Dmaven.javadoc.source=1.5  -e \
+mvn-jpp -e \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         install javadoc:javadoc
 
@@ -97,7 +97,6 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 %__cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
 %pre javadoc
-# workaround for rpm bug, can be removed in F-17
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
@@ -112,6 +111,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc LICENSE
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.5-alt3_8jpp7
+- new release
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.5-alt3_6jpp6
 - fixed build with maven3
 
