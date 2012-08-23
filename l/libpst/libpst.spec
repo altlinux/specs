@@ -1,5 +1,5 @@
 Name: libpst
-Version: 0.6.54
+Version: 0.6.55
 Release: alt1
 
 Summary: Tools for conversion of Outlook files to mailbox and other formats
@@ -7,7 +7,8 @@ License: %gpl2plus
 Group: System/Libraries
 
 Url: http://www.five-ten-sg.com/libpst
-Source: %url/packages/%name-%version.tar.gz
+Source0: %url/packages/%name-%version.tar.gz
+Source100: libpst.watch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
@@ -96,6 +97,9 @@ Developer's documentation for libpst
 %exclude %pkgdocdir/[A-Z]*
 
 %changelog
+* Thu Aug 23 2012 Michael Shigorin <mike@altlinux.org> 0.6.55-alt1
+- new version (watch file uupdate)
+
 * Mon Feb 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.54-alt1
 - 0.6.54
 
