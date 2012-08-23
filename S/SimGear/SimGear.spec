@@ -1,6 +1,6 @@
 Name: SimGear
-Version: 2.6.0
-Release: alt2
+Version: 2.8.0
+Release: alt1
 
 Summary: Simulator Construction Tools
 License: GPL
@@ -54,6 +54,9 @@ This package contains header files for SimGear.
 %_includedir/simgear
 
 %changelog
+* Sat Aug 18 2012 Michael Shigorin <mike@altlinux.org> 2.8.0-alt1
+- 2.8.0
+
 * Mon Jun 25 2012 Michael Shigorin <mike@altlinux.org> 2.6.0-alt2
 - applied fedora patch to fix CVE-2012-2090
 
