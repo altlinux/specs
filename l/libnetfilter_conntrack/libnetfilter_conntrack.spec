@@ -1,6 +1,6 @@
 Name: libnetfilter_conntrack
 Version: 0.9.0
-Release: alt1
+Release: alt1.qa1
 Serial: 1
 
 Summary: API to the in-kernel connection tracking state table.
@@ -22,7 +22,7 @@ interface (API) to the in-kernel connection tracking state table
 %package devel
 Summary: Netfilter conntrack userspace library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 
 %description devel
 libnetfilter_conntrack is a userspace library providing a programming
@@ -51,6 +51,11 @@ rm -f %buildroot%_libdir/%name/*.la
 
 
 %changelog
+* Thu Aug 23 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.9.0-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for libnetfilter_conntrack
+
 * Sat Oct 30 2010 Anton Farygin <rider@altlinux.ru> 1:0.9.0-alt1
 - New version
 - updated build requires
