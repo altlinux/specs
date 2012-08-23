@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.5.5
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        Containers for Plexus
 License:        ASL 2.0 and Plexus
 Group:          Development/Java
@@ -74,7 +74,7 @@ is like a J2EE application server, without all the baggage.
 %package component-metadata
 Summary:        Component metadata from %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       plexus-cli
 
 %description component-metadata
@@ -83,7 +83,7 @@ Requires:       plexus-cli
 %package component-javadoc
 Summary:        Javadoc component from %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description component-javadoc
 %{summary}.
@@ -92,7 +92,7 @@ Requires:       %{name} = %{version}-%{release}
 %package component-annotations
 Summary:        Component API from %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description component-annotations
 %{summary}.
@@ -100,7 +100,7 @@ Requires:       %{name} = %{version}-%{release}
 %package container-default
 Summary:        Default Container from %{name}
 Group:          Development/Java
-Requires:       %{name}-component-annotations = %{version}-%{release}
+Requires:       %{name}-component-annotations = %{?epoch:%epoch:}%{version}-%{release}
 Provides:       plexus-containers-component-api = %{version}-%{release}
 
 %description container-default
@@ -219,6 +219,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt2_5jpp7
+- applied repocop patches
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt1_5jpp7
 - fc build
 
