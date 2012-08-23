@@ -1,6 +1,6 @@
 Name: mirall
 Version: 1.0.2
-Release: alt3
+Release: alt4
 
 Group: Networking/Other
 Summary: Applet for ownflowd files syncronization
@@ -32,13 +32,19 @@ install -m0644 mirall.desktop %buildroot/%_sysconfdir/xdg/autostart
 %find_lang %name
 
 %files -f %name.lang
-%_bindir/*
+%_bindir/mirall
 %_sysconfdir/exclude.lst
 %_sysconfdir/xdg/autostart/*
 %_datadir/%name
-%_iconsdir/hicolor/48x48/apps/*
+%_iconsdir/hicolor/*/apps/mirall.*
 
 %changelog
+* Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt4
+- exclude owncloud-client files
+
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt2.M60P.1
+- built for M60P
+
 * Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt3
 - don't check for updates by default
 
