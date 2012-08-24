@@ -46,7 +46,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-javaflow
 Version:        1.0
-Release:        alt5_0.r618928.1jpp5
+Release:        alt6_0.r618928.1jpp5
 Epoch:          0
 Summary:        Commons JavaFlow
 License:        Apache License 2.0
@@ -92,16 +92,16 @@ BuildRequires: mojo-maven2-plugin-taglist
 
 BuildRequires: asm2 >= 0:2.2.3
 BuildRequires: bcel
-BuildRequires: jakarta-commons-io >= 0:1.3.2
-BuildRequires: jakarta-commons-jci
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-io >= 0:1.3.2
+BuildRequires: apache-commons-jci
+BuildRequires: apache-commons-logging
 BuildRequires: subversion
 
 Requires: asm2 >= 0:2.2.3
 Requires: bcel
-Requires: jakarta-commons-io >= 0:1.3.2
-Requires: jakarta-commons-jci
-Requires: jakarta-commons-logging
+Requires: apache-commons-io >= 0:1.3.2
+Requires: apache-commons-jci
+Requires: apache-commons-logging
 BuildArch:      noarch
 
 %description
@@ -262,6 +262,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.r618928.1jpp5
+- build w/new jci
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.r618928.1jpp5
 - fixed build w/new commons-parent
 
