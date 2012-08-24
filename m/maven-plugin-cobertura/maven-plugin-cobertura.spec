@@ -1,23 +1,46 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:       maven-plugin-cobertura
+Version:    2.5.1
+Release:    alt1_4jpp7
+Summary:    Plugin providing the features of Cobertura within Maven
+
+Group:      Development/Java
+License:    ASL 2.0 and GPLv2 and GPLv2+
+URL:        http://mojo.codehaus.org/cobertura-maven-plugin/
+Source0:    http://repo2.maven.org/maven2/org/codehaus/mojo/cobertura-maven-plugin/%{version}/cobertura-maven-plugin-%{version}-source-release.zip
+BuildArch:  noarch
+
+BuildRequires:  maven
+BuildRequires:  maven-plugin-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-invoker-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-surefire-provider-junit4
+BuildRequires:  maven-doxia-sitetools
+BuildRequires:  maven-plugin-testing-harness
+BuildRequires:  maven-plugin-cobertura
+BuildRequires:  gnu-getopt >= 0:1.0.13
+BuildRequires:  cobertura
+BuildRequires:  mojo-parent
+
+Requires:       maven
+Requires:       cobertura
+Requires:       mojo-parent
+Requires(post): jpackage-utils
+Requires(postun):  jpackage-utils
+Source44: import.info
+
 Provides: mojo-maven2-plugin-cobertura = 18
 Obsoletes: mojo-maven2-plugin-cobertura < 18
-Name: maven-plugin-cobertura
-Version: 2.5.1
-Summary: Plugin providing the features of Cobertura within Maven
-License: ASL 2.0 and GPLv2 and GPLv2+
-Url: http://mojo.codehaus.org/cobertura-maven-plugin/
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Requires: /bin/sh
-Requires: /bin/sh
-Requires: cobertura
-Requires: jpackage-utils
-Requires: jpackage-utils
-Requires: maven
-Requires: mojo-parent
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.3jpp
-Source: maven-plugin-cobertura-2.5.1-1.fc16.cpio
 
 %description
 This plugin provides the features of Cobertura within the Maven 2 environment.
@@ -26,29 +49,49 @@ tool against your compiled classes to help you determine how well the unit
 testing efforts have been, and can then be used to identify which parts
 of your Java program are lacking test coverage.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package	javadoc
+Summary:    Javadoc for %{name}
+Group:      Development/Java
+Requires:   jpackage-utils
+BuildArch: noarch
+
+%description	javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n cobertura-maven-plugin-%{version}
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+mvn-rpmbuild -Dmaven.test.failure.ignore=true package javadoc:javadoc
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+# jar
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -p -m 644 target/cobertura-maven-plugin-%{version}.jar \
+  $RPM_BUILD_ROOT%{_javadir}/maven-plugin-cobertura.jar
 
-# hack to override mojo-maven2-plugins
-pushd %buildroot/etc/maven/fragments
-mv %name zz-%name
-popd
-sed -i -e s,/etc/maven/fragments/,/etc/maven/fragments/zz-, %name-list
+# pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m 644 pom.xml \
+  $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-maven-plugin-cobertura.pom
+%add_to_maven_depmap org.codehaus.mojo cobertura-maven-plugin %{version} JPP maven-plugin-cobertura
 
-%files -f %name-list
+# javadoc
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+
+%files
+%{_mavenpomdir}/JPP-%{name}*.pom
+%{_mavendepmapfragdir}/%{name}
+%{_javadir}/*
+
+%files javadoc
+%{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_4jpp7
+- new release
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt0.3jpp
 - added Obsoletes on mojo-maven2-plugin-cobertura
 
