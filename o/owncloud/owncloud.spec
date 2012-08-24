@@ -2,7 +2,7 @@
 
 Name: owncloud
 Version: 4.0.7
-Release: alt1
+Release: alt2
 
 Summary: Cloud platform
 Group: Networking/WWW
@@ -82,6 +82,9 @@ rm -f %buildroot%installdir/l10n/l10n.pl
 %config(noreplace) %attr(0644,root,root) %_sysconfdir/httpd2/conf/addon.d/A.%name.conf
 
 %changelog
+* Fri Aug 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.0.7-alt2
+- an ability to play mp3 without tags added
+
 * Tue Aug 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.0.7-alt1
 - 4.0.7
 
