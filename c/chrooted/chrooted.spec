@@ -1,5 +1,5 @@
 Name: chrooted
-Version: 0.3.7
+Version: 0.3.8
 Release: alt1
 
 Summary: The chrooted environment helper
@@ -55,6 +55,9 @@ install -Dpm755 resolvconf %buildroot%_sysconfdir/hooks/resolv.conf.d/update_chr
 %config %_chrootdir
 
 %changelog
+* Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.3.8-alt1
+- copy_resolv_conf: forcibly remove stale optional config files.
+
 * Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.3.7-alt1
 - copy_resolv_conf: treat /etc/localtime as an optional config file.
 
