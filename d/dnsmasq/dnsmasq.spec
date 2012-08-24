@@ -1,5 +1,5 @@
 Name: dnsmasq
-Version: 2.62
+Version: 2.63
 
 %define with_resolvconf with_resolvconf
 
@@ -106,6 +106,9 @@ rm -f %_sysconfdir/*.dnsmasq 2>&1   # fixme! should be more elegant..
 %doc contrib/dnslist contrib/dynamic-dnsmasq
 
 %changelog
+* Fri Aug 24 2012 Mikhail Efremov <sem@altlinux.org> 2.63-alt1
+- Updated to new version 2.63.
+
 * Thu Jun 07 2012 Mikhail Efremov <sem@altlinux.org> 2.62-alt1
 - Updated to new version 2.62.
 
