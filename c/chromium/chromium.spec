@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.11.10.5
-%define rev 139751
+%define rev 151980
 
 %if_enabled debug
 %define buildtype Debug
@@ -11,8 +11,8 @@
 %def_disable nacl
 
 Name:           chromium
-Version:        21.0.1158.0
-Release:        alt5.r%rev
+Version:        21.0.1180.81
+Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -65,17 +65,12 @@ Patch64:        chromium-more-codec-aliases.patch
 Patch66:        chromium-sandbox-pie.patch
 # PATCH-FIX-OPENSUSE Compile with the standard gold linker
 Patch67:        chromium_use_gold.patch
-# PATCH-FIX-OPENSUSE Fix build with GCC 4.7
-Patch68:        chromium-gcc47.patch
 # ALT: Fix krb5 includes path
 Patch69:	chromium-alt-krb5-fix-path.patch
-# Fix crash on Print
-Patch70:	chromium-21.0.1158.0-fix-print-dialog.patch
 # Set appropriate desktop file name for default browser check
 Patch71:	chromium-21.0.1158.0-set-desktop-file-name.patch
-
-# Upstream Patches 
-Patch500:       sqlite-3.7.6.3-fix-out-of-scope-memory-reference.patch
+# Replace 'struct siginfo' with 'siginfo_t'
+Patch72:	chromium-20.0.1132.57-glib-2.16-use-siginfo_t.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -210,12 +205,9 @@ to Gnome's Keyring.
 %patch32 -p1
 %patch66 -p1
 %patch67 -p1
-%patch68 -p1
 %patch69 -p2
-%patch70 -p2
 %patch71 -p2
-
-%patch500 -p1
+%patch72 -p1
 
 echo "svn%rev" > src/build/LASTCHANGE.in
 
@@ -271,6 +263,7 @@ pushd src
 %endif
 	-Dlinux_use_gold_flags=0 \
 	-Dlinux_use_gold_binary=0 \
+	-Denable_plugin_installation=0 \
 	-Djavascript_engine=v8
 
 make -r %{?_smp_mflags} chrome V=1 BUILDTYPE=%buildtype
@@ -386,6 +379,12 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Fri Aug 24 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.81-alt1.r151980
+- New version 21.0.1180.81
+- Disable plugin installation
+- Fix tcmalloc because glibc 2.16 removed the undocumented definition of
+  'struct siginfo' from <bits/siginfo.h>
+
 * Wed Aug 15 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1158.0-alt5.r139751
 - Set appropriate desktop file name for default browser check
 
