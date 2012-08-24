@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-parent12
 Version:        12
-Release:        alt6_2jpp6
+Release:        alt7_2jpp6
 Epoch:          0
 Summary:        Apache Commons Parent
 License:        Apache Software License 2.0
@@ -63,7 +63,7 @@ Requires: maven2-plugin-javadoc
 Requires: maven2-plugin-source
 Requires: maven-surefire-plugin
 Requires: maven-release
-Requires: maven2-plugin-jxr
+Requires: maven-jxr
 Requires: maven2-plugin-project-info-reports
 Requires: maven2-plugin-site
 Requires: maven-surefire-report-maven-plugin
@@ -97,6 +97,9 @@ cp -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:12-alt7_2jpp6
+- build with maven-jxr
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:12-alt6_2jpp6
 - compat build
 
