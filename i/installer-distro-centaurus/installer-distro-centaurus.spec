@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 6.0
-Release: alt13
+Release: alt14
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -26,7 +26,6 @@ Requires: alterator-pkg
 Requires: alterator-vm
 Requires: alterator-notes
 Requires: x-cursor-theme-jimmac
-Requires: installer-feature-services
 
 %description stage2
 Centaurus Installer stage2.
@@ -45,7 +44,6 @@ Requires: alterator-net-eth dhcpcd
 Requires: alterator-net-general
 Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
-Requires: installer-feature-copy-udev-rules-stage3 
 
 %description stage3
 Centaurus Installer stage3.
@@ -67,6 +65,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Aug 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt14
+- removed dependences on outdated installer features
+
 * Thu Aug 25 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt13
 - fix 80-setup-user-groups
 
