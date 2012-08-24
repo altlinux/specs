@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           wadi2
 Version:        2.1.1
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          0
 License:        ASL 2.0
 Summary:        WADI Application Distribution Infrastructure
@@ -80,7 +80,7 @@ BuildRequires: maven2-plugin-war
 BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-surefire-maven-plugin
 BuildRequires: maven-surefire-provider-junit
-BuildRequires: mojo-maven2-plugin-aspectj
+BuildRequires: mojo-aspectj-maven-plugin
 BuildRequires: mojo-maven2-plugin-jspc
 BuildRequires: mojo-maven2-jspc-compiler-tomcat5
 
@@ -327,6 +327,9 @@ cp -pr doc/* %{buildroot}%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt3_1jpp6
+- build with mojo-aspectj-plugin
+
 * Fri Mar 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_1jpp6
 - fixed build
 
