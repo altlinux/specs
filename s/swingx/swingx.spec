@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           swingx
 Version:        1.6
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Summary:        Extensions to the Swing GUI toolkit
 
 Group:          Development/Java
@@ -107,7 +107,7 @@ mkdir -p ${MAVEN_REPO_LOCAL}
 export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Djava.awt.headless=true -Daggregate=true -Dallow.test.failure.ignore=true -Dmaven.test.failure.ignore=true"
 export MAVEN_SETTINGS=$(pwd)/settings.xml
 
-%{_bindir}/mvn-jpp \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
         -s $MAVEN_SETTINGS \
         install javadoc:javadoc
@@ -144,6 +144,9 @@ export MAVEN_SETTINGS=$(pwd)/settings.xml
 %{_javadocdir}/%{name} 
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_1jpp6
+- build without emma-plugin
+
 * Sun Jan 09 2011 Igor Vlasenko <viy@altlinux.ru> 1.6-alt2_1jpp6
 - fixed build
 
