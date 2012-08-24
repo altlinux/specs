@@ -1,12 +1,11 @@
 Name: chrooted
-Version: 0.3.6
-Release: alt2
+Version: 0.3.7
+Release: alt1
 
 Summary: The chrooted environment helper
-License: GPL
+License: GPLv2+
 Group: File tools
 BuildArch: noarch
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 %define _chrootdir %_sysconfdir/chroot.d
 
@@ -21,7 +20,7 @@ BuildPreReq: help2man
 This package is required for chroot-aware packages.
 
 %prep
-%setup -q
+%setup
 
 %build
 sed -i 's/@VERSION@/%version/g' -- update_chrooted
@@ -34,7 +33,7 @@ ln -s ../../sbin/update_chrooted %buildroot%_sbindir/
 install -pm755 functions %buildroot%_chrootdir/
 install -pm644 update_chrooted.8 %buildroot%_man8dir/
 
-install -Dpm755 update_chrooted.resolvconf %buildroot/%_sysconfdir/hooks/resolv.conf.d/update_chrooted
+install -Dpm755 resolvconf %buildroot%_sysconfdir/hooks/resolv.conf.d/update_chrooted
 
 # Generate shell functions provides list.
 (
@@ -56,8 +55,11 @@ install -Dpm755 update_chrooted.resolvconf %buildroot/%_sysconfdir/hooks/resolv.
 %config %_chrootdir
 
 %changelog
+* Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.3.7-alt1
+- copy_resolv_conf: treat /etc/localtime as an optional config file.
+
 * Mon Mar 16 2009 Stanislav Ievlev <inger@altlinux.org> 0.3.6-alt2
-- add hook for openresolv
+- added a hook for openresolv
 
 * Thu Nov 27 2008 Dmitry V. Levin <ldv@altlinux.org> 0.3.6-alt1
 - functions (copy_resolv_lib): Copy required NSS libraries only.
