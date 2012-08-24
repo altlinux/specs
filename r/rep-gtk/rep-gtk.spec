@@ -3,8 +3,8 @@
 %define rep_archlibdir %(pkg-config --variable=repcommonexecdir librep)
 
 Name: rep-gtk
-Version: 0.90.8
-Release: alt1
+Version: 0.90.9
+Release: alt1.git20120705
 
 Summary: GTK+ binding for librep Lisp environment
 Group: Development/Lisp
@@ -59,6 +59,9 @@ cp -pfv %_datadir/automake/config.{guess,sub} .
 %_pkgconfigdir/rep-gtk.pc
 
 %changelog
+* Fri Aug 24 2012 Dmitry Derjavin <dd@altlinux.org> 0.90.9-alt1.git20120705
+- Merge with upstream git.
+
 * Mon Nov 28 2011 Dmitry Derjavin <dd@altlinux.org> 0.90.8-alt1
 - [0.90.8];
 - *.la removed;
