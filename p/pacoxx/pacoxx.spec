@@ -5,7 +5,7 @@
 
 Name: pacoxx
 Version: 0.2.beta
-Release: alt1
+Release: alt2
 Summary: PaCO++: Portable Parallel CORBA Object
 License: GPLv2+ / LGPLv2+
 Group: Networking/Remote access
@@ -155,6 +155,7 @@ else
 fi
 
 EOF
+chmod +x %buildroot%_bindir/pacoenv.sh
 
 %files
 %doc COPYRIGHT CREDITS
@@ -180,6 +181,9 @@ EOF
 %ldir/Examples
 
 %changelog
+* Fri Aug 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.beta-alt2
+- Fixed bin-permissions repocop warning
+
 * Thu Aug 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.beta-alt1
 - Initial build for Sisyphus
 
