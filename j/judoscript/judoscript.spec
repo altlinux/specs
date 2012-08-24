@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           judoscript
 Version:        1.0
-Release:        alt2_1jpp5
+Release:        alt3_1jpp5
 Epoch:          0
 Summary:        Judo Scripting Language
 
@@ -56,10 +56,10 @@ BuildRequires: axis
 BuildRequires: bsf
 BuildRequires: hibernate3
 BuildRequires: jakarta-commons-compress10
-BuildRequires: jakarta-commons-email
-BuildRequires: jakarta-commons-fileupload
-BuildRequires: jakarta-commons-lang
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-email
+BuildRequires: apache-commons-fileupload
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-logging
 BuildRequires: jaf_1_0_2_api
 BuildRequires: javamail_1_3_1_api
 BuildRequires: jaxrpc_1_1_api
@@ -71,10 +71,10 @@ BuildRequires: xalan-j2
 Requires: ant
 Requires: bsf
 Requires: jakarta-commons-compress10
-Requires: jakarta-commons-email
-Requires: jakarta-commons-fileupload
-Requires: jakarta-commons-lang
-Requires: jakarta-commons-logging
+Requires: apache-commons-email
+Requires: apache-commons-fileupload
+Requires: apache-commons-lang
+Requires: apache-commons-logging
 Requires: log4j
 
 Requires(post): jpackage-utils >= 0:1.7.5
@@ -119,7 +119,7 @@ done
 %build
 #export JAVA_HOME=%{_jvmdir}/java
 export CLASSPATH=$(build-classpath \
-ant \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
 axis/axis \
 bsf \
 commons-compress10 \
@@ -143,7 +143,7 @@ export BD=$(pwd)
 #popd
 #patch -p0 < %{PATCH1}
 pushd src/judo
-$JAVA_HOME/bin/javac  -target 1.4 -source 1.4 -d ${BD}/target/classes $(find com -name "*.java")
+$JAVA_HOME/bin/javac  -target 1.5 -source 1.5  -target 1.4 -source 1.4 -d ${BD}/target/classes $(find com -name "*.java")
 $JAVA_HOME/bin/javadoc -d ${BD}/target/site/apidocs -sourcepath . \
 com.judoscript \
 com.judoscript.jmdl \
@@ -201,6 +201,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_1jpp5
+- build with commons-email 1.2
+
 * Thu Dec 30 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_1jpp5
 - rebuild with compat commons-compress10
 
