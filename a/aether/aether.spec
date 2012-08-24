@@ -1,40 +1,111 @@
-Name: aether
-Version: 1.13.1
-Summary: Sonatype library to resolve, install and deploy artifacts the Maven way
-License: EPL or ASL 2.0
-Url: https://docs.sonatype.org/display/AETHER/Home
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Requires: async-http-client
-Requires: java
-Requires: jboss-parent
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:           aether
+Version:        1.13.1
+Release:        alt1_4jpp7
+Summary:        Sonatype library to resolve, install and deploy artifacts the Maven way
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt0.1jpp
-Source: aether-1.13.1-1.fc17.cpio
+Group:          Development/Java
+License:        EPL or ASL 2.0
+URL:            https://docs.sonatype.org/display/AETHER/Home
+# git clone https://github.com/sonatype/sonatype-aether.git
+# git archive --prefix="aether-1.11/" --format=tar aether-1.11 | bzip2 > aether-1.11.tar.bz2
+Source0:        %{name}-%{version}.tar.bz2
+
+BuildArch:      noarch
+
+BuildRequires:  maven
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-surefire-provider-junit4
+BuildRequires:  plexus-containers-component-metadata >= 1.5.4-4
+BuildRequires:  animal-sniffer >= 1.6-5
+BuildRequires:  mojo-parent
+BuildRequires:  async-http-client >= 1.6.1
+BuildRequires:  sonatype-oss-parent
+
+# required by netty really, but we push this dep on level higer
+BuildRequires:  jboss-parent
+Requires:       jboss-parent
+
+Requires:       async-http-client >= 1.6.1
+Source44: import.info
+
 
 %description
 Aether is standalone library to resolve, install and deploy artifacts
 the Maven way developed by Sonatype
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Summary:   API documentation for %{name}
+Group:     Development/Java
+Requires:  jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+# last part will have to change every time
+%setup -q
+
+# we'd need org.sonatype.http-testing-harness so let's remove async
+# and wagon http tests (leave others enabled)
+for module in asynchttpclient wagon; do (
+    cd ./aether-connector-$module
+    rm -rf src/test
+    # Removes all dependencies with test scope
+    %pom_xpath_remove "pom:dependency[pom:scope[text()='test']]"
+) done
+
+# Remove clirr plugin
+%pom_remove_plugin :clirr-maven-plugin
+%pom_remove_plugin :clirr-maven-plugin aether-api
+%pom_remove_plugin :clirr-maven-plugin aether-spi
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+mvn-rpmbuild install javadoc:aggregate
+
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+
+for module in aether-api aether-connector-file aether-connector-wagon aether-connector-asynchttpclient\
+         aether-impl aether-spi aether-test-util aether-util;do
+pushd $module
+      jarname=`echo $module | sed s:aether-::`
+      install -m 644 target/$module-*.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/$jarname.jar
+
+      install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-$jarname.pom
+      %add_maven_depmap JPP.%{name}-$jarname.pom %{name}/$jarname.jar
+popd
 done
 
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%files -f %name-list
+install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-parent.pom
+%add_maven_depmap JPP.%{name}-parent.pom
+
+%files
+%doc README.md
+%{_javadir}/%{name}
+%{_mavendepmapfragdir}/%{name}
+%{_mavenpomdir}/*.pom
+
+%files javadoc
+%{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt1_4jpp7
+- complete build
+
 * Wed Mar 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.13.1-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
