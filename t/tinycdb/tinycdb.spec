@@ -1,6 +1,6 @@
 Name: tinycdb
 Version: 0.77
-Release: alt1
+Release: alt2
 
 Summary: A package for maintenance of constant databases
 License: GPLv2+
@@ -122,6 +122,9 @@ make %{?_enable_static:test} test-shared
 %endif
 
 %changelog
+* Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.77-alt2
+- Fixed build with fresh glibc.
+
 * Tue Mar 08 2011 Dmitry V. Levin <ldv@altlinux.org> 0.77-alt1
 - Updated to 0.77.
 
