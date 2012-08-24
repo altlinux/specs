@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt7
+Release: %branch_release alt8
 
 License: %asl
 Group: System/Servers
@@ -761,7 +761,7 @@ EOF
 ../configure -C \
 	--enable-layout=ALTLinux \
 	--with-pcre=%_usr/bin/pcre-config \
-	--with-perl=%__perl \
+	--with-perl=/usr/bin/perl \
 	--with-apr=%apache2_apr_config \
 	--with-apr-util=%apache2_apu_config \
 	--enable-suexec --with-suexec \
@@ -1673,6 +1673,12 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Fri Aug 24 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt8
+- Applied repocop fixes:
+  * postclean-03-private-rpm-macros for the spec file
+- Fix service httpd2 restart for systemd: Posted expectation actually
+  completing the demon (300 seconds maximum)
+
 * Wed Aug 22 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt7
 - Convert Summary(ru_RU.KOI8-R) for subpackage %%name-cgi-bin to ru_RU.UTF-8
 
