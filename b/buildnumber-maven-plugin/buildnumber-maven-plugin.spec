@@ -1,22 +1,19 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           buildnumber-maven-plugin
-Version:        1.0
-Release:        alt1_5jpp7
+Version:        1.1
+Release:        alt1_2jpp7
 Summary:        Build Number Maven Plugin
 
 Group:          Development/Java
-License:        MIT
-# svn export http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.0 buildnumber-maven-plugin
-URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.0
+License:        MIT and ASL 2.0
+URL:            http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.1
 
-# tar caf buildnumber-maven-plugin-1.0.tar.xz buildnumber-maven-plugin
-Source0:        buildnumber-maven-plugin-1.0.tar.xz
+# svn export http://svn.codehaus.org/mojo/tags/buildnumber-maven-plugin-1.1 buildnumber-maven-plugin
+# tar caf buildnumber-maven-plugin-1.1.tar.xz buildnumber-maven-plugin
+Source0:        buildnumber-maven-plugin-1.1.tar.xz
 Source1:	%{name}-depmap.xml
-
-Patch0:  	0001-Add-source-and-target-version-for-compiler.patch
-Patch1:		0002-Remove-maven-scm-provider-svnjava-dependency.patch
-Patch2:         0003-Remove-svnkit-dependency.patch
+Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch: 	noarch
 
@@ -90,17 +87,18 @@ API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}
+cp -p %{SOURCE2} .
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
+%pom_remove_dep com.google.code.maven-scm-provider-svnjava:maven-scm-provider-svnjava
+%pom_remove_dep org.tmatesoft.svnkit:svnkit
 
 %build
 
 # tests skipped due to invoker problems with local repository tests
 mvn-rpmbuild -DskipTests=true \
         -Dmaven.test.skip=true \
-        install javadoc:javadoc
+        -Dmaven.compile.target=1.5 \
+        install javadoc:aggregate
 
 %install
 
@@ -120,21 +118,21 @@ install -pm 644 pom.xml \
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
-%doc LICENSE.txt
+%doc LICENSE.txt LICENSE-2.0.txt
 %{_javadir}/%{name}.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%doc LICENSE.txt
+%doc LICENSE.txt LICENSE-2.0.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp7
+- new version
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5jpp7
 - complete build
 
