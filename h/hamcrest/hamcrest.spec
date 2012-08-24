@@ -1,6 +1,13 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -37,26 +44,26 @@ BuildRequires: jpackage-compat
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 
 # This option controls integration which requires easymock2 and jmock
-%bcond_with integration
+%bcond_without integration
 
 # This option controls jarjar on qdox
 # Since bundling the qdox classes prevents upgrades, we disable it by default
+#def_with jarjar
 %bcond_with jarjar
 
 # This option controls tests which requires ant-junit and testng
+#def_with tests
 %bcond_with tests
 
 # If integration is disabled, then tests are disabled
 %if %without integration
+#def_with tests
 %bcond_with tests
 %endif
 
-%define _with_gcj_support 0
-%define gcj_support 0
-
 Name:           hamcrest
 Version:        1.1
-Release:        alt1_9.2jpp6
+Release:        alt1_19jpp7
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -71,41 +78,33 @@ Source5:        http://repo1.maven.org/maven2/org/hamcrest/hamcrest-core/1.1/ham
 Source6:        http://repo1.maven.org/maven2/org/hamcrest/hamcrest-all/1.1/hamcrest-all-1.1.pom
 Source7:        hamcrest-text-1.1.pom
 Source8:        hamcrest-core-MANIFEST.MF
+Source9:        hamcrest-library-MANIFEST.MF
+Source10:       hamcrest-text-MANIFEST.MF
+Source11:       hamcrest-integration-MANIFEST.MF
+Source12:       hamcrest-generator-MANIFEST.MF
 Patch0:         hamcrest-1.1-build.patch
 Patch1:         hamcrest-1.1-no-jarjar.patch
 Patch2:         hamcrest-1.1-no-integration.patch
 %if %with integration
-Requires: easymock2
-Requires: jmock
+Requires:       easymock2
+#Requires:       jmock
 %endif
-Requires: qdox
-BuildRequires: jpackage-utils >= 0:1.7.4
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-%if %with integration
-BuildRequires: easymock2
-%endif
+Requires:       qdox
+BuildRequires:  jpackage-utils >= 0:1.7.4
+BuildRequires:  ant >= 0:1.6.5
+BuildRequires:  ant-junit
+BuildRequires:  zip
+BuildRequires:  easymock2
 %if %with jarjar
-BuildRequires: jarjar
+BuildRequires:  jarjar
 %endif
-%if %with integration
-BuildRequires: jmock
-%endif
-BuildRequires: junit
-BuildRequires: junit4
-BuildRequires: qdox
+BuildRequires:  junit
+BuildRequires:  qdox
 %if %with tests
-BuildRequires: testng
+BuildRequires:  testng
 %endif
 
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
-Buildarch:      noarch
-%endif
-
-Requires(post): jpackage-utils >= 0:1.7.4
-Requires(postun): jpackage-utils >= 0:1.7.4
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -125,11 +124,10 @@ Javadoc for %{name}.
 %package demo
 Group:          Development/Java
 Summary:        Demos for %{name}
-Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: junit
-Requires: junit4
+Requires:       hamcrest = %{epoch}:%{version}-%{release}
+Requires:       junit
 %if %with tests
-Requires: testng
+Requires:       testng
 %endif
 
 %description demo
@@ -138,6 +136,9 @@ Demonstrations and samples for %{name}.
 %prep
 %setup -q
 find . -type f -name "*.jar" | xargs -t rm
+rm -fr hamcrest-integration/src/main/java/org/hamcrest/integration/JMock1Adapter.java
+rm -fr hamcrest-integration/src/main/java/org/hamcrest/JMock1Matchers.java
+rm -fr hamcrest-unit-test/src/main/java/org/hamcrest/integration/JMock1AdapterTest.java
 # BUILD/hamcrest-%{version}/lib/generator/jarjar-1.0rc3.jar.no
 %if %with jarjar
 ln -sf $(build-classpath jarjar) lib/generator/
@@ -154,8 +155,6 @@ ln -sf $(build-classpath jmock) lib/integration/
 %endif
 # BUILD/hamcrest-1.1/lib/integration/junit-3.8.1.jar.no
 ln -sf $(build-classpath junit) lib/integration/
-# BUILD/hamcrest-1.1/lib/integration/junit-4.0.jar.no
-ln -sf $(build-classpath junit4) lib/integration/
 # BUILD/hamcrest-1.1/lib/integration/testng-4.6-jdk15.jar.no
 %if %with tests
 ln -sf $(build-classpath testng-jdk15) lib/integration/
@@ -165,7 +164,7 @@ ln -sf $(build-classpath testng-jdk15) lib/integration/
 %patch1 -p1
 %endif
 %if %without integration
-%patch2 -p1
+#%patch2 -p1
 %endif
 
 perl -pi -e 's/\r$//g' LICENSE.txt
@@ -173,11 +172,7 @@ perl -pi -e 's/\r$//g' LICENSE.txt
 %build
 export CLASSPATH=$(build-classpath qdox)
 export OPT_JAR_LIST="junit ant/ant-junit"
-%if %with integration
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dversion=%{version} -Dbuild.sysclasspath=first all javadoc
-%else
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dversion=%{version} -Dbuild.sysclasspath=first clean core generator library text bigjar javadoc
-%endif
+ant -Dant.build.javac.source=1.5 -Dversion=%{version} -Dbuild.sysclasspath=first clean core generator library text bigjar javadoc
 
 # inject OSGi manifests
 mkdir -p META-INF
@@ -185,102 +180,102 @@ cp -p %{SOURCE8} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
 zip -u build/%{name}-core-%{version}.jar META-INF/MANIFEST.MF
 
+rm -fr META-INF
+mkdir -p META-INF
+cp -p %{SOURCE9} META-INF/MANIFEST.MF
+touch META-INF/MANIFEST.MF
+zip -u build/%{name}-library-%{version}.jar META-INF/MANIFEST.MF
+
+rm -fr META-INF
+mkdir -p META-INF
+cp -p %{SOURCE10} META-INF/MANIFEST.MF
+touch META-INF/MANIFEST.MF
+zip -u build/%{name}-text-%{version}.jar META-INF/MANIFEST.MF
+
+rm -fr META-INF
+mkdir -p META-INF
+cp -p %{SOURCE11} META-INF/MANIFEST.MF
+touch META-INF/MANIFEST.MF
+zip -u build/%{name}-integration-%{version}.jar META-INF/MANIFEST.MF
+
+rm -fr META-INF
+mkdir -p META-INF
+cp -p %{SOURCE12} META-INF/MANIFEST.MF
+touch META-INF/MANIFEST.MF
+zip -u build/%{name}-generator-%{version}.jar META-INF/MANIFEST.MF
+
 %install
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-parent.pom
-%add_to_maven_depmap org.hamcrest %{name}-parent %{version} JPP/%{name} parent
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-parent.pom
+%add_maven_depmap JPP.%{name}-parent.pom
 
-install -m 644 build/%{name}-all-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/all-%{version}.jar
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-all.pom
-%add_to_maven_depmap org.hamcrest %{name}-all %{version} JPP/%{name} all
+install -m 644 build/%{name}-all-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/all.jar
+install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-all.pom
+%add_maven_depmap JPP.%{name}-all.pom %{name}/all.jar
 
-install -m 644 build/%{name}-core-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/core-%{version}.jar
-install -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-core.pom
-%add_to_maven_depmap org.hamcrest %{name}-core %{version} JPP/%{name} core
+install -m 644 build/%{name}-core-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/core.jar
+install -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-core.pom
+%add_maven_depmap JPP.%{name}-core.pom %{name}/core.jar
 
-install -m 644 build/%{name}-generator-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/generator-%{version}.jar
-install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-generator.pom
-%add_to_maven_depmap org.hamcrest %{name}-generator %{version} JPP/%{name} generator
+install -m 644 build/%{name}-generator-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/generator.jar
+install -m 644 %{SOURCE4} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-generator.pom
+%add_maven_depmap JPP.%{name}-generator.pom %{name}/generator.jar
 
-install -m 644 build/%{name}-library-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/library-%{version}.jar
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-library.pom
-%add_to_maven_depmap org.hamcrest %{name}-library %{version} JPP/%{name} library
+install -m 644 build/%{name}-library-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/library.jar
+install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-library.pom
+%add_maven_depmap JPP.%{name}-library.pom %{name}/library.jar
 
 %if %with integration
-install -m 644 build/%{name}-integration-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/integration-%{version}.jar
-install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-integration.pom
-%add_to_maven_depmap org.hamcrest %{name}-integration %{version} JPP/%{name} integration
+install -m 644 build/%{name}-integration-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/integration.jar
+install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-integration.pom
+%add_maven_depmap JPP.%{name}-integration.pom %{name}/integration.jar
 %endif
 
-install -m 644 build/%{name}-text-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/text-%{version}.jar
-install -m 644 %{SOURCE7} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-text.pom
-%add_to_maven_depmap org.hamcrest %{name}-text %{version} JPP/%{name} text
+install -m 644 build/%{name}-text-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/text.jar
+install -m 644 %{SOURCE7} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-text.pom
+%add_maven_depmap JPP.%{name}-text.pom %{name}/text.jar
 
 %if %with tests
-install -m 644 build/%{name}-unit-test-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/unit-test-%{version}.jar
+install -m 644 build/%{name}-unit-test-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/unit-test.jar
 %endif
-
-pushd $RPM_BUILD_ROOT%{_javadir}/%{name}
-for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done
-popd
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # demo
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-%if %with integration
-install -m 644 build/%{name}-examples-%{version}.jar $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-%endif
-cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_datadir}/%{name}
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 
 %files
 %doc LICENSE.txt
 %dir %{_javadir}/%{name}
-%{_javadir}/%{name}/all-%{version}.jar
 %{_javadir}/%{name}/all.jar
-%{_javadir}/%{name}/core-%{version}.jar
 %{_javadir}/%{name}/core.jar
-%{_javadir}/%{name}/generator-%{version}.jar
 %{_javadir}/%{name}/generator.jar
 %if %with integration
-%{_javadir}/%{name}/integration-%{version}.jar
 %{_javadir}/%{name}/integration.jar
 %endif
-%{_javadir}/%{name}/library-%{version}.jar
 %{_javadir}/%{name}/library.jar
-%{_javadir}/%{name}/text-%{version}.jar
 %{_javadir}/%{name}/text.jar
 %if %with tests
-%{_javadir}/%{name}/unit-test-%{version}.jar
 %{_javadir}/%{name}/unit-test.jar
 %endif
-%{_datadir}/maven2/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/all-%{version}.jar.db
-%{_libdir}/gcj/%{name}/all-%{version}.jar.so
-%endif
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %files demo
-%{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_19jpp7
+- fc release
+
 * Tue Oct 05 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_9.2jpp6
 - added OSGi manifest for eclipse
 
