@@ -1,6 +1,6 @@
 Name: SimplePAMApps
 Version: 0.60
-Release: alt32
+Release: alt33
 
 %def_with login
 %def_with su
@@ -29,6 +29,7 @@ Patch10: %name-0.60-alt-makefile-passwd.patch
 Patch11: %name-0.60-alt-openpam.patch
 Patch12: %name-0.60-alt-audit.patch
 Patch13: %name-0.60-alt-utmp_do_close_session.patch
+Patch14: %name-0.60-alt-su-make_process_killable.patch
 
 BuildPreReq: libpam-devel libaudit-devel
 
@@ -61,7 +62,7 @@ user can be specified with the username argument.  The default username
 is that of the local superuser (UID=0).
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -75,6 +76,7 @@ is that of the local superuser (UID=0).
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 find -type f -print0 |
 	xargs -r0 fgrep -lZ PAM_DATA_QUIET -- |
 	xargs -r0 sed -i s/PAM_DATA_QUIET/PAM_DATA_SILENT/ --
@@ -148,6 +150,9 @@ fi
 %endif #with su
 
 %changelog
+* Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt33
+- su: fixed build with fresh glibc.
+
 * Mon Jul 16 2012 Dmitry V. Levin <ldv@altlinux.org> 0.60-alt32
 - login: reenabled GOODBYE_MESSAGE.
 
