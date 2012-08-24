@@ -1,16 +1,16 @@
 Name: m4
 Version: 1.4.16
-Release: alt2
+Release: alt3
 
 Summary: The GNU macro processor
 License: GPLv3+
 Group: Development/Other
 Url: http://www.gnu.org/software/m4/
 
-# ftp://ftp.gnu.org/gnu/m4/%name-%version.tar.xz
-Source: m4-%version.tar
-Source1: m4.m4
-Patch: gnulib-up-tests-readlink.patch
+# git://git.altlinux.org/gears/m/m4.git
+Source: %name-%version-%release.tar
+
+BuildRequires: gnulib >= 0.0.7557.ee60576
 
 %description
 A GNU implementation of the traditional UNIX macro processor.  m4 is
@@ -21,17 +21,23 @@ etc.  The autoconf program needs m4 for generating configure scripts,
 but not for running configure scripts.
 
 %prep
-%setup
-%patch -p1
+%setup -n %name-%version-%release
+
+# Build scripts expect to find m4 version in this file.
+echo -n %version > .tarball-version
+
+rmdir gnulib
+ln -s %_datadir/gnulib .
+%define _configure_update_config :
 
 %build
-rm doc/*.info*
+./bootstrap --force
 %configure --without-included-regex
 %make_build MAKEINFOFLAGS=--no-split
 
 %install
 %makeinstall_std
-install -pD -m644 %_sourcedir/m4.m4 %buildroot%_datadir/aclocal/m4.m4
+install -pD -m644 m4/m4.m4 %buildroot%_datadir/aclocal/m4.m4
 
 %check
 %make_build -k check
@@ -44,6 +50,11 @@ install -pD -m644 %_sourcedir/m4.m4 %buildroot%_datadir/aclocal/m4.m4
 %doc AUTHORS BACKLOG NEWS README THANKS TODO
 
 %changelog
+* Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.16-alt3
+- Updated to v1.4.16-9-ga0496f2.
+- Updated m4.m4 from autoconf-v2.68-110-gb69f4c2.
+- Built with system gnulib v0.0-7591-g898f143.
+
 * Tue Jun 28 2011 Dmitry V. Levin <ldv@altlinux.org> 1.4.16-alt2
 - Fixed build on linux kernel >= 2.6.39.
 
@@ -142,4 +153,3 @@ install -pD -m644 %_sourcedir/m4.m4 %buildroot%_datadir/aclocal/m4.m4
 
 * Mon Jun 02 1997 Erik Troan <ewt@redhat.com>
 - built against glibc
-
