@@ -64,7 +64,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-net
 Version:        2.0
-Release:        alt8_6jpp6
+Release:        alt9_6jpp6
 Epoch:          0
 Summary:        Apache Commons Net Package
 License:        Apache Software License 2.0
@@ -102,7 +102,6 @@ BuildRequires: maven2-plugin-jar
 BuildRequires: maven2-plugin-javadoc
 BuildRequires: maven2-plugin-resources
 BuildRequires: maven2-default-skin
-BuildRequires: mojo-maven2-plugin-clirr
 %endif
 
 %if ! %{gcj_support}
@@ -301,6 +300,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt9_6jpp6
+- build without clirr plugin
+
 * Mon Mar 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt8_6jpp6
 - fixed build with maven3
 
