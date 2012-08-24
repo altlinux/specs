@@ -1,5 +1,5 @@
 Name: rpm-utils
-Version: 0.9.16
+Version: 0.9.17
 Release: alt1
 
 Summary: Utilities every rpm packager must have
@@ -63,6 +63,9 @@ grep -qs 'gcc.*-c++' out
 %_datadir/buildreqs
 
 %changelog
+* Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.9.17-alt1
+- Fixed build with fresh glibc.
+
 * Mon May 21 2012 Dmitry V. Levin <ldv@altlinux.org> 0.9.16-alt1
 - Fixed build with ld --no-copy-dt-needed-entries.
 
