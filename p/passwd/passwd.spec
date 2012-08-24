@@ -1,11 +1,10 @@
 Name: passwd
-Version: 1.0.12
-Release: alt3
+Version: 1.0.13
+Release: alt1
 
 Summary: The passwd utility for setting/changing passwords using PAM
-License: GPL
+License: GPLv2+
 Group: System/Base
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: passwd-%version.tar
 
@@ -18,13 +17,13 @@ This package contains a system utility (passwd) which is used to update
 a user's authentication token(s).
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build CFLAGS="%optflags -W -Werror" libdir=%_libdir
 
 %install
-%make_install install DESTDIR=%buildroot libdir=%_libdir
+%makeinstall_std libdir=%_libdir
 
 %pre
 %pre_control passwd
@@ -40,6 +39,9 @@ a user's authentication token(s).
 %_mandir/man?/passwd.*
 
 %changelog
+* Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.13-alt1
+- %_sbindir/passwd: always check seteuid return code.
+
 * Wed Jan 27 2010 Slava Semushin <php-coder@altlinux.ru> 1.0.12-alt3
 - NMU
 - passwd.8: fixed NAME section for whatis (Closes: #21238)
