@@ -1,12 +1,12 @@
 Epoch: 0
-BuildRequires: spring2-beans spring2-context spring2-web
+BuildRequires: spring2-beans spring2-context spring2-web maven2
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xbean
 Version:        3.7
 BuildArch:      noarch
 
-Release:        alt2_7jpp7
+Release:        alt3_7jpp7
 Summary:        Java plugin based web server
 
 Group:          Development/Java
@@ -80,7 +80,7 @@ sed -i 's/org.apache.xbean.asm/org.objectweb.asm/' \
 
 %build
 export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mvn-jpp -e \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
 	-Dmaven.test.skip=true \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         -Dmaven2.jpp.depmap.file="%{SOURCE1}" \
@@ -135,6 +135,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.7-alt3_7jpp7
+- fixed build
+
 * Tue May 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.7-alt2_7jpp7
 - added maven-xbean-plugin
 
