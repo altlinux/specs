@@ -7,7 +7,7 @@
 %define PRIO 05
 
 Name: sawfish
-Version: 1.8.91
+Version: 1.9.1
 Release: alt1
 
 Summary: An extensible window manager for the X Window System
@@ -35,7 +35,7 @@ Requires: %{get_dep rep-gtk}
 
 BuildRequires(pre): rep-gtk-devel
 # Automatically added by buildreq on Mon Apr 27 2009
-BuildRequires: libSM-devel libXext-devel libXinerama-devel libXrandr-devel libgtk+2-devel librep-devel
+BuildRequires: libXtst-devel libSM-devel libXext-devel libXinerama-devel libXrandr-devel libgtk+2-devel librep-devel
 
 %description
 Sawfish is an extensible window manager which uses a Lisp-based
@@ -201,6 +201,9 @@ EOF
 %_rpmmacrosdir/sawfish
 
 %changelog
+* Fri Aug 24 2012 Dmitry Derjavin <dd@altlinux.org> 1.9.1-alt1
+- [1.9.1]
+
 * Mon Nov 28 2011 Dmitry Derjavin <dd@altlinux.org> 1.8.91-alt1
 - [1.8.91]
 

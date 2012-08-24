@@ -3,8 +3,8 @@
 %define platform %(%_datadir/automake/config.sub %_target_platform | sed -e 's,-%_vendor,,')
 
 Name: librep
-Version: 0.92.2
-Release: alt1
+Version: 0.92.3
+Release: alt1.git20120706
 
 Summary: An embeddable LISP environment
 License: GPL
@@ -103,6 +103,12 @@ EOF
 %_man1dir/repdoc.1*
 
 %changelog
+* Fri Aug 24 2012 Dmitry Derjavin <dd@altlinux.org> 0.92.3-alt1.git20120706
+- Merge with upstream git to fix NEWS bugs.
+
+* Fri Aug 24 2012 Dmitry Derjavin <dd@altlinux.org> 0.92.2.1-alt1
+- read_line no longer aborts at 400 characters.
+
 * Fri Nov 25 2011 Dmitry Derjavin <dd@altlinux.org> 0.92.2-alt1
 - [0.92.2];
 - *.la files skipped;
