@@ -1,6 +1,6 @@
 Name: findutils
 Version: 4.5.10
-Release: alt2
+Release: alt3
 
 Summary: The GNU versions of find utilities (find and xargs)
 License: GPLv3+
@@ -12,7 +12,7 @@ Source: %name-%version-%release.tar
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.0.7557.ee60576
+BuildRequires: gnulib >= 0.0.7591.898f143
 BuildRequires: glibc-devel-static
 %{?_enable_selinux:BuildRequires: libselinux-devel}
 %{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
@@ -111,6 +111,11 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_bindir/find.static
 
 %changelog
+* Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 4.5.10-alt3
+- Updated documentation about regular expression syntax dialects
+  supported by find.
+- Built with gnulib v0.0-7591-g898f143.
+
 * Sun Aug 05 2012 Dmitry V. Levin <ldv@altlinux.org> 4.5.10-alt2
 - Updated to v4.5.10-100-g003c8e6.
 - Built with gnulib v0.0-7557-gee60576.
