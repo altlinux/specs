@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           stripes
 Version:        1.5.3
-Release:	alt2_1jpp6
+Release:	alt3_1jpp6
 Epoch:          0
 Summary:        JSON-RPC Implementation
 Group:          Development/Java
@@ -106,7 +106,7 @@ ln -sf $(build-classpath javamail_1_4_api) stripes/lib/build/mail.jar
 ln -sf $(build-classpath servlet_2_5_api) stripes/lib/build/servlet-api.jar
 ln -sf $(build-classpath tlddoc) stripes/lib/build/tlddoc.jar
 ln -sf $(build-classpath commons-logging) stripes/lib/deploy/commons-logging.jar
-ln -sf $(build-classpath maven2/empty-dep) stripes/lib/deploy/cos.jar
+ln -sf $(build-classpath maven/empty-dep) stripes/lib/deploy/cos.jar
 ln -sf $(build-classpath commons-fileupload) stripes/lib/test/commons-fileupload-1.2.1.jar
 ln -sf $(build-classpath commons-io) stripes/lib/test/commons-io-1.4.jar
 ln -sf $(build-classpath log4j) stripes/lib/test/log4j-1.2.15.jar
@@ -116,7 +116,7 @@ ln -sf $(build-classpath testng) tests/lib/testng-5.5-jdk15.jar
 rm stripes/src/net/sourceforge/stripes/controller/multipart/CosMultipartWrapper.java
 
 %build
-ant dist
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  dist
 
 %install
 
@@ -141,6 +141,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt3_1jpp6
+- fixed build (use maven/empty-dep)
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt2_1jpp6
 - fixed build with new testng and xbean
 
