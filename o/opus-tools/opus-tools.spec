@@ -1,5 +1,5 @@
 Name: opus-tools
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: Opus Audio Codec utilities
@@ -36,6 +36,9 @@ decode .opus files.
 %doc AUTHORS COPYING ChangeLog
 
 %changelog
+* Sat Aug 25 2012 L.A. Kostis <lakostis@altlinux.ru> 0.1.4-alt1
+- 0.1.4.
+
 * Wed Jul 25 2012 L.A. Kostis <lakostis@altlinux.ru> 0.1.3-alt1
 - initial build for ALTLinux.
 
