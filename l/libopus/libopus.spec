@@ -1,12 +1,12 @@
 Name: libopus
-Version: 0.9.14
-Release: alt1
+Version: 1.0.1
+Release: alt0.1.rc2
 
 Summary: Opus Audio Codec library
 License: BSD-style
 Group: System/Libraries
 Url: http://opus-codec.org/
-# http://downloads.xiph.org/releases/opus/%name-%version.tar.xz
+# http://downloads.xiph.org/releases/opus/%name-%version.tar.gz
 Source: opus-%version.tar
 
 %def_disable static
@@ -53,6 +53,9 @@ statically linked libopus-based software.
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*.pc
+%_man3dir/*
+%dir %_docdir/opus/
+%_docdir/opus/*
 
 %if_enabled static
 %files devel-static
@@ -60,6 +63,9 @@ statically linked libopus-based software.
 %endif
 
 %changelog
+* Sat Aug 25 2012 L.A. Kostis <lakostis@altlinux.ru> 1.0.1-alt0.1.rc2
+- 1.0.1rc2.
+
 * Mon Jul 23 2012 L.A. Kostis <lakostis@altlinux.ru> 0.9.14-alt1
 - Updated to 0.9.14;
 - initial build for ALTLinux.
