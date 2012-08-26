@@ -1,7 +1,7 @@
 %define rname mtdev
 
 Name: lib%rname
-Version: 1.1.2
+Version: 1.1.3
 Release: alt1
 Summary: Multitouch Protocol Translation Library
 Group: System/Libraries
@@ -47,6 +47,9 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/mtdev.pc
 
 %changelog
+* Sun Aug 26 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.1.3-alt1
+- 1.1.3
+
 * Wed Mar 07 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.1.2-alt1
 - 1.1.2
 
