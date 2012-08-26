@@ -4,7 +4,7 @@
 Name: asterisk1.6.2-chan_datacard
 Summary: Channel driver for Asterisk to use Huawei 3G modem series.
 Version: 0.53
-Release: alt23
+Release: alt24
 License: GPL
 Group: System/Libraries
 
@@ -37,6 +37,9 @@ mkdir -p %buildroot%_docdir/%name
 %doc LICENSE.txt README.txt TODO.txt datacard.conf
 
 %changelog
+* Sun Aug 26 2012 Denis Smirnov <mithraen@altlinux.ru> 0.53-alt24
+- Asterisk update
+
 * Mon Jan 02 2012 Denis Smirnov <mithraen@altlinux.ru> 0.53-alt23
 - Asterisk update
 
