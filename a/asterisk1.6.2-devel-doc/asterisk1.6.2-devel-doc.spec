@@ -3,7 +3,7 @@
 Name: asterisk1.6.2-devel-doc
 Summary: Asterisk API documentation
 Version: 1.6.2
-Release: alt19
+Release: alt20
 License: GPL
 Group: System/Servers
 Url: http://www.asterisk.org/
@@ -34,6 +34,9 @@ tar xfj %_usrsrc/asterisk1.6.2.tar.bz2
 %doc doc
 
 %changelog
+* Sun Aug 26 2012 Denis Smirnov <mithraen@altlinux.ru> 1.6.2-alt20
+- Asterisk update
+
 * Fri Jul 15 2011 Denis Smirnov <mithraen@altlinux.ru> 1.6.2-alt19
 - Asterisk update
 
