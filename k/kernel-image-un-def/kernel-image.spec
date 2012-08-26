@@ -2,7 +2,7 @@ Name: kernel-image-un-def
 Release: alt1
 epoch:1 
 %define kernel_base_version	3.5
-%define kernel_sublevel	.2
+%define kernel_sublevel	.3
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -17,6 +17,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
 
+%define nprocs 8
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	4.5
@@ -318,6 +319,7 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 
 %build
 export ARCH=%base_arch
+export NPROCS=%nprocs
 KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
@@ -576,6 +578,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Sun Aug 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.3-alt1
+- 3.5.3
+- kmod: pass -b option to /sbin/modprobe (by ldv@)
+
 * Wed Aug 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.2-alt1
 - 3.5.2
 - Applyed: fs: push rcu_barrier() from deactivate_locked_super()
