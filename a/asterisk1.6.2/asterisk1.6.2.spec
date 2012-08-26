@@ -1,7 +1,7 @@
 Name: asterisk1.6.2
 Summary: Open source PBX
-Version: 1.6.2.22
-Release: alt2
+Version: 1.6.2.24
+Release: alt1
 License: GPL
 Group: System/Servers
 BuildRequires: binutils-devel dahdi-linux-headers flex gcc-c++ graphviz gtk+-devel libSDL_image-devel libalsa-devel libavcodec-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libiksemel-devel libilbc-devel libjack-devel libltdl7-devel liblua5-devel libncurses-devel libnet-snmp-devel libnewt-devel libopenh323_1.19-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
@@ -1153,6 +1153,9 @@ mv %buildroot%_includedir/asterisk.h %buildroot%_includedir/asterisk-%version/as
 %_altdir/conf2ael-%version
 
 %changelog
+* Sun Aug 26 2012 Denis Smirnov <mithraen@altlinux.ru> 1.6.2.24-alt1
+- 1.6.2.24
+
 * Tue Feb 14 2012 Denis Smirnov <mithraen@altlinux.ru> 1.6.2.22-alt2
 - disable mISDN
 

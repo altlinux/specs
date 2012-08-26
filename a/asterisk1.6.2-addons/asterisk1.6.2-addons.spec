@@ -3,7 +3,7 @@
 Name: asterisk1.6.2-addons
 Summary: Asterisk addons
 Version: 1.6.2.3
-Release: alt3
+Release: alt4
 License: GPL
 Group: System/Servers
 Url: http://www.asterisk.org/
@@ -55,6 +55,9 @@ mv %buildroot/usr/lib/asterisk/modules/*.so %buildroot%modules_dir/
 %attr(0440,root,_asterisk) %modules_dir/chan_mobile.so
 
 %changelog
+* Sun Aug 26 2012 Denis Smirnov <mithraen@altlinux.ru> 1.6.2.3-alt4
+- Asterisk update
+
 * Mon Jan 02 2012 Denis Smirnov <mithraen@altlinux.ru> 1.6.2.3-alt3
 - Asterisk update
 
