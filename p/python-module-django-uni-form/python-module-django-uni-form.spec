@@ -2,7 +2,7 @@
 
 Name: python-module-%module_name
 Version: 0.9.0
-Release: alt1
+Release: alt1.qa1
 
 Summary: The best way to have Django_ DRY forms. Build programmatic reusable layouts out of components, having full control of the rendered HTML
 
@@ -35,11 +35,22 @@ lets you quickly render forms in a div format
 %install
 %python_install
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %files
 %doc README* CHANGELOG CONTRIBUTORS.txt LICENSE.txt docs
 %python_sitelibdir/uni_form*
 %python_sitelibdir/django_uni_form*
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.9.0-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * macos-ds-store-file-in-package for python-module-django-uni-form
+
 * Thu Apr 19 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.9.0-alt1
 - Initial build for ALT Linux
