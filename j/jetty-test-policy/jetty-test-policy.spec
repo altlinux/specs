@@ -1,8 +1,9 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-test-policy
 Version:        1.2
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Jetty test policy files
 
 Group:          Development/Java
@@ -41,7 +42,7 @@ BuildArch: noarch
 %setup -q
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
 
 %install
 # poms
@@ -66,6 +67,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2_4jpp7
+- fixed build
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp7
 - new version
 
