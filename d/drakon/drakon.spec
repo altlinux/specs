@@ -1,7 +1,7 @@
 %define oname drakon_editor
 Name: drakon
 Version: 1.13
-Release: alt1
+Release: alt1.qa1
 
 Summary: DRAKON Editor is a free cross-platform editor for the DRAKON visual language
 
@@ -58,6 +58,12 @@ rm -f %buildroot%_datadir/%name/readme.html
 rm -rf %buildroot%_datadir/%name/docs/
 rm -rf %buildroot%_datadir/%name/unittest/
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %files
 %doc readme.html
 %doc docs
@@ -66,5 +72,10 @@ rm -rf %buildroot%_datadir/%name/unittest/
 %_datadir/%name/
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.13-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * macos-ds-store-file-in-package for drakon
+
 * Mon Aug 06 2012 Vitaly Lipatov <lav@altlinux.ru> 1.13-alt1
 - initial build for ALT Linux Sisyphus
