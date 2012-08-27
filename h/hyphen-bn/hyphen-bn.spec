@@ -1,9 +1,11 @@
+%global upstreamid 20111229
+%global upstream_version 0.7.0
+
 Name: hyphen-bn
 Summary: Bengali hyphenation rules
-%define upstreamid 20100204
 Version: 0.%{upstreamid}
-Release: alt1_4
-Source: http://git.savannah.gnu.org/cgit/smc.git/plain/hyphenation/hyph_bn_IN.dic
+Release: alt1_1
+Source: http://download.savannah.gnu.org/releases/smc/hyphenation/patterns/%{name}-%{upstream_version}.tar.bz2
 Group: Text tools
 URL: http://wiki.smc.org.in
 License: LGPLv3+
@@ -15,14 +17,13 @@ Source44: import.info
 Bengali hyphenation rules.
 
 %prep
-%setup -T -q -c
-cp -p %{SOURCE0} .
+%setup -q -n %{name}-%{upstream_version} 
 
 %build
 
 %install
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
-cp -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
+install -m644 -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
 pushd $RPM_BUILD_ROOT/%{_datadir}/hyphen/
 bn_IN_aliases="bn_BD"
@@ -35,6 +36,9 @@ popd
 %{_datadir}/hyphen/*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20111229-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20100204-alt1_4
 - update to new release by fcimport
 
