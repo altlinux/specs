@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Repocop/ExternalTest.pm)
 %define testname build-logs
 
 Name: repocop-unittest-%testname
-Version: 0.03
+Version: 0.04
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -29,6 +29,7 @@ Source0: %name-%version.tar
 mkdir -p $RPM_BUILD_ROOT%_bindir/
 install -m 755 \
    repocop-unittest-build-log \
+   repocop-rsync-beehive-logs \
    repocop-process-build-logs \
    $RPM_BUILD_ROOT%_bindir/
 
@@ -42,6 +43,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- support for serial in patchgenerator
+
 * Thu May 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - bugfix release
 
