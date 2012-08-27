@@ -1,8 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# one of the sources is a zip file
-BuildRequires: unzip
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,40 +33,38 @@ BuildRequires: unzip
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-
-Name:           kxml2
+Name:           kxml
 Version:        2.2.2
-Release:	alt3_4jpp6
-Epoch:          0
-Summary:        Small XML pull parser specially designed for constrained environments
-License:        BSD
+Release:        alt3_12jpp7
+Summary:        Small XML pull parser
+License:        MIT
 URL:            http://kxml.sourceforge.net/
 Group:          Development/Java
 Source0:        http://dl.sourceforge.net/sourceforge/kxml/kxml2-src-2.2.2.zip
 Source1:        http://repo1.maven.org/maven2/net/sf/kxml/kxml2/2.2.2/kxml2-2.2.2.pom
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: ant >= 0:1.7.1
-BuildRequires: xpp3 >= 0:1.1.3.1
-Requires: xpp3
+BuildRequires:  jpackage-utils >= 0:1.7.4
+BuildRequires:  ant >= 0:1.6.5
+BuildRequires:  xpp3 >= 0:1.1.3.1
+Requires:  jpackage-utils
+Requires:  xpp3
 BuildArch:      noarch
-
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
 Source44: import.info
+Provides: kxml2 = %version-%release
+Conflicts: kxml2 < %version-%release
+Obsoletes: kxml2 < %version-%release
 
 %description
-kXML 2 is a small XML pull parser, specially designed for constrained
-environments such as Applets, Personal Java or MIDP devices. In contrast
-to kXML 1, kXML 2 is based on the common XML pull API. The 1.x version
-of kXML will stay available at kxml.enhydra.org.
+kXML is a small XML pull parser, specially designed for constrained
+environments such as Applets, Personal Java or MIDP devices.
 
 %package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-%{summary}.
+API documentation for %{name}.
 
 %prep
 %setup -q -c
@@ -78,44 +77,37 @@ ln -sf $(build-classpath xpp3) lib/xmlpull_1_1_3_1.jar
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
-%add_to_maven_depmap net.sf.kxml %{name} %{version} JPP %{name}
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP.%{name}.pom
+install -m 644 %{SOURCE1} \
+        $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 dist/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-install -m 644 dist/%{name}-min-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-min-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do \
-ln -sf ${jar} ${jar/-%{version}/}; done)
+install -m 644 dist/%{name}2-%{version}.jar \
+        $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -m 644 dist/%{name}2-min-%{version}.jar \
+        $RPM_BUILD_ROOT%{_javadir}/%{name}-min.jar
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
-install -p -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr www/kxml2/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-(cd $RPM_BUILD_ROOT%{_javadocdir} && ln -sf %{name}-%{version} %{name})
+install -p -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr www/kxml2/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+# jpp compat - just in case
+ln -s kxml.jar %buildroot%_javadir/kxml2.jar
 
 %files
+%doc license.txt
 %{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}*
+%doc license.txt
+%{_javadocdir}/%{name}
 
 %changelog
-* Sat Mar 12 2011 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_4jpp6
-- jpp 6 release
-
-* Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt3_3jpp5
-- fixes for java6 support
-
-* Sun Feb 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt2_3jpp5
-- use default jpp profile
-
-* Sat Sep 06 2008 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt2_2jpp5
-- converted from JPackage by jppimport script
-
-* Wed Jul 02 2008 Igor Vlasenko <viy@altlinux.ru> 0:2.2.2-alt1_2jpp5
-- converted from JPackage by jppimport script
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.2-alt3_12jpp7
+- added jpp compatible symlink
 
