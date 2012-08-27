@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-plugin-build-helper
 Version:        1.5
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Build Helper Maven Plugin
 
 Group:          Development/Java
@@ -38,6 +38,10 @@ Requires: jpackage-utils
 Requires: plexus-utils
 Requires: mojo-parent
 Source44: import.info
+
+Provides: mojo-maven2-plugin-build-helper = %version
+Obsoletes: mojo-maven2-plugin-build-helper = 17
+
 
 %description
 This plugin contains various small independent goals to assist with
@@ -87,6 +91,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_6jpp7
+- added jpp compatible provides
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_5jpp7
 - fc version
 
