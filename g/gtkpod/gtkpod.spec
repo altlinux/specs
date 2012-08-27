@@ -1,6 +1,6 @@
 Name: gtkpod
 Version: 2.1.1
-Release: alt3
+Release: alt3.qa1
 Summary: A GUI for Apple's iPod using GTK2
 License: GPL
 Group: Sound
@@ -65,11 +65,16 @@ echo "%version" > version
 %makeinstall_std
 %find_lang %name
 
-%__subst "s|%_prefix/lib|%_libdir|g" %buildroot%_datadir/%name/scripts/sync-evolution.sh
+sed -i "s|%_prefix/lib|%_libdir|g" %buildroot%_datadir/%name/scripts/sync-evolution.sh
 
 desktop-file-install --vendor="" \
   --add-mime-type="x-content/audio-player" \
   --dir %buildroot%_datadir/applications %buildroot%_datadir/applications/*
+desktop-file-install --dir %buildroot%_desktopdir \
+	--remove-category=AudioVideo \
+	--add-category=TelephonyTools \
+	--add-category=Utility \
+	%buildroot%_desktopdir/gtkpod.desktop
 
 %files -f %name.lang
 %doc README AUTHORS ChangeLog
@@ -94,6 +99,12 @@ desktop-file-install --vendor="" \
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2.1.1-alt3.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for gtkpod
+  * postclean-03-private-rpm-macros for the spec file
+
 * Thu May 17 2012 Alexey Shabalin <shaba@altlinux.ru> 2.1.1-alt3
 - rebuild with new libgdl
 
