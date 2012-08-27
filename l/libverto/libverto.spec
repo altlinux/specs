@@ -1,20 +1,20 @@
 Group: Development/C
 %add_optflags %optflags_shared
 Name:           libverto
-Version:        0.2.4
-Release:        alt1_3
+Version:        0.2.5
+Release:        alt1_1
 Summary:        Main loop abstraction library
 
 License:        MIT
 URL:            https://fedorahosted.org/libverto/
 Source0:        http://fedorahosted.org/releases/l/i/%{name}/%{name}-%{version}.tar.gz
-# From upstream, will be in next release
-Patch1:         libverto-0.2.4-fix-libev.patch
 
 BuildRequires:  glib2-devel
-BuildRequires:  libev-devel
 BuildRequires:  libevent-devel
 BuildRequires:  libtevent-devel
+%if !0%{?rhel}
+BuildRequires:  libev-devel
+%endif
 Source44: import.info
 
 %description
@@ -59,31 +59,6 @@ Requires:       libverto-devel = %{version}-%{release}
 The %{name}-glib-devel package contains libraries and header files for
 developing applications that use %{name}-glib.
 
-%package        libev
-Group: Development/C
-Summary:        libev module for %{name}
-Requires:       libverto = %{version}-%{release}
-Provides:       %{name}-module-base = %{version}-%{release}
-
-%description    libev
-Module for %{name} which provides integration with libev.
-
-This package provides %{name}-module-base since it supports io, timeout
-and signal.
-
-%package        libev-devel
-Group: Development/C
-Summary:        Development files for %{name}-libev
-Requires:       libverto-libev = %{version}-%{release}
-Requires:       libverto-devel = %{version}-%{release}
-
-%description    libev-devel
-The %{name}-libev-devel package contains libraries and header files for
-developing applications that use %{name}-libev.
-
-This package provides %{name}-module-base since it supports io, timeout
-and signal.
-
 %package        libevent
 Group: Development/C
 Summary:        libevent module for %{name}
@@ -125,9 +100,35 @@ Requires:       libverto-devel = %{version}-%{release}
 The %{name}-tevent-devel package contains libraries and header files for
 developing applications that use %{name}-tevent.
 
+%if !0%{?rhel}
+%package        libev
+Group: Development/C
+Summary:        libev module for %{name}
+Requires:       libverto = %{version}-%{release}
+Provides:       %{name}-module-base = %{version}-%{release}
+
+%description    libev
+Module for %{name} which provides integration with libev.
+
+This package provides %{name}-module-base since it supports io, timeout
+and signal.
+
+%package        libev-devel
+Group: Development/C
+Summary:        Development files for %{name}-libev
+Requires:       libverto-libev = %{version}-%{release}
+Requires:       libverto-devel = %{version}-%{release}
+
+%description    libev-devel
+The %{name}-libev-devel package contains libraries and header files for
+developing applications that use %{name}-libev.
+
+This package provides %{name}-module-base since it supports io, timeout
+and signal.
+%endif
+
 %prep
 %setup -q
-%patch1 -p1
 
 %build
 %configure --disable-static
@@ -155,14 +156,6 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}-glib.so
 %{_libdir}/pkgconfig/%{name}-glib.pc
 
-%files libev
-%{_libdir}/%{name}-libev.so.*
-
-%files libev-devel
-%{_includedir}/verto-libev.h
-%{_libdir}/%{name}-libev.so
-%{_libdir}/pkgconfig/%{name}-libev.pc
-
 %files libevent
 %{_libdir}/%{name}-libevent.so.*
 
@@ -179,7 +172,20 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/%{name}-tevent.so
 %{_libdir}/pkgconfig/%{name}-tevent.pc
 
+%if !0%{?rhel}
+%files libev
+%{_libdir}/%{name}-libev.so.*
+
+%files libev-devel
+%{_includedir}/verto-libev.h
+%{_libdir}/%{name}-libev.so
+%{_libdir}/pkgconfig/%{name}-libev.pc
+%endif
+
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.4-alt1_3
 - update to new release by fcimport
 
