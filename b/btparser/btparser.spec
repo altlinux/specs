@@ -1,16 +1,32 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
-BuildRequires: pkgconfig(python)
+BuildRequires: /usr/bin/python-config
 # END SourceDeps(oneline)
+%{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+
 Name: btparser
-Version: 0.17
+Version: 0.18
 Release: alt1_2
 Summary: Parser and analyzer for backtraces produced by GDB
 Group: Development/C
 License: GPLv2+
 URL: http://fedorahosted.org/btparser
 Source0: https://fedorahosted.org/released/btparser/btparser-%{version}.tar.xz
+BuildRequires: glib2-devel >= 2.21
+%if 0%{?suse_version}
 BuildRequires: python-devel
+BuildRequires: libelf-devel
+Requires: libelf
+%else
+BuildRequires: python-devel
+BuildRequires: elfutils-devel
+BuildRequires: libelf-devel
+Requires: elfutils
+Requires: libelf
+%endif
+BuildRequires: binutils-devel
+Requires: glib2 >= 2.21
+Requires: binutils
 Source44: import.info
 
 %description
@@ -79,6 +95,9 @@ make check
 %{python_sitelibdir}/%{name}/*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_2
+- new release
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1_2
 - update to new release by fcimport
 
