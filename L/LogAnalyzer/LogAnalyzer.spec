@@ -3,7 +3,7 @@
 Summary: A syslog data viewer for the web
 Name: LogAnalyzer
 Version: 3.4.4
-Release: alt1
+Release: alt1.qa1
 License: GPLv3+
 Group: Monitoring
 Url: http://loganalyzer.adiscon.com/
@@ -37,6 +37,12 @@ cp -aRf src/* %buildroot%wwwdir/
 touch             %buildroot%_sysconfdir/%name/config.php
 ln -s ../../..%_sysconfdir/%name/config.php %buildroot%wwwdir/config.php
 
+# It is the file in the package named Thumbs.db or Thumbs.db.gz, 
+# which is normally a Windows image thumbnail database. 
+# Such databases are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
+
 
 %files
 %doc COPYING INSTALL ChangeLog LogAnalyzer-apache.conf doc
@@ -46,6 +52,11 @@ ln -s ../../..%_sysconfdir/%name/config.php %buildroot%wwwdir/config.php
 %wwwdir/*
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.4.4-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * windows-thumbnail-database-in-package for LogAnalyzer
+
 * Tue Aug 07 2012 Michael Shigorin <mike@altlinux.org> 3.4.4-alt1
 - 3.4.4
 
