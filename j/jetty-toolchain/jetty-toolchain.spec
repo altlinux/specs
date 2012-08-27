@@ -1,8 +1,9 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-toolchain
 Version:        1.4
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Jetty Toolchain main POM file
 
 Group:          Development/Java
@@ -30,7 +31,7 @@ Jetty Toolchain main POM file
 
 %build
 pushd %{name}
-mvn-rpmbuild install
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install
 
 %install
 # poms
@@ -48,6 +49,9 @@ popd
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_4jpp7
+- fixed build
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_4jpp7
 - new version
 
