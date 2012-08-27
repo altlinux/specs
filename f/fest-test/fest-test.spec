@@ -1,3 +1,4 @@
+BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -34,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           fest-%{module}
 Version:        1.2.1
-Release:        alt3_0.r1039.1jpp7
+Release:        alt4_0.r1039.1jpp7
 Summary:        Fixtures for Easy Software Testing Tests
 
 Group:          Development/Java
@@ -94,7 +95,7 @@ export SETTINGS=$(pwd)/settings.xml
 export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
 mkdir -p ${MAVEN_REPO_LOCAL}
 export MAVEN_OPTS="-Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Dmaven.test.failure.ignore=true"
-%{_bindir}/mvn-jpp \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
         -s ${SETTINGS} \
         install javadoc:javadoc
@@ -129,6 +130,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt4_0.r1039.1jpp7
+- fixed build
+
 * Thu Mar 15 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt3_0.r1039.1jpp7
 - fixed build with maven3
 
