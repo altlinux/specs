@@ -93,7 +93,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty6
 Version:        6.1.26
-Release:        alt8_1jpp6
+Release:        alt9_1jpp6
 Epoch:          0
 Summary:        Webserver and Servlet Container
 Group:          Development/Java
@@ -181,8 +181,8 @@ BuildRequires:  maven-jxr
 BuildRequires:  maven-release
 BuildRequires:  maven-shared-enforcer-rule-api
 BuildRequires:  maven-surefire-provider-junit
-BuildRequires:  mojo-maven2-plugin-build-helper
-BuildRequires:  mojo-maven2-plugin-exec
+BuildRequires:  maven-plugin-build-helper
+#BuildRequires:  mojo-maven2-plugin-exec
 #BuildRequires:  mojo-maven2-plugin-jboss-packaging
 #BuildRequires:  mojo-maven2-natives
 BuildRequires:  mojo-parent
@@ -1698,6 +1698,9 @@ fi
 # ========= End of Jetty Webapps Subpackage Files
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt9_1jpp6
+- build without mojo-maven2-plugin-exec
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt8_1jpp6
 - fixed pre script
 
