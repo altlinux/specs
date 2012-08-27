@@ -1,8 +1,9 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-distribution-remote-resources
 Version:        1.1
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Jetty toolchain artifact for distribution remote resources
 
 Group:          Development/Java
@@ -29,7 +30,7 @@ Jetty toolchain artifact for distribution remote distribution resources
 %setup -q
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
 
 %install
 # poms
@@ -48,6 +49,9 @@ install -Dp -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_4jpp7
+- fixed build
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_4jpp7
 - new version
 
