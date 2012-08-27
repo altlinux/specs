@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libhbalinux
 Version:        1.0.14
-Release:        alt1_2
+Release:        alt1_3
 Summary:        FC-HBAAPI implementation using scsi_transport_fc interfaces
 Group:          System/Libraries
 License:        LGPLv2
@@ -37,7 +37,6 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
-find %{buildroot} -name '*.so' -exec rm -f {} ';'
 
 %post
 ORG=org.open-fcoe.libhbalinux
@@ -65,8 +64,12 @@ fi
 
 %files devel
 %{_libdir}/pkgconfig/%{name}.pc
+%{_libdir}/%{name}.so
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.14-alt1_3
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.14-alt1_2
 - update to new release by fcimport
 
