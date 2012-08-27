@@ -1,3 +1,4 @@
+BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: oss-parent
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           fest-%{module}
 Version:        1.2
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Summary:        Fixtures for Easy Software Testing Swing GUI Testing TestNG
 
 Group:          Development/Java
@@ -107,7 +108,7 @@ export SETTINGS=$(pwd)/settings.xml
 export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
 mkdir -p ${MAVEN_REPO_LOCAL}
 export MAVEN_OPTS="-Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Dmaven.test.failure.ignore=true"
-%{_bindir}/mvn-jpp \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
         -s ${SETTINGS} \
 	-Dmaven.test.skip=true \
@@ -141,6 +142,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4_1jpp6
+- fixed build
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_1jpp6
 - fixed build with new testng and xbean
 
