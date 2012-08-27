@@ -5,13 +5,13 @@ BuildRequires: unzip
 %global fontname adf-accanthis
 %global fontconf 60-%{fontname}
 
-%global archivename Accanthis-Std
+%global archivename Accanthis-Std-20101124
 
 %global common_desc \
-A latin typeface published by Hirwen Harendal's Arkandis Digital Foundry, \
+A Latin typeface published by Hirwen Harendal's Arkandis Digital Foundry, \
 Accanthis was inspired from the a.'Cloister Oldstylea.' typeface found in the \
 a.'American Specimen Book of Typefaces Suplementa.'. Its medium contrast is \
-sufficient to be reader-frendly and deliver a elegant and refined experience.\
+sufficient to be reader-friendly and deliver an elegant and refined experience.\
 \
 Its creator considers it as a a.'modernizeda.' garaldic typeface. \
 \
@@ -20,8 +20,8 @@ Accanthis is well suited to book typesetting and refined presentations.
 
 Name:      fonts-otf-adf-accanthis
 # Use the main PS version (as documented in NOTICE)
-Version:   1.6
-Release:   alt3_7
+Version:   1.8
+Release:   alt1_2
 Summary:   A a.'modernizeda.' garaldic serif typeface, a.'Galliarda.' alternative
 
 Group:     System/Fonts/True type
@@ -67,7 +67,7 @@ Requires: %{name}-common = %{version}-%{release}
 %description -n fonts-ttf-adf-accanthis-2
 %common_desc
 
-This variant is closer to the a.'Horley old stylea.' typeface than the original \
+This variant is closer to the a.'Horley old stylea.' typeface than the original
 version.
 
 %files -n fonts-ttf-adf-accanthis-2
@@ -97,7 +97,7 @@ original Italic and changes to k, p, z and numbers.
 %prep
 %setup -q -n %{archivename}
 install -m 0644 -p %{SOURCE1} .
-for txt in NOTICE */COPYING ; do
+for txt in NOTICE.txt OTF/COPYING ; do
    fold -s $txt > $txt.new
    sed -i 's/\r//' $txt.new
    touch -r $txt $txt.new
@@ -167,10 +167,13 @@ fi
 
 
 %files common
-%doc NOTICE OTF/COPYING *.pdf
+%doc NOTICE.txt OTF/COPYING *.pdf
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_2
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_7
 - update to new release by fcimport
 
