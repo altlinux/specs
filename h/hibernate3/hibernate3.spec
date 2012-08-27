@@ -63,7 +63,7 @@ BuildRequires: jpackage-1.6.0-compat
 Summary:        Relational persistence and query service
 Name:           hibernate3
 Version:        3.3.2
-Release:        alt4_1jpp6
+Release:        alt5_1jpp6
 Epoch:          1
 License:        LGPLv2+
 URL:            http://www.hibernate.org/
@@ -102,7 +102,7 @@ BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven2-plugin-surefire-report
 BuildRequires:  maven2-plugin-war
 # Requires mojo-maven2-plugin-antlr due to http://jira.codehaus.org/browse/MANTLR-24
-BuildRequires:  mojo-maven2-plugin-antlr
+BuildRequires:  antlr-maven-plugin
 
 BuildRequires:  jboss-parent
 BuildRequires:  javassist >= 0:3.9.0
@@ -491,6 +491,9 @@ ln -s hibernate3-core.jar %buildroot%_javadir/hibernate3.jar
 %endif
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.3.2-alt5_1jpp6
+- use antlr-maven-plugin
+
 * Sun Jun 10 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.3.2-alt4_1jpp6
 - build with maven-enforcer-api
 
