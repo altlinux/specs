@@ -347,7 +347,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt22_8jpp6
+Release:        alt23_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -675,13 +675,13 @@ Summary:     Aspectj plugin from %{name}
 Group:       Development/Java
 Requires:    %{name} = 0:%{version}-%{release}
 BuildRequires:    maven2 >= 0:2.0.8
-BuildRequires:    maven-embedder
+#BuildRequires:    maven-embedder
 BuildRequires:    maven-shared-reporting-impl
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    aspectj >= 0:1.5.3
 BuildRequires:    junit
 Requires:    maven2 >= 0:2.0.8
-Requires:    maven-embedder
+#Requires:    maven-embedder
 Requires:    maven-shared-reporting-impl
 Requires:    aspectj >= 0:1.5.3
 
@@ -991,7 +991,7 @@ Summary:     DEB plugin from %{name}
 Group:       Development/Java
 Requires:    %{name} = 0:%{version}-%{release}
 BuildRequires:    maven2 >= 0:2.0.8
-BuildRequires:    maven-embedder
+#BuildRequires:    maven-embedder
 Requires:    maven2 >= 0:2.0.8
 
 %description -n mojo-maven2-plugin-deb
@@ -1899,7 +1899,7 @@ Summary:     WAS plugin and support from %{name}
 Group:       Development/Java
 Requires:    %{name} = 0:%{version}-%{release}
 Requires:    maven2 >= 0:2.0.8
-Requires:    maven-embedder
+#Requires:    maven-embedder
 Requires:    ant >= 0:1.7.1
 
 %description -n mojo-maven2-was
@@ -2624,7 +2624,7 @@ Requires:    %{name} = 0:%{version}-%{release}
 BuildRequires:    maven2 >= 0:2.0.8
 BuildRequires:    maven2-plugin-jar
 BuildRequires:    maven2-plugin-plugin
-BuildRequires:    maven-embedder
+#BuildRequires:    maven-embedder
 BuildRequires:    maven-shared-plugin-testing-harness
 BuildRequires:    maven-shared-plugin-tools-java
 BuildRequires:    maven-shared-reporting-impl
@@ -6087,6 +6087,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt23_8jpp6
+- dropped dependency on maven-embedder
+
 * Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt22_8jpp6
 - dropped plexus-maven-plugin dependency
 
