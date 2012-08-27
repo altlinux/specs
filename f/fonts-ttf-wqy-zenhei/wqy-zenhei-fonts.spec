@@ -25,13 +25,13 @@ named "WenQuanYi Zen Hei Mono".
 
 Name:           fonts-ttf-wqy-zenhei
 Version:        0.9.46
-Release:        alt3_5
+Release:        alt3_6
 Summary:        WenQuanYi Zen Hei CJK Font
 
 Group:          System/Fonts/True type
 License:        GPLv2 with exceptions
 URL:            http://wenq.org/enindex.cgi
-Source0:        http://downloads.sourceforge.net/wqy/%{fontname}-%{version}-nightlybuild.tar.gz
+Source0:        http://downloads.sourceforge.net/wqy/%{fontname}-%{version}-May.tar.bz2
 Source1:        %{fontconf1}
 Source2:        %{fontconf2}
 Source3:        %{setscript}
@@ -116,6 +116,9 @@ fi
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_5
 - update to new release by fcimport
 
