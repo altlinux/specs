@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:		biniax
 Version:	1.2
-Release:	alt3_10
+Release:	alt3_12
 Summary:	A unique arcade logic game
 
 Group:		Games/Other
@@ -19,6 +19,7 @@ Patch0:		%{name}-%{version}-gfx.patch
 Patch1:		%{name}-%{version}-snd.patch
 Patch2:		%{name}-%{version}-save.patch
 Patch3:		%{name}-%{version}-optflags.patch
+Patch4:		%{name}-%{version}-close.patch
 
 Requires:	icon-theme-hicolor
 BuildRequires:	libSDL-devel libSDL_mixer-devel desktop-file-utils
@@ -39,6 +40,7 @@ pair. The field is scrolling down on time event or after certain moves are spend
 %patch1 -p0 -b .snd
 %patch2 -p0 -b .save
 %patch3 -p0 -b .optflags
+%patch4 -p0 -b .close
 # Needed because of this rpmlint warning "W: wrong-file-end-of-line-encoding"
 sed -i 's/\r//' Readme.txt LICENSE.txt
 # Set datadir prefix, snd.patch and gfx.patch
@@ -79,6 +81,9 @@ install -p -m 0644 %{SOURCE2} \
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_12
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_10
 - update to new release by fcimport
 
