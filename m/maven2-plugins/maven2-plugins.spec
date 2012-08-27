@@ -1,8 +1,4 @@
-# hack until 2.0.7 will be built
-# Requires: jakarta-commons-cli10
-# Requires(post): jakarta-commons-cli10
-# another hack to be resolved
-# Requires: excalibur-avalon-framework
+Requires: /usr/bin/mvn-jpp
 # 2.0.4; gone in 2.0.7
 #Requires: maven2-plugin-antlr
 #Requires: maven2-plugin-jxr
@@ -44,8 +40,8 @@ Requires: maven-scm
 
 Name:           maven2-plugins
 Version:        2.0.7
-Release:        alt6
-Summary:        convenience package for all maven2 plugins
+Release:        alt7
+Summary:        convenience package for the default set of maven2 plugins
 
 Group:          Development/Java
 License:        Apache Software License 2.0
@@ -54,7 +50,7 @@ URL:            http://maven.apache.org/
 BuildArch:      noarch
 
 %description
-convenience package for all maven2 plugins
+convenience package for the default set of maven2 plugins
 
 %prep
 
@@ -64,13 +60,12 @@ convenience package for all maven2 plugins
 
 install -dm 755 $RPM_BUILD_ROOT%{_bindir}
 
-#%post
-#[ -e /usr/share/java/commons-cli.jar ] && [ -e /usr/share/java/commons-cli10.jar ] && ln -sf commons-cli10.jar /usr/share/java/commons-cli.jar
-#:
-
 %files
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt7
+- added dependency on /usr/bin/mvn-jpp
+
 * Sat Jan 29 2011 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt6
 - removed maven2-plugin-plugin
 
