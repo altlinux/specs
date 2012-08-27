@@ -3,7 +3,7 @@
 
 Name: revelation
 Version: %ver_major.13
-Release: alt1
+Release: alt1.qa1
 
 Summary: Keyring management program for the GNOME Desktop
 License: %gpl2plus
@@ -51,6 +51,12 @@ This a keyring management program for the GNOME Desktop.
 %makeinstall_std
 
 %find_lang --with-gnome %name
+desktop-file-install --dir %buildroot%_desktopdir \
+	--remove-category=Utility \
+	--add-category=Settings \
+	--add-category=X-PersonalSettings \
+	--add-category=GTK \
+	%buildroot%_desktopdir/revelation.desktop
 
 %post
 %gconf2_install %name
@@ -81,6 +87,11 @@ fi
 %config %gconf_schemasdir/%name.schemas
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.4.13-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for revelation
+
 * Tue May 29 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.13-alt1
 - 0.4.13 release
 
