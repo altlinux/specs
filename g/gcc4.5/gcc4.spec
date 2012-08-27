@@ -1,8 +1,8 @@
 %define gcc_branch 4.5
 
 Name: gcc%gcc_branch
-Version: 4.5.3
-Release: alt4
+Version: 4.5.4
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -15,9 +15,9 @@ Url: http://gcc.gnu.org/
 # On ppc32, we build a 64-bit compiler with default 32-bit mode.
 %define _target_platform ppc64-alt-linux
 %endif
-%define priority 453
-%define snapshot 20120403
-%define svnrev 183083
+%define priority 454
+%define snapshot 20120702
+%define svnrev 189152
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -140,7 +140,7 @@ Patch704: gcc45-alt-libgfortran-makefile.patch
 Patch705: gcc45-alt-libjava-makefile.patch
 Patch706: gcc45-alt-ada-link.patch
 Patch707: gcc43-alt-spp-buffer-size.patch
-Patch708: gcc43-alt-defaults-FORTIFY_SOURCE.patch
+Patch708: gcc45-alt-defaults-FORTIFY_SOURCE.patch
 Patch709: gcc45-alt-defaults-stack-protector.patch
 Patch710: gcc45-alt-defaults-relro.patch
 Patch711: gcc43-alt-fixinc.patch
@@ -1642,6 +1642,10 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Mon Aug 27 2012 Dmitry V. Levin <ldv@altlinux.org> 4.5.4-alt1
+- Merged with gcc-4_5-branch@189152.
+- Define _FORTIFY_SOURCE only for optimization level 2 or higher.
+
 * Wed May 16 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.5.3-alt4
 - rebuilt to coexist with gcc4.6
 
