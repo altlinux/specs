@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		cpptasks
 Version:	1.0b5
-Release:	alt1_8jpp7
+Release:	alt2_8jpp7
 Summary:	Compile and link task for ant
 
 Group:		Development/Java
@@ -106,13 +106,25 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 #Place a file into ant's config dir
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/
-echo "%{name} ant/%{name}" > $RPM_BUILD_ROOT/%{_sysconfdir}/ant.d/%{name}
+echo "ant/%{name}" > $RPM_BUILD_ROOT/%{_sysconfdir}/ant.d/%{name}
+# jpp compat
+ln -s ant/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%add_to_maven_depmap ant-contrib %{name} %{namedversion} JPP %{name}
+
+# poms
+install -D -m 644 pom.xml $RPM_BUILD_ROOT%_mavenpomdir/JPP-%{name}.pom
+
 
 
 %files
 %doc LICENSE NOTICE README.fedora
 %{_javadir}/ant/*.jar
 %{_sysconfdir}/ant.d/%{name}
+
+%{_javadir}/%{name}.jar
+%{_mavendepmapfragdir}/*
+%_mavenpomdir/*
+
 
 %files javadoc
 %doc %{_javadocdir}/%{name}-%{version}
@@ -125,6 +137,9 @@ echo "%{name} ant/%{name}" > $RPM_BUILD_ROOT/%{_sysconfdir}/ant.d/%{name}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt2_8jpp7
+- added jpp compatible symlink
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0b5-alt1_8jpp7
 - fc version
 
