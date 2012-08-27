@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-jomolhari
 Version:	0.003
-Release:	alt3_12
+Release:	alt3_14
 Summary:	Jomolhari a Bhutanese style font for Tibetan and Dzongkha
 
 Group:		System/Fonts/True type
@@ -35,6 +35,14 @@ The font supports the standard combinations used in most texts.
 %install
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
+
+install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
+                   %{buildroot}%{_fontconfig_confdir}
+
+install -m 0644 -p %{SOURCE1} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}
+ln -s %{_fontconfig_templatedir}/%{fontconf} \
+      %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
 for i in FONTLOG.txt OFL-FAQ.txt OFL.txt
 do
@@ -77,10 +85,15 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files
+%{_fontconfig_templatedir}/65-0-%{fontname}.conf
+%config(noreplace) %{_fontconfig_confdir}/65-0-%{fontname}.conf
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc FONTLOG.txt OFL-FAQ.txt OFL.txt
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_14
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_12
 - update to new release by fcimport
 
