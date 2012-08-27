@@ -1,8 +1,9 @@
+BuildRequires: desktop-file-utils
 %define translations ru be
 
 Name: cog
 Version: 0.8.0
-Release: alt4.qa1
+Release: alt4.qa2
 
 Summary: GNOME Configurator 
 License: %gpl2plus
@@ -15,7 +16,7 @@ Source2: %name-0.8.0.be.po
 #Source3: %name-0.8.0.uk.po
 
 Requires: GConf >= 2.6.0
-BuildPreReq: menu-devel rpm-build-licenses
+BuildPreReq:  rpm-build-licenses
 
 # From configure.in
 BuildPreReq: libgnomeui-devel >= 2.6.0
@@ -32,9 +33,9 @@ easy way.
 %setup -q
 cp %SOURCE1 po/ru.po
 cp %SOURCE2 po/be.po
-#%__cp %SOURCE3 po/uk.po
+#cp %SOURCE3 po/uk.po
 
-%__subst 's,\(ALL_LINGUAS=\"\),\1%translations ,' configure*
+sed -i 's,\(ALL_LINGUAS=\"\),\1%translations ,' configure*
 
 %build
 #export LDFLAGS=-export-dynamic
@@ -45,6 +46,14 @@ cp %SOURCE2 po/be.po
 %makeinstall
 
 %find_lang --with-gnome %name
+desktop-file-install --dir %buildroot%_desktopdir \
+	--remove-key='Comment[fr]' \
+	--remove-category=System \
+	--remove-category=Application \
+	--add-category=Settings \
+	--add-category=DesktopSettings \
+	--add-category=GTK \
+	%buildroot%_desktopdir/cog.desktop
 
 %files -f %name.lang
 %_bindir/*
@@ -54,6 +63,13 @@ cp %SOURCE2 po/be.po
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.0-alt4.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-obsolete-buildreq for cog
+  * freedesktop-desktop-file-proposed-patch for cog
+  * postclean-03-private-rpm-macros for the spec file
+
 * Sat Nov 14 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.0-alt4.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for cog
