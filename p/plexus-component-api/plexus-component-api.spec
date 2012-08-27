@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-component-api
 Version:        1.0
-Release:        alt1_0.7.alpha15jpp7
+Release:        alt1_0.10.alpha15jpp7
 Summary:        Plexus Component API
 
 Group:          Development/Java
@@ -17,8 +17,7 @@ Source0:        plexus-component-api-1.0-alpha-15.tar.gz
 BuildArch: noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
-BuildRequires:  ant ant-nodeps
-BuildRequires:  maven >= 0:2.0.4-9
+BuildRequires:  maven
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -37,8 +36,6 @@ BuildRequires:  plexus-classworlds
 Requires:          plexus-digest
 Requires:          plexus-classworlds
 Requires:          jpackage-utils
-Requires(post):    jpackage-utils >= 0:1.7.2
-Requires(postun):  jpackage-utils >= 0:1.7.2
 Source44: import.info
 
 %description
@@ -47,6 +44,7 @@ Plexus Component API
 %package javadoc
 Group:          Development/Java
 Summary:        Javadoc for %{name}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -57,35 +55,28 @@ API documentation for %{name}.
 %setup -q -n %{name}-%{project_version}
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mvn-jpp \
-        -e \
-        -Dmaven2.jpp.mode=true \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        install javadoc:javadoc
+mvn-rpmbuild -e package javadoc:javadoc
 
 %install
-
-
 # jars
 install -d -m 0755 %{buildroot}%{_javadir}/plexus
-install -m 644 target/%{name}-%{project_version}.jar %{buildroot}%{_javadir}/plexus
-
-(cd %{buildroot}%{_javadir}/plexus && for jar in *-%{project_version}*; \
-    do ln -sf ${jar} `echo $jar| sed "s|-%{project_version}||g"`; done)
-
-%add_to_maven_depmap org.codehaus.plexus %{name} %{project_version} JPP/plexus %{name}
+install -m 644 target/%{name}-%{project_version}.jar \
+               %{buildroot}%{_javadir}/plexus/%{name}.jar
 
 # poms
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml \
     %{buildroot}%{_mavenpomdir}/JPP.plexus-%{name}.pom
 
+%add_maven_depmap JPP.plexus-%{name}.pom plexus/%{name}.jar
+
 # javadoc
-install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}-%{version}
-cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}-%{version}/
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/plexus/%{name}
-rm -rf target/site/api*
+install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}
+
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %{_javadir}/plexus/*
@@ -93,10 +84,12 @@ rm -rf target/site/api*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
-%{_javadocdir}/plexus/%{name}-%{version}
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.10.alpha15jpp7
+- new release
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.7.alpha15jpp7
 - complete build
 
