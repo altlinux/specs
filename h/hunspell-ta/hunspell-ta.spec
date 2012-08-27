@@ -1,8 +1,10 @@
 Name: hunspell-ta
 Summary: Tamil hunspell dictionaries
 Version: 20100226
-Release: alt2_5
-Source: http://tamil.nrcfoss.au-kbc.org.in/files/hunspell/ta_IN-hunspell-Wordlist.tar.gz
+Release: alt2_6
+# Upstream download link is dead now
+#Source: http://tamil.nrcfoss.au-kbc.org.in/files/hunspell/ta_IN-hunspell-Wordlist.tar.gz
+Source: ta_IN-hunspell-Wordlist.tar.gz
 Group: Text tools
 URL: http://nrcfoss.au-kbc.org.in
 License: GPLv2+
@@ -29,6 +31,9 @@ cp -p ta_IN-hunspell-wordlist/*.dic ta_IN-hunspell-wordlist/*.aff $RPM_BUILD_ROO
 %{_datadir}/myspell/*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 20100226-alt2_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20100226-alt2_5
 - update to new release by fcimport
 
