@@ -1,3 +1,4 @@
+BuildRequires: /usr/bin/mvn-jpp
 %define oldname gossip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -49,7 +50,7 @@ BuildRequires: jpackage-compat
 
 Name:           sonatype-gossip
 Version:        1.5
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        Gossip
 License:        ASL 2.0
@@ -187,6 +188,9 @@ rm -r %{buildroot}%{_docdir}/%{oldname}-%{version}/apidocs
 %endif
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt3_1jpp6
+- fixed build
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_1jpp6
 - fixed build with maven3
 
