@@ -1,3 +1,4 @@
+BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: xpp3-minimal
 Patch33: gshell-2.6.2-alt-no-deploy.patch
 BuildRequires: /proc apache-commons-jexl
@@ -60,7 +61,7 @@ BuildRequires: jpackage-compat
 
 Name:           gshell
 Version:        2.6.2
-Release:        alt3_0jpp6
+Release:        alt4_0jpp6
 Epoch:          0
 Summary:        GShell
 License:        ASL 2.0
@@ -154,7 +155,7 @@ can be extracted through rpm2cpio.
 
 %build
 export MAVEN_REPO_LOCAL=$(pwd)/maven2-brew
-%{_bindir}/mvn-jpp \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
         -Dmaven2.jpp.mode=true \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
@@ -298,6 +299,9 @@ rm -r %{buildroot}%{_docdir}/%{name}-%{namedversion}/apidocs
 %endif
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.2-alt4_0jpp6
+- fixed build
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.2-alt3_0jpp6
 - fixed build; added BR: xpp3-minimal
 
