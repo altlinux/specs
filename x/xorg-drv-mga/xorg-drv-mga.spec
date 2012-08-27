@@ -1,5 +1,5 @@
 Name: xorg-drv-mga
-Version: 1.5.0
+Version: 1.6.1
 Release: alt1
 Epoch: 1
 Summary: Matrox video driver
@@ -52,6 +52,9 @@ cards).
 %_man4dir/*
 
 %changelog
+* Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.1-alt1
+- 1.6.1
+
 * Sun Mar 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.5.0-alt1
 - 1.5.0
 

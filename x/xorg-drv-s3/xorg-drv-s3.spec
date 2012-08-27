@@ -1,6 +1,6 @@
 Name: xorg-drv-s3
-Version: 0.6.3
-Release: alt6
+Version: 0.6.5
+Release: alt1
 Epoch: 1
 Summary: S3 video driver
 License: MIT/X11
@@ -39,6 +39,9 @@ s3 is an Xorg driver for S3 video chipsets
 %_man4dir/*.4*
 
 %changelog
+* Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.6.5-alt1
+- 0.6.5
+
 * Sun Mar 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.6.3-alt6
 - requires XORG_ABI_VIDEODRV = 12.0
 

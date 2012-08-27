@@ -1,6 +1,6 @@
 Name: xorg-drv-nouveau
 Version: 0.0.16
-Release: alt9
+Release: alt10
 Epoch: 2
 Summary: NVIDIA video driver
 License: MIT/X11
@@ -42,6 +42,9 @@ for these depths
 %_man4dir/*
 
 %changelog
+* Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:0.0.16-alt10
+- requires XORG_ABI_VIDEODRV = 12.1
+
 * Mon Mar 05 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:0.0.16-alt9
 - requires XORG_ABI_VIDEODRV = 12.0
 

@@ -1,5 +1,5 @@
 Name: xorg-drv-sis
-Version: 0.10.4
+Version: 0.10.7
 Release: alt1
 Epoch: 1
 Summary: SiS and XGI video driver
@@ -43,6 +43,9 @@ are supported as well.
 %_man4dir/*
 
 %changelog
+* Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.10.7-alt1
+- 0.10.7
+
 * Sun Mar 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.10.4-alt1
 - 0.10.4
 
