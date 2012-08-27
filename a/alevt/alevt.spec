@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Proc/Simple.pm) perl(Tk.pm)
+# END SourceDeps(oneline)
 Name: alevt
 Version: 1.6.2
-Release: alt2_16
+Release: alt2_20
 Summary: Teletext decoder/browser
 Group: Video
 License: GPLv2
@@ -11,6 +14,7 @@ Patch0: alevt-1.6.2-pixmap.patch
 Patch1: alevt-1.6.2-manpath.patch
 Patch2: alevt-1.6.2-rus-greek.patch
 Patch3: alevt-1.6.2-doublefont.patch
+Patch4: alevt-1.6.2-zlib.patch
 BuildRequires: libX11-devel
 BuildRequires: libpng-devel
 BuildRequires: desktop-file-utils
@@ -31,6 +35,7 @@ one to capture teletext pages from scripts.
 %patch1 -p1 -b .manpath
 %patch2 -p1 -b .rusgreek
 %patch3 -p1 -b .double
+%patch4 -p1 -b .zlib
 
 %build
 # alevt does not have standard build system, so we populate OPT, 
@@ -58,6 +63,9 @@ desktop-file-install \
 %doc README CHANGELOG COPYRIGHT
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_20
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_16
 - rebuild to get rid of #27020
 
