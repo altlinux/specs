@@ -1,6 +1,6 @@
 Name:      arc
 Version:   5.21o
-Release:   alt2_10
+Release:   alt2_11
 Summary:   Arc archiver
 Group:     Archiving/Other
 License:   GPL+
@@ -36,6 +36,9 @@ install -m 0644 arc.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 5.21o-alt2_11
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 5.21o-alt2_10
 - rebuild to get rid of #27020
 
