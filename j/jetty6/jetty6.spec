@@ -93,7 +93,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty6
 Version:        6.1.26
-Release:        alt7_1jpp6
+Release:        alt8_1jpp6
 Epoch:          0
 Summary:        Webserver and Servlet Container
 Group:          Development/Java
@@ -1295,10 +1295,9 @@ touch $RPM_BUILD_ROOT/etc/default/jetty
 
 # ********************* CLEAN SECTION **************************
 %pre
-%{_sbindir}/groupadd -r -r %{username} &>/dev/null || :
+%{_sbindir}/groupadd -r %{username} || :
 # Use /bin/sh so init script will start properly.
-%{_sbindir}/useradd -r -s /bin/sh -d %{apphomedir} -M          \
-                    -r %{username} &>/dev/null || :
+%{_sbindir}/useradd -r -s /bin/sh -d %{apphomedir} -M -g %{username} %{username} || :
 
 %preun
 if [ $1 = 0 ]; then
@@ -1699,6 +1698,9 @@ fi
 # ========= End of Jetty Webapps Subpackage Files
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt8_1jpp6
+- fixed pre script
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt7_1jpp6
 - fixed build w/new commons-parent
 
