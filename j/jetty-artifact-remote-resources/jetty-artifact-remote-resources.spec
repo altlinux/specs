@@ -1,8 +1,9 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-artifact-remote-resources
 Version:        1.0
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        Jetty toolchain artifact remote resources
 
 Group:          Development/Java
@@ -30,7 +31,7 @@ Jetty toolchain artifact remote resources
 %setup -q
 
 %build
-mvn-rpmbuild -X install
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -X install
 
 %install
 # poms
@@ -47,6 +48,9 @@ install -Dp -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_5jpp7
+- fixed build
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5jpp7
 - new version
 
