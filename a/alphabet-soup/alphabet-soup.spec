@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           alphabet-soup
 Version:        1.1
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Guide your worm through the soup to spell words
 Group:          Games/Other
 License:        Crystal Stacker
@@ -13,7 +13,7 @@ Source1:        alphabet-soup.desktop
 Source2:        alphabet-soup.png
 Patch0:         alphabet-soup-1.1-linux.patch
 Patch1:         alphabet-soup-1.1-rhbz699425.patch
-BuildRequires:  libalfont-devel dumb-devel desktop-file-utils
+BuildRequires:  alfont-devel dumb-devel desktop-file-utils
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -57,6 +57,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_10
+- update to new release by fcimport
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_9
 - rebuild with fixed sourcedep analyser (#27020)
 
