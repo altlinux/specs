@@ -1,8 +1,9 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-version-maven-plugin
 Version:        1.0.7
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Jetty version management Maven plugin
 
 Group:          Development/Java
@@ -45,7 +46,7 @@ BuildArch: noarch
 %build
 pushd %{name}
 # skip tests because we don't have jetty-test-helper (yet)
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dmaven.test.skip=true install javadoc:aggregate
 
 %install
 # poms
@@ -72,6 +73,9 @@ popd
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt2_4jpp7
+- fixed build
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt1_4jpp7
 - new version
 
