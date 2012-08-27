@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        2.4
-Release:        alt1_3jpp7
+Release:        alt1_7jpp7
 Summary:        Plexus Classworlds Classloader Framework
 License:        ASL 2.0 and Plexus
 Group:          Development/Java
@@ -65,10 +65,8 @@ BuildRequires:  maven-shared-reporting-impl
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-surefire-maven-plugin
 BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-plugin-bundle
 BuildRequires:  plexus-utils
-
-Requires(post):    jpackage-utils
-Requires(postun):  jpackage-utils
 Source44: import.info
 
 %description
@@ -99,32 +97,36 @@ done
 # fix ant groupId
 sed -i 's:<groupId>ant</groupId>:<groupId>org.apache.ant</groupId>:' pom.xml
 
+# Generate OSGI info
+%pom_xpath_inject "pom:project" "<packaging>bundle</packaging>"
+%pom_xpath_inject "pom:build/pom:plugins" "
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <_nouses>true</_nouses>
+              <Export-Package>org.codehaus.classworlds.*;org.codehaus.plexus.classworlds.*</Export-Package>
+            </instructions>
+          </configuration>
+        </plugin>"
+
 %build
-
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
-
-mvn-jpp -e \
-  -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-  install javadoc:javadoc
-
+mvn-rpmbuild -e install javadoc:javadoc
 
 %install
 # jars
 install -Dpm 644 target/%{name}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/plexus/%{subname}.jar
-%add_to_maven_depmap org.codehaus.plexus %{name} %{version} JPP/%{parent} %{subname}
 
 # pom
 install -Dpm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{parent}-%{subname}.pom
+%add_maven_depmap JPP.%{parent}-%{subname}.pom plexus/%{subname}.jar
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
 %{_javadir}/%{parent}/*
@@ -137,6 +139,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_7jpp7
+- new release
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt1_3jpp7
 - complete build
 
