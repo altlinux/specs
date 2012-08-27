@@ -1,13 +1,13 @@
 Name: cdparanoia
 Version: 10.2
-Release: alt2
+Release: alt2.qa1
 Serial: 1
 Summary: Utility to copy digital audio cd's.
 License: GPL
 Group: Sound
 Url: http://www.xiph.org/paranoia
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %{?serial:%serial:}%version-%release
 
 Source: %url/download/%name-III-%version.src.tgz
 Patch0: cdparanoia-10.2-#463009.patch
@@ -36,7 +36,7 @@ This package contains shared libraries for %name.
 %package -n lib%name-devel
 Summary: Development libraries and header files for %name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: lib%name = %{?serial:%serial:}%version-%release
 Provides: cdparanoia-devel
 Obsoletes: cdparanoia-devel
 
@@ -79,6 +79,11 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:10.2-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for cdparanoia
+
 * Mon Oct 25 2010 Sergey V Turchin <zerg@altlinux.org> 1:10.2-alt2
 - rebuilt
 
