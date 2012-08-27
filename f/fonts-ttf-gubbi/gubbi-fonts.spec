@@ -3,14 +3,14 @@
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-gubbi
-Version:        1.0
-Release:        alt1_2
+Version:        1.1
+Release:        alt1_1
 Summary:        Free Kannada Opentype serif font
 
 Group:          Graphical desktop/Other
 License:        OFL
 URL:            https://github.com/aravindavk/Gubbi
-Source0:        http://sanchaya.net/downloads/fonts/%{fontname}-%{version}.tar.gz
+Source0:        http://cloud.github.com/downloads/aravindavk/Gubbi/%{fontname}-%{version}.tar.gz
 BuildArch:      noarch
 BuildRequires: fontforge
 BuildRequires:  fontpackages-devel
@@ -85,6 +85,9 @@ fi
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_2
 - update to new release by fcimport
 
