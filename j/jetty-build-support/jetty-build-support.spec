@@ -1,9 +1,10 @@
+BuildRequires: maven-enforcer-plugin
 Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-build-support
 Version:        1.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Jetty build support files
 
 Group:          Development/Java
@@ -54,7 +55,7 @@ BuildArch: noarch
 
 %build
 pushd %{name}
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
 
 %install
 # poms
@@ -81,6 +82,9 @@ popd
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_2jpp7
+- fixed build
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_2jpp7
 - new version
 
