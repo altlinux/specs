@@ -1,9 +1,10 @@
+BuildRequires: /usr/bin/mvn-jpp
 Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           json-lib
 Version:        2.3
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        JSON library for Java
 
 Group:          Development/Java
@@ -69,7 +70,7 @@ find -name '*.jar' -o -name '*.class' -delete
 MAVEN_REPO_LOCAL=$PWD/.m2/repository
 mkdir -p $MAVEN_REPO_LOCAL
 
-mvn-jpp -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
 	-Dmaven.test.skip=true \
         install javadoc:javadoc
 
@@ -103,6 +104,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_5jpp7
+- fixed build
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_5jpp7
 - fc version
 
