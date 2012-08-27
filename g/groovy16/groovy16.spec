@@ -1,3 +1,4 @@
+BuildRequires: cpptasks
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -37,7 +38,7 @@ Name:           groovy16
 Summary:        Groovy scripting language
 Url:            http://groovy.codehaus.org/
 Version:        1.6.9
-Release:        alt2_3jpp6
+Release:        alt3_3jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -53,7 +54,7 @@ BuildRequires: ant17-antlr
 BuildRequires: ant17-junit
 BuildRequires: ant17-trax
 BuildRequires: antlr
-BuildRequires: aqute-bndlib
+BuildRequires: aqute-bnd
 BuildRequires: cewolf
 BuildRequires: checkstyle4
 BuildRequires: cobertura
@@ -244,7 +245,7 @@ pushd target/lib/tools
 ln -sf $(build-classpath antlr)
 ln -sf $(build-classpath asm2/asm2)
 ln -sf $(build-classpath asm2/asm2-tree)
-ln -sf $(build-classpath aqute-bndlib)
+ln -sf $(build-classpath aqute-bnd)
 #ln -sf $(build-classpath backport-util-concurrent)
 ln -sf $(build-classpath checkstyle4)
 ln -sf $(build-classpath cobertura)
@@ -351,6 +352,9 @@ sed -i -e 's,startGroovy,startGroovy16,g' %buildroot%_bindir/*
 %doc %{_javadocdir}/%{name}*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.9-alt3_3jpp6
+- fixed build - use aqute-bnd from fedora instead of aqute-bndlib
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.9-alt2_3jpp6
 - fixed parasyte dep on groovy10
 
