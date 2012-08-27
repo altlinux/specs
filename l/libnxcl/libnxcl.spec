@@ -1,7 +1,7 @@
 %define libname nxcl
 Name: libnxcl
 Version: 0.9
-Release: alt2.1
+Release: alt2.1.qa1
 
 Epoch: 1
 
@@ -35,7 +35,7 @@ removed and the Qt build system replaced with GNU autotools.
 %package devel
 Group: Development/Other
 Summary: libnxcl header
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 
 %description devel
 This package provides the support files which can be used to
@@ -44,7 +44,7 @@ build applications using the libnxcl
 %package devel-static
 Group: Development/Other
 Summary: libnxcl static library
-Requires: %name-devel = %version-%release
+Requires: %name-devel = %{?epoch:%epoch:}%version-%release
 
 %description devel-static
 This package provides static libnxcl library
@@ -83,6 +83,11 @@ This package provides static libnxcl library
 %_libdir/*.a
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.9-alt2.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for libnxcl
+
 * Tue Nov 09 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.9-alt2.1
 - Rebuilt for soname set-versions
 
