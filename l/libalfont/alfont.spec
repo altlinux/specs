@@ -1,15 +1,19 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ perl(Archive/Tar.pm) perl(Archive/Zip.pm)
+# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname alfont
 Name:           libalfont
-Version:        2.0.6
-Release:        alt2_9
+Version:        2.0.9
+Release:        alt1_3
 Summary:        Font rendering library for the Allegro game library
 Group:          System/Libraries
 License:        FTL
 URL:            http://chernsha.sitesled.com/
-# this is http://chernsha.sitesled.com/AlFont206.rar repackaged in .tgz format
+# this is http://chernsha.sitesled.com/AlFont209.rar repackaged in .tgz format
 Source0:        %{oldname}-%{version}.tar.gz
-Patch0:         alfont-2.0.6-linux.patch
+Patch0:         alfont-2.0.9-linux.patch
+Patch1:         alfont-2.0.9-remove-alfont_get_string.patch
 BuildRequires:  liballegro-devel libfreetype-devel
 Source44: import.info
 Provides: alfont = %{version}-%{release}
@@ -23,7 +27,7 @@ text using freetype fonts on Allegro bitmaps.
 %package        devel
 Summary:        Development files for %{oldname}
 Group:          Development/C
-Requires:       libalfont = %{version}-%{release}
+Requires:       alfont = %{version}-%{release}
 Provides: alfont-devel = %{version}-%{release}
 
 %description    devel
@@ -34,7 +38,11 @@ developing applications that use %{oldname}.
 %prep
 %setup -q -n %{oldname}-%{version}
 %patch0 -p1 -z .linux
-sed -i s'/\r//g' freetype/docs/FTL.TXT
+%patch1 -p1
+for i in include/alfont*.h freetype/docs/FTL.TXT; do
+    sed -i.orig s'/\r//g' $i
+    touch -r $i.orig $i
+done
 
 
 %build
@@ -66,6 +74,9 @@ install -m 644 include/%{oldname}*.h $RPM_BUILD_ROOT%{_includedir}
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.9-alt1_3
+- update to new release by fcimport
+
 * Thu Mar 22 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.6-alt2_9
 - rebuild to get rid of #27020
 
