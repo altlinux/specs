@@ -1,8 +1,9 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jetty-assembly-descriptors
 Version:        1.0
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Jetty assembly descriptors used for building
 
 Group:          Development/Java
@@ -28,7 +29,7 @@ Jetty assembly descriptors used for building
 %setup -q
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  install javadoc:aggregate
 
 %install
 # poms
@@ -46,6 +47,9 @@ install -Dp -m 644 target/%{name}-1.4.jar %{buildroot}%{_javadir}/%{name}.jar
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_4jpp7
+- fixed build
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_4jpp7
 - new version
 
