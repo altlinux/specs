@@ -1,3 +1,4 @@
+BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2011, JPackage Project
@@ -42,7 +43,7 @@ BuildRequires: jpackage-compat
 
 Name:           jbosscache-support
 Version:        1.6
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        JBoss Cache Support Modules
 License:        LGPLv2+
@@ -103,7 +104,7 @@ can be extracted through rpm2cpio.
 
 %build
 export MAVEN_REPO_LOCAL=$(pwd)/maven2-brew
-%{_bindir}/mvn-jpp -e \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
         -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
         -Dmaven2.jpp.depmap.file=%{SOURCE1} \
         -Dmaven.test.skip=true \
@@ -160,6 +161,9 @@ cp -pr maven2-brew %{buildroot}%{_javadir}/repository.jboss.com
 %endif
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt3_2jpp6
+- fixed build
+
 * Mon Mar 26 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_2jpp6
 - fixed build with maven3
 
