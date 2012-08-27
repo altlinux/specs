@@ -1,5 +1,5 @@
 Name: fricas
-Version: 1.1.6
+Version: 1.1.7
 Release: alt1
 
 Summary: FriCAS Computer Algebra System
@@ -14,13 +14,13 @@ Source2: %name-32.png
 Source3: %name-48.png
 Source4: %name.desktop
 
-Requires: sbcl = 1.0.56
+Requires: sbcl = 1.0.58
 
 Conflicts: axiom
 
 BuildRequires: libXpm-devel libXpm clisp
 BuildRequires: /proc
-BuildRequires: sbcl = 1.0.56
+BuildRequires: sbcl = 1.0.58
 
 %description
 FriCAS is an advanced computer algebra system. Its capabilities range 
@@ -74,6 +74,8 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Tue Aug 27 2012 Ilya Mashkin <oddity@altlinux.ru> 1.1.7-alt1
+- 1.1.7
 
 * Fri Apr 27 2012 Ilya Mashkin <oddity@altlinux.ru> 1.1.6-alt1
 - 1.1.6
