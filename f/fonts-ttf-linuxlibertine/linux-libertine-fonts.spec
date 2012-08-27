@@ -4,8 +4,9 @@
 %global prio_biolinum       61
 %global fontconf_libertine  %{prio_libertine}-%{fontname}-libertine.conf
 %global fontconf_biolinum   %{prio_biolinum}-%{fontname}-biolinum.conf
+%global fontconf_metrics    29-%{fontname}-metrics-alias.conf
 %global archivename         LinLibertine
-%define posttag             2
+%define posttag             2012_07_02
 
 %define common_desc                                                     \
 The Linux Libertine Open Fonts are a TrueType font family for practical \
@@ -13,20 +14,21 @@ use in documents.  They were created to provide a free alternative to   \
 proprietary standard fonts.
 
 Name:           fonts-ttf-linuxlibertine
-Version:        4.7.5
-Release:        alt2_2.2
+Version:        5.3.0
+Release:        alt1_2.2012_07_02
 Summary:        Linux Libertine Open Fonts
 
 Group:          System/Fonts/True type
 License:        GPLv2+ with exceptions or OFL
 URL:            http://linuxlibertine.sf.net
-Source0:        http://download.sourceforge.net/sourceforge/linuxlibertine/LinLibertineSRC-%{version}-%{posttag}.tgz
+Source0:        http://download.sourceforge.net/sourceforge/linuxlibertine/LinLibertineOTF_%{version}_%{posttag}.tgz
 Source1:        %{oldname}-libertine-fontconfig.conf
 Source2:        %{oldname}-biolinum-fontconfig.conf
+Source3:        %{oldname}-libertine-metrics-alias-fontconfig.conf
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-BuildRequires:  fontforge
+#BuildRequires:  fontforge
 Requires:       %{name}-common = %{version}-%{release}
 Source44: import.info
 
@@ -55,39 +57,41 @@ Group:          System/Fonts/True type
 This package consists of files used by other %{oldname} packages.
 
 %prep
-%setup -q -n %{archivename}
-sed -i -e 's/\r//' OFL.txt
+%setup -q -c
+sed -i -e 's/\r//' OFL-1.1.txt
 
 %build
-for i in $(find -name '*.sfd'); do
-  (cd scripts;
-   ./bailly-2.sh "../$i" ttf
-  )
-done
-mv scripts/*.ttf .
+#for i in $(find -name '*.sfd'); do
+#  (cd scripts;
+#   ./bailly-2.sh "../$i" ttf
+#  )
+#done
+#mv scripts/*.ttf .
 
 %install
 rm -fr %{buildroot}
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
+install -m 0644 -p *.otf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
 
 install -m 0644 -p %{SOURCE1} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf_libertine}
-install -m 0644 -p %{SOURCE1} \
+install -m 0644 -p %{SOURCE2} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf_biolinum}
+install -m 0644 -p %{SOURCE3} \
+        %{buildroot}%{_fontconfig_templatedir}/%{fontconf_metrics}
 
-for fconf in %{fontconf_libertine} %{fontconf_biolinum}; do
+for fconf in %{fontconf_libertine} %{fontconf_metrics} %{fontconf_biolinum}; do
     ln -s %{_fontconfig_templatedir}/$fconf \
           %{buildroot}%{_fontconfig_confdir}/$fconf
 done
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
+for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
     case "$fontpatt" in 
-	pcf*) type=bitmap;;
+	pcf*|bdf*) type=bitmap;;
 	tt*|TT*) type=ttf;;
 	otf|OTF) type=otf;;
 	afm*|pf*) type=type1;;
@@ -119,19 +123,25 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files common
-%doc Bugs.txt ChangeLog.txt GPL.txt LICENCE.txt OFL.txt Readme-TEX.txt Readme.txt
+%doc Bugs.txt ChangeLog.txt GPL.txt LICENCE.txt OFL-1.1.txt Readme-TEX.txt README
 
 %files
 %{_fontconfig_templatedir}/%{fontconf_libertine}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf_libertine}
-%{_fontbasedir}/*/%{_fontstem}/LinLibertine*.ttf
+%{_fontbasedir}/*/%{_fontstem}/LinLibertine*.otf
+
+%{_fontconfig_templatedir}/%{fontconf_metrics}
+%{_fontconfig_confdir}/%{fontconf_metrics}
 
 %files -n fonts-ttf-linuxlibertine-biolinum
 %{_fontconfig_templatedir}/%{fontconf_biolinum}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf_biolinum}
-%{_fontbasedir}/*/%{_fontstem}/LinBiolinum*.ttf
+%{_fontbasedir}/*/%{_fontstem}/LinBiolinum*.otf
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 5.3.0-alt1_2.2012_07_02
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.7.5-alt2_2.2
 - rebuild to get rid of #27020
 
