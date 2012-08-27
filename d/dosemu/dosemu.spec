@@ -1,6 +1,6 @@
 Name: dosemu
 Version: 1.4.0.1
-Release: alt1.qa1
+Release: alt1.qa2
 Serial: 1
 Packager: Grigory Batalov <bga@altlinux.ru>
 
@@ -52,7 +52,7 @@ DOSEmu позволяет запускать программы MS-DOS под Li
 Summary: Dosemu X11 and SDL plugins
 License: GPL
 Group: Emulators
-Requires: dosemu = %version-%release
+Requires: dosemu = %{?serial:%serial:}%version-%release
 Obsoletes: xdosemu
 Obsoletes: dosemu-bin-x
 
@@ -63,7 +63,7 @@ The Linux DOS Emulator XFree86/Xorg and SDL plugins.
 Summary: Dosemu ALSA and Sndfile plugins
 License: GPL
 Group: Emulators
-Requires: dosemu = %version-%release
+Requires: dosemu = %{?serial:%serial:}%version-%release
 
 %description plugins-sound
 The Linux DOS Emulator ALSA and Sndfile plugins.
@@ -179,6 +179,11 @@ fi
 %_libdir/%name/libplugin_sndfile.so
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:1.4.0.1-alt1.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for dosemu
+
 * Tue Apr 12 2011 Igor Vlasenko <viy@altlinux.ru> 1:1.4.0.1-alt1.qa1
 - NMU: converted menu to desktop file
 
