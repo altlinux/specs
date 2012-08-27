@@ -1,3 +1,4 @@
+BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: /proc easymock2
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2011, JPackage Project
@@ -50,7 +51,7 @@ BuildRequires: jpackage-compat
 
 Name:           sisu-guice
 Version:        2.9.2
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        Sisu Guice
 License:        ASL 2.0
@@ -122,7 +123,7 @@ can be extracted through rpm2cpio.
 
 %build
 ln -s .m2 $(pwd)/maven2-brew
-%{_bindir}/mvn-jpp \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
         -Dmaven2.jpp.depmap.file=%{SOURCE1} \
         -DaltDeploymentRepository=oss-releases::default::file://$(pwd)/maven2-brew \
@@ -284,6 +285,9 @@ rm -r %{buildroot}%{_docdir}/%{name}-%{version}/apidocs
 %endif
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9.2-alt3_2jpp6
+- fixed build
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9.2-alt2_2jpp6
 - fixed build with maven3
 
