@@ -37,7 +37,7 @@ Name:           groovy15
 Summary:        Groovy scripting language
 Url:            http://groovy.codehaus.org/
 Version:        1.5.8
-Release:        alt2_3jpp6
+Release:        alt3_3jpp6
 Epoch:          1
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -59,7 +59,7 @@ BuildRequires:  ant17-antlr
 BuildRequires:  ant17-junit
 BuildRequires:  ant17-trax
 BuildRequires:  antlr
-BuildRequires:  aqute-bndlib
+BuildRequires:  aqute-bnd
 BuildRequires:  cewolf
 BuildRequires:  checkstyle4
 BuildRequires:  cobertura
@@ -249,7 +249,7 @@ mkdir -p target/lib/tools
 pushd target/lib/tools
 ln -sf $(build-classpath antlr)
 ln -sf $(build-classpath asm2/asm2)
-ln -sf $(build-classpath aqute-bndlib)
+ln -sf $(build-classpath aqute-bnd)
 ln -sf $(build-classpath checkstyle4)
 ln -sf $(build-classpath cobertura)
 ln -sf $(build-classpath commons-beanutils)
@@ -358,6 +358,9 @@ sed -i -e 's,startGroovy,startGroovy15,g' %buildroot%_bindir/*
 %doc %{_javadocdir}/%{name}*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.5.8-alt3_3jpp6
+- fixed build - use aqute-bnd instead of aqute-bndlib
+
 * Mon Mar 19 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.5.8-alt2_3jpp6
 - fixed broken dependency on /usr/bin/startGroovy
 
