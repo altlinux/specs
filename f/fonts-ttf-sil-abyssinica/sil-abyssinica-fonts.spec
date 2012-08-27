@@ -10,7 +10,7 @@ Group: System/Fonts/True type
 
 Name:           fonts-ttf-sil-abyssinica
 Version:        1.200
-Release:        alt2_3
+Release:        alt2_4
 Summary:        SIL Abyssinica fonts
 
 License:        OFL
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.200-alt2_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.200-alt2_3
 - update to new release by fcimport
 
