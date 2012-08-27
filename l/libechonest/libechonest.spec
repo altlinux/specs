@@ -4,23 +4,21 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libechonest
-Version:	1.2.1
-Release:	alt2_3
+Version: 	2.0.1
+Release:	alt1_1
 Summary:	C++ wrapper for the Echo Nest API
 
 Group:		System/Libraries
 License:	GPLv2+
 URL:		https://projects.kde.org/projects/playground/libs/libechonest
-Source0:	http://pwsp.cleinias.com/%{name}-%{version}.tar.bz2
+Source0:	http://files.lfranchi.com/libechonest-%{version}.tar.bz2
 
 BuildRequires:	ctest cmake
+BuildRequires:	pkgconfig(QJson)
 BuildRequires:	pkgconfig(QtNetwork)
-BuildRequires:	qjson-devel
+Source44: import.info
 
 ## upstream patches
-# fix reported version
-Patch100: libechonest-1.2.1-version.patch
-Source44: import.info
 
 
 %description
@@ -40,8 +38,6 @@ developing applications that use %{name}.
 %prep
 %setup -q
 
-%patch100 -p1 -b .version
-
 
 %build
 mkdir -p %{_target_platform}
@@ -59,13 +55,13 @@ make install/fast DESTDIR=$RPM_BUILD_ROOT -C %{_target_platform}
 %check
 export PKG_CONFIG_PATH=%{buildroot}%{_datadir}/pkgconfig:%{buildroot}%{_libdir}/pkgconfig
 test "$(pkg-config --modversion libechonest)" = "%{version}"
-# The tests need active internet connection, which is not available
-# in koji builds
+# The tests need active internet connection, which is not available in koji builds
+# besides, there's several known-failures yet anyway -- rex
 #make test -C %%{_target_platform}
 
 %files
 %doc AUTHORS COPYING README TODO
-%{_libdir}/libechonest.so.1*
+%{_libdir}/libechonest.so.2*
 
 %files devel
 %{_includedir}/echonest/
@@ -74,6 +70,9 @@ test "$(pkg-config --modversion libechonest)" = "%{version}"
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt2_3
 - update to new release by fcimport
 
