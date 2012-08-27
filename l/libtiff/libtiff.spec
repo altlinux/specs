@@ -1,6 +1,6 @@
 Name: libtiff
 Version: 3.9.6
-Release: alt2
+Release: alt3
 
 Summary: A library of functions for manipulating TIFF format image files
 License: BSD-style
@@ -153,6 +153,10 @@ bzip2 -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Mon Aug 27 2012 Dmitry V. Levin <ldv@altlinux.org> 3.9.6-alt3
+- Updated to Release-v3-9-6-8-g0f67777
+  (fixes CVE-2012-2113 CVE-2012-2088 CVE-2012-3401).
+
 * Mon May 21 2012 Dmitry V. Levin <ldv@altlinux.org> 3.9.6-alt2
 - Fixed build with ld --no-copy-dt-needed-entries.
 
