@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           findbugs-maven-plugin
 Version:        2.3.2
-Release:        alt2_0.3.SNAPSHOTjpp6
+Release:        alt3_0.3.SNAPSHOTjpp6
 Epoch:          0
 Summary:        FindBugs Maven Plugin
 Group:          Development/Java
@@ -62,6 +62,7 @@ BuildRequires:  gmaven-runtime-1.5
 BuildRequires:  gmaven-runtime-1.7
 BuildRequires:  plexus-utils
 BuildRequires:  mojo-maven2-plugin-cobertura
+BuildRequires:  maven2
 BuildRequires:  maven2-plugin-plugin
 BuildRequires:  maven2-plugin-pmd
 BuildRequires:  maven2-plugin-resources
@@ -148,6 +149,9 @@ ln -s %{name}-%{namedversion} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt3_0.3.SNAPSHOTjpp6
+- fixed build
+
 * Wed Mar 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt2_0.3.SNAPSHOTjpp6
 - fixed build with maven3
 
