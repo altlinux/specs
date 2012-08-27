@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libSDL_sound-devel
+# END SourceDeps(oneline)
 Name:		radius-engine
 Version:	0.7
-Release:	alt2_3
+Release:	alt2_5
 Summary:	A Lua based real-time 2D graphics game engine
 Group:		System/Libraries
 License:	MIT
@@ -8,8 +11,12 @@ URL:		http://radius-engine.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/%{name}/%{name}-%{version}.tar.gz
 Patch0:		radius-engine-0.6-configure-lua.patch
 Patch1:		radius-engine-0.7-shared-libs.patch
+# Latest autoconf enables "extra-portability" along with "Wall", which causes
+# warnings (treated as errors because of Wall) to be thrown. We just need to 
+# pass "-Wno-extra-portability" to fix this.
+Patch2:		radius-engine-0.7-disable-extra-portability.patch
 BuildRequires:	liblua5-devel libSDL-devel libGL-devel libGLU-devel
-BuildRequires:	libphysfs-devel libpng-devel zlib-devel libSDL_sound-devel
+BuildRequires:	libphysfs-devel libpng-devel zlib-devel SDL_sound-devel
 # I could not figure out a way to generate a patch to enable shared libraries 
 # that worked right. All my attempts resulted in an environment where make, 
 # when invoked, would re-run aclocal and automake. :P
@@ -25,7 +32,7 @@ Radius Engine are portable to both Windows and Linux.
 %package devel
 Summary:	Development libraries and headers for Radius Engine
 Group:		Development/C
-Requires:	%{name} = %{version}-%{release}
+Requires:	radius-engine = %{version}-%{release}
 
 %description devel
 Development libraries and headers for Radius Engine.
@@ -34,6 +41,9 @@ Development libraries and headers for Radius Engine.
 %setup -q
 %patch0 -p1 -b .lua
 %patch1 -p1 -b .shared
+%patch2 -p1 -b .disable-extra-portability
+# autoconf is being anal now.
+mv configure.in configure.ac
 autoreconf -if
 chmod -x *.c *.h ChangeLog
 
@@ -55,6 +65,9 @@ rm -rf %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/radius-engine.pc
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_5
+- update to new release by fcimport
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_3
 - rebuild to get rid of #27020
 
