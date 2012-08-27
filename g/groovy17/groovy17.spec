@@ -1,3 +1,4 @@
+BuildRequires: cpptasks
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %define version 1.7.10
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           groovy%{majmin}
 Version:        1.7.10
-Release:        alt2_3jpp6
+Release:        alt3_3jpp6
 Epoch:          0
 Summary:        Groovy scripting language
 License:        ASL 2.0
@@ -75,7 +76,7 @@ BuildRequires:  ant-antlr
 BuildRequires:  ant-junit
 BuildRequires:  ant-trax
 BuildRequires:  antlr
-BuildRequires:  aqute-bndlib
+BuildRequires:  aqute-bnd
 BuildRequires:  cewolf
 BuildRequires:  checkstyle4
 BuildRequires:  cobertura
@@ -249,7 +250,7 @@ ln -s $(build-classpath ant) ant.jar
 ln -s $(build-classpath antlr)
 ln -s $(build-classpath objectweb-asm/asm)
 ln -s $(build-classpath objectweb-asm/asm-tree)
-ln -s $(build-classpath aqute-bndlib)
+ln -s $(build-classpath aqute-bnd)
 #ln -s $(build-classpath backport-util-concurrent)
 ln -s $(build-classpath checkstyle4)
 ln -s $(build-classpath cobertura)
@@ -405,6 +406,9 @@ sed -i -e 's,startGroovy,startGroovy17,g' %buildroot%_datadir/%{name}-%{version}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.10-alt3_3jpp6
+- fixed build - use aqute-bnd from fedora instead of aqute-bndlib
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.10-alt2_3jpp6
 - fixed parasite dep on groovy10
 
