@@ -2,7 +2,7 @@
 %define octave_descr_name ODE
 Name: octave-%octave_pkg_name
 Version: 1.0.1
-Release: alt1
+Release: alt1.qa1
 Summary: Ordinary Differential Equation (ODE) Solvers
 
 Group: Sciences/Mathematics
@@ -40,6 +40,14 @@ mkdir -p %buildroot%_datadir/octave/packages
 mkdir -p %buildroot%_libdir/octave/packages
 octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packages %buildroot%_libdir/octave/packages; pkg install -local -nodeps %octave_pkg_name-%version.tar.gz"
 
+# The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
+# It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
+# usually don't belong in releases. 
+# When packaging a CVS/SVN snapshot, export from CVS/SVN rather than use a checkout.
+find $RPM_BUILD_ROOT -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
+# the find below is useful in case those CVS/.svn/.git/.hg/.bzr/_MTN directory is added as %%doc
+find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o -name '.bzr' -o -name '_MTN' \) -print -exec rm -rf {} \; ||:
+
 %files
 %_datadir/octave/packages/%octave_pkg_name-%version
 %if_with _octave_arch
@@ -47,6 +55,11 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.1-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * pkg-contains-cvs-or-svn-control-dir for octave-ode
+
 * Thu Nov 17 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
 - initial import by octave-package-builder
 
