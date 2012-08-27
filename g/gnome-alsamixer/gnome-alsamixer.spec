@@ -1,6 +1,7 @@
+BuildRequires: desktop-file-utils
 Name: gnome-alsamixer
 Version: 0.9.7
-Release: alt4
+Release: alt4.qa1
 
 Summary: %name is an ALSA mixer for GNOME
 Summary(ru_RU.UTF-8): ALSA-микшер для GNOME
@@ -37,6 +38,11 @@ ALSA.
 %makeinstall_std
 
 %find_lang %name
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=Audio \
+	--add-category=Mixer \
+	--add-category=GTK \
+	%buildroot%_desktopdir/gnome-alsamixer.desktop
 
 %post
 %gconf2_install %name
@@ -54,6 +60,11 @@ fi
 %doc AUTHORS ChangeLog
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.9.7-alt4.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for gnome-alsamixer
+
 * Tue Apr 10 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9.7-alt4
 - modernized build system
 - fixed desktop-file
