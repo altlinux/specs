@@ -1,6 +1,6 @@
 Name: libkexif
 Version: 0.2.5
-Release: alt6
+Release: alt6.qa1
 Serial: 1
 
 Group: System/Libraries
@@ -20,7 +20,7 @@ The library for manage exif image information
 %package devel
 Summary: Development files for %name
 Group: Development/KDE and QT
-Requires: %name = %version-%release
+Requires: %name = %{?serial:%serial:}%version-%release
 Requires: libexif-devel
 
 %description devel
@@ -51,6 +51,11 @@ make -f admin/Makefile.common cvs ||:
 %_libdir/pkgconfig/%name.pc
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.2.5-alt6.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for libkexif
+
 * Tue Apr 26 2011 Sergey V Turchin <zerg@altlinux.org> 1:0.2.5-alt6
 - fix build requires
 
