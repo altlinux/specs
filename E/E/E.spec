@@ -3,8 +3,8 @@ BuildRequires: perl(English.pm)
 # END SourceDeps(oneline)
 BuildRequires: texlive-latex-extra
 Name:		E
-Version:	1.5
-Release:	alt1_2
+Version:	1.6
+Release:	alt1_1
 Summary:	Equational Theorem Prover
 Group:		Engineering
 License:	GPLv2+ or LGPLv2+
@@ -95,6 +95,9 @@ diff test-results test-expected-results
 %{_mandir}/man1/*
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_2
 - update to new release by fcimport
 
