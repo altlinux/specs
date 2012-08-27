@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.6.3
-Release: alt6
+Release: alt7
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -99,7 +99,7 @@ Url: http://gcc.gnu.org/
 %define REQ =
 %ifarch %ix86 x86_64
 %def_with ada
-%def_with go
+%def_without go
 %else
 %define REQ >=
 %def_without ada
@@ -121,20 +121,24 @@ Source: %srcfilename.tar
 Source1: gcc-extra.tar
 %{?_with_java_bootstrap:Source2: libjava-classes-%version-%release.tar.bz2}
 
+Patch1: gcc46-svn186612-siginfo.patch
+Patch2: gcc46-svn188229-libgo-mksysinfo.patch
+Patch3: gcc46-svn189373-libgo-mksysinfo.patch
+
 # RH patches.
-Patch00: gcc46-rh-hack.patch
-Patch01: gcc46-rh-c++-builtin-redecl.patch
-Patch02: gcc46-rh-java-nomulti.patch
-Patch03: gcc46-rh-ppc32-retaddr.patch
-Patch04: gcc46-rh-pr33763.patch
-Patch05: gcc46-rh-rh330771.patch
-Patch06: gcc46-rh-i386-libgomp.patch
-Patch07: gcc46-rh-sparc-config-detection.patch
-Patch08: gcc46-rh-libgomp-omp_h-multilib.patch
-Patch09: gcc46-rh-libtool-no-rpath.patch
-Patch10: gcc46-rh-cloog-dl.patch
-Patch11: gcc46-rh-pr38757.patch
-Patch12: gcc46-rh-libstdc++-docs.patch
+Patch100: gcc46-rh-hack.patch
+Patch101: gcc46-rh-c++-builtin-redecl.patch
+Patch102: gcc46-rh-java-nomulti.patch
+Patch103: gcc46-rh-ppc32-retaddr.patch
+Patch104: gcc46-rh-pr33763.patch
+Patch105: gcc46-rh-rh330771.patch
+Patch106: gcc46-rh-i386-libgomp.patch
+Patch107: gcc46-rh-sparc-config-detection.patch
+Patch108: gcc46-rh-libgomp-omp_h-multilib.patch
+Patch109: gcc46-rh-libtool-no-rpath.patch
+Patch110: gcc46-rh-cloog-dl.patch
+Patch111: gcc46-rh-pr38757.patch
+Patch112: gcc46-rh-libstdc++-docs.patch
 
 # Debian patches.
 Patch301: gcc46-deb-gcc-textdomain.patch
@@ -862,7 +866,7 @@ Summary: GCC documentation
 Group: Development/Other
 BuildArch: noarch
 Provides: gcc-doc = %version-%release
-Obsoletes: gcc-doc gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc
+Obsoletes: gcc-doc gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc
 Conflicts: gcc-doc > %version
 
 %description doc
@@ -870,28 +874,32 @@ This package contains documentation for the GNU Compiler Collection
 version %version.
 
 %prep
-%setup -q -a1 -n %srcdirname
+%setup -a1 -n %srcdirname
 
 # Set proper version info.
 echo %version >gcc/BASE-VER
 echo '%distribution %version-%release' >gcc/DEV-PHASE
 
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+
 # RH patches.
-%patch00 -p0
-%patch01 -p0
-%patch02 -p0
-%patch03 -p0
-%patch04 -p0
-#patch05 -p0
-%patch06 -p0
-%patch07 -p0
-#patch08 -p0
-%patch09 -p0
+%patch100 -p0
+%patch101 -p0
+%patch102 -p0
+%patch103 -p0
+%patch104 -p0
+#patch105 -p0
+%patch106 -p0
+%patch107 -p0
+#patch108 -p0
+%patch109 -p0
 %if_with cloog
-%patch10 -p0
+%patch110 -p0
 %endif
-%patch11 -p0
-#patch12 -p0
+%patch111 -p0
+#patch112 -p0
 
 # Debian patches.
 %patch301 -p2
@@ -1908,6 +1916,11 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Aug 27 2012 Dmitry V. Levin <ldv@altlinux.org> 4.6.3-alt7
+- Backported upstream changes to fix build with glibc-2.16.
+- Disabled go backend for a while because it doesn't build
+  with glibc-2.16.
+
 * Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 4.6.3-alt6
 - Define _FORTIFY_SOURCE only for optimization level 2 or higher.
 - libgfortran4.6-devel: fixed non-strict dependency on libquadmath4.6-devel.
