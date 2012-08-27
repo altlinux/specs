@@ -1,3 +1,4 @@
+BuildRequires: cpptasks
 BuildRequires: eclipse-equinox-osgi felix-osgi-foundation xpp3-minimal
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -50,7 +51,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty
 Version:        8.1.0
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Summary:        Java Webserver and Servlet Container
 
 Group:          Development/Java
@@ -179,7 +180,7 @@ mv LICENSE-CONTRIBUTOR/CDDLv1.0.txt{.con,}
 # remove previous lines!
 sed -i -e "s|/usr/share|%{_datadir}|g" djetty
 
-mvn-rpmbuild  -X \
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5   -X \
     -Dmaven.local.depmap.file=%{SOURCE4} \
     -Dmaven.test.skip=true \
     install javadoc:aggregate
@@ -350,17 +351,17 @@ mkdir -p %buildroot%{_sysconfdir}/default/
 touch %buildroot%{_sysconfdir}/default/jetty8
 
 %pre
-groupadd %jtuid -r %username &>/dev/null || :
+groupadd -r %username || :
 # Use /bin/sh so init script will start properly.
-useradd  %jtuid -r -s /bin/sh -d %apphomedir -M          \
-                    -g %username %username &>/dev/null || :
+useradd  -r -s /bin/sh -d %apphomedir -M          \
+                    -g %username %username || :
 
 %post
 [ -x /sbin/chkconfig ] && /sbin/chkconfig --add %{name}
 
 %postun
-userdel  %username &>/dev/null || :
-groupdel %username &>/dev/null || :
+#userdel  %username &>/dev/null || :
+#groupdel %username &>/dev/null || :
 
 
 %preun
@@ -397,6 +398,9 @@ fi
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 8.1.0-alt2_4jpp7
+- fixed %pre
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 8.1.0-alt1_4jpp7
 - full version
 
