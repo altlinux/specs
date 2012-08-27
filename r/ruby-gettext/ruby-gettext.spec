@@ -2,7 +2,7 @@
 
 Name: ruby-gettext
 Version: 2.1.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Native Language Support Library for Ruby
 Group: Development/Ruby
@@ -68,6 +68,12 @@ popd
 
 %find_lang rgettext
 
+# It is the file in the package whose name matches the format emacs or vim uses 
+# for backup and autosave files. It may have been installed by  accident.
+find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+# failsafe cleanup if the file is declared as %%doc
+find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
+
 %files
 %ruby_sitelibdir/*
 %exclude %ruby_sitelibdir/gettext/parser
@@ -90,6 +96,11 @@ popd
 %ruby_ri_sitedir/GetText*
 
 %changelog
+* Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2.1.0-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * backup-file-in-package for ruby-gettext-doc
+
 * Mon Mar 21 2011 Andriy Stepanov <stanv@altlinux.ru> 2.1.0-alt2
 - Rebuild with new version.
 
