@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name: fonts-ttf-madan
 Version: 2.000
-Release: alt3_7
+Release: alt3_8
 Summary: Font for Nepali language
 Group: System/Fonts/True type
 License: GPL+
@@ -16,8 +16,12 @@ URL: http://madanpuraskar.org/
 #Source0: http://madanpuraskar.org/index.php?option=com_docman&task=doc_download&gid=8&Itemid=63
 Source0: madan.zip
 Source1: %{fontconf}
+Source2: ttf2sfd.pe
+Source3: sfd2ttf.pe
 BuildArch: noarch
+BuildRequires: fontforge
 BuildRequires: fontpackages-devel
+Patch0: madan-fonts-2.000-bug842965-u0970.patch
 Source44: import.info
 
 %description
@@ -31,6 +35,12 @@ for file in madan/license.txt; do
  touch -r $file $file.new && \
  mv $file.new $file
 done
+cp -p %{SOURCE2} %{SOURCE3} .
+chmod 755 ttf2sfd.pe sfd2ttf.pe
+./ttf2sfd.pe madan/*.ttf
+rm -rf madan/*ttf
+%patch0 -p1 -b .added-u0970-character
+./sfd2ttf.pe madan/*.sfd
 
 
 %build
@@ -90,6 +100,9 @@ fi
 
 
 %changelog
+* Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_7
 - update to new release by fcimport
 
