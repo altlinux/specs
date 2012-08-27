@@ -1,6 +1,6 @@
 Name: xorg-drv-openchrome
 Version: 0.2.999
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: VIA openchrome graphics driver
 License: MIT/X11
@@ -59,6 +59,9 @@ echo "#undef XF86DRI" >> config.h
 %_man4dir/*
 
 %changelog
+* Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.2.999-alt2
+- requires XORG_ABI_VIDEODRV = 12.1
+
 * Sun Mar 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.2.999-alt1
 - requires XORG_ABI_VIDEODRV = 12.0
 

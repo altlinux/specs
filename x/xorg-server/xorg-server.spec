@@ -18,7 +18,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.12.3
+Version: 1.12.4
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -28,7 +28,7 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # grep ABI_ hw/xfree86/common/xf86Module.h
-Provides: XORG_ABI_VIDEODRV = 12.0
+Provides: XORG_ABI_VIDEODRV = 12.1
 Provides: XORG_ABI_XINPUT = 16.0
 Provides: XORG_ABI_EXTENSION = 6.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
@@ -309,6 +309,15 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.4-alt1
+- 1.12.4
+
+* Mon Aug 20 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.3.902-alt1
+- 1.12.4 RC2
+
+* Sun Aug 05 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.3.901-alt1
+- 1.12.4 RC1
+
 * Mon Jul 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.3-alt1
 - 1.12.3
 

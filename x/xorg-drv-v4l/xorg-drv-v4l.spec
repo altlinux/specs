@@ -1,6 +1,6 @@
 Name: xorg-drv-v4l
 Version: 0.2.0
-Release: alt10
+Release: alt11
 Epoch: 1
 Summary: video4linux driver
 License: MIT/X11
@@ -44,6 +44,9 @@ Note that the the extmod module is also required for the Xvideo support
 %_man4dir/*
 
 %changelog
+* Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.2.0-alt11
+- requires XORG_ABI_VIDEODRV = 12.1
+
 * Sun Mar 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.2.0-alt10
 - requires XORG_ABI_VIDEODRV = 12.0
 

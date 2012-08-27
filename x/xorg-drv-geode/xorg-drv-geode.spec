@@ -1,6 +1,6 @@
 Name: xorg-drv-geode
 Version: 2.11.13
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: AMD Geode GX and LX Xorg graphics Driver
 License: MIT/X11
@@ -44,6 +44,9 @@ framebuffer depths: 8, 16 and 24.
 %_x11modulesdir/drivers/*.so
 
 %changelog
+* Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:2.11.13-alt2
+- requires XORG_ABI_VIDEODRV = 12.1
+
 * Sun Mar 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:2.11.13-alt1
 - 2.11.13
 
