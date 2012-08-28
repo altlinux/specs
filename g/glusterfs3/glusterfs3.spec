@@ -24,10 +24,9 @@
 Summary: Cluster File System
 Name: glusterfs3
 Version: %major.5
-Release: alt5
+Release: alt5.qa1
 License: GPLv3
 Group: System/Base
-Vendor: Red Hat
 Url: http://www.gluster.org/docs/index.php/GlusterFS
 Packager: Denis Baranov <baraka@altlinux.ru>
 
@@ -187,8 +186,8 @@ This package provides the development libraries.
 %configure %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} --localstatedir=/var/
 
 # Remove rpath
-%__subst 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
-%__subst 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
+sed -i 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' libtool
+sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 
 %make_build
 
@@ -236,7 +235,7 @@ mkdir -p %buildroot%_sharedstatedir/glusterd
 
 
 # Update configuration file to /var/lib working directory
-%__subst 's|option working-directory %_sysconfdir/glusterd|option working-directory %_sharedstatedir/glusterd|g' \
+sed -i 's|option working-directory %_sysconfdir/glusterd|option working-directory %_sharedstatedir/glusterd|g' \
 %buildroot%_sysconfdir/glusterfs/glusterd.vol
 # Clean up the examples we want to include as %%doc
 cp -a doc/examples examples
@@ -292,12 +291,6 @@ install -D -p -m 644 extras/glusterfs.vim \
 %endif
 
 %if 0%{!?_without_georeplication:1}
-%post geo-replication
-#restart glusterd.
-#%_initdir/glusterd restart &> /dev/null
-%endif
-
-%if 0%{!?_without_georeplication:1}
 %files geo-replication
 %dir %_libexecdir/glusterfs/
 %_libexecdir/glusterfs/gsyncd
@@ -345,6 +338,22 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.2.5-alt5.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * vendor-tag for glusterfs3-geo-replication
+  * vendor-tag for glusterfs3-rdma-debuginfo
+  * vendor-tag for glusterfs3-client
+  * vendor-tag for glusterfs3-server
+  * vendor-tag for glusterfs3
+  * vendor-tag for glusterfs3-debuginfo
+  * vendor-tag for glusterfs3-devel
+  * vendor-tag for glusterfs3-client-debuginfo
+  * vendor-tag for glusterfs3-vim
+  * vendor-tag for glusterfs3-rdma
+  * postclean-03-private-rpm-macros for the spec file
+  * postclean-05-filetriggers for the spec file
+
 * Wed Mar 28 2012 Denis Baranov <baraka@altlinux.ru> 3.2.5-alt5
 - fix requires for package
 
