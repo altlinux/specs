@@ -1,7 +1,7 @@
 %define oversion 33_0
 Name: libcdf
 Version: 3.3.0
-Release: alt2
+Release: alt2.qa1
 
 Summary: Common Data Format (CDF)
 
@@ -71,6 +71,15 @@ rm -rf cdfjava/lib
 %install
 %makeinstall_std
 
+# There is a file in the package with a name starting with <tt>._</tt>, 
+# the file name pattern used by Mac OS X to store resource forks in non-native 
+# file systems. Such files are generally useless in packages and were usually 
+# accidentally included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+# for ones installed as %%doc
+find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
+
+
 %files
 %_bindir/*
 %_datadir/cdf/
@@ -88,6 +97,11 @@ rm -rf cdfjava/lib
 %endif
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.3.0-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * macos-resource-fork-file-in-package for libcdf-devel
+
 * Mon Feb 28 2011 Vitaly Lipatov <lav@altlinux.ru> 3.3.0-alt2
 - rebuild with debuginfo
 
