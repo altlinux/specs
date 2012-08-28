@@ -1,12 +1,13 @@
-BuildRequires: xpp3-minimal
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+Requires: xpp3-minimal
+BuildRequires: xpp3-minimal
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-war-plugin
-Version:        2.1.1
-Release:        alt2_5jpp7
+Version:        2.2
+Release:        alt1_2jpp7
 Summary:        Maven WAR Plugin
 
 Group:          Development/Java
@@ -43,8 +44,6 @@ BuildRequires: xstream
 Requires: maven
 Requires: xstream
 Requires: jpackage-utils
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
 
 Provides:       maven2-plugin-war = 0:%{version}-%{release}
 Obsoletes:      maven2-plugin-war <= 0:2.0.8
@@ -95,6 +94,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2jpp7
+- new release
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt2_5jpp7
 - fixed build with xpp3
 
