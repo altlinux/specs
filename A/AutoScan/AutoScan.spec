@@ -1,10 +1,11 @@
+BuildRequires: desktop-file-utils
 # TODO: rename package
 %define oname autoscan-network
 %define _subver	.bin
 
 Name: AutoScan
 Version: 1.50
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: AutoScan - a utility for network exploration
 
@@ -34,7 +35,7 @@ equipment.
 %patch1 -p2
 
 %build
-%__subst "s|export GCONF|-export GCONF|" configure
+sed -i "s|export GCONF|-export GCONF|" configure
 ./configure --distrib-fedora --without-daemon
 %make_build
 
@@ -44,6 +45,11 @@ rm -rf %buildroot%_docdir/%oname
 rm -rf %buildroot%_menudir
 mkdir -p %buildroot%_niconsdir
 mv %buildroot%_iconsdir/%oname.png %buildroot%_niconsdir
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=Security \
+	--add-category=System \
+	--remove-key=MultipleArgs \
+	%buildroot%_desktopdir/autoscan-network.desktop
 
 %files
 %doc AUTHORS copyright
@@ -56,6 +62,12 @@ mv %buildroot%_iconsdir/%oname.png %buildroot%_niconsdir
 %_niconsdir/%oname.png
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.50-alt1.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for AutoScan
+  * postclean-03-private-rpm-macros for the spec file
+
 * Wed Aug 17 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.50-alt1.1
 - Rebuilt with curl 7.21.7
 
