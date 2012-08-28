@@ -1,7 +1,8 @@
+BuildRequires: desktop-file-utils
 %define oname tuxtype_w_fonts
 Name: tuxtype
 Version: 1.8.1
-Release: alt1
+Release: alt1.qa1
 
 Summary: An educational typing tutor game starring Tux
 
@@ -64,6 +65,10 @@ install -pD -m644 %SOURCE3 %buildroot%_miconsdir/%name.xpm
 %find_lang %name
 rm -rf %buildroot%_docdir/%name/
 rm -rf %buildroot%_prefix/doc/
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=KidsGame \
+	--add-category=X-Typing \
+	%buildroot%_desktopdir/tuxtype.desktop
 
 %files -f %name.lang
 %doc README AUTHORS TODO ChangeLog doc/OFL
@@ -77,6 +82,11 @@ rm -rf %buildroot%_prefix/doc/
 %attr(0755,root,games) %config(noreplace) %_localstatedir/games/tuxtype
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.8.1-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for tuxtype
+
 * Thu Aug 18 2011 Andrey Cherepanov <cas@altlinux.org> 1.8.1-alt1
 - New version 1.8.1 (thanks kostyalamer) (closes: #26071)
 - Complete Russian translation
