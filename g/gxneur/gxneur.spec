@@ -1,8 +1,9 @@
+BuildRequires: desktop-file-utils
 %define oname gXNeur
 
 Name: gxneur
 Version: 0.15.0
-Release: alt1.1
+Release: alt1.1.qa1
 
 Summary: GTK frontend for X Neural Switcher
 
@@ -57,6 +58,9 @@ Comment[ru]=Автоматический переключатель раскла
 StartupNotify=false
 Terminal=false
 EOF
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=Accessibility \
+	%buildroot%_desktopdir/gxneur.desktop
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog NEWS README TODO
@@ -69,6 +73,11 @@ EOF
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.15.0-alt1.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for gxneur
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.0-alt1.1
 - Fixed build with new libX11
 
