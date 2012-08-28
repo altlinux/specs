@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.4.6
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -56,7 +56,7 @@ Url: http://gcc.gnu.org/
 %def_without objc
 %endif
 %def_disable objc_gc
-%def_with java
+%def_without java
 # If you don't have already a usable gcc-java and libgcj for your arch,
 # do on some arch which has it rpmbuild -bc --with java_tar gcc4.spec
 # which creates libjava-classes-%version-%release.tar.bz2
@@ -140,7 +140,7 @@ Patch706: gcc44-alt-ada-link.patch
 Patch707: gcc44-deb-alt-ada-gcc-name.patch
 Patch708: gcc43-alt-spp-buffer-size.patch
 Patch709: gcc44-deb-alt-defaults-format-security.patch
-Patch710: gcc43-alt-defaults-FORTIFY_SOURCE.patch
+Patch710: gcc44-alt-defaults-FORTIFY_SOURCE.patch
 Patch711: gcc43-alt-defaults-stack-protector.patch
 Patch712: gcc43-alt-defaults-relro.patch
 Patch713: gcc43-alt-fixinc.patch
@@ -152,6 +152,7 @@ Patch724: gcc44-alt-escalate-always-overflow.patch
 Patch725: gcc44-alt-arm-pr41684-workaround.patch
 Patch726: gcc44-up-libstdc-unpreciousize.patch
 Patch727: gcc44-alt-no-copy-dt-needed-entries.patch
+Patch728: gcc44-up-siginfo.patch
 
 Patch800: libtool.m4-gcj.patch
 
@@ -788,6 +789,7 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch725 -p1
 %patch726 -p0
 #patch727 -p2
+%patch728 -p0
 
 # This testcase does not compile.
 rm libjava/testsuite/libjava.lang/PR35020*
@@ -1608,6 +1610,11 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Tue Aug 28 2012 Dmitry V. Levin <ldv@altlinux.org> 4.4.6-alt2
+- Backported upstream change to fix build with glibc-2.16.
+- Define _FORTIFY_SOURCE only for optimization level 2 or higher.
+- Disabled java subpackages.
+
 * Wed Apr 11 2012 Dmitry V. Levin <ldv@altlinux.org> 4.4.6-alt1
 - Synced with RH 4.4.6-3.
 - Updated to build with libtool 2.4.2.
