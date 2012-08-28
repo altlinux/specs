@@ -1,7 +1,7 @@
 %define dist X-Osd
 Name: perl-%dist
 Version: 0.7
-Release: alt2.2
+Release: alt3
 
 Summary: Perl extension to the X On Screen Display library (xosd)
 License: GPL
@@ -41,6 +41,9 @@ xvfb-run -a make test
 %perl_vendor_autolib/X
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.7-alt3
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.7-alt2.2
 - rebuilt with perl-5.14
 - enabled tests using Xvfb

@@ -1,7 +1,7 @@
 %define dist BerkeleyDB
 Name: perl-%dist
-Version: 0.49
-Release: alt2
+Version: 0.51
+Release: alt1
 
 Summary: Perl bindings to Berkeley DB version 2.x and greater
 License: GPL or Artistic
@@ -44,6 +44,10 @@ rm -rv t/Test/
 	%perl_vendor_autolib/BerkeleyDB
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.51-alt1
+- 0.49 -> 0.51
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 0.49-alt2
 - rebuilt for perl-5.14
 

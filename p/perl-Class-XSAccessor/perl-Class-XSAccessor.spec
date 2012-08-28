@@ -1,7 +1,7 @@
 %define dist Class-XSAccessor
 Name: perl-%dist
-Version: 1.12
-Release: alt2
+Version: 1.14
+Release: alt1
 
 Summary: Generate fast XS accessors without runtime compilation
 License: GPL or Artistic
@@ -37,6 +37,10 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_autolib/Class
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.14-alt1
+- 1.12 -> 1.14
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1.12-alt2
 - rebuilt for perl-5.14
 

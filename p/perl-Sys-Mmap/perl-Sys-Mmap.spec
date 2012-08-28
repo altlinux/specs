@@ -1,7 +1,7 @@
 %define m_distro Sys-Mmap
 Name: perl-%m_distro
 Version: 0.16
-Release: alt3
+Release: alt4
 Summary: Perl module to use mmap to map in a file as a Perl variable
 Group: Development/Perl
 License: Artistic/GPL
@@ -22,15 +22,15 @@ perl-Sys-Mmap is a Perl module to use mmap to map in a file as a Perl variable.
 %install
 %perl_vendor_install
 
-%clean
-%__rm -rf %buildroot
-
 %files
 %perl_vendor_archlib/Sys/*
 %dir %perl_vendor_autolib/Sys/Mmap/*
 %doc Artistic Changes Copying MANIFEST META.yml README
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.16-alt4
+- rebuilt for perl-5.16
+
 * Thu Nov 10 2011 Alex Negulescu <alecs@altlinux.org> 0.16-alt3
 - added libnss-role, fix build issue
 

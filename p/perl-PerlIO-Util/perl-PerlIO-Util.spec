@@ -1,7 +1,7 @@
 %define dist PerlIO-Util
 Name: perl-%dist
 Version: 0.72
-Release: alt2
+Release: alt3
 
 Summary: A selection of general PerlIO utilities
 License: Artistic
@@ -9,6 +9,8 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+# Patch from https://rt.cpan.org/Public/Bug/Display.html?id=74539
+Patch: %name-0.72-refcnt.patch
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Module-Install perl-autodie perl-threads
@@ -19,7 +21,7 @@ methods.
 
 %prep
 %setup -q -n %dist-%version
-#rm -rv inc/
+%patch -p1
 
 %build
 %perl_vendor_build
@@ -33,6 +35,10 @@ methods.
 %perl_vendor_autolib/PerlIO
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.72-alt3
+- rebuilt for perl-5.16
+- fixed test t/06_tee.t
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.72-alt2
 - rebuilt for perl-5.14
 

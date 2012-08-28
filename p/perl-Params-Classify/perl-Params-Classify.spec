@@ -1,7 +1,7 @@
 %define dist Params-Classify
 Name: perl-%dist
 Version: 0.013
-Release: alt1
+Release: alt2
 
 Summary: Argument type classification
 License: GPL or Artistic
@@ -35,5 +35,8 @@ in C++).
 %perl_vendor_autolib/Params
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.013-alt2
+- rebuilt for perl-5.16
+
 * Tue Oct 25 2011 Alexey Tourbin <at@altlinux.ru> 0.013-alt1
 - initial revision

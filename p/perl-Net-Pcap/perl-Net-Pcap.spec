@@ -1,7 +1,7 @@
 %define dist Net-Pcap
 Name: perl-%dist
 Version: 0.16
-Release: alt2.2
+Release: alt3
 
 Summary: Interface to pcap(3) LBL packet capture library
 License: GPL or Artistic
@@ -42,6 +42,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/Net
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.16-alt3
+- rebuilt for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 0.16-alt2.2
 - rebuilt for perl-5.14
 

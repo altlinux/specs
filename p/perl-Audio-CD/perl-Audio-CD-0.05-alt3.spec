@@ -1,7 +1,7 @@
 %define dist Audio-CD
 Name: perl-%dist
 Version: 0.05
-Release: alt2.2
+Release: alt3
 
 Summary: Perl interface to libcdaudio
 License: Artistic
@@ -31,6 +31,9 @@ tray eject.
 %perl_vendor_autolib/Audio
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.05-alt3
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.05-alt2.2
 - rebuitl for perl-5.14
 

@@ -3,7 +3,7 @@
 
 Name: perl-%module
 Version: 1.000
-Release: alt2.1
+Release: alt3
 
 Summary: Perl wrappers for the GtkSourceView widget
 License: LGPLv2+
@@ -40,6 +40,9 @@ library for source editing.
 	%perl_vendor_archlib/Gtk2/SourceView/Install
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.000-alt3
+- rebuilt for perl-5.16
+
 * Tue Oct 11 2011 Alexey Tourbin <at@altlinux.ru> 1.000-alt2.1
 - rebuilt for perl-5.14
 

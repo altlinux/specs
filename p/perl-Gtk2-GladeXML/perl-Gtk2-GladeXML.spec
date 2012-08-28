@@ -1,7 +1,7 @@
 %define dist Gtk2-GladeXML
 Name: perl-%dist
 Version: 1.007
-Release: alt1.2
+Release: alt2
 
 Summary: Create user interfaces directly from Glade XML files
 License: LGPL
@@ -39,6 +39,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gtk2/GladeXML/Install
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.007-alt2
+- rebuilt for perl-5.16
+
 * Mon Oct 10 2011 Alexey Tourbin <at@altlinux.ru> 1.007-alt1.2
 - rebuilt for perl-5.14
 

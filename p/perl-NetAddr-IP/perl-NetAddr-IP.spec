@@ -1,7 +1,7 @@
 %define module NetAddr-IP
 
 Name: perl-%module
-Version: 4.059
+Version: 4.062
 Release: alt1
 
 Summary: Manages IP addresses and subnets
@@ -10,7 +10,7 @@ Group: Development/Perl
 
 URL: %CPAN %module
 Source: http://search.cpan.org/CPAN/authors/id/M/MI/MIKER/%module-%version.tar.gz
-Patch1: NetAddr-IP-4.059-version.patch
+Patch1: NetAddr-IP-4.062-version.patch
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-Pod-Coverage perl-Socket6 perl-Test-Pod
@@ -38,6 +38,10 @@ Manages IPv4 and IPv6 addresses and subnets.
 %perl_vendor_autolib/NetAddr
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 4.062-alt1
+- 4.059 -> 4.062
+- built for perl-5.16
+
 * Fri Mar 09 2012 Victor Forsiuk <force@altlinux.org> 4.059-alt1
 - 4.059
 

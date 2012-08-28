@@ -1,7 +1,7 @@
 %define dist Filesys-Df
 Name: perl-%dist
 Version: 0.92
-Release: alt1.2
+Release: alt2
 
 Summary: Perl extension for filesystem disk space information
 License: GPL or Artistic
@@ -32,6 +32,9 @@ information.
 %perl_vendor_autolib/Filesys
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.92-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.92-alt1.2
 - rebuilt for perl-5.14
 

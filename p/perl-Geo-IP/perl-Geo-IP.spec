@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.40
-Release: alt1
+Release: alt2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -42,6 +42,9 @@ find lib/ example/ -type f -print0 | xargs -r0 %__subst -p 's./usr/local/share/G
 %perl_vendor_autolib/Geo
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.40-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.40-alt1
 - 1.38 -> 1.40
 - built for perl-5.14

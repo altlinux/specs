@@ -1,6 +1,6 @@
 %define dist Text-CSV_XS
 Name: perl-%dist
-Version: 0.85
+Version: 0.91
 Release: alt1
 
 Summary: Comma-separated values manipulation routines
@@ -33,6 +33,10 @@ fields into a CSV string and parse a CSV string into fields.
 %perl_vendor_autolib/Text
 
 %changelog
+* Wed Aug 29 2012 Vladimir Lettiev <crux@altlinux.ru> 0.91-alt1
+- 0.85 -> 0.91
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 0.85-alt1
 - 0.80 -> 0.85
 - built for perl-5.14

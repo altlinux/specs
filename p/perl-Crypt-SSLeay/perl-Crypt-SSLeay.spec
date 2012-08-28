@@ -1,7 +1,7 @@
 %define dist Crypt-SSLeay
 Name: perl-%dist
-Version: 0.58
-Release: alt3
+Version: 0.64
+Release: alt1
 
 Summary: OpenSSL glue that provides LWP https support
 License: GPL
@@ -10,8 +10,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
-# Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: libssl-devel perl-Test-Pod
+BuildRequires: libssl-devel perl-Test-Pod zlib-devel perl-Try-Tiny
 
 %description
 This perl module provides support for the https protocol under LWP, so
@@ -32,12 +31,16 @@ mv t/02-live.t t/02-live.t.orig
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.md
 %perl_vendor_archlib/Crypt
 %perl_vendor_archlib/Net
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.64-alt1
+- 0.58 -> 0.64
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 0.58-alt3
 - rebuilt for perl-5.14
 

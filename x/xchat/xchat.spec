@@ -2,7 +2,7 @@
 
 Name: xchat
 Version: %ver_major.6
-Release: alt2.3
+Release: alt3
 
 Summary: Graphical IRC client
 Summary(ru_RU.UTF-8): Графический IRC клиент
@@ -114,6 +114,9 @@ cp -a %SOURCE9 ./README.ALT.utf-8
 %xchatpluginsdir/*.so
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.8.6-alt3
+- rebuilt for perl-5.16
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.6-alt2.3
 - Fixed build with new glib2 2.32.3
 

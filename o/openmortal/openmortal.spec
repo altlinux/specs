@@ -1,6 +1,6 @@
 Name: openmortal
 Version: 0.7
-Release: alt2.2
+Release: alt3
 
 Summary: Parody of the original fighting game "Mortal Kombat"
 Group: Games/Arcade
@@ -43,6 +43,9 @@ http://openmortal.sourceforge.net/Character_HOWTO.html
 %_bindir/openmortal
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.7-alt3
+- rebuilt for perl-5.16
+
 * Tue Oct 18 2011 Alexey Tourbin <at@altlinux.ru> 0.7-alt2.2
 - rebuilt for perl-5.14
 

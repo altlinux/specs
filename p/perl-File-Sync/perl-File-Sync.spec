@@ -1,7 +1,7 @@
 %define dist File-Sync
 Name: perl-%dist
-Version: 0.09
-Release: alt1.2
+Version: 0.11
+Release: alt1
 
 Summary: Perl access to fsync() and sync() function calls
 License: GPL or Artistic
@@ -32,6 +32,10 @@ fsync(2) system calls.
 %perl_vendor_autolib/File
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt1
+- 0.09 -> 0.11
+- built for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.09-alt1.2
 - rebuilt for perl-5.14
 

@@ -1,7 +1,8 @@
 %define dist BDB
 Name: perl-%dist
-Version: 1.89
-Release: alt2
+Version: 1.9
+Release: alt1
+Epoch: 1
 
 Summary: Asynchronous Berkeley DB access
 License: GPL or Artistic
@@ -34,6 +35,10 @@ faithful).
 %perl_vendor_autolib/BDB
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1:1.9-alt1
+- 1,89 -> 1.9
+- built for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.89-alt2
 - rebuilt for perl-5.14
 

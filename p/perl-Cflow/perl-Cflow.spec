@@ -1,6 +1,6 @@
 Name: perl-Cflow
 Version: 1.053
-Release: alt1.2
+Release: alt2
 Summary: Find flows in raw IP flow files
 Group: Development/Perl
 License: GPLv2+
@@ -34,6 +34,9 @@ routers and written into flow files.
 %perl_vendor_autolib/Cflow
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.053-alt2
+- rebuilt for perl-5.16
+
 * Tue Oct 18 2011 Alexey Tourbin <at@altlinux.ru> 1.053-alt1.2
 - rebuilt for perl-5.14
 

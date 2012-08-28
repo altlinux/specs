@@ -1,6 +1,6 @@
 %define dist Encode
 Name: perl-%dist
-Version: 2.44
+Version: 2.47
 Release: alt1
 
 Summary: Character encodings
@@ -132,6 +132,12 @@ bzip2 -k Changes
 	%perl_vendor_archlib/Encode/MIME/Header/ISO_2022_JP.pm
 
 %changelog
+* Thu Aug 23 2012 Vladimir Lettiev <crux@altlinux.ru> 2.47-alt1
+- 2.44 -> 2.47
+
+* Thu May 03 2012 Vladimir Lettiev <crux@altlinux.ru> 2.44-alt2
+- built for perl-5.16
+
 * Thu Oct 06 2011 Alexey Tourbin <at@altlinux.ru> 2.44-alt1
 - 2.42 -> 2.44
 - built for perl-5.14

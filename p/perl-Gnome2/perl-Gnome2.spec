@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.042
-Release: alt3
+Release: alt4
 
 Summary: Gnome2 Perl module
 License: LGPLv2.1+
@@ -66,6 +66,9 @@ for developers (overview of internals and internal API reference).
 %doc	%perl_vendor_archlib/Gnome2/Config
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.042-alt4
+- rebuilt for perl-5.16
+
 * Tue Oct 11 2011 Alexey Tourbin <at@altlinux.ru> 1.042-alt3
 - rebuilt for perl-5.14
 

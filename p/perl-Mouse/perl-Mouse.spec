@@ -1,6 +1,6 @@
 %define dist Mouse
 Name: perl-%dist
-Version: 0.95
+Version: 1.02
 Release: alt1
 
 Summary: Moose minus the antlers
@@ -43,6 +43,10 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_archlib/Test
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.02-alt1
+- 0.95 -> 1.02
+- built for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 0.95-alt1
 - 0.93 -> 0.95
 - built for perl-5.14

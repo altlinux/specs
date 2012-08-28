@@ -1,6 +1,6 @@
 Name: weechat
 Version: 0.3.5
-Release: alt2.1
+Release: alt3
 
 Summary: fast, light & extensible IRC client
 License: GPLv3
@@ -137,6 +137,9 @@ ln -s %name-curses %buildroot%_bindir/%name
 %_libdir/%name/plugins/tcl.so
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.3.5-alt3
+- rebuilt for perl-5.16
+
 * Mon Nov 07 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.5-alt2.1
 - Rebuild with Python-2.7
 

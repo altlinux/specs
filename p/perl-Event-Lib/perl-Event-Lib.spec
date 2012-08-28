@@ -1,7 +1,7 @@
 %define dist Event-Lib
 Name: perl-%dist
 Version: 1.03
-Release: alt2.2
+Release: alt3
 
 Summary: Perl extentions for event-based programming
 License: GPL or Artistic
@@ -9,7 +9,11 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
-Patch: Event-Lib-tests-fork.patch
+Patch1: Event-Lib-tests-fork.patch
+
+# in 5.16 get_sv("$", FALSE) returns NULL sometimes
+# use getpid() call instead
+Patch2: Event-Lib-getpid.patch
 
 # Automatically added by buildreq on Tue Oct 11 2011
 BuildRequires: libevent-devel perl-Test-Fork perl-Test-Pod perl-Test-Pod-Coverage
@@ -22,7 +26,8 @@ is received.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
+%patch1 -p1
+%patch2 -p2
 
 %build
 %perl_vendor_build
@@ -36,6 +41,10 @@ is received.
 %perl_vendor_autolib/Event
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt3
+- rebuilt for perl-5.16
+- fixed build
+
 * Tue Oct 11 2011 Alexey Tourbin <at@altlinux.ru> 1.03-alt2.2
 - rebuilt for perl-5.14
 

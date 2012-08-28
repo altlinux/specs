@@ -1,7 +1,7 @@
 Summary: Prelude Hybrid Intrusion Detection System Library
 Name: libprelude
 Version: 1.0.0
-Release: alt1.7
+Release: alt2
 License: GPLv2
 Group: System/Libraries
 Url: http://www.prelude-ids.org/
@@ -187,6 +187,9 @@ touch -r ./configure.in %buildroot%_sysconfdir/prelude/default/*
 %perl_vendor_archlib/Prelude*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0.0-alt2
+- rebuilt for perl-5.16
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.7
 - Fixed build with new glibc
 

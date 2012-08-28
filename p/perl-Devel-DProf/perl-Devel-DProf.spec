@@ -1,7 +1,7 @@
 %define dist Devel-DProf
 Name: perl-%dist
 Version: 20110802.00
-Release: alt1
+Release: alt2
 
 Summary: A DEPRECATED Perl code profiler
 License: GPL or Artistic
@@ -9,6 +9,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+Patch: %name-20110802.00-rh-static_XSUB.patch
 
 # Deprecated in perl-5.14.
 Requires: perl-base >= 1:5.14
@@ -30,9 +31,9 @@ showing subroutine relationships.
 
 %prep
 %setup -q -n %dist-%version
+%patch -p1
 
 %build
-export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_build
 
 %install
@@ -45,5 +46,9 @@ export XSUBPP_NO_STATIC_XS=1
 %perl_vendor_autolib/Devel
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 20110802.00-alt2
+- rebuilt for perl-5.16
+- fixed build
+
 * Tue Oct 11 2011 Alexey Tourbin <at@altlinux.ru> 20110802.00-alt1
 - initial revision

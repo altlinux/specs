@@ -1,6 +1,6 @@
 Name: perl-AptPkg
 Version: 0.1.25
-Release: alt1
+Release: alt2
 
 Summary: Perl interface to libapt-pkg
 License: GPL
@@ -39,6 +39,9 @@ cp -a /etc/apt/* t/cache/etc/
 	%perl_vendor_autolib/AptPkg/AptPkg.so
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.1.25-alt2
+- rebuilt for perl-5.16
+
 * Wed Oct 12 2011 Alexey Tourbin <at@altlinux.ru> 0.1.25-alt1
 - 0.1.24 -> 0.1.25
 - built for perl-5.14

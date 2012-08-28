@@ -1,6 +1,6 @@
 Name: lockdev
 Version: 1.0.3
-Release: alt1.3
+Release: alt2
 
 Summary: A library and a command-line tool for locking devices
 License: LGPL
@@ -122,6 +122,9 @@ cd LockDev
 %endif
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0.3-alt2
+- rebuilt for perl-5.16
+
 * Mon Oct 17 2011 Alexey Tourbin <at@altlinux.ru> 1.0.3-alt1.3
 - rebuilt for perl-5.14
 

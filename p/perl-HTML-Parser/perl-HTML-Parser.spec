@@ -1,7 +1,7 @@
 %define dist HTML-Parser
 Name: perl-%dist
 Version: 3.69
-Release: alt1
+Release: alt2
 
 Summary: Parsing and extracting information from HTML documents
 License: GPL or Artistic
@@ -40,6 +40,9 @@ mv t/headparser-http.t t/headparser-http.t.orig
 %perl_vendor_autolib/HTML
 
 %changelog
+* Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 3.69-alt2
+- rebuilt for perl-5.16
+
 * Tue Oct 25 2011 Alexey Tourbin <at@altlinux.ru> 3.69-alt1
 - 3.68 -> 3.69
 

@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 5.71
-Release: alt1
+Release: alt2
 
 Summary: Perl extension for SHA-1/224/256/384/512
 License: Perl
@@ -38,6 +38,9 @@ module can handle all types of input, including partial-byte data.
 %_man1dir/*
 
 %changelog
+* Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 5.71-alt2
+- rebuilt for perl-5.16
+
 * Fri Mar 23 2012 Victor Forsiuk <force@altlinux.org> 5.71-alt1
 - 5.71
 

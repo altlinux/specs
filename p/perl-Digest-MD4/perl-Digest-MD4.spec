@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.5
-Release: alt1.2
+Release: alt2
 
 Summary: Perl interface to the MD4 Algorithm
 License: Perl
@@ -35,6 +35,9 @@ as input a message of arbitrary length and produces as output a 128-bit
 %perl_vendor_autolib/Digest
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.5-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.5-alt1.2
 - rebuilt for perl-5.14
 

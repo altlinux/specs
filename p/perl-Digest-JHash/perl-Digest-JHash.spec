@@ -1,7 +1,7 @@
 %define dist Digest-JHash
 Name: perl-%dist
 Version: 0.07
-Release: alt2
+Release: alt3
 
 Summary: Perl extension for 32 bit Jenkins Hashing Algorithm
 License: GPL or Artistic
@@ -34,6 +34,9 @@ digest" of the input in the form of an unsigned long integer.
 %perl_vendor_autolib/Digest
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.07-alt3
+- rebuilt for perl-5.16
+
 * Tue Oct 11 2011 Alexey Tourbin <at@altlinux.ru> 0.07-alt2
 - rebuilt for perl-5.14
 

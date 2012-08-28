@@ -1,7 +1,7 @@
 %define dist EV
 Name: perl-%dist
-Version: 4.03
-Release: alt2
+Version: 4.11
+Release: alt1
 
 Summary: Perl interface to libev, a high performance full-featured event loop
 License: GPL or Artistic
@@ -37,6 +37,10 @@ detailed information.
 %perl_vendor_autolib/EV
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 4.11-alt1
+- 4.03 -> 4.11
+- built for perl-5.16
+
 * Mon Oct 10 2011 Alexey Tourbin <at@altlinux.ru> 4.03-alt2
 - rebuilt for perl-5.14
 

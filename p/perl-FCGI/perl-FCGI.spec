@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.74
-Release: alt2
+Release: alt3
 
 Summary: Fast CGI module for perl
 License: OpenMarket
@@ -41,6 +41,9 @@ chmod -c 644 LICENSE.TERMS
 %doc README ChangeLog LICENSE.TERMS *.fpl
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.74-alt3
+- rebuilt for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 0.74-alt2
 - rebuilt for perl-5.14
 

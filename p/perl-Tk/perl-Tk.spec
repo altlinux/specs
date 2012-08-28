@@ -1,7 +1,7 @@
 %define dist Tk
 Name: perl-%dist
-Version: 804.029_500
-Release: alt2
+Version: 804.030
+Release: alt1
 
 Summary: Perl modules providing the Tk graphics library
 License: GPL/Artistic/Tk/Tix
@@ -10,6 +10,9 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar
 Patch: %name-%version-%release.patch
+
+# fix for deparse failure
+%define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MTk'
 
 # provides for demos are useless
 %add_findprov_skiplist %perl_vendor_archlib/Tk/demos/*/*.pl
@@ -112,8 +115,14 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Tk/demos/*.pm
 	%perl_vendor_archlib/Tk/demos/images/
 	%perl_vendor_archlib/Tk/demos/widget_lib/
+	%perl_vendor_archlib/Tk/demos/widtrib/
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 804.030-alt1
+- 804.029_500 -> 804.030
+- built for perl-5.16
+- fixed build
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 804.029_500-alt2
 - rebuilt for perl-5.14
 

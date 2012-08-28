@@ -1,6 +1,6 @@
 %define dist Net-SSLeay
 Name: perl-%dist
-Version: 1.42
+Version: 1.48
 Release: alt1
 
 Summary: Perl extension for using OpenSSL
@@ -34,6 +34,10 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 1.48-alt1
+- 1.42 -> 1.48
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1.42-alt1
 - 1.36 -> 1.42
 - built for perl-5.14

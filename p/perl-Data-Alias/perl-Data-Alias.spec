@@ -1,7 +1,7 @@
 %define dist Data-Alias
 Name: perl-%dist
-Version: 1.15
-Release: alt2
+Version: 1.16
+Release: alt1
 
 Summary: Comprehensive set of aliasing operations
 License: GPL or Artistic
@@ -34,6 +34,10 @@ when compared to using references.
 %perl_vendor_autolib/Data
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.16-alt1
+- 1.15 -> 1.16
+- rebuilt for perl-5.14
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1.15-alt2
 - rebuilt for perl-5.14
 

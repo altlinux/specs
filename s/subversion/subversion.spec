@@ -43,7 +43,7 @@
 %def_with javahl_check
 
 %define svn_ver_pre %nil
-%define svn_rel alt1.1
+%define svn_rel alt2
 
 # for %%libdb_soname_req macros
 %define apr_name libapr1
@@ -69,7 +69,7 @@
 
 Name: subversion
 Version: 1.6.17
-Release: %svn_rel.1
+Release: %svn_rel
 
 Summary: A version control system
 Group: Development/Other
@@ -847,6 +847,9 @@ fi
 /etc/bash_completion.d/*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.6.17-alt2
+- rebuilt for perl-5.16
+
 * Mon Nov 07 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.6.17-alt1.1.1
 - Rebuild with Python-2.7
 

@@ -1,7 +1,7 @@
 %define dist Devel-NYTProf
 Name: perl-%dist
-Version: 4.06
-Release: alt2
+Version: 4.08
+Release: alt1
 
 Summary: Powerful fast feature-rich perl source code profiler
 License: Perl
@@ -39,6 +39,10 @@ rm -rv %buildroot%perl_vendor_archlib/Devel/auto
 %perl_vendor_autolib/Devel
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 4.08-alt1
+- 4.06 -> 4.08
+- built for perl-5.16
+
 * Tue Oct 11 2011 Alexey Tourbin <at@altlinux.ru> 4.06-alt2
 - rebuilt for perl-5.14
 - disabled dependency on Apache

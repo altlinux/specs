@@ -1,7 +1,7 @@
 %define dist BSD-Resource
 Name: perl-%dist
 Version: 1.2904
-Release: alt3
+Release: alt4
 
 Summary: BSD process resource limit and priority functions
 License: GPL or Artistic
@@ -32,6 +32,9 @@ limits and priorities.
 %perl_vendor_autolib/BSD
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.2904-alt4
+- rebuilt for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1.2904-alt3
 - rebuilt for perl-5.14
 

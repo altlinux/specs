@@ -1,7 +1,7 @@
 %define dist IO-Socket-Multicast
 Name: perl-%dist
 Version: 1.12
-Release: alt1.2
+Release: alt2
 
 Summary: Send and receive multicast messages
 License: GPL or Artistic
@@ -35,6 +35,9 @@ outgoing multicast packets.
 %perl_vendor_autolib/IO
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.12-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.12-alt1.2
 - rebuilt for perl-5.14
 

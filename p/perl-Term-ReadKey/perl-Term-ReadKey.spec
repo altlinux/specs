@@ -1,7 +1,7 @@
 %define dist TermReadKey
 Name: perl-Term-ReadKey
 Version: 2.30
-Release: alt2.2
+Release: alt3
 
 Summary: A perl module for simple terminal control
 License: distributable
@@ -43,6 +43,9 @@ for working with terminals.
 	%perl_vendor_autolib/Term/ReadKey/ReadKey.so
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 2.30-alt3
+- rebuilt for perl-5.16
+
 * Sat Oct 15 2011 Alexey Tourbin <at@altlinux.ru> 2.30-alt2.2
 - rebuilt for perl-5.14
 

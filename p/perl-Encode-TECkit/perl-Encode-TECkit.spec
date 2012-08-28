@@ -1,7 +1,7 @@
 %define dist Encode-TECkit
 Name: perl-%dist
 Version: 0.04
-Release: alt1.2
+Release: alt2
 
 Summary: TECkit Encode interface
 License: GPL or Artistic
@@ -37,6 +37,9 @@ contextual data conversion.
 %perl_vendor_autolib/Encode
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.04-alt1.2
 - rebuilt for perl-5.14
 

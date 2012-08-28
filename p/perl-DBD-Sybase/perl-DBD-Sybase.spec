@@ -1,7 +1,7 @@
 %define dist DBD-Sybase
 Name: perl-%dist
 Version: 1.14
-Release: alt1
+Release: alt2
 
 Summary: Sybase database driver (TDS protocol) for the DBI module
 License: GPL or Artistic
@@ -36,6 +36,9 @@ export SYBASE=/usr
 %perl_vendor_autolib/DBD
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.14-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.14-alt1
 - 1.07 -> 1.14
 - built for perl-5.14

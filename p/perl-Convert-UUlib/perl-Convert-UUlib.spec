@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.4
-Release: alt2
+Release: alt3
 Epoch: 2
 Summary: Perl interface to the uulib library (a.k.a. uudeview/uuenview)
 
@@ -42,6 +42,9 @@ binary files into all of these representations except BinHex.
 %perl_vendor_autolib/Convert
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 2:1.4-alt3
+- rebuilt for perl-5.16
+
 * Mon Oct 10 2011 Alexey Tourbin <at@altlinux.ru> 2:1.4-alt2
 - rebuilt for perl-5.14
 

@@ -1,7 +1,7 @@
 %define dist IPC-SysV
 Name: perl-%dist
 Version: 2.03
-Release: alt2
+Release: alt3
 
 Summary: System V IPC constants and system calls
 License: GPL or Artistic
@@ -33,6 +33,9 @@ IPC::SysV - Provides the constants required to use the system SysV IPC calls
 %perl_vendor_autolib/IPC
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 2.03-alt3
+- rebuilt for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 2.03-alt2
 - rebuilt for perl-5.14
 

@@ -3,7 +3,7 @@
 %def_disable static
 
 Name: hivex
-Version: 1.3.3
+Version: 1.3.6
 Release: alt1
 Summary: Read and write Windows Registry binary hive files
 
@@ -225,5 +225,8 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Tue Sep 04 2012 Alexey Shabalin <shaba@altlinux.ru> 1.3.6-alt1
+- 1.3.6
+
 * Thu Dec 15 2011 Alexey Shabalin <shaba@altlinux.ru> 1.3.3-alt1
 - initial build for ALT Linux Sisyphus

@@ -1,5 +1,5 @@
 Name: perl-Wx
-Version: 0.9902
+Version: 0.9911
 Release: alt1
 
 Summary: wxPerl - Perl bindings for wxWindows
@@ -66,6 +66,10 @@ xvfb-run -a make test
 %perl_vendor_archlib/Wx/typemap
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.9911-alt1
+- 0.9902 -> 0.9911
+- built for perl-5.16
+
 * Wed Oct 19 2011 Alexey Tourbin <at@altlinux.ru> 0.9902-alt1
 - 0.9901 -> 0.9902
 - built for perl-5.14

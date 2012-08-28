@@ -1,6 +1,6 @@
 %define dist Socket-GetAddrInfo
 Name: perl-%dist
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Summary: RFC 2553's getaddrinfo and getnameinfo functions
@@ -41,6 +41,10 @@ name pair.
 %perl_vendor_privlib/Socket
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.22-alt1
+- 0.21 -> 0.22
+- built for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.21-alt1
 - 0.10 -> 0.21
 - now noarch

@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     1
 %define postgresql_subminor  3
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 %define libpq_major          5
 %define libpq_minor          4
 %define libecpg_major        6
@@ -695,6 +695,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 9.1.3-alt2
+- rebuilt for perl-5.16
+
 * Sat Mar 31 2012 Vladimir V. Kamarzin <vvk@altlinux.org> 9.1.3-alt1
 - 9.1.3.
 - Package /var/lib/pgsql as a directory.

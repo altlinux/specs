@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.04
-Release: alt2
+Release: alt3
 
 Summary: Perl module for OpenSSL's multiprecision integer arithmetic
 License: Perl
@@ -33,6 +33,9 @@ arithmetic libraries.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt3
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.04-alt2
 - rebuilt for perl-5.14
 

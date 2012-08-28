@@ -1,7 +1,7 @@
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.61
-Release: alt2
+Version: 0.64
+Release: alt1
 
 Summary: Interface to read and parse BibTeX files
 License: GPL or Artistic
@@ -41,6 +41,10 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %perl_vendor_archlib/Text
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.64-alt1
+- 0.61 -> 0.64
+- built for perl-5.16
+
 * Tue Dec 27 2011 Kirill Maslinsky <kirill@altlinux.org> 0.61-alt2
 - remove standard libdir from Rpath
 

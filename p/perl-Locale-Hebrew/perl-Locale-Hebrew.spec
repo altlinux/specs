@@ -1,7 +1,7 @@
 %define dist Locale-Hebrew
 Name: perl-%dist
 Version: 1.05
-Release: alt3
+Release: alt4
 
 Summary: Bidirectional Hebrew support
 License: GPL or Artistic
@@ -33,6 +33,9 @@ the real charset from scratch.  There might have some mistakes, though.
 %perl_vendor_autolib/Locale
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.05-alt4
+- rebuilt for perl-5.16
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.05-alt3
 - disabled build dependency on perl-Module-Install
 

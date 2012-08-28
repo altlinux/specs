@@ -1,6 +1,6 @@
 Name: apache2-mod_apreq
 Version: 2.13
-Release: alt1
+Release: alt2
 
 Summary: Apache2 HTTP request library
 License: Apache Software License v. 2.0
@@ -209,6 +209,9 @@ fi
 %perl_vendor_archlib/Apache2*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.13-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 15 2011 Alexey Tourbin <at@altlinux.ru> 2.13-alt1
 - 2.12 -> 2.13
 - built for perl-5.14

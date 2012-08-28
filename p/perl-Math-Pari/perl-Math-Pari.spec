@@ -1,7 +1,7 @@
 %define dist Math-Pari
 Name: perl-%dist
 Version: 2.01080605
-Release: alt2
+Release: alt3
 
 Summary: Perl interface to PARI
 License: GPL or Artistic
@@ -37,6 +37,9 @@ Math::libPARI).
 %perl_vendor_autolib/Math
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 2.01080605-alt3
+- rebuilt for perl-5.16
+
 * Wed Oct 19 2011 Alexey Tourbin <at@altlinux.ru> 2.01080605-alt2
 - rebuilt for perl-5.14
 

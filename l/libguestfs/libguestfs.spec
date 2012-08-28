@@ -13,7 +13,7 @@
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
 Version: 1.19.38
-Release: alt1
+Release: alt2
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -492,6 +492,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_sysconfdir/bash_completion.d/guestfish-bash-completion.sh
 
 %changelog
+* Thu Sep 06 2012 Vladimir Lettiev <crux@altlinux.ru> 1.19.38-alt2
+- rebuilt for perl-5.16
+
 * Tue Sep 04 2012 Alexey Shabalin <shaba@altlinux.ru> 1.19.38-alt1
 - 1.19.38
 

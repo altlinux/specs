@@ -1,6 +1,6 @@
 %define dist Devel-Cover
 Name: perl-%dist
-Version: 0.79
+Version: 0.93
 Release: alt1
 
 Summary: Code coverage metrics for Perl
@@ -46,6 +46,10 @@ echo 'sub Devel::Cover::set_first_init_and_end{}1' >%buildroot/hack.pm
 %exclude /hack.pm
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.93-alt1
+- 0.79 -> 0.93
+- built for perl-5.16
+
 * Wed Oct 12 2011 Alexey Tourbin <at@altlinux.ru> 0.79-alt1
 - 0.72 -> 0.79
 - built for perl-5.14

@@ -1,7 +1,7 @@
 %define dist Crypt-IDEA
 Name: perl-%dist
 Version: 1.08
-Release: alt3
+Release: alt4
 
 Summary: Perl interface to IDEA block cipher
 License: GPL or Artistic
@@ -35,6 +35,9 @@ rm %buildroot%perl_vendor_archlib/Crypt/._test.pl
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.08-alt4
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.08-alt3
 - rebuilt for perl-5.14
 

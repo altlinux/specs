@@ -1,6 +1,6 @@
 Name: apache2-mod_perl
-Version: 2.0.5
-Release: alt2
+Version: 2.0.7
+Release: alt1
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор пёрла для веб-сёрвера Апаче2
@@ -14,9 +14,7 @@ Source2: perl.conf
 Source3: perl.start
 
 Patch0: mod_perl-2.0.2-multilib.patch
-Patch1: mod_perl-2.0.5-sv_dup.patch
-Patch2: mod_perl-2.0.5-lwp6.patch
-Patch3: mod_perl-2.0.5-lfs.patch
+Patch1: mod_perl-2.0.5-lfs.patch
 
 Provides: mod_perl = %version
 
@@ -107,8 +105,6 @@ This package contains the documentation for mod_perl Apache2 module.
 %setup -n mod_perl-%version
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 %build
 %perl_vendor_build MP_APXS=%apache2_apxs MP_APR_CONFIG=%apache2_apr_config
@@ -250,6 +246,12 @@ fi
 %doc docs/*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.0.7-alt1
+- 2.0.5 -> 2.0.7
+- built for perl-5.16
+- dropped patches mod_perl-2.0.5-sv_dup.patch, mod_perl-2.0.5-lwp6.patch
+  (applied upstream)
+
 * Wed Oct 26 2011 Alexey Tourbin <at@altlinux.ru> 2.0.5-alt2
 - exclude Apache/SizeLimit.pm, due to conflict with mod_perl-1.x (ALT#26508)
 

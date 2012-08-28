@@ -1,6 +1,6 @@
 Name: perl-Parse-ExuberantCTags
 Version: 1.02
-Release: alt1.2
+Release: alt2
 
 Summary: Efficiently parse exuberant ctags files
 License: GPL or Artistic
@@ -30,6 +30,9 @@ BuildRequires: perl-devel
 %perl_vendor_autolib/Parse
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.02-alt2
+- rebuilt for perl-5.16
+
 * Wed Oct 19 2011 Alexey Tourbin <at@altlinux.ru> 1.02-alt1.2
 - rebuilt for perl-5.14
 

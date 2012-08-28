@@ -1,7 +1,7 @@
 %define dist Devel-Caller
 Name: perl-%dist
 Version: 2.05
-Release: alt1.2
+Release: alt2
 
 Summary: Meatier versions of caller()
 License: Artistic
@@ -31,6 +31,9 @@ Devel::Caller module provides meatier versions of "caller" function.
 %perl_vendor_autolib/Devel
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 2.05-alt2
+- rebuilt for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 2.05-alt1.2
 - rebuilt for perl-5.14
 

@@ -1,6 +1,6 @@
 %define dist Params-Validate
 Name: perl-%dist
-Version: 1.00
+Version: 1.06
 Release: alt1
 
 Summary: Validate method/function parameters
@@ -10,8 +10,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
-# Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-Attribute-Handlers perl-Module-Build
+BuildRequires: perl-Attribute-Handlers perl-Module-Build perl-Module-Implementation perl-Test-Fatal
 
 %description
 The Params::Validate module allows you to validate method or function
@@ -38,6 +37,10 @@ and that no unspecified additional parameters were passed in.
 %perl_vendor_archlib/Attribute
 
 %changelog
+* Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 1.06-alt1
+- 1.00 -> 1.06
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1.00-alt1
 - 0.95 -> 1.00
 - built for perl-5.14

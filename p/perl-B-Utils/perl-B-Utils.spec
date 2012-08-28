@@ -1,6 +1,6 @@
 %define dist B-Utils
 Name: perl-%dist
-Version: 0.15
+Version: 0.21
 Release: alt1
 
 Summary: Helper functions for op tree manipulation
@@ -31,6 +31,10 @@ B::Utils - Helper functions for op tree manipulation
 %perl_vendor_archlib/B
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.21-alt1
+- 0.15 -> 0.21
+- built for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.15-alt1
 - 0.07 -> 0.15
 - built for perl-5.14

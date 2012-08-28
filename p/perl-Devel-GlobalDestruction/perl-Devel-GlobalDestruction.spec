@@ -1,7 +1,7 @@
 %define dist Devel-GlobalDestruction
 Name: perl-%dist
-Version: 0.04
-Release: alt2
+Version: 0.09
+Release: alt1
 
 Summary: Expose the flag which marks global destruction
 License: GPL or Artistic
@@ -17,7 +17,7 @@ Requires: perl-base >= 1:5.14
 BuildRequires: perl-base >= 1:5.14
 
 # Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: perl-Sub-Exporter perl-devel
+BuildRequires: perl-Sub-Exporter perl-devel perl-Sub-Exporter-Progressive
 
 %description
 Perl's global destruction is a little tricky to deal with WRT finalizers
@@ -43,6 +43,10 @@ destruction is in effect.
 %perl_vendor_privlib/Devel
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt1
+- 0.04 -> 0.09
+- built for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 0.04-alt2
 - rebuilt for perl-5.14
 - now noarch

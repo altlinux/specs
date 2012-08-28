@@ -1,7 +1,7 @@
 %define dist Gnome2-GConf
 Name: perl-%dist
 Version: 1.044
-Release: alt4
+Release: alt5
 
 Summary: Perl wrappers for the GConf configuration engine
 License: LGPL
@@ -49,6 +49,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gnome2/GConf/Install
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.044-alt5
+- rebuilt for perl-5.16
+
 * Tue Oct 11 2011 Alexey Tourbin <at@altlinux.ru> 1.044-alt4
 - rebuilt for perl-5.14
 

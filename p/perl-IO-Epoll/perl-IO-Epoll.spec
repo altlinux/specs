@@ -1,7 +1,7 @@
 %define dist IO-Epoll
 Name: perl-%dist
 Version: 0.03
-Release: alt1
+Release: alt2
 
 Summary: Scalable IO Multiplexing for Linux
 License: GPL or Artistic
@@ -37,6 +37,9 @@ higher-level layer designed to emulate the behavior of IO::Poll.
 %perl_vendor_autolib/IO
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.03-alt2
+- rebuilt for perl-5.16
+
 * Mon Apr 02 2012 Dmitry V. Levin <ldv@altlinux.org> 0.03-alt1
 - Updated to 0.03.
 

@@ -1,6 +1,6 @@
 %define dist Cache-FastMmap
 Name: perl-%dist
-Version: 1.39
+Version: 1.40
 Release: alt1
 
 Summary: Uses an mmap'ed file to act as a shared memory interprocess cache
@@ -33,6 +33,10 @@ cache shared between processes.
 %perl_vendor_autolib/Cache
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.40-alt1
+- 1.39 -> 1.40
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1.39-alt1
 - 1.35 -> 1.39
 - built for perl-5.14
