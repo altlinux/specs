@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.50
+Version: 0.51
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -11,10 +11,6 @@ Url: http://ceph.com/
 
 Source0: %name-%version.tar
 Patch0: %name-%version-%release.patch
-
-Requires: librbd1 = %version-%release
-Requires: librados2 = %version-%release
-Requires: libcephfs1 = %version-%release
 
 BuildRequires: boost-devel-headers gcc-c++ libaio-devel libcurl-devel
 BuildRequires: libedit-devel libexpat-devel libfcgi-devel libfuse-devel
@@ -39,9 +35,6 @@ Summary: Ceph headers
 Group: Development/C
 License: LGPLv2
 Requires: %name = %version-%release
-Requires: librados2 = %version
-Requires: librbd1 = %version
-Requires: libcephfs1 = %version
 %description devel
 This package contains libraries and headers needed to develop programs
 that use Ceph.
@@ -49,7 +42,6 @@ that use Ceph.
 %package radosgw
 Summary: Rados REST gateway
 Group: System/Libraries
-Requires: librados2 = %version-%release
 %description radosgw
 radosgw is an S3 HTTP REST gateway for the RADOS object store. It is
 implemented as a FastCGI module using libfcgi, and can be used in
@@ -90,7 +82,6 @@ store using a simple file-like interface.
 Summary: RADOS block device client library
 Group: System/Libraries
 License: LGPLv2
-Requires: librados2 = %version-%release
 %description -n librbd1
 RBD is a block device striped across multiple distributed objects in
 RADOS, a reliable, autonomic distributed object storage cluster
@@ -112,9 +103,6 @@ Summary: Python libraries for the Ceph distributed filesystem
 Group: Development/Python
 License: LGPLv2
 BuildArch: noarch
-Requires: librados2 = %version-%release
-Requires: librbd1 = %version-%release
-Requires: libcephfs1 = %version-%release
 %description -n python-module-ceph
 This package contains Python libraries for interacting with Cephs RADOS
 object storage.
@@ -276,6 +264,12 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Aug 28 2012 Alexei Takaseev <taf@altlinux.org> 0.51-alt1
+- 0.51
+
+* Thu Aug 23 2012 Alexei Takaseev <taf@altlinux.org> 0.50-alt2
+- edit requires
+
 * Wed Aug 22 2012 Alexei Takaseev <taf@altlinux.org> 0.50-alt1
 - 0.50
 
