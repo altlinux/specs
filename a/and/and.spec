@@ -1,9 +1,6 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-# END SourceDeps(oneline)
 Name:      and
 Version:   1.2.2
-Release:   alt2_15
+Release:   alt2_16
 Summary:   Auto nice daemon
 
 License:   GPLv2
@@ -67,21 +64,7 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/sysconfig/and
 mkdir -p %{buildroot}%{_unitdir}
 install -p -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}
 
-%post
-if [ $1 -eq 1 ]; then
-   /bin/systemctl daemon-reload >/dev/null 2>&1 || :
-fi
-
-%preun
-if [ $1 -eq 1 ]; then
-   /bin/systemctl --no-reload disable and.service >/dev/null 2>&1 || :
-   /bin/systemctl stop and.service >/dev/null 2>&1 || :
-fi
-
 %postun
-if [ $0 -en 0 ]; then
-   /bin/systemctl try-restart and.service >/dev/null 2>&1 || :
-fi
 
 %files
 %doc README LICENSE CHANGELOG
@@ -93,6 +76,9 @@ fi
 %{_unitdir}/and.service
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2_16
+- new release
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2_15
 - rebuild to get rid of #27020
 
