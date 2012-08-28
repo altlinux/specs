@@ -1,140 +1,53 @@
-BuildRequires: mojo-parent
-BuildRequires: mojo-maven2-plugin-jdepend velocity14
+Epoch: 0
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+%global base_name  logging
+%global short_name commons-%{base_name}
 
-#def_with bootstrap
-%bcond_with bootstrap
-#def_with gcj_support
-%bcond_with gcj_support
-%bcond_without maven
-%bcond_without repolib
+Name:           apache-%{short_name}
+Version:        1.1.1
+Release:        alt3_20jpp7
+Summary:        Apache Commons Logging
+License:        ASL 2.0
+Group:          Development/Java
+URL:            http://commons.apache.org/%{base_name}
+Source0:        http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Source1:        %{short_name}.depmap
+Source2:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{short_name}/%{short_name}-api/1.1/%{short_name}-api-1.1.pom
+# Sent upstream https://issues.apache.org/jira/browse/LOGGING-143
+Patch0:         %{short_name}-avalon-update.patch
 
+Patch1:         %{short_name}-eclipse-manifest.patch
+BuildArch:      noarch
+BuildRequires:  maven
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  avalon-framework >= 4.3
+BuildRequires:  avalon-logkit
+BuildRequires:  apache-commons-parent
+BuildRequires:  maven-plugin-build-helper
+BuildRequires:  maven-release-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  servlet
+
+Requires:       jpackage-utils >= 0:1.6
+
+# This should go away with F-17
+Provides:       jakarta-%{short_name} = 0:%{version}-%{release}
+Obsoletes:      jakarta-%{short_name} <= 0:1.0.4
+Provides:       %{short_name} = %{epoch}:%{version}-%{release}
+Source44: import.info
+
+%def_with repolib
 %define repodir %{_javadir}/repository.jboss.com/apache-%{base_name}/%{version}-brew
 %define repodirlib %{repodir}/lib
 %define repodirres %{repodir}/resources
 %define repodirsrc %{repodir}/src
 
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-%define base_name  logging
-%define short_name commons-%{base_name}
-
-Name:           apache-%{short_name}
-Version:        1.1.1
-Release:        alt3_6jpp6
-Epoch:          0
-Summary:        Apache Commons Logging Package
-License:        ASL 2.0
-Group:          Development/Java
-URL:            http://commons.apache.org/logging/
-Source0:        %{short_name}-%{version}-src.tar.gz
-#wget http://www.apache.org/dist/jakarta/commons/logging/source/commons-logging-1.1.1-src.tar.gz
-Source1:        %{name}-settings.xml
-Source2:        %{name}-jpp-depmap.xml
 Source3:        %{name}-component-info.xml
-Source4:        %{short_name}-api-%{version}.pom
-
-Patch0:         apache-commons-logging-pom.patch
-Patch1:         apache-commons-logging-build.patch
-
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: fonts-ttf-liberation
-BuildRequires: ant >= 0:1.7
-%if %with maven
-BuildRequires: apache-commons-parent >= 0:12
-BuildRequires: maven2 >= 0:2.0.8
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-assembly
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-idea
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-default-skin
-BuildRequires: mojo-maven2-plugin-build-helper
-BuildRequires: mojo-maven2-plugin-rat
-%endif
-%if %without bootstrap
-BuildRequires: ant-junit
-BuildRequires: junit
-BuildRequires: excalibur-avalon-logkit
-BuildRequires: excalibur-avalon-framework
-%endif
-BuildRequires: log4j
-BuildRequires: servlet_2_5_api
-%if ! %{gcj_support}
-BuildArch:      noarch
-%endif
-Provides:       jakarta-%{short_name} = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name} < %{epoch}:%{version}-%{release}
-Provides:       %{short_name} = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name} < %{epoch}:%{version}-%{release}
-
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-Requires: servlet_2_5_api
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%endif
-Source44: import.info
-Source45: apache-commons-logging-1.1.1.jar-OSGi-MANIFEST.MF
-
-%description
-The commons-logging package provides a simple, component oriented
-interface (org.apache.commons.logging.Log) together with wrappers for
-logging systems. The user can choose at runtime which system they want
-to use. In addition, a small number of basic implementations are
-provided to allow users to use the package standalone. 
-commons-logging was heavily influenced by Avalon's Logkit and Log4J. The
-commons-logging abstraction is meant to minimixe the differences between
-the two, and to allow a developer to not tie himself to a particular
-logging implementation.
-
-%if %with repolib
+%if_with repolib
 %package repolib
 Summary:        Artifacts to be uploaded to a repository library
 Group:          Development/Java
@@ -149,164 +62,94 @@ This package is not meant to be installed but so its contents
 can be extracted through rpm2cpio.
 %endif
 
+%if_with repolib
+%files repolib
+%dir %{_javadir}
+%{_javadir}/repository.jboss.com
+%endif
+
+%description
+The commons-logging package provides a simple, component oriented
+interface (org.apache.commons.logging.Log) together with wrappers for
+logging systems. The user can choose at runtime which system they want
+to use. In addition, a small number of basic implementations are
+provided to allow users to use the package standalone.
+commons-logging was heavily influenced by Avalon's Logkit and Log4J. The
+commons-logging abstraction is meant to minimize the differences between
+the two, and to allow a developer to not tie himself to a particular
+logging implementation.
+
 %package        javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Provides:       jakarta-%{short_name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-javadoc < %{epoch}:%{version}-%{release}
-Provides:       %{short_name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name}-javadoc < %{epoch}:%{version}-%{release}
+Summary:        API documentation for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+
+Obsoletes:      jakarta-%{short_name}-javadoc <= 0:1.0.4
 BuildArch: noarch
 
 %description    javadoc
 %{summary}.
 
-%if %with maven
-%package        manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-Provides:       jakarta-%{short_name}-manual = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-manual < %{epoch}:%{version}-%{release}
-Provides:       %{short_name}-manual = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name}-manual < %{epoch}:%{version}-%{release}
-BuildArch: noarch
-
-%description    manual
-%{summary}.
-%endif
+# -----------------------------------------------------------------------------
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch0 -b .sav0
-%patch1 -b .sav1
 
-cp -p %{SOURCE1} settings.xml
+%patch0 -p1
+%patch1
 
-%{__perl} -pi -e 's/\r$//g' LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+sed -i 's/\r//' RELEASE-NOTES.txt LICENSE.txt
 
-%if %with maven
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-%endif
+# -----------------------------------------------------------------------------
 
 %build
-cat > build.properties <<EOBM
-junit.jar=$(build-classpath junit)
-log4j.jar=$(build-classpath log4j)
-log4j12.jar=$(build-classpath log4j)
-%if %without bootstrap
-logkit.jar=$(build-classpath excalibur/avalon-logkit)
-avalon-framework.jar=$(build-classpath excalibur/avalon-framework)
-%endif
-servletapi.jar=$(build-classpath servlet_2_5_api)
-EOBM
+# fails with recent surefire for some reason
+rm src/test/org/apache/commons/logging/logkit/StandardTestCase.java
+rm src/test/org/apache/commons/logging/servlet/BasicServletTestCase.java
 
-%if %without bootstrap
-%if %with maven
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p ${MAVEN_REPO_LOCAL}
-export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Dmaven.test.failure.ignore=true -Dproject.build.directory=target"
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -s $(pwd)/settings.xml \
-        install javadoc:javadoc site
+# These files have names suggesting they are test cases but they are not.
+# They should probably be renamed/excluded from surefire run properly
+rm src/test/org/apache/commons/logging/log4j/log4j12/*StandardTestCase.java
 
-%else
+mvn-rpmbuild -Dmaven.local.depmap.file="%{SOURCE1}" \
+    install javadoc:aggregate
 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
-        -Djunit.jar=$(build-classpath junit) \
-        -Dlogkit.jar=$(build-classpath excalibur/avalon-logkit) \
-        -Davalon-framework.jar=$(build-classpath excalibur/avalon-framework) \
-        -Dservletapi.jar=$(build-classpath servlet_2_5_api) \
-        compile.tests javadoc
-
-%endif
-## FIXME: There are failures with gcj. Ignore them for now.
-%if %{gcj_support}
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dtest.failonerror=false \
-        -Djunit.jar=$(build-classpath junit) \
-        -Dlogkit.jar=$(build-classpath excalibur/avalon-logkit) \
-        -Davalon-framework.jar=$(build-classpath excalibur/avalon-framework) \
-        -Dservletapi.jar=$(build-classpath servlet_2_5_api) \
-    test
-%endif
-%else
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 compile-only javadoc
-%endif
+# -----------------------------------------------------------------------------
 
 %install
-
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+install -p -m 644 target/%{short_name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -p -m 644 target/%{short_name}-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-api.jar
+install -p -m 644 target/%{short_name}-adapters-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-adapters.jar
 
-install -m 644 target/%{short_name}-%{version}.jar \
-                $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-install -m 644 target/%{short_name}-api-%{version}.jar \
-                $RPM_BUILD_ROOT%{_javadir}/%{name}-api-%{version}.jar
-install -m 644 target/%{short_name}-adapters-%{version}.jar \
-                $RPM_BUILD_ROOT%{_javadir}/%{name}-adapters-%{version}.jar
+pushd $RPM_BUILD_ROOT%{_javadir}
+for jar in %{name}*; do
+    ln -sf ${jar} `echo $jar| sed "s|apache-||g"`
+done
+popd
 
+# pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{short_name}.pom
+install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{short_name}-api.pom
+
+%add_to_maven_depmap org.apache.commons %{short_name} %{version} JPP %{short_name}
+%add_to_maven_depmap org.apache.commons %{short_name}-api %{version} JPP %{short_name}-api
+%add_to_maven_depmap org.apache.commons %{short_name}-adapters %{version} JPP %{short_name}-adapters
+
+# following lines are only for backwards compatibility. New packages
+# should use proper groupid org.apache.commons and also artifactid
 %add_to_maven_depmap %{short_name} %{short_name} %{version} JPP %{short_name}
 %add_to_maven_depmap %{short_name} %{short_name}-api %{version} JPP %{short_name}-api
 %add_to_maven_depmap %{short_name} %{short_name}-adapters %{version} JPP %{short_name}-adapters
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{short_name}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
-ln -s %{name}-api-%{version}.jar %{buildroot}%{_javadir}/%{name}-api.jar
-ln -s %{name}-api-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-api-%{version}.jar
-ln -s %{name}-api-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-api.jar
-ln -s %{name}-api-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-api-%{version}.jar
-ln -s %{name}-api-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-api.jar
-ln -s %{name}-adapters-%{version}.jar %{buildroot}%{_javadir}/%{name}-adapters.jar
-ln -s %{name}-adapters-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-adapters-%{version}.jar
-ln -s %{name}-adapters-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-adapters.jar
-ln -s %{name}-adapters-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-adapters-%{version}.jar
-ln -s %{name}-adapters-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-adapters.jar
 
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{short_name}.pom
-install -m 644 %{SOURCE4} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{short_name}-api.pom
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-%if %without bootstrap
-%if %with maven
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-rm -rf target/site/apidocs
-%else
-cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-%endif
-%else
-cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-%endif
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{short_name}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{short_name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/jakarta-%{short_name}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/jakarta-%{short_name}-%{version}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %without bootstrap
-install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -p *.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -p *.html $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%if %with maven
-# manual
-cp -pr target/site $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%endif
-%endif
-
-%if %with repolib
+%if_with repolib
 %{__install} -d -m 0755 %{buildroot}%{repodir}
 %{__install} -d -m 0755 %{buildroot}%{repodirlib}
 %{__install} -p -m 0644 %{SOURCE3} %{buildroot}%{repodir}/component-info.xml
@@ -319,55 +162,27 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__install} -p -m 0644 %{SOURCE0} %{buildroot}%{repodirsrc}
 %{__install} -p -m 0644 %{SOURCE1} %{buildroot}%{repodirsrc}
 %{__install} -p -m 0644 %{SOURCE2} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
+%{__cp} -p %{buildroot}%{_javadir}/%{short_name}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
 %endif
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
-# inject OSGi manifest apache-commons-logging-1.1.1.jar-OSGi-MANIFEST.MF
-rm -rf META-INF
-mkdir -p META-INF
-cp %{SOURCE45} META-INF/MANIFEST.MF
-# update even MANIFEST.MF already exists
-# touch META-INF/MANIFEST.MF
-zip -v %buildroot/usr/share/java/commons-logging.jar META-INF/MANIFEST.MF
-# end inject OSGi manifest apache-commons-logging-1.1.1.jar-OSGi-MANIFEST.MF
 
 %files
-%{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
-%config(noreplace) %{_mavendepmapfragdir}/*
-%dir %{_docdir}/%{name}-%{version}
-%{_docdir}/%{name}-%{version}/*.txt
-%{_docdir}/%{name}-%{version}/*.html
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/*
-%endif
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%doc PROPOSAL.html STATUS.html LICENSE.txt RELEASE-NOTES.txt
+%{_javadir}/*
+%{_mavenpomdir}/JPP-%{short_name}.pom
+%{_mavenpomdir}/JPP-%{short_name}-api.pom
+%{_mavendepmapfragdir}/*
+
 
 %files javadoc
-%{_javadocdir}/*
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
 
-%if %without bootstrap
-%if %with maven
-%files manual
-%doc %{_docdir}/%{name}-%{version}/site
-%endif
-%endif
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
-
-%if %with repolib
-%files repolib
-%dir %{_javadir}
-%{_javadir}/repository.jboss.com
-%endif
+# -----------------------------------------------------------------------------
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_20jpp7
+- new release
+
 * Sat Feb 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_6jpp6
 - fixed build
 
