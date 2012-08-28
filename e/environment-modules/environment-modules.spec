@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/runtest libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           environment-modules
 Version:        3.2.9c
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -71,6 +71,8 @@ ln -s %{_datadir}/Modules/init/csh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/modul
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 
 
+%check
+make test ||:
 
 
 %files
@@ -89,6 +91,9 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.9c-alt1_3
+- new release
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.9c-alt1_2
 - update to new release by fcimport
 
