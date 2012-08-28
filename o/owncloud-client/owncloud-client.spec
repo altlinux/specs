@@ -1,7 +1,7 @@
 %define rname mirall
 Name: owncloud-client
 Version: 1.0.2
-Release: alt4
+Release: alt5
 
 Group: Networking/File transfer
 Summary: Applet for owncloud files syncronization
@@ -50,6 +50,9 @@ desktop-file-install \
 %_iconsdir/hicolor/*/apps/owncloud.*
 
 %changelog
+* Tue Aug 28 2012 Andrey Cherepanov <cas@altlinux.org> 1.0.2-alt5
+- Update Russian translation
+
 * Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.2-alt4
 - don't conflict with mirall
 - bump release
