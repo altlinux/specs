@@ -1,6 +1,7 @@
+BuildRequires: desktop-file-utils
 Name: lightlang
 Version: 0.8.6.s
-Release: alt1
+Release: alt1.qa1
 
 Summary: Dictionary Shell on Qt4
 Summary(ru_RU.UTF-8): Словарь на основе Qt4
@@ -40,6 +41,10 @@ rm -rf %buildroot%_pkgconfigdir/*.pc
 mkdir -p %buildroot/var/lib
 mv -v %buildroot%_datadir/sl/ %buildroot/var/lib/%name
 ln -s ../../var/lib/%name %buildroot%_datadir/sl
+desktop-file-install --dir %buildroot%_desktopdir \
+	--remove-category=Utility \
+	--add-category=TextTools \
+	%buildroot%_desktopdir/xsl.desktop
 
 %files
 %_bindir/lightlang
@@ -61,6 +66,11 @@ ln -s ../../var/lib/%name %buildroot%_datadir/sl
 #%_pkgconfigdir/*.pc
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.6.s-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for lightlang
+
 * Sun Jun 03 2012 Vitaly Lipatov <lav@altlinux.ru> 0.8.6.s-alt1
 - new version (0.8.6-20110413) with rpmgs script
 
