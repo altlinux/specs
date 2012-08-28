@@ -1,8 +1,9 @@
+BuildRequires: desktop-file-utils
 %define major 1.8
 
 Name: wavesurfer
 Version: %major.5
-Release: alt3
+Release: alt3.qa1
 
 %add_tcl_req_skip tile
 %add_tcl_lib_path %_datadir/%name
@@ -63,7 +64,7 @@ install -p -m0644 -D icons/ws48.xpm %buildroot%_niconsdir/%name.xpm
 
 # msgcat expects contents in utf-8
 iconv -f iso8859-1 -t utf-8 msgs/se.msg > %buildroot%_datadir/%name/msgs/se.msg
-cat msgs/ru_ru.koi8-r.msg ru.msg |grep -v Silence |%__sed 's| ru_ru.koi8-r | ru |' |\
+cat msgs/ru_ru.koi8-r.msg ru.msg |grep -v Silence |sed 's| ru_ru.koi8-r | ru |' |\
 iconv -f koi8-r -t utf-8 > %buildroot%_datadir/%name/msgs/ru.msg
 chmod 0644 %buildroot%_datadir/%name/msgs/*.msg
 
@@ -72,6 +73,10 @@ chmod 0644 README*
 
 # python go away 
 rm -f demos/*.py
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=AudioVideoEditing \
+	--remove-key=Terminal \
+	%buildroot%_desktopdir/wavesurfer.desktop
 
 %files
 %doc README* LICENSE*
@@ -82,6 +87,12 @@ rm -f demos/*.py
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.8.5-alt3.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for wavesurfer
+  * postclean-03-private-rpm-macros for the spec file
+
 * Sun Jan 24 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.5-alt3
 - reqs on aoss removed
 
