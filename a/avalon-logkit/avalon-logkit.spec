@@ -1,7 +1,9 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.5.0-compat
-# Copyright (c) 2000-2008, JPackage Project
+BuildRequires: jpackage-compat
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,123 +33,101 @@ BuildRequires: jpackage-1.5.0-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-# If you want repolib package to be built,
-# issue the following: 'rpmbuild --with repolib'
-%define _with_repolib 1
+%global     short_name      logkit
+%global     camelcase_short_name      LogKit
 
-%define with_repolib %{?_with_repolib:1}%{!?_with_repolib:0}
-%define without_repolib %{!?_with_repolib:1}%{?_with_repolib:0}
+Name:        avalon-%{short_name}
+Version:     2.1
+Release:     alt1_11jpp7
+Epoch:       0
+Summary:     Java logging toolkit
+License:     ASL 2.0
+Group:       Development/Java
+URL:         http://avalon.apache.org/%{short_name}/
+Source0:     http://www.apache.org/dist/excalibur/%{name}/source/%{name}-%{version}-src.zip
+Source1:     http://repo1.maven.org/maven2/avalon-logkit/avalon-logkit/%{version}/%{name}-%{version}.pom
+Patch0:      fix-java6-compile.patch
+Patch1:      avalon-logkit-pom-deps.patch
+Patch2:      avalon-logkit-encoding.patch
+Patch3:      java7.patch
+Requires:    avalon-framework >= 0:4.1.4
+Requires:    tomcat-servlet-3.0-api
+Requires:    jms
 
-%define repodir %{_javadir}/repository.jboss.com/apache-avalon-logkit/1.2-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-%define short_name      logkit
-%define short_Name      LogKit
-%define name            avalon-%{short_name}
-%define version         1.2
-%define release         2jpp.el4ep1.2
+BuildRequires:    jpackage-utils >= 0:1.5
+BuildRequires:    ant
+BuildRequires:    javamail
+BuildRequires:    ant-junit
+BuildRequires:    log4j
+BuildRequires:    avalon-framework >= 0:4.1.4
+# Required for converting jars to OSGi bundles
+BuildRequires:    aqute-bnd
+BuildRequires:    tomcat-servlet-3.0-api
+BuildRequires:    jms
 
-Name:           avalon-logkit
-Version:        1.2
-Release:        alt2_4jpp5
-Epoch:          0
-Summary:        Java logging toolkit
-License:        ASL 2.0
-Group:          Development/Java
-#Distribution:  JPackage
-#Vendor:                JPackage Project
-Url:            http://avalon.apache.org/%{short_name}/
-Source0:        http://jakarta.apache.org/builds/jakarta-avalon/release/logkit/latest/LogKit-1.2-src.tar.gz
-Patch0:         %{name}-build.patch
-Source1:        avalon-logkit-component-info.xml
-Requires: avalon-framework >= 0:4.1.4
-Requires: servlet
-Requires: jms
-Requires: jdbc-stdext
-Requires(post): jpackage-utils >= 0:1.5
-Requires(postun): jpackage-utils >= 0:1.5
-BuildRequires: jpackage-utils >= 0:1.5
-BuildRequires: ant
-BuildRequires: javamail
-BuildRequires: junit
-BuildRequires: log4j
-BuildRequires: avalon-framework >= 0:4.1.4
-BuildRequires: servlet
-BuildRequires: jms
-BuildRequires: jdbc-stdext
-BuildArch:      noarch
+BuildArch:    noarch
+Source44: import.info
+
 
 %description
 LogKit is a logging toolkit designed for secure performance orientated
 logging in applications. To get started using LogKit, it is recomended
 that you read the whitepaper and browse the API docs.
 
-%if %{with_repolib}
-%package         repolib
-Summary:         Artifacts to be uploaded to a repository library
-Group:  Development/Java
-
-%description     repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio
-%endif
-
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Summary:    Javadoc for %{name}
+Group:        Development/Java
+Requires:     jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %prep
-%setup -q -n %{short_Name}-%{version}
-%patch
+%setup -q
+%patch0
+
+cp %{SOURCE1} pom.xml
+%patch1
+%patch2 -p1
+%patch3
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
 
-
-tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-sed -i "s/@TAG@/$tag/g" %{SOURCE1}
-
 %build
-export CLASSPATH=%(build-classpath log4j javamail/mailapi jms servlet jdbc-stdext avalon-framework junit):$PWD/build/classes
-ant clean jar javadocs
+export CLASSPATH=$(build-classpath log4j javamail/mailapi jms servlet jdbc-stdext avalon-framework junit):$PWD/build/classes
+ant -Dencoding=ISO-8859-1 -Dnoget=true clean jar javadoc
+# Convert to OSGi bundle
+java -jar $(build-classpath aqute-bnd) wrap target/%{name}-%{version}.jar
 
 %install
 # jars
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 build/lib/%{short_name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done)
+install -d -m 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
+
+install -m 644 target/%{name}-%{version}.bar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+
+install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name},org.apache.avalon.logkit:%{name}"
+
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -pr build/javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-
-%if %{with_repolib}
-        install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-        install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-        install -m 755 %{SOURCE1} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-        install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-        install -m 755 %{PATCH0} $RPM_BUILD_ROOT%{repodirsrc}
-        install -m 755 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-        cp build/lib/%{short_name}.jar $RPM_BUILD_ROOT%{repodirlib}
-%endif
+cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%doc KEYS LICENSE
-%{_javadir}/*
+%doc LICENSE.txt NOTICE.txt
+%{_mavendepmapfragdir}/%{name}
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_javadir}/%{name}.jar
 
 %files javadoc
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
-%if %{with_repolib}
-%files repolib
-%{repodir}
-%endif
-
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_11jpp7
+- new release
+
 * Wed May 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_4jpp5
 - selected java5 compiler explicitly
 
