@@ -18,7 +18,7 @@
 %define bugfix 5
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -1559,6 +1559,12 @@ based on kdepim.
 
 
 %changelog
+* Tue Aug 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2
+- update from 4.8 branch (kde bug 295484)
+
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 
