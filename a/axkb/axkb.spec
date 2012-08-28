@@ -1,6 +1,7 @@
+BuildRequires: desktop-file-utils
 Name: axkb
 Version: 0.4.3
-Release: alt1.85c44479.1
+Release: alt1.85c44479.1.qa1
 
 Summary: Antico XKB configuration utility
 Group: Graphical desktop/Other
@@ -33,6 +34,13 @@ qmake-qt4
 
 %install
 %makeinstall_std INSTALL_ROOT=%buildroot
+# two Type=Application entries :(
+sed -i -e '/^Type=/d' %buildroot%_desktopdir/axkb.desktop
+desktop-file-install --dir %buildroot%_desktopdir \
+	--set-key=Type --set-value=Application \
+	--add-category=Accessibility \
+	--add-category=X-Desktop \
+	%buildroot%_desktopdir/axkb.desktop
 
 %files
 %doc README
@@ -43,6 +51,11 @@ qmake-qt4
 %_datadir/qt4/translations/%{name}*
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.4.3-alt1.85c44479.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for axkb
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt1.85c44479.1
 - Fixed build
 
