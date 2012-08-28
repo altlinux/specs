@@ -1,6 +1,6 @@
 Name: rpm-build-xfce4
-Version: 0.1.0
-Release: alt2
+Version: 0.1.1
+Release: alt1
 
 Summary: Macros for comfort build xfce4 and plugins
 Summary(ru_RU.UTF-8): Макросы для удобной сборки Xfce
@@ -28,6 +28,10 @@ install -m644 %SOURCE0 %buildroot/etc/rpm/macros.d/xfce4
 /etc/rpm/macros.d/xfce4
 
 %changelog
+* Tue Aug 28 2012 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
+- Add comment for xfce4reconf macros.
+- Add xfce4_drop_gitvtag macros.
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 0.1.0-alt2
 - Fix summary and description (by Igor Zubkov).
 

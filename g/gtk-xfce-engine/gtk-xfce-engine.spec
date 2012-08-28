@@ -6,16 +6,18 @@
 Name: gtk-xfce-engine
 Summary: Xfce gtk theme engine with various different themes
 Version: 3.0.0
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Url: http://www.xfce.org/
+# Upstream: git://git.xfce.org/xfce/gtk-xfce-engine
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 Group: Graphical desktop/XFce
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildRequires: rpm-build-xfce4 xfce4-dev-tools
+BuildRequires: rpm-build-xfce4 >= 0.1.1 xfce4-dev-tools
 BuildRequires: libICE-devel libXt-devel xorg-cf-files
 BuildRequires: libgtk+2-devel >= %gtk2_ver libgtk+3-devel
 
@@ -46,6 +48,10 @@ homogeneity in applications for both business and personal desktops.
 
 %prep
 %setup
+%patch -p1
+
+# Don't use git tag in version.
+%xfce4_drop_gitvtag gtk_xfce_engine_version_tag configure.in.in
 
 %build
 %xfce4reconf
@@ -75,6 +81,10 @@ touch ChangeLog
 %doc AUTHORS
 
 %changelog
+* Tue Aug 28 2012 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt2
+- Patch from upstream:
+  + Don't leak a graduent pattern at each draw (bug #8521).
+
 * Sat Apr 28 2012 Mikhail Efremov <sem@altlinux.org> 3.0.0-alt1
 - Updated to 3.0.0.
 
