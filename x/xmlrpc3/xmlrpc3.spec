@@ -34,37 +34,32 @@ BuildRequires: jpackage-compat
 
 Name:       xmlrpc3
 Version:    3.1.3
-Release:    alt1_5jpp6
+Release:    alt1_12jpp7
 Summary:    Java XML-RPC implementation
 License:    ASL 2.0
 Group:      Development/Java
 URL:        http://ws.apache.org/xmlrpc/
 Source0:    http://www.apache.org/dist//ws/xmlrpc/sources/apache-xmlrpc-%{version}-src.tar.bz2
 Source1:    %{name}-jpp-depmap.xml
-# FIXME:  file this upstream
-# The tests pom.xml doesn't include necessary dependencies on junit and
-# servletapi
-Patch0:     %{name}-addjunitandservletapitotestpom.patch
 # Add OSGi MANIFEST information
 Patch1:     %{name}-client-addosgimanifest.patch
 Patch2:     %{name}-common-addosgimanifest.patch
+Patch3:     %{name}-javax-methods.patch
 
-BuildRequires:  maven2 >= 2.0.4
-BuildRequires:  maven2-plugin-resources
-BuildRequires:  maven2-plugin-compiler
+BuildRequires:  maven
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven2-plugin-jar
-BuildRequires:  maven2-plugin-install
-BuildRequires:  maven2-plugin-javadoc
-BuildRequires:  maven2-plugin-eclipse
-BuildRequires:  maven2-plugin-assembly
-BuildRequires:  maven2-plugin-source
-BuildRequires:  maven2-plugin-site
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-assembly-plugin
+BuildRequires:  maven-source-plugin
+BuildRequires:  maven-site-plugin
 BuildRequires:  ws-jaxme
 BuildRequires:  ws-commons-util
 BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  servlet25
-BuildRequires:	tomcat6
+BuildRequires:  tomcat-servlet-3.0-api
 BuildRequires:  junit
 BuildRequires:  jakarta-commons-httpclient
 BuildRequires:  apache-commons-logging
@@ -95,8 +90,6 @@ Requires:   ws-jaxme
 Requires:   ws-commons-util
 Requires:   jpackage-utils >= 0:1.6
 Requires:   apache-commons-logging
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
 
 %description common
 %{summary}.
@@ -104,7 +97,7 @@ Requires(postun): jpackage-utils
 %package client
 Summary:    XML-RPC client implementation
 Group:      Development/Java
-Requires:   %{name}-common
+Requires:   xmlrpc3-common
 Requires:   jakarta-commons-httpclient
 Obsoletes:  %{name}-client-devel <= %{version}
 
@@ -114,9 +107,9 @@ Obsoletes:  %{name}-client-devel <= %{version}
 %package server
 Summary:    XML-RPC server implementation
 Group:      Development/Java
-Requires:   %{name}-client
+Requires:   xmlrpc3-client
 Requires:   junit
-Requires:   servlet25
+Requires:   tomcat-servlet-3.0-api
 Obsoletes:  %{name}-server-devel <= %{version}
 
 %description server
@@ -124,9 +117,7 @@ Obsoletes:  %{name}-server-devel <= %{version}
 
 %prep
 %setup -q -n apache-%{mainname}-%{version}-src
-pushd server
-%patch0 -b .sav
-popd
+%patch3 -b .sav
 pushd client
 %patch1 -b .sav
 popd
@@ -137,13 +128,10 @@ popd
 sed -i 's/\r//' LICENSE.txt
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL
 # ignore test failure because server part needs network
-mvn-jpp \
+mvn-rpmbuild \
   -e \
-  -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-  -Dmaven2.jpp.depmap.file=%{SOURCE1} \
+  -Dmaven.local.depmap.file=%{SOURCE1} \
   -Dmaven.test.failure.ignore=true \
   install javadoc:aggregate
 
@@ -165,17 +153,16 @@ install -Dm 644 client/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-client
 install -Dm 644 server/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-server.pom
 
 # ... and maven depmaps
-%add_to_maven_depmap org.apache.xmlrpc %{mainname} %{version} JPP %{name}
-%add_to_maven_depmap org.apache.xmlrpc %{mainname}-common %{version} JPP %{name}-common
-%add_to_maven_depmap org.apache.xmlrpc %{mainname}-client %{version} JPP %{name}-client
-%add_to_maven_depmap org.apache.xmlrpc %{mainname}-server %{version} JPP %{name}-server
+%add_maven_depmap JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}-common.pom %{name}-common.jar
+%add_maven_depmap JPP-%{name}-client.pom %{name}-client.jar
+%add_maven_depmap JPP-%{name}-server.pom %{name}-server.jar
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %pre javadoc
-# workaround rpm bug, can be removed in F-17
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
@@ -199,6 +186,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadir}/%{name}-server.jar
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 3.1.3-alt1_12jpp7
+- new release
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 3.1.3-alt1_5jpp6
 - update to new release by jppimport
 
