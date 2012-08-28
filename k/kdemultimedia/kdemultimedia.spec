@@ -24,7 +24,7 @@
 
 Name: kdemultimedia
 Version: 3.5.13
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -76,6 +76,7 @@ Patch114: kio_audiocd-3.4.1-alt-flac_config.patch
 Patch115: mpg123_artsplugin-alt-fix-defines.patch
 Patch116: kdemultimedia-3.5.6-alt-desktop-categiries.patch
 Patch117: kscd-3.5.7-alt-digital-defaults.patch
+Patch118: kmix-3.5.13-capture-process.patch
 
 # Automatically added by buildreq on Mon Apr 12 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs cdparanoia fontconfig freetype2 gcc-c++ gcc-g77 glib2-devel kde-settings kdelibs-devel libalsa-devel libarts-devel libarts-qt-devel libaudiofile-devel libcdparanoia-devel libjpeg-devel liblame-devel libmusicbrainz-devel libogg-devel libpng-devel libqt3-devel libstdc++-devel libtag-devel libtiff-devel libvorbis-devel libxine-devel qt3-designer xml-utils zlib-devel
@@ -310,6 +311,7 @@ cp -ar altlinux/admin ./
 %patch115 -p1
 %patch116 -p1
 %patch117 -p1
+%patch118
 
 for f in `find -type f -name \*.mcopclass`
 do
@@ -653,6 +655,9 @@ mv %buildroot/%_K3apps/kconf_update/noatun20update %buildroot/%_K3libdir/kconf_u
 %_K3includedir/mpeglib
 
 %changelog
+* Tue Aug 28 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt5
+- Capture mixer's knob processing is fixed.
+
 * Wed May 23 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt4
 - Build fix for direct add -lkdeui -lkdecore -lDCOP -lqt-mt.
 
