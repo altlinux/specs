@@ -1,179 +1,233 @@
+Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%global ucname PDFBox
-
-
 Name:           pdfbox
-Summary:        PDFBox pdf library
-Url:            http://www.pdfbox.org/
-Version:        0.7.3
-Release:        alt2_3jpp6
-Epoch:          0
-License:        BSD
+Version:        1.7.0
+Release:        alt1_1jpp7
+Summary:        Java library for working with PDF documents
+
 Group:          Development/Java
+License:        ASL 2.0
+URL:            http://pdfbox.apache.org/
+Source0:        http://www.apache.org/dist/pdfbox/%{version}/%{name}-%{version}-src.zip
+#Don't download anything
+Patch0:         %{name}-nodownload.patch
+#Use sysytem bitream-vera-sans-fonts instead of bundled fonts
+Patch1:         %{name}-1.2.0-bitstream.patch
+#Patch2:         %{name}-debug.patch
+
+BuildRequires:  jpackage-utils
+BuildRequires:  ant
+BuildRequires:  maven
+BuildRequires:  maven-antrun-plugin
+BuildRequires:  maven-plugin-bundle
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-deploy-plugin
+BuildRequires:  maven-doxia-sitetools
+BuildRequires:  maven-release-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven-surefire-provider-junit4
+BuildRequires:  maven-war-plugin
+BuildRequires:  apache-commons-logging
+BuildRequires:  apache-rat-plugin
+BuildRequires:  fonts-ttf-vera
+BuildRequires:  bouncycastle-mail
+BuildRequires:  fontconfig
+BuildRequires:  icu4j
+BuildRequires:  junit4
+BuildRequires:  lucene-demo >= 2.4.1
+BuildRequires:  pcfi
+
 BuildArch:      noarch
-Source0:        %{ucname}-%{version}.zip
-Source1:        pdfbox-extract-expected.txt
-Source2:        fdeb.pdf
-Source3:        FreedomExpressions.pdf
-Source4:        FreedomExpressions.fdf
-Source5:        pdf_with_lots_of_fields.pdf
-# XXX: modified to remove jempbox and update bouncycastle version
-Source6:        http://mirrors.ibiblio.org/pub/mirrors/maven2/pdfbox/pdfbox/0.7.3/pdfbox-0.7.3.pom
 
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.7.1
-BuildRequires:  ant-junit
-BuildRequires:  ant-nodeps
-BuildRequires:  bouncycastle
-BuildRequires:  fontbox
-BuildRequires:  junit
-BuildRequires:  lucene
-BuildRequires:  lucene-demo
-
-Requires:       bouncycastle
+Requires:       jpackage-utils
+Requires:       fonts-ttf-vera
+Requires:       bouncycastle-mail
 Requires:       fontbox
-Requires:       lucene
-Requires:       lucene-demo
-Requires(post):   jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
+Requires:       icu4j
+Requires:       apache-commons-logging
+Requires:       jempbox
+Requires:       lucene-demo >= 2.4.1
+
+Obsoletes:      %{name}-app <= 1.6.0-4
+Provides:       %{name}-app = %{version}-%{release}
 Source44: import.info
 
 %description
-PDFBox is a Java PDF Library. This project will allow 
-access to all of the components in a PDF document. 
-More PDF manipulation features will be added as the 
-project matures. This ships with a utility to take a 
-PDF document and output a text file.
+Apache PDFBox is an open source Java PDF library for working with PDF
+documents. This project allows creation of new PDF documents, manipulation of
+existing documents and the ability to extract content from documents. Apache
+PDFBox also includes several command line utilities. Apache PDFBox is
+published under the Apache License v2.0.
+
+
+%package examples
+Summary:        Examples for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+
+%description examples
+This package contains examples for %{name}.
+
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Summary:        Javadocs for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+Provides:       fontbox-javadocs = %{version}-%{release}
+Obsoletes:      fontbox-javadocs < %{version}-%{release}
+Provides:       jempbox-javadocs = %{version}-%{release}
+Obsoletes:      jempbox-javadocs < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
+This package contains the API documentation for %{name}.
+
+
+%package ant
+Summary:        Apache PDFBox for Ant
+Group:          Development/Java
+Requires:       pdfbox = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       ant
+
+%description ant
 %{summary}.
 
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
 
-%description manual
+%package -n fontbox
+Summary:        Apache FontBox
+Group:          Development/Java
+Requires:       pdfbox = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       junit
+
+%description -n fontbox
+FontBox is a Java library used to obtain low level information from font
+files. FontBox is a subproject of Apache PDFBox.
+
+
+%package -n jempbox
+Summary:        Apache JempBox
+Group:          Development/Java
+Requires:       pdfbox = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       junit
+
+%description -n jempbox
+JempBox is an open source Java library that implements Adobe's XMP(TM)
+specification. JempBox is a subproject of Apache PDFBox.
+
+
+%package lucene
+Summary:        Apache PDFBox for Lucene
+Group:          Development/Java
+Requires:       pdfbox = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       lucene-demo >= 2.4.1
+
+%description lucene
 %{summary}.
+
 
 %prep
-%setup -q -n %{ucname}-%{version}
-chmod -R go=u-w *
-for j in $(find . -name "*.jar"); do
-    mv $j $j.no
-done
-mkdir -p test/input
-cp Resources/cmap/00_ReadMe.pdf test/input
-cp %{SOURCE1} test/input/00_ReadMe.pdf.txt
-cp %{SOURCE2} test/input/
-cp %{SOURCE3} test/input/
-cp %{SOURCE4} test/input/
-cp %{SOURCE5} test/input/
+%setup -q
+%patch0 -p1 -b .nodownload
+%patch1 -p1 -b .bitstream
+#patch2 -p1 -b .debug
+#Use jdk16 version of bcprov
+sed -i -e s/jdk15/jdk16/g */pom.xml
+# Don't build app (it's just a bundle of everything)
+sed -i -e /app/d pom.xml
+find -name '*.class' -exec rm -f '{}' \;
+find -name '*.jar' -exec rm -f '{}' \;
+#Fix line endings
+sed -i -e 's|\r||' RELEASE-NOTES.txt
+#Remove META-INF file that does not exist
+sed -i -e '/META-INF/d' pdfbox/pom.xml
+#Remove included fonts
+rm -r pdfbox/src/main/resources/org/apache/pdfbox/resources/ttf
 
-build-jar-repository external \
-ant \
-bcmail \
-bcprov \
-fontbox \
-junit \
-lucene \
-lucene-demos 
 
 %build
-export OPT_JAR_LIST="ant/ant-nodeps ant/ant-junit junit"
-
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
-    -Dant.jar=$(build-classpath ant) \
-    -Dcheckstyle.jar=$(build-classpath checkstyle4) \
-    -Dfontbox.jar=$(build-classpath fontbox) \
-    -Dlucene.jar=$(build-classpath lucene) \
-    -Dlucene-demos.jar=$(build-classpath lucene-demos) \
-    -Dbcprov.jar=$(build-classpath bcprov) \
-    -Dbcmail.jar=$(build-classpath bcmail) \
-    -Djunit.jar=$(build-classpath junit) \
-test package javadoc
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dadobefiles.jar=%{_javadir}/pcfi.jar install javadoc:aggregate
 
 
 %install
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
+mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
 
-install -m 644 lib/%{ucname}-%{version}-dev.jar \
-        $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
+for jar in */target/*.jar
+do
+  dir=$(dirname $jar)
+  target=$(dirname $dir)
+  jarname=$target
+  [ -f ${dir}/%{name}-${target}-%{version}.jar ] && jarname=%{name}-${target}
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+  cp -p ${dir}/${jarname}-%{version}.jar \
+    $RPM_BUILD_ROOT%{_javadir}/${jarname}.jar
 
-# 
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/Resources
-cp -pr Resources/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/Resources
+  cp -p ${target}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-${jarname}.pom
+  %add_maven_depmap JPP-${jarname}.pom ${jarname}.jar
+done
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr docs/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+# Javadocs
+cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-# manual
-install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-rm -rf docs/javadoc 
-cp -pr docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+#Parent
+cp -p parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-pdfbox-parent.pom
+%add_maven_depmap JPP-pdfbox-parent.pom
+
+#TODO - install/ship war
+
 
 %files
-%{_javadir}/*.jar
-%{_datadir}/%{name}-%{version}
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
+%doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}-parent.pom
+%{_mavendepmapfragdir}/%{name}
+
+%files examples
+%doc LICENSE.txt
+%{_javadir}/%{name}-examples.jar
+%{_mavenpomdir}/JPP-%{name}-examples.pom
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
 
-%files manual
-%doc %{_docdir}/%{name}-%{version}
+%files ant
+%doc LICENSE.txt
+%{_javadir}/%{name}-ant.jar
+%{_mavenpomdir}/JPP-%{name}-ant.pom
+
+%files -n fontbox
+%doc LICENSE.txt
+%{_javadir}/fontbox.jar
+%{_mavenpomdir}/JPP-fontbox.pom
+
+%files -n jempbox
+%doc LICENSE.txt
+%{_javadir}/jempbox.jar
+%{_mavenpomdir}/JPP-jempbox.pom
+
+%files lucene
+%doc LICENSE.txt
+%{_javadir}/%{name}-lucene.jar
+%{_mavenpomdir}/JPP-%{name}-lucene.pom
+
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt1_1jpp7
+- new release
+
 * Thu Feb 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.3-alt2_3jpp6
 - new jpp relase
 
