@@ -8,9 +8,11 @@
 %def_enable quotacheck
 %def_enable randomseed
 %def_disable coredump
+%def_disable gcrypt
+%def_disable qrencode
 
 Name: systemd
-Version: 188
+Version: 189
 Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
@@ -77,6 +79,9 @@ BuildRequires: pciids usbids
 BuildRequires: libblkid-devel >= 2.20
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel}
+BuildRequires: libgcrypt-devel
+%{?_enable_qrencode:BuildRequires: libqrencode-devel}
+
 Requires: dbus >= %dbus_ver
 Requires: udev = %version-%release
 Requires: libudev1 = %version-%release
@@ -307,6 +312,8 @@ intltoolize --force --automake
 	%{subst_enable quotacheck} \
 	%{subst_enable randomseed} \
 	%{subst_enable coredump} \
+	%{subst_enable gcrypt} \
+	%{subst_enable qrencode} \
 	--enable-introspection \
 	--enable-split-usr \
 	--with-rootlibdir=/%_lib \
@@ -788,6 +795,10 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Tue Aug 28 2012 Alexey Shabalin <shaba@altlinux.ru> 189-alt1
+- snapshot fe1fed02c7637a2c18cd575f78be7fda27972148
+- build without FSS (gcrypt and qrencode)
+
 * Thu Aug 09 2012 Alexey Shabalin <shaba@altlinux.ru> 188-alt1
 - 188
 - update prefdm.service
