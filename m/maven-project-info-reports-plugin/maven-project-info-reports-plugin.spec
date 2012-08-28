@@ -5,14 +5,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-project-info-reports-plugin
 Version:        2.4
-Release:        alt1_5jpp7
+Release:        alt1_7jpp7
 Summary:        Maven Project Info Reports Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-project-info-reports-plugin/
 Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-#- Removed junit-addons dependency as there is no junit-addons available in koji, meanwhile set test skip as true.
+# removed cvsjava provider since we don't support it anymore
 Patch0:        %{name}-pom.patch
 BuildArch: noarch
 
@@ -34,7 +34,7 @@ BuildRequires: plexus-utils
 BuildRequires: apache-commons-validator
 BuildRequires: httpunit
 BuildRequires: maven-plugin-testing-harness
-BuildRequires: servlet25
+BuildRequires: servlet3
 BuildRequires: netbeans-cvsclient
 BuildRequires: maven-jarsigner-plugin
 BuildRequires: keytool-maven-plugin
@@ -48,13 +48,10 @@ Requires:       plexus-i18n
 Requires:       plexus-utils
 Requires:       apache-commons-validator
 Requires:       httpunit
-Requires:       servlet25
+Requires:       servlet3
 Requires:       maven-shared-jar
 Requires:       maven-scm
 Requires:       joda-time
-
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
 
 Obsoletes: maven2-plugin-project-info-reports <= 0:2.0.8
 Provides: maven2-plugin-project-info-reports = 0:%{version}-%{release}
@@ -77,7 +74,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q -c
-%patch0 -p0 -b .sav
+%patch0 -p1 -b .sav
 
 %build
 pushd %{name}-%{version}
@@ -109,6 +106,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_7jpp7
+- new release
+
 * Mon Mar 26 2012 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_5jpp7
 - complete build
 
