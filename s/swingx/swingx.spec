@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           swingx
 Version:        1.6
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Summary:        Extensions to the Swing GUI toolkit
 
 Group:          Development/Java
@@ -51,7 +51,7 @@ BuildRequires: jpackage-utils >= 0:5.0.0
 BuildRequires: maven2 >= 0:2.0.8
 BuildRequires: maven2-plugin-resources
 BuildRequires: maven-surefire-provider-junit4
-BuildRequires: mojo-maven2-plugin-emma
+#BuildRequires: mojo-maven2-plugin-emma
 BuildRequires: jhlabs-filters
 BuildRequires: junit4
 
@@ -144,6 +144,9 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %{_javadocdir}/%{name} 
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt4_1jpp6
+- fixed build
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt3_1jpp6
 - build without emma-plugin
 
