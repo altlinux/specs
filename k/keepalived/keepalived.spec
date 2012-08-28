@@ -1,5 +1,5 @@
 Name: keepalived
-Version: 1.2.5
+Version: 1.2.6
 Release: alt1
 
 Summary: The main goal of the keepalived project is to add a strong & robust keepalive facility to the Linux Virtual Server project.
@@ -8,7 +8,6 @@ Group: Networking/Other
 Url: http://www.keepalived.org/software/
 Source0: %url/%name-%version.tar
 Source1: %name.init
-Patch0: %name-build.patch
 
 # Automatically added by buildreq on Thu Aug 09 2007 (-ba)
 BuildRequires: libpopt-devel libssl-devel
@@ -26,7 +25,6 @@ userspace daemon for LVS cluster nodes healthchecks and LVS directors failover.
 
 %prep
 %setup -q
-%patch0 -p1
 autoreconf
 
 %build
@@ -89,6 +87,9 @@ install -pD -m755 %SOURCE1 %buildroot/etc/rc.d/init.d/%name
 %doc doc/samples/keepalived.conf.track_interface
 
 %changelog
+* Tue Aug 28 2012 Anton Farygin <rider@altlinux.ru> 1.2.6-alt1
+- new version
+
 * Tue Aug 14 2012 Anton Farygin <rider@altlinux.ru> 1.2.5-alt1
 - new version
 
