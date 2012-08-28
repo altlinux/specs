@@ -2,7 +2,7 @@
 
 Name: libvdpau
 Version: 0.4.1
-Release: alt2.qa1
+Release: alt2.qa2
 Epoch: 1
 Group: System/Libraries
 Summary: VDPAU library
@@ -26,7 +26,7 @@ VDPAU_DRIVER environment variable.
 %package devel
 Group: Development/C
 Summary: Development files for VDPAU library
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 Provides: libvdpau1-devel = %version-%release
 Obsoletes: libvdpau1-devel
 
@@ -72,6 +72,11 @@ Documentation for VDPAU library
 %docdir/html
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.4.1-alt2.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for libvdpau
+
 * Fri May 13 2011 Andrey Cherepanov <cas@altlinux.org> 1:0.4.1-alt2.qa1
 - Obsoletes libvdpau1
 
