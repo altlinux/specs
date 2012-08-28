@@ -1,7 +1,7 @@
 Name: fpc
 Epoch: 2
 Version: 2.6.0
-Release: alt2.qa1
+Release: alt2.qa2
 
 Summary: Free Pascal Compiler -- Meta Package
 License: GPL
@@ -63,7 +63,7 @@ and can skip installing this metapackage.
 %setup -q -n fpcbuild-%version
 %patch -p1
 
-%__subst "s|/usr/local/lib|%_libdir|g" fpcsrc/packages/gdbint/src/gdbint.pp
+sed -i "s|/usr/local/lib|%_libdir|g" fpcsrc/packages/gdbint/src/gdbint.pp
 sed -i "/LINKLIB/s/python/python2.7/" fpcsrc/packages/gdbint/src/gdbint.pp
 sed -i "/LINKLIB ncurses/a {\$LINKLIB z}" fpcsrc/packages/gdbint/src/gdbint.pp
 
@@ -71,10 +71,10 @@ sed -i '/fp/s/\/bin/\/usr\/bin/g' fpcsrc/compiler/utils/samplecfg
 
 %build
 # install src
-%__rm -rf ../fpcsrc
-%__mkdir_p ../fpcsrc
-%__cp -fR  fpcsrc/* ../fpcsrc/
-%__rm -rf ../fpcsrc/{ide,installer,tests,utils}
+rm -rf ../fpcsrc
+mkdir -p ../fpcsrc
+cp -fR  fpcsrc/* ../fpcsrc/
+rm -rf ../fpcsrc/{ide,installer,tests,utils}
 
 export OPT="-vwn "
 export GDBLIBDIR=%_libdir
@@ -82,10 +82,10 @@ export LIBGDBFILE=%_libdir/libgdb.a
 
 # bootstrap fpc
 %ifarch %ix86
-%__cp %SOURCE6 .
+cp %SOURCE6 .
 make -C fpcsrc/compiler cycle RELEASE=1 FPC=$PWD/ppc386_bootstrap
 %else
-%__cp %SOURCE7 .
+cp %SOURCE7 .
 make -C fpcsrc/compiler cycle RELEASE=1 FPC=$PWD/ppcx64_bootstrap
 %endif
 cp -pv fpcsrc/compiler/%ppcname %ppcname
@@ -99,7 +99,7 @@ cp -pv fpcsrc/utils/fpcm/fpcmake fpcmake
 
 #Fix path
 %ifarch x86_64
-%__subst "s|/lib/fpc/lexyacc|/lib64/fpc/lexyacc|g" fpcsrc/utils/tply/Makefile.fpc
+sed -i "s|/lib/fpc/lexyacc|/lib64/fpc/lexyacc|g" fpcsrc/utils/tply/Makefile.fpc
 %endif
 
 # Begin make all use new fpcmake
@@ -127,7 +127,7 @@ make -C fpcdocs html pdf
 %endif
 
 %if %maketests
-%__make TEST_FPC=$PWD/%ppcname FPCDIR=$PWD QUICKTEST=YES -C fpcsrc/tests digest
+make TEST_FPC=$PWD/%ppcname FPCDIR=$PWD QUICKTEST=YES -C fpcsrc/tests digest
 %endif
 
 %install
@@ -147,8 +147,8 @@ ln -s %fpc_dir/%ppcname %buildroot%_bindir/%ppcname
 
 #Install src
 %if %makesrc
-%__mkdir_p %buildroot%_datadir/fpcsrc
-%__cp -fR ../fpcsrc %buildroot%_datadir/
+mkdir -p %buildroot%_datadir/fpcsrc
+cp -fR ../fpcsrc %buildroot%_datadir/
 %add_verify_elf_skiplist */fpcsrc/*
 %add_findreq_skiplist */fpcsrc/*
 %endif
@@ -164,44 +164,44 @@ ln -s %fpc_dir/ppc386 %buildroot%_bindir/ppc386
 %endif
 
 #Install man
-%__make INSTALL_PREFIX=%buildroot%_datadir -C install/man installman
+make INSTALL_PREFIX=%buildroot%_datadir -C install/man installman
 
 #Instal docs
-%__mkdir_p %buildroot%_defaultdocdir/%name-%version
-%__install -p -m 644 install/doc/copying* install/doc/whatsnew.txt install/doc/readme.txt install/doc/faq.txt %buildroot%_defaultdocdir/%name-%version
+mkdir -p %buildroot%_defaultdocdir/%name-%version
+install -p -m 644 install/doc/copying* install/doc/whatsnew.txt install/doc/readme.txt install/doc/faq.txt %buildroot%_defaultdocdir/%name-%version
 
 # Create fpc.cfg
 chmod 755 fpcsrc/compiler/utils/samplecfg
 fpcsrc/compiler/utils/samplecfg "%fpc_dir" %buildroot%_sysconfdir
 iconv -f CP866 -t UTF8 %buildroot%fpc_dir/msg/errorr.msg > %buildroot%fpc_dir/msg/errorru.msg
-%__subst "s|errorn.msg|errorn.msg\n-Fr%fpc_dir/msg/errorru.msg|g" %buildroot%_sysconfdir/%name.cfg
+sed -i "s|errorn.msg|errorn.msg\n-Fr%fpc_dir/msg/errorru.msg|g" %buildroot%_sysconfdir/%name.cfg
 
-%__mkdir_p %buildroot%_datadir/pixmaps
-%__mkdir_p %buildroot%_miconsdir
-%__mkdir_p %buildroot%_liconsdir
-%__mkdir_p %buildroot%_niconsdir
-%__mkdir_p %buildroot%_datadir/applications
-%__install -p -m 644 %SOURCE1 %buildroot%_datadir/applications
-%__mv %buildroot%_bindir/fp %buildroot%_bindir/fp-bin
-%__install -p -m 755 %SOURCE2 %buildroot%_bindir/fp
-%__install -p -m 644 %SOURCE3 %buildroot%_sysconfdir/fp.cfg
-%__install -p -m 644 install/unix/fp32x32.xpm %buildroot%_datadir/pixmaps/fp.xpm
-%__install -p -m 644 install/unix/fp32x32.xpm %buildroot%_niconsdir/fp.xpm
-%__install -p -m 644 %SOURCE4 %buildroot%_miconsdir/fp.xpm
-%__install -p -m 644 %SOURCE5 %buildroot%_liconsdir/fp.xpm
+mkdir -p %buildroot%_datadir/pixmaps
+mkdir -p %buildroot%_miconsdir
+mkdir -p %buildroot%_liconsdir
+mkdir -p %buildroot%_niconsdir
+mkdir -p %buildroot%_datadir/applications
+install -p -m 644 %SOURCE1 %buildroot%_datadir/applications
+mv %buildroot%_bindir/fp %buildroot%_bindir/fp-bin
+install -p -m 755 %SOURCE2 %buildroot%_bindir/fp
+install -p -m 644 %SOURCE3 %buildroot%_sysconfdir/fp.cfg
+install -p -m 644 install/unix/fp32x32.xpm %buildroot%_datadir/pixmaps/fp.xpm
+install -p -m 644 install/unix/fp32x32.xpm %buildroot%_niconsdir/fp.xpm
+install -p -m 644 %SOURCE4 %buildroot%_miconsdir/fp.xpm
+install -p -m 644 %SOURCE5 %buildroot%_liconsdir/fp.xpm
 
 #Fix for depend
 %ifarch x86_64
-%__install -p -m 644 fpcsrc/utils/fppkg/units/x86_64-linux/*.{o,ppu} %buildroot%fpc_dir/units/x86_64-linux/fppkg/
-%__subst "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/%name.cfg
-%__subst "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/fp.cfg
-%__subst "s|/usr/lib|%_libdir|g" %buildroot%_sysconfdir/fp.cfg
+install -p -m 644 fpcsrc/utils/fppkg/units/x86_64-linux/*.{o,ppu} %buildroot%fpc_dir/units/x86_64-linux/fppkg/
+sed -i "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/%name.cfg
+sed -i "s|\$fpctarget|x86_64-linux|g" %buildroot%_sysconfdir/fp.cfg
+sed -i "s|/usr/lib|%_libdir|g" %buildroot%_sysconfdir/fp.cfg
 %else
-%__install -p -m 644 fpcsrc/utils/fppkg/units/i386-linux/*.{o,ppu} %buildroot%fpc_dir/units/i386-linux/fppkg/
-%__subst "s|\$fpctarget|i386-linux|g" %buildroot%_sysconfdir/%name.cfg
-%__subst "s|\$fpctarget|i386-linux|g" %buildroot%_sysconfdir/fp.cfg
+install -p -m 644 fpcsrc/utils/fppkg/units/i386-linux/*.{o,ppu} %buildroot%fpc_dir/units/i386-linux/fppkg/
+sed -i "s|\$fpctarget|i386-linux|g" %buildroot%_sysconfdir/%name.cfg
+sed -i "s|\$fpctarget|i386-linux|g" %buildroot%_sysconfdir/fp.cfg
 %endif
-%__subst "s|\$fpcversion|fpc|g" %buildroot%_sysconfdir/%name.cfg
+sed -i "s|\$fpcversion|fpc|g" %buildroot%_sysconfdir/%name.cfg
 
 %files
 
@@ -224,7 +224,7 @@ common files and dirs.
 %package compiler
 Summary: Free Pascal -- Compiler
 Group: Development/Other
-Requires: %name-common = %version-%release
+Requires: %name-common = %{?epoch:%epoch:}%version-%release
 Requires: binutils
 Obsoletes: fpc <= 2.1-alt3
 
@@ -358,7 +358,7 @@ Compiler:
 %package units-rtl
 Summary: Free Pascal -- Runtime Library
 Group: Development/Other
-Requires: %name-compiler = %version-%release
+Requires: %name-compiler = %{?epoch:%epoch:}%version-%release
 
 %description units-rtl
 The Free Pascal Compiler is an object pascal compiler supporting both Delphi
@@ -753,7 +753,7 @@ This package contains Free Pascal multimedia interfacing units for:
 %package ide
 Summary: Free Pascal -- IDE
 Group: Development/Other
-Requires: %name-common = %version-%release
+Requires: %name-common = %{?epoch:%epoch:}%version-%release
 
 %description ide
 The Free Pascal Compiler is an object pascal compiler supporting both Delphi
@@ -812,7 +812,7 @@ the Lazarus IDE.
 Group: Documentation
 Summary: Free Pascal Compiler - Documentation
 BuildArch: noarch
-Requires: %name-common = %version-%release
+Requires: %name-common = %{?epoch:%epoch:}%version-%release
 
 %description docs
 The Free Pascal Compiler is an object pascal compiler supporting both Delphi
@@ -840,7 +840,7 @@ PDF format.
 %package win32
 Summary: Free Pascal runtime library units cross-compiled for win32
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 #Requires: i386-mingw32msvc-binutils
 
 %description win32
@@ -861,6 +861,12 @@ interfacing many popular open source libraries.
 %endif
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2:2.6.0-alt2.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for fpc
+  * postclean-03-private-rpm-macros for the spec file
+
 * Fri May 11 2012 Andrey Cherepanov <cas@altlinux.org> 2:2.6.0-alt2.qa1
 - Increase epoch to rollback version in p6 branch
 
