@@ -43,7 +43,7 @@ BuildRequires: jpackage-compat maven-surefire-provider-junit4
 
 Name:           portals-%{bname}12
 Version:        1.2.0
-Release:        alt4_0.G602095.1jpp5
+Release:        alt5_0.G602095.1jpp5
 Epoch:          0
 Summary:        Portlet 1.0 Reference Implementation
 License:        Apache Software License 2.0
@@ -448,7 +448,7 @@ install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 cp LICENSE $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %if %{with_maven}
 rm -rf target/site/apidocs
-cp -pr target/site/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+#cp -pr target/site/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %endif
 
 %if %{gcj_support}
@@ -492,6 +492,9 @@ EOF
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt5_0.G602095.1jpp5
+- fixed build
+
 * Sat Mar 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt4_0.G602095.1jpp5
 - fixed build with maven3
 
