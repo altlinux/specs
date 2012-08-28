@@ -1,5 +1,5 @@
 Name: xfce4-places-plugin
-Version: 1.3.0
+Version: 1.4.0
 Release: alt1
 
 Summary: This plugin is a menu with quick access to folders, documents, and removable media
@@ -8,6 +8,7 @@ Group: Graphical desktop/XFce
 Url: http://goodies.xfce.org/projects/panel-plugins/%name
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
+# git://git.xfce.org/panel-plugins/xfce4-places-plugin
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -51,10 +52,15 @@ so that it shares bookmarks with Thunar, Nautilus, the GNOME Panel, etc.
 %files -f %name.lang
 %doc README AUTHORS
 %_bindir/xfce4-popup-places
-%_libexecdir/xfce4/panel-plugins/*
+%_libdir/xfce4/panel/plugins/*
 %_datadir/xfce4/panel/plugins/*.desktop
 
+%exclude %_libdir/xfce4/panel/plugins/*.la
+
 %changelog
+* Tue Aug 28 2012 Mikhail Efremov <sem@altlinux.org> 1.4.0-alt1
+- Updated to 1.4.0.
+
 * Fri Apr 13 2012 Mikhail Efremov <sem@altlinux.org> 1.3.0-alt1
 - Updated to 1.3.0.
 
