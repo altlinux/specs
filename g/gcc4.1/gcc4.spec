@@ -2,13 +2,12 @@
 
 Name: gcc%gcc_branch
 Version: 4.1.2
-Release: alt10
+Release: alt11
 
 Summary: GNU Compiler Collection
 License: GPL
 Group: Development/C
 Url: http://gcc.gnu.org/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 %ifarch ppc
 # On ppc32, we build a 64-bit compiler with default 32-bit mode.
@@ -123,6 +122,8 @@ Patch712: gcc41-up-pr30486.patch
 Patch713: gcc41-up-pr28516.patch
 Patch714: gcc41-alt-arm-cflags.patch
 Patch715: gcc41-alt-makeinfo.patch
+Patch716: gcc41-alt-defaults-FORTIFY_SOURCE.patch
+Patch717: gcc41-up-siginfo.patch
 
 Provides: gcc = %version-%release, %_bindir/%_target_platform-gcc, %_bindir/gcc
 Obsoletes: egcs, gcc3.0, gcc3.1
@@ -842,6 +843,8 @@ sed -i \
 %patch714 -p1
 %endif
 %patch715 -p1
+%patch716 -p0
+%patch717 -p0
 
 find -type f -name \*.orig -delete -print
 
@@ -850,7 +853,7 @@ cp -a libstdc++-v3/config/cpu/i{4,3}86/atomicity.h
 
 %set_automake_version 1.9
 %set_autoconf_version 2.5
-%set_gcc_version %gcc_branch
+#set_gcc_version %gcc_branch
 
 # Never build with bundled libltdl.
 sed -i s/AC_LIBLTDL_CONVENIENCE/AC_LIBLTDL_INSTALLABLE/ \
@@ -1563,6 +1566,10 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Tue Aug 28 2012 Dmitry V. Levin <ldv@altlinux.org> 4.1.2-alt11
+- Backported upstream change to fix build with glibc-2.16.
+- Define _FORTIFY_SOURCE only for optimization level 2 or higher.
+
 * Tue Nov 16 2010 Dmitry V. Levin <ldv@altlinux.org> 4.1.2-alt10
 - Fixed build with new perl.
 
