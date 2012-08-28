@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt7
+Release: alt8
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -915,6 +915,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Aug 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt8
+- update from 4.8 branch
+
+* Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt6.M60P.1
+- built for M60P
+
 * Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt7
 - don't save owncloud-client in session by default
 
