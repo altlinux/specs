@@ -1,15 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ libX11-devel libggi-devel libpth-devel
+BuildRequires: gcc-c++ libggi-devel libgpm-devel libncurses-devel libpth-devel
 # END SourceDeps(oneline)
 Summary(zh_TW): Zhcon 是一個支援 Framebuffer 及多內碼 Linux 中日韓文主控台
 Summary(zh_CN): Zhcon 是一个支持 Framebuffer 的 Linux 中日韩文控制台
+Summary(zh_TW): Zhcon 是一個支援 Framebuffer 及多內碼 Linux 中日韓文主控台
+Summary(zh_CN): Zhcon 是一个支持 Framebuffer 的 Linux 中日韩文控制台
 Summary(zh_CN): Zhcon 是一个支持 Framebuffer 的 Linux 中日韩文控制台
 Summary(zh_TW): Zhcon 是一個支援 Framebuffer 及多內碼 Linux 中日韓文主控台
-%define fedora 15
+%define fedora 16
 Name: zhcon
 Summary: A Fast Console CJK System Using FrameBuffer
 Version: 0.2.6
-Release: alt1_19
+Release: alt1_20
 Group: File tools
 License: GPLv2+
 URL:   http://zhcon.sourceforge.net/
@@ -31,8 +33,8 @@ Summary(zh_TW): Zhcon 是一個支援 Framebuffer 及多內碼 Linux 中日韓�
 
 
 BuildRequires: autoconf automake
-BuildRequires: gettext-devel libncurses-devel libgpm-devel
-Requires: gpm ncurses%{!?ncurse_libs_postfix: }
+BuildRequires: gettext-devel ncurses-devel gpm-devel
+Requires: gpm ncurses 
 Source44: import.info
 
 
@@ -91,6 +93,9 @@ make DESTDIR=${RPM_BUILD_ROOT} INSTALL="install -c -p" install
 %{_datadir}/%{name}/
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_20
+- new release
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.6-alt1_19
 - rebuild to get rid of #27020
 
