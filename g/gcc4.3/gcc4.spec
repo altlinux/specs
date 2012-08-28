@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.3.2
-Release: alt17
+Release: alt18
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap and crtstuff have an exception which
@@ -59,7 +59,7 @@ Url: http://gcc.gnu.org/
 %def_disable objc_gc
 %def_with treelang
 %ifnarch %arm ppc ppc64
-%def_with java
+%def_without java
 %else
 %def_without java
 %endif
@@ -157,7 +157,8 @@ Patch712: gcc43-alt-testsuite.patch
 Patch713: gcc43-alt-m4-cache-id.patch
 Patch714: gcc43-alt-libjava-ltdl.patch
 Patch715: gcc44-up-libstdc-unpreciousize.patch
-Patch716: libtool.m4-gcj.patch
+Patch716: gcc43-up-siginfo.patch
+Patch717: libtool.m4-gcj.patch
 
 Provides: gcc = %version-%release, %_bindir/%_target_platform-gcc, %_bindir/gcc
 Obsoletes: egcs, gcc3.0, gcc3.1
@@ -803,6 +804,7 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch713 -p0
 %patch714 -p0
 %patch715 -p0
+%patch716 -p0
 
 # Remove -I- gcc option.
 find -type f -name Makefile\* -print0 |
@@ -1610,6 +1612,11 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Tue Aug 28 2012 Dmitry V. Levin <ldv@altlinux.org> 4.3.2-alt18
+- Backported upstream change to fix build with glibc-2.16.
+- Define _FORTIFY_SOURCE only for optimization level 2 or higher.
+- Disabled java subpackages.
+
 * Wed Apr 11 2012 Dmitry V. Levin <ldv@altlinux.org> 4.3.2-alt17
 - Updated to build with libtool 2.4.2.
 - gcc4.3, libstdc++4.3-devel:
