@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           google-collections
 Version:        1.0
-Release:        alt1_3jpp6
+Release:        alt2_3jpp6
 Epoch:          0
 Summary:        Google Collections Library
 License:        ASL 2.0
@@ -133,7 +133,7 @@ cp %{SOURCE2} build.xml
 cp %{SOURCE3} build.properties
 cp %{SOURCE4} COPYING
 mkdir lib
-ln -sf $(build-classpath jsr305) lib
+ln -sf $(build-classpath jsr-305) lib/jsr305.jar
 ln -sf $(build-classpath junit) lib
 ln -sf $(build-classpath cglib-nodep) lib/cglib-nodep-2.2.jar
 ln -sf $(build-classpath easymock2) lib/easymock-2.4.jar
@@ -192,6 +192,9 @@ export CLASSPATH=
 %{_javadocdir}/google-collect
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_3jpp6
+- fixed build
+
 * Wed Feb 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_3jpp6
 - new version
 
