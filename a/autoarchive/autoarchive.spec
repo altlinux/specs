@@ -1,18 +1,20 @@
-%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
-
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python3 rpm-macros-fedora-compat
+BuildRequires: python-devel
+# END SourceDeps(oneline)
 Name:           autoarchive
-Version:        0.2.0
-Release:        alt2_3
+Version:        0.5.2
+Release:        alt1_4
 Summary:        A simple backup tool that uses tar
 
 Group:          File tools
 License:        GPLv3
 URL:            http://autoarchive.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.bz2
+Patch0:         %{name}-0.5.2-coding.patch
 BuildArch:      noarch
 
-BuildRequires:  python-devel
-BuildRequires:  python-module-setuptools
+BuildRequires:  python3-devel
 
 Requires:       xz
 Requires:       tar
@@ -27,31 +29,36 @@ AutoArchive is a simple utility for making backups more easily. It
 uses tar for creating archives. The idea of the program is that every 
 information needed for making a backup is in one file - the archive 
 spec file. Path to this file is passed as a parameter to 'aa' command 
-which reads informations from it and creates desired backup.
+which reads information from it and creates desired backup.
 
 
 %prep
 %setup -q
+%patch0 -p1
 
 
 %build
-%{__python} setup.py build
+%{__python3} setup.py build
 
 
 %install
-%{__python} setup.py install -O1 --skip-build --root=%{buildroot}
+%{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
 
 
 %files
-%doc COPYING NEWS README README.sk src/doc/examples/
+%doc COPYING NEWS README README.sk
+%config(noreplace) %{_sysconfdir}/aa/
 %{_mandir}/man?/*.*
 %{_bindir}/autoarchive
 %{_bindir}/aa
-%{python_sitelib}/AutoArchive/
-%{python_sitelib}/%{name}*.egg-info
+%{python3_sitelibdir_noarch}/AutoArchive/
+%{python3_sitelibdir_noarch}/%{name}*.egg-info
 
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt1_4
+- new release
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_3
 - rebuild to get rid of #27020
 
