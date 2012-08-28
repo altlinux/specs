@@ -20,7 +20,7 @@ Name: blcr
 %define Name BLCR
 %define lname lib%name
 Version: 0.8.3
-Release: alt1
+Release: alt2
 Summary: Berkeley Lab Checkpoint/Restart for Linux
 Group: System/Base
 License: %gpl2plus
@@ -124,6 +124,7 @@ install -m644 %SOURCE1 .
 
 
 %build
+./autogen.sh
 install -d -m 0755 kernel-source-%name-%version
 cp -r -L -t ./kernel-source-%name-%version Makefile* a* %{name}_* config* cr_module include vmadump4
 for i in {doc,etc,rpm}/*.in; do
@@ -225,6 +226,9 @@ sed -i -e '3rinit.info' \
 
 
 %changelog
+* Tue Aug 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt2
+- Fixed build
+
 * Thu Oct 06 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt1
 - Version 0.8.3
 
