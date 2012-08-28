@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           servletapi4
 Version:        4.0.4
-Release:	alt2_7jpp6
+Release:	alt3_7jpp6
 Epoch:          0
 Summary:        Java Servlet 2.3 and JSP 1.2 API classes
 License:        Apache License
@@ -50,7 +50,7 @@ Requires(postun): jpackage-utils >= 0:1.7.5
 
 BuildRequires:  jpackage-utils >= 0:1.7.5
 BuildRequires:  ant >= 0:1.7.1
-BuildRequires:  aqute-bndlib
+BuildRequires:  aqute-bnd
 BuildArch:      noarch
 Provides:       servlet
 Provides:       servlet_api
@@ -79,7 +79,7 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist -Dservletapi.
 pushd dist/lib
 echo Bundle-SymbolicName: javax.servlet > servlet.osgi
 echo Bundle-Version: 2.3.0 >> servlet.osgi
-java -jar $(build-classpath aqute-bndlib) wrap -properties servlet.osgi servlet.jar
+java -jar $(build-classpath aqute-bnd) wrap -properties servlet.osgi servlet.jar
 rm servlet.jar
 mv servlet.bar servlet.jar
 popd
@@ -136,6 +136,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.4-alt3_7jpp6
+- fixed build - use fedora' aqute-bnd instead of aqute-bndlib
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.4-alt2_7jpp6
 - new jpp relase
 
