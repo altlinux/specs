@@ -2,7 +2,7 @@ BuildRequires: desktop-file-utils
 
 Name:		rpminstall
 Version:	1.1.3
-Release:	alt1
+Release:	alt1.qa1
 Summary:	Graphical application for install RPM packages using apt-get
 
 License:	GPL
@@ -30,6 +30,11 @@ DESTDIR=%buildroot PREFIX=/usr qmake-qt4 %name.pro
 %install
 %makeinstall
 install -Dm644 apturl.js %buildroot%_libdir/firefox/defaults/preferences/apturl.js
+desktop-file-install --dir %buildroot%_desktopdir \
+	--remove-category=Utility \
+	--add-category=Settings \
+	--add-category=PackageManager \
+	%buildroot%_desktopdir/rpminstall.desktop
 
 %files
 %doc AUTHORS README
@@ -42,6 +47,11 @@ install -Dm644 apturl.js %buildroot%_libdir/firefox/defaults/preferences/apturl.
 %_libdir/firefox/defaults/preferences/apturl.js
 
 %changelog
+* Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.1.3-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for rpminstall
+
 * Thu Dec 08 2011 Andrey Cherepanov <cas@altlinux.org> 1.1.3-alt1
 - Move menu entry to System menu (like Synaptic)
 
