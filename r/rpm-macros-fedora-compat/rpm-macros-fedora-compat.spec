@@ -2,7 +2,7 @@
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
 Version: 0.07
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 BuildArch: noarch
@@ -28,6 +28,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2
+- fixes in systemd macros
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
 - added __python3
 
