@@ -9,7 +9,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -310,6 +310,12 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Tue Aug 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt3
+- update from 4.8 branch (kde bug 268020)
+
+* Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1.M60P.1
+- built for M60P
+
 * Thu Aug 23 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2
 - add for global desktop-files translation support
 
