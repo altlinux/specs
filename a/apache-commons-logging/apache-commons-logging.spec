@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.1.1
-Release:        alt4_20jpp7
+Release:        alt5_20jpp7
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 Group:          Development/Java
@@ -85,6 +85,7 @@ Group:          Development/Java
 Requires:       jpackage-utils
 
 Obsoletes:      jakarta-%{short_name}-javadoc <= 0:1.0.4
+Provides:       jakarta-%{short_name}-javadoc = 0:%{version}-%{release}
 BuildArch: noarch
 
 %description    javadoc
@@ -126,6 +127,7 @@ install -p -m 644 target/%{short_name}-adapters-%{version}.jar $RPM_BUILD_ROOT%{
 pushd $RPM_BUILD_ROOT%{_javadir}
 for jar in %{name}*; do
     ln -sf ${jar} `echo $jar| sed "s|apache-||g"`
+    ln -sf ${jar} jakarta-`echo $jar| sed "s|apache-||g"`
 done
 popd
 
@@ -148,6 +150,7 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{short_name}-api
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+ln -s %{name} %buildroot%{_javadocdir}/jakarta-%{short_name}
 
 %if_with repolib
 %{__install} -d -m 0755 %{buildroot}%{repodir}
@@ -176,10 +179,14 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %files javadoc
 %doc LICENSE.txt
 %{_javadocdir}/%{name}
+%{_javadocdir}/jakarta-%{short_name}
 
 # -----------------------------------------------------------------------------
 
 %changelog
+* Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt5_20jpp7
+- added jakarta cpmpat symlinks
+
 * Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt4_20jpp7
 - no not package repolib in main commons-logging
 
