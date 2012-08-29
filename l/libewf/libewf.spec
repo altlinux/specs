@@ -1,6 +1,6 @@
 Name: libewf
 Version: 20080501
-Release: alt1.qa3
+Release: alt1.qa4
 
 Summary: Library and tools to support the Expert Witness Compression Format
 
@@ -35,7 +35,7 @@ Header files and libraries for developing applications which will use libewf.
 
 %prep
 %setup -q
-%patch -p0
+%patch -p2
 
 %build
 %configure --disable-static
@@ -66,6 +66,9 @@ Header files and libraries for developing applications which will use libewf.
 %_man3dir/*
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080501-alt1.qa4
+- Really fixed build with new glibc
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080501-alt1.qa3
 - Fixed build with new glibc
 
