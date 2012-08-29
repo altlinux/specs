@@ -4,10 +4,12 @@
 %define status %nil
 %define variants altlinux-office-desktop altlinux-office-server altlinux-desktop
 %define brand school
+%define distro_name Informika 6.0 School Junior
+%define distro_name_ru Информика 6.0 Школьный Юниор
 
 Name: branding-%brand-%theme
 Version: 6.0.0
-Release: alt4
+Release: alt5
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -26,10 +28,10 @@ Summary: System/Base
 License: GPL
 
 %description
-Distro-specific packages with design and texts for Simply Linux distribution.
+Distro-specific packages with design and texts for %distro_name.
 
 %description -l ru_RU.UTF-8
-Пакеты, для дистрибутива "Просто Линукс" (Simply Linux)
+Пакеты оформления для дистрибутива %distro_name_ru.
 
 %package bootloader
 Group: System/Configuration/Boot and Init
@@ -47,16 +49,16 @@ Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-b
 %define grub_high black/white
 
 %description bootloader
-Here you find the graphical boot logo for Simply Linux distribution.
+Here you find the graphical boot logo for %distro_name.
 Suitable for both lilo and syslinux.
 
 %description bootloader -l ru_RU.UTF-8
 В данном пакете находится тема для экрана выбора вариантов загрузки (lilo и syslinux) 
-для дистрибутива "Просто Линукс" (Simply Linux).
+для дистрибутива %distro_name_ru.
 
 %package bootsplash
 Summary: Theme for splash animations during bootup
-Summary(ru_RU.UTF-8): Тема для экрана загрузки для дистрибутива "Просто Линукс"
+Summary(ru_RU.UTF-8): Тема для экрана загрузки для дистрибутива %distro_name_ru.
 License: Distributable
 Group:  System/Configuration/Boot and Init
 Provides: plymouth-theme-%theme
@@ -66,16 +68,16 @@ PreReq: plymouth
 Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-bootsplash ";done )
 
 %description bootsplash
-This package contains graphics for boot process for Simply Linux
+This package contains graphics for boot process for %distro_name
 (needs console splash screen enabled).
 
 %description bootsplash -l ru_RU.UTF-8
 В данном пакете находится тема для экрана загрузки для дистрибутива
-"Просто Линукс" (Simply Linux).
+%distro_name_ru.
 
 %package alterator
-Summary: Design for alterator for Simply Linux 
-Summary(ru_RU.UTF-8): Тема для "Центра управления системой" и QT для дистрибутива "Просто Линукс"
+Summary: Design for alterator for %distro_name
+Summary(ru_RU.UTF-8): Тема для "Центра управления системой" и QT для дистрибутива %distro_name_ru
 License: GPL
 Group: System/Configuration/Other
 Provides: design-alterator-browser-%theme  branding-alt-%theme-browser-qt branding-altlinux-%theme-browser-qt
@@ -87,15 +89,15 @@ Obsoletes: design-alterator-server design-alterator-desktop design-altertor-brow
 PreReq(post,preun): alternatives >= 0.2 alterator
 
 %description alterator
-Design for QT and web alterator for Simply Linux.
+Design for QT and web alterator for %distro_name.
 
 %description alterator -l ru_RU.UTF-8
 В данном пакете находится тема для "Центра управления системой" (Alterator)
-и модулей библиотеки QT для дистрибутива "Просто Линукс" (Simply Linux).
+и модулей библиотеки QT для дистрибутива %distro_name_ru.
 
 %package graphics
-Summary: Design for Simply Linux
-Summary(ru_RU.UTF-8): Тема для дистрибутива "Просто Линукс"
+Summary: Design for %distro_name
+Summary(ru_RU.UTF-8): Тема для дистрибутива %distro_name_ru
 License: Different licenses
 Group: Graphics
 
@@ -107,11 +109,11 @@ PreReq(post,preun): alternatives >= 0.2
 Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-graphics ";done )
 
 %description graphics
-This package contains some graphics for Simply Linux design.
+This package contains some graphics for %distro_name design.
 
 %description graphics -l ru_RU.UTF-8
 В данном пакете находится необходимые графические элементы для дистрибутива 
-"Просто Линукс" (Simply Linux).
+%distro_name_ru.
 
 
 %define provide_list altlinux fedora redhat system altlinux
@@ -119,8 +121,8 @@ This package contains some graphics for Simply Linux design.
 %define conflicts_list altlinux-release-sisyphus altlinux-release-4.0 altlinux-release-5.0 altlinux-release-5.1 altlinux-release-junior altlinux-release-master altlinux-release-server altlinux-release-terminal altlinux-release-small_business
 %package release
 
-Summary: Simply Linux release file
-Summary(ru_RU.UTF-8): Описание дистрибутива "Просто Линукс"
+Summary: %distro_name release file
+Summary(ru_RU.UTF-8): Описание дистрибутива %distro_name_ru
 License: GPL
 Group: System/Configuration/Other
 Provides: %(for n in %provide_list; do echo -n "$n-release = %version-%release "; done) altlinux-release-%theme  branding-alt-%theme-release
@@ -129,17 +131,16 @@ Conflicts: %conflicts_list
 Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-release ";done )
 
 %description release
-Simply Linux %version release file.
+%distro_name release file.
 
 %description release -l ru_RU.UTF-8
-В данном пакете находится описание версии %version дистрибутива
-"Просто Линукс" (Simply Linux).
+В данном пакете находится описание дистрибутива %distro_name_ru.
 
 %package notes
 Provides: alt-license-theme = %version alt-notes-%theme
 Obsoletes: alt-license-%theme alt-notes-%theme 
 Summary: Distribution license and release notes
-Summary(ru_RU.UTF-8): Лицензия и дополнительные сведения для дистрибутива "Просто Линукс"
+Summary(ru_RU.UTF-8): Лицензия и дополнительные сведения для дистрибутива %distro_name_ru
 License: Distributable
 Group: Documentation
 Conflicts: alt-notes-children alt-notes-hpc alt-notes-junior alt-notes-junior-sj alt-notes-junior-sm alt-notes-school-server alt-notes-server-lite alt-notes-skif alt-notes-terminal alt-notes-desktop
@@ -149,12 +150,12 @@ Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-n
 Distribution license and release notes
 
 %description notes -l ru_RU.UTF-8
-В данном пакете находится лицензия и дополнительные сведения для версии %version
-дистрибутива "Просто Линукс" (Simply Linux).
+В данном пакете находится лицензия и дополнительные сведения
+для дистрибутива %distro_name_ru.
 
 %package xfce-settings
 
-Summary: default settings for Xfce 4.6 for Simply linux distribution
+Summary: default settings for Xfce 4.6 for %distro_name
 License: Distributable
 Group: Graphical desktop/XFce
 Requires: PolicyKit-gnome
@@ -166,25 +167,25 @@ Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-x
 Conflicts: xfce-settings-simply-linux
 
 %description xfce-settings
-This package contains default settings for Xfce 4.6 for Simply linux distribution.
+This package contains default settings for Xfce 4.6 for %distro_name.
 
 %package slideshow
-Summary: Slideshow for Simply Linux %version installer.
-Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива "Просто Линукс"
+Summary: Slideshow for %distro_name installer
+Summary(ru_RU.UTF-8): Изображения для организации "слайдшоу" в установщике дистрибутива %distro_name_ru
 License: Distributable
 Group: System/Configuration/Other 
 Conflicts: %(for n in %variants ; do [ "$n" = %theme ] || echo -n "branding-$n-slideshow ";done )
 
 %description slideshow
-Slideshow for Simply Linux %version installer.
+Slideshow for %distro_name installer.
 
 %description slideshow -l ru_RU.UTF-8
 В данном пакете находятся изображения для организации "слайдшоу" в установщике 
-дистрибутива "Просто Линукс" (Simply Linux).
+дистрибутива %distro_name_ru.
 
 %package indexhtml
-Summary: Simply Linux html welcome page
-Summary(ru_RU.UTF-8): Стартовая страница для дистрибутива "Просто Линукс"
+Summary: %distro_name welcome page
+Summary(ru_RU.UTF-8): Стартовая страница для дистрибутива %distro_name_ru
 License: distributable
 Group: System/Base
 Provides: indexhtml indexhtml-%theme = %version indexhtml-Desktop = 1:5.0
@@ -205,22 +206,22 @@ Requires: docs-linux_intro
 Requires(post): indexhtml-common
 
 %description indexhtml
-Simply Linux index.html welcome page.
+%distro_name index.html welcome page.
 
 %description indexhtml -l ru_RU.UTF-8
 В данном пакете содержится стартовая страница для дистрибутива
-"Просто Линукс" (Simply Linux).
+%distro_name_ru.
 
 %package menu
 
-Summary: menu for Simply Linux
+Summary: Menu for %distro_name
 License: Distributable
 Group: Graphical desktop/Other
 Requires(pre): altlinux-freedesktop-menu-common
 Requires: altlinux-freedesktop-menu-common
 
 %description menu
-Menu for Simply Linux
+Menu for %distro_name
 
 
 %prep
@@ -400,6 +401,9 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Wed Aug 29 2012 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt5
+- Set correct distribution name
+
 * Mon Aug 20 2012 Andrey Cherepanov <cas@altlinux.org> 6.0.0-alt4
 - Fix indexhtml menu and distro name
 
