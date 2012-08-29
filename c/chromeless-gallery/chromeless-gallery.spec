@@ -1,7 +1,7 @@
 Name: chromeless-gallery
 # The version is the average version of the components.
 Version: 0.16
-Release: alt1
+Release: alt1.qa1
 
 Summary: A set of advanced example applications for the Cheomeless platform
 License: MPL 1.1/GPL 2.0+/LGPL 2.1+, Apache 2.0, MIT
@@ -37,6 +37,12 @@ pushd %buildroot%gallery
 for d in *; do mkdir -p -m0755 "%buildroot%_docdir/$d"; cd "$d"; mv *.md "%buildroot%_docdir/$d/"; cd ..; done
 popd
 
+# There is a file in the package named .DS_Store or .DS_Store.gz, 
+# the file name used by Mac OS X to store folder attributes.  
+# Such files are generally useless in packages and were usually accidentally 
+# included by copying complete directories from the source tarball.
+find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -delete
+
 %files
 %gallery
 %dir %_docdir
@@ -44,6 +50,11 @@ popd
 %doc %_docdir/*/*.md
 
 %changelog
+* Wed Aug 29 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.16-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * macos-ds-store-file-in-package for chromeless-gallery
+
 * Wed Jul 13 2011 Paul Wolneykien <manowar@altlinux.ru> 0.16-alt1
 - simple text editor changes:
   + Contributor Julian and the save new file (thx Marcio Galli).
