@@ -4,7 +4,7 @@
 
 Name: %oname%abiversion
 Version: 1.3.2
-Release: alt1.1
+Release: alt2
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
@@ -111,6 +111,9 @@ rm -f %buildroot%_libdir/*.a
 %_infodir/*
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt2
+- Rebuilt with gmp 5.0.5
+
 * Fri Apr 27 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.2-alt1.1
 - rebuild on arm
 
