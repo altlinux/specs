@@ -3,7 +3,7 @@
 
 %define rname ktp-text-ui
 Name: kde4-ktp-text-ui
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -83,6 +83,8 @@ done
 %_kde4_bindir/ktp-log-viewer
 %_K4lib/kcm_ktp_chat_appearance.so
 %_K4lib/kcm_ktp_chat_behavior.so
+%_K4lib/kcm_ktp_chat_messages.so
+%_K4lib/ktptextui_message_filter_*.so
 %_K4lib/imports/org/kde/telepathy/
 %_K4exec/ktp-adiumxtra-protocol-handler
 %_K4exec/ktp-text-ui
@@ -92,7 +94,10 @@ done
 %_K4apps/ktp-text-ui/
 %_K4apps/plasma/plasmoids/org.kde.ktp-chatplasmoid/
 %_K4srv/adiumxtra.protocol
+%_K4srv/ktptextui_message_filter_*.desktop
+%_K4srv/kcm_ktp_chat_messages.desktop
 %_K4srv/plasma-applet-ktpchat.desktop
+%_K4srvtyp/ktptxtui_message_filter.desktop
 %_kde4_xdg_apps/ktp-log-viewer.desktop
 %_K4dbus_services/org.freedesktop.Telepathy.Client.KTp.TextUi.service
 %_datadir/telepathy/clients/KTp.TextUi.client
@@ -102,6 +107,9 @@ done
 %_K4includedir/KTp/*
 
 %changelog
+* Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.0-alt1
+- new version
+
 * Fri Jun 15 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
 - new version
 

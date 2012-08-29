@@ -1,6 +1,6 @@
 
 Name: telepathy-logger-qt4
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 %define sover 1
 %define libname lib%name%sover
@@ -64,6 +64,9 @@ It is needed by KDE Telepathy in order to log the chat activity.
 %_libdir/pkgconfig/TelepathyLoggerQt4.pc
 
 %changelog
+* Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.0-alt1
+- new version
+
 * Wed Jun 13 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
 - new version
 

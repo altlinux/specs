@@ -3,7 +3,7 @@
 
 %define rname ktp-common-internals
 Name: kde4-ktp-common-internals
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -83,10 +83,14 @@ Requires: libtelepathy-qt4-devel
 %_K4libdir/libktpwidgetsprivate.so.*
 
 %files devel
+%_kde4_bindir/ktp-debugger
 %_K4link/lib*.so
 %_K4includedir/KTp/
 
 %changelog
+* Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.0-alt1
+- new version
+
 * Wed Jun 13 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
 - new version
 

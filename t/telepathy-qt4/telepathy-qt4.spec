@@ -1,7 +1,7 @@
 %define qt4_ver %{get_version libqt4-devel}
 
 Name: telepathy-qt4
-Version: 0.9.1
+Version: 0.9.3
 Release: alt1
 
 Summary: Telepathy framework - Qt4 connection manager library 
@@ -50,7 +50,7 @@ Development libraries and header files for %name.
 %build
 export PATH=%_qt4dir/bin:$PATH
 export QT_DOC_DIR=%_docdir/qt-%qt4_ver
-%Kbuild
+%Kbuild -DENABLE_TESTS=OFF
 pushd BUILD*/
 make doxygen-doc
 popd
@@ -70,6 +70,9 @@ popd
 %_includedir/telepathy-qt4
 
 %changelog
+* Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.3-alt1
+- new version
+
 * Mon Mar 26 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.1-alt1
 - Version 0.9.1
 
