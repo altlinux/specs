@@ -4,7 +4,7 @@ Name: open-%bname
 %define module_name %name
 Version: 2.0.871
 License: %gpl2plus
-Release: alt6
+Release: alt6.1
 Summary: Utils to operate with %Name
 Group: System/Kernel and hardware
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
@@ -12,6 +12,7 @@ URL: http://%name.org
 Source: http://www.%name.org/bits/%name-%version.tar
 Source1: iscsi-gen-initiatorname.sh
 Patch: %name-%version-%release.patch
+Patch1: %name-2.0.871-alt-glibc-2.16.patch
 Conflicts: linux-iscsi
 
 # Automatically added by buildreq on Fri Jun 08 2007 (-bi)
@@ -35,6 +36,7 @@ This package contains sources for %module_name kernel modules.
 %prep
 %setup -n %name-%version
 %patch -p1
+%patch1 -p0
 
 %build
 for d in utils/fwparam_ibft utils usr; do
@@ -77,6 +79,9 @@ fi
 %_usrsrc/kernel/sources/*.tar.bz2
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.871-alt6.1
+- Fixed build with new glibc
+
 * Wed Aug 15 2012 Terechkov Evgenii <evg@altlinux.org> 2.0.871-alt6
 - Fix LSB header to work with systemd
 
