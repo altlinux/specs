@@ -4,7 +4,7 @@
 
 Name: miredo
 Version: 1.2.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Teredo IPv6 tunneling through NATs
 
@@ -113,7 +113,7 @@ mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
-%def_enable Werror
+%def_disable Werror
 sed -e 's#/share/gettext/gettext.h#/share/gettext/intl/gettext.h#' -i autogen.sh
 
 sed -e '/# include <stdbool.h>/ i# include <stddef.h>' -i libteredo/tunnel.h
@@ -224,6 +224,9 @@ install -m 0644 -- misc/%name-server.conf %buildroot%_sysconfdir/%name/%name-ser
 %endif
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.5-alt1.2
+- Disabled -Werror compiler flag
+
 * Tue Jun 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.5-alt1.1
 - Fixed build
 
