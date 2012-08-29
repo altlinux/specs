@@ -1,6 +1,6 @@
 Name: python-module-egenix-mx-experimental
 Version: 3.0.0
-Release: alt3.1.1
+Release: alt4
 
 Summary: eGenix mx-Extensions - EXPERIMENTAL package
 Summary(ru_RU.KOI8-R): eGenix mx-Extensions - Экспериментальный пакет
@@ -53,6 +53,9 @@ rm -rf %buildroot%python_sitelibdir/mx/Tidy/mxTidy/input.html
 %doc COPYRIGHT* LICENSE* README mx/Number/Doc/* mx/Tidy/Doc/*
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0-alt4
+- Rebuilt with gmp 5.0.5
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.0.0-alt3.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
