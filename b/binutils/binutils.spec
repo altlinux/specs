@@ -1,6 +1,6 @@
 Name: binutils
-Version: 2.22.52.0.4
-Release: alt2
+Version: 2.23.51.0.1
+Release: alt1
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -24,9 +24,8 @@ Patch06: binutils-2.20.51.0.10-rh-copy-osabi.patch
 Patch07: binutils-2.20.51.0.10-rh-sec-merge-emit.patch
 #Patch08: binutils-2.22.52.0.1-rh-relro-on-by-default.patch
 #Patch09: binutils-2.22.52.0.1-rh-export-demangle.h.patch
-Patch10: binutils-2.22.52.0.4-rh-dwz.patch
-Patch11: binutils-2.22.52.0.4-rh-ar-4Gb.patch
-Patch12: binutils-2.22.52.0.4-rh-arm-plt-refcount.patch
+Patch10: binutils-2.23.51.0.1-rh833355-gold-keep.patch
+Patch11: binutils-2.22.52.0.4-rh845084-no-config-h-check.patch
 
 # ALT
 Patch100: binutils-2.22.52.0.3-alt-configure.patch
@@ -36,8 +35,10 @@ Patch103: binutils-2.22.52.0.3-alt-ld-defaults.patch
 Patch104: binutils-2.22.52.0.4-alt-ld-testsuite.patch
 Patch105: binutils-2.22.52.0.3-alt-gold-testsuite.patch
 Patch106: binutils-2.22.52.0.3-alt-export-headers.patch
-Patch107: binutils-2.22.52.0.4-alt-ld-testsuite-gcc-workaround.patch
-Patch108: binutils-2.22.52.0.4-alt-gold-testsuite-gcc-workaround.patch
+
+Patch111: binutils-2.22.52.0.4-alt-gold-testsuite-workaround-x86.patch
+Patch112: binutils-2.22.52.0.4-alt-ld-testsuite-workaround-x86.patch
+Patch113: binutils-2.22.52.0.4-alt-ld-testsuite-workaround-x86_64.patch
 
 PreReq: alternatives >= 0:0.4
 Conflicts: libbfd
@@ -89,7 +90,6 @@ libiberty.
 #patch09 -p0
 %patch10 -p0
 %patch11 -p0
-%patch12 -p0
 
 %patch101 -p1
 %patch102 -p1
@@ -97,8 +97,14 @@ libiberty.
 %patch104 -p1
 %patch105 -p1
 %patch106 -p1
-%patch107 -p1
-%patch108 -p1
+
+%ifarch %ix86
+%patch111 -p1
+%patch112 -p1
+%endif
+%ifarch x86_64
+%patch113 -p1
+%endif
 
 grep -Fl 'x86_64-*kfreebsd*-gnu)' */configure |while read f; do
 	patch "$f" < %PATCH100
@@ -137,8 +143,6 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 
 %install
 %makeinstall_std tooldir=%_prefix install-info
-sed -i '/PR 14072: Ensure that config.h is included first/,/^#endif/ d' \
-	%buildroot%_includedir/bfd.h
 
 # Add alternatives files
 install -d %buildroot%_altdir
@@ -241,7 +245,12 @@ done
 %check
 [ -w /dev/ptmx -a -f /proc/self/maps ] || exit
 RUNTESTFLAGS=
-%make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/gxx.sh" RUNTESTFLAGS="$RUNTESTFLAGS"
+XFAIL_TESTS=
+%ifarch x86_64
+XFAIL_TESTS=exception_static_test
+%endif
+%make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/gxx.sh" \
+	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS"
 
 %files devel
 %_libdir/*.a
@@ -260,6 +269,9 @@ RUNTESTFLAGS=
 %doc NEWS*
 
 %changelog
+* Wed Aug 29 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.23.51.0.1-alt1
+- Updated to 2.23.51.0.1.
+
 * Mon Jul 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.22.52.0.4-alt2
 - %_includedir/bfd/bfd.h: removed unsuitable checks.
 
