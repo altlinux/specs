@@ -12,7 +12,7 @@ BuildRequires: gcc-c++
  
 Name:           Io-language
 Version:        20080330
-Release:        alt2_9.2
+Release:        alt2_9.2.1
 Summary:        Io is a small, prototype-based programming language
 Group:          System/Libraries
 License:        BSD
@@ -217,6 +217,9 @@ done
 
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080330-alt2_9.2.1
+- Rebuilt with gmp 5.0.5
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 20080330-alt2_9.2
 - rebuild to get rid of #27020
 
