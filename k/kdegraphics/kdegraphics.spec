@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13
-Release: alt3
+Release: alt3.qa1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -74,7 +74,7 @@ BuildRequires: fontconfig-devel freetype2-devel
 BuildRequires: gcc-c++ imlib-devel libart_lgpl-devel
 BuildRequires: libieee1284-devel libjpeg-devel openexr-devel
 BuildRequires: liblcms-devel libpng-devel libqt3-devel libsane-devel libstdc++-devel
-BuildRequires: libtiff-devel libungif-devel libusb-devel menu-devel pkg-config
+BuildRequires: libtiff-devel libungif-devel libusb-devel  pkg-config
 BuildRequires: qt3-designer tetex-core xml-utils zlib-devel
 BuildRequires: libfribidi-devel fribidi t1lib-devel libpoppler13-devel
 BuildRequires: libacl-devel libattr-devel
@@ -692,6 +692,11 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Wed Aug 29 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.5.13-alt3.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-obsolete-buildreq for kdegraphics
+
 * Thu Jun 21 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt3
 - Poppler direct set to version 0.16.
 
