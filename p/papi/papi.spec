@@ -3,7 +3,7 @@ License: BSD-like
 Group: Development/Tools
 Summary: Performance Application Programming Interface
 Version: 4.2.1
-Release: alt1
+Release: alt2
 Url: http://icl.cs.utk.edu/papi/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -126,6 +126,9 @@ ln -s libpfm.so %buildroot%_libdir/libpfm64.so
 #_docdir/%name
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt2
+- Fixed build with new glibc
+
 * Fri Mar 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1
 - Version 4.2.1
 
