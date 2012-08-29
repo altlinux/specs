@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        1.1.1
-Release:        alt3_20jpp7
+Release:        alt4_20jpp7
 Summary:        Apache Commons Logging
 License:        ASL 2.0
 Group:          Development/Java
@@ -171,7 +171,7 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{_mavenpomdir}/JPP-%{short_name}.pom
 %{_mavenpomdir}/JPP-%{short_name}-api.pom
 %{_mavendepmapfragdir}/*
-
+%exclude %{_javadir}/repository.jboss.com
 
 %files javadoc
 %doc LICENSE.txt
@@ -180,6 +180,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # -----------------------------------------------------------------------------
 
 %changelog
+* Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt4_20jpp7
+- no not package repolib in main commons-logging
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_20jpp7
 - new release
 
