@@ -1,15 +1,15 @@
 %define module_name	virtualbox
 %define module_version	4.1.20
 
-%define module_release	alt1
+%define module_release	alt2
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
 %define net_module_name	vboxnetflt
 %define net_module_adaptor_name	vboxnetadp
 
-%define kversion	3.5.2
-%define krelease	alt2
+%define kversion	3.5.3
+%define krelease	alt1
 %define flavour		std-def
 
 %define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
@@ -19,7 +19,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197890.2
+Release: %module_release.197891.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -101,8 +101,11 @@ cp kernel-source-%drv_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Wed Aug 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1.197890.2
-- Build for kernel-image-std-def-3.5.2-alt2.
+* Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2.197891.1
+- Build for kernel-image-std-def-3.5.3-alt1.
+
+* Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2
+- technical
 
 * Wed Aug 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1
 - Update to new release
