@@ -1,7 +1,7 @@
 
 Name:     aqbanking
 Version:  5.0.22
-Release:  alt1
+Release:  alt1.1
 
 Summary:  A library for online banking functions and financial data import/export
 License:  GPLv2+
@@ -225,6 +225,9 @@ install -m 644 %SOURCE1 %buildroot%_docdir/%name/
 %_docdir/%name/
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.22-alt1.1
+- Rebuilt with gmp 5.0.5
+
 * Mon Jan 16 2012 Andrey Cherepanov <cas@altlinux.org> 5.0.22-alt1
 - New version 5.0.22
 - Remove standard library path from RPATH
