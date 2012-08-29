@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           noderunner-http
 Version:        1.0.2
-Release:	alt1_3jpp6
+Release:	alt2_3jpp6
 Epoch:          0
 Summary:        Basic library for building HTTP clients and servers
 License:        LGPLv2+
@@ -94,7 +94,7 @@ ln -s %{_javadir} external_repo/JPP
 export M2SETTINGS=$(pwd)/maven2-settings.xml
 export MAVEN_REPO_LOCAL=$(pwd)/m2_repo/repository
 export LANG=C
-%{_bindir}/mvn-jpp -e \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
         -s ${M2SETTINGS} \
         -Dmaven.test.failure.ignore=true \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
@@ -130,6 +130,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt2_3jpp6
+- fixed build
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt1_3jpp6
 - new version
 
