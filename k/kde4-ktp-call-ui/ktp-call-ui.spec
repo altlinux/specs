@@ -3,7 +3,7 @@
 
 %define rname ktp-call-ui
 Name: kde4-ktp-call-ui
-Version: 0.4.0
+Version: 0.5.0
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -48,6 +48,7 @@ Requires: libtelepathy-qt4-devel
 %K4find_lang --with-kde %rname
 
 %files -f %rname.lang
+%_kde4_bindir/ktp-dialout-ui
 %_K4exec/ktp-call-ui
 %_K4apps/ktp-call-ui/
 %_K4dbus_services/org.freedesktop.Telepathy.Client.KTp.CallUi.service
@@ -58,5 +59,8 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.0-alt1
+- new version
+
 * Mon Jun 18 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
 - initial build
