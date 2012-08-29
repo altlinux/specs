@@ -56,7 +56,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-fileupload
 Version:        1.2.1
-Release:        alt3_7jpp6
+Release:        alt4_7jpp6
 Epoch:          1
 Summary:        Apache Commons Fileupload Package
 Group:          Development/Java
@@ -159,7 +159,7 @@ mkdir external_repo
 export MAVEN_REPO_LOCAL=$(pwd)/m2_repo/repository
 mkdir -p ${MAVEN_REPO_LOCAL}
 export SETTINGS=$(pwd)/settings.xml
-%{_bindir}/mvn-jpp \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
         -s ${SETTINGS} \
         -Dmaven2.jpp.depmap.file=%{SOURCE2} \
@@ -173,7 +173,7 @@ junit \
 portlet_1_0_api \
 servlet_2_4_api \
 ):${PWD}/target/classes:${PWD}/target/test-classes"
-%{ant} -Dbuild.sysclasspath=only dist
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only dist
 %endif
 
 %install
@@ -266,6 +266,9 @@ fi
 %endif
 
 %changelog
+* Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.2.1-alt4_7jpp6
+- fixed build
+
 * Thu May 24 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.2.1-alt3_7jpp6
 - bumped release to properly obsolete jakarta-commons-fileupload
 - closes: #27363
