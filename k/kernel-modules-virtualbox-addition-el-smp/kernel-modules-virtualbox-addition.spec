@@ -1,6 +1,6 @@
 %define module_name	virtualbox-addition
-%define module_version	4.1.12
-%define module_release	alt3
+%define module_version	4.1.20
+%define module_release	alt1
 
 %define kversion	2.6.32
 %define krelease	alt39
@@ -53,8 +53,8 @@ PreReq: kernel-image-%flavour = %kversion-%krelease
 Requires(postun): kernel-image-%flavour = %kversion-%krelease
 ExclusiveArch: %ix86 x86_64
 
-%if "%flavour" == "el-smp"
-Patch1: fix-build-on-el-smp.patch
+%if "%flavour" == "ovz-el"
+Patch1: ovz-el-fix-build.patch
 %endif
 
 %description
@@ -67,7 +67,7 @@ that are needed for additonal guests support for VirtualBox.
 %__tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
 %__tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 
-%if "%flavour" == "el-smp"
+%if "%flavour" == "ovz-el"
 %patch1 -p1
 %endif
 
@@ -102,8 +102,17 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Fri Jul 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 4.1.12-alt3.132640.39
+* Wed Aug 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1.132640.39
 - Build for kernel-image-el-smp-2.6.32-alt39.
+
+* Wed Aug 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1
+- Update to new release
+
+* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt2
+- Remove old patch for el-smp
+
+* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
+- Update to new release
 
 * Sun Jun 24 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt3
 - Fix build on el-smp
