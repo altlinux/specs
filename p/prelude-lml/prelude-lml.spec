@@ -1,7 +1,7 @@
 Summary:        Prelude Hybrid Intrusion Detection System - Log Analyzer Sensor
 Name:           prelude-lml
 Version:        1.0.0
-Release:        alt2
+Release:        alt2.1
 License:        GPLv2
 Group:          Networking/Other
 URL:            http://www.prelude-ids.org/
@@ -124,6 +124,7 @@ IDS.
 %patch -p1
 
 %build
+%add_optflags -include %_includedir/stdio.h
 %autoreconf
 %configure %{subst_enable static} \
 	--localstatedir=%_var \
@@ -183,6 +184,9 @@ EOF
 %endif
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.1
+- Fixed build with new glibc
+
 * Wed Mar 30 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.0-alt2
 - Add libgcrypt-devel to BuildRequires
 
