@@ -2,8 +2,8 @@
 %define module_version	1.0
 %define module_release	alt3
 
-%define kversion       3.5.2
-%define krelease       alt2
+%define kversion       3.5.3
+%define krelease       alt1
 %define flavour        std-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/kernel/drivers/net/usb/
@@ -11,7 +11,7 @@
 Summary:	u200 kernel module
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.197890.2
+Release:	%module_release.197891.1
 License:	GPL
 Group:		System/Kernel and hardware
 %if "%kversion" >= "3.2"
@@ -73,8 +73,8 @@ install -p -m644 %module_name.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Sun Aug 19 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.1.0-alt3.197890.2
-- Build for kernel-image-std-def-3.5.2-alt2.
+* Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.1.0-alt3.197891.1
+- Build for kernel-image-std-def-3.5.3-alt1.
 
 * Sat Aug 18 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.1.0-alt3
 - fix to build with 3.5 kernel
