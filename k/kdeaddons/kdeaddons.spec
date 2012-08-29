@@ -15,7 +15,7 @@
 
 Name: kdeaddons
 Version: 3.5.13
-Release: alt1.2
+Release: alt1.2.qa1
 
 Group: Graphical desktop/KDE
 Summary: KDE addons
@@ -58,7 +58,7 @@ BuildRequires: gcc-c++
 BuildRequires: kdebase-devel >= %version
 BuildRequires: kdemultimedia-devel >= %version kdepim-devel >= %version
 BuildRequires: libSDL-devel libjpeg-devel libpng-devel
-BuildRequires: libqt3-devel libstdc++-devel menu-devel
+BuildRequires: libqt3-devel libstdc++-devel 
 BuildRequires: perl-Finance-Quote perl-MIME-tools perl-NNTPClient perl-URI perl-libwww-perl
 BuildRequires: qt3-designer xml-utils zlib-devel python
 BuildRequires: libacl-devel libattr-devel
@@ -499,6 +499,11 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Wed Aug 29 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.5.13-alt1.2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-obsolete-buildreq for kdeaddons
+
 * Fri Apr 27 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.5.13-alt1.2
 - fixed build with recent automake
 - restored build with rpm optflags
