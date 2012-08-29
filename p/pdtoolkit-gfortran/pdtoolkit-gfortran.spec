@@ -3,7 +3,7 @@
 
 Name: pdtoolkit-gfortran
 Version: 4.0.2
-Release: alt1
+Release: alt2
 Summary: Modified gfortran parser for use in PDToolkit
 License: GPLv2+
 Group: Development/Tools
@@ -54,6 +54,9 @@ install -m755 BUILD/gcc/{cc1,f951,gfortran} \
 %_libdir/pdtoolkit/bin/gfortran
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt2
+- Fixed build with new glibc
+
 * Wed Mar 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
 - Initial build for Sisyphus (thanx qboosh)
 
