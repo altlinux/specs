@@ -1,7 +1,7 @@
 %define sover 5.1
 Name: racket
 Version: 5.1
-Release: alt2
+Release: alt3
 
 Summary: Racket programming language
 
@@ -39,7 +39,7 @@ Depending on how you look at it, Racket is
 %package doc
 Summary: Documentation for Racket
 Group: Documentation
-BuildArch: noarch
+#BuildArch: noarch
 
 %description doc
 Depending on how you look at it, Racket is
@@ -150,6 +150,9 @@ chrpath -d %buildroot%_bindir/g%name
 %_includedir/*
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt3
+- Fixed build with new glibc
+
 * Wed Dec 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt2
 - Removed RPATH
 
