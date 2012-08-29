@@ -1,6 +1,6 @@
 Name: libewf
 Version: 20080501
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: Library and tools to support the Expert Witness Compression Format
 
@@ -12,6 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 
 Source: https://www.uitwisselplatform.nl/frs/download.php/529/%name-%version.tar.gz
+Patch: libewf-20080501-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Thu Jan 10 2008
 BuildRequires: gcc-c++ libssl-devel libuuid-devel zlib-devel
@@ -34,6 +35,7 @@ Header files and libraries for developing applications which will use libewf.
 
 %prep
 %setup -q
+%patch -p0
 
 %build
 %configure --disable-static
@@ -64,6 +66,9 @@ Header files and libraries for developing applications which will use libewf.
 %_man3dir/*
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080501-alt1.qa3
+- Fixed build with new glibc
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 20080501-alt1.qa2
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
