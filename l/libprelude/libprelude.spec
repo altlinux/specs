@@ -1,7 +1,7 @@
 Summary: Prelude Hybrid Intrusion Detection System Library
 Name: libprelude
 Version: 1.0.0
-Release: alt1.6
+Release: alt1.7
 License: GPLv2
 Group: System/Libraries
 Url: http://www.prelude-ids.org/
@@ -143,6 +143,8 @@ Install perl-%name if you want to use any perl scripts that use %name.
 	--with-perl-installdirs=vendor
 
 rm -fR libltdl
+sed -i 's|^\(CFLAGS =.*\)|\1 -include %_includedir/stdio.h|' \
+	$(find ./ -name Makefile)
 %make
 
 %install
@@ -185,6 +187,9 @@ touch -r ./configure.in %buildroot%_sysconfdir/prelude/default/*
 %perl_vendor_archlib/Prelude*
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.7
+- Fixed build with new glibc
+
 * Sat Jun 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.6
 - Fixed build
 
