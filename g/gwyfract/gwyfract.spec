@@ -1,7 +1,7 @@
 Name: gwyfract
 Url: http://gwyddion.net/apps/gwyfract.php
 Version: 0.8
-Release: alt1
+Release: alt1.1
 License: GPL
 Packager: Boris Savelev <boris@altlinux.org>
 
@@ -38,6 +38,9 @@ Despite being a toy renderer, it has a few cool features:
 %_bindir/%name
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.1
+- Rebuilt with gmp 5.0.5
+
 * Fri Jul 03 2009 Boris Savelev <boris@altlinux.org> 0.8-alt1
 - initial build for Sisyphus
 
