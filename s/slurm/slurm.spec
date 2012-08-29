@@ -21,7 +21,7 @@ Name: slurm
 %define lname lib%name
 Version: 2.3.0
 %define pre %nil
-Release: alt2
+Release: alt3
 Summary: Simple Linux Utility for Resource Management
 License: %gpl2plus
 Group: System/Base
@@ -416,6 +416,9 @@ chrpath -d %buildroot%_libdir/libpmi.so
 
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt3
+- Fixed build with new glibc
+
 * Wed Dec 14 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.0-alt2
 - Removed RPATH
 
