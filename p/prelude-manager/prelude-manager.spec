@@ -4,7 +4,7 @@
 Summary:        Prelude Hybrid Intrusion Detection System Manager
 Name:           prelude-manager
 Version:        1.0.1
-Release:        alt1
+Release:        alt1.1
 License:        GPLv2
 Group:          System/Servers
 URL:            http://www.prelude-ids.org/
@@ -243,6 +243,7 @@ IDS. Он представляет собой мультитредовый се�
 
 %build
 %autoreconf
+%add_optflags -include %_includedir/stdio.h
 # Fix undefined symbol
 find ./plugins -type f -print0 -name Makefile | xargs -r0 %__subst "s|(LDFLAGS)|(LDFLAGS) \$(LIBPRELUDEDB_LIBS) |g"
 
@@ -332,6 +333,9 @@ EOF
 %endif
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.1
+- Fixed build with new glibc
+
 * Wed Mar 30 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.1-alt1
 - New version
 - Add libgcrypt-devel to BuildRequires
