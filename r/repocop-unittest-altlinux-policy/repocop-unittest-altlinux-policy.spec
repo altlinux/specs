@@ -1,6 +1,6 @@
 Name: repocop-unittest-altlinux-policy
 Version: 0.29
-Release: alt4
+Release: alt5
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Url: http://repocop.altlinux.org
@@ -42,6 +42,10 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt5
+- restored specfile-macros-get_dep-is-deprecated.posttest
+  as experimental w/o patch generator.
+
 * Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt4
 - removed specfile-macros-get_dep-is-deprecated
 
