@@ -1,6 +1,6 @@
 Name: glpk
 Version: 4.47
-Release: alt1
+Release: alt2
 
 Summary: GNU Linear Programming Kit
 License: GPL
@@ -30,11 +30,6 @@ Requires: lib%name = %version-%release, pkgconfig
 Provides: lib%{name}4-devel = %version-%release
 Obsoletes: lib%{name}4-devel < %version-%release
 Conflicts: lib%{name}4-devel < %version-%release
-
-%package -n lib%name-devel-static
-Summary: Static version of GLPK libraries
-Group: Development/C
-Requires: lib%name-devel = %version-%release
 
 %package -n lib%name-devel-doc
 Summary: Development documentation for GLPK
@@ -77,14 +72,6 @@ and organized in the form of a callable library.
 
 This package contains headers and files for developing applications
 which use glpk (GNU Linear Programming Kit).
-
-%description -n lib%name-devel-static
-The glpk (GNU Linear Programming Kit) package is intended for solving
-large-scale linear programming (LP), mixed integer programming (MIP),
-and other related problems. It is a set of routines written in ANSI C
-and organized in the form of a callable library.
-
-This package contains GLPK static libraries.
 
 %description -n lib%name-devel-doc
 The glpk (GNU Linear Programming Kit) package is intended for solving
@@ -132,13 +119,13 @@ ln -s glpk/glpk.h %buildroot%_includedir
 #_libdir/pkgconfig/*
 %doc AUTHORS ChangeLog COPYING NEWS README THANKS
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files -n lib%name-devel-doc
 %_docdir/%name
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.47-alt2
+- Rebuilt with gmp 5.0.5
+
 * Thu Dec 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.47-alt1
 - Version 4.47
 - Disabled devel-static package
