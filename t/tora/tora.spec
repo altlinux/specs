@@ -1,7 +1,7 @@
 %define origname tora
 Name: tora
-Version: 2.1.3
-Release: alt2.svn4289
+Version: 2.1.4
+Release: alt1.svn4398
 Summary: TOra is an open-source multi-platform database management GUI
 License: GPL
 Group: Databases
@@ -61,11 +61,14 @@ done
 %_desktopdir/*
 
 %changelog
+* Wed Aug 29 2012 Andrew Clark <andyc@altlinux.ru> 2.1.4-alt1.svn4398
+- version update to 2.1.4-alt1.svn4398
+
 * Mon Apr 30 2012 Andrew Clark <andyc@altlinux.ru> 2.1.3-alt2.svn4289
-- version update to 2.1.3-alt1.svn4289
+- version update to 2.1.3-alt2.svn4289
 
 * Sun Feb 19 2012 Andrew Clark <andyc@altlinux.ru> 2.1.3-alt2.svn4238
-- version update to 2.1.3-alt1.svn4238
+- version update to 2.1.3-alt2.svn4238
 
 * Mon Jan 2 2012 Andrew Clark <andyc@altlinux.ru> 2.1.3-alt2.svn4200
 - buildreq
