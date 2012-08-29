@@ -2,7 +2,7 @@
 
 Name: cln
 Version: 1.2.2
-Release: alt1.2
+Release: alt1.3
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
@@ -105,6 +105,9 @@ mv %buildroot%_datadir/html/ %buildroot%_datadir/doc/%name-%version/
 #doc %_datadir/doc/*
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.3
+- Rebuilt with gmp 5.0.5
+
 * Thu Dec 23 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.2
 - Moved this version in System/Legacy libraries
 
