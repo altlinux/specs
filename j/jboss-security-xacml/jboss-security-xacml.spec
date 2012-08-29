@@ -56,7 +56,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-security-xacml
 Version:        2.0.4
-Release:        alt2_5jpp6
+Release:        alt3_5jpp6
 Epoch:          0
 Summary:        JBoss Security XACML
 License:        LGPLv2+
@@ -234,6 +234,9 @@ install -p -m 644 %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-jboss-xacml.po
 %endif
 
 %changelog
+* Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt3_5jpp6
+- fixed build
+
 * Fri Apr 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt2_5jpp6
 - fixed build with maven3
 
