@@ -1,10 +1,9 @@
 Summary:   Library to program and control the FTDI USB serial controllers
 Name:      libftdi
 Version:   0.18
-Release:   alt3.1
+Release:   alt3.1.qa1
 License: LGPL
 Group:     System/Libraries
-Vendor:    Intra2net AG
 URL:       http://www.intra2net.com/opensource/ftdi/
 Packager:  Evgeny Sinelnikov <sin@altlinux.ru>
 
@@ -135,6 +134,21 @@ mv %buildroot%_man3dir/deprecated.3 %buildroot%_man3dir/ftdi_deprecated.3
 %_man3dir/*
 
 %changelog
+* Wed Aug 29 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.18-alt3.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * vendor-tag for libftdipp-devel-static
+  * vendor-tag for libftdipp-debuginfo
+  * vendor-tag for libftdi
+  * vendor-tag for libftdi-devel
+  * vendor-tag for libftdipp
+  * vendor-tag for libftdi-devel-static
+  * vendor-tag for libftdipp-devel
+  * vendor-tag for libftdi-docs
+  * vendor-tag for libftdi-debuginfo
+  * vendor-tag for python-module-ftdi
+  * vendor-tag for python-module-ftdi-debuginfo
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.18-alt3.1
 - Rebuild with Python-2.7
 
