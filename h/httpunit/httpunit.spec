@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 
 Name:           httpunit
 Version:        1.7
-Release:        alt2_4jpp6
+Release:        alt3_4jpp6
 Epoch:          0
 Summary:        Library for testing websites programmatically
 License:        MIT
@@ -240,6 +240,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt3_4jpp6
+- fixed build
+
 * Tue Mar 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt2_4jpp6
 - fixed build with maven3
 
