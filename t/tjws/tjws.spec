@@ -45,7 +45,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           tjws
 Version:        1.3.3
-Release:        alt3_2jpp6
+Release:        alt4_2jpp6
 Epoch:          0
 Summary:        Tiny Java Web Server and Servlet Container        
 License:        GPLv2+
@@ -160,6 +160,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt4_2jpp6
+- fixed build
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.3-alt3_2jpp6
 - built with java 6 due to abstract getParentLogger
 
