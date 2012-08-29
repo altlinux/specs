@@ -33,7 +33,7 @@
 
 Name: boost
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Boost libraries
@@ -49,6 +49,7 @@ Patch5: boost-1.47.0-alt-bjam-locate-target.patch
 Patch15: boost-1.36.0-alt-test-include-fix.patch
 Patch23: boost-1.45.0-alt-mpi-mt-only.patch
 Patch25: boost-1.47.0-fedora-exceptions.patch
+Patch26: boost-1.49.0-alt-fix-c99-name-collision.patch
 
 # we use %%_python_version
 BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
@@ -956,6 +957,7 @@ applications. This package contains python module.
 %patch15 -p1
 %patch23 -p2
 %patch25 -p0
+%patch26 -p2
 
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
@@ -1345,6 +1347,10 @@ done
 
 
 %changelog
+* Wed Aug 29 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.49.0-alt4
+- dirty fix to build with new glibc
+  (see https://svn.boost.org/trac/boost/ticket/6940).
+
 * Tue Jun 26 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.49.0-alt3
 - rebuild with openmpi 1.6.
 
