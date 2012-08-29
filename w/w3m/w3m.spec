@@ -3,7 +3,7 @@
 
 Name: w3m
 Version: 0.5.2
-Release: alt3.1
+Release: alt3.2
 License: BSD
 Group: Networking/WWW
 Summary: w3m is a pager with Web browsing capability
@@ -11,6 +11,7 @@ Url: http://w3m.sourceforge.net/
 
 Source: %name-%version.tar.gz
 Patch: %name-0.5.2-alt-DSO.patch
+Patch1: %name-0.5.2-alt-glibc-2.16.patch
 
 # Patch0: w3m-0.5.1-fix-format-string.patch
 
@@ -48,6 +49,7 @@ linux framebuffer.
 %prep
 %setup -q
 %patch0 -p2
+%patch1 -p2
 
 %build
 %add_optflags -I%_includedir/gc
@@ -76,6 +78,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %_libexecdir/w3m/w3mimgdisplay
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt3.2
+- Fixed build with new glibc
+
 * Tue Jun 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt3.1
 - Fixed build
 
