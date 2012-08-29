@@ -1,6 +1,6 @@
 Name: ccache
 Version: 3.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Compiler cache
 License: GPLv3+
@@ -48,6 +48,9 @@ EOF
 %_sysconfdir/buildreqs/packages/ignore.d/*
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.1
+- Disabled -Werror compiler flag
+
 * Sat Jul 17 2010 Andrey Rahmatullin <wrar@altlinux.org> 3.0.1-alt1
 - 3.0.1
 
