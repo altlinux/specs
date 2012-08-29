@@ -35,7 +35,7 @@
 
 Summary: Web browser engine
 Name: libwebkitgtk3
-Version: 1.8.2
+Version: 1.8.3
 Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
@@ -329,6 +329,9 @@ mkdir -p DerivedSources/InjectedBundle
 %endif
 
 %changelog
+* Wed Aug 29 2012 Alexey Shabalin <shaba@altlinux.ru> 1.8.3-alt1
+- 1.8.3
+
 * Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.8.2-alt1
 - 1.8.2
 
