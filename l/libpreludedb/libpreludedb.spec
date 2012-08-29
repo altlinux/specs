@@ -1,6 +1,6 @@
 Name: libpreludedb
 Version: 1.0.0
-Release: alt1.3.1.1
+Release: alt1.4
 Summary: Provide the framework for easy access to the Prelude database
 Group: System/Libraries
 License: GPLv2
@@ -118,6 +118,8 @@ Perl bindings for libpreludedb.
 
 #	--with-html-dir=%_defaultdocdir/%name-%version/html \
 
+sed -i 's|^\(CFLAGS =.*\)|\1 -include %_includedir/stdio.h|' \
+	$(find ./ -name Makefile)
 %make
 
 %install
@@ -185,6 +187,9 @@ chmod 660 %_var/lib/preludedb/idmef-db.sqlite &> /dev/null ||:
 %_datadir/%name/classic/pgsql*
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.4
+- Fixed build with new glibc
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.0-alt1.3.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
