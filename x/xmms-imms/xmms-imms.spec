@@ -2,7 +2,7 @@
 
 Name: xmms-imms
 Version: 3.0.2
-Release: alt6
+Release: alt6.1
 Epoch: 20110327
 
 Summary: Intelligent Multimedia Management System
@@ -13,6 +13,7 @@ Url: http://www.luminal.org/phpwiki/index.php/IMMS
 Source: http://imms.googlecode.com/files/%origname-%version.tar.bz2
 Patch0: imms-3.0.2-alt-configure.patch
 Patch1: imms-3.0.2-alt-gcc43.patch
+Patch2: xmms-imms-3.0.2-alt-glibc-2.16.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Obsoletes: imms
@@ -57,6 +58,7 @@ IMMS - адаптивный модуль списку в╕дтворення XMMS, створений
 %setup -n %origname-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %configure
@@ -78,6 +80,9 @@ install -pDm755 build/immsd %buildroot%_bindir/immsd
 # - build 3.1.0rc (for audacious/quodlibet as well?)
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110327:3.0.2-alt6.1
+- Fixed build with new glibc
+
 * Sun Mar 27 2011 Michael Shigorin <mike@altlinux.org> 20110327:3.0.2-alt6
 - re-added lost BR:
 
