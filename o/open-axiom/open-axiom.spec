@@ -3,7 +3,7 @@
 
 Name: open-%oname
 Version: 1.5.0
-Release: alt1.svn20120504
+Release: alt1.svn20120826
 
 Summary: OpenAxiom Computer Algebra System
 License: BSD-style
@@ -73,6 +73,7 @@ export SBCL_HOME=%_libdir/sbcl
 export PATH=$PATH:%_qt4dir/bin
 
 #autoreconf
+./build-setup.sh
 %configure \
 	--enable-threads \
 	--with-lisp=%lisp \
@@ -109,6 +110,9 @@ install -D -m644 %SOURCE6 %buildroot%_desktopdir/%name.desktop
 %_docdir/%name
 
 %changelog
+* Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.svn20120826
+- New snapshot
+
 * Fri May 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.svn20120504
 - New snapshot
 
