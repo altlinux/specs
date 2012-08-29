@@ -25,7 +25,7 @@
 %define rname koffice
 Name: %{rname}16
 Version: 1.6.3
-%define rlz alt24
+%define rlz alt24.qa1
 %define beta %nil
 Serial: 4
 
@@ -41,7 +41,7 @@ URL: http://www.koffice.org/
 License: GPL
 
 #Requires: koffice-kexi = %version-%release
-Requires: koffice-kivio = %version-%release
+Requires: koffice-kivio = %{?serial:%serial:}%version-%release
 #Requires: koffice-karbon = %version-%release
 #Requires: koffice-kchart = %version-%release
 #Requires: koffice-chalk = %version-%release
@@ -948,6 +948,11 @@ mkdir -p %buildroot/%_Kconfig
 %endif
 
 %changelog
+* Wed Aug 29 2012 Repocop Q. A. Robot <repocop@altlinux.org> 4:1.6.3-alt24.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for koffice16
+
 * Wed Apr 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4:1.6.3-alt24
 - Fixed build with new automake
 
