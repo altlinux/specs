@@ -2,7 +2,7 @@
 
 Name: polyml
 Version: 5.4.1
-Release: alt3
+Release: alt3.1
 
 Summary: Standard ML implementation
 Summary(ru_RU.UTF-8): Реализация Standard ML
@@ -68,6 +68,9 @@ Static files for Poly/ML runtime library.
 %endif
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.1-alt3.1
+- Rebuilt with gmp 5.0.5
+
 * Sat Jun 02 2012 Yuriy Shirokov <yushi@altlinux.org> 5.4.1-alt3
 - wrong russian description fixed
 
