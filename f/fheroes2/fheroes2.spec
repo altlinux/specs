@@ -1,7 +1,7 @@
 %define rev svn2867
 Name: fheroes2
 Version: 20120301
-Release: alt1.%rev
+Release: alt1.%rev.1
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPL
 Group: Games/Strategy
@@ -25,8 +25,10 @@ into your /usr/share/games/fheroes2/{maps,data} directories respectively
 
 %prep
 %setup -n %name
+sed -i 's/empty/simple/' Makefile
 
 %build
+# Makefile hardwires AI resulting in non-fighting opponents
 %make_build WITH_AI=simple CONFIGURE_FHEROES2_DATA="%_gamesdatadir/%name/" 
 
 %install
@@ -53,6 +55,9 @@ install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdi
 
 
 %changelog
+* Thu Aug 30 2012 Michael Shigorin <mike@altlinux.org> 20120301-alt1.svn2867.1
+- actually use WITH_AI=simple (closes: #27151; see also SF#3467445)
+
 * Wed Aug 29 2012 Andrew Clark <andyc@altlinux.ru> 20120301-alt1.svn2867
 - version update 20120301-alt1.svn2867
 
