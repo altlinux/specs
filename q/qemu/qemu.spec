@@ -124,7 +124,7 @@
 
 Name: qemu
 Version: 1.1.0
-Release: alt4
+Release: alt5
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -495,6 +495,10 @@ fi
 %_defaultdocdir/%name-%version
 
 %changelog
+* Thu Aug 30 2012 Dmitry V. Levin <ldv@altlinux.org> 1.1.0-alt5
+- Use upstreamed version of the getdents emulation fix,
+  to ease further merges.
+
 * Fri Aug 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1.1.0-alt4
 - Fixed emulation of getdents.
 
