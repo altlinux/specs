@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(Digest/MD5.pm)
+# END SourceDeps(oneline)
+%define oldname junit
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,25 +35,31 @@ BuildRequires: jpackage-compat
 #
 
 Name:           junit4
-Version:        4.8.2
-Release:        alt1_5jpp6
+Version:        4.10
+Release:        alt1_6jpp7
 Epoch:          0
 Summary:        Java regression test package
 License:        CPL
 URL:            http://www.junit.org/
 Group:          Development/Java
-# git clone --bare git://github.com/KentBeck/junit.git junit.git
-# mkdir junit-4.8.2
-# git --git-dir=junit.git --work-tree=junit-4.8.2 checkout r4.8.2
-# tar cjf junit-4.8.2.tar.bz2 junit-4.8.2/
-Source0:        junit-%{version}.tar.bz2
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-Requires:       hamcrest
-BuildRequires:  ant
-BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  hamcrest
 BuildArch:      noarch
+
+# git clone --bare git://github.com/KentBeck/junit.git junit.git 
+# mkdir junit-4.10
+# git --git-dir=junit.git --work-tree=junit-4.10 checkout r4.10
+# tar cjf junit-4.10.tar.xz junit-4.10/
+Source0:        %{oldname}-%{version}.tar.xz
+Source1:        http://search.maven.org/remotecontent?filepath=%{oldname}/%{oldname}/%{version}/%{oldname}-%{version}.pom
+Source2:        junit-OSGi-MANIFEST.MF
+Patch0:         %{oldname}-removed-test.patch
+
+BuildRequires:  ant
+BuildRequires:  ant-contrib
+BuildRequires:  jpackage-utils >= 0:1.7.4
+BuildRequires:  hamcrest
+
+Requires:       hamcrest
+
 Source44: import.info
 
 %description
@@ -61,84 +71,90 @@ hosted on SourceForge.
 
 %package manual
 Group:          Development/Java
-Summary:        Manual for %{name}
+Summary:        Manual for %{oldname}
 BuildArch: noarch
 
 %description manual
-Documentation for %{name}.
+Documentation for %{oldname}.
 
 %package javadoc
 Group:          Development/Java
-Summary:        Javadoc for %{name}
+Summary:        Javadoc for %{oldname}
 Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+Javadoc for %{oldname}.
 
 %package demo
 Group:          Development/Java
-Summary:        Demos for %{name}
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary:        Demos for %{oldname}
+Requires:       junit4 = %{epoch}:%{version}-%{release}
 
 %description demo
-Demonstrations and samples for %{name}.
+Demonstrations and samples for %{oldname}.
 
 %prep
-%setup -q -n junit-%{version}
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t %{__rm}
+%setup -q -n %{oldname}-%{version} 
+%patch0 -p1
+cp %{SOURCE1} pom.xml
+find -iname '*.class' -o -iname '*.jar' -delete
 ln -s $(build-classpath hamcrest/core) lib/hamcrest-core-1.1.jar
-perl -pi -e 's/\r$//g' stylesheet.css
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST=:
-%{ant} -Dant.build.javac.source=1.5 dist
+ant dist
+
+# inject OSGi manifest
+mkdir -p META-INF
+cp -p %{SOURCE2} META-INF/MANIFEST.MF
+touch META-INF/MANIFEST.MF
+zip -u %{oldname}%{version}/%{oldname}-%{version}.jar META-INF/MANIFEST.MF
 
 %install
-
 # jars
 install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 644 junit%{version}/junit-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-pushd %{buildroot}%{_javadir} 
-ln -s %{name}-%{version}.jar %{name}.jar
-ln -s %{name}-%{version}.jar junit-%{version}.jar
-popd
+install -m 644 %{oldname}%{version}/%{oldname}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+# Many packages still use the junit4.jar directly
+ln -s %{_javadir}/%{name}.jar %{buildroot}%{_javadir}/%{oldname}.jar
 
 # pom
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -p -m 644 pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap junit junit %{version} JPP %{name}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr junit%{version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr %{oldname}%{version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
 # demo
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/demo/junit # Not using %%name for last part because it is 
-                                                                # part of package name
-cp -pr junit%{version}/junit/* %{buildroot}%{_datadir}/%{name}/demo/junit
+install -d -m 755 %{buildroot}%{_datadir}/%{name}/demo/%{name} 
+
+cp -pr %{oldname}%{version}/%{oldname}/* %{buildroot}%{_datadir}/%{name}/demo/%{name}
+
 
 %files
 %doc cpl-v10.html README.html
-%{_javadir}*/%{name}.jar
-%{_javadir}*/%{name}-%{version}.jar
-%{_javadir}*/junit-%{version}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+#%{_javadir}/%{oldname}.jar
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %files demo
+%doc cpl-v10.html
 %{_datadir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc cpl-v10.html
+%doc %{_javadocdir}/%{name}
 
 %files manual
+%doc cpl-v10.html
 %doc junit%{version}/doc/*
 
 %changelog
+* Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.10-alt1_6jpp7
+- new version
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.8.2-alt1_5jpp6
 - new jpp relase
 
