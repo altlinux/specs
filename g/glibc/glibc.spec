@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.16
-Release: alt1
+Release: alt2
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -645,6 +645,13 @@ fi
 %_datadir/i18n
 
 %changelog
+* Wed Aug 29 2012 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt2
+- locales/ru_RU: fixed abday (sw#10873) and abmon.
+- ru.po: reintroduced fixes from 2.11.3-alt8.
+- sys/cdefs.h: fixed support of old compilers (sw#13741, sw#14530).
+- glibc_post_upgrade: moved telinit support to 0ldconfig.filetrigger
+  (closes: #27666).
+
 * Tue Aug 21 2012 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt1
 - Updated to 2.16.
 
