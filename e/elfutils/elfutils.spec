@@ -1,20 +1,22 @@
 Name: elfutils
-Version: 0.153
+Version: 0.155
 Release: alt1
 
 Summary: A collection of utilities and DSOs to handle compiled objects
-License: GPLv2 with exceptions
+License: GPLv3+ and (GPLv2+ or LGPLv3+)
 Group: Development/C
 URL: http://fedorahosted.org/elfutils/
 
 # http://fedorahosted.org/releases/e/l/elfutils/%version/%name-%version.tar.bz2
 Source: %name-%version.tar
 
-Patch1: elfutils-0.153-rh-portability.patch
-Patch2: elfutils-0.153-rh-robustify.patch
-Patch3: elfutils-0.147-alt-findtextrel.patch
-Patch4: elfutils-0.147-alt-osabi.patch
-Patch5: elfutils-0.147-alt-bss.patch
+Patch1: elfutils-0.155-rh-portability.patch
+Patch2: elfutils-0.155-rh-robustify.patch
+Patch3: elfutils-0.155-rh-binutils-pr-ld-13621.patch
+Patch4: elfutils-0.147-alt-findtextrel.patch
+Patch5: elfutils-0.147-alt-osabi.patch
+Patch6: elfutils-0.155-alt-elflint-bss.patch
+Patch7: elfutils-0.155-alt-elflint-st_value.patch
 
 Requires: libelf = %version-%release
 
@@ -39,6 +41,7 @@ which implement DWARF, ELF, and machine-specific ELF handling.
 
 %package devel
 Summary: Development libraries to handle compiled objects
+License: GPLv2+ or LGPLv3+
 Group: Development/C
 Requires: %name = %version-%release
 Requires: libelf-devel = %version-%release
@@ -51,6 +54,7 @@ libasm provides a programmable assembler interface.
 
 %package -n libelf
 Summary: Library to read and write ELF files
+License: GPLv2+ or LGPLv3+
 Group: System/Libraries
 
 %description -n libelf
@@ -61,6 +65,7 @@ also to generate new ELF files.
 
 %package -n libelf-devel
 Summary: Development libelf library
+License: GPLv2+ or LGPLv3+
 Group: Development/C
 Requires: libelf = %version-%release
 
@@ -71,6 +76,7 @@ object file format, so you can see the different sections of an ELF file.
 
 %package -n libelf-devel-static
 Summary: Static libelf library
+License: GPLv2+ or LGPLv3+
 Group: Development/C
 Requires: libelf-devel = %version-%release
 
@@ -80,12 +86,14 @@ compiled objects.  libelf allows you to access the internals of the ELF
 object file format, so you can see the different sections of an ELF file.
 
 %prep
-%setup -q
+%setup
 #patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 # Remove flex-generated files.
 rm libcpu/i386_lex.c src/ldlex.c
@@ -104,6 +112,7 @@ mkdir %buildtarget
 cd %buildtarget
 %configure --enable-dependency-tracking \
 	--program-prefix=%_programprefix \
+	--enable-dwz \
 	--enable-shared %{subst_enable static}
 %make_build
 
@@ -112,7 +121,8 @@ cd %buildtarget
 %find_lang %name
 
 %check
-LD_LIBRARY_PATH=%buildroot%_libdir make -k check -C %buildtarget
+export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
+%make_build -k check -C %buildtarget
 
 %files
 %_bindir/eu-addr2line
@@ -146,7 +156,7 @@ LD_LIBRARY_PATH=%buildroot%_libdir make -k check -C %buildtarget
 %exclude %_libdir/libebl.a
 
 %files -n libelf -f %name.lang
-%doc AUTHORS EXCEPTION NEWS.bz2 NOTES README THANKS
+%doc AUTHORS CONTRIBUTING NEWS.bz2 NOTES README THANKS
 %_libdir/libelf-*.so
 %_libdir/libelf*.so.*
 
@@ -162,6 +172,9 @@ LD_LIBRARY_PATH=%buildroot%_libdir make -k check -C %buildtarget
 %endif
 
 %changelog
+* Thu Aug 30 2012 Dmitry V. Levin <ldv@altlinux.org> 0.155-alt1
+- Updated to 0.155.
+
 * Sun Mar 25 2012 Dmitry V. Levin <ldv@altlinux.org> 0.153-alt1
 - Updated to 0.153.
 
