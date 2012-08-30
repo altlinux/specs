@@ -1,6 +1,6 @@
 Name: libbotan
 Version: 1.8.10
-Release: alt2
+Release: alt2.1
 
 Summary: A C++ Crypto Library
 License: BSD
@@ -66,6 +66,9 @@ cp -rp readme.txt doc/{examples,scripts} %buildroot%_defaultdocdir/%name-%versio
 %doc %_defaultdocdir/%name-%version
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.10-alt2.1
+- Rebuilt with gmp 5.0.5
+
 * Wed Mar 30 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 1.8.10-alt2
 - Add build dependency on zlib-devel for fix building.
 
