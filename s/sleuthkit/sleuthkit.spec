@@ -1,6 +1,6 @@
 Name: sleuthkit
-Version: 3.0.0
-Release: alt2.qa1
+Version: 3.2.3
+Release: alt1
 
 Summary: The Sleuth Kit
 
@@ -11,7 +11,7 @@ Url: http://www.sleuthkit.org/sleuthkit/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sourceforge.net/sleuthkit/%name-%version.tar.gz
-Source1: mac-robber-1.00.tar.bz2
+Source1: mac-robber-1.02.tar.bz2
 Patch: sleuthkit-unbundle.diff
 
 # Automatically added by buildreq on Fri Nov 07 2008
@@ -49,25 +49,22 @@ Header files and libraries for developing applications which will use libewf.
 
 %prep
 %setup -q -n %name-%version -a1
-find -name Makefile.am | xargs %__subst "s| -static||g"
+find -name Makefile.am | xargs subst "s| -static||g"
 
 %build
 %autoreconf
 %configure --disable-static
 %make_build
 
-gcc %optflags -o mac-robber mac-robber-1.00/mac-robber.c
+gcc %optflags -o mac-robber mac-robber-1.02/mac-robber.c
 
-mv mac-robber-1.00/README README.mac-robber
+mv mac-robber-1.02/README README.mac-robber
+mv mac-robber-1.02/CHANGES CHANGES.mac-robber
 chmod 644 README.mac-robber
-
-# hack...
-#%__subst "s|%_builddir/%name-%version|%prefix|g" bin/sorter
 
 %install
 %makeinstall_std
 
-#install -d %buildroot%_bindir
 install -d %buildroot%_datadir/sorter
 install -d %buildroot%_man1dir
 
@@ -76,11 +73,12 @@ install -m755 mac-robber %buildroot%_bindir/
 #install -m644 share/sorter/* %buildroot%_datadir/sorter/
 
 %files
-%doc CHANGES.txt INSTALL.txt README.mac-robber README.txt TODO.txt licenses/* docs/*.txt
+%doc ChangeLog.txt INSTALL.txt README.mac-robber README.txt licenses/*
+%doc CHANGES.mac-robber
 %_bindir/blkcalc
 %_bindir/blkcat
-%_bindir/disk_sreset
-%_bindir/disk_stat
+#_bindir/disk_sreset
+#_bindir/disk_stat
 %_bindir/blkls
 %_bindir/blkstat
 %_bindir/ffind
@@ -105,10 +103,11 @@ install -m755 mac-robber %buildroot%_bindir/
 %_bindir/sigfind
 %_bindir/sorter
 %_bindir/srch_strings
+%_bindir/tsk_*
 %_man1dir/blkcalc.1*
 %_man1dir/blkcat.1*
-%_man1dir/disk_sreset.1*
-%_man1dir/disk_stat.1*
+#_man1dir/disk_sreset.1*
+#_man1dir/disk_stat.1*
 %_man1dir/blkls.1*
 %_man1dir/blkstat.1*
 %_man1dir/ffind.1*
@@ -129,6 +128,7 @@ install -m755 mac-robber %buildroot%_bindir/
 %_man1dir/mmstat.1*
 %_man1dir/sigfind.1*
 %_man1dir/sorter.1*
+%_man1dir/tsk_*
 %_datadir/tsk3/
 
 %files -n libtsk
@@ -139,6 +139,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_includedir/tsk3/
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.3-alt1
+- Version 3.2.3
+
 * Wed Dec 02 2009 Repocop Q. A. Robot <repocop@altlinux.org> 3.0.0-alt2.qa1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libtsk

@@ -1,21 +1,19 @@
 Name: libewf
-Version: 20080501
-Release: alt1.qa4
+Version: 20120813
+Release: alt1
 
 Summary: Library and tools to support the Expert Witness Compression Format
 
-Url: https://www.uitwisselplatform.nl/projects/libewf/
+Url: http://sourceforge.net/projects/libewf/
 Group: System/Libraries
 License: BSD
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-
-Source: https://www.uitwisselplatform.nl/frs/download.php/529/%name-%version.tar.gz
-Patch: libewf-20080501-alt-glibc-2.16.patch
+Source: %name-%version.tar.gz
 
 # Automatically added by buildreq on Thu Jan 10 2008
 BuildRequires: gcc-c++ libssl-devel libuuid-devel zlib-devel
+
+BuildPreReq: libfuse-devel python-devel flex
 
 %description
 libewf is library for support of the Expert Witness Compression Format (EWF).
@@ -33,12 +31,29 @@ Requires: libewf = %version-%release
 %description devel
 Header files and libraries for developing applications which will use libewf.
 
+%package -n python-module-pyewf
+Summary: Python bindings for libewf
+Group: Development/Python
+Requires: libewf = %version-%release
+
+%description -n python-module-pyewf
+libewf is library for support of the Expert Witness Compression Format (EWF).
+libewf allows you to read media information of EWF files in the SMART (EWF-S01)
+format and the EnCase (EWF-E01) format. libewf allows to read files created by
+EnCase 1 to 5, linen and FTK Imager.
+
+This package contains python bindings for libewf.
+
 %prep
 %setup -q
-%patch -p2
 
 %build
-%configure --disable-static
+%autoreconf
+%configure \
+	--disable-static \
+	--disable-rpath \
+	--enable-wide-character-type \
+	--enable-python
 %make_build
 
 %install
@@ -46,17 +61,9 @@ Header files and libraries for developing applications which will use libewf.
 
 %files
 %doc AUTHORS COPYING NEWS README
-%_bindir/ewfacquire
-%_bindir/ewfacquirestream
-%_bindir/ewfexport
-%_bindir/ewfinfo
-%_bindir/ewfverify
+%_bindir/*
 %_libdir/*.so.*
 %_man1dir/*
-
-### Exclude expirimental files ###
-%exclude %_bindir/ewfalter
-%exclude %_pkgconfigdir/libewf.pc
 
 %files devel
 %doc AUTHORS COPYING NEWS README ChangeLog
@@ -64,8 +71,15 @@ Header files and libraries for developing applications which will use libewf.
 %_includedir/%name/
 %_includedir/%name.h
 %_man3dir/*
+%_pkgconfigdir/libewf.pc
+
+%files -n python-module-pyewf
+%python_sitelibdir/*.so
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120813-alt1
+- Version 20120813
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080501-alt1.qa4
 - Really fixed build with new glibc
 

@@ -4,7 +4,7 @@
 
 Name: progsreiserfs
 Version: 0.3.0.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Programs needed for manipulating reiserfs partitions
 License: %gpl2plus
@@ -101,6 +101,9 @@ mv %buildroot%_man8dir/{mkfs.reiserfs,reiserfs.mkfs}.8
 %_man8dir/*
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0.5-alt1.2
+- Rebuilt for debuginfo
+
 * Sun Nov 14 2010 Denis Smirnov <mithraen@altlinux.ru> 0.3.0.5-alt1.1
 - rebuild (with the help of girar-nmu utility)
 
