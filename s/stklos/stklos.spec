@@ -1,6 +1,6 @@
 Name: stklos
 Version: 0.98
-Release: alt3
+Release: alt3.1
 License: GPL
 Group: Development/Scheme
 Summary: STklos is a free Scheme System
@@ -77,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT/%_datadir/doc/%name-%version
 %doc TODO NEWS doc/html
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.98-alt3.1
+- Rebuilt with gmp 5.0.5
+
 * Sat Sep 19 2009 Alexey Voinov <voins@altlinux.ru> 0.98-alt3
 - fixed ownership of /usr/include,lib}/stklos
 
