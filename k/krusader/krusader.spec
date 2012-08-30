@@ -1,5 +1,5 @@
 %define version 1.90.0
-%define altrelease 9
+%define altrelease 10
 
 %define appname krusader
 %define srcname %appname-%{?cvs:cvs-%cvs}%{!?cvs:%version%{?pre:-%pre}}
@@ -16,6 +16,7 @@ Source0: %srcname.tar.gz
 Patch10: krusader-cvs-20060412-makefile-kutils.patch
 Patch11: tde-3.5.13-build-defdir-autotool.patch
 Patch12: cvs-auto_version_check.patch
+Patch13: tde-3.5.13-krarc-chdirUTF8.patch
 
 Group: File tools
 Summary: A twin panel file manager for kde %{?cvs:- unstable version from cvs}
@@ -36,6 +37,7 @@ It is (almost) completely customizable, very user friendly, fast and looks great
 %patch10
 %patch11
 %patch12
+%patch13
 
 cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
 cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
@@ -84,6 +86,9 @@ cp %buildroot/%_kde3_iconsdir/locolor/16x16/apps/%appname.png %buildroot/%_kde3_
 # %_man1dir/*
 
 %changelog
+* Wed Aug 29 2012 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt10
+- Chdir for copy into krarc is fixed for Cyrillic and generic UTF-8.
+
 * Wed May 23 2012 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt9
 - Direct link to -lkjs is added for build fix.
 
