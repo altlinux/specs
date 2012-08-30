@@ -7,7 +7,7 @@
 Summary: GNU Compiler for AVR (C language only).
 Name: %cross_arch-gcc
 Version: 4.5.1
-Release: alt3
+Release: alt3.1
 
 Copyright: GPL
 Group: Development/Other
@@ -166,6 +166,9 @@ rename avr-avr avr %buildroot%_man1dir/*
 %_man1dir/avr-g++.1*
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.1-alt3.1
+- Rebuilt with gmp 5.0.5
+
 * Thu Mar 17 2011 Grigory Milev <week@altlinux.ru> 4.5.1-alt3
 - added patch for fix problem with USART2 and USART3 on atmega2560
 
