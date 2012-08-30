@@ -1,6 +1,6 @@
 Name: mmcalc
 Summary: Molar Mass Calculator
-Version: 20120821
+Version: 20120830
 Release: alt1
 Group: Sciences/Chemistry
 License: LGPL
@@ -9,7 +9,6 @@ URL: http://www.ogion76.name/home/mmcalc
 Packager: Denis G. Samsonenko <ogion@altlinux.org>
 
 Source: %name-%version.tar.gz
-Source1: %name.svg
 
 BuildArch: noarch
 
@@ -45,24 +44,6 @@ is acceptable.
 
 %install
 %perl_vendor_install
-
-install -m 755 -d %buildroot%_desktopdir
-
-cat > %buildroot%_desktopdir/%name.desktop <<EOF
-[Desktop Entry]
-Name=MMCalc
-Comment=Molar Mass Calculator
-Exec=gmmcalc
-Icon=mmcalc
-Terminal=false
-Type=Application
-StartupNotify=true
-Categories=Education;Science;Chemistry;
-EOF
-
-install -m 755 -d %buildroot%_datadir/icons/hicolor/scalable/apps
-install -m 644 %SOURCE1 %buildroot%_datadir/icons/hicolor/scalable/apps/%name.svg
-
 %find_lang %name
 
 %files -f %name.lang
@@ -75,6 +56,10 @@ install -m 644 %SOURCE1 %buildroot%_datadir/icons/hicolor/scalable/apps/%name.sv
 %_desktopdir/%name.desktop
 
 %changelog
+
+* Thu Aug 30 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120830-alt1
+- new version
+- mmcalc.desktop and mmcalc.svg are now packed into source tar.gz
 
 * Tue Aug 21 2012 Denis G. Samsonenko <ogion@altlinux.org> 20120821-alt1
 - new version
