@@ -1,6 +1,6 @@
 Name: installed-db-office-server
 Version: 1.3
-Release: alt9
+Release: alt10
 Summary: Databases and config files for moodled, mediawiki and rujel
 License: GPL
 Group: Editors
@@ -43,6 +43,9 @@ mkdir -p %buildroot/var/www/webapps/mediawiki
 /etc/hooks/hostname.d/*
 
 %changelog
+* Thu Aug 30 2012 Andrey Cherepanov <cas@altlinux.org> 1.3-alt10
+- updated rujel user access privileges for MySQL (thanks Gennady Kushnir)
+
 * Thu May 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.3-alt9
 - moodle domain changing fixed
 
