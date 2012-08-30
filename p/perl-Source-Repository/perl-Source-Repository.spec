@@ -1,8 +1,8 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.07
-Release: alt2
+Version: 0.08
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -36,6 +36,9 @@ Requires: perl-RPM-Source-Convert > 0.40
 %perl_vendor_privlib/Source*
 
 %changelog
+* Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- configurable matcher
+
 * Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2
 - bugfix relase
 
