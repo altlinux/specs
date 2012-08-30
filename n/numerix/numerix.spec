@@ -10,7 +10,7 @@ License: GPL
 Group: System/Libraries
 Summary: Numerix "big integer"
 Version: 0.22
-Release: alt7.1
+Release: alt7.2
 Url: http://pauillac.inria.fr/~quercia/
 Source: http://pauillac.inria.fr/~quercia/cdrom/bibs/%name.tar.gz
 Patch: %name-install.patch
@@ -124,6 +124,9 @@ cp -a exemples/* %buildroot%_datadir/examples/%name/
 %_datadir/examples/%name/*
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt7.2
+- Rebuilt with gmp 5.0.5
+
 * Wed Jan 11 2012 Alexey Shabalin <shaba@altlinux.ru> 0.22-alt7.1
 - Rebuild with new ocaml
 
