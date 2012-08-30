@@ -1,7 +1,7 @@
 %define oname aften
 Name: libaften
 Version: 0.0.8
-Release: alt1.qa2
+Release: alt1.qa3
 Serial: 1
 
 Summary: Aften: A/52 audio encoder
@@ -23,7 +23,7 @@ A simple AC3-compatible audio encoder based on FFmpeg.
 %package devel
 Summary: Header files for %name library
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %{?serial:%serial:}%version-%release
 
 %description devel
 Header files for %name library.
@@ -52,6 +52,11 @@ test -d %buildroot%_libdir || mv %buildroot%_prefix/lib %buildroot%_libdir
 %_includedir/*
 
 %changelog
+* Thu Aug 30 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.0.8-alt1.qa3
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for libaften
+
 * Mon Nov 29 2010 Igor Vlasenko <viy@altlinux.ru> 1:0.0.8-alt1.qa2
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
