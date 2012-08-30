@@ -1,7 +1,7 @@
 
 Name:    kmymoney
 Version: 4.6.2
-Release: alt5.1
+Release: alt5.2
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -231,6 +231,9 @@ tar xf %SOURCE1
 
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.2-alt5.2
+- Rebuilt
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.2-alt5.1
 - Rebuilt with gmp 5.0.5
 

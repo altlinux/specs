@@ -1,7 +1,7 @@
 
 Name:    libalkimia
 Version: 4.3.2
-Release: alt1
+Release: alt1.1
 
 Summary: Financial library
 License: LGPLv2+
@@ -48,6 +48,9 @@ Headers and other files for develop with %name.
 %_K4apps/cmake/modules/FindLibAlkimia.cmake
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3.2-alt1.1
+- Rebuilt with gmp 5.0.5
+
 * Thu Feb 09 2012 Andrey Cherepanov <cas@altlinux.org> 4.3.2-alt1
 - New version 4.3.2
 
