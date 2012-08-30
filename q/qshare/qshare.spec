@@ -2,17 +2,16 @@ Name:		qshare
 Summary:	qShare is a FTP server
 License:	GPLv3
 Group:		Networking/File transfer
-Version:	2.1.3
-Release:	alt2
+Version:	2.1.4
+Release:	alt1.1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 URL:		http://www.zuzuf.net/qshare/
 
-Source0:	http://www.zuzuf.net/qshare/files/%name-%version-src.tar.gz
-Source1:	%name.desktop
+Source0:	http://www.zuzuf.net/qshare/files/%name-%version-src.tar.bz2
 
-Patch0:		%name-2.1.3-russian_update.diff
+Patch0:		%name-2.1.4-desktop.diff
 
-BuildRequires:	/usr/bin/convert gcc-c++ libqt4-devel libavahi-devel
+BuildRequires:	/usr/bin/convert cmake gcc-c++ libqt4-devel libavahi-devel
 
 %description
 qShare is a FTP server with a service discovery feature
@@ -23,18 +22,20 @@ You can easily add/remove folders from the shared folders
 list, enable/disable the built-in FTP server.
 
 %prep
-%setup -n %name
+%setup
 %patch0 -p1
 
 %build
-export PATH=$PATH:%_qt4dir/bin
-lrelease ./i18n/%{name}_ru.ts
-qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" %name.pro
+lrelease-qt4 i18n/*.ts
+cmake \
+	-DCMAKE_INSTALL_PREFIX=%prefix \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_C_FLAGS:STRING="%optflags"
+
 %make_build
 
 %install
-%__install -Dp -m 0755 %name %buildroot%_bindir/%name
-%__install -Dp -m 644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
+make DESTDIR=%buildroot install
 
 # Icons
 %__mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
@@ -43,14 +44,27 @@ convert -resize 32x32 icons/%name.png %buildroot%_niconsdir/%name.png
 convert -resize 16x16 icons/%name.png %buildroot%_miconsdir/%name.png
 
 %files
-%doc docs/*
+%dir %_datadir/%name
+%dir %_datadir/%name/docs
+%dir %_datadir/%name/translations
+%doc AUTHORS README
 %_bindir/*
 %_desktopdir/%name.desktop
+%_datadir/kde4/services/ServiceMenus/*.desktop
+%_datadir/%name
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
+%_pixmapsdir/%name.png
+
 
 %changelog
+* Thu Aug 30 2012 Motsyo Gennadi <drool@altlinux.ru> 2.1.4-alt1.1
+- update Russian & Ukrainian translations
+
+* Wed Aug 29 2012 Motsyo Gennadi <drool@altlinux.ru> 2.1.4-alt1
+- 2.1.4
+
 * Fri Aug 17 2012 Motsyo Gennadi <drool@altlinux.ru> 2.1.3-alt2
 - update BuildRequires
 
