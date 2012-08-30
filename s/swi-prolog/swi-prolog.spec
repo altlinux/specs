@@ -1,6 +1,6 @@
 Name: swi-prolog
 Version: 5.6.15
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: Prolog interpreter and compiler
 License: LGPL/GPL
@@ -56,6 +56,9 @@ rmdir %buildroot%plbase/man
 %plbase/
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.15-alt1.qa2
+- Rebuilt with gmp 5.0.5
+
 * Thu Feb 04 2010 Repocop Q. A. Robot <repocop@altlinux.org> 5.6.15-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for swi-prolog
