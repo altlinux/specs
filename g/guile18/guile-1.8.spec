@@ -4,7 +4,7 @@
 Summary: A GNU implementation of Scheme for application extensibility
 Name: %{iname}18
 Version: %sversion.7
-Release: alt2.3
+Release: alt2.4
 Serial: 1
 Url: http://www.gnu.org/software/guile/
 
@@ -124,6 +124,9 @@ make check
 %_libdir/lib*.a
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.8.7-alt2.4
+- Rebuilt with gmp 5.0.5
+
 * Tue Mar 22 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.8.7-alt2.3
 - Rebuilt for debuginfo
 
