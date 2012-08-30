@@ -74,7 +74,7 @@ BuildRequires: jpackage-compat
 
 Name:           xml-commons
 Version:        1.3.04
-Release:        alt5_10jpp6
+Release:        alt5_10jpp7
 Summary:        Common code for XML projects
 Epoch:          0
 License:        ASL 2.0
@@ -412,7 +412,7 @@ sed -e 's|org.apache.xml.resolver.Catalog|org.apache.xml.resolver.apps.resolver|
 cp tempf src/manifest.resolver
 rm tempf
 popd
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jars
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jars
 popd
 pushd xml-commons-resolver-1_1_b1
 mkdir -p build/site/components/resolver
@@ -423,10 +423,10 @@ sed -e 's|org.apache.xml.resolver.Catalog|org.apache.xml.resolver.apps.resolver|
 cp tempf src/manifest.resolver
 rm tempf
 popd
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jars javadocs
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jars javadocs
 popd
 pushd xml-commons-external-1_2_04
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -f java/external/build.xml jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f java/external/build.xml jar javadoc
 popd
 pushd xml-commons-external-1_3_*
 pushd java
@@ -436,7 +436,7 @@ sed -e 's|org.apache.xml.resolver.Catalog|org.apache.xml.resolver.apps.resolver|
 cp tempf src/manifest.resolver
 rm tempf
 popd
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jars javadocs
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jars javadocs
 popd
 
 %install
@@ -794,18 +794,33 @@ cp %{SOURCE47} META-INF/MANIFEST.MF
 zip -v %buildroot/usr/share/java/xml-commons-jaxp-1.3-apis-ext.jar META-INF/MANIFEST.MF
 
 chmod 755 %buildroot%{_bindir}/*
+# fc compatibility: xml-commons-apis-ext.jar
+ln -s xml-commons-jaxp-1.3-apis-ext-%{version}.jar %buildroot%{_javadir}/xml-commons-apis-ext.jar
 # end inject OSGi manifest xml-commons-apis-ext.jar-OSGi-MANIFEST.MF
 # end inject OSGi manifest xml-commons-apis.jar-OSGi-MANIFEST.MF
 # end inject OSGi manifest xml-commons-resolver-1.2.jar-OSGi-MANIFEST.MF
 
 # -----------------------------------------------------------------------------
 
+%post jaxp-1.1-apis
+#rm -f %{_javadir}/jaxp11.jar
+#ln -s %{name}-jaxp-1.1-apis.jar %{_javadir}/jaxp11.jar
+:
+
+%postun jaxp-1.1-apis
+if [ "$1" = "0" ]; then
+  :
+  #rm -f %{_javadir}/jaxp11.jar
+fi
+
 %post jaxp-1.1-apis-javadoc
 rm -f %{_javadocdir}/%{name}-jaxp-1.1-apis
 ln -s %{name}-jaxp-1.1-apis-%{version} %{_javadocdir}/%{name}-jaxp-1.1-apis
+:
 
 %postun jaxp-1.1-apis-javadoc
 if [ "$1" = "0" ]; then
+  :
   rm -f %{_javadocdir}/%{name}-jaxp-1.1-apis
 fi
 
@@ -836,23 +851,49 @@ if [ "$1" = "0" ]; then
   rm -f %{_javadocdir}/%{name}-resolver11
 fi
 
+%post jaxp-1.2-apis
+#rm -f %{_javadir}/xml-commons-apis.jar
+#rm -f %{_javadir}/jaxp12.jar
+#ln -s %{name}-jaxp-1.2-apis.jar %{_javadir}/jaxp12.jar
+:
+
+%postun jaxp-1.2-apis
+if [ "$1" = "0" ]; then
+  :
+  #rm -f %{_javadir}/jaxp12.jar
+fi
 
 %post jaxp-1.2-apis-javadoc
 rm -f %{_javadocdir}/%{name}-jaxp-1.2-apis
 ln -s %{name}-jaxp-1.2-apis-%{version} %{_javadocdir}/%{name}-jaxp-1.2-apis
+:
 
 %postun jaxp-1.2-apis-javadoc
 if [ "$1" = "0" ]; then
+  :
   rm -f %{_javadocdir}/%{name}-jaxp-1.2-apis
 fi
 
+%post jaxp-1.3-apis
+#rm -f %{_javadir}/xml-commons-apis.jar
+#rm -f %{_javadir}/jaxp13.jar
+#ln -s %{name}-jaxp-1.3-apis.jar %{_javadir}/jaxp13.jar
+:
+
+%postun jaxp-1.3-apis
+if [ "$1" = "0" ]; then
+  :
+  #rm -f %{_javadir}/jaxp13.jar
+fi
 
 %post jaxp-1.3-apis-javadoc
 rm -f %{_javadocdir}/%{name}-jaxp-1.3-apis
 ln -s %{name}-jaxp-1.3-apis-%{version} %{_javadocdir}/%{name}-jaxp-1.3-apis
+:
 
 %postun jaxp-1.3-apis-javadoc
 if [ "$1" = "0" ]; then
+  :
   rm -f %{_javadocdir}/%{name}-jaxp-1.3-apis
 fi
 
@@ -997,6 +1038,8 @@ fi
 %exclude %{_javadir}*/dom.jar
 %exclude %{_javadir}*/sax2.jar
 %exclude %{_javadir}*/sax.jar
+# fc compatibility: 
+%{_javadir}/xml-commons-apis-ext.jar
 
 %files jaxp-1.3-apis-javadoc
 %_altdir/xml-commons-apis-javadoc_xml-commons-jaxp-1.3-apis-javadoc
@@ -1044,6 +1087,9 @@ fi
 %endif
 
 %changelog
+* Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.04-alt5_10jpp7
+- added compat symlink xml-commons-apis-ext.jar
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.04-alt5_10jpp6
 - added resolver pom
 
