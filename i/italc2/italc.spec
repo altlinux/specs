@@ -43,7 +43,7 @@
 
 Name: italc2
 Version: 2.0.1
-Release: %branch_release alt7
+Release: %branch_release alt8
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -248,7 +248,7 @@ mkdir -p %buildroot%keysdir/public/other
 # mkdir -p %buildroot%xinitdir
 # ln -snf $(relative %buildroot%_bindir/ica-launcher %buildroot%xinitdir/ica-launcher) %buildroot%xinitdir/ica-launcher
 # For autostart ica only
-install -m 755 -pD %SOURCE10 %buildroot%xinitdir/ica-launcher
+install -m 755 -pD %SOURCE20 %buildroot%xinitdir/ica-launcher
 
 find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 	| xargs -r0 -i touch "{}/key"
@@ -326,6 +326,9 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 %icons16x16dir/imc.png
 
 %changelog
+* Thu Aug 30 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt8
+- Really fix ica autostart (ALT #27684)
+
 * Mon Jul 09 2012 Aleksey Avdeev <solo@altlinux.ru> 2.0.1-alt7
 - Fix ica autostart
 
