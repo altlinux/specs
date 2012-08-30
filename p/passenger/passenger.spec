@@ -8,7 +8,7 @@
 %define module_package_name apache2-mod_%module_name
 
 Name: passenger
-Version: 3.0.10
+Version: 3.0.17
 Release: alt1
 
 Summary: Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
@@ -169,6 +169,9 @@ fi
 %apache2_libexecdir/%real_name.so
 
 %changelog
+* Thu Aug 30 2012 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.17-alt1
+- Update to release
+
 * Sun Nov 27 2011 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.10-alt1
 - Update to release
 - Start build with new scheme based on upstream git repository:
