@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
 Version: 1.2.0
-Release: alt1
+Release: alt2
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -27,7 +27,7 @@ BuildPreReq: libexo-devel
 
 Requires: xfce4-panel
 Requires: polkit
-Requires: upower udisks
+Requires: upower
 
 %description
 xfce4-power-manager is a tool for the Xfce desktop environment for
@@ -64,10 +64,12 @@ scaling.
 %_datadir/xfce4/panel/plugins/*.desktop
 %_datadir/polkit-1/actions/*.policy
 %_mandir/man?/*
-%doc %_datadir/xfce4/doc/C/images/*.png
-%doc %_datadir/xfce4/doc/C/%name.html
 
 %changelog
+* Thu Aug 30 2012 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt2
+- Don't control disk's spin speed.
+- Don't try to use internel documentation.
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
