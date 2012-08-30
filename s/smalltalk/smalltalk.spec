@@ -8,7 +8,7 @@
 
 Name: smalltalk
 Version: 3.2.4
-Release: alt1.git.263.ga839464
+Release: alt1.git.263.ga839464.1
 
 Summary: Smalltalk free language implementation
 License: GPL
@@ -97,7 +97,9 @@ GNU Smalltalk html doc
 	--with-system-libsigsegv \
 
 rm -rf libffi sigsegv
-%make_build lispstartdir=%_sysconfdir/emacs/site-start.d
+# parallel build is broken
+#make_build lispstartdir=%_sysconfdir/emacs/site-start.d
+%make lispstartdir=%_sysconfdir/emacs/site-start.d
 make -C doc html
 bzip2 ChangeLog ||:
 
@@ -158,6 +160,9 @@ find %buildroot -type f \( -path %buildroot%_libdir/\*.so\* -or -path %buildroot
 %doc doc/html/*
 
 %changelog
+* Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.4-alt1.git.263.ga839464.1
+- Rebuilt with gmp 5.0.5
+
 * Wed Feb 22 2012 Ildar Mulyukov <ildar@altlinux.ru> 3.2.4-alt1.git.263.ga839464
 - new version
 - fix RPATHs manually
