@@ -1,6 +1,6 @@
 Name: jed
 Version: 0.99.19
-Release: alt2
+Release: alt2.qa1
 Serial: 2
 
 %define srcname %name-0.99-19
@@ -31,7 +31,7 @@ Patch6: jed-0.99-18-slutf8.patch
 
 
 
-Requires: %name-common = %version-%release
+Requires: %name-common = %{?serial:%serial:}%version-%release
 
 # Automatically added by buildreq on Tue Nov 26 2002
 BuildRequires: libXt-devel xorg-compat-devel libX11-devel xorg-libs fontconfig-devel freetype2-devel libXft-devel libexpat libgpm-devel libslang2-devel autoconf libXft-devel libXft
@@ -46,7 +46,7 @@ Group: Editors
 Summary: The X Window System version of the Jed text editor
 Summary(ru_RU.KOI8-R): Редактор JED c поддержкой X Window System
 Group: Editors
-Requires: %name-common = %version-%release
+Requires: %name-common = %{?serial:%serial:}%version-%release
 
 %package -n rgrep
 Summary: A grep utility which can recursively descend through directories
@@ -131,7 +131,7 @@ cd ..
 XFTCFLAGS="-I/usr/include/freetype2"
 XFTLIBS="-lXft -lX11 -lfreetype -lfontconfig -lXrender -lX11"
 
-%__subst "
+sed -i "
      s!^#\(MOUSEFLAGS.*\)!\1!
      s!^#\(MOUSELIB.*\)!\1!
      s!^#\(GPMMOUSEO.*\)!\1!
@@ -140,15 +140,15 @@ XFTLIBS="-lXft -lX11 -lfreetype -lfontconfig -lXrender -lX11"
      s!^\(XINCLUDE = .*\)!\1 $XFTCFLAGS!
      " src/Makefile
 
-%__subst '
+sed -i '
      /XJED_HAS_XRENDERFONT/ s!0!1!
      ' src/jed-feat.h
 
-%__subst '
+sed -i '
      s/doc\/txt/help/
      ' lib/*.sl
 
-%__subst '
+sed -i '
      s!@INFODIR@!%_infodir!g
      s!@DATADIR@!%_datadir!g
      s!@LIBDIR@!%_libdir!g			     
@@ -161,29 +161,29 @@ touch src/Makefile
 %set_verify_info_method relaxed
 
 %install
-%__mkdir_p %buildroot%_infodir
-%__mkdir_p %buildroot%_datadir/%name/lib/colors/X%name
-%__mkdir_p %buildroot%_datadir/%name/help
-%__mkdir_p %buildroot%_libdir/%name
+mkdir -p %buildroot%_infodir
+mkdir -p %buildroot%_datadir/%name/lib/colors/X%name
+mkdir -p %buildroot%_datadir/%name/help
+mkdir -p %buildroot%_libdir/%name
 
-%__install -pD -m755 src/objs/x%name    %buildroot%_x11bindir/x%name
-%__install -pD -m755 src/objs/%name     %buildroot%_bindir/%name
-%__install -pD -m755 src/objs/rgrep     %buildroot%_bindir/rgrep
-%__install -pD -m755 src/objs/getmail   %buildroot%_libdir/%name/getmail
+install -pD -m755 src/objs/x%name    %buildroot%_x11bindir/x%name
+install -pD -m755 src/objs/%name     %buildroot%_bindir/%name
+install -pD -m755 src/objs/rgrep     %buildroot%_bindir/rgrep
+install -pD -m755 src/objs/getmail   %buildroot%_libdir/%name/getmail
 
 pushd %buildroot%_bindir
 	ln -s %name %name-script
 popd
 
-%__install -pD -m644 %SOURCE1           %buildroot%_sysconfdir/%name.conf
+install -pD -m644 %SOURCE1           %buildroot%_sysconfdir/%name.conf
 
-%__install -pD -m644 doc/manual/%name.1 %buildroot%_man1dir/%name.1
-%__install -pD -m644 doc/manual/rgrep.1 %buildroot%_man1dir/rgrep.1
+install -pD -m644 doc/manual/%name.1 %buildroot%_man1dir/%name.1
+install -pD -m644 doc/manual/rgrep.1 %buildroot%_man1dir/rgrep.1
 
-%__install -m644 info/%name.*           %buildroot%_infodir
-%__install -m644 doc/txt/*              %buildroot%_datadir/jed/help
+install -m644 info/%name.*           %buildroot%_infodir
+install -m644 doc/txt/*              %buildroot%_datadir/jed/help
 
-%__cp -r         lib                    %buildroot%_datadir/%name/
+cp -r         lib                    %buildroot%_datadir/%name/
 
 # now make .slc files (comment 21042011)
 #( 
@@ -216,6 +216,12 @@ while ps -C jed > /dev/null; do sleep 1; done
 %_man1dir/rgrep.1*
 
 %changelog
+* Thu Aug 30 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2:0.99.19-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for jed
+  * postclean-03-private-rpm-macros for the spec file
+
 * Thu Apr 21 2011 Ilya Mashkin <oddity@altlinux.ru> 2:0.99.19-alt2
 - fix build
 
