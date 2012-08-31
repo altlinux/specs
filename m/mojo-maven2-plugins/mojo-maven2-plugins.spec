@@ -127,7 +127,7 @@ BuildRequires: jpackage-compat
 %define apt_namedversion 1.0-alpha-3-SNAPSHOT
 %define apt_include 0
 %define batik_namedversion 1.0-SNAPSHOT
-%define batik_include 1
+%define batik_include 0
 %define cis_namedversion 1.0-alpha-1-SNAPSHOT
 %define cis_include 0
 %define cruisecontrol_namedversion 1.0-SNAPSHOT
@@ -225,7 +225,7 @@ BuildRequires: jpackage-compat
 %define xfire_namedversion 1.0-SNAPSHOT
 %define xfire_include 0
 %define xjc_namedversion 1.0-beta-2-SNAPSHOT
-%define xjc_include 1
+%define xjc_include 0
 %define xsltc_namedversion 1.0-SNAPSHOT
 %define xsltc_include 1
 
@@ -347,7 +347,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt23_8jpp6
+Release:        alt24_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -3026,6 +3026,8 @@ sed -i 's,<module>webstart</module>,<!-- tmp nocompile<module>webstart</module>-
 sed -i 's,<module>solaris</module>,<!-- tmp nocompile<module>solaris</module>-->,' pom.xml
 sed -i 's,<module>xmlbeans-maven-plugin</module>,<!-- tmp nocompile<module>xmlbeans-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>jdiff-maven-plugin</module>,<!-- tmp nocompile<module>jdiff-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>xjc-maven-plugin</module>,<!-- tmp nocompile<module>xjc-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>batik-maven-plugin</module>,<!-- tmp nocompile<module>batik-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>cis-maven-plugin</module>,<!-- tmp nocompile<module>cis-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>emma-maven-plugin</module>,<!-- tmp nocompile<module>emma-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>graphing-maven-plugin</module>,<!-- tmp nocompile<module>graphing-maven-plugin</module>-->,' mojo-sandbox/pom.xml
@@ -6087,6 +6089,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt24_8jpp6
+- build w/o mojo-maven2-plugin-xjc due to jaxb_1_0_api
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt23_8jpp6
 - dropped dependency on maven-embedder
 
