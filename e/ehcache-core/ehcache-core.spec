@@ -1,250 +1,131 @@
+Epoch: 0
 BuildRequires: hsqldb
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name:          ehcache-core
+Version:       2.6.0
+Release:       alt1_2jpp7
+Summary:       Easy Hibernate Cache
+Group:         Development/Java
+License:       ASL 2.0
+URL:           http://ehcache.org/
+# svn export http://svn.terracotta.org/svn/ehcache/tags/ehcache-core-2.6.0
+# find ehcache-core-2.6.0 -name '*.jar' -delete
+# ehcache-core-2.6.0/tools/maven-ant-tasks-2.0.7.jar
+# find ehcache-core-2.6.0 -name '*.class' -delete
+# tar czf ehcache-core-2.6.0-clean-src-svn.tar.gz ehcache-core-2.6.0
+Source0:       %{name}-%{version}-clean-src-svn.tar.gz
+# force use tomcat 7.x apis
+Source1:       %{name}-%{version}-depmap
+# remove gmaven-plugin maven-checkstyle-plugin
+# fix java.vendor
+# add servlet-api version
+Patch0:        %{name}-%{version}-pom.patch
+# Don't use buildnumber-plugin, because jna is required (and currently broken)
+Patch1:        %{name}-%{version}-disable-buildnumber-plugin.patch
+# circular deps
+# org.hibernate hibernate-ehcache 3.3.2.GA
+# unavailable deps
+# net.sf.hibernate hibernate
+Patch2:        %{name}-%{version}-remove-unavailable-test-deps.patch
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+BuildRequires: ehcache-parent
+BuildRequires: jpackage-utils
 
-#def_with gcj_support
-%bcond_with gcj_support
-#def_with repolib
-%bcond_with repolib
-
-%define repodir %{_javadir}/repository.jboss.com/net/sf/ehcache/ecache-core/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-
-Name:           ehcache-core
-Version:        2.3.1
-Release:        alt1_1jpp6
-Epoch:          0
-Summary:        Ehcache Core
-License:        ASL 2.0
-URL:            http://ehcache.org/
-Group:          Development/Java
-# svn export http://svn.terracotta.org/svn/ehcache/tags/ehcache-core-2.3.1/ ehcache-core-2.3.1 && tar cjf ehcache-core-2.3.1.tar.bz2 ehcache-core-2.3.1
-# Exported revision 3313.
-Source0:        %{name}-%{version}.tar.bz2
-Source1:        %{name}-settings.xml
-Source2:        %{name}-jpp-depmap.xml
-Source3:        %{name}-component-info.xml
-# FIXME: Missing a lot of test dependencies
-Patch0:         %{name}-no-test.patch
-# FIXME: [INFO] Reporting mojo's can only be called from ReportDocumentRender
-Patch1:         %{name}-no-checkstyle.patch
-# FIXME: Missing ydoc (ydoc.doclets.YStandard)
-Patch2:         %{name}-no-ydoc.patch
-# FIXME: [INFO] Error getting reports from the plugin 'org.apache.maven.plugins:maven-changes-plugin': Error adding plugin dependency 'org.apache.maven.doxia:doxia-site-renderer:jar' into plugin manager: Cannot add jar resource: ehcache-core-2.3.1/m2_repo/repository/org/apache/maven/doxia/doxia-site-renderer/1.0/doxia-site-renderer-1.0.jar (error discovering new components)
-# Component descriptor role: 'org.codehaus.plexus.velocity.VelocityComponent', implementation: 'org.codehaus.plexus.velocity.DefaultVelocityComponent', role hint: 'doxia-default' has a hint, but there are other implementations that don't
-# [INFO] ------------------------------------------------------------------------
-# [INFO] Trace
-# org.apache.maven.lifecycle.LifecycleExecutionException: Error getting reports from the plugin 'org.apache.maven.plugins:maven-changes-plugin': Error adding plugin dependency 'org.apache.maven.doxia:doxia-site-renderer:jar' into plugin manager: Cannot add jar resource: ehcache-core-2.3.1/m2_repo/repository/org/apache/maven/doxia/doxia-site-renderer/1.0/doxia-site-renderer-1.0.jar (error discovering new components)
-Patch3:         %{name}-no-maven-changes-plugin.patch
-Patch4:         %{name}-jxr.patch
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-Requires: jpackage-utils
-Requires: hibernate3
-Requires: jta_1_1_api
-Requires: slf4j
-BuildRequires: apache-commons-parent
-BuildRequires: ehcache-parent >= 0:2.1
+BuildRequires: geronimo-jta
 BuildRequires: hibernate3
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: jta_1_1_api
+BuildRequires: ehcache-sizeof-agent
 BuildRequires: slf4j
-BuildRequires: maven2 >= 0:2.0.7
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-project-info-reports
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-plugin-site
-BuildRequires: maven2-plugin-source
-BuildRequires: maven-release
-BuildRequires: mojo-maven2-plugin-buildnumber
-BuildRequires: mojo-maven2-plugin-findbugs
-%if 0
-BuildRequires: maven2-default-skin
-BuildRequires: maven-jxr
-%endif
-BuildArch:      noarch
+BuildRequires: tomcat-servlet-3.0-api
+
+# TODO test
+#BuildRequires: apache-commons-logging
+#BuildRequires: mvn(org.hibernate:hibernate-ehcache)
+#BuildRequires: bsh
+#BuildRequires: btm
+#BuildRequires: derby
+#BuildRequires: dom4j
+#BuildRequires: hamcrest12
+#BuildRequires: javassist
+#BuildRequires: junit4
+#BuildRequires: mockito
+#BuildRequires: xsom
+
+BuildRequires: maven
+BuildRequires: maven-assembly-plugin
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-dependency-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-source-plugin
+BuildRequires: maven-surefire-plugin
+BuildRequires: rmic-maven-plugin
+BuildRequires: xml-maven-plugin
+BuildRequires: plexus-resources
+
+Requires:      ehcache-sizeof-agent
+Requires:      geronimo-jta
+Requires:      hibernate3
+Requires:      slf4j
+Requires:      tomcat-servlet-3.0-api
+
+Requires:      jpackage-utils
+BuildArch:     noarch
 Source44: import.info
 
 %description
-This is the ehcache core module. Pair it with other modules for added
-functionality.
+Ehcache is a pure Java, in-process cache.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Requires: jpackage-utils
+Group:         Development/Java
+Summary:       Javadoc for %{name}
+Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
-
-%if 0
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-%{summary}.
-%endif
-
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
+This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0 -b .sav0
-%patch1 -p0 -b .sav1
-%patch2 -p0 -b .sav2
-%patch3 -p0 -b .sav3
-%patch4 -p0 -b .sav4
-
-cp -p %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" settings.xml
-
-mkdir -p external_repo
-ln -s %{_javadir} external_repo/JPP
+%patch0 -p0
+%patch1 -p0
+%patch2 -p0
 
 sed -i 's,<filter>${project.build.directory}/filter.properties</filter>,<filter>src/assemble/filter.properties</filter>,' pom.xml
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/m2_repo/repository
-export M2_SETTINGS=$(pwd)/settings.xml
-# FIXME: project.build.outputDirectory undefined
-%{_bindir}/mvn-jpp \
-        -e \
-        -s $M2_SETTINGS \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven.test.skip=true \
-        -Dproject.build.outputDirectory=$(pwd)/target/classes \
-        install javadoc:javadoc \
-%if 0
-        site
-%endif
+
+# tests skipped. cause: missing dependencies
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -X -Dmaven.local.depmap.file="%{SOURCE1}" -Dmaven.test.skip=true install javadoc:aggregate
 
 %install
 
-# jars
 mkdir -p %{buildroot}%{_javadir}
-cp -p target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do ln -s ${jar} ${jar/-%{version}/}; done)
+install -pm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
-# pom
-mkdir -p %{buildroot}%{_datadir}/maven2/poms
-cp -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap net.sf.ehcache ehcache-core %{version} JPP %{name}
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-# javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
-%if 0
-## manual
-mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
-cp -pr target/site/* %{buildroot}%{_docdir}/%{name}-%{version}
-rm -r %{buildroot}%{_docdir}/%{name}-%{version}/apidocs
-%endif
-
-%if %with repolib
-%{__install} -d -m 755 %{buildroot}%{repodir}
-%{__install} -d -m 755 %{buildroot}%{repodirlib}
-%{__install} -p -m 644 %{SOURCE3} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__install} -d -m 755 %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE1} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE2} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{PATCH0} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{PATCH1} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{PATCH2} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{PATCH3} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{PATCH4} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/ehcache-core.pom
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/ehcache-core.jar
-%endif
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
-%{_javadir}*/%{name}-%{version}.jar
-%{_javadir}*/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
+%doc src/assemble/EHCACHE-CORE-LICENSE.txt
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
-
-%if 0
-%files manual
-%doc %{_docdir}/%{name}-%{version}
-%endif
-
-%if %with repolib
-%files repolib
-%dir %{_javadir}*
-%{_javadir}*/repository.jboss.com
-%endif
+%doc src/assemble/EHCACHE-CORE-LICENSE.txt
 
 %changelog
+* Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.0-alt1_2jpp7
+- new version
+
 * Wed Feb 23 2011 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_1jpp6
 - new version
 
