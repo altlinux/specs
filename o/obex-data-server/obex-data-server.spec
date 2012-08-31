@@ -2,10 +2,10 @@
 
 Name: obex-data-server
 Version: 0.4.6
-Release: alt1
+Release: alt2.1
 
 Summary: D-Bus service for Obex access
-License: %gpl2plus
+License: GPLv2+
 Group: System/Servers
 Url: http://tadas.dailyda.com/blog/
 Packager: Mobile Development Team <mobile at packages.altlinux.org>
@@ -13,13 +13,14 @@ Packager: Mobile Development Team <mobile at packages.altlinux.org>
 Source: http://tadas.dailyda.com/software/%name-%version.tar.gz
 Source2: obex-data-server.conf
 
+Patch0: %name-%version-build-fixes-1.patch
+
 # From configure.in
 %define glib_ver 2.10.0
 %define dbus_ver 0.70
 %define bluez_ver 4.00
-%define openobex_ver 1.3
+%define openobex_ver 1.6
 
-BuildPreReq: rpm-build-licenses
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libdbus-glib-devel >= %dbus_ver
 BuildPreReq: libbluez-devel >= %bluez_ver
@@ -37,6 +38,7 @@ other Bluetooth-equipped devices.
 
 %prep
 %setup -q
+%patch0 -p1
 # cp -f %SOURCE2 data/obex-data-server.conf
 
 %build
@@ -61,6 +63,12 @@ install -D -m644 data/obex-data-server.conf %buildroot%_sysconfdir/dbus-1/system
 %_man1dir/*.gz
 
 %changelog
+* Mon Sep 03 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.6-alt2.1
+- build to Sisyphus
+
+* Fri Aug 03 2012 Motsyo Gennadi <drool@altlinux.ru> 0.4.6-alt2
+- rebuild with libopenobex-1.6
+
 * Tue Jan 10 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.6-alt1
 - 0.4.6
 

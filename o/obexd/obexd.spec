@@ -3,7 +3,7 @@
 %def_disable server
 
 Name: obexd
-Version: 0.41
+Version: 0.47
 Release: alt1
 Summary: D-Bus service for Obex Client access
 Group: System/Servers
@@ -18,7 +18,7 @@ Provides: obex-data-server
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: glib2-devel libbluez-devel libdbus-devel libical-devel libopenobex-devel
+BuildRequires: glib2-devel libbluez-devel libdbus-devel libical-devel
 
 %description
 obexd contains obex-client, a D-Bus service to allow sending files
@@ -46,6 +46,12 @@ Bluetooth-equipped devices
 %_datadir/dbus-1/services/obex*.service
 
 %changelog
+* Thu Aug 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.47-alt1
+- 0.47
+
+* Sat Dec 24 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.43-alt1
+- 0.43
+
 * Mon Jun 27 2011 Valery Inozemtsev <shrek@altlinux.ru> 0.41-alt1
 - 0.41
 

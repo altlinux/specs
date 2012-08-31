@@ -1,6 +1,6 @@
 Name: libopenobex
-Version: 1.5
-Release: alt3
+Version: 1.6
+Release: alt1
 Summary: OpenOBEX - Free implementation of the Object Exchange protocol
 License: LGPL
 Group: System/Libraries
@@ -10,7 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: doxygen libbluez-devel libusb-compat-devel
+BuildRequires: doxygen libbluez-devel libusb-devel xmlto
 
 %description
 OpenOBEX - Free implementation of the Object Exchange protocol
@@ -40,6 +40,7 @@ This package containns development files of Open OBEX library
 
 %files
 %doc AUTHORS ChangeLog
+%_sbindir/obex-check-device
 %_libdir/*.so.*
 
 %files devel
@@ -49,6 +50,9 @@ This package containns development files of Open OBEX library
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Aug 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.6-alt1
+- 1.6
+
 * Sun Dec 05 2010 Valery Inozemtsev <shrek@altlinux.ru> 1.5-alt3
 - updated build dependencies
 
