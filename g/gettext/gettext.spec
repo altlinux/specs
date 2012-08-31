@@ -1,11 +1,11 @@
 Name: gettext
 Version: 0.18.1.1
-Release: alt2.1
+Release: alt3
 
 %define libintl libintl3
 
 Summary: GNU libraries and utilities for producing multi-lingual messages
-License: GPLv3+ and LGPLv2+
+License: GPLv3+ and LGPLv2.1+
 Group: System/Base
 Url: http://www.gnu.org/software/gettext/
 
@@ -14,13 +14,19 @@ Source: gettext-%version.tar
 Source1: msghack.py
 Source2: gettext-po-mode-start.el
 
-Patch1: gettext-0.18-alt-gettextize-quiet.patch
-Patch2: gettext-0.18-alt-cvs-git.patch
-Patch3: gettext-0.18-alt-tmp-autopoint.patch
-Patch4: gettext-0.18-alt-gcc.patch
-Patch5: gettext-0.18-alt-doc.patch
-Patch6: gettext-0.18-alt-urlview.patch
-Patch7: gnulib-up-tests-readlink.patch
+Patch1: gnulib-up-tests-readlink.patch
+Patch2: gettext-0.18.1.1-up-fix-xgettext-crash.patch
+Patch3: gettext-0.18.1.1-up-new-scheme-syntax.patch
+Patch4: gettext-0.18.1.1-deb-project-id.patch
+Patch5: gettext-0.18.1.1-deb-msgfmt-default-little-endian.patch
+Patch6: gettext-0.18.1.1-rh-stdio-gets.patch
+
+Patch11: gettext-0.18-alt-gettextize-quiet.patch
+Patch12: gettext-0.18-alt-cvs-git.patch
+Patch13: gettext-0.18-alt-tmp-autopoint.patch
+Patch14: gettext-0.18-alt-gcc.patch
+Patch15: gettext-0.18-alt-doc.patch
+Patch16: gettext-0.18-alt-urlview.patch
 
 Provides: %name-base = %version-%release
 Obsoletes: %name-base
@@ -170,7 +176,13 @@ a formatted output library for C++.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
+
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
 # autopoint: replace gzip with xz.
 sed -i -e 's/\.tar\.gz/.tar.xz/g' -e 's/gzip/xz/g' \
@@ -331,6 +343,15 @@ mkdir -p %buildroot%_docdir
 %_defaultdocdir/libasprintf
 
 %changelog
+* Tue Aug 28 2012 Dmitry V. Levin <ldv@altlinux.org> 0.18.1.1-alt3
+- Synced with Debian gettext-0.18.1.1-9:
+  + modified msgfmt to always create little endian .mo files;
+  + changed project-id to use quotes around pwd;
+  + applied upstream patch that teaches xgettext about new scheme syntax;
+  + applied upstream patch that fixes xgettext crash when extracting
+    a message with plural that is excluded.
+- Fixed build with glibc-2.16.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.18.1.1-alt2.1
 - Rebuild with Python-2.7
 

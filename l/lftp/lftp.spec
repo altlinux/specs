@@ -1,6 +1,6 @@
 Name: lftp
-Version: 4.3.6
-Release: alt2
+Version: 4.3.8
+Release: alt1
 
 Summary: Sophisticated command line file transfer program
 License: GPLv3+
@@ -84,6 +84,9 @@ desktop-file-install --dir %buildroot%_desktopdir %_sourcedir/lftp.desktop
 %doc AUTHORS README.* THANKS TODO lftp.lsm BUGS
 
 %changelog
+* Fri Aug 31 2012 Dmitry V. Levin <ldv@altlinux.org> 4.3.8-alt1
+- Updated to 4.3.8.
+
 * Mon May 21 2012 Dmitry V. Levin <ldv@altlinux.org> 4.3.6-alt2
 - Fixed build with ld --no-copy-dt-needed-entries.
 

@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.55
+Release: alt100.56
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -228,7 +228,7 @@ export ac_cv_path___SSH=/usr/bin/ssh
 
 set_c_cflags="$(sed -n 's/^CFLAGS = //p' lib/Makefile) -W -Wno-missing-prototypes -Wno-override-init %{!?_enable_debug:-O3} -fno-builtin-memcmp"
 %make_build -C lib set.lo CFLAGS="$set_c_cflags"
-%make_build YACC='bison -y'
+%make_build
 
 %if_with profile
 rm lib/set.lo lib/librpm.la tools/setcmp.static
@@ -506,6 +506,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Fri Aug 31 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.56
+- Removed obsolete getdate.y.
+
 * Fri Aug 31 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.55
 - %%patch: added -F<N> support (by Igor Vlasenko; closes: #27662).
 - 0ldconfig.filetrigger: execute "telinit u" if appropriate
