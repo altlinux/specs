@@ -1,7 +1,7 @@
 # vim:set ft=spec:
 Name: swig
-Version: 2.0.4
-Release: alt4
+Version: 2.0.8
+Release: alt1
 
 Summary: Simplified Wrapper and Interface Generator (SWIG)
 License: Open Source
@@ -204,6 +204,9 @@ cp -a Examples Doc %buildroot%docdir/
 #%doc CHANGES.current LICENSE
 
 %changelog
+* Fri Aug 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.8-alt1
+- Version 2.0.8
+
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt4
 - Rebuilt without pike7.8-devel
 
