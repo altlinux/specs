@@ -1,3 +1,4 @@
+BuildRequires: plexus-cdc
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2011, JPackage Project
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-tools
 Version:        1.0.10
-Release:        alt8.a13_5jpp6
+Release:        alt9.a13_5jpp6
 Epoch:          0
 Summary:        Plexus Tools
 License:        ASL 2.0
@@ -231,6 +232,9 @@ ln -s tools-cdc-1.0.jar %buildroot/usr/share/java/plexus/tools-cdc.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.10-alt9.a13_5jpp6
+- fixed build
+
 * Fri Apr 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.10-alt8.a13_5jpp6
 - fixed build with new plexus-containers
 
