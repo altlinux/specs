@@ -2,6 +2,7 @@ Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: java-devel = 1.4.2
 BuildRequires: /proc
 BuildRequires: jpackage-1.5.0-compat
+ExclusiveArch: %ix86
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -37,7 +38,7 @@ BuildRequires: jpackage-1.5.0-compat
 
 Name:           retrotranslator
 Version:        1.2.3
-Release:        alt2_1jpp5
+Release:        alt3_1jpp5
 Epoch:          0
 Summary:        Retrotranslator
 License:        BSD
@@ -96,7 +97,7 @@ ln -sf $(build-classpath mx4j/mx4j) lib
 mv lib/junit.jar.no lib/junit.jar
 export OPT_JAR_LIST="ant/ant-junit"
 export CLASSPATH=lib/junit.jar
-ant \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
    -Dbuild.sysclasspath=first \
    -Djava14_home=%{_jvmdir}/java-1.4.2 \
    -Djava15_home=%{_jvmdir}/java-1.5.0 \
@@ -159,6 +160,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt3_1jpp5
+- fixed build
+
 * Wed May 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt2_1jpp5
 - selected java5 compiler explicitly
 
