@@ -1,5 +1,5 @@
 Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: avalon-logkit
+BuildRequires: avalon-logkit geronimo-jms
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2008, JPackage Project
@@ -41,7 +41,7 @@ Name:           rmock
 Summary:        RMOCK - A Java Test-Double Framework
 Url:            http://rmock.sourceforge.net/
 Version:        2.0.0
-Release:        alt6_2jpp5
+Release:        alt7_2jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -269,6 +269,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt7_2jpp5
+- fixed build
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt6_2jpp5
 - fixed build with java 7
 
