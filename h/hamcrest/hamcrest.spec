@@ -1,7 +1,7 @@
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
-BuildRequires: jpackage-compat
+BuildRequires: jpackage-1.6.0-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
@@ -63,7 +63,7 @@ BuildRequires: jpackage-compat
 
 Name:           hamcrest
 Version:        1.1
-Release:        alt1_19jpp7
+Release:        alt2_19jpp7
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -273,6 +273,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_19jpp7
+- java6 build for jmock2
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_19jpp7
 - fc release
 
