@@ -1,6 +1,6 @@
 Name: chromeless
 Version: 0.3
-Release: alt3.1
+Release: alt4
 
 Summary: A planform to create desktop applications using HTML and related Web technologies.
 License: MPL 1.1/GPL 2.0+/LGPL 2.1+
@@ -10,7 +10,7 @@ Url: http://github.com/mozilla/chromeless
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 Source: %name-%version.tar
 
-%define xulrunner %_libdir/xulrunner/xulrunner
+%define xulrunner %_bindir/xulrunner
 %define xulrunner_pkg xulrunner
 %define xulrunner_min 2.0.1
 
@@ -118,7 +118,7 @@ The documentation source can be found in the %name-docs package.
 %build
 # Link the xulrunner files
 ln -s %xulrunner xulrunner
-ln -s %xulrunner-bin xulrunner-bin
+ln -s %xulrunner xulrunner-bin
 
 # Make the documentation
 ./chromeless docs
@@ -144,7 +144,7 @@ install -D -m0755 chromeless.sh %buildroot%_bindir/chromeless
 # Install the xulrunner links and run-mozilla.sh script
 install -D -m0755 run-mozilla.sh %buildroot%cuddlefish_root/run-mozilla.sh
 ln -s %xulrunner %buildroot%cuddlefish_root/xulrunner
-ln -s %xulrunner-bin %buildroot%cuddlefish_root/xulrunner-bin
+ln -s %xulrunner %buildroot%cuddlefish_root/xulrunner-bin
 
 # Configure the planform for system-wide usage
 # Set the cuddlefish root directory path
@@ -183,6 +183,9 @@ sed -i -e 's|/usr/local/lib/chromeless|%cuddlefish_root|g' %buildroot%_bindir/ch
 %doc %home_dir/build/docs/*
 
 %changelog
+* Fri Aug 31 2012 Paul Wolneykien <manowar@altlinux.ru> 0.3-alt4
+- Use /usr/bin/xulrunner to run xulrunner.
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3-alt3.1
 - Rebuild with Python-2.7
 
