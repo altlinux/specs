@@ -1,6 +1,6 @@
 Name: elfutils
 Version: 0.155
-Release: alt1
+Release: alt2
 
 Summary: A collection of utilities and DSOs to handle compiled objects
 License: GPLv3+ and (GPLv2+ or LGPLv3+)
@@ -172,6 +172,9 @@ export PATH="%buildroot%_bindir:$PATH" LD_LIBRARY_PATH=%buildroot%_libdir
 %endif
 
 %changelog
+* Fri Aug 31 2012 Dmitry V. Levin <ldv@altlinux.org> 0.155-alt2
+- elflint --gnu-ld: tolerate __bss_start out of .dynsym bounds.
+
 * Thu Aug 30 2012 Dmitry V. Levin <ldv@altlinux.org> 0.155-alt1
 - Updated to 0.155.
 
