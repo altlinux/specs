@@ -4,7 +4,7 @@
 #%%define branch_switch Mxx
 
 Name: moodle-plugins-tools
-Version: 0.1
+Version: 0.2
 Release: %branch_release alt1
 
 Summary: Moodle plugins configuration tools
@@ -43,5 +43,8 @@ s|%%moodle_dir|%moodle_dir|g
 %_sbindir/mt-*
 
 %changelog
+* Fri Aug 31 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
+- fields locking modified
+
 * Sun May 06 2012 Aleksey Avdeev <solo@altlinux.ru> 0.1-alt1
 - Initial build for ALT Linux Sisyphus
