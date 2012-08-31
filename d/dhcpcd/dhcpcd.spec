@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 5.5.6
-Release: alt3
+Release: alt4
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -62,6 +62,16 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Fri Aug 31 2012 Mikhail Efremov <sem@altlinux.org> 1:5.5.6-alt4
+- dhcpcd-run-hooks: Print hook's exit code to log.
+- dhcpcd.conf: Disable solicition of IPv6 RA by default.
+- ntp.conf hook: Fix exit status.
+- Don't set if_up or if_down as true when testing
+    (from upstream git).
+- Improve patch for check netlink messages sender
+    (from upstream git).
+- dhcpcd-run-hooks: Don't run *.rpm* and *~ scripts.
+
 * Fri Aug 24 2012 Mikhail Efremov <sem@altlinux.org> 1:5.5.6-alt3
 - Accept netlink messages only from kernel.
 
