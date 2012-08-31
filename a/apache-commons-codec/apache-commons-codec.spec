@@ -1,3 +1,5 @@
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 Epoch: 0
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
@@ -8,7 +10,7 @@ BuildRequires: jpackage-compat
 
 Name:          apache-%{short_name}
 Version:       1.6
-Release:       alt1_4jpp7
+Release:       alt2_4jpp7
 Summary:       Implementations of common encoders and decoders
 Group:         Development/Java
 License:       ASL 2.0
@@ -49,6 +51,7 @@ Source44: import.info
 
 %if_with repolib
 Source3:        %{name}-component-info.xml
+Source45: commons-codec.jar-OSGi-MANIFEST.MF
 
 %package	 repolib
 Summary:	 Artifacts to be uploaded to a repository library
@@ -118,6 +121,15 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__cp} -p %{buildroot}%{_javadir}/%{short_name}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
 %endif
 
+# inject OSGi manifest commons-codec.jar-OSGi-MANIFEST.MF
+rm -rf META-INF
+mkdir -p META-INF
+cp %{SOURCE45} META-INF/MANIFEST.MF
+# update even MANIFEST.MF already exists
+# touch META-INF/MANIFEST.MF
+zip -v %buildroot/usr/share/java/commons-codec.jar META-INF/MANIFEST.MF
+# end inject OSGi manifest commons-codec.jar-OSGi-MANIFEST.MF
+
 %files
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES*
 %{_mavendepmapfragdir}/*
@@ -134,6 +146,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_4jpp7
+- added OSGi manifest
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_4jpp7
 - new version
 
