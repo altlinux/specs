@@ -36,7 +36,7 @@
 %define minor	8
 %define bugfix	2
 %define beta	%nil
-%define rlz alt1
+%define rlz alt2
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -434,7 +434,7 @@ Group: Development/KDE and QT
 Requires: lib%name = %version-%release
 Requires: lib%name-test = %version-%release
 Requires: lib%name-scripttools = %version-%release
-Requires: libssl-devel freetype2-devel fontconfig-devel libpng-devel zlib-devel libtiff-devel
+Requires: libssl-devel freetype2-devel fontconfig-devel libpng-devel zlib-devel
 Requires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel
 Requires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 Requires: xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel
@@ -1525,6 +1525,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Fri Aug 31 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt2
+- don't require libtiff-devel
+
+* Wed May 23 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt0.M60P.1
+- build for M60P
+
 * Tue May 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
 - new version
 
