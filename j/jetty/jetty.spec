@@ -51,7 +51,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty
 Version:        8.1.0
-Release:        alt2_4jpp7
+Release:        alt3_4jpp7
 Summary:        Java Webserver and Servlet Container
 
 Group:          Development/Java
@@ -398,6 +398,9 @@ fi
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 8.1.0-alt3_4jpp7
+- rebuild
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 8.1.0-alt2_4jpp7
 - fixed %pre
 
