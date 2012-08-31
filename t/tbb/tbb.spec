@@ -1,5 +1,5 @@
 Name: tbb
-Version: 40_20120408
+Version: 40_20120613
 Release: alt1
 Summary: Threading Building Blocks
 License: GPL
@@ -153,6 +153,9 @@ install -p -m644 CHANGES COPYING README %buildroot%_docdir/%name
 %_libdir/%name/
 
 %changelog
+* Fri Aug 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 40_20120613-alt1
+- Version 40_20120613
+
 * Mon May 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 40_20120408-alt1
 - Version 40_20120408
 
