@@ -3,6 +3,7 @@ Patch33: jetty6-maven3-alt.patch
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%def_without webapps
 %def_without cometd
 %def_without wadi
 %def_without jboss
@@ -93,7 +94,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty6
 Version:        6.1.26
-Release:        alt9_1jpp6
+Release:        alt10_1jpp6
 Epoch:          0
 Summary:        Webserver and Servlet Container
 Group:          Development/Java
@@ -489,6 +490,7 @@ Requires:       %{name}-core = %{epoch}:%{version}-%{release}
 %description -n %{jettyname}6-util5
 %{summary}.
 
+%if_with webapps
 %package webapps
 Summary:        Example webapps for %{name}
 Group:          Development/Java
@@ -498,9 +500,12 @@ Requires:       jsp_2_1_api
 Requires:       ejb_3_0_api
 Requires:       interceptor_3_0_api
 BuildRequires:  cometd-javascript
+%endif #webapps
 
+%if_with webapps
 %description webapps
 %{summary}.
+%endif #webapps
 
 %if_with jboss
 %package jboss
@@ -566,6 +571,11 @@ perl -pi -e 's|<!--<module>modules/plus</module>-->|<module>modules/plus</module
 %endif
 %if %without xbean
 perl -pi -e 's|<module>extras/xbean</module>|<!--<module>extras/xbean</module>-->|;' pom.xml
+%endif
+%if %without webapps
+perl -pi -e 's|<module>examples/test-jaas</module>|<!--<module>examples/test-jaas</module>-->|;' pom.xml
+perl -pi -e 's|<module>examples/test-jndi</module>|<!--<module>examples/test-jndi</module>-->|;' pom.xml
+perl -pi -e 's|<module>examples/test-webapp</module>|<!--<module>examples/test-webapp</module>-->|;' pom.xml
 %endif
 
 cp -p %{SOURCE1} settings.xml
@@ -1069,6 +1079,7 @@ done
 # ================= End of Jetty-JBoss subpackage install
 %endif
 
+%if_with webapps
 # ================= Start of Jetty-Webapps subpackage install
 LOC=$(pwd)
 mkdir -p %{buildroot}%{appdir}/spring-ebj3-demo
@@ -1093,6 +1104,7 @@ mkdir -p %{buildroot}%{appdir}/test
 pushd %{buildroot}%{appdir}/test
 jar xf ${LOC}/examples/test-webapp/target/jetty-test-%{version}.war
 popd
+%endif
 
 mkdir -p %{buildroot}%{appdir}/cometd
 %if_with cometd
@@ -1686,6 +1698,7 @@ fi
 # ========= End of Jetty Webapps Subpackage Files
 
 # ========= Start of Jetty Webapps Subpackage Files
+%if_with webapps
 %files webapps
 %{appdir}/*
 %{ctxdir}/README*
@@ -1695,9 +1708,13 @@ fi
 %config(noreplace) %{confdir}/login.properties
 %doc *.txt
 %doc LICENSES/LICENSE*.txt
+%endif #webapps
 # ========= End of Jetty Webapps Subpackage Files
 
 %changelog
+* Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt10_1jpp6
+- build without webapps examples due to cometd-javascript dependency
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt9_1jpp6
 - build without mojo-maven2-plugin-exec
 
