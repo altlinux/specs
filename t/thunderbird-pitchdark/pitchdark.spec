@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-build-thunderbird
 %define mworkdir %tbird_name-%mname-%mver
 
 Name: %tbird_name-%mname
-Version: 4.0.0
+Version: 4.0.4
 Release: alt1
 Summary: Dark-colored minimalistic theme for Thunderbird
 License: MPL or GPLv3
@@ -33,6 +33,9 @@ cp -fR * %buildroot%mciddir/
 %mciddir
 
 %changelog
+* Fri Aug 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1
+- Version 4.0.4
+
 * Sat Dec 03 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1
 - Version 4.0.0
 
