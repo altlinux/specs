@@ -1,7 +1,7 @@
 # -*- coding: utf-8; mode: rpm-spec -*-
 # $Id: emacs22.spec,v 1.60 2006/09/12 18:38:21 eugene Exp $
 
-%define emacs_version 24.1
+%define emacs_version 24.2
 %define gnus_version 5.13
 %define shortname emacs
 %define tramp_version 2.2.3
@@ -10,10 +10,10 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 1.0
 
-%define cedet_release alt3
+%define cedet_release alt4
 
 %define cvsdate 20090110
-%define rel_base alt2
+%define rel_base alt3
 
 # subpackages to build;
 %def_enable nox
@@ -1548,6 +1548,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Tue Aug 28 2012 Terechkov Evgenii <evg@altlinux.org> 24.2-alt3
+- 24.2
+
 * Thu Jun 21 2012 Terechkov Evgenii <evg@altlinux.org> 24.1-alt2
 - Rebuild with new libImageMagick
 
