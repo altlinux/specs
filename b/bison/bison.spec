@@ -1,21 +1,25 @@
 Name: bison
-Version: 2.4.3
-Release: alt3
+Version: 2.6.2
+Release: alt1
 
 Summary: A GNU general-purpose parser generator
 License: GPLv3+
 Group: Development/Other
 Url: http://www.gnu.org/software/bison/
 
-# ftp://ftp.gnu.org/gnu/bison/bison-%version.tar.bz2
-Source: bison-%version.tar
-
-BuildRequires: flex, gcc-c++
+%define srcname %name-%version-%release
+# git://git.altlinux.org/people/ldv/packages/bison refs/heads/bison-current
+Source0: %srcname.tar
+# git://git.altlinux.org/people/ldv/packages/bison refs/heads/po-current
+Source1: po-%version-%release.tar
 
 Requires: m4 >= 0:1.4
 Requires: %name-runtime = %version-%release
 Provides: byacc = %version-%release
 Obsoletes: byacc
+
+BuildRequires: flex, gcc-c++, help2man
+BuildRequires: gnulib >= 0.0.7591.898f143
 
 %description
 Bison is a general purpose parser generator which converts a grammar
@@ -23,11 +27,11 @@ description for an LALR(1) context-free grammar into a C program to
 parse that grammar.  Bison can be used to develop a wide range of
 language parsers, from ones used in simple desk calculators to complex
 programming languages.  Bison is upwardly compatible with Yacc, so any
-correctly written Yacc grammar should work with Bison without any changes.
-If you know Yacc, you shouldn't have any trouble using Bison.  You do need
-to be very proficient in C programming to be able to program with Bison.
-Many programs use Bison as part of their build process.  Bison is only
-needed on systems that are used for development.
+correctly written Yacc grammar should work with Bison without any
+changes.  If you know Yacc, you shouldn't have any trouble using Bison.
+You do need to be very proficient in C programming to be able to program
+with Bison.  Many programs use Bison as part of their build process.
+Bison is only needed on systems that are used for development.
 
 %package runtime
 Summary: Runtime support files used by Bison-generated parsers
@@ -42,11 +46,24 @@ See the Internationalization in the Bison manual section for more
 information.
 
 %prep
-%setup
-bzip2 -9k NEWS
+%setup -n %srcname -a1
+
+# Build scripts expect to find the bison version in this file.
+echo -n %version > .tarball-version
+
+# Generate LINGUAS file.
+ls po/*.po | sed 's|.*/||; s|\.po$||' > po/LINGUAS
+
+# Install autoconf files.
+rm m4/m4.m4 data/m4sugar/{foreach,m4sugar}.m4
+install -pm644 %_aclocaldir/m4.m4 m4/
+install -pm644 %_datadir/autoconf/m4sugar/{foreach,m4sugar}.m4 data/m4sugar/
+
+xz -9k NEWS
 
 %build
-%configure
+./bootstrap --no-git --skip-po --gnulib-srcdir=%_datadir/gnulib
+%configure --disable-silent-rules
 touch src/scan-????.l
 %make_build
 
@@ -60,7 +77,7 @@ touch src/scan-????.l
 %make_build -k check
 
 %files -f %name.lang
-%doc AUTHORS NEWS.bz2 README THANKS
+%doc AUTHORS NEWS.xz README THANKS
 %_bindir/*
 %_libdir/lib*.a
 %_datadir/bison/
@@ -71,6 +88,11 @@ touch src/scan-????.l
 %files -f %name-runtime.lang runtime
 
 %changelog
+* Fri Aug 31 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.2-alt1
+- Updated to bison 2.6.2.
+- Updated translations from translationproject.org.
+- Built with system gnulib v0.0-7591-g898f143.
+
 * Mon Feb 07 2011 Dmitry V. Levin <ldv@altlinux.org> 2.4.3-alt3
 - Minor specfile cleanup.
 
