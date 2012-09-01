@@ -1,6 +1,6 @@
 Name: atop
-Version: 1.26
-Release: alt2
+Version: 1.27
+Release: alt1
 Summary: AT Computing's System & Process Monitor
 License: %gpl2plus
 Group: Monitoring
@@ -62,6 +62,9 @@ touch %buildroot%_sysconfdir/%{name}rc
 
 
 %changelog
+* Sat Sep 01 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.27-alt1
+- 1.27-3
+
 * Sat Dec 25 2010 Slava Dubrovskiy <dubrsl@altlinux.org> 1.26-alt2
 - Bugfix release for two bug fixes related to segmentation faults
 
