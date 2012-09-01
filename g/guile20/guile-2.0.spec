@@ -5,15 +5,14 @@
 %def_disable static
 
 Name: %{_name}20
-Version: %api_ver.5
-Release: alt2
+Version: %api_ver.6
+Release: alt1
 
 Summary: A GNU implementation of Scheme (version 2.0)
-Url: http://www.gnu.org/software/guile/
 License: GPL
 Group: Development/Scheme
-Source: ftp://ftp.gnu.org/gnu/%_name/%_name-%version.tar.gz
-Patch: %_name-2.0.5-up-gc.test.patch
+Url: http://www.gnu.org/software/guile/
+Source: ftp://ftp.gnu.org/gnu/%_name/%_name-%version.tar.xz
 
 Provides: /usr/bin/guile
 Provides: %_name = %version-%release
@@ -87,8 +86,7 @@ users of Guile-based applications a choice of languages.
 Install this package if you need to statically link your program with guile.
 
 %prep
-%setup -q -n %_name-%version
-%patch -p1
+%setup -n %_name-%version
 
 %build
 %autoreconf
@@ -151,6 +149,9 @@ mv %buildroot%_man1dir/%_name.1 %buildroot%_man1dir/%name.1
 #%dir %_datadir/%_name
 
 %changelog
+* Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 2.0.6-alt1
+- Updated to 2.0.6.
+
 * Fri Jun 01 2012 Yuri N. Sedunov <aris@altlinux.org> 2.0.5-alt2
 - fixed test suite from upstream
 
