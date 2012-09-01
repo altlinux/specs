@@ -1,69 +1,62 @@
 Name: libgc
-Version: 7.1
-Release: alt3.1
+Version: 7.2d
+Release: alt1
 
-Summary: Boehm garbage collector
-Summary(ru_RU.KOI8-R): Сборщик мусора Boehm
-
-License: See README.QUICK for Copyright notes
+Summary: The Boehm-Demers-Weiser conservative garbage collector
+License: MIT and GPLv2+
 Group: System/Libraries
 Url: http://www.hpl.hp.com/personal/Hans_Boehm/gc/
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: %url/gc_source/gc-%version.tar.bz2
-Patch: %name-7.0-fixarm.patch
+Source: %url/gc_source/gc-%version.tar.gz
 
 BuildRequires: gcc-c++
+%{?!_without_check:%{?!_disable_check:BuildRequires: /proc}}
+
+%def_disable static
 
 %description
 The Boehm-Demers-Weiser conservative garbage collector can be used as a
-garbage collecting replacement for C malloc or C++ new. Alternatively,
+garbage collecting replacement for C malloc or C++ new.  Alternatively,
 it may be used as a leak detector for C or C++ programs, though that is
 not its primary goal.
 
-%description -l ru_RU.KOI8-R
-Консервативный сборщик мусора Boehm-Demers-Weiser, который может быть
-использован как замена C malloc или C++ new, только со сборкой мусора.
-Также он может быть использован как анализатор утечек памяти
-для программ на C или C++, хотя это не основное его предназначение.
-
 %package devel
-Summary: Header files for libgc
-Summary(ru_RU.KOI8-R): Заголовочные файлы для libgc
+Summary: Development files for libgc
 Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
-This package contain header files for Boehm garbage collector.
+The Boehm-Demers-Weiser conservative garbage collector can be used as a
+garbage collecting replacement for C malloc or C++ new.  Alternatively,
+it may be used as a leak detector for C or C++ programs, though that is
+not its primary goal.
 
-%description -l ru_RU.KOI8-R
-Пакет содержит заголовочные файлы для сборщика мусора Boehm.
+This package contains development files for libgc.
 
 %package devel-static
-Summary: Static library files libgc
-Summary(ru_RU.KOI8-R): Статические библиотеки libgc
+Summary: Static libgc library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name-devel = %version-%release
 
 %description devel-static
-This package contain static libraries Boehm garbage collector.
-
-%description -l ru_RU.KOI8-R
-Пакет содержит статические библиотеки сборщика мусора Boehm.
+This package contains static libgc library.
 
 %prep
-%setup -q -n gc-%version
-%patch
+%setup -n gc-7.2
 
 %build
-%add_optflags -DUSE_LIBC_PRIVATES=1
-%configure  \
-	--enable-threads=pthreads \
-	 --enable-shared=yes \
-	 --enable-cplusplus \
-	 --enable-static=yes
-
+# see bugzilla.redhat.com/689877
+export CPPFLAGS='-DUSE_GET_STACKBASE_FOR_MAIN=1'
+%configure \
+	--enable-cplusplus \
+	--enable-large-config \
+	--enable-threads=posix \
+	--with-libatomic-ops=no \
+	--enable-shared=yes \
+	%{subst_enable static} \
+%ifarch %{ix86}
+	--enable-parallel-mark \
+%endif
+	#
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
 
@@ -71,30 +64,36 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %makeinstall_std
 
 mkdir -p %buildroot%_man3dir/
-install -m 644 doc/gc.man %buildroot%_man3dir/gc.3
+install -pm644 doc/gc.man %buildroot%_man3dir/gc.3
 
-# remove docs from wrong place
-rm -rf %buildroot%_datadir/gc
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
+%make_build -k check
 
 %files
-%doc ChangeLog
-%_libdir/libcord.so.*
-%_libdir/libgc.so.*
-%_libdir/libgccpp.so.*
+%_libdir/*.so.*
+%doc ChangeLog README.QUICK doc/README
+%doc doc/README.changes doc/README.contributors 
+%doc doc/README.environment doc/README.linux
 
 %files devel
-%doc doc/README* doc/*.html README.QUICK doc/barrett_diagram
 %_libdir/*.so
-%_includedir/gc/
-%_includedir/gc.h
-%_includedir/gc_cpp.h
+%_includedir/*
+%_pkgconfigdir/*.pc
 %_man3dir/*
-%_pkgconfigdir/bdw-gc.pc
+# exclude docs from the wrong place
+%exclude %_datadir/gc/
+%doc doc/*.html doc/barrett_diagram
 
+%if_enabled static
 %files devel-static
 %_libdir/*.a
+%endif
 
 %changelog
+* Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 7.2d-alt1
+- Updated to 7.2d.
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.1-alt3.1
 - Removed bad RPATH
 
@@ -102,7 +101,7 @@ rm -rf %buildroot%_datadir/gc
 - rebuilt for debuginfo
 
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 7.1-alt2.qa1
-- rebuild using girar-nmu to require/provide setversion 
+- rebuild using girar-nmu to require/provide setversion
   by request of mithraen@
 
 * Tue Jul 14 2009 Vitaly Lipatov <lav@altlinux.ru> 7.1-alt2
