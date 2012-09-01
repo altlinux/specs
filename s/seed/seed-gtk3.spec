@@ -5,7 +5,7 @@
 
 Name: seed
 Version: %ver_major.0
-Release: alt1
+Release: alt1.1
 
 Summary: GObject JavaScriptCore bridge
 License: LGPLv3+/GPLv3+
@@ -153,6 +153,9 @@ rm -f seed.pc
 %_datadir/gtk-doc/html/%name
 
 %changelog
+* Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 3.2.0-alt1.1
+- Rebuilt with libgmp.so.10.
+
 * Thu Sep 22 2011 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - 3.2.0
 
