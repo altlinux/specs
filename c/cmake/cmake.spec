@@ -1,6 +1,6 @@
 Name: cmake
-Version: 2.8.8
-Release: alt3
+Version: 2.8.9
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -103,6 +103,14 @@ BuildArch: noarch
 %description -n vim-plugin-%name
 This package contains updated indent and syntax Vim plugins for CMake files.
 
+%package -n bash-completion-%name
+Summary: bash completion for CMake
+Group: Shells
+BuildArch: noarch
+
+%description -n bash-completion-%name
+bash completion for CMake
+
 
 %package -n rpm-macros-%name
 Summary: Set of RPM macros for packaging applications that use cmake
@@ -146,10 +154,12 @@ mv %buildroot/usr/lib %buildroot%_libdir || :
 for i in 32 128; do
     install -pD -m644 Source/QtDialog/CMakeSetup$i.png %buildroot%_iconsdir/hicolor/${i}x$i/apps/CMakeSetup.png
 done
-mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir}
+mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir,%_sysconfdir}
 install -m644 Docs/cmake-indent.vim %buildroot%vim_indent_dir/%name.vim
 install -m644 Docs/cmake-syntax.vim %buildroot%vim_syntax_dir/%name.vim
 install -pD -m644 %name.macros %buildroot%_rpmmacrosdir/%name
+
+mv -f %buildroot%_datadir/CMake/completions %buildroot%_sysconfdir/bash_completion.d
 
 install -p  build/Source/kwsys/libcmsys.so  %buildroot%_libdir/libcmsys.so
 install -p  build/Source/kwsys/libcmsys_c.so  %buildroot%_libdir/libcmsys_c.so
@@ -221,12 +231,18 @@ popd
 %vim_indent_dir/*
 %vim_syntax_dir/*
 
+%files -n bash-completion-%name
+%_sysconfdir/bash_completion.d/*
 
 %files -n rpm-macros-%name
 %_rpmmacrosdir/*
 
 
 %changelog
+* Sat Sep 01 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.9-alt1
+- 2.8.9
+- Add subpackage bash-completion-cmake
+
 * Wed Jun 27 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.8-alt3
 - Really fix FindPkgConfig.cmake regression (closes: #27499)
 
