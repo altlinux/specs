@@ -1,24 +1,17 @@
 Name: flex
-Version: 2.5.35
-Release: alt5
+Version: 2.5.36
+Release: alt1
 
 Summary: A fast lexical analyzer generator
 License: BSD-style
 Group: Development/Other
 Url: http://flex.sourceforge.net/
 
-# http://sf.net/flex/%name-%version.tar.bz2
-Source0: flex-%version.tar
-Source1: flex-NEWS.ALT
-Patch0: flex-2.5.35-cvs-20081228.patch
-Patch1: flex-2.5.35-deb-6.patch
-Patch2: flex-2.5.35-alt-YY_STATE_BUF_SIZE.patch
-Patch3: flex-2.5.35-alt-texinfo.patch
-Patch4: flex-2.5.35-alt-yy_fatal_error-noreturn.patch
-Patch5: flex-2.5.35-alt-gcc44.patch
-Patch6: flex-2.5.35-alt-isatty.patch
-Patch7: flex-2.5.35-suse-pic.patch
-Patch8: flex-2.5.35-suse-doc.patch
+# http://download.sourceforge.net/%name/%name-%version.tar.bz2
+Source: flex-%version.tar
+Patch1: flex-2.5.36-rh-tests-bison.patch
+Patch2: flex-2.5.36-alt-yy_fatal_error-noreturn.patch
+Patch3: flex-2.5.36-suse-pic.patch
 
 Requires: m4 >= 0:1.4
 Conflicts: flex-old
@@ -45,34 +38,21 @@ scanners require conforming implementations when flex is used in ANSI
 C mode.  The package flex-old provides the older behaviour.
 
 %prep
-%setup -q
-rm parse.[hc] scan.c skel.c
-%patch0 -p0
+%setup
+rm parse.[hc] scan.c skel.c doc/flex.info*
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-
-install -pm644 %_sourcedir/flex-NEWS.ALT NEWS.ALT
-bzip2 -9k NEWS
 
 %build
 %autoreconf
 %configure
 %make_build CFLAGS='%optflags -D_REENTRANT' MAKEINFOFLAGS=--no-split dist_doc_DATA=
 
-%check
-%make_build -k check dist_doc_DATA=
-
 %install
-%makeinstall dist_doc_DATA=
+%makeinstall_std dist_doc_DATA=
 
 ln -s flex %buildroot%_bindir/lex
-ln -s flex %buildroot%_bindir/flex++
 ln -s libfl.a %buildroot%_libdir/libl.a
 ln -s libfl.a %buildroot%_libdir/libfl_pic.a
 ln -s flex.1 %buildroot%_man1dir/lex.1
@@ -80,8 +60,11 @@ ln -s flex.1 %buildroot%_man1dir/flex++.1
 
 %find_lang %name
 
+%check
+%make_build -k check dist_doc_DATA=
+
 %files -f %name.lang
-%doc AUTHORS COPYING NEWS.* README examples
+%doc AUTHORS COPYING NEWS README examples
 %_bindir/*
 %_libdir/lib*.a
 %_includedir/*
@@ -89,6 +72,10 @@ ln -s flex.1 %buildroot%_man1dir/flex++.1
 %_infodir/*.info*
 
 %changelog
+* Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 2.5.36-alt1
+- Updated to 2.5.36.
+- Fixed build with new bison.
+
 * Mon Feb 07 2011 Dmitry V. Levin <ldv@altlinux.org> 2.5.35-alt5
 - Minor specfile cleanup.
 
