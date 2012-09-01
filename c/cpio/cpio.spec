@@ -1,6 +1,6 @@
 Name: cpio
 Version: 2.11
-Release: alt1
+Release: alt2
 
 Summary: A GNU archiving program
 License: GPLv3+
@@ -102,6 +102,10 @@ mv %buildroot%_bindir/cpio{,.}static
 %_bindir/cpio.static
 
 %changelog
+* Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 2.11-alt2
+- Synced cpio manpage with Fedora cpio-2.11-11.
+- Fixed build with glibc-2.16.
+
 * Sun Mar 14 2010 Dmitry V. Levin <ldv@altlinux.org> 2.11-alt1
 - Updated to 2.11.
 
