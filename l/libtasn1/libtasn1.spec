@@ -1,5 +1,5 @@
 Name: libtasn1
-Version: 2.12
+Version: 2.13
 Release: alt1
 
 Summary: The ASN.1 library used in GNUTLS
@@ -109,6 +109,9 @@ install -pm644 doc/reference/html/* %buildroot%docdir/reference/html/
 %docdir/reference/
 
 %changelog
+* Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 2.13-alt1
+- Updated to 2.13.
+
 * Fri Mar 23 2012 Dmitry V. Levin <ldv@altlinux.org> 2.12-alt1
 - Updated to 2.12 (fixes CVE-2012-1569).
 
