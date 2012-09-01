@@ -1,5 +1,5 @@
 Name: gnutls26
-Version: 2.12.18
+Version: 2.12.20
 Release: alt1
 
 Summary: A TLS protocol implementation
@@ -9,7 +9,8 @@ Group: System/Libraries
 Url: http://www.gnu.org/software/gnutls/
 # ftp://ftp.gnutls.org/pub/gnutls/gnutls-%version.tar.bz2
 Source: gnutls-%version.tar
-Patch: gnutls-2.12.14-rh-tests.patch
+Patch1: gnutls-2.12.14-rh-tests.patch
+Patch2: gnutls-2.12.20-rh-stdio-gets.patch
 
 %define libcxx libgnutlsxx27
 %define libssl libgnutls27-openssl
@@ -209,7 +210,9 @@ This package contains the GnuTLS API Reference Manual.
 
 %prep
 %setup -n gnutls-%version
-%patch -p1
+%patch1 -p1
+%patch2 -p1
+rm doc/*.info*
 
 %build
 %autoreconf
@@ -308,6 +311,9 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%docdir/COPYING.LIB
 %endif
 
 %changelog
+* Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 2.12.20-alt1
+- Updated to 2.12.20.
+
 * Fri Mar 23 2012 Dmitry V. Levin <ldv@altlinux.org> 2.12.18-alt1
 - Updated to 2.12.18.
 
