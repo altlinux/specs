@@ -3,7 +3,7 @@
 
 Name: genius
 Version: %ver_major.15
-Release: alt1.2
+Release: alt1.3
 
 Summary: Genius Calculator
 License: LGPLv3+
@@ -87,6 +87,9 @@ popd
 %exclude %_datadir/mime-info/genius.mime
 
 %changelog
+* Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 1.0.15-alt1.3
+- Rebuilt with libgmp.so.10.
+
 * Tue Jun 05 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.15-alt1.2
 - updated buildreqs
 
