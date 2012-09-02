@@ -1,33 +1,39 @@
 %define orig_name blender
 
-Name: %{orig_name}2.49
+Name: blender2.49
 Version: 2.49b
-Release: alt11.1
+Release: alt11.2
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
 Group: Graphics
 URL: http://www.blender.org/
 
-Source0: http://download.blender.org/source/%{orig_name}-%version.tar.gz
-Source1: %{orig_name}-wrapper
-Source2: %{orig_name}.desktop
-Source3: %{orig_name}-win.desktop
-Patch1: %{orig_name}-2.47-alt-libtiff4.patch
-Patch2: %{orig_name}-2.47-alt-usertempdir.patch
-Patch3: %{orig_name}-2.49b-alt-ld.patch
-Patch4: %{orig_name}-2.49b-alt-qhull.patch
-Patch5: %{orig_name}-2.49b-alt-libav.patch
-Patch6: %{orig_name}-2.49b-alt-i18n.patch
-Patch7: %{orig_name}-2.49b-alt-rename.patch
-Patch8: %orig_name-2.49b-alt-gcc4.6.patch
+Source0: http://download.blender.org/source/blender-%version.tar.gz
+Source1: blender-wrapper
+Source2: blender.desktop
+Source3: blender-win.desktop
+Patch1: blender-2.47-alt-libtiff5.patch
+Patch2: blender-2.47-alt-usertempdir.patch
+Patch3: blender-2.49b-alt-ld.patch
+Patch4: blender-2.49b-alt-qhull.patch
+Patch5: blender-2.49b-alt-libav.patch
+Patch6: blender-2.49b-alt-i18n.patch
+Patch7: blender-2.49b-alt-rename.patch
+Patch8: blender-2.49b-alt-gcc4.6.patch
 
 Provides: python%_python_version(Blender)
 Provides: python%_python_version(bpy)
 Provides: python%_python_version(BPyMesh)
 
-Requires: libtiff >= 3.0
 Requires: %name-i18n = %version-%release
+
+%if "%_lib" == "lib64"
+%define lib_suffix ()(64bit)
+%else
+%define lib_suffix %nil
+%endif
+Requires: libtiff.so.5%lib_suffix
 
 # Automatically added by buildreq on Sun Dec 19 2010
 BuildRequires: flex gcc-c++ libSDL-devel libXi-devel libavdevice-devel libftgl-devel libglew-devel libjpeg-devel libopenal-devel libpng-devel libpth-devel libswscale-devel libtiff-devel openexr-devel python-devel python-modules-email scons swig
@@ -196,6 +202,9 @@ popd
 %_datadir/%name/.Blanguages
 
 %changelog
+* Sun Sep 02 2012 Dmitry V. Levin <ldv@altlinux.org> 2.49b-alt11.2
+- Built with libtiff.so.5.
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.49b-alt11.1
 - Fixed build
 

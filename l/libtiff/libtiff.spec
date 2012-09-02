@@ -1,52 +1,63 @@
 Name: libtiff
-Version: 3.9.6
-Release: alt3
+Version: 4.0.2
+Release: alt2
 
-Summary: A library of functions for manipulating TIFF format image files
+Summary: Library of functions for manipulating TIFF format image files
 License: BSD-style
 Group: System/Libraries
 Url: http://www.remotesensing.org/libtiff/
 
-# git://git.altlinux.org/gears/l/libtiff
+# git://git.altlinux.org/gears/l/%name
 Source: %name-%version-%release.tar
 
 %def_disable static
 %def_enable cxx
 
-# Automatically added by buildreq on Tue Feb 08 2011
-BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjpeg-devel zlib-devel
+BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjpeg-devel liblzma-devel zlib-devel
+
+%description
+This package contains a library of functions for manipulating
+TIFF (Tagged Image File Format) image format files.  TIFF is a widely
+used file format for bitmapped images.  TIFF files usually end in the
+.tif extension and they are often quite large.
+
+%package -n libtiff5
+Summary: Library of functions for manipulating TIFF format image files
+Group: System/Libraries
 
 %package utils
 Summary: Programs for manipulating TIFF format image files
 Group: Graphics
-Requires: %name = %version-%release
+Requires: libtiff5 = %version-%release
 
 %package -n tiffgt
 Summary: Program for viewing TIFF format image files
 Group: Graphics
-Requires: %name = %version-%release
+Requires: libtiff5 = %version-%release
 
 %package devel
 Summary: Development files for programs which will use the tiff library
 Group: Development/C
-Requires: %name = %version-%release
+Requires: libtiff5 = %version-%release
+Provides: libtiff5-devel
+Obsoletes: libtiff5-devel
 
 %package devel-static
 Summary: Static tiff library
 Group: Development/C
 Requires: %name-devel = %version-%release
 
-%package -n libtiffxx
+%package -n libtiffxx5
 Summary: TIFF I/O C++ shared library
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: libtiff5 = %version-%release
 
 %package -n libtiffxx-devel
 Summary: TIFF I/O C++ development library and header files
 Group: Development/C
-Requires: libtiffxx = %version-%release
+Requires: libtiffxx5 = %version-%release
 
-%description
+%description -n libtiff5
 This package contains a library of functions for manipulating
 TIFF (Tagged Image File Format) image format files.  TIFF is a widely
 used file format for bitmapped images.  TIFF files usually end in the
@@ -66,7 +77,7 @@ will manipulate TIFF format image files using the tiff library.
 %description devel-static
 This package contains static %name library.
 
-%description -n libtiffxx
+%description -n libtiffxx5
 This package contains TIFF I/O C++ shared library
 
 %description -n libtiffxx-devel
@@ -86,6 +97,8 @@ TIFFFaxWhiteTable
 _TIFFCheckMalloc
 _TIFFDataSize
 _TIFFFax3fillruns
+_TIFFMultiply32
+_TIFFRewriteField
 display_sRGB
 EOF
 sed -n 's/^extern[^)]\+[[:space:]]\*\?\([^[:space:]*()]\+\)[[:space:]]*(.*/\1/p' \
@@ -111,12 +124,12 @@ rm libtiff.sym
 
 %install
 %makeinstall_std
-bzip2 -9 %buildroot%docdir/ChangeLog
+xz -9 %buildroot%docdir/ChangeLog
 
 %check
 %make_build -k check
 
-%files
+%files -n libtiff5
 %_libdir/%name.so.?*
 %dir %docdir
 %docdir/[A-Z]*
@@ -132,6 +145,7 @@ bzip2 -9 %buildroot%docdir/ChangeLog
 %_man1dir/tiffgt.*
 
 %files devel
+%_pkgconfigdir/*.pc
 %_libdir/%name.so
 %_includedir/*.h
 %_man3dir/*.*
@@ -144,7 +158,7 @@ bzip2 -9 %buildroot%docdir/ChangeLog
 %endif
 
 %if_enabled cxx
-%files -n libtiffxx
+%files -n libtiffxx5
 %_libdir/libtiffxx.so.*
 
 %files -n libtiffxx-devel
@@ -153,6 +167,10 @@ bzip2 -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Sun Sep 02 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.2-alt2
+- Updated to Release-v4-0-2-21-g8520941.
+- Renamed: libtiff -> libtiff5, libtiffxx -> libtiffxx5.
+
 * Mon Aug 27 2012 Dmitry V. Levin <ldv@altlinux.org> 3.9.6-alt3
 - Updated to Release-v3-9-6-8-g0f67777
   (fixes CVE-2012-2113 CVE-2012-2088 CVE-2012-3401).
