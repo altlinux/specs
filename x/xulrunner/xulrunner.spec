@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	14.0.1
+Version:	15.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -38,8 +38,8 @@ Patch105:	mozilla-libjpeg-turbo.patch
 Requires:	%name-libs = %version-%release
 
 Requires:	hunspell-en
-Requires:	libnspr       >= 4.9.0-alt1
-Requires:	libnss        >= 3.13.4-alt2
+Requires:	libnspr       >= 4.9.2-alt1
+Requires:	libnss        >= 3.13.6-alt1
 
 Obsoletes:	xulrunner-192
 Obsoletes:	xulrunner-2.0
@@ -54,7 +54,6 @@ BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
-BuildRequires: python-modules-compiler python-modules-logging
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libGL-devel
@@ -71,10 +70,18 @@ BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
 BuildRequires: gstreamer-devel gst-plugins-devel
+BuildRequires: libopus-devel
 
-BuildRequires: libnspr-devel       >= 4.8.7-alt1
-BuildRequires: libnss-devel        >= 3.13.4-alt2
-BuildRequires: libnss-devel-static >= 3.13.4-alt2
+# Python requires
+BuildRequires: python-module-distribute
+BuildRequires: python-modules-compiler
+BuildRequires: python-modules-logging
+BuildRequires: python-modules-sqlite3
+
+# Mozilla requires
+BuildRequires: libnspr-devel       >= 4.9.2-alt1
+BuildRequires: libnss-devel        >= 3.13.6-alt1
+BuildRequires: libnss-devel-static >= 3.13.6-alt1
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -293,7 +300,7 @@ rm -f -- \
 	./%_libdir/pkgconfig/gtkmozembed*.pc \
 	#
 
-ln -sf -- $(relative "%xulr_prefix/xulrunner-bin" "%_bindir/%xulr_name") \
+ln -sf -- $(relative "%xulr_prefix/xulrunner" "%_bindir/%xulr_name") \
 	./%_bindir/%xulr_name
 
 # Fix *.pc
@@ -355,6 +362,26 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Tue Aug 28 2012 Alexey Gladkov <legion@altlinux.ru> 15.0-alt1
+- New release (15.0).
+- Fixed:
+  + MFSA 2012-72 Web console eval capable of executing chrome-privileged code
+  + MFSA 2012-71 Insecure use of __android_log_print
+  + MFSA 2012-70 Location object security checks bypassed by chrome code
+  + MFSA 2012-69 Incorrect site SSL certificate data display
+  + MFSA 2012-68 DOMParser loads linked resources in extensions when parsing text/html
+  + MFSA 2012-67 Installer will launch incorrect executable following new installation
+  + MFSA 2012-66 HTTPMonitor extension allows for remote debugging without explicit activation
+  + MFSA 2012-65 Out-of-bounds read in format-number in XSLT
+  + MFSA 2012-64 Graphite 2 memory corruption
+  + MFSA 2012-63 SVG buffer overflow and use-after-free issues
+  + MFSA 2012-62 WebGL use-after-free and memory corruption
+  + MFSA 2012-61 Memory corruption with bitmap format images with negative height
+  + MFSA 2012-60 Escalation of privilege through about:newtab
+  + MFSA 2012-59 Location object can be shadowed using Object.defineProperty
+  + MFSA 2012-58 Use-after-free issues found using Address Sanitizer
+  + MFSA 2012-57 Miscellaneous memory safety hazards (rv:15.0/ rv:10.0.7)
+
 * Mon Jul 23 2012 Alexey Gladkov <legion@altlinux.ru> 14.0.1-alt1
 - New release (14.0.1).
 - Fixed:

@@ -1,7 +1,6 @@
 #set_verify_elf_method relaxed
 
 %define firefox_cid                    \{ec8030f7-c20a-464f-9b0e-13a3a9e97384\}
-%define firefox_version                13.0.1
 %define firefox_prefix                 %_libdir/firefox
 %define firefox_datadir                %_datadir/firefox
 %define firefox_arch_extensionsdir     %firefox_prefix/extensions
@@ -11,7 +10,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        14.0.1
+Version:        15.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -40,7 +39,6 @@ BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
-BuildRequires: python-modules-compiler python-modules-logging
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libGL-devel
@@ -56,10 +54,17 @@ BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: rpm-macros-alternatives
 
-BuildRequires: xulrunner-devel     >= 11.0
-BuildRequires: libnspr-devel       >= 4.9.0-alt1
-BuildRequires: libnss-devel        >= 3.13.4-alt1
-BuildRequires: libnss-devel-static >= 3.13.4-alt1
+# Python requires
+BuildRequires: python-module-distribute
+BuildRequires: python-modules-compiler
+BuildRequires: python-modules-logging
+BuildRequires: python-modules-sqlite3
+
+# Mozilla requires
+BuildRequires: xulrunner-devel     >= 15.0-alt1
+BuildRequires: libnspr-devel       >= 4.9.2-alt1
+BuildRequires: libnss-devel        >= 3.13.6-alt1
+BuildRequires: libnss-devel-static >= 3.13.6-alt1
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -258,6 +263,26 @@ done
 %_sysconfdir/rpm/macros.d/firefox
 
 %changelog
+* Wed Aug 29 2012 Alexey Gladkov <legion@altlinux.ru> 15.0-alt1
+- New release (15.0).
+- Fixed:
+  + MFSA 2012-72 Web console eval capable of executing chrome-privileged code
+  + MFSA 2012-71 Insecure use of __android_log_print
+  + MFSA 2012-70 Location object security checks bypassed by chrome code
+  + MFSA 2012-69 Incorrect site SSL certificate data display
+  + MFSA 2012-68 DOMParser loads linked resources in extensions when parsing text/html
+  + MFSA 2012-67 Installer will launch incorrect executable following new installation
+  + MFSA 2012-66 HTTPMonitor extension allows for remote debugging without explicit activation
+  + MFSA 2012-65 Out-of-bounds read in format-number in XSLT
+  + MFSA 2012-64 Graphite 2 memory corruption
+  + MFSA 2012-63 SVG buffer overflow and use-after-free issues
+  + MFSA 2012-62 WebGL use-after-free and memory corruption
+  + MFSA 2012-61 Memory corruption with bitmap format images with negative height
+  + MFSA 2012-60 Escalation of privilege through about:newtab
+  + MFSA 2012-59 Location object can be shadowed using Object.defineProperty
+  + MFSA 2012-58 Use-after-free issues found using Address Sanitizer
+  + MFSA 2012-57 Miscellaneous memory safety hazards (rv:15.0/ rv:10.0.7)
+
 * Sun Jul 29 2012 Alexey Gladkov <legion@altlinux.ru> 14.0.1-alt1
 - New release (14.0.1).
 - Fixed:
