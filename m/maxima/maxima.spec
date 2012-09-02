@@ -22,9 +22,9 @@
 %define CVS_BUILD	0
 
 Name: maxima
-Version: 5.27.0
-%define maxima_version 5.27.0
-Release: alt2
+Version: 5.28.0
+%define maxima_version 5.28.0
+Release: alt1
 Summary: Maxima Computer Algebra System
 License: GPL
 Group: Sciences/Mathematics
@@ -538,6 +538,9 @@ cd %maxima_dir
 
 
 %changelog
+* Mon Sep 03 2012 Ilya Mashkin <oddity@altlinux.ru> 5.28.0-alt1
+- 5.28.0
+
 * Tue Aug 27 2012 Ilya Mashkin <oddity@altlinux.ru> 5.27.0-alt2
 - build with sbcl 1.0.58
 
