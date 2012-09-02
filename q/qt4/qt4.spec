@@ -36,7 +36,7 @@
 %define minor	8
 %define bugfix	2
 %define beta	%nil
-%define rlz alt2
+%define rlz alt4
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -141,7 +141,7 @@ Patch9106: 9107-qt-webkit-fix_graphicscontextqt.patch
 BuildRequires: libfreetype-devel pkg-config rpm-utils rpm-macros-alternatives browser-plugins-npapi-devel
 BuildRequires: libcups-devel libclucene-devel libalsa-devel
 BuildRequires: gcc-c++ libstdc++-devel libcom_err-devel libicu-devel libffi-devel
-BuildRequires: libjpeg-devel libmng-devel libpng-devel zlib-devel libtiff-devel
+BuildRequires: libjpeg-devel libmng-devel libpng-devel zlib-devel libtiff5-devel
 BuildRequires: libxml2-devel libxslt-devel libreadline-devel libpam0-devel
 BuildRequires: libMySQL-devel libsqlite3-devel
 BuildRequires: bison pkg-config
@@ -1525,6 +1525,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Sun Sep 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt4
+- built with libtiff5
+
 * Fri Aug 31 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt2
 - don't require libtiff-devel
 
