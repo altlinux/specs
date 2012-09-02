@@ -9,8 +9,8 @@
 
 
 Name: ejudge
-Version: 2.3.23
-Release: alt9
+Version: 2.3.24
+Release: alt1
 
 
 Summary: Ejudge is a programming contest managment system
@@ -21,7 +21,7 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: %name-svn7011.tar.bz2
+Source0: %name-svn7019.tar.bz2
 Source1: %name.rc
 Source2: %name.logrotate
 Source3: ejudge-install.sh
@@ -135,6 +135,9 @@ install -d %buildroot%lang_config_dir
 %doc ejudge-*.pdf
 
 %changelog
+* Sun Sep 02 2012 Denis Kirienko <dk@altlinux.org> 2.3.24-alt1
+- Version 2.3.24 (SVN 7019)
+
 * Wed Aug 29 2012 Denis Kirienko <dk@altlinux.org> 2.3.23-alt9
 - SVN 7011
 
