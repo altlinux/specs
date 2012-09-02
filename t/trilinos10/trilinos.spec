@@ -26,7 +26,7 @@ Name: %truename-docs
 Name: %truename
 %endif
 Version: 10.12.2
-Release: alt2
+Release: alt3
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL
 Group: Sciences/Mathematics
@@ -2407,6 +2407,9 @@ popd
 %endif
 
 %changelog
+* Sun Sep 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt3
+- Rebuilt with tbb 40_20120613
+
 * Mon Aug 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt2
 - Built with Dakota
 
