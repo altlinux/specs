@@ -3,7 +3,7 @@
 %define name2 ardour2
 
 Name: ardour
-Version: 2.8.12
+Version: 2.8.14
 Release: alt1
 
 Summary: Ardour is a multichannel hard disk recorder and digital audio workstation
@@ -13,7 +13,7 @@ Url: http://ardour.org
 
 Packager: Alex Karpov <karpov@altlinux.ru>
 
-Source: http://releases.ardour.org/%name-%version.tar.bz2
+Source: http://releases.ardour.org/%name-%version.tar
 
 Patch0: %name-2.7.1-alt.patch
 Patch1: %name-2.0rc1-x86_64-alt.patch
@@ -26,7 +26,7 @@ Patch1: %name-2.0rc1-x86_64-alt.patch
 #BuildRequires: libsoundtouch-devel libusb-devel libxslt-devel rcs scons swig tetex-latex
 
 # Automatically added by buildreq on Wed Oct 14 2009
-BuildRequires: boost-devel cvs flex gcc-c++ ghostscript-utils jackit-devel libalsa-devel libaubio-devel libfftw3-devel libgnomecanvasmm-devel liblo-devel liblrdf-devel libsamplerate-devel libsndfile-devel libxslt-devel rcs scons swig texlive-latex-base libsoundtouch-devel
+BuildRequires: boost-devel-headers cvs flex gcc-c++ ghostscript-utils gns3 iotop libalsa-devel libaubio-devel libcurl-devel libgnomecanvasmm-devel libjack-devel liblo-devel liblrdf-devel libsamplerate-devel libsndfile-devel libxslt-devel pympd python-module-FuncDesigner python-module-MySQLdb python-module-OpenGL python-module-PySolFC python-module-PyXML python-module-Rabbyt python-module-Reportlab python-module-argparse python-module-chardet python-module-cheetah python-module-config python-module-cupshelpers python-module-cvxopt python-module-django-cms python-module-django-command-extensions python-module-django-tagging python-module-elementtree python-module-eyeD3 python-module-imaging python-module-matplotlib python-module-mutagen python-module-pivy python-module-psycopg2 python-module-pycollada python-module-pyxdg python-module-renpy python-module-scipy python-module-silvercity python-module-smbc python-module-twisted-core python-module-unittest2 python-module-virtinst python-module-wx2.9 python-module-z3c.recipe.sphinxdoc raptor2-devel rcs scons swig
 
 %description
 Ardour is a multichannel hard disk recorder (HDR) and digital audio 
@@ -70,6 +70,9 @@ DIST_TARGET=x86_64
 %endif
 
 %changelog
+* Sun Sep 02 2012 Alex Karpov <karpov@altlinux.ru> 2.8.14-alt1
+- new version
+
 * Wed Oct 12 2011 Alex Karpov <karpov@altlinux.ru> 2.8.12-alt1
 - new version
 
