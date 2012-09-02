@@ -1,5 +1,5 @@
 Name: audacity
-Version: 2.0.0
+Version: 2.0.2
 Release: alt1
 
 Summary: Cross-platform audio editor
@@ -19,8 +19,7 @@ Source6: %name-%version-help-en.tar
 
 Patch0: %name-installmo.patch
 
-# Automatically added by buildreq on Fri Aug 14 2009
-BuildRequires: gcc-c++ gcc-fortran glibc-devel-static jackit-devel libalsa-devel libavformat-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libmad-devel libsndfile-devel libsoundtouch-devel libtag-devel libtwolame-devel libvorbis-devel wxGTK-devel
+BuildRequires: gcc-c++ libalsa-devel libavformat-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel mt-st
 
 BuildRequires: libportaudio2-devel
 BuildRequires: desktop-file-utils shared-mime-info
@@ -71,6 +70,9 @@ tar -xf %SOURCE6 -C %buildroot%_datadir/%name/help/
 %_datadir/mime/packages/%name.xml
 
 %changelog
+* Sun Sep 02 2012 Alex Karpov <karpov@altlinux.ru> 2.0.2-alt1
+- new version
+
 * Thu Mar 15 2012 Alex Karpov <karpov@altlinux.ru> 2.0.0-alt1
 - new version. At last - not beta anymore!
 
