@@ -1,7 +1,7 @@
 %define _optlevel s
 
 Name: stellarium
-Version: 0.11.2
+Version: 0.11.4
 Release: alt1
 
 Group: Education
@@ -72,6 +72,9 @@ install -m 644 %SOURCE5 %buildroot/%_datadir/applications/%name.desktop
 %_datadir/applications/%name.desktop
 
 %changelog
+* Sun Sep 02 2012 Alex Karpov <karpov@altlinux.ru> 0.11.4-alt1
+- new version
+
 * Thu Mar 15 2012 Alex Karpov <karpov@altlinux.ru> 0.11.2-alt1
 - new version
 
