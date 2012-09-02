@@ -3,8 +3,8 @@
 
 
 Name: lyx
-Version: 2.0.3
-Release: alt1.1
+Version: 2.0.4
+Release: alt1
 
 Summary: LyX - a WYSIWYM word processor for the Desktop Environment.
 License: GPL
@@ -116,6 +116,9 @@ python configure.py
 %files -n lyx-tex
 
 %changelog
+* Sun Sep 02 2012 Alex Karpov <karpov@altlinux.ru> 2:2.0.4-alt1
+- new version
+
 * Thu Apr 05 2012 Alex Karpov <karpov@altlinux.ru> 2:2.0.3-alt1.1
 - rebuild with new boost
 
