@@ -25,7 +25,7 @@
 %define bugfix 3
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define poppler_devel_name lib%rname-devel
 %define poppler_cpp_devel_name lib%rname-cpp-devel
 %define poppler_glib_devel_name lib%rname-glib-devel
@@ -53,7 +53,7 @@ BuildRequires(pre): libqt4-devel
 BuildRequires: glib2-devel
 %endif
 BuildRequires: gcc-c++ glibc-devel libcurl-devel libgtk+2-devel zlib-devel
-BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libopenjpeg-devel libtiff-devel
+BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libopenjpeg-devel libtiff5-devel
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel
 
@@ -336,6 +336,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Sun Sep 02 2012 Sergey V Turchin <zerg@altlinux.org> 0.20.3-alt2
+- built with libtiff5
+
 * Wed Aug 22 2012 Sergey V Turchin <zerg@altlinux.org> 0.20.3-alt1
 - new version
 
