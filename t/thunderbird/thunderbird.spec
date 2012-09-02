@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	14.0
+Version:	15.0
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -41,7 +41,6 @@ BuildRequires: doxygen gcc-c++ imake libIDL-devel makedepend
 BuildRequires: libXt-devel libX11-devel libXext-devel libXft-devel libXScrnSaver-devel
 BuildRequires: libcurl-devel libgtk+2-devel libhunspell-devel libjpeg-devel
 BuildRequires: xorg-cf-files chrpath alternatives yasm
-BuildRequires: python-modules-compiler python-modules-logging
 BuildRequires: bzlib-devel zlib-devel
 BuildRequires: mozldap-devel
 BuildRequires: libcairo-devel libpixman-devel
@@ -57,10 +56,17 @@ BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
 
-BuildRequires:	libnspr-devel       >= 4.9.0-alt1
-BuildRequires:	libnss-devel        >= 3.13.4-alt1
-BuildRequires:	libnss-devel-static >= 3.13.4-alt1
-BuildRequires:	xulrunner-devel     >= 14.0.1-alt1
+# Python requires
+BuildRequires: python-module-distribute
+BuildRequires: python-modules-compiler
+BuildRequires: python-modules-logging
+BuildRequires: python-modules-sqlite3
+
+# Mozilla requires
+BuildRequires:	libnspr-devel       >= 4.9.2-alt1
+BuildRequires:	libnss-devel        >= 3.13.6-alt1
+BuildRequires:	libnss-devel-static >= 3.13.6-alt1
+BuildRequires:	xulrunner-devel     >= 15.0-alt1
 
 Provides:	mailclient
 Obsoletes:	thunderbird-calendar
@@ -501,6 +507,22 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Wed Aug 29 2012 Alexey Gladkov <legion@altlinux.ru> 15.0-alt1
+- New version (15.0).
+- Fixed:
+  + MFSA 2012-72 Web console eval capable of executing chrome-privileged code
+  + MFSA 2012-70 Location object security checks bypassed by chrome code
+  + MFSA 2012-68 DOMParser loads linked resources in extensions when parsing text/html
+  + MFSA 2012-67 Installer will launch incorrect executable following new installation
+  + MFSA 2012-65 Out-of-bounds read in format-number in XSLT
+  + MFSA 2012-64 Graphite 2 memory corruption
+  + MFSA 2012-63 SVG buffer overflow and use-after-free issues
+  + MFSA 2012-62 WebGL use-after-free and memory corruption
+  + MFSA 2012-61 Memory corruption with bitmap format images with negative height
+  + MFSA 2012-59 Location object can be shadowed using Object.defineProperty
+  + MFSA 2012-58 Use-after-free issues found using Address Sanitizer
+  + MFSA 2012-57 Miscellaneous memory safety hazards (rv:15.0/ rv:10.0.7)
+
 * Mon Jul 30 2012 Alexey Gladkov <legion@altlinux.ru> 14.0-alt1
 - New version (14.0).
 - Fixed:
