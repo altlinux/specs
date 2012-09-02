@@ -1,7 +1,7 @@
 Name: dahdi-linux
 Summary: DAHDI drivers for Digium hardware and Asterisk
-Version: 2.6.0
-Release: alt2
+Version: 2.6.1
+Release: alt1
 License: GPL
 Group: System/Kernel and hardware
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -74,6 +74,9 @@ tar cjf \
 %_usrsrc/kernel/sources/kernel-source-dahdi-%version.tar.bz2
 
 %changelog
+* Sun Sep 02 2012 Denis Smirnov <mithraen@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+
 * Mon Feb 13 2012 Denis Smirnov <mithraen@altlinux.ru> 2.6.0-alt2
 - enable ppp support and pcap support
 
