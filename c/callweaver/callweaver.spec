@@ -1,6 +1,6 @@
 Name: callweaver
 Version: 1.2
-Release: alt1.svn5593.1.2
+Release: alt1.svn5593.1.3
 
 Summary: CallWeaver IP PBX
 License: GPL
@@ -9,8 +9,6 @@ Url: http://callweaver.org/
 Packager: Eugene Prokopiev <enp@altlinux.ru>
 
 %define modules_dir %_libexecdir/%name/modules
-
-PreReq: chkconfig
 
 %add_findprov_lib_path %_libdir/%name
 
@@ -24,7 +22,7 @@ Patch1: %name-%version-huawei-rfc2833.patch
 Patch2: %name-%version-buffer-overflow.patch
 
 BuildRequires: gcc-c++ libcap-devel libpopt-devel libreadline-devel libspandsp6-devel libspeex-devel libssl-devel libtiff-devel libvorbis-devel zlib-devel libsqlite3-devel libMySQL-devel postgresql-devel libltdl7-devel
-Requires: service libcap libpopt libreadline libspandsp6 libspeex libssl libtiff libvorbis zlib libsqlite3 monit-base
+Requires: service monit-base
 
 %description
 CallWeaver is a community-driven vendor-independent cross-platform open source PBX software project 
@@ -300,6 +298,9 @@ mv %buildroot/%_sysconfdir/%name/QUICKSTART.ru_RU.UTF-8 %buildroot/%_docdir/%nam
 %files full
 
 %changelog
+* Mon Sep 03 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2-alt1.svn5593.1.3
+- Built with libtiff.so.5.
+
 * Fri Dec 10 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2-alt1.svn5593.1.2
 - rebuilt with recent spandsp
 

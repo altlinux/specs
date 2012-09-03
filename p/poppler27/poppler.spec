@@ -2,7 +2,6 @@
 %define popIF_ver_gteq() %if "%(rpmvercmp '%1' '%2')" >= "0"
 %define popIF_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
-%undefine __libtoolize
 
 %def_disable static
 %def_enable cpp
@@ -25,7 +24,7 @@
 %define bugfix 3
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 %define poppler_devel_name lib%rname-devel
 %define poppler_cpp_devel_name lib%rname-cpp-devel
 %define poppler_glib_devel_name lib%rname-glib-devel
@@ -53,7 +52,7 @@ BuildRequires(pre): libqt4-devel
 BuildRequires: glib2-devel
 %endif
 BuildRequires: gcc-c++ glibc-devel libcurl-devel libgtk+2-devel zlib-devel
-BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libopenjpeg-devel libtiff5-devel
+BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libopenjpeg-devel libtiff-devel
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel
 
@@ -336,6 +335,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Sun Sep 02 2012 Dmitry V. Levin <ldv@altlinux.org> 0.20.3-alt3
+- Built with system libtiff again.
+
 * Sun Sep 02 2012 Sergey V Turchin <zerg@altlinux.org> 0.20.3-alt2
 - built with libtiff5
 

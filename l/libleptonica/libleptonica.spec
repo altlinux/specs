@@ -2,14 +2,13 @@
 
 Name: libleptonica
 Version: 1.69
-Release: alt2
+Release: alt2.1
 Summary: A library for manipulating images
 Summary(ru_RU.UTF-8): Библиотека для операций над изображениями
 License: Leptonica license (BSD-like)
 Group: System/Libraries
 Url: http://www.leptonica.com
-Requires: libjpeg, libtiff, libpng
-BuildRequires: doxygen, libjpeg-devel, libtiff-devel, libpng-devel libgif-devel libwebp-devel
+BuildRequires: doxygen libjpeg-devel libtiff-devel libpng-devel libgif-devel libwebp-devel
 
 Packager: %packager
 
@@ -129,6 +128,9 @@ mv doc/html_reference %buildroot%docdir
 %docdir/html_reference/*
 
 %changelog
+* Sun Sep 02 2012 Dmitry V. Levin <ldv@altlinux.org> 1.69-alt2.1
+- Built with libtiff.so.5.
+
 * Sat Aug 04 2012 Andrey Bergman <vkni@altlinux.org> 1.69-alt2
 - corrected BuildRequires
 

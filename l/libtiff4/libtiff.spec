@@ -1,29 +1,31 @@
-%define oname libtiff
-Name: %{oname}5
-Version: 4.0.2
-Release: alt1
+Name: libtiff4
+Version: 3.9.6
+Release: alt4
 
-Summary: A library of functions for manipulating TIFF format image files
+Summary: Library of functions for manipulating TIFF format image files
 License: BSD-style
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://www.remotesensing.org/libtiff/
 
+# git://git.altlinux.org/gears/l/%name
 Source: %name-%version-%release.tar
 
+%def_enable compat
+%def_disable static
 %def_enable cxx
 
 # Automatically added by buildreq on Tue Feb 08 2011
-BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libGLUT-devel libjpeg-devel zlib-devel
+BuildRequires: gcc-c++ libSM-devel libXi-devel libXmu-devel libfreeglut-devel libjpeg-devel zlib-devel
 
-BuildPreReq: liblzma-devel
+Provides: libtiff = %version-%release
+Obsoletes: libtiff < %version-%release
 
 %package utils
 Summary: Programs for manipulating TIFF format image files
 Group: Graphics
 Requires: %name = %version-%release
-Conflicts: %oname-utils
 
-%package -n tiffgt4
+%package -n tiffgt
 Summary: Program for viewing TIFF format image files
 Group: Graphics
 Requires: %name = %version-%release
@@ -32,20 +34,23 @@ Requires: %name = %version-%release
 Summary: Development files for programs which will use the tiff library
 Group: Development/C
 Requires: %name = %version-%release
-Conflicts: %oname-devel
 
-%package -n libtiffxx5
+%package devel-static
+Summary: Static tiff library
+Group: Development/C
+Requires: %name-devel = %version-%release
+
+%package -n libtiffxx0
 Summary: TIFF I/O C++ shared library
-Group: System/Libraries
+Group: System/Legacy libraries
 Requires: %name = %version-%release
+Provides: libtiffxx = %version-%release
+Obsoletes: libtiffxx < %version-%release
 
-%package -n libtiffxx5-devel
+%package -n libtiffxx-devel
 Summary: TIFF I/O C++ development library and header files
 Group: Development/C
-Requires: libtiffxx5 = %version-%release
-Requires: %name-devel = %version-%release
-Conflicts: libtiffxx-devel
-Conflicts: %oname-devel
+Requires: libtiffxx0 = %version-%release
 
 %description
 This package contains a library of functions for manipulating
@@ -57,28 +62,56 @@ used file format for bitmapped images.  TIFF files usually end in the
 This package contains simple client programs for accessing
 the tiff functions.
 
-%description -n tiffgt4
+%description -n tiffgt
 This package contains tiffgt - a TIFF file display program.
 
 %description devel
 This package contains the header files for developing programs which
 will manipulate TIFF format image files using the tiff library.
 
-%description -n libtiffxx5
+%description devel-static
+This package contains static %name library.
+
+%description -n libtiffxx0
 This package contains TIFF I/O C++ shared library
 
-%description -n libtiffxx5-devel
+%description -n libtiffxx-devel
 This package contains TIFF I/O C++ development library and header files.
 
 %prep
 %setup -n %name-%version-%release
 :>port/dummy.c
 
+cd libtiff
+cat > libtiff.sym << EOF
+TIFFFaxBlackCodes
+TIFFFaxBlackTable
+TIFFFaxMainTable
+TIFFFaxWhiteCodes
+TIFFFaxWhiteTable
+_TIFFCheckMalloc
+_TIFFDataSize
+_TIFFFax3fillruns
+display_sRGB
+EOF
+sed -n 's/^extern[^)]\+[[:space:]]\*\?\([^[:space:]*()]\+\)[[:space:]]*(.*/\1/p' \
+	tiffio.h >> libtiff.sym
+sort -u -o libtiff.sym{,}
+cat > libtiff.map << EOF
+{
+ global:
+$(sed 's/.*/  &;/' libtiff.sym)
+ local:
+  *;
+};
+EOF
+rm libtiff.sym
+
 %build
 ./autogen.sh
 %define docdir %_docdir/%name-%version
-%configure --with-docdir=%docdir \
-	--disable-static %{subst_enable cxx}
+%configure --with-docdir=%docdir --enable-ld-version-script \
+	%{subst_enable static} %{subst_enable cxx}
 %make_build X_PRE_LIBS= GLUT_CFLAGS= GLUT_CFLAGS= GLUT_LIBS='-lglut -lGL' \
 	GLU_CFLAGS= GLU_LIBS= GL_CFLAGS= GL_LIBS=
 
@@ -86,50 +119,57 @@ This package contains TIFF I/O C++ development library and header files.
 %makeinstall_std
 bzip2 -9 %buildroot%docdir/ChangeLog
 
-install -p -m644 libtiff/{tiffiop.h,tif_config.h,tif_dir.h} \
-	%buildroot%_includedir
-
-mv %buildroot%_bindir/tiffgt %buildroot%_bindir/tiffgt4
-mv %buildroot%_man1dir/tiffgt.1 %buildroot%_man1dir/tiffgt4.1
-
 %check
 %make_build -k check
 
 %files
-%_libdir/%oname.so.?*
+%_libdir/libtiff.so.?*
 %dir %docdir
 %docdir/[A-Z]*
 
+%if_disabled compat
 %files utils
 %_bindir/*
 %_man1dir/*.*
-%exclude %_bindir/tiffgt4
-%exclude %_man1dir/tiffgt4.*
+%exclude %_bindir/tiffgt
+%exclude %_man1dir/tiffgt.*
 
-%files -n tiffgt4
-%_bindir/tiffgt4
-%_man1dir/tiffgt4.*
+%files -n tiffgt
+%_bindir/tiffgt
+%_man1dir/tiffgt.*
 
 %files devel
-%_libdir/%oname.so
+%_libdir/libtiff.so
 %_includedir/*.h
 %_man3dir/*.*
-%_pkgconfigdir/*
 %dir %docdir
 %docdir/html
 
+%if_enabled static
+%files devel-static
+%_libdir/libtiff.a
+%endif
+%endif #compat
+
 %if_enabled cxx
-%files -n libtiffxx5
+%files -n libtiffxx0
 %_libdir/libtiffxx.so.*
 
-%files -n libtiffxx5-devel
+%if_disabled compat
+%files -n libtiffxx-devel
 %_libdir/libtiffxx.so
 %_includedir/*.hxx
 %endif
+%endif #compat
 
 %changelog
-* Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
-- Version 4.0.2
+* Mon Sep 03 2012 Dmitry V. Levin <ldv@altlinux.org> 3.9.6-alt4
+- Renamed: libtiff -> libtiff4, libtiffxx -> libtiffxx0.
+- Packaged in compat mode.
+
+* Mon Aug 27 2012 Dmitry V. Levin <ldv@altlinux.org> 3.9.6-alt3
+- Updated to Release-v3-9-6-8-g0f67777
+  (fixes CVE-2012-2113 CVE-2012-2088 CVE-2012-3401).
 
 * Mon May 21 2012 Dmitry V. Levin <ldv@altlinux.org> 3.9.6-alt2
 - Fixed build with ld --no-copy-dt-needed-entries.
