@@ -5,7 +5,7 @@
 
 Name: branding-%brand-kdesktop
 Version: 6.0.2
-Release: alt8
+Release: alt9
 BuildArch: noarch
 
 %define theme %name
@@ -418,6 +418,12 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_datadir/kde4/apps/kio_desktop/DesktopLinks/indexhtml.desktop
 
 %changelog
+* Mon Sep 03 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt9
+- fix KDE3 splash and color defaults
+
+* Mon Aug 27 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt7.M60P.1
+- built for M60P
+
 * Mon Aug 27 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.2-alt8
 - don't remove background image from livecd alterator-browser-qt branding (ALT#27647)
 
