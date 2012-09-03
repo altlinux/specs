@@ -1,6 +1,6 @@
 Name: libgc
 Version: 7.2d
-Release: alt1
+Release: alt2
 
 Summary: The Boehm-Demers-Weiser conservative garbage collector
 License: MIT and GPLv2+
@@ -45,7 +45,7 @@ This package contains static libgc library.
 
 %build
 # see bugzilla.redhat.com/689877
-export CPPFLAGS='-DUSE_GET_STACKBASE_FOR_MAIN=1'
+export CPPFLAGS='-DUSE_GET_STACKBASE_FOR_MAIN=1 -DUSE_LIBC_PRIVATES=1'
 %configure \
 	--enable-cplusplus \
 	--enable-large-config \
@@ -91,6 +91,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir:$PWD/.libs
 %endif
 
 %changelog
+* Mon Sep 03 2012 Dmitry V. Levin <ldv@altlinux.org> 7.2d-alt2
+- Built with USE_LIBC_PRIVATES again to make GC_linux_main_stack_base()
+  work without /proc mounted.
+
 * Sat Sep 01 2012 Dmitry V. Levin <ldv@altlinux.org> 7.2d-alt1
 - Updated to 7.2d.
 
