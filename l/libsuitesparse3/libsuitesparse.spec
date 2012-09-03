@@ -1,11 +1,11 @@
-Name: libsuitesparse
-Version: 4.0.2
-Release: alt1
+Name: libsuitesparse3
+Version: 3.6.1
+Release: alt6
 
 Summary: Shared libraries for sparse matrix calculations
 Packager: Paul Wolneykien <manowar@altlinux.ru>
 License: LGPL, GPL
-Group: Sciences/Mathematics
+Group: System/Legacy libraries
 Url: http://www.cise.ufl.edu/research/sparse/SuiteSparse/
 
 Source: SuiteSparse-%version.tar.gz
@@ -13,7 +13,7 @@ Source1: cholmod.pc
 Source2: prepare_versions.sh
 Source3: umfpack.pc
 
-BuildPreReq: libmetis-devel gcc-c++ libtbb-devel
+BuildPreReq: libmetis0-devel gcc-c++
 
 # Automatically added by buildreq on Sun Sep 14 2008
 BuildRequires: gcc-fortran liblapack-devel texlive-latex-base
@@ -69,19 +69,11 @@ install -m755 %SOURCE2 .
 %build
 ./prepare_versions.sh
 
-%make -C CCOLAMD
 %make TOPDIR=$PWD
-%make docs
+%make doc
 
 %install
-install -d %buildroot%_libdir
-install -d %buildroot%_includedir/suitesparse
-
-%ifarch x86_64
-LIB_SUFFIX=64
-%endif
-%makeinstall_std LIB_SUFFIX=${LIB_SUFFIX} NAME=%name VERSION=%version
-%makeinstall_std INSTALL_LIB=%buildroot%_libdir
+%makeinstall NAME=%name VERSION=%version
 
 install -p -m644 CXSparse/Include/cs.h \
 	%buildroot%_includedir/suitesparse/cx_cs.h
@@ -90,55 +82,31 @@ install -m644 *.pc %buildroot%_pkgconfigdir
 
 for i in $(find ./ -name Demo); do
 	rm -f $(find $i -name '*.m')
-	wcl=$(ls $i |wc -l)
-	if [ "$wcl" != "0" ]; then
-		install -d %buildroot%_libdir/%name/demos/$i
-		cp -fR $i/* %buildroot%_libdir/%name/demos/$i/
-	fi
-done
-
-install -d %buildroot%_docdir/%name-%version/ChangeLogs
-for i in BTF CAMD AMD CCOLAMD CHOLMOD COLAMD CSparse CXSparse KLU LDL \
-	RBio SPQR UMFPACK
-do
-	install -p -m644 $i/Doc/ChangeLog \
-		%buildroot%_docdir/%name-%version/ChangeLogs/ChangeLog.$i
-done
-
-mv CHOLMOD/Doc/UserGuide.pdf CHOLMOD/Doc/CHOLMOD_UserGuide.pdf
-pushd UMFPACK/Doc
-for i in *.pdf; do
-	mv $i UMFPACK_$i
-done
-popd
-install -d %buildroot%_docdir/%name-%version/pdf
-for i in AMD CAMD CHOLMOD KLU LDL SPQR UMFPACK
-do
-	install -p -m644 $i/Doc/*.pdf %buildroot%_docdir/%name-%version/pdf
+	install -d %buildroot%_libdir/%name/demos/$i
+	cp -fR $i/* %buildroot%_libdir/%name/demos/$i/
 done
 
 %files
 %_libdir/*.so.*
 
-%files devel
-%_libdir/*.so
-%_includedir/*
-%_pkgconfigdir/*
+#files devel
+#_libdir/*.so
+#_includedir/*
+#_pkgconfigdir/*
 
 #files devel-static
 #_libdir/*.a
 
-%files devel-doc
-%_docdir/%name-%version
+#files devel-doc
+#_docdir/%name-%version
 
-%files examples
-%dir %_libdir/%name
-%_libdir/%name/demos
+#files examples
+#dir %_libdir/%name
+#_libdir/%name/demos
 
 %changelog
-* Mon Sep 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
-- Version 4.0.2
-- Rebuilt with libmetis instead of libmetis0
+* Mon Sep 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt6
+- Moved this version into System/Legacy libraries
 
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt5
 - Built with OpenBLAS instead of GotoBLAS2
