@@ -2,10 +2,10 @@
 %define mpidir %_libdir/%mpiimpl
 
 %define libtool_ver 2.4
-%define iversion 1.0.0
+%define iversion 1.1.0
 Name: sundials
-Version: 2.6.0
-Release: alt12
+Version: 2.7.0
+Release: alt1
 Summary: SUite of Nonlinear and DIfferential/ALgebraic equation Solvers
 License: BSD
 Group: Sciences/Mathematics
@@ -271,6 +271,9 @@ cp pvode/fcmix/examples/*.f _ex-src/pvode/fcmix/
 %doc _ex-doc/*
 
 %changelog
+* Mon Sep 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1
+- Version 2.7.0
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt12
 - Built with OpenBLAS instead of GotoBLAS2
 
