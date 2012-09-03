@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.15.3
-Release: alt1
+Release: alt2
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -18,7 +18,6 @@ Patch1: FreeImage-3.10.0-syslibs.patch
 BuildRequires: gcc-c++ libmng-devel libpng-devel openexr-devel unzip
 
 BuildPreReq: rpm-macros-make libopenjpeg-devel libraw-devel zlib-devel
-BuildPreReq: libtiff5-devel
 
 %description
 FreeImage is a library project for developers who would like to support
@@ -45,15 +44,21 @@ subst 's/\r//g' gensrclist.sh
 # Only internal OpenJPEG is used as this library is not yet in our repo.
 
 # remove included libs to make sure these don't get used during compile
-rm -r Source/LibTIFF4 Source/LibPNG Source/ZLib Source/OpenEXR
+rm -r Source/LibPNG Source/ZLib Source/OpenEXR
 rm -fR Source/LibRawLite Source/LibOpenJPEG
-#rm -r Source/Lib* Source/ZLib Source/OpenEXR
 
 sh ./gensrclist.sh
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared -I$PWD/Source/LibTIFF4
+%add_optflags -g -fpermissive -DPNG_iTXt_SUPPORTED
+%add_optflags $(pkg-config --cflags OpenEXR)
+gcc %optflags_shared -pthread -I. -ISource -ISource/Metadata \
+	-ISource/FreeImageToolkit -ISource/LibJPEG -ISource/LibTIFF4 \
+	-IWrapper/FreeImagePlus -IWrapper/FreeImagePlus/src -c \
+	Source/LibTIFF4/tif_unix.c -o Source/LibTIFF4/tif_unix.o
+
 %make_build_ext \
-	CXX="g++ -g -fpermissive -DPNG_iTXt_SUPPORTED `pkg-config --cflags OpenEXR`" \
-	LIBRARIES="-lstdc++ -lm -ltiff -lpng -lmng -lIlmImf -lraw -lopenjpeg -lIex -lHalf -lz"
+	CXX="g++ %optflags" \
+	LIBRARIES="Source/LibTIFF4/tif_unix.o -lstdc++ -lm -lpng -lmng -lIlmImf -lraw -lopenjpeg -lIex -lHalf -lz"
 
 %install
 %ifarch x86_64
@@ -71,6 +76,9 @@ LIB_SUFFIX=64
 %_libdir/libfreeimage.so
 
 %changelog
+* Mon Sep 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.15.3-alt2
+- Rebuilt with internal libtiff
+
 * Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.15.3-alt1
 - Version 3.15.3
 
