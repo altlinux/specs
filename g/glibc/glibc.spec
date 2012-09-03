@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.16
-Release: alt2
+Release: alt3
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -374,7 +374,7 @@ ln -sf libbsd-compat.a %buildroot%_libdir/libbsd.a
 
 mkdir -p %buildroot{%_initdir,%_unitdir,/etc/sysconfig,/lib/tmpfiles.d}
 install -pm644 alt/nsswitch.conf %buildroot/etc/
-install -pm644 alt/nscd.conf %buildroot/etc/
+install -pm644 nscd/nscd.conf %buildroot/etc/
 install -pm755 alt/nscd.init %buildroot%_initdir/nscd
 install -pm644 alt/nscd.{service,socket} %buildroot%_unitdir/
 install -pm644 alt/nscd.conf %buildroot/lib/tmpfiles.d/
@@ -645,6 +645,9 @@ fi
 %_datadir/i18n
 
 %changelog
+* Mon Sep 03 2012 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt3
+- nscd: fixed /etc/nscd.conf (closes: #27694).
+
 * Wed Aug 29 2012 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt2
 - locales/ru_RU: fixed abday (sw#10873) and abmon.
 - ru.po: reintroduced fixes from 2.11.3-alt8.
