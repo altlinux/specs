@@ -67,7 +67,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           ant17
 Version:        1.7.1
-Release:        alt3_13jpp6
+Release:        alt4_13jpp6
 Epoch:          0
 Summary:        Ant build tool for java
 Summary(it):    Tool per la compilazione di programmi java
@@ -302,8 +302,8 @@ Taches commons logging optionelles pour %{name}.
 Summary:        Optional commons net tasks for %{name}
 Group:          Development/Java
 Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: jakarta-commons-net
-BuildRequires: jakarta-commons-net
+Requires: apache-commons-net20
+BuildRequires: apache-commons-net20
 Provides:       ant-commons-net = %{epoch}:%{version}-%{release}
 
 %description commons-net
@@ -535,7 +535,7 @@ find . -name "*.jar" | %{_bindir}/xargs -t rm
 %build
 export OPT_JAR_LIST=:
 %if %without bootstrap
-export CLASSPATH=$(build-classpath xerces-j2 xml-commons-jaxp-1.3-apis antlr bcel jaf javamail/mailapi jdepend junit log4j oro regexp bsf commons-logging commons-net jsch xml-commons-resolver12)
+export CLASSPATH=$(build-classpath xerces-j2 xml-commons-jaxp-1.3-apis antlr bcel jaf javamail/mailapi jdepend junit log4j oro regexp bsf commons-logging commons-net20 jsch xml-commons-resolver12)
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jars test-jar
 %if %{build_javadoc}
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 javadocs
@@ -685,7 +685,7 @@ echo "antlr ant17/ant17-antlr" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/antlr
 echo "bsf ant17/ant17-apache-bsf" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-bsf
 echo "xml-commons-resolver12 ant17/ant17-apache-resolver" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-resolver
 echo "jakarta-commons-logging ant17/ant17-commons-logging" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/commons-logging
-echo "jakarta-commons-net ant17/ant17-commons-net" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/commons-net
+echo "commons-net20 ant17/ant17-commons-net" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/commons-net
 #echo "jai ant17/ant17-jai" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/jai
 echo "bcel ant17/ant17-apache-bcel" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-bcel
 echo "log4j ant17/ant17-apache-log4j" > $RPM_BUILD_ROOT%{_sysconfdir}/%{name}.d/apache-log4j
@@ -1012,6 +1012,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 # -----------------------------------------------------------------------------
 
 %changelog
+* Mon Sep 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt4_13jpp6
+- fixed build w/new commons-net (using commons-net20)
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt3_13jpp6
 - built with java 6 due to abstract getParentLogger
 
