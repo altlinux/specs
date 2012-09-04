@@ -1,6 +1,6 @@
 Name: sifdec
 Version: 2.0.0
-Release: alt1.svn20090528.1
+Release: alt1.svn20120420
 Summary: Decoder for translating SIF into Fortran 77 and data files
 License: LGPL v2.1 or later
 Group: File tools
@@ -93,6 +93,9 @@ install -p -m644 common/doc/*.pdf %buildroot%_docdir/%name
 %_docdir/%name
 
 %changelog
+* Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.svn20120420
+- New snapshot
+
 * Tue Mar 22 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1.svn20090528.1
 - Rebuilt for debuginfo
 
