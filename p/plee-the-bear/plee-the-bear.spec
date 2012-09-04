@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           plee-the-bear
 Version:        0.6.0
-Release:        alt2_6
+Release:        alt2_7
 Summary:        2D platform game
 Group:          Games/Other
 # Code and artwork respectively
@@ -12,11 +12,12 @@ License:        GPLv2+ and CC-BY-SA
 URL:            http://plee-the-bear.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/project/plee-the-bear/Plee%%20the%%20Bear/0.5/%{name}-%{version}-light.tar.gz
 
-Patch0:         plee-the-bear-0.5.1-boost-use-filesystemv2.patch
 # There is probably a more appropriate C++ fix instead of using -fpermissive, but I don't know it.
 Patch1:         plee-the-bear-0.6.0-fpermissive.patch
 # Disable stupid & broken SVN revision checking
 Patch2:         plee-the-bear-0.6.0-svnclawfix.patch
+# Initial work taken from Debian, thanks to Konstantinos Margaritis <markos@genesi-usa.com>
+Patch3:		plee-the-bear-boost-1.50-patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libclaw-devel >= 1.7.0
@@ -51,9 +52,9 @@ game counts several contributions from external people.
 
 %prep
 %setup -q
-%patch0 -p1 -b .boostfix
 %patch1 -p1 -b .fpermissive
 %patch2 -p1 -b .svnclawfix
+%patch3 -p1 -b .boost150
 
 %build
 %{fedora_cmake}  . \
@@ -83,40 +84,6 @@ done
 for i in %{buildroot}%{_libdir}/*.so %{buildroot}%{_bindir}/bf-* %{buildroot}%{_bindir}/running-bear; do
 	chrpath --delete $i
 done
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files -f %{name}.lang
@@ -131,6 +98,9 @@ fi
 
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt2_6
 - update to new release by fcimport
 
