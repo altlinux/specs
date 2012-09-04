@@ -1,6 +1,6 @@
 %define oname shiboken
 Name: %oname-py3
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: Generates bindings for C++ libraries using CPython source code (Python 3)
 License: GPLv2, LGPLv2.1
@@ -45,6 +45,17 @@ Shiboken is a plugin (front-end) for Generator Runner. It generates
 bindings for C++ libraries using CPython source code.
 
 This package contains development files of Shiboken.
+
+%package -n python3-module-%oname
+Summary: Python module of Shiboken (Python 3)
+Group: Development/Python3
+Requires: lib%name = %version-%release
+
+%description -n python3-module-%oname
+Shiboken is a plugin (front-end) for Generator Runner. It generates
+bindings for C++ libraries using CPython source code.
+
+This package contains python module of Shiboken.
 
 %prep
 %setup
@@ -105,7 +116,13 @@ gzip ChangeLog
 %_libdir/cmake
 %_pkgconfigdir/*
 
+%files -n python3-module-%oname
+%python3_sitelibdir/*
+
 %changelog
+* Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1
+- Version 1.1.2 for Python 3
+
 * Fri May 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
 - Version 1.1.1 for Python 3
 
