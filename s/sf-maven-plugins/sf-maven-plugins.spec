@@ -64,7 +64,7 @@ BuildRequires: ant-bsf
 
 Name:           sf-maven-plugins
 Version:        1.0
-Release:        alt6_0.20050908.9jpp5
+Release:        alt7_0.20050908.9jpp5
 Epoch:          0
 Summary:        Maven Plugins hosted at sf.net
 
@@ -1062,6 +1062,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.20050908.9jpp5
+- fixed build with new batik
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.20050908.9jpp5
 - fixed build with java 7
 
