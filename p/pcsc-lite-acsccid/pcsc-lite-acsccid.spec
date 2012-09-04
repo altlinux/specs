@@ -1,7 +1,7 @@
 Name:           pcsc-lite-acsccid
 BuildRequires:  libusb-compat-devel libpcsclite-devel flex
 Version:        1.0.3
-Release:        alt1
+Release:        alt2
 Group:          System/Servers
 License:        LGPLv2.1+
 Url:            http://acsccid.sourceforge.net/
@@ -38,6 +38,9 @@ sed 's:GROUP="pcscd":GROUP="scard":' <src/92_pcscd_acsccid.rules >%buildroot/lib
 %_libdir/pcsc/drivers/*
 
 %changelog
+* Tue Sep 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.3-alt2
+- added 072f:90cc USB ID 
+
 * Tue Mar 20 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.3-alt1
 - 1.0.3
 
