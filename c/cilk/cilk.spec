@@ -1,6 +1,6 @@
 Name: cilk
 Version: 5.4.6
-Release: alt8
+Release: alt9
 Summary: Language for multithreaded parallel programming based on ANSI C
 License: GPL v2 or later
 Group: Development/C
@@ -197,6 +197,9 @@ popd
 %_libdir/%name/examples
 
 %changelog
+* Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.6-alt9
+- Fixed build with new glibc
+
 * Fri Apr 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.4.6-alt8
 - Fixed build with new automake
 
