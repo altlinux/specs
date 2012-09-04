@@ -1,7 +1,7 @@
 Summary: The EXTLINUX bootloader, for booting the local system.
 Name: extlinux
 Version: 4.05
-Release: alt1
+Release: alt2
 License: GPL2
 Group: System/Base
 Url: http://www.syslinux.org/wiki/index.php/The_Syslinux_Project
@@ -22,6 +22,7 @@ BuildRequires: libe2fs-devel libuuid-devel nasm python-module-distribute
 
 Requires: libshell util-linux parted
 
+Conflicts: syslinux-extlinux
 Obsoletes: syslinux4-extlinux
 Provides: syslinux4-extlinux = %version-%release
 
@@ -99,6 +100,9 @@ ln -s ../boot/extlinux/extlinux.conf.d .
 %doc sample
 
 %changelog
+* Wed Sep 05 2012 Alexey Gladkov <legion@altlinux.ru> 4.05-alt2
+- Add conflict with syslinux-extlinux.
+
 * Thu May 24 2012 Alexey Gladkov <legion@altlinux.ru> 4.05-alt1
 - New release (4.05).
 - There is only a bootloader.
