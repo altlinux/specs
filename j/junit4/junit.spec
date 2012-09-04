@@ -1,3 +1,5 @@
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Digest/MD5.pm)
 # END SourceDeps(oneline)
@@ -36,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           junit4
 Version:        4.10
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Epoch:          0
 Summary:        Java regression test package
 License:        CPL
@@ -152,6 +154,9 @@ cp -pr %{oldname}%{version}/%{oldname}/* %{buildroot}%{_datadir}/%{name}/demo/%{
 %doc junit%{version}/doc/*
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.10-alt2_6jpp7
+- added OSGi manifest
+
 * Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.10-alt1_6jpp7
 - new version
 
