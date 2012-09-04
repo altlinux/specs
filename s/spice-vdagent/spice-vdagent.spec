@@ -1,9 +1,7 @@
 %define _localstatedir /var
-#auto/console-kit/systemd/none
-%def_without systemd
 
 Name: spice-vdagent
-Version: 0.10.1
+Version: 0.12.0
 Release: alt1
 Summary: Agent for Spice guests
 Group: Networking/Remote access
@@ -17,13 +15,7 @@ Patch: %name-%version-%release.patch
 BuildRequires: spice-protocol libXrandr-devel libXfixes-devel libXinerama-devel libX11-devel
 BuildRequires: libpciaccess-devel >= 0.10
 BuildRequires: desktop-file-utils
-
-%if_with systemd
-BuildPreReq: libsystemd-login-devel >= 42
-%else
-BuildPreReq: libdbus-devel
-Requires: ConsoleKit
-%endif
+BuildRequires: libsystemd-login-devel >= 42 systemd-devel
 
 %description
 Spice agent for Linux guests offering the following features:
@@ -44,11 +36,8 @@ Features:
 %build
 %autoreconf
 %configure \
-%if_with systemd
-	--with-session-info=systemd
-%else
-	--with-session-info=console-kit
-%endif
+	--with-session-info=systemd \
+	--with-init-script=systemd+redhat
 
 %make_build
 
@@ -64,16 +53,22 @@ install -m 0755 %SOURCE2 %buildroot%_initdir/spice-vdagentd
 
 %files
 %doc COPYING ChangeLog README TODO
-%_sysconfdir/tmpfiles.d/spice-vdagentd.conf
+/lib/udev/rules.d/*.rules
+/lib/tmpfiles.d/spice-vdagentd.conf
+%config(noreplace) %_sysconfdir/modules-load.d/spice-vdagentd.conf
+%config(noreplace) %_sysconfdir/rsyslog.d/spice-vdagentd.conf
 %_initddir/spice-vdagentd
+%_unitdir/*
 %_bindir/spice-vdagent
 %_sbindir/spice-vdagentd
-%_logdir/spice-vdagentd
 %_var/run/spice-vdagentd
 %_sysconfdir/xdg/autostart/spice-vdagent.desktop
 %_datadir/gdm/autostart/LoginWindow/spice-vdagent.desktop
 
 %changelog
+* Tue Sep 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
 * Tue Apr 10 2012 Alexey Shabalin <shaba@altlinux.ru> 0.10.1-alt1
 - 0.10.1
 

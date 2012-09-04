@@ -1,22 +1,24 @@
 Name: SPICE
-Version: 0.10.1
-Release: alt1.1
+Version: 0.11.3
+Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
 Url: http://www.spice-space.org/
 
 Source: http://www.spice-space.org/download/releases/%name-%version.tar
+Source2: spice-common.tar
+Source3: spice-protocol.tar
 Patch: %name-%version-%release.patch
-Patch1: %name-0.10.1-alt-DSO.patch
+Patch1: fix-alt.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=613529
 ExclusiveArch: %ix86 x86_64
 
-BuildRequires: spice-protocol >= 0.10.1
-BuildRequires: cegui06-devel gcc-c++ libXfixes-devel libXrandr-devel libalsa-devel libcelt051-devel libjpeg-devel libpixman-devel libXext-devel zlib-devel
+BuildRequires: cegui06-devel gcc-c++ 
+BuildRequires: libXfixes-devel libXrandr-devel libXext-devel libX11-devel libXinerama-devel
+BuildRequires: libalsa-devel libcelt051-devel libjpeg-devel libpixman-devel zlib-devel
 BuildRequires: libssl-devel libsasl2-devel python-module-pyparsing
-BuildRequires: libXinerama-devel
 BuildRequires: libcacard-devel >= 0.1.2
 
 %description
@@ -66,13 +68,23 @@ using spice-server, you will need to install spice-server-devel.
 %prep
 %setup
 %patch -p1
-%patch1 -p0
+%patch1 -p1
+tar -xf %SOURCE2
+pushd spice-common
+tar -xf %SOURCE3
+popd
 
 %build
 rm -f GITVERSION
 %autoreconf
-%configure --enable-client --enable-gui --enable-smartcard --enable-static=no --with-sasl
-%make WARN_CFLAGS=''
+%configure			\
+	--enable-client		\
+	--enable-gui		\
+	--enable-smartcard	\
+	--enable-static=no	\
+	--with-sasl
+
+%make_build
 
 %install
 %make_install install DESTDIR=%buildroot
@@ -94,6 +106,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Tue Sep 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.11.3-alt1
+- 0.11.3
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.1-alt1.1
 - Fixed build
 
