@@ -4,7 +4,7 @@
 %def_with pam
 
 Name: monit
-Version: 5.4
+Version: 5.5
 Release: alt1
 
 Summary: Process monitor and restart utility
@@ -19,6 +19,7 @@ Source3: monitrc
 Source4: %name.cnf
 Source5: README.Certificate-Creation
 Source6: monitrc.d.tar.gz
+Source100: monit.watch
 Patch: monit-5.3-pkgconfig-configure.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -151,6 +152,12 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Tue Sep 04 2012 Michael Shigorin <mike@altlinux.org> 5.5-alt1
+- new version (watch file uupdate)
+
+* Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 5.4-alt2
+- added watch file
+
 * Tue May 08 2012 Michael Shigorin <mike@altlinux.org> 5.4-alt1
 - 5.4
   + process uptime test added
