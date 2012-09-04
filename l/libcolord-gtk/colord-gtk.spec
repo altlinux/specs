@@ -3,7 +3,7 @@
 %def_enable vala
 
 Name: lib%_name-gtk
-Version: 0.1.22
+Version: 0.1.23
 Release: alt1
 
 Summary: GTK+3 support library for colord daemon
@@ -15,7 +15,7 @@ Source: http://www.freedesktop.org/software/%name/releases/%_name-gtk-%version.t
 
 %define glib_ver 2.31
 %define lcms_ver 2.2
-%define colord_ver 0.1.22
+%define colord_ver 0.1.23
 
 Requires: lib%_name >= %colord_ver
 
@@ -108,6 +108,9 @@ This package provides Vala language bindings for %_name-gtk library.
 
 
 %changelog
+* Tue Sep 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.23-alt1
+- 0.1.23
+
 * Sun Jul 01 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.22-alt1
 - first build for Sisyphus
 

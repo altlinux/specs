@@ -6,7 +6,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: colord
-Version: 0.1.22
+Version: 0.1.23
 Release: alt1
 
 Summary: Color daemon
@@ -26,7 +26,7 @@ Requires: lib%name = %version-%release
 Requires: shared-color-profiles
 
 BuildRequires: glib2-devel >= %glib_ver
-BuildRequires: docbook-utils gtk-doc intltool libdbus-devel libgudev-devel
+BuildRequires: docbook-utils gtk-doc intltool libdbus-devel libgudev-devel libudev-devel
 BuildRequires: liblcms2-devel >= %lcms_ver libpolkit-devel >= 0.103 libsane-devel
 BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel
 %{?_enable_sane:BuildRequires: libsane-devel}
@@ -172,6 +172,9 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 
 
 %changelog
+* Tue Sep 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.23-alt1
+- 0.1.23
+
 * Sun Jul 01 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.22-alt1
 - 0.1.22
 
