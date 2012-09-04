@@ -1,5 +1,5 @@
 %define ver_maj 1
-%define ver_min 51
+%define ver_min 49
 %define ver_rel 0
 
 %define namesuff %{ver_maj}_%{ver_min}_%ver_rel
@@ -7,7 +7,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name-%version
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -31,9 +31,9 @@
 %define mpidir %_libdir/%mpiimpl
 %endif
 
-Name: boost
+Name: boost%namesuff
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt3
+Release: alt4.1
 Epoch: 1
 
 Summary: Boost libraries
@@ -44,11 +44,12 @@ Url: http://www.boost.org
 Packager: Ivan Melnikov <iv@altlinux.org>
 
 Source: boost_%namesuff.tar
-Patch4: boost-1.51.0-alt-explicit-st.patch
-Patch5: boost-1.50.0-alt-bjam-locate-target.patch
+Patch4: boost-1.47.0-alt-explicit-st.patch
+Patch5: boost-1.47.0-alt-bjam-locate-target.patch
 Patch15: boost-1.36.0-alt-test-include-fix.patch
 Patch23: boost-1.45.0-alt-mpi-mt-only.patch
-Patch27: boost-1.51.0-alt-graph-use-traits.patch
+Patch25: boost-1.47.0-fedora-exceptions.patch
+Patch26: boost-1.49.0-alt-fix-c99-name-collision.patch
 
 # we use %%_python_version
 BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
@@ -68,9 +69,8 @@ libraries.  The emphasis is on libraries which work well with the C++
 Standard Library. One goal is to establish "existing practice" and
 provide reference implementations so that the Boost libraries are
 suitable for eventual standardization. Some of the libraries have
-already been included in the C++ 2011 standard and others have been
-proposed to the C++ Standards Committee for inclusion in future
-standards.
+already been proposed for inclusion in the C++ Standards Committee's
+upcoming C++ Standard Library Technical Report.
 
 Although Boost was begun by members of the C++ Standards Committee
 Library Working Group, membership has expanded to include nearly two
@@ -98,9 +98,8 @@ libraries.  The emphasis is on libraries which work well with the C++
 Standard Library. One goal is to establish "existing practice" and
 provide reference implementations so that the Boost libraries are
 suitable for eventual standardization. Some of the libraries have
-already been included in the C++ 2011 standard and others have been
-proposed to the C++ Standards Committee for inclusion in future
-standards.
+already been proposed for inclusion in the C++ Standards Committee's
+upcoming C++ Standard Library Technical Report.
 
 This package contains header files only.
 
@@ -157,9 +156,8 @@ libraries.  The emphasis is on libraries which work well with the C++
 Standard Library. One goal is to establish "existing practice" and
 provide reference implementations so that the Boost libraries are
 suitable for eventual standardization. Some of the libraries have
-already been included in the C++ 2011 standard and others have been
-proposed to the C++ Standards Committee for inclusion in future
-standards.
+already been proposed for inclusion in the C++ Standards Committee's
+upcoming C++ Standard Library Technical Report.
 
 
 %package complete
@@ -171,7 +169,6 @@ Requires: %name-devel-headers = %epoch:%version-%release
 Requires: %name-devel = %epoch:%version-%release
 Requires: %name-asio-devel = %epoch:%version-%release
 Requires: %name-chrono-devel = %epoch:%version-%release
-Requires: %name-context-devel = %epoch:%version-%release
 Requires: %name-filesystem-devel = %epoch:%version-%release
 Requires: %name-flyweight-devel = %epoch:%version-%release
 Requires: %name-geometry-devel = %epoch:%version-%release
@@ -196,9 +193,8 @@ libraries.  The emphasis is on libraries which work well with the C++
 Standard Library. One goal is to establish "existing practice" and
 provide reference implementations so that the Boost libraries are
 suitable for eventual standardization. Some of the libraries have
-already been included in the C++ 2011 standard and others have been
-proposed to the C++ Standards Committee for inclusion in future
-standards.
+already been proposed for inclusion in the C++ Standards Committee's
+upcoming C++ Standard Library Technical Report.
 
 This is a virtual package which depends on all Boost packages except
 static libraries. Install it if you need complete Boost distribution in
@@ -217,25 +213,6 @@ PreReq: %name-devel = %epoch:%version-%release
 asio is a cross-platform C++ library for network programming that
 provides developers with a consistent asynchronous I/O model using a
 modern C++ approach.
-
-
-%package context-devel
-Summary: The Boost Context Lirary development files
-Group: Development/C++
-AutoReq: yes, nocpp
-
-PreReq: %name-devel = %epoch:%version-%release
-Requires: libboost_context%version = %epoch:%version-%release
-
-%description context-devel
-Boost.Context is a foundational library that provides a sort of
-cooperative multitasking on a single thread. By providing an abstraction
-of the current execution state in the current thread, including the
-stack (with local variables) and stack pointer, all registers and CPU
-flags, and the instruction pointer, a fcontext_t instance represents a
-specific point in the application's execution path. This is useful for
-building higher-level abstractions, like coroutines, cooperative threads
-(userland threads) or an aquivalent to C# keyword yield in C++.
 
 
 %package filesystem-devel
@@ -535,9 +512,8 @@ libraries.  The emphasis is on libraries which work well with the C++
 Standard Library. One goal is to establish "existing practice" and
 provide reference implementations so that the Boost libraries are
 suitable for eventual standardization. Some of the libraries have
-already been included in the C++ 2011 standard and others have been
-proposed to the C++ Standards Committee for inclusion in future
-standards.
+already been proposed for inclusion in the C++ Standards Committee's
+upcoming C++ Standard Library Technical Report.
 
 This package contains Boost libraries documentation.
 %endif #with devel
@@ -563,7 +539,6 @@ Group: Development/C++
 
 PreReq: %name-devel = %epoch:%version-%release
 Requires: %name-chrono-devel = %epoch:%version-%release
-Requires: %name-context-devel = %epoch:%version-%release
 Requires: %name-filesystem-devel = %epoch:%version-%release
 %if_with mpi
 Requires: %name-graph-parallel-devel = %epoch:%version-%release
@@ -604,9 +579,8 @@ libraries.  The emphasis is on libraries which work well with the C++
 Standard Library. One goal is to establish "existing practice" and
 provide reference implementations so that the Boost libraries are
 suitable for eventual standardization. Some of the libraries have
-already been included in the C++ 2011 standard and others have been
-proposed to the C++ Standards Committee for inclusion in future
-standards.
+already been proposed for inclusion in the C++ Standards Committee's
+upcoming C++ Standard Library Technical Report.
 
 This package contains static libraries.
 %endif #with devel-static
@@ -629,14 +603,6 @@ time API, thereby allowing the extraction of wall clock time,
 user CPU time, and system CPU time of the process.
 
 
-%package -n libboost_context%version
-Summary: Boost.Locale Library
-Group: Development/C++
-
-%description -n libboost_context%version
-Boost.Context is a foundational library that provides a sort of
-cooperative multitasking on a single thread.
-
 %package -n libboost_date_time%version
 Summary: Boost Date-Time Library.
 Group: Development/C++
@@ -656,7 +622,6 @@ time intervals.
 Summary: Filesystem Library
 Group: Development/C++
 Provides: boost-filesystem = %epoch:%version-%release
-
 %if_with strict_deps
 Requires: libboost_system%version = %epoch:%version-%release
 %endif
@@ -670,7 +635,6 @@ manipulate paths, files, and directories.
 Summary: Graph Library
 Group: Development/C++
 Provides: boost-graph = %epoch:%version-%release
-
 %if_with strict_deps
 Requires: libboost_regex%version = %epoch:%version-%release
 %endif
@@ -679,11 +643,25 @@ Requires: libboost_regex%version = %epoch:%version-%release
 The Boost Graph Library provides  graph components and algorithms.
 
 
+%package -n libboost_locale%version
+Summary: Boost.Locale Library
+Group: Development/C++
+
+%if_with strict_deps
+Requires: libboost_thread%version = %epoch:%version-%release
+%endif
+
+%description -n libboost_locale%version
+Boost.Locale is a library that provides high quality localization
+facilities in a C++ way. It gives powerful tools for development
+of cross platform localized software - the software that talks
+to user in its language.
+
+
 %if_with mpi
 %package -n libboost_graph_parallel%version
 Summary: Parallel Boost Graph Library
 Group: Development/C++
-
 %if_with strict_deps
 Requires: libboost_serialization%version = %epoch:%version-%release
 Requires: libboost_mpi%version = %epoch:%version-%release
@@ -699,22 +677,6 @@ BGL.
 
 This package contains shared libraries.
 %endif
-
-
-%package -n libboost_locale%version
-Summary: Boost.Locale Library
-Group: Development/C++
-
-%if_with strict_deps
-Requires: libboost_thread%version = %epoch:%version-%release
-Requires: libboost_system%version = %epoch:%version-%release
-%endif
-
-%description -n libboost_locale%version
-Boost.Locale is a library that provides high quality localization
-facilities in a C++ way. It gives powerful tools for development
-of cross platform localized software - the software that talks
-to user in its language.
 
 
 %package -n libboost_iostreams%version
@@ -928,10 +890,6 @@ is also useful in some production (non-test) environments.
 Group: Development/C++
 Summary: The Boost Threads Library (Boost.Threads)
 
-%if_with strict_deps
-Requires: libboost_system%version = %epoch:%version-%release
-%endif
-
 Obsoletes: boost-thread-gcc2, boost-thread-gcc3
 Provides: boost-thread-gcc2 = %epoch:%version-%release
 Provides: boost-thread-gcc3 = %epoch:%version-%release
@@ -965,9 +923,7 @@ clock time, user CPU process time, system CPU process time, and more.
 Summary: Boost.Wave Library
 Group: Development/C++
 Provides: boost-wave = %epoch:%version-%release
-
 %if_with strict_deps
-Requires: libboost_system%version = %epoch:%version-%release
 Requires: libboost_thread%version = %epoch:%version-%release
 %endif
 
@@ -982,7 +938,6 @@ Group: Development/Python
 %if_with strict_deps
 Requires: libboost_mpi%version = %epoch:%version-%release
 Requires: libboost_mpi_python%version = %epoch:%version-%release
-Requires: libboost_python%version = %epoch:%version-%release
 Requires: libboost_serialization%version = %epoch:%version-%release
 %endif
 
@@ -1001,7 +956,8 @@ applications. This package contains python module.
 %patch5 -p2
 %patch15 -p1
 %patch23 -p2
-%patch27 -p2
+%patch25 -p0
+%patch26 -p2
 
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
@@ -1113,30 +1069,6 @@ fi
 
 # some documentation have hyperlinks to real headers; this makes them work
 ln -s %_includedir/%name %buildroot%boost_doc/boost
-
-# Programs that link with Boost.Thread and Boost.Filesystem need to link
-# with Boost.System explicitly. For thread, this is new requirement since
-# boost 1.50.0. To avoid breaking build of too many Boost.Thread clients,
-# we introduce some linker scripts.
-
-boost_make_linker_script()
-{
-    local so_path="%buildroot%_libdir/libboost_${1}.so"
-
-    rm -f "${so_path}"
-    echo '/* GNU ld script */' > ${so_path}
-
-    echo -n 'GROUP(' >> ${so_path}
-    for name in "$@"; do
-        echo -n " %_libdir/libboost_${name}.so.%version" >> ${so_path}
-    done
-    echo ' )' >> ${so_path}
-}
-
-boost_make_linker_script thread system
-boost_make_linker_script filesystem system
-boost_make_linker_script filesystem-st system-st
-
 %endif
 
 %if_with jam
@@ -1165,7 +1097,6 @@ export LD_PRELOAD=%_libdir/libpython%_python_version.so
 %files devel-headers
 %_includedir/%name
 %exclude %_includedir/%name/asio*
-%exclude %_includedir/%name/context
 %exclude %_includedir/%name/filesystem*
 %exclude %_includedir/%name/flyweight*
 %exclude %_includedir/%name/geometry*
@@ -1187,7 +1118,6 @@ export LD_PRELOAD=%_libdir/libpython%_python_version.so
 
 %files devel
 %_libdir/*.so
-%exclude %_libdir/*_context*.so
 %exclude %_libdir/*_filesystem*.so
 %exclude %_libdir/*_locale*.so
 %exclude %_libdir/*_math*.so
@@ -1207,10 +1137,6 @@ export LD_PRELOAD=%_libdir/libpython%_python_version.so
 
 %files asio-devel
 %_includedir/%name/asio*
-
-%files context-devel
-%_includedir/%name/context
-%_libdir/*_context*.so
 
 %files filesystem-devel
 %_includedir/%name/filesystem*
@@ -1294,9 +1220,6 @@ export LD_PRELOAD=%_libdir/libpython%_python_version.so
 
 %files -n libboost_chrono%version
 %_libdir/*_chrono*.so.*
-
-%files -n libboost_context%version
-%_libdir/*_context*.so.*
 
 %files -n libboost_date_time%version
 %_libdir/*_date_time*.so.*
@@ -1424,20 +1347,8 @@ done
 
 
 %changelog
-* Tue Sep 04 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.51.0-alt3
-- add patch #27 to make BGL use traits to make null_vertex
-  (see https://svn.boost.org/trac/boost/ticket/7327).
-
-* Fri Aug 31 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.51.0-alt2
-- fixed headers packaging;
-- updated %%description to reflect current state of C++
-  standardization (wording taken from fedora package by Petr Machata).
-
-* Thu Aug 30 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.51.0-alt1
-- new version;
-- new library, Boost.Context, put to separate subpackages;
-- updated patches, removed obsolete patches;
-- introduced linker scripts for Boost.Thread and Boost.Filesystem.
+* Thu Aug 30 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.49.0-alt4.1
+- compat build without development support.
 
 * Wed Aug 29 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.49.0-alt4
 - dirty fix to build with new glibc
