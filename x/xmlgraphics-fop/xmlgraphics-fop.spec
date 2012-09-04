@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           xmlgraphics-fop
 Version:        1.0
-Release:        alt1_4jpp6
+Release:        alt2_4jpp6
 Epoch:          0
 Summary:        XSL-driven print formatter
 License:        ASL 2.0
@@ -50,7 +50,7 @@ Patch1:         xmlgraphics-fop-cli.patch
 Requires(post): jpackage-utils
 Requires(postun): jpackage-utils
 Requires:       jpackage-utils
-Requires:       xmlgraphics-batik >= 0:1.7-13
+Requires:       batik >= 1.7-13
 Requires:       excalibur-avalon-logkit
 Requires:       excalibur-avalon-framework-api
 Requires:       excalibur-avalon-framework-impl
@@ -63,8 +63,8 @@ BuildRequires:  ant >= 0:1.8.0
 BuildRequires:  ant-junit
 BuildRequires:  junit
 BuildRequires:  fonts-ttf-liberation
-BuildRequires:  xmlgraphics-batik >= 0:1.7-13
-BuildRequires:  xmlgraphics-batik-javadoc >= 0:1.7-13
+BuildRequires:  batik >= 0:1.7-13
+BuildRequires:  batik-javadoc >= 0:1.7-13
 BuildRequires:  excalibur-avalon-logkit
 BuildRequires:  excalibur-avalon-framework-api
 BuildRequires:  excalibur-avalon-framework-impl
@@ -227,6 +227,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_4jpp6
+- fixed build w/new batik
+
 * Sun Jan 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_4jpp6
 - new jpp relase
 
