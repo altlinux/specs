@@ -1,7 +1,7 @@
 Summary: A text formatting package based on SGML
 Name: linuxdoc-tools
-Version: 0.9.66
-Release: alt3
+Version: 0.9.68
+Release: alt1
 License: GPL
 Group: Publishing
 Source: http://http.us.debian.org/debian/pool/main/l/linuxdoc-tools/%{name}_%version.tar.gz
@@ -86,6 +86,9 @@ mv %buildroot%_datadir/%name/*.sty \
 %_mandir/*/*
 
 %changelog
+* Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.68-alt1
+- Version 0.9.68
+
 * Sat Dec 17 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.66-alt3
 - Replaced Conflicts: with Obsoletes: (ALT #26720)
 
