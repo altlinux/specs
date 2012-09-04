@@ -1,6 +1,6 @@
 Name: scantailor
 Version: 0.9.11.1
-Release: alt1
+Release: alt2
 
 Summary: Scan processing software
 License: GPL
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Source1: %name.desktop
 
 # Automatically added by buildreq on Fri Apr 10 2009
-BuildRequires: boost-devel boost-intrusive-devel cmake gcc-c++ glib2-devel libXfixes-devel libjpeg-devel libqt4-devel
+BuildRequires: boost-devel-headers boost-intrusive-devel cmake gcc-c++ libXft-devel libXmu-devel libXpm-devel libjpeg-devel libtiff-devel libqt4-devel phonon-devel
 
 %description
 Scantailor is a book scan processing software. It
@@ -54,6 +54,9 @@ install -pm644 -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Sep 04 2012 Andrey Bergman <vkni@altlinux.org> 0.9.11.1-alt2
+- Adjusted BuildRequires.
+
 * Sat Mar 17 2012 Andrey Bergman <vkni@altlinux.org> 0.9.11.1-alt1
 - update to version 0.9.11.1
 
