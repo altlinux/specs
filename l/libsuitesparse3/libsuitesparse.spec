@@ -1,6 +1,6 @@
 Name: libsuitesparse3
 Version: 3.6.1
-Release: alt6
+Release: alt7
 
 Summary: Shared libraries for sparse matrix calculations
 Packager: Paul Wolneykien <manowar@altlinux.ru>
@@ -87,7 +87,9 @@ for i in $(find ./ -name Demo); do
 done
 
 %files
-%_libdir/*.so.*
+#_libdir/*.so.*
+%_libdir/libcholmod.so.*
+%_libdir/libcxsparse.so.*
 
 #files devel
 #_libdir/*.so
@@ -105,6 +107,9 @@ done
 #_libdir/%name/demos
 
 %changelog
+* Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt7
+- Packed libraries only for octave
+
 * Mon Sep 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.1-alt6
 - Moved this version into System/Legacy libraries
 
