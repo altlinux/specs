@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.1
-Release:	alt2_2
+Release:	alt2_3
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -126,7 +126,7 @@ pushd build
   -DAQSIS_BOOST_REGEX_LIBRARY_NAME=boost_regex-mt \
   -DAQSIS_BOOST_THREAD_LIBRARY_NAME=boost_thread-mt \
   -DAQSIS_BOOST_WAVE_LIBRARY_NAME=boost_wave-mt \
-  -DCMAKE_CXX_FLAGS="$CXXFLAGS -DBOOST_FILESYSTEM_VERSION=2" \
+  -DCMAKE_CXX_FLAGS="$CXXFLAGS -DBOOST_FILESYSTEM_VERSION=3" \
   -DAQSIS_USE_EXTERNAL_TINYXML:BOOL=OFF ..
 
 make VERBOSE=1 %{?_smp_mflags}
@@ -220,6 +220,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2_3
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2_2
 - update to new release by fcimport
 
