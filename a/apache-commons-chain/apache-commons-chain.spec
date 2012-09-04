@@ -1,5 +1,5 @@
 %define _without_maven 1
-BuildRequires: mojo-maven2-plugin-jdepend mojo-maven2-plugin-rat
+#BuildRequires: mojo-maven2-plugin-jdepend mojo-maven2-plugin-rat
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -58,7 +58,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-chain
 Version:        1.3
-Release:        alt2_0.r831527.5jpp6
+Release:        alt3_0.r831527.5jpp6
 Epoch:          0
 Summary:        Apache Commons Chain
 License:        ASL 2.0
@@ -311,6 +311,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_0.r831527.5jpp6
+- build w/o maven-plugin-rat
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt2_0.r831527.5jpp6
 - fixed build with maven3
 
