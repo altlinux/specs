@@ -1,5 +1,5 @@
 %define _enable_debug 1
-BuildRequires: java-javadoc
+BuildRequires: java-javadoc ant-jai ant-junit4 ant-junit
 AutoReqProv: yes,nopython
 BuildRequires: xorg-proto-devel libGLU-devel
 BuildRequires: java-devel-openjdk
@@ -10,12 +10,16 @@ BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
 Epoch:  1
 
-%global eclipse_major   3
-%global eclipse_minor   7
+%global eclipse_major   4
+%global eclipse_minor   2
 %global eclipse_majmin  %{eclipse_major}.%{eclipse_minor}
 %global eclipse_micro   0
 %global initialize      1
-%global download_url    http://download.eclipse.org/technology/linuxtools/eclipse-build/3.7.x_Indigo/
+%global download_url    http://download.eclipse.org/technology/linuxtools/eclipse-build/4.2.x/
+%global eb_sha1         8b7060063e10f73e00056a9766d33fc43f043f4b
+%global build_id        I20120608-1400
+%global eclipse_version %{eclipse_majmin}.%{eclipse_micro}
+%global emf_version     2.8.0
 
 # FIXME:  update java packaging guidelines for this.  See
 # fedora-devel-java-list discussion in September 2008.
@@ -25,20 +29,29 @@ Epoch:  1
 
 Summary:        An open, extensible IDE
 Name:           eclipse
-Version:        %{eclipse_majmin}.%{eclipse_micro}
-Release:        alt3_3jpp6
+Version:        %{eclipse_version}
+Release:        alt1_7jpp7
 License:        EPL
 Group:          Editors
 URL:            http://www.eclipse.org/
-Source0:        %{download_url}eclipse-build-db208c33d1a67591d17b02148ae7948fd178a80d.tar.xz
-Source1:        %{download_url}eclipse-3.7.0-src.tar.bz2
+Source0:        %{download_url}eclipse-build-%{eb_sha1}.tar.xz
+Source1:        %{download_url}eclipse-%{eclipse_version}-%{build_id}-src.tar.bz2
+Source4:        macros.%{name}
+Source5:        http://repo1.maven.org/maven2/org/eclipse/osgi/org.eclipse.osgi/3.6.0.v20100517/org.eclipse.osgi-3.6.0.v20100517.pom
+# Fetched from http://repo1.maven.org/maven2/org/eclipse/osgi/org.eclipse.osgi.services/3.2.100.v20100503/org.eclipse.osgi.services-3.2.100.v20100503.pom
+# Patched to remove fake parent
+Source6:        org.eclipse.osgi.services-3.2.100.v20100503.pom
+Source7:        http://repo1.maven.org/maven2/org/eclipse/equinox/http/servlet/1.0.0-v20070606/servlet-1.0.0-v20070606.pom
+Source8:        org.eclipse.jdt.core-3.8.0.v_C03.pom
+Patch0:         lucene-3.6-compile.patch
+Patch73:	eclipse-3.7.0-alt-dependencies.patch
 
-BuildRequires:  ant
+BuildRequires:  ant >= 1.8.3
 BuildRequires:  rsync
 BuildRequires:  jpackage-utils >= 0:1.5 make gcc
-BuildRequires:  libgtk+2-devel
-BuildRequires:  libglib2-devel
-BuildRequires:  libgnome-devel
+BuildRequires:  gtk2-devel
+BuildRequires:  glib2-devel
+BuildRequires:  libGConf-devel
 BuildRequires:  gcc-c++
 BuildRequires:  libnspr-devel
 BuildRequires:  libXtst-devel
@@ -47,36 +60,45 @@ BuildRequires:  libGLU-devel
 BuildRequires:  libcairo >= 1.0
 BuildRequires:  unzip
 BuildRequires:  desktop-file-utils
-BuildRequires:  java-javadoc
+BuildRequires:  java-javadoc >= 1:1.7.0
 BuildRequires:  libXt-devel
-BuildRequires:  libwebkitgtk3-devel
+BuildRequires:  webkitgtk-devel
+BuildRequires:  geronimo-annotation >= 1.0-7
+BuildRequires:  geronimo-annotation-1.0-api
 
-BuildRequires: icu4j-eclipse >= 1:4.4.2-2
-BuildRequires: tomcat5-jasper-eclipse >= 5.5.31-2
-BuildRequires: tomcat6-servlet-2.5-api >= 6.0.32-8
-BuildRequires: tomcat6-jsp-2.1-api
+BuildRequires: icu4j-eclipse >= 1:4.4.2.2-11
+BuildRequires: tomcat-lib >= 7.0.25-3
 BuildRequires: ant-antlr ant-apache-bcel ant-apache-log4j ant-apache-oro ant-apache-regexp ant-apache-resolver ant-commons-logging ant-apache-bsf ant-commons-net
-BuildRequires: ant-javamail ant-jdepend ant-junit ant-swing ant-jsch ant-testutil ant-apache-xalan2 ant-jmf
-BuildRequires: jsch >= 0:0.1.41
-BuildRequires: apache-commons-el
+BuildRequires: ant-javamail ant-jdepend ant-junit ant-junit4 ant-swing ant-jsch ant-testutil ant-apache-xalan2 ant-jmf
+BuildRequires: ant-scripts
+BuildRequires: jsch >= 0:0.1.46-2
+BuildRequires: apache-commons-el >= 1.0-22
 BuildRequires: apache-commons-logging
-BuildRequires: apache-commons-codec
-BuildRequires: jakarta-commons-httpclient
-#BuildRequires: jetty6-core6 >= 6.1.24-1
-BuildRequires: lucene >= 2.9.4-5
-BuildRequires: lucene-contrib >= 2.9.4-5
-BuildRequires: junit >= 3.8.1
-BuildRequires: junit4
-BuildRequires: hamcrest >= 0:1.1-9.2
+BuildRequires: apache-commons-codec >= 1.6-2
+BuildRequires: jakarta-commons-httpclient >= 1:3.1-7
+BuildRequires: felix-gogo-command >= 0.12
+BuildRequires: felix-gogo-shell >= 0.10.0-3
+BuildRequires: jetty >= 8.1.0-1
+BuildRequires: lucene >= 2.9.4-8
+BuildRequires: lucene-contrib >= 2.9.4-8
+BuildRequires: junit4 >= 4.10-5
+BuildRequires: hamcrest >= 0:1.1-11
 BuildRequires: sat4j >= 2.3.0-1
 BuildRequires: objectweb-asm >= 3.3.1-1
 BuildRequires: zip
+BuildRequires: sac >= 1.3-12
+BuildRequires: batik >= 1.8
+BuildRequires: xml-commons-apis 
+BuildRequires: atinject >= 1-6
+
+%if 0%{?rhel} >= 6
+ExclusiveArch: %{ix86} x86_64
+%endif
 Source44: import.info
 Patch33: eclipse-3.7.0-alt-as-needed-statically-link-xpcomglue.patch
 Patch34: eclipse-3.7.0-alt-libgnomeproxy-gcc-as-needed.patch
 Patch35: eclipse-3.7.0-alt-swt-linux-as-needed.patch
-Source33: jetty-6.1.26.jar
-Source34: jetty-util-6.1.26.jar
+Source45: fix_share_symlinks_to_libdir.pl
 
 %description
 The Eclipse platform is designed for building integrated development
@@ -84,78 +106,124 @@ environments (IDEs), server-side applications, desktop applications, and
 everything in between.
 
 %package     swt
+Version:        %{eclipse_version}
 Summary:        SWT Library for GTK+-2.0
 Group:          Editors
 # %{_libdir}/java directory owned by jpackage-utils
 Requires:       jpackage-utils
-Requires:       libgtk+2
-Requires:       xulrunner-libs
-Requires:       libwebkitgtk3
+Requires:       gtk2
+Requires:       webkitgtk
 
 %description swt
 SWT Library for GTK+-2.0.
 
+%package      equinox-osgi
+Group: Editors
+Version:        %{eclipse_version}
+Summary:        Eclipse OSGi - Equinox
+Requires:       jpackage-utils
+
+%description  equinox-osgi
+Eclipse OSGi - Equinox
+
+%package      emf-core
+Version:        %{emf_version}
+Summary:        Eclipse Modeling Framework Core
+Group:          Development/Java
+Requires:       eclipse-equinox-osgi = %{epoch}:%{eclipse_version}-%{release}
+Conflicts:      eclipse-emf < 2.8.0-0.5
+
+%description  emf-core
+Eclipse Modeling Framework Core
+
+
 %package        rcp
+Version:        %{eclipse_version}
 Summary:        Eclipse Rich Client Platform
 Group:          Development/Java
-Requires:       %{name}-swt = %{epoch}:%{version}-%{release}
-Requires:       icu4j-eclipse >= 1:4.4.2-2
+Requires:       eclipse-swt = %{epoch}:%{eclipse_version}-%{release}
+Requires:       eclipse-equinox-osgi = %{epoch}:%{eclipse_version}-%{release}
+Requires:       icu4j-eclipse >= 1:4.4.2.2-11
+Requires:       %{name}-emf-core >= %{epoch}:%{emf_version}-%{release}
+Provides:       osgi(system.bundle) = %{epoch}:%{eclipse_version}
+Provides:	osgi(org.eclipse.core.runtime) = %version
+Provides:	osgi(org.eclipse.equinox.ds) = %version
 
 %description    rcp
 Eclipse Rich Client Platform
 
 %package        platform
 AutoReqProv: yes,nopython
+Version:        %{eclipse_version}
 Summary:        Eclipse platform common files
 Group:          Editors
-Requires:   %{name}-rcp = %{epoch}:%{version}-%{release}
+Requires:   eclipse-rcp = %{epoch}:%{eclipse_version}-%{release}
 Requires: ant-antlr ant-apache-bcel ant-apache-log4j ant-apache-oro ant-apache-regexp ant-apache-resolver ant-commons-logging ant-apache-bsf ant-commons-net
 Requires: ant-javamail ant-jdepend ant-junit ant-swing ant-jsch ant-testutil ant-apache-xalan2 ant-jmf
-Requires: apache-commons-el
+Requires: ant-scripts
+Requires: apache-commons-el >= 1.0-23
 Requires: apache-commons-logging
-Requires: apache-commons-codec
-Requires: tomcat5-jasper-eclipse >= 5.5.31-2
-Requires: tomcat6-servlet-2.5-api >= 6.0.32-8
-Requires: tomcat6-jsp-2.1-api
-#Requires: jetty6-core6 >= 6.1.24-1
-Requires: jsch >= 0.1.41
-Requires: lucene >= 2.9.4-5
-Requires: lucene-contrib >= 2.9.4-5
+Requires: apache-commons-codec >= 1.6-2
+Requires: jakarta-commons-httpclient >= 1:3.1-7
+Requires: tomcat-lib >= 7.0.25-3
+Requires: felix-gogo-command >= 0.12
+Requires: felix-gogo-shell >= 0.10.0-3
+Requires: jetty >= 8.1.0-1
+Requires: jsch >= 0.1.46-2
+Requires: lucene >= 2.9.4-8
+Requires: lucene-contrib >= 2.9.4-8
 Requires: sat4j >= 2.3.0-1
-Provides: eclipse-cvs-client = 1:%{version}-%{release}
+Requires: sac >= 1.3-12
+Requires: xml-commons-apis
+Requires: batik >= 1.8
+Requires: atinject >= 1-6
+Requires: geronimo-annotation-1.0-api >= 1.0-7
+Provides: eclipse-cvs-client = 1:%{eclipse_version}-%{release}
 Obsoletes: eclipse-cvs-client < 1:3.3.2-20
+#Package eclipse-platform has broken dep on osgi(org.apache.el)
+#Reinst eclipse-emf-core Failed early because of osgi(org.w3c.css.sac)
+Provides: osgi(org.apache.el) = 1.0
+Provides: osgi(org.w3c.css.sac) = 1.3.0
+Provides: osgi(org.eclipse.equinox.p2.core) = 2.0.100
+Provides: osgi(org.eclipse.equinox.p2.engine) = 2.0.0
+Provides: osgi(org.eclipse.equinox.p2.metadata) = 2.1.0
+Provides: osgi(org.eclipse.equinox.p2.repository) = 2.1.0
+
 
 %description    platform
 The Eclipse Platform is the base of all IDE plugins.  This does not include the
 Java Development Tools or the Plugin Development Environment.
 
+
 %package        jdt
+Version:        %{eclipse_version}
 Summary:        Eclipse Java Development Tools
 Group:          Editors
-Requires:       %{name}-platform = %{epoch}:%{version}-%{release}
-Requires:       %{name}-cvs-client = %{epoch}:%{version}-%{release}
-Requires:       junit >= 3.8.1-3jpp
-Requires:       junit4
-Requires:       jakarta-commons-httpclient
-Requires:       java-javadoc
+Requires:       eclipse-platform = %{epoch}:%{eclipse_version}-%{release}
+Requires:       eclipse-cvs-client = %{epoch}:%{eclipse_version}-%{release}
+Requires:       junit4 >= 4.10-5
+Requires:       jakarta-commons-httpclient >= 1:3.1-7
+Requires:       hamcrest >= 0:1.1-11
+Requires:       java-javadoc >= 1:1.7.0
+
 
 %description    jdt
 Eclipse Java Development Tools.  This package is required to use Eclipse for
 developing software written in the Java programming language.
 
 %package        pde
+Version:        %{eclipse_version}
 Summary:        Eclipse Plugin Development Environment
 Group:          Editors
-Provides:       eclipse = %{epoch}:%{version}-%{release}
-Provides:       eclipse-sdk = %{epoch}:%{version}-%{release}
-Requires:       %{name}-platform = %{epoch}:%{version}-%{release}
-Requires:       %{name}-jdt = %{epoch}:%{version}-%{release}
+Provides:       eclipse = %{epoch}:%{eclipse_version}-%{release}
+Provides:       eclipse-sdk = %{epoch}:%{eclipse_version}-%{release}
+Requires:       eclipse-platform = %{epoch}:%{eclipse_version}-%{release}
+Requires:       eclipse-jdt = %{epoch}:%{eclipse_version}-%{release}
 Requires:       objectweb-asm >= 3.3.1-1
-Requires:       hamcrest >= 0:1.1-9.2
 # For PDE Build wrapper script + creating jars
 Requires:       zip
 Requires:       bash
-Provides:       %{name}-pde-runtime = 1:%{version}-%{release}
+Provides:       %{name}-pde-runtime = 1:%{eclipse_version}-%{release}
 Obsoletes:      %{name}-pde-runtime < 1:3.3.2-20
 
 %description    pde
@@ -163,24 +231,38 @@ Eclipse Plugin Development Environment.  This package is required for
 developing Eclipse plugins.
 
 %prep
-%setup -q -n eclipse-build-db208c33d1a67591d17b02148ae7948fd178a80d
+export JAVA_HOME=%{java_home}
+%setup -q -n eclipse-build-%{eb_sha1}
 cp %{SOURCE1} .
 ant applyPatches
-pushd build/eclipse-3.7.0-src
+%patch0
+pushd build/eclipse-%{eclipse_version}-%{build_id}-src
+
+sed -i -e "s|\[2.9.0,3.0.0)|\[2.9.0,4.0.0)|g" plugins/org.eclipse.help.base/META-INF/MANIFEST.MF
 
 # Use our system-installed javadocs, reference only what we built, and
 # don't like to osgi.org docs (FIXME:  maybe we should package them?)
-sed -i -e "s|http://java.sun.com/j2se/1.4.2/docs/api|%{_datadir}/javadoc/java|" \
+sed -i -e "s|http://download.oracle.com/javase/1.5.0/docs/api|%{_datadir}/javadoc/java|" \
    -e "/osgi\.org/d" \
    -e "s|-breakiterator|;../org.eclipse.equinox.util/@dot\n;../org.eclipse.ecf.filetransfer_3.0.0.v20090302-0803.jar\n;../org.eclipse.ecf_3.0.0.v20090302-0803.jar\n-breakiterator|" \
     plugins/org.eclipse.platform.doc.isv/platformOptions.txt
-sed -i -e "s|http://java.sun.com/j2se/1.5/docs/api|%{_datadir}/javadoc/java|" \
+sed -i -e "s|http://download.oracle.com/javase/1.5.0/docs/api|%{_datadir}/javadoc/java|" \
    -e "s/win32.win32.x86/gtk.linux.%{eclipse_arch}/" \
    plugins/org.eclipse.jdt.doc.isv/jdtOptions.txt
-sed -i -e "s|http://java.sun.com/j2se/1.4/docs/api|%{_datadir}/javadoc/java|" \
+sed -i -e "s|http://download.oracle.com/javase/6/docs/api|%{_datadir}/javadoc/java|" \
+   -e "/osgi\.org/d" \
+   plugins/org.eclipse.jdt.doc.isv/jdtOptions.txt
+sed -i -e "s|http://download.oracle.com/javase/1.4.2/docs/api|%{_datadir}/javadoc/java|" \
    -e "s/motif.linux.x86/gtk.linux.%{eclipse_arch}/" \
+   -e "/osgi\.org/d" \
    plugins/org.eclipse.pde.doc.user/pdeOptions.txt \
    plugins/org.eclipse.pde.doc.user/pdeOptions.txt
+sed -i -e "s|http://download.oracle.com/javase/1.5.0/docs/api|%{_datadir}/javadoc/java|" \
+   plugins/org.eclipse.pde.doc.user/pdeOptions.txt \
+   plugins/org.eclipse.pde.doc.user/pdeOptions.txt
+
+#fix for glib 2.31 not allowing include of anything else but glib
+sed -i -e "s|#include <glib/gslist.h>||g" plugins/org.eclipse.core.net/natives/unix/gnomeproxy.c
 
 # make sure there are no jars left
 JARS=""
@@ -200,12 +282,7 @@ pushd build/eclipse-%version-*
 %patch34 -p2
 %patch35 -p2
 popd
-
-sed -i -e s,/usr/share/java/jetty/jetty.jar,%{SOURCE33},g dependencies.properties
-sed -i -e s,/usr/share/java/jetty/jetty-util.jar,%{SOURCE34},g dependencies.properties
-#sed -i -e s,/usr/share/jetty/lib/jetty-6.1.26.jar,%{SOURCE33},g `grep -rl /usr/share/jetty/lib/jetty-6.1.26.jar .`
-#sed -i -e s,/usr/share/jetty/lib/jetty-util-6.1.26.jar,%{SOURCE34},g `grep -rl /usr/share/jetty/lib/jetty-util-6.1.26.jar .`
-
+%patch73 -p0
 
 %build
 export CXX='g++ -Dchar16_t="unsigned short int"'
@@ -213,25 +290,33 @@ export JAVA_HOME=%{java_home}
 ant provision.cvs
 
 %install
+export JAVA_HOME=%{java_home}
 ant -DdestDir=$RPM_BUILD_ROOT -Dprefix=/usr -Dmultilib=true installSDKinDropins
 
 # We don't need icon.xpm
 # https://bugs.eclipse.org/292472
-rm $RPM_BUILD_ROOT/%{_libdir}/%{name}/icon.xpm
+rm -f $RPM_BUILD_ROOT/%{_libdir}/%{name}/icon.xpm
 
 # Some directories we need
 install -d -m 755 $RPM_BUILD_ROOT%{_libdir}/java
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 pushd $RPM_BUILD_ROOT%{_libdir}/%{name}
 # Create file listings for the extracted shared libraries
 echo -n "" > %{_builddir}/%{buildsubdir}/%{name}-platform.install;
 for id in `ls configuration/org.eclipse.osgi/bundles`; do
   if [ "Xconfiguration" = $(echo X`find configuration/org.eclipse.osgi/bundles/$id -name libswt\*.so` | sed "s:/.*::") ]; then
-    echo "%{_libdir}/%{name}/configuration/org.eclipse.osgi/bundles/$id" > %{_builddir}/%{buildsubdir}/%{name}-swt.install;
+    echo "%verify(not mtime) %{_libdir}/%{name}/configuration/org.eclipse.osgi/bundles/$id" > %{_builddir}/%{buildsubdir}/%{name}-swt.install;
   else
-    echo "%{_libdir}/%{name}/configuration/org.eclipse.osgi/bundles/$id" >> %{_builddir}/%{buildsubdir}/%{name}-platform.install;
+    echo "%verify(not mtime) %{_libdir}/%{name}/configuration/org.eclipse.osgi/bundles/$id" >> %{_builddir}/%{buildsubdir}/%{name}-platform.install;
   fi
 done
+popd
+
+# Remove state files
+pushd $RPM_BUILD_ROOT%{_libdir}/%{name}/configuration/org.eclipse.osgi/
+    rm -rf .bundledata* .lazy* .manager .state*
 popd
 
 # Symlinks to the SWT JNI shared libraries in %%{_libdir}/eclipse
@@ -244,7 +329,9 @@ popd
 # Temporary fix until https://bugs.eclipse.org/294877 is resolved
 sed -i "s|-Xms40m|-Xms128m|g" $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
 sed -i "s|-Xmx384m|-Xmx512m|g" $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
+echo "" >> $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
 echo "-Dorg.eclipse.swt.browser.UseWebKitGTK=true" >> $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
+echo "-Dhelp.lucene.tokenizer=standard" >> $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
 echo "-XX:CompileCommand=exclude,org/eclipse/core/internal/dtree/DataTreeNode,forwardDeltaWith" >> $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
 echo "-XX:CompileCommand=exclude,org/eclipse/jdt/internal/compiler/lookup/ParameterizedMethodBinding,<init>" >> $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
 echo "-XX:CompileCommand=exclude,org/eclipse/cdt/internal/core/dom/parser/cpp/semantics/CPPTemplates,instantiateTemplate" >> $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
@@ -252,59 +339,73 @@ echo "-XX:CompileCommand=exclude,org/eclipse/cdt/internal/core/pdom/dom/cpp/PDOM
 echo "-XX:CompileCommand=exclude,org/python/pydev/editor/codecompletion/revisited/PythonPathHelper,isValidSourceFile" >> $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
 echo "-XX:CompileCommand=exclude,org/python/pydev/ui/filetypes/FileTypesPreferencesPage,getDottedValidSourceFiles" >> $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
 
+# Prevent running master Eclipse in a shared configuration
+echo "-preventMasterEclipseLaunch" | cat - $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini > /tmp/out && mv -f /tmp/out $RPM_BUILD_ROOT/%{_sysconfdir}/eclipse.ini
+
+# Deploy installation debug config
+echo -e "org.eclipse.equinox.p2.core/debug=true" >  $RPM_BUILD_ROOT%{_libdir}/%{name}/.options
+echo -e "org.eclipse.equinox.p2.core/reconciler=true" >>  $RPM_BUILD_ROOT%{_libdir}/%{name}/.options
+
 # SWT JAR symlink in libdir
 pushd $RPM_BUILD_ROOT%{_libdir}/%{name}
 ln -s ../%{name}/swt.jar ../java/swt.jar
 popd
 
+# OSGI JAR symlinks in javadir and maven depmaps
+pushd $RPM_BUILD_ROOT%{_javadir}/eclipse
+ln -s ../../../../%{_libdir}/%{name}/plugins/org.eclipse.osgi_*.jar osgi.jar
+popd
+install -m 0644 %{SOURCE5} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.eclipse-osgi.pom
+%add_maven_depmap JPP.eclipse-osgi.pom %{name}/osgi.jar -a "org.eclipse:osgi,org.eclipse.tycho:org.eclipse.osgi" -f equinox-osgi
+
+pushd $RPM_BUILD_ROOT%{_javadir}/eclipse
+ln -s ../../../../%{_libdir}/%{name}/plugins/org.eclipse.osgi.services_*.jar osgi.services.jar
+popd
+install -m 0644 %{SOURCE6} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.eclipse-osgi.services.pom
+%add_maven_depmap JPP.eclipse-osgi.services.pom %{name}/osgi.services.jar -a "org.eclipse.osgi:services" -f equinox-osgi
+
+pushd $RPM_BUILD_ROOT%{_javadir}/eclipse
+ln -s ../../../../%{_libdir}/%{name}/plugins/org.eclipse.osgi.util_*.jar osgi.util.jar
+popd
+
+pushd $RPM_BUILD_ROOT%{_javadir}/eclipse
+ln -s ../../../../%{_libdir}/%{name}/plugins/org.eclipse.equinox.http.servlet_*.jar equinox.http.servlet.jar
+popd
+install -m 0644 %{SOURCE7} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.eclipse-equinox.http.servlet.pom
+%add_maven_depmap JPP.eclipse-equinox.http.servlet.pom %{name}/equinox.http.servlet.jar -a "org.eclipse.equinox.http:servlet" -f platform
+
+pushd $RPM_BUILD_ROOT%{_javadir}/eclipse
+ln -s ../../../../%{_libdir}/%{name}/plugins/org.eclipse.jdt.core_*.jar jdt.core.jar
+popd
+install -m 0644 %{SOURCE8} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.eclipse-jdt.core.pom
+%add_maven_depmap JPP.eclipse-jdt.core.pom %{name}/jdt.core.jar -a "org.eclipse:jdt.core,org.eclipse.tycho:org.eclipse.jdt.core"  -f jdt
 # A sanity check.
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
 
 # Create a script that can be used to make a symlink tree of the
 # eclipse platform.
 cp -p pdebuild/eclipse-copy-platform.sh copy-platform
-(
-  cd $RPM_BUILD_ROOT%{_libdir}/%{name}
-  ls -d * | grep -E -v '^(plugins|features|about_files|dropins)$'
-  ls -d plugins/* features/*
-) |
-sed -e's,^\(.*\),[ ! -e \1 ] \&\& ln -s $eclipse/\1 \1,' >> copy-platform
+
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/%{name}/buildscripts
 mv copy-platform $RPM_BUILD_ROOT%{_libdir}/%{name}/buildscripts
 copyPlatform=$RPM_BUILD_ROOT%{_libdir}/%{name}/buildscripts/copy-platform
 
-# This symlink is actually provided by the icu4j-eclipse package
-# We need to remove this *after* copy-platform creation otherwise
-# copy-platform gets generated wrong.
-rm $RPM_BUILD_ROOT/%{_libdir}/%{name}/plugins/com.ibm.icu_*.jar
-
-pushd $RPM_BUILD_ROOT%{_libdir}/%{name}
-for p in $(ls -d dropins/jdt/plugins/*); do
-    plugin=$(basename $p)
-    echo $p | sed -e"s,^\(.*\),[ ! -e plugins/$plugin ] \&\& ln -s \$eclipse/\1 plugins/$plugin," >> $copyPlatform
-done
-for p in $(ls -d dropins/sdk/plugins/*); do
-    plugin=$(basename $p)
-    echo $p | sed -e"s,^\(.*\),[ ! -e plugins/$plugin ] \&\& ln -s \$eclipse/\1 plugins/$plugin," >> $copyPlatform
-done
-popd
-
 # Install the PDE Build wrapper script.
 install -p -D -m0755 pdebuild/eclipse-pdebuild.sh \
-  $RPM_BUILD_ROOT%{_libdir}/%{name}/buildscripts/pdebuild
+  $RPM_BUILD_ROOT%{_bindir}/%{name}-pdebuild
 PDEBUILDVERSION=$(ls $RPM_BUILD_ROOT%{_libdir}/%{name}/dropins/sdk/plugins \
   | grep org.eclipse.pde.build_ | \
   sed 's/org.eclipse.pde.build_//')
 sed -i "s/@PDEBUILDVERSION@/$PDEBUILDVERSION/g" \
-  $RPM_BUILD_ROOT%{_libdir}/%{name}/buildscripts/pdebuild
-chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
+  $RPM_BUILD_ROOT%{_bindir}/%{name}-pdebuild
 
-jetty=`ls %buildroot%_libdir/eclipse/plugins/org.mortbay.jetty.util*`
-rm -f $jetty
-install -m 644 %{SOURCE34} $jetty
-jetty=`ls %buildroot%_libdir/eclipse/plugins/org.mortbay.jetty.server*`
-rm -f $jetty
-install -m 644 %{SOURCE33} $jetty
+# Install eclipse macros file
+mkdir $RPM_BUILD_ROOT%{_sysconfdir}/rpm/
+install -m 0644 %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/rpm/
+
+# Remove the junit library duplicated by pdebuild.
+rm $RPM_BUILD_ROOT%{_libdir}/%{name}/dropins/jdt/plugins/org.junit_4.10.0.v4_10_0_v20120426-0900.jar
+chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 # check for undefined symbols
 if find %buildroot%_libdir/eclipse -type f -name '*.so' -print0 \
  | xargs -0 ldd -r 2>&1 \
@@ -313,17 +414,16 @@ if find %buildroot%_libdir/eclipse -type f -name '*.so' -print0 \
     echo "JPP robo-check for undefined symbols failed."
     exit 1;
 fi
-
-%pre jdt
-# workaround for rpm bug, can be removed in F-20 Fixes the problem with efj being directory instead of launcher
-[ $1 -gt 1 ] && [ -L %{_bindir}/efj ] && \
-rm -rf $(readlink -f %{_bindir}/efj) %{_bindir}/efj || :
+# fix /usr/share symlinks to _libdir
+perl %{SOURCE45} %buildroot
+touch %buildroot/etc/eclipse.ini
 
 %if %{initialize}
 %files swt -f %{name}-swt.install
 %else
 %files swt
 %endif
+/etc/eclipse.ini
 %dir %{_libdir}/%{name}
 %dir %{_libdir}/%{name}/plugins
 %if %{initialize}
@@ -333,6 +433,8 @@ rm -rf $(readlink -f %{_bindir}/efj) %{_bindir}/efj || :
 %dir %{_libdir}/%{name}/configuration/org.eclipse.osgi/bundles
 %endif
 %{_libdir}/%{name}/notice.html
+%{_libdir}/%{name}/eclipse.ini
+%{_libdir}/%{name}/.options
 %{_libdir}/%{name}/epl-v10.html
 %{_libdir}/%{name}/plugins/org.eclipse.swt_*
 %{_libdir}/%{name}/plugins/org.eclipse.swt.gtk.linux.*
@@ -340,27 +442,31 @@ rm -rf $(readlink -f %{_bindir}/efj) %{_bindir}/efj || :
 %{_libdir}/%{name}/swt.jar
 %{_libdir}/java/swt.jar
 
+%files -n  eclipse-emf-core
+%{_libdir}/%{name}/features/org.eclipse.emf.common_*
+%{_libdir}/%{name}/features/org.eclipse.emf.ecore_*
+%{_libdir}/%{name}/plugins/org.eclipse.emf.common_*
+%{_libdir}/%{name}/plugins/org.eclipse.emf.ecore_*
+%{_libdir}/%{name}/plugins/org.eclipse.emf.ecore.change_*
+%{_libdir}/%{name}/plugins/org.eclipse.emf.ecore.xmi_*
+
 %files rcp
 %dir %{_libdir}/%{name}/features
 %dir %{_datadir}/%{name}
-%if %{initialize}
-%{_libdir}/%{name}/configuration/org.eclipse.osgi/.bundledata*
-%{_libdir}/%{name}/configuration/org.eclipse.osgi/.lazy*
-%{_libdir}/%{name}/configuration/org.eclipse.osgi/.manager
-%{_libdir}/%{name}/configuration/org.eclipse.osgi/.state*
-%endif
 %dir %{_libdir}/%{name}/configuration
-%config %{_libdir}/%{name}/configuration/config.ini
-%config %{_libdir}/%{name}/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info
+%{_libdir}/%{name}/configuration/config.ini
+%{_libdir}/%{name}/configuration/org.eclipse.equinox.simpleconfigurator/bundles.info
 %dir %{_libdir}/%{name}/configuration/org.eclipse.equinox.simpleconfigurator
-%ifnarch ppc ppc64
-%{_libdir}/%{name}/about.html
-%endif
-%ifarch x86_64
-%{_libdir}/%{name}/about_files
-%endif
 %{_libdir}/%{name}/readme
 %{_libdir}/%{name}/features/org.eclipse.rcp_*
+%{_libdir}/%{name}/features/org.eclipse.e4.rcp_*
+%{_libdir}/%{name}/plugins/com.ibm.icu_*
+%{_libdir}/%{name}/plugins/javax.inject_1.0.0.v20091030.jar
+%{_libdir}/%{name}/plugins/javax.xml_1.3.4.v200806030440.jar
+%{_libdir}/%{name}/plugins/org.apache.batik.css_*
+%{_libdir}/%{name}/plugins/org.apache.batik.util.gui_*
+%{_libdir}/%{name}/plugins/org.apache.batik.util_*
+%{_libdir}/%{name}/plugins/org.apache.geronimo.specs.geronimo-annotation_1.1_spec_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.commands_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.contenttype_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.databinding_*
@@ -370,23 +476,44 @@ rm -rf $(readlink -f %{_bindir}/efj) %{_bindir}/efj || :
 %{_libdir}/%{name}/plugins/org.eclipse.core.expressions_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.jobs_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.runtime_*
-%{_libdir}/%{name}/plugins/org.eclipse.core.runtime.compatibility.auth_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.app_*
+%{_libdir}/%{name}/plugins/org.eclipse.equinox.bidi_*
+%{_libdir}/%{name}/plugins/org.eclipse.equinox.console_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.common_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.launcher_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.launcher.gtk.linux.*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.preferences_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.registry_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.util_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.commands_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.contexts_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.di.extensions_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.di_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.services_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.bindings_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.css.core_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.css.swt.theme_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.css.swt_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.di_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.model.workbench_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.services_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.widgets_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench.addons.swt_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench.renderers.swt_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench.swt_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench3_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench_*
 %{_libdir}/%{name}/plugins/org.eclipse.help_*
 %{_libdir}/%{name}/plugins/org.eclipse.jface_*
 %{_libdir}/%{name}/plugins/org.eclipse.jface.databinding_*
-%{_libdir}/%{name}/plugins/org.eclipse.osgi_*
 %{_libdir}/%{name}/plugins/org.eclipse.rcp_*
 %{_libdir}/%{name}/plugins/org.eclipse.ui_*
+%{_libdir}/%{name}/plugins/org.eclipse.ui.views_*
 %{_libdir}/%{name}/plugins/org.eclipse.ui.workbench_*
 %{_libdir}/%{name}/plugins/org.eclipse.update.configurator_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.simpleconfigurator_*
+%{_libdir}/%{name}/plugins/org.w3c.css.sac_*
+%{_libdir}/%{name}/plugins/org.w3c.dom.svg_*
 %dir %_libdir/eclipse/configuration/org.eclipse.osgi
 # duplicates of swt
 %exclude %_libdir/eclipse/configuration/org.eclipse.osgi/bundles/*/*/.cp/libswt-*.so
@@ -400,9 +527,7 @@ rm -rf $(readlink -f %{_bindir}/efj) %{_bindir}/efj || :
 %{_libdir}/%{name}/.eclipseproduct
 %config %{_libdir}/%{name}/eclipse.ini
 %config %{_sysconfdir}/eclipse.ini
-%ifnarch ppc ppc64
-%{_libdir}/%{name}/about_files
-%endif
+%{_sysconfdir}/rpm/macros.%{name}
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*/*/apps/*
@@ -410,28 +535,40 @@ rm -rf $(readlink -f %{_bindir}/efj) %{_bindir}/efj || :
 %dir %{_libdir}/%{name}/dropins
 %dir %{_datadir}/%{name}/dropins
 %{_libdir}/%{name}/features/org.eclipse.platform_*
+%{_libdir}/%{name}/features/org.eclipse.e4.rcp_*
 %{_libdir}/%{name}/plugins/com.jcraft.jsch_*
+%{_libdir}/%{name}/plugins/org.eclipse.jdt.core_*
 %{_libdir}/%{name}/plugins/javax.servlet_*
 %{_libdir}/%{name}/plugins/javax.servlet.jsp_*
+%{_libdir}/%{name}/plugins/javax.el_*
+%{_libdir}/%{name}/plugins/javax.inject_1.0.0.v20091030.jar
+%{_libdir}/%{name}/plugins/javax.xml_1.3.4.v200806030440.jar
+%{_libdir}/%{name}/plugins/org.apache.tomcat_*
+%{_libdir}/%{name}/plugins/org.apache.juli_*
+%{_libdir}/%{name}/plugins/org.apache.el_*
 %{_libdir}/%{name}/plugins/org.apache.ant_*
+%{_libdir}/%{name}/plugins/org.apache.batik.css_*
+%{_libdir}/%{name}/plugins/org.apache.batik.util.gui_*
+%{_libdir}/%{name}/plugins/org.apache.batik.util_*
+%{_libdir}/%{name}/plugins/org.apache.commons.codec_*
 %{_libdir}/%{name}/plugins/org.apache.commons.el_*
+%{_libdir}/%{name}/plugins/org.apache.commons.httpclient_*
 %{_libdir}/%{name}/plugins/org.apache.commons.logging_*
-%{_libdir}/%{name}/plugins/org.apache.lucene_*
+%{_libdir}/%{name}/plugins/org.apache.felix.gogo.command_*
+%{_libdir}/%{name}/plugins/org.apache.felix.gogo.runtime_*
+%{_libdir}/%{name}/plugins/org.apache.felix.gogo.shell_*
+%{_libdir}/%{name}/plugins/org.apache.geronimo.specs.geronimo-annotation_1.1_spec_*
 %{_libdir}/%{name}/plugins/org.apache.lucene.core_*
 %{_libdir}/%{name}/plugins/org.apache.lucene.analysis_*
 %{_libdir}/%{name}/plugins/org.eclipse.ant.core_*
 %{_libdir}/%{name}/plugins/org.eclipse.compare_*
 %{_libdir}/%{name}/plugins/org.eclipse.compare.core_*
-%{_libdir}/%{name}/plugins/org.eclipse.core.boot_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.externaltools_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.filebuffers_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.filesystem_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.filesystem.linux.*
 %{_libdir}/%{name}/plugins/org.eclipse.core.net_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.net.linux.*
-%ifarch %{ix86}
-%{_libdir}/%{name}/plugins/org.eclipse.update.core.linux_*
-%endif
 %{_libdir}/%{name}/plugins/org.eclipse.core.resources_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.runtime.compatibility_*
 %{_libdir}/%{name}/plugins/org.eclipse.core.runtime.compatibility.registry_*
@@ -445,7 +582,6 @@ rm -rf $(readlink -f %{_bindir}/efj) %{_bindir}/efj || :
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.http.servlet_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.jsp.jasper_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.jsp.jasper.registry_*
-%{_libdir}/%{name}/plugins/org.eclipse.help.appserver_*
 %{_libdir}/%{name}/plugins/org.eclipse.help.base_*
 %{_libdir}/%{name}/plugins/org.eclipse.help.ui_*
 %{_libdir}/%{name}/plugins/org.eclipse.help.webapp_*
@@ -475,16 +611,34 @@ rm -rf $(readlink -f %{_bindir}/efj) %{_bindir}/efj || :
 %{_libdir}/%{name}/plugins/org.eclipse.ui.navigator_*
 %{_libdir}/%{name}/plugins/org.eclipse.ui.navigator.resources_*
 %{_libdir}/%{name}/plugins/org.eclipse.ui.net_*
-%{_libdir}/%{name}/plugins/org.eclipse.ui.presentations.r21_*
 %{_libdir}/%{name}/plugins/org.eclipse.ui.views_*
 %{_libdir}/%{name}/plugins/org.eclipse.ui.views.properties.tabbed_*
-%{_libdir}/%{name}/plugins/org.eclipse.ui.workbench.compatibility_*
 %{_libdir}/%{name}/plugins/org.eclipse.ui.workbench.texteditor_*
-%{_libdir}/%{name}/plugins/org.eclipse.update.core_*
-%{_libdir}/%{name}/plugins/org.eclipse.update.scheduler_*
-%{_libdir}/%{name}/plugins/org.eclipse.update.ui_*
-%{_libdir}/%{name}/plugins/org.mortbay.jetty.util_*
-%{_libdir}/%{name}/plugins/org.mortbay.jetty.server_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.commands_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.contexts_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.di.extensions_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.di_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.core.services_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.bindings_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.css.core_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.css.swt.theme_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.css.swt_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.di_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.model.workbench_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.services_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.widgets_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench.addons.swt_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench.renderers.swt_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench.swt_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench3_*
+%{_libdir}/%{name}/plugins/org.eclipse.e4.ui.workbench_*
+%{_libdir}/%{name}/plugins/org.eclipse.jetty.util_*
+%{_libdir}/%{name}/plugins/org.eclipse.jetty.server_*
+%{_libdir}/%{name}/plugins/org.eclipse.jetty.http_*
+%{_libdir}/%{name}/plugins/org.eclipse.jetty.continuation_*
+%{_libdir}/%{name}/plugins/org.eclipse.jetty.io_*
+%{_libdir}/%{name}/plugins/org.eclipse.jetty.security_*
+%{_libdir}/%{name}/plugins/org.eclipse.jetty.servlet_*
 %{_libdir}/%{name}/plugins/org.eclipse.equinox.initializer_*
 %{_libdir}/%{name}/plugins/org.eclipse.team.cvs.core_*
 %{_libdir}/%{name}/plugins/org.eclipse.cvs_*
@@ -538,25 +692,46 @@ rm -rf $(readlink -f %{_bindir}/efj) %{_bindir}/efj || :
 %{_libdir}/%{name}/plugins/org.eclipse.ecf_*
 %{_libdir}/%{name}/plugins/org.eclipse.ecf.filetransfer_*
 %{_libdir}/%{name}/plugins/org.eclipse.ecf.identity_*
-%{_libdir}/%{name}/plugins/org.apache.commons.codec_*
-%{_libdir}/%{name}/plugins/org.apache.commons.httpclient_*
 %{_libdir}/%{name}/plugins/org.sat4j.core_*
 %{_libdir}/%{name}/plugins/org.sat4j.pb_*
+%{_libdir}/%{name}/plugins/org.w3c.css.sac_*
+%{_libdir}/%{name}/plugins/org.w3c.dom.svg_*
 # Put this in -platform since we're putting the p2 stuff here
 %{_libdir}/%{name}/artifacts.xml
 # FIXME: should we ship content.xml for the platform?
-#%{_libdir}/%{name}/metadata
+#%%{_libdir}/%%{name}/metadata
 %{_libdir}/%{name}/p2
+%{_javadir}/%{name}/equinox.http.servlet.jar
+%{_mavenpomdir}/JPP.%{name}-equinox.http.servlet.pom
+%{_mavendepmapfragdir}/%{name}-platform
 
 %files jdt
-%{_bindir}/efj
+%attr(0755,root,root) %{_bindir}/efj
 %{_libdir}/%{name}/dropins/jdt
+%{_javadir}/%{name}/jdt.core.jar
+%{_mavenpomdir}/JPP.%{name}-jdt.core.pom
+%{_mavendepmapfragdir}/%{name}-jdt
 
 %files pde
+%{_bindir}/%{name}-pdebuild
 %{_libdir}/%{name}/buildscripts
 %{_libdir}/%{name}/dropins/sdk
 
+%files equinox-osgi
+%dir %{_javadir}/%{name}
+%{_javadir}/%{name}/osgi.jar
+%{_javadir}/%{name}/osgi.services.jar
+%{_javadir}/%{name}/osgi.util.jar
+%{_libdir}/%{name}/plugins/org.eclipse.osgi_*
+%{_libdir}/%{name}/plugins/org.eclipse.osgi.services_*
+%{_libdir}/%{name}/plugins/org.eclipse.osgi.util_*
+%{_mavenpomdir}/JPP.%{name}-osgi*.pom
+%{_mavendepmapfragdir}/%{name}-equinox-osgi
+
 %changelog
+* Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt1_7jpp7
+- new version
+
 * Tue Oct 18 2011 Igor Vlasenko <viy@altlinux.ru> 1:3.7.0-alt3_3jpp6
 - bumped release for t6 update
 

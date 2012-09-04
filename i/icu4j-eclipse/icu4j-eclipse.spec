@@ -1,19 +1,22 @@
-Name: eclipse-equinox-osgi
-Version: 4.0
-Summary: Eclipse OSGi - Equinox
-License: EPL
-Url: http://www.eclipse.org/
+BuildRequires: jpackage-compat
+BuildRequires: rpm-build-java-osgi
+AutoReq: yes,noosgi
+Name: icu4j-eclipse
+Version: 4.4.2.2
+Summary: Eclipse plugin for icu4j
+License: MIT and EPL
+Url: http://site.icu-project.org/
+Epoch: 1
 Packager: Igor Vlasenko <viy@altlinux.ru>
-Requires: java
 Requires: jpackage-utils
 
 BuildArch: noarch
 Group: Development/Java
 Release: alt0.1jpp
-Source: eclipse-equinox-osgi-4.2.0-6.fc18.cpio
+Source: icu4j-eclipse-4.4.2.2-12.fc18.cpio
 
 %description
-Eclipse OSGi - Equinox
+Eclipse plugin support for icu4j.
 
 # sometimes commpress gets crazy (see maven-scm-javadoc for details)
 %set_compress_method none
@@ -33,7 +36,7 @@ done
 %files -f %name-list
 
 %changelog
-* Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt0.1jpp
+* Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.4.2.2-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
 
