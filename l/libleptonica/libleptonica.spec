@@ -2,7 +2,7 @@
 
 Name: libleptonica
 Version: 1.69
-Release: alt2.1
+Release: alt2.2
 Summary: A library for manipulating images
 Summary(ru_RU.UTF-8): Библиотека для операций над изображениями
 License: Leptonica license (BSD-like)
@@ -15,6 +15,7 @@ Packager: %packager
 Source: leptonlib-%version.tar.bz2
 Patch: %name-alt-makefile.patch
 Patch1: %name-alt-doc.patch
+Patch2: %name-1.69-alt-debuginfo.patch
 
 %package devel
 Summary: Development files for programs which will use the Leptonica library
@@ -81,6 +82,7 @@ Doxygen документация в html формате по функциям б
 %setup -q -n %srcName-%version
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 doxygen Doxyfile
@@ -101,7 +103,7 @@ mkdir -p %buildroot%docdir
 install -pm644 leptonica-license.txt %buildroot%docdir/
 install -pm644 README.html %buildroot%docdir/
 install -pm644 version-notes.html %buildroot%docdir/
-install -spm644 lib/shared/liblept.so.%version %buildroot%_libdir/
+install -pm644 lib/shared/liblept.so.%version %buildroot%_libdir/
 cp -af lib/shared/*.so %buildroot%_libdir/
 install -spm644 lib/nodebug/*.a %buildroot%_libdir/
 install -pm644 src/*.h %buildroot%_includedir/leptonica/
@@ -128,6 +130,9 @@ mv doc/html_reference %buildroot%docdir
 %docdir/html_reference/*
 
 %changelog
+* Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.69-alt2.2
+- Rebuilt for debuginfo
+
 * Sun Sep 02 2012 Dmitry V. Levin <ldv@altlinux.org> 1.69-alt2.1
 - Built with libtiff.so.5.
 
