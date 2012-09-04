@@ -1,13 +1,13 @@
 Name:          festival-freebsoft-utils
 Version:       0.10
-Release:       alt3_4
+Release:       alt3_5
 Summary:       A collection of utilities that enhance Festival with some useful features
 
 Group:         Sound
 BuildArch:     noarch
 License:       GPLv2+
 URL:           http://www.freebsoft.org/festival-freebsoft-utils
-Source0:       http://www.freebsoft.org/pub/projects/%{name}/%{name}-%{version}.tar.gz
+Source0:       http://devel.freebsoft.org/pub/projects/%{name}/%{name}-%{version}.tar.gz
 
 BuildRequires: festival
 
@@ -42,7 +42,6 @@ Key festival-freebsoft-utils features are:
 %build
 
 %install
-
 mkdir -p %{buildroot}/%{_datadir}/festival/
 cp -p *.scm %{buildroot}/%{_datadir}/festival/
 
@@ -51,6 +50,9 @@ cp -p *.scm %{buildroot}/%{_datadir}/festival/
 %{_datadir}/festival/*.scm
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_4
 - update to new release by fcimport
 
