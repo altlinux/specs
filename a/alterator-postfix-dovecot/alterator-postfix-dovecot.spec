@@ -3,9 +3,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-postfix-dovecot
-Version: 0.4
-Release: alt2
-Packager: Grigory Batalov <bga@altlinux.ru>
+Version: 0.5
+Release: alt1
 
 Summary: Alterator module for Postfix/Dovecot setup
 License: GPL
@@ -70,6 +69,9 @@ chmod 755 %buildroot%_datadir/install2/postinstall.d/81-postfix-dovecot.sh
 %_datadir/install2/postinstall.d/*
 
 %changelog
+* Tue Sep 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5-alt1
+- make it work if changing kerberos status without domain name change
+
 * Tue Nov 02 2010 Anton Protopopov <aspsk@altlinux.org> 0.4-alt2
 - Use IPv4 by default
 - Don't hurt acc (ALT #24484)
