@@ -49,7 +49,7 @@ BuildRequires: jpackage-core
 
 Name:           maven1
 Version:        1.1
-Release:        alt18_9jpp6
+Release:        alt19_9jpp6
 Epoch:          0
 Summary:        Java project management and project comprehension tool
 
@@ -2836,6 +2836,9 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt19_9jpp6
+- fixed build w/new batik
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt18_9jpp6
 - fixed build
 
