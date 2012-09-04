@@ -39,7 +39,7 @@ Name:           activemq4
 Summary:        ActiveMQ Message Broker
 Url:            http://activemq.apache.org/
 Version:        4.1.2
-Release:        alt8_2jpp6
+Release:        alt9_2jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -80,10 +80,10 @@ BuildRequires:  maven-shared-downloader
 BuildRequires:  maven-surefire-maven-plugin
 BuildRequires:  maven-surefire-provider-junit
 #BuildRequires:  mvn-anno-mojo
-BuildRequires:  mojo-maven2-plugin-build-helper
+BuildRequires:  maven-plugin-build-helper
 BuildRequires:  mojo-maven2-plugin-exec
 BuildRequires:  mojo-maven2-plugin-javacc
-BuildRequires:  mojo-maven2-plugin-rat
+#BuildRequires:  mojo-maven2-plugin-rat
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  javacc3
 BuildRequires:  jetty6-maven2-plugins
@@ -591,6 +591,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.1.2-alt9_2jpp6
+- build w/o maven-plugin-rat
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.1.2-alt8_2jpp6
 - dropped maven-jaxb2-plugin dependency
 
