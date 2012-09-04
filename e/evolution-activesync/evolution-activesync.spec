@@ -2,7 +2,7 @@
 
 Name: evolution-activesync
 Version: 0.92
-Release: alt1
+Release: alt2
 Summary: ActiveSync client support for Evolution
 Group: Networking/Mail
 License: LGPLv2.1
@@ -23,6 +23,7 @@ BuildRequires: pkgconfig(libsoup-2.4)
 BuildRequires: libwbxml2-devel > 0.11
 BuildRequires: pkgconfig(libical)
 BuildRequires: pkgconfig(gconf-2.0)
+BuildRequires: /usr/lib/openssh/ssh-askpass
 
 %description
 Implementing the ActiveSync protocol, along with a
@@ -71,6 +72,7 @@ Development files for ActiveSync client library for calendar/addressbook synchro
 %prep
 %setup
 %patch -p1
+subst 's|/usr/libexec/openssh|/usr/lib/openssh|' configure.ac
 
 %build
 ./autogen.sh
@@ -113,5 +115,8 @@ find %buildroot%_libdir -name '*.la' -exec rm {} \;
 %_pkgconfigdir/libeasclient.pc
 
 %changelog
+* Tue Sep 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.92-alt2
+- fix ssh-askpass detection
+
 * Fri Aug 31 2012 Alexey Shabalin <shaba@altlinux.ru> 0.92-alt1
 - initial build for ALT Linux Sisyphus
