@@ -1,6 +1,6 @@
 Name: repocop-unittest-altlinux-policy
 Version: 0.29
-Release: alt6
+Release: alt7
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Url: http://repocop.altlinux.org
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt7
+- custom names for rpm-macros-* subpoackages
+
 * Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt6
 - bugfix in altlinux-policy-rpm-macros-packaging*
 
