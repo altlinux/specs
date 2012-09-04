@@ -5,7 +5,7 @@ BuildRequires: libexpat-devel
 Summary: Base libraries for GGZ gaming zone
 Name:    ggz-base-libs
 Version: 0.99.5
-Release: alt2_11
+Release: alt3_11
 
 License: LGPLv2+ and GPLv2+
 Group:   System/Libraries
@@ -49,9 +49,23 @@ Provides: ggz-client-libs-devel = 1:%{version}-%{release}
 Requires: ggz-base-libs = %{version}-%{release}
 # %{_sysconfdir}/rpm ownership
 Requires: rpm
+Requires: rpm-macros-ggz = %{version}-%{release}
 %description devel
 %{summary}.
 
+
+
+%package -n rpm-macros-ggz
+Summary: Set of RPM macros for packaging %name-based applications
+Group: Development/Other
+# uncomment if macroses are platform-neutral
+#BuildArch: noarch
+# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
+Conflicts: ggz-base-libs-devel <= 0.99.5-alt2_11
+
+%description -n rpm-macros-ggz
+Set of RPM macros for packaging %name-based applications for ALT Linux.
+Install this package if you want to create RPM packages that use %name.
 
 %prep
 %setup -q -n %{name}-snapshot-%{version}
@@ -94,7 +108,7 @@ mkdir -p %{buildroot}%{_datadir}/ggz
 # GGZGAMEDIR
 mkdir -p %{buildroot}%{_libdir}/ggz
 # RPM macros
-install -D -m644 -p %{SOURCE2} %{buildroot}%{_sysconfdir}/rpm/macros.ggz
+install -D -m644 -p %{SOURCE2} %{buildroot}%_rpmmacrosdir/ggz
 
 %find_lang ggzcore_snapshot-%{version}
 %find_lang ggz-config
@@ -128,7 +142,7 @@ make check ||:
 %{_datadir}/desktop-directories/ggz*.directory
 
 %files devel
-%{_sysconfdir}/rpm/macros.ggz
+#%_rpmmacrosdir/ggz
 # GPLv2+
 %{_includedir}/ggzmod.h
 %{_libdir}/libggzmod.so
@@ -144,9 +158,17 @@ make check ||:
 %{_libdir}/libggzcore.so
 %{_libdir}/pkgconfig/ggzcore.pc
 %{_mandir}/man3/ggzcore_h.3*
+%exclude %_rpmmacrosdir/*
+
+%files -n rpm-macros-ggz
+%_rpmmacrosdir/*
+
 
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt3_11
+- applied repocop patches
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt2_11
 - update to new release by fcimport
 
