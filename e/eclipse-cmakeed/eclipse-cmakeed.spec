@@ -2,14 +2,13 @@
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.6-compat
+BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-%global eclipse_base   %{_libdir}/eclipse
 %global install_loc    %{_datadir}/eclipse/dropins/cmakeed
 
 Name:           eclipse-cmakeed
 Version:        1.1.6
-Release:        alt1_1jpp6
+Release:        alt1_4jpp7
 Summary:        CMake Editor plug-in for Eclipse
 
 Group:          Development/Java
@@ -36,7 +35,7 @@ an editor for files named CMakeLists.txt and *.cmake.
 find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
 %build
-%{eclipse_base}/buildscripts/pdebuild
+eclipse-pdebuild
 
 %install
 %{__install} -d -m 755 %{buildroot}%{install_loc}
@@ -49,6 +48,9 @@ find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 %doc com.cthing.cmakeed.feature/License.html
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_4jpp7
+- new version
+
 * Thu Jan 12 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.6-alt1_1jpp6
 - update to new release by jppimport
 
