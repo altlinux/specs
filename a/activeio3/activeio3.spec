@@ -39,7 +39,7 @@ Name:           activeio3
 Summary:        ActiveIO Protocol Implementation Framework
 Url:            http://activeio.codehaus.org/
 Version:        3.0.1
-Release:        alt4_2jpp6
+Release:        alt5_2jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -67,7 +67,7 @@ BuildRequires:  maven2-plugin-resources
 BuildRequires:  maven2-plugin-stage
 BuildRequires:  maven-release
 BuildRequires:  maven-surefire-plugin
-BuildRequires:  mojo-maven2-plugin-rat
+#BuildRequires:  mojo-maven2-plugin-rat
 BuildRequires:  apache-commons-parent
 BuildRequires:  apache-jar-resource-bundle >= 0:1.4
 #BuildRequires:  felix-maven2
@@ -192,6 +192,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt5_2jpp6
+- build w/o maven-plugin-rat
+
 * Thu Jan 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt4_2jpp6
 - converted from JPackage by jppimport script
 
