@@ -1,5 +1,5 @@
 Name: delaboratory
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: %name photo processor
@@ -8,7 +8,7 @@ License: GPLv3+
 Url: http://code.google.com/p/%name/
 
 Source: http://%name.googlecode.com/files/%name-%version.tar.gz
-Patch: %name-0.7-alt-makefile.patch
+Patch: %name-0.8-alt-makefile.patch
 
 BuildRequires: gcc-c++ libtiff-devel libwxGTK-devel libxml2-devel
 
@@ -37,6 +37,9 @@ processing, before final retouch.
 %doc README
 
 %changelog
+* Tue Sep 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8-alt1
+- 0.8
+
 * Tue May 29 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7-alt1
 - 0.7
 
