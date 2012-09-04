@@ -1,6 +1,6 @@
 Name: sfepy
-Version: 2011.1
-Release: alt2.git20110405
+Version: 2012.2
+Release: alt1.git20120830
 Summary: Simple finite elements in Python (SfePy)
 License: New BSD License
 Group: Sciences/Mathematics
@@ -12,7 +12,6 @@ Source: %name-%version.tar.gz
 Source1: README.1st
 
 Requires: python-module-%name = %version-%release
-Requires: %name-data = %version-%release
 
 BuildRequires(pre): rpm-build-python
 BuildPreReq: python-devel python-module-scikits.umfpack libsuitesparse-devel
@@ -20,12 +19,10 @@ BuildPreReq: python-module-pyparsing ipython pytables swig
 BuildPreReq: libtetgen-devel libnetgen-devel libnumpy-devel
 BuildPreReq: doxygen graphviz texlive-latex-extra dvipng
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
+BuildPreReq: python-module-tables-tests python-module-Pyrex
 
 %description
 A finite element analysis software based primarily on NumPy and SciPy.
-
-NOTE: for executing examples You need copy directory %_datadir/%name
-into place, where You can write into it.
 
 %package -n python-module-%name
 Summary: Python module of Simple finite elements (SfePy)
@@ -73,10 +70,33 @@ A finite element analysis software based primarily on NumPy and SciPy.
 
 This package contains pickles for SfePy.
 
+%package -n python-module-%name-tests
+Summary: Tests for Simple finite elements in Python (SfePy)
+Group: Development/Python
+Requires: python-module-%name = %version-%release
+
+%description  -n python-module-%name-tests
+A finite element analysis software based primarily on NumPy and SciPy.
+
+This package contains tests for SfePy.
+
+%package -n python-module-%name-examples
+Summary: Examples for Simple finite elements in Python (SfePy)
+Group: Development/Python
+Requires: python-module-%name = %version-%release
+
+%description  -n python-module-%name-examples
+A finite element analysis software based primarily on NumPy and SciPy.
+
+This package contains examples for SfePy.
+
 %prep
 %setup
 ln -s types.h sfepy/fem/extmods/types_s.h
 install -m644 %SOURCE1 .
+
+cp %python_sitelibdir/matplotlib/mpl-data/matplotlibrc ~/.matplotlibrc
+sed -i 's|^\(backend\).*|\1 : Agg|' ~/.matplotlibrc
 
 %prepare_sphinx .
 sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
@@ -84,22 +104,25 @@ sed -i 's|@PYVER@|%_python_version|g' doc/Makefile
 %build
 export PYTHONPATH=$PWD:$PWD/script
 %python_build_debug build_ext
-pushd sfepy/terms
-sed -i "28s|\(terms.i'\)|\1, '*.c'|" extmods/setup.py
-%python_build_debug build_ext
-popd
+#pushd sfepy/terms
+#sed -i "28s|\(terms.i'\)|\1, '*.c'|" extmods/setup.py
+#python_build_debug build_ext
+#popd
 
 %install
 export PYTHONPATH=$PWD:$PWD/script
 %python_install
-pushd sfepy/terms
-%python_install
-popd
+#pushd sfepy/terms
+#python_install
+#popd
+
+touch %buildroot%python_sitelibdir/%name/script/__init__.py
 
 export PYTHONPATH=%buildroot%python_sitelibdir
 pushd doc
 doxygen doxygen.config
 %make_build -C doc/latex
+%make_build pickle
 popd
 install -p -m644 homogen.py %buildroot%python_sitelibdir
 
@@ -108,28 +131,39 @@ install -p -m644 homogen.py %buildroot%python_sitelibdir
 install -d %buildroot%_docdir/%name/pdf
 install -m644 doc/doc/latex/*.pdf %buildroot%_docdir/%name/pdf
 cp -fR doc/doc/html %buildroot%_docdir/%name/
-#cp -fR pickle %buildroot%python_sitelibdir/%name/
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%name/
 
 %files
-%doc LICENSE README RELEASE_NOTES.txt doc/txt/*.txt
+%doc AUTHORS LICENSE README doc/txt/*.txt
 %_bindir/*
 
 %files -n python-module-%name
 %python_sitelibdir/*
-#exclude %python_sitelibdir/%name/pickle
+%exclude %python_sitelibdir/%name/pickle
+%exclude %python_sitelibdir/%name/tests
+%exclude %python_sitelibdir/%name/base/testing.py*
+%exclude %python_sitelibdir/%name/examples
 
-%files data
-%_datadir/%name
-%exclude %_datadir/%name/doc/Makefile*
-%exclude %_datadir/%name/doc/conf.py
+#files data
+#_datadir/%name
 
 %files doc
 %_docdir/%name
 
-#files -n python-module-%name-pickles
-#python_sitelibdir/%name/pickle
+%files -n python-module-%name-pickles
+%python_sitelibdir/%name/pickle
+
+%files -n python-module-%name-tests
+%python_sitelibdir/%name/tests
+%python_sitelibdir/%name/base/testing.py*
+
+%files -n python-module-%name-examples
+%python_sitelibdir/%name/examples
 
 %changelog
+* Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.2-alt1.git20120830
+- Version 2012.2
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1-alt2.git20110405
 - Disabled requirement on matplotlib.backends.backend_gtkagg
 
