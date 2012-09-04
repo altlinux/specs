@@ -21,20 +21,19 @@
 Summary: ObexFTP implements the Object Exchange (OBEX) protocols file transfer.
 Name: obexftp
 Version: 0.23
-Release: alt2.4.1
+Release: alt3.git76127
 
 License: GPL
 Group: Communications
 URL: http://triq.net/gsm.html
 
 Packager: Pavlov Konstantin <thresh@altlinux.ru>
-Source: http://triq.net/obex/%name-%version.tar.bz2
-Patch: obexftp-alt-STR2CSTR.patch
-Patch1: obexftp-alt-version-check.patch
+Source: http://triq.net/obex/%name-%version.tar
+Patch: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: gcc-c++ libopenobex-devel libgsm-devel libbluez-devel libusb-compat-devel
+BuildRequires: gcc-c++ libopenobex-devel libgsm-devel libbluez-devel libusb-compat-devel libfuse-devel autoconf-archive asciidoc xmlto
 
 BuildPreReq: chrpath
 
@@ -137,21 +136,25 @@ Ruby bindings for obexftp.
 
 %prep
 %setup
-%patch -p2
-%patch1 -p2
+%patch -p1
 
 %build
-%autoreconf
+mkdir m4
+touch config.rpath
+libtoolize --copy --force
+%autoreconf -I m4
 
 %configure \
     --enable-bluetooth \
     --enable-builddocs \
     --enable-swig \
-	%{subst_enable tcl} \
+    --disable-rpath \
+    %{subst_enable tcl} \
     %{subst_enable perl} \
     %{subst_enable python} \
     %{subst_enable ruby} \
-	%{subst_enable static} 
+    --disable-fuse \
+    %{subst_enable static}
 %if_enabled swig
 rm -f swig/*/*_wrap.c
 %endif
@@ -161,12 +164,9 @@ rm -f swig/*/*_wrap.c
 
 %make_install noinstdir=`pwd`/docs DESTDIR="%buildroot" INSTALLDIRS=vendor install
 
-for i in obexmv; do
+for i in obexmv obexls obexget obexput obexrm ; do
 	ln -s obexftp %buildroot%_bindir/$i
 done
-
-mv %buildroot%_bindir/discovery %buildroot%_bindir/obexftp-discovery
-install -m 0644 -D doc/%name.1 %buildroot%_man1dir/%name.1
 
 %if_enabled tcl
 mkdir -p %buildroot%_tcllibdir
@@ -227,6 +227,9 @@ chrpath -d %buildroot%perl_vendor_autolib/OBEXFTP/OBEXFTP.so
 %endif
 
 %changelog
+* Mon Sep 03 2012 Alexey Shabalin <shaba@altlinux.ru> 0.23-alt3.git76127
+- buils upstream snapshot 76127c541fc7fab4a86a4eca11e407fbd91f81aa
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.23-alt2.4.1
 - Rebuild to remove redundant libpython2.7 dependency
 

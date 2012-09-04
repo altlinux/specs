@@ -1,20 +1,16 @@
 
-Name: wbxml2
-Url: http://libwbxml.aymerick.com
+Name: libwbxml
+Url: https://libwbxml.opensync.org
 License: LGPLv2.1+
 Group: System/Libraries
-Provides: wbxml2
 Summary: WBXML parser and compiler library
-Version: 0.10.7
+Version: 0.11.2
 Release: alt1
 
-Source0: %name-%version.tar
-Source1: cmake.tar
-Source2: tests.tar
-Patch0: %name-%version-%release.patch
+Source0: libwbxml-%version.tar.bz2
 
-Requires: libexpat
-Requires: lib%name = %version-%release
+Provides: libwbxml2 = %version-%release
+Obsoletes: libwbxml2 <  %version-%release
 
 BuildRequires: gcc-c++ cmake cmake-modules
 BuildRequires: libexpat-devel libpopt-devel zlib-devel libxml2-devel libcheck-devel
@@ -27,29 +23,31 @@ associated tools to Parse, Encode and Handle WBXML documents. The WBXML
 (Wireless Binary XML) format is a binary representation of XML, and it
 has been defined by the Wap Forum.
 
-%package -n lib%name
-Summary: Libraries for %name
-Group: System/Libraries
-
-%description -n lib%name
-This packages contains some library needed for %name
-
-%package -n lib%name-devel
+%package devel
 Summary: Header files, libraries and development documentation for %name
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: %name = %version-%release
+Provides: libwbxml2-devel = %version-%release
+Obsoletes: libwbxml2-devel <  %version-%release
 
-%description -n lib%name-devel
+%description devel
 This package contains the header files, static libraries and development
 documentation for %name. If you like to develop programs using %name,
 you will need to install %name-devel.
 
+%package -n wbxml
+Summary: Libraries for %name
+Group: System/Libraries
+Requires: %name = %version-%release
+Provides: wbxml2 = %version-%release
+Obsoletes: wbxml2 <  %version-%release
+
+%description -n wbxml
+This packages contains wbxml2 tools
+
 %prep
 %setup -q
-%patch0 -p1
-mkdir cmake tests
-tar -xf %SOURCE1
-tar -xf %SOURCE2
+sed -i -e  '/Requires: expat >= 2.0/d' libwbxml2.pc.cmake
 
 %build
 mkdir build
@@ -72,17 +70,21 @@ popd
 
 %files
 %doc AUTHORS INSTALL ChangeLog NEWS README References THANKS TODO
-%_bindir/*
-
-%files -n lib%name 
 %_libdir/*.so.*
 
-%files -n lib%name-devel
+%files devel
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_datadir/CMake/Modules/FindLibWbxml2.cmake
+
+%files -n wbxml
+%_bindir/*
 
 %changelog
+* Fri Aug 31 2012 Alexey Shabalin <shaba@altlinux.ru> 0.11.2-alt1
+- 0.11.2
+
 * Wed May 13 2009 Alexey Shabalin <shaba@altlinux.ru> 0.10.7-alt1
 - 0.10.7
 
