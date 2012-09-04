@@ -1,5 +1,5 @@
 Name: shiboken
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Summary: Generates bindings for C++ libraries using CPython source code
 License: GPLv2, LGPLv2.1
@@ -40,6 +40,17 @@ Shiboken is a plugin (front-end) for Generator Runner. It generates
 bindings for C++ libraries using CPython source code.
 
 This package contains development files of Shiboken.
+
+%package -n python-module-%name
+Summary: Python module of Shiboken
+Group: Development/Python
+Requires: lib%name = %version-%release
+
+%description -n python-module-%name
+Shiboken is a plugin (front-end) for Generator Runner. It generates
+bindings for C++ libraries using CPython source code.
+
+This package contains python module of Shiboken.
 
 %prep
 %setup
@@ -97,7 +108,13 @@ gzip ChangeLog
 %_libdir/cmake
 %_pkgconfigdir/*
 
+%files -n python-module-%name
+%python_sitelibdir/*
+
 %changelog
+* Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.2-alt1
+- Version 1.1.2
+
 * Fri May 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1
 - Version 1.1.1
 
