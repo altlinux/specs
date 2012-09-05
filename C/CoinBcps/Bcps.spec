@@ -4,7 +4,7 @@
 %define oname Bcps
 Name: Coin%oname
 Version: 0.93.2
-Release: alt2.svn20120128
+Release: alt2.svn20120517
 Summary: Make up the CHiPPS (COIN High Performance Parallel Search Framework) library hierarchy
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -132,6 +132,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/examples/*
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.93.2-alt2.svn20120517
+- New snapshot
+
 * Mon Jul 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.93.2-alt2.svn20120128
 - Rebuilt with OpenMPI 1.6
 
