@@ -3,7 +3,7 @@
 %define module_release	alt2
 
 %define kversion       2.6.32
-%define krelease       alt73
+%define krelease       alt74
 %define flavour        ovz-el
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/kernel/drivers/usb/net/
@@ -11,7 +11,7 @@
 Summary:	asix kernel module from vendor
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.132640.73
+Release:	%module_release.132640.74
 License:	GPL
 Group:		System/Kernel and hardware
 
@@ -64,8 +64,8 @@ install -p -m644 %module_name.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Wed Aug 08 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.4.1.0-alt2.132640.73
-- Build for kernel-image-ovz-el-2.6.32-alt73.
+* Wed Sep 05 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.4.1.0-alt2.132640.74
+- Build for kernel-image-ovz-el-2.6.32-alt74.
 
 * Fri Jan 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.4.1.0-alt2
 - fix to build with 3.2 kernel

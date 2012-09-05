@@ -1,9 +1,9 @@
 %define module_name	virtualbox-addition
-%define module_version	4.1.18
+%define module_version	4.1.20
 %define module_release	alt2
 
 %define kversion	2.6.32
-%define krelease	alt73
+%define krelease	alt74
 %define flavour		ovz-el
 
 %define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.73
+Release: %module_release.132640.74
 License: GPL
 Group: System/Kernel and hardware
 
@@ -53,9 +53,9 @@ PreReq: kernel-image-%flavour = %kversion-%krelease
 Requires(postun): kernel-image-%flavour = %kversion-%krelease
 ExclusiveArch: %ix86 x86_64
 
-%if "%flavour" == "ovz-el"
-Patch1: ovz-el-fix-build.patch
-%endif
+# %%if "%flavour" == "ovz-el"
+# #Patch1: ovz-el-fix-build.patch
+# %%endif
 
 %description
 This package contains VirtualBox addition modules (vboxguest, vboxsf, vboxvideo)
@@ -67,9 +67,9 @@ that are needed for additonal guests support for VirtualBox.
 %__tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
 %__tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 
-%if "%flavour" == "ovz-el"
-%patch1 -p1
-%endif
+# %%if "%flavour" == "ovz-el"
+# %%patch1 -p1
+# %%endif
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -102,8 +102,14 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Wed Aug 08 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.18-alt2.132640.73
-- Build for kernel-image-ovz-el-2.6.32-alt73.
+* Wed Sep 05 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2.132640.74
+- Build for kernel-image-ovz-el-2.6.32-alt74.
+
+* Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2
+- technical
+
+* Wed Aug 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1
+- Update to new release
 
 * Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt2
 - Remove old patch for el-smp
