@@ -12,10 +12,10 @@
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.15.16
+Version: 1.19.38
 Release: alt1
 License: LGPLv2+
-Group: Development/Other
+Group: System/Libraries
 Url: http://libguestfs.org/
 
 Source: %name-%version.tar
@@ -29,16 +29,22 @@ Patch1: %name-%version-alt-fixes.patch
 BuildPreReq: /proc
 BuildRequires: gcc gcc-c++
 BuildRequires: glibc-utils libselinux-devel libaugeas-devel
+BuildRequires: libgio-devel
+BuildRequires: gtk-doc
+BuildRequires: gettext-tools
+BuildRequires: gobject-introspection-devel libgjs
 BuildRequires: cpio gperf perl-podlators perl-devel genisoimage xml-utils db4-utils
 # po4a 
 BuildRequires: qemu-kvm qemu-system
 BuildRequires: libncurses-devel libreadline-devel
 BuildRequires: libpcre-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
+BuildRequires: netpbm
 %if_enabled fuse
 BuildRequires: libfuse-devel
 %endif
 %if_enabled ocaml
 BuildRequires: ocaml findlib ocamldoc ocamlbuild
+#BuildRequires: ocaml-gettext
 %endif
 %if_enabled python
 BuildRequires: python-devel
@@ -67,6 +73,15 @@ files inside guests, scripting changes to VMs, monitoring disk
 used/free statistics, P2V, V2V, performing partial backups, cloning
 VMs, and much else besides.
 
+%package -n guestfsd
+Summary: Provides guestfsd for the appliance
+Group: File tools
+
+%description -n guestfsd
+guestfsd runs within the appliance. It receives commands from the host
+and performs the requested action by calling the helper binaries.
+This package is only required for building the appliance.
+
 %package devel
 Summary: Header files for libguestfs library
 Group: Development/Other
@@ -75,9 +90,44 @@ Requires: %name = %version-%release
 %description devel
 Header files for libguestfs library.
 
+%package gobject
+Summary: GObject'ified version of libguestfs API
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gobject
+GObject'ified version of libguestfs API
+
+%package gobject-devel
+Summary: Libraries and header files for libguestfs gobject development
+Group: Development/C
+Requires: %name-devel = %version-%release
+Requires: %name-gobject = %version-%release
+
+%description gobject-devel
+Header files and libraries necessary for developing
+programs using libguestfs with GObject/glib.
+
+%package gir
+Summary: GObject introspection data for the libguestf library
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+GObject introspection data for the libguestfs library
+
+%package gir-devel
+Summary: GObject introspection devel data for the libguestfs library
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-devel = %version-%release %name-gir = %version-%release
+
+%description gir-devel
+GObject introspection devel data for the libguestfs library
+
 %package tools
 Summary: System administration tools for virtual machines
-Group: Development/Tools
+Group: File tools
 License: GPLv2+
 Requires: %name = %version-%release
 
@@ -215,6 +265,7 @@ mkdir -p daemon/m4
 %configure \
 	vmchannel_test=no \
 	%{subst_enable daemon} \
+	--enable-install-daemon \
 	%{subst_enable appliance} \
 	%{subst_enable fuse} \
 	%{subst_enable ocaml} \
@@ -228,9 +279,8 @@ mkdir -p daemon/m4
 	--with-extra="ALTLinux,release=%version-%release" \
 	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \
 	--disable-silent-rules \
+	--disable-probes \
 	--disable-rpath
-
-#   --enable-install-daemon \
 
 %make INSTALLDIRS=vendor
 
@@ -274,8 +324,11 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man1dir/guestfs-testing.1*
 %_man1dir/libguestfs-test-tool.1*
 
+%files -n guestfsd
+%_sbindir/guestfsd
+
 %files devel
-%doc AUTHORS BUGS HACKING TODO README RELEASE-NOTES ROADMAP
+%doc AUTHORS BUGS HACKING TODO README ROADMAP
 %doc examples/*.c
 %doc installed-docs/*
 %_libdir/libguestfs.so
@@ -285,6 +338,20 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man3dir/libguestfs.3*
 %_includedir/guestfs.h
 %_pkgconfigdir/libguestfs.pc
+
+%files gobject
+%_libdir/libguestfs-gobject-*.so.*
+
+%files gobject-devel
+%_libdir/libguestfs-gobject-*.so
+%_includedir/guestfs-gobject
+%_includedir/guestfs-gobject.h
+
+%files gir
+%_typelibdir/*.typelib
+
+%files gir-devel
+%_girdir/*.gir
 
 %files tools
 %doc README
@@ -307,6 +374,8 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man1dir/virt-edit.1*
 %_bindir/virt-filesystems
 %_man1dir/virt-filesystems.1*
+%_bindir/virt-format
+%_man1dir/virt-format.1*
 %_bindir/virt-inspector
 %_man1dir/virt-inspector.1*
 %_bindir/virt-ls
@@ -333,6 +402,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_man1dir/virt-tar.1*
 %_bindir/virt-win-reg
 %_man1dir/virt-win-reg.1*
+%_man1dir/guestfs-faq.1*
+%_man1dir/guestfs-performance.1*
+%_man1dir/guestfs-release-notes.1*
 
 #%files live-service
 #%doc COPYING README
@@ -420,6 +492,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_sysconfdir/bash_completion.d/guestfish-bash-completion.sh
 
 %changelog
+* Tue Sep 04 2012 Alexey Shabalin <shaba@altlinux.ru> 1.19.38-alt1
+- 1.19.38
+
 * Thu Jan 12 2012 Alexey Shabalin <shaba@altlinux.ru> 1.15.16-alt1
 - initial build
 
