@@ -5,18 +5,15 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.4jpp
+Release: alt0.5jpp
 
 Requires: jbossts
-#Requires: plexus-maven-plugin
 Requires: mojo-maven2-plugins
 Requires: maven-ant-tasks
 Requires: logback
 Requires: hawtjni
-Requires: junit4
 Requires: jsontools
 Requires: gmaven
-Requires: eclipse-mylyn-commons
 Requires: eclipse
 
 %description
@@ -33,6 +30,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.5jpp
+- updated dependencies
+
 * Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.4jpp
 - updated dependencies
 
