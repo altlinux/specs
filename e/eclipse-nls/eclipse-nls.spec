@@ -1,14 +1,16 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# required for prep
-BuildRequires: unzip
-%define eclipse_data %{_datadir}/eclipse
+BuildArch: noarch
+%global eclipse_data %{_datadir}/eclipse
 # Disable repacking of jars, since it takes forever for all the little jars, 
 # and we don't need multilib anyway:
-%define __jar_repack %{nil}
+%global __jar_repack %{nil}
 
-%define debug_package %{nil}
+%global debug_package %{nil}
 
 Name: eclipse-nls 
 Summary: Babel language packs for the Eclipse platform and various plug-ins
@@ -17,18 +19,24 @@ Group: Editors
 License: EPL
 URL: http://www.eclipse.org/babel/
 
-Version: 3.6.0.v20100814043401
-Release: alt1_5jpp6
+Version: 3.7.0.v20111128043401
+Release: alt1_2jpp7
 ## The source for this package is taken from
-# http://download.eclipse.org/technology/babel/babel_language_packs/R0.8.0/helios.php
-# usage: FROM=http://download.eclipse.org/technology/babel/babel_language_packs/R0.8.0/helios.php ./fetch-babel.sh
+# http://download.eclipse.org/technology/babel/babel_language_packs/R0.9.1/indigo/indigo.php
+# usage: FROM=http://download.eclipse.org/technology/babel/babel_language_packs/R0.9.1/indigo/indigo.php ./fetch-babel.sh
 Source0: BabelLanguagePack-%{version}.tar.bz2
 
+%if %{defined fedora}
 BuildArch:  noarch
-Requires:   eclipse-platform >= 3.6
+%endif
+Requires:   eclipse-platform >= 1:3.6
+
+%if 0%{?rhel} >= 6
+ExclusiveArch: %{ix86} x86_64
+%endif
 Source44: import.info
 
-# It tekes too long for osgi to complete :(
+# It takes too long for osgi to complete :(
 %add_findreq_skiplist /usr/share/*
 %add_findprov_skiplist /usr/share/*
 
@@ -68,7 +76,6 @@ Note that English text will be displayed if Babel doesn't \
 have a translation for a given string. \
 \
 %files %1 \
-%defattr(-,root,root,-) \
 #% {eclipse_data}/dropins/babel/eclipse/features/org.eclipse.babel.nls_*_%{2}_%{version} \
 %doc eclipse/features/*_%{2}_%{version} \
 %{eclipse_data}/dropins/babel/eclipse/plugins/*.nl_%{2}_%{version}.jar
@@ -84,6 +91,7 @@ have a translation for a given string. \
 %lang_meta_pkg da da Danish
 %lang_meta_pkg nl nl Dutch
 %lang_meta_pkg en_AU en_AU English%{spc}(Australian)
+%lang_meta_pkg en_CA en_CA English%{spc}(Canadian)
 %lang_meta_pkg et et Estonian
 %lang_meta_pkg fa fa Farsi
 %lang_meta_pkg fi fi Finnish
@@ -101,6 +109,7 @@ have a translation for a given string. \
 # tl should be Tagalog.  Klingon has < 1% coverage at present in Babel.  Tagalog is unsupported.
 #% lang_meta_pkg tlh tl Klingon
 %lang_meta_pkg ko ko Korean
+%lang_meta_pkg ku ku Kurdish
 %lang_meta_pkg mn mn Mongolian
 %lang_meta_pkg no no Norwegian
 %lang_meta_pkg pl pl Polish
@@ -109,7 +118,11 @@ have a translation for a given string. \
 %lang_meta_pkg ro ro Romanian
 %lang_meta_pkg ru ru Russian
 %lang_meta_pkg es es Spanish
+%lang_meta_pkg sk sk Slovak
+%lang_meta_pkg sl sl Slovene
+%lang_meta_pkg sq sq Albanian
 %lang_meta_pkg sv sv Swedish
+%lang_meta_pkg sr sr Serbian
 %lang_meta_pkg tr tr Turkish
 %lang_meta_pkg uk uk Ukrainian
 %lang_meta_pkg en_AA en_AA Pseudo%{spc}Translations
@@ -136,12 +149,14 @@ done
 # nothing to build
 
 %install
-
 mkdir -p $RPM_BUILD_ROOT%{eclipse_data}/dropins/babel/eclipse/
 mv eclipse/plugins $RPM_BUILD_ROOT%{eclipse_data}/dropins/babel/eclipse
 find eclipse/features -type f -exec chmod 644 {} \;
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 3.7.0.v20111128043401-alt1_2jpp7
+- new version
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 3.6.0.v20100814043401-alt1_5jpp6
 - update to new release by jppimport
 
