@@ -35,7 +35,7 @@ BuildRequires: jpackage-1.6.0-core
 
 Name:           jbossas
 Version:        %{version_major}.%{version_minor}.%{version_revision}
-Release:        alt22_24jpp6
+Release:        alt23_24jpp6
 Epoch:          0
 Summary:        JBoss Application Server
 License:        LGPLv2+
@@ -834,6 +834,9 @@ fi
 %ghost %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.cat
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.2.3-alt23_24jpp6
+- fixed build with new commons-codec
+
 * Mon Apr 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.2.3-alt22_24jpp6
 - fixed build
 
