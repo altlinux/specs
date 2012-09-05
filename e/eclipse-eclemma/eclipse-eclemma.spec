@@ -1,35 +1,30 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# required for install
-BuildRequires: unzip
-%global eclipse_base %{_libdir}/eclipse
 %global install_loc  %{_datadir}/eclipse/dropins/eclemma
 
 Name:      eclipse-eclemma
-Version:   1.5.3
-Release:   alt1_1jpp6
+Version:   2.1.2
+Release:   alt1_2jpp7
 Summary:   Java code coverage tool plugin for Eclipse
 Group:     Development/Java
 License:   EPL and ASL 2.0
 URL:       http://www.eclemma.org
 
 # Source tarball and script used to generate it
-# $ sh ./get-eclemma.sh
-Source0:   eclemma-%{version}.tar.xz
-Source1:   get-eclemma.sh
-# Unpack the emma-including plugin so we can symlink to our JAR
-Patch0:    %{name}-unjar.patch
-Patch1:    %{name}-unjar-2.patch
+# http://eclemma.svn.sourceforge.net/viewvc/eclemma/eclemma/tags/v2.1.2/?view=tar
+Source0:   eclemma-v%{version}.tar.gz
 
 BuildArch:        noarch
 BuildRequires:    jpackage-utils
-BuildRequires:    eclipse-pde >= 1:3.4.1
-BuildRequires:    emma
+BuildRequires:    eclipse-pde >= 1:4.2.0
+BuildRequires:    jacoco
 Requires:         jpackage-utils
-Requires:         eclipse-jdt >= 1:3.4.1
-Requires:         emma
-Provides:         eclemma = %{version}-%{release}
+Requires:         eclipse-jdt >= 1:4.2.0
+Requires:         jacoco
 Source44: import.info
 
 %description
@@ -39,28 +34,33 @@ coverage analysis summaries, and highlighting in Java source code
 editors.
 
 %prep
-%setup -q -n eclemma-%{version}
-%patch0
-
+%setup -q -n v%{version}
+rm -fr com.mountainminds.eclemma.debug.ui.compatibility/src/org/eclipse/debug/ui/actions/RelaunchLastAction.java
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
-pushd com.mountainminds.eclemma.core
-%patch1
+rm -rf orbitDeps
+mkdir orbitDeps
+pushd orbitDeps
+ln -s %{_javadir}/jacoco/org.jacoco.core.jar
+ln -s %{_javadir}/jacoco/org.jacoco.agent.jar
+ln -s %{_javadir}/jacoco/org.jacoco.report.jar
 popd
-build-jar-repository -s -p com.mountainminds.eclemma.core emma.jar
 
 %build
-%{eclipse_base}/buildscripts/pdebuild
+eclipse-pdebuild -o `pwd`/orbitDeps
 
 %install
 install -d -m 755 %{buildroot}/%{install_loc}
 unzip -q -o -d %{buildroot}/%{install_loc} \
   build/rpmBuild/com.mountainminds.eclemma.feature.zip
 pushd %{buildroot}/%{install_loc}/eclipse/plugins
-#build-jar-repository -s -p com.mountainminds.eclemma.core_%{version} emma.jar
-rm com.mountainminds.eclemma.core_%{version}/emma.jar
-ln -s ../../../../../../java/emma.jar com.mountainminds.eclemma.core_%{version}
+rm -fr org.jacoco*
+rm -fr org.objectweb.asm*
+ln -s %{_javadir}/jacoco/org.jacoco.agent.jar 
+ln -s %{_javadir}/jacoco/org.jacoco.core.jar 
+ln -s %{_javadir}/jacoco/org.jacoco.report.jar
+ln -s %{_javadir}/objectweb-asm/asm-all.jar
 popd
 
 %files
@@ -70,6 +70,9 @@ popd
 %{install_loc}
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1_2jpp7
+- new version
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_1jpp6
 - update to new release by jppimport
 
