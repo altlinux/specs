@@ -1,3 +1,4 @@
+BuildRequires: excalibur-avalon-logkit excalibur-avalon-framework
 BuildRequires: geronimo-corba-1.0-apis geronimo-j2ee-connector-1.5-api
 BuildRequires: /proc
 BuildRequires: jpackage-1.6.0-compat
@@ -37,7 +38,7 @@ BuildRequires: jpackage-1.6.0-compat
 Summary:                An Open Source implementation of the Java Transaction Service
 Name:                   tyrex
 Version:                1.0.3
-Release:                alt6_2jpp6
+Release:                alt7_2jpp6
 Epoch:                  0
 Group:                  Development/Java
 License:                BSD-like
@@ -46,8 +47,8 @@ BuildArch:              noarch
 BuildRequires:          jpackage-utils >= 0:1.7.5
 BuildRequires:          ant >= 0:1.7.1
 BuildRequires:          ant-trax
-BuildRequires:          avalon-framework
-BuildRequires:          avalon-logkit
+#BuildRequires:          avalon-framework
+#BuildRequires:          avalon-logkit
 BuildRequires:          castor0
 BuildRequires:          j2ee-connector
 BuildRequires:          javamail
@@ -150,8 +151,8 @@ export OPT_JAR_LIST="ant/ant-trax"
 export CLASSPATH=$(build-classpath \
 castor0 \
 commons-logging \
-avalon-framework \
-avalon-logkit \
+excalibur/avalon-framework \
+excalibur/avalon-logkit \
 geronimo-corba-1.0-apis \
 geronimo-javamail-1.3.1-api \
 geronimo-j2ee-connector-1.5-api \
@@ -214,6 +215,9 @@ cp -prf build/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.3-alt7_2jpp6
+- fixed build
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.3-alt6_2jpp6
 - fixed build
 
