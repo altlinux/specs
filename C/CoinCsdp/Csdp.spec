@@ -1,7 +1,7 @@
 %define oname Csdp
 Name: Coin%oname
 Version: 6.1.1
-Release: alt2.svn20101110
+Release: alt2.svn20110208
 Summary: A C Library for Semidefinite Programming
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -131,6 +131,9 @@ mv %buildroot%_bindir/theta %buildroot%_bindir/theta.%oname
 %_bindir/csdp-example
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.1.1-alt2.svn20110208
+- New snapshot
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.1.1-alt2.svn20101110
 - Built with OpenBLAS instead of GotoBLAS2
 
