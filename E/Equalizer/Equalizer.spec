@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(Env.pm)
 %define fedora 16
 Name:		Equalizer
 Version:	1.0.1
-Release:	alt4_1.20110922.1
+Release:	alt5_1.20110922.1
 Summary:	Middleware to create and deploy parallel OpenGL-based applications
 
 Group:		Development/C
@@ -139,6 +139,9 @@ done
 %{_includedir}/vmmlib
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_1.20110922.1
+- rebuild with new boost
+
 * Tue Jun 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt4_1.20110922.1
 - fixed build
 
