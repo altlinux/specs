@@ -4,7 +4,7 @@
 %define oname Bonmin
 Name: Coin%oname
 Version: 1.6
-Release: alt2.svn20120901
+Release: alt3.svn20120901
 Summary: Basic Open-source Nonlinear Mixed INteger programming
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -21,7 +21,7 @@ BuildPreReq: CoinNetlib-devel libCoinOsi-devel libCoinUtils-devel
 BuildPreReq: CoinSample-devel libCoinCbc-devel libCoinCgl-devel
 BuildPreReq: libCoinClp-devel libipopt-devel libCoinDyLP-devel
 BuildPreReq: libCoinVol-devel libCoinSYMPHONY-devel libCoinBcp-devel
-#BuildPreReq: libCoinCouenne-devel
+BuildPreReq: libCoinCouenne-devel
 
 %description
 BONMIN (Basic Open-source Nonlinear Mixed INteger programming) is an
@@ -86,9 +86,9 @@ sed -i 's|^\(coin_has_couenne\).*|\1=../../../../..|' %oname/configure
 	--with-metis-lib="-L%mpidir/lib -lparmetis" \
 	--with-metis-incdir=%mpidir/include/metis \
 	--with-mumps-lib=-ldmumps \
-	--with-bcp-incdir=%_includedir/coin
-#	--with-couenne-lib="-lBonCouenne -lCouenne" \
-#	--with-couenne-incdir=%_includedir/coin
+	--with-bcp-incdir=%_includedir/coin \
+	--with-couenne-lib="-lBonCouenne -lCouenne" \
+	--with-couenne-incdir=%_includedir/coin
 %make_build TOPDIR=$PWD
 
 pushd doxydoc
@@ -122,6 +122,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/doc/*.pdf %oname/examples doxydoc/Doc/html
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt3.svn20120901
+- Rebuilt with Couenne
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt2.svn20120901
 - New snapshot (without Couenne)
 
