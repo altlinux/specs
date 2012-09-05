@@ -1,20 +1,21 @@
 %define oname STLport
 Name: libstlport
 
-Version: 5.1.4
-Release: alt1.qa1
+Version: 5.2.1
+Release: alt1
 
 Summary: C++ standard library
 
-License: distributable (see README.gz)
+License: distributable (see README)
 Group: System/Libraries
 Url: http://stlport.sourceforge.net/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://dl.sf.net/stlport/%oname-%version.tar.bz2
+Source: http://prdownloads.sf.net/stlport/%oname-%version.tar
 
-BuildRequires: gcc-c++ libstdc++-devel
+BuildRequires: gcc-c++
+# libstdc++-devel
 
 %description
 STLport is a multiplatform implementation of C++ Standard Template
@@ -41,14 +42,12 @@ Static STLport libraries.
 %setup -q -n %oname-%version
 
 %build
-%make_build -C build/lib -f gcc.mak
+./configure --prefix=%prefix --includedir=%_includedir --libdir=%_libdir
+%make_build
+# -C build/lib -f gcc.mak
 
 %install
-%__make -C build/lib -f gcc.mak install \
-	INSTALL_BIN_DIR=%buildroot%prefix \
-	INSTALL_LIB_DIR=%buildroot%_libdir
-mkdir -p %buildroot%_includedir
-cp -rp stlport %buildroot%_includedir
+%makeinstall_std
 
 %files
 %doc README
@@ -63,6 +62,9 @@ cp -rp stlport %buildroot%_includedir
 #%_libdir/*.a
 
 %changelog
+* Wed Sep 05 2012 Vitaly Lipatov <lav@altlinux.ru> 5.2.1-alt1
+- new version 5.2.1 (with rpmrb script)
+
 * Tue Nov 24 2009 Repocop Q. A. Robot <repocop@altlinux.org> 5.1.4-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * post_ldconfig for libstlport
