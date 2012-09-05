@@ -1,7 +1,7 @@
 %define testname checkbashisms
 
 Name: repocop-unittest-%testname
-Version: 0.05
+Version: 0.06
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -11,7 +11,7 @@ Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org 
 Requires: repocop
-Requires: checkbashisms > 2.11
+Requires: checkbashisms > 2.12
 
 %description
 %testname integration test for repocop test platform.
@@ -29,10 +29,21 @@ cat > filepattern <<'EOF'
 ^/usr/share/repocop/
 EOF
 
+cat > whitelist <<'EOF'
+console-scripts
+consolelocker
+gear
+system-report
+EOF
+
 cat > test <<'EOF'
 #!/bin/bash
 echo ok > $REPOCOP_TEST_TMPDIR/status
 rm -f $REPOCOP_TEST_TMPDIR/message
+if grep '^'$REPOCOP_PKG_NAME'$' %_datadir/repocop/pkgtests/%testname/whitelist >/dev/null; then
+    exec repocop-test-ok
+fi
+
 FAIL_STATUS=experimental
 shabangbinshpath=`dirname $0`
 shabangbinsh=${shabangbinshpath}/shabangbinsh
@@ -80,6 +91,9 @@ install -m 644 shabangbinsh $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- added whitelist
+
 * Mon Aug 15 2011 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - new checkbashisms version
 
