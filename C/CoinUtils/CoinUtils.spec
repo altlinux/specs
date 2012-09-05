@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: CoinUtils
-Version: 2.8.6
-Release: alt4.svn20120129
+Version: 2.8.7
+Release: alt1.svn20120901
 Summary: Open-source collection of classes and functions for COIN-OR project
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -125,6 +125,9 @@ rm -fR %buildroot%_datadir/coin/doc \
 %doc %name/doxydoc/doxydoc/html/*
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.7-alt1.svn20120901
+- Version 2.8.7
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.6-alt4.svn20120129
 - Built with OpenBLAS instead of GotoBLAS2
 

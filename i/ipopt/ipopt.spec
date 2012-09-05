@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: ipopt
-Version: 3.10.1
-Release: alt4.svn20120128
+Version: 3.10.2
+Release: alt1.svn20120830
 Summary: Large-Scale Nonlinear Optimization Solver (Interior Point OPTimizer)
 License: CPL 1.0
 Group: Sciences/Mathematics
@@ -139,6 +139,9 @@ pushd Ipopt/src/Algorithm
 	done
 popd
 
+install -d %buildroot%_docdir/coin
+mv %buildroot%_datadir/coin/doc/Ipopt %buildroot%_docdir/coin/
+
 cp -fR Ipopt/tutorial Ipopt/doc/documentation.pdf Ipopt/examples \
 	%buildroot%_docdir/coin/Ipopt/
 #popd
@@ -168,6 +171,9 @@ rm -fR %buildroot%_datadir/coin/doc
 %_docdir/coin/Ipopt/examples
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.2-alt1.svn20120830
+- Version 3.10.2
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.10.1-alt4.svn20120128
 - Built with OpenBLAS instead of GotoBLAS2
 

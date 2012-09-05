@@ -1,7 +1,7 @@
 %define oname BuildTools
 Name: Coin%oname
-Version: 0.7.2
-Release: alt3.svn20120128
+Version: 0.7.3
+Release: alt1.svn20120811
 Summary: CoinHelp (BuildTools) project
 License: Public domain
 Group: Development/Tools
@@ -52,6 +52,9 @@ ln -s ../%oname/ltmain.sh %buildroot%_datadir/libtool
 %_datadir/config.site
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt1.svn20120811
+- Version 0.7.3
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt3.svn20120128
 - Built with OpenBLAS instead of GotoBLAS2
 
