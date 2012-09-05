@@ -6,7 +6,7 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
 Version: 2.6.2
-Release: alt1.svn20120814
+Release: alt2.svn20120814
 Group: Graphics
 License: GPL v2
 URL: http://www.geuz.org/gmsh/
@@ -24,13 +24,14 @@ BuildPreReq: libnetgen-devel libann-devel libchaco-devel chrpath
 BuildPreReq: libtetgen-devel getfemxx libGL-devel libGLU-devel libX11-devel
 BuildPreReq: libXft-devel libXext-devel libhdf5-mpi-devel %mpiimpl-devel
 BuildPreReq: liblapack-devel texlive-base-bin libcairo-devel libavcodec53
-BuildPreReq: cmake libICE-devel libSM-devel
+BuildPreReq: cmake libICE-devel libSM-devel libparmetis0-devel
 BuildPreReq: libXtst-devel libXau-devel libtaucs-devel libgmp-devel
 BuildPreReq: libcgns-mpi-devel libXcomposite-devel libpixman-devel
 BuildPreReq: libXcursor-devel libXdmcp-devel libXinerama-devel libXpm-devel
 BuildPreReq: libXrandr-devel libXt-devel libXv-devel libXxf86misc-devel
-BuildPreReq: libslepc-real-devel flex libamesos10
+BuildPreReq: libslepc-real-devel flex libamesos10 swig
 BuildPreReq: libepetraext10 libifpack10 libtrilinos10 libgaleri10
+BuildPreReq: libopencascade-devel libmmg3d-devel
 
 %description
 Gmsh is an automatic 3D finite element grid generator with a built-in CAD engine
@@ -71,12 +72,12 @@ LIB64=64
 %endif
 sed -i "s|@64@|$LIB64|g" CMakeCache.txt
 
-sed -i 's|@LIBDIR@|%_libdir|g' CMakeLists.txt
-
 # avoid conflict with defs.h in other packages
 ln -s defs.h contrib/Chaco/main/chaco_defs.h
 CHACO_FILES="$(egrep -R 'defs\.h' contrib/Chaco/|awk -F : '{print $1}')"
 sed -i 's|defs\.h|chaco_defs.h|' $CHACO_FILES
+
+rm -fR contrib/{ANN,Metis,mmg3d}
 
 %build
 mpi-selector --set %mpiimpl
@@ -84,7 +85,12 @@ source %_bindir/petsc-real.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib -L%_libdir/oski"
 export LD_LIBRARY_PATH=%_libdir/oski
 
-cmake .
+cmake \
+%ifarch x86_64
+	-DLIB_SUFFIX:STRING=64 \
+%endif
+	-DMPIDIR:PATH=%mpidir \
+	.
 %make_build VERBOSE=1
 %make info
 
@@ -94,7 +100,7 @@ export LD_LIBRARY_PATH=%_libdir/oski
 
 %makeinstall_std
 
-for i in %buildroot%_bindir/*; do
+for i in %buildroot%_bindir/* %buildroot%_libdir/*.so; do
 	chrpath -r %mpidir/lib:%petsc_dir/lib $i
 done
 
@@ -115,6 +121,7 @@ rm -fR %buildroot%_includedir
 %_bindir/*
 %_man1dir/*
 %_infodir/*
+%_libdir/*.so
 
 %files demos
 %dir %_docdir/%name
@@ -122,6 +129,10 @@ rm -fR %buildroot%_includedir
 %_docdir/%name/tutorial
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt2.svn20120814
+- Rebuilt with external ANN, ParMetis, Mmg3d and Netgen
+- Built with OpenCASCADE
+
 * Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt1.svn20120814
 - Version 2.6.2
 
