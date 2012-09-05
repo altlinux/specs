@@ -8,7 +8,7 @@
 
 Name: elmerfem
 Version: 7.0
-Release: alt1.%svn
+Release: alt2.%svn
 
 Summary: Open Source Finite Element Software for Multiphysical Problems
 License: GPLv2+
@@ -23,7 +23,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildRequires: gcc-c++ libncurses-devel
 
 BuildRequires: gcc-fortran liblapack-devel libxblas-devel %mpiimpl-devel
-BuildRequires: libncurses-devel libreadline-devel libmetis-devel
+BuildRequires: libncurses-devel libreadline-devel libmetis0-devel
 BuildRequires: libopencascade-devel libftgl-devel R-devel
 BuildpreReq: libtetgen-devel libsuitesparse-devel libarpack-devel
 BuildPreReq: python-module-PyQt4 libqwt-devel libvtk-devel
@@ -351,6 +351,9 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %_niconsdir/document-save-as.png
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt2.svn5812
+- Fixed build
+
 * Sat Aug 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt1.svn5812
 - Version 7.0
 
