@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.9
+Version: 0.10
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -11,11 +11,15 @@ Source0: %name-%version.tar
 Requires: console-vt-tools fdisk /sbin/addpart grep
 Requires: aufs2-util sysvinit-utils net-tools
 Requires: sed procps psmisc findutils
+Requires: make-initrd
+Requires: e2fsprogs
 
 # For new put-file utility
 Requires: make-initrd >= 0.7.6-alt1
 
 BuildArch: noarch
+AutoReq: noshell, noshebang
+
 
 %description
 Make-initrd feature, able to make hybrid propagator/make-initrd initrd
@@ -32,8 +36,14 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Wed Sep 05 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.10-alt1
+- added --numeric-ports option to netstat (dans@), (closes: #27698)
+
 * Thu May 10 2012 Michael Shigorin <mike@altlinux.org> 0.9-alt1
 - NMU: merged legion@'s update for current make-initrd
+
+* Thu Mar 22 2012 Andriy Stepanov <stanv@altlinux.ru> 0.8-alt1.2
+- Works independent from propagator
 
 * Wed Sep 14 2011 Michael Shigorin <mike@altlinux.org> 0.8-alt1.1
 - NMU: add Requires: make-initrd (closes: #26133)
