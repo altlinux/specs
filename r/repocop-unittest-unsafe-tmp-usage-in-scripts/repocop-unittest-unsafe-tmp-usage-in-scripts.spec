@@ -1,7 +1,7 @@
 %define testname unsafe-tmp-usage-in-scripts
 Name: repocop-unittest-%testname
 Version: 0.6
-Release: alt4
+Release: alt5
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -24,7 +24,6 @@ cat > %testname.whitelist <<'EOF'
 installer-common-stage2
 installer-feature-desktop-other-fs-stage2
 installer-feature-services
-lbuscd
 make-initrd-propagator-resume
 mkimage
 mkimage-profiles
@@ -32,11 +31,13 @@ mkinitrd-initramfs
 mod_security-doc
 spt
 spt-profiles-junior
-bash-examples
-python-module-pyinotify-examples
-tcl-httpd-manual
+strongswan
 EOF
 cat > %testname.graylist <<'EOF'
+bash-examples
+lbuscd
+python-module-pyinotify-examples
+tcl-httpd-manual
 EOF
 
 cat > %testname.test <<'EOF'
@@ -121,6 +122,9 @@ install -Dm 755 %testname.whitelist %buildroot%_datadir/repocop/pkgtests/%testna
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt5
+- added strongswan to whitelist
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt4
 - added graylist and exceptions
 
