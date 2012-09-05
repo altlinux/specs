@@ -11,7 +11,7 @@
 
 Name: xmms
 Version: 1.2.11
-Release: alt9.6.qa3
+Release: alt10
 Epoch: 20100727
 
 Summary: X Multimedia System - the player for you
@@ -134,7 +134,6 @@ Patch97: xmms-1.2.10-alt-media-cdrom.patch
 Patch98: xmms.gtk.doublesize.diff.gz
 
 Patch99: xmms-1.2.11-alt-DSO.patch
-Patch100: xmms-1.2.11-alt-textrel.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -168,13 +167,13 @@ can use WinAmp skins, and play mp3s, mods, s3ms, and other formats. It now has
 support for input, output, and general plugins, and has also been GPLd.
 
 %description -l ru_RU.KOI8-R
-X MultiMedia System - наиболее популярный медиа-проигрыватель для UNIX-систем.
+X MultiMedia System - некогда популярный медиа-проигрыватель для UNIX-систем.
 
 Поддерживает существенное количество форматов и эффектов благодаря большому
 количеству модулей расширения, доступных в отдельных пакетах.
 
 %description -l uk_UA.KOI8-U
-X MultiMedia System - найб╕льш популярний мед╕а-програвач для UNIX-систем.
+X MultiMedia System - колись популярний мед╕а-програвач для UNIX-систем.
 
 П╕дтриму╓ величезну к╕льк╕сть формат╕в та ефект╕в завдяки велик╕й к╕лькост╕
 модул╕в розширення, що доступн╕ в окремих пакетах.
@@ -490,7 +489,6 @@ popd
 #patch61 -p1
 
 %patch99 -p2
-#patch100 -p2
 
 msgfmt -c -o po/ru.gmo %SOURCE8
 
@@ -685,6 +683,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Sep 06 2012 Michael Shigorin <mike@altlinux.org> 20100727:1.2.11-alt10
+- fixed outdated and misleading description translations
+
 * Sun Jun 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100727:1.2.11-alt9.6.qa3
 - Fixed build
 
