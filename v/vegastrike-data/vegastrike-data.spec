@@ -1,12 +1,11 @@
-%filter_from_requires /^python2...Briefing.$/d
-%filter_from_requires /^python2...Director.$/d
 %filter_from_requires /^python2...VS.$/d
-
+%filter_from_requires /^python2...Director.$/d
+%filter_from_requires /^python2...Briefing.$/d
 %define _unpackaged_files_terminate_build 1
 %add_python_req_skip Base
 Name:           vegastrike-data
 Version:        0.5.1
-Release:        alt2_1.r1
+Release:        alt2_2.r1
 Summary:        Data files for Vega Strike
 Group:          Games/Other
 License:        GPLv2+
@@ -107,7 +106,7 @@ cat data.dirs >> data.files
 cat data.dirs >> data.files
 
 
-%files -n vegastrike-extra -f extra.files
+%files -n vegastrike-extra -f extra.files  
 
 %files -f data.files 
 %{_datadir}/vegastrike/documentation
@@ -116,6 +115,9 @@ cat data.dirs >> data.files
 
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_2.r1
+- update to new release by fcimport
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt2_1.r1
 - update to new release by fcimport
 
