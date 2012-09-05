@@ -1,115 +1,46 @@
+BuildRequires: rpm-build-java-osgi
+AutoReq: yes,noosgi
+
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+%global base_name       lang
+%global short_name      commons-%{base_name}
 
-%bcond_without maven
-#def_with gcj_support
-%bcond_with gcj_support
-%bcond_without repolib
+Name:           apache-%{short_name}
+Version:        2.6
+Release:        alt1_7jpp7
+Summary:        Provides a host of helper utilities for the java.lang API
+License:        ASL 2.0
+Group:          Development/Java
+URL:            http://commons.apache.org/%{base_name}
+Source0:        http://archive.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+Patch0:         0001-Make-source-version-1.3.patch
+Patch1:         0002-Fix-FastDateFormat-for-Java-7-behaviour.patch
 
+BuildArch:      noarch
+BuildRequires:  jpackage-utils >= 0:1.7.2
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven
+BuildRequires:  apache-commons-parent
+BuildRequires:  maven-surefire-provider-junit
+
+Requires:       jpackage-utils >= 0:1.6
+
+
+# This should go away with F-17
+Provides:       jakarta-commons-lang = 0:%{version}-%{release}
+Obsoletes:      jakarta-commons-lang <= 0:2.4
+Provides:       %{short_name} = %{epoch}:%{version}-%{release}
+Source44: import.info
+
+Source3:        %{name}-component-info.xml
+%def_with repolib
 %define repodir %{_javadir}/repository.jboss.com/apache-%{base_name}/%{version}-brew
 %define repodirlib %{repodir}/lib
 %define repodirres %{repodir}/resources
 %define repodirsrc %{repodir}/src
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-%define base_name lang
-%define short_name commons-%{base_name}
-
-Name:           apache-commons-lang
-Version:        2.4
-Release:        alt3_7jpp6
-Epoch:          0
-Summary:        Apache Commons Lang Package
-License:        ASL 2.0
-Group:          Development/Java
-URL:            http://commons.apache.org/lang
-Source0:        http://archive.apache.org/dist/jakarta/commons/lang/source/commons-lang-2.4-src.tar.gz
-Source1:        %{name}-settings.xml
-Source2:        %{name}-jpp-depmap.xml
-Source3:        %{name}-component-info.xml
-Patch0:         %{name}-build.patch
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: ant >= 0:1.7
-BuildRequires: ant-junit
-BuildRequires: java-javadoc
-%if %with maven
-BuildRequires: apache-commons-parent >= 0:12
-BuildRequires: maven2 >= 0:2.0.8
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-assembly
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-idea
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-resources
-%endif
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
-BuildArch:      noarch
-%endif
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-Provides:       jakarta-%{short_name} = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name} < %{epoch}:%{version}-%{release}
-Provides:       %{short_name} = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name} < %{epoch}:%{version}-%{release}
-Source44: import.info
-
-%description
-The standard Java libraries fail to provide enough methods for
-manipulation of its core classes. The Commons Lang Component provides
-these extra methods.
-
-The Commons Lang Component provides a host of helper utilities for the
-java.lang API, notably String manipulation methods, basic numerical
-methods, object reflection, creation and serialization, and System
-properties. Additionally it contains an inheritable enum type, an
-exception structure that supports multiple types of nested-Exceptions
-and a series of utilities dedicated to help with building methods, such
-as hashCode, toString and equals.
 
 %if %with repolib
 %package repolib
@@ -126,99 +57,55 @@ This package is not meant to be installed but so its contents
 can be extracted through rpm2cpio.
 %endif
 
-%package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Requires: java-javadoc
-Provides:       jakarta-%{short_name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-javadoc < %{epoch}:%{version}-%{release}
-Provides:       %{short_name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name}-javadoc < %{epoch}:%{version}-%{release}
+
+%description
+The standard Java libraries fail to provide enough methods for
+manipulation of its core classes. The Commons Lang Component provides
+these extra methods.
+The Commons Lang Component provides a host of helper utilities for the
+java.lang API, notably String manipulation methods, basic numerical
+methods, object reflection, creation and serialization, and System
+properties. Additionally it contains an inheritable enum type, an
+exception structure that supports multiple types of nested-Exceptions
+and a series of utilities dedicated to help with building methods, such
+as hashCode, toString and equals.
+
+%package        javadoc
+Summary:        API documentation for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+
+Obsoletes:      jakarta-%{short_name}-javadoc <= 0:2.4
 BuildArch: noarch
 
-%description javadoc
-Javadoc for %{name}.
+%description    javadoc
+%{summary}.
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
-%patch0 -p1 -b .p0
-%{__perl} -pi \
-    -e 's/\r$//g;' \
-  PROPOSAL.html LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-
-%if %with maven
-cp -p %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-%endif
+%patch0 -p1
+%patch1 -p1
+sed -i 's/\r//' *.txt
 
 %build
-%if %with maven
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p ${MAVEN_REPO_LOCAL}
-export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL}"
-mvn-jpp -Dmaven.javadoc.source=1.4 \
-        -e \
-        -s $(pwd)/settings.xml \
-	-Dmaven.test.skip=true \
-	install 
-#	javadoc:javadoc
-%else
-export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
-export CLASSPATH=
-ant \
-    -Dcompile.source=1.4 \
-    -Djunit.jar=$(build-classpath junit) \
-    -Dfinal.name=%{short_name} \
-%if %{gcj_support}
-    -Dtest.failonerror=false \
-%endif
-    -Djdk.javadoc=%{_javadocdir}/java \
-    test dist
-%endif
+mvn-rpmbuild install javadoc:javadoc
 
 %install
 
 # jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%if %with maven
-%{__cp} -p target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%else
-%{__cp} -p %{short_name}/%{short_name}/%{short_name}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%endif
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{short_name}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+ln -sf %{name}.jar %{buildroot}%{_javadir}/%{short_name}.jar
+ln -sf %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
 
 # pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap commons-lang commons-lang %{version} JPP %{name}
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
+%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "org.apache.commons:%{short_name},%{base_name}:%{base_name}"
 
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%if %with maven
-#%{__cp} -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}/
-%else
-%{__cp} -pr %{short_name}/%{short_name}/docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}/
-%endif
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{short_name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{short_name}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/jakarta-%{short_name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/jakarta-%{short_name}
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %if %with repolib
 %{__mkdir_p} %{buildroot}%{repodir}
@@ -232,29 +119,34 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__mkdir_p} %{buildroot}%{repodirsrc}
 %{__install} -p -m 0644 %{PATCH0} %{buildroot}%{repodirsrc}/
 %{__install} -p -m 0644 %{SOURCE0} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
+%{__cp} -p %{buildroot}%{_javadir}/%{name}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
 %endif
-
-%files
-%doc PROPOSAL.html LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-%{_javadir}/*.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/apache-commons-lang-%{version}.jar.db
-%{_libdir}/gcj/%{name}/apache-commons-lang-%{version}.jar.so
-%endif
-
-%files javadoc
-%{_javadocdir}/*
 
 %if %with repolib
 %files repolib
 %{_javadir}/repository.jboss.com
 %endif
 
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
+
+%files
+%doc PROPOSAL.html LICENSE.txt RELEASE-NOTES.txt NOTICE.txt
+%{_javadir}/%{name}.jar
+%{_javadir}/%{short_name}.jar
+%{_javadir}/jakarta-%{short_name}.jar
+%{_mavenpomdir}/JPP-%{short_name}.pom
+%{_mavendepmapfragdir}/%{name}
+
+%files javadoc
+%doc LICENSE.txt NOTICE.txt
+%doc %{_javadocdir}/%{name}
+
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6-alt1_7jpp7
+- new version
+
 * Mon Mar 26 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.4-alt3_7jpp6
 - restored javadoc
 
