@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libexpat-devel perl(English.pm) zlib-devel
 BuildRequires: boost-python-devel
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt3_2.r1
+Release:        alt3_4.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -91,7 +91,7 @@ install -p -m 644 *.6 $RPM_BUILD_ROOT%{_mandir}/man6
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --vendor fedora            \
+desktop-file-install             \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE3}
 
@@ -102,10 +102,13 @@ desktop-file-install --vendor fedora            \
 %{_bindir}/vs*
 %{_libexecdir}/%{name}
 %{_mandir}/man6/*
-%{_datadir}/applications/fedora-%{name}.desktop
+%{_datadir}/applications/%{name}.desktop
 
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt3_4.r1
+- update to new release by fcimport
+
 * Tue Jun 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt3_2.r1
 - fixed build
 
