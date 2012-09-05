@@ -6,8 +6,8 @@
 %define ldir %_libdir/petsc-%scalar_type
 
 Name: %oname-%scalar_type
-Version: 7.2
-Release: alt5.pre.svn20120813
+Version: 7.3
+Release: alt1.pre.svn20120904
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -216,6 +216,9 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 %endif
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt1.pre.svn20120904
+- Version 7.3
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.2-alt5.pre.svn20120813
 - New snapshot
 

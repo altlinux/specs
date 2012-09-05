@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.8
-Release: alt13
+Release: alt14
 Summary: C++ library for (adaptive) finite element developping (%scalar_type scalars)
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -170,6 +170,9 @@ done
 %endif
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt14
+- Rebuilt with dealii 7.3-pre
+
 * Sun Jul 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt13
 - Rebuilt with OpenMPI 1.6
 
