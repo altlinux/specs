@@ -34,7 +34,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt22
+Release:        alt23
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -400,6 +400,7 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 %files -n rpm-build-java
 %_rpmmacrosdir/jpackage
 %_rpmmacrosdir/jpackage-fjava
+%_rpmmacrosdir/jpackage-eclipse
 %_rpmmacrosdir/libjvm
 /usr/lib/rpm/maven.*
 
@@ -407,6 +408,9 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 /usr/lib/rpm/osgi.*
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt23
+- packaged eclipse macros
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt22
 - fjava macros fixes
 
