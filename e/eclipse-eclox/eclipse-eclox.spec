@@ -1,16 +1,16 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# required for install
-BuildRequires: unzip
 %global install_loc  %{_datadir}/eclipse/dropins
-%global eclipse_base %{_libdir}/eclipse
 
 %global pkgname      eclox
 
 Name:           eclipse-%{pkgname}
 Version:        0.8.0
-Release:        alt1_6.20100810svnjpp6
+Release:        alt1_9.20100810svnjpp7
 Summary:        Eclipse-based doxygen plugin
 
 Group:          System/Libraries
@@ -24,7 +24,6 @@ Source1:        eclipse-%{pkgname}-download.sh
 # These excludes are pulled as %%docs instead
 Patch0:         eclipse-eclox-bin_excludes.patch
 Patch1:         eclipse-eclox-help_excludes.patch
-
 
 BuildRequires:  eclipse-pde
 
@@ -51,10 +50,9 @@ find -name '*.jar' -o -name '*.class' -exec rm -f '{}' \;
 
 %build
 # build the main feature
-%{eclipse_base}/buildscripts/pdebuild -f org.gna.%{pkgname}
+eclipse-pdebuild -f org.gna.%{pkgname}
 
 %install
-
 install -d -m 755 %{buildroot}%{install_loc}
 
 unzip -d %{buildroot}%{install_loc} -q build/rpmBuild/org.gna.%{pkgname}.zip
@@ -65,6 +63,9 @@ unzip -d %{buildroot}%{install_loc} -q build/rpmBuild/org.gna.%{pkgname}.zip
 %{install_loc}/*
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_9.20100810svnjpp7
+- new release
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_6.20100810svnjpp6
 - update to new release by jppimport
 
