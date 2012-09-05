@@ -3,8 +3,8 @@
 %define somver 0
 %define sover %somver.0.0
 Name: CoinCppAD
-Version: 20120130
-Release: alt1.svn20120211
+Version: 20120805
+Release: alt1.svn20120806
 Summary: A Package for Differentiation of C++ Algorithms
 License: CPL v1.0 or GPL v2.0
 Group: Sciences/Mathematics
@@ -121,6 +121,9 @@ mv %buildroot%_datadir/pkgconfig/cppad.pc \
 %_docdir/cppad-%version
 
 %changelog
+* Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120805-alt1.svn20120806
+- Version 20120805
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120130-alt1.svn20120211
 - Version 20120130
 
