@@ -1,7 +1,7 @@
 %define testname unsafe-tmp-usage-in-scripts
 Name: repocop-unittest-%testname
 Version: 0.6
-Release: alt5
+Release: alt6
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -116,12 +116,16 @@ EOF
 %install
 install -Dm 755 %testname.test %buildroot%_datadir/repocop/pkgtests/%testname/test
 install -Dm 755 %testname.whitelist %buildroot%_datadir/repocop/pkgtests/%testname/whitelist
+install -Dm 755 %testname.graylist %buildroot%_datadir/repocop/pkgtests/%testname/graylist
 
 %files
 #doc README ChangeLog
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt6
+- bugfixes
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt5
 - added strongswan to whitelist
 
