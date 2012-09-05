@@ -1,6 +1,6 @@
 Name: consolelocker
 Version: 0.0.1
-Release: alt5
+Release: alt6
 
 Summary: Daemon for lock console terminal and virtual consoles.
 License: GPL
@@ -48,6 +48,9 @@ fi
 %config(noreplace) %_sysconfdir/cron.d/%name
 
 %changelog
+* Wed Sep 05 2012 Alexey Gladkov <legion@altlinux.ru> 0.0.1-alt6
+- Fix build.
+
 * Fri Jul 17 2009 Alexey Gladkov <legion@altlinux.ru> 0.0.1-alt5
 - Fix build.
 
