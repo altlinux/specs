@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        3.1
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        Provides a host of helper utilities for the java.lang API
 License:        ASL 2.0
 Group:          Development/Java
@@ -20,7 +20,10 @@ BuildRequires:  maven
 BuildRequires:  apache-commons-parent
 BuildRequires:  apache-commons-io
 BuildRequires:  junit4
+%if 0%{?rhel} <= 0
 BuildRequires:  easymock3
+%endif
+
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-resources-plugin
@@ -60,7 +63,11 @@ BuildArch: noarch
 %setup -q -n %{short_name}-%{version}-src
 
 %build
-mvn-rpmbuild install javadoc:javadoc
+mvn-rpmbuild \
+%if 0%{?rhel}
+    -Dmaven.test.skip=true \
+%endif
+    install javadoc:aggregate
 
 %install
 
@@ -90,6 +97,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_3jpp7
+- new release
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_2jpp7
 - new version
 
