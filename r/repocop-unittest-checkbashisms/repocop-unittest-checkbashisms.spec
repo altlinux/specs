@@ -2,7 +2,7 @@
 
 Name: repocop-unittest-%testname
 Version: 0.06
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -85,12 +85,16 @@ install -m 755 test $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
 install -m 644 description $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
 install -m 644 filepattern $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
 install -m 644 shabangbinsh $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
+install -m 644 whitelist $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
 
 %files
 #doc README ChangeLog
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2
+- bugfixes
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - added whitelist
 
