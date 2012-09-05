@@ -1,3 +1,5 @@
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global artifactId javax.servlet.jsp
@@ -5,8 +7,8 @@ BuildRequires: jpackage-compat
 
 
 Name:       glassfish-jsp
-Version:    2.2.5
-Release:    alt1_1jpp7
+Version:    2.2.6
+Release:    alt1_2jpp7
 Summary:    Glassfish J2EE JSP API implementation
 
 Group:      Development/Java
@@ -16,6 +18,8 @@ Source0:    %{artifactId}-%{version}.tar.xz
 # no source releases, but this will generate tarball for you from an
 # SVN tag
 Source1:    generate_tarball.sh
+
+Patch0:     %{name}-build-eclipse-compilers.patch
 
 BuildArch:  noarch
 
@@ -29,6 +33,7 @@ BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-release-plugin
 BuildRequires:  maven-source-plugin
 BuildRequires:  glassfish-jsp-api
+BuildRequires:  mvn(org.eclipse.jdt:core)
 BuildRequires:  mvn(javax.servlet:javax.servlet-api)
 BuildRequires:  mvn(javax.el:javax.el-api)
 BuildRequires:  mvn(javax.servlet.jsp:javax.servlet.jsp-api)
@@ -63,7 +68,7 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{artifactId}-%{version}
-
+%patch0
 
 %build
 mvn-rpmbuild install javadoc:javadoc
@@ -95,6 +100,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt1_2jpp7
+- new release
+
 * Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.5-alt1_1jpp7
 - full version
 
