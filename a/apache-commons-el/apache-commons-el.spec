@@ -1,5 +1,16 @@
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name apache-commons-el
+%define version 1.0.1
 # Copyright (c) 2000-2010, JPackage Project
 # All rights reserved.
 #
@@ -56,7 +67,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-el
 Version:        1.0.1
-Release:        alt5_0.r936225.4jpp6
+Release:        alt6_0.r936225.4jpp6
 Epoch:          0
 Summary:        Apache Commons Extension Language
 License:        ASL 2.0
@@ -67,41 +78,41 @@ Source0:        commons-el-%{version}-src.tar.gz
 Source1:        %{name}-settings.xml
 Source2:        %{name}-jpp-depmap.xml
 Source3:        %{name}-component-info.xml
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: ant >= 0:1.7
-BuildRequires: apache-commons-logging
-BuildRequires: jsp_2_0_api
-BuildRequires: servlet_2_4_api
-BuildRequires: junit
+BuildRequires:  jpackage-utils >= 0:1.7.5
+BuildRequires:  ant >= 0:1.7
+BuildRequires:  apache-commons-logging
+BuildRequires:  jsp_2_0_api
+BuildRequires:  servlet_2_4_api
+BuildRequires:  junit
 %if %with maven
-BuildRequires: apache-commons-parent >= 0:12
-BuildRequires: maven2 >= 0:2.0.8
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-assembly
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-idea
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-resources
+BuildRequires:  apache-commons-parent >= 0:12
+BuildRequires:  maven2 >= 0:2.0.8
+BuildRequires:  maven-surefire-maven-plugin
+BuildRequires:  maven-surefire-provider-junit
+BuildRequires:  maven2-plugin-antrun
+BuildRequires:  maven2-plugin-assembly
+BuildRequires:  maven2-plugin-compiler
+BuildRequires:  maven2-plugin-idea
+BuildRequires:  maven2-plugin-install
+BuildRequires:  maven2-plugin-jar
+BuildRequires:  maven2-plugin-javadoc
+BuildRequires:  maven2-plugin-resources
 %endif
 %if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
+BuildRequires:  java-gcj-compat-devel
 %else
 BuildArch:      noarch
 %endif
 Requires(post): jpackage-utils >= 0:1.7.5
 Requires(postun): jpackage-utils >= 0:1.7.5
-Requires: apache-commons-logging
-Requires: jsp_2_0_api
-Requires: servlet_2_4_api
+Requires:       apache-commons-logging
+Requires:       jsp_2_0_api
+Requires:       servlet_2_4_api
 Provides:       jakarta-%{short_name} = %{epoch}:%{version}-%{release}
 Obsoletes:      jakarta-%{short_name} < %{epoch}:%{version}-%{release}
 Provides:       %{short_name} = %{epoch}:%{version}-%{release}
 Obsoletes:      %{short_name} < %{epoch}:%{version}-%{release}
-Source44: _fEl9UplJH
+Source44: import.info
 Obsoletes: jakarta-%{short_name} < 1:%{version}-%{release}
 Conflicts: jakarta-%{short_name} < 1:%{version}-%{release}
 
@@ -168,14 +179,14 @@ ln -s %{_javadir} external_repo/JPP
 export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
 mkdir -p ${MAVEN_REPO_LOCAL}
 export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL}"
-%{_bindir}/mvn-jpp \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
         -s $(pwd)/settings.xml \
         install javadoc:javadoc
 %else
 export CLASSPATH=
 export OPT_JAR_LIST=:
-%{ant} \
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
   -Dfinal.name=%{short_name} \
   -Dj2se.javadoc=%{_javadocdir}/java \
   -Dservlet-api.jar=$(build-classpath servlet_2_4_api) \
@@ -261,6 +272,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt6_0.r936225.4jpp6
+- added OSGi manifest
+
 * Wed Apr 27 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt5_0.r936225.4jpp6
 - added OSGi manifest
 
