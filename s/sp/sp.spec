@@ -1,6 +1,6 @@
 Name:           sp
 Version:        4.2
-Release:        alt4
+Release:        alt5
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
@@ -9,11 +9,15 @@ Url:            http://spcms.ru
 Packager:       Andrey Stroganov <dja@altlinux.org>
 Vendor:         SP Team
 Source:         sp-4.2.tar
+BuildRequires:  fpc
 Requires:       perl-base perl-CGI perl-CGI-Session perl-Archive-Zip perl-GD perl-GD-Graph perl-CGI-SpeedyCGI perl-Magick perl-Mail-Sender perl-Text-Iconv perl-DBD-InterBase perl-HTML-TagFilter pwgen perl-IO-Compress
 Requires(post): apache2 firebird-classic squid-server net-tools apache-common
 Autoprov:       0
 Autoreq:        0
-ExclusiveArch:  %ix86
+
+# for UDF, because:
+# verify-elf: ERROR: ./usr/lib/firebird/UDF/UDFLib.dll: TEXTREL entry found: 0x00000000
+%set_verify_elf_method textrel=relaxed
 
 # -------------------------------------------
 # Описание на английском
@@ -33,11 +37,18 @@ Integrated school control system.
 # -------------------------------------------
 %prep
 %setup
+# Build UDFlib for Firebird
+mkdir -p usr/lib/firebird/UDF/
+cd UDFlib-src
+# find  .. | grep usr
+fpc -Mdelphi -Xc -Cccdecl UDFLib.dpr -o../usr/lib/firebird/UDF/UDFLib.dll
+cd ..
+rm -rf UDFlib-src
+rm usr/lib/firebird/UDF/UDFLib.o
 
 # -------------------------------------------
 # Установка. Устанавливаем всё, что нужно в $RPM_BUILD_ROOT как в /
 # -------------------------------------------
-
 %install
 mkdir -p %buildroot/
 mkdir -p %buildroot/var/www/cgi-bin/sp/
@@ -293,6 +304,8 @@ a2ensite  default
 a2dissite 000-sp
 
 %changelog
+* Thu Sep 5 2012 Andrey Stroganov <dja@altlinux.org> 4.2-alt5
+- UDFlib source code, 4.2-alt5
 * Tue Sep 13 2011 Andrey Stroganov <dja@altlinux.org> 4.2-alt4
 - added README, final installation message now shorter
 * Mon Sep 12 2011 Andrey Stroganov <dja@altlinux.org> 4.2-alt3
