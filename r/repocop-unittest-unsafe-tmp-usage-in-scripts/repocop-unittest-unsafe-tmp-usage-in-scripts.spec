@@ -1,7 +1,7 @@
 %define testname unsafe-tmp-usage-in-scripts
 Name: repocop-unittest-%testname
 Version: 0.6
-Release: alt3
+Release: alt4
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -35,6 +35,8 @@ spt-profiles-junior
 bash-examples
 python-module-pyinotify-examples
 tcl-httpd-manual
+EOF
+cat > %testname.graylist <<'EOF'
 EOF
 
 cat > %testname.test <<'EOF'
@@ -96,6 +98,8 @@ cd $cwd
 
 if grep 'Found error' $report_name; then
     if grep '^'$REPOCOP_PKG_NAME'$' %_datadir/repocop/pkgtests/%testname/whitelist >/dev/null; then
+        : # skip
+    elif grep '^'$REPOCOP_PKG_NAME'$' %_datadir/repocop/pkgtests/%testname/graylist >/dev/null; then
         repocop-test-info `cat $report_name`
     elif [ -e "$not_an_example_flag" ]; then
         repocop-test-fail `cat $report_name`
@@ -117,6 +121,9 @@ install -Dm 755 %testname.whitelist %buildroot%_datadir/repocop/pkgtests/%testna
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt4
+- added graylist and exceptions
+
 * Thu Mar 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3
 - added whitelist
 
