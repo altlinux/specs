@@ -1,7 +1,7 @@
 Summary: DVD authoring program with nice and clean GUI
 Name: bombono-dvd
 Version: 1.2.1
-Release: alt2
+Release: alt3.git06454fe
 License: GPL
 Group: Video
 Url: http://www.bombono.org
@@ -30,7 +30,7 @@ The main features of Bombono DVD are:
 %prep
 %setup
 
-sed -i "s|^\(release_flags\).*|\1 = ['-O2', '-g', '-DBOOST_FILESYSTEM_VERSION=2']|" SConstruct
+sed -i "s|^\(release_flags\).*|\1 = ['-O2', '-g']|" SConstruct
 
 %build
 scons -j %__nprocs PREFIX=/usr USE_EXT_BOOST=1
@@ -57,6 +57,9 @@ ln -s %_datadir/fonts/ttf/freefont/FreeSans.ttf %buildroot%_datadir/bombono/reso
 %_datadir/mime/packages/*
 
 %changelog
+* Thu Sep 06 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.1-alt3.git06454fe
+- Fix build with boost 1.51.0 (thanks iv@)
+
 * Tue Apr 03 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.1-alt2
 - Build from commit e9390e72f44785ddc815f0a6da90fde5bda0abf4 for fix build
 
