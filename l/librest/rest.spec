@@ -5,7 +5,7 @@
 %def_disable tests
 
 Name: lib%_name
-Version: %ver_major.12
+Version: %ver_major.90
 Release: alt1
 
 Summary: A library for access to RESTful web services
@@ -74,6 +74,7 @@ This package contains development documentation for the %_name library.
 %patch -p1 -b .fixdso
 
 %build
+%autoreconf
 %configure --disable-static \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt
@@ -111,6 +112,9 @@ This package contains development documentation for the %_name library.
 %_datadir/gtk-doc/html/%{_name}*%ver_major/
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.90-alt1
+- 0.7.90
+
 * Thu Nov 10 2011 Yuri N. Sedunov <aris@altlinux.org> 0.7.12-alt1
 - 0.7.12
 
