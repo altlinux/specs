@@ -1,6 +1,6 @@
 Name: rp-pppoe
-Version: 3.10
-Release: alt4
+Version: 3.11
+Release: alt1
 
 License: %gpl2plus
 Url: http://www.roaringpenguin.com/pppoe/
@@ -184,6 +184,9 @@ EOF
 %post_control pppoe-wrapper
 
 %changelog
+* Wed Aug 29 2012 Mikhail Efremov <sem@altlinux.org> 3.11-alt1
+- Updated to 3.11.
+
 * Tue Jun 21 2011 Mikhail Efremov <sem@altlinux.org> 3.10-alt4
 - Check HELP_BROWSER variable and don't run browser as root.
 
