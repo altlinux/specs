@@ -1,7 +1,7 @@
 %define oname coopr
 Name: python-module-%oname
-Version: 3.2
-Release: alt1.svn20120212
+Version: 3.3
+Release: alt1.svn20120905
 Summary: COmmon Optimization Python Repository 
 License: BSD
 Group: Development/Python
@@ -12,7 +12,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %oname-%version.tar.gz
 
 BuildPreReq: python-devel python-module-setuptools
-BuildPreReq: texlive-latex-recommended asciidoc
+BuildPreReq: texlive-latex-recommended asciidoc asciidoc-a2x
 BuildArch: noarch
 
 %description
@@ -485,6 +485,9 @@ Requires: %name-pyomo = %version-%release
 Requires: %name-pysp = %version-%release
 Requires: %name-skel = %version-%release
 Requires: %name-sucasa = %version-%release
+Requires: %name-core = %version-%release
+Requires: %name-extras = %version-%release
+Requires: %name-openopt = %version-%release
 #Requires: %name-os = %version-%release
 %py_requires pyutilib.dev.runtests pyutilib.th pyutilib.component.app
 %py_requires pyutilib.component.loader pyutilib.autotest
@@ -511,7 +514,7 @@ pushd ceps
 popd
 
 for i in %{oname}* ATTIC/%oname.colin ATTIC/%oname.gui.coopr \
-	ATTIC/%oname.gui.pyomo ATTIC/%oname.skel
+	ATTIC/%oname.gui.pyomo ATTIC/%oname.skel ATTIC/%oname.plugins.skel
 do
 	if [ "$i" != "coopr.doc" ]; then
 		pushd $i/trunk
@@ -536,7 +539,7 @@ cp %oname.data.samples/trunk/%oname/data/samples/CooprGettingStarted \
 export PYTHONPATH=%buildroot%python_sitelibdir
 
 for i in %{oname}* ATTIC/%oname.colin ATTIC/%oname.gui.coopr \
-	ATTIC/%oname.gui.pyomo ATTIC/%oname.skel
+	ATTIC/%oname.gui.pyomo ATTIC/%oname.skel ATTIC/%oname.plugins.skel
 do
 	if [ "$i" != "coopr.doc" ]; then
 		pushd $i/trunk
@@ -553,13 +556,15 @@ do
 done
 
 rm -f \
-	%buildroot%python_sitelibdir/%oname/pyomo/tests/NL/CUTE/gigomez1_cute.py*
+	%buildroot%python_sitelibdir/%oname/pyomo/tests/NL/CUTE/gigomez1_cute.py* \
+	%buildroot%python_sitelibdir/%oname/data/cute/hubfit_cute.py*
 
 mv %buildroot%_bindir/OSSolverService \
 	%buildroot%_bindir/OSSolverService.%oname
 
 install -d %buildroot%_docdir/%oname
 pushd %oname.doc/trunk/GettingStarted/current
+%make
 cp -fR *.html *.pdf *.txt examples %buildroot%_docdir/%oname/
 popd
 
@@ -763,6 +768,9 @@ popd
 %python_sitelibdir/%oname/openopt/test*
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.svn20120905
+- Version 3.3
+
 * Sun Feb 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt1.svn20120212
 - Version 3.2
 
