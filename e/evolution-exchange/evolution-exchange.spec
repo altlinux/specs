@@ -10,7 +10,7 @@
 %def_disable gtk_doc
 
 Name: evolution-exchange
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 
 Summary: Microsoft Exchange connector for Evolution
@@ -146,6 +146,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
+- 3.4.4
+
 * Mon Jun 18 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
 - 3.4.3
 
