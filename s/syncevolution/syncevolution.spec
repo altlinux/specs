@@ -5,21 +5,24 @@
 
 %def_enable libsoup
 %def_enable libcurl
-# requires updated xmlprc-c compiled with --enable-cplusplus (libxmlrpc++-devel)
-%def_disable xmlrpc
+%def_enable xmlrpc
 %def_enable bluetooth
 %def_enable gnome_bluetooth
 %def_enable gnome_keyring
+%def_enable akonadi
 %def_enable activesync
 # experimental now
+# sqlite conflicts with the evolution backend
 %def_disable sqlite
+%def_enable dav
+%def_disable qtcontacts
 
 #SySync_ConsolePrintf is expected by libsmltk and has to be provided by caller
 %set_verify_elf_skiplist %_libdir/libsmltk.so.0.6.0
 
 Name: syncevolution
 Version: %ver_major.99.4
-Release: alt1
+Release: alt3
 Summary: SyncEvolution synchronizes personal information management (PIM) data like contacts, calenders, tasks and memos
 
 Group: Office
@@ -34,17 +37,19 @@ Requires: %name-libs = %version-%release
 Requires: ca-certificates
 
 BuildRequires: boost-devel boost-signals-devel db2latex-xsl evolution-data-server-devel gcc-c++ intltool libexpat-devel zlib-devel
-BuildRequires: libglade-devel libnotify-devel libopenobex-devel libdbus-devel libdbus-glib-devel
-BuildRequires: libpcre-devel libpcrecpp-devel libunique-devel cppunit-devel python-module-PyXML python-modules-encodings xsltproc
-BuildRequires: libgtk+3-devel libgio-devel libqt4-devel kde4libs kde4pimlibs-devel
+BuildRequires: libnotify-devel libopenobex-devel libdbus-devel libdbus-glib-devel
+BuildRequires: libpcre-devel libpcrecpp-devel cppunit-devel python-module-PyXML python-modules-encodings xsltproc
+BuildRequires: libneon-devel kde4pimlibs-devel
+BuildRequires: libgtk+3-devel libgio-devel
 %{?_enable_libsoup:BuildRequires: libsoup-gnome-devel}
 %{?_enable_libcurl:BuildRequires: libcurl-devel}
 %{?_enable_bluetooth:BuildRequires: libbluez-devel}
 %{?_enable_gnome_bluetooth:BuildRequires: libgnome-bluetooth-devel}
 %{?_enable_gnome_keyring:BuildRequires: libgnome-keyring-devel}
-%{?_enable_xmlrpc:BuildRequires: libxmlrpc++-devel}
+%{?_enable_xmlrpc:BuildRequires: libxmlrpc-devel}
 %{?_enable_sqlite:BuildRequires: libsqlite3-devel}
 %{?_enable_activesync:BuildRequires: libeasclient-devel}
+%{?_enable_qtcontacts:BuildRequires: qt4-mobility-devel}
 
 
 %description
@@ -113,7 +118,7 @@ mkdir m4
 ./autogen.sh
 popd
 
-export LDFLAGS="$LDFLAGS -ldl"
+export LDFLAGS="$LDFLAGS -ldl -L%_libdir/kde4/devel"
 %configure \
 	--enable-shared \
 	--disable-static \
@@ -127,7 +132,10 @@ export LDFLAGS="$LDFLAGS -ldl"
 	%{subst_enable xmlrpc} \
 	%{subst_enable sqlite} \
 	%{subst_enable bluetooth} \
+	%{subst_enable akonadi} \
 	%{subst_enable activesync} \
+	%{subst_enable dav} \
+	%{subst_enable qtcontacts} \
 	%{?_enable_gnome_keyring:--enable-gnome-keyring} \
 	%{?_enable_gnome_bluetooth:--enable-gnome-bluetooth-panel-plugin} \
 	--with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt \
@@ -145,11 +153,16 @@ rm -f %buildroot%_libdir/*/*/*.{a,la}
 
 %find_lang %name
 
+%check
+# FAILS currently
+#make check
+
 %files -f %name.lang
 %_bindir/*
 %_libexecdir/*
 %dir %_libdir/%name
 # some backends not linked properly, test needed
+#FIXME: divide backends
 %_libdir/%name/backends
 %_libdir/gnome-bluetooth/plugins/libgbt%name.so
 %_datadir/%name
@@ -180,6 +193,14 @@ rm -f %buildroot%_libdir/*/*/*.{a,la}
 %_iconsdir/hicolor/48x48/apps/sync.png
 
 %changelog
+* Thu Sep 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.99.4-alt3
+- build to sisyphus
+
+* Wed Sep 05 2012 Ildar Mulyukov <ildar@altlinux.ru> 1.2.99.4-alt2
+- upstream/syncevolution: new snapshot
+- added and enabled new backends
+- disabled sqlite and qtcontacts backends
+
 * Fri Aug 31 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.99.4-alt1
 - 1.2.99.4
 - build with gtk+-3
