@@ -1,10 +1,11 @@
 %define _name gupnp-av
+%define api_ver 1.0
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: libgupnp-av
-Version: 0.10.2
+Version: 0.10.3
 Release: alt1
 
 Summary: A library to handle UPnP A/V profiles
@@ -105,14 +106,17 @@ GObject introspection devel data for the GUPnP A/V library
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*
+%_typelibdir/GUPnPAV-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/*
+%_girdir/GUPnPAV-%api_ver.gir
 %endif
 
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.10.3-alt1
+- 0.10.3
+
 * Fri Apr 20 2012 Yuri N. Sedunov <aris@altlinux.org> 0.10.2-alt1
 - 0.10.2
 
