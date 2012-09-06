@@ -47,7 +47,7 @@ BuildRequires: jpackage-1.5.0-compat
 
 Name:           shale
 Version:        1.0.4
-Release:        alt5_1jpp5
+Release:        alt6_1jpp5
 Epoch:          0
 Summary:        Shale Framework
 License:        Apache Software License 2.0
@@ -90,7 +90,7 @@ BuildRequires: mojo-maven2-plugin-cobertura
 %endif
 BuildRequires: cargo
 BuildRequires: el_1_0_api
-BuildRequires: htmlunit
+BuildRequires: htmlunit1
 BuildRequires: jakarta-commons-beanutils
 BuildRequires: jakarta-commons-chain
 BuildRequires: jakarta-commons-collections
@@ -202,7 +202,7 @@ Requires: spring-web >= 0:1.2.9
 %package test
 Summary:        Shale Test Framework
 Group:          Development/Java
-Requires: htmlunit
+Requires: htmlunit1
 Requires: jmock
 Requires: junit
 Requires: cargo
@@ -608,6 +608,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt6_1jpp5
+- fixed build using htmlunit1
+
 * Mon Feb 14 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt5_1jpp5
 - fixed build - disabled site generation
 
