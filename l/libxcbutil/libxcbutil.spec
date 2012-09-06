@@ -1,52 +1,37 @@
 Name: libxcbutil
-Version: 0.3.6
-Release: alt2
-Serial: 1
-Summary: XCB support libraries
+Version: 0.3.9
+Release: alt1
+Epoch: 1
+Summary: XCB util modules
 License: MIT
 Group: System/Libraries
 URL: http://xcb.freedesktop.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Provides: xcb-util = %version-%release
-Obsoletes: xcb-util < %version-%release
-
 Source: %name-%version.tar
+Source1: m4.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gperf libxcb-devel xorg-xproto-devel
+BuildRequires: doxygen libxcb-devel xorg-xproto-devel xorg-util-macros
 
 %description
-The xcb-util module provides a number of libraries which sit on top of
-libxcb, the core X protocol library, and some of the extension
+The XCB util modules provides a number of libraries which sit on top
+of libxcb, the core X protocol library, and some of the extension
 libraries. These experimental libraries provide convenience functions
 and interfaces which make the raw X protocol more usable. Some of the
 libraries also provide client-side code which is not strictly part of
 the X protocol but which have traditionally been provided by Xlib.
 
-These libraries are currently included, roughly ordered by maturity:
-render-util: Convenience functions for the Render extension.
-aux: Convenient access to connection setup and some core requests.
-atom: Standard core X atom constants and atom caching.
-property: Callback X property-change handling.
-icccm: Both client and window-manager helpers for ICCCM.
-keysyms: Standard X key constants and conversion to/from keycodes.
-event: Callback X event handling.
-image: Port of Xlib's XImage and XShmImage functions.
-wm: Framework for window manager implementation.
-
 %package devel
 Summary: Header files for XCB util libraries
 Group: Development/C
 Requires: %name = %version-%release
-Provides: xcb-util-devel = %version-%release
-Obsoletes: xcb-util-devel < %version-%release
 
 %description devel
-Header files for XCB util libraries.
+Header files for XCB util libraries
 
 %prep
-%setup -q
+%setup -q -a1
 %patch -p1
 
 %build
@@ -67,6 +52,12 @@ Header files for XCB util libraries.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Aug 29 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.9-alt1
+- 0.3.9
+
+* Mon May 02 2011 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.8-alt1
+- 0.3.8
+
 * Fri Nov 05 2010 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.6-alt2
 - rebuild
 

@@ -3,7 +3,7 @@
 
 Name: startup-notification
 Version: %ver_major
-Release: alt1
+Release: alt1.1
 
 Summary: Startup Notification Library
 License: LGPL
@@ -72,6 +72,9 @@ This package contains the lib%name static libraries.
 %endif
 
 %changelog
+* Sun Sep 02 2012 Valery Inozemtsev <shrek@altlinux.org> 0.12-alt1.1
+- rebuild with libxcbutil 0.3.9
+
 * Wed May 25 2011 Yuri N. Sedunov <aris@altlinux.org> 0.12-alt1
 - 0.12
 
