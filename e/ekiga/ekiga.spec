@@ -3,7 +3,7 @@
 
 Name: ekiga
 Version: 3.3.0
-Release: alt2.1
+Release: alt2.2
 
 Summary: IP phone client with full SIP and H.323 support
 
@@ -84,6 +84,9 @@ fi
 %_man1dir/*.1*
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.0-alt2.2
+- Rebuilt with Boost 1.51.0
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.0-alt2.1
 - Fixed build
 
