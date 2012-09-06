@@ -6,19 +6,18 @@
 
 Name: libtool_%ltversion
 Version: 1.5.26
-Release: alt9
+Release: alt10
 Epoch: 3
 
 Summary: The GNU libtool, which simplifies the use of shared libraries
 License: GPLv2+
 Group: Development/Other
 Url: http://www.gnu.org/software/libtool/libtool.html
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 %add_findreq_skiplist %_datadir/%libtool/config.guess
 %set_compress_method gzip
 
-Provides: libtool = 3:%version-%release
+Provides: libtool = %epoch:%version-%release
 Obsoletes: libtool
 PreReq: libtool-common >= 0.2, alternatives >= 0:0.4
 Requires: aclocal(libtool)
@@ -34,18 +33,18 @@ BuildRequires: gcc-c++, gcc-g77
 %package -n %libltdl
 Summary: dlopen wrapper for GNU libtool
 License: LGPLv2+
-Group: System/Libraries
-Provides: libltdl = 3:%version-%release
-Obsoletes: libltdl < 3:%version-%release
+Group: System/Legacy libraries
+Provides: libltdl = %epoch:%version-%release
+Obsoletes: libltdl < %epoch:%version-%release
 
 %package -n %libltdl-devel
 Summary: Development files for %libltdl
 License: LGPLv2+
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 Requires: %libltdl = %epoch:%version-%release
-Provides: libltdl-devel = 3:%version-%release
-Obsoletes: libltdl-devel < 3:%version-%release
+Provides: libltdl-devel = %epoch:%version-%release
+Obsoletes: libltdl-devel < %epoch:%version-%release
 Conflicts: libltdl7-devel
 
 %package -n %libltdl-devel-static
@@ -53,8 +52,8 @@ Summary: Static %libltdl library
 License: LGPLv2+
 Group: Development/C
 Requires: %libltdl-devel = %epoch:%version-%release
-Provides: libltdl-devel-static = 3:%version-%release
-Obsoletes: libltdl-devel-static < 3:%version-%release
+Provides: libltdl-devel-static = %epoch:%version-%release
+Obsoletes: libltdl-devel-static < %epoch:%version-%release
 Conflicts: libltdl7-devel-static
 
 %package demos
@@ -89,7 +88,7 @@ Static libltdl library, a system independent dlopen wrapper for GNU libtool.
 Sample programs and libraries to build with libtool.
 
 %prep
-%setup -q -n libtool-%version
+%setup -n libtool-%version
 %patch -p1
 
 # fix testsuite
@@ -229,6 +228,9 @@ cp -p install-sh missing %buildroot%ltdocdir/demo/
 %ltdocdir/*demo*
 
 %changelog
+* Thu Sep 06 2012 Dmitry V. Levin <ldv@altlinux.org> 3:1.5.26-alt10
+- Fixed %libltdl-devel interpackage requirements.
+
 * Fri Nov 12 2010 Dmitry V. Levin <ldv@altlinux.org> 3:1.5.26-alt9
 - Rebuilt for soname set-versions.
 
