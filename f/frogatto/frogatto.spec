@@ -1,6 +1,6 @@
 Name: frogatto
 Version: 1.1.1
-Release: alt1.3
+Release: alt1.4
 
 Summary: Frogatto & Friends classic adventure game
 License: GPLv3+
@@ -78,6 +78,9 @@ chmod 755 %buildroot%_gamesbindir/frogatto
 %_datadir/frogatto
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.4
+- Rebuilt with Boost 1.51.0
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.3
 - Rebuilt with Boost 1.49.0
 
