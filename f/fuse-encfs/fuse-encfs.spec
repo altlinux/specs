@@ -4,7 +4,7 @@
 Name: fuse-encfs
 Summary: Encrypted pass-thru filesystem for Linux
 Version: 1.7.4
-Release: alt1.3
+Release: alt1.4
 License: GPL
 Group: System/Kernel and hardware
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -70,6 +70,9 @@ encfs/test
 %exclude %_libdir/*.so
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.4-alt1.4
+- Rebuilt with Boost 1.51.0
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.4-alt1.3
 - Rebuilt with Boost 1.49.0
 
