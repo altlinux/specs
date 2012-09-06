@@ -14,7 +14,7 @@
 Summary:	XUL Runner
 Name:		xulrunner
 Version:	15.0
-Release:	alt1
+Release:	alt2
 
 License:	MPL/GPL/LGPL
 Group:		Networking/Other
@@ -69,7 +69,7 @@ BuildRequires: libgio-devel
 BuildRequires: libfreetype-devel fontconfig-devel
 BuildRequires: libstartup-notification-devel
 BuildRequires: libffi-devel
-BuildRequires: gstreamer-devel gst-plugins-devel
+#BuildRequires: gstreamer-devel gst-plugins-devel
 BuildRequires: libopus-devel
 
 # Python requires
@@ -362,6 +362,9 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Thu Sep 06 2012 Alexey Gladkov <legion@altlinux.ru> 15.0-alt2
+- Disable gstreamer for now.
+
 * Tue Aug 28 2012 Alexey Gladkov <legion@altlinux.ru> 15.0-alt1
 - New release (15.0).
 - Fixed:
