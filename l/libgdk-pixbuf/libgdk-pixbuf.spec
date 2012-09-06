@@ -7,7 +7,7 @@
 %def_with x11
 
 Name: lib%_name
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -77,7 +77,7 @@ applications.
 
 %package devel-doc
 Summary: Development documentation for GdkPixBuf library
-Group: Development/C
+Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name-devel < %version
 
@@ -190,6 +190,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %endif
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 2.26.3-alt1
+- 2.26.3
+
 * Sat Apr 14 2012 Yuri N. Sedunov <aris@altlinux.org> 2.26.1-alt1
 - 2.26.1
 
