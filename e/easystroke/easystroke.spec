@@ -3,7 +3,7 @@
 
 Name:     easystroke
 Version:  0.5.5.1
-Release:  alt1.1
+Release:  alt1.2
 
 Summary: a gesture-recognition application for X11
 
@@ -16,6 +16,7 @@ Source0: %name-%version.tar
 Patch0:  %name-%version-%release.patch
 
 Patch1:  %name-0.5.5.1-alt-desktop.patch
+Patch2:  %name-0.5.5.1-alt-debuginfo.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: librsvg-utils
@@ -37,6 +38,7 @@ with a mouse.
 %patch0 -p1
 
 %patch1
+%patch2 -p2
 
 %build
 %make PREFIX=%_exec_prefix
@@ -70,6 +72,10 @@ mkdir -p -- %buildroot%_miconsdir %buildroot%_niconsdir %buildroot%_liconsdir
 %_iconsdir/hicolor/scalable/apps/%name.svg
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.5.1-alt1.2
+- Rebuilt with Boost 1.51.0
+- Enabled debuginfo
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.5.1-alt1.1
 - Rebuilt with Boost 1.49.0
 
