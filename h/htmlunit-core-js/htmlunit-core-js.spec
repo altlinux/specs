@@ -1,117 +1,77 @@
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with gcj_support
-%bcond_with gcj_support
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
 Name:           htmlunit-core-js
-Version:        2.8
-Release:        alt1_3jpp6
-Epoch:          0
-Summary:        HtmlUnit adaptation of Mozilla Rhino Javascript engine for Java
-License:        MPL 1.1
+Version:        2.9
+Release:        alt1_3jpp7
+Summary:        Rhino fork for htmlunit
+
 Group:          Development/Java
-URL:            http://htmlunit.svn.sourceforge.net/
-# svn -q export https://htmlunit.svn.sourceforge.net/svnroot/htmlunit/tags/core-js-2.8/ htmlunit-core-js-2.8 && tar cjf htmlunit-core-js-2.8.tar.bz2 htmlunit-core-js-2.8/
-# Exported revision 6155.
-Source0:        htmlunit-core-js-2.8.tar.bz2
-Patch0:         htmlunit-core-js-build.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires: jpackage-utils
-BuildRequires: ant
-BuildRequires: jpackage-utils
-BuildRequires: junit4
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
-BuildArch: noarch
-%endif
+License:        MPLv1.1
+URL:            http://htmlunit.sourceforge.net/
+# svn export http://htmlunit.svn.sourceforge.net/svnroot/htmlunit/tags/core-js-2.9 htmlunit-core-js-2.9
+# tar caf ~/rpmbuild/htmlunit-core-js-2.9.tar.xz htmlunit-core-js-2.9
+Source0:        %{name}-%{version}.tar.xz
+Patch0:         %{name}-%{version}-build-fix.patch
+
+BuildArch:      noarch
+
+BuildRequires:  jpackage-utils
+BuildRequires:  junit4
+BuildRequires:  ant
+
+Requires:       jpackage-utils
 Source44: import.info
 
 %description
-HtmlUnit uses Rhino as its core JavaScript engine. HtmlUnit-core-js
-is a fork of the Mozilla Rhino JavaScript engine where what is
-important is to simulate browser's behavior.
+This is a fork of Rhino to support HtmlUnit.
+Everyone hopes it will go away someday.
+
+%package javadoc
+Summary:        Javadocs for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0 -b .sav0
-%{_bindir}/find -name "*.jar" | %{_bindir}/xargs -t %{__rm}
+%patch0 -p0
+find . -regex '.*\.\(class\|jar\|zip\)' -exec rm -f '{}' \;
 
 %build
-export OPT_JAR_LIST=:
-export CLASSPATH=
-%{ant} -Djunit.jar=$(%{_bindir}/build-classpath junit4) jar-all
+ant -DupdateRhinoOriginal.skip=true jar-all
 
 %install
 
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p target/htmlunit-core-js-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} ${jar/-%{version}/}; done)
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-# poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap net.sourceforge.htmlunit htmlunit-core-js %{version} JPP %{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp target/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
 
 %files
-%doc LICENSE.txt MPL-1.1.html rhinoDiff.txt 
-%{_javadir}*/%{name}-%{version}.jar
-%{_javadir}*/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%attr(-,root,root,) %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.db
-%attr(-,root,root,) %{_libdir}/gcj/%{name}/%{name}-%{version}.jar.so
-%endif
+%{_javadir}/%{name}.jar
+%doc LICENSE.txt README.txt release.txt
+
+%files javadoc
+%{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt1_3jpp7
+- new release
+
 * Sun Feb 13 2011 Igor Vlasenko <viy@altlinux.ru> 0:2.8-alt1_3jpp6
 - new version
 
