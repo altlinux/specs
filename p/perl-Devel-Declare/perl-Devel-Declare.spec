@@ -1,6 +1,6 @@
 %define dist Devel-Declare
 Name: perl-%dist
-Version: 0.006008
+Version: 0.006011
 Release: alt1
 
 Summary: Adding keywords to perl, in perl
@@ -32,5 +32,9 @@ take over Perl's parser, allowing the creation of new syntax.
 %perl_vendor_autolib/Devel
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.006011-alt1
+- 0.006008 -> 0.006011
+- built for perl-5.16
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.006008-alt1
 - initial revision

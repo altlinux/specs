@@ -7,7 +7,7 @@
 
 Name: perl-%module
 Version: 0.9509
-Release: alt1
+Release: alt2
 
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -54,6 +54,9 @@ in the Perl script.
 #perl_vendor_man3dir/*
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.9509-alt2
+- rebuilt for perl-5.16
+
 * Tue Feb 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.9509-alt1
 - new version; see Changes
 

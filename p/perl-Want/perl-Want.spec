@@ -1,7 +1,7 @@
 %define dist Want
 Name: perl-%dist
-Version: 0.18
-Release: alt1.2
+Version: 0.21
+Release: alt1
 
 Summary: A generalisation of "wantarray"
 License: GPL or Artistic
@@ -32,6 +32,10 @@ is going to be immediately used.
 %perl_vendor_autolib/Want
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.21-alt1
+- 0.18 -> 0.21
+- built for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.18-alt1.2
 - rebuilt for perl-5.14
 

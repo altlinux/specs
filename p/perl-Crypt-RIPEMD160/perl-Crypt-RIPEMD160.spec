@@ -1,7 +1,7 @@
 %define dist Crypt-RIPEMD160
 Name: perl-%dist
 Version: 0.05
-Release: alt2
+Release: alt3
 
 Summary: Perl extension for the RIPEMD-160 Hash function
 License: GPL or Artistic
@@ -35,6 +35,9 @@ Katholieke Universiteit Leuven.
 %perl_vendor_autolib/Crypt
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.05-alt3
+- rebuilt for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 0.05-alt2
 - rebuilt for perl-5.14
 

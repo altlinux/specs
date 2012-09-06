@@ -1,7 +1,7 @@
 %define dist Net-CUPS
 Name: perl-%dist
 Version: 0.61
-Release: alt1.2
+Release: alt2
 
 Summary: Perl interface to the Common Unix Printing System API
 License: GPL or Artistic
@@ -31,6 +31,9 @@ Net::CUPS is an object oriented interface to the Common Unix Printing System.
 %perl_vendor_archlib/Net
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.61-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.61-alt1.2
 - rebuilt for perl-5.14
 

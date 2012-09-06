@@ -1,7 +1,7 @@
 %define dist Data-Structure-Util
 Name: perl-%dist
 Version: 0.15
-Release: alt2.2
+Release: alt3
 
 Summary: Change nature of data within a structure
 License: GPL or Artistic
@@ -11,7 +11,7 @@ URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: perl-File-Find-Rule perl-Test-Pod
+BuildRequires: perl-File-Find-Rule perl-Test-Pod perl-CPAN-Meta
 
 %description
 Data::Structure::Util is a toolbox to manipulate the data inside a
@@ -38,6 +38,10 @@ detect if there is a circular reference.
 %perl_vendor_autolib/Data
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt3
+- rebuilt for perl-5.16
+- perl-CPAN-Meta required for build
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.15-alt2.2
 - rebuilt for perl-5.14
 

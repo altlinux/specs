@@ -1,7 +1,7 @@
 %define dist Gtk2-Sexy
 Name: perl-%dist
 Version: 0.05
-Release: alt1.2
+Release: alt2
 
 Summary: Perl interface to the sexy widget collection
 License: LGPL
@@ -46,6 +46,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gtk2/Sexy/Install
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.05-alt2
+- rebuilt for perl-5.16
+
 * Mon Oct 10 2011 Alexey Tourbin <at@altlinux.ru> 0.05-alt1.2
 - rebuilt for perl-5.14
 

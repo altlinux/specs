@@ -1,7 +1,7 @@
 %define dist Time-Format_XS
 Name: perl-%dist
 Version: 1.03
-Release: alt1.2
+Release: alt2
 
 Summary: Companion module for Time::Format, to speed up time formatting
 License: GPL or Artistic
@@ -32,6 +32,9 @@ of the time_format function written in C, so it is much faster.
 %perl_vendor_archlib/Time
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.03-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.03-alt1.2
 - rebuilt for perl-5.14
 

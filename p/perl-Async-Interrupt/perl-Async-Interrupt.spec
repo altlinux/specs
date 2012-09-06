@@ -1,8 +1,9 @@
 %define module Async-Interrupt
 
 Name: perl-%module
-Version: 1.05
-Release: alt1.2
+Version: 1.1
+Release: alt1
+Epoch: 1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -36,6 +37,10 @@ without using a single syscall.
 %perl_vendor_autolib/Async
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1:1.1-alt1
+- 1.05 -> 1.1
+- built for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.05-alt1.2
 - rebuilt for perl-5.14
 

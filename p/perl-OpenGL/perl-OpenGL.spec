@@ -1,6 +1,6 @@
 Name: perl-OpenGL
 Version: 0.66
-Release: alt1
+Release: alt2
 
 Summary: Perl bindings to OpenGL API
 Group: Development/Perl
@@ -33,5 +33,8 @@ rm test.pl
 %doc TODO CHANGES README COPYRIGHT KNOWN_PROBLEMS Release_Notes SUPPORTS
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.66-alt2
+- rebuilt for perl-5.16
+
 * Fri Jun 22 2012 Vladimir Lettiev <crux@altlinux.ru> 0.66-alt1
 - initial build

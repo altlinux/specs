@@ -1,7 +1,7 @@
 %define dist Coro
 Name: perl-%dist
-Version: 6.06
-Release: alt2
+Version: 6.08
+Release: alt1
 
 Summary: cooperative multitasking Perl module
 License: GPL or Artistic
@@ -38,6 +38,10 @@ cp -p Coro/libcoro/LICENSE LICENSE.libcoro
 %perl_vendor_autolib/Coro
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 6.08-alt1
+- 6.06 -> 6.08
+- built for perl-5.16
+
 * Wed Oct 19 2011 Alexey Tourbin <at@altlinux.ru> 6.06-alt2
 - rebuilt for perl-5.14
 

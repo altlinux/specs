@@ -3,7 +3,7 @@
 Name: openipmi
 Summary: %name - Library interface to IPMI
 Version: 2.0.19
-Release: alt1
+Release: alt2
 License: LGPL
 Url: http://openipmi.sourceforge.net
 Group: System/Configuration/Hardware
@@ -150,6 +150,9 @@ rm -f %buildroot%_libdir/libOpenIPMIglib12.*
 %_man8dir/ipmilan.8*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.0.19-alt2
+- rebuilt for perl-5.16
+
 * Sat Dec 31 2011 Michael Shigorin <mike@altlinux.org> 2.0.19-alt1
 - new version
 

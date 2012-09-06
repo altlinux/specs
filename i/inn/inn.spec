@@ -1,6 +1,6 @@
 Name: inn
 Version: 2.4.5
-Release: alt4.3
+Release: alt5
 
 Summary: The InterNetNews (INN) system, an Usenet news server
 License: GPL
@@ -386,6 +386,9 @@ fi
 %_man1dir/inews*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.4.5-alt5
+- rebuilt for perl-5.16
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.5-alt4.3
 - Removed bad RPATH
 

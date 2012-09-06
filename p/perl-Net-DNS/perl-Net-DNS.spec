@@ -4,8 +4,8 @@
 %define __spec_autodep_custom_pre export PERL5OPT='-I%buildroot%perl_vendor_archlib -MNet::DNS'
 
 Name: perl-%module
-Version: 0.66
-Release: alt1.2
+Version: 0.68
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -47,6 +47,10 @@ sed -i- '/sock->sockaddr/s/;/ if $sock;/' t/01-resolver.t
 %exclude %perl_vendor_archlib/Net/DNS/Resolver/Win32.pm
 
 %changelog
+* Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 0.68-alt1
+- 0.68
+- built for perl-5.16
+
 * Thu Oct 06 2011 Alexey Tourbin <at@altlinux.ru> 0.66-alt1.2
 - rebuilt for perl-5.14
 - fixed failing test in hasher

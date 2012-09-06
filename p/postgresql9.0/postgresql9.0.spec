@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     0
 %define postgresql_subminor  6
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 %define libpq_major          5
 %define libpq_minor          3
 %define libecpg_major        6
@@ -705,6 +705,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 9.0.6-alt2
+- rebuilt for perl-5.16
+
 * Thu Dec 15 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 9.0.6-alt1
 - 9.0.6.
 

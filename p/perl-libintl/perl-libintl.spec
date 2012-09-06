@@ -1,7 +1,7 @@
 %define dist libintl-perl
 Name: perl-libintl
 Version: 1.20
-Release: alt1
+Release: alt2
 
 Summary: High-Level Interface to Uniforum Message Translation
 License: LGPL or Artistic
@@ -46,6 +46,9 @@ sed -i- '/LIBS/d' gettext_xs/Makefile.PL
 	%perl_vendor_autolib/Locale
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.20-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.20-alt1
 - 1.16 -> 1.20
 - built for perl-5.12

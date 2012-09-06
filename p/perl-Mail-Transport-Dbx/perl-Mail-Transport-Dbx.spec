@@ -1,7 +1,7 @@
 %define dist Mail-Transport-Dbx
 Name: perl-%dist
 Version: 0.07
-Release: alt2.2
+Release: alt3
 
 Summary: Parse Outlook Express mailboxes
 License: GPL or Artistic
@@ -33,6 +33,9 @@ version of libdbx to make it work on big-endian machines (like Solaris).
 %perl_vendor_autolib/Mail
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.07-alt3
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.07-alt2.2
 - rebuilt for perl-5.14
 

@@ -1,7 +1,7 @@
 %define dist MRO-Define
 Name: perl-%dist
 Version: 0.01
-Release: alt3
+Release: alt4
 
 Summary: Define your own method resolution order
 License: GPL or Artistic
@@ -39,6 +39,9 @@ addition to those perl already has.
 %perl_vendor_autolib/MRO
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.01-alt4
+- rebuilt for perl-5.16
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.01-alt3
 - disabled build dependency on perl-Module-Install
 

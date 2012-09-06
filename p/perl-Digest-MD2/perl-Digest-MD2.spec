@@ -1,7 +1,7 @@
 %define dist Digest-MD2
 Name: perl-%dist
 Version: 2.03
-Release: alt2.3
+Release: alt3
 
 Summary: Perl interface to the MD2 Algorithm
 License: GPL or Artistic
@@ -34,6 +34,9 @@ a 128-bit "fingerprint" or "message digest" of the input.
 %perl_vendor_autolib/Digest
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 2.03-alt3
+- rebuilt for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 2.03-alt2.3
 - rebuilt for perl-5.14
 

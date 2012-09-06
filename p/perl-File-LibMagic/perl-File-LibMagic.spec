@@ -1,7 +1,7 @@
 %define dist File-LibMagic
 Name: perl-File-LibMagic
 Version: 0.96
-Release: alt2
+Release: alt3
 
 Summary: Perl wrapper for libmagic
 License: GPL or Artistic
@@ -32,6 +32,9 @@ the file-4.x package from Christos Zoulas (ftp://ftp.astron.com/pub/file/).
 %perl_vendor_autolib/File
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.96-alt3
+- rebuilt for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 0.96-alt2
 - rebuilt for perl-5.14
 

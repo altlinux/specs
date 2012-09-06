@@ -1,7 +1,7 @@
 %define dist DateTime
 Name: perl-%dist
-Version: 0.70
-Release: alt2
+Version: 0.76
+Release: alt1
 
 Summary: DateTime base objects
 License: GPL or Artistic
@@ -13,8 +13,7 @@ Source: %dist-%version.tar.gz
 # break dependency loop
 Requires: perl-DateTime-TimeZone
 
-# Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: perl-DateTime-Locale perl-DateTime-TimeZone perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn
+BuildRequires: perl-DateTime-Locale perl-DateTime-TimeZone perl-Math-Round perl-Module-Build perl-Test-Exception perl-Test-Warn perl-Test-Fatal
 
 %description
 DateTime is a class for the representation of date/time combinations,
@@ -38,6 +37,10 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 0.76-alt1
+- 0.70 -> 0.76
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 0.70-alt2
 - rebuilt for perl-5.14
 

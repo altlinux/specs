@@ -1,7 +1,7 @@
 %define dist Data-Dump-Streamer
 Name: perl-%dist
-Version: 2.32
-Release: alt2
+Version: 2.34
+Release: alt1
 
 Summary: Accurately serialize a data structure as Perl code
 License: GPL or Artistic
@@ -35,6 +35,10 @@ output correctly.
 %perl_vendor_autolib/Data
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 2.34-alt1
+- 2.32 -> 2.34
+- built for perl-5.16
+
 * Tue Oct 11 2011 Alexey Tourbin <at@altlinux.ru> 2.32-alt2
 - rebuilt for perl-5.14
 

@@ -1,7 +1,7 @@
 %define dist Unix-Mknod
 Name: perl-%dist
 Version: 0.04
-Release: alt1
+Release: alt2
 
 Summary: Perl extension for mknod, major, minor, and makedev
 License: GPL or Artistic
@@ -33,5 +33,8 @@ mknod(2) system call.
 %perl_vendor_autolib/Unix
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.04-alt2
+- rebuilt for perl-5.16
+
 * Tue Oct 18 2011 Alexey Tourbin <at@altlinux.ru> 0.04-alt1
 - initial revision

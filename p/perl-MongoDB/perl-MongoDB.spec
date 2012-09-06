@@ -1,7 +1,7 @@
 %define dist MongoDB
 Name: perl-%dist
 Version: 0.45
-Release: alt2
+Release: alt3
 
 Summary: Mongo Driver for Perl
 License: GPL or Artistic
@@ -34,6 +34,9 @@ This is the Perl driver for MongoDB, a document-oriented database.
 %perl_vendor_autolib/MongoDB
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.45-alt3
+- rebuilt for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 0.45-alt2
 - rebuilt for perl-5.14
 

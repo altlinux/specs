@@ -29,7 +29,7 @@
 
 Name: apache
 Version: %apache_version
-Release: %branch_release alt4
+Release: %branch_release alt5
 
 Summary: The most widely used Web server on the Internet
 License: %asl
@@ -110,6 +110,7 @@ Patch97: mod_perl-1.29-CVE-2007-1349.patch
 
 # https://rt.cpan.org/Public/Bug/Display.html?id=64999
 Patch98: mp1+perl5.14.diff
+Patch99: mod_perl-perl-5.16.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache
@@ -119,7 +120,7 @@ BuildPreReq: rpm-macros-webserver-cgi-bin-control
 BuildPreReq: rpm-build-licenses
 
 # Automatically added by buildreq on Thu Oct 13 2011 (-bi)
-BuildRequires: libdb4-devel libgdbm-devel libmm-devel perl-BSD-Resource perl-CGI perl-DBM perl-Devel-Symdump perl-devel perl-libwww
+BuildRequires: libdb4-devel libgdbm-devel libmm-devel perl-BSD-Resource perl-CGI perl-DBM perl-Devel-Symdump perl-devel perl-libwww perl-Pod-Simple
 
 %if_with mod_deflate
 BuildRequires: zlib-devel
@@ -829,6 +830,7 @@ pwd
 pushd ../mod_perl-%mod_perl_version
 %patch97 -p1
 %patch98 -p1
+%patch99 -p1
 popd
 
 chmod -x $(find htdocs -type f)
@@ -1454,6 +1456,10 @@ fi
 # - macro for %_cachedir/httpd/
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.3.42rusPL30.24-alt5
+- rebuilt for perl-5.16
+- fixed build
+
 * Tue Feb 21 2012 Aleksey Avdeev <solo@altlinux.ru> 1.3.42rusPL30.24-alt4
 - Add condstopstart-web scripts for httpd-perl
 

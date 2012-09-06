@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.002
-Release: alt3.2
+Release: alt4
 
 Summary: Gnome2-Canvas Perl module
 License: LGPL
@@ -61,6 +61,9 @@ xvfb-run -a make test
 	%perl_vendor_archlib/Gnome2/Canvas/Install
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.002-alt4
+- rebuilt for perl-5.16
+
 * Mon Oct 10 2011 Alexey Tourbin <at@altlinux.ru> 1.002-alt3.2
 - rebuilt for perl-5.14
 

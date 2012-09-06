@@ -1,7 +1,7 @@
 %define dist Template-Toolkit
 Name: perl-Template
-Version: 2.22
-Release: alt1.2
+Version: 2.24
+Release: alt1
 
 Summary: Perl Template Toolkit
 License: GPL or Artistic
@@ -62,6 +62,10 @@ LaTeX, and so on.
 	%_man1dir/ttree.*
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 2.24-alt1
+- 2.22 -> 2.24
+- built for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 2.22-alt1.2
 - rebuilt for perl-5.14
 - disabled dependency on Apache::Util (ALT#24241)

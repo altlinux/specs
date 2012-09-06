@@ -18,7 +18,7 @@ Summary:	Math::BigInteger - arbitrary length integer extension module for Perl
 Summary(pl.UTF-8):	Math::BigInteger - moduł rozszerzenia liczb całkowitych dowolnej długości
 Name:		perl-Math-BigInteger
 Version:	1.01
-Release:	alt1_7
+Release:	alt2
 # if used in a product, Systemics should be given attribution
 License:	free use, distributable
 Group:		Development/Perl
@@ -62,6 +62,9 @@ Younga. Jest to szybsza alternatywa dla biblioteki Math::BigInt.
 %{perl_vendor_archlib}/auto/Math/BigInteger/BigInteger.*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.01-alt2
+- rebuilt for perl-5.16
+
 * Wed May 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_7
 - converted from PLD by srpmconvert script
 

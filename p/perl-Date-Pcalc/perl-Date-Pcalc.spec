@@ -1,7 +1,7 @@
 %define dist Date-Pcalc
 Name: perl-%dist
 Version: 6.1
-Release: alt2
+Release: alt3
 
 Summary: Gregorian calendar date calculations
 License: GPL or Artistic
@@ -9,6 +9,9 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
+
+# Patch via https://rt.cpan.org/Public/Bug/Display.html?id=76442 
+Patch:  %name-6.1-boolean.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Bit-Vector perl-ExtUtils-CBuilder
@@ -22,6 +25,7 @@ to some extent, ISO 8601 (where applicable).
 
 %prep
 %setup -q -n %dist-%version
+%patch -p2
 
 %build
 %perl_vendor_build
@@ -35,6 +39,10 @@ to some extent, ISO 8601 (where applicable).
 %perl_vendor_autolib/Date
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 6.1-alt3
+- rebuilt for perl-5.16
+- fixed build
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 6.1-alt2
 - rebuilt for perl-5.14
 

@@ -1,7 +1,7 @@
 %define dist Unicode-Map
 Name: perl-%dist
 Version: 0.112
-Release: alt4
+Release: alt5
 
 Summary: Maps charsets from and to utf16 unicode
 License: GPL or Artistic
@@ -60,6 +60,9 @@ perl -Mblib -MUnicode::Map -e 'Unicode::Map->new("KOI8-R") or die "KOI8-R broken
 %perl_vendor_autolib/Unicode
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.112-alt5
+- rebuilt for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 0.112-alt4
 - rebuilt for perl-5.14
 

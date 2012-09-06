@@ -43,7 +43,7 @@
 Name: %Name
 %define lname lib%name
 Version: 1.3.16
-Release: alt1
+Release: alt2
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -504,6 +504,9 @@ __MENU__
 %endif
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.3.16-alt2
+- rebuilt for perl-5.16
+
 * Thu Jun 28 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.3.16-alt1
 - New version
 

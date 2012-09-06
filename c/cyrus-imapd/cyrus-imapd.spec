@@ -9,7 +9,7 @@
 
 Name: cyrus-imapd
 Version: 2.4.12
-Release: alt1.1
+Release: alt2
 
 Summary: A high-performance mail store with IMAP and POP3 support
 License: CMU License
@@ -389,6 +389,9 @@ done
 %dir %_datadir/%name
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.4.12-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 15 2011 Alexey Tourbin <at@altlinux.ru> 2.4.12-alt1.1
 - Rebuilt for perl-5.14.
 

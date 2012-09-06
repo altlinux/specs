@@ -1,7 +1,7 @@
 %define dist Authen-Smb
 Name: perl-%dist
 Version: 0.91
-Release: alt3
+Release: alt4
 
 Summary: Perl extension to authenticate against an SMB server
 License: GPL or Artistic
@@ -34,6 +34,9 @@ specifying servers.
 %perl_vendor_archlib/Authen
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.91-alt4
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.91-alt3
 - rebuilt for perl-5.14
 

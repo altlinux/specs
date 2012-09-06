@@ -1,6 +1,6 @@
 Name: freeswitch
 Version: 1.0.7
-Release: alt0.5
+Release: alt0.6
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL
@@ -549,6 +549,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_libdir/%name/mod_say_ru.so*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0.7-alt0.6
+- rebuilt for perl-5.16
+
 * Thu Nov 24 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0.7-alt0.5
 - updated from git b9e28f85
 

@@ -1,7 +1,7 @@
 %define	dist Text-Kakasi
 Name: perl-%dist
 Version: 2.04
-Release: alt2.2
+Release: alt3
 
 Summary: Perl frontend to kakasi
 License: GPL
@@ -36,6 +36,9 @@ used to tokenizing Japanese text. To find more about kakasi, see
 %perl_vendor_autolib/Text
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 2.04-alt3
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 2.04-alt2.2
 - rebuilt for perl-5.14
 

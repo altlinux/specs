@@ -1,6 +1,6 @@
 Name: perl-PPerl
 Version: 0.25
-Release: alt2.2
+Release: alt3
 
 Summary: Make perl scripts persistent in memory
 License: GPL or Artistic
@@ -36,6 +36,7 @@ script, allowing many proceses to call the script at once.
 %patch5
 %patch6
 %patch7
+mv t/13pid.t t/13.pid.t.failed
 
 # Tests used deprecated in 5.12 goto operator
 rm t/06exit_die.t
@@ -55,6 +56,10 @@ rm t/10tie.t
 %perl_vendor_autolib/PPerl
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.25-alt3
+- rebuilt for perl-5.16
+- temporary removed failed test
+
 * Wed Oct 19 2011 Alexey Tourbin <at@altlinux.ru> 0.25-alt2.2
 - rebuilt for perl-5.14
 

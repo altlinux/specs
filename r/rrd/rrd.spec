@@ -1,6 +1,6 @@
 Name: rrd
 Version: 1.4.7
-Release: alt2.1
+Release: alt3
 
 %define native rrdtool
 %define abiversion 4
@@ -314,6 +314,9 @@ sed -e 's|@@USER@@|%rrdcached_user|g' < %SOURCE2 > $RPM_BUILD_ROOT%_sysconfdir/s
 %endif
 
 %changelog
+* Mon Sep 03 2012 Vladimir Lettiev <crux@altlinux.ru> 1.4.7-alt3
+- rebuilt for perl-5.16
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.7-alt2.1
 - Fixed build
 

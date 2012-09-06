@@ -1,6 +1,6 @@
 Name: perl-GD
 Version: 2.46
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Perl interface to the GD graphics library
@@ -47,6 +47,9 @@ sed -i- 's/compare(test6(),6);/print "ok 6 # Skip, we change fonts so byte-compa
 %perl_vendor_archlib/qd.pl
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1:2.46-alt3
+- rebuilt for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 1:2.46-alt2
 - rebuilt for perl-5.14
 

@@ -1,7 +1,7 @@
 %define dist Compress-Bzip2
 Name: perl-%dist
 Version: 2.09
-Release: alt4
+Release: alt5
 
 Summary: Interface to Bzip2 compression library
 License: GPL or Artistic
@@ -33,6 +33,9 @@ export BUILD_BZLIB=0
 %perl_vendor_autolib/Compress
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 2.09-alt5
+- rebuilt for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 2.09-alt4
 - rebuilt for perl-5.14
 

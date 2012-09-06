@@ -1,7 +1,7 @@
 %define dist IPC-Mmap
 Name: perl-IPC-Mmap
 Version: 0.21
-Release: alt2
+Release: alt3
 
 Summary: Minimal unified mmap for POSIX and Win32
 License: GPL or Artistic
@@ -32,6 +32,9 @@ the IPC::Mmap::POSIX and IPC::Mmap::Win32 implementations.
 %perl_vendor_autolib/IPC
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.21-alt3
+- rebuilt for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 0.21-alt2
 - rebuilt for perl-5.14
 

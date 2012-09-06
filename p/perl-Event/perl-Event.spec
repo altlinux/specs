@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.20
-Release: alt2
+Release: alt3
 
 Summary: Event loop processing
 License: Perl
@@ -35,6 +35,9 @@ order when it is safe for callbacks to execute.
 %perl_vendor_autolib/Event
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.20-alt3
+- rebuilt for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1.20-alt2
 - rebuilt for perl-5.14
 

@@ -1,7 +1,7 @@
 %define dist List-MoreUtils
 Name: perl-%dist
 Version: 0.33
-Release: alt2
+Release: alt3
 
 Summary: Provide the stuff missing in List::Util
 License: GPL or Artistic
@@ -32,6 +32,9 @@ on lists which is not going to go into List::Util.
 %perl_vendor_autolib/List
 
 %changelog
+* Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 0.33-alt3
+- rebuilt for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 0.33-alt2
 - rebuilt for perl-5.14
 

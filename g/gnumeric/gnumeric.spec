@@ -11,7 +11,7 @@
 
 Name: gnumeric
 Version: 1.10.17
-Release: alt4
+Release: alt5
 
 Summary: A full-featured spreadsheet for GNOME
 License: GPL
@@ -162,6 +162,9 @@ cat %name-functions.lang >> %name.lang
 %_libdir/libspreadsheet*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.10.17-alt5
+- rebuilt for perl-5.16
+
 * Tue Jun 19 2012 Yuri N. Sedunov <aris@altlinux.org> 1.10.17-alt4
 - used GSettings instead GConf as in libgnomeoffice-0.8.17-alt2
 

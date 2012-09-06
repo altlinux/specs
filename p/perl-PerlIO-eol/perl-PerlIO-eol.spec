@@ -1,7 +1,7 @@
 %define dist PerlIO-eol
 Name: perl-%dist
 Version: 0.14
-Release: alt1.3
+Release: alt2
 
 Summary: PerlIO layer for normalizing line endings
 License: GPL or Artistic
@@ -32,6 +32,9 @@ line ending. It works for both input and output handles.
 %perl_vendor_autolib/PerlIO
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt2
+- rebuilt for perl-5.16
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.14-alt1.3
 - disabled build dependency on perl-Module-Install
 

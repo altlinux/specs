@@ -1,7 +1,7 @@
 %define dist Encode-HanExtra
 Name: perl-%dist
 Version: 0.23
-Release: alt3
+Release: alt4
 
 Summary: Extra sets of Chinese encodings
 License: MIT
@@ -42,6 +42,9 @@ __EOF__
 %perl_vendor_autolib/Encode
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.23-alt4
+- rebuilt for perl-5.16
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.23-alt3
 - disabled build dependency on perl-Module-Install
 

@@ -2,7 +2,7 @@
 
 Name: perl-%dist
 Version: 1.05
-Release: alt1.2
+Release: alt2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -13,7 +13,6 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: http://www.cpan.org/modules/by-module/Readonly/%dist-%version.tar.gz
 
-# Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-Readonly perl-devel
 
 %description
@@ -35,6 +34,9 @@ scalar variables.
 %perl_vendor_autolib/Readonly
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.05-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.05-alt1.2
 - rebuilt for perl-5.14
 - disabled dependency on perl-Readonly

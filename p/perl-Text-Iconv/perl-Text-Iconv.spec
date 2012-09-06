@@ -1,7 +1,7 @@
 %define dist Text-Iconv
 Name: perl-%dist
 Version: 1.7
-Release: alt2.2
+Release: alt3
 
 Summary: Perl interface to iconv(3) codeset conversion function
 License: GPL or Artistic
@@ -34,6 +34,9 @@ conversion function, as defined by the Single UNIX Specification.
 %perl_vendor_autolib/Text
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.7-alt3
+- rebuilt for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1.7-alt2.2
 - rebuilt for perl-5.14
 - rebuilt as plain src.rpm

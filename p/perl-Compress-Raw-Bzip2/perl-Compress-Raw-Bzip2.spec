@@ -1,6 +1,6 @@
 %define dist Compress-Raw-Bzip2
 Name: perl-%dist
-Version: 2.048
+Version: 2.055
 Release: alt1
 
 Summary: Low-level interface to the bzip2 compression library
@@ -38,6 +38,10 @@ export BUILD_BZIP2=0 BZIP2_INCLUDE=%_includedir BZIP2_LIB=%_libdir
 %perl_vendor_autolib/Compress
 
 %changelog
+* Thu Aug 23 2012 Vladimir Lettiev <crux@altlinux.ru> 2.055-alt1
+- built for perl-5.16
+- 2.048 -> 2.055
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 2.048-alt1
 - 2.037 -> 2.048
 

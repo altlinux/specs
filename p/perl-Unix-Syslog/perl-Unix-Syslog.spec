@@ -1,7 +1,7 @@
 %define dist Unix-Syslog
 Name: perl-%dist
 Version: 1.1
-Release: alt1.2
+Release: alt2
 
 Summary: Perl interface to the UNIX system logger
 License: Artistic
@@ -32,6 +32,9 @@ UNIX system via Perl's XSUBs (Perl's C interface).
 %perl_vendor_autolib/Unix
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.1-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.1-alt1.2
 - rebuilt for perl-5.14
 

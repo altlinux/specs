@@ -12,7 +12,7 @@
 
 Name: nginx
 Version: 1.2.3
-Release: alt1
+Release: alt2
 
 Summary: Fast HTTP server
 License: BSD
@@ -241,6 +241,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.2.3-alt2
+- rebuilt for perl-5.16
+
 * Wed Aug 29 2012 Anton Farygin <rider@altlinux.ru> 1.2.3-alt1
 - new version
 

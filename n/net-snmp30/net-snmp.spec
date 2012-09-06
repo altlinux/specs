@@ -7,7 +7,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.1
-Release: alt8
+Release: alt9
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -567,6 +567,9 @@ echo "===== start test ====="
 %python_sitelibdir/netsnmp*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 5.7.1-alt9
+- rebuilt for perl-5.16
+
 * Fri May 25 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.7.1-alt8
 - Update patches from V5-7-patches branch
 - Fix DSO linking

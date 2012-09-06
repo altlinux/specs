@@ -1,6 +1,6 @@
 %define dist Moose
 Name: perl-%dist
-Version: 2.0400
+Version: 2.0603
 Release: alt1
 
 Summary: A postmodern object system for Perl 5
@@ -54,6 +54,10 @@ more about what you want to do and less about the mechanics of OOP.
 %perl_vendor_archlib/oose.pm
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 2.0603-alt1
+- 2.0400 -> 2.0603
+- built for perl-5.16
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 2.0400-alt1
 - 2.0205 -> 2.0400
 - disabled dependency on perl-devel

@@ -1,6 +1,6 @@
 %define dist Params-Util
 Name: perl-%dist
-Version: 1.04
+Version: 1.07
 Release: alt1
 
 Summary: Simple standalone param-checking functions
@@ -32,6 +32,10 @@ checking parameters a hell of a lot easier.
 %perl_vendor_autolib/Params
 
 %changelog
+* Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 1.07-alt1
+- 1.04 -> 1.07
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 1.04-alt1
 - 1.03 -> 1.04
 - built for perl-5.14

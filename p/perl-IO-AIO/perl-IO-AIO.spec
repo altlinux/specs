@@ -1,7 +1,7 @@
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.0
-Release: alt2
+Version: 4.15
+Release: alt1
 
 Summary: Asynchronous Input/Output
 License: GPL or Artistic
@@ -42,6 +42,10 @@ concurrently.
 %perl_vendor_archlib/IO
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 4.15-alt1
+- 4.0 -> 4.15
+- built for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 4.0-alt2
 - rebuilt for perl-5.14
 

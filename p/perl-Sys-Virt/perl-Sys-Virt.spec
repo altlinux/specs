@@ -1,6 +1,6 @@
 %define dist Sys-Virt
 Name: perl-%dist
-Version: 0.9.5
+Version: 0.9.13
 Release: alt1
 
 Summary: Represent and manage a libvirt hypervisor connection
@@ -23,17 +23,22 @@ a consistent API.
 %setup -q -n %dist-%version
 
 %build
+export NPROCS=1
 %perl_vendor_build
 
 %install
 %perl_vendor_install
 
 %files
-%doc AUTHORS CHANGES README examples
+%doc AUTHORS Changes README examples
 %perl_vendor_archlib/Sys
 %perl_vendor_autolib/Sys
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.9.13-alt1
+- 0.9.5 -> 0.9.13
+- built for perl-5.16
+
 * Wed Oct 19 2011 Alexey Tourbin <at@altlinux.ru> 0.9.5-alt1
 - 0.2.6 -> 0.9.5
 - built for perl-5.14

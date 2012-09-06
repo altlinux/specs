@@ -8,7 +8,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 1.8.0
-Release: alt1.4
+Release: alt2
 Group: Sciences/Geosciences
 
 License: MIT
@@ -187,6 +187,9 @@ done
 %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.8.0-alt2
+- rebuilt for perl-5.16
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt1.4
 - Rebuilt with libhdf5-7-seq 1.8.8-alt2
 

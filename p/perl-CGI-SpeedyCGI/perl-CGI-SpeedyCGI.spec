@@ -1,7 +1,7 @@
 %define dist CGI-SpeedyCGI
 Name: perl-%dist
 Version: 2.22
-Release: alt2.2
+Release: alt3
 
 Summary: Speed up perl scripts by running them persistently
 License: GPL
@@ -65,6 +65,9 @@ NPROCS=1
 %perl_vendor_privlib/CGI
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 2.22-alt3
+- rebuilt for perl-5.16
+
 * Tue Oct 18 2011 Alexey Tourbin <at@altlinux.ru> 2.22-alt2.2
 - rebuilt for perl-5.14
 

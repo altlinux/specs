@@ -1,6 +1,6 @@
 Name: perl
-Version: 5.14.2
-Release: alt4
+Version: 5.16.1
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -22,6 +22,9 @@ Patch: perl-%version-%release.patch
 %add_findreq_skiplist */Data/Dumper.pm
 # open.pm requires Encode in certain cases
 %add_findreq_skiplist */open.pm
+# Pod::Html requires Pod::Simple
+%add_findreq_skiplist */Pod/Html.pm
+%add_findreq_skiplist */pod2html
 
 # do not provide auxiliary unicore libraries
 %add_findprov_skiplist */unicore/*/*
@@ -34,7 +37,7 @@ Summary: Pathologically Eclectic Rubbish Lister
 Group: System/Base
 Provides: perl = %epoch:%version
 Obsoletes: perl < %epoch:%version
-Provides: perl-version = 0.88
+Provides: perl-version = 0.99
 Obsoletes: perl-version < 0.88
 Provides: perl-PerlIO = %epoch:%version perl-Storable = %epoch:%version
 Obsoletes: perl-PerlIO < %epoch:%version perl-Storable < %epoch:%version
@@ -204,7 +207,6 @@ rm -r %buildroot%privlib/B/Lint*
 rm -r %buildroot%privlib/CGI*
 rm -r %buildroot%privlib/CPAN* %buildroot%privlib/App/Cpan.pm %buildroot%_bindir/cpan*
 rm -r %buildroot{%privlib,%archlib,%autolib}/Compress
-rm -r %buildroot{%archlib,%autolib}/Devel/DProf* %buildroot%_bindir/dprofpp
 rm %buildroot%privlib/Devel/SelfStubber.pm
 rm -r %buildroot{%archlib,%autolib}/Digest/SHA* %buildroot%_bindir/shasum
 rm -r %buildroot{%privlib,%archlib,%autolib}/Encode*
@@ -234,6 +236,7 @@ rm -r %buildroot%privlib/Module/Build* %buildroot%privlib/inc %buildroot%_bindir
 rm -r %buildroot%privlib/Module/Load*
 rm -r %buildroot%privlib/Module/Pluggable* %buildroot%privlib/Devel/InnerPackage.pm
 rm %buildroot%privlib/Module/CoreList.pm %buildroot%_bindir/corelist
+rm %buildroot%privlib/Module/CoreList.pod
 rm %buildroot%privlib/Module/Metadata.pm
 rm %buildroot%privlib/NEXT.pm
 rm %buildroot%privlib/Object/Accessor.pm
@@ -250,7 +253,6 @@ rm -r %buildroot%privlib/Pod/{Man,ParseLink,Text}*
 rm %buildroot%_bindir/{pod2man,pod2text}
 rm -r %buildroot%privlib/Pod/Perldoc* %buildroot%_bindir/perldoc
 rm -r %buildroot%privlib/Pod/Simple*
-rm %buildroot%privlib/Shell.pm
 rm %buildroot%privlib/Term/ANSIColor.pm
 rm %buildroot%privlib/Term/Cap.pm
 rm %buildroot%privlib/Term/ReadLine.pm
@@ -262,6 +264,9 @@ rm %buildroot%privlib/Tie/RefHash.pm
 rm -r %buildroot{%archlib,%autolib}/Time/Piece* %buildroot%archlib/Time/Seconds.pm
 rm -r %buildroot{%privlib,%archlib,%autolib}/Unicode/Collate*
 rm %buildroot%privlib/Version/Requirements.pm
+
+rm %buildroot%_bindir/zipdetails
+rm %buildroot%privlib/perlfaq.pm
 
 # cleanup Perl4-CoreLibs
 grep -lZ '^warn "Legacy library' %buildroot%privlib/*.pl |xargs -r0 rm -fv --
@@ -295,6 +300,8 @@ EOF
 %dir	/usr/lib/perl5/vendor_perl
 %config %_rpmlibdir/perl-base-files.req.list
 # pragma
+	%archlib/arybase.pm
+	%autolib/arybase
 	%archlib/attributes.pm
 	%autolib/attributes
 	%privlib/autouse.pm
@@ -364,12 +371,14 @@ EOF
 %dir	%privlib/unicore/lib/Gc
 	%privlib/unicore/lib/Gc/Cc.pl
 	%privlib/unicore/lib/Gc/P.pl
+	%privlib/unicore/lib/Gc/Nd.pl
 %dir	%privlib/unicore/lib/Hex
 	%privlib/unicore/lib/Hex/Y.pl
 %dir	%privlib/unicore/lib/Lower
 	%privlib/unicore/lib/Lower/Y.pl
 %dir	%privlib/unicore/lib/Nt
-	%privlib/unicore/lib/Nt/De.pl
+	%privlib/unicore/lib/Nt/Di.pl
+	%privlib/unicore/lib/Nt/Nu.pl
 %dir	%privlib/unicore/lib/Perl
 	%privlib/unicore/lib/Perl/Alnum.pl
 	%privlib/unicore/lib/Perl/Blank.pl
@@ -533,6 +542,9 @@ EOF
 	%_bindir/s2p
 	%_bindir/splain
 	%_bindir/xsubpp
+%dir   %privlib/Pod
+	%privlib/Pod/Html.pm
+	%_bindir/pod2html
 # perl4-compat scripts
 	%_bindir/h2ph
 	%_bindir/pl2pm
@@ -580,13 +592,16 @@ EOF
 	%privlib/ExtUtils/Mkbootstrap.pm
 	%privlib/ExtUtils/Mksymlists.pm
 	%privlib/ExtUtils/Packlist.pm
+%dir	%privlib/ExtUtils/ParseXS
+	%privlib/ExtUtils/ParseXS/*.pm
 	%privlib/ExtUtils/ParseXS.pm
+%doc	%privlib/ExtUtils/ParseXS.pod
+%dir	%privlib/ExtUtils/Typemaps
+	%privlib/ExtUtils/Typemaps/*.pm
+	%privlib/ExtUtils/Typemaps.pm
 	%privlib/ExtUtils/testlib.pm
 	%privlib/ExtUtils/typemap
 	%privlib/ExtUtils/xsubpp
-%dir	%privlib/Pod
-	%privlib/Pod/Html.pm
-	%_bindir/pod2html
 	%privlib/Test.pm
 %dir	%privlib/Test
 	%privlib/Test/Builder*
@@ -618,20 +633,26 @@ EOF
 
 %files	unicore
 	%privlib/charnames.pm
+	%privlib/_charnames.pm
 %dir	%privlib/Unicode
 	%privlib/Unicode/UCD.pm
 %dir	%privlib/unicore
 	%privlib/unicore/version
+	%privlib/unicore/Name.pm
 	%privlib/unicore/Name.pl
+	%privlib/unicore/UCD.pl
 	%privlib/unicore/lib/
+
 %exclude %privlib/unicore/lib/Alpha/Y.pl
 %exclude %privlib/unicore/lib/Blk/ASCII.pl
 %exclude %privlib/unicore/lib/Cased/Y.pl
 %exclude %privlib/unicore/lib/Gc/Cc.pl
 %exclude %privlib/unicore/lib/Gc/P.pl
+%exclude %privlib/unicore/lib/Gc/Nd.pl
 %exclude %privlib/unicore/lib/Hex/Y.pl
 %exclude %privlib/unicore/lib/Lower/Y.pl
-%exclude %privlib/unicore/lib/Nt/De.pl
+%exclude %privlib/unicore/lib/Nt/Di.pl
+%exclude %privlib/unicore/lib/Nt/Nu.pl
 %exclude %privlib/unicore/lib/Perl/Alnum.pl
 %exclude %privlib/unicore/lib/Perl/Blank.pl
 %exclude %privlib/unicore/lib/Perl/Graph.pl
@@ -649,11 +670,11 @@ EOF
 # required for Unicode::Normalize
 	%privlib/unicore/CombiningClass.pl
 	%privlib/unicore/Decomposition.pl
-	%privlib/unicore/CompositionExclusions.txt
 # required for Unicode::UCD
 	%privlib/unicore/Blocks.txt
 	%privlib/unicore/CaseFolding.txt
 	%privlib/unicore/SpecialCasing.txt
+	%privlib/unicore/NamedSequences.txt
 
 %files	DBM
 	%privlib/AnyDBM_File.pm
@@ -677,6 +698,11 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Thu Aug 23 2012 Vladimir Lettiev <crux@altlinux.ru> 1:5.16.1-alt1
+- 5.14.2 -> 5.16.1
+- Devel::DProf, Shell moved from core
+- added new arybase pragma
+
 * Fri Jan 20 2012 Vladimir Lettiev <crux@altlinux.ru> 1:5.14.2-alt4
 - updated Digest 1.16 -> 1.17 (fixed CVE-2011-3597)
 

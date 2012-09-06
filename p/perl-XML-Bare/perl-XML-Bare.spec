@@ -1,7 +1,7 @@
 %define dist XML-Bare
 Name: perl-%dist
-Version: 0.45
-Release: alt1.2
+Version: 0.47
+Release: alt1
 
 Summary: A minimal XML parser / schema checker / pretty-printer using C internally
 License: GPL or Artistic
@@ -40,6 +40,10 @@ in the module as well.
 %perl_vendor_autolib/XML
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.47-alt1
+- 0.45 -> 0.47
+- built for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 0.45-alt1.2
 - rebuilt for perl-5.14
 

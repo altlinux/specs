@@ -1,6 +1,6 @@
 %define dist Filter
 Name: perl-%dist
-Version: 1.39
+Version: 1.45
 Release: alt1
 
 Summary: Source Filters
@@ -37,6 +37,13 @@ mv t/pod.t t/pod.t.orig
 %perl_vendor_autolib/Filter
 
 %changelog
+* Thu Aug 23 2012 Vladimir Lettiev <crux@altlinux.ru> 1.45-alt1
+- 1.43 -> 1.45
+
+* Thu May 03 2012 Vladimir Lettiev <crux@altlinux.ru> 1.43-alt1
+- 1.39 -> 1.43
+- build for perl-5.16
+
 * Thu Oct 06 2011 Alexey Tourbin <at@altlinux.ru> 1.39-alt1
 - 1.37 -> 1.39
 - build for perl-5.14

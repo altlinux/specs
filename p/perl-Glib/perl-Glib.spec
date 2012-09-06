@@ -1,6 +1,6 @@
 %define dist Glib
 Name: perl-%dist
-Version: 1.242
+Version: 1.262
 Release: alt1
 
 Summary: Perl module for the glib-2.x library
@@ -69,6 +69,10 @@ sed -i- '/MAN3PODS/d' Makefile.PL
 	%perl_vendor_archlib/Glib/Install/*
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.262-alt1
+- 1.242 -> 1.262
+- built for perl-5.16
+
 * Wed Apr 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1.242-alt1
 - 1.224 -> 1.242
 

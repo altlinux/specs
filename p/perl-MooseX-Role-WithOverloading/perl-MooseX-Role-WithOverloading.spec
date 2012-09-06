@@ -1,7 +1,7 @@
 %define dist MooseX-Role-WithOverloading
 Name: perl-%dist
 Version: 0.09
-Release: alt3
+Release: alt4
 
 Summary: Roles which support overloading
 License: GPL or Artistic
@@ -34,6 +34,9 @@ composed into the classes/roles/instances it's compiled to, while plain
 %perl_vendor_autolib/MooseX
 
 %changelog
+* Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt4
+- rebuilt for perl-5.16
+
 * Sat Nov 19 2011 Alexey Tourbin <at@altlinux.ru> 0.09-alt3
 - updated build dependencies
 

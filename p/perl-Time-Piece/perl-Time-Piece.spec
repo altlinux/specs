@@ -1,7 +1,7 @@
 %define dist Time-Piece
 Name: perl-%dist
 Version: 1.20
-Release: alt1.2
+Release: alt2
 
 Summary: Object Oriented time objects
 License: GPL or Artistic
@@ -38,6 +38,9 @@ http://www.xray.mpe.mpg.de/mailing-lists/perl5-porters/2000-01/msg00241.html
 %perl_vendor_autolib/Time
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.20-alt2
+- rebuilt for perl-5.16
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.20-alt1.2
 - rebuilt for perl-5.14
 

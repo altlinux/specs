@@ -5,7 +5,7 @@
 
 Name: perl-%module
 Version: 0.45
-Release: alt1
+Release: alt2
 
 Summary: Tools for working with DNS packets
 License: Perl
@@ -38,6 +38,9 @@ NPROCS=1
 %perl_vendor_autolib/Net
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.45-alt2
+- rebuilt for perl-5.16
+
 * Sun Mar 25 2012 Victor Forsiuk <force@altlinux.org> 0.45-alt1
 - 0.45
 

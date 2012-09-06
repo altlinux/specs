@@ -1,7 +1,7 @@
 %define dist HTML-Tidy
 Name: perl-%dist
-Version: 1.08
-Release: alt1.2
+Version: 1.54
+Release: alt1
 
 Summary: HTML validation in a Perl object
 License: GPL or Artistic
@@ -11,7 +11,7 @@ URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: libtidy-devel perl-Test-Pod perl-Test-Pod-Coverage perl-libwww
+BuildRequires: libtidyp-devel perl-Test-Pod perl-Test-Pod-Coverage perl-libwww
 
 %description
 HTML::Tidy is an HTML checker in a handy dandy object.  It's meant
@@ -27,12 +27,17 @@ as a replacement for HTML::Lint.
 %perl_vendor_install
 
 %files
-%doc Changes README
+%doc Changes README.markdown
 %_bindir/webtidy
 %perl_vendor_autolib/HTML
 %perl_vendor_archlib/HTML
 
 %changelog
+* Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 1.54-alt1
+- 1.08 -> 1.54
+- built for perl-5.16
+- libtidy -> libtidyp
+
 * Sat Oct 08 2011 Alexey Tourbin <at@altlinux.ru> 1.08-alt1.2
 - rebuilt for perl-5.14
 

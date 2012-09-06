@@ -1,6 +1,6 @@
 Name: rpmtools
 Version: 3.1
-Release: alt6.2
+Release: alt7
 
 Summary: Contains various rpm command-line tools
 License: GPL
@@ -35,6 +35,9 @@ perl Makefile.PL PREFIX=/usr INSTALLDIRS=vendor
 %perl_vendor_autolib/rpmtools*
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 3.1-alt7
+- rebuilt for perl-5.16
+
 * Thu Oct 20 2011 Alexey Tourbin <at@altlinux.ru> 3.1-alt6.2
 - rebuilt for perl-5.14
 

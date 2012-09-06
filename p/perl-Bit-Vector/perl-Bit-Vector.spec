@@ -1,7 +1,7 @@
 %define dist Bit-Vector
 Name: perl-%dist
-Version: 7.1
-Release: alt3
+Version: 7.2
+Release: alt1
 
 Summary: Efficient bit vector, set of integers and "big int" math library
 License: GPL or Artistic
@@ -47,6 +47,9 @@ overloaded operators for maximum ease of use.
 	%perl_vendor_autolib/Bit/Vector
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 7.2-alt1
+- rebuilt for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 7.1-alt3
 - rebuilt for perl-5.14
 

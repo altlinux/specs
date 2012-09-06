@@ -1,7 +1,7 @@
 %define dist WWW-Curl
 Name: perl-%dist
 Version: 4.15
-Release: alt2
+Release: alt3
 
 Summary: Perl extension interface for libcurl 
 License: MPL
@@ -39,6 +39,9 @@ rm t/19multi.t
 %perl_vendor_autolib/WWW
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 4.15-alt3
+- rebuilt for perl-5.16
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 4.15-alt2
 - disabled build dependency on perl-Module-Install
 

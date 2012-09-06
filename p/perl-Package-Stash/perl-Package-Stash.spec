@@ -1,7 +1,7 @@
 %define dist Package-Stash
 Name: perl-%dist
-Version: 0.32
-Release: alt2
+Version: 0.33
+Release: alt1
 
 Summary: Routines for manipulating stashes
 License: GPL or Artistic
@@ -43,6 +43,10 @@ sed -i- '/^check_conflicts/s/^/#/' Makefile.PL
 %perl_vendor_privlib/Package
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.33-alt1
+- 0.32 -> 0.33
+- built for perl-5.16
+
 * Sun Oct 09 2011 Alexey Tourbin <at@altlinux.ru> 0.32-alt2
 - added depdendency on perl-Package-Stash-XS
 

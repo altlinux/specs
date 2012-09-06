@@ -3,7 +3,7 @@
 
 Name: pilot-link
 Version: 0.12.5
-Release: alt1.1.1
+Release: alt2
 
 Summary: File transfer utilities between Linux and PalmPilots
 License: GPL
@@ -167,6 +167,9 @@ install -p -m644 doc/60-libpisock.rules %buildroot%_sysconfdir/udev/rules.d/75-l
 %endif
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.12.5-alt2
+- rebuilt for perl-5.16
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.12.5-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 

@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 1.000
-Release: alt1.2
+Release: alt2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -69,6 +69,9 @@ order to mainatin a UI consistent for all GNOME applications.
 %doc	%perl_vendor_archlib/Gnome2/Print/Font
 
 %changelog
+* Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.000-alt2
+- rebuilt for perl-5.16
+
 * Mon Oct 10 2011 Alexey Tourbin <at@altlinux.ru> 1.000-alt1.2
 - rebuilt for perl-5.14
 

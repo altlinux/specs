@@ -29,7 +29,7 @@
 
 Name: collectd
 Version: 5.1.0
-Release: alt4
+Release: alt5
 
 Summary: (Multi-)System statistics collection
 License: GPL
@@ -802,6 +802,9 @@ service %name condrestart ||:
 # - macroize repetitive sections
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 5.1.0-alt5
+- rebuilt for perl-5.16
+
 * Tue Jul 17 2012 Michael Shigorin <mike@altlinux.org> 5.1.0-alt4
 - disabled debug which breaks nagios plugin (closes: #27548)
 

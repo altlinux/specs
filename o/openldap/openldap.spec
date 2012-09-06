@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.31
-Release: alt5
+Release: alt6
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -697,6 +697,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.4.31-alt6
+- rebuilt for perl-5.16
+
 * Sat Jun 30 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.4.31-alt5
 - update rh patches
 - CVE-2012-2668

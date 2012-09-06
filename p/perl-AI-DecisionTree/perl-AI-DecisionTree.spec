@@ -1,6 +1,6 @@
 %define dist AI-DecisionTree
 Name: perl-%dist
-Version: 0.09
+Version: 0.11
 Release: alt1
 
 Summary: Automatically Learns Decision Trees
@@ -9,7 +9,7 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
-Patch: perl-AI-DecisionTree-0.09-alt-GraphViz.patch
+Patch: perl-AI-DecisionTree-0.11-alt-GraphViz.patch
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-GraphViz perl-devel
@@ -36,6 +36,10 @@ categorizing new instances.
 %perl_vendor_autolib/AI
 
 %changelog
+* Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt1
+- 0.09 -> 0.11
+- built for perl-5.16
+
 * Fri Oct 07 2011 Alexey Tourbin <at@altlinux.ru> 0.09-alt1
 - 0.08 -> 0.09
 - built for perl-5.14
