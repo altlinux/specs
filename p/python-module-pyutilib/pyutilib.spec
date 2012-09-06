@@ -1,7 +1,7 @@
 %define oname pyutilib
 Name: python-module-%oname
-Version: 3.8
-Release: alt1.svn20111215
+Version: 4.2
+Release: alt1.svn20120831
 Summary: A Python Utility Library
 License: BSD, LGPL
 Group: Development/Python
@@ -110,6 +110,7 @@ options.
 Summary: Modular component framework
 Group: Development/Python
 Requires: %name = %version-%release
+%add_findreq_skiplist %python_sitelibdir/%oname/component/core/core3.py
 
 %description component-core
 The PyUtilib project supports the development of an ensemble of Python
@@ -397,6 +398,22 @@ scipy or numpy types).  Also, pyutilib.workflow is designed to support
 Python-level definitions of the workflow (rather than a separate XML
 specification).
 
+%package autodist
+Summary: PyUtilib definitions and commands
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description autodist
+The PyUtilib project supports the development of an ensemble of Python
+packages that include a wide variety of utilities, including a
+well-developed component architecture. PyUtilib has been developed to
+support several Python projects under development at Sandia National
+Laboratories, including  Coopr and  FAST.
+
+This Python package includes commonly used PyUtilib definitions and
+commands.  For example, this package includes PyUtilib-specific
+exception definitions.
+
 %package workflow-doc
 Summary: Documentation for simple workflow management system
 Group: Development/Documentation
@@ -576,7 +593,15 @@ touch %buildroot%python_sitelibdir/%oname/component/__init__.py
 %files workflow-doc
 %doc %oname.workflow/trunk/doc/*
 
+%files autodist
+%doc %oname.autodist/trunk/*.txt
+%python_sitelibdir/%oname.autodist*
+%python_sitelibdir/%oname/autodist
+
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt1.svn20120831
+- Version 4.2
+
 * Fri Dec 23 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8-alt1.svn20111215
 - Version 3.8
 
