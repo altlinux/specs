@@ -2,17 +2,15 @@ Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-io
-Version:        2.0.2
-Release:        alt1_1jpp7
+Version:        2.0.4
+Release:        alt1_2jpp7
 Summary:        Plexus IO Components
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://plexus.codehaus.org/plexus-components/plexus-io
-# git clone https://github.com/sonatype/plexus-io
-# cd plexus-io
-# git archive --format=tar --prefix=plexus-io-2.0.2/ plexus-io-2.0.2 | xz >plexus-io-2.0.2.tar.xz
-Source0:        %{name}-%{version}.tar.xz
+# fetched from https://github.com/sonatype/plexus-io/tarball/plexus-io-2.0.4
+Source0:        sonatype-plexus-io-plexus-io-2.0.4-0-g2767dfe.tar.gz
 BuildArch: noarch
 
 BuildRequires:  jpackage-utils
@@ -48,7 +46,7 @@ API documentation for %{name}.
 
 
 %prep
-%setup -q
+%setup -q -n sonatype-plexus-io-fd7f1a8
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -81,6 +79,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.4-alt1_2jpp7
+- new version
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.2-alt1_1jpp7
 - complete build
 
