@@ -2,7 +2,7 @@
 %define sover %somver.0.0
 Name: cgal
 Version: 4.0.2
-Release: alt1
+Release: alt2
 Summary: Easy access to efficient and reliable geometric algorithms
 License: Free for non-commertial using
 Group: Sciences/Mathematics
@@ -181,6 +181,9 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %doc %_docdir/%{name}*
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt2
+- Rebuilt with Boost 1.51.0
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1
 - Version 4.0.2
 
