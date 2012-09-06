@@ -1,5 +1,5 @@
 %define version 0.18
-%define release alt1.3
+%define release alt1.4
 
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
@@ -51,6 +51,9 @@ make install DESTDIR=%buildroot
 
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1.4
+- Rebuilt with Boost 1.51.0
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1.3
 - Rebuilt with Boost 1.49.0
 
