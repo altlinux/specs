@@ -1,4 +1,3 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -33,14 +32,15 @@ BuildRequires: jpackage-compat
 
 Summary:	Parser Generator with Java Extension
 Name:		byaccj
-Version:	1.14
-Release:	alt1_5jpp5
+Version:	1.15
+Release:	alt1_5jpp7
 Epoch:		0
 License:	Public Domain
 URL:		http://byaccj.sourceforge.net/
 Group:		Development/Java
-Source0:	http://downloads.sourceforge.net/%{name}/%{name}%{version}_src.tar.gz
-Requires: man-pages
+Source0:	http://sourceforge.net/projects/byaccj/files/byaccj/1.15/byaccj1.15_src.tar.gz
+Requires:	man-pages
+Source44: import.info
 
 %description
 BYACC/J is an extension of the Berkeley v 1.8 YACC-compatible 
@@ -55,17 +55,18 @@ generate Java source code, instead. So there finally is a YACC for
 Java now! 
 
 %prep
-%setup -q -n %{name}%{version}_src
+%setup -q -n %{name}%{version}
+
+sed -i -e 's|-arch i386 -isysroot /Developer/SDKs/MacOSX10.4u.sdk -mmacosx-version-min=10.4||g' src/Makefile
 
 %build
 pushd src
-make linux CFLAGS="%{optflags}"
+make linux CFLAGS="%{optflags}" LDFLAGS=""
 popd
 
 sed -i 's/\r//g' docs/tf.y
 
 %install
-
 # manual
 install -d -m 755 %{buildroot}%{_mandir}/man1
 mv docs/yacc.cat %{buildroot}%{_mandir}/man1
@@ -77,7 +78,6 @@ cp -p src/yacc.linux \
 
 mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
 cp -p docs/* %{buildroot}%{_docdir}/%{name}-%{version}
-cp -p src/readme %{buildroot}%{_docdir}/%{name}-%{version}
 cp -p src/README %{buildroot}%{_docdir}/%{name}-%{version}
 
 %files
@@ -85,8 +85,10 @@ cp -p src/README %{buildroot}%{_docdir}/%{name}-%{version}
 %{_mandir}/man1/yacc.cat*
 %attr(755, root, root) %{_bindir}/%{name}
 
-
 %changelog
+* Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_5jpp7
+- new release
+
 * Mon Feb 22 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt1_5jpp5
 - updated from fedora 13
 
