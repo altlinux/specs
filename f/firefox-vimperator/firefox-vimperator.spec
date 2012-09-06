@@ -4,9 +4,9 @@
 %define mcid muttator@mozdev.org
 %define vciddir 	%firefox_noarch_extensionsdir/%vcid
 %define mciddir 	%tbird_noarch_extensionsdir/%mcid
-%define ver 3.4
-%define mver 1.1
-%define ft_release alt1.hg20120115
+%define ver 3.6
+%define mver 1.2
+%define ft_release alt1.hg20120828
 %define workdir %firefox_name-%vname-%ver
 %define mworkdir %tbird_name-%mname-%mver
 
@@ -112,6 +112,9 @@ install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 %vim_ftdetect_dir/%mname.vim
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6-alt1.hg20120828
+- Version 3.6pre
+
 * Thu Jan 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4-alt1.hg20120115
 - Version 3.4
 
