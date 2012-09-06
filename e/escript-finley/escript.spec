@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: escript-finley
-Version: 3.2.1
-Release: alt3
+Version: 3.3
+Release: alt1
 Summary: Fast Finite Elements for Partial Differential Equations
 License: OSLv3.0
 Group: Sciences/Mathematics
@@ -177,6 +177,9 @@ install -p -m644 doc/manpage/man1/* %buildroot%_man1dir
 %doc doc/examples
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1
+- Version 3.3
+
 * Fri Jun 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt3
 - Rebuilt with OpenMPI 1.6
 
