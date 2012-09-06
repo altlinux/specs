@@ -1,5 +1,5 @@
 Name: irqbalance
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: Evenly distribute interrupt load across CPUs
@@ -8,7 +8,6 @@ Group: System/Kernel and hardware
 
 Url: https://code.google.com/p/irqbalance
 Source: %name-%version.tar
-Packager: Dmitry Lebkov <dlebkov@altlinux.ru>
 
 BuildRequires: gccmakedep glib2-devel libcap-ng-devel libnuma-devel
 
@@ -22,17 +21,19 @@ will ever notice it's there or want to turn it off.
 
 %prep
 %setup
+subst "s|/path/to/irqbalance.env|%_sysconfdir/sysconfig/%name|g" misc/%name.service
 
 %build
+mkdir -p m4
 %autoreconf
 %configure
 %make_build
 
 %install
-install -pDm755 irqbalance %buildroot/%_sbindir/%name
+%makeinstall_std
+
 install -pDm755 %name.init %buildroot/%_initdir/%name
-install -pDm644 %name.sysconfig %buildroot/%_sysconfdir/sysconfig/%name
-install -pDm644 %name.1 %buildroot/%_man1dir/%name.1
+install -pDm644 misc/%name.env %buildroot/%_sysconfdir/sysconfig/%name
 install -pDm644 misc/%name.service %buildroot/%systemd_unitdir/%name.service
 
 %preun
@@ -49,6 +50,9 @@ install -pDm644 misc/%name.service %buildroot/%systemd_unitdir/%name.service
 %systemd_unitdir/%name.service
 
 %changelog
+* Wed Sep 05 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.4-alt1
+- new version
+
 * Sun Feb 19 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.3-alt1
 - new version from new URL location
 - migrate to git source, update spec
