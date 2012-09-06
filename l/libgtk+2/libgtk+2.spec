@@ -17,7 +17,7 @@
 %def_enable introspection
 
 Name: libgtk+2
-Version: %ver_major.11
+Version: %ver_major.12
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
@@ -49,8 +49,6 @@ Patch6: gtk+-2.10.6-fix-drop-gdk_colormap_change.patch
 
 # https://bugzilla.gnome.org/show_bug.cgi?id=583273
 Patch10: gtk+-2.20-icon-padding.patch
-# https://bugzilla.gnome.org/show_bug.cgi?id=599617
-Patch11: gtk+-2.20-fresh-tooltips.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=599618
 Patch12: gtk+-2.21.0-tooltip-positioning.patch
 
@@ -219,7 +217,6 @@ install -p -m644 %_sourcedir/%name-gtk.lds gtk/compat.lds
 %patch6
 
 %patch10 -p1 -b .icon-padding
-%patch11 -p1 -b .fresh-tooltips
 %patch12 -p1 -b .tooltip-positioning
 %patch20 -p1 -b .fixdso
 
@@ -369,6 +366,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk-icon-cache.filetrigger
 %_datadir/gir-1.0/*
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 2.24.12-alt1
+- 2.24.12
+
 * Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 2.24.11-alt1
 - 2.24.11 release
 
