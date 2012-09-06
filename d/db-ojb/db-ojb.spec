@@ -47,7 +47,7 @@ BuildRequires: jpackage-1.5.0-compat
 
 Name:           db-ojb
 Version:        1.0.4
-Release:        alt2_4jpp5
+Release:        alt3_4jpp5
 Epoch:          0
 Summary:        ObJectRelationalBridge
 
@@ -94,15 +94,15 @@ BuildRequires: asm
 BuildRequires: cglib
 BuildRequires: db-torque-gen >= 0:3.3
 BuildRequires: db-torque-gen-templates >= 0:3.3
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-configuration
-BuildRequires: jakarta-commons-dbcp
-BuildRequires: jakarta-commons-digester
-BuildRequires: jakarta-commons-lang
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-pool
-BuildRequires: jakarta-commons-transaction
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-configuration
+BuildRequires: apache-commons-dbcp
+BuildRequires: apache-commons-digester
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-pool
+BuildRequires: apache-commons-transaction
 BuildRequires: regexp
 BuildRequires: log4j
 BuildRequires: p6spy
@@ -116,15 +116,15 @@ Requires: asm
 Requires: cglib
 Requires: db-torque-gen >= 0:3.3
 Requires: db-torque-gen-templates >= 0:3.3
-Requires: jakarta-commons-beanutils
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-configuration
-Requires: jakarta-commons-dbcp
-Requires: jakarta-commons-digester
-Requires: jakarta-commons-lang
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-pool
-Requires: jakarta-commons-transaction
+Requires: apache-commons-beanutils
+Requires: apache-commons-collections
+Requires: apache-commons-configuration
+Requires: apache-commons-dbcp
+Requires: apache-commons-digester
+Requires: apache-commons-lang
+Requires: apache-commons-logging
+Requires: apache-commons-pool
+Requires: apache-commons-transaction
 Requires: regexp
 Requires: log4j
 Requires: p6spy
@@ -160,12 +160,12 @@ Requires: xdoclet
 %package        javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
-BuildRequires: jakarta-commons-beanutils-javadoc
-BuildRequires: jakarta-commons-collections-javadoc
-BuildRequires: jakarta-commons-dbcp-javadoc
-BuildRequires: jakarta-commons-lang-javadoc
-BuildRequires: jakarta-commons-logging-javadoc
-BuildRequires: jakarta-commons-pool-javadoc
+BuildRequires: apache-commons-beanutils-javadoc
+BuildRequires: apache-commons-collections-javadoc
+BuildRequires: apache-commons-dbcp-javadoc
+BuildRequires: apache-commons-lang-javadoc
+BuildRequires: apache-commons-logging-javadoc
+BuildRequires: apache-commons-pool-javadoc
 BuildArch: noarch
 
 %description    javadoc
@@ -384,6 +384,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt3_4jpp5
+- fixed build
+
 * Wed May 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt2_4jpp5
 - selected java5 compiler explicitly
 
