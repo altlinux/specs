@@ -1,0 +1,95 @@
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jboss-el-2.2-api
+%define version 1.0.1
+%global namedreltag .20120212git2fabd8
+%global namedversion %{version}%{?namedreltag}
+
+Name: jboss-el-2.2-api
+Version: 1.0.1
+Release: alt1_0.4.20120212git2fabd8jpp7
+Summary: Expression Language 2.2 API
+Group: Development/Java
+License: CDDL or GPLv2 with exceptions
+URL: http://www.jboss.org
+
+# git clone git://github.com/jboss/jboss-el-api_spec.git jboss-el-2.2-api
+# cd jboss-el-2.2-api
+# git archive --format=tar --prefix=jboss-el-2.2-api-1.0.1/ 2fabd8013214d50b03a65853673c111bdf39e87f | xz > jboss-el-2.2-api-1.0.1.20120212git2fabd8.tar.xz
+Source0: %{name}-%{namedversion}.tar.xz
+
+BuildRequires: jboss-specs-parent
+BuildRequires: jpackage-utils
+BuildRequires: maven
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+
+Requires: jpackage-utils
+
+BuildArch: noarch
+Source44: import.info
+
+
+%description
+Expression Language 2.2 API classes.
+
+
+%package javadoc
+Summary: Javadocs for %{name}
+Group: Development/Java
+Requires: jpackage-utils
+BuildArch: noarch
+
+
+%description javadoc	
+This package contains the API documentation for %{name}.
+
+
+%prep
+%setup -q -n %{name}-%{version}
+
+
+%build
+mvn-rpmbuild install javadoc:aggregate
+
+
+%install
+
+# Jar files:
+install -d -m 755 %{buildroot}%{_javadir}
+install -pm 644 target/jboss-el-api_2.2_spec-%{version}-SNAPSHOT.jar %{buildroot}%{_javadir}/%{name}.jar
+
+# POM files:
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+# Javadoc files:
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+
+# Dependencies map:
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "javax.el:el-api"
+
+
+%files
+%{_javadir}/*
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
+%doc LICENSE
+%doc README
+
+
+%files javadoc
+%{_javadocdir}/%{name}
+%doc LICENSE
+%doc README
+
+
+%changelog
+* Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_0.4.20120212git2fabd8jpp7
+- new version
+
