@@ -1,6 +1,6 @@
 Name: awesome
-Version: 3.4.10
-Release: alt2
+Version: 3.4.12
+Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
 
@@ -15,7 +15,7 @@ Summary: A window manager initialy based on a dwm code rewriting
 
 BuildRequires: ImageMagick-tools asciidoc cmake gcc-c++ gperf imlib2-devel libdbus-devel libev-devel liblua5-devel libncurses-devel libpango-devel libreadline-devel xmlto libxdg-basedir-devel libstartup-notification-devel
 
-BuildPreReq: libxcbutil-devel
+BuildPreReq: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8 libxcbutil-icccm-devel >= 0.3.8 libxcbutil-image-devel >= 0.3.8
 
 Requires: libstartup-notification >= 0.10-alt1
 
@@ -80,6 +80,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Sun Sep  2 2012 Terechkov Evgenii <evg@altlinux.org> 3.4.12-alt1
+- 3.4.12 (Starlight)
+
 * Fri Apr  6 2012 Terechkov Evgenii <evg@altlinux.org> 3.4.10-alt2
 - Fix FTBFS with new glib
 
