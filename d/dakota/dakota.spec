@@ -7,7 +7,7 @@ Name: dakota
 Version: 5.2
 %define somver 0
 %define sover %somver.0.0
-Release: alt5
+Release: alt6
 Epoch: 1
 Summary: Design Analysis Kit for Optimization and Terascale Applications
 License: LGPL v2.1
@@ -371,6 +371,9 @@ ln -s ../../macros.hpp \
 %_includedir/*
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.2-alt6
+- Rebuilt with Boost 1.51.0
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:5.2-alt5
 - Built with OpenBLAS instead of GotoBLAS2
 
