@@ -66,7 +66,7 @@ BuildRequires: jpackage-compat
 
 Name:           struts
 Version:        1.3.10
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        Web application framework
 License:        ASL 2.0
@@ -162,7 +162,7 @@ BuildRequires: jakarta-commons-el
 BuildRequires: jakarta-taglibs-standard
 BuildRequires: log4j
 # src/integration/apps-it/pom.xml:
-BuildRequires: htmlunit >= 0:1.8
+BuildRequires: htmlunit1
 BuildRequires: cargo >= 0:0.8
 %endif
 Obsoletes:      struts-webapps-tomcat3 < %{epoch}:%{version}
@@ -1182,6 +1182,9 @@ rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
 %endif
 
 %changelog
+* Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt3_2jpp6
+- fixed build using htmlunit1
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt2_2jpp6
 - fixed build with java 7
 
