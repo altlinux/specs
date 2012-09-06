@@ -1,6 +1,6 @@
 Name: sdf
 Version: 2.001
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Simple Document Format (SDF) Parser
@@ -23,7 +23,7 @@ BuildRequires: perl-devel perl-Pod-Parser
 %package doc
 Summary: Documentation and examples for the Simple Document Format (SDF) Parser
 Group: Development/Other
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 
 %description
 SDF (Simple Document Format) is a freely available document development
@@ -83,6 +83,9 @@ ln -s %_sysconfdir/%name.ini \
 %doc LICENSE README doc/* examples/2001/stylesheets
 
 %changelog
+* Thu Sep 06 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.001-alt3
+- %name-doc: fixed interpackage requirements.
+
 * Mon Nov 15 2010 Dmitry V. Levin <ldv@altlinux.org> 1:2.001-alt2
 - Fixed build with new perl.
 - Dropped pod2sdf.1, use "perldoc pod2sdf" instead.

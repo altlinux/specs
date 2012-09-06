@@ -6,13 +6,12 @@
 
 Name: flac
 Version: 1.2.1
-Release: alt9
+Release: alt10
 
 Summary: Free Lossless Audio Codec
 License: GPLv2+
 Group: Sound
 Url: http://flac.sourceforge.net/
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
 # http://download.sourceforge.net/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -109,7 +108,7 @@ Requires: lib%name%soversion = %version-%release
 Xmms plugin for playing FLAC files.
 
 %prep
-%setup -q
+%setup
 %patch -p1
 
 %build
@@ -128,6 +127,8 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 %files
 %_bindir/*
 %_mandir/man?/*
+%dir %flacdocs/
+%dir %flacdocs/html/
 %flacdocs/html/*.html
 %flacdocs/html/*.ico
 %flacdocs/html/*.css
@@ -136,8 +137,7 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 
 %files -n lib%name%soversion
 %_libdir/libFLAC.so.*
-%dir %flacdocs
-%dir %flacdocs/html
+%dir %flacdocs/
 %flacdocs/AUTHORS
 %flacdocs/README
 %flacdocs/COPYING.Xiph
@@ -146,9 +146,11 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 %_datadir/aclocal/libFLAC.m4
 %_libdir/libFLAC.so
 %_includedir/FLAC
+%_pkgconfigdir/flac.pc
+%dir %flacdocs/
+%dir %flacdocs/html
 %flacdocs/html/api
 %flacdocs/FLAC.tag
-%_pkgconfigdir/flac.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -173,6 +175,9 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 %_libdir/xmms/Input/*
 
 %changelog
+* Thu Sep 06 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.1-alt10
+- Fixed packaging of %flacdocs.
+
 * Fri Mar 25 2011 Alexey Tourbin <at@altlinux.ru> 1.2.1-alt9
 - libflac-devel: removed dependency on libogg-devel
 
