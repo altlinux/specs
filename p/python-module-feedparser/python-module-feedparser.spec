@@ -1,9 +1,10 @@
 Name: python-module-feedparser
-Version: 4.1
-Release: alt1.1
+Version: 5.1.2
+Release: alt1
 Epoch: 1
 
 %define sname feedparser
+%def_with doc
 
 Summary: Universal feed parser for Python
 Group: Development/Python
@@ -13,15 +14,11 @@ BuildArch: noarch
 
 %setup_python_module feedparser
 
-# http://%sname.googlecode.com/files/%sname-%version.zip
-Source: %sname-%version.tar
+BuildRequires: python-module-distribute
+%{?_with_doc:BuildRequires: python-module-sphinx}
 
-Patch1: feedparser-deb-utf8-decoding.patch
-Patch2: feedparser-deb-title-override.patch
-Patch3: feedparser-deb-contentType.patch
-Patch4: feedparser-deb-auth-handlers.patch
-Patch5: feedparser-deb-doc-css-path.patch
-Patch6: feedparser-deb-etag.patch
+# http://feedparser.googlecode.com/files/feedparser-%version.tar.bz2
+Source: %sname-%version.tar
 
 %description
 Universal feed parser is a Python module for downloading and parsing
@@ -34,7 +31,7 @@ It provides the same API to all formats, and sanitizes URIs and HTML.
 %package doc
 Summary: Documentation for the Universal feed parser for Python
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 
 %description doc
 This package contains documentation for the Universal feed parser.
@@ -43,35 +40,38 @@ This package contains documentation for the Universal feed parser.
 %setup -n %sname-%version
 find -type f -print0 |
 	xargs -r0 sed -i 's/\r//' --
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
 
 %build
 %python_build
+%{?_with_doc:sphinx-build -b html docs html}
 
 %install
 %python_install
 
 %define docdir %_docdir/%name
-mkdir -p %buildroot/%docdir
-install -pm644 LICENSE README %buildroot/%docdir/
-cp -a docs %buildroot/%docdir/html
-rm %buildroot/%docdir/html/examples/.ht*
+mkdir -p %buildroot%docdir
+install -pm644 LICENSE NEWS README %buildroot%docdir/
+%{?_with_doc:cp -a html %buildroot%docdir/}
+
+%check
+cd %sname
+PYTHONPATH=%buildroot%python_sitelibdir %__python feedparsertest.py
 
 %files
 %python_sitelibdir/*
 %dir %docdir
-%docdir/[RL]*
+%docdir/[LNR]*
 
+%if_with doc
 %files doc
 %dir %docdir
 %docdir/html
+%endif
 
 %changelog
+* Thu Sep 06 2012 Dmitry V. Levin <ldv@altlinux.org> 1:5.1.2-alt1
+- Updated to 5.1.2.
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1:4.1-alt1.1
 - Rebuild with Python-2.7
 
