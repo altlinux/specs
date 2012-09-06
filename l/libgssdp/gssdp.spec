@@ -1,11 +1,13 @@
 %define _name gssdp
+%define api_ver 1.0
+
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.12.1
-Release: alt2
+Version: 0.12.2.1
+Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
 Group: System/Libraries
@@ -16,6 +18,7 @@ Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.xz
 
 BuildRequires: gtk-doc libsoup-devel >= 2.4 glib2-devel >= 2.18
 BuildRequires: libgtk+2-devel libxml2-devel libGConf-devel NetworkManager-devel
+BuildRequires: vala-tools rpm-build-vala
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel}
 
 %description
@@ -77,32 +80,35 @@ GObject introspection devel data for the GSSDP library
 
 %files
 %_libdir/*.so.*
+%doc AUTHORS README NEWS ChangeLog
 
+%files devel
 # do not package tools
 %exclude %_bindir/gssdp-device-sniffer
 #%%dir %_datadir/gssdp
 %exclude %_datadir/gssdp/gssdp-device-sniffer.ui
-
-%doc AUTHORS README NEWS ChangeLog
-
-%files devel
+%_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/*
-%_includedir/*
+%_vapidir/%_name-%api_ver.deps
+%_vapidir/%_name-%api_ver.vapi
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*
+%_typelibdir/GSSDP-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/*
+%_girdir/GSSDP-%api_ver.gir
 %endif
 
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.2.1-alt1
+- 0.12.2.1
+
 * Mon Jan 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt2
 - used %%autoreconf to fix RPATH problem
 

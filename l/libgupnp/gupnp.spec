@@ -1,10 +1,11 @@
 %define _name gupnp
+%define api_ver 1.0
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: libgupnp
-Version: 0.18.3
+Version: 0.18.4
 Release: alt1
 
 Summary: A framework for creating UPnP devices and control points
@@ -14,7 +15,7 @@ Url: http://www.gupnp.org/
 
 Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.xz
 
-BuildPreReq: libgssdp-devel >= 0.11.2 glib2-devel >= 2.18
+BuildPreReq: libgssdp-devel >= 0.12.2.1 glib2-devel >= 2.18
 BuildRequires: libxml2-devel libsoup-devel libuuid-devel gtk-doc libdbus-glib-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libsoup-gir-devel libgssdp-gir-devel}
 
@@ -83,29 +84,32 @@ GObject introspection devel data for the gUPnP library
 %make check
 
 %files
-%_libdir/libgupnp-1.0.so.4
-%_libdir/libgupnp-1.0.so.4.0.0
+%_libdir/libgupnp-%api_ver.so.4
+%_libdir/libgupnp-%api_ver.so.4.0.0
 %_bindir/gupnp-binding-tool
 %doc AUTHORS README ChangeLog
 
 %files devel
-%_libdir/pkgconfig/gupnp-1.0.pc
-%_libdir/libgupnp-1.0.so
-%_includedir/gupnp-1.0
+%_libdir/pkgconfig/gupnp-%api_ver.pc
+%_libdir/libgupnp-%api_ver.so
+%_includedir/gupnp-%api_ver
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
 %if_enabled introspection
 %files gir
-%_libdir/girepository-1.0/*
+%_typelibdir/GUPnP-%api_ver.typelib
 
 %files gir-devel
-%_datadir/gir-1.0/*
+%_girdir/GUPnP-%api_ver.gir
 %endif
 
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.18.4-alt1
+- 0.18.4
+
 * Thu May 10 2012 Yuri N. Sedunov <aris@altlinux.org> 0.18.3-alt1
 - 0.18.3
 
