@@ -2,8 +2,8 @@
 %define oname %name-backends
 
 Name: sane
-Version: 1.0.22
-Release: alt3
+Version: 1.0.23
+Release: alt1
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -41,9 +41,10 @@ Patch301: sane-backends-1.0.22-canon-4410.patch
 Requires: lib%name = %version-%release
 Requires: udev
 
-# manually removed:  texlive-latex-extra
-# Automatically added by buildreq on Fri Jun 19 2009
-BuildRequires: libgphoto2-devel libieee1284-devel libjpeg-devel libtiff-devel
+# manually removed: libsane-devel
+# Automatically added by buildreq on Wed Sep 05 2012
+# optimized out: libexif-devel libusb-compat pkg-config tex-common texlive-base texlive-base-bin texlive-common texlive-fonts-recommended texlive-generic-recommended texlive-latex-base
+BuildRequires: glibc-devel libcups-devel libgphoto2-devel libieee1284-devel libjpeg-devel libtiff-devel libusb-devel libv4l-devel
 
 BuildPreReq: libusb-devel
 
@@ -143,7 +144,7 @@ This package contains SANE static libraries.
 %setup -n %oname-%version
 %patch3
 %patch4
-%patch7
+#patch7
 
 # Fedora patches
 %patch109 -p1 -b .glibc-2.7
@@ -153,7 +154,7 @@ This package contains SANE static libraries.
 %patch201 -p1 -b .plusteks12
 
 # Debian patches
-%patch301 -p1 -b .canon4410
+#patch301 -p1 -b .canon4410
 
 # Comment out entry for the "geniusvp2" backend in
 # %_sysconfdir/sane.d/dll.conf as it makes SANE hanging on some systems when
@@ -253,6 +254,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Wed Sep 05 2012 Vitaly Lipatov <lav@altlinux.ru> 1.0.23-alt1
+- new version 1.0.23 (ALT bug #27677)
+
 * Fri Mar 02 2012 Michael Shigorin <mike@altlinux.org> 1.0.22-alt3
 - added Canon MF4410 support patch (ALT bug #27023)
 
