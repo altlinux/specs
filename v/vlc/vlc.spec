@@ -1,6 +1,6 @@
 Name: vlc
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Summary: VLC media player
 License: GPLv2
@@ -28,7 +28,7 @@ BuildRequires: libtag-devel libfluidsynth-devel libnotify-devel libdbus-devel
 BuildRequires: libzvbi-devel libraw1394-devel libavc1394-devel libfribidi-devel
 BuildRequires: libass-devel libbluray-devel libpcre-devel
 BuildRequires: libkate-devel libv4l-devel libmtp-devel libshout2-devel
-BuildRequires: libtar-devel libva-devel libxcb-devel libxcbutil-devel
+BuildRequires: libtar-devel libva-devel libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel
 BuildRequires: libdc1394-devel libschroedinger-devel libsmbclient-devel
 BuildRequires: libupnp-devel libqt4-devel liblua5-devel libGL-devel
 BuildRequires: libtiger-devel libudev-devel libprojectM-devel libsqlite3-devel
@@ -1270,6 +1270,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Sep  6 2012 Terechkov Evgenii <evg@altlinux.org> 2.0.3-alt2
+- Rebuild with new libxcbutil
+
 * Thu Jul 19 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.3-alt1
 - 2.0.3 released
 
