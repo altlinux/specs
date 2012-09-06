@@ -50,7 +50,7 @@ BuildRequires: jpackage-compat
 
 Name:           velocity
 Version:        1.6.4
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
@@ -100,8 +100,8 @@ BuildRequires: servlet_2_5_api
 BuildRequires: werken-xpath
 BuildRequires: excalibur-avalon-logkit-javadoc
 BuildRequires: jakarta-oro-javadoc
-BuildRequires: jakarta-commons-collections-javadoc
-BuildRequires: jakarta-commons-lang-javadoc
+BuildRequires: apache-commons-collections-javadoc
+BuildRequires: apache-commons-lang-javadoc
 BuildRequires: java-javadoc
 BuildRequires: jdom-javadoc
 BuildRequires: log4j-javadoc
@@ -276,6 +276,9 @@ cp -pr test $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.6.4-alt3_1jpp6
+- fixed build
+
 * Tue Jun 26 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.6.4-alt2_1jpp6
 - added velocity:velocity jppmap
 
