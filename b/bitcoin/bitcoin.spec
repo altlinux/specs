@@ -1,6 +1,6 @@
 Name: bitcoin
 Version: 0.6.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -8,6 +8,7 @@ Group: Networking/Other
 
 Url: http://www.bitcoin.org/
 Source: %name-%version.tar
+Patch: bitcoin-0.6.0-alt-debuginfo.patch
 
 BuildRequires: zlib-devel boost-devel libssl-devel gcc-c++ libdb4-devel libdb4_cxx-devel
 BuildRequires: boost-filesystem-devel boost-interprocess-devel boost-program_options-devel
@@ -31,6 +32,7 @@ Before each transaction the coin's validity will be checked.
 
 %prep
 %setup
+%patch -p1
 
 %build
 pushd src
@@ -49,6 +51,10 @@ install -pDm0755 src/%{name}d %buildroot%_bindir/%{name}d
 %doc doc/*
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.2
+- Rebuilt with Boost 1.51.0
+- Enabled debuginfo
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.1
 - Rebuilt with Boost 1.49.0
 
