@@ -6,10 +6,11 @@
 %def_with crypt
 %def_with mppe
 %def_with libatm
+%def_with inet6
 
 Name: ppp
 Version: 2.4.5
-Release: alt10
+Release: alt11
 
 Summary: The PPP daemon and documentation
 License: distributable
@@ -116,6 +117,7 @@ rm -f include/linux/if_pppol2tp.h
 	    %{?_with_crypt:USE_CRYPT=y} \
 	    %{?_with_mppe:MPPE=y} \
 	    %{?_with_libatm:HAVE_LIBATM=y} \
+	    %{?_with_inet6:HAVE_INET6=y} \
 	    COPTS="%optflags" \
 	    CC="gcc" \
 	    libdir=%_libdir
@@ -230,6 +232,9 @@ touch %buildroot/lib/udev/devices/ppp
 %_libdir/pppd/%version/dhcpc.so
 
 %changelog
+* Thu Sep 06 2012 Mikhail Efremov <sem@altlinux.org> 2.4.5-alt11
+- Enable IPv6 support (closes: #27707).
+
 * Wed Jun 13 2012 Alexey Shabalin <shaba@altlinux.org> 2.4.5-alt10
 - mv /etc/tmpfiles.d/ppp.conf -> /lib/tmpfiles.d/ppp.conf.
 - update tmpfiles for create a character device /dev/ppp.
