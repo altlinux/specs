@@ -8,9 +8,9 @@
 %define upname libtorrent-rasterbar
 
 Name: libtorrent-rasterbar%{abiversion}
-Version: 0.16.0
+Version: 0.16.1
 Epoch: 2
-Release: alt3.svn6278
+Release: alt1.svn7387
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -95,7 +95,6 @@ mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
 %build
-%add_optflags -DBOOST_FILESYSTEM_VERSION=2
 export LDFLAGS="$LDFLAGS -L/%_lib -lrt"
 %autoreconf
 %configure %{subst_enable static} %{subst_enable debug} --with-boost-libdir=%_libdir \
@@ -130,6 +129,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt1.svn7387
+- Version 0.16.1
+
 * Wed Apr 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.0-alt3.svn6278
 - Fixed build
 
