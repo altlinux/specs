@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 0.9.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -30,8 +30,8 @@ play network games with people all over the world.
 
 %build
 qmake-qt4 \
-	QMAKE_CFLAGS_RELEASE="%optflags -DBOOST_FILESYSTEM_VERSION=2" \
-	QMAKE_CXXFLAGS_RELEASE="%optflags -DBOOST_FILESYSTEM_VERSION=2" \
+	QMAKE_CFLAGS_RELEASE="%optflags" \
+	QMAKE_CXXFLAGS_RELEASE="%optflags" \
 	pokerth.pro
 %make_build Makefile.pokerth_{lib,game,server}
 sed -i 's|-pipe |%optflags -fno-strict-aliasing |g' Makefile*
@@ -49,6 +49,9 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1.2
+- Rebuilt with Boost 1.51.0
+
 * Mon Jul 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1.1
 - Rebuilt
 
