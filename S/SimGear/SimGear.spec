@@ -1,6 +1,6 @@
 Name: SimGear
 Version: 2.8.0
-Release: alt1
+Release: alt2
 
 Summary: Simulator Construction Tools
 License: GPL
@@ -9,7 +9,8 @@ Group: System/Libraries
 Url: http://www.flightgear.org
 Packager: Michael Shigorin <mike@altlinux.org>
 Source: %name-%version.tar.gz
-Patch: simgear-2.6.0-fedora-format.patch
+Patch0: simgear-2.6.0-fedora-format.patch
+Patch1: SimGear-2.8.0-alt-boost-1.51.0-compatibility.patch
 
 # Automatically added by buildreq on Sat Mar 03 2012
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
@@ -40,7 +41,8 @@ This package contains header files for SimGear.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p1
+%patch1 -p2
 
 %build
 %cmake
@@ -54,6 +56,9 @@ This package contains header files for SimGear.
 %_includedir/simgear
 
 %changelog
+* Thu Sep 06 2012 Michael Shigorin <mike@altlinux.org> 2.8.0-alt2
+- added patch by iv@ to fix FTBFS against boost-1.51
+
 * Sat Aug 18 2012 Michael Shigorin <mike@altlinux.org> 2.8.0-alt1
 - 2.8.0
 
