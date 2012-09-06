@@ -1,174 +1,117 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2008, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name: rngom
+Version: 201103
+Release: alt1_0.5.20120119svnjpp7
+Summary: Java library for parsing RELAX NG grammars
+Group: Development/Java
+License: MIT
+URL: https://rngom.dev.java.net
 
-%define cvsversion      20061207
+# svn export -r 70 https://svn.java.net/svn/rngom~svn/trunk/rngom rngom-201103
+# find rngom-201103/ -name '*.class' -delete
+# find rngom-201103/ -name '*.jar' -delete
+# tar czf rngom-201103.tar.gz rngom-201103
+Source0: %{name}-%{version}.tar.gz
+Patch0: %{name}-%{version}-pom.patch
 
-Name:           rngom
-Summary:        RELAX NG Object Model / Parser
-Url:            https://rngom.dev.java.net/
-Version:        0.1
-Release:        alt3_0.20061207.1jpp5
-Epoch:          0
-License:        MIT-style
-Group:          Development/Java
-BuildArch:      noarch
-Source0:        rngom-20061207.tar.gz
-# cvs -d :pserver:guest@cvs.dev.java.net:/cvs login
-# cvs -d :pserver:guest@cvs.dev.java.net:/cvs export -r jaxb21_fcs rngom
-Source1:        rngom-20061207.pom
-Patch0:         rngom-build.patch
-BuildRequires: jpackage-utils >= 0:1.7.4
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-nodeps
+BuildRequires: bsf
+BuildRequires: bsh
+BuildRequires: stax2-api
 BuildRequires: javacc
-BuildRequires: javatools-package-rename-task
-BuildRequires: junit
+BuildRequires: javacc-maven-plugin
+BuildRequires: jpackage-utils
+BuildRequires: junit4
+BuildRequires: maven
+BuildRequires: maven-clean-plugin
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-enforcer
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-surefire-plugin
 BuildRequires: msv-xsdlib
 BuildRequires: relaxngDatatype
-BuildRequires: retroweaver
-BuildRequires: stax_1_0_api
+BuildRequires: sonatype-oss-parent
 BuildRequires: xmlunit
 
+Requires: stax2-api
+Requires: jpackage-utils
+Requires: msv-xsdlib
 Requires: relaxngDatatype
-Requires: stax_1_0_api
 
-Requires(post): jpackage-utils >= 0:1.7.4
-Requires(postun): jpackage-utils >= 0:1.7.4
-Patch33: rngom-20061207-alt-javadoc.patch
+BuildArch: noarch
+Source44: import.info
+
 
 %description
-RNGOM is an open-source Java library for parsing RELAX NG 
-grammars. In particular, RNGOM can:
-1. parse the XML syntax
-2. parse the compact syntax
-3. check all the semantic restrictions as specified in the 
-   specification
-4. parse RELAX NG into application-defined data structures
-5. build a default data structure based around the binarized 
-   simple syntax or another data structure that preserves 
-   more of the parsed information.
-6. parse foreign elements/attributes in a schema
-7. parse comments in a schema 
+RNGOM is an open-source Java library for parsing RELAX NG grammars.
+
+In particular, RNGOM can:
+* parse the XML syntax
+* parse the compact syntax
+* check all the semantic restrictions as specified in the specification
+* parse RELAX NG into application-defined data structures
+* build a default data structure based around the binarized simple syntax or
+  another data structure that preserves more of the parsed information
+* parse foreign elements/attributes in a schema
+* parse comments in a schema
+
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group: Development/Java
+Summary: Javadoc for %{name}
+Requires: jpackage-utils
 BuildArch: noarch
 
+
 %description javadoc
-%{summary}.
+This package contains javadoc for %{name}.
+
 
 %prep
-%setup -q -n %{name}
-chmod -R go=u-w *
-for j in $(find . -name "*.jar"); do
-    mv $j $j.no
-done
-%patch0 -b .sav0
-
-#BUILD/rngom/rngom/lib/javacc/bin/lib/javacc.jar.no
-ln -sf $(build-classpath javacc) rngom/lib/javacc/bin/lib/javacc.jar
-#BUILD/rngom/rngom/lib/jsr173_1.0_api.jar.no
-ln -sf $(build-classpath stax_1_0_api) rngom/lib/jsr173_1.0_api.jar
-#BUILD/rngom/rngom/lib/junit.jar.no
-ln -sf $(build-classpath junit) rngom/lib/junit.jar
-#BUILD/rngom/rngom/lib/relaxngDatatype.jar.no
-ln -sf $(build-classpath relaxngDatatype) rngom/lib/relaxngDatatype.jar
-
-#BUILD/rngom/rngom/lib/retroweaver/bcel-5.1.jar.no
-#BUILD/rngom/rngom/lib/retroweaver/jace.jar.no
-#BUILD/rngom/rngom/lib/retroweaver/Regex.jar.no
-#BUILD/rngom/rngom/lib/retroweaver/retroweaver.jar.no
-ln -sf $(build-classpath retroweaver-all) rngom/lib/retroweaver/
-
-#BUILD/rngom/rngom/lib/util/package-rename-task.jar.no
-ln -sf $(build-classpath javatools-package-rename-task) rngom/lib/util/package-rename-task.jar
-
-#BUILD/rngom/rngom/lib/xmlunit1.0.jar.no
-ln -sf $(build-classpath xmlunit) rngom/lib/xmlunit1.0.jar
-#BUILD/rngom/rngom/lib/xsdlib.jar.no
-ln -sf $(build-classpath xsdlib) rngom/lib/xsdlib.jar
-%patch33 -p0
+%setup -q
+%patch0 -p1
 
 
 %build
-cd %{name}
-ant -Dbuild.sysclasspath=first jar javadoc
+mvn-rpmbuild install javadoc:aggregate
+
 
 %install
 
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 %{name}/build/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-install -m 644 %{name}/build/%{name}-1.3.jar $RPM_BUILD_ROOT%{_javadir}/%{name}13-%{version}.jar
-install -m 644 %{name}/build/jax-qname.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-jax-qname-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
+# Jar files:
+install -d -m 755 %{buildroot}%{_javadir}
+cp -p target/rngom-%{version}-SNAPSHOT.jar %{buildroot}%{_javadir}/%{name}.jar
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-%add_to_maven_depmap org.kohsuke %{name} %{cvsversion} JPP %{name}
+# POM files:
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+cp -p pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr %{name}/build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+# Javadoc files:
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 
-install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-install -m 644 www/doc/LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+# Dependencies map:
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-%post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
-
-%postun javadoc
-if [ "$1" = "0" ]; then
-    rm -f %{_javadocdir}/%{name}
-fi
 
 %files
-%doc %{_docdir}/%{name}-%{version}/LICENSE.txt
-%{_javadir}/*
-%{_datadir}/maven2
-%{_mavendepmapfragdir}
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
+
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%ghost %doc %{_javadocdir}/%{name}
+%{_javadocdir}/*
+
 
 %changelog
+* Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:201103-alt1_0.5.20120119svnjpp7
+- new version
+
 * Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.1-alt3_0.20061207.1jpp5
 - fixes for java6 support
 
