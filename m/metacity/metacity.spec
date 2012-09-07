@@ -5,7 +5,7 @@
 %def_enable shape
 
 Name: metacity
-Version: %ver_major.3
+Version: %ver_major.8
 Release: alt1
 
 Summary: Metacity window manager
@@ -71,7 +71,7 @@ BuildRequires: libXfixes-devel libXrender-devel libXdamage-devel libXtst-devel
 %{?_enable_render:BuildRequires: libXrender-devel}
 BuildRequires: libXcursor-devel libXt-devel libXinerama-devel
 %{?_enable_shape:BuildRequires: libXext-devel}
-BuildRequires: gnome-doc-utils zenity libcanberra-gtk2-devel
+BuildRequires: yelp-tools itstool zenity libcanberra-gtk2-devel
 BuildRequires: libXrandr-devel libX11-devel libSM-devel libICE-devel perl-XML-Parser libgtop-devel
 
 %description
@@ -303,6 +303,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Fri Sep 07 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.8-alt1
+- 2.34.8
+
 * Tue Mar 20 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.3-alt1
 - 2.34.3
 
