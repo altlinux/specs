@@ -1,13 +1,15 @@
 Name: imapsync
+Version: 1.504
+Release: alt1
+
 Summary: Tool to migrate email between IMAP servers
-Version: 1.337
-Release: alt1.1
+
 License: GPLv2
 Group: Networking/Mail
-Url: http://freshmeat.net/projects/imapsync/
+Url: https://fedorahosted.org/imapsync/
+
 Packager: Boris Savelev <boris@altlinux.org>
-#Source: http://www.linux-france.org/prj/imapsync/dist/%name-%version.tgz
-Source: %name-%version.tar
+Source: https://fedorahosted.org/released/imapsync/%name-%version.tar
 BuildArch: noarch
 
 BuildRequires: perl-Mail-Box
@@ -27,16 +29,19 @@ optionally be deleted after a successful transfer.
 %prep
 %setup
 
-%build
 %install
 %makeinstall_std
 
 %files
-%doc ChangeLog CREDITS INSTALL TODO README FAQ
+%doc ChangeLog CREDITS TODO README FAQ
 %_bindir/%name
 %_man1dir/%name.*
 
 %changelog
+* Fri Sep 07 2012 Vitaly Lipatov <lav@altlinux.ru> 1.504-alt1
+- new version 1.504 (with rpmrb script)
+- cleanup spec
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 1.337-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
