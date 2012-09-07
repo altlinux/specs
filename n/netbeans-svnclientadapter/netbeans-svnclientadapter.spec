@@ -12,7 +12,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{nb_}-svnclientadapter
 Version:        %{nb_ver}
-Release:        alt1_3jpp6
+Release:        alt1_5jpp7
 Summary:        Subversion Client Adapter
 
 License:        ASL 2.0
@@ -69,6 +69,9 @@ ant -verbose svnClientAdapter.jar
 %{_javadir}/*
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_5jpp7
+- new version
+
 * Tue Sep 13 2011 Igor Vlasenko <viy@altlinux.ru> 6.7.1-alt1_3jpp6
 - update to new release by jppimport
 
