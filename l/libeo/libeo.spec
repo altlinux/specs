@@ -1,6 +1,6 @@
 Name:		libeo
 Version:	1.2.0
-Release:	alt2
+Release:	alt2.1
 Summary:	EO, the Evolving Objects library
 License:	LGPLv2.1
 URL:		http://eodev.sourceforge.net
@@ -87,6 +87,9 @@ mv %buildroot%_prefix/lib/* %buildroot%_libdir/
 #_libexecdir/eo/test
 
 %changelog
+* Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.1
+- Rebuilt with Boost 1.51.0
+
 * Tue Jun 19 2012 Fr. Br. George <george@altlinux.ru> 1.2.0-alt2
 - Fix build
 
