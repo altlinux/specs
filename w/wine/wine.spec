@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.5.10
+Version: 1.5.12
 Release: alt1
 Epoch: 1
 
@@ -61,6 +61,8 @@ BuildRequires: libusb-devel libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libalsa-devel jackit-devel libieee1284-devel libhal-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libv4l-devel gstreamer-devel gst-plugins-devel libgsm-devel libmpg123-devel
+# udev needed for udev version detect
+BuildRequires: libudev-devel udev
 
 # https://bugzilla.altlinux.org/show_bug.cgi?id=20356
 BuildRequires: libesd-devel
@@ -79,8 +81,6 @@ BuildRequires: libXres-devel libXScrnSaver-devel libXinerama-devel libXt-devel
 BuildRequires: libXxf86dga-devel libXxf86misc-devel libXcomposite-devel
 BuildRequires: libXxf86vm-devel libfontenc-devel libXdamage-devel
 BuildRequires: libXvMC-devel libXcursor-devel libXevie-devel libXv-devel
-# udev needed for udev version detect
-BuildRequires: libudev-devel udev
 
 BuildRequires: perl-XML-Simple
 
@@ -89,9 +89,9 @@ BuildRequires: prelink
 
 # Actually for x86_32
 Requires: glibc-pthread glibc-nss
-# Runtime linked
-Requires: libcups libncurses libssl
-Requires: libXrender libICE libuuid
+# Runtime linked (via dl_open)
+Requires: libcups libncurses libssl libfontconfig libfreetype
+Requires: libXrender libXi libXext libX11 libICE
 
 # We have not to use it in production (used in winedbg)
 #BuildConflicts: valgrind-devel valgrind
@@ -185,6 +185,7 @@ linked with Wine.
 Summary: DirectX/OpenGL support libraries for Wine
 Group: System/Libraries
 Requires: lib%name = %epoch:%version-%release
+Requires: libGL
 
 %description -n lib%name-gl
 This package contains the libraries for DirectX/OpenGL support in Wine.
@@ -230,6 +231,8 @@ develop programs which make use of Wine.
 %setup
 
 %build
+%remove_optflags -fomit-frame-pointer
+%remove_optflags -D_FORTIFY_SOURCE=2
 %configure --with-x \
 %ifarch x86_64
 	--enable-win64 \
@@ -254,7 +257,7 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 %post
 %post_service wine
-# start service during first time install (not for ALT), see rpm-build-compat
+# start service during first time install (not for ALT), see rpm-build-intro
 %start_service wine
 
 %preun
@@ -437,6 +440,12 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Fri Sep 07 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.12-alt1
+- new build 1.5.12
+
+* Thu Aug 02 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.10-alt2
+- add direct requires (libfontconfig and so on)
+
 * Wed Aug 01 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.10-alt1
 - new build 1.5.10 (use wine-gecko 1.7)
 
