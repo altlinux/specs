@@ -9,7 +9,7 @@
 %endif
 
 Name: wine-vanilla
-Version: 1.5.10
+Version: 1.5.12
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -111,10 +111,14 @@ Summary: Main library for Wine
 Group: System/Libraries
 Conflicts: libwine
 
+# Actually for x86_32
+Requires: glibc-pthread glibc-nss
+
 # Runtime linked
 Requires: libcups libncurses
-Requires: libXrender libICE libuuid
+Requires: libXrender libXi libXext libX11 libICE
 Requires: libssl
+Requires: libfontconfig libfreetype
 
 %description -n lib%name
 This package contains the library needed to run programs dynamically
@@ -129,6 +133,8 @@ Summary: DirectX/OpenGL support libraries for Wine
 Group: System/Libraries
 Requires: lib%name = %version-%release
 Conflicts: libwine-gl
+
+Requires: libGL
 
 %description -n lib%name-gl
 This package contains the libraries for DirectX/OpenGL support in Wine.
@@ -355,6 +361,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Fri Sep 07 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.12-alt1
+- new version 1.5.12
+
 * Wed Aug 01 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.10-alt1
 - new version 1.5.10, requires wine-gecko 1.7
 
