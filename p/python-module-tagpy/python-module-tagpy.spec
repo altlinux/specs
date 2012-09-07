@@ -1,7 +1,7 @@
 %define rname tagpy
 Name: python-module-tagpy
 Version: 0.94.8
-Release: alt3.3
+Release: alt3.4
 
 Summary: TagPy is a set of Python bindings for TagLib. 
 License: GPL2+
@@ -50,6 +50,9 @@ python setup.py install --root=%buildroot \
 
 
 %changelog
+* Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.94.8-alt3.4
+- Rebuilt with Boost 1.51.0
+
 * Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.94.8-alt3.3
 - Rebuilt with Boost 1.49.0
 
