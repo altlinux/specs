@@ -1,5 +1,5 @@
 Name:    yagf
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: YAGF is a graphical front-end for cuneiform and tesseract OCR tools
@@ -59,6 +59,12 @@ make install DESTDIR=%buildroot
 %_datadir/applications/YAGF.desktop
 
 %changelog
+* Thu Sep 06 2012 Andrey Cherepanov <cas@altlinux.org> 0.9.2-alt1
+- Version 0.9.2
+  - Workspace may now be saved as a project
+  - Prepare for recognition button
+  - Small bug fixes and improvements
+
 * Mon Apr 23 2012 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt1
 - Version 0.9.1
 - Changes:
