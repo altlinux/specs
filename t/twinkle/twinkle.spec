@@ -1,6 +1,6 @@
 Name: twinkle
 Version: 1.4.2
-Release: alt4.5
+Release: alt4.6
 
 Summary: twinkle - SIP Soft Phone
 
@@ -52,6 +52,9 @@ install -pD -m0644 src/gui/images/twinkle16.png %buildroot%_miconsdir/%name.png
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt4.6
+- Rebuilt with Boost 1.51.0
+
 * Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt4.5
 - Rebuilt with Boost 1.49.0
 
