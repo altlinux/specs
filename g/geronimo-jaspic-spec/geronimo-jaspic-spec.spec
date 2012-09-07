@@ -3,20 +3,19 @@ BuildRequires: jpackage-compat
 %define api_version 1.0
 %define pkg_name geronimo-jaspic_%{api_version}_spec
 Name:          geronimo-jaspic-spec
-Version:       1.0
-Release:       alt1_2jpp7
+Version:       1.1
+Release:       alt1_3jpp7
 Summary:       Java Authentication SPI for Containers
-License:       ASL 2.0
+License:       ASL 2.0 and W3C
 Group:         Development/Java
 URL:           http://geronimo.apache.org/
 Source0:       http://repo2.maven.org/maven2/org/apache/geronimo/specs/%{pkg_name}/%{version}/%{pkg_name}-%{version}-source-release.tar.gz
-
-Patch0:        geronimo-jaspic-spec-use-parent-pom.patch
 
 BuildArch:     noarch
 
 BuildRequires: maven
 BuildRequires: maven-plugin-bundle
+BuildRequires: geronimo-osgi-support
 BuildRequires: geronimo-parent-poms
 BuildRequires: jpackage-utils
 
@@ -43,7 +42,14 @@ for d in LICENSE NOTICE ; do
   iconv -f iso8859-1 -t utf-8 $d > $d.conv && mv -f $d.conv $d
   sed -i 's/\r//' $d
 done
-%patch0 -p0
+
+%pom_xpath_remove "pom:parent"
+%pom_xpath_inject "pom:project" "
+    <parent>
+      <groupId>org.apache.geronimo.specs</groupId>
+      <artifactId>specs</artifactId>
+      <version>any</version>
+    </parent>"
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -73,6 +79,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_3jpp7
+- new version
+
 * Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_2jpp7
 - full version
 
