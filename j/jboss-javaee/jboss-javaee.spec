@@ -1,3 +1,4 @@
+%def_without jboss_jms_1.1_api
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -56,7 +57,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-javaee
 Version:        5.0.1
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        JBoss JavaEE 5.0 Aggregate
 License:        LGPLv2+
@@ -188,6 +189,7 @@ Provides:       jca_api = 0:1.5
 %description -n jboss-jca-1.5-api
 The J2EE Connector Architecture 1.5 API classes.
 
+%if_with jboss_jms_1.1_api
 %package -n jboss-jms-1.1-api
 Summary:        JBoss JMS 1.1 API
 Group:          Development/Java
@@ -197,9 +199,12 @@ Requires(post): alternatives >= 0:0.4
 Provides:       jms = 0:1.1
 Provides:       jms_1_1_api
 Provides:       jms_api = 0:1.1
+%endif #jboss_jms_1.1_api
 
+%if_with jboss_jms_1.1_api
 %description -n jboss-jms-1.1-api
 The Java Messaging Service 1.1 API classes.
+%endif #jboss_jms_1.1_api
 
 %package -n jboss-transaction-1.0.1-api
 Summary:        JBoss Transaction 1.0.1 API
@@ -577,6 +582,7 @@ EOF
 %exclude %{_javadir}/jca_1_5_api.jar
 %exclude %{_javadir}/jca_api.jar
 
+%if_with jboss_jms_1.1_api
 %files -n jboss-jms-1.1-api
 %_altdir/jms_jboss-jms-1.1-api
 %_altdir/jms_api_jboss-jms-1.1-api
@@ -588,6 +594,7 @@ EOF
 %exclude %{_javadir}/jms.jar
 %exclude %{_javadir}/jms_1_1_api.jar
 %exclude %{_javadir}/jms_api.jar
+%endif #jboss_jms_1.1_api
 
 %files -n jboss-transaction-1.0.1-api
 %_altdir/jta_jboss-transaction-1.0.1-api
@@ -615,6 +622,9 @@ EOF
 %endif
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt3_2jpp6
+- build w/o jms-1.1-api
+
 * Tue Mar 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt2_2jpp6
 - built with patched assembly plugin
 
