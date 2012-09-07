@@ -6,8 +6,8 @@
 
 
 Name: branding-%brand-%theme
-Version: 6.0.0 
-Release: alt18
+Version: 6.9.0 
+Release: alt1
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -415,6 +415,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Sep 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt1
+- full-size installer background
+
 * Fri Sep 30 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0.0-alt18
 - theme-livecd.qrc for livecd
 
