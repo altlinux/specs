@@ -1,34 +1,36 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ unzip
+# END SourceDeps(oneline)
 %set_verify_elf_method fhs=relaxed
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
-# one of the sources is a zip file
-BuildRequires: unzip
-BuildRequires: gcc-c++
+BuildRequires: jpackage-compat
 # Prevent brp-java-repack-jars from being run.
 %define __jar_repack %{nil}
 
 %define nb_             netbeans
-%define nb_major_ver    6.9
-%define nb_bugfix_ver   1
-%define nb_ver          %{nb_major_ver}.%{nb_bugfix_ver}
+%define nb_major_ver    7.0
+%define nb_minor_ver    1
+%define nb_ver          %{nb_major_ver}.%{nb_minor_ver}
 
-%define nb_release_time 201007282301
+%define nb_release_time 201107282000
 %define nb_home         %{_datadir}/%{nb_}
 %define nb_dir          %{nb_home}/%{nb_major_ver}
 
-%define nb_platform_ver 12
-%define nb_platform     platform
-%define nb_platform_dir %{nb_home}/%{nb_platform}%{nb_platform_ver}
+%define nb_platform_ver  13
+%define nb_platform      platform
+%define nb_platform_dir  %{nb_home}/%{nb_platform}%{nb_platform_ver}
+%define nb_platform_pkg  %{nb_}-platform
 %define nb_platform_vpkg %{nb_}-%{nb_platform}%{nb_platform_ver}
 
 %define nb_harness      harness
 %define nb_harness_dir  %{nb_home}/%{nb_harness}
+%define nb_harness_vpkg %{nb_}-%{nb_harness}
 
 %define nb_javadoc      javadoc
 %define nb_javadoc_dir  %{_javadocdir}/%{nb_}-%{nb_platform}
 
 %define compiler_opt    -Dbuild.compiler.deprecation=false -Dbuild.compiler.debug=false
-%define jdk_opt         -Dpermit.jdk6.builds=true
+%define jdk_opt         -Dpermit.jdk6.builds=true -Dpermit.jdk7.builds=true
 %define verify_opt      -Dverify.checkout=false
 %define ant_nb_opt      %{ant} %{jdk_opt} %{compiler_opt} %{verify_opt}
 
@@ -54,9 +56,9 @@ BuildRequires: gcc-c++
 # Links the system JAR.
 # %%{1} - the sys jar
 # %%{2} - the symlink name/path (optional)
-%global lnSysJAR() \
-  if [ -f %{_javadir}/%{1} ] ; then \
-     %__ln_s -f %{_javadir}/%{*} ; \
+%global lnSys() \
+  if [ -f %{1} ] ; then \
+     %__ln_s -f %{*} ; \
   else \
     echo "%{1} doesn't exist." ; exit 1 ; \
   fi ;
@@ -66,11 +68,13 @@ BuildRequires: gcc-c++
 %global rmFiles() find . -type f \\( -iname %{1} \\) | \
                   tee -a ./rmFiles.lst | xargs -t %__rm -f ;
 
+%global debug_package %{nil}
+
 Name:         netbeans-platform
 Epoch:        1
 Version:      %{nb_ver}
-Release:      alt2_3jpp6
-Summary:      NetBeans Platform {nb_ver}
+Release:      alt1_6jpp7
+Summary:      NetBeans Platform
 Group:        Development/Java
 License:      GPLv2 with exceptions or CDDL
 URL:          http://platform.netbeans.org
@@ -79,49 +83,58 @@ Source0: http://download.netbeans.org/%{nb_}/%{version}/final/zip/%{nb_}-%{versi
 
 # Avoids copying the external binaries
 # (*.exe *.dll) from the o.n.bootstrup/build.xml
-Patch0: %{name}-6.9~release_external.patch
+Patch0: remove-binaries-from-release.patch
+# Avoid looking for non-linux jna bits
+Patch1: remove-non-linux-jna-bits.patch
 # Prevents from releasing zip files (swing-layout-1.0.4-doc.zip,
 # swing-layout-1.0.4-src.zip) in the o.jdesktop.layout module
-Patch1: %{name}-6.9~properties.patch
-# Avoids copying the external binaries in nbi module
-Patch2: %{name}-6.9~nbi.patch
-# Avoids spam in the log if the -XX:+HeapDumpOnOutOfMemoryError option is not supported by the JVM
-# http://netbeans.org/bugzilla/show_bug.cgi?id=188283
-Patch3: %{name}-6.9~launcher.patch
-
-BuildArch: noarch
+Patch2: remove-swing-layout-src.patch
+# Do not copy non-linux jni libaries
+Patch3: remove-non-linux-jni-libs.patch
+# Build native libraries
+Patch4: build-native-code.patch
+# Fix path to native build dir
+#Patch5: native-build-properties.patch
+Patch5: fix-native-dir-paths.patch
+# Fix paths and flags in jnilib native build
+Patch6: jnilib-build-uniformly-across-archs.patch
+# Do not special case so names
+Patch7: do-not-name-sos-based-on-arch.patch
+# Do not build windows cleaners
+Patch8: no-windows-cleaners.patch
 
 BuildRequires: jpackage-utils
+
 BuildRequires: ant >= 1.7.0
 BuildRequires: ant-junit >= 1.7.0
-BuildRequires: ant-nodeps >= 1.7.0
 BuildRequires: ant-trax >= 1.7.0
-BuildRequires: junit4 >= 4.5
-BuildRequires: swing-layout >= 1.0
-BuildRequires: javahelp2 >= 2.0.05
-BuildRequires: jna >= 3.0.9
-BuildRequires: cobertura >= 1.9.3
-BuildRequires: objectweb-asm >= 3.0
-BuildRequires: log4j >= 1.2.9
-BuildRequires: jakarta-oro >= 2.0.8
-BuildRequires: jemmy >= 2.3.0.0
+BuildRequires: antlr3
+BuildRequires: bindex >= 2.2
 BuildRequires: felix-osgi-core >= 1.4.0
 BuildRequires: felix-osgi-compendium >= 1.4.0
 BuildRequires: felix-main >= 2.0.5
 BuildRequires: felix-framework >= 2.0.5
-BuildRequires: bindex >= 2.2
+BuildRequires: javahelp2 >= 2.0.05
+BuildRequires: jna >= 3.0.9
+BuildRequires: jna-contrib
+BuildRequires: junit4 >= 4.5
+BuildRequires: jakarta-oro >= 2.0.8
+BuildRequires: jemmy >= 2.3.0.0
+BuildRequires: swing-layout >= 1.0
+BuildRequires: stringtemplate
 
 Requires: jpackage-utils
 Requires: junit4 >= 4.5
 Requires: swing-layout >= 1.0
 Requires: javahelp2 >= 2.0.05
 Requires: jna >= 3.0.9
+Requires: jna-contrib
 Requires: felix-osgi-core >= 1.4.0
 Requires: felix-osgi-compendium >= 1.4.0
 Requires: felix-main >= 2.0.5
 Requires: felix-framework >= 2.0.5
 
-Provides: %{nb_platform_vpkg} = %{version}-%{release}
+Provides: %{nb_platform_vpkg} = %{epoch}:%{version}-%{release}
 Source44: import.info
 
 # macos proxy detection code :(
@@ -130,14 +143,16 @@ Source44: import.info
 %add_findreq_skiplist /usr/share/netbeans/platform*/lib/nbexec
 
 %description
-The NetBeans Platform, version %{nb_platform_ver}, is a generic framework 
-for Swing applications. It provides the services common to almost all 
-large desktop applications: window management, menus, settings and 
-storage, update management, file access, etc.
+The NetBeans Platform is a generic framework for Swing applications.
+It provides the services common to almost all large desktop
+applications: window management, menus, settings and storage, update
+management, file access, etc.
 
 %package %{nb_javadoc}
-Summary: Javadoc documentation for NetBeans Platform %{nb_platform_ver}
+Summary: Javadoc documentation for NetBeans Platform
 Group: Development/Java
+BuildArch: noarch
+
 %description %{nb_javadoc}
 NetBeans Platform is a set of modules, each providing
 their own APIs and working together or in a standalone
@@ -145,18 +160,22 @@ mode. This package provides one master
 javadoc to all of them.
 
 %package %{nb_harness}
-Summary: Build harness for NetBeans Platform %{nb_platform_ver}
+Summary: Build harness for NetBeans Platform
 Group: Development/Java
-Requires: jpackage-utils
-Requires: ant >= 1.7.0
+
 Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: javahelp2 >= 2.0.05
-Requires: cobertura >= 1.9.3
-Requires: objectweb-asm >= 3.0
-Requires: log4j >= 1.2.9
-Requires: jakarta-oro >= 2.0.8
-Requires: jemmy >= 2.3.0.0
+
+Requires: jpackage-utils
+
+Requires: ant >= 1.7.0
 Requires: bindex >= 2.2
+Requires: cobertura >= 1.9.3
+Requires: jakarta-oro >= 2.0.8
+Requires: javahelp2 >= 2.0.05
+Requires: jemmy >= 2.3.0.0
+
+Provides:  %{nb_harness_vpkg} = %{epoch}:%{version}-%{release}
+
 %description %{nb_harness}
 Harness with build scripts and ant tasks for everyone who
 build an application on top of NetBeans Platform
@@ -168,39 +187,51 @@ build an application on top of NetBeans Platform
 %rmFiles "*.zip"
 %rmFiles "*.exe"
 %rmFiles "*.dll"
+%rmFiles "*.so"
 %rmFiles "binaries-list"
 
 # To build the netbeans modules the system JARs will be used instead of pre-packaged ones
-%lnSysJAR javahelp2.jar     javahelp/external/jh-2.0_05.jar
-%lnSysJAR jemmy.jar         jemmy/external/jemmy-2.3.0.0.jar
-%lnSysJAR jna.jar           libs.jna/external/jna-3.0.9.jar
-%lnSysJAR junit4.jar        libs.junit4/external/junit-4.5.jar
-%lnSysJAR swing-layout.jar  o.jdesktop.layout/external/swing-layout-1.0.4.jar
+%lnSys %{_javadir}/javahelp2.jar     javahelp/external/jhall-2.0_05.jar
+%lnSys %{_javadir}/jemmy.jar         jemmy/external/jemmy-2.3.0.0.jar
+%lnSys %{_javadir}/jna.jar           libs.jna/external/jna-3.2.7.jar
+mkdir -p libs.jna/external/linux-amd64
+mkdir -p libs.jna/external/linux-i386
+%lnSys %{_libdir}/jna/libjnidispatch.so libs.jna/external/linux-amd64/libjnidispatch.so
+%lnSys %{_libdir}/jna/libjnidispatch.so libs.jna/external/linux-i386/libjnidispatch.so         
+
+%lnSys %{_javadir}/junit4.jar        libs.junit4/external/junit-4.8.2.jar
+%lnSys %{_javadir}/swing-layout.jar  o.jdesktop.layout/external/swing-layout-1.0.4.jar
 
 pushd apisupport.harness/external
-  %lnSysJAR javahelp2.jar jsearch-2.0_05.jar
-  %lnSysJAR bindex.jar bindex-2.2.jar
+  %lnSys %{_javadir}/javahelp2.jar jsearch-2.0_05.jar
+  %lnSys %{_javadir}/bindex.jar bindex-2.2.jar
 popd
-pushd apisupport.tc.cobertura/external
-  %lnSysJAR objectweb-asm/asm-all.jar asm-3.0.jar
-  %lnSysJAR objectweb-asm/asm-all.jar asm-tree-3.0.jar
-  %lnSysJAR cobertura.jar cobertura-1.9.3.jar
-  %lnSysJAR oro.jar       jakarta-oro-2.0.8.jar
-  %lnSysJAR log4j.jar     log4j-1.2.9.jar
+pushd core.nativeaccess/external
+  #%lnSys %{_javadir}/jna.jar platform-3.2.7.jar
+  %lnSys %{_javadir}/jna/platform.jar platform-3.2.7.jar 
+popd
+pushd libs.antlr3.devel/external
+  %lnSys %{_javadir}/antlr3-runtime.jar antlr-3.1.3.jar
+  %lnSys %{_javadir}/stringtemplate.jar stringtemplate-3.2.jar
 popd
 pushd libs.felix/external
-  %lnSysJAR felix/org.apache.felix.framework.jar felix-2.0.3.jar
-  %lnSysJAR felix/org.apache.felix.main.jar felix-main-2.0.2.jar
+  %lnSys %{_javadir}/felix/org.apache.felix.framework.jar felix-2.0.3.jar
+  %lnSys %{_javadir}/felix/org.apache.felix.main.jar felix-main-2.0.2.jar
 popd
 pushd libs.osgi/external
-  %lnSysJAR felix/org.osgi.core.jar osgi.core-4.2.jar
-  %lnSysJAR felix/org.osgi.compendium.jar osgi.cmpn-4.2.jar
+  %lnSys %{_javadir}/felix/org.osgi.core.jar osgi.core-4.2.jar
+  %lnSys %{_javadir}/felix/org.osgi.compendium.jar osgi.cmpn-4.2.jar
 popd
 
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
 
 %build
 
@@ -234,15 +265,29 @@ sendopts,options.api,editor.mimelookup \
 
 # linking the platform to the system JARs
 pushd %{buildroot}%{nb_platform_dir}/modules/ext
-  %lnSysJAR felix/org.apache.felix.framework.jar felix-2.0.3.jar
-  %lnSysJAR felix/org.apache.felix.main.jar felix-main-2.0.2.jar
-  %lnSysJAR javahelp2.jar    jh-2.0_05.jar
-  %lnSysJAR jna.jar          jna-3.0.9.jar
-  %lnSysJAR junit4.jar       junit-4.5.jar
-  %lnSysJAR felix/org.osgi.compendium.jar osgi.cmpn-4.2.jar
-  %lnSysJAR felix/org.osgi.core.jar osgi.core-4.2.jar
-  %lnSysJAR swing-layout.jar swing-layout-1.0.4.jar
+  %lnSys %{_javadir}/felix/org.apache.felix.framework.jar felix-2.0.3.jar
+  %lnSys %{_javadir}/felix/org.apache.felix.main.jar felix-main-2.0.2.jar
+  %lnSys %{_javadir}/javahelp2.jar    jhall-2.0_05.jar
+  %lnSys %{_javadir}/jna.jar          jna-3.2.7.jar
+  %lnSys %{_javadir}/jna/platform.jar platform-3.2.7.jar
+  %lnSys %{_javadir}/junit4.jar       junit-4.5.jar
+  %lnSys %{_javadir}/felix/org.osgi.compendium.jar osgi.cmpn-4.2.jar
+  %lnSys %{_javadir}/felix/org.osgi.core.jar osgi.core-4.2.jar
+  %lnSys %{_javadir}/swing-layout.jar swing-layout-1.0.4.jar
 popd
+pushd %{buildroot}%{nb_platform_dir}/modules/lib
+  %lnSys %{_libdir}/jna/libjnidispatch.so amd64/Linux/libjnidispatch.so
+  %lnSys %{_libdir}/jna/libjnidispatch.so i386/Linux/libjnidispatch.so
+popd
+
+# link system jars to platform
+%{__mkdir_p} %{buildroot}%{_javadir}/netbeans
+%{__ln_s} %{nb_platform_dir}/modules/org-netbeans-swing-outline.jar \
+  %{buildroot}%{_javadir}/netbeans/swing-outline.jar
+%{__ln_s} %{nb_platform_dir}/modules/org-netbeans-swing-plaf.jar \
+  %{buildroot}%{_javadir}/netbeans/swing-plaf.jar
+%{__ln_s} %{nb_platform_dir}/modules/org-netbeans-swing-tabcontrol.jar \
+  %{buildroot}%{_javadir}/netbeans/swing-tabcontrol.jar
 
 # install harness
 %__mkdir_p %{buildroot}%{nb_harness_dir}
@@ -252,19 +297,10 @@ popd
 # linking the harness to the system JARs
 pushd %{buildroot}%{nb_harness_dir}
   pushd antlib
-    %lnSysJAR bindex.jar bindex-2.2.jar
-    %lnSysJAR javahelp2.jar jsearch-2.0_05.jar
+    %lnSys %{_javadir}/bindex.jar bindex-2.2.jar
+    %lnSys %{_javadir}/javahelp2.jar jsearch-2.0_05.jar
   popd
-  %lnSysJAR jemmy.jar modules/ext/jemmy-2.3.0.0.jar
-  pushd testcoverage/cobertura
-    %lnSysJAR cobertura.jar cobertura-1.9.3.jar
-    pushd lib
-      %lnSysJAR objectweb-asm/asm-all.jar asm-3.0.jar
-      %lnSysJAR objectweb-asm/asm-all.jar asm-tree-3.0.jar
-      %lnSysJAR oro.jar       jakarta-oro-2.0.8.jar
-      %lnSysJAR log4j.jar     log4j-1.2.9.jar
-    popd
-  popd
+  %lnSys %{_javadir}/jemmy.jar modules/ext/jemmy-2.3.0.0.jar
 popd
 
 # install javadoc
@@ -290,6 +326,9 @@ popd
 %{nb_platform_dir}/VERSION.txt
 %{nb_platform_dir}/.noautoupdate
 %{nb_platform_dir}/.lastModified
+%{_javadir}/netbeans/swing-outline.jar
+%{_javadir}/netbeans/swing-plaf.jar
+%{_javadir}/netbeans/swing-tabcontrol.jar
 
 %files %{nb_harness}
 %dir %{nb_harness_dir}/
@@ -301,7 +340,6 @@ popd
 %attr(755, root, root) %{nb_harness_dir}/launchers/app.sh
 %{nb_harness_dir}/modules
 %{nb_harness_dir}/nbi
-%{nb_harness_dir}/testcoverage
 %{nb_harness_dir}/update_tracking
 %doc %{nb_harness_dir}/README
 %{nb_harness_dir}/build.xml
@@ -313,8 +351,6 @@ popd
 %{nb_harness_dir}/run.xml
 %{nb_harness_dir}/suite.xml
 %{nb_harness_dir}/tasks.jar
-%{nb_harness_dir}/testcoverage-suite.xml
-%{nb_harness_dir}/testcoverage.xml
 %{nb_harness_dir}/.noautoupdate
 %{nb_harness_dir}/.lastModified
 
@@ -323,6 +359,9 @@ popd
 %doc nbbuild/licenses/CDDL-GPL-2-CP
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1:7.0.1-alt1_6jpp7
+- new version
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1:6.9.1-alt2_3jpp6
 - built with java 6
 
