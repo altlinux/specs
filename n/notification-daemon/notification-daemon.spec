@@ -2,7 +2,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: notification-daemon
-Version: %ver_major.4
+Version: %ver_major.6
 Release: alt1
 
 Summary: Desktop Notification Daemon
@@ -53,6 +53,9 @@ Desktop Notifications specification
 %doc AUTHORS NEWS
 
 %changelog
+* Fri Sep 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.6-alt1
+- 0.7.6
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.4-alt1
 - 0.7.4
 
