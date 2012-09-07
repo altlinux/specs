@@ -1,22 +1,21 @@
-Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
-%define name jboss-logmanager
-%define version 1.2.2
+%define name jboss-logging
+%define version 3.1.0
 %global namedreltag .GA
 %global namedversion %{version}%{?namedreltag}
 
-Name:             jboss-logmanager
-Version:          1.2.2
-Release:          alt1_3jpp7
-Summary:          JBoss Log Manager
+Name:             jboss-logging
+Version:          3.1.0
+Release:          alt1_4jpp7
+Summary:          The JBoss Logging Framework
 Group:            Development/Java
 License:          LGPLv2+
-URL:              https://github.com/jboss-logging/jboss-logmanager
+URL:              https://github.com/jboss-logging/jboss-logging
 
-# git clone git://github.com/jboss-logging/jboss-logmanager.git
-# cd jboss-logmanager/ && git archive --format=tar --prefix=jboss-logmanager-1.2.2.GA/ 1.2.2.GA | xz > jboss-logmanager-1.2.2.GA.tar.xz
+# git clone git://github.com/jboss-logging/jboss-logging.git
+# cd jboss-logging/ && git archive --format=tar --prefix=jboss-logging-3.1.0.GA/ 3.1.0.GA | xz > jboss-logging-3.1.0.GA.tar.xz
 Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildArch:        noarch
@@ -32,22 +31,21 @@ BuildRequires:    maven-release-plugin
 BuildRequires:    maven-resources-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    maven-enforcer-plugin
-BuildRequires:    maven-checkstyle-plugin
-BuildRequires:    maven-plugin-cobertura
-BuildRequires:    maven-dependency-plugin
-BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
-BuildRequires:    maven-ejb-plugin
-BuildRequires:    testng
-BuildRequires:    maven-surefire-provider-testng
-BuildRequires:    qdox
+BuildRequires:    jboss-logmanager
+BuildRequires:    slf4j
+BuildRequires:    log4j
+BuildRequires:    apiviz
 BuildRequires:    jboss-parent
+BuildRequires:    maven-surefire-provider-junit
 
+Requires:         log4j
+Requires:         slf4j
+Requires:         jboss-logmanager
 Requires:         jpackage-utils
 Source44: import.info
 
 %description
-This package contains the JBoss Log Manager
+This package contains the JBoss Logging Framework.
 
 %package javadoc
 Summary:          Javadocs for %{name}
@@ -73,7 +71,7 @@ cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-# POM
+#POM
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
@@ -84,16 +82,11 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %{_javadir}/*
-%doc COPYING.txt
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc COPYING.txt
 
 %changelog
-* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt1_3jpp7
-- new version
-
-* Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt1_3jpp6
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 3.1.0-alt1_4jpp7
 - new version
 
