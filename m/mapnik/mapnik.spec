@@ -1,6 +1,6 @@
 Name: mapnik
 Version: 2.0.1
-Release: alt3
+Release: alt3.1
 Summary: Free Toolkit for developing mapping applications
 Group: Engineering
 License: LGPLv2+
@@ -202,6 +202,9 @@ install -p -m 644 %name.pc %buildroot%_pkgconfigdir/%name.pc
 %doc demo/python demo/test
 
 %changelog
+* Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt3.1
+- Rebuilt with Boost 1.51.0
+
 * Fri Apr 27 2012 Alexey Shabalin <shaba@altlinux.ru> 2.0.1-alt3
 - really fix plugin path in python bindings
 
