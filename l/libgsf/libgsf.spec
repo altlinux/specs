@@ -6,8 +6,8 @@
 %def_without gnome_vfs
 
 Name: libgsf
-Version: %ver_major.23
-Release: alt2
+Version: %ver_major.24
+Release: alt1
 
 Summary: GNOME Structured file library
 License: %lgpl2plus
@@ -16,7 +16,6 @@ Url: http://www.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-1.14.23-alt-fix_tests.patch
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 
@@ -145,7 +144,6 @@ programs.
 
 %prep
 %setup -q
-%patch -p1
 
 subst 's/pythondir/pyexecdir/' python/Makefile.am
 
@@ -159,6 +157,7 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
     %{?_with_bonobo:--with-bonobo} \
     %{?_with_gnome_vfs:--with-gnome-vfs} \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
+    %{?_enable_introspection:--enable-introspection=yes} \
     %{subst_enable static}
 
 %make_build
@@ -237,6 +236,9 @@ fi
 %exclude %python_sitelibdir/gsf/*.la
 
 %changelog
+* Fri Sep 07 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.24-alt1
+- 1.14.24
+
 * Fri Apr 20 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.23-alt2
 - 1.14.23 release
 
