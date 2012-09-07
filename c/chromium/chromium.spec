@@ -1,6 +1,9 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.11.10.5
-%define rev 151980
+%define rev 154005
+
+%def_enable debug
+%def_disable nacl
 
 %if_enabled debug
 %define buildtype Debug
@@ -8,10 +11,8 @@
 %define buildtype Release
 %endif
 
-%def_disable nacl
-
 Name:           chromium
-Version:        21.0.1180.81
+Version:        21.0.1180.89
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -19,22 +20,20 @@ License:        BSD-3-Clause and LGPL-2.1+
 Group:          Networking/WWW
 Url:            http://code.google.com/p/chromium/
 
-Source0:        %name.%version.svn%rev.tar.bz2
+Source0:        %name.%version.svn%rev.tar.gz
 Source30:       master_preferences
 Source31:       default_bookmarks.html
 Source99:       chrome-wrapper
 Source100:      %name.sh
 Source101:      chromium.desktop
 Source102:      chromium-browser.xml
-Source104:      chromium-icons.tar.bz2
+Source104:      chromium-icons.tar
 Source200:      %name.default
 Provides:       chromium-browser = %version
 Obsoletes:      chromium-browser < %version
 
 ## Start Patches
 # Many changes to the gyp systems so we can use system libraries
-# PATCH-FIX-OPENSUSE Fix build with GCC 4.6
-Patch1:         chromium-gcc46.patch
 # PATCH-FIX-OPENSUSE patches in system zlib library
 Patch8:         chromium-codechanges-zlib.patch
 # PATCH-FIX-OPENSUSE removes build part for courgette
@@ -43,14 +42,8 @@ Patch13:        chromium-no-courgette.patch
 Patch14:        chromium-master-prefs-path.patch
 # PATCH-FIX-OPENSUSE patches in system glew library
 Patch17:        chromium-system-glew.patch
-# PATCH-FIX-OPENSUSE patches in system expat library
-Patch18:        chromium-system-expat.patch
 # PATCH-FIX-OPENSUSE disables the requirement for ffmpeg
 Patch20:        chromium-6.0.425.0-ffmpeg-no-pkgconfig.patch
-# PATCH-FIX-OPENSUSE disable the use of tcmallic function
-Patch25:        tcmalloc-factory.patch
-# PATCH-FIX-OPENSUSE make sure that Chrome remoting is linking against the system libvpx
-Patch26:        chromium-remoting-build-fix.diff
 # PATCH-FIX-OPENSUSE patches in system speex library
 Patch28:        chromium-7.0.500.0-system-speex.patch
 # PATCH-FIX-OPENSUSE patches in the system libvpx library
@@ -71,6 +64,24 @@ Patch69:	chromium-alt-krb5-fix-path.patch
 Patch71:	chromium-21.0.1158.0-set-desktop-file-name.patch
 # Replace 'struct siginfo' with 'siginfo_t'
 Patch72:	chromium-20.0.1132.57-glib-2.16-use-siginfo_t.patch
+
+# Patches from Debian
+Patch80:	nspr.patch
+Patch81:	nss.patch
+Patch82:	expat.patch
+Patch83:	armv4.patch
+Patch84:	ffmpeg_arm.patch
+Patch85:	fix-manpage.patch
+Patch86:	webkit-version.patch
+Patch87:	cups1.5.patch
+Patch88:	arm-no-float-abi.patch
+Patch89:	vpx.patch
+Patch90:	gcc4.7.patch
+Patch91:	arm.patch
+
+# Patches from upstream
+# Fix build WebKit with bison 1.6 (see http://trac.webkit.org/changeset/124099)
+Patch100:	chromium-fix-build-with-new-bison.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -111,6 +122,7 @@ BuildRequires:  libudev-devel
 BuildRequires:  libv8-devel = %v8_ver
 BuildRequires:  libvpx-devel
 BuildRequires:  libxslt-devel
+BuildRequires:  libyasm-devel
 BuildRequires:  perl-Switch
 BuildRequires:  pkg-config
 BuildRequires:  pkgconfig(cairo) >= 1.6
@@ -137,6 +149,7 @@ BuildRequires:  python-modules-json
 BuildRequires:  python-modules-logging
 BuildRequires:  subversion
 BuildRequires:  wdiff
+BuildRequires:  yasm
 BuildRequires:  zlib-devel
 
 Requires:       libv8 = %v8_ver
@@ -190,7 +203,6 @@ to Gnome's Keyring.
 %prep
 %setup -q -n %name
 
-%patch1 -p1
 %patch62 -p1
 %patch63 -p1
 %patch64
@@ -198,9 +210,7 @@ to Gnome's Keyring.
 %patch13 -p1
 %patch14 -p1
 %patch17 -p1
-%patch18 -p1
 %patch20 -p1
-%patch26 -p1
 %patch28 -p1
 %patch32 -p1
 %patch66 -p1
@@ -208,6 +218,21 @@ to Gnome's Keyring.
 %patch69 -p2
 %patch71 -p2
 %patch72 -p1
+
+%patch80 -p1
+%patch81 -p1
+%patch82 -p1
+%patch83 -p1
+%patch84 -p1
+%patch85 -p1
+%patch86 -p1
+%patch87 -p1
+%patch88 -p1
+%patch89 -p1
+%patch90 -p1
+%patch91 -p1
+
+%patch100 -p0
 
 echo "svn%rev" > src/build/LASTCHANGE.in
 
@@ -229,30 +254,66 @@ for i in src/build/common.gypi; do
         sed -i "s|'-fno-exceptions',|$PARSED_OPT_FLAGS|g" $i
         sed -i "s|'-Werror'|'-Wno-error'|g" $i
 done
-# '
+
+# TODO: ARM specific (from Debian rules)
+#ifeq (arm,$(DEB_HOST_ARCH_CPU))
+#GYP_DEFINES += \
+#	target_arch=arm \
+#	enable_webrtc=0 \
+#	use_cups=1 \
+#	$(NULL)
+#ifeq (armel,$(DEB_HOST_ARCH))
+#AVOID_GCC_44 := 0
+#GYP_DEFINES += \
+#	v8_use_arm_eabi_hardfloat=false \
+#	arm_float_abi=soft \
+#	arm_thumb=0 \
+#	armv7=0 \
+#	arm_neon=0 \
+#	$(NULL)
+#endif
+#ifeq (armhf,$(DEB_HOST_ARCH))
+#GYP_DEFINES += -DUSE_EABI_HARDFLOAT 
+#GYP_DEFINES += \
+#	v8_use_arm_eabi_hardfloat=true \
+#	arm_fpu=vfpv3 \
+#	arm_float_abi=hard \
+#	arm_thumb=1 \
+#	armv7=1 \
+#	arm_neon=0 \
+#	$(NULL)
+#endif
+## '
 
 pushd src
 
 ./build/gyp_chromium -f make build/all.gyp \
 	-Dlinux_sandbox_path=%_libexecdir/chrome_sandbox \
 	-Dlinux_sandbox_chrome_path=%_libdir/chromium/chromium \
-	-Duse_openssl=0 \
 	-Dbuild_ffmpegsumo=1 \
-	-Duse_system_ffmpeg=1 \
-	-Duse_system_zlib=1 \
-	-Duse_system_libpng=1 \
+	-Duse_openssl=0 \
 	-Duse_system_bzip2=1 \
+	-Duse_system_ffmpeg=0 \
+	-Duse_system_flac=1 \
+	-Duse_system_icu=0 \
 	-Duse_system_libbz2=1 \
+	-Duse_system_libevent=1 \
 	-Duse_system_libjpeg=0 \
+	-Duse_system_libpng=1 \
+	-Duse_system_libwebp=0 \
 	-Duse_system_libxml=1 \
 	-Duse_system_libxslt=1 \
-	-Duse_system_libevent=1 \
-	-Duse_system_vpx=1 \
-	-Dremove_webcore_debug_symbols=1 \
+	-Duse_system_speex=1 \
+	-Duse_system_sqlite=0 \
 	-Duse_system_v8=1 \
+	-Duse_system_vpx=0 \
+	-Duse_system_xdg_utils=0 \
+	-Duse_system_yasm=1 \
+	-Duse_system_zlib=1 \
+	-Dremove_webcore_debug_symbols=1 \
 	-Dproprietary_codecs=1 \
 %if_disabled nacl
-        -Ddisable_nacl=1 \
+    -Ddisable_nacl=1 \
 %endif
 	-Dlinux_fpic=1 \
 %ifnarch x86_64
@@ -264,6 +325,8 @@ pushd src
 	-Dlinux_use_gold_flags=0 \
 	-Dlinux_use_gold_binary=0 \
 	-Denable_plugin_installation=0 \
+	-Dlinux_use_tcmalloc=0 \
+	-Duse_pulseaudio=1 \
 	-Djavascript_engine=v8
 
 make -r %{?_smp_mflags} chrome V=1 BUILDTYPE=%buildtype
@@ -316,7 +379,7 @@ popd
 
 mkdir -p %buildroot%_datadir/icons/
 pushd %buildroot%_datadir/icons/
-tar -xjf %SOURCE104
+tar -xf %SOURCE104
 mv oxygen hicolor
 popd
 
@@ -379,6 +442,25 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Fri Sep 07 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.89-alt1.r154005
+- New version 21.0.1180.89
+- Fixes:
+  - Several Pepper Flash fixes (Issue 140577, 144107, 140498, 142479)
+  - Microphone issues with tinychat.com (Issue: 143192)
+  - Devtools regression with "save as" of edited source (issue: 141180)
+  - Mini ninjas shaders fails (Issue: 142705)
+  - Page randomly turns red/green gradient boxes (Issue: 110343)
+  - Medium CVE-2012-2865: Out-of-bounds read in line breaking.
+  - High CVE-2012-2866: Bad cast with run-ins.
+  - Low CVE-2012-2867: Browser crash with SPDY.
+  - Medium CVE-2012-2868: Race condition with workers and XHR.
+  - High CVE-2012-2869: Avoid stale buffer in URL loading.
+  - Low CVE-2012-2870: Lower severity memory management issues in XPath.
+  - High CVE-2012-2871: Bad cast in XSL transforms.
+  - Medium CVE-2012-2872: XSS in SSL interstitial.
+- Export patches and flags from Debian
+- Disable tcmalloc
+
 * Fri Aug 24 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.81-alt1.r151980
 - New version 21.0.1180.81
 - Disable plugin installation
