@@ -1,3 +1,4 @@
+%def_without tags_quartz
 BuildRequires: /proc
 BuildRequires: jpackage-1.6.0-compat
 # Copyright (c) 2000-2011, JPackage Project
@@ -44,7 +45,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           jakarta-%{base_name}
 Version:        %{jakarta_version}
-Release:        alt10_7jpp6
+Release:        alt11_7jpp6
 Epoch:          0
 Summary:        Jelly Scripting Engine
 Group:          Development/Java
@@ -129,7 +130,7 @@ BuildRequires:  mx4j
 BuildRequires:  db-ojb
 ## for tags-quartz
 BuildRequires:  log4j
-BuildRequires:  quartz
+#BuildRequires:  quartz
 ## for tags-soap
 BuildRequires:  axis
 ## for tags-sql
@@ -401,15 +402,19 @@ Requires:       db-ojb
 %description    tags-ojb
 %{summary}.
 
+%if_with tags_quartz
 %package tags-quartz
 Summary:        Quartz tags for %{name}
 Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       log4j
 Requires:       quartz
+%endif #tags_quartz
 
+%if_with tags_quartz
 %description    tags-quartz
 %{summary}.
+%endif #tags_quartz
 
 %package tags-soap
 Summary:        Soap tags for %{name}
@@ -738,12 +743,14 @@ EOBP
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
+%if_with tags_quartz
   pushd quartz
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(build-classpath quartz)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
+%endif
   pushd soap
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(build-classpath axis/axis axis/jaxrpc commons-codec commons-httpclient)
@@ -855,8 +862,10 @@ install -pm 644 jelly-tags/log/target/commons-jelly-tags-log-1.0-SNAPSHOT.jar \
       $RPM_BUILD_ROOT%{_javadir}/jelly-tags/%{name}-tags-log-%{version}.jar
 install -pm 644 jelly-tags/ojb/target/commons-jelly-tags-ojb-1.0-SNAPSHOT.jar \
       $RPM_BUILD_ROOT%{_javadir}/jelly-tags/%{name}-tags-ojb-%{version}.jar
+%if_with tags_quartz
 install -pm 644 jelly-tags/quartz/target/commons-jelly-tags-quartz-1.0-SNAPSHOT.jar \
       $RPM_BUILD_ROOT%{_javadir}/jelly-tags/%{name}-tags-quartz-%{version}.jar
+%endif
 install -pm 644 jelly-tags/soap/target/commons-jelly-tags-soap-1.1-SNAPSHOT.jar \
       $RPM_BUILD_ROOT%{_javadir}/jelly-tags/%{name}-tags-soap-%{version}.jar
 install -pm 644 jelly-tags/sql/target/commons-jelly-tags-sql-1.0-SNAPSHOT.jar \
@@ -877,9 +886,13 @@ install -pm 644 jelly-tags/xmlunit/target/commons-jelly-tags-xmlunit-1.0-SNAPSHO
       $RPM_BUILD_ROOT%{_javadir}/jelly-tags/%{name}-tags-xmlunit-%{version}.jar
 
 %if %{with_jaxme}
-export taglibs="ant antlr avalon bean beanshell betwixt bsf define dynabean email fmt html http interaction jaxme jetty jms jmx jsl junit log ojb quartz soap sql swing threads util validate velocity xml xmlunit"
+#with quartz
+#export taglibs="ant antlr avalon bean beanshell betwixt bsf define dynabean email fmt html http interaction jaxme jetty jms jmx jsl junit log ojb quartz soap sql swing threads util validate velocity xml xmlunit"
+export taglibs="ant antlr avalon bean beanshell betwixt bsf define dynabean email fmt html http interaction jaxme jetty jms jmx jsl junit log ojb soap sql swing threads util validate velocity xml xmlunit"
 %else
-export taglibs="ant antlr avalon bean beanshell betwixt bsf define dynabean email fmt html http interaction jetty jms jmx jsl junit log ojb quartz soap sql swing threads util validate velocity xml xmlunit"
+#with quartz
+#export taglibs="ant antlr avalon bean beanshell betwixt bsf define dynabean email fmt html http interaction jetty jms jmx jsl junit log ojb quartz soap sql swing threads util validate velocity xml xmlunit"
+export taglibs="ant antlr avalon bean beanshell betwixt bsf define dynabean email fmt html http interaction jetty jms jmx jsl junit log ojb soap sql swing threads util validate velocity xml xmlunit"
 %endif
 
 (
@@ -1170,6 +1183,7 @@ done
 %{_libdir}/gcj/%{name}/%{name}-tags-ojb-%{version}.jar.*
 %endif
 
+%if_with tags_quartz
 %files    tags-quartz
 %{_javadir}/jakarta-commons-jelly-tags-quartz.jar
 %{_javadir}/commons-jelly-tags-quartz.jar
@@ -1180,6 +1194,7 @@ done
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/%{name}-tags-quartz-%{version}.jar.*
 %endif
+%endif #tags_quartz
 
 %files    tags-soap
 %{_javadir}/jakarta-commons-jelly-tags-soap.jar
@@ -1282,6 +1297,9 @@ done
 
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_7jpp6
+- build w/o quartz
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt10_7jpp6
 - fixed build with java7
 
