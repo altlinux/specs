@@ -1,88 +1,136 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: maven2-plugin-dependency maven-shared-filtering
 BuildRequires: /proc
-BuildRequires: jpackage-1.6-compat
-# Prevent brp-java-repack-jars from being run.
-%global __jar_repack %{nil}
-
-%global servlet_jar %{_javadir}/servlet.jar
-%global jetty_jar %{_javadir}/jetty/jetty.jar
-
+BuildRequires: jpackage-compat
 Name:           ini4j
-Version:        0.4.1
-Release:        alt1_2jpp6
+Version:        0.5.1
+Release:        alt1_7jpp7
 Summary:        Java API for handling files in Windows .ini format
-
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://www.ini4j.org/
+
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}-src.zip
-Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
-Source2:        %{name}-%{version}-build.xml
+# maven-changes-plugin requires javax-activation (which is part of JRE)
+Source1:        %{name}.depmap
+
+Patch0:         %{name}-remove-translator.patch
+Patch1:         %{name}-remove-wagon.patch
+Patch2:         %{name}-fix-maven-license-plugin.patch
+Patch3:         %{name}-remove-test-dependencies.patch
+# disable checkstyle and pmd; both fail when running over the release
+# thanks to heffer for pointing this out
+Patch4:         %{name}-remove-checkstyle-and-pmd-checks.patch
+Patch5:         %{name}-encoding.patch
+# removing maven-license-plugin BR
+Patch6:         %{name}-remove-license-plugin.patch
 
 BuildArch:      noarch
 
 # See http://ini4j.sourceforge.net/dependencies.html
-BuildRequires: jpackage-utils
-BuildRequires: ant
-BuildRequires: tomcat5-servlet-2.4-api >= 5.5
-BuildRequires: jetty6 >= 4.2.2
+BuildRequires:  jpackage-utils
 
-Requires: jpackage-utils
-Requires: tomcat5-servlet-2.4-api >= 5.5
+BuildRequires:  maven
+
+BuildRequires:  javamail
+BuildRequires:  maven-antrun-plugin
+BuildRequires:  maven-assembly-plugin
+BuildRequires:  maven-changes-plugin
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-release-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven-source-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  plexus-mail-sender
+BuildRequires:  xmlrpc3-client
+BuildRequires:  xmlrpc3-common
+
+Requires:       jpackage-utils
+Source44: import.info
+
 
 %description
-The [ini4j] is a simple Java API for handling configuration files in Windows 
+%{name} is a simple Java API for handling configuration files in Windows 
 .ini format. Additionally, the library includes Java Preferences API 
 implementation based on the .ini file.
 
+
 %package javadoc
-Summary:        Javadocs for %{name}
+Summary:        API documentation for %{name}
 Group:          Development/Java
-Requires: %{name} = %{version}-%{release}
-Requires: jpackage-utils
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 This package contains the API documentation for %{name}.
 
-%prep
 
+%prep
 %setup -q
 
-cp -a %{SOURCE1} ./LICENSE-2.0.txt
-cp -a %{SOURCE2} ./build.xml
+# remove existing binaries
+find . -type f \( -iname "*.jar" -o -iname "*.class" -o -iname "*.exe" -o -iname "*.so" \) | \
+  xargs -t rm -f
 
-find . -type f \( -iname "*.jar" -o -iname "*.class" \) | xargs -t %{__rm} -f
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1 
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
-# remove test sources
-%{__rm} -rf src/test
-# remove site sources
-%{__rm} -rf src/site
 
 %build
+export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
+mkdir -p $MAVEN_REPO_LOCAL
 
-%ant -Dbuild.servlet.jar=%{servlet_jar} -Dbuild.jetty.jar=%{jetty_jar} build javadoc
+# Tests require easymock2 class extension to compile. This package is not
+# available in fedora yet. So disable tests for now.
+# Will also need to add the correct depmap for jetty when tests are enabled.
+
+mvn-rpmbuild \
+        -Dmaven.local.depmap.file=%{SOURCE1} \
+        -Dmaven.test.skip=true \
+        install javadoc:aggregate
+
 
 %install
+# jar
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-# JAR
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p dist/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && %{__ln_s} %{name}-%{version}.jar %{name}.jar)
+# javadoc
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-# Javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}
-%{__cp} -rp build/doc/api/* %{buildroot}%{_javadocdir}/%{name}
+# pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
+%doc LICENSE.txt NOTICE.txt
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 %{_javadir}/*
-%doc LICENSE-2.0.txt src/main/java/org/ini4j/package.html
+
 
 %files javadoc
+%doc LICENSE.txt
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_7jpp7
+- new version
+
 * Thu Apr 15 2010 Igor Vlasenko <viy@altlinux.ru> 0.4.1-alt1_2jpp6
 - new version
 
