@@ -1,5 +1,5 @@
 Name: alterator-x11
-Version: 1.98.1
+Version: 1.98.2
 Release: alt1
 
 Url: http://www.altlinux.com
@@ -85,6 +85,9 @@ Scripts which creates simple configuration files in
 %_bindir/xsetup*
 
 %changelog
+* Fri Sep 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.98.2-alt1
+- the modesetting driver added to the drivers database
+
 * Wed Oct 19 2011 Mikhail Efremov <sem@altlinux.org> 1.98.1-alt1
 - Add .conf extension to blacklist config name.
 

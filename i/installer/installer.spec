@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.6.2
+Version: 1.7.0
 Release: alt1
 
 Summary: Installer common parts
@@ -101,6 +101,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Sep 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.0-alt1
+- don't force 800x600 and use native resolution
+
 * Fri Aug 17 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.6.2-alt1
 - included installer features: cmdline-parameters, setup-bootloader,
   setup-network
