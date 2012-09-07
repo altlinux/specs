@@ -1,20 +1,24 @@
+BuildArch: noarch
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-Name: jibx		
-Version:	1.2.3	
-Release:	alt2_1jpp6
-Summary:	Framework for binding XML data to Java objects 
+%define debug_package %{nil}
+
+Name: jibx
+Version:	1.2.4
+Release:	alt1_6jpp7
+Summary:	Framework for binding XML data to Java objects
 
 Group:		Development/Java
 License:	BSD and ASL 1.1
-URL: http://sourceforge.net/projects/jibx/
-Source0:	http://sourceforge.net/projects/jibx/files/jibx/jibx-1.2.3/%{name}_1_2_3.zip
+URL:		http://sourceforge.net/projects/jibx/
+Source0:	http://sourceforge.net/projects/jibx/files/jibx/jibx-1.2.4/%{name}_1_2_4.zip
 Patch0: %{name}-classpath.patch
-BuildArch: noarch
+Patch1: %{name}-%{version}-poms.patch
+
 BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: junit
@@ -23,6 +27,7 @@ BuildRequires: bcel
 BuildRequires: bea-stax-api
 BuildRequires: eclipse-jdt
 BuildRequires: eclipse-rcp
+BuildRequires: eclipse-platform
 BuildRequires: joda-time
 BuildRequires: qdox
 BuildRequires: dom4j
@@ -51,6 +56,9 @@ This package contains the API documentation for %{name}.
 %setup -q -n %{name}
 #Patch to add the bundled jar dependencies in the classpath
 %patch0 -p1
+#Patch to add maven poms
+%patch1 -p0
+
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 rm -rf %{_builddir}/%{name}/build/docs/src/*
@@ -84,7 +92,7 @@ ln -s "$plugin_file" lib/org.eclipse.jdt.core.manipulation.jar
 plugin_file=`ls %{_libdir}/eclipse/plugins/org.eclipse.osgi_*.jar`
 ln -s "$plugin_file" lib/org.eclipse.osgi.jar
 
-plugin_file=`ls %{_libdir}/eclipse/dropins/jdt/plugins/org.eclipse.jdt.core_*jar`
+plugin_file=`ls %{_libdir}/eclipse/plugins/org.eclipse.jdt.core_*jar`
 ln -s "$plugin_file" lib/org.eclipse.jdt.core.jar
 
 
@@ -108,15 +116,23 @@ pushd build/
 sed -i -e s:stax-api.jar:bea-stax-api.jar:g build.xml
 
 export CLASSPATH=$(build-classpath junit)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  current #test-multiples test-singles test-extras basic-blackbox blackbox devdoc javadoc
+ant current #test-multiples test-singles test-extras basic-blackbox blackbox devdoc javadoc
 
 %install
 install -d -m 755 %{buildroot}/%{_javadir}/%{name}
-for sub_component in bind extras run schema tools; do
-install -m 644 lib/jibx-${sub_component}.jar \
-%{buildroot}/%{_javadir}/%{name}/${sub_component}-%{version}.jar
-done
+install -d -m 755 %{buildroot}%{_mavenpomdir}
 
+install -pm 644 build/maven/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-main-reactor.pom
+%add_maven_depmap JPP.%{name}-main-reactor.pom
+
+for sub_component in bind extras run schema tools; do
+install -m 644 lib/%{name}-${sub_component}.jar \
+%{buildroot}/%{_javadir}/%{name}/${sub_component}-%{version}.jar
+# TODO unversioned jars
+( cd %{buildroot}%{_javadir}/%{name} && ln -sf ${sub_component}-%{version}.jar ${sub_component}.jar )
+install -m 644 build/maven/jibx-${sub_component}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${sub_component}.pom
+%add_maven_depmap JPP.%{name}-${sub_component}.pom %{name}/${sub_component}.jar
+done
 
 mkdir -p %{buildroot}/%{_javadocdir}/%{name}
 cp -rp %{_builddir}/%{name}/build/docs/* \
@@ -126,11 +142,16 @@ cp -rp %{_builddir}/%{name}/build/docs/* \
 %files
 %{_javadir}/%{name}/*.jar
 %dir %{_javadir}/%{name}
+%{_mavenpomdir}/JPP.%{name}-*.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.4-alt1_6jpp7
+- new version
+
 * Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt2_1jpp6
 - applied repocop patches
 
