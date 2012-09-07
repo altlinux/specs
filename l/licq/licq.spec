@@ -27,7 +27,7 @@
 # name-version-release
 %define rname licq
 %define ver 1.6.1
-%define rlz alt1
+%define rlz alt1.1
 
 Name: %rname
 Version: %ver
@@ -679,6 +679,9 @@ popd
 
 ########################################################
 %changelog
+* Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.1
+- Rebuilt with Boost 1.51.0
+
 * Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 1.6.1-alt1
 - new version
 
