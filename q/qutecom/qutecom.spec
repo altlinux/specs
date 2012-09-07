@@ -1,6 +1,6 @@
 Name: qutecom
 Version: 2.2.1
-Release: alt3.3
+Release: alt3.4
 Summary: SIP softphone
 License: GPLv2+
 Group: Networking/Instant messaging
@@ -13,6 +13,8 @@ Patch2: remove-extra-copying-file.patch
 Patch3: ffmpeg-0.7.1.patch
 Patch4: %name-2.2.1-alt-glib2-2.32.0.patch
 Patch5: %name-2.2.1-alt-v4l.patch
+Patch6: %name-2.2.1-alt-DSO.patch
+Patch7: %name-2.2.1-alt-boost-1.51.0.patch
 
 BuildRequires(pre): rpm-macros-cmake
 # Automatically added by buildreq on Fri Aug 13 2010
@@ -51,6 +53,8 @@ pm-utils support for %name
 %patch3 -p2
 %patch4 -p2
 %patch5 -p2
+%patch6 -p2
+%patch7 -p2
 
 %build
 %cmake \
@@ -79,6 +83,8 @@ pm-utils support for %name
 	-DENABLE_SKYPE=ON \
         ..
 
+#sed -i '1s|\(.*\)|\1 -lpthread|' \
+#	BUILD/crashreport/CMakeFiles/owcrashreport.dir/link.txt
 %make_build -C BUILD VERBOSE=1
 
 %install
@@ -98,6 +104,9 @@ pm-utils support for %name
 %_libdir/pm-utils/sleep.d/70QuteCom
 
 %changelog
+* Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt3.4
+- Rebuilt with Boost 1.51.0
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt3.3
 - Rebuilt
 
