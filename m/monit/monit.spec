@@ -5,7 +5,7 @@
 
 Name: monit
 Version: 5.5
-Release: alt1
+Release: alt2
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -152,6 +152,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Sat Sep 08 2012 Michael Shigorin <mike@altlinux.org> 5.5-alt2
+- added apache2 and rsyslog config snippet examples
+
 * Tue Sep 04 2012 Michael Shigorin <mike@altlinux.org> 5.5-alt1
 - new version (watch file uupdate)
 
