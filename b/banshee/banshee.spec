@@ -1,4 +1,3 @@
-
 %def_enable docs
 %def_disable boo
 %def_enable mtp
@@ -17,8 +16,8 @@
 %def_disable upnp
 
 Name: banshee
-Version: 2.3.5
-Release: alt2
+Version: 2.5.0
+Release: alt1
 Summary: Easily import, manage, and play selections from your music collection
 Group: Sound
 License: MIT
@@ -37,19 +36,19 @@ BuildPreReq: intltool >= 0.35.0
 BuildPreReq: libgtk+2-devel >= 2.22
 BuildPreReq: gnome-doc-utils
 BuildPreReq: libgnome-desktop-devel >= 2.28
-BuildPreReq: gstreamer-devel >= 0.10.3
-BuildPreReq: gst-plugins-devel >= 0.10.25.2
+BuildPreReq: gstreamer-devel >= 0.10.26
+BuildPreReq: gst-plugins-devel >= 0.10.26
 BuildPreReq: mono-devel >= 2.4.3
 BuildPreReq: mono-data mono-data-sqlite
 BuildPreReq: mono-web-devel
 BuildPreReq: dbus-sharp-devel >= 0.7
 BuildPreReq: dbus-sharp-glib-devel >= 0.5
-BuildPreReq: mono-addins-devel >= 0.3.1
+BuildPreReq: mono-addins-devel >= 0.6.2
 %{?_enable_boo:BuildPreReq: boo-devel >= 0.8.1}
 %{?_enable_docs:BuildPreReq: monodoc-devel}
 %{?_enable_nunit:BuildPreReq: mono-nunit-devel >= 2.4}
 BuildPreReq: libtag-sharp-devel >= 2.0.3.7
-BuildPreReq: libgtk-sharp2-devel >= 2.12
+BuildPreReq: libgtk-sharp2-devel >= 2.12.10
 BuildPreReq: libgnome-sharp-devel >= 2.8
 BuildPreReq: libsqlite3-devel >= 3.4
 %{?_enable_mtp:BuildPreReq: libmtp-devel >= 0.2.0}
@@ -156,7 +155,7 @@ Install this package for boo scripts support in Banshee.
 
 %prep
 %setup -q
-%__tar -xf %SOURCE2 -C src/Hyena
+tar -xf %SOURCE2 -C src/Hyena
 %patch0 -p1
 
 %build
@@ -174,12 +173,12 @@ ACLOCAL="aclocal -I build/m4/banshee -I build/m4/shamrock -I build/m4/shave"  %a
 	%{subst_enable clutter} \
 	%{subst_enable youtube} \
 	%{subst_enable gio} \
+	%{subst_enable upnp} \
+	%{subst_enable webkit} \
 	--disable-schemas-install \
 	--enable-user-help \
 	--enable-release \
-
-
-# 	--with-vendor-build-id="`lsb_release -ds`"
+	--with-vendor-build-id="ALTLinux"
 
 # Non-parallel build
 %make
@@ -191,6 +190,7 @@ desktop-file-install --vendor gnome --delete-original		\
   --remove-category=X-Red-Hat-Base				\
   --remove-category=X-Novell-Main				\
   --remove-category=X-Ximian-Main				\
+  --add-category=GTK						\
   --dir %buildroot%_desktopdir			\
 %buildroot%_desktopdir/%name.desktop
 
@@ -252,6 +252,9 @@ desktop-file-install --vendor gnome --delete-original		\
 %endif
 
 %changelog
+* Thu Sep 06 2012 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
+- 2.5.0
+
 * Tue Feb 21 2012 Alexey Shabalin <shaba@altlinux.ru> 2.3.5-alt2
 - fixed manual provides  mono(Banshee.CollectionIndexer)
 
