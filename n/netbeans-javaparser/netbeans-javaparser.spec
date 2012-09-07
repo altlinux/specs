@@ -4,19 +4,19 @@ BuildRequires: jpackage-compat
 %define __jar_repack %{nil}
 
 Name:           netbeans-javaparser
-Version:        6.9
-Release:        alt1_2jpp6
+Version:        7.0.1
+Release:        alt1_3jpp7
 Summary:        NetBeans Java Parser
 License:        GPLv2 with exceptions
-Url:            http://java.netbeans.org/javaparser/
+Url:            http://netbeans.org/
 Group:          Development/Java
 # The source for this package was pulled from upstream's vcs.  Use the
 # following commands to generate the tarball:
 # hg clone http://hg.netbeans.org/main/nb-javac/
 # cd nb-javac/
-# hg update -r release69_base
-# tar -czvf ../nb-javac-6.9.tar.gz .
-Source0:        nb-javac-%{version}.tar.gz
+# hg update -r release701_base
+# hg archive ../netbeans-javaparser-7.0.1.tar.gz
+Source0:        %{name}-%{version}.tar.gz
 
 BuildRequires:  ant
 BuildRequires:  ant-nodeps
@@ -31,23 +31,19 @@ Source44: import.info
 Java parser to analyze Java source files inside of the NetBeans IDE
 
 %prep
-%setup -q -c
+%setup -q
 # remove all binary libs
 find . -name "*.jar" -exec %__rm -f {} \;
 
 %build
-[ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java 
 %ant -f make/netbeans/nb-javac/build.xml jar
 
 %install
-%__rm -fr %{buildroot}
 
 # jar
 %__install -d -m 755 %{buildroot}%{_javadir}
-%__install -m 644 make/netbeans/nb-javac/dist/javac-api.jar %{buildroot}%{_javadir}/%{name}-api-%{version}.jar
-%__ln_s %{name}-api-%{version}.jar %{buildroot}%{_javadir}/%{name}-api.jar
-%__install -m 644 make/netbeans/nb-javac/dist/javac-impl.jar %{buildroot}%{_javadir}/%{name}-impl-%{version}.jar
-%__ln_s %{name}-impl-%{version}.jar %{buildroot}%{_javadir}/%{name}-impl.jar
+%__install -m 644 make/netbeans/nb-javac/dist/javac-api.jar %{buildroot}%{_javadir}/%{name}-api.jar
+%__install -m 644 make/netbeans/nb-javac/dist/javac-impl.jar %{buildroot}%{_javadir}/%{name}-impl.jar
 
 %files
 %doc ASSEMBLY_EXCEPTION LICENSE README
@@ -55,6 +51,9 @@ find . -name "*.jar" -exec %__rm -f {} \;
 
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 7.0.1-alt1_3jpp7
+- new version
+
 * Tue Sep 13 2011 Igor Vlasenko <viy@altlinux.ru> 6.9-alt1_2jpp6
 - update to new release by jppimport
 
