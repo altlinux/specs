@@ -1,4 +1,4 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -30,108 +30,72 @@ BuildRequires: jpackage-compat
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
-
-
-Name:           jopt-simple
-Version:        3.1
-Release:        alt1_1jpp6
-Epoch:          0
-Summary:        JOpt command line parser
-License:        MIT
-Group:          Development/Java
-URL:            http://jopt-simple.sourceforge.net
-Source0:        jopt-simple-3.1.tar.gz
-# cvs -z3 -d:pserver:anonymous@jopt-simple.cvs.sourceforge.net:/cvsroot/jopt-simple export -r jopt-simple-3_1
-
-Source1:        jopt-simple-jpp-depmap.xml
-Source2:        jopt-simple-settings.xml
-Patch0:         jopt-simple-pom.patch
-
-BuildArch:      noarch
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: maven2 >= 0:2.0.7
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-plugin-site
-BuildRequires: maven-release
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: maven-surefire-provider-junit4
-BuildRequires: ant
-BuildRequires: joda-time
-BuildRequires: junit-addons
-BuildRequires: junit44
-
+Name: jopt-simple
+Version: 3.3
+Release: alt1_6jpp7
+Summary: A Java command line parser
+License: MIT
+Group: Development/Java
+URL: http://jopt-simple.sourceforge.net
+# https://github.com/pholser/jopt-simple/tarball/jopt-simple-3.3
+Source0: https://download.github.com/pholser-jopt-simple-jopt-simple-%{version}-0-g59a05aa.tar.gz
+Patch0: jopt-simple-buildfixes.patch
+BuildArch: noarch
+BuildRequires: jpackage-utils
+BuildRequires: maven maven-scm
+BuildRequires: maven-enforcer-plugin maven-dependency-plugin
+Requires: jpackage-utils
+Source44: import.info
+# Unit testing is disabled due to missing dependencies.
+#BuildRequires:  joda-time
+#BuildRequires:  junit4
+#BuildRequires:  continuous-testing-toolkit
+#BuildRequires:  ant
 
 %description
 A Java library for parsing command line options.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Summary: Javadoc for %{name}
+Group: Development/Java
+Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n %{name}
-%patch0 -b .sav0
+%setup -q -n pholser-jopt-simple-9d4f1b6
+%patch0 -p1 -b .buildfixes
 
 %build
-cp %{SOURCE2} maven2-settings.xml
-
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" maven2-settings.xml
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-
-export M2SETTINGS=$(pwd)/maven2-settings.xml
-export MAVEN_REPO_LOCAL=`pwd`/m2_repo/repository
-
-mvn-jpp -e \
-        -s ${M2SETTINGS} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE1} \
-        install javadoc:javadoc
+mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip=true
 
 %install
+mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-%add_to_maven_depmap net.sf.jopt-simple %{name} %{namedversion} JPP %{name}
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+install -m 644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -rf target/site/apidocs/* \
-                  $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rf target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
+%doc LICENSE.txt
 %{_javadir}/*
-%{_datadir}/maven2/poms/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt1_6jpp7
+- new version
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:3.1-alt1_1jpp6
 - new version
 
