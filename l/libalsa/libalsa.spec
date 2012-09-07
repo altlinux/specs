@@ -1,6 +1,6 @@
 Name: libalsa
-Version: 1.0.24.1
-Release: alt4
+Version: 1.0.26
+Release: alt2
 Epoch: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) library
@@ -153,6 +153,15 @@ done
 %_bindir/aserver
 
 %changelog
+* Fri Sep 07 2012 Michael Shigorin <mike@altlinux.org> 1:1.0.26-alt2
+- retag
+
+* Thu Sep 06 2012 Michael Shigorin <mike@altlinux.org> 1:1.0.26-alt1
+- 1.0.26
+- %_datadir/alsa/pulse.conf is no more autoloaded
+  (moved to %_datadir/alsa/alsa.conf.d/pulse.conf
+  in corresponding alsa-plugins package)
+
 * Tue Oct 04 2011 Michael Shigorin <mike@altlinux.org> 1:1.0.24.1-alt4
 - renamed %modprobe_old
        to %modprobe_conf

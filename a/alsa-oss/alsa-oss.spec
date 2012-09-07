@@ -1,6 +1,6 @@
 Name: alsa-oss
-Version: 1.0.17
-Release: alt7
+Version: 1.0.25
+Release: alt2
 
 Summary: Advanced Linux Sound Architecture (ALSA) OSS compatibility library
 License: GPL
@@ -64,6 +64,12 @@ e.g. with dmix software multichannel mixer.
 %_man1dir/*
 
 %changelog
+* Fri Sep 07 2012 Michael Shigorin <mike@altlinux.org> 1.0.25-alt2
+- retag
+
+* Thu Sep 06 2012 Michael Shigorin <mike@altlinux.org> 1.0.25-alt1
+- 1.0.25
+
 * Thu Dec 17 2009 Michael Shigorin <mike@altlinux.org> 1.0.17-alt7
 - spec cleanup
 

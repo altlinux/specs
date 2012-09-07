@@ -1,6 +1,6 @@
 Name: alsa-plugins
-Version: 1.0.24
-Release: alt2.1
+Version: 1.0.26
+Release: alt2
 Serial: 1
 
 Summary: Advanced Linux Sound Architecture (ALSA) plugins
@@ -45,10 +45,10 @@ ALSA pulseaudio plugin
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 mkdir -p %buildroot%_datadir/alsa
-cat << __EOF__ >> %buildroot%_datadir/alsa/pulse.conf
+cat << __EOF__ >> %buildroot%_datadir/alsa/alsa.conf.d/pulse.conf
 pcm.!default { type pulse }
 ctl.!default { type pulse }
 pcm.pulse { type pulse }
@@ -62,9 +62,18 @@ __EOF__
 
 %files pulse
 %_libdir/alsa-lib/*pulse*.so
-%_datadir/alsa/pulse.conf
+%_datadir/alsa/alsa.conf.d/pulse.conf
 
 %changelog
+* Fri Sep 07 2012 Michael Shigorin <mike@altlinux.org> 1:1.0.26-alt2
+- retag
+
+* Thu Sep 06 2012 Michael Shigorin <mike@altlinux.org> 1:1.0.26-alt1
+- 1.0.26
+- moved pulse.conf:
+  from %_datadir/alsa/pulse.conf
+    to %_datadir/alsa/alsa.conf.d/pulse.conf
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.24-alt2.1
 - Fixed build with new glibc
 
