@@ -48,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo
 Version:        1.0
-Release:        alt4_3jpp6
+Release:        alt5_3jpp6
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -238,6 +238,7 @@ ln -s %{_javadir} external_repo/JPP
 %endif
 
 %patch33
+sed -i -e 's,org\.apache\.commons\.vfs\.,org.apache.commons.vfs2.,g' `grep -rl org.apache.commons.vfs. .`
 
 %build
 export LANG=en_US.ISO8859-1
@@ -550,6 +551,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_3jpp6
+- build with new commons-vfs2
+
 * Sun Mar 25 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_3jpp6
 - fixed build with maven3
 

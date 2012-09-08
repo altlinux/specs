@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-ivy
 Version:        2.2.0
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        Agile dependency manager
 License:        ASL 2.0
@@ -51,7 +51,7 @@ Requires:       jakarta-commons-codec
 Requires:       jakarta-commons-httpclient
 Requires:       jakarta-commons-lang
 Requires:       jakarta-commons-logging
-Requires:       jakarta-commons-vfs
+Requires:       apache-commons-vfs
 Requires:       jpackage-utils
 Requires:       jsch
 Requires:       xerces-j2
@@ -66,7 +66,7 @@ BuildRequires:  jakarta-commons-codec
 BuildRequires:  jakarta-commons-httpclient
 BuildRequires:  jakarta-commons-lang
 BuildRequires:  jakarta-commons-logging
-BuildRequires:  jakarta-commons-vfs
+BuildRequires:  apache-commons-vfs
 BuildRequires:  jpackage-utils >= 0:1.7.3
 BuildRequires:  jsch
 BuildRequires:  oro
@@ -130,6 +130,7 @@ pushd lib
 %{__ln_s} $(%{_bindir}/build-classpath xerces-j2) xercesImpl.jar
 %{__ln_s} $(%{_bindir}/build-classpath xml-commons-jaxp-1.3-apis) xmlParserAPIs.jar
 popd
+sed -i -e 's,org\.apache\.commons\.vfs\.,org.apache.commons.vfs2.,g' `grep -rl org.apache.commons.vfs. .`
 
 %build
 export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/{junit,nodeps}`
@@ -182,6 +183,9 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclassp
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt3_1jpp6
+- build with new commons-vfs2
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt2_1jpp6
 - fixed build
 

@@ -1,346 +1,197 @@
-#BuildRequires: velocity
-BuildRequires: mojo-maven2-plugin-jdepend mojo-maven2-plugin-rat
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+%global base_name vfs
+%global short_name commons-%{base_name}
+Name:          apache-commons-vfs
+Version:       2.0
+Release:       alt3_4jpp7
+Summary:       Commons Virtual File System
+Group:         Development/Java
+License:       ASL 2.0
+Url:           http://commons.apache.org/%{base_name}/
+Source0:       http://www.apache.org/dist/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
+# add maven-compiler-plugin configuration
+# fix ant gId
+# remove/disable jackrabbit-webdav support
+# remove org.apache.commons commons-build-plugin
+# remove org.codehaus.mojo findbugs-maven-plugin
+# remove maven-scm
+# remove old vfs stuff
+Patch0:        %{name}-%{version}-build.patch
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+BuildRequires: jpackage-utils
+BuildRequires: apache-commons-parent
 
-%bcond_without maven
-#def_with gcj_support
-%bcond_with gcj_support
-%bcond_without repolib
+BuildRequires: maven
+BuildRequires: maven-antrun-plugin
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-plugin-bundle
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-site-plugin
+BuildRequires: maven-surefire-plugin
+BuildRequires: maven-surefire-provider-junit4
 
-%define repodir %{_javadir}/repository.jboss.com/apache-%{base_name}/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirres %{repodir}/resources
-%define repodirsrc %{repodir}/src
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-%define base_name vfs
-%define short_name commons-%{base_name}
-
-Name:           apache-commons-vfs
-Version:        2.0
-Release:        alt3_0.r834424.5jpp6
-Epoch:          0
-Summary:        Apache Commons Virtual Filesystem
-License:        ASL 2.0
-Url:            http://common.apache.org/vfs/
-Group:          Development/Java
-Source0:        commons-vfs-2.0-src.tar.gz
-# svn export -r 834424 http://svn.apache.org/repos/asf/commons/proper/vfs/trunk commons-vfs-2.0-src
-Source1:        %{name}-settings.xml
-Source2:        %{name}-jpp-depmap.xml
-Source3:        %{name}-component-info.xml
-Patch0:         %{name}-pom.patch
-Patch1:         %{name}-SmbFileObject.patch
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: fonts-ttf-liberation
-BuildRequires: ant >= 0:1.7
-BuildRequires: ant-junit
-BuildRequires: junit
-%if %with maven
-BuildRequires: apache-commons-parent >= 0:12
-BuildRequires: maven2 >= 0:2.0.8
-BuildRequires: maven-surefire-maven-plugin
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-assembly
-BuildRequires: maven2-plugin-checkstyle
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-idea
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-default-skin
-BuildRequires: maven-jxr
-%endif
-BuildRequires: apache-commons-codec
+BuildRequires: ant
 BuildRequires: apache-commons-collections
 BuildRequires: apache-commons-compress
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-net
 BuildRequires: jakarta-commons-httpclient
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-net
-BuildRequires: jackrabbit 
-BuildRequires: jaf_1_1_api
-BuildRequires: javamail_1_4_api
+BuildRequires: javamail
 BuildRequires: jcifs
-BuildRequires: jdepend
 BuildRequires: jdom
 BuildRequires: jsch
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
-BuildArch:      noarch
-%endif
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-Requires: apache-commons-codec
-Requires: apache-commons-collections
-Requires: apache-commons-compress
-Requires: jakarta-commons-httpclient
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-net
-Requires: jackrabbit
-Requires: jaf_1_1_api
-Requires: javamail_1_4_api
-Requires: jcifs
-Requires: jdom
-Requires: jsch
-Provides:       jakarta-%{short_name} = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name} < %{epoch}:%{version}-%{release}
-Provides:       %{short_name} = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name} < %{epoch}:%{version}-%{release}
+
+# test deps
+BuildRequires: junit4
+BuildRequires: slf4j
+
+Requires:      apache-commons-collections
+Requires:      apache-commons-compress
+Requires:      apache-commons-logging
+Requires:      apache-commons-net
+Requires:      jakarta-commons-httpclient
+Requires:      javamail
+Requires:      jcifs
+Requires:      jsch
+
+Requires:      jpackage-utils
+BuildArch:     noarch
+Provides:      %{name}2 = %{version}-%{release}
+Provides:      jakarta-%{short_name} = %{version}-%{release}
 Source44: import.info
 
 %description
-Commons VFS provides a single API for accessing various 
-different file systems. It presents a uniform view of the 
-files from various different sources, such as the files on 
+Commons VFS provides a single API for accessing various
+different file systems. It presents a uniform view of the
+files from various different sources, such as the files on
 local disk, on an HTTP server, or inside a Zip archive.
 Some of the features of Commons VFS are:
-* A single consistent API for accessing files of different 
-  types.
+* A single consistent API for accessing files of different
+ types.
 * Support for numerous file system types.
-* Caching of file information. Caches information in-JVM, 
-  and optionally can cache remote file information on the 
-  local file system.
+* Caching of file information. Caches information in-JVM,
+ and optionally can cache remote file information on the
+ local file system.
 * Event delivery.
-* Support for logical file systems made up of files from 
-  various different file systems.
-* Utilities for integrating Commons VFS into applications, 
-  such as a VFS-aware ClassLoader and URLStreamHandlerFactory.
+* Support for logical file systems made up of files from
+ various different file systems.
+* Utilities for integrating Commons VFS into applications,
+ such as a VFS-aware ClassLoader and URLStreamHandlerFactory.
 * A set of VFS-enabled Ant tasks.
 
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
+%package ant
+Summary:       Development files for Commons VFS
+Group:         Development/Java
+Requires:      ant
+Requires:      apache-commons-logging
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
+%description ant
+This package enables support for the Commons VFS ant tasks.
+
+%package examples
+Group:         Development/Java
+Summary:       Commons VFS Examples
+Requires:      jdom
+Requires:      jpackage-utils
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Provides:      %{name}2-examples = %{version}-%{release}
+
+%description examples
+VFS is a Virtual File System library - Examples.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-Provides:       jakarta-%{short_name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-javadoc < %{epoch}:%{version}-%{release}
-Provides:       %{short_name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name}-javadoc < %{epoch}:%{version}-%{release}
+Group:         Development/Java
+Summary:       Javadoc for %{name}
+Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
-
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-Provides:       jakarta-%{short_name}-manual = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-manual < %{epoch}:%{version}-%{release}
-Provides:       %{short_name}-manual = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name}-manual < %{epoch}:%{version}-%{release}
-BuildArch: noarch
-
-%description manual
-%{summary}.
+This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{short_name}-%{version}-src
-%patch0 -b .sav0
-%patch1 -b .sav1
-%{__perl} -pi \
-    -e 's/\r$//g;' \
-  PROPOSAL.html LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%setup -q -n %{short_name}-%{version}
+perl -pi -e 's/\r$//g;' *.txt
 
-%if %with maven
-cp -p %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
+%patch0 -p1
+rm -rf core/src/main/java/org/apache/commons/vfs2/provider/webdav
+rm -rf core/src/test/java/org/apache/commons/vfs2/provider/webdav
+sed -i 's|"webdav",||' core/src/test/java/org/apache/commons/vfs2/util/DelegatingFileSystemOptionsBuilderTest.java
 
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-%endif
+sed -i "s|<module>dist</module>|<!--module>dist</module-->|" pom.xml
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p ${MAVEN_REPO_LOCAL}
-%if %with maven
-export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Dmaven.test.failure.ignore=true"
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -s $(pwd)/settings.xml \
-        install
 
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -s $(pwd)/settings.xml \
-        javadoc:javadoc site
-
-%else
-export CLASSPATH=$(build-classpath commons-collections commons-httpclient commons-logging commons-net jaf_1_1_api javamail_1_4_api jcifs jdom jsch junit slide/jakarta-slide-webdavlib):`pwd`/target/commons-vfs-%{version}.jar:`pwd`/target/test-classes
-export OPT_JAR_LIST="junit ant/ant-junit"
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
-    -Dmaven.build.dir=`pwd`/target \
-    -Dmaven.build.outputDir=`pwd`/target \
-    -Dmaven.mode.offline=true \
-    -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-    -Dmaven.repo.remote=file:%{_datadir}/maven/repository \
-    -Dmaven.javadoc.source=1.4 \
-    -Dmaven.home.local=$(pwd)/.maven \
-    -Dmaven.test.skip=true \
-    -Dmaven.test.error.ignore=true \
-    package javadoc 
-%endif
+mvn-rpmbuild -Dmaven.test.skip=true -Dmaven.test.failure.ignore=true install javadoc:aggregate
 
 %install
 
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 core/target/%{short_name}-%{version}-SNAPSHOT.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-%add_to_maven_depmap commons-vfs commons-vfs %{version} JPP commons-vfs
-install -m 644 examples/target/%{short_name}-examples-%{version}-SNAPSHOT.jar \
-                   $RPM_BUILD_ROOT%{_javadir}/%{name}-examples-%{version}.jar
-%add_to_maven_depmap commons-vfs commons-vfs-examples %{version} JPP commons-vfs-examples
-install -m 644 sandbox/target/%{short_name}-sandbox-%{version}-SNAPSHOT.jar \
-                   $RPM_BUILD_ROOT%{_javadir}/%{name}-sandbox-%{version}.jar
-%add_to_maven_depmap commons-vfs commons-vfs-sandbox %{version} JPP commons-vfs-sandbox
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{short_name}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}.jar
-ln -s %{name}-examples-%{version}.jar %{buildroot}%{_javadir}/%{name}-examples.jar
-ln -s %{name}-examples-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-examples-%{version}.jar
-ln -s %{name}-examples-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-examples.jar
-ln -s %{name}-examples-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-examples-%{version}.jar
-ln -s %{name}-examples-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-examples.jar
-ln -s %{name}-sandbox-%{version}.jar %{buildroot}%{_javadir}/%{name}-sandbox.jar
-ln -s %{name}-sandbox-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-sandbox-%{version}.jar
-ln -s %{name}-sandbox-%{version}.jar %{buildroot}%{_javadir}/%{short_name}-sandbox.jar
-ln -s %{name}-sandbox-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-sandbox-%{version}.jar
-ln -s %{name}-sandbox-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}-sandbox.jar
+mkdir -p %{buildroot}%{_javadir}
+install -m 644 core/target/%{short_name}2-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+install -m 644 examples/target/%{short_name}2-examples-%{version}.jar %{buildroot}%{_javadir}/%{name}-examples.jar
 
-# pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-project.pom
-%add_to_maven_depmap commons-vfs commons-vfs-project %{version} JPP %{name}-project
-%{__cp} -p core/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap commons-vfs commons-vfs %{version} JPP %{name}
-%{__cp} -p examples/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-examples.pom
-%add_to_maven_depmap commons-vfs commons-vfs-examples %{version} JPP %{name}-examples
-%{__cp} -p sandbox/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-sandbox.pom
-%add_to_maven_depmap commons-vfs commons-vfs-sandbox %{version} JPP %{name}-sandbox
+pushd %{buildroot}%{_javadir}
+  ln -s %{name}.jar %{short_name}.jar
+  ln -s %{name}-examples.jar %{short_name}-examples.jar
+  ln -s %{name}.jar jakarta-%{short_name}.jar
+  ln -s %{name}-examples.jar jakarta-%{short_name}-examples.jar
+  ln -s %{name}.jar %{name}2.jar
+  ln -s %{name}-examples.jar %{name}2-examples.jar
+  ln -s %{name}.jar %{short_name}2.jar
+  ln -s %{name}-examples.jar %{short_name}2-examples.jar
+popd
 
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-%if %with maven
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-# FIXME: (dwalluck): breaks --short-circuit
-rm -rf target/site/apidocs
-%else
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-rm -rf target/site/apidocs
-%endif
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{short_name}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{short_name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/jakarta-%{short_name}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/jakarta-%{short_name}-%{version}
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}-project.pom
+%add_maven_depmap JPP-%{short_name}-project.pom
+install -pm 644 core/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
+%add_maven_depmap JPP-%{short_name}.pom %{short_name}.jar -a "org.apache.commons:%{short_name},%{short_name}:%{short_name}"
+install -pm 644 examples/pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}-examples.pom
+%add_maven_depmap -f examples JPP-%{short_name}-examples.pom %{short_name}-examples.jar -a "org.apache.commons:%{short_name}-examples,%{short_name}:%{short_name}-examples"
 
-mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%if %with maven
-## manual
-cp -pr target/site/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-find $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version} -name "*.sav" -exec rm {} \;
-%endif
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
-%if %with repolib
-%{__mkdir_p} %{buildroot}%{repodir}
-%{__mkdir_p} %{buildroot}%{repodirlib}
-%{__install} -m 0644 %{SOURCE3} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__mkdir_p} %{buildroot}%{repodirsrc}
-#%{__install} -p -m 0644 %{PATCH0} %{buildroot}%{repodirsrc}/
-%{__install} -m 0644 %{SOURCE0} %{buildroot}%{repodirsrc}/
-%{__install} -m 0644 %{SOURCE1} %{buildroot}%{repodirsrc}/
-%{__install} -m 0644 %{SOURCE2} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
-%endif
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+mkdir -p %{buildroot}%{_sysconfdir}/ant.d
+echo "ant commons-logging %{short_name}" > %{short_name}
+install -p -m 644 %{short_name} %{buildroot}%{_sysconfdir}/ant.d/%{short_name}
 
 %files
-%doc *.txt
-%{_javadir}/*.jar
-%{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
+%{_javadir}/%{name}.jar
+%{_javadir}/%{name}2.jar
+%{_javadir}/%{short_name}.jar
+%{_javadir}/%{short_name}2.jar
+%{_javadir}/jakarta-%{short_name}.jar
+%{_mavenpomdir}/JPP-%{short_name}.pom
+%{_mavenpomdir}/JPP-%{short_name}-project.pom
+%{_mavendepmapfragdir}/%{name}
+%doc LICENSE.txt NOTICE.txt README.txt RELEASE-NOTES.txt
+
+%files examples
+%{_javadir}/%{name}-examples.jar
+%{_javadir}/%{name}2-examples.jar
+%{_javadir}/%{short_name}-examples.jar
+%{_javadir}/%{short_name}2-examples.jar
+%{_javadir}/jakarta-%{short_name}-examples.jar
+%{_mavenpomdir}/JPP-%{short_name}-examples.pom
+%{_mavendepmapfragdir}/%{name}-examples
 
 %files javadoc
-%{_javadocdir}/*
+%{_javadocdir}/%{name}
+%doc LICENSE.txt NOTICE.txt
 
-%if %with maven
-%files manual
-%{_docdir}/%{name}-%{version}
-%endif
-
-%if %with repolib
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
+%files ant
+%config %{_sysconfdir}/ant.d/%{short_name}
 
 %changelog
+* Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt3_4jpp7
+- fc version
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt3_0.r834424.5jpp6
 - fixed jackrabbit dependency
 

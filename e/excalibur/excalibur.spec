@@ -67,7 +67,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           excalibur
 Version:        1.0
-Release:        alt8_0.r508111.16jpp6
+Release:        alt9_0.r508111.16jpp6
 Epoch:          1
 Summary:        Excalibur IOC Frameworks, Containers, Components
 License:        ASL 2.0
@@ -131,11 +131,11 @@ BuildRequires:  d-haven-event
 BuildRequires:  d-haven-mpool
 #BuildRequires: jms_1_1_api
 BuildRequires:  geronimo-jms-1.1-api
-BuildRequires:  jakarta-commons-beanutils
-BuildRequires:  jakarta-commons-collections
-BuildRequires:  jakarta-commons-httpclient
-BuildRequires:  jakarta-commons-logging
-BuildRequires:  jakarta-commons-vfs
+BuildRequires:  apache-commons-beanutils
+BuildRequires:  apache-commons-collections
+BuildRequires:  apache-commons-httpclient
+BuildRequires:  apache-commons-logging
+BuildRequires:  apache-commons-vfs
 BuildRequires:  jaxen
 BuildRequires:  jisp2
 BuildRequires:  jtidy
@@ -196,7 +196,7 @@ Group:          Development/Java
 Version:        %{framework_version}
 Requires:       %{name} = %{epoch}:%{main_version}-%{release}
 Requires:       %{name}-avalon-logkit = %{epoch}:%{containerkit_version}-%{release}
-Requires:       jakarta-commons-logging
+Requires:       apache-commons-logging
 Requires:       log4j >= 0:1.2.13
 
 %description avalon-framework
@@ -231,7 +231,7 @@ Version:        %{framework_version}
 Requires:       %{name} = %{epoch}:%{main_version}-%{release}
 Requires:       %{name}-avalon-framework-api = %{epoch}:%{framework_version}-%{release}
 Requires:       %{name}-avalon-logkit = %{epoch}:%{containerkit_version}-%{release}
-Requires:       jakarta-commons-logging
+Requires:       apache-commons-logging
 Requires:       log4j >= 0:1.2.13
 
 %description avalon-framework-impl
@@ -288,7 +288,7 @@ Requires:       %{name}-datasource = %{epoch}:%{components_version}-%{release}
 Requires:       %{name}-pool-api = %{epoch}:%{components_version}-%{release}
 Requires:       %{name}-pool-impl = %{epoch}:%{components_version}-%{release}
 Requires:       %{name}-thread-api = %{epoch}:%{components_version}-%{release}
-Requires:       jakarta-commons-logging
+Requires:       apache-commons-logging
 Requires:       xerces-j2
 Requires:       xml-commons-jaxp-1.3-apis
 
@@ -419,7 +419,7 @@ Requires:       %{name}-pool-impl = %{epoch}:%{components_version}-%{release}
 Requires:       %{name}-thread-api = %{epoch}:%{components_version}-%{release}
 Requires:       %{name}-thread-impl = %{epoch}:%{components_version}-%{release}
 Requires:       concurrent
-Requires:       jakarta-commons-collections
+Requires:       apache-commons-collections
 
 %description cornerstone-threads-impl
 %{summary}.
@@ -439,7 +439,7 @@ Requires:       %{name}-pool-instrumented = %{epoch}:%{components_version}-%{rel
 Requires:       %{name}-instrument-api = %{epoch}:%{containerkit_version}-%{release}
 Requires:       %{name}-instrument-mgr-api = %{epoch}:%{containerkit_version}-%{release}
 Requires:       %{name}-instrument-mgr-impl = %{epoch}:%{containerkit_version}-%{release}
-Requires:       jakarta-commons-collections
+Requires:       apache-commons-collections
 Requires:       log4j
 Requires:       servlet
 
@@ -489,7 +489,7 @@ Requires:       %{name}-avalon-logkit = %{epoch}:%{containerkit_version}-%{relea
 Requires:       %{name}-pool-api = %{epoch}:%{components_version}-%{release}
 Requires:       %{name}-pool-impl = %{epoch}:%{components_version}-%{release}
 Requires:       concurrent
-Requires:       jakarta-commons-collections
+Requires:       apache-commons-collections
 
 %description event-impl
 %{summary}.
@@ -541,8 +541,8 @@ Requires:       bcel
 Requires:       concurrent
 Requires:       d-haven-event
 Requires:       d-haven-mpool
-Requires:       jakarta-commons-beanutils
-Requires:       jakarta-commons-collections
+Requires:       apache-commons-beanutils
+Requires:       apache-commons-collections
 
 %description fortress-container-impl
 %{summary}.
@@ -750,7 +750,7 @@ Requires:       %{name}-avalon-framework-api = %{epoch}:%{framework_version}-%{r
 Requires:       %{name}-avalon-framework-impl = %{epoch}:%{framework_version}-%{release}
 Requires:       %{name}-pool-api = %{epoch}:%{components_version}-%{release}
 Requires:       concurrent
-Requires:       jakarta-commons-collections
+Requires:       apache-commons-collections
 
 %description pool-impl
 %{summary}.
@@ -766,8 +766,8 @@ Requires:       %{name}-avalon-framework-api = %{epoch}:%{framework_version}-%{r
 Requires:       %{name}-avalon-framework-impl = %{epoch}:%{framework_version}-%{release}
 Requires:       %{name}-fortress-container-api = %{epoch}:%{fortress_version}-%{release}
 Requires:       concurrent
-Requires:       jakarta-commons-collections
-Requires:       jakarta-commons-logging
+Requires:       apache-commons-collections
+Requires:       apache-commons-logging
 
 %description pool-instrumented
 %{summary}.
@@ -779,9 +779,9 @@ Version:        %{components_version}
 Requires:       %{name} = %{epoch}:%{main_version}-%{release}
 Requires:       %{name}-avalon-framework-api = %{epoch}:%{framework_version}-%{release}
 Requires:       %{name}-avalon-framework-impl = %{epoch}:%{framework_version}-%{release}
-Requires:       jakarta-commons-httpclient
-Requires:       jakarta-commons-logging
-Requires:       jakarta-commons-vfs
+Requires:       apache-commons-httpclient
+Requires:       apache-commons-logging
+Requires:       apache-commons-vfs
 
 %description sourceresolve
 %{summary}.
@@ -1310,6 +1310,8 @@ sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 %endif
+
+sed -i -e 's,org\.apache\.commons\.vfs\.,org.apache.commons.vfs2.,g' `grep -rl org.apache.commons.vfs. .`
 
 %build
 %if %with maven
@@ -3145,6 +3147,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}/avalon-logkit-%{containerkit_version}.j
 %endif
 
 %changelog
+* Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt9_0.r508111.16jpp6
+- build with apache-commons-vfs2 
+
 * Tue Mar 27 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt8_0.r508111.16jpp6
 - fixed build with maven3
 
