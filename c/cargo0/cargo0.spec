@@ -2,7 +2,7 @@ Patch34: cargo-core-0.9-alt-maven3.patch
 BuildRequires: maven-dependency-plugin maven-ear-plugin
 %define oldname cargo
 Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: checkstyle4-optional jakarta-commons-vfs maven-shared maven-shared-file-management
+BuildRequires: checkstyle4-optional apache-commons-vfs maven-shared maven-shared-file-management
 BuildRequires: geronimo-specs-poms
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo0
 Version:        0.9
-Release:        alt9_5jpp5
+Release:        alt10_5jpp5
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -107,7 +107,7 @@ BuildRequires: jpackage-utils >= 0:1.7.4
 BuildRequires: ant >= 0:1.6.5
 BuildRequires: bcel
 BuildRequires: jakarta-commons-codec
-BuildRequires: jakarta-commons-vfs
+BuildRequires: apache-commons-vfs
 BuildRequires: jdom
 BuildRequires: jline
 BuildRequires: modello >= 0:1.0-0.a17
@@ -125,7 +125,7 @@ BuildRequires: xml-commons-jaxp-1.3-apis
 BuildRequires: xpp3-minimal
 Requires: ant >= 0:1.6
 Requires: jakarta-commons-codec
-Requires: jakarta-commons-vfs
+Requires: apache-commons-vfs
 Requires: jdom
 Requires: jline
 Requires: geronimo-j2ee-deployment-1.1-api
@@ -226,6 +226,7 @@ cp -p %{SOURCE5} settings.xml
 
 rm ./core/api/generic/src/test/java/org/codehaus/cargo/generic/deployable/DefaultDeployableFactoryTest.java
 find ./core/samples/java/src/test/java -name '*.java' -delete
+sed -i -e 's,org\.apache\.commons\.vfs\.,org.apache.commons.vfs2.,g' `grep -rl org.apache.commons.vfs. .`
 
 
 %build
@@ -564,6 +565,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt10_5jpp5
+- build with new commons-vfs2
+
 * Sun Mar 25 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt9_5jpp5
 - fixed build with maven3
 
