@@ -1,12 +1,11 @@
 Epoch: 0
-BuildRequires: spring2-beans spring2-context spring2-web maven2
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           xbean
-Version:        3.7
+Version:        3.8
 BuildArch:      noarch
 
-Release:        alt3_7jpp7
+Release:        alt1_2jpp7
 Summary:        Java plugin based web server
 
 Group:          Development/Java
@@ -15,8 +14,8 @@ URL:            http://geronimo.apache.org/xbean/
 
 # unfortunately no source/binary releases are being made lately, just
 # tags in repos and binary releases in maven repositories
-# svn export http://svn.apache.org/repos/asf/geronimo/xbean/tags/xbean-3.7
-# tar caf xbean-3.7.tar.xz xbean-3.7
+# svn export http://svn.apache.org/repos/asf/geronimo/xbean/tags/xbean-3.8
+# tar caf xbean-3.8.tar.xz xbean-3.8
 Source0:        xbean-%{version}.tar.xz
 Source1:        xbean.depmap
 
@@ -30,16 +29,20 @@ BuildRequires:  ant
 BuildRequires:  qdox
 BuildRequires:  slf4j
 BuildRequires:  felix-osgi-core >= 1.4.0
+BuildRequires:  maven
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-idea-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-surefire-maven-plugin
+BuildRequires:  maven-surefire-provider-junit4
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-shade-plugin
+BuildRequires:  eclipse-rcp
 
 Requires:       objectweb-asm
 Requires:       apache-commons-logging
@@ -79,17 +82,15 @@ sed -i 's/org.apache.xbean.asm/org.objectweb.asm/' \
     xbean-reflect/src/main/java/org/apache/xbean/recipe/XbeanAsmParameterNameLoader.java
 
 %build
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-	-Dmaven.test.skip=true \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file="%{SOURCE1}" \
+mvn-rpmbuild -e \
+        -Dmaven.local.depmap.file="%{SOURCE1}" \
+        -Dmaven.test.skip=true \
         install javadoc:aggregate
 
 
 %install
 # for every module we want to be built
-for sub in bundleutils finder reflect naming classpath spring; do
+for sub in bundleutils finder reflect naming classpath; do
     # install jar
     install -Dpm 644 %{name}-${sub}/target/%{name}-${sub}-%{version}.jar \
             $RPM_BUILD_ROOT/%{_javadir}/xbean/%{name}-${sub}.jar;
@@ -98,27 +99,15 @@ for sub in bundleutils finder reflect naming classpath spring; do
     install -Dpm 644 %{name}-${sub}/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-%{name}-${sub}.pom
 
     # maven depmap
-    %add_to_maven_depmap org.apache.xbean %{name}-${sub} %{version} JPP/%{name} %{name}-${sub}
+    %add_maven_depmap JPP.%{name}-%{name}-${sub}.pom %{name}/%{name}-${sub}.jar
 done
-
-
-    # install jar
-    install -Dpm 644 maven-xbean-plugin/target/maven-xbean-plugin-%{version}.jar \
-            $RPM_BUILD_ROOT/%{_javadir}/xbean/maven-xbean-plugin.jar;
-
-    # intall pom
-    install -Dpm 644 maven-xbean-plugin/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-maven-xbean-plugin.pom
-
-    # maven depmap
-    %add_to_maven_depmap org.apache.xbean maven-xbean-plugin %{version} JPP/%{name} maven-xbean-plugin
-
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # parent pom
 install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-main.pom
-%add_to_maven_depmap org.apache.xbean %{name} %{version} JPP/%{name} main
+%add_maven_depmap JPP.%{name}-main.pom
 
 %pre javadoc
 [ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
@@ -135,6 +124,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.8-alt1_2jpp7
+- new version
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.7-alt3_7jpp7
 - fixed build
 
