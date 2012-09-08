@@ -58,7 +58,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-vfs
 Version:        2.0
-Release:        alt2_0.r834424.5jpp6
+Release:        alt3_0.r834424.5jpp6
 Epoch:          0
 Summary:        Apache Commons Virtual Filesystem
 License:        ASL 2.0
@@ -99,7 +99,7 @@ BuildRequires: apache-commons-compress
 BuildRequires: jakarta-commons-httpclient
 BuildRequires: jakarta-commons-logging
 BuildRequires: jakarta-commons-net
-BuildRequires: jackrabbit >= 0:1.5.7
+BuildRequires: jackrabbit 
 BuildRequires: jaf_1_1_api
 BuildRequires: javamail_1_4_api
 BuildRequires: jcifs
@@ -119,7 +119,7 @@ Requires: apache-commons-compress
 Requires: jakarta-commons-httpclient
 Requires: jakarta-commons-logging
 Requires: jakarta-commons-net
-Requires: jackrabbit >= 0:1.5.7
+Requires: jackrabbit
 Requires: jaf_1_1_api
 Requires: javamail_1_4_api
 Requires: jcifs
@@ -341,6 +341,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt3_0.r834424.5jpp6
+- fixed jackrabbit dependency
+
 * Mon Mar 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt2_0.r834424.5jpp6
 - fixed build with maven3
 
