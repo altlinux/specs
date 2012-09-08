@@ -1,6 +1,6 @@
 Name: fetchmail
-Version: 6.3.21
-Release: alt1.1
+Version: 6.3.22
+Release: alt2
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -26,7 +26,7 @@ Requires: setup >= 2.1.9-ipl15mdk
 BuildPreReq: rpm-build-python
 %_python_set_noarch
 
-BuildPreReq: flex libssl-devel
+BuildPreReq: flex libssl-devel python-dev
 
 %define rtdir %_runtimedir/%name
 
@@ -184,6 +184,14 @@ usermod -d %rtdir %name ||:
 %files -f %name.lang locales
 
 %changelog
+* Sat Sep 08 2012 Michael Shigorin <mike@altlinux.org> 6.3.22-alt2
+- merge gears repo
+
+* Sat Sep 08 2012 Michael Shigorin <mike@altlinux.org> 6.3.22-alt1
+- 6.3.22: security fixes for:
+  + CVE-2012-3482: potential DoS/data theft in NTLM auth
+  + CVE-2011-3389: disabled SSL attack countermeasures
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 6.3.21-alt1.1
 - Rebuild with Python-2.7
 
