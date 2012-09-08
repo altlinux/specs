@@ -59,7 +59,7 @@ BuildRequires: unzip
 
 Name:           apache-commons-io14
 Version:        1.4
-Release:        alt4_13jpp6
+Release:        alt5_13jpp6
 Epoch:          0
 Summary:        Apache Commons IO Package
 Group:          Development/Java
@@ -99,10 +99,10 @@ BuildArch:      noarch
 %endif
 Requires(post): jpackage-utils >= 0:1.7.5
 Requires(postun): jpackage-utils >= 0:1.7.5
-Provides:       jakarta-%{short_name} = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name} < %{epoch}:%{version}-%{release}
-Provides:       %{short_name} = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name} < %{epoch}:%{version}-%{release}
+#Provides:       jakarta-%{short_name} = %{epoch}:%{version}-%{release}
+#Obsoletes:      jakarta-%{short_name} < %{epoch}:%{version}-%{release}
+#Provides:       %{short_name} = %{epoch}:%{version}-%{release}
+#Obsoletes:      %{short_name} < %{epoch}:%{version}-%{release}
 Source44: import.info
 Source45: apache-commons-io.jar-OSGi-MANIFEST.MF
 
@@ -114,10 +114,10 @@ file filters, and endian classes.
 %package javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
-Provides:       jakarta-%{short_name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-%{short_name}-javadoc < %{epoch}:%{version}-%{release}
-Provides:       %{short_name}-javadoc = %{epoch}:%{version}-%{release}
-Obsoletes:      %{short_name}-javadoc < %{epoch}:%{version}-%{release}
+#Provides:       jakarta-%{short_name}-javadoc = %{epoch}:%{version}-%{release}
+#Obsoletes:      jakarta-%{short_name}-javadoc < %{epoch}:%{version}-%{release}
+#Provides:       %{short_name}-javadoc = %{epoch}:%{version}-%{release}
+#Obsoletes:      %{short_name}-javadoc < %{epoch}:%{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -176,15 +176,12 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclassp
 # jars
 install -d -m 755 %{buildroot}%{_javadir}
 %if %with maven
-install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
+install -pm 644 target/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %else
-install -pm 644 target/dist/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
+install -pm 644 target/dist/%{short_name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 %endif
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{short_name}14-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/%{short_name}14.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}14-%{version}.jar
-ln -s %{name}-%{version}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}14.jar
+ln -s %{name}.jar %{buildroot}%{_javadir}/%{short_name}14.jar
+ln -s %{name}.jar %{buildroot}%{_javadir}/jakarta-%{short_name}14.jar
 
 # poms
 install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
@@ -202,10 +199,6 @@ mv %{buildroot}%{_javadocdir}/%{short_name}-%{version}/apidocs/* %{buildroot}%{_
 rm -r %{buildroot}%{_javadocdir}/%{short_name}-%{version}
 %endif
 ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{short_name}14-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{short_name}14
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/jakarta-%{short_name}14-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/jakarta-%{short_name}14
 
 %if %with repolib
 %{__install} -d -m 0755 %{buildroot}%{repodir}
@@ -220,7 +213,7 @@ tag=`/bin/echo %{oldname}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__install} -p -m 0644 %{SOURCE0} %{buildroot}%{repodirsrc}
 %{__install} -p -m 0644 %{SOURCE1} %{buildroot}%{repodirsrc}
 %{__install} -p -m 0644 %{SOURCE2} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
+%{__cp} -p %{buildroot}%{_javadir}/%{name}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
 %endif
 
 %if %{gcj_support}
@@ -233,7 +226,7 @@ mkdir -p META-INF
 cp %{SOURCE45} META-INF/MANIFEST.MF
 # update even MANIFEST.MF already exists
 # touch META-INF/MANIFEST.MF
-zip -v %buildroot/usr/share/java/commons-io.jar META-INF/MANIFEST.MF
+zip -v %buildroot/usr/share/java/%{name}.jar META-INF/MANIFEST.MF
 # end inject OSGi manifest apache-commons-io.jar-OSGi-MANIFEST.MF
 
 %files
@@ -256,6 +249,9 @@ zip -v %buildroot/usr/share/java/commons-io.jar META-INF/MANIFEST.MF
 %endif
 
 %changelog
+* Sat Sep 08 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0:1.4-alt5_13jpp6
+- fixed symlik conflict
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt4_13jpp6
 - compat build
 
