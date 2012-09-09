@@ -2,16 +2,15 @@ Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-interpolation
-Version:        1.14
-Release:        alt1_3jpp7
+Version:        1.15
+Release:        alt1_2jpp7
 Summary:        Plexus Interpolation API
 
 Group:          Development/Java
 License:        ASL 2.0 and ASL 1.1 and MIT
 URL:            http://plexus.codehaus.org/plexus-components/plexus-interpolation
-#svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-interpolation-1.14/
-#tar caf plexus-interpolation-1.14.tar.xz plexus-interpolation-1.14/
-Source0:        %{name}-%{version}.tar.xz
+#fetched from https://github.com/sonatype/plexus-interpolation/tarball/plexus-interpolation-1.15
+Source0:        sonatype-plexus-interpolation-plexus-interpolation-1.15-0-g9690e65.tar.gz
 
 BuildArch: noarch
 
@@ -44,7 +43,7 @@ BuildArch: noarch
 API documentation for %{name}.
 
 %prep
-%setup -q
+%setup -q -n sonatype-plexus-interpolation-cf017ec
 
 %build
 mvn-rpmbuild install javadoc:javadoc
@@ -75,6 +74,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.15-alt1_2jpp7
+- new version
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt1_3jpp7
 - fc version
 
