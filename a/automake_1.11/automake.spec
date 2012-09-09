@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 1.11.6
-Release: alt1
+Release: alt2
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
 %set_compress_method gzip
@@ -99,6 +99,9 @@ install -pm644 AUTHORS README THANKS NEWS.bz2 TODO.bz2 \
 %docdir
 
 %changelog
+* Sun Sep 09 2012 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt2
+- aclocal: backported upstream fix for perl 5.16.0.
+
 * Mon Jul 09 2012 Dmitry V. Levin <ldv@altlinux.org> 1.11.6-alt1
 - Updated to v1.11.6.
 
