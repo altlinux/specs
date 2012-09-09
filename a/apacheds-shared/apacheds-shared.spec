@@ -1,380 +1,148 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name:          apacheds-shared
+Version:       0.9.19
+Release:       alt1_1jpp7
+Summary:       Shared APIs of Apache Directory Project
+Group:         Development/Java
+License:       ASL 2.0
+Url:           http://directory.apache.org/
+# svn export http://svn.apache.org/repos/asf/directory/shared/tags/0.9.19/ apacheds-shared-0.9.19
+# tar czf  apacheds-shared-0.9.19-src-svn.tar.gz  apacheds-shared-0.9.19
+Source0:       apacheds-shared-0.9.19-src-svn.tar.gz
+# requires antlr 2.x and change org.apache.maven.plugins maven-antlr-plugin with org.codehaus.mojo antlr-maven-plugin
+Patch0:        apacheds-shared-0.9.19-antlr-plugin.patch
 
-%define gcj_support 0
-
-
-Summary:        Shared APIs of Apache Directory Project
-Name:           apacheds-shared
-Version:        0.9.12
-Release:        alt5_2jpp6
-Epoch:          0
-Group:          Development/Java
-License:        Apache 2.0 License
-URL:            http://directory.apache.org/subprojects/shared/
-Source0:        %{name}-%{version}.tar.gz
-# svn export http://svn.apache.org/repos/asf/directory/shared/tags/0.9.12/ apacheds-shared-0.9.12
-
-
-Source1:        directory-project-12.tar.gz
-# svn export http://svn.apache.org/repos/asf/directory/project/tags/12/ directory-project-12
-
-Source2:        %{name}-jpp-depmap.xml
-Source3:        %{name}-settings.xml
-Source4:        apache-jar-resource-bundle-1.3.jar
-
-Patch0:         directory-project-12-pom.patch
-Patch1:         apacheds-shared-pom.patch
-Patch2:         apacheds-shared-convert-pom.patch
-Patch3:         apacheds-shared-ldap-pom.patch
-Patch4:         apacheds-shared-bouncycastle-reduced-pom.patch
-Patch5:		apacheds-shared-0.9.12-alt-use-maven2-plugin-shade.patch
-
-BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: maven2 >= 0:2.0.7
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-project-info-reports
-BuildRequires: maven2-plugin-remote-resources
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-plugin-stage
-BuildRequires: maven-jxr
-BuildRequires: maven-release
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven-surefire-report-plugin
-BuildRequires: mojo-maven2-plugin-antlr
-BuildRequires: mojo-maven2-plugin-rat
-BuildRequires: maven2-plugin-shade
-BuildRequires: mojo-maven2-support
-BuildRequires: geronimo-genesis
-
-BuildRequires: junit
-BuildRequires: bouncycastle
+BuildRequires: jpackage-utils
+BuildRequires: directory-project
 
 BuildRequires: antlr
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-lang
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-io
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-pool
+BuildRequires: apache-mina
+BuildRequires: dom4j
+BuildRequires: log4j
 BuildRequires: slf4j
-BuildRequires: nlog4j
-BuildRequires: mina11
+BuildRequires: xpp3
 
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
+# test deps
+BuildRequires: junit
 
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-%if ! %{gcj_support}
-BuildArch:      noarch
-%endif
+BuildRequires: antlr-maven-plugin
+BuildRequires: maven
+BuildRequires: maven-antrun-plugin
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-surefire-plugin
+BuildRequires: maven-surefire-provider-junit4
 
+Requires:      antlr
+Requires:      apache-commons-collections
+Requires:      apache-commons-io
+Requires:      apache-commons-lang
+Requires:      apache-commons-pool
+Requires:      apache-mina
+Requires:      dom4j
+Requires:      log4j
+Requires:      slf4j
+Requires:      xpp3
+
+Requires:      jpackage-utils
+BuildArch:     noarch
+Source44: import.info
 
 %description
+ApacheDS is an extensible and embeddable directory server
+entirely written in Java, which has been certified LDAPv3
+compatible by the Open Group. Besides LDAP it supports
+Kerberos 5 and the Change Password Protocol. It has been
+designed to introduce triggers, stored procedures, queues and
+views to the world of LDAP which has lacked these rich
+constructs. 
+
 This package contains the shared APIs of the
 Apache Directory Project.
 
-%package asn1-codec
-Group:          Development/Java
-Summary:        Apache shared ASN.1 Codec
-Requires: mina11
-%if %{gcj_support}
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-
-%description asn1-codec
-The ASN.1 subproject attempts to isolate the ASN.1 libraries and tools
-for encoding ASN.1 in BER/DER/CER/PER encodings. The LDAP and X.500
-aspects of the directory project impose the need for ASN.1 and BER
-codecs.  Kerberos requires DER.  Rather than implement highly
-specific and britle code for these needs we decided to separate out
-the APIs and implementations used for dealing with ASN.1 codecs for any
-ASN.1 defined protocol.
-
-%package asn1
-Group:          Development/Java
-Summary:        Apache shared ASN.1 Tools
-Requires: %{name}-asn1-codec = %{epoch}:%{version}-%{release}
-Requires: slf4j
-%if %{gcj_support}
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-
-%description asn1
-The ASN.1 subproject attempts to isolate the ASN.1 libraries and tools
-for encoding ASN.1 in BER/DER/CER/PER encodings. The LDAP and X.500
-aspects of the directory project impose the need for ASN.1 and BER
-codecs.  Kerberos requires DER.  Rather than implement highly
-specific and britle code for these needs we decided to separate out
-the APIs and implementations used for dealing with ASN.1 codecs for any
-ASN.1 defined protocol.
-
-%package ldap
-Group:          Development/Java
-Summary:        Shared LDAP APIs of Apache Directory Project
-Requires: %{name}-asn1-codec = %{epoch}:%{version}-%{release}
-Requires: %{name}-asn1 = %{epoch}:%{version}-%{release}
-Requires: antlr
-Requires: jakarta-commons-collections
-Requires: slf4j
-%if %{gcj_support}
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-
-%description ldap
-%{summary}.
-
-%package bouncycastle-reduced
-Group:          Development/Java
-Summary:        Reduced Bouncycastle from Apache Directory Project
-%if %{gcj_support}
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-
-%description bouncycastle-reduced
-Repackages the BouncyCastle jar including only those files we require
-rather than everything which includes patented algorithms like IDEA.
-
-%package converter
-Group:          Development/Java
-Summary:        Shared converters from Apache Directory Project
-Requires: %{name}-ldap = %{epoch}:%{version}-%{release}
-%if %{gcj_support}
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-
-%description converter
-%{summary}.
-
 %package javadoc
-Group:          Development/Documentation
-Summary:        Javadoc for %{name}
-Provides:       %{name}-asn1-codec-javadoc
-Obsoletes:      %{name}-asn1-javadoc < %{epoch}-%{version}
-Provides:       %{name}-asn1-javadoc
-Obsoletes:      %{name}-ldap-javadoc < %{epoch}-%{version}
-Provides:       %{name}-ldap-javadoc
+Group:         Development/Java
+Summary:       Javadoc for %{name}
+Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n %{name}-%{version}
-gzip -dc %{SOURCE1} | tar xf -
+%setup -q -n apacheds-shared-%{version}
+%patch0 -p1
+# cleanup
+find . -name "*.jar" -delete
+find . -name "*.class" -delete
 
-%patch0 -b .sav0
-%patch1 -b .sav1
-%patch2 -b .sav2
-%patch3 -b .sav3
-%patch4 -b .sav4
-%patch5 -p1
+sed -i "s|<module>all</module>|<!--module>all</module-->|" pom.xml
+# fix wrong permissions
+chmod 644 README.txt
 
 %build
-export LANG=en_US.ISO8859-1
-cp %{SOURCE3} maven2-settings.xml
 
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" maven2-settings.xml
-
-export M2SETTINGS=$(pwd)/maven2-settings.xml
-export MAVEN_REPO_LOCAL=`pwd`/m2_repo/repository
-
-
-#mkdir -p m2_repo/repository/JPP/maven2/default_poms
-#cp %{SOURCE1} m2_repo/repository/JPP/maven2/default_poms/org.apache.directory-build.pom
-mkdir -p $MAVEN_REPO_LOCAL/JPP/maven2/default_poms/
-cp directory-project-12/pom.xml \
-   $MAVEN_REPO_LOCAL/JPP/maven2/default_poms/org.apache.directory.project-project.pom
-mkdir -p $MAVEN_REPO_LOCAL/org/apache/directory/project/project/12/
-cp directory-project-12/pom.xml \
-$MAVEN_REPO_LOCAL/org/apache/directory/project/project/12/project-12.pom
-mkdir -p $MAVEN_REPO_LOCAL/org.apache/
-mkdir -p $MAVEN_REPO_LOCAL/org/apache/apache-jar-resource-bundle/1.4/
-cp %{SOURCE4} $MAVEN_REPO_LOCAL/org.apache/apache-jar-resource-bundle.jar
-cp %{SOURCE4} $MAVEN_REPO_LOCAL/org/apache/apache-jar-resource-bundle/1.4/apache-jar-resource-bundle-1.4.jar
-
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-
-pushd ldap-constants
-mvn-jpp -e \
-        -s ${M2SETTINGS} \
-	-Dmaven.test.skip=true \
-	-Dmaven.test.skip.exec=true \
-	-Dmaven.compile.target=1.5 \
-	-Dmaven.javadoc.source=1.5 \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        install
-popd
-
-mvn-jpp -e \
-        -s ${M2SETTINGS} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-	-Dmaven.test.skip=true \
-	-Dmaven.test.skip.exec=true \
-	-Dmaven.compile.target=1.5 \
-	-Dmaven.javadoc.source=1.5 \
-        install
-
-mvn-jpp -e \
-        -s ${M2SETTINGS} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-	-Dmaven.test.skip=true \
-	-Dmaven.test.skip.exec=true \
-	-Dmaven.compile.target=1.5 \
-	-Dmaven.javadoc.source=1.5 \
-        javadoc:javadoc
-
-mkdir tmp
-pushd tmp
-jar xf ../bouncycastle-reduced/target/shared-bouncycastle-reduced-%{version}.jar
-rm -rf META-INF
-# alt; remove embedded junit
-rm -rf junit org/junit org/hamcrest
-# end alt
-jar cf ../bouncycastle-reduced/target/shared-bouncycastle-reduced-%{version}.jar *
-popd
+mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
 
 %install
 
-# jars
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
+%add_maven_depmap JPP.%{name}-parent.pom
 
-install -m 644 asn1-codec/target/shared-asn1-codec-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-asn1-codec-%{version}.jar
-install -m 644 asn1-codec/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-asn1-codec.pom
-%add_to_maven_depmap org.apache.directory.shared shared-asn1-codec %{version} JPP %{name}-asn1-codec
+mkdir -p %{buildroot}%{_javadir}/apacheds
 
-install -m 644 asn1/target/shared-asn1-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-asn1-%{version}.jar
-install -m 644 asn1/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-asn1.pom
-%add_to_maven_depmap org.apache.directory.shared shared-asn1 %{version} JPP %{name}-asn1
+install -m 644 ldap-convert/target/shared-ldap-converter-%{version}.jar %{buildroot}%{_javadir}/apacheds/shared-ldap-converter.jar
+install -pm 644 ldap-convert/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-ldap-converter.pom
+%add_maven_depmap JPP.%{name}-ldap-converter.pom apacheds/shared-ldap-converter.jar
 
-install -m 644 ldap/target/shared-ldap-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-ldap-%{version}.jar
-install -m 644 ldap/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-ldap.pom
-%add_to_maven_depmap org.apache.directory.shared shared-ldap %{version} JPP %{name}-ldap
+install -m 644 ldap-ldif/target/shared-ldif-%{version}.jar %{buildroot}%{_javadir}/apacheds/shared-ldif.jar
+install -pm 644 ldap-ldif/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-ldif.pom
+%add_maven_depmap JPP.%{name}-ldif.pom apacheds/shared-ldif.jar
 
-install -m 644 ldap-constants/target/shared-ldap-constants-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-ldap-constants-%{version}.jar
-install -m 644 ldap-constants/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-ldap-constants.pom
-%add_to_maven_depmap org.apache.directory.shared shared-ldap-constants %{version} JPP %{name}-ldap-constants
+for m in asn1 \
+  asn1-codec \
+  cursor \
+  dsml-parser \
+  i18n \
+  ldap \
+  ldap-constants \
+  ldap-jndi \
+  ldap-schema \
+  ldap-schema-dao \
+  ldap-schema-loader \
+  ldap-schema-manager; do
+  install -m 644 ${m}/target/shared-${m}-%{version}.jar %{buildroot}%{_javadir}/apacheds/shared-${m}.jar
+  install -pm 644 ${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
+%add_maven_depmap JPP.%{name}-${m}.pom apacheds/shared-${m}.jar
+done
 
-install -m 644 ldap-jndi/target/shared-ldap-jndi-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-ldap-jndi-%{version}.jar
-install -m 644 ldap-jndi/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-ldap-jndi.pom
-%add_to_maven_depmap org.apache.directory.shared shared-ldap-jndi %{version} JPP %{name}-ldap-jndi
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
-install -m 644 convert/target/shared-converter-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-converter-%{version}.jar
-install -m 644 convert/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-converter.pom
-%add_to_maven_depmap org.apache.directory.shared shared-converter %{version} JPP %{name}-converter
-
-install -m 644 bouncycastle-reduced/target/shared-bouncycastle-reduced-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-bouncycastle-reduced-%{version}.jar
-install -m 644 bouncycastle-reduced/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-bouncycastle-reduced.pom
-%add_to_maven_depmap org.apache.directory.shared shared-bouncycastle-reduced %{version} JPP %{name}-bouncycastle-reduced
-
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-build.pom
-%add_to_maven_depmap org.apache.directory.shared build %{version} JPP %{name}-build
-
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
-
-# javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/
-#cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/
-ln -sf %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} #ghost
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
-%files asn1-codec
-%doc directory-project-12/LICENSE.txt
-%{_javadir}/%{name}-asn1-codec-%{version}.jar
-%{_javadir}/%{name}-asn1-codec.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-asn1-codec-%{version}.jar.*
-%endif
-
-%files asn1
-%doc directory-project-12/LICENSE.txt
-%{_javadir}/%{name}-asn1-%{version}.jar
-%{_javadir}/%{name}-asn1.jar
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-asn1-%{version}.jar.*
-%endif
-
-%files ldap
-%doc directory-project-12/LICENSE.txt
-%{_javadir}/%{name}-ldap*.jar
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-ldap-%{version}.jar.*
-%endif
-
-%files bouncycastle-reduced
-%doc directory-project-12/LICENSE.txt
-%{_javadir}/%{name}-bouncycastle*.jar
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-bouncycastle-reduced-%{version}.jar.*
-%endif
-
-%files converter
-%doc directory-project-12/LICENSE.txt
-%{_javadir}/%{name}-converter*.jar
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-converter-%{version}.jar.*
-%endif
+%files
+%{_javadir}/apacheds/shared-*.jar
+%{_mavenpomdir}/JPP.%{name}-*.pom
+%{_mavendepmapfragdir}/%{name}
+%doc LICENSE NOTICE README.txt
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
+%doc LICENSE NOTICE
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.19-alt1_1jpp7
+- fc release
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.12-alt5_2jpp6
 - fixed build with java 7
 
