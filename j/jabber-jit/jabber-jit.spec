@@ -4,7 +4,7 @@
 Name: jabber-jit
 
 Version: 1.2.1
-Release: alt0.2
+Release: alt0.3
 
 Summary: Jabber ICQ Transport
 
@@ -22,6 +22,7 @@ Source4: %name.adapter
 
 Patch1:  %name-1.1.5-no-thanks-we-have-logrotate.patch
 Patch2:  %name-1.2.1-alt-headers_fix.patch
+Patch3:  %name-1.2.1-alt-time_header.patch
 
 Obsoletes: ejabberd-jit
 #Requires(post): jabber-common
@@ -39,17 +40,19 @@ core with pthreads.
 %prep
 %setup -q -n jit-%version
 %patch1 -p1
-%patch2 -p0
+
+%patch2
+%patch3
 
 pushd jit/jit
 ../../makeversion.sh
 popd
 
 %build
-%__subst '/^COMMON_CFLAGS/ s|-I%_includedir ||' platform-settings
-%__subst 's|^OUT_FILE=.*|OUT_FILE=jabber-jit|' platform-settings
-%__subst '/^COMMON_CFLAGS/ s|-g ||' platform-settings
-%__subst '/^CONFIG_FILE/ s|jabber.xml|jabber-jit.xml|' platform-settings
+subst '/^COMMON_CFLAGS/ s|-I%_includedir ||' platform-settings
+subst 's|^OUT_FILE=.*|OUT_FILE=jabber-jit|' platform-settings
+subst '/^COMMON_CFLAGS/ s|-g ||' platform-settings
+subst '/^CONFIG_FILE/ s|jabber.xml|jabber-jit.xml|' platform-settings
 
 %configure
 %make_build
@@ -78,9 +81,9 @@ mkdir -p %buildroot%_sbindir \
 /bin/install -m755 %SOURCE3 %buildroot%_initdir/%name
 /bin/install -pD -m0755 %SOURCE4 %buildroot%_jabber_component_dir/%name
 
-%__subst 's#@libdir@#%_libdir/%{name}#g' %buildroot%_initdir/%name \
-			%buildroot%_sysconfdir/%name/%name.xml
-%__subst 's#@configfile@#%_sysconfdir/%name/%name.xml#g' %buildroot%_jabber_component_dir/%name
+subst 's#@libdir@#%_libdir/%{name}#g' %buildroot%_initdir/%name \
+		%buildroot%_sysconfdir/%name/%name.xml
+subst 's#@configfile@#%_sysconfdir/%name/%name.xml#g' %buildroot%_jabber_component_dir/%name
 
 
 %pre
@@ -106,6 +109,9 @@ mkdir -p %buildroot%_sbindir \
 %_jabber_component_dir/%name
 
 %changelog
+* Sun Sep 09 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.2.1-alt0.3
+- Fix build with GCC 4.6.3
+
 * Tue May 26 2009 Nikolay A. Fetisov <naf@altlinux.ru> 1.2.1-alt0.2
 - Fix build with GCC 4.4
 
