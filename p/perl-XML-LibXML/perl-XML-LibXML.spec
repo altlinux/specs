@@ -1,7 +1,7 @@
 %define dist XML-LibXML
 Name: perl-%dist
 Version: 2.0004
-Release: alt1
+Release: alt2
 
 Summary: Perl binding for libxml2
 License: GPL or Artistic
@@ -15,7 +15,7 @@ Provides: perl-XML-LibXML-Common = 0.13-alt99
 Obsoletes: perl-XML-LibXML-Common < 0.13-alt99
 
 # Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: libxml2-devel perl-Test-Differences perl-Test-Pod perl-URI perl-XML-NamespaceSupport perl-XML-SAX-Base
+BuildRequires: libxml2-devel perl-Test-Differences perl-Test-Pod perl-URI perl-XML-NamespaceSupport perl-XML-SAX
 
 %description
 This module is an interface to the Gnome libxml2 DOM and SAX parser and
@@ -27,7 +27,7 @@ providing access to the XPath API in libxml2.
 %patch -p1
 
 # bootstrap: disable build dependency on XML::SAX
-mv t/14sax.t t/14sax.t.orig
+#mv t/14sax.t t/14sax.t.orig
 
 %build
 %perl_vendor_build INC=-I/usr/include/libxml2 LIBS=-lxml2
@@ -49,6 +49,9 @@ mv t/14sax.t t/14sax.t.orig
 	%perl_vendor_autolib/XML
 
 %changelog
+* Sun Sep 09 2012 Vladimir Lettiev <crux@altlinux.ru> 2.0004-alt2
+- enabled build dependency on XML::SAX
+
 * Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 2.0004-alt1
 - 2.0002 -> 2.0004
 - built fot perl-5.16
