@@ -1,6 +1,6 @@
 %define requires_ant               ant >= 1.6.5 ant-junit >= 1.6.5 ant-trax >= 1.6.5 ant-nodeps >= 1.6.5 ant-optional >= 1.6.5
 %define requires_antlr             antlr
-%define requires_apache_commons    sh
+%define requires_apache_commons    jakarta-commons-validator jakarta-commons-logging jakarta-commons-collections  jakarta-commons-digester jakarta-commons-beanutils jakarta-commons-lang jakarta-commons-fileupload jakarta-commons-io
 %define requires_aspectj           aspectj
 %define requires_asm               asm
 %define requires_bsh               bsh
@@ -23,7 +23,7 @@
 %define requires_nekohtml          nekohtml
 %define requires_openoffice        openoffice.org
 %define requires_odmg              odmg
-%define requires_portal_bridges    sh
+%define requires_portal_bridges    portals-bridges-struts
 %define requires_perlcgi           perl-CGI
 %define requires_struts            struts struts-taglib
 %define requires_struts_test       strutstestcase
@@ -62,15 +62,34 @@
 
 
 %define requires_ant               ant >= 1.6.5 ant-junit >= 1.6.5 ant-optional >= 1.6.5
-%define requires_apache_commons    apache-commons-validator apache-commons-logging apache-commons-collections apache-commons-digester apache-commons-beanutils apache-commons-lang apache-commons-fileupload apache-commons-io
+%define requires_antlr             sh
+%define requires_apache_commons    sh
+%define requires_aspectj           sh
+%define requires_asm               sh
+%define requires_bsh               sh
+%define requires_cactus            sh
+%define requires_cargo             sh
+%define requires_dom4j             sh
+%define requires_ecs               sh
+%define requires_ehcache           sh
+%define requires_freemarker        sh
 %define requires_hibernate         sh chrpath
-%define requires_cargo             cargo spring2-all
+%define requires_javamail          sh
+%define requires_jcifs             sh
+%define requires_jta               sh
+%define requires_nekohtml          sh
+%define requires_odmg              sh
 %define requires_portal_bridges    sh
+%define requires_struts            sh
+%define requires_struts_test       sh
+%define requires_xjavadoc          sh
+%define requires_trove             sh
+
 %define _sysconfdir_init_d	   %_sysconfdir/rc.d/init.d
 
 Name: runawfe
-Version: 3.4.2.2
-Release: alt2.svn3794
+Version: 3.5.0
+Release: alt1.svn4065
 Summary: RUNA WFE Workflow/BPM management system
 License: LGPL
 Group: Office
@@ -172,6 +191,9 @@ This package contains documentation for all runawfe components.
 Group: Office
 Summary: Runawfe Graphic Process Designer
 Requires: %requires_java %requires_libgtk %requires_mozilla %requires_swt
+
+%filter_from_requires /^python/d 
+
 %description gpd
 RUNA WFE is a cross-platform end user solution for business process management. It provides rich web interface with tasklist, form player, graphical process designer, bots and more
 
@@ -862,6 +884,6 @@ rm -f %_sbindir/runawfe-start.sh
 
 
 %changelog
-* Sun Jun 10 2012 Konstantinov Aleksey <kana@altlinux.org> 3.4.2.2-alt2.svn3794
+* Sun Sep 09 2012 Konstantinov Aleksey <kana@altlinux.org> 3.5.0-alt1.svn4065
 - New release
 
