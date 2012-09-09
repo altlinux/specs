@@ -1,11 +1,11 @@
 Name: liboggz
-Version: 0.9.7
-Release: alt2.2
+Version: 1.1.1
+Release: alt1
 
 Summary: Simple programming interface for Ogg files and streams
 Group: System/Libraries
 License: BSD
-URL: http://www.annodex.net/
+Url: http://www.annodex.net/
 Source0: http://www.annodex.net/software/liboggz/download/%name-%version.tar.gz
 
 Packager: Repocop Q. A. Robot <repocop@altlinux.org>
@@ -35,7 +35,7 @@ This package contains the header files and documentation needed for
 development using liboggz.
 
 %prep
-%setup -q
+%setup
 
 %build
 %configure \
@@ -59,6 +59,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_includedir/oggz
 
 %changelog
+* Sun Sep 09 2012 Fr. Br. George <george@altlinux.ru> 1.1.1-alt1
+- Autobuild version bump to 1.1.1
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.7-alt2.2
 - Removed bad RPATH
 

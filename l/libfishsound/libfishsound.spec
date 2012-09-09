@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind
 %add_optflags %optflags_shared
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt2_5
+Release:        alt2_5.1
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -107,6 +107,9 @@ mv src/examples .
 
 
 %changelog
+* Sun Sep 09 2012 Fr. Br. George <george@altlinux.ru> 1.0.0-alt2_5.1
+- Rebuild with liboggz 1.1.1
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt2_5
 - update to new release by fcimport
 

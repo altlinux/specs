@@ -1,18 +1,17 @@
 Name: aqualung
 Summary: Aqualung is a music player for the GNU/Linux operating system
-Version: 0.9svn1155
-Release: alt1.1
+Version: 0.9svn1249
+Release: alt1
 License: GPL
 Group: Sound
-# svn co https://aqualung.svn.sourceforge.net/svnroot/aqualung/trunk aqualung
-Source: %name-svn.tar.gz
+# http://aqualung.factorial.hu/download.php?key=svntgzd
+Source: %name-%version.tar.gz
 Patch: %name-ffmpeg-0.7.1.patch
 #Source:			%name-%version.tar.gz
-Packager: Fr. Br. George <george@altlinux.ru>
 Url: http://aqualung.sf.net
 
 # Automatically added by buildreq on Mon Mar 14 2011
-BuildRequires: gcc-c++ libalsa-devel libavformat-devel libcddb-devel libcdio-devel libflac-devel libgtk+2-devel libjack-devel liblame-devel liblrdf-devel liblua5-devel libmac-devel libmad-devel libmodplug-devel libmpcdec-devel liboggz-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libspeex-devel libvorbis-devel libwavpack-devel libxml2-devel zlib-devel
+BuildRequires: gcc-c++ libalsa-devel libavformat-devel libcddb-devel libcdio-devel libflac-devel libgtk+2-devel libjack-devel liblame-devel liblrdf-devel liblua5-devel libmac-devel libmad-devel libmodplug-devel libmpcdec-devel liboggz-devel libpulseaudio-devel libsamplerate-devel libsndfile-devel libspeex-devel libvorbis-devel libwavpack-devel libxml2-devel zlib-devel libhid-devel libifp-devel
 
 %description
 Aqualung is a music player for the GNU/Linux operating system.
@@ -56,13 +55,13 @@ all-in-one Winamp/XMMS playlist.
 Author: Tom Szilagyi <tszilagyi@users.sourceforge.net>
 
 %prep
-%setup -q -n %name
-%patch0 -p2
+%setup
+#patch0 -p2
 
-#./autogen.sh
-%autoreconf
+sed -i 's/\[mad], \[mad],/[mad], [libmad],/' configure.ac
 
 %build
+%autoreconf
 %configure \
 	--enable-debug \
 	--prefix=%prefix \
@@ -132,6 +131,10 @@ install -m 0644 %name.desktop \
 %_desktopdir/%name.desktop
 
 %changelog
+* Sun Sep 09 2012 Fr. Br. George <george@altlinux.ru> 0.9svn1249-alt1
+- Autobuild version bump to 0.9svn1249
+- Fix build
+
 * Sat Aug 20 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9svn1155-alt1.1
 - Rebuilt with ffmpeg 0.7.1
 
@@ -154,7 +157,7 @@ install -m 0644 %name.desktop \
 - *64 ladspa path fix
 
 * Thu Aug 27 2009 Fr. Br. George <george@altlinux.ru> 0.9svn1075-alt2
-- Version up 
+- Version up
 
 * Wed Jun 03 2009 Fr. Br. George <george@altlinux.ru> 0.9svn1065-alt2
 - Repocop fail fixed
