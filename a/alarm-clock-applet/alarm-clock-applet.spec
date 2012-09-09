@@ -2,7 +2,7 @@
 %define ver_major 0.3
 
 Name: %_name-applet
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Alarm Clock Applet
@@ -54,6 +54,9 @@ fi
 %doc AUTHORS README NEWS
 
 %changelog
+* Sun Sep 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
+- 0.3.3
+
 * Sat Apr 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - first build for Sisyphus
 
