@@ -49,7 +49,7 @@ BuildRequires: jpackage-core
 
 Name:           maven1
 Version:        1.1
-Release:        alt19_9jpp6
+Release:        alt20_9jpp6
 Epoch:          0
 Summary:        Java project management and project comprehension tool
 
@@ -212,6 +212,7 @@ Requires(post): xml-commons-resolver11
 Provides: %movname = %{epoch}:%{version}-%{release}
 Source44: import.info
 Patch33: maven-1.1-plugin-checkstyle-alt-add-collections-dep.patch
+Patch35: maven-1.1-alt-commons-io-24.patch
 Provides: %movname = %version-%release
 Provides: %movname = 0:%version-%release
 Obsoletes: maven1 < 1.1-alt14
@@ -2016,6 +2017,7 @@ sed -i 's,<jar>plexus/containers-component-api.jar</jar>,<jar>plexus/containers-
 pushd ../maven-plugins
 %patch33 -p2
 popd
+%patch35 -p0 -d ..
 
 %build
 mkdir -p home/lib/endorsed
@@ -2836,6 +2838,9 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt20_9jpp6
+- fixed build
+
 * Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt19_9jpp6
 - fixed build w/new batik
 
