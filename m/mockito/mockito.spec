@@ -1,201 +1,98 @@
+Epoch: 0
+Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_without repolib
-%bcond_without zip
-
-
-%define ant JAVA_HOME=%{java_home} %{_bindir}/ant17
-
 Name:           mockito
-Version:        1.8.5
-Release:        alt5_0.1jpp6
-Epoch:          0
-Summary:        Mock objects library for java
+Version:        1.9.0
+Release:        alt1_9jpp7
+Summary:        A Java mocking framework
+
 License:        MIT
-Group:          Development/Java
-URL:            http://www.jboss.org/
-# svn -q export http://mockito.googlecode.com/svn/tags/1.8.5 mockito-1.8.5 && tar cjf mockito-1.8.5.tar.bz2 mockito-1.8.5
-Source0:        mockito-1.8.5.tar.bz2
-Requires: junit4
-Requires: hamcrest
-Requires: objenesis
-BuildRequires: ant17 >= 0:1.7.0
-BuildRequires: ant17-junit >= 0:1.7.0
-BuildRequires: ant17-trax >= 0:1.7.0
-# FIXME
-#BuildRequires:  aqute-bndlib >= 0:0.0.313
-BuildRequires: hamcrest >= 0:1.1
-# FIXME: >= 0:1.0
-BuildRequires: jarjar
-BuildRequires: jaxen >= 0:1.1.1
-BuildRequires: junit4 >= 0:4.5
-BuildRequires: maven-ant-tasks >= 0:2.0.9
-BuildRequires: objectweb-asm >= 0:3.1
-BuildRequires: objenesis >= 0:1.0
-BuildRequires: pmd >= 0:4.1
-# FIXME: needs cglib (repackaged) powermock-1.2.5 fest-1.1 sorcerer
+URL:            http://code.google.com/p/mockito/
+Source0:        mockito-%{version}.tar.xz
+Source1:        make-mockito-sourcetarball.sh
+Patch0:         fixup-ant-script.patch
+Patch1:         fix-cglib-refs.patch
+Patch2:         maven-cglib-dependency.patch
+Patch3:         fix-bnd-config.patch
+
 BuildArch:      noarch
+BuildRequires:  jpackage-utils
+BuildRequires:  ant
+BuildRequires:  objenesis
+BuildRequires:  cglib
+BuildRequires:  junit4
+BuildRequires:  hamcrest
+BuildRequires:  aqute-bnd
+
+Requires:       jpackage-utils
+Requires:       objenesis
+Requires:       cglib
+Requires:       junit4
+Requires:       hamcrest
 Source44: import.info
 
 %description
-Mock objects library for java.
+Mockito is a mocking framework that tastes really good. It lets you write
+beautiful tests with clean & simple API. Mockito doesn't give you hangover
+because the tests are very readable and they produce clean verification
+errors.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Summary:        Javadocs for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
-
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
-%if %with zip
-%package zip
-Summary:     Container for the zipped distribution of %{name}
-Group:       Development/Java
-
-%description zip
-Container for the zipped distribution of %{name}.
-%endif
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
-
-%{__rm} ./cglib-and-asm/lib/ant-1.7.0.jar
-%{__rm} ./lib/build/asm-3.1.jar
-%{__rm} ./lib/build/jarjar-1.0.jar
-%{__rm} ./lib/build/jaxen-1.1.1.jar
-%{__rm} ./lib/build/maven-ant-tasks-2.0.9.jar
-%{__rm} ./lib/build/pmd-4.1.jar
-
-%if 0
-%{__rm} ./lib/build/bnd-0.0.313.jar
-%{__rm} ./lib/build/sorcerer.jar
-%{__rm} ./lib/compile/com.springsource.org.junit-4.5.0.jar
-%{__rm} ./lib/run/com.springsource.org.hamcrest.core-1.1.0.jar
-%{__rm} ./lib/run/com.springsource.org.objenesis-1.0.0.jar
-%{__rm} ./lib/sources/com.springsource.org.hamcrest.core-1.1.0-sources.jar
-%{__rm} ./lib/sources/com.springsource.org.objenesis-1.0.0-sources.jar
-%endif
-
-# disable tests till upgrade
-sed -i -e 's, depends="test", depends="compile.test",' build.xml
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+# Set Bundle-Version properly
+sed -i 's/Bundle-Version= ${version}/Bundle-Version= %{version}/' conf/mockito-core.bnd
+%patch3
 
 %build
-export CLASSPATH=$(build-classpath hamcrest/core jaxen jarjar junit4 maven-ant-tasks objectweb-asm/asm objenesis pmd)
-export OPT_JAR_LIST=$(%{__cat} %{_sysconfdir}/ant17.d/{junit,trax})
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 all
+ant jar javadoc
+# Convert to OSGi bundle
+pushd target
+java -jar $(build-classpath aqute-bnd) wrap -output mockito-core-%{version}.bar -properties ../conf/mockito-core.bnd mockito-core-%{version}.jar
+popd
 
 %install
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+sed -i -e "s|@version@|%{version}|g" maven/mockito-core.pom
+cp -p target/mockito-core-%{version}.bar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-%if %with repolib
-export CLASSPATH=$(build-classpath maven-ant-tasks)
-export OPT_JAR_LIST=:
-%{ant} -Dmaven.repository.dir=%{buildroot}%{_javadir}/repository.jboss.com/maven2-brew release.maven
-%endif
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 maven/mockito-core.pom  \
+        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-# jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p target/mockito-all-%{version}.jar %{buildroot}%{_javadir}/%{name}-all-%{version}.jar
-%{__cp} -p target/mockito-all-%{version}-sources.jar %{buildroot}%{_javadir}/%{name}-all-sources-%{version}.jar
-%{__cp} -p target/mockito-core-%{version}.jar %{buildroot}%{_javadir}/%{name}-core-%{version}.jar
-%{__cp} -p target/mockito-core-%{version}-sources.jar %{buildroot}%{_javadir}/%{name}-core-sources-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp target/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-# pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p target/mockito-all.pom %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-all.pom
-%add_to_maven_depmap org.mockito mockito-all %{version} JPP %{name}-all
-%{__cp} -p target/mockito-core.pom %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-core.pom
-%add_to_maven_depmap org.mockito mockito-core %{version} JPP %{name}-core
-
-# javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr target/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
-%if %with zip
-%{__mkdir_p} %{buildroot}%{_javadir}/jbossas-fordev
-%{__cp} -p target/mockito-%{version}.zip %{buildroot}%{_javadir}/jbossas-fordev/mockito-%{version}.zip
-%endif
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.mockito:mockito-all"
 
 %files
-%doc LICENSE NOTICE
-%{_javadir}/%{name}-all-%{version}.jar
-%{_javadir}/%{name}-all.jar
-%{_javadir}/%{name}-all-sources-%{version}.jar
-%{_javadir}/%{name}-all-sources.jar
-%{_javadir}/%{name}-core-%{version}.jar
-%{_javadir}/%{name}-core.jar
-%{_javadir}/%{name}-core-sources-%{version}.jar
-%{_javadir}/%{name}-core-sources.jar
-%{_datadir}/maven2/poms/JPP-%{name}-all.pom
-%{_datadir}/maven2/poms/JPP-%{name}-core.pom
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
+%doc NOTICE
+%doc LICENSE
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
-
-%if %with repolib
-%files repolib
-%dir %{_javadir}
-%{_javadir}/repository.jboss.com
-%endif
-
-%if %with zip
-%files zip
-%dir %{_javadir}
-%dir %{_javadir}/jbossas-fordev
-%{_javadir}/jbossas-fordev/mockito-%{version}.zip
-%endif
+%doc LICENSE
+%doc NOTICE
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.9.0-alt1_9jpp7
+- new version
+
 * Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.5-alt5_0.1jpp6
 - fixed build
 
