@@ -1,7 +1,7 @@
 %define dist DateTime-TimeZone
 Name: perl-%dist
 Version: 1.48
-Release: alt1
+Release: alt2
 
 Summary: Time zone object base class and factory
 License: GPL or Artistic
@@ -24,12 +24,12 @@ BuildArch: noarch
 %add_findprov_skiplist */DateTime/TimeZone/Pacific/*
 
 # bootstrap: disable circular dependencies on DateTime
-%add_findreq_skiplist */DateTime/TimeZone/*
+#add_findreq_skiplist */DateTime/TimeZone/*
 
 # bootstrap: some dependencies have to be re-added manually
-Requires: perl-Class-Load perl-Class-Singleton perl-Params-Validate perl-parent
+#Requires: perl-Class-Load perl-Class-Singleton perl-Params-Validate perl-parent
 
-BuildRequires: perl-Class-Load perl-Class-Singleton perl-Test-Output perl-Params-Validate perl-parent
+BuildRequires: perl-Class-Load perl-Class-Singleton perl-Test-Output perl-Params-Validate perl-parent perl-DateTime
 
 %description
 The DateTime::TimeZone modules provide a Perl interface to the Olson
@@ -52,7 +52,7 @@ http://www.twinsun.com/tz/tz-link.htm.
 sed -i- '/Pod::Man/d' Makefile.PL
 
 # bootstrap: avoid build dependency on DateTime
-sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
+#sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 
 %build
 %perl_vendor_build
@@ -65,6 +65,9 @@ sed -i- 's/eval "use DateTime/eval "die/' t/check_datetime_version.pl
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Sun Sep 09 2012 Vladimir Lettiev <crux@altlinux.ru> 1.48-alt2
+- re-enabled dependency on perl-DateTime
+
 * Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1.48-alt1
 - 1.41 -> 1.48
 - bootstrap for perl-5.16
