@@ -1,7 +1,7 @@
 %define dist Math-BigInt
 Name: perl-%dist
 Version: 1.997
-Release: alt4
+Release: alt5
 
 Summary: Arbitrary size integer math package
 License: GPL or Artistic
@@ -12,12 +12,11 @@ Source: %dist-%version.tar.gz
 Patch: perl-Math-BigInt-1.997-alt-FastCalc.patch
 
 # enable XS routines for more speed
-#Requires: perl-Math-BigInt-FastCalc
+Requires: perl-Math-BigInt-FastCalc
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Wed Nov 16 2011
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl-Math-BigInt-FastCalc
 
 %description
 This package contains the following perl modules:
@@ -26,7 +25,7 @@ Math::BigFloat - Arbitrary size floating point math package
 
 %prep
 %setup -q -n %dist-%version
-#patch -p1
+%patch -p1
 chmod -x -c CHANGES HISTORY
 
 # do not check for older versions
@@ -43,6 +42,9 @@ sed -i- 's/eval " require/eval " die/' Makefile.PL
 %perl_vendor_privlib/Math
 
 %changelog
+* Sun Sep 09 2012 Vladimir Lettiev <crux@altlinux.ru> 1.997-alt5
+- re-enabled dependency on perl-Math-BigInt-FastCalc
+
 * Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 1.997-alt4
 - bootstrap for perl-5.16
 
