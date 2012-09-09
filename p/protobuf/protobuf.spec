@@ -1,8 +1,13 @@
+# find-requires: message.h:112:18: fatal error: vector: No such file or directory
+%add_findreq_skiplist /usr/include/google/protobuf/message.h
+%add_findprov_skiplist /usr/include/google/protobuf/message.h
+
+%def_with java
 %define soversion 7
 
 Name: protobuf
 Version: 2.4.1
-Release: alt1
+Release: alt2
 Summary: Protocol Buffers - Google's data interchange format
 License: Apache License 2.0
 Group: System/Libraries
@@ -11,6 +16,7 @@ Packager: Mikhail A Pokidko <pma@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch2: protobuf-2.4.1-java-fixes.patch
 
 Obsoletes: libprotobuf <= 2.0.0-alt1
 
@@ -85,25 +91,38 @@ BuildArch: noarch
 %description -n python-module-%name
 Python bindings for protocol buffers
 
-#%%package java
-#%%Summary: Java binding files for %name%soversion
-#%%Group: Development/Java
-#
-#BuildRequires:    java-devel >= 1.6
-#BuildRequires:    jpackage-utils
-#BuildRequires:    maven2
-#BuildRequires:    maven2-plugin-compiler
-#BuildRequires:    maven2-plugin-install
-#BuildRequires:    maven2-plugin-jar
-#BuildRequires:    maven2-plugin-javadoc
-#BuildRequires:    maven2-plugin-release
-#BuildRequires:    maven2-plugin-resources
-#BuildRequires:    maven2-plugin-surefire
-#BuildRequires:    maven2-plugin-antrun
-#Requires:         java jpackage-utils
-#
-#%%description java
-#Java bindings for protocol buffers
+%if_with java
+%package java
+Summary: Java Protocol Buffers runtime library
+Group:   Development/Java
+BuildRequires:    jpackage-core
+BuildRequires:    maven
+BuildRequires:    maven-compiler-plugin
+BuildRequires:    maven-install-plugin
+BuildRequires:    maven-jar-plugin
+BuildRequires:    maven-javadoc-plugin
+BuildRequires:    maven-resources-plugin
+BuildRequires:    maven-surefire-plugin
+BuildRequires:    maven-antrun-plugin
+BuildRequires:    maven-doxia
+BuildRequires:    maven-doxia-sitetools
+Requires:         java
+Requires:         jpackage-utils
+Conflicts:        %{name}-compiler > %{version}
+Conflicts:        %{name}-compiler < %{version}
+
+%description java
+This package contains Java Protocol Buffers runtime library.
+
+%package javadoc
+Summary: Javadocs for %{name}-java
+Group:   Development/Documentation
+BuildArch: noarch
+Requires: %{name}-java = %{version}-%{release}
+
+%description javadoc
+This package contains the API documentation for %{name}-java.
+%endif
 
 %prep
 %setup -q
@@ -113,7 +132,15 @@ rm -rf java/src/test
 # without gtest
 rm -rf gtest
 
+%if_with java
+%patch2 -p1 -b .java-fixes
+rm -rf java/src/test
+%endif
+
 %build
+iconv -f iso8859-1 -t utf-8 CONTRIBUTORS.txt > CONTRIBUTORS.txt.utf8
+mv CONTRIBUTORS.txt.utf8 CONTRIBUTORS.txt
+
 rm -f m4/{lt*,libtool*}.m4
 export PTHREAD_LIBS="-lpthread"
 %autoreconf
@@ -123,11 +150,11 @@ pushd python
 %python_build
 popd
 
-#pushd java
-#export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-#mkdir -p $MAVEN_REPO_LOCAL
-#mvn-jpp -Dmaven.repo.local=$MAVEN_REPO_LOCAL install javadoc:javadoc
-#popd
+%if_with java
+pushd java
+mvn-rpmbuild install javadoc:javadoc
+popd
+%endif
 
 %install
 %makeinstall_std
@@ -137,17 +164,18 @@ pushd python
 %python_install --optimize=2 --record=INSTALLED_FILES
 popd
 
-#pushd java
-#install -d -m 755 %{buildroot}%{_javadir}
-#install -pm 644 target/%{name}-java-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-#
-#install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
-#cp -rp target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
-#
-#install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-#install -pm 644 pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-##add_to_maven_depmap org.apache.maven %{name} %{version} JPP %{name}
-#popd
+%if_with java
+pushd java
+install -d -m 755 %{buildroot}%{_javadir}
+install -pm 644 target/%{name}-java-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -rp target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
+
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%endif
 
 %files compiler
 %_bindir/protoc
@@ -174,14 +202,21 @@ popd
 %files -n python-module-%name -f python/INSTALLED_FILES
 #python_sitelibdir/google/
 
-#%%files java
-#%defattr(-, root, root, -)
-#%{_datadir}/maven2/poms/JPP-protobuf.pom
-#%{_mavendepmapfragdir}/protobuf
-#%{_javadir}/*
-#%doc examples/AddPerson.java examples/ListPeople.java
+%if_with java
+%files java
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
+%{_javadir}/%{name}.jar
+%doc examples/AddPerson.java examples/ListPeople.java
+
+%files javadoc
+%{_javadocdir}/%{name}
+%endif
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt2
+- added protobuf-java subpackage (required for maven dependencies)
+
 * Thu Nov 24 2011 Alexey Shabalin <shaba@altlinux.ru> 2.4.1-alt1
 - 2.4.1
 
