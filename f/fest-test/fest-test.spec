@@ -1,135 +1,103 @@
-BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%define module test
-
-Name:           fest-%{module}
+Name:           fest-test
 Version:        1.2.1
-Release:        alt4_0.r1039.1jpp7
-Summary:        Fixtures for Easy Software Testing Tests
+Release:        alt4_4jpp7
+Summary:        FEST Testing
 
 Group:          Development/Java
-License:        Apache License, Version 2.0
-URL:            http://fest.easytesting.org/
-Source0:        fest-test-1.2.1-r1039.tgz
-# svn export http://svn.codehaus.org/fest/trunk/fest-test fest-test-1.2.1
-# tar czf fest-test-1.2.1-r1039.tgz fest-test-1.2.1
-Source1:        %{name}-settings.xml
-Source2:        %{name}-jpp-depmap.xml
-Source3:        fest-1.0.1.pom
-# See http://svn.codehaus.org/fest/trunk/fest/pom.xml
+License:        ASL 2.0
+URL:            http://fest.easytesting.org
 
-BuildRequires:  maven >= 0:2.0.8
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  fest-assembly
-BuildRequires:  fest-util
-Requires:  jpackage-utils >= 0:5.0.0
-Requires:  fest-util
+# git clone https://github.com/alexruiz/fest-test.git
+# cd fest-test
+# git archive --prefix="fest-test-1.2.1/" --format=tar \
+#   7a43f000480534f393150cbe0cdd0f9eab0e03b8 | \
+#   bzip2 - >../fest-test-1.2.1.tar.bz2
+Source0:        %{name}-%{version}.tar.bz2
 
-Requires(post):    jpackage-utils >= 0:5.0.0
-Requires(postun):  jpackage-utils >= 0:5.0.0
+# those two patches make the fest version match with
+# the currently packaged (and compatible) version in
+# Fedora, and let us use a most up-to-date version of
+# the code, rather than an extremely old and
+# unmaintained one
+Patch0:         fix-parent-version.patch
+Patch1:         fix-util-version.patch
 
 BuildArch:      noarch
+
+BuildRequires:  mockito
+BuildRequires:  junit
+BuildRequires:  jpackage-utils
+
+BuildRequires:  maven
+BuildRequires:  maven-enforcer-plugin
+BuildRequires:  maven-surefire
+BuildRequires:  maven-surefire-provider-junit4
+BuildRequires:  maven-dependency-plugin
+
+BuildRequires:  fest-common = 1.0.11
+BuildRequires:  fest-util = 1.2.0
+
+Requires:       mockito
+Requires:       junit
+Requires:       fest-common = 1.0.11
+Requires:       fest-util = 1.2.0
 Source44: import.info
 
+
 %description
-Utility methods used by FEST modules.
+Utility methods for testing FEST modules
 
 %package javadoc
+Group:          Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+API documentation for %{name}.
 
 %prep
 %setup -q
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-cp -p %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
-mkdir -p .m2/repository/org/easytesting/fest/1.0.1/
-cp %{SOURCE3} .m2/repository/org/easytesting/fest/1.0.1/fest-1.0.1.pom
-jar xf $(build-classpath fest/assembly)
-rm -rf META-INF
+%patch0 -p1
+%patch1 -p1
 
 %build
-export SETTINGS=$(pwd)/settings.xml
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p ${MAVEN_REPO_LOCAL}
-export MAVEN_OPTS="-Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Dmaven.test.failure.ignore=true"
-mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+mvn-rpmbuild \
         -e \
-        -s ${SETTINGS} \
         install javadoc:javadoc
 
-
 %install
+# jars
+install -d -m 0755 %{buildroot}%{_javadir}
+install -m 644 target/%{name}-%{version}.jar  %{buildroot}%{_javadir}/%{name}.jar
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/fest
+# poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml \
+    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-install -m 644 target/%{name}-%{version}.jar \
-       $RPM_BUILD_ROOT%{_javadir}/fest/%{module}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir}/fest && for jar in *-%{version}*; do \
-ln -s ${jar} ${jar/-%{version}/}; done)
-
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
-%add_to_maven_depmap org.easytesting %{name} %{version} JPP/fest %{module}
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files
-%doc LICENSE.txt
-%dir %{_javadir}/fest
-%{_javadir}/fest/*.jar
-%{_datadir}/maven2/poms/*
+%{_javadir}/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
+%doc LICENSE.txt
 
 %files javadoc
-%{_javadocdir}/%{name}*
+%{_javadocdir}/%{name}
+%doc LICENSE.txt
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt4_4jpp7
+- fc release
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt4_0.r1039.1jpp7
 - fixed build
 
