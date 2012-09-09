@@ -1,6 +1,4 @@
-# tmp plexus-maven-plugin
-#BuildRequires: plexus-maven-plugin
-
+BuildRequires: fusesource-pom
 BuildRequires: velocity14
 BuildRequires: geronimo-jpa-3.0-api javacc3 sun-ws-metadata-2.0-api sun-annotation-1.0-api maven-plugin-cobertura gmaven-runtime-1.5
 BuildRequires: /proc
@@ -347,7 +345,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt24_8jpp6
+Release:        alt25_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -6089,6 +6087,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt25_8jpp6
+- fixed build
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt24_8jpp6
 - build w/o mojo-maven2-plugin-xjc due to jaxb_1_0_api
 
