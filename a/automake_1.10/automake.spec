@@ -6,7 +6,7 @@
 
 Name: %realname%dialect
 Version: 1.10.3
-Release: alt1
+Release: alt2
 Epoch: 1
 
 %add_findreq_skiplist %_datadir/%realname%suff/config.guess
@@ -94,6 +94,10 @@ install -pm644 AUTHORS README THANKS ChangeLog.bz2 NEWS.bz2 TODO.bz2 \
 %docdir
 
 %changelog
+* Sun Sep 09 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.10.3-alt2
+- distdir.am (distcheck): backported upstream fix for CVE-2012-3386.
+- aclocal: backported upstream fix for perl 5.16.0.
+
 * Sat Mar 05 2011 Dmitry V. Levin <ldv@altlinux.org> 1:1.10.3-alt1
 - Updated to 1.10.3.
 
