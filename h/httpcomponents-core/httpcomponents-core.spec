@@ -4,21 +4,26 @@ BuildRequires: jpackage-compat
 
 Name:              httpcomponents-core
 Summary:           Set of low level Java HTTP transport components for HTTP services
-Version:           4.1.3
-Release:           alt1_2jpp7
+Version:           4.2.1
+Release:           alt1_3jpp7
 Group:             Development/Java
 License:           ASL 2.0
 URL:               http://hc.apache.org/
 Source0:           http://www.apache.org/dist/httpcomponents/httpcore/source/httpcomponents-core-%{version}-src.tar.gz
-Patch0:            0001-Remove-unneeded-pom-dependencies.patch
-Patch1:            0002-Osgify-modules.patch
 BuildArch:         noarch
 
 BuildRequires:     httpcomponents-project
 BuildRequires:     jpackage-utils
 BuildRequires:     maven-surefire-provider-junit4
+BuildRequires:     apache-commons-logging
+BuildRequires:     junit
+%if 0%{?rhel} <= 0
+BuildRequires:     mockito
+%endif
 
 Requires:          jpackage-utils
+Requires:          apache-commons-logging
+Requires:          junit
 Source44: import.info
 
 Obsoletes: hc-httpcore < 4.1.1
@@ -49,30 +54,54 @@ BuildArch: noarch
 
 %prep
 %setup -q
-%patch0 -p1
-%patch1 -p1
+
+%pom_remove_plugin :maven-clover2-plugin httpcore-nio
+%pom_remove_plugin :maven-clover2-plugin httpcore
+%pom_remove_plugin :maven-notice-plugin
+%pom_remove_plugin :docbkx-maven-plugin
+
+# OSGify modules
+for module in httpcore httpcore-nio; do
+    %pom_xpath_remove "pom:project/pom:packaging" $module
+    %pom_xpath_inject "pom:project" "<packaging>bundle</packaging>" $module
+    %pom_xpath_inject "pom:build/pom:plugins" "
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <extensions>true</extensions>
+          <configuration>
+            <instructions>
+              <Export-Package>*</Export-Package>
+            </instructions>
+          </configuration>
+        </plugin>" $module
+done
 
 %build
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild \
+%if 0%{?rhel}
+    -Dmaven.test.skip=true \
+%endif
+    install javadoc:aggregate
 
 %install
-install -d %{buildroot}/%{_mavenpomdir}
-install -d %{buildroot}/%{_javadir}/%{base_name}
+install -dm 755 %{buildroot}/%{_mavenpomdir}
+install -dm 755 %{buildroot}/%{_javadir}/%{base_name}
 
 for m in httpcore httpcore-nio; do
     # poms
-    install -m 0644 $m/pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{base_name}-$m.pom
+    install -pm 644 $m/pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{base_name}-$m.pom
 
     # jars - osgi doesn't have one
     if [ -f $m/target/$m-%{version}.jar ];then
-        install -m 0644 $m/target/$m-%{version}.jar %{buildroot}%{_javadir}/%{base_name}/$m.jar
+        install -m 644 $m/target/$m-%{version}.jar %{buildroot}%{_javadir}/%{base_name}/$m.jar
     fi
 
     %add_maven_depmap JPP.%{base_name}-$m.pom %{base_name}/$m.jar
 done
 
 # parent
-install -D -m 0644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{base_name}-%{name}.pom
+install -pm 644 pom.xml %{buildroot}/%{_mavenpomdir}/JPP.%{base_name}-%{name}.pom
 %add_maven_depmap JPP.%{base_name}-%{name}.pom
 
 # javadocs
@@ -80,16 +109,20 @@ install -dm 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
-%doc README.txt LICENSE.txt RELEASE_NOTES.txt
+%doc LICENSE.txt NOTICE.txt
+%doc README.txt RELEASE_NOTES.txt
 %{_mavendepmapfragdir}/%{name}
-%{_mavenpomdir}/JPP.%{basename}*.pom
-%{_javadir}/%{basename}
+%{_mavenpomdir}/JPP.%{base_name}*.pom
+%{_javadir}/%{base_name}
 
 %files javadoc
-%doc LICENSE.txt
+%doc LICENSE.txt NOTICE.txt
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_3jpp7
+- new version
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.3-alt1_2jpp7
 - full version
 
