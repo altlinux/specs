@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 Summary:        MyFaces shared for JSF 11
 Name:           myfaces-shared11
 Version:        2.0.5
-Release:        alt3_2jpp5
+Release:        alt4_2jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -194,6 +194,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt4_2jpp5
+- fixed build
+
 * Sun Jan 30 2011 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt3_2jpp5
 - adapted pom for new aspectj
 
