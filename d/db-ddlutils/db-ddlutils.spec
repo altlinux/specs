@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           db-%{base_name}
 Version:        1.0
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        DDL utilities
 
@@ -276,6 +276,9 @@ cp -pr doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_1jpp6
+- build with new fc mckoi 1.0.4
+
 * Thu Oct 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_1jpp6
 - fixed build
 

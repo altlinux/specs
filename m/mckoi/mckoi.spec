@@ -1,144 +1,140 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.5.0-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+BuildRequires: jpackage-compat
+Name:          mckoi
+Version:       1.0.4
+Release:       alt1_2jpp7
+Summary:       Open Source Java SQL Database
+Group:         Development/Java
+License:       GPLv2
+URL:           http://mckoi.com/database/
+Source0:       http://mckoi.com/database/ver/%{name}%{version}.zip
 
+Patch0:        %{name}-%{version}-jdk7.patch
 
-Name:		mckoi
-Version:	1.0.3
-Release:	alt2_1jpp5
-Epoch:		0
-Summary:	An Open Source Java SQL Database System
-License:	GPL
-Url:		http://www.mckoi.com/database/
-Group:		Development/Java
-Source0:	http://www.mckoi.com/database/ver/mckoi1.0.3.zip
-Source1:	mckoi-build.xml
-Source2:	%{name}-%{version}.pom
+Patch1:        %{name}-%{version}-fix_fsf-address.patch
 
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: ant >= 1.6.5
-BuildRequires: junit >= 3.8.1
+BuildRequires: jpackage-utils
+
+BuildRequires: javacc
+BuildRequires: maven
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-surefire-plugin
+BuildRequires: zip
+
 BuildRequires: gnu-regexp
-BuildRequires: jakarta-commons-logging
-BuildRequires: jboss4-common
-BuildRequires: jboss4-jmx
-BuildRequires: jboss4-system
-Requires: gnu-regexp
-Requires: jakarta-commons-logging
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
 
-BuildArch:	noarch
+Requires:      jpackage-utils
+BuildArch:     noarch
+Source44: import.info
 
 %description
-Mckoi SQL Database is an SQL (Structured Query Language) 
-Database management system written for the JavaTM platform.
-Mckoi SQL Database is optimized to run as a client/server 
-database server for multiple clients, however it can also 
-be embedded in an application as a stand-alone database. 
-It is highly multi-threaded and features an extendable 
-object-oriented engine.
+Mckoi SQL Database is an Open Source SQL Database System written in Java.
+The Mckoi SQL Database project was started in 1998, and the goal was to
+build a database management system in a traditional shared disk/shared memory
+style architecture. Mckoi SQL Database includes some nice features such as
+write-ahead-logging. Many of the design ideas implemented in this project
+were carried through into MckoiDDB, the evolution of this project.
 
-%package        javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+%package javadoc
+Group:         Development/Java
+Summary:       Javadoc for %{name}
+Requires:      jpackage-utils
 BuildArch: noarch
 
-%description    javadoc
-%{summary}.
+%description javadoc
+This package contains javadoc for %{name}.
+
+%package demos
+Group:         Development/Java
+Summary:       Demonstrations and samples for %{name}
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      gnu-regexp
+
+%description demos
+This package contains sources archive demonstrations and samples for %{name}.
 
 %prep
 %setup -q -n %{name}%{version}
-cp %{SOURCE1} build.xml
-unzip -q src.zip
-for f in $(find . -name "*.jar" -o -name "*.zip"); do
-    mv $f $f.no
-done
-mkdir lib
-ln -sf $(build-classpath commons-logging) lib
-ln -sf $(build-classpath gnu-regexp) lib
-ln -sf $(build-classpath jboss4/jboss-common) lib
-ln -sf $(build-classpath jboss4/jboss-jmx) lib
-ln -sf $(build-classpath jboss4/jboss-system) lib
+find . -name '*.jar' -delete
+find . -name '*.class' -delete
+find . -name '*.bat' -delete
+unzip -qq src.zip
+%patch0 -p0
+%patch1 -p1
 
+# contrib require org.jboss.system
+# fix generics support for java 7
+sed -i "s|<source>1.3</source>|<source>1.5</source>|" pom.xml
+sed -i "s|<target>1.3</target>|<target>1.5</target>|" pom.xml
+
+sed -i "s|../mckoidb.jar:../gnu-regexp-1.0.8.jar|../target/MckoiSQLDB-%{version}.jar:%{_javadir}/gnu-regexp.jar|" test/*.sh
+chmod 755 test/*.sh
+
+sed -i 's/\r//' README.txt LICENSE.txt docs/LICENSE.txt
+
+cd src/main/java/com/mckoi/database/sql
+rm -rf TokenMgrError.java ParseException.java Token.java SimpleCharStream.java
+javacc.sh SQL.jj
 
 %build
-ant jar jdoc
+
+mvn-rpmbuild install javadoc:aggregate
 
 %install
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 output/dist/lib/mckoidb-%{version}.jar \
-		$RPM_BUILD_ROOT%{_javadir}/mckoidb-%{version}.jar
-install -m 644 output/dist/lib/mkjdbc-%{version}.jar \
-		$RPM_BUILD_ROOT%{_javadir}/mkjdbc-%{version}.jar
 
-# create unprefixed and unversioned symlinks
-(cd $RPM_BUILD_ROOT%{_javadir}
-for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done
+mkdir -p %{buildroot}%{_javadir}
+install -m 644 target/MckoiSQLDB-%{version}.jar \
+  %{buildroot}%{_javadir}/%{name}.jar
+( cd %{buildroot}%{_javadir} && ln -s %{name}.jar MckoiSQLDB.jar )
+
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "mckoi:mckoi"
+
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+
+mkdir -p %{buildroot}%{_datadir}/%{name}
+(
+  cd src/main/java
+  zip ../../../%{name}-src -r com
 )
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
+cp -pr %{name}-src.zip %{buildroot}%{_datadir}/%{name}
+cp -pr contrib %{buildroot}%{_datadir}/%{name}
+cp -pr demo %{buildroot}%{_datadir}/%{name}
+cp -pr test %{buildroot}%{_datadir}/%{name}
 
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr output/dist/doc/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-
-install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-cp -pr contrib $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-cp -pr test $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
-find $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version} -name "*.bat" -exec rm {} \;
+%check
+cd test
+sh ./runLocalTest.sh
 
 %files
-%doc %{_docdir}/%{name}-%{version}/*
-%dir %{_docdir}/%{name}-%{version}
-%{_datadir}/%{name}-%{version}
-%{_javadir}/*.jar
-%{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%{_javadir}/%{name}.jar
+%{_javadir}/MckoiSQLDB.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
+%doc LICENSE.txt README.txt
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
+%doc LICENSE.txt
+
+%files demos
+%{_datadir}/%{name}
+%doc docs/*
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt1_2jpp7
+- new version
+
 * Wed May 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0.3-alt2_1jpp5
 - selected java5 compiler explicitly
 
