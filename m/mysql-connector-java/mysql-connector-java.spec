@@ -1,17 +1,17 @@
 BuildRequires: java-1.5.0-devel
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
+BuildRequires: jpackage-compat
 %global     builddir        build-mysql-jdbc
 %global     distdir         dist-mysql-jdbc
-%global     gcj_support     1
+%global     gcj_support     0
 %global     java6_rtpath    %{java_home}/jre/lib/rt.jar
 %global     java6_javacpath /usr/bin/javac
 %global     java6_javapath  /usr/bin/javac
 
 Summary:    Official JDBC driver for MySQL
 Name:       mysql-connector-java
-Version:    5.1.15
-Release:    alt2_1jpp6
+Version:    5.1.21
+Release:    alt1_3jpp7
 Epoch:      1 
 
 # MySQL FLOSS Exception
@@ -21,37 +21,46 @@ URL:        http://dev.mysql.com/downloads/connector/j/
 
 # Mysql has a mirror redirector for its downloads
 # You can get this tarball by following a link from:
-# http://dev.mysql.com/get/Downloads/Connector-J/%{name}-%{version}.tar.gz/from/pick#mirrors
+# http://dev.mysql.com/get/Downloads/Connector-J/%{name}-%{version}.zip/from/pick#mirrors
 #
-# Following prebuilt jars have been removed from the tarball:
+# Following prebuilt jars and sources have been removed from the tarball:
 #
 # %{name}-%{version}-bin.jar
 # src/lib/ant-contrib.jar
 # src/lib/c3p0-0.9.1-pre6.jar
+# src/lib/c3p0-0.9.1-pre6.src.zip
 # src/lib/jboss-common-jdbc-wrapper.jar
+# src/lib/jboss-common-jdbc-wrapper-src.jar
 # src/lib/slf4j-api-1.6.1.jar
 #
 # See http://bugs.mysql.com/bug.php?id=28512 for details.
 Source0:            %{name}-%{version}.tar.xz
 
+# Patch to build with JDBC 4.1/Java 7
+Patch0:             %{name}-jdbc-4.1.patch
+
+
+%if ! %{gcj_support}
+BuildArch:          noarch
+%endif
+
 %if %{gcj_support}
 BuildRequires:      java-gcj-compat-devel >= 1.0.31
 Requires(post):     java-gcj-compat >= 1.0.31
 Requires(postun):   java-gcj-compat >= 1.0.31
-%else
 %endif
-Requires:           jta >= 1.0
-Requires:           slf4j
+
 BuildRequires:      ant >= 1.6.0
 BuildRequires:      ant-contrib >= 1.0
 BuildRequires:      jpackage-utils >= 1.6
 BuildRequires:      jta >= 1.0
 BuildRequires:      junit
 BuildRequires:      slf4j
-BuildRequires:      java-1.6.0-openjdk-devel
 BuildRequires:      java-1.5.0-gcj-devel
 BuildRequires:      jakarta-commons-logging
 
+Requires:           jta >= 1.0
+Requires:           slf4j
 Requires:               jpackage-utils
 Requires(post):         jpackage-utils
 Requires(postun):       jpackage-utils
@@ -78,8 +87,11 @@ rm README README.txt
 # fix line endings
 sed -i 's/\r//' docs/README.txt
 
+%patch0 -p1 -F3
+
 %build
-export JAVA_HOME=/usr/lib/jvm/java-1.5.0
+JAVA_HOME=/usr/lib/jvm/java-1.5.0
+
 # We need both JDK1.5 (for JDBC3.0; appointed by $JAVA_HOME) and JDK1.6 (for JDBC4.0; appointed in the build.xml)
 export CLASSPATH=$(build-classpath jdbc-stdext jta junit slf4j commons-logging.jar ant-contrib)
 
@@ -94,6 +106,7 @@ rm src/testsuite/simple/jdbc4/StatementsTest.java
 ant -DbuildDir=%{builddir} -DdistDir=%{distdir} -Dcom.mysql.jdbc.java6.rtjar=%{java6_rtpath} -Dcom.mysql.jdbc.java6.javac=%{java6_javacpath} -Dcom.mysql.jdbc.java6.java=%{java6_javapath}
 
 %install
+JAVA_HOME=/usr/lib/jvm/java-1.5.0
 
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -m 644 %{builddir}/%{name}-%{version}-SNAPSHOT/%{name}-%{version}-SNAPSHOT-bin.jar \
@@ -107,15 +120,16 @@ install -m 644 %{builddir}/%{name}-%{version}-SNAPSHOT/%{name}-%{version}-SNAPSH
 %endif
 
 # Install the Maven build information
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -pm 644 src/doc/sources/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-sed -i 's/>@.*</>%{version}</' $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 src/doc/sources/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+sed -i 's/>@.*</>%{version}</' $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 %add_to_maven_depmap mysql %{name} %{version} JPP %{name}
 
 pushd %buildroot%_javadir
 ln -s mysql-connector-java.jar mysql-connector-jdbc.jar
 popd
+
 
 %files
 %doc CHANGES COPYING docs
@@ -128,6 +142,9 @@ popd
 %_javadir/mysql-connector-jdbc.jar
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1:5.1.21-alt1_3jpp7
+- new version
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1:5.1.15-alt2_1jpp6
 - built with java 6
 
