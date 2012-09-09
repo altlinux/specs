@@ -1,44 +1,100 @@
-Name: maven-shade-plugin
-Version: 1.5
-Summary: This plugin provides the capability to package the artifact in an uber-jar
-License: ASL 2.0
-Url: http://maven.apache.org/plugins/maven-shade-plugin
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven2-plugin-shade
-Requires: ant
-Requires: java
-Requires: jdependency
-Requires: jpackage-utils
-Requires: maven
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires:  maven2-plugin-deploy
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:           maven-shade-plugin
+Version:        1.7.1
+Release:        alt1_2jpp7
+Summary:        This plugin provides the capability to package the artifact in an uber-jar
+
+Group:          Development/Java
+License:        ASL 2.0
+URL:            http://maven.apache.org/plugins/%{name}
+Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
-Group: Development/Java
-Release: alt2jpp
-Source: maven-shade-plugin-1.5-2.fc17.cpio
+
+BuildRequires: jpackage-utils
+BuildRequires: plexus-utils
+BuildRequires: ant
+BuildRequires: maven
+BuildRequires: maven-wagon
+BuildRequires: plexus-container-default
+BuildRequires: plexus-containers-component-metadata
+BuildRequires: maven-install-plugin
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-plugin-plugin
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-surefire-plugin
+BuildRequires: maven-surefire-provider-junit4
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-plugin-testing-harness
+BuildRequires: jdependency >= 0.6
+BuildRequires: xmlunit
+Requires: ant
+Requires: maven
+Requires: jpackage-utils
+Requires: jdependency >= 0.6
+
+Obsoletes: maven2-plugin-shade <= 0:2.0.8
+Provides: maven2-plugin-shade = 1:%{version}-%{release}
+Source44: import.info
 
 %description
 This plugin provides the capability to package the artifact in an
 uber-jar, including its dependencies and to shade - i.e. rename - the
 packages of some of the dependencies.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+
+%package javadoc
+Group:          Development/Java
+Summary:        API documentation for %{name}
+Requires:       jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+%{summary}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q
+
+rm src/test/jars/plexus-utils-1.4.1.jar
+ln -s $(build-classpath plexus/utils) src/test/jars/plexus-utils-1.4.1.jar
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+mvn-rpmbuild install javadoc:javadoc
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+# jars
+install -Dpm 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
+
+# poms
+install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
+# javadoc
+install -dm 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
+
+%files
+%{_javadir}/*
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
+%doc LICENSE NOTICE
 
 
-%files -f %name-list
+%files javadoc
+%{_javadocdir}/%{name}
+%doc LICENSE
 
 %changelog
+* Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.7.1-alt1_2jpp7
+- new version
+
 * Thu Apr 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2jpp
 - reverted to bootstrap pack due to regression
 
