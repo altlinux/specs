@@ -5,7 +5,7 @@
 
 Name: ftp
 Version: 0.18
-Release: alt0.pre1.1
+Release: alt0.pre1.2
 
 Summary: The standard UNIX FTP (file transfer protocol) client
 
@@ -48,6 +48,10 @@ Patch31: %rname-0.17-fedora-bitrate.patch
 Patch32: %rname-0.17-fedora-case.patch
 Patch33: %rname-0.17-fedora-chkmalloc.patch
 Patch34: %rname-0.17-fedora-fprintf.patch
+Patch35: %rname-0.17-fedora-acct_ovl.patch
+Patch36: %rname-0.17-fedora-linelen.patch
+Patch37: %rname-0.17-fedora-man.patch
+Patch38: %rname-0.17-fedora-remove-nested-include.patch
 
 # Automatically added by buildreq on Sat Dec 13 2008
 BuildRequires: libreadline-devel libtinfo-devel
@@ -91,6 +95,10 @@ file transfers.
 %patch32 -p1
 %patch33 -p1
 %patch34 -p1
+%patch35 -p1
+%patch36 -p1
+%patch37 -p1
+%patch38 -p1
 
 %build
 CFLAGS=$RPM_OPT_FLAGS BINDIR=%_bindir MANDIR=%_mandir ./configure --enable-ipv6
@@ -107,6 +115,9 @@ mkdir -p $RPM_BUILD_ROOT{%_bindir,%_mandir/man{1,5}}
 %doc README BUGS
 
 %changelog
+* Sun Sep 09 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.18-alt0.pre1.2
+- Fix build: removing nested include
+
 * Sat Dec 13 2008 Nikolay A. Fetisov <naf@altlinux.ru> 0.18-alt0.pre1.1
 - New version 0.18-pre1
 - Rivives from orphaned
