@@ -1,5 +1,5 @@
 Name: awesome
-Version: 3.4.12
+Version: 3.4.13
 Release: alt1
 Group: Graphical desktop/Other
 License: GPL2+
@@ -80,6 +80,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Sun Sep  9 2012 Terechkov Evgenii <evg@altlinux.org> 3.4.13-alt1
+- 3.4.13 (Octopus)
+
 * Sun Sep  2 2012 Terechkov Evgenii <evg@altlinux.org> 3.4.12-alt1
 - 3.4.12 (Starlight)
 
