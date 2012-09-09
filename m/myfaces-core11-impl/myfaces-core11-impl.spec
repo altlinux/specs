@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat maven2-plugin-checkstyle
 Summary:        Myfaces JSF 1.1 implementation
 Name:           myfaces-core11-impl
 Version:        1.1.5
-Release:        alt5_2jpp5
+Release:        alt6_2jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -138,14 +138,6 @@ Group:          Development/Documentation
 sed -i 's,<groupId>aspectj</groupId>,<groupId>org.aspectj</groupId>,' api/pom.xml
 
 %build
-cp %{SOURCE2} maven2-settings.xml
-
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" maven2-settings.xml
-
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 
@@ -156,13 +148,11 @@ cp %{SOURCE3} ${MAVEN_REPO_LOCAL}/JPP/maven2/default_poms/org.apache.myfaces-myf
 install -Dm644 %{SOURCE3} ${MAVEN_REPO_LOCAL}/org/apache/myfaces/maven/myfaces-master/1.0.5/myfaces-master-1.0.5.pom
 
 mvn-jpp -e \
-        -s ${M2SETTINGS} \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         -Dmaven2.jpp.depmap.file=%{SOURCE1} \
 	install:install-file -DgroupId=org.apache.myfaces.shared -DartifactId=myfaces-shared-impl -Dversion=2.0.5 -Dclassifier=sources -Dpackaging=jar -Dfile=/usr/share/java/myfaces/shared11-impl.jar
 
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-        -s ${M2SETTINGS} \
         -Dmaven.test.failure.ignore=true \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         -Dmaven2.jpp.depmap.file=%{SOURCE1} \
@@ -207,6 +197,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt6_2jpp5
+- fixed build
+
 * Sat Feb 25 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt5_2jpp5
 - fixed build
 
