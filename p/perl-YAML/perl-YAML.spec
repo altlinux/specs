@@ -1,6 +1,6 @@
 %define dist YAML
 Name: perl-%dist
-Version: 0.77
+Version: 0.84
 Release: alt1
 
 Summary: YAML Ain't Markup Language
@@ -41,6 +41,10 @@ data structures of most modern programming languages (including Perl).
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.84-alt1
+- 0.77 -> 0.84
+- fixed build with perl-5.16 (Closes: #27721)
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 0.77-alt1
 - 0.71 -> 0.77
 
