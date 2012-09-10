@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/splint gcc-c++ pkgc
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libqb
-Version:        0.14.1
+Version:        0.14.2
 Release:        alt1_1
 Summary:        An IPC library for high performance servers
 
@@ -11,8 +11,6 @@ Group:          System/Libraries
 License:        LGPLv2+
 URL:            http://www.libqb.org
 Source0:        https://fedorahosted.org/releases/q/u/quarterback/%{name}-%{version}.tar.xz
-
-Patch1:         0000-test-with-output.patch
 
 BuildRequires:  libtool doxygen procps libcheck-devel automake
 Source44: import.info
@@ -25,8 +23,6 @@ Initially these are IPC and poll.
 
 %prep
 %setup -q
-
-%patch1 -p1
 
 # work-around for broken epoll in rawhide/f17
 %build
@@ -47,7 +43,7 @@ rm -rf $RPM_BUILD_ROOT/%{_docdir}/*
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libqb = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -62,6 +58,9 @@ developing applications that use %{name}.
 %{_mandir}/man8/qb-blackbox.8.*
 
 %changelog
+* Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.14.2-alt1_1
+- update to new release by fcimport
+
 * Thu Jul 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.14.1-alt1_1
 - update to new release by fcimport
 
