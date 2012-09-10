@@ -1,16 +1,15 @@
 %define oldname paktype-tehreer-fonts
-%define fontname paktype-tehreer
-%define fontconf 67-paktype
-%define fontdir %{_datadir}/fonts/%{fontname}
+%global fontname paktype-tehreer
+%global fontconf 67-paktype
 
 Name:	fonts-ttf-paktype-tehreer
-Version:     2.0
-Release:     alt3_13
+Version:     2.1
+Release:     alt1_1
 Summary:     Fonts for Arabic from PakType
 Group:		System/Fonts/True type
 License:     GPLv2 with exceptions
 URL:		https://sourceforge.net/projects/paktype/
-Source0:     http://downloads.sourceforge.net/project/paktype/Tehreer-2.0.tar.gz
+Source0:     http://citylan.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Tehreer-2.1.tar.gz
 Source1:	%{fontconf}-tehreer.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
@@ -23,23 +22,15 @@ Arabic from the PakType by Lateef Sagar.
 
 %prep
 %setup -q -c
-rm -rf Tehreer-2.0/Project\ files/
+rm -rf Code
 # get rid of the white space (' ')
-mv Tehreer-2.0/Ready*/PakType\ Tehreer.ttf PakType_Tehreer.ttf
-mv Tehreer-2.0/License\ files/PakType\ Tehreer\ License.txt PakType_Tehreer_License.txt
+mv PakType\ Tehreer.ttf PakType_Tehreer.ttf
+mv PakType\ Tehreer\ License.txt PakType_Tehreer_License.txt
+mv PakType\ Tehreer\ Features.pdf PakType_Tehreer_Features.pdf
 
 %{__sed} -i 's/\r//' PakType_Tehreer_License.txt
+chmod a-x PakType_Tehreer.ttf PakType_Tehreer_License.txt PakType_Tehreer_Features.pdf
 
-for txt in Tehreer-2.0/Readme.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\x92//g' $txt.new
-   sed -i 's/\x93//g' $txt.new
-   sed -i 's/\x94//g' $txt.new
-   sed -i 's/\x96//g' $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
 
 %build
 echo "Nothing to do in Build."
@@ -96,9 +87,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-tehreer.conf
 %{_fontbasedir}/*/%{_fontstem}/PakType_Tehreer.ttf
 
-%doc PakType_Tehreer_License.txt Tehreer-2.0/Readme.txt
+%doc PakType_Tehreer_License.txt PakType_Tehreer_Features.pdf
 
 %changelog
+* Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_13
 - update to new release by fcimport
 
