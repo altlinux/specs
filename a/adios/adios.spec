@@ -5,21 +5,26 @@
 %define sover %somver.0.0
 
 Name: adios
-Version: 1.3.1
-Release: alt4
+Version: 1.4.0
+Release: alt1
 Summary: The Adaptable IO System (ADIOS)
 License: BSD
 Group: Sciences/Mathematics
 Url: http://www.nccs.gov/user-support/center-projects/adios/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://users.nccs.gov/~pnorbert/adios-1.3.1.tar.gz
-Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.3.1.pdf
+Source: http://users.nccs.gov/~pnorbert/adios-1.4.0.tar.gz
+Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.4.0.pdf
+Source2: https://users.nccs.gov/~lot/skel/skel-doc.pdf
+Source3: http://users.nccs.gov/~pnorbert/ADIOS-DevManual-1.4.0.pdf
 
 %add_verify_elf_skiplist %_libdir/%name/examples/C/*
 
 BuildPreReq: libmxml-devel %mpiimpl-devel libhdf5-mpi-devel
-BuildPreReq: libnetcdf-mpi-devel libmpe2-devel
+BuildPreReq: libnetcdf-mpi-devel libmpe2-devel libmxml-devel
+BuildPreReq: python-modules-xml
+
+Requires: python-module-%name = %version-%release
 
 %description
 The Adaptable IO System (ADIOS) provides a simple, flexible way for
@@ -29,6 +34,21 @@ providing an external to the code XML file describing the various
 elements, their types, and how you wish to process them this run, the
 routines in the host code (either Fortran or C) can transparently change
 how they process the data.
+
+%package -n python-module-%name
+Summary: Python module of the Adaptable IO System (ADIOS)
+Group: Development/Python
+
+%description -n python-module-%name
+The Adaptable IO System (ADIOS) provides a simple, flexible way for
+scientists to desribe the data in their code that may need to be
+written, read, or processed outside of the running simulation. By
+providing an external to the code XML file describing the various
+elements, their types, and how you wish to process them this run, the
+routines in the host code (either Fortran or C) can transparently change
+how they process the data.
+
+This package contains python module of ADIOS.
 
 %package -n lib%name
 Summary: Shared libraries of the Adaptable IO System (ADIOS)
@@ -94,7 +114,7 @@ This package contains documentation for ADIOS.
 
 %prep
 %setup
-install -p -m644 %SOURCE1 .
+install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 .
 
 %build
 mpi-selector --set %mpiimpl
@@ -102,16 +122,19 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export MPIDIR=%mpidir
 
-#autoreconf
+%autoreconf
 %add_optflags -I%mpidir/include -I%mpidir/include/netcdf-3 %optflags_shared
 %configure \
+	--sysconfdir=%_sysconfdir \
 	--enable-shared \
 	--enable-static=no \
-	--disable-fortran \
+	--enable-skel-timing \
+	--with-mxml=%prefix \
 	--with-mpi=%mpidir \
 	--with-phdf5=%mpidir \
 	--with-nc4par=%mpidir \
 	--with-nc4par-incdir=%mpidir/include/netcdf-3
+#	--disable-fortran \
 #make_build
 %make
 
@@ -130,8 +153,12 @@ rm -f $(find examples -name '*.o')
 install -d %buildroot%_libdir/%name
 cp -fR examples %buildroot%_libdir/%name/
 
+install -d %buildroot%python_sitelibdir
+mv %buildroot%_libdir/python/*.py %buildroot%python_sitelibdir/
+
 mkdir -p %buildroot%_libdir/tmp
 pushd %buildroot%_libdir
+rm -f *_nompi*.a
 LIBS="$(ls *.a)"
 pushd tmp
 for i in $LIBS; do
@@ -147,15 +174,20 @@ popd
 popd
 rmdir %buildroot%_libdir/tmp
 
-rm -f %buildroot%_libdir/*_nompi.so*
+#rm -f %buildroot%_libdir/*_nompi.so*
 
 %files
 %doc AUTHORS COPYING ChangeLog KNOWN_BUGS NEWS README TODO
+%_sysconfdir/*
 %_bindir/*
 %exclude %_bindir/adios_config
 
 %files -n lib%name
 %_libdir/*.so.*
+
+%files -n python-module-%name
+%python_sitelibdir/*
+%exclude %python_sitelibdir/argparse.py*
 
 %files -n lib%name-devel
 %_bindir/adios_config
@@ -170,6 +202,9 @@ rm -f %buildroot%_libdir/*_nompi.so*
 %doc *.pdf
 
 %changelog
+* Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
+- Version 1.4.0
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt4
 - Rebuilt with OpenMPI 1.6
 
