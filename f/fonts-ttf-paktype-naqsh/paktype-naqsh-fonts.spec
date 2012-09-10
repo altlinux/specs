@@ -1,17 +1,16 @@
 %define oldname paktype-naqsh-fonts
-%define fontname paktype-naqsh
-%define fontconf 67-paktype
-%define fontdir %{_datadir}/fonts/%{fontname}
+%global fontname paktype-naqsh
+%global fontconf 67-paktype
 
 Name:	fonts-ttf-paktype-naqsh
-Version:     3.0
-Release:     alt3_7
+Version:     3.1
+Release:     alt1_1
 Summary:     Fonts for Arabic from PakType
 
 Group:	System/Fonts/True type
 License:     GPLv2 with exceptions
 URL:	https://sourceforge.net/projects/paktype/
-Source0:     http://downloads.sourceforge.net/project/paktype/Naqsh-3.0.tar.gz
+Source0:    http://nchc.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Naqsh-3.1.tar.gz
 Source1:	%{fontconf}-naqsh.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
@@ -25,23 +24,14 @@ Arabic from the PakType by Lateef Sagar.
 
 %prep
 %setup -q -c
-rm -rf Naqsh-3.0/Project\ files/
+rm -rf Code
 # get rid of the white space (' ')
-mv Naqsh-3.0/Ready*/PakType\ Naqsh.ttf PakType_Naqsh.ttf
-mv Naqsh-3.0/License\ files/PakType\ Naqsh\ License.txt PakType_Naqsh_License.txt
+mv PakType\ Naqsh.ttf PakType_Naqsh.ttf
+mv PakType\ Naqsh\ License.txt PakType_Naqsh_License.txt
+mv PakType\ Naqsh\ Features.pdf PakType_Naqsh_Features.pdf
 
 %{__sed} -i 's/\r//' PakType_Naqsh_License.txt
-
-for txt in Naqsh-3.0/Readme.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\x92//g' $txt.new
-   sed -i 's/\x93//g' $txt.new
-   sed -i 's/\x94//g' $txt.new
-   sed -i 's/\x96//g' $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
+chmod a-x PakType_Naqsh.ttf PakType_Naqsh_License.txt PakType_Naqsh_Features.pdf
 
 %build
 echo "Nothing to do in Build."
@@ -93,14 +83,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}-naqsh.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-naqsh.conf
 %{_fontbasedir}/*/%{_fontstem}/PakType_Naqsh.ttf
 
-%doc PakType_Naqsh_License.txt Naqsh-3.0/Readme.txt
+%doc PakType_Naqsh_License.txt PakType_Naqsh_Features.pdf 
 
 %changelog
+* Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.0-alt3_7
 - update to new release by fcimport
 
