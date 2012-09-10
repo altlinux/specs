@@ -1,24 +1,23 @@
-%define m_distro Test-Block
-Name: perl-Test-Block
-Version: 0.11
+%define dist Test-Block
+Name: perl-%dist
+Version: 0.13
 Release: alt1
+
 Summary: Test::Block - Specify fine granularity test plans
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
-
 Group: Development/Perl
 License: Perl
-Url: http://search.cpan.org/~adie/Test-Block/
+
+Url: %CPAN %dist
+Source: %dist-%version.tar
 
 BuildArch: noarch
-Source: %m_distro-%version.tar
 BuildRequires: perl-devel perl-pod perl-Module-Build perl-Test-Exception
 
 %description
 %summary
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %dist-%version
 
 %build
 %perl_vendor_build
@@ -28,8 +27,11 @@ BuildRequires: perl-devel perl-pod perl-Module-Build perl-Test-Exception
 
 %files
 %perl_vendor_privlib/Test/Block*
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.13-alt1
+- 0.11 -> 0.13
+
 * Tue Aug 24 2010 Vladimir Lettiev <crux@altlinux.ru> 0.11-alt1
 - initial build
