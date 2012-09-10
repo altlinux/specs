@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.9.1
-Release: alt6
+Version: 4.9.4
+Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -201,6 +201,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 %endif
 
 %changelog
+* Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.4-alt1
+- Version 4.9.4
+
 * Sat Jun 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.1-alt6
 - Added PyQt4.QtCore, PyQt4.QtGui and PyQt4.QtNetwork symbols into
   PyQt4.Qt (ALT #27424)
