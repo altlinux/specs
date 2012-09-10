@@ -1,6 +1,6 @@
 Name:		boinc
 Version:	7.0.31
-Release:	alt2
+Release:	alt3
 Packager:	Paul Wolneykien <manowar@altlinux.ru>
 License:	GPLv3+/LGPLv3+
 Group:		Sciences/Other
@@ -521,6 +521,9 @@ getent group boincadm >/dev/null || groupadd -r boincadm
 %{_libdir}/libsched.so
 
 %changelog
+* Mon Sep 10 2012 Paul Wolneykien <manowar@altlinux.ru> 7.0.31-alt3
+- Fix/improve the version comparison proc.
+
 * Sun Jul 15 2012 Paul Wolneykien <manowar@altlinux.ru> 7.0.31-alt2
 - Install the remote host ACL template into the BOINC home directory.
 - Do not install the configuration files into the /etc/boinc.
