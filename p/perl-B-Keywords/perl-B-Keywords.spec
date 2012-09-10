@@ -1,11 +1,11 @@
 ## SPEC file for Perl module B::Keywords
 
-%define version    1.10
+%define version    1.12
 %define release    alt1
 
 Name: perl-B-Keywords
 Version: %version
-Release: alt1.1
+Release: %release
 
 Summary: Perl module with lists of reserved barewords and symbol names
 
@@ -45,6 +45,9 @@ non-function keywords (like __DATA__, NULL) to the @Functions array.
 %perl_vendor_privlib/B/Keywords*
 
 %changelog
+* Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 1.12-alt1
+- 1.10 -> 1.12
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
