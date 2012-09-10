@@ -1,18 +1,21 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(check)
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
+%global gnulib_ver 20111211-stable
+
 Summary: A pipeline manipulation library
 Name: libpipeline
 Version: 1.2.1
-Release: alt1_1
+Release: alt1_2
 License: GPLv3+
 Group: Development/C
 URL: http://libpipeline.nongnu.org/
-Source0: http://download.savannah.gnu.org/releases/libpipeline/%{name}-%{version}.tar.gz
-Patch0: libpipeline-1.2.1-gnulib.patch
-BuildRequires: libtool
-Provides: bundled(gnulib)
+Source: http://download.savannah.gnu.org/releases/libpipeline/libpipeline-%{version}.tar.gz
+
+Patch: libpipeline-1.2.1-gnulib.patch
+
+BuildRequires: libtool libcheck-devel
+
+# FPC exception for gnulib - copylib - https://fedorahosted.org/fpc/ticket/174
+Provides: bundled(gnulib) = %{gnulib_ver}
 Source44: import.info
 
 %description
@@ -25,7 +28,7 @@ and execve(2).
 %package devel
 Summary: Header files and libraries for pipeline manipulation library
 Group: Development/C
-Requires: libpipeline = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 libpipeline-devel contains the header files and libraries needed
@@ -33,15 +36,17 @@ to develop programs that use libpipeline library.
 
 %prep
 %setup -q
-%patch0 -p1 -b .gnulibpatch
+%patch -p1 -b .gnulibpatch
 
 %build
-./configure --libdir=%{_libdir}
+%{configure}
 make %{?_smp_mflags}
 
+%check
+make check
+
 %install
-make install DESTDIR=$RPM_BUILD_ROOT prefix=%{_prefix} \
-             INSTALL='install -p'
+make install DESTDIR=$RPM_BUILD_ROOT prefix=%{_prefix} INSTALL='install -p'
 rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 
 %files
@@ -50,11 +55,14 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 
 %files devel
 %{_libdir}/libpipeline.so
+%{_libdir}/pkgconfig/libpipeline.pc
 %{_includedir}/*.h
 %{_mandir}/man3/*
-%{_libdir}/pkgconfig/libpipeline.pc
 
 %changelog
+* Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_2
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_1
 - update to new release by fcimport
 
