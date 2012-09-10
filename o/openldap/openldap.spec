@@ -18,7 +18,7 @@
 
 Name: openldap
 Version: %_sover.31
-Release: alt6
+Release: alt7
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -587,7 +587,7 @@ rm -f /var/lib/ldap/%_lib/*.so*
 
 
 %files -n libldap
-/%_lib/*
+/%_lib/*.so.*
 %_libdir/*.so.*
 
 %files -n libldap-devel
@@ -697,6 +697,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 2.4.31-alt7
+- fix files for libldap on i586 (ALT #27713)
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.4.31-alt6
 - rebuilt for perl-5.16
 
