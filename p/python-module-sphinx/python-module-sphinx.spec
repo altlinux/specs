@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -100,7 +100,7 @@ This packages contains tests for Sphinx.
 Summary: RPM macros for build with Sphinx (Python 3)
 Group: Development/Python3
 Requires: rpm-build-python3 python3-module-objects.inv
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %epoch:%version-%release
 
 %description -n rpm-macros-%{oname}3
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -129,7 +129,7 @@ This package destinated for development of Python modules.
 Summary: RPM macros for build with Sphinx
 Group: Development/Python
 Requires: rpm-build-python python-module-objects.inv
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 
 %description -n rpm-macros-%oname
 Sphinx is a tool that makes it easy to create intelligent and beautiful
@@ -360,6 +360,9 @@ popd
 %endif
 
 %changelog
+* Mon Sep 10 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.1.3-alt3
+- Fixed rpm-macros-sphinx* interpackage requirements.
+
 * Mon Apr 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.3-alt2
 - Added python3-module-jinja2-tests in requirements for
   python3-module-sphinx-devel
