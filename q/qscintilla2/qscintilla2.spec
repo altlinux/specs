@@ -5,8 +5,8 @@
 
 Summary: QScintilla is a port to Qt of Neil Hodgson's Scintilla C++ editor class
 Name: qscintilla2
-Version: 2.6.1
-Release: alt2
+Version: 2.6.2
+Release: alt1
 License: GPL
 Group: Development/KDE and QT
 Source: qscintilla-gpl-%version.tar.gz
@@ -193,6 +193,7 @@ Documentation for %name
 %prep
 %setup -n QScintilla-gpl-%version
 %patch0 -p2
+ln -s Qt4Qt5 Qt4
 cp -a Python Python-qt4
 %if_with python3
 cp -fR Python-qt4 ../python3
@@ -227,7 +228,7 @@ popd
 %endif
 
 # Qt4
-pushd Qt4
+pushd Qt4Qt5
 qmake-qt4 QMAKE_CFLAGS_RELEASE="%optflags" \
 	QMAKE_CXXFLAGS_RELEASE="%optflags" qscintilla.pro
 forDebug
@@ -254,11 +255,11 @@ sed -i "s:$STR:$STR,-rpath,%_qt3dir/lib:g" Makefile
 popd
 %endif
 
-cp -fR Qt4 ../
+cp -fR Qt4Qt5 ../
 
 # Python bindings for PyQt4
 pushd Python-qt4
-python configure.py --debug -p 4 -n ../Qt4 -o ../Qt4
+python configure.py --debug -p 4 -n ../Qt4Qt5 -o ../Qt4Qt5
 %make_build
 popd
 
@@ -267,7 +268,7 @@ pushd ../python3
 python3 configure.py \
 	--apidir=%_datadir/qt4/qsci3 \
 	--sipdir=%_datadir/sip3/PyQt4 \
-	--debug -p 4 -n ../Qt4 -o ../Qt4
+	--debug -p 4 -n ../Qt4Qt5 -o ../Qt4Qt5
 sed -i \
 	's|-lpython%_python3_version|-lpython%{_python3_version}mu|g' \
 	Makefile
@@ -320,8 +321,8 @@ popd
 %endif
 
 # Qt4 library
-install Qt4/lib%name.so.*.*.* %buildroot%_libdir
-install Qt4/*.qm %buildroot%_qt4dir/translations
+install Qt4Qt5/lib%name.so.*.*.* %buildroot%_libdir
+install Qt4Qt5/*.qm %buildroot%_qt4dir/translations
 pushd %buildroot%_libdir
 ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]$//`
 ln -s lib%name.so.*.*.* `ls lib%name.so.*.*.* | sed s/\.[0-9]\.[0-9]$//`
@@ -348,14 +349,14 @@ install -m644 Qt3/Qsci/*.h %buildroot%_qt3dir/include/Qsci
 %endif
 
 # Qt4 headers
-install -m644 Qt4/*.h %buildroot%_includedir/qt4
-install -m644 Qt4/Qsci/*.h %buildroot%_includedir/qt4/Qsci
+install -m644 Qt4Qt5/*.h %buildroot%_includedir/qt4
+install -m644 Qt4Qt5/Qsci/*.h %buildroot%_includedir/qt4/Qsci
 
 # docs
 mkdir -p %buildroot%_docdir/%libname-%version
 cp -a doc/Scintilla %buildroot%_docdir/%libname-%version
 cp -a doc/html-Qt3 %buildroot%_docdir/%libname-%version
-cp -a doc/html-Qt4 %buildroot%_docdir/%libname-%version
+cp -a doc/html-Qt4Qt5 %buildroot%_docdir/%libname-%version
 
 %if_with qt3
 %files -n %libname-qt3
@@ -421,6 +422,9 @@ cp -a doc/html-Qt4 %buildroot%_docdir/%libname-%version
 %_docdir/%libname-%version
 
 %changelog
+* Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt1
+- Version 2.6.2
+
 * Tue May 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.1-alt2
 - Added module for Python 3
 
