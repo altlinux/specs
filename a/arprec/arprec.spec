@@ -2,7 +2,7 @@
 %define sover %somver.2.14
 Name: arprec
 Version: 2.2.14
-Release: alt1
+Release: alt2
 Summary: C++/Fortran-90 arbitrary precision package
 License: BSD
 Group: Sciences/Mathematics
@@ -205,6 +205,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %_bindir/math*
 
 %changelog
+* Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.14-alt2
+- Rebuilt with QD 2.3.13
+
 * Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.14-alt1
 - Version 2.2.14
 
