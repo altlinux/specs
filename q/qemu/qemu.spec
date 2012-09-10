@@ -123,8 +123,8 @@
 # }}}
 
 Name: qemu
-Version: 1.1.0
-Release: alt5
+Version: 1.2.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -168,7 +168,7 @@ BuildRequires: ipxe-roms-qemu vgabios seabios
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.3.4}
 %{?_enable_opengl:BuildRequires: libGL-devel libX11-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel python-base}
-%{?_enable_libiscsi:BuildRequires: libiscsi-devel}
+%{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.3.0}
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -346,6 +346,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	%{?_enable_smartcard_nss:--enable-smartcard-nss} \
 	%{?_enable_usb_redir:--enable-usb-redir} \
 	%{subst_enable opengl} \
+	%{subst_enable libiscsi} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
 	--enable-guest-base \
 	--enable-pie
@@ -482,6 +483,7 @@ fi
 %_bindir/qemu-img
 %_bindir/qemu-io
 %_bindir/qemu-nbd
+%_bindir/vscclient
 %_bindir/virtfs-proxy-helper
 %_man1dir/virtfs-proxy-helper.*
 %_libexecdir/qemu-bridge-helper
@@ -495,6 +497,9 @@ fi
 %_defaultdocdir/%name-%version
 
 %changelog
+* Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
 * Thu Aug 30 2012 Dmitry V. Levin <ldv@altlinux.org> 1.1.0-alt5
 - Use upstreamed version of the getdents emulation fix,
   to ease further merges.

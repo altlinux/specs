@@ -27,8 +27,8 @@
 %define audio_card_list ac97 es1370 sb16 adlib cs4231a gus hda
 
 Name: qemu-kvm
-Version: 1.1.1
-Release: alt2
+Version: 1.2.0
+Release: alt1
 Summary: Kernel Virtual Machine virtualization environment
 Group: Emulators
 License: %gpl2plus
@@ -61,7 +61,7 @@ BuildRequires: zlib-devel libcurl-devel libpci-devel libattr-devel libcap-devel 
 %{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.3.4}
 %{?_enable_opengl:BuildRequires: libGL-devel libX11-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel python-base}
-%{?_enable_libiscsi:BuildRequires: libiscsi-devel}
+%{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.3.0}
 
 %description
 The Kernel Virtual Machine provides a virtualization enviroment for
@@ -97,6 +97,7 @@ export CFLAGS="%optflags"
     %{?_enable_smartcard_nss:--enable-smartcard-nss} \
     %{?_enable_usb_redir:--enable-usb-redir} \
     %{?_disable_guest_agent:--disable-guest-agent} \
+    %{subst_enable libiscsi} \
     --audio-drv-list="%audio_drv_list" \
     --audio-card-list="%audio_card_list" \
     --enable-mixemu
@@ -120,6 +121,7 @@ ln -s %_bindir/qemu-kvm %buildroot%_bindir/kvm
 # cleanup - use from qemu-common and qemu-img packages
 rm -rf %buildroot%_datadir/qemu/* %buildroot%_sysconfdir
 rm -f %buildroot%_bindir/qemu-{img,io,nbd}
+rm -f %buildroot%_bindir/vscclient
 rm -f %buildroot%_bindir/virtfs-proxy-helper
 rm -rf %buildroot/usr/libexec
 
@@ -142,6 +144,9 @@ printf '%_bindir/qemu-system-x86_64\t%_bindir/qemu-kvm-system-x86_64\t100\n' >./
 # %_datadir/qemu/*.bin
 
 %changelog
+* Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
+- 1.2.0
+
 * Wed Jul 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.1-alt2
 - add check section
 

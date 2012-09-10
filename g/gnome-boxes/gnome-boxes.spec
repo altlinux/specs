@@ -1,7 +1,7 @@
 
 Name: gnome-boxes
 Version: 3.4.3
-Release: alt1
+Release: alt1.1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Group: Emulators
@@ -78,6 +78,9 @@ gnome-boxes lets you easily create, setup, access, and use:
 %_iconsdir/hicolor/*/apps/gnome-boxes.*
 
 %changelog
+* Tue Sep 11 2012 Alexey Shabalin <shaba@altlinux.ru> 3.4.3-alt1.1
+- rebuild with new libspice-client-glib-2.0.so.1, libspice-client-gtk-3.0.so.1
+
 * Thu Jun 14 2012 Alexey Shabalin <shaba@altlinux.ru> 3.4.3-alt1
 - 3.4.3
 
