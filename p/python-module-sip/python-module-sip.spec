@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 4.13.2
-Release: alt3
+Version: 4.13.3
+Release: alt1
 Summary: Python bindings generator for C++ class libraries
 License: PSF
 Group: Development/Python
@@ -125,6 +125,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.13.3-alt1
+- Version 4.13.3
+
 * Mon May 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.13.2-alt3
 - Fixed config for python3-module-sip
 
