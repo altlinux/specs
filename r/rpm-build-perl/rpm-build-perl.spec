@@ -1,5 +1,5 @@
 Name: rpm-build-perl
-Version: 0.80
+Version: 0.81
 Release: alt1
 
 Summary: RPM helper scripts to calculate Perl dependencies
@@ -51,6 +51,9 @@ cp -p macros.env %buildroot/etc/rpm/macros.d/perl5.env
 %config /etc/rpm/macros.d/perl5.env
 
 %changelog
+* Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.81-alt1
+- updated test suite for perl-5.16
+
 * Sat Nov 19 2011 Alexey Tourbin <at@altlinux.ru> 0.80-alt1
 - B/PerlReq.pm: IO::File->new(\$var, ...) requires PerlIO::scalar
 
