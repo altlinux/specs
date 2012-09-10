@@ -1,7 +1,7 @@
 %define dist Eval-Closure
 Name: perl-%dist
-Version: 0.06
-Release: alt2
+Version: 0.08
+Release: alt1
 
 Summary: Safely and cleanly create closures via string eval
 License: GPL or Artistic
@@ -45,6 +45,10 @@ if caching is to work properly).
 %perl_vendor_privlib/Eval
 
 %changelog
+* Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.08-alt1
+- 0.06 -> 0.08
+- fixed build with perl-5.16
+
 * Fri Nov 18 2011 Alexey Tourbin <at@altlinux.ru> 0.06-alt2
 - rebuilt to disable dependency on Perl::Tidy
 
