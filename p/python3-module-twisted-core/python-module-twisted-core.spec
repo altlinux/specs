@@ -3,8 +3,8 @@
 
 %define prefx python3-module-twisted
 Name: %prefx-core
-Version: 11.1.0
-Release: alt1.hg20120216
+Version: 12.1.0
+Release: alt1.hg20120710
 Summary: An asynchronous networking framework written in Python 3
 
 Group: Development/Python3
@@ -516,6 +516,9 @@ touch %buildroot%python3_sitelibdir/twisted/trial/__init__.py
 %exclude %python3_sitelibdir/twisted/pair/test
 
 %changelog
+* Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 12.1.0-alt1.hg20120710
+- Version 12.1.0
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.1.0-alt1.hg20120216
 - Built for Python 3
 
