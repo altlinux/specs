@@ -4,14 +4,14 @@
 %define fontdir %{_datadir}/fonts/%{fontname}
 
 Name:	fonts-ttf-paktype-ajrak
-Version:     2.0
-Release:     alt3_7
+Version:     2.1
+Release:     alt1_1
 Summary:     Fonts for Arabic from PakType
 
 Group:	System/Fonts/True type
 License:     GPLv2 with exceptions
 URL:	https://sourceforge.net/projects/paktype/
-Source0:     http://downloads.sourceforge.net/project/paktype/Ajrak-2.0.tar.gz
+Source0:     http://nchc.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Ajrak-2.1.tar.gz
 Source1:	%{fontconf}-ajrak.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
@@ -23,23 +23,14 @@ Arabic from the PakType by Lateef Sagar.
 
 %prep
 %setup -q -c
-rm -rf Ajrak-2.0/Project\ files/
+rm -rf Code
 # get rid of the white space (' ')
-mv Ajrak-2.0/Ready*/PakType\ Ajrak.ttf PakType_Ajrak.ttf
-mv Ajrak-2.0/License\ file/PakType\ Ajrak\ License.txt PakType_Ajrak_License.txt
+mv PakType\ Ajrak.ttf PakType_Ajrak.ttf
+mv PakType\ Ajrak\ License.txt PakType_Ajrak_License.txt
+mv PakType\ Ajrak\ Features.pdf PakType_Ajrak_Features.pdf
+chmod a-x PakType_Ajrak.ttf PakType_Ajrak_License.txt PakType_Ajrak_Features.pdf
 
 %{__sed} -i 's/\r//' PakType_Ajrak_License.txt
-
-for txt in Ajrak-2.0/Readme.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\x92//g' $txt.new
-   sed -i 's/\x93//g' $txt.new
-   sed -i 's/\x94//g' $txt.new
-   sed -i 's/\x96//g' $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
 
 %build
 echo "Nothing to do in Build."
@@ -96,10 +87,13 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-ajrak.conf
 %{_fontbasedir}/*/%{_fontstem}/PakType_Ajrak.ttf
 
-%doc PakType_Ajrak_License.txt Ajrak-2.0/Readme.txt
+%doc PakType_Ajrak_License.txt PakType_Ajrak_Features.pdf
 
 
 %changelog
+* Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_7
 - update to new release by fcimport
 
