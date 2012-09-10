@@ -1,7 +1,7 @@
 %define dist Class-Inspector
 Name: perl-%dist
-Version: 1.25
-Release: alt2
+Version: 1.27
+Release: alt1
 
 Summary: Get information about a class and its structure
 License: GPL or Artistic
@@ -37,6 +37,9 @@ information.
 %perl_vendor_privlib/Class
 
 %changelog
+* Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 1.27-alt1
+- 1.25 -> 1.27
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.25-alt2
 - disabled build dependency on perl-Module-Install
 
