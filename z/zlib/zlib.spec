@@ -1,6 +1,6 @@
 Name: zlib
-Version: 1.2.5
-Release: alt3
+Version: 1.2.7
+Release: alt1
 
 Summary: The zlib compression and decompression library
 Summary(ru_RU.UTF-8): Библиотека сжатия данных zlib
@@ -64,11 +64,10 @@ that use the minizip zip file manipulation library.
 
 %prep
 %setup -n %name-%version-%release
-sed -i 's/@PACKAGE_VERSION@/%version/' contrib/minizip/configure.ac
 
 fgrep -B999 @ zlib.h >License
-bzip2 -9k FAQ doc/algorithm.txt
-iconv -fcp1252 -tutf8 < ChangeLog | bzip2 -9 > ChangeLog.bz2
+xz -9k FAQ doc/algorithm.txt
+iconv -fcp1252 -tutf8 < ChangeLog | xz -9 > ChangeLog.xz
 
 %build
 %define _optlevel 3
@@ -93,7 +92,7 @@ CFLAGS="%optflags" ./configure --prefix=%prefix --libdir=%_libdir
 pushd contrib/minizip
 mkdir m4
 %autoreconf
-%configure
+%configure --disable-static
 %make_build
 popd
 
@@ -111,8 +110,8 @@ mv %buildroot%_libdir/libz.so.* %buildroot/%_lib/
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
-install -pm644 License README {FAQ,ChangeLog,doc/algorithm.txt}.bz2 example.c minigzip.c \
-	%buildroot%docdir/
+install -pm644 License README {FAQ,ChangeLog,doc/algorithm.txt}.xz \
+	test/example.c test/minigzip.c %buildroot%docdir/
 cp -a examples %buildroot%docdir/
 
 %check
@@ -145,6 +144,9 @@ make test
 %_pkgconfigdir/minizip.pc
 
 %changelog
+* Mon Sep 10 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.7-alt1
+- Updated to v1.2.7.
+
 * Tue Jul 19 2011 Dmitry V. Levin <ldv@altlinux.org> 1.2.5-alt3
 - Packaged libminizip (closes: #25866).
 
