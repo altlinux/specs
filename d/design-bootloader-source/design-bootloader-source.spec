@@ -2,7 +2,7 @@
 
 Name: %base_name-source
 Version: 6.0
-Release: alt4
+Release: alt5
 
 Group: Graphics
 Summary: Graphical boot logo sources
@@ -32,6 +32,10 @@ cp -a * %buildroot/usr/src/%base_name-source
 /usr/src/%base_name-source
 
 %changelog
+* Mon Sep 10 2012 Andrey Cherepanov <cas@altlinux.org> 6.0-alt5
+- Language item should be in English because it's one way to change
+  language for English-speaking people
+
 * Mon Feb 13 2012 Andriy Stepanov <stanv@altlinux.ru> 6.0-alt4
 - Addedd altlinux entry
 
