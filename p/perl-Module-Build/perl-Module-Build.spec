@@ -1,6 +1,6 @@
 %define dist Module-Build
 Name: perl-%dist
-Version: 0.3800
+Version: 0.4003
 Release: alt1
 
 Summary: Build and install Perl modules
@@ -46,6 +46,10 @@ bzip2 -k Changes
 	%perl_vendor_privlib/Module/Build/Platform/Unix.pm
 
 %changelog
+* Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.4003-alt1
+- 0.3800 -> 0.4003
+- fixed build with perl-5.16
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.3800-alt1
 - 0.36_04 -> 0.3800
 
