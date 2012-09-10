@@ -35,12 +35,12 @@ Requires: maven2-plugin-source
 Requires: maven2-plugin-verifier
 Requires: maven2-plugin-war
 
-Requires: saxon-scripts
+#Requires: saxon-scripts
 Requires: maven-scm
 
 Name:           maven2-plugins
 Version:        2.0.7
-Release:        alt7
+Release:        alt8
 Summary:        convenience package for the default set of maven2 plugins
 
 Group:          Development/Java
@@ -63,6 +63,9 @@ install -dm 755 $RPM_BUILD_ROOT%{_bindir}
 %files
 
 %changelog
+* Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt8
+- removed saxon-scripts dependency
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.7-alt7
 - added dependency on /usr/bin/mvn-jpp
 
