@@ -1,6 +1,6 @@
 Name: tintin++
 Version: 2.00.8
-Release: alt1
+Release: alt2
 Summary: Console MUD client
 License: GPLv2
 Group: Games/Other
@@ -41,9 +41,10 @@ cd src
 
 %install
 %define docdir %_docdir/%name-%version
+
 mkdir -p %buildroot%_bindir
-mkdir -p %buildroot/%docdir
-ls
+mkdir -p %buildroot%docdir
+
 install -pm755 src/tt++ %buildroot/%_bindir/
 
 install -pm644 docs/* %buildroot%docdir/
@@ -56,9 +57,13 @@ install -pm644 TODO %buildroot%docdir/
 
 %files
 %_bindir/tt++
-%doc *
+%dir %docdir
+%docdir/*
 
 %changelog
+* Mon Sep 10 2012 Andrey Bergman <vkni@altlinux.org> 2.00.8-alt2
+- Corrected spec error (removed unnecessary directories from doc)
+
 * Sat Feb 25 2012 Andrey Bergman <vkni@altlinux.org> 2.00.8-alt1
 - Update to a new version.
 
