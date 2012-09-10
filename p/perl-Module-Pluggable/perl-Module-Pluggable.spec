@@ -1,7 +1,7 @@
 %define dist Module-Pluggable
 Name: perl-%dist
-Version: 3.9
-Release: alt2
+Version: 4.3
+Release: alt1
 
 Summary: Automatically give your module the ability to have plugins
 License: GPL or Artistic
@@ -13,7 +13,7 @@ Source: %dist-%version.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 26 2011
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl-Module-Build
 
 %description
 Provides a simple but, hopefully, extensible way of having 'plugins'
@@ -21,9 +21,6 @@ for your module.
 
 %prep
 %setup -n %dist-%version
-
-# disable archlib hack
-sed -i- '/INST_LIB/d' Makefile.PL
 
 %build
 %perl_vendor_build
@@ -37,6 +34,9 @@ sed -i- '/INST_LIB/d' Makefile.PL
 %perl_vendor_privlib/Devel
 
 %changelog
+* Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 4.3-alt1
+- 3.9 -> 4.3
+
 * Wed Oct 26 2011 Alexey Tourbin <at@altlinux.ru> 3.9-alt2
 - noarch
 
