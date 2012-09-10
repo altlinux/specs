@@ -1,6 +1,6 @@
 Summary: A printer administration tool
 Name: system-config-printer
-Version: 1.3.9
+Version: 1.3.11
 Release: alt1
 License: GPLv2+
 Url: http://cyberelk.net/tim/software/system-config-printer/
@@ -8,25 +8,13 @@ Group: System/Configuration/Printing
 
 Source: system-config-printer-%version.tar
 
-Patch2: system-config-printer-typo.patch
-Patch3: system-config-printer-driver-pre-selection.patch
-Patch4: system-config-printer-foomatic-recommended.patch
-Patch5: system-config-printer-jobviewer-exit.patch
-Patch6: system-config-printer-npinit-traceback.patch
-Patch7: system-config-printer-notification-timeouts.patch
-Patch8: system-config-printer-select-nonexistent-printer.patch
-Patch9: system-config-printer-ink-levels.patch
-Patch10: system-config-printer-auth-no-pw.patch
-Patch11: system-config-printer-copy-crash.patch
-Patch12: system-config-printer-1.3.7-alt-udev-185.patch
-
 BuildRequires: python-devel
 BuildRequires: desktop-file-utils
 BuildRequires: gettext-devel
 BuildRequires: cups-devel
 BuildRequires: glib2-devel
 BuildRequires: intltool
-BuildRequires: libusb-compat-devel, libudev-devel
+BuildRequires: libusb-devel, libudev-devel
 BuildRequires: xmlto
 
 %py_requires gtk.glade
@@ -57,7 +45,6 @@ Python module to configure a CUPS print server
 
 %prep
 %setup -q
-%patch12 -p1
 
 %build
 ./bootstrap
@@ -99,6 +86,9 @@ exit 0
 %python_sitelibdir_noarch/cupshelpers-*
 
 %changelog
+* Mon Sep 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.3.11-alt1
+- 1.3.11
+
 * Thu Jul 19 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.9-alt1
 - 1.3.9 (ALT #25875)
 - fix '&mdash' in ru.po (ALT #26123)
