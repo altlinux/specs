@@ -1,8 +1,8 @@
 %define somver 2
-%define sover %somver.2.6
+%define sover %somver.2.14
 Name: arprec
-Version: 2.2.8
-Release: alt4
+Version: 2.2.14
+Release: alt1
 Summary: C++/Fortran-90 arbitrary precision package
 License: BSD
 Group: Sciences/Mathematics
@@ -73,28 +73,6 @@ encouraged to use this package, rather than MPFUN90 or MPFUN77 (see below).
 
 This package contains development files of ARPREC.
 
-%package -n lib%name-devel-static
-Summary: Static libraries of ARPREC
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Conflicts: lib%name-devel < %version-%release
-
-%description -n lib%name-devel-static
-This package supports a flexible, arbitrarily high level of numeric precision --
-the equivalent of hundreds or even thousands of decimal digits (up to
-approximately ten million digits if needed). Special routines are provided for
-extra-high precision (above 1000 digits). The entire library is written in C++.
-High-precision real, integer and complex datatypes are supported. Both C++ and
-Fortran-90 translation modules modules are also provided that permit one to
-convert an existing C++ or Fortran-90 program to use the library with only minor
-changes to the source code. In most cases only the type statements and (in the
-case of Fortran-90 programs) read/write statements need be changed. Six
-implementations of PSLQ (one-, two- and three-level, regular and multi-pair) are
-included, as well as three high-precision quadrature programs. New users are
-encouraged to use this package, rather than MPFUN90 or MPFUN77 (see below).
-
-This package contains static libraries of ARPREC.
-
 %package -n lib%name-devel-doc
 Summary: Documentation for ARPREC
 Group: Development/Documentation
@@ -150,7 +128,12 @@ integration (Gaussian, error function or tanh-sinh), and summation of series.
 %build
 %add_optflags %optflags_shared
 %autoreconf
-%configure --enable-qd --enable-fortran --enable-debug
+%configure \
+	--enable-shared \
+	--enable-static=no \
+	--enable-qd \
+	--enable-fortran \
+	--enable-debug
 %make_build
 #make check
 %make cpp-demo fortran-demo toolkit
@@ -158,38 +141,39 @@ integration (Gaussian, error function or tanh-sinh), and summation of series.
 %install
 %makeinstall_std
 
-pushd tests
+pushd tests/.libs
 for i in $(ls pslq?); do
 	mv $i cpp$i
 done
 popd
 install -m755 \
-	fortran/pslq? fortran/pslqm? fortran/quaderf fortran/quad?s fortran/roots \
-	tests/mp_ex tests/mp_timer tests/mpslq?  tests/quads \
-	tests/cpppslq? toolkit/math???? \
+	fortran/.libs/pslq? fortran/.libs/pslqm? fortran/.libs/quaderf \
+	fortran/.libs/quad?s fortran/.libs/roots tests/.libs/mp_ex \
+	tests/.libs/mp_timer tests/.libs/mpslq? tests/.libs/quads \
+	tests/.libs/cpppslq? toolkit/.libs/math???? \
 	%buildroot%_bindir
 
 # shared libraries
 
-pushd %buildroot%_libdir
-mkdir tmp
-pushd tmp
-for i in libarprec libarprec_f_main libarprecmod; do
-	if [ "$i" != "libarprec" ]; then
-		ADDLIB="-L.. -larprec"
-	else
-		ADDLIB=
-	fi
-	ar x ../$i.a
-	f77 -shared *.o $ADDLIB -lqd_f_main -lstdc++ -lc \
-		-Wl,-soname,$i.so.%somver -o ../$i.so.%sover
-	ln -s $i.so.%sover ../$i.so.%somver
-	ln -s $i.so.%somver ../$i.so
-	rm -f *
-done
-popd
-rmdir tmp
-popd
+#pushd %buildroot%_libdir
+#mkdir tmp
+#pushd tmp
+#for i in libarprec libarprec_f_main libarprecmod; do
+#	if [ "$i" != "libarprec" ]; then
+#		ADDLIB="-L.. -larprec"
+#	else
+#		ADDLIB=
+#	fi
+#	ar x ../$i.a
+#	f77 -shared *.o $ADDLIB -lqd_f_main -lstdc++ -lc \
+#		-Wl,-soname,$i.so.%somver -o ../$i.so.%sover
+#	ln -s $i.so.%sover ../$i.so.%somver
+#	ln -s $i.so.%somver ../$i.so
+#	rm -f *
+#done
+#popd
+#rmdir tmp
+#popd
 
 # There is a file in the package with a name starting with <tt>._</tt>, 
 # the file name pattern used by Mac OS X to store resource forks in non-native 
@@ -201,7 +185,7 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 
 
 %files
-%doc *.doc AUTHORS ChangeLog COPYING NEWS README* TODO
+%doc AUTHORS ChangeLog COPYING NEWS README* TODO
 %_bindir/*
 %exclude %_bindir/%name-config
 %exclude %_bindir/math*
@@ -212,11 +196,7 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %files -n lib%name-devel
 %_bindir/%name-config
 %_libdir/*.so
-%_libdir/%name
 %_includedir/*
-
-#files -n lib%name-devel-static
-#_libdir/*.a
 
 %files -n lib%name-devel-doc
 %_docdir/%name
@@ -225,6 +205,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %_bindir/math*
 
 %changelog
+* Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.14-alt1
+- Version 2.2.14
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.8-alt4
 - Fixed build
 
