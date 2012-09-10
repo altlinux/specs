@@ -1,7 +1,7 @@
 %define sover 0
 
 Name: OpenAD
-Version: 20120321
+Version: 20120830
 Release: alt1
 Summary: A tool for automatic differentiation (AD) of numerical computer programs
 License: BSD
@@ -247,6 +247,7 @@ install -m755 openad %buildroot%_bindir
 %files -n lib%name
 %_libdir/libbe.so
 %_libdir/be.so
+%_libdir/whirl2f
 %_libdir/itanium.so
 %_libdir/*.so.*
 %exclude %_libdir/libxaif*.so.*
@@ -273,6 +274,9 @@ install -m755 openad %buildroot%_bindir
 %doc xaifBooster/doc/*.ps
 
 %changelog
+* Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120830-alt1
+- Version 20120830
+
 * Tue Apr 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120321-alt1
 - Initial build for Sisyphus
 
