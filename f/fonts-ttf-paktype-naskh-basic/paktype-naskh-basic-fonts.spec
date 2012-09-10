@@ -1,7 +1,6 @@
 %define oldname paktype-naskh-basic-fonts
-%define fontname paktype-naskh-basic
+%global fontname paktype-naskh-basic
 %global fontconf 67-%{fontname}
-%define fontdir %{_datadir}/fonts/%{fontname}
 
 # Common description
 %define common_desc \
@@ -9,11 +8,11 @@ The paktype-naskh-basic-fonts package contains fonts for the display of \
 Arabic, Farsi, Urdu and Sindhi from PakType by Lateef Sagar.
 
 Name:    fonts-ttf-paktype-naskh-basic
-Version: 3.0
-Release: alt3_11
+Version: 3.1
+Release: alt1_1
 License: GPLv2 with exceptions
 URL: https://sourceforge.net/projects/paktype/
-Source0: http://downloads.sourceforge.net/project/paktype/NaskhBasic-3.0.tar.gz
+Source0: http://citylan.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Naskh-Basic-3.1.tar.gz
 Source1: %{fontconf}-sa.conf
 Source2: %{fontconf}-sindhi.conf
 Source3: %{fontconf}-farsi.conf
@@ -95,30 +94,22 @@ This package provides a free Urdu truetype/opentype font
 
 %prep
 %setup -q -c
-mv NaskhBasic-3.0/* .
-mv Ready\ to\ use\ fonts/* .
+rm -rf Code
 mv PakType\ Naskh\ Basic\ Farsi.ttf PakTypeNaskhBasicFarsi.ttf
 mv PakType\ Naskh\ Basic.ttf PakTypeNaskhBasic.ttf
 mv PakType\ Naskh\ Basic\ SA.ttf PakTypeNaskhBasicSA.ttf
 mv PakType\ Naskh\ Basic\ Urdu.ttf PakTypeNaskhBasicUrdu.ttf
 mv PakType\ Naskh\ Basic\ Sindhi.ttf PakTypeNaskhBasicSindhi.ttf
-mv License\ files/* .
-mv PakType\ Naskh\ Basic\ Comparison\ Chart.htm  PakType_Naskh_Basic_Comparison_Chart.htm
-mv PakType\ Naskh\ Basic\ Comparison\ Chart.pdf PakType_Naskh_Basic_Comparison_Chart.pdf
-%{__sed} -i 's/\r//'  PakType_Naskh_Basic_Comparison_Chart.htm
+
+mv Features/PakType\ Naskh\ Basic\ Farsi\ Features.pdf PakTypeNaskhBasicFarsiFeatures.pdf
+mv Features/PakType\ Naskh\ Basic\ Features.pdf PakTypeNaskhBasicFeatures.pdf
+mv Features/PakType\ Naskh\ Basic\ SA\ Features.pdf PakTypeNaskhBasicSAFeatures.pdf
+mv Features/PakType\ Naskh\ Basic\ Sindhi\ Features.pdf PakTypeNaskhBasicSindhiFeatures.pdf
+mv Features/PakType\ Naskh\ Basic\ Urdu\ Features.pdf PakTypeNaskhBasicUrduFeatures.pdf
+
 mv PakType\ Naskh\ Basic\ License.txt  PakType_Naskh_Basic_License.txt
 %{__sed} -i 's/\r//' PakType_Naskh_Basic_License.txt
-chmod a-x PakType_Naskh_Basic_Comparison_Chart.htm PakType_Naskh_Basic_License.txt PakType_Naskh_Basic_Comparison_Chart.pdf
-for txt in Readme.txt ; do
-   fold -s $txt > $txt.new
-   sed -i 's/\x92//g' $txt.new
-   sed -i 's/\x93//g' $txt.new
-   sed -i 's/\x94//g' $txt.new
-   sed -i 's/\x96//g' $txt.new
-   sed -i 's/\r//' $txt.new
-   touch -r $txt $txt.new
-   mv $txt.new $txt
-done
+chmod a-x PakTypeNaskhBasicFarsiFeatures.pdf PakType_Naskh_Basic_License.txt PakTypeNaskhBasicSindhiFeatures.pdf PakTypeNaskhBasicFeatures.pdf PakTypeNaskhBasicSAFeatures.pdf PakTypeNaskhBasicUrduFeatures.pdf
 
 %build
 echo "Nothing to do in Build."
@@ -191,12 +182,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
-
 %files common
-%doc PakType_Naskh_Basic_Comparison_Chart.htm PakType_Naskh_Basic_License.txt PakType_Naskh_Basic_Comparison_Chart.pdf Readme.txt
+%doc PakType_Naskh_Basic_License.txt PakTypeNaskhBasicFarsiFeatures.pdf PakTypeNaskhBasicFeatures.pdf PakTypeNaskhBasicSAFeatures.pdf PakTypeNaskhBasicUrduFeatures.pdf PakTypeNaskhBasicSindhiFeatures.pdf
+
 
 %changelog
+* Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.0-alt3_11
 - update to new release by fcimport
 
