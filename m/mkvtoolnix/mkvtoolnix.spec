@@ -14,8 +14,8 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 5.0.1
-Release: alt3
+Version: 5.7.0
+Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
 License: GPL
@@ -28,12 +28,12 @@ Provides: mkvmerge = %version-%release
 BuildRequires(pre): rpm-build-xdg
 BuildRequires: gcc-c++ boost-devel boost-filesystem-devel zlib-devel libmagic-devel
 BuildRequires: libexpat-devel libvorbis-devel ImageMagick ruby ruby-stdlibs symlinks
-BuildRequires: libebml-devel >= 1.2.2 libmatroska-devel >= 1.3.0
+BuildRequires: libcurl-devel libebml-devel >= 1.2.2 libmatroska-devel >= 1.3.0 
 
-%{?_enable_gui:BuildRequires: libpango-devel libwxGTK-devel}
+%{?_enable_wxwidgets:BuildRequires: libpango-devel libwxGTK-devel}
+%{?_enable_qt:BuildRequires: libSM-devel libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel libqt4-devel}
 %{?_enable_bz2:BuildRequires: bzlib-devel}
 %{?_enable_lzo:BuildRequires: liblzo2-devel}
-%{?_enable_qt:BuildRequires: libSM-devel libXcursor-devel libXi-devel libXinerama-devel libXrandr-devel libqt4-devel}
 %{?_with_flac:BuildRequires: libflac-devel}
 
 %description
@@ -88,7 +88,6 @@ This package contains some additional tools.
 %setup
 
 %build
-%add_optflags -DBOOST_FILESYSTEM_VERSION=2
 ./autogen.sh
 export LINGUAS="en ru uk"
 %configure \
@@ -164,6 +163,9 @@ find %buildroot%_datadir -name 'mkvmergeGUI.*' -exec rename mkvmergeGUI %gname "
 %endif
 
 %changelog
+* Tue Sep 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.7.0-alt1
+- 5.7.0 released
+
 * Wed Apr 18 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0.1-alt3
 - rebuilt with recent boost, again
 
