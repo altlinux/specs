@@ -2,19 +2,19 @@
 BuildRequires: libSDL_sound-devel
 # END SourceDeps(oneline)
 Name:		radius-engine
-Version:	0.7
-Release:	alt2_5
+Version:	1.1
+Release:	alt1_1
 Summary:	A Lua based real-time 2D graphics game engine
 Group:		System/Libraries
 License:	MIT
 URL:		http://radius-engine.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/%{name}/%{name}-%{version}.tar.gz
 Patch0:		radius-engine-0.6-configure-lua.patch
-Patch1:		radius-engine-0.7-shared-libs.patch
+Patch1:		radius-engine-1.1-shared-libs.patch
 # Latest autoconf enables "extra-portability" along with "Wall", which causes
 # warnings (treated as errors because of Wall) to be thrown. We just need to 
 # pass "-Wno-extra-portability" to fix this.
-Patch2:		radius-engine-0.7-disable-extra-portability.patch
+Patch2:		radius-engine-1.1-disable-extra-portability.patch
 BuildRequires:	liblua5-devel libSDL-devel libGL-devel libGLU-devel
 BuildRequires:	libphysfs-devel libpng-devel zlib-devel SDL_sound-devel
 # I could not figure out a way to generate a patch to enable shared libraries 
@@ -32,7 +32,7 @@ Radius Engine are portable to both Windows and Linux.
 %package devel
 Summary:	Development libraries and headers for Radius Engine
 Group:		Development/C
-Requires:	radius-engine = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description devel
 Development libraries and headers for Radius Engine.
@@ -65,6 +65,9 @@ rm -rf %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/radius-engine.pc
 
 %changelog
+* Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7-alt2_5
 - update to new release by fcimport
 
