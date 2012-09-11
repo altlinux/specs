@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-transaction-aspects
 Version:        1.0.0
-Release:        alt1_3jpp6
+Release:        alt2_3jpp6
 Epoch:          0
 Summary:        JBoss Transaction Aspects
 License:        LGPLv2+
@@ -140,6 +141,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt2_3jpp6
+- fixed build
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt1_3jpp6
 - new version
 
