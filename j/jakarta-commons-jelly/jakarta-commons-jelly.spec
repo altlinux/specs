@@ -45,7 +45,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           jakarta-%{base_name}
 Version:        %{jakarta_version}
-Release:        alt11_7jpp6
+Release:        alt12_7jpp6
 Epoch:          0
 Summary:        Jelly Scripting Engine
 Group:          Development/Java
@@ -74,7 +74,7 @@ BuildRequires:  junit
 BuildRequires:  xmlunit
 # Jelly general BuildRequires
 BuildRequires:  dom4j >= 0:1.6.1
-BuildRequires:  apache-commons-jexl >= 0:1.0
+BuildRequires:  apache-commons-jexl11 >= 0:1.0
 BuildRequires:  jakarta-commons-beanutils16
 BuildRequires:  apache-commons-cli
 BuildRequires:  apache-commons-collections
@@ -147,7 +147,7 @@ BuildRequires:  xmlunit
 %endif
 # Jelly general runtime requirements
 Requires:  dom4j >= 0:1.6.1
-Requires:  apache-commons-jexl >= 0:1.0
+Requires:  apache-commons-jexl11 >= 0:1.0
 Requires:  jakarta-commons-beanutils16
 Requires:  apache-commons-cli
 Requires:  apache-commons-collections
@@ -524,7 +524,7 @@ commons-discovery.jar=file:$(build-classpath commons-discovery)
 forehead.jar=file:$(build-classpath forehead)
 jstl.jar=file:$(build-classpath taglibs-standard)
 junit.jar=file:$(build-classpath junit)
-commons-jexl.jar=file:$(build-classpath commons-jexl)
+commons-jexl.jar=file:$(build-classpath commons-jexl11)
 #xml-apis.jar=file:$(build-classpath xml-commons-apis)
 commons-beanutils.jar=file:$(build-classpath commons-beanutils16)
 commons-collections.jar=file:$(build-classpath commons-collections)
@@ -556,7 +556,7 @@ pushd jelly-tags
 cat >> build.properties << EOBP
 commons-cli.jar=file:$(build-classpath commons-cli)
 junit.jar=file:$(build-classpath junit)
-commons-jexl.jar=file:$(build-classpath commons-jexl)
+commons-jexl.jar=file:$(build-classpath commons-jexl11)
 #xml-apis.jar=file:$(build-classpath xml-commons-apis)
 commons-beanutils.jar=file:$(build-classpath commons-beanutils16)
 commons-collections.jar=file:$(build-classpath commons-collections)
@@ -571,21 +571,21 @@ EOBP
   pushd util
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-lang commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-lang commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
   pushd log
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-collections commons-beanutils16 commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-collections commons-beanutils16 commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
   pushd xml
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -600,7 +600,7 @@ commons-cli.jar=file:$(build-classpath commons-cli)
 #xml-apis.jar=file:$(build-classpath xml-commons-apis)
 commons-beanutils.jar=file:$(build-classpath commons-beanutils16)
 commons-collections.jar=file:$(build-classpath commons-collections)
-commons-jexl.jar=file:$(build-classpath commons-jexl)
+commons-jexl.jar=file:$(build-classpath commons-jexl11)
 commons-jelly.jar=file:$(pwd)/../../target/commons-jelly-1.0.jar
 commons-logging.jar=file:$(build-classpath commons-logging)
 dom4j.jar=file:$(build-classpath dom4j)
@@ -610,7 +610,7 @@ EOBP
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../util/target/commons-jelly-tags-util-1.0-SNAPSHOT.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen )
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen )
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -630,14 +630,14 @@ EOBP
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../log/target/commons-jelly-tags-log-1.0-SNAPSHOT.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
   pushd beanshell
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging bsh dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging bsh dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -645,7 +645,7 @@ EOBP
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../log/target/commons-jelly-tags-log-1.0-SNAPSHOT.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-betwixt commons-collections commons-digester commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-betwixt commons-collections commons-digester commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -658,7 +658,7 @@ EOBP
   pushd dynabean
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -668,7 +668,7 @@ EOBP
     CLASSPATH=$CLASSPATH:$(pwd)/../log/target/commons-jelly-tags-log-1.0-SNAPSHOT.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../xml/target/commons-jelly-tags-xml-1.0-SNAPSHOT.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../dynabean/target/commons-jelly-tags-dynabean-1.0-SNAPSHOT.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -682,7 +682,7 @@ EOBP
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../ant/target/commons-jelly-tags-ant-1.1-SNAPSHOT.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -692,7 +692,7 @@ EOBP
     CLASSPATH=$CLASSPATH:$(pwd)/../xml/target/commons-jelly-tags-xml-1.0-SNAPSHOT.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../log/target/commons-jelly-tags-log-1.0-SNAPSHOT.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../ant/target/commons-jelly-tags-ant-1.1-SNAPSHOT.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -700,7 +700,7 @@ EOBP
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../xml/target/commons-jelly-tags-xml-1.0-SNAPSHOT.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen nekohtml)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen nekohtml)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -719,7 +719,7 @@ EOBP
   pushd jetty
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../http/target/commons-jelly-tags-http-1.0-SNAPSHOT.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-codec commons-httpclient commons-jexl commons-logging jetty5 dom4j jaxen servlet_2_4_api)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-codec commons-httpclient commons-jexl11 commons-logging jetty5 dom4j jaxen servlet_2_4_api)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -760,27 +760,27 @@ EOBP
   pushd sql
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
   pushd swing
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-lang commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-lang commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
   pushd threads
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
   pushd validate
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging dom4j jaxen isorelax msv-msv msv-xsdlib relaxngDatatype)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging dom4j jaxen isorelax msv-msv msv-xsdlib relaxngDatatype)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -794,7 +794,7 @@ EOBP
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../xml/target/commons-jelly-tags-xml-1.0-SNAPSHOT.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging xmlunit dom4j jaxen)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging xmlunit dom4j jaxen)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -804,7 +804,7 @@ rm -rf src/test/*
     export CLASSPATH=$(pwd)/../../target/commons-jelly-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../junit/target/commons-jelly-tags-junit-1.0.jar
     CLASSPATH=$CLASSPATH:$(pwd)/../xmlunit/target/commons-jelly-tags-xmlunit-1.0-SNAPSHOT.jar
-    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl commons-logging jaxme/jaxme2 jaxme/jaxmeapi jaxme/jaxmejs jaxme/jaxmexs dom4j jaxen xmlunit)
+    CLASSPATH=$CLASSPATH:$(build-classpath commons-beanutils16 commons-collections commons-jexl11 commons-logging jaxme/jaxme2 jaxme/jaxmeapi jaxme/jaxmejs jaxme/jaxmexs dom4j jaxen xmlunit)
     CLASSPATH=$CLASSPATH:target/classes:target/test-classes
     ant17  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only dist
   popd
@@ -1297,6 +1297,9 @@ done
 
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt12_7jpp6
+- build with apache-commons-jexl11
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_7jpp6
 - build w/o quartz
 
