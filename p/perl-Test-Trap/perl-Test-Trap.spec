@@ -1,5 +1,5 @@
 Name: perl-Test-Trap
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Test::Trap perl module
@@ -29,5 +29,9 @@ BuildArch: noarch
 %doc Changes README
 
 %changelog
+* Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.2.2-alt1
+- 0.2.1 -> 0.2.2
+- fixed build with Carp >= 1.25
+
 * Mon Oct 03 2011 Vladimir Lettiev <crux@altlinux.ru> 0.2.1-alt1
 - initial build
