@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # fedora bcond_with macro
@@ -61,7 +62,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-common-logging-log4j
 Version:        2.1.0
-Release:	alt2_4jpp6
+Release:	alt3_4jpp6
 Epoch:          0
 Summary:        JBoss Logging Log4j
 License:        LGPLv2+
@@ -214,6 +215,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt3_4jpp6
+- fixed build
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt2_4jpp6
 - new jpp release
 
