@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat jboss-parent3
@@ -34,7 +35,7 @@ BuildRequires: jpackage-compat jboss-parent3
 
 Name:           maven-jboss-deploy-plugin
 Version:        1.6
-Release:	alt1_4jpp6
+Release:	alt2_4jpp6
 Epoch:          0
 Summary:        Maven JBoss Deploy Plugin
 License:        ASL 2.0
@@ -138,6 +139,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_4jpp6
+- fixed build
+
 * Thu Sep 30 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt1_4jpp6
 - new version
 
