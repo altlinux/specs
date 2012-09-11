@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Patch33: maven-buildmagic-thirdparty-plugin-2.2.0-alt-maven3.patch
 
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-buildmagic-thirdparty-plugin
 Version:        2.2.0
-Release:	alt2_3jpp6
+Release:	alt3_3jpp6
 Epoch:          0
 Summary:        JBoss Buildmagic Thirdparty Repository Maven Plugin
 License:        ASL 2.0
@@ -157,6 +158,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt3_3jpp6
+- fixed build
+
 * Wed Apr 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt2_3jpp6
 - fixed build with new asm
 
