@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: xpp3-minimal
 Patch33: gshell-2.6.2-alt-no-deploy.patch
@@ -61,7 +62,7 @@ BuildRequires: jpackage-compat
 
 Name:           gshell
 Version:        2.6.2
-Release:        alt4_0jpp6
+Release:        alt5_0jpp6
 Epoch:          0
 Summary:        GShell
 License:        ASL 2.0
@@ -88,7 +89,7 @@ BuildRequires:  forge-parent >= 0:5
 BuildRequires:  google-guice >= 0:2.0
 BuildRequires:  sonatype-gossip >= 0:1.5
 BuildRequires:  jakarta-commons-cli >= 0:1.2
-BuildRequires:  apache-commons-jexl >= 0:1.1
+BuildRequires:  apache-commons-jexl11
 BuildRequires:  jakarta-commons-vfs >= 0:1.0
 BuildRequires:  mojo-maven2-plugin-javacc >= 0:2.6
 BuildRequires:  junit
@@ -299,6 +300,9 @@ rm -r %{buildroot}%{_docdir}/%{name}-%{namedversion}/apidocs
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.2-alt5_0jpp6
+- fixed build
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.2-alt4_0jpp6
 - fixed build
 
