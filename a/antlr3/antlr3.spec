@@ -2,6 +2,7 @@
 BuildRequires(pre): rpm-build-python
 BuildRequires: perl(Digest.pm) perl(English.pm) perl(Error.pm) perl(Exception/Class.pm) perl(ExtUtils/MakeMaker.pm) perl(File/Slurp.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(List/Util.pm) perl(Module/Build.pm) perl(Moose.pm) perl(Moose/Role.pm) perl(Moose/Util/TypeConstraints.pm) perl(Params/Validate.pm) perl(Readonly.pm) perl(Switch.pm) perl(Test/Builder/Module.pm) perl(Test/Class/Load.pm) perl(Test/More.pm) perl(UNIVERSAL.pm) perl(YAML/Tiny.pm) perl(blib.pm) perl(overload.pm) perl-devel perl-podlators python-devel unzip
 # END SourceDeps(oneline)
+BuildRequires: antlr3-java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 #%{!?python_sitelib: %global python_sitelib %(%{__python} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
@@ -15,7 +16,7 @@ BuildRequires: jpackage-compat
 Summary:            ANother Tool for Language Recognition
 Name:               antlr3
 Version:            %{antlr_version}
-Release:            alt1_11jpp7
+Release:            alt1_12jpp7
 URL:                http://www.antlr.org/
 Source0:            http://www.antlr.org/download/antlr-%{antlr_version}.tar.gz
 Source1:            http://www.antlr.org/download/C/libantlr3c-%{antlr_version}.tar.gz
@@ -65,7 +66,7 @@ BuildArch:   noarch
 Requires:    jpackage-utils
 Provides:    %{name} = %{antlr_version}-%{release}
 Obsoletes:   %{name} < %{antlr_version}-%{release}
-Requires:    antlr3 = %{antlr_version}-%{release}
+Requires:    %{name}-java = %{antlr_version}-%{release}
 Requires:    stringtemplate4
 
 %description tool
@@ -289,15 +290,6 @@ pushd antlr-javascript-runtime-%{javascript_runtime_version}
 install -pm 644 *.js $RPM_BUILD_ROOT%{_datadir}/antlr/
 popd
 
-pushd $RPM_BUILD_ROOT%{_man3dir}
-#ln -sf antlr3-pANTLR3_BASE_RECOGNIZER.3 antlr3-alreadyParsedRule.3
-#ln -sf antlr3-pANTLR3_BASE_RECOGNIZER.3 antlr3-combineFollows.3
-#ln -sf antlr3-pANTLR3_BASE_RECOGNIZER.3 antlr3-computeCSRuleFollow.3
-#	for i in `grep -rl 'man3/pANTLR3_BASE_RECOGNIZER\.3$' .`; do
-#		ln -sf antlr3-pANTLR3_BASE_RECOGNIZER.3 $i
-#	done
-popd
-
 %files tool
 %doc tool/{README.txt,LICENSE.txt,CHANGES.txt}
 %{_javadir}/antlr3.jar
@@ -331,6 +323,9 @@ popd
 %{_datadir}/antlr/
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 3.4-alt1_12jpp7
+- fixed requires for antlr3-java
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 3.4-alt1_11jpp7
 - new version
 
