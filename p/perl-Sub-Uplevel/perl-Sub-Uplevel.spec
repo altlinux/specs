@@ -1,6 +1,6 @@
 %define dist Sub-Uplevel
 Name: perl-%dist
-Version: 0.22
+Version: 0.24
 Release: alt1
 Epoch: 1
 
@@ -34,9 +34,12 @@ are avoided.
 %doc	Changes README
 %dir	%perl_vendor_privlib/Sub
 	%perl_vendor_privlib/Sub/Uplevel.pm
-%doc	%perl_vendor_privlib/Sub/Uplevel.pod
 
 %changelog
+* Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1:0.24-alt1
+- 0.22 -> 0.24
+- fixed build with Carp >= 1.25
+
 * Sat Dec 18 2010 Alexey Tourbin <at@altlinux.ru> 1:0.22-alt1
 - 0.1901 -> 0.22
 
