@@ -37,7 +37,7 @@ Name:           geronimo-txmanager
 Summary:        Geronimo Genesis
 Url:            http://geronimo.apache.org/
 Version:        2.1.1
-Release:        alt2_2jpp5
+Release:        alt3_2jpp5
 Epoch:          0
 License:        Apache 2.0 License
 Group:          Development/Java
@@ -45,7 +45,6 @@ Source0:        %{name}-%{version}.tar.gz
 # Steps to reproduce
 # svn export http://svn.apache.org/repos/asf/geronimo/components/txmanager/tags/geronimo-txmanager-parent-2.1.1/ geronimo-txmanager-2.1.1
 
-Source1:        %{name}-settings.xml
 Source2:        %{name}-jpp-depmap.xml
 Source3:        apache-jar-resource-bundle-1.3.jar
 Patch0:         geronimo-txmanager-pom.patch
@@ -63,12 +62,12 @@ BuildRequires: maven2-plugin-release
 BuildRequires: maven2-plugin-remote-resources
 BuildRequires: maven2-plugin-resources
 BuildRequires: maven-surefire-plugin
-BuildRequires: mojo-maven2-support
+BuildRequires: plugin-support
 
 BuildRequires: geronimo-genesis
 BuildRequires: geronimo-jta-1.1-api
 BuildRequires: geronimo-j2ee-connector-1.5-api
-BuildRequires: jakarta-commons-jexl >= 0:1.1
+BuildRequires: apache-commons-jexl11
 BuildRequires: howl-logger >= 0:1.0.2
 
 
@@ -98,15 +97,9 @@ chmod -R go=u-w *
 for f in $(find . -name "*.jar"); do
   mv $f $f.no
 done
-cp %{SOURCE1} settings.xml
 %patch0 -b .sav0
 
 %build
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-
 export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
 mkdir -p $MAVEN_REPO_LOCAL/org.apache
 cp %{SOURCE3} $MAVEN_REPO_LOCAL/org.apache/apache-jar-resource-bundle.jar
@@ -114,11 +107,8 @@ cp %{SOURCE3} $MAVEN_REPO_LOCAL/org.apache/apache-jar-resource-bundle.jar
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 
-export SETTINGS=$(pwd)/settings.xml
-
 mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $SETTINGS \
         -Dmaven2.jpp.depmap.file=%{SOURCE2} \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         install javadoc:javadoc
@@ -173,6 +163,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt3_2jpp5
+- build with plugin-support
+
 * Thu Mar 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt2_2jpp5
 - fixed build with maven3
 
