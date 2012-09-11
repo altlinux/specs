@@ -58,7 +58,7 @@ BuildRequires: jpackage-compat
 Name:           apache-commons-scxml
 Summary:        Apache Commons SCXML
 Version:        0.9
-Release:        alt3_3jpp6
+Release:        alt4_3jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -92,7 +92,7 @@ BuildRequires: jakarta-commons-beanutils
 BuildRequires: jakarta-commons-collections
 BuildRequires: jakarta-commons-digester
 BuildRequires: apache-commons-el
-BuildRequires: apache-commons-jexl
+BuildRequires: apache-commons-jexl11
 BuildRequires: jakarta-commons-logging
 BuildRequires: myfaces-core11-impl
 BuildRequires: servlet_2_4_api
@@ -105,7 +105,7 @@ Requires(postun): jpackage-utils >= 0:1.7.5
 Requires: jakarta-commons-beanutils
 Requires: jakarta-commons-digester
 Requires: apache-commons-el
-Requires: apache-commons-jexl
+Requires: apache-commons-jexl11
 Requires: jakarta-commons-logging
 Requires: jsf_1_1_api
 Requires: servlet_2_4_api
@@ -291,6 +291,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt4_3jpp6
+- build with apache-commons-jexl11
+
 * Wed Dec 15 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt3_3jpp6
 - really fixed broken symlink
 
