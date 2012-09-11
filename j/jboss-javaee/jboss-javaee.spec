@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 %def_without jboss_jms_1.1_api
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
@@ -57,7 +58,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-javaee
 Version:        5.0.1
-Release:        alt3_2jpp6
+Release:        alt4_2jpp6
 Epoch:          0
 Summary:        JBoss JavaEE 5.0 Aggregate
 License:        LGPLv2+
@@ -254,11 +255,6 @@ for j in $(find . -name "*.jar"); do
     mv $j $j.no
 done
 
-cp %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" settings.xml
-
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 
@@ -266,10 +262,8 @@ ln -s %{_javadir} external_repo/JPP
 export LANG=en_US.ISO8859-1
 
 export MAVEN_REPO_LOCAL=$(pwd)/m2_repo/repository
-export M2_SETTINGS=$(pwd)/settings.xml
-mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5 -Dproject.build.sourceEncoding=ISO8859-1 \
         -e \
-        -s $M2_SETTINGS \
         -Dmaven2.jpp.depmap.file=%{SOURCE2} \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         -Daggregate=true \
@@ -622,6 +616,9 @@ EOF
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt4_2jpp6
+- fixed build
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt3_2jpp6
 - build w/o jms-1.1-api
 
