@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-1.6.0-compat
 # fedora bcond_with macro
@@ -54,7 +55,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           jboss-cl
 Version:        2.0.6
-Release:	alt2_3jpp6
+Release:	alt3_3jpp6
 Epoch:          0
 Summary:        JBoss Classloading
 License:        LGPLv2+
@@ -218,6 +219,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}/jboss-classloading-vfs.jar $RPM_BUILD_R
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.6-alt3_3jpp6
+- fixed build
+
 * Wed Mar 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.6-alt2_3jpp6
 - fixed build with maven3
 
