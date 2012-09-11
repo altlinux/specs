@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-jsp-2.2-api
 Version:          1.0.1
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          JavaServer(TM) Pages 2.2 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -81,6 +82,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE README
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_3jpp7
+- fixed build
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3jpp7
 - new version
 
