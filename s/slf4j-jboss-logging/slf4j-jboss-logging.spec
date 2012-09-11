@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           slf4j-jboss-logging
 Version:        1.0.2
-Release:        alt1_5jpp6
+Release:        alt2_5jpp6
 Epoch:          0
 Summary:        SLF4J to JBoss logging
 License:        LGPLv2+
@@ -134,6 +135,9 @@ ln -s %{name}-%{namedversion} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt2_5jpp6
+- fixed build
+
 * Sat Mar 12 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt1_5jpp6
 - new version
 
