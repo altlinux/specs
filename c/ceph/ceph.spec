@@ -1,6 +1,6 @@
 Name: ceph
 Version: 0.51
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -122,6 +122,7 @@ ln -s libs3_sub src/libs3
 
 %build
 ./autogen.sh
+export LIBS="$LIBS -lboost_system"
 %configure	--without-hadoop \
 		--without-libatomic-ops \
 		--with-radosgw \
@@ -264,6 +265,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Sep 11 2012 Alexei Takaseev <taf@altlinux.org> 0.51-alt2
+- Fix build with boost 1.51.0
+
 * Tue Aug 28 2012 Alexei Takaseev <taf@altlinux.org> 0.51-alt1
 - 0.51
 
