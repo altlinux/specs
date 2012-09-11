@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: glassfish-fastinfoset
 Version: 1.2.12
-Release: alt1_4jpp7
+Release: alt2_4jpp7
 Summary: Fast Infoset
 Group: Development/Java
 License: ASL 2.0
@@ -89,17 +89,29 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}/.
 %add_maven_depmap JPP-%{name}-project.pom
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
 
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/FastInfoset_glassfish-fastinfoset<<EOF
+%{_javadir}/FastInfoset.jar.jar	%{_javadir}/%name.jar	100
+EOF
+
+
 
 %files
 %{_javadir}/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
+%_altdir/FastInfoset_glassfish-fastinfoset
+%exclude %{_javadir}*/FastInfoset.jar
+
+
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt2_4jpp7
+- shared FastInfoset.jar symlink as alternative
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.12-alt1_4jpp7
 - new version
 
