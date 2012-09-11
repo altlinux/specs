@@ -1,9 +1,10 @@
 Epoch: 0
+Requires: fusesource-pom
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jansi
 Version:          1.6
-Release:          alt2_2jpp7
+Release:          alt3_4jpp7
 Summary:          Jansi is a java library for generating and interpreting ANSI escape sequences
 Group:            Development/Java
 License:          ASL 2.0
@@ -19,7 +20,6 @@ BuildArch:        noarch
 BuildRequires:    jpackage-utils
 BuildRequires:    maven
 BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-license-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
@@ -75,7 +75,7 @@ install -pm 644 %{name}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
 # DEPMAP
 %add_maven_depmap JPP-%{name}-project.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap -a "%{name}:%{name}" JPP-%{name}.pom %{name}.jar
 
 %files
 %{_mavenpomdir}/*
@@ -88,6 +88,12 @@ install -pm 644 %{name}/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc license.txt
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt3_4jpp7
+- added Requires: fusesource-pom
+
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_4jpp7
+- added jansi:jansi depmap for jpp packages
+
 * Fri Mar 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6-alt2_2jpp7
 - fixed pom
 
