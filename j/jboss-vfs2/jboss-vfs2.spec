@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # fedora bcond_with macro
@@ -55,7 +56,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-vfs2
 Version:        2.1.2
-Release:	alt1_3jpp6
+Release:	alt2_3jpp6
 Epoch:          0
 Summary:        JBoss VFS
 License:        LGPLv2+
@@ -208,6 +209,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/jboss-vfs.jar $RPM_BUILD_ROOT%{repodirlib}/jbos
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt2_3jpp6
+- fixed build
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_3jpp6
 - new jpp release
 
