@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat jboss-parent3
@@ -34,7 +35,7 @@ BuildRequires: jpackage-compat jboss-parent3
 
 Name:           maven-jdocbook-style-plugin
 Version:        1.0.0
-Release:        alt2_1jpp5
+Release:        alt3_1jpp5
 Epoch:          0
 Summary:        jDocBook Maven Style Plugin
 License:        LGPL
@@ -132,6 +133,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt3_1jpp5
+- fixed build
+
 * Thu Sep 30 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt2_1jpp5
 - fixed build with new maven 2.0.8
 
