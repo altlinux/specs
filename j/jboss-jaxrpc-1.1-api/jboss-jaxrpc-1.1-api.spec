@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-jaxrpc-1.1-api
 Version:          1.0.1
-Release:          alt1_0.1.20120309gita3c227jpp7
+Release:          alt2_0.1.20120309gita3c227jpp7
 Summary:          Java API for XML-Based RPC (JAX-RPC) 1.1
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -78,6 +79,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_0.1.20120309gita3c227jpp7
+- fixed build
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_0.1.20120309gita3c227jpp7
 - new version
 
