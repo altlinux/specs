@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           fest-%{module}
 Version:        1.2
-Release:        alt3_1jpp7
+Release:        alt4_1jpp7
 Summary:        Fixtures for Easy Software Testing Swing GUI Testing JUnit
 
 Group:          Development/Java
@@ -141,6 +142,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4_1jpp7
+- fixed build
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3_1jpp7
 - fixed build
 
