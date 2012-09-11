@@ -1,8 +1,9 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jboss-ejb3-ext-api
 Version:          2.0.0
-Release:          alt1_2jpp7
+Release:          alt2_2jpp7
 Summary:          JBoss EJB 3 Extension API
 Group:            Development/Java
 License:          LGPLv3+
@@ -76,6 +77,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_2jpp7
+- fixed build
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_2jpp7
 - new version
 
