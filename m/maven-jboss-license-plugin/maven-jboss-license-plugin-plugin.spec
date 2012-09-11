@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -34,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-jboss-license-plugin
 Version:        1.0.0
-Release:        alt1_2jpp6
+Release:        alt2_2jpp6
 Epoch:          0
 Summary:        Maven JBoss License Plugin
 License:        ASL 2.0
@@ -136,6 +137,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt2_2jpp6
+- fixed build
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt1_2jpp6
 - new version
 
