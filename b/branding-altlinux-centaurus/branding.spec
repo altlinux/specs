@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt1
+Release: alt2
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -21,8 +21,8 @@ BuildRequires: libqt4-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
-%define status %nil
-%define status_en %nil
+%define status альфа 
+%define status_en alpha
 %define variants altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-desktop altlinux-gnome-desktop
 
 Packager: Anton V. Boyarshinov <boyarsh at altlinux dot org>
@@ -415,6 +415,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Sep 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt2
+- installer background resizing removed
+- status set
+
 * Fri Sep 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt1
 - full-size installer background
 
