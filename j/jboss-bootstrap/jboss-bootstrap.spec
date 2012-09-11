@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # fedora bcond_with macro
@@ -54,7 +55,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-bootstrap
 Version:        1.0.0
-Release:        alt1_0.3.Beta3jpp6
+Release:        alt2_0.3.Beta3jpp6
 Epoch:          0
 Summary:        JBoss Bootstrap (Legacy)
 License:        LGPLv2+
@@ -188,6 +189,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}.jar $RPM_BUILD_ROOT%{repodirlib}/jboss-
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt2_0.3.Beta3jpp6
+- fixed build
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt1_0.3.Beta3jpp6
 - new jpp release
 
