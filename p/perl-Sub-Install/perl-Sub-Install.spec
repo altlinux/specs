@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Sub-Install
-Version: 0.925
-Release: alt1.1
+Version: 0.926
+Release: alt1
 
 Summary: install subroutines into packages easily
 
@@ -49,6 +49,10 @@ see them.
 %perl_vendor_privlib/Sub*
 
 %changelog
+* Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.926-alt1
+- 0.925 -> 0.926
+- fixed build with Carp >= 1.25
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.925-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
