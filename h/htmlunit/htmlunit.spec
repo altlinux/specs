@@ -1,3 +1,4 @@
+BuildRequires: maven-antrun-plugin
 Epoch: 0
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           htmlunit
 Version:        2.9
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Summary:        A headless web browser for automated testing
 
 Group:          Development/Java
@@ -110,6 +111,9 @@ install -pm 644 pom.xml \
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt2_3jpp7
+- fixed build
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9-alt1_3jpp7
 - new release
 
