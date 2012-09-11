@@ -1,6 +1,6 @@
 Name: vzquota
-Version: 3.0.12
-Release: alt2
+Version: 3.1
+Release: alt1
 
 Summary: OpenVZ disk quota control utilities
 License: GPL
@@ -39,6 +39,9 @@ make install DESTDIR=%buildroot MANDIR=%_mandir VARDIR=/var/lib
 %doc doc/*
 
 %changelog
+* Tue Sep 11 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 3.1-alt1
+- Updated to 3.1.
+
 * Tue May 19 2009 Dmitry V. Levin <ldv@altlinux.org> 3.0.12-alt2
 - Fixed build with fresh toolchain.
 
