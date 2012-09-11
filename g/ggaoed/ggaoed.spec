@@ -1,6 +1,6 @@
 Name: ggaoed
 Version: 1.1
-Release: alt1
+Release: alt2
 
 Summary: AoE target implementation for Linux
 License: GPL
@@ -65,5 +65,8 @@ install -pm0600 -D ggaoed.conf.dist %buildroot%_sysconfdir/ggaoed.conf
 %_man8dir/ggaoed.8*
 
 %changelog
+* Tue Sep 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1-alt2
+- fix build
+
 * Thu Jun 02 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.1-alt1
 - initial
