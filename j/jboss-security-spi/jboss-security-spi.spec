@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # fedora bcond_with macro
@@ -55,7 +56,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-security-spi
 Version:        2.0.3
-Release:        alt2_2.SP1.2jpp6
+Release:        alt3_2.SP1.2jpp6
 Epoch:          1
 Summary:        JBoss Security SPI
 License:        LGPLv2+
@@ -262,6 +263,9 @@ cp -p %{buildroot}%{_javadir}/%{name}/jboss-security-spi-%{namedversion}.jar %{b
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt3_2.SP1.2jpp6
+- fixed build
+
 * Mon Mar 26 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.0.3-alt2_2.SP1.2jpp6
 - fixed build with maven3
 
