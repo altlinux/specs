@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: gmaven-runtime-1.5
 Patch33: geronimo-genesis-2.0-alt-maven3hack.patch
 BuildRequires: maven-plugin-descriptor
@@ -38,7 +39,7 @@ Name:           geronimo-genesis2
 Summary:        Geronimo Genesis
 Url:            http://geronimo.apache.org/
 Version:        2.0
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Epoch:          0
 License:        Apache 2.0 License
 Group:          Development/Java
@@ -175,6 +176,9 @@ install -m 644 genesis-default-flava/genesis-java1.4-flava/pom.xml \
 %doc LICENSE
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_1jpp6
+- fixed build
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt3_1jpp6
 - fixed build: added BR: gmaven-runtime-1.5
 
