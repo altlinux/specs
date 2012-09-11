@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -48,7 +49,7 @@ BuildRequires: jpackage-compat
 
 Name:           jbossxb2
 Version:        2.0.1
-Release:	alt3_3jpp6
+Release:	alt4_3jpp6
 Epoch:          0
 Summary:        JBoss XB
 License:        LGPLv2+
@@ -198,6 +199,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/jboss-xml-binding.jar $RPM_BUILD_ROOT%{repodirl
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt4_3jpp6
+- fixed build
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt3_3jpp6
 - fixed build with java 7
 
