@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: oss-parent
 BuildRequires: /proc
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           fest-%{module}
 Version:        1.2
-Release:        alt4_1jpp6
+Release:        alt5_1jpp6
 Summary:        Fixtures for Easy Software Testing Swing GUI Testing TestNG
 
 Group:          Development/Java
@@ -142,6 +143,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}*
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt5_1jpp6
+- fixed build
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4_1jpp6
 - fixed build
 
