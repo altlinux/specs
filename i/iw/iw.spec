@@ -1,5 +1,5 @@
 Name: iw
-Version: 0.9.20
+Version: 3.6
 Release: alt1
 
 Summary: nl80211 based CLI configuration utility for wireless devices
@@ -8,7 +8,7 @@ Group: Networking/Other
 
 Url: http://linuxwireless.org/en/users/Documentation/iw
 
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
+Packager: Evgenii Terechkov <evg@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -32,11 +32,14 @@ required.
 %makeinstall_std V=1
 
 %files
-%doc README
 %_sbindir/*
 %_man8dir/*
+%doc README COPYING
 
 %changelog
+* Mon Sep 10 2012 Terechkov Evgenii <evg@altlinux.org> 3.6-alt1
+- 3.6
+
 * Sat Aug 28 2010 Andrey Rahmatullin <wrar@altlinux.org> 0.9.20-alt1
 - 0.9.20
 
