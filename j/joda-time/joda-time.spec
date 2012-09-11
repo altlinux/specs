@@ -1,3 +1,4 @@
+BuildRequires: maven-antrun-plugin
 Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -5,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             joda-time
 Version:          1.6.2
-Release:          alt1_8.tzdata2011fjpp7
+Release:          alt2_8.tzdata2011fjpp7
 Summary:          Java date and time API
 
 Group:            Development/Java
@@ -91,6 +92,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt2_8.tzdata2011fjpp7
+- fixed build
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.2-alt1_8.tzdata2011fjpp7
 - new version
 
