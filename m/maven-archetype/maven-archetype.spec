@@ -1,3 +1,4 @@
+BuildRequires: maven-antrun-plugin
 BuildRequires: xpp3-minimal
 Epoch: 0
 # BEGIN SourceDeps(oneline):
@@ -7,7 +8,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-archetype
 Version:        2.1
-Release:        alt1_7jpp7
+Release:        alt2_7jpp7
 Summary:        Maven project templating toolkit
 
 Group:          Development/Java
@@ -297,6 +298,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 %{_javadir}/%{name}/plugin.jar
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_7jpp7
+- fixed build
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_7jpp7
 - new version
 
