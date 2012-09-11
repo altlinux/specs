@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.0
-Release: alt5
+Release: alt6
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 License: MIT
@@ -73,6 +73,9 @@ http://portland.freedesktop.org/wiki/TestSuite
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Tue Sep 11 2012 Mykola Grechukh <gns@altlinux.ru> 1.1.0-alt6
+- use generic for LXDE if beesu not found; fixes problem of -c.
+
 * Wed Mar 07 2012 Radik Usupov <radik@altlinux.org> 1.1.0-alt5
 - Added lxde support to xdg-su
 
