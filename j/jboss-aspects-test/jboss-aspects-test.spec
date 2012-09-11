@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-aspects-test
 Version:        1.0.0
-Release:        alt2_0.b1.2jpp6
+Release:        alt3_0.b1.2jpp6
 Epoch:          0
 Summary:        JBoss Aspects Test
 License:        LGPLv2+
@@ -144,6 +145,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt3_0.b1.2jpp6
+- fixed build
+
 * Mon Feb 14 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt2_0.b1.2jpp6
 - fixed build with new jboss-test
 
