@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Patch33: jboss-server-manager-alt-no-junit3-surefire.patch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
@@ -48,7 +49,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-server-manager
 Version:        1.0.2
-Release:	alt2_5jpp6
+Release:	alt3_5jpp6
 Epoch:          0
 Summary:        JBoss Server Manager
 License:        LGPLv2+
@@ -189,6 +190,9 @@ cp -p $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom  $RPM_BUILD_ROOT%{r
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt3_5jpp6
+- fixed build
+
 * Fri Apr 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt2_5jpp6
 - fixed build with maven3
 
