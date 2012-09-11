@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-plugin-cobertura maven-surefire-provider-junit4
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -40,7 +41,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-exec-maven-plugin
 Version:        1.2.1
-Release:        alt1_1jpp7
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        Execute system and Java programs
 Group:          Development/Java
@@ -165,6 +166,9 @@ ln -s %{name}-%{namedversion} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt2_1jpp6
+- fixed build
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.1-alt1_1jpp7
 - new version
 
