@@ -1,6 +1,6 @@
 Name:		avoision
-Version:	0.6
-Release:	alt2_6
+Version:	1.1
+Release:	alt1_1
 Summary:	Arcade style game of evade and capture
 Group:		Text tools
 # Code is GPLv2+, music and graphics are CC-BY-SA
@@ -9,7 +9,7 @@ URL:		http://avsn.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/project/avsn/%{name}-%{version}.tar.gz
 Source1:	%{name}.png
 Source2:	%{name}.desktop
-BuildRequires:	radius-engine-devel desktop-file-utils zip
+BuildRequires:	radius-engine-devel >= 1.1 desktop-file-utils zip
 Source44: import.info
 
 %description
@@ -42,6 +42,9 @@ desktop-file-install --dir %{buildroot}%{_datadir}/applications	%{SOURCE2}
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
+- rebuild with new radius-engine
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_6
 - update to new release by fcimport
 
