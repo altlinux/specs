@@ -1,7 +1,7 @@
 # Spec file for Perl module ParseTemplate
 
 Name: perl-Parse-Template
-Version: 3.07
+Version: 3.08
 Release: alt1
 
 Summary: processor for templates containing Perl expressions
@@ -48,6 +48,9 @@ XML, RTF, etc.).
 %perl_vendor_privlib/Parse/Template*
 
 %changelog
+* Tue Sep 11 2012 Nikolay A. Fetisov <naf@altlinux.ru> 3.08-alt1
+- New version
+
 * Mon Nov 29 2010 Nikolay A. Fetisov <naf@altlinux.ru> 3.07-alt1
 - New version
 
