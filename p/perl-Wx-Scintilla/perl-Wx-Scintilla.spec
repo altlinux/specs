@@ -1,5 +1,5 @@
 Name: perl-Wx-Scintilla
-Version: 0.34
+Version: 0.39
 Release: alt1
 
 Summary: Wx::Scintilla - Scintilla source code editing component for wxWidgets
@@ -32,8 +32,11 @@ xvfb-run -a ./Build test
 %files
 %perl_vendor_archlib/Wx/Scintilla*
 %perl_vendor_autolib/Wx/Scintilla*
-%doc Changes README 
+%doc Changes README
 
 %changelog
+* Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.39-alt1
+- 0.34 -> 0.39
+
 * Mon Nov 14 2011 Vladimir Lettiev <crux@altlinux.ru> 0.34-alt1
 - initial build
