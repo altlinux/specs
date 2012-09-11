@@ -49,7 +49,7 @@ BuildRequires: jpackage-core
 
 Name:           maven1
 Version:        1.1
-Release:        alt20_9jpp6
+Release:        alt21_9jpp6
 Epoch:          0
 Summary:        Java project management and project comprehension tool
 
@@ -122,7 +122,7 @@ BuildRequires: jakarta-commons-jelly-tags-define
 BuildRequires: jakarta-commons-jelly-tags-interaction >= 0:1.0-5jpp
 BuildRequires: jakarta-commons-jelly-tags-util
 BuildRequires: jakarta-commons-jelly-tags-xml
-BuildRequires: apache-commons-jexl >= 0:1.0
+BuildRequires: apache-commons-jexl11 >= 0:1.0
 BuildRequires: apache-commons-lang >= 0:2.0
 BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: jaxen >= 0:1.1
@@ -161,7 +161,7 @@ Requires: jakarta-commons-jelly-tags-define
 Requires: jakarta-commons-jelly-tags-interaction >= 0:1.0-5jpp
 Requires: jakarta-commons-jelly-tags-util
 Requires: jakarta-commons-jelly-tags-xml
-Requires: apache-commons-jexl >= 0:1.0
+Requires: apache-commons-jexl11 >= 0:1.0
 Requires: apache-commons-lang >= 0:2.0
 Requires: jakarta-commons-logging >= 0:1.0.4
 Requires: jaxen >= 0:1.1
@@ -196,7 +196,7 @@ Requires(post): jakarta-commons-jelly-tags-define
 Requires(post): jakarta-commons-jelly-tags-interaction >= 0:1.0-5jpp
 Requires(post): jakarta-commons-jelly-tags-util
 Requires(post): jakarta-commons-jelly-tags-xml
-Requires(post): apache-commons-jexl >= 0:1.0
+Requires(post): apache-commons-jexl11 >= 0:1.0
 Requires(post): apache-commons-lang >= 0:2.0
 Requires(post): jakarta-commons-logging >= 0:1.0.4
 Requires(post): jaxen >= 0:1.1
@@ -237,7 +237,7 @@ BuildRequires: jakarta-commons-jelly-tags-jsl >= 0:1.0-5jpp
 BuildRequires: jakarta-commons-jelly-tags-log >= 0:1.0-5jpp
 BuildRequires: jakarta-commons-jelly-tags-velocity >= 0:1.0-5jpp
 BuildRequires: jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
-BuildRequires: apache-commons-jexl >= 0:1.0
+BuildRequires: apache-commons-jexl11 >= 0:1.0
 BuildRequires: apache-commons-lang >= 0:2.0
 BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: jakarta-commons-net >= 0:1.4.1
@@ -271,7 +271,7 @@ Requires: jakarta-commons-jelly-tags-jsl >= 0:1.0-5jpp
 Requires: jakarta-commons-jelly-tags-log >= 0:1.0-5jpp
 Requires: jakarta-commons-jelly-tags-velocity >= 0:1.0-5jpp
 Requires: jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
-Requires: apache-commons-jexl >= 0:1.0
+Requires: apache-commons-jexl11 >= 0:1.0
 Requires: apache-commons-lang >= 0:2.0
 Requires: jakarta-commons-logging >= 0:1.0.4
 Requires: jakarta-commons-net >= 0:1.4.1
@@ -420,7 +420,7 @@ BuildRequires: aspectwerkz >= 0:2.0
 BuildRequires: bcel5.3
 BuildRequires: dom4j >= 0:1.6.1
 BuildRequires: gnu-trove >= 0:1.0.2
-BuildRequires: apache-commons-jexl >= 0:1.0
+BuildRequires: apache-commons-jexl11 >= 0:1.0
 BuildRequires: jrexx >= 0:1.1.1
 BuildRequires: qdox161
 BuildRequires: xerces-j2 >= 0:2.7.1
@@ -431,7 +431,7 @@ Requires: aspectwerkz >= 0:2.0
 Requires: bcel5.3
 Requires: dom4j >= 0:1.6.1
 Requires: gnu-trove >= 0:1.0.2
-Requires: apache-commons-jexl >= 0:1.0
+Requires: apache-commons-jexl11 >= 0:1.0
 Requires: jrexx >= 0:1.1.1
 Requires: qdox161
 Requires: xerces-j2 >= 0:2.7.1
@@ -1841,7 +1841,7 @@ BuildArch: noarch
 ##BuildRequires:  jakarta-commons-jelly-tags-util >= 0:1.0-5jpp
 ##BuildRequires:  jakarta-commons-jelly-tags-velocity >= 0:1.0-5jpp
 ##BuildRequires:  jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
-##BuildRequires:  jakarta-commons-jexl >= 0:1.0
+##BuildRequires:  jakarta-commons-jexl11 >= 0:1.0
 ##BuildRequires:  jakarta-commons-lang >= 0:2.0
 ##BuildRequires:  jakarta-commons-latka >= 0:1.0
 ##BuildRequires:  jakarta-commons-logging >= 0:1.0.4
@@ -2017,7 +2017,9 @@ sed -i 's,<jar>plexus/containers-component-api.jar</jar>,<jar>plexus/containers-
 pushd ../maven-plugins
 %patch33 -p2
 popd
-%patch35 -p0 -d ..
+pushd ..
+%patch35 -p0
+popd
 
 %build
 mkdir -p home/lib/endorsed
@@ -2838,6 +2840,9 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt21_9jpp6
+- build with apache-commons-jexl11
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt20_9jpp6
 - fixed build
 
