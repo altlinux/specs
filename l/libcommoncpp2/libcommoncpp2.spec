@@ -2,7 +2,7 @@
 
 Name: libcommoncpp2
 Version: 1.8.1
-Release: alt2
+Release: alt3
 
 %define docdir %_docdir/%name-%version
 
@@ -86,6 +86,9 @@ cp -a AUTHORS NEWS README THANKS TODO doc/html %buildroot%docdir
 %_infodir/commoncpp2.*
 
 %changelog
+* Tue Sep 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.1-alt3
+- build fixed
+
 * Thu Dec 15 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.1-alt2
 - rebuilt without rpath pointing to standard paths
 
