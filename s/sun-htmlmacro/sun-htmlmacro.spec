@@ -37,7 +37,7 @@ Name:           sun-htmlmacro
 Summary:        Macro engine for generating HTML documents
 Url:            https://htmlmacro.dev.java.net/
 Version:        1.0
-Release:        alt4_0.r27.2jpp6
+Release:        alt5_0.r27.2jpp6
 Epoch:          0
 License:        CDDL
 Group:          Development/Java
@@ -52,7 +52,7 @@ BuildRequires:  jakarta-commons-beanutils
 BuildRequires:  jakarta-commons-jelly
 BuildRequires:  jakarta-commons-jelly-tags-define
 BuildRequires:  jakarta-commons-jelly-tags-xml
-BuildRequires:  jakarta-commons-jexl
+BuildRequires:  apache-commons-jexl11
 BuildRequires:  jakarta-commons-logging
 BuildRequires:  jaxen
 BuildRequires:  nekohtml
@@ -62,7 +62,7 @@ Requires:       jakarta-commons-beanutils
 Requires:       jakarta-commons-jelly
 Requires:       jakarta-commons-jelly-tags-define
 Requires:       jakarta-commons-jelly-tags-xml
-Requires:       jakarta-commons-jexl
+Requires:       apache-commons-jexl11
 Requires:       jakarta-commons-logging
 Requires:       jaxen
 Requires:       nekohtml
@@ -127,8 +127,8 @@ ln -sf $(build-classpath commons-jelly) htmlmacro/lib/
 ln -sf $(build-classpath jelly-tags/commons-jelly-tags-define) htmlmacro/lib/
 #BUILD/sun-htmlmacro-1.0-r27/htmlmacro/lib/commons-jelly-tags-xml-1.1.jar.no
 ln -sf $(build-classpath jelly-tags/commons-jelly-tags-xml) htmlmacro/lib/
-#BUILD/sun-htmlmacro-1.0-r27/htmlmacro/lib/commons-jexl-1.0.jar.no
-ln -sf $(build-classpath commons-jexl) htmlmacro/lib/
+#BUILD/sun-htmlmacro-1.0-r27/htmlmacro/lib/commons-jexl11-1.0.jar.no
+ln -sf $(build-classpath commons-jexl11) htmlmacro/lib/
 #BUILD/sun-htmlmacro-1.0-r27/htmlmacro/lib/commons-lang-2.0.jar.no
 ### ln -sf $(build-classpath commons-lang) htmlmacro/lib/
 #BUILD/sun-htmlmacro-1.0-r27/htmlmacro/lib/commons-logging-1.0.3.jar.no
@@ -183,6 +183,9 @@ cp -pr %{bname}/examples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.r27.2jpp6
+- build with apache-commons-jexl11
+
 * Thu Feb 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.r27.2jpp6
 - new jpp relase
 
