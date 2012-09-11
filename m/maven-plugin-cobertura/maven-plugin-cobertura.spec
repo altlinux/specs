@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       maven-plugin-cobertura
 Version:    2.5.1
-Release:    alt1_4jpp7
+Release:    alt2_4jpp7
 Summary:    Plugin providing the features of Cobertura within Maven
 
 Group:      Development/Java
@@ -89,6 +90,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt2_4jpp7
+- fixed build
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_4jpp7
 - new release
 
