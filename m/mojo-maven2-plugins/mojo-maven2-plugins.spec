@@ -86,7 +86,7 @@ BuildRequires: jpackage-compat
 %define jaxb2_namedversion 1.3-SNAPSHOT
 %define jaxb2_include 0
 %define jboss_namedversion 1.3.2-SNAPSHOT
-%define jboss_include 1
+%define jboss_include 0
 %define jboss_packaging_namedversion 2.0-SNAPSHOT
 %define jboss_packaging_include 1
 %define jdepend_namedversion 2.0-SNAPSHOT
@@ -137,7 +137,7 @@ BuildRequires: jpackage-compat
 %define delicious_namedversion 1.0-alpha-1-SNAPSHOT
 %define delicious_include 1
 %define ejbdoclet_namedversion 1.0-beta-1-SNAPSHOT
-%define ejbdoclet_include 1
+%define ejbdoclet_include 0
 %define emma_namedversion 1.0-SNAPSHOT
 %define emma_include 0
 %define fileutils_namedversion 1.0-SNAPSHOT
@@ -151,7 +151,7 @@ BuildRequires: jpackage-compat
 %define graphing_namedversion 0.1-SNAPSHOT
 %define graphing_include 0
 %define hibernatedoclet_namedversion 1.0-beta-1-SNAPSHOT
-%define hibernatedoclet_include 1
+%define hibernatedoclet_include 0
 %define ibatis_namedversion 1.0-alpha-1-SNAPSHOT
 %define ibatis_include 0
 %define j2me_namedversion 0.1.0-alpha-SNAPSHOT
@@ -213,13 +213,13 @@ BuildRequires: jpackage-compat
 %define shell_namedversion 1.0-SNAPSHOT
 %define shell_include 1
 %define springdoclet_namedversion 1.0-beta-1
-%define springdoclet_include 1
+%define springdoclet_include 0
 %define visibroker_namedversion 1.0-alpha-1-SNAPSHOT
 %define visibroker_include 0
 %define wagon_namedversion 1.0-SNAPSHOT
 %define wagon_include 1
 %define webdoclet_namedversion 1.0-beta-1
-%define webdoclet_include 1
+%define webdoclet_include 0
 %define xfire_namedversion 1.0-SNAPSHOT
 %define xfire_include 0
 %define xjc_namedversion 1.0-beta-2-SNAPSHOT
@@ -345,7 +345,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt25_8jpp6
+Release:        alt26_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -3022,6 +3022,7 @@ sed -i 's,<module>sysdeo-tomcat-maven-plugin</module>,<!-- tmp nocompile<module>
 sed -i 's,<module>was6-maven-plugin</module>,<!-- tmp nocompile<module>was6-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>webstart</module>,<!-- tmp nocompile<module>webstart</module>-->,' pom.xml
 sed -i 's,<module>solaris</module>,<!-- tmp nocompile<module>solaris</module>-->,' pom.xml
+sed -i 's,<module>jboss-maven-plugin</module>,<!-- tmp nocompile<module>jboss-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>xmlbeans-maven-plugin</module>,<!-- tmp nocompile<module>xmlbeans-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>jdiff-maven-plugin</module>,<!-- tmp nocompile<module>jdiff-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>xjc-maven-plugin</module>,<!-- tmp nocompile<module>xjc-maven-plugin</module>-->,' mojo-sandbox/pom.xml
@@ -3039,6 +3040,10 @@ sed -i 's,<module>push-maven-plugin</module>,<!-- tmp nocompile<module>push-mave
 sed -i 's,<module>script-maven-plugin</module>,<!-- tmp nocompile<module>script-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>visibroker-maven-plugin</module>,<!-- tmp nocompile<module>visibroker-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>shade-maven-plugin</module>,<!-- tmp nocompile<module>shade-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>hibernatedoclet-maven-plugin</module>,<!-- tmp nocompile<module>hibernatedoclet-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>springdoclet-maven-plugin</module>,<!-- tmp nocompile<module>springdoclet-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>webdoclet-maven-plugin</module>,<!-- tmp nocompile<module>web-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>ejbdoclet-maven-plugin</module>,<!-- tmp nocompile<module>ejbdoclet-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>-maven-plugin</module>,<!-- tmp nocompile<module>-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 
 %build
@@ -6087,6 +6092,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt26_8jpp6
+- build without jboss4
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt25_8jpp6
 - fixed build
 
