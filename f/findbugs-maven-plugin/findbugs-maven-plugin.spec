@@ -1,3 +1,4 @@
+BuildRequires: maven-antrun-plugin fusesource-pom
 BuildRequires: /proc maven-plugin-descriptor
 BuildRequires: jpackage-compat
 %define version 2.3.2
@@ -37,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           findbugs-maven-plugin
 Version:        2.3.2
-Release:        alt3_0.3.SNAPSHOTjpp6
+Release:        alt4_0.3.SNAPSHOTjpp6
 Epoch:          0
 Summary:        FindBugs Maven Plugin
 Group:          Development/Java
@@ -149,6 +150,9 @@ ln -s %{name}-%{namedversion} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt4_0.3.SNAPSHOTjpp6
+- fixed build
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.2-alt3_0.3.SNAPSHOTjpp6
 - fixed build
 
