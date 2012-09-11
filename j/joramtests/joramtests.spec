@@ -1,3 +1,4 @@
+BuildRequires: maven-antrun-plugin jboss-jms-1.1-api
 BuildRequires: geronimo-jms-1.1-api jboss-test jboss-common
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -53,7 +54,7 @@ BuildRequires: jpackage-compat
 
 Name:           joramtests
 Version:        1.5
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        JORAM tests
 License:        LGPLv2+
@@ -213,6 +214,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt3_2jpp6
+- fixed build
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_2jpp6
 - fixed build with java 7
 
