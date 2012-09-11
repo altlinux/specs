@@ -10,7 +10,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt6.beta
+Release: alt7.beta
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -104,7 +104,9 @@ export MPIDIR=%mpidir
 for i in depend libpetscfem; do
 	%make_ext $i SOMVER=%somver SOVER=%sover
 done
-%make_ext all SOMVER=%somver SOVER=%sover
+%make_ext all \
+	SOMVER=%somver SOVER=%sover \
+	PERL_DIR=%perl_vendor_archlib/CORE
 
 %if "%scalar_type" == "real"
 %make_build -C doc
@@ -148,6 +150,9 @@ done
 %endif
 
 %changelog
+* Tue Sep 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt7.beta
+- Fixed build
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt6.beta
 - New snapshot
 
