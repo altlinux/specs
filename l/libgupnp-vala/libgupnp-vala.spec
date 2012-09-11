@@ -1,7 +1,7 @@
 %define oname gupnp-vala
 
 Name: lib%oname
-Version: 0.10.3
+Version: 0.10.4
 Release: alt1
 Summary: GUPnP is a uPnP framework. This adds vala language bindings
 
@@ -51,6 +51,9 @@ This package adds vala language bindings
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Sep 11 2012 Alexey Shabalin <shaba@altlinux.ru> 0.10.4-alt1
+- 0.10.4
+
 * Tue Mar 13 2012 Alexey Shabalin <shaba@altlinux.ru> 0.10.3-alt1
 - 0.10.3
 
