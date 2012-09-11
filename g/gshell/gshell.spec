@@ -2,7 +2,7 @@ BuildRequires: maven-enforcer-plugin
 BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: xpp3-minimal
 Patch33: gshell-2.6.2-alt-no-deploy.patch
-BuildRequires: /proc apache-commons-jexl
+BuildRequires: /proc
 BuildRequires: jpackage-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
@@ -62,7 +62,7 @@ BuildRequires: jpackage-compat
 
 Name:           gshell
 Version:        2.6.2
-Release:        alt5_0jpp6
+Release:        alt6_0jpp6
 Epoch:          0
 Summary:        GShell
 License:        ASL 2.0
@@ -300,6 +300,9 @@ rm -r %{buildroot}%{_docdir}/%{name}-%{namedversion}/apidocs
 %endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.2-alt6_0jpp6
+- build with apache-commons-jexl11
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.2-alt5_0jpp6
 - fixed build
 
