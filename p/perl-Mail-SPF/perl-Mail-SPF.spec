@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 2.8.0
-Release: alt1
+Release: alt2
 
 Summary: Perl module that implements Sender Policy Framework
 License: BSD
@@ -10,6 +10,9 @@ Group: Development/Perl
 
 URL: %CPAN %module
 Source: http://www.cpan.org/modules/by-module/Mail/%module-v%version.tar.gz
+
+# https://rt.cpan.org/Public/Bug/Display.html?id=78214
+Patch: %module-2.8.0-fixed_tests_with_new_Net_DNS.patch
 
 BuildArch: noarch
 
@@ -22,6 +25,7 @@ Framework (SPF) e-mail sender authentication system.
 
 %prep
 %setup -n %module-v%version
+%patch -p2
 
 %build
 %perl_vendor_build
@@ -35,9 +39,12 @@ Framework (SPF) e-mail sender authentication system.
 %files
 %exclude %_bindir/spfquery
 %exclude %_sbindir/spfd
-%perl_vendor_privlib/Mail/
+%perl_vendor_privlib/Mail/SPF*
 
 %changelog
+* Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 2.8.0-alt2
+- fixed tests with Net::DNS 0.68
+
 * Sun Mar 25 2012 Victor Forsiuk <force@altlinux.org> 2.8.0-alt1
 - 2.8.0
 
