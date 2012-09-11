@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -47,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-deployers
 Version:        2.0.7
-Release:	alt1_4jpp6
+Release:	alt2_4jpp6
 Epoch:          0
 Summary:        JBoss Deployers
 License:        LGPLv2+
@@ -314,6 +315,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}/jboss-deployers-impl.jar $RPM_BUILD_ROO
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.7-alt2_4jpp6
+- fixed build
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.0.7-alt1_4jpp6
 - new version
 
