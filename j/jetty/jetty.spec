@@ -1,3 +1,4 @@
+BuildRequires: maven-antrun-plugin
 BuildRequires: cpptasks
 BuildRequires: eclipse-equinox-osgi felix-osgi-foundation xpp3-minimal
 BuildRequires: /proc
@@ -51,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty
 Version:        8.1.0
-Release:        alt3_4jpp7
+Release:        alt4_4jpp7
 Summary:        Java Webserver and Servlet Container
 
 Group:          Development/Java
@@ -398,6 +399,9 @@ fi
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 8.1.0-alt4_4jpp7
+- fixed build
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 8.1.0-alt3_4jpp7
 - rebuild
 
