@@ -7,7 +7,7 @@
 
 Name: cdrdao
 Version: 1.2.3
-%define release alt2%rc_ver
+%define release alt3%rc_ver
 
 %ifdef cvsdate
 Release: %{release}cvs%cvsdate
@@ -30,13 +30,11 @@ Source: %name-%version-%cvsdate.tar.bz2
 Source1: %name.control
 Patch: %name-1.1.9-alt-locale.patch
 # from Fedora
-Patch2:    cdrdao-1.2.2-desktop.patch
-Patch3:    cdrdao-1.2.3-version.patch
+Patch2: cdrdao-1.2.2-desktop.patch
+Patch3: cdrdao-1.2.3-version.patch
+Patch4: cdrdao-1.2.3-stat.patch
 
 PreReq: control
-
-# Added by buildreq2 on Wed Feb 01 2006
-#BuildRequires: gcc-c++ gnome-libs-devel libacl-devel libao-devel libgnome-vfsmm-devel libgnomemm-devel libgnomeui-devel libgnomeuimm-devel liblame-devel libmad-devel libpopt-devel libvorbis-devel pccts-devel
 
 BuildRequires: gcc-c++ libacl-devel libao-devel liblame-devel libmad-devel libvorbis-devel
 BuildRequires: libGConf-devel
@@ -71,6 +69,7 @@ ISRC codes/CD-TEXT and non destructive cut of the audio data.
 #%%patch -p1
 %patch2 -p1 -b .desktop
 %patch3 -p1 -b .version
+%patch4 -p1 -b .stat
 
 subst 's,<linux/../scsi/scsi.h>,<scsi/scsi.h>,' dao/sg_err.h
 
@@ -125,6 +124,9 @@ chmod 700 %buildroot%_bindir/%name
 %endif
 
 %changelog
+* Tue Sep 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt3
+- fixed build (patch from fedora)
+
 * Sun Jan 03 2010 Yuri N. Sedunov <aris@altlinux.org> 1.2.3-alt2
 - 1.2.3 release
 - upstreamed patches removed
