@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -34,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-maven-utils
 Version:        1.0.0
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        Various Maven utilities hosted by JBoss
 License:        LGPLv2+
@@ -157,6 +158,9 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 #%doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt3_1jpp6
+- fixed build
+
 * Sat Apr 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt2_1jpp6
 - fixed build with new plexus-containers
 
