@@ -1,6 +1,6 @@
 %define dist IO-Socket-SSL
 Name: perl-%dist
-Version: 1.49
+Version: 1.76
 Release: alt1
 
 Summary: SSL socket interface class
@@ -9,12 +9,11 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
-Patch: IO-Socket-SSL-1.49-alt-deps.patch
+Patch: IO-Socket-SSL-1.76-alt-deps.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Nov 14 2011
-BuildRequires: perl-Encode perl-IO-Socket-INET6 perl-Net-IDN-Encode perl-Net-SSLeay perl-devel
+BuildRequires: perl-Encode perl-IO-Socket-IP perl-Net-IDN-Encode perl-Net-SSLeay perl-devel perl-unicore
 
 %description
 IO::Socket::SSL is a class implementing an object oriented
@@ -24,7 +23,7 @@ interface methods.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
+%patch -p2
 
 %build
 %perl_vendor_build
@@ -37,6 +36,11 @@ interface methods.
 %perl_vendor_privlib/IO
 
 %changelog
+* Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1.76-alt1
+- 1.49 -> 1.76
+- use perl-IO-Socket-IP instead of IO::Socket::INET6
+- updated alt-deps patch
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 1.49-alt1
 - 1.44 -> 1.49
 - enabled dependency on Net::IDN::Encode
