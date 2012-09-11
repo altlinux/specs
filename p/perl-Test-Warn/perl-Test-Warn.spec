@@ -1,6 +1,6 @@
 %define dist Test-Warn
 Name: perl-%dist
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 Summary: Perl extension to test methods for warnings
@@ -32,6 +32,10 @@ This module provides a few convenience methods for testing warning based code.
 %perl_vendor_privlib/Test
 
 %changelog
+* Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 0.24-alt1
+- 0.23 -> 0.24
+- fixed build with Carp >= 1.25
+
 * Sat Apr 23 2011 Alexey Tourbin <at@altlinux.ru> 0.23-alt1
 - 0.21 -> 0.23
 
