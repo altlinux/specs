@@ -1,6 +1,6 @@
 Name: stardict
 Version: 3.0.3
-Release: alt1
+Release: alt2
 
 Summary: StarDict dictionary
 License: GPLv3+
@@ -21,6 +21,7 @@ Patch3: stardict-3.0.3-alt-dsl2dict.patch
 Patch4: stardict-3.0.3-alt-linkage.patch
 Patch5: stardict-3.0.3-alt-desktop.patch
 Patch6: stardict-3.0.3-alt-tabfile.patch
+Patch7: stardict-3.0.3-alt-zlib.patch
 
 Provides: %name-common = %version
 Obsoletes: %name-common < %version
@@ -28,6 +29,8 @@ Provides: %name-gtk = %version
 Obsoletes: %name-gtk < %version
 Provides: %name-gnome = %version
 Obsoletes: %name-gnome < %version
+
+%def_disable dictdotcn
 
 # Automatically added by buildreq on Mon May 28 2012
 # optimized out: docbook-dtds fontconfig fontconfig-devel glib2-devel gnome-doc-utils-xslt libICE-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libgtk+2-devel libpango-devel libstdc++-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config python-base python-module-libxml2 python-modules python-modules-encodings xml-common xml-utils xorg-xproto-devel xsltproc zlib-devel
@@ -97,21 +100,23 @@ sed -i '/AM_GCONF_SOURCE_2/d' dict/configure.ac
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 install -pm644 %_sourcedir/docklet_*.png dict/src/pixmaps/
 
 %build
 %autoreconf
 %configure \
- --disable-gnome-support \
  --enable-spell \
  --enable-gucharmap \
  --enable-espeak \
+ --disable-gnome-support \
  --disable-festival \
  --disable-man \
  --disable-updateinfo \
  --disable-advertisement \
  --disable-gpe-support \
  --disable-maemo-support \
+ %{subst_enable dictdotcn} \
  #
 %make_build
 
@@ -160,14 +165,23 @@ hardlink -cv %buildroot%_datadir
 
 %files plugin-espeak
 %_libdir/%name/plugins/stardict_espeak.*
+
 %files plugin-gucharmap
 %_libdir/%name/plugins/stardict_gucharmap.*
+
 %files plugin-spell
 %_libdir/%name/plugins/stardict_spell.*
+
+%if_enabled dictdotcn
 %files plugin-dictdotcn
 %_libdir/%name/plugins/stardict_dictdotcn.*
+%endif
 
 %changelog
+* Tue Sep 11 2012 Dmitry V. Levin <ldv@altlinux.org> 3.0.3-alt2
+- Disabled build and packaging of dictdotcn netdict plugin.
+- Fixed build with zlib >= 1.2.5.2.
+
 * Mon May 28 2012 Dmitry V. Levin <ldv@altlinux.org> 3.0.3-alt1
 - Updated to 3.0.3.
 - Dropped stardict-gnome, merged stardict-common and stardict-gtk back
