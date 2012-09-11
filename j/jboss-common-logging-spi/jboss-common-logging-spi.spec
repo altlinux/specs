@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -47,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-common-logging-spi
 Version:        2.1.0
-Release:        alt1_2jpp6
+Release:        alt2_2jpp6
 Epoch:          0
 Summary:        JBoss Logging Programming Interface
 License:        LGPLv2+
@@ -193,6 +194,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt2_2jpp6
+- fixed build
+
 * Wed Feb 09 2011 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_2jpp6
 - new version
 
