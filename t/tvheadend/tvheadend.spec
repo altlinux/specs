@@ -1,5 +1,5 @@
 Name: tvheadend
-Version: 2.99
+Version: 3.0
 Release: alt1
 
 Summary: Tvheadend TV streaming server
@@ -62,6 +62,9 @@ f=%_sysconfdir/tvheadend/superuser
 %dir %attr(0770,root,_hts) %_localstatedir/tvheadend
 
 %changelog
+* Tue Sep 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0-alt1
+- 3.0 released
+
 * Mon Jun 18 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.99-alt1
 - 2.99 released
 
