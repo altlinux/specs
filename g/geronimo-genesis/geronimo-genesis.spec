@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           geronimo-genesis
 Version:        1.3
-Release:        alt4_2jpp6
+Release:        alt5_2jpp6
 Epoch:          0
 Summary:        Geronimo Genesis
 License:        ASL 2.0
@@ -67,7 +67,7 @@ BuildRequires:  maven2-plugin-remote-resources
 BuildRequires:  maven2-plugin-resources
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  plugin-support
-BuildRequires:  jakarta-commons-jexl >= 0:1.1
+BuildRequires:  apache-commons-jexl11 >= 0:1.1
 BuildArch:      noarch
 Source44: import.info
 
@@ -189,6 +189,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt5_2jpp6
+- build with apache-commons-jexl11
+
 * Thu Mar 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt4_2jpp6
 - fixed build with maven3
 
