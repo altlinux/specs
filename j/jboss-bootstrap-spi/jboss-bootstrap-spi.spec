@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-bootstrap-spi
 Version:        2.0.0
-Release:        alt1_0.a2.2jpp6
+Release:        alt2_0.a2.2jpp6
 Epoch:          0
 Summary:        JBoss Bootstrap SPI
 License:        LGPLv2+
@@ -126,6 +127,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt2_0.a2.2jpp6
+- fixed build
+
 * Fri Sep 03 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_0.a2.2jpp6
 - new version
 
