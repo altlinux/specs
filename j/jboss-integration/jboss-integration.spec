@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -47,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-integration
 Version:        5.1.0
-Release:	alt2_4jpp6
+Release:	alt3_4jpp6
 Epoch:          0
 Summary:        JBoss Integration
 License:        LGPLv2+
@@ -263,6 +264,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}/jboss-profileservice-spi.jar $RPM_BUILD
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.1.0-alt3_4jpp6
+- fixed build
+
 * Tue Mar 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.1.0-alt2_4jpp6
 - built with patched assembly plugin
 
