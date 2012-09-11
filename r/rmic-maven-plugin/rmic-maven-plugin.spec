@@ -1,3 +1,4 @@
+BuildRequires: maven-antrun-plugin maven-clean-plugin
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             rmic-maven-plugin
 Version:          1.2.0
-Release:          alt1_1jpp7
+Release:          alt2_1jpp7
 Summary:          Uses the java rmic compiler to generate classes used in remote method invocation
 License:          MIT
 Group:            Development/Java
@@ -87,6 +88,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_1jpp7
+- fixed build
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_1jpp7
 - new version
 
