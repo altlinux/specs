@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 2.00.10
-Release: alt1.1
+Release: alt2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -12,7 +12,10 @@ Group: Development/Perl
 
 Url: %CPAN %module
 Source: http://www.cpan.org/modules/by-module/SOAP/%module-%version.tar.gz
-Patch: SOAP-WSDL-2.00.05-fixmodulepath.patch
+Patch1: SOAP-WSDL-2.00.05-fixmodulepath.patch
+
+# https://rt.cpan.org/Public/Bug/Display.html?id=74257
+Patch2: SOAP-WSDL-2.00.10-perl5.16.patch
 
 BuildArch: noarch
 
@@ -28,7 +31,8 @@ SOAP-WSDL provides a SOAP client with WSDL support.
 
 %prep
 %setup -n %module-%version
-%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -42,6 +46,9 @@ SOAP-WSDL provides a SOAP client with WSDL support.
 %perl_vendor_privlib/SOAP/*
 
 %changelog
+* Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 2.00.10-alt2
+- fixed build with perl-5.16
+
 * Fri Nov 26 2010 Igor Vlasenko <viy@altlinux.ru> 2.00.10-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
