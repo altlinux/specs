@@ -5,12 +5,13 @@
 %def_enable vala
 %def_enable smartcard
 %def_enable usbredir
+%def_disable gtk_doc
 # gstreamer/pulse/no
 %define audio pulse
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.12
+Version: 0.13.29
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -37,6 +38,7 @@ BuildRequires: libjpeg-devel libpixman-devel libssl-devel zlib-devel
 BuildRequires: spice-protocol >= 0.10.1
 BuildRequires: libgio-devel libcairo-devel
 BuildRequires: libcelt051-devel >= 0.5.1.1
+BuildRequires: libdbus-glib-devel
 %{?_with_sasl:BuildRequires: libsasl2-devel}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver vala-tools}
 %{?_enable_smartcard:BuildRequires: libcacard-devel >= 0.1.2}
@@ -221,8 +223,8 @@ cd %_name-%version
 	--disable-static \
 	--disable-rpath \
 	--enable-polkit \
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	--with-usb-acl-helper-dir=%_libexecdir/spice-gtk/ \
-	--enable-gtk-doc \
 	--with-pnp-ids-path=%_datadir/misc \
 	--with-usb-ids-path=%_datadir/misc \
 	--with-gtk=2.0 \
@@ -303,8 +305,10 @@ cd ..
 %_datadir/vala/vapi/spice-client-glib-2.0.vapi
 %_datadir/vala/vapi/spice-client-glib-2.0.deps
 
+%if_enabled gtk_doc
 %files devel-doc
 %_datadir/gtk-doc/html/*
+%endif
 
 %files -n python-module-%_name
 %python_sitelibdir/*.so
@@ -335,6 +339,10 @@ cd ..
 %endif
 
 %changelog
+* Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 0.13.29-alt1
+- 0.13.29
+- disable build gtk-doc
+
 * Thu Apr 26 2012 Alexey Shabalin <shaba@altlinux.ru> 0.12-alt1
 - 0.12
 

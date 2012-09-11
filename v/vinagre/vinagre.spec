@@ -9,7 +9,7 @@
 
 Name: vinagre
 Version: %ver_major.2
-Release: alt1
+Release: alt1.1
 
 Summary: VNC client for the GNOME Desktop
 License: GPLv2
@@ -78,12 +78,15 @@ rm -rf %buildroot%_datadir/doc
 %_datadir/icons/hicolor/*/*/*
 %_datadir/mime/packages/vinagre-mime.xml
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Vinagre.service
-%config %_datadir/glib-2.0/schemas/org.gnome.Vinagre.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.Vinagre.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.Vinagre.convert
 %_man1dir/vinagre.*
 %doc AUTHORS NEWS README
 
 %changelog
+* Tue Sep 11 2012 Alexey Shabalin <shaba@altlinux.ru> 3.4.2-alt1.1
+- rebuild with new libspice-client-glib-2.0.so.1, libspice-client-gtk-3.0.so.1
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

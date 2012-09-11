@@ -1,9 +1,9 @@
 Name: libiscsi
-Version: 1.2.0
+Version: 1.6.0
 Release: alt1
 
 Summary: iSCSI client library
-License: LGPLv2+
+License: LGPLv2.1+
 Group: System/Libraries
 
 Url: https://github.com/sahlberg/libiscsi
@@ -21,29 +21,26 @@ across a network.
 
 %build
 ./autogen.sh
-%configure
+%configure --disable-static
 %make_build
 
 %install
 %makeinstall_std
-rm %buildroot%_libdir/libiscsi.a
-rm %buildroot%_libdir/libiscsi.la
-find %buildroot -name "*.old" -delete
 
 %files
-%doc COPYING.LESSER README TODO
+%doc COPYING README TODO
 %_libdir/libiscsi.so.*
 
 %package utils
 Summary: iSCSI Client Utilities
 Group: System/Configuration/Networking
+License: GPLv2+
 
 %description utils
 This package provides a set of assorted utilities to connect to iSCSI
 servers without having to set up the Linux iSCSI initiator.
 
 %files utils
-%doc COPYING README TODO
 %_bindir/ld_iscsi.so
 %_bindir/iscsi-ls
 %_bindir/iscsi-inq
@@ -57,12 +54,14 @@ Requires: libiscsi = %version-%release
 The libiscsi-devel package includes the header files for libiscsi.
 
 %files devel
-%doc COPYING.LESSER README TODO
 %_includedir/iscsi/iscsi.h
 %_includedir/iscsi/scsi-lowlevel.h
 %_libdir/libiscsi.so
 
 %changelog
+* Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 1.6.0-alt1
+- 1.6.0
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
