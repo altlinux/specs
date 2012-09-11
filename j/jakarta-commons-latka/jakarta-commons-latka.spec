@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-latka
 Version:        1.0
-Release:        alt5_0.r560660.1jpp5
+Release:        alt6_0.r560660.1jpp5
 Epoch:          0
 Summary:        Functional (end-to-end) testing tool
 
@@ -91,7 +91,7 @@ BuildRequires: jakarta-commons-collections
 BuildRequires: jakarta-commons-httpclient
 BuildRequires: jakarta-commons-jelly
 BuildRequires: jakarta-commons-jelly-tags-junit
-BuildRequires: jakarta-commons-jexl
+BuildRequires: apache-commons-jexl11
 BuildRequires: jakarta-commons-logging
 BuildRequires: jaxen >= 0:1.1
 BuildRequires: jdom >= 0:1.0
@@ -104,7 +104,7 @@ Requires: jakarta-commons-collections
 Requires: jakarta-commons-httpclient
 Requires: jakarta-commons-jelly
 Requires: jakarta-commons-jelly-tags-junit
-Requires: jakarta-commons-jexl
+Requires: apache-commons-jexl11
 Requires: jakarta-commons-logging
 Requires: jaxen >= 0:1.1
 Requires: jdom >= 0:1.0
@@ -182,7 +182,7 @@ pushd target/lib
     ln -sf $(build-classpath commons-httpclient)
     ln -sf $(build-classpath commons-jelly)
     ln -sf $(build-classpath commons-jelly-tags-junit)
-    ln -sf $(build-classpath commons-jexl)
+    ln -sf $(build-classpath commons-jexl11)
     ln -sf $(build-classpath commons-logging)
     ln -sf $(build-classpath jaxen)
     ln -sf $(build-classpath jdom)
@@ -256,6 +256,9 @@ find $RPM_BUILD_ROOT -name *.sh -print0 | xargs -0 dos2unix
 %endif
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.r560660.1jpp5
+- build with apache-commons-jexl11
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.r560660.1jpp5
 - fixed build with java 7
 
