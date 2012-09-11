@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: hugin
-Version: 2011.4.0
-Release: alt1.2
+Version: 2012.0.0
+Release: alt1rc1
 
 Group: Graphics
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -18,6 +18,7 @@ BuildRequires: boost-signals-devel libglew-devel libGLUT-devel libXi-devel libXm
 BuildRequires: glib-devel libgtk+2-devel libjpeg-devel libpano13-devel perl-podlators
 BuildRequires: libpng-devel libstdc++-devel libtiff-devel wxGTK-devel xorg-locales
 BuildRequires: zlib-devel libpango-devel zip cmake openexr-devel libexiv2-devel libtclap-devel
+BuildRequires: liblensfun-devel swig
 Requires: enblend >= 3.2 libpano13 wxGTK >= 2.6.0  autopano-sift-C perl-Image-ExifTool make
 
 %description
@@ -30,14 +31,14 @@ panorama, stitch any series of overlapping pictures and much more.
 %build
 ###From CVS only
 suffix=`echo %_libdir | sed s/[^0-9]*//`
-cmake   -DCMAKE_INSTALL_PREFIX=%buildroot/usr/ -DINSTALL_XRC_DIR="/usr/share/hugin/xrc" -DLIB_SUFFIX="$suffix" .
+cmake -DCMAKE_INSTALL_PREFIX=/usr/ -DINSTALL_XRC_DIR="/usr/share/hugin/xrc" -DLIB_SUFFIX="$suffix" .
 make
 
 %install
 ###Check line below
 #/bin/ln -s %%_datadir/automake/mkinstalldirs config/mkinstalldirs
 
-%makeinstall
+make install DESTDIR=%buildroot
 ###Check line below
 %find_lang %name
 ###Check line below ???
@@ -50,9 +51,6 @@ make
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=Photography \
 	%buildroot%_desktopdir/hugin.desktop
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=Photography \
-	%buildroot%_desktopdir/PTBatcherGUI.desktop
 
 
 %files -f %name.lang
@@ -64,8 +62,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/hugin/
 %_datadir/pixmaps/*
 %_datadir/mime/packages/hugin.xml
-%_libdir/*
-%exclude /usr/lib/debug
+%_libdir/libhuginlevmar.so*
+%_libdir/hugin
+%python_sitelibdir/*
 %_niconsdir/*
 %_desktopdir/*
 %_man1dir/*
@@ -73,11 +72,8 @@ desktop-file-install --dir %buildroot%_desktopdir \
 /usr/share/icons/hicolor/32x32/apps/hugin.png
 
 %changelog
-* Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.4.0-alt1.2
-- Rebuilt with Boost 1.51.0
-
-* Wed Apr 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.4.0-alt1.1
-- Rebuilt with Boost 1.49.0
+* Fri Aug 31 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2012.0.0-alt1rc1
+- 2012.0.0.rc1
 
 * Wed Dec 21 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2011.4.0-alt1
 - 2011.4.0
