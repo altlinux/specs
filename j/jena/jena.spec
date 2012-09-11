@@ -1,10 +1,11 @@
+BuildRequires: maven-antrun-plugin
 BuildRequires: icu4j
 Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		jena
 Version:	2.6.4
-Release:	alt1_3jpp7
+Release:	alt2_3jpp7
 BuildArch:	noarch
 Summary:	Java framework for building Semantic Web applications
 
@@ -94,6 +95,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 2.6.4-alt2_3jpp7
+- fixed build
+
 * Sat Mar 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.6.4-alt1_3jpp7
 - new version
 
