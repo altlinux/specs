@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           plugin-support
 Version:        1.0
-Release:        alt3_1.alpha_1jpp6
+Release:        alt4_1.alpha_1jpp6
 Epoch:          0
 Summary:        Plugin Support
 Group:          Development/Java
@@ -53,14 +53,14 @@ Source2:        plugin-support-jpp-depmap.xml
 Requires(post): jpackage-utils
 Requires(postun): jpackage-utils
 Requires:       ant >= 0:1.6.5
-Requires:       apache-commons-jexl >= 0:1.1
+Requires:       apache-commons-jexl11 >= 0:1.1
 Requires:       commons-lang >= 0:2.3
 Requires:       commons-logging >= 0:1.0.4
 Requires:       maven2 >= 0:2.0.4
 Requires:       mojo-parent
 Requires:       jpackage-utils
 BuildRequires:  ant >= 0:1.6.5
-BuildRequires:  apache-commons-jexl >= 0:1.1
+BuildRequires:  apache-commons-jexl11 >= 0:1.1
 BuildRequires:  commons-lang >= 0:2.3
 BuildRequires:  commons-logging >= 0:1.0.4
 BuildRequires:  maven2 >= 0:2.0.4
@@ -152,6 +152,9 @@ ln -s plugin-support-%{namedversion} %{buildroot}%{_javadocdir}/plugin-support
 %{_javadocdir}/plugin-support
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_1.alpha_1jpp6
+- build with apache-commons-jexl11
+
 * Fri Apr 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_1.alpha_1jpp6
 - fixed build with maven3
 
