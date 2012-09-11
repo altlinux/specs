@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.16.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -361,6 +361,9 @@ EOF
 	%privlib/unicore/To/Lower.pl
 	%privlib/unicore/To/Title.pl
 	%privlib/unicore/To/Upper.pl
+	%privlib/unicore/To/Cf.pl
+	%privlib/unicore/To/Lc.pl
+	%privlib/unicore/To/Uc.pl
 %dir	%privlib/unicore/lib
 %dir	%privlib/unicore/lib/Alpha
 	%privlib/unicore/lib/Alpha/Y.pl
@@ -667,6 +670,9 @@ EOF
 %exclude %privlib/unicore/To/Lower.pl
 %exclude %privlib/unicore/To/Title.pl
 %exclude %privlib/unicore/To/Upper.pl
+%exclude %privlib/unicore/To/Cf.pl
+%exclude %privlib/unicore/To/Lc.pl
+%exclude %privlib/unicore/To/Uc.pl
 # required for Unicode::Normalize
 	%privlib/unicore/CombiningClass.pl
 	%privlib/unicore/Decomposition.pl
@@ -698,6 +704,12 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1:5.16.1-alt2
+- unicore database files moved to perl-base:
+  * unicore/To/Cf.pl (format control characters)
+  * unicore/To/Lc.pl (lowercase)
+  * unicore/To/Uc.pl (uppercase)
+
 * Thu Aug 23 2012 Vladimir Lettiev <crux@altlinux.ru> 1:5.16.1-alt1
 - 5.14.2 -> 5.16.1
 - Devel::DProf, Shell moved from core
