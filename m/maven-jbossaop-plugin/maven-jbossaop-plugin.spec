@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -35,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-jbossaop-plugin
 Version:        2.1.3
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        Maven JBoss AOP Plugin
 License:        ASL 2.0
@@ -132,6 +133,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_1jpp6
+- fixed build
+
 * Mon Feb 14 2011 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt1_1jpp6
 - new version
 
