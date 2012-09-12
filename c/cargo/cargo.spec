@@ -48,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo
 Version:        1.0
-Release:        alt5_3jpp6
+Release:        alt6_3jpp6
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -106,8 +106,7 @@ BuildRequires: geronimo-jta-1.0.1B-api
 BuildRequires: geronimo-servlet-2.4-api
 BuildRequires: gnu-trove
 BuildRequires: jpackage-utils >= 0:1.7.5
-BuildRequires: jetty6
-BuildRequires: jetty6-core
+BuildRequires: jetty
 BuildRequires: jmock
 BuildRequires: junit
 BuildRequires: apache-commons-parent
@@ -551,6 +550,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_3jpp6
+- build with jetty8
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_3jpp6
 - build with new commons-vfs2
 
