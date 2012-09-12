@@ -38,7 +38,7 @@ Name:           sysunit
 Summary:        SysUnit
 Url:            http://sourceforge.net/projects/sysunit
 Version:        1.0
-Release:        alt5_1jpp5
+Release:        alt6_1jpp5
 Epoch:          0
 License:        Apache Software License 2
 Group:          Development/Java
@@ -76,7 +76,7 @@ BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-war
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 #
 BuildRequires: jakarta-commons-logging
 BuildRequires: jbossas
@@ -126,12 +126,12 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > sysunit-1.0-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > sysunit-1.0-depmap.new.xml
 
 %patch0 -b .sav0
 
@@ -139,7 +139,7 @@ echo '</depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -212,6 +212,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 #%doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_1jpp5
+- build with saxon6-scripts
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_1jpp5
 - fixed build with java 7
 
