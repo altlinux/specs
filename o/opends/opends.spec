@@ -1,4 +1,3 @@
-BuildRequires: glassfish-jaxb
 BuildRequires: /proc
 BuildRequires: jpackage-1.6.0-core
 # Copyright (c) 2000-2009, JPackage Project
@@ -35,7 +34,7 @@ BuildRequires: jpackage-1.6.0-core
 
 Name:           opends
 Version:        1.0.0
-Release:	alt3_5jpp6
+Release:	alt4_5jpp6
 Epoch:          0
 Summary:        OpenDS directory service
 Group:          Development/Java
@@ -78,12 +77,12 @@ BuildRequires: ganymed-ssh2
 BuildRequires: berkeleydb-je32
 BuildRequires: jaf_1_1_api
 BuildRequires: javamail_1_4_api
-BuildRequires: jaxb_2_1_api
+#BuildRequires: jaxb_2_1_api
 BuildRequires: relaxngDatatype
 BuildRequires: saaj_1_3_api
 BuildRequires: servlet_2_5_api
 BuildRequires: stax_1_0_api
-BuildRequires: glassfish-jaxb
+BuildRequires: glassfish-jaxb21
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-jaxp-1.3-apis
 Requires: aspectj
@@ -91,12 +90,12 @@ Requires: ganymed-ssh2
 Requires: berkeleydb-je32
 Requires: jaf_1_1_api
 Requires: javamail_1_4_api
-Requires: jaxb_2_1_api
+#Requires: jaxb_2_1_api
 Requires: relaxngDatatype
 Requires: saaj_1_3_api
 Requires: servlet_2_5_api
 Requires: stax_1_0_api
-Requires: glassfish-jaxb
+Requires: glassfish-jaxb21
 Requires(post): jpackage-utils >= 0:1.7.5
 Requires(postun): jpackage-utils >= 0:1.7.5
 Source44: import.info
@@ -153,11 +152,11 @@ ln -sf $(build-classpath aspectjrt) lib/aspectjrt.jar
 #BUILD/opends-1.0.0/lib/activation.jar.no
 ln -sf $(build-classpath jaf_1_1_api) lib/activation.jar
 #BUILD/opends-1.0.0/resource/dsml/lib/jaxb-impl.jar.no
-ln -sf $(build-classpath glassfish-jaxb/jaxb-impl) resource/dsml/lib/jaxb-impl.jar
+ln -sf $(build-classpath glassfish-jaxb21/jaxb-impl) resource/dsml/lib/jaxb-impl.jar
 #BUILD/opends-1.0.0/resource/dsml/lib/jaxb-xjc.jar.no
-ln -sf $(build-classpath glassfish-jaxb/jaxb-xjc) resource/dsml/lib/jaxb-xjc.jar
+ln -sf $(build-classpath glassfish-jaxb21/jaxb-xjc) resource/dsml/lib/jaxb-xjc.jar
 #BUILD/opends-1.0.0/resource/dsml/lib/jaxb1-impl.jar.no
-ln -sf $(build-classpath glassfish-jaxb/jaxb1-impl) resource/dsml/lib/jaxb1-impl.jar
+ln -sf $(build-classpath glassfish-jaxb21/jaxb1-impl) resource/dsml/lib/jaxb1-impl.jar
 #BUILD/opends-1.0.0/resource/dsml/lib/jaxb-api.jar.no
 ln -sf $(build-classpath jaxb_2_1_api) resource/dsml/lib/jaxb-api.jar
 ln -sf $(build-classpath relaxngDatatype) resource/dsml/lib/
@@ -253,6 +252,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt4_5jpp6
+- build with glassfish-jaxb21
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt3_5jpp6
 - built with java 6
 
