@@ -1,6 +1,6 @@
 %define oname eigen
 Name: %{oname}3
-Version: 3.0.5
+Version: 3.1.1
 Release: alt1
 Summary: C++ template library for linear algebra
 License: LGPLv3+ or GPLv2+
@@ -18,6 +18,7 @@ BuildPreReq: libXmu-devel libmetis-devel phonon-devel libXres-devel
 BuildPreReq: libXcomposite-devel libXdamage-devel libXdmcp-devel
 BuildPreReq: libXft-devel libxkbfile-devel libXpm-devel
 BuildPreReq: libXScrnSaver-devel libXxf86misc-devel libXxf86vm-devel
+BuildPreReq: libpastix-devel libscotch-devel libgoogle-sparsehash
 
 %description
 Eigen is a C++ template library for linear algebra: matrices, vectors,
@@ -65,6 +66,12 @@ cmake \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
 	-DEIGEN_INCLUDE_INSTALL_DIR:PATH=%_includedir/%name \
+	-DPASTIX_INCLUDES:STRING="$(pastix-conf --incs)" \
+	-DPASTIX_LIBRARIES:STRING="$(pastix-conf --libs)" \
+	-DSCOTCH_INCLUDES:STRING="$(pkg-config scotch --cflags)" \
+	-DSCOTCH_LIBRARIES:STRING="$(pkg-config scotch --libs)" \
+	-DGOOGLEHASH_INCLUDES:PATH="%_includedir/google" \
+	-DGOOGLEHASH_COMPILE:STRING="g++ %optflags" \
 	..
 popd
 
@@ -91,6 +98,9 @@ install -m755 BUILD/doc/examples/* %buildroot%_bindir
 %doc BUILD/doc/html/*
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1
+- Version 3.1.1
+
 * Tue Mar 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.5-alt1
 - Initial build for Sisyphus
 
