@@ -44,7 +44,7 @@ BuildRequires: jpackage-compat
 
 Name:           db-torque
 Version:        3.3
-Release:        alt4_3jpp5
+Release:        alt5_3jpp5
 Epoch:          0
 Summary:        Torque persistence layer
 
@@ -134,7 +134,7 @@ BuildRequires: jamonapi
 BuildRequires: log4j
 BuildRequires: mysql-connector-java
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 BuildRequires: texen
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-apis
@@ -304,17 +304,17 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE5} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE5} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE6} > %{name}-%{version}-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE6} > %{name}-%{version}-depmap.new.xml
 fi
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE7} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE7} map=%{SOURCE4}
     popd
 done
 
@@ -604,6 +604,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %doc %{_docdir}/%{name}-maven2-plugin-%{version}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt5_3jpp5
+- build with saxon6-scripts
+
 * Thu Mar 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3-alt4_3jpp5
 - java5 target build
 
