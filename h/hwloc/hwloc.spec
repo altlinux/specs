@@ -1,5 +1,5 @@
 Name: hwloc
-Version: 1.4
+Version: 1.5
 Release: alt1
 Summary: Portable Hardware Locality (hwloc)
 License: BSD
@@ -11,6 +11,8 @@ Source: %name-%version.tar
 
 BuildPreReq: libxml2-devel libX11-devel libcairo-devel
 BuildPreReq: libpci-devel libncurses-devel xml-utils
+BuildPreReq: libnuma-devel gcc-c++ libICE-devel libSM-devel
+BuildPreReq: texlive-extra-utils ghostscript-classic doxygen transfig
 
 Requires: lib%name = %version-%release
 
@@ -115,6 +117,9 @@ This package contains documentation for hwloc.
 %doc doc/doxygen-doc/html
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
+- Version 1.5
+
 * Fri Feb 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
 - Version 1.4
 
