@@ -4,17 +4,17 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-eclipse-plugin
-Version:        2.8
-Release:        alt1_8jpp7
+Version:        2.9
+Release:        alt1_2jpp7
 Summary:        Maven Eclipse Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-eclipse-plugin/
 Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
-Patch0:         add_compat.patch
-Patch1:         reduced_exception.patch
-Patch2:         kill-bsh.patch
+Patch0:         %{name}-compat.patch
+Patch1:         %{name}-exception.patch
+Patch2:         %{name}-ioexception.patch
 
 %if 0%{?rhel} >= 6
 ExclusiveArch: %{ix86} x86_64
@@ -86,9 +86,10 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
-%patch0
-%patch1
-%patch2
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+
 sed -i -e "s|3.3.0-v20070604|3.7.100.v20110510-0712|g" pom.xml
 
 %build
@@ -105,7 +106,7 @@ ln -s "$plugin_file" $CORE_PLUGIN_DIR/resources-$CORE_FAKE_VERSION.jar
 mvn-rpmbuild -e \
         -Dmaven.test.skip=true \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        install javadoc:javadoc
+        install javadoc:aggregate
 
 %install
 # jars
@@ -131,6 +132,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 2.9-alt1_2jpp7
+- new version
+
 * Sat Mar 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_8jpp7
 - new version
 
