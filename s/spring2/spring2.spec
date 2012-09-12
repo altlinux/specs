@@ -97,7 +97,7 @@ FIXME: (dwalluck): Need to link offline:
 Name:           spring2
 Summary:        Spring J2EE Framework
 Version:        2.5.6.SEC03
-Release:        alt4_5jpp6
+Release:        alt5_5jpp6
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -133,7 +133,7 @@ BuildRequires:  junit-addons
 BuildRequires:  junit44 >= 0:4.4
 BuildRequires:  antlr
 BuildRequires:  excalibur-avalon-framework
-BuildRequires:  saxon
+BuildRequires:  saxon6
 BuildRequires:  spring-build-aws-ant
 
 #BuildRequires:  activemq3
@@ -895,7 +895,7 @@ cp -p docs/reference/lib/jai_core.jar.no docs/reference/lib/jai_core.jar
 cp -p docs/reference/lib/saxon-dbxsl-extensions.jar.no docs/reference/lib/saxon-dbxsl-extensions.jar
 %endif
 # BUILD/spring/docs/reference/lib/saxon.jar.no
-ln -sf $(build-classpath saxon) docs/reference/lib/saxon.jar
+ln -sf $(build-classpath saxon6) docs/reference/lib/saxon.jar
 # BUILD/spring/lib/activemq/activemq-1.1.jar.no
 ##ln -sf $(build-classpath activemq3) lib/activemq/activemq-1.1.jar
 cp -p lib/activemq/activemq-1.1.jar.no lib/activemq/activemq-1.1.jar
@@ -1604,6 +1604,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt5_5jpp6
+- build with saxon6
+
 * Fri Jun 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt4_5jpp6
 - fixed build
 
