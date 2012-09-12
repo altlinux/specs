@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.7.3
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt2.svn20120228
+Release: alt3.svn20120228
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -287,6 +287,7 @@ sed -i 's|@BLIBDIR@|%blibdir|g' Makefile
 	--enable-unordered-containers \
 %endif
 	--enable-shared \
+	--enable-boost \
 	--enable-petsc \
 	--enable-slepc \
 	--enable-exceptions \
@@ -327,7 +328,7 @@ popd
 
 function makeIt() {
 	%make_build $1 SLEPC_LIB=-L$SLEPC_DIR/lib \
-		PACKAGES_LIBS="$(pkg-config petsc-%scalar_type --libs) -L$3 -lexoIIv2c -lglpk" \
+		PACKAGES_LIBS="$(pkg-config petsc-%scalar_type --libs) -L$3 -lexoIIv2c -lglpk -lboost_system" \
 		NEW_LIBDIR="$2" CONTRIB_DIR="$3" ADDLIB="$4 $5 $6 $7 $8 $9"
 }
 
@@ -477,6 +478,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt3.svn20120228
+- Rebuilt with Boost 1.51.0
+
 * Sat Aug 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt2.svn20120228
 - Rebuilt with Trilinos 10.12.2
 
