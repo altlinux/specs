@@ -1,5 +1,5 @@
 Name: whois
-Version: 5.0.16
+Version: 5.0.18
 Release: alt1
 
 Summary: Intelligent WHOIS client
@@ -18,7 +18,9 @@ BuildRequires: libidn-devel
 This package provides a commandline client for the WHOIS (RFC 3912)
 protocol, which queries online servers for information such as contact
 details for domains and IP address assignments.
-It can intelligently select the appropriate WHOIS server for most queries.
+
+This version of the WHOIS client tries to guess the right server to ask
+for the specified object.
 
 %prep
 %setup
@@ -44,6 +46,9 @@ install -pDm644 whois.conf %buildroot/etc/whois.conf
 %config(noreplace) /etc/whois.conf
 
 %changelog
+* Wed Sep 12 2012 Dmitry V. Levin <ldv@altlinux.org> 5.0.18-alt1
+- Updated to 5.0.18.
+
 * Fri May 04 2012 Dmitry V. Levin <ldv@altlinux.org> 5.0.16-alt1
 - Updated to 5.0.16.
 

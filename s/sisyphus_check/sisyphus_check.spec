@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.34
+Version: 0.8.35
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Wed Sep 12 2012 Dmitry V. Levin <ldv@altlinux.org> 0.8.35-alt1
+- 211-check-firmware: removed "noarch" check (closes: #27709).
+
 * Fri Apr 13 2012 Dmitry V. Levin <ldv@altlinux.org> 0.8.34-alt1
 - 220-check-python: implemented additional restrictions on
   requirements between python2 and python3 modules (closes: #27194).

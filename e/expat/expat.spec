@@ -1,15 +1,15 @@
 Name: expat
-Version: 2.0.1
-Release: alt5
+Version: 2.1.0
+Release: alt1
 
-%def_enable static
+%def_disable static
 %define pkgdocdir %_docdir/%name-%version
 
 Summary: An XML parser written in C
 License: MIT/X Consortium
 Group: System/Base
-
-URL: http://expat.sourceforge.net
+Url: http://www.libexpat.org/
+# http://download.sourceforge.net/%name/%name-%version.tar.gz
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
@@ -21,11 +21,6 @@ BuildRequires: gcc-c++
 %package -n lib%name
 Summary: XML parser library
 Group: System/Libraries
-%if "%_lib" == "lib64"
-Provides: libexpat.so.0()(64bit)
-%else
-Provides: libexpat.so.0
-%endif
 
 %package -n lib%name-devel
 Summary: Development files for Expat, an XML parser library for C
@@ -56,22 +51,16 @@ Expat is a stream-oriented XML parser written in C.
 This package provides the Expat parser as a library for static linking.
 
 %prep
-%setup -q
+%setup
 %patch -p1
-rm conftools/libtool.m4
 
 %build
-autoreconf -fisv
+%autoreconf
 %configure %{subst_enable static}
-
-# SMP-incompatible build.
-make
-
-%check
-make check
+%make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 # Relocate shared library from /usr/lib to /lib.
 mkdir -p %buildroot/%_lib
@@ -79,14 +68,14 @@ mv %buildroot%_libdir/libexpat.so.1* %buildroot/%_lib
 rm %buildroot%_libdir/libexpat.so
 ln -s ../../%_lib/libexpat.so.1 %buildroot%_libdir/libexpat.so
 
-# Provide symlink for backward compatibility
-ln -s libexpat.so.1 %buildroot/%_lib/libexpat.so.0
-
 install -d -m755 %buildroot%pkgdocdir
 install -p -m644 README COPYING Changes %buildroot%pkgdocdir/
 install -p -m644 doc/*.{html,css,png} %buildroot%pkgdocdir/
 install -d -m755 %buildroot%pkgdocdir/examples
 install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
+
+%check
+%make_build -k check
 
 %files
 %_bindir/*
@@ -102,6 +91,7 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
+%_pkgconfigdir/*.pc
 %dir %pkgdocdir
 %pkgdocdir/*.html
 %pkgdocdir/*.css
@@ -114,6 +104,10 @@ install -p -m644 examples/*.c %buildroot%pkgdocdir/examples/
 %endif	# enabled static
 
 %changelog
+* Wed Sep 12 2012 Dmitry V. Levin <ldv@altlinux.org> 2.1.0-alt1
+- Updated to 2.1.0.
+- Stopped build and packaging of libexpat-devel-static.
+
 * Sat Feb 05 2011 Alexey Tourbin <at@altlinux.ru> 2.0.1-alt5
 - relocated shared library from /usr/lib to /lib
 
