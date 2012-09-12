@@ -1,5 +1,5 @@
 Name: colpack
-Version: 1.0.4
+Version: 1.0.8
 Release: alt1
 Summary: Graph Coloring for Computing Derivatives
 License: LGPL v3
@@ -9,7 +9,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://www.cscapes.org/download/ColPack/ColPack-%version.tar.gz
 
-BuildPreReq: gcc-c++
+BuildPreReq: gcc-c++ libgomp-devel
+
+Requires: lib%name = %version-%release
 
 %description
 ColPack: Graph Coloring for Computing Derivatives.
@@ -33,25 +35,41 @@ ColPack: Graph Coloring for Computing Derivatives.
 
 This package contains development files of ColPack.
 
+%package examples
+Summary: Examples for Graph Coloring for Computing Derivatives
+Group: Sciences/Mathematics
+Requires: lib%name = %version-%release
+
+%description examples
+ColPack: Graph Coloring for Computing Derivatives.
+
+This package contains examples for ColPack.
+
 %prep
 %setup
-rm -fR $(find ./ -name '.svn')
 
 %build
+%autoreconf
+%configure \
+	--enable-static=no \
+	--enable-openmp \
+	--enable-examples
 %make_build
 
 %install
-install -d %buildroot%_bindir
-install -d %buildroot%_libdir
-install -d %buildroot%_includedir/%name
+%makeinstall_std
 
-install -m755 ColPack %buildroot%_bindir
-cp -P build/lib/*.so* %buildroot%_libdir/
-install -m644 build/include/* %buildroot%_includedir/%name
+install -d %buildroot%_bindir
+install -m755 .libs/ColPack %buildroot%_bindir
+mv %buildroot%prefix/examples/Basic/* %buildroot%_bindir/
+mv %buildroot%prefix/examples/Matrix_Compression_and_Recovery/*/* \
+	%buildroot%_bindir/
+
+ln -s ColPack %buildroot%_includedir/%name
 
 %files
-%doc AUTHOR
-%_bindir/*
+%doc AUTHORS ChangeLog NEWS README Main/Main.cpp
+%_bindir/ColPack
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -60,7 +78,16 @@ install -m644 build/include/* %buildroot%_includedir/%name
 %_libdir/*.so
 %_includedir/*
 
+%files examples
+%doc SampleDrivers/Basic/*.cpp
+%doc SampleDrivers/Matrix_Compression_and_Recovery/*/*.cpp
+%_bindir/*
+%exclude %_bindir/ColPack
+
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt1
+- Version 1.0.8
+
 * Thu Dec 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt1
 - Version 1.0.4
 
