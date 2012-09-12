@@ -1,7 +1,7 @@
 Name: blitz
 Summary: C++ class library for scientific computing
 Version: 0.10
-Release: alt1.hg20120125
+Release: alt1.hg20120703
 Group: Sciences/Mathematics
 License: LGPL v2.1
 URL: http://www.oonumerics.org/blitz/
@@ -120,6 +120,9 @@ bzip2 ChangeLog*
 %_docdir/%name/examples
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.hg20120703
+- New snapshot
+
 * Fri Jan 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10-alt1.hg20120125
 - New snapshot
 
