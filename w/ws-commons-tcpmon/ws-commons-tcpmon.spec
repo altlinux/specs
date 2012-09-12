@@ -55,7 +55,7 @@ Patch1:         ws-commons-tcpmon-script.patch
 
 Name:           ws-commons-tcpmon
 Version:        1.0
-Release:        alt6_1jpp5
+Release:        alt7_1jpp5
 Epoch:          0
 License:        Apache Software License 2
 Group:          Development/Java
@@ -69,7 +69,7 @@ BuildRequires: maven1-plugin-license
 BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 %endif
 Requires: jpackage-utils >= 0:1.7.2
 Requires(post): jpackage-utils >= 0:1.7.2
@@ -124,12 +124,12 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > %{name}-%{version}-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > %{name}-%{version}-depmap.new.xml
 fi
 %endif
 
@@ -138,7 +138,7 @@ fi
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -221,6 +221,9 @@ fi
 #endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_1jpp5
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_1jpp5
 - fixed build with moved maven1
 
