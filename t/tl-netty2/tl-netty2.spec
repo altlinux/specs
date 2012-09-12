@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           tl-netty2
 Version:        1.9.2
-Release:        alt4_4jpp6
+Release:        alt5_4jpp6
 Epoch:          0
 Summary:        Event based network application framework
 License:        Apache Software License 2.0
@@ -61,7 +61,7 @@ BuildRequires:  maven1-plugin-license
 BuildRequires:  maven1-plugin-test
 BuildRequires:  maven1-plugin-xdoc
 BuildRequires:  saxon
-BuildRequires:  saxon-scripts
+BuildRequires:  saxon6-scripts
 BuildRequires:  apache-commons-logging
 
 Requires(post):   jpackage-utils >= 0:1.7.5
@@ -112,17 +112,17 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > %{name}-%{version}-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > %{name}-%{version}-depmap.new.xml
 fi
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -178,6 +178,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 #%doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.9.2-alt5_4jpp6
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.9.2-alt4_4jpp6
 - fixed build with moved maven1
 
