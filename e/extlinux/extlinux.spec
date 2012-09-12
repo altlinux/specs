@@ -1,7 +1,7 @@
 Summary: The EXTLINUX bootloader, for booting the local system.
 Name: extlinux
 Version: 4.05
-Release: alt2
+Release: alt3
 License: GPL2
 Group: System/Base
 Url: http://www.syslinux.org/wiki/index.php/The_Syslinux_Project
@@ -79,9 +79,6 @@ ln -s ../boot/extlinux/extlinux.conf.d .
 %pre
 [ ! -L /sbin/extlinux-config ] || rm -f -- /sbin/extlinux-config
 
-%post
-[ "$1" = 1 ] || /sbin/extlinux-config
-
 %files
 %config(noreplace) /boot/extlinux/extlinux.conf
 %config(noreplace) /boot/extlinux/extlinux.conf.d/*.conf
@@ -100,6 +97,10 @@ ln -s ../boot/extlinux/extlinux.conf.d .
 %doc sample
 
 %changelog
+* Wed Sep 12 2012 Alexey Gladkov <legion@altlinux.ru> 4.05-alt3
+- Remove obsolete %%postinstall script.
+- Filetrigger only updates the configuration.
+
 * Wed Sep 05 2012 Alexey Gladkov <legion@altlinux.ru> 4.05-alt2
 - Add conflict with syslinux-extlinux.
 
