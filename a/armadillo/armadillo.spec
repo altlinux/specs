@@ -1,6 +1,6 @@
 Name:           armadillo
-Version:        2.4.2
-Release:        alt2.svn20111208
+Version:        3.4.0
+Release:        alt1.svn20120910
 Summary:        Fast C++ matrix library with interfaces to LAPACK and ATLAS
 Group:          Sciences/Mathematics
 License:        LGPLv3+
@@ -8,9 +8,7 @@ URL:            http://arma.sourceforge.net/
 # fragment from .git/config :
 #[svn-remote "svn"]
 #  url = https://arma.svn.sourceforge.net/svnroot/arma
-#  fetch = trunk:refs/remotes/trunk
-#  branches = branches/*:refs/remotes/*
-#  tags = tags/*:refs/remotes/tags/*
+#  fetch = :refs/remotes/git-svn
 Source:         %name-%version.tar.gz
 Source1: Makefile
 Source2: %name.pc
@@ -154,12 +152,15 @@ install -p -m644 %name.pc %buildroot%_pkgconfigdir
 %_libdir/*.so
 %_includedir/*
 %_pkgconfigdir/*
-#_datadir/Armadillo
+%_datadir/Armadillo
 
 %files -n lib%name-devel-doc
-%doc examples docs_user/*
+%doc examples *.pdf *.html *.png
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1.svn20120910
+- Version 3.4.0
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt2.svn20111208
 - Built with OpenBLAS instead of GotoBLAS2
 
