@@ -38,7 +38,7 @@ BuildRequires: unzip
 Summary:        Java XSLT processor
 Name:           saxon6
 Version:        6.5.5
-Release:        alt3_3jpp6
+Release:        alt4_3jpp6
 Epoch:          0
 License:        MPL
 Group:          Development/Java
@@ -226,6 +226,9 @@ chmod 755 $RPM_BUILD_ROOT%{_bindir}/*
 %attr(0644,root,root) %{_mandir}/man1/%{name}.1*
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.5.5-alt4_3jpp6
+- bugfix in script
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.5.5-alt3_3jpp6
 - compat build
 
