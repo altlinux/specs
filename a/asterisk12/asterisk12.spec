@@ -1,4 +1,4 @@
-%define svn_revision 372708
+%define svn_revision 372996
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -64,7 +64,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 372708
+%define svn_revision 372996
 %add_verify_elf_skiplist %_libdir/libasteriskssl*
 %def_with debug
 %def_enable debug
@@ -642,7 +642,6 @@ menuselect/menuselect  \
     --enable chan_misdn \
     --enable res_jabber \
     --enable chan_gtalk \
-    --enable chan_jingle \
     --disable chan_h323
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
 %make_build libdir=%_libdir NOISY_BUILD=yes ||:
@@ -1126,14 +1125,12 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_datadir/asterisk/static-http-%version
 
 %files jabber
-%astmodule chan_jingle
 %astmodule chan_gtalk
 %astmodule res_jabber
 %astmodule chan_motif
 %astmodule res_xmpp
 %dir %_docdir/%name-%version/samples
 %astsample jabber
-%astsample jingle
 %astsample gtalk
 %astsample xmpp
 %astsample motif
@@ -1224,6 +1221,9 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl.so.1
 
 %changelog
+* Thu Sep 13 2012 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.372996
+- update from svn revision 372996
+
 * Sat Sep 08 2012 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.372708
 - update from svn revision 372708
 
