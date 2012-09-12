@@ -1,6 +1,6 @@
 Name: gsl
 Version: 1.15
-Release: alt2.bzr20120122
+Release: alt2.bzr20120912
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -27,11 +27,6 @@ Group: System/Libraries
 Summary: Development environment for Scientific Library
 Group: Development/C
 Requires: lib%name = %version-%release
-
-%package -n lib%name-devel-static
-Summary: Development environment for Scientific Library
-Group: Development/C
-Requires: lib%name-devel = %version-%release
 
 %package -n lib%name-doc
 Summary: book for Scientific Library
@@ -82,17 +77,6 @@ Linking against the GSL allows programs to access functions which can
 handle many of the problems encountered in scientific computing.
 
 This package contains shared libs and include headers required for development.
-
-%description -n lib%name-devel-static
-The lib%name-devel package is part of the GNU Scientific Library (GSL). The GSL is a
-collection of routines for numerical analysis, written in C.  The GSL is
-in alpha development.  It now includes a random number suite, an FFT
-package, simulated annealing and root finding.  In the future, it will
-include numerical and Monte Carlo integration and special functions.
-Linking against the GSL allows programs to access functions which can
-handle many of the problems encountered in scientific computing.
-
-This package contains static libs.
 
 %description -n lib%name-doc
 book for developers
@@ -151,9 +135,6 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %_man1dir/%name-config.1*
 %_man3dir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files -n lib%name-doc
 %doc %dir %_docdir/lib%name-%version
 %doc %_docdir/lib%name-%version/*
@@ -168,6 +149,9 @@ install -p -m644 ChangeLog.* NEWS.* AUTHORS README THANKS TODO \
 %doc %_docdir/lib%name-%version/examples
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15-alt2.bzr20120912
+- New snapshot
+
 * Sun Jun 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.15-alt2.bzr20120122
 - Fixed Cflags in pkg-config file
 
