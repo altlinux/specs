@@ -1,3 +1,6 @@
+%def_without jboss_jaspi_1.0_api
+%def_without jboss_jad_1.2_api
+%def_without jboss_jaxr_1.0_api
 BuildRequires: maven-enforcer-plugin
 %def_without jboss_jms_1.1_api
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -58,7 +61,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-javaee
 Version:        5.0.1
-Release:        alt4_2jpp6
+Release:        alt5_2jpp6
 Epoch:          0
 Summary:        JBoss JavaEE 5.0 Aggregate
 License:        LGPLv2+
@@ -137,6 +140,7 @@ Provides:       jacc_api = 0:1.1
 %description -n jboss-jacc-1.1-api
 The Java Authorization Contract for Containers 1.1 API classes.
 
+%if_with jboss_jad_1.2_api
 %package -n jboss-jad-1.2-api
 Summary:        JBoss JAD 1.2 API
 Group:          Development/Java
@@ -145,10 +149,14 @@ Requires(preun): alternatives >= 0:0.4
 Requires(post): alternatives >= 0:0.4
 Provides:       jad_1_2_api
 Provides:       jad_api = 0:1.2
+%endif #jboss_jad_1.2_api
 
+%if_with jboss_jad_1.2_api
 %description -n jboss-jad-1.2-api
 The JavaEE Application Deployment 1.2 API classes.
+%endif #jboss_jad_1.2_api
 
+%if_with jboss_jaspi_1.0_api
 %package -n jboss-jaspi-1.0-api
 Summary:        JBoss JASPI 1.0 API
 Group:          Development/Java
@@ -157,10 +165,14 @@ Requires(preun): alternatives >= 0:0.4
 Requires(post): alternatives >= 0:0.4
 Provides:       jaspi_1_0_api
 Provides:       jaspi_api = 0:1.0
+%endif #jboss_jaspi_1.0_api
 
+%if_with jboss_jaspi_1.0_api
 %description -n jboss-jaspi-1.0-api
 The Java Authentication SPI for Containers 1.0-PR API classes.
+%endif #jboss_jaspi_1.0_api
 
+%if_with jboss_jaxr_1.0_api
 %package -n jboss-jaxr-1.0-api
 Summary:        JBoss JAXR 1.0 API
 Group:          Development/Java
@@ -171,9 +183,12 @@ Requires(post): alternatives >= 0:0.4
 Provides:       jaxr = 0:1.0
 Provides:       jaxr_1_0_api
 Provides:       jaxr_api = 0:1.0
+%endif #jboss_jaxr_1.0_api
 
+%if_with jboss_jaxr_1.0_api
 %description -n jboss-jaxr-1.0-api
 The Java API for XML Registries 1.0 API classes.
+%endif #jboss_jaxr_1.0_api
 
 %package -n jboss-jca-1.5-api
 Summary:        JBoss JCA 1.5 API
@@ -528,6 +543,7 @@ EOF
 %exclude %{_javadir}/jacc_api.jar
 %exclude %{_javadir}/jacc_1_1_api.jar
 
+%if_with jboss_jad_1.2_api
 %files -n jboss-jad-1.2-api
 %_altdir/jad_api_jboss-jad-1.2-api
 %_altdir/jad_1_2_api_jboss-jad-1.2-api
@@ -537,7 +553,9 @@ EOF
 %{_javadir}/jboss-jad-api.jar
 %exclude %{_javadir}/jad_api.jar
 %exclude %{_javadir}/jad_1_2_api.jar
+%endif #jboss_jad_1.2_api
 
+%if_with jboss_jaspi_1.0_api
 %files -n jboss-jaspi-1.0-api
 %_altdir/jaspi_api_jboss-jaspi-1.0-api
 %_altdir/jaspi_1_0_api_jboss-jaspi-1.0-api
@@ -547,7 +565,9 @@ EOF
 %{_javadir}/jboss-jaspi-api.jar
 %exclude %{_javadir}/jaspi_api.jar
 %exclude %{_javadir}/jaspi_1_0_api.jar
+%endif #jboss_jaspi_1.0_api
 
+%if_with jboss_jaxr_1.0_api
 %files -n jboss-jaxr-1.0-api
 %_altdir/jaxr_jboss-jaxr-1.0-api
 %_altdir/jaxr_api_jboss-jaxr-1.0-api
@@ -559,6 +579,7 @@ EOF
 %exclude %{_javadir}/jaxr.jar
 %exclude %{_javadir}/jaxr_1_0_api.jar
 %exclude %{_javadir}/jaxr_api.jar
+%endif #jboss_jaxr_1.0_api
 
 %files -n jboss-jca-1.5-api
 %_altdir/j2ee_connector_1_5_api_jboss-jca-1.5-api
@@ -616,6 +637,9 @@ EOF
 %endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt5_2jpp6
+- build w/o jaxr-1.0-api, jboss-jaspi-1.0-api
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt4_2jpp6
 - fixed build
 
