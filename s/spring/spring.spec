@@ -47,7 +47,7 @@ Name:           spring
 Summary:        Spring J2EE Framework
 Url:            http://www.springframework.org/
 Version:        1.2.9
-Release:        alt11_4jpp6
+Release:        alt12_4jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -159,7 +159,7 @@ BuildRequires:  jakarta-poi >= 0:2.5.1
 BuildRequires:  log4j
 BuildRequires:  oro
 BuildRequires:  qdox161
-BuildRequires:  quartz
+BuildRequires:  quartz15
 BuildRequires:  servlet_2_4_api
 BuildRequires:  struts
 BuildRequires:  struts-tiles
@@ -641,7 +641,7 @@ popd
 
 mkdir -p quartz
 pushd quartz
-ln -sf $(build-classpath quartz) .
+ln -sf $(build-classpath quartz15) .
 popd
 
 mkdir -p struts
@@ -879,6 +879,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %{_datadir}/%{name}-%{version}/samples
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.9-alt12_4jpp6
+- build with quartz15
+
 * Fri Jun 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.9-alt11_4jpp6
 - fixed build
 
