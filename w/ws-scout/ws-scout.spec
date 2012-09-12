@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:		ws-scout
 Version:	1.0
-Release:	alt6_5jpp5
+Release:	alt7_5jpp5
 Epoch:		0
 Summary:	Apache Scout Implementation of JSR 93 (JAXR)
 License:	Apache Software License 2.0
@@ -63,7 +63,7 @@ BuildRequires: jakarta-commons-discovery
 BuildRequires: jakarta-commons-logging
 BuildRequires: jdom
 BuildRequires: juddi
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 Requires: axis >= 0:1.2
 Requires: jaf
 Requires: jakarta-commons-discovery
@@ -107,16 +107,16 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > ws-scout-1.0-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > ws-scout-1.0-depmap.new.xml
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 for p in $(find . -name project.properties); do
@@ -180,6 +180,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_5jpp5
+- build with saxon6-scripts
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_5jpp5
 - fixed build with java 7
 
