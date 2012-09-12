@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jing
 Version:        0.1
-Release:        alt3_0.20030619.9jpp5
+Release:        alt4_0.20030619.9jpp5
 Epoch:          0
 Summary:        Jing, a validator for RELAX NG implemented in Java
 
@@ -62,11 +62,11 @@ BuildRequires: junit >= 0:3.8.1
 BuildRequires: xalan-j2 >= 0:2.7.0
 BuildRequires: xerces-j2 >= 0:2.9.0
 BuildRequires: isorelax
-BuildRequires: saxon
+BuildRequires: saxon6
 Requires: xalan-j2 >= 0:2.7.0
 Requires: xerces-j2 >= 0:2.9.0
-Requires: isorelax
-Requires: saxon
+#Requires: isorelax
+#Requires: saxon6
 
 %if %{gcj_support}
 BuildRequires: gnu-crypto
@@ -113,7 +113,7 @@ export OPT_JAR_LIST="ant/ant-junit junit"
 export CLASSPATH=$(build-classpath \
 xalan-j2 \
 xerces-j2 \
-saxon \
+saxon6 \
 isorelax)
 CLASSPATH=$CLASSPATH:src/test-input:target/classes:target/test-classes
 ant dist javadoc 
@@ -160,6 +160,9 @@ fi
 
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.1-alt4_0.20030619.9jpp5
+- build with saxon6
+
 * Wed May 12 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.1-alt3_0.20030619.9jpp5
 - fixes for java6 support
 
