@@ -1,5 +1,5 @@
 Name: e2fsprogs
-Version: 1.42.3
+Version: 1.42.5
 Release: alt1
 
 Summary: The filesystem utilities for the ext2/ext3 filesystems
@@ -242,19 +242,12 @@ autoconf
 	%{subst_enable fsck} \
 	#
 
-# SMP-incompatible build.
-make all V=1
-
-%check
-PATH=/sbin:/usr/sbin:/bin:/usr/bin make -k check && exit ||:
-mv tests/m_no_opt/expect.1{,.tmpfs}
-mv tests/m_no_opt/expect.1{.ext2,}
-PATH=/sbin:/usr/sbin:/bin:/usr/bin make -k check
+%make_build V=1
 
 %install
 mkdir -p %buildroot{/%_lib,%_includedir/e2p}
 
-%makeinstall_std install-libs
+%makeinstall_std install-libs V=1
 
 ln -snf et/com_err.h %buildroot%_includedir/
 
@@ -280,13 +273,20 @@ for i in ext2 ext3 ext4 ext4dev; do
 done
 
 # Prepare docs.
-bzip2 -9 RELEASE-NOTES
+xz -9 RELEASE-NOTES
 chmod -R a+rX,go-w %buildroot%_mandir
 
 %find_lang %name
 
 # Ensure that buildroot did not get info installed files.
 ! fgrep -rl %buildroot %buildroot
+
+%check
+export PATH=/sbin:/usr/sbin:/bin:/usr/bin
+%make_build -k check V=1 && exit ||:
+mv tests/m_no_opt/expect.1{,.tmpfs}
+mv tests/m_no_opt/expect.1{.ext2,}
+%make_build -k check V=1
 
 %files -f %name.lang
 %config(noreplace) %_sysconfdir/*.conf
@@ -387,6 +387,9 @@ chmod -R a+rX,go-w %buildroot%_mandir
 %endif # libuuid
 
 %changelog
+* Wed Sep 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1.42.5-alt1
+- Updated to v1.42.5-7-gab3f5c5.
+
 * Tue May 22 2012 Dmitry V. Levin <ldv@altlinux.org> 1.42.3-alt1
 - Updated to v1.42.3-2-g108e658.
 
