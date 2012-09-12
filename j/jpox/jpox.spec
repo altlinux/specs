@@ -45,7 +45,7 @@ BuildRequires: jpackage-1.5.0-compat
 Name:           jpox
 Summary:        Java Persistent Objects
 Version:        1.1.1
-Release:        alt6_2jpp5
+Release:        alt7_2jpp5
 Epoch:          0
 URL:            http://www.jpox.org
 License:        Apache License, Version 2.0
@@ -122,7 +122,7 @@ BuildRequires: maven1-plugin-tasklist
 BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 %endif
 BuildRequires: ant >= 0:1.6.5
 BuildRequires: ant-nodeps
@@ -379,7 +379,7 @@ rm -rf samples
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE1} map=%{SOURCE2}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE1} map=%{SOURCE2}
     popd
 done
 
@@ -798,6 +798,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt7_2jpp5
+- build with saxon6-scripts
+
 * Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt6_2jpp5
 - applied repocop patches
 
