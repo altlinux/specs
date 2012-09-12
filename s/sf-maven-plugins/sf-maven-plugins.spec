@@ -64,7 +64,7 @@ BuildRequires: ant-bsf
 
 Name:           sf-maven-plugins
 Version:        1.0
-Release:        alt7_0.20050908.9jpp5
+Release:        alt8_0.20050908.9jpp5
 Epoch:          0
 Summary:        Maven Plugins hosted at sf.net
 
@@ -169,11 +169,11 @@ BuildRequires: jakarta-commons-jelly-tags-log
 BuildRequires: jakarta-commons-jelly-tags-util
 BuildRequires: jakarta-commons-jelly-tags-velocity
 BuildRequires: jakarta-commons-jelly-tags-xml
-BuildRequires: jakarta-commons-jxpath
-BuildRequires: jakarta-commons-lang
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-net
-BuildRequires: jakarta-commons-pool
+BuildRequires: apache-commons-jxpath
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-net
+BuildRequires: apache-commons-pool
 BuildRequires: dbunit
 BuildRequires: docbook-xsl-java-xalan
 BuildRequires: dom4j
@@ -1062,6 +1062,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.20050908.9jpp5
+- build with new apache-commons-jxpath
+
 * Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.20050908.9jpp5
 - fixed build with new batik
 
