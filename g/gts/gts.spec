@@ -1,12 +1,13 @@
 Name: gts
 Version: 0.7.6
-Release: alt2.cvs20111025
+Release: alt2.drc20120912
 Summary: GNU Triangulated Surface Library
 License: LGPL v2
 Group: Development/Tools
 Url: http://gts.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# darcs get http://gerris.dalembert.upmc.fr/darcs/gts-stable --lazy
 Source: %name-%version.tar.gz
 
 Requires: lib%name = %version-%release
@@ -53,22 +54,6 @@ rendering.
 
 This package contains development files of GNU Triangulated Surface Library.
 
-%package -n lib%name-devel-static
-Summary: Static library of GNU Triangulated Surface Library
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-This is the GTS library. GTS stands for the GNU Triangulated
-Surface Library. It includes a number of useful functions to deal with
-triangulated surfaces including, but not limited to, multi-resolution
-models, Delaunay and Constrained Delaunay triangulations, set operations on
-surfaces (intersection, union etc ...), bounding-boxes trees for efficient
-collision and intersection detection, triangle strips generation for fast
-rendering.
-
-This package contains static library of GNU Triangulated Surface Library.
-
 %package -n lib%name-devel-doc
 Summary: Documentation for GNU Triangulated Surface Library
 Group: Development/Documentation
@@ -90,8 +75,8 @@ Library.
 %setup
 
 %build
-%autoreconf
-%configure
+sh autogen.sh
+%configure --enable-static=no
 %make_build
 
 %install
@@ -103,7 +88,7 @@ install -d %buildroot%_docdir/%name/examples
 install -m644 examples/*.c %buildroot%_docdir/%name/examples
 
 %files
-%doc AUTHORS COPYING ChangeLog NEWS README THANKS TODO
+%doc AUTHORS NEWS README THANKS TODO
 %_bindir/*
 %exclude %_bindir/%name-config
 
@@ -117,14 +102,14 @@ install -m644 examples/*.c %buildroot%_docdir/%name/examples
 %_pkgconfigdir/*
 %_aclocaldir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files -n lib%name-devel-doc
 %_docdir/%name
 %_man1dir/*
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt2.drc20120912
+- New snapshot from darcs repository
+
 * Thu Dec 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt2.cvs20111025
 - New snapshot
 
