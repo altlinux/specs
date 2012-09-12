@@ -36,7 +36,7 @@ Name:           groovy10
 Summary:        Groovy scripting language
 Url:            http://groovy.codehaus.org/
 Version:        1.0
-Release:        alt4_4jpp6
+Release:        alt5_4jpp6
 Epoch:          0
 License:        BSD/Apache-style Software License
 Group:          Development/Java
@@ -65,7 +65,7 @@ BuildRequires: maven1-plugin-license
 BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 
 BuildRequires: asm2 >= 0:2.2
 BuildRequires: axion
@@ -165,12 +165,12 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in project.xml groovy-core/project.xml; do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > groovy-1.0-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > groovy-1.0-depmap.new.xml
 
 
 %patch0 -b .sav
@@ -191,7 +191,7 @@ rm src/test/groovy/bugs/ForAndSqlBug.groovy
 for p in project.xml groovy-core/project.xml; do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -309,6 +309,9 @@ popd
 %doc %{_javadocdir}/%{name}*
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_4jpp6
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_4jpp6
 - fixed build with moved maven1
 
