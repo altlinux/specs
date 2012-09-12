@@ -5,7 +5,7 @@
 Name: kde4-%rname
 %define lname lib%name
 Version: 2.7.0
-Release: alt1
+Release: alt2
 
 Summary: digiKam is an advanced digital photo management application for linux
 License: %gpl2plus
@@ -18,7 +18,7 @@ Conflicts: digikam <= 0.9.6-alt3
 BuildRequires(pre): rpm-build-licenses kde-common-devel
 
 # Automatically added by buildreq on Wed Sep 01 2010
-BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms-devel liblensfun-devel liblqr-devel libxkbfile-devel soprano
+BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms-devel liblensfun-devel liblqr-devel libxkbfile-devel soprano libtiff-devel
              
 %if_enabled marble
 BuildRequires: kde4edu-devel
@@ -206,6 +206,9 @@ rm -rf %buildroot%_man1dir
 %_K4link/*.so
 
 %changelog
+* Wed Sep 12 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 2.7.0-alt2
+- fix build
+
 * Tue Jul 10 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 2.7.0-alt1
 - 2.7.0
 
