@@ -20,8 +20,8 @@ American Institute of Aeronautics and Astronautics (AIAA) Recommended \
 Practice.
 
 Name: %oname-%seqmpi
-Version: 3.1.3
-Release: alt2.svn20111216
+Version: 3.2
+Release: alt1.svn20120829
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
@@ -219,6 +219,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt1.svn20120829
+- Version 3.2
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt2.svn20111216
 - Rebuilt with OpenMPI 1.6
 
@@ -252,3 +255,4 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 
 * Thu Oct 15 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.7-alt1.svn20091009
 - Initial build for Sisyphus
+
