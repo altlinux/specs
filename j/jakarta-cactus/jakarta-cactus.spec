@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 Summary:        Cactus unit test framework for server-side java code 
 Name:           jakarta-%{base_name}
 Version:        1.7.2
-Release:        alt5_4jpp5
+Release:        alt6_4jpp5
 Epoch:          0
 License:        Apache Software License
 URL:            http://jakarta.apache.org/cactus/
@@ -75,7 +75,7 @@ BuildRequires: maven1 >= 0:1.1
 BuildRequires: maven1-plugins-base
 BuildRequires: maven1-plugin-license
 BuildRequires: maven1-plugin-test
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 BuildRequires: ant >= 0:1.6
 BuildRequires: ant-junit >= 0:1.6
 BuildRequires: ant-nodeps >= 0:1.6
@@ -205,18 +205,18 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE2} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE2} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE3} > jakarta-cactus-1.7.2-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE3} > jakarta-cactus-1.7.2-depmap.new.xml
 
 for p in $(find . -name "*project.xml"); do
     pushd $(dirname $p)
     b=$(basename $p)
     cp ${b} ${b}.orig
-    /usr/bin/saxon -o ${b} ${b}.orig %{SOURCE4} map=%{SOURCE5}
+    /usr/bin/saxon6 -o ${b} ${b}.orig %{SOURCE4} map=%{SOURCE5}
     popd
 done
 
@@ -337,6 +337,9 @@ cp -pr documentation/dist/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt6_4jpp5
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt5_4jpp5
 - fixed build with moved maven1
 
