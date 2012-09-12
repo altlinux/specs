@@ -1,6 +1,6 @@
 Name: gl2ps
-Version: 1.3.6
-Release: alt2
+Version: 1.3.7
+Release: alt1
 Summary: OpenGL to PostScript printing library
 License: LGPLv2+
 Group: Graphics
@@ -80,7 +80,7 @@ cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 %ifarch x86_64
-	-DLIBSUFF:STRING=64 \
+	-DLIB_SUFFIX:STRING=64 \
 %endif
 	.
 
@@ -101,6 +101,9 @@ cmake \
 %_docdir/%name
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt1
+- Version 1.3.7
+
 * Mon May 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.6-alt2
 - Fixed build
 
