@@ -37,7 +37,7 @@ BuildRequires: python-devel
 
 Name:           aspectj
 Version:        1.5.4
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        AspectJ aspect-oriented language extension to Java
 License:        EPL
@@ -94,21 +94,21 @@ BuildRequires:  ant-nodeps
 BuildRequires:  ant-junit
 #BuildRequires:  java-devel >= 0:1.4.2
 BuildRequires:  eclipse-platform
-BuildRequires:  jakarta-commons-beanutils
-BuildRequires:  jakarta-commons-collections
-BuildRequires:  jakarta-commons-digester
-BuildRequires:  jakarta-commons-logging
+BuildRequires:  apache-commons-beanutils
+BuildRequires:  apache-commons-collections
+BuildRequires:  apache-commons-digester
+BuildRequires:  apache-commons-logging
 BuildRequires:  regexp
-BuildRequires:  saxon
+BuildRequires:  saxon6
 BuildRequires:  xalan-j2
 BuildRequires:  xerces-j2
 BuildRequires:  xml-commons-apis
-Requires:  jakarta-commons-beanutils
-Requires:  jakarta-commons-collections
-Requires:  jakarta-commons-digester
-Requires:  jakarta-commons-logging
+Requires:  apache-commons-beanutils
+Requires:  apache-commons-collections
+Requires:  apache-commons-digester
+Requires:  apache-commons-logging
 Requires:  regexp
-Requires:  saxon
+Requires:  saxon6
 Requires:  xalan-j2
 Requires:  xerces-j2
 Requires:  xml-commons-apis
@@ -211,7 +211,7 @@ ln -sf $(build-classpath xml-commons-apis) modules/lib/ant/lib/xml-apis.jar
 ln -sf $(build-classpath asm2/asm2) modules/lib/asm/asm-2.2.1.jar
 ln -sf $(build-classpath junit) modules/lib/junit/junit.jar
 ln -sf $(build-classpath regexp) modules/lib/regexp/jakarta-regexp-1.2.jar
-ln -sf $(build-classpath saxon) modules/lib/saxon/saxon.jar
+ln -sf $(build-classpath saxon6) modules/lib/saxon/saxon.jar
 
 pushd modules/org.eclipse.jdt.core
   mkdir src
@@ -482,6 +482,9 @@ touch $RPM_BUILD_ROOT/etc/java/aspectj.conf
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.4-alt3_1jpp6
+- build with saxon6
+
 * Sat Sep 17 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.5.4-alt2_1jpp6
 - fixed build
 
