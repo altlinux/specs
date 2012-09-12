@@ -1,8 +1,8 @@
 %define vtk_ver 5.10
 
 Name: engrid
-Version: 1.3
-Release: alt2.git20120322
+Version: 1.4
+Release: alt1.git20120704
 Summary: Mesh generation software with CFD applications in mind
 License: GPL v3 or later
 Group: Sciences/Physics
@@ -77,7 +77,7 @@ ln -s %_niconsdir/engrid.xpm %buildroot%_liconsdir/
 install -d %buildroot%_desktopdir
 install -p -m644 debian/%name.desktop %buildroot%_desktopdir
 install -d %buildroot%_datadir/blender/scripts/blender
-install -p -m644 src/blender_scripts/* \
+install -p -m644 src/blender_scripts/2.4/* src/blender_scripts/2.59/* \
 	%buildroot%_datadir/blender/scripts/blender
 
 %files
@@ -95,6 +95,9 @@ install -p -m644 src/blender_scripts/* \
 %doc manual tutorials
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.git20120704
+- Version 1.4
+
 * Sat Jun 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt2.git20120322
 - Rebuilt with VTK 5.10.0
 
