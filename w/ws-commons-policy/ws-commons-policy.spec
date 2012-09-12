@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           ws-commons-policy
 Version:        1.0
-Release:        alt4_10jpp6
+Release:        alt5_10jpp6
 Epoch:          0
 Summary:        Web Services Commons - WS-Policy implementation
 License:        ASL 2.0
@@ -81,7 +81,7 @@ BuildRequires: maven-plugin-license >= 0:1.0.2
 BuildRequires: maven-plugin-test >= 0:1.0.2
 %endif
 BuildRequires: jakarta-commons-logging >= 0:1.0.4
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 BuildRequires: stax_1_0_api
 BuildRequires: wsdl4j >= 0:1.5.1
 BuildRequires: ws-commons-axiom
@@ -129,7 +129,7 @@ done
 for p in $(find . -name project.xml); do
     pushd $(dirname ${p})
     %{__cp} -p project.xml project.xml.orig
-    %{_bindir}/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    %{_bindir}/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 for p in $(find . -name project.properties); do
@@ -197,6 +197,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_10jpp6
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_10jpp6
 - fixed build with moved maven1
 
