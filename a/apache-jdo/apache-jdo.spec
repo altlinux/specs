@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 Name:           apache-jdo
 Summary:        Apache JDO specification.
 Version:        2.0
-Release:        alt6_5jpp6
+Release:        alt7_5jpp6
 Epoch:          0
 URL:            http://db.apache.org/jdo
 License:        Apache License, Version 2.0
@@ -97,7 +97,7 @@ BuildRequires:  maven1-plugin-multiproject
 BuildRequires:  maven1-plugin-test
 BuildRequires:  maven1-plugin-xdoc
 BuildRequires:  saxon
-BuildRequires:  saxon-scripts
+BuildRequires:  saxon6-scripts
 %endif
 BuildRequires:  junit
 BuildRequires:  antlr
@@ -426,7 +426,7 @@ mkdir -p fostore20/target/test-classes
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE1} map=%{SOURCE2}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE1} map=%{SOURCE2}
     popd
 done
 export MAVEN_OPTS="-XX:MaxPermSize=256m"
@@ -750,6 +750,9 @@ EOF
 %endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt7_5jpp6
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt6_5jpp6
 - fixed build with moved maven1
 
