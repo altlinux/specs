@@ -1,6 +1,6 @@
 Name: gnash
 Version: 0.8.10
-Release: alt2
+Release: alt3
 Summary: GNU Flash player
 License: GPLv3
 Group: Video
@@ -116,6 +116,9 @@ cp -r gui/icons/hicolor %buildroot%_iconsdir/
 %browser_plugins_path/libgnashplugin.so
 
 %changelog
+* Wed Sep 12 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.10-alt3
+- rebuilt with recent boost
+
 * Wed Apr 18 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.10-alt2
 - rebuilt with recent boost
 
