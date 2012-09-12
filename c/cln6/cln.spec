@@ -4,13 +4,12 @@
 
 Name: %oname%abiversion
 Version: 1.3.2
-Release: alt2
+Release: alt3
 
 Summary: CLN - Class Library for Numbers
 Group: System/Libraries
 License: GPL
 Url: http://www.ginac.de/CLN
-Packager: Alexey Morsov <swi@altlinux.ru>
 
 Source: %oname-%version.tar
 
@@ -69,6 +68,15 @@ BuildArch: noarch
 %description -n lib%oname-doc
 This package contains documentation on CLN library.
 
+%package -n pi
+Summary: Compute decimal Archimedes' constant Pi to arbitrary accuracy
+Group: Sciences/Mathematics
+Requires: lib%name = %version-%release
+Conflicts: puppet
+
+%description -n pi
+Compute decimal Archimedes' constant Pi to arbitrary accuracy.
+
 %prep
 %setup
 rm -f aclocal.m4
@@ -93,7 +101,6 @@ rm -f %buildroot%_libdir/*.a
 
 
 %files -n lib%name
-%_bindir/*
 %_libdir/*.so.*
 %_man1dir/*
 
@@ -110,7 +117,13 @@ rm -f %buildroot%_libdir/*.a
 %files -n lib%oname-doc
 %_infodir/*
 
+%files -n pi
+%_bindir/pi
+
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt3
+- Moved %_bindir/pi into separate package (ALT #27724)
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt2
 - Rebuilt with gmp 5.0.5
 
