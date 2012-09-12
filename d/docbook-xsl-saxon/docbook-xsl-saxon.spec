@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           docbook-xsl-saxon
 Version:        1.00
-Release:        alt1_2jpp5
+Release:        alt2_2jpp5
 Epoch:          0
 Summary:        DocBook Saxon Extensions
 License:        Artistic
@@ -41,10 +41,10 @@ Group:          Development/Java
 URL:            http://wiki.docbook.org/topic/DocBookXslStylesheets
 Source0:        http://downloads.sourceforge.net/docbook/docbook-xsl-saxon-1.00.tar.bz2
 Requires: docbook-style-xsl
-Requires: saxon >= 0:6.5.5
+Requires: saxon6 >= 0:6.5.5
 BuildRequires: ant
 BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: saxon >= 0:6.5.5
+BuildRequires: saxon6 >= 0:6.5.5
 BuildArch:      noarch
 
 %description
@@ -71,7 +71,7 @@ Javadoc for %{name}.
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-%{ant} -Dplatform.active=jpackage -Dplatforms.jpackage.home=%{java_home} -Djavac.classpath=$(build-classpath saxon) -Ddist.jar=%{name}-%{version}.jar -Djar.compress=true
+%{ant} -Dplatform.active=jpackage -Dplatforms.jpackage.home=%{java_home} -Djavac.classpath=$(build-classpath saxon6) -Ddist.jar=%{name}-%{version}.jar -Djar.compress=true
 
 %install
 
@@ -95,6 +95,9 @@ export OPT_JAR_LIST=:
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.00-alt2_2jpp5
+- build with saxon6
+
 * Thu Nov 27 2008 Igor Vlasenko <viy@altlinux.ru> 0:1.00-alt1_2jpp5
 - new version
 
