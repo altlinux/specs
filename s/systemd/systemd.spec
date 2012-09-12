@@ -13,7 +13,7 @@
 
 Name: systemd
 Version: 189
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -119,15 +119,6 @@ Summary: Systemd Daemon Utility Library
 The sd-daemon library provides a reference implementation of various
 APIs for new-style daemons, as implemented by the systemd init system.
 
-%package -n libsystemd-daemon-devel
-Group: Development/C
-Summary: Development headers for systemd Daemon Utility Library
-License: MIT
-Requires: libsystemd-daemon = %version-%release
-
-%description -n libsystemd-daemon-devel
-The sd-daemon library provides a reference implementation of various
-APIs for new-style daemons, as implemented by the systemd init system.
 
 This package contains the development files.
 
@@ -138,6 +129,30 @@ Summary: Systemd Login Utility Library
 %description -n libsystemd-login
 The libsystemd-login library provides an interface for the
 systemd-logind service which is used to track user sessions and seats.
+
+%package -n libsystemd-id128
+Group: System/Libraries
+Summary: Systemd 128 Bit ID Utility Library
+
+%description -n libsystemd-id128
+The libsystemd-id128 library provides utility functions for generating 128 bit IDs.
+
+%package -n libsystemd-journal
+Group: System/Libraries
+Summary: Systemd Journal Utility Library
+
+%description -n libsystemd-journal
+The libsystemd-journal library provides an interface for the systemd journal service.
+
+%package -n libsystemd-daemon-devel
+Group: Development/C
+Summary: Development headers for systemd Daemon Utility Library
+License: MIT
+Requires: libsystemd-daemon = %version-%release
+
+%description -n libsystemd-daemon-devel
+The sd-daemon library provides a reference implementation of various
+APIs for new-style daemons, as implemented by the systemd init system.
 
 %package -n libsystemd-login-devel
 Group: Development/C
@@ -150,13 +165,32 @@ systemd-logind service which is used to track user sessions and seats.
 
 This package contains the development files.
 
+%package -n libsystemd-id128-devel
+Group: Development/C
+Summary: Development headers for systemd 128 Bit ID Utility Library
+Requires: libsystemd-id128 = %version-%release
+
+%description -n libsystemd-id128-devel
+The libsystemd-id128 library provides utility functions for generating 128 bit IDs.
+
+This package contains the development files.
+
+%package -n libsystemd-journal-devel
+Group: Development/C
+Summary: Development headers for systemd Journal Utility Library
+Requires: libsystemd-journal = %version-%release
+Requires: libsystemd-id128-devel = %version-%release
+
+%description -n libsystemd-journal-devel
+The libsystemd-journal library provides an interface for the systemd journal service.
+
+This package contains the development files.
+
 %package devel
 Group: Development/C
 Summary: Development headers for systemd
 License: LGPLv2.1+ MIT
-Requires: %name = %version-%release
-Requires: libsystemd-daemon-devel = %version-%release
-Requires: libsystemd-login-devel = %version-%release
+BuildArch: noarch
 
 %description devel
 Development headers and library files for developing applications for systemd.
@@ -641,10 +675,6 @@ fi
 %_datadir/polkit-1/actions/*.policy
 # %%_docdir/systemd
 %doc DISTRO_PORTING LICENSE.LGPL2.1 README NEWS TODO
-/%_lib/*.so.*
-%exclude /%_lib/libsystemd-daemon.so.*
-%exclude /%_lib/libsystemd-login.so.*
-%exclude /%_lib/libudev.so.*
 %exclude %_unitdir/*udev*
 %exclude %_unitdir/*/systemd-udev*
 %exclude /lib/systemd/systemd-udevd
@@ -655,23 +685,17 @@ fi
 %files -n libsystemd-login
 /%_lib/libsystemd-login.so.*
 
+%files -n libsystemd-id128
+/%_lib/libsystemd-id128.so.*
+
+%files -n libsystemd-journal
+/%_lib/libsystemd-journal.so.*
+
 %files devel
 %doc LICENSE.LGPL2.1 LICENSE.MIT
-%_includedir/systemd
-%_libdir/*.so
-%_pkgconfigdir/*.pc
+%_includedir/systemd/sd-shutdown.h
 %_datadir/pkgconfig/systemd.pc
 %_man3dir/*
-%exclude %_libdir/libsystemd-daemon.so
-%exclude %_libdir/libsystemd-login.so
-%exclude %_libdir/libudev.so
-%exclude %_libdir/libgudev-*.so
-%exclude %_pkgconfigdir/libsystemd-daemon.pc
-%exclude %_pkgconfigdir/libsystemd-login.pc
-%exclude %_pkgconfigdir/libudev.pc
-%exclude %_pkgconfigdir/gudev-*.pc
-%exclude %_includedir/systemd/sd-daemon.h
-%exclude %_includedir/systemd/sd-login.h
 
 %files -n libsystemd-daemon-devel
 %doc LICENSE.MIT
@@ -683,6 +707,17 @@ fi
 %_libdir/libsystemd-login.so
 %_pkgconfigdir/libsystemd-login.pc
 %_includedir/systemd/sd-login.h
+
+%files -n libsystemd-id128-devel
+%_libdir/libsystemd-id128.so
+%_pkgconfigdir/libsystemd-id128.pc
+%_includedir/systemd/sd-id128.h
+
+%files -n libsystemd-journal-devel
+%_libdir/libsystemd-journal.so
+%_pkgconfigdir/libsystemd-journal.pc
+%_includedir/systemd/sd-journal.h
+%_includedir/systemd/sd-messages.h
 
 %files sysvinit
 /sbin/init
@@ -795,6 +830,11 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Wed Sep 12 2012 Alexey Shabalin <shaba@altlinux.ru> 189-alt2
+- move libsystemd-journal,libsystemd-id128{-devel} to separate packages
+- systemd-devel as noarch without any requires;
+  many packages require pkgconfig/systemd.pc only
+
 * Tue Aug 28 2012 Alexey Shabalin <shaba@altlinux.ru> 189-alt1
 - snapshot fe1fed02c7637a2c18cd575f78be7fda27972148
 - build without FSS (gcrypt and qrencode)
