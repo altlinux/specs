@@ -60,7 +60,7 @@ BuildRequires: jpackage-compat
 
 Name:           sun-fi
 Version:        1.2.2
-Release:        alt2_4jpp6
+Release:        alt3_4jpp6
 Epoch:          0
 Summary:        Fast Infoset
 License:        ASL 2.0
@@ -218,7 +218,7 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/FastInfoset_sun-fi<<EOF
-%{_javadir}/FastInfoset.jar.jar	%{_javadir}/%name.jar	200
+%{_javadir}/FastInfoset.jar	%{_javadir}/%name.jar	200
 EOF
 
 
@@ -260,6 +260,9 @@ EOF
 %endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt3_4jpp6
+- bugfix in alternative
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt2_4jpp6
 - added fastinfoset.jar alternative
 
