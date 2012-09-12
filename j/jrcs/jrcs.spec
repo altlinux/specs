@@ -43,7 +43,7 @@ BuildRequires: jpackage-compat
 
 Name:           jrcs
 Version:        1.1
-Release:        alt4_0.r72.1jpp6
+Release:        alt5_0.r72.1jpp6
 Epoch:          0
 Summary:        JRCS - A RCS Archive Parser in Java
 
@@ -80,7 +80,7 @@ BuildRequires: maven1-plugin-license
 BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 %endif
 BuildRequires: junit
 BuildRequires: jakarta-oro
@@ -120,19 +120,19 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > jrcs-1.1-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > jrcs-1.1-depmap.new.xml
 fi
 
 %build
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -174,6 +174,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt5_0.r72.1jpp6
+- build with saxon6-scripts
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt4_0.r72.1jpp6
 - fixed build with java 7
 
