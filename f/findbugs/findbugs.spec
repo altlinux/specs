@@ -41,7 +41,7 @@ BuildRequires: jpackage-compat
 
 Name:           findbugs
 Version:        1.3.9
-Release:        alt1_5jpp6
+Release:        alt2_5jpp6
 Epoch:          0
 Summary:        Bug Pattern Detector for Java
 License:        LGPLv2+
@@ -90,7 +90,7 @@ BuildRequires:  jpackage-utils >= 0:1.7.3
 BuildRequires:  jsr-305
 BuildRequires:  junit4
 BuildRequires:  objectweb-asm >= 0:3.0
-BuildRequires:  saxon >= 0:6.5.5
+BuildRequires:  saxon6 >= 0:6.5.5
 BuildArch:      noarch
 Source44: import.info
 
@@ -164,6 +164,8 @@ popd
 %{__unzip} -qq %{_javadir}/docbook-xsl-ns-resources.zip
 # offline
 sed -i -e s,http://findbugs.googlecode.com/svn/trunk/findbugs/etc/docbook/docbookx.dtd,`pwd`/etc/docbook/docbookx.dtd,g `grep -rl 'http://findbugs.googlecode.com/svn/trunk/findbugs/etc/docbook/docbookx.dtd' .`
+
+sed -i -e 's,saxon.home}/saxon.jar,saxon.home}/saxon6.jar,' build.xml
 
 %build
 export CLASSPATH=
@@ -246,17 +248,13 @@ EOF
 %{__ln_s} %{_docdir}/%{name}-%{version} %{buildroot}%{_datadir}/%{name}-%{version}/doc
 %{__ln_s} %{name}-%{version} %{buildroot}%{_datadir}/%{name}
 
-%{__mkdir_p} %{buildroot}%{_docdir}/%{name}-%{version}
-%{__cp} -pr src/doc/* %{buildroot}%{_docdir}/%{name}-%{version}
-%{__ln_s} %{_javadocdir}/%{name}-%{version} %{buildroot}%{_docdir}/%{name}-%{version}/api
-
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/%name.conf`
 touch $RPM_BUILD_ROOT/etc/%name.conf
 # fix to report
 sed -i -e 's,Categories=Development;X-JPackage;,Categories=X-JPackage;Java;Development;Debugger;,' $RPM_BUILD_ROOT%_desktopdir/*.desktop
 
 %files
-%doc LICENSE.txt README.txt design
+%doc LICENSE.txt README.txt
 %attr(0755,root,root) %{_bindir}/findbugs
 %dir %{_datadir}/%{name}-%{version}
 %dir %{_datadir}/%{name}-%{version}/lib
@@ -343,9 +341,13 @@ sed -i -e 's,Categories=Development;X-JPackage;,Categories=X-JPackage;Java;Devel
 %{_javadocdir}/%{name}
 
 %files manual
-%doc %{_docdir}/%{name}-%{version}
+%doc design
+%doc src/doc
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.9-alt2_5jpp6
+- build with saxon6
+
 * Fri Feb 10 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.9-alt1_5jpp6
 - new release
 
