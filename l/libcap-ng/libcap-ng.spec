@@ -1,8 +1,7 @@
-
-Summary: An alternate posix capabilities library
 Name: libcap-ng
-Version: 0.6.6
-Release: alt1.1
+Summary: An alternate posix capabilities library
+Version: 0.7
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://people.redhat.com/sgrubb/libcap-ng
@@ -91,6 +90,9 @@ rm -f %buildroot%python_sitelibdir/*.{a,la}
 %_man8dir/*
 
 %changelog
+* Wed Sep 12 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7-alt1
+- New version
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.6-alt1.1
 - Rebuild with Python-2.7
 
