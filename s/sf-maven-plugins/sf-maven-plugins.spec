@@ -64,7 +64,7 @@ BuildRequires: ant-bsf
 
 Name:           sf-maven-plugins
 Version:        1.0
-Release:        alt8_0.20050908.9jpp5
+Release:        alt9_0.20050908.9jpp5
 Epoch:          0
 Summary:        Maven Plugins hosted at sf.net
 
@@ -145,7 +145,7 @@ BuildRequires: ant-junit
 BuildRequires: ant-trax
 BuildRequires: maven1 >= 0:1.1
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 BuildRequires: aptconvert
 BuildRequires: asm
 BuildRequires: excalibur-avalon-framework-api
@@ -660,18 +660,18 @@ if [ ! -f %{SOURCE4} ]; then
   echo '<depset>' >> $DEPCAT
   for p in $(find . -name project.xml); do
       pushd $(dirname $p)
-      /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+      /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
       popd
   done
   echo >> $DEPCAT
   echo '</depset>' >> $DEPCAT
-  /usr/bin/saxon $DEPCAT %{SOURCE2} > sf-maven-plugins-1.0-depmap.new.xml
+  /usr/bin/saxon6 $DEPCAT %{SOURCE2} > sf-maven-plugins-1.0-depmap.new.xml
 fi
 
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -1062,6 +1062,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt9_0.20050908.9jpp5
+- build with saxon6-scripts
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_0.20050908.9jpp5
 - build with new apache-commons-jxpath
 
