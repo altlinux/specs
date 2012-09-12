@@ -1,14 +1,15 @@
 Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define version 1.3.1
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apiviz
+%define version 1.3.1
 %global namedreltag .GA
 %global namedversion %{version}%{?namedreltag}
 
 Name:             apiviz
 Version:          1.3.1
-Release:          alt1_4jpp7
+Release:          alt1_7jpp7
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 Group:            Development/Java
 License:          LGPLv2+
@@ -69,18 +70,18 @@ mvn-rpmbuild install javadoc:aggregate
 
 %install
 # JAR
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/jboss
-cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/jboss/%{name}.jar
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+cp -p target/%{name}-%{namedversion}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # APIDOCS
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # POM
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.jboss-%{name}.pom
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP.jboss-%{name}.pom jboss/%{name}.jar
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "net.gleamynode.apiviz:apiviz"
 
 %files
 %{_mavenpomdir}/*
@@ -93,6 +94,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.jboss-%{name}.pom
 %doc LICENSE.txt
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_7jpp7
+- new release
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_4jpp7
 - fc version
 
