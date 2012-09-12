@@ -39,7 +39,7 @@ Name:           clirr
 Summary:        Binary and Source Compatibility Check
 Url:            http://clirr.sourceforge.net/
 Version:        0.6
-Release:        alt5_6jpp6
+Release:        alt6_6jpp6
 Epoch:          0
 License:        LGPL
 Group:          Development/Java
@@ -62,7 +62,7 @@ BuildRequires: jpackage-utils >= 0:5.0.0
 BuildRequires: ant >= 0:1.7.1
 BuildRequires: junit
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 BuildRequires: maven1 >= 0:1.1
 BuildRequires: maven1-plugins-base
 BuildRequires: maven1-plugin-changes
@@ -168,7 +168,7 @@ export LANG=C
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -294,6 +294,9 @@ chmod 755 $RPM_BUILD_ROOT%_bindir/%name
 %endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.6-alt6_6jpp6
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.6-alt5_6jpp6
 - fixed build with moved maven1
 
