@@ -21,25 +21,24 @@ Requires: glassfish-jsf
 Requires: glassfish-jstl
 Requires: gnu-getopt
 Requires: gnu-trove
-Requires: grep
 Requires: hibernate3-ejb-persistence-3.0-api
 Requires: hsqldb
 Requires: jacorb
 Requires: jakarta-commons-codec
 Requires: jakarta-commons-collections
 Requires: jakarta-commons-httpclient
-Requires: jakarta-commons-logging-jboss
+#Requires: jakarta-commons-logging-jboss
 Requires: javassist
 Requires: jaxbintros
 Requires: jaxen
 Requires: jboss-aop
 Requires: jboss-cache
 Requires: jboss-common
-Requires: jboss-jaxr
+#Requires: jboss-jaxr
 Requires: jboss-microcontainer
 Requires: jboss-remoting
 Requires: jboss-serialization
-Requires: jbossts
+#Requires: jbossts
 Requires: jboss-vfs
 #Requires: jbossweb20
 Requires: jbossws-common
@@ -51,7 +50,7 @@ Requires: jettison
 Requires: jfreechart
 Requires: joesnmp
 Requires: log4j
-Requires: quartz
+#Requires: quartz
 Requires: snmptrapappender
 #Requires: sun-fi
 Requires: ws-commons-policy
@@ -61,7 +60,7 @@ Requires: xml-security
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt24jpp
+Release: alt25jpp
 Source: jbossas-4.2.3-alt23_24jpp6.cpio
 
 %description
@@ -89,6 +88,9 @@ done
 %files -f %name-list
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.2.3-alt25jpp
+- dropped quartz deps
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.2.3-alt24jpp
 - reduced to bootstrap pack of jars til the end of jboss update transaction
 
