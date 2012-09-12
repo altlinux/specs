@@ -1,7 +1,7 @@
 Name:		flush
 Summary:	GTK-based BitTorrent client
-Version:	0.9.11
-Release:	alt2
+Version:	0.9.12
+Release:	alt1.2
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 License:	GPLv3+
 Group:		Networking/File transfer
@@ -10,7 +10,7 @@ Source0:	%name-%version.tar.bz2
 
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-signals-devel
 BuildRequires: doxygen gcc-c++ libconfig-c++-devel libexpat-devel
-BuildRequires: libglademm-devel libnotify-devel libssl-devel libtorrent-rasterbar-devel libdbus-devel
+BuildRequires: libglademm-devel libnotify-devel libssl-devel libtorrent-rasterbar7-devel libdbus-devel
 
 Patch0:		%name-0.9.11-magnet_mime_support.patch
 
@@ -38,8 +38,8 @@ Flush uses Rasterbar's version of libtorrent.
 %patch0 -p1
 
 %build
-export CXXFLAGS+=-DBOOST_FILESYSTEM_VERSION=2
-export CFLAGS+=-DBOOST_FILESYSTEM_VERSION=2
+export CXXFLAGS+=-DBOOST_FILESYSTEM_VERSION=3
+export CFLAGS+=-DBOOST_FILESYSTEM_VERSION=3
 %configure --disable-bundle-package
 %make_build
 
@@ -71,6 +71,15 @@ cd ../..
 %_pixmapsdir/*
 
 %changelog
+* Wed Sep 12 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.12-alt1.2
+- fix BuildRequires for libtorrent-rasterbar7-devel
+
+* Wed Sep 12 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.12-alt1.1
+- fix build with new Boost 1.51
+
+* Wed Sep 12 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.12-alt1
+- 0.9.12
+
 * Wed Aug 22 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.11-alt2
 - add magnet support in desktop-file
 
