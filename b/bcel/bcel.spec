@@ -42,7 +42,7 @@ BuildRequires: jpackage-compat
 
 Name:           bcel
 Version:        5.2
-Release:        alt3_3jpp5
+Release:        alt4_3jpp5
 Epoch:          1
 Summary:        Byte Code Engineering Library
 License:        Apache Software License
@@ -62,8 +62,8 @@ Requires: regexp
 BuildRequires: ant
 %if %{with_maven}
 BuildRequires: maven1 >= 0:1.1
-BuildRequires: saxon
-BuildRequires: saxon-scripts
+#BuildRequires: saxon
+BuildRequires: saxon6-scripts
 BuildRequires: maven1-plugins-base
 BuildRequires: maven1-plugin-changelog
 BuildRequires: maven1-plugin-changes
@@ -138,17 +138,17 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-        /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+        /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > %{name}-%{version}-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > %{name}-%{version}-depmap.new.xml
 
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
         %{__cp} project.xml project.xml.orig
-        /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} \
+        /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} \
             map="%{SOURCE4}"
     popd
 done
@@ -255,6 +255,9 @@ fi
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1:5.2-alt4_3jpp5
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 1:5.2-alt3_3jpp5
 - fixed build with moved maven1
 
