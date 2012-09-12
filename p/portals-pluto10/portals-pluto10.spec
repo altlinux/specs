@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           portals-%{bname}10
 Version:        1.0.1
-Release:        alt5_2jpp5
+Release:        alt6_2jpp5
 Epoch:          0
 Summary:        Portlet 1.0 Reference Implementation
 License:        Apache Software License 2.0
@@ -91,7 +91,7 @@ BuildRequires: maven1-plugin-tasklist
 BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 %endif
 BuildRequires: castor0
 BuildRequires: jakarta-commons-beanutils
@@ -203,16 +203,16 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > pluto-1.0.1-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > pluto-1.0.1-depmap.new.xml
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -416,6 +416,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt6_2jpp5
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt5_2jpp5
 - fixed build with moved maven1
 
