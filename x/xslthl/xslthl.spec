@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           xslthl
 Version:        2.0.2
-Release:	alt1_1jpp6
+Release:	alt2_1jpp6
 Epoch:          0
 Summary:        XSLT Syntax Highlighting
 License:        zlib/libpng
@@ -66,7 +66,7 @@ Requires(post): jpackage-utils >= 0:1.7.3
 Requires(postun): jpackage-utils >= 0:1.7.3
 BuildRequires:  ant >= 0:1.6.5
 BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  saxon
+BuildRequires:  saxon6
 BuildRequires:  saxon9
 BuildRequires:  xalan-j2
 %if %{gcj_support}
@@ -97,7 +97,7 @@ Javadoc for %{name}.
 %patch0 -p0 -b .sav0
 
 %build
-export CLASSPATH=$(build-classpath saxon saxon9 xalan-j2)
+export CLASSPATH=$(build-classpath saxon6 saxon9 xalan-j2)
 export OPT_JAR_LIST=:
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only javadoc
@@ -141,6 +141,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.2-alt2_1jpp6
+- build with saxon6
+
 * Sat Jan 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.2-alt1_1jpp6
 - new jpp relase
 
