@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           fulcrum-yaafi
 Version:        1.0.5
-Release:        alt3_1jpp5
+Release:        alt4_1jpp5
 Epoch:          0
 Summary:        Yet Another Avalon Framework Implementation
 License:        Apache Software License 2.0
@@ -65,7 +65,7 @@ BuildRequires: maven1-plugin-license
 BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 BuildRequires: excalibur-avalon-framework-api
 BuildRequires: excalibur-avalon-framework-impl
 BuildRequires: jamonapi
@@ -116,17 +116,17 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > %{name}-%{version}-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > %{name}-%{version}-depmap.new.xml
 fi
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -192,6 +192,9 @@ fi
 
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.5-alt4_1jpp5
+- build with saxon6-scripts
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.5-alt3_1jpp5
 - fixed build with moved maven1
 
