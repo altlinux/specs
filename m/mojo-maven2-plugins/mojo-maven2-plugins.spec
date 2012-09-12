@@ -1,6 +1,7 @@
 BuildRequires: fusesource-pom
 BuildRequires: velocity14
-BuildRequires: geronimo-jpa-3.0-api javacc3 sun-ws-metadata-2.0-api sun-annotation-1.0-api maven-plugin-cobertura gmaven-runtime-1.5
+BuildRequires: geronimo-jpa-3.0-api javacc3 sun-ws-metadata-2.0-api sun-annotation-1.0-api maven-plugin-cobertura
+#gmaven-runtime-1.5
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2011, JPackage Project
@@ -44,7 +45,7 @@ BuildRequires: jpackage-compat
 %define aspectj_namedversion 1.1-SNAPSHOT
 %define aspectj_include 0
 %define axistools_namedversion 1.2-SNAPSHOT
-%define axistools_include 1
+%define axistools_include 0
 %define build_helper_namedversion 1.5
 %define build_helper_include 0
 %define buildnumber_namedversion 1.0-beta-2-SNAPSHOT
@@ -58,7 +59,7 @@ BuildRequires: jpackage-compat
 %define commons_attributes_namedversion 1.1-SNAPSHOT
 %define commons_attributes_include 1
 %define dbunit_namedversion 1.0-beta-2-SNAPSHOT
-%define dbunit_include 1
+%define dbunit_include 0
 %define docbook_namedversion 1.0.0-alpha-2-SNAPSHOT
 %define docbook_include 0
 %define exec_namedversion 1.1-beta-2-SNAPSHOT
@@ -76,13 +77,13 @@ BuildRequires: jpackage-compat
 %define idlj_namedversion 1.1-SNAPSHOT
 %define idlj_include 1
 %define jalopy_namedversion 1.0-alpha-2-SNAPSHOT
-%define jalopy_include 1
+%define jalopy_include 0
 %define jasperreports_namedversion 1.0-beta-2-SNAPSHOT
 %define jasperreports_include 0
 %define javacc_namedversion 2.5-SNAPSHOT
 %define javacc_include 1
 %define javancss_namedversion 2.0-beta-3-SNAPSHOT
-%define javancss_include 1
+%define javancss_include 0
 %define jaxb2_namedversion 1.3-SNAPSHOT
 %define jaxb2_include 0
 %define jboss_namedversion 1.3.2-SNAPSHOT
@@ -94,7 +95,7 @@ BuildRequires: jpackage-compat
 %define jdiff_namedversion 0.1-SNAPSHOT
 %define jdiff_include 0
 %define jpox_namedversion 1.1.8-SNAPSHOT
-%define jpox_include 1
+%define jpox_include 0
 %define jruby_namedversion 1.0-beta-5-SNAPSHOT
 %define jruby_include 0
 %define jruby_stdlib_namedversion 1.8.5
@@ -102,9 +103,9 @@ BuildRequires: jpackage-compat
 %define jspc_namedversion 2.0-alpha-3
 %define jspc_include 1
 %define keytool_namedversion 1.1-beta-1-SNAPSHOT
-%define keytool_include 1
+%define keytool_include 0
 %define l10n_namedversion 1.0-alpha-2-SNAPSHOT
-%define l10n_include 1
+%define l10n_include 0
 %define wagon_cifs_namedversion 1.0-alpha-1-SNAPSHOT
 %define wagon_cifs_include 0
 
@@ -116,12 +117,17 @@ BuildRequires: jpackage-compat
 %define native_namedversion 1.0-alpha-3-SNAPSHOT
 %define native_include 0
 %define minijar_namedversion 1.0-alpha-3
-%define minijar_include 1
+%define minijar_include 0
 
+
+
+#-------------
+# sanbox ...
+#-------------
 %define appbundler_namedversion 1.0-SNAPSHOT
-%define appbundler_include 1
+%define appbundler_include 0
 %define appfuse_namedversion 2.0.0-SNAPSHOT
-%define appfuse_include 1
+%define appfuse_include 0
 %define apt_namedversion 1.0-alpha-3-SNAPSHOT
 %define apt_include 0
 %define batik_namedversion 1.0-SNAPSHOT
@@ -129,25 +135,25 @@ BuildRequires: jpackage-compat
 %define cis_namedversion 1.0-alpha-1-SNAPSHOT
 %define cis_include 0
 %define cruisecontrol_namedversion 1.0-SNAPSHOT
-%define cruisecontrol_include 1
+%define cruisecontrol_include 0
 %define dashboard_namedversion 1.0-SNAPSHOT
 %define dashboard_include 0
 %define deb_namedversion 1.0-SNAPSHOT
-%define deb_include 1
+%define deb_include 0
 %define delicious_namedversion 1.0-alpha-1-SNAPSHOT
-%define delicious_include 1
+%define delicious_include 0
 %define ejbdoclet_namedversion 1.0-beta-1-SNAPSHOT
 %define ejbdoclet_include 0
 %define emma_namedversion 1.0-SNAPSHOT
 %define emma_include 0
 %define fileutils_namedversion 1.0-SNAPSHOT
-%define fileutils_include 1
+%define fileutils_include 0
 %define fit_namedversion 2.0-beta-4-SNAPSHOT
-%define fit_include 1
+%define fit_include 0
 %define freemarker_namedversion 0.0.4-alpha-1-SNAPSHOT
-%define freemarker_include 1
+%define freemarker_include 0
 %define ganalytics_namedversion 1.0-SNAPSHOT
-%define ganalytics_include 1
+%define ganalytics_include 0
 %define graphing_namedversion 0.1-SNAPSHOT
 %define graphing_include 0
 %define hibernatedoclet_namedversion 1.0-beta-1-SNAPSHOT
@@ -169,11 +175,11 @@ BuildRequires: jpackage-compat
 %define jettybin_namedversion 0.1-SNAPSHOT
 %define jettybin_include 0
 %define jetty_namedversion 1.0.0-alpha-1-SNAPSHOT
-%define jetty_include 1
+%define jetty_include 0
 #%%define legaltools_namedversion 1.0-alpha-1-SNAPSHOT
 %define legaltools_include 0
 %define mant_namedversion 1.0-beta-2-SNAPSHOT
-%define mant_include 1
+%define mant_include 0
 #%%define mojo_was5_plugin_namedversion 1.1.3
 %define mojo_was5_plugin_include 0
 %define mojo_was_plugin_anttasks_namedversion 1.1
@@ -181,15 +187,15 @@ BuildRequires: jpackage-compat
 %define buildinfo_namedversion 1.0-SNAPSHOT
 %define buildinfo_include 0
 %define changes_namedversion 2.0-SNAPSHOT
-%define changes_include 1
+%define changes_include 0
 %define diagram_maker_namedversion 0.1-SNAPSHOT
-%define diagram_maker_include 1
+%define diagram_maker_include 0
 %define diagrams_namedversion 1.0-SNAPSHOT
 %define diagrams_include 1
 %define hsqldb_namedversion 1.0-SNAPSHOT
-%define hsqldb_include 1
+%define hsqldb_include 0
 %define springbeandoc_namedversion 1.0.8-SNAPSHOT
-%define springbeandoc_include 1
+%define springbeandoc_include 0
 #%%define testing_simple_namedversion 1.0-SNAPSHOT
 %define testing_simple_include 0
 %define pomtools_namedversion 1.0-SNAPSHOT
@@ -199,25 +205,25 @@ BuildRequires: jpackage-compat
 %define push_namedversion 1.0-alpha-1-SNAPSHOT
 %define push_include 0
 %define retroweaver_namedversion 1.0-SNAPSHOT
-%define retroweaver_include 1
+%define retroweaver_include 0
 #%%define rspec_namedversion 1.0-SNAPSHOT
 %define rspec_include 0
 %define rubyscript_namedversion 1.0-beta-1-SNAPSHOT
 %define rubyscript_include 0
 %define runtime_builder_namedversion 0.1-SNAPSHOT
-%define runtime_builder_include 1
+%define runtime_builder_include 0
 %define script_namedversion 1.0-SNAPSHOT
 %define script_include 0
 %define shade_namedversion 1.0-alpha-11-SNAPSHOT
 %define shade_include 0
 %define shell_namedversion 1.0-SNAPSHOT
-%define shell_include 1
+%define shell_include 0
 %define springdoclet_namedversion 1.0-beta-1
 %define springdoclet_include 0
 %define visibroker_namedversion 1.0-alpha-1-SNAPSHOT
 %define visibroker_include 0
 %define wagon_namedversion 1.0-SNAPSHOT
-%define wagon_include 1
+%define wagon_include 0
 %define webdoclet_namedversion 1.0-beta-1
 %define webdoclet_include 0
 %define xfire_namedversion 1.0-SNAPSHOT
@@ -225,16 +231,17 @@ BuildRequires: jpackage-compat
 %define xjc_namedversion 1.0-beta-2-SNAPSHOT
 %define xjc_include 0
 %define xsltc_namedversion 1.0-SNAPSHOT
-%define xsltc_include 1
+%define xsltc_include 0
 
+# main pom again ...
 %define native2ascii_namedversion 1.0-alpha-2-SNAPSHOT
-%define native2ascii_include 1
+%define native2ascii_include 0
 %define netbeans_freeform_namedversion 2.1-SNAPSHOT
-%define netbeans_freeform_include 1
+%define netbeans_freeform_include 0
 %define openjpa_namedversion 1.1-alpha-SNAPSHOT
-%define openjpa_include 1
+%define openjpa_include 0
 %define osxappbundle_namedversion 1.0-alpha-2-SNAPSHOT
-%define osxappbundle_include 1
+%define osxappbundle_include 0
 %define ounce_namedversion 1.1-SNAPSHOT
 %define ounce_include 0
 #%%define pde_namedversion 1.0-alpha-2-SNAPSHOT
@@ -242,45 +249,45 @@ BuildRequires: jpackage-compat
 %define plugin_support_namedversion 1.0-alpha-2-SNAPSHOT
 %define plugin_support_include 0
 %define retrotranslator_namedversion 1.0-beta-1-SNAPSHOT
-%define retrotranslator_include 1
+%define retrotranslator_include 0
 %define rat_namedversion 1.0-alpha-4-SNAPSHOT
 %define rat_include 0
 %define rmic_namedversion 1.0-SNAPSHOT
-%define rmic_include 1
+%define rmic_include 0
 %define rpm_namedversion 2.0-beta-2-SNAPSHOT
-%define rpm_include 1
+%define rpm_include 0
 %define sablecc_namedversion 2.3-SNAPSHOT
-%define sablecc_include 1
+%define sablecc_include 0
 %define selenium_namedversion 1.0-beta-3-SNAPSHOT
-%define selenium_include 1
+%define selenium_include 0
 %define shitty_namedversion 1.0-alpha-2-SNAPSHOT
 %define shitty_include 0
 %define smc_namedversion 1.0-alpha-2-SNAPSHOT
-%define smc_include 1
+%define smc_include 0
 %define solaris_namedversion 1.0-alpha-2-SNAPSHOT
 %define solaris_include 0
 %define sql_namedversion 1.1-SNAPSHOT
-%define sql_include 1
+%define sql_include 0
 %define sysdeo_tomcat_namedversion 1.1-SNAPSHOT
 %define sysdeo_tomcat_include 0
 %define taglist_namedversion 2.3-SNAPSHOT
 %define taglist_include 1
 %define tomcat_namedversion 1.0-alpha-2-SNAPSHOT
-%define tomcat_include 1
+%define tomcat_include 0
 %define pack200_anttasks_namedversion 1.2-SNAPSHOT
-%define pack200_anttasks_include 1
+%define pack200_anttasks_include 0
 %define webstart_namedversion 1.0-beta-1-SNAPSHOT
 %define webstart_include 0
 %define webstart_servlet_namedversion 1.0-6.0.02_ea_b02.1-SNAPSHOT
-%define webstart_servlet_include 1
+%define webstart_servlet_include 0
 %define wsdl2java_namedversion 0.4-SNAPSHOT
-%define wsdl2java_include 1
+%define wsdl2java_include 0
 %define xdoclet_namedversion 1.0-beta-1-SNAPSHOT
 %define xdoclet_include 0
 %define xmlbeans_namedversion 2.3.2-SNAPSHOT
 %define xmlbeans_include 0
 %define xml_namedversion 1.0-beta-3-SNAPSHOT
-%define xml_include 1
+%define xml_include 0
 %define xslt_namedversion 1.1-SNAPSHOT
 %define xslt_include 1
 #
@@ -345,7 +352,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt26_8jpp6
+Release:        alt27_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -1155,6 +1162,7 @@ BuildRequires:    dom4j
 BuildRequires:    jgoodies-looks
 BuildRequires:    gmaven
 BuildRequires:    gmaven-runtime-1.6
+BuildRequires:    gmaven-runtime-1.5
 BuildRequires:    groovy16
 BuildRequires:    maven2 >= 0:2.0.8
 BuildRequires:    maven-shared-reporting-impl
@@ -1727,6 +1735,7 @@ Requires:    %{name} = 0:%{version}-%{release}
 BuildRequires:    maven2 >= 0:2.0.8
 BuildRequires:    maven-shared-file-management
 BuildRequires:    gmaven
+BuildRequires:    gmaven-runtime-1.5
 BuildRequires:    jakarta-commons-lang
 Requires:    maven2 >= 0:2.0.8
 Requires:    maven-shared-file-management
@@ -3022,6 +3031,15 @@ sed -i 's,<module>sysdeo-tomcat-maven-plugin</module>,<!-- tmp nocompile<module>
 sed -i 's,<module>was6-maven-plugin</module>,<!-- tmp nocompile<module>was6-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>webstart</module>,<!-- tmp nocompile<module>webstart</module>-->,' pom.xml
 sed -i 's,<module>solaris</module>,<!-- tmp nocompile<module>solaris</module>-->,' pom.xml
+sed -i 's,<module>axistools-maven-plugin</module>,<!-- tmp nocompile<module>axistools-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>dbunit-maven-plugin</module>,<!-- tmp nocompile<module>dbunit-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>jalopy-maven-plugin</module>,<!-- tmp nocompile<module>jalopy-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>keytool-maven-plugin</module>,<!-- tmp nocompile<module>keytool-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>minijar-maven-plugin</module>,<!-- tmp nocompile<module>minijar-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>l10n-maven-plugin</module>,<!-- tmp nocompile<module>l10n-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>javancss-maven-plugin</module>,<!-- tmp nocompile<module>javancss-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>jruby-stdlib</module>,<!-- tmp nocompile<module>jruby-stdlib</module>-->,' pom.xml
+sed -i 's,<module>jpox-maven-plugin</module>,<!-- tmp nocompile<module>jpox-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>jboss-maven-plugin</module>,<!-- tmp nocompile<module>jboss-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>xmlbeans-maven-plugin</module>,<!-- tmp nocompile<module>xmlbeans-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>jdiff-maven-plugin</module>,<!-- tmp nocompile<module>jdiff-maven-plugin</module>-->,' pom.xml
@@ -3044,6 +3062,41 @@ sed -i 's,<module>hibernatedoclet-maven-plugin</module>,<!-- tmp nocompile<modul
 sed -i 's,<module>springdoclet-maven-plugin</module>,<!-- tmp nocompile<module>springdoclet-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>webdoclet-maven-plugin</module>,<!-- tmp nocompile<module>web-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 sed -i 's,<module>ejbdoclet-maven-plugin</module>,<!-- tmp nocompile<module>ejbdoclet-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>appbundler-maven-plugin</module>,<!-- tmp nocompile<module>appbundler-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>appfuse-maven-plugin</module>,<!-- tmp nocompile<module>appfuse-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>cruisecontrol-maven-plugin</module>,<!-- tmp nocompile<module>cruisecontrol-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>deb-maven-plugin</module>,<!-- tmp nocompile<module>deb-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>delicious-maven-plugin</module>,<!-- tmp nocompile<module>delicious-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>fileutils-maven-plugin</module>,<!-- tmp nocompile<module>fileutils-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>fit-maven-plugin</module>,<!-- tmp nocompile<module>fit-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>freemarker-maven-plugin</module>,<!-- tmp nocompile<module>freemarker-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>ganalytics-maven-plugin</module>,<!-- tmp nocompile<module>ganalytics-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>jetty-maven-plugin</module>,<!-- tmp nocompile<module>jetty-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>mant-maven-plugin</module>,<!-- tmp nocompile<module>mant-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>maven-changes</module>,<!-- tmp nocompile<module>maven-changes</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>maven-diagram-maker</module>,<!-- tmp nocompile<module>maven-diagram-maker</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>maven-hsqldb-plugin</module>,<!-- tmp nocompile<module>maven-hsqldb-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>maven-springbeandoc-plugin</module>,<!-- tmp nocompile<module>maven-springbeandoc-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>retroweaver-maven-plugin</module>,<!-- tmp nocompile<module>retroweaver-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>runtime-maven-plugin</module>,<!-- tmp nocompile<module>runtime-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>shell-maven-plugin</module>,<!-- tmp nocompile<module>shell-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>wagon-maven-plugin</module>,<!-- tmp nocompile<module>wagon-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>xsltc-maven-plugin</module>,<!-- tmp nocompile<module>xsltc-maven-plugin</module>-->,' mojo-sandbox/pom.xml
+sed -i 's,<module>native2ascii-maven-plugin</module>,<!-- tmp nocompile<module>native2ascii-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>netbeans-freeform-maven-plugin</module>,<!-- tmp nocompile<module>netbeans-freeform-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>openjpa-maven-plugin</module>,<!-- tmp nocompile<module>openjpa-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>osxappbundle-maven-plugin</module>,<!-- tmp nocompile<module>osxappbundle-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>retrotranslator-maven-plugin</module>,<!-- tmp nocompile<module>retrotranslator-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>rmic-maven-plugin</module>,<!-- tmp nocompile<module>rmic-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>rpm-maven-plugin</module>,<!-- tmp nocompile<module>rpm-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>selenium-maven-plugin</module>,<!-- tmp nocompile<module>selenium-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>sablecc-maven-plugin</module>,<!-- tmp nocompile<module>sablecc-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>smc-maven-plugin</module>,<!-- tmp nocompile<module>smc-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>sql-maven-plugin</module>,<!-- tmp nocompile<module>sql-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>tomcat-maven-plugin</module>,<!-- tmp nocompile<module>tomcat-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>wsdl2java-maven-plugin</module>,<!-- tmp nocompile<module>wsdl2java-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>xml-maven-plugin</module>,<!-- tmp nocompile<module>xml-maven-plugin</module>-->,' pom.xml
+
 sed -i 's,<module>-maven-plugin</module>,<!-- tmp nocompile<module>-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 
 %build
@@ -6092,6 +6145,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt27_8jpp6
+- dropped unused plugins
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt26_8jpp6
 - build without jboss4
 
