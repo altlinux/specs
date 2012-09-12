@@ -1,6 +1,6 @@
 Summary: Mouse replacement software that moves the pointer as you move your head
 Name: eviacam
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Group: System/Base
@@ -38,6 +38,9 @@ is required. Based on the award winning Facial Mouse software.
 %_datadir/pixmaps/*
 
 %changelog
+* Wed Sep 12 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.5.4-alt1
+- New version
+
 * Tue Jan 31 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.5.3-alt1
 - New version
 
