@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-commons-latka
 Version:        1.0
-Release:        alt6_0.r560660.1jpp5
+Release:        alt7_0.r560660.1jpp5
 Epoch:          0
 Summary:        Functional (end-to-end) testing tool
 
@@ -82,7 +82,7 @@ BuildRequires: maven1-plugin-tasklist
 BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 %endif
 
 BuildRequires: dom4j >= 0:1.6
@@ -161,7 +161,7 @@ gzip -dc %{SOURCE3} | tar xf -
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE1} map=%{SOURCE2}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE1} map=%{SOURCE2}
     popd
 done
 
@@ -256,6 +256,9 @@ find $RPM_BUILD_ROOT -name *.sh -print0 | xargs -0 dos2unix
 %endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_0.r560660.1jpp5
+- build with saxon6-scripts
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_0.r560660.1jpp5
 - build with apache-commons-jexl11
 
