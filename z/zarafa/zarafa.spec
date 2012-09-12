@@ -4,7 +4,7 @@
 #
 ###############################################################################
 
-%define svnrevision	33926
+%define svnrevision	36676
 %define php5_extension	mapi
 %define webprefix	%_datadir/zarafa-webaccess
 %define mobprefix	%_datadir/zarafa-webaccess-mobile
@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.0
-Release: alt6
+Release: alt7
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -25,6 +25,7 @@ Patch: zarafa-7.1.0beta1-alt-makefile.patch
 Patch1: zarafa-7.0rc2-alt-ossbuild.patch
 Patch2: zarafa-7.0rc1-alt-php-ext-makefile.patch
 Patch3: zarafa-7.0.1-alt-fix-userscript-path.patch
+Patch4: zarafa-7.1.0-boost-filesystem-v3-support.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires(pre): rpm-build-apache2
@@ -256,9 +257,10 @@ modern web browser.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
-%add_optflags -DBOOST_FILESYSTEM_VERSION=2 -fPIC -L%_libdir
+%add_optflags -fPIC -L%_libdir
 
 BUILD_HAVE=`echo %php5_extension | tr '[:lower:]-' '[:upper:]_'`
 export LDFLAGS=-lphp-%_php5_version
@@ -681,6 +683,10 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Wed Sep 12 2012 Radik Usupov <radik@altlinux.org> 7.1.0-alt7
+- New upstreame snapshot (7.1.0 Release)
+- Add support for Boost.Filesystem v3 (thanks iv@!)
+
 * Fri Aug 10 2012 Radik Usupov <radik@altlinux.org> 7.1.0-alt6
 - New upstreame snapshot (7.1.0rc3)
 

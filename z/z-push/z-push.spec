@@ -1,7 +1,7 @@
 %define with_ldap 0
 
 Name: z-push
-Version: 2.0
+Version: 2.0.2
 Release: alt1
 
 Summary: ActiveSync over-the-air implementation for mobile syncing
@@ -96,6 +96,9 @@ rm -f %buildroot%_datadir/%name/{INSTALL,LICENSE,{config,debug}.php.{package,zar
 %_datadir/%name/
 
 %changelog
+* Wed Sep 12 2012 Radik Usupov <radik@altlinux.org> 2.0.2-alt1
+- New version (2.0.2-1437)
+
 * Wed Jul 11 2012 Radik Usupov <radik@altlinux.org> 2.0-alt1
 - New version (2.0-1346)
 
