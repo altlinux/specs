@@ -1,14 +1,14 @@
 %define dist Class-Accessor-Grouped
 Name: perl-Class-Accessor-Grouped
-Version: 0.10003
+Version: 0.10006
 Release: alt1
 
 Summary: Lets you build groups of accessors
 License: GPL or Artistic
 Group: Development/Perl
 
-URL: http://search.cpan.org/dist/Class-Accessor-Grouped/
-Source: http://www.cpan.org/authors/id/F/FR/FREW/Class-Accessor-Grouped-0.10003.tar.gz
+URL: %CPAN %dist
+Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ rm -f MANIFEST.SKIP
 %perl_vendor_privlib/Class*
 
 %changelog
+* Wed Sep 12 2012 Vladimir Lettiev <crux@altlinux.ru> 0.10006-alt1
+- 0.10003 -> 0.10006
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.10003-alt1
 - automated CPAN update
 
