@@ -51,7 +51,7 @@ BuildRequires: jpackage-compat
 
 Name:           glassfish-jaxws
 Version:        2.1.3
-Release:        alt2_8jpp6
+Release:        alt3_8jpp6
 Epoch:          0
 Summary:        Java API for XML Web Services API
 License:        CDDL 1.0/GPLv2
@@ -70,7 +70,7 @@ Requires(postun): jpackage-utils
 Requires(preun): alternatives >= 0:0.4
 Requires: jpackage-utils
 %if %without bundled
-Requires: glassfish-jaxb
+Requires: glassfish-jaxb21
 Requires: sun-saaj-1.3-impl
 Requires: sun-xmlstreambuffer
 Requires: wstx
@@ -78,7 +78,7 @@ Requires: sun-mimepull
 # FIXME: This is added in place of annotation_1_0_api
 Requires: jboss-ejb-3.0-api
 Requires: jaf_1_1_api
-Requires: jaxb_2_1_api
+#Requires: jaxb_2_1_api
 Requires: stax_1_0_api
 Requires: stax-ex
 Requires: sun-fi
@@ -98,8 +98,8 @@ BuildRequires: ant-trax
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: jaf_1_1_api
 BuildRequires: sun-fi >= 0:1.2.2
-BuildRequires: jaxb_2_1_api
-BuildRequires: glassfish-jaxb >= 0:%{jaxbver}
+#BuildRequires: jaxb_2_1_api
+BuildRequires: glassfish-jaxb21
 ##BuildRequires:  glassfish-jaxws >= 0:2.1.3
 # jsr173_api (or bea-stax-api)
 BuildRequires: codehaus-stax11-api
@@ -177,9 +177,9 @@ pushd lib
 # remove all jars
 %{__ln_s} $(build-classpath jaf_1_1_api) activation.jar
 %{__ln_s} $(build-classpath sun-fi) FastInfoset.jar
-%{__ln_s} $(build-classpath glassfish-jaxb/jaxb-api) .
-%{__ln_s} $(build-classpath glassfish-jaxb/jaxb-impl) .
-%{__ln_s} $(build-classpath glassfish-jaxb/jaxb-xjc) .
+%{__ln_s} $(build-classpath glassfish-jaxb21/jaxb-api) .
+%{__ln_s} $(build-classpath glassfish-jaxb21/jaxb-impl) .
+%{__ln_s} $(build-classpath glassfish-jaxb21/jaxb-xjc) .
 # XXX
 %if 0
 %{__ln_s} $(build-classpath sun-jaxws/jaxws-api) .
@@ -378,6 +378,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %endif
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt3_8jpp6
+- build with glassfish-jaxb21
+
 * Thu Feb 03 2011 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt2_8jpp6
 - fixed components-info
 - hack: added saaj-api/impl.jar though jaxws is built w/o them,
