@@ -30,7 +30,7 @@ Epoch:  1
 Summary:        An open, extensible IDE
 Name:           eclipse
 Version:        %{eclipse_version}
-Release:        alt1_8jpp7
+Release:        alt2_7jpp7
 License:        EPL
 Group:          Editors
 URL:            http://www.eclipse.org/
@@ -133,7 +133,7 @@ Group:          Development/Java
 Requires:       eclipse-swt = %{epoch}:%{eclipse_version}-%{release}
 Requires:       eclipse-equinox-osgi = %{epoch}:%{eclipse_version}-%{release}
 Requires:       icu4j-eclipse >= 1:4.4.2.2-11
-Requires:       %{name}-emf-core >= %{epoch}:%{emf_version}-%{release}
+#Requires:       %{name}-emf-core >= %{epoch}:%{emf_version}-%{release}
 Provides:       osgi(system.bundle) = %{epoch}:%{eclipse_version}
 Provides:	osgi(org.eclipse.core.runtime) = %version
 Provides:	osgi(org.eclipse.equinox.ds) = %version
@@ -387,27 +387,9 @@ PDEBUILDVERSION=$(ls $RPM_BUILD_ROOT%{_libdir}/%{name}/dropins/sdk/plugins \
   sed 's/org.eclipse.pde.build_//')
 sed -i "s/@PDEBUILDVERSION@/$PDEBUILDVERSION/g" \
   $RPM_BUILD_ROOT%{_bindir}/%{name}-pdebuild
-rm -rf   $RPM_BUILD_ROOT%{_libdir}/eclipse/features/org.eclipse.emf.common_*
-rm -rf   $RPM_BUILD_ROOT%{_libdir}/eclipse/features/org.eclipse.emf.ecore_*
-rm -rf   $RPM_BUILD_ROOT%{_libdir}/eclipse/plugins/org.eclipse.emf.common_*.jar
-rm -rf   $RPM_BUILD_ROOT%{_libdir}/eclipse/plugins/org.eclipse.emf.ecore.change_*.jar
-rm -rf   $RPM_BUILD_ROOT%{_libdir}/eclipse/plugins/org.eclipse.emf.ecore.xmi_*.jar
-rm -rf   $RPM_BUILD_ROOT%{_libdir}/eclipse/plugins/org.eclipse.emf.ecore_*.jar
-
-pushd $RPM_BUILD_ROOT%{_libdir}/eclipse/features/
-popd
-
-pushd $RPM_BUILD_ROOT%{_libdir}/eclipse/plugins/
-	ln -s /usr/share/java/emf/eclipse/plugins/org.eclipse.emf.common_2.8.0.v20110913-1526.jar org.eclipse.emf.common_2.8.0.R2_8_0.jar
-	ln -s /usr/share/java/emf/eclipse/plugins/org.eclipse.emf.ecore_2.8.0.v20110913-1526.jar org.eclipse.emf.ecore_2.8.0.R2_8_0.jar
-	ln -s /usr/share/java/emf/eclipse/plugins/org.eclipse.emf.ecore.change_2.8.0.v20110913-1526.jar org.eclipse.emf.ecore.change_2.8.0.R2_8_0.jar,4,false
-	ln -s /usr/share/java/emf/eclipse/plugins/org.eclipse.emf.ecore.xmi_2.8.0.v20110913-1526.jar org.eclipse.emf.ecore.xmi_2.8.0.R2_8_0.jar,4,false
-popd
-
 
 # Install eclipse macros file
 mkdir $RPM_BUILD_ROOT%{_sysconfdir}/rpm/
-install -m 0644 %{SOURCE4} $RPM_BUILD_ROOT%{_sysconfdir}/rpm/
 
 # Remove the junit library duplicated by pdebuild.
 rm $RPM_BUILD_ROOT%{_libdir}/%{name}/dropins/jdt/plugins/org.junit_4.10.0.v4_10_0_v20120426-0900.jar
@@ -525,7 +507,6 @@ touch %buildroot/etc/eclipse.ini
 %{_libdir}/%{name}/.eclipseproduct
 %config %{_libdir}/%{name}/eclipse.ini
 %config %{_sysconfdir}/eclipse.ini
-%{_sysconfdir}/rpm/macros.%{name}
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/*
 %{_datadir}/icons/*/*/apps/*
@@ -698,6 +679,9 @@ touch %buildroot/etc/eclipse.ini
 %{_libdir}/%{name}/plugins/org.eclipse.emf.ecore.change_*
 %{_libdir}/%{name}/plugins/org.eclipse.emf.ecore.xmi_*
 %{_libdir}/%{name}/plugins/org.eclipse.emf.ecore_*
+%{_libdir}/%{name}/features/org.eclipse.emf.common_*
+%{_libdir}/%{name}/features/org.eclipse.emf.ecore_*
+
 # Put this in -platform since we're putting the p2 stuff here
 %{_libdir}/%{name}/artifacts.xml
 # FIXME: should we ship content.xml for the platform?
@@ -731,6 +715,9 @@ touch %buildroot/etc/eclipse.ini
 %{_mavendepmapfragdir}/%{name}-equinox-osgi
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt2_7jpp7
+- restored internal emf
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt1_8jpp7
 - use external emf-core
 
