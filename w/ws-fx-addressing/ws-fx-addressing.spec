@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:		ws-fx-addressing
 Version:	1.0
-Release:	alt4_3jpp5
+Release:	alt5_3jpp5
 Epoch:		0
 Summary:	WS-Addressing on top of Axis
 License:	Apache Software License 2.0
@@ -59,7 +59,7 @@ BuildRequires: maven1-plugin-license
 BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
 BuildRequires: saxon
-BuildRequires: saxon-scripts
+BuildRequires: saxon6-scripts
 BuildRequires: axis >= 0:1.4
 BuildRequires: wsdl4j >= 0:1.5
 BuildRequires: jakarta-commons-discovery
@@ -99,16 +99,16 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > ws-fx-addressing-1.0-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > ws-fx-addressing-1.0-depmap.new.xml
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -171,6 +171,9 @@ cp LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_3jpp5
+- build with saxon6-scripts
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_3jpp5
 - fixed build with java 7
 
