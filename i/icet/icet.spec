@@ -3,7 +3,7 @@
 
 Name: icet
 Version: 2.1.0
-Release: alt3.git20120130
+Release: alt3.git20120820
 Summary: The Image Composition Engine for Tiles (IceT)
 License: Public domain
 Group: Graphics
@@ -142,6 +142,9 @@ rm -f %buildroot%_libdir/*.cmake
 %_man3dir/*
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt3.git20120820
+- New snapshot
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt3.git20120130
 - Rebuilt with OpenMPI 1.6
 
