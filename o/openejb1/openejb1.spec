@@ -38,7 +38,7 @@ Name:           openejb1
 Summary:        EJB Container System and EJB Server
 Url:            http://openejb.apache.org/
 Version:        1.0
-Release:        alt6_3jpp6
+Release:        alt7_3jpp6
 Epoch:          0
 License:        Apache Software License 2
 Group:          Development/Java
@@ -83,7 +83,7 @@ BuildRequires:  maven1-plugin-test
 BuildRequires:  maven1-plugin-war
 BuildRequires:  maven1-plugin-xdoc
 BuildRequires:  saxon
-BuildRequires:  saxon-scripts
+BuildRequires:  saxon6-scripts
 #
 BuildRequires:  backport-util-concurrent
 BuildRequires:  castor0
@@ -182,12 +182,12 @@ echo '<?xml version="1.0" standalone="yes"?>' > $DEPCAT
 echo '<depset>' >> $DEPCAT
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
-    /usr/bin/saxon project.xml %{SOURCE1} >> $DEPCAT
+    /usr/bin/saxon6 project.xml %{SOURCE1} >> $DEPCAT
     popd
 done
 echo >> $DEPCAT
 echo '</depset>' >> $DEPCAT
-/usr/bin/saxon $DEPCAT %{SOURCE2} > openejb1-1.0-depmap.new.xml
+/usr/bin/saxon6 $DEPCAT %{SOURCE2} > openejb1-1.0-depmap.new.xml
 
 %patch0 -b .sav0
 %patch1 -b .sav1
@@ -200,7 +200,7 @@ sed -i -e 's|^OPENEJB_HOME=.*|OPENEJB_HOME=/usr/share/openejb1; cd $OPENEJB_HOME
 for p in $(find . -name project.xml); do
     pushd $(dirname $p)
     cp project.xml project.xml.orig
-    /usr/bin/saxon -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
+    /usr/bin/saxon6 -o project.xml project.xml.orig %{SOURCE3} map=%{SOURCE4}
     popd
 done
 
@@ -395,6 +395,9 @@ rm -f *.jar
 %doc %{_datadir}/%{name}/moviefun
 
 %changelog
+* Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_3jpp6
+- build with saxon6-scripts
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_3jpp6
 - built with java 6 due to abstract getParentLogger
 
