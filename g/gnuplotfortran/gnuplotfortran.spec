@@ -1,5 +1,5 @@
 Name: gnuplotfortran
-Version: 0.2.2
+Version: 0.2.2.1
 Release: alt1
 Summary: Provides an interface between Fortran 90/95 and GNUPlot
 License: LGPLv2.1+
@@ -90,6 +90,9 @@ popd
 %doc *.pdf
 
 %changelog
+* Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2.1-alt1
+- Version 0.2.2-1
+
 * Wed Mar 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus
 
