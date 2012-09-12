@@ -3,27 +3,31 @@
 ### Header
 Summary: A collection of basic system utilities
 Name: util-linux
-Version: 2.20.1
-Release: alt2
+Version: 2.22
+Release: alt1
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
 URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
 Packager: Alexey Gladkov <legion@altlinux.ru>
 
 ### Macros
-%define include_raw 1
-
-%def_with hwclock
-%def_with getopt
+%def_enable raw
 %def_with setarch
-%def_without login-utils
-%def_with schedutils
+%def_disable login
+%def_disable sulogin
+%def_disable su
+%def_disable chfn_chsh
+%def_disable newgrp
+%def_disable vipw
+%def_enable schedutils
 %def_without nfs
-%def_with fsck
+%def_enable fsck
 %def_with selinux
 %def_with audit
+%def_with udev
 %def_enable line
 %def_disable mountpoint
+%def_disable eject
 
 ### Dependences
 BuildRequires: /dev/pts
@@ -32,6 +36,8 @@ BuildRequires: glibc-devel-static klibc-devel
 BuildRequires: libncursesw-devel libpopt-devel zlib-devel
 %{?_with_selinux:BuildRequires: libselinux-devel}
 %{?_with_audit:BuildRequires: libaudit-devel}
+%{?_with_udev:BuildRequires: libudev-devel}
+%{?_enable_login:BuildRequires: libpam-devel}
 
 ### Sources
 # ftp://ftp.kernel.org/pub/linux/utils/util-linux-ng/v2.13/util-linux-ng-2.14.tar.bz2
@@ -59,7 +65,7 @@ Provides: /usr/sbin/rdev
 Conflicts: kernel < 2.2.12-7
 
 #due to fsck migration
-%if_with fsck
+%if_enabled fsck
 Conflicts: e2fsprogs < 0:1.41.9-alt3
 %endif
 
@@ -69,28 +75,21 @@ Requires: coreutils > 6.10-alt2
 #due to findmnt
 Requires: libmount = %version-%release
 
-# RHEL/Fedora specific mount options
-Patch1: util-linux-ng-2.13-mount-managed.patch
-Patch2: util-linux-ng-2.19.1-mount-pamconsole.patch
 # 151635 - makeing /var/log/lastlog
-Patch5: util-linux-ng-2.13-login-lastlog.patch
-# 199745 - Non-existant simpleinit(8) mentioned in ctrlaltdel(8)
-Patch6: util-linux-ng-2.13-ctrlaltdel-man.patch
+Patch5: util-linux-ng-2.21-login-lastlog.patch
 # 231192 - ipcs is not printing correct values on pLinux
-Patch8: util-linux-2.20-ipcs-32bit.patch
+Patch8: util-linux-2.21-ipcs-32bit.patch
 
 # move /var/lib/lastdate -> /var/lib/hwclock/lastdate
 Patch13: util-linux-2.20-alt-hwclock-badyear.patch
 
 # Owl
-Patch40: util-linux-ng-2.13-owl-alt-mtab-umask.patch
-Patch41: util-linux-ng-2.20-owl-write.patch
+Patch40: util-linux-2.22-owl-alt-mtab-umask-for-mount-deprecated.patch
+Patch41: util-linux-2.22-owl-write.patch
 
 Patch50: util-linux-2.20-alt-pg.patch
 Patch52: util-linux-2.11a-gecossize.patch
-Patch53: util-linux-2.18-rh-partlimit.patch
 Patch54: util-linux-2.11f-rh-rawman.patch
-Patch55: util-linux-2.11y-rh-fdisksegv-103954.patch
 Patch56: util-linux-2.12r-cal-trim_trailing_spaces.patch
 Patch58: util-linux-2.12r-alt-mount-MS_SILENT.patch
 Patch59: util-linux-tests.patch
@@ -98,7 +97,7 @@ Patch60: util-linux-2.20-alt-agetty-release.patch
 Patch61: util-linux-2.19.1-alt-selinux-libs.patch
 
 %description
-The util-linux-ng package contains a large variety of low-level system
+The util-linux package contains a large variety of low-level system
 utilities that are necessary for a Linux system to function. Among
 others, Util-linux contains the fdisk configuration tool and the login
 program.
@@ -116,6 +115,7 @@ Summary: Programs for mounting and unmounting filesystems
 Group: System/Base
 PreReq: %name-control = %version-%release
 Requires: libblkid = %version-%release
+Requires: libmount = %version-%release
 %{!?_with_nfs:Requires: nfs-utils >= 1:1.0.10-alt3}
 
 %description -n mount
@@ -173,7 +173,6 @@ Group: System/Configuration/Hardware
 Small partitioning program with argument interface, that will be hard
 for linux newbie, but it is extra stable, and you can trust it.
 
-%if_with hwclock
 %package -n hwclock
 Summary: Query and set the hardware clock
 License: GPL
@@ -200,22 +199,17 @@ the Hardware Clock is every time you set it.
 
 Hwclock uses /dev/rtc if it is available.  Otherwise, it uses its own
 direct I/O to do what the rtc device driver would normally do.
-%endif #with hwclock
 
-%if_with getopt
 %package -n getopt
 Summary: An improved implementation of getopt
 Group: System/Base
-Url: http://huizen.dds.nl/~frodol/getopt.html
 
 %description -n getopt
 An improved implementation of getopt(1), a program to parse
 options within a shell script. Fully compatible with other
 getopt(1) implementations, but with many additions like
 long options and mixing of options and parameters.
-%endif #with getopt
 
-%if_with login-utils
 %package -n login
 Summary: Start an interactive session on the system
 Group: System/Base
@@ -226,13 +220,10 @@ The login application opens an interactive session with a Linux workstation.
 It is one of the first applications a user interacts with, but is generally
 not invoked by a normal user.  Instead some program like mingetty(8) will
 invoke login.
-%endif #with login-utils
 
-%if_with setarch
 %package -n setarch
 Summary: Personality setter
 Group: System/Kernel and hardware
-
 %ifarch sparc sparcv9 sparc64
 Provides: sparc32
 Obsoletes: sparc32
@@ -242,9 +233,7 @@ Obsoletes: sparc32
 This utility tells the kernel to report a different architecture than
 the current one, then runs a program in that environment.  It can also
 set various personality flags.
-%endif #with setarch
 
-%if_with schedutils
 %package -n schedutils
 Summary: Utilities for manipulating process scheduler attributes
 Group: System/Kernel and hardware
@@ -256,7 +245,6 @@ scheduler-related attributes, such as real-time parameters and CPU affinity.
 This package includes the chrt and taskset utilities. 
 
 Install this package if you need to set or get scheduler-related attributes.
-%endif #with schedutils
 
 %package -n look
 Summary: Program to display lines beginning with a given string
@@ -265,6 +253,16 @@ Requires: words
 
 %description -n look
 The look utility displays any lines in file which contain string as a prefix.
+
+%package -n eject
+Summary: A program that ejects removable media using software control
+Group: System/Kernel and hardware
+
+%description -n eject
+Eject  allows  removable  media (typically a CD-ROM, floppy disk, tape,
+JAZ, ZIP or USB disk) to be ejected under software control.   The  command
+can  also control some multi-disc CD-ROM changers, the auto-eject feature
+supported by some devices, and close the disc tray of some  CD-ROM drives.
 
 %package -n libblkid
 Summary: Dynamic block device id library
@@ -356,10 +354,7 @@ Utilities for use in initramfs.
 %setup -q
 cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 
-#patch1 -p1
-%patch2 -p1
 %patch5 -p1
-%patch6 -p1
 %patch8 -p1
 %patch13 -p1
 
@@ -368,12 +363,10 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 
 %patch50 -p1
 %patch52 -p1
-%patch53 -p1
 %patch54 -p1
-%patch55 -p1
 %patch56 -p1
-%patch58 -p1
-%patch59 -p1
+#%patch58 -p1
+#%patch59 -p1
 %patch60 -p1
 %patch61 -p1
 
@@ -394,15 +387,17 @@ autoheader --force
 automake --add-missing --force-missing
 
 %configure \
-	--with-fsprobe=builtin \
 	--enable-libblkid \
 	--enable-libuuid \
 	--enable-static-programs=blkid \
 	--without-ncurses \
 	--disable-shared \
+	--disable-login \
+	--disable-sulogin \
+	--disable-su \
 	--enable-static
-%make_build -C misc-utils blkid.static
-mv misc-utils/blkid.static rpm/blkid.initramfs
+%make_build blkid.static
+mv blkid.static rpm/blkid.initramfs
 
 %make clean
 
@@ -415,29 +410,24 @@ mv misc-utils/blkid.static rpm/blkid.initramfs
 	--enable-partx \
 	--enable-write \
 	--enable-rdev \
-%if %include_raw
-	--enable-raw \
-%endif
-%if_without login-utils
-	--disable-login-utils \
-%endif
-%if_without schedutils
-	--disable-schedutils \
-%endif
-	--with-fsprobe=builtin \
+	%{subst_enable raw} \
+	%{subst_enable login} \
+	%{subst_enable sulogin} \
+	%{subst_enable su} \
+	%{?_enable_chfn_chsh:--enable-chfn-chsh} \
+	%{subst_enable newgrp} \
+	%{subst_enable vipw} \
+	%{subst_enable schedutils} \
 	--enable-libblkid \
 	--enable-libuuid \
-%if_without fsck
-	--disable-fsck \
-%endif
-	\
+	%{subst_enable fsck} \
 	--disable-uuidd \
-	--with-pam \
-	--enable-libmount-mount \
-	%{?_with_selinux:--with-selinux} \
-	%{?_with_audit:--with-audit} \
+	%{subst_with udev} \
+	%{subst_with selinux} \
+	%{subst_with audit} \
 	%{subst_enable line} \
 	%{subst_enable mountpoint} \
+	%{subst_enable eject} \
 	--enable-ddate \
 	--disable-makeinstall-chown
 
@@ -451,23 +441,24 @@ mv misc-utils/blkid.static rpm/blkid.initramfs
 %__cc -Os -static -nostartfiles -o pause pause.c
 klcc -Wall -Wextra -Werror nologin.c -o nologin
 
-%if_with hwclock
 %__cc %optflags clock_unsynced.c -o clock_unsynced
-%endif
+
 
 %check
 # cal: broken.
 # mount, swapon: required real root and ignored in hasher.
 # ipcs/limits*: failed in hasher.
-pushd tests
-LANG=C ./run.sh \
-	\! -regex '.*/cal/.*'        \
-	\! -regex '.*/login/.*'      \
-	\! -regex '.*/lscpu/.*'      \
-	\! -regex '.*/ipcs/limits.*' \
-	\! -regex '.*/script/race'   \
-	;
-popd
+#pushd tests
+#LANG=C ./run.sh \
+#	\! -regex '.*/cal/.*'        \
+#	\! -regex '.*/login/.*'      \
+#	\! -regex '.*/lscpu/.*'      \
+#	\! -regex '.*/ipcs/limits.*' \
+#	\! -regex '.*/script/race'   \
+#	;
+#popd
+rm -rf tests/ts/{cal,login,look,ipcs/limits*,libmount/utils}
+LANG=C %make check-local-tests
 
 %install
 mkdir -p %buildroot/{bin,sbin,etc/pam.d}
@@ -486,7 +477,7 @@ install -p -m755 pause %buildroot/%_bindir
 install -p -m755 nologin %buildroot/sbin/
 install -p -m644 nologin.8 %buildroot/%_man8dir/
 
-%if %include_raw
+%if_enabled raw
 echo '.so man8/raw.8' > %buildroot/%_man8dir/rawdevices.8
 ln -sf ../../bin/raw %buildroot/%_bindir/raw
 
@@ -494,37 +485,28 @@ ln -sf ../../bin/raw %buildroot/%_bindir/raw
 install -pD -m 644 %SOURCE4 %buildroot/%_sysconfdir/udev/rules.d/60-raw.rules
 %endif
 
-%if_with login-utils
-	chmod 4711 %buildroot/%_bindir/{ch{sh,fn},newgrp}
+%if_enabled chfn_chsh
+	chmod 4711 %buildroot/%_bindir/{ch{sh,fn}
 	install -m 644 %SOURCE3 %buildroot/%_sysconfdir/pam.d/chsh
 	install -m 644 %SOURCE3 %buildroot/%_sysconfdir/pam.d/chfn
 %endif
+%if_enabled newgrp
+	chmod 4711 %buildroot/%_bindir/newgrp
+%endif
 
-%if_with hwclock
 	install -pD -m755 clock_unsynced %buildroot/bin/clock_unsynced
 	ln -sf ../../sbin/hwclock %buildroot/%_sbindir/hwclock
 	ln -sf hwclock %buildroot/sbin/clock
 	mkdir -p -- %buildroot/%_localstatedir/hwclock
 	install -pD -m644 /dev/null %buildroot/%_localstatedir/hwclock/lastdate
 	install -pD -m644 /dev/null %buildroot/%_sysconfdir/adjtime
-%else
-	rm -f -- \
-		%buildroot/sbin/*clock \
-		%buildroot/%_man8dir/*clock.*
-%endif
-
-%if_without getopt
-	rm -f -- \
-		%buildroot/%_bindir/getopt \
-		%buildroot/%_man1dir/getopt.*
-%endif
 
 # deprecated commands
 for prog in \
 	/sbin/fsck.minix /sbin/mkfs.{bfs,minix} /sbin/sln /sbin/shutdown /bin/kill \
-	%_bindir/chkdupexe %_bindir/newgrp \
+	%_bindir/newgrp \
 	\
-	%_man1dir/chkdupexe.1 %_man1dir/newgrp.1 \
+	%_man1dir/newgrp.1 \
 	%_man8dir/fsck.minix.8 %_man8dir/mkfs.minix.8 %_man8dir/mkfs.bfs.8 \
 	\
 	%_datadir/getopt;
@@ -532,13 +514,8 @@ do
 	rm -rf -- %buildroot/$prog
 done
 
-# deprecated docs
-for I in text-utils/README.pg misc-utils/README.reset; do
-	rm -rf -- $I
-done
-
 # we install getopt/getopt-*.{bash,tcsh} as doc files
-chmod 644 getopt/getopt-*.{bash,tcsh}
+chmod 644 misc-utils/getopt-*.{bash,tcsh}
 
 # Relocate shared libraries from %_libdir/ to /%_lib/. 
 mkdir -p -- %buildroot/%_lib
@@ -613,7 +590,7 @@ done > setarch.files
 	# bindir
 	ls -1 %buildroot/%_bindir |
 		egrep -v "^($exclude_archs)\$" |
-		egrep -v '^(write|getopt|look|taskset|chrt|ionice)$' |
+		egrep -v '^(eject|write|getopt|look|taskset|chrt|ionice)$' |
 		sed -e 's|^\(.*\)$|%%_bindir/\1|g'
 
 	# sbindir
@@ -623,7 +600,7 @@ done > setarch.files
 
 	# man1dir
 	ls -1 %buildroot%_man1dir |
-		egrep -v '^(getopt|login|look|taskset|chrt|ionice)' |
+		egrep -v '^(eject|getopt|login|look|taskset|chrt|ionice)' |
 		sed -e 's|^\(.*\)$|%%_man1dir/\1*|g'
 
 	# man8dir
@@ -666,7 +643,6 @@ EOF
 %find_lang %name
 cat %name.lang >> %name.files
 
-%if_with hwclock
 %triggerpostun -n hwclock -- startup <= 0.6-alt1, initscripts < 1:5.49.1-alt1
 f=%_sysconfdir/adjtime
 if [ ! -f "$f" ]; then
@@ -676,7 +652,6 @@ if [ ! -f "$f" ]; then
         cp -pf "$f".rpmnew "$f"
     fi
 fi
-%endif #with hwclock
 
 %pre
 %pre_control write
@@ -714,7 +689,6 @@ fi
 %attr(0640, root, disk) %dev(b, 7, 3) /lib/udev/devices/loop3
 /lib/tmpfiles.d/losetup-loop.conf
 
-%if_with hwclock
 %files -n hwclock
 %config(noreplace) %_sysconfdir/adjtime
 %config(noreplace) %_localstatedir/hwclock/lastdate
@@ -723,53 +697,49 @@ fi
 %_sbindir/hwclock
 %dir %_localstatedir/hwclock
 %_man8dir/*clock.*
-%doc hwclock/README.hwclock
-%endif #with hwclock
+%doc Documentation/hwclock.txt
 
-%if_with getopt
 %files -n getopt
 /bin/getopt
 %_bindir/getopt
 %_man1dir/getopt.*
-%doc getopt*/{Changelog,README,*.*sh}
-%doc getopt/getopt-*.{bash,tcsh}
-%endif #with getopt
+%doc misc-utils/getopt-*.{bash,tcsh}
 
 %files -n agetty
 /sbin/agetty
 %_man8dir/agetty.*
-%doc term-utils/README.modems-with-agetty
+%doc Documentation/modems-with-agetty.txt
 
 %files -n cfdisk
 %_sbindir/cfdisk
 %_man8dir/cfdisk.*
-%doc fdisk/README.cfdisk
+%doc Documentation/cfdisk.txt
 
 %files -n fdisk
 /sbin/fdisk
 /sbin/*part*
 %_man8dir/fdisk.*
 %_man8dir/*part*.*
-%doc fdisk/README.fdisk
+%doc Documentation/fdisk.txt
 
 %files -n sfdisk
 /sbin/sfdisk
 %_man8dir/sfdisk.*
-%doc fdisk/sfdisk.examples
+%doc Documentation/sfdisk.txt
 
 %files -n look
 %_bindir/look
 %_man1dir/look.*
 
-%if_with login-utils
-%files -n login-utils
+%if_enabled login
+%files -n login
 /bin/login
 %_man8dir/login.8*
 %config(noreplace) %_sysconfdir/pam.d/login
 %config(noreplace) %_sysconfdir/pam.d/ch??
-%endif #with login-utils
+%endif #enabled login
 
-%if_with schedutils
+%if_enabled schedutils
 %files -n schedutils
 /bin/taskset
 %_bindir/chrt
@@ -778,13 +748,19 @@ fi
 %_man1dir/chrt.*
 %_man1dir/ionice.*
 %_man1dir/taskset.*
-%endif #with schedutils
+%endif #enabled schedutils
 
 %if_with setarch
 %files -n setarch -f setarch.files
 %_bindir/setarch
 %_man8dir/setarch.*
 %endif #with setarch
+
+%if_enabled eject
+%files -n eject
+%_bindir/eject
+%_man1dir/eject.1*
+%endif #enabled eject
 
 %files -n libblkid
 /%_lib/libblkid.so.*
@@ -828,9 +804,17 @@ fi
 %files -f %name.files
 %attr(2711,root,tty) %_bindir/write
 %_sysconfdir/udev/rules.d/60-raw.rules
-%doc */README.* NEWS AUTHORS DEPRECATED licenses/* README*
+%doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Wed Sep 12 2012 Alexey Shabalin <shaba@altlinux.ru> 2.22-alt1
+- 2.22
+- Add strict dependency on libmount to mount.
+- Add eject subpackage, but disable.
+- Drop conditions for hwclock.
+- Update configure options.
+- Update fedora patches.
+
 * Wed Jun 13 2012 Alexey Shabalin <shaba@altlinux.org> 2.20.1-alt2
 - add /lib/tmpfiles.d/losetup-loop.conf for create character devices
   /dev/loop{0-4}.
