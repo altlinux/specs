@@ -1,6 +1,6 @@
 %define _name libevent
 Name: %{_name}2
-Version: 2.0.19
+Version: 2.0.20
 Release: alt1
 
 Summary: An asynchronous event notification library
@@ -119,6 +119,9 @@ make verify
 %endif
 
 %changelog
+* Wed Sep 12 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.20-alt1
+- Updated to 2.0.20
+
 * Mon Jun 11 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.19-alt1
 - Updated to 2.0.19
 
