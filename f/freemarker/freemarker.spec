@@ -1,251 +1,186 @@
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+# Prevent brp-java-repack-jars from being run.
+%global __jar_repack %{nil}
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+%global checkForbiddenJARFiles F=`find -type f -iname '*.jar'`; [ ! -z "$F" ] && \
+echo "ERROR: Sources should not contain JAR files:" && echo "$F" && exit 1
 
+%global fm_compatible_ver 2.3
+%global fm_ver %{fm_compatible_ver}.19
 
 Name:           freemarker
-Version:        2.3.16
-Release:        alt1_2jpp6
-Epoch:          0
-Summary:        FreeMarker template engine
-License:        BSD-style
+Version:        %{fm_ver}
+Release:        alt1_4jpp7
+Summary:        A template engine
+
 Group:          Development/Java
+License:        BSD
 URL:            http://freemarker.sourceforge.net/
-Source0:        http://download.sourceforge.net/freemarker/freemarker-2.3.16.tar.gz
-Patch0:         freemarker-2.3.15-JythonHashModel.patch
-Patch1:         freemarker-2.3.15-BeansWrapper.patch
-Patch2:         freemarker-2.3.15-NodeListModel.patch
-Patch3:         freemarker-2.3.15-JdomNavigator.patch
-Patch4:         freemarker-build.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires:       avalon-logkit
-Requires:       servlet_api
-Requires:       jaxen >= 0:1.1
-Requires:       jpackage-utils
-Requires:       jython
-Requires:       jdom
-Requires:       dom4j
-Requires:       el_1_0_api
-Requires:       jpackage-utils
-Requires:       log4j
-Requires:       rhino
-Requires:       saxpath
-Requires:       struts
-BuildRequires:  jpackage-utils >= 0:1.7.3
-BuildRequires:  ant >= 0:1.6.5
-BuildRequires:  ant-junit
-BuildRequires:  ant-nodeps
-BuildRequires:  emma
-BuildRequires:  junit
-BuildRequires:  javacc
-BuildRequires:  jaxen >= 0:1.1
-BuildRequires:  jython
-BuildRequires:  avalon-logkit
-BuildRequires:  dom4j
-BuildRequires:  el_1_0_api
-BuildRequires:  jdom
-BuildRequires:  jsp_1_2_api
-BuildRequires:  jsp_2_0_api
-BuildRequires:  jsp_2_1_api
-BuildRequires:  log4j
-BuildRequires:  rhino
-BuildRequires:  saxpath
-BuildRequires:  servlet_2_5_api
-BuildRequires:  struts
-BuildRequires:  xerces-j2
-BuildRequires:  xalan-j2
+Source0:        http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
+Source1:        http://freemarker.sourceforge.net/maven2/org/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+
+# disabled functionality: ext/jdom, ext/jsp/FreeMarkerPageContext1, ext/xml/JdomNavigator
+Patch0:         %{name}-%{version}-build.patch
+#
+Patch1:         %{name}-2.3.13~PyObject.__class__.patch
+# http://netbeans.org/bugzilla/show_bug.cgi?id=156876
+Patch2:         %{name}-%{version}-logging.patch
+# illegal character in the javadoc comment
+Patch3:         %{name}-2.3.13~encoding.patch
+# do not depend on tomcat5
+Patch4:         %{name}-%{version}-no-tomcat5.patch
+# Disable JavaRebelIntegration
+Patch5:         %{name}-%{version}-no-javarebel.patch
+# enable jdom extension
+Patch6:         %{name}-%{version}-enable-jdom.patch
+# use system javacc and fix Token.java
+Patch7:         %{name}-%{version}-javacc.patch
+
 BuildArch:      noarch
+
+BuildRequires: ant >= 1.6
+BuildRequires: ant-nodeps >= 1.6
+BuildRequires: apache-commons-logging
+BuildRequires: avalon-logkit >= 1.2
+BuildRequires: dom4j >= 1.6.1
+BuildRequires: dos2unix
+BuildRequires: emma >= 2.0
+BuildRequires: javacc >= 4.0
+BuildRequires: jaxen >= 1.1
+BuildRequires: jdom >= 1.0
+BuildRequires: jpackage-utils
+BuildRequires: junit >= 3.8.2
+BuildRequires: jython >= 2.2.1
+BuildRequires: log4j >= 1.2
+BuildRequires: rhino >= 1.6
+BuildRequires: slf4j
+BuildRequires: tomcat6-el-2.1-api
+BuildRequires: tomcat6-lib >= 6.0.16
+BuildRequires: tomcat6-servlet-2.5-api >= 6.0
+BuildRequires: xalan-j2 >= 2.7.0
+
+Requires: jpackage-utils
 Source44: import.info
 
 %description
-FreeMarker is a "template engine"; a generic tool to 
-generate text output (anything from HTML or RTF to 
-autogenerated source code) based on templates.
-FreeMarker is designed to be practical for the generation 
-of HTML Web pages, particularly by servlet-based applications 
-following the MVC (Model View Controller) pattern. 
-Although FreeMarker has some programming capabilities, 
-it is not a full-blown programming language like PHP. Instead, 
-Java programs prepare the data to be displayed, and FreeMarker 
-just generates textual pages that display the prepared data 
-using templates. 
-FreeMarker is not a Web application framework. It is suitable 
-for a component in a Web application framework, but the 
-FreeMarker engine itself knows nothing about HTTP or servlets. 
-
+FreeMarker is a Java tool to generate text output based on templates.
+It is designed to be practical as a template engine to generate web
+pages and particularly for servlet-based page production that follows
+the MVC (Model View Controller) pattern. That is, you can separate the
+work of Java programmers and website designers - Java programmers
+needn't know how to design nice websites, and website designers needn't
+know Java programming.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Summary:        Javadocs for %{name}
+Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
-
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-%{summary}.
+This package contains the API documentation for %{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
-chmod -R go=u-w *
-find -type f -name \*.jar | xargs -t rm
 
-for i in `find -type f -name \*.java | xargs grep -l 'Generated By:JavaCC'`; do
-    rm $i
-done
-#<available file="lib/README.txt"/>
-touch lib/README.txt
-#<available file="lib/ant.jar"/>
-ln -s $(build-classpath ant) lib
-#<available file="lib/dom4j.jar"/>
-ln -s $(build-classpath dom4j) lib
-#<available file="lib/emma.jar"/>
-ln -s $(build-classpath emma) lib
-#<available file="lib/emma_ant.jar"/>
-ln -s $(build-classpath emma_ant) lib
-#<available file="lib/javacc.jar"/>
-ln -s $(build-classpath javacc) lib/javacc.jar
-#ln -s $(build-classpath freemarker) lib/freemarker-bootstrap.jar
-ln -s $(build-classpath ant) lib/freemarker-bootstrap.jar
-#<available file="lib/javarebel-sdk.jar"/>
-ln -s $(build-classpath ant) lib/javarebel-sdk.jar
-#<available file="lib/jaxen.jar"/>
-ln -s $(build-classpath jaxen) lib
-#<available file="lib/jdom.jar"/>
-ln -s $(build-classpath jdom) lib
-#<available file="lib/js.jar"/>
-ln -s $(build-classpath js) lib
-#<available file="lib/junit.jar"/>
-ln -s $(build-classpath junit) lib
-#<available file="lib/jython.jar"/>
-ln -s $(build-classpath jython) lib
-#<available file="lib/log4j.jar"/>
-ln -s $(build-classpath log4j) lib
-#<available file="lib/logkit.jar"/>
-ln -s $(build-classpath avalon-logkit) lib/logkit.jar
-#<available file="lib/rt122.jar"/>
-#ln -s $JAVA_HOME/jre/lib/rt.jar lib/rt122.jar
-#<available file="lib/saxpath.jar"/>
-ln -s $(build-classpath saxpath) lib
-#<available file="lib/servlet.jar"/>
-ln -s $(build-classpath servlet_2_5_api) lib/servlet.jar
-#<available file="lib/struts.jar"/>
-ln -s $(build-classpath struts) lib
-#<available file="lib/jsp-api-1.2.jar"/>
-ln -s $(build-classpath jsp_1_2_api) lib/jsp-api-1.2.jar
-#<available file="lib/jsp-api-2.0.jar"/>
-ln -s $(build-classpath jsp_2_0_api) lib/jsp-api-2.0.jar
-#<available file="lib/jsp-api-2.1.jar"/>
-ln -s $(build-classpath jsp_2_1_api) lib/jsp-api-2.1.jar
-#<available file="lib/xalan.jar"/>
-ln -s $(build-classpath xalan-j2) lib/xalan.jar
+find -type f \( -iname '*.jar' -o -iname '*.class' \)  -exec rm -f '{}' \;
 
-%patch0 -p0 -b .sav0
-%patch1 -p0 -b .sav1
-%patch2 -p0 -b .sav2
-%patch3 -p0 -b .sav3
-%patch4 -p0 -b .sav4
-rm src/freemarker/ext/beans/JavaRebelIntegration.java
+%patch0 -p0
+#  % p atch1 -p1
+%patch2 -p0
+%patch3 -p1
+%patch4 -p0
+%patch5 -p1
+%patch6 -p1
+%patch7 -p0
+
+# %{__rm} -rf src/freemarker/core/ParseException.java
+%{__rm} -rf src/freemarker/core/FMParser.java
+%{__rm} -rf src/freemarker/core/FMParserConstants.java
+%{__rm} -rf src/freemarker/core/FMParserTokenManager.java
+%{__rm} -rf src/freemarker/core/SimpleCharStream.java
+%{__rm} -rf src/freemarker/core/Token.java
+%{__rm} -rf src/freemarker/core/TokenMgrError.java
+
+%{__ln_s} -f %{_javadir}/ant.jar           lib/ant.jar
+%{__ln_s} -f %{_javadir}/commons-logging.jar    lib/commons-logging.jar
+%{__ln_s} -f %{_javadir}/dom4j.jar         lib/dom4j.jar
+%{__ln_s} -f %{_javadir}/emma_ant.jar      lib/emma_ant.jar
+%{__ln_s} -f %{_javadir}/emma.jar          lib/emma.jar
+#%{__ln_s} -f %{_javadir}/javacc.jar        lib/javacc.jar
+%{__ln_s} -f %{_javadir}/jaxen.jar         lib/jaxen.jar
+%{__ln_s} -f %{_javadir}/jdom.jar          lib/jdom.jar
+# js.jsr provided by rhino package
+%{__ln_s} -f %{_javadir}/js.jar            lib/js.jar
+
+# The JavaServer Pages 1.2 technology isn't provided in Fedora 10
+#%{__ln_s} -f %{_javadir}/jsp-api-1.2.jar   lib/jsp-api-1.2.jar
+
+%{__ln_s} -f %{_javadir}/tomcat5-jsp-2.0-api.jar  lib/jsp-api-2.0.jar
+
+%{__ln_s} -f %{_javadir}/tomcat6-jsp-2.1-api.jar  lib/jsp-api-2.1.jar
+
+%{__ln_s} -f %{_javadir}/junit.jar         lib/junit.jar
+%{__ln_s} -f %{_javadir}/jython.jar        lib/jython.jar
+%{__ln_s} -f %{_javadir}/log4j.jar         lib/log4j.jar
+%{__ln_s} -f %{_javadir}/avalon-logkit.jar lib/logkit.jar
+%{__ln_s} -f %{_javadir}/slf4j/api.jar lib/slf4j-api.jar
+
+# It doesn't required due to OpenJDK 6 is used
+#%{__ln_s} -f %{_javadir}/rt122.jar         lib/rt122.jar
+
+# SAXPath has been merged into the Jaxen codebase and is 
+# no longer being maintained separately. See jaxen-1.1.jar
+#%{__ln_s} -f %{_javadir}/saxpath.jar       lib/saxpath.jar
+
+# The package javax.el isn't included in:
+%{__ln_s} -f %{_javadir}/tomcat6-servlet-2.5-api.jar lib/servlet.jar
+# so, el-api.jar is additionally used.
+%{__ln_s} -f %{_javadir}/tomcat6-el-2.1-api.jar lib/el-api.jar
+
+%{__ln_s} -f %{_javadir}/struts.jar        lib/struts.jar
+%{__ln_s} -f %{_javadir}/xalan-j2.jar      lib/xalan.jar
+
+dos2unix -k docs/docs/api/stylesheet.css
+dos2unix -k docs/docs/api/package-list
+
+%checkForbiddenJARFiles
 
 %build
-#export JAVA_HOME=%{java_home}
-ln -s $JAVA_HOME/jre/lib/rt.jar lib/rt122.jar
-export OPT_JAR_LIST="ant/ant-junit junit ant/ant-nodeps javacc3"
-export CLASSPATH=$(build-classpath \
-el_1_0_api \
-)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  create-pom
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 
 %install
-
 # jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-
-install -p -m 644 lib/freemarker.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -s ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -p -m 644 build/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.freemarker freemarker %{version} JPP %{name}
-# fedora compatibility
-%add_to_maven_depmap org.freemarker %{name} %{version} JPP %{name}
+%{__install} -d -m 755 %{buildroot}%{_javadir}
+%{__install} -m 644 lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr docs/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+%{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+%{__cp} -pr docs/docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
-# manual
-install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-rm -r $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/docs/api
+# pom
+%{__install} -d -m 755 %{buildroot}%{_mavenpomdir}
+%{__install} -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-# fedora compatibility
-pushd %buildroot%_javadir
-ln -s freemarker-%version.jar freemarker-2.3.jar
-popd
+# depmap
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
-%doc LICENSE.txt
-%{_javadir}*/%{name}-%{version}.jar
-%{_javadir}*/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%_javadir/freemarker-2.3.jar
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
+%{_javadir}/*.jar
+%doc LICENSE.txt README.txt
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
-
-%files manual
-%doc %dir %{_docdir}/%{name}-%{version}
-%doc %{_docdir}/%{name}-%{version}/*
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%doc LICENSE.txt
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.19-alt1_4jpp7
+- new version
+
 * Fri Sep 16 2011 Igor Vlasenko <viy@altlinux.ru> 0:2.3.16-alt1_2jpp6
 - new version
 
