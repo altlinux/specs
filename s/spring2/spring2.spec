@@ -1,3 +1,4 @@
+%def_with old_tiles
 ExclusiveArch: x86_64
 BuildRequires: avalon-framework
 BuildRequires: /proc
@@ -97,7 +98,7 @@ FIXME: (dwalluck): Need to link offline:
 Name:           spring2
 Summary:        Spring J2EE Framework
 Version:        2.5.6.SEC03
-Release:        alt5_5jpp6
+Release:        alt6_5jpp6
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -1161,6 +1162,7 @@ ln -sf $(build-classpath struts-extras) lib/struts/struts-extras.jar
 ln -sf $(build-classpath testng) lib/testng/testng-5.8-jdk15.jar
 ln -sf $(build-classpath jcommander) lib/testng/jcommander.jar
 ln -sf $(build-classpath objenesis) lib/testng/objenesis.jar
+%if_with new_tiles
 # BUILD/spring/lib/tiles/tiles-api-2.0.6.jar.no
 ln -sf $(build-classpath tiles/api) lib/tiles/api-2.0.6.jar
 # BUILD/spring/lib/tiles/tiles-core-2.0.6.jar.no
@@ -1169,6 +1171,13 @@ ln -sf $(build-classpath tiles/core) lib/tiles/core-2.0.6.jar
 ln -sf $(build-classpath tiles/jsp) lib/tiles/jsp-2.0.6.jar
 #
 #ln -sf $(build-classpath tiles/servlet) lib/tiles/tiles-servlet-2.0.6.jar
+%else
+ls lib/tiles
+cp lib/tiles/tiles-api-2.0.6.jar.no lib/tiles/api-2.0.6.jar
+cp lib/tiles/tiles-core-2.0.6.jar.no lib/tiles/core-2.0.6.jar
+cp lib/tiles/tiles-jsp-2.0.6.jar.no lib/tiles/jsp-2.0.6.jar
+%endif
+
 # BUILD/spring/lib/tomcat/catalina.jar.no
 ln -sf $(build-classpath tomcat5/catalina) lib/tomcat/catalina.jar
 # BUILD/spring/lib/tomcat/naming-resources.jar.no
@@ -1604,6 +1613,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %endif
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt6_5jpp6
+- build without new tiles 2.2.2
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt5_5jpp6
 - build with saxon6
 
