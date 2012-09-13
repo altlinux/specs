@@ -1,6 +1,6 @@
 Name: colpack
 Version: 1.0.8
-Release: alt1
+Release: alt2
 Summary: Graph Coloring for Computing Derivatives
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -67,6 +67,9 @@ mv %buildroot%prefix/examples/Matrix_Compression_and_Recovery/*/* \
 
 ln -s ColPack %buildroot%_includedir/%name
 
+%pre -n lib%name-devel
+rm -fR %_includedir/%name
+
 %files
 %doc AUTHORS ChangeLog NEWS README Main/Main.cpp
 %_bindir/ColPack
@@ -85,6 +88,9 @@ ln -s ColPack %buildroot%_includedir/%name
 %exclude %_bindir/ColPack
 
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt2
+- Fixed install of devel package
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8-alt1
 - Version 1.0.8
 
