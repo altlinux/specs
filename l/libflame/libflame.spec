@@ -1,11 +1,11 @@
 %define mpiimpl openmpi
 %define mpidir %_libexecdir/%mpiimpl
 %define somver 0
-%define sover %somver.60.25
+%define sover %somver.92.39
 
 Name: libflame
-Version: r6025
-Release: alt2
+Version: r9239
+Release: alt1
 Summary: Formal Linear Algebra Method Environment
 License: LGPL v2.1
 Group: System/Libraries
@@ -85,9 +85,9 @@ This package contains example of using FLAME.
 sed -i "s|@fla_host_cpu@|%_arch|" build/config.mk.in
 
 %build
-%add_optflags %optflags_shared
+%add_optflags %optflags_shared -std=gnu99
 #autoreconf
-#./bootstrap
+./bootstrap
 %configure \
 	--enable-debug \
 	--enable-static-build \
@@ -141,6 +141,9 @@ mv doxygen/html %buildroot%_docdir/%name/
 %doc examples
 
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r9239-alt1
+- Version r9239
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r6025-alt2
 - Rebuilt with OpenBLAS instead of GotoBLAS2
 
