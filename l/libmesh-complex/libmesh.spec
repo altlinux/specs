@@ -5,10 +5,10 @@
 %define oname libmesh
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
-Version: 0.7.3
+Version: 0.8.0
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt3.svn20120228
+Release: alt1.svn20120913
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -352,6 +352,8 @@ install -d %buildroot%ldir/lib
 install -d %buildroot%ldir/include/contrib
 install -d %buildroot%ldir/%oname
 
+mv contrib/bin/libmesh-config bin/
+rm -fR bin/*gnu_opt
 install -m755 bin/* contrib/bin/* %buildroot%ldir/bin
 cp -P lib/*/* contrib/lib/*/* %buildroot%ldir/lib
 cp -fR include/* %buildroot%ldir/include/
@@ -479,6 +481,9 @@ popd
 %endif
 
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.svn20120913
+- Version 0.8.0
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.3-alt3.svn20120228
 - Rebuilt with Boost 1.51.0
 
@@ -582,3 +587,4 @@ popd
 
 * Thu Aug 27 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3_rc1-alt1
 - Initial build for Sisyphus
+
