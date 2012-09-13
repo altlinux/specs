@@ -1,6 +1,6 @@
 Name: vdr
-Version: 1.7.21
-Release: alt5
+Version: 1.7.30
+Release: alt1
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -47,11 +47,6 @@ Requires: vdr = %version-%release
 
 %package plugin-remoteosd
 Summary: VDR remote OSD plugin
-Group: Video
-Requires: vdr = %version-%release
-
-%package plugin-softdevice
-Summary: VDR ffmpeg plugin
 Group: Video
 Requires: vdr = %version-%release
 
@@ -123,9 +118,6 @@ Analog PVR-like cards (ivtv, cx18 etc) support for the Video Disk Recorder (VDR)
 %description plugin-remoteosd
 Remote OSD plugin for the Video Disk Recorder (VDR).
 
-%description plugin-softdevice
-Softdevice plugin for the Video Disk Recorder (VDR).
-
 %description plugin-streamdev
 Streaming server and client plugins for the Video Disk Recorder (VDR).
 
@@ -177,18 +169,17 @@ Additional Xine plugins for use with VDR frontends.
 %setup
 sed -e 's,^MANDIR.\+$,MANDIR = %_mandir,' \
     -e 's,^BINDIR.\+$,BINDIR = %_bindir,' \
-    -e 's,^LOCDIR.\+$,LOCDIR = %_datadir/locale,' \
-    -e 's,^PLUGINLIBDIR.\+$,PLUGINLIBDIR = %plugindir,' \
-    -e 's,^VIDEODIR.\+$,VIDEODIR = %videodir,' \
-    -e 's,^CONFDIR.\+$,CONFDIR = %confdir,' \
-    -e 's,^.\*VDR_USER.\+$,VDR_USER = vdr,' \
-    -e '/^CONFDIR/ aREMOTE = LIRC' \
+    -e 's,^LOCDIR.\+$,LOCDIR = %_datadir/locale,g' \
+    -e 's,^PLUGINLIBDIR.\+$,PLUGINLIBDIR = %plugindir,g' \
+    -e 's,^VIDEODIR.\+$,VIDEODIR = %videodir,g' \
+    -e 's,^CONFDIR.\+$,CONFDIR = %confdir,g' \
+    -e 's,^.\+USEFHS.\+$,USEFHS=1,' \
+    -e 's,^.\+VDR_USER.\+$,VDR_USER = vdr,' \
     < Make.config.template > Make.config
 
 sed -i 's,^IMAGELIB.\+$,IMAGELIB = graphicsmagick,' PLUGINS/src/text2skin/Makefile
 
 %build
-(cd PLUGINS/src/softdevice && sh configure)
 (cd PLUGINS/src/xineliboutput && sh configure)
 make all plugins
 
@@ -223,9 +214,6 @@ cp -p PLUGINS/src/svdrpservice/README %buildroot%docdir/svdrpservice
 
 mkdir -p %buildroot%docdir/remoteosd
 cp -p PLUGINS/src/remoteosd/README %buildroot%docdir/remoteosd
-
-mkdir -p %buildroot%docdir/softdevice %buildroot%confdir/plugins/softdevice
-cp -p PLUGINS/src/softdevice/README %buildroot%docdir/softdevice
 
 mkdir -p %buildroot%docdir/streamdev
 cp -p PLUGINS/src/streamdev/{README,PROTOCOL} %buildroot%docdir/streamdev
@@ -274,7 +262,6 @@ mkdir -p %buildroot%_runtimedir/vdr
 %find_lang --output=femon.lang vdr-femon
 %find_lang --output=iptv.lang vdr-iptv
 %find_lang --output=pvrinput.lang vdr-pvrinput
-%find_lang --output=softdevice.lang vdr-softdevice
 %find_lang --output=streamdev.lang --append vdr-streamdev-server vdr-streamdev-client
 %find_lang --output=text2skin.lang vdr-text2skin
 %find_lang --output=ttxtsubs.lang vdr-ttxtsubs
@@ -384,14 +371,6 @@ mkdir -p %buildroot%_runtimedir/vdr
 %plugindir/libvdr-remoteosd.so.%version
 %plugindir/libvdr-svdrpservice.so.%version
 
-%files plugin-softdevice -f softdevice.lang
-%docdir/softdevice
-%dir %attr(0770,root,_vdr) %confdir/plugins/softdevice
-%plugindir/libvdr-softdevice.so.%version
-%plugindir/libsoftdevice-fb.so.%version
-%plugindir/libsoftdevice-shm.so.%version
-%plugindir/libsoftdevice-xv.so.%version
-
 %files plugin-streamdev -f streamdev.lang
 %docdir/streamdev
 %dir %attr(0770,root,_vdr) %confdir/plugins/streamdev-server
@@ -459,6 +438,9 @@ mkdir -p %buildroot%_runtimedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Wed Sep 12 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.30-alt1
+- 1.7.30 released
+
 * Fri Dec 02 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.21-alt5
 - xvdr plugin updated to 0.9.5
 - xineliboutput plugin rebuilt with recent libbluray
