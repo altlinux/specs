@@ -1,12 +1,13 @@
 Name: icmake
-Version: 7.16.00
-Release: alt1
+Version: 7.19.00
+Release: alt1.git20120722
 Summary: Hybrid between a 'make' utility and a 'shell script' language
 License: GPLv3
 Group: Development/Tools
 Url: http://icmake.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# git://icmake.git.sourceforge.net/gitroot/icmake/icmake
 Source: %name-%version.tar
 
 %description
@@ -34,16 +35,22 @@ This package contains documentation for Icmake.
 
 %prep
 %setup
-sed -i 's|@LIBDIR@|%_libdir|g' INSTALL.im
+sed -i 's|@LIBDIR@|%_libdir|g' %name/INSTALL.im
 
 %build
+pushd %name
 ./icm_bootstrap /
+popd
+
+./manpages
 
 %install
+pushd %name
 ./icm_install all %buildroot
+popd
 
 %files
-%doc changelog LICENSE doc/*.doc
+%doc %name/changelog %name/doc/*.doc
 %_sysconfdir/*
 %_bindir/*
 %_libdir/%name
@@ -55,6 +62,9 @@ sed -i 's|@LIBDIR@|%_libdir|g' INSTALL.im
 %_docdir/%name
 
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.19.00-alt1.git20120722
+- Version 7.19.00
+
 * Sun Aug 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.16.00-alt1
 - Initial build for Sisyphus
 
