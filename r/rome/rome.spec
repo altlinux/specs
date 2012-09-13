@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		rome
 Version:	0.9
-Release:	alt2_7jpp6
+Release:	alt2_12jpp7
 Summary:	RSS and Atom Utilities
 
 Group:		Development/Java
@@ -18,15 +18,18 @@ Source0:	%{name}-%{version}-src.tar.gz
 # # We won't have the same SHA-1 sums (class sometimes spills into # cl\nass)
 # sed -i -e "/^Name/d" -e "/^SHA/d" -e "/^\ ass$/d" -e "/^$/d" META-INF/MANIFEST.MF
 Source1:	MANIFEST.MF
+Source2:    http://repo1.maven.org/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
 BuildArch:	noarch
 
 Patch0:		%{name}-%{version}-addosgimanifest.patch
+# fix maven-surefire-plugin aId
+Patch1:     %{name}-%{version}-pom.patch
 
 BuildRequires:	jpackage-utils
 BuildRequires:	ant
-BuildRequires:	jdom
+BuildRequires:	jdom >= 1.1.2-3
 Requires:	jpackage-utils
-Requires:	jdom
+Requires:	jdom >= 1.1.2-3
 Source44: import.info
 
 %description
@@ -50,27 +53,36 @@ mkdir -p target/lib
 ln -s %{_javadir}/jdom.jar target/lib
 cp -p %{SOURCE1} .
 %patch0
+cp -p %{SOURCE2} pom.xml
+%patch1
 
 %build
-ant -Dnoget=true dist
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dnoget=true dist
 
 %install
-
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
-cp -p target/%{name}-%{version}.jar \
-  $RPM_BUILD_ROOT%{_javadir}
+cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+
+mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -rp dist/docs/api/* \
   $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%{_javadir}/%{name}-%{version}.jar
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_12jpp7
+- fc version
+
 * Wed Sep 07 2011 Igor Vlasenko <viy@altlinux.ru> 0.9-alt2_7jpp6
 - update to new release by jppimport
 

@@ -2,7 +2,7 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2007, JPackage Project
+# Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,58 +32,26 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with bootstrap
-%bcond_with bootstrap
-#def_with gcj_support
-%bcond_with gcj_support
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-
 Name:           jdom
-Version:        1.1.1
-Release:	alt3_2jpp6
+Version:        1.1.3
+Release:        alt1_2jpp7
 Epoch:          0
 Summary:        Java alternative to DOM and SAX
-License:        Apache Software License-like
+License:        ASL 1.1
 URL:            http://www.jdom.org/
 Group:          Development/Java
-Source0:        http://www.jdom.org/dist/source/jdom-1.1.1.tar.gz
-Source1:        jdom-1.1.1.pom
+Source0:        http://jdom.org/dist/binary/archive/jdom-%{version}.tar.gz
+Source1:        http://repo1.maven.org/maven2/org/jdom/jdom/%{version}/jdom-%{version}.pom
 Patch0:         %{name}-crosslink.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires: xalan-j2 >= 0:2.2.0
-%if %with bootstrap
-Requires: jaxen-bootstrap
-%else
-Requires: jaxen
-%endif
-BuildRequires: ant >= 0:1.6
-BuildRequires: xalan-j2 >= 0:2.2.0
-BuildRequires: jpackage-utils >= 0:1.6
-BuildRequires: java-javadoc
-%if %with bootstrap
-BuildRequires: jaxen-bootstrap
-%else
-BuildRequires: jaxen
-%endif
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
+Patch1:         %{name}-1.1-OSGiManifest.patch
+Requires:       xalan-j2 >= 0:2.2.0
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  xalan-j2 >= 0:2.2.0
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  java-javadoc
 BuildArch:      noarch
-%endif
+Requires:       jpackage-utils
 Source44: import.info
-Source45: jdom-1.1.1.jar-OSGi-MANIFEST.MF
 
 %description
 JDOM is, quite simply, a Java representation of an XML document. JDOM
@@ -95,7 +63,8 @@ and SAX.
 
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -104,79 +73,60 @@ Javadoc for %{name}.
 %package demo
 Summary:        Demos for %{name}
 Group:          Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
 
-%prep
-%setup -q -n jdom
-%patch0 -p0
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t %{__rm}
-%{_bindir}/find -type f -name "*.class" | %{_bindir}/xargs -t %{__rm}
-%if %with bootstrap
-%{__rm} src/java/org/jdom/xpath/JaxenXPath.java
-%endif
 
-%{__sed} -i -e 's|<property name="build.compiler".*||' build.xml
+%prep
+%setup -q -n %{name}
+%patch0 -p0
+%patch1 -p0
+# remove all binary libs
+find . -name "*.jar" -exec rm -f {} \;
+find . -name "*.class" -exec rm -f {} \;
 
 %build
-export OPT_JAR_LIST=:
-export CLASSPATH=$(build-classpath jaxen xalan-j2):$(pwd)/build/jdom.jar
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first -Dj2se.apidoc=%{_javadocdir}/java package javadoc-link
+export CLASSPATH=$(build-classpath xalan-j2)
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dj2se.apidoc=%{_javadocdir}/java package javadoc-link
 
 %install
-
 # jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p build/jdom.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
-
-# pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.jdom jdom %{version} JPP %{name}
-%add_to_maven_depmap jdom jdom %{version} JPP %{name}
+mkdir -p $RPM_BUILD_ROOT%{_javadir}
+cp -p build/%{name}-1.1.2-snap.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr build/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr build/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # demo
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}
-%{__cp} -pr samples %{buildroot}%{_datadir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
+cp -pr samples $RPM_BUILD_ROOT%{_datadir}/%{name}
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
-# inject OSGi manifest jdom-1.1.1.jar-OSGi-MANIFEST.MF
-rm -rf META-INF
-mkdir -p META-INF
-cp %{SOURCE45} META-INF/MANIFEST.MF
-zip -u %buildroot/usr/share/java/jdom.jar META-INF/MANIFEST.MF
-# end inject OSGi manifest jdom-1.1.1.jar-OSGi-MANIFEST.MF
+# maven stuff
+mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+cp %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-jdom.pom
+%add_maven_depmap JPP-jdom.pom %{name}.jar -a "jdom:jdom"
 
 %files
 %doc CHANGES.txt COMMITTERS.txt LICENSE.txt README.txt TODO.txt
-%{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/jdom-%{version}.jar.*
-%endif
+%{_mavenpomdir}/*.pom
 
 %files javadoc
 %{_javadocdir}/%{name}
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE.txt
 
 %files demo
 %{_datadir}/%{name}
+%doc LICENSE.txt
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_2jpp7
+- new version
+
 * Fri Jun 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_2jpp6
 - added jdom:jdom jppmap
 
