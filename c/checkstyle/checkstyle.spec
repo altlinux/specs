@@ -1,9 +1,7 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: jakarta-commons-lang
-BuildRequires: ant-optional
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -33,247 +31,175 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_with tests
-%bcond_with gcj_support
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-
 Name:           checkstyle
-Version:        5.0
-Release:        alt3_1jpp5
-Epoch:          0
+Version:        5.5
+Release:        alt1_4jpp7
 Summary:        Java source code checker
-License:        LGPLv2+
-Group:          Development/Java
 URL:            http://checkstyle.sourceforge.net/
-Source0:        http://download.sf.net/checkstyle/checkstyle-src-5.0.tar.gz
-Source1:        checkstyle-5.0-script
-Source2:        checkstyle-5.0.catalog
-Patch0:         checkstyle-5.0-build.patch
-Patch1:         checkstyle-5.0-javadoc-crosslink.patch
-Patch2:         checkstyle-5.0-google-collections.patch
-Requires(post): jpackage-utils >= 0:1.7.2
-Requires(postun): jpackage-utils >= 0:1.7.2
-Requires: ant >= 0:1.6
-Requires: antlr >= 0:2.7.1
-Requires: google-collections
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-cli
-Requires: jakarta-commons-beanutils
-Requires: jakarta-commons-collections
-Requires: jpackage-utils >= 0:1.7.2
-Requires: jaxp_parser_impl
-BuildRequires: ant >= 0:1.6
-BuildRequires: ant-javadoc
-BuildRequires: ant-nodeps >= 0:1.6
-BuildRequires: antlr >= 0:2.7.1
-BuildRequires: antlr-javadoc
-BuildRequires: google-collections
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-beanutils-javadoc
-BuildRequires: jakarta-commons-cli
-BuildRequires: jakarta-commons-logging
-BuildRequires: java-javadoc
-BuildRequires: jpackage-utils >= 0:1.7.2
-BuildRequires: junit4
-BuildRequires: velocity
-BuildRequires: xalan-j2
-# xerces-j2 because tests fail with gnujaxp...
-BuildRequires: xerces-j2
-BuildRequires: xml-commons-jaxp-1.3-apis-javadoc
-%if %with tests
-BuildRequires: ant-junit >= 0:1.6
-BuildRequires: emma
-%endif
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
+# src/checkstyle/com/puppycrawl/tools/checkstyle/grammars/java.g is GPLv2+
+# Most of the files in contrib/usage/src/checkstyle/com/puppycrawl/tools/checkstyle/checks/usage/transmogrify/ are BSD
+License:        LGPLv2+ and GPLv2+ and BSD
+Group:          Development/Java
+Source0:        http://download.sf.net/checkstyle/checkstyle-%{version}-src.tar.gz
+Source2:        %{name}.catalog
+
+# Used for releases only, no use for us
+Patch0:         0001-Remove-sonatype-parent.patch
+
+# not available in Fedora yet
+Patch1:         0002-Remove-linkcheck-plugin.patch
+
+# get rid of eclipse dependency
+Patch2:         0003-Remove-eclipse-plugin.patch
+
+
+BuildRequires:  antlr-maven-plugin
+BuildRequires:  apache-commons-beanutils
+BuildRequires:  apache-commons-cli
+BuildRequires:  apache-commons-logging
+BuildRequires:  guava
+BuildRequires:  junit
+BuildRequires:  maven
+BuildRequires:  maven-antrun-plugin
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-enforcer-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-plugin-cobertura
+BuildRequires:  maven-plugin-exec
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-site-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-surefire-provider-junit4
+
+Requires:       jpackage-utils
+Requires:       antlr-tool
+Requires:       apache-commons-beanutils
+Requires:       apache-commons-cli
+Requires:       apache-commons-logging
+Requires:       guava
+
 BuildArch:      noarch
-%endif
+
+Obsoletes:      %{name}-optional < %{version}-%{release}
+# revisit later, maybe manual will come back when change from ant to
+# maven build system will settle down
+Obsoletes:      %{name}-manual < %{version}-%{release}
+Source44: import.info
 
 %description
 A tool for checking Java source code for adherence to a set of rules.
 
-%package demo
+%package        demo
 Group:          Development/Java
 Summary:        Demos for %{name}
-Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
-%description demo
+%description    demo
 Demonstrations and samples for %{name}.
 
-%package javadoc
-Group:          Development/Documentation
-Summary:        Javadoc for %{name}
-BuildArch: noarch
-
-%description javadoc
-Javadoc for %{name}.
-
-%package manual
+%package        javadoc
 Group:          Development/Java
-Summary:        Manual for %{name}
+Summary:        Javadoc for %{name}
+Requires:       jpackage-utils
 BuildArch: noarch
 
-%description manual
-Manual for %{name}.
+%description    javadoc
+API documentation for %{name}.
 
 %prep
-%setup -q -n checkstyle-src-%{version}
+%setup -q -n %{name}-%{version}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%{_bindir}/find -name "*.jar" | %{_bindir}/xargs -t %{__rm}
 
-%{__perl} -pi -e 's/\r$//g;' \
-build.xml \
-checkstyle_checks.xml \
-java.header \
-LICENSE.apache20 \
-LICENSE \
-README \
-RIGHTS.antlr \
-sun_checks.xml \
-suppressions.xml \
-src/xdocs/css/*.css \
-src/xdocs/*.xml \
-src/xdocs/stylesheets/*.vsl \
-src/xdocs/stylesheets/*.xml
+# fix encoding issues in docs
+sed -i 's/\r//' LICENSE LICENSE.apache20 README RIGHTS.antlr \
+         checkstyle_checks.xml sun_checks.xml suppressions.xml \
+         contrib/hooks/*.pl src/site/resources/css/*css \
+         java.header
 
 %build
-export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/{junit,nodeps}`
-export CLASSPATH=$(build-classpath commons-collections commons-lang)
+mvn-rpmbuild -e install javadoc:aggregate
 
-pushd lib
-ln -sf $(build-classpath antlr) .
-ln -sf $(build-classpath commons-beanutils-core) .
-ln -sf $(build-classpath commons-cli) commons-cli-1.1.jar
-ln -sf $(build-classpath commons-logging) .
-%if %with tests
-ln -sf $(build-classpath emma) .
-ln -sf $(build-classpath emma_ant) .
-%endif
-ln -sf $(build-classpath google-collections) google-collect-snapshot-20090211.jar
-ln -sf $(build-classpath jdom) jdom-b9.jar
-ln -sf $(build-classpath junit4) junit-4.4.jar
-ln -sf $(build-classpath velocity) velocity-dep-1.4.jar
-popd
-
-%{ant}  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
-  -Dbuild.sysclasspath=first \
-  -Dant.javadoc=%{_javadocdir}/ant \
-  -Dantlr.javadoc=%{_javadocdir}/antlr \
-  -Djava.javadoc=%{_javadocdir}/java \
-  -Djaxp.javadoc=%{_javadocdir}/xml-commons-apis \
-  -Dbeanutils.javadoc=%{_javadocdir}/jakarta-commons-beanutils \
-%if %with tests
-  \
-%endif
-  build.bindist
 
 %install
+# jar
+install -dm 755 %{buildroot}%{_javadir}
+cp -pa target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
-# jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -p target/dist/checkstyle-%{version}/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do %{__ln_s} ${jar} `echo $jar| %__sed "s|-%{version}||g"`; done)
+# pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-checkstyle.pom
+%add_maven_depmap JPP-checkstyle.pom %{name}.jar
 
-# poms
-%add_to_maven_depmap checkstyle checkstyle %{version} JPP %{name}
-%add_to_maven_depmap com.puppycrawl.tools checkstyle %{version} JPP %{name}
-
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}.pom
 
 # script
-%{__mkdir_p} %{buildroot}%{_bindir}
-%{__install} -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
+%jpackage_script com.puppycrawl.tools.checkstyle.Main "" "" checkstyle:antlr:apache-commons-beanutils:apache-commons-cli:apache-commons-logging:guava checkstyle true
 
 # dtds
-%{__mkdir_p} %{buildroot}%{_datadir}/xml/%{name}
-%{__cp} -p %{SOURCE2} %{buildroot}%{_datadir}/xml/%{name}/catalog
-%{__cp} -p src/checkstyle/com/puppycrawl/tools/checkstyle/*.dtd %{buildroot}%{_datadir}/xml/%{name}
-%{__mkdir_p} %{buildroot}%{_sysconfdir}/sgml
-/bin/touch %{buildroot}%{_sysconfdir}/sgml/%{name}-%{version}-%{release}.cat
+install -Dm 644 %{SOURCE2} %{buildroot}%{_datadir}/xml/%{name}/catalog
+cp -pa src/checkstyle/com/puppycrawl/tools/checkstyle/*.dtd \
+  %{buildroot}%{_datadir}/xml/%{name}
 
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr target/dist/checkstyle-%{version}/docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
-# docs
-# FIXME: (dwalluck): breaks --short-circuit
-%{__rm} -rf target/dist/%{name}-%{version}/docs/api
-%{__ln_s} %{_javadocdir}/%{name} target/dist/%{name}-%{version}/docs/api
+install -dm 755  %{buildroot}%{_javadocdir}/%{name}
+cp -par target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 # demo
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}
-%{__cp} -pr target/dist/%{name}-%{version}/contrib/* %{buildroot}%{_datadir}/%{name}
+install -dm 755 %{buildroot}%{_datadir}/%{name}
+cp -par contrib/* %{buildroot}%{_datadir}/%{name}
 
 # ant.d
-%{__mkdir_p} %{buildroot}%{_sysconfdir}/ant.d
-%{__cat} > %{buildroot}%{_sysconfdir}/ant.d/%{name} << EOF
-checkstyle antlr google-collections jakarta-commons-beanutils jakarta-commons-cli jakarta-commons-logging jakarta-commons-collections jaxp_parser_impl
+install -dm 755  %{buildroot}%{_sysconfdir}/ant.d
+cat > %{buildroot}%{_sysconfdir}/ant.d/%{name} << EOF
+checkstyle antlr apache-commons-beanutils apache-commons-cli apache-commons-logging guava
 EOF
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/checkstyle.conf`
+touch $RPM_BUILD_ROOT/etc/java/checkstyle.conf
+
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %post
-/bin/touch %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.cat 2>/dev/null
-# Note that we're using a fully versioned catalog, so this is always ok.
 if [ -x %{_bindir}/install-catalog -a -d %{_sysconfdir}/sgml ]; then
   %{_bindir}/install-catalog --add \
     %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.cat \
-    %{_datadir}/xml/%{name}/catalog > /dev/null 2>&1 || :
+    %{_datadir}/xml/%{name}/catalog > /dev/null || :
 fi
 
 %postun
-# Note that we're using a fully versioned catalog, so this is always ok.
 if [ -x %{_bindir}/install-catalog -a -d %{_sysconfdir}/sgml ]; then
   %{_bindir}/install-catalog --remove \
     %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.cat \
-    %{_datadir}/xml/%{name}/catalog > /dev/null 2>&1 || :
+    %{_datadir}/xml/%{name}/catalog > /dev/null || :
 fi
 
 %files
 %doc LICENSE LICENSE.apache20 README RIGHTS.antlr
-%doc build.xml checkstyle_checks.xml java.header sun_checks.xml suppressions.xml
-%{_javadir}/%{name}.jar
-%{_javadir}/%{name}-%{version}.jar
-%{_datadir}/xml/%{name}
-%attr(0755,root,root) %{_bindir}/%{name}
-%config(noreplace) %{_sysconfdir}/ant.d/%{name}
-%{_datadir}/maven2/poms/JPP.%{name}.pom
+%doc checkstyle_checks.xml java.header sun_checks.xml suppressions.xml
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
-#%ghost %{_sysconfdir}/sgml/%{name}-%{version}-%{release}.cat
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
+%{_javadir}/%{name}.jar
+%{_datadir}/xml/%{name}
+%{_bindir}/%{name}
+%config(noreplace) %{_sysconfdir}/ant.d/%{name}
+%config(noreplace,missingok) /etc/java/checkstyle.conf
 
 %files demo
 %{_datadir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
 
-%files manual
-%doc --no-dereference target/dist/%{name}-%{version}/docs/*
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.5-alt1_4jpp7
+- new version
+
 * Sat Mar 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt3_1jpp5
 - added to depmap com.puppycrawl.tools:checkstyle
 
