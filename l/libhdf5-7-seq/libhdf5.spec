@@ -8,8 +8,8 @@
 %define hdfdir %_libdir/%oname-seq
 %define priority 30
 Name: lib%oname-%sover-seq
-Version: 1.8.8
-Release: alt2
+Version: 1.8.9
+Release: alt1
 
 Summary: Hierarchical Data Format 5 library
 
@@ -74,6 +74,20 @@ requirements of modern systems and applications.
 
 This package contains tools for work with HDF5.
 
+%package -n %oname-examples
+Summary: HDF5 examples
+Group: Development/Documentation
+BuildArch: noarch
+
+%description -n %oname-examples
+HDF5 is a completely new Hierarchical Data Format product consisting
+of a data format specification and a supporting library
+implementation. HDF5 is designed to address some of the limitations of
+the older HDF product and to address current and anticipated
+requirements of modern systems and applications.
+
+This package contains examples for HDF5.
+
 %prep
 %setup -q -n %oname-%version
 
@@ -107,6 +121,9 @@ install -d %buildroot%hdfdir/include
 
 mv %buildroot%hdfdir/lib/lib%oname.settings \
 	%buildroot%hdfdir/lib/lib%oname-%sover.settings
+
+install -d %buildroot%_docdir
+mv %buildroot%_datadir/hdf5_examples %buildroot%_docdir/
 
 # alternatives
 
@@ -165,7 +182,13 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-seq.pc %priority" >> \
 %hdfdir/bin/*
 %_altdir/%oname-tools.alternatives
 
+%files -n %oname-examples
+%_docdir/hdf5_examples
+
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.9-alt1
+- Version 1.8.9
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.8-alt2
 - Set native directory as %_libdir/%oname-seq instead of
   %_libexecdir/%oname-seq

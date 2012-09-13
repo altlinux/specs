@@ -5,8 +5,8 @@
 %define sover 7
 %define priority 40
 Name: lib%{oname}-%sover-mpi
-Version: 1.8.8
-Release: alt3
+Version: 1.8.9
+Release: alt1
 
 Summary: Hierarchical Data Format 5 library, parallel version
 
@@ -74,7 +74,7 @@ mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
-%add_optflags -DH5_HAVE_MPE
+#add_optflags -DH5_HAVE_MPE
 %autoreconf
 %configure \
 	--bindir=%mpidir/bin \
@@ -89,12 +89,13 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--with-szlib=%prefix \
 	--enable-fortran \
 	--enable-parallel \
-	--with-mpe=%prefix \
+	--enable-trace \
 	MPIDIR=%mpidir
+#	--with-mpe=%prefix \
 
 subst "s|^LT=.*|LT=../libtool|g" c++/src/Makefile c++/test/Makefile
 cp src/lib%oname.settings src/lib%oname-%sover.settings
-%make_build MPIDIR=%mpidir
+%make_build MPIDIR=%mpidir V=1
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -164,6 +165,9 @@ echo "%_pkgconfigdir/%oname.pc %_pkgconfigdir/%oname-mpi.pc %priority" >> \
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.9-alt1
+- Version 1.8.9
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.8-alt3
 - Rebuilt with OpenMPI 1.6
 
