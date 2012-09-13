@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           biojava
 Version:        1.7.1
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        Java framework for processing biological data
 License:        LGPLv2+
@@ -47,20 +47,20 @@ URL:            http://biojava.org/
 Source0:        http://www.biojava.org/download/bj171/src/biojava-1.7.1-src.jar
 Patch0:         biojava-1.7-javadoc.patch
 Requires: bytecode
-Requires: jakarta-commons-cli
-Requires: commons-collections
-Requires: commons-dbcp
-Requires: commons-pool
+Requires: apache-commons-cli
+Requires: apache-commons-collections
+Requires: apache-commons-dbcp
+Requires: apache-commons-pool
 Requires: hsqldb
 Requires: jgrapht
 Requires: jpackage-utils
 BuildRequires: ant
 BuildRequires: ant-junit
 BuildRequires: bytecode
-BuildRequires: jakarta-commons-cli
-BuildRequires: commons-collections >= 0:2.1
-BuildRequires: commons-dbcp >= 0:1.1
-BuildRequires: commons-pool >= 0:1.1
+BuildRequires: apache-commons-cli
+BuildRequires: apache-commons-collections >= 0:2.1
+BuildRequires: apache-commons-dbcp >= 0:1.1
+BuildRequires: apache-commons-pool >= 0:1.1
 BuildRequires: hsqldb
 BuildRequires: java-javadoc
 BuildRequires: jgrapht
@@ -135,7 +135,7 @@ popd
 pushd biojava-%{version}-src
 export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
 export CLASSPATH=
-%{ant} dist
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist
 popd
 
 %install
@@ -186,6 +186,9 @@ popd
 %{_javadocdir}/%{name}-demos
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt2_1jpp6
+- fixed build with new commons-nbcp
+
 * Wed Dec 29 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_1jpp6
 - new version
 
