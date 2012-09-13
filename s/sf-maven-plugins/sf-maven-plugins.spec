@@ -1,3 +1,4 @@
+%def_without sf_dbunit_maven_plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -64,7 +65,7 @@ BuildRequires: ant-bsf
 
 Name:           sf-maven-plugins
 Version:        1.0
-Release:        alt9_0.20050908.9jpp5
+Release:        alt10_0.20050908.9jpp5
 Epoch:          0
 Summary:        Maven Plugins hosted at sf.net
 
@@ -174,7 +175,7 @@ BuildRequires: apache-commons-lang
 BuildRequires: apache-commons-logging
 BuildRequires: apache-commons-net
 BuildRequires: apache-commons-pool
-BuildRequires: dbunit
+#BuildRequires: dbunit
 BuildRequires: docbook-xsl-java-xalan
 BuildRequires: dom4j
 BuildRequires: xmlgraphics-fop
@@ -222,7 +223,7 @@ BuildRequires: izpack
 BuildRequires: wsdl4j
 
 Requires: sf-cobertura-maven-plugin
-Requires: sf-dbunit-maven-plugin
+#Requires: sf-dbunit-maven-plugin
 Requires: sf-deb-maven-plugin
 Requires: sf-files-maven-plugin
 Requires: sf-findbugs-maven-plugin
@@ -299,6 +300,7 @@ Requires(postun): java-gcj-compat
 %description -n sf-cobertura-maven-plugin
 %{summary}.
 
+%if_with sf_dbunit_maven_plugin
 %package -n sf-dbunit-maven-plugin
 Summary:        DBUnit Maven Plugin hosted at sf.net
 Group:          Development/Java
@@ -312,9 +314,12 @@ Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires(post): java-gcj-compat
 Requires(postun): java-gcj-compat
 %endif
+%endif #sf_dbunit_maven_plugin
 
+%if_with sf_dbunit_maven_plugin
 %description -n sf-dbunit-maven-plugin
 %{summary}.
+%endif #sf_dbunit_maven_plugin
 
 %package -n sf-deb-maven-plugin
 Summary:        DEB Maven Plugin hosted at sf.net
@@ -679,12 +684,12 @@ mkdir -p .maven
 
 export MAVEN_HOME_LOCAL=$(pwd)/.maven
 
-ALL_PLUGINS="aptdoc axis cobertura db2 dbunit deb dotuml doxygen files findbugs flash help izpack javaapp javancss jaxb junitpp kodo macker maven-dashboard-history middlegen news rpm runtime-builder sdocbook sourceforge springgraph strutsdoc tasks transform uberdist vignette was40 was5 weblogic webtest wiki word2html xmlresume"
+ALL_PLUGINS="aptdoc axis cobertura db2 deb dotuml doxygen files findbugs flash help izpack javaapp javancss jaxb junitpp kodo macker maven-dashboard-history middlegen news rpm runtime-builder sdocbook sourceforge springgraph strutsdoc tasks transform uberdist vignette was40 was5 weblogic webtest wiki word2html xmlresume"
 
 PEND_PLUGINS="db2 dotuml doxygen jaxb kodo macker middlegen maven-dashboard-history/maven-plugins sourceforge strutsdoc transform weblogic wiki"
 
 
-for p in aptdoc axis cobertura dbunit deb news files findbugs flash help izpack javaapp javancss junitpp rpm runtime-builder sdocbook springgraph tasks uberdist vignette was40 was5 webtest word2html xmlresume; do
+for p in aptdoc axis cobertura deb news files findbugs flash help izpack javaapp javancss junitpp rpm runtime-builder sdocbook springgraph tasks uberdist vignette was40 was5 webtest word2html xmlresume; do
 pushd $p
 maven \
 	-Dmaven.compile.target=1.5 -Dmaven.compile.source=1.5 -Dmaven.javadoc.source=1.5 \
@@ -710,9 +715,9 @@ $RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-axis-plugin-%{axis_pver}.jar
 install -m 644 \
 cobertura/target/maven-cobertura-plugin-%{cobertura_pver}.jar \
 $RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-cobertura-plugin-%{cobertura_pver}.jar
-install -m 644 \
-dbunit/target/maven-dbunit-plugin-%{dbunit_pver}.jar \
-$RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-dbunit-plugin-%{dbunit_pver}.jar
+#install -m 644 \
+#dbunit/target/maven-dbunit-plugin-%{dbunit_pver}.jar \
+#$RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-dbunit-plugin-%{dbunit_pver}.jar
 install -m 644 \
 deb/target/maven-deb-plugin-%{deb_pver}.jar \
 $RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-deb-plugin-%{deb_pver}.jar
@@ -785,7 +790,7 @@ pushd $RPM_BUILD_ROOT%{_javadir}/maven1-plugins
 ln -sf %{_datadir}/maven1/plugins/maven-aptdoc-plugin-%{aptdoc_pver}.jar maven-aptdoc-plugin.jar
 ln -sf %{_datadir}/maven1/plugins/maven-axis-plugin-%{axis_pver}.jar maven-axis-plugin.jar
 ln -sf %{_datadir}/maven1/plugins/maven-cobertura-plugin-%{cobertura_pver}.jar maven-cobertura-plugin.jar
-ln -sf %{_datadir}/maven1/plugins/maven-dbunit-plugin-%{dbunit_pver}.jar maven-dbunit-plugin.jar
+#ln -sf %{_datadir}/maven1/plugins/maven-dbunit-plugin-%{dbunit_pver}.jar maven-dbunit-plugin.jar
 ln -sf %{_datadir}/maven1/plugins/maven-deb-plugin-%{deb_pver}.jar maven-deb-plugin.jar
 ln -sf %{_datadir}/maven1/plugins/maven-files-plugin-%{files_pver}.jar maven-files-plugin.jar
 ln -sf %{_datadir}/maven1/plugins/maven-findbugs-plugin-%{findbugs_pver}.jar maven-findbugs-plugin.jar
@@ -811,7 +816,7 @@ ln -sf %{_datadir}/maven1/plugins/maven-xmlresume-plugin-%{xmlresume_pver}.jar m
 popd
 
 install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-for p in aptdoc dbunit deb files javaapp; do
+for p in aptdoc deb files javaapp; do
         install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/$p
 cp -pr $p/target/docs/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/$p
 rm -rf $p/target/docs/apidocs
@@ -820,7 +825,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 
 install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-for p in aptdoc axis cobertura dbunit deb news files findbugs flash help izpack javaapp javancss junitpp rpm runtime-builder sdocbook springgraph tasks uberdist vignette was40 was5 webtest word2html xmlresume; do
+for p in aptdoc axis cobertura deb news files findbugs flash help izpack javaapp javancss junitpp rpm runtime-builder sdocbook springgraph tasks uberdist vignette was40 was5 webtest word2html xmlresume; do
         install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/$p
 cp -pr $p/target/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/$p
 done
@@ -868,6 +873,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
+%if_with sf_dbunit_maven_plugin
 %files -n sf-dbunit-maven-plugin
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_datadir}/maven1/plugins/maven-dbunit-plugin*.jar
@@ -877,6 +883,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %endif
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
+%endif #sf_dbunit_maven_plugin
 
 %files -n sf-deb-maven-plugin
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
@@ -1062,6 +1069,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt10_0.20050908.9jpp5
+- dropped dbunit plugin
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt9_0.20050908.9jpp5
 - build with saxon6-scripts
 
