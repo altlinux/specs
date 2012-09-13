@@ -1,6 +1,6 @@
 %define oname mathgl
 Name: lib%oname
-Version: 2.0
+Version: 2.0.3
 Release: alt1
 
 Summary: Library of fast C++ routines for the plotting of the data
@@ -10,6 +10,7 @@ Group: System/Libraries
 Url: http://www.sf.net/projects/mathgl/
 
 Source: http://prdownloads.sf.net/%oname/%oname-%version.tar
+Source1: %oname-%version.eng.pdf
 
 # Automatically added by buildreq on Fri Jan 08 2010
 BuildRequires: gcc-c++ glibc-devel libGL-devel libGLUT-devel libgif-devel libgsl-devel libhdf5-devel libjpeg-devel libpng-devel python-devel libnumpy-devel swig
@@ -47,8 +48,25 @@ Requires: %name = %version-%release
 %description -n python-module-mathgl
 Python module for %name.
 
+%package devel-doc
+Summary: Documentation for %name
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel-doc
+Development documentation for %name.
+
+%package examples
+Summary: Examples for %name
+Group: Development/Documentation
+Requires: %name = %version-%release
+
+%description examples
+Examples for %name.
+
 %prep
 %setup -n %oname-%version
+install -p -m644 %SOURCE1 .
 
 %build
 %add_optflags `pkg-config --cflags hdf5`
@@ -58,7 +76,8 @@ cmake \
 	-DCMAKE_CXX_FLAGS="%optflags" \
 	-DCMAKE_Fortran_FLAGS="%optflags" \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
-	-DHDF5_DIR:PATH="/usr/lib/hdf5-seq" \
+	-DCMAKE_SKIP_RPATH:BOOL=ON \
+	-DHDF5_DIR:PATH="%_libdir/hdf5-seq" \
 	-DFLTK_DIR:PATH=%prefix \
 	-Denable-double:BOOL=ON \
 	-Denable-fltk:BOOL=ON \
@@ -90,14 +109,23 @@ cmake \
 %_datadir/mathgl/
 
 %files devel
-%_bindir/mgl*example
 %_libdir/*.so
 %_includedir/*
 
 %files -n python-module-mathgl
 %python_sitelibdir/*
 
+%files devel-doc
+%doc texinfo/*.pdf *.pdf todo.txt
+
+%files examples
+%doc examples/*.cpp
+%_bindir/mgl*example
+
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1
+- Version 2.0.3
+
 * Thu May 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1
 - Version 2.0
 
