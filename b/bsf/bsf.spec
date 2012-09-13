@@ -1,14 +1,6 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define version 2.4.0
-%define name bsf
-# Copyright (c) 2000-2011, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -36,50 +28,29 @@ BuildRequires: jpackage-compat
 # THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
-%bcond_without repolib
-
-%define repodir %{_javadir}/repository.jboss.com/apache-bsf/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
+#
 
 Name:           bsf
 Version:        2.4.0
-Release:        alt3_11jpp6
+Release:        alt3_13jpp7
 Epoch:          1
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
+URL:            http://commons.apache.org/bsf/
 Group:          Development/Java
-URL:            http://jakarta.apache.org/bsf/
-#Source0:       http://archive.apache.org/dist/jakarta/bsf/source/bsf-src-2.4.0.tar.gz
-# <https://issues.apache.org/jira/browse/BSF-12>
-# Also missing xdocs
-# svn export http://svn.apache.org/repos/asf/jakarta/bsf/tags/bsf-2.4.0
-Source0:        bsf-2.4.0.tar.bz2
-Source1:        bsf-component-info.xml
-Source2:        bsf-2.4.0.pom
-Patch0:         bsf-javadoc-crosslink.patch
-Requires(post): jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-Requires:       jakarta-commons-logging
-Requires:       jpackage-utils
-Requires:       jsp_2_1_api
-Requires:       xalan-j2
-Requires:       servlet_2_5_api
+Source0:        http://apache.osuosl.org/jakarta/%{name}/source/%{name}-src-%{version}.tar.gz
+Source1:        %{name}-pom.xml
+Patch0:         build-file.patch
+Patch1:	        build.properties.patch
+BuildRequires:  jpackage-utils >= 1.6
 BuildRequires:  ant
-BuildRequires:  ant-junit
-BuildRequires:  jakarta-commons-logging
-BuildRequires:  jakarta-commons-logging-javadoc
-BuildRequires:  java-javadoc
-BuildRequires:  jpackage-utils
-BuildRequires:  jsp_2_1_api
-BuildRequires:  jacl
+BuildRequires:  xalan-j2
 BuildRequires:  jython
 BuildRequires:  rhino
-BuildRequires:  servlet_2_5_api
-BuildRequires:  velocity14
-BuildRequires:  xalan-j2
+BuildRequires:  apache-commons-logging
+Requires:       xalan-j2
+Requires:       apache-commons-logging
+Requires:       jpackage-utils
 BuildArch:      noarch
 Source44: import.info
 %add_findreq_skiplist /usr/share/bsf-*
@@ -110,100 +81,61 @@ engines:
 * JRuby
 * JudoScript
 
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
 %package javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
 Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
-%package manual
-Summary:        Manual for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-Manual for %{name}.
-
 %prep
 %setup -q
-%patch0 -p1 -b .sav0
-%{_bindir}/find -name "*.jar" | %{_bindir}/xargs -t %{__rm}
-%{__rm} -r docs/
-%{__perl} -pi -e 's/\r$//g' samples/scriptedui/ui.{jacl,py}
+# remove all binary libs
+find . -name "*.jar" -exec %{__rm} -f {} \;
+%{__rm} -fr bsf
+
+%patch0 -p1
+%patch1 -p1
 
 %build
-export OPT_JAR_LIST="ant/ant-junit junit"
-export CLASSPATH=$(build-classpath commons-logging jacl jsp_2_1_api jython rhino servlet_2_5_api xalan-j2)
-export CLASSPATH=${CLASSPATH}:$(build-classpath excalibur/avalon-logkit commons-collections commons-lang jdom velocity14)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first -Djava.javadoc=%{_javadocdir}/java -Dcommons.logging.javadoc=%{_javadocdir}/jakarta-commons-logging all \
-%if 0
-test
-%endif
+[ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
+export CLASSPATH=$(build-classpath apache-commons-logging jython xalan-j2 rhino)
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar
+%{__rm} -rf bsf/src/org/apache/bsf/engines/java
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  javadocs
 
 %install
-
 # jar
 %{__install} -d -m 755 %{buildroot}%{_javadir}
-%{__install} -p -m 644 dist/bsf-%{version}/lib/bsf.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do ln -s ${jar} ${jar/-%{version}/}; done)
-
-# pom and depmap frag
-%{__install} -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-%{__install} -p -m 644 %{SOURCE2} %{buildroot}%{_datadir}/maven2/poms/JPP-bsf.pom
-%add_to_maven_depmap bsf bsf %{version} JPP %{name}
-
+%{__install} -m 644 build/lib/%{name}.jar \
+             %{buildroot}%{_javadir}/%{name}.jar
 # javadoc
-%{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr dist/bsf-%{version}/docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-(cd %{buildroot}%{_javadocdir} && ln -s %{name}-%{version} %{name})
+%{__install} -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+%{__cp} -pr build/javadocs/* %{buildroot}%{_javadocdir}/%{name}
 
-%if %with repolib
-%{__install} -d -m 755 %{buildroot}%{repodir}
-%{__install} -d -m 755 %{buildroot}%{repodirlib}
-%{__install} -p -m 644 %{SOURCE1} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__install} -d -m 755 %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/bsf.jar %{buildroot}%{repodirlib}
-%endif
+%{__install} -DTm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.apache.bsf:%{name}"
+
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
-%doc dist/bsf-%{version}/{AUTHORS.txt,BUILDING.txt,CHANGES.txt,INSTALL.txt,LICENSE.txt,NOTICE.txt,README.txt,RELEASE-NOTE.txt,samples/,TODO.txt}
-%{_javadir}/%{name}-%{version}.jar
+%doc LICENSE.txt AUTHORS.txt CHANGES.txt NOTICE.txt README.txt TODO.txt RELEASE-NOTE.txt
 %{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE.txt NOTICE.txt
 %{_javadocdir}/%{name}
 
-%files manual
-%doc docs/*
-
-%if %with repolib
-%files repolib
-%dir %{_javadir}
-%{_javadir}/repository.jboss.com
-%endif
-
 %changelog
+* Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_13jpp7
+- fc version
+
 * Tue Jan 24 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_11jpp6
 - restored repolib
 
