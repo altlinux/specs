@@ -1,6 +1,6 @@
 Name:           sp
 Version:        4.2
-Release:        alt5
+Release:        alt6
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
@@ -40,11 +40,10 @@ Integrated school control system.
 # Build UDFlib for Firebird
 mkdir -p usr/lib/firebird/UDF/
 cd UDFlib-src
-# find  .. | grep usr
-fpc -Mdelphi -Xc -Cccdecl UDFLib.dpr -o../usr/lib/firebird/UDF/UDFLib.dll
+fpc -Mdelphi -Xc -Cccdecl UDFLib.dpr -oUDFLib.dll
+mv UDFLib.dll ..
 cd ..
 rm -rf UDFlib-src
-rm usr/lib/firebird/UDF/UDFLib.o
 
 # -------------------------------------------
 # Установка. Устанавливаем всё, что нужно в $RPM_BUILD_ROOT как в /
@@ -57,6 +56,10 @@ mkdir -p %buildroot/var/www/html/sp/
 # add by snejok@
 cp -r * %buildroot/
 
+# UDFlib
+mkdir -p      %buildroot/%_libdir/firebird/UDF/
+mv UDFLib.dll %buildroot/%_libdir/firebird/UDF/UDFLib.dll
+
 # -------------------------------------------
 # Список файлов, которые попадут в пакет
 # -------------------------------------------
@@ -65,7 +68,7 @@ cp -r * %buildroot/
 %attr(640,apache,apache)     %config(noreplace) /var/www/cgi-bin/sp/sp.conf
 %dir /var/lib/firebird/xxi/
 %attr(660,firebird,firebird) %config(noreplace) /var/lib/firebird/xxi/*
-%attr(440,firebird,firebird) /usr/lib/firebird/UDF/UDFLib.dll
+%attr(440,firebird,firebird) %_libdir/firebird/UDF/UDFLib.dll
 %attr(640,apache,apache)     /var/www/html/.htaccess
 %attr(640,apache,apache)     %config /etc/httpd2/conf/sites-available/000-sp.conf
 %attr(750,root,root)         /usr/sbin/sp-add-admin
@@ -304,8 +307,10 @@ a2ensite  default
 a2dissite 000-sp
 
 %changelog
+* Thu Sep 13 2012 Andrey Stroganov <dja@altlinux.org> 4.2-alt6
+- /usr/lib replaced with macros
 * Thu Sep 5 2012 Andrey Stroganov <dja@altlinux.org> 4.2-alt5
-- UDFlib source code, 4.2-alt5
+- UDFlib source code
 * Tue Sep 13 2011 Andrey Stroganov <dja@altlinux.org> 4.2-alt4
 - added README, final installation message now shorter
 * Mon Sep 12 2011 Andrey Stroganov <dja@altlinux.org> 4.2-alt3
