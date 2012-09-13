@@ -1,5 +1,5 @@
 Name: libmaa
-Version: 1.3.1
+Version: 1.3.2
 Release: alt1
 
 Summary: Client/server software, human language dictionary databases, tools for DICT protocol
@@ -24,17 +24,6 @@ Client/server software, human language dictionary databases, and tools
 supporting the DICT protocol (RFC 2229).
 
 This package contains development files of libmaa.
-
-%package devel-static
-Summary: Static library of libmaa
-Group: Development/C
-Requires: %name-devel = %version-%release
-
-%description devel-static
-Client/server software, human language dictionary databases, and tools
-supporting the DICT protocol (RFC 2229).
-
-This package contains static library of libmaa.
 
 %package devel-doc
 Summary: Documentation for libmaa
@@ -69,13 +58,13 @@ install -p -m644 doc/*.ps %buildroot%_docdir/%name
 %_libdir/*.so
 %_includedir/*
 
-#files devel-static
-#_libdir/*.a
-
 %files devel-doc
 %_docdir/%name
 
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt1
+- Version 1.3.2
+
 * Mon Nov 07 2011 Michael Shigorin <mike@altlinux.org> 1.3.1-alt1
 - NMU: 1.3.1 (gcc-4.6 ready)
 
