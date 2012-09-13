@@ -1,8 +1,7 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: xdoclet
 BuildRequires: /proc
-BuildRequires: jpackage-1.5.0-compat
-# Copyright (c) 2000-2009, JPackage Project
+BuildRequires: jpackage-compat
+# Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -32,8 +31,6 @@ BuildRequires: jpackage-1.5.0-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
 # If you want to build with the xdoclet-ojb-module
 # give rpmbuild option '--with xdoclet'
 # You will then need to set and export an environment
@@ -47,7 +44,7 @@ BuildRequires: jpackage-1.5.0-compat
 
 Name:           db-ojb
 Version:        1.0.4
-Release:        alt3_4jpp5
+Release:        alt3_5jpp6
 Epoch:          0
 Summary:        ObJectRelationalBridge
 
@@ -64,82 +61,79 @@ Patch0:         db-ojb-1.0.4-build_xml.patch
 Patch1:         db-ojb-1.0.4-Torque33-TorqueDBHandling.patch
 Patch2:         db-ojb-1.0.4-ojbcore-schema.patch
 Patch3:         db-ojb-1.0.4-ojbtest-schema.patch
+Patch4:         db-ojb-WrappedConnection.patch
+Patch33:	db-ojb-1.0.4-alt-java7.patch
 
 
-%if ! %{gcj_support}
 BuildArch:      noarch
-%endif
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: ant-swing
-BuildRequires: ant-trax
-BuildRequires: apache-jdo-1.1-api
-BuildRequires: apache-jdo-1.1-impl
-BuildRequires: junit
-BuildRequires: antlr
-BuildRequires: concurrent
-BuildRequires: db-ddlutils
-BuildRequires: excalibur-avalon-logkit
-BuildRequires: geronimo-j2ee-1.4-apis
-BuildRequires: geronimo-servlet-2.4-api
-BuildRequires: hsqldb
-BuildRequires: jakarta-commons-betwixt0
-BuildRequires: jakarta-jcs
-BuildRequires: xalan-j2
-BuildRequires: xdoclet
-BuildRequires: xjavadoc
+BuildRequires:  jpackage-utils >= 0:1.7.5
+BuildRequires:  ant >= 0:1.7.1
+BuildRequires:  ant-junit
+BuildRequires:  ant-swing
+BuildRequires:  ant-trax
+BuildRequires:  apache-jdo-1.1-api
+BuildRequires:  apache-jdo-1.1-impl
+BuildRequires:  junit
+BuildRequires:  antlr
+BuildRequires:  concurrent
+BuildRequires:  db-ddlutils
+BuildRequires:  excalibur-avalon-logkit
+BuildRequires:  geronimo-j2ee-1.4-apis
+BuildRequires:  geronimo-servlet-2.4-api
+BuildRequires:  hsqldb
+BuildRequires:  apache-commons-betwixt
+#BuildRequires:  apache-commons-jcs
+BuildRequires:  jakarta-jcs
+BuildRequires:  xalan-j2
+BuildRequires:  xdoclet
+BuildRequires:  xjavadoc
 
-BuildRequires: asm
-BuildRequires: cglib
-BuildRequires: db-torque-gen >= 0:3.3
-BuildRequires: db-torque-gen-templates >= 0:3.3
-BuildRequires: apache-commons-beanutils
-BuildRequires: apache-commons-collections
-BuildRequires: apache-commons-configuration
-BuildRequires: apache-commons-dbcp
-BuildRequires: apache-commons-digester
-BuildRequires: apache-commons-lang
-BuildRequires: apache-commons-logging
-BuildRequires: apache-commons-pool
-BuildRequires: apache-commons-transaction
-BuildRequires: regexp
-BuildRequires: log4j
-BuildRequires: p6spy
-BuildRequires: texen
-BuildRequires: velocity
-BuildRequires: village
-BuildRequires: xerces-j2
-BuildRequires: xml-commons-jaxp-1.3-apis
+BuildRequires:  asm
+BuildRequires:  cglib
+BuildRequires:  db-torque-gen >= 0:3.3
+BuildRequires:  db-torque-gen-templates >= 0:3.3
+BuildRequires:  apache-commons-beanutils
+BuildRequires:  apache-commons-collections
+BuildRequires:  apache-commons-configuration
+BuildRequires:  apache-commons-dbcp
+BuildRequires:  apache-commons-digester
+BuildRequires:  apache-commons-lang
+BuildRequires:  apache-commons-logging
+BuildRequires:  apache-commons-pool
+BuildRequires:  apache-commons-transaction
+BuildRequires:  regexp
+BuildRequires:  log4j
+BuildRequires:  p6spy
+BuildRequires:  texen
+BuildRequires:  velocity
+BuildRequires:  village
+#BuildRequires:  xerces-j2
+#BuildRequires:  xml-commons-jaxp-1.3-apis
 
-Requires: asm
-Requires: cglib
-Requires: db-torque-gen >= 0:3.3
-Requires: db-torque-gen-templates >= 0:3.3
-Requires: apache-commons-beanutils
-Requires: apache-commons-collections
-Requires: apache-commons-configuration
-Requires: apache-commons-dbcp
-Requires: apache-commons-digester
-Requires: apache-commons-lang
-Requires: apache-commons-logging
-Requires: apache-commons-pool
-Requires: apache-commons-transaction
-Requires: regexp
-Requires: log4j
-Requires: p6spy
-Requires: texen
-Requires: velocity
-Requires: village
+Requires:  asm
+Requires:  cglib
+Requires:  db-torque-gen >= 0:3.3
+Requires:  db-torque-gen-templates >= 0:3.3
+Requires:  apache-commons-beanutils
+Requires:  apache-commons-collections
+Requires:  apache-commons-configuration
+Requires:  apache-commons-dbcp
+Requires:  apache-commons-digester
+Requires:  apache-commons-lang
+Requires:  apache-commons-logging
+Requires:  apache-commons-pool
+Requires:  apache-commons-transaction
+Requires:  regexp
+Requires:  log4j
+Requires:  p6spy
+Requires:  texen
+Requires:  velocity
+Requires:  village
 #Requires:  jaxp_parser_impl
 #Requires:  xml-commons-jaxp-1.3-apis
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
+Requires(post):    jpackage-utils >= 0:1.7.5
+Requires(postun):  jpackage-utils >= 0:1.7.5
+Source44: import.info
 
 %description
 ObJectRelationalBridge (OJB) is an Object/Relational 
@@ -150,8 +144,8 @@ Java Objects against relational databases.
 %package        xdoclet-module
 Summary:        XDoclet module for %{name}
 Group:          Development/Java
-Requires: %{name} = %{epoch}:%{version}
-Requires: xdoclet
+Requires:       %{name} = %{epoch}:%{version}
+Requires:       xdoclet
 
 %description    xdoclet-module
 %{summary}.
@@ -160,12 +154,12 @@ Requires: xdoclet
 %package        javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Documentation
-BuildRequires: apache-commons-beanutils-javadoc
-BuildRequires: apache-commons-collections-javadoc
-BuildRequires: apache-commons-dbcp-javadoc
-BuildRequires: apache-commons-lang-javadoc
-BuildRequires: apache-commons-logging-javadoc
-BuildRequires: apache-commons-pool-javadoc
+BuildRequires:  apache-commons-beanutils-javadoc
+BuildRequires:  apache-commons-collections-javadoc
+BuildRequires:  apache-commons-dbcp-javadoc
+BuildRequires:  apache-commons-lang-javadoc
+BuildRequires:  apache-commons-logging-javadoc
+BuildRequires:  apache-commons-pool-javadoc
 BuildArch: noarch
 
 %description    javadoc
@@ -182,7 +176,7 @@ BuildArch: noarch
 %package        demo
 Summary:        Samples for %{name}
 Group:          Development/Java
-Requires: %{name} = %{epoch}:%{version}
+Requires:       %{name} = %{epoch}:%{version}
 
 %description    demo
 %{summary}.
@@ -199,8 +193,11 @@ cp %{SOURCE2} database_3_1.dtd
 %patch1 -b .sav1
 %patch2 -b .sav2
 %patch3 -b .sav3
+%patch4 -b .sav4
+%patch33 -p1
 
 %build
+export LANG=en_US.ISO8859-1
 export ANT_OPTS="$ANT_OPTS -Xms512m -Xmx2048m -Xss1m"
 pushd lib
 ln -sf $(build-classpath ant) .
@@ -212,7 +209,7 @@ ln -sf $(build-classpath antlr) .
 ln -sf $(build-classpath asm/asm) .
 ln -sf $(build-classpath cglib) .
 ln -sf $(build-classpath commons-beanutils) .
-ln -sf $(build-classpath commons-betwixt0) .
+ln -sf $(build-classpath commons-betwixt) .
 ln -sf $(build-classpath commons-collections) .
 ln -sf $(build-classpath commons-dbcp) .
 ln -sf $(build-classpath commons-digester) .
@@ -244,14 +241,14 @@ ln -sf $(build-classpath xdoclet/xdoclet-jmx-module) .
 ln -sf $(build-classpath xdoclet/xdoclet-objectweb-module) .
 ln -sf $(build-classpath xdoclet/xdoclet-web-module) .
 ln -sf $(build-classpath xjavadoc) .
-ln -sf $(build-classpath xerces-j2) .
-ln -sf $(build-classpath xml-commons-apis) .
+#ln -sf $(build-classpath xerces-j2) .
+#ln -sf $(build-classpath xml-commons-apis) .
 #
 ln -sf $(build-classpath apache-jdo-1.1-api) .
 ln -sf $(build-classpath apache-jdo-1.1-impl) .
 popd
 
-ant \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
     oql \
     jdoql \
     jar \
@@ -264,7 +261,8 @@ ant \
     rar \
     war
 %if %{with_xdoclet}
-ant -Dxdoclet.src.dir=${XDOCLETSRC} -f build-xdoclet-module.xml rebuild
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
+ -Dxdoclet.src.dir=${XDOCLETSRC} -f build-xdoclet-module.xml rebuild
 %endif
 #   ojb-quickstart \
 #   with-jdori \
@@ -335,15 +333,6 @@ install -pm 644 dist/ojb-servlet.war \
 rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/bin
 rm -f $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/db-ojb-blank*.jar
 
-%if %{gcj_support}
-export CLASSPATH=$(build-classpath gnu-crypto)
-%{_bindir}/aot-compile-rpm \
---exclude %{_datadir}/%{name}-%{version}/ojb-lockserver.war \
---exclude %{_datadir}/%{name}-%{version}/ojb-servlet.war \
---exclude %{_datadir}/%{name}-%{version}/ojb-jca.rar \
---exclude %{_datadir}/%{name}-%{version}/ejb/lib/db-ojb-1.0.4-client.jar
-%endif
-
 %files
 %doc %{_docdir}/%{name}-%{version}/LICENSE
 %doc %{_docdir}/%{name}-%{version}/release-notes.txt
@@ -357,20 +346,12 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %{_datadir}/%{name}-%{version}/profile
 %{_mavendepmapfragdir}/*
 %{_datadir}/maven2/poms/*
-%if %{gcj_support}
-%dir %attr(-,root,root) %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}*-%{version}.jar.*
-%{_libdir}/gcj/%{name}/%{name}-%{version}-client.jar.*
-%endif
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %if %{with_xdoclet}
 %files xdoclet-module
 %{_javadir}/xdoclet/*.jar
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/xdoclet*-%{version}.jar.*
-%endif
 %endif
 
 %files javadoc
@@ -384,6 +365,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt3_5jpp6
+- jpp6 release
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt3_4jpp5
 - fixed build
 
