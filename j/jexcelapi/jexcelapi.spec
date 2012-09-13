@@ -1,57 +1,28 @@
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%define archivever 2_6_12
+%global oname jxl
 
 Name:           jexcelapi
 Version:        2.6.12
-Release:        alt3_1jpp6
-Epoch:          0
+Release:        alt3_4jpp7
 Summary:        A Java API to read, write and modify Excel spreadsheets
-License:        LGPL
+License:        LGPLv3
 Group:          Development/Java
-URL:            http://www.andykhan.com/%{name}
-Source0:        %{url}/%{name}_%{archivever}.tar.gz
+URL:            http://www.andykhan.com/jexcelapi
+Source0:        http://www.andykhan.com/jexcelapi/jexcelapi_2_6_12.tar.gz
 Source1:        http://repo1.maven.org/maven2/net/sourceforge/jexcelapi/jxl/2.6.12/jxl-2.6.12.pom
-Requires(post):   jpackage-utils >= 0:1.7.5
-Requires(postun): jpackage-utils >= 0:1.7.5
-Requires:	log4j >= 0:1.2.8
+Patch0:         jexcelapi-build.patch
+Requires:       log4j >= 0:1.2.7
+Requires:       jpackage-utils
 
-BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  ant >= 0:1.7.1
+BuildRequires:  jpackage-utils >= 0:1.7.3
+BuildRequires:  ant
 BuildRequires:  jflex
+BuildRequires:  jlex
 BuildRequires:  findutils
 BuildRequires:  sed
-BuildRequires:	log4j
+BuildRequires:  log4j
 BuildArch:      noarch
 Source44: import.info
 
@@ -71,88 +42,77 @@ Features:
 - Reads and writes formulas (Excel 97 and later only)
 - Generates spreadsheets in Excel 97 format
 - Supports font, number and date formatting
-- Supports shading and colouring of cells
+- Supports shading and coloring of cells
 - Modifies existing worksheets
 
 
 %package        javadoc
-Group:          Development/Documentation
-Summary:        Javadoc for %{name}
+Group:          Development/Java
+Summary:        API documentation for %{name}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-Javadoc for %{name}.
+API documentation for %{name}.
 
 %prep
 %setup -n %{name} -q
 
 # Clean up binary leftovers
-%{_bindir}/find . -name "*.jar" -exec rm -f {} \;
-%{_bindir}/find . -name "*.class" -exec rm -f {} \;
+find . -name "*.jar" -exec rm -f {} \;
+find . -name "*.class" -exec rm -f {} \;
 
 # Clean up temp files (confuses javadoc 1.3.1)
-%{_bindir}/find . -name ".#*" -exec rm -f {} \;
+find . -name ".#*" -exec rm -f {} \;
 
-mkdir -p build/out
+%patch0 -p1 -b .build
 
 %build
-export LANG=en_US.ISO8859-1
-cd build
+pushd build
 cat > build.properties <<EOBP
 logger=Log4jLogger
 loggerClasspath=$(build-classpath log4j)
 EOBP
 
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
-ln -sf $(build-classpath jflex) JFlex.jar
+export CLASSPATH=$(build-classpath jlex jflex)
 
-%{_bindir}/ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 clean
-%{_bindir}/ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jxlall
-
-%install
-
-# jars
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -m 0644 jxl.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-%{version}.jar
-
-pushd $RPM_BUILD_ROOT%{_javadir}/%{name}
-        for jar in %{name}*.jar ; do
-                ln -sf ${jar} $(echo $jar| sed "s|%{name}|jxl|g")
-        done
-        for jar in *-%{version}.jar ; do
-                ln -sf ${jar} $(echo $jar| sed "s|-%{version}\.jar|.jar|g")
-        done
+mkdir out
+ant jxlall
 popd
 
+# html doc files should not be executable
+chmod -x index.html tutorial.html
+
+%install
+# jars
+install -d -m 0755 $RPM_BUILD_ROOT%{_javadir}/%{name}
+install -m 0644 jxl.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/jxl.jar
+
 # pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-%{name}.pom
-%add_to_maven_depmap %{name} jxl %{version} JPP/%{name} %{name}
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
-install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -sf %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-
-# demo
-install -d -m 0755 $RPM_BUILD_ROOT%{_datadir}/%name
-install -m 0644 *.dtd *.xls $RPM_BUILD_ROOT%{_datadir}/%name/
+install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
 %doc *.html
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/*jar
-%{_datadir}/maven2/poms/*
+%{_javadir}/*.jar
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
-%dir %{_datadir}/%{name}
-%{_datadir}/%{name}/*.dtd
-%{_datadir}/%{name}/*.xls
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc index.html
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt3_4jpp7
+- fc version
+
 * Sat Mar 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt3_1jpp6
 - target 5 build
 
