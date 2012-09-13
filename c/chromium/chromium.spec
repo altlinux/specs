@@ -2,7 +2,7 @@
 %define v8_ver 3.11.10.5
 %define rev 154005
 
-%def_enable debug
+%def_disable debug
 %def_disable nacl
 
 %if_enabled debug
@@ -13,7 +13,7 @@
 
 Name:           chromium
 Version:        21.0.1180.89
-Release:        alt1.r%rev
+Release:        alt2.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -75,7 +75,6 @@ Patch85:	fix-manpage.patch
 Patch86:	webkit-version.patch
 Patch87:	cups1.5.patch
 Patch88:	arm-no-float-abi.patch
-Patch89:	vpx.patch
 Patch90:	gcc4.7.patch
 Patch91:	arm.patch
 
@@ -104,6 +103,7 @@ BuildRequires:  libelf-devel
 BuildRequires:  libevent1.4-devel
 BuildRequires:  libexpat-devel
 BuildRequires:  libflac-devel
+BuildRequires:  libglew-devel
 BuildRequires:  libgcrypt-devel
 BuildRequires:  libgnome-keyring-devel
 BuildRequires:  libhunspell-devel
@@ -121,6 +121,7 @@ BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
 BuildRequires:  libv8-devel = %v8_ver
 BuildRequires:  libvpx-devel
+BuildRequires:  libx264-devel
 BuildRequires:  libxslt-devel
 BuildRequires:  libyasm-devel
 BuildRequires:  perl-Switch
@@ -210,11 +211,11 @@ to Gnome's Keyring.
 %patch13 -p1
 %patch14 -p1
 %patch17 -p1
-%patch20 -p1
+#%%patch20 -p1
 %patch28 -p1
 %patch32 -p1
 %patch66 -p1
-%patch67 -p1
+#%%patch67 -p1
 %patch69 -p2
 %patch71 -p2
 %patch72 -p1
@@ -228,7 +229,6 @@ to Gnome's Keyring.
 %patch86 -p1
 %patch87 -p1
 %patch88 -p1
-%patch89 -p1
 %patch90 -p1
 %patch91 -p1
 
@@ -291,11 +291,10 @@ pushd src
 	-Dlinux_sandbox_path=%_libexecdir/chrome_sandbox \
 	-Dlinux_sandbox_chrome_path=%_libdir/chromium/chromium \
 	-Dbuild_ffmpegsumo=1 \
-	-Duse_openssl=0 \
 	-Duse_system_bzip2=1 \
 	-Duse_system_ffmpeg=0 \
 	-Duse_system_flac=1 \
-	-Duse_system_icu=0 \
+	-Duse_system_icu=1 \
 	-Duse_system_libbz2=1 \
 	-Duse_system_libevent=1 \
 	-Duse_system_libjpeg=0 \
@@ -306,7 +305,7 @@ pushd src
 	-Duse_system_speex=1 \
 	-Duse_system_sqlite=0 \
 	-Duse_system_v8=1 \
-	-Duse_system_vpx=0 \
+	-Duse_system_vpx=1 \
 	-Duse_system_xdg_utils=0 \
 	-Duse_system_yasm=1 \
 	-Duse_system_zlib=1 \
@@ -329,13 +328,14 @@ pushd src
 	-Duse_pulseaudio=1 \
 	-Djavascript_engine=v8
 
-make -r %{?_smp_mflags} chrome V=1 BUILDTYPE=%buildtype
+# Buld main program
+%make_build -r %{?_smp_mflags} chrome V=1 BUILDTYPE=%buildtype
 
 # Build the required SUID_SANDBOX helper
-make -r %{?_smp_mflags} chrome_sandbox V=1 BUILDTYPE=%buildtype
+%make_build -r %{?_smp_mflags} chrome_sandbox V=1 BUILDTYPE=%buildtype
 
 # Build the ChromeDriver test suite
-make -r %{?_smp_mflags} chromedriver V=1 BUILDTYPE=%buildtype
+%make_build -r %{?_smp_mflags} chromedriver V=1 BUILDTYPE=%buildtype
 
 popd
 
@@ -442,6 +442,12 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu Sep 13 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.89-alt2.r154005
+- Disable debug version and fix problem with Google accounts (ALT 27731)
+- Build with system icu libraries
+- Open blank initial tab and distribution start page
+- Add ALT-specific initial bookmarks
+
 * Fri Sep 07 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.89-alt1.r154005
 - New version 21.0.1180.89
 - Fixes:
