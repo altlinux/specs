@@ -4,8 +4,8 @@
 %define mpidir %_libdir/openmpi
 
 Name: libfftw3-mpi
-Version: 3.3
-Release: alt2
+Version: 3.3.2
+Release: alt1
 Epoch: 1
 
 Summary: Library for computing Fast Fourier Transforms (with MPI support)
@@ -50,6 +50,22 @@ self-optimization techniques (along with many other tricks).
 
 This package contains development files for FFTW, double and long-double
 precision, with MPI support.
+
+%package devel-doc
+Summary: Development documentation for parallel FFTW
+Group: Development/Documentation
+BuildArch: noarch
+
+%description devel-doc
+FFTW is a free collection of fast C routines for computing the Discrete
+Fourier Transform in one or more dimensions.  It includes complex, real,
+symmetric, and parallel transforms, and can handle arbitrary array sizes
+efficiently.  FFTW is typically faster than other publically-available
+FFT implementations, and is even competitive with vendor-tuned libraries.
+To achieve this performance, FFTW uses novel code-generation and runtime
+self-optimization techniques (along with many other tricks).
+
+This package contains development documentation for FFTW.
 
 %prep
 %setup
@@ -110,7 +126,13 @@ sed -i 's|^\(includedir\).*|\1=%_includedir/fftw3-mpi|' \
 %_infodir/*
 %_man1dir/*
 
+%files devel-doc
+%doc doc/html doc/*.pdf
+
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.3.2-alt1
+- Version 3.3.2
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.3-alt2
 - Rebuilt with OpenMPI 1.6
 
