@@ -3,7 +3,7 @@
 
 Name: sane
 Version: 1.0.23
-Release: alt1
+Release: alt2
 
 Summary: This package contains the SANE docs and utils
 Summary(ru_RU.UTF-8): Документация и утилиты для SANE
@@ -245,7 +245,7 @@ rm -f %buildroot%_libdir/%name/*.a
 %_libdir/*.so
 %_libdir/%name/*.so
 %_includedir/sane/
-#%_pkgconfigdir/%oname.pc
+%_pkgconfigdir/%oname.pc
 
 %if_enabled static
 %files -n lib%name-devel-static
@@ -254,6 +254,9 @@ rm -f %buildroot%_libdir/%name/*.a
 %endif
 
 %changelog
+* Thu Sep 13 2012 Vitaly Lipatov <lav@altlinux.ru> 1.0.23-alt2
+- add missed pkgconfig (ALT bug #27727)
+
 * Wed Sep 05 2012 Vitaly Lipatov <lav@altlinux.ru> 1.0.23-alt1
 - new version 1.0.23 (ALT bug #27677)
 
