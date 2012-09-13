@@ -49,7 +49,7 @@ BuildRequires: jpackage-core
 
 Name:           maven1
 Version:        1.1
-Release:        alt21_9jpp6
+Release:        alt22_9jpp6
 Epoch:          0
 Summary:        Java project management and project comprehension tool
 
@@ -107,7 +107,7 @@ BuildRequires: bea-stax
 BuildRequires: bea-stax-api
 BuildRequires: dom4j >= 0:1.6.1
 BuildRequires: forehead >= 0:1.0.b4
-BuildRequires: hibernate2-tools
+#BuildRequires: hibernate2-tools
 BuildRequires: jakarta-commons-beanutils16 >= 0:1.6.1
 #BuildRequires:  jakarta-commons-betwixt
 BuildRequires: jakarta-commons-cli10
@@ -2840,6 +2840,9 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt22_9jpp6
+- build w/o hibernate2-tools
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt21_9jpp6
 - build with apache-commons-jexl11
 
