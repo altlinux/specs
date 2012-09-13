@@ -3,7 +3,7 @@
 %define oname fox
 
 Name: libfox
-Version: %major.44
+Version: %major.46
 Release: alt1
 
 Summary: The FOX C++ GUI Toolkit shared libraries
@@ -20,7 +20,7 @@ Source: ftp://ftp.fox-toolkit.org/pub/%oname-%version.tar.bz2
 BuildRequires: bzlib-devel gcc-c++ imake libGL-devel libICE-devel
 BuildRequires: libXcursor-devel libXext-devel libXft-devel
 BuildRequires: libXrandr-devel libjpeg-devel libpng-devel libtiff-devel
-BuildRequires: xorg-cf-files
+BuildRequires: xorg-cf-files libXfixes-devel libXi-devel
 
 BuildPreReq: libGLU-devel
 
@@ -88,6 +88,8 @@ subst 's|FXFile::getExecPath(),"Adie.stx"|"%_datadir/fox-examples/","Adie.stx"|g
 			--with-xim \
 			--with-shape \
 			--with-xshm \
+			--with-xcursor \
+			--with-xrender \
 			--with-cups \
 			--enable-release \
 			%{subst_enable static}
@@ -137,6 +139,9 @@ mv %buildroot/%_bindir/Adie.stx %buildroot/%_datadir/fox-examples
 %_man1dir/calculator.*
 
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.46-alt1
+- Version 1.6.46
+
 * Tue Dec 06 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.44-alt1
 - Version 1.6.44
 
