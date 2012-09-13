@@ -2,8 +2,8 @@
 %define major 1.3
 
 Name: %{oname}13
-Version: %major.0.r9251
-Release: alt3
+Version: %major.0.r9678
+Release: alt1
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
 License: LGPL
@@ -131,6 +131,9 @@ mv %buildroot%prefix/man/* %buildroot%_mandir/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0.r9678-alt1
+- New snapshot
+
 * Sun Jun 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0.r9251-alt3
 - Added glib2-devel, libpixman-devel, pkgconfig(glproto),
   pkgconfig(dri2proto), libXxf86vm-devel into BuildRequires (ALT #27429)
