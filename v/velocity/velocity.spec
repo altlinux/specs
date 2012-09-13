@@ -1,7 +1,6 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,93 +30,55 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with gcj_support
-%bcond_with gcj_support
-#def_with test
-%bcond_with test
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-
 Name:           velocity
-Version:        1.6.4
-Release:        alt3_1jpp6
+Version:        1.7
+Release:        alt1_5jpp7
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
-Group:          Development/Java
 URL:            http://velocity.apache.org/
-Source0:        http://www.apache.org/dist/velocity/engine/1.6.4/velocity-1.6.4.tar.gz
-Source1:        http://www.apache.org/dist/velocity/engine/1.6.4/velocity-1.6.4.pom
-Patch0:         velocity-build_xml.patch
-Patch1:         velocity-link-offline.patch
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-Requires: excalibur-avalon-logkit
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-lang >= 0:2.3
-Requires: jakarta-commons-logging
-Requires: jakarta-oro
-Requires: jdom >= 0:1.0-1
-Requires: jpackage-utils
-Requires: log4j >= 0:1.1
-%if %with test
-Requires: servlet_2_3_api
-%else
-Requires: servlet_2_5_api
-%endif
-Requires: werken-xpath
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-junit
-BuildRequires: antlr
-BuildRequires: classworlds
-BuildRequires: excalibur-avalon-logkit
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-lang >= 0:2.3
-BuildRequires: jakarta-commons-logging
-BuildRequires: jdom >= 0:1.0-1
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: log4j >= 0:1.1
-BuildRequires: jakarta-oro
-%if %with test
-BuildRequires: hsqldb
-BuildRequires: junit
-%endif
-%if %with test
-BuildRequires: servlet_2_3_api
-%else
-BuildRequires: servlet_2_5_api
-%endif
-BuildRequires: werken-xpath
-BuildRequires: excalibur-avalon-logkit-javadoc
-BuildRequires: jakarta-oro-javadoc
-BuildRequires: apache-commons-collections-javadoc
-BuildRequires: apache-commons-lang-javadoc
-BuildRequires: java-javadoc
-BuildRequires: jdom-javadoc
-BuildRequires: log4j-javadoc
-BuildRequires: tomcat6-javadoc
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
+Source0:        http://www.apache.org/dist/%{name}/engine/%{version}/%{name}-%{version}.tar.gz
+Source1:        http://repo1.maven.org/maven2/org/apache/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+Patch0:         0001-Remove-avalon-logkit.patch
+Patch2:         0003-Use-system-jars.patch
+Patch3:         0004-JDBC-41-compat.patch
+Group:          Development/Java
+Requires:       apache-commons-collections
+Requires:       apache-commons-logging
+Requires:       apache-commons-lang
+Requires:       servlet3
+Requires:       jakarta-oro
+Requires:       werken-xpath
+Requires:       junit
+Requires:       hsqldb
+Requires:       jdom
+Requires:       bcel
+Requires:       log4j
+
+BuildRequires:	werken-xpath
+BuildRequires:  ant
+BuildRequires:  antlr
+BuildRequires:  junit
+BuildRequires:	ant-junit
+BuildRequires:  hsqldb
+BuildRequires:  apache-commons-collections
+BuildRequires:  apache-commons-logging
+BuildRequires:  apache-commons-lang
+BuildRequires:  servlet3
+BuildRequires:  jakarta-oro
+BuildRequires:  jdom
+BuildRequires:  bcel
+BuildRequires:  log4j
+BuildRequires:  jpackage-utils
+
+# It fails one of the arithmetic test cases with gcj
 BuildArch:      noarch
-%endif
 Source44: import.info
 
 %description
 Velocity is a Java-based template engine. It permits anyone to use the
 simple yet powerful template language to reference objects defined in
 Java code.
-
 When Velocity is used for web development, Web designers can work in
 parallel with Java programmers to develop web sites according to the
 Model-View-Controller (MVC) model, meaning that web page designers can
@@ -126,7 +87,6 @@ focus solely on writing top-notch code. Velocity separates Java code
 from the web pages, making the web site more maintainable over the long
 run and providing a viable alternative to Java Server Pages (JSPs) or
 PHP.
-
 Velocity's capabilities reach well beyond the realm of web sites; for
 example, it can generate SQL and PostScript and XML (see Anakia for more
 information on XML transformations) from templates. It can be used
@@ -136,146 +96,126 @@ template services for the Turbine web application framework.
 Velocity+Turbine provides a template service that will allow web
 applications to be developed according to a true MVC model.
 
-%package manual
+%package        manual
 Summary:        Manual for %{name}
 Group:          Development/Java
 BuildArch: noarch
 
-%description manual
+%description    manual
 Documentation for %{name}.
 
-%package javadoc
+%package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 Javadoc for %{name}.
 
-%package demo
+%package        demo
 Summary:        Demo for %{name}
 Group:          Development/Java
-Requires: %{name} = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 
-%description demo
+%description    demo
 Demonstrations and samples for %{name}.
 
+# -----------------------------------------------------------------------------
+
 %prep
-%setup -q
-# Remove all binary libs used in compiling the package.
-# Note that velocity has some jar files containing macros under
-# examples and test that should not be removed.
+%setup -q -n %{name}-%{version}
 
-%if %with test
-for j in $(find . -name "*.jar" | grep -v /test/); do
-    rm $j
-done
-%else
-%{_bindir}/find -type f -name "*.jar" | %{_bindir}/xargs -t %{__rm}
-%endif
+# remove bundled libs/classes (except those used for testing)
+find . -name '*.jar' -o -name '*.class' -not -path '*test*' -print -delete
 
-%patch0 -b .sav0
-%patch1 -b .sav1
+# Remove dependency on avalon-logkit
+rm -f src/java/org/apache/velocity/runtime/log/AvalonLogChute.java
+rm -f src/java/org/apache/velocity/runtime/log/AvalonLogSystem.java
+rm -f src/java/org/apache/velocity/runtime/log/VelocityFormatter.java
 
-%if %with test
-mkdir -p bin/test-lib
-pushd bin/test-lib
-ln -s $(build-classpath hsqldb)
-ln -s $(build-classpath junit)
-popd
-%endif
-mkdir -p bin/lib
-pushd bin/lib
-ln -s $(build-classpath ant)
-ln -s $(build-classpath antlr)
-ln -s $(build-classpath excalibur/avalon-logkit)
-ln -s $(build-classpath commons-collections)
-ln -s $(build-classpath commons-lang)
-ln -s $(build-classpath commons-logging)
-ln -s $(build-classpath jdom)
-ln -s $(build-classpath log4j)
-ln -s $(build-classpath oro)
-%if %with test
-ln -s $(build-classpath servlet_2_3_api)
-%else
-ln -s $(build-classpath servlet_2_5_api)
-%endif
-ln -s $(build-classpath werken-xpath)
-ln -s $(build-classpath classworlds)
-popd
+# need porting to new servlet API. We would just add a lot of empty functions
+rm  src/test/org/apache/velocity/test/VelocityServletTestCase.java
 
-perl -pi -e 's/\r$//g' LICENSE
+cp %{SOURCE1} ./pom.xml
+
+# remove rest of avalon logkit refences
+%patch0 -p1
+
+# Use system jar files instead of downloading from net
+%patch2 -p1
+
+%patch3 -p1
+
+# -----------------------------------------------------------------------------
 
 %build
-export CLASSPATH=$(%{_bindir}/build-classpath antlr commons-collections commons-lang commons-logging jdom werken-xpath)
-%if %with test
-CLASSPATH=${CLASSPATH}:$(pwd)/test/texen-classpath/test.jar
-%endif
-#export OPT_JAR_LIST=`%{__cat} %{_sysconfdir}/ant.d/junit`
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
-  -Djavadocs.ref.jsdk=file://%{_javadocdir}/java \
+export CLASSPATH=$(build-classpath \
+antlr \
+apache-commons-collections \
+commons-lang \
+commons-logging \
+tomcat-servlet-api \
+junit \
+jakarta-oro \
+log4j \
+jdom \
+bcel \
+werken-xpath \
+hsqldb \
+junit)
+ant \
   -buildfile build/build.xml \
-  jar javadocs \
-%if %with test
-test
-%else
+  -Dbuild.sysclasspath=first \
+  jar javadocs test
 
-%endif
+# fix line-endings in generated files
+sed -i 's/\r//' docs/api/stylesheet.css docs/api/package-list
 
-%{__rm} -r docs/api
+# -----------------------------------------------------------------------------
 
 %install
 
 # jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -p -m 644 bin/velocity-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -s ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
-
-# pom
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.apache.velocity velocity %{version} JPP %{name}
-%add_to_maven_depmap velocity velocity %{version} JPP %{name}
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 bin/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr bin/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
 # data
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
-cp -pr convert examples $RPM_BUILD_ROOT%{_datadir}/%{name}
-%if %with test
-cp -pr test $RPM_BUILD_ROOT%{_datadir}/%{name}
-%endif
+install -d -m 755 %{buildroot}%{_datadir}/%{name}
+cp -pr examples test %{buildroot}%{_datadir}/%{name}
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+# Maven metadata
+install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap -a "%{name}:%{name}"
+
 
 %files
 %doc LICENSE NOTICE README.txt
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_javadir}/*.jar
 %{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%{_libdir}/gcj/%{name}/classloader.*
-%endif
+%{_mavenpomdir}/JPP-%{name}.pom
 
 %files manual
+%doc LICENSE
 %doc docs/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE
 %{_javadocdir}/%{name}
 
 %files demo
+%doc LICENSE
 %{_datadir}/%{name}
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt1_5jpp7
+- new version
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.6.4-alt3_1jpp6
 - fixed build
 
