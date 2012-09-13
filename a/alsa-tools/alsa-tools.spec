@@ -1,6 +1,8 @@
+%define basever 1.0.26
+
 Name: alsa-tools
-Version: 1.0.24.1
-Release: alt2.1.1
+Version: 1.0.26.1
+Release: alt4
 
 Summary: Advanced Linux Sound Architecture (ALSA) tools
 License: GPL
@@ -14,7 +16,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Obsoletes: alsa2-tools < 0.9.4
 Provides: alsa2-tools = %version
-Requires: libalsa >= %version
+Requires: libalsa >= %basever
 # echomixer
 Requires: fonts-bitmap-misc
 # due to %%_bindir/as10k1
@@ -22,8 +24,8 @@ Conflicts: emu10k1-tools
 # someone remind me how to cheat SourceIfExists clones
 Provides: /etc/default/ld10k1
 
-BuildRequires: gcc-c++ libgtk+2-devel
-BuildRequires: libalsa-devel >= %version
+BuildRequires: gcc-c++ libgtk+2-devel libgtk+3-devel
+BuildRequires: libalsa-devel >= %basever
 
 %define udevdir /lib/udev
 
@@ -64,6 +66,17 @@ following chips:
 It is recommended to use at least Linux kernel 2.6.32
 or alsa-driver 1.0.22; otherwise, the name of the program
 that is using a stream cannot be shown.
+
+%package -n hdajackretask
+Summary: ALSA soundcard jack task manipulation tool
+Group: System/Kernel and hardware
+
+%description -n hdajackretask
+Most HDA Intel soundcards are to some degree retaskable, i.e. can
+be used for more than one thing. This tool is a GUI to make it
+easy to retask your jacks - e g, turn your Mic jack into an extra
+Headphone, or why not make them both line outs and connect them
+to your surround receiver?
 
 %package -n ld10k1
 Summary: EMU10K1 patch loader/linker
@@ -121,6 +134,7 @@ mv %buildroot%_sysconfdir/hotplug/usb/* %buildroot%udevdir/
 install -pm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/
 
 %files
+%exclude %_bindir/hdajackretask
 %exclude %_bindir/hwmixvolume
 %exclude %_bindir/lo10k1
 %_bindir/*
@@ -129,6 +143,9 @@ install -pm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/
 %config(noreplace) %_sysconfdir/udev/rules.d/*.rules
 %udevdir/tascam_fpga
 %udevdir/tascam_fw
+
+%files -n hdajackretask
+%_bindir/hdajackretask
 
 %files -n hwmixvolume
 %_bindir/hwmixvolume
@@ -150,6 +167,19 @@ install -pm644 %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/
 # - consider http://cvs.fedoraproject.org/viewvc/rpms/alsa-tools/devel/
 
 %changelog
+* Fri Sep 07 2012 Michael Shigorin <mike@altlinux.org> 1.0.26.1-alt4
+- fixed udev rules (closes: #27623)
+
+* Fri Sep 07 2012 Michael Shigorin <mike@altlinux.org> 1.0.26.1-alt3
+- merge gears repo
+
+* Fri Sep 07 2012 Michael Shigorin <mike@altlinux.org> 1.0.26.1-alt2
+- retag
+
+* Thu Sep 06 2012 Michael Shigorin <mike@altlinux.org> 1.0.26.1-alt1
+- 10.26.1
+- added hdajackretask subpackage (requires GTK3)
+
 * Mon Nov 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.24.1-alt2.1.1
 - Rebuild with Python-2.7
 

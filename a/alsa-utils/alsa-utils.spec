@@ -1,5 +1,5 @@
 Name: alsa-utils
-Version: 1.0.24.2
+Version: 1.0.26
 Release: alt2
 Serial: 1
 
@@ -88,6 +88,12 @@ touch config.rpath
 %_man1dir/amixer.1*
 
 %changelog
+* Fri Sep 07 2012 Michael Shigorin <mike@altlinux.org> 1:1.0.26-alt2
+- retag
+
+* Thu Sep 06 2012 Michael Shigorin <mike@altlinux.org> 1:1.0.26-alt1
+- 1.0.26
+
 * Wed Mar 07 2012 Michael Shigorin <mike@altlinux.org> 1:1.0.24.2-alt2
 - cherry-picked upstream commit 4c09aaa to fix alsamixer segfault
   with pulseaudio and libxcb-1.8 (debian #657538, rh #731381)
