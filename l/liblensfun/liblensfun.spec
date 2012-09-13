@@ -1,6 +1,6 @@
 Name: liblensfun
 Version: 0.2.5
-Release: alt3
+Release: alt3.1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -13,6 +13,7 @@ Source: http://download.berlios.de/lensfun/lensfun-%version.tar.bz2
 Patch1: lensfun-0.2.5-lensdbadditions.patch
 # Patch from PLD to fix broken vectorization code:
 Patch2: lensfun-0.2.5-vectorization.patch
+Patch3: lensfun-0.2.5-alt-debuginfo.patch
 
 # Automatically added by buildreq on Mon Aug 16 2010
 BuildRequires: doxygen gcc-c++ glib2-devel libpng-devel python-modules
@@ -32,6 +33,7 @@ Development tools for programs which will use the lensfun library.
 %setup -n lensfun-%version
 %patch1 -p1
 %patch2 -p0
+%patch3 -p2
 
 %build
 # Additional LIBS put here to satisfy as-needed linker mode (in lazy way :).
@@ -54,6 +56,9 @@ LIBS="-lglib-2.0 -lpng" \
 %_pkgconfigdir/*
 
 %changelog
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt3.1
+- Rebuilt for debuginfo
+
 * Wed Dec 08 2010 Victor Forsiuk <force@altlinux.org> 0.2.5-alt3
 - Apply PLD patch that fixes bug (broken vectorization) caused SIGSEGV in ufraw.
   SSE vectorization enabled in this build.
