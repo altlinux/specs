@@ -1,5 +1,5 @@
-%define ver_major 0.3
-%define api_ver 0
+%define ver_major 0.9
+%define api_ver 1
 
 %def_disable static
 %def_enable gtk_doc
@@ -19,7 +19,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.31.0
 
 BuildRequires: libgio-devel >= %glib_ver
-BuildRequires: libgcrypt-devel gtk-doc intltool
+BuildRequires: libgcrypt-devel gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 # for check
 BuildRequires: /proc dbus-tools-gui python-module-dbus  python-module-pygobject
@@ -96,12 +96,14 @@ GObject introspection devel data for %name.
 %files -f %name.lang
 %_bindir/secret-tool
 %_libdir/%name-%api_ver.so.*
+%_man1dir/secret-tool.1.*
 %doc AUTHORS README NEWS
 
 %files devel
-%_includedir/secret-%api_ver
+%_includedir/%name-%api_ver
 %_libdir/%name-%api_ver.so
-%_libdir/pkgconfig/libsecret-%api_ver.pc
+%_libdir/pkgconfig/%name-%api_ver.pc
+%_libdir/pkgconfig/%name-unstable.pc
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
@@ -109,13 +111,18 @@ GObject introspection devel data for %name.
 %if_enabled introspection
 %files gir
 %_typelibdir/Secret-%api_ver.typelib
+%_typelibdir/SecretUnstable-0.typelib
 
 %files gir-devel
 %_girdir/Secret-%api_ver.gir
+%_girdir/SecretUnstable-0.gir
 %endif
 
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt1
+- 0.9
+
 * Mon Jun 25 2012 Yuri N. Sedunov <aris@altlinux.org> 0.3-alt1
 - 0.3
 
