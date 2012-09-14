@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
-Version: 2.1.12
-Release: alt2
+Version: 2.2.0
+Release: alt1
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -13,10 +13,8 @@ Source102: freeradius-logrotate
 Source103: freeradius-pam-conf
 
 Patch1: %name-%version-%release.patch
-Patch2: %name-2.1.12-alt-libtool_2.4.patch
 
-BuildPreReq: libtool_1.5
-BuildRequires: gcc-c++ libmysqlclient-devel libcom_err-devel libgdbm-devel libldap-devel libltdl-devel libpam-devel libreadline-devel libstdc++-devel-static libunixODBC-devel mailx net-snmp-utils perl-DBI perl-devel postgresql-devel python-devel slocate libssl-devel
+BuildRequires: gcc-c++ libmysqlclient-devel libcom_err-devel libgdbm-devel libldap-devel libltdl-devel libpam-devel libreadline-devel libstdc++-devel-static libunixODBC-devel mailx net-snmp-utils perl-DBI perl-devel postgresql-devel python-devel slocate libssl-devel perl-DBM
 
 %description
 The FreeRADIUS Server Project is a high performance and highly configurable
@@ -122,11 +120,8 @@ This plugin provides the unixODBC support for the FreeRADIUS server project.
 %prep
 %setup -q
 %patch1 -p1
-%patch2 -p1
 
 %build
-%set_libtool_version 1.5
-CFLAGS="-DIE_LIBTOOL_DIE"
 %configure \
         --with-system-libtool \
         --with-system-libltdl \
@@ -151,7 +146,7 @@ CFLAGS="-DIE_LIBTOOL_DIE"
         --without-rlm_sql_db2 \
         --without-rlm_sql_oracle
 
-make LIBTOOL='libtool --tag=CC'
+%make_build
 
 %install
 make install R=%buildroot
@@ -242,6 +237,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/always
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/attr_filter
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/attr_rewrite
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/cache
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/chap
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/checkval
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/counter
@@ -249,6 +245,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/detail
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/detail.example.com
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/detail.log
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/dhcp_sqlippool
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/digest
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/dynamic_clients
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/echo
@@ -273,6 +270,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/passwd
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/policy
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/preprocess
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/radrelay
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/radutmp
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/realm
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/redis
@@ -318,6 +316,8 @@ fi
 %_libdir/freeradius/rlm_attr_filter-%version.so
 %_libdir/freeradius/rlm_attr_rewrite.so
 %_libdir/freeradius/rlm_attr_rewrite-%version.so
+%_libdir/freeradius/rlm_cache.so
+%_libdir/freeradius/rlm_cache-%version.so
 %_libdir/freeradius/rlm_chap.so
 %_libdir/freeradius/rlm_chap-%version.so
 %_libdir/freeradius/rlm_checkval.so
@@ -400,6 +400,8 @@ fi
 %_libdir/freeradius/rlm_sqlippool-%version.so
 %_libdir/freeradius/rlm_unix.so
 %_libdir/freeradius/rlm_unix-%version.so
+%_libdir/freeradius/rlm_wimax.so
+%_libdir/freeradius/rlm_wimax-%version.so
 
 %files utils
 %_bindir/*
@@ -449,6 +451,11 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Fri Sep 14 2012 Vladimir Lettiev <crux@altlinux.ru> 2.2.0-alt1
+- 2.1.12 -> 2.2.0
+- Security fixes: CVE-2012-3547
+- Built with fresh libtool
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 2.1.12-alt2
 - rebuilt for perl-5.16
 
