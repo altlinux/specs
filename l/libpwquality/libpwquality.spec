@@ -1,7 +1,7 @@
 %define _name pwquality
 
 Name: lib%_name
-Version: 1.1.0
+Version: 1.2.0
 Release: alt1
 
 Summary: A library for password generation and password quality checking
@@ -16,34 +16,30 @@ Requires: cracklib-words pam
 BuildRequires: cracklib-devel pam-devel python-devel
 
 %description
-
 This is a library for password quality checks and generation of random
 passwords that pass the checks.
-
 This library uses the cracklib and cracklib dictionaries to perform some
 of the checks.
 
 %package devel
 Group: Development/C
-Summary: Files needed for developing PAM-aware applications and modules for PAM
+Summary: Develompent files for %name
 Requires: %name = %version-%release
 
 %description devel
-Files needed for development of applications using the libpwquality
-library.
-
+Files needed for development of applications using the %name library.
 See the pwquality.h header file for the API.
 
 %package -n python-module-%_name
 Group: Development/Python
-Summary: Python bindings for the libpwquality library
+Summary: Python bindings for the %name library
 Requires: %name = %version-%release
 
 %description -n python-module-%_name
-This is pwquality Python module that provides Python bindings
-for the libpwquality library. These bindings can be used
-for easy password quality checking and generation of random
-pronounceable passwords from Python applications.
+This is %_name Python module that provides Python bindings for the
+%name library. These bindings can be used for easy password
+quality checking and generation of random pronounceable passwords from
+Python applications.
 
 
 %prep
@@ -92,6 +88,9 @@ ln -sf ../../%_lib/%name.so.1 %buildroot%_libdir/%name.so
 %python_sitelibdir/%_name.so
 
 %changelog
+* Fri Sep 14 2012 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Wed Jun 06 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
 - first build for Sisyphus
 
