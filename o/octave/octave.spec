@@ -1,6 +1,6 @@
 Name: octave
-Version: 3.4.0
-Release: alt2.3
+Version: 3.6.3
+Release: alt1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -21,11 +21,12 @@ BuildPreReq: libqhull-devel fontconfig-devel libfltk-devel
 BuildPreReq: libqrupdate-devel libsuitesparse-devel gperf libXft-devel
 BuildPreReq: libpixman-devel libcairo-devel libXinerama-devel
 
-Source: %name-%version-%release.tar
-Patch: octave-3.4.0-alt-config.patch
+Source0: %name-%version-%release.tar
+Source1: octave.filetrigger
+
+Patch0: octave-include-pcre.patch
 Patch1: octave-3.4.0-alt-gcc4.6.patch
 Patch2: octave-3.4.0-alt-suitesparse.patch
-Patch3: octave-3.4.0-alt-fltk13.patch
 
 Requires: gnuplot
 
@@ -76,10 +77,9 @@ This package contains extra documentation for GNU Octave.
 
 %prep
 %setup
-%patch -p1
+%patch0 -p2
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %add_optflags $(pkg-config hdf5-seq --cflags) $(pcre-config --cflags)
@@ -104,10 +104,10 @@ install -pm0644 faq/OctaveFAQ.pdf interpreter/octave.pdf \
     liboctave/liboctave.pdf refcard/refcard-a4.pdf %buildroot%docdir
 popd
 gzip -c ChangeLog > %buildroot%docdir/ChangeLog.gz
-install -pm0644 BUGS COPYING NEWS* PROJECTS README README.Linux %buildroot%docdir
+install -pm0644 BUGS COPYING NEWS* README %buildroot%docdir
 
 # Install the filetrigger for packages:
-install -pm0755 -D altlinux/%name.filetrigger %buildroot%_rpmlibdir/%name.filetrigger
+install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 
 #check
 #make_build check
@@ -117,9 +117,7 @@ install -pm0755 -D altlinux/%name.filetrigger %buildroot%_rpmlibdir/%name.filetr
 %docdir/BUGS
 %docdir/COPYING
 %docdir/NEWS*
-%docdir/PROJECTS
 %docdir/README
-%docdir/README.Linux
 %docdir/ChangeLog.gz
 
 %_bindir/octave
@@ -128,8 +126,8 @@ install -pm0755 -D altlinux/%name.filetrigger %buildroot%_rpmlibdir/%name.filetr
 %_bindir/octave-config-%version
 
 %_datadir/%name
-%_libdir/%name-%version/*.so*
-%exclude %_libdir/%name-%version/*.la*
+%_libdir/%name/%version/*.so*
+%exclude %_libdir/%name/%version/*.la*
 %_libexecdir/%name
 
 %_infodir/octave.info*
@@ -153,6 +151,13 @@ install -pm0755 -D altlinux/%name.filetrigger %buildroot%_rpmlibdir/%name.filetr
 %docdir/liboctave
 
 %changelog
+* Mon Sep 10 2012 Paul Wolneykien <manowar@altlinux.ru> 3.6.3-alt1
+- Remote the fltk patch (already applied).
+- Fix/update the pcre.h patch.
+- Build v3.6.3 with the help of cronbuild scripts.
+- Add cronbuild scripts.
+- Move sources to the subdirectory, patches to the top.
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt2.3
 - Built with OpenBLAS instead of GotoBLAS2
 
