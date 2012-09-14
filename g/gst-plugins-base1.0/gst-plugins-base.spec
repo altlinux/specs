@@ -1,0 +1,139 @@
+%define _name gst-plugins
+%define ver_major 0.11
+%define api_ver 1.0
+
+%define _gst_libdir %_libdir/gstreamer-%api_ver
+%define _gtk_docdir %_datadir/gtk-doc/html
+
+%def_disable gtk_doc
+
+Name: %_name-base%api_ver
+Version: %ver_major.94
+Release: alt1
+
+Summary: An essential set of GStreamer plugins
+Group: System/Libraries
+License: LGPL
+URL: http://gstreamer.freedesktop.org/
+
+Requires: lib%_name%api_ver = %version-%release
+Requires: gstreamer%api_ver
+
+Provides: gstreamer%api_ver(audio-hardware-sink) = %version
+Provides: gstreamer%api_ver(audio-hardware-source) = %version
+
+Source: http://download.gnome.org/sources/%_name-base/%ver_major/%_name-base-%version.tar.xz
+Patch: gst-plugins-base-0.11.94-alt-intltool.patch
+
+BuildRequires: gstreamer%api_ver-devel libgstreamer%api_ver-gir-devel gtk-doc intltool libSM-devel
+BuildRequires: libXext-devel libXv-devel libalsa-devel libgtk+2-devel
+BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel orc liborc-test-devel 
+BuildRequires: python-module-PyXML python-modules-encodings gobject-introspection-devel
+
+%description
+GStreamer Base Plug-ins is a well-groomed and well-maintained
+collection of GStreamer plug-ins and elements, spanning the range of
+possible types of elements one would want to write for GStreamer. A
+wide range of video and audio decoders, encoders, and filters are
+included.
+
+%package -n lib%_name%api_ver
+Summary: GStreamer plugin libraries
+Group: System/Libraries
+
+%description -n lib%_name%api_ver
+Helper libraries for GStreamer plugins, containing base classes useful for elements
+
+%package -n lib%_name%api_ver-gir
+Summary: GObject introspection data for the GStreamer library
+Group: System/Libraries
+Requires: lib%_name%api_ver = %version-%release
+
+%description -n lib%_name%api_ver-gir
+GObject introspection data for the GStreamer library
+
+%package -n %_name%api_ver-tools
+Summary: GStreamer plugin tools
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description -n %_name%api_ver-tools
+This package contains a few test tools from the
+GStreamer Base Plugins distribution.
+
+%package -n %_name%api_ver-devel
+Summary: Development files for GStreamer plugins
+Group: Development/C
+Requires: lib%_name%api_ver = %version-%release gstreamer-devel
+
+%description -n %_name%api_ver-devel
+This package contains the libraries, headers and other files necessary
+to develop GStreamer plugins.
+
+%package -n %_name%api_ver-gir-devel
+Summary: GObject introspection devel data for the GStreamer library
+Group: System/Libraries
+BuildArch: noarch
+Requires: lib%_name%api_ver-gir = %version-%release
+Requires: %_name%api_ver-devel = %version-%release
+
+%description -n %_name%api_ver-gir-devel
+GObject introspection devel data for the GStreamer library
+
+%prep
+%setup -n %_name-base-%version
+%patch -p1
+
+%build
+%autoreconf
+%configure \
+	--with-default-audiosrc=pulsesrc \
+	--with-default-audiosink=pulsesink \
+	--with-default-videosrc=v4l2src \
+	--with-default-videosink=xvimagesink \
+	--disable-examples \
+	--disable-valgrind \
+	--enable-experimental \
+	--enable-gio \
+	--disable-debug \
+	--disable-static \
+	--with-html-dir=%_gtk_docdir \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
+
+%make_build
+
+%install
+%make DESTDIR=%buildroot install
+
+%find_lang %_name-base-%api_ver
+
+%files -f %_name-base-%api_ver.lang
+%dir %_gst_libdir
+%_gst_libdir/*.so
+%_datadir/%_name-base/%api_ver/*.dict
+%exclude %_gst_libdir/*.la
+
+%files -n lib%_name%api_ver
+%_libdir/*.so.*
+%dir %_gst_libdir
+
+%files -n lib%_name%api_ver-gir
+%_typelibdir/*.typelib
+
+%files -n %_name%api_ver-tools
+%_bindir/*-%api_ver
+%_man1dir/*
+
+%files -n %_name%api_ver-devel
+%_includedir/*
+%_libdir/*.so
+%_pkgconfigdir/*.pc
+%_gtk_docdir/%_name-base-*-%api_ver
+
+%files -n %_name%api_ver-gir-devel
+%_girdir/*.gir
+
+%changelog
+* Fri Sep 14 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11.94-alt1
+- first build for Sisyphus
+
