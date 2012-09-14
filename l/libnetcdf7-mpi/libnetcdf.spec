@@ -1,19 +1,15 @@
 %define major 4
-%define sover 6
 %define oname netcdf
 %define sname lib%oname
 %define sover 7
-%define c_sover 4
-%define c4_sover 1
-%define f_sover 5
 %define priority 40
 
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
 Name: %sname%sover-mpi
-Version: %major.1.3
-Release: alt6
+Version: %major.2.1.1
+Release: alt1.1
 
 Summary: Parallel libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -24,8 +20,6 @@ Url: http://www.unidata.ucar.edu/packages/netcdf/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %oname-%version.tar
-Source1: ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.pdf.bz2
-Source2: ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.html.tar.bz2
 
 Requires(post,preun): alternatives
 Requires: libhdf5-mpi >= 1.8.3-alt5
@@ -43,36 +37,38 @@ Conflicts: %sname < 4.0.1-alt3
 BuildRequires: flex gcc-c++ gcc-fortran %mpiimpl-devel
 
 BuildPreReq: zlib-devel libsz2-devel libhdf5-mpi-devel /usr/bin/tex
-BuildPreReq: libcurl-devel libexpat-devel chrpath
+BuildPreReq: libcurl-devel libexpat-devel chrpath doxygen graphviz
+BuildPreReq: libpnetcdf-devel
 
 %description
-NetCDF (network Common Data Form) is an interface for array-oriented data
-access and a freely-distributed collection of software libraries for C,
-Fortran, C++, and perl that provides an implementation of the interface.
-The netCDF library also defines a machine-independent format for representing
-scientific data. Together, the interface, library, and format support the
-creation, access, and sharing of scientific data. The netCDF software was
-developed at the Unidata Program Center in Boulder, Colorado.
+NetCDF (network Common Data Form) is an interface for array-oriented
+data access and a freely-distributed collection of software libraries
+for C, Fortran, C++, and perl that provides an implementation of the
+interface.  The netCDF library also defines a machine-independent format
+for representing scientific data. Together, the interface, library, and
+format support the creation, access, and sharing of scientific data. The
+netCDF software was developed at the Unidata Program Center in Boulder,
+Colorado.
 
 NetCDF data is:
 
-   o Self-Describing. A netCDF file includes information about the data it
-     contains.
+   o Self-Describing. A netCDF file includes information about the data
+     it contains.
 
-   o Network-transparent. A netCDF file is represented in a form that can be
-     accessed by computers with different ways of storing integers, characters,
-     and floating-point numbers.
+   o Network-transparent. A netCDF file is represented in a form that
+     can be accessed by computers with different ways of storing
+     integers, characters, and floating-point numbers.
 
    o Direct-access. A small subset of a large dataset may be accessed
      efficiently, without first reading through all the preceding data.
 
-   o Appendable. Data can be appended to a netCDF dataset along one dimension
-     without copying the dataset or redefining its structure. The structure of
-     a netCDF dataset can be changed, though this sometimes causes the dataset
-     to be copied.
+   o Appendable. Data can be appended to a netCDF dataset along one
+     dimension without copying the dataset or redefining its structure.
+     The structure of a netCDF dataset can be changed, though this
+     sometimes causes the dataset to be copied.
 
-   o Sharable. One writer and multiple readers may simultaneously access the
-     same netCDF file.
+   o Sharable. One writer and multiple readers may simultaneously access
+     the same netCDF file.
 
 This is parallel version of library.
 
@@ -92,126 +88,12 @@ NetCDF (network Common Data Form) - это ориентированный на �
 
 Данный пакет содержит параллельную версию библиотеки.
 
-%package -n %sname-cxx-%c_sover-mpi
-Summary: Parallel NetCDF C++ library v3
-Group: System/Libraries
-Requires(post,preun): alternatives
-Requires: %name = %version-%release
-Provides: %sname-cxx-mpi = %version-%release
-Conflicts: %sname-mpi < %version-%release
-Obsoletes: %sname-mpi < %version-%release
-Conflicts: %sname-cxx < 4.0.1-alt3
-
-%description -n %sname-cxx-%c_sover-mpi
-NetCDF (network Common Data Form) is an interface for array-oriented data
-access and a freely-distributed collection of software libraries for C,
-Fortran, C++, and perl that provides an implementation of the interface.
-The netCDF library also defines a machine-independent format for representing
-scientific data. Together, the interface, library, and format support the
-creation, access, and sharing of scientific data. The netCDF software was
-developed at the Unidata Program Center in Boulder, Colorado.
-
-This package contains C++ interface library for parallel NetCDF version 3.
-
-%description -n %sname-cxx-%c_sover-mpi -l ru_RU.UTF-8
-NetCDF (network Common Data Form) - это ориентированный на массивы
-интерфейс для доступа к данным и, одновременно, свободно
-распространяемая коллекция программ и библиотек для C, Fortran, C++,
-которые реализуют этот интерфейс. Программы netCDF были
-разработаны Гленом Дэвисом (Glenn Davis), Руссом Рью (Russ Rew),
-Стивом Еммерсоном (Steve Emmerson), Джоном Кэроном (John Caron) и
-Харвей Дэвисом (Harvey Davies) в Unidata Program Center в Боулдере,
-Колорадо и расширены вкладами от других пользователей netCDF.
-Библиотеки netCDF определяют машиннонезависимый  формат для
-представления научных данных. Интерфейс, библиотеки и сам формат
-поддерживают создание, доступ и совместное использование научных
-данных.
-
-Данный пакет содержит библиотеку C++ интерфейсов для NetCDF версии 3.
-
-%package -n %sname-cxx4-%c4_sover-mpi
-Summary: Parallel NetCDF C++ library v4
-Group: System/Libraries
-Requires(post,preun): alternatives
-Requires: %name = %version-%release
-Provides: %sname-cxx4-mpi = %version-%release
-Conflicts: %sname-mpi < %version-%release
-Obsoletes: %sname-mpi < %version-%release
-Conflicts: %sname-cxx4 < 4.0.1-alt3
-
-%description -n %sname-cxx4-%c4_sover-mpi
-NetCDF (network Common Data Form) is an interface for array-oriented data
-access and a freely-distributed collection of software libraries for C,
-Fortran, C++, and perl that provides an implementation of the interface.
-The netCDF library also defines a machine-independent format for representing
-scientific data. Together, the interface, library, and format support the
-creation, access, and sharing of scientific data. The netCDF software was
-developed at the Unidata Program Center in Boulder, Colorado.
-
-This package contains C++ interface library for parallel NetCDF version 4.
-
-%description -l ru_RU.UTF-8 -n %sname-cxx4-%c4_sover-mpi
-NetCDF (network Common Data Form) - это ориентированный на массивы
-интерфейс для доступа к данным и, одновременно, свободно
-распространяемая коллекция программ и библиотек для C, Fortran, C++,
-которые реализуют этот интерфейс. Программы netCDF были
-разработаны Гленом Дэвисом (Glenn Davis), Руссом Рью (Russ Rew),
-Стивом Еммерсоном (Steve Emmerson), Джоном Кэроном (John Caron) и
-Харвей Дэвисом (Harvey Davies) в Unidata Program Center в Боулдере,
-Колорадо и расширены вкладами от других пользователей netCDF.
-Библиотеки netCDF определяют машиннонезависимый  формат для
-представления научных данных. Интерфейс, библиотеки и сам формат
-поддерживают создание, доступ и совместное использование научных
-данных.
-
-Данный пакет содержит библиотеку C++ интерфейсов для NetCDF версии 4.
-
-%package -n %sname-fortran-%f_sover-mpi
-Summary: Parallel NetCDF Fortran library
-Group: System/Libraries
-Requires(post,preun): alternatives
-Requires: %name = %version-%release
-Provides: %sname-fortran-mpi = %version-%release
-Conflicts: %sname-mpi < %version-%release
-Obsoletes: %sname-mpi < %version-%release
-Conflicts: %sname-fortran < 4.0.1-alt3
-
-%description -n %sname-fortran-%f_sover-mpi
-NetCDF (network Common Data Form) is an interface for array-oriented data
-access and a freely-distributed collection of software libraries for C,
-Fortran, C++, and perl that provides an implementation of the interface.
-The netCDF library also defines a machine-independent format for representing
-scientific data. Together, the interface, library, and format support the
-creation, access, and sharing of scientific data. The netCDF software was
-developed at the Unidata Program Center in Boulder, Colorado.
-
-This package contains Fortran interface library for parallel NetCDF.
-
-%description -l ru_RU.UTF-8 -n %sname-fortran-%f_sover-mpi
-NetCDF (network Common Data Form) - это ориентированный на массивы
-интерфейс для доступа к данным и, одновременно, свободно
-распространяемая коллекция программ и библиотек для C, Fortran, C++,
-которые реализуют этот интерфейс. Программы netCDF были
-разработаны Гленом Дэвисом (Glenn Davis), Руссом Рью (Russ Rew),
-Стивом Еммерсоном (Steve Emmerson), Джоном Кэроном (John Caron) и
-Харвей Дэвисом (Harvey Davies) в Unidata Program Center в Боулдере,
-Колорадо и расширены вкладами от других пользователей netCDF.
-Библиотеки netCDF определяют машиннонезависимый  формат для
-представления научных данных. Интерфейс, библиотеки и сам формат
-поддерживают создание, доступ и совместное использование научных
-данных.
-
-Данный пакет содержит библиотеку Fortran интерфейсов для NetCDF версии 4.
-
 %package -n %sname-mpi-devel
 Summary: Development tools for the NetCDF library
 Summary(ru_RU.UTF-8): Средства разработки программ на основе библиотеки NetCDF
 Group: Development/Other
 Requires(post,preun): alternatives
 Requires: %name = %version-%release
-Requires: %sname-cxx-%c_sover-mpi = %version-%release
-Requires: %sname-cxx4-%c4_sover-mpi = %version-%release
-Requires: %sname-fortran-%f_sover-mpi = %version-%release
 Conflicts: %sname-devel < 4.0.1-alt3
 
 %description -n %sname-mpi-devel
@@ -219,7 +101,7 @@ This package contains the netCDF header files, shared devel libs, and
 man pages.
 
 If you want to develop applications which will use the NetCDF library,
-you'll need to install the %name-devel package.  
+you'll need to install the %name-devel package.
 
 %description -l ru_RU.UTF-8 -n %sname-mpi-devel
 Заголовочные файлы и документация для использования библиотеки NetCDF
@@ -227,7 +109,7 @@ you'll need to install the %name-devel package.
 
 Если вы собираетесь разрабатывать приложения, которые будут
 использовать библиотеку NetCDF, вам необходимо установить пакет
-%name-devel. 
+%name-devel.
 
 %package -n %oname%sover-mpi-tools
 Summary: NetCDF tools
@@ -273,8 +155,6 @@ LIB64=64
 %endif
 sed -i "s|@64@|$LIB64|g" nc-config.in
 
-rm -fR udunits/expat
-
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
@@ -287,6 +167,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--libdir=%mpidir/lib \
 	--includedir=%mpidir/include \
 	--enable-shared \
+	--enable-static=no \
 	--enable-netcdf-4 \
 	--enable-f90 \
 	--enable-cxx-4 \
@@ -296,6 +177,15 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 	--with-hdf5=%mpidir \
 	--with-zlib=%prefix \
 	--with-szlib=%prefix \
+	--enable-doxygen \
+	--enable-internal-docs \
+	--enable-extra-example-tests \
+	--enable-extra-tests \
+	--enable-v2 \
+	--enable-mmap \
+	--disable-dap-remote-tests \
+	--enable-parallel-tests \
+	--enable-pnetcdf \
 	MPIDIR=%mpidir
 sed -i 's|^\(postdeps.*\)\-l \(.*\)|\1 \2|' libtool
 sed -i 's|^\(postdeps.*\)\-l \(.*\)|\1 \2|' libtool
@@ -309,13 +199,18 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std MPIDIR=%mpidir
 
-mkdir -p %buildroot%mpidir/include/netcdf-3
+install -d %buildroot%mpidir/include/netcdf
+ln -s netcdf %buildroot%mpidir/include/netcdf-3
+install -p -m644 include/*.h %buildroot%mpidir/include/netcdf
+sed -i 's|config\.h|netcdf_config.h|' \
+	%buildroot%mpidir/include/netcdf/*
+install -p -m644 config.h \
+	%buildroot%mpidir/include/netcdf/netcdf_config.h
+rm -f %buildroot%mpidir/include/netcdf/netcdf.h
+mv %buildroot%mpidir/include/*.* %buildroot%mpidir/include/netcdf/
 #install -p -m644 libsrc4/netcdf3.h libsrc4/netcdf_base.h libsrc4/nc4internal.h \
 #	%buildroot%mpidir/include
-mv %buildroot%mpidir/include/*.* %buildroot%mpidir/include/netcdf-3
 
-bzcat %SOURCE1 > guidec.pdf
-bzcat %SOURCE2 | tar xvf -
 #install -d %buildroot%_docdir/%oname%sover-mpi-tools
 #mv %buildroot%_docdir/%oname/ncdump* %buildroot%_docdir/%oname/ncgen* \
 #	%buildroot/%_docdir/%oname%sover-mpi-tools/
@@ -326,25 +221,10 @@ bzcat %SOURCE2 | tar xvf -
 install -d %buildroot%_altdir
 mkdir -p %buildroot%_libdir
 pushd %buildroot%mpidir/lib
-for i in %sname.so.* libudunits2.so.*; do
+for i in %sname.so.*; do
 	ln -s ../..%mpidir/lib/$i %buildroot%_libdir/
 	echo "%_libdir/$i %mpidir/lib/$i %priority" >> \
 		%buildroot%_altdir/%name.alternatives
-done
-for i in $(ls %{sname}_c++.so.*); do
-	ln -s ../..%mpidir/lib/$i %buildroot%_libdir/
-	echo "%_libdir/$i %mpidir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name-cxx.alternatives
-done
-for i in $(ls %{sname}_c++4.so.*); do
-	ln -s ../..%mpidir/lib/$i %buildroot%_libdir/
-	echo "%_libdir/$i %mpidir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name-cxx4.alternatives
-done
-for i in $(ls %{sname}f.so.*); do
-	ln -s ../..%mpidir/lib/$i %buildroot%_libdir/
-	echo "%_libdir/$i %mpidir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name-fortran.alternatives
 done
 for i in $(ls *.so); do
 	echo "%_libdir/$i %mpidir/lib/$i %priority" >> \
@@ -362,46 +242,32 @@ for i in $(ls |egrep -v 'nc\-config'); do
 done
 popd
 
-for i in %buildroot%mpidir/lib/*.so; do
+for i in %buildroot%mpidir/lib/*.so %buildroot%mpidir/bin/*; do
 	chrpath -r %mpidir/lib $i ||:
 done
+
+%pre -n %sname-mpi-devel
+rm -fR %mpidir/include/netcdf-3 %mpidir/include/netcdf
 
 %files
 %doc COPYRIGHT README RELEASE_NOTES
 %ghost %_libdir/%sname.so.*
 %mpidir/lib/%sname.so.*
-%ghost %_libdir/libudunits2.so.*
-%mpidir/lib/libudunits2.so.*
 %_altdir/%name.alternatives
-#_datadir/udunits
-
-%files -n %sname-cxx-%c_sover-mpi
-%ghost %_libdir/%{sname}_c++.so.*
-%mpidir/lib/%{sname}_c++.so.*
-%_altdir/%name-cxx.alternatives
-
-%files -n %sname-cxx4-%c4_sover-mpi
-%ghost %_libdir/%{sname}_c++4.so.*
-%mpidir/lib/%{sname}_c++4.so.*
-%_altdir/%name-cxx4.alternatives
-
-%files -n %sname-fortran-%f_sover-mpi
-%ghost %_libdir/%{sname}f.so.*
-%mpidir/lib/%{sname}f.so.*
-%_altdir/%name-fortran.alternatives
 
 %files -n %sname-mpi-devel
 %mpidir/include/netcdf-3
 %mpidir/include/netcdf
 %mpidir/lib/*.so
-%_man3dir/*
+%_man3dir/netcdf.3*
 %mpidir/bin/nc-config
 %mpidir/lib/pkgconfig/*
 %_altdir/%name-devel.alternatives
 
 %files -n %sname-mpi-devel-doc
-%doc guidec.pdf guidec
-%_infodir/*
+%doc man4/html examples
+%_man3dir/*
+%exclude %_man3dir/netcdf.3*
 
 %files -n %oname%sover-mpi-tools
 #_docdir/%oname%sover-mpi-tools
@@ -411,6 +277,12 @@ done
 %_altdir/%oname-mpi-tools.alternatives
 
 %changelog
+* Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt1.1
+- Reenabled netCDF version 2 API
+
+* Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt1
+- Version 4.2.1.1
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt6
 - Rebuilt with OpenMPI 1.6
 
