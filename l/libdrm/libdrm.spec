@@ -1,5 +1,5 @@
 Name: libdrm
-Version: 2.4.33
+Version: 2.4.39
 Release: alt1
 Epoch: 1
 Summary: Userspace interface to kernel DRM service
@@ -36,10 +36,7 @@ develop programs which make use of %name
 %build
 %autoreconf
 %configure \
-	--enable-nouveau-experimental-api \
-	--enable-omap-experimental-api \
 	--enable-udev \
-	--disable-libkms \
 	--disable-static
 %make_build
 
@@ -51,13 +48,18 @@ develop programs which make use of %name
 
 %files devel
 %_includedir/%name
-%_includedir/nouveau
-%_includedir/omap
+%_includedir/libkms
 %_includedir/*.h
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Sep 10 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.39-alt1
+- 2.4.39
+
+* Fri May 11 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.34-alt1
+- 2.4.34
+
 * Thu Mar 29 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:2.4.33-alt1
 - 2.4.33
 
