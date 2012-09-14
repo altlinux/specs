@@ -1,38 +1,36 @@
-%def_enable mmx
-%def_disable static
-
 Name: imlib2
-Version: 1.4.4
-Release: alt2.qa2
+Version: 1.4.5
+Release: alt1
 
-Summary: Powerful image loading and rendering library
-
-License: LGPL
+Summary: Image loading, saving, rendering, and manipulation library
+License: Imlib2
 Group: System/Libraries
+Url: http://docs.enlightenment.org/api/imlib2/html/
+# http://download.sourceforge.net/enlightenment/%name-%version.tar.bz2
+Source: %name-%version.tar
 
-Url: http://www.enlightenment.org
-# https://sourceforge.net/projects/enlightenment/files/imlib2-src/
-Source: http://dl.sf.net/enlightenment/imlib2-src/%version/%name-%version.tar
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
+%def_disable static
+%def_enable mmx
 
-BuildRequires: bzlib-devel libfreetype-devel gcc-c++ libjpeg-devel libpng-devel
-BuildRequires: libstdc++-devel libtiff-devel libungif-devel zlib-devel
-BuildRequires: libX11-devel libXext-devel
+# Automatically added by buildreq on Sun Sep 16 2012
+# optimized out: gnu-config libX11-devel pkg-config xorg-xextproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: bzlib-devel libXext-devel libfreetype-devel libgif-devel libjpeg-devel libpng-devel libtiff-devel
 
 %description
-Imlib2 is an advanced replacement library for libraries like libXpm
-that provides many more features with much greater flexibility and
-speed than standard libraries, including font rasterization, rotation,
-RGBA space rendering and blending, dynamic binary filters, scripting,
-and more.
+Imlib 2 is a library that does image file loading and saving as well as
+rendering, manipulation, arbitrary polygon support, etc.  It does ALL of
+these operations FAST.  Imlib2 also tries to be highly intelligent about
+doing them, so writing naive programs can be done easily, without
+sacrificing speed.  This is a complete rewrite over the Imlib 1.x
+series.  The architecture is more modular, simple, and flexible.
 
 %package devel
-Summary: Imlib2 header files and development documentation
+Summary: Imlib2 development files
 Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
-Header files and development documentation for Imlib2.
+This package contains development files for Imlib2.
 
 %package devel-static
 Summary: Imlib static libraries
@@ -62,13 +60,14 @@ distribution.
 
 %build
 %configure \
-    %{subst_enable static} \
+	%{subst_enable static} \
 %ifarch x86_64
-    --enable-amd64 \
+	--enable-amd64 \
 %endif
-%ifarch %ix86 x86_64
-    %{subst_enable mmx}
+%ifarch %ix86
+	%{subst_enable mmx} \
 %endif
+	--enable-visibility-hiding
 
 %make_build
 
@@ -76,7 +75,7 @@ distribution.
 %makeinstall_std
 
 # remove non-packaged files
-rm -rf %buildroot%_libdir/%name/*/*.la
+find %buildroot%_libdir/ -name '*.la' -delete
 
 %files
 %_libdir/*.so.*
@@ -105,6 +104,9 @@ rm -rf %buildroot%_libdir/%name/*/*.la
 %endif
 
 %changelog
+* Sun Sep 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.5-alt1
+- Updated to 1.4.5.
+
 * Wed Mar 09 2011 Michael Shigorin <mike@altlinux.org> 1.4.4-alt2.qa2
 - rebuilt for debuginfo
 - minor spec cleanup
