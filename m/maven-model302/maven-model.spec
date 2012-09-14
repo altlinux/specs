@@ -41,7 +41,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-model302
 Version:        3.0.2
-Release:        alt9_7jpp6
+Release:        alt10_7jpp6
 Epoch:          0
 Summary:        Maven Model
 License:        Apache Software License 2.0
@@ -211,6 +211,8 @@ install -m 644 target/%{oldname}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 install -m 644 target/%{oldname}-%{version}-all.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-all.jar
+# tmp hack for maven1
+ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/maven-model.jar
 %add_to_maven_depmap maven %{oldname} %{version} JPP %{name}
 %add_to_maven_depmap maven %{oldname}-all %{version} JPP %{name}-all
 
@@ -245,6 +247,9 @@ cp -pr target/site/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %endif
 
 %changelog
+* Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.2-alt10_7jpp6
+- added temporary maven-model.jar symlink for maven1
+
 * Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.2-alt9_7jpp6
 - renamed to maven-model302
 

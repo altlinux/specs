@@ -4,9 +4,11 @@ BuildRequires: jpackage-compat
 %global bootstrap 0
 %global __jar_repack 0
 
+%global main_pkg maven
+
 Name:	    maven2
 Version:	2.2.1
-Release:	alt2_32jpp7
+Release:	alt3_32jpp7
 Summary:	Java project management and project comprehension tool
 
 Group:		Development/Java
@@ -51,10 +53,6 @@ Source103:    %{name}-%{version}-depmap.xml
 Source104:    %{name}-empty-dep.pom
 Source105:    %{name}-empty-dep.jar
 
-# 2xx for created non-buildable sources
-Source200:    %{name}-script
-Source201:    %{name}-jpp-script
-
 Patch0:     %{name}-antbuild.patch
 Patch1:     %{name}-%{version}-jpp.patch
 Patch2:     %{name}-%{version}-update-tests.patch
@@ -91,15 +89,15 @@ Requires: classworlds
 Requires: jdom
 
 %if !%{bootstrap}
-Requires: maven-artifact-manager = %{version}-%{release}
-Requires: maven-error-diagnostics = %{version}-%{release}
-Requires: maven-model22 = %{version}-%{release}
-Requires: maven-monitor = %{version}-%{release}
-Requires: maven-plugin-registry = %{version}-%{release}
-Requires: maven-profile = %{version}-%{release}
-Requires: maven-project = %{version}-%{release}
-Requires: maven-toolchain = %{version}-%{release}
-Requires: maven-plugin-descriptor = %{version}-%{release}
+Requires: maven-artifact-manager = %{?epoch:%epoch:}%{version}-%{release}
+Requires: maven-error-diagnostics = %{?epoch:%epoch:}%{version}-%{release}
+Requires: maven-model = 1:%{version}-%{release}
+Requires: maven-monitor = %{?epoch:%epoch:}%{version}-%{release}
+Requires: maven-plugin-registry = %{?epoch:%epoch:}%{version}-%{release}
+Requires: maven-profile = %{?epoch:%epoch:}%{version}-%{release}
+Requires: maven-project = %{?epoch:%epoch:}%{version}-%{release}
+Requires: maven-toolchain = %{?epoch:%epoch:}%{version}-%{release}
+Requires: maven-plugin-descriptor = %{?epoch:%epoch:}%{version}-%{release}
 %endif
 
 BuildArch: noarch
@@ -140,13 +138,15 @@ Requires:       plexus-containers-container-default
 %description -n maven-error-diagnostics
 Maven error diagnostics artifact
 
-%package -n maven-model22
+%package -n maven-model
 Group:          Development/Java
 Summary:        Compatibility Maven model artifact
 Requires:       jpackage-utils
 Requires:       plexus-utils
+Epoch: 1
+Obsoletes:       maven-model22 < 0:%{version}-%{release}
 
-%description -n maven-model22
+%description -n maven-model
 Maven model artifact
 
 %package -n maven-monitor
@@ -315,6 +315,8 @@ install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
 # M2_HOME #
 ###########
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{main_pkg}
+install -dm 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
 ################
 # M2_HOME/poms #
@@ -378,9 +380,6 @@ install -m 644 maven-reporting/pom.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/poms/J
 # maven pom
 install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/%{name}/poms/JPP.%{name}-maven.pom
 %add_to_maven_depmap org.apache.maven maven %{version} JPP/%{name} maven
-# maven-model22
-mv $RPM_BUILD_ROOT%{_mavendepmapfragdir}/maven-model \
-   $RPM_BUILD_ROOT%{_mavendepmapfragdir}/maven-model22
 
 # Items in %%{_bindir}
 install -Dm 755 %{SOURCE45} $RPM_BUILD_ROOT%{_bindir}/mvn-jpp
@@ -435,8 +434,8 @@ if [ -d %{_javadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_javadir
 %{_javadir}/%{name}/maven-error-diagnostics.jar
 %{_datadir}/%{name}/poms/JPP.%{name}-maven-error-diagnostics.pom
 
-%files -n maven-model22
-%{_mavendepmapfragdir}/maven-model22
+%files -n maven-model
+%{_mavendepmapfragdir}/maven-model
 %{_javadir}/%{name}/maven-model.jar
 %{_datadir}/%{name}/poms/JPP.%{name}-maven-model.pom
 
@@ -472,6 +471,9 @@ if [ -d %{_javadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_javadir
 
 
 %changelog
+* Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt3_32jpp7
+- restored maven-model subpackage 
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt2_32jpp7
 - fixed verbose post
 
