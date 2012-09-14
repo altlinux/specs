@@ -49,7 +49,7 @@ BuildRequires: jpackage-core
 
 Name:           maven1
 Version:        1.1
-Release:        alt22_9jpp6
+Release:        alt23_9jpp6
 Epoch:          0
 Summary:        Java project management and project comprehension tool
 
@@ -129,7 +129,7 @@ BuildRequires: jaxen >= 0:1.1
 BuildRequires: jsch >= 0:0.1.27
 BuildRequires: junit >= 0:3.8.2
 BuildRequires: log4j >= 0:1.2.13
-BuildRequires: maven-model >= 0:3.0.2
+BuildRequires: maven-model302
 BuildRequires: maven-wagon >= 0:1.0-0.b2
 BuildRequires: objectweb-asm
 BuildRequires: plexus-classworlds
@@ -168,7 +168,7 @@ Requires: jaxen >= 0:1.1
 Requires: jsch >= 0:0.1.27
 Requires: junit >= 0:3.8.2
 Requires: log4j >= 0:1.2.13
-Requires: maven-model >= 0:3.0.2
+Requires: maven-model302
 Requires: maven-wagon >= 0:1.0-0.b2
 Requires: plexus-utils >= 1.0.3
 Requires: stax-utils
@@ -201,7 +201,7 @@ Requires(post): apache-commons-lang >= 0:2.0
 Requires(post): jakarta-commons-logging >= 0:1.0.4
 Requires(post): jaxen >= 0:1.1
 Requires(post): log4j >= 0:1.2.13
-Requires(post): maven-model >= 0:3.0.2
+Requires(post): maven-model302
 Requires(post): maven-wagon >= 0:1.0-0.b2
 Requires(post): plexus-utils >= 1.0.3
 Requires(post): werkz >= 1.0-0.b10.5jpp
@@ -247,7 +247,7 @@ BuildRequires: jdom >= 0:1.0
 BuildRequires: jline >= 0:0.9.5
 BuildRequires: jsch >= 0:0.1.27
 BuildRequires: junit >= 0:3.8.2
-BuildRequires: maven-model >= 0:3.0.2
+BuildRequires: maven-model302
 BuildRequires: maven-wagon >= 0:1.0-0.b2
 BuildRequires: msv-msv
 BuildRequires: msv-xsdlib
@@ -281,7 +281,7 @@ Requires: jdom >= 0:1.0
 Requires: jline >= 0:0.9.5
 Requires: jsch >= 0:0.1.27
 Requires: junit >= 0:3.8.2
-Requires: maven-model >= 0:3.0.2
+Requires: maven-model302
 Requires: maven-wagon >= 0:1.0-0.b2
 Requires: msv-msv
 Requires: msv-xsdlib
@@ -490,7 +490,7 @@ BuildRequires: jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
 BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: junit >= 0:3.8.2
 BuildRequires: javacvs-lib >= 0:3.6
-BuildRequires: maven-model >= 0:3.0.2
+BuildRequires: maven-model302
 BuildRequires: regexp >= 0:1.3
 BuildRequires: xerces-j2 >= 0:2.7.1
 BuildRequires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
@@ -501,7 +501,7 @@ Requires: jakarta-commons-jelly-tags-xml >= 0:1.0-5jpp
 Requires: jakarta-commons-logging >= 0:1.0.4
 Requires: junit >= 0:3.8.2
 Requires: javacvs-lib >= 3.6
-Requires: maven-model >= 0:3.0.2
+Requires: maven-model302
 Requires: regexp >= 0:1.3
 Requires: xerces-j2 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis >= 0:1.3.03
@@ -659,11 +659,11 @@ BuildRequires: jakarta-commons-jelly >= 0:1.0-5jpp
 BuildRequires: apache-commons-lang >= 0:2.0
 BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: junit >= 0:3.8.2
-BuildRequires: maven-model >= 0:3.0.2
+BuildRequires: maven-model302
 Requires: jakarta-commons-jelly >= 0:1.0-5jpp
 Requires: apache-commons-lang >= 0:2.0
 Requires: jakarta-commons-logging >= 0:1.0.4
-Requires: maven-model >= 0:3.0.2
+Requires: maven-model302
 Provides: %movname-plugin-eclipse = %{epoch}:%{version}-%{release}
 Obsoletes: maven-plugin-eclipse < 1.1-alt14
 BuildArch: noarch
@@ -678,10 +678,10 @@ Requires: %{name} = %{epoch}:%{version}-%{release}
 BuildRequires: apache-commons-lang >= 0:2.0
 BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: junit >= 0:3.8.2
-BuildRequires: maven-model >= 0:3.0.2
+BuildRequires: maven-model302
 Requires: apache-commons-lang >= 0:2.0
 Requires: jakarta-commons-logging >= 0:1.0.4
-Requires: maven-model >= 0:3.0.2
+Requires: maven-model302
 Provides: %movname-plugin-ejb = %{epoch}:%{version}-%{release}
 Obsoletes: maven-plugin-ejb < 1.1-alt14
 BuildArch: noarch
@@ -1208,7 +1208,7 @@ BuildRequires: apache-commons-lang >= 0:2.0
 BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: junit >= 0:3.8.2
 BuildRequires: log4j >= 0:1.2.13
-BuildRequires: maven-model >= 0:3.0.2
+BuildRequires: maven-model302
 Requires: jakarta-commons-beanutils >= 0:1.7.0
 Requires: apache-commons-codec >= 0:1.2
 Requires: apache-commons-collections >= 0:3.1-1jpp
@@ -1223,7 +1223,7 @@ Requires: apache-commons-lang >= 0:2.0
 Requires: jakarta-commons-logging >= 0:1.0.4
 Requires: junit >= 0:3.8.2
 Requires: log4j >= 0:1.2.13
-Requires: maven-model >= 0:3.0.2
+Requires: maven-model302
 Provides: %movname-plugin-linkcheck = %{epoch}:%{version}-%{release}
 Obsoletes: maven-plugin-linkcheck < 1.1-alt14
 BuildArch: noarch
@@ -1272,11 +1272,11 @@ Summary:        Optional multiproject plugin for %{name}
 Group:          Development/Java
 Requires: %{name} = %{epoch}:%{version}-%{release}
 BuildRequires: jakarta-commons-jelly-tags-velocity >= 0:1.0-5jpp
-BuildRequires: maven-model >= 0:3.0.2
+BuildRequires: maven-model302
 BuildRequires: velocity >= 0:1.5
 Requires: jakarta-commons-jelly-tags-velocity >= 0:1.0-5jpp
 BuildRequires: junit >= 0:3.8.2
-Requires: maven-model >= 0:3.0.2
+Requires: maven-model302
 Requires: velocity >= 0:1.5
 Provides: %movname-plugin-multiproject = %{epoch}:%{version}-%{release}
 Obsoletes: maven-plugin-multiproject < 1.1-alt14
@@ -1496,13 +1496,13 @@ BuildRequires: apache-commons-lang >= 0:2.0
 BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: jline >= 0:0.9.5
 BuildRequires: junit >= 0:3.8.2
-BuildRequires: maven-model >= 0:3.0.2
+BuildRequires: maven-model302
 Requires: jakarta-commons-jelly >= 0:1.0-5jpp
 Requires: jakarta-commons-jelly-tags-interaction >= 0:1.0-5jpp
 Requires: apache-commons-lang >= 0:2.0
 Requires: jakarta-commons-logging >= 0:1.0.4
 Requires: jline >= 0:0.9.5
-Requires: maven-model >= 0:3.0.2
+Requires: maven-model302
 Provides: %movname-plugin-source = %{epoch}:%{version}-%{release}
 Obsoletes: maven-plugin-source < 1.1-alt14
 BuildArch: noarch
@@ -1743,7 +1743,7 @@ BuildRequires: apache-commons-lang >= 0:2.0
 BuildRequires: jakarta-commons-logging >= 0:1.0.4
 BuildRequires: jaxen >= 0:1.1
 BuildRequires: junit >= 0:3.8.2
-BuildRequires: maven-model >= 0:3.0.2
+BuildRequires: maven-model302
 BuildRequires: maven-scm >= 0:1.0
 BuildRequires: velocity >= 0:1.5
 BuildRequires: velocity-dvsl >= 0:1.0
@@ -1760,7 +1760,7 @@ Requires: apache-commons-lang >= 0:2.0
 Requires: jakarta-commons-logging >= 0:1.0.4
 Requires: jaxen >= 0:1.1
 Requires: junit >= 0:3.8.2
-Requires: maven-model >= 0:3.0.2
+Requires: maven-model302
 Requires: maven-scm >= 0:1.0
 Requires: velocity >= 0:1.5
 Requires: velocity-dvsl >= 0:1.0
@@ -1873,7 +1873,7 @@ BuildArch: noarch
 ##BuildRequires:  junitdoclet-jdk14 >= 0:1.0.2
 ##BuildRequires:  log4j >= 0:1.2.13
 ##BuildRequires:  maven-jxr >= 0:1.0
-##BuildRequires:  maven-model >= 0:3.0.2
+##BuildRequires:  maven-model302
 ##BuildRequires:  maven-scm >= 0:1.0
 ##BuildRequires:  maven-wagon >= 0:1.0-0.b2
 ##BuildRequires:  modello >= 0:1.0-0.a8.6jpp
@@ -2840,6 +2840,9 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt23_9jpp6
+- fix for maven-model
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt22_9jpp6
 - build w/o hibernate2-tools
 
