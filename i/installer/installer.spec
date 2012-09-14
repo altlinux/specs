@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 
 Summary: Installer common parts
@@ -101,6 +101,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Sep 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.2-alt1
+- ability to work on writable aufs /
+
 * Tue Sep 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.1-alt1
 - copy xorg.conf to destdir if Driver set
 
