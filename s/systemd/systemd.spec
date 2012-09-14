@@ -13,7 +13,7 @@
 
 Name: systemd
 Version: 189
-Release: alt2
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -830,6 +830,9 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Fri Sep 14 2012 Alexey Shabalin <shaba@altlinux.ru> 189-alt3
+- because initrd drop udev db, need full rebuild with udevadm trigger
+
 * Wed Sep 12 2012 Alexey Shabalin <shaba@altlinux.ru> 189-alt2
 - move libsystemd-journal,libsystemd-id128{-devel} to separate packages
 - systemd-devel as noarch without any requires;
