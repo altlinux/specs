@@ -9,8 +9,8 @@
 %define hdfdir %_libdir/hdf5-seq
 
 Name: %sname%sover-seq
-Version: %major.1.3
-Release: alt4
+Version: %major.2.1.1
+Release: alt1.1
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -35,42 +35,42 @@ Provides: %sname.so.%sover
 %endif
 
 Source: %oname-%version.tar
-Source1: ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.pdf.bz2
-Source2: ftp://ftp.unidata.ucar.edu/pub/netcdf/guidec.html.tar.bz2
 
 # Automatically added by buildreq on Sun Jan 18 2009
 BuildRequires: flex gcc-c++ gcc-fortran zlib-devel libhdf5-devel
 
-BuildPreReq: /usr/bin/tex libcurl-devel libexpat-devel
+BuildPreReq: /usr/bin/tex libcurl-devel libexpat-devel doxygen graphviz
 
 %description
-NetCDF (network Common Data Form) is an interface for array-oriented data
-access and a freely-distributed collection of software libraries for C,
-Fortran, C++, and perl that provides an implementation of the interface.
-The netCDF library also defines a machine-independent format for representing
-scientific data. Together, the interface, library, and format support the
-creation, access, and sharing of scientific data. The netCDF software was
-developed at the Unidata Program Center in Boulder, Colorado.
+NetCDF (network Common Data Form) is an interface for array-oriented
+data access and a freely-distributed collection of software libraries
+for C, Fortran, C++, and perl that provides an implementation of the
+interface.
+The netCDF library also defines a machine-independent format for
+representing scientific data. Together, the interface, library, and
+format support the creation, access, and sharing of scientific data. The
+netCDF software was developed at the Unidata Program Center in Boulder,
+Colorado.
 
 NetCDF data is:
 
-   o Self-Describing. A netCDF file includes information about the data it
-     contains.
+   o Self-Describing. A netCDF file includes information about the data
+     it contains.
 
-   o Network-transparent. A netCDF file is represented in a form that can be
-     accessed by computers with different ways of storing integers, characters,
-     and floating-point numbers.
+   o Network-transparent. A netCDF file is represented in a form that
+     can be accessed by computers with different ways of storing
+     integers, characters, and floating-point numbers.
 
    o Direct-access. A small subset of a large dataset may be accessed
      efficiently, without first reading through all the preceding data.
 
-   o Appendable. Data can be appended to a netCDF dataset along one dimension
-     without copying the dataset or redefining its structure. The structure of
-     a netCDF dataset can be changed, though this sometimes causes the dataset
-     to be copied.
+   o Appendable. Data can be appended to a netCDF dataset along one
+     dimension without copying the dataset or redefining its structure.
+     The structure of a netCDF dataset can be changed, though this
+     sometimes causes the dataset to be copied.
 
-   o Sharable. One writer and multiple readers may simultaneously access the
-     same netCDF file.
+   o Sharable. One writer and multiple readers may simultaneously
+     access the same netCDF file.
 
 %description -l ru_RU.UTF-8
 NetCDF (network Common Data Form) - это ориентированный на массивы
@@ -86,126 +86,12 @@ NetCDF (network Common Data Form) - это ориентированный на �
 поддерживают создание, доступ и совместное использование научных
 данных.
 
-%package -n %sname-cxx-%c_sover
-Summary: NetCDF C++ library v3
-Group: System/Libraries
-Requires(post,preun): alternatives
-Requires: %name = %version-%release
-Conflicts: %sname-mpi < 4.0.1-alt6 %sname-mpi-cxx < 4.0.1-alt6
-Provides: %sname-cxx = %version-%release
-Conflicts: %sname < %version-%release
-Obsoletes: %sname < %version-%release
-
-%description -n %sname-cxx-%c_sover
-NetCDF (network Common Data Form) is an interface for array-oriented data
-access and a freely-distributed collection of software libraries for C,
-Fortran, C++, and perl that provides an implementation of the interface.
-The netCDF library also defines a machine-independent format for representing
-scientific data. Together, the interface, library, and format support the
-creation, access, and sharing of scientific data. The netCDF software was
-developed at the Unidata Program Center in Boulder, Colorado.
-
-This package contains C++ interface library for NetCDF version 3.
-
-%description -n %sname-cxx-%c_sover -l ru_RU.UTF-8
-NetCDF (network Common Data Form) - это ориентированный на массивы
-интерфейс для доступа к данным и, одновременно, свободно
-распространяемая коллекция программ и библиотек для C, Fortran, C++,
-которые реализуют этот интерфейс. Программы netCDF были
-разработаны Гленом Дэвисом (Glenn Davis), Руссом Рью (Russ Rew),
-Стивом Еммерсоном (Steve Emmerson), Джоном Кэроном (John Caron) и
-Харвей Дэвисом (Harvey Davies) в Unidata Program Center в Боулдере,
-Колорадо и расширены вкладами от других пользователей netCDF.
-Библиотеки netCDF определяют машиннонезависимый  формат для
-представления научных данных. Интерфейс, библиотеки и сам формат
-поддерживают создание, доступ и совместное использование научных
-данных.
-
-Данный пакет содержит библиотеку C++ интерфейсов для NetCDF версии 3.
-
-%package -n %sname-cxx4-%c4_sover
-Summary: NetCDF C++ library v4
-Group: System/Libraries
-Requires(post,preun): alternatives
-Requires: %name = %version-%release
-Conflicts: %sname-mpi < 4.0.1-alt6 %sname-mpi-cxx4 < 4.0.1-alt6
-Provides: %sname-cxx4 = %version-%release
-Conflicts: %sname < %version-%release
-Obsoletes: %sname < %version-%release
-
-%description -n %sname-cxx4-%c4_sover
-NetCDF (network Common Data Form) is an interface for array-oriented data
-access and a freely-distributed collection of software libraries for C,
-Fortran, C++, and perl that provides an implementation of the interface.
-The netCDF library also defines a machine-independent format for representing
-scientific data. Together, the interface, library, and format support the
-creation, access, and sharing of scientific data. The netCDF software was
-developed at the Unidata Program Center in Boulder, Colorado.
-
-This package contains C++ interface library for NetCDF version 4.
-
-%description -l ru_RU.UTF-8 -n %sname-cxx4-%c4_sover
-NetCDF (network Common Data Form) - это ориентированный на массивы
-интерфейс для доступа к данным и, одновременно, свободно
-распространяемая коллекция программ и библиотек для C, Fortran, C++,
-которые реализуют этот интерфейс. Программы netCDF были
-разработаны Гленом Дэвисом (Glenn Davis), Руссом Рью (Russ Rew),
-Стивом Еммерсоном (Steve Emmerson), Джоном Кэроном (John Caron) и
-Харвей Дэвисом (Harvey Davies) в Unidata Program Center в Боулдере,
-Колорадо и расширены вкладами от других пользователей netCDF.
-Библиотеки netCDF определяют машиннонезависимый  формат для
-представления научных данных. Интерфейс, библиотеки и сам формат
-поддерживают создание, доступ и совместное использование научных
-данных.
-
-Данный пакет содержит библиотеку C++ интерфейсов для NetCDF версии 4.
-
-%package -n %sname-fortran-%f_sover
-Summary: NetCDF Fortran library
-Group: System/Libraries
-Requires(post,preun): alternatives
-Requires: %name = %version-%release
-Conflicts: %sname-mpi < 4.0.1-alt6 %sname-mpi-fortran < 4.0.1-alt6
-Provides: %sname-fortran = %version-%release
-Conflicts: %sname < %version-%release
-Obsoletes: %sname < %version-%release
-
-%description -n %sname-fortran-%f_sover
-NetCDF (network Common Data Form) is an interface for array-oriented data
-access and a freely-distributed collection of software libraries for C,
-Fortran, C++, and perl that provides an implementation of the interface.
-The netCDF library also defines a machine-independent format for representing
-scientific data. Together, the interface, library, and format support the
-creation, access, and sharing of scientific data. The netCDF software was
-developed at the Unidata Program Center in Boulder, Colorado.
-
-This package contains Fortran interface library for NetCDF.
-
-%description -l ru_RU.UTF-8 -n %sname-fortran-%f_sover
-NetCDF (network Common Data Form) - это ориентированный на массивы
-интерфейс для доступа к данным и, одновременно, свободно
-распространяемая коллекция программ и библиотек для C, Fortran, C++,
-которые реализуют этот интерфейс. Программы netCDF были
-разработаны Гленом Дэвисом (Glenn Davis), Руссом Рью (Russ Rew),
-Стивом Еммерсоном (Steve Emmerson), Джоном Кэроном (John Caron) и
-Харвей Дэвисом (Harvey Davies) в Unidata Program Center в Боулдере,
-Колорадо и расширены вкладами от других пользователей netCDF.
-Библиотеки netCDF определяют машиннонезависимый  формат для
-представления научных данных. Интерфейс, библиотеки и сам формат
-поддерживают создание, доступ и совместное использование научных
-данных.
-
-Данный пакет содержит библиотеку Fortran интерфейсов для NetCDF версии 4.
-
 %package -n %sname-devel
 Summary: Development tools for the NetCDF library
 Summary(ru_RU.UTF-8): Средства разработки программ на основе библиотеки NetCDF
 Group: Development/C
 Requires(post,preun): alternatives
 Requires: %name = %version-%release
-Requires: %sname-cxx-%c_sover = %version-%release
-Requires: %sname-cxx4-%c4_sover = %version-%release
-Requires: %sname-fortran-%f_sover = %version-%release
 Conflicts: %sname-mpi-devel < 4.0.1-alt6
 
 %description -n %sname-devel
@@ -213,7 +99,7 @@ This package contains the netCDF-3 header files, shared devel libs, and
 man pages.
 
 If you want to develop applications which will use the NetCDF library,
-you'll need to install the %sname-devel package.  
+you'll need to install the %sname-devel package.
 
 %description -l ru_RU.UTF-8 -n %sname-devel
 Заголовочные файлы и документация для использования библиотеки NetCDF
@@ -221,7 +107,7 @@ you'll need to install the %sname-devel package.
 
 Если вы собираетесь разрабатывать приложения, которые будут
 использовать библиотеку NetCDF, вам необходимо установить пакет
-%sname-devel. 
+%sname-devel.
 
 %package doc
 Summary: Documentation for NetCDF
@@ -244,7 +130,9 @@ rm -fR udunits/expat
 %build
 %add_optflags -I%hdfdir/include -fno-strict-aliasing %optflags_shared
 %autoreconf
-%configure --enable-shared \
+%configure \
+	--enable-shared \
+	--enable-static=no \
 	--bindir=%hdfdir/bin \
 	--libdir=%hdfdir/lib \
 	--includedir=%hdfdir/include \
@@ -254,46 +142,44 @@ rm -fR udunits/expat
 	--enable-ncgen4 \
 	--with-udunits \
 	--with-hdf5=%hdfdir \
-	--with-zlib=%prefix
+	--with-zlib=%prefix \
+	--enable-doxygen \
+	--enable-internal-docs \
+	--enable-extra-example-tests \
+	--enable-extra-tests \
+	--enable-v2 \
+	--enable-mmap \
+	--disable-dap-remote-tests
 %make
 
 %install
 %makeinstall_std
 
-mkdir -p %buildroot%hdfdir/include/netcdf-3
-mv %buildroot%hdfdir/include/*.* %buildroot%hdfdir/include/netcdf-3
+install -d %buildroot%hdfdir/include/netcdf
+ln -s netcdf %buildroot%hdfdir/include/netcdf-3
+install -p -m644 include/*.h %buildroot%hdfdir/include/netcdf
+sed -i 's|config\.h|netcdf_config.h|' \
+	%buildroot%hdfdir/include/netcdf/*
+install -p -m644 config.h \
+	%buildroot%hdfdir/include/netcdf/netcdf_config.h
+rm -f %buildroot%hdfdir/include/netcdf/netcdf.h
+mv %buildroot%hdfdir/include/*.* %buildroot%hdfdir/include/netcdf/
 install -d %buildroot%_includedir
-ln -s %hdfdir/include/netcdf-3 %buildroot%_includedir
-ln -s %hdfdir/include/netcdf %buildroot%_includedir
+ln -s %hdfdir/include/netcdf %buildroot%_includedir/netcdf-3
+ln -s %hdfdir/include/netcdf %buildroot%_includedir/netcdf
 rm -f %buildroot%hdfdir/lib/*.la
 
-bzcat %SOURCE1 > guidec.pdf
-bzcat %SOURCE2 | tar xvf -
+install -m644 man4/man/man3/* %buildroot%_man3dir
 
 # alternatives
 
 install -d %buildroot%_altdir
 mkdir -p %buildroot%_libdir
 pushd %buildroot%hdfdir/lib
-for i in %sname.so.* libudunits2.so.*; do
+for i in %sname.so.*; do
 	ln -s ../..%hdfdir/lib/$i %buildroot%_libdir/
 	echo "%_libdir/$i %hdfdir/lib/$i %priority" >> \
 		%buildroot%_altdir/%name.alternatives
-done
-for i in $(ls %{sname}_c++.so.*); do
-	ln -s ../..%hdfdir/lib/$i %buildroot%_libdir/
-	echo "%_libdir/$i %hdfdir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name-cxx.alternatives
-done
-for i in $(ls %{sname}_c++4.so.*); do
-	ln -s ../..%hdfdir/lib/$i %buildroot%_libdir/
-	echo "%_libdir/$i %hdfdir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name-cxx4.alternatives
-done
-for i in $(ls %{sname}f.so.*); do
-	ln -s ../..%hdfdir/lib/$i %buildroot%_libdir/
-	echo "%_libdir/$i %hdfdir/lib/$i %priority" >> \
-		%buildroot%_altdir/%name-fortran.alternatives
 done
 for i in $(ls *.so); do
 	echo "%_libdir/$i %hdfdir/lib/$i %priority" >> \
@@ -312,7 +198,8 @@ done
 popd
 
 %pre -n %sname-devel
-rm -fR %_includedir/netcdf-3
+rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
+	%hdfdir/include/netcdf-3 %hdfdir/include/netcdf
 
 %files
 %doc COPYRIGHT README RELEASE_NOTES
@@ -320,27 +207,8 @@ rm -fR %_includedir/netcdf-3
 %exclude %hdfdir/bin/nc-config
 %_man1dir/*
 %ghost %_libdir/%sname.so.*
-%ghost %_libdir/libudunits2.so.*
 %hdfdir/lib/%sname.so.*
-%hdfdir/lib/libudunits2.so.*
-%_infodir/*
 %_altdir/%name.alternatives
-%_datadir/udunits
-
-%files -n %sname-cxx-%c_sover
-%ghost %_libdir/%{sname}_c++.so.*
-%hdfdir/lib/%{sname}_c++.so.*
-%_altdir/%name-cxx.alternatives
-
-%files -n %sname-cxx4-%c4_sover
-%ghost %_libdir/%{sname}_c++4.so.*
-%hdfdir/lib/%{sname}_c++4.so.*
-%_altdir/%name-cxx4.alternatives
-
-%files -n %sname-fortran-%f_sover
-%ghost %_libdir/%{sname}f.so.*
-%hdfdir/lib/%{sname}f.so.*
-%_altdir/%name-fortran.alternatives
 
 %files -n %sname-devel
 %hdfdir/bin/nc-config
@@ -350,14 +218,21 @@ rm -fR %_includedir/netcdf-3
 %_includedir/netcdf
 %hdfdir/lib/*.so
 %hdfdir/lib/pkgconfig/*
-%_man3dir/*
+%_man3dir/netcdf.3*
 %_altdir/%name-devel.alternatives
 
 %files doc
-%doc guidec.pdf guidec
-#_docdir/netcdf
+%doc man4/html examples
+%_man3dir/*
+%exclude %_man3dir/netcdf.3*
 
 %changelog
+* Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt1.1
+- Reenabled netCDF version 2 API
+
+* Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt1
+- Version 4.2.1.1
+
 * Fri Jun 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt4
 - Rebuilt
 
