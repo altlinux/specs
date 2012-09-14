@@ -5,7 +5,7 @@
 
 Name: pacoxx
 Version: 0.2.beta
-Release: alt2
+Release: alt3
 Summary: PaCO++: Portable Parallel CORBA Object
 License: GPLv2+ / LGPLv2+
 Group: Networking/Remote access
@@ -181,6 +181,9 @@ chmod +x %buildroot%_bindir/pacoenv.sh
 %ldir/Examples
 
 %changelog
+* Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.beta-alt3
+- Rebuilt with updated libomniORB
+
 * Fri Aug 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.beta-alt2
 - Fixed bin-permissions repocop warning
 

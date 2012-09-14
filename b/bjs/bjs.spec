@@ -1,6 +1,6 @@
 Name: bjs
 Version: 0.1.3
-Release: alt3
+Release: alt3.1
 Summary: 3D tank battle
 License: GPLv2
 Group: Games/Arcade
@@ -41,6 +41,9 @@ make idl
 %_datadir/games/%name
 
 %changelog
+* Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.3-alt3.1
+- Rebuilt with updated libomniORB
+
 * Sat Sep 03 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 0.1.3-alt3
 - Fix build
 

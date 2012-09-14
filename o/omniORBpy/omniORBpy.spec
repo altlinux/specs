@@ -1,6 +1,6 @@
 Name: omniORBpy
-Version: 3.6
-Release: alt2
+Version: 4.2.0
+Release: alt1.svn20120816
 Summary: Python bindings for CORBA object request broker (omniORB)
 License: LGPLv2.1+
 Group: Networking/Remote access
@@ -71,6 +71,9 @@ sed -i 's|\(get_python_lib\)(0|\1(1|' configure
 %doc doc/*.pdf doc/omniORBpy examples
 
 %changelog
+* Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.0-alt1.svn20120816
+- Version 4.2.0
+
 * Fri Aug 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6-alt2
 - Added explicit conflict with python-module-pyorbit
 
