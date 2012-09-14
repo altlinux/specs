@@ -3,7 +3,7 @@
 %define module_release	alt1
 
 %define kversion	2.6.32
-%define krelease	alt74
+%define krelease	alt75
 %define flavour		ovz-el
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -11,7 +11,7 @@
 Summary: ipset kernel modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.74
+Release: %module_release.132640.75
 License: GPL
 Group: System/Kernel and hardware
 
@@ -69,8 +69,8 @@ install -p -m644 $(find . -name *.ko) %buildroot%module_dir
 %module_dir
 
 %changelog
-* Wed Sep 05 2012 Anton Protopopov <aspsk@altlinux.org> 6.12.1-alt1.132640.74
-- Build for kernel-image-ovz-el-2.6.32-alt74.
+* Fri Sep 14 2012 Anton Protopopov <aspsk@altlinux.org> 6.12.1-alt1.132640.75
+- Build for kernel-image-ovz-el-2.6.32-alt75.
 
 * Mon Jun 11 2012 Anton Protopopov <aspsk@altlinux.org> 6.12.1-alt1
 - Update to 6.12.1
