@@ -1,3 +1,4 @@
+%def_without clirr_maven_plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # one of the sources is a zip file
@@ -39,7 +40,7 @@ Name:           clirr
 Summary:        Binary and Source Compatibility Check
 Url:            http://clirr.sourceforge.net/
 Version:        0.6
-Release:        alt6_6jpp6
+Release:        alt7_6jpp6
 Epoch:          0
 License:        LGPL
 Group:          Development/Java
@@ -76,7 +77,7 @@ BuildRequires: maven1-plugin-multiproject
 BuildRequires: maven1-plugin-tasklist
 BuildRequires: maven1-plugin-test
 BuildRequires: maven1-plugin-xdoc
-BuildRequires: maven-model
+#BuildRequires: maven-model
 BuildRequires: sf-javaapp-maven-plugin
 BuildRequires: bcel5.3
 BuildRequires: apache-commons-cli
@@ -109,6 +110,7 @@ api changes. In a continuous integration process Clirr
 can automatically prevent accidental introduction of 
 binary or source compatibility problems.
 
+%if_with clirr_maven_plugin
 %package maven-plugin
 Summary:        Maven plugin for %{name}
 Group:          Development/Java
@@ -116,9 +118,12 @@ Requires: %{name} = %{epoch}:%{version}
 Requires: maven1 >= 0:1.1
 Requires: maven-model
 Requires: sf-javaapp-maven-plugin
+%endif #clirr_maven_plugin
 
+%if_with clirr_maven_plugin
 %description maven-plugin
 %{summary}.
+%endif #clirr_maven_plugin
 
 %package javadoc
 Summary:        Javadoc for %{name}
@@ -187,6 +192,7 @@ install -m 644 core/target/%{name}-core-%{version}.jar \
         $RPM_BUILD_ROOT%{_javadir}/%{name}-core-%{version}.jar
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
+%if_with clirr_maven_plugin
 # plugin
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven1/plugins
 install -m 644 \
@@ -198,6 +204,9 @@ ln -sf \
     %{_datadir}/maven1/plugins/maven-clirr-plugin-%{version}.jar \
     maven-clirr-plugin.jar
 popd
+install -m 644 %{SOURCE6} \
+        $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-clirr-maven.pom
+%endif #clirr_maven_plugin
 
 %add_to_maven_depmap %{name} %{name}-core %{version} JPP %{name}
 
@@ -205,8 +214,6 @@ popd
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
 install -m 644 %{SOURCE5} \
         $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-clirr-core.pom
-install -m 644 %{SOURCE6} \
-        $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-clirr-maven.pom
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
@@ -272,9 +279,10 @@ chmod 755 $RPM_BUILD_ROOT%_bindir/%name
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/%{name}-core-%{version}.jar.*
 %endif
-%exclude %_javadir/maven1-plugins*
 %_bindir/%name
 
+%if_with clirr_maven_plugin
+%exclude %_javadir/maven1-plugins*
 %files maven-plugin
 %doc LICENSE.txt
 %{_datadir}/maven1/plugins/maven-clirr-plugin*.jar
@@ -283,6 +291,7 @@ chmod 755 $RPM_BUILD_ROOT%_bindir/%name
 %if %{gcj_support}
 %{_libdir}/gcj/%{name}/maven-%{name}-plugin-%{version}.jar.*
 %endif
+%endif #clirr_maven_plugin
 
 %files javadoc
 %doc %{_javadocdir}/%{name}-%{version}
@@ -294,6 +303,9 @@ chmod 755 $RPM_BUILD_ROOT%_bindir/%name
 %endif
 
 %changelog
+* Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.6-alt7_6jpp6
+- dropped maven1 plugin
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.6-alt6_6jpp6
 - build with saxon6-scripts
 
