@@ -2,11 +2,11 @@
 %def_enable static
 
 %define Name Exempi
-%define bname exempi
+%define _name exempi
 
-Name: lib%bname
-Version: 2.1.1
-Release: alt2
+Name: lib%_name
+Version: 2.2.0
+Release: alt1
 
 Summary: Library for easy parsing of XMP metadata
 Group: System/Libraries
@@ -14,7 +14,7 @@ License: %bsd
 
 URL: http://libopenraw.freedesktop.org/wiki/%Name
 
-Source: http://libopenraw.freedesktop.org/download/%bname-%version.tar.gz
+Source: http://libopenraw.freedesktop.org/download/%_name-%version.tar.bz2
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-test-devel gcc-c++ libexpat-devel zlib-devel
@@ -47,7 +47,7 @@ This package contains the static library needed for developing with
 
 
 %prep
-%setup -n %bname-%version
+%setup -n %_name-%version
 
 %build
 %define _optlevel 3
@@ -63,13 +63,14 @@ This package contains the static library needed for developing with
 
 %if_enabled shared
 %files
+%_bindir/%_name
 %doc AUTHORS ChangeLog NEWS README
 %_libdir/*.so.*
 %endif
 
 %files devel
 %{?_disable_shared:%doc AUTHORS ChangeLog NEWS README}
-%_includedir/%bname-2.0/
+%_includedir/%_name-2.0/
 %{?_enable_shared:%_libdir/*.so}
 %_pkgconfigdir/*
 
@@ -81,6 +82,9 @@ This package contains the static library needed for developing with
 
 
 %changelog
+* Fri Sep 14 2012 Yuri N. Sedunov <aris@altlinux.org> 2.2.0-alt1
+- 2.2.0
+
 * Tue Nov 02 2010 Yuri N. Sedunov <aris@altlinux.org> 2.1.1-alt2
 - rebuild
 
