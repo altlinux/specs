@@ -3,7 +3,7 @@
 
 Name: libuniset
 Version: 1.4
-Release: alt1
+Release: alt1.1
 Summary: UniSet - library for building distributed industrial control systems
 License: GPL
 Group: Development/C++
@@ -12,6 +12,7 @@ Url: http://git.etersoft.ru/projects/?p=asu/uniset.git;a=summary
 Packager: Pavel Vainerman <pv@altlinux.ru>
 
 Source: /var/ftp/pvt/Etersoft/Ourside/unstable/sources/tarball/%name-%version.tar
+Patch: libuniset-1.4-alt-sys_stat.patch
 
 # manually removed: glibc-devel-static
 # Automatically added by buildreq on Fri Nov 26 2010
@@ -100,6 +101,7 @@ Libraries needed to develop for uniset extensions
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 %autoreconf
@@ -213,6 +215,9 @@ rm -f %buildroot%_libdir/*.la
 
 
 %changelog
+* Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.1
+- Rebuilt with updated libomniORB
+
 * Thu May 31 2012 Pavel Vainerman <pv@altlinux.ru> 1.4-alt1
 - rename unet2 -->unetudp
 - release version 1.4
