@@ -2,7 +2,7 @@
 %define module_version	1.0
 %define module_release	alt3
 
-%define kversion       3.5.3
+%define kversion       3.5.4
 %define krelease       alt1
 %define flavour        std-pae
 
@@ -11,7 +11,7 @@
 Summary:	u200 kernel module
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.197891.1
+Release:	%module_release.197892.1
 License:	GPL
 Group:		System/Kernel and hardware
 %if "%kversion" >= "3.2"
@@ -73,8 +73,8 @@ install -p -m644 %module_name.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Thu Aug 30 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.1.0-alt3.197891.1
-- Build for kernel-image-std-pae-3.5.3-alt1.
+* Sat Sep 15 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.1.0-alt3.197892.1
+- Build for kernel-image-std-pae-3.5.4-alt1.
 
 * Sat Aug 18 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.1.0-alt3
 - fix to build with 3.5 kernel

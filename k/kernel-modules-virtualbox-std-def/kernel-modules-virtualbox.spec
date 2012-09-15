@@ -8,7 +8,7 @@
 %define net_module_name	vboxnetflt
 %define net_module_adaptor_name	vboxnetadp
 
-%define kversion	3.5.3
+%define kversion	3.5.4
 %define krelease	alt1
 %define flavour		std-def
 
@@ -19,7 +19,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197891.1
+Release: %module_release.197892.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -101,8 +101,8 @@ cp kernel-source-%drv_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2.197891.1
-- Build for kernel-image-std-def-3.5.3-alt1.
+* Sat Sep 15 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2.197892.1
+- Build for kernel-image-std-def-3.5.4-alt1.
 
 * Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2
 - technical

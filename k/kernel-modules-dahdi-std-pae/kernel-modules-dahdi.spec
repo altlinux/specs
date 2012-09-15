@@ -4,7 +4,7 @@
 %define module_version	2.6.1
 %define module_release	alt1
 
-%define kversion	3.5.3
+%define kversion	3.5.4
 %define krelease	alt1
 %define flavour	std-pae
 
@@ -16,7 +16,7 @@
 Summary: %module_name modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197891.1
+Release: %module_release.197892.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -180,8 +180,8 @@ popd
 %kernel_headers_dir/kernel-modules-%module_name.symvers
 
 %changelog
-* Sun Sep 02 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1.197891.1
-- Build for kernel-image-std-pae-3.5.3-alt1.
+* Sun Sep 16 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1.197892.1
+- Build for kernel-image-std-pae-3.5.4-alt1.
 
 * Sun Sep 02 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1
 - 2.6.1
