@@ -2,8 +2,11 @@
 %def_disable static
 %def_disable gtk_doc
 
+%define gst_api_ver 1.0
+%define old_gst_api_ver 0.10
+
 Name: libnice
-Version: 0.1.1
+Version: 0.1.3
 Release: alt1
 
 Summary: Connectivity Establishment standard (ICE) library
@@ -13,7 +16,9 @@ URL: http://nice.freedesktop.org
 
 Source: http://nice.freedesktop.org/releases/%name-%version.tar.gz
 
-BuildRequires: glib2-devel gtk-doc gst-plugins-devel libgupnp-igd-devel
+BuildRequires: glib2-devel gtk-doc libgupnp-igd-devel
+BuildRequires: gst-plugins-devel
+BuildRequires: gst-plugins%gst_api_ver-devel
 
 %description
 Nice is an implementation of the IETF's draft Interactice Connectivity
@@ -65,6 +70,18 @@ Establishment standard (ICE). It provides GLib-based library, libnice.
 This package provides Interactive UDP connectivity establishment plugin
 for Gstreamer
 
+%package -n gst-plugins-nice%gst_api_ver
+Summary: UDP connectivity establishment plugin for Gstreamer (1.0) based on libnice
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description -n gst-plugins-nice%gst_api_ver
+Nice is an implementation of the IETF's draft Interactice Connectivity
+Establishment standard (ICE). It provides GLib-based library, libnice.
+
+This package provides Interactive UDP connectivity establishment plugin
+for Gstreamer (1.0 API version)
+
 %prep
 %setup -q
 
@@ -96,7 +113,10 @@ for Gstreamer
 %endif
 
 %files -n gst-plugins-nice
-%_libdir/gstreamer-*/libgstnice.so
+%_libdir/gstreamer-%old_gst_api_ver/libgstnice010.so
+
+%files -n gst-plugins-nice%gst_api_ver
+%_libdir/gstreamer-%gst_api_ver/libgstnice.so
 
 %exclude %_libdir/gstreamer-*/*.la
 
@@ -104,6 +124,10 @@ for Gstreamer
 %exclude %_bindir/stun*
 
 %changelog
+* Sat Sep 15 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
+- 0.1.3
+- new gst-plugins-nice1.0 subpackage for GStreamer-1.0
+
 * Tue Nov 08 2011 Yuri N. Sedunov <aris@altlinux.org> 0.1.1-alt1
 - 0.1.1
 
