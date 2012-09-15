@@ -10,7 +10,7 @@
 
 Name: %sname%sover-seq
 Version: %major.2.1.1
-Release: alt1.1
+Release: alt2
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF)
 
@@ -224,9 +224,13 @@ rm -fR %_includedir/netcdf-3 %_includedir/netcdf \
 %files doc
 %doc man4/html examples
 %_man3dir/*
+%exclude %_man3dir/error.3*
 %exclude %_man3dir/netcdf.3*
 
 %changelog
+* Sat Sep 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt2
+- Avoid conflict with man-pages
+
 * Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1.1-alt1.1
 - Reenabled netCDF version 2 API
 
