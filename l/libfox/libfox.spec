@@ -4,7 +4,7 @@
 
 Name: libfox
 Version: %major.46
-Release: alt1
+Release: alt2
 
 Summary: The FOX C++ GUI Toolkit shared libraries
 
@@ -106,6 +106,8 @@ rm -rf %buildroot%_prefix/%name
 mkdir -p %buildroot/%_datadir/fox-examples
 mv %buildroot/%_bindir/Adie.stx %buildroot/%_datadir/fox-examples
 
+mv %buildroot%_bindir/calculator %buildroot%_bindir/fox-calculator
+
 %files
 %_libdir/*.so.*
 %doc AUTHORS README
@@ -132,13 +134,16 @@ mv %buildroot/%_bindir/Adie.stx %buildroot/%_datadir/fox-examples
 %files examples
 %_bindir/adie
 %_bindir/PathFinder
-%_bindir/calculator
+%_bindir/fox-calculator
 %_datadir/fox-examples
 %_man1dir/adie.*
 %_man1dir/PathFinder.*
 %_man1dir/calculator.*
 
 %changelog
+* Sat Sep 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.46-alt2
+- Avoid conflict with qt-at-spi
+
 * Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.46-alt1
 - Version 1.6.46
 
