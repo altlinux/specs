@@ -1,5 +1,5 @@
 Name: xorg-dri2proto-devel
-Version: 2.6
+Version: 2.8
 Release: alt1
 Summary: DRI2 Protocol Headers
 License: MIT/X11
@@ -34,6 +34,9 @@ DRI2 Protocol Headers
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Sep 15 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.8-alt1
+- 2.8
+
 * Thu Jun 30 2011 Valery Inozemtsev <shrek@altlinux.ru> 2.6-alt1
 - 2.6
 
