@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           wadi2
 Version:        2.1.1
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Epoch:          0
 License:        ASL 2.0
 Summary:        WADI Application Distribution Infrastructure
@@ -92,7 +92,7 @@ BuildRequires: derby
 BuildRequires: groovy11
 BuildRequires: jakarta-commons-el
 BuildRequires: jakarta-slide-webdavclient >= 0:2.1
-BuildRequires: jgroups
+BuildRequires: jgroups212
 BuildRequires: mx4j
 BuildRequires: spring-mock
 BuildRequires: tomcat5-jasper
@@ -327,6 +327,9 @@ cp -pr doc/* %{buildroot}%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt4_1jpp6
+- fixed build with new jgroup
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.1-alt3_1jpp6
 - build with mojo-aspectj-plugin
 
