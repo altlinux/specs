@@ -6,12 +6,12 @@
 
 %def_enable libdrm_intel
 %def_enable libdrm_radeon
-%def_enable libdrm_nouveau
+%def_disable libdrm_nouveau
 
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
 Version: 0.8.6.1
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Base
 
@@ -474,6 +474,9 @@ fi \
 %files system-theme
 
 %changelog
+* Sat Sep 15 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.8.6.1-alt2
+- disabled libdrm_nouveau
+
 * Tue Jul 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.8.6.1-alt1
 - 0.8.6.1
 - ship systemd service files

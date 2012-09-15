@@ -2,7 +2,7 @@
 %def_enable scanner
 
 Name: wayland
-Version: 0.85.0
+Version: 0.95.0
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -67,6 +67,24 @@ Requires: %name-devel = %version-%release
 %description -n lib%name-server-devel
 This package provides development files for Wayland server library.
 
+%package -n lib%name-cursor
+Summary: Wayland cursor helper library
+Group: System/Libraries
+License: MIT
+
+%description -n lib%name-cursor
+Wayland cursor helper shared library.
+
+%package -n lib%name-cursor-devel
+Summary: Wayland cursor helper library
+Group: System/Libraries
+License: MIT
+Requires: lib%name-cursor = %version-%release
+Requires: %name-devel = %version-%release
+
+%description -n lib%name-cursor-devel
+This package provides development files for Wayland cursor helper library.
+
 %prep
 %setup
 
@@ -83,14 +101,12 @@ This package provides development files for Wayland server library.
 %files devel
 %_bindir/%name-scanner
 %_includedir/%name-util.h
+%_includedir/%name-version.h
 %_datadir/aclocal/%name-scanner.*
 %doc README TODO
 
 %files -n lib%name-client
 %_libdir/lib%name-client.so.*
-
-%files -n lib%name-server
-%_libdir/lib%name-server.so.*
 
 %files -n lib%name-client-devel
 %_includedir/%name-client*.h
@@ -98,12 +114,26 @@ This package provides development files for Wayland server library.
 %_libdir/lib%name-client.so
 %_pkgconfigdir/%name-client.pc
 
+%files -n lib%name-server
+%_libdir/lib%name-server.so.*
+
 %files -n lib%name-server-devel
 %_includedir/%name-server*.h
 %_libdir/lib%name-server.so
 %_pkgconfigdir/%name-server.pc
 
+%files -n lib%name-cursor
+%_libdir/lib%name-cursor.so.*
+
+%files -n lib%name-cursor-devel
+%_includedir/%name-cursor.h
+%_libdir/lib%name-cursor.so
+%_pkgconfigdir/%name-cursor.pc
+
 %changelog
+* Mon Sep 10 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.95.0-alt1
+- 0.95.0
+
 * Sun Feb 12 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.85.0-alt1
 - first release
 

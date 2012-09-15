@@ -4,8 +4,8 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 8.0.4
-Release: alt1
+Version: 9.0
+Release: alt0.2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -40,23 +40,6 @@ Requires: libGL = %epoch:%version-%release
 %description -n libGL-devel
 libGL-devel contains the libraries and header files needed to
 develop programs which make use of Mesa
-
-%package -n libGLU
-Summary: Mesa libGLU runtime library
-Group: System/Libraries
-Requires: libGL = %epoch:%version-%release
-
-%description -n libGLU
-Mesa libGLU runtime library
-
-%package -n libGLU-devel
-Summary: Mesa libGLU development package
-Group: Development/C
-Requires: libGLU = %epoch:%version-%release
-Requires: libGL-devel = %epoch:%version-%release
-
-%description -n libGLU-devel
-Mesa libGLU development package
 
 %package -n libEGL
 Summary: Mesa EGL library
@@ -189,7 +172,6 @@ subst "s|^\(#define MESA_VERSION_STRING \"\).*|#define MESA_VERSION_STRING \"%ve
 %build
 %autoreconf
 %configure \
-	--with-driver=dri \
 %ifarch %ix86
 	--enable-32-bit \
 	--with-dri-drivers=%dri_ix86 \
@@ -225,23 +207,19 @@ subst "s|^\(#define MESA_VERSION_STRING \"\).*|#define MESA_VERSION_STRING \"%ve
 %endif
 #
 
-subst 's|^\(SRC_DIRS = \)\(.*\)mesa[[:space:]]*glx\(.*\)|\1\2glx mesa\3|' configs/current
+subst 's|^\(SRC_DIRS = \)\(.*\)mesa.*glx\(.*\)|\1\2glx mesa gtest\3|' src/Makefile
 %make_build
 %make -C progs
 
 %install
 %make DESTDIR=%buildroot install
 
-%if_enabled osmesa
-cp -a lib*/libOSMesa.so* %buildroot%_libdir/
-%endif
-
 mkdir -p %buildroot%_bindir
 install -m755 progs/glx{info,gears} %buildroot%_bindir/
 
 # moved libGL
 mkdir -p %buildroot%_sysconfdir/X11/%_lib
-mv %buildroot%_libdir/libGL.so.1.2 %buildroot%_libdir/X11/
+mv %buildroot%_libdir/libGL.so.1.2.0 %buildroot%_libdir/X11/libGL.so.1.2
 ln -sf ../../..%_libdir/X11/libGL.so.1.2 %buildroot%_sysconfdir/X11/%_lib/libGL.so.1
 ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %buildroot%_libdir/
 ln -sf X11/libGL.so.1.2 %buildroot%_libdir/libGL.so
@@ -255,10 +233,12 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 %doc docs/relnotes-%version.html docs/versions.html docs/news.html
 %dir %_sysconfdir/X11/%_lib
 %ghost %_sysconfdir/X11/%_lib/libGL.so.1
+%config(noreplace) %_sysconfdir/drirc
 %_libdir/libGL.so.*
 %_libdir/libglapi.so.*
+%_libdir/libdricore*.so.*
 %dir %_libdir/X11
-%_libdir/X11/libGL.so.1.2
+%_libdir/X11/libGL.so.1.*
 %dir %_libdir/X11/modules
 %dir %_libdir/X11/modules/dri
 
@@ -273,6 +253,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 %_includedir/GL/glxext.h
 %_libdir/libGL.so
 %_libdir/libglapi.so
+%_libdir/libdricore*.so
 %_pkgconfigdir/gl.pc
 %_pkgconfigdir/dri.pc
 
@@ -322,15 +303,6 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 %_pkgconfigdir/wayland-egl.pc
 %endif
 
-%files -n libGLU
-%_libdir/libGLU.so.*
-
-%files -n libGLU-devel
-%_includedir/GL/glu.h
-%_includedir/GL/glu_mangle.h
-%_libdir/libGLU.so
-%_pkgconfigdir/glu.pc
-
 %files -n xorg-dri-swrast
 %_libdir/X11/modules/dri/swrast*_dri.so
 
@@ -353,6 +325,12 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Fri Sep 14 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0-alt0.2
+- updated to 9.0 git.a5a8665
+
+* Mon Sep 10 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0-alt0.1
+- 9.0-devel
+
 * Wed Jul 11 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:8.0.4-alt1
 - 8.0.4
 

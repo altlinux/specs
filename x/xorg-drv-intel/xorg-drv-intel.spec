@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
 Version: 2.20.7
-Release: alt1
+Release: alt2
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -37,6 +37,7 @@ and 24 for the 830M and later
 %configure \
 	--with-xorg-module-dir=%_x11modulesdir \
 	--enable-dri \
+	--disable-sna \
 	--disable-static
 
 %make_build
@@ -50,6 +51,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Fri Sep 14 2012 Valery Inozemtsev <shrek@altlinux.ru> 7:2.20.7-alt2
+- disabled SNA
+
 * Sun Sep 09 2012 Valery Inozemtsev <shrek@altlinux.ru> 7:2.20.7-alt1
 - 2.20.7
 
