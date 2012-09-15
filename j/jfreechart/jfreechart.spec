@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           jfreechart
 Version:        1.0.14
-Release:        alt2_2jpp7
+Release:        alt3_2jpp7
 Summary:        Java chart library
 
 Group:          Development/Java
@@ -83,6 +83,7 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
 
 # DEPMAP
 %add_maven_depmap -a "%{name}:%{name}" JPP.%{name}-%{name}.pom %{name}/%{name}.jar
+ln -s %{name}/%{name}.jar %buildroot%{_javadir}/%{name}.jar
 
 %files
 %{_mavenpomdir}/*
@@ -90,6 +91,7 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
 %dir %{_javadir}/%{name}
 %{_javadir}/%{name}/%{name}.jar
 %doc ChangeLog licence-LGPL.txt NEWS README.txt
+%{_javadir}/%{name}.jar
 
 %files swt
 %{_javadir}/%{name}/swtgraphics2d*.jar
@@ -99,6 +101,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt3_2jpp7
+- added jpp compat symlink
+
 * Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt2_2jpp7
 - added jfreechart:jfreechart depmap
 
