@@ -1,5 +1,7 @@
+BuildRequires: itext bouncycastle-mail bouncycastle-tsp
 Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: /proc maven-shared-archiver maven2-plugin-javadoc  maven2-plugin-antrun maven2-plugin-resources
+BuildRequires: maven-shared-archiver maven2-plugin-javadoc  maven2-plugin-antrun maven2-plugin-resources
+BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
 # All rights reserved.
@@ -33,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           dsol-basic
 Version:        1.6.9
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Summary:        Java D-SOL simulation basic libs
 
 Group:          Development/Java
@@ -219,6 +221,9 @@ done
 %{_javadocdir}/%{name} 
 
 %changelog
+* Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt4_1jpp6
+- fixed build with new jfreechart
+
 * Tue Mar 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt3_1jpp6
 - fixed build with maven3
 
