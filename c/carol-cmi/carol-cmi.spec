@@ -37,7 +37,7 @@ Name:		carol-cmi
 Summary:	CMI: "Cluster aware" distribution protocol
 Url:		http://carol.objectweb.org/
 Version:	1.2.7
-Release:	alt3_3jpp6
+Release:	alt4_3jpp6
 Epoch:		0
 License:	LGPL
 Group:		Development/Java
@@ -56,7 +56,7 @@ BuildRequires:  geronimo-servlet-2.4-api
 
 BuildRequires:  apache-commons-collections >= 3.1
 BuildRequires:  apache-commons-logging >= 1.0.4
-BuildRequires:  jgroups
+BuildRequires:  jgroups212
 BuildRequires:  mx4j
 BuildRequires:  velocity
 Requires:  asm >= 0:1.5.3
@@ -104,7 +104,7 @@ geronimo-servlet-2.4-api \
 asm/asm \
 commons-collections \
 commons-logging \
-jgroups \
+jgroups212 \
 mx4j/mx4j \
 velocity \
 
@@ -156,6 +156,9 @@ cp -pr output/dist/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.7-alt4_3jpp6
+- fixed build with new jgroup
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.7-alt3_3jpp6
 - new jpp relase
 
