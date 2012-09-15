@@ -1,5 +1,5 @@
 Name: perl-Plack-Middleware-ReverseProxy
-Version: 0.09
+Version: 0.14
 Release: alt1
 Summary: Plack::Middleware::ReverseProxy - supports app to run as a reverse proxy backend
 
@@ -28,5 +28,8 @@ BuildRequires: perl-devel perl-parent perl-Plack perl-YAML perl-Module-Install p
 %doc Changes README 
 
 %changelog
+* Sat Sep 15 2012 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt1
+- 0.09 -> 0.14
+
 * Fri Jul 29 2011 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt1
 - initial build
