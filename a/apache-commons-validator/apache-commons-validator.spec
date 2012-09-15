@@ -56,7 +56,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-validator
 Version:        1.4
-Release:	alt1_0.r832761.5jpp6
+Release:	alt2_0.r832761.5jpp6
 Epoch:          0
 Summary:        Apache Commons Validator
 License:        ASL 2.0
@@ -111,6 +111,7 @@ Obsoletes:      jakarta-%{short_name} < %{epoch}:%{version}-%{release}
 Provides:       %{short_name} = %{epoch}:%{version}-%{release}
 Obsoletes:      %{short_name} < %{epoch}:%{version}-%{release}
 Source44: import.info
+Patch33: apache-commons-validator-1.4-alt-make-oro-essential-dependency.patch
 
 %description
 A common issue when receiving data either electronically or from user
@@ -171,6 +172,7 @@ sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 %endif
+%patch33 -p0
 
 %build
 %if %with maven
@@ -294,6 +296,9 @@ fi
 %endif
 
 %changelog
+* Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt2_0.r832761.5jpp6
+- marked oro as essential dependency due to maven-site-plugin
+
 * Sat Feb 26 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_0.r832761.5jpp6
 - new version
 
