@@ -2,13 +2,14 @@
 %define api_ver 2.0
 %define gst_api_ver 1.0
 
+%def_enable gtk_doc
 %def_enable introspection
 # experimental support for hardware accelerated decoders
 %def_disable hw
 
 Name: %_name%api_ver
 Version: 1.9.90
-Release: alt1
+Release: alt2
 
 Summary: Library integrating clutter with GStreamer
 License: LGPL v2+
@@ -16,6 +17,7 @@ Group: System/Libraries
 Url: http://www.clutter-project.org/
 
 Source: %_name-%version.tar.xz
+Patch: clutter-gst-1.9.90-alt-gtk-doc.patch
 
 BuildRequires: gst-plugins1.0-devel gtk-doc glib2-devel >= 2.18 libclutter-devel >= 1.6.0
 %{?_enable_introspection:BuildRequires: libclutter-gir-devel gst-plugins1.0-gir-devel}
@@ -58,14 +60,26 @@ Requires: lib%name-devel = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Clutter-Gst library.
 
+%package -n lib%name-devel-doc
+Summary: Clutter-Gst development documentation
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: lib%name-devel < %version
+
+%description -n lib%name-devel-doc
+This package contains documentation necessary to develop applications
+that use Clutter-Gst libraries.
+
 %prep
 %setup -n %_name-%version
+%patch
 
 %build
-#%%autoreconf
+%autoreconf
 %configure \
-	--enable-gtk-doc \
-	--disable-static
+	--disable-static \
+	%{?_enable_gtk_doc:--enable-gtk-doc}
+
 %make_build
 
 %install
@@ -80,7 +94,6 @@ GObject introspection devel data for the Clutter-Gst library.
 %_includedir/clutter-*
 %_libdir/libclutter-gst-*.so
 %_pkgconfigdir/*.pc
-%_datadir/gtk-doc/html/*
 
 %if_enabled introspection
 %files -n lib%name-gir
@@ -90,8 +103,15 @@ GObject introspection devel data for the Clutter-Gst library.
 %_girdir/ClutterGst-%api_ver.gir
 %endif
 
+%if_enabled gtk_doc
+%files -n lib%name-devel-doc
+%_datadir/gtk-doc/html/*
+%endif
 
 %changelog
+* Sat Sep 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.9.90-alt2
+- fixed path to html documentation to avoid conflict with clutter-gst-1.0
+
 * Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 1.9.90-alt1
 - first build for Sisyphus
 
