@@ -36,7 +36,7 @@ BuildRequires: servletapi4
 Summary:        High performance J2EE caching solution
 Name:           oscache
 Version:        2.4.1
-Release:        alt2_1jpp5
+Release:        alt3_1jpp5
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -62,7 +62,7 @@ BuildRequires: httpunit >= 0:1.6
 BuildRequires: jms >= 0:1.1
 BuildRequires: servlet >= 0:2.3
 BuildRequires: jakarta-commons-logging >= 0:1.1
-BuildRequires: jgroups >= 0:2.2.8
+BuildRequires: jgroups212
 BuildArch:      noarch
 
 %description
@@ -120,9 +120,11 @@ touch EMPTY.MF
 
 sed -i -e s,fr.jayasoft.ivy,org.apache.ivy,g build.xml osbuild.xml
 
+sed -i -e 's,dependency org="java" name="jgroups",dependency org="java" name="jgroups212",'  ivy.xml
+
 %build
 
-    export CLASSPATH=$(build-classpath apache-ivy ant/ant-junit junit ant/ant-trax)
+export CLASSPATH=$(build-classpath apache-ivy ant/ant-junit junit ant/ant-trax)
 export CLASSPATH=
 export OPT_JAR_LIST="apache-ivy ant/ant-junit junit ant/ant-trax"
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dskip.tests=true -Dcommon.build=osbuild.xml jar
@@ -162,6 +164,9 @@ mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt3_1jpp5
+- fixed build with new jgroup
+
 * Wed Apr 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.4.1-alt2_1jpp5
 - fixed build
 
