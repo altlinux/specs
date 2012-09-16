@@ -26,7 +26,7 @@
 %define bugfix 4
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -462,6 +462,12 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Sun Sep 16 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2
+- rebuilt with new libktorrent
+
+* Fri Jun 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Wed Jun 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 

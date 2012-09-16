@@ -1,9 +1,9 @@
 
-%define sonum 4
+%define sonum 5
 %define libname libktorrent%sonum
 
 Name: libktorrent
-Version: 1.2.1
+Version: 1.3.0
 Release: alt1
 
 Group: System/Libraries
@@ -70,6 +70,12 @@ This package contains the development files for %name.
 %_K4link/lib*.so
 
 %changelog
+* Sat Sep 15 2012 Sergey V Turchin <zerg at altlinux dot org> 1.3.0-alt1
+- new version
+
+* Tue Jun 19 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt0.M60P.1
+- built for M60P
+
 * Fri Jun 15 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.1-alt1
 - new version
 

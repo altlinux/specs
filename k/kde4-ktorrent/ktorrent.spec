@@ -5,7 +5,7 @@
 %add_findreq_skiplist %_K4apps/%rname/scripts/*.py
 
 Name: kde4-%rname
-Version: 4.2.1
+Version: 4.3.0
 Release: alt1
 
 Group:     Networking/File transfer
@@ -59,6 +59,12 @@ ktorrent - KDE BitTorrent client. It comes with many useful plugins.
 
 
 %changelog
+* Sat Sep 15 2012 Sergey V Turchin <zerg at altlinux dot org> 4.3.0-alt1
+- new version
+
+* Tue Jun 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.2.1-alt0.M60P.1
+- built for M60P
+
 * Fri Jun 15 2012 Sergey V Turchin <zerg@altlinux.org> 4.2.1-alt1
 - new version
 
