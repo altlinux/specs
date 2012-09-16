@@ -1,6 +1,6 @@
 Name: asterisk10
 Summary: Open source PBX
-Version: 10.6.1
+Version: 10.8.0
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -1199,6 +1199,9 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %_altdir/conf2ael-%version
 
 %changelog
+* Sun Sep 16 2012 Denis Smirnov <mithraen@altlinux.ru> 10.8.0-alt1
+- 10.8.0
+
 * Thu Aug 09 2012 Denis Smirnov <mithraen@altlinux.ru> 10.6.1-alt1
 - 10.6.1
 - not build chan_h323 (use chan_ooh323 instead)
