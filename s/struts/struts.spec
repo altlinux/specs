@@ -1,269 +1,128 @@
-BuildRequires: cssparser
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+%global master_version 4
+Name:          struts
+Version:       1.3.10
+Release:       alt3_5jpp7
+Summary:       Web application framework
+Group:         Development/Java
+License:       ASL 2.0
+URL:           http://struts.apache.org/
+# wget http://www.apache.org/dist/struts/source/struts-1.3.10-src.zip
+# remove non free resources
+# unzip -qq struts-1.3.10-src.zip
+# rm -r struts-1.3.10/src/core/src/main/resources/org/apache/struts/resources/web-app_2_3.dtd
+# tar czf struts-1.3.10-clean-src.tar.gz struts-1.3.10
+Source0:       %{name}-%{version}-clean-src.tar.gz
+# wget -O struts-master-4-pom.xml http://svn.apache.org/repos/asf/struts/maven/tags/STRUTS_MASTER_4/pom.xml
+Source1:       %{name}-master-%{master_version}-pom.xml
+# add struts-master relativePath
+Patch0:        %{name}-%{version}-parent-pom.patch
+# add 
+#  org.jboss.spec.javax.el jboss-el-api_2.2_spec
+#  org.apache.maven.plugins maven-resources-plugin configuration
+# change 
+#  myfaces myfaces-jsf-api 1.0.9 with org.jboss.spec.javax.faces jboss-jsf-api_2.1_spec
+#  jakarta-taglibs-standard with jboss-jstl-1.2-api
+#  javax.servlet servlet-api with org.jboss.spec.javax.servlet jboss-servlet-api_3.0_spec
+#  javax.servlet jsp-api with org.jboss.spec.javax.servlet.jsp jboss-jsp-api_2.2_spec
+# fix
+#  bsf gId
+#  maven-compiler-plugin build source/target
+#  build for junit servlet-3.0-api
+Patch1:        %{name}-%{version}-jboss.patch
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+BuildRequires: jpackage-utils
 
-#def_with coreonly
-%bcond_with coreonly
-#def_with gcj_support
-%bcond_with gcj_support
-#def_with jsf_ri
-%bcond_with jsf_ri
-
-%if %with coreonly
-#def_with apps
-%bcond_with apps
-#def_with manual
-%bcond_with manual
-#def_with zips
-%bcond_with zips
-%else
-%bcond_with apps
-%bcond_with manual
-#def_with zips
-%bcond_with zips
-%endif
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-
-Name:           struts
-Version:        1.3.10
-Release:        alt3_2jpp6
-Epoch:          0
-Summary:        Web application framework
-License:        ASL 2.0
-Group:          Development/Java
-URL:            http://struts.apache.org/
-Source0:        http://archive.apache.org/dist/struts/source/struts-1.3.10-src.zip
-Source1:        %{name}-settings.xml
-Source2:        %{name}-jpp-depmap.xml
-Source3:        http://svn.apache.org/repos/asf/struts/maven/tags/STRUTS_MASTER_4/pom.xml
-Source4:        %{name}-checks.xml
-Patch0:         struts-1.3.8-core-pom.patch
-Patch1:         struts-1.3.10-Tomcat5xTestSetup.patch
-Patch2:         struts-1.3.8-assembly-pom.patch
-Patch3:         struts-1.3.10-taglib-pom.patch
-Patch4:         struts-1.3.10-pom.patch
-# Part of updating the syntax in site.xml for the new site plugin
-Patch5:         struts-1.3.8-site.patch
-Patch6:         struts-1.3.8-no-sign.patch
-Patch7:         struts-1.3.8-no-versions.patch
-Patch8:         struts-1.3.8-jsf-ri.patch
-Patch9:         struts-1.3.8-no-apps.patch
-Patch10:        struts-1.3.8-web-xml-version.patch
-Patch11:        struts-1.3.8-apps-scripting-mailreader.patch
-# This is due to <http://jira.codehaus.org/browse/MCHECKSTYLE-97>
-Patch12:         struts-1.3.10-no-checkstyle.patch
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-Requires: %{name}-core = %{epoch}:%{version}-%{release}
-Requires: %{name}-extras = %{epoch}:%{version}-%{release}
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: junit
-BuildRequires: maven2 >= 0:2.0.7
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-assembly
-BuildRequires: maven2-plugin-checkstyle
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-dependency
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-gpg
-BuildRequires: maven2-plugin-pmd
-BuildRequires: maven2-plugin-project-info-reports
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-plugin-site
-BuildRequires: maven2-plugin-source
-BuildRequires: maven2-plugin-war
-BuildRequires: maven-jxr
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven2-plugin-surefire-report
-BuildRequires: maven-surefire-provider-junit
-BuildRequires: cargo-maven2-plugin
-BuildRequires: commons-parent
-BuildRequires: dtddoc-maven2-plugin
-BuildRequires: taglib-maven2-plugin
-BuildRequires: bcel
-BuildRequires: checkstyle4
-BuildRequires: checkstyle4-optional
-BuildRequires: jhighlight
-BuildRequires: maven2-default-skin
-BuildRequires: jakarta-taglibs-standard
-BuildRequires: servlet_2_4_api
-BuildRequires: jsp_2_0_api
-%if %without jsf_ri
-BuildRequires: myfaces
-%else
-BuildRequires: glassfish-jsf
-%endif
 BuildRequires: antlr
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-digester
-BuildRequires: jakarta-commons-fileupload
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-validator
-BuildRequires: jakarta-oro
-BuildRequires: xpp3-minimal
-# For compilation
-BuildRequires: servletapi4
-# For tests
-BuildRequires: tomcat5-servlet-2.4-api
-BuildRequires: tomcat6-el-2.1-api
-BuildRequires: tomcat5-jsp-2.0-api
-BuildRequires: tomcat6-jsp-2.1-api
-%if %without coreonly
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-chain
+BuildRequires: apache-commons-digester
+BuildRequires: apache-commons-fileupload
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-validator
 BuildRequires: bsf
-BuildRequires: excalibur-avalon-framework
-BuildRequires: excalibur-avalon-logkit
-BuildRequires: groovy15
-BuildRequires: jakarta-commons-chain
-BuildRequires: jakarta-commons-codec
-BuildRequires: jakarta-commons-el
-BuildRequires: jakarta-taglibs-standard
-BuildRequires: log4j
-# src/integration/apps-it/pom.xml:
-BuildRequires: htmlunit1
-BuildRequires: cargo >= 0:0.8
-%endif
-Obsoletes:      struts-webapps-tomcat3 < %{epoch}:%{version}
-Provides:       struts-webapps-tomcat3 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-webapps-tomcat4 < %{epoch}:%{version}
-Provides:       struts-webapps-tomcat4 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-webapps-tomcat5 < %{epoch}:%{version}
-Provides:       struts-webapps-tomcat5 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-chain-webapps-tomcat3 < %{epoch}:%{version}
-Provides:       struts-chain-webapps-tomcat3 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-chain-webapps-tomcat4 < %{epoch}:%{version}
-Provides:       struts-chain-webapps-tomcat4 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-chain-webapps-tomcat5 < %{epoch}:%{version}
-Provides:       struts-chain-webapps-tomcat5 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-el-webapps-tomcat3 < %{epoch}:%{version}
-Provides:       struts-el-webapps-tomcat3 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-el-webapps-tomcat4 < %{epoch}:%{version}
-Provides:       struts-el-webapps-tomcat4 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-el-webapps-tomcat5 < %{epoch}:%{version}
-Provides:       struts-el-webapps-tomcat5 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-faces-webapps-tomcat3 < %{epoch}:%{version}
-Provides:       struts-faces-webapps-tomcat3 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-faces-webapps-tomcat4 < %{epoch}:%{version}
-Provides:       struts-faces-webapps-tomcat4 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-faces-webapps-tomcat5 < %{epoch}:%{version}
-Provides:       struts-faces-webapps-tomcat5 = %{epoch}:%{version}-%{release}
-Obsoletes:      struts-chain < %{epoch}:%{version}
-Provides:       struts-chain = %{epoch}:%{version}-%{release}
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
-BuildArch:      noarch
-%endif
+BuildRequires: jakarta-oro
+BuildRequires: jboss-el-2.2-api
+BuildRequires: jboss-jsf-2.1-api
+BuildRequires: jboss-jsp-2.2-api
+BuildRequires: jboss-jstl-1.2-api
+BuildRequires: jboss-servlet-3.0-api
+# not only a test dep
+BuildRequires: junit
+
+BuildRequires: maven
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-surefire-plugin
+BuildRequires: maven-surefire-provider-junit4
+
+Requires:      antlr
+Requires:      apache-commons-beanutils
+Requires:      apache-commons-chain
+Requires:      apache-commons-digester
+Requires:      apache-commons-fileupload
+Requires:      apache-commons-logging
+Requires:      apache-commons-validator
+Requires:      bsf
+Requires:      jakarta-oro
+Requires:      jboss-el-2.2-api
+Requires:      jboss-jsf-2.1-api
+Requires:      jboss-jsp-2.2-api
+Requires:      jboss-jstl-1.2-api
+Requires:      jboss-servlet-3.0-api
+Requires:      junit
+
+Requires:      jpackage-utils
+BuildArch:     noarch
+Obsoletes:     %{name}-manual < %{version}
+Obsoletes:     %{name}-webapps-tomcat5 < %{version}
 Source44: import.info
 
-%description
-Welcome to the Struts Framework! The goal of this project is to provide
-an open source framework useful in building web applications with Java
-Servlet and JavaServer Pages (JSP) technology. Struts encourages
-application architectures based on the Model-View-Controller (MVC)
-design paradigm, colloquially known as Model 2 in discussions on various
-servlet and JSP related mailing lists.
-
-Struts includes the following primary areas of functionality:
-A controller servlet that dispatches requests to appropriate Action
-classes provided by the application developer.
-JSP custom tag libraries, and associated support in the controller
-servlet, that assists developers in creating interactive form-based
-applications.
-
-Utility classes to support XML parsing, automatic population of
-JavaBeans properties based on the Java reflection APIs, and
-internationalization of prompts and messages.
-Struts is part of the Jakarta Project, sponsored by the Apache Software
-Foundation. The official Struts home page is at
-http://jakarta.apache.org/struts.
-
-%if %with manual
-%package manual
-Summary:        Manual for %{name}
-Group:          Development/Documentation
-Requires: %{name}-javadoc = %{epoch}:%{version}-%{release}
-BuildArch: noarch
-
-%description manual
-Documentation for %{name}.
-%endif
-
-%package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description javadoc
-%{summary}.
+# Provides: struts-core = 0:1.3.8
+# Provides: struts-el = 0:1.3.8
+# Provides: struts-extras = 0:1.3.8
+# Provides: struts-faces = 0:1.3.8
+# Provides: struts-mailreader-dao = 0:1.3.8
+# Provides: struts-scripting = 0:1.3.8
+# Provides: struts-taglib = 0:1.3.8
+# Provides: struts-tiles = 0:1.3.8
+# Obsoletes: struts-core < 0:1.3.10-alt3_3
+# Obsoletes: struts-el < 0:1.3.10-alt3_3
+# Obsoletes: struts-extras < 0:1.3.10-alt3_3
+# Obsoletes: struts-faces < 0:1.3.10-alt3_3
+# Obsoletes: struts-mailreader-dao < 0:1.3.10-alt3_3
+# Obsoletes: struts-scripting < 0:1.3.10-alt3_3
+# Obsoletes: struts-taglib < 0:1.3.10-alt3_3
+# Obsoletes: struts-tiles < 0:1.3.10-alt3_3
 
 %package core
 Summary:        Core for %{name}
 Group:          Development/Java
-Requires: antlr >= 0:2.7.2
-Requires: jakarta-commons-beanutils >= 0:1.8.0
-Requires: jakarta-commons-chain >= 0:1.2
-Requires: jakarta-commons-digester >= 0:1.8
-Requires: jakarta-commons-logging >= 0:1.0.4
-Requires: jakarta-commons-validator >= 0:1.3.1
-Requires: jakarta-oro >= 0:2.0.8
+#Requires: antlr
+#Requires: apache-commons-beanutils
+#Requires: apache-commons-chain
+#Requires: apache-commons-digester
+#Requires: apache-commons-logging
+#Requires: apache-commons-validator
+#Requires: jakarta-oro
 Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: commons-parent >= 0:7
+#Requires: commons-parent
 
 %description core
 %{summary}.
 
-%if %without coreonly
 %package el
 Summary:        EL extension for %{name}
 Group:          Development/Java
 Requires: %{name}-core = %{epoch}:%{version}-%{release}
 Requires: %{name}-taglib = %{epoch}:%{version}-%{release}
 Requires: %{name}-tiles = %{epoch}:%{version}-%{release}
-Requires: jakarta-taglibs-standard >= 0:1.0.6
-#Provided:      servlet_2_3_api
+#Requires: jakarta-taglibs-standard
 
 %description el
 %{summary}.
@@ -272,7 +131,6 @@ Requires: jakarta-taglibs-standard >= 0:1.0.6
 Summary:        Extras for %{name}
 Group:          Development/Java
 Requires: %{name}-core = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
 
 %description extras
 %{summary}.
@@ -283,13 +141,6 @@ Group:          Development/Java
 Requires: %{name}-core = %{epoch}:%{version}-%{release}
 Requires: %{name}-taglib = %{epoch}:%{version}-%{release}
 Requires: %{name}-tiles = %{epoch}:%{version}-%{release}
-%if %without jsf_ri
-#Provided:      myfaces >= 0:1.0.9
-%else
-#Provided:      glassfish-jsf
-%endif
-#Provided:      jsp_2_0_api
-#Provided:      servlet_2_3_api
 
 %description faces
 %{summary}.
@@ -297,8 +148,8 @@ Requires: %{name}-tiles = %{epoch}:%{version}-%{release}
 %package mailreader-dao
 Summary:        %{name} mailreader-dao library
 Group:          Development/Java
-Requires: jakarta-commons-digester >= 0:1.8
-Requires: jakarta-commons-logging >= 0:1.0.4
+#Requires: apache-commons-digester
+#Requires: apache-commons-logging
 
 %description mailreader-dao
 %{summary}.
@@ -307,8 +158,7 @@ Requires: jakarta-commons-logging >= 0:1.0.4
 Summary:        %{name} scripting library
 Group:          Development/Java
 Requires: %{name}-core = %{epoch}:%{version}-%{release}
-Requires: bsf >= 0:2.3
-#Provided:      servlet_2_3_api
+#Requires: bsf
 
 %description scripting
 %{summary}.
@@ -317,7 +167,6 @@ Requires: bsf >= 0:2.3
 Summary:        %{name} taglib library
 Group:          Development/Java
 Requires: %{name}-core = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
 
 %description taglib
 %{summary}.
@@ -326,301 +175,131 @@ Requires: %{name}-core = %{epoch}:%{version}-%{release}
 Summary:        %{name} tiles library
 Group:          Development/Java
 Requires: %{name}-core = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
 
 %description tiles
 %{summary}.
-%endif # coreonly
 
-%if %with apps
-%package webapp-blank
-Summary:        Sample %{name} blank webapp
-Group:          Development/Java
-Requires: %{name}-taglib = %{epoch}:%{version}-%{release}
-Requires: %{name}-tiles = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
+%files core
+%{_javadir}/%{name}-core.jar
+%{_javadir}/%{name}.jar
 
-%description webapp-blank
-%{summary}.
+%files el
+%{_javadir}/%{name}-el.jar
 
-%package webapp-cookbook
-Summary:        Sample %{name} cookbook webapp
-Group:          Development/Java
-Requires: %{name}-core = %{epoch}:%{version}-%{release}
-Requires: %{name}-taglib = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
+%files extras
+%{_javadir}/%{name}-extras.jar
 
-%description webapp-cookbook
-%{summary}.
+%files faces
+%{_javadir}/%{name}-faces.jar
 
-%package webapp-el-example
-Summary:        Sample %{name} EL webapp
-Group:          Development/Java
-Requires: antlr
-Requires: excalibur-avalon-framework
-Requires: excalibur-avalon-logkit
-Requires: jakarta-commons-beanutils
-Requires: jakarta-commons-chain
-Requires: jakarta-commons-digester
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-validator
-Requires: jakarta-taglibs-standard
-Requires: log4j
-Requires: jakarta-oro
-Requires: %{name}-el = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
+%files mailreader-dao
+%{_javadir}/%{name}-mailreader-dao.jar
 
-%description webapp-el-example
-%{summary}.
+%files scripting
+%{_javadir}/%{name}-scripting.jar
 
-%package webapp-examples
-Summary:        Sample %{name} webapp
-Group:          Development/Java
-Requires: %{name}-extras = %{epoch}:%{version}-%{release}
-Requires: %{name}-taglib = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
-Requires: jakarta-taglibs-standard >= 0:1.0.6
-Requires: jakarta-commons-fileupload >= 0:1.1.1
+%files taglib
+%{_javadir}/%{name}-taglib.jar
 
-%description webapp-examples
-%{summary}.
+%files tiles
+%{_javadir}/%{name}-tiles.jar
 
-%package webapps-faces
-Summary:        Sample %{name} faces webapps
-Group:          Development/Java
-%if %with jsf_ri
-#Optional:      myfaces >= 0:1.0.9
-%else
-#Optional:      glassfish-jsf
-%endif
-Requires: jakarta-commons-codec >= 0:1.2
-Requires: jakarta-commons-el >= 0:1.0
-Requires: jakarta-taglibs-standard >= 0:1.0.6
-Requires: %{name}-faces = %{epoch}:%{version}-%{release}
-Requires: %{name}-tiles = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
 
-%description webapps-faces
-%{summary}.
+%description
+Welcome to the Struts Framework! The goal of this project is to provide
+an open source framework useful in building web applications with Java
+Servlet and JavaServer Pages (JSP) technology. Struts encourages
+application architectures based on the Model-View-Controller (MVC)
+design paradigm, colloquially known as Model 2 in discussions on various
+servlet and JSP related mailing lists.
+Struts includes the following primary areas of functionality:
+A controller servlet that dispatches requests to appropriate Action
+classes provided by the application developer.
+JSP custom tag libraries, and associated support in the controller
+servlet, that assists developers in creating interactive form-based
+applications.
+Utility classes to support XML parsing, automatic population of
+JavaBeans properties based on the Java reflection APIs, and
+internationalization of prompts and messages.
 
-%package webapp-mailreader
-Summary:        Sample %{name} mailreader webapp
-Group:          Development/Java
-Requires: %{name}-extras = %{epoch}:%{version}-%{release}
-Requires: %{name}-mailreader-dao = %{epoch}:%{version}-%{release}
-Requires: %{name}-taglib = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
+%package javadoc
+Group:         Development/Java
+Summary:       Javadoc for %{name}
+Requires:      jpackage-utils
+BuildArch: noarch
 
-%description webapp-mailreader
-%{summary}.
-
-%package webapp-scripting-mailreader
-Summary:        Sample %{name} scripting mailreader webapp
-Group:          Development/Java
-Requires: groovy15
-Requires: %{name}-extras = %{epoch}:%{version}-%{release}
-Requires: %{name}-mailreader-dao = %{epoch}:%{version}-%{release}
-Requires: %{name}-scripting = %{epoch}:%{version}-%{release}
-Requires: %{name}-taglib = %{epoch}:%{version}-%{release}
-#Provided:      servlet_2_3_api
-
-%description webapp-scripting-mailreader
-%{summary}.
-%endif # apps
-
-%if %with zips
-%package zip
-Summary:     Container for the zipped distribution of %{name}
-Group:       Development/Java
-
-%description zip
-Container for the zipped distribution of %{name}.
-
-%package src-zip
-Summary:     Container for the sources of %{name}
-Group:       Development/Java
-
-%description src-zip
-Container for the sources of %{name}.
-%endif # zips
+%description javadoc
+This package contains javadoc for %{name}.
 
 %prep
 %setup -q
-%patch0
-%patch1
-%patch2
-%patch3
-%patch4
-%patch5
-%patch6
-%patch7
-%if %with jsf_ri
-%patch8
-%endif
-%if %without apps
-%patch9
-%endif
-%patch10
-%patch11
-%patch12
+find -name "*.jar" -delete
+find -name "*.class" -delete
+%patch0 -p0
+%patch1 -p1
 
-# Finish updating the syntax in site.xml for the new site plugin
-for j in $(find . -name "site.xml"); do
-    perl -p -i -e 's/\$\{reports\}/\<menu ref=\"reports\" \/\>/' $j
+sed -i 's/\r//' LICENSE.txt NOTICE.txt
+
+# fix non ASCII chars
+for s in src/tiles/src/main/java/org/apache/struts/tiles/ComponentDefinition.java;do
+  native2ascii -encoding UTF8 ${s} ${s}
 done
 
-%if %without jsf_ri
-perl -pi -e 's/^MYFACES_BEGIN.*\n$//g;' \
-         -e 's/^MYFACES_END.*\n$//g;' \
-%else
-perl -pi -e 's/^MYFACES_BEGIN.*\n$/<!--\r\n/g;' \
-         -e 's/^MYFACES_END.*\n$/-->\r\n/g;' \
-%endif
-    src/apps/faces-example1/src/main/webapp/WEB-INF/web.xml \
-    src/apps/faces-example2/src/main/webapp/WEB-INF/web.xml
-
-%if %with zips
-# Create src-zip
-mkdir -p dist/%{name}-%{version}
-cd dist/%{name}-%{version}
-cp -R ../../src .
-cp -R ../../*.txt .
-zip -q -r ../%{name}-%{version}-src.zip * -x \*.sav*
-rm -Rf src
-cd ../../
-%endif
-
-cp -p %{SOURCE3} pom.xml
-
-cp -p %{SOURCE1} maven2-settings.xml
-CHECK_XML_LOCATION=$(pwd)/struts_checks.xml
-cp -p %{SOURCE4} $CHECK_XML_LOCATION
-
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" maven2-settings.xml
-sed -i -e "s|<configLocation>__STRUTS_CHECKS__</configLocation>|<configLocation>file://$CHECK_XML_LOCATION</configLocation>|g" src/pom.xml
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-
-find -type f -name site.xml | xargs -t perl -pi -e 's|\$\{modules\}||g;' -e 's|\$\{reports\}||g;'
+cp -p %{SOURCE1} pom.xml
 
 %build
-export LANG=en_US.ISO8859-1
-export M2SETTINGS=$(pwd)/maven2-settings.xml
-export MAVEN_REPO_LOCAL=`pwd`/m2_repo/repository
-mkdir -p $MAVEN_REPO_LOCAL/JPP/maven2/default_poms
-cp -p %{SOURCE3} $MAVEN_REPO_LOCAL/JPP/maven2/default_poms/org.apache.struts-struts-master.pom
-#cp -p %{SOURCE3} $MAVEN_REPO_LOCAL/JPP/maven2/default_poms/JPP-struts-master.pom
 
-export MAVEN_OPTS="-Xmx256M -Djava.awt.headless=true"
-
-pushd src/
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-        -s ${M2SETTINGS} \
-        -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        -Dcargo.tomcat5x.home=%{_datadir}/tomcat5 \
-        -Dmaven.test.failure.ignore=true \
-        install -P apps,itest,pre-assembly
-
-#mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-#        -s ${M2SETTINGS} \
-#        -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
-#        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-#        -Daggregate=true \
-#        site -P apps,itest,pre-assembly
-popd
-
-#pushd src/assembly/
-#mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-#        -s ${M2SETTINGS} \
-#        -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
-#        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-#    assembly:assembly
-#popd
+cd src
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+  -Dproject.build.sourceEncoding=UTF-8 \
+  install javadoc:aggregate
 
 %install
 
-# jars
-install -d -m 755 %{buildroot}%{_javadir}
-install -p -m 0644 src/core/target/%{name}-core-%{version}.jar %{buildroot}%{_javadir}/%{name}-core-%{version}.jar
-ln -s %{name}-core-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%if %without coreonly
-install -p -m 0644 src/el/target/%{name}-el-%{version}.jar %{buildroot}%{_javadir}/%{name}-el-%{version}.jar
-install -p -m 0644 src/extras/target/%{name}-extras-%{version}.jar %{buildroot}%{_javadir}/%{name}-extras-%{version}.jar
-install -p -m 0644 src/faces/target/%{name}-faces-%{version}.jar %{buildroot}%{_javadir}/%{name}-faces-%{version}.jar
-install -p -m 0644 src/mailreader-dao/target/%{name}-mailreader-dao-%{version}.jar %{buildroot}%{_javadir}/%{name}-mailreader-dao-%{version}.jar
-install -p -m 0644 src/scripting/target/%{name}-scripting-%{version}.jar %{buildroot}%{_javadir}/%{name}-scripting-%{version}.jar
-install -p -m 0644 src/taglib/target/%{name}-taglib-%{version}.jar %{buildroot}%{_javadir}/%{name}-taglib-%{version}.jar
-install -p -m 0644 src/tiles/target/%{name}-tiles-%{version}.jar %{buildroot}%{_javadir}/%{name}-tiles-%{version}.jar
-%endif
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do ln -s ${jar} ${jar/-%{version}/}; done)
-%if %with apps
-pushd %{buildroot}%{_javadir}
-ln -s %{_datadir}/%{name}/apps %{name}-apps
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-master.pom
+%add_maven_depmap JPP.%{name}-master.pom
+
+install -pm 644 src/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
+%add_maven_depmap JPP.%{name}-parent.pom
+
+mkdir -p %{buildroot}%{_javadir}/%{name}
+for m in core \
+ el \
+ extras \
+ faces \
+ mailreader-dao \
+ scripting \
+ taglib \
+ tiles; do
+  install -pm 644 src/${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
+  install -pm 644 src/${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
+  %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
+done
+
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -pr src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
+
+for m in core \
+ el \
+ extras \
+ faces \
+ mailreader-dao \
+ scripting \
+ taglib \
+ tiles; do
+  ln -s %{name}/${m}.jar %{buildroot}%{_javadir}/%{name}-${m}.jar
+done
+
+# struts-all compat jar
+mkdir tmp-all
+pushd tmp-all
+for i in %{buildroot}%{_javadir}/%{name}/*.jar; do
+jar xf $i;
+done
+jar cf %{buildroot}%{_javadir}/%{name}.jar *
 popd
-%endif
-
-# poms and depmap frags
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-%if %with apps
-install -p -m 0644 src/apps/blank/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apps-blank.pom
-%add_to_maven_depmap org.apache.struts struts-blank %{version} JPP/%{name}-apps blank
-install -p -m 0644 src/apps/cookbook/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apps-cookbook.pom
-%add_to_maven_depmap org.apache.struts struts-cookbook %{version} JPP/%{name}-apps cookbook
-install -p -m 0644 src/apps/el-example/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apps-el-example.pom
-%add_to_maven_depmap org.apache.struts struts-el %{version} JPP/%{name}-apps el-example
-install -p -m 0644 src/apps/examples/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apps-examples.pom
-%add_to_maven_depmap org.apache.struts struts-examples %{version} JPP/%{name}-apps examples
-install -p -m 0644 src/apps/faces-example1/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apps-faces-example1.pom
-%add_to_maven_depmap org.apache.struts struts-faces-example1 %{version} JPP/%{name}-apps faces-example1
-install -p -m 0644 src/apps/faces-example2/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apps-faces-example2.pom
-%add_to_maven_depmap org.apache.struts struts-faces-example2 %{version} JPP/%{name}-apps faces-example2
-install -p -m 0644 src/apps/mailreader/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apps-mailreader.pom
-%add_to_maven_depmap org.apache.struts struts-mailreader %{version} JPP/%{name}-apps mailreader
-install -p -m 0644 src/apps/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-apps.pom
-%add_to_maven_depmap org.apache.struts struts-apps %{version} JPP %{name}-apps
-install -p -m 0644 src/apps/scripting-mailreader/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-apps-scripting-mailreader.pom
-%add_to_maven_depmap org.apache.struts struts-scripting-mailreader %{version} JPP/%{name}-apps scripting-mailreader
-%endif
-install -p -m 0644 src/assembly/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-assembly.pom
-%add_to_maven_depmap org.apache.struts struts-assembly %{version} JPP %{name}-assembly
-install -p -m 0644 src/core/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.apache.struts struts-core %{version} JPP %{name}
-install -p -m 0644 src/integration/apps-it/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-it-apps.pom
-%add_to_maven_depmap org.apache.struts struts-it-apps %{version} JPP %{name}-it-apps
-install -p -m 0644 src/integration/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-it.pom
-%add_to_maven_depmap org.apache.struts struts-it %{version} JPP %{name}-it
-%if %without coreonly
-install -p -m 0644 src/el/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-el.pom
-%add_to_maven_depmap org.apache.struts struts-el %{version} JPP %{name}-el
-install -p -m 0644 src/extras/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-extras.pom
-%add_to_maven_depmap org.apache.struts struts-extras %{version} JPP %{name}-extras
-install -p -m 0644 src/faces/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-faces.pom
-%add_to_maven_depmap org.apache.struts struts-faces %{version} JPP %{name}-faces
-install -p -m 0644 src/mailreader-dao/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-mailreader-dao.pom
-%add_to_maven_depmap org.apache.struts struts-mailreader-dao %{version} JPP %{name}-mailreader-dao
-install -p -m 0644 src/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-parent.pom
-%add_to_maven_depmap org.apache.struts struts-parent %{version} JPP %{name}-parent
-install -p -m 0644 src/scripting/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-scripting.pom
-%add_to_maven_depmap org.apache.struts struts-scripting %{version} JPP %{name}-scripting
-install -p -m 0644 src/taglib/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-taglib.pom
-%add_to_maven_depmap org.apache.struts struts-taglib %{version} JPP %{name}-taglib
-install -p -m 0644 src/tiles/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-tiles.pom
-%add_to_maven_depmap org.apache.struts struts-tiles %{version} JPP %{name}-tiles
-%endif
-install -p -m 0644 pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-master.pom
-%add_to_maven_depmap org.apache.struts struts-master %{version} JPP %{name}-master
-
-# javadoc
-install -d -m 755 %{buildroot}%{_javadocdir}/%{name}-%{version}
-#cp -pr src/target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-#rm -rf src/target/site/apidocs
 
 # data
 install -d -m 755 %{buildroot}%{_datadir}/%{name}
@@ -631,557 +310,21 @@ install -p -m 0644 src/tiles/src/main/resources/META-INF/tld/*.tld %{buildroot}%
 #install -p -m 0644 src/target/site/dtds/*.dtd %{buildroot}%{_datadir}/%{name}
 install -p -m 0644 src/core/src/main/resources/org/apache/struts/validator/vali*.xml %{buildroot}%{_datadir}/%{name}
 
-%if %with apps
-install -d -m 755 %{buildroot}%{_datadir}/%{name}/apps
-pushd %{buildroot}%{_datadir}/%{name}/apps
-mkdir blank.war
-pushd blank.war
-unzip -qq $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-blank*.war
-rm -v WEB-INF/lib/*
-#WEB-INF/lib/antlr-2.7.2.jar
-ln -s $(build-classpath antlr) .
-#WEB-INF/lib/avalon-framework-4.1.3.jar
-ln -s $(build-classpath excalibur/avalon-framework) .
-#WEB-INF/lib/commons-beanutils-1.8.0.jar
-ln -s $(build-classpath commons-beanutils) .
-#WEB-INF/lib/commons-chain-1.2.jar
-ln -s $(build-classpath commons-chain) .
-#WEB-INF/lib/commons-collections-3.1.jar
-ln -s $(build-classpath commons-collections) .
-#WEB-INF/lib/commons-digester-1.8.jar
-ln -s $(build-classpath commons-digester) .
-#WEB-INF/lib/commons-logging-1.0.4.jar
-ln -s $(build-classpath commons-logging) .
-#WEB-INF/lib/commons-validator-1.3.1.jar
-ln -s $(build-classpath commons-validator) .
-#WEB-INF/lib/log4j-1.2.12.jar
-ln -s $(build-classpath log4j) .
-#WEB-INF/lib/logkit-1.0.1.jar
-ln -s $(build-classpath excalibur/avalon-logkit) .
-#WEB-INF/lib/mail-1.4.jar
-ln -s $(build-classpath javamail_1_4_api) .
-#WEB-INF/lib/oro-2.0.8.jar
-ln -s $(build-classpath jakarta-oro) .
-#WEB-INF/lib/struts-core-1.3.10.jar
-ln -s %{_javadir}/struts-core.jar .
-#WEB-INF/lib/struts-taglib-1.3.10.jar
-ln -s %{_javadir}/struts-taglib.jar .
-#WEB-INF/lib/struts-tiles-1.3.10.jar
-ln -s %{_javadir}/struts-tiles.jar .
-rm $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-blank*.war
-zip -q -r $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-blank.war .
-popd
-mkdir cookbook.war
-pushd cookbook.war
-unzip -qq $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-cookbook*.war
-rm -v WEB-INF/lib/*
-#WEB-INF/lib/antlr-2.7.2.jar
-ln -s $(build-classpath antlr) .
-#WEB-INF/lib/avalon-framework-4.1.3.jar
-ln -s $(build-classpath excalibur/avalon-framework) .
-#WEB-INF/lib/commons-beanutils-1.8.0.jar
-ln -s $(build-classpath commons-beanutils) .
-#WEB-INF/lib/commons-chain-1.2.jar
-ln -s $(build-classpath commons-chain) .
-#WEB-INF/lib/commons-collections-3.1.jar
-ln -s $(build-classpath commons-collections) .
-#WEB-INF/lib/commons-digester-1.8.jar
-ln -s $(build-classpath commons-digester) .
-#WEB-INF/lib/commons-logging-1.0.4.jar
-ln -s $(build-classpath commons-logging) .
-#WEB-INF/lib/commons-validator-1.3.1.jar
-ln -s $(build-classpath commons-validator) .
-#WEB-INF/lib/log4j-1.2.12.jar
-ln -s $(build-classpath log4j) .
-#WEB-INF/lib/logkit-1.0.1.jar
-ln -s $(build-classpath excalibur/avalon-logkit) .
-#WEB-INF/lib/mail-1.4.jar
-ln -s $(build-classpath javamail_1_4_api) .
-#WEB-INF/lib/oro-2.0.8.jar
-ln -s $(build-classpath jakarta-oro) 
-#WEB-INF/lib/struts-core-1.3.10.jar
-ln -s %{_javadir}/struts-core.jar .
-#WEB-INF/lib/struts-taglib-1.3.10.jar
-ln -s %{_javadir}/struts-taglib.jar .
-rm $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-cookbook*.war
-zip -q -r $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-cookbook.war .
-popd
-mkdir el-example.war
-pushd el-example.war
-unzip -qq $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-el-example*.war
-rm -v WEB-INF/lib/*
-#WEB-INF/lib/antlr-2.7.2.jar
-ln -s $(build-classpath antlr) .
-#WEB-INF/lib/avalon-framework-4.1.3.jar
-ln -s $(build-classpath excalibur/avalon-framework) .
-#WEB-INF/lib/commons-beanutils-1.8.0.jar
-ln -s $(build-classpath commons-beanutils) .
-#WEB-INF/lib/commons-chain-1.2.jar
-ln -s $(build-classpath commons-chain) .
-#WEB-INF/lib/commons-collections-3.1.jar
-ln -s $(build-classpath commons-collections) .
-#WEB-INF/lib/commons-digester-1.8.jar
-ln -s $(build-classpath commons-digester) .
-#WEB-INF/lib/commons-logging-1.0.4.jar
-ln -s $(build-classpath commons-logging) .
-#WEB-INF/lib/commons-validator-1.3.1.jar
-ln -s $(build-classpath commons-validator) .
-#WEB-INF/lib/jstl-1.0.2.jar
-ln -s $(build-classpath jakarta-taglibs-core) .
-#WEB-INF/lib/log4j-1.2.12.jar
-ln -s $(build-classpath log4j) .
-#WEB-INF/lib/logkit-1.0.1.jar
-ln -s $(build-classpath excalibur/avalon-logkit) .
-#WEB-INF/lib/mail-1.4.jar
-ln -s $(build-classpath javamail_1_4_api) .
-#WEB-INF/lib/oro-2.0.8.jar
-ln -s $(build-classpath jakarta-oro) .
-#WEB-INF/lib/standard-1.0.6.jar
-ln -s $(build-classpath jakarta-taglibs-standard) .
-#WEB-INF/lib/struts-core-1.3.10.jar
-ln -s %{_javadir}/struts-core.jar .
-#WEB-INF/lib/struts-el-1.3.10.jar
-ln -s %{_javadir}/struts-el.jar .
-#WEB-INF/lib/struts-taglib-1.3.10.jar
-ln -s %{_javadir}/struts-taglib.jar .
-rm $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-el-example*.war
-zip -q -r $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-el-example.war .
-popd
-mkdir examples.war
-pushd examples.war
-unzip -qq $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-examples*.war
-rm -v WEB-INF/lib/*
-#WEB-INF/lib/antlr-2.7.2.jar
-ln -s $(build-classpath antlr) .
-#WEB-INF/lib/avalon-framework-4.1.3.jar
-ln -s $(build-classpath excalibur/avalon-framework) .
-#WEB-INF/lib/commons-beanutils-1.8.0.jar
-ln -s $(build-classpath commons-beanutils) .
-#WEB-INF/lib/commons-chain-1.2.jar
-ln -s $(build-classpath commons-chain) .
-#WEB-INF/lib/commons-collections-3.1.jar
-ln -s $(build-classpath commons-collections) .
-#WEB-INF/lib/commons-digester-1.8.jar
-ln -s $(build-classpath commons-digester) .
-#WEB-INF/lib/commons-fileupload-1.1.1.jar
-ln -s $(build-classpath commons-fileupload) .
-#WEB-INF/lib/commons-logging-1.0.4.jar
-ln -s $(build-classpath commons-logging) .
-#WEB-INF/lib/commons-validator-1.3.1.jar
-ln -s $(build-classpath commons-validator) .
-#WEB-INF/lib/jstl-1.0.6.jar
-ln -s $(build-classpath jakarta-taglibs-core) .
-#WEB-INF/lib/log4j-1.2.12.jar
-ln -s $(build-classpath log4j) .
-#WEB-INF/lib/logkit-1.0.1.jar
-ln -s $(build-classpath excalibur/avalon-logkit) .
-#WEB-INF/lib/mail-1.4.jar
-ln -s $(build-classpath javamail_1_4_api) .
-#WEB-INF/lib/oro-2.0.8.jar
-ln -s $(build-classpath jakarta-oro) .
-#WEB-INF/lib/standard-1.0.6.jar
-ln -s $(build-classpath jakarta-taglibs-standard) .
-#WEB-INF/lib/struts-core-1.3.10.jar
-ln -s %{_javadir}/struts-core.jar .
-#WEB-INF/lib/struts-extras-1.3.10.jar
-ln -s %{_javadir}/struts-extras.jar .
-#WEB-INF/lib/struts-taglib-1.3.10.jar
-ln -s %{_javadir}/struts-taglib.jar .
-rm $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-examples*.war
-zip -q -r $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-examples.war .
-popd
-mkdir faces-example1.war
-pushd faces-example1.war
-unzip -qq $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-faces-example1*.war
-rm -v WEB-INF/lib/*
-#WEB-INF/lib/antlr-2.7.2.jar
-ln -s $(build-classpath antlr) .
-#WEB-INF/lib/avalon-framework-4.1.3.jar
-ln -s $(build-classpath excalibur/avalon-framework) .
-#WEB-INF/lib/commons-beanutils-1.8.0.jar
-ln -s $(build-classpath commons-beanutils) .
-#WEB-INF/lib/commons-chain-1.2.jar
-ln -s $(build-classpath commons-chain) .
-#WEB-INF/lib/commons-codec-1.2.jar
-ln -s $(build-classpath commons-codec) .
-#WEB-INF/lib/commons-collections-3.1.jar
-ln -s $(build-classpath commons-collections) .
-#WEB-INF/lib/commons-digester-1.8.jar
-ln -s $(build-classpath commons-digester) .
-#WEB-INF/lib/commons-el-1.0.jar
-ln -s $(build-classpath commons-el) .
-#WEB-INF/lib/commons-logging-1.0.4.jar
-ln -s $(build-classpath commons-logging) .
-#WEB-INF/lib/commons-validator-1.3.1.jar
-ln -s $(build-classpath commons-validator) .
-#WEB-INF/lib/jstl-1.0.2.jar
-ln -s $(build-classpath jakarta-taglibs-core) .
-#WEB-INF/lib/log4j-1.2.12.jar
-ln -s $(build-classpath log4j) .
-#WEB-INF/lib/logkit-1.0.1.jar
-ln -s $(build-classpath excalibur/avalon-logkit) .
-#WEB-INF/lib/mail-1.4.jar
-ln -s $(build-classpath javamail_1_4_api) .
-#WEB-INF/lib/myfaces-extensions-1.0.9.jar
-ln -s $(build-classpath myfaces/myfaces-all) .
-#WEB-INF/lib/myfaces-impl-1.0.9.jar
-ln -s $(build-classpath myfaces/myfaces-impl) .
-#WEB-INF/lib/myfaces-jsf-api-1.0.9.jar
-ln -s $(build-classpath myfaces/myfaces-jsf-api) .
-#WEB-INF/lib/oro-2.0.8.jar
-ln -s $(build-classpath jakarta-oro) .
-#WEB-INF/lib/standard-1.0.6.jar
-ln -s $(build-classpath jakarta-taglibs-standard) .
-#WEB-INF/lib/struts-core-1.3.10.jar
-ln -s %{_javadir}/struts-core.jar .
-#WEB-INF/lib/struts-faces-1.3.10.jar
-ln -s %{_javadir}/struts-faces.jar .
-#WEB-INF/lib/struts-taglib-1.3.10.jar
-ln -s %{_javadir}/struts-taglib.jar .
-#WEB-INF/lib/struts-tiles-1.3.10.jar
-ln -s %{_javadir}/struts-tiles.jar .
-rm $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-faces-example1*.war
-zip -q -r $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-faces-example1.war .
-popd
-mkdir faces-example2.war
-pushd faces-example2.war
-unzip -qq $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-faces-example2*.war
-rm -v WEB-INF/lib/*
-#WEB-INF/lib/antlr-2.7.2.jar
-ln -s $(build-classpath antlr) .
-#WEB-INF/lib/avalon-framework-4.1.3.jar
-ln -s $(build-classpath excalibur/avalon-framework) .
-#WEB-INF/lib/commons-beanutils-1.8.0.jar
-ln -s $(build-classpath commons-beanutils) .
-#WEB-INF/lib/commons-chain-1.2.jar
-ln -s $(build-classpath commons-chain) .
-#WEB-INF/lib/commons-codec-1.2.jar
-ln -s $(build-classpath commons-codec) .
-#WEB-INF/lib/commons-collections-3.1.jar
-ln -s $(build-classpath commons-collections) .
-#WEB-INF/lib/commons-digester-1.8.jar
-ln -s $(build-classpath commons-digester) .
-#WEB-INF/lib/commons-el-1.0.jar
-ln -s $(build-classpath commons-el) .
-#WEB-INF/lib/commons-logging-1.0.4.jar
-ln -s $(build-classpath commons-logging) .
-#WEB-INF/lib/commons-validator-1.3.1.jar
-ln -s $(build-classpath commons-validator) .
-#WEB-INF/lib/jstl-1.0.2.jar
-ln -s $(build-classpath jakarta-taglibs-core) .
-#WEB-INF/lib/log4j-1.2.12.jar
-ln -s $(build-classpath log4j) .
-#WEB-INF/lib/logkit-1.0.1.jar
-ln -s $(build-classpath excalibur/avalon-logkit) .
-#WEB-INF/lib/mail-1.4.jar
-ln -s $(build-classpath javamail_1_4_api) .
-#WEB-INF/lib/myfaces-extensions-1.0.9.jar
-ln -s $(build-classpath myfaces/myfaces-all) .
-#WEB-INF/lib/myfaces-impl-1.0.9.jar
-ln -s $(build-classpath myfaces/myfaces-impl) .
-#WEB-INF/lib/myfaces-jsf-api-1.0.9.jar
-ln -s $(build-classpath myfaces/myfaces-jsf-api) .
-#WEB-INF/lib/oro-2.0.8.jar
-ln -s $(build-classpath jakarta-oro) .
-#WEB-INF/lib/standard-1.0.6.jar
-ln -s $(build-classpath jakarta-taglibs-standard) .
-#WEB-INF/lib/struts-core-1.3.10.jar
-ln -s %{_javadir}/struts-core.jar .
-#WEB-INF/lib/struts-faces-1.3.10.jar
-ln -s %{_javadir}/struts-faces.jar .
-#WEB-INF/lib/struts-taglib-1.3.10.jar
-ln -s %{_javadir}/struts-taglib.jar .
-#WEB-INF/lib/struts-tiles-1.3.10.jar
-ln -s %{_javadir}/struts-tiles.jar .
-rm $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-faces-example2*.war
-zip -q -r $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-faces-example2.war .
-popd
-mkdir mailreader.war
-pushd mailreader.war
-unzip -qq $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-mailreader*.war
-rm -v WEB-INF/lib/*
-#WEB-INF/lib/antlr-2.7.2.jar
-ln -s $(build-classpath antlr) .
-#WEB-INF/lib/avalon-framework-4.1.3.jar
-ln -s $(build-classpath excalibur/avalon-framework) .
-#WEB-INF/lib/commons-beanutils-1.8.0.jar
-ln -s $(build-classpath commons-beanutils) .
-#WEB-INF/lib/commons-chain-1.2.jar
-ln -s $(build-classpath commons-chain) .
-#WEB-INF/lib/commons-collections-3.1.jar
-ln -s $(build-classpath commons-collections) .
-#WEB-INF/lib/commons-digester-1.8.jar
-ln -s $(build-classpath commons-digester) .
-#WEB-INF/lib/commons-logging-1.0.4.jar
-ln -s $(build-classpath commons-logging) .
-#WEB-INF/lib/commons-validator-1.3.1.jar
-ln -s $(build-classpath commons-validator) .
-#WEB-INF/lib/log4j-1.2.12.jar
-ln -s $(build-classpath log4j) .
-#WEB-INF/lib/logkit-1.0.1.jar
-ln -s $(build-classpath excalibur/avalon-logkit) .
-#WEB-INF/lib/mail-1.4.jar
-ln -s $(build-classpath javamail_1_4_api) .
-#WEB-INF/lib/oro-2.0.8.jar
-ln -s $(build-classpath jakarta-oro) .
-#WEB-INF/lib/struts-core-1.3.10.jar
-ln -s %{_javadir}/struts-core.jar .
-#WEB-INF/lib/struts-extras-1.3.10.jar
-ln -s %{_javadir}/struts-extras.jar .
-#WEB-INF/lib/struts-mailreader-dao-1.3.10.jar
-ln -s %{_javadir}/struts-mailreader-dao.jar .
-#WEB-INF/lib/struts-taglib-1.3.10.jar
-ln -s %{_javadir}/struts-taglib.jar .
-rm $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-mailreader*.war
-zip -q -r $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-mailreader.war .
-popd
-mkdir scripting-mailreader.war
-pushd scripting-mailreader.war
-unzip -qq $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-scripting-mailreader*.war
-rm -v WEB-INF/lib/*
-#WEB-INF/lib/ant-1.7.0.jar
-ln -s $(build-classpath ant) .
-#WEB-INF/lib/ant-launcher-1.7.0.jar
-ln -s $(build-classpath ant-launcher) .
-#WEB-INF/lib/antlr-2.7.2.jar
-ln -s $(build-classpath antlr) .
-#WEB-INF/lib/avalon-framework-4.1.3.jar
-ln -s $(build-classpath excalibur/avalon-framework) .
-#WEB-INF/lib/bsf-2.3.0.jar
-ln -s $(build-classpath bsf) .
-#WEB-INF/lib/commons-beanutils-1.8.0.jar
-ln -s $(build-classpath commons-beanutils) .
-#WEB-INF/lib/commons-chain-1.2.jar
-ln -s $(build-classpath commons-chain) .
-#WEB-INF/lib/commons-collections-3.1.jar
-ln -s $(build-classpath commons-collections) .
-#WEB-INF/lib/commons-digester-1.8.jar
-ln -s $(build-classpath commons-digester) .
-#WEB-INF/lib/commons-logging-1.0.4.jar
-ln -s $(build-classpath commons-logging) .
-#WEB-INF/lib/commons-validator-1.3.1.jar
-ln -s $(build-classpath commons-validator) .
-#WEB-INF/lib/groovy-all-1.0-jsr-04.jar
-ln -s $(build-classpath groovy15) .
-#WEB-INF/lib/jline-0.9.94.jar
-ln -s $(build-classpath jline) .
-#WEB-INF/lib/log4j-1.2.12.jar
-ln -s $(build-classpath log4j) .
-#WEB-INF/lib/logkit-1.0.1.jar
-ln -s $(build-classpath excalibur/avalon-logkit) .
-#WEB-INF/lib/mail-1.4.jar
-ln -s $(build-classpath javamail_1_4_api) .
-#WEB-INF/lib/oro-2.0.8.jar
-ln -s $(build-classpath jakarta-oro) .
-#WEB-INF/lib/struts-core-1.3.10.jar
-ln -s %{_javadir}/struts-core.jar .
-#WEB-INF/lib/struts-extras-1.3.10.jar
-ln -s %{_javadir}/struts-extras.jar .
-#WEB-INF/lib/struts-mailreader-dao-1.3.10.jar
-ln -s %{_javadir}/struts-mailreader-dao.jar .
-#WEB-INF/lib/struts-scripting-1.3.10.jar
-ln -s %{_javadir}/struts-scripting.jar .
-#WEB-INF/lib/struts-taglib-1.3.10.jar
-ln -s %{_javadir}/struts-taglib.jar .
-rm $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-scripting-mailreader*.war
-zip -q -r $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/struts-scripting-mailreader.war .
-popd
-popd
-rm -rf struts-%{version}/apps
-mkdir -p struts-%{version}/apps
-cp -p $RPM_BUILD_DIR/%{name}-%{version}/src/assembly/target/apps/*.war struts-%{version}/apps/
-rm src/assembly/target/assembly/out/struts-%{version}-apps.zip
-zip -q -r src/assembly/target/assembly/out/struts-%{version}-apps.zip struts-%{version}/apps/
-%endif # apps
-
-%if %with zips
-install -dm 755 %{buildroot}/%{_javadir}/jbossas-fordev/
-%{__install} -p -m 0644 src/assembly/target/assembly/out/struts-%{version}-all.zip %{buildroot}%{_javadir}/jbossas-fordev/%{name}-%{version}-all.zip
-%{__install} -p -m 0644 src/assembly/target/assembly/out/struts-%{version}-lib.zip %{buildroot}%{_javadir}/jbossas-fordev/%{name}-%{version}-lib.zip
-%if %with apps
-%{__install} -p -m 0644 src/assembly/target/assembly/out/struts-%{version}-apps.zip %{buildroot}%{_javadir}/jbossas-fordev/%{name}-%{version}-apps.zip
-%endif
-%{__install} -p -m 0644 src/assembly/target/assembly/out/struts-%{version}-src.zip %{buildroot}%{_javadir}/jbossas-fordev/%{name}-%{version}-src.zip
-%{__install} -p -m 0644 src/assembly/target/assembly/out/struts-%{version}-docs.zip %{buildroot}%{_javadir}/jbossas-fordev/%{name}-%{version}-docs.zip
-%endif
-
-%if %with manual
-rm -rf docs-tmp/
-mkdir docs-tmp/
-unzip -qq src/assembly/target/assembly/out/struts-%{version}-docs.zip -d docs-tmp/
-install -dm 755 %{buildroot}%{_docdir}/%{name}-%{version}
-cp -pr docs-tmp/struts-%{version}/* %{buildroot}%{_docdir}/%{name}-%{version}
-rm -Rf %{buildroot}%{_docdir}/%{name}-%{version}/docs/apidocs
-pushd %{buildroot}%{_docdir}/%{name}-%{version}/docs/
-ln -s %{_javadocdir}/%{name} apidocs
-popd
-%endif
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-rm -rf $RPM_BUILD_ROOT/var/lib/tomcat?/webapps/struts-documentation/download.cgi
-
 %files
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%dir %{_datadir}/%{name}
-#%{_datadir}/%{name}/struts-config_1_0.dtd
-#%{_datadir}/%{name}/struts-config_1_1.dtd
-#%{_datadir}/%{name}/struts-config_1_2.dtd
-#%{_datadir}/%{name}/struts-config_1_3.dtd
-#%{_datadir}/%{name}/tiles-config_1_1.dtd
-#%{_datadir}/%{name}/tiles-config_1_3.dtd
-%{_datadir}/%{name}/struts-bean-el.tld
-%{_datadir}/%{name}/struts-bean.tld
-%{_datadir}/%{name}/struts-faces.tld
-%{_datadir}/%{name}/struts-html-el.tld
-%{_datadir}/%{name}/struts-html.tld
-%{_datadir}/%{name}/struts-logic-el.tld
-%{_datadir}/%{name}/struts-logic.tld
-%{_datadir}/%{name}/struts-nested.tld
-%{_datadir}/%{name}/struts-tiles-el.tld
-%{_datadir}/%{name}/struts-tiles.tld
-%{_datadir}/%{name}/validator-rules-compressed.xml
-%{_datadir}/%{name}/validator-rules.xml
-#%{_datadir}/%{name}/web-app_2_3.dtd
-%if %with apps
-%dir %{_datadir}/%{name}/apps
-%dir %{_javadir}/%{name}-apps
-%{_datadir}/maven2/poms/JPP-%{name}-apps.pom
-%endif
-%{_datadir}/maven2/poms/JPP-%{name}-assembly.pom
-%{_datadir}/maven2/poms/JPP-%{name}-it-apps.pom
-%{_datadir}/maven2/poms/JPP-%{name}-it.pom
-%{_datadir}/maven2/poms/JPP-%{name}-master.pom
-%{_datadir}/maven2/poms/JPP-%{name}-parent.pom
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_javadir}/%{name}/*.jar
+%{_mavenpomdir}/JPP.%{name}-*.pom
 %{_mavendepmapfragdir}/%{name}
-
-%if %with manual
-%files manual
-%doc %{_docdir}/%{name}-%{version}
-%endif
+%doc LICENSE.txt NOTICE.txt
+%{_datadir}/%{name}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
-
-%files core
-%{_javadir}/%{name}-core-%{version}.jar
-%{_javadir}/%{name}-core.jar
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-core-%{version}.jar.*
-%endif
-
-%if %without coreonly
-%files el
-%{_javadir}/%{name}-el-%{version}.jar
-%{_javadir}/%{name}-el.jar
-%{_datadir}/maven2/poms/JPP-%{name}-el.pom
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-el-%{version}.jar.*
-%endif
-
-%files extras
-%{_javadir}/%{name}-extras-%{version}.jar
-%{_javadir}/%{name}-extras.jar
-%{_datadir}/maven2/poms/JPP-%{name}-extras.pom
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-extras-%{version}.jar.*
-%endif
-
-%files faces
-%{_javadir}/%{name}-faces-%{version}.jar
-%{_javadir}/%{name}-faces.jar
-%{_datadir}/maven2/poms/JPP-%{name}-faces.pom
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-faces-%{version}.jar.*
-%endif
-
-%files mailreader-dao
-%{_javadir}/%{name}-mailreader-dao-%{version}.jar
-%{_javadir}/%{name}-mailreader-dao.jar
-%{_datadir}/maven2/poms/JPP-%{name}-mailreader-dao.pom
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-mailreader-dao-%{version}.jar.*
-%endif
-
-%files scripting
-%{_javadir}/%{name}-scripting-%{version}.jar
-%{_javadir}/%{name}-scripting.jar
-%{_datadir}/maven2/poms/JPP-%{name}-scripting.pom
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-scripting-%{version}.jar.*
-%endif
-
-%files taglib
-%{_javadir}/%{name}-taglib-%{version}.jar
-%{_javadir}/%{name}-taglib.jar
-%{_datadir}/maven2/poms/JPP-%{name}-taglib.pom
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-taglib-%{version}.jar.*
-%endif
-
-%files tiles
-%{_javadir}/%{name}-tiles-%{version}.jar
-%{_javadir}/%{name}-tiles.jar
-%{_datadir}/maven2/poms/JPP-%{name}-tiles.pom
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/%{name}-tiles-%{version}.jar.*
-%endif
-%endif # coreonly
-
-%if %with apps
-%files webapp-blank
-%{_datadir}/%{name}/apps/blank.war
-%{_datadir}/maven2/poms/JPP.%{name}-apps-blank.pom
-
-%files webapp-cookbook
-%{_datadir}/%{name}/apps/cookbook.war
-%{_datadir}/maven2/poms/JPP.%{name}-apps-cookbook.pom
-
-%files webapp-el-example
-%{_datadir}/%{name}/apps/el-example.war
-%{_datadir}/maven2/poms/JPP.%{name}-apps-el-example.pom
-
-%files webapp-examples
-%{_datadir}/%{name}/apps/examples.war
-%{_datadir}/maven2/poms/JPP.%{name}-apps-examples.pom
-
-%files webapps-faces
-%{_datadir}/%{name}/apps/faces-example1.war
-%{_datadir}/%{name}/apps/faces-example2.war
-%{_datadir}/maven2/poms/JPP.%{name}-apps-faces-example1.pom
-%{_datadir}/maven2/poms/JPP.%{name}-apps-faces-example2.pom
-
-%files webapp-mailreader
-%{_datadir}/%{name}/apps/mailreader.war
-%{_datadir}/maven2/poms/JPP.%{name}-apps-mailreader.pom
-
-%files webapp-scripting-mailreader
-%{_datadir}/%{name}/apps/scripting-mailreader.war
-%{_datadir}/maven2/poms/JPP.%{name}-apps-scripting-mailreader.pom
-%endif # apps
-
-%if %with zips
-%files zip
-%defattr(0644,jboss,jboss,0755)
-%dir %{_javadir}/jbossas-fordev
-%{_javadir}/jbossas-fordev/%{name}-%{version}-all.zip
-%{_javadir}/jbossas-fordev/%{name}-%{version}-lib.zip
-%if %with apps
-%{_javadir}/jbossas-fordev/%{name}-%{version}-apps.zip
-%endif
-%{_javadir}/jbossas-fordev/%{name}-%{version}-docs.zip
-
-%files src-zip
-%defattr(0644,jboss,jboss,0755)
-%dir %{_javadir}/jbossas-fordev
-%{_javadir}/jbossas-fordev/%{name}-%{version}-src.zip
-%endif
+%doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt3_5jpp7
+- fc version
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.10-alt3_2jpp6
 - fixed build using htmlunit1
 
