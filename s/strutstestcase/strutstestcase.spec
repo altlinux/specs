@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           strutstestcase
 Version:        2.1.4
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 Summary:        StrutsTestCase for JUnit
 
@@ -72,6 +72,7 @@ BuildRequires: servlet_2_4_api
 BuildRequires: struts
 BuildRequires: struts-taglib
 BuildRequires: struts-tiles
+BuildRequires: struts-extras
 Requires: jakarta-cactus
 Requires: jakarta-commons-collections
 Requires: jakarta-commons-digester
@@ -161,6 +162,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.4-alt2_1jpp5
+- build with new struts
+
 * Fri May 22 2009 Igor Vlasenko <viy@altlinux.ru> 0:2.1.4-alt1_1jpp5
 - new jpp release
 
