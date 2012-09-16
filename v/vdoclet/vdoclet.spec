@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 Summary:        Java code generation framework
 Name:           vdoclet
 Version:        0.2
-Release:        alt1_0.20070127.8jpp6
+Release:        alt2_0.20070127.8jpp6
 Epoch:          0
 License:        BSD-style
 URL:            http://vdoclet.sourceforge.net/
@@ -53,10 +53,10 @@ BuildRequires:  jaxp_transform_impl
 BuildRequires:  ant-trax
 BuildRequires:  jakarta-commons-collections
 BuildRequires:  qdox >= 0:1.10
-BuildRequires:  velocity
+BuildRequires:  velocity14
 Requires:  jakarta-commons-collections
 Requires:  qdox >= 0:1.10
-Requires:  velocity
+#Requires:  velocity
 %if %{gcj_support}
 BuildRequires:          java-gcj-compat-devel
 Requires(post):         java-gcj-compat
@@ -98,7 +98,7 @@ for j in $(find . -name "*.jar"); do
 done
 mkdir -p lib/downloads
 (cd lib/downloads
-ln -s $(find-jar velocity) velocity-dep-1.3.1.jar
+ln -s $(find-jar velocity14) velocity-dep-1.3.1.jar
 ln -s $(find-jar qdox) qdox-1.6.1.jar
 )
 
@@ -109,7 +109,7 @@ export OPT_JAR_LIST="ant/ant-junit junit ant/ant-nodeps jaxp_transform_impl ant/
 export CLASSPATH=$(build-classpath \
 commons-collections \
 qdox \
-velocity)
+velocity14)
 CLASSPATH=build/main/classes:$CLASSPATH
 ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only test dist
 
@@ -162,6 +162,9 @@ cp -p dist/LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt2_0.20070127.8jpp6
+- fixed build
+
 * Wed Feb 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.2-alt1_0.20070127.8jpp6
 - new version
 
