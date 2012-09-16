@@ -98,7 +98,7 @@ FIXME: (dwalluck): Need to link offline:
 Name:           spring2
 Summary:        Spring J2EE Framework
 Version:        2.5.6.SEC03
-Release:        alt7_5jpp6
+Release:        alt8_5jpp6
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -142,7 +142,7 @@ BuildRequires:  annotation_1_0_api
 BuildRequires:  aopalliance
 BuildRequires:  apache-ibatis2-sqlmap
 BuildRequires:  apache-jdo-2.0-api
-BuildRequires:  openjpa >= 0:1.0.1
+BuildRequires:  openjpa1
 #BuildRequires:  aqute-bndlib
 BuildRequires:  asm
 BuildRequires:  asm2
@@ -1136,7 +1136,7 @@ ln -sf $(build-classpath log4j) lib/log4j/log4j-1.2.15.jar
 # BUILD/spring/lib/ognl/ognl.jar.no
 ln -sf $(build-classpath ognl) lib/ognl/ognl.jar
 # BUILD/spring/lib/openjpa/openjpa-1.1.0.jar.no
-ln -sf $(build-classpath openjpa/all) lib/openjpa/openjpa-1.1.0.jar
+ln -sf $(build-classpath openjpa1/all) lib/openjpa/openjpa-1.1.0.jar
 # BUILD/spring/lib/osgi/org.eclipse.osgi_3.1.1.jar.no
 
 # BUILD/spring/lib/poi/poi-3.0.1.jar.no
@@ -1613,6 +1613,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %endif
 
 %changelog
+* Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt8_5jpp6
+- use openjpa1
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt7_5jpp6
 - fixed build
 
