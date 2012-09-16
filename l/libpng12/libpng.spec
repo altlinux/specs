@@ -1,65 +1,79 @@
-Name: libpng
-Version: 1.5.12
-Release: alt1
+Name: libpng12
+Version: 1.2.50
+Release: alt2
 
-Summary: A library of functions for manipulating PNG image format files
+Summary: PNG runtime legacy library
 License: zlib
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://www.libpng.org/pub/png/
 
-# git://git.altlinux.org/gears/l/%name.git
-Source: %name-%version-%release.tar
+# http://download.sourceforge.net/libpng/libpng-%version.tar.xz
+Source: libpng-%version.tar
+Patch: libpng-%version-%release.patch
 
 %def_disable static
+
+Provides: libpng = %version
+Conflicts: libpng3 < 1.2.13-alt1
 
 # Automatically added by buildreq on Tue Feb 08 2011
 BuildRequires: zlib-devel
 
-%package -n libpng15
-Summary: PNG runtime library
-Group: System/Libraries
-Provides: libpng = %version
+%package -n libpng3
+Summary: PNG runtime legacy library
+Group: System/Legacy libraries
+Requires: %name = %version-%release
 
 %package devel
 Summary: PNG development library
 Group: Development/C
-Requires: libpng15 = %version-%release, zlib-devel
-Conflicts: libpng12-devel
+Requires: %name = %version-%release, zlib-devel
+Provides: libpng3-devel = %version
+Obsoletes: libpng3-devel < %version
+Conflicts: libpng2-devel libpng15-devel libpng-devel
 
 %package devel-static
 Summary: PNG static library
 Group: Development/C
 Requires: %name-devel = %version-%release, zlib-devel-static
+Provides: libpng3-devel-static = %version
+Obsoletes: libpng3-devel-static < %version
+Conflicts: libpng2-devel-static
 
 %description
 libpng is a library implementing an interface for reading and writing
 PNG (Portable Network Graphics) format files.
 
-%description -n libpng15
+This package contains the runtime legacy library files needed to run
+legacy software using %name.
+
+%description -n libpng3
 libpng is a library implementing an interface for reading and writing
 PNG (Portable Network Graphics) format files.
 
-This package contains the runtime library files needed to run software
-using libpng.
+This package is superseded by %name, and is provided only for
+transitional purposes.
 
 %description devel
 libpng is a library implementing an interface for reading and writing
 PNG (Portable Network Graphics) format files.
 
 This package contains the header and development files needed to build
-programs and packages using libpng.
+programs and packages using %name.
 
 %description devel-static
-This package contains static library necessary for developing statically
-linked programs using the PNG (Portable Network Graphics) library.
+This package contains static legacy library necessary for developing
+statically linked legacy programs using the PNG (Portable Network
+Graphics) library.
 
 %prep
-%setup -n %name-%version-%release
+%setup -n libpng-%version
+%patch -p1
 
 %build
 %autoreconf
 %configure %{subst_enable static}
-%make_build DFA_XTRA=pngusr.dfa
+%make_build
 
 %install
 %makeinstall_std
@@ -68,18 +82,19 @@ rm %buildroot%_libdir/lib*.la
 %define docdir %_docdir/libpng-%version
 rm -rf %buildroot%docdir
 mkdir -p %buildroot%docdir
-install -p -m644 CHANGES LICENSE README TODO example.c libpng*.txt \
+install -p -m644 CHANGES KNOWNBUG LICENSE README TODO example.c libpng*.txt \
 	%buildroot%docdir/
 xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 
 %check
 %make_build -k check
 
-%files -n libpng15
-%_libdir/*.so.*
-%_man5dir/*
-%dir %docdir
-%docdir/[CLR]*
+%files
+%_libdir/%name.so.*
+%exclude %_man5dir/*
+
+%files -n libpng3
+%_libdir/libpng.so.*
 
 %files devel
 %_bindir/*-config
@@ -88,17 +103,16 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %_pkgconfigdir/*.pc
 %_man3dir/*
 %docdir
-%exclude %docdir/[CLR]*
 
 %if_enabled static
 %files devel-static
-%_libdir/*.a
+%_libdir/%name.a
 %endif
 
 %changelog
-* Fri Sep 14 2012 Dmitry V. Levin <ldv@altlinux.org> 1.5.12-alt1
-- Updated to 1.5.12.
-- Activated chunk size limits by default.
+* Thu Sep 13 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.50-alt2
+- Renamed: libpng-devel -> libpng12-devel.
+- Packaged libpng12 as a legacy library.
 
 * Wed Jul 11 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.50-alt1
 - Updated to 1.2.50.
