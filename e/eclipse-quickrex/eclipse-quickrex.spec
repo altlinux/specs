@@ -1,8 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# required for install
-BuildRequires: unzip
 %define eclipse_base        %{_libdir}/eclipse
 %define install_loc         %{_datadir}/eclipse/dropins
 %define upstream_name       QuickREx
@@ -12,7 +13,7 @@ BuildRequires: unzip
 
 Name:           eclipse-quickrex
 Version:        3.5.0
-Release:        alt1_14jpp6
+Release:        alt1_15jpp7
 Summary:        %{upstream_name} is a regular-expression test Eclipse Plug-In
 
 Group:          Development/Java
@@ -63,7 +64,7 @@ popd
 popd
 
 %build
-%{eclipse_base}/buildscripts/pdebuild
+eclipse-pdebuild
 
 %install
 installDir=%{buildroot}%{install_loc}/quickrex
@@ -84,6 +85,9 @@ popd
 %{install_loc}/quickrex
 
 %changelog
+* Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1_15jpp7
+- new fc release
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 3.5.0-alt1_14jpp6
 - update to new release by jppimport
 
