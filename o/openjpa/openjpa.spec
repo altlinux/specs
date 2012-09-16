@@ -1,522 +1,280 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
-%define _without_maven 1
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.5.0-compat
-# Copyright (c) 2000-2008, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+BuildRequires: jpackage-compat
+# set to 0 provides a minimal test suite
+%global with_tests 0
+Name:          openjpa
+Version:       2.2.0
+Release:       alt1_2jpp7
+Summary:       Java Persistence 2.0 API
+Group:         Development/Java
+# # For a breakdown of the licensing, see NOTICE file
+License:       ASL 2.0 and CDDL
+Url:           http://openjpa.apache.org/
+Source0:       ftp://ftp.gbnet.net/pub/apache/dist/%{name}/%{version}/apache-%{name}-%{version}-source.zip
+# force tomcat 7.x apis
+Source1:       %{name}-%{version}-depmap
 
-%define gcj_support 0
+# remove org.codehaus.mojo ianal-maven-plugin 1.0-alpha-1
+Patch0:        %{name}-%{version}-remove-ianal-plugin.patch
+# remove unavailable deps
+Patch1:        %{name}-%{version}-parent-pom.patch
+Patch2:        %{name}-%{version}-remove-checkstyle-plugin.patch
+# remove com.ibm.websphere websphere_uow_api 0.0.1
+# change org.osgi org.osgi.core 4.2.0 in org.apache.felix 1.4.0
+Patch3:        %{name}-%{version}-kernel-pom.patch
+# remove unavailable test deps org.jmock jmock jmock-junit3 2.5.1
+Patch4:        %{name}-%{version}-jdbc-pom.patch
+# change 
+#   org.osgi org.osgi.core 4.2.0 in org.apache.felix 1.4.0
+#   org.apache.geronimo.specs geronimo-jpa_2.0_spec 1.1 with org.hibernate.javax.persistence hibernate-jpa-2.0-api 1.0.1.Final
+Patch5:        %{name}-%{version}-persistence-pom.patch
+# fix test failure
+Patch6:        %{name}-%{version}-persistence-jdbc-DynamicEnhancementSuite.patch
+# replace 
+#   org.apache.bval org.apache.bval.bundle with bval-core and bval-jsr303
+#   org.apache.geronimo.specs geronimo-jpa_2.0_spec with org.hibernate.javax.persistence hibernate-jpa-2.0-api
+Patch7:        %{name}-%{version}-maven-plugin-pom.patch
+Patch8:        %{name}-%{version}-slice-pom.patch
+Patch9:        %{name}-%{version}-jest-pom.patch
+Patch10:       %{name}-%{version}-tools-it-poms.patch
+# remove testing profiles for unavailable drivers: db2jcc informix-driver jcc-driver jdbc-driver jdbc-oracle jtds sqljdbc
+Patch11:       %{name}-%{version}-remove-test-profiles.patch
 
-## If you don't want to build with maven, and use straight ant instead,
-## give rpmbuild option '--without maven'
+BuildRequires: jpackage-utils
 
-%define with_maven %{!?_without_maven:1}%{?_without_maven:0}
-%define without_maven %{?_without_maven:1}%{!?_without_maven:0}
+BuildRequires: apache-rat-plugin
+BuildRequires: buildnumber-maven-plugin
+BuildRequires: javacc-maven-plugin
+BuildRequires: maven-antrun-plugin
+BuildRequires: maven-compiler-plugin
+BuildRequires: maven-dependency-plugin
+BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-install-plugin
+BuildRequires: maven-invoker-plugin
+BuildRequires: maven-jar-plugin
+BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-resources-plugin
+BuildRequires: maven-surefire-plugin
+BuildRequires: maven-surefire-provider-junit4
 
-## If you don't want to wait for tests
-## give rpmbuild option '--without tests'
+# maven-antrun-plugin deps
+BuildRequires: ant-contrib
+BuildRequires: ant-jsch
 
-%define with_tests %{!?_without_tests:1}%{?_without_tests:0}
-%define without_tests %{?_without_tests:1}%{!?_without_tests:0}
+BuildRequires: ant
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-dbcp
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-pool
+BuildRequires: felix-osgi-core
+BuildRequires: geronimo-jms
+BuildRequires: geronimo-jta
+BuildRequires: geronimo-validation
+BuildRequires: glassfish-jaxb
+BuildRequires: glassfish-jaxb-api
+BuildRequires: hibernate-jpa-2.0-api
+BuildRequires: log4j
+BuildRequires: objectweb-asm
+BuildRequires: postgresql-jdbc
+BuildRequires: serp
+BuildRequires: slf4j
+BuildRequires: tomcat-servlet-3.0-api
 
-
-Name:           openjpa
-Version:        1.0.2
-Release:        alt6_1jpp5
-Epoch:          0
-Summary:        Apache OpenJPA
-License:        Apache License 2.0
-Url:            http://openjpa.apache.org/
-Group:          Development/Java
-Source0:        http://www.apache.org/dist/openjpa/1.0.2/apache-openjpa-1.0.2-source.zip
-Source1:        %{name}-settings.xml
-Source2:        %{name}-%{version}-jpp-depmap.xml
-Source3:        %{name}-autogenerated-files.tar.gz
-Source4:        %{name}-autogenerated-files-notests.tar.gz
-Patch0:         openjpa-1.0.2-TestSQLDateId.patch
-Patch1:         openjpa-1.0.2-TestSQLBigDecimalId.patch 
-Patch2:         openjpa-1.0.2-TestSQLBigIntegerId.patch
-Patch3:         openjpa-1.0.2-pom.patch
-Patch4:         openjpa-1.0.2-project-pom.patch
-Patch5:         openjpa-1.0.2-site_xml.patch
-
-BuildRequires: jpackage-utils >= 0:1.7.4
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: ant-nodeps
-BuildRequires: ant-junit
-BuildRequires: junit
+# test deps
+BuildRequires: apache-commons-jci-rhino
 BuildRequires: derby
 BuildRequires: hsqldb
-BuildRequires: javacc
-%if %{with_maven}
-BuildRequires: docbkx
-BuildRequires: docbook-xml
-BuildRequires: maven2-common-poms
-BuildRequires: maven2 >= 0:2.0.7
-BuildRequires: maven2-default-skin
-BuildRequires: maven2-plugin-ant
-BuildRequires: maven2-plugin-antrun
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-idea
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven2-plugin-javadoc
-BuildRequires: maven2-plugin-jxr
-BuildRequires: maven2-plugin-pmd
-BuildRequires: maven2-plugin-project-info-reports
-BuildRequires: maven2-plugin-resources
-BuildRequires: maven2-plugin-site
-BuildRequires: maven-surefire-plugin
-BuildRequires: maven2-plugin-surefire-report
-BuildRequires: mojo-maven2-plugin-cobertura
-BuildRequires: mojo-maven2-plugin-javacc
-BuildRequires: mojo-maven2-plugin-taglist
-BuildRequires: jetty6-maven2-plugins
-%endif
-
-
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-dbcp
-BuildRequires: jakarta-commons-lang
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-pool
-BuildRequires: jaxb_2_1_api
-BuildRequires: jms_1_1_api
-BuildRequires: jpa_3_0_api
-BuildRequires: jta_1_1_api
-BuildRequires: log4j
+BuildRequires: httpunit
+#BuildRequires: jtds
+BuildRequires: junit
+BuildRequires: mysql-connector-java
 BuildRequires: regexp
-BuildRequires: serp
-BuildRequires: stax_1_0_api
+BuildRequires: simple-jndi
 
-Requires: hsqldb
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-dbcp
-Requires: jakarta-commons-lang
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-pool
-Requires: jaxb_2_1_api
-Requires: jms_1_1_api
-Requires: jpa_3_0_api
-Requires: jta_1_1_api
-Requires: log4j
-Requires: regexp
-Requires: serp
-Requires: stax_1_0_api
+Requires:      ant
+Requires:      apache-commons-collections
+Requires:      apache-commons-dbcp
+Requires:      apache-commons-lang
+Requires:      apache-commons-logging
+Requires:      apache-commons-pool
+Requires:      felix-osgi-core
+Requires:      geronimo-jms
+Requires:      geronimo-jta
+Requires:      geronimo-validation
+Requires:      glassfish-jaxb
+Requires:      glassfish-jaxb-api
+Requires:      hibernate-jpa-2.0-api
+Requires:      log4j
+Requires:      objectweb-asm
+Requires:      postgresql-jdbc
+Requires:      serp
+Requires:      slf4j
+# servlet-api 2.4
+Requires:      tomcat-servlet-3.0-api
 
-BuildArch:      noarch
+Requires:      jpackage-utils
+BuildArch:     noarch
+Source44: import.info
 
 %description
-Apache OpenJPA, a Java EE persistence project of the Apache
-Software Foundation. It is a feature-rich implementation of
-the persistence part of Enterprise Java Beans 3.0, also known 
-as the Java Persistence API (JPA), and is available under the 
-terms of the Apache Software License. OpenJPA can be used as 
-a stand-alone POJO persistence layer, or it can be integrated 
-into any EJB3.0 compliant container and many lightweight frameworks.
+OpenJPA is Apache's implementation of Sun's Java Persistence 2.0 API
+(JSR-317 JPA 2.0) specification for the transparent persistence of
+Java objects.
+
+It is an object-relational mapping (ORM) solution for the Java language,
+which simplifies storing objects in databases.
+
+%package tools
+Group:         Development/Java
+Summary:       OpenJPA tools - Maven Plugin
+BuildRequires: bval
+BuildRequires: plexus-utils
+Requires:      maven
+Requires:      bval
+Requires:      geronimo-validation
+Requires:      hibernate-jpa-2.0-api
+Requires:      log4j
+Requires:      plexus-utils
+Requires:      jpackage-utils
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
+
+%description tools
+OpenJPA tasks for enhancing, SQL creation and
+schema mapping creation using Apache maven.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:         Development/Java
+Summary:       Javadoc for %{name}
+Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
-
-%if %{with_maven}
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-%{summary}.
-%endif
+This package contains javadoc for %{name}.
 
 %prep
-%setup -q -n apache-%{name}-%{version}-source
-#find . -name "*.jar" -exec rm -f {} \;
-for j in $(find . -name "*.jar"); do
-    mv $j $j.no
-done
-%if %{without_maven}
-%if %{with_tests}
-gzip -dc %{SOURCE3} | tar xf -
-%else
-gzip -dc %{SOURCE4} | tar xf -
-%endif
-%endif
+%setup -q -n apache-openjpa-%{version}-source
+find . -name "*.class" -delete
+find . -name "*.jar" -delete
 
-%patch0 -b .sav0
-%patch1 -b .sav1
-%patch2 -b .sav2
-%patch3 -b .sav3
-%patch4 -b .sav4
-%patch5 -b .sav5
+%patch0 -p0
+%patch1 -p0
+%patch2 -p0
+%patch3 -p0
+%patch4 -p0
+%patch5 -p0
+%patch6 -p0
+%patch7 -p0
+%patch8 -p0
+%patch9 -p0
+%patch10 -p0
+%patch11 -p1
 
-sed -i -e 's,target="1.4",target="1.5",g' */*.xml
-sed -i -e 's,source="1.4",source="1.5",g' */*.xml
+sed -i "s|<module>openjpa</module>|<!--module>openjpa</module-->|" pom.xml
+sed -i "s|<module>openjpa-all</module>|<!--module>openjpa-all</module-->|" pom.xml
+sed -i "s|<module>openjpa-examples</module>|<!--module>openjpa-examples</module-->|" pom.xml
+sed -i "s|<module>openjpa-integration</module>|<!--module>openjpa-integration</module-->|" pom.xml
+sed -i "s|<module>openjpa-project</module>|<!--module>openjpa-project</module-->|" pom.xml
+sed -i "s|<module>openbooks</module>|<!--module>openbooks</module-->|" openjpa-examples/pom.xml
 
-cp %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
+# require non free com.ibm.websphere websphere_uow_api 0.0.1
+rm openjpa-kernel/src/main/java/org/apache/openjpa/ee/WASRegistryManagedRuntime.java
+rm openjpa-kernel/src/main/java/org/apache/openjpa/ee/AutomaticManagedRuntime.java
 
-cp src/site/site.xml openjpa-project/src/site
+# require unavailable jmock
+rm -r openjpa-jdbc/src/test/java/org/apache/openjpa/jdbc/sql/*
 
 %build
-
-%if %{with_maven}
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p $MAVEN_REPO_LOCAL/org/apache/maven/skins/maven-default-skin/1.1/
-ln -sf $(build-classpath maven2/default-skin) $MAVEN_REPO_LOCAL/org/apache/maven/skins/maven-default-skin/1.1/maven-default-skin-1.1.jar
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-
-export M2_SETTINGS=$(pwd)/settings.xml
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -s $M2_SETTINGS \
+# test random fails
+mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
 %if %{with_tests}
-        -P test-derby \
+  -Ptest-derby \
 %else
-        -Dtest=false \
+  -Dtest=false \
 %endif
-        -Dmaven.test.failure.ignore=true \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        install
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -s $M2_SETTINGS \
-        -Pjavadoc-profile \
-        -Dtest=false \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        javadoc:javadoc site
-export MAVEN_OPTS="-Xmx512m"
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -s $M2_SETTINGS \
-        -Pdocbook-profile \
-        -Dtest=false \
-        -Dmaven2.jpp.depmap.file=%{SOURCE2} \
-        -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-        process-resources
-
-%else
-#[INFO] Reactor build order:
-#[INFO]   OpenJPA
-#[INFO]   OpenJPA Utilities
-#[INFO]   OpenJPA Kernel
-#[INFO]   OpenJPA JDBC
-#[INFO]   OpenJPA XML Store
-#[INFO]   OpenJPA JDBC 1.5
-#[INFO]   OpenJPA Utilities 1.5
-#[INFO]   OpenJPA Kernel 1.5
-#[INFO]   OpenJPA JPA
-#[INFO]   OpenJPA JPA JDBC
-#[INFO]   OpenJPA Aggregate Jar
-#[INFO]   OpenJPA Distribution
-#[INFO]   OpenJPA Integration Tests
-#[INFO]   OpenJPA Examples Integration Tests
-#[INFO]   OpenJPA JPA TCK Integration Tests
-#[INFO]   OpenJPA Persistence Examples
-
-export OPT_JAR_LIST="ant/ant-nodep ant/ant-junit junit"
-export CLASSPATH=$(build-classpath \
-commons-collections \
-commons-lang \
-commons-logging \
-log4j \
-regexp \
-serp \
-)
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-lib
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-export CLASSPATH=$(build-classpath \
-commons-collections \
-commons-lang \
-commons-pool \
-jms_1_1_api \
-jta_1_1_api \
-regexp \
-serp \
-)
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib/target/openjpa-lib-%{version}.jar
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-kernel
-jjtree -BUILD_NODE_FILES=false -OUTPUT_DIRECTORY=target/generated-sources/jjtree/org/apache/openjpa/kernel/jpql/ src/main/jjtree/org/apache/openjpa/kernel/jpql/JPQL.jjt 
-javacc -OUTPUT_DIRECTORY=target/generated-sources/javacc/org/apache/openjpa/kernel/jpql/ target/generated-sources/jjtree/org/apache/openjpa/kernel/jpql/JPQL.jj 
-rm target/generated-sources/javacc/org/apache/openjpa/kernel/jpql/ParseException.java
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar
-$JAVA_HOME/bin/java org.apache.openjpa.ee.WASManagedRuntime
-$JAVA_HOME/bin/java org.apache.openjpa.util.ProxyManagerImpl -utils 5
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-export CLASSPATH=$(build-classpath \
-commons-collections \
-commons-lang \
-hsqldb \
-jta_1_1_api \
-serp \
-)
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib/target/openjpa-lib-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-kernel/target/openjpa-kernel-%{version}.jar
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-jdbc
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-export CLASSPATH=$(build-classpath \
-commons-collections \
-serp \
-)
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib/target/openjpa-lib-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-kernel/target/openjpa-kernel-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-jdbc/target/openjpa-jdbc-%{version}.jar
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-xmlstore
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-export CLASSPATH=$(build-classpath \
-commons-collections \
-jaxb_2_1_api \
-stax_1_0_api \
-)
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib/target/openjpa-lib-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-kernel/target/openjpa-kernel-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-jdbc/target/openjpa-jdbc-%{version}.jar
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-jdbc-5
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-export CLASSPATH=$(build-classpath \
-serp \
-)
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib/target/openjpa-lib-%{version}.jar
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-lib-5
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-export CLASSPATH=$(build-classpath \
-commons-collections \
-serp \
-)
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib/target/openjpa-lib-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-kernel/target/openjpa-kernel-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-jdbc/target/openjpa-jdbc-%{version}.jar
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-kernel-5
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-export CLASSPATH=$(build-classpath \
-commons-collections \
-commons-lang \
-jpa_3_0_api \
-jta_1_1_api \
-serp \
-)
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib/target/openjpa-lib-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-kernel/target/openjpa-kernel-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-jdbc/target/openjpa-jdbc-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib-5/target/openjpa-lib-5-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-kernel-5/target/openjpa-kernel-5-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-jdbc-5/target/openjpa-jdbc-5-%{version}.jar
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-persistence
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-export CLASSPATH=$(build-classpath \
-commons-collections \
-commons-dbcp \
-commons-lang \
-commons-pool \
-derby/derby \
-jaxb_2_1_api \
-jpa_3_0_api \
-jta_1_1_api \
-log4j \
-serp \
-stax_1_0_api \
-)
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib/target/openjpa-lib-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-kernel/target/openjpa-kernel-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-jdbc/target/openjpa-jdbc-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-lib-5/target/openjpa-lib-5-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-kernel-5/target/openjpa-kernel-5-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-jdbc-5/target/openjpa-jdbc-5-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-persistence/target/openjpa-persistence-%{version}.jar
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-persistence-jdbc
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-export CLASSPATH=
-pushd openjpa-all
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only 
-popd
-export CLASSPATH=$(build-classpath \
-commons-collections \
-jpa_3_0_api \
-)
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-kernel/target/openjpa-kernel-%{version}.jar
-CLASSPATH=$CLASSPATH:$(pwd)/openjpa-jdbc/target/openjpa-jdbc-%{version}.jar
-CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd openjpa-examples
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
-
-%endif
+  -DfailIfNoTests=false \
+  -Dmaven.test.failure.ignore=true \
+  -Dmaven.local.depmap.file="%{SOURCE1}" \
+  install javadoc:aggregate process-resources
 
 %install
 
-# jars
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/%{name}
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
+%add_maven_depmap JPP.%{name}-parent.pom
 
-%add_to_maven_depmap org.apache.openjpa %{name}-parent %{version} JPP/%{name} parent
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-parent.pom
-
-install -m 644 %{name}-all/target/%{name}-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/all-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name} %{version} JPP/%{name} all
-install -m 644 %{name}-all/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-all.pom
-
-install -m 644 %{name}-jdbc-5/target/%{name}-jdbc-5-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/jdbc-5-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name}-jdbc-5 %{version} JPP/%{name} jdbc-5
-install -m 644 %{name}-jdbc-5/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-jdbc-5.pom
-
-install -m 644 %{name}-jdbc/target/%{name}-jdbc-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/jdbc-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name}-jdbc %{version} JPP/%{name} jdbc
-install -m 644 %{name}-jdbc/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-jdbc.pom
-
-install -m 644 %{name}-kernel-5/target/%{name}-kernel-5-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/kernel-5-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name}-kernel-5 %{version} JPP/%{name} kernel-5
-install -m 644 %{name}-kernel-5/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-kernel-5.pom
-
-install -m 644 %{name}-kernel/target/%{name}-kernel-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/kernel-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name}-kernel %{version} JPP/%{name} kernel
-install -m 644 %{name}-kernel/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-kernel.pom
-
-install -m 644 %{name}-lib-5/target/%{name}-lib-5-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/lib-5-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name}-lib-5 %{version} JPP/%{name} lib-5
-install -m 644 %{name}-lib-5/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-lib-5.pom
-
-install -m 644 %{name}-lib/target/%{name}-lib-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/lib-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name}-lib %{version} JPP/%{name} lib
-install -m 644 %{name}-lib/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-lib.pom
-
-install -m 644 %{name}-persistence-jdbc/target/%{name}-persistence-jdbc-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/persistence-jdbc-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name}-persistence-jdbc %{version} JPP/%{name} persistence-jdbc
-install -m 644 %{name}-persistence-jdbc/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-persistence-jdbc.pom
-
-install -m 644 %{name}-persistence/target/%{name}-persistence-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/persistence-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name}-persistence %{version} JPP/%{name} persistence
-install -m 644 %{name}-persistence/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-persistence.pom
-
-install -m 644 %{name}-xmlstore/target/%{name}-xmlstore-%{version}.jar \
-           $RPM_BUILD_ROOT%{_javadir}/%{name}/xmlstore-%{version}.jar
-%add_to_maven_depmap org.apache.openjpa %{name}-xmlstore %{version} JPP/%{name} xmlstore
-install -m 644 %{name}-xmlstore/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-xmlstore.pom
-
-
-
-(cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{version}*; do \
-ln -sf ${jar} ${jar/-%{version}/}; done)
-
-
-# javadoc
-for module in \
-           examples \
-           jdbc-5 \
-           jdbc \
-           kernel-5 \
-           kernel \
-           lib-5 \
-           lib \
-           persistence-jdbc \
-           persistence \
-           xmlstore \
-           ; do
-    install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/$module
-    cp -pr %{name}-$module/target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}/$module
+mkdir -p %{buildroot}%{_javadir}/%{name}
+for m in jdbc \
+  jest \
+  kernel \
+  lib \
+  persistence \
+  persistence-jdbc \
+  persistence-locking \
+  slice \
+  xmlstore;do
+    install -m 644 %{name}-${m}/target/%{name}-${m}-%{version}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
+    install -pm 644 %{name}-${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
+    %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
 done
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
-## manual
-install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -p LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%if %{with_maven}
-cp -pr target/site $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr openjpa-project/target/manual $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-%endif
+install -pm 644 %{name}-tools/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-tools.pom
+%add_maven_depmap -f tools JPP.%{name}-tools.pom
+install -pm 644 %{name}-tools/%{name}-maven-plugin/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-maven-plugin.pom
+install -m 644 %{name}-tools/%{name}-maven-plugin/target/%{name}-maven-plugin-%{version}.jar \
+  %{buildroot}%{_javadir}/%{name}/maven-plugin.jar
+%add_maven_depmap -f tools JPP.%{name}-maven-plugin.pom %{name}/maven-plugin.jar -a "org.codehaus.mojo:openjpa-maven-plugin"
 
-%post javadoc
-ln -sf %{name}-%{version} %{_javadocdir}/%{name}
- 
-%postun javadoc
-if [ "$1" = "0" ]; then
-  rm -f %{_javadocdir}/%{name}
-fi
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
+
+mkdir -p %{buildroot}%{_sysconfdir}/ant.d
+echo "ant %{name}/jdbc %{name}/kernel %{name}/lib" > %{name}-ant
+install -p -m 644 %{name}-ant %{buildroot}%{_sysconfdir}/ant.d/%{name}
 
 %files
-%{_docdir}/%{name}-%{version}/LICENSE.txt
-%{_javadir}/%{name}
-%{_datadir}/maven2
-%{_mavendepmapfragdir}
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%dir %{_javadir}/%{name}
+%{_javadir}/%{name}/jdbc.jar
+%{_javadir}/%{name}/jest.jar
+%{_javadir}/%{name}/kernel.jar
+%{_javadir}/%{name}/lib.jar
+%{_javadir}/%{name}/persistence.jar
+%{_javadir}/%{name}/persistence-jdbc.jar
+%{_javadir}/%{name}/persistence-locking.jar
+%{_javadir}/%{name}/slice.jar
+%{_javadir}/%{name}/xmlstore.jar
+%{_mavenpomdir}/JPP.%{name}-jdbc.pom
+%{_mavenpomdir}/JPP.%{name}-jest.pom
+%{_mavenpomdir}/JPP.%{name}-kernel.pom
+%{_mavenpomdir}/JPP.%{name}-lib.pom
+%{_mavenpomdir}/JPP.%{name}-parent.pom
+%{_mavenpomdir}/JPP.%{name}-persistence.pom
+%{_mavenpomdir}/JPP.%{name}-persistence-jdbc.pom
+%{_mavenpomdir}/JPP.%{name}-persistence-locking.pom
+%{_mavenpomdir}/JPP.%{name}-slice.pom
+%{_mavenpomdir}/JPP.%{name}-xmlstore.pom
+%{_mavendepmapfragdir}/%{name}
+%config(noreplace) %{_sysconfdir}/ant.d/%{name}
+%doc CHANGES.txt LICENSE NOTICE README.txt RELEASE-NOTES.html
+
+%files tools
+%{_javadir}/%{name}/maven-plugin.jar
+%{_mavenpomdir}/JPP.%{name}-tools.pom
+%{_mavenpomdir}/JPP.%{name}-maven-plugin.pom
+%{_mavendepmapfragdir}/%{name}-tools
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%ghost %{_javadocdir}/%{name}
-
-%if %{with_maven}
-%files manual
-%doc %{_docdir}/%{name}-%{version}/manual
-%doc %{_docdir}/%{name}-%{version}/site
-%endif
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
+%{_javadocdir}/%{name}
+%doc LICENSE NOTICE
 
 %changelog
+* Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.0-alt1_2jpp7
+- fc version
+
 * Wed Apr 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt6_1jpp5
 - fixed build
 
