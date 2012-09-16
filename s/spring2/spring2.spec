@@ -98,7 +98,7 @@ FIXME: (dwalluck): Need to link offline:
 Name:           spring2
 Summary:        Spring J2EE Framework
 Version:        2.5.6.SEC03
-Release:        alt6_5jpp6
+Release:        alt7_5jpp6
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -238,7 +238,7 @@ BuildRequires:  tiles
 BuildRequires:  tomcat5
 BuildRequires:  unzip
 # XXX: (dwalluck): brew is 1.4;  upstream is velocity-1.5
-BuildRequires:  velocity >= 0:1.5
+BuildRequires:  velocity15
 # XXX: (dwalluck): brew is 1.2; upstream is velocity-tools-view-1.4
 BuildRequires:  velocity-tools
 BuildRequires:  ws_metadata_2_0_api
@@ -1190,7 +1190,7 @@ ln -sf $(build-classpath glassfish/toplink-essentials) lib/toplink/toplink-essen
 #mv lib/toplink/toplink-essentials.jar.no lib/toplink/toplink-essentials.jar
 
 # BUILD/spring/lib/velocity/velocity-1.5.jar.no
-ln -sf $(build-classpath velocity) lib/velocity/velocity-1.5.jar
+ln -sf $(build-classpath velocity15) lib/velocity/velocity-1.5.jar
 # BUILD/spring/lib/velocity/velocity-tools-view-1.4.jar.no
 ln -sf $(build-classpath velocity-tools) lib/velocity/velocity-tools-view-1.4.jar
 # BUILD/spring/lib/websphere/websphere_uow_api.jar.no
@@ -1613,6 +1613,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %endif
 
 %changelog
+* Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt7_5jpp6
+- fixed build
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt6_5jpp6
 - build without new tiles 2.2.2
 
