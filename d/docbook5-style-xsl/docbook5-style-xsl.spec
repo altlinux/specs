@@ -1,7 +1,6 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
 Name: docbook5-style-xsl
-Version: 1.76.0
-Release: alt1_1
+Version: 1.77.1
+Release: alt1_2
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -53,7 +52,6 @@ rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/extensions
 rm -rf $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets/install.sh
 
 %files
-%defattr (-,root,root,-)
 %doc BUGS
 %doc README COPYING
 %doc TODO NEWS
@@ -78,7 +76,6 @@ CATALOG=%{_sysconfdir}/xml/catalog
 
 
 %postun
-# remove entries only on removal of package
 if [ "$1" = 0 ]; then
   CATALOG=%{_sysconfdir}/xml/catalog
   %{_bindir}/xmlcatalog --noout --del \
@@ -86,6 +83,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.77.1-alt1_2
+- new version
+
 * Thu Oct 21 2010 Igor Vlasenko <viy@altlinux.ru> 1.76.0-alt1_1
 - converted from Fedora by srpmconvert script
 
