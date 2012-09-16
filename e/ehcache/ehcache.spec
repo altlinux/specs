@@ -56,7 +56,7 @@ Summary:        Easy Hibernate Cache
 Name:           ehcache
 Version:        1.3.0
 %define namedversion %{version}
-Release:        alt6_4jpp6
+Release:        alt7_4jpp6
 Epoch:          0
 License:        LGPLv2+
 URL:            http://ehcache.sourceforge.net/
@@ -86,6 +86,7 @@ BuildRequires:  httpunit
 BuildRequires:  nekohtml
 BuildRequires:  rhino
 BuildRequires:  servlet_2_5_api
+BuildRequires:  apache-commons-collections
 %if %with maven
 BuildRequires:  maven-artifact-ant
 BuildRequires:  maven2-default-skin
@@ -104,9 +105,9 @@ BuildRequires:  maven2-plugin-site
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven2-plugin-jxr
 %endif
-BuildRequires:  jakarta-commons-beanutils
-BuildRequires:  jakarta-commons-collections
-BuildRequires:  jakarta-commons-logging
+BuildRequires:  apache-commons-beanutils
+BuildRequires:  apache-commons-collections
+BuildRequires:  apache-commons-logging
 BuildRequires:  jsr107cache
 %if %with hibernate
 BuildRequires:  hibernate2
@@ -118,11 +119,9 @@ BuildRequires:  spring2-aop
 BuildRequires:  spring2-test
 %endif
 #
-Requires(post): alternatives
-Requires(preun): alternatives
-Requires:  jakarta-commons-beanutils
-Requires:  jakarta-commons-collections
-Requires:  jakarta-commons-logging
+Requires:  apache-commons-beanutils
+Requires:  apache-commons-collections
+Requires:  apache-commons-logging
 Requires:  jsr107cache
 Provides:  hibernate_in_process_cache
 Provides:  ehcache-bootstrap = 0:%{version}-%{release}
@@ -302,6 +301,7 @@ export MAVEN_SETTINGS=$(pwd)/settings.xml
 export CLASSPATH=$(%{_bindir}/build-classpath \
 backport-util-concurrent \
 commons-httpclient \
+commons-collections \
 %if %with hibernate
 hibernate2 \
 hibernate3 \
@@ -430,6 +430,9 @@ EOF
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt7_4jpp6
+- fixed build
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.0-alt6_4jpp6
 - new jpp6 release
 
