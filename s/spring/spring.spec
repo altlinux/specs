@@ -47,7 +47,7 @@ Name:           spring
 Summary:        Spring J2EE Framework
 Url:            http://www.springframework.org/
 Version:        1.2.9
-Release:        alt12_4jpp6
+Release:        alt13_4jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 Group:          Development/Java
@@ -163,6 +163,7 @@ BuildRequires:  quartz15
 BuildRequires:  servlet_2_4_api
 BuildRequires:  struts
 BuildRequires:  struts-tiles
+BuildRequires:  struts-extras
 BuildRequires:  velocity14
 BuildRequires:  velocity-tools12
 BuildRequires:  xapool
@@ -879,6 +880,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %{_datadir}/%{name}-%{version}/samples
 
 %changelog
+* Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.9-alt13_4jpp6
+- build with new struts
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.9-alt12_4jpp6
 - build with quartz15
 
