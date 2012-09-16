@@ -14,13 +14,13 @@
 %define flavour		%base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.42
-Release: alt7
+Version: 3.0.43
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 42
+%define kernel_stable_version 43
 %define kernel_extra_version	.%kernel_stable_version
 #define kernel_extra_version	%nil
 
@@ -165,7 +165,7 @@ Patch0071: linux-%kernel_branch.42-fix-drivers-base--memory.patch
 Patch0072: linux-%kernel_branch.42-fix-drivers-base-power--runtime.patch
 
 Patch0081: linux-%kernel_branch.42-fix-drivers-block--DAC960.patch
-Patch0082: linux-%kernel_branch.42-fix-drivers-block--cciss.patch
+Patch0082: linux-%kernel_branch.43-fix-drivers-block--cciss.patch
 Patch0083: linux-%kernel_branch.42-fix-drivers-block--drbd.patch
 Patch0084: linux-%kernel_branch.42-fix-drivers-block--floppy.patch
 Patch0085: linux-%kernel_branch.42-fix-drivers-block--nbd.patch
@@ -408,13 +408,12 @@ Patch0591: linux-%kernel_branch.42-fix-init--calibrate.patch
 Patch0601: linux-%kernel_branch.42-fix-ipc--mqueue.patch
 
 Patch0610: linux-%kernel_branch.42-fix-kernel.patch
-Patch0611: linux-%kernel_branch.42-fix-kernel--audit_tree.patch
-Patch0612: linux-%kernel_branch.42-fix-kernel--cgroup.patch
-Patch0613: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
-Patch0614: linux-%kernel_branch.42-fix-kernel--freezer.patch
-Patch0615: linux-%kernel_branch.42-fix-kernel--watchdog.patch
-Patch0616: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
-Patch0617: linux-%kernel_branch.42-fix-kernel-time.patch
+Patch0611: linux-%kernel_branch.42-fix-kernel--cgroup.patch
+Patch0612: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
+Patch0613: linux-%kernel_branch.42-fix-kernel--freezer.patch
+Patch0614: linux-%kernel_branch.42-fix-kernel--watchdog.patch
+Patch0615: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
+Patch0616: linux-%kernel_branch.42-fix-kernel-time.patch
 
 Patch0620: linux-%kernel_branch.42-fix-lib.patch
 Patch0621: linux-%kernel_branch.42-fix-lib--genalloc.patch
@@ -454,7 +453,8 @@ Patch0669: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
 
 Patch0670: linux-%kernel_branch.42-fix-scripts.patch
 
-Patch0681: linux-%kernel_branch.42-fix-security-selinux.patch
+Patch0681: linux-%kernel_branch.42-fix-security--security.patch
+Patch0682: linux-%kernel_branch.42-fix-security-selinux.patch
 
 Patch0691: linux-%kernel_branch.42-fix-sound-core--snd-pcm.patch
 Patch0692: linux-%kernel_branch.42-fix-sound-oss--pss.patch
@@ -484,15 +484,16 @@ Patch1042: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
 Patch1051: linux-%kernel_branch.42-feat-drivers-video--bootsplash.patch
 
 Patch1061: linux-%kernel_branch.42-feat-fs--secrm.patch
-Patch1062: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
-Patch1063: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
-Patch1064: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
-Patch1065: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
-Patch1066: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
-Patch1067: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1068: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1069: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1070: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1062: linux-%kernel_branch-feat-fs-aufs.patch
+Patch1063: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
+Patch1064: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
+Patch1065: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
+Patch1066: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
+Patch1067: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
+Patch1068: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
+Patch1069: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1070: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1071: linux-%kernel_branch.42-feat-fs-unionfs.patch
 
 Patch1081: linux-%kernel_branch.42-feat-lib--llist.patch
 
@@ -1451,7 +1452,6 @@ cd linux-%version
 %patch0614 -p1
 %patch0615 -p1
 %patch0616 -p1
-%patch0617 -p1
 
 %patch0620 -p1
 %patch0621 -p1
@@ -1492,6 +1492,7 @@ cd linux-%version
 %patch0670 -p1
 
 %patch0681 -p1
+%patch0682 -p1
 
 %patch0691 -p1
 %patch0692 -p1
@@ -1530,6 +1531,7 @@ cd linux-%version
 %patch1068 -p1
 %patch1069 -p1
 %patch1070 -p1
+%patch1071 -p1
 
 %patch1081 -p1
 
@@ -2349,6 +2351,23 @@ fi
 
 
 %changelog
+* Sun Sep 16 2012 Led <led@altlinux.ru> 3.0.43-alt1
+- 3.0.43
+- removed:
+  + fix-kernel--audit_tree
+- updated:
+  + fix-drivers-block--cciss
+  + fix-fs
+  + fix-fs-proc
+  + fix-kernel
+  + fix-mm
+  + fix-mm--hugetlb
+  + feat-fs-unionfs
+- added:
+  + fix-security--security
+  + feat-fs-aufs
+- disabled SCHED_DEBUG
+
 * Sat Sep 15 2012 Led <led@altlinux.ru> 3.0.42-alt7
 - updated:
   + fix-drivers-gpu-drm
