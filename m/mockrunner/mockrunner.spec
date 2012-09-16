@@ -1,5 +1,5 @@
 Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: struts-taglib
+BuildRequires: struts-taglib struts-extras
 BuildRequires: /proc
 BuildRequires: jpackage-1.5.0-core
 # Copyright (c) 2000-2008, JPackage Project
@@ -38,7 +38,7 @@ BuildRequires: jpackage-1.5.0-core
 Summary:        J2EE Unit Testing
 Name:           mockrunner
 Version:        0.3.8
-Release:        alt6_1jpp5
+Release:        alt7_1jpp5
 Epoch:          0
 License:        Apache Software License -style
 URL:            http://mockrunner.sourceforge.net/
@@ -275,6 +275,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.3.8-alt7_1jpp5
+- build with new struts
+
 * Thu Mar 10 2011 Igor Vlasenko <viy@altlinux.ru> 0:0.3.8-alt6_1jpp5
 - build with ant17
 
