@@ -1,3 +1,4 @@
+BuildRequires: glassfish-jaxb-api
 %def_with old_tiles
 ExclusiveArch: x86_64
 BuildRequires: avalon-framework
@@ -98,7 +99,7 @@ FIXME: (dwalluck): Need to link offline:
 Name:           spring2
 Summary:        Spring J2EE Framework
 Version:        2.5.6.SEC03
-Release:        alt8_5jpp6
+Release:        alt9_5jpp6
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -1089,7 +1090,7 @@ ln -sf $(build-classpath jasperreports2) lib/jasperreports/jasperreports-2.0.5.j
 # BUILD/spring/lib/javassist/javassist-3.4.GA.jar.no
 ln -sf $(build-classpath javassist) lib/javassist/javassist-3.4.GA.jar
 # BUILD/spring/lib/jaxws/jaxb-api.jar.no
-ln -sf $(build-classpath glassfish-jaxb/jaxb-api) lib/jaxws/jaxb-api.jar
+ln -sf $(build-classpath jaxb-api) lib/jaxws/jaxb-api.jar
 # BUILD/spring/lib/jaxws/jaxws-api.jar.no
 ln -sf $(build-classpath jaxws_2_1_api) lib/jaxws/jaxws-api.jar
 # BUILD/spring/lib/jaxws/jws-api.jar.no
@@ -1155,6 +1156,7 @@ ln -sf $(build-classpath slf4j/slf4j-api) lib/slf4j/slf4j-api-1.5.0.jar
 # BUILD/spring/lib/slf4j/slf4j-log4j12-1.5.0.jar.no
 ln -sf $(build-classpath slf4j/slf4j-log4j12) lib/slf4j/slf4j-log4j12-1.5.0.jar
 # BUILD/spring/lib/struts/struts.jar.no
+#cp lib/struts/struts.jar.no lib/struts/struts.jar
 ln -sf $(build-classpath struts) lib/struts/struts.jar
 ln -sf $(build-classpath struts-tiles) lib/struts/struts-tiles.jar
 ln -sf $(build-classpath struts-extras) lib/struts/struts-extras.jar
@@ -1192,7 +1194,8 @@ ln -sf $(build-classpath glassfish/toplink-essentials) lib/toplink/toplink-essen
 # BUILD/spring/lib/velocity/velocity-1.5.jar.no
 ln -sf $(build-classpath velocity15) lib/velocity/velocity-1.5.jar
 # BUILD/spring/lib/velocity/velocity-tools-view-1.4.jar.no
-ln -sf $(build-classpath velocity-tools) lib/velocity/velocity-tools-view-1.4.jar
+cp lib/velocity/velocity-tools-view-1.4.jar.no lib/velocity/velocity-tools-view-1.4.jar
+#ln -sf $(build-classpath velocity-tools) lib/velocity/velocity-tools-view-1.4.jar
 # BUILD/spring/lib/websphere/websphere_uow_api.jar.no
 
 # BUILD/spring/lib/xdoclet/xjavadoc-1.1.jar.no
@@ -1613,6 +1616,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %endif
 
 %changelog
+* Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt9_5jpp6
+- support for new velocity-tools
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt8_5jpp6
 - use openjpa1
 
