@@ -6,7 +6,7 @@
 %define libgudev_version 143
 
 Name: ModemManager
-Version: 0.5.3.96
+Version: 0.5.4.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -74,6 +74,9 @@ make check
 %exclude %_includedir/mm/mm-modem.h
 
 %changelog
+* Sun Sep 16 2012 Mikhail Efremov <sem@altlinux.org> 0.5.4.0-alt1
+- Updated to 0.5.4.0.
+
 * Fri Jul 20 2012 Mikhail Efremov <sem@altlinux.org> 0.5.3.96-alt1
 - Updated to 0.5.3.96 (0.5.4-rc2).
 
