@@ -1,14 +1,14 @@
 Name: xorg-font-utils
-Version: 1.2.0
+Version: 1.3.0
 Release: alt1
-Serial: 1
+Epoch: 1
 Summary: Font utilities required for installing fonts
 License: MIT/X11
 Group: System/X11
 Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Provides: font-util xorg-x11-font-utils = %serial:%version-%release
+Provides: font-util xorg-x11-font-utils = %epoch:%version-%release
 Requires: bdftopcf mkfontdir mkfontscale xorg-font-encodings
 Obsoletes: xorg-x11-font-utils
 
@@ -28,6 +28,7 @@ installing font packages.
 %build
 %autoreconf
 %configure \
+	--with-fontrootdir=%_datadir/fonts \
 	--with-mapdir=%_datadir/X11/fonts/util
 %make_build
 
@@ -40,9 +41,12 @@ installing font packages.
 %dir %_datadir/X11/fonts
 %_datadir/X11/fonts/util
 %_datadir/aclocal/*.m4
-%_man1dir/*
+%_man1dir/*.1*
 
 %changelog
+* Sun Sep 16 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.3.0-alt1
+- 1.3.0
+
 * Thu Oct 21 2010 Valery Inozemtsev <shrek@altlinux.ru> 1:1.2.0-alt1
 - 1.2.0
 
