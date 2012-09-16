@@ -24,7 +24,7 @@
 %define bugfix 3
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 %define poppler_devel_name lib%rname-devel
 %define poppler_cpp_devel_name lib%rname-cpp-devel
 %define poppler_glib_devel_name lib%rname-glib-devel
@@ -335,6 +335,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Mon Sep 17 2012 Dmitry V. Levin <ldv@altlinux.org> 0.20.3-alt4
+- Rebuilt with libpng15.
+
 * Sun Sep 02 2012 Dmitry V. Levin <ldv@altlinux.org> 0.20.3-alt3
 - Built with system libtiff again.
 
