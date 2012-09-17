@@ -1,4 +1,3 @@
-%def_disable static
 %def_disable debug
 %def_enable apps
 %def_disable openmp
@@ -28,27 +27,29 @@
 
 %define bname opencv
 %define Name OpenCV
-%define sover 2.3
+%define sover 2.4
 Name: lib%bname%sover
-Version: 2.3.2
-%define trunk 20111203
-Release: alt3.svn%trunk
+Version: 2.4.9
+%define trunk 20120917
+Release: alt1.git%trunk
 Summary:  Intel(R) Open Source Computer Vision Library
 License: Distributable
-Group: System/Legacy libraries
-URL: http://%{bname}library.sourceforge.net/
-# https://code.ros.org/svn/opencv/trunk/opencv
+Group: System/Libraries
+URL: http://opencv.org
+# git://code.opencv.org/opencv.git
 Source: %bname-%version.tar
-#Source1: %{bname}_extra.tar
-Source2: interfaces.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 BuildPreReq: chrpath libavformat53 libavcodec53
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
-BuildRequires: openexr-devel graphviz libpng-devel
-BuildPreReq: cmake libnumpy-devel eigen2 doxygen
+BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
+BuildPreReq: cmake libnumpy-devel eigen3 doxygen zlib-devel
 BuildPreReq: libucil-devel libv4l-devel libtbb-devel bzlib-devel
+BuildPreReq: pkgconfig(glproto) pkgconfig(dri2proto) pkgconfig(xext)
+BuildPreReq: pkgconfig(xdamage) pkgconfig(xxf86vm)
+BuildPreReq: libGLU-devel libXau-devel libXdmcp-devel libgtkglext-devel
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
+BuildPreReq: texlive-latex-base
 %{?_enable_openmp:BuildRequires: libgomp-devel}
 %{?_with_unicap:BuildRequires: libunicap-devel}
 %{?_with_ffmpeg:BuildRequires: libavformat-devel libswscale-devel}
@@ -94,27 +95,6 @@ This package contains header files and documentation needed to develop
 applications with %name.
 
 
-%if_enabled static
-%package -n lib%bname-devel-static
-Summary: Static %name
-Group: Development/C++
-Requires: lib%bname-devel = %version-%release
-Conflicts: lib%bname-devel-static
-Conflicts: lib%{bname}2-devel-static
-
-%description -n lib%bname-devel-static
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains static library to develop applications with
-%name.
-%endif
-
-
 %package doc
 Summary: %name documentation
 Group: Development/Documentation
@@ -149,7 +129,6 @@ This package contains %Name tests applications.
 %package utils
 Group: Video
 Summary: %Name utils
-Requires: %name-utils-data = %version-%release
 Provides: lib%bname-utils = %version-%release
 Conflicts: lib%bname-utils < %version-%release
 Obsoletes: lib%bname-utils < %version-%release
@@ -167,21 +146,6 @@ improving Python bindings to %Name.
 
 This package contains %Name demo applications.
 
-%package utils-data
-Group: Video
-Summary: %Name utils data
-BuildArch: noarch
-
-%description utils-data
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains %Name demo applications data.
-
 
 %package -n python-module-%bname%sover
 Group: Development/Python
@@ -192,7 +156,6 @@ Obsoletes: python-module-%bname < %version-%release
 Provides: python-module-%{bname}2 = %version-%release
 Conflicts: python-module-%{bname}2 < %version-%release
 Obsoletes: python-module-%{bname}2 < %version-%release
-Conflicts: python-module-%{bname}2.4
 
 %description -n python-module-%bname%sover
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -203,23 +166,6 @@ about 300 C functions and a few C++ classes. Also there are constantly
 improving Python bindings to %Name.
 
 This package contains an extension module for python that provides a
-Python language mapping for the %Name.
-
-%package -n python-module-%bname%sover-pickles
-Group: Development/Python
-Summary: Pickles for Python modules for %Name
-Conflicts: python-module-%bname-pickles
-Conflicts: python-module-%{bname}2-pickles
-
-%description -n python-module-%bname%sover-pickles
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains pickles for %{bname}4 for python that provides a
 Python language mapping for the %Name.
 
 %package examples
@@ -239,92 +185,16 @@ improving Python bindings to %Name.
 
 This package contains %Name examples.
 
-%package -n %bname-tracker3D
-Group: Video
-Summary: Obtain automatically training images from video or camera
-Requires: %name = %version-%release
-Requires: %bname-tracker3D-data = %version-%release
-
-%description -n %bname-tracker3D
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-tracker3D application was developed to obtain automatically
-training images from video or camera only by selecting an object
-in one frame. To do so you need only a pre-recored video or
-live input from camera.
-
-%package -n %bname-tracker3D-data
-Group: Video
-Summary: Data files for tracker3D
-BuildArch: noarch
-
-%description -n %bname-tracker3D-data
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-tracker3D application was developed to obtain automatically
-training images from video or camera only by selecting an object
-in one frame. To do so you need only a pre-recored video or
-live input from camera. This package contains data files for tracker3D.
-
-%package -n %bname-extra
-Group: Video
-Summary: Extra data files for %Name
-BuildArch: noarch
-
-%description -n %bname-extra
-%Name means Intel(R) Open Source Computer Vision Library. It is a
-collection of C functions and a few C++ classes that implement many
-popular Image Processing and Computer Vision algorithms.
-%Name provides cross-platform middle-to-high level API that includes
-about 300 C functions and a few C++ classes. Also there are constantly
-improving Python bindings to %Name.
-
-This package contains extra data files for %Name.
-
 %prep
 %setup
-#tar -xf %SOURCE1
-tar -xf %SOURCE2
 
-for i in IlmImf Iex Half; do
-	rm -f 3rdparty/lib/$i.lib
-done
-
-rm -f $(find ./ -name '*.a')
-
-for i in $(egrep -R cxtypes interfaces/swig/|awk -F : '{print $1}')
-do
-	sed -i 's|.*cxtypes.*||' $i
-done
-for i in $(egrep -R cvtypes interfaces/swig/|awk -F : '{print $1}')
-do
-	sed -i 's|.*cvtypes.*||' $i
-done
-
-rm -f interfaces/swig/python/_*.cpp interfaces/swig/python/cv.py \
-	interfaces/swig/python/highgui.py interfaces/swig/python/ml.py
-#rm -fR interfaces/swig/general
+rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib}
 
 %prepare_sphinx .
 cp -f doc/conf.py ./
 cp doc/opencv-logo2.png ./
 
 %build
-INCS="-I$PWD/modules/core/include -I$PWD/modules/imgproc/include"
-INCS="$INCS -I$PWD/modules/video/include -I$PWD/modules/features2d/include"
-INCS="$INCS -I$PWD/modules/flann/include -I$PWD/modules/calib3d/include"
-INCS="$INCS -I$PWD/modules/objdetect/include -I$PWD/modules/ml/include"
-INCS="$INCS -I$PWD/modules/highgui/include -I$PWD/modules/legacy/include"
 cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DBUILD_PACKAGE:BOOL=ON \
@@ -337,118 +207,63 @@ cmake \
 	-DBUILD_PYTHON_SUPPORT:BOOL=ON \
 	-DCMAKE_VERBOSE:BOOL=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
-	-DCMAKE_CXX_FLAGS:STRING="-DHAVE_PNG -fno-strict-aliasing $INCS" \
-	-DCMAKE_C_FLAGS:STRING="-DHAVE_PNG -fno-strict-aliasing $INCS" \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo \
 	-DPYTHON_PLUGIN_INSTALL_PATH:PATH=%python_sitelibdir/%bname \
+	-DWITH_UNICAP:BOOL=ON \
+	-DWITH_QUICKTIME:BOOL=ON \
+	-DWITH_XINE:BOOL=ON \
+	-DWITH_OPENGL:BOOL=ON \
+	-DINSTALL_PYTHON_EXAMPLES:BOOL=ON \
+	-DCMAKE_SKIP_RPATH:BOOL=ON \
+	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
 %ifarch x86_64
 	-DLIB_SUFFIX:STRING=64 \
 %endif
 	.
 %make_build VERBOSE=1
 
-# tracker3D
-
-#pushd opencv_extra/3d/tracker3D
-#rm -f makefile
-#cmake \
-#	-DOpenCV_DIR=$PWD/../../.. \
-#	.
-#make_build
-#popd
-
 %install
-touch AUTHORS ChangeLog COPYING INSTALL NEWS THANKS TODO
-
 %makeinstall_std
 
-%makeinstall_std -C interfaces/swig/python
+install -d %buildroot%_docdir/%name
+mv %buildroot%_datadir/%Name/doc/* %buildroot%_docdir/%name/
 
-%ifarch x86_64
-install -d %buildroot%_libdir
-mv %buildroot%python_sitelibdir_noarch/* %buildroot%python_sitelibdir/
-%endif
-
-rm -fR %buildroot%_datadir/%bname/doc \
-	%buildroot%python_sitelibdir/%bname/matlab_syntax.py*
-
-# tracker3D
-
-#install -m755 opencv_extra/3d/tracker3D/tracker3D \
-#	%buildroot%_bindir
-#install -d %buildroot%_datadir/%bname/tracker3D
-#install -p -m644 opencv_extra/3d/tracker3D/data/* \
-#	%buildroot%_datadir/%bname/tracker3D
-
-# extra
-
-#cp -fR opencv_extra/classifiers opencv_extra/testdata \
-#	%buildroot%_datadir/%bname/
-
-# no RPATH
-
-pushd %buildroot
-for i in .%_bindir/* .%python_sitelibdir/%bname/*.so \
-	.%python_sitelibdir/*.so .%_libdir/*.so
-do
-	chrpath -d $i
-done
-popd
+cp -fR samples/python* %buildroot%_datadir/%Name/samples/
 
 %files
+%doc README
 %_libdir/*.so.*
+%dir %_datadir/%bname
+%dir %_datadir/%Name
+%_datadir/%Name/haarcascades
+%_datadir/%Name/lbpcascades
 
-#files -n lib%bname-devel
-#_libdir/*.so
-#_includedir/*
-#_pkgconfigdir/*
-#dir %_datadir/%bname
-#_datadir/%Name
+%files -n lib%bname-devel
+%_libdir/*.so
+%_includedir/*
+%_pkgconfigdir/*
+%_datadir/%Name/*.cmake
 
-#if_enabled static
-#files -n lib%bname-devel-static
-#_libdir/*.a
-#endif
+%files doc
+%doc doc/vidsurv
+%_docdir/%name
 
-#files doc
-#doc doc/vidsurv doc/*.pdf
-
-#files utils
-#_bindir/*
-#exclude %_bindir/tracker3D
-
-#files utils-data
-#dir %_datadir/%bname
-#_datadir/%bname/*
-#exclude %_datadir/%bname/samples
-#exclude %_datadir/%bname/tracker3D
-#exclude %_datadir/%bname/classifiers
-#exclude %_datadir/%bname/testdata
-
+%files utils
+%_bindir/*
 
 %files -n python-module-%bname%sover
 %python_sitelibdir/*
 
-#files examples
-#dir %_datadir/%bname
-#_datadir/%bname/samples
-
-#files -n %bname-tracker3D
-#doc opencv_extra/3d/tracker3D/readme.txt
-#_bindir/tracker3D
-
-#files -n %bname-tracker3D-data
-#dir %_datadir/%bname
-#_datadir/%bname/tracker3D
-
-#files -n %bname-extra
-#dir %_datadir/%bname
-#_datadir/%bname/classifiers
-#_datadir/%bname/testdata
+%files examples
+%dir %_datadir/%bname
+%dir %_datadir/%Name
+%_datadir/*/samples
 
 %changelog
-* Mon Sep 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.2-alt3.svn20111203
-- Moved this version into legacy libraries
+* Mon Sep 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt1.git20120917
+- Version 2.4.9
 
 * Mon Feb 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.2-alt2.svn20111203
 - Fixed build with libav 0.8
