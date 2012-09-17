@@ -1,5 +1,5 @@
 Name: libscythe
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 Summary: C++ library for statistical computation
 
@@ -8,7 +8,7 @@ License: GPL
 Url: http://scythe.wustl.edu/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://scythe.wustl.edu/dist/scythestat-1.0.2.tar.gz
+Source: http://scythe.wustl.edu/dist/scythestat-%version.tar.gz
 Source1: http://scythe.wustl.edu/jstatsoftScythe.pdf
 
 BuildPreReq: gcc-c++
@@ -73,11 +73,15 @@ install -p -m644 %SOURCE1 .
 %make_install DESTDIR=%buildroot install
 
 %files devel
+%doc AUTHORS COPYING ChangeLog LICENSE NEWS README
 %_includedir/scythestat
 
 %files doc
 %doc jstatsoftScythe.pdf
 
 %changelog
+* Mon Sep 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1
+- Version 1.0.3
+
 * Tue Mar 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
