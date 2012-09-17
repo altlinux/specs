@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -504,6 +504,7 @@ Patch1090: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
 Patch1091: linux-%kernel_branch.42-feat-fs-unionfs.patch
 
 Patch1101: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
+Patch1102: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
 
 Patch1111: linux-%kernel_branch.42-feat-lib--llist.patch
 
@@ -1552,6 +1553,7 @@ cd linux-%version
 %patch1091 -p1
 
 %patch1101 -p1
+%patch1102 -p1
 
 %patch1111 -p1
 
@@ -2371,6 +2373,14 @@ fi
 
 
 %changelog
+* Mon Sep 17 2012 Led <led@altlinux.ru> 3.0.43-alt3
+- updated:
+  + fix-drivers-scsi--aha152x
+  + fix-fs-proc
+  + feat-fs-aufs
+- added:
+  + feat-kernel-power-tuxonice
+
 * Mon Sep 17 2012 Led <led@altlinux.ru> 3.0.43-alt2
 - updated:
   + fix-kernel
