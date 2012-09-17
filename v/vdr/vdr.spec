@@ -1,6 +1,6 @@
 Name: vdr
 Version: 1.7.30
-Release: alt1
+Release: alt2
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -30,6 +30,11 @@ Summary: VDR softcam plugin
 Group: Video
 Requires: vdr = %version-%release
 
+%package plugin-enigmang
+Summary: VDR theme
+Group: Video
+Requires: vdr = %version-%release
+
 %package plugin-femon
 Summary: VDR femon plugin
 Group: Video
@@ -47,6 +52,11 @@ Requires: vdr = %version-%release
 
 %package plugin-remoteosd
 Summary: VDR remote OSD plugin
+Group: Video
+Requires: vdr = %version-%release
+
+%package plugin-softdevice
+Summary: VDR ffmpeg plugin
 Group: Video
 Requires: vdr = %version-%release
 
@@ -106,6 +116,9 @@ Requires: vdr-plugin-xine = %version-%release
 %description plugin-sc
 Softcam plugin  for the Video Disk Recorder (VDR).
 
+%description plugin-enigmang
+EnigmaNG standalone skin for the Video Disk Recorder (VDR).
+
 %description plugin-femon
 DVB Frontend Status Monitor plugin for the Video Disk Recorder (VDR).
 
@@ -117,6 +130,9 @@ Analog PVR-like cards (ivtv, cx18 etc) support for the Video Disk Recorder (VDR)
 
 %description plugin-remoteosd
 Remote OSD plugin for the Video Disk Recorder (VDR).
+
+%description plugin-softdevice
+Softdevice plugin for the Video Disk Recorder (VDR).
 
 %description plugin-streamdev
 Streaming server and client plugins for the Video Disk Recorder (VDR).
@@ -180,18 +196,23 @@ sed -e 's,^MANDIR.\+$,MANDIR = %_mandir,' \
 sed -i 's,^IMAGELIB.\+$,IMAGELIB = graphicsmagick,' PLUGINS/src/text2skin/Makefile
 
 %build
+(cd PLUGINS/src/softdevice && sh configure)
 (cd PLUGINS/src/xineliboutput && sh configure)
 make all plugins
 
 %install
 make install DESTDIR=%buildroot
 
-mkdir -p %buildroot%docdir %buildroot%confdir/plugins
+mkdir -p %buildroot%docdir %buildroot%confdir/plugins %buildroot%confdir/themes
 cp -p CONTRIBUTORS HISTORY INSTALL MANUAL PLUGINS.html README* UPDATE* %buildroot%docdir
 
 mkdir -p %buildroot%docdir/sc %buildroot%confdir/plugins/sc
 cp -p PLUGINS/src/sc/README* %buildroot%docdir/sc
 cp -a PLUGINS/src/sc/examples %buildroot%docdir/sc
+
+mkdir -p %buildroot%docdir/enigmang %buildroot%confdir/plugins/skinenigmang
+cp -p PLUGINS/src/enigmang/README %buildroot%docdir/enigmang
+cp -p PLUGINS/src/enigmang/themes/* %buildroot%confdir/themes/
 
 mkdir -p %buildroot%docdir/femon
 cp -p PLUGINS/src/femon/README %buildroot%docdir/femon
@@ -214,6 +235,9 @@ cp -p PLUGINS/src/svdrpservice/README %buildroot%docdir/svdrpservice
 
 mkdir -p %buildroot%docdir/remoteosd
 cp -p PLUGINS/src/remoteosd/README %buildroot%docdir/remoteosd
+
+mkdir -p %buildroot%docdir/softdevice %buildroot%confdir/plugins/softdevice
+cp -p PLUGINS/src/softdevice/README %buildroot%docdir/softdevice
 
 mkdir -p %buildroot%docdir/streamdev
 cp -p PLUGINS/src/streamdev/{README,PROTOCOL} %buildroot%docdir/streamdev
@@ -255,13 +279,15 @@ mkdir -p %buildroot%_iconsdir
 cp -a icons/* %buildroot%_iconsdir
 install -pm0644 -D vdr.desktop %buildroot%_desktopdir/vdr.desktop
 
-mkdir -p %buildroot%_runtimedir/vdr
+mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 
 %find_lang --output=VDR.lang --append vdr vdr-hello vdr-pictures vdr-skincurses vdr-dvbsddevice vdr-dvbhddevice
 %find_lang --output=sc.lang vdr-sc
+%find_lang --output=enigmang.lang vdr-skinenigmang
 %find_lang --output=femon.lang vdr-femon
 %find_lang --output=iptv.lang vdr-iptv
 %find_lang --output=pvrinput.lang vdr-pvrinput
+%find_lang --output=softdevice.lang vdr-softdevice
 %find_lang --output=streamdev.lang --append vdr-streamdev-server vdr-streamdev-client
 %find_lang --output=text2skin.lang vdr-text2skin
 %find_lang --output=ttxtsubs.lang vdr-ttxtsubs
@@ -297,6 +323,7 @@ mkdir -p %buildroot%_runtimedir/vdr
 
 %dir %attr(0770,root,_vdr) %confdir
 %dir %attr(0750,root,_vdr) %confdir/plugins
+%dir %attr(0770,root,_vdr) %confdir/themes
 
 %config(noreplace) %attr(0600,_vdr,_vdr) %confdir/*.conf
 
@@ -318,12 +345,15 @@ mkdir -p %buildroot%_runtimedir/vdr
 %plugindir/libvdr-svccli.so.%version
 %plugindir/libvdr-svcsvr.so.%version
 %plugindir/libvdr-svdrpdemo.so.%version
+%plugindir/libvdr-rcu.so.%version
+%plugindir/libvdr-epgtableid0.so.%version
 
 %_man1dir/vdr.1*
 %_man5dir/vdr.5*
 
 %dir %attr(0770,root,_vdr) %videodir
 %dir %attr(0770,root,_vdr) %_runtimedir/vdr
+%dir %attr(0770,root,_vdr) %_cachedir/vdr
 
 %files plugin-sc -f sc.lang
 %docdir/sc
@@ -349,6 +379,12 @@ mkdir -p %buildroot%_runtimedir/vdr
 %plugindir/libsc-dvbsddevice-*.so.%version
 %plugindir/libvdr-sc.so.%version
 
+%files plugin-enigmang -f enigmang.lang
+%docdir/enigmang
+%confdir/themes/EnigmaNG*.theme
+%dir %attr(0770,root,_vdr) %confdir/plugins/skinenigmang
+%plugindir/libvdr-skinenigmang.so.%version
+
 %files plugin-femon -f femon.lang
 %docdir/femon
 %plugindir/libvdr-femon.so.%version
@@ -370,6 +406,14 @@ mkdir -p %buildroot%_runtimedir/vdr
 %plugindir/libvdr-svdrposd.so.%version
 %plugindir/libvdr-remoteosd.so.%version
 %plugindir/libvdr-svdrpservice.so.%version
+
+%files plugin-softdevice -f softdevice.lang
+%docdir/softdevice
+%dir %attr(0770,root,_vdr) %confdir/plugins/softdevice
+%plugindir/libvdr-softdevice.so.%version
+%plugindir/libsoftdevice-fb.so.%version
+%plugindir/libsoftdevice-shm.so.%version
+%plugindir/libsoftdevice-xv.so.%version
 
 %files plugin-streamdev -f streamdev.lang
 %docdir/streamdev
@@ -438,6 +482,11 @@ mkdir -p %buildroot%_runtimedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Mon Sep 17 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.30-alt2
+- enigmang skin plugin added
+- softdevice plugin resurrected
+- vdr cachedir packaged
+
 * Wed Sep 12 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.30-alt1
 - 1.7.30 released
 
