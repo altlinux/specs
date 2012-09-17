@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 
 #def_with bootstrap
-%bcond_with bootstrap
+%bcond_without bootstrap
 %bcond_without repolib
 
 %define repodir %{_javadir}/repository.jboss.com/quartz/%{version}-brew
@@ -49,7 +49,7 @@ BuildRequires: jpackage-compat
 Name:           quartz15
 Epoch:          0
 Version:        1.5.2
-Release:	alt3_6jpp6
+Release:	alt4_6jpp6
 Summary:        Quartz Enterprise Job Scheduler
 License:        ASL 2.0
 URL:            http://www.opensymphony.com/quartz/
@@ -326,6 +326,9 @@ find $RPM_BUILD_ROOT%_datadir/%name-%version/ -name "*.sh" -print0 | xargs -0 ch
 %endif
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.2-alt4_6jpp6
+- build with jboss4
+
 * Fri Sep 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.2-alt3_6jpp6
 - compat build
 
