@@ -1,31 +1,28 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           clonekeen
-Version:        0.8.3
-Release:        alt2_10
+Version:        0.8.4
+Release:        alt1_1
 Summary:        "Commander Keen: Invasion of the Vorticons" clone
 Group:          Games/Other
-License:        GPLv2+
+License:        GPLv3+
 URL:            http://clonekeen.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/%{name}/CKBeta83_Src.zip
+# We make a clean tarball by removing bin/data/sound*
+# from http://clonekeen.sourceforge.net/files/%{name}-src-84.tar.gz
+Source0:	%{name}-src-84-clean.tar.gz
 # This are the .dat files and the extra (GPL) levels from 
 # http://downloads.sourceforge.net/%{name}/CKBeta83_Bin_W32.zip
-# ep1attr.dat and ep3attr.dat are replaced with improved versions from
-# http://jonathannielsen.com/mw/CloneKeen2X-1.0-src.zip
 # The pristine upstream .zip's aren't used because the included sounds.ck?
 # files are property of id Software
-Source1:        %{name}-%{version}-data.tar.gz
+Source1:        %{name}-0.8.4-data.tar.gz
 Source2:        extract.c
 Source3:        clonekeen-extract-sounds.c
 Source4:        %{name}.sh
 Source5:        %{name}.autodlrc
 Source6:        %{name}.desktop
 Source7:        %{name}.png
-Patch0:         %{name}-fixes.patch
-Patch1:         %{name}-clonekeen2x-fixes.patch
-Patch2:         %{name}-options.patch
-Patch3:         %{name}-missing-protos.patch
+Patch0:		%{name}-0.8.4-noSDLmain.patch
 BuildRequires:  libSDL_mixer-devel libdynamite-devel desktop-file-utils
 Requires:       icon-theme-hicolor autodownloader
 Source44: import.info
@@ -45,17 +42,15 @@ the shareware datafiles for you.
 
 %prep
 %setup -q -a 1 -n keen
-%patch0 -p1
-%patch1 -p0
-%patch2 -p1
-%patch3 -p1
+%patch0 -p1 -b .noSDLmain
+sed -i 's|gcc -O2|gcc %{optflags}|g' src/Makefile
 cp -a %{SOURCE2} %{SOURCE3} .
-rm src/scale2x/*.o
-sed -i 's/\r//g' readme.txt src/changelog.txt
+# rm src/scale2x/*.o
+sed -i 's/\r//g' README src/changelog.txt
 
 
 %build
-make %{?_smp_mflags} -C src -f Makefile.lnx CFLAGS="$RPM_OPT_FLAGS"
+make %{?_smp_mflags} -C src -f Makefile CFLAGS="$RPM_OPT_FLAGS"
 gcc -o %{name}-extract $RPM_OPT_FLAGS extract.c -ldynamite
 gcc -o %{name}-extract-sounds $RPM_OPT_FLAGS %{name}-extract-sounds.c
 
@@ -64,6 +59,7 @@ gcc -o %{name}-extract-sounds $RPM_OPT_FLAGS %{name}-extract-sounds.c
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_libexecdir}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}/data
+mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}/gfx
 
 install -m 755 src/keen $RPM_BUILD_ROOT%{_libexecdir}/%{name}
 install -m 755 %{name}-extract $RPM_BUILD_ROOT%{_libexecdir}
@@ -71,7 +67,10 @@ install -m 755 %{name}-extract-sounds $RPM_BUILD_ROOT%{_libexecdir}
 install -p -m 755 %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/%{name}
 install -p -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -p -m 644 bin/*.dat  $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -p -m 644 bin/*.ini  $RPM_BUILD_ROOT%{_datadir}/%{name}
+install -p -m 644 bin/gfx/*  $RPM_BUILD_ROOT%{_datadir}/%{name}/gfx
 install -p -m 644 bin/data/* $RPM_BUILD_ROOT%{_datadir}/%{name}/data
+install -p -m 644 bin/*.ck1  $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
@@ -84,52 +83,20 @@ install -p -m 644 %{SOURCE7} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps
 
 sed -i s,/usr/libexec,%{_libexecdir},g %buildroot%{_libexecdir}/%{name}* %buildroot%{_bindir}/%{name}
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
-%doc readme.txt src/changelog.txt
+%doc README src/changelog.txt
 %{_bindir}/%{name}
 %{_libexecdir}/%{name}*
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 
-
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.4-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.3-alt2_10
 - update to new release by fcimport
 
