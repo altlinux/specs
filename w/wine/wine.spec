@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.5.12
+Version: 1.5.13
 Release: alt1
 Epoch: 1
 
@@ -63,10 +63,6 @@ BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libv4l-devel gstreamer-devel gst-plugins-devel libgsm-devel libmpg123-devel
 # udev needed for udev version detect
 BuildRequires: libudev-devel udev
-
-# https://bugzilla.altlinux.org/show_bug.cgi?id=20356
-BuildRequires: libesd-devel
-# TODO: libjack-devel
 
 # Note: xorg-x11-devel requires all X11 devel packages, but missed on Fedora based systems
 # Require here all subpackages
@@ -440,6 +436,10 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.13-alt1
+- new build 1.5.12
+- remove libesd-devel requires
+
 * Fri Sep 07 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.12-alt1
 - new build 1.5.12
 
