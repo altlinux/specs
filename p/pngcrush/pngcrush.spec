@@ -1,5 +1,5 @@
 Name: pngcrush
-Version: 1.7.31
+Version: 1.7.35
 Release: alt1
 
 Summary: Utility to compress PNG files
@@ -25,7 +25,6 @@ find -name \*.h -type f -not \( -name cexcept.h -or -name pngcrush.h \) -delete
 
 %build
 %__cc %optflags pngcrush.c -o pngcrush \
-	-DPNG_INTERNAL -DPNG_USE_LOCAL_ARRAYS \
 	$(pkg-config --cflags --libs libpng) -lz
 
 %install
@@ -36,6 +35,9 @@ install -Dpm755 pngcrush %buildroot%_bindir/pngcrush
 %doc ChangeLog.*
 
 %changelog
+* Mon Sep 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.35-alt1
+- Updated to 1.7.35.
+
 * Wed Jul 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.31-alt1
 - Updated to 1.7.31.
 
