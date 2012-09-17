@@ -7,7 +7,7 @@
 %define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
 
 Name: musl
-Version: 0.9.4
+Version: 0.9.6
 Release: alt1
 Group: System/Libraries
 Summary: musl
@@ -115,6 +115,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Mon Sep 17 2012 Led <led@altlinux.ru> 0.9.6-alt1
+- 0.9.6
+
 * Tue Sep 11 2012 Led <led@altlinux.ru> 0.9.4-alt1
 - updated from upstream's SCM
 
