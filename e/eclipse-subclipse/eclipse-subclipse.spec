@@ -13,7 +13,7 @@ BuildRequires: unzip
 
 Name:           eclipse-subclipse
 Version:        1.6.18
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Summary:        Subversion Eclipse plugin
 
 Group:          Development/Java
@@ -70,16 +70,16 @@ sed -i 's/\r//' org.tigris.subversion.subclipse.graph/icons/readme.txt
 %build
 # ???
 mkdir `pwd`/orbitDeps
-%{eclipse_base}/buildscripts/pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5"      \
+eclipse-pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5"      \
   -f org.tigris.subversion.clientadapter.feature 
-%{eclipse_base}/buildscripts/pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5"      \
+eclipse-pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5"      \
   -f org.tigris.subversion.clientadapter.javahl.feature 
-%{eclipse_base}/buildscripts/pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5"     \
+eclipse-pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5"     \
   -f org.tigris.subversion.clientadapter.svnkit.feature \
   -d svnkit
-%{eclipse_base}/buildscripts/pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5" \
+eclipse-pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5" \
   -f org.tigris.subversion.subclipse  
-%{eclipse_base}/buildscripts/pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5" \
+eclipse-pdebuild -a "-DjavacSource=1.5 -DjavacTarget=1.5" \
   -f org.tigris.subversion.subclipse.graph.feature \
   -d gef
 
@@ -116,6 +116,9 @@ ln -s %{_javadir}/svn-javahl.jar $installBase/subclipse-clientadapter-javahl/ecl
 
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.18-alt2_1jpp6
+- fixed build
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 1.6.18-alt1_1jpp6
 - update to new release by jppimport
 
