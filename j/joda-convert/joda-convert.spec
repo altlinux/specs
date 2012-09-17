@@ -1,0 +1,84 @@
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:           joda-convert
+Version:        1.2
+Release:        alt1_3jpp7
+Summary:        Java library for conversion to and from standard string formats
+
+Group:          Development/Java
+License:        ASL 2.0 
+
+URL:            https://github.com/JodaOrg/joda-convert/
+# wget -O joda-convert-1.2.tar.gz https://github.com/JodaOrg/joda-convert/tarball/v1.2
+Source0:        joda-convert-1.2.tar.gz
+
+BuildArch:      noarch
+
+BuildRequires:  jpackage-utils
+BuildRequires:  maven
+BuildRequires:  maven-compiler-plugin
+BuildRequires:  maven-install-plugin
+BuildRequires:  maven-jar-plugin
+BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-release-plugin
+BuildRequires:  maven-resources-plugin
+BuildRequires:  maven-surefire-plugin
+BuildRequires:  maven-changes-plugin
+BuildRequires:  maven-project-info-reports-plugin
+BuildRequires:  maven-surefire-provider-junit4
+BuildRequires:  junit4
+BuildRequires:  dos2unix
+
+Requires:       jpackage-utils
+Source44: import.info
+
+%description
+Java library to enable conversion to and from standard string formats.
+
+%package javadoc
+Summary:        Javadocs for %{name}
+Group:          Development/Java
+Requires:       jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
+%prep
+%setup -q -n JodaOrg-joda-convert-c6eb10b
+
+%build
+mvn-rpmbuild install javadoc:javadoc
+for x in LICENSE.txt NOTICE.txt RELEASE-NOTES.txt; do
+    dos2unix $x
+done
+
+%install
+
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
+cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml \
+        $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
+
+%files
+%doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
+%{_javadir}/%{name}.jar
+
+%files javadoc
+%doc LICENSE.txt
+%{_javadocdir}/%{name}
+
+%changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3jpp7
+- new version
+
