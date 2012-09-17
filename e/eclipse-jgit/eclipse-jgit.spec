@@ -1,3 +1,4 @@
+BuildRequires: maven-antrun-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
@@ -6,7 +7,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-jgit
 Version:        2.0.0
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Eclipse JGit
 
 Group:          Development/Java
@@ -125,6 +126,9 @@ install -m 755 org.eclipse.jgit.pgm/jgit.sh %{buildroot}%{_bindir}/jgit
 %doc README
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt2_2jpp7
+- fixed build
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_2jpp7
 - new version
 
