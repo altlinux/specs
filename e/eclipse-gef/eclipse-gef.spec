@@ -7,7 +7,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:      eclipse-gef
 Version:   3.6.1
-Release:   alt1_1jpp6
+Release:   alt2_1jpp6
 Summary:   Graphical Editing Framework (GEF) Eclipse plugin
 Group:     Development/Java
 License:   EPL
@@ -81,17 +81,17 @@ fi
 #       later than the tags of the individual plugins.
 
 # build gef features
-%{eclipse_base}/buildscripts/pdebuild -f org.eclipse.gef \
+eclipse-pdebuild -f org.eclipse.gef \
   -a "-DforceContextQualifier=%{contextQualifier}"
-%{eclipse_base}/buildscripts/pdebuild -f org.eclipse.zest \
+eclipse-pdebuild -f org.eclipse.zest \
   -a "-DforceContextQualifier=%{contextQualifier}"
-%{eclipse_base}/buildscripts/pdebuild -f org.eclipse.gef.sdk \
+eclipse-pdebuild -f org.eclipse.gef.sdk \
   -a "-DforceContextQualifier=%{contextQualifier} -DJAVADOC14_HOME=%{java_home}/bin"
-%{eclipse_base}/buildscripts/pdebuild -f org.eclipse.zest.sdk \
+eclipse-pdebuild -f org.eclipse.zest.sdk \
   -a "-DforceContextQualifier=%{contextQualifier} -DJAVADOC14_HOME=%{java_home}/bin"
 
 # build examples features
-%{eclipse_base}/buildscripts/pdebuild -f org.eclipse.gef.examples -a "-DforceContextQualifier=%{contextQualifier} -DJAVADOC14_HOME=%{java_home}/bin"
+eclipse-pdebuild -f org.eclipse.gef.examples -a "-DforceContextQualifier=%{contextQualifier} -DJAVADOC14_HOME=%{java_home}/bin"
 
 %install
 install -d -m 755 %{buildroot}%{eclipse_dropin}
@@ -121,6 +121,9 @@ unzip -q -n -d %{buildroot}%{eclipse_dropin}/gef-examples build/rpmBuild/org.ecl
 %doc org.eclipse.gef.examples-feature/rootfiles/*
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 3.6.1-alt2_1jpp6
+- fixed build
+
 * Thu Mar 10 2011 Igor Vlasenko <viy@altlinux.ru> 3.6.1-alt1_1jpp6
 - new version
 
