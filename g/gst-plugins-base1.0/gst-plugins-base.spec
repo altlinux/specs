@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.94
+Version: %ver_major.99
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -26,8 +26,8 @@ Source: http://download.gnome.org/sources/%_name-base/%ver_major/%_name-base-%ve
 Patch: gst-plugins-base-0.11.94-alt-intltool.patch
 
 BuildRequires: gstreamer%api_ver-devel libgstreamer%api_ver-gir-devel gtk-doc intltool libSM-devel
-BuildRequires: libXext-devel libXv-devel libalsa-devel libgtk+2-devel
-BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel orc liborc-test-devel 
+BuildRequires: libXext-devel libXv-devel libalsa-devel libgtk+3-devel
+BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel orc liborc-test-devel
 BuildRequires: python-module-PyXML python-modules-encodings gobject-introspection-devel
 
 %description
@@ -64,7 +64,8 @@ GStreamer Base Plugins distribution.
 %package -n %_name%api_ver-devel
 Summary: Development files for GStreamer plugins
 Group: Development/C
-Requires: lib%_name%api_ver = %version-%release gstreamer-devel
+Requires: lib%_name%api_ver = %version-%release
+Requires: gstreamer%api_ver-devel
 
 %description -n %_name%api_ver-devel
 This package contains the libraries, headers and other files necessary
@@ -118,7 +119,16 @@ GObject introspection devel data for the GStreamer library
 %dir %_gst_libdir
 
 %files -n lib%_name%api_ver-gir
-%_typelibdir/*.typelib
+%_typelibdir/GstApp-%api_ver.typelib
+%_typelibdir/GstAudio-%api_ver.typelib
+%_typelibdir/GstFft-%api_ver.typelib
+%_typelibdir/GstPbutils-%api_ver.typelib
+%_typelibdir/GstRiff-%api_ver.typelib
+%_typelibdir/GstRtp-%api_ver.typelib
+%_typelibdir/GstRtsp-%api_ver.typelib
+%_typelibdir/GstSdp-%api_ver.typelib
+%_typelibdir/GstTag-%api_ver.typelib
+%_typelibdir/GstVideo-%api_ver.typelib
 
 %files -n %_name%api_ver-tools
 %_bindir/*-%api_ver
@@ -131,9 +141,21 @@ GObject introspection devel data for the GStreamer library
 %_gtk_docdir/%_name-base-*-%api_ver
 
 %files -n %_name%api_ver-gir-devel
-%_girdir/*.gir
+%_girdir/GstApp-%api_ver.gir
+%_girdir/GstAudio-%api_ver.gir
+%_girdir/GstFft-%api_ver.gir
+%_girdir/GstPbutils-%api_ver.gir
+%_girdir/GstRiff-%api_ver.gir
+%_girdir/GstRtp-%api_ver.gir
+%_girdir/GstRtsp-%api_ver.gir
+%_girdir/GstSdp-%api_ver.gir
+%_girdir/GstTag-%api_ver.gir
+%_girdir/GstVideo-%api_ver.gir
 
 %changelog
+* Mon Sep 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11.99-alt1
+- 0.11.99
+
 * Fri Sep 14 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11.94-alt1
 - first build for Sisyphus
 
