@@ -1,7 +1,7 @@
 %define oname drakon_editor
 Name: drakon
-Version: 1.13
-Release: alt1.qa1
+Version: 1.14
+Release: alt1
 
 Summary: DRAKON Editor is a free cross-platform editor for the DRAKON visual language
 
@@ -72,6 +72,9 @@ find $RPM_BUILD_ROOT \( -name '*.DS_Store' -o -name '*.DS_Store.gz' \) -print -d
 %_datadir/%name/
 
 %changelog
+* Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 1.14-alt1
+- new version 1.14 (with rpmrb script)
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.13-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
