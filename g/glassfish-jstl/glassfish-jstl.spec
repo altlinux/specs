@@ -1,7 +1,15 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
-BuildRequires: jpackage-1.5.0-compat
-# Copyright (c) 2000-2008, JPackage Project
+BuildRequires: jpackage-1.6.0-compat
+# fedora bcond_with macro
+%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name glassfish-jstl
+%define version 1.2.0
+# Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -30,48 +38,50 @@ BuildRequires: jpackage-1.5.0-compat
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
+%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 
-%define _with_repolib 1
+#def_with jdk6
+%bcond_without          jdk6
+%bcond_with          repolib
 
-# If you want repolib package to be built,
-# issue the following: 'rpmbuild --with repolib'
-%define with_repolib %{?_with_repolib:1}%{!?_with_repolib:0}
-%define without_repolib %{!?_with_repolib:1}%{?_with_repolib:0}
 %define jar_name jstl
 %define jstlver 1.2
 
-%define repodir %{_javadir}/repository.jboss.com/glassfish/jstl/%{version}-brew
+%define repodir %{_javadir}/repository.jboss.com/sun-jstl/%{version}-brew
 %define repodirlib %{repodir}/lib
 %define repodirsrc %{repodir}/src
 
 Name:           glassfish-jstl 
 Version:        1.2.0
-Release:        alt2_7jpp5
+Release:        alt2_10jpp6
 Epoch:          0
 Summary:        GlassFish JSTL
 License:        CDDL 1.0
 Group:          Development/Java
 URL:            http://jstl.dev.java.net/
-
-BuildArch:      noarch
 Source0:        %{name}-%{version}.tar.gz
 Source1:        %{name}-component-info.xml
-Source2:	CDDLv1.0.txt
-Source3:	jstl-1.2.pom
-Patch0:		%{name}-%{version}-ant-hack.patch
-
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: servletapi6 >= 0:6.0.10
-BuildRequires: jbossweb >= 0:2.0.0
-Provides:	jstl = 0:%{jstlver}
+Source2:        CDDLv1.0.txt
+Source3:        jstl-1.2.pom
+Patch0:         %{name}-%{version}-ant-hack.patch
+Patch1:         %{name}-jdk6.patch
+BuildRequires:  ant >= 0:1.6.5
+BuildRequires:  servletapi6 >= 0:6.0.10
+BuildRequires:  jboss-web jboss-el-2.2-api
+Provides:       jstl = 0:%{jstlver}
+BuildArch:      noarch
+Source44: import.info
 
 %description
 JavaServer Pages Standard Tag Library.
 
-%if %{with_repolib}
+%if %with repolib
 %package repolib
-Summary:	Artifacts to be uploaded to a repository library
-Group:	        Development/Java
+Summary:        Artifacts to be uploaded to a repository library
+Group:          Development/Java
 
 %description repolib
 Artifacts to be uploaded to a repository library.
@@ -91,20 +101,15 @@ BuildArch: noarch
 %prep
 %setup -q -n appserv-jstl 
 %{_bindir}/iconv -f iso88591 -t utf8 < %{SOURCE2} > CDDLv1.0.txt
-
-%if %{with_repolib}
-tag=`echo %{version}-brew`
-sed -i "s/@VERSION@/$tag/g" %{SOURCE1}
-tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-sed -i "s/@TAG@/$tag/g" %{SOURCE1}
-%endif
-
 %patch0 -p1
+%if %with jdk6
+%patch1 -p1
+%endif
 
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-ant -Djavaee.jar=$(build-classpath servletapi6 jspapi6 jbossweb) release jar
+%{ant} -Djavaee.jar=$(build-classpath servletapi6 jspapi6 jboss-el-2.2-api jboss-web) release jar
 
 %install
 
@@ -119,47 +124,50 @@ touch  $RPM_BUILD_ROOT%{_javadir}/jstl.jar
 
 # poms
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -pm 644 %{SOURCE3} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
+install -pm 644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
 
 # javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %{with_repolib}
-	install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-	install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-        cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar $RPM_BUILD_ROOT%{repodirlib}/jstl.jar
-	install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-	install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-	install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-	install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{repodirsrc}
-	install -p -m 644 %{PATCH0} $RPM_BUILD_ROOT%{repodirsrc}
+%if %with repolib
+install -d -m 755 $RPM_BUILD_ROOT%{repodir}
+install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
+install -p -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{repodir}/component-info.xml
+
+install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
+install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
+install -p -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{repodirsrc}
+install -p -m 644 %{PATCH0} $RPM_BUILD_ROOT%{repodirsrc}
+cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar $RPM_BUILD_ROOT%{repodirlib}/jstl.jar
 %endif
-install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jstl_%{name}<<EOF
+install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/jstl_glassfish-jstl<<EOF
 %{_javadir}/jstl.jar	%{_javadir}/%{name}.jar	10100
 EOF
 
 %files
-%_altdir/jstl_%{name}
+%_altdir/jstl_glassfish-jstl
 %doc CDDLv1.0.txt
 %{_javadir}/%{name}-%{version}.jar
 %{_javadir}/%{name}.jar
 %exclude %{_javadir}/%{jar_name}.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}/*
+%{_datadir}/maven2/poms/JPP.%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
 
-%if %{with_repolib}
+%if %with repolib
 %files repolib
-%{repodir}
+%{_javadir}/repository.jboss.com
 %endif
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt2_10jpp6
+- jpp6 release + fresh jboss-web
+
 * Wed May 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.2.0-alt2_7jpp5
 - selected java5 compiler explicitly
 
