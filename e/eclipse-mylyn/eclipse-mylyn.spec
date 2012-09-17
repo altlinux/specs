@@ -12,7 +12,7 @@ BuildRequires: rpm-build-java-osgi
 Name: eclipse-mylyn
 Summary: Eclipse Mylyn main feature.
 Version: 3.6.4
-Release: alt1_2jpp6
+Release: alt2_2jpp6
 License: EPL
 URL: http://www.eclipse.org/mylyn
 
@@ -54,7 +54,7 @@ ln -s %{_javadir}/rome*.jar
 popd
 
 %build
-%{eclipse_base}/buildscripts/pdebuild \
+eclipse-pdebuild \
  -a "-DjavacSource=1.5 -DjavacTarget=1.5 -DforceContextQualifier=%{qualifier} -DmylynQualifier=%{qualifier}" \
  -d "mylyn-commons" -o `pwd`/orbitDeps
 
@@ -72,6 +72,9 @@ unzip -q -o -d %{buildroot}%{install_loc}/mylyn \
 %doc org.eclipse.mylyn-feature/license.html
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 3.6.4-alt2_2jpp6
+- fixed build
+
 * Thu Jan 12 2012 Igor Vlasenko <viy@altlinux.ru> 3.6.4-alt1_2jpp6
 - update to new release by jppimport
 
