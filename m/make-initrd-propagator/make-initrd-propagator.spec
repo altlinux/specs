@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.11
+Version: 0.12
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -36,6 +36,10 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Mon Sep 17 2012 Fr. Br. George <george@altlinux.ru> 0.12-alt1
+- Provide /proc/cmdline parser
+- Add overlays profiling support
+
 * Wed Sep 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.11-alt1
 - put-file usage fix from sin@ (closes #27725)
 
