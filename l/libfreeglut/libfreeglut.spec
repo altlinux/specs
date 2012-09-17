@@ -1,6 +1,6 @@
 Name: libfreeglut
 Version: 2.8.0
-Release: alt1
+Release: alt2
 
 Summary: A freely licensed alternative to the GLUT library
 License: MIT
@@ -9,7 +9,13 @@ Group: System/Libraries
 Url: http://freeglut.sourceforge.net/
 Source: http://download.sourceforge.net/freeglut/freeglut-%version.tar.gz
 
-# Automatically added by buildreq on Fri Jan 06 2012
+Patch1: freeglut-2.8.0-rh-fixld.patch
+Patch2: freeglut-2.8.0-rh-glextconflict.patch
+Patch3: freeglut-2.8.0-rh-fixXInput.patch
+Patch4: freeglut-2.8.0-rh-btnmask.patch
+
+# Automatically added by buildreq on Mon Sep 17 2012
+# optimized out: gnu-config libGL-devel libX11-devel libXext-devel libXrender-devel xorg-inputproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
 BuildRequires: imake libGLU-devel libICE-devel libXi-devel libXrandr-devel libXxf86vm-devel xorg-cf-files
 
 Provides: libglut = %version freeglut = %version
@@ -44,6 +50,10 @@ license.
 
 %prep
 %setup -n freeglut-%version
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
 
 %build
 # --disable-warnings: don't add -Werror to CFLAGS
@@ -61,6 +71,9 @@ license.
 %_libdir/*.so
 
 %changelog
+* Mon Sep 17 2012 Dmitry V. Levin <ldv@altlinux.org> 2.8.0-alt2
+- Synced with freeglut-2.8.0-7 from fedora to fix build.
+
 * Fri Jan 06 2012 Victor Forsiuk <force@altlinux.org> 2.8.0-alt1
 - 2.8.0
 
