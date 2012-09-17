@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           tapestry
 Version:        4.0.2
-Release:        alt4_3jpp5
+Release:        alt5_3jpp5
 Epoch:          0
 Summary:        Tapestry Framework
 License:        ASL 2.0
@@ -107,7 +107,8 @@ BuildRequires: log4j
 BuildRequires: ognl
 BuildRequires: portlet-1.0-api
 BuildRequires: servletapi4
-BuildRequires: spring-all
+#BuildRequires: spring-all
+BuildRequires: springframework
 
 %description
 Tapestry is an open-source framework for creating dynamic, 
@@ -216,7 +217,9 @@ ln -sf $(build-classpath easymock-classextension) easymockclassextension-.jar
 ln -sf $(build-classpath cglib-nodep) cglib-full-.jar
 ln -sf $(build-classpath junit) junit-.jar
 ln -sf $(build-classpath jdom) jdom-.jar
-ln -sf $(build-classpath spring) spring-.jar
+#ln -sf $(build-classpath spring) spring-.jar
+ln -sf $(build-classpath springframework/spring-core.jar) spring-.jar
+
 ln -sf $(build-classpath portlet-1.0-api) portlet-api-.jar
 ln -sf $(build-classpath geronimo-ejb-2.1-api) geronimo-ejb-2.1-api-.jar
 ln -sf $(build-classpath jcharts) jcharts-.jar
@@ -342,6 +345,9 @@ cp -pr config/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/config
 %endif
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt5_3jpp5
+- build with spring3
+
 * Fri Mar 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt4_3jpp5
 - fixed build
 
