@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.94
+Version: %ver_major.99
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -16,8 +16,8 @@ Group: System/Libraries
 License: LGPL
 URL: http://gstreamer.freedesktop.org/
 
-Requires: lib%_name%api_ver >= 0.11.94
-Requires: gstreamer%api_ver >= 0.11.94
+Requires: lib%_name%api_ver >= 0.11.99
+Requires: gstreamer%api_ver >= 0.11.99
 
 Source: http://gstreamer.freedesktop.org/src/gst-plugins-bad/%_name-bad-%version.tar.xz
 Patch: gst-plugins-bad-0.11.94-alt-intltool.patch
@@ -84,7 +84,7 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %dir %_gst_libdir
 %_gst_libdir/*.so
 %exclude %_gst_libdir/*.la
-%_datadir/gstreamer-%api_ver/presets/GstVP8Enc.prs
+#%_datadir/gstreamer-%api_ver/presets/GstVP8Enc.prs
 #%_datadir/glib-2.0/schemas/*.xml
 
 %files devel
@@ -99,6 +99,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Mon Sep 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11.99-alt1
+- 0.11.99
+
 * Sat Sep 15 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11.94-alt1
 - first build for Sisyphus
 
