@@ -1,9 +1,10 @@
+%def_without jboss_ejb_3.0_api
 %def_without jboss_jaspi_1.0_api
 %def_without jboss_jad_1.2_api
 %def_without jboss_jaxr_1.0_api
-BuildRequires: maven-enforcer-plugin
 %def_without jboss_jms_1.1_api
 Packager: Igor Vlasenko <viy@altlinux.ru>
+BuildRequires: maven-enforcer-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -41,7 +42,7 @@ BuildRequires: jpackage-compat
 %define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 
-%bcond_without repolib
+%bcond_with repolib
 
 %define repodir %{_javadir}/repository.jboss.com/jboss/jboss-javaee/%{javaee_namedversion}-brew
 %define repodirlib %{repodir}/lib
@@ -61,7 +62,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-javaee
 Version:        5.0.1
-Release:        alt5_2jpp6
+Release:        alt6_2jpp6
 Epoch:          0
 Summary:        JBoss JavaEE 5.0 Aggregate
 License:        LGPLv2+
@@ -80,7 +81,7 @@ BuildRequires: jboss-common-logging-spi >= 0:2.0.5
 BuildRequires: jboss-parent
 BuildRequires: jbossweb
 # FIXME: (dwalluck): 3.0.4.GA listed in POM
-BuildRequires: jbossws-native >= 0:3.0.1
+#BuildRequires: jbossws-native >= 0:3.0.1
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: junit
 BuildRequires: maven-jboss-deploy-plugin
@@ -273,6 +274,11 @@ done
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 
+#jboss-jacc-api jboss-jca-api jboss-transaction-api
+for i in jboss-ejb-api jboss-jad-api jboss-jaxr-api jboss-jms-api jboss-jaspi-api; do
+ sed -i -e "s,<module>$i</module>,<!-- module>$i</module -->," pom.xml
+done
+
 %build
 export LANG=en_US.ISO8859-1
 
@@ -301,14 +307,14 @@ install -m 644 target/jboss-javaee.jar \
            $RPM_BUILD_ROOT%{_javadir}/jboss-javaee-5-apis-%{version}.jar
 ln -s jboss-javaee-5-apis-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-javaee-%{version}.jar
 
-%add_to_maven_depmap org.jboss.javaee jboss-ejb-api %{ejb_namedversion} JPP jboss-ejb-api
-install -m 644 jboss-ejb-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-ejb-api.pom
-install -m 644 jboss-ejb-api/target/jboss-ejb-api.jar \
-           $RPM_BUILD_ROOT%{_javadir}/jboss-ejb-3.0-api-%{version}.jar
-ln -s jboss-ejb-3.0-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-ejb-api-%{version}.jar
-touch $RPM_BUILD_ROOT%{_javadir}/ejb.jar
-touch $RPM_BUILD_ROOT%{_javadir}/ejb_api.jar
-touch $RPM_BUILD_ROOT%{_javadir}/ejb_3_0_api.jar
+#add_to_maven_depmap org.jboss.javaee jboss-ejb-api %{ejb_namedversion} JPP jboss-ejb-api
+#install -m 644 jboss-ejb-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-ejb-api.pom
+#install -m 644 jboss-ejb-api/target/jboss-ejb-api.jar \
+#           $RPM_BUILD_ROOT%{_javadir}/jboss-ejb-3.0-api-%{version}.jar
+#ln -s jboss-ejb-3.0-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-ejb-api-%{version}.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/ejb.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/ejb_api.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/ejb_3_0_api.jar
 
 %add_to_maven_depmap org.jboss.javaee jboss-jacc-api %{jacc_namedversion} JPP jboss-jacc-api
 install -m 644 jboss-jacc-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jacc-api.pom
@@ -318,30 +324,30 @@ ln -s jboss-jacc-1.1-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-jacc-ap
 touch $RPM_BUILD_ROOT%{_javadir}/jacc_api.jar
 touch $RPM_BUILD_ROOT%{_javadir}/jacc_1_1_api.jar
 
-%add_to_maven_depmap org.jboss.javaee jboss-jad-api %{jad_namedversion} JPP jboss-jad-api
-install -m 644 jboss-jad-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jad-api.pom
-install -m 644 jboss-jad-api/target/jboss-jad-api.jar \
-           $RPM_BUILD_ROOT%{_javadir}/jboss-jad-1.2-api-%{version}.jar
-ln -s jboss-jad-1.2-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-jad-api-%{version}.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jad_api.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jad_1_2_api.jar
+#add_to_maven_depmap org.jboss.javaee jboss-jad-api %{jad_namedversion} JPP jboss-jad-api
+#install -m 644 jboss-jad-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jad-api.pom
+#install -m 644 jboss-jad-api/target/jboss-jad-api.jar \
+#           $RPM_BUILD_ROOT%{_javadir}/jboss-jad-1.2-api-%{version}.jar
+#ln -s jboss-jad-1.2-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-jad-api-%{version}.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jad_api.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jad_1_2_api.jar
 
-%add_to_maven_depmap org.jboss.javaee jboss-jaspi-api %{jaspi_namedversion} JPP jboss-jaspi-api
-install -m 644 jboss-jaspi-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jaspi-api.pom
-install -m 644 jboss-jaspi-api/target/jboss-jaspi-api.jar \
-           $RPM_BUILD_ROOT%{_javadir}/jboss-jaspi-1.0-api-%{version}.jar
-ln -s jboss-jaspi-1.0-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-jaspi-api-%{version}.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jaspi_api.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jaspi_1_0_api.jar
+#add_to_maven_depmap org.jboss.javaee jboss-jaspi-api %{jaspi_namedversion} JPP jboss-jaspi-api
+#install -m 644 jboss-jaspi-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jaspi-api.pom
+#install -m 644 jboss-jaspi-api/target/jboss-jaspi-api.jar \
+#           $RPM_BUILD_ROOT%{_javadir}/jboss-jaspi-1.0-api-%{version}.jar
+#ln -s jboss-jaspi-1.0-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-jaspi-api-%{version}.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jaspi_api.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jaspi_1_0_api.jar
 
-%add_to_maven_depmap org.jboss.javaee jboss-jaxr-api %{jaxr_namedversion} JPP jboss-jaxr-api
-install -m 644 jboss-jaxr-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jaxr-api.pom
-install -m 644 jboss-jaxr-api/target/jboss-jaxr-api.jar \
-           $RPM_BUILD_ROOT%{_javadir}/jboss-jaxr-1.0-api-%{version}.jar
-ln -s jboss-jaxr-1.0-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-jaxr-api-%{version}.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jaxr.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jaxr_api.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jaxr_1_0_api.jar
+#add_to_maven_depmap org.jboss.javaee jboss-jaxr-api %{jaxr_namedversion} JPP jboss-jaxr-api
+#install -m 644 jboss-jaxr-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jaxr-api.pom
+#install -m 644 jboss-jaxr-api/target/jboss-jaxr-api.jar \
+#           $RPM_BUILD_ROOT%{_javadir}/jboss-jaxr-1.0-api-%{version}.jar
+#ln -s jboss-jaxr-1.0-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-jaxr-api-%{version}.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jaxr.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jaxr_api.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jaxr_1_0_api.jar
 
 %add_to_maven_depmap org.jboss.javaee jboss-jca-api %{jca_namedversion} JPP jboss-jca-api
 install -m 644 jboss-jca-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jca-api.pom
@@ -354,14 +360,14 @@ touch $RPM_BUILD_ROOT%{_javadir}/j2ee_connector_1_5_api.jar
 touch $RPM_BUILD_ROOT%{_javadir}/jca_1_5_api.jar
 touch $RPM_BUILD_ROOT%{_javadir}/jca_api.jar
 
-%add_to_maven_depmap org.jboss.javaee jboss-jms-api %{jms_namedversion} JPP jboss-jms-api
-install -m 644 jboss-jms-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jms-api.pom
-install -m 644 jboss-jms-api/target/jboss-jms-api.jar \
-           $RPM_BUILD_ROOT%{_javadir}/jboss-jms-1.1-api-%{version}.jar
-ln -s jboss-jms-1.1-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-jms-api-%{version}.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jms.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jms_api.jar
-touch $RPM_BUILD_ROOT%{_javadir}/jms_1_1_api.jar
+#add_to_maven_depmap org.jboss.javaee jboss-jms-api %{jms_namedversion} JPP jboss-jms-api
+#install -m 644 jboss-jms-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-jms-api.pom
+#install -m 644 jboss-jms-api/target/jboss-jms-api.jar \
+#           $RPM_BUILD_ROOT%{_javadir}/jboss-jms-1.1-api-%{version}.jar
+#ln -s jboss-jms-1.1-api-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-jms-api-%{version}.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jms.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jms_api.jar
+#touch $RPM_BUILD_ROOT%{_javadir}/jms_1_1_api.jar
 
 %add_to_maven_depmap org.jboss.javaee jboss-transaction-api %{transaction_namedversion} JPP jboss-transaction-api
 install -m 644 jboss-transaction-api/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-transaction-api.pom
@@ -415,12 +421,12 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__install} -p -m 644 %{SOURCE0} %{buildroot}%{repodirsrc}
 %{__install} -p -m 644 %{SOURCE1} %{buildroot}%{repodirsrc}
 %{__install} -p -m 644 %{SOURCE2} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/jboss-ejb-3.0-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-ejb-api.jar
+#%{__cp} -p %{buildroot}%{_javadir}/jboss-ejb-3.0-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-ejb-api.jar
 %{__cp} -p %{buildroot}%{_javadir}/jboss-transaction-1.0.1-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-transaction-api.jar
-%{__cp} -p %{buildroot}%{_javadir}/jboss-jms-1.1-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-jms-api.jar
+#%{__cp} -p %{buildroot}%{_javadir}/jboss-jms-1.1-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-jms-api.jar
 %{__cp} -p %{buildroot}%{_javadir}/jboss-jca-1.5-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-jca-api.jar
 %{__cp} -p %{buildroot}%{_javadir}/jboss-jacc-1.1-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-jacc-api.jar
-%{__cp} -p %{buildroot}%{_javadir}/jboss-jad-1.2-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-jad-api.jar
+#%{__cp} -p %{buildroot}%{_javadir}/jboss-jad-1.2-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-jad-api.jar
 
 %define repodir %{_javadir}/repository.jboss.com/jboss/jboss-jaspi-api/%{jaspi_namedversion}-brew
 %{__install} -d -m 755 %{buildroot}%{repodir}
@@ -433,7 +439,7 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__install} -p -m 644 %{SOURCE0} %{buildroot}%{repodirsrc}
 %{__install} -p -m 644 %{SOURCE1} %{buildroot}%{repodirsrc}
 %{__install} -p -m 644 %{SOURCE2} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/jboss-jaspi-1.0-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-jaspi-api.jar
+#%{__cp} -p %{buildroot}%{_javadir}/jboss-jaspi-1.0-api-%{version}.jar %{buildroot}%{repodirlib}/jboss-jaspi-api.jar
 %endif
 install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/ejb_jboss-ejb-3.0-api<<EOF
 %{_javadir}/ejb.jar	%{_javadir}/jboss-ejb-3.0-api.jar	30000
@@ -521,6 +527,7 @@ EOF
 %{_datadir}/maven2/poms/*
 %{_mavendepmapfragdir}/*
 
+%if_with jboss_ejb_3.0_api
 %files -n jboss-ejb-3.0-api
 %_altdir/ejb_api_jboss-ejb-3.0-api
 %_altdir/ejb_3_0_api_jboss-ejb-3.0-api
@@ -532,6 +539,7 @@ EOF
 %exclude %{_javadir}/ejb.jar
 %exclude %{_javadir}/ejb_api.jar
 %exclude %{_javadir}/ejb_3_0_api.jar
+%endif #jboss
 
 %files -n jboss-jacc-1.1-api
 %_altdir/jacc_api_jboss-jacc-1.1-api
@@ -637,6 +645,9 @@ EOF
 %endif
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt6_2jpp6
+- build w/o jbossws-native
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt5_2jpp6
 - build w/o jaxr-1.0-api, jboss-jaspi-1.0-api
 
