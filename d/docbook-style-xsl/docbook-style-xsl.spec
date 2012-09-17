@@ -1,7 +1,7 @@
 ## %%define snapshot 20080311
 
 Name: docbook-style-xsl
-Version: 1.75.2
+Version: 1.77.1
 Release: alt1
 Group: Publishing
 
@@ -32,6 +32,7 @@ Source0: http://prdownloads.sourceforge.net/docbook/docbook-xsl-%{actual_version
 Source1: http://prdownloads.sourceforge.net/docbook/docbook-xsl-doc-%{actual_version}.%{actual_archive}
 Source2: docbook-output-stub.xsl
 Source3: docbook-add-output-encoding.xsl
+Source4: %{name}.Makefile
 
 # Fedora Core patches
 #Avoid proportional-column-width for passivetex (bug #176766).
@@ -44,6 +45,8 @@ Patch3: docbook-xsl-newmethods.patch
 Patch4: docbook-xsl-non-constant-expressions.patch
 #added fixes for passivetex extension and list-item-body(#161371)
 Patch5: docbook-xsl-list-item-body.patch
+#workaround missing mandir section problem (#727251)
+Patch6: docbook-xsl-mandir.patch
 
 
 BuildArch: noarch
@@ -66,15 +69,31 @@ in the HTML format.
 
 %prep
 %setup -q -n docbook-xsl-%{actual_version} -b 1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
+%patch1 -p1 -b .pagesetup
+%patch2 -p1 -b .marginleft
+%patch3 -p1 -b .newmethods
+%patch4 -p1 -b .nonconstant
+%patch5 -p1 -b .listitembody
+%patch6 -p1 -b .mandir
 
 find . -type f -name '*.xsl.orig' -delete
 find . -type f -name '.gitignore' -delete
 find . -type f -perm +a+x -print0 | xargs -r0 chmod a-x
+
+cp -p %{SOURCE4} Makefile
+
+# fix of non UTF-8 files rpmlint warnings
+for fhtml in $(find ./doc -name '*.html' -type f)
+do
+  iconv -f ISO-8859-1 -t UTF-8 "$fhtml" -o "$fhtml".tmp
+  mv -f "$fhtml".tmp "$fhtml"
+  sed -i 's/charset=ISO-8859-1/charset=UTF-8/' "$fhtml"
+done
+
+for f in $(find -name "*'*")
+do
+  mv -v "$f" $(echo "$f" | tr -d "'")
+done
 
 %build
 for enc in %hack_output_encodings; do
@@ -83,26 +102,20 @@ for enc in %hack_output_encodings; do
 done
 
 %install
-install -d -m755 %buildroot%xmlbase/docbook/xsl-stylesheets-%version
-install -p -m644 VERSION \
-    %buildroot%xmlbase/docbook/xsl-stylesheets-%version/
-cp -a common eclipse fo highlighting html htmlhelp images javahelp lib \
-      manpages profiling slides template website xhtml xhtml-1_1 roundtrip \
-    %buildroot%xmlbase/docbook/xsl-stylesheets-%version/
 
-# Do not copy scripts in tools/bin as they are purely for docbook developers
-install -d -m755 %buildroot%xmlbase/docbook/xsl-stylesheets-%version/tools
-cp -a tools/make %buildroot%xmlbase/docbook/xsl-stylesheets-%version/tools/
+DESTDIR=$RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT
+make install BINDIR=$DESTDIR%{_bindir} DESTDIR=$DESTDIR%xmlbase/docbook/xsl-stylesheets-%{version}
+cp -a VERSION.xsl $DESTDIR%xmlbase/docbook/xsl-stylesheets-%{version}/VERSION.xsl
+ln -s xsl-stylesheets-%{version} \
+	$DESTDIR%xmlbase/docbook/xsl-stylesheets
 
+# Don't ship the extensions (bug #177256).
+rm -rf $DESTDIR%xmlbase/docbook/xsl-stylesheets/extensions/*
+
+# relic of the past? do we need it?
 install -p -m644 catalog.xml \
     %buildroot%xmlbase/docbook/xsl-stylesheets-%version/
-
-# ? RH#177256
-#install -d -m755 %buildroot%xmlbase/docbook/xsl-stylesheets-%version/extensions
-#install -p -m644 extensions/*.jar \
-#    %buildroot%xmlbase/docbook/xsl-stylesheets-%version/extensions/
-
-ln -sf xsl-stylesheets-%version %buildroot%xmlbase/docbook/xsl-stylesheets
 
 %files
 %doc AUTHORS BUGS COPYING NEWS* README RELEASE-NOTES.* TODO
@@ -135,6 +148,10 @@ if [ ! -d "%xmlbase/docbook/xsl-stylesheets-%version" ]; then
 fi
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.77.1-alt1
+- 1.77.1 (closes: 27743)
+- sync'ed fedora patches
+
 * Fri Jul 09 2010 Alexey Shabalin <shaba@altlinux.ru> 1.75.2-alt1
 - 1.75.2
 - Sync patches with fedora
