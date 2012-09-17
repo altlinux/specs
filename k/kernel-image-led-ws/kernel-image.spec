@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -251,7 +251,8 @@ Patch0301: linux-%kernel_branch.42-fix-drivers-message-fusion.patch
 
 Patch0311: linux-%kernel_branch.42-fix-drivers-misc--rts_pstor.patch
 Patch0312: linux-%kernel_branch.42-fix-drivers-misc--vmw_balloon.patch
-Patch0313: linux-%kernel_branch.42-fix-drivers-misc-lis3lv02d--lis3lv02d.patch
+Patch0313: linux-%kernel_branch.42-fix-drivers-misc--zcache.patch
+Patch0314: linux-%kernel_branch.42-fix-drivers-misc-lis3lv02d--lis3lv02d.patch
 
 Patch0321: linux-%kernel_branch.42-fix-drivers-mmc-card--mmc_block.patch
 
@@ -369,7 +370,8 @@ Patch0509: linux-%kernel_branch.42-fix-drivers-usb-serial--ipw.patch
 Patch0510: linux-%kernel_branch.42-fix-drivers-usb-serial--pl2303.patch
 Patch0511: linux-%kernel_branch.42-fix-drivers-usb-serial--usbserial.patch
 Patch0512: linux-%kernel_branch.42-fix-drivers-usb-storage--ums-realtek.patch
-Patch0513: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
+Patch0513: linux-%kernel_branch.42-fix-drivers-usb-usbip--usbip-host.patch
+Patch0514: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
 
 Patch0521: linux-%kernel_branch.42-fix-drivers-video--intelfb.patch
 Patch0522: linux-%kernel_branch.42-fix-drivers-video-aty--radeonfb.patch
@@ -471,35 +473,43 @@ Patch1001: linux-%kernel_branch.42-feat-block--bfq-iosched.patch
 Patch1002: linux-%kernel_branch.42-feat-block--bsg-lib.patch
 Patch1003: linux-%kernel_branch.42-feat-block--sio-iosched.patch
 
-Patch1011: linux-%kernel_branch-feat-drivers-input-lirc.patch
-Patch1012: linux-%kernel_branch.42-feat-drivers-input-touchscreen--elousb.patch
+Patch1011: linux-%kernel_branch.42-feat-drivers-block--zram.patch
 
-Patch1021: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
+Patch1021: linux-%kernel_branch-feat-drivers-input-lirc.patch
+Patch1022: linux-%kernel_branch.42-feat-drivers-input-touchscreen--elousb.patch
 
-Patch1031: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
+Patch1031: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
 
-Patch1041: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
-Patch1042: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
+Patch1041: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
+Patch1042: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
+Patch1043: linux-%kernel_branch.42-feat-drivers-misc--zcache.patch
 
-Patch1051: linux-%kernel_branch.42-feat-drivers-video--bootsplash.patch
+Patch1051: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
+Patch1052: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
 
-Patch1061: linux-%kernel_branch.42-feat-fs--secrm.patch
-Patch1062: linux-%kernel_branch-feat-fs-aufs.patch
-Patch1063: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
-Patch1064: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
-Patch1065: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
-Patch1066: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
-Patch1067: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
-Patch1068: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1069: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1070: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1071: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1061: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
 
-Patch1081: linux-%kernel_branch.42-feat-lib--llist.patch
+Patch1071: linux-%kernel_branch.42-feat-drivers-video--bootsplash.patch
 
-Patch1091: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+Patch1081: linux-%kernel_branch.42-feat-fs--secrm.patch
+Patch1082: linux-%kernel_branch-feat-fs-aufs.patch
+Patch1083: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
+Patch1084: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
+Patch1085: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
+Patch1086: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
+Patch1087: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
+Patch1088: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
+Patch1089: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1090: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1091: linux-%kernel_branch.42-feat-fs-unionfs.patch
 
-Patch1101: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
+Patch1101: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
+
+Patch1111: linux-%kernel_branch.42-feat-lib--llist.patch
+
+Patch1121: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+
+Patch1131: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %x86_64 %ix86
@@ -1290,6 +1300,7 @@ cd linux-%version
 %patch0311 -p1
 %patch0312 -p1
 %patch0313 -p1
+%patch0314 -p1
 
 %patch0321 -p1
 
@@ -1408,6 +1419,7 @@ cd linux-%version
 %patch0511 -p1
 %patch0512 -p1
 %patch0513 -p1
+%patch0514 -p1
 
 %patch0521 -p1
 %patch0522 -p1
@@ -1510,34 +1522,42 @@ cd linux-%version
 %patch1003 -p1
 
 %patch1011 -p1
-%patch1012 -p1
 
 %patch1021 -p1
+%patch1022 -p1
 
 %patch1031 -p1
 
 %patch1041 -p1
 %patch1042 -p1
+%patch1043 -p1
 
 %patch1051 -p1
+%patch1052 -p1
 
 %patch1061 -p1
-%patch1062 -p1
-%patch1063 -p1
-%patch1064 -p1
-%patch1065 -p1
-%patch1066 -p1
-%patch1067 -p1
-%patch1068 -p1
-%patch1069 -p1
-%patch1070 -p1
+
 %patch1071 -p1
 
 %patch1081 -p1
-
+%patch1082 -p1
+%patch1083 -p1
+%patch1084 -p1
+%patch1085 -p1
+%patch1086 -p1
+%patch1087 -p1
+%patch1088 -p1
+%patch1089 -p1
+%patch1090 -p1
 %patch1091 -p1
 
 %patch1101 -p1
+
+%patch1111 -p1
+
+%patch1121 -p1
+
+%patch1131 -p1
 
 # get rid of unwanted files resulting from patch fuzz
 #find . -name "*.orig" -delete -or -name "*~" -delete
@@ -1865,7 +1885,7 @@ for I in Documentation/*; do
 %endif
 			;;
 		[a-z][a-z]_[A-Z][A-Z]|Makefile|dontdiff) ;;
-		*) cp -a "$I" %buildroot%_docdir/kernel-doc-%flavour-%kernel_branch/ ;;
+		*) cp -aL "$I" %buildroot%_docdir/kernel-doc-%flavour-%kernel_branch/ ;;
 	esac
 done
 find %buildroot%_docdir/kernel-doc-%flavour-%kernel_branch -type f -name Makefile -delete
@@ -2351,6 +2371,21 @@ fi
 
 
 %changelog
+* Mon Sep 17 2012 Led <led@altlinux.ru> 3.0.43-alt2
+- updated:
+  + fix-kernel
+- added:
+  + fix-drivers-misc--zcache
+  + fix-drivers-usb-usbip--usbip-host
+  + feat-drivers-block--zram
+  + feat-drivers-misc--xvmalloc
+  + feat-drivers-misc--zcache
+  + feat-drivers-usb-usbip
+  + feat-kernel--sched-cfs-boost
+- enabled:
+  + SCHED_SYSCTL
+  + SCHED_CFS_BOOST
+
 * Sun Sep 16 2012 Led <led@altlinux.ru> 3.0.43-alt1
 - 3.0.43
 - removed:
