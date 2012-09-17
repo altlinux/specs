@@ -17,7 +17,7 @@ ExclusiveArch: %{ix86} x86_64
 
 Name:           eclipse-valgrind
 Version:        0.9.0
-Release:        alt1_2jpp6
+Release:        alt2_2jpp6
 Summary:        Valgrind Tools Integration for Eclipse
 
 Group:          Development/Java
@@ -48,7 +48,7 @@ projects using the Valgrind tool suite and presents the results in the IDE.
 %setup -q -n linuxtools-valgrind-parent-0.9.0-src
 
 %build
-%{eclipse_base}/buildscripts/pdebuild \
+eclipse-pdebuild \
     -f org.eclipse.linuxtools.valgrind \
     -d "cdt linuxprofilingframework emf rhino birt" \
     -a "-DjavacSource=1.5 -DjavacTarget=1.5 -DforceContextQualifier=%{qualifier}"
@@ -64,6 +64,9 @@ install -d -m 755 %{buildroot}%{install_loc}
 %doc org.eclipse.linuxtools.valgrind/epl-v10.html
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt2_2jpp6
+- fixed build
+
 * Thu Jan 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_2jpp6
 - update to new release by jppimport
 
