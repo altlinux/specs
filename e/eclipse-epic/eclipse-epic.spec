@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:      eclipse-epic
 Version:   0.6.39
-Release:   alt1_1jpp6
+Release:   alt2_1jpp6
 Summary:   Perl Eclipse plug-in
 Group:     Development/Java
 License:   CPL
@@ -89,7 +89,7 @@ done
 popd
 
 # build the main feature
-%{eclipse_base}/buildscripts/pdebuild -f org.epic.feature.main \
+eclipse-pdebuild -f org.epic.feature.main \
   -a "-DjavacTarget=1.4 -DjavacSource=1.4"
 
 %install
@@ -119,6 +119,9 @@ popd
 %{_datadir}/eclipse/dropins/epic
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.39-alt2_1jpp6
+- fixed build
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 0.6.39-alt1_1jpp6
 - update to new release by jppimport
 
