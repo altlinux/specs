@@ -9,43 +9,43 @@ Requires: antlr
 Requires: bsf
 Requires: bsh
 Requires: cglib
-Requires: codehaus-stax11-api
-Requires: concurrent
+#Requires: codehaus-stax11-api
+#Requires: concurrent
 Requires: dom4j
 Requires: excalibur-avalon-framework
-Requires: glassfish-jaf
-Requires: glassfish-javamail
-Requires: glassfish-jaxb
-Requires: glassfish-jaxws
-Requires: glassfish-jsf
-Requires: glassfish-jstl
-Requires: gnu-getopt
-Requires: gnu-trove
+#Requires: glassfish-jaf
+#Requires: glassfish-javamail
+#Requires: glassfish-jaxb
+#Requires: glassfish-jaxws
+#Requires: glassfish-jsf
+#Requires: glassfish-jstl
+#Requires: gnu-getopt
+#Requires: gnu-trove
 Requires: hibernate3-ejb-persistence-3.0-api
 Requires: hsqldb
-Requires: jacorb
+#Requires: jacorb
 Requires: jakarta-commons-codec
 Requires: jakarta-commons-collections
 Requires: jakarta-commons-httpclient
 #Requires: jakarta-commons-logging-jboss
 Requires: javassist
-Requires: jaxbintros
+#Requires: jaxbintros
 Requires: jaxen
-Requires: jboss-aop
-Requires: jboss-cache
-Requires: jboss-common
+#Requires: jboss-aop
+#Requires: jboss-cache
+#Requires: jboss-common
 #Requires: jboss-jaxr
-Requires: jboss-microcontainer
-Requires: jboss-remoting
-Requires: jboss-serialization
+#Requires: jboss-microcontainer
+#Requires: jboss-remoting
+#Requires: jboss-serialization
 #Requires: jbossts
-Requires: jboss-vfs
+#Requires: jboss-vfs
 #Requires: jbossweb20
-Requires: jbossws-common
-Requires: jbossws-framework
-Requires: jbossws-native
-Requires: jbossws-spi
-Requires: jbossxb
+#Requires: jbossws-common
+#Requires: jbossws-framework
+#Requires: jbossws-native
+#Requires: jbossws-spi
+#Requires: jbossxb
 Requires: jettison
 Requires: jfreechart
 Requires: joesnmp
@@ -53,14 +53,14 @@ Requires: log4j
 #Requires: quartz
 Requires: snmptrapappender
 #Requires: sun-fi
-Requires: ws-commons-policy
+#Requires: ws-commons-policy
 Requires: xalan-j2
 Requires: xerces-j2
 Requires: xml-security
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt25jpp
+Release: alt26jpp
 Source: jbossas-4.2.3-alt23_24jpp6.cpio
 
 %description
@@ -88,6 +88,9 @@ done
 %files -f %name-list
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.2.3-alt26jpp
+- dropped old jboss* deps
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.2.3-alt25jpp
 - dropped quartz deps
 
