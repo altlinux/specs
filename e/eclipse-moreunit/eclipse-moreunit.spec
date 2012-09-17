@@ -7,7 +7,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-moreunit
 Version:        2.4.1
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Summary:        An Eclipse plugin that assists with writing more unit tests
 
 Group:          Development/Java
@@ -37,7 +37,7 @@ find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
 %build
-%{eclipse_base}/buildscripts/pdebuild -f org.moreunit
+eclipse-pdebuild -f org.moreunit
 
 %install
 install -d -m 755 %{buildroot}%{install_loc}
@@ -50,6 +50,9 @@ install -d -m 755 %{buildroot}%{install_loc}
 %doc org.moreunit.plugin/help/documentation.html
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt2_1jpp6
+- fixed build
+
 * Wed Sep 14 2011 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_1jpp6
 - update to new release by jppimport
 
