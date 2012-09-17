@@ -4,8 +4,8 @@
 %define sover %somver.2.4
 
 Name: libpsblas
-Version: 2.4.0.4
-Release: alt3
+Version: 3.0.2
+Release: alt1
 Summary: Parallel Sparse Basic Linear Algebra Subroutines
 License: BSD
 Group: System/Libraries
@@ -129,6 +129,9 @@ sed -i 's|^\(INSTALL_DOCSDIR\).*|\1=%_docdir/%name|' \
 %doc test
 
 %changelog
+* Mon Sep 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1
+- Version 3.0-2
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0.4-alt3
 - Built with OpenBLAS instead of GotoBLAS2
 
