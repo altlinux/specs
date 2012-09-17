@@ -2,7 +2,7 @@
 %define module_version	4.1.20
 %define module_release	alt1
 
-%define kversion	3.5.3
+%define kversion	3.5.4
 %define krelease	alt1
 %define flavour		un-def
 
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197891.1
+Release: %module_release.197892.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -102,29 +102,20 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Wed Aug 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1.197891.1
-- Build for kernel-image-un-def-3.5.3-alt1.
+* Sat Sep 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.20-alt1.197892.1
+- Build for kernel-image-un-def-3.5.4-alt1.
 
 * Wed Aug 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1
 - Update to new release
 
-* Sun Jul 29 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt2
-- Remove old patch for el-smp
+* Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.18-alt1
+- 4.1.18
 
-* Sat Jul 28 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.18-alt1
-- Update to new release
+* Sun Apr 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.12-alt4
+- 4.1.12
 
-* Sun Jun 24 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt3
-- Fix build on el-smp
-
-* Fri Apr 06 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.12-alt2
-- Technical
-
-* Wed Apr 04 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.12-alt1
-- Update to new release
-
-* Sun Apr 01 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.10-alt1
-- Update to new release with 3.2 kernel support
+* Mon Mar 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt4
+- fix to build with 3.3 kernel
 
 * Sat Jan 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.6-alt3
 - fix to build with 3.2 kernel
