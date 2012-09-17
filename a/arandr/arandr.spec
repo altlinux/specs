@@ -1,5 +1,5 @@
 Name: arandr
-Version: 0.1.5
+Version: 0.1.6
 Release: alt1
 
 Summary: Screen layout editor for xrandr 1.2 (Another XRandR gui)
@@ -65,6 +65,9 @@ Features
 %_man1dir/*
 
 %changelog
+* Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 0.1.6-alt1
+- new version 0.1.6 (with rpmrb script)
+
 * Sat Jan 14 2012 Vitaly Lipatov <lav@altlinux.ru> 0.1.5-alt1
 - initial build for ALT Linux Sisyphus (thanks, Mandriva!)
 
