@@ -47,7 +47,7 @@ BuildRequires: jpackage-1.5.0-compat
 
 Name:           shale
 Version:        1.0.4
-Release:        alt6_1jpp5
+Release:        alt7_1jpp5
 Epoch:          0
 Summary:        Shale Framework
 License:        Apache Software License 2.0
@@ -103,10 +103,10 @@ BuildRequires: jsf_1_2_api
 BuildRequires: jsp_2_1_api
 BuildRequires: myfaces
 BuildRequires: servlet_2_5_api
-BuildRequires: spring-beans
-BuildRequires: spring-context
-BuildRequires: spring-core
-BuildRequires: spring-web
+#BuildRequires: spring-beans
+#BuildRequires: spring-context
+#BuildRequires: spring-core
+#BuildRequires: spring-web
 %if ! %{bootstrap}
 BuildRequires: tiles
 %endif
@@ -292,6 +292,8 @@ sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repo
 
 find . -type d -name site -exec rm -rf {} \; ||:
 
+sed -i -e 's,<module>shale-spring</module>,<!-- module>shale-spring</module -->,' pom.xml
+
 %build
 
 %if %{with_maven}
@@ -438,17 +440,9 @@ CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-remoting
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
-export CLASSPATH=$(build-classpath \
-commons-logging \
-jsf_1_2_api \
-spring/web \
-)
 CLASSPATH=$CLASSPATH:$(pwd)/shale-test/target/shale-test-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-pushd shale-spring
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
-popd
 export CLASSPATH=$(build-classpath \
 commons-beanutils \
 commons-digester \
@@ -508,7 +502,6 @@ for module in \
            dialog-scxml \
            dialog \
            remoting \
-           spring \
            test \
            tiger \
 %if ! %{bootstrap}
@@ -578,8 +571,8 @@ fi
 %files remoting
 %{_javadir}/%{name}/remoting*.jar
 
-%files spring
-%{_javadir}/%{name}/spring*.jar
+#%files spring
+#%{_javadir}/%{name}/spring*.jar
 
 %files test
 %{_javadir}/%{name}/test*.jar
@@ -608,6 +601,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt7_1jpp5
+- dropped spring1
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt6_1jpp5
 - fixed build using htmlunit1
 
