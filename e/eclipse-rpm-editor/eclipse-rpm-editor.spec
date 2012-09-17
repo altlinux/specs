@@ -10,7 +10,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-rpm-editor
 Version:        0.9.0
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Summary:        RPM Specfile editor for Eclipse
 Group:          Development/Java
 License:        EPL
@@ -39,9 +39,9 @@ useful for maintenance of RPM specfiles within the Eclipse IDE.
 %setup -q -n linuxtools-rpm-parent-0.9.0-src
 
 %build
-%{eclipse_base}/buildscripts/pdebuild -a "-DforceContextQualifier=%{qualifier} -DjavacSource=1.5 -DjavacTarget=1.5" \
+eclipse-pdebuild -a "-DforceContextQualifier=%{qualifier} -DjavacSource=1.5 -DjavacTarget=1.5" \
  -f  org.eclipse.linuxtools.rpm
-%{eclipse_base}/buildscripts/pdebuild -a "-DforceContextQualifier=%{qualifier} -DjavacSource=1.5 -DjavacTarget=1.5" \
+eclipse-pdebuild -a "-DforceContextQualifier=%{qualifier} -DjavacSource=1.5 -DjavacTarget=1.5" \
  -f  org.eclipse.linuxtools.rpm.ui.editor.feature -d changelog ;
 
 %install
@@ -57,6 +57,9 @@ unzip -q -d $installDir \
 %{install_loc}/rpm-editor
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt2_1jpp6
+- fixed build
+
 * Thu Jan 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_1jpp6
 - update to new release by jppimport
 
