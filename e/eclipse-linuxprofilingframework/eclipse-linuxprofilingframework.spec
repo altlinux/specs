@@ -13,7 +13,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-linuxprofilingframework
 Version:        0.9.0
-Release:        alt1_2jpp6
+Release:        alt2_2jpp6
 Summary:        Eclipse Linux Tools Profiling Framework
 
 Group:          Development/Java
@@ -43,7 +43,7 @@ Plugins common to Eclipse Linux Tools profiling tools.
 %setup -q -n linuxtools-profiling-parent-%{version}-src
 
 %build
-%{eclipse_base}/buildscripts/pdebuild -v -d "cdt birt emf gef rse dtp-connectivity" \
+eclipse-pdebuild -v -d "cdt birt emf gef rse dtp-connectivity" \
  -a "-DjavacSource=1.6 -DjavacTarget=1.6 -DforceContextQualifier=%{qualifier}" \
  -j -DJ2SE-1.6=%{_jvmdir}/java/jre/lib/rt.jar \
  -f org.eclipse.linuxtools.profiling
@@ -59,6 +59,9 @@ unzip -q -d $RPM_BUILD_ROOT%{install_loc} \
 %{install_loc}
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt2_2jpp6
+- fixed build
+
 * Thu Jan 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_2jpp6
 - update to new release by jppimport
 
