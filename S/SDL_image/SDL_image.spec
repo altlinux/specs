@@ -1,19 +1,18 @@
 Name: SDL_image
-Version: 1.2.10
-Release: alt3
+Version: 1.2.12
+Release: alt1
 
-Summary: Simple DirectMedia Layer - image
+Summary: Image loading library for SDL
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.libsdl.org/projects/SDL_image/
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
 # http://www.libsdl.org/projects/%name/release/%name-%version.tar.gz
-Source0: %name-%version.tar
+Source: %name-%version.tar
 
 %def_disable static
 %define libname lib%name
 # must match SDL_VERSION= in configure.ac
-%define SDL_ver %version
+%define SDL_ver 1.2.10
 
 BuildRequires: libSDL-devel >= %SDL_ver
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel zlib-devel
@@ -24,9 +23,8 @@ designed to provide fast access to the graphics frame buffer and audio
 device.
 
 %package -n %libname
-Summary: Main library for %name
+Summary: %name runtime library
 Group: System/Libraries
-Requires: libSDL >= %SDL_ver
 
 %description -n %libname
 Simple DirectMedia Layer (SDL) is a cross-platform multimedia library
@@ -35,7 +33,7 @@ device.  This package contains a simple library for loading images of
 various formats (BMP, PPM, PCX, GIF, JPEG, PNG) as SDL surfaces.
 
 %package -n %libname-devel
-Summary: Headers for developing programs that will use %name
+Summary: %name development files
 Group: Development/C
 Requires: %libname = %version-%release
 
@@ -63,6 +61,9 @@ touch NEWS AUTHORS ChangeLog
 # required for properly linked showimage
 %autoreconf
 %configure \
+	--enable-jpg \
+	--enable-png \
+	--enable-tif \
 	--disable-jpg-shared \
 	--disable-png-shared \
 	--disable-tif-shared \
@@ -90,6 +91,9 @@ install -pm755 .libs/showimage %buildroot%_bindir/
 %endif
 
 %changelog
+* Mon Sep 17 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.12-alt1
+- Updated to 1.2.12.
+
 * Fri Mar 11 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.10-alt3
 - Rebuilt for debuginfo
 
