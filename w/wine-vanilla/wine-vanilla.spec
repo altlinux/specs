@@ -1,16 +1,6 @@
-%if %_vendor == "alt"
-%ifarch x86_64
-	%def_with build64
-%else
-    %def_without build64
-%endif
-%else
-   %def_without build64
-%endif
-
 Name: wine-vanilla
-Version: 1.5.12
-Release: alt1
+Version: 1.5.13
+Release: alt2
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -28,12 +18,21 @@ Source2: %name-%version-desktop.tar
 
 AutoReq: yes, noperl
 
-%define freetype_ver 2.1.9
+# try build wine64 only on ALT
+%if %_vendor == "alt"
+%ifarch x86_64
+	%def_with build64
+%else
+    %def_without build64
+%endif
+%else
+   %def_without build64
+%endif
 
 # General dependencies
 BuildRequires: rpm-build-intro >= 1.0
 BuildRequires: gcc util-linux flex bison
-BuildRequires: fontconfig-devel libfreetype-devel >= %freetype_ver
+BuildRequires: fontconfig-devel libfreetype-devel
 BuildRequires: libncurses-devel libncursesw-devel libtinfo-devel
 BuildRequires: libssl-devel zlib-devel libldap-devel libgnutls-devel
 BuildRequires: libxslt-devel libxml2-devel
@@ -43,9 +42,6 @@ BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel
 BuildRequires: libopenal-devel libGLU-devel
 BuildRequires: libusb-devel libieee1284-devel libhal-devel
 BuildRequires: libv4l-devel gstreamer-devel gst-plugins-devel
-
-# https://bugzilla.altlinux.org/show_bug.cgi?id=20356
-BuildRequires: libesd-devel
 
 BuildRequires: libICE-devel libSM-devel
 BuildRequires: libX11-devel libXau-devel libXaw-devel libXrandr-devel
@@ -182,11 +178,11 @@ develop programs which make use of Wine.
 %setup
 
 %build
-%configure --with-x --disable-tests \
+%configure --with-x \
 %if_with build64
 	--enable-win64 \
 %endif
-	--without-esd
+	--disable-tests 
 
 %__make depend
 %make_build
@@ -202,21 +198,6 @@ tar xvf %SOURCE2
 # Do not pack non english man pages yet
 rm -rf %buildroot%_mandir/*.UTF-8
 
-%if %_vendor != "alt"
-%post
-%update_menus
-%update_desktopdb
-
-%postun
-%clean_menus
-%clean_desktopdb
-
-%post -n lib%name
-%post_ldconfig
-
-%postun -n lib%name
-%postun_ldconfig
-%endif
 
 %files
 %doc ANNOUNCE AUTHORS LICENSE README
@@ -361,6 +342,13 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.13-alt2
+- restore missed-in-merge changes
+
+* Sat Sep 15 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.13-alt1
+- new version 1.5.13, cleanup spec
+- disable libesd support and requires
+
 * Fri Sep 07 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.12-alt1
 - new version 1.5.12
 
