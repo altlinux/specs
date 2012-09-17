@@ -49,7 +49,7 @@ BuildRequires: jpackage-core
 
 Name:           maven1
 Version:        1.1
-Release:        alt23_9jpp6
+Release:        alt24_9jpp6
 Epoch:          0
 Summary:        Java project management and project comprehension tool
 
@@ -1584,7 +1584,7 @@ BuildArch: noarch
 %description plugin-test
 %{summary}.
 
-%if %{RHEL4}==0
+%if_with tjdo
 %package plugin-tjdo
 Summary:        Optional tjdo plugin for %{name}
 Group:          Development/Java
@@ -1998,7 +1998,7 @@ mv ../maven-plugins-sandbox/jcoverage ../maven-plugins
 %if %{RHEL4}==0
 %if %{NONFREE}==1
 (cd ../%{oldname}-%{version}
-echo "maven.plugins.excludes = examples/**,touchstone/**,touchstone-partner/**,plugin-parent/**,itest/**,ashkelon/**,clover/**,simian/**,abbot/**,latka/**" >> project.properties
+echo "maven.plugins.excludes = examples/**,touchstone/**,touchstone-partner/**,plugin-parent/**,itest/**,ashkelon/**,clover/**,simian/**,tjdo/**,abbot/**,latka/**" >> project.properties
 )
 %else
 (cd ../%{oldname}-%{version}
@@ -2010,6 +2010,8 @@ echo "maven.plugins.excludes = examples/**,touchstone/**,touchstone-partner/**,p
 echo "maven.plugins.excludes = examples/**,touchstone/**,touchstone-partner/**,plugin-parent/**,itest/**,abbot/**,ashkelon/**,aspectj/**,aspectwerkz/**,changelog/**,clover/**,jalopy/**,jdeveloper/**,jdiff/**,jetty/**,latex/**,latka/**,native/**,pdf/**,simian/**,tjdo/**,uberjar/**,vdoclet/**" >> project.properties
 )
 %endif
+# viy kills tjdo
+echo "maven.build.plugins.excludes=plugins-common/project.xml,plugins-parent/project.xml,plugins-site/project.xml,abbot/project.xml,ashkelon/project.xml,hibernate/project.xml,surefire/project.xml,tjdo/project.xml" >> ../maven-plugins-sandbox/project.properties
 
 # plexus-* have component-api.jar no more, use containers-container-default.jar instead.
 sed -i 's,<jar>plexus/component-api.jar</jar>,<jar>plexus/containers-container-default.jar</jar>,' ../maven-plugins/scm/project.xml
@@ -2756,7 +2758,7 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %{_javadir}/%{name}-plugins/maven-test-plugin.jar
 %{_datadir}/maven2/poms/JPP.maven1-plugins-maven-test-plugin.pom
 
-%if %{RHEL4}==0
+%if_with tjdo
 %files plugin-tjdo
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
@@ -2840,6 +2842,9 @@ if [ -d %{_datadir}/%{name} ] ; then rmdir --ignore-fail-on-non-empty %{_datadir
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt24_9jpp6
+- build without tjdo
+
 * Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt23_9jpp6
 - fix for maven-model
 
