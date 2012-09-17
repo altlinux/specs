@@ -1,48 +1,82 @@
 Name: gif2png
-Version: 2.5.1
-Release: alt1.2.1
+Version: 2.5.8
+Release: alt1
 
-Summary: Tools for converting files from using GIFs to using PNGs
+Summary: A GIF to PNG converter
 Group: Graphics
-License: MIT-like
+License: BSD-style
 Url: http://catb.org/~esr/gif2png/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-Source: %url/gif2png-%version.tar.bz2
-Patch1: gif2png-2.4.6-alt-web2png.patch
-Patch2: gif2png-2.5.1-deb-comment.patch
-Patch3: gif2png-2.5.1-deb-man.patch
+# http://catb.org/~esr/%name/%name-%version.tar.gz
+Source: gif2png-%version.tar
+Source1: test-1.gif
+Source2: test-2.gif
+Patch1: gif2png-2.5.8-alt-web2png.patch
+Patch2: gif2png-2.5.8-deb-warnings.patch
 
 # Automatically added by buildreq on Mon Oct 21 2002
 BuildRequires: libpng-devel zlib-devel
 
 %description
-The gif2png program converts files from the patent-encumbered Graphic
-Interchange Format to Portable Network Graphics.
+The gif2png program converts files from the obsolescent Graphic
+Interchange Format to Portable Network Graphics.  The conversion
+preserves all graphic information, including transparency, perfectly.
+The gif2png program can even recover data from corrupted GIFs.
 
-This distribution also supplies web2png, a Python front end for
-gif2png which automagically converts entire web hierarchies (the
-graphics files themselves and references to them in web pages).
+There exists a 'web2png' program in a separate package which is able
+to convert entire directory hierarchies.
+
+%package -n web2png
+Summary: A GIF to PNG converter for entire directory hierarchies
+Group: Graphics
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%description -n web2png
+The gif2png program converts files from the obsolescent Graphic
+Interchange Format to Portable Network Graphics.  The conversion
+preserves all graphic information, including transparency, perfectly.
+The gif2png program can even recover data from corrupted GIFs.
+
+The distribution also includes a Python script, web2png, that will
+convert entire web hierarchies (images and HTML or PHP pages).
 
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 
 %build
 %configure
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
+
+%check
+p=%buildroot%_bindir/gif2png
+for i in 1 2; do
+	f=%_sourcedir/test-$i.gif
+	install -pm644 $f _tmp.gif
+	$p _tmp.gif
+	$p -f < $f > _tmp.png
+	$p -O -f < $f > _tmp.png
+done
 
 %files
-%_bindir/*
-%_mandir/man?/*
+%_bindir/gif2png
+%_mandir/man?/gif2png.*
 %doc AUTHORS COPYING README NEWS
 
+%files -n web2png
+%_bindir/web2png
+%_mandir/man?/web2png.*
+
 %changelog
+* Mon Sep 17 2012 Dmitry V. Levin <ldv@altlinux.org> 2.5.8-alt1
+- Updated to 2.5.8.
+- Moved web2png to separate subpackage.
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.5.1-alt1.2.1
 - Rebuild with Python-2.7
 
