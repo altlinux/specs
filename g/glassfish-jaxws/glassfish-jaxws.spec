@@ -51,7 +51,7 @@ BuildRequires: jpackage-compat
 
 Name:           glassfish-jaxws
 Version:        2.1.3
-Release:        alt3_8jpp6
+Release:        alt4_8jpp6
 Epoch:          0
 Summary:        Java API for XML Web Services API
 License:        CDDL 1.0/GPLv2
@@ -66,9 +66,6 @@ Provides:       jaxws_api = 0:2.1
 Provides:       jaxws_2_1_api = 0:%{version}-%{release}
 Requires(post): jpackage-utils
 Requires(post): alternatives >= 0:0.4
-Requires(postun): jpackage-utils
-Requires(preun): alternatives >= 0:0.4
-Requires: jpackage-utils
 %if %without bundled
 Requires: glassfish-jaxb21
 Requires: sun-saaj-1.3-impl
@@ -76,12 +73,12 @@ Requires: sun-xmlstreambuffer
 Requires: wstx
 Requires: sun-mimepull
 # FIXME: This is added in place of annotation_1_0_api
-Requires: jboss-ejb-3.0-api
+Requires: jboss-ejb-3.1-api
 Requires: jaf_1_1_api
 #Requires: jaxb_2_1_api
 Requires: stax_1_0_api
 Requires: stax-ex
-Requires: sun-fi
+Requires: /usr/share/java/FastInfoset.jar
 Requires: saaj_1_3_api
 Requires: servlet_2_5_api
 Requires: sun-sjsxp
@@ -97,7 +94,7 @@ BuildRequires: ant-nodeps
 BuildRequires: ant-trax
 BuildRequires: jpackage-utils >= 0:1.7.3
 BuildRequires: jaf_1_1_api
-BuildRequires: sun-fi >= 0:1.2.2
+BuildRequires: /usr/share/java/FastInfoset.jar
 #BuildRequires: jaxb_2_1_api
 BuildRequires: glassfish-jaxb21
 ##BuildRequires:  glassfish-jaxws >= 0:2.1.3
@@ -106,7 +103,7 @@ BuildRequires: codehaus-stax11-api
 # jsr181-api (or geronimo-ws-metadata-2.0-api)
 BuildRequires: sun-ws-metadata-2.0-api
 # jsr250-api (or {geronimo,sun}-annotation-1.0-api)
-BuildRequires: jboss-ejb-3.0-api
+BuildRequires: jboss-ejb-3.1-api
 # FIXME: Need upgrade to 1.3
 BuildRequires: sun-mimepull >= 0:1.2
 %if 1
@@ -176,7 +173,7 @@ BuildArch: noarch
 pushd lib
 # remove all jars
 %{__ln_s} $(build-classpath jaf_1_1_api) activation.jar
-%{__ln_s} $(build-classpath sun-fi) FastInfoset.jar
+%{__ln_s} $(build-classpath FastInfoset) FastInfoset.jar
 %{__ln_s} $(build-classpath glassfish-jaxb21/jaxb-api) .
 %{__ln_s} $(build-classpath glassfish-jaxb21/jaxb-impl) .
 %{__ln_s} $(build-classpath glassfish-jaxb21/jaxb-xjc) .
@@ -190,7 +187,7 @@ pushd lib
 # XXX: jaxws-tools
 %{__ln_s} $(build-classpath codehaus-stax11-api) jsr173_api.jar
 %{__ln_s} $(build-classpath sun-ws-metadata-2.0-api) jsr181-api.jar
-%{__ln_s} $(build-classpath jboss-ejb-3.0-api) jsr250-api.jar
+%{__ln_s} $(build-classpath jboss-ejb-3.1-api) jsr250-api.jar
 %{__ln_s} $(build-classpath sun-mimepull) mimepull.jar
 # XXX: not right
 %if 0
@@ -238,10 +235,10 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclassp
 %{__cp} -p build/lib/jaxws-tools.jar %{buildroot}%{_javadir}/sun-jaxws/jaxws-tools.jar
 ###
 pushd %{buildroot}%{_javadir}/sun-jaxws
-%{__ln_s} $(build-classpath sun-fi) FastInfoset.jar
+%{__ln_s} $(build-classpath FastInfoset) FastInfoset.jar
 %{__ln_s} $(build-classpath stax_1_0_api) jsr173_api.jar
 %{__ln_s} $(build-classpath ws_metadata_2_0_api) jsr181-api.jar
-%{__ln_s} $(build-classpath jboss-ejb-3.0-api) jsr250-api.jar
+%{__ln_s} $(build-classpath jboss-ejb-3.1-api) jsr250-api.jar
 %if 1
 %{__ln_s} $(build-classpath saaj_1_3_api) saaj-api.jar
 %{__ln_s} $(build-classpath sun-saaj-1.3-impl) saaj-impl.jar
@@ -378,6 +375,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %endif
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt4_8jpp6
+- build with new boss
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt3_8jpp6
 - build with glassfish-jaxb21
 
