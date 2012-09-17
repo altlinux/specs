@@ -3,7 +3,7 @@
 
 %define module_release	alt2
 
-%define kversion  	3.5.3	
+%define kversion  	3.5.4	
 %define krelease	alt1
 %define flavour		std-pae
 
@@ -14,7 +14,7 @@
 Summary: acpi_call module
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197891.1
+Release: %module_release.197892.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -66,8 +66,8 @@ make KDIR=%_usrsrc/linux-%kversion-%flavour-%krelease
 %module_dir
 
 %changelog
-* Thu Aug 30 2012 Anton Protopopov <aspsk@altlinux.org> 0.1-alt2.197891.1
-- Build for kernel-image-std-pae-3.5.3-alt1.
+* Sat Sep 15 2012 Anton Protopopov <aspsk@altlinux.org> 0.1-alt2.197892.1
+- Build for kernel-image-std-pae-3.5.4-alt1.
 
 * Wed May 11 2011 Anton Protopopov <aspsk@altlinux.org> 0.1-alt2
 - Use kernelarch macro for %%buildarch
