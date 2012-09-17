@@ -36,7 +36,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           sun-jaxb-2.1-impl
 Version:        2.1.13
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        JAXB Reference Implementation
 License:        CDDL
@@ -76,13 +76,12 @@ BuildRequires:  stax_1_0_api
 BuildRequires:  stax-ex >= 0:1.2
 BuildRequires:  sun-codemodel
 BuildRequires:  sun-dtdparser
-BuildRequires:  sun-fi >= 0:1.2.2
+BuildRequires:  /usr/share/java/FastInfoset.jar
 BuildRequires:  sun-htmlmacro
 BuildRequires:  sun-istack-commons >= 1:1.0
-BuildRequires:  sun-jaxb-1.0-impl
+#BuildRequires:  sun-jaxb-1.0-impl
 BuildRequires:  sun-jaxb-2.1-api
-BuildRequires:  sun-txw2
-BuildRequires:  sun-txw2-compiler
+BuildRequires:  txw2
 BuildRequires:  sun-xsom
 BuildRequires:  xml-commons-resolver11
 
@@ -98,7 +97,7 @@ Requires:  relaxngDatatype
 Requires:  servlet_2_5_api
 Requires:  stax_1_0_api
 Requires:  stax-ex >= 0:1.2
-Requires:  sun-fi >= 0:1.2.2
+Requires:  /usr/share/java/FastInfoset.jar
 Requires:  sun-jaxb-2.1-api
 %if ! %{gcj_support}
 BuildArch:      noarch
@@ -160,11 +159,11 @@ ln -sf $(build-classpath aqute-bndlib) tools/lib/util/bnd-0.0.249.jar
 ln -sf $(build-classpath jing) tools/lib/util/jing.jar
 
 #mv tools/lib/rebundle/runtime2/txw2.jar.no tools/lib/rebundle/runtime2/txw2.jar
-ln -sf $(build-classpath sun-txw2) tools/lib/rebundle/runtime2/txw2.jar
+ln -sf $(build-classpath txw2) tools/lib/rebundle/runtime2/txw2.jar
 
 ###
-mv tools/lib/util/txwc2.jar.no tools/lib/util/txwc2.jar
-#ln -sf $(build-classpath sun-txwc2) tools/lib/util/txwc2.jar
+#mv tools/lib/util/txwc2.jar.no tools/lib/util/txwc2.jar
+ln -sf $(build-classpath txwc2) tools/lib/util/txwc2.jar
 
 #mv tools/htmlmacro/htmlmacro.jar.no tools/htmlmacro/htmlmacro.jar
 ln -sf $(build-classpath sun-htmlmacro) tools/htmlmacro/htmlmacro.jar
@@ -208,7 +207,7 @@ mv tools/lib/rebundle/compiler/xsom.jar.no tools/lib/rebundle/compiler/xsom.jar
 #ln -sf $(build-classpath sun-xsom/xsom) tools/lib/rebundle/compiler/xsom.jar
 
 #mv tools/lib/util/FastInfoset.jar.no tools/lib/util/FastInfoset.jar
-ln -sf $(build-classpath sun-fi) tools/lib/util/FastInfoset.jar
+ln -sf $(build-classpath FastInfoset) tools/lib/util/FastInfoset.jar
 
 #mv tools/lib/redist/jsr173_1.0_api.jar.no tools/lib/redist/jsr173_1.0_api.jar
 ln -sf $(build-classpath stax_1_0_api) tools/lib/redist/jsr173_1.0_api.jar
@@ -238,7 +237,8 @@ ln -sf $(build-classpath jaf_1_1_api) tools/lib/redist/activation.jar
 ln -sf $(build-classpath relaxngcc) tools/lib/util/relaxngcc.jar
 
 #mv tools/compiler10/jaxb1-xjc.jar.no tools/compiler10/jaxb1-xjc.jar
-ln -sf $(build-classpath sun-jaxb-1.0/xjc.jar) tools/compiler10/jaxb1-xjc.jar
+mv tools/compiler10/jaxb1-xjc.jar.no tools/compiler10/jaxb1-xjc.jar
+#ln -sf $(build-classpath sun-jaxb-1.0/xjc.jar) tools/compiler10/jaxb1-xjc.jar
 
 
 %patch0 -b .sav0
@@ -375,6 +375,9 @@ EOF
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.13-alt3_1jpp6
+- build with txw2
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.13-alt2_1jpp6
 - use java6 build
 
