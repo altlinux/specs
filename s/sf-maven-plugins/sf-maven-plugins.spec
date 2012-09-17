@@ -1,3 +1,4 @@
+%def_without sf_webtest_maven_plugin
 %def_without sf_dbunit_maven_plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
@@ -65,7 +66,7 @@ BuildRequires: ant-bsf
 
 Name:           sf-maven-plugins
 Version:        1.0
-Release:        alt10_0.20050908.9jpp5
+Release:        alt11_0.20050908.9jpp5
 Epoch:          0
 Summary:        Maven Plugins hosted at sf.net
 
@@ -178,8 +179,8 @@ BuildRequires: apache-commons-pool
 #BuildRequires: dbunit
 BuildRequires: docbook-xsl-java-xalan
 BuildRequires: dom4j
-BuildRequires: xmlgraphics-fop
-BuildRequires: groovy11
+BuildRequires: fop
+#BuildRequires: groovy11
 #BuildRequires:  jai
 BuildRequires: gnu-getopt
 BuildRequires: gnu-regexp
@@ -243,7 +244,7 @@ Requires: sf-uberdist-maven-plugin
 Requires: sf-vignette-maven-plugin
 Requires: sf-was40-maven-plugin
 Requires: sf-was5-maven-plugin
-Requires: sf-webtest-maven-plugin
+#Requires: sf-webtest-maven-plugin
 Requires: sf-word2html-maven-plugin
 Requires: sf-xmlresume-maven-plugin
 
@@ -474,7 +475,7 @@ Requires: docbook-xsl-java-xalan
 Requires: excalibur-avalon-framework-api
 Requires: excalibur-avalon-logkit
 Requires: batik
-Requires: xmlgraphics-fop
+Requires: fop
 #Requires:       jimi
 Requires: xalan-j2
 Requires: xerces-j2
@@ -534,6 +535,7 @@ Requires: maven1 >= 0:1.1
 %description -n sf-was5-maven-plugin
 %{summary}.
 
+%if_with sf_webtest_maven_plugin
 %package -n sf-webtest-maven-plugin
 Summary:        WebTest Maven Plugin hosted at sf.net
 Group:          Development/Java
@@ -552,7 +554,7 @@ Requires: jakarta-commons-httpclient >= 1:3.0
 Requires: jakarta-commons-io
 Requires: jakarta-commons-lang
 Requires: jakarta-commons-logging
-Requires: groovy11
+#Requires: groovy11
 Requires: jaxen
 Requires: junit
 Requires: log4j
@@ -565,9 +567,12 @@ Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires(post): java-gcj-compat
 Requires(postun): java-gcj-compat
 %endif
+%endif #sf_webtest_maven_plugin
 
+%if_with sf_webtest_maven_plugin
 %description -n sf-webtest-maven-plugin
 %{summary}.
+%endif #sf_webtest_maven_plugin
 
 %package -n sf-word2html-maven-plugin
 Summary:        Word2html Maven Plugin hosted at sf.net
@@ -584,7 +589,7 @@ Requires: maven1 >= 0:1.1
 Requires: excalibur-avalon-framework-api
 Requires: excalibur-avalon-logkit
 Requires: batik
-Requires: xmlgraphics-fop
+Requires: fop
 Requires: xalan-j2
 Requires: xerces-j2
 Requires: xml-commons-apis
@@ -689,7 +694,7 @@ ALL_PLUGINS="aptdoc axis cobertura db2 deb dotuml doxygen files findbugs flash h
 PEND_PLUGINS="db2 dotuml doxygen jaxb kodo macker middlegen maven-dashboard-history/maven-plugins sourceforge strutsdoc transform weblogic wiki"
 
 
-for p in aptdoc axis cobertura deb news files findbugs flash help izpack javaapp javancss junitpp rpm runtime-builder sdocbook springgraph tasks uberdist vignette was40 was5 webtest word2html xmlresume; do
+for p in aptdoc axis cobertura deb news files findbugs flash help izpack javaapp javancss junitpp rpm runtime-builder sdocbook springgraph tasks uberdist vignette was40 was5 word2html xmlresume; do
 pushd $p
 maven \
 	-Dmaven.compile.target=1.5 -Dmaven.compile.source=1.5 -Dmaven.javadoc.source=1.5 \
@@ -775,9 +780,9 @@ $RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-was40-plugin-%{was40_pver}.jar
 install -m 644 \
 was5/target/maven-was5-plugin-%{was5_pver}-SNAPSHOT.jar \
 $RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-was5-plugin-%{was5_pver}.jar
-install -m 644 \
-webtest/target/maven-webtest-plugin-%{webtest_pver}.jar \
-$RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-webtest-plugin-%{webtest_pver}.jar
+#install -m 644 \
+#webtest/target/maven-webtest-plugin-%{webtest_pver}.jar \
+#$RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-webtest-plugin-%{webtest_pver}.jar
 install -m 644 \
 word2html/target/maven-word2html-plugin-%{word2html_pver}.jar \
 $RPM_BUILD_ROOT%{_datadir}/maven1/plugins/maven-word2html-plugin-%{word2html_pver}.jar
@@ -810,7 +815,7 @@ ln -sf %{_datadir}/maven1/plugins/maven-uberdist-plugin-%{uberdist_pver}.jar mav
 ln -sf %{_datadir}/maven1/plugins/maven-vignette-plugin-%{vignette_pver}.jar maven-vignette-plugin.jar
 ln -sf %{_datadir}/maven1/plugins/maven-was40-plugin-%{was40_pver}.jar maven-was40-plugin.jar
 ln -sf %{_datadir}/maven1/plugins/maven-was5-plugin-%{was5_pver}.jar maven-was5-plugin.jar
-ln -sf %{_datadir}/maven1/plugins/maven-webtest-plugin-%{webtest_pver}.jar maven-webtest-plugin.jar
+#ln -sf %{_datadir}/maven1/plugins/maven-webtest-plugin-%{webtest_pver}.jar maven-webtest-plugin.jar
 ln -sf %{_datadir}/maven1/plugins/maven-word2html-plugin-%{word2html_pver}.jar maven-word2html-plugin.jar
 ln -sf %{_datadir}/maven1/plugins/maven-xmlresume-plugin-%{xmlresume_pver}.jar maven-xmlresume-plugin.jar
 popd
@@ -825,7 +830,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 
 install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-for p in aptdoc axis cobertura deb news files findbugs flash help izpack javaapp javancss junitpp rpm runtime-builder sdocbook springgraph tasks uberdist vignette was40 was5 webtest word2html xmlresume; do
+for p in aptdoc axis cobertura deb news files findbugs flash help izpack javaapp javancss junitpp rpm runtime-builder sdocbook springgraph tasks uberdist vignette was40 was5 word2html xmlresume; do
         install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/$p
 cp -pr $p/target/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/$p
 done
@@ -1036,6 +1041,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
+%if_with sf_webtest_maven_plugin
 %files -n sf-webtest-maven-plugin
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_datadir}/maven1/plugins/maven-webtest-plugin*.jar
@@ -1045,6 +1051,7 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %endif
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
+%endif #sf_webtest_maven_plugin
 
 %files -n sf-word2html-maven-plugin
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
@@ -1069,6 +1076,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt11_0.20050908.9jpp5
+- build without groovy11
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt10_0.20050908.9jpp5
 - dropped dbunit plugin
 
