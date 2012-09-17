@@ -6,7 +6,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:           eclipse-manpage
 Version:        0.9.0
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Summary:        Man page viewer
 
 Group:          Development/Java
@@ -28,7 +28,7 @@ fetching its content for embedded display purposes (e.g hover help).
 %setup -q -n linuxtools-man-parent-%{version}-src
 
 %build
-%{eclipse_base}/buildscripts/pdebuild
+eclipse-pdebuild
 
 %install
 install -d -m 755 %{buildroot}%{install_loc}
@@ -42,6 +42,9 @@ install -d -m 755 %{buildroot}%{install_loc}
 %doc org.eclipse.linuxtools.man/epl-v10.html
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt2_1jpp6
+- fixed build
+
 * Thu Jan 12 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1_1jpp6
 - update to new release by jppimport
 
