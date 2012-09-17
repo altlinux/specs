@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           openws
 Version:        1.2.2
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 Summary:        Open WS
 License:        ASL 2.0
@@ -46,6 +46,8 @@ Source0:        openws-1.2.2.tar.gz
 Source1:        openws-jpp-depmap.xml
 Source2:        openws-settings.xml
 Patch0:         openws-pom.patch
+Patch33:	openws-alt-no-spring.patch
+
 BuildArch:      noarch
 Requires(post): jpackage-utils >= 0:1.7.3
 Requires(postun): jpackage-utils >= 0:1.7.3
@@ -60,7 +62,7 @@ BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-release
 BuildRequires: maven-surefire-maven-plugin
 BuildRequires: maven-surefire-provider-junit
-BuildRequires: spring-mock
+#BuildRequires: spring-mock
 BuildRequires: spring2-core
 BuildRequires: xmltooling >= 0:1.2.0
 Requires: xmltooling >= 0:1.2.0
@@ -80,6 +82,7 @@ BuildArch: noarch
 %prep
 %setup -q 
 %patch0 -b .sav0
+%patch33 -p1
 
 cp -p %{SOURCE2} maven2-settings.xml
 
@@ -98,6 +101,7 @@ export MAVEN_REPO_LOCAL=$(pwd)/m2_repo/repository
 
 mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
         -s ${M2SETTINGS} \
+        -Dmaven.test.skip=true \
         -Dmaven.test.failure.ignore=true \
         -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
         -Dmaven2.jpp.depmap.file=%{SOURCE1} \
@@ -132,6 +136,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt3_2jpp6
+- dropped spring1
+
 * Fri Apr 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt2_2jpp6
 - fixed build with maven3
 
