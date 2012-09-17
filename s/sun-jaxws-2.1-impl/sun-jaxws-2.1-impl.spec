@@ -37,7 +37,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           sun-jaxws-2.1-impl
 Version:        2.1.3
-Release:        alt5_1jpp5
+Release:        alt6_1jpp5
 Epoch:          0
 Summary:        Java API for XML Web Services API
 License:        CDDL
@@ -64,10 +64,10 @@ BuildRequires: servlet_2_5_api
 BuildRequires: stax_1_0_api
 BuildRequires: stax-ex >= 0:1.2
 BuildRequires: sun-codemodel
-BuildRequires: sun-fi >= 0:1.2.2
+BuildRequires: /usr/share/java/FastInfoset.jar
 BuildRequires: sun-jaxb-2.1-impl >= 0:2.1.6
 BuildRequires: sun-mimepull
-BuildRequires: sun-txw2
+BuildRequires: txw2
 BuildRequires: sun-xmlstreambuffer
 BuildRequires: ws_metadata_2_0_api
 BuildRequires: xml-commons-resolver12
@@ -82,10 +82,10 @@ Requires: saaj_1_3_api
 Requires: stax_1_0_api
 Requires: stax-ex >= 0:1.2
 Requires: sun-codemodel
-Requires: sun-fi >= 0:1.2.2
+Requires: /usr/share/java/FastInfoset.jar
 Requires: sun-jaxb-2.1-impl >= 0:2.1.6
 Requires: sun-mimepull
-Requires: sun-txw2
+Requires: txw2
 Requires: sun-xmlstreambuffer
 Requires: ws_metadata_2_0_api
 Requires: xml-commons-resolver12
@@ -135,11 +135,11 @@ servlet_2_5_api \
 stax_1_0_api \
 stax-ex \
 sun-codemodel \
-sun-fi \
+FastInfoset \
 sun-jaxb-2.1-impl \
 sun-jaxb-2.1-impl-xjc \
 sun-mimepull \
-sun-txw2 \
+txw2 \
 sun-xmlstreambuffer \
 ws_metadata_2_0_api \
 )
@@ -221,6 +221,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt6_1jpp5
+- build with txw2
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.3-alt5_1jpp5
 - fixed build with java 7
 
