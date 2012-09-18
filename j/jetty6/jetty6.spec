@@ -3,6 +3,7 @@ Patch33: jetty6-maven3-alt.patch
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+%def_without jetty6_spring
 %def_without webapps
 %def_without cometd
 %def_without wadi
@@ -94,7 +95,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty6
 Version:        6.1.26
-Release:        alt10_1jpp6
+Release:        alt11_1jpp6
 Epoch:          0
 Summary:        Webserver and Servlet Container
 Group:          Development/Java
@@ -192,7 +193,7 @@ BuildRequires:  jetty-build-support
 #BuildRequires:  mx4j
 BuildRequires:  qdox
 BuildRequires:  slf4j
-BuildRequires:  spring-all
+#BuildRequires:  spring-all
 BuildRequires:  testng
 BuildRequires:  tomcat5-jasper
 BuildRequires:  tomcat6
@@ -317,15 +318,19 @@ Requires:       javamail_1_4_api
 %{summary}.
 
 
+%if_with jetty6_spring
 %package -n %{jettyname}6-spring
 Summary:        Spring for %{name}
 Group:          Development/Java
 Requires:       %{name}-core = %{epoch}:%{version}-%{release}
 Requires:       %{name}-plus = %{epoch}:%{version}-%{release}
 Requires:       spring
+%endif #jetty6_spring
 
+%if_with jetty6_spring
 %description -n %{jettyname}6-spring
 %{summary}.
+%endif #jetty6_spring
 
 %if %with xbean
 %package -n %{jettyname}6-xbean
@@ -609,6 +614,7 @@ sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share
  sed -i -e '/<module>contrib\/grizzly<\/module>/d' pom.xml
  sed -i -e '/<module>contrib\/wadi<\/module>/d' pom.xml
  sed -i -e '/<module>contrib\/terracotta<\/module>/d' pom.xml
+ sed -i -e '/<module>extras\/spring<\/module>/d' pom.xml
 
  sed -i -e '/<module>modules\/native<\/module>/d' extras/setuid/pom.xml
 
@@ -897,10 +903,12 @@ install -d -m 755 %{buildroot}%{_javadir}/%{name}/embedded
 install -m 644 examples/embedded/target/jetty-embedded-%{version}.jar %{buildroot}%{_javadir}/%{name}/embedded/%{name}-embedded-%{version}.jar
 # ================= End of Jetty-Embedded subpackage install
 
+%if_with spring
 # ================= Start of Jetty-Spring subpackage install
 install -d -m 755 %{buildroot}%{_javadir}/%{name}/spring
 install -m 644 extras/spring/target/jetty-spring-%{version}.jar %{buildroot}%{_javadir}/%{name}/spring/%{name}-spring-%{version}.jar
 # ================= End of Jetty-Spring subpackage install
+%endif
 
 install -d -m 755 %{buildroot}%{_datadir}/maven2/plugins
 # ================= Start of Jetty Maven2-Plugins subpackages install
@@ -1208,8 +1216,10 @@ install -m 644 extras/servlet-tester/pom.xml %{buildroot}%{_datadir}/maven2/poms
 %add_to_maven_depmap org.mortbay.jetty jetty-sslengine %{version} JPP/%{name}/ext %{name}-sslengine
 install -m 644 extras/sslengine/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.jetty6.ext-%{name}-sslengine.pom
 
+%if_with spring
 %add_to_maven_depmap org.mortbay.jetty jetty-spring %{version} JPP/%{name}/spring %{name}-spring
 install -m 644 extras/spring/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP.jetty6.spring-%{name}-spring.pom
+%endif
 
 %if %with xbean
 %add_to_maven_depmap org.mortbay.jetty jetty-xbean %{version} JPP/%{name}/xbean %{name}-xbean
@@ -1307,16 +1317,17 @@ touch $RPM_BUILD_ROOT/etc/default/jetty
 
 # ********************* CLEAN SECTION **************************
 %pre
-%{_sbindir}/groupadd -r %{username} || :
+getent group %{username} >/dev/null || groupadd -r %{username} || :
 # Use /bin/sh so init script will start properly.
-%{_sbindir}/useradd -r -s /bin/sh -d %{apphomedir} -M -g %{username} %{username} || :
+getent passwd %{username} >/dev/null || \
+    useradd -r -s /bin/sh -d /usr/share/%{name} -M \
+                        -g %{username} %{username} || :
+
 
 %preun
 if [ $1 = 0 ]; then
     [ -f /var/lock/subsys/%{name} ] && %{_initrddir}/%{name} stop || :
     [ -f %{_initrddir}/%{name} -a -x /sbin/chkconfig ] && /sbin/chkconfig --del %{name} || :
-
-    %{_sbindir}/userdel jetty >> /dev/null 2>&1 || :
 fi
 
 # Post-Install
@@ -1501,6 +1512,7 @@ fi
 # ========= End of Jetty naming  Subpackage Files
 
 # ========= Start of Jetty spring Subpackage Files
+%if_with jetty6_spring
 %files -n %{jettyname}6-spring
 %dir %{_javadir}/%{name}/spring
 %{_javadir}/%{name}/spring/*.jar
@@ -1509,6 +1521,7 @@ fi
 %{_datadir}/maven2/poms/JPP.jetty6.spring-%{name}-spring.pom
 %doc *.txt
 %doc LICENSES/LICENSE*.txt
+%endif #jetty6_spring
 # ========= End of Jetty spring  Subpackage Files
 
 %if %with xbean
@@ -1712,6 +1725,9 @@ fi
 # ========= End of Jetty Webapps Subpackage Files
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt11_1jpp6
+- build without spring1
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:6.1.26-alt10_1jpp6
 - build without webapps examples due to cometd-javascript dependency
 
