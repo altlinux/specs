@@ -1,26 +1,17 @@
-%undefine cvs_date
 %def_with pstoedit
 %def_disable static
 
 Name: autotrace
 Version: 0.31.1
-#define release alt2
-Release: alt2.4.1
-
-#ifdef cvs_date
-#Release: %{release}cvs%cvs_date.1
-#else
-#Release: %release.1
-#endif
+Release: alt3
 
 Summary: Bitmap to vector graphics converter
-Summary(ru_RU.KOI8-R): Программа трассировки растровых изображений.
+Summary(ru_RU.UTF-8): п÷я─п╬пЁя─п╟п╪п╪п╟ я┌я─п╟я│я│п╦я─п╬п╡п╨п╦ я─п╟я│я┌я─п╬п╡я▀я┘ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧.
 Group: Graphics
 License: GPLv2+ and LGPLv2+
 Url: http://%name.sourceforge.net/
 Packager: Yury Aliaev <mutabor@altlinux.org>
 
-%ifndef cvs_date
 Source: %name-%version.tar
 Patch: %name-0.31.1-configure_in-deb-alt.patch
 Patch1: %name-0.31.1-makefile_am-deb.patch
@@ -28,9 +19,7 @@ Patch2: %name-0.31.1-docs-deb.patch
 Patch3: %name-0.31.1-gcc41-deb.patch
 Patch4: %name-0.31.1-pc_in-deb.patch
 Patch5: %name-0.31.1-unneeded_libs-alt.patch
-%else
-Source: %name-%version-%cvs_date.tar
-%endif
+Patch6: %name-0.31.1-libpng-1.5.patch
 
 %define pstoedit_ver 3.32
 
@@ -54,12 +43,12 @@ Supported formats:
 Input BMP, TGA, PNM, PPM, PGM, PBM and those supported by ImageMagick.
 Export Postscript, svg, xfig, swf, pstoedit, emf, dxf, cgm, mif, p2e and sk
 
-%description -l ru_RU.KOI8-R
-%name - программа преобразования растровых изображений в векторные.
+%description -l ru_RU.UTF-8
+%name - п©я─п╬пЁя─п╟п╪п╪п╟ п©я─п╣п╬п╠я─п╟п╥п╬п╡п╟п╫п╦я▐ я─п╟я│я┌я─п╬п╡я▀я┘ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧ п╡ п╡п╣п╨я┌п╬я─п╫я▀п╣.
 
-Поддерживаемые форматы:
-Растровые: BMP, TGA, PNM, PPM, PGM, PBM и прочие, поддерживаемые программой ImageMagick.
-Векторные: Postscript, svg, xfig, swf, pstoedit, emf, dxf, cgm, mif, p2e и sk
+п÷п╬п╢п╢п╣я─п╤п╦п╡п╟п╣п╪я▀п╣ я└п╬я─п╪п╟я┌я▀:
+п═п╟я│я┌я─п╬п╡я▀п╣: BMP, TGA, PNM, PPM, PGM, PBM п╦ п©я─п╬я┤п╦п╣, п©п╬п╢п╢п╣я─п╤п╦п╡п╟п╣п╪я▀п╣ п©я─п╬пЁя─п╟п╪п╪п╬п╧ ImageMagick.
+п▓п╣п╨я┌п╬я─п╫я▀п╣: Postscript, svg, xfig, swf, pstoedit, emf, dxf, cgm, mif, p2e п╦ sk
 
 %package -n lib%name
 Summary: Shared library for %name
@@ -92,7 +81,6 @@ This package contains static library required for packaging statically
 linked software using lib%name.
 
 %prep
-%ifndef cvs_date
 %setup -q -n %name-%version
 %patch -p1
 %patch1 -p1
@@ -100,9 +88,7 @@ linked software using lib%name.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-%else
-%setup -q -n %name-%version-%cvs_date
-%endif
+%patch6 -p0
 
 %build
 %ifdef cvs_date
@@ -145,6 +131,10 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Tue Sep 18 2012 Anton Farygin <rider@altlinux.ru> 0.31.1-alt3
+- cleanup spec
+- add patch from gentoo for fix build with new libpng
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 0.31.1-alt2.4.1
 - Rebuild with new libImageMagick
 
@@ -155,7 +145,7 @@ autoreconf -fisv
 - rebuild with new libImageMagick
 
 * Fri Aug 21 2009 Dmitry V. Levin <ldv@altlinux.org> 0.31.1-alt2.2
-- Removed obsolete %post_ldconfig/%postun_ldconfig calls.
+- Removed obsolete post_ldconfig/postun_ldconfig calls.
 - Rebuilt with libMagickCore.so.2.
 
 * Sat Dec 13 2008 ALT QA Team Robot <qa-robot@altlinux.org> 0.31.1-alt2.1
