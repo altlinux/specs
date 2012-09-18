@@ -50,7 +50,7 @@ BuildRequires: jpackage-compat
 
 Name:           hivemind
 Version:        1.1.1
-Release:        alt1_4jpp6
+Release:        alt2_4jpp6
 Epoch:          0
 Summary:        HiveMind Microkernel
 Group:          Development/Java
@@ -96,7 +96,7 @@ BuildRequires:  junit
 BuildRequires:  log4j
 BuildRequires:  mx4j
 BuildRequires:  servletapi4
-BuildRequires:  spring-all
+BuildRequires:  spring2-all
 #BuildRequires:  xerces-j2
 #BuildRequires:  xml-commons-jaxp-1.3-apis
 %if %{gcj_support}
@@ -121,7 +121,7 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       aopalliance
 Requires:       ejb
 Requires:       groovy15
-Requires:       spring-all
+Requires:       spring2-all
 
 %description lib
 %{summary}.
@@ -179,7 +179,7 @@ ln -s $(build-classpath cglib-nodep) cglib-full-.jar
 ln -s $(build-classpath junit) junit-.jar
 ln -s $(build-classpath xerces-j2) xercesImpl-.jar
 ln -s $(build-classpath geronimo-ejb-2.1-api) geronimo-ejb-2.1-api-.jar
-ln -s $(build-classpath spring) spring-full-.jar
+ln -s $(build-classpath spring2) spring-full-.jar
 ln -s $(build-classpath groovy15) groovy-jsr-all-.jar
 ln -s $(build-classpath aopalliance) aopalliance-.jar
 ln -s $(build-classpath mx4j/mx4j) mx4j-.jar
@@ -277,6 +277,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_4jpp6
+- build with spring2
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt1_4jpp6
 - new jpp relase
 
