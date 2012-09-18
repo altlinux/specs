@@ -1,7 +1,7 @@
 Summary: specialized packet sniffer designed for displaying and logging HTTP traffic
 Name: httpry
 Version: 0.1.7
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: Networking/WWW
 Url: http://dumpsterventures.com/jason/httpry/
@@ -78,6 +78,9 @@ cp -r scripts/plugins/* %buildroot%perl_vendor_privlib/%name
 %perl_vendor_privlib/%name
 
 %changelog
+* Tue Sep 18 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.1.7-alt2
+- Update to tag 0.1.7 from git
+
 * Sun Nov 27 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 0.1.7-alt1
 - New version
 
