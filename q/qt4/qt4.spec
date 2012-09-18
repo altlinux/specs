@@ -4,7 +4,6 @@
 %define qIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define binutils_ver %{get_version binutils}
-%define glib_ver %{get_version glib2-devel}
 %define _keep_libtool_files 1
 #define _optlevel s
 %def_disable debug
@@ -34,9 +33,9 @@
 %define rname	qt
 %define major	4
 %define minor	8
-%define bugfix	2
+%define bugfix	3
 %define beta	%nil
-%define rlz alt4
+%define rlz alt1
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -90,15 +89,14 @@ Patch202: qt-4.0.1-sans-mono.patch
 Patch203: qt-everywhere-opensource-src-4.6.2-cups.patch
 Patch204: qt-everywhere-opensource-src-4.6.3-glib_eventloop_nullcheck.patch
 Patch205: qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
-Patch206: qt-everywhere-opensource-src-4.8.1-qdbusconnection_no_debug.patch
+Patch206: qt-everywhere-opensource-src-4.8.3-qdbusconnection_no_debug.patch
 Patch207: qt-everywhere-opensource-src-4.8.1-icu_no_debug.patch
 Patch208: qt-everywhere-opensource-src-4.8.0-QTBUG-14724.patch
 Patch209: qt-everywhere-opensource-src-4.8.0-QTBUG-21900.patch
 Patch210: qt-everywhere-opensource-src-4.8.0-QTBUG-22037.patch
-Patch211: qt-everywhere-opensource-src-4.8.0-qtwebkit-glib231.patch
-Patch212: qt-everywhere-opensource-src-4.8.1-type.patch
+#
 Patch213: qt-everywhere-opensource-src-4.8.0-tp-qtreeview-kpackagekit-crash.patch
-Patch214: qt-4.8.1-webkit-no_Werror.patch
+Patch214: qt-everywhere-opensource-src-4.8.3-no_Werror.patch
 # MDV
 # ALT
 # by raorn@altlinux
@@ -114,7 +112,7 @@ Patch510: qt-4.8.0-alt-ldflags.patch
 Patch511: qt-4.3.2-alt-checkbox-indicator-plastique.patch
 Patch512: qt-4.3.4-alt-uitools-shared.patch
 Patch513: qt-4.5.2-alt-fix-ssl-loading.patch
-Patch514: qt-4.4.0-alt-fix-resolv-loading.patch
+Patch514: qt-4.8.3-alt-fix-resolv-loading.patch
 Patch515: qt-4.6.1-alt-xmlpatterns-fexceptions.patch
 Patch516: qt-4.7.1-alt-sql-ibase-firebird.patch
 # SuSE
@@ -139,9 +137,9 @@ Patch9106: 9107-qt-webkit-fix_graphicscontextqt.patch
 # optimized out: alternatives elfutils fontconfig fontconfig-devel glib2-devel gstreamer-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel libatk-devel libcairo-devel libcom_err-devel libdbus-devel libfreetype-devel libgdk-pixbuf-devel libgio-devel libgst-plugins libkrb5-devel libpango-devel libpng-devel libpq-devel libqt4-devel libqt4-sql-sqlite libssl-devel libstdc++-devel libtiff-devel libunixODBC-devel libxml2-devel pkg-config python-base ruby xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: firebird-devel gcc-c++ glibc-devel-static gst-plugins-devel libalsa-devel libcups-devel libfreetds-devel libgtk+2-devel libjpeg-devel libmng-devel libmysqlclient-devel libpulseaudio-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsqlite-devel libsqlite3-devel makedepend phonon-devel postgresql-devel rpm-build-ruby
 BuildRequires: libfreetype-devel pkg-config rpm-utils rpm-macros-alternatives browser-plugins-npapi-devel
-BuildRequires: libcups-devel libclucene-devel libalsa-devel
+BuildRequires: libcups-devel libalsa-devel
 BuildRequires: gcc-c++ libstdc++-devel libcom_err-devel libicu-devel libffi-devel
-BuildRequires: libjpeg-devel libmng-devel libpng-devel zlib-devel libtiff5-devel
+BuildRequires: libjpeg-devel libmng-devel libpng-devel zlib-devel libtiff-devel
 BuildRequires: libxml2-devel libxslt-devel libreadline-devel libpam0-devel
 BuildRequires: libMySQL-devel libsqlite3-devel
 BuildRequires: bison pkg-config
@@ -738,10 +736,7 @@ Install this package if you want to create RPM packages that use %name
 %patch208 -p1
 %patch209 -p1
 %patch210 -p1
-%qIF_ver_gteq %glib_ver 2.31
-%patch211 -p1
-%endif
-%patch212 -p1
+#
 %patch213 -p1
 %patch214 -p1
 # MDV
@@ -1525,6 +1520,9 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Mon Sep 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt1
+- new version
+
 * Sun Sep 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt4
 - built with libtiff5
 
