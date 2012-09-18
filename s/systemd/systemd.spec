@@ -13,7 +13,7 @@
 
 Name: systemd
 Version: 189
-Release: alt3
+Release: alt4
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -44,6 +44,7 @@ Source24: var-run.mount
 Source25: altlinux-storage-init-late.service
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
+Source29: tmpfile-systemd-startup-nologin.conf
 
 # udev rule generator
 Source31: rule_generator.functions
@@ -557,6 +558,7 @@ install -p -m644 %SOURCE35 %buildroot/lib/udev/rules.d/
 
 echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
+install -m644 %SOURCE29 %buildroot/lib/tmpfiles.d/systemd-startup-nologin.conf
 # rpm posttrans filetriggers
 install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
 
@@ -830,6 +832,11 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Tue Sep 18 2012 Alexey Shabalin <shaba@altlinux.ru> 189-alt4
+- exclude run tmpfiles systemd-startup-nologin.conf from filetrigger
+  for upgrade systemd. (ALT#27749)
+- move create /run/nologin to separate file systemd-startup-nologin.conf.
+
 * Fri Sep 14 2012 Alexey Shabalin <shaba@altlinux.ru> 189-alt3
 - because initrd drop udev db, need full rebuild with udevadm trigger
 
