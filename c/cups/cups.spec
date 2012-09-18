@@ -1,5 +1,5 @@
 Name: cups
-Version: 1.5.3
+Version: 1.6.1
 Release: alt1
 
 Summary: Common Unix Printing System - server package
@@ -9,7 +9,6 @@ Group: System/Servers
 Url: http://www.cups.org
 
 Source: ftp://ftp.easysw.com/pub/cups/%version/%name-%version.tar
-Source2: http://www.openprinting.org/download/printing/pdf-printing/pdf-filters.tar.gz
 
 Source100: %name.control
 Source101: %name.pam
@@ -22,30 +21,21 @@ Source111: %name.systemd.service
 Source112: %name.systemd.socket
 Source113: %name.systemd.tmpfiles
 
-Source200: cpdftocps
-Source201: cpdftocps.convs
-Source202: pstopdf
-Source203: pstopdf.convs
-Source204: pstopdf.types
-
-Patch1: cups-1.5.0-debian-pidfile.patch
-Patch2: cups-1.5.0-alt-hardening.patch
+Patch1: cups-1.6.0-debian-pidfile.patch
+Patch2: cups-1.6.1-alt-hardening.patch
 Patch3: cups-1.4.0-rh-lpr-help.patch
 Patch4: cups-1.4.3-rh-no-export-ssllibs.patch
 Patch5: cups-1.4.3-rh-driverd-timeout.patch
-Patch6: cups-1.5.3-rh-lspp.patch
+Patch6: cups-1.6.1-rh-lspp.patch
 Patch7: cups-1.4.6-alt-config-libs.patch
-Patch8: pdf-filters-fix.patch
-Patch9: cups-1.5.3-rh-0755.patch
-Patch10: cups-1.5.3-rh-avahi-1-config.patch
-Patch11: cups-1.5.3-rh-avahi-2-backend.patch
-Patch12: cups-1.5.3-rh-avahi-3-timeouts.patch
-Patch13: cups-1.5.3-rh-avahi-4-poll.patch
-Patch14: cups-1.5.3-rh-avahi-5-services.patch
-Patch15: cups-1.5.3-rh-systemd-socket.patch
+Patch8: cups-1.6.1-defconf.patch
+Patch9: cups-1.6.1-rh-0755.patch
+Patch10: cups-1.6-rh-dnssd-deviceid.patch
+Patch11: cups-1.5.4-rh-usblp-quirks.patch
+Patch15: cups-1.6.1-rh-systemd-socket.patch
 Patch16: cups-1.5.3-translation.patch
 
-Requires: printer-testpages bc
+Requires: printer-testpages bc cups-filters
 
 PreReq: lib%name = %version-%release, ghostscript-cups
 #PreReq: urw-fonts >= 1.0.7pre41-alt3
@@ -62,10 +52,7 @@ Requires: /usr/bin/pdftops
 BuildRequires: dbus
 
 # Automatically added by buildreq on Wed Mar 23 2011 (-bi)
-BuildRequires: ImageMagick-tools gcc-c++ libacl-devel libdbus-devel libgcrypt-devel libjpeg-devel libldap-devel libopenslp-devel libpam-devel libpng-devel libssl-devel libtiff-devel libusb-devel php5-devel poppler xdg-utils libselinux-devel libaudit-devel fontconfig-devel libsystemd-daemon-devel libavahi-devel
-
-# for pdf-filters
-BuildRequires: liblcms-devel libpoppler-devel libijs-devel libfreetype-devel t1lib-devel
+BuildRequires: ImageMagick-tools gcc-c++ libacl-devel libdbus-devel libgcrypt-devel libjpeg-devel libldap-devel libopenslp-devel libpam-devel libpng-devel libssl-devel libtiff-devel libusb-devel poppler xdg-utils libselinux-devel libaudit-devel fontconfig-devel libsystemd-daemon-devel libavahi-devel
 
 %description
 The Common Unix Printing System provides a portable printing layer for
@@ -89,14 +76,6 @@ PreReq: %name = %version-%release
 %description ppd
 ppd drivers for %name
 
-%package backend-serial
-Summary: serial backend for %name
-License: GPL
-Group: System/Servers
-PreReq: %name = %version-%release
-
-%description backend-serial
-serial backend for %name
 
 %package backend-pdf
 Summary: pdf backend for %name
@@ -145,19 +124,6 @@ Requires: alterator > 1.99-alt14
 %description -n alterator-backend-%name
 Alterator backend for the Common Unix Printing System
 
-%package -n php5-%name
-Summary: PHP5 module for the Common Unix Printing System
-License: GPL
-Group: System/Servers
-Requires: lib%name = %version
-Requires: php5 = %php5_version
-BuildRequires(pre): rpm-build-php5
-Source301: php-%name.ini
-Source302: php-%name-params.sh
-
-%description -n php5-%name
-PHP5 module for the Common Unix Printing System
-
 %package ipptool
 Summary: Common Unix Printing System - tool for performing IPP requests
 Group: System/Servers
@@ -167,11 +133,10 @@ Requires: lib%name = %version-%release
 %description ipptool
 Sends IPP requests to the specified URI and tests and/or displays the results.
 
-%define php5_extension %name
 
 %prep
 %setup
-%setup -T -D -a 2
+%setup -T -D
 
 %patch1 -p1
 %patch2 -p2
@@ -180,17 +145,10 @@ Sends IPP requests to the specified URI and tests and/or displays the results.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p2
-pushd pdf-filters
-%patch8 -p2
-./addtocups ..
-popd
+%patch8 -p1
 %patch9 -p1
-
 %patch10 -p1
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
 %patch15 -p1
 %patch16 -p1
 
@@ -206,7 +164,6 @@ autoconf -I config-scripts
    --with-cups-user=lp \
    --with-cups-group=lp \
    --with-log-file-perm=0600 \
-   --with-php \
    --with-docdir=%_docdir/%name-%version \
     --localstatedir=%_var \
     --enable-lspp \
@@ -230,14 +187,6 @@ install -Dpm 644 %SOURCE110 %buildroot%systemd_unitdir/%name.path
 install -Dpm 644 %SOURCE111 %buildroot%systemd_unitdir/%name.service
 install -Dpm 644 %SOURCE112 %buildroot%systemd_unitdir/%name.socket
 install -Dpm 644 %SOURCE113 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
-
-# Install filters: cpdftocps pstopdf
-install -Dpm 755 %SOURCE200 %buildroot%_libexecdir/%name/filter/
-install -Dpm 755 %SOURCE202 %buildroot%_libexecdir/%name/filter/
-
-install -Dpm 644 %SOURCE201 %buildroot%_datadir/%name/mime/
-install -Dpm 644 %SOURCE203 %buildroot%_datadir/%name/mime/
-install -Dpm 644 %SOURCE204 %buildroot%_datadir/%name/mime/
 
 
 # prepare the commands conflicting with LPD for the update-alternatives treatment
@@ -263,10 +212,6 @@ touch %buildroot/%_sysconfdir/%name/printers.conf
 #fix icons
 convert -resize 48x48 desktop/cups-64.png  desktop/cups-48.png
 install -Dpm 644 desktop/cups-48.png %buildroot%_liconsdir/cups.png
-
-mv %buildroot/%php5_extdir/phpcups.so %buildroot/%php5_extdir/%name.so
-install -D -m 644 %SOURCE301 %buildroot/%php5_extconf/%php5_extension/config
-install -D -m 644 %SOURCE302 %buildroot/%php5_extconf/%php5_extension/params
 
 # install /lib/tmpfiles.d/cups.conf
 mkdir -p %buildroot/lib/tmpfiles.d
@@ -306,11 +251,6 @@ rm -f /var/cache/cups/ppds.dat
 
 %preun
 %preun_service %name
-%post -n php5-%name
-%php5_extension_postin
-
-%preun -n php5-%name
-%php5_extension_preun
 
 %triggerpostun -- %name < 1.5.0-alt4
 [ -f %_sysconfdir/modprobe.d/blacklist-cups.rpmsave ] && {
@@ -336,11 +276,12 @@ rm -f /var/cache/cups/ppds.dat
 %_sysconfdir/dbus-1/system.d/%name.conf
 
 %_prefix/lib/%name
-%exclude %_prefix/lib/cups/backend/serial
 
 %_datadir/%name
 %exclude %_datadir/%name/examples
 %exclude %_datadir/%name/ipptool
+%exclude %_datadir/%name/data/testprint
+%exclude %_datadir/%name/banners/*
 
 %_logdir/%name
 %dir %_spooldir/%name
@@ -400,11 +341,6 @@ rm -f /var/cache/cups/ppds.dat
 %_man1dir/ppd*
 %_man5dir/ppd*
 
-%files backend-serial
-%_prefix/lib/cups/backend/serial
-%files -n php5-%name
-%php5_extdir/%name.so
-%php5_extconf/%php5_extension
 
 %files ipptool
 %_bindir/ipptool
@@ -422,6 +358,11 @@ rm -f /var/cache/cups/ppds.dat
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Wed Sep 19 2012 Anton Farygin <rider@altlinux.ru> 1.6.1-alt1
+- 1.6.1
+- php-cups subpackage now will be build from cups-filters
+- cups now used cups-filters from same package
+
 * Thu Jun 14 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 - add tmpfiles.d files for static devices and /var/run/cups stuff
