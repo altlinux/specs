@@ -1,7 +1,7 @@
 %define fname ubuntu-font-family
 
 Name: fonts-ttf-%fname
-Version: 0.71.2
+Version: 0.80
 Release: alt1
 
 Summary: Ubuntu Font Family, sans-serif typeface hinted for clarity
@@ -25,7 +25,7 @@ The Ubuntu Font Family are a set of matching new libre/open
 fonts in development during 2010--2011. The development is being funded
 by Canonical Ltd on behalf the wider Free Software community and the
 Ubuntu project. The technical font design work and implementation is
-being undertaken by Dalton Maag. 
+being undertaken by Dalton Maag.
 
 Both the final font Truetype/OpenType
 files and the design files used to produce the font family are
@@ -36,18 +36,21 @@ experiment, modify, share and improve.
 %setup -n %fname-%version
 
 %install
-%ttf_fonts_install %fname
+# ALT bug #27736
+rm -f Ubuntu-MI.ttf Ubuntu-M.ttf
+# FIXME: still need install macro?
+mkdir -p %buildroot%_ttffontsdir/%fname/
+install -m644 *.ttf %buildroot%_ttffontsdir/%fname/
 
-%post
-%post_fonts
-
-%postun
-%postun_fonts
-
-%files -f %fname.files
+%files
+%_ttffontsdir/%fname/
 %doc *.txt
 
 %changelog
+* Tue Sep 18 2012 Vitaly Lipatov <lav@altlinux.ru> 0.80-alt1
+- new version 0.80 (with rpmrb script)
+- remove Ubuntu-MI.ttf, Ubuntu-M.ttf (ALT bug #27736)
+
 * Fri May 13 2011 Vitaly Lipatov <lav@altlinux.ru> 0.71.2-alt1
 - new version 0.71.2 (with rpmrb script)
 
