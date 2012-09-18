@@ -1,4 +1,3 @@
-BuildRequires: mojo-maven2-plugin-jdepend mojo-maven2-plugin-rat
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -57,7 +56,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-math
 Version:        2.0
-Release:        alt3_5jpp6
+Release:        alt4_5jpp6
 Epoch:          0
 Summary:        Apache Commons Math Package
 License:        Apache Software License 2.0
@@ -76,7 +75,7 @@ BuildRequires: ant >= 0:1.7
 BuildRequires: ant-junit
 BuildRequires: junit44
 %if %with maven
-BuildRequires: apache-commons-parent >= 0:12
+BuildRequires: apache-commons-parent12
 BuildRequires: maven2 >= 0:2.0.8
 BuildRequires: maven-surefire-maven-plugin
 BuildRequires: maven-surefire-provider-junit4
@@ -177,13 +176,6 @@ BuildArch: noarch
   LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
 
 %if %with maven
-cp -p %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
-
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 %endif
@@ -196,8 +188,7 @@ mkdir -p ${MAVEN_REPO_LOCAL}
 export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL}"
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $(pwd)/settings.xml \
-        install javadoc:javadoc site
+        install javadoc:javadoc
 %else
 
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
@@ -242,7 +233,7 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{short_name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/jakarta-%{short_name}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/jakarta-%{short_name}-%{version}
 
-%if %with maven
+%if 0
 # manual
 rm -rf target/site/apidocs
 install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/site
@@ -281,12 +272,12 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %files javadoc
 %doc %{_javadocdir}/*
 
-%if %with maven
+%if 0
 %files manual
 %doc %{_docdir}/%{name}-%{version}/site
-%endif
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
+%endif
 
 %if %with repolib
 %files repolib
@@ -294,6 +285,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %endif
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt4_5jpp6
+- build without mojo-* plugins
+
 * Mon Mar 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0-alt3_5jpp6
 - fixed build with maven3
 
