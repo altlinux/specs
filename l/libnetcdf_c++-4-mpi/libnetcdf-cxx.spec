@@ -10,7 +10,7 @@
 
 Name: %sname-%sover-mpi
 Version: %major.2
-Release: alt1
+Release: alt2
 
 Summary: Libraries to use the Unidata network Common Data Form (netCDF) v3, C++ interface
 
@@ -165,6 +165,8 @@ for i in $(ls *.so); do
 done
 popd
 
+%filter_from_requires /^debug.*(libnetcdf\.so.*/s/^/libnetcdf7-mpi-debuginfo\t/
+
 %files
 %doc COPYRIGHT
 %ghost %_libdir/%sname.so.*
@@ -181,6 +183,10 @@ popd
 %_infodir/*
 
 %changelog
+* Tue Sep 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt2
+- Forced requirement on libnetcdf7-mpi-debuginfo for
+  libnetcdf_c++-4-mpi-debuginfo
+
 * Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt1
 - Initial build for Sisyphus
 
