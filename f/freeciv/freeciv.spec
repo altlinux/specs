@@ -1,5 +1,5 @@
 Name: freeciv
-Version: 2.3.1
+Version: 2.3.2
 Release: alt1
 
 Summary: Turn-based strategy game inspired by the history of human civilization
@@ -154,7 +154,7 @@ sed -i 's,@LIBEXECDIR@,%_libexecdir,g' \
 mv %buildroot%_bindir/freeciv-server %buildroot%_libexecdir/%name/
 rln %_libexecdir/%name/wrapper %_bindir/freeciv-server
 
-rm %buildroot%_man6dir/freeciv-{ftwl,gtk2,sdl,win32,xaw}.6
+rm %buildroot%_man6dir/freeciv-{gtk2,sdl,xaw}.6
 ln -s freeciv-client.6 %buildroot%_man6dir/freeciv-gtk2.6
 
 # docs.
@@ -223,6 +223,9 @@ hardlink -cv %buildroot
 %_datadir/%name/wonders*
 
 %changelog
+* Tue Sep 18 2012 Dmitry V. Levin <ldv@altlinux.org> 2.3.2-alt1
+- Updated to 2.3.2 release.
+
 * Fri Jan 13 2012 Dmitry V. Levin <ldv@altlinux.org> 2.3.1-alt1
 - Updated to 2.3.1 release.
 
