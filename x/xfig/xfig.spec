@@ -1,6 +1,6 @@
 Name:         xfig
 Version:      3.2.5b
-Release:      alt5
+Release:      alt6
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -87,6 +87,9 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Tue Sep 18 2012 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5b-alt6
+- fix for libpng15
+
 * Mon Nov 14 2011 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5b-alt5
 - add xfig.sh wrapper to avoid utf8 charsets
   and use it in the desktop file (see #26579)
