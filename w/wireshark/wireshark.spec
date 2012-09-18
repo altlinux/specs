@@ -5,7 +5,7 @@
 %set_verify_elf_method unresolved=relaxed
 
 Name: wireshark
-Version: 1.6.8
+Version: 1.8.2
 Release: alt1
 
 Summary: The BugTraq Award Winning Network Traffic Analyzer
@@ -233,6 +233,9 @@ export ac_cv_lib_lualib_luaL_openlib=no
 %_libdir/libwiretap.so
 
 %changelog
+* Tue Sep 18 2012 Anton Farygin <rider@altlinux.ru> 1.8.2-alt1
+- new version
+
 * Wed Jun 06 2012 Anton Farygin <rider@altlinux.ru> 1.6.8-alt1
 - new version
 
