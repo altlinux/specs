@@ -1,101 +1,71 @@
-Patch33: commons-parent-12-alt-no-commons-build-plugin.patch
-Packager: Igor Vlasenko <viy@altlinux.ru>
+BuildRequires: maven-antrun-plugin
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+%global base_name       parent
+%global short_name      commons-%{base_name}
 
-%define short_name commons-parent
+Name:             apache-%{short_name}
+Version:          22
+Release:          alt1_4jpp7
+Summary:          Apache Commons Parent Pom
+Group:            Development/Java
+License:          ASL 2.0
+URL:              http://svn.apache.org/repos/asf/commons/proper/%{short_name}/tags/%{short_name}-%{version}/
 
-Name:           apache-commons-parent
-Version:        12
-Release:        alt6_2jpp6
-Epoch:          0
-Summary:        Apache Commons Parent
-License:        Apache Software License 2.0
-Group:          Development/Java
-URL:            http://svn.apache.org/repos/asf/commons/proper/commons-parent
-# svn -q export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-11 && tar cjf commons-parent-11.tar.bz2 commons-parent-11
-Source0:        %{short_name}-%{version}.tar.bz2
-Patch0:         apache-commons-parent-pom.patch
-Provides:       %{short_name} = %{epoch}:%{version}-%{release}
-Requires(post): jpackage-utils >= 0:5.0.0
-Requires(postun): jpackage-utils >= 0:5.0.0
-#Requires: commons-build-plugin >= 0:1.1
-#Requires: felix-maven2 >= 0:1.0.2
-# replced by
-Requires: maven-plugin-bundle
-Requires: maven2-plugin-antrun
-Requires: maven2-plugin-assembly
-Requires: maven2-plugin-compiler
-Requires: maven2-plugin-gpg
-Requires: maven2-plugin-install
-Requires: maven2-plugin-jar
-Requires: maven2-plugin-javadoc
-Requires: maven2-plugin-source
-Requires: maven-surefire-plugin
-Requires: maven-release
-Requires: maven-jxr
-Requires: maven2-plugin-project-info-reports
-Requires: maven2-plugin-site
-Requires: maven-surefire-report-maven-plugin
-#Requires: mojo-maven2-plugin-jdepend
-#Requires: mojo-maven2-plugin-rat
-BuildRequires: jpackage-utils >= 0:5.0.0
-BuildArch:      noarch
-Provides:       jakarta-commons-parent = %{epoch}:%{version}-%{release}
-Obsoletes:      jakarta-commons-parent < %{epoch}:%{version}-%{release}
+# svn export http://svn.apache.org/repos/asf/commons/proper/commons-parent/tags/commons-parent-22
+# tar caf commons-parent-22.tar.xz commons-parent-22
+Source0:          %{short_name}-%{version}.tar.xz
+
+#common-build-plugin not in fedora yet
+Patch1:           %{name}-remove-build-plugin.patch
+BuildArch:        noarch
+
+BuildRequires:    jpackage-utils
+BuildRequires:    maven
+BuildRequires:    buildnumber-maven-plugin
+
+Requires:         jpackage-utils
+Requires:         maven
+Requires:         buildnumber-maven-plugin
+Requires:         maven-antrun-plugin
+Requires:         maven-compiler-plugin
+Requires:         maven-idea-plugin
+Requires:         maven-install-plugin
+Requires:         maven-jar-plugin
+Requires:         maven-javadoc-plugin
+Requires:         maven-plugin-bundle
+Requires:         maven-resources-plugin
+Requires:         maven-surefire-plugin
 Source44: import.info
 
+
 %description
-Commons Parent.
+The Project Object Model files for the apache-commons packages.
 
 %prep
 %setup -q -n %{short_name}-%{version}
-%patch0 -b .sav0
-%patch33
+%patch1 -p0
 
 %build
+mvn-rpmbuild install
 
 %install
+# poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{short_name}.pom
 
-%add_to_maven_depmap org.apache.commons commons-parent %{version} JPP %{name}
-
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+%add_maven_depmap JPP-%{short_name}.pom
 
 %files
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%doc LICENSE.txt NOTICE.txt
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:22-alt1_4jpp7
+- new version
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:12-alt6_2jpp6
 - build with maven-jxr
 
