@@ -17,8 +17,8 @@
 %def_enable ntlm
 
 Name: openldap
-Version: %_sover.31
-Release: alt7
+Version: %_sover.32
+Release: alt1
 
 Provides: openldap2.4 = %version-%release
 Obsoletes: openldap2.4 < %version-%release
@@ -697,6 +697,9 @@ rm -f /var/lib/ldap/%_lib/*.so*
 #[FR] Create chroot-scripts dynamic while build package 
 
 %changelog
+* Thu Sep 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.4.32-alt1
+- 2.4.32
+
 * Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 2.4.31-alt7
 - fix files for libldap on i586 (ALT #27713)
 
