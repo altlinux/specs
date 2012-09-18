@@ -1,3 +1,4 @@
+BuildRequires(pre): rpm-build-java
 Name: jbossas
 Version: 4.2.3
 Summary: JBoss Application Server
@@ -60,8 +61,16 @@ Requires: xml-security
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt26jpp
+Release: alt27jpp
 Source: jbossas-4.2.3-alt23_24jpp6.cpio
+
+# jboss4 compat provides
+Provides: jboss4-common = %version
+Provides: jboss4-connector = %version
+Provides: jboss4-j2ee = %version
+Provides: jboss4-jmx = %version
+Provides: jboss4-server = %version
+Provides: jboss4-system = %version
 
 %description
 JBoss Application Server is the #1 most widely used Java application server
@@ -85,9 +94,29 @@ for i in usr var etc; do
 [ -d $i ] && mv $i $RPM_BUILD_ROOT/
 done
 
+mkdir -p $RPM_BUILD_ROOT%_javadir/jboss4
+ln -s ../jbossas/jbossall-client.jar $RPM_BUILD_ROOT%_javadir/jboss4/jboss-common.jar
+ln -s ../jbossas/jbossall-client.jar $RPM_BUILD_ROOT%_javadir/jboss4/jboss-client.jar
+ln -s ../jbossas/jboss-jmx.jar $RPM_BUILD_ROOT%_javadir/jboss4/jboss-jmx.jar
+ln -s ../jbossas/jboss-system.jar $RPM_BUILD_ROOT%_javadir/jboss4/jboss-system.jar
+ln -s ../jbossas/jboss.jar $RPM_BUILD_ROOT%_javadir/jboss4/jboss.jar
+ln -s ../jbossas/jboss-common-jdbc-wrapper.jar $RPM_BUILD_ROOT%_javadir/jboss4/jboss-common-jdbc-wrapper.jar
+ln -s ../jbossas/jboss-j2ee.jar $RPM_BUILD_ROOT%_javadir/jboss4/jboss-j2ee.jar
+
 %files -f %name-list
+%dir %_javadir/jboss4
+%_javadir/jboss4/jboss-common.jar
+%_javadir/jboss4/jboss-client.jar
+%_javadir/jboss4/jboss-jmx.jar
+%_javadir/jboss4/jboss-system.jar
+%_javadir/jboss4/jboss.jar
+%_javadir/jboss4/jboss-common-jdbc-wrapper.jar
+%_javadir/jboss4/jboss-j2ee.jar
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.2.3-alt27jpp
+- added compat provides for jboss4
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.2.3-alt26jpp
 - dropped old jboss* deps
 
