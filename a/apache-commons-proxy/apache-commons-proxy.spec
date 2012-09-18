@@ -1,5 +1,5 @@
 BuildRequires: jmock
-BuildRequires: /proc mojo-maven2-plugin-jdepend mojo-maven2-plugin-rat
+BuildRequires: /proc 
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
 # All rights reserved.
@@ -57,7 +57,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-proxy
 Version:        1.0
-Release:        alt3_4jpp6
+Release:        alt4_4jpp6
 Epoch:          0
 Summary:        Apache Commons Proxy Component
 License:        Apache Software License 2.0
@@ -83,7 +83,7 @@ BuildRequires: ant >= 0:1.7
 BuildRequires: junit
 BuildRequires: java-javadoc
 %if %with maven
-BuildRequires: apache-commons-parent >= 0:12
+BuildRequires: apache-commons-parent12
 BuildRequires: maven2 >= 0:2.0.8
 BuildRequires: maven-surefire-maven-plugin
 BuildRequires: maven-surefire-provider-junit
@@ -187,15 +187,8 @@ BuildArch: noarch
 %{__perl} -pi \
     -e 's/\r$//g;' \
   PROPOSAL.html LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
-cp -p %{SOURCE1} settings.xml
 
 %if %with maven
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
-
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 
@@ -212,8 +205,7 @@ mkdir -p ${MAVEN_REPO_LOCAL}
 export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Dmaven.test.failure.ignore=true"
 mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $(pwd)/settings.xml \
-        install javadoc:javadoc site
+        install javadoc:javadoc
 %else
 ln -sf $(build-classpath aopalliance) .m2/repository/
 ln -sf $(build-classpath axis/jaxrpc) .m2/repository/axis-jaxrpc.jar
@@ -265,8 +257,8 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/jakarta-%{short_name}-%{v
 install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/site
 install -m 644 LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %if %with maven
-rm -rf target/site/apidocs
-cp -pR target/site/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/site
+#rm -rf target/site/apidocs
+#cp -pR target/site/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/site
 %endif
 
 %if %with repolib
@@ -300,12 +292,12 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %files javadoc
 %doc %{_javadocdir}/*
 
-%if %with maven
+%if 0
 %files manual
 %doc %{_docdir}/%{name}-%{version}/site
-%endif
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
+%endif
 
 %if %with repolib
 %files repolib
@@ -313,6 +305,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_4jpp6
+- fixed requires
+
 * Sat Mar 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_4jpp6
 - fixed build - added jmock dep
 
