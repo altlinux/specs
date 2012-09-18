@@ -1,7 +1,7 @@
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: cssparser
 BuildRequires: /proc
-BuildRequires: jpackage-1.5.0-compat
+BuildRequires: jpackage-compat
 # Copyright (c) 2000-2008, JPackage Project
 # All rights reserved.
 #
@@ -47,7 +47,7 @@ BuildRequires: jpackage-1.5.0-compat
 
 Name:           shale
 Version:        1.0.4
-Release:        alt7_1jpp5
+Release:        alt8_1jpp5
 Epoch:          0
 Summary:        Shale Framework
 License:        Apache Software License 2.0
@@ -91,13 +91,13 @@ BuildRequires: mojo-maven2-plugin-cobertura
 BuildRequires: cargo
 BuildRequires: el_1_0_api
 BuildRequires: htmlunit1
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-chain
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-digester
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-scxml
-BuildRequires: jakarta-commons-validator
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-chain
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-digester
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-scxml
+BuildRequires: apache-commons-validator
 BuildRequires: jmock
 BuildRequires: jsf_1_2_api
 BuildRequires: jsp_2_1_api
@@ -111,7 +111,7 @@ BuildRequires: servlet_2_5_api
 BuildRequires: tiles
 %endif
 
-Requires: jakarta-commons-logging >= 0:1.1
+Requires: apache-commons-logging >= 0:1.1
 Requires: el_1_0_api
 Requires: jsf_1_2_api
 Requires: jsp_2_1_api
@@ -136,8 +136,8 @@ development when combinations of technologies are required.
 Summary:        Shale Application Control
 Group:          Development/Java
 Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: jakarta-commons-chain
-Requires: jakarta-commons-digester >= 0:1.8
+Requires: apache-commons-chain
+Requires: apache-commons-digester >= 0:1.8
 
 %description application
 %{summary}.
@@ -162,8 +162,8 @@ Requires: %{name} = %{epoch}:%{version}-%{release}
 Summary:        Shale Dialog Manager Basic Impl
 Group:          Development/Java
 Requires: %{name}-dialog = %{epoch}:%{version}-%{release}
-Requires: jakarta-commons-beanutils >= 0:1.7.0
-Requires: jakarta-commons-digester >= 0:1.8
+Requires: apache-commons-beanutils >= 0:1.7.0
+Requires: apache-commons-digester >= 0:1.8
 
 %description dialog-basic
 %{summary}.
@@ -172,8 +172,8 @@ Requires: jakarta-commons-digester >= 0:1.8
 Summary:        Shale Dialog Manager SCXML Impl
 Group:          Development/Java
 Requires: %{name}-dialog = %{epoch}:%{version}-%{release}
-Requires: jakarta-commons-digester >= 0:1.8
-Requires: jakarta-commons-scxml >= 0:0.7
+Requires: apache-commons-digester >= 0:1.8
+Requires: apache-commons-scxml >= 0:0.7
 
 %description dialog-scxml
 %{summary}.
@@ -182,7 +182,7 @@ Requires: jakarta-commons-scxml >= 0:0.7
 Summary:        Shale Remoting
 Group:          Development/Java
 Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: jakarta-commons-chain
+Requires: apache-commons-chain
 
 %description remoting
 %{summary}.
@@ -211,15 +211,17 @@ Requires: %{name} = %{epoch}:%{version}-%{release}
 %description test
 %{summary}.
 
+%if 0
 %package tiger
 Summary:        Shale Tiger Extensions
 Group:          Development/Java
 Requires: %{name} = %{epoch}:%{version}-%{release}
 Requires: %{name}-view = %{epoch}:%{version}-%{release}
-Requires: jakarta-commons-digester >= 0:1.8
+Requires: apache-commons-digester >= 0:1.8
 
 %description tiger
 %{summary}.
+%endif
 
 %if ! %{bootstrap}
 %package tiles
@@ -236,7 +238,7 @@ Requires: tiles-core
 Summary:        Shale Validator Integration
 Group:          Development/Java
 Requires: %{name} = %{epoch}:%{version}-%{release}
-Requires: jakarta-commons-validator >= 0:1.3.1
+Requires: apache-commons-validator >= 0:1.3.1
 Requires: jakarta-oro
 
 %description validator
@@ -272,13 +274,9 @@ BuildArch: noarch
 for j in $(find . -name "*.jar"); do
     mv $j $j.no
 done
-cp %{SOURCE3} settings.xml
 %if %{without_maven}
 gzip -dc %{SOURCE4} | tar xf -
 %endif
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
 %patch0 -b .sav0
 %patch1 -b .sav1
 %patch2 -b .sav2
@@ -308,7 +306,7 @@ ln -s %{_javadir} external_repo/JPP
 export M2_SETTINGS=$(pwd)/settings.xml
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $M2_SETTINGS \
+        -Dmaven.test.skip=true \
         -Dmaven.test.failure.ignore=true \
         -Dmaven2.jpp.depmap.file=%{SOURCE2} \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
@@ -344,7 +342,7 @@ servlet_2_5_api \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-test
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 export CLASSPATH=$(build-classpath \
 commons-logging \
@@ -356,7 +354,7 @@ servlet_2_5_api \
 CLASSPATH=$CLASSPATH:$(pwd)/shale-test/target/shale-test-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-core
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 export CLASSPATH=$(build-classpath \
 commons-chain \
@@ -368,7 +366,7 @@ CLASSPATH=$CLASSPATH:$(pwd)/shale-test/target/shale-test-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-application
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 export CLASSPATH=$(build-classpath \
 commons-beanutils \
@@ -385,7 +383,7 @@ CLASSPATH=$CLASSPATH:$(pwd)/shale-test/target/shale-test-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-clay
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 export CLASSPATH=$(build-classpath \
 commons-logging \
@@ -396,7 +394,7 @@ CLASSPATH=$CLASSPATH:$(pwd)/shale-test/target/shale-test-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-dialog
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 export CLASSPATH=$(build-classpath \
 commons-beanutils \
@@ -425,7 +423,7 @@ CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-dialog/target/shale-dialog-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-dialog-scxml
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 export CLASSPATH=$(build-classpath \
 commons-chain \
@@ -438,7 +436,7 @@ CLASSPATH=$CLASSPATH:$(pwd)/shale-test/target/shale-test-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-remoting
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 CLASSPATH=$CLASSPATH:$(pwd)/shale-test/target/shale-test-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
@@ -458,7 +456,7 @@ CLASSPATH=$CLASSPATH:$(pwd)/shale-test/target/shale-test-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-validator
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 export CLASSPATH=$(build-classpath \
 commons-logging \
@@ -471,7 +469,7 @@ CLASSPATH=$CLASSPATH:$(pwd)/shale-test/target/shale-test-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-view
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 export CLASSPATH=$(build-classpath \
 commons-digester \
@@ -485,7 +483,7 @@ CLASSPATH=$CLASSPATH:$(pwd)/shale-core/target/shale-core-%{version}.jar
 CLASSPATH=$CLASSPATH:$(pwd)/shale-view/target/shale-view-%{version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
 pushd shale-tiger
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dmaven.settings.offline=true -Dbuild.sysclasspath=only jar javadoc
 popd
 %endif
 
@@ -503,8 +501,8 @@ for module in \
            dialog \
            remoting \
            test \
-           tiger \
 %if ! %{bootstrap}
+           tiger \
            tiles \
 %endif
            validator \
@@ -577,8 +575,8 @@ fi
 %files test
 %{_javadir}/%{name}/test*.jar
 
-%files tiger
-%{_javadir}/%{name}/tiger*.jar
+#%files tiger
+#%{_javadir}/%{name}/tiger*.jar
 
 %if ! %{bootstrap}
 %files tiles
@@ -601,6 +599,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt8_1jpp5
+- build with java6
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt7_1jpp5
 - dropped spring1
 
