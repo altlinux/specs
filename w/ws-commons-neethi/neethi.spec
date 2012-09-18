@@ -4,7 +4,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           ws-commons-neethi
 Version:        3.0.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Web Services Policy framework
 
 Group:          Development/Java
@@ -24,6 +24,7 @@ Requires:      jpackage-utils
 Requires:      wsdl4j
 Requires:      ws-commons-axiom
 Source44: import.info
+Provides: neethi = %version
 
 %description
 Apache Neethi provides general framework for the programmers to
@@ -71,6 +72,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{oldname}
 
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt2_2jpp7
+- added compat Provides:
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.1-alt1_2jpp7
 - new version
 
