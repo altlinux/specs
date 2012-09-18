@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.8.0
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt1.svn20120913
+Release: alt2.svn20120913
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -41,7 +41,7 @@ BuildPreReq: liboptipack10-devel libpliris10-devel libpamgen10-devel
 BuildPreReq: libseacas10-devel libseacas10-apps-devel libkomplex10-devel
 BuildPreReq: libfei10-devel libteko10-devel libtrikota10-devel
 BuildPreReq: libintrepid10-devel libphalanx10-devel libmoertel10-devel
-BuildPreReq: libstokhos10-devel liblaspack-devel
+BuildPreReq: libstokhos10-devel liblaspack-devel libnetcdf_c++4-mpi-devel
 
 %description
 The libMesh library provides a framework for the numerical simulation of
@@ -480,6 +480,9 @@ popd
 %endif
 
 %changelog
+* Tue Sep 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt2.svn20120913
+- Rebuilt with netcdf 4.2
+
 * Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt1.svn20120913
 - Version 0.8.0
 
