@@ -3,7 +3,7 @@
 
 Name: escript-finley
 Version: 3.3
-Release: alt1
+Release: alt2
 Summary: Fast Finite Elements for Partial Differential Equations
 License: OSLv3.0
 Group: Sciences/Mathematics
@@ -17,6 +17,7 @@ BuildPreReq: python-devel scons gcc-c++ boost-devel %mpiimpl-devel
 BuildPreReq: libnetcdf-mpi-devel libnumpy-devel libparmetis-devel
 BuildPreReq: boost-python-devel libpapi-devel libsuitesparse-devel
 BuildPreReq: libsilo-devel libhdf5-mpi-devel gmsh
+BuildPreReq: libnetcdf_c++-mpi-devel
 BuildPreReq: doxygen texlive-latex-recommended ghostscript-utils
 
 Requires: lib%name = %version-%release
@@ -38,6 +39,7 @@ reactive transport, plate subduction, and tsunamis.
 %package -n lib%name
 Summary: Shared libraries of Escript
 Group: System/Libraries
+Requires: libhdf5-7-mpi
 
 %description -n lib%name
 Escript is a python-based programming tool for mathematical modelling
@@ -158,6 +160,8 @@ mv %buildroot/usr/release/doc/user/* \
 install -d %buildroot%_man1dir
 install -p -m644 doc/manpage/man1/* %buildroot%_man1dir
 
+%filter_from_requires /^debug.*(libcgns\.so.*/s/^/libcgns-mpi-debuginfo\t/
+
 %files
 %doc CREDITS.txt README_LICENSE
 %_bindir/*
@@ -177,6 +181,9 @@ install -p -m644 doc/manpage/man1/* %buildroot%_man1dir
 %doc doc/examples
 
 %changelog
+* Tue Sep 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt2
+- Rebuilt with netcdf 4.2
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1
 - Version 3.3
 
