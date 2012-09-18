@@ -1,6 +1,6 @@
 Name: blender
-Version: 2.62
-Release: alt1
+Version: 2.63
+Release: alt0.1
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -34,6 +34,7 @@ BuildRequires(pre): rpm-build-python3
 Provides: python%_python3_version(Blender)
 Provides: python%_python3_version(bpy)
 Provides: python%_python3_version(BPyMesh)
+Provides: python%_python3_version(bmesh)
 
 # Automatically added by buildreq on Fri Feb 17 2012
 BuildRequires: cmake gcc-c++ libSDL-devel libXi-devel libavdevice-devel libavformat-devel libfftw3-devel libfreetype-devel libglew-devel libjpeg-devel libopenal-devel libpng-devel libswscale-devel libtiff-devel openexr-devel python3-dev boost-devel libjack-devel libsndfile-devel libopenjpeg-devel
@@ -158,6 +159,9 @@ cp -a release/datafiles/locale %buildroot%_datadir
 
 
 %changelog
+* Tue Aug 21 2012 Yuriy Kashirin <uka@altlinux.ru> 2.63-alt0.1
+- 2.63 test build
+
 * Sat Mar 31 2012 Sergei Epiphanov <serpiph@altlinux.ru> 2.62-alt1
 - Build with new rpm-build-python3
 - Fix libav patch
