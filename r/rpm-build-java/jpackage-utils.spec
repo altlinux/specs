@@ -34,7 +34,7 @@
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt24
+Release:        alt25
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -408,6 +408,9 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 /usr/lib/rpm/osgi.*
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt25
+- store poms in /usr/share/maven-poms
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt24
 - sync with eclipse 4.2.0-13 macros
 
