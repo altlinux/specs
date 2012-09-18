@@ -1,7 +1,6 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
-BuildRequires: jpackage-1.5.0-compat
-# Copyright (c) 2000-2007, JPackage Project
+BuildRequires: jpackage-1.6.0-compat
+# Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,8 +30,6 @@ BuildRequires: jpackage-1.5.0-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
 # If you don't want to build with maven, and use straight ant instead,
 # give rpmbuild option '--without maven'
 
@@ -42,7 +39,7 @@ BuildRequires: jpackage-1.5.0-compat
 
 Name:           gsbase
 Version:        2.0.1
-Release:        alt7_1jpp5
+Release:        alt7_2jpp6
 Epoch:          0
 Summary:        GSBase
 License:        Apache-style Software License
@@ -60,45 +57,39 @@ Source6:        %{name}-build.xml
 
 Patch0:         %{name}-maven.patch
 Patch1:         %{name}-site-jsl.patch
+Patch2:         %{name}-jdk6.patch
 
 
-%if ! %{gcj_support}
 BuildArch:      noarch
-%endif
 
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: junit
-BuildRequires: junitperf
+BuildRequires:  jpackage-utils >= 0:1.7.5
+BuildRequires:  ant >= 0:1.7.1
+BuildRequires:  junit
+BuildRequires:  junitperf
 %if %{with_maven}
-BuildRequires: maven1 >= 0:1.1
-BuildRequires: maven1-plugins-base
-BuildRequires: maven1-plugin-changelog
-BuildRequires: maven1-plugin-changes
-BuildRequires: maven1-plugin-checkstyle
-BuildRequires: maven1-plugin-developer-activity
-BuildRequires: maven1-plugin-file-activity
-BuildRequires: maven1-plugin-jdepend
-BuildRequires: maven1-plugin-jxr
-BuildRequires: maven1-plugin-license
-BuildRequires: maven1-plugin-linkcheck
-BuildRequires: maven1-plugin-pmd
-BuildRequires: maven1-plugin-tasklist
-BuildRequires: maven1-plugin-test
-BuildRequires: maven1-plugin-xdoc
-BuildRequires: saxon
-BuildRequires: saxon6-scripts
+BuildRequires:  maven1 >= 0:1.1
+BuildRequires:  maven1-plugins-base
+BuildRequires:  maven1-plugin-changelog
+BuildRequires:  maven1-plugin-changes
+BuildRequires:  maven1-plugin-checkstyle
+BuildRequires:  maven1-plugin-developer-activity
+BuildRequires:  maven1-plugin-file-activity
+BuildRequires:  maven1-plugin-jdepend
+BuildRequires:  maven1-plugin-jxr
+BuildRequires:  maven1-plugin-license
+BuildRequires:  maven1-plugin-linkcheck
+BuildRequires:  maven1-plugin-pmd
+BuildRequires:  maven1-plugin-tasklist
+BuildRequires:  maven1-plugin-test
+BuildRequires:  maven1-plugin-xdoc
+BuildRequires:  saxon
+BuildRequires:  saxon6-scripts
 %endif
-%if %{gcj_support}
-BuildRequires: gnu-crypto
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-Requires: junit
-Requires: junitperf
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
+Requires:  junit
+Requires:  junitperf
+Requires(post):    jpackage-utils >= 0:1.7.5
+Requires(postun):  jpackage-utils >= 0:1.7.5
+Source44: import.info
 
 %description
 A collection of classes that are helpful 
@@ -131,6 +122,7 @@ for j in $(find . -name "*.jar" ); do
 done
 %patch0 -b .sav0
 %patch1 -b .sav1
+%patch2 -b .sav2
 cp %{SOURCE6} build.xml
 
 %build
@@ -156,7 +148,7 @@ done
 
 export MAVEN_HOME_LOCAL=$(pwd)/.maven
 
-maven -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5   -e \
+maven -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5   -e \
         -Dmaven.repo.remote=file:/usr/share/maven1/repository \
         -Dmaven.home.local=${MAVEN_HOME_LOCAL} \
         -Dmaven.test.error.ignore=true \
@@ -169,7 +161,7 @@ junit \
 junitperf \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 %endif
 
 %install
@@ -177,7 +169,7 @@ ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclassp
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -pm 644 target/%{name}-%{version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-%add_to_maven_depmap %{name} %{name} %{namedversion} JPP %{name}
+%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
 
@@ -199,36 +191,18 @@ rm -rf target/docs/apidocs
 cp -pr target/docs/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %endif
 
-%if %{gcj_support}
-export CLASSPATH=$(build-classpath gnu-crypto)
-%{_bindir}/aot-compile-rpm
-%endif
-
-%post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
-
-%postun javadoc
-if [ "$1" = "0" ]; then
-  rm -f %{_javadocdir}/%{name}
-fi
-
 %files
 %{_javadir}/*
 %dir %{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}/LICENSE.txt
 %{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}
-%if %{gcj_support}
-%dir %attr(-,root,root) %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{subname}*-%{version}.jar.*
-%endif
+%{_mavendepmapfragdir}/*
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %files javadoc
 %doc %{_javadocdir}/%{name}-%{version}
-%ghost %doc %{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
 
 %if %{with_maven}
 %files manual
@@ -238,6 +212,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt7_2jpp6
+- jpp6 release
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.1-alt7_1jpp5
 - build with saxon6-scripts
 
