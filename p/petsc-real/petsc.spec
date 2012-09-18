@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.3_p2
-Release: alt1
+Release: alt2
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -76,7 +76,8 @@ BuildPreReq: libexpat-devel
 BuildPreReq: python-module-mpi4py
 %endif
 %if_with netcdf
-BuildPreReq: libnetcdf-mpi-devel
+BuildPreReq: libnetcdf-mpi-devel libnetcdff-mpi-devel
+BuildPreReq: libnetcdf_c++-mpi-devel
 %endif
 BuildPreReq: libsundials-devel libsprng1-devel
 %endif
@@ -149,7 +150,8 @@ Requires: libexpat-devel
 Requires: python-module-mpi4py
 %endif
 %if_with netcdf
-Requires: libnetcdf-mpi-devel
+Requires: libnetcdf-mpi-devel libnetcdff-mpi-devel
+Requires: libnetcdf_c++-mpi-devel
 %endif
 Requires: libsundials-devel libsprng1-devel
 %endif
@@ -415,9 +417,6 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-umfpack=1 \
 	--with-umfpack-include=%_includedir/suitesparse \
 	--with-umfpack-lib=[libumfpack.so,libamd.so] \
-	--with-tetgen=1 \
-	--with-tetgen-include=%_includedir \
-	--with-tetgen-lib=[libtetgen.so] \
 	--with-spooles=1 \
 	--with-spooles-include=%_libdir/spooles/include \
 	--with-spooles-lib=[libspoolesMPI.so,libspooles.so] \
@@ -476,6 +475,9 @@ CCAS="-lcca_0_8_6_b_1.4.0-cxx -lsidlstub_cxx"
 	--with-sprng=1 \
 	--with-sprng-include=%_includedir/sprng1 \
 	--with-sprng-lib=[libcmrg.so,liblcg64.so,liblcg.so,liblfg.so,libmlfg.so] \
+	--with-tetgen=1 \
+	--with-tetgen-include=%_includedir \
+	--with-tetgen-lib=[libtetgen.so] \
 %if_with mpi4py
 	--with-mpi4py=1 \
 	--with-mpi4py-dir=%prefix \
@@ -784,6 +786,9 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 %ldir/sources
 
 %changelog
+* Tue Sep 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p2-alt2
+- Rebuilt with netcdf 4.2
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p2-alt1
 - Version 3.3-p2
 
