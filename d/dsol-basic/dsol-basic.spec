@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           dsol-basic
 Version:        1.6.9
-Release:        alt4_1jpp6
+Release:        alt5_1jpp6
 Summary:        Java D-SOL simulation basic libs
 
 Group:          Development/Java
@@ -77,7 +77,7 @@ Patch4:         dsol-jstats-1.6.9-BoxAndWhiskerPlot.patch
 BuildRequires: maven2 >= 2.0.8
 BuildRequires: jpackage-utils >= 0:5.0.0
 BuildRequires: colt
-BuildRequires: commons-math
+BuildRequires: apache-commons-math
 BuildRequires: java3d
 BuildRequires: jcommon
 BuildRequires: jfreechart
@@ -85,7 +85,7 @@ BuildRequires: xml-commons-jaxp-1.3-apis
 
 Requires: jpackage-utils >= 0:5.0.0
 Requires: colt
-Requires: commons-math
+Requires: apache-commons-math
 Requires: java3d
 Requires: jcommon
 Requires: jfreechart
@@ -221,6 +221,9 @@ done
 %{_javadocdir}/%{name} 
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt5_1jpp6
+- fixed requires
+
 * Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt4_1jpp6
 - fixed build with new jfreechart
 
