@@ -5,16 +5,11 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.6jpp
+Release: alt0.7jpp
 
-#Requires: jbossts
-Requires: mojo-maven2-plugins
+#Requires: mojo-maven2-plugins
 Requires: maven-ant-tasks
-Requires: logback
-Requires: hawtjni
-#Requires: jsontools
-Requires: gmaven
-Requires: eclipse
+#Requires: gmaven
 
 %description
 Maven3 transaction unfinished files.
@@ -30,6 +25,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.7jpp
+- updated dependencies
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.6jpp
 - updated dependencies
 
