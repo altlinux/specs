@@ -1,5 +1,5 @@
 Name: curl
-Version: 7.26.0
+Version: 7.27.0
 Release: alt1
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
@@ -141,6 +141,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Tue Sep 18 2012 Anton Farygin <rider@altlinux.ru> 7.27.0-alt1
+- new version
+
 * Tue May 29 2012 Anton Farygin <rider@altlinux.ru> 7.26.0-alt1
 - new version
 
