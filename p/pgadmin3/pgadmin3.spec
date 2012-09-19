@@ -1,8 +1,10 @@
 %define __find		/bin/find
 %define __xargs		/bin/xargs
 
+%def_enable databasedesigner
+
 Name: pgadmin3
-Version: 1.14.2
+Version: 1.16.0
 Release: alt1
 
 Summary: Powerful administration and development platform for PostgreSQL.
@@ -13,13 +15,14 @@ Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 Url: http://www.pgadmin.org/
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
+# Patch: %name-%version-%release.patch
 
 Requires: %name-docs-en_US
 
 BuildRequires: gcc-c++ libssl-devel libxslt-devel postgresql-devel
 BuildRequires: libwxGTK-contrib-ogl-devel libwxGTK-contrib-stc-devel libwxGTK-devel
 BuildRequires: findutils ImageMagick-tools
+BuildRequires: python-module-sphinx
 
 %description
 pgAdmin III is a powerful administration and development platform for
@@ -52,7 +55,8 @@ All docs for %name.
 
 %build
 /bin/sh bootstrap
-%configure CPPFLAGS="-I./include"
+%configure CPPFLAGS="-I./include" \
+	%{subst_enable databasedesigner}
 
 %make_build
 
@@ -123,6 +127,9 @@ mv -f %buildroot%_datadir/%name/i18n/??_?? %buildroot%_datadir/locale
 %doc %_datadir/%name/docs/sl_SI
 
 %changelog
+* Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 1.16.0-alt1
+- git REL-1_16_0_PATCHES branch
+
 * Thu Apr 19 2012 Alexey Shabalin <shaba@altlinux.ru> 1.14.2-alt1
 - git REL-1_14_0_PATCHES branch (cfe0a7ffd13fd7c30c28341a66a16c8d9fc3530c)
 
