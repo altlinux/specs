@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           dsol-basic
 Version:        1.6.9
-Release:        alt5_1jpp6
+Release:        alt6_1jpp6
 Summary:        Java D-SOL simulation basic libs
 
 Group:          Development/Java
@@ -221,6 +221,9 @@ done
 %{_javadocdir}/%{name} 
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt6_1jpp6
+- build with apache-commons-math3
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.9-alt5_1jpp6
 - fixed requires
 
