@@ -2,11 +2,11 @@
 %define mpidir %_libdir/%mpiimpl
 
 %define somver 0
-%define sover %somver.31.84
+%define sover %somver.37.25
 Name: pastix
 %define ldir %_libdir/%name
-Version: 3184
-Release: alt5
+Version: 3725
+Release: alt1
 Summary: Parallel Sparse matriX package
 License: CeCILL
 Group: Sciences/Mathematics
@@ -73,6 +73,7 @@ install -m644 %SOURCE1 src
 LIB64=64
 %endif
 sed -i "s|@64@|$LIB64|" src/config.in
+sed -i "s|@PWD@|$PWD|" src/config.in
 
 %build
 mpi-selector --set %mpiimpl
@@ -81,6 +82,7 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
 
 pushd src
+mkdir -p sparse-matrix/obj
 %make_build -f makefile.old expor
 mkdir ../install
 %make $PWD/../install/libpastix.a
@@ -237,6 +239,9 @@ popd
 %_docdir/%name
 
 %changelog
+* Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3725-alt1
+- Version 3725
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3184-alt5
 - Built with OpenBLAS instead of GotoBLAS2
 
