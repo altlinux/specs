@@ -2,13 +2,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 %define fedora 18
 Name:             guacamole-common
-Version:          0.6.0
-Release:          alt1_7jpp7
+Version:          0.6.1
+Release:          alt1_2jpp7
 Summary:          The core Java library used by the Guacamole web application
 License:          MPLv1.1 or GPLv2+ or LGPLv2+
 Group:            Development/Java
 URL:              http://guac-dev.org/
-Source0:          http://downloads.sourceforge.net/guacamole/%{name}-%{version}.tar.gz
+Source0:          http://guac-dev.org/pub/dist/source/%{name}-%{version}.tar.gz
 BuildArch:        noarch
 
 # Generic Buildrequires:
@@ -85,6 +85,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.guacamole-%{name}.pom
 
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1_2jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt1_7jpp7
 - new version
 
