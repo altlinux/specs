@@ -1,6 +1,6 @@
 Name: cinelerra
 Version: 2.2.0CV
-Release: alt2.20111217
+Release: alt2.20111217.1
 
 # inline mmx assembly can cause text relocations
 %set_verify_elf_method textrel=relaxed
@@ -344,6 +344,9 @@ cp guicast/bootstrap %buildroot%_bindir/guicast_bootstrap1
 %doc doc/README_en
 
 %changelog
+* Wed Sep 19 2012 Sergey Kurakin <kurakin@altlinux.org> 2.2.0CV-alt2.20111217.1
+- rebuild with latest libpng and libtiff
+
 * Thu May 31 2012 Sergey Kurakin <kurakin@altlinux.org> 2.2.0CV-alt2.20111217
 - 2011.12.17 upstream git snapshot fixes build (-lmp3lame)
 
