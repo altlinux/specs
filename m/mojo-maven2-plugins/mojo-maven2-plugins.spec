@@ -101,7 +101,7 @@ BuildRequires: jpackage-compat
 %define jruby_stdlib_namedversion 1.8.5
 %define jruby_stdlib_include 1
 %define jspc_namedversion 2.0-alpha-3
-%define jspc_include 1
+%define jspc_include 0
 %define keytool_namedversion 1.1-beta-1-SNAPSHOT
 %define keytool_include 0
 %define l10n_namedversion 1.0-alpha-2-SNAPSHOT
@@ -352,7 +352,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt27_8jpp6
+Release:        alt28_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -3009,6 +3009,7 @@ sed -i 's,<module>ibatis-maven-plugin</module>,<!-- tmp nocompile<module>ibatis-
 sed -i 's,<module>xfire-maven-plugin</module>,<!-- tmp nocompile<module>xfire-maven-plugin</module>-->,' mojo-sandbox/pom.xml
 
 # maven3
+sed -i 's,<module>jspc</module>,<!-- tmp nocompile<module>jspc</module>-->,' pom.xml
 sed -i 's,<module>docbook-maven-plugin</module>,<!-- tmp nocompile<module>docbook-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>rat-maven-plugin</module>,<!-- tmp nocompile<module>rat-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>antlr-maven-plugin</module>,<!-- tmp nocompile<module>antlr-maven-plugin</module>-->,' pom.xml
@@ -6145,6 +6146,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt28_8jpp6
+- dropped jspc
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt27_8jpp6
 - dropped unused plugins
 
