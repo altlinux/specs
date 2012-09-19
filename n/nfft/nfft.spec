@@ -1,6 +1,6 @@
 Name: nfft
-Version: 3.1.3
-Release: alt2
+Version: 3.2.1
+Release: alt1
 Summary: Nonequispaced FFT, generalisations, inversion, and applications
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -84,27 +84,26 @@ This package contains development documentation for NFFT3.
 %install
 %makeinstall_std pkgdatadir=%buildroot%_datadir
 
+install -d %buildroot%_bindir
+
+for i in $(find applications/ -name .libs); do
+	rm -f $i/*.*
+	install -m755 $i/* %buildroot%_bindir
+done
+
 %make -C applications clean
 %make -C examples clean
 
-install -d %buildroot%_docdir/%name
-mv %buildroot%_datadir/doc/api %buildroot%_docdir/%name/
+install -d %buildroot%_docdir/%name/api
+cp -fR doc/api/html %buildroot%_docdir/%name/api/
+cp -fR doc/logo %buildroot%_docdir/%name/
 cp -fR examples %buildroot%_docdir/%name/
 
-install -d %buildroot%_bindir
-mv %buildroot%buildroot%_datadir/applications/mri/mri3d/reconstruct_data_gridding \
+mv %buildroot%_bindir/reconstruct_data_gridding \
 	%buildroot%_bindir/reconstruct_data_gridding_3d
-for i in fastgauss/fastgauss fastsum/fastsum_test fastsumS2/fastsumS2 \
-	mri/mri2d/construct_data_* mri/mri2d/reconstruct_data_* \
-	mri/mri3d/construct_data_* mri/mri3d/reconstruct_data_* polarFFT/*_fft_test \
-	quadratureS2/quadratureS2 radon/*radon
-do
-	mv %buildroot%buildroot%_datadir/applications/$i \
-		%buildroot%_bindir/
-done
 
 %files
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc AUTHORS ChangeLog NEWS README
 %doc applications
 %_bindir/*
 
@@ -114,11 +113,15 @@ done
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_pkgconfigdir/*
 
 %files -n lib%name-devel-doc
 %doc %_docdir/%name
 
 %changelog
+* Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
+- Version 3.2.1
+
 * Mon May 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt2
 - Fixed build
 
