@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       aspectjweaver 
 Version:    1.6.12
-Release:    alt1_5jpp7
+Release:    alt2_5jpp7
 Summary:    Java byte-code weaving library
 Group:      Development/Java
 License:    EPL
@@ -23,6 +23,7 @@ BuildRequires:   apache-commons-logging
 Requires:        objectweb-asm
 BuildArch:       noarch
 Source44: import.info
+Obsoletes: aspectj < 1.5.5
 
 %description
 The AspectJ Weaver supports byte-code weaving for aspect-oriented
@@ -70,6 +71,9 @@ cp -rp javadoc ${RPM_BUILD_ROOT}/%{_javadocdir}/%{name}
 %{_javadocdir}/*
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.12-alt2_5jpp7
+- added Obsoletes for aspectj
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.12-alt1_5jpp7
 - new release
 
