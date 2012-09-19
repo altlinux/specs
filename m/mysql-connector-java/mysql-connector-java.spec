@@ -10,8 +10,8 @@ BuildRequires: jpackage-compat
 
 Summary:    Official JDBC driver for MySQL
 Name:       mysql-connector-java
-Version:    5.1.21
-Release:    alt1_3jpp7
+Version:    5.1.22
+Release:    alt1_1jpp7
 Epoch:      1 
 
 # MySQL FLOSS Exception
@@ -142,6 +142,9 @@ popd
 %_javadir/mysql-connector-jdbc.jar
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1:5.1.22-alt1_1jpp7
+- new version
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1:5.1.21-alt1_3jpp7
 - new version
 
