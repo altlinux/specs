@@ -1,9 +1,9 @@
-BuildRequires: modello icu4j
+BuildRequires: icu4j
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-doap-plugin
 Version:        1.1
-Release:        alt1_2jpp7
+Release:        alt2_2jpp7
 Summary:        Plugins which generate a DOAP file from information in a POM
 
 Group:          Development/Java
@@ -13,6 +13,7 @@ URL:            http://maven.apache.org/plugins/maven-doap-plugin/
 # tar caf maven-doap-plugin-1.1.tar.xz maven-doap-plugin-1.1/
 Source0:        %{name}-%{version}.tar.xz
 Patch0:         %{name}-fixed-dependencies.patch
+Patch1: maven-doap-plugin-1.1-alt-no-cvs.patch
 
 BuildArch: noarch
 
@@ -59,6 +60,7 @@ API documentation for %{name}.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -b .sav -p1
+%patch1 -b .sav1 -p1
 
 %build
 mvn-rpmbuild \
@@ -92,6 +94,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_2jpp7
+- fixed build
+
 * Sat Mar 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_2jpp7
 - fc version
 
