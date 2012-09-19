@@ -1,7 +1,7 @@
 %define sover 2
 
 Name: libsvm
-Version: 3.11
+Version: 3.12
 Release: alt1
 Summary: A Library for Support Vector Machines
 Group: Sciences/Mathematics
@@ -98,6 +98,9 @@ install -m644 python/*.py %buildroot%python_sitelibdir_noarch
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.12-alt1
+- Version 3.12
+
 * Wed Dec 07 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.11-alt1
 - Version 3.11
 
