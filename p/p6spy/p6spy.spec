@@ -36,7 +36,7 @@ BuildRequires: jpackage-1.5.0-compat
 Summary:        Database statement interceptor for Java
 Name:           p6spy
 Version:        1.3
-Release:        alt2_4jpp5
+Release:        alt3_4jpp5
 Epoch:          0
 Group:          Databases
 License:        P6Spy Software License
@@ -52,9 +52,9 @@ BuildRequires: ant >= 0:1.6.5
 BuildRequires: gnu-regexp
 BuildRequires: log4j
 #BuildRequires:  jdbc-stdext
-BuildRequires: jboss4-common
-BuildRequires: jboss4-jmx
-BuildRequires: jboss4-system
+#BuildRequires: jboss4-common
+#BuildRequires: jboss4-jmx
+#BuildRequires: jboss4-system
 BuildRequires: log4j-javadoc
 BuildRequires: regexp
 Requires: gnu-regexp
@@ -93,13 +93,15 @@ BuildArch: noarch
 rm -rf javadocs documentation/Templates documentation/_notes
 mkdir lib
 
+rm -rf ./com/p6spy/management/jboss ./generated/com/p6spy/engine/test/jboss
 
 %build
-CLASSPATH=%(build-classpath regexp gnu.regexp log4j jdbc-stdext)
-export CLASSPATH=$CLASSPATH:\
-$(build-classpath jboss4/jboss-common):\
-$(build-classpath jboss4/jboss-jmx):\
-$(build-classpath jboss4/jboss-system)
+export CLASSPATH=%(build-classpath regexp gnu.regexp log4j jdbc-stdext)
+#export CLASSPATH=$CLASSPATH:\
+#$(build-classpath jboss4/jboss-common):\
+#$(build-classpath jboss4/jboss-jmx):\
+#$(build-classpath jboss4/jboss-system)
+
 # Tests would need a DB to test against :(
 ant \
   -Dbuild.sysclasspath=last \
@@ -146,6 +148,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt3_4jpp5
+- build with java6
+
 * Wed May 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt2_4jpp5
 - selected java5 compiler explicitly
 
