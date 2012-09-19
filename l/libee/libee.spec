@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: libee
-Version: 0.3.2
+Version: 0.4.1
 Release: alt1
 
 Summary: An Event Expression Library inspired by CEE
@@ -44,7 +44,6 @@ Static libs for building statically linked software that uses %name
 
 %install
 %makeinstall
-mv %buildroot%_sbindir/convert %buildroot%_sbindir/%name-convert
 
 %files
 %_libdir/%name.so.*
@@ -62,5 +61,8 @@ mv %buildroot%_sbindir/convert %buildroot%_sbindir/%name-convert
 %endif
 
 %changelog
+* Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.1-alt1
+- 0.4.1
+
 * Fri Mar 02 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.2-alt1
 - Initial build for ALT Linux
