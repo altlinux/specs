@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: liblognorm
-Version: 0.3.4
+Version: 0.3.5
 Release: alt1
 
 Summary: liblognorm is a tool to normalize log data.
@@ -46,7 +46,7 @@ Static libs for building statically linked software that uses %name
 %makeinstall
 
 %files
-%_bindir/normalizer
+%_bindir/lognormalizer
 %_libdir/%name.so.*
 %doc AUTHORS ChangeLog
 
@@ -61,6 +61,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.5-alt1
+- 0.3.5
+
 * Tue May 22 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.4-alt1
 - 0.3.4
 
