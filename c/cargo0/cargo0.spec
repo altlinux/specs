@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo0
 Version:        0.9
-Release:        alt10_5jpp5
+Release:        alt11_5jpp5
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -229,6 +229,9 @@ find ./core/samples/java/src/test/java -name '*.java' -delete
 sed -i -e 's,org\.apache\.commons\.vfs\.,org.apache.commons.vfs2.,g' `grep -rl org.apache.commons.vfs. .`
 
 
+sed -i -e 's,<assembly>,<assembly><id>ALT</id>,' core/uberjar/src/assemble/main.xml
+
+
 %build
 export LANG=en_US.ISO8859-1
 
@@ -354,7 +357,7 @@ install -m 644 \
    $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-sample-java-%{version}.jar
 %if %with bootstrap
 install -m 644 \
-   core/uberjar/target/%{oldname}-core-uberjar-%{version}.jar \
+   core/uberjar/target/%{oldname}-core-uberjar-%{version}-ALT.jar \
    $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-core-uberjar-%{version}.jar
 %endif
 install -m 644 \
@@ -565,6 +568,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt11_5jpp5
+- fixed build with assembly plugin
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt10_5jpp5
 - build with new commons-vfs2
 
