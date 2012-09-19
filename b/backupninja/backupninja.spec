@@ -1,5 +1,5 @@
 Name: backupninja
-Version: 0.9.9
+Version: 1.0.1
 Release: alt1
 
 Summary: backup system
@@ -13,6 +13,8 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # It is new feature etersoft-build-utils since 1.7.6: supports commented real url
 # Source-url: https://labs.riseup.net/code/attachments/download/229/backupninja-0.9.9.tar.bz2
 Source: %name-%version.tar
+
+BuildArch: noarch
 
 Requires: %_sysconfdir/cron.d %_sysconfdir/logrotate.d dialog
 
@@ -34,7 +36,9 @@ configuration, currently supported are: rdiff-backup, duplicity, CD/DVD.
 
 %prep
 %setup
-%__subst "s|pkglib|pkglibexec|g" lib/Makefile.am
+# lib/Makefile.am:1: `pkglibdir' is not a legitimate directory for `SCRIPTS'
+%__subst "s|(pkglib|(pkglibexec|g" */Makefile.am
+%__subst "s|pkglib_SCRIPTS|pkglibexec_SCRIPTS|g" lib/Makefile.am
 
 %build
 %autoreconf
@@ -61,6 +65,9 @@ mkdir -p %buildroot%_sysconfdir/backup.d/
 %_sbindir/ninjahelper
 
 %changelog
+* Wed Sep 19 2012 Vitaly Lipatov <lav@altlinux.ru> 1.0.1-alt1
+- new version 1.0.1 (with rpmrb script)
+
 * Wed Apr 18 2012 Vitaly Lipatov <lav@altlinux.ru> 0.9.9-alt1
 - new version 0.9.9 (with rpmrb script)
 - replace pkglib with pkglibexec
