@@ -1,5 +1,5 @@
 Name: pam-config
-Version: 1.5.3
+Version: 1.5.4
 Release: alt1
 
 Summary: Systemwide PAM config files
@@ -158,6 +158,9 @@ fi
 %files -n pam0-config
 
 %changelog
+* Wed Sep 19 2012 Dmitry V. Levin <ldv@altlinux.org> 1.5.4-alt1
+- common-login: added pam_nologin.so to account management list.
+
 * Fri Aug 12 2011 Dmitry V. Levin <ldv@altlinux.org> 1.5.3-alt1
 - system-auth-*: changed to use the "$2y$" hash encoding prefix.
 
