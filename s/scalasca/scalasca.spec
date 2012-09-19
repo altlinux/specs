@@ -7,7 +7,7 @@
 %define sover %somver.%over
 Name: scalasca
 Version: %over
-Release: alt14
+Release: alt15
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
@@ -523,6 +523,9 @@ sed -i '1s|/sh|/bash|' \
 %_libdir/libsz0.a
 
 %changelog
+* Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt15
+- Rebuilt with papi 5.0.0
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt14
 - Rebuilt with OpenMPI 1.6
 

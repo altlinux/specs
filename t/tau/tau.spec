@@ -3,7 +3,7 @@
 
 Name: tau
 Version: 2.19.2
-Release: alt21
+Release: alt22
 Summary: TAU Portable Profiling Package
 License: BSD-like
 Group: Development/Tools
@@ -414,6 +414,9 @@ rm -f %buildroot%_libdir/*/*.so
 %exclude %_javadir/jargs.jar
 
 %changelog
+* Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.19.2-alt22
+- Rebuilt with papi 5.0.0
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.19.2-alt21
 - Rebuilt with OpenMPI 1.6
 

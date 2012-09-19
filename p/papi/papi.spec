@@ -2,8 +2,8 @@ Name: papi
 License: BSD-like
 Group: Development/Tools
 Summary: Performance Application Programming Interface
-Version: 4.2.1
-Release: alt2
+Version: 5.0.0
+Release: alt1
 Url: http://icl.cs.utk.edu/papi/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -11,8 +11,8 @@ Source: %name-%version.tar.gz
 
 Requires: lib%name = %version-%release
 
-BuildPreReq: libncurses-devel gcc-fortran /proc
-BuildPreReq: libltdl-devel
+BuildPreReq: libncurses-devel gcc-fortran /proc libsensors3-devel
+BuildPreReq: libltdl-devel doxygen graphviz
 
 %description
 PAPI aims to provide the tool designer and application engineer with a
@@ -45,23 +45,10 @@ near real time, the relation between software performance and processor events.
 
 This package contains development files of PAPI.
 
-%package -n lib%name-devel-static
-Summary: Static libraries of Performance Application Programming Interface
-Group: Development/C
-Requires: lib%name-devel = %version-%release
-
-%description -n lib%name-devel-static
-PAPI aims to provide the tool designer and application engineer with a
-consistent interface and methodology for use of the performance counter hardware
-found in most major microprocessors. PAPI enables software engineers to see, in
-near real time, the relation between software performance and processor events.
-
-This package contains static libraries of PAPI.
-
 %package doc
 Summary: Documentation for Performance Application Programming Interface
 Group: Documentation
-BuildArch: noarch
+#BuildArch: noarch
 
 %description doc
 PAPI aims to provide the tool designer and application engineer with a
@@ -80,33 +67,49 @@ cp -f src/Rules.pfm src/Rules.perfctr-pfm
 
 %build
 cd src
-cp Makefile.inc Makefile.inc.bak
-sed -i -e 's/\-Werror//g' libpfm-3.?/config.mk
+
+pushd components/lmsensors
+%autoreconf
+%configure \
+	--with-sensors_incdir=%_includedir/sensors \
+	--with-sensors_libdir=%_libdir
+popd
+
+#cp Makefile.inc Makefile.inc.bak
+#sed -i -e 's/\-Werror//g' libpfm-3.?/config.mk
 %add_optflags %optflags_shared
 %autoreconf
-%configure --with-ffsll \
+%configure \
+%ifarch x86_64
+	--with-bitmode=64 \
+%else
+	--with-bitmode=32 \
+%endif
+	--with-ffsll \
 	--with-static-lib=no \
 	--with-virtualtimer=clock_thread_cputime_id \
 	--with-perf-events \
-	--with-libpfm3
+	--with-libpfm3 \
+	--with-components="appio coretemp lmsensors mx net rapl stealtime"
 #cp -f Makefile.inc.bak Makefile.inc
-%make libpapi.a
-%make
+#make libpapi.a
+%make_build
+
+%make -C ../doc html man
 
 %install
 cd src
 %makeinstall_std
+%make_install DESTDIR=%buildroot install-man
 
-#rm -f %buildroot%_bindir/perfex %buildroot%_includedir/*perfctr* \
-#	%buildroot%_libdir/libperfctr.*
+install -d %buildroot%_docdir/%name
+cp -fR ../doc/html/* %buildroot%_docdir/%name/
 
 ln -s libpapi.so %buildroot%_libdir/libpapi64.so
 ln -s libpfm.so %buildroot%_libdir/libpfm64.so
-#ln -s libpapi.a %buildroot%_libdir/libpapi64.a
-#ln -s libpfm.a %buildroot%_libdir/libpfm64.a
 
 %files
-%doc *.txt
+%doc *.txt README
 %_bindir/*
 %_man1dir/*
 %_datadir/%name
@@ -119,13 +122,13 @@ ln -s libpfm.so %buildroot%_libdir/libpfm64.so
 %_includedir/*
 %_man3dir/*
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
-#files doc
-#_docdir/%name
+%files doc
+%_docdir/%name
 
 %changelog
+* Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.0-alt1
+- Version 5.0.0
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt2
 - Fixed build with new glibc
 
