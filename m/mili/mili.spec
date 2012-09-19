@@ -1,6 +1,6 @@
 Name: mili
 Version: 17
-Release: alt1.svn20120221
+Release: alt1.svn20120420
 Summary: Minimalistic headers-only C++ Library
 License: GPL v3 or later
 Group: Development/C++
@@ -49,6 +49,9 @@ install -p -m644 %name/* %buildroot%_includedir/%name
 %doc examples/*
 
 %changelog
+* Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 17-alt1.svn20120420
+- New snapshot
+
 * Tue Feb 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 17-alt1.svn20120221
 - New snapshot
 
