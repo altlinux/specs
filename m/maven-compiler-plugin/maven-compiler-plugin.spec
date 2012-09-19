@@ -1,16 +1,17 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-compiler-plugin
-Version:        2.3.2
-Release:        alt1_5jpp7
+Version:        2.5.1
+Release:        alt1_2jpp7
 Summary:        Maven Compiler Plugin
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://maven.apache.org/plugins/maven-compiler-plugin
-#svn export http://svn.apache.org/repos/asf/maven/plugins/tags/maven-compiler-plugin-2.3.2 maven-compiler-plugin-2.3.2
-#tar caf maven-compiler-plugin-2.3.2.tar.xz maven-compiler-plugin-2.3.2/
-Source0:        %{name}-%{version}.tar.xz
+Source0:        http://repo1.maven.org/maven2/org/apache/maven/plugins/%{name}/%{version}/%{name}-%{version}-source-release.zip
 
 BuildArch: noarch
 
@@ -53,12 +54,10 @@ API documentation for %{name}.
 
 
 %prep
-%setup -q #You may need to update this according to your Source0
+%setup -q 
 
 %build
-mvn-rpmbuild -e \
-        -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+mvn-rpmbuild install javadoc:aggregate -Dmaven.test.failure.ignore
 
 %install
 
@@ -78,10 +77,6 @@ install -pm 644 pom.xml \
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
-%pre javadoc
-[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
-rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
-
 %files
 %{_javadir}/*
 %{_mavenpomdir}/*
@@ -91,6 +86,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_2jpp7
+- new release
+
 * Mon Mar 26 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_5jpp7
 - complete build
 

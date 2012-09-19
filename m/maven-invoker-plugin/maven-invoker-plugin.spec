@@ -1,12 +1,11 @@
-Patch33: maven-invoker-plugin-1.5-alt-maven3.patch
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-invoker-plugin
-Version:        1.5
-Release:        alt1_5jpp7
+Version:        1.6
+Release:        alt1_1jpp7
 Summary:        Maven Invoker Plugin
 
 Group:          Development/Java
@@ -32,6 +31,7 @@ BuildRequires: maven-surefire-provider-junit
 BuildRequires: maven-surefire-plugin
 BuildRequires: maven-plugin-cobertura
 BuildRequires: maven-javadoc-plugin
+BuildRequires: maven-script-interpreter
 BuildRequires: maven-shared-invoker
 
 # Others
@@ -43,8 +43,7 @@ Requires: jpackage-utils
 Requires: maven-shared-invoker
 Requires: maven-shared-reporting-api
 Requires: maven-shared-reporting-impl
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
+Requires: maven-script-interpreter
 
 Provides:       maven2-plugin-invoker = 1:%{version}-%{release}
 Obsoletes:      maven2-plugin-invoker <= 0:2.0.8
@@ -67,24 +66,26 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
-%patch33
+
+%pom_add_dep org.apache.maven:maven-core
+%pom_add_dep org.apache.maven:maven-compat
 
 %build
 mvn-rpmbuild \
         -Dmaven.test.failure.ignore=true \
-        install javadoc:javadoc
+        install javadoc:aggregate
 
 %install
 # jars
 install -d -m 0755 %{buildroot}%{_javadir}
 install -m 644 target/%{name}-%{version}.jar   %{buildroot}%{_javadir}/%{name}.jar
 
-%add_to_maven_depmap org.apache.maven.plugins maven-invoker-plugin %{version} JPP maven-invoker-plugin
-
 # poms
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml \
     %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
 install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
@@ -99,6 +100,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_1jpp7
+- new release
+
 * Tue Mar 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_5jpp7
 - complete build
 

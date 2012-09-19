@@ -5,8 +5,8 @@ Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-reporting-exec
-Version:        1.0.1
-Release:        alt1_4jpp7
+Version:        1.0.2
+Release:        alt1_2jpp7
 BuildArch:      noarch
 Summary:        Classes to manage report plugin executions with Maven 3
 
@@ -46,11 +46,10 @@ The API documentation of %{name}.
 
 %prep
 %setup -qn %{name}-%{version}
-%patch0 -p1
-
 # convert CR+LF to LF
 sed -i 's/\r//g' pom.xml src/main/java/org/apache/maven/reporting/exec/*
 
+%patch0 -p1
 
 
 %build
@@ -88,6 +87,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1_2jpp7
+- new release
+
 * Mon Apr 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_4jpp7
 - complete build
 
