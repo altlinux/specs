@@ -32,12 +32,12 @@ BuildRequires: jpackage-compat
 #
 
 %global parent  plexus
-%global dirhash 8b4d9ed
-%global githash gef6142f
+%global dirhash 113d7de
+%global githash g233d1ab
 
 Name:       plexus-compiler
-Version:    1.8.3
-Release:    alt2_1jpp7
+Version:    1.9.1
+Release:    alt1_3jpp7
 Epoch:      0
 Summary:    Compiler call initiators for Plexus
 License:    MIT
@@ -45,9 +45,9 @@ Group:      Development/Java
 URL:        http://plexus.codehaus.org/
 
 # wget  https://github.com/sonatype/plexus-compiler/tarball/plexus-compiler-1.8.3
-Source0:    sonatype-plexus-compiler-plexus-compiler-1.8.3-0-%{githash}.tar.gz
+Source0:    sonatype-plexus-compiler-plexus-compiler-1.9.1-0-%{githash}.tar.gz
 
-Patch0:     0001-Remove-aspecj-support.patch
+Patch0:     plexus-compiler-ignoreOptionalProblems.patch
 
 BuildArch:      noarch
 BuildRequires:  maven
@@ -59,6 +59,7 @@ BuildRequires:  plexus-container-default
 BuildRequires:  plexus-utils
 BuildRequires:  plexus-containers-component-metadata
 BuildRequires:  junit4
+BuildRequires:  plexus-pom
 
 Requires:       classworlds
 Requires:       plexus-container-default
@@ -76,7 +77,7 @@ Summary:        Extra compiler support for %{name}
 Group:          Development/Java
 Requires:       jpackage-utils
 Requires:       eclipse-ecj
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description extras
 Additional support for csharp, eclipse and jikes compilers
@@ -94,9 +95,10 @@ API documentation for %{name}.
 %setup -q -n sonatype-plexus-compiler-%{dirhash}
 %patch0 -p1
 
+%pom_disable_module plexus-compiler-aspectj plexus-compilers/pom.xml
 
 # don't build/install compiler-test module, it needs maven2 test harness
-sed -i 's:<module>plexus-compiler-test</module>::' pom.xml
+%pom_disable_module plexus-compiler-test
 
 %build
 mvn-rpmbuild -e \
@@ -178,6 +180,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_3jpp7
+- new version
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.3-alt2_1jpp7
 - applied repocop patches
 
