@@ -1,5 +1,5 @@
 Name: mapsoft
-Version: 20120625
+Version: 20120919
 Release: alt1
 License: GPL
 Summary: mapsoft - programs for working with maps and geodata
@@ -51,8 +51,6 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_mandir/man1/mapsoft_mapview.1.gz
 
 %files tools
-%_bindir/catfig
-%_bindir/catmp
 %_bindir/convs_*
 %_bindir/mapsoft_toxyz
 %_bindir/mapsoft_geofig
@@ -70,6 +68,12 @@ scons -Q minimal=1 -Q prefix=%buildroot install
 %_mandir/man1/mapsoft_vmap.1.gz
 
 %changelog
+* Wed Sep 19 2012 Vladislav Zavjalov <slazav@altlinux.org> 20120919-alt1
+- rebuld with libpng15
+- current snapshot:
+  - partial read/write kml support
+  - fix errors in save_image action
+
 * Mon Jun 25 2012 Vladislav Zavjalov <slazav@altlinux.org> 20120625-alt1
 - current snapshot
  - simple navigation mode
