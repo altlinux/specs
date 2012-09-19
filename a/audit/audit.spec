@@ -1,6 +1,6 @@
 Name: audit
-Version: 2.1.3
-Release: alt1.1
+Version: 2.2.1
+Release: alt1
 
 Packager: Anton Farygin <rider@altlinux.com>
 
@@ -10,8 +10,6 @@ License: GPL
 Group: Monitoring
 URL: http://people.redhat.com/sgrubb/audit/
 Source: %name-%version.tar
-Source1: %name.init
-Source2: %name.cron
 Patch0: %name-%version-%release.patch
 
 Requires: lib%{name}1 = %version-%release
@@ -94,10 +92,10 @@ ln -s  /%_lib/${LIBNAME##*/}  %buildroot/%_libdir/$i.so
 done
 
 #replace init script
-install -Dpm755 %SOURCE1 %buildroot/%_initdir/%{name}d
+install -Dpm755 %name.init %buildroot/%_initdir/%{name}d
 
 #install rotate script
-install -Dpm755 %SOURCE2 %buildroot/%_sysconfdir/cron.weekly/%{name}d
+install -Dpm755 %name.cron %buildroot/%_sysconfdir/cron.weekly/%{name}d
 
 %post
 %post_service %{name}d
@@ -113,6 +111,7 @@ install -Dpm755 %SOURCE2 %buildroot/%_sysconfdir/cron.weekly/%{name}d
 
 /sbin/ausearch
 /sbin/aureport
+%_bindir/auvirt
 %attr(750,root,root) /sbin/auditctl
 %attr(750,root,root) /sbin/auditd
 %attr(750,root,root) /sbin/autrace
@@ -159,8 +158,8 @@ install -Dpm755 %SOURCE2 %buildroot/%_sysconfdir/cron.weekly/%{name}d
 %python_sitelibdir/*
 
 %changelog
-* Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.3-alt1.1
-- Rebuild with Python-2.7
+* Wed Sep 19 2012 Anton Farygin <rider@altlinux.ru> 2.2.1-alt1
+- new version
 
 * Tue Sep 13 2011 Anton Farygin <rider@altlinux.ru> 2.1.3-alt1
 - new version
