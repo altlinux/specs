@@ -1,6 +1,6 @@
 Name: pylons_sphinx_theme
 Version: 1.0
-Release: alt3
+Release: alt4
 Summary: Pylons Sphinx Theme
 License: Free
 Group: Development/Tools
@@ -27,6 +27,9 @@ cp -fR * %buildroot%_datadir/%name/
 %_datadir/%name
 
 %changelog
+* Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt4
+- New snapshot
+
 * Fri Mar 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt3
 - New snapshot
 
