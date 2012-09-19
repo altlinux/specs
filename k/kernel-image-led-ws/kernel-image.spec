@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -78,9 +78,10 @@ Release: alt3
 %def_enable alsa
 %def_disable pcsp
 %def_enable video
-%def_enable virtio
+%def_enable guest
 %def_enable ext4_for_ext23
 %def_enable bootsplash
+%def_enable zcache
 %def_enable security
 %def_enable audit
 %def_enable selinux
@@ -206,7 +207,8 @@ Patch0174: linux-%kernel_branch.42-fix-drivers-gpu-drm--i915.patch
 Patch0175: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0176: linux-%kernel_branch.42-fix-drivers-gpu-drm--radeon.patch
 Patch0177: linux-%kernel_branch.42-fix-drivers-gpu-drm--via.patch
-Patch0178: linux-%kernel_branch.42-fix-drivers-gpu-vga--vgaarb.patch
+Patch0178: linux-%kernel_branch.42-fix-drivers-gpu-drm--vmwgfx.patch
+Patch0179: linux-%kernel_branch.42-fix-drivers-gpu-vga--vgaarb.patch
 
 Patch0181: linux-%kernel_branch.42-fix-drivers-hid--hid-apple.patch
 Patch0182: linux-%kernel_branch.42-fix-drivers-hid--usbhid.patch
@@ -473,44 +475,47 @@ Patch1001: linux-%kernel_branch.42-feat-block--bfq-iosched.patch
 Patch1002: linux-%kernel_branch.42-feat-block--bsg-lib.patch
 Patch1003: linux-%kernel_branch.42-feat-block--sio-iosched.patch
 
-Patch1011: linux-%kernel_branch.42-feat-drivers-block--zram.patch
+Patch1011: linux-%kernel_branch-feat-drivers-block--cloop.patch
+Patch1012: linux-%kernel_branch.42-feat-drivers-block--zram.patch
 
-Patch1021: linux-%kernel_branch-feat-drivers-input-lirc.patch
-Patch1022: linux-%kernel_branch.42-feat-drivers-input-touchscreen--elousb.patch
+Patch1021: linux-%kernel_branch-feat-drivers-gpu-drm--cirrus.patch
 
-Patch1031: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
+Patch1031: linux-%kernel_branch-feat-drivers-input-lirc.patch
+Patch1032: linux-%kernel_branch.42-feat-drivers-input-touchscreen--elousb.patch
 
-Patch1041: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
-Patch1042: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
-Patch1043: linux-%kernel_branch.42-feat-drivers-misc--zcache.patch
+Patch1041: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
 
-Patch1051: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
-Patch1052: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
+Patch1051: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
+Patch1052: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
+Patch1053: linux-%kernel_branch.42-feat-drivers-misc--zcache.patch
 
-Patch1061: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
+Patch1061: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
+Patch1062: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
 
-Patch1071: linux-%kernel_branch.42-feat-drivers-video--bootsplash.patch
+Patch1071: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
 
-Patch1081: linux-%kernel_branch.42-feat-fs--secrm.patch
-Patch1082: linux-%kernel_branch-feat-fs-aufs.patch
-Patch1083: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
-Patch1084: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
-Patch1085: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
-Patch1086: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
-Patch1087: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
-Patch1088: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1089: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1090: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1091: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1081: linux-%kernel_branch.42-feat-drivers-video--bootsplash.patch
 
-Patch1101: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
-Patch1102: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
+Patch1091: linux-%kernel_branch.42-feat-fs--secrm.patch
+Patch1092: linux-%kernel_branch-feat-fs-aufs.patch
+Patch1093: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
+Patch1094: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
+Patch1095: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
+Patch1096: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
+Patch1097: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
+Patch1098: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
+Patch1099: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1100: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1101: linux-%kernel_branch.42-feat-fs-unionfs.patch
 
-Patch1111: linux-%kernel_branch.42-feat-lib--llist.patch
+Patch1111: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
+Patch1112: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
 
-Patch1121: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+Patch1121: linux-%kernel_branch.42-feat-lib--llist.patch
 
-Patch1131: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
+Patch1131: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+
+Patch1141: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %x86_64 %ix86
@@ -990,14 +995,14 @@ These are ISDN modules for your Linux system.
 %endif
 
 
-%if_enabled virtio
+%if_enabled guest
 %if "%sub_flavour" != "guest"
-%package -n kernel-modules-virtio-%flavour
-Summary: Linux virtio driver modules
-%kernel_modules_package_std_body virtio
+%package -n kernel-modules-guest-%flavour
+Summary: Linux guest driver modules
+%kernel_modules_package_std_body guest
 
-%description -n kernel-modules-virtio-%flavour
-This package contains Linux virtio driver modules for the kernel package
+%description -n kernel-modules-guest-%flavour
+This package contains Linux guest driver modules for the kernel package
 %name-%version-%release.
 %endif
 %endif
@@ -1256,6 +1261,7 @@ cd linux-%version
 %patch0176 -p1
 %patch0177 -p1
 %patch0178 -p1
+%patch0179 -p1
 
 %patch0181 -p1
 %patch0182 -p1
@@ -1523,43 +1529,46 @@ cd linux-%version
 %patch1003 -p1
 
 %patch1011 -p1
+%patch1012 -p1
 
 %patch1021 -p1
-%patch1022 -p1
 
 %patch1031 -p1
+%patch1032 -p1
 
 %patch1041 -p1
-%patch1042 -p1
-%patch1043 -p1
 
 %patch1051 -p1
 %patch1052 -p1
+%patch1053 -p1
 
 %patch1061 -p1
+%patch1062 -p1
 
 %patch1071 -p1
 
 %patch1081 -p1
-%patch1082 -p1
-%patch1083 -p1
-%patch1084 -p1
-%patch1085 -p1
-%patch1086 -p1
-%patch1087 -p1
-%patch1088 -p1
-%patch1089 -p1
-%patch1090 -p1
-%patch1091 -p1
 
+%patch1091 -p1
+%patch1092 -p1
+%patch1093 -p1
+%patch1094 -p1
+%patch1095 -p1
+%patch1096 -p1
+%patch1097 -p1
+%patch1098 -p1
+%patch1099 -p1
+%patch1100 -p1
 %patch1101 -p1
-%patch1102 -p1
 
 %patch1111 -p1
+%patch1112 -p1
 
 %patch1121 -p1
 
 %patch1131 -p1
+
+%patch1141 -p1
 
 # get rid of unwanted files resulting from patch fuzz
 #find . -name "*.orig" -delete -or -name "*~" -delete
@@ -1682,12 +1691,13 @@ config_disable \
 	%{?_disable_apparmor:SECURITY_APPARMOR} \
 	%{?_disable_tomoyo:SECURITY_SMACK} \
 	%{?_disable_thp:TRANSPARENT_HUGEPAGE} \
-	%{?_disable_virtio:VIRTIO} \
+	%{?_disable_guest:VIRTIO DRM_KVM_CIRRUS DRM_VMWGFX} \
 	%{?_disable_kvm:KVM} \
 	%{?_disable_hyperv:HYPERV} \
 	%{?_disable_paravirt_guest:PARAVIRT_GUEST} \
 	%{?_disable_kvm_guest:KVM_GUEST} \
 	%{?_disable_bootsplash:BOOTSPLASH} \
+	%{?_disable_zcache:ZCACHE} \
 	%{?_disable_pci:PCI} \
 	%{?_disable_mca:MCA} \
 	%{?_disable_acpi:ACPI} \
@@ -1921,7 +1931,7 @@ gen_rpmmodfile scsi-base \
 	%buildroot%modules_dir/kernel/drivers/scsi/{{,lib}iscsi*,scsi_transport_iscsi.ko} \
 %endif
 	%buildroot%modules_dir/kernel/drivers/scsi/{{*_mod,scsi_{tgt,transport_srp}}.ko,osd,device_handler{,/scsi_dh.ko}}
-gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/device_handler}}/* | grep -Fxv -f scsi-base.rpmmodlist > scsi.rpmmodlist
+gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/device_handler}/*} | grep -Fxv -f scsi-base.rpmmodlist > scsi.rpmmodlist
 mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
 gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
 gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{char/ipmi,hwmon/ibm*.ko}
@@ -1943,7 +1953,8 @@ for i in %{?_enable_joystick:joystick} %{?_enable_lirc:lirc} %{?_enable_tablet:t
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/input/$i
 done
 %if "%sub_flavour" != "guest"
-%{?_enable_virtio:gen_rpmmodfile virtio %buildroot%modules_dir/kernel/drivers/{virtio,char{,/hw_random},net,block}/virtio*}
+%{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/drivers/{virtio,{char{,/hw_random},net,block}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,vmwgfx}}}}
+%{?_enable_drm:grep -F -f drm.rpmmodlist guest.rpmmodlist | sed 's/^/%%exclude &/' >> drm.rpmmodlist}
 %endif
 sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
@@ -2010,7 +2021,7 @@ fi
 %{?_enable_isdn:%kernel_modules_package_post isdn}
 
 %if "%sub_flavour" != "guest"
-%{?_enable_virtio:%kernel_modules_package_post virtio}
+%{?_enable_guest:%kernel_modules_package_post guest}
 %endif
 
 %{?_enable_kvm:%kernel_modules_package_post kvm}
@@ -2240,7 +2251,7 @@ fi
 
 
 %if "%sub_flavour" != "guest"
-%{?_enable_virtio:%kernel_modules_package_files virtio}
+%{?_enable_guest:%kernel_modules_package_files guest}
 %endif
 
 
@@ -2373,6 +2384,20 @@ fi
 
 
 %changelog
+* Tue Sep 18 2012 Led <led@altlinux.ru> 3.0.43-alt4
+- updated:
+  + fix-drivers-misc--zcache
+  + fix-fs-btrfs
+- added:
+  + fix-drivers-gpu-drm--vmwgfx
+  + feat-drivers-block--cloop
+  + feat-drivers-gpu-drm--cirrus
+- enabled modesetting by default:
+  + DRM_RADEON_KMS
+  + DRM_I915_KMS
+- enabled DRM_VMWGFX
+- renamed kernel-modules-virtio-* to kernel-module-guest-*
+
 * Mon Sep 17 2012 Led <led@altlinux.ru> 3.0.43-alt3
 - updated:
   + fix-drivers-scsi--aha152x
@@ -2385,7 +2410,6 @@ fi
 - updated:
   + fix-kernel
 - added:
-  + fix-drivers-misc--zcache
   + fix-drivers-usb-usbip--usbip-host
   + feat-drivers-block--zram
   + feat-drivers-misc--xvmalloc
