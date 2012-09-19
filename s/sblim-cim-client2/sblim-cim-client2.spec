@@ -5,14 +5,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name sblim-cim-client2
-%define version 2.1.12
+%define version 2.2.0
 
 %global project_folder %{name}-%{version}-src
 %global archive_folder build
 
 Name:           sblim-cim-client2
-Version:        2.1.12
-Release:        alt1_2jpp7
+Version:        2.2.0
+Release:        alt1_1jpp7
 Summary:        Java CIM Client library
 
 Group:          Development/Java
@@ -40,6 +40,7 @@ http://www.jcp.org and http://www.jcp.org/en/jsr/detail?id=48.
 Summary:        Javadoc for %{name}
 Group:          Development/Java
 Requires:       sblim-cim-client2 = %{version}-%{release}
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
@@ -101,8 +102,8 @@ install %{archive_folder}/lib/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/
     ln -sf %{name}-%{version}.jar %{name}.jar;
 )
 # --- javadoc ---
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %files
@@ -119,7 +120,7 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
+%{_javadocdir}/%{name}
 
 %files manual
 %doc %{_docdir}/%{name}-%{version}/COPYING
@@ -129,6 +130,9 @@ cp -pr %{archive_folder}/doc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.0-alt1_1jpp7
+- new release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.12-alt1_2jpp7
 - new version
 
