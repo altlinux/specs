@@ -1,54 +1,28 @@
+Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+Name:          jcifs
+Version:       1.3.17
+Release:       alt1_4jpp7
+Summary:       Common Internet File System Client in 100% Java
+Group:         Development/Java
+License:       LGPLv2+
+Url:           http://jcifs.samba.org/
+Source0:       http://jcifs.samba.org/src/jcifs-1.3.17.tgz
+Source1:       http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/%{version}/%{name}-%{version}.pom
+# fix javac executable
+Patch0:        %{name}-%{version}-build.patch
+# remove maven-gpg-plugin
+Patch1:        %{name}-%{version}-pom.patch
+BuildRequires: jpackage-utils
 
+BuildRequires: ant
 
-Name:           jcifs
-Version:        1.3.16
-Release:        alt1_1jpp6
-Epoch:          0
-Summary:        Common Internet File System Client in 100% Java
-License:        LGPLv2+
-Group:          Development/Java
-URL:            http://jcifs.samba.org/
-Source0:        http://jcifs.samba.org/src/jcifs-1.3.16.tgz
-Source1:        jcifs.pom
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires:       jpackage-utils
-Requires:       servlet_api
-BuildRequires:  ant
-BuildRequires:  jpackage-utils
-BuildRequires:  servlet_api
-BuildArch:      noarch
+BuildRequires: tomcat-servlet-3.0-api
+Requires:      tomcat-servlet-3.0-api
+
+Requires:      jpackage-utils
+BuildArch:     noarch
 Source44: import.info
 
 %description
@@ -65,72 +39,69 @@ give away a modified binary only version of the library itself without
 reciprocation).
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Summary:       Javadocs for %{name}
+Group:         Development/Java
+Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+This package contains the API documentation for %{name}.
 
 %package demo
-Summary:        Demo for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary:       Demo for %{name}
+Group:         Development/Java
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
 
 %prep
 %setup -q -n %{name}_%{version}
-%{_bindir}/find -type f -name "*.jar" | xargs -t rm
-%{__perl} -p -i -e 's|executable=".*"|executable="%{javac}"|;' build.xml
+find -name '*.class' -exec rm -f '{}' \;
+find -name '*.jar' -exec rm -f '{}' \;
+%patch0 -p0
+cp -p %{SOURCE1} pom.xml
+%patch1 -p0
 
 %build
-export CLASSPATH=`%{_bindir}/build-classpath servlet_api`
+
+export CLASSPATH=$(build-classpath tomcat-servlet-3.0-api)
 export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 jar javadoc
-%if 0
-export CLASSPATH=`%{_bindir}/build-classpath servlet_api`:`pwd`/%{name}-%{version}.jar
-(cd examples && %{javac}  -target 1.5 -source 1.5 *.java)
-%endif
+%ant jar javadoc docs
 
 %install
 
-# jar
 mkdir -p %{buildroot}%{_javadir}
-cp -p jcifs-%{version}.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done)
+install -p -m 644 %{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
-# pom
-mkdir -p %{buildroot}%{_datadir}/maven2/poms
-cp -p %{SOURCE1} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.samba.jcifs jcifs %{version} JPP %{name}
+mkdir -p %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "org.samba.jcifs:jcifs"
 
-# javadoc
-mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -pr docs/api/* %{buildroot}%{_javadocdir}/%{name}
 
-# data
-mkdir -p %{buildroot}%{_datadir}/%{name}
-cp -pr examples %{buildroot}%{_datadir}/%{name}
+mkdir -p %{buildroot}%{_datadir}/%{name}/examples
+cp -pr examples/*.java  %{buildroot}%{_datadir}/%{name}/examples
 
 %files
-%doc LICENSE.txt README.txt docs/*.{html,txt,gif}
 %{_javadir}/%{name}.jar
-%{_javadir}/%{name}-%{version}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
+%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
+%doc LICENSE.txt README.txt docs/*.{html,txt,gif}
 
 %files javadoc
 %{_javadocdir}/%{name}
-%{_javadocdir}/%{name}-%{version}
+%doc LICENSE.txt
 
 %files demo
-%{_datadir}/%{name}
+%{_datadir}/%{name}/*
+%doc LICENSE.txt
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.17-alt1_4jpp7
+- new release
+
 * Mon Jan 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.16-alt1_1jpp6
 - new jpp relase
 
