@@ -43,7 +43,7 @@ BuildRequires: jpackage-compat
 %define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 
-%bcond_without jboss
+%bcond_with jboss
 %bcond_without repolib
 
 %define version_full %{version}RC4
@@ -66,7 +66,7 @@ BuildRequires: jpackage-compat
 
 Name:           juddi
 Version:        0.9
-Release:        alt2_0.rc4.8jpp6
+Release:        alt3_0.rc4.8jpp6
 Epoch:          0
 Summary:        Open source Java implementation UDDI specification
 License:        ASL 2.0
@@ -295,6 +295,9 @@ rm -f %{appdir}/%{name}/WEB-INF/lib/*.jar
 %endif
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt3_0.rc4.8jpp6
+- fixed build
+
 * Thu Feb 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9-alt2_0.rc4.8jpp6
 - new jpp relase
 
