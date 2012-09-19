@@ -1,147 +1,94 @@
-BuildRequires: maven-enforcer-plugin
-BuildRequires: /usr/bin/mvn-jpp
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-
-%define module swing-junit
-
-Name:           fest-%{module}
-Version:        1.2
-Release:        alt4_1jpp7
-Summary:        Fixtures for Easy Software Testing Swing GUI Testing JUnit
+Name:           fest-swing-junit
+Version:        1.2.1
+Release:        alt1_4jpp7
+Summary:        FEST Swing JUnit support
 
 Group:          Development/Java
-License:        Apache License, Version 2.0
-URL:            http://fest.easytesting.org/swing/
-Source0:        fest-swing-junit-1.2.tgz
-# svn export http://svn.codehaus.org/fest/tags/fest-swing-junit-1.2
-# tar czf fest-swing-junit-1.2.tgz fest-swing-junit-1.2
-Source1:        %{name}-settings.xml
-Source2:        %{name}-jpp-depmap.xml
-Source3:        fest-1.0.pom
-# See http://svn.codehaus.org/fest/trunk/fest/pom.xml
+License:        ASL 2.0
+URL:            http://fest.easytesting.org
 
-BuildRequires:  maven >= 0:2.0.8
-BuildRequires:  maven-dependency-plugin
-BuildRequires:  maven-surefire-provider-junit4
-BuildRequires:  ant-junit
-BuildRequires:  apache-commons-codec
-BuildRequires:  fest-assembly
-BuildRequires:  fest-assert
-BuildRequires:  fest-mocks
-BuildRequires:  fest-reflect
-BuildRequires:  fest-test
-BuildRequires:  fest-swing
-BuildRequires:  junit44
-Requires:  jpackage-utils >= 0:5.0.0
-Requires:  apache-commons-codec
-Requires:  fest-reflect
-Requires:  fest-swing
-
-Requires(post):    jpackage-utils >= 0:5.0.0
-Requires(postun):  jpackage-utils >= 0:5.0.0
-
+# svn co http://svn.codehaus.org/fest/tags/fest-swing-junit-1.2.1
+# tar cvfj fest-swing-junit-1.2.1.tar.bz2 fest-swing-junit-1.2.1
+Source0:        %{name}-%{version}.tar.bz2
+Patch0:         fest-swing-junit-remove-fest-test-dep.patch
 BuildArch:      noarch
+
+BuildRequires:  jpackage-utils
+BuildRequires:  maven
+BuildRequires:  maven-enforcer-plugin
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  junit
+BuildRequires:  commons-codec
+BuildRequires:  ant-junit
+BuildRequires:  fest-swing = 1.2.1
+
+Requires:       jpackage-utils
+Requires:       commons-codec
+Requires:       ant-junit
+Requires:       junit
+Requires:       fest-swing = 1.2.1
 Source44: import.info
 
 %description
-FEST-Swing Junit.
+FEST-Swing provides a simple and intuitive API for
+functional testing of Swing user interfaces, resulting in tests that
+are compact, easy to write, and read like a specification.
+FEST simulates actual user gestures at the operating system level,
+ensuring that the application will behave correctly in front of the user.
+
+This package provides integration with JUnit.
 
 %package javadoc
+Group:          Development/Java
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+API documentation for %{name}.
 
 %prep
 %setup -q
-
-mkdir external_repo
-ln -s %{_javadir} external_repo/JPP
-cp -p %{SOURCE1} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
-mkdir -p .m2/repository/org/easytesting/fest/1.0/
-cp %{SOURCE3} .m2/repository/org/easytesting/fest/1.0/fest-1.0.pom
-mkdir -p .m2/repository/org/easytesting/fest/1.0.1/
-cp %{SOURCE3} .m2/repository/org/easytesting/fest/1.0.1/fest-1.0.1.pom
-
-jar xf $(build-classpath fest/assembly)
-rm -rf META-INF
+%patch0
 
 %build
-export SETTINGS=$(pwd)/settings.xml
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p ${MAVEN_REPO_LOCAL}
-export MAVEN_OPTS="-Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Dmaven.test.failure.ignore=true"
-# -Djava.awt.headless=true -Dmaven.test.skip=true"
-mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
-        -e \
-        -s ${SETTINGS} \
-        install javadoc:javadoc
+# Skip tests because that would require dependency on obsolete
+# and difficult to package fest-mocks. Upstream is moving
+# to mockito for subsequent releases.
+mvn-rpmbuild -Dmaven.test.skip=true install javadoc:javadoc
 
 %install
+# jars
+install -d -m 0755 %{buildroot}%{_javadir}
+install -m 644 target/%{name}-%{version}.jar  %{buildroot}%{_javadir}/%{name}.jar
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/fest
+# poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml \
+    %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
-install -m 644 target/%{name}-%{version}.jar \
-       $RPM_BUILD_ROOT%{_javadir}/fest/%{module}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir}/fest && for jar in *-%{version}*; do \
-ln -s ${jar} ${jar/-%{version}/}; done)
-
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}.pom
-%add_to_maven_depmap org.easytesting %{name} %{version} JPP/fest %{module}
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 
 %files
-%dir %{_javadir}/fest
-%{_javadir}/fest/*.jar
-%{_datadir}/maven2/poms/*
+%{_javadir}/*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
+%doc LICENSE.txt
 
 %files javadoc
-%{_javadocdir}/%{name}*
+%{_javadocdir}/%{name}
+%doc LICENSE.txt
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_4jpp7
+- new release
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4_1jpp7
 - fixed build
 
