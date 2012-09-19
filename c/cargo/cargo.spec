@@ -48,7 +48,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo
 Version:        1.0
-Release:        alt6_3jpp6
+Release:        alt7_3jpp6
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -238,6 +238,8 @@ ln -s %{_javadir} external_repo/JPP
 
 %patch33
 sed -i -e 's,org\.apache\.commons\.vfs\.,org.apache.commons.vfs2.,g' `grep -rl org.apache.commons.vfs. .`
+sed -i -e 's,<assembly>,<assembly><id>ALT</id>,' core/uberjar/src/assemble/main.xml
+
 
 %build
 export LANG=en_US.ISO8859-1
@@ -334,7 +336,7 @@ cp -p \
    core/samples/java/target/cargo-sample-java-%{version}.jar \
    %{buildroot}%{_javadir}/%{name}/%{name}-sample-java-%{version}.jar
 cp -p \
-   core/uberjar/target/cargo-core-uberjar-%{version}.jar \
+   core/uberjar/target/cargo-core-uberjar-%{version}-ALT.jar \
    %{buildroot}%{_javadir}/%{name}/%{name}-core-uberjar-%{version}.jar
 cp -p \
    extensions/ant/target/cargo-ant-%{version}.jar \
@@ -550,6 +552,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_3jpp6
+- fixed build - added non-null assembly descriptor
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt6_3jpp6
 - build with jetty8
 
