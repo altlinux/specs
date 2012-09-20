@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name: resteasy
 Version: 2.3.2
-Release: alt1_9jpp7
+Release: alt2_9jpp7
 Summary: Framework for RESTful Web services and Java applications
 Group: Development/Java
 License: ASL 2.0 and CDDL
@@ -18,6 +18,7 @@ URL: http://www.jboss.org/resteasy
 # cd Resteasy
 # git archive --prefix=resteasy-2.3.2.Final/ --output=resteasy-2.3.2.Final.tgz RESTEASY_JAXRS_2_3_2_FINAL
 Source0: %{name}-%{namedversion}.tgz
+Source33: resteasy-2.3.2-jpp-depmap.xml
 
 Patch0: %{name}-%{namedversion}-remove-dependenciesA.patch
 Patch1: %{name}-%{namedversion}-fix-tests.patch
@@ -187,7 +188,8 @@ This package contains the API documentation for %{name}.
 %patch4 -p1
 
 %build
-mvn-rpmbuild -Dmaven.test.skip=true -e install javadoc:aggregate
+mvn-rpmbuild -Dmaven.local.depmap.file=%{SOURCE33} \
+ -Dmaven.test.skip=true -e install javadoc:aggregate
 
 %install
 
@@ -272,6 +274,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc License.html
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2_9jpp7
+- fixed build
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt1_9jpp7
 - new version
 
