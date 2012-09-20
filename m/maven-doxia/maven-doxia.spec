@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-doxia
 Version:        1.2
-Release:        alt1_4jpp7
+Release:        alt2_4jpp7
 Epoch:          0
 Summary:        Content generation framework
 License:        ASL 2.0
@@ -106,7 +106,7 @@ BuildRequires:  httpcomponents-project
 BuildRequires:  xmlgraphics-commons
 BuildRequires:  avalon-framework
 BuildRequires:  geronimo-parent-poms
-BuildRequires:  geronimo-jms-1.1-api
+BuildRequires:  geronimo-jms
 BuildRequires:  javamail
 
 
@@ -125,7 +125,7 @@ Requires:       velocity
 Requires:	fop
 Requires:       httpcomponents-client
 Requires:       httpcomponents-project
-Requires:       geronimo-jms-1.1-api
+Requires:       geronimo-jms
 Requires:       javamail
 # should be in geronimo-jms but that would pull maven even for ant use
 # of library so we don't add it there
@@ -223,6 +223,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_4jpp7
+- use fc geronimo
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_4jpp7
 - new release
 
