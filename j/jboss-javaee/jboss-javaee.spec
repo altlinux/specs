@@ -62,7 +62,7 @@ BuildRequires: jpackage-compat
 
 Name:           jboss-javaee
 Version:        5.0.1
-Release:        alt6_2jpp6
+Release:        alt7_2jpp6
 Epoch:          0
 Summary:        JBoss JavaEE 5.0 Aggregate
 License:        LGPLv2+
@@ -279,6 +279,9 @@ for i in jboss-ejb-api jboss-jad-api jboss-jaxr-api jboss-jms-api jboss-jaspi-ap
  sed -i -e "s,<module>$i</module>,<!-- module>$i</module -->," pom.xml
 done
 
+sed -i -e 's,<assembly>,<assembly><id>JDK14</id>,' build/assembly/bin-jdk14.xml 
+sed -i -e 's,<assembly>,<assembly><id>ALT</id>,' build/assembly/bin.xml 
+
 %build
 export LANG=en_US.ISO8859-1
 
@@ -303,7 +306,7 @@ install -m 644 build/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-ja
 
 %add_to_maven_depmap org.jboss.javaee jboss-javaee %{javaee_namedversion} JPP jboss-javaee
 install -m 644 pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-jboss-javaee.pom
-install -m 644 target/jboss-javaee.jar \
+install -m 644 target/jboss-javaee-ALT.jar \
            $RPM_BUILD_ROOT%{_javadir}/jboss-javaee-5-apis-%{version}.jar
 ln -s jboss-javaee-5-apis-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/jboss-javaee-%{version}.jar
 
@@ -645,6 +648,9 @@ EOF
 %endif
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt7_2jpp6
+- fixed null assembly id
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.1-alt6_2jpp6
 - build w/o jbossws-native
 
