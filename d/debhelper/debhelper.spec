@@ -1,5 +1,5 @@
 Name: debhelper
-Version: 7.1.1
+Version: 9.20120830
 Release: alt1
 
 Summary: Tools for Debian Packages
@@ -10,7 +10,7 @@ Url: http://packages.debian.org/unstable/devel/%name
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://ftp.debian.org/debian/pool/main/d/%name/%{name}_%version.tar.bz2
+Source: http://ftp.debian.org/debian/pool/main/d/%name/%{name}_%version.tar
 
 BuildArch: noarch
 
@@ -60,6 +60,9 @@ install -m 755 dh_*[^1-9] %buildroot%_bindir
 %_man7dir/*
 
 %changelog
+* Thu Sep 20 2012 Vitaly Lipatov <lav@altlinux.ru> 9.20120830-alt1
+- new version 9.20120830 (with rpmrb script)
+
 * Wed Jan 07 2009 Vitaly Lipatov <lav@altlinux.ru> 7.1.1-alt1
 - new version 7.1.1 (with rpmrb script)
 - update buildreq
