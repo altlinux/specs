@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-commons-math
 Version:          3.0
-Release:          alt1_2jpp7
+Release:          alt2_2jpp7
 Summary:          Java library of lightweight mathematics and statistics components
 
 Group:            Development/Java
@@ -59,6 +59,8 @@ install -pm 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -dm 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
+# jpp compat symlink
+ln -s %name.jar %buildroot%_javadir/commons-math.jar
 
 %files
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
@@ -73,6 +75,9 @@ cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0-alt2_2jpp7
+- added jpp compat symlink
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0-alt1_2jpp7
 - new version
 
