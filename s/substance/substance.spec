@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           substance
 Version:        5.3
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Summary:        Substance Look and Feel
 License:        BSD
 Group:          Development/Java
@@ -91,10 +91,10 @@ ln -sf %{_javadir}/jgoodies-forms.jar lib/forms-1.2.0.jar
 ln -sf %{_javadir}/laf-plugin.jar     lib/laf-plugin-50.jar
 ln -sf %{_javadir}/laf-widget.jar     lib
 ln -sf %{_javadir}/swingx.jar         lib
-ln -sf %{_javadir}/fest/assert.jar    lib/test/fest-assert-1.1.jar
-ln -sf %{_javadir}/fest/reflect.jar   lib/test/fest-reflect-1.1.jar
-ln -sf %{_javadir}/fest/swing.jar     lib/test/fest-swing-1.2a3.jar
-ln -sf %{_javadir}/fest/util.jar      lib/test/fest-util-1.1.jar
+ln -sf %{_javadir}/fest-assert.jar    lib/test/fest-assert-1.1.jar
+ln -sf %{_javadir}/fest-reflect.jar   lib/test/fest-reflect-1.1.jar
+ln -sf %{_javadir}/fest-swing.jar     lib/test/fest-swing-1.2a3.jar
+ln -sf %{_javadir}/fest-util.jar      lib/test/fest-util-1.1.jar
 
 %build
 export LANG=en_US.ISO8859-1
@@ -143,6 +143,9 @@ ln -s %{name}-%{version} \
 %doc www/*
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 5.3-alt3_1jpp6
+- fixed build with fc fest-*
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 5.3-alt2_1jpp6
 - fixed build with java 7
 
