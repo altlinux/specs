@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           joone
 Version:        2.0.0
-Release:        alt3_0.rc2.1jpp6
+Release:        alt4_0.rc2.1jpp6
 Summary:        An Object Oriented Neural Engine
 
 Group:          Development/Java
@@ -184,6 +184,7 @@ mkdir releases
 %patch6 -b .jfree
 %patch7 -b .groovy15
 
+sed -i -e s,org.apache.commons.math.,org.apache.commons.math3., `grep -rl 'org\.apache\.commons\.math\.' .`
 
 %build
 export LANG=en_US.ISO8859-1
@@ -191,7 +192,7 @@ pushd joone_oat
 export CLASSPATH=$(build-classpath \
 axis \
 colt \
-commons-math \
+commons-math3 \
 jcommon \
 jfreechart \
 junit4 \
@@ -238,6 +239,9 @@ install -m 644 joone/doc/Latex_Doc/JooneCompleteGuide.pdf $RPM_BUILD_ROOT%{_docd
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt4_0.rc2.1jpp6
+- built with commons-math3
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt3_0.rc2.1jpp6
 - built with java 6
 
