@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:       jamonapi
 Version:    2.73
-Release:    alt1_6jpp7
+Release:    alt2_6jpp7
 Summary:    A Java monitoring API
 Group:      Development/Java
 License:    BSD
@@ -26,7 +26,7 @@ BuildRequires:   tomcat-lib
 BuildRequires:   tomcat-servlet-3.0-api
 BuildRequires:   tomcat-el-2.2-api
 BuildRequires:   jetty
-BuildRequires:   geronimo-interceptor-3.0-api
+BuildRequires:   geronimo-interceptor
 BuildRequires:   log4j
 BuildRequires:   dos2unix
 Requires:        jpackage-utils
@@ -34,7 +34,7 @@ Requires:        tomcat-lib
 Requires:        tomcat-servlet-3.0-api
 Requires:        tomcat-el-2.2-api
 Requires:        jetty
-Requires:        geronimo-interceptor-3.0-api
+Requires:        geronimo-interceptor
 Requires:        log4j
 BuildArch:       noarch
 Source44: import.info
@@ -60,8 +60,8 @@ mkdir lib
 
 %build
 pushd src/ant
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 JAR
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 javadoc
+ant JAR
+ant javadoc
 popd
 
 # Remove spurious executable permissions
@@ -105,6 +105,9 @@ cp -rp src/doc/javadoc ${RPM_BUILD_ROOT}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.73-alt2_6jpp7
+- use fc geronimo
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.73-alt1_6jpp7
 - new version
 
