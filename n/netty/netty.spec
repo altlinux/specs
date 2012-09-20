@@ -1,41 +1,39 @@
-BuildRequires: /proc maven-enforcer-plugin
+BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           netty
-Version:        3.2.4
-Release:        alt1_2jpp7
+Version:        3.5.3
+Release:        alt1_1jpp7
 Summary:        An asynchronous event-driven network application framework and tools for Java
 
 Group:          Development/Java
 License:        ASL 2.0
-URL:            http://www.jboss.org/netty
-Source0:        http://sourceforge.net/projects/jboss/files/%{name}-%{version}.Final-dist.tar.bz2
+URL:            https://netty.io/
+Source0:        https://github.com/downloads/%{name}/%{name}/%{name}-%{version}.Final-dist.tar.bz2
 
-Patch0:         0001-Remove-optional-deps.patch
-Patch1:         0002-Replace-jboss-logger-with-jdk-logger.patch
-Patch2:         0003-Fix-javadoc-plugin-configuration.patch
-Patch3:         0004-Remove-antun-execution-for-removing-examples.patch
+BuildArch:      noarch
 
-BuildArch:     noarch
-
-# This pulls in all of the required java and maven stuff
 BuildRequires:  maven
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
-BuildRequires:  maven-eclipse-plugin
+BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-javadoc-plugin
+BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-resources-plugin
-BuildRequires:  maven-release-plugin
 BuildRequires:  maven-source-plugin
 BuildRequires:  maven-surefire-plugin
-BuildRequires:  maven-plugin-bundle
-BuildRequires:  buildnumber-maven-plugin
 BuildRequires:  ant-contrib
-BuildRequires:  subversion
-BuildRequires:  protobuf-java
-BuildRequires:  felix-osgi-compendium
-BuildRequires:  jboss-parent
 
+BuildRequires:  felix-osgi-compendium
+BuildRequires:  felix-osgi-core
+BuildRequires:  jboss-logging
+BuildRequires:  jboss-marshalling
+BuildRequires:  protobuf-java
+BuildRequires:  slf4j
+BuildRequires:  sonatype-oss-parent
+BuildRequires:  tomcat-servlet-3.0-api
+
+Requires:       jpackage-utils
 Requires:       protobuf-java
 Source44: import.info
 
@@ -65,26 +63,22 @@ BuildArch: noarch
 
 %prep
 %setup -q -n %{name}-%{version}.Final
-
 # just to be sure, but not used anyway
-rm -rf jar/
+rm -rf jar doc license
 
-# example doesn't build with our protobuf
-rm -rf src/main/java/org/jboss/netty/example/localtime
+%pom_xpath_remove "pom:plugin[pom:artifactId[text()='maven-jxr-plugin']]"
+%pom_xpath_remove "pom:plugin[pom:artifactId[text()='maven-checkstyle-plugin']]"
+%pom_remove_plugin org.eclipse.m2e:lifecycle-mapping
+%pom_remove_dep javax.activation:activation
+%pom_remove_plugin :animal-sniffer-maven-plugin
+%pom_xpath_remove "pom:execution[pom:id[text()='remove-examples']]"
+%pom_xpath_remove "pom:plugin[pom:artifactId[text()='maven-javadoc-plugin']]/pom:configuration"
 
-
-%patch0 -p1
-%patch1 -p1
-
-# we don't have jboss logging facilites so we replace it with jdk logger
-rm src/main/java/org/jboss/netty/logging/JBossLogger*.java
-%patch2 -p1
-%patch3 -p1
+sed s/jboss-logging-spi/jboss-logging/ -i pom.xml
 
 %build
-# skipping tests because we don't have all dependencies in Fedora
-mvn-rpmbuild -Dmaven.test.skip=true \
-        install javadoc:javadoc
+# skipping tests because we don't have easymockclassextension
+mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
 
 
 %install
@@ -93,14 +87,13 @@ install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
 install -m 644 target/%{name}-%{version}.Final.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
-%add_maven_depmap JPP-%{name}.pom %{name}.jar
+%add_maven_depmap -a org.jboss.netty:netty JPP-%{name}.pom %{name}.jar
 
 %files
 %doc LICENSE.txt NOTICE.txt
@@ -113,6 +106,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 3.5.3-alt1_1jpp7
+- new version
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.4-alt1_2jpp7
 - complete build
 
