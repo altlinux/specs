@@ -1,4 +1,3 @@
-Obsoletes: groovy10 < 1.1
 Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -7,8 +6,8 @@ BuildRequires: jpackage-compat
 # the Requires list.
 
 Name:           groovy
-Version:        1.8.6
-Release:        alt2_2jpp7
+Version:        1.8.7
+Release:        alt1_1jpp7
 Summary:        Dynamic language for the Java Platform
 
 Group:          Development/Java
@@ -21,16 +20,16 @@ Source3:        groovy.desktop
 BuildArch:      noarch
 
 BuildRequires:  ant
-BuildRequires:  antlr
+BuildRequires:  antlr-tool
 BuildRequires:  ant-antlr
 BuildRequires:  objectweb-asm
 BuildRequires:  bsf
 BuildRequires:  apache-ivy
 BuildRequires:  jansi
 BuildRequires:  jline
-BuildRequires:  jsp21
-BuildRequires:  junit
-BuildRequires:  servlet25
+BuildRequires:  tomcat-jsp-2.2-api
+BuildRequires:  junit4
+BuildRequires:  tomcat-servlet-3.0-api
 BuildRequires:  xstream
 BuildRequires:  desktop-file-utils
 BuildRequires:  jpackage-utils
@@ -42,17 +41,17 @@ Requires:       jpackage-utils
 # TODO: Think of splitting them into a separate subpackage
 Requires:       ant
 Requires:       ant-junit
-Requires:       antlr
+Requires:       antlr-tool
 Requires:       objectweb-asm
 Requires:       bsf
 Requires:       apache-commons-cli
 Requires:       apache-commons-logging
-Requires:       ivy
+Requires:       apache-ivy
 Requires:       jansi
 Requires:       jline
-Requires:       jsp21
-Requires:       junit
-Requires:       servlet25
+Requires:       tomcat-jsp-2.2-api
+Requires:       junit4
+Requires:       tomcat-servlet-3.0-api
 Requires:       xstream
 Source44: import.info
 
@@ -87,7 +86,7 @@ build-jar-repository target/lib/compile servlet jsp \
         objectweb-asm/asm-tree objectweb-asm/asm \
         objectweb-asm/asm-util objectweb-asm/asm-analysis \
         antlr ant/ant-antlr antlr \
-        bsf jline xstream ant junit apache-ivy commons-cli \
+        bsf jline xstream ant junit4 ivy commons-cli \
         jansi
 
 # Build
@@ -125,16 +124,17 @@ desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
         %{SOURCE3}
 
 # API Documentation
-install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 find target -type d |xargs chmod 755
-cp -rp target/html/api/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+cp -rp target/html/api/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # Maven depmap
-install -d $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -p -m644 pom.xml $RPM_BUILD_ROOT/%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap org.codehaus.groovy %{name} %{version} JPP %{name}
+install -d $RPM_BUILD_ROOT%{_mavenpomdir}
+install -p -m644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
-touch $RPM_BUILD_ROOT%{_sysconfdir}/groovy.conf
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/groovy.conf`
+touch $RPM_BUILD_ROOT/etc/groovy.conf
 
 %files
 %{_bindir}/*
@@ -142,18 +142,19 @@ touch $RPM_BUILD_ROOT%{_sysconfdir}/groovy.conf
 %{_datadir}/pixmaps/*
 %{_datadir}/applications/*
 %{_mavendepmapfragdir}/*
-%{_datadir}/maven2/poms/*
-%config(noreplace) %{_sysconfdir}/groovy-starter.conf
-%config(noreplace,missingok) %{_sysconfdir}/groovy.conf
-
+%{_mavenpomdir}/*
+%config(noreplace) %{_sysconfdir}/*
 %doc LICENSE.txt NOTICE.txt README.md 
+%config(noreplace,missingok) /etc/groovy.conf
 
 
 %files javadoc
 %{_javadocdir}/*
 
-
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.7-alt1_1jpp7
+- new version
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8.6-alt2_2jpp7
 - applied repocop patches
 
