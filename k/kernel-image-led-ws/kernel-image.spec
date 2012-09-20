@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -129,17 +129,18 @@ Source2: %flavour-%kernel_branch-config-i386
 Patch0001: linux-%kernel_branch.42-fix-Documentation-DocBook.patch
 Patch0002: linux-%kernel_branch.42-fix-Documentation-DocBook-man.patch
 
-Patch0011: linux-%kernel_branch.42-fix-arch-powerpc.patch
-Patch0012: linux-%kernel_branch.42-fix-arch-powerpc-platforms--52xx.patch
-Patch0013: linux-%kernel_branch.42-fix-arch-powerpc-platforms--chrp.patch
-Patch0014: linux-%kernel_branch.42-fix-arch-powerpc-platforms--pseries.patch
-Patch0015: linux-%kernel_branch.42-fix-arch-x86.patch
-Patch0016: linux-%kernel_branch.42-fix-arch-x86--apic.patch
-Patch0017: linux-%kernel_branch.42-fix-arch-x86--apm.patch
-Patch0018: linux-%kernel_branch.42-fix-arch-x86--mcheck.patch
-Patch0019: linux-%kernel_branch.42-fix-arch-x86--tsc.patch
-Patch0020: linux-%kernel_branch.42-fix-arch-x86-cpu--perf-event.patch
-Patch0021: linux-%kernel_branch.42-fix-arch-x86-platform-olpc.patch
+Patch0011: linux-%kernel_branch.42-fix-arch-ia64.patch
+Patch0012: linux-%kernel_branch.42-fix-arch-powerpc.patch
+Patch0013: linux-%kernel_branch.42-fix-arch-powerpc-platforms--52xx.patch
+Patch0014: linux-%kernel_branch.42-fix-arch-powerpc-platforms--chrp.patch
+Patch0015: linux-%kernel_branch.42-fix-arch-powerpc-platforms--pseries.patch
+Patch0016: linux-%kernel_branch.42-fix-arch-x86.patch
+Patch0017: linux-%kernel_branch.42-fix-arch-x86--apic.patch
+Patch0018: linux-%kernel_branch.42-fix-arch-x86--apm.patch
+Patch0019: linux-%kernel_branch.42-fix-arch-x86--mcheck.patch
+Patch0020: linux-%kernel_branch.42-fix-arch-x86--tsc.patch
+Patch0021: linux-%kernel_branch.42-fix-arch-x86-cpu--perf-event.patch
+Patch0022: linux-%kernel_branch.42-fix-arch-x86-platform-olpc.patch
 
 Patch0030: linux-%kernel_branch.42-fix-block.patch
 Patch0031: linux-%kernel_branch.42-fix-block--blk-integrity.patch
@@ -303,8 +304,9 @@ Patch0381: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
 Patch0390: linux-%kernel_branch.42-fix-drivers-pci.patch
 Patch0391: linux-%kernel_branch.42-fix-drivers-pci--dmar.patch
-Patch0392: linux-%kernel_branch.42-fix-drivers-pci-hotplug--acpiphp.patch
-Patch0393: linux-%kernel_branch.42-fix-drivers-pci-hotplug--pci_hotplug.patch
+Patch0392: linux-%kernel_branch.42-fix-drivers-pci--sn.patch
+Patch0393: linux-%kernel_branch.42-fix-drivers-pci-hotplug--acpiphp.patch
+Patch0394: linux-%kernel_branch.42-fix-drivers-pci-hotplug--pci_hotplug.patch
 
 Patch0401: linux-%kernel_branch.42-fix-drivers-platform--hdaps.patch
 Patch0402: linux-%kernel_branch.42-fix-drivers-platform--hp_accel.patch
@@ -504,12 +506,14 @@ Patch1095: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
 Patch1096: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
 Patch1097: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
 Patch1098: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1099: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1100: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1101: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1099: linux-%kernel_branch.42-feat-fs-overlayfs.patch
+Patch1100: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1101: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1102: linux-%kernel_branch.42-feat-fs-unionfs.patch
 
-Patch1111: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
-Patch1112: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
+Patch1111: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
+Patch1112: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
+Patch1113: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
 
 Patch1121: linux-%kernel_branch.42-feat-lib--llist.patch
 
@@ -1193,6 +1197,7 @@ cd linux-%version
 %patch0019 -p1
 %patch0020 -p1
 %patch0021 -p1
+%patch0022 -p1
 
 %patch0030 -p1
 %patch0031 -p1
@@ -1358,6 +1363,7 @@ cd linux-%version
 %patch0391 -p1
 %patch0392 -p1
 %patch0393 -p1
+%patch0394 -p1
 
 %patch0401 -p1
 %patch0402 -p1
@@ -1560,9 +1566,11 @@ cd linux-%version
 %patch1099 -p1
 %patch1100 -p1
 %patch1101 -p1
+%patch1102 -p1
 
 %patch1111 -p1
 %patch1112 -p1
+%patch1113 -p1
 
 %patch1121 -p1
 
@@ -2384,6 +2392,19 @@ fi
 
 
 %changelog
+* Thu Sep 20 2012 Led <led@altlinux.ru> 3.0.43-alt5
+- updated:
+  + fix-drivers-scsi--sd_mod
+  + fix-drivers-scsi-device_handler--scsi_dh_alua
+  + fix-drivers-scsi-megaraid--megaraid_sas
+  + fix-fs-btrfs
+  + fix-mm--memcontrol
+- added:
+  + fix-arch-ia64
+  + fix-drivers-pci--sn
+  + feat-fs-overlayfs
+  + feat-kernel--cpe_migrate
+
 * Tue Sep 18 2012 Led <led@altlinux.ru> 3.0.43-alt4
 - updated:
   + fix-drivers-misc--zcache
