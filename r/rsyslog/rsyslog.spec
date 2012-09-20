@@ -1,8 +1,8 @@
 %def_disable ommongodb
 
 Name: rsyslog
-Version: 6.2.2
-Release: alt2
+Version: 6.4.2
+Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+
@@ -16,9 +16,9 @@ Conflicts: syslogd klogd
 Conflicts: syslog-ng
 
 Source: %name-%version.tar
-Source2: mongo-c-driver.tar
 Patch: %name-%version-%release.patch
 
+BuildRequires: flex
 BuildRequires: zlib-devel
 BuildRequires: libdbi-devel
 BuildRequires: libmysqlclient-devel
@@ -28,8 +28,10 @@ BuildRequires: librelp-devel
 BuildRequires: libgnutls-devel libgcrypt-devel
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
-BuildRequires: libestr-devel libee-devel
-BuildRequires: liblognorm-devel
+BuildRequires: libestr-devel >= 0.1.2
+BuildRequires: libee-devel >= 0.4.0
+BuildRequires: liblognorm-devel >= 0.3.1
+%{?_enable_ommongodb:BuildRequires: libmongo-client >= 0.1.4}
 
 %define mod_dir /%_lib/%name
 
@@ -197,9 +199,6 @@ This package contains the HTML documentation for rsyslog.
 %prep
 %setup -q
 %patch -p1
-pushd plugins/ommongodb
-tar -xvf %SOURCE2
-popd
 
 %build
 %autoreconf
@@ -208,7 +207,6 @@ popd
 	--disable-testbench \
 	--sbindir=/sbin \
 	--libdir=/%_lib \
-	--with-moddirs=%mod_dir \
 	--enable-largefile \
 	--enable-regexp \
 	--enable-zlib \
@@ -366,6 +364,12 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %doc html_docs/*
 
 %changelog
+* Thu Sep 20 2012 Alexey Shabalin <shaba@altlinux.ru> 6.4.2-alt1
+- 6.4.2
+
+* Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 6.4.1-alt1
+- 6.4.1 new stable release
+
 * Tue Jul 17 2012 Alexey Shabalin <shaba@altlinux.ru> 6.2.2-alt2
 - fix unit file for systemd-186
 
