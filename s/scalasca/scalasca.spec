@@ -1,20 +1,20 @@
 %define mpiimpl openmpi
 %define mpidir %_libdir/%mpiimpl
 
-%define over 1.3.1
-%define cubever 3.0.%over
+%define over 1.4.2
+%define cubever 3.4.2.%over
 %define somver 0
 %define sover %somver.%over
 Name: scalasca
 Version: %over
-Release: alt15
+Release: alt1
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
-Url: http://www.fz-juelich.de/jsc/scalasca/
+Url: http://www.scalasca.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://www.fz-juelich.de/jsc/datapool/scalasca/scalasca-1.3.1.tar.gz
+Source: %name-%version.tar.gz
 Source1: Makefile.shared
 
 Requires: papi
@@ -23,11 +23,10 @@ Provides: kojak = 2.2p1_%over-%release
 Conflicts: kojak < 2.2p1_%over-%release
 Obsoletes: kojak < 2.2p1_%over-%release
 
-%set_gcc_version 4.5
 BuildPreReq: libgomp-devel libqt4-devel libpapi-devel libotf-devel
-BuildPreReq: libpdtoolkit-devel pdtoolkit gcc4.5-fortran
-BuildPreReq: %mpiimpl-devel doxygen binutils-devel gcc4.5-c++
-BuildPreReq: texlive-latex-base ghostscript-utils libgomp4.5-devel
+BuildPreReq: libpdtoolkit-devel pdtoolkit
+BuildPreReq: %mpiimpl-devel doxygen binutils-devel
+BuildPreReq: texlive-latex-base ghostscript-utils chrpath
 
 %description
 The KOJAK project (Kit for Objective Judgement And Knowledge-based
@@ -108,7 +107,7 @@ This package contains shared libraries of SCALASCA.
 %package -n lib%name-devel
 Summary: development files of SCALASCA
 Group: Development/Other
-Requires: libpapi-devel libgomp-devel libotf-devel
+Requires: libpapi-devel libotf-devel
 Requires: libiberty-devel %mpiimpl-devel binutils-devel
 Requires: libsz0-devel = 2.2p1_%over-%release
 Provides: libkojak-devel = 2.2p1_%over-%release
@@ -320,22 +319,31 @@ export MPIDIR=%mpidir
 %ifarch x86_64
 sed -i -e 's/^\(PREC\).*/\1 = 64/' \
 	mf/Makefile.defs.linux-gomp
+LIBSUFF=64
 %endif
+sed -i "s|@64@|$LIBSUFF|" mf/common.defs
 
 export CC="mpicc -g"
 export CXX="mpicxx -g"
 ./configure \
+%ifarch x86_64
+	--force-64 \
+%else
+	--force-32 \
+%endif
 	--prefix=%prefix \
 	--with-papi=%prefix \
 	--with-otf=%prefix \
 	--with-pdt=%prefix \
-	--with-qmake=qmake \
+	--with-qmake=%_qt4dir/bin/qmake \
 	--compiler=gnu \
-	--mpi=%mpiimpl
+	--mpi=%mpiimpl \
+	--enable-all-mpi-wrappers \
+	--with-binutils=%prefix
 
 pushd build-*
 
-sed -i 's|^\(MPILIB.*\)|\1 -Wl,-R%mpidir/lib|' Makefile.defs
+sed -i 's|^\(MPILIB.*\)|\1 -Wl,-rpath,%mpidir/lib|' Makefile.defs
 sed -i 's|^\(FMPILIB\).*|\1 = -lmpi_f77 -lmpi_f90|' Makefile.defs
 sed -i 's|^#OMPCXX|OMPCXX|' Makefile.defs
 sed -i 's|^#OMPF90|OMPF90|' Makefile.defs
@@ -357,60 +365,72 @@ rm -f *.o
 %make_build -f Makefile.shared
 popd
 
+%make_install PREFIX=%buildroot%prefix install
+chmod +x %buildroot%_bindir/*
+
 # libpomp
 
-KINST_DIR=$(find $PWD -name kinst-pomp|sed 's|/kinst-pomp||')
-OPARI_DIR=$(find $PWD -name opari -type f|sed 's|/opari$||')
-chmod +x $KINST_DIR/kinst-pomp
-export PATH=$KINST_DIR:$OPARI_DIR:$PATH
+cp %buildroot%_bindir/kinst-pomp %buildroot%_bindir/kinst-pomp.tmp
+sed -i 's|\(`\${OPARI2_CONFIG} --awk-script`\)|%buildroot\1|' \
+	%buildroot%_bindir/kinst-pomp.tmp
+sed -i 's|\(ELGLIB="-L\)|\1%buildroot|' \
+	%buildroot%_bindir/kinst-pomp.tmp
+sed -i 's|\(opari2\-config\)|\1 --config=/usr/src/op.conf|' \
+	%buildroot%_bindir/kinst-pomp.tmp
+echo 'OPARI_SCRIPT="%buildroot%_bindir/pomp2-parse-init-regions.awk"' \
+	>/usr/src/op.conf
+export PATH=%buildroot%_bindir:$PATH
 
-pushd build/opari/tool/Test
-%make ctest
-for i in `ls test*.c*inc.out`; do
-	sed -i "1a\#include \"$i\"" opari.tab.c
+pushd build/opari2/src/pomp-lib-dummy
+
+gcc -I../opari -c foos.c
+f95 foos.o getfname.f -o getfname -lc
+rm -f foos.o
+sleep 1 ; ./getfname ; sleep 1
+for i in pomp2_fwrapper pomp2_fwrapper_base pomp2_region_info pomp2_lib
+do
+	kinst-pomp.tmp mpicc -fopenmp -std=c99 %optflags %optflags_shared \
+		-I../opari -I../../include -c $i.c
 done
-kinst-pomp mpicc -I../../lib -c opari.tab.c
-popd
-cp -f build/opari/tool/Test/opari.tab.o build/opari/lib/
-pushd build/opari/lib
-%make libpomp.a
-popd
+kinst-pomp.tmp mpicc -shared *.o -Wl,-soname,libpomp.so.%somver \
+	-o %buildroot%_libdir/libpomp.so.%sover -lgomp
+ln -s libpomp.so.%sover %buildroot%_libdir/libpomp.so.%somver
+ln -s libpomp.so.%somver %buildroot%_libdir/libpomp.so
+chrpath -r %mpidir/lib %buildroot%_libdir/libpomp.so
 
 popd
 
-%make_install PREFIX=%buildroot%prefix install
+rm -f %buildroot%_bindir/kinst-pomp.tmp
 
-pushd build-*
-install -m644 build/opari/lib/*.a %buildroot%_libexecdir
+#
 
 install -d %buildroot%_docdir/%name
-install -d %buildroot%_docdir/lib%name-devel/pearl
-install -d %buildroot%_docdir/lib%name-devel/epik
 install -d %buildroot%_docdir/cube3
 install -d %buildroot%_libdir/%name-devel
 
 # docs
 
-pushd build/pearl
-# unknown non-zero result (heed help :( )
-doxygen doc/doxygen.conf ||:
-popd
+for i in epik pearl scout silas
+do
+	pushd build/$i
+	doxygen doc/doxygen.conf ||:
+	install -d %buildroot%_docdir/lib%name-devel/$i
+	cp -fR html/* %buildroot%_docdir/lib%name-devel/$i/
+	popd
+done
 
-pushd build/epik
-doxygen doc/doxygen.conf
-popd
+install -d %buildroot%_docdir/lib%name-devel/expert-3.0
+install -p -m644 build/expert-3.0/doc/* \
+	%buildroot%_docdir/lib%name-devel/expert-3.0
 
-
-mv build/pearl/html/* %buildroot%_docdir/lib%name-devel/pearl/
-mv build/epik/html/* %buildroot%_docdir/lib%name-devel/epik/
 popd
 
 sed -i 's|%buildroot||g' %buildroot%_bindir/cube-config
 
-pushd %buildroot/%prefix/doc
-mv *.used manuals/earl.pdf html/opari* \
+pushd %buildroot/%_docdir
+mv *.used manuals/earl.pdf \
 	%buildroot%_docdir/lib%name-devel/
-mv ../example %buildroot%_libdir/%name-devel/
+mv ../../example %buildroot%_libdir/%name-devel/
 mv METRICS.SPEC html manuals \
 	%buildroot%_docdir/%name/
 popd
@@ -419,11 +439,6 @@ install -p -m644 cube-3.0/doc/* %buildroot%_docdir/cube3
 install -d %buildroot%_includedir/szlib
 pushd build-*/build/utils/szlib
 %make_install -f Makefile.shared PREFIX=%buildroot%prefix install
-
-%ifarch x86_64
-install -d %buildroot%_libdir
-mv %buildroot%_libexecdir/* %buildroot%_libdir/
-%endif
 
 install -m644 *.h %buildroot%_includedir/szlib
 ln -s zlib.h %buildroot%_includedir/szlib/szlib.h
@@ -434,7 +449,7 @@ popd
 # shared libraries
 
 pushd %buildroot%_libdir
-LIBS0="pomp cubew3 elg.omp elg.mpi pearl.base pearl.mpi pearl.omp pearl.replay"
+LIBS0="cubew3 elg.omp elg.mpi pearl.base pearl.mpi pearl.omp pearl.replay"
 LIBS="$(ls *.a|sed 's|^lib\(.*\)\.a$|\1|'|egrep -v sz0)"
 mkdir tmp
 pushd tmp
@@ -442,8 +457,9 @@ for i in $LIBS0 $LIBS
 do
 	if [ ! -f ../lib$i.so.%sover ]; then
 		ar x ../lib$i.a
-		mpicxx -shared * -Wl,--as-needed -L.. $ADDLIB \
-			-lsz0 -lpapi -lgomp -lbfd -lmpi_f77 -lgfortran \
+		mpif90 -shared * -Wl,--as-needed -L.. $ADDLIB \
+			-lpomp -lsz0 -lpapi -lbfd -lmpi_cxx -lmpi_f77 -lstdc++ -lgfortran \
+			$(find /usr -name libgomp.so ||:) \
 			-Wl,-R%mpidir/lib \
 			-Wl,-soname,lib$i.so.%somver -o ../lib$i.so.%sover
 		ln -s lib$i.so.%sover ../lib$i.so.%somver
@@ -480,6 +496,7 @@ sed -i '1s|/sh|/bash|' \
 %exclude %_libdir/libsz0.*
 
 %files -n lib%name-devel
+%_docdir/%name.inst
 %_bindir/kinst*
 %_bindir/kconfig
 %_bindir/cube-config
@@ -491,9 +508,9 @@ sed -i '1s|/sh|/bash|' \
 %_includedir/*
 %exclude %_includedir/szlib
 
-%files -n lib%name-devel-static
-%_libdir/*.a
-%exclude %_libdir/libsz0.*
+#files -n lib%name-devel-static
+#_libdir/*.a
+#exclude %_libdir/libsz0.*
 
 %files devel-example
 %_libdir/%name-devel/*
@@ -519,10 +536,14 @@ sed -i '1s|/sh|/bash|' \
 %files -n libsz0-devel
 %_libdir/libsz0.so
 
-%files -n libsz0-devel-static
-%_libdir/libsz0.a
+#files -n libsz0-devel-static
+#_libdir/libsz0.a
 
 %changelog
+* Thu Sep 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1
+- Version 1.4.2
+- Disabled static libraries
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt15
 - Rebuilt with papi 5.0.0
 
