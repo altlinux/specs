@@ -39,7 +39,7 @@ BuildRequires: jpackage-compat
 Summary:        Cactus unit test framework for server-side java code 
 Name:           jakarta-%{base_name}
 Version:        1.7.2
-Release:        alt6_4jpp5
+Release:        alt7_4jpp5
 Epoch:          0
 License:        Apache Software License
 URL:            http://jakarta.apache.org/cactus/
@@ -82,7 +82,7 @@ BuildRequires: ant-nodeps >= 0:1.6
 BuildRequires: ant-trax >= 0:1.6
 BuildRequires: junit
 BuildRequires: antlr
-BuildRequires: aspectj
+BuildRequires: aspectj15
 BuildRequires: cargo0 >= 0:0.9
 BuildRequires: checkstyle4
 BuildRequires: httpunit
@@ -107,8 +107,8 @@ BuildRequires: xalan-j2
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-jaxp-1.3-apis
 Requires: ant
-Requires: aspectj
-Requires: cargo0
+#Requires: aspectj
+#Requires: cargo0
 Requires: httpunit
 Requires: jasper5
 Requires: jakarta-commons-beanutils
@@ -221,8 +221,8 @@ for p in $(find . -name "*project.xml"); do
 done
 
 echo antlr.jar=$(build-classpath antlr) >> build.properties
-echo aspectjrt.jar=$(build-classpath aspectjrt) >> build.properties
-echo aspectj-tools.jar=$(build-classpath aspectjtools) >> build.properties
+echo aspectjrt.jar=$(build-classpath aspectjrt15) >> build.properties
+echo aspectj-tools.jar=$(build-classpath aspectjtools15) >> build.properties
 echo cargo.jar = $(build-classpath cargo0/cargo0-core-uberjar) >> build.properties
 echo checkstyle.jar=$(build-classpath checkstyle4) >> build.properties
 echo commons.beanutils.jar=$(build-classpath commons-beanutils) >> build.properties
@@ -252,7 +252,7 @@ echo xmlapis.jar=$(build-classpath xml-commons-jaxp-1.3-apis) >> build.propertie
 echo cactus.port=9992 >> build.properties
 
 
-export OPT_JAR_LIST="ant/ant-nodeps ant/ant-junit junit ant/ant-trax xalan-j2 xalan-j2-serializer aspectjtools"
+export OPT_JAR_LIST="ant/ant-nodeps ant/ant-junit junit ant/ant-trax xalan-j2 xalan-j2-serializer aspectjtools15"
 export CLASSPATH=$(build-classpath commons-codec)
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
         -Drepo.url=file://usr/share/java/ \
@@ -337,6 +337,9 @@ cp -pr documentation/dist/doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt7_4jpp5
+- build with aspectj15
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.2-alt6_4jpp5
 - build with saxon6-scripts
 
