@@ -99,7 +99,7 @@ FIXME: (dwalluck): Need to link offline:
 Name:           spring2
 Summary:        Spring J2EE Framework
 Version:        2.5.6.SEC03
-Release:        alt9_5jpp6
+Release:        alt10_5jpp6
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -147,7 +147,7 @@ BuildRequires:  openjpa1
 #BuildRequires:  aqute-bndlib
 BuildRequires:  asm
 BuildRequires:  asm2
-BuildRequires:  aspectj >= 0:1.5.3
+BuildRequires:  aspectj15
 BuildRequires:  axis
 BuildRequires:  backport-util-concurrent >= 0:3.1
 BuildRequires:  bsh2
@@ -288,7 +288,7 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       %{name}-beans = %{epoch}:%{version}-%{release}
 Requires:       %{name}-tx = %{epoch}:%{version}-%{release}
 %if %without nodeps
-Requires:       aspectj >= 0:1.2.1
+#Requires:       aspectj15
 Requires:       apache-commons-logging
 %endif
 
@@ -304,7 +304,7 @@ Requires:       %{name}-beans = %{epoch}:%{version}-%{release}
 Requires:       %{name}-core = %{epoch}:%{version}-%{release}
 %if %without nodeps
 Requires:       aopalliance
-Requires:       aspectj >= 0:1.5.3
+#Requires:       aspectj
 Requires:       cglib21
 Requires:       apache-commons-attributes
 Requires:       apache-commons-pool
@@ -479,7 +479,7 @@ Requires:       %{name}-orm = %{epoch}:%{version}-%{release}
 Requires:       %{name}-tx = %{epoch}:%{version}-%{release}
 Requires:       %{name}-webmvc = %{epoch}:%{version}-%{release}
 %if %without nodeps
-Requires:       aspectj >= 0:1.5.3
+#Requires:       aspectj15
 Requires:       jpa_3_0_api
 Requires:       jsp_2_0_api
 Requires:       junit
@@ -637,7 +637,7 @@ Requires:       aopalliance
 Requires:       apache-ibatis2-sqlmap
 Requires:       apache-jdo-2.0-api
 Requires:       asm2
-Requires:       aspectj >= 0:1.5.3
+#Requires:       aspectj15
 Requires:       axis
 Requires:       backport-util-concurrent >= 0:3.0
 Requires:       bsh2
@@ -865,7 +865,7 @@ ln -sf $(build-classpath apache-ibatis2-common) autobuilds/apps/jpetstore/lib/ib
 # BUILD/spring/autobuilds/lib/ant-addons/path-to-fileset.jar.no
 
 # BUILD/spring/autobuilds/lib/aspectj/aspectjrt-1.2.1.jar.no
-ln -sf $(build-classpath aspectjrt) autobuilds/lib/aspectj/aspectjrt-1.2.1.jar
+ln -sf $(build-classpath aspectjrt15) autobuilds/lib/aspectj/aspectjrt-1.2.1.jar
 # BUILD/spring/autobuilds/lib/cactus/cactus-1.7.1.jar.no
 ln -sf $(build-classpath cactus-14/cactus) autobuilds/lib/cactus/cactus-1.7.1.jar
 # BUILD/spring/autobuilds/lib/cactus/cactus-ant-1.7.1.jar.no
@@ -920,11 +920,11 @@ ln -sf $(build-classpath asm2/asm2-commons) lib/asm/asm-commons-2.2.3.jar
 # BUILD/spring/lib/asm/asm-util-2.2.3.jar.no
 ln -sf $(build-classpath asm2/asm2-util) lib/asm/asm-util-2.2.3.jar
 # BUILD/spring/lib/aspectj/aspectjrt.jar.no
-ln -sf $(build-classpath aspectjrt) lib/aspectj/aspectjrt.jar
+ln -sf $(build-classpath aspectjrt15) lib/aspectj/aspectjrt.jar
 # BUILD/spring/lib/aspectj/aspectjtools.jar.no
-ln -sf $(build-classpath aspectjtools) lib/aspectj/aspectjtools.jar
+ln -sf $(build-classpath aspectjtools15) lib/aspectj/aspectjtools.jar
 # BUILD/spring/lib/aspectj/aspectjweaver.jar.no
-ln -sf $(build-classpath aspectjweaver) lib/aspectj/aspectjweaver.jar
+ln -sf $(build-classpath aspectjweaver15) lib/aspectj/aspectjweaver.jar
 # BUILD/spring/lib/aws/spring-aws-ant.jar.no
 ln -sf $(build-classpath spring-build/org.springframework.build.aws.ant) lib/aws/spring-aws-ant.jar
 # BUILD/spring/lib/axis/axis.jar.no
@@ -1616,6 +1616,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %endif
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt10_5jpp6
+- fixed build with new aspectj
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt9_5jpp6
 - support for new velocity-tools
 
