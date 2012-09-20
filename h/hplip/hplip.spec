@@ -1,4 +1,4 @@
-Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
+# TODO!!!: enable patch31 for cups1.6!
 
 %def_enable cupstifffilter
 %def_enable sane_backend
@@ -11,8 +11,9 @@ Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet
 %def_enable udevacl
 %def_disable halacl
 
+Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
-Version: 3.12.6
+Version: 3.12.9
 Release: alt1
 License: GPL/MIT/BSD
 Group: Publishing
@@ -85,9 +86,9 @@ Source201: hp-toolbox.wrapper
 Source202: hpijs.1
 
 #Patch0: 
-Patch1: hplip-3.12.6-alt-urlhandler.patch
+Patch1: hplip-3.12.9-alt-urlhandler.patch
 Patch2: hplip-3.9.12-alt-fix-udev-rules-ppdev.patch
-Patch3: hplip-3.12.6-alt-fix-udev-rules-usbdev.patch
+Patch3: hplip-3.12.9-alt-fix-udev-rules-usbdev.patch
 Patch4: hplip-3.9.12-alt-hplip-desktop.patch
 
 Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.patch
@@ -95,37 +96,36 @@ Patch10: http://www.linuxprinting.org/download/printing/hpijs/hpijs-1.4.1-rss.1.
 Patch11: hpijs-1.4.1-rss-alt-for-2.7.7.patch
 
 # fedora patches
-Patch101: fedora-3.12.6-2-hplip-pstotiff-is-rubbish.patch
-Patch102: fedora-3.12.6-2-hplip-strstr-const.patch
-Patch103: fedora-3.12.6-2-hplip-ui-optional.patch
-Patch104: fedora-3.12.6-2-hplip-no-asm.patch
-Patch105: fedora-3.12.6-2-hplip-deviceIDs-drv.patch
-Patch106: fedora-3.12.6-2-hplip-mucks-with-spooldir.patch
-Patch107: fedora-3.12.6-2-hplip-udev-rules.patch
-Patch108: fedora-3.12.6-2-hplip-retry-open.patch
-Patch109: fedora-3.12.6-2-hplip-snmp-quirks.patch
-Patch110: fedora-3.12.6-2-hplip-discovery-method.patch
-Patch111: fedora-3.12.6-2-hplip-hpijs-marker-supply.patch
-Patch112: fedora-3.12.6-2-hplip-clear-old-state-reasons.patch
-Patch113: fedora-3.12.6-2-hplip-systray-dbus-exception.patch
-Patch114: fedora-3.12.6-2-hplip-hpcups-sigpipe.patch
-Patch115: fedora-3.12.6-2-hplip-fax-ppd.patch
-Patch116: fedora-3.12.6-2-hplip-bad-low-ink-warning.patch
-Patch117: fedora-3.12.6-2-hplip-deviceIDs-ppd.patch
-Patch118: fedora-3.12.6-2-hplip-skip-blank-lines.patch
-Patch119: fedora-3.12.6-2-hplip-dbglog-newline.patch
-Patch120: fedora-3.12.6-2-hplip-release-parport.patch
-Patch121: fedora-3.12.6-2-hplip-ppd-ImageableArea.patch
-Patch122: fedora-3.12.6-2-hplip-raw_deviceID-traceback.patch
-Patch123: fedora-3.12.6-2-hplip-UnicodeDecodeError.patch
-Patch124: fedora-3.12.6-2-hplip-addprinter.patch
-Patch125: fedora-3.12.6-2-hplip-dbus-exception.patch
-Patch126: fedora-3.12.6-2-hplip-notification-exception.patch
-Patch127: fedora-3.12.6-2-hplip-CVE-2010-4267.patch
-Patch128: fedora-3.12.6-2-hplip-wifisetup.patch
-Patch129: fedora-3.12.6-2-hplip-makefile-chgrp.patch
-Patch130: fedora-3.12.6-2-hplip-hpaio-localonly.patch
-
+Patch101: fedora-3.12.9-2-hplip-pstotiff-is-rubbish.patch
+Patch102: fedora-3.12.9-2-hplip-strstr-const.patch
+Patch103: fedora-3.12.9-2-hplip-ui-optional.patch
+Patch104: fedora-3.12.9-2-hplip-no-asm.patch
+Patch105: fedora-3.12.9-2-hplip-deviceIDs-drv.patch
+Patch106: fedora-3.12.9-2-hplip-mucks-with-spooldir.patch
+Patch107: fedora-3.12.9-2-hplip-udev-rules.patch
+Patch108: fedora-3.12.9-2-hplip-retry-open.patch
+Patch109: fedora-3.12.9-2-hplip-snmp-quirks.patch
+Patch110: fedora-3.12.9-2-hplip-discovery-method.patch
+Patch111: fedora-3.12.9-2-hplip-hpijs-marker-supply.patch
+Patch112: fedora-3.12.9-2-hplip-clear-old-state-reasons.patch
+Patch113: fedora-3.12.9-2-hplip-systray-dbus-exception.patch
+Patch114: fedora-3.12.9-2-hplip-hpcups-sigpipe.patch
+Patch116: fedora-3.12.9-2-hplip-bad-low-ink-warning.patch
+Patch117: fedora-3.12.9-2-hplip-deviceIDs-ppd.patch
+Patch118: fedora-3.12.9-2-hplip-skip-blank-lines.patch
+Patch119: fedora-3.12.9-2-hplip-dbglog-newline.patch
+Patch120: fedora-3.12.9-2-hplip-release-parport.patch
+Patch121: fedora-3.12.9-2-hplip-ppd-ImageableArea.patch
+Patch122: fedora-3.12.9-2-hplip-raw_deviceID-traceback.patch
+Patch123: fedora-3.12.9-2-hplip-UnicodeDecodeError.patch
+Patch124: fedora-3.12.9-2-hplip-addprinter.patch
+Patch125: fedora-3.12.9-2-hplip-dbus-exception.patch
+Patch126: fedora-3.12.9-2-hplip-notification-exception.patch
+Patch127: fedora-3.12.9-2-hplip-CVE-2010-4267.patch
+Patch128: fedora-3.12.9-2-hplip-wifisetup.patch
+Patch129: fedora-3.12.9-2-hplip-makefile-chgrp.patch
+Patch130: fedora-3.12.9-2-hplip-hpaio-localonly.patch
+Patch131: fedora-3.12.9-2-hplip-ipp-accessors.patch
 
 %description
 This is the HP driver package to supply Linux support for most
@@ -370,7 +370,7 @@ SANE driver for scanners in HP's multi-function devices (from HPLIP)
 
 %prep
 %setup -q
-%patch1 -p1
+%patch1 -p2
 %patch2 -p2
 %patch3 -p2
 
@@ -474,9 +474,6 @@ mv prnt/drv/hpijs.drv.in{,.deviceIDs-drv-hpijs}
 # Avoid busy loop in hpcups when backend has exited (bug #525944).
 %patch114 -p1 -b .hpcups-sigpipe
 
-# Use correct fax PPD name for Qt3 UI.
-%patch115 -p1 -b .fax-ppd
-
 # Fixed Device ID parsing code in hpijs's dj9xxvip.c (bug #510926).
 %patch116 -p1 -b .bad-low-ink-warning
 
@@ -534,12 +531,14 @@ done
 # Avoid KeyError in ui4/wifisetupdialog.py (bug #680939).
 %patch128 -p1 -b .wifisetup
 
-# Don't run 'chgrp lp /var/log/hp' in makefile
+# Don't run 'chgrp lp /var/log/hp' and 'chgrp lp /var/log/hp/tmp' in makefile
 %patch129 -p1 -b .chgrp
 
 # Pay attention to the SANE localOnly flag in hpaio (bug #743593).
 %patch130 -p1 -b .hpaio-localonly
 
+# To build against CUPS-1.6 (launchpad #1026666)
+#patch31 -p1 -b .ipp-accessors
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -816,6 +815,7 @@ fi
 %{_bindir}/hp-info
 %{_bindir}/hp-levels
 %{_bindir}/hp-linefeedcal
+%{_bindir}/hp-logcapture
 %{_bindir}/hp-makecopies
 %{_bindir}/hp-makeuri
 %{_bindir}/hp-mkuri
@@ -854,6 +854,7 @@ fi
 %{_datadir}/hplip/__init__.py*
 %{_datadir}/hplip/levels.py*
 %{_datadir}/hplip/linefeedcal.py*
+%{_datadir}/hplip/logcapture.py*
 %{_datadir}/hplip/makecopies.py*
 %{_datadir}/hplip/makeuri.py*
 %{_datadir}/hplip/plugin.py*
@@ -892,6 +893,7 @@ fi
 %dir %_localstatedir/hp
 #%_localstatedir/hp/hplip.state
 %dir %attr(0775,root,lp) %{_var}/log/hp
+%{_sysconfdir}/cron.daily/hplip_cron
 %endif
 
 %files hpcups
@@ -1006,6 +1008,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 3.12.9-alt1
+- new version
+
 * Wed Aug 08 2012 Igor Vlasenko <viy@altlinux.ru> 3.12.6-alt1
 - new version
 
