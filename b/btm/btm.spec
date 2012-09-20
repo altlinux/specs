@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 Summary:        Bitronix Transaction Manager
 Name:           btm
 Version:        2.1.2
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Epoch:          0
 License:        LGPLv3
 URL:            http://bitronix.be
@@ -20,8 +20,8 @@ BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  ant >= 0:1.6
 BuildRequires:  junit
 BuildRequires:  slf4j
-BuildRequires:  geronimo-jms-1.1-api
-BuildRequires:  geronimo-jta-1.1-api
+BuildRequires:  geronimo-jms
+BuildRequires:  geronimo-jta
 BuildRequires:  xml-commons-apis
 # Turn this on to make "ant test" work
 # BuildRequires:  mockito
@@ -30,8 +30,8 @@ Requires:       junit
 Requires:       xml-commons-apis
 Requires:       jpackage-utils >= 0:1.6
 Requires:       slf4j
-Requires:       geronimo-jms-1.1-api
-Requires:       geronimo-jta-1.1-api
+Requires:       geronimo-jms
+Requires:       geronimo-jta
 
 BuildArch:      noarch
 Source44: import.info
@@ -93,6 +93,9 @@ install -pm 644 %{SOURCE2} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_2jpp7
+- use fc geronimo
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_1jpp7
 - fc build
 
