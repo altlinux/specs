@@ -4,8 +4,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-remote-resources-plugin
-Version:        1.2.1
-Release:        alt1_4jpp7
+Version:        1.3
+Release:        alt1_2jpp7
 Summary:        Maven Remote Resources Plugin
 
 Group:          Development/Java
@@ -15,7 +15,7 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 #Class org.apache.maven.shared.artifact.filter.collection.TransitivityFilter which ProcessRemoteResourcesMojo.java imports
 #is renamed as org.apache.maven.shared.artifact.filter.collection.ProjectTransitivityFilter in
 #the version 1.3 of maven-shared-common-artifact-filters package.
-Patch0:        ProcessRemoteResourcesMojo.java.patch
+Patch0:        %{name}-mojo.patch
 
 BuildArch: noarch
 
@@ -75,14 +75,15 @@ API documentation for %{name}.
 
 %prep
 %setup -q
-%patch0 -p0
+
+%patch0 -p1
 
 %build
 # fix 613582
 # we now use plexus-velocity which has the correct descriptor with a hint.
 rm -f src/main/resources/META-INF/plexus/components.xml
 
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:javadoc
+mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip=true
 
 %install
 # jars
@@ -108,6 +109,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1_2jpp7
+- new release
+
 * Thu Mar 15 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1_4jpp7
 - new version
 

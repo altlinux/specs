@@ -4,8 +4,8 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-clean-plugin
-Version:        2.4.1
-Release:        alt1_5jpp7
+Version:        2.5
+Release:        alt1_2jpp7
 Summary:        Maven Clean Plugin
 
 Group:          Development/Java
@@ -28,9 +28,6 @@ BuildRequires: maven-doxia-sitetools
 BuildRequires: maven-plugin-testing-harness
 Requires: maven
 Requires:       jpackage-utils
-Requires(post):       jpackage-utils
-Requires(postun):     jpackage-utils
-
 
 Provides:       maven2-plugin-clean = 1:%{version}-%{release}
 Obsoletes:      maven2-plugin-clean <= 0:2.0.8
@@ -83,6 +80,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 2.5-alt1_2jpp7
+- new release
+
 * Sun Mar 25 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt1_5jpp7
 - complete build
 
