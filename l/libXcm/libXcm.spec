@@ -1,10 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(x11)
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libXcm
-Version:        0.5.0
-Release:        alt1_3
+Version:        0.5.1
+Release:        alt1_1
 Summary:        X Color Management Library
 
 Group:          System/Libraries
@@ -30,7 +27,7 @@ servers.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libXcm = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -67,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt1_3
 - update to new release by fcimport
 
