@@ -36,7 +36,7 @@ BuildRequires: unzip
 Summary:        Dependency manager
 Name:           ivy1
 Version:        1.3.1
-Release:        alt4_4jpp6
+Release:        alt5_4jpp6
 Epoch:          0
 License:        BSD
 URL:            http://www.jayasoft.org/ivy
@@ -54,15 +54,15 @@ BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: ant >= 0:1.6.5
 BuildRequires: ant-junit
 BuildRequires: oro
-BuildRequires: jakarta-commons-codec
-BuildRequires: jakarta-commons-httpclient >= 1:3.0
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-cli
+BuildRequires: apache-commons-codec
+BuildRequires: apache-commons-httpclient >= 1:3.0
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-cli
 Requires: oro
-Requires: jakarta-commons-codec
-Requires: jakarta-commons-httpclient >= 1:3.0
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-cli
+Requires: apache-commons-codec
+Requires: apache-commons-httpclient >= 1:3.0
+Requires: apache-commons-logging
+Requires: apache-commons-cli
 
 BuildArch:      noarch
 Requires(post): jpackage-utils >= 0:1.7.5
@@ -135,14 +135,13 @@ install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-ivy1.pom
 %add_to_maven_depmap jayasoft %{oldname} %{version} JPP %{name}
 
 # javadoc
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{oldname}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr build/javadoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 # manual
-mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}
+mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 rm -rf doc/build/api
-cp -pr doc/* $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}
+cp -pr doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 
 %files
@@ -152,13 +151,15 @@ cp -pr doc/* $RPM_BUILD_ROOT%{_docdir}/%{oldname}-%{version}
 %{_mavendepmapfragdir}
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
 
 %files manual
 %doc %{_docdir}/*
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt5_4jpp6
+- fixed javadoc
+
 * Mon Mar 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt4_4jpp6
 - renamed to ivy1
 
