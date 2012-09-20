@@ -1,5 +1,5 @@
 Name: vsftpd
-Version: 3.0.0
+Version: 3.0.2
 Release: alt1
 
 Summary: File Transfer Protocol (FTP) server
@@ -101,6 +101,9 @@ touch %_logdir/vsftpd.log
 %doc vsftpd.eps.bz2
 
 %changelog
+* Thu Sep 20 2012 Dmitry V. Levin <ldv@altlinux.org> 3.0.2-alt1
+- Updated to 3.0.2 (closes: #27752).
+
 * Fri Apr 27 2012 Dmitry V. Levin <ldv@altlinux.org> 3.0.0-alt1
 - Updated to 3.0.0.
 - Build vsftpd as a PIE.
