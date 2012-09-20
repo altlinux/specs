@@ -50,7 +50,7 @@
 
 Name:           %jppname
 Version:        %{javaver}.%{buildver}
-Release:        alt5
+Release:        alt6
 Epoch:          0
 Summary:        Java 2 Runtime Environment, Standard Edition
 License:        Operating System Distributor License for Java version 1.1
@@ -72,7 +72,7 @@ Packager:       Igor Yu. Vlasenko <viy@altlinux.org>
 
 %def_enable demo
 %def_enable fonts
-%def_enable accessibility
+%def_disable accessibility
 %def_disable alsa_subpackage
 %def_enable jdbc_subpackage
 %ifarch x86_64
@@ -977,6 +977,9 @@ done
 
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.26-alt6
+- disabled accessibility subpackage (java access bridge is depecated)
+
 * Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0.26-alt5
 - proper epoch in strict requires
 
