@@ -1,3 +1,4 @@
+BuildRequires: aspectj
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        JSF 1.1 API
 Name:           myfaces-core11-api
 Version:        1.1.5
-Release:        alt4_2jpp6
+Release:        alt5_2jpp6
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -181,6 +182,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt5_2jpp6
+- build with aspectj 1.6.0
+
 * Mon Jan 31 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt4_2jpp6
 - restored parent subpackage
 
