@@ -8,9 +8,9 @@
 
 Name: musl
 Version: 0.9.6
-Release: alt1
+Release: alt2
 Group: System/Libraries
-Summary: musl
+Summary: musl libc - new standard library
 License: MIT
 Url: http://www.etalabs.net/%name
 Source: %url/releases/%name-%version.tar
@@ -115,6 +115,10 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Fri Sep 21 2012 Led <led@altlinux.ru> 0.9.6-alt2
+- updated from upstream's SCM
+- updated Summary
+
 * Mon Sep 17 2012 Led <led@altlinux.ru> 0.9.6-alt1
 - 0.9.6
 
