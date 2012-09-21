@@ -1,24 +1,49 @@
 Name: make
-Version: 3.81
-Release: alt5
+Version: 3.82
+Release: alt3
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
-License: GPLv2+
+License: GPLv3+
 Group: Development/Other
 Url: http://www.gnu.org/software/make/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 # ftp://ftp.gnu.org/gnu/make/make-%version.tar.bz2
 Source: make-%version.tar
-Patch1: make-3.81-cvs-20070103-ENULLLOOP.patch
-Patch2: make-3.81-alt-getcwd.patch
-Patch3: make-3.81-alt-job_slots.patch
-Patch4: make-3.81-alt-tests-recursion.patch
-Patch5: make-3.81-deb-fixes.patch
-
-# due to autoreconf/autopoint.
-#BuildRequires: cvs
+Patch00: make-3.82-cvs-00.patch
+Patch01: make-3.82-cvs-01.patch
+Patch02: make-3.82-cvs-02.patch
+Patch03: make-3.82-cvs-03.patch
+Patch04: make-3.82-cvs-04.patch
+Patch05: make-3.82-cvs-05.patch
+Patch06: make-3.82-cvs-06.patch
+Patch07: make-3.82-cvs-07.patch
+Patch08: make-3.82-cvs-08.patch
+Patch09: make-3.82-cvs-09.patch
+Patch10: make-3.82-cvs-10.patch
+Patch11: make-3.82-cvs-11.patch
+Patch12: make-3.82-cvs-12.patch
+Patch13: make-3.82-cvs-13.patch
+Patch14: make-3.82-cvs-14.patch
+Patch15: make-3.82-cvs-15.patch
+Patch16: make-3.82-cvs-16.patch
+Patch17: make-3.82-cvs-17.patch
+Patch18: make-3.82-cvs-18.patch
+Patch19: make-3.82-cvs-19.patch
+Patch20: make-3.82-cvs-20.patch
+Patch21: make-3.82-cvs-21.patch
+Patch22: make-3.82-cvs-22.patch
+Patch23: make-3.82-cvs-23.patch
+Patch24: make-3.82-cvs-24.patch
+Patch25: make-3.82-cvs-25.patch
+Patch26: make-3.82-cvs-26.patch
+Patch101: make-3.82-alt-getcwd.patch
+Patch102: make-3.82-alt-job_slots.patch
+Patch103: make-3.82-alt-tests-fixes.patch
+Patch111: make-3.82-rh-err-reporting.patch
+Patch112: make-3.82-rh-jobserver.patch
+Patch113: make-3.82-rh-warn_undefined_function.patch
+Patch114: make-3.82-rh-trace.patch
 
 %description
 A GNU tool for controlling the generation of executables and other
@@ -29,23 +54,54 @@ how the program should be built are provided for make in the program's
 makefile.
 
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-bzip2 -9k NEWS ChangeLog
+%setup
+%patch00 -p1
+%patch01 -p1
+%patch02 -p1
+%patch03 -p1
+%patch04 -p1
+%patch05 -p1
+%patch06 -p1
+%patch07 -p1
+%patch08 -p1
+%patch09 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
+%patch25 -p1
+%patch26 -p1
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch111 -p1
+%patch112 -p1
+%patch113 -p1
+%patch114 -p1
+find -type f -name \*.orig -delete -print
 rm doc/*.info*
 
 %build
+%autoreconf
+
 # Enable mkstemp explicitly, not rely on configure (Owl).
 export ac_cv_func_mkstemp=yes
 %configure
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 ln -sf make %buildroot%_bindir/gmake
 
 %find_lang %name
@@ -57,9 +113,22 @@ ln -sf make %buildroot%_bindir/gmake
 %_bindir/*
 %_mandir/man?/*
 %_infodir/*.info*
-%doc AUTHORS ChangeLog.bz2 NEWS.bz2 README
+%doc AUTHORS NEWS README
 
 %changelog
+* Fri Sep 21 2012 Dmitry V. Levin <ldv@altlinux.org> 2:3.82-alt3
+- Backported assorted upstream fixes.
+- Synced with make-3.82-13 from fedora.
+- Resurrected our patches from 3.81-alt5.
+
+* Thu Feb 24 2011 Alexey Gladkov <legion@altlinux.ru> 2:3.82-alt2
+- Add upstream fixes.
+- Add fedora patches.
+
+* Sat Aug 21 2010 Alexey Gladkov <legion@altlinux.ru> 2:3.82-alt1
+- Updated to 3.82.
+- Package was renamed because of incompatibility with the previous version.
+
 * Sat Jun 05 2010 Dmitry V. Levin <ldv@altlinux.org> 2:3.81-alt5
 - Fixed tests/scripts/features/recursion.
 - Updated fixes from Debian make-3.81-8.
