@@ -1,7 +1,7 @@
 Summary: Identify resistors
 Name: gresistor
 Version: 0.0.1
-Release: alt3.1.1
+Release: alt3.1.1.qa1
 License: GPL
 Group: Sciences/Physics
 URL: http://www.minipop.org/index.php?file=progs/gresistor/gresistor.tpl
@@ -31,10 +31,17 @@ value is changing according to the selected color.
 #patch1 -p1
 
 %build
-%__python setup.py build
+python setup.py build
 
 %install
-%__python setup.py install --prefix %buildroot%_prefix
+python setup.py install --prefix %buildroot%_prefix
+desktop-file-install --dir %buildroot%_desktopdir \
+	--remove-category=Utility \
+	--remove-category=gResistor \
+	--add-category=Engineering \
+	--add-category=Electronics \
+	--remove-key=Version \
+	%buildroot%_desktopdir/gresistor.desktop
 
 %files
 %doc README
@@ -45,6 +52,12 @@ value is changing according to the selected color.
 %python_sitelibdir/*
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.0.1-alt3.1.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for gresistor
+  * postclean-03-private-rpm-macros for the spec file
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.0.1-alt3.1.1
 - Rebuild with Python-2.7
 
