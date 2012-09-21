@@ -1,6 +1,6 @@
 Name: freeswitch
-Version: 1.0.7
-Release: alt0.6
+Version: 1.2.1
+Release: alt1
 
 Summary: FreeSWITCH open source telephony platform
 License: MPL
@@ -11,16 +11,17 @@ Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++ libalsa-devel
 BuildRequires: libgnutls-devel libncurses-devel libssl-devel libunixODBC-devel
-BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libsofia-sip-devel
-BuildRequires: libspandsp6-devel libspeex-devel libsqlite3-devel libsrtp
+BuildRequires: gdbm-devel db4-devel libldap-devel libcurl-devel libjpeg-devel
+BuildRequires: libspeex-devel libsqlite3-devel libX11-devel libmpeg4ip-devel
 BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
 BuildRequires: libsndfile-devel libpcre-devel libapr1-devel libaprutil1-devel
-BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel
+BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel mongo-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
-BuildRequires: libpcap-devel libunimrcp-devel perl-devel python-devel
+BuildRequires: libpcap-devel libunimrcp-devel libvlc-devel perl-devel python-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
-BuildRequires: libpri-devel libopenr2.3-devel libnet-snmp-devel libnl-devel
-BuildRequires: libsensors3-devel erlang-devel postgresql-devel
+BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel libsangoma-devel
+BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
+BuildRequires: erlang-devel postgresql-devel
 BuildRequires: java-common java-1.6.0-openjdk-devel /proc
 
 %description
@@ -177,6 +178,13 @@ Russian language phrases module and directory structure for say module and voice
 %autoreconf
 %configure \
     --localstatedir=%_var \
+    --with-logfiledir=%_var/log/freeswitch \
+    --with-dbdir=%_var/lib/freeswitch/db \
+    --with-htdocsdir=%_datadir/freeswitch/htdocs \
+    --with-soundsdir=%_datadir/freeswitch/sounds \
+    --with-grammardir=%_datadir/freeswitch/grammar \
+    --with-scriptdir=%_datadir/freeswitch/scripts \
+    --with-recordingsdir=%_var/spool/freeswitch \
     --enable-core-libedit-support \
     --enable-core-odbc-support \
     --with-erlang=%_bindir/erl \
@@ -188,17 +196,20 @@ make
 
 %install
 %make_install sysconfdir=%_sysconfdir/freeswitch DESTDIR=%buildroot install
+(cd conf && find dialplan directory -type f | cpio -pmd %buildroot%_sysconfdir/%name)
+
 install -pm0755 -D freeswitch.init %buildroot%_initdir/freeswitch
 install -pm0644 -D freeswitch.sysconfig %buildroot%_sysconfdir/sysconfig/freeswitch
 
 mkdir -p \
     %buildroot%_sbindir \
+    %buildroot%_sysconfdir/freeswitch/ssl \
     %buildroot%_var/lib/freeswitch/recordings \
     %buildroot%_logdir/freeswitch/{cdr-csv,xml_cdr}
 
 mv %buildroot%_bindir/freeswitch %buildroot%_sbindir/
 
-find %buildroot%_libdir/%name -name \*.la -delete
+find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %add_python_req_skip _freeswitch
 
 #---------------------------------------------------------------
@@ -232,8 +243,11 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %dir %_libdir/freetdm
 %_libdir/freetdm/ftmod_analog.so
 %_libdir/freetdm/ftmod_analog_em.so
+%_libdir/freetdm/ftmod_isdn.so
+%_libdir/freetdm/ftmod_libpri.so
 %_libdir/freetdm/ftmod_r2.so
 %_libdir/freetdm/ftmod_skel.so
+%_libdir/freetdm/ftmod_wanpipe.so
 %_libdir/freetdm/ftmod_zt.so
 
 %files -n libfreetdm-devel
@@ -247,6 +261,7 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %config(noreplace) %_sysconfdir/sysconfig/freeswitch
 
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/ssl
 
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/*.tpl
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/*.ttml
@@ -255,12 +270,14 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/mime.types
 
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/autoload_configs
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/abstraction.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/acl.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/alsa.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/blacklist.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/callcenter.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cidlookup.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cdr_csv.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cdr_mongodb.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cdr_pg_csv.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/cdr_sqlite.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/conference.conf.xml
@@ -278,6 +295,7 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/fax.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/fifo.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/hash.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/httapi.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/http_cache.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/ivr.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/lcr.conf.xml
@@ -285,12 +303,14 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/logfile.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/memcache.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/modules.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/mongo.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/nibblebill.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/opal.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/osp.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/pocketsphinx.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/portaudio.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/post_load_modules.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/presence_map.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/redis.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/rss.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/rtmp.conf.xml
@@ -306,9 +326,11 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/unicall.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/unimrcp.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/voicemail.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/voicemail_ivr.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/xml_cdr.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/xml_curl.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/xml_rpc.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/xml_scgi.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/zeroconf.conf.xml
 
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/directory
@@ -318,6 +340,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/directory/default/example.com.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/directory/default/skinny-example.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/directory/default/usertemplate.xml
+
+%dir %attr(0750, root, _pbx) %_sysconfdir/%name/chatplan
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/chatplan/default.xml
 
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/dialplan
 %dir %attr(0750, root, _pbx) %_sysconfdir/%name/dialplan/default
@@ -360,17 +385,21 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_bindir/fs_ivrd
 
 %dir %_libdir/%name
+%_libdir/%name/mod_abstraction.so
 %_libdir/%name/mod_alsa.so
+%_libdir/%name/mod_avmd.so
 %_libdir/%name/mod_blacklist.so
 %_libdir/%name/mod_amr.so
 %_libdir/%name/mod_bv.so
 %_libdir/%name/mod_callcenter.so
 %_libdir/%name/mod_cidlookup.so
 %_libdir/%name/mod_cdr_csv.so
+%_libdir/%name/mod_cdr_mongodb.so
 %_libdir/%name/mod_cdr_sqlite.so
 %_libdir/%name/mod_cdr_pg_csv.so
 %_libdir/%name/mod_celt.so
 %_libdir/%name/mod_cluechoo.so
+%_libdir/%name/mod_codec2.so
 %_libdir/%name/mod_commands.so
 %_libdir/%name/mod_conference.so
 %_libdir/%name/mod_console.so
@@ -387,11 +416,11 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_libdir/%name/mod_easyroute.so
 %_libdir/%name/mod_enum.so
 %_libdir/%name/mod_erlang_event.so
+%_libdir/%name/mod_esl.so
 %_libdir/%name/mod_esf.so
 %_libdir/%name/mod_event_multicast.so
 %_libdir/%name/mod_event_socket.so
 %_libdir/%name/mod_expr.so
-%_libdir/%name/mod_fax.so
 %_libdir/%name/mod_fifo.so
 %_libdir/%name/mod_flite.so
 %_libdir/%name/mod_fsk.so
@@ -400,8 +429,11 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_libdir/%name/mod_g729.so
 %_libdir/%name/mod_h26x.so
 %_libdir/%name/mod_hash.so
+%_libdir/%name/mod_httapi.so
 %_libdir/%name/mod_http_cache.so
 %_libdir/%name/mod_ilbc.so
+%_libdir/%name/mod_isac.so
+%_libdir/%name/mod_json_cdr.so
 %_libdir/%name/mod_lcr.so
 %_libdir/%name/mod_ldap.so
 %_libdir/%name/mod_limit.so
@@ -409,16 +441,23 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_libdir/%name/mod_logfile.so
 %_libdir/%name/mod_loopback.so
 #_libdir/%name/mod_memcache.so
+%_libdir/%name/mod_mp4.so
+%_libdir/%name/mod_mp4v.so
 %_libdir/%name/mod_native_file.so
 %_libdir/%name/mod_nibblebill.so
+%_libdir/%name/mod_posix_timer.so
+%_libdir/%name/mod_random.so
 %_libdir/%name/mod_redis.so
+%_libdir/%name/mod_reference.so
 %_libdir/%name/mod_rss.so
 %_libdir/%name/mod_rtmp.so
-%_libdir/%name/mod_siren.so
 %_libdir/%name/mod_shell_stream.so
 %_libdir/%name/mod_shout.so
 %_libdir/%name/mod_silk.so
+%_libdir/%name/mod_siren.so
 %_libdir/%name/mod_skinny.so
+%_libdir/%name/mod_skypopen.so
+%_libdir/%name/mod_sms.so
 %_libdir/%name/mod_snapshot.so
 %_libdir/%name/mod_sndfile.so
 %_libdir/%name/mod_snipe_hunt.so
@@ -431,14 +470,18 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_libdir/%name/mod_speex.so
 %_libdir/%name/mod_spy.so
 %_libdir/%name/mod_syslog.so
+%_libdir/%name/mod_theora.so
 %_libdir/%name/mod_timerfd.so
 %_libdir/%name/mod_tone_stream.so
 %_libdir/%name/mod_tts_commandline.so
 %_libdir/%name/mod_unimrcp.so
 %_libdir/%name/mod_valet_parking.so
+#_libdir/%name/mod_vlc.so
 %_libdir/%name/mod_vmd.so
 %_libdir/%name/mod_voicemail.so
+%_libdir/%name/mod_voicemail_ivr.so
 %_libdir/%name/mod_voipcodecs.so
+%_libdir/%name/mod_vp8.so
 %_libdir/%name/mod_xml_cdr.so
 %_libdir/%name/mod_xml_curl.so
 %_libdir/%name/mod_yaml.so
@@ -549,6 +592,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_libdir/%name/mod_say_ru.so*
 
 %changelog
+* Fri Sep 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
+- 1.2.1 released
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0.7-alt0.6
 - rebuilt for perl-5.16
 
