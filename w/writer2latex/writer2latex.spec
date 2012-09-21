@@ -1,6 +1,6 @@
 Name: writer2latex
 Version: 1.1.5
-Release: alt2.1
+Release: alt3
 
 Summary: Flexible tool to convert OpenOffice documents into LaTeX2e and XHTML formats
 License: LGPL
@@ -10,11 +10,11 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 
 Source: %name-%version.tar
 
-BuildRequires(pre): /proc rpm-build-java rpm-build-texmf
+BuildRequires(pre): /proc rpm-build-java rpm-build-texmf java-1.6.0-sun-devel
 # Automatically added by buildreq on Sat Jun 09 2007
 BuildRequires: ant junit libreoffice xml-commons-resolver12
 
-Requires: java
+#Requires: java-1.6.0-sun
 
 BuildArch: noarch
 
@@ -24,7 +24,7 @@ Writer2LaTeX is a flexible tool to convert documents in OpenDocument format
 It is written in Java.
 
 You can use Writer2LaTeX
- 
+
  * ...as a command line utility, independent of OpenOffice.org.
  * ...as an export filter for OpenOffice.org/LibreOffice/NeoOffice.
  * ...from another java program.
@@ -98,6 +98,9 @@ install -m 644 source/distro/latex/*.sty source/distro/latex/obsolete/*.sty %bui
 #%doc %_javadocdir/%name
 
 %changelog
+* Wed Sep 19 2012 Fr. Br. George <george@altlinux.ru> 1.1.5-alt3
+- Rebuild with java-sun
+
 * Tue Jul 31 2012 Fr. Br. George <george@altlinux.ru> 1.1.5-alt2.1
 Fix build with new LOO
 
