@@ -1,6 +1,6 @@
 Name: tig
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Summary: text-mode interface for git
 License: GPL
@@ -12,7 +12,7 @@ Patch: tig-%version-%release.patch
 
 Requires: git-core
 
-# Automatically added by buildreq on Fri May 11 2012
+# Automatically added by buildreq on Fri Sep 21 2012
 BuildRequires: asciidoc libncursesw-devel python-modules-encodings xmlto
 
 %description
@@ -31,20 +31,25 @@ Using it as a pager, it will display input from stdin and colorize it.
 
 %build
 make sysconfdir=/etc CFLAGS='%optflags' LDLIBS=-lncursesw clean tig \
-	tig.1 tigrc.5 tig.1.html tigrc.5.html manual.html README.html NEWS.html
+	doc-man doc-html
 
 %install
 install -pD -m755 tig %buildroot%_bindir/tig
 install -pD -m644 tig.1 %buildroot%_man1dir/tig.1
 install -pD -m644 tigrc.5 %buildroot%_man5dir/tigrc.5
+install -pD -m644 tigmanual.7 %buildroot%_man7dir/tigmanual.7
 
 %files
 %doc *.html
 %_bindir/tig
 %_man1dir/tig.1*
 %_man5dir/tigrc.5*
+%_man7dir/tigmanual.7*
 
 %changelog
+* Fri Sep 21 2012 Alexey Tourbin <at@altlinux.ru> 1.0-alt2
+- packaged tigmanual(7)
+
 * Fri May 11 2012 Alexey Tourbin <at@altlinux.ru> 1.0-alt1
 - tig-1.0
 
