@@ -2,7 +2,8 @@
 
 Name: python-module-%modulename
 Version: 1.2.4
-Release: alt1.hg20110930
+Release: alt1.git20120914
+Epoch: 1
 
 %setup_python_module %modulename
 
@@ -14,11 +15,13 @@ URL: http://formencode.org
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 
-# hg clone http://bitbucket.org/ianb/formencode
+# git://github.com/formencode/formencode.git
 Source0: %name-%version.tar
 
 BuildPreReq: %py_dependencies setuptools
-BuildPreReq: python-module-docutils
+BuildPreReq: python-module-docutils python-module-sphinx-devel
+BuildPreReq: python-module-pydns python-module-pycountry
+BuildPreReq: python-module-nose
 
 %description
 FormEncode validates and converts nested structures. It allows for
@@ -26,10 +29,19 @@ a declarative form of defining the validation, and decoupled processes
 for filling and generating forms.
 
 %package doc
-Summary: This package contains documentation and examples for FormEncode.
-Group: Development/Python
+Summary: This package contains documentation and examples for FormEncode
+Group: Development/Documentation
 
 %description doc
+FormEncode validates and converts nested structures. It allows for
+a declarative form of defining the validation, and decoupled processes
+for filling and generating forms.
+
+%package pickles
+Summary: This package contains pickles for FormEncode
+Group: Development/Python
+
+%description pickles
 FormEncode validates and converts nested structures. It allows for
 a declarative form of defining the validation, and decoupled processes
 for filling and generating forms.
@@ -37,23 +49,35 @@ for filling and generating forms.
 %prep
 %setup
 
+%prepare_sphinx .
+
 %build
 %python_build
-
-pushd docs
-./build
-popd
 
 %install
 %python_install
 
+pushd docs
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make html
+%make pickle
+cp -fR _build/pickle %buildroot%python_sitelibdir/formencode/
+popd
+
 %files
 %python_sitelibdir/*
+%exclude %python_sitelibdir/*/pickle
 
 %files doc
-%doc docs/* examples
+%doc docs/_build/html examples
+
+%files pickles
+%python_sitelibdir/*/pickle
 
 %changelog
+* Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.4-alt1.git20120914
+- New snapshot
+
 * Thu Dec 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.4-alt1.hg20110930
 - Version 1.2.4
 
