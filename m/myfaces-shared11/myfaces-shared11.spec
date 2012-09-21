@@ -1,3 +1,4 @@
+BuildRequires: aspectj
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        MyFaces shared for JSF 11
 Name:           myfaces-shared11
 Version:        2.0.5
-Release:        alt4_2jpp5
+Release:        alt5_2jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -194,6 +195,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt5_2jpp5
+- build with aspectj 1.6.0
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt4_2jpp5
 - fixed build
 
