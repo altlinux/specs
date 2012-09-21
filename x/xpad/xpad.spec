@@ -1,6 +1,7 @@
+BuildRequires: desktop-file-utils
 Name: xpad
 Version: 4.1
-Release: alt2
+Release: alt2.qa1
 
 Summary: Sticky notepad for GTK+2
 License: GPLv3+
@@ -31,6 +32,9 @@ subst "/include <glib\/glist.h>/d" src/xpad-undo.c
 %makeinstall_std
 
 %find_lang %name
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=TextTools \
+	%buildroot%_desktopdir/xpad.desktop
 
 %files -f %name.lang
 %_bindir/*
@@ -39,6 +43,11 @@ subst "/include <glib\/glist.h>/d" src/xpad-undo.c
 %_man1dir/*
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 4.1-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for xpad
+
 * Fri Apr 06 2012 Victor Forsiuk <force@altlinux.org> 4.1-alt2
 - Fix glib include compile problem.
 
