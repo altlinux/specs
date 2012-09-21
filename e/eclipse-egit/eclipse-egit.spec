@@ -1,27 +1,27 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 BuildRequires: rpm-build-java-osgi
-# required for install
-BuildRequires: unzip
-%global eclipse_base     %{_libdir}/eclipse
 %global install_loc      %{_datadir}/eclipse/dropins/egit
 
 Summary:          Eclipse Git Integration
 Name:             eclipse-egit
-Version:          1.1.0
-Release:          alt1_1jpp6
+Version:          2.0.0
+Release:          alt1_2jpp7
 License:          EPL
 URL:              http://www.eclipse.org/egit
 Group:            Development/Java
-
-# retrieved from http://egit.eclipse.org/w/?p=egit.git;a=snapshot;h=v1.1.0.201109151100-r;sf=tbz2
-Source0:          egit-v1.1.0.201109151100-r.tar.bz2
+# retrieved from http://git.eclipse.org/c/egit/egit.git/snapshot/egit-2.0.0.201206130900-r.tar.bz2
+Source0:          egit-2.0.0.201206130900-r.tar.bz2
+Patch0:           encoding-fix.patch
 
 BuildRequires:    eclipse-pde
-BuildRequires:    eclipse-jgit >= 1.1.0
+BuildRequires:    eclipse-jgit >= 1.3.0
 BuildRequires:    jpackage-utils >= 0:1.5
 Requires:         eclipse-platform >= 1:3.5.0
-Requires:         eclipse-jgit >= 1.1.0
+Requires:         eclipse-jgit >= 1.3.0
 
 BuildArch:        noarch
 Source44: import.info
@@ -31,15 +31,11 @@ The eclipse-egit package contains Eclipse plugins for
 interacting with Git repositories.
 
 %prep
-%setup -n eclipse-egit -q -c
-NR=$((`wc -l egit/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneWizard.java | \
-            cut -d' ' -f1` - 1))
-       tail -n$NR egit/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneWizard.java > part2.java
-echo "/*******************************************************************************" > part1.java
-cat part1.java part2.java > egit/org.eclipse.egit.ui/src/org/eclipse/egit/ui/internal/clone/GitCloneWizard.java
+%setup -n egit-2.0.0.201206130900-r -q
+#%patch0 -p1
 
 %build
-%{eclipse_base}/buildscripts/pdebuild -f org.eclipse.egit -d jgit mylyn
+%{_bindir}/eclipse-pdebuild -f org.eclipse.egit -d "jgit"
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{install_loc}
@@ -49,10 +45,15 @@ unzip -q -d $RPM_BUILD_ROOT%{install_loc}/ build/rpmBuild/org.eclipse.egit.zip
 
 %files
 %{install_loc}
-%doc egit/LICENSE
-%doc egit/README
+%doc LICENSE README
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt1_2jpp7
+- new version
+
+* Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_1jpp6
+- fixed build
+
 * Thu Oct 06 2011 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1_1jpp6
 - update to new release by jppimport
 
