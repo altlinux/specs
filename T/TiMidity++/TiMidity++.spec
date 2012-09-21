@@ -2,8 +2,8 @@
 %define _name timidity
 
 Name: TiMidity++
-Version: 2.13.2
-Release: alt13%prerel
+Version: 2.14.0
+Release: alt2%prerel
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
 License: GPL
@@ -15,14 +15,7 @@ Source1: timidity.init
 Source2: timidity.sysconfig
 Source3: timidity.desktop
 Patch0: TiMidity++-2.13.0-alt-config.patch
-Patch1: timidity++-2.13.2-exiterror.patch
-Patch2: timidity++-2.13.2-gcc4.patch
-Patch3: timidity++-2.13.2-gtk26.patch
-Patch4: TiMidity++-2.13.2-tcltk-link.patch
-Patch5: TiMidity++-2.13.2+flac-1.1.3-partial.patch
-Patch6: TiMidity++-2.13.2+flac-1.1.3.patch
-Patch7: TiMidity++-2.13.2-alt-speex.patch
-Patch8: TiMidity-nopoll.diff
+Patch4: TiMidity++-2.14.0-tcltk-link.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 %define tcl_ver 8.4.0-alt1
@@ -36,6 +29,7 @@ BuildRequires: emacs-common esound-devel jackit-devel libXaw-devel libXaw3d-deve
 
 BuildRequires: tcl-devel >= %tcl_ver, tk-devel >= %tk_ver
 BuildRequires: libpng-devel
+BuildRequires: libogg-devel libvorbis-devel
 
 Summary(ru_RU.KOI8-R): Конвертер/проигрыватель MIDI-файлов
 Summary(uk_UA.KOI8-U): Конвертер/програвач MIDI-файл╕в
@@ -70,14 +64,7 @@ timidity-eaw-patches.
 %prep
 %setup -n %name-%version%prerel
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p0
-%patch4 -p1
-#patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p0
+%patch4 -p2
 cp -a INSTALL INSTALL.orig
 
 %build
@@ -131,6 +118,12 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Fri Sep 21 2012 Andriy Stepanov <stanv@altlinux.ru> 2.14.0-alt2
+- cleanup spec
+
+* Fri Sep 21 2012 Andriy Stepanov <stanv@altlinux.ru> 2.14.0-alt1
+- version update
+
 * Sun Mar 20 2011 Michael Shigorin <mike@altlinux.org> 2.13.2-alt13
 - re-added lost BR, thx at@
 
