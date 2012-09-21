@@ -4,7 +4,7 @@ BuildRequires: unzip
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-changes-plugin
-Version:        2.6
+Version:        2.7.1
 Release:        alt1_2jpp7
 Summary:        Plugin to support reporting of changes between releases
 
@@ -15,7 +15,7 @@ Source0:        http://repo2.maven.org/maven2/org/apache/maven/plugins/%{name}/%
 Source1:        %{name}.depmap
 
 Patch0:         0001-Fix-Maven-3-compatibility.patch
-Patch1:         %{name}-migration-to-component-metadata.patch
+Patch1:         0002-Remove-geronimo-dependency-supplied-by-JVM.patch
 
 BuildArch:      noarch
 
@@ -75,8 +75,6 @@ Requires: xmlrpc3-common
 Requires: xerces-j2
 Requires: xml-commons-apis
 Requires: velocity
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
 
 Obsoletes: maven2-plugin-changes <= 0:2.0.8
 Provides: maven2-plugin-changes = 1:%{version}-%{release}
@@ -109,7 +107,7 @@ API documentation for %{name}.
 %build
 mvn-rpmbuild -e \
         -Dmaven.local.depmap.file=%{SOURCE1} \
-        -Dmaven.test.failure.ignore=true \
+        -Dmaven.test.skip=true \
         install javadoc:aggregate
 
 %install
@@ -117,10 +115,10 @@ mvn-rpmbuild -e \
 # jars
 install -Dpm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
-%add_to_maven_depmap org.apache.maven.plugins %{name} %{version} JPP %{name}
-
 # poms
 install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap
 
 # javadoc
 install -dm 755 %{buildroot}%{_javadocdir}/%{name}
@@ -131,14 +129,17 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
-%{_javadir}/*
-%{_mavenpomdir}/*
-%config(noreplace) %{_mavendepmapfragdir}/*
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 
 %files javadoc
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.7.1-alt1_2jpp7
+- new version
+
 * Sat Mar 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_2jpp7
 - new version
 
