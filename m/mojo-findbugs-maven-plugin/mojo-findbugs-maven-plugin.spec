@@ -41,7 +41,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-findbugs-maven-plugin
 Version:        2.2
-Release:        alt1_2jpp7
+Release:        alt2_2jpp6
 Epoch:          0
 Summary:        FindBugs Maven Plugin
 Group:          Development/Java
@@ -170,6 +170,9 @@ ln -s %{name}-%{namedversion} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt2_2jpp6
+- proper jpp6 release
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2-alt1_2jpp7
 - separate package
 
