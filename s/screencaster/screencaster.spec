@@ -1,5 +1,5 @@
 Name: screencaster
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 Summary: Screencaster
@@ -30,6 +30,12 @@ cp -a recstop %buildroot%_bindir
 %_bindir/*
 
 %changelog
+* Fri Sep 21 2012 Dmitry Derjavin <dd@altlinux.org> 0.4-alt1
+- Check for data directory availability;
+- simple check for Pulse Audio, else fall back to ALSA;
+- current directory is now default data directory;
+- ffmpeg/avconv configuration switch.
+
 * Tue Sep 04 2012 Dmitry Derjavin <dd@altlinux.org> 0.3-alt1
 - Example configuration file errors fixed;
 - OSS@highschool conference abstract added as a doc.
