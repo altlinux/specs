@@ -1,6 +1,6 @@
 Name:    tetex-latex-unicode
 Version: 20041017
-Release: alt1
+Release: alt1.qa1
 Summary: Extended UTF-8 input encoding for LaTeX
 License: LaTeX Project Public License
 Group:   Publishing
@@ -36,14 +36,6 @@ install -d %buildroot%_datadir/texmf/doc/latex
 #ln -sf ../../../doc/%name-%version  %buildroot%_datadir/texmf/doc/latex/unicode
 
 
-%post
-[ -x /usr/bin/texhash ] && /usr/bin/texhash 2>/dev/null ||:
-
-
-%postun
-[ -x /usr/bin/texhash ] && /usr/bin/texhash 2>/dev/null ||:
-
-
 %files
 %_datadir/texmf/tex/latex/unicode
 %_docdir/%name-%version
@@ -52,6 +44,11 @@ install -d %buildroot%_datadir/texmf/doc/latex
 
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 20041017-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-tex-obsolete-util-calls-in-post for tetex-latex-unicode
+
 * Fri Jun 27 2008 Kirill Maslinsky <kirill@altlinux.org> 20041017-alt1
 - version up
   + now provides utf8x input encoding
