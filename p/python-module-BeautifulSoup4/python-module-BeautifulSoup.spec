@@ -6,8 +6,8 @@
 
 %define oname BeautifulSoup4
 Name: python-module-%oname
-Version: 4.0.3
-Release: alt2
+Version: 4.1.3
+Release: alt1
 
 Summary: HTML/XML parser for quick-turnaround applications like screen-scraping
 
@@ -25,7 +25,7 @@ Source: BeautifulSoup-%version.tar.bz2
 BuildRequires: python-devel python-modules-compiler python-modules-encodings
 %if_with python3
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel
+BuildRequires: python3-devel python-tools-2to3
 %endif
 
 %description
@@ -79,6 +79,9 @@ cp -a . ../python3
 %python_build
 %if_with python3
 pushd ../python3
+for i in $(find ./ -name '*.py'); do
+	2to3 -w $i
+done
 %python3_build
 popd
 %endif
@@ -90,6 +93,9 @@ pushd ../python3
 %python3_install
 popd
 %endif
+
+%check
+python -m unittest discover -s bs4
 
 %files
 %doc *.txt
@@ -110,6 +116,9 @@ popd
 %endif
 
 %changelog
+* Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.3-alt1
+- Version 4.1.3
+
 * Tue Apr 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt2
 - Extracted tests into separate package
 
