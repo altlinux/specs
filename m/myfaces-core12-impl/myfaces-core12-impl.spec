@@ -1,3 +1,4 @@
+BuildRequires: aspectj
 BuildRequires: mojo-parent oss-parent
 BuildRequires: portals-pluto10-portlet-1.0-api
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat testng maven-surefire-provider-testng
 Summary:        JSF 1.2 implementation
 Name:           myfaces-core12-impl
 Version:        1.2.3
-Release:        alt8_1jpp5
+Release:        alt9_1jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -197,6 +198,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt9_1jpp5
+- build with aspectj 1.6.0
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.3-alt8_1jpp5
 - fixed build with new testng and xbean
 
