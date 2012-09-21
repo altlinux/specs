@@ -1,3 +1,4 @@
+BuildRequires: aspectj
 BuildRequires: qdox
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat testng maven-surefire-provider-testng
 Summary:        MyFaces shared 12
 Name:           myfaces-shared12
 Version:        3.0.4
-Release:        alt4_1jpp5
+Release:        alt5_1jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -199,6 +200,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt5_1jpp5
+- build with aspectj 1.6.0
+
 * Fri Apr 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt4_1jpp5
 - fixed build with new plexus-containers
 
