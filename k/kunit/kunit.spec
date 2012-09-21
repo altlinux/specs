@@ -1,6 +1,6 @@
 Name: kunit
 Version: 0.5
-Release: alt9
+Release: alt9.qa1
 
 Summary: KUnit - units converter
 Summary(ru-Ru.KOI8-R): Конвертер физических величин
@@ -23,7 +23,7 @@ Patch1: kunit-0.5-qt_no_compat.patch
 Patch2: kunit-build.patch
 Patch3: kunit-fix_deprecated_headers.patch
 
-BuildPreReq: menu-devel desktop-file-utils
+BuildPreReq:  desktop-file-utils
 BuildRequires: gcc-c++ kdelibs-devel libqt3-devel libpng-devel libjpeg-devel
 Requires(post,postun): desktop-file-utils
 
@@ -62,19 +62,19 @@ KUnit - программа пересчета физических величин в различные системы
 	CXXFLAGS="%optflags"
 
 %install
-%__install -pD kunit/%name %buildroot%_bindir/%name
-%__install -pD %SOURCE8 %buildroot%_docdir/HTML/en/%name/index.docbook
+install -pD kunit/%name %buildroot%_bindir/%name
+install -pD %SOURCE8 %buildroot%_docdir/HTML/en/%name/index.docbook
 /usr/bin/meinproc --check --cache %buildroot%_docdir/HTML/en/%name/index.cache.bz2 %buildroot%_docdir/HTML/en/%name/index.docbook
-%__ln_s ../common %buildroot/%_docdir/HTML/en/%name/common
+ln -s ../common %buildroot/%_docdir/HTML/en/%name/common
 
 #icons
-%__install -pD -m644 %SOURCE1 %buildroot%_miconsdir/%name.png
-%__install -pD -m644 %SOURCE2 %buildroot%_iconsdir/hicolor/32x32/apps/%name.png
-%__install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.png
-%__install -pD -m644 %SOURCE4 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
-%__install -pD -m644 %SOURCE5 %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
-%__install -pD -m644 %SOURCE6 %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
-%__install -pD -m644 %SOURCE7 %buildroot%_datadir/applications/kde/%name.desktop
+install -pD -m644 %SOURCE1 %buildroot%_miconsdir/%name.png
+install -pD -m644 %SOURCE2 %buildroot%_iconsdir/hicolor/32x32/apps/%name.png
+install -pD -m644 %SOURCE3 %buildroot%_liconsdir/%name.png
+install -pD -m644 %SOURCE4 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
+install -pD -m644 %SOURCE5 %buildroot%_iconsdir/hicolor/128x128/apps/%name.png
+install -pD -m644 %SOURCE6 %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+install -pD -m644 %SOURCE7 %buildroot%_datadir/applications/kde/%name.desktop
 
 %files
 %doc README AUTHORS
@@ -87,6 +87,12 @@ KUnit - программа пересчета физических величин в различные системы
 %_miconsdir/%name.png
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.5-alt9.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-obsolete-buildreq for kunit
+  * postclean-03-private-rpm-macros for the spec file
+
 * Tue Nov 25 2008 Andrey Cherepanov <cas@altlinux.org> 0.5-alt9
 - Fix kunit.desktop file 
 
