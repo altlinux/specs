@@ -1,6 +1,6 @@
 Summary: Vargus - the video surveillance program
 Name: vargus
-Version: 0.9.5
+Version: 0.9.5.1
 Release: alt1
 License: %gpl2plus
 Group: Video
@@ -132,6 +132,9 @@ exit 0
 
 
 %changelog
+* Fri Sep 21 2012 Michael A. Kangin <prividen@altlinux.org> 0.9.5.1-alt1
+- Some persistence fixes
+
 * Sat Aug 18 2012 Michael A. Kangin <prividen@altlinux.org> 0.9.5-alt1
 - Alerts support
 - libav support
