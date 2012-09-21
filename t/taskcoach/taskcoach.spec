@@ -1,13 +1,13 @@
 %define oname TaskCoach
 Name: taskcoach
-Version: 1.3.17
+Version: 1.3.18
 Release: alt1
 
 Summary: Your friendly task manager
 
 License: GPL
 Group: Text tools
-Url: http://taskcoach.niessink.com/
+Url: http://taskcoach.org/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -17,10 +17,13 @@ Patch: %name.patch
 BuildArch: noarch
 
 # manually removed: eric
-# Automatically added by buildreq on Tue Jan 06 2009
-BuildRequires: libcurl python-module-PyXML python-module-wx
+# Automatically added by buildreq on Fri Sep 21 2012
+# optimized out: python-base python-devel python-module-distribute python-module-zope python-modules python-modules-compiler python-modules-email python-modules-encodings
+BuildRequires: python-module-mwlib
 
 BuildPreReq: rpm-build-intro
+
+Requires: lsb-release
 
 AutoProv: no
 # wait for correct build python-module-pysyncml
@@ -38,6 +41,7 @@ deal with composite tasks.
 %prep
 %setup -n %oname-%version
 %patch -p2
+%__subst "s|^ *wxversion|#wxversion|g" taskcoach.py
 
 %build
 %python_build
@@ -60,6 +64,9 @@ rm -rf %buildroot%python_sitelibdir/buildlib/
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Sep 21 2012 Vitaly Lipatov <lav@altlinux.ru> 1.3.18-alt1
+- new version 1.3.18 (with rpmrb script)
+
 * Thu Aug 16 2012 Vitaly Lipatov <lav@altlinux.ru> 1.3.17-alt1
 - new version 1.3.17 (with rpmrb script) (ALT bug #27633)
 
