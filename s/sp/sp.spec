@@ -1,13 +1,12 @@
 Name:           sp
 Version:        4.2
-Release:        alt6
+Release:        alt6.qa1
 Summary:        School Portal
 Summary(ru):    Школьный портал
 License:        Distributable, non-free
 Group:          Education
 Url:            http://spcms.ru
 Packager:       Andrey Stroganov <dja@altlinux.org>
-Vendor:         SP Team
 Source:         sp-4.2.tar
 BuildRequires:  fpc
 Requires:       perl-base perl-CGI perl-CGI-Session perl-Archive-Zip perl-GD perl-GD-Graph perl-CGI-SpeedyCGI perl-Magick perl-Mail-Sender perl-Text-Iconv perl-DBD-InterBase perl-HTML-TagFilter pwgen perl-IO-Compress
@@ -307,6 +306,12 @@ a2ensite  default
 a2dissite 000-sp
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 4.2-alt6.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * vendor-tag for sp-debuginfo
+  * vendor-tag for sp
+
 * Thu Sep 13 2012 Andrey Stroganov <dja@altlinux.org> 4.2-alt6
 - /usr/lib replaced with macros
 * Thu Sep 5 2012 Andrey Stroganov <dja@altlinux.org> 4.2-alt5
