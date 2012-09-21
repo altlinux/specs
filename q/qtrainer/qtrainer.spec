@@ -1,7 +1,8 @@
+BuildRequires: desktop-file-utils
 Name:		qtrainer
 Summary:	Qtrainer is a personal home trainer for Qt4
 Version:	0.5.2
-Release:	alt2.qa1
+Release:	alt2.qa2
 Group:		Office
 License:	GPLv2+
 Packager: 	Mikhail Pokidko <pma@altlinux.ru>
@@ -33,13 +34,17 @@ install -Dp -m 0755 bin/%name %buildroot%_bindir/%name
 install -Dp -m 0644 src/logo.svg %buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
 install -Dp -m 0644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
-
 %files
 %_bindir/*
 %_iconsdir/hicolor/scalable/apps/*
 %_desktopdir/*
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.5.2-alt2.qa2
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * freedesktop-desktop-file-proposed-patch for qtrainer
+
 * Fri Jan 15 2010 Repocop Q. A. Robot <repocop@altlinux.org> 0.5.2-alt2.qa1
 - NMU (by repocop): the following fixes applied:
   * pixmap-in-deprecated-location for qtrainer
