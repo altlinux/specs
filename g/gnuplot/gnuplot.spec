@@ -1,6 +1,6 @@
 Name: gnuplot
 Version: 4.4.0
-Release: alt2
+Release: alt2.qa1
 Epoch: 1
 
 Summary: A program for plotting mathematical expressions and data
@@ -42,7 +42,7 @@ BuildArch: noarch
 BuildPreReq: emacs-devel >= 0.0.1-alt2
 BuildRequires: emacs-common texinfo
 Group: Editors
-Requires: %name = %version-%release emacs-base
+Requires: %name = %{?epoch:%epoch:}%version-%release emacs-base
 Obsoletes: emacs-gnuplot <= 0.6.0-alt1
 Provides: emacs-gnuplot
 
@@ -51,7 +51,7 @@ Summary:  The Emacs Lisp sources for bytecode included in emacs-mode-%name
 Summary(ru_RU.UTF-8): Исходный код Emacs Lisp для emacs-mode-%name
 BuildArch: noarch
 Group: Development/Other
-Requires: emacs-mode-%name = %version-%release
+Requires: emacs-mode-%name = %{?epoch:%epoch:}%version-%release
 Obsoletes: emacs-gnuplot <= 0.6.0-alt1
 Provides: emacs-gnuplot-el
 
@@ -174,6 +174,11 @@ install -D -pm644 %SOURCE12  %buildroot/%_liconsdir/%name.png
 %_emacslispdir/%name/*.el
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:4.4.0-alt2.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for gnuplot
+
 * Fri Mar 26 2010 Alexey Morsov <swi@altlinux.ru> 1:4.4.0-alt2
 - add wxt terminal support
 - fix .gih file location
