@@ -1,8 +1,7 @@
 Name:		juffed
 Version:	0.8.1
-Release:	alt5
+Release:	alt5.qa1
 License:	GPL
-Vendor:		Mikhail Murzin <mezomish@gmail.com>
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 Group:		Editors
 Summary:	Simple tabbed text editor
@@ -55,6 +54,13 @@ mkdir -p %buildroot/%_libdir/%name/plugins
 %_includedir/%name
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.1-alt5.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * vendor-tag for juffed-debuginfo
+  * vendor-tag for juffed
+  * vendor-tag for juffed-devel
+
 * Wed Mar 21 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt5
 - Consider %%optflags (thanks sbolshakov@)
 
