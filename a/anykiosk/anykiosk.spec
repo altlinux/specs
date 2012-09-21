@@ -5,13 +5,12 @@
 
 Name: anykiosk
 Version: %ver.%reldate
-Release: alt2.1
+Release: alt2.1.qa1
 
 Summary: Easy kiosk mode tuning for various programs
 License: GPL
 Group: System/Configuration/Other
 
-Vendor: UnixForum.org (Denjs & Minoru-kun)
 Url: http://anykiosk.berlios.de
 #Packager: Denjs <denjs@users.berlios.de>
 Packager: Andrey Cherepanov <cas@altlinux.org>
@@ -84,6 +83,11 @@ install -pD -m640 %name.security %buildroot%_sysconfdir/security/console.apps/%n
 %config(noreplace) %_sysconfdir/security/console.apps/%name
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.0.2.20101210-alt2.1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * vendor-tag for anykiosk
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.0.2.20101210-alt2.1
 - Rebuild with Python-2.7
 
