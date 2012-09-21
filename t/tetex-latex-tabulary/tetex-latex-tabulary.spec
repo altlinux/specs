@@ -2,7 +2,7 @@
 
 Name: tetex-latex-%srcName
 Version: 0.9
-Release: alt1
+Release: alt1.qa1
 Summary: Tabular environment with variable width columns balanced
 License: LPPL (LaTeX Project Public License)
 Group: Publishing
@@ -34,20 +34,20 @@ width of the widest cell in the column.
 latex tabulary.ins
 
 %install
-%__mkdir_p %buildroot%_datadir/texmf/tex/latex/carlisle
+mkdir -p %buildroot%_datadir/texmf/tex/latex/carlisle
 install -pD -m644 tabulary.sty %buildroot%_datadir/texmf/tex/latex/carlisle/
-
-%post
-[ -x %_bindir/texhash ] && %_bindir/texhash 2>/dev/null ||:
-
-%postun
-[ -x %_bindir/texhash ] && %_bindir/texhash 2>/dev/null ||:
 
 %files
 %_datadir/texmf/tex/latex/carlisle/tabulary.sty
 %doc README tabulary.pdf
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.9-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-tex-obsolete-util-calls-in-post for tetex-latex-tabulary
+  * postclean-03-private-rpm-macros for the spec file
+
 * Thu Nov 22 2007 Kirill Maslinsky <kirill@altlinux.org> 0.9-alt1
 - Initial build for Sisyphus
 
