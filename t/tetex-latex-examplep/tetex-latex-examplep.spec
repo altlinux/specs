@@ -2,7 +2,7 @@
 
 Name: tetex-latex-%srcName
 Version: 0.03
-Release: alt1
+Release: alt1.qa1
 Summary: Verbatim phrases and listings in LaTeX
 License: LPPL (LaTeX Project Public License)
 Group: Publishing
@@ -45,20 +45,20 @@ from a single source embedded into the appropriate place of the
 %build
 
 %install
-%__mkdir_p %buildroot%_datadir/texmf/tex/latex/%srcName
+mkdir -p %buildroot%_datadir/texmf/tex/latex/%srcName
 install -pD -m644 examplep.sty codep.sty verbfwr.sty %buildroot%_datadir/texmf/tex/latex/%srcName/
-
-%post
-[ -x %_bindir/texhash ] && %_bindir/texhash 2>/dev/null ||:
-
-%postun
-[ -x %_bindir/texhash ] && %_bindir/texhash 2>/dev/null ||:
 
 %files
 %_datadir/texmf/tex/latex/%srcName/
 %doc README eurotex_2005_examplep.pdf houses.pdf pexaminipage.pdf shorthyp_t1xtts.pdf houses.eps pexaminipage.eps shorthyp_t1xtts.eps wrfiles.pl eurotex_2005_examplep.tex 
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.03-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * altlinux-policy-tex-obsolete-util-calls-in-post for tetex-latex-examplep
+  * postclean-03-private-rpm-macros for the spec file
+
 * Thu Nov 22 2007 Kirill Maslinsky <kirill@altlinux.org> 0.03-alt1
 - Initial build for Sisyphus
 
