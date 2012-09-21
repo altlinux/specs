@@ -1,3 +1,4 @@
+BuildRequires: aspectj
 BuildRequires: mojo-parent
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
@@ -37,7 +38,7 @@ BuildRequires: jpackage-compat maven2-plugin-checkstyle
 Summary:        Myfaces JSF 1.1 implementation
 Name:           myfaces-core11-impl
 Version:        1.1.5
-Release:        alt6_2jpp5
+Release:        alt7_2jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -197,6 +198,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt7_2jpp5
+- build with aspectj 1.6.0
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt6_2jpp5
 - fixed build
 
