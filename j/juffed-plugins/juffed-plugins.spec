@@ -1,11 +1,10 @@
 Name:		juffed-plugins
 Summary:	Plugins for JuffEd text editor
 Version:	0.8.1
-Release:	alt5
+Release:	alt5.qa1
 License:	GPL
 Group:		Editors	
 URL:		http://code.google.com/p/juffed-plugins
-Vendor:		Mikhail Murzin <mezomish@gmail.com>
 Packager:	Andrey Cherepanov <cas@altlinux.org>	
 
 Source:		%{name}_%{version}.tar.gz
@@ -38,6 +37,12 @@ DESTDIR=%buildroot PREFIX=/usr qmake-qt4 %name.pro
 %_libdir/juffed/plugins/*.so*
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.1-alt5.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * vendor-tag for juffed-plugins
+  * vendor-tag for juffed-plugins-debuginfo
+
 * Wed Mar 21 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt5
 - Consider %%optflags (thanks sbolshakov@)
 
