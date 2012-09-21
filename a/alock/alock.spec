@@ -1,6 +1,6 @@
 Name: alock
 Version: 0.0.1
-Release: alt0.svn94.0
+Release: alt0.svn94.1
 URL: http://code.google.com/p/alock/
 
 Summary: Locks the local X display until the correct password is entered
@@ -12,7 +12,7 @@ Patch1: alt_change_pam_scheme.diff
 Source: %name.tar
 Source1: %name.pam
 
-BuildRequires: imlib2-devel libXcursor-devel libXpm-devel libXrender-devel libXxf86misc-devel libfreetype-devel libpam-devel xorg-bitmaps
+BuildRequires: zlib-devel imlib2-devel libXcursor-devel libXpm-devel libXrender-devel libXxf86misc-devel libfreetype-devel libpam-devel xorg-bitmaps
 
 %description
 'alock' locks the X server until the user enters the correct password at the
@@ -48,7 +48,7 @@ install -pm0644 -D %{S:1} %buildroot%_sysconfdir/pam.d/%name
 %makeinstall
 
 %files
-%_bindir/*
+%attr(2711,root,chkpwd) %_bindir/*
 %_datadir/%name/bitmaps/*.xbm
 %_datadir/%name/xcursors/*
 %_man1dir/*
@@ -56,6 +56,9 @@ install -pm0644 -D %{S:1} %buildroot%_sysconfdir/pam.d/%name
 %doc LICENSE.txt README.txt CHANGELOG.txt
 
 %changelog
+* Fri Sep 21 2012 Andriy Stepanov <stanv@altlinux.ru> 0.0.1-alt0.svn94.1
+- Fix build for Sisyphus and patch from Denis Smirnov mithraen@
+
 * Fri Apr 13 2012 Andriy Stepanov <stanv@altlinux.ru> 0.0.1-alt0.svn94.0
 - Import to ALT Linux Sisyphus
 
