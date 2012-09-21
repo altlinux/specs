@@ -1,9 +1,8 @@
 Name:		eggwm
 Version:	0.2
-Release:	alt1
+Release:	alt1.qa1
 Summary:	Egg Windows Manager
 License:	GPL
-Vendor:		José Expósito <jose.exposito89@gmail.com>
 URL:		http://code.google.com/p/eggwm/
 Group:		Graphical desktop/Other	
 Packager: 	Andrey Cherepanov <cas@altlinux.org>
@@ -37,6 +36,12 @@ install -D -m0655 %SOURCE1 %buildroot%_datadir/xsessions/%name.desktop
 %_datadir/xsessions/%name.desktop
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.2-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * vendor-tag for eggwm-debuginfo
+  * vendor-tag for eggwm
+
 * Sun Feb 13 2011 Andrey Cherepanov <cas@altlinux.org> 0.2-alt1
 - New version 0.2
 
