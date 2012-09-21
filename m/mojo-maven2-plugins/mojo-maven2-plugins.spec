@@ -65,7 +65,7 @@ BuildRequires: jpackage-compat
 %define exec_namedversion 1.1-beta-2-SNAPSHOT
 %define exec_include 0
 %define findbugs_namedversion 2.3.1
-%define findbugs_include 1
+%define findbugs_include 0
 
 #%%define groovy_namedversion 1.0-beta-3 SEE gmaven
 %define groovy_include 0
@@ -352,7 +352,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt28_8jpp6
+Release:        alt29_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -3012,6 +3012,7 @@ sed -i 's,<module>xfire-maven-plugin</module>,<!-- tmp nocompile<module>xfire-ma
 sed -i 's,<module>jspc</module>,<!-- tmp nocompile<module>jspc</module>-->,' pom.xml
 sed -i 's,<module>docbook-maven-plugin</module>,<!-- tmp nocompile<module>docbook-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>rat-maven-plugin</module>,<!-- tmp nocompile<module>rat-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>findbugs-maven-plugin</module>,<!-- tmp nocompile<module>findbugs-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>antlr-maven-plugin</module>,<!-- tmp nocompile<module>antlr-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>appassembler</module>,<!-- tmp nocompile<module>appassembler</module>-->,' pom.xml
 sed -i 's,<module>apt-maven-plugin</module>,<!-- tmp nocompile<module>apt-maven-plugin</module>-->,' pom.xml
@@ -5089,6 +5090,8 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 export CLASSPATH=$(build-classpath gnu-crypto)
 %{_bindir}/aot-compile-rpm
 %endif
+
+%if %{findbugs_include}
 patch %buildroot/usr/share/maven2/poms/JPP.mojo-findbugs-maven-plugin.pom <<'EOF'
 --- JPP.mojo-findbugs-maven-plugin.pom	2012-02-10 13:27:49.000000000 +0200
 +++ JPP.mojo-findbugs-maven-plugin.pom	2012-02-11 19:02:04.000000000 +0200
@@ -5107,6 +5110,7 @@ patch %buildroot/usr/share/maven2/poms/JPP.mojo-findbugs-maven-plugin.pom <<'EOF
        <groupId>org.codehaus.gmaven</groupId>
        <artifactId>gmaven-mojo</artifactId>
 EOF
+%endif
 
 %files
 %dir %{_javadir}/mojo
@@ -6146,6 +6150,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt29_8jpp6
+- build without gmaven and findbugs plugin
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt28_8jpp6
 - dropped jspc
 
