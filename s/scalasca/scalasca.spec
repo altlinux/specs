@@ -7,7 +7,7 @@
 %define sover %somver.%over
 Name: scalasca
 Version: %over
-Release: alt1
+Release: alt2
 Summary: Scalable performance Analysis of Large-Scale parallel Applications
 License: MIT
 Group: Development/Tools
@@ -479,14 +479,16 @@ sed -i '1s|/sh|/bash|' \
 	%buildroot%_bindir/cube-config \
 	%buildroot%_bindir/pearl-config \
 	%buildroot%_bindir/scarlet
+sed -i 's|\.a|.so|' %buildroot%_bindir/kinst-pomp
 
 %files
 %doc COPYRIGHT LICENSE OPEN_ISSUES README.1st
 %_bindir/*
 %exclude %_bindir/kinst*
-%exclude %_bindir/kconfig
+%exclude %_bindir/*conf*
 %exclude %_bindir/cube*
 %exclude %_bindir/opari*
+%exclude %_bindir/*.awk
 
 %files doc
 %_docdir/%name
@@ -498,9 +500,9 @@ sed -i '1s|/sh|/bash|' \
 %files -n lib%name-devel
 %_docdir/%name.inst
 %_bindir/kinst*
-%_bindir/kconfig
-%_bindir/cube-config
+%_bindir/*conf*
 %_bindir/opari*
+%_bindir/*.awk
 %_libdir/*.so
 %exclude %_libdir/libsz0.*
 %dir %_libdir/%name-devel
@@ -540,6 +542,9 @@ sed -i '1s|/sh|/bash|' \
 #_libdir/libsz0.a
 
 %changelog
+* Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt2
+- Fixed kinst-pomp for work with shared libraries
+
 * Thu Sep 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1
 - Version 1.4.2
 - Disabled static libraries

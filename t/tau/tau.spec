@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: tau
-Version: 2.19.2
-Release: alt22
+Version: 2.21.4
+Release: alt1
 Summary: TAU Portable Profiling Package
 License: BSD-like
 Group: Development/Tools
@@ -104,27 +104,6 @@ automatic instrumentation tool.
 
 This package contains development files of TAU Portable Profiling Package.
 
-%package -n lib%name-devel-static
-Summary: Static libraries of TAU Portable Profiling Package
-Group: Development/Other
-Requires: lib%name-devel = %version-%release
-Requires: lib%name-common = %version-%release
-Requires: libpapi-devel libgomp-devel libsz0-devel
-Requires: libopenpdt-devel openpdt libscalasca-devel libpapi-devel
-
-%description -n lib%name-devel-static
-TAU is a program and performance analysis tool framework being developed for
-the DOE and ASC program at University of Oregon. TAU provides a suite of 
-static and dynamic tools that provide graphical user
-interaction and interoperation to form an integrated analysis environment for
-parallel Fortran 95, C and C++ applications.  In particular, a robust
-performance profiling facility availble in TAU has been applied extensively in
-the ACTS toolkit.  Also, recent advancements in TAU's code analysis
-capabilities have allowed new static tools to be developed, such as an
-automatic instrumentation tool.
-
-This package contains static libraries of TAU Portable Profiling Package.
-
 %package doc
 Summary: Documentation for TAU Portable Profiling Package
 Group: Documentation
@@ -200,6 +179,7 @@ export BUILDROOT=%buildroot
 	-extrashlibopts="-Wl,-R%mpidir/lib -L%mpidir/lib -lmpi -lgomp"
 
 export BUILDROOTLIB=%buildroot%_libexecdir
+export BUILDROOT=%buildroot
 %ifarch x86_64
 export LIBSUFF=64
 %endif
@@ -324,14 +304,15 @@ sed -i 's|%buildroot||g' %buildroot%_includedir/*.h \
 for i in %buildroot%_libdir/*; do
 	chrpath -r %mpidir/lib $i || chrpath -d $i ||:
 done
-rm -f %buildroot%_libdir/*/*.so
+rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
+	%buildroot%_bindir/opari2*
 
 %files
 %doc README COPYRIGHT LICENSE CREDITS
 %_bindir/*
 %exclude %_bindir/tau_opari
 %exclude %_bindir/tau_reduce
-%exclude %_bindir/tau_ompcheck
+#exclude %_bindir/tau_ompcheck
 %exclude %_bindir/tau_wrap
 %exclude %_bindir/tau_instrumentor
 %exclude %_bindir/tau-config
@@ -352,7 +333,7 @@ rm -f %buildroot%_libdir/*/*.so
 %_sysconfdir/*
 %_man1dir/*
 %exclude %_man1dir/tau_reduce.1*
-%exclude %_man1dir/tau_ompcheck.1*
+#exclude %_man1dir/tau_ompcheck.1*
 %exclude %_man1dir/tau_wrap.1*
 %exclude %_man1dir/tau_instrumentor.1*
 %exclude %_man1dir/tau_compiler.sh.1*
@@ -368,7 +349,7 @@ rm -f %buildroot%_libdir/*/*.so
 %files -n lib%name-common
 %_bindir/tau_opari
 %_bindir/tau_reduce
-%_bindir/tau_ompcheck
+#_bindir/tau_ompcheck
 %_bindir/tau_wrap
 %_bindir/tau_instrumentor
 %_bindir/tau-config
@@ -389,7 +370,7 @@ rm -f %buildroot%_libdir/*/*.so
 %exclude %_includedir/pomp_lib.h
 %_datadir/%name
 %_man1dir/tau_reduce.1*
-%_man1dir/tau_ompcheck.1*
+#_man1dir/tau_ompcheck.1*
 %_man1dir/tau_wrap.1*
 %_man1dir/tau_instrumentor.1*
 %_man1dir/tau_compiler.sh.1*
@@ -403,9 +384,6 @@ rm -f %buildroot%_libdir/*/*.so
 %files -n lib%name-devel
 %_libdir/*.so
 
-#files -n lib%name-devel-static
-#_libdir/*.a
-
 %files doc
 %_docdir/%name
 
@@ -414,6 +392,9 @@ rm -f %buildroot%_libdir/*/*.so
 %exclude %_javadir/jargs.jar
 
 %changelog
+* Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.21.4-alt1
+- Version 2.21.4
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.19.2-alt22
 - Rebuilt with papi 5.0.0
 
