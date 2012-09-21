@@ -30,7 +30,7 @@ Epoch:  1
 Summary:        An open, extensible IDE
 Name:           eclipse
 Version:        %{eclipse_version}
-Release:        alt2_7jpp7
+Release:        alt3_7jpp7
 License:        EPL
 Group:          Editors
 URL:            http://www.eclipse.org/
@@ -64,7 +64,6 @@ BuildRequires:  java-javadoc >= 1:1.7.0
 BuildRequires:  libXt-devel
 BuildRequires:  webkitgtk-devel
 BuildRequires:  geronimo-annotation >= 1.0-7
-BuildRequires:  geronimo-annotation-1.0-api
 
 BuildRequires: icu4j-eclipse >= 1:4.4.2.2-11
 BuildRequires: tomcat-lib >= 7.0.25-3
@@ -166,7 +165,7 @@ Requires: sac >= 1.3-12
 Requires: xml-commons-apis
 Requires: batik >= 1.8
 Requires: atinject >= 1-6
-Requires: geronimo-annotation-1.0-api >= 1.0-7
+Requires: geronimo-annotation >= 1.0-7
 Provides: eclipse-cvs-client = 1:%{eclipse_version}-%{release}
 Obsoletes: eclipse-cvs-client < 1:3.3.2-20
 #Package eclipse-platform has broken dep on osgi(org.apache.el)
@@ -715,6 +714,9 @@ touch %buildroot/etc/eclipse.ini
 %{_mavendepmapfragdir}/%{name}-equinox-osgi
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt3_7jpp7
+- fixed geronimo-*api dependencies
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt2_7jpp7
 - restored internal emf
 
