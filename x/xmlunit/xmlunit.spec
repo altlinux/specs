@@ -1,12 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: docbook-simple
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# one of the sources is a zip file
-BuildRequires: unzip
-# Copyright (c) 2000-2009, JPackage Project
+# Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -36,55 +34,31 @@ BuildRequires: unzip
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_with manual
-%bcond_without repolib
-
-%define repodir %{_javadir}/repository.jboss.com/xmlunit-xmlunit/%{version}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
-%define gcj_support 0
-
-
 Name:           xmlunit
-Version:        1.2
-Release:        alt3_4jpp6
+Version:        1.3
+Release:        alt1_6jpp7
 Epoch:          0
-Summary:        Provides classes to do asserts on XML
+Summary:        Provides classes to do asserts on xml
 License:        BSD
-Group:          Development/Java
+Source0:        http://downloads.sourceforge.net/project/xmlunit/xmlunit%%20for%%20Java/XMLUnit%%20for%%20Java%%201.3/xmlunit-1.3-src.zip
+Source1:        http://repo1.maven.org/maven2/xmlunit/xmlunit/1.0/xmlunit-1.0.pom
 URL:            http://xmlunit.sourceforge.net/
-Source0:        http://downloads.sourceforge.net/xmlunit/xmlunit-1.2-src.zip
-Source1:        http://repo1.maven.org/maven2/xmlunit/xmlunit/1.2/xmlunit-1.2.pom
-Source2:        xmlunit-component-info.xml
-Patch0:         xmlunit-no-javac-target.patch
-Requires(post): jpackage-utils >= 0:1.7.3
-Requires(postun): jpackage-utils >= 0:1.7.3
-%if %with manual
-BuildRequires: dblatex
-BuildRequires: docbook5-style-xsl
-%endif
-BuildRequires: jpackage-utils
-BuildRequires: ant
-BuildRequires: ant-junit
-BuildRequires: ant-trax
-BuildRequires: xalan-j2
-BuildRequires: xerces-j2
-BuildRequires: xml-commons-jaxp-1.3-apis
-Requires: junit
-Requires: xalan-j2
-Requires: xml-commons-jaxp-1.3-apis
-Requires: xerces-j2
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
+BuildRequires:  jpackage-utils >= 0:1.7.3
+BuildRequires:  ant >= 0:1.6.5
+BuildRequires:  ant-junit
+BuildRequires:  ant-trax
+BuildRequires:  junit >= 0:3.8.1
+BuildRequires:  xalan-j2
+BuildRequires:  xerces-j2
+BuildRequires:  xml-commons-apis
+BuildRequires:  dblatex
+BuildRequires:  docbook5-style-xsl
+Requires:       junit >= 0:3.8
+Requires:       xalan-j2
+Requires:       xml-commons-apis
+Requires:       jpackage-utils
+Group:          Development/Java
 BuildArch:      noarch
-%endif
 Source44: import.info
 
 %description
@@ -93,145 +67,74 @@ XML document to a test document or the result of a transformation, validates
 documents against a DTD, and (from v0.5) compares the results of XPath
 expressions.
 
-%package javadoc
+%package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
-%description javadoc
-Javadoc for %{name}.
-
-%package manual
-
-Summary:        Manual for %{name}
-Group:          Development/Java
-BuildArch: noarch
-
-%description manual
-Documentation for %{name}.
-
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
+%description    javadoc
+Javadoc for %{name}
 
 %prep
-%setup -q -n xmlunit-%{version}
-%patch0 -p1
+%setup -q 
+# remove all binary libs and javadocs
+find . -name "*.jar" -exec rm -f {} \;
+rm -rf doc
 
-%{__perl} -pi -e 's/\r$//g' README.txt LICENSE.txt
-rm -r userguide
-
-%if %with manual
-DB5_XSL=`/bin/echo %{_datadir}/sgml/docbook/xsl-ns-stylesheets-*/ 2>/dev/null`
-
-if [ ! -d "$DB5_XSL" ]; then
-    DB5_XSL=`/bin/echo %{_datadir}/sgml/docbook/xsl-stylesheets-db5-*/ 2>/dev/null`
-fi
-
-if [ ! -d "$DB5_XSL" ]; then
-    echo Could not find db5.xsl directory
-    exit 1
-fi
-%endif
-
-cat > build.properties << EOF
+cat >build.properties <<EOF
 junit.lib=$(build-classpath junit)
-%if %with manual
-db5.xsl=$DB5_XSL
-%endif
-xmlxsl.lib=$(build-classpath xalan-j2 xerces-j2 xml-commons-jaxp-1.3-apis)
+xmlxsl.lib=$(build-classpath xalan-j2 xalan-j2-serializer xerces-j2)
 test.report.dir=test
 EOF
+
+cat >docbook.properties <<EOF
+db5.xsl=%{_datadir}/sgml/docbook/xsl-ns-stylesheets
+EOF
+
+#Fix wrong-file-end-of-line-encoding
+sed -i 's/\r//g' README.txt LICENSE.txt
 # damn the net
-# TODO: why catalog does not work?
+# TODO: why catalog does not work? it is ant xslt task
 sed -i 's,http://docbook.org/xml/simple/1.1b1/sdocbook.dtd,http://www.oasis-open.org/docbook/xml/simple/1.1/sdocbook.dtd,g' `grep -rl 'http://docbook.org/xml/simple/1.1b1/sdocbook.dtd' .`
 
 
 %build
-export CLASSPATH=
-export OPT_JAR_LIST="`%{__cat} %{_sysconfdir}/ant.d/{junit,trax}`"
-%if %with manual
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  dist
-%else
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar javadocs test
-%endif
+export CLASSPATH=$(build-classpath xalan-j2-serializer)
+ant -Dbuild.compiler=modern -Dfailonerror=false jar javadocs
 
 %install
 
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
-install -p -m 0644 build/lib/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-
-# Jar versioning
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
+install -m 0644 build/lib/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
 
 # poms
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -p -m 644 %{SOURCE1} \
+
+install -m 644 %{SOURCE1} \
     $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
+
 
 # Javadoc
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -pr build/doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-%if %with manual
-# Manual
-mkdir -p $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr build/doc/userguide/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/
-%endif
-
-%if %with repolib
-%{__install} -d -m 755 %{buildroot}%{repodir}
-%{__install} -d -m 755 %{buildroot}%{repodirlib}
-%{__install} -p -m 644 %{SOURCE2} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__install} -d -m 755 %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE1} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{PATCH0} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/xmlunit.jar
-%endif
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
 %files
-%doc README.txt LICENSE.txt
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/%{name}-%{version}.jar.*
-%endif
+%{_javadir}/*
+%doc README.txt LICENSE.txt userguide/XMLUnit-Java.pdf 
+%{_datadir}/maven2/poms/*
+%{_mavendepmapfragdir}/*
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
-
-%if %with manual
-%files manual
-%doc %{_docdir}/%{name}-%{version}
-%endif
-
-%if %with repolib
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
+%doc %{_javadocdir}/%{name}-%{version}
+%doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt1_6jpp7
+- new version
+
 * Mon Aug 01 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt3_4jpp6
 - fixed build
 
