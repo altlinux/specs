@@ -1,3 +1,4 @@
+BuildRequires: aspectj
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -40,7 +41,7 @@ BuildRequires: jpackage-compat
 
 Name:           spring-beandoc
 Version:        0.8.1
-Release:        alt3_1jpp5
+Release:        alt4_1jpp5
 Epoch:          0
 Summary:        Spring Beandoc
 
@@ -187,6 +188,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt4_1jpp5
+- build with aspectj 1.6.0
+
 * Sat Jan 29 2011 Igor Vlasenko <viy@altlinux.ru> 0:0.8.1-alt3_1jpp5
 - fixed build;
 - spring-beandoc-0.8.1-alt-pom-aspectj.patch;
