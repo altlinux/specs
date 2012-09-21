@@ -9,7 +9,7 @@
 
 Name: seamonkey
 Version: 2.8
-Release: alt1
+Release: alt1.qa1
 Serial: 1
 Summary: Web browser and mail reader
 License: MPL/NPL
@@ -75,7 +75,7 @@ compliance, performance and portability.
 Summary: An integrated calendar for Seamonkey
 Group: Office
 Url: http://www.mozilla.org/projects/calendar/lightning/
-Requires: %name = %version-%release
+Requires: %name = %{?serial:%serial:}%version-%release
 
 %description lightning
 An integrated calendar for Seamonkey.
@@ -103,18 +103,18 @@ echo 'ac_add_options --enable-calendar' >> .mozconfig
 %add_findprov_lib_path %sm_prefix
 
 sed -i -e 's|AC_CONFIG_AUX_DIR(\${MOZILLA_SRCDIR}/build/autoconf)|AC_CONFIG_AUX_DIR(mozilla/build/autoconf)|' configure.in
-%__autoconf
+autoconf
 
 cd mozilla
 sed -i -e 's|AC_CONFIG_AUX_DIR(\${srcdir}/build/autoconf)|AC_CONFIG_AUX_DIR(build/autoconf)|' configure.in
 ln -s "$PWD/configure" build/autoconf/configure
-%__autoconf
+autoconf
 cd -
 
 cd mozilla/js/src
 sed -i -e 's|AC_CONFIG_AUX_DIR(\${srcdir}/build/autoconf)|AC_CONFIG_AUX_DIR(build/autoconf)|' configure.in
 ln -s "$PWD/configure" build/autoconf/configure
-%__autoconf
+autoconf
 cd -
 
 # Add fake RPATH
@@ -128,7 +128,7 @@ export CXXFLAGS="$MOZ_OPT_FLAGS"
 export LIBIDL_CONFIG=/usr/bin/libIDL-config-2
 export MOZILLA_SRCDIR="$PWD"
 
-%__autoconf
+autoconf
 
 # On x86 architectures, Mozilla can build up to 4 jobs at once in parallel,
 # however builds tend to fail on other arches when building in parallel.
@@ -189,7 +189,7 @@ cd -
 
 %install
 
-%__mkdir_p \
+mkdir -p \
 	%buildroot/%sm_prefix/plugins \
 	%buildroot/%sm_arch_extensionsdir \
 	%buildroot/%sm_noarch_extensionsdir \
@@ -200,7 +200,7 @@ cd -
 	#
 
 ###From Enigmail
-%__mkdir_p %buildroot/%enigmail_ciddir
+mkdir -p %buildroot/%enigmail_ciddir
 unzip -q -u -d %buildroot/%enigmail_ciddir -- \
     mozilla/dist/xpi-stage/enigmail.xpi
 
@@ -224,23 +224,23 @@ rm -rf -- \
 	#
 
 # install icons
-	%__install -D suite/branding/nightly/icons/gtk/default16.png \
+	install -D suite/branding/nightly/icons/gtk/default16.png \
 	%buildroot%_miconsdir/%name.png
-	%__install -D suite/branding/nightly/icons/gtk/default.png \
+	install -D suite/branding/nightly/icons/gtk/default.png \
 	%buildroot%_niconsdir/%name.png
-	%__install -D suite/branding/nightly/icons/gtk/%name.png \
+	install -D suite/branding/nightly/icons/gtk/%name.png \
 	%buildroot%_iconsdir/hicolor/128x128/apps/%name.png
 
 # install search plugins
 tar -C %buildroot%sm_prefix -xf %SOURCE2
 
 # install browser menu file
-%__install -D -m 644 %SOURCE3 %buildroot%_datadir/applications/seamonkey-alt-browser.desktop
+install -D -m 644 %SOURCE3 %buildroot%_datadir/applications/seamonkey-alt-browser.desktop
 # install mail menu file
-%__install -D -m 644 %SOURCE4 %buildroot%_datadir/applications/seamonkey-alt-mail.desktop
+install -D -m 644 %SOURCE4 %buildroot%_datadir/applications/seamonkey-alt-mail.desktop
 
 # Add alternatives
-%__mkdir_p %buildroot%_altdir
+mkdir -p %buildroot%_altdir
 printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 
 # Fixed plugins path
@@ -264,6 +264,12 @@ sed -i -e 's,@PLUGIN_PATH@,%browser_plugins_path,g' %buildroot%sm_prefix/seamonk
 %endif
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:2.8-alt1.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for seamonkey
+  * postclean-03-private-rpm-macros for the spec file
+
 * Sun Feb 19 2012 Radik Usupov <radik@altlinux.org> 1:2.8-alt1
 - New version seamonkey (2.8b3)
 
