@@ -2,8 +2,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: ldap-user-tools
-Version: 0.6
-Release: alt4
+Version: 0.7
+Release: alt1
 
 Summary: tools to work with ldap users
 Group: Development/Other
@@ -15,7 +15,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 # HEREDOC code
 Requires: ruby(ldap) ruby(ldap/ldif) openldap-servers perl-Crypt-SmbHash alterator-kdc
-Requires: alterator-openldap-functions
+Requires: alterator-openldap-functions >= 0.3
 
 %description
 tools to work with ldap users
@@ -42,6 +42,11 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Fri Sep 21 2012 Andrey Cherepanov <cas@altlinux.org> 0.7-alt1
+- Use default LDAP configuration if DN_CONF is empty
+- Add --help and --version arguments support in scripts
+- Write short help for ldap-* scripts
+
 * Tue Jul 12 2011 Fr. Br. George <george@altlinux.ru> 0.6-alt4
 - Fix "ldap-dn find" exit status and output bug
 

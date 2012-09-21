@@ -1,8 +1,8 @@
 %define _altdata_dir %_sysconfdir/alterator
 
 Name: alterator-openldap-functions
-Version: 0.2
-Release: alt2
+Version: 0.3
+Release: alt1
 
 BuildArch: noarch
 
@@ -33,6 +33,11 @@ helper functions for alterator openldap based backends
 %dir %_altdata_dir/openldap
 
 %changelog
+* Fri Sep 21 2012 Andrey Cherepanov <cas@altlinux.org> 0.3-alt1
+- added functions
+  + set_ldap_config
+  + get_ldap_version
+
 * Wed Apr 14 2010 Dmitriy Kruglikov <dkr@altlinux.org> 0.2-alt2
 - added functions
   + slapd_daemon_status
