@@ -1,17 +1,20 @@
 Summary: A tool for combine images (make a panoramas) using a multiresolution spline
 Name: enblend
 Version: 4.0
-Release: alt1.1
+Release: alt2
 License: VIGRA License
 Group: Graphics
 URL: http://enblend.sourceforge.net/
 Packager: Sergei Epiphanov <serpiph@altlinux.ru>
 Source0: %name-%version.tar.gz
+Source1: %name.readme
+Patch1: %name-fix-png15-4.0.patch
+Patch2: %name-fix-boost3-4.0.patch
 
 Provides: enfuse
 
 
-BuildRequires: boost-devel gcc-c++ libstdc++-devel automake autoconf
+BuildRequires: boost-devel gcc-c++ libstdc++-devel automake autoconf boost-filesystem-devel
 BuildRequires: libjpeg-devel libpng-devel libtiff-devel libglew-devel liblcms-devel
 BuildRequires: libxmi-devel libXmu-devel libXi-devel
 BuildRequires: libGLU-devel libGLUT-devel openexr-devel liblcms-devel libstlport-devel
@@ -25,6 +28,8 @@ the  input  images  invisible and very suitable to make panoramas.
 %prep
 
 %setup -q
+%patch1 -p1
+%patch2 -p1
 
 %build
 
@@ -32,7 +37,7 @@ export CPPFLAGS=-I/usr/include/lcms
 autoreconf -fisv
 #mkdir build
 #cd build
-%configure
+%configure --with-boost-filesystem=yes
 %make
 #cd ..
 %install
@@ -48,6 +53,9 @@ autoreconf -fisv
 
 
 %changelog
+* Sat Sep 22 2012 Sergei Epiphanov <serpiph@altlinux.ru> 4.0-alt2
+- Fix build with png15 and boost1.51.0.
+
 * Fri Apr 08 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.0-alt1.1
 - build fixed
 
