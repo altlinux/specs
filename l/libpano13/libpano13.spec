@@ -1,6 +1,6 @@
 Name: libpano13
 Version: 2.9.18
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: %name - library for panorama stitching programs. This is new generation and development version
@@ -98,6 +98,9 @@ autoconf
 %_man1dir/*
 
 %changelog
+* Sat Sep 22 2012 Sergei Epiphanov <serpiph@altlinux.ru> 2.9.18-alt2
+- Rebuild with new libpng and libtiff
+
 * Thu Jul 21 2011 Sergei Epiphanov <serpiph@altlinux.ru> 2.9.18-alt1
 - New version
 
