@@ -1,5 +1,5 @@
 %define version 1.5.1
-%define release alt1.hg20120315
+%define release alt1.hg20120916
 %define oname PasteDeploy
 
 %def_with python3
@@ -91,6 +91,9 @@ popd
 %endif
 
 %changelog
+* Sat Sep 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.5.1-alt1.hg20120916
+- New snapshot
+
 * Fri May 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.5.1-alt1.hg20120315
 - New snapshot
 - Added module for Python 3
