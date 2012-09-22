@@ -1,6 +1,6 @@
 Name: libtiff
-Version: 4.0.2
-Release: alt2
+Version: 4.0.3
+Release: alt1
 
 Summary: Library of functions for manipulating TIFF format image files
 License: BSD-style
@@ -167,6 +167,9 @@ xz -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Sun Sep 23 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.3-alt1
+- Updated to Release-v4-0-3.
+
 * Sun Sep 02 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.2-alt2
 - Updated to Release-v4-0-2-21-g8520941.
 - Renamed: libtiff -> libtiff5, libtiffxx -> libtiffxx5.
