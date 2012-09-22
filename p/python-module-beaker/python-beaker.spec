@@ -3,13 +3,13 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 1.6.3
+Version: 1.6.4
 Release: alt1
 Summary: WSGI middleware layer to provide sessions
 
 Group:  Development/Python
 License: BSD
-URL: http://beaker.groovie.org/
+URL: http://pypi.python.org/pypi/Beaker
 Source0: http://pypi.python.org/packages/source/B/Beaker/%{name}-%{version}.tar.gz
 BuildPreReq: python-devel python-module-setuptools rpm-build-python
 %if_with python3
@@ -30,7 +30,7 @@ manage Session objects and signed cookies.
 %package -n python3-module-%oname
 Summary: WSGI middleware layer to provide sessions (Python 3)
 Group: Development/Python3
-%add_python3_req_skip jarray javax builtins
+%add_python3_req_skip jarray javax builtins nss
 
 %description -n python3-module-%oname
 Beaker is a caching library that includes Session and Cache objects built on
@@ -79,6 +79,9 @@ popd
 %endif
 
 %changelog
+* Sat Sep 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.4-alt1
+- Version 1.6.4
+
 * Thu May 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.3-alt1
 - Version 1.6.3
 - Added module for Python 3
