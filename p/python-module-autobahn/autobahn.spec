@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.5.1
-Release: alt1.git20120523
+Version: 0.5.8
+Release: alt1.git20120920
 Summary: WebSocket & WAMP for Python/Twisted
 License: Apache License 2.0
 Group: Development/Python
@@ -68,8 +68,8 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
-%prepare_sphinx doc
-ln -s ../objects.inv doc/python/
+%prepare_sphinx .
+ln -s ../objects.inv doc/
 
 %build
 pushd %oname
@@ -85,7 +85,7 @@ done
 popd
 %endif
 
-pushd doc/python
+pushd doc
 %make pickle
 %make html
 popd
@@ -95,7 +95,7 @@ pushd %oname
 %python_install
 popd
 
-cp -fR doc/python/_build/pickle \
+cp -fR doc/_build/pickle \
 	%buildroot%python_sitelibdir/%oname/
 
 %if_with python3
@@ -105,7 +105,7 @@ popd
 %endif
 
 %files
-%doc README* doc/rfc
+%doc README* CONTRIBUTORS
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/pickle
 
@@ -113,15 +113,18 @@ popd
 %python_sitelibdir/*/pickle
 
 %files docs
-%doc doc/python/_build/html examples
+%doc doc/_build/html examples
 
 %if_with python3
 %files -n python3-module-%oname
-%doc README* doc/rfc
+%doc README* CONTRIBUTORS
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Sat Sep 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.8-alt1.git20120920
+- Version 0.5.8
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt1.git20120523
 - Initial build for Sisyphus
 
