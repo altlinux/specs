@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.2
-Release: alt3
+Version: 0.7.8
+Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
 License: MIT
@@ -15,7 +15,7 @@ Source: SQLAlchemy-%version.tar
 Patch0: SQLAlchemy-%version-alt-allinone.patch
 %py_provides SQLAlchemy
 
-BuildArch: noarch
+#BuildArch: noarch
 BuildPreReq: python-devel python-module-setuptools
 %if_with python3
 BuildRequires(pre): rpm-build-python3
@@ -35,6 +35,7 @@ simple and Pythonic domain language.
 %package -n python3-module-%oname
 Summary: Python 3 SQL toolkit and Object Relational Mapper
 Group: Development/Python3
+BuildArch: noarch
 %py3_provides SQLAlchemy
 
 %description -n python3-module-%oname
@@ -65,7 +66,7 @@ This package contains tests for SQLAlchemy.
 %package tests
 Summary: Tests for SQLAlchemy
 Group: Development/Python
-BuildArch: noarch
+#BuildArch: noarch
 Requires: %name = %version-%release
 
 %description tests
@@ -106,21 +107,24 @@ popd
 %endif
 
 %files -f INSTALLED_FILES
-%exclude %python_sitelibdir/*/test
+#exclude %python_sitelibdir/*/test
 
-%files tests
-%python_sitelibdir/*/test
+#files tests
+#python_sitelibdir/*/test
 
 %if_with python3
 %files -n python3-module-%oname
-%python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test
+%python3_sitelibdir_noarch/*
+#exclude %python3_sitelibdir_noarch/*/test
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test
+#files -n python3-module-%oname-tests
+#python3_sitelibdir_noarch/*/test
 %endif
 
 %changelog
+* Sat Sep 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.8-alt1
+- Version 0.7.8
+
 * Fri Apr 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt3
 - Added module for Python 3
 
