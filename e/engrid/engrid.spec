@@ -2,7 +2,7 @@
 
 Name: engrid
 Version: 1.4
-Release: alt1.git20120704
+Release: alt2.git20120704
 Summary: Mesh generation software with CFD applications in mind
 License: GPL v3 or later
 Group: Sciences/Physics
@@ -77,7 +77,7 @@ ln -s %_niconsdir/engrid.xpm %buildroot%_liconsdir/
 install -d %buildroot%_desktopdir
 install -p -m644 debian/%name.desktop %buildroot%_desktopdir
 install -d %buildroot%_datadir/blender/scripts/blender
-install -p -m644 src/blender_scripts/2.4/* src/blender_scripts/2.59/* \
+install -p -m644 src/blender_scripts/2.4/* src/blender_scripts/2.63a/* \
 	%buildroot%_datadir/blender/scripts/blender
 
 %files
@@ -95,6 +95,9 @@ install -p -m644 src/blender_scripts/2.4/* src/blender_scripts/2.59/* \
 %doc manual tutorials
 
 %changelog
+* Sat Sep 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2.git20120704
+- Rebuilt with blender 2.63
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.git20120704
 - Version 1.4
 
