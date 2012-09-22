@@ -2,23 +2,21 @@
 %define		varpath		/var/lib/angband
 
 Name:		angband
-Version: 	3.1.1
-Release: 	alt1.qa3
-
-Packager:	Alexey Voinov <voins@altlinux.ru>
+Version: 	3.4.0
+Release: 	alt1
 
 Summary:	Angband is a "graphical" dungeon adventure game
 Summary(ru_RU.KOI8-R): 	Angband - приключенческая игра.
 License:	Moria/Angband license
 Group:		Games/Adventure
-Source:		%name-%version.tar
+Source:		%name-v%version.tar.gz
 Source1:	%name-graf.tar.bz2
 Source2:	graf-32x32-304.tar.bz2
-Patch: angband-3.1.1-alt-DSO.patch
 URL:		http://rephial.org
 
-# Automatically added by buildreq on Mon Feb 11 2008
-BuildRequires: imake libSDL-devel libSDL_mixer-devel libSM-devel libX11-devel libncurses-devel xorg-cf-files
+# Automatically added by buildreq on Fri Sep 21 2012
+# optimized out: gnu-config libICE-devel libncurses-devel libtinfo-devel termutils xorg-kbproto-devel xorg-xproto-devel
+BuildRequires: imake libSM-devel libX11-devel libncursesw-devel xorg-cf-files
 
 %description
 Angband is a "graphical" dungeon adventure game using textual characters
@@ -31,12 +29,11 @@ Angband - приключенческая игра. Для изображения стен подземелья, а так же его
 Игра является прямым потомком игры moria. 
 
 %prep
-%setup -q -a1 -a2
-%patch -p2
+%setup -q -a1 -a2 -n %name-v%version
 
 %build
 %configure --enable-x11 --enable-curses --disable-sdl --with-libpath=%libpath
-make
+%make_build
  
 %install
 mkdir -p $RPM_BUILD_ROOT/%_bindir
@@ -47,8 +44,10 @@ cp lib/edit/*.txt $RPM_BUILD_ROOT/%libpath/edit/
 cp lib/file/*.txt $RPM_BUILD_ROOT/%libpath/file/
 cp lib/help/*.{txt,hlp} $RPM_BUILD_ROOT/%libpath/help/
 cp lib/pref/*.prf $RPM_BUILD_ROOT/%libpath/pref/
-cp lib/xtra/font/*.{txt,fon} $RPM_BUILD_ROOT/%libpath/xtra/font/
-cp lib/xtra/graf/*.{png,bmp} $RPM_BUILD_ROOT/%libpath/xtra/graf/
+# TODO what happens to .txt? cp lib/xtra/font/*.{txt,fon} ...
+cp lib/xtra/font/*.fon $RPM_BUILD_ROOT/%libpath/xtra/font/
+# TODO what happens to .bmp? cp lib/xtra/graf/*.{png,bmp} ...
+cp lib/xtra/graf/*.png $RPM_BUILD_ROOT/%libpath/xtra/graf/
 cp lib/xtra/sound/*.{wav,cfg} $RPM_BUILD_ROOT/%libpath/xtra/sound/
 
 cp angband-graf/*.bmp $RPM_BUILD_ROOT/%libpath/xtra/graf/
@@ -122,6 +121,9 @@ fi
 %_desktopdir/%name.desktop
 
 %changelog
+* Sat Sep 22 2012 Fr. Br. George <george@altlinux.ru> 3.4.0-alt1
+- Version up
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1.qa3
 - Fixed build
 
