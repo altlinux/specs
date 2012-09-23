@@ -1,15 +1,14 @@
 Name:		focuswriter
-Version:	1.3.6
+Version:	1.4.0
 Release:	alt1
 Summary:	FocusWriter is a fullscreen, distraction-free word processor
 License:	GPLv3
+Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Group:		Text tools
 Url:		http://gottcode.org/focuswriter/
-Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Source0:	http://gottcode.org/focuswriter/%name-%version-src.tar.bz2
 
-# Automatically added by buildreq on Tue Mar 22 2011 (-bi)
-BuildRequires: gcc-c++ libao-devel libhunspell-devel libqt4-devel libzip-devel
+BuildRequires: gcc-c++ libenchant-devel libzip-devel libqt4-devel
 
 %description
 FocusWriter is a fullscreen, distraction-free word processor
@@ -18,16 +17,6 @@ The program autosaves your progress, and reloads the last files
 you had open to make it easy to jump back in during your next
 writing session, and has many other features that make it such
 that only one thing matters: your writing.
-
-%package -n %name-dictionaries
-Summary:	Dictionaries for FocusWriter
-Group:		Text tools
-BuildArch:	noarch
-Requires:	%name
-
-%description -n %name-dictionaries
-Spelling and morphological dictionary for FocusWriter
-from OpenOffice.org
 
 %prep
 %setup
@@ -38,19 +27,17 @@ qmake-qt4 "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" PREFIX=%prefix
 
 %install
 %make_install INSTALL_ROOT=%buildroot install
-cp -a resources/dict %buildroot%_datadir/%name/
 
 %files
 %_bindir/%name
 %_desktopdir/%name.desktop
 %_datadir/%name
-%exclude %_datadir/%name/dict
 %_iconsdir/hicolor/*/apps/*
 
-%files -n %name-dictionaries
-%_datadir/%name/dict
-
 %changelog
+* Sun Sep 23 2012 Motsyo Gennadi <drool@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Sun Jun 17 2012 Motsyo Gennadi <drool@altlinux.ru> 1.3.6-alt1
 - 1.3.6
 
