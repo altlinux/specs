@@ -1,5 +1,6 @@
 Patch33: cargo-core-1.0-alt-maven3.patch 
 BuildRequires: jetty6-servlet-2.5-api
+%def_without jetty
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -48,7 +49,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo
 Version:        1.0
-Release:        alt7_3jpp6
+Release:        alt8_3jpp6
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -239,7 +240,7 @@ ln -s %{_javadir} external_repo/JPP
 %patch33
 sed -i -e 's,org\.apache\.commons\.vfs\.,org.apache.commons.vfs2.,g' `grep -rl org.apache.commons.vfs. .`
 sed -i -e 's,<assembly>,<assembly><id>ALT</id>,' core/uberjar/src/assemble/main.xml
-
+sed -i -e 's,<module>jetty-deployer</module>,<!-- module>jetty-deployer</module -->,' resources/pom.xml
 
 %build
 export LANG=en_US.ISO8859-1
@@ -308,9 +309,12 @@ cp -p \
 cp -p \
    core/containers/jboss/target/cargo-core-container-jboss-%{version}.jar \
    %{buildroot}%{_javadir}/%{name}/%{name}-core-container-jboss-%{version}.jar
+
+%if_with jetty
 cp -p \
    core/containers/jetty/target/cargo-core-container-jetty-%{version}.jar \
    %{buildroot}%{_javadir}/%{name}/%{name}-core-container-jetty-%{version}.jar
+%endif
 cp -p \
    core/containers/jo/target/cargo-core-container-jo-%{version}.jar \
    %{buildroot}%{_javadir}/%{name}/%{name}-core-container-jo-%{version}.jar
@@ -384,8 +388,10 @@ cp -p core/containers/geronimo/pom.xml \
    %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-geronimo.pom
 cp -p core/containers/jboss/pom.xml \
    %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-jboss.pom
+%if_with jetty
 cp -p core/containers/jetty/pom.xml \
    %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-jetty.pom
+%endif
 cp -p core/containers/jo/pom.xml \
    %{buildroot}%{_datadir}/maven2/poms/JPP.cargo-cargo-core-container-jo.pom
 cp -p core/containers/jrun/pom.xml \
@@ -435,7 +441,9 @@ cp -p resources/pom.xml \
 %add_to_maven_depmap org.codehaus.cargo cargo-core-api-util %{version} JPP/cargo cargo-core-api-util
 %add_to_maven_depmap org.codehaus.cargo cargo-core-container-geronimo %{version} JPP/cargo cargo-core-container-geronimo
 %add_to_maven_depmap org.codehaus.cargo cargo-core-container-jboss %{version} JPP/cargo cargo-core-container-jboss
+%if_with jetty
 %add_to_maven_depmap org.codehaus.cargo cargo-core-container-jetty %{version} JPP/cargo cargo-core-container-jetty
+%endif
 %add_to_maven_depmap org.codehaus.cargo cargo-core-container-jo %{version} JPP/cargo cargo-core-container-jo
 %add_to_maven_depmap org.codehaus.cargo cargo-core-container-jrun %{version} JPP/cargo cargo-core-container-jrun
 %add_to_maven_depmap org.codehaus.cargo cargo-core-container-orion %{version} JPP/cargo cargo-core-container-orion
@@ -479,9 +487,11 @@ cp -pr core/containers/geronimo/target/site/apidocs/* \
 mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}/core/containers/jboss
 cp -pr core/containers/jboss/target/site/apidocs/* \
    %{buildroot}%{_javadocdir}/%{name}-%{version}/core/containers/jboss
+%if_with jetty
 mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}/core/containers/jetty
 cp -pr core/containers/jetty/target/site/apidocs/* \
    %{buildroot}%{_javadocdir}/%{name}-%{version}/core/containers/jetty
+%endif
 mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}/core/containers/jo
 cp -pr core/containers/jo/target/site/apidocs/* \
    %{buildroot}%{_javadocdir}/%{name}-%{version}/core/containers/jo
@@ -552,6 +562,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Sep 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_3jpp6
+- fixed build with new jetty
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt7_3jpp6
 - fixed build - added non-null assembly descriptor
 
