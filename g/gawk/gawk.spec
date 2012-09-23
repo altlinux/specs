@@ -1,21 +1,24 @@
 Name: gawk
-Version: 3.1.8
+Version: 4.0.1
 Release: alt1
 
+%def_with doc
 %def_with profile
-%define _libexecdir %_prefix/libexec
+%define _libexecdir %prefix/libexec
 
 Summary: The GNU version of the awk text processing utility
 License: GPLv3+
 Group: Text tools
 Url: http://www.gnu.org/software/gawk/
-Packager: Stanislav Ievlev <inger@altlinux.org>
 
-# ftp://ftp.gnu.org/gnu/gawk/gawk-%version.tar.bz2
-Source: gawk-%version.tar
+# git://git.altlinux.org/gears/g/gawk.git
+Source: %name-%version-%release.tar
 
 Provides: awk = %version
-BuildRequires: groff-ps texlive-base-bin texlive-generic-recommended
+BuildRequires: libreadline-devel
+# Automatically added by buildreq on Sat Sep 22 2012
+# optimized out: fontconfig fonts-type1-urw ghostscript-classic ghostscript-common gnu-config groff-base tex-common texlive-base texlive-base-bin texlive-common texlive-latex-base tzdata
+%{?_with_doc:BuildRequires: ghostscript-utils groff-ps texlive-generic-recommended}
 
 %description
 This packages contains the GNU version of awk, a text processing utility.
@@ -25,7 +28,7 @@ upwardly compatible with the Bell Labs research version of awk and is
 almost completely compliant with the 1993 POSIX 1003.2 standard for awk.
 
 %package profile
-Summary: The version of gawk with profiling support.
+Summary: The version of gawk with profiling support
 Group: Development/Other
 Requires: %name = %version-%release
 
@@ -33,6 +36,14 @@ Requires: %name = %version-%release
 This package includes pgawk (profiling gawk).  pgawk is identical in
 every way to gawk, except that when it has finished running, it creates
 a profile of your program with line execution counts.
+
+%package -n dgawk
+Summary: The awk Debugger
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description -n dgawk
+This package includes dgawk -- the awk debugger.
 
 %package doc
 Summary: Documentation about the GNU version of the awk text processing utility
@@ -45,16 +56,19 @@ This packages contains documentation about the GNU version of the awk
 text processing utility.
 
 %prep
-%setup
-rm awkgram.c doc/*.info awklib/eg/prog/igawk.sh awklib/stamp-eg
-bzip2 -9k ChangeLog NEWS
+%setup -n %name-%version-%release
 
 %build
-%configure --bindir=/bin --enable-switch
-sed -i 's/#define HAVE_SOCKETS 1/#undef HAVE_SOCKETS/' config.h
+./bootstrap.sh
+rm awkgram.c command.c version.c doc/*.info awklib/eg/prog/igawk.sh awklib/stamp-eg
+%configure --bindir=/bin --without-libsigsegv-prefix
 %make_build
-%make_build -C doc gawk.ps awkcard.ps
-bzip2 -9 doc/{gawk,awkcard}.ps
+%if_with doc
+cd doc
+%make_build gawk.dvi awkcard.pdf
+dvipdf gawk.dvi
+cd -
+%endif
 
 %install
 %makeinstall_std
@@ -67,8 +81,8 @@ ln -s gawk.1 %buildroot%_man1dir/awk.1
 
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
-install -pm644 AUTHORS ChangeLog.bz2 FUTURES LIMITATIONS NEWS.bz2 POSIX.STD PROBLEMS README \
-	doc/{gawk,awkcard}.ps.bz2 %buildroot%docdir/
+install -pm644 AUTHORS ChangeLog FUTURES LIMITATIONS NEWS POSIX.STD README \
+	%{?_with_doc:doc/{gawk,awkcard}.pdf} %buildroot%docdir/
 
 %find_lang %name
 
@@ -78,9 +92,10 @@ install -pm644 AUTHORS ChangeLog.bz2 FUTURES LIMITATIONS NEWS.bz2 POSIX.STD PROB
 %files -f %name.lang
 /bin/*
 %_bindir/*
+%exclude %_bindir/dgawk
 
 %if_with profile
-%exclude %_bindir/pgawk*
+%exclude %_bindir/pgawk
 %endif #with profile
 
 %_libexecdir/awk
@@ -91,16 +106,24 @@ install -pm644 AUTHORS ChangeLog.bz2 FUTURES LIMITATIONS NEWS.bz2 POSIX.STD PROB
 %dir %docdir
 %docdir/[A-Z]*
 
+%files -n dgawk
+%_bindir/dgawk
+
 %if_with profile
 %files profile
-%_bindir/pgawk*
+%_bindir/pgawk
 %endif #with profile
 
+%if_with doc
 %files doc
 %dir %docdir
-%docdir/*.ps.bz2
+%docdir/*.pdf
+%endif
 
 %changelog
+* Sun Sep 23 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.1-alt1
+- Updated to gawk-4.0.1-39-g439d946 (closes: #27715).
+
 * Thu Jun 03 2010 Dmitry V. Levin <ldv@altlinux.org> 3.1.8-alt1
 - Updated to 3.1.8 (closes: #4911, #16359).
 
