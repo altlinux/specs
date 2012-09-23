@@ -1,19 +1,18 @@
 Name: dynamips
 Version: 0.2.8
-Release: alt1rc2
+%define extra_ver RC3
+Release: alt2%extra_ver
 
 Summary: Cisco 7200 Simulator
-License: GPL
+License: GPLv2
 Group: Emulators
 
-Url: http://www.ipflow.utc.fr/index.php/Cisco_7200_Simulator
+Url: http://www.gns3.net/
 
-Source0: %name-%version-RC2.tar.gz
-Patch0: dynamips-Makefile.patch
-Patch1: %name-0.2.8-RC2-alt-makefile.patch
+Source: %name-%version-RC3-community.tar.gz
+Patch1: %name-0.2.8-RC3-make.patch
 
-# Automatically added by buildreq on Sun Mar 23 2008
-BuildRequires: libelf-devel libpcap-devel
+BuildRequires: libelf-devel libpcap-devel libuuid-devel
 
 %description
 A project to emulate a Cisco 7200 on a traditionnal PC.
@@ -34,43 +33,29 @@ The goals of this emulator are mainly:
     * Check quickly configurations to be deployed later on real routers.
 
 %prep
-%setup -q -n %name-%version-RC2
+%setup -q -n %name-%version-%extra_ver-community
 %patch1 -p1
 
 %build
-%ifarch x86_64
-# parallel build fails
-ARCH=amd64
-%else
-%ifarch %ix86
-ARCH=x86
-%else
-ARCH=nojit
-%endif
-%endif
-
-%make \
-	DYNAMIPS_ARCH=$ARCH \
-	CC="%__cc" \
-	LD="%__ld"
+%make
 
 %install
-install -d %buildroot{%_bindir,%_man1dir,%_man7dir}
+%makeinstall_std
 install -d %buildroot%_localstatedir/%name/{labs,images}
-install -p -m755 %name %buildroot%_bindir/
-install -m644 dynamips.1 nvram_export.1 %buildroot%_man1dir/
-install -m644 hypervisor_mode.7 %buildroot%_man7dir/
 
 %files
-%doc README* ChangeLog TODO
-%_man1dir/dynamips.1*
-%_man1dir/nvram_export.1*
+%doc COPYING README* TODO stable/ChangeLog
+%_man1dir/*
 %_man7dir/hypervisor_mode.7*
-%_bindir/%name
+%_bindir/*
 %dir %_localstatedir/%name/images
 %dir %_localstatedir/%name/labs
 
 %changelog
+* Sun Sep 23 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.2.8-alt2RC3
+- 0.2.8-RC3-community
+- Update patch and spec
+
 * Sat Mar 22 2008 Dmitry Lebkov <dlebkov@altlinux.ru> 0.2.8-alt1rc2
 - 0.2.8-RC2
 - add hypervisor_mode man page
