@@ -1,37 +1,35 @@
-%define mcstrans_ver 0.3.2
-
 %def_with gui
 
 Summary: SELinux policy core utilities
 Name: policycoreutils
-Version: 2.0.85
-Release: alt3
-License: %gpl2plus
+Version: 2.1.13
+Release: alt1
+License: GPLv2
 Group: System/Base
-Source: %name-%version.tar
-Url: http://userspace.selinuxproject.org/trac/
+Url: http://userspace.selinuxproject.org
+Source0: %name-%version.tar
+Source1: restorecond.init
+Source2: sandbox.init
 Source3: system-config-selinux.pam
 Source4: system-config-selinux.png
 Source5: system-config-selinux.desktop
 Source6: system-config-selinux.console
 Source7: selinux-polgengui.desktop
 Source8: selinux-polgengui.console
-
+Source9: mcstrans.init
 Patch0: %name-%version-%release.patch
-Patch1: policycoreutils-gui.patch
-Patch2: policycoreutils-po.patch
-Patch3: policycoreutils-alt-autorelabel-fix-path.patch
+Patch1: policycoreutils-alt-autorelabel-fix-path.patch
+%define mcstrans_ver 0.3.3
+Requires: python-module-semanage python-module-audit
 
-BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Thu Jan 15 2009
-BuildRequires: libaudit-devel libcap-devel libexpat libpam-devel libselinux-devel libsemanage-devel libsepol-devel libsepol-devel-static
+BuildPreReq: rpm-build-xdg
+BuildRequires: libaudit-devel libcap-devel libpam-devel
+BuildRequires: libselinux-devel libsemanage-devel libsepol-devel libsepol-devel-static
 BuildRequires: python-devel
 BuildRequires: desktop-file-utils
 BuildRequires: python-module-sepolgen
-BuildRequires: libcap-ng-devel
-BuildRequires: libpcre-devel
-
-Requires: python-module-semanage python-module-audit
+BuildRequires: glib2-devel libdbus-glib-devel
+BuildRequires: libcap-ng-devel libpcre-devel libcgroup-devel
 
 %description
 policycoreutils contains the policy core utilities that are required
@@ -39,6 +37,7 @@ for basic operation of a SELinux system.  These utilities include
 load_policy to load policies, setfiles to label filesystems, newrole
 to switch roles, and run_init to run /etc/init.d scripts in the proper
 context.
+
 
 %package newrole
 Summary: The newrole application for RBAC/MLS
@@ -49,6 +48,7 @@ Requires: %name = %version-%release
 RBAC/MLS policy machines require newrole as a way of changing the role
 or level of a logged in user.
 
+
 %package sandbox
 Summary: SELinux sandbox utilities
 Group: System/Base
@@ -57,6 +57,7 @@ Requires: %name = %version-%release
 %description sandbox
 This package contains the sandbox which allow you to run an applications
 within a tightly confined SELinux domain.
+
 
 %package sandbox-x
 Summary: SELinux sandbox utilities for X applications
@@ -70,6 +71,7 @@ BuildArch: noarch
 %description sandbox-x
 This package contains the scripts to create graphical sandboxes.
 
+
 %package restorecond
 Summary: SELinux restorecond utilities
 Group:   System/Base
@@ -79,6 +81,7 @@ Provides: mcstrans = %mcstrans_ver
 %description restorecond
 This package contains the restorecond service.
 
+
 %package mcstransd
 Summary: SELinux Translation Daemon
 Group: System/Base
@@ -86,6 +89,7 @@ Group: System/Base
 %description mcstransd
 mcstrans provides an translation daemon to translate SELinux categories
 from internal representations to user defined representation.
+
 
 %if_with gui
 %package gui
@@ -97,90 +101,70 @@ Requires: selinux-policy
 BuildArch: noarch
 
 %description gui
-system-config-selinux is a utility for managing the SELinux environment
-
-%files gui
-%_bindir/sepolgen
-%_bindir/system-config-selinux
-%_bindir/selinux-polgengui
-%_datadir/applications/system-config-selinux.desktop
-%_datadir/applications/selinux-polgengui.desktop
-%_iconsdir/hicolor/24x24/apps/system-config-selinux.png
-%_datadir/system-config-selinux/*.py*
-%_datadir/system-config-selinux/selinux.tbl
-%_datadir/system-config-selinux/*png
-%_datadir/system-config-selinux/*.glade
-%dir %_datadir/system-config-selinux
-%dir %_datadir/system-config-selinux/templates
-%_datadir/system-config-selinux/polgen.py
-%_datadir/system-config-selinux/templates/*.py*
-
-%config(noreplace) %_sysconfdir/pam.d/system-config-selinux
-%config(noreplace) %_sysconfdir/pam.d/selinux-polgengui
-%config(noreplace) %_sysconfdir/security/console.apps/system-config-selinux
-%config(noreplace) %_sysconfdir/security/console.apps/selinux-polgengui
+system-config-selinux is a utility for managing the SELinux environment.
 %endif
+
 
 %prep
 %setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
+sed -i '/^override CFLAGS/s/ -Werror//g' sandbox/Makefile
+sed -i 's/\( awk \)-S /\1/g' setfiles/Makefile
+
 
 %build
-%make_build LSPP_PRIV=y LIBDIR="%_libdir" CFLAGS="%optflags -fPIE" LDFLAGS="-pie -Wl,-z,relro" all
-cd mcstrans
-%make_build LIBDIR=%_libdir CFLAGS="%optflags -Wall -W -Wundef -Wmissing-noreturn \
-        -Wmissing-format-attribute $(pkg-config --cflags-only-I libpcre)"
-cd -
+%make_build LSPP_PRIV=y LIBDIR="%_libdir" CFLAGS="%optflags %optflags_shared" LDFLAGS="-pie -Wl,-z,relro" all
+%make_build -C mcstrans LIBDIR=%_libdir CFLAGS="%optflags $(pkg-config --cflags-only-I libpcre)"
+
 
 %install
-mkdir -p %buildroot/var/lib/selinux
+install -d -m 0755 %buildroot/var/lib/selinux
+install -D -m 0644 %SOURCE3 %buildroot%_sysconfdir/pam.d/system-config-selinux
+install -D -m 0644 %SOURCE3 %buildroot%_sysconfdir/pam.d/selinux-polgengui
+install -D -m 0644 %SOURCE4 %buildroot%_iconsdir/hicolor/24x24/apps/system-config-selinux.png
+install -D -m 0644 %SOURCE4 %buildroot%_datadir/system-config-selinux/system-config-selinux.png
+install -D -m 0644 %SOURCE6 %buildroot%_sysconfdir/security/console.apps/system-config-selinux
+install -D -m 0644 %SOURCE8 %buildroot%_sysconfdir/security/console.apps/selinux-polgengui
 
-install -Dm 644 %SOURCE3 %buildroot%_sysconfdir/pam.d/system-config-selinux
-install -Dm 644 %SOURCE3 %buildroot%_sysconfdir/pam.d/selinux-polgengui
-install -Dm 644 %SOURCE4 %buildroot%_iconsdir/hicolor/24x24/apps/system-config-selinux.png
-install -Dm 644 %SOURCE4 %buildroot%_datadir/system-config-selinux/system-config-selinux.png
-install -Dm 644 %SOURCE6 %buildroot%_sysconfdir/security/console.apps/system-config-selinux
-install -Dm 644 %SOURCE8 %buildroot%_sysconfdir/security/console.apps/selinux-polgengui
+%makeinstall_std LSPP_PRIV=y LIBDIR=%buildroot%_libdir
+%makeinstall_std -C gui LIBDIR="%buildroot%_libdir"
+%makeinstall_std -C mcstrans
 
-make LSPP_PRIV=y  DESTDIR="%buildroot" LIBDIR="%buildroot%_libdir" install
-make -C gui DESTDIR="%buildroot" LIBDIR="%buildroot%_libdir" install
+install -m 0755 %SOURCE1 %buildroot%_initddir/restorecond
+install -m 0755 %SOURCE2 %buildroot%_initddir/sandbox
+install -m 0755 %SOURCE9 %buildroot%_initddir/mcstrans
 
-ln -sf consolehelper %buildroot%_bindir/system-config-selinux
-ln -sf consolehelper %buildroot%_bindir/selinux-polgengui
+for f in system-config-selinux selinux-polgengui; do
+	ln -sf consolehelper %buildroot%_bindir/$f
+done
 
-desktop-file-install  --dir %buildroot%_datadir/applications \
-                      --add-category Settings \
-                      %SOURCE5
+desktop-file-install --dir %buildroot%_datadir/applications --add-category Settings %SOURCE5
+desktop-file-install --dir %buildroot%_datadir/applications %SOURCE7
 
-desktop-file-install  --dir %buildroot%_datadir/applications \
-                      %{SOURCE7}
-
-mkdir -p %buildroot%_datadir/mcstrans
-mkdir -p %buildroot%_sysconfdir/selinux/mls/setrans.d
-cd mcstrans
-%makeinstall_std
-cp -r share/* %buildroot%_datadir/mcstrans/
-cd -
+install -d -m 0755 %buildroot{%_datadir/mcstrans,%_sysconfdir/selinux/mls/setrans.d}
+cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 %find_lang %name
+
 
 %triggerin -- selinux-policy
 [ -f %_datadir/selinux/devel/include/build.conf ] && sepolgen-ifgen ||:
 
-%preun restorecond
-%preun_service restorecond
 
 %post restorecond
 %post_service restorecond
 
-%preun mcstransd
-%preun_service mcstrans
+%preun restorecond
+%preun_service restorecond
+
 
 %post mcstransd
 %post_service mcstrans
+
+%preun mcstransd
+%preun_service mcstrans
+
 
 %files -f %name.lang
 /sbin/restorecon
@@ -195,59 +179,94 @@ cd -
 %_sbindir/sestatus
 %_sbindir/run_init
 %_sbindir/open_init_pty
-%_bindir/sepolgen-ifgen
+%_bindir/sepolgen-ifgen*
 %_bindir/audit2allow
 %_bindir/audit2why
 %_bindir/chcat
 %_bindir/secon
-%_bindir/semodule_deps
-%_bindir/semodule_expand
-%_bindir/semodule_link
-%_bindir/semodule_package
-%_mandir/man?/*
-%exclude %_man1dir/newrole.1.gz
-%exclude %_man8dir/sandbox.8.gz
-%exclude %_man8dir/restorecond.8.gz
-%exclude %_man8dir/mcs.8.gz
-%exclude %_man8dir/mcstransd.8.gz
-%exclude %_man8dir/setrans.conf.8.gz
+%_bindir/semodule_*
+%_man1dir/*
+%_man5dir/*
+%_man8dir/*
+%exclude %_man1dir/newrole.*
+%exclude %_man8dir/sandbox.*
+%exclude %_man8dir/restorecond.*
+%exclude %_man8dir/mcs.*
+%exclude %_man8dir/mcstransd.*
+%exclude %_man8dir/setrans.conf.*
 %config(noreplace) %_sysconfdir/pam.d/run_init
 %config(noreplace) %_sysconfdir/sestatus.conf
 %_libdir/python?.?/site-packages/seobject.py*
-%dir  /var/lib/selinux
+%dir /var/lib/selinux
+%dir %_sysconfdir/bash_completion.d
+%config %_sysconfdir/bash_completion.d/*
+
 
 %files newrole
 %config(noreplace) %_sysconfdir/pam.d/newrole
 %attr(4511,root,root) %_bindir/newrole
-%_man1dir/newrole.1.gz
+%_man1dir/newrole.*
+
 
 %files sandbox
 %_bindir/sandbox
 %_sbindir/seunshare
 %_initddir/sandbox
 %config(noreplace) %_sysconfdir/sysconfig/sandbox
-%_man8dir/sandbox.8.gz
+%_man8dir/sandbox.*
+
 
 %files sandbox-x
-%dir %_datadir/sandbox
-%_datadir/sandbox/sandboxX.sh
+%_datadir/sandbox
+
 
 %files restorecond
 %_sbindir/restorecond
 %attr(755,root,root) %_initddir/restorecond
-%config(noreplace) %_sysconfdir/selinux/restorecond.conf
-%_man8dir/restorecond.8.gz
+%config(noreplace) %_sysconfdir/selinux/restorecond*
+%_man8dir/restorecond.*
+#%_datadir/dbus-1/services/*
+#%config %_xdgconfigdir/autostart/*
+
 
 %files mcstransd
 /sbin/mcstransd
 %_initrddir/mcstrans
 %dir %_sysconfdir/selinux/mls/setrans.d
-%_man8dir/mcs.8.gz
-%_man8dir/mcstransd.8.gz
-%_man8dir/setrans.conf.8.gz
+%_man8dir/mcs.*
+%_man8dir/mcstransd.*
+%_man8dir/setrans.conf.*
 %_datadir/mcstrans
 
+
+%if_with gui
+%files gui
+%_bindir/sepolgen
+%_bindir/system-config-selinux
+%_bindir/selinux-polgengui
+%_datadir/applications/system-config-selinux.desktop
+%_datadir/applications/selinux-polgengui.desktop
+%_iconsdir/hicolor/24x24/apps/system-config-selinux.png
+%_datadir/system-config-selinux/*.py*
+#%_datadir/system-config-selinux/selinux.tbl
+%_datadir/system-config-selinux/*png
+%_datadir/system-config-selinux/*.glade
+%dir %_datadir/system-config-selinux
+%dir %_datadir/system-config-selinux/templates
+%_datadir/system-config-selinux/polgen.py
+%_datadir/system-config-selinux/templates/*.py*
+%config(noreplace) %_sysconfdir/pam.d/system-config-selinux
+%config(noreplace) %_sysconfdir/pam.d/selinux-polgengui
+%config(noreplace) %_sysconfdir/security/console.apps/system-config-selinux
+%config(noreplace) %_sysconfdir/security/console.apps/selinux-polgengui
+%endif
+
+
 %changelog
+* Mon Sep 24 2012 Led <led@altlinux.ru> 2.1.13-alt1
+- 2.1.13
+- fixed License
+
 * Fri Feb 24 2012 Mikhail Efremov <sem@altlinux.org> 2.0.85-alt3
 - newrole: Grant CAP_SETGID for pam_tcb.
 - newrole: Fix drop_capabilities().
@@ -435,7 +454,7 @@ cd -
 	* Ensure that setfiles -p output is newline terminated from Russell Coker.
 
 * Fri Aug 1 2008 Dan Walsh <dwalsh@redhat.com> 2.0.53-3
-- Allow semanage user to add group lists %groupname
+- Allow semanage user to add group lists %%groupname
 
 * Tue Jul 29 2008 Dan Walsh <dwalsh@redhat.com> 2.0.53-2
 - Fix help

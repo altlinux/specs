@@ -1,22 +1,22 @@
 %def_disable check
 
-Version: 2.0.82
-Release: alt1.1
+Epoch: 1
+Version: 1.1.8
+Release: alt1
 %setup_python_module sepolgen
 Name: python-module-sepolgen
 Summary: A Python module used in SELinux policy generation
-License: %gpl2plus
+License: GPL2+
 Group: Development/Python
 Source: %modulename-%version.tar
-Url: http://userspace.selinuxproject.org/trac/
+Url: http://userspace.selinuxproject.org
 BuildArch: noarch
+Provides: %modulename = %version-%release
 
-BuildRequires(pre): rpm-build-licenses
-BuildPreReq: python-module-selinux 
+BuildPreReq: rpm-build-python
+BuildRequires: python-module-selinux
+%{!?_disable_check:BuildPreReq: selinux-policy}
 
-%if_enabled check
-BuildPreReq: selinux-policy
-%endif
 
 %description
 This package contains a Python module that forms the core of the modern
@@ -31,20 +31,29 @@ contains infrastructure for parsing SELinux related messages as produced
 by the audit system. It has facilities for generating policy based on
 required access.
 
+
 %prep
 %setup -n %modulename-%version
+
 
 %install
 %makeinstall_std PYTHONLIBDIR=%python_sitelibdir
 
+
 %check
-make test
+%make_build test
+
 
 %files
 %python_sitelibdir/*
 /var/lib/sepolgen/
 
+
 %changelog
+* Sun Sep 23 2012 Led <led@altlinux.ru> 1:1.1.8-alt1
+- 1.1.8
+- cleaned up spec
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.82-alt1.1
 - Rebuild with Python-2.7
 

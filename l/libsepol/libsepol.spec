@@ -1,13 +1,15 @@
-Name: libsepol
-Version: 2.0.42
-Release: alt1.1
+%def_disable check
 
+Name: libsepol
+Version: 2.1.8
+Release: alt1
 Summary: SELinux binary policy manipulation library
 License: LGPLv2+
 Group: System/Libraries
 Url: http://userspace.selinuxproject.org/trac/
-# http://www.nsa.gov/selinux/archives/libsepol-%version.tgz
 Source: %name-%version.tar
+
+%{!?_disable_check:BuildRequires: CUnit-devel}
 
 %description
 libsepol provides an API for the manipulation of SELinux binary policies.
@@ -15,10 +17,12 @@ It is used by checkpolicy (the policy compiler) and similar tools, as well
 as by programs like load_policy that need to perform specific transformations
 on binary policies such as customizing policy boolean settings.
 
+
 %package devel
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version-%release
+
 %description devel
 libsepol provides an API for the manipulation of SELinux binary policies.
 It is used by checkpolicy (the policy compiler) and similar tools, as well
@@ -27,10 +31,12 @@ on binary policies such as customizing policy boolean settings.
 
 This package contains development library and header files for %name.
 
+
 %package devel-static
 Summary: Static development files for %name
 Group: Development/C
 Requires: %name-devel = %version-%release
+
 %description devel-static
 libsepol provides an API for the manipulation of SELinux binary policies.
 It is used by checkpolicy (the policy compiler) and similar tools, as well
@@ -39,44 +45,60 @@ on binary policies such as customizing policy boolean settings.
 
 This package contains static library.
 
+
 %package utils
 Summary: Utils for checking and mainplating policy binaries Security-enhanced Linux
 Group: System/Configuration/Other
+Provides: chkcon = %version-%release
 Requires: %name = %version-%release
+
 %description utils
 libsepol provides an API for the manipulation of SELinux binary policies.
 It is used by checkpolicy (the policy compiler) and similar tools, as well
 as by programs like load_policy that need to perform specific transformations
 on binary policies such as customizing policy boolean settings.
 
+
 %prep
-%setup
+%setup -q
+
 
 %build
-%make_build LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib \
-        CFLAGS='%optflags -W -Wundef -Wshadow -Wmissing-noreturn -Wmissing-format-attribute'
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib all
+
 
 %install
 %makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib
 
+
+%check
+%make_build test
+
 %files
-/%_lib/*.so.*
+/%_lib/*
+
 
 %files devel
 %_libdir/*.so
 %_includedir/sepol
-%_pkgconfigdir/*.pc
+%_pkgconfigdir/*
 %_man3dir/*
+
 
 %files devel-static
 %_libdir/*.a
 
+
 %files utils
-%_bindir/chkcon
-%_man8dir/chkcon.*
+%_bindir/*
+%_man8dir/*
 %exclude %_man8dir/genpol*
 
 %changelog
+* Sun Sep 23 2012 Led <led@altlinux.ru> 2.1.8-alt1
+- 2.1.8
+- cleaned up spec
+
 * Thu Nov 10 2011 Dmitry V. Levin <ldv@altlinux.org> 2.0.42-alt1.1
 - Fixed packaging of manpages.
 - Rebuilt for debuginfo.

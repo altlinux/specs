@@ -1,20 +1,19 @@
 Name: checkpolicy
-Version: 2.0.23
+Version: 2.1.11
 Release: alt1
-License: GPL
-Url: http://userspace.selinuxproject.org/
-
-Source: %name-%version.tar
-Summary: This package contains the checkpolicy policy compiler, which is needed to compile policies to the binary form used by the kernel
+Summary: SELinux policy compiler
 Group: System/Configuration/Other
-# Automatically added by buildreq on Sun Mar 09 2008
-BuildRequires: flex libselinux-devel libsepol-devel libsepol-devel-static
+License: GPLv2
+Url: http://userspace.selinuxproject.org
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
+
+BuildRequires: flex libselinux-devel >= 2.1 libsepol-devel >= 2.1 libsepol-devel-static >= 2.1
 
 %description
-SELinux policy compiler
 Security-enhanced Linux is a patch of the Linux(R) kernel and a number
 of utilities with enhanced security functionality designed to add
-mandatory access controls to Linux.  The Security-enhanced Linux
+mandatory access controls to Linux. The Security-enhanced Linux
 kernel contains new architectural components originally developed to
 improve the security of the Flask operating system. These
 architectural components provide general support for the enforcement
@@ -25,20 +24,35 @@ Control, and Multi-level Security.
 This package contains checkpolicy, the SELinux policy compiler.
 Only required for building policies.
 
+
 %prep
-%setup
+%setup -q
+%patch -p1
+
 
 %build
-%make_build LIBDIR=%_libdir CFLAGS="%optflags -Wshadow -fno-strict-aliasing"
+%make_build LIBDIR=%_libdir CFLAGS="%optflags"
+
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
+for f in dis{mod,pol}; do
+	install test/$f %buildroot%_bindir/se$f
+done
+
 
 %files
-%_man8dir/*
 %_bindir/*
+%_man8dir/*
+
 
 %changelog
+* Mon Sep 24 2012 Led <led@altlinux.ru> 2.1.11-alt1
+- 2.1.11
+- cleaned up spec
+- fixed License
+- added test utils
+
 * Wed Dec 29 2010 Mikhail Efremov <sem@altlinux.org> 2.0.23-alt1
 - Updated to 2.0.23.
 

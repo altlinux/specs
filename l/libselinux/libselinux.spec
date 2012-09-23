@@ -1,22 +1,24 @@
-Name: libselinux
-Version: 2.0.98
-Release: alt2.1
+%def_with python
 
+Name: libselinux
+Version: 2.1.12
+Release: alt1
 Summary: SELinux library
 License: Public Domain
 Group: System/Libraries
 Url: http://userspace.selinuxproject.org/
-
-# http://userspace.selinuxproject.org/releases/current/devel/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: libsepol-devel-static >= 2.0.36-alt1
+%{?_with_python:BuildPreReq: rpm-build-python}
+BuildRequires: libpcre-devel libsepol-devel >= 2.1.4
+%{?_with_python:BuildRequires: python-dev swig libsepol-devel-static >= 2.1.4}
 
 %description
 libselinux provides an API for SELinux applications to get and set
 process and file security contexts and to obtain security policy
 decisions.
+
 
 %package devel
 Summary: SELinux development library and header files
@@ -27,6 +29,7 @@ Requires: %name = %version-%release
 This package contains development library and header files needed
 for developing SELinux applications.
 
+
 %package devel-static
 Summary: Static SELinux library
 Group: Development/C
@@ -36,64 +39,86 @@ Requires: %name-devel = %version-%release
 This package contains static SELinux library needed for developing
 statically linked SELinux applications.
 
+
 %package utils
 Summary: SELinux utilities
 Group: System/Configuration/Other
+Requires: %name = %version-%release
 
 %description utils
 This package provides utility programs to get and set process and
 file security contexts and to obtain security policy decisions.
 
+
+%if_with python
 %package -n python-module-selinux
 %setup_python_module selinux
 Summary: Python module for %name
 Group: System/Configuration/Other
+Requires: %name = %version-%release
 
 %description -n python-module-selinux
 This package contains SELinux python bindings.
+%endif
+
 
 %prep
-%setup
+%setup -q
 %patch -p1
 
+
 %build
-%make_build all pywrap \
-	CFLAGS='%optflags -W -Wundef -Wshadow -Wmissing-noreturn -Wmissing-format-attribute' \
-	LIBDIR=%_libdir PYTHON_VERSION=%__python_version
+%make_build CFLAGS="%optflags $(pkg-config libpcre --cflags)" LIBDIR=%_libdir all
+%{?_with_python:%make_build CFLAGS="%optflags" LIBDIR=%_libdir pywrap}
+
 
 %install
-%makeinstall_std install-pywrap \
-	LIBDIR=%buildroot/%_libdir \
-	SHLIBDIR=%buildroot/%_lib
-mkdir -p %buildroot/var/run/setrans
+%makeinstall_std LIBDIR=%buildroot%_libdir SHLIBDIR=%buildroot/%_lib %{?_with_python:install-pywrap}
+install -d -m 0755 %buildroot/var/run/setrans
+
 
 %post
-telinit=/sbin/telinit
-[ -x $telinit -a -L /proc/1/exe -a -L /proc/1/root ] && $telinit u ||:
+TELINIT=/sbin/telinit
+[ -x $TELINIT -a -L /proc/1/exe -a -L /proc/1/root ] && $TELINIT u ||:
+
 
 %files
 /%_lib/*.so.*
-%_man8dir/*
-/sbin/matchpathcon
+%_man8dir/booleans.*
+%_man8dir/selinux.*
 %dir /var/run/setrans
+
 
 %files devel
 %_libdir/*.so
-%_includedir/selinux/
-%_pkgconfigdir/*.pc
+%_includedir/selinux
+%_pkgconfigdir/*
 %_man3dir/*
-%_man5dir/*
+
 
 %files devel-static
 %_libdir/*.a
 
+
 %files utils
 %_sbindir/*
+%_man5dir/*
+%_man8dir/*
+%exclude %_man8dir/booleans.*
+%exclude %_man8dir/selinux.*
 
+
+%if_with python
 %files -n python-module-selinux
 %python_sitelibdir/*
+%endif
+
 
 %changelog
+* Sun Sep 23 2012 Led <led@altlinux.ru> 2.1.12-alt1
+- 2.1.12
+- cleaned up spec
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.98-alt2.1
 - Rebuild with Python-2.7
 
