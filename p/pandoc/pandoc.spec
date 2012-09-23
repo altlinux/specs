@@ -8,7 +8,7 @@
 
 Name: pandoc
 Version: 1.9.4.2
-Release: alt1
+Release: alt3
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -16,6 +16,7 @@ License: GPLv2+
 Url: http://hackage.haskell.org/package/%name
 
 Source: http://hackage.haskell.org/packages/archive/%name/%version/%name-%version.tar.gz
+Source100: pandoc.watch
 
 BuildRequires: ghc%ghc_version-base64-bytestring ghc%ghc_version-citeproc-hs ghc%ghc_version-highlighting-kate ghc%ghc_version-http ghc%ghc_version-random ghc%ghc_version-tagsoup ghc%ghc_version-temporary ghc%ghc_version-texmath ghc%ghc_version-zip-archive zlib-devel
 BuildRequires(pre): rpm-build-haskell
@@ -48,6 +49,9 @@ runghc Setup copy --destdir=%buildroot
 %attr(644,root,root) %_man5dir/*
 
 %changelog
+* Sun Sep 23 2012 Denis Smirnov <mithraen@altlinux.ru> 1.9.4.2-alt3
+- add watch-file for gear-cronbuild
+
 * Sat Jul 28 2012 Denis Smirnov <mithraen@altlinux.ru> 1.9.4.2-alt1
 - 1.9.4.2
 
