@@ -1,6 +1,6 @@
 Name: anki
-Version: 1.2.8
-Release: alt2
+Version: 1.2.11
+Release: alt1
 Summary: Flashcard program for using space repetition learning
 
 Group: Games/Educational
@@ -8,7 +8,6 @@ License: GPLv3+ and MIT
 Url: http://ankisrs.net/
 Source0: %name-%version.tgz
 
-Patch0: %name-1.2.8-noupdate.patch
 
 BuildRequires: python-module-setuptools python-module-PyQt4-devel
 BuildRequires: python-modules-sqlite3 python-module-SQLAlchemy
@@ -25,7 +24,6 @@ as possible. Anki is based on a theory called spaced repetition.
 
 %prep
 %setup
-%patch0 -p1 -b .noupdate
 %build
 pushd lib%name
 python setup.py build
@@ -63,6 +61,9 @@ install -m 644 icons/%name.png %buildroot%_datadir/pixmaps/
 %doc COPYING CREDITS README*
 
 %changelog
+* Mon Sep 24 2012 Terechkov Evgenii <evg@altlinux.org> 1.2.11-alt1
+- Build with new python-module-SQLAlchemy
+
 * Wed May  9 2012 Terechkov Evgenii <evg@altlinux.org> 1.2.8-alt2
 - Fix ALT#27312
 
