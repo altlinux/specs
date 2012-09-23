@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 %global archivever  jdk16-%(echo %{ver}|sed 's|\\\.||')
 Name:          bouncycastle-pg
 Version:       1.46
-Release:       alt1_8jpp7
+Release:       alt2_8jpp7
 Summary:       Bouncy Castle OpenPGP API
 Group:         Development/Java
 License:       MIT
@@ -100,6 +100,9 @@ install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-bcpg.pom
 %doc LICENSE.html
 
 %changelog
+* Sun Sep 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.46-alt2_8jpp7
+- fixed build with new slf4j
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.46-alt1_8jpp7
 - fc release
 
