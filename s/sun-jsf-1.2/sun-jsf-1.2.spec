@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           sun-jsf-1.2
 Version:        1.2.04
-Release:        alt4_2jpp6
+Release:        alt5_2jpp6
 Epoch:          0
 Summary:        Java Server Pages
 License:        CDDL
@@ -71,9 +71,9 @@ BuildRequires:  apache-commons-collections
 BuildRequires:  apache-commons-digester
 BuildRequires:  apache-commons-logging
 BuildRequires:  jakarta-taglibs-standard
-BuildRequires:  jetty6
-BuildRequires:  jetty6-annotations
-BuildRequires:  jetty6-plus
+#BuildRequires:  jetty-webapp
+#BuildRequires:  jetty-annotations
+#BuildRequires:  jetty-plus
 BuildRequires:  jsp_2_1_api
 BuildRequires:  portlet-1.0-api
 BuildRequires:  servlet_2_5_api
@@ -161,16 +161,20 @@ ln -sf $(build-classpath portlet-1.0-api) dependencies/jars/portlet-api-1.0.jar
 mkdir -p dependencies/apache-tomcat-6.0.10/lib/
 ln -sf $(build-classpath tomcat6/catalina) dependencies/apache-tomcat-6.0.10/lib/
 
-mkdir -p dependencies/jetty-6.1.2rc0/lib/annotations
-ln -sf $(build-classpath jetty6/annotations/jetty6-annotations) dependencies/jetty-6.1.2rc0/lib/annotations/jetty-annotations-6.1.2rc0.jar
-ln -sf $(build-classpath jetty6/jetty6) dependencies/jetty-6.1.2rc0/lib/annotations/jetty-6.1.2rc0.jar
-mkdir -p dependencies/jetty-6.1.2rc0/lib/plus
-ln -sf $(build-classpath jetty6/plus/jetty6-plus) dependencies/jetty-6.1.2rc0/lib/plus/jetty-plus-6.1.2rc0.jar
+#mkdir -p dependencies/jetty-6.1.2rc0/lib/annotations
+#ln -sf $(build-classpath jetty/jetty-annotations) dependencies/jetty-6.1.2rc0/lib/annotations/jetty-annotations-6.1.2rc0.jar
+#ln -sf $(build-classpath jetty/jetty-webapp) dependencies/jetty-6.1.2rc0/lib/annotations/jetty-6.1.2rc0.jar
+#mkdir -p dependencies/jetty-6.1.2rc0/lib/plus
+#ln -sf $(build-classpath jetty/jetty-plus) dependencies/jetty-6.1.2rc0/lib/plus/jetty-plus-6.1.2rc0.jar
 
 # TODO: bring in glassfish-appserv-rt.jar dependency
 #mkdir -p dependencies/glassfish/lib/
 #cp %{SOURCE1} dependencies/glassfish/lib/appserv-rt.jar
 rm jsf-ri/src/com/sun/faces/vendor/GlassFishInjectionProvider.java
+
+sed -i -e 's,org\.mortbay\.jetty\.,org.eclipse.jetty.,g' `grep -rl 'org\.mortbay\.jetty\.'`
+
+rm -f jsf-ri/src/com/sun/faces/vendor/Jetty6InjectionProvider.java
 
 %build
 export OPT_JAR_LIST="ant-launcher ant/ant-trax"
@@ -236,6 +240,9 @@ EOF
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Sep 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.04-alt5_2jpp6
+- dropped jetty6 dependencies
+
 * Sat Jan 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.04-alt4_2jpp6
 - new jpp relase
 
