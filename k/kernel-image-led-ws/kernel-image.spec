@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -280,25 +280,26 @@ Patch0348: linux-%kernel_branch.42-fix-drivers-net--ne3210.patch
 Patch0349: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
 Patch0350: linux-%kernel_branch.42-fix-drivers-net--qlge.patch
 Patch0351: linux-%kernel_branch.42-fix-drivers-net--r8169.patch
-Patch0352: linux-%kernel_branch.42-fix-drivers-net--tg3.patch
-Patch0353: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
-Patch0354: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
-Patch0355: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
-Patch0356: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
-Patch0357: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_en.patch
-Patch0358: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
-Patch0359: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
-Patch0360: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
-Patch0361: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
-Patch0362: linux-%kernel_branch.42-fix-drivers-net-usb--asix.patch
-Patch0363: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
-Patch0364: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
-Patch0365: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
-Patch0366: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
-Patch0367: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
-Patch0368: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
-Patch0369: linux-%kernel_branch.42-fix-drivers-net-wireless--rt2x00.patch
-Patch0370: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
+Patch0352: linux-%kernel_branch.42-fix-drivers-net--sfc.patch
+Patch0353: linux-%kernel_branch.42-fix-drivers-net--tg3.patch
+Patch0354: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
+Patch0355: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
+Patch0356: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
+Patch0357: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
+Patch0358: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_en.patch
+Patch0359: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
+Patch0360: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
+Patch0361: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
+Patch0362: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
+Patch0363: linux-%kernel_branch.42-fix-drivers-net-usb--asix.patch
+Patch0364: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
+Patch0365: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
+Patch0366: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
+Patch0367: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
+Patch0368: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
+Patch0369: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
+Patch0370: linux-%kernel_branch.42-fix-drivers-net-wireless--rt2x00.patch
+Patch0371: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
 
 Patch0381: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
@@ -453,24 +454,25 @@ Patch0663: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ecache.patch
 Patch0664: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ftp.patch
 Patch0665: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_netlink.patch
 Patch0666: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
-Patch0667: linux-%kernel_branch.42-fix-net-sctp.patch
-Patch0668: linux-%kernel_branch.42-fix-net-sunrpc.patch
-Patch0669: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
+Patch0667: linux-%kernel_branch.42-fix-net-rds--rds.patch
+Patch0668: linux-%kernel_branch.42-fix-net-sctp.patch
+Patch0669: linux-%kernel_branch.42-fix-net-sunrpc.patch
+Patch0670: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
 
-Patch0670: linux-%kernel_branch.42-fix-scripts.patch
+Patch0680: linux-%kernel_branch.42-fix-scripts.patch
 
-Patch0681: linux-%kernel_branch.42-fix-security--security.patch
-Patch0682: linux-%kernel_branch.42-fix-security-selinux.patch
+Patch0691: linux-%kernel_branch.42-fix-security--security.patch
+Patch0692: linux-%kernel_branch.42-fix-security-selinux.patch
 
-Patch0691: linux-%kernel_branch.42-fix-sound-core--snd-pcm.patch
-Patch0692: linux-%kernel_branch.42-fix-sound-oss--pss.patch
-Patch0693: linux-%kernel_branch.42-fix-sound-pci-hda.patch
-Patch0694: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
-Patch0695: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
+Patch0701: linux-%kernel_branch.42-fix-sound-core--snd-pcm.patch
+Patch0702: linux-%kernel_branch.42-fix-sound-oss--pss.patch
+Patch0703: linux-%kernel_branch.42-fix-sound-pci-hda.patch
+Patch0704: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
+Patch0705: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 
-Patch0701: linux-%kernel_branch.42-fix-tools--perf.patch
+Patch0711: linux-%kernel_branch.42-fix-tools--perf.patch
 
-Patch0711: linux-%kernel_branch.42-fix-virt-kvm.patch
+Patch0721: linux-%kernel_branch.42-fix-virt-kvm.patch
 
 
 Patch1001: linux-%kernel_branch.42-feat-block--bfq-iosched.patch
@@ -507,9 +509,10 @@ Patch1096: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
 Patch1097: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
 Patch1098: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
 Patch1099: linux-%kernel_branch.42-feat-fs-overlayfs.patch
-Patch1100: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1101: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1102: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1100: linux-%kernel_branch.42-feat-fs-reiser4.patch
+Patch1101: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1102: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1103: linux-%kernel_branch.42-feat-fs-unionfs.patch
 
 Patch1111: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
 Patch1112: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
@@ -1356,6 +1359,7 @@ cd linux-%version
 %patch0368 -p1
 %patch0369 -p1
 %patch0370 -p1
+%patch0371 -p1
 
 %patch0381 -p1
 
@@ -1513,21 +1517,22 @@ cd linux-%version
 %patch0667 -p1
 %patch0668 -p1
 %patch0669 -p1
-
 %patch0670 -p1
 
-%patch0681 -p1
-%patch0682 -p1
+%patch0680 -p1
 
 %patch0691 -p1
 %patch0692 -p1
-%patch0693 -p1
-%patch0694 -p1
-%patch0695 -p1
 
 %patch0701 -p1
+%patch0702 -p1
+%patch0703 -p1
+%patch0704 -p1
+%patch0705 -p1
 
 %patch0711 -p1
+
+%patch0721 -p1
 
 
 %patch1001 -p1
@@ -1555,6 +1560,7 @@ cd linux-%version
 
 %patch1081 -p1
 
+# fix-fs-*
 %patch1091 -p1
 %patch1092 -p1
 %patch1093 -p1
@@ -1563,10 +1569,11 @@ cd linux-%version
 %patch1096 -p1
 %patch1097 -p1
 %patch1098 -p1
-%patch1099 -p1
+#patch1099 -p1
 %patch1100 -p1
 %patch1101 -p1
 %patch1102 -p1
+%patch1103 -p1
 
 %patch1111 -p1
 %patch1112 -p1
@@ -2392,6 +2399,26 @@ fi
 
 
 %changelog
+* Sat Sep 22 2012 Led <led@altlinux.ru> 3.0.43-alt6
+- updated:
+  + fix-arch-x86--mcheck
+  + fix-block
+  + fix-drivers-gpu-drm
+  + fix-drivers-gpu-drm--drm
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-net--igb
+  + fix-drivers-scsi--sd_mod
+  + fix-drivers-scsi-device_handler--scsi_dh_rdac
+  + fix-fs
+  + fix-kernel
+  + fix-net-ipv4
+  + feat-fs-overlayfs
+- added:
+  + fix-drivers-net--sfc
+  + fix-net-rds--rds
+  + feat-fs-reiser4
+- disabled feat-fs-overlayfs
+
 * Thu Sep 20 2012 Led <led@altlinux.ru> 3.0.43-alt5
 - updated:
   + fix-drivers-scsi--sd_mod
