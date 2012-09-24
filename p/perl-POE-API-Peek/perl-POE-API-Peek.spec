@@ -1,6 +1,6 @@
 %define dist POE-API-Peek
 Name: perl-%dist
-Version: 2.19
+Version: 2.20
 Release: alt1
 
 Summary: Peek into the internals of a running POE environment
@@ -8,7 +8,7 @@ License: BSD
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/POE-API-Peek-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ is also available.
 %perl_vendor_privlib/POE
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 2.19-alt1
 - 1.34 -> 2.19
 
