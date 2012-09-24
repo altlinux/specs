@@ -17,7 +17,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.7.0-openjdk
-%define version 1.7.0.3
+%define version 1.7.0.6
 # If gcjbootstrap is 1 OpenJDK is bootstrapped against
 # java-1.6.0-sun-devel.  If gcjbootstrap is 0 OpenJDK is built against
 # java-1.6.0-openjdk-devel.
@@ -29,7 +29,7 @@ BuildRequires: jpackage-compat
 # If runtests is 0 test suites will not be run.
 %global runtests 0
 
-%global icedtea_version 2.2.1
+%global icedtea_version 2.3.1
 %global hg_tag icedtea-{icedtea_version}
 
 %global accessmajorver 1.23
@@ -129,9 +129,10 @@ BuildRequires: jpackage-compat
 
 # Standard JPackage naming and versioning defines.
 %global origin          openjdk
-%global priority        17000
+%global buildver        6
+# Keep priority on 5digits in case buildver>9
+%global priority        1700%{buildver}
 %global javaver         1.7.0
-%global buildver        3
 
 # Standard JPackage directories and symbolic links.
 # Make 64-bit JDKs just another alternative on 64-bit architectures.
@@ -171,7 +172,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt4_2.2.1.8jpp7
+Release: alt1_2.3.1.2jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -192,6 +193,7 @@ URL:      http://openjdk.java.net/
 #REPO=http://icedtea.classpath.org/hg/icedtea7-forest
 #current release
 #REPO=http://icedtea.classpath.org/hg/release/icedtea7-forest-2.2
+#REPO=http://icedtea.classpath.org/hg/release/icedtea7-forest-2.3
 # hg clone $REPO/ openjdk -r %{hg_tag}
 # hg clone $REPO/corba/ openjdk/corba -r %{hg_tag}
 # hg clone $REPO/hotspot/ openjdk/hotspot -r %{hg_tag}
@@ -244,6 +246,13 @@ Source11: pulseaudio.tar.gz
 # Removed libraries that we link instead
 Source12: remove-intree-libraries.sh
 
+# For primary arches, build latest and for secondary, use hs22
+# base (icedtea-2.2.1 tag)
+
+# http://icedtea.classpath.org/hg/release/icedtea7-forest-2.1
+# hg tag: icedtea-2.1.1
+Source100:  openjdk-icedtea-2.1.1.tar.gz
+
 # RPM/distribution specific patches
 
 # Allow TCK to pass with access bridge wired in
@@ -281,6 +290,8 @@ Patch103: %{name}-arm-fixes.patch
 # Patch for PPC/PPC64
 Patch104: %{name}-ppc-zero-jdk.patch
 Patch105: %{name}-ppc-zero-hotspot.patch
+
+Patch106: %{name}-freetype-check-fix.patch
 
 #
 # Bootstrap patches (code with this is never shipped)
@@ -409,6 +420,15 @@ Patch300: pulse-soundproperties.patch
 # Workaround for RH613824
 Patch302: systemtap.patch
 
+#
+# IcedTea 2.1.1/hs22 specific patches
+#
+
+# Rhino support
+Patch400: rhino-icedtea-2.1.1.patch
+
+#Patch500: java-1.7.0-openjdk-removing_jvisualvm_man.patch
+
 BuildRequires: autoconf
 BuildRequires: automake
 BuildRequires: libalsa-devel
@@ -507,11 +527,6 @@ Provides: java-sasl = %{epoch}:%{version}
 Provides: java-fonts = %{epoch}:%{version}
 
 # Obsolete older 1.6 packages as it cannot use the new bytecode
-#Obsoletes: java-1.6.0-openjdk
-#Obsoletes: java-1.6.0-openjdk-demo
-#Obsoletes: java-1.6.0-openjdk-devel
-#Obsoletes: java-1.6.0-openjdk-javadoc
-#Obsoletes: java-1.6.0-openjdk-src
 Source44: import.info
 
 %define altname %name
@@ -545,7 +560,7 @@ Summary: OpenJDK Development Environment
 Group:   Development/Java
 
 # Require base package.
-Requires:         java-1.7.0-openjdk = %{epoch}:%{version}-%{release}
+Requires:         %{name} = %{epoch}:%{version}-%{release}
 # Post requires alternatives to install tool alternatives.
 Requires(post):   alternatives
 # Postun requires alternatives to uninstall tool alternatives.
@@ -568,7 +583,7 @@ The OpenJDK development tools.
 Summary: OpenJDK Demos
 Group:   Development/Java
 
-Requires: java-1.7.0-openjdk = %{epoch}:%{version}-%{release}
+Requires: %{name} = %{epoch}:%{version}-%{release}
 
 %description demo
 The OpenJDK demos.
@@ -577,7 +592,7 @@ The OpenJDK demos.
 Summary: OpenJDK Source Bundle
 Group:   Development/Java
 
-Requires: java-1.7.0-openjdk = %{epoch}:%{version}-%{release}
+Requires: %{name} = %{epoch}:%{version}-%{release}
 
 %description src
 The OpenJDK source bundle.
@@ -603,14 +618,27 @@ Provides: java-javadoc = 1:1.7.0
 The OpenJDK API documentation.
 
 %prep
-%setup -q -c -n %{name}
+
+%ifarch %{jit_arches}
+%global source_num 0
+%else
+%global source_num 100
+%endif
+
+%setup -q -c -n %{name} -T -a %{source_num}
 %setup -q -n %{name} -T -D -a 3
 %setup -q -n %{name} -T -D -a 1
 cp %{SOURCE2} .
 cp %{SOURCE4} .
 
 # OpenJDK patches
+
+# Rhino patch -- one default version (100) and one specific to 2.1.1 (400)
+%ifarch %{jit_arches}
 %patch100
+%else
+%patch400
+%endif
 
 # pulseaudio support
 %if %{with_pulseaudio}
@@ -706,6 +734,8 @@ cp -a openjdk openjdk-boot
 %endif
 sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' openjdk/hotspot/make/linux/makefiles/defs.make
 
+#%patch500
+
 %build
 # How many cpu's do we have?
 export NUM_PROC=`/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :`
@@ -730,13 +760,15 @@ patch -l -p0 < %{PATCH6}
 # Type fixes for s390
 %ifarch s390 s390x
 patch -l -p0 < %{PATCH101}
-#patch -l -p0 < %{PATCH102} # size_t patch disabled for now as it has conflicts
+patch -l -p0 < %{PATCH102}
 %endif
 
 # Arm fixes
 %ifarch %{arm}
 patch -l -p0 < %{PATCH103}
 %endif
+
+patch -l -p0 < %{PATCH106}
 
 %ifarch ppc ppc64
 # PPC fixes
@@ -894,7 +926,11 @@ make MEMORY_LIMIT=-J-Xmx512m \
   ANT="/usr/bin/ant" \
   DISTRO_NAME="Fedora" \
   DISTRO_PACKAGE_VERSION="ALTLinux-%{release}-%{_arch}" \
+%ifarch %{jit_arches}
   JDK_UPDATE_VERSION=`printf "%02d" %{buildver}` \
+%else
+  JDK_UPDATE_VERSION="03" \
+%endif
   MILESTONE="fcs" \
   HOTSPOT_BUILD_JOBS="$NUM_PROC" \
   STATIC_CXX="false" \
@@ -904,7 +940,7 @@ make MEMORY_LIMIT=-J-Xmx512m \
   FT2_LIBS="-lfreetype " \
   DEBUG_CLASSFILES="true" \
   DEBUG_BINARIES="true" \
-  ALT_STRIP_POLICY="no_strip" \
+  STRIP_POLICY="no_strip" \
 %ifnarch %{jit_arches}
   LIBFFI_CFLAGS="`pkg-config --cflags libffi` " \
   LIBFFI_LIBS="-lffi " \
@@ -987,6 +1023,12 @@ make MEMORY_LIMIT=-J-Xmx512m
 %install
 unset JAVA_HOME
 STRIP_KEEP_SYMTAB=libjvm*
+
+# Install symlink to default soundfont
+install -d -m 755 $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/audio
+pushd $RPM_BUILD_ROOT%{_jvmdir}/%{jredir}/lib/audio
+ln -s %{_datadir}/soundfonts/default.sf2
+popd
 
 pushd %{buildoutputdir}/j2sdk-image
 
@@ -1136,8 +1178,8 @@ install -d $RPM_BUILD_ROOT/%_altdir; cat >$RPM_BUILD_ROOT/%_altdir/javadocdir_ja
 %{_javadocdir}/java	%{_javadocdir}/%{name}/api	%{priority}
 EOF
 
-sed -i 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
-sed -i 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
+%__subst 's,^Categories=.*,Categories=Settings;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*policytool.desktop
+%__subst 's,^Categories=.*,Categories=Development;Profiling;System;Monitor;Java;X-ALTLinux-Java;X-ALTLinux-Java-%javaver-%{origin};,' %buildroot/usr/share/applications/*jconsole.desktop
 
 
 ##################################################
@@ -1155,10 +1197,10 @@ install -m644 j2se-buildreq-substitute \
 install -m644 j2se-devel-buildreq-substitute \
     %buildroot%_sysconfdir/buildreqs/packages/substitute.d/%name-devel
 
-install -d %buildroot%_altdir
+%__install -d %buildroot%_altdir
 
 # J2SE alternative
-cat <<EOF >%buildroot%_altdir/%altname-java
+%__cat <<EOF >%buildroot%_altdir/%altname-java
 %{_bindir}/java	%{_jvmdir}/%{jredir}/bin/java	%priority
 %_man1dir/java.1.gz	%_man1dir/java%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
@@ -1166,14 +1208,14 @@ EOF
 for i in keytool policytool servertool pack200 unpack200 \
 orbd rmid rmiregistry tnameserv
 do
-  cat <<EOF >>%buildroot%_altdir/%altname-java
+  %__cat <<EOF >>%buildroot%_altdir/%altname-java
 %_bindir/$i	%{_jvmdir}/%{jredir}/bin/$i	%{_jvmdir}/%{jredir}/bin/java
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{jredir}/bin/java
 EOF
 done
 
 # ----- JPackage compatibility alternatives ------
-cat <<EOF >>%buildroot%_altdir/%altname-java
+%__cat <<EOF >>%buildroot%_altdir/%altname-java
 %{_jvmdir}/jre	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmjardir}/jre	%{_jvmjardir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
 %{_jvmdir}/jre-%{origin}	%{_jvmdir}/%{jrelnk}	%{_jvmdir}/%{jredir}/bin/java
@@ -1183,7 +1225,7 @@ cat <<EOF >>%buildroot%_altdir/%altname-java
 EOF
 # JPackage specific: alternatives for security policy
 if [ -e %buildroot%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar ]; then
-    cat <<EOF >>%buildroot%_altdir/%altname-java
+    %__cat <<EOF >>%buildroot%_altdir/%altname-java
 %{_jvmdir}/%{jrelnk}/lib/security/local_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar	%{priority}
 %{_jvmdir}/%{jrelnk}/lib/security/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/US_export_policy.jar	%{_jvmprivdir}/%{name}/jce/vanilla/local_policy.jar
 EOF
@@ -1192,7 +1234,7 @@ fi
 
 
 # Javac alternative
-cat <<EOF >%buildroot%_altdir/%altname-javac
+%__cat <<EOF >%buildroot%_altdir/%altname-javac
 %_bindir/javac	%{_jvmdir}/%{sdkdir}/bin/javac	%priority
 %_prefix/lib/jdk	%{_jvmdir}/%{sdkdir}	%{_jvmdir}/%{sdkdir}/bin/javac
 %_man1dir/javac.1.gz	%_man1dir/javac%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
@@ -1203,7 +1245,7 @@ for i in appletviewer extcheck idlj jar jarsigner javadoc javah javap jdb native
 jhat jrunscript jvisualvm schemagen wsgen wsimport xjc
 do
   if [ -e $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/bin/$i ]; then
-  cat <<EOF >>%buildroot%_altdir/%altname-javac
+  %__cat <<EOF >>%buildroot%_altdir/%altname-javac
 %_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
 %_man1dir/$i.1.gz	%_man1dir/${i}%{label}.1.gz	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
@@ -1213,14 +1255,14 @@ done
 for i in HtmlConverter
 do
   if [ -e $RPM_BUILD_ROOT%{_jvmdir}/%{sdkdir}/bin/$i ]; then
-  cat <<EOF >>%buildroot%_altdir/%altname-javac
+  %__cat <<EOF >>%buildroot%_altdir/%altname-javac
 %_bindir/$i	%{_jvmdir}/%{sdkdir}/bin/$i	%{_jvmdir}/%{sdkdir}/bin/javac
 EOF
 fi
 done
 
 # ----- JPackage compatibility alternatives ------
-  cat <<EOF >>%buildroot%_altdir/%altname-javac
+  %__cat <<EOF >>%buildroot%_altdir/%altname-javac
 %{_jvmdir}/java	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmjardir}/java	%{_jvmjardir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
 %{_jvmdir}/java-%{origin}	%{_jvmdir}/%{sdklnk}	%{_jvmdir}/%{sdkdir}/bin/javac
@@ -1273,6 +1315,8 @@ done
 %{_mandir}/man1/tnameserv-%{name}.1*
 %{_mandir}/man1/unpack200-%{name}.1*
 %{_jvmdir}/%{jredir}/lib/security/nss.cfg
+%{_jvmdir}/%{jredir}/lib/audio/
+
 
 %files devel
 %_altdir/%altname-javac
@@ -1307,7 +1351,9 @@ done
 %{_mandir}/man1/javah-%{name}.1*
 %{_mandir}/man1/javap-%{name}.1*
 %{_mandir}/man1/jconsole-%{name}.1*
+%ifarch %{jit_arches} # Only in u4+
 %{_mandir}/man1/jcmd-%{name}.1*
+%endif
 %{_mandir}/man1/jdb-%{name}.1*
 %{_mandir}/man1/jhat-%{name}.1*
 %{_mandir}/man1/jinfo-%{name}.1*
@@ -1349,6 +1395,9 @@ done
 %doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
 
 %changelog
+* Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.6-alt1_2.3.1.2jpp7
+- new version
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.3-alt4_2.2.1.8jpp7
 - applied repocop patches
 
