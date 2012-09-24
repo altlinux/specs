@@ -14,7 +14,7 @@
 %define maketest 1
 
 Name: perl-Regexp-Common
-Version: 2011041701
+Version: 2011121001
 Release: alt1
 
 Summary: Regexp-Common - Provide commonly requested regular expressions
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AB/ABIGAIL/Regexp-Common-2011041701.tar.gz
+Source: http://www.cpan.org/authors/id/A/AB/ABIGAIL/Regexp-Common-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 06 2005
 BuildRequires: perl-devel
@@ -52,6 +52,9 @@ There is an alternative, subroutine-based syntax described in
 %perl_vendor_privlib/Regexp/
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2011121001-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 2011041701-alt1
 - automated CPAN update
 
