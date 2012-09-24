@@ -1,14 +1,14 @@
 %define dist HTML-Lint
 Name: perl-%dist
-Version: 2.06
-Release: alt2
+Version: 2.20
+Release: alt1
 
 Summary: Check for HTML errors in a string or file
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PE/PETDANCE/HTML-Lint-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ Test::More-style wrapper, Test::HTML::Lint.
 %perl_vendor_privlib/Test
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.20-alt1
+- automated CPAN update
+
 * Tue Apr 26 2011 Alexey Tourbin <at@altlinux.ru> 2.06-alt2
 - fixed unpackaged directory
 
