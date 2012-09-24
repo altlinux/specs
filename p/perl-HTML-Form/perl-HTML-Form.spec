@@ -1,6 +1,6 @@
 %define dist HTML-Form
 Name: perl-%dist
-Version: 6.02
+Version: 6.03
 Release: alt1
 
 Summary: Class that represents an HTML form element
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GA/GAAS/HTML-Form-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 
@@ -38,6 +38,9 @@ objects that can be passed to the request() method of LWP::UserAgent.
 %perl_vendor_privlib/HTML
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1
+- automated CPAN update
+
 * Sat Mar 10 2012 Alexey Tourbin <at@altlinux.ru> 6.02-alt1
 - 6.00 -> 6.02
 
