@@ -1,6 +1,6 @@
 %define dist POE
 Name: perl-%dist
-Version: 1.312
+Version: 1.354
 Release: alt1
 
 Summary: Portable multitasking and networking framework for any event loop
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RC/RCAPUTO/POE-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -47,6 +47,9 @@ portability.
 %perl_vendor_privlib/POE*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.354-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 1.312-alt1
 - 1.289 -> 1.312
 
