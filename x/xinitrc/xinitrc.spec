@@ -1,11 +1,10 @@
 Name: xinitrc
-Version: 2.4.36
+Version: 2.4.37
 Release: alt1
 
 Summary: The default startup scripts for the X Window System
 License: GPL
 Group: System/X11
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -20,7 +19,7 @@ The %name package contains system scripts used to start
 X Window System session.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build -C po
@@ -74,6 +73,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Mon Sep 24 2012 Dmitry V. Levin <ldv@altlinux.org> 2.4.37-alt1
+- prefdm: added MATE support (closes: #27611).
+
 * Tue Jun 26 2012 Michael Shigorin <mike@altlinux.org> 2.4.36-alt1
 - prefdm: Added nodm support by Max Kosmach (closes: #27449).
 
