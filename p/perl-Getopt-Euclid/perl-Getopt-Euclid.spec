@@ -1,6 +1,6 @@
 %define dist Getopt-Euclid
 Name: perl-%dist
-Version: 0.3.2
+Version: 0.3.3
 Release: alt1
 
 Summary: Executable Uniform Command-Line Interface Descriptions
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/F/FA/FANGLY/Getopt-Euclid-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ its actual interface always agree.
 %perl_vendor_privlib/Getopt
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.3.2-alt1
 - 0.2.3 -> 0.3.2
 
