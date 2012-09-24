@@ -1,7 +1,7 @@
 %define module HTTP-Body
 
 Name: perl-%module
-Version: 1.12
+Version: 1.15
 Release: alt1
 
 Summary: %module - HTTP Body Parser
@@ -9,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/G/GE/GETTY/HTTP-Body-1.12.tar.gz
+Source: http://www.cpan.org/authors/id/G/GE/GETTY/HTTP-Body-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ export TEST_POD=1
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1
 - automated CPAN update
 
