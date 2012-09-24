@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Locale-Maketext-Fuzzy
-Version: 0.10
-Release: alt1.1
+Version: 0.11
+Release: alt1
 
 Summary: Locale-Maketext-Fuzzy - Maketext from already interpolated strings
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AU/AUDREYT/Locale-Maketext-Fuzzy-0.10.tar.gz
+Source: http://www.cpan.org/authors/id/A/AU/AUDREYT/Locale-Maketext-Fuzzy-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 06 2005
 BuildRequires: perl-I18N-LangTags perl-Locale-Maketext perl-devel
@@ -67,6 +67,9 @@ calls into "maketext_fuzzy" calls.
 %perl_vendor_privlib/Locale/
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
