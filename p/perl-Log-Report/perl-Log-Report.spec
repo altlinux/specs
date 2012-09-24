@@ -1,6 +1,6 @@
 %define dist Log-Report
 Name: perl-%dist
-Version: 0.94
+Version: 0.98
 Release: alt1
 
 Summary: Report a problem, pluggable handlers and language support
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Log-Report-0.94.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Log-Report-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -44,6 +44,9 @@ module to do only translations or only message dispatching.
 %_bindir/xgettext-perl
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.94-alt1
 - automated CPAN update
 
