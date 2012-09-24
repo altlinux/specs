@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Perl6-Junction
-Version: 1.40000
-Release: alt1.1
+Version: 1.50000
+Release: alt1
 
 Summary: Perl6 style Junction operators in Perl5
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Perl6-Junction/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/C/CF/CFRANKS/Perl6-Junction-1.40000.tar.gz
+Source: http://www.cpan.org/authors/id/C/CF/CFRANKS/Perl6-Junction-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon May 26 2008
 BuildRequires: perl-devel
@@ -59,6 +59,9 @@ must also use a regex object, such as "qr/\d/", not a plain regex such as
 %exclude %perl_vendor_archlib
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.50000-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.40000-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
