@@ -1,6 +1,6 @@
 %define dist Archive-Extract
 Name: perl-%dist
-Version: 0.56
+Version: 0.60
 Release: alt1
 
 Summary: A generic archive extracting mechanism
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Archive-Extract-0.56.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Archive-Extract-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ either perl modules, or commandline tools on your system.
 %perl_vendor_privlib/Archive
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
 - automated CPAN update
 
