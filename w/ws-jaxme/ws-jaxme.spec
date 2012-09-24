@@ -1,11 +1,9 @@
-Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: jakarta-commons-codec
-Requires: jakarta-commons-codec
 Requires: xmldb-api-sdk
 BuildRequires: xmldb-api-sdk
+BuildRequires: docbook-xml docbook-dtds
 BuildRequires: /proc
-BuildRequires: jpackage-1.5.0-compat
-# Copyright (c) 2000-2007, JPackage Project
+BuildRequires: jpackage-compat
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -35,68 +33,54 @@ BuildRequires: jpackage-1.5.0-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define gcj_support 0
-
-%define base_name jaxme
+%global base_name jaxme
 
 Name:           ws-jaxme
 Version:        0.5.2
-Release:        alt2_1jpp5
+Release:        alt2_6jpp7
 Epoch:          0
 Summary:        Open source implementation of JAXB
 
 Group:          Development/Java
-License:        Apache Software License
+License:        ASL 2.0
 URL:            http://ws.apache.org/jaxme/
+# svn export http://svn.apache.org/repos/asf/webservices/archive/jaxme/tags/R0_5_2/ ws-jaxme-0.5.2
+# tar czf ws-jaxme-0.5.2-src.tar.gz ws-jaxme-0.5.2
 Source0:        ws-jaxme-0.5.2-src.tar.gz
-# svn export https://svn.apache.org/repos/asf/webservices/jaxme/tags/R0_5_2/ ws-jaxme-0.5.2
-
-Source1:        ws-jaxme-0.5-docs.tar.gz
+Source1:        ws-jaxme-bind-MANIFEST.MF
 # generated docs with forrest-0.5.1
-Source2:        jaxme2-0.5.2.pom
-Source3:        jaxme2-rt-0.5.2.pom
-Source4:        jaxmeapi-0.5.2.pom
-Source5:        jaxmejs-0.5.2.pom
-Source6:        jaxmepm-0.5.2.pom
-Source7:        jaxmexs-0.5.2.pom
-
-Patch0:         ws-jaxme-ant-scripts.patch
-
-# ws-jaxme 0.5.1 fedora
-Source11:        ws-jaxme-bind-MANIFEST.MF
+Patch0:         ws-jaxme-docs_xml.patch
+Patch1:         ws-jaxme-catalog.patch
+Patch2:         ws-jaxme-system-dtd.patch
 Patch3:         ws-jaxme-jdk16.patch
+Patch4:         ws-jaxme-ant-scripts.patch
 Patch5:         ws-jaxme-use-commons-codec.patch
-
-
-%if ! %{gcj_support}
+# Remove xmldb-api, deprecated since f17
+Patch6:         ws-jaxme-remove-xmldb.patch
+Patch7:         ws-jaxme-0.5.2-class-version15.patch
 BuildArch:      noarch
-%endif
-%if %{gcj_support}
-BuildRequires: gnu-crypto
-BuildRequires: java-gcj-compat-devel
-Requires(post): java-gcj-compat
-Requires(postun): java-gcj-compat
-%endif
-
-BuildRequires: jpackage-utils >= 0:1.7.2
-BuildRequires: ant >= 0:1.6
-BuildRequires: antlr
-BuildRequires: junit
-BuildRequires: hsqldb
-BuildRequires: log4j
-BuildRequires: xmldb-api
-BuildRequires: xerces-j2
-BuildRequires: xml-commons-jaxp-1.3-apis
-
-Requires(post): jpackage-utils >= 0:1.7.2
-Requires(postun): jpackage-utils >= 0:1.7.2
-
-Requires: ant
-Requires: antlr
-Requires: log4j
-Requires: xml-commons-jaxp-1.3-apis
-Requires: xmldb-api
-
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  ant >= 0:1.6
+BuildRequires:  ant-apache-resolver
+BuildRequires:  antlr
+BuildRequires:  apache-commons-codec
+BuildRequires:  junit
+BuildRequires:  hsqldb
+BuildRequires:  log4j
+BuildRequires:  xalan-j2
+BuildRequires:  xerces-j2
+BuildRequires:	docbook-style-xsl
+BuildRequires:  docbook-dtds
+BuildRequires:  zip
+Requires:       antlr
+Requires:       apache-commons-codec
+Requires:       junit
+Requires:       hsqldb
+Requires:       log4j
+Requires:       xalan-j2
+Requires:       xerces-j2
+Requires:       jpackage-utils
+Source44: import.info
 
 %description
 A Java/XML binding compiler takes as input a schema 
@@ -114,51 +98,48 @@ a set of Java classes:
 
 %package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+Requires:       jpackage-utils
+Requires(postun): jpackage-utils
+BuildArch: noarch
 
 %description    javadoc
 %{summary}.
 
 %package        manual
 Summary:        Documents for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+BuildArch: noarch
 
 %description    manual
 %{summary}.
 
 %prep
-%setup -q -n %{name}-%{version}
+%setup -q
 for j in $(find . -name "*.jar"); do
-      mv $j $j.no
+    mv $j $j.no
 done
-mkdir -p build/docs/build/site
-pushd build/docs/build/site
-tar xzf %{SOURCE1}
-popd
 
-%patch0 -b .sav
-#%patch3 -p1
+%patch0 -p0
+%patch1 -p0
+%patch2 -p1
+DOCBOOKX_DTD=`%{_bindir}/xmlcatalog %{_datadir}/sgml/docbook/xmlcatalog "-//OASIS//DTD DocBook XML V4.5//EN" 2>/dev/null`
+%{__perl} -pi -e 's|@DOCBOOKX_DTD@|$DOCBOOKX_DTD|' src/documentation/manual/jaxme2.xml
+%patch3 -p1
+%patch4 -b .sav
 %patch5 -b .sav
-
-subst 's,<pathelement location="\${preqs}/ant.jar"/>,<pathelement location="${preqs}/ant.jar"/><pathelement location="${preqs}/commons-codec.jar"/>,' ant/jm.xml
+%patch6 -p1
+%patch7 -p1
 
 %build
-build-jar-repository -s -p prerequisites \
-ant \
-antlr \
-junit \
-log4j \
-xerces-j2 \
-xml-commons-jaxp-1.3-apis \
-xmldb-api \
-hsqldb \
-commons-codec
-
-ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 all 
-ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 javadoc
+export CLASSPATH=$(build-classpath antlr hsqldb commons-codec junit log4j xerces-j2 xalan-j2)
+ant all Docs.all \
+-Dbuild.sysclasspath=first \
+-Ddocbook.home=%{_datadir}/sgml/docbook \
+-Ddocbookxsl.home=%{_datadir}/sgml/docbook/xsl-stylesheets
 
 mkdir -p META-INF
-cp -p %{SOURCE11} META-INF/MANIFEST.MF
+cp -p %{SOURCE1} META-INF/MANIFEST.MF
 touch META-INF/MANIFEST.MF
 zip -u dist/jaxmeapi-%{version}.jar META-INF/MANIFEST.MF
 
@@ -167,77 +148,45 @@ install -dm 755 $RPM_BUILD_ROOT%{_javadir}/%{base_name}
 for jar in dist/*.jar; do
    install -m 644 ${jar} $RPM_BUILD_ROOT%{_javadir}/%{base_name}/
 done
-(cd $RPM_BUILD_ROOT%{_javadir}/%{base_name} && for jar in *-%{version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
-(cd $RPM_BUILD_ROOT%{_javadir}/%{base_name} && for jar in *.jar; do ln -sf ${jar} ws-${jar}; done)
+(cd $RPM_BUILD_ROOT%{_javadir}/%{base_name} && 
+    for jar in *-%{version}*; 
+        do ln -sf ${jar} `echo $jar| sed  "s|-%{version}||g"`; 
+    done
+)
 
-%add_to_maven_depmap org.apache.ws.jaxme jaxme2 %{version} JPP/jaxme jaxme2
-%add_to_maven_depmap org.apache.ws.jaxme jaxme2-rt %{version} JPP/jaxme jaxme2-rt
-%add_to_maven_depmap org.apache.ws.jaxme jaxmeapi %{version} JPP/jaxme jaxmeapi
-%add_to_maven_depmap org.apache.ws.jaxme jaxmejs %{version} JPP/jaxme jaxmejs
-%add_to_maven_depmap org.apache.ws.jaxme jaxmepm %{version} JPP/jaxme jaxmepm
-%add_to_maven_depmap org.apache.ws.jaxme jaxmexs %{version} JPP/jaxme jaxmexs
-
-# poms
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/maven2/poms
-install -pm 644 %{SOURCE2} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.jaxme-jaxme2.pom
-install -pm 644 %{SOURCE3} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.jaxme-jaxme2-rt.pom
-install -pm 644 %{SOURCE4} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.jaxme-jaxmeapi.pom
-install -pm 644 %{SOURCE5} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.jaxme-jaxmejs.pom
-install -pm 644 %{SOURCE6} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.jaxme-jaxmepm.pom
-install -pm 644 %{SOURCE7} \
-    $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.jaxme-jaxmexs.pom
+(cd $RPM_BUILD_ROOT%{_javadir}/%{base_name} && 
+    for jar in *.jar; 
+        do ln -sf ${jar} ws-${jar}; 
+    done
+)
 
 #javadoc
-install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -pr build/docs/src/documentation/content/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
-rm -rf build/docs/build/site/apidocs
+install -dm 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -pr build/docs/src/documentation/content/apidocs \
+    $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+rm -rf build/docs/src/documentation/content/apidocs
 
 #manual
 install -dm 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr build/docs/build/site/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -p LICENSE $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-
-%if %{gcj_support}
-export CLASSPATH=$(build-classpath gnu-crypto)
-%{_bindir}/aot-compile-rpm
-%endif
-
-%post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
-
-%postun javadoc
-if [ "$1" = "0" ]; then
-  rm -f %{_javadocdir}/%{name}
-fi
+cp -pr build/docs/src/documentation/content/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
+install -pm 644 LICENSE $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 %files
-%doc %{_docdir}/%{name}-%{version}/LICENSE
+%doc LICENSE NOTICE
 %{_javadir}/%{base_name}
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/jaxme*%{version}.jar.*
-%endif
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
-
 
 %files javadoc
-%doc %{_javadocdir}/%{name}-%{version}
-%ghost %doc %{_javadocdir}/%{name}
+%doc LICENSE NOTICE
+%doc %{_javadocdir}/%{name}
 
 %files manual
+%doc LICENSE NOTICE
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt2_6jpp7
+- fc release
+
 * Fri May 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:0.5.2-alt2_1jpp5
 - explicitly selected java5 compiler
 
