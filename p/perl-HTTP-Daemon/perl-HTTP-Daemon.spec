@@ -1,14 +1,14 @@
 %define dist HTTP-Daemon
 Name: perl-%dist
-Version: 6.00
-Release: alt2
+Version: 6.01
+Release: alt1
 
 Summary: a simple http server class
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GA/GAAS/HTTP-Daemon-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 
@@ -37,6 +37,9 @@ too.
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 6.01-alt1
+- automated CPAN update
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 6.00-alt2
 - rebuilt as plain src.rpm
 
