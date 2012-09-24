@@ -1,5 +1,5 @@
 Name: SPICE
-Version: 0.11.3
+Version: 0.12.0
 Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
@@ -9,7 +9,6 @@ Url: http://www.spice-space.org/
 Source: http://www.spice-space.org/download/releases/%name-%version.tar
 Source2: spice-common.tar
 Source3: spice-protocol.tar
-Patch: %name-%version-%release.patch
 Patch1: fix-alt.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=613529
@@ -67,12 +66,9 @@ using spice-server, you will need to install spice-server-devel.
 
 %prep
 %setup
-%patch -p1
+tar -xf %SOURCE2 
+tar -xf %SOURCE3 -C spice-common
 %patch1 -p1
-tar -xf %SOURCE2
-pushd spice-common
-tar -xf %SOURCE3
-popd
 
 %build
 rm -f GITVERSION
@@ -106,6 +102,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt1
+- 0.12.0
+
 * Tue Sep 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.11.3-alt1
 - 0.11.3
 

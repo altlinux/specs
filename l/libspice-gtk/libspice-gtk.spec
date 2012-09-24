@@ -11,7 +11,7 @@
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.13.29
+Version: 0.14
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -339,6 +339,9 @@ cd ..
 %endif
 
 %changelog
+* Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14-alt1
+- 0.14
+
 * Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 0.13.29-alt1
 - 0.13.29
 - disable build gtk-doc
