@@ -1,6 +1,6 @@
 %define dist Version-Requirements
 Name: perl-%dist
-Version: 0.101020
+Version: 0.101022
 Release: alt1
 
 Summary: A set of version requirements for a CPAN dist
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Version-Requirements-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,5 +35,8 @@ them to the simplest representation.
 %perl_vendor_privlib/Version
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.101022-alt1
+- automated CPAN update
+
 * Thu Apr 28 2011 Alexey Tourbin <at@altlinux.ru> 0.101020-alt1
 - initial revision
