@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Module-Loaded
-Version: 0.06
-Release: alt1.1
+Version: 0.08
+Release: alt1
 
 Summary: Mark modules as loaded/unloaded
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Loaded-0.06.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Loaded-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Jun 24 2007
 BuildRequires: perl-devel
@@ -53,6 +53,9 @@ loaded and/or unloaded.
 %perl_vendor_privlib/Module/
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
