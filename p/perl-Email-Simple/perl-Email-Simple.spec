@@ -1,14 +1,14 @@
 %define dist Email-Simple
 Name: perl-%dist
-Version: 2.100
-Release: alt2
+Version: 2.102
+Release: alt1
 
 Summary: Simple parsing of RFC2822 message format and headers
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Simple-%{version}.tar.gz
 
 # see Makefile.PL
 Conflicts: perl-Email-MIME < 1.857
@@ -46,6 +46,9 @@ sed -i- '/^if .* require Email::MIME/,/^}/s/^/#/' Makefile.PL
 %perl_vendor_privlib/Email
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.102-alt1
+- automated CPAN update
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 2.100-alt2
 - rebuilt as plain src.rpm
 
