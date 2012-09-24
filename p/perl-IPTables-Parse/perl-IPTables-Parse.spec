@@ -1,6 +1,6 @@
 %define dist IPTables-Parse
 Name: perl-%dist
-Version: 0.7
+Version: 1.1
 Release: alt1
 
 Summary: Perl extension for parsing iptables firewall rulesets
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MR/MRASH/IPTables-Parse-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,5 +37,8 @@ rules exist.
 %perl_vendor_privlib/IPTables
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1
+- automated CPAN update
+
 * Thu Oct 20 2011 Alexey Tourbin <at@altlinux.ru> 0.7-alt1
 - initial revision
