@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Write
-Version: 1.05
+Version: 1.07
 Release: alt1
 
 Summary: a portable interface to open and send raw data to network
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GO/GOMOR/Net-Write-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Nov 07 2009
 BuildRequires: perl-Class-Gomor perl-Net-Pcap perl-Socket6 perl-Test-Pod perl-Test-Pod-Coverage
@@ -51,6 +51,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.07-alt1
+- automated CPAN update
+
 * Sat Nov 07 2009 Denis Smirnov <mithraen@altlinux.ru> 1.05-alt1
 - initial build for ALT Linux Sisyphus
 
