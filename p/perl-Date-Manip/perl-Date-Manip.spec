@@ -1,6 +1,6 @@
 %define dist Date-Manip
 Name: perl-Date-Manip
-Version: 6.25
+Version: 6.34
 Release: alt1
 
 Summary: Date manipulation routines
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/S/SB/SBECK/Date-Manip-6.25.tar.gz
+Source: http://www.cpan.org/authors/id/S/SB/SBECK/Date-Manip-%{version}.tar.gz
 
 %add_findprov_skiplist */Date/Manip/Offset/*.pm
 %add_findprov_skiplist */Date/Manip/TZ/*.pm
@@ -49,6 +49,9 @@ international times are all easily done.
 	%perl_vendor_privlib/Date/Manip/TZ/*.pm
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 6.34-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 6.25-alt1
 - automated CPAN update
 
