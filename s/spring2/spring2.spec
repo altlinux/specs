@@ -99,7 +99,7 @@ FIXME: (dwalluck): Need to link offline:
 Name:           spring2
 Summary:        Spring J2EE Framework
 Version:        2.5.6.SEC03
-Release:        alt10_5jpp6
+Release:        alt11_5jpp6
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -143,7 +143,7 @@ BuildRequires:  annotation_1_0_api
 BuildRequires:  aopalliance
 BuildRequires:  apache-ibatis2-sqlmap
 BuildRequires:  apache-jdo-2.0-api
-BuildRequires:  openjpa1
+#BuildRequires:  openjpa1
 #BuildRequires:  aqute-bndlib
 BuildRequires:  asm
 BuildRequires:  asm2
@@ -172,8 +172,8 @@ BuildRequires:  glassfish-persistence-impl
 BuildRequires:  groovy15
 BuildRequires:  hessian-nodep
 BuildRequires:  hibernate3 >= 0:3.3.2
-BuildRequires:  hibernate3-annotations
-BuildRequires:  hibernate3-commons-annotations
+#BuildRequires:  hibernate3-annotations
+#BuildRequires:  hibernate3-commons-annotations
 BuildRequires:  hibernate3-entitymanager
 BuildRequires:  hsqldb
 BuildRequires:  httpunit
@@ -996,6 +996,7 @@ ln -sf $(build-classpath freemarker) lib/freemarker/freemarker.jar
 
 # BUILD/spring/lib/groovy/groovy-1.5.6.jar.no
 ln -sf $(build-classpath groovy15-all) lib/groovy/groovy-1.5.6.jar
+%if_with hibernate3
 # BUILD/spring/lib/hibernate/hibernate3.jar.no
 ln -sf $(build-classpath hibernate3-core) lib/hibernate/hibernate3.jar
 # BUILD/spring/lib/hibernate/hibernate-annotations.jar.no
@@ -1004,6 +1005,16 @@ ln -sf $(build-classpath hibernate3-annotations) lib/hibernate/hibernate-annotat
 ln -sf $(build-classpath hibernate3-commons-annotations) lib/hibernate/hibernate-commons-annotations.jar
 # BUILD/spring/lib/hibernate/hibernate-entitymanager.jar.no
 ln -sf $(build-classpath hibernate3-entitymanager) lib/hibernate/hibernate-entitymanager.jar
+%else
+# BUILD/spring/lib/hibernate/hibernate3.jar.no
+cp -a lib/hibernate/hibernate3.jar.no lib/hibernate/hibernate3.jar
+# BUILD/spring/lib/hibernate/hibernate-annotations.jar.no
+cp -a lib/hibernate/hibernate-annotations.jar.no lib/hibernate/hibernate-annotations.jar
+# BUILD/spring/lib/hibernate/hibernate-commons-annotations.jar.no
+cp -a lib/hibernate/hibernate-commons-annotations.jar.no lib/hibernate/hibernate-commons-annotations.jar
+# BUILD/spring/lib/hibernate/hibernate-entitymanager.jar.no
+cp -a lib/hibernate/hibernate-entitymanager.jar.no lib/hibernate/hibernate-entitymanager.jar
+%endif
 # BUILD/spring/lib/hsqldb/hsqldb.jar.no
 ln -sf $(build-classpath hsqldb) lib/hsqldb/hsqldb.jar
 # BUILD/spring/lib/httpclient/commons-httpclient-3.0.jar.no
@@ -1137,7 +1148,8 @@ ln -sf $(build-classpath log4j) lib/log4j/log4j-1.2.15.jar
 # BUILD/spring/lib/ognl/ognl.jar.no
 ln -sf $(build-classpath ognl) lib/ognl/ognl.jar
 # BUILD/spring/lib/openjpa/openjpa-1.1.0.jar.no
-ln -sf $(build-classpath openjpa1/all) lib/openjpa/openjpa-1.1.0.jar
+#ln -sf $(build-classpath openjpa1/all) lib/openjpa/openjpa-1.1.0.jar
+cp -a lib/openjpa/openjpa-1.1.0.jar.no lib/openjpa/openjpa-1.1.0.jar
 # BUILD/spring/lib/osgi/org.eclipse.osgi_3.1.1.jar.no
 
 # BUILD/spring/lib/poi/poi-3.0.1.jar.no
@@ -1616,6 +1628,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %endif
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt11_5jpp6
+- fixed build with new hibernate3
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5.6.SEC03-alt10_5jpp6
 - fixed build with new aspectj
 
