@@ -1,6 +1,6 @@
 %define dist Config-General
 Name: perl-%dist
-Version: 2.50
+Version: 2.51
 Release: alt1
 
 Summary: Generic Config Module
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/T/TL/TLINDEN/Config-General-2.50.tar.gz
+Source: http://www.cpan.org/authors/id/T/TL/TLINDEN/Config-General-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -40,6 +40,9 @@ files.
 %perl_vendor_privlib/Config*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.51-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 2.50-alt1
 - automated CPAN update
 
