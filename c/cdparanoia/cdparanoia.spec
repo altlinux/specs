@@ -1,6 +1,6 @@
 Name: cdparanoia
 Version: 10.2
-Release: alt2.qa1
+Release: alt4
 Serial: 1
 Summary: Utility to copy digital audio cd's.
 License: GPL
@@ -12,6 +12,8 @@ Requires: lib%name = %{?serial:%serial:}%version-%release
 Source: %url/download/%name-III-%version.src.tgz
 Patch0: cdparanoia-10.2-#463009.patch
 Patch1: cdparanoia-10.2-endian.patch
+# ALT
+Patch10: cdparanoia-10.2-alt-armh.patch
 
 %description
 This CDDA reader distribution ('%name') reads audio from the CDROM
@@ -51,6 +53,7 @@ This package contains development libraries and header files for %name.
 %setup -q -n %name-III-%version
 %patch0 -p3
 %patch1 -p1
+%patch10 -p1
 
 %build
 %define _optlevel 0
@@ -79,6 +82,9 @@ rm -f %buildroot%_libdir/*.a
 %_libdir/*.so
 
 %changelog
+* Mon Sep 24 2012 Sergey V Turchin <zerg@altlinux.org> 1:10.2-alt4
+- fix to build for armh (ALT#27759)
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:10.2-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
