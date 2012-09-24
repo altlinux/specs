@@ -3,8 +3,8 @@
 %define pkgname nokogiri
 
 Name: ruby-%pkgname
-Version: 1.4.4.2
-Release: alt2
+Version: 1.5.5
+Release: alt1
 
 Summary: HTML, XML, SAX, and Reader parser
 Group: Development/Ruby
@@ -14,10 +14,8 @@ Url: http://rubyforge.org/projects/nokogiri/
 Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
-Patch1: ruby-nokogiri-1.4.4.2-alt-Drop-FFI-support.patch
 Patch2: ruby-nokogiri-1.4.4.2-alt-Fix_encoding_issues.patch
 Patch3: ruby-nokogiri-1.4.4.2-alt-rubygems.patch
-Patch4: ruby-nokogiri-1.4.4.2-alt-libxml.patch
 
 # Automatically added by buildreq on Sun Jun 28 2009 (-bi)
 BuildRequires: libruby-devel libxslt-devel ruby-racc-runtime ruby-test-unit ruby-tool-setup
@@ -39,12 +37,10 @@ Documentation files for %name
 
 %prep
 %setup -n %pkgname-%version
-%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 # Not needed.
-rm -r lib/nokogiri/ffi
+# rm -r lib/nokogiri/ffi
 %update_setup_rb
 
 %build
@@ -73,6 +69,9 @@ rex --independent -o lib/nokogiri/css/generated_tokenizer.rb lib/nokogiri/css/to
 %ruby_ri_sitedir/Nokogiri*
 
 %changelog
+* Wed Mar 24 2012 Andriy Stepanov <stanv@altlinux.ru> 1.5.5-alt1
+- New version
+
 * Wed Mar 23 2011 Andriy Stepanov <stanv@altlinux.ru> 1.4.4.2-alt2
 - Fix build
 
