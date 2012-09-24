@@ -1,6 +1,6 @@
 %define dist B-Hooks-EndOfScope
 Name: perl-%dist
-Version: 0.09
+Version: 0.11
 Release: alt1
 
 Summary: Execute code after a scope finished compilation
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/F/FL/FLORA/B-Hooks-EndOfScope-0.09.tar.gz
+Source: http://www.cpan.org/authors/id/F/FL/FLORA/B-Hooks-EndOfScope-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ surrounding scope.
 %perl_vendor_privlib/B*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Tue Jul 13 2010 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
 - automated CPAN update
 
