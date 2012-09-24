@@ -1,6 +1,6 @@
 %define dist Mail-Box
 Name: perl-%dist
-Version: 2.101
+Version: 2.106
 Release: alt1
 
 Summary: Manage a mailbox, a folder with messages
@@ -8,7 +8,7 @@ License: Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Mail-Box-2.101.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/Mail-Box-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ rm %buildroot%perl_vendor_privlib/Mail/Box/Search/SpamAssassin.{pm,pod}
 %perl_vendor_privlib/Mail/
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.106-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 2.101-alt1
 - automated CPAN update
 
