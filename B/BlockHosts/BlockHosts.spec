@@ -1,6 +1,6 @@
 Name: BlockHosts
-Version: 2.5.1
-Release: alt1.1
+Version: 2.7.0
+Release: alt1
 
 Summary: Block IP Addresses based on information in system logs related to SSH/FTP failures
 
@@ -37,12 +37,15 @@ login attempt, this keeps the hosts.allow file size manageable.
 rm -f %buildroot%python_sitelibdir/*.egg-info
 
 %files
-%doc CHANGES blockhosts.html bhrss.html
+%doc CHANGES README blockhosts.html
 %_bindir/*
 %config(noreplace) %_logrotatedir/blockhosts
 %config(noreplace) %_sysconfdir/blockhosts.cfg
 
 %changelog
+* Mon Sep 24 2012 Vitaly Lipatov <lav@altlinux.ru> 2.7.0-alt1
+- new version 2.7.0 (with rpmrb script)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.5.1-alt1.1
 - Rebuild with Python-2.7
 
