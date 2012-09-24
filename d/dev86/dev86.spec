@@ -1,29 +1,26 @@
 Name: dev86
-Version: 0.16.17
-Release: alt5
+Version: 0.16.19
+Release: alt1
 
 Summary: A real mode 80x86 assembler and linker
-License: GPL
+License: GPL+ and GPLv2+ and LGPLv2+
 Group: Development/Other
-Url: http://www.cix.co.uk/~mayday
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Url: http://www.debath.co.uk/dev86/
 
-# %url/dev86/Dev86src-%version.tar.gz
+# http://www.debath.co.uk/dev86/Dev86src-%version.tar.gz
 Source: Dev86src-%version.tar
 
 Patch1: dev86-0.16.16-rh-alt-owl-kinclude.patch
-Patch2: dev86-0.16.17-owl-warnings.patch
+Patch2: dev86-0.16.19-owl-warnings.patch
 Patch3: dev86-0.16.17-owl-makefile.patch
-Patch4: dev86-0.16.16-alt-optflags.patch
-Patch5: dev86-0.16.17-alt-noelksemu.patch
-Patch6: dev86-0.16.17-owl-tmp.patch
-Patch7: dev86-0.16.17-alt-fixes.patch
+Patch4: dev86-0.16.19-alt-noelksemu.patch
+Patch5: dev86-0.16.19-owl-tmp.patch
+Patch6: dev86-0.16.19-alt-bcc.patch
+Patch7: dev86-0.16.19-rh-nostrip.patch
+Patch8: dev86-0.16.19-rh-bound.patch
 
-ExclusiveArch: %ix86 x86_64
 Provides: bin86
 Obsoletes: bin86
-
-Summary(ru_RU.KOI8-R): Ассемблер и компоновщик для реального режима Intel 80x86
 
 %package devel
 Summary: Development files for dev86
@@ -36,13 +33,6 @@ You'll need to have this package installed in order to build programs
 that run in real mode, including LILO and the kernel's bootstrapping code,
 from their sources.
 
-%description -l ru_RU.KOI8-R
-
-Пакет %name содержит транслятор языка Ассемблер и компоновщик, предназначенные
-для компиляции программ под т.н. реальный режим процессоров Intel 80x86.
-Установите его, если вы собираетесь собирать из исходников программы,
-работающие в реальном режиме - такие, как LILO или загрузочный код ядра Linux.
-
 %description devel
 dev86 provides an assembler and linker for real mode 80x86 instructions.
 You'll need to have this package installed in order to build programs
@@ -54,21 +44,8 @@ real mode x86.
 
 Note that you don't need this package in order to build a kernel.
 
-%description -l ru_RU.KOI8-R devel
-
-dev86 содержит транслятор языка Ассемблер и компоновщик, предназначенные
-для написания программ под т.н. реальный режим процессоров Intel 80x86.
-Установите его, если вы собираетесь компилировать из исходников программы,
-работающие в реальном режиме - такие, как LILO или загрузочный код ядра Linux.
-
-Этот пакет содержит заголовочные файлы и библиотеки языка Си, необходимые
-для запуска Си-компилятора bcc, который генерирует код реального режима 80x86.
-
-Примечание: для компиляции ядра Linux нужен пакет dev86, поскольку
-загрузочная часть ядра целиком написана на Ассемблере.
-
 %prep
-%setup -q
+%setup
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -76,6 +53,7 @@ dev86 содержит транслятор языка Ассемблер и компоновщик, предназначенные
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 find -type f -print0 |
 	xargs -r0 grep -FZl /usr/lib/liberror.txt -- |
@@ -85,11 +63,7 @@ mkdir -p lib/bcc
 ln -s ../../include lib/bcc/include
 
 %build
-%add_optflags -fno-strict-aliasing -fno-builtin-exp2
-make GCCFLAG="%optflags" <<!EOF!
-5
-quit
-!EOF!
+make GCCFLAG='%optflags'
 
 for f in `find -mindepth 2 -type f -name README\*`; do
 	d="${f%%/*}"
@@ -97,20 +71,23 @@ for f in `find -mindepth 2 -type f -name README\*`; do
 done
 
 %install
-%make_install DIST=%buildroot MANDIR=%_mandir install
+%makeinstall_std DIST=%buildroot MANDIR=%_mandir
 
 for f in nm86 size86; do
 	ln -sf objdump86 "%buildroot%_bindir/$f"
 done
 
 find %buildroot%_prefix/lib/bcc -type d |
-	fgrep -v /include |
+	grep -Fv /include |
 	sed -e "s|%buildroot|%%dir |g" >files.list
 
 find %buildroot%_prefix/lib/bcc \! -type d |
-	fgrep -v /include |
+	grep -Fv /include |
 	sed -e "s|%buildroot||g" |
-	fgrep -v 86/lib | fgrep -v \.a >>files.list
+	grep -Fv 86/lib | fgrep -v \.a >>files.list
+
+%check
+BCC_PREFIX=%buildroot%_prefix make -C tests BCC=%buildroot%_bindir/bcc
 
 %files -f files.list
 %_bindir/*
@@ -125,6 +102,9 @@ find %buildroot%_prefix/lib/bcc \! -type d |
 %_prefix/lib/bcc/include
 
 %changelog
+* Mon Sep 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.16.19-alt1
+- Updated to 0.16.19.
+
 * Tue Jul 17 2007 Dmitry V. Levin <ldv@altlinux.org> 0.16.17-alt5
 - Fixed regression introduced in previous release (nidd, #12355).
 
