@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Log-Dispatch-Perl
-Version: 0.03
-Release: alt2
+Version: 0.04
+Release: alt1
 
 Summary: Log::Dispatch::Perl - Use core Perl functions for logging
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/E/EL/ELIZABETH/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/EL/ELIZABETH/Log-Dispatch-Perl-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Apr 14 2008
 BuildRequires: perl-Log-Dispatch perl-devel
@@ -52,6 +52,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Log/Dispatch/*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Fri Dec 12 2008 Vitaly Lipatov <lav@altlinux.ru> 0.03-alt2
 - cleanup spec
 
