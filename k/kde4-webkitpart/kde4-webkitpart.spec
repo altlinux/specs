@@ -1,8 +1,8 @@
 %define _kde_alternate_placement 1
 
 Name: kde4-webkitpart
-Version: 1.2.0
-Release: alt0.1
+Version: 1.3.0
+Release: alt1
 Serial: 1
 
 Group: Networking/WWW
@@ -68,6 +68,12 @@ sed -i "s|^Icon=.*|Icon=kwebkit|" src/kwebkitpart.desktop
 #%_K4apps/cmake/modules/*.cmake
 
 %changelog
+* Mon Sep 24 2012 Sergey V Turchin <zerg@altlinux.org> 1:1.3.0-alt1
+- new version
+
+* Tue Dec 27 2011 Sergey V Turchin <zerg@altlinux.org> 1:1.2.0-alt0.0.M60P.1
+- built for M60P
+
 * Tue Nov 15 2011 Sergey V Turchin <zerg@altlinux.org> 1:1.2.0-alt0.1
 - 1.2.0 git20111019
 
