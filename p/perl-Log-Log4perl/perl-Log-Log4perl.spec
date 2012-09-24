@@ -1,6 +1,6 @@
 %define dist Log-Log4perl
 Name: perl-%dist
-Version: 1.37
+Version: 1.38
 Release: alt1
 
 Summary: Log4j implementation for Perl
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MS/MSCHILLI/Log-Log4perl-%{version}.tar.gz
 Patch: perl-Log-Log4perl-1.37-alt-disable-tobedone-LDAP.patch
 
 BuildArch: noarch
@@ -46,6 +46,9 @@ popular (Java-based) Log4j logging package in pure Perl.
 %_bindir/l4p-tmpl
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.38-alt1
+- automated CPAN update
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1.37-alt1
 - 1.33 -> 1.37
 - fixed build with perl-5.16
