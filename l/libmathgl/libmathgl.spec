@@ -1,7 +1,7 @@
 %define oname mathgl
 Name: lib%oname
 Version: 2.0.3
-Release: alt1
+Release: alt1.1
 
 Summary: Library of fast C++ routines for the plotting of the data
 
@@ -123,6 +123,9 @@ cmake \
 %_bindir/mgl*example
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1.1
+- rebuild with libharu 2.2.1
+
 * Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt1
 - Version 2.0.3
 
