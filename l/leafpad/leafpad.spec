@@ -1,6 +1,6 @@
 Name: leafpad
 Version: 0.8.18.1
-Release: alt1
+Release: alt2
 
 Summary: GTK+2 based notepad clone
 
@@ -11,8 +11,6 @@ Url: http://tarot.freeshell.org/leafpad/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://savannah.nongnu.org/download/%name/%name-%version.tar
-
-Patch1: leafpad-ru-update.patch
 
 Requires(post,postun): desktop-file-utils
 BuildPreReq: desktop-file-utils
@@ -46,6 +44,9 @@ and to be as useful as them.
 %_desktopdir/*
 
 %changelog
+* Mon Sep 24 2012 Vitaly Lipatov <lav@altlinux.ru> 0.8.18.1-alt2
+- update translation (ALT bug #15020)
+
 * Sat Jun 02 2012 Vitaly Lipatov <lav@altlinux.ru> 0.8.18.1-alt1
 - new version 0.8.18.1 (with rpmrb script)
 
