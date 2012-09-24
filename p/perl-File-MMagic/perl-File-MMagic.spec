@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-File-MMagic
-Version: 1.27
-Release: alt1.1
+Version: 1.29
+Release: alt1
 
 Summary: Guess file type from contents
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/K/KN/KNOK/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/K/KN/KNOK/File-MMagic-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Mar 08 2006
 BuildRequires: perl-devel
@@ -49,6 +49,9 @@ returns string contains file type with MIME mediatype format.
 %perl_vendor_privlib/File/
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.29-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
