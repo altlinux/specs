@@ -1,9 +1,6 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/col /usr/bin/compress /usr/bin/dvipdf /usr/bin/dvips /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/gdb /usr/bin/groff /usr/bin/gtar /usr/bin/gvim /usr/bin/gzip /usr/bin/ldd /usr/bin/less /usr/bin/lha /usr/bin/makeinfo /usr/bin/md5sum /usr/bin/perl /usr/bin/pg /usr/bin/pkg-config /usr/bin/runtest /usr/bin/shar /usr/bin/strip /usr/bin/texi2dvi /usr/bin/valgrind /usr/bin/xemacs /usr/bin/zip /usr/sbin/zdump bzlib-devel gcc-c++ gcc-fortran glib2-devel libICE-devel libSM-devel libX11-devel libao-devel libdbus-devel libexpat-devel libfuse-devel libgcrypt-devel libgmp-devel libncurses-devel libreadline-devel libtinfo-devel libxml2-devel pkgconfig(gconf-2.0) pkgconfig(gdk-pixbuf-xlib-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0) pkgconfig(x11) python-devel unzip zlib-devel
-# END SourceDeps(oneline)
+BuildRequires: python-modules-encodings python-modules-xml
 Name:           malaga-suomi-voikko
-Version:        1.10
+Version:        1.12
 Release:        alt1_2
 Summary:        A description of Finnish morphology written in Malaga (Voikko edition)
 
@@ -48,6 +45,9 @@ make voikko-install DESTDIR=$RPM_BUILD_ROOT%{_libdir}/voikko
 
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.12-alt1_2
+- new version
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_2
 - update to new release by fcimport
 
