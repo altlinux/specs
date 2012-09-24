@@ -1,14 +1,14 @@
 %define dist Class-C3
 Name: perl-%dist
-Version: 0.23
-Release: alt2
+Version: 0.24
+Release: alt1
 
 Summary: A pragma to use the C3 method resolution order algortihm
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/F/FL/FLORA/Class-C3-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ more sophisticated C3 method resolution order.
 %perl_vendor_privlib/Class
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
+- automated CPAN update
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 0.23-alt2
 - rebuilt as plain src.rpm
 
