@@ -1,6 +1,6 @@
 %define dist Tk-Pod
 Name: perl-%dist
-Version: 0.9939_58
+Version: 0.9940
 Release: alt1
 
 Summary: Perl/Tk Pod browser
@@ -8,7 +8,7 @@ License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SR/SREZIC/Tk-Pod-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -45,6 +45,9 @@ documentation.
 %perl_vendor_privlib/Tk
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.9940-alt1
+- automated CPAN update
+
 * Sat Apr 23 2011 Alexey Tourbin <at@altlinux.ru> 0.9939_58-alt1
 - 0.9929 -> 0.9939_58
 
