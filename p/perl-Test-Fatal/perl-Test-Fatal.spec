@@ -1,6 +1,6 @@
 %define dist Test-Fatal
 Name: perl-%dist
-Version: 0.006
+Version: 0.010
 Release: alt1
 
 Summary: Simple helpers for testing code with exceptions
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Test-Fatal-0.006.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Test-Fatal-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ with about the same amount of typing.
 %perl_vendor_privlib/Test*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.010-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
 - automated CPAN update
 
