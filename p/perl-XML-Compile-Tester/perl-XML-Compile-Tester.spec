@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-XML-Compile-Tester
-Version: 0.06
+Version: 0.90
 Release: alt1
 
 Summary: support XML::Compile related regression testing
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MA/MARKOV/XML-Compile-Tester-0.06.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/XML-Compile-Tester-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jan 10 2009
 BuildRequires: perl-Log-Report perl-Test-Deep perl-Test-Pod
@@ -50,6 +50,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/XML/*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.90-alt1
+- automated CPAN update
+
 * Tue Jul 13 2010 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - automated CPAN update
 
