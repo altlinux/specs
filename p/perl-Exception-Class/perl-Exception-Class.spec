@@ -1,6 +1,6 @@
 %define dist Exception-Class
 Name: perl-%dist
-Version: 1.32
+Version: 1.35
 Release: alt1
 
 Summary: A module that allows you to declare real exception classes in Perl
@@ -8,7 +8,7 @@ License: Artistic 2.0
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/Exception-Class-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ class, Exception::Class::Base, that can be easily extended.
 %perl_vendor_privlib/Exception
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.35-alt1
+- automated CPAN update
+
 * Sat Apr 23 2011 Alexey Tourbin <at@altlinux.ru> 1.32-alt1
 - 1.24 -> 1.32
 
