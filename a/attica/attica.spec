@@ -2,7 +2,7 @@
 %define libattica libattica%sover
 
 Name: attica
-Version: 0.4.0
+Version: 0.4.1
 Release: alt1
 
 Summary: Open Collaboration Service providers library
@@ -61,6 +61,12 @@ based on %name.
 %_libdir/pkgconfig/libattica.pc
 
 %changelog
+* Mon Sep 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.1-alt1
+- new version
+
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt0.M60P.1
+- built for M60P
+
 * Fri Jul 27 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt1
 - new version
 
