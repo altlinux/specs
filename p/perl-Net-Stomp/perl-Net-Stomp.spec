@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Stomp
-Version: 0.42
+Version: 0.45
 Release: alt1
 
 Summary: Net::Stomp - a Streaming Text Orientated Messaging Protocol Client
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Net-Stomp/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AS/ASH/Net-Stomp-0.42.tar.gz
+Source: http://www.cpan.org/authors/id/J/JT/JTANG/Net-Stomp-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
 BuildRequires: perl-Class-Accessor perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage perl-version
@@ -57,6 +57,9 @@ For details on the protocol see http://stomp.codehaus.org/Protocol
 %doc CHANGES README 
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.45-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
 - automated CPAN update
 
