@@ -1,6 +1,6 @@
 %define dist Email-Address
 Name: perl-%dist
-Version: 1.892
+Version: 1.896
 Release: alt1
 
 Summary: RFC 2822 Address Parsing
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Address-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ of this software is to be correct, and very very fast.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.896-alt1
+- automated CPAN update
+
 * Sat Dec 18 2010 Alexey Tourbin <at@altlinux.ru> 1.892-alt1
 - 1.889 -> 1.892
 
