@@ -1,7 +1,7 @@
 %define module YAML-Syck
 
 Name: perl-%module
-Version: 1.20
+Version: 1.21
 Release: alt1
 
 Summary: Fast, lightweight YAML loader and dumper
@@ -9,7 +9,7 @@ License: MIT
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: %module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TODDR/YAML-Syck-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-Devel-Leak perl-JSON perl-Pod-Escapes perl-devel
@@ -35,6 +35,9 @@ structures to YAML strings, and the other way around.
 %perl_vendor_autolib/YAML
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.21-alt1
+- automated CPAN update
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.20-alt1
 - 1.17 -> 1.20
 - built for perl-5.16
