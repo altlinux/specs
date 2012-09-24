@@ -1,14 +1,14 @@
 %define dist XML-RegExp
 Name: perl-%dist
-Version: 0.03
-Release: alt5
+Version: 0.04
+Release: alt1
 
 Summary: Regular expressions for XML tokens
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TJ/TJMATHER/XML-RegExp-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ EntityRef, CharRef, Reference, Name, NmToken, and AttValue.
 %perl_vendor_privlib/XML
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 0.03-alt5
 - rebuilt as plain src.rpm
 
