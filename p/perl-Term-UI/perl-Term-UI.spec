@@ -1,6 +1,6 @@
 %define dist Term-UI
 Name: perl-%dist
-Version: 0.26
+Version: 0.30
 Release: alt1
 
 Summary: User interfaces via Term::ReadLine made easy
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Term-UI-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ template. It can also parse options per unix style.
 %perl_vendor_privlib/Term
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Wed Apr 27 2011 Alexey Tourbin <at@altlinux.ru> 0.26-alt1
 - 0.20 -> 0.26
 - fixed unpackaged directory
