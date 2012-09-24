@@ -1,7 +1,7 @@
 
 %define major 4
-%define minor 8
-%define bugfix 3
+%define minor 9
+%define bugfix 0
 
 Name: kde-common
 Version: %major.%minor.%bugfix
@@ -225,6 +225,12 @@ ln -s `relative %_libdir %_K4datadir/lib` %buildroot/%_K4datadir/lib
 
 
 %changelog
+* Mon Sep 24 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.0-alt1
+- bump version
+
+* Thu May 10 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt0.M60P.1
+- build for M60P
+
 * Thu May 10 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt1
 - add share/kde4/lib
 
