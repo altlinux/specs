@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Net-Server-Mail
-Version: 0.17
-Release: alt1.1
+Version: 0.18
+Release: alt1
 
 Summary: Class to easily create a mail server
 
@@ -27,7 +27,7 @@ Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
 #Source: http://cpan.org/modules/by-module/Net/%m_distro-%version.tar.gz
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GU/GUIMARD/Net-Server-Mail-%{version}.tar.gz
 
 
 # Automatically added by buildreq on Fri Sep 05 2008 (-bi)
@@ -52,6 +52,9 @@ to your programs.
 %doc Changes README
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
