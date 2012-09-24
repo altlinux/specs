@@ -49,7 +49,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo
 Version:        1.0
-Release:        alt8_3jpp6
+Release:        alt9_3jpp6
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -240,7 +240,14 @@ ln -s %{_javadir} external_repo/JPP
 %patch33
 sed -i -e 's,org\.apache\.commons\.vfs\.,org.apache.commons.vfs2.,g' `grep -rl org.apache.commons.vfs. .`
 sed -i -e 's,<assembly>,<assembly><id>ALT</id>,' core/uberjar/src/assemble/main.xml
-sed -i -e 's,<module>jetty-deployer</module>,<!-- module>jetty-deployer</module -->,' resources/pom.xml
+
+
+#sed -i -e 's,<module>jetty-deployer</module>,<!-- module>jetty-deployer</module -->,' resources/pom.xml
+%pom_disable_module jetty-deployer resources
+%pom_remove_dep "org.codehaus.cargo:cargo-core-container-jetty" core/uberjar
+%pom_remove_dep "org.codehaus.cargo:cargo-core-container-jetty" core/samples
+%pom_remove_dep "org.codehaus.cargo:cargo-core-container-jetty" core/documentation
+%pom_remove_dep "org.codehaus.cargo:cargo-core-container-jetty" extensions
 
 %build
 export LANG=en_US.ISO8859-1
@@ -562,6 +569,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt9_3jpp6
+- fixed uberjar pom depeandencies
+
 * Sun Sep 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt8_3jpp6
 - fixed build with new jetty
 
