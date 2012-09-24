@@ -1,7 +1,6 @@
-BuildRequires: maven2-plugin-resources maven2-plugin-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2010, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -31,192 +30,138 @@ BuildRequires: jpackage-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with bootstrap
-%bcond_with                bootstrap
-%define gcj_support        %{?_with_gcj_support:1}%{!?_with_gcj_support:%{?_without_gcj_support:0}%{!?_without_gcj_support:%{?_gcj_support:%{_gcj_support}}%{!?_gcj_support:0}}}
-
+Summary:        Fast Scanner Generator
 Name:           jflex
 Version:        1.4.3
-Release:        alt5_1jpp6
+Release:        alt5_10jpp7
 Epoch:          0
-Summary:        Lexical Analyzer Generator for Java
-License:        GPLv2+
+License:        GPL+
+URL:            http://jflex.de/
 Group:          Development/Java
-URL:            http://www.jflex.de/
-Source0:        jflex-1.4.3.tar.gz
-# svn export http://jflex.svn.sourceforge.net/svnroot/jflex/tags/release_1_4_3/ jflex-1.4.3
-# tar czf jflex-1.4.3.tar.gz jflex-1.4.3/
-Source1:        jflex.script
-Source2:        jflex-settings.xml
-Source3:        jflex-1.4.3.pom
-Patch0:         jflex-bootwith-1.4.2.patch
+Source0:        http://jflex.de/%{name}-%{version}.tar.gz
+Source1:        http://repo2.maven.org/maven2/de/jflex/jflex/1.4.3/jflex-1.4.3.pom
+Source2:        %{name}.desktop
+Source3:        %{name}.png
+Source4:        %{name}.1
 
-Requires: java-cup
-Requires: jpackage-utils
-BuildRequires: ant
-BuildRequires: java-cup
-%if %without bootstrap
-BuildRequires: jflex
-%endif
-BuildRequires: junit
+Patch0:         jflex-build_xml.patch
+Patch1:         jflex-junit-incompatibility.patch
 
-BuildRequires: maven2 >= 2.0.8
-BuildRequires: maven2-plugin-compiler
-BuildRequires: maven2-plugin-install
-BuildRequires: maven2-plugin-jar
-BuildRequires: maven-plugin-tools
-BuildRequires: apache-commons-parent
-%if %{gcj_support}
-BuildRequires: java-gcj-compat-devel
-%else
+BuildRequires:  jpackage-utils >= 0:1.5
+BuildRequires:  ant
+BuildRequires:  junit
+BuildRequires:  java_cup
+BuildRequires:  desktop-file-utils
+Requires:       java_cup
 BuildArch:      noarch
-%endif
 Source44: import.info
 
 %description
-JFlex is a lexical analyzer generator for Java written in Java. It is 
-also a rewrite of the very useful tool JLex which was developed by 
-Elliot Berk at Princeton University. As Vern Paxson states for his C/C++ 
-tool flex: they do not share any code though.
-
-Design goals The main design goals of JFlex are:
-
-    * Full unicode support
-    * Fast generated scanners
-    * Fast scanner generation
-    * Convenient specification syntax
-    * Platform independence
-    * JLex compatibility
-
-%package maven-plugin
-Group:          Development/Java
-Summary:        Maven2 plugin for %{name}
-Requires: %{name} = %{epoch}:%{version}-%{release}
-
-%description maven-plugin
-%{summary}.
+JFlex is a lexical analyzer generator (also known as scanner
+generator) for Java(tm), written in Java(tm). It is also a
+rewrite of the very useful tool JLex which was developed by
+Elliot Berk at Princeton University. As Vern Paxson states
+for his C/C++ tool flex: They do not share any code though.
+JFlex is designed to work together with the LALR parser
+generator CUP by Scott Hudson, and the Java modification of
+Berkeley Yacc BYacc/J by Bob Jamison. It can also be used
+together with other parser generators like ANTLR or as a
+standalone tool.
 
 %package javadoc
-Group:          Development/Java
 Summary:        Javadoc for %{name}
+Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+%{summary}.
 
 %prep
 %setup -q
-cp -p %{SOURCE2} settings.xml
+%patch0 -b .sav
+%patch1 -p1 -b .sav
 
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
+for j in $(find . -name "*.jar"); do mv $j $j.no; done
+find . -name "*.class" -exec rm {} \;
 
-%if %without bootstrap
-export CLASSPATH=$(build-classpath java-cup junit jflex)
-export OPT_JAR_LIST=:
-pushd jflex/src
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  realclean
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jflex
-popd
-# patch if bootstrapping with jflex-1.4.2
-# %patch0 -b .sav0
-%endif
+%{__sed} -i 's/\r//' COPYRIGHT
+%{__sed} -i 's|includes="JFlex/\*\*,java_cup/\*\*,skeleton|includes="JFlex/\*\*,skeleton|g' src/build.xml
 
 %build
-export LANG=en_US.ISO8859-1
-pushd jflex/src
-%if %without bootstrap
-export CLASSPATH=$(build-classpath java-cup junit jflex)
-%else
-export CLASSPATH=$(build-classpath java-cup junit)
-%endif
-export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar
-%{__mkdir_p} ../dist/docs/api
-%{javadoc} -d ../dist/docs/api `find . -type f -name "*.java"`
-popd
 
-export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
-mkdir -p  $MAVEN_REPO_LOCAL/JPP
-cp jflex/lib/JFlex.jar $MAVEN_REPO_LOCAL/JPP/jflex.jar
-mkdir -p $MAVEN_REPO_LOCAL/de/jflex/jflex/%{version}/
-cp jflex/lib/JFlex.jar $MAVEN_REPO_LOCAL/de/jflex/jflex/%{version}/jflex-%{version}.jar
+pushd src
+# intial build using the autogenerated sym.java LexParse.java and LexScan.java
+# these are created by the jflex ant task which needs to be built first
+CLASSPATH=%{_javadir}/junit.jar:%{_javadir}/java_cup.jar ant jar-bootstrap
+# now that the JFlex.jar has been build we can use jflex ant tasks
+# removing the generated files and rebuilding using the JFlex.jar
+CLASSPATH=%{_javadir}/junit.jar:%{_javadir}/java_cup.jar:../lib/JFlex.jar ant genclean libclean jar
 
-pushd maven-jflex-plugin
-
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-        -s ../settings.xml \
-	-Dmaven.repo.local=$MAVEN_REPO_LOCAL \
-	-Dmaven.test.skip=true \
-        install javadoc:javadoc
-
-#       -Dmaven2.jpp.depmap.file=%{SOURCE4} \
-#       -Dmaven.test.failure.ignore=true \
-
+javadoc -sourcepath . -d ../api JFlex
 popd
 
 %install
 
-# jar
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -a jflex/lib/JFlex.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%{__cp} -a maven-jflex-plugin/target/maven-jflex-plugin-%{version}.jar %{buildroot}%{_javadir}/maven-jflex-plugin-%{version}.jar
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} `echo $jar| sed  "s|-%{version}||g"`; done)
-
-# compatibility symlink
-(cd %{buildroot}%{_javadir} && %{__ln_s} jflex.jar JFlex.jar)
+# jars
+mkdir -p %{buildroot}%{_javadir}
+cp -p lib/JFlex.jar %{buildroot}%{_javadir}/%{name}.jar
+(cd %{buildroot}%{_javadir} && ln -sf %{name}.jar JFlex.jar)
 
 # poms
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
-install -m 644 %{SOURCE3} %{buildroot}%{_datadir}/maven2/poms/JPP-jflex.pom
-%add_to_maven_depmap de.jflex %{name} %{version} JPP %{name}
-install -m 644 maven-jflex-plugin/pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-maven-jflex-plugin.pom
-%add_to_maven_depmap de.jflex maven-jflex-plugin %{version} JPP maven-jflex-plugin
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 %{SOURCE1} %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -a jflex/dist/docs/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -pr api/* %{buildroot}%{_javadocdir}/%{name}
 
-%{__mkdir_p} %{buildroot}%{_bindir}
-%{__install} -p -m 0755 %{SOURCE1} %{buildroot}%{_bindir}/%{name}
+# docs
+mkdir -p %{buildroot}%{_docdir}/%{name}-%{version}
+cp -p doc/* %{buildroot}%{_docdir}/%{name}-%{version}
+cp -p COPYRIGHT %{buildroot}%{_docdir}/%{name}-%{version}
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
+# wrapper script for direct execution
+%jpackage_script JFlex.Main "" "" jflex:java_cup jflex true
+
+# manpage
+install -dm 755 %{buildroot}%{_mandir}/man1
+install -pm 644 %{SOURCE4} %{buildroot}%{_mandir}/man1
+
+# .desktop + icons
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications %{SOURCE2}
+install -Dpm 644 %{SOURCE3} %{buildroot}%{_datadir}/pixmaps/%{name}.png
+
+mkdir -p $RPM_BUILD_ROOT`dirname /etc/java/jflex.conf`
+touch $RPM_BUILD_ROOT/etc/java/jflex.conf
 
 %__subst 's,java_cup,java-cup,' $RPM_BUILD_ROOT/%_bindir/jflex
 
-%files
-%doc jflex/COPYRIGHT jflex/doc jflex/examples jflex/src/README jflex/src/changelog
-%attr(0755,root,root) %{_bindir}/%{name}
-%{_javadir}/%{name}.jar
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/JFlex.jar
-%{_datadir}/maven2/poms/*
-%{_mavendepmapfragdir}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/*
-%endif
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
-%files maven-plugin
-%{_javadir}/maven-%{name}-plugin-%{version}.jar
-%{_javadir}/maven-%{name}-plugin.jar
+%files
+%doc %{_docdir}/%{name}-%{version}
+%{_javadir}/%{name}.jar
+%{_javadir}/JFlex.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
+%{_bindir}/%{name}
+%{_mandir}/man1/%{name}.1.*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/%{name}.png
+%config(noreplace,missingok) /etc/java/jflex.conf
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
+%doc %{_javadocdir}/%{name}
+
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4.3-alt5_10jpp7
+- fc release
+
 * Fri Apr 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4.3-alt5_1jpp6
 - fixed build
 
