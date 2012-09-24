@@ -1,14 +1,14 @@
 %define dist Test-use-ok
 Name: perl-%dist
-Version: 0.02
-Release: alt2.3
+Version: 0.11
+Release: alt1
 
 Summary: Alternative to Test::More::use_ok
 License: MIT
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AU/AUDREYT/Test-use-ok-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ ok", and they will be executed at "BEGIN" time. The explicit space after
 %perl_vendor_privlib/ok.pm
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.02-alt2.3
 - disabled build dependency on perl-Module-Install
 
