@@ -1,6 +1,6 @@
 %define dist File-ChangeNotify
 Name: perl-%dist
-Version: 0.20
+Version: 0.22
 Release: alt1
 
 Summary: Watch for changes to files, cross-platform style
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/File-ChangeNotify-0.20.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/File-ChangeNotify-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ subclass that will work on your platform.
 %perl_vendor_privlib/File*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - automated CPAN update
 
