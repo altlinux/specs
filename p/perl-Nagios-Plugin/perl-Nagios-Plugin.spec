@@ -1,6 +1,6 @@
 %define dist Nagios-Plugin
 Name: perl-%dist
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: A family of perl modules to streamline writing Nagios plugins
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TONVOON/Nagios-Plugin-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ developers to create plugins that conform the Nagios Plugin guidelines
 %perl_vendor_privlib/Nagios
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Fri Apr 22 2011 Alexey Tourbin <at@altlinux.ru> 0.35-alt1
 - 0.34 -> 0.35
 
