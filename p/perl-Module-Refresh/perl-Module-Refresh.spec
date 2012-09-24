@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Module-Refresh
-Version: 0.16
+Version: 0.17
 Release: alt1
 
 Summary: Module-Refresh - Refresh INC files when updated on disk
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/J/JE/JESSE/Module-Refresh-%{version}.tar.gz
+Source: http://www.cpan.org/authors/id/A/AL/ALEXMV/Module-Refresh-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Sep 02 2005
 BuildRequires: perl-devel perl(Path/Class.pm)
@@ -51,6 +51,9 @@ It does not require mod_perl.
 %perl_vendor_privlib/Module/
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- automated CPAN update
+
 * Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - automated CPAN update
 
