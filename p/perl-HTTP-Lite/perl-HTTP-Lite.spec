@@ -3,7 +3,7 @@
 %define m_name		HTTP::Lite
 #%define m_author_id	TJMATHER
 Name: perl-%module
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 Summary: HTTP::Lite - Lightweight HTTP implementation
@@ -13,7 +13,7 @@ License:	Artistic
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Url: http://search.cpan.org/dist/%m_distro/
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/HTTP-Lite-2.3.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/HTTP-Lite-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -58,6 +58,9 @@ HTTP::Lite is a stand-alone lightweight HTTP/1.1
 %perl_vendor_privlib/HTTP/
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1
 - automated CPAN update
 
