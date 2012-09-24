@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           shale
 Version:        1.0.4
-Release:        alt8_1jpp5
+Release:        alt9_1jpp5
 Epoch:          0
 Summary:        Shale Framework
 License:        Apache Software License 2.0
@@ -599,6 +599,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt9_1jpp5
+- fixed build
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt8_1jpp5
 - build with java6
 
