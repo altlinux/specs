@@ -1,30 +1,39 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/adonthell python-devel
+BuildRequires: /usr/bin/adonthell-0.3 python-devel
 # END SourceDeps(oneline)
+Group: Games/Other
 Name:           wastesedge
-Version:        0.3.4
-Release:        alt2_0.18
+Version:        0.3.5
+Release:        alt1_1
 Summary:        Official game package for Adonthell
 
-Group:          Games/Other
 License:        GPL+
 URL:            http://adonthell.linuxgames.com/
+
 ## Due to legal issues (RHBZ#477481), upstream sources need to be modified
 # Here is how are obtained the sources used in this package:
-# $ wget http://savannah.nongnu.org/download/adonthell/%{name}-src-%{version}.tar.gz
-# $ tar xzvf %{name}-src-%{version}.tar.gz
-# $ rm %{name}-%{version}/gfx/window/font/avatar.ttf
-# $ sed -i 's|avatar.ttf||g' %{name}-%{version}/gfx/window/font/Makefile.in
-# $ tar czvf %{name}-src-%{version}-modified.tar.gz %{name}-%{version}/
+# $ VERSION=0.3.5
+# $ wget http://savannah.nongnu.org/download/adonthell/wastesedge-src-$VERSION.tar.gz
+# $ tar xzvf wastesedge-src-$VERSION.tar.gz
+# $ rm wastesedge-$VERSION/gfx/window/font/avatar.ttf
+# $ sed -i 's|avatar.ttf||g' wastesedge-$VERSION/gfx/window/font/Makefile.in
+# $ tar czvf wastesedge-src-$VERSION-modified.tar.gz wastesedge-$VERSION/
 Source0:        %{name}-src-%{version}-modified.tar.gz
-Source1:        %{name}.desktop
-Patch0:         %{name}-more.patch
+
+# This release is 4 years old and upstream moved on since then to work on
+# adonthell/wastesedge 0.4 (and I'll update to it once it's ready). So they
+# aren't really interested in this old version any more, and I won't bother
+# them with something as trivial, unless I have another more important patch
+# to submit at the same time.
+Patch0:         wastesedge-0.3.5-Fix-upstream-desktop-file.patch
+
 BuildArch:      noarch
 
 BuildRequires:  adonthell >= %{version}
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
-Requires:       adonthell >= %{version}-%{release}
+
+Requires:       adonthell >= %{version}
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -39,12 +48,14 @@ mistress' high reputation. And you are the only one to avert this ...
 
 %prep
 %setup -q
+
 # fix wrong file permissions (fixed upstream for future release)
 chmod a-x AUTHORS COPYING INSTALL README
+
 # install locale files in the right place
 sed -i 's|datadir = @gamedatadir@|datadir = ${prefix}/share|' po/Makefile.in.in
-# patch configure to not use "more" any more
-%patch0 -p0
+
+%patch0 -p1
 
 
 %build
@@ -53,52 +64,19 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
+make install DESTDIR=%{buildroot} INSTALL="install -p"
 
 # install images in the correct folders
-mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/{16x16,32x32}/apps
-mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}_16x16.xpm $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps/%{name}.xpm
-mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}_32x32.xpm $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/%{name}.xpm
+mkdir -p %{buildroot}%{_datadir}/icons/hicolor/{16x16,32x32}/apps
+mv %{buildroot}%{_datadir}/pixmaps/%{name}_16x16.xpm %{buildroot}%{_datadir}/icons/hicolor/16x16/apps/%{name}.xpm
+mv %{buildroot}%{_datadir}/pixmaps/%{name}_32x32.xpm %{buildroot}%{_datadir}/icons/hicolor/32x32/apps/%{name}.xpm
 
-# install desktop file not provided upstream
-desktop-file-install --vendor=""                      \
-        --dir=$RPM_BUILD_ROOT%{_datadir}/applications \
-        %{SOURCE1}
+# install desktop file
+desktop-file-install                               \
+        --dir=%{buildroot}%{_datadir}/applications \
+        %{name}.desktop
+
 %find_lang %{name}
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files -f %{name}.lang
@@ -111,6 +89,9 @@ fi
 
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.5-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.4-alt2_0.18
 - update to new release by fcimport
 
