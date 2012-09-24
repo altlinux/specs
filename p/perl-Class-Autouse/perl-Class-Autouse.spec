@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Class-Autouse
-Version: 2.00
+Version: 2.01
 Release: alt1
 
 Summary: Class-Autouse - Run-time class loading on first method call
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/Class-Autouse-2.00.tar.gz
+Source: http://www.cpan.org/authors/id/A/AD/ADAMK/Class-Autouse-%{version}.tar.gz
 #Source: http://www.cpan.org/modules/by-module/Class/%m_distro-%version.tar.bz2
 
 Patch: %name.patch
@@ -52,6 +52,9 @@ Run-time load a class the first time you call a method in it.
 %perl_vendor_privlib/Class/
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 2.00-alt1
 - automated CPAN update
 
