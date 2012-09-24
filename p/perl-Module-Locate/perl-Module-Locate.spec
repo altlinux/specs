@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Module-Locate
-Version: 1.7
-Release: alt1.1.1
+Version: 1.71
+Release: alt1
 
 Summary: locate modules in the same fashion as "require" and "use"
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Module-Locate/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/B/BR/BROQ/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Module-Locate-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 09 2008
 BuildRequires: perl-devel
@@ -54,6 +54,9 @@ the module itself (except for "get_source") and are available for import.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.71-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.7-alt1.1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
