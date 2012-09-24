@@ -8,7 +8,7 @@
 
 Name:    fonts-ttf-apanov-edrip
 Version: 20100430
-Release: alt2_4
+Release: alt2_5
 Summary: A decorative contrast sans-serif font
 
 Group:     System/Fonts/True type
@@ -94,6 +94,9 @@ fi
 %doc *.txt README
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_5
+- new fc release
+
 * Thu Jun 07 2012 Igor Vlasenko <viy@altlinux.ru> 20100430-alt2_4
 - update to new release by fcimport
 
