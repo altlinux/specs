@@ -1,6 +1,6 @@
 %define dist Getopt-Long-Descriptive
 Name: perl-%dist
-Version: 0.091
+Version: 0.092
 Release: alt1
 
 Summary: Getopt::Long, but simpler and more powerful
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Getopt-Long-Descriptive-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ think about its huge array of options.
 %perl_vendor_privlib/Getopt
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.092-alt1
+- automated CPAN update
+
 * Mon Apr 16 2012 Vladimir Lettiev <crux@altlinux.ru> 0.091-alt1
 - 0.090 -> 0.091
 
