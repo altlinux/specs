@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-Catalyst-View-TT
-Version: 0.37
+Version: 0.39
 Release: alt1
 
 Summary: %m_name - Template View Class
@@ -23,7 +23,7 @@ Url: http://search.cpan.org/dist/Catalyst-View-TT/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MS/MSTROUT/Catalyst-View-TT-0.37.tar.gz
+Source: http://www.cpan.org/authors/id/B/BO/BOBTFISH/Catalyst-View-TT-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 20 2010 (-bi)
 BuildRequires: perl-Catalyst-Devel perl-Template-Provider-Encoding perl-Template-Timer perl-Test-Pod perl-Test-Pod-Coverage
@@ -47,6 +47,9 @@ this module.
 %doc Changes README
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.39-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.37-alt1
 - automated CPAN update
 
