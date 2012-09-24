@@ -1,6 +1,6 @@
 %define dist Module-CoreList
 Name: perl-%dist
-Version: 2.72
+Version: 2.73
 Release: alt1
 
 Summary: What modules shipped with versions of perl
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-CoreList-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ shipped with each version of perl.
 %perl_vendor_privlib/Module
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.73-alt1
+- automated CPAN update
+
 * Mon Sep 10 2012 Vladimir Lettiev <crux@altlinux.ru> 2.72-alt1
 - 2.57 -> 2.72
 
