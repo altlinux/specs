@@ -1,5 +1,5 @@
 Name: autorepo-altnode-config
-Version: 0.04
+Version: 0.05
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -73,6 +73,9 @@ service nginx restart ||:
 %_sysconfdir/nginx/sites-enabled.d/autorepo.conf
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- support for p6 and 5.1
+
 * Wed Jun 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - added initial xinetd configuration
 
