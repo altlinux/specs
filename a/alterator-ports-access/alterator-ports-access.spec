@@ -2,7 +2,7 @@
 
 Name: alterator-ports-access
 Version: 0.0.3
-Release: alt5
+Release: alt6
 Packager: Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
 Source:%name-%version.tar
@@ -39,6 +39,9 @@ Alterator module to control serial/USB ports access
 /lib/udev/alterator-ports-access
 
 %changelog
+* Mon Sep 24 2012 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt6
+- Fix serial available ports list 2
+
 * Mon Sep 24 2012 Andriy Stepanov <stanv@altlinux.ru> 0.0.3-alt5
 - Fix serial available ports list
 
