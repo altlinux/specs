@@ -49,7 +49,7 @@ BuildRequires: jpackage-compat
 %define build_helper_namedversion 1.5
 %define build_helper_include 0
 %define buildnumber_namedversion 1.0-beta-2-SNAPSHOT
-%define buildnumber_include 1
+%define buildnumber_include 0
 %define castor_namedversion 2.0-SNAPSHOT
 %define castor_include 0
 %define clirr_namedversion 2.3-SNAPSHOT
@@ -57,7 +57,7 @@ BuildRequires: jpackage-compat
 %define cobertura_namedversion 2.3-SNAPSHOT
 %define cobertura_include 0
 %define commons_attributes_namedversion 1.1-SNAPSHOT
-%define commons_attributes_include 1
+%define commons_attributes_include 0
 %define dbunit_namedversion 1.0-beta-2-SNAPSHOT
 %define dbunit_include 0
 %define docbook_namedversion 1.0.0-alpha-2-SNAPSHOT
@@ -75,13 +75,13 @@ BuildRequires: jpackage-compat
 %define hibernate3_namedversion 2.2-SNAPSHOT
 %define hibernate3_include 0
 %define idlj_namedversion 1.1-SNAPSHOT
-%define idlj_include 1
+%define idlj_include 0
 %define jalopy_namedversion 1.0-alpha-2-SNAPSHOT
 %define jalopy_include 0
 %define jasperreports_namedversion 1.0-beta-2-SNAPSHOT
 %define jasperreports_include 0
 %define javacc_namedversion 2.5-SNAPSHOT
-%define javacc_include 1
+%define javacc_include 0
 %define javancss_namedversion 2.0-beta-3-SNAPSHOT
 %define javancss_include 0
 %define jaxb2_namedversion 1.3-SNAPSHOT
@@ -89,7 +89,7 @@ BuildRequires: jpackage-compat
 %define jboss_namedversion 1.3.2-SNAPSHOT
 %define jboss_include 0
 %define jboss_packaging_namedversion 2.0-SNAPSHOT
-%define jboss_packaging_include 1
+%define jboss_packaging_include 0
 %define jdepend_namedversion 2.0-SNAPSHOT
 %define jdepend_include 1
 %define jdiff_namedversion 0.1-SNAPSHOT
@@ -99,7 +99,7 @@ BuildRequires: jpackage-compat
 %define jruby_namedversion 1.0-beta-5-SNAPSHOT
 %define jruby_include 0
 %define jruby_stdlib_namedversion 1.8.5
-%define jruby_stdlib_include 1
+%define jruby_stdlib_include 0
 %define jspc_namedversion 2.0-alpha-3
 %define jspc_include 0
 %define keytool_namedversion 1.1-beta-1-SNAPSHOT
@@ -271,7 +271,7 @@ BuildRequires: jpackage-compat
 %define sysdeo_tomcat_namedversion 1.1-SNAPSHOT
 %define sysdeo_tomcat_include 0
 %define taglist_namedversion 2.3-SNAPSHOT
-%define taglist_include 1
+%define taglist_include 0
 %define tomcat_namedversion 1.0-alpha-2-SNAPSHOT
 %define tomcat_include 0
 %define pack200_anttasks_namedversion 1.2-SNAPSHOT
@@ -352,7 +352,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-maven2-plugins
 Version:        17
-Release:        alt29_8jpp6
+Release:        alt30_8jpp6
 Epoch:          0
 Summary:        Maven2 plugin set from mojo.codehaus.org
 License:        ASL, MIT, GPL, LGPL
@@ -3010,6 +3010,13 @@ sed -i 's,<module>xfire-maven-plugin</module>,<!-- tmp nocompile<module>xfire-ma
 
 # maven3
 sed -i 's,<module>jspc</module>,<!-- tmp nocompile<module>jspc</module>-->,' pom.xml
+sed -i 's,<module>jruby-stdlib</module>,<!-- tmp nocompile<module>jruby-stdlib</module>-->,' pom.xml
+sed -i 's,<module>jboss-packaging-maven-plugin</module>,<!-- tmp nocompile<module>jboss-packaging-maven-plugin</module>-->,'  pom.xml
+sed -i 's,<module>commons-attributes-maven-plugin</module>,<!-- tmp nocompile<module>commons-attributes-maven-plugin</module>-->,'  pom.xml
+sed -i 's,<module>javacc-maven-plugin</module>,<!-- tmp nocompile<module>javacc-maven-plugin</module>-->,'  pom.xml
+sed -i 's,<module>idlj-maven-plugin</module>,<!-- tmp nocompile<module>idlj-maven-plugin</module>-->,' pom.xml
+sed -i 's,<module>buildnumber-maven-plugin</module>,<!-- tmp nocompile<module>buildnumber-maven-plugin</module>-->,' pom.xml
+#sed -i 's,<module>taglist-maven-plugin</module>,<!-- tmp nocompile<module>taglist-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>docbook-maven-plugin</module>,<!-- tmp nocompile<module>docbook-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>rat-maven-plugin</module>,<!-- tmp nocompile<module>rat-maven-plugin</module>-->,' pom.xml
 sed -i 's,<module>findbugs-maven-plugin</module>,<!-- tmp nocompile<module>findbugs-maven-plugin</module>-->,' pom.xml
@@ -6150,6 +6157,9 @@ EOF
 %{_javadocdir}/*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt30_8jpp6
+- moved out taglist, commons-attributes, idlj, javacc
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:17-alt29_8jpp6
 - build without gmaven and findbugs plugin
 
