@@ -1,6 +1,6 @@
 %define dist Module-Load-Conditional
 Name: perl-%dist
-Version: 0.46
+Version: 0.50
 Release: alt1
 
 Summary: Looking up module information / loading at runtime
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Load-Conditional-0.46.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Load-Conditional-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ rm t/01_Module_Load_Conditional.t
 %perl_vendor_privlib/Module
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.46-alt1
 - automated CPAN update
 
