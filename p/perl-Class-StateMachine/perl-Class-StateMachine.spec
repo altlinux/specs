@@ -1,6 +1,6 @@
 %define dist Class-StateMachine
 Name: perl-%dist
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: Define classes for state machines
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SA/SALVA/Class-StateMachine-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,6 +32,9 @@ that are dispatched depending on an internal "state" property.
 %perl_vendor_privlib/Class
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Thu Oct 27 2011 Alexey Tourbin <at@altlinux.ru> 0.18-alt1
 - 0.12 -> 0.18
 
