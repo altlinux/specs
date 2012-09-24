@@ -1,3 +1,4 @@
+Requires: gmaven-runtime-1.5
 Name: gmaven
 Version: 1.3
 Summary: Groovy Maven Integration
@@ -26,7 +27,7 @@ Requires: slf4j
 
 BuildArch: noarch
 Group: Development/Java
-Release: alt4jpp
+Release: alt5jpp
 Source: gmaven-1.3-alt1_3jpp6.cpio
 
 %description
@@ -58,6 +59,9 @@ done
 %files -f %name-list
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt5jpp
+- added gmaven-runtime-1.5 dep
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3-alt4jpp
 - bootstrap jar pack to restore broken gmaven jars
 
