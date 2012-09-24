@@ -11,8 +11,8 @@
 %def_enable test
 
 Name: perl-Data-FormValidator
-Version: 4.66
-Release: alt1.1
+Version: 4.70
+Release: alt1
 
 Summary: %m_name - Validates user input (usually from an HTML form) based on input profile
 
@@ -23,7 +23,7 @@ Url: http://search.cpan.org/dist/Data-FormValidator/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MARKSTOS/Data-FormValidator-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 21 2010 (-bi)
 BuildRequires: perl-CGI-Simple perl-Date-Calc perl-Email-Valid perl-File-MMagic perl-Image-Size perl-MIME-Types perl-Module-Build perl-Perl6-Junction perl-PerlIO perl-Regexp-Common perl-Template perl-Test-Pod
@@ -45,6 +45,9 @@ expressible in a simple format.
 %perl_vendor_privlib/Data*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 4.70-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 4.66-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
