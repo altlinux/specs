@@ -43,7 +43,7 @@ Japanese text arts correctly.
 
 Name:		fonts-bitmap-mona
 Version:	2.90
-Release:	alt1_15
+Release:	alt1_16
 Summary:	Japanese font for text arts
 
 # monafont itself is under public domain
@@ -231,6 +231,9 @@ fi
 %endif
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.90-alt1_16
+- new fc release
+
 * Wed Jun 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.90-alt1_15
 - fc import
 
