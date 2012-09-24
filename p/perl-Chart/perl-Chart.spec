@@ -1,6 +1,6 @@
 %define dist Chart
 Name: perl-%dist
-Version: 2.4.2
+Version: 2.4.5
 Release: alt1
 
 Summary: A series of charting modules
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CH/CHARTGRP/Chart-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ all of its graphics primitives calls.
 %doc %perl_vendor_privlib/Chart.pod
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.5-alt1
+- automated CPAN update
+
 * Mon Apr 25 2011 Alexey Tourbin <at@altlinux.ru> 2.4.2-alt1
 - 2.4.1 -> 2.4.2
 
