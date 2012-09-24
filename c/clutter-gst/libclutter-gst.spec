@@ -1,8 +1,9 @@
 %define api_ver 1.0
 %def_enable introspection
+%def_disable hw
 
 Name: clutter-gst
-Version: 1.5.6
+Version: 1.6.1
 Release: alt1
 
 Summary: Library integrating clutter with GStreamer
@@ -11,11 +12,12 @@ Group: System/Libraries
 Url: http://www.clutter-project.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar.xz
+Source: %name-%version.tar
+Patch: clutter-gst-1.6.1-alt-disable-deprecations.patch
 
 BuildRequires: gst-plugins-devel gtk-doc libclutter-devel libgtk+2-devel
 # for gstreamer-basevideo
-BuildRequires: gst-plugins-bad-devel
+%{?_enable_hw:BuildRequires: gst-plugins-bad-devel}
 %{?_enable_introspection:BuildRequires: libclutter-gir-devel gst-plugins-gir-devel}
 
 %description
@@ -55,13 +57,15 @@ Requires: lib%name-devel = %version-%release
 GObject introspection devel data for the Clutter-Gst library.
 
 %prep
-%setup -q
+%setup
+%patch -p1
 
 %build
-#%%autoreconf
+%autoreconf
 %configure \
 	--enable-gtk-doc \
 	--disable-static
+
 %make_build
 
 %install
@@ -88,6 +92,10 @@ GObject introspection devel data for the Clutter-Gst library.
 
 
 %changelog
+* Fri Sep 14 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1 snapshot
+- disabled experimental support for hardware accelerated decoders
+
 * Fri May 25 2012 Yuri N. Sedunov <aris@altlinux.org> 1.5.6-alt1
 - 1.5.6
 

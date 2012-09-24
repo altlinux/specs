@@ -1,5 +1,5 @@
 %define _name control-center
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 2.0
 
 %def_disable debug
@@ -7,10 +7,11 @@
 %def_with libsocialweb
 %def_with cheese
 %def_enable systemd
+%def_enable ibus
 
 Name: gnome-control-center
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt2
 
 Summary: GNOME Control Center
 License: GPLv2+
@@ -19,27 +20,28 @@ Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 # git archive --format=tar --prefix=gnome-control-center-3.2.2/ --output=gnome-control-center-3.2.2.tar HEAD
-#Source: %name-%version.tar
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 # From configure.ac
-%define gtk_ver 3.3.5
-%define glib_ver 2.29.14
-%define desktop_ver 3.3.90
+%define gtk_ver 3.5.13
+%define glib_ver 2.31.0
+%define desktop_ver 3.5.91
+#%define clutter_ver 1.11.3
 %define fontconfig_ver 1.0.0
 %define xft_ver 2.1.2
-%define gnome_menu_ver 3.3.5
 %define libmetacity_ver 2.30.0
-%define libgnomekbd_ver 3.3.90
-%define libxklavier_ver 5.2.1
-%define gsds_ver 3.3.90
+%define gsds_ver 3.6.0
 %define notify_ver 0.7.3
 %define nm_ver 0.9.1.90
-%define goa_ver 3.2.0
-%define sett_daemon_ver 3.3.92
-%define cheese_ver 3.2.0
-%define bt_ver 3.3.4
+%define gnome_menus_ver 3.5.5
+%define goa_ver 3.5.90
+%define sett_daemon_ver 3.6.0
+%define cheese_ver 3.5.92
+%define bt_ver 3.5.92
 %define systemd_ver 40
+%define wacom_ver 0.6
+%define ibus_ver 1.4.99
 
 Requires: %name-data = %version-%release
 
@@ -54,33 +56,34 @@ Requires: gnome-online-accounts >= %goa_ver
 BuildPreReq: rpm-build-gnome >= 0.9
 
 # From configure.in
-BuildPreReq: intltool >= 0.37.1 gnome-common desktop-file-utils gnome-doc-utils gtk-doc
+BuildPreReq: intltool >= 0.50 gnome-common desktop-file-utils gnome-doc-utils gtk-doc xsltproc
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libXft-devel >= %xft_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: glib2-devel >= %glib_ver
-BuildPreReq: libgnome-menus-devel >= %gnome_menu_ver
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
-BuildPreReq: libgnomekbd-devel >= %libgnomekbd_ver
-BuildPreReq: libxklavier-devel >= %libxklavier_ver
 BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: gnome-settings-daemon-devel >= %sett_daemon_ver
+BuildPreReq: libgnome-menus-devel >= %gnome_menus_ver
 %{?_with_cheese:BuildPreReq: libcheese-devel >= %cheese_ver}
+BuildRequires: libxkbfile-devel
+%{?_enable_ibus:BuildPreReq: libibus-devel >= %ibus_ver}
 BuildRequires: libGConf-devel libdbus-glib-devel libupower-devel libpolkit1-devel
 BuildRequires: libgio-devel librsvg-devel libxml2-devel libcanberra-gtk3-devel
 BuildRequires: libX11-devel libXext-devel libSM-devel libXScrnSaver-devel libXt-devel
 BuildRequires: libXft-devel libXi-devel libXrandr-devel libXrender-devel libXcursor-devel libXcomposite-devel
 BuildRequires: libgtop-devel libcups-devel libpulseaudio-devel iso-codes-devel
+BuildRequires: libpwquality-devel libkrb5-devel
 # for test-endianess
 BuildRequires: glibc-i18ndata
 BuildRequires: libnm-gtk-devel >= %nm_ver
 BuildRequires: libgnome-online-accounts-devel >= %goa_ver colord-devel
 BuildRequires: libgnome-bluetooth-devel >= %bt_ver
-BuildRequires: libwacom-devel
-BuildRequires: libclutter-gst-devel
+BuildRequires: libwacom-devel >= %wacom_ver
+BuildRequires: libclutter-gtk3-devel
 %{?_with_libsocialweb:BuildRequires: libsocialweb-devel}
-%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver}
+%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
 
 %description
 GNOME (the GNU Network Object Model Environment) is an attractive and
@@ -124,7 +127,8 @@ you'll want to install this package.
 	--disable-update-mimedb \
 	%{subst_with libsocialweb} \
 	%{subst_with cheese} \
-	%{subst_enable systemd}
+	%{subst_enable systemd} \
+	%{subst_enable ibus}
 
 %make_build
 
@@ -178,12 +182,25 @@ you'll want to install this package.
 %_iconsdir/hicolor/*/*/*
 %_datadir/sounds/gnome/default/alerts/*.ogg
 %_datadir/polkit-1/actions/org.gnome.controlcenter.datetime.policy
+%_datadir/polkit-1/actions/org.gnome.controlcenter.user-accounts.policy
+%_datadir/polkit-1/rules.d/gnome-control-center.rules
+%_man1dir/%name.1.*
 %doc AUTHORS NEWS README
 
 %files devel
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
+- updated to c35850649
+- built with ibus
+
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
+* Tue May 29 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt2
+- updated from upstream git (89498b5)
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

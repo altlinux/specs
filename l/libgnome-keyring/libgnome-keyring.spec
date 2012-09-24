@@ -1,11 +1,11 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
 %def_enable introspection
 
 Name: libgnome-keyring
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Compatibility library for accessing secrets
@@ -27,6 +27,7 @@ BuildPreReq: glib2-devel >= %glib_ver libgio-devel
 BuildPreReq: libdbus-devel >= %dbus_ver
 BuildPreReq: libgcrypt-devel >= %gcrypt_ver
 BuildRequires: gtk-doc
+BuildRequires: libvala-devel vala-tools rpm-build-vala
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 
 # for check
@@ -55,7 +56,7 @@ against %name.
 
 %package devel-doc
 Summary: Development documentation for %name
-Group: Development/C
+Group: Development/Documentation
 Conflicts: %name < %version
 BuildArch: noarch
 
@@ -113,6 +114,7 @@ install -p -m644 %SOURCE1 library/%name-altlinux.ver
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/*
+%_vapidir/gnome-keyring-1.vapi
 
 %if_enabled static
 %files devel-static
@@ -131,6 +133,9 @@ install -p -m644 %SOURCE1 library/%name-altlinux.ver
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Apr 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

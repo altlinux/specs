@@ -1,13 +1,14 @@
 # Ahtung!
 #%%set_verify_elf_method unresolved=relaxed
 
-%define ver_major 3.4
+%define ver_major 3.6
 %define _libexecdir %_prefix/libexec
+%def_enable kerberos
 %def_enable gtk_doc
 %define api_ver 1.0
 
 Name: gnome-online-accounts
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Provide online accounts information
@@ -16,11 +17,11 @@ License: LGPLv2+
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.2.0-alt-link.patch
 
 Requires: lib%name = %version-%release
 
 %define glib_ver 2.29.5
+%define gtk_ver 3.5.1
 %define oauth_ver 0.9.5
 %define rest_ver 0.7.12
 
@@ -28,8 +29,9 @@ BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: liboauth-devel >= %oauth_ver
 BuildPreReq: librest-devel >= %rest_ver
 BuildRequires: gnome-common intltool gtk-doc
-BuildRequires: libgtk+3-devel libwebkitgtk3-devel libjson-glib-devel
-BuildRequires: libgnome-keyring-devel libnotify-devel libsoup-gnome-devel
+BuildRequires: libgtk+3-devel >= %gtk_ver libwebkitgtk3-devel libjson-glib-devel
+BuildRequires: libgnome-keyring-devel libnotify-devel libsoup-gnome-devel libsecret-devel
+BuildRequires: libkrb5-devel gcr-libs-devel
 BuildRequires: gobject-introspection-devel
 
 %description
@@ -81,12 +83,12 @@ This package contains development documentation for the %name libraries.
 
 %prep
 %setup -q
-%patch
 
 %build
 %autoreconf
 %configure --disable-static \
 	--enable-facebook \
+	%{subst_enable kerberos} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -124,6 +126,9 @@ This package contains development documentation for the %name libraries.
 %_datadir/gtk-doc/html/goa/
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon May 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

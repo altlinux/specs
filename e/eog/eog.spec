@@ -1,11 +1,11 @@
 %define oldname eog2
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 %def_enable color_management
 %def_enable introspection
 
 Name: eog
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Eye Of Gnome
@@ -31,7 +31,7 @@ BuildPreReq: rpm >= %rpm_ver
 # From configure.in
 BuildPreReq: gnome-common
 BuildPreReq: intltool >= 0.40.0
-BuildPreReq: gnome-doc-utils >= 0.3.2
+BuildPreReq: yelp-tools itstool
 BuildPreReq: libgtk+3-devel >= 3.3.6
 BuildPreReq: gtk-doc
 BuildPreReq: libgio-devel >= 2.31.0
@@ -43,7 +43,7 @@ BuildPreReq: libexif-devel >= 0.6.14
 %{?_enable_color_management:BuildPreReq: liblcms2-devel}
 BuildPreReq: libjpeg-devel librsvg-devel
 BuildPreReq: libpeas-devel >= 0.7.4
-BuildRequires: libXt-devel libxml2-devel perl-XML-Parser scrollkeeper zlib-devel gsettings-desktop-schemas-devel
+BuildRequires: libXt-devel libxml2-devel perl-XML-Parser zlib-devel gsettings-desktop-schemas-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.10.2 libgtk+3-gir-devel}
 
 %description
@@ -98,8 +98,8 @@ GObject introspection devel data for the Eye of GNOME
     %{?_enable_color_management:--with-cms} \
     --with-xmp \
     --with-libjpeg \
-    --disable-schemas-compile \
-    --disable-scrollkeeper
+    --disable-schemas-compile
+
 
 %make_build
 
@@ -142,6 +142,9 @@ GObject introspection devel data for the Eye of GNOME
 %exclude %_libdir/%name/plugins/*.la
 
 %changelog
+* Thu Sep 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
 - 3.4.3
 

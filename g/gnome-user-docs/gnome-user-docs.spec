@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: gnome-user-docs
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: General GNOME User Documentation
@@ -19,8 +19,10 @@ Provides: gnome-users-guide
 Obsoletes: gnome2-user-docs
 Provides: gnome2-user-docs
 
-BuildPreReq: rpm-build-gnome rpm-build-licenses
-BuildRequires: intltool yelp-tools itstool xml-utils xsltproc xmllint
+%define yelp_ver 3.5.90
+
+BuildRequires: rpm-build-gnome rpm-build-licenses
+BuildRequires: intltool yelp-tools >= %yelp_ver itstool xml-utils xsltproc xmllint
 
 %description
 This package contains general GNOME user documentation which is not
@@ -36,12 +38,15 @@ directly associated with any particular GNOME application or package.
 %install
 %make_install DESTDIR=%buildroot install
 
-%find_lang --with-gnome --output=%name.lang gnome-help
+%find_lang --with-gnome --output=%name.lang gnome-help system-admin-guide
 
 %files -f %name.lang
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu May 31 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

@@ -1,9 +1,15 @@
-%define ver_major 3.4
+%define ver_major 3.6
+%define api_ver 1.0
 
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
 %define authentication_scheme pam
+#%%define default_pam_config altlinux
+%define default_pam_config redhat
+# Initial virtual terminal to use
+%define vt_nr 7
+
 %def_disable static
 %def_disable debug
 %def_enable ipv6
@@ -14,11 +20,12 @@
 %def_with consolekit
 %def_with systemd
 %def_with libaudit
+%def_with plymouth
 %def_without xevie
 %def_disable split_authentication
 
 Name: gdm
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -31,20 +38,25 @@ Source: %name-%version.tar.xz
 Source1: gdm_xdmcp.control
 Source2: gdm.wms-method
 
-Patch0: gdm-snapshot.patch
+# PAM config files
+Source10: gdm.pam
+Source11: gdm-autologin.pam
+Source12: gdm-password.pam
+Source13: gdm-launch-environment.pam
+#Source11: gdm-smartcard.pam
+#Source12: gdm-fingerprint.pam
+
 Patch2: gdm-3.2.1.1-alt-Xsession.patch
-Patch3: gdm-3.1.92-alt-pam.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch9: gdm-3.2.2-alt-link.patch
 Patch10: gdm-3.2.1.1-alt-invalid_user_shell.patch
 
 # from configure.ac
 %define dbus_glib_ver 0.74
-%define glib_ver 2.29.3
+%define glib_ver 2.33.2
 %define gtk_ver 2.91.1
 %define pango_ver 1.3.0
 %define scrollkeeper_ver 0.1.4
-%define libxklavier_ver 4.0
 %define libcanberra_ver 0.4
 %define fontconfig_ver 2.5.0
 %define upower_ver 0.9.0
@@ -58,24 +70,23 @@ Requires: %name-libs = %version-%release
 %{?_with_consolekit:Requires: ConsoleKit-x11}
 Requires: coreutils consolehelper zenity xinitrc iso-codes lsb-release
 
-BuildPreReq: desktop-file-utils gnome-common gnome-doc-utils rpm-build-gnome
-BuildPreReq: intltool >= 0.40.0
+BuildPreReq: desktop-file-utils gnome-common rpm-build-gnome
+BuildPreReq: intltool >= 0.40.0 yelp-tools itstool
 BuildPreReq: libdbus-glib-devel >= %dbus_glib_ver
 BuildPreReq: iso-codes-devel
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libpango-devel >= %pango_ver
-BuildPreReq: librarian
 BuildPreReq: libupower-devel >= %upower_ver
 BuildPreReq: libaccountsservice-devel >= %accountsservice_ver
 %{?_with_consolekit:BuildPreReq: libConsoleKit-devel}
-%{?_with_systemd:BuildRequires: systemd-devel}
+%{?_with_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
 %{?_with_selinux:BuildPreReq: libselinux-devel libattr-devel}
 %{?_with_libaudit:BuildPreReq: libaudit-devel}
+%{?_with_plymouth:BuildPreReq: plymouth-devel}
 BuildPreReq: libpam-devel
 %{?_with_tcp_wrappers:BuildPreReq: libwrap-devel}
 BuildPreReq: libgnome-panel-devel >= 2.0.0
-BuildPreReq: libxklavier-devel >= %libxklavier_ver
 BuildPreReq: libcanberra-devel >= %libcanberra_ver libcanberra-gtk3-devel
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: libX11-devel libXau-devel libXrandr-devel libXext-devel libXdmcp-devel libXft-devel libSM-devel
@@ -84,8 +95,8 @@ BuildPreReq: xorg-xephyr xorg-server
 BuildPreReq: libcheck-devel >= 0.9.4
 BuildPreReq: libnss-devel >= 3.11.1
 
-BuildRequires: docbook-dtds gcc-c++ gnome-doc-utils-xslt libdmx-devel
-BuildRequires: libpopt-devel librsvg-devel perl-XML-Parser xsltproc zenity
+BuildRequires:  gcc-c++ libdmx-devel
+BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
 BuildRequires: gobject-introspection-devel
 #BuildRequires: libhal-devel
 
@@ -179,8 +190,8 @@ BuildArch: noarch
 Requires: %name = %version-%release
 Provides: gnome-dm
 Conflicts: %name < 2.28.0-alt1
-Requires: gnome-session >= 3.2.1
-Requires: polkit-gnome gnome-settings-daemon >= 3.2.1
+Requires: gnome-session >= 3.5.1
+Requires: polkit-gnome >= 0.105 gnome-settings-daemon >= 3.5.1
 
 %description gnome
 Gdm (the GNOME Display Manager) is a highly configurable
@@ -192,20 +203,19 @@ Install this package for use with GNOME desktop.
 
 %prep
 %setup -q
-%patch0 -p1
 %patch2 -p1
-%patch3 -p1 -b .altpam
 %patch7 -p1
 %patch9 -p1 -b .link
 %patch10 -p1 -b .shells
 
+# just copy our PAM config files to %default_pam_config directory
+cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
+
 %build
-mkdir -p m4
-gnome-doc-prepare -f
+[ ! -d m4 ] && mkdir m4
 %autoreconf
 %configure \
 	%{subst_enable static} \
-	--disable-scrollkeeper \
 	--disable-schemas-compile \
 	--enable-console-helper \
 	--enable-authentication-scheme=%authentication_scheme \
@@ -215,15 +225,18 @@ gnome-doc-prepare -f
 	%{subst_with xinerama} \
 	%{subst_with xdmcp} \
 	%{?_with_tcp_wrappers:--with-tcp-wrappers} \
-	%{subst_with selinux} \
 	%{?_with_consolekit:--with-console-kit} \
 	%{subst_with systemd} \
 	--with-pam-prefix=%_sysconfdir \
+	--with-default-pam-config=%default_pam_config \
 	%{subst_with xevie} \
 	%{subst_with libaudit} \
-	--disable-dependency-tracking \
+	%{subst_with plymouth} \
 	--with-default-path="/bin:/usr/bin:/usr/local/bin" \
-	%{?_disable_split_authentication:--disable-split-authentication}
+	%{?_disable_split_authentication:--disable-split-authentication} \
+	--with-initial-vt=%vt_nr \
+	--with-authentication-agent-directory=%_libexecdir/polkit-1 \
+	--disable-dependency-tracking
 
 %make_build
 
@@ -258,6 +271,7 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 %doc AUTHORS ChangeLog NEWS README TODO
 %config %_sysconfdir/pam.d/gdm
 %config %_sysconfdir/pam.d/gdm-autologin
+%config %_sysconfdir/pam.d/gdm-password
 %config %_sysconfdir/dbus-1/system.d/%name.conf
 %config %_datadir/glib-2.0/schemas/org.gnome.login-screen.gschema.xml
 %config(noreplace) %_sysconfdir/X11/%name
@@ -270,6 +284,7 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 %dir %_sysconfdir/X11/sessions
 %config %_controldir/gdm_xdmcp
 %_sysconfdir/X11/wms-methods.d/%name
+%_unitdir/gdm.service
 %_bindir/*
 %_sbindir/*
 %_libexecdir/*
@@ -277,7 +292,11 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 %_datadir/%name/*.ui
 %_datadir/%name/locale.alias
 %_datadir/%name/gdb-cmd
-%_datadir/%name/gdm.schemas
+%_datadir/%name/%name.schemas
+%dir %_datadir/%name/greeter
+%dir %_datadir/%name/greeter/applications
+%dir %_datadir/%name/greeter/autostart
+%_datadir/%name/greeter/applications/polkit-gnome-authentication-agent-1.desktop
 %_pixmapsdir/*
 %_datadir/icons/*/*/*/*.*
 %dir %_localstatedir/log/gdm
@@ -290,16 +309,16 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 %dir %_datadir/gdm/simple-greeter/extensions
 %dir %_datadir/gdm/simple-greeter
 
-%_sysconfdir/pam.d/gdm-welcome
+%_sysconfdir/pam.d/gdm-launch-environment
 %dir %_datadir/gdm/simple-greeter/extensions/unified
 %_datadir/gdm/simple-greeter/extensions/unified/page.ui
 
 %if_enabled split_authentication
-%_sysconfdir/pam.d/gdm-password
 %_libdir/gdm/simple-greeter/extensions/libpassword.so
 %dir %_datadir/gdm/simple-greeter/extensions/password
 %_datadir/gdm/simple-greeter/extensions/password/page.ui
 %endif
+
 
 %files help -f %name-help.lang
 
@@ -310,26 +329,26 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 %_datadir/gdm/greeter/applications/gok.desktop
 %_datadir/gdm/greeter/applications/mime-dummy-handler.desktop
 %_datadir/gdm/greeter/applications/mimeapps.list
-%_datadir/gdm/greeter/applications/orca-screen-reader.desktop
+%_datadir/gdm/greeter/autostart/orca-autostart.desktop
 %_datadir/gnome-session/sessions/gdm-fallback.session
 %_datadir/gnome-session/sessions/gdm-shell.session
 
 %files libs
-%_libdir/libgdmgreeter.so.*
+%_libdir/libgdm.so.*
 %_libdir/libgdmsimplegreeter.so.*
 
 %files libs-devel
 %_includedir/gdm/
-%_libdir/libgdmgreeter.so
+%_libdir/libgdm.so
 %_libdir/libgdmsimplegreeter.so
-%_libdir/pkgconfig/gdmgreeter.pc
+%_libdir/pkgconfig/gdm.pc
 %_libdir/pkgconfig/gdmsimplegreeter.pc
 
 %files libs-gir
-%_typelibdir/GdmGreeter-1.0.typelib
+%_typelibdir/Gdm-%api_ver.typelib
 
 %files libs-gir-devel
-%_girdir/GdmGreeter-1.0.gir
+%_girdir/Gdm-%api_ver.gir
 
 # TODO
 %if_enabled split_authentication
@@ -347,6 +366,13 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 %endif
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
+* Thu Jul 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt0.1
+- 3.4.2 snapshot
+- plymouth support enabled
+
 * Sun Apr 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

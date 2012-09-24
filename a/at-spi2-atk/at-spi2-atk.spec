@@ -1,4 +1,4 @@
-%define ver_major 2.4
+%define ver_major 2.6
 %define api_ver 2.0
 %define _libexecdir %_prefix/libexec
 %def_enable introspection
@@ -14,12 +14,13 @@ Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
 
 Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%name-%version.tar.xz
 
-%define core_ver 2.3.90
+%define core_ver 2.5.91
+%define atk_ver 2.5.91
 
 Requires: at-spi2-core >= %core_ver
 
-BuildRequires: libdbus-devel libgio-devel libatk-devel libat-spi2-core-devel >= %core_ver
-BuildRequires: libX11-devel libICE-devel libSM-devel
+BuildRequires: libdbus-devel libgio-devel libatk-devel >= %atk_ver
+BuildRequires: libat-spi2-core-devel >= %core_ver libX11-devel libICE-devel libSM-devel
 BuildRequires: intltool
 
 %description
@@ -35,10 +36,19 @@ transport protocol.
 This package includes a gtk-modules that bridges ATK to the new D-Bus
 based at-spi.
 
+%package devel
+Summary: Development files for atk-bridge
+Group: Development/C
+Requires: %name = %version-%release
+
+%description devel
+This package provides development files for atk-bridge library.
+
 %prep
 %setup
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -48,15 +58,25 @@ based at-spi.
 %find_lang %name
 
 %files -f %name.lang
+%_libdir/libatk-bridge-%api_ver.so.*
 %_libdir/gtk-2.0/modules/libatk-bridge.so
-%_libdir/gtk-3.0/modules/libatk-bridge.so
 %_datadir/glib-2.0/schemas/org.a11y.atspi.gschema.xml
 %_libdir/gnome-settings-daemon-3.0/gtk-modules/at-spi2-atk.desktop
 %doc AUTHORS README NEWS
 
 %exclude %_libdir/gtk-*/modules/libatk-bridge.la
 
+%files devel
+%dir %_includedir/%name
+%dir %_includedir/%name/%api_ver
+%_includedir/%name/%api_ver/atk-bridge.h
+%_libdir/libatk-bridge-%api_ver.so
+%_pkgconfigdir/atk-bridge-%api_ver.pc
+
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 

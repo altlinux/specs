@@ -9,9 +9,10 @@
 %def_enable pixbuf_loader
 %def_enable gtk_theme
 %def_enable introspection
+%def_enable vala
 
 Name: %bname
-Version: %ver_major.1
+Version: %ver_major.3
 Release: alt1
 
 Summary: An SVG library based on libart
@@ -32,6 +33,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%bname/%ver_major/%bname-%version.
 %define pango_ver 1.10.0
 %define libgsf_ver 1.6.0
 %define croco_ver 0.6.4
+%define vala_ver 0.17.1.26
 
 PreReq: libcroco >= %croco_ver
 
@@ -49,6 +51,7 @@ BuildPreReq: libgsf-devel >= %libgsf_ver
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgdk-pixbuf-gir-devel}
 BuildPreReq: libX11-devel libXt-devel
 BuildRequires: gcc-c++ gtk-doc sgml-common zlib-devel
+%{?_enable_vala:BuildRequires: vala-tools >= %vala_ver rpm-build-vala}
 
 %description
 An SVG library based on libart.
@@ -64,7 +67,7 @@ files to allow you to develop with librsvg.
 
 %package devel-doc
 Summary: Development documentation for %bname
-Group: Development/C
+Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %bname < %version-%release
 
@@ -137,7 +140,8 @@ GObject introspection devel data for the %name library
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{?_enable_pixbuf_loader:--enable-pixbuf-loader} \
 	%{?_enable_gtk_theme:--enable-gtk-theme} \
-	%{?_enable_introspection:--enable-introspection=yes}
+	%{?_enable_introspection:--enable-introspection=yes} \
+	%{?_enable_vala:--enable-vala=yes}
 
 %make_build
 
@@ -154,6 +158,7 @@ GObject introspection devel data for the %name library
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/%bname-%gtk_api_ver.pc
+%{?_enable_vala:%_vapidir/%name-%api_ver.vapi}
 
 %files devel-doc
 %_gtk_docdir/*
@@ -187,6 +192,9 @@ GObject introspection devel data for the %name library
 %{?_enable_pixbuf_loader:%exclude %_libdir/gdk-pixbuf-%gtk_api_ver/*/loaders/*.la}
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 2.36.3-alt1
+- 2.36.3
+
 * Mon Apr 16 2012 Yuri N. Sedunov <aris@altlinux.org> 2.36.1-alt1
 - 2.36.1
 

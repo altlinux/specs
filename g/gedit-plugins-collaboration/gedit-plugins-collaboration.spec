@@ -1,5 +1,5 @@
 %define _name gedit-collaboration
-%define ver_major 3.4
+%define ver_major 3.6
 %define gedit_pluginsdir %_libdir/gedit/plugins
 
 Name: gedit-plugins-collaboration
@@ -12,7 +12,7 @@ Group: Editors
 Url: http://gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%_name-%version.tar.xz
+Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 
 # From configure.in
 %define glib_ver 2.28.0
@@ -66,6 +66,9 @@ servers with shared documents.
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Sat Sep 22 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

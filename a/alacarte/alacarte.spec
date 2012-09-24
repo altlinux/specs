@@ -1,7 +1,7 @@
-%define ver_major 0.13
+%define ver_major 3.5
 
 Name: alacarte
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: Menu editor for GNOME
@@ -14,7 +14,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Source1: %name-icons.tar.bz2
 BuildArch: noarch
 
-%define menus_ver 3.2.0.1
+%define menus_ver 3.5.3
 
 BuildPreReq: intltool >= 0.40
 BuildPreReq: libgnome-menus-devel >= %menus_ver
@@ -47,6 +47,9 @@ Just click and type to edit, add, and delete any menu entry.
 %doc README AUTHORS NEWS
 
 %changelog
+* Sun Sep 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.5-alt1
+- 3.5.5
+
 * Fri Jun 01 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.4-alt1
 - 0.13.4
 - removed XFCE specific patches

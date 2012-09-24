@@ -1,5 +1,6 @@
+%define _libexecdir %_prefix/libexec
 %define _name gnome-desktop
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 %define gnome_distributor "%vendor"
 %define gnome_date "%(date "+%%B %%e %%Y"), Moscow"
@@ -8,7 +9,7 @@
 %def_enable introspection
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0.1
 Release: alt1
 
 Summary: Library with common API for various GNOME 3 modules
@@ -35,11 +36,11 @@ BuildPreReq: intltool >= 0.35
 BuildPreReq: libgtk+3-devel >= 3.0.1
 BuildPreReq: glib2-devel >= 2.28.0
 BuildPreReq: libgio-devel >= 2.28.0
-BuildPreReq: gnome-doc-utils librarian-devel
+BuildPreReq: yelp-tools itstool
 BuildPreReq: gtk-doc >= 1.4
 BuildPreReq: gnome-common >= 2.8.0
-BuildPreReq: gsettings-desktop-schemas-devel >= 3.0.0
-BuildRequires: libSM-devel libXrandr-devel libXext-devel
+BuildPreReq: gsettings-desktop-schemas-devel >= 3.5.91
+BuildRequires: libSM-devel libXrandr-devel libXext-devel xkeyboard-config-devel libxkbfile-devel
 BuildRequires: hwdatabase >= 0.3.31-alt1
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
@@ -112,11 +113,9 @@ GObject introspection devel data for the %_name library
 [ ! -d m4 ] && mkdir m4
 
 %build
-gnome-doc-prepare -f
 %autoreconf
 %configure \
     %{subst_enable static} \
-    --disable-scrollkeeper \
     %{?_enable_gtk_doc:--enable-gtk-doc} \
     --with-gnome-distributor=%gnome_distributor \
     --with-pnp-ids-path=%_datadir/misc
@@ -135,6 +134,7 @@ gnome-doc-prepare -f
 %doc AUTHORS NEWS README
 
 %files -n lib%name-devel
+%_libexecdir/gnome-rr-debug
 %_includedir/*
 %_libdir/*.so
 %_datadir/gnome/gnome-version.xml
@@ -158,6 +158,9 @@ gnome-doc-prepare -f
 
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0.1-alt1
+- 3.6.0.1
+
 * Mon May 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

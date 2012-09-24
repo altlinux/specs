@@ -1,5 +1,5 @@
 %define _name json-glib
-%define ver_major 0.14
+%define ver_major 0.15
 %define api_ver 1.0
 %def_disable gtk_doc
 %def_disable static
@@ -16,7 +16,7 @@ Url: http://live.gnome.org/JsonGlib
 
 Source: ftp://ftp.gnome.org/pub/GNOME/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-%define glib_ver 2.26.0
+%define glib_ver 2.31.0
 %define gi_ver 0.10.5
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
@@ -46,6 +46,7 @@ GObject introspection data for the JSON-GLib library
 %package gir-devel
 Summary: GObject introspection devel data for the JSON-GLib library
 Group: System/Libraries
+BuildArch: noarch
 Requires: %name-gir = %version-%release
 
 %description gir-devel
@@ -71,7 +72,7 @@ GObject introspection devel data for the JSON-GLib library
 
 %files -f %_name.lang
 %_libdir/*.so.*
-%doc README NEWS
+%doc NEWS
 
 %files devel
 %_libdir/*.so
@@ -88,6 +89,9 @@ GObject introspection devel data for the JSON-GLib library
 %endif
 
 %changelog
+* Wed Sep 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.15.2-alt1
+- 0.15.2
+
 * Thu Nov 03 2011 Yuri N. Sedunov <aris@altlinux.org> 0.14.2-alt1
 - 0.14.2
 

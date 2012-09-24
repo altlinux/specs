@@ -1,11 +1,11 @@
 %define _name pygobject
-%define major 3.2
+%define major 3.4
 %define api_ver 3.0
 %define gtk_api_ver 2.0
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.2
+Version: %major.0
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -24,10 +24,10 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar
 %define glib_ver 2.31.0
 
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildRequires: python-devel python-modules-encodings python-module-pycairo-devel
-BuildPreReq: gobject-introspection-devel >= 1.29.0
+BuildRequires: python-devel python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel
+BuildPreReq: gobject-introspection-devel >= 1.33.14
 # for tests
-# BuildRequires: libcairo-gobject-devel dbus-tools-gui libgtk+3-gir-devel
+# BuildRequires: dbus-tools-gui libgtk+3-gir-devel
 
 %description
 GObject is a object system used by GTK+, GStreamer and other libraries.
@@ -95,6 +95,9 @@ export LD_PRELOAD=%_libdir/libpython%__python_version.so
 %endif
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Mon May 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.2.2-alt1
 - 3.2.2
 

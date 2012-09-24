@@ -1,10 +1,11 @@
-%define ver_major 2.97
+%define ver_major 2.98
 %define rev %nil
 
 %def_without hal
 %def_with gudev
 %def_enable daap
 %def_enable grilo
+%def_disable visualizer
 
 Name: rhythmbox
 Version: %ver_major
@@ -20,13 +21,9 @@ Url: http://www.gnome.org/projects/rhythmbox/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %define dbus_ver 0.35
-%define glib_ver 2.18.0
-%define gconf_ver 2.8.0
-%define gnome_media_ver 2.91.2
-%define gstreamer_ver 0.10.12
-%define gtk_ver 2.14.0
-%define musicbrainz3_ver 3.0.2
-%define musicbrainz4_ver 4.0.0
+%define glib_ver 2.32.0
+%define gstreamer_ver 0.10.32
+%define gtk_ver 3.4.0
 %define mtp_ver 0.3
 %define brasero_ver 0.9.1
 %define scrollkeeper_ver 0.3.14
@@ -44,23 +41,16 @@ Requires: gstreamer(audio-hardware-sink)
 Requires: gst-plugins-base
 Requires: gst-plugins-good
 Requires: gst-plugins-gconf
-Requires: notification-daemon
 
 %define _libexecdir %_libdir/%name
 
 BuildRequires(Pre): browser-plugins-npapi-devel
 
-BuildRequires: glib2-devel >= 2.2.0
-BuildRequires: intltool >= 0.25
-BuildRequires: pkg-config >= 0.14.0
-BuildRequires: gtk-doc
-BuildRequires: gnome-doc-utils >= 0.3.2
-BuildRequires: gnome-common >= 2.3.0
-BuildRequires: desktop-file-utils
+BuildRequires: glib2-devel >= %glib_ver
+BuildRequires: intltool >= 0.40
+BuildRequires: gtk-doc gnome-doc-utils gnome-common desktop-file-utils
 
-BuildRequires: GConf >= %gconf_ver
-BuildRequires: libgtk+2-devel >= %gtk_ver
-BuildRequires: libgnome-media-profiles-devel >= %gnome_media_ver
+BuildRequires: libgtk+3-devel >= %gtk_ver
 BuildRequires: libdbus-glib-devel >= %dbus_ver
 BuildRequires: libsoup-devel >= %soup_ver
 BuildRequires: libsoup-gnome-devel >= %soup_ver
@@ -72,9 +62,6 @@ BuildRequires: gst-plugins-devel >= %gstreamer_ver
 BuildRequires: libgpod-devel >= %gpod_ver
 BuildRequires: libmtp-devel >= %mtp_ver
 BuildRequires: libICE-devel libSM-devel libgnome-keyring-devel
-BuildRequires: libmusicbrainz3-devel >= %musicbrainz3_ver
-BuildRequires: libmusicbrainz4-devel >= %musicbrainz4_ver
-BuildRequires:libneon-devel libdiscid-devel
 BuildRequires: iso-codes-devel libcheck-devel
 BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
 BuildRequires: libjson-glib-devel libpng-devel
@@ -84,7 +71,7 @@ BuildRequires: libpeas-devel libtdb-devel zlib-devel
 BuildRequires: libavahi-glib-devel
 BuildRequires: libdmapsharing-devel
 # for visualizer plugin
-BuildRequires: libclutter-gtk3-devel libclutter-gst-devel libmx-devel
+%{?_enable_visualizer:BuildRequires: libclutter-gtk3-devel libclutter-gst-devel libmx-devel}
 %{?_with_hal:BuildRequires: libhal-devel}
 %{?_with_gudev:BuildRequires: libgudev-devel}
 BuildRequires: python-module-pygobject3-devel
@@ -320,7 +307,7 @@ Requires: %name-plugins-lirc = %version-%release
 Requires: %name-plugins-mmkeys = %version-%release
 Requires: %name-plugins-mtpdevice = %version-%release
 Requires: %name-plugins-power-manager = %version-%release
-Requires: %name-plugins-visualizer = %version-%release
+%{?_enable_visualizer:Requires: %name-plugins-visualizer = %version-%release}
 Requires: %name-plugins-im-status = %version-%release
 Requires: %name-plugins-notification = %version-%release
 Requires: %name-plugins-media-server = %version-%release
@@ -345,8 +332,8 @@ export MOZILLA_PLUGINDIR=%browser_plugins_path
 %configure \
 	--enable-gtk-doc \
 	--disable-static \
-	--disable-schemas-install \
 	--disable-scrollkeeper \
+	--disable-schemas-compile \
 	--disable-dependency-tracking \
 	--enable-lirc \
 	--with-brasero \
@@ -356,7 +343,8 @@ export MOZILLA_PLUGINDIR=%browser_plugins_path
 	--with-ipod \
 	%{subst_with hal} \
 	%{subst_with gudev} \
-	%{subst_enable grilo}
+	%{subst_enable grilo} \
+	%{subst_enable visualizer}
 
 %make_build
 
@@ -433,8 +421,10 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %files plugins-power-manager
 %_libdir/%name/plugins/power-manager/
 
+%if_enabled visualizer
 %files plugins-visualizer
 %_libdir/%name/plugins/visualizer/
+%endif
 
 %files plugins-mozilla
 %browser_plugins_path/librhythmbox-itms-detection-plugin.so
@@ -484,7 +474,14 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %files devel-doc
 %_datadir/gtk-doc/html/rhythmbox/
 
+%exclude %_libdir/%name/sample-plugins/
+
+
 %changelog
+* Sun Sep 30 2012 Yuri N. Sedunov <aris@altlinux.org> 2.98-alt1
+- 2.98
+- visualizer plugin temporarily disabled
+
 * Mon Jun 04 2012 Yuri N. Sedunov <aris@altlinux.org> 2.97-alt1
 - 2.97
 

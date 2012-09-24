@@ -1,9 +1,9 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_enable introspection
 
 Name: libgnomekbd
-Version: %ver_major.0.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: GNOME keyboard shared library
 License: %lgpl2plus
@@ -13,8 +13,6 @@ URL: http://www.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-3.4.0.1-drop_wrong_free_calls.patch
-Patch1: %name-3.4.0-install.patch
 
 Obsoletes: gnome-kbd-indicator < 2.22.0
 Provides: gnome-kbd-indicator = %version-%release
@@ -67,8 +65,6 @@ GObject introspection devel data for the GNOME keyboard library
 
 %prep
 %setup -q
-%patch
-%patch1
 
 %build
 %autoreconf
@@ -111,6 +107,9 @@ GObject introspection devel data for the GNOME keyboard library
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu Apr 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0.1-alt2
 - fixed install
 

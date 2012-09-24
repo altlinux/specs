@@ -1,28 +1,30 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define parser_ver 3.4.1
-%define gst_ver 0.10.26
-%define gst_plugins_ver 0.10.30
-%define gtk_ver 3.3.6
+%define gst_api_ver 1.0
+%define gst_ver 0.11.99
+%define gst_plugins_ver 0.11.93
+%define gtk_ver 3.5.2
+%define grilo_ver 0.2.0
+%define glib_ver 2.33.0
 
 %define _libexecdir %_prefix/libexec
 %define nautilus_extdir %_libdir/nautilus/extensions-3.0
 
 %def_disable static
-%def_disable vala
+%def_enable vala
 %if_enabled vala
 %def_enable rotation
+%def_enable zeitgeist
 %endif
 %def_enable introspection
 %def_enable nautilus
 %def_enable grilo
 %def_enable lirc
-%def_disable publish
 %def_disable tracker
 %def_enable python
 %def_enable browser_plugins
 %def_disable coherence_upnp
 %def_disable jamendo
-%def_disable zeitgeist
 
 %if_enabled browser_plugins
 %def_enable gmp_plugin
@@ -32,7 +34,7 @@
 %endif
 
 Name: totem
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -44,14 +46,14 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Obsoletes: %name-gstreamer < %version %name-backend-gstreamer < %version %name-backend-xine < %version
 Obsoletes: %name-plugins-mythtv  %name-plugins-galago
 Obsoletes: %name-plugins-bemused  %name-plugins-youtube
+Obsoletes: %name-plugins-publish  %name-plugins-iplayer
 Provides: %name-backend = %version %name-backend-gstreamer = %version %name-backend-xine = %version
 
 Requires: lib%name = %version-%release
-Requires: gstreamer >= %gst_ver
-Requires: gst-plugins-base
-Requires: gst-plugins-good
+Requires: gstreamer%gst_api_ver >= %gst_ver
+Requires: gst-plugins-base%gst_api_ver
+Requires: gst-plugins-good%gst_api_ver
 Requires: iso-codes
-PreReq: librarian
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source1: totem-bin-backend-ondemand.sh
@@ -60,24 +62,23 @@ BuildPreReq: rpm-build-gnome gnome-common gtk-doc
 BuildPreReq: intltool >= 0.40.0
 %{?_enable_nvtv:BuildRequires: libnvtv-devel >= 0.4.5}
 
-BuildRequires: gstreamer-devel >= %gst_ver
-BuildRequires: gst-plugins-devel >= %gst_plugins_ver
-BuildRequires: gstreamer-utils >= %gst_ver
-BuildRequires: gst-plugins-base
-BuildRequires: gst-plugins-gconf gst-plugins-gio gst-plugins-ugly
-BuildRequires: gst-plugins-good gst-ffmpeg gstreamer-utils
+BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver
+BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_plugins_ver
+BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
+BuildRequires: gst-plugins-base%gst_api_ver
+BuildRequires: gst-plugins-good%gst_api_ver
+BuildRequires: gst-plugins-bad%gst_api_ver
 BuildRequires: browser-plugins-npapi-devel
 
 BuildPreReq: iso-codes-devel gnome-icon-theme
-BuildPreReq: glib2-devel libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= 0.7.3
+BuildPreReq: glib2-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libgio-devel libpeas-devel >= 0.7.3
 BuildPreReq: libtotem-pl-parser-devel >= %parser_ver
 BuildPreReq: libXtst-devel libXrandr-devel libXxf86vm-devel xorg-xproto-devel
 
 %{?_enable_python:BuildRequires: python-devel python-module-pygobject3-devel pylint}
-%{?_enable_vala:BuildRequires: libvala-devel >= 0.12}
-BuildRequires: libdbus-devel libdbus-glib-devel libgdata-devel
+%{?_enable_vala:BuildRequires: libvala-devel >= 0.14 vala-tools}
+BuildRequires: libdbus-devel libdbus-glib-devel libgdata-devel gsettings-desktop-schemas-devel
 %{?_enable_lirc:BuildRequires: liblirc-devel}
-%{?_enable_publish:BuildPreReq: libepc-devel >= 0.4.1}
 %{?_enable_tracker:BuildRequires: tracker-devel}
 %{?_enable_nautilus:BuildRequires: libnautilus-devel}
 %{?_enable_grilo:BuildRequires: libgrilo-devel}
@@ -85,9 +86,9 @@ BuildRequires: libdbus-devel libdbus-glib-devel libgdata-devel
 %{?_enable_introspection:BuildRequires: libtotem-pl-parser-gir-devel libgtk+3-gir-devel}
 
 BuildRequires: desktop-file-utils libSM-devel
-BuildRequires: db2latex-xsl gnome-doc-utils gcc-c++
+BuildRequires: db2latex-xsl yelp-tools itstool gcc-c++
 BuildRequires: libX11-devel libXext-devel libXi-devel
-BuildRequires: libclutter-gst-devel >= 1.3.9 libclutter-gtk3-devel libmx-devel
+BuildRequires: libclutter-gst2.0-devel >= 1.3.9 libclutter-gtk3-devel
 
 %description
 Totem is simple movie player for the Gnome desktop.
@@ -161,14 +162,6 @@ A default plugins for Totem:
 	opensubtitles
 	chapters
 
-%package plugins-iplayer
-Summary: BBC iPlayer plugin for Totem
-Group: Video
-Requires: %name = %version-%release
-
-%description plugins-iplayer
-A plugin to access from the last 7 days from the BBC iPlayer service.
-
 %package plugins-grilo
 Summary: Grilo browser for Totem
 Group: Video
@@ -210,15 +203,6 @@ Requires: %name = %version-%release
 %description plugins-tracker
 A plugin to allow searching local videos, based on their tags, metadata,
 or filenames, as indexing by the Tracker indexer.
-
-%package plugins-publish
-Summary: Share your playlist with other Totems on the local network
-Group: Video
-Requires: %name = %version-%release
-
-%description plugins-publish
-A plugin to allow you to share your current playlist (and the files included
-in that playlist) with other Totems on the same local network.
 
 %package plugins-jamendo
 Summary: Plugin for jamendo.com music collection
@@ -296,10 +280,8 @@ export BROWSER_PLUGIN_DIR=%browser_plugins_path
 %configure \
 	%{subst_enable static} \
 	--disable-schemas-compile \
-	--disable-scrollkeeper \
 	%{subst_enable python} \
 	%{subst_enable vala} \
-	%{subst_enable zeitgeist} \
 %if_enabled browser_plugins
 	--enable-browser-plugins \
 	%{?_enable_gmp_plugin:--enable-gmp-plugin} \
@@ -364,6 +346,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/%name/plugins/chapters/
 %_libdir/%name/plugins/save-file/
 %_libdir/%name/plugins/im-status/
+%_libdir/%name/plugins/apple-trailers/
+%_libdir/%name/plugins/autoload-subtitles/
+%_libdir/%name/plugins/recent/
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.opensubtitles.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.totem.plugins.pythonconsole.gschema.xml
 %_datadir/GConf/gsettings/opensubtitles.convert
@@ -373,8 +358,6 @@ find %buildroot%_libdir -name \*.la -delete
 %files plugins-grilo
 %_libdir/%name/plugins/grilo/
 %endif
-%files plugins-iplayer
-%_libdir/%name/plugins/iplayer/
 
 %if_enabled lirc
 %files plugins-lirc
@@ -388,19 +371,12 @@ find %buildroot%_libdir -name \*.la -delete
 
 %if_enabled zeitgeist
 %files plugins-zeitgeist
-%_libdir/%name/plugins/zeitgeist/
+%_libdir/%name/plugins/zeitgeist-dp/
 %endif
 
 %if_enabled tracker
 %files plugins-tracker
 %_libdir/%name/plugins/tracker/
-%endif
-
-%if_enabled publish
-%files plugins-publish
-%_libdir/%name/plugins/publish/
-%_datadir/glib-2.0/schemas/org.gnome.totem.plugins.publish.gschema.xml
-%_datadir/GConf/gsettings/publish.convert
 %endif
 
 %if_enabled browser_plugins
@@ -434,6 +410,10 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+- removed obsolete publish and iplayer plugins
+
 * Wed Jul 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
 - 3.4.3
 

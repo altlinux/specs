@@ -1,10 +1,10 @@
 # typelibs/girs dependencies (see below) added manually because of conflict with gnome-shell names
 
-%global _internal_version 10abba0
+%global _internal_version 392f000
 
 Name: muffin
-Version: 1.0.3
-Release: alt2
+Version: 1.1.1
+Release: alt1
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -26,7 +26,7 @@ BuildRequires: GConf libGConf-devel libcanberra-gtk3-devel libstartup-notificati
 BuildRequires: libXrandr-devel libXcursor-devel libXcomposite-devel
 BuildRequires: libXinerama-devel libXext-devel libSM-devel
 BuildRequires: gtk-doc gnome-common intltool gnome-doc-utils
-BuildRequires: zenity
+BuildRequires: gsettings-desktop-schemas-gir-devel zenity
 BuildRequires: gobject-introspection-devel libclutter-gir-devel libgtk+3-gir-devel
 
 %description
@@ -75,20 +75,7 @@ Header files and libraries for developing Muffin plugins.
 %build
 %autoreconf
 %configure --disable-static \
-	--disable-schemas-install
-
-SHOULD_HAVE_DEFINED="HAVE_SM HAVE_XINERAMA HAVE_XFREE_XINERAMA HAVE_SHAPE HAVE_RANDR HAVE_STARTUP_NOTIFICATION HAVE_COMPOSITE_EXTENSION"
-
-for I in $SHOULD_HAVE_DEFINED; do
-  if ! grep -q "define $I" config.h; then
-    echo "$I was not defined in config.h"
-    grep "$I" config.h
-    exit 1
-  else
-    echo "$I was defined as it should have been"
-    grep "$I" config.h
-  fi
-done
+	--disable-schemas-compile
 
 %make_build
 
@@ -97,15 +84,6 @@ done
 
 %find_lang %name
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-    %gconf2_uninstall %name
-fi
-
-
 %files -f %name.lang
 %_man1dir/muffin.1*
 %_man1dir/muffin-message.1*
@@ -113,8 +91,10 @@ fi
 %_bindir/muffin-message
 %_desktopdir/*.desktop
 %_datadir/gnome/wm-properties/muffin-wm.desktop
-%config %_sysconfdir/gconf/schemas/muffin.schemas
 %_datadir/muffin
+%_datadir//GConf/gsettings/muffin-schemas.convert
+%_datadir/glib-2.0/schemas/org.cinnamon.muffin.gschema.xml
+%_datadir/gnome-control-center/keybindings/50-muffin-windows.xml
 %doc README AUTHORS NEWS HACKING doc/theme-format.txt
 
 %files utils
@@ -137,6 +117,9 @@ fi
 %_pkgconfigdir/*
 
 %changelog
+* Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- 1.1.1
+
 * Wed May 30 2012 Michael Shigorin <mike@altlinux.org> 1.0.3-alt2
 - rebuilt for Sisyphus
 

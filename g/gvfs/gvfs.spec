@@ -1,4 +1,4 @@
-%define ver_major 1.12
+%define ver_major 1.14
 %def_enable http
 %def_enable avahi
 %def_enable cdda
@@ -14,10 +14,12 @@
 %def_enable afp
 %def_enable udisks2
 %def_enable bluray
+%def_enable gtk
+%def_enable systemd_login
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -29,20 +31,21 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: gvfs-1.11.3-alt-gettext.patch
 Patch1: gvfs-1.0.1-archive-integration.patch
-Patch3: gvfs-1.6.2-libgvfsdaemon+headers_install.patch
+Patch3: gvfs-1.13.8-libgvfsdaemon+headers_install.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
 
 # From configure.in
 %define intltool_ver 0.35.0
-%define glib_ver 2.31.0
+%define glib_ver 2.33.4
 %define libsoup_ver 2.26.0
 %define avahi_ver 0.6
 %define libcdio_paranoia_ver 0.78.2
 %define hal_ver 0.5.10
 %define bluez_ver 4.0
 %define gdu_ver 3.3.91
+%define udisks_ver 1.99
 
 %{?_enable_hal:Requires: gnome-mount}
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
@@ -60,6 +63,7 @@ BuildPreReq: openssh-clients
 BuildRequires: libgudev-devel
 # required if autoreconf used
 BuildRequires: libgcrypt-devel
+%{?_enable_gtk:BuildPreReq: libgtk+3-devel}
 %{?_enable_http:BuildPreReq: libsoup-gnome-devel >= %libsoup_ver libxml2-devel}
 %{?_enable_avahi:BuildPreReq: libavahi-glib-devel >= %avahi_ver libavahi-devel >= %avahi_ver}
 %{?_enable_cdda:BuildPreReq: libcdio-devel >= %libcdio_paranoia_ver}
@@ -67,14 +71,15 @@ BuildRequires: libgcrypt-devel
 %{?_enable_hal:BuildPreReq: libhal-devel >= %hal_ver}
 %{?_enable_obexftp:BuildPreReq: libbluez-devel >= %bluez_ver libdbus-glib-devel libexpat-devel}
 %{?_enable_gphoto2:BuildPreReq: libgphoto2-devel}
-%{?_enable_keyring:BuildPreReq: libgnome-keyring-devel}
+%{?_enable_keyring:BuildPreReq: libsecret-devel}
 %{?_enable_samba:BuildPreReq: libsmbclient-devel}
 %{?_enable_archive:BuildPreReq: libarchive-devel}
 %{?_enable_gdu:BuildPreReq: libgdu-devel >= %gdu_ver libgudev-devel}
 %{?_enable_afc:BuildPreReq: libimobiledevice-devel >= 1.1.3}
 %{?_enable_afp:BuildPreReq: libgcrypt-devel}
-%{?_enable_udisks2:BuildPreReq: libudisks2-devel}
+%{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
 %{?_enable_bluray:BuildPreReq: libbluray-devel}
+%{?_enable_systemd_login:BuildPreReq: libsystemd-login-devel}
 
 BuildPreReq: desktop-file-utils
 BuildRequires: gcc-c++ perl-XML-Parser
@@ -120,6 +125,11 @@ Summary: Apple Filing Protocol backend for gvfs
 Group: System/Libraries
 Requires: %name = %version-%release
 
+%package backend-recent-files
+Summary: Recent files backend for gvfs
+Group: System/Libraries
+Requires: %name = %version-%release
+
 %package backends
 Summary: All backends for gvfs
 Group: System/Libraries
@@ -129,6 +139,7 @@ Requires: gvfs gvfs-backend-smb gvfs-backend-dnssd
 %{?_enable_obexftp:Requires: gvfs-backend-obexftp}
 %{?_enable_afc:Requires: gvfs-backend-afc}
 %{?_enable_afp:Requires: gvfs-backend-afp}
+%{?_enable_gtk:Requires: gvfs-backend-recent-files}
 
 %package utils
 Summary: Command line applications for gvfs.
@@ -184,6 +195,8 @@ iPhone, and iPod Touch devices.
 This package contains a backend for gvfs, providing access to Apple
 Mac OS X filesystem by AFP (Apple Filing Protocol) network protocol.
 
+%description backend-recent-files
+This package contains recent files backend for gvfs.
 
 %description backends
 This virtual package contains the all backends for gvfs.
@@ -221,6 +234,8 @@ Bash completion for gvfs.
         %{subst_enable gdu} \
         %{subst_enable udisks2} \
         %{subst_enable bluray} \
+        %{subst_enable gtk} \
+        %{?_enable_systemd_login:--enable-libsystemd-login}
         %{?_enable_gtk_doc:--enable-gtk-doc}
 
 %make_build
@@ -229,9 +244,6 @@ Bash completion for gvfs.
 %make_install install DESTDIR=%buildroot
 
 %find_lang %name
-
-mkdir -p %buildroot%_sysconfdir/bash_completion.d/
-mv -f %buildroot%_sysconfdir/profile.d/gvfs-bash-completion.sh %buildroot%_sysconfdir/bash_completion.d/%name
 
 %check
 %make check
@@ -258,6 +270,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %_libdir/gio/modules/*.so
 # default backends
 %_libexecdir/gvfsd-*
+%exclude %_libexecdir/gvfsd-fuse
 
 %dir %_datadir/%name
 %dir %_datadir/%name/remote-volume-monitors
@@ -299,6 +312,11 @@ killall -USR1 gvfsd >&/dev/null || :
     %exclude %_libexecdir/gvfsd-dnssd
     %exclude %_datadir/%name/mounts/dns-sd.mount
 
+%if_enabled gtk
+%exclude %_libexecdir/gvfsd-recent
+%exclude %_datadir/%name/mounts/recent.mount
+%endif
+
 %files devel
 %_includedir/*
 %_libdir/*.so
@@ -306,7 +324,7 @@ killall -USR1 gvfsd >&/dev/null || :
 #%%_datadir/gtk-doc/html/*
 
 %files -n fuse-gvfs
-%_libexecdir/gvfs-fuse-daemon
+%_libexecdir/gvfsd-fuse
 
 %files backend-smb
 %_libexecdir/gvfsd-smb
@@ -350,17 +368,30 @@ killall -USR1 gvfsd >&/dev/null || :
 %_datadir/%name/mounts/afp-browse.mount
 %endif
 
+%if_enabled gtk
+%files backend-recent-files
+%_libexecdir/gvfsd-recent
+%_datadir/%name/mounts/recent.mount
+%endif
+
 %files backends
 
 %files utils
 %_bindir/*
+%_man1dir/*.1.*
+%_man7dir/gvfs.7.*
 
 %files -n bash-completion-gvfs
-%_sysconfdir/bash_completion.d/%name
+%_datadir/bash-completion/completions/%name
 
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.0-alt1
+- 1.14.0
+- new gvfs-backend-recent-files subpackage
+- optional libsystemd-login support
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.12.3-alt1
 - 1.12.3 release
 

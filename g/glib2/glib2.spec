@@ -1,6 +1,6 @@
 %def_disable snapshot
 
-%define ver_major 2.32
+%define ver_major 2.34
 %define pcre_ver 8.11
 %def_without sys_pcre
 %def_enable selinux
@@ -13,7 +13,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -374,6 +374,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.0-alt1
+- 2.34.0
+
 * Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 2.32.4-alt1
 - 2.32.4
 

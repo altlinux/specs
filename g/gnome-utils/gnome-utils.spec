@@ -1,8 +1,8 @@
-%define ver_major 3.3
+%define ver_major 3.6
 %define _oldname gnome2-utils
 
 Name: gnome-utils
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Utilities for the GNOME 3 desktop
@@ -15,6 +15,7 @@ BuildArch: noarch
 
 Provides: %_oldname = %version-%release
 Obsoletes: %_oldname < 2.14
+Obsoletes: %name-common
 
 Requires: gnome-dictionary >= %version
 Requires: gnome-disk-usage >= %version
@@ -40,6 +41,9 @@ Font Viewer	  - preview fonts.
 
 
 %changelog
+* Fri Oct 05 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6
+
 * Sat Mar 10 2012 Yuri N. Sedunov <aris@altlinux.org> 3.3.1-alt1
 - made virtual package after gnome-utils split
 

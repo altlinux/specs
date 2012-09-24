@@ -1,8 +1,8 @@
-%define ver_major 3.4
+%define ver_major 3.5
 %define _name mousetweaks
 
 Name: gnome-%_name
-Version: %ver_major.2
+Version: %ver_major.91
 Release: alt1
 
 Summary: Mouse accessibility enhancements
@@ -22,11 +22,9 @@ BuildPreReq: gnome-common
 BuildPreReq: intltool >= 0.40.0
 BuildPreReq: libgio-devel >= 2.28.5
 BuildPreReq: libgtk+3-devel >= 3.0.7
-BuildPreReq: libgnome-panel-devel
 BuildPreReq: libXfixes-devel libXcursor-devel libXtst-devel
 BuildPreReq: libX11-devel libXi-devel libXext-devel xorg-xextproto-devel
 BuildRequires: gsettings-desktop-schemas-devel
-BuildRequires: perl-XML-Parser librarian gnome-doc-utils
 
 %description
 The Mousetweaks package provides mouse accessibility enhancements for
@@ -54,8 +52,8 @@ gnome-panel.
 
 %build
 %configure \
-	--disable-schemas-compile \
-	--disable-scrollkeeper
+	--disable-schemas-compile
+
 
 %make_build
 
@@ -75,6 +73,9 @@ gnome-panel.
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Sun Sep 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.91-alt1
+- 3.5.91
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

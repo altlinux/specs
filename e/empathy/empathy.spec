@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_disable static
 %def_enable sendto
 %def_enable map
@@ -9,9 +9,11 @@
 %def_enable geocode
 %def_enable gudev
 %def_with cheese
+%define gst_api_ver 1.0
+%def_enable gst_1
 
 Name: empathy
-Version: %ver_major.2.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -27,16 +29,16 @@ Obsoletes: libempathy libempathy-gtk python-module-empathy
 Requires: %name-data = %version-%release
 
 %define intltool_ver 0.35.0
-%define glib_ver 2.31.10
-%define gtk_ver 3.3.6
+%define glib_ver 2.33.3
+%define gtk_ver 3.5.1
 %define clutter_ver 1.1.2
-%define clutter_gst_ver 1.5.2
-%define tp_glib_ver 0.18.0
+%define clutter_gst_ver 1.9.92
+%define tp_glib_ver 0.19.9
 %define tp_logger_ver 0.2.13
 %define tp_gabble_ver 0.16.0
 %define tp_haze_ver 0.6.0
 %define tp_salut_ver 0.8.0
-%define mission_control_ver 5.12.0
+%define mission_control_ver 5.13.0
 %define enchant_ver 1.2.0
 %define check_ver 0.9.4
 %define iso_codes_ver 0.35
@@ -44,28 +46,27 @@ Requires: %name-data = %version-%release
 %define canberra_ver 0.26
 %define webkit_ver 1.3.13
 %define geoclue_ver 0.12
-%define keyring_ver 2.32.0
 %define gcr_ver 3.3.90
 %define champlain_ver 0.12.0
 %define gnutls_ver 2.8.5
-%define folks_ver 0.6.4
+%define folks_ver 0.7.1
 %define nst_ver 2.91.6
-%define farstream_ver 0.1.1
+%define farstream_ver 0.2
 %define nm_ver 0.8.995
-%define goa_ver 3.3.0
+%define goa_ver 3.5.1
+%define secret_ver 0.5
 
 Requires: telepathy-gabble >= %tp_gabble_ver
 Requires: telepathy-salut >= %tp_salut_ver
 Requires: telepathy-haze >= %tp_haze_ver
 Requires: libtelepathy-mission-control >= %mission_control_ver
-Requires: gst-plugins-gconf
 Requires: telepathy-logger >= %tp_logger_ver
 
 BuildPreReq: intltool >= %intltool_ver gnome-common itstool
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libclutter-gtk3-devel >= %clutter_ver
-BuildPreReq: libclutter-gst-devel >= %clutter_gst_ver
+BuildPreReq: libclutter-gst2.0-devel >= %clutter_gst_ver
 BuildPreReq: libtelepathy-glib-devel >= %tp_glib_ver
 BuildPreReq: libfolks-devel >= %folks_ver
 BuildPreReq: libenchant-devel >= %enchant_ver
@@ -75,7 +76,7 @@ BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: libcanberra-gtk3-devel >= %canberra_ver
 BuildPreReq: libgeoclue-devel >= %geoclue_ver
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
-BuildPreReq: libgnome-keyring-devel >= %keyring_ver
+BuildPreReq: libsecret-devel >= %secret_ver
 BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildPreReq: libtelepathy-logger-devel >= %tp_logger_ver
 BuildPreReq: libgnutls-devel >= %gnutls_ver
@@ -90,7 +91,7 @@ BuildPreReq: NetworkManager-glib-devel >= %nm_ver libtelepathy-farstream-devel >
 %{?_with_cheese:BuildRequires: libcheese-devel}
 BuildRequires: libcheck-devel gsettings-desktop-schemas-devel xsltproc
 BuildRequires: yelp-tools itstool
-BuildRequires: libpulseaudio-devel gstreamer-devel gst-plugins-devel
+BuildRequires: libpulseaudio-devel gstreamer%gst_api_ver-devel gst-plugins%gst_api_ver-devel
 BuildRequires: db2latex-xsl evolution-data-server-devel gtk-doc
 BuildRequires: xorg-cf-files libICE-devel libSM-devel
 
@@ -107,7 +108,7 @@ BuildArch: noarch
 This package provides noarch data needed for Empathy to work.
 
 %package -n nautilus-sendto-empathy
-Summary: Send files to from nautilus to Empathy
+Summary: Send files from nautilus to Empathy
 Group: Graphical desktop/GNOME
 Requires: nautilus-sendto >= 2.28.2
 Requires: %name = %version-%release
@@ -131,7 +132,8 @@ rm -f data/%name.desktop
 	%{?_enable_gudev:--enable-gudev=yes} \
 	%{subst_with cheese} \
 	%{?_enable_sendto:--enable-nautilus-sendto=yes} \
-	%{?_disable_sendto:--enable-nautilus-sendto=no}
+	%{?_disable_sendto:--enable-nautilus-sendto=no} \
+	%{?_enable_gst_1:--enable-gst-1.0}
 
 # SMP-incompatible build
 %make
@@ -146,43 +148,54 @@ rm -f data/%name.desktop
 %_libexecdir/empathy-auth-client
 %_libexecdir/empathy-call
 %_libexecdir/empathy-chat
+%dir %_libdir/%name
+%_libdir/%name/lib%name-%version.so
+%_libdir/%name/lib%name.so
+%_libdir/%name/lib%name-gtk-%version.so
+%_libdir/%name/lib%name-gtk.so
+%exclude %_libdir/%name/*.la
 %if_enabled goa
 %mcp_dir/mcp-account-manager-goa.so
 %exclude %mcp_dir/mcp-account-manager-goa.la
 %endif
 
 %files data -f %name.lang
-%_datadir/applications/empathy.desktop
-%_datadir/applications/empathy-accounts.desktop
+%_datadir/applications/%name.desktop
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Empathy.Chat.service
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Empathy.Call.service
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Empathy.Auth.service
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Empathy.FileTransfer.service
-%dir %_datadir/empathy
-%_datadir/empathy/*.ui
-%_datadir/empathy/*.dtd
-%_datadir/empathy/irc-networks.xml
-%_datadir/empathy/Template.html
+%dir %_datadir/%name
+%_datadir/%name/*.ui
+%_datadir/%name/*.dtd
+%_datadir/%name/irc-networks.xml
+%_datadir/%name/Template.html
+%_datadir/%name/%name.css
 %_datadir/telepathy/clients/Empathy.Chat.client
 %_datadir/telepathy/clients/Empathy.Call.client
 %_datadir/telepathy/clients/Empathy.Auth.client
 %_datadir/telepathy/clients/Empathy.FileTransfer.client
-%_datadir/empathy/icons/
-%_datadir/empathy/empathy-log-window.html
+%_datadir/%name/icons/
+%_datadir/%name/%name-log-window.html
 %_datadir/icons/hicolor/*/apps/*
+%dir %_datadir/adium
+%_datadir/adium/*
 %_man1dir/*
 %config %_datadir/glib-2.0/schemas/*
 %_datadir/GConf/gsettings/%name.convert
 %doc AUTHORS CONTRIBUTORS NEWS README TODO
 
 %if_enabled sendto
-%files -n nautilus-sendto-empathy
-%_libdir/nautilus-sendto/plugins/libnstempathy.so
-%exclude %_libdir/nautilus-sendto/plugins/libnstempathy.la
+%files -n nautilus-sendto-%name
+%_libdir/nautilus-sendto/plugins/libnst%name.so
+%exclude %_libdir/nautilus-sendto/plugins/libnst%name.la
 %endif
 
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Wed Jun 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2.2-alt1
 - 3.4.2.2
 
@@ -398,10 +411,10 @@ rm -f data/%name.desktop
 - buildreq
 
 * Wed Jan 09 2008 Igor Zubkov <icesik@altlinux.org> 0.21.4-alt3
-- move libempathy library to libempathy subpackage (#12567)
-- move libempathy-gtk library to libempathy-gtk subpackage (#12567)
-- move libempathy devel files to libempathy-devel subpackage (#12567)
-- move libempathy-gtk devel files to libempathy-gtk-devel subpackage (#12567)
+- move lib%name library to lib%name subpackage (#12567)
+- move lib%name-gtk library to lib%name-gtk subpackage (#12567)
+- move lib%name devel files to lib%name-devel subpackage (#12567)
+- move lib%name-gtk devel files to libempathy-gtk-devel subpackage (#12567)
 
 * Sat Jan 05 2008 Igor Zubkov <icesik@altlinux.org> 0.21.4-alt2
 - add Conflicts: telepathy-haze-aim (it's don't needed anymore)

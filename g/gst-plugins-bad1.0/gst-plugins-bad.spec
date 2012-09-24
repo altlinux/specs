@@ -1,6 +1,6 @@
 %define _name gst-plugins
 %define api_ver 1.0
-%define ver_major 0.11
+%define ver_major 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
 %define _gtk_docdir %_datadir/gtk-doc/html
@@ -8,7 +8,7 @@
 %def_enable gtk_doc
 
 Name: %_name-bad%api_ver
-Version: %ver_major.99
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of GStreamer plugins that need more quality
@@ -16,8 +16,8 @@ Group: System/Libraries
 License: LGPL
 URL: http://gstreamer.freedesktop.org/
 
-Requires: lib%_name%api_ver >= 0.11.99
-Requires: gstreamer%api_ver >= 0.11.99
+Requires: lib%_name%api_ver >= 1.0.0
+Requires: gstreamer%api_ver >= 1.0.0
 
 Source: http://gstreamer.freedesktop.org/src/gst-plugins-bad/%_name-bad-%version.tar.xz
 Patch: gst-plugins-bad-0.11.94-alt-intltool.patch
@@ -99,6 +99,9 @@ This package contains documentation for GStreamer Bad Plug-ins.
 %endif
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Mon Sep 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11.99-alt1
 - 0.11.99
 

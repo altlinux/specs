@@ -2,7 +2,7 @@
 
 Name: libgpod4
 Version: 0.8.2
-Release: alt1.3
+Release: alt2
 
 Summary: iPod access library
 Group: Sound
@@ -10,6 +10,7 @@ License: %lgpl3plus
 URL: http://www.gtkpod.org/libgpod
 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Provides: libgpod = %version-%release
 Obsoletes: libgpod < 0.7
@@ -79,6 +80,7 @@ libgpod-sharp.
 
 %prep
 %setup
+%patch -p1
 
 # remove execute perms on the python examples as they'll be installed in %%doc
 chmod -x bindings/python/examples/*.py
@@ -135,6 +137,10 @@ rm -f %buildroot%python_sitelibdir/gpod/*.la
 %_pkgconfigdir/libgpod-sharp.pc
 
 %changelog
+* Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 0.8.2-alt2
+- upstream snapshot
+- add patches for fix deprecated functions
+
 * Mon Apr 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.3
 - Rebuilt with libplist-1.8
 

@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.5
 %define api_ver 3.0
 %define panel_api_ver 4.0
 
@@ -8,8 +8,8 @@
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.2
-Release: alt1.1
+Version: %ver_major.90
+Release: alt1
 
 Summary: VNC client for the GNOME Desktop
 License: GPLv2
@@ -24,7 +24,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 BuildPreReq: rpm-build-gnome gnome-common gnome-icon-theme
 BuildPreReq: intltool >= 0.35 glib2-devel >= 2.28.0
 BuildPreReq: libgtk3vnc-devel >= 0.4.3-alt2
-BuildRequires: libavahi-gobject-devel libavahi-ui-gtk3-devel libgnome-keyring-devel
+BuildRequires: libavahi-gobject-devel libavahi-ui-gtk3-devel libsecret-devel
 BuildRequires: yelp-tools itstool xmllint
 %{?_enable_ssh:BuildRequires: libvte3-devel libxml2-devel}
 %{?_enable_telepathy:BuildRequires: libtelepathy-glib-devel >= 0.11.6 libdbus-glib-devel}
@@ -78,12 +78,15 @@ rm -rf %buildroot%_datadir/doc
 %_datadir/icons/hicolor/*/*/*
 %_datadir/mime/packages/vinagre-mime.xml
 %_datadir/dbus-1/services/org.freedesktop.Telepathy.Client.Vinagre.service
-%_datadir/glib-2.0/schemas/org.gnome.Vinagre.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.Vinagre.gschema.xml
 %_datadir/GConf/gsettings/org.gnome.Vinagre.convert
 %_man1dir/vinagre.*
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Sep 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.90-alt1
+- 3.5.90
+
 * Tue Sep 11 2012 Alexey Shabalin <shaba@altlinux.ru> 3.4.2-alt1.1
 - rebuild with new libspice-client-glib-2.0.so.1, libspice-client-gtk-3.0.so.1
 

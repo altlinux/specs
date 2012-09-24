@@ -1,5 +1,5 @@
 BuildRequires: desktop-file-utils
-%define ver_major 0.9
+%define ver_major 0.10
 %def_enable encryption
 
 Name: almanah
@@ -15,7 +15,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 BuildRequires: intltool
-BuildRequires: libgio-devel libgtkspell3-devel evolution-data-server-devel >= 3.0.0
+BuildRequires: libgio-devel libgtkspell3-devel evolution-data-server-devel >= 3.5.91
 BuildRequires: libsqlite3-devel libcryptui-devel
 %{?_enable_encryption:BuildRequires: libgpgme-devel libseahorse-devel >= 3.0.0}
 
@@ -53,6 +53,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc README AUTHORS NEWS
 
 %changelog
+* Sat Sep 22 2012 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Mon Mar 26 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9.0-alt1
 - 0.9.0
 

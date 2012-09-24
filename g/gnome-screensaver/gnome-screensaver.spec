@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_disable static
 %def_disable docbook
 %def_enable consolekit
@@ -7,7 +7,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-screensaver
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Screensaver
@@ -50,7 +50,7 @@ BuildRequires: libpam-devel gsettings-desktop-schemas-devel
 BuildRequires: xorg-proto-devel libXxf86vm-devel libSM-devel
 BuildRequires:libXScrnSaver-devel libXext-devel libXtst-devel xorg-xf86vidmodeproto-devel
 %{?_enable_docbook:Requires: xmlto}
-%{?_with_systemd:BuildRequires: systemd-devel >= %systemd_ver}
+%{?_with_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel}
 
 %description
 gnome-screensaver is a screen saver and locker that aims to have
@@ -100,6 +100,9 @@ install %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Wed Jul 18 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
 - 3.4.4
 

@@ -1,6 +1,6 @@
 
-%define ver_major 1.2
-%define libsynthesis_ver 3.4.0.16.7
+%define ver_major 1.3
+%define libsynthesis_ver 3.4.0.16.8
 %define _libexecdir %_prefix/libexec
 
 %def_enable libsoup
@@ -10,7 +10,7 @@
 %def_enable gnome_bluetooth
 %def_enable gnome_keyring
 %def_enable akonadi
-%def_enable activesync
+%def_disable activesync
 # experimental now
 # sqlite conflicts with the evolution backend
 %def_disable sqlite
@@ -21,8 +21,8 @@
 %set_verify_elf_skiplist %_libdir/libsmltk.so.0.6.0
 
 Name: syncevolution
-Version: %ver_major.99.4
-Release: alt3
+Version: %ver_major.0
+Release: alt1
 Summary: SyncEvolution synchronizes personal information management (PIM) data like contacts, calenders, tasks and memos
 
 Group: Office
@@ -193,6 +193,10 @@ rm -f %buildroot%_libdir/*/*/*.{a,la}
 %_iconsdir/hicolor/48x48/apps/sync.png
 
 %changelog
+* Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
+- 1.3.0
+- disable activesync
+
 * Thu Sep 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.99.4-alt3
 - build to sisyphus
 

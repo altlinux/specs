@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: gnome-system-log
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME logfile viewer
@@ -11,11 +11,11 @@ Url: http://www.gnome.org
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.30.0
-%define gtk_ver 3.0.0
+%define glib_ver 2.31.0
+%define gtk_ver 3.5.10
 
 BuildPreReq: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver
-BuildRequires: zlib-devel intltool gnome-doc-utils rpm-build-gnome
+BuildRequires: zlib-devel intltool yelp-tools itstool rpm-build-gnome
 
 %description
 System Log Viewer - monitor and view system log files.
@@ -38,8 +38,6 @@ System Log Viewer - monitor and view system log files.
 %files -f %name.lang
 %_bindir/%name
 %_desktopdir/%name.desktop
-%_datadir/%name/logview-toolbar.xml
-%_datadir/%name/logview-filter.ui
 %_iconsdir/hicolor/*x*/apps/logview.png
 %_man1dir/%name.1.*
 %config  %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
@@ -47,6 +45,9 @@ System Log Viewer - monitor and view system log files.
 %doc NEWS
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Apr 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

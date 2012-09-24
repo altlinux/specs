@@ -1,11 +1,11 @@
-%define ver_major 5.2
+%define ver_major 5.3
 %define api_ver 1.0
 
 %def_disable static
 %def_enable introspection
 
 Name: libxklavier
-Version: %ver_major.1
+Version: %ver_major
 Release: alt1
 
 Summary: libXklavier library
@@ -44,7 +44,7 @@ Libraries, include files, etc you can use to develop libxklavier applications.
 
 %package devel-doc
 Summary: Development documentation for libxklavier
-Group: Development/C
+Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name < %version
 
@@ -108,6 +108,9 @@ This package provides GObject introspection devel data for libxklavier.
 %_girdir/Xkl-%api_ver.gir
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 5.3-alt1
+- 5.3
+
 * Thu Feb 16 2012 Yuri N. Sedunov <aris@altlinux.org> 5.2.1-alt1
 - 5.2.1
 - removed obsolete linking patch

@@ -1,5 +1,6 @@
-%define ver_major 1.32
+%define ver_major 1.34
 %define _name gjs
+%define api_ver 1.0
 
 Name: lib%_name
 Version: %ver_major.0
@@ -15,11 +16,9 @@ License: MIT and (MPLv1.1 or GPLv2+ or LGPLv2+)
 Url: http://live.gnome.org/Gjs/
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-#Source: %_name-%version.tar
-Patch: %_name-1.31.10-alt-gi.patch
 
-%define glib_ver 2.32.0
-%define gi_ver 1.32.0
+%define glib_ver 2.33.14
+%define gi_ver 1.33.14
 
 BuildRequires: gcc-c++ libmozjs-devel >= 1.8.5 libcairo-devel
 BuildRequires: glib2-devel >= %glib_ver gobject-introspection-devel >= %gi_ver
@@ -41,9 +40,11 @@ Requires: %name = %version-%release
 %description devel
 Files for development with %name.
 
+%set_typelibdir %_libdir/%_name/girepository-1.0
+
+
 %prep
 %setup -q -n %_name-%version
-%patch -b .gi
 
 %build
 %autoreconf
@@ -59,31 +60,32 @@ Files for development with %name.
 %make check
 
 %files
-%_bindir/gjs
-%_bindir/gjs-console
+%_bindir/%_name
+%_bindir/%_name-console
 %_libdir/*.so.*
-%dir %_libdir/gjs-1.0
-%_libdir/gjs-1.0/*.so
-
-%_typelibdir/GjsDBus-1.0.typelib
-
-%_datadir/gjs-1.0
+%dir %_libdir/%_name-%api_ver
+%_libdir/%_name-%api_ver/*.so
+%dir %_libdir/%_name/
+%dir %_libdir/%_name/girepository-1.0
+%_libdir/%_name/girepository-1.0/GjsPrivate-%api_ver.typelib
+%_datadir/%_name-%api_ver
 %doc COPYING NEWS README
 
 %exclude %_libdir/gjs-1.0/*.la
 
 %files devel
-%_includedir/gjs-1.0
+%_includedir/%_name-%api_ver/
 %_libdir/*.so
-%_libdir/pkgconfig/gjs-1.0.pc
-%_libdir/pkgconfig/gjs-dbus-1.0.pc
-%_libdir/pkgconfig/gjs-internals-1.0.pc
-
-%_girdir/GjsDBus-1.0.gir
+%_libdir/pkgconfig/%_name-%api_ver.pc
+%_libdir/pkgconfig/%_name-dbus-%api_ver.pc
+%_libdir/pkgconfig/%_name-internals-%api_ver.pc
 
 %doc examples/*
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.34.0-alt1
+- 1.34.0
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 1.32.0-alt1
 - 1.32.0
 

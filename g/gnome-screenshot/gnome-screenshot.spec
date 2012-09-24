@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: gnome-screenshot
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Screenshot Tool
@@ -11,7 +11,7 @@ Url: http://www.gnome.org
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
-%define glib_ver 2.31.0
+%define glib_ver 2.33.1
 
 BuildPreReq: libgio-devel >= %glib_ver
 BuildRequires: libgtk+3-devel libcanberra-gtk3-devel libX11-devel libXext-devel
@@ -36,12 +36,14 @@ GNOME Screenshot Tool makes screenshots from desktop.
 %_bindir/%name
 %_datadir/applications/%name.desktop
 %_datadir/GConf/gsettings/%name.convert
-%_datadir/%name/
 %_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %_man1dir/%name.1.*
 %doc NEWS
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Apr 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

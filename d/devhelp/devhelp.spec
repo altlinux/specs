@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: devhelp
 Version: %ver_major.0
@@ -15,7 +15,7 @@ Url: http://www.gnome.org
 Source: %name-%version.tar
 
 # From configure.in
-%define gtk_ver 3.0.2
+%define gtk_ver 3.4
 %define GConf_ver 2.6.0
 
 Requires: lib%name = %version-%release
@@ -26,7 +26,7 @@ BuildPreReq: gtk-doc
 
 # From configure.in
 BuildPreReq: intltool >= 0.40.0
-BuildPreReq: glib2-devel >= 2.25.11
+BuildPreReq: libgio-devel >= 2.32
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: GConf libGConf-devel >= %GConf_ver
 BuildPreReq: libwebkitgtk3-devel
@@ -132,6 +132,9 @@ fi
 %gedit_pluginsdir/*
 
 %changelog
+* Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
+- 3.6.0
+
 * Thu Apr 05 2012 Alexey Shabalin <shaba@altlinux.ru> 3.4.0-alt1
 - 3.4.0
 

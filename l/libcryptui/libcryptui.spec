@@ -1,10 +1,10 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 0.0
 %def_disable static
 %def_enable introspection
 
 Name: libcryptui
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 Summary: Library for OpenPGP prompts
 
@@ -20,15 +20,15 @@ Obsoletes: libseahorse
 Provides: libseahorse = %version-%release
 
 # From configure.in
+%define glib_ver 2.32.0
 %define gtk_ver 3.0.0
 %define intltool_ver 0.40.0
-%define soup_ver 2.33.1
 %define gir_ver 0.10.1
 
 BuildRequires: rpm-build-gnome gtk-doc
-BuildRequires: libgio-devel libgtk+3-devel >= %gtk_ver libdbus-glib-devel
+BuildRequires: libgio-devel >= %glib_ver libgtk+3-devel >= %gtk_ver libdbus-glib-devel
 BuildRequires: gnupg2-gpg libgpgme-devel >= 1.0.0 libgnome-keyring-devel libSM-devel
-BuildRequires: libGConf-devel libnotify-devel >= 0.7.3 intltool >= %intltool_ver xsltproc
+BuildRequires: libnotify-devel >= 0.7.3 intltool >= %intltool_ver xsltproc
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver libgtk+3-gir-devel}
 
 %description
@@ -47,7 +47,7 @@ developing applications that use %name.
 
 %package devel-doc
 Summary: Development documentation for %name
-Group: Development/C
+Group: Development/Documentation
 BuildArch: noarch
 Obsoletes: libseahorse-devel-doc
 Provides: libseahorse-devel-doc = %version-%release
@@ -120,6 +120,9 @@ GObject introspection devel data for the %name library
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Apr 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

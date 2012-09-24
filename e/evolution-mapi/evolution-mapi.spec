@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: evolution-mapi
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 Group: Networking/Mail
 Summary: Evolution extension for MS Exchange 2007 servers
@@ -11,12 +11,12 @@ Url: http://www.gnome.org/projects/evolution-mapi/
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar
 Patch: %name-%version-%release.patch
 
-%define ver_base 3.4
+%define ver_base 3.6
 %define evo_ver_base %ver_base
 
-%define evolution_ver 3.4.0
+%define evolution_ver 3.6.0
 # from configure.in.
-%define eds_ver 3.4.0
+%define eds_ver 3.6.0
 %define libmapi_version 1.0
 
 Requires: evolution >= %evolution_ver
@@ -26,6 +26,8 @@ BuildPreReq: gnome-common rpm-build-gnome
 BuildPreReq: evolution-data-server-devel >= %eds_ver
 BuildPreReq: evolution-devel >= %evolution_ver
 BuildPreReq: intltool >= 0.35.5
+BuildRequires: glib2-devel >= 2.32.0
+BuildRequires: libgtk+3-devel >= 2.99.2
 BuildRequires: libtalloc-devel
 BuildRequires: openchange-devel >= %libmapi_version
 BuildRequires: samba4-devel
@@ -85,10 +87,11 @@ find %buildroot%_libdir -name '*.la' -exec rm {} \;
 %files -f %name.lang
 %doc AUTHORS ChangeLog INSTALL README
 %_libdir/*.so.*
-%_libdir/evolution/%evo_ver_base/plugins/*
+%_libdir/evolution/%evo_ver_base/modules/*
 %_libdir/evolution-data-server/camel-providers/*
 %_libdir/evolution-data-server/addressbook-backends/*.so
 %_libdir/evolution-data-server/calendar-backends/*.so
+%_libdir/evolution-data-server/registry-modules/*.so
 %_datadir/evolution-data-server-%evo_ver_base/mapi
 
 %files devel
@@ -97,6 +100,9 @@ find %buildroot%_libdir -name '*.la' -exec rm {} \;
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
+- 3.6.0
+
 * Mon Jun 18 2012 Alexey Shabalin <shaba@altlinux.ru> 3.4.3-alt1
 - 3.4.3
 

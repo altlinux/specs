@@ -4,7 +4,7 @@
 
 Name: gtranslator
 Version: %ver_major.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: A GNOME po file editor with many bells and whistles.
 License: GPL
@@ -89,6 +89,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Tue Oct 02 2012 Yuri N. Sedunov <aris@altlinux.org> 2.91.5-alt1.2
+- rebuilt against libgdl-3.so.5
+
 * Tue Jun 12 2012 Yuri N. Sedunov <aris@altlinux.org> 2.91.5-alt1.1
 - used %%set_typelibdir macros
 

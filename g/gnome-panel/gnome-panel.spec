@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 %def_disable static
 %def_disable gtk_doc
@@ -13,7 +13,7 @@
 %def_without in_process_applets
 
 Name: gnome-panel
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -27,7 +27,6 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 # https://bugzilla.gnome.org/show_bug.cgi?id=507873
 # need  to rework after testing
 Patch3: %name-2.9.92-alt-default_setup.patch
-Patch5: %name-2.5.93-alt-fish_schemas.patch
 
 # http://bugzilla.gnome.org/show_bug.cgi?id=520111
 Patch24: %name-2.21.92-allow-spurious-view-done-signals.patch
@@ -39,17 +38,17 @@ Patch24: %name-2.21.92-allow-spurious-view-done-signals.patch
 %define glib_ver 2.31.16
 %define libwnck_ver 2.91.92
 %define GConf_ver 2.6.1
-%define gnome_menus_ver 3.3.5
-%define eds_ver 2.91.91
+%define dconf_ver 0.13.4
+%define gnome_menus_ver 3.5.5
+%define eds_ver 3.5.91
 %define cairo_ver 1.0
 %define tp_glib_ver 0.14
-%define gweather_ver 2.91.6
-%define nm_ver 0.8.
+%define gweather_ver 3.5.1
+%define nm_ver 0.8
 %define rsvg_ver 2.35.1
 
 Conflicts: gnome-power-manager < 2.15.3
 
-PreReq: GConf >= %GConf_ver
 PreReq: librarian
 Requires: lib%name = %version-%release
 
@@ -76,10 +75,10 @@ BuildPreReq: libgweather-devel >= %gweather_ver
 %{?_enable_eds:BuildPreReq: evolution-data-server-devel >= %eds_ver}
 BuildPreReq: librsvg-devel >= %rsvg_ver
 BuildPreReq: libX11-devel libXt-devel libXau-devel libXrandr-devel
-BuildPreReq: gtk-doc >= 1.0
-BuildPreReq: gnome-doc-utils librarian libxml2-devel
+BuildPreReq: gtk-doc >= 1.0 yelp-tools itstool
+BuildPreReq: libxml2-devel
 BuildPreReq: NetworkManager-devel >= %nm_ver
-BuildRequires: libGConf-devel libdconf-devel libdbus-glib-devel libpolkit-devel libSM-devel perl-XML-Parser
+BuildRequires: libGConf-devel libdconf-devel >= %dconf_ver libdbus-glib-devel libpolkit-devel libSM-devel perl-XML-Parser
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel libGConf-gir-devel}
 
 %description
@@ -150,7 +149,6 @@ GObject introspection devel data for the GNOME Panel shared library.
 
 %prep
 %setup -q
-#%%patch5 -p1
 %patch24 -p1 -b .allow-spurious-view-done-signals
 
 %build
@@ -161,7 +159,6 @@ gnome-doc-common --copy
     %{subst_enable eds} \
     %{?_with_in_process_applets:--with-in-process-applets=all} \
     --disable-schemas-compile \
-    --disable-scrollkeeper \
     %{?_enable_gtk_doc:--enable-gtk-doc}
 
 # SMP-incompatible build
@@ -171,14 +168,6 @@ gnome-doc-common --copy
 %make DESTDIR=%buildroot install
 
 %find_lang --with-gnome --output=%name.lang %name %name-%api_ver clock fish fish-applet-2 window-list workspace-switcher
-
-%post
-%gconf2_install clock
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall clock
-fi
 
 %files -f %name.lang
 %_bindir/*
@@ -195,7 +184,6 @@ fi
 %_datadir/dbus-1/services/org.gnome.panel.applet.NotificationAreaAppletFactory.service
 %_datadir/dbus-1/services/org.gnome.panel.applet.WnckletFactory.service
 %config %_datadir/glib-2.0/schemas/*.xml
-%config %_sysconfdir/gconf/schemas/clock.schemas
 %doc AUTHORS NEWS README
 
 %files -n lib%name
@@ -223,6 +211,9 @@ fi
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon May 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2.1-alt1
 - 3.4.2.1
 

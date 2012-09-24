@@ -3,7 +3,7 @@
 
 
 Name: accountsservice
-Version: 0.6.22
+Version: 0.6.25
 Release: alt1
 Summary: D-Bus interfaces for querying and manipulating user account information
 
@@ -20,7 +20,7 @@ BuildRequires: glib2-devel libgio-devel
 BuildRequires: libpolkit-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: vala vala-tools
-BuildRequires: libsystemd-login-devel >= 43 libsystemd-daemon-devel
+BuildRequires: libsystemd-login-devel >= 43 libsystemd-daemon-devel systemd-devel
 
 Requires: polkit
 Requires: shadow-utils
@@ -112,6 +112,9 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Wed Sep 26 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.25-alt1
+- 0.6.25
+
 * Fri Jul 20 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.22-alt1
 - 0.6.22
 - Correct CVE-2012-2737, local file disclosure.

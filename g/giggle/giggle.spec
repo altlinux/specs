@@ -1,6 +1,6 @@
 Name: giggle
 Version: 0.6.1
-Release: alt2
+Release: alt3
 
 Summary: Giggle is a Gtk frontend to git.
 Group: Development/Other
@@ -9,7 +9,8 @@ URL: http://live.gnome.org/giggle
 Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: giggle-0.6.1-up-link.patch
+Patch1: giggle-0.6.1-up-link.patch
+Patch2: giggle-0.6.1-ebook.patch
 
 Requires: git-core
 
@@ -36,7 +37,8 @@ Requires: %name = %version-%release
 
 %prep
 %setup
-%patch -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -64,6 +66,9 @@ Requires: %name = %version-%release
 %_includedir/%name
 
 %changelog
+* Tue Oct 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.6.1-alt3
+- fixed build with new libebook
+
 * Thu Mar 29 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.1-alt2
 - rebuild against libebook-1.2.so.13
 

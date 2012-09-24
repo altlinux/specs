@@ -3,17 +3,19 @@
 %define api_ver 0.12
 %def_enable introspection
 %def_enable vala
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 Name: %_name
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: Map view library for Clutter
 License: LGPLv2+
 Group: System/Libraries
 Url: http://projects.gnome.org/%name/
-Source: http://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%_name-%version.tar.xz
+
+#Source: http://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%_name-%version.tar.xz
+Source: %_name-%version.tar
 
 %define glib_ver 2.16
 %define cairo_ver 1.4
@@ -130,9 +132,10 @@ This package provides Vala language bindings for the Libchamplain library
 %setup -q -n %_name-%version
 
 %build
+gtkdocize --copy
 %autoreconf
 %configure --disable-static \
-	%{?_enable_gtk_doc:--enable-gtk} \
+	%{?_enable_gtk_doc:--enable-gtk-doc} \
 	%{?_disable_vala:--disable-vala-demos} \
 	--enable-introspection=auto
 
@@ -195,6 +198,9 @@ This package provides Vala language bindings for the Libchamplain library
 %endif
 
 %changelog
+* Wed Sep 12 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt2
+- after 0.12.3 snapshot for people/gnome
+
 * Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.3-alt1
 - 0.12.3
 

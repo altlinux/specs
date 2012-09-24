@@ -8,8 +8,8 @@
 %def_disable hw
 
 Name: %_name%api_ver
-Version: 1.9.90
-Release: alt2
+Version: 1.9.92
+Release: alt1
 
 Summary: Library integrating clutter with GStreamer
 License: LGPL v2+
@@ -19,10 +19,10 @@ Url: http://www.clutter-project.org/
 Source: %_name-%version.tar.xz
 Patch: clutter-gst-1.9.90-alt-gtk-doc.patch
 
-BuildRequires: gst-plugins1.0-devel gtk-doc glib2-devel >= 2.18 libclutter-devel >= 1.6.0
-%{?_enable_introspection:BuildRequires: libclutter-gir-devel gst-plugins1.0-gir-devel}
+BuildRequires: gst-plugins%gst_api_ver-devel gtk-doc glib2-devel >= 2.18 libclutter-devel >= 1.6.0
+%{?_enable_introspection:BuildRequires: libclutter-gir-devel gst-plugins%gst_api_ver-gir-devel}
 # for gstreamer-basevideo
-%{?_enable_hw:BuildRequires: gst-plugins1.0-bad-devel}
+%{?_enable_hw:BuildRequires: gst-plugins%gst_api_ver-bad-devel}
 
 %description
 Library integrating clutter with GStreamer
@@ -109,6 +109,9 @@ that use Clutter-Gst libraries.
 %endif
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 1.9.92-alt1
+- 1.9.92
+
 * Sat Sep 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.9.90-alt2
 - fixed path to html documentation to avoid conflict with clutter-gst-1.0
 

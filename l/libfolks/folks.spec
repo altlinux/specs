@@ -3,6 +3,7 @@
 
 %define _name folks
 %define ver_major 0.7
+%define api_ver 0.6
 %def_disable static
 %def_enable introspection
 %def_enable vala
@@ -10,7 +11,7 @@
 %def_enable tracker
 
 Name: lib%_name
-Version: %ver_major.0
+Version: %ver_major.4.1
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -22,17 +23,19 @@ Source: http://download.gnome.org/sources/%_name/%ver_major/%_name-%version.tar.
 # git archive --format=tar --prefix=folks-0.6.0/ --output=folks-0.6.0.tar HEAD
 #Source: %_name-%version.tar
 
-%define glib_ver 2.24.0
-%define tp_glib_ver 0.15.5
+%define glib_ver 2.26.0
+%define tp_glib_ver 0.19.0
 %define vala_ver 0.15.1
-%define eds_ver 3.1.5
+%define eds_ver 3.5.3
 %define gconf_ver 2.31
-%define tracker_ver 0.12
+%define tracker_ver 0.14
 %define gee_ver 0.6
+%define zeitgeist_ver 0.3.14
 
 BuildRequires: intltool libgio-devel >= %glib_ver libdbus-glib-devel
 BuildRequires: libtelepathy-glib-devel >= %tp_glib_ver libgee-devel >= %gee_ver
 BuildRequires: evolution-data-server-devel >= %eds_ver libGConf-devel >= %gconf_ver
+BuildRequires: libzeitgeist-devel >= %zeitgeist_ver
 %{?_enable_tracker:BuildRequires: tracker-devel >= %tracker_ver}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgee-gir-devel libtelepathy-glib-gir-devel evolution-data-server-gir-devel}
 %{?_enable_vala:BuildRequires: vala >= %vala_ver vala-tools >= %vala_ver libtelepathy-glib-vala evolution-data-server-vala}
@@ -114,6 +117,8 @@ chrpath --delete %buildroot/%_libdir/%_name/*/backends/*/*.so
 %files -f %_name.lang
 %_libdir/*.so.*
 %_libdir/%_name/
+%_datadir/GConf/gsettings/folks.convert
+%_datadir/glib-2.0/schemas/org.freedesktop.folks.gschema.xml
 %doc AUTHORS README
 
 %files devel
@@ -125,10 +130,10 @@ chrpath --delete %buildroot/%_libdir/%_name/*/backends/*/*.so
 
 %if_enabled introspection
 %files gir
-%_typelibdir/Folks-0.6.typelib
+%_typelibdir/Folks-%api_ver.typelib
 
 %files gir-devel
-%_girdir/Folks-0.6.gir
+%_girdir/Folks-%api_ver.gir
 %endif
 
 %if_enabled vala
@@ -138,6 +143,9 @@ chrpath --delete %buildroot/%_libdir/%_name/*/backends/*/*.so
 %endif
 
 %changelog
+* Wed Sep 12 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.4.1-alt1
+- 0.7.4.1
+
 * Tue Apr 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.0-alt1
 - 0.7.0
 

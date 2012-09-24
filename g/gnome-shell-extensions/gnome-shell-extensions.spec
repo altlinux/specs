@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define domain gcampax.github.com
 
 Name: gnome-shell-extensions
@@ -59,6 +59,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/alternative-status-menu@gnome-shell-extensions.%domain/convenience.js
+%_datadir/glib-2.0/schemas/org.gnome.shell.extensions.alternative-status-menu.gschema.xml
 
 # dock
 %dir %_datadir/gnome-shell/extensions/dock@gnome-shell-extensions.%domain
@@ -128,6 +129,7 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/metadata.json
 %_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/stylesheet.css
 %_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/convenience.js
+%_datadir/gnome-shell/extensions/places-menu@gnome-shell-extensions.%domain/placeDisplay.js
 
 # system monitor
 %dir %_datadir/gnome-shell/extensions/systemMonitor@gnome-shell-extensions.%domain
@@ -165,6 +167,9 @@ NOCONFIGURE=1 ./autogen.sh
 %doc README
 
 %changelog
+* Fri Oct 05 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Wed Apr 18 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0 snapshot
 

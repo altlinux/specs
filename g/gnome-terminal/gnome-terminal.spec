@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: gnome-terminal
-Version: %ver_major.1.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GNOME Terminal
@@ -17,7 +17,6 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define glib_ver 2.28.0
 %define gtk_ver 3.0.1
 %define vte_ver 0.32.1
-%define gnome_doc_utils_ver 0.3.5
 
 Provides: xvt
 
@@ -28,7 +27,7 @@ Requires: common-licenses
 
 BuildPreReq: gnome-common
 BuildPreReq: intltool >= %intltool_ver
-BuildPreReq: gnome-doc-utils >= %gnome_doc_utils_ver
+BuildPreReq: yelp-tools itstool
 BuildPreReq: GConf >= %GConf_ver libGConf-devel >= %GConf_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
@@ -49,7 +48,6 @@ GNOME terminal emulator application.
 %build
 %autoreconf
 %configure \
-	--disable-scrollkeeper \
 	--disable-schemas-install \
 	--disable-dependency-tracking
 
@@ -87,6 +85,9 @@ fi
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Apr 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1.1-alt1
 - 3.4.1.1
 

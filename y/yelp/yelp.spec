@@ -1,9 +1,9 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_disable debug
 %def_disable lzma
 
 Name: yelp
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Lightweight help browser for GNOME
@@ -19,8 +19,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define gtk_ver 3.0.5
 %define xslt_ver 1.1.4
 %define webkit_ver 1.3.2
-%define yelpxsl_ver 3.3.92
-%define intltool_ver 0.41.0
+%define yelpxsl_ver 3.5.91
+%define intltool_ver 0.5.0
 
 Requires: lib%name = %version-%release
 Requires: yelp-xsl >= %yelpxsl_ver
@@ -116,6 +116,9 @@ Yelp.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

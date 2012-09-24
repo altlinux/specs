@@ -1,6 +1,7 @@
+%define ver_major 0.2
 
 Name: grilo
-Version: 0.1.19
+Version: %ver_major.0
 Release: alt1
 Summary: Content discovery framework
 Group: Sound
@@ -8,13 +9,13 @@ License: LGPLv2+
 Url: http://live.gnome.org/Grilo
 
 Source: %name-%version.tar
-Patch1: %name-%version-%release.patch
+# Patch1: %name-%version-%release.patch
 
 BuildRequires: gnome-common
-BuildRequires: glib2-devel >= 2.22 libgio-devel
+BuildRequires: glib2-devel >= 2.29.10 libgio-devel
 BuildRequires: libxml2-devel
 BuildRequires: libgtk+3-devel >= 3.0
-BuildRequires: libsoup-devel >= 2.33.4 libsoup-gir-devel
+BuildRequires: libsoup-devel >= 2.39.0 libsoup-gir-devel
 BuildRequires: vala-tools libvala-devel
 BuildRequires: gtk-doc >= 1.10
 BuildRequires: gobject-introspection-devel >= 0.9.0
@@ -82,10 +83,10 @@ Tools for the %name library
 
 %prep
 %setup
-%patch1 -p1
+# %patch1 -p1
 
 # Fix vala detection for version 0.16
-sed -i.vala 's/libvala-0.14/libvala-0.16/g' configure*
+# sed -i.vala 's/libvala-0.14/libvala-0.16/g' configure*
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -101,7 +102,7 @@ NOCONFIGURE=1 ./autogen.sh
 
 %install
 %make_install DESTDIR=%buildroot install
-mkdir -p %buildroot%_libdir/grilo-0.1 %buildroot%_datadir/grilo-0.1/plugins
+mkdir -p %buildroot%_libdir/grilo-%ver_major %buildroot%_datadir/grilo-%ver_major/plugins
 
 # Remove files that will not be packaged
 rm -f %buildroot%_bindir/grilo-simple-playlist
@@ -114,8 +115,8 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 
 %files -n lib%name
 %_libdir/*.so.*
-%dir %_libdir/grilo-0.1
-%dir %_datadir/grilo-0.1/plugins
+%dir %_libdir/grilo-%ver_major
+%dir %_datadir/grilo-%ver_major/plugins
 
 %files -n lib%name-gir
 %_typelibdir/*.typelib
@@ -124,7 +125,7 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_girdir/*.gir
 
 %files -n lib%name-devel
-%_includedir/%name-0.1/
+%_includedir/%name-%ver_major
 %_libdir/*.so
 %_pkgconfigdir/*.pc
 %_vapidir/*
@@ -133,6 +134,9 @@ rm -f %buildroot%_bindir/grilo-simple-playlist
 %_gtk_docdir/*
 
 %changelog
+* Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.0-alt1
+- 0.2.0
+
 * Fri May 25 2012 Alexey Shabalin <shaba@altlinux.ru> 0.1.19-alt1
 - 0.1.19
 

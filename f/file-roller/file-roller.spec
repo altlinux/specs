@@ -1,11 +1,12 @@
-%define ver_major 3.4
+%define ver_major 3.5
 %def_disable packagekit
 %def_enable magic
+%def_disable libarchive
 
 %define nau_api_ver 3.0
 
 Name: file-roller
-Version: %ver_major.2
+Version: %ver_major.92
 Release: alt1
 
 Summary: An archive manager for GNOME
@@ -22,7 +23,7 @@ Patch1: %name-3.3.90-alt-zip_command.patch
 %define glib_ver 2.29.14
 %define gtk_ver 3.0.2
 %define nautilus_ver 2.91.91
-
+%define libarchive_ver 3.0.0
 %define desktop_file_utils_ver 0.8
 
 Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip lzma-utils
@@ -30,15 +31,17 @@ Requires: tar gzip bzip2 ncompress lzop binutils arj lha unrar zip unzip p7zip l
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 # From configure.in
-BuildPreReq: gnome-doc-utils
+BuildPreReq: yelp-tools itstool
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libnautilus-devel >= %nautilus_ver
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: desktop-file-utils >= %desktop_file_utils_ver
-BuildRequires: scrollkeeper libSM-devel
+BuildRequires: libSM-devel libjson-glib-devel libnotify-devel
+%{?_enable_libarchive:BuildRequires: libarchive-devel >= %libarchive_ver}
 %{?_enable_magic:BuildRequires: libmagic-devel}
+
 
 %description
 File Roller is an archive manager for the GNOME environment.  This means that
@@ -93,10 +96,11 @@ rm -f data/%name.desktop{,.in}
 %configure \
     --enable-nautilus-actions \
     --disable-schemas-compile \
-    --disable-scrollkeeper \
     --disable-static \
     %{subst_enable magic} \
-    %{subst_enable packagekit}
+    %{subst_enable packagekit} \
+    %{subst_enable libarchive} \
+    --with-smclient=auto
 
 %make_build
 
@@ -108,7 +112,6 @@ rm -f data/%name.desktop{,.in}
 %files -f %name.lang
 %_bindir/*
 %_libdir/nautilus/extensions-%nau_api_ver/*.so
-%_libexecdir/file-roller-server
 %dir %_libexecdir/%name
 %_libexecdir/%name/*.sh
 %_libexecdir/%name/rpm2cpio
@@ -125,6 +128,9 @@ rm -f data/%name.desktop{,.in}
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/*.la
 
 %changelog
+* Tue Sep 18 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.92-alt1
+- 3.5.92
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

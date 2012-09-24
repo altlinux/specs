@@ -1,5 +1,5 @@
 %define _name atk
-%define ver_major 2.4
+%define ver_major 2.6
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
@@ -25,7 +25,7 @@ Requires: %name-locales = %version
 Provides: atk = %version
 Obsoletes: atk < %version
 
-%define glib_ver 2.5.7
+%define glib_ver 2.31.2
 %define gtk_doc_ver 1.0
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
@@ -152,6 +152,9 @@ install -p -m644 %_sourcedir/atk-compat.lds atk/compat.lds
 %endif
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 

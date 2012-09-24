@@ -4,7 +4,7 @@
 
 Name: lib%{_name}3
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: C++ bindings for the gdl library
 Group: System/Libraries
@@ -69,6 +69,9 @@ make check
 %_datadir/devhelp/*
 
 %changelog
+* Tue Oct 02 2012 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt2
+- rebuilt against libgdl-3.so.5
+
 * Mon May 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt1
 - 3.3.2
 

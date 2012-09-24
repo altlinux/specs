@@ -1,11 +1,11 @@
 %define api_version 3.0
 %define rname gtkmm
-%define ver_major 3.4
+%define ver_major 3.5
 %def_disable atkmm
 %def_disable demos
 
 Name: libgtkmm3
-Version: %ver_major.0
+Version: %ver_major.12
 Release: alt1
 
 Summary: A C++ interface for GTK3 (a GUI library for X)
@@ -18,8 +18,8 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%rname/%ver_major/%rname-%version.
 
 Provides: %rname = %version
 
-BuildRequires: gcc-c++ mm-common libgtk+3-devel >= 3.4.0
-BuildRequires: libglibmm-devel >= 2.32.0 libpangomm-devel >= 2.28.2
+BuildRequires: gcc-c++ mm-common doxygen  xsltproc libgtk+3-devel >= 3.5.12
+BuildRequires: libglibmm-devel >= 2.33.12 libpangomm-devel >= 2.28.2
 BuildRequires: libatkmm-devel >= 2.22.5 libcairomm-devel >= 1.9.2
 
 %description
@@ -40,7 +40,7 @@ developing gtkmm applications.
 
 %package doc
 Summary: Documentation for developing with %name
-Group: Development/C++
+Group: Development/Documentation
 BuildArch: noarch
 
 %description doc
@@ -92,6 +92,9 @@ The %name-demos package contains source code of demo programs for %name.
 %endif
 
 %changelog
+* Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.12-alt1
+- 2.33.12
+
 * Tue Apr 10 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

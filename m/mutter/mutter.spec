@@ -1,10 +1,10 @@
 %def_enable privatelib
 
 Name: mutter
-Version: 3.4.1
+Version: 3.6.0
 Release: alt1
 Epoch: 1
-Summary: Clutter based compositing GTK2 Window Manager
+Summary: Clutter based compositing GTK3 Window Manager
 License: GPLv2+
 Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -89,7 +89,7 @@ environment.
 %build
 %autoreconf
 DATADIRNAME=share %configure \
-	--with-introspection \
+	--enable-introspection \
 	--disable-static \
 	--disable-schemas-compile
 
@@ -134,6 +134,15 @@ DATADIRNAME=share %configure \
 %_datadir/gnome/wm-properties/%name-wm.desktop
 
 %changelog
+* Tue Sep 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.6.0-alt1
+- 3.6.0
+
+* Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.5.92-alt1
+- 3.5.92
+
+* Thu Sep 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.5.91-alt1
+- 3.5.91
+
 * Wed Apr 18 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.4.1-alt1
 - 3.4.1
 

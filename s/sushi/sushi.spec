@@ -1,10 +1,11 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 0.4
+%define ver_major 3.6
 %define api_ver 1.0
+%define gst_api_ver 1.0
 %def_enable introspection
 
 Name: sushi
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -14,15 +15,17 @@ Url: https://live.gnome.org/ThreePointOne/Features/FilePreviewing
 
 Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-Requires: lib%name-gir = %version-%release
+%define gst_ver 0.11.94
+%define clutter_ver 1.11.4
 
 BuildRequires: intltool
 BuildRequires: libgtksourceview3-devel libgjs-devel
-BuildRequires: libclutter-devel libclutter-gtk3-devel libclutter-gst-devel
-BuildRequires: libevince-devel libmusicbrainz3-devel libwebkitgtk3-devel
+BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libclutter-gst2.0-devel
+BuildRequires: libevince-devel libmusicbrainz5-devel libwebkitgtk3-devel
+BuildRequires: gstreamer%gst_api_ver-devel >= %gst_ver gst-plugins%gst_api_ver-devel
 %if_enabled introspection
 BuildRequires: libgtksourceview3-gir-devel libclutter-gir-devel libevince-gir-devel
-BuildRequires: gstreamer-gir-devel gst-plugins-gir-devel
+BuildRequires: libgstreamer%gst_api_ver-gir-devel gst-plugins%gst_api_ver-gir-devel
 %endif
 
 %description
@@ -63,6 +66,7 @@ Requires: lib%name-devel = %version-%release
 %description -n lib%name-gir-devel
 GObject introspection devel data for the Sushi library.
 
+%set_typelibdir %_libdir/%name/girepository-1.0
 
 %prep
 %setup
@@ -79,25 +83,20 @@ GObject introspection devel data for the Sushi library.
 %files -f %name.lang
 %_bindir/%name
 %_libexecdir/*
+%dir %_libdir/%name
+%_libdir/%name/*.so
+%exclude %_libdir/%name/*.la
+%dir %_libdir/%name/girepository-1.0
+%_libdir/%name/girepository-1.0/Sushi-%api_ver.typelib
 %_datadir/%name/
 %_datadir/dbus-1/services/*
+%_datadir/glib-2.0/schemas/org.gnome.%name.gschema.xml
 %doc README AUTHORS NEWS TODO
 
-%files -n lib%name
-%_libdir/*.so.*
-
-%files -n lib%name-devel
-%_libdir/*.so
-
-%if_enabled introspection
-%files -n lib%name-gir
-%_typelibdir/Sushi-%api_ver.typelib
-
-%files -n lib%name-gir-devel
-%_girdir/Sushi-%api_ver.gir
-%endif
-
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Apr 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
 - 0.4.1
 

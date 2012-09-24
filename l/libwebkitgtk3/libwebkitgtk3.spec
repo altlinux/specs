@@ -1,50 +1,31 @@
 %set_verify_elf_method textrel=relaxed
 %define _gtk_docdir %_datadir/gtk-doc/html
 %define _libexecdir %_prefix/libexec
+%add_verify_elf_skiplist %_libexecdir/WebKitPluginProcess
 %define gtk_ver 3.0
 
 %define oname webkit
 # freetype/pango
 %define font_backend freetype
-# no/opengl/cairo/clutter
-%define accelerated_compositing no
+# none/opengl/cairo/clutter
+%define acceleration_backend opengl
 %def_enable introspection
 %def_enable geolocation
-%def_disable directory_upload
-%def_disable file_system
-%def_disable indexed_database
-%def_disable input_color
-%def_disable input_speech
-%def_enable style_scoped
-%def_enable webgl
-%def_enable coverage
-%def_disable web_timing
 %def_disable web_audio
-%def_enable blob
-%def_disable media_source
 %def_disable media_stream
-%def_disable media_statistics
 %def_enable spellcheck
-%def_disable notifications
-%def_enable meter_tag
-%def_enable page_visibility_api
-%def_enable progress_tag
-%def_enable link-prefetch
-%def_enable animation_api
 %def_disable webkit2
+
+%def_disable unstable_features
 
 Summary: Web browser engine
 Name: libwebkitgtk3
-Version: 1.8.3
+Version: 1.10.0
 Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
 Url: http://www.webkitgtk.org/
 Source: %oname-%version.tar
-# Patch1: %name-%version-fix-build.patch
-# Patch2: webkit-1.6.1-alt-fix-TEXTREL.patch
-Patch3: webkit-1.8.1-fix-rpath.patch
-Patch100: changeset_r109329.diff
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
@@ -62,30 +43,31 @@ BuildRequires: libgail3-devel >= 3.0
 BuildRequires: libenchant-devel >= 0.22
 BuildRequires: libsqlite3-devel >= 3.0
 BuildRequires: libxslt-devel >= 1.1.7
-BuildRequires: gstreamer-devel >= 0.10 gst-plugins-devel >= 0.10.30
+BuildRequires: gstreamer1.0-devel >= 0.11.90 gst-plugins1.0-devel >= 0.11.90
 BuildRequires: librsvg-devel >= 2.2.0
 BuildRequires: gtk-doc >= 1.10
-BuildRequires: libsoup-devel >= 2.37.92
+BuildRequires: libsoup-devel >= 2.39.2
 BuildRequires: libpango-devel >= 1.21.0 libcairo-devel >= 1.10 libcairo-gobject-devel
 BuildRequires: libgio-devel >= 2.25.0
 BuildRequires: python-modules-json
+BuildRequires: ruby ruby-stdlibs
 
 %if %font_backend == freetype
 BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel
 %endif
-%if %accelerated_compositing == clutter
+%if %acceleration_backend == clutter
 BuildRequires: libclutter-devel >= 1.8.2
 BuildRequires: libclutter-gtk3-devel >= 1.0.2
 %endif
-%if %accelerated_compositing == opengl
-BuildRequires: libGL-devel
+%if %acceleration_backend == opengl
+BuildRequires: libGL-devel libXcomposite-devel
 %endif
 
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libsoup-gir-devel}
 %{?_enable_geolocation:BuildPreReq: libgeoclue-devel}
 %{?_enable_spellcheck:BuildPreReq: libenchant-devel}
-%{?_enable_webgl:BuildPreReq: libGL-devel}
 %{?_enable_webkit2:BuildPreReq: libat-spi2-core-devel >= 2.2.1  libgtk+2-devel libgail-devel}
+%{?_enable_media_stream:BuildPreReq: farstream-devel}
 
 %description
 WebKit is an open source web browser engine.
@@ -149,6 +131,7 @@ that we have built the process split model directly into the framework, allowing
 Summary: WebKit2 is a new API layer for WebKit
 Group: Development/GNOME and GTK+
 Requires: libjavascriptcoregtk3-devel = %version-%release
+Requires: libwebkit2gtk = %version-%release
 
 %description -n libwebkit2gtk-devel
 WebKit2 is a new API layer for WebKit designed from the ground up to support a split process model,
@@ -218,48 +201,37 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -q -n %oname-%version
-#%patch1 -p1
-#%patch2 -p1
-# %patch3 -p1
-%patch100 -p2
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
 rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmain.sh,missing,libtool.m4,ltoptions.m4,ltsugar.m4,ltversion.m4,lt~obsolete.m4,gsettings.m4,gtk-doc.m4}
 
 %build
+%ifarch %arm ppc
+# Use linker flags to reduce memory consumption on low-mem architectures
+%add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
+%endif
+
+# Build with -g1 on all platforms to avoid running into 4 GB ar format limit
+# https://bugs.webkit.org/show_bug.cgi?id=91154
+%define optflags_debug -g1
+
+
 gtkdocize --copy
 %autoreconf -I Source/autotools
 
 %configure \
 	--enable-video \
 	--with-font-backend=%font_backend \
-	--with-accelerated-compositing=%accelerated_compositing \
-	--with-gstreamer=0.10 \
+	--with-acceleration-backend=%acceleration_backend \
+	--enable-webgl \
+	--with-gstreamer=1.0 \
 	%{subst_enable introspection} \
 	%{subst_enable geolocation} \
-	%{subst_enable coverage} \
-	%{subst_enable blob} \
-	%{subst_enable spellcheck} \
-	%{?_enable_indexed_database:--enable-indexed-database} \
-	%{?_enable_input_color:--enable-input-color} \
-	%{?_enable_input_speech:--enable-input-speech} \
-	%{?_enable_style_scoped:--enable-style-scoped} \
-	%{?_enable_directory_upload:--enable-directory-upload} \
-	%{?_enable_file_system:--enable-file-system} \
-	%{subst_enable webgl} \
-	%{?_enable_web_timing:--enable-web-timing} \
 	%{?_enable_web_audio:--enable-web-audio} \
-	%{?_enable_media_source:--enable-media-source} \
 	%{?_enable_media_stream:--enable-media-stream} \
-	%{?_enable_media_statistics:--enable-media-statistics} \
-	%{subst_enable notifications} \
-	%{?_enable_page_visibility_api:--enable-page-visibility-api} \
-	%{?_enable_meter_tag:--enable-meter-tag} \
-	%{?_enable_progress_tag:--enable-progress-tag} \
-	%{?_enable_link_prefetch:--enable-link-prefetch} \
-	%{?_enable_animation_api:--enable-animation-api} \
 	%{subst_enable webkit2} \
-	--with-gtk=%gtk_ver
+	--with-gtk=%gtk_ver \
+	%{?_enable_unstable_features:--enable-unstable-features}
 
 mkdir -p DerivedSources/webkit
 mkdir -p DerivedSources/ANGLE
@@ -271,7 +243,7 @@ mkdir -p DerivedSources/InjectedBundle
 %install
 %make_install DESTDIR=%buildroot install
 
-%find_lang --output=webkitgtk.lang webkit-%gtk_ver
+%find_lang --output=webkitgtk.lang webkitgtk-%gtk_ver
 
 %files -f webkitgtk.lang
 %_libdir/libwebkitgtk-3.0.so.*
@@ -329,6 +301,9 @@ mkdir -p DerivedSources/InjectedBundle
 %endif
 
 %changelog
+* Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+
 * Wed Aug 29 2012 Alexey Shabalin <shaba@altlinux.ru> 1.8.3-alt1
 - 1.8.3
 

@@ -1,4 +1,4 @@
-%define ver_major 3.2
+%define ver_major 3.6
 
 Name: gnome3
 Version: %ver_major.0
@@ -22,7 +22,7 @@ BuildPreReq: rpm-build-licenses
 %define terminal_ver %ver_major
 %define epiphany_ver %ver_major
 %define pidgin_ver 2.6.3
-%define metacity_ver 2.34
+%define metacity_ver 2.34.2
 %define media_ver 2.91.2
 %define evince_ver %ver_major
 %define applets_ver 2.91.4
@@ -75,7 +75,7 @@ Requires: yelp >= %ver_major
 # GNOME Utilities
 Requires: gnome-search-tool >= %ver_major
 Requires: gnome-system-monitor >= %ver_major
-Requires: gucharmap >= %ver_major
+Requires: gucharmap >= 3.5.99
 Requires: gcalctool >= %ver_major
 
 # Applications
@@ -84,7 +84,7 @@ Requires: nautilus >= %ver_major
 ## Default terminal emulator
 Requires: gnome-terminal >= %terminal_ver
 ## Default archiving tool
-Requires: file-roller >= %ver_major
+Requires: file-roller >= 3.5.92
 ## Default text editor
 Requires: gedit >= %ver_major
 
@@ -128,11 +128,12 @@ Requires: gdm-gnome >= %ver_major
 ## Default web-browser (firefox or galeon?)
 Requires: epiphany >=  %epiphany_ver
 ## Epiphany extensions
-Requires: epiphany-extensions
+#Requires: epiphany-extensions
 ## Default mailer
 Requires: evolution >= %ver_major
 ## Default messenger
 Requires: empathy >= %ver_major
+Requires: gnome-contacts >= %ver_major
 ## Default RSS-reader
 #Requires: liferea
 ## Default document reader (currently pdf, ps, tiff, dvi)
@@ -161,10 +162,11 @@ Requires: gnome-media >= %media_ver
 ## Default media player
 Requires: totem
 ## Stock GNOME games
-Requires: gnome-games >= %ver_major
+Requires: gnome-games >= 3.4.0
+#Requires: gnome-games >= %ver_major
 ## Default image viewer
 Requires: eog >= %ver_major
-Requires: eog-plugins >= 2.91.90
+Requires: eog-plugins >= %ver_major
 ## Default CD/DVD burning interface
 Requires: brasero >= %ver_major
 ## Clipboard manager
@@ -353,6 +355,11 @@ itself).
 #%files a11y
 
 %changelog
+* Fri Oct 05 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- added gnome-contacts in -default
+- temporarily removed buggy epiphany-extensions
+- temporarily relaxed gnome-games required version
+
 * Thu Oct 13 2011 Yuri N. Sedunov <aris@altlinux.org> 3.2.0-alt1
 - added gnome-color-manager, sushi in -default
 

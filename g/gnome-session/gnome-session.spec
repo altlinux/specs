@@ -1,10 +1,10 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define _libexecdir %_prefix/libexec
 %def_enable systemd
 
 Name: gnome-session
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt2.1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -12,13 +12,19 @@ Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 Source1: gnome-nautilus.png
 Source2: gnome.svg
 Patch: %name-2.91.6-alt-autosave_session.patch
 
+# fedora patches:
+Patch10: gnome-session-3.3.1-llvmpipe.patch
+# Blacklist NV30: https://bugzilla.redhat.com/show_bug.cgi?id=745202
+Patch11: gnome-session-3.3.92-nv30.patch
+
 # From configure.in
-%define glib_ver 2.28.0
+%define glib_ver 2.33.4
 %define gtk_ver 3.0.0
 %define dbus_glib_ver 0.76
 %define polkit_ver 0.91
@@ -43,11 +49,11 @@ BuildPreReq: libgio-devel glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libdbus-glib-devel >= %dbus_glib_ver
 BuildPreReq: libupower-devel >= %upower_ver
-BuildRequires: libgnome-desktop3-devel librsvg-devel libjson-glib-devel
+BuildRequires: libpangox-compat-devel libgnome-desktop3-devel librsvg-devel libjson-glib-devel
 BuildRequires: libX11-devel libXau-devel libXrandr-devel libXrender-devel libXt-devel
 BuildRequires: libSM-devel libXext-devel libXtst-devel libXi-devel libXcomposite-devel libGL-devel
 BuildRequires: GConf browser-plugins-npapi-devel perl-XML-Parser xorg-xtrans-devel
-%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libpolkit-devel}
+%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel libsystemd-daemon-devel libpolkit-devel}
 
 %description
 GNOME (GNU Network Object Model Environment) is a user-friendly
@@ -59,10 +65,16 @@ This package provides tools for the the gnome desktop.
 %prep
 %setup -q
 %patch
+%patch10 -p1 -b .llvmpipe
+%patch11 -p1 -b .nv30
+
+[ ! -d m4 ] && mkdir m4
 
 %build
+%autoreconf
 %configure PATH=$PATH:/sbin \
     %{subst_enable systemd} \
+    --enable-ipv6 \
     --disable-schemas-compile
 
 %make_build
@@ -152,6 +164,18 @@ install -pD -m644 %SOURCE2 %buildroot%_iconsdir/gnome.svg
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Thu Oct 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2.1
+- shaba:
+  add fedora patches:
+  gnome-session-3.3.1-llvmpipe.patch: Don't consider llvmpipe unsupported
+  gnome-session-3.3.92-nv30.patch: blacklist NV30 family
+
+* Tue Oct 02 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
+- updated to 765827a
+
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon May 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

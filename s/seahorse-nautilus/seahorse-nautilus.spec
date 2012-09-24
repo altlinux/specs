@@ -1,5 +1,5 @@
 %define _name seahorse
-%define ver_major 3.4
+%define ver_major 3.6
 %def_enable libnotify
 
 Name: %_name-nautilus
@@ -15,7 +15,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildRequires: rpm-build-gnome intltool
 BuildRequires: libgtk+3-devel libnautilus-devel libcryptui-devel libgpgme-devel
-BuildRequires: libgnome-keyring-devel libdbus-glib-devel gnupg2-gpg
+BuildRequires: libgnome-keyring-devel libdbus-glib-devel gnupg2-gpg gcr-libs-devel
 %{?_enable_libnotify:BuildPreReq: libnotify-devel >= 0.7.2}
 
 %description
@@ -28,6 +28,7 @@ and decryption of OpenPGP files using GnuPG.
 %build
 export GNUPG=/usr/bin/gpg2
 %configure --disable-static \
+	--disable-schemas-compile \
 	%{subst_enable libnotify}
 
 %make_build
@@ -44,12 +45,18 @@ export GNUPG=/usr/bin/gpg2
 %_desktopdir/seahorse-pgp-keys.desktop
 %_desktopdir/seahorse-pgp-signature.desktop
 %_datadir/%name/
+%_datadir/GConf/gsettings/org.gnome.seahorse.nautilus.convert
+%_datadir/glib-2.0/schemas/org.gnome.seahorse.nautilus.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.seahorse.nautilus.window.gschema.xml
 %_man1dir/%_name-tool.1.*
 %doc AUTHORS NEWS README
 
 %exclude %nautilus_extdir/*.la
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Sun Apr 01 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - first build for Sisyphus
 

@@ -4,7 +4,7 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: 1.10.8
+Version: 1.12.0
 Release: alt1
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -16,7 +16,7 @@ Source: %name-%version.tar
 # Patch: %name-%version-%release.patch
 
 %define glib_ver 2.31.19
-%define cogl_ver 1.9.8
+%define cogl_ver 1.11
 
 BuildRequires: gtk-doc
 BuildRequires: libGL-devel libXcomposite-devel libXext-devel libXdamage-devel libXi-devel libX11-devel libXfixes-devel
@@ -131,6 +131,15 @@ Contains developer documentation for %name.
 
 
 %changelog
+* Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
+- 1.12.0
+
+* Tue Sep 18 2012 Alexey Shabalin <shaba@altlinux.ru> 1.11.16-alt1
+- 1.11.16
+
+* Thu Sep 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.11.14-alt1
+- 1.11.14
+
 * Wed Jun 20 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.8-alt1
 - 1.10.8
 
