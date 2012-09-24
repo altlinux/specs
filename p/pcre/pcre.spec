@@ -1,6 +1,6 @@
 Name: pcre
-Version: 8.21
-Release: alt1
+Version: 8.31
+Release: alt2
 
 Summary: Perl-compatible regular expression library
 License: BSD-style
@@ -15,10 +15,10 @@ Patch: pcre-%version-%release.patch
 
 Summary(ru_RU.UTF-8): Библиотека для работы с Perl-совместимыми регулярными выражениями
 
-%define libname lib%{name}3
+%define libname libpcre3
 %def_enable cpp
 
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ libreadline-devel
 
 %package -n %libname
 Summary: Perl-compatible regular expression shared library
@@ -29,6 +29,12 @@ Provides: pcre-config(unicode-properties)
 Provides: %name = %version
 Obsoletes: %name < %version
 
+%package -n libpcre16
+Summary: Perl-compatible regular expression shared library with UTF-16 support
+Summary(ru_RU.UTF-8): Разделяемая библиотека для работы с регулярными выражениями Perl-стиля с поддержкой UTF-16
+Group: System/Libraries
+Provides: pcre-config(utf16)
+
 %package -n lib%name-devel
 Summary: Perl-compatible regular expressions development environment
 Summary(ru_RU.UTF-8): Заголовочные файлы и документация для разработки с использованием библиотеки PCRE
@@ -36,6 +42,7 @@ Group: Development/C
 Provides: %name-devel = %version
 Obsoletes: %name-devel < %version
 Requires: %libname = %version-%release
+Requires: libpcre16 = %version-%release
 Requires: pcretest = %version-%release
 
 %package -n lib%name-devel-static
@@ -81,7 +88,7 @@ pattern matching using the same syntax and semantics as Perl, with
 just a few differences.  The current implementation of PCRE corresponds
 approximately with Perl 5.8.
 
-This package contains PCRE shared libraries.
+This package contains PCRE runtime shared libraries.
 
 %description -n %libname -l ru_RU.UTF-8
 Библиотека PCRE (Perl-compatible regular expressions) предоставляет
@@ -90,6 +97,22 @@ This package contains PCRE shared libraries.
 языка Perl версии 5.8.
 
 Данный пакет содержит динамическую разделяемую библиотеку PCRE.
+
+%description -n libpcre16
+The PCRE library is a set of functions that implement regular expression
+pattern matching using the same syntax and semantics as Perl, with
+just a few differences.  The current implementation of PCRE corresponds
+approximately with Perl 5.8.
+
+This package contains libpcre16 runtime dhared library.
+
+%description -n libpcre16 -l ru_RU.UTF-8
+Библиотека PCRE (Perl-compatible regular expressions) предоставляет
+набор функций для работы с регулярными выражениями, синтаксис и смысл
+которых полностью совпадают со встроенными регулярными выражениями
+языка Perl версии 5.8.
+
+Данный пакет содержит динамическую разделяемую библиотеку libpcre16.
 
 %description -n lib%{name}cpp
 The PCRE library is a set of functions that implement regular expression
@@ -182,9 +205,12 @@ mkdir m4
 %define docdir %_docdir/%name-%version
 %configure --includedir=%_includedir/%name \
 	--docdir=%docdir \
-	%{subst_enable cpp} \
-	--enable-utf8 \
+	--enable-pcre8 \
+	--enable-pcre16 \
+	--enable-utf \
 	--enable-unicode-properties \
+	--enable-pcretest-libreadline \
+	%{subst_enable cpp} \
 	#
 %make_build
 
@@ -218,12 +244,17 @@ rm %buildroot%_libdir/*.la
 %dir %docdir
 %docdir/[ACLN]*
 
+%files -n libpcre16
+%_libdir/libpcre16.so.*
+
 %files -n lib%name-devel
 %_libdir/libpcre.so
+%_libdir/libpcre16.so
 %_libdir/libpcreposix.so
 %_includedir/pcre
 %_bindir/*
 %_pkgconfigdir/libpcre.pc
+%_pkgconfigdir/libpcre16.pc
 %_pkgconfigdir/libpcreposix.pc
 %_man1dir/*
 %_man3dir/*
@@ -262,6 +293,13 @@ rm %buildroot%_libdir/*.la
 %_man1dir/pcretest.*
 
 %changelog
+* Mon Sep 24 2012 Dmitry V. Levin <ldv@altlinux.org> 8.31-alt2
+- libpcre3: reintroduced obsolete pcre_info() API for compatiblity.
+
+* Mon Sep 24 2012 Dmitry V. Levin <ldv@altlinux.org> 8.31-alt1
+- Updated to 8.31.
+- Enabled and packaged libpcre16.
+
 * Wed Dec 14 2011 Dmitry V. Levin <ldv@altlinux.org> 8.21-alt1
 - Updated to 8.21.
 
