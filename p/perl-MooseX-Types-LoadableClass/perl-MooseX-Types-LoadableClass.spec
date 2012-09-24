@@ -14,7 +14,7 @@
 %define _disable_test 1
 
 Name: perl-MooseX-Types-LoadableClass
-Version: 0.006
+Version: 0.008
 Release: alt1
 
 Summary: ClassName type constraint with coercion to load the class
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/CPAN/authors/id/B/BO/BOBTFISH/MooseX-Types-LoadableC
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/B/BO/BOBTFISH/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BO/BOBTFISH/MooseX-Types-LoadableClass-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Sep 29 2011
 BuildRequires: perl-Class-Load perl-Pod-Escapes perl-devel perl-namespace-clean perl-MooseX-Types perl-Moose
@@ -55,6 +55,9 @@ Now I don't have to.
 %perl_vendor_privlib/MooseX*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.008-alt1
+- automated CPAN update
+
 * Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 0.006-alt1
 - initial build for ALT Linux Sisyphus
 
