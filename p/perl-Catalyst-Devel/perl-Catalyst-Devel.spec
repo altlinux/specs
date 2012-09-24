@@ -1,6 +1,6 @@
 %define dist Catalyst-Devel
 Name: perl-%dist
-Version: 1.34
+Version: 1.37
 Release: alt1
 
 Summary: Catalyst Development Tools
@@ -42,6 +42,9 @@ Catalyst::Runtime.
 %perl_vendor_privlib/auto/share/dist/%dist/*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.37-alt1
+- automated CPAN update
+
 * Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 1.34-alt1
 - automated CPAN update
 
