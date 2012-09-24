@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Digest-CRC
-Version: 0.17
+Version: 0.18
 Release: alt1
 
 Summary: Digest::CRC - Generic CRC functions
@@ -25,7 +25,7 @@ Url: http://search.cpan.org/dist/Digest-CRC/
 
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
-Source: http://www.cpan.org/authors/id/O/OL/OLIMAUL/Digest-CRC-0.17.tar.gz
+Source: http://www.cpan.org/authors/id/O/OL/OLIMAUL/Digest-CRC-%{version}.tar.gz
 
 BuildArch: noarch
 # Automatically added by buildreq on Mon Jun 30 2008
@@ -48,6 +48,9 @@ functions with the correct parameters for CRC-CCITT, CRC-16 and CRC-32.
 %doc README Changes
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - automated CPAN update
 
