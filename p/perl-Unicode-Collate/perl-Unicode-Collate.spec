@@ -1,6 +1,6 @@
 %define dist Unicode-Collate
 Name: perl-%dist
-Version: 0.89
+Version: 0.90
 Release: alt1
 
 Summary: Unicode Collation Algorithm
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SA/SADAHIRO/Unicode-Collate-%{version}.tar.gz
 
 # require Unicode::Normalize without `eval'
 Patch: perl-Unicode-Collate-0.56-alt-deps.patch
@@ -39,6 +39,9 @@ as described by Unicode Technical Standard #10 (UTS #10).
 %perl_vendor_autolib/Unicode
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.90-alt1
+- automated CPAN update
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.89-alt1
 - 0.87 -> 0.89
 - built for perl-5.16
