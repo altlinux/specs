@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/python-config
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name: btparser
-Version: 0.18
-Release: alt1_2
+Version: 0.19
+Release: alt1_1
 Summary: Parser and analyzer for backtraces produced by GDB
 Group: Development/C
 License: GPLv2+
@@ -50,7 +50,7 @@ routines:
 %package devel
 Summary: Development libraries for %{name}
 Group: Development/C
-Requires: btparser = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 Development libraries and headers for %{name}.
@@ -58,7 +58,7 @@ Development libraries and headers for %{name}.
 %package -n python-module-btparser
 Summary: Python bindings for %{name}
 Group: Development/C
-Requires: btparser = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description -n python-module-btparser
 Python bindings for %{name}.
@@ -95,6 +95,9 @@ make check
 %{python_sitelibdir}/%{name}/*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1_2
 - new release
 
