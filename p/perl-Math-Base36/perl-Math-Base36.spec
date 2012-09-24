@@ -1,14 +1,14 @@
 %define dist Math-Base36
 Name: perl-%dist
-Version: 0.09
-Release: alt2
+Version: 0.10
+Release: alt1
 
 Summary: Encoding and decoding of base36 strings
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BR/BRICAS/Math-Base36-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,6 +32,9 @@ This module converts to and from Base36 numbers (0..9 - A..Z)
 %perl_vendor_privlib/Math
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.09-alt2
 - disabled build dependency on perl-Math-Base36
 
