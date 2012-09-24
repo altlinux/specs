@@ -1,7 +1,7 @@
 %define _name p11-kit
 
 Name: lib%_name
-Version: 0.12
+Version: 0.14
 Release: alt1
 
 Summary: Library for loading and sharing PKCS#11 modules
@@ -77,6 +77,9 @@ mkdir -p %buildroot%_sysconfdir/pkcs11/modules
 %_datadir/gtk-doc/html/%_name
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 0.14-alt1
+- 0.14
+
 * Sun Mar 25 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12-alt1
 - 0.12
 - %%check section
