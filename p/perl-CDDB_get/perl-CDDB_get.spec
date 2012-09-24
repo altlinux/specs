@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-CDDB_get
-Version: 2.27
-Release: alt2.1
+Version: 2.28
+Release: alt1
 
 Summary: This module/script gets the CDDB info for an audio cd
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/F/FO/FONKIE/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/F/FO/FONKIE/CDDB_get-%{version}.tar.gz
 #Source: http://www.cpan.org/modules/by-module/%m_distro/%m_distro-%version.tar.bz2
 
 
@@ -53,6 +53,9 @@ in order to do that.
 %perl_vendor_privlib/*.p*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.28-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.27-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
