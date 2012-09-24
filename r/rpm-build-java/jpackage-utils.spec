@@ -31,10 +31,11 @@
 %define distver 5.0
 %def_enable gcj_filesystem
 %def_disable gcj_support
+%def_without lua_scripts
 
 Name:           rpm-build-java
 Version:        5.0.0
-Release:        alt25
+Release:        alt26
 Epoch:          0
 URL:            http://www.jpackage.org/
 License:        BSD
@@ -240,7 +241,9 @@ install -pm 644 etc/font.properties ${RPM_BUILD_ROOT}%_sysconfdir/java
 
 # Install abs2rel scripts
 install -pm 755 abs2rel.sh  ${RPM_BUILD_ROOT}${_javadir}-utils/
+%if_with lua_scripts
 install -pm 644 abs2rel.lua ${RPM_BUILD_ROOT}${_javadir}-utils/
+%endif
 
 # Create an initial (empty) depmap
 echo -e "<dependencies>\\n" > ${RPM_BUILD_ROOT}${_mavendepmapdir}/maven2-depmap.xml
@@ -408,6 +411,9 @@ install -pm 644 rpm-build-java/macros.eclipse ${RPM_BUILD_ROOT}%_rpmmacrosdir/jp
 /usr/lib/rpm/osgi.*
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt26
+- disabled lua scripts
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0.0-alt25
 - store poms in /usr/share/maven-poms
 
