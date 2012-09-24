@@ -1,6 +1,6 @@
 %define dist Params-Check
 Name: perl-%dist
-Version: 0.32
+Version: 0.36
 Release: alt1
 
 Summary: A generic input parsing/checking mechanism.
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Params-Check-0.32.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Params-Check-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ system, providing default values and so on.
 %perl_vendor_privlib/Params
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.32-alt1
 - automated CPAN update
 
