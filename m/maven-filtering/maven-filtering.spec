@@ -1,51 +1,89 @@
-Name: maven-filtering
-Version: 1.0
-Summary: Shared component providing resource filtering
-License: ASL 2.0
-Url: http://maven.apache.org/shared/maven-filtering/index.html
-Packager: Igor Vlasenko <viy@altlinux.ru>
-Provides: maven-shared-filtering
-Requires: java
-Requires: jpackage-utils
-Requires: maven
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:             maven-filtering
+Version:          1.0
+Release:          alt2_8jpp7
+Summary:          Shared component providing resource filtering
+Group:            Development/Java
+License:          ASL 2.0
+URL:              http://maven.apache.org/shared/%{name}/index.html
 
-BuildArch: noarch
-Group: Development/Java
-Release: alt2_0jpp
-Source: maven-filtering-1.0-5.fc17.cpio
+Source0:          http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+# POM requires plexus-maven-plugin, which was replaced by 
+# plexus-containers-component-metadata
+Patch0:           %{name}-plexus.patch
+  
+BuildArch:        noarch
+
+BuildRequires:    jpackage-utils
+BuildRequires:    maven
+BuildRequires:    plexus-build-api
+BuildRequires:    plexus-containers-component-metadata
+BuildRequires:    sisu
+
+Requires:         jpackage-utils
+Requires:         maven
+
+Provides:         maven-shared-filtering = 1.0-99
+Obsoletes:        maven-shared-filtering < 1.0-99 
+Source44: import.info
 
 %description
-These Plexus components have been built from the filtering process/code in
-Maven Resources Plugin. The goal is to provide a shared component for all
+These Plexus components have been built from the filtering process/code in 
+Maven Resources Plugin. The goal is to provide a shared component for all 
 plugins that needs to filter resources.
 
-# sometimes commpress gets crazy (see maven-scm-javadoc for details)
-%set_compress_method none
+%package javadoc
+Group:            Development/Java
+Summary:          Javadoc for %{name}
+Requires:         jpackage-utils
+BuildArch: noarch
+
+%description javadoc
+This package contains the API documentation for %{name}.
+
 %prep
-cpio -idmu --quiet --no-absolute-filenames < %{SOURCE0}
+%setup -q -n %{name}-%{version}
+%patch0 -p1
+
 
 %build
-cpio --list < %{SOURCE0} | sed -e 's,^\.,,' > %name-list
+# Tests use a package that is no longer present in plexus-build-api (v0.0.7)
+mvn-rpmbuild install javadoc:aggregate -Dmaven.test.skip
 
 %install
-mkdir -p $RPM_BUILD_ROOT
-for i in usr var etc; do
-[ -d $i ] && mv $i $RPM_BUILD_ROOT/
-done
+# jars
+install -d -m 0755 %{buildroot}%{_javadir}
+install -pm 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
+
+# pom
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
+# javadoc
+install -d -m 0755 %{buildroot}%{_javadocdir}/%{name}
+cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 
 
-%files -f %name-list
+%files
+%doc DEPENDENCIES LICENSE NOTICE
+%{_javadir}/*
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
+
+%files javadoc
+%doc LICENSE
+%{_javadocdir}/%{name}
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_8jpp7
+- full build
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0jpp
-- bootstrap pack of jars created with jppbootstrap script
-- temporary package to satisfy circular dependencies
-
-%changelog
-* Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5jpp7
-- complete build
-
-* Wed Mar 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.1jpp
 - bootstrap pack of jars created with jppbootstrap script
 - temporary package to satisfy circular dependencies
 
