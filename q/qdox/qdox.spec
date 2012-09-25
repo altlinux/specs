@@ -55,7 +55,7 @@ BuildRequires: jpackage-compat
 
 Name:           qdox
 Version:        1.12
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Summary:        Extract class/interface/method definitions from sources
 Epoch:          1
 License:        Apache-style Software License
@@ -95,8 +95,8 @@ BuildRequires:  maven2-plugin-resources
 BuildRequires:  maven-surefire-maven-plugin
 BuildRequires:  maven2-common-poms >= 1.0
 BuildRequires:  maven2-default-skin
-BuildRequires:  mojo-maven2-plugin-cobertura
-BuildRequires:  jflex-maven-plugin
+BuildRequires:  maven-plugin-cobertura
+BuildRequires:  maven-jflex-plugin
 BuildRequires:  jmock >= 0:1.0
 %endif
 BuildRequires:  annotation_1_0_api
@@ -259,6 +259,9 @@ cp -p README.txt %{buildroot}%{_docdir}/%{name}-%{version}
 %endif
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.12-alt3_2jpp6
+- fixed build
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.12-alt2_2jpp6
 - fixed build with java 7
 
