@@ -1,6 +1,6 @@
 %define dist Email-MIME
 Name: perl-%dist
-Version: 1.910
+Version: 1.911
 Release: alt1
 
 Summary: Easy MIME message parsing
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-MIME-1.910.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-MIME-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -38,6 +38,9 @@ the message. Headers are decoded from MIME encoding.
 %perl_vendor_privlib/Email*
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.911-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.910-alt1
 - automated CPAN update
 
