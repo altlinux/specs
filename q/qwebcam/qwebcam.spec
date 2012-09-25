@@ -1,6 +1,6 @@
 Name: qwebcam
 Version: 0.0.3
-Release: alt1
+Release: alt2
 
 Summary: webcam viewer built on Qt4/C++
 Group: Development/Tools
@@ -32,5 +32,8 @@ install -pD -m755 %name %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt2
+- rebuild with new libopencv
+
 * Tue Jan 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.3-alt1
 - Built for Sisyphus
