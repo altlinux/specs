@@ -1,14 +1,14 @@
 %define dist AnyEvent
 Name: perl-%dist
-Version: 6.02
-Release: alt2
+Version: 7.02
+Release: alt1
 
 Summary: Framework for multiple event loops
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/AnyEvent-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -19,7 +19,7 @@ BuildArch: noarch
 Provides: perl(AnyEvent/Util/uts46data.pl)
 
 # Automatically added by buildreq on Wed Oct 26 2011 (-bi)
-BuildRequires: perl-Async-Interrupt perl-EV perl-Guard perl-Net-SSLeay perl-Unicode-Normalize perl-devel
+BuildRequires: perl-Async-Interrupt perl-EV perl-Guard perl-Net-SSLeay perl-Unicode-Normalize perl-devel perl(IO/AIO.pm) perl(AnyEvent/AIO.pm)
 
 %description
 AnyEvent provides an identical interface to multiple event loops. This allows
@@ -46,6 +46,9 @@ sed -i- '/ PM /,/}/d' Makefile.PL
 %perl_vendor_privlib/AnyEvent*
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 7.02-alt1
+- automated CPAN update
+
 * Wed Oct 26 2011 Alexey Tourbin <at@altlinux.ru> 6.02-alt2
 - noarch
 
