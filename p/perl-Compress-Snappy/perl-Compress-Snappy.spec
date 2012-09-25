@@ -1,6 +1,6 @@
 %define dist Compress-Snappy
 Name: perl-%dist
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: Perl interface to Google's Snappy (de)compressor
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GR/GRAY/Compress-Snappy-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Oct 09 2011
 BuildRequires: perl-devel perl-parent
@@ -41,6 +41,9 @@ sed -i- '/CCFLAGS/d' Makefile.PL
 %perl_vendor_autolib/Compress
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Sat Sep 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.18-alt1
 - 0.12 -> 0.18
 - built for perl-5.16
