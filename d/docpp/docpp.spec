@@ -1,7 +1,7 @@
 %define oname doc++
 Name: docpp
 Version: 3.4.10
-Release: alt3
+Release: alt4
 Summary: Documentation system for C, C++, IDL and Java
 License: GPL v2
 Group: Development/Tools
@@ -68,7 +68,13 @@ This package contains user manual for DOC++.
 
 %build
 %add_optflags -DSTDC_HEADERS -DHAVE_UNISTD_H
-%configure
+touch config.rpath
+%autoreconf
+%configure \
+	--disable-rpath \
+	--enable-threads=pth \
+	--with-libpth-prefix=%prefix \
+	--with-libintl-prefix=%prefix
 %make_build
 
 pushd doc/manual
@@ -96,6 +102,9 @@ install -m644 doc/manual/*.pdf %buildroot%_docdir/%oname
 %_docdir/%oname
 
 %changelog
+* Tue Sep 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.10-alt4
+- Fix for build with make 3.82
+
 * Wed Mar 16 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.10-alt3
 - Rebuilt for debuginfo
 
