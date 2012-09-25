@@ -4,7 +4,7 @@
 
 Name: libgdiplus
 Version: 2.10.8
-Release: alt1.1
+Release: alt2
 
 Summary: An Open Source implementation of the GDI+ API.
 License: MPL
@@ -14,7 +14,6 @@ Url: http://www.mono-project.com/
 
 Source0: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: %name-2.10.8-alt-DSO.patch
 
 BuildPreReq: glib2-devel >= 2.2.3
 BuildPreReq: libcairo-devel >= 1.4.0
@@ -37,7 +36,6 @@ Libraries and header files for developing against libgdiplus.
 %prep
 %setup -q
 %patch -p1
-%patch1 -p0
 
 %build
 #%%remove_optflags -Wall
@@ -63,6 +61,9 @@ NOCONFIGURE=1 ./autogen.sh --skip-cairo
 %_libdir/*.so
 
 %changelog
+* Tue Sep 25 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10.8-alt2
+- fix build with png-1.5
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.10.8-alt1.1
 - Fixed build
 
