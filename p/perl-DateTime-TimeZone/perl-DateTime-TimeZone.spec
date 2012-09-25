@@ -1,14 +1,14 @@
 %define dist DateTime-TimeZone
 Name: perl-%dist
-Version: 1.48
-Release: alt2
+Version: 1.50
+Release: alt1
 
 Summary: Time zone object base class and factory
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-TimeZone-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -65,6 +65,9 @@ sed -i- '/Pod::Man/d' Makefile.PL
 %perl_vendor_privlib/DateTime
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1
+- automated CPAN update
+
 * Sun Sep 09 2012 Vladimir Lettiev <crux@altlinux.ru> 1.48-alt2
 - re-enabled dependency on perl-DateTime
 
