@@ -1,6 +1,6 @@
 Name: qmotion
 Version: 2.3
-Release: alt2
+Release: alt3
 
 Summary: Detect motion with your webcam.
 Group: Development/Tools
@@ -66,6 +66,9 @@ EOF
 %_iconsdir/hicolor/??x??/apps/%name.png
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 2.3-alt3
+- rebuild with new libopencv
+
 * Tue Jan 03 2012 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2
 - added %name.desktop and examples
 
