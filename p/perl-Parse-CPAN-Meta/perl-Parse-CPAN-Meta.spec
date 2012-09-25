@@ -1,14 +1,14 @@
 %define dist Parse-CPAN-Meta
 Name: perl-%dist
-Version: 1.4401
-Release: alt2
+Version: 1.4404
+Release: alt1
 
 Summary: Base class for image manipulation
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/Parse-CPAN-Meta-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ and Image::Xpm.
 %perl_vendor_privlib/Parse
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.4404-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 1.4401-alt2
 - added dependency on perl-JSON-PP
 
