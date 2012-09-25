@@ -1,6 +1,6 @@
 %define dist Alien-SDL
 Name: perl-%dist
-Version: 1.428
+Version: 1.438
 Release: alt1
 
 Summary: Building, finding and using SDL binaries
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/F/FR/FROGGS/Alien-SDL-1.428.tar.gz
+Source: http://www.cpan.org/authors/id/J/JT/JTPALMER/Alien-SDL-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ from source codes.
 %perl_vendor_privlib/Alien
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.438-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.428-alt1
 - automated CPAN update
 
