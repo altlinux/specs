@@ -1,6 +1,6 @@
 Name: libcairo
 Version: 1.12.2
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Multi-platform 2D graphics library
 License: LGPL
@@ -116,6 +116,9 @@ This package contains tools for working with the cairo graphics library.
 %_libdir/cairo
 
 %changelog
+* Tue Sep 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.12.2-alt2
+- egl: s/EGL_KHR_surfaceless_opengl/EGL_KHR_surfaceless_context/
+
 * Tue May 01 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.12.2-alt1
 - 1.12.2
 
