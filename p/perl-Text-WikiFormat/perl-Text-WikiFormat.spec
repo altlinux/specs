@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Text-WikiFormat
-Version: 0.79
-Release: alt2
+Version: 0.80
+Release: alt1
 
 Summary: Module for translating Wiki formatted text into other formats
 
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/~chromatic/%m_distro-%version/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/C/CH/CHROMATIC/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/C/CY/CYCLES/Text-WikiFormat-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 10 2005
 BuildRequires: perl-Devel-Symdump perl-Module-Build perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Simple perl-Test-Pod-Coverage perl-URI perl-devel
@@ -54,6 +54,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Text/*
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.80-alt1
+- automated CPAN update
+
 * Sat Sep 06 2008 Vitaly Lipatov <lav@altlinux.ru> 0.79-alt2
 - fix directory ownership violation
 - disable man packaging
