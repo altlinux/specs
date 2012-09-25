@@ -1,14 +1,16 @@
 Name: libcaca
 Version: 0.99
-Release: alt12.beta17.1
+Release: alt13.beta17
 
 Summary: Text mode graphics library
 Group: System/Libraries
 License: DWTFYWTPL
 Url: http://sam.zoy.org/projects/libcaca/
+Packager: Gleb F-Malinovskiy <glebfm@altlinux.org>
 
-Source: http://sam.zoy.org/projects/libcaca/%name-%version.tar.bz2
-Patch0: libcaca-ruby1.9.patch
+# http://caca.zoy.org/files/libcaca/%name-%version.beta17.tar.gz
+Source: %name-%version.tar
+Patch: libcaca-ruby1.9.patch
 
 %ifarch x86_64
 Provides: libcucul.so.0()(64bit)
@@ -20,9 +22,11 @@ Provides: libcucul++.so.0
 
 BuildPreReq: rpm-build-ruby
 
+%def_disable static
+
 # Automatically added by buildreq on Mon Apr 25 2011
 # optimized out: imlib2 libX11-devel libstdc++-devel libtinfo-devel pkg-config ruby tex-common texlive-base texlive-base-bin texlive-common texlive-fonts-recommended texlive-latex-base texlive-latex-recommended texmf-latex-xcolor xorg-kbproto-devel xorg-xproto-devel
-BuildRequires: doxygen gcc-c++ imake imlib2-devel libncurses-devel libruby-devel libslang-devel texlive-generic-recommended texlive-publishers texlive-xetex xorg-cf-files
+BuildRequires: doxygen gcc-c++ imake imlib2-devel libncurses-devel libruby-devel libslang2-devel texlive-generic-recommended texlive-publishers texlive-xetex xorg-cf-files
 
 %description
 libcaca is the Colour AsCii Art library. It provides high level functions
@@ -45,6 +49,7 @@ compile applications or shared objects that use libcaca.
 %package -n caca-utils
 Summary: Text mode graphics utilities
 Group: Graphics
+Requires: %name = %version-%release
 
 %description -n caca-utils
 This package contains utilities and demonstration programs for libcaca, the
@@ -66,9 +71,9 @@ such as line and ellipses drawing, triangle filling and sprite blitting.
 %package -n ruby-libcaca
 Summary: Ruby bindings for libcaca
 Group: Graphics
+Requires: %name = %version-%release
 Provides: ruby-module-libcaca = %version-%release
 Obsoletes: ruby-module-libcaca
-
 
 %description -n ruby-libcaca
 libcaca is the Colour AsCii Art library. It provides high level functions
@@ -78,13 +83,11 @@ drawing, as well as powerful image to text conversion routines.
 This package contains Ruby bindings for libcaca.
 
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%patch -p1
 
 %build
-
 %autoreconf
-
 %configure \
 	--enable-slang \
 	--enable-ncurses \
@@ -92,17 +95,17 @@ This package contains Ruby bindings for libcaca.
 	--enable-imlib2 \
 	--enable-doc \
 	--x-libraries=%_x11libdir \
-	--disable-debug
+	--disable-debug \
+	%{subst_enable static}
 
 %make_build
 
 %install
-cp -a doc/man/man3caca doc/man/man3
-%make_install DESTDIR=%buildroot install
-rm -f %buildroot/%_docdir/libcucul-dev
-mv %buildroot/%_datadir/doc/%name-dev %buildroot/%_docdir/%name-%version
-
-rm -f %buildroot%_man3dir/*
+%makeinstall_std
+rm %buildroot%_libdir/*.la
+rm -r %buildroot%_man3dir
+rm -f %buildroot%_docdir/libcucul-dev
+mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 
 %files
 %_libdir/*.so.*
@@ -135,6 +138,10 @@ rm -f %buildroot%_man3dir/*
 %ruby_sitearchdir/caca.*
 
 %changelog
+* Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 0.99-alt13.beta17
+- Fixed interpackage dependencies.
+- Built with libslang2-devel.
+
 * Tue Oct 04 2011 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.99-alt12.beta17.1
 - remove obsolete macro
 
