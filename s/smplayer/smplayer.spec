@@ -1,4 +1,4 @@
-%define		svn 4305
+# #%define		svn 4305
 
 Name:		smplayer
 Summary:	A great MPlayer front-end (QT4)
@@ -7,8 +7,8 @@ Summary(uk_UA.UTF8): Потужний інтерфейс для MPlayer (QT4)
 License:	GPLv2
 Group:		Video
 Url:		http://smplayer.sourceforge.net
-Version:	0.8.0
-Release:	alt1.%svn
+Version:	0.8.1
+Release:	alt1
 Packager:	Alexey Morsov <swi@altlinux.ru>
 Source0:	%name-%version.tar
 Source6:	%name.desktop
@@ -76,6 +76,9 @@ install -Dp -m 0644 %SOURCE6 %buildroot%_desktopdir/%name.desktop
 %_man1dir/*
 
 %changelog
+* Tue Sep 25 2012 Motsyo Gennadi <drool@altlinux.ru> 0.8.1-alt1
+- 0.8.1
+
 * Sun Apr 22 2012 Motsyo Gennadi <drool@altlinux.ru> 0.8.0-alt1.4305
 - 0.8.0 (svn revision 4305)
 
