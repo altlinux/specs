@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.6
-Release: alt3
+Release: alt4
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -115,6 +115,10 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Tue Sep 25 2012 Led <led@altlinux.ru> 0.9.6-alt4
+- updated from upstream's SCM:
+  + fix handling of EINTR during close()
+
 * Mon Sep 24 2012 Led <led@altlinux.ru> 0.9.6-alt3
 - updated from upstream's SCM
 
