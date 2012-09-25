@@ -1,439 +1,129 @@
+Epoch: 0
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
-# Copyright (c) 2000-2009, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}} 
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
+BuildRequires: jpackage-compat
+Name:             jacorb
+Version:          2.3.1
+Release:          alt1_3.20120215gitjpp7
+Summary:          The Java implementation of the OMG's CORBA standard
+Group:            Development/Java
+License:          LGPLv2
+URL:              http://www.jacorb.org/index.html
 
-%bcond_without jdk6
-%bcond_without repolib
+# git clone git://github.com/sguilhen/jacorb.git
+# find jacorb/ -name '*.jar' -delete
+# tar cafJ jacorb-20120215git5481b0.tar.xz jacorb
+Source0:          jacorb-20120215git5481b0.tar.xz
+Source1:          http://central.maven.org/maven2/org/jacorb/jacorb-parent/%{version}/jacorb-parent-%{version}.pom
+Source2:          http://central.maven.org/maven2/org/jacorb/jacorb/%{version}/jacorb-%{version}.pom
+Source3:          http://central.maven.org/maven2/org/jacorb/jacorb-idl-compiler/%{version}/jacorb-idl-compiler-%{version}.pom
 
-%define repodir %{_javadir}/repository.jboss.com/jacorb/%{version}jboss.patch6-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
+# These methods are not implemented in the current 
+Patch0:           0001-Implement-a-few-methods-in-GSSUPContextSpi-to-make-i.patch
 
-%define shortname jacorb
+# We need to modify the build script to build an intermediate jacorb.jar and use
+# java.endorsed.dirs to point to the jar to override JDK classes
+Patch1:           0002-Create-jacorb.jar-to-use-it-in-java.endorsed.dirs-pa.patch
 
+# Fix "error: unmappable character for encoding ASCII" JDK issues
+Patch2:           0003-Set-encoding-to-UTF-8-when-generating-javadoc.patch
 
-Name:           jacorb
-Version:        2.3.0
-Release:	alt2_20jpp6
-Epoch:          0
-Summary:        Free Java implementation of OMG's CORBA standard
-License:        LGPLv2+
-Group:          Development/Java
-URL:            http://www.jacorb.org/
-Source0:        http://www.jacorb.org/releases/2.3.0/JacORB-2.3.0-src.zip
-Source1:        jacorb-jboss-component-info.xml
-Source4:        http://repository.jboss.com/jacorb/2.3.0jboss.patch3/resources/jacorb.properties
-Source5:        http://repository.jboss.com/jacorb/2.3.0jboss.patch3/resources/orb.idl
-Source6:        jacorb-repolib-README
-Source7:        jacorb-idl-compiler.pom
-Patch0:         jacorb-2.3.0-notification-build_xml.patch
-Patch1:         jacorb-2.3.0-version.patch
-# The size of a chunk should not include any bytes of padding that might have
-# been added after the chunk for alignment purposes. This patch allows JacORB 
-# to interoperate with the ORB in Sun's JDK 1.5 with chunking of custom RMI
-# valuetypes enabled (jacorb.interop.chunk_custom_rmi_valuetypes=on), as it 
-# should be per the CORBA spec. 
-Patch2:         jacorb-2.3.0-chunk_size.patch
-# In handle_chunking: change to distinguish a null value tag from
-# a chunk size tag (the latter must be positive).
-# In read_untyped_value and readChunkSizeTag: changes for correctness (to 
-# ensure that chunk_end_pos is set to -1 if we are not within a chunk) and 
-# for clarity.
-Patch3:         jacorb-2.3.0-null_value_tag.patch
-# Fix for bug #782 in JacORB's bugzilla system:
-# The creation of an SSLServerSocket fails when JacORB 2.3.0 uses the JSSE
-# included in Sun's JDK 1.4 and later releases. The problem is in the wrapper
-# class JSSEUtil, which causes an IllegalAccessException to be thrown.
-Patch4:         jacorb-2.3.0-JSSE.patch
-# Fix for bug #783 in JacORB's bugzilla system:
-# Server throws CORBA.INTERNAL (ArrayIndexOutOfBoundsException) when a client
-# uses an IOR with a component tagged with TAG_CSI_SEC_MECH_LIST. When the 
-# current implementation of the method 
-# org.jacorb.orb.iiop.IIOPProfile.getTLSPortFromCSIComponent finds an IOR
-# component that is tagged with TAG_CSI_SEC_MECH_LIST and has a non-empty list
-# of security mechanisms, it assumes that the first mechanism listed has a 
-# transport component tagged with TAG_TLS_SEC_TRANS. It tries to access the 
-# data of the presumed TLS_SEC_TRANS component, without first checking the 
-# component's tag. If this tag is TAG_NULL_TAG rather than TAG_TLS_SEC_TRANS, 
-# then an ArrayIndexOutOfBoundsException occurs.
-Patch5:         jacorb-2.3.0-IIOP.patch
-# Fix for NPE on shutdown
-Patch6:         jacorb-2.3.0-IIOP_Shutdown.patch
-# This patch resets the port of the primary address to zero when an
-# IORInterceptor adds a TAG_CSI_SEC_MECH_LIST component with transport
-# protection requirements (SSL), as it should be per the CSI v2 specification.
-Patch7:         jacorb-2.3.0-primaddress_port.patch
-# The SSL profile check is unnecessary and incorrect, as it should also check
-# for the presence of the TAG_TLS_SEC_TRANS tag in the IIOPProfile.
-# By not doing so, it causes JacORB not to open SSL connections when the
-# server-side IORs contain only the TAG_TLS_SEC_TRANS tag. We can just
-# eliminate this verification since the remaining method body already performs
-# the necessary checks correctly.
-Patch8:         jacorb-2.3.0-ssl_verification.patch
-Patch9:         jacorb-2.3.0-manifest-classpath.patch
-Patch10:        jacorb-jdk6.patch
-Patch11:        jacorb-2.3.0-javadoc-maxmemory.patch
-# JBPAPP-1477 JacORB 2.3.0.jboss5 intermittently hangs during shutdown.
-# Thread dump shows it waiting in RequestController.waitForShutdown(),
-# presumably beacause it believes there are outstanding requests still
-# in progress.
-Patch12:         jacorb-2.3.0-CORBA_OBJECT_NOT_EXIST.patch
-# This patch removes the OTS classes
-Patch13:        jacorb-2.3.0-remove_ots_classes.patch
-# read_boolean() now only adjusts positions if the chunk_end_pos == pos,
-# no longer calling handle_chunking(). The problem with handle_chunking()
-# is that it aligns the current position and this can cause CDRInputStream
-# to "skip" valid boolean values, as those are not padded.
-Patch14:        jacorb-2.3.0-read_boolean.patch
+# Remove the Class-Path entry to fix class-path-in-manifest issue
+Patch3:           0004-Removed-Class-Path-entry-from-MANIFEST.MF.patch
 
-Requires: antlr
-Requires: concurrent
-Requires: excalibur-avalon-framework-api
-Requires: excalibur-avalon-framework-impl
-Requires: excalibur-avalon-logkit
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-logging
-#Optional:      tanukiwrapper
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-#Optional:      picocontainer
-BuildRequires: jpackage-utils >= 0:1.7.3
-BuildRequires: ant >= 0:1.6.5
-BuildRequires: antlr
-BuildRequires: concurrent
-BuildRequires: excalibur-avalon-framework-api
-BuildRequires: excalibur-avalon-framework-impl
-BuildRequires: excalibur-avalon-logkit
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-logging
-BuildRequires: tanukiwrapper
-BuildRequires: picocontainer
-BuildRequires: xdoclet
-BuildRequires: xjavadoc
-BuildArch:      noarch
+# Remove unnecessary deps from POM since we don't have notification module available
+Patch4:           jacorb-%{version}-notification-dependencies-removal.patch
+
+BuildArch:        noarch
+
+BuildRequires:    jpackage-utils
+BuildRequires:    ant
+BuildRequires:    antlr-tool
+BuildRequires:    avalon-logkit
+BuildRequires:    slf4j
+
+Requires:         jpackage-utils
+Requires:         antlr-tool
+Requires:         avalon-logkit
+Requires:         slf4j
 Source44: import.info
-%add_findreq_skiplist /usr/share/%{name}-*
 
 %description
-- high-performance, fully multithreaded ORB 
-- IDL compiler, supports OMG IDL/Java language mapping 
-  rev. 2.3, OBV 
-- native IIOP, GIOP 1.2 and Bidirectional GIOP 
-- POA (Portable Object Adapter) 
-- AMI (Asynchronous Method Invocations) 
-- ETF (Extensible Transport Framework) 
-- POAMonitor, a GUI tools that lets you inspect your 
-  object adapters (screenshot) 
-- Dynamic Invocation Interface (DII) and Dynamic Skeleton 
-  Interface (DSI) 
-- Dynamic Management of Anys (DynAny) 
-- Portable Interceptors (standard) 
-- OMG Interoperable Naming Service 
-- NameManager, a GUI browser for the name service 
-  (requires Swing or JDK 1.2) (screenshot) 
-- improved IIOP over SSL, includes KeyStoreManager 
-- OMG Notification  and Event service 
-- Transaction Service, Collection and Concurrency services 
-- TradingService (supports trader links), an extension of 
-  Mark Spruiell's free JTrader 
-- CORBA 2.3 Code set support 
-- Appligator, an IIOP proxy 
-- Support for HTTP tunneling 
-- Domain Manager, an object domain management service, 
-  includes a domain browser GUI 
-- Interface Repository 
-- IRBrowser, a GUI front end for the Interface Repository
-- Implementation Repository 
-- Implementation Repository Manager, a GUI front end for 
-  the Implementation Repository 
-- IDL and Java source for all CORBA/COSS interfaces 
-- examples and full source code included 
-- 100%% pure Java, JDK 1.3 and 1.4 compatible, also cooperates 
-  with Sun's JDK 1.2 classes (releases prior to 1.4 are 
-  compatible with JDK 1.1) 
-
-Note: To use the CORBA Notification Service add picocontainer.jar
-      to the ClassPath (from the 'picocontainer' RPM).
-
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
+This package contains the Java implementation of the OMG's CORBA standard
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Summary:          Javadocs for %{name}
+Group:            Development/Java
+Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}
-
-%package manual
-Summary:        Documents for %{name}
-Group:          Development/Documentation
-BuildArch: noarch
-
-%description manual
-%{summary}.
-
-%package demo
-Summary:        Usage examples for %{name}
-Group:          Development/Documentation
-
-%description demo
-%{summary}.
+This package contains the API documentation for %{name}.
 
 %prep
-%setup -q -n JacORB
-%{__chmod} -R go=u-w *
-%{_bindir}/find -name "*.jar" | %{_bindir}/xargs -t %{__rm}
-%patch0 -b .sav0
-%patch1 -b .sav1
-%patch2 -b .sav2
-%patch3 -b .sav3
-%patch4 -b .sav4
-%patch5 -b .sav5
-%patch6 -b .sav6
-%patch7 -b .sav7
-%patch8 -b .sav8
-%patch9 -p1 -b .sav9
-%if %with jdk6
-%patch10 -p1 -b .sav10
-%endif
-%patch11 -p1 -b .sav11
-%patch12 -b .sav12
-%if 0
-%patch13 -b .sav13
-%endif
-%patch14 -b .sav14
+%setup -q -n jacorb
 
-# assume no filename contains spaces
-# Uncomment this one for JDK 1.5  (not needed with Java4)
-perl -p -i -e 's/edu(.)emory(.)mathcs(.)backport(.)java(.)util/java${1}util/' `grep edu.emory.mathcs.backport.java.util -lr *`
+cp %{SOURCE1} jacorb-parent.pom
+cp %{SOURCE2} jacorb.pom
+cp %{SOURCE3} jacorb-idl-compiler.pom
 
-pushd lib
-%{__ln_s} $(build-classpath antlr) .
-%{__ln_s} $(build-classpath excalibur/avalon-framework-api) .
-%{__ln_s} $(build-classpath excalibur/avalon-framework-impl) .
-%{__ln_s} $(build-classpath excalibur/avalon-logkit) .
-%{__ln_s} $(build-classpath picocontainer) .
-%{__ln_s} $(build-classpath tanukiwrapper) .
-pushd build
-%{__ln_s} $(build-classpath commons-collections) .
-%{__ln_s} $(build-classpath commons-logging) .
-%{__ln_s} $(build-classpath xdoclet/xdoclet) .
-%{__ln_s} $(build-classpath xdoclet/xdoclet-ejb-module) .
-%{__ln_s} $(build-classpath xdoclet/xdoclet-jboss-module) .
-%{__ln_s} $(build-classpath xdoclet/xdoclet-jmx-module) .
-%{__ln_s} $(build-classpath xdoclet/xdoclet-mx4j-module) .
-%{__ln_s} $(build-classpath xdoclet/xdoclet-web-module) .
-%{__ln_s} $(build-classpath xjavadoc) .
-popd
-popd
-# Tests were not included with the 2.2.4 source zip
-#pushd test/regression/lib
-#%{__ln_s} $(build-classpath easymock) .
-#%{__ln_s} $(build-classpath emma) .
-#%{__ln_s} $(build-classpath emma_ant) .
-#%{__ln_s} $(build-classpath junit) .
-#popd
+find -name '*.class' -exec rm -f '{}' \;
+find -name '*.jar' -exec rm -f '{}' \;
 
-%{__mkdir_p} temp
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p0
 
-%{__perl} -pi -e 's/\r$//g' \
-  bin/NotifyService-Wrapper-MX4J.conf.template \
-  bin/NamingService-Wrapper.conf \
-  bin/NotifyService-Wrapper.conf \
-  doc/CONTEXT_IDs \
-  doc/jacorb.css \
-  doc/Coding.txt \
-  doc/REL_NOTES \
-  doc/dds/TODOLIST.txt \
-  doc/LICENSE \
-  doc/dds/style.css
+# No xdoclet available
+sed -i 's|,notification||' src/org/jacorb/build.xml
 
-# remove DOS files
-%{_bindir}/find -name "*.bat" | %{_bindir}/xargs -t %{__rm}
-%{_bindir}/find -name "*.exe" | %{_bindir}/xargs -t %{__rm}
-%__subst 's,avalon-framework-[0-9\.]\+,avalon-framework-*,' etc/common-xdoclet.xml
+ln -s $(build-classpath antlr) lib/antlr-2.7.2.jar
+ln -s $(build-classpath slf4j/api) lib/slf4j-api-1.5.6.jar
 
 %build
-export ANT_OPTS=" -Xmx256m "
-export CLASSPATH=
-export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 all doc
-for i in lib/*.jar ; do j=`basename $i`; %{__cp} -p ${i} temp/${j/\.jar/_g.jar} ; done
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 realclean
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Ddebug=off all doc
+
+# due to javadoc x86_64 out of memory
+subst 's,maxmemory="256m",maxmemory="512m",' build.xml
+export CLASSPATH=$(build-classpath avalon-logkit slf4j/api)
+
+ant all doc
 
 %install
+# JAR
+install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/
+install -pm 644 lib/jacorb.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -pm 644 lib/idl.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-idl-compiler.jar
 
-# jar
-%{__mkdir_p} %{buildroot}%{_javadir}/%{name}
-%{__cp} -p lib/jacorb.jar %{buildroot}%{_javadir}/%{name}/%{shortname}-%{version}.jar
-%{__cp} -p temp/jacorb_g.jar %{buildroot}%{_javadir}/%{name}/%{shortname}_g-%{version}.jar
-%{__cp} -p lib/idl.jar %{buildroot}%{_javadir}/%{name}/idl-%{version}.jar
-%{__cp} -p temp/idl_g.jar %{buildroot}%{_javadir}/%{name}/idl_g-%{version}.jar
+# POM
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 jacorb-parent.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-parent.pom
+install -pm 644 jacorb.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+install -pm 644 jacorb-idl-compiler.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}-idl-compiler.pom
 
-# resources
-%{__mkdir_p} tmp/resources
-pushd tmp
-%{__cp} -p ../idl/omg/CSI.idl resources/
-%{__cp} -p ../idl/omg/CosTransactions.idl resources/
-%{__cp} -p %{SOURCE4} resources/
-%{__cp} -p %{SOURCE5} resources/
-%{jar} -cf %{name}-resources-%{version}.jar resources
-%{__cp} -p %{name}-resources-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}/resources-%{version}.jar
-%add_to_maven_depmap jacorb resources %{version} JPP/%{name} resources
-popd
-%{__rm} -r tmp
+# DEPMAP
+%add_maven_depmap JPP-%{name}-parent.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "jacorb:jacorb"
+%add_maven_depmap JPP-%{name}-idl-compiler.pom %{name}-idl-compiler.jar -a "jacorb:jacorb-idl-compiler"
 
-(cd %{buildroot}%{_javadir}/%{name} && for jar in *-%{version}*; do %{__ln_s} ${jar} `/bin/echo ${jar} | %{__sed} "s|-%{version}||g"`; done)
-
-# pom
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p %{SOURCE7} %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-idl.pom
-%add_to_maven_depmap org.jacorb jacorb-idl-compiler %{version} JPP/%{name} idl
-
-# bin, etc, idl
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}-%{version}/bin
-%{__cp} -pr bin/* %{buildroot}%{_datadir}/%{name}-%{version}/bin
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}-%{version}/etc
-%{__cp} -pr etc/* %{buildroot}%{_datadir}/%{name}-%{version}/etc
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}-%{version}/idl
-%{__cp} -pr idl/* %{buildroot}%{_datadir}/%{name}-%{version}/idl
-
-# javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -pr doc/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-
-# manual
-%{__mkdir_p} %{buildroot}%{_docdir}/%{name}-%{version}/doc
-%{__cp} -p index.html %{buildroot}%{_docdir}/%{name}-%{version}
-%{__cp} -pr doc/* %{buildroot}%{_docdir}/%{name}-%{version}/doc
-%{__rm} -r %{buildroot}%{_docdir}/%{name}-%{version}/doc/api
-%{__ln_s} %{_javadocdir}/%{name}-%{version} %{buildroot}%{_docdir}/%{name}-%{version}/doc/api
-
-# demo
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}-%{version}/demo
-
-%if %with repolib
-%{__mkdir_p} %{buildroot}%{repodir}/
-%{__mkdir_p} %{buildroot}%{repodir}/resources/
-%{__mkdir_p} %{buildroot}%{repodirlib}/
-%{__cp} -p %{SOURCE1} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@VERSION@/%{version}jboss.patch6-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__mkdir_p} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH0} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH1} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH2} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH3} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH4} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH5} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH6} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH7} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH8} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH10} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH11} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{PATCH12} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{SOURCE0} %{buildroot}%{repodirsrc}/
-%{__cp} -p %{SOURCE6} %{buildroot}%{repodirsrc}/README
-%{__cp} -p %{SOURCE0} %{buildroot}%{repodirlib}/
-%{__cp} -p idl/omg/CSI.idl %{buildroot}%{repodir}/resources/CSI.idl
-%{__cp} -p idl/omg/CosTransactions.idl %{buildroot}%{repodir}/resources/CosTransactions.idl
-%{__cp} -p %{SOURCE4} %{buildroot}%{repodir}/resources/jacorb.properties
-%{__cp} -p %{SOURCE5} %{buildroot}%{repodir}/resources/orb.idl
-%{__cp} -p %{buildroot}%{_javadir}/%{name}/idl_g.jar %{buildroot}%{repodirlib}/idl_g.jar
-%{__cp} -p %{buildroot}%{_javadir}/%{name}/%{shortname}_g.jar %{buildroot}%{repodirlib}/jacorb_g.jar
-%{__cp} -p %{buildroot}%{_javadir}/%{name}/%{shortname}.jar %{buildroot}%{repodirlib}/jacorb.jar
-%{__cp} -p %{buildroot}%{_javadir}/%{name}/idl.jar %{buildroot}%{repodirlib}/idl.jar
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-idl.pom %{buildroot}%{repodirlib}/idl.pom
-%endif
-
-pushd $RPM_BUILD_ROOT/usr/share/%name-%version/bin
-chmod 644 *.conf
-for i in *.template; do
-    cat $i | sed -e 's,@@@JACORB_HOME@@@,/usr/share/%name-%version/bin,' > `echo $i | sed -e 's,.template$,,'`
-done
-popd
+# APIDOCS
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp doc/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 %files
-%dir %{_javadir}/%{name}
-%{_javadir}/%{name}/idl-%{version}.jar
-%{_javadir}/%{name}/idl.jar
-%{_javadir}/%{name}/idl_g-%{version}.jar
-%{_javadir}/%{name}/idl_g.jar
-%{_javadir}/%{name}/jacorb-%{version}.jar
-%{_javadir}/%{name}/jacorb.jar
-%{_javadir}/%{name}/jacorb_g-%{version}.jar
-%{_javadir}/%{name}/jacorb_g.jar
-%{_javadir}/%{name}/resources-%{version}.jar
-%{_javadir}/%{name}/resources.jar
-%dir %{_datadir}/%{name}-%{version}
-%dir %{_datadir}/%{name}-%{version}/bin
-%attr(0755,root,root) %{_datadir}/%{name}-%{version}/bin/*
-%{_datadir}/%{name}-%{version}/etc
-%{_datadir}/%{name}-%{version}/idl
-%{_datadir}/maven2/poms/JPP.%{name}-idl.pom
-%{_mavendepmapfragdir}/%{name}
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
+%{_javadir}/*
+%doc doc/LICENSE
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
-
-%files manual
-%{_docdir}/%{name}-%{version}
-
-%files demo
-%{_datadir}/%{name}-%{version}/demo
-
-%if %with repolib
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
+%doc doc/LICENSE
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.1-alt1_3.20120215gitjpp7
+- new version
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.0-alt2_20jpp6
 - built with java 6
 
