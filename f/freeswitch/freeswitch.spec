@@ -1,5 +1,5 @@
 Name: freeswitch
-Version: 1.2.1
+Version: 1.2.3
 Release: alt1
 
 Summary: FreeSWITCH open source telephony platform
@@ -17,7 +17,7 @@ BuildRequires: libxmlrpc-devel libyaml-devel libiksemel-devel libedit-devel
 BuildRequires: libsndfile-devel libpcre-devel libapr1-devel libaprutil1-devel
 BuildRequires: libilbc1-devel libjs-devel libjson-devel flite-devel mongo-devel
 BuildRequires: libtiff-devel libldap-devel libsoundtouch-devel libldns-devel
-BuildRequires: libpcap-devel libunimrcp-devel libvlc-devel perl-devel python-devel
+BuildRequires: libpcap-devel libvlc-devel perl-devel python-devel
 BuildRequires: libcelt-devel libmpg123-devel liblame-devel libshout2-devel
 BuildRequires: libisdn-devel libpri-devel libopenr2.3-devel libsangoma-devel
 BuildRequires: libnet-snmp-devel libnl-devel libsensors3-devel zlib-devel
@@ -187,6 +187,7 @@ Russian language phrases module and directory structure for say module and voice
     --with-recordingsdir=%_var/spool/freeswitch \
     --enable-core-libedit-support \
     --enable-core-odbc-support \
+    --enable-zrtp \
     --with-erlang=%_bindir/erl \
     --with-libcurl \
     --with-openssl \
@@ -307,6 +308,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/nibblebill.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/opal.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/osp.conf.xml
+%config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/oreka.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/pocketsphinx.conf.xml
 #config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/portaudio.conf.xml
 %config(noreplace) %attr(0640, root, _pbx) %_sysconfdir/%name/autoload_configs/post_load_modules.conf.xml
@@ -445,6 +447,7 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_mp4v.so
 %_libdir/%name/mod_native_file.so
 %_libdir/%name/mod_nibblebill.so
+%_libdir/%name/mod_oreka.so
 %_libdir/%name/mod_posix_timer.so
 %_libdir/%name/mod_random.so
 %_libdir/%name/mod_redis.so
@@ -592,6 +595,9 @@ find %buildroot%_libdir/%name %buildroot%_libdir/freetdm -name \*.la -delete
 %_libdir/%name/mod_say_ru.so*
 
 %changelog
+* Tue Sep 25 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.3-alt1
+- 1.2.3
+
 * Fri Sep 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.1-alt1
 - 1.2.1 released
 
