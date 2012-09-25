@@ -1,6 +1,6 @@
 %define dist Audio-MPD-Common
 Name: perl-%dist
-Version: 1.110550
+Version: 1.120881
 Release: alt1
 
 Summary: Common helper classes for mpd
@@ -8,12 +8,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JQ/JQUELIN/Audio-MPD-Common-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Apr 25 2011
-BuildRequires: perl-Module-Build perl-MooseX-Has-Sugar perl-MooseX-Types perl-Readonly
+BuildRequires: perl-Module-Build perl-MooseX-Has-Sugar perl-MooseX-Types perl-Readonly perl(String/Formatter.pm)
 
 %description
 Depending on whether you're using a POE-aware environment or not,
@@ -39,6 +39,9 @@ Audio::MPD::Common.
 %perl_vendor_privlib/Audio
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.120881-alt1
+- automated CPAN update
+
 * Mon Apr 25 2011 Alexey Tourbin <at@altlinux.ru> 1.110550-alt1
 - 0.1.3 -> 1.110550
 
