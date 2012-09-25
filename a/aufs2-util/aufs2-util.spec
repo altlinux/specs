@@ -1,11 +1,11 @@
 %define realname aufs2-util
 
 Name: aufs2-util
-Version: 2.1
-Release: alt4.gitaee57b2
+Version: 2.2
+Release: alt0.1
 
 Group: System/Base
-Summary: Utilities for aufs2.1
+Summary: Utilities for aufs2.2
 License: %gpl2plus
 Url: http://aufs.sourceforge.net
 Packager: Andriy Stepanov <stanv@altlinux.ru>
@@ -20,7 +20,7 @@ BuildRequires: glibc-devel-static
 Conflicts: aufs2-util-ng
 
 %description
-These utilities are always necessary for aufs2.1
+These utilities are always necessary for aufs2.2
 If you forget to install them, your aufs may not work correctly.
 
 %prep
@@ -49,6 +49,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Tue Sep 25 2012 Andriy Stepanov <stanv@altlinux.ru> 2.2-alt0.1
+- Upstream commit 6dca494f02448832d52ee60401d8a89fc4e0cd11
+
 * Tue Sep 25 2012 Andriy Stepanov <stanv@altlinux.ru> 2.1-alt4.gitaee57b2
 - Update
 
