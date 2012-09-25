@@ -1,41 +1,32 @@
 Name: slang2
-Version: 2.2.3
-Release: alt2.1
+Version: 2.2.4
+Release: alt1
 
 Summary: The shared library for the S-Lang extension language
-License: GPL
+License: GPLv2+
 Group: System/Libraries
 Url: http://www.jedsoft.org/slang/
 
-Source: slang-%version.tar.bz2
-Source1: README.UTF-8
-Packager: Nick S. Grechukh <gns@altlinux.org>
+# ftp://space.mit.edu/pub/davis/slang/v2.2/slang-%version.tar.bz2
+Source: slang-%version.tar
 
-Patch1: slang-2.1.3-alt-makefile.patch
-Patch2: slang-1.4.7-owl-alt-fixes.patch
-Patch3: slang-1.4.7-alt-doc.patch
-Patch4: slang-1.4.4-deb-utf8.patch.bz2
-Patch5: slang-1.4.5-utf8-acs.patch.bz2
-Patch6: slang-1.4.5-utf8-fix.patch
-Patch7: slang-1.4.5-utf8-segv.patch
-Patch8: slang-1.4.9-mdk-utf8-revert_soname.patch.bz2
+Patch1: slang-2.2.4-alt-makefile.patch
+Patch2: slang-2.2.4-owl-alt-fixes.patch
+Patch3: slang-2.2.4-alt-doc.patch
 
-### debian patches
-Patch110: 010_demos_make.patch
-Patch120: 020_termcap_emulation.patch
-Patch150: 050_add_pseudograhics_chars.patch
-Patch190: 090_install_prefix.patch
+Patch11: slang-2.2.4-deb-demos-make.patch
+Patch12: slang-2.2.4-deb-hostent-haddr.patch
 
-# Automatically added by buildreq on Wed Mar 26 2008
-BuildRequires: libICE-devel libncurses-devel libpcre-devel libpng-devel libX11-devel
+# Automatically added by buildreq on Tue Sep 25 2012
+# optimized out: gnu-config pkg-config xorg-xproto-devel zlib-devel
+BuildRequires: libICE-devel libX11-devel libncurses-devel libpcre-devel libpng-devel
 
-BuildRequires: libncurses-devel-static libpcre-devel-static libpng-devel-static
-
-BuildPreReq: chrpath
+%def_enable static
 
 %package slsh
 Summary: S-Lang shell
 Group: System/Libraries
+Requires: lib%name = %version-%release
 
 %package -n lib%name
 Summary: The shared library for the S-Lang extension language
@@ -45,6 +36,7 @@ Group: System/Libraries
 Summary: The development environment for S-Lang
 Group: Development/C
 Requires: lib%name = %version-%release
+Conflicts: libslang-devel < %version
 
 %package -n lib%name-devel-static
 Summary: The static library for development using S-Lang
@@ -89,62 +81,67 @@ which you'll need if you want to develop S-Lang based statically linked
 applications.
 
 %prep
-%setup -q -n slang-%version
-%patch1 -p1 
-#patch2 -p1 ## obsoleted
+%setup -n slang-%version
+%patch1 -p1
+%patch2 -p1
 %patch3 -p1
-#patch4 -p1 -b .utf8
-#patch5 -p1 -b .utf8-acs
-#patch6 -p1 -b .utf8-fix
-#patch7 -p1 -b .utf8-segv
-#patch8 -p1 -b .utf8-soname
 
-%patch110 -p1
-##patch120 -p1 ### 2.1.4
-#patch150 -p1
-%patch190 -p1
-subst 's/\(ELF_CFLAGS="[^"]*\)-O2\([^"]*".*\)/\1'"$RPM_OPT_FLAGS"'\2/g' configure
-
-##grep -l -R 'libslang' . | xargs sed -i 's,libslang,libslang2,g'
-##grep -l -R '\-lslang' . | xargs sed -i 's,-lslang,-lslang2,g'
-##sed -ri '/^THIS_LIB\t/ s,slang,slang2,' src/Makefile.in
+%patch11 -p1
+%patch12 -p1
 
 %build
 export ac_cv_func_snprintf=yes ac_cv_func_vsnprintf=yes
-%configure --includedir=%_includedir/slang --enable-static
-%make -C src all
+%configure \
+	--includedir=%_includedir/slang \
+	--with-{pcre,png,z}lib=%_libdir \
+	--with-pcreinc=$(pkg-config libpcre --cflags |sed 's/^[^/]*//') \
+	--with-pnginc=$(pkg-config libpng --cflags |sed 's/^[^/]*//') \
+	--with-zinc=%_includedir \
+	#
+mkdir -p modules/objs slsh/objs src/elfobjs src/objs
+%make_build RPATH= SLANG_LIB="-L$PWD/src/elfobjs -lslang"
+%{?_enable_static:%make_build -C src static}
 
 %install
-mkdir -p $RPM_BUILD_ROOT%_includedir
-%make DESTDIR=$RPM_BUILD_ROOT install-elf install-static
+%makeinstall_std RPATH= %{?_enable_static:install-static}
+%define docdir %_docdir/slang-%version
+mv %buildroot%_docdir/slang/v2 %buildroot%docdir
+rmdir %buildroot%_docdir/slang
+mv %buildroot%_docdir/slsh/html %buildroot%docdir/slsh
+rmdir %buildroot%_docdir/slsh
+%set_verify_elf_method strict
 
-chmod a+x $RPM_BUILD_ROOT%_libdir/*.so.*
-
-for i in %buildroot%_libdir/slang/v2/modules/*.so
-do
-	chrpath -d $i ||:
-done
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%make_build -k -C src/test CFLAGS='%optflags' OTHERLIBS=-lm SLANGLIB=%buildroot%_libdir
 
 %files slsh
-%doc slsh/doc/html/*
 %_sysconfdir/slsh.rc
 %_bindir/slsh
 %_datadir/slsh
 %_man1dir/*
+%dir %docdir/
+%docdir/slsh/
 
 %files -n lib%name
-%doc changes.txt COPYING NEWS doc/{README,grammar.txt,text,internal}
 %_libdir/*.so.*
 %_libdir/slang
+%docdir/
+%exclude %docdir/slsh/
 
 %files -n lib%name-devel
 %_libdir/*.so
-%_includedir/slang
+%_includedir/*
+%_pkgconfigdir/*.pc
 
 %files -n lib%name-devel-static
 %_libdir/*.a
 
 %changelog
+* Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 2.2.4-alt1
+- Updated to 2.2.4 (closes: #24882).
+- Fixed packaging (closes: #15151).
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.3-alt2.1
 - Removed bad RPATH
 
