@@ -8,7 +8,7 @@
 
 Name: wxGTK
 Version: %wxbranch.11.0
-Release: alt1.svn20100628.5
+Release: alt1.svn20100628.5.qa1
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -28,7 +28,7 @@ BuildPreReq: libGConf-devel gst-plugins-devel
 
 BuildPreReq: libstdc++-devel
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %{?serial:%serial:}%version-%release
 
 %description
 wxWidgets is a free C++ library for cross-platform GUI development.
@@ -40,7 +40,7 @@ This is a GTK+ port.
 %package -n lib%name
 Summary: Shared libraries of the GTK+ port of the wxWidgets
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %{?serial:%serial:}%version-%release
 
 %description -n lib%name
 wxWidgets is a free C++ library for cross-platform GUI development.
@@ -64,7 +64,7 @@ Group: Development/C++
 Provides: %name-devel = %version-%release
 Conflicts: %name-devel < %version-%release
 Obsoletes: %name-devel < %version-%release
-Requires: %name = %version-%release
+Requires: %name = %{?serial:%serial:}%version-%release
 Conflicts: wxGTK2-devel
 Conflicts: wxGTK2u-devel
 
@@ -85,10 +85,10 @@ wxGTK example programs.
 %package -n lib%name-contrib-stc
 Summary: wxWidgets styled text control library
 Group: System/Libraries
-Provides: %name-contrib-stc = %version-%release
+Provides: %name-contrib-stc = %{?serial:%serial:}%version-%release
 Conflicts: %name-contrib-stc < %version-%release
 Obsoletes: %name-contrib-stc < %version-%release
-Requires: %name = %version-%release
+Requires: %name = %{?serial:%serial:}%version-%release
 
 %description -n lib%name-contrib-stc
 wxWidgets styled text control library.
@@ -99,7 +99,7 @@ Group: Development/C++
 Provides: %name-contrib-stc-devel = %version-%release
 Conflicts: %name-contrib-stc-devel < %version-%release
 Obsoletes: %name-contrib-stc-devel < %version-%release
-Requires: %name-contrib-stc = %version-%release
+Requires: lib%name-contrib-stc = %{?serial:%serial:}%version-%release
 
 %description -n lib%name-contrib-stc-devel
 Header files for wxWidgets styled text control library.
@@ -107,10 +107,10 @@ Header files for wxWidgets styled text control library.
 %package -n lib%name-contrib-gizmos
 Summary: wxWidgets cell and canvas layout objects
 Group: System/Libraries
-Provides: %name-contrib-gizmos = %version-%release
+Provides: %name-contrib-gizmos = %{?serial:%serial:}%version-%release
 Conflicts: %name-contrib-gizmos < %version-%release
 Obsoletes: %name-contrib-gizmos < %version-%release
-Requires: %name = %version-%release
+Requires: %name = %{?serial:%serial:}%version-%release
 
 %description -n lib%name-contrib-gizmos
 wxWidgets cell and canvas layout objects.
@@ -118,10 +118,10 @@ wxWidgets cell and canvas layout objects.
 %package -n lib%name-contrib-gizmos-devel
 Summary: Development files for wxWidgets cell and canvas layout objects
 Group: Development/C++
-Provides: %name-contrib-gizmos-devel = %version-%release
+Provides: %name-contrib-gizmos-devel = %{?serial:%serial:}%version-%release
 Conflicts: %name-contrib-gizmos-devel < %version-%release
 Obsoletes: %name-contrib-gizmos-devel < %version-%release
-Requires: %name-contrib-gizmos = %version-%release
+Requires: lib%name-contrib-gizmos = %{?serial:%serial:}%version-%release
 
 %description -n lib%name-contrib-gizmos-devel
 Header files for wxWidgets cell and canvas layout objects.
@@ -129,10 +129,10 @@ Header files for wxWidgets cell and canvas layout objects.
 %package -n lib%name-contrib-ogl
 Summary: wxWidgets object graphics library
 Group: System/Libraries
-Provides: %name-contrib-ogl = %version-%release
+Provides: %name-contrib-ogl = %{?serial:%serial:}%version-%release
 Conflicts: %name-contrib-ogl < %version-%release
 Obsoletes: %name-contrib-ogl < %version-%release
-Requires: %name = %version-%release
+Requires: %name = %{?serial:%serial:}%version-%release
 
 %description -n lib%name-contrib-ogl
 wxWidgets' Object Graphics Library (OGL) is a C++ library supporting the
@@ -144,7 +144,7 @@ Group: Development/C++
 Provides: %name-contrib-ogl-devel = %version-%release
 Conflicts: %name-contrib-ogl-devel < %version-%release
 Obsoletes: %name-contrib-ogl-devel < %version-%release
-Requires: %name-contrib-ogl = %version-%release
+Requires: lib%name-contrib-ogl = %{?serial:%serial:}%version-%release
 
 %description -n lib%name-contrib-ogl-devel
 Header files for wxWidgets object graphics library.
@@ -316,6 +316,11 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2:2.8.11.0-alt1.svn20100628.5.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for wxGTK
+
 * Tue Mar 15 2011 Michael Shigorin <mike@altlinux.org> 2:2.8.11.0-alt1.svn20100628.5
 - NMU: rebuilt with rpm-4.0.4-alt100.23 to fix broken requires
 
