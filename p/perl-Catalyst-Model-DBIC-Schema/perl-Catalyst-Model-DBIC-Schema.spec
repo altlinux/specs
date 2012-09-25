@@ -1,6 +1,6 @@
 %define dist Catalyst-Model-DBIC-Schema
 Name: perl-%dist
-Version: 0.59
+Version: 0.60
 Release: alt1
 
 Summary: DBIx::Class::Schema Model Class
@@ -8,12 +8,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RK/RKITOVER/Catalyst-Model-DBIC-Schema-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-Catalyst-Component-InstancePerContext perl-Catalyst-Devel perl-CatalystX-Component-Traits perl-Class-C3 perl-DBD-SQLite perl-DBIx-Class-Schema-Loader perl-SQL-Abstract perl-Test-Exception perl-Test-Pod perl-Test-Requires perl-Tie-IxHash
+BuildRequires: perl-Catalyst-Component-InstancePerContext perl-Catalyst-Devel perl-CatalystX-Component-Traits perl-Class-C3 perl-DBD-SQLite perl-DBIx-Class-Schema-Loader perl-SQL-Abstract perl-Test-Exception perl-Test-Pod perl-Test-Requires perl-Tie-IxHash perl(MooseX/MarkAsMethods.pm)
 
 %description
 This is a Catalyst Model for DBIx::Class::Schema-based Models.  See the
@@ -34,6 +34,9 @@ on generating these Models via Helper scripts.
 %perl_vendor_privlib/Catalyst
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.59-alt1
 - 0.55 -> 0.59
 
