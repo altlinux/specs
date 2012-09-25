@@ -7,7 +7,7 @@ Name: lib%origname
 %define somver 1
 %define sover %somver.1
 Version: 1.1
-Release: alt12
+Release: alt13
 Summary: Basic Linear Algebra Communication Subprograms
 License: LGPL
 Group: Sciences/Mathematics
@@ -175,6 +175,9 @@ popd
 %exclude %_libdir/*-1.a
 
 %changelog
+* Tue Sep 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt13
+- Fixed build with make 3.82
+
 * Fri Jun 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt12
 - Rebuilt with OpenMPI 1.6
 
