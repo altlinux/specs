@@ -1,6 +1,6 @@
 %define dist Audio-MPD
 Name: perl-%dist
-Version: 1.112670
+Version: 1.120610
 Release: alt1
 
 Summary: Class to talk to MPD (Music Player Daemon) servers
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/authors/id/J/JQ/JQUELIN/Audio-MPD-%{version}.tar.gz
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Apr 25 2011
-BuildRequires: perl-Audio-MPD-Common perl-DBM perl-Getopt-Euclid perl-Module-Build perl-MooseX-SemiAffordanceAccessor perl-Proc-Daemon
+BuildRequires: perl-Audio-MPD-Common perl-DBM perl-Getopt-Euclid perl-Module-Build perl-MooseX-SemiAffordanceAccessor perl-Proc-Daemon perl(IO/Socket/IP.pm)
 
 %description
 Audio::MPD gives a clear object-oriented interface for talking to and
@@ -39,6 +39,9 @@ server is established as soon as a new Audio::MPD object is created.
 %_man1dir/mpd-*
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.120610-alt1
+- automated CPAN update
+
 * Sun Sep 25 2011 Igor Vlasenko <viy@altlinux.ru> 1.112670-alt1
 - automated CPAN update
 
