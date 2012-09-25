@@ -3,10 +3,10 @@
 
 Name: TiMidity++
 Version: 2.14.0
-Release: alt2%prerel
+Release: alt3%prerel
 
 Summary: Great-sounding CPU-hungry MIDI soundfile player
-License: GPL
+License: GPLv2
 Group: Sound
 
 Url: http://timidity.sourceforge.net
@@ -25,7 +25,7 @@ Requires: timidity-instruments
 Requires: tcl >= %tcl_ver, tk >= %tk_ver
 
 # Automatically added by buildreq on Tue Feb 20 2007
-BuildRequires: emacs-common esound-devel jackit-devel libXaw-devel libXaw3d-devel libalsa-devel libao-devel libflac-devel libgtk+2-devel libncurses-devel liboggflac-devel libslang-devel libspeex-devel openmotif-devel tk-devel
+BuildRequires: emacs-common esound-devel jackit-devel libXaw-devel libXaw3d-devel libalsa-devel libao-devel libflac-devel libgtk+2-devel libncurses-devel liboggflac-devel libslang2-devel libspeex-devel openmotif-devel tk-devel
 
 BuildRequires: tcl-devel >= %tcl_ver, tk-devel >= %tk_ver
 BuildRequires: libpng-devel
@@ -118,6 +118,9 @@ install -pDm644 interface/%_name.el %buildroot%_emacslispdir/%_name.el
 %doc doc/C/{README*,FAQ}
 
 %changelog
+* Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 2.14.0-alt3
+- Built with libslang2-devel.
+
 * Fri Sep 21 2012 Andriy Stepanov <stanv@altlinux.ru> 2.14.0-alt2
 - cleanup spec
 
