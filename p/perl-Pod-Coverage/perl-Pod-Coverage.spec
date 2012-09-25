@@ -1,6 +1,6 @@
 %define dist Pod-Coverage
 Name: perl-%dist
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Summary: Checks if the documentation of a module is comprehensive
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RC/RCLAMP/Pod-Coverage-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ given module is comprehensive.
 %perl_vendor_privlib/Pod
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- automated CPAN update
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 0.21-alt1
 - 0.19 -> 0.21
 
