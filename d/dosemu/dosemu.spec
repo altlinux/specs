@@ -1,16 +1,17 @@
 Name: dosemu
-Version: 1.4.0.1
-Release: alt1.qa2
-Serial: 1
-Packager: Grigory Batalov <bga@altlinux.ru>
+Version: 1.4.1
+Release: alt0.1
+Epoch: 1
 
 Summary: The Linux DOS emulator
 Summary(ru_RU.UTF-8): Эмулятор DOS под Linux
-License: GPL
+License: GPLv2
 Group: Emulators
 Url: http://dosemu.sourceforge.net/
+Packager: Grigory Batalov <bga@altlinux.ru>
 
-Source0: http://telia.dl.sourceforge.net/sourceforge/dosemu/%name-%version.tar
+# https://dosemu.svn.sourceforge.net/svnroot/dosemu/trunk
+Source: %name-svn.tar
 
 # icons from Mandrake
 Source2: xdosemu.xpm
@@ -23,20 +24,23 @@ Source9: dosemu-1.4.0-alt-fonts.tar
 # default /etc/dosemu.users
 Source13: dosemu.users
 
-Patch: %name-%version-alt.patch
+Patch: %name-%version-%release.patch
 
 Obsoletes: dosemu-bin-nox
 Conflicts: dosemu-freedos < 050405-alt3
 Conflicts: dosemu-bin-x
 
-# Automatically added by buildreq on Wed Mar 11 2009
-BuildRequires: flex imake libICE-devel libSDL-devel libX11-devel libXext-devel libXxf86vm-devel libalsa-devel libgpm-devel libslang-devel libsndfile-devel
+%define docdir %_docdir/%name-%version
+
+# Automatically added by buildreq on Tue Sep 25 2012
+# optimized out: alternatives libX11-devel xorg-kbproto-devel xorg-xextproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
+BuildRequires: flex imake libICE-devel libSDL-devel libXext-devel libXxf86vm-devel libalsa-devel libgpm-devel libslang2-devel libsndfile-devel
 
 %description
 This package allows MS-DOS programs to be started in Linux. A virtual
 machine (the DOS box) provides the necessary BIOS functions and emulates
 most of the chip devices (e.g. timer, interrupt- and keyboard controler)
-Documentation can be found in %_defaultdocdir/%name-%version and in the man
+Documentation can be found in %docdir and in the man
 page, as well as in the sources.
 You probably need dosemu-freedos package too.
 
@@ -44,15 +48,14 @@ You probably need dosemu-freedos package too.
 DOSEmu позволяет запускать программы MS-DOS под Linux. Виртуальная
 машина (DOS) предоставляет необходимые функции BIOS и эмулирует
 большинство устройств, таких как таймер, контроллеры прерываний
-и клавиатуры. Документацию можно найти в %_defaultdocdir/%name-%version
+и клавиатуры. Документацию можно найти в %docdir
 и на страницах руководства (man). Как, впрочем, и в исходниках.
 Вероятно, вам также понадобится пакет dosemu-freedos.
 
 %package plugins-x-sdl
 Summary: Dosemu X11 and SDL plugins
-License: GPL
 Group: Emulators
-Requires: dosemu = %{?serial:%serial:}%version-%release
+Requires: dosemu = %epoch:%version-%release
 Obsoletes: xdosemu
 Obsoletes: dosemu-bin-x
 
@@ -61,15 +64,14 @@ The Linux DOS Emulator XFree86/Xorg and SDL plugins.
 
 %package plugins-sound
 Summary: Dosemu ALSA and Sndfile plugins
-License: GPL
 Group: Emulators
-Requires: dosemu = %{?serial:%serial:}%version-%release
+Requires: dosemu = %epoch:%version-%release
 
 %description plugins-sound
 The Linux DOS Emulator ALSA and Sndfile plugins.
 
 %prep
-%setup -q
+%setup -n %name-svn
 
 cp -f compiletime-settings.devel compiletime-settings
 %patch -p1
@@ -93,8 +95,7 @@ sed -i -e "s! plugin_sdl off! plugin_sdl on!g" compiletime-settings
 
 %install
 # install itself
-%make_install install DESTDIR=%buildroot prefix=%prefix \
-	      mandir=%_mandir docdir=%_defaultdocdir/%name-%version
+%makeinstall_std prefix=%prefix mandir=%_mandir docdir=%docdir
 # /var/lib/dosemu for custom DOS
 mkdir -p %buildroot%_localstatedir/dosemu
 
@@ -106,8 +107,8 @@ install -m644 %SOURCE2 %buildroot%_niconsdir/xdosemu.xpm
 install -m644 %SOURCE3 %buildroot%_miconsdir/xdosemu.xpm
 install -m644 %SOURCE4 %buildroot%_liconsdir/xdosemu.xpm
 # adjusting docs
-#mv %buildroot%_sysconfdir/%name/global.conf %buildroot%_defaultdocdir/%name-%version
-install -m644 doc/HP1100-cp866-fonts-HOWTO.txt %buildroot%_defaultdocdir/%name-%version/
+#mv %buildroot%_sysconfdir/%name/global.conf %buildroot%docdir
+install -m644 doc/HP1100-cp866-fonts-HOWTO.txt %buildroot%docdir/
 
 # Menu entry for xdosemu
 mkdir -p %buildroot%_desktopdir
@@ -156,9 +157,9 @@ fi
 %dir %_datadir/dosemu
 %exclude %_datadir/dosemu/Xfonts
 %_datadir/dosemu/*
-%doc %_defaultdocdir/%name-%version
+%docdir
 %exclude %_man1dir/xdosemu.*
-%doc %_man1dir/*
+%_man1dir/*
 %dir %_libdir/%name/
 %_libdir/%name/libplugin_gpm.so
 %_libdir/%name/libplugin_term.so
@@ -179,6 +180,14 @@ fi
 %_libdir/%name/libplugin_sndfile.so
 
 %changelog
+* Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.4.1-alt0.1
+- Updated to https://dosemu.svn.sourceforge.net/svnroot/dosemu/trunk@2080
+  (closes: #24643, #26471).
+
+* Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.4.0.1-alt2
+- Fixed build with flex >= 2.5.36.
+- Built with libslang2-devel.
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:1.4.0.1-alt1.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
