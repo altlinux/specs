@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 7.3
-Release: alt1.pre.svn20120904
+Release: alt2.pre.svn20120904
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -26,6 +26,7 @@ BuildPreReq: libstratimikos10-devel libbelos10-devel librtop10-devel
 BuildPreReq: libsacado10-devel libthyra10-devel libtrilinos10-devel
 BuildPreReq: libmumps-devel libhypre-devel libsuitesparse-devel
 BuildPreReq: chrpath rpm-macros-make boost-signals-devel
+BuildPreReq: libnetcdf_c++-mpi-devel
 
 Requires: lib%name = %version-%release
 
@@ -216,6 +217,9 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 %endif
 
 %changelog
+* Tue Sep 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt2.pre.svn20120904
+- Rebuilt with netcdf 4.2
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt1.pre.svn20120904
 - Version 7.3
 
