@@ -1,6 +1,6 @@
 %define dist Text-Format
 Name: perl-%dist
-Version: 0.53
+Version: 0.58
 Release: alt1
 
 Summary: Various subroutines to format text
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SH/SHLOMIF/Text-Format-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -41,6 +41,9 @@ formatting than what Text::Wrap allows.
 %perl_vendor_privlib/Text
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
+- automated CPAN update
+
 * Mon Apr 25 2011 Alexey Tourbin <at@altlinux.ru> 0.53-alt1
 - 0.52 -> 0.53
 
