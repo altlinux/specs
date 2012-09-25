@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -94,6 +94,7 @@ Release: alt6
 %def_disable paravirt_guest
 %def_disable kvm_quest
 %def_disable nfs_swap
+%def_enable fatelf
 %def_without perf
 %def_enable oprofile
 %def_enable secrm
@@ -101,7 +102,7 @@ Release: alt6
 
 %def_disable debug_section_mismatch
 
-%define allocator SLAB
+%define allocator SLQB
 
 %define strip_mod_opts --strip-unneeded -R .comment
 
@@ -502,17 +503,18 @@ Patch1081: linux-%kernel_branch.42-feat-drivers-video--bootsplash.patch
 
 Patch1091: linux-%kernel_branch.42-feat-fs--secrm.patch
 Patch1092: linux-%kernel_branch-feat-fs-aufs.patch
-Patch1093: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
-Patch1094: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
-Patch1095: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
-Patch1096: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
-Patch1097: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
-Patch1098: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1099: linux-%kernel_branch.42-feat-fs-overlayfs.patch
-Patch1100: linux-%kernel_branch.42-feat-fs-reiser4.patch
-Patch1101: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1102: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1103: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1093: linux-%kernel_branch.42-feat-fs-binfmt_elf--fatelf.patch
+Patch1094: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
+Patch1095: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
+Patch1096: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
+Patch1097: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
+Patch1098: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
+Patch1099: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
+Patch1100: linux-%kernel_branch.42-feat-fs-overlayfs.patch
+Patch1101: linux-%kernel_branch.42-feat-fs-reiser4.patch
+Patch1102: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1103: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1104: linux-%kernel_branch.42-feat-fs-unionfs.patch
 
 Patch1111: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
 Patch1112: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
@@ -520,9 +522,11 @@ Patch1113: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
 
 Patch1121: linux-%kernel_branch.42-feat-lib--llist.patch
 
-Patch1131: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+Patch1131: linux-%kernel_branch.42-feat-mm--slqb.patch
 
-Patch1141: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
+Patch1141: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+
+Patch1151: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %x86_64 %ix86
@@ -1569,11 +1573,12 @@ cd linux-%version
 %patch1096 -p1
 %patch1097 -p1
 %patch1098 -p1
-#patch1099 -p1
+%patch1099 -p1
 %patch1100 -p1
 %patch1101 -p1
 %patch1102 -p1
 %patch1103 -p1
+%patch1104 -p1
 
 %patch1111 -p1
 %patch1112 -p1
@@ -1584,6 +1589,8 @@ cd linux-%version
 %patch1131 -p1
 
 %patch1141 -p1
+
+%patch1151 -p1
 
 # get rid of unwanted files resulting from patch fuzz
 #find . -name "*.orig" -delete -or -name "*~" -delete
@@ -1719,6 +1726,7 @@ config_disable \
 	%{?_disable_math_emu:MATH_EMULATION} \
 	%{?_disable_kallsyms:KALLSYMS} \
 	%{?_disable_oprofile:PROFILING OPROFILE} \
+	%{?_disable_fatelf:BINFMT_FATELF} \
 	%{?_enable_ext4_for_ext23:EXT[23]_FS}
 
 %ifarch i386 i486 i586 i686
@@ -1812,7 +1820,7 @@ install -Dp -m644 System.map %buildroot/boot/System.map-%kversion-%flavour-%krel
 install -Dp -m644 arch/%base_arch/boot/bzImage %buildroot/boot/vmlinuz-%kversion-%flavour-%krelease
 install -Dp -m644 .config %buildroot/boot/config-%kversion-%flavour-%krelease
 
-make -j%__nprocs \
+%make_install \
 	INSTALL_MOD_PATH=%buildroot \
 	INSTALL_FW_PATH=%buildroot%firmware_dir \
 	%{!?_enable_debug:%{?strip_mod_opts:INSTALL_MOD_STRIP="%strip_mod_opts"}} \
@@ -2399,6 +2407,17 @@ fi
 
 
 %changelog
+* Tue Sep 25 2012 Led <led@altlinux.ru> 3.0.43-alt7
+- updated:
+  + fix-arch-x86-cpu--perf-event
+  + fix-net-core
+  + feat-fs-overlayfs
+  + feat-fs-reiser4
+- added:
+  + feat-fs-binfmt_elf--fatelf
+  + feat-mm--slqb
+- build with SLQB allocator
+
 * Sat Sep 22 2012 Led <led@altlinux.ru> 3.0.43-alt6
 - updated:
   + fix-arch-x86--mcheck
