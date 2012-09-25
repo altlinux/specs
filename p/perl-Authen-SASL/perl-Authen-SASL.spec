@@ -1,14 +1,14 @@
 %define dist Authen-SASL
 Name: perl-%dist
-Version: 2.15
-Release: alt3
+Version: 2.16
+Release: alt1
 
 Summary: SASL authentication framework for Perl
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GB/GBARR/Authen-SASL-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ connection.
 	%perl_vendor_privlib/Authen/SASL/Perl/*.pm
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 2.16-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 2.15-alt3
 - disabled build dependency on perl-Module-Install
 
