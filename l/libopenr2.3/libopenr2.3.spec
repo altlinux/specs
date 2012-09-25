@@ -1,6 +1,6 @@
 Name: libopenr2.3
 Version: 1.3.0
-Release: alt2
+Release: alt3
 
 Summary: MFC/R2 call setup library
 License: LGPL
@@ -74,6 +74,9 @@ This package contains OpenR2 utilities.
 %_man8dir/r2test.8*
 
 %changelog
+* Tue Sep 25 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt3
+- fixed build
+
 * Wed Jun 15 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.3.0-alt2
 - updated from svn r425
 
