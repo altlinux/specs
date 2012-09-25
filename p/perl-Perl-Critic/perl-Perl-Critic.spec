@@ -1,6 +1,6 @@
 %define m_distro Perl-Critic
 Name: perl-Perl-Critic
-Version: 1.117
+Version: 1.118
 Release: alt1
 
 Summary: Critique Perl source code for best-practices.  
@@ -10,7 +10,7 @@ Group: Development/Perl
 Url: %CPAN %m_distro
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TH/THALJEF/Perl-Critic-%{version}.tar.gz
 
 BuildRequires: perl-B-Keywords perl-Config-Tiny perl-Exception-Class perl-File-HomeDir perl-File-Which perl-HTML-Parser perl-Module-Build perl-PPI perl-Perl-Tidy perl-Pod-Spell perl-Readonly perl-Regexp-Parser perl-String-Format perl-version perl-podlators perl-Module-Pluggable perl-autodie perl-Email-Address perl-PPIx-Utilities perl-PPIx-Regexp perl-Test-Deep
 Requires: perl(Module/Pluggable.pm)
@@ -52,6 +52,9 @@ code analysis.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.118-alt1
+- automated CPAN update
+
 * Wed Jun 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.117-alt1
 - new version
 
