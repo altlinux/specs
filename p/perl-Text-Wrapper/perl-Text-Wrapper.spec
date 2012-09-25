@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Text-Wrapper
-Version: 1.02
+Version: 1.04
 Release: alt1
 
 Summary: Text-Wrapper - Simple word wrapping routine
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/C/CJ/CJM/Text-Wrapper-1.02.tar.gz
+Source: http://www.cpan.org/authors/id/C/CJ/CJM/Text-Wrapper-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 06 2005
 BuildRequires: perl-devel perl-Module-Build
@@ -52,6 +52,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Text/*
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- automated CPAN update
+
 * Fri Jul 16 2010 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
