@@ -3,7 +3,7 @@
 Name: libginac
 Version: 1.6.2
 Epoch: 1
-Release: alt1.git20111208
+Release: alt1.git20111208.qa1
 
 Summary: C++ class library for symbolic calculations
 
@@ -46,7 +46,7 @@ C++ programming language.
 %package devel
 Summary: Libraries, includes and more for developing GiNaC applications
 Group: Development/C++
-Requires: %name = %version-%release
+Requires: %name = %{?epoch:%epoch:}%version-%release
 
 %description devel
 GiNaC is Not a Cocktail.
@@ -90,6 +90,11 @@ for developing GiNaC applications.
 %_infodir/*.info*
 
 %changelog
+* Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:1.6.2-alt1.git20111208.qa1
+- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
+- applied repocop fixes:
+  * beehive-log-dependency-needs-epoch-x86_64 for libginac
+
 * Fri Dec 23 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.6.2-alt1.git20111208
 - Version 1.6.2
 
