@@ -2,7 +2,7 @@
 
 Name: aufs2-util
 Version: 2.1
-Release: alt3.git0f0cf3f
+Release: alt4.gitaee57b2
 
 Group: System/Base
 Summary: Utilities for aufs2.1
@@ -49,6 +49,9 @@ export CFLAGS="%optflags"
 
 
 %changelog
+* Tue Sep 25 2012 Andriy Stepanov <stanv@altlinux.ru> 2.1-alt4.gitaee57b2
+- Update
+
 * Tue Apr 26 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.1-alt3.git0f0cf3f
 - conflicts fixed
 
