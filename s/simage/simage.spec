@@ -1,6 +1,6 @@
 Name: simage
 Version: 1.7.0
-Release: alt4
+Release: alt5
 Summary: Format loaders and front-ends to common import libraries
 License: Public domain
 Group: Video
@@ -95,6 +95,9 @@ export QTDIR=%_qt4dir
 %_datadir/guile/coin/*
 
 %changelog
+* Tue Sep 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt5
+- Rebuilt with libpng15
+
 * Tue Mar 22 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt4
 - Rebuilt for debuginfo
 
