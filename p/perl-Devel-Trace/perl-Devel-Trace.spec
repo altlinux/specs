@@ -1,14 +1,14 @@
 %define dist Devel-Trace
 Name: perl-%dist
-Version: 0.11
-Release: alt2
+Version: 0.12
+Release: alt1
 
 Summary: Print out each line before it is executed
 License: Public Domain
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MJ/MJD/Devel-Trace-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ just before each line is executed (liks "sh -x").
 %perl_vendor_privlib/Devel
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.11-alt2
 - rebuilt as plain src.rpm
 
