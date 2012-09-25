@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-Path-Class
-Version: 0.24
+Version: 0.26
 Release: alt1
 
 Summary: Cross-platform path specification manipulation
@@ -23,7 +23,7 @@ Url: http://search.cpan.org/dist/Path-Class/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/K/KW/KWILLIAMS/Path-Class-0.24.tar.gz
+Source: http://www.cpan.org/authors/id/K/KW/KWILLIAMS/Path-Class-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 13 2010 (-bi)
 BuildRequires: perl-Module-Build
@@ -58,6 +58,9 @@ rm t/02-foreign.t
 %perl_vendor_privlib/Path*
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1
 - automated CPAN update
 
