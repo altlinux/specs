@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:        avalon-%{short_name}
 Version:     2.1
-Release:     alt1_11jpp7
+Release:     alt2_11jpp7
 Epoch:       0
 Summary:     Java logging toolkit
 License:     ASL 2.0
@@ -108,7 +108,7 @@ install -d -m 755 $RPM_BUILD_ROOT/%{_mavenpomdir}
 install -m 644 target/%{name}-%{version}.bar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
 install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
-%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name},org.apache.avalon.logkit:%{name}"
+%add_maven_depmap JPP-%{name}.pom %{name}.jar -a "%{short_name}:%{short_name},org.apache.avalon.logkit:%{name},avalon:%{name}"
 
 # javadoc
 install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -125,6 +125,9 @@ cp -pr dist/docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt2_11jpp7
+- added avalon:avalon-logkit depmap
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt1_11jpp7
 - new release
 
