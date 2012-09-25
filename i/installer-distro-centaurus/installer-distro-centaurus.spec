@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
-Version: 6.0
-Release: alt14
+Version: 6.9
+Release: alt1
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -60,11 +60,16 @@ cp -a * %buildroot%install2dir/
 %install2dir/alterator-menu
 %install2dir/installer-steps
 %install2dir/services-*
+%install2dir/systemd-*
 %install2dir/*.d/*
 
 %files stage3
 
 %changelog
+* Tue Sep 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt1
+- bump version
+- systemd-enabled file added
+
 * Fri Aug 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.0-alt14
 - removed dependences on outdated installer features
 
