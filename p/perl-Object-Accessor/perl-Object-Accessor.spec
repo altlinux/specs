@@ -1,6 +1,6 @@
 %define dist Object-Accessor
 Name: perl-%dist
-Version: 0.42
+Version: 0.44
 Release: alt1
 
 Summary: Per object accessors
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Object-Accessor-0.42.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Object-Accessor-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ opposed to per Class accessors, as, for example, Class::Accessor provides).
 %perl_vendor_privlib/Object
 
 %changelog
+* Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.44-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1
 - automated CPAN update
 
