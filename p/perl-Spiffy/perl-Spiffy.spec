@@ -1,14 +1,14 @@
 %define dist Spiffy
 Name: perl-%dist
-Version: 0.30
-Release: alt2
+Version: 0.31
+Release: alt1
 
 Summary: Spiffy Perl Interface Framework For You
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/I/IN/INGY/Spiffy-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ clean, straightforward and (perhaps someday) standard way.
 %perl_vendor_privlib/Spiffy*
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 0.30-alt2
 - rebuilt
 
