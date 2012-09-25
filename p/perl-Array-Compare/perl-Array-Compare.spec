@@ -9,8 +9,8 @@
 %define _enable_test 1
 
 Name: perl-Array-Compare
-Version: 2.01
-Release: alt1.1
+Version: 2.02
+Release: alt1
 
 Summary: Array::Compare - perl module comparing arrays
 
@@ -19,10 +19,10 @@ Group: Development/Perl
 Url: http://search.cpan.org/dist/Array-Compare/
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAVECROSS/Array-Compare-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 27 2010 (-bi)
-BuildRequires: perl-Module-Build perl-Moose perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Module-Build perl-Moose perl-Test-Pod perl-Test-Pod-Coverage perl(Test/NoWarnings.pm)
 
 %description
 Array::Compare is a Perl module which allows you to compare two arrays.
@@ -52,6 +52,9 @@ differing columns.
 %doc Changes README
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 2.02-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.01-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
