@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-namespace-clean
-Version: 0.21
+Version: 0.23
 Release: alt1
 
 Summary: Keep imports and functions out of your namespace
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/CPAN/authors/id/R/RI/RIBASUSHI/namespace-clean-0.21.
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/R/RI/RIBASUSHI/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RI/RIBASUSHI/namespace-clean-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Sep 25 2011
 BuildRequires: perl-Data-OptList perl-List-MoreUtils perl-Package-DeprecationManager perl-Params-Util perl-Sub-Exporter perl-Sub-Install perl-Variable-Magic perl-B-Hooks-EndOfScope perl-Package-Stash perl-devel
@@ -46,6 +46,9 @@ None.
 %perl_vendor_privlib/namespace/*
 
 %changelog
+* Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Sun Sep 25 2011 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - automated CPAN update
 
