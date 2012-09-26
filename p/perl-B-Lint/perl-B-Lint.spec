@@ -1,6 +1,6 @@
 %define dist B-Lint
 Name: perl-%dist
-Version: 1.13
+Version: 1.14
 Release: alt1
 
 Summary: Perl lint
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/F/FL/FLORA/B-Lint-1.13.tar.gz
+Source: http://www.cpan.org/authors/id/F/FL/FLORA/B-Lint-%{version}.tar.gz
 Patch: perl-B-Lint-1.12-alt-install.patch
 
 BuildArch: noarch
@@ -36,6 +36,9 @@ process for C programs.
 %perl_vendor_privlib/B
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.14-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 
