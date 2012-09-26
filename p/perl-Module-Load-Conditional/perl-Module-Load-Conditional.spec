@@ -1,6 +1,6 @@
 %define dist Module-Load-Conditional
 Name: perl-%dist
-Version: 0.50
+Version: 0.54
 Release: alt1
 
 Summary: Looking up module information / loading at runtime
@@ -13,7 +13,7 @@ Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Module-Load-Conditional-%{ver
 BuildArch: noarch
 
 # Automatically added by buildreq on Sun Apr 24 2011
-BuildRequires: perl-Module-CoreList perl-Module-Load perl-Params-Check perl-devel
+BuildRequires: perl-Module-CoreList perl-Module-Load perl-Params-Check perl-devel perl(Module/Metadata.pm)
 
 %description
 Module::Load::Conditional provides simple ways to query and possibly load
@@ -41,6 +41,9 @@ rm t/01_Module_Load_Conditional.t
 %perl_vendor_privlib/Module
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
 - automated CPAN update
 
