@@ -15,7 +15,7 @@
 #%%def_without test
 
 Name: perl-Net-SIP
-Version: 0.62
+Version: 0.67
 Release: alt1
 
 Summary: Perl framework for SIP (Voice Over IP, RFC3261)
@@ -27,7 +27,7 @@ Url: http://search.cpan.org/dist/Net-SIP/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/S/SU/SULLR/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SU/SULLR/Net-SIP-%{version}.tar.gz
 
 BuildPreReq: perl-Storable
 # Automatically added by buildreq on Sun Nov 08 2009 (-bi)
@@ -51,6 +51,9 @@ layer for common tasks.
 %doc Changes README INSTALL HOWTO BUGS THANKS TODO COPYRIGHT samples bin
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.67-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.62-alt1
 - automated CPAN update
 
