@@ -1,6 +1,6 @@
 %define dist IPTables-ChainMgr
 Name: perl-%dist
-Version: 0.9
+Version: 1.2
 Release: alt1
 
 Summary: Perl extension for manipulating iptables policies
@@ -8,12 +8,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MR/MRASH/IPTables-ChainMgr-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Thu Oct 20 2011
-BuildRequires: perl-IPTables-Parse perl-Net-IPv4Addr perl-devel
+BuildRequires: perl-IPTables-Parse perl-Net-IPv4Addr perl-devel perl(NetAddr/IP.pm)
 
 %description
 The IPTables::ChainMgr package provide an interface to manipulate iptables
@@ -40,5 +40,8 @@ an installed iptables binary instead of having to compile against a library.
 %perl_vendor_privlib/IPTables
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1
+- automated CPAN update
+
 * Thu Oct 20 2011 Alexey Tourbin <at@altlinux.ru> 0.9-alt1
 - initial revision
