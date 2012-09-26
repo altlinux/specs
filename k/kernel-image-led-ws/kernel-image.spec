@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -207,7 +207,7 @@ Patch0162: linux-%kernel_branch.42-fix-drivers-firmware--efivars.patch
 Patch0171: linux-%kernel_branch.42-fix-drivers-gpu-drm.patch
 Patch0172: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm.patch
 Patch0173: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm_kms_helper.patch
-Patch0174: linux-%kernel_branch.42-fix-drivers-gpu-drm--i915.patch
+Patch0174: linux-%kernel_branch.43-fix-drivers-gpu-drm--i915.patch
 Patch0175: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0176: linux-%kernel_branch.42-fix-drivers-gpu-drm--radeon.patch
 Patch0177: linux-%kernel_branch.42-fix-drivers-gpu-drm--via.patch
@@ -336,7 +336,7 @@ Patch0444: linux-%kernel_branch.42-fix-drivers-scsi--mpt2sas.patch
 Patch0445: linux-%kernel_branch.42-fix-drivers-scsi--mvsas.patch
 Patch0446: linux-%kernel_branch.42-fix-drivers-scsi--pm8001.patch
 Patch0447: linux-%kernel_branch.42-fix-drivers-scsi--qla2xxx.patch
-Patch0448: linux-%kernel_branch.42-fix-drivers-scsi--scsi_mod.patch
+Patch0448: linux-%kernel_branch.43-fix-drivers-scsi--scsi_mod.patch
 Patch0449: linux-%kernel_branch.42-fix-drivers-scsi--scsi_transport_fc.patch
 Patch0450: linux-%kernel_branch.42-fix-drivers-scsi--scsi_transport_sas.patch
 Patch0451: linux-%kernel_branch.42-fix-drivers-scsi--scsi_transport_spi.patch
@@ -406,7 +406,7 @@ Patch0570: linux-%kernel_branch.42-fix-fs-hfs.patch
 Patch0571: linux-%kernel_branch.42-fix-fs-jbd.patch
 Patch0572: linux-%kernel_branch.42-fix-fs-nfs.patch
 Patch0573: linux-%kernel_branch.42-fix-fs-ocfs2.patch
-Patch0574: linux-%kernel_branch.42-fix-fs-proc.patch
+Patch0574: linux-%kernel_branch.43-fix-fs-proc.patch
 Patch0575: linux-%kernel_branch.42-fix-fs-pstore.patch
 Patch0576: linux-%kernel_branch.42-fix-fs-reiserfs.patch
 Patch0577: linux-%kernel_branch.42-fix-fs-sysfs.patch
@@ -431,7 +431,7 @@ Patch0621: linux-%kernel_branch.42-fix-lib--genalloc.patch
 Patch0630: linux-%kernel_branch.42-fix-mm.patch
 Patch0631: linux-%kernel_branch.42-fix-mm--compaction.patch
 Patch0632: linux-%kernel_branch.42-fix-mm--huge_memory.patch
-Patch0633: linux-%kernel_branch.42-fix-mm--hugetlb.patch
+Patch0633: linux-%kernel_branch.43-fix-mm--hugetlb.patch
 Patch0634: linux-%kernel_branch.42-fix-mm--memcontrol.patch
 Patch0635: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0636: linux-%kernel_branch.42-fix-mm--mmu.patch
@@ -459,7 +459,7 @@ Patch0665: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_netlink.patch
 Patch0666: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
 Patch0667: linux-%kernel_branch.42-fix-net-rds--rds.patch
 Patch0668: linux-%kernel_branch.42-fix-net-sctp.patch
-Patch0669: linux-%kernel_branch.42-fix-net-sunrpc.patch
+Patch0669: linux-%kernel_branch.43-fix-net-sunrpc.patch
 Patch0670: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
 
 Patch0680: linux-%kernel_branch.42-fix-scripts.patch
@@ -2416,6 +2416,14 @@ fi
 
 
 %changelog
+* Wed Sep 26 2012 Led <led@altlinux.ru> 3.0.43-alt9
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-scsi--scsi_mod
+  + fix-fs-proc
+  + fix-mm--hugetlb
+  + fix-net-sunrpc
+
 * Wed Sep 26 2012 Led <led@altlinux.ru> 3.0.43-alt8
 - updated:
   + fix-fs-nfs
