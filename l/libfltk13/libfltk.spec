@@ -3,7 +3,7 @@
 
 Name: %{oname}13
 Version: %major.0.r9678
-Release: alt1
+Release: alt2
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
 License: LGPL
@@ -53,14 +53,6 @@ repository in the US.
 
 This package includes header files, static library, GUI builder fluid,
 needed to develop FLTK applications.
-
-%package -n %oname-devel-static
-Summary: Static libraries for %name
-Group: Development/C
-Requires: %oname-devel = %version-%release
-
-%description -n %oname-devel-static
-Static libraries for %name
 
 %package doc
 Summary: Documentation and test suit for multiplatform C++ GUI Fast Light ToolKit
@@ -121,9 +113,6 @@ mv %buildroot%prefix/man/* %buildroot%_mandir/
 %_libdir/FLTK-1.3
 %_mandir/man?/*
 
-#files -n %oname-devel-static
-#_libdir/*.a
-
 %files doc
 %_docdir/fltk-%version
 %exclude %_docdir/fltk-%version/ANNOUNCEMENT
@@ -131,6 +120,9 @@ mv %buildroot%prefix/man/* %buildroot%_mandir/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0.r9678-alt2
+- Rebuilt with libpng15
+
 * Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0.r9678-alt1
 - New snapshot
 
