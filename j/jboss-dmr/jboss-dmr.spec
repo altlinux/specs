@@ -1,3 +1,4 @@
+BuildRequires: maven-clean-plugin maven-antrun-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-dmr
 Version:          1.1.1
-Release:          alt1_6jpp7
+Release:          alt2_6jpp7
 Summary:          JBoss DMR
 Group:            Development/Java
 License:          LGPLv2+
@@ -91,6 +92,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2_6jpp7
+- fixed build
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt1_6jpp7
 - new version
 
