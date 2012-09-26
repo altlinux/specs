@@ -1,6 +1,6 @@
 %define dist IO-Compress
 Name: perl-%dist
-Version: 2.048
+Version: 2.055
 Release: alt1
 
 Summary: Read and write compressed data
@@ -18,7 +18,7 @@ Obsoletes: perl-IO-Compress-Base < %version perl-IO-Compress-Zlib < %version per
 BuildRequires: perl-Compress-Raw-Zlib >= %version
 BuildRequires: perl-Compress-Raw-Bzip2 >= %version
 
-# Automatically added by buildreq on Mon Feb 20 2012
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Test-NoWarnings perl-Test-Pod
 
 %description
@@ -37,11 +37,16 @@ export TEST_SKIP_VERSION_CHECK=1
 
 %files
 %doc Changes README examples
+%_bindir/zipdetails
 %perl_vendor_privlib/Compress
 %perl_vendor_privlib/File
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.055-alt1
+- 2.048 -> 2.055
+- packaged /usr/bin/zipdetails, requires Encode
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 2.048-alt1
 - 2.037 -> 2.048
 
