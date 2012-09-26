@@ -1,6 +1,6 @@
 %define dist MooseX-Types-DateTime
 Name: perl-%dist
-Version: 0.05
+Version: 0.07
 Release: alt1
 
 Summary: DateTime related constraints and coercions for Moose
@@ -12,7 +12,7 @@ Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sun Nov 20 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-DateTime perl-Locale-Maketext perl-MooseX-Types perl-Test-Exception perl-Test-use-ok
 
 %description
@@ -33,5 +33,8 @@ designed to work with the DateTime suite of objects.
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 0.07-alt1
+- 0.05 -> 0.07
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 0.05-alt1
 - initial revision
