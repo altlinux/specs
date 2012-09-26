@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt2.git20120608
+Release: alt3.git20120608
 
 Summary: Matlab(TM) style python plotting package
 
@@ -595,6 +595,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt3.git20120608
+- Rebuilt with libpng15
+
 * Mon Jun 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.git20120608
 - New snapshot
 - Fixed Cairo and FltkAgg backends
