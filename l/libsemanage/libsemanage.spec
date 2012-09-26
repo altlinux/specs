@@ -1,18 +1,20 @@
-Name: libsemanage
-Version: 2.0.46
-Release: alt1.1
-License: %lgpl2plus
-Url: http://userspace.selinuxproject.org/trac/
+%def_disable check
+%def_with python
 
+Name: libsemanage
+Version: 2.1.9
+Release: alt1
+Summary: Library, which provides an interface for SELinux management
+Group: System/Libraries
+License: LGPLv2.1+
+Url: http://userspace.selinuxproject.org
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Summary: This package contains the libsemanage library, which provides an interface for SELinux management.
-Group: System/Libraries
 
-BuildRequires(pre): rpm-build-licenses
-
-# Automatically added by buildreq on Tue May 12 2009
-BuildRequires: bzlib-devel flex libselinux-devel >= 2.0.80-alt1 libsepol-devel >= 2.0.36-alt1 libustr-devel python-devel
+%{?_with_python:BuildPreReq: rpm-build-python}
+BuildRequires: bzlib-devel flex libustr-devel libsepol-devel >= 2.1 libselinux-devel >= 2.1
+%{?_with_python:BuildRequires: swig python-dev}
+%{!?_disable_check:BuildRequires: CUnit-devel libsepol-devel-static >= 2.1 libselinux-devel-static >= 2.1}
 
 %description
 This package provides the shared libraries for the manipulation of
@@ -22,10 +24,12 @@ to perform specific transformations on binary policies such as
 customizing policy boolean settings. This contains the run-time
 libraries needed by such tools.
 
+
 %package devel
 Summary: Development files for %name
 Group: Development/C
 Requires: %name = %version
+
 %description devel
 Header files and libraries for SELinux policy manipulation tools
 This package provides an API for the manipulation of SELinux binary policies.
@@ -35,43 +39,77 @@ transformations on binary policies such as customizing policy boolean
 settings. It contains the static libraries and header files needed
 for developing applications that manipulate SELinux binary policies.
 
+
+%package devel-static
+Summary: Development files for %name
+Group: Development/C
+Requires: %name-devel = %version
+
+%description devel-static
+Static libraries for SELinux policy manipulation tools.
+
+
+%if_with python
 %package -n python-module-semanage
 Summary: Python module for %name
 Group: System/Configuration/Other
+Requires: %name = %version
+
 %description -n python-module-semanage
 Python bindings  for SELinux policy manipulation tools
 This package provides python bindings for the manipulation of SELinux
 binary policies.
+%endif
+
 
 %prep
-%setup
+%setup -q
 %patch -p1
 
+
 %build
-%make_build all pywrap \
-        CFLAGS='%optflags -W -Wundef -Wshadow -Wmissing-noreturn -Wmissing-format-attribute -Wno-unused-parameter' \
-        LIBDIR=%buildroot/%_libdir SHLIBDIR=%buildroot/%_lib
+%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib all
+%{?_with_python:%make_build CFLAGS="%optflags" LIBDIR=%_libdir SHLIBDIR=%_lib pywrap}
+
 
 %install
-%makeinstall_std install-pywrap LIBDIR=%buildroot/%_libdir SHLIBDIR=%buildroot/%_lib
+%makeinstall_std LIBDIR=%buildroot/%_libdir SHLIBDIR=%buildroot/%_lib %{?_with_python:install-pywrap}
 ln -sf /%_lib/libsemanage.so.1 %buildroot/%_libdir/libsemanage.so
+
+
+%check
+%make_build test
+
 
 %files
 %dir %_sysconfdir/selinux
-%config(noreplace) %_sysconfdir/selinux/semanage.conf
+%config(noreplace) %_sysconfdir/selinux/*
 /%_lib/*.so.*
-%_man3dir/*
+%_man5dir/*
+
 
 %files devel
 %_libdir/*.so
-%exclude %_libdir/*.a
-%_includedir/semanage
-%_pkgconfigdir/*.pc
+%_includedir/*
+%_pkgconfigdir/*
+%_man3dir/*
 
+
+%files devel-static
+%_libdir/*.a
+
+
+%if_with python
 %files -n python-module-semanage
 %python_sitelibdir/*
+%endif
+
 
 %changelog
+* Sun Sep 23 2012 Led <led@altlinux.ru> 2.1.9-alt1
+- 2.1.9
+- cleaned up spec
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.46-alt1.1
 - Rebuild with Python-2.7
 
