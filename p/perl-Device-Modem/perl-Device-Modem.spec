@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Device-Modem
-Version: 1.54
+Version: 1.56
 Release: alt1
 
 Summary: Perl extension to talk to modem devices connected via serial port
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/C/CO/COSIMO/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CO/COSIMO/Device-Modem-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Jul 19 2009 (-bi)
 BuildRequires: perl-Device-SerialPort perl-devel
@@ -47,9 +47,12 @@ rm -rf %buildroot%perl_vendor_man3dir/
 
 %files
 %perl_vendor_privlib/Device/*
-%doc README Changes docs examples
+%doc README Changes examples
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.56-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 1.54-alt1
 - automated CPAN update
 
