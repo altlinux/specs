@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-SVG
-Version: 2.50
-Release: alt1.1
+Version: 2.53
+Release: alt1
 
 Summary: SVG - Perl extension for generating Scalable Vector Graphics (SVG) documents
 
@@ -26,10 +26,10 @@ Url: http://search.cpan.org/~ronan/%m_distro-%version/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RO/RONAN/SVG-2.50.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/SVG-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jul 16 2005
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(parent.pm)
 
 %description
 SVG is a 100%% Perl module which generates a nested data structure containing the
@@ -51,6 +51,9 @@ object, create and access javascript, and generate SMIL animation content.
 %perl_vendor_privlib/SVG.pm
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 2.53-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.50-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
