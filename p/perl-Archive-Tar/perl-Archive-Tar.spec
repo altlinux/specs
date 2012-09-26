@@ -1,6 +1,6 @@
 %define dist Archive-Tar
 Name: perl-%dist
-Version: 1.78
+Version: 1.90
 Release: alt1
 
 Summary: Module for creation and manipulation of tar archives
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Archive-Tar-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ allowing for the creation of tar file objects for custom manipulation.
 %perl_vendor_privlib/Archive
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.90-alt1
+- automated CPAN update
+
 * Mon Oct 03 2011 Alexey Tourbin <at@altlinux.ru> 1.78-alt1
 - rebuilt as plain src.rpm
 
