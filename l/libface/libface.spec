@@ -1,6 +1,6 @@
 Name: libface
 Version: 0.1
-Release: alt1.2
+Release: alt1.3
 Summary: Face recognition library
 License: GPLv2
 Group: System/Libraries
@@ -39,6 +39,9 @@ cmake -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_CXX_FLAGS:STRING='%optflags'
 %_datadir/CMake/Modules/FindLibFace.cmake
 
 %changelog
+* Wed Sep 26 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 0.1-alt1.3
+- Rebuilt with OpenCV 2.4.9
+
 * Fri Apr 27 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.1-alt1.2
 - rebuild with rpm optflags
 
