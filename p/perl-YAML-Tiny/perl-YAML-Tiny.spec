@@ -1,6 +1,6 @@
 %define dist YAML-Tiny
 Name: perl-%dist
-Version: 1.50
+Version: 1.51
 Release: alt1
 
 Summary: Read/Write YAML files with as little code as possible
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/A/AD/ADAMK/YAML-Tiny-1.50.tar.gz
+Source: http://www.cpan.org/authors/id/A/AD/ADAMK/YAML-Tiny-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ memory overhead.
 %perl_vendor_privlib/YAML*
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.51-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.50-alt1
 - automated CPAN update
 
