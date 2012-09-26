@@ -1,6 +1,6 @@
 Name: slang2
 Version: 2.2.4
-Release: alt1
+Release: alt2
 
 Summary: The shared library for the S-Lang extension language
 License: GPLv2+
@@ -31,12 +31,14 @@ Requires: lib%name = %version-%release
 %package -n lib%name
 Summary: The shared library for the S-Lang extension language
 Group: System/Libraries
+Provides: slang = %version
 
 %package -n lib%name-devel
 Summary: The development environment for S-Lang
 Group: Development/C
 Requires: lib%name = %version-%release
-Conflicts: libslang-devel < %version
+Provides: libslang-devel = %version
+Obsoletes: libslang-devel < %version
 
 %package -n lib%name-devel-static
 Summary: The static library for development using S-Lang
@@ -138,6 +140,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_libdir/*.a
 
 %changelog
+* Wed Sep 26 2012 Dmitry V. Levin <ldv@altlinux.org> 2.2.4-alt2
+- Changed libslang2-devel dependencies to replace libslang-devel.
+
 * Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 2.2.4-alt1
 - Updated to 2.2.4 (closes: #24882).
 - Fixed packaging (closes: #15151).
