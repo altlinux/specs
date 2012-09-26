@@ -1,6 +1,6 @@
 %define dist DBIx-SearchBuilder
 Name: perl-%dist
-Version: 1.61
+Version: 1.63
 Release: alt1
 
 Summary: Encapsulate SQL queries and rows in simple perl objects
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TS/TSIBLEY/DBIx-SearchBuilder-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ updating data in a DBI-accesible database.
 %perl_vendor_privlib/DBIx
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.63-alt1
+- automated CPAN update
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 1.61-alt1
 - 1.54 -> 1.61
 
