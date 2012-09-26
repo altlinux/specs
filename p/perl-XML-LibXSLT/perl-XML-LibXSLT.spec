@@ -1,7 +1,7 @@
 %define dist XML-LibXSLT
 Name: perl-%dist
-Version: 1.77
-Release: alt2
+Version: 1.78
+Release: alt1
 
 Summary: Perl interface to the Gnome libxslt library
 License: GPL or Artistic
@@ -10,7 +10,7 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
-# Automatically added by buildreq on Wed Oct 12 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: libxslt-devel perl-XML-LibXML perl-devel zlib-devel
 
 %description
@@ -36,6 +36,9 @@ sed -i- '/Config{libs}/d' Makefile.PL
 %perl_vendor_autolib/XML
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.78-alt1
+- 1.77 -> 1.78
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.77-alt2
 - rebuilt for perl-5.16
 
