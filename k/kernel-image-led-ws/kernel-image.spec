@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -95,6 +95,8 @@ Release: alt7
 %def_disable kvm_quest
 %def_disable nfs_swap
 %def_enable fatelf
+%def_without lnfs
+%def_disable lnfs
 %def_without perf
 %def_enable oprofile
 %def_enable secrm
@@ -485,48 +487,51 @@ Patch1012: linux-%kernel_branch.42-feat-drivers-block--zram.patch
 
 Patch1021: linux-%kernel_branch-feat-drivers-gpu-drm--cirrus.patch
 
-Patch1031: linux-%kernel_branch-feat-drivers-input-lirc.patch
-Patch1032: linux-%kernel_branch.42-feat-drivers-input-touchscreen--elousb.patch
+Patch1031: linux-%kernel_branch.42-feat-drivers-hwmon--ipmisensors.patch
 
-Patch1041: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
+Patch1041: linux-%kernel_branch-feat-drivers-input-lirc.patch
+Patch1042: linux-%kernel_branch.42-feat-drivers-input-touchscreen--elousb.patch
 
-Patch1051: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
-Patch1052: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
-Patch1053: linux-%kernel_branch.42-feat-drivers-misc--zcache.patch
+Patch1051: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
 
-Patch1061: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
-Patch1062: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
+Patch1061: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
+Patch1062: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
+Patch1063: linux-%kernel_branch.42-feat-drivers-misc--zcache.patch
 
-Patch1071: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
+Patch1071: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
+Patch1072: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
 
-Patch1081: linux-%kernel_branch.42-feat-drivers-video--bootsplash.patch
+Patch1081: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
 
-Patch1091: linux-%kernel_branch.42-feat-fs--secrm.patch
-Patch1092: linux-%kernel_branch-feat-fs-aufs.patch
-Patch1093: linux-%kernel_branch.42-feat-fs-binfmt_elf--fatelf.patch
-Patch1094: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
-Patch1095: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
-Patch1096: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
-Patch1097: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
-Patch1098: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
-Patch1099: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1100: linux-%kernel_branch.42-feat-fs-overlayfs.patch
-Patch1101: linux-%kernel_branch.42-feat-fs-reiser4.patch
-Patch1102: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1103: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1104: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1091: linux-%kernel_branch.42-feat-drivers-video--bootsplash.patch
 
-Patch1111: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
-Patch1112: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
-Patch1113: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
+Patch1101: linux-%kernel_branch.42-feat-fs--secrm.patch
+Patch1102: linux-%kernel_branch-feat-fs-aufs.patch
+Patch1103: linux-%kernel_branch.42-feat-fs-binfmt_elf--fatelf.patch
+Patch1104: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
+Patch1105: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
+Patch1106: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
+Patch1107: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
+Patch1108: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
+Patch1109: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
+Patch1110: linux-%kernel_branch.42-feat-fs-overlayfs.patch
+Patch1111: linux-%kernel_branch.42-feat-fs-reiser4.patch
+Patch1112: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1113: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1114: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1115: linux-%kernel_branch.43-feat-fs--lnfs.patch
 
-Patch1121: linux-%kernel_branch.42-feat-lib--llist.patch
+Patch1121: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
+Patch1122: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
+Patch1123: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
 
-Patch1131: linux-%kernel_branch.42-feat-mm--slqb.patch
+Patch1131: linux-%kernel_branch.42-feat-lib--llist.patch
 
-Patch1141: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+Patch1141: linux-%kernel_branch.42-feat-mm--slqb.patch
 
-Patch1151: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
+Patch1151: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+
+Patch1161: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %x86_64 %ix86
@@ -1549,48 +1554,51 @@ cd linux-%version
 %patch1021 -p1
 
 %patch1031 -p1
-%patch1032 -p1
 
 %patch1041 -p1
+%patch1042 -p1
 
 %patch1051 -p1
-%patch1052 -p1
-%patch1053 -p1
 
 %patch1061 -p1
 %patch1062 -p1
+%patch1063 -p1
 
 %patch1071 -p1
+%patch1072 -p1
 
 %patch1081 -p1
 
-# fix-fs-*
 %patch1091 -p1
-%patch1092 -p1
-%patch1093 -p1
-%patch1094 -p1
-%patch1095 -p1
-%patch1096 -p1
-%patch1097 -p1
-%patch1098 -p1
-%patch1099 -p1
-%patch1100 -p1
+
+# fix-fs-*
 %patch1101 -p1
 %patch1102 -p1
 %patch1103 -p1
 %patch1104 -p1
-
+%patch1105 -p1
+%patch1106 -p1
+%patch1107 -p1
+%patch1108 -p1
+%patch1109 -p1
+%patch1110 -p1
 %patch1111 -p1
 %patch1112 -p1
 %patch1113 -p1
+%patch1114 -p1
+%{?_with_lnfs:%patch1115 -p1}
 
 %patch1121 -p1
+%patch1122 -p1
+%patch1123 -p1
 
 %patch1131 -p1
 
 %patch1141 -p1
 
 %patch1151 -p1
+
+%patch1161 -p1
 
 # get rid of unwanted files resulting from patch fuzz
 #find . -name "*.orig" -delete -or -name "*~" -delete
@@ -1741,6 +1749,7 @@ config_enable \
 	%{?_enable_pcsp:SND_PCSP=m} \
 	%{?_enable_secrm:EXT[234]_SECRM FAT_SECRM} \
 	%{?_enable_nfs_swap:NFS_SWAP} \
+	%{?_enable_lnfs:NFS_V4_SECURITY_LABEL NFSD_V4_SECURITY_LABEL} \
 	%{?_enable_kallsyms:KALLSYMS} \
 	%allocator
 
@@ -1957,7 +1966,7 @@ gen_rpmmodfile scsi-base \
 gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/device_handler}/*} | grep -Fxv -f scsi-base.rpmmodlist > scsi.rpmmodlist
 mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
 gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
-gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{char/ipmi,hwmon/ibm*.ko}
+gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
 %{?_enable_atm:gen_rpmmodfile atm %buildroot%modules_dir/kernel/{drivers{,/usb},net}/atm}
 %{?_enable_drm:gen_rpmmodfile drm %buildroot%modules_dir/kernel/drivers/gpu/drm}
 %{?_enable_fddi:gen_rpmmodfile fddi %buildroot%modules_dir/kernel/{drivers/net/{defxx.ko,skfp},net/802/fddi.ko}}
@@ -2407,6 +2416,17 @@ fi
 
 
 %changelog
+* Wed Sep 26 2012 Led <led@altlinux.ru> 3.0.43-alt8
+- updated:
+  + fix-fs-nfs
+  + feat-fs-overlayfs
+- added:
+  + feat-drivers-hwmon--ipmisensors
+  + feat-fs--lnfs
+- without lnfs
+- disabled lnfs
+- moved acpi_ipmi.ko to kernel-modules-ipmi-* subpackage
+
 * Tue Sep 25 2012 Led <led@altlinux.ru> 3.0.43-alt7
 - updated:
   + fix-arch-x86-cpu--perf-event
