@@ -1,6 +1,6 @@
 %define dist File-Fetch
 Name: perl-%dist
-Version: 0.32
+Version: 0.36
 Release: alt1
 
 Summary: A generic file fetching mechanism
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/File-Fetch-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ export PERL_CORE=1
 %perl_vendor_privlib/File
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Sat Feb 26 2011 Alexey Tourbin <at@altlinux.ru> 0.32-alt1
 - 0.14 -> 0.32
 
