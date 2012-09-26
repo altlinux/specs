@@ -11,8 +11,8 @@
 %def_enable test
 
 Name: perl-Data-Visitor
-Version: 0.27
-Release: alt1.1
+Version: 0.28
+Release: alt1
 
 Summary: %m_name - Visitor style traversal of Perl data structures
 
@@ -23,11 +23,11 @@ Url: http://search.cpan.org/dist/Data-Visitor/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DO/DOY/Data-Visitor-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed Apr 21 2010 (-bi)
 BuildRequires: perl-Data-Alias perl-Moose perl-Task-Weaken perl-Test-use-ok perl-Tie-ToObject perl-namespace-clean
-BuildRequires: perl-Tie-RefHash
+BuildRequires: perl-Tie-RefHash perl(Test/Requires.pm)
 
 %description
 This module is a simple visitor implementation for Perl values.
@@ -46,6 +46,9 @@ This module is a simple visitor implementation for Perl values.
 %exclude %perl_vendor_archlib
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Wed Nov 24 2010 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
