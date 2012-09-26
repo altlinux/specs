@@ -1,6 +1,6 @@
 Name: cmake
 Version: 2.8.9
-Release: alt1
+Release: alt1.1
 
 Summary: Cross-platform, open-source make system
 
@@ -125,7 +125,10 @@ Set of RPM macros for packaging applications that use cmake.
 %prep
 %setup
 %patch -p1
-sed -i 's,SET(BUILD_SHARED_LIBS OFF),SET(BUILD_SHARED_LIBS ON),' CMakeLists.txt
+sed -i 's,SET(BUILD_SHARED_LIBS OFF),SET(BUILD_SHARED_LIBS ON),' \
+	CMakeLists.txt
+ln -s 'file with spaces.cxx' \
+	Tests/CompileCommandOutput/file_with_spaces.cxx
 
 %build
 mkdir build
@@ -239,6 +242,9 @@ popd
 
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.9-alt1.1
+- Avoid tests with spaces in names of files and directories
+
 * Sat Sep 01 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.9-alt1
 - 2.8.9
 - Add subpackage bash-completion-cmake
