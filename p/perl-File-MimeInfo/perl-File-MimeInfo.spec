@@ -1,15 +1,14 @@
 %define dist File-MimeInfo
 Name: perl-%dist
-Version: 0.15
-Release: alt3
+Version: 0.16
+Release: alt1
 
 Summary: Determine file type
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-Patch: File-MimeInfo-0.15-rt-66841.patch
+Source: http://www.cpan.org/authors/id/P/PA/PARDUS/File-MimeInfo/File-MimeInfo-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -25,7 +24,6 @@ work-alike.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -40,6 +38,10 @@ work-alike.
 %perl_vendor_privlib/File
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- automated CPAN update
+- dropped File-MimeInfo-0.15-rt-66841.patch (in upstream)
+
 * Tue Oct 25 2011 Alexey Tourbin <at@altlinux.ru> 0.15-alt3
 - patch tests from rt.cpan.org #66841
 
