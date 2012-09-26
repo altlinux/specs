@@ -1,6 +1,6 @@
 %define dist DateTime
 Name: perl-%dist
-Version: 0.76
+Version: 0.77
 Release: alt1
 
 Summary: DateTime base objects
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DR/DROLSKY/DateTime-%{version}.tar.gz
 
 # break dependency loop
 Requires: perl-DateTime-TimeZone
@@ -37,6 +37,9 @@ http://datetime.perl.org/faq.html.
 %perl_vendor_autolib/DateTime*
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.77-alt1
+- automated CPAN update
+
 * Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 0.76-alt1
 - 0.70 -> 0.76
 - built for perl-5.16
