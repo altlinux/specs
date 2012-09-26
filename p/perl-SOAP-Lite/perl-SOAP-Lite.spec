@@ -1,6 +1,6 @@
 %define dist SOAP-Lite
 Name: perl-%dist
-Version: 0.714
+Version: 0.715
 Release: alt1
 
 Summary: Perl's Web Services Toolkit
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MK/MKUTTER/SOAP-Lite-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -46,13 +46,16 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %doc Changes README examples
 %_bindir/*.pl
 %perl_vendor_privlib/Apache
-%perl_vendor_privlib/IO
+#perl_vendor_privlib/IO
 %perl_vendor_privlib/SOAP
 %perl_vendor_privlib/UDDI
 %perl_vendor_privlib/XML
 %perl_vendor_privlib/XMLRPC
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.715-alt1
+- automated CPAN update
+
 * Tue Oct 25 2011 Alexey Tourbin <at@altlinux.ru> 0.714-alt1
 - 0.712 -> 0.714
 
