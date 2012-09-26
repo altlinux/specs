@@ -1,6 +1,6 @@
 %define dist Image-Base
 Name: perl-%dist
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Summary: Base class for image manipulation
@@ -8,7 +8,7 @@ License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/K/KR/KRYDE/Image-Base-1.16.tar.gz
+Source: http://www.cpan.org/authors/id/K/KR/KRYDE/Image-Base-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ and Image::Xpm.
 %perl_vendor_privlib/Image/Base.pm
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1
 - automated CPAN update
 
