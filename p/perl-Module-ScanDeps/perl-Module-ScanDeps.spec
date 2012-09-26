@@ -1,6 +1,6 @@
 %define dist Module-ScanDeps
 Name: perl-%dist
-Version: 1.05
+Version: 1.09
 Release: alt1
 
 Summary: Recursively scan Perl programs for dependencies
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RS/RSCHUPP/Module-ScanDeps-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ such projects, PAR and App::Packer.
 %perl_vendor_privlib/Module
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.09-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.05-alt1
 - 1.04 -> 1.05
 - disabled build dependency on perl-Module-Install
