@@ -1,7 +1,7 @@
 %define dist XML-Simple
 Name: perl-%dist
-Version: 2.18
-Release: alt2
+Version: 2.20
+Release: alt1
 
 Summary: Easy API to read/write XML
 Group: Development/Perl
@@ -12,7 +12,7 @@ Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Oct 04 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-Tie-IxHash perl-XML-Parser perl-XML-SAX perl-devel
 
 %description
@@ -36,6 +36,9 @@ XML parsing module (either XML::Parser or one of the SAX2 parser modules).
 %doc	%perl_vendor_privlib/XML/Simple/*.pod
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.20-alt1
+- 2.18 -> 2.20
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 2.18-alt2
 - rebuilt
 
