@@ -1,11 +1,11 @@
 %define version 0.15.19
-%define release alt1
+%define release alt2
 
 %setup_python_module telepathy
 
 Name: %packagename
 Version: %version
-Release: %release.1
+Release: %release
 
 Summary: Python bindings for telepathy library
 License: LGPL 2.1 or later
@@ -31,6 +31,7 @@ Telepathy python bindings for use with python programs.
 
 %build
 %define __libtoolize true
+%autoreconf
 %configure \
 	am_cv_python_pythondir=%python_sitelibdir \
 	am_cv_python_pyexecdir=%python_sitelibdir
@@ -43,6 +44,9 @@ Telepathy python bindings for use with python programs.
 %python_sitelibdir/*
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.19-alt2
+- Fixed build with make 3.82
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.15.19-alt1.1
 - Rebuild with Python-2.7
 
