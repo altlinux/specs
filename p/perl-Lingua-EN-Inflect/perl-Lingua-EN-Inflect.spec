@@ -1,6 +1,6 @@
 %define dist Lingua-EN-Inflect
 Name: perl-%dist
-Version: 1.893
+Version: 1.895
 Release: alt1
 
 Summary: Convert singular to plural, select "a" or "an"
@@ -12,7 +12,7 @@ Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sun Apr 24 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-devel
 
 %description
@@ -35,6 +35,9 @@ rm Build.PL
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.895-alt1
+- 1.893 -> 1.895
+
 * Sun Apr 24 2011 Alexey Tourbin <at@altlinux.ru> 1.893-alt1
 - 1.891 -> 1.893
 
