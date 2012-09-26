@@ -1,6 +1,6 @@
 %define dist ExtUtils-CBuilder
 Name: perl-%dist
-Version: 0.280202
+Version: 0.280205
 Release: alt1
 
 Summary: Compile and link C code for Perl modules
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DAGOLDEN/ExtUtils-CBuilder-%{version}.tar.gz
 
 Patch0: ExtUtils-CBuilder-0.280202-alt-unix.patch
 Patch1: ExtUtils-CBuilder-0.280202-alt-link.patch
@@ -16,7 +16,7 @@ Patch1: ExtUtils-CBuilder-0.280202-alt-link.patch
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: gcc-c++ perl-IPC-Cmd
+BuildRequires: gcc-c++ perl-IPC-Cmd perl(Perl/OSType.pm)
 
 %description
 This module can build the C portions of Perl modules by invoking the
@@ -38,7 +38,7 @@ been a much more ambitious goal!
 %perl_vendor_install
 
 %files
-%doc	Changes README
+%doc	Changes
 %dir	%perl_vendor_privlib/ExtUtils
 	%perl_vendor_privlib/ExtUtils/CBuilder.pm
 %dir	%perl_vendor_privlib/ExtUtils/CBuilder
@@ -47,6 +47,9 @@ been a much more ambitious goal!
 	%perl_vendor_privlib/ExtUtils/CBuilder/Platform/Unix.pm
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.280205-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.280202-alt1
 - 0.2701 -> 0.280202
 
