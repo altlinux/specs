@@ -1,6 +1,6 @@
 %define dist Parse-RecDescent
 Name: perl-%dist
-Version: 1.966_000
+Version: 1.967009
 Release: alt1
 
 Summary: Perl module for generating recursive-descent parsers
@@ -12,8 +12,8 @@ Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-Module-Build perl-Test-Pod perl-Text-Balanced
+# Automatically added by buildreq on Wed Sep 26 2012
+BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Warn perl-Text-Balanced
 
 %description
 Parse::RecDescent is a Perl module for parser generators.
@@ -34,6 +34,9 @@ parsers from simple yacc(1)-like grammar specifications.
 %perl_vendor_privlib/Parse
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.967009-alt1
+- 1.966_000 -> 1.967009
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 1.966_000-alt1
 - 1.965001 -> 1.966_000
 
