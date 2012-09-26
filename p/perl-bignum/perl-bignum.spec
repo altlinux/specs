@@ -1,6 +1,6 @@
 %define dist bignum
 Name: perl-%dist
-Version: 0.29
+Version: 0.30
 Release: alt1
 
 Summary: Transparent BigNumber support for Perl
@@ -12,7 +12,7 @@ Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Mon Nov 14 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-Math-BigRat perl-Test-Pod
 
 %description
@@ -39,6 +39,9 @@ bigrat - Transparent BigNumber/BigRational support
 %perl_vendor_privlib/big*
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 0.30-alt1
+- 0.29 -> 0.30
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 0.29-alt1
 - 0.28 -> 0.29
 
