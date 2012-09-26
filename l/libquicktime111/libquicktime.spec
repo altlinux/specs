@@ -25,7 +25,7 @@
 %define corename %libname-core
 Name: %libname
 Version: 1.2.2
-Release: alt1.4
+Release: alt1.5
 
 Summary: A library for manipulating QuickTime files
 %if_with gpl
@@ -347,6 +347,9 @@ rm -f %buildroot%pluginsdir/*.la
 %endif
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.5
+- Rebuilt with libpng15
+
 * Tue Jan 31 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt1.4
 - artificial req on libffmpeg dropped
 
