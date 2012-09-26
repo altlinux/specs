@@ -1,6 +1,6 @@
 Name: gnome-libs
 Version: 1.4.2
-Release: alt11.1
+Release: alt11.2
 
 Summary: Main GNOME libraries
 License: LGPL
@@ -57,6 +57,7 @@ Patch36: %name-%version-configure_in-libs-alt.patch
 Patch37: %name-%version-makefile_am-libs-alt.patch
 Patch38: %name-%version-gcc41fix-alt.patch
 Patch39: %name-1.4.2-alt-linking.patch
+Patch40: %name-1.4.2-alt-libpng15.patch
 
 Requires: gtk+ >= 1.2.8, ORBit, imlib, pulseaudio-daemon, alsa-plugins-pulse
 
@@ -155,6 +156,7 @@ fi
 %patch36 -p1 -b .libs
 %patch37 -p1 -b .libs
 %patch38 -p1 -b .gcc41
+%patch40 -p2
 
 %build
 #needed by patches 24 & 37 and Makefile.am edit
@@ -241,6 +243,9 @@ cp %{SOURCE1} $RPM_BUILD_ROOT%_bindir
 %endif	# enabled static
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt11.2
+- Rebuilt with libpng15
+
 * Tue Jul 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt11.1
 - Fixed build
 
