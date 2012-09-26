@@ -1,6 +1,6 @@
 %define dist MailTools
 Name: perl-%dist
-Version: 2.08
+Version: 2.11
 Release: alt1
 
 Summary: Perl modules related to mail applications
@@ -12,8 +12,8 @@ Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Aug 09 2011 (-bi)
-BuildRequires: perl-Net-SMTP-SSL perl-Test-Pod perl-TimeDate sendmail-common
+# Automatically added by buildreq on Wed Sep 26 2012 (-bi)
+BuildRequires: perl-Net-SMTP-SSL perl-TimeDate perl-devel sendmail-common
 
 %description
 This is MailTools, a set of perl modules related to mail applications.
@@ -39,6 +39,9 @@ This is MailTools, a set of perl modules related to mail applications.
 	%perl_vendor_privlib/Mail/Mailer/*.pm
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.11-alt1
+- 2.08 -> 2.11
+
 * Tue Aug 09 2011 Alexey Tourbin <at@altlinux.ru> 2.08-alt1
 - 2.07 -> 2.08
 
