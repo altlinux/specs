@@ -1,8 +1,8 @@
 %define module	Convert-TNEF
 
 Name: perl-%module
-Version: 0.17
-Release: alt2
+Version: 0.18
+Release: alt1
 Summary: %module (module for perl)
 
 License: GPL or Artistic
@@ -10,7 +10,7 @@ Group: Development/Perl
 Url: http://www.cpan.org/modules/by-module/Convert/
 
 BuildArch: noarch
-Source: %url/%module-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/D/DO/DOUGW/Convert-TNEF-%{version}.tar.gz
 
 BuildRequires: perl-IO-stringy perl-MIME-tools perl-devel
 
@@ -33,6 +33,9 @@ attachment, you may want to use this module.
 %perl_vendor_privlib/Convert*
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- automated CPAN update
+
 * Mon Nov 15 2010 Alexey Shabalin <shaba@altlinux.ru> 0.17-alt2
 - drop %%perl_vendor_man3dir
 
