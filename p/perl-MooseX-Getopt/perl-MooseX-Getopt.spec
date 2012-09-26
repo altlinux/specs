@@ -1,6 +1,6 @@
 %define dist MooseX-Getopt
 Name: perl-%dist
-Version: 0.37
+Version: 0.47
 Release: alt1
 
 Summary: A Moose role for processing command line options
@@ -8,12 +8,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/ET/ETHER/MooseX-Getopt-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Oct 26 2011
-BuildRequires: perl-Getopt-Long-Descriptive perl-MooseX-Role-Parameterized perl-Test-Deep perl-Test-Fatal perl-Test-Requires perl-Test-Warn
+BuildRequires: perl-Getopt-Long-Descriptive perl-MooseX-Role-Parameterized perl-Test-Deep perl-Test-Fatal perl-Test-Requires perl-Test-Warn perl-Test-Trap
 
 %description
 This is a role which provides an alternate constructor for creating
@@ -29,10 +29,13 @@ objects using parameters passed in from the command line.
 %perl_vendor_install
 
 %files
-%doc ChangeLog README
+%doc README
 %perl_vendor_privlib/MooseX
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.47-alt1
+- automated CPAN update
+
 * Wed Oct 26 2011 Alexey Tourbin <at@altlinux.ru> 0.37-alt1
 - 0.33 -> 0.37
 
