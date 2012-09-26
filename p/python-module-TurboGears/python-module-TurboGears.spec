@@ -1,10 +1,10 @@
-%define version 1.0.8
-%define release alt1.1
+%define version 1.1.3
+%define release alt1
 %setup_python_module TurboGears
 
 Name: %packagename
-Version: 1.0.9
-Release: alt3.1
+Version: 1.1.3
+Release: alt1
 
 Summary: Back-to-front web development in Python
 
@@ -59,6 +59,9 @@ TurboGears is easy to use for a wide range of web applications.
 %python_sitelibdir/TurboGears*.egg-info
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt1
+- Version 1.1.3
+
 * Tue Nov 01 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.9-alt3.1
 - Rebuild with Python-2.7
 
