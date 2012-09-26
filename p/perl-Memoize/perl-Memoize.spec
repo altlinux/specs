@@ -1,6 +1,6 @@
 %define dist Memoize
 Name: perl-%dist
-Version: 1.02
+Version: 1.03
 Release: alt1
 
 Summary: Perl functions speedup by caching return values
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/F/FL/FLORA/Memoize-1.02.tar.gz
+Source: http://www.cpan.org/authors/id/M/MJ/MJD/Memoize-%{version}.tgz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ the function compute the value all over again.
 %perl_vendor_privlib/Memoize*
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
 - automated CPAN update
 
