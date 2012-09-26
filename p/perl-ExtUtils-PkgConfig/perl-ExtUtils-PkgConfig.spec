@@ -1,14 +1,14 @@
 %define dist ExtUtils-PkgConfig
 Name: perl-%dist
-Version: 1.12
-Release: alt2
+Version: 1.13
+Release: alt1
 
 Summary: Perl interface to the pkg-config(1) command-line utility
 License: LGPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/X/XA/XAOC/ExtUtils-PkgConfig-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ the libraries about which pkg-config knows.
 %perl_vendor_privlib/ExtUtils
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Tue Oct 04 2011 Alexey Tourbin <at@altlinux.ru> 1.12-alt2
 - rebuilt
 
