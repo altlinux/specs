@@ -1,6 +1,6 @@
 Name: perl
 Version: 5.16.1
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -38,7 +38,7 @@ Group: System/Base
 Provides: perl = %epoch:%version
 Obsoletes: perl < %epoch:%version
 Provides: perl-version = 0.99
-Obsoletes: perl-version < 0.88
+Obsoletes: perl-version < 0.99
 Provides: perl-PerlIO = %epoch:%version perl-Storable = %epoch:%version
 Obsoletes: perl-PerlIO < %epoch:%version perl-Storable < %epoch:%version
 Provides: perl-Digest-MD5 perl-Time-HiRes perl-MIME-Base64
@@ -235,8 +235,7 @@ rm -r %buildroot%privlib/Memoize*
 rm -r %buildroot%privlib/Module/Build* %buildroot%privlib/inc %buildroot%_bindir/config_data
 rm -r %buildroot%privlib/Module/Load*
 rm -r %buildroot%privlib/Module/Pluggable* %buildroot%privlib/Devel/InnerPackage.pm
-rm %buildroot%privlib/Module/CoreList.pm %buildroot%_bindir/corelist
-rm %buildroot%privlib/Module/CoreList.pod
+rm %buildroot%privlib/Module/CoreList.* %buildroot%_bindir/corelist
 rm %buildroot%privlib/Module/Metadata.pm
 rm %buildroot%privlib/NEXT.pm
 rm %buildroot%privlib/Object/Accessor.pm
@@ -363,6 +362,7 @@ EOF
 	%privlib/unicore/To/Upper.pl
 	%privlib/unicore/To/Cf.pl
 	%privlib/unicore/To/Lc.pl
+	%privlib/unicore/To/Tc.pl
 	%privlib/unicore/To/Uc.pl
 %dir	%privlib/unicore/lib
 %dir	%privlib/unicore/lib/Alpha
@@ -373,8 +373,8 @@ EOF
 	%privlib/unicore/lib/Cased/Y.pl
 %dir	%privlib/unicore/lib/Gc
 	%privlib/unicore/lib/Gc/Cc.pl
-	%privlib/unicore/lib/Gc/P.pl
 	%privlib/unicore/lib/Gc/Nd.pl
+	%privlib/unicore/lib/Gc/P.pl
 %dir	%privlib/unicore/lib/Hex
 	%privlib/unicore/lib/Hex/Y.pl
 %dir	%privlib/unicore/lib/Lower
@@ -383,6 +383,7 @@ EOF
 	%privlib/unicore/lib/Nt/Di.pl
 	%privlib/unicore/lib/Nt/Nu.pl
 %dir	%privlib/unicore/lib/Perl
+	%privlib/unicore/lib/Perl/_PerlIDS.pl
 	%privlib/unicore/lib/Perl/Alnum.pl
 	%privlib/unicore/lib/Perl/Blank.pl
 	%privlib/unicore/lib/Perl/Graph.pl
@@ -545,9 +546,6 @@ EOF
 	%_bindir/s2p
 	%_bindir/splain
 	%_bindir/xsubpp
-%dir   %privlib/Pod
-	%privlib/Pod/Html.pm
-	%_bindir/pod2html
 # perl4-compat scripts
 	%_bindir/h2ph
 	%_bindir/pl2pm
@@ -605,6 +603,9 @@ EOF
 	%privlib/ExtUtils/testlib.pm
 	%privlib/ExtUtils/typemap
 	%privlib/ExtUtils/xsubpp
+%dir	%privlib/Pod
+	%privlib/Pod/Html.pm
+	%_bindir/pod2html
 	%privlib/Test.pm
 %dir	%privlib/Test
 	%privlib/Test/Builder*
@@ -650,12 +651,13 @@ EOF
 %exclude %privlib/unicore/lib/Blk/ASCII.pl
 %exclude %privlib/unicore/lib/Cased/Y.pl
 %exclude %privlib/unicore/lib/Gc/Cc.pl
-%exclude %privlib/unicore/lib/Gc/P.pl
 %exclude %privlib/unicore/lib/Gc/Nd.pl
+%exclude %privlib/unicore/lib/Gc/P.pl
 %exclude %privlib/unicore/lib/Hex/Y.pl
 %exclude %privlib/unicore/lib/Lower/Y.pl
 %exclude %privlib/unicore/lib/Nt/Di.pl
 %exclude %privlib/unicore/lib/Nt/Nu.pl
+%exclude %privlib/unicore/lib/Perl/_PerlIDS.pl
 %exclude %privlib/unicore/lib/Perl/Alnum.pl
 %exclude %privlib/unicore/lib/Perl/Blank.pl
 %exclude %privlib/unicore/lib/Perl/Graph.pl
@@ -672,14 +674,16 @@ EOF
 %exclude %privlib/unicore/To/Upper.pl
 %exclude %privlib/unicore/To/Cf.pl
 %exclude %privlib/unicore/To/Lc.pl
+%exclude %privlib/unicore/To/Tc.pl
 %exclude %privlib/unicore/To/Uc.pl
-# required for Unicode::Normalize
+# required to build Unicode::Normalize
 	%privlib/unicore/CombiningClass.pl
 	%privlib/unicore/Decomposition.pl
 # required for Unicode::UCD
 	%privlib/unicore/Blocks.txt
 	%privlib/unicore/CaseFolding.txt
 	%privlib/unicore/SpecialCasing.txt
+# not required
 	%privlib/unicore/NamedSequences.txt
 
 %files	DBM
@@ -704,6 +708,12 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1:5.16.1-alt3
+- Storable.pm: restored patch to avoid early dependency on Log::Agent
+- ExtUtils/MM_Any.pm: disabled CPAN::Meta under rpm
+- moved unicore/lib/Perl/_PerlIDS.pl to perl-base, for constant.pm
+- moved unicore/To/Tc.pl to perl-base, required for ucfirst()
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1:5.16.1-alt2
 - unicore database files moved to perl-base:
   * unicore/To/Cf.pl (format control characters)

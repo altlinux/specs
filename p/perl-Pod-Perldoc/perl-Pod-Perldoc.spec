@@ -1,6 +1,6 @@
 %define dist Pod-Perldoc
-Name: perldoc
-Version: 3.15
+Name: perl-%dist
+Version: 3.17
 Release: alt1
 
 Summary: perldoc is program for reading Pod documentation
@@ -11,14 +11,19 @@ URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
 # Pod::Perldoc frontends require additional modules
-%add_findreq_skiplist */Pod/Perldoc/ToTk.pm */Pod/Perldoc/ToRtf.pm */Pod/Perldoc/ToXml.pm
+%add_findreq_skiplist */Pod/Perldoc/ToTk.pm
+%add_findreq_skiplist */Pod/Perldoc/ToRtf.pm
+%add_findreq_skiplist */Pod/Perldoc/ToXml.pm
 
 BuildArch: noarch
+
+Provides: perldoc = %version
+Obsoletes: perldoc < %version
+
 Requires: groff-base less
 
-# Added by buildreq2 on Thu Apr 21 2005
-BuildRequires: less perl-Pod-Simple perl-devel
-BuildRequires: perl-Pod-Parser
+# Automatically added by buildreq on Wed Sep 26 2012
+BuildRequires: less perl-devel perl-parent perl-podlators
 
 %description
 perldoc is program for reading Pod documentation.  Pod (the Plain
@@ -28,6 +33,11 @@ for writing documentation for Perl, Perl programs, and Perl modules.
 %prep
 %setup -q -n %dist-%version
 
+# disable build dependency on Tk::Pod
+%ifdef __buildreqs
+sed -i- 's/require Tk;/die;/' t/load.t
+%endif
+
 %build
 %perl_vendor_build
 
@@ -35,13 +45,17 @@ for writing documentation for Perl, Perl programs, and Perl modules.
 %perl_vendor_install
 
 %files
-%doc	ChangeLog README
+%doc	Changes README
 	%_bindir/perldoc
-%dir	%perl_vendor_privlib/Pod
-	%perl_vendor_privlib/Pod/Perldoc*
-	%perl_vendor_privlib/perldoc.pod
+	%perl_vendor_privlib/Pod
+# XXX perl-pod has pod/perldoc.pod
+%doc	%perl_vendor_privlib/perldoc.pod
 
 %changelog
+* Tue Sep 25 2012 Alexey Tourbin <at@altlinux.ru> 3.17-alt1
+- 3.15 -> 3.17
+- renamed perldoc packages to perl-Pod-Perldoc
+
 * Sun Nov 07 2010 Vladimir Lettiev <crux@altlinux.ru> 3.15-alt1
 - new version 3.15
 - dropped patches (Closes: #9043)
