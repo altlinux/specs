@@ -1,14 +1,14 @@
 %define dist XML-Writer
 Name: perl-%dist
-Version: 0.612
-Release: alt2
+Version: 0.615
+Release: alt1
 
 Summary: Simple Perl module for writing XML documents
 License: distributable
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JO/JOSEPHW/XML-Writer-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ there are not duplicate attribute names.
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.615-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.612-alt2
 - rebuilt as plain src.rpm
 
