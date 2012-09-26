@@ -1,6 +1,6 @@
 Name: imlib
 Version: 1.9.15
-Release: alt4
+Release: alt5
 
 Summary: An image loading and rendering library for X11R6
 License: LGPL
@@ -20,7 +20,7 @@ Patch7: imlib-1.9.14-alt-gdk_imlib-modules-debug.patch
 Patch8: imlib-1.9.15-debian-shm.patch
 Patch9: imlib-1.9.15-asneeded.patch
 Patch10: imlib-1.9.15-alt-DSO.patch
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+Patch11: imlib-1.9.15-alt-libpng15.patch
 
 Provides: lib%name = %version-%release
 Obsoletes: Imlib, lib%name
@@ -83,6 +83,7 @@ with Imlib.  Imlib is an image loading and rendering library for X11R6.
 %patch8 -p1
 %patch9 -p0
 %patch10 -p2
+%patch11 -p2
 
 %build
 %autoreconf
@@ -156,6 +157,9 @@ bzip2 -9 %buildroot%docdir/ChangeLog
 %endif
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.15-alt5
+- Rebuilt with libpng15
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.15-alt4
 - Fixed build
 
