@@ -1,6 +1,6 @@
 Name: R-base
 Version: 2.15.1
-Release: alt1
+Release: alt2
 
 Summary: A language for data analysis and graphics
 License: GPL
@@ -9,7 +9,6 @@ Group: Sciences/Mathematics
 URL: http://www.r-project.org
 Source: R-%version.tar
 Patch: R-%version-%release.patch
-Packager: Alexey Tourbin <at@altlinux.ru>
 
 # Automatically added by buildreq on Thu Mar 03 2011
 BuildRequires: bzlib-devel gcc-c++ gcc-fortran libXmu-devel libjpeg-devel liblzma-devel libpango-devel libpcre-devel libpng-devel libreadline-devel libtiff-devel texlive-fonts-recommended texlive-generic-recommended texlive-xetex tk-devel zlib-devel
@@ -112,6 +111,7 @@ ln -snfv `relative %_bindir/libtool %Rhome/bin/libtool` %buildroot%Rhome/bin/lib
 rm -fv %buildroot%_infodir/dir*
 
 %check
+export TZ="GMT"
 # don't test for i586 (unstable version)
 %ifarch x86_64
 make check
@@ -321,6 +321,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.15.1-alt2
+- Rebuilt with libpng15
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.15.1-alt1
 - Version 2.15.1
 - Built with OpenBLAS instead of GotoBLAS2
