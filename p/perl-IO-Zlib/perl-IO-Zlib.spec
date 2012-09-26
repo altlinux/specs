@@ -1,18 +1,18 @@
 %define dist IO-Zlib
 Name: perl-%dist
 Version: 1.10
-Release: alt2
+Release: alt3
 
 Summary: IO:: style interface to Compress::Zlib
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar
+Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Wed Oct 05 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-IO-Compress perl-devel
 
 %description
@@ -35,6 +35,9 @@ code that doesn't know which sort of file it is using.
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.10-alt3
+- rebuilt with pristine tarball
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 1.10-alt2
 - rebuilt as plain src.rpm
 
