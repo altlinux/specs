@@ -7,10 +7,10 @@ find -type f -print0 | xargs -0 chmod 0664
 
 Name: python-module-%oname
 Version: 1.9.1
-Release: alt2
+Release: alt3
 
 Summary: A Python module for interfacing with the SDL multimedia library
-Summary(ru_RU.KOI8-R): Расширение языка Python для работы с библиотекой SDL
+Summary(ru_RU.KOI8-R): п═п╟я│я┬п╦я─п╣п╫п╦п╣ я▐п╥я▀п╨п╟ Python п╢п╩я▐ я─п╟п╠п╬я┌я▀ я│ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╬п╧ SDL
 
 Group: Development/Python
 License: LGPL
@@ -53,11 +53,11 @@ Install %name if you would like to write or play SDL games written in the
 python language.
 
 %description -l ru_RU.KOI8-R
-pygame - расширение языка программирования Python, позволяющее
-использовать возможности мультимедийной библиотеки SDL (Simple
-DirectMedia Layer), предоставляющей низкоуровневый доступ к звуковым
-устройствам, клавиатуре, манипулятору мышь и к буферу экрана на
-множестве различных платформ.
+pygame - я─п╟я│я┬п╦я─п╣п╫п╦п╣ я▐п╥я▀п╨п╟ п©я─п╬пЁя─п╟п╪п╪п╦я─п╬п╡п╟п╫п╦я▐ Python, п©п╬п╥п╡п╬п╩я▐я▌я┴п╣п╣
+п╦я│п©п╬п╩я▄п╥п╬п╡п╟я┌я▄ п╡п╬п╥п╪п╬п╤п╫п╬я│я┌п╦ п╪я┐п╩я▄я┌п╦п╪п╣п╢п╦п╧п╫п╬п╧ п╠п╦п╠п╩п╦п╬я┌п╣п╨п╦ SDL (Simple
+DirectMedia Layer), п©я─п╣п╢п╬я│я┌п╟п╡п╩я▐я▌я┴п╣п╧ п╫п╦п╥п╨п╬я┐я─п╬п╡п╫п╣п╡я▀п╧ п╢п╬я│я┌я┐п© п╨ п╥п╡я┐п╨п╬п╡я▀п╪
+я┐я│я┌я─п╬п╧я│я┌п╡п╟п╪, п╨п╩п╟п╡п╦п╟я┌я┐я─п╣, п╪п╟п╫п╦п©я┐п╩я▐я┌п╬я─я┐ п╪я▀я┬я▄ п╦ п╨ п╠я┐я└п╣я─я┐ я█п╨я─п╟п╫п╟ п╫п╟
+п╪п╫п╬п╤п╣я│я┌п╡п╣ я─п╟п╥п╩п╦я┤п╫я▀я┘ п©п╩п╟я┌я└п╬я─п╪.
 
 %if_with python3
 %package -n python3-module-%oname
@@ -96,7 +96,7 @@ and example programs.
 
 %package devel
 Summary: Pygame development headers
-Summary(ru_RU.KOI8-R): Файлы для разработчика приложений, использующих pygame
+Summary(ru_RU.KOI8-R): п╓п╟п╧п╩я▀ п╢п╩я▐ я─п╟п╥я─п╟п╠п╬я┌я┤п╦п╨п╟ п©я─п╦п╩п╬п╤п╣п╫п╦п╧, п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦я┘ pygame
 Group: Development/Python
 BuildArch: noarch
 Requires: %name = %version-%release
@@ -112,8 +112,8 @@ Mark Baker.
 Install %name-devel if you need the API documentation and example programs.
 
 %description devel -l ru_RU.KOI8-R
-Пакет содержит заголовочные файлы, документацию и примеры программ,
-использующих расширение pygame.
+п÷п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╥п╟пЁп╬п╩п╬п╡п╬я┤п╫я▀п╣ я└п╟п╧п╩я▀, п╢п╬п╨я┐п╪п╣п╫я┌п╟я├п╦я▌ п╦ п©я─п╦п╪п╣я─я▀ п©я─п╬пЁя─п╟п╪п╪,
+п╦я│п©п╬п╩я▄п╥я┐я▌я┴п╦я┘ я─п╟я│я┬п╦я─п╣п╫п╦п╣ pygame.
 
 %package doc
 Summary: Pygame documentation and example programs
@@ -193,6 +193,9 @@ popd
 %endif
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt3
+- Rebuilt with libpng15
+
 * Sun Jun 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt2
 - Fixed build
 
