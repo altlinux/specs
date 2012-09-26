@@ -1,6 +1,6 @@
 Name: libfreeimage
 Version: 3.15.3
-Release: alt2
+Release: alt3
 
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -76,6 +76,9 @@ LIB_SUFFIX=64
 %_libdir/libfreeimage.so
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.15.3-alt3
+- Rebuilt with libpng15
+
 * Mon Sep 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.15.3-alt2
 - Rebuilt with internal libtiff
 
