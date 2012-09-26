@@ -1,6 +1,6 @@
 %define dist File-Remove
 Name: perl-%dist
-Version: 1.51
+Version: 1.52
 Release: alt1
 
 Summary: Remove files and directories
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AD/ADAMK/File-Remove-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ hashref.
 %perl_vendor_privlib/File
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.52-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.51-alt1
 - 1.46 -> 1.51
 
