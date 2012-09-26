@@ -1,6 +1,6 @@
 Name: scribus
 Version: 1.4.1
-Release: alt4
+Release: alt4.1
 Epoch: 1
 
 Summary: DeskTop Publishing application written in Qt
@@ -163,6 +163,9 @@ popd
 %_docdir/%name/en
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.4.1-alt4.1
+- Rebuilt with libpng15
+
 * Wed Jun 13 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.4.1-alt4
 - rebuild with new libpodofo
 
