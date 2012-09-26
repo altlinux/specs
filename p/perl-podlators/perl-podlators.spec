@@ -1,6 +1,6 @@
 %define dist podlators
 Name: perl-%dist
-Version: 2.4.0
+Version: 2.4.2
 Release: alt1
 
 Summary: Convert POD data to various other formats
@@ -12,7 +12,7 @@ Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Thu Dec 23 2010 (-bi)
+# Automatically added by buildreq on Wed Sep 26 2012 (-bi)
 BuildRequires: perl-Pod-Parser perl-Term-ANSIColor perl-Term-Cap perl-Test-Pod
 
 %description
@@ -41,6 +41,9 @@ export PERL5LIB=$PWD/blib/lib
 %perl_vendor_privlib/Pod*
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.4.2-alt1
+- 2.4.0 -> 2.4.2
+
 * Thu Dec 23 2010 Alexey Tourbin <at@altlinux.ru> 2.4.0-alt1
 - 2.3.1 -> 2.4.0
 
