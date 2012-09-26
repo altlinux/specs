@@ -1,7 +1,7 @@
 %define dist MIME-tools
 Name: perl-%dist
-Version: 5.502
-Release: alt2
+Version: 5.503
+Release: alt1
 Epoch: 1
 
 Summary: Perl modules for parsing and creating MIME entities
@@ -14,7 +14,7 @@ Patch: %name-%version-%release.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sat Nov 19 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-Convert-BinHex perl-MailTools perl-Test-Deep perl-Test-Pod
 
 %description
@@ -37,6 +37,9 @@ messages.
 %perl_vendor_privlib/MIME*
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1:5.503-alt1
+- 5.502 -> 5.503
+
 * Sat Nov 19 2011 Alexey Tourbin <at@altlinux.ru> 1:5.502-alt2
 - disabled build dependency on perl-Module-Install
 
