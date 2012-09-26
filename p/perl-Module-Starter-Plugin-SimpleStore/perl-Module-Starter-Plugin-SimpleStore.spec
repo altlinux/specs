@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Module-Starter-Plugin-SimpleStore
-Version: 0.143
+Version: 0.144
 Release: alt1
 
 Summary: template storage methods for Module::Starter
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/R/RJ/RJBS/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Module-Starter-Plugin-SimpleStore-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 27 2009 (-bi)
 BuildRequires: perl-Module-Starter perl-Test-Pod perl-Test-Pod-Coverage
@@ -55,6 +55,9 @@ install -m755 bin/ms-pack %buildroot%_bindir/module-starter-pack
 %doc LICENSE Changes README
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.144-alt1
+- automated CPAN update
+
 * Tue Oct 27 2009 Michael Bochkaryov <misha@altlinux.ru> 0.143-alt1
 - initial build for ALT Linux Sisyphus
 
