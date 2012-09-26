@@ -1,6 +1,6 @@
 %define dist CGI.pm
 Name: perl-CGI
-Version: 3.59
+Version: 3.60
 Release: alt1
 
 Summary: Simple CGI class for Perl
@@ -20,7 +20,7 @@ BuildArch: noarch
 %filter_from_requires /^perl.Apache/d
 %filter_from_requires /^perl.ModPerl/d
 
-# Automatically added by buildreq on Mon Feb 20 2012
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-Encode perl-FCGI perl-devel
 
 %description
@@ -42,6 +42,9 @@ bzip2 -k Changes
 %perl_vendor_privlib/CGI*
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 3.60-alt1
+- 3.59 -> 3.60
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 3.59-alt1
 - 3.58 -> 3.59
 
