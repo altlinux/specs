@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Graph-ReadWrite
-Version: 2.00
-Release: alt2
+Version: 2.03
+Release: alt1
 
 Summary: Graph::Reader::Dot - class for reading a Graph instance from Dot format
 
@@ -26,10 +26,10 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/N/NE/NEILB/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/N/NE/NEILB/Graph-ReadWrite-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Jun 23 2008
-BuildRequires: perl-Graph perl-XML-Parser perl-XML-Writer perl-devel
+BuildRequires: perl-Graph perl-XML-Parser perl-XML-Writer perl-devel perl-parent perl(Parse/Yapp/Driver.pm)
 
 %description
 Graph::Reader::Dot is a class for reading in a directed graph in the
@@ -49,6 +49,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Graph/
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 2.03-alt1
+- automated CPAN update
+
 * Sat Sep 06 2008 Vitaly Lipatov <lav@altlinux.ru> 2.00-alt2
 - fix directory ownership violation
 - disable man packaging
