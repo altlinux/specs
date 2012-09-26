@@ -2,7 +2,7 @@
 
 Name: directfb
 Version: 1.1.0
-Release: alt4
+Release: alt4.1
 
 Summary: %realname - drivers and binaries
 License: GPL
@@ -24,6 +24,9 @@ Patch3:	%realname-tty.patch
 Patch4:	%realname-0.9.25.1-sysfs.patch
 
 Patch5: %realname-alt-libadd-fix.patch
+# http://mail.directfb.org/pipermail/directfb-dev/2011-February/006048.html
+# http://mail.directfb.org/pipermail/directfb-dev/2011-February/006049.html
+Patch6: directfb-1.1.0-libpng15.patch
 
 # Automatically added by buildreq on Sun Dec 14 2008
 BuildRequires: gcc-c++ glibc-devel-static libX11-devel libXext-devel libfreetype-devel libjpeg-devel libpng-devel libsysfs-devel man
@@ -70,6 +73,7 @@ Static libraries for devel %realname applications
 %patch3 -p1 -b .fix3
 %patch4 -p1 -b .fix4
 %patch5 -p1 -b .fix5
+%patch6 -p1
 
 %build
 %autoreconf
@@ -121,6 +125,9 @@ find \
 %files -n lib%name-devel-static -f %name-static.files
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt4.1
+- Rebuilt with libpng15
+
 * Sun Dec 19 2010 Alexey Gladkov <legion@altlinux.ru> 1.1.0-alt4
 - Rebuilt for new depends.
 
