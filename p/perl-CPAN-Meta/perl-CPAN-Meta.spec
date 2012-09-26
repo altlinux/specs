@@ -1,6 +1,6 @@
 %define dist CPAN-Meta
 Name: perl-%dist
-Version: 2.120351
+Version: 2.120921
 Release: alt1
 
 Summary: The distribution metadata for a CPAN dist
@@ -12,9 +12,8 @@ Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Sun Feb 05 2012
-# optimized out: perl-CPAN-Meta-YAML perl-IPC-Run3 perl-JSON-PP perl-Probe-Perl perl-devel
-BuildRequires: perl-Parse-CPAN-Meta perl-Test-Script
+# Automatically added by buildreq on Wed Sep 26 2012
+BuildRequires: perl-CPAN-Meta-Requirements perl-Parse-CPAN-Meta perl-Test-Script
 
 %description
 Software distributions released to the CPAN include a META.json or,
@@ -41,6 +40,9 @@ interrogating that data.
 %perl_vendor_privlib/CPAN
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.120921-alt1
+- 2.120351 -> 2.120921
+
 * Sun Feb 05 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.120351-alt1
 - New version
 
