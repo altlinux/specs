@@ -7,7 +7,7 @@
 %define sover 5.0
 Name: %oname%sover
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Game programming library
@@ -101,6 +101,9 @@ gzip CHANGES*
 %_pkgconfigdir/*
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.5-alt2
+- Rebuilt with libpng15
+
 * Tue Jan 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.5-alt1
 - Version 5.0.5
 
