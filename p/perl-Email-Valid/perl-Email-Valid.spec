@@ -1,6 +1,6 @@
 %define dist Email-Valid
 Name: perl-%dist
-Version: 0.185
+Version: 0.190
 Release: alt1
 
 Summary: Check validity of Internet email addresses 
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RJ/RJBS/Email-Valid-%{version}.tar.gz
 Patch: perl-Email-Valid-0.182-alt-req.patch
 
 BuildArch: noarch
@@ -35,6 +35,9 @@ and optionally, whether a mail host exists for the domain.
 %perl_vendor_privlib/Email
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.190-alt1
+- automated CPAN update
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 0.185-alt1
 - 0.184 -> 0.185
 
