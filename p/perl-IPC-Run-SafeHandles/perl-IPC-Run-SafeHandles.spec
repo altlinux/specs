@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-IPC-Run-SafeHandles
-Version: 0.02
+Version: 0.04
 Release: alt1
 
 Summary: IPC-Run-SafeHandles - Perl module
@@ -27,10 +27,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-Source: http://search.cpan.org//CPAN/authors/id/C/CL/CLKAO/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CL/CLKAO/IPC-Run-SafeHandles-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Apr 13 2008
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(List/MoreUtils.pm)
 
 %description
 IPC::Run and IPC::Run3 are both very upset when you try to use them under
@@ -55,6 +55,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/IPC/Run/*
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- automated CPAN update
+
 * Sun Dec 21 2008 Vitaly Lipatov <lav@altlinux.ru> 0.02-alt1
 - new version 0.02 (with rpmrb script)
 - fix directory ownership violation
