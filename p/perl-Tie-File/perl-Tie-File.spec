@@ -1,17 +1,14 @@
 %define dist Tie-File
 Name: perl-%dist
-Version: 0.96
-Release: alt2
+Version: 0.98
+Release: alt1
 
 Summary: Access the lines of a disk file via a Perl array
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-
-# updated from perl-5.12.2
-Patch: perl-Tie-File-0.96-0.97_02.patch
+Source: http://www.cpan.org/authors/id/T/TO/TODDR/Tie-File-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -24,7 +21,6 @@ Each element in the array corresponds to a record in the file.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -36,6 +32,10 @@ Each element in the array corresponds to a record in the file.
 %perl_vendor_privlib/Tie*
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.98-alt1
+- automated CPAN update
+- dropped perl-Tie-File-0.96-0.97_02.patch (already upstream)
+
 * Mon Dec 27 2010 Alexey Tourbin <at@altlinux.ru> 0.96-alt2
 - updated to 0.97_02 from perl-5.12.2
 
