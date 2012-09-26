@@ -1,6 +1,6 @@
 %define dist URI
 Name: perl-%dist
-Version: 1.59
+Version: 1.60
 Release: alt1
 
 Summary: A Perl interface for URI objects
@@ -14,7 +14,7 @@ BuildArch: noarch
 
 %add_findreq_skiplist */isbn.pm
 
-# Automatically added by buildreq on Wed Oct 05 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-Encode perl-devel perl-libnet
 
 %description
@@ -36,6 +36,9 @@ Resource Identifier (URI) references as specified in RFC 2396.
 %perl_vendor_privlib/URI*
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.60-alt1
+- 1.59 -> 1.60
+
 * Wed Oct 05 2011 Alexey Tourbin <at@altlinux.ru> 1.59-alt1
 - 1.58 -> 1.59
 - rebuilt as plain src.rpm
