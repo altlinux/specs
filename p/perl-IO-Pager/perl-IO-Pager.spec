@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-IO-Pager
-Version: 0.06
-Release: alt1.1
+Version: 0.30
+Release: alt1
 
 Summary: Select a pager, optionally pipe it output if destination is a TTY
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/J/JP/JPIERCE/%m_distro-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/J/JP/JPIERCE/IO-Pager-%{version}.tgz
 
 # Automatically added by buildreq on Tue Feb 21 2006
 BuildRequires: less perl-devel
@@ -55,6 +55,9 @@ namely
 %perl_vendor_privlib/IO/
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.30-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
