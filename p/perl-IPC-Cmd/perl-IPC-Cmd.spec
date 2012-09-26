@@ -1,6 +1,6 @@
 %define dist IPC-Cmd
 Name: perl-%dist
-Version: 0.72
+Version: 0.78
 Release: alt1
 
 Summary: Finding and running system commands made easy
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/IPC-Cmd-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -33,6 +33,9 @@ interactively if desired, but have them still work.
 %perl_vendor_privlib/IPC
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.78-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.72-alt1
 - 0.70 -> 0.72
 
