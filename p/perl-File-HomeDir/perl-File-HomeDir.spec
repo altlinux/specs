@@ -1,14 +1,14 @@
 %define dist File-HomeDir
 Name: perl-%dist
-Version: 0.98
-Release: alt2
+Version: 0.99
+Release: alt1
 
 Summary: Get the home directory for yourself or other users
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AD/ADAMK/File-HomeDir-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ platforms.
 %perl_vendor_privlib/File
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.98-alt2
 - disabled build dependency on perl-Module-Install
 
