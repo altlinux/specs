@@ -1,36 +1,37 @@
+%define dist MDK-Common
 Name: perl-MDK-Common
-Version: 1.1.23
-Release: alt1.1
+Version: 1.2.29
+Release: alt1
 
 Summary: Various simple Perl functions
 License: GPL
 Group: Development/Perl
 
 URL: http://cvs.mandrakesoft.com/cgi-bin/cvsweb.cgi/soft/perl-MDK-Common/
-Source: %name-%version.tar.bz2
+Source: http://www.cpan.org/authors/id/T/TV/TVIGNAUD/%{dist}-%{version}.tgz
 
 BuildArch: noarch
 
 # Added by buildreq2 on Fri Apr 29 2005
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(File/Sync.pm)
 
 %description
 Various simple perl functions created for DrakX.
 
 %prep
-%setup -q -n %name
-%__mv MDK/Common.pm.pl MDK/Common.pm.in
+%setup -q -n %dist-%version
+#mv MDK/Common.pm.pl MDK/Common.pm.in
 
 %build
-%__perl MDK/Common.pm.in >MDK/Common.pm
-touch -r MDK/Common.pm.in MDK/Common.pm
+#perl MDK/Common.pm.in >MDK/Common.pm
+#touch -r MDK/Common.pm.in MDK/Common.pm
 
-cd MDK
-echo 'use ExtUtils::MakeMaker; WriteMakefile NAME => "MDK::Common";' >Makefile.PL
+#cd MDK
+#echo 'use ExtUtils::MakeMaker; WriteMakefile NAME => "MDK::Common";' >Makefile.PL
 %perl_vendor_build
 
 %install
-cd MDK
+#cd MDK
 %perl_vendor_install
 
 %files
@@ -40,6 +41,9 @@ cd MDK
 %perl_vendor_privlib/MDK/Common/*.pm
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.29-alt1
+- automated CPAN update
+
 * Sat Nov 06 2010 Vladimir Lettiev <crux@altlinux.ru> 1.1.23-alt1.1
 - rebuilt with perl 5.12
 
