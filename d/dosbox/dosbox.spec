@@ -2,7 +2,7 @@
 
 Name: dosbox
 Version: 0.74
-Release: alt2.1
+Release: alt2.2
 
 Summary: i8086/DOS/VGA software emulator for running old games
 Summary(ru_RU.UTF8): Программный эмулятор i8086/DOS/VGA для запуска старых игр
@@ -196,6 +196,9 @@ EOF
 rm -f %_bindir/%name-set-lang
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.74-alt2.2
+- Rebuilt with libpng15
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.74-alt2.1
 - Fixed build
 
