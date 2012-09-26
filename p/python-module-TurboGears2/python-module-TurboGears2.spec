@@ -3,7 +3,7 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 2.0.4
+Version: 2.2.0
 Release: alt1
 
 Summary: Back-to-front web development in Python
@@ -26,7 +26,7 @@ BuildRequires: python3-devel python3-module-distribute
 BuildPreReq: python-tools-2to3
 %endif
 
-Source: http://www.turbogears.org/2.0/downloads/%version/%oname-%version.tar
+Source: http://www.turbogears.org/2.2/downloads/%version/%oname-%version.tar
 
 %description
 TurboGears brings together four major pieces to create an
@@ -130,12 +130,12 @@ popd
 %doc README.txt
 %python_sitelibdir/tg/
 %python_sitelibdir/%{oname}*.egg-info
-%exclude %python_sitelibdir/tg/test_stack
-%exclude %python_sitelibdir/tg/tests
+#exclude %python_sitelibdir/tg/test_stack
+#exclude %python_sitelibdir/tg/tests
 
-%files tests
-%python_sitelibdir/tg/test_stack
-%python_sitelibdir/tg/tests
+#files tests
+#python_sitelibdir/tg/test_stack
+#python_sitelibdir/tg/tests
 
 %if_with python3
 %files -n python3-module-%oname
@@ -144,12 +144,15 @@ popd
 %exclude %python3_sitelibdir/tg/test_stack
 %exclude %python3_sitelibdir/tg/tests
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/tg/test_stack
-%python3_sitelibdir/tg/tests
+#files -n python3-module-%oname-tests
+#python3_sitelibdir/tg/test_stack
+#python3_sitelibdir/tg/tests
 %endif
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1
+- Version 2.2.0
+
 * Mon Jun 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1
 - Version 2.0.4
 
