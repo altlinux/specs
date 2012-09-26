@@ -1,7 +1,7 @@
 %define dist Net-IDN-Encode
 Name: perl-%dist
 Version: 2.003
-Release: alt1
+Release: alt2
 
 Summary: Encoding and decoding of Internationalized Domain Names
 License: GPL or Artistic
@@ -10,8 +10,11 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
-# Automatically added by buildreq on Sun Oct 09 2011
-BuildRequires: perl-Module-Build perl-Net-IDN-Nameprep perl-Test-NoWarnings perl-unicore
+# uses unicode properties
+Requires: perl-unicore
+
+# Automatically added by buildreq on Wed Sep 26 2012
+BuildRequires: perl-Module-Build perl-Test-NoWarnings perl-unicore
 
 %description
 Net::IDN::Encode - high-level interface for encoding and decoding of domain
@@ -34,6 +37,9 @@ Net::IDN::Punycode - ASCII-compatible encoding of Unicode (Punycode, RFC 3492)
 %perl_vendor_archlib/Net
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.003-alt2
+- added dependency on perl-unicore
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 2.003-alt1
 - 1.100 -> 2.003
 - built for perl-5.16
