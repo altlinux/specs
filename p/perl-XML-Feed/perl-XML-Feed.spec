@@ -1,6 +1,6 @@
 %define dist XML-Feed
 Name: perl-%dist
-Version: 0.46
+Version: 0.50
 Release: alt1
 
 Summary: XML Syndication Feed Support
@@ -15,7 +15,7 @@ BuildArch: noarch
 # this dependency cannot be detected automatically
 Requires: perl-XML-RSS
 
-# Automatically added by buildreq on Fri Nov 11 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-Feed-Find perl-Module-Build perl-Module-Pluggable perl-Test-Pod perl-Test-Pod-Coverage perl-URI-Fetch perl-XML-Atom perl-XML-RSS
 
 %description
@@ -36,6 +36,9 @@ It also implements feed auto-discovery for finding feeds, given a URI.
 %perl_vendor_privlib/XML
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 0.50-alt1
+- 0.46 -> 0.50
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 0.46-alt1
 - 0.43 -> 0.46
 
