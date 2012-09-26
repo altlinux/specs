@@ -1,7 +1,7 @@
 %define dist Image-Info
 Name: perl-%dist
-Version: 1.31
-Release: alt2
+Version: 1.32
+Release: alt1
 
 Summary: Extract meta information from image files
 License: GPL or Artistic
@@ -15,7 +15,7 @@ Patch1: Image-Info-1.31-alt-req-zlib.patch
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Tue Nov 15 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-IO-Compress perl-Image-Xbm perl-Image-Xpm perl-Test-Pod perl-Test-Pod-Coverage perl-XML-Simple
 
 %description
@@ -45,8 +45,12 @@ formats are supported:
 %files
 %doc CHANGES CREDITS README
 %perl_vendor_privlib/Image
+%exclude %perl_vendor_privlib/Bundle/Image
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.32-alt1
+- 1.31 -> 1.32
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 1.31-alt2
 - rebilt as plain src.rpm
 
