@@ -1,6 +1,6 @@
 %define dist Lingua-EN-Inflect-Phrase
 Name: perl-%dist
-Version: 0.10
+Version: 0.14
 Release: alt1
 
 Summary: Inflect short English Phrases
@@ -8,12 +8,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RK/RKITOVER/Lingua-EN-Inflect-Phrase-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 15 2011
-BuildRequires: perl-Lingua-EN-Inflect-Number perl-Lingua-EN-Tagger perl-Pod-Escapes perl-devel
+BuildRequires: perl-Lingua-EN-Inflect-Number perl-Lingua-EN-Tagger perl-Pod-Escapes perl-devel perl(Lingua/EN/FindNumber.pm)
 
 %description
 Attempts to pluralize or singularize short English phrases.
@@ -32,6 +32,9 @@ Attempts to pluralize or singularize short English phrases.
 %perl_vendor_privlib/Lingua
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
+- automated CPAN update
+
 * Tue Nov 15 2011 Alexey Tourbin <at@altlinux.ru> 0.10-alt1
 - 0.04 -> 0.10
 
