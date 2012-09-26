@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.7.2
+Version: 1.7.3
 Release: alt1
 
 Summary: Installer common parts
@@ -101,6 +101,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Sep 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.3-alt1
+- set systemd default target if any dm present
+
 * Fri Sep 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.2-alt1
 - ability to work on writable aufs /
 
