@@ -1,6 +1,6 @@
 %define dist DBD-CSV
 Name: perl-%dist
-Version: 0.33
+Version: 0.36
 Release: alt1
 
 Summary: DBI driver for CSV files
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: http://search.cpan.org/dist/DBD-CSV/
-Source: http://www.cpan.org/authors/id/H/HM/HMBRAND/DBD-CSV-0.33.tgz
+Source: http://www.cpan.org/authors/id/H/HM/HMBRAND/DBD-CSV-%{version}.tgz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ MS Access and MS Excel data.
 %perl_vendor_privlib/DBD
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.33-alt1
 - automated CPAN update
 
