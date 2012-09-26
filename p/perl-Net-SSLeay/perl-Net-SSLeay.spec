@@ -1,6 +1,6 @@
 %define dist Net-SSLeay
 Name: perl-%dist
-Version: 1.48
+Version: 1.49
 Release: alt1
 
 Summary: Perl extension for using OpenSSL
@@ -10,8 +10,8 @@ Group: Development/Perl
 URL: %CPAN %dist
 Source: %dist-%version.tar.gz
 
-# Automatically added by buildreq on Fri Oct 07 2011
-BuildRequires: libssl-devel openssl perl-Module-Install perl-Test-Exception perl-Test-NoWarnings perl-Test-Pod perl-Test-Warn
+# Automatically added by buildreq on Wed Sep 26 2012
+BuildRequires: libssl-devel openssl perl-Test-Exception perl-Test-NoWarnings perl-Test-Pod perl-Test-Warn perl-threads
 
 %description
 This module offers some high level convinience functions for accessing
@@ -34,6 +34,9 @@ so you can write servers or clients for more complicated applications.
 %perl_vendor_autolib/Net
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1.49-alt1
+- 1.48 -> 1.49
+
 * Mon Aug 27 2012 Vladimir Lettiev <crux@altlinux.ru> 1.48-alt1
 - 1.42 -> 1.48
 - built for perl-5.16
