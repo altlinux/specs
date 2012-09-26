@@ -4,7 +4,7 @@
 
 Name: libfox
 Version: %major.46
-Release: alt2
+Release: alt3
 
 Summary: The FOX C++ GUI Toolkit shared libraries
 
@@ -141,6 +141,9 @@ mv %buildroot%_bindir/calculator %buildroot%_bindir/fox-calculator
 %_man1dir/calculator.*
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.46-alt3
+- Rebuilt with libpng15
+
 * Sat Sep 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.46-alt2
 - Avoid conflict with qt-at-spi
 
