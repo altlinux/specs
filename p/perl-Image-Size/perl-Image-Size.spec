@@ -1,6 +1,6 @@
 %define dist Image-Size
 Name: perl-%dist
-Version: 3.230
+Version: 3.232
 Release: alt1
 
 Summary: Perl library for reading the dimensions of an image
@@ -12,7 +12,7 @@ Source: %dist-%version.tar.gz
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Fri Nov 11 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: perl-IO-Compress perl-Module-Build
 
 %description
@@ -34,9 +34,11 @@ to IMG tags.
 %_bindir/imgsize
 %_man1dir/imgsize.1*
 %perl_vendor_privlib/Image
-%perl_vendor_privlib/auto/Image
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 3.232-alt1
+- 3.230 -> 3.232
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 3.230-alt1
 - 3.2 -> 3.230
 
