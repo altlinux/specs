@@ -1,14 +1,14 @@
 %define dist Convert-ASN1
 Name: perl-%dist
-Version: 0.22
-Release: alt2
+Version: 0.26
+Release: alt1
 
 Summary: Perl ASN.1 parser module
 License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GB/GBARR/Convert-ASN1-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -32,7 +32,7 @@ and decode to perl data structures using a hierarchy of references.
 %perl_vendor_install
 
 %files
-%doc	ChangeLog README
+%doc	ChangeLog
 %dir	%perl_vendor_privlib/Convert
 	%perl_vendor_privlib/Convert/ASN1.pm
 %doc	%perl_vendor_privlib/Convert/ASN1.pod
@@ -40,6 +40,9 @@ and decode to perl data structures using a hierarchy of references.
 	%perl_vendor_privlib/Convert/ASN1/*.pm
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- automated CPAN update
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 0.22-alt2
 - disabled build dependency on perl-Module-Install
 
