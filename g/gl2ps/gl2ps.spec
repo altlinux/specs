@@ -1,6 +1,6 @@
 Name: gl2ps
 Version: 1.3.7
-Release: alt1
+Release: alt2
 Summary: OpenGL to PostScript printing library
 License: LGPLv2+
 Group: Graphics
@@ -101,6 +101,9 @@ cmake \
 %_docdir/%name
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt2
+- Rebuilt with libpng15
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.7-alt1
 - Version 1.3.7
 
