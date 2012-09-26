@@ -7,7 +7,7 @@
 %add_findreq_skiplist */POE/Test/Loops/wheel_curses.pm 
 
 Name: perl-POE-Test-Loops
-Version: 1.312
+Version: 1.351
 Release: alt1
 
 Summary: POE::Loop test suite
@@ -19,7 +19,7 @@ Url: http://search.cpan.org/dist/POE-Test-Loops/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/R/RC/RCAPUTO/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RC/RCAPUTO/POE-Test-Loops-%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Oct 15 2009 (-bi)
 BuildRequires: perl-POE perl-devel
@@ -52,6 +52,9 @@ also documents the POE::Test::Loops system in more detail.
 %doc CHANGES README
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.351-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 1.312-alt1
 - automated CPAN update
 
