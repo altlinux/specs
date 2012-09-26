@@ -1,6 +1,6 @@
 %define dist Inline
 Name: perl-%dist
-Version: 0.48
+Version: 0.50
 Release: alt1
 
 Summary: Write Perl subroutines in other programming languages
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SI/SISYPHUS/Inline-%{version}.tar.gz
 
 BuildArch: noarch
 Requires: gcc >= 4.1
@@ -47,6 +47,9 @@ can just run your Perl script like normal.
 	%perl_vendor_privlib/auto/Inline/*
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.50-alt1
+- automated CPAN update
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 0.48-alt1
 - 0.46 -> 0.48
 
