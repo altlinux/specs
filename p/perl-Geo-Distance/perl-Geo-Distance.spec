@@ -1,6 +1,6 @@
 %define dist Geo-Distance
 Name: perl-%dist
-Version: 0.17
+Version: 0.19
 Release: alt1
 
 Summary: Calculate Distances and Closest Locations
@@ -8,12 +8,12 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BL/BLUEFEET/Geo-Distance-%{version}.tar.gz
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Fri Nov 11 2011
-BuildRequires: perl-DBD-SQLite perl-Math-Complex perl-Test-Script
+BuildRequires: perl-DBD-SQLite perl-Math-Complex perl-Test-Script perl(Test/Fatal.pm)
 
 %description
 This perl library aims to provide as many tools to make it as simple as
@@ -37,5 +37,8 @@ distance calculations.
 %perl_vendor_privlib/Geo
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- automated CPAN update
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 0.17-alt1
 - initial revision
