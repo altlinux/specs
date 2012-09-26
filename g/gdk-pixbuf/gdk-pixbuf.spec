@@ -1,6 +1,6 @@
 Name: gdk-pixbuf
 Version: 0.22.0
-Release: alt10.1
+Release: alt10.2
 
 Summary: An image loading and rendering library for Gdk
 Group: System/Libraries
@@ -26,6 +26,7 @@ Patch10: %name-0.22.0-rh-alt-bound.patch
 Patch11: %name-0.22.0-alt-linkage.patch
 Patch12: %name-0.22.0-alt-libs.patch
 Patch13: %name-0.22.0-alt-DSO.patch
+Patch14: %name-0.22.0-alt-libpng15.patch
 
 Provides: %name-loaders = %version-%release
 Obsoletes: %name-loaders < %version-%release
@@ -93,6 +94,7 @@ for Gdk.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p2
+%patch14 -p2
 find -type f -name \*.orig -delete -print
 
 %build
@@ -145,6 +147,9 @@ install -pm755 %name/pixops/timescale $RPM_BUILD_ROOT%_bindir/
 %doc %_datadir/gnome/html/*
 
 %changelog
+* Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22.0-alt10.2
+- Rebuilt with libpng15
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22.0-alt10.1
 - Fixed build
 
