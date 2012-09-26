@@ -1,7 +1,5 @@
-%define distname sshfs-fuse
-
 Name: fuse-sshfs
-Version: 2.3
+Version: 2.4
 Release: alt1
 
 Summary: SSH filesystem using FUSE
@@ -9,8 +7,8 @@ License: GPLv2
 Group: System/Kernel and hardware
 Url: http://fuse.sourceforge.net/sshfs.html
 
-Source: http://dl.sourceforge.net/sourceforge/fuse/%distname-%version.tar.gz
-Patch0: %distname-1.8-alt-makefile.patch
+Source: http://dl.sourceforge.net/sourceforge/fuse/sshfs-fuse-%version.tar.gz
+Patch0: sshfs-fuse-1.8-alt-makefile.patch
 
 Requires: fuse >= 2.3
 Requires: openssh-clients
@@ -18,7 +16,7 @@ Requires: openssh-clients
 Provides: sshfs-fuse = %version sshfs = %version
 Obsoletes: sshfs-fuse < %version sshfs < %version
 
-# Automatically added by buildreq on Fri Sep 23 2011
+# Automatically added by buildreq on Wed Sep 26 2012
 BuildRequires: glib2-devel libfuse-devel openssh-clients
 
 %description
@@ -38,7 +36,7 @@ that codebase, so he rewrote it. Features of this implementation are:
 * Reconnect on failure
 
 %prep
-%setup -q -n %distname-%version
+%setup -q -n sshfs-fuse-%version
 %patch0 -p1
 
 %build
@@ -55,6 +53,9 @@ that codebase, so he rewrote it. Features of this implementation are:
 %_man1dir/sshfs.*
 
 %changelog
+* Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 2.4-alt1
+- 2.3 -> 2.4
+
 * Fri Sep 23 2011 Alexey Tourbin <at@altlinux.ru> 2.3-alt1
 - 2.2 -> 2.3
 
