@@ -1,6 +1,6 @@
 %define dist Locale-Maketext
 Name: perl-%dist
-Version: 1.19
+Version: 1.22
 Release: alt1
 
 Summary: A framework for localization
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/T/TO/TODDR/Locale-Maketext-1.19.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TODDR/Locale-Maketext-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ applications.
 %perl_vendor_privlib/Locale*
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.22-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.19-alt1
 - automated CPAN update
 
