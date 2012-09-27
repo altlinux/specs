@@ -8,8 +8,8 @@
 %global archivename2 Cantarell-Regular
 
 Name: fonts-otf-abattis-cantarell
-Version: 0.0.9
-Release: alt1_2
+Version: 0.0.10
+Release: alt1_1
 Summary: Cantarell, a Humanist sans-serif font family
 
 Group: System/Fonts/True type
@@ -87,6 +87,9 @@ fi
 %doc COPYING NEWS README
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.10-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.9-alt1_2
 - update to new release by fcimport
 
