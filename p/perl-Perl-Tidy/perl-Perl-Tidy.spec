@@ -1,6 +1,6 @@
 %define dist Perl-Tidy
 Name: perl-%dist
-Version: 20101217
+Version: 20120714
 Release: alt1
 
 Summary: Parses and beautifies perl source
@@ -8,8 +8,8 @@ License: GPL
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-Patch: perl-Perl-Tidy-20090616-alt-deps.patch
+Source: http://www.cpan.org/authors/id/S/SH/SHANCOCK/Perl-Tidy-%{version}.tar.gz
+Patch: perl-Perl-Tidy-20120714-alt-deps.patch
 
 BuildArch: noarch
 
@@ -39,6 +39,9 @@ write scripts in html format.
 %doc CHANGES README BUGS examples docs/tutorial.pod docs/stylekey.pod
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 20120714-alt1
+- automated CPAN update
+
 * Fri Dec 24 2010 Alexey Tourbin <at@altlinux.ru> 20101217-alt1
 - 20101217 -> 20101217
 
