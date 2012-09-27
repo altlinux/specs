@@ -10,10 +10,10 @@
 %define nxml_version 0.2.20041004
 %define cedet_version 1.0
 
-%define cedet_release alt5
+%define cedet_release alt6
 
 %define cvsdate 20090110
-%define rel_base alt4
+%define rel_base alt5
 
 # subpackages to build;
 %def_enable nox
@@ -1548,6 +1548,9 @@ install -p -m755 %SOURCE51 %buildroot%_bindir/check-shadows
 
 
 %changelog
+* Thu Sep 27 2012 Terechkov Evgenii <evg@altlinux.org> 24.2-alt5
+- Rebuild with new libpng15.so.15/libtiff.so.5
+
 * Sat Sep  1 2012 Terechkov Evgenii <evg@altlinux.org> 24.2-alt4
 - Post 24.1 regression fixes
 
