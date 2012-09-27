@@ -1,8 +1,8 @@
 %define module  Net-Server
 
 Name: perl-%module
-Version: 0.99
-Release: alt1.1
+Version: 2.006
+Release: alt1
 
 Summary: Net::Server - Extensible, general Perl server engine
 License: Artistic
@@ -10,9 +10,9 @@ Group: Development/Perl
 Url: http://search.cpan.org/dist/%module/
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/R/RH/RHANDOM/Net-Server-0.99.tar.gz
+Source: http://www.cpan.org/authors/id/R/RH/RHANDOM/Net-Server-%{version}.tar.gz
 
-BuildRequires: perl-devel perl-IO-Multiplex perl-Net-SSLeay
+BuildRequires: perl-devel perl-IO-Multiplex perl-Net-SSLeay perl(Log/Log4perl.pm)
 Requires: perl-IO-Multiplex perl-Net-SSLeay
 
 %description
@@ -35,6 +35,9 @@ and intended to be the back end layer of internet protocol servers.
 %perl_vendor_privlib/Net/Server
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.006-alt1
+- automated CPAN update
+
 * Sat Nov 06 2010 Vladimir Lettiev <crux@altlinux.ru> 0.99-alt1.1
 - rebuilt with perl 5.12
 
