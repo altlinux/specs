@@ -10,7 +10,7 @@
 
 Name: OpenSceneGraph
 Version: 3.0.1
-Release: alt2
+Release: alt2.1
 
 Summary: High performance real-time graphics toolkit
 License: OSGPL (wxWidgets, clarified LGPL)
@@ -322,6 +322,9 @@ Development files for OpenThreads
 %_includedir/OpenThreads
 
 %changelog
+* Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt2.1
+- Rebuilt with libpng15
+
 * Wed Nov 30 2011 Michael Shigorin <mike@altlinux.org> 3.0.1-alt2
 - moved osgversion from %name to lib%name-devel
   (thanks dd@ for hitting the problem and iv@ for diagnosing it)
