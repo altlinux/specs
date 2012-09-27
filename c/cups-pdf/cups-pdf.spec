@@ -1,6 +1,6 @@
 Name: cups-pdf
-Version: 2.5.1
-Release: alt4
+Version: 2.6.1
+Release: alt1
 
 Summary: Extension for creating pdf-Files with CUPS
 Summary(ru_RU.UTF-8): Расширения для создания PDF файлов с помощью CUPS
@@ -72,6 +72,9 @@ fi
 %dir %_spooldir/cups-pdf/SPOOL
 
 %changelog
+* Thu Sep 27 2012 Andriy Stepanov <stanv@altlinux.ru> 2.6.1-alt1
+- New version
+
 * Wed Aug 17 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.5.1-alt4
 - modify firsttime.d script to add Cups-PDF printer if it does not exist
 
