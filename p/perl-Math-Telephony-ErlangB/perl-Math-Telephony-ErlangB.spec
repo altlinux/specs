@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Math-Telephony-ErlangB
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: Erlang B calculations from Perl
@@ -26,7 +26,7 @@ Url: http://search.cpan.org/dist/Math-Telephony-ErlangB/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PO/POLETTIX/Math-Telephony-ErlangB-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jun 27 2009
 BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
@@ -45,6 +45,9 @@ The Erlang B model allows dimensioning the number of servers in a M/M/S/0/inf mo
 %prep
 %setup -q -n %m_distro-%version
 
+# test for upstream; not for us
+rm t/pod.t
+
 %build
 %perl_vendor_build
 
@@ -57,6 +60,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %doc Changes README
 
 %changelog
+* Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
+- automated CPAN update
+
 * Sat Jun 27 2009 Michael Bochkaryov <misha@altlinux.ru> 1.0.0-alt1
 - initial build for ALT Linux Sisyphus
 
