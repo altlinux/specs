@@ -1,5 +1,5 @@
 Name: girar-nmu
-Version: 1.03
+Version: 1.04
 Release: alt1
 #Release: alt0.M51.1
 
@@ -33,8 +33,9 @@ mkdir -p %buildroot%_bindir
 install -m 755 girar-* rpm-sign-* %buildroot%_bindir/
 
 for i in girar-*; do
-    pod2man  --name $i --center 'girar-nmu utils' --section 1 --release %version $i > $i.1
+    pod2man  --name $i --center 'girar-nmu utils' --section 1 --release %version $i > $i.1 ||:
 done
+find . -name '*.1' -size 0 -print -delete
 mkdir -p %buildroot%_man1dir
 install -m 644 girar-*.1 %buildroot%_man1dir/
 
@@ -44,6 +45,9 @@ install -m 644 girar-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.04-alt1
+- maintainance release
+
 * Wed Jun 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
 - new version thanks to mithraen@
 
