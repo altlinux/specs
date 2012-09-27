@@ -1,6 +1,6 @@
 Name: plib
 Version: 1.8.5
-Release: alt2
+Release: alt3
 
 Summary: Steve's Portable Game Library
 License: LGPL
@@ -12,8 +12,6 @@ Source0: http://plib.sourceforge.net/dist/%name-%version.tar.gz
 Patch1: plib-1.8.4-alt-shared.patch
 Patch2: plib-1.8.4-alt-fix-unresolved.patch
 Patch5: plib-1.8.4-alt-makefile.patch
-
-Packager: Igor Zubkov <icesik@altlinux.org>
 
 # Automatically added by buildreq on Thu May 15 2008
 BuildRequires: gcc-c++ libaudio-devel libGL-devel libICE-devel libSM-devel libX11-devel libXext-devel libXi-devel libXmu-devel
@@ -54,6 +52,9 @@ Development libraries and header files for %name.
 %_includedir/%name
 
 %changelog
+* Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.5-alt3
+- Rebuilt for debuginfo
+
 * Thu Oct 28 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.5-alt2
 - Rebuilt for soname set-versions
 - Fixed underlinking of libraries
