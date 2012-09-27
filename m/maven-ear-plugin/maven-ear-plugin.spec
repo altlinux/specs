@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-ear-plugin
 Version:        2.7
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        Maven EAR Plugin
 
 Group:          Development/Java
@@ -62,7 +62,7 @@ API documentation for %{name}.
 
 %prep
 %setup -q 
-%patch0 -p1
+%patch0 -p1 -F3
 
 %build
 mvn-rpmbuild \
@@ -90,6 +90,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_2jpp7
+- new fc release
+
 * Sun Mar 25 2012 Igor Vlasenko <viy@altlinux.ru> 2.7-alt1_1jpp7
 - complete build
 
