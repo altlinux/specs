@@ -15,7 +15,7 @@
 
 Name: perl-Math-Telephony-ErlangC
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: Erlang C calculations in Perl
 
@@ -46,6 +46,8 @@ in a M/M/S/inf/inf model (Kendall notation):
 
 %prep
 %setup -q -n %m_distro-%version
+# test for the developer; not for us
+rm t/pod.t
 
 %build
 %perl_vendor_build
@@ -59,6 +61,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %doc Changes README eg/average_time.pl
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1.1
+- disabled t/pod.t
+
 * Sat Jun 27 2009 Michael Bochkaryov <misha@altlinux.ru> 1.0.1-alt1
 - initial build for ALT Linux Sisyphus
 
