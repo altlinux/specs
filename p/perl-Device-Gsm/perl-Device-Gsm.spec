@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Device-Gsm
-Version: 1.58
+Version: 1.60
 Release: alt1
 
 Summary: Perl extension to interface GSM phones / modems
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CO/COSIMO/Device-Gsm-%{version}.tar.gz
 
 # Automatically added by buildreq on Wed May 25 2011 (-bb)
 # optimized out: perl-Device-SerialPort
@@ -69,6 +69,9 @@ so I can add better support for your device in the future!
 %perl_vendor_privlib/Device/*
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.60-alt1
+- automated CPAN update
+
 * Wed May 25 2011 Denis Smirnov <mithraen@altlinux.ru> 1.58-alt1
 - initial build for ALT Linux Sisyphus
 
