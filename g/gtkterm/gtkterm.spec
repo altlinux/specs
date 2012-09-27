@@ -1,11 +1,11 @@
 Name: gtkterm
-Version: 0.99.5
-Release: alt1.qa2
+Version: 0.99.7
+Release: alt0.1
 
 Summary: A simple GTK+ serial port terminal
 Group: Terminals
 License: %gpl2only
-URL: http://www.jls-info.com/julien/linux
+URL: https://fedorahosted.org/gtkterm/
 
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 Source1: %name.desktop
 
 BuildRequires: rpm-build-licenses
-BuildRequires: libvte-devel
+BuildRequires: libvte-devel intltool
 
 %description
 It is a "clone" of the famous Hyperterminal. But it is much more simple,
@@ -58,6 +58,9 @@ install -D -pm 644 %{S:1} %buildroot%_desktopdir
 %_man1dir/%name.*
 
 %changelog
+* Thu Sep 27 2012 Andriy Stepanov <stanv@altlinux.ru> 0.99.7-alt0.1
+- Update to new version. git commit 20c313b1
+
 * Fri Apr 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.99.5-alt1.qa2
 - NMU: converted menu to desktop file
 
