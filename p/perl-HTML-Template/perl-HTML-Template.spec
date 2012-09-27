@@ -1,6 +1,6 @@
 %define dist HTML-Template
 Name: perl-%dist
-Version: 2.10
+Version: 2.91
 Release: alt1
 
 Summary: Perl module to use HTML Templates from CGI scripts
@@ -8,10 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
-
-# from Fedora
-Patch: perl-HTML-Template-2.10-versioning.patch
+Source: http://www.cpan.org/authors/id/W/WO/WONKO/HTML-Template-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -31,7 +28,6 @@ in the Perl script.
 
 %prep
 %setup -q -n %dist-%version
-%patch -p1
 
 %build
 %perl_vendor_build
@@ -44,6 +40,10 @@ in the Perl script.
 %perl_vendor_privlib/HTML
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.91-alt1
+- automated CPAN update
+- dropped versioning.patch (no more needed)
+
 * Mon Nov 14 2011 Alexey Tourbin <at@altlinux.ru> 2.10-alt1
 - 2.9 -> 2.10
 - applied versioning.patch from Fedora
