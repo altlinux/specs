@@ -1,7 +1,7 @@
 Name: fvwm
 Version: 2.6.5
 #define cvsdate 20031019
-Release: alt2
+Release: alt3
 
 %def_with fribidi
 %def_with libstroke
@@ -221,7 +221,7 @@ fvwm.
 
 
 %prep
-%setup -q %{?cvsdate:-n fvwm} -a1 -a11
+%setup %{?cvsdate:-n fvwm} -a1 -a11
 
 %patch1 -p1
 %patch2 -p1
@@ -421,6 +421,9 @@ find $RPM_BUILD_ROOT%_docdir/%name-%version -type d -empty -print -delete
 %_miconsdir/*.xpm
 
 %changelog
+* Thu Sep 27 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt3
+- Rebuilt with libpng15.
+
 * Tue Jul 24 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.5-alt2
 - Fixed build with new ld.
 
