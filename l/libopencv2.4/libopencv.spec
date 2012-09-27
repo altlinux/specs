@@ -31,7 +31,7 @@
 Name: lib%bname%sover
 Version: 2.4.9
 %define trunk 20120917
-Release: alt2.git%trunk
+Release: alt3.git%trunk
 Summary:  Intel(R) Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -40,7 +40,7 @@ URL: http://opencv.org
 Source: %bname-%version.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-BuildPreReq: chrpath libavformat53 libavcodec53
+BuildPreReq: chrpath libavformat53 libavcodec53 libcvmser
 BuildRequires: gcc-c++ libjasper-devel libjpeg-devel libtiff-devel
 BuildRequires: openexr-devel graphviz libpng-devel libpixman-devel
 BuildPreReq: cmake libnumpy-devel eigen3 doxygen zlib-devel
@@ -156,6 +156,8 @@ Obsoletes: python-module-%bname < %version-%release
 Provides: python-module-%{bname}2 = %version-%release
 Conflicts: python-module-%{bname}2 < %version-%release
 Obsoletes: python-module-%{bname}2 < %version-%release
+Conflicts: python-module-%{bname}2.3
+Obsoletes: python-module-%{bname}2.3
 
 %description -n python-module-%bname%sover
 %Name means Intel(R) Open Source Computer Vision Library. It is a
@@ -190,11 +192,32 @@ This package contains %Name examples.
 
 rm -fR 3rdparty/{ffmpeg,lib,libjasper,libjpeg,libpng,libtiff,openexr,tbb,zlib}
 
+for i in $(egrep -R cxtypes interfaces/swig/|awk -F : '{print $1}')
+do
+	sed -i 's|.*cxtypes.*||' $i
+done
+for i in $(egrep -R cvtypes interfaces/swig/|awk -F : '{print $1}')
+do
+	sed -i 's|.*cvtypes.*||' $i
+done
+
+rm -f interfaces/swig/python/_*.cpp interfaces/swig/python/cv.py \
+	interfaces/swig/python/highgui.py interfaces/swig/python/ml.py
+#rm -fR interfaces/swig/general
+
 %prepare_sphinx .
 cp -f doc/conf.py ./
 cp doc/opencv-logo2.png ./
 
 %build
+SWIG_FEATURES="-I$PWD/include/opencv"
+for i in core ml imgproc video features2d flann calib3d objdetect \
+	legacy highgui photo
+do
+	SWIG_FEATURES="$SWIG_FEATURES -I$PWD/modules/$i/include"
+done
+export SWIG_FEATURES
+%add_optflags $SWIG_FEATURES
 cmake \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DBUILD_PACKAGE:BOOL=ON \
@@ -226,6 +249,10 @@ cmake \
 
 %install
 %makeinstall_std
+
+%makeinstall_std -C interfaces/swig/python
+
+rm -f	%buildroot%python_sitelibdir/%bname/matlab_syntax.py*
 
 install -d %buildroot%_docdir/%name
 mv %buildroot%_datadir/%Name/doc/* %buildroot%_docdir/%name/
@@ -266,6 +293,9 @@ sed -i \
 %_datadir/*/samples
 
 %changelog
+* Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt3.git20120917
+- Built python%_python_version(%bname)
+
 * Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt2.git20120917
 - Fixed pkg-config file
 
