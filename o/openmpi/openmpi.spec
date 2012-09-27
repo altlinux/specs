@@ -39,8 +39,8 @@
 Name: openmpi
 #pkgname
 
-Version: 1.6
-Release: alt2
+Version: 1.6.2
+Release: alt1
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -328,6 +328,9 @@ EOF
 %endif
 
 %changelog
+* Thu Sep 27 2012 Denis Pynkin <dans@altlinux.org> 1.6.2-alt1
+- New version
+
 * Mon Jun 25 2012 Denis Pynkin <dans@altlinux.org> 1.6-alt2
 - Fixed overlapping with vt libraries
 
