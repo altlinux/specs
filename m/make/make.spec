@@ -1,6 +1,6 @@
 Name: make
 Version: 3.82
-Release: alt3
+Release: alt4
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -40,6 +40,7 @@ Patch26: make-3.82-cvs-26.patch
 Patch101: make-3.82-alt-getcwd.patch
 Patch102: make-3.82-alt-job_slots.patch
 Patch103: make-3.82-alt-tests-fixes.patch
+Patch104: make-3.82-Ralf.Wildenhues-alt-command-line-length-limit.patch
 Patch111: make-3.82-rh-err-reporting.patch
 Patch112: make-3.82-rh-jobserver.patch
 Patch113: make-3.82-rh-warn_undefined_function.patch
@@ -85,6 +86,7 @@ makefile.
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
+%patch104 -p1
 %patch111 -p1
 %patch112 -p1
 %patch113 -p1
@@ -116,6 +118,10 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Sep 26 2012 Dmitry V. Levin <ldv@altlinux.org> 2:3.82-alt4
+- Adopted a patch from Ralf Wildenhues to evade the command line length limit:
+  http://lists.gnu.org/archive/html/bug-make/2009-07/msg00012.html
+
 * Fri Sep 21 2012 Dmitry V. Levin <ldv@altlinux.org> 2:3.82-alt3
 - Backported assorted upstream fixes.
 - Synced with make-3.82-13 from fedora.
