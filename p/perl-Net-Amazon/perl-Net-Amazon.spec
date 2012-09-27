@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Amazon
-Version: 0.60
+Version: 0.61
 Release: alt1
 
 Summary: Framework for accessing amazon.com via REST
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BO/BOUMENOT/Net-Amazon-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 04 2010
 BuildRequires: perl-Digest-SHA perl-Log-Log4perl perl-XML-Parser perl-XML-Simple perl-devel
@@ -247,6 +247,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.60-alt1
 - automated CPAN update
 
