@@ -4,14 +4,14 @@
 %define _libexecdir %_prefix/libexec
 %define _localstatedir %_var
 
-%def_enable libdrm_intel
-%def_enable libdrm_radeon
+%def_disable libdrm_intel
+%def_disable libdrm_radeon
 %def_disable libdrm_nouveau
 
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
-Version: 0.8.6.1
-Release: alt2
+Version: 0.8.7
+Release: alt1
 License: GPLv2+
 Group: System/Base
 
@@ -474,6 +474,10 @@ fi \
 %files system-theme
 
 %changelog
+* Thu Sep 27 2012 Alexey Shabalin <shaba@altlinux.ru> 0.8.7-alt1
+- 0.8.7
+- disable libdrm_intel, libdrm_radeon too
+
 * Sat Sep 15 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.8.6.1-alt2
 - disabled libdrm_nouveau
 
