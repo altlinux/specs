@@ -1,7 +1,7 @@
 Summary: Tera-scale Open-source Resource and QUEue manager
 
 Name: torque
-Version: 3.0.1
+Version: 4.1.2
 Release: alt1
 
 License: OpenPBS (Portable Batch System) v2.3 Software License (Redistribution in any form is only permitted for non-commercial, non-profit purposes)
@@ -22,8 +22,9 @@ Patch: %name-%version-%release.patch
 
 %define torquehomedir %_spooldir/%name
 
-# Automatically added by buildreq on Wed Aug 08 2007
-BuildRequires: flex gcc-c++ groff-base libncurses-devel libpam-devel libreadline-devel sendmail-common tk-devel openssh
+BuildRequires: flex gcc-c++ groff-base libncurses-devel libpam-devel 
+BuildRequires: libreadline-devel sendmail-common tk-devel openssh
+BuildRequires: openssl-devel libxml2-devel
 
 %description
 TORQUE (Tera-scale Open-source Resource and QUEue manager) is a resource 
@@ -144,7 +145,7 @@ echo "localhost" > %buildroot/%torquehomedir/server_name
 %__install -Dpm644 %SOURCE201 %buildroot/%_desktopdir/xpbsmon.desktop
 
 %files
-%doc README.* PBS_License_2.5.txt
+%doc README.* PBS_License.txt Release_Notes CHANGELOG
 %config(noreplace) %torquehomedir/pbs_environment
 %config(noreplace) %torquehomedir/server_name
 %dir %torquehomedir
@@ -211,7 +212,7 @@ echo "localhost" > %buildroot/%torquehomedir/server_name
 %preun_service pbs_mom
 
 %files client
-%attr(4711 root root) %_sbindir/pbs_iff
+%attr(4711 root root) %_sbindir/trqauthd
 %_bindir/q*
 %_bindir/chk_tree
 %_bindir/hostn
@@ -252,6 +253,9 @@ echo "localhost" > %buildroot/%torquehomedir/server_name
 %_man3dir/*
 
 %changelog
+* Thu Sep 27 2012 Denis Pynkin <dans@altlinux.org> 4.1.2-alt1
+- New version
+
 * Sat Apr 30 2011 Denis Pynkin <dans@altlinux.ru> 3.0.1-alt1
 - New version
 - Added lsb header to init scripts
