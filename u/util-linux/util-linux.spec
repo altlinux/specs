@@ -4,7 +4,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.22
-Release: alt1
+Release: alt2
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
 URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
@@ -88,6 +88,7 @@ Patch40: util-linux-2.22-owl-alt-mtab-umask-for-mount-deprecated.patch
 Patch41: util-linux-2.22-owl-write.patch
 
 Patch50: util-linux-2.20-alt-pg.patch
+Patch51: util-linux-ng-2.22-mount-pamconsole.patch
 Patch52: util-linux-2.11a-gecossize.patch
 Patch54: util-linux-2.11f-rh-rawman.patch
 Patch56: util-linux-2.12r-cal-trim_trailing_spaces.patch
@@ -362,6 +363,7 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 %patch41 -p1
 
 %patch50 -p1
+%patch51 -p1
 %patch52 -p1
 %patch54 -p1
 %patch56 -p1
@@ -448,15 +450,6 @@ klcc -Wall -Wextra -Werror nologin.c -o nologin
 # cal: broken.
 # mount, swapon: required real root and ignored in hasher.
 # ipcs/limits*: failed in hasher.
-#pushd tests
-#LANG=C ./run.sh \
-#	\! -regex '.*/cal/.*'        \
-#	\! -regex '.*/login/.*'      \
-#	\! -regex '.*/lscpu/.*'      \
-#	\! -regex '.*/ipcs/limits.*' \
-#	\! -regex '.*/script/race'   \
-#	;
-#popd
 rm -rf tests/ts/{cal,login,look,ipcs/limits*,libmount/utils}
 LANG=C %make check-local-tests
 
@@ -633,10 +626,10 @@ touch %buildroot/lib/udev/devices/loop{0,1,2,3}
 
 mkdir -p %buildroot/lib/tmpfiles.d
 cat > %buildroot/lib/tmpfiles.d/losetup-loop.conf <<EOF
-c /dev/loop0 0640 root disk - 7:0
-c /dev/loop1 0640 root disk - 7:1
-c /dev/loop2 0640 root disk - 7:2
-c /dev/loop3 0640 root disk - 7:3
+b /dev/loop0 0660 root disk - 7:0
+b /dev/loop1 0660 root disk - 7:1
+b /dev/loop2 0660 root disk - 7:2
+b /dev/loop3 0660 root disk - 7:3
 EOF
 
 # find MO files
@@ -683,10 +676,10 @@ fi
 %files -n losetup
 /sbin/losetup
 %_man8dir/losetup*
-%attr(0640, root, disk) %dev(b, 7, 0) /lib/udev/devices/loop0
-%attr(0640, root, disk) %dev(b, 7, 1) /lib/udev/devices/loop1
-%attr(0640, root, disk) %dev(b, 7, 2) /lib/udev/devices/loop2
-%attr(0640, root, disk) %dev(b, 7, 3) /lib/udev/devices/loop3
+%attr(0660, root, disk) %dev(b, 7, 0) /lib/udev/devices/loop0
+%attr(0660, root, disk) %dev(b, 7, 1) /lib/udev/devices/loop1
+%attr(0660, root, disk) %dev(b, 7, 2) /lib/udev/devices/loop2
+%attr(0660, root, disk) %dev(b, 7, 3) /lib/udev/devices/loop3
 /lib/tmpfiles.d/losetup-loop.conf
 
 %files -n hwclock
@@ -807,6 +800,11 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Wed Sep 26 2012 Alexey Gladkov <legion@altlinux.ru> 2.22-alt2
+- Fix regression in previous release ('pamconsole' mount option
+  has been silently lost).
+- Fix device type and permissions in losetup-loop.conf (ALT#27767).
+
 * Wed Sep 12 2012 Alexey Shabalin <shaba@altlinux.ru> 2.22-alt1
 - 2.22
 - Add strict dependency on libmount to mount.
