@@ -2,7 +2,7 @@
 
 Name: gmic
 Version: 1.5.0.8
-Release: alt1
+Release: alt1.1
 
 Summary: G'MIC is an interpreter of image processing macros
 License: CeCILL
@@ -62,6 +62,9 @@ subst 's/strip /#strip /' src/Makefile
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0.8-alt1.1
+- Rebuilt with libopencv2.4
+
 * Sun Jan 08 2012 Victor Forsiuk <force@altlinux.org> 1.5.0.8-alt1
 - 1.5.0.8
 
