@@ -31,7 +31,7 @@
 Name: lib%bname%sover
 Version: 2.4.9
 %define trunk 20120917
-Release: alt1.git%trunk
+Release: alt2.git%trunk
 Summary:  Intel(R) Open Source Computer Vision Library
 License: Distributable
 Group: System/Libraries
@@ -232,6 +232,10 @@ mv %buildroot%_datadir/%Name/doc/* %buildroot%_docdir/%name/
 
 cp -fR samples/python* %buildroot%_datadir/%Name/samples/
 
+sed -i \
+	's|\(Libs:\)\(.*\)|\1 ${exec_prefix}/%_lib/libopencv_legacy.so \2|' \
+	%buildroot%_pkgconfigdir/opencv.pc
+
 %files
 %doc README
 %_libdir/*.so.*
@@ -262,6 +266,9 @@ cp -fR samples/python* %buildroot%_datadir/%Name/samples/
 %_datadir/*/samples
 
 %changelog
+* Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt2.git20120917
+- Fixed pkg-config file
+
 * Mon Sep 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt1.git20120917
 - Version 2.4.9
 
