@@ -2,7 +2,7 @@
 
 Name: FlightGear
 Version: 2.8.0
-Release: alt1
+Release: alt1.1
 
 Summary: open-source flight simulator
 License: GPL
@@ -91,6 +91,9 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt1.1
+- Rebuilt with libpng15
+
 * Sat Aug 18 2012 Michael Shigorin <mike@altlinux.org> 2.8.0-alt1
 - 2.8.0
 
