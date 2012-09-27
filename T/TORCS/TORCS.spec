@@ -12,7 +12,7 @@ Requires: freeglut plib libalut
 
 Name: TORCS
 Version: 1.3.0
-Release: alt6
+Release: alt6.1
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -40,6 +40,8 @@ Patch14: torcs-stringcompare.diff
 Patch15: torcs-gcc43.patch
 Patch16: torcs-glibc.patch
 
+Patch17: TORCS-1.3.0-alt-libpng15.patch
+
 Requires: %name-data = %version
 #Requires: %name-data-tracks = %version
 #Requires: %name-data-cars = %version
@@ -63,6 +65,7 @@ A 3D racing car simulator using OpenGL.
 %patch14
 %patch15
 %patch16
+%patch17 -p2
 
 # replace nonunicode symbols in all XMLs
 find ./ -name "*.xml" -print0 | xargs -0 sed -i "s|\xE9|e|g"
@@ -99,6 +102,9 @@ install -m 644 -D %SOURCE13 %buildroot%_liconsdir/%name.xpm
 %_liconsdir/%name.xpm
 
 %changelog
+* Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt6.1
+- Rebuilt with libpng15
+
 * Tue Apr 19 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.0-alt6
 - fix build
 
