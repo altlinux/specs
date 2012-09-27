@@ -12,8 +12,8 @@
 %def_disable qrencode
 
 Name: systemd
-Version: 189
-Release: alt4
+Version: 192
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -45,6 +45,7 @@ Source25: altlinux-storage-init-late.service
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
 Source29: tmpfile-systemd-startup-nologin.conf
+Source30: systemd-vconsole-setup@.service
 
 # udev rule generator
 Source31: rule_generator.functions
@@ -74,7 +75,7 @@ BuildRequires: glib2-devel >= 2.26 libgio-devel
 BuildRequires: gobject-introspection-devel
 BuildRequires: liblzma-devel
 BuildRequires: kmod-devel >= 5
-
+BuildRequires: python-devel
 BuildRequires: gtk-doc
 BuildRequires: pciids usbids
 BuildRequires: libblkid-devel >= 2.20
@@ -218,6 +219,15 @@ BuildArch: noarch
 
 %description analyze
 Analyze tool for systemd.
+
+%package -n python-module-%name
+Summary: Python Bindings for systemd
+License: LGPLv2+
+Group: Development/Python
+Requires: libsystemd-journal = %version-%release
+
+%description -n python-module-%name
+This package contains python binds for systemd APIs
 
 %package -n udev
 Group: System/Configuration/Hardware
@@ -426,11 +436,21 @@ ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty4.servic
 ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty5.service
 ln -s ../getty@.service %buildroot%_unitdir/getty.target.wants/getty@tty6.service
 
+install -m644 %SOURCE30 %buildroot%_unitdir/systemd-vconsole-setup@.service
+ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty1.service
+ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty2.service
+ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty3.service
+ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty4.service
+ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty5.service
+ln -s ../systemd-vconsole-setup@.service %buildroot%_unitdir/getty.target.wants/systemd-vconsole-setup@tty6.service
 
 # disable legacy services
 ln -s /dev/null %buildroot%_unitdir/fbsetfont.service
 ln -s /dev/null %buildroot%_unitdir/keytable.service
 ln -s /dev/null %buildroot%_unitdir/killall.service
+ln -s /dev/null %buildroot%_unitdir/halt.service
+ln -s /dev/null %buildroot%_unitdir/single.service
+ln -s /dev/null %buildroot%_unitdir/netfs.service
 
 # Use mingetty as default
 #%__subst 's,/sbin/agetty,/sbin/mingetty,'  %buildroot%_unitdir/getty@.service
@@ -740,6 +760,9 @@ fi
 %files analyze
 %_bindir/systemd-analyze
 
+%files -n python-module-%name
+%python_sitelibdir/%name
+
 %files -n libudev1
 /%_lib/libudev.so.*
 
@@ -832,6 +855,15 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Thu Sep 27 2012 Alexey Shabalin <shaba@altlinux.ru> 192-alt1
+- 192
+
+* Fri Sep 21 2012 Alexey Shabalin <shaba@altlinux.ru> 190-alt1
+- 190
+- mask legacy services: halt, single, netfs
+- fix load font on tty1-6 - add and autorun systemd-vconsole-setup@.service
+- add package contains python binds for systemd APIs
+
 * Tue Sep 18 2012 Alexey Shabalin <shaba@altlinux.ru> 189-alt4
 - exclude run tmpfiles systemd-startup-nologin.conf from filetrigger
   for upgrade systemd. (ALT#27749)
