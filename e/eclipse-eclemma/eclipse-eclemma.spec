@@ -7,7 +7,7 @@ BuildRequires: rpm-build-java-osgi
 %global install_loc  %{_datadir}/eclipse/dropins/eclemma
 
 Name:      eclipse-eclemma
-Version:   2.1.2
+Version:   2.1.4
 Release:   alt1_2jpp7
 Summary:   Java code coverage tool plugin for Eclipse
 Group:     Development/Java
@@ -21,10 +21,10 @@ Source0:   eclemma-v%{version}.tar.gz
 BuildArch:        noarch
 BuildRequires:    jpackage-utils
 BuildRequires:    eclipse-pde >= 1:4.2.0
-BuildRequires:    jacoco
+BuildRequires:    jacoco >= 0.5.9
 Requires:         jpackage-utils
 Requires:         eclipse-jdt >= 1:4.2.0
-Requires:         jacoco
+Requires:         jacoco >= 0.5.9
 Source44: import.info
 
 %description
@@ -48,7 +48,7 @@ ln -s %{_javadir}/jacoco/org.jacoco.report.jar
 popd
 
 %build
-eclipse-pdebuild -o `pwd`/orbitDeps
+eclipse-pdebuild -a "-DforceContextQualifier="`date date '+%%Y%%m%%d0000'`  -o `pwd`/orbitDeps
 
 %install
 install -d -m 755 %{buildroot}/%{install_loc}
@@ -70,6 +70,9 @@ popd
 %{install_loc}
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.4-alt1_2jpp7
+- new release
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt1_2jpp7
 - new version
 

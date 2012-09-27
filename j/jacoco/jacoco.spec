@@ -2,18 +2,23 @@ AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global tag 201204190339
+%global tag 201207300726
 
 Name:      jacoco
-Version:   0.5.7
-Release:   alt1_0.6jpp7
+Version:   0.5.9
+Release:   alt1_2jpp7
 Summary:   Java Code Coverage for Eclipse 
 Group:     System/Libraries
 License:   EPL
 URL:       http://www.eclemma.org/jacoco/
-#http://eclemma.svn.sourceforge.net/viewvc/eclemma/jacoco/tags/v0.5.7/?view=tar
-Source0:   eclemma-v0.5.7.tar.gz
-Patch0:    removeGroovyScriptingAndCircularDependency.patch
+#https://github.com/jacoco/jacoco/tags
+Source0:   eclemma-v0.5.9.tar.gz
+Patch0:    removeGroovyScripting.patch
+
+#jacoco can't be build with maven 3. https://github.com/jacoco/jacoco/issues/21
+# probably due to 
+# http://maven.apache.org/plugins/maven-site-plugin/maven-3.html#New_Configuration_Maven_3_only_no_reports_configuration_inheritance
+Patch1:    jacoco-remove-reporting.patch
 
 BuildArch:        noarch
 
@@ -28,6 +33,7 @@ BuildRequires:    maven-install-plugin maven-invoker-plugin maven-gpg-plugin mav
 BuildRequires:    maven-release-plugin maven-resources-plugin maven-shade-plugin maven-source-plugin maven-surefire-plugin maven-site-plugin
 BuildRequires:    maven-plugin-tools-javadoc
 BuildRequires:    dos2unix
+BuildRequires:    fest-assert
 Requires:         ant
 Requires:         objectweb-asm
 Source44: import.info
@@ -61,6 +67,7 @@ A Jacoco plugin for maven.
 %prep
 %setup -q -n v%{version}
 %patch0 -p3
+%patch1
 
 # make sure upstream hasn't sneaked in any jars we don't know about
 JARS=""
@@ -77,13 +84,7 @@ fi
 %build
 # Note: Tests must be disabled because they introduce circular dependency
 # right now.
-OPTIONS=" -DrandomNumner=${RANDOM} -Dmaven.test.skip=true  clean install javadoc:aggregate"
-
-# Ensure that all required dependencies are available in a local p2 repo                                
-/bin/sh -x %{_eclipse_base}/buildscripts/copy-platform SDK %{_eclipse_base}
-
-eclipse -debug -consolelog -nosplash -verbose -application org.eclipse.equinox.p2.publisher.FeaturesAndBundlesPublisher -me\
-tadataRepository file:$PWD/myrepo -artifactRepository file:$PWD/myrepo -source $PWD/SDK -compress -append -publishArtifacts
+OPTIONS="-DrandomNumner=${RANDOM} -Dtycho.targetPlatform=%_libdir/eclipse clean package javadoc:aggregate" 
 
 pushd org.jacoco.build
     mvn-rpmbuild $OPTIONS
@@ -150,6 +151,9 @@ cp -rf org.jacoco.build/target/site/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.9-alt1_2jpp7
+- new release
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.7-alt1_0.6jpp7
 - new version
 
