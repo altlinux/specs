@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Digest-MD5-File
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: Perl extension for getting MD5 sums for files and urls
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DM/DMUEY/Digest-MD5-File-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Sep 04 2010
 BuildRequires: perl-devel perl-libwww
@@ -47,6 +47,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Digest/*
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- automated CPAN update
+
 * Sat Sep 04 2010 Denis Smirnov <mithraen@altlinux.ru> 0.07-alt1
 - initial build for ALT Linux Sisyphus
 
