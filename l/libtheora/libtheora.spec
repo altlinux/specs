@@ -1,6 +1,6 @@
 Name: libtheora
 Version: 1.1.1
-Release: alt4
+Release: alt5
 Epoch: 2
 
 Summary: Theora Video Compression Codec
@@ -57,8 +57,7 @@ ln -s m4/as-ac-expand.m4 acinclude.m4
 
 %build
 %autoreconf
-%configure \
-    --disable-static
+%configure --disable-static
 %make_build
 
 %install
@@ -99,6 +98,9 @@ install -pm644 AUTHORS CHANGES COPYING LICENSE README %buildroot%docdir/
 %_bindir/*
 
 %changelog
+* Thu Sep 27 2012 Dmitry V. Levin <ldv@altlinux.org> 2:1.1.1-alt5
+- Rebuilt with libpng15.
+
 * Thu Apr 21 2011 Dmitry V. Levin <ldv@altlinux.org> 2:1.1.1-alt4
 - Rebuilt for debuginfo.
 
