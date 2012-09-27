@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           objectweb-asm
 Version:        3.3.1
-Release:        alt4_4jpp6
+Release:        alt5_4jpp6
 Epoch:          0
 Summary:        Code manipulation tool to implement adaptable systems
 License:        BSD
@@ -199,6 +199,9 @@ sed -i -e 's,<groupId>asm</groupId>,<groupId>org.objectweb.asm</groupId>,g' %bui
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3.1-alt5_4jpp6
+- updated OSGi manifest to match version
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.3.1-alt4_4jpp6
 - added pom groupid asm
 
