@@ -1,5 +1,5 @@
 Name: perl-Dancer-Plugin-Database
-Version: 1.81
+Version: 2.01
 Release: alt1
 Summary: Dancer::Plugin::Database - easy database connections for Dancer applications
 
@@ -28,6 +28,9 @@ BuildRequires: perl-devel perl-DBI perl-Dancer
 %doc Changes README 
 
 %changelog
+* Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 2.01-alt1
+- 1.81 -> 2.01
+
 * Tue Apr 10 2012 Vladimir Lettiev <crux@altlinux.ru> 1.81-alt1
 - New version 1.81
 
