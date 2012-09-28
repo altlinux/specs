@@ -1,6 +1,6 @@
 Name: glaxium
 Version: 0.5
-Release: alt6.1.qa3
+Release: alt6.1.qa4
 
 Group: Games/Arcade
 Summary: OpenGL-based space-ship "shoot-em-up"
@@ -85,6 +85,9 @@ install -pD -m644 %name.6 %buildroot%_man6dir
 %doc CHANGES* README*
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt6.1.qa4
+- Rebuilt with libpng15
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt6.1.qa3
 - Fixed build
 
