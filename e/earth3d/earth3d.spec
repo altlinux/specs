@@ -1,6 +1,6 @@
 Name: earth3d
 Version: 1.0.5
-Release: alt3.1
+Release: alt3.2
 
 Summary: A program that visualizes the earth in realtime in a 3D view
 License: GPL
@@ -12,6 +12,7 @@ Source: earth3d_client-%version-src.tar.bz2
 Patch0: earth3d_client-1.0.4-alt-makefile.patch
 Patch1: earth3d_client-1.0.5-alt-gcc43.patch
 Patch2: earth3d-1.0.5-alt-DSO.patch
+Patch3: earth3d-1.0.5-alt-libpng15.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Jan 08 2006
@@ -43,6 +44,7 @@ PS: packaged experiencing frustration of Google Earth ;)
 %patch0 -p1
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
 echo "#include <gltest.h>" >gltestwidget.h
 
 %build
@@ -64,6 +66,9 @@ install -pD -m644 %name.1 %buildroot%_man1dir/%name.1
 #   on perfectly present in GROUPS one)
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt3.2
+- Rebuilt with libpng15
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt3.1
 - Fixed build
 
