@@ -2,7 +2,7 @@
 
 Name: libezV24
 Version: 0.1.1
-Release: alt3.qa1
+Release: alt3.qa2
 
 Summary: Serial ports interface library
 
@@ -14,6 +14,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%oname/%name-%version.tar.bz2
 Patch: %name-0.1.1-alt-makefile.patch
+Patch1: %name-0.1.1-alt-debuginfo.patch
 
 %description
 %name library provides a easy to use interface to the serial ports of the
@@ -33,6 +34,7 @@ needed for %name development.
 
 %prep
 %setup -q
+%patch1 -p2
 %patch -p1
 %__subst "s|%oname/%oname|%oname|g" test-v24.c
 %__subst "s|/lib/|/%_lib/|g" Makefile
@@ -56,6 +58,9 @@ rm -f %buildroot%_libdir/*.a
 %doc README api-html
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt3.qa2
+- Rebuilt for debuginfo
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt3.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
