@@ -1,5 +1,5 @@
 Name: perl-B-Debug
-Version: 1.17
+Version: 1.18
 Release: alt1
 Summary: B::Debug - Walk Perl syntax tree, printing debug info about ops
 
@@ -7,7 +7,7 @@ Group: Development/Perl
 License: Perl
 Url: %CPAN B-Debug
 
-Source: %name-%version.tar
+Source: B-Debug-%version.tar.gz
 BuildArch: noarch
 BuildRequires: perl-devel
 
@@ -15,7 +15,7 @@ BuildRequires: perl-devel
 %summary
 
 %prep
-%setup -q
+%setup -q -n B-Debug-%version
 
 %build
 %perl_vendor_build
@@ -28,6 +28,10 @@ BuildRequires: perl-devel
 %doc Changes README Artistic Copying
 
 %changelog
+* Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1.18-alt1
+- 1.17 -> 1.18
+- built as plain srpm
+
 * Fri Dec 02 2011 Vladimir Lettiev <crux@altlinux.ru> 1.17-alt1
 - New version 1.17
 
