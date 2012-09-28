@@ -10,9 +10,10 @@
 %def_disable coredump
 %def_disable gcrypt
 %def_disable qrencode
+%def_disable microhttpd
 
 Name: systemd
-Version: 192
+Version: 193
 Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
@@ -83,6 +84,7 @@ BuildRequires: libblkid-devel >= 2.20
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel}
 BuildRequires: libgcrypt-devel
 %{?_enable_qrencode:BuildRequires: libqrencode-devel}
+%{?_enable_microhttpd:BuildRequires: libmicrohttpd-devel}
 
 Requires: dbus >= %dbus_ver
 Requires: udev = %version-%release
@@ -359,6 +361,7 @@ intltoolize --force --automake
 	%{subst_enable coredump} \
 	%{subst_enable gcrypt} \
 	%{subst_enable qrencode} \
+	%{subst_enable microhttpd} \
 	--enable-introspection \
 	--enable-split-usr \
 	--with-rootlibdir=/%_lib \
@@ -855,6 +858,10 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Fri Sep 28 2012 Alexey Shabalin <shaba@altlinux.ru> 193-alt1
+- 193
+- add support build with microhttpd, but disable
+
 * Thu Sep 27 2012 Alexey Shabalin <shaba@altlinux.ru> 192-alt1
 - 192
 
