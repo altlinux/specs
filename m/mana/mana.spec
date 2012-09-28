@@ -1,6 +1,6 @@
 Name: mana
 Version: 1.0.0
-Release: alt0.beta2.qa1
+Release: alt0.beta2.qa2
 License: GPLv2+
 Url: http://themanaworld.org/
 Packager: Egor Glukhov <kaman@altlinux.org>
@@ -45,6 +45,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man6dir/%name.6.gz
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt0.beta2.qa2
+- Rebuilt with libpng15
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.0-alt0.beta2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
