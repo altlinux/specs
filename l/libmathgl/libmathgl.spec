@@ -1,7 +1,7 @@
 %define oname mathgl
 Name: lib%oname
 Version: 2.0.3
-Release: alt1.1
+Release: alt2
 
 Summary: Library of fast C++ routines for the plotting of the data
 
@@ -23,7 +23,7 @@ BuildPreReq: libXi-devel libXinerama-devel libxkbfile-devel libXpm-devel
 BuildPreReq: libXrandr-devel libXrender-devel libXScrnSaver-devel
 BuildPreReq: libXt-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
 BuildPreReq: libXmu-devel gcc-fortran libltdl-devel libharu-devel
-BuildPreReq: hdf5-tools
+BuildPreReq: hdf5-tools libqt4-devel ImageMagick-tools
 
 %description
 MathGL is a free library of fast C++ routines for the plotting of the data
@@ -64,6 +64,21 @@ Requires: %name = %version-%release
 %description examples
 Examples for %name.
 
+%package -n %oname-udav
+Summary: UDAV is program for data visualization based on MathGL
+Group: Sciences/Mathematics
+Requires: %name = %version-%release
+Conflicts: udav
+Obsoletes: udav
+
+%description -n %oname-udav
+UDAV is program for data arrays visualization based on MathGL library.
+It support wide spectrum of graphics, simple script language and
+visual data handling and editing. It has windows interface for data
+viewing, changing and plotting. Also it can execute MGL scripts, setup
+and rotate graphics and so on. MathGL is a free library of fast C++
+routines for the plotting.
+
 %prep
 %setup -n %oname-%version
 install -p -m644 %SOURCE1 .
@@ -90,6 +105,7 @@ cmake \
 	-Denable-pdf:BOOL=ON \
 	-Denable-pthread:BOOL=ON \
 	-Denable-python:BOOL=ON \
+	-Denable-qt:BOOL=ON \
 %ifarch x86_64
 	-DLIB_SUFFIX=64 \
 %endif
@@ -99,6 +115,9 @@ cmake \
 
 %install
 %makeinstall_std
+
+install -d %buildroot%_liconsdir
+mv %buildroot%_pixmapsdir/udav.png %buildroot%_liconsdir/
 
 %files
 #_bindir/mgl2*
@@ -122,7 +141,15 @@ cmake \
 %doc examples/*.cpp
 %_bindir/mgl*example
 
+%files -n %oname-udav
+%_bindir/udav
+%_desktopdir/UDAV.*
+%_liconsdir/udav.*
+
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.3-alt2
+- Added %oname-udav
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.3-alt1.1
 - rebuild with libharu 2.2.1
 
