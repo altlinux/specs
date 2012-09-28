@@ -3,7 +3,7 @@
 %define module_release	alt1
 
 %define kversion       2.6.32
-%define krelease       alt75
+%define krelease       alt76
 %define flavour        ovz-el
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/kernel/net/ipv4/netfilter/
@@ -11,7 +11,7 @@
 Summary:	ipt_NETFLOW linux 2.6 kernel module
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.132640.75
+Release:	%module_release.132640.76
 License:	GPL
 Group:		System/Kernel and hardware
 
@@ -68,8 +68,8 @@ install -p -m644 ipt_NETFLOW.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Fri Sep 14 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.1.7.1-alt1.132640.75
-- Build for kernel-image-ovz-el-2.6.32-alt75.
+* Fri Sep 28 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.1.7.1-alt1.132640.76
+- Build for kernel-image-ovz-el-2.6.32-alt76.
 
 * Thu May 26 2011 Anton Protopopov <aspsk@altlinux.org> 1.0.1.7.1-alt1
 - Initial build for ALT

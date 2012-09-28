@@ -3,7 +3,7 @@
 %define module_release	alt2
 
 %define kversion	2.6.32
-%define krelease	alt75
+%define krelease	alt76
 %define flavour		ovz-el
 
 %define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.75
+Release: %module_release.132640.76
 License: GPL
 Group: System/Kernel and hardware
 
@@ -102,8 +102,8 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Fri Sep 14 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2.132640.75
-- Build for kernel-image-ovz-el-2.6.32-alt75.
+* Fri Sep 28 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2.132640.76
+- Build for kernel-image-ovz-el-2.6.32-alt76.
 
 * Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2
 - technical
