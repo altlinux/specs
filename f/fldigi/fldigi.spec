@@ -1,6 +1,6 @@
 Name: fldigi
 Version: 3.21.8
-Release: alt2
+Release: alt3
 Summary: Digital modem program
 License: GPL
 Group: Communications
@@ -34,6 +34,9 @@ Digital modem program
 %_man1dir/*
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.21.8-alt3
+- Rebuilt with libpng15
+
 * Fri Apr 15 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.21.8-alt2
 - Rebuilt with FLTK 1.3.0.r8575
 
