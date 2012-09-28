@@ -1,6 +1,6 @@
 Name: neverball
 Version: 1.5.4
-Release: alt4
+Release: alt4.1
 
 Summary: OpenGL golf-based game
 License: GPL
@@ -53,8 +53,8 @@ mkdir -p %buildroot%_gamesbindir
 cp -a data/* %buildroot%_datadir/%name/
 find %buildroot%_datadir/%name/ -type f -name "*.map"|xargs rm -f
 
-install -pm755 -s %name %buildroot%_gamesbindir
-install -pm755 -s neverputt %buildroot%_gamesbindir
+install -pm755 %name %buildroot%_gamesbindir
+install -pm755 neverputt %buildroot%_gamesbindir
 
 # Install the desktop files
 cat > neverball.desktop << EOF
@@ -112,6 +112,9 @@ ln -sf %_datadir/fonts/ttf/dejavu/DejaVuSans-Bold.ttf \
 %_datadir/applications/*
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.4-alt4.1
+- Rebuilt with libpng15
+
 * Sun May 06 2012 Michael Shigorin <mike@altlinux.org> 1.5.4-alt4
 - *fixed* datadir issues (closes: #23162)
 - applied fedora patch (a bit more complete than gentoo one)
