@@ -2,7 +2,7 @@
 
 Name: devil
 Version: 1.7.8
-Release: alt1.2
+Release: alt1.3
 
 %define realver %version
 
@@ -14,6 +14,7 @@ Group: System/Libraries
 Source: %name-%realver.tar
 
 #Patch1: DevIL-1.6.8-ilut-h.patch
+Patch2: devil-1.7.8-alt-libpng15.patch
 
 BuildRequires: gcc-c++ libSDL-devel liballegro-devel libjpeg-devel liblcms-devel libmng-devel libpng-devel libstdc++-devel libtiff-devel zlib-devel
 BuildRequires: libGL-devel libGLU-devel libGLUT-devel libX11-devel
@@ -72,6 +73,8 @@ for a developer to learn and use. This package contains documentation
 %prep
 %setup 
 
+%patch2 -p0
+
 sed -i 's|glut32|glut|g' configure
 
 %build
@@ -104,6 +107,9 @@ rm -rf %buildroot%_infodir/*
 %doc README Libraries.txt TODO CREDITS AUTHORS
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.8-alt1.3
+- Rebuilt with libpng15
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.8-alt1.2
 - Removed bad RPATH
 
