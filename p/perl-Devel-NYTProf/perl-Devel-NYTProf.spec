@@ -1,6 +1,6 @@
 %define dist Devel-NYTProf
 Name: perl-%dist
-Version: 4.08
+Version: 4.09
 Release: alt1
 
 Summary: Powerful fast feature-rich perl source code profiler
@@ -39,6 +39,9 @@ rm -rv %buildroot%perl_vendor_archlib/Devel/auto
 %perl_vendor_autolib/Devel
 
 %changelog
+* Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 4.09-alt1
+- 4.08 -> 4.09
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 4.08-alt1
 - 4.06 -> 4.08
 - built for perl-5.16
