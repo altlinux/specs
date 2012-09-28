@@ -1,6 +1,6 @@
 %define dist POE-Component-IRC
 Name: perl-%dist
-Version: 6.75
+Version: 6.80
 Release: alt1
 
 Summary: A fully event-driven IRC client dist
@@ -14,6 +14,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Sun Nov 20 2011
 BuildRequires: perl-IRC-Utils perl-Net-DNS-SEC perl-POE-Component-Client-DNS perl-POE-Component-SSLify perl-POE-Component-Syndicator perl-POE-Filter-IRCD perl-POE-Filter-Zlib perl-devel
+BuildRequires: perl-List-MoreUtils  perl-Test-Differences
 
 %description
 POE::Component::IRC is a POE (Perl Object Environment) component
@@ -34,6 +35,10 @@ IRC client session and send and receive IRC events through it.
 %perl_vendor_privlib/POE
 
 %changelog
+* Fri Sep 28 2012 Alexey Shabalin <shaba@altlinux.ru> 6.80-alt1
+- 6.75 -> 6.80
+- update BR:
+
 * Sun Nov 20 2011 Alexey Tourbin <at@altlinux.ru> 6.75-alt1
 - 6.52 -> 6.75
 
