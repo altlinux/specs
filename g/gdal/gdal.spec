@@ -8,7 +8,7 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 1.8.0
-Release: alt2
+Release: alt2.1
 Group: Sciences/Geosciences
 
 License: MIT
@@ -22,6 +22,7 @@ Patch0: %name-1.7.1-alt-swig_python.patch
 Patch1: %name-1.7.1-alt-pydir.patch
 Patch2: %name-1.7.1-alt-apps_install.patch
 Patch3: %name-1.7.1-alt-inst_docs.patch
+Patch4: %name-1.8.0-alt-libpng15.patch
 
 %define libname lib%name
 
@@ -94,6 +95,7 @@ Perl modules for GDAL/OGR.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 
 %build
 %configure \
@@ -187,6 +189,9 @@ done
 %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt2.1
+- Rebuilt with libpng15
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.8.0-alt2
 - rebuilt for perl-5.16
 
