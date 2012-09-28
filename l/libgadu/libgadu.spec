@@ -1,5 +1,5 @@
 Name: libgadu
-Version: 1.11.0
+Version: 1.11.2
 Release: alt1
 
 Summary: Library for Handling of Gadu-Gadu Instant Messaging
@@ -51,6 +51,9 @@ instant messenger Gadu-Gadu.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Sep 28 2012 Alexey Shabalin <shaba@altlinux.ru> 1.11.2-alt1
+- 1.11.2
+
 * Wed Jun 08 2011 Alexey Shabalin <shaba@altlinux.ru> 1.11.0-alt1
 - 1.11.0
 
