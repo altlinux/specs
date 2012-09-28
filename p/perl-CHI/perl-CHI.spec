@@ -1,5 +1,5 @@
 Name: perl-CHI
-Version: 0.52
+Version: 0.55
 Release: alt1
 Summary: CHI - Unified cache handling interface
 
@@ -7,19 +7,16 @@ Group: Development/Perl
 License: Perl
 Url: %CPAN CHI
 
+Source: CHI-%version.tar.gz
+
 BuildArch: noarch
-# Cloned from git://github.com/jonswar/perl-chi.git
-Source: %name-%version.tar
-# TODO: build Makefile.PL with Dist::Zilla at build time
-Patch: %name-%version-%release.patch
-BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl-Moose perl-JSON perl-List-MoreUtils perl-Task-Weaken perl-Hash-MoreUtils perl-Digest-JHash perl-Time-Duration perl-Time-Duration-Parse perl-Carp-Assert perl-Test-Deep perl-Test-Exception perl-TimeDate perl-Test-Warn perl-Test-Class perl-IO-Compress perl-Cache-Cache perl-Cache-FastMmap
+BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl-Moose perl-JSON perl-List-MoreUtils perl-Task-Weaken perl-Hash-MoreUtils perl-Digest-JHash perl-Time-Duration perl-Time-Duration-Parse perl-Carp-Assert perl-Test-Deep perl-Test-Exception perl-TimeDate perl-Test-Warn perl-Test-Class perl-IO-Compress perl-Cache-Cache perl-Cache-FastMmap perl-String-RewritePrefix
 
 %description
 %summary
 
 %prep
-%setup -q
-%patch -p1
+%setup -q -n CHI-%version
 
 %build
 %perl_vendor_build
@@ -29,10 +26,14 @@ BuildRequires: perl-Log-Any perl-Time-Duration perl-Data-UUID perl-Try-Tiny perl
 
 %files
 %perl_vendor_privlib/CHI*
-%exclude %perl_vendor_privlib/Pod/Weaver/Section/SeeAlsoCHI.pm
-%doc Changes
+%exclude %perl_vendor_privlib/CHI/t
+%doc Changes LICENSE
 
 %changelog
+* Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 0.55-alt1
+- 0.52 -> 0.55
+- built as plain srpm
+
 * Tue Apr 10 2012 Vladimir Lettiev <crux@altlinux.ru> 0.52-alt1
 - New version 0.52
 
