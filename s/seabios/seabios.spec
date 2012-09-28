@@ -1,5 +1,5 @@
 Name: seabios
-Version: 1.7.0
+Version: 1.7.1
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -9,7 +9,7 @@ Url: http://www.coreboot.org/SeaBIOS
 
 Source: %name-%version.tar
 
-BuildRequires: python-base
+BuildRequires: python-base python-modules iasl
 
 %description
 SeaBIOS is an open-source legacy BIOS implementation which can be used as
@@ -18,9 +18,8 @@ that a typical x86 proprietary BIOS implements.
 
 %prep
 %setup -q
-
-# Makefile changes version to include date and buildhost
-%__subst 's,VERSION=%version.*,VERSION=%version,g' Makefile
+echo %version > .version
+sed -i '/VERSION="${VERSION}-.*"$/d' tools/buildversion.sh
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS"
@@ -36,6 +35,9 @@ install -m 0644 out/bios.bin %buildroot%_libexecdir/%name
 %_libexecdir/%name/bios.bin
 
 %changelog
+* Fri Sep 28 2012 Alexey Shabalin <shaba@altlinux.ru> 1.7.1-alt1
+- 1.7.1
+
 * Tue May 22 2012 Alexey Shabalin <shaba@altlinux.ru> 1.7.0-alt1
 - 1.7.0
 
