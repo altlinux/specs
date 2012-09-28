@@ -4,7 +4,7 @@
 
 Name: links2
 Version: 2.6
-Release: alt1
+Release: alt1.1
 
 Summary: Lynx-like text and graphics WWW browser
 License: GPL
@@ -111,6 +111,9 @@ chmod +x %buildroot%_bindir/x%name
 %doc README SITES mailcap.pl
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6-alt1.1
+- Rebuilt with libpng15
+
 * Tue Apr 10 2012 Michael Shigorin <mike@altlinux.org> 2.6-alt1
 - 2.6
 - buildreq
