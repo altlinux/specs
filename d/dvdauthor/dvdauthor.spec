@@ -1,6 +1,6 @@
 Name: dvdauthor
 Version: 0.7.1
-Release: alt1
+Release: alt1.1
 Summary: set of tools to author a DVD
 License: GPL
 Group: Video
@@ -38,6 +38,9 @@ touch %buildroot%_sysconfdir/%name.conf
 %_datadir/%name
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.1
+- Rebuilt with libpng15
+
 * Sat Sep 01 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.1-alt1
 - 0.7.1
 
