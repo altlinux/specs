@@ -1,6 +1,6 @@
 BuildRequires: oss-parent
 Patch32: selenium-rc-alt-maven3.patch
-BuildRequires: mojo-parent gmaven-runtime-1.5 gmaven-runtime-1.6 gmaven-runtime-1.7
+BuildRequires: mojo-parent gmaven-runtime-1.5 gmaven-runtime-1.6 
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2009, JPackage Project
@@ -45,7 +45,7 @@ BuildRequires: jpackage-compat
 Summary:        Selenium Remote Control
 Name:           openqa-selenium-rc
 Version:        1.0.1
-Release:        alt5_5jpp6
+Release:        alt6_5jpp6
 Epoch:          0
 License:        ASL 2.0
 URL:            http://www.openqa.org/selenium-rc/
@@ -176,12 +176,6 @@ for j in $(find . -name "*.jar"); do
 done
 mv server-coreless/src/main/resources/customProfileDirCUSTFFCHROME/extensions/readystate@openqa.org/chrome/readystate.jar.no \
 server-coreless/src/main/resources/customProfileDirCUSTFFCHROME/extensions/readystate@openqa.org/chrome/readystate.jar
-cp %{SOURCE2} settings.xml
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
 %patch0 -b .sav0
 #%patch1 -b .sav1
 %if %{with_bootstrap}
@@ -207,7 +201,6 @@ export MAVEN_REPO_LOCAL=$(pwd)/m2_repo/repository
 
 mkdir -p $MAVEN_REPO_LOCAL/bouncycastle
 ln -sf $(build-classpath bcprov) $MAVEN_REPO_LOCAL/bouncycastle/bcprov-jdk15.jar
-MAVEN_SETTINGS=$(pwd)/settings.xml
 #mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
 #        -e \
 #        -s $MAVEN_SETTINGS \
@@ -217,14 +210,12 @@ MAVEN_SETTINGS=$(pwd)/settings.xml
 
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $MAVEN_SETTINGS \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         -Dmaven2.jpp.depmap.file=%{SOURCE1} \
 	install:install-file -DgroupId=bouncycastle -DartifactId=bcprov-jdk15 -Dversion=135 -Dpackaging=jar -Dfile=$(build-classpath bcprov)
 
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $MAVEN_SETTINGS \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
         -Dmaven2.jpp.depmap.file=%{SOURCE1} \
        install:install-file -DgroupId=org.testng -DartifactId=testng -Dversion=5.8 -Dclassifier=jdk15 -Dpackaging=jar -Dfile=$(build-classpath testng)
@@ -232,7 +223,6 @@ mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
 
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $MAVEN_SETTINGS \
         -Dmaven.test.failure.ignore=true \
         -Dmaven.test.skip.exec=true \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
@@ -324,6 +314,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %endif
 
 %changelog
+* Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt6_5jpp6
+- fixed build with new hsqldb
+
 * Sat May 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt5_5jpp6
 - fixed build with new testng and xbean
 
