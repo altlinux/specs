@@ -1,7 +1,7 @@
 # vim:set ft=spec: -*- rpm-spec -*-
 Name: briquolo
 Version: 0.5.7
-Release: alt5
+Release: alt5.1
 
 Group: Games/Arcade
 Summary: OpenGL-based 3D breakout
@@ -16,6 +16,7 @@ Source1: briquolo.16.png
 Source2: briquolo.32.png
 Source3: briquolo.48.png
 Patch01: briquolo-0.5.7-strncmp.patch
+Patch02: briquolo-0.5.7-alt-libpng15.patch
 
 # Automatically added by buildreq on Thu Sep 04 2008
 BuildRequires: gcc-c++ imake libSDL_sound-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel libfreetype-devel libpng-devel xorg-cf-files
@@ -37,6 +38,7 @@ BRIQUOLO гэта трохмерны арканоід. Цагліны і біт�
 %prep
 %setup
 %patch01 -p1
+%patch02 -p2
 
 %build
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
@@ -83,6 +85,9 @@ install -m 644 %SOURCE3 %buildroot/%_pixmapsdir/%name.png
 %doc README*
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.7-alt5.1
+- Rebuilt with libpng15
+
 * Sun Apr 17 2011 Lenar Shakirov <snejok@altlinux.ru> 0.5.7-alt5
 - fixed build: libmesa-devel removed from BuildReqs
 - Spec cleaned: thanks to rpmcs!
