@@ -2,7 +2,7 @@
 
 Name: dillo
 Version: 0.8.6
-Release: alt7
+Release: alt7.1
 
 Summary: a small GTK+ web browser
 Summary(ru_RU.UTF-8): компактный веб-браузер, написанный на GTK+
@@ -116,6 +116,9 @@ rm -f -- doc/Makefile*
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.6-alt7.1
+- Rebuilt with libpng15
+
 * Sat May 26 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.8.6-alt7
 - Fix build with --no-copy-dt-needed-entries
 
