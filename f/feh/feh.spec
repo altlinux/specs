@@ -1,7 +1,7 @@
 %define rev 9ed58f2c
 Name: feh
 Version: 2.6
-Release: alt1
+Release: alt1.1
 Summary: Image viewer using Imlib 2
 Group: Graphics
 License: BSD
@@ -46,6 +46,9 @@ cp %_builddir/%name-%version/man/*.1 %buildroot%_man1dir/
 %doc AUTHORS ChangeLog README TODO
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6-alt1.1
+- Rebuilt with libpng15
+
 * Sat Sep 1 2012 Andrew Clark <andyc@altlinux.org> 2.6-alt1
 - version update to 2.6-alt1
 
