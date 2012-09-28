@@ -1,15 +1,12 @@
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# one of the sources is a zip file
-BuildRequires: unzip
-%define version 1.7
-%define name rhino
-# Copyright (c) 2000-2009, JPackage Project
+# Copyright (c) 2000-2005, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -39,222 +36,135 @@ BuildRequires: unzip
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-%bcond_without repolib
-
-%define repodir %{_javadir}/repository.jboss.com/rhino/%{version}%{rel}-brew
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
-%define gcj_support 0
-
-
-%define rel R2
-%define cvs_version     1_7%{rel}
-%define archive_version 1_7%{rel}
+%define cvs_version 1_7R3
 
 Name:           rhino
-Version:        1.7
-Release:        alt2_1.r2.8jpp6
-Epoch:          0
+# R3 doesn't mean a prerelease, but behind R there is a version of this implementation
+# of Javascript version 1.7 (which is independent from this particular implementation,
+# e.g., there is C++ implementation in Spidermonkey)
+Version:        1.7R3
+Release:        alt1_6jpp7
 Summary:        JavaScript for Java
-License:        MPL
-Source0:        ftp://ftp.mozilla.org/pub/mozilla.org/js/rhino%{archive_version}.zip
-Source1:        http://java.sun.com/products/jfc/tsc/articles/treetable2/downloads/src.zip
-Source2:        rhino.script
-Source3:        rhino-debugger.script
-Source4:        rhino-idswitch.script
-Source5:        rhino-jsc.script
-Source6:        rhino-js.pom
-Source7:        rhino.pom
-Source8:        rhino-component-info.xml
-Patch0:         rhino-build.patch
-Patch1:         rhino-dojo.patch
-Patch2:         rhino-class-loader.patch
-Patch3:         rhino-288467.patch
+License:        MPLv1.1 or GPLv2+
+
+Source0:        ftp://ftp.mozilla.org/pub/mozilla.org/js/rhino%{cvs_version}.zip
+
+Source2:        %{name}.script
+
+Patch0:         %{name}-build.patch
+# Add OSGi metadata from Eclipse Orbit project
+# Rip out of MANIFEST.MF included in this JAR:
+# http://www.eclipse.org/downloads/download.php?r=1&file=/tools/orbit/downloads/drops/R20110523182458/repository/plugins/org.mozilla.javascript_1.7.2.v201005080400.jar
+Patch1:         %{name}-addOrbitManifest.patch
+Patch2:         %{name}-1.7R3-crosslink.patch
+
 URL:            http://www.mozilla.org/rhino/
 Group:          Development/Java
-Requires:       jline
-Requires:       stax_1_0_api
-Requires:       xmlbeans
+
 BuildRequires:  ant
-BuildRequires:  jpackage-utils
-BuildRequires:  jline
-BuildRequires:  stax_1_0_api
-BuildRequires:  xmlbeans
-%if %{gcj_support}
-BuildRequires:  java-gcj-compat-devel
-%else
+BuildRequires:  java-1.7.0-openjdk-devel
+Requires:       jpackage-utils
+Requires:       jline
+
+# Disable xmlbeans until we can get it into Fedora
+#Requires:       xmlbeans
+#BuildRequires:  xmlbeans
 BuildArch:      noarch
-%endif
 Source44: import.info
-Source45: js-1.7.jar-OSGi-MANIFEST.MF
 
 %description
 Rhino is an open-source implementation of JavaScript written entirely
 in Java. It is typically embedded into Java applications to provide
 scripting to end users.
 
-This version contains Dojo's JavaScript compression patch.
-
-%package demo
+%package        demo
 Summary:        Examples for %{name}
 Group:          Development/Java
 
-%description demo
+%description    demo
 Examples for %{name}.
 
-%package manual
+%package        manual
 
 Summary:        Manual for %{name}
 Group:          Development/Java
 BuildArch: noarch
 
-%description manual
+%description    manual
 Documentation for %{name}.
 
-%package javadoc
+%package        javadoc
 Summary:        Javadoc for %{name}
-Group:          Development/Documentation
+Group:          Development/Java
+BuildRequires:  java-javadoc
+Requires:       java-javadoc
 BuildArch: noarch
 
-%description javadoc
+%description    javadoc
 Javadoc for %{name}.
-
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
 
 %prep
 %setup -q -n %{name}%{cvs_version}
-%patch0 -p0 -b .sav0
-%patch1 -p0 -b .sav1
-%patch2 -p0 -b .sav2
-%patch3 -p0 -b .sav3
+%patch0 -p1 -b .build
+%patch1 -p1 -b .fixManifest
+%patch2 -p1 -b .crosslink
 
 # Fix build
-%{__perl} -pi -e 's|.*<get.*src=.*>\n||' build.xml testsrc/build.xml toolsrc/org/mozilla/javascript/tools/debugger/build.xml xmlimplsrc/build.xml
-%{__install} -D -p -m 644 %{SOURCE1} toolsrc/org/mozilla/javascript/tools/debugger/downloaded/swingExSrc.zip
+sed -i -e '/.*<get.*src=.*>$/d' build.xml testsrc/build.xml \
+       toolsrc/org/mozilla/javascript/tools/debugger/build.xml xmlimplsrc/build.xml
 
 # Fix manifest
-%{__perl} -pi -e 's|^Class-Path:.*\n||g' src/manifest
+sed -i -e '/^Class-Path:.*$/d' src/manifest
 
 # Add jpp release info to version
-%{__perl} -pi -e 's|^implementation.version: Rhino .* release .* \${implementation.date}|implementation.version: Rhino %{version} release %{release} \${implementation.date}|' build.properties
+sed -i -e 's|^implementation.version: Rhino .* release .* \${implementation.date}|implementation.version: Rhino %{version} release %{release} \${implementation.date}|' build.properties
 
 %build
-export CLASSPATH=$(build-classpath jline)
+export CLASSPATH=
 export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dxbean.jar=$(build-classpath xmlbeans/xbean) -Djsr173.jar=$(build-classpath stax_1_0_api) deepclean jar copy-all javadoc
+%ant deepclean jar copy-all javadoc -Dno-xmlbeans=1
 
-export CLASSPATH=`pwd`/build/%{name}%{cvs_version}/js.jar
 pushd examples
-%{javac}  -target 1.5 -source 1.5 *.java
-%{jar} cvf ../build/%{name}%{cvs_version}/%{name}-examples-%{version}.jar *.class
+
+export CLASSPATH=../build/%{name}%{cvs_version}/js.jar:$(build-classpath xmlbeans/xbean 2>/dev/null)
+%{javac} *.java
+%{jar} cvf ../build/%{name}%{cvs_version}/%{name}-examples.jar *.class
 popd
 
 %install
 
 # jars
-%{__mkdir_p} %{buildroot}%{_javadir}
-%{__cp} -a build/%{name}%{cvs_version}/js.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
-%{__cp} -a build/%{name}%{cvs_version}/%{name}-examples-%{version}.jar %{buildroot}%{_javadir}/%{name}-examples-%{version}.jar
-(cd %{buildroot}%{_javadir} && %{__ln_s} %{name}-%{version}.jar js-%{version}.jar)
-(cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do %{__ln_s} ${jar} `echo $jar| %{__sed} "s|-%{version}||g"`; done)
-
-# poms
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -a %{SOURCE6} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-js.pom
-%{__cp} -a %{SOURCE7} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap %{name} %{name} %{version} JPP %{name}
-%add_to_maven_depmap %{name} js %{version} JPP js
+mkdir -p %{buildroot}%{_javadir}
+cp -a build/%{name}%{cvs_version}/js.jar %{buildroot}%{_javadir}
+ln -s js.jar %{buildroot}%{_javadir}/%{name}.jar
+cp -a build/%{name}%{cvs_version}/%{name}-examples.jar %{buildroot}%{_javadir}/%{name}-examples.jar
 
 # javadoc
-%{__mkdir_p} %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__cp} -a build/%{name}%{cvs_version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
-%{__ln_s} %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
-%{_bindir}/find %{buildroot}%{_javadocdir}/%{name}-%{version} -type f -name '*.html' | %{_bindir}/xargs %{__perl} -pi -e 's/\r$//g'
+mkdir -p %{buildroot}%{_javadocdir}/%{name}
+cp -a build/%{name}%{cvs_version}/javadoc/* %{buildroot}%{_javadocdir}/%{name}
 
-# scripts
-%{__mkdir_p} %{buildroot}%{_bindir}
-%{__install} -p -m 0755 %{SOURCE2} %{buildroot}%{_bindir}/%{name}
-%{__install} -p -m 0755 %{SOURCE3} %{buildroot}%{_bindir}/%{name}-debugger
-%{__install} -p -m 0755 %{SOURCE4} %{buildroot}%{_bindir}/%{name}-idswitch
-%{__install} -p -m 0755 %{SOURCE5} %{buildroot}%{_bindir}/%{name}-jsc
+## script
+mkdir -p %{buildroot}%{_bindir}
+install -m 755 %{SOURCE2} %{buildroot}%{_bindir}/%{name}
 
 # examples
-%{__mkdir_p} %{buildroot}%{_datadir}/%{name}
-%{__cp} -a examples/* %{buildroot}%{_datadir}/%{name}
-
-%if %with repolib
-%{__install} -d -m 755 %{buildroot}%{repodir}
-%{__install} -d -m 755 %{buildroot}%{repodirlib}
-%{__install} -p -m 644 %{SOURCE7} %{buildroot}%{repodir}/component-info.xml
-tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
-%{__sed} -i "s/@TAG@/$tag/g" %{buildroot}%{repodir}/component-info.xml
-%{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
-%{__install} -d -m 755 %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE1} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE2} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE3} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE4} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE5} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{SOURCE6} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{PATCH0} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{PATCH1} %{buildroot}%{repodirsrc}
-%{__install} -p -m 644 %{PATCH2} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/js.jar
-%endif
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
-# inject OSGi manifest js-1.7.jar-OSGi-MANIFEST.MF
-rm -rf META-INF
-mkdir -p META-INF
-cp %{SOURCE45} META-INF/MANIFEST.MF
-# update even MANIFEST.MF already exists
-# touch META-INF/MANIFEST.MF
-zip -v %buildroot/usr/share/java/js.jar META-INF/MANIFEST.MF
+mkdir -p %{buildroot}%{_datadir}/%{name}
+cp -a examples/* %{buildroot}%{_datadir}/%{name}
+find %{buildroot}%{_datadir}/%{name} -name '*.build' -delete
 
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/%{name}.conf`
 touch $RPM_BUILD_ROOT/etc/%{name}.conf
-# end inject OSGi manifest js-1.7.jar-OSGi-MANIFEST.MF
+
+%pre javadoc
+[ $1 -gt 1 ] && [ -L %{_javadocdir}/%{name} ] && \
+%__rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 %files
-%attr(0755,root,root) %{_bindir}/%{name}
-%attr(0755,root,root) %{_bindir}/%{name}-debugger
-%attr(0755,root,root) %{_bindir}/%{name}-idswitch
-%attr(0755,root,root) %{_bindir}/%{name}-jsc
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%{_javadir}/js-%{version}.jar
-%{_javadir}/js.jar
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%{_libdir}/gcj/%{name}/*
-%endif
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_datadir}/maven2/poms/JPP-js.pom
-%{_mavendepmapfragdir}/%{name}
+%attr(0755,root,root) %{_bindir}/*
+%{_javadir}/*
 %config(noreplace,missingok) /etc/%{name}.conf
 
 %files demo
-%{_javadir}/%{name}-examples-%{version}.jar
-%{_javadir}/%{name}-examples.jar
 %{_datadir}/%{name}
 
 %files manual
@@ -263,15 +173,12 @@ touch $RPM_BUILD_ROOT/etc/%{name}.conf
 %endif
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%{_javadocdir}/%{name}
-
-%if %with repolib
-%files repolib
-%{_javadir}/repository.jboss.com
-%endif
+%doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7R3-alt1_6jpp7
+- R3
+
 * Sat Sep 17 2011 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt2_1.r2.8jpp6
 - updated OSGi manifest
 
