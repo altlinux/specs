@@ -1,7 +1,7 @@
 %define oname mathgl
 Name: lib%{oname}5
 Version: 1.11.0.1
-Release: alt1.4
+Release: alt1.5
 
 Summary: Library of fast C++ routines for the plotting of the data
 
@@ -46,7 +46,7 @@ Python module for %name.
 %setup -n %oname-%version
 
 %build
-%add_optflags `pkg-config --cflags hdf5`
+%add_optflags `pkg-config --cflags hdf5` -fpermissive
 %configure --enable-tiff --enable-jpeg --enable-python \
 	--enable-hdf5 \
 	--disable-static
@@ -82,6 +82,9 @@ mv %buildroot%python_sitelibdir_noarch/*.py* \
 #python_sitelibdir/*
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0.1-alt1.5
+- Rebuilt with libpng15
+
 * Sun May 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0.1-alt1.4
 - Restored devel subpackage
 
