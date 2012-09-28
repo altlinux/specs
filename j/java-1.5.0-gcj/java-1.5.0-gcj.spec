@@ -1,7 +1,7 @@
 Packager: Igor Vlasenko <viy@altlinux.ru>
 %def_without src
 %def_without devel
-%define gccrpmsuffix    4.4
+%define gccrpmsuffix    4.5
 %define _with_bootstrap 1
 %define _bootstrap 1
 BuildRequires(pre): rpm-build-java
@@ -67,7 +67,7 @@ BuildRequires: /proc
 
 Name:    %{name}
 Version: %{javaver}.%{buildver}
-Release: alt2_28jpp5.1.1
+Release: alt4_28jpp5
 Summary: JPackage runtime compatibility layer for GCJ
 Group:   System/Internationalization
 # The LICENSE file has the classpath exception, but nothing in this package
@@ -831,6 +831,9 @@ fi
 
 
 %changelog
+* Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0.0-alt4_28jpp5
+- fixed build
+
 * Wed Oct 26 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.0.0-alt2_28jpp5.1.1
 - Rebuild with Python-2.7
 
