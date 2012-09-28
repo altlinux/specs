@@ -3,7 +3,7 @@
 
 Name: ghostscript
 Version: %gsver
-Release: alt1
+Release: alt1.1
 
 %define esp_name esp-ghostscript
 %define gnu_name gnu-ghostscript
@@ -312,6 +312,9 @@ mkdir -p %buildroot/%_datadir/ghostscript/conf.d
 %_includedir/ijs
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 9.05-alt1.1
+- Rebuilt with libpng15
+
 * Wed Feb 15 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 9.05-alt1
 - 9.05
 
