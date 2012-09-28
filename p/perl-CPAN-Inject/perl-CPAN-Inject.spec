@@ -1,28 +1,25 @@
-%define m_distro CPAN-Inject
+%define dist CPAN-Inject
 Name: perl-CPAN-Inject
-Version: 1.13
+Version: 1.14
 Release: alt1
+
 Summary: CPAN::Inject - Base class for injecting distributions into CPAN sources
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
-
 Group: Development/Perl
 License: Perl
-Url: http://search.cpan.org/~adamk/CPAN-Inject/
+
+Url: %CPAN %dist
+Source: %dist-%version.tar.gz
 
 BuildArch: noarch
-Source: %m_distro-%version.tar
 BuildRequires: perl-Test-Script perl-devel perl-CPAN-Checksums perl-CPAN perl-File-Remove perl-Params-Util perl-File-chmod perl-podlators
 
 %description
 %summary
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %dist-%version
 
 %build
-# disabled tests: http://bugs.debian.org/560647
-%def_without test
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
 %install
@@ -32,9 +29,12 @@ BuildRequires: perl-Test-Script perl-devel perl-CPAN-Checksums perl-CPAN perl-Fi
 %_bindir/cpaninject
 %perl_vendor_privlib/CPAN/Inject*
 %_man1dir/cpaninject.*
-%doc Changes README 
+%doc Changes
 
 %changelog
+* Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1.14-alt1
+- 1.13 -> 1.14
+
 * Mon Jan 10 2011 Vladimir Lettiev <crux@altlinux.ru> 1.13-alt1
 - New version 1.13
 
