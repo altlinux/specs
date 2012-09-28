@@ -11,7 +11,7 @@
 %define lname mplayer
 %define Name MPlayer
 %define rel 35
-%define subrel 6
+%define subrel 7
 
 #---------------------- BEGIN OF PARAMETERS -------------------------------------
 
@@ -344,6 +344,7 @@ Patch13: %lname-svn-r32566-vbe.patch
 
 Patch100: %name-%pkgver-alt-nls.patch
 Patch101: %name-%version-alt-changes.patch
+Patch102: %name-1.0-alt-libpng15.patch
 
 # Automatically added by buildreq on Wed May 30 2007
 #BuildRequires: aalib-devel docbook-dtds docbook-style-xsl esound-devel gcc-c++ kdelibs ladspa_sdk libarts-devel libaudio-devel libavformat-devel libcaca-devel libcdparanoia-devel libdv-devel libdvdnav-devel libdvdread-devel libenca-devel libfribidi-devel libgpm-devel libgtk+2-devel libjpeg-devel liblirc-devel liblive555-devel liblzo2-devel libmesa-devel libmpcdec-devel libopenal-devel libpostproc-devel libpulseaudio-devel libSDL-devel libSDL_image-devel libslang-devel libsmbclient-devel libspeex-devel libswscale-devel libungif-devel libvidix-devel libXinerama-devel libxmms-devel libXvMC-devel libXxf86dga-devel subversion svgalib-devel xsltproc
@@ -698,6 +699,7 @@ SVCDs from a movie.
 
 %patch100 -p1
 %patch101 -p1
+%patch102 -p2
 
 %patch0 -p1
 %patch1 -p1
@@ -1230,6 +1232,9 @@ ln -sf %lname %buildroot%_bindir/g%lname
 
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt35.32772.7
+- Rebuilt with libpng15
+
 * Mon Jun 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt35.32772.6
 - Fixed build
 
