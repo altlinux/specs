@@ -1,16 +1,17 @@
-%define m_distro System-Command
 Name: perl-System-Command
-Version: 1.04
+Version: 1.07
 Release: alt1
+
 Summary: System::Command - Object for running system commands
-
-Group: Development/Perl
 License: Perl
-Url: %CPAN %m_distro
+Group: Development/Perl
 
-BuildArch: noarch
+Url: %CPAN System-Command
+# Cloned from git://github.com/book/System-Command.git
 Source: %name-%version.tar
+
 BuildRequires: perl-devel perl-Module-Build
+BuildArch: noarch
 
 %description
 %summary
@@ -29,6 +30,9 @@ BuildRequires: perl-devel perl-Module-Build
 %doc Changes README 
 
 %changelog
+* Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1.07-alt1
+- 1.0.4 -> 1.0.7
+
 * Fri Jun 17 2011 Vladimir Lettiev <crux@altlinux.ru> 1.04-alt1
 - New version 1.0.4
 
