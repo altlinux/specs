@@ -1,6 +1,6 @@
 Name: xfce4-mixer
-Version: 4.8.0
-Release: alt4
+Version: 4.9.0
+Release: alt1
 
 Summary: Audio mixer plugin for the XFce panel
 Summary (ru_RU.UTF-8): Звуковой микшер для панели рабочего стола Xfce
@@ -8,16 +8,17 @@ License: %gpl2plus
 Group: Graphical desktop/XFce
 Url: http://www.xfce.org/projects/xfce4-mixer
 Packager: XFCE Team <xfce@packages.altlinux.org>
+# git://git.xfce.org/apps/xfce4-mixer
 Source: %name-%version.tar
-Patch1: xfce4-mixer-4.8.0-alt-fix-mousewheel-crash.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
-BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
+BuildPreReq: rpm-build-xfce4 xfce4-dev-tools >= 0.1.1-alt1
 BuildPreReq: libxfce4panel-devel libxfce4ui-devel libxfce4util-devel libxfconf-devel
-BuildRequires: gst-plugins-devel intltool libxml2-devel
+BuildRequires: gst-plugins-devel intltool libxml2-devel libunique-devel libkeybinder-devel
 
-Requires: xfce4-panel >= 4.8 gst-plugins-base
+Requires: xfce4-panel >= 4.10 gst-plugins-base
 
 %description
 %name is the volume control plugin for the XFce panel.
@@ -30,16 +31,15 @@ Includes a simple sound mixer.
 
 %prep
 %setup
-%patch1 -p1
+%patch -p1
 
 %build
-# Fix desktop file path for xfce4-panel >= 4.8
-sed -i 's|\$(datadir)/xfce4/panel-plugins|\$(datadir)/xfce4/panel/plugins|' \
-   panel-plugin/Makefile.am
-
+# Don't use git tag in version.
+%xfce4_drop_gitvtag xfce4_mixer_version_tag configure.ac.in
 %xfce4reconf
 %configure \
-    --enable-debug=no
+	--enable-keybinder=yes \
+	--enable-debug=no
 %make_build
 
 %install
@@ -47,15 +47,23 @@ sed -i 's|\$(datadir)/xfce4/panel-plugins|\$(datadir)/xfce4/panel/plugins|' \
 %find_lang %name
 
 %files -f %name.lang
-%doc README TODO ChangeLog AUTHORS
+%doc README AUTHORS
 %_bindir/*
-%_libexecdir/xfce4/panel-plugins/*
+%_libdir/xfce4/panel/plugins/*
 %_desktopdir/*
 %_pixmapsdir/*
 %_datadir/%name
 %_xfce4data/panel/plugins/*.desktop
+%_man1dir/*
+
+%exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Fri Sep 28 2012 Mikhail Efremov <sem@altlinux.org> 4.9.0-alt1
+- Updated from upsteam git (91598f7c34).
+- Drop obsoleted patch.
+- Updated to 4.9.0.
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 4.8.0-alt4
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
 
