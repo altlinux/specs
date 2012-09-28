@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven
 Version:        3.0.4
-Release:        alt1_10jpp7
+Release:        alt2_10jpp7
 Summary:        Java project management and project comprehension tool
 
 Group:          Development/Java
@@ -77,6 +77,7 @@ BuildRequires:  xmlunit
 Requires:       aether >= 1.13.1
 Requires:       animal-sniffer >= 1.6-5
 Requires:       apache-commons-cli
+Requires:       apache-commons-parent
 Requires:       async-http-client
 Requires:       atinject
 Requires:       google-guice >= 3.0
@@ -367,6 +368,9 @@ touch $RPM_BUILD_ROOT/etc/mavenrc
 
 
 %changelog
+* Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt2_10jpp7
+- restored requires: apache-commons-parent
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt1_10jpp7
 - complete build
 
