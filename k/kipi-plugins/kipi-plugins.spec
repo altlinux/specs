@@ -2,7 +2,7 @@
 
 Name: kipi-plugins
 Version: 0.1.6
-Release: alt6.2
+Release: alt6.3
 Serial: 3
 
 Group: Graphics
@@ -43,7 +43,7 @@ The library of the KDE Image Plugin Interface used by digiKam and Gwenview
 %make -f admin/Makefile.common cvs ||:
 
 %build
-%add_optflags -I%_includedir/tqtinterface
+%add_optflags -I%_includedir/tqtinterface -fpermissive %optflags_shared
 %K3configure \
     --enable-libkipi \
     --enable-final \
@@ -75,6 +75,9 @@ done
 %lang(pt_BR) %_K3doc/pt_BR/%name
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3:0.1.6-alt6.3
+- Rebuilt with libtiff5 and libpng15
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3:0.1.6-alt6.2
 - Rebuilt without libOSMesa
 
