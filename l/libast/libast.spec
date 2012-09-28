@@ -1,7 +1,7 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libXext-devel libfreetype-devel
 # END SourceDeps(oneline)
-%add_optflags %optflags_shared
+BuildRequires: zlib-devel
 # Arches on which the multilib {sysdefs,types}.h hack is needed:
 # (Update libast-wrapper.h when adding archs)
 
@@ -11,7 +11,7 @@ BuildRequires: libXext-devel libfreetype-devel
 Summary:        Library of Assorted Spiffy Things
 Name:           libast
 Version:        0.7.1
-Release:        alt2_0.12.20080502cvs
+Release:        alt3_0.12.20080502cvs
 Group:          System/Libraries
 License:        BSD
 URL:            http://www.eterm.org/
@@ -37,7 +37,7 @@ version number that begins with 0.
 %package devel
 Summary:  Header files, libraries and development documentation for %{name}
 Group:    Development/C
-Requires: libast = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 This package contains the header files, static libraries and development
@@ -82,6 +82,9 @@ touch -r ChangeLog %{buildroot}%{_bindir}/%{name}-config
 %exclude %{_libdir}/*.a
 
 %changelog
+* Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt3_0.12.20080502cvs
+- fixed build
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_0.12.20080502cvs
 - update to new release by fcimport
 
