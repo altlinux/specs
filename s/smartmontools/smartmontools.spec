@@ -1,6 +1,6 @@
 Name: smartmontools
-Version: 5.42
-Release: alt4
+Version: 5.43
+Release: alt1
 
 Summary: Control and monitor storage systems using S.M.A.R.T.
 License: GPLv2+
@@ -11,6 +11,9 @@ Url: http://smartmontools.sourceforge.net
 Source0: smartmontools-%version.tar
 Source1: smartd.init
 Source2: smartd.sysconfig
+
+Patch1: smartmontools-alt-conf.patch
+Patch2: smartmontools-alt-service.patch
 
 Obsoletes: smartctl
 Obsoletes: smartd
@@ -29,6 +32,8 @@ and includes support for ATA/ATAPI-5 disks.
 
 %prep
 %setup
+%patch1 -p1
+%patch2 -p1
 fgrep -lZ /usr/local/bin/mail *.in |
 	xargs -r0 sed -i 's,/usr/local/bin/mail,/bin/mail,g' --
 fgrep -lZ /usr/local/etc/sysconfig *.am *.in |
@@ -74,6 +79,9 @@ rm %buildroot%docdir/{CHANGELOG,COPYING,INSTALL}
 %docdir
 
 %changelog
+* Fri Sep 28 2012 Dmitry V. Levin <ldv@altlinux.org> 5.43-alt1
+- Updated to 5.43.
+
 * Wed May 09 2012 Dmitry V. Levin <ldv@altlinux.org> 5.42-alt4
 - Fixed smartd.service.
 
