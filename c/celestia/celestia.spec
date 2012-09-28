@@ -1,6 +1,6 @@
 Name: celestia
 Version: 1.6.1
-Release: alt2.1
+Release: alt2.2
 License: GPL
 Group: Education
 Summary: A real-time visual space simulation
@@ -9,6 +9,7 @@ Source: %{name}-%{version}.tar.gz
 Patch1: celestia-1.4.0-desktop-fix.patch
 Patch2: celestia-1.6.1-alt-gcc4.6.patch
 Patch3: celestia-1.6.1-alt-DSO.patch
+Patch4: celestia-1.6.1-alt-libpng15.patch
 
 BuildRequires: fontconfig freetype2 gcc-c++ kdelibs-devel libtqt-devel
 BuildRequires: libjpeg-devel libpng-devel libqt3-devel
@@ -86,6 +87,7 @@ travelthroughout the solar system, to any of over
 %patch1 -p0
 %patch2 -p2
 %patch3 -p2
+%patch4 -p2
 ##%__aclocal --force
 ##%__automake --foreign
 autoreconf
@@ -166,6 +168,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/celestia.sche
 /etc/alternatives/packages.d/%name-kde
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt2.2
+- Rebuilt with libpng15
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt2.1
 - Fixed build
 
