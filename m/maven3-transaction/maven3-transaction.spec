@@ -5,8 +5,9 @@ License: ASL 2.0
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildArch: noarch
 Group: Development/Java
-Release: alt0.8jpp
+Release: alt0.9jpp
 
+Requires: eclipse-cdt
 Requires: eclipse-phpeclipse
 
 %description
@@ -23,6 +24,9 @@ mkdir -p $RPM_BUILD_ROOT
 %files
 
 %changelog
+* Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.9jpp
+- updated dependencies
+
 * Thu Sep 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt0.8jpp
 - updated dependencies
 
