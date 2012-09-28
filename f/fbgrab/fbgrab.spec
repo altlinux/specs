@@ -1,6 +1,6 @@
 Name: fbgrab
 Version: 1.0
-Release: alt4
+Release: alt4.1
 
 Summary: Framebuffer screenshot program
 License: GCL
@@ -9,6 +9,7 @@ URL: http://hem.bredband.net/gmogmo/fbgrab/
 Packager: Vadim V. Zhytnikov <vvzhy@altlinux.ru>
 
 Source0: %name-%version.tar.gz
+Patch: fbgrab-1.0-alt-zlib.patch
 
 BuildRequires: libpng-devel
 
@@ -18,6 +19,7 @@ frambuffer and converting it to a png-picture.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 gcc %optflags fbgrab.c -lpng -lz -o fbgrab
@@ -31,6 +33,9 @@ install -D -m644 fbgrab.1.man %buildroot%_man1dir/fbgrab.1
 %_man1dir/f*
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt4.1
+- Rebuilt with libpng15
+
 * Fri Sep 21 2007 Vadim V. Zhytnikov <vvzhy@altlinux.ru> 1.0-alt4
 - Remove Russian summary and description.
 
