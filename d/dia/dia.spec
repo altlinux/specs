@@ -1,6 +1,6 @@
 Name: dia
 Version: 0.97.2
-Release: alt1
+Release: alt1.1
 
 Summary: A gtk+ based diagram creation program
 Summary(ru_RU.UTF-8): Программа для создания диаграмм, основанная на GTK+
@@ -86,6 +86,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.97.2-alt1.1
+- Rebuilt with libpng15
+
 * Sat May 26 2012 Vitaly Lipatov <lav@altlinux.ru> 0.97.2-alt1
 - build new version (ALT bug #27156)
 
