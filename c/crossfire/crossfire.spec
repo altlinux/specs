@@ -3,7 +3,7 @@
 
 Name: crossfire
 Version: 1.11.0
-Release: alt1.qa3
+Release: alt1.qa4
 Summary: Multiplayer graphical role-playing game
 Summary(ru_RU.UTF-8): Многопользовательская графическая ролевая игра
 License: GPL
@@ -20,6 +20,7 @@ Source6: %name-32x32.png
 Source7: %name-48x48.png
 
 Patch0: %name-1.9.0-bound_cond.patch
+Patch1: %name-1.11.0-alt-libpng15.patch
 
 Provides: crossfire-server
 Requires: crossfire-maps
@@ -100,6 +101,7 @@ X11, GTK, или SDL (в окне gtk).
 %prep
 %setup -q
 # %patch0 -p1
+%patch1 -p2
 
 
 %build
@@ -175,6 +177,9 @@ install -d %buildroot%_localstatedir/games/%name/datafiles
 
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.qa4
+- Rebuilt with libpng15
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.qa3
 - Fixed build
 
