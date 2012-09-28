@@ -6,7 +6,7 @@
 
 Name: evince-gtk
 Version: %major.0
-Release: alt4.1
+Release: alt4.2
 Summary: A document viewer
 License: GPL
 Group: Office
@@ -170,6 +170,9 @@ fi
 %endif
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.32.0-alt4.2
+- Rebuilt with libtiff5
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.32.0-alt4.1
 - Fixed build
 
