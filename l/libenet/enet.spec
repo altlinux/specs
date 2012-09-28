@@ -2,7 +2,7 @@
 
 Name: libenet
 Version: 1.2
-Release: alt1.qa2
+Release: alt1.qa3
 Summary: Thin, simple and robust network layer on top of UDP
 Group: System/Libraries
 License: MIT
@@ -63,6 +63,9 @@ install -m 644 include/%_libname/*.h \
 %_libdir/lib%_libname.so
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt1.qa3
+- Rebuilt for debuginfo
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1.qa2
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
