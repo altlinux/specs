@@ -3,7 +3,7 @@
 
 Name: htmldoc
 Version: 1.9.0
-Release: alt1.%subversion.3
+Release: alt1.%subversion.4
 Serial: 1
 
 License: GPL with exceptions (see COPYING.txt)
@@ -18,6 +18,7 @@ Source: %name-%sourceversion-%subversion.tar.bz2
 Source2: htmldoc.png
 
 Patch1: htmldoc-1.9.x-%subversion-fix.overflow.patch
+Patch2: htmldoc-1.9.0-alt-libpng15.patch
 
 PreReq: fontconfig >= 2.4.2
 Requires: fonts-type1-htmldoc
@@ -46,6 +47,7 @@ from Irmologion project.
 %prep
 %setup -n %name-%sourceversion-%subversion
 %patch1 -p1
+%patch2 -p2
 autoconf
 
 %build
@@ -144,6 +146,9 @@ fi
 %_datadir/%name/fonts
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.9.0-alt1.r1629.4
+- Rebuilt with libpng15
+
 * Sat Apr 23 2011 Igor Vlasenko <viy@altlinux.ru> 1:1.9.0-alt1.r1629.3
 - NMU: converted menu to desktop file
 
