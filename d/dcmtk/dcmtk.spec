@@ -2,7 +2,7 @@
 
 Name: dcmtk
 Version: 3.5.4
-Release: alt3.1
+Release: alt3.2
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT license
@@ -72,6 +72,9 @@ make
 %_libdir/*.a
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.4-alt3.2
+- Rebuilt with libpng15
+
 * Thu Dec 16 2010 Dmitry V. Levin <ldv@altlinux.org> 3.5.4-alt3.1
 - Fixed build with openssl-1.0.
 
