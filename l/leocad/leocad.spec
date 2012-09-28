@@ -2,7 +2,7 @@ Summary: Visual brick construction tool for kids
 Summary (ru_RU.KOI8-R): Детский конструктор, использующий блоки с шипами
 Name:    leocad
 Version: 0.75
-Release: alt5.1
+Release: alt5.2
 
 License: GPL
 Url:     http://www.leocad.org
@@ -16,6 +16,7 @@ Source1: %name.desktop
 Patch1: %name-longint.patch
 Patch2: %name-gcc44.patch
 Patch3: %name-0.75-alt-DSO.patch
+Patch4: %name-0.75-alt-libpng15.patch
 
 BuildRequires: gcc-c++ libgtk+2-devel libjpeg-devel unzip libpng-devel libGL-devel
 BuildRequires: desktop-file-utils, ImageMagick
@@ -33,6 +34,7 @@ LeoCAD -- программа для конструирования чего угодно из блоков с шипами. В прилаг
 %setup -q -n %name
 %patch2 -p1 
 %patch3 -p2
+%patch4 -p2
 
 %build
 %make PREFIX=/usr
@@ -57,6 +59,9 @@ desktop-file-install \
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.75-alt5.2
+- Rebuilt with libpng15
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.75-alt5.1
 - Fixed build
 
