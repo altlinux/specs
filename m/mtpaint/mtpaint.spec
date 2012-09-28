@@ -3,7 +3,7 @@
 Summary: Painting program for creating icons and pixel-based artwork
 Name: mtpaint
 Version: 3.40
-Release: alt2
+Release: alt2.1
 License: GPLv3+
 Group: Graphics
 Url: http://mtpaint.sourceforge.net/
@@ -79,6 +79,9 @@ desktop-file-install --delete-original         \
 %doc %{name}_handbook-%docver/COPYING %{name}_handbook-%docver/docs/*
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.40-alt2.1
+- Rebuilt with libpng15
+
 * Mon May 28 2012 Fr. Br. George <george@altlinux.ru> 3.40-alt2
 - Fix i18n and HTML help
 
