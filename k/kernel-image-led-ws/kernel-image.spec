@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt10
+Release: alt11
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -488,7 +488,7 @@ Patch1011: linux-%kernel_branch-feat-drivers-block--cloop.patch
 Patch1012: linux-%kernel_branch.42-feat-drivers-block--zram.patch
 
 Patch1021: linux-%kernel_branch-feat-drivers-gpu-drm--cirrus.patch
-Patch1022: linux-%kernel_branch.43-feat-drivers-gpu-drm--gma500.patch
+Patch1022: linux-%kernel_branch.43-feat-drivers-gpu-drm--psb_gfx.patch
 
 Patch1031: linux-%kernel_branch.42-feat-drivers-hwmon--ipmisensors.patch
 
@@ -2427,6 +2427,14 @@ fi
 
 
 %changelog
+* Fri Sep 28 2012 Led <led@altlinux.ru> 3.0.43-alt11
+- removed
+  + feat-drivers-gpu-drm--gma500
+- updated:
+  + fix-drivers-gpu-drm--gma500
+- added:
+  + feat-drivers-gpu-drm--psb_gfx
+
 * Thu Sep 27 2012 Led <led@altlinux.ru> 3.0.43-alt10
 - updated:
   + fix-drivers-block--nbd
