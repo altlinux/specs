@@ -1,5 +1,5 @@
 Name: perl-Git-Repository
-Version: 1.25
+Version: 1.26
 Release: alt1
 
 Summary: Git::Repository - Perl interface to Git repositories
@@ -32,6 +32,9 @@ git config --global user.name "Hasher Bot"
 %doc Changes README 
 
 %changelog
+* Fri Sep 28 2012 Vladimir Lettiev <crux@altlinux.ru> 1.26-alt1
+- 1.25 -> 1.26
+
 * Wed Apr 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1.25-alt1
 - 1.22 -> 1.25
 
