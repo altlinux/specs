@@ -3,7 +3,7 @@
 
 Name: foobillard
 Version: 3.0a
-Release: alt1
+Release: alt1.1
 
 Summary: A game of playing billard
 License: GPL
@@ -84,6 +84,9 @@ install -pm0644 %SOURCE5 %buildroot/%_iconsdir/hicolor/48x48/apps/%name.xpm
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0a-alt1.1
+- Rebuilt with libpng15
+
 * Sat Oct 08 2011 Michael Shigorin <mike@altlinux.org> 3.0a-alt1
 - fix versioning (it was 3.0a already, just abusing beta macro)
 
