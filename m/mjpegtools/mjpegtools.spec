@@ -3,7 +3,7 @@
 
 Name: mjpegtools
 Version: 1.9.0
-Release: alt5
+Release: alt6
 
 Summary: Tools for recording, editing, playing back mpeg-encoding video under linux
 License: GPL
@@ -15,6 +15,7 @@ Source: http://prdownloads.sourceforge.net/mjpeg/%name-%version.tar.gz
 Patch4: 0003-Fix-path-to-transcode.patch
 Patch5: 0001-Fix-build-with-new-gcc.patch
 Patch6: mjpegtools-1.9.0-alt-v4l.patch
+Patch7: mjpegtools-1.9.0-alt-libpng15.patch
 
 %define quicktime_ver 0.9.7
 %define libdv_ver 0.9
@@ -93,6 +94,7 @@ This binaries does ***NOT*** compatible with a K6 or Pentium CPU
 %patch4 -p2
 %patch5 -p2
 %patch6 -p2
+%patch7 -p2
 
 %build
 %configure \
@@ -132,6 +134,9 @@ rm -f %buildroot%_infodir/dir
 %_libdir/*.a
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt6
+- Rebuilt with libpng15
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.0-alt5
 - Fixed build
 
