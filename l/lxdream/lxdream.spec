@@ -1,6 +1,6 @@
 Name: lxdream
 Version: 0.9.1
-Release: alt2.qa3
+Release: alt2.qa4
 
 Summary: Lxdream is an emulator for the Sega Dreamcast system
 License: GPL
@@ -57,6 +57,9 @@ echo "Comment=Lxdream is an emulator for the Sega Dreamcast" >> %buildroot%_desk
 #_iconsdir/*
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt2.qa4
+- Rebuilt with libpng15
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt2.qa3
 - Fixed build
 
