@@ -34,7 +34,7 @@
 %define upstream_module_name	NVIDIA_kernel
 
 %define kversion	2.6.32
-%define krelease	alt75
+%define krelease	alt76
 %define flavour		ovz-el
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
@@ -49,7 +49,7 @@
 Summary:	nVidia video card drivers
 Name:		kernel-modules-%module_name-%flavour
 Version:	%module_version
-Release:	%module_release.132640.75
+Release:	%module_release.132640.76
 License:	Proprietary
 Group:		System/Kernel and hardware
 URL:		http://www.nvidia.com
@@ -193,8 +193,8 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Fri Sep 14 2012 Anton Protopopov <aspsk@altlinux.org> 304.43-alt2.132640.75
-- Build for kernel-image-ovz-el-2.6.32-alt75.
+* Fri Sep 28 2012 Anton Protopopov <aspsk@altlinux.org> 304.43-alt2.132640.76
+- Build for kernel-image-ovz-el-2.6.32-alt76.
 
 * Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 304.43-alt2
 - technical
