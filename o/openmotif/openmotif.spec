@@ -4,7 +4,7 @@
 
 Name: openmotif
 Version: 2.3.3
-Release: alt2.1
+Release: alt3
 
 Summary: The Open Motif
 License: Open Group Public License
@@ -48,6 +48,7 @@ Patch54: openmotif-freetype.patch
 Patch55: openmotif-parbuild.patch
 Patch56: openmotif-libtool.patch
 Patch57: openmotif-2.3.3-alt-DSO.patch
+Patch58: openmotif-2.3.3-alt-no_underlinked.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -131,6 +132,7 @@ This package contains the Motif demo applications.
 %prep
 %setup
 # RH
+%patch58 -p2
 %patch4 -p1
 %patch7 -p1
 %patch8 -p1
@@ -146,6 +148,10 @@ This package contains the Motif demo applications.
 %patch57 -p2
 
 find -type f -name \*.orig -print -delete
+
+for i in $(find demos/programs -name 'Makefile.*'); do
+	sed -i 's|bindir = \${prefix}/share|bindir = ${prefix}/%_lib|' $i
+done
 
 %build
 %add_optflags -D_FILE_OFFSET_BITS=64
@@ -169,8 +175,8 @@ for f in %buildroot%_libexecdir/app-defaults/*; do
 done
 
 %if_with demos
-find %buildroot%_datadir/Xm -type f -perm +111
-find %buildroot%_datadir/Xm -type f -perm +111 -exec mv '{}' %buildroot%_bindir/ \;
+find %buildroot%_libdir/Xm -type f -perm +111
+find %buildroot%_libdir/Xm -type f -perm +111 -exec mv '{}' %buildroot%_bindir/ \;
 ls %buildroot%_bindir/* \
 | sed -e "s,%buildroot,,g" \
 | grep -Ev '/(mwm|uil|xmbind)$' >demos.list ||:
@@ -218,9 +224,10 @@ rm -f %_x11includedir/{Mrm,Xm} >/dev/null 2>&1 ||:
 %if_with demos
 %files demos -f demos.list
 # conflicts with util-linux
-%exclude %_bindir/column
-%exclude %_bindir/tree
+#exclude %_bindir/column
+#exclude %_bindir/tree
 %_datadir/Xm
+%_libdir/Xm
 %_mandir/manm/*
 %endif
 
@@ -230,6 +237,9 @@ rm -f %_x11includedir/{Mrm,Xm} >/dev/null 2>&1 ||:
 # - actually test mwm?
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt3
+- Rebuilt with libpng15
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.3-alt2.1
 - Fixed build
 
