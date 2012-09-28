@@ -3,7 +3,7 @@
 
 Name: libzvbi
 Version: 0.2.33
-Release: alt3
+Release: alt4
 
 Summary: Raw VBI, Teletext and Closed Caption decoding library
 
@@ -12,6 +12,8 @@ Group: Video
 Url: http://zapping.sourceforge.net/
 
 Source: http://prdownloads.sf.net/zapping/%oname-%version.tar.bz2
+Patch: libzvbi-0.2.33-alt-libpng15.patch
+Patch1: libzvbi-0.2.33-alt-sys_stat.patch
 Packager: Konstantin Pavlov <thresh@altlinux.org>
 
 BuildRequires: cvs doxygen libpng-devel libX11-devel
@@ -64,6 +66,8 @@ will use the zvbi library (aka libzvbi)
 
 %prep
 %setup -q -n %oname-%version
+%patch -p2
+%patch1 -p2
 
 %build
 %autoreconf
@@ -99,6 +103,9 @@ will use the zvbi library (aka libzvbi)
 %endif
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.33-alt4
+- Rebuilt with libpng15
+
 * Thu Oct 28 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.33-alt3
 - Rebuilt for soname set-versions
 
