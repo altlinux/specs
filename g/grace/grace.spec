@@ -3,7 +3,7 @@
 
 Name: grace
 Version: 5.1.22
-Release: alt9.2
+Release: alt9.3
 
 Summary: WYSIWYG tool to make two-dimensional plots of scientific data
 License: GPL
@@ -21,6 +21,7 @@ Patch3: grace-5.1.9-alt1-alt-makefile-install_man.patch
 Patch4: grace-5.1.9-alt1-alt-makefile-install_grace_np.patch
 Patch5: grace-5.1.11-alt1-alt-makefile-font_links.patch
 Patch6: grace-5.1.9-alt1-alt-config-gracerc.patch
+Patch7: grace-5.1.22-alt-libpng15.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: fonts-type1-urw >= 1.0.7
@@ -79,6 +80,7 @@ A library for interfacing with Grace using pipes
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p2
 cp -a %SOURCE7 set_default_enc
 
 %build
@@ -132,6 +134,9 @@ GRACE_HOME=%_datadir/grace %_datadir/grace/auxiliary/set_default_enc
 # - look into printing support
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.22-alt9.3
+- Rebuilt with libpng15
+
 * Tue Sep 06 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.22-alt9.2
 - Rebuilt with libhdf5-7
 
