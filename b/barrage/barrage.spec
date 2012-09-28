@@ -1,17 +1,19 @@
 Summary: Kill and destroy as many targets as possible within 3 minutes
 Name: barrage
-Version: 1.0.2
-Release: alt1.2
+Version: 1.0.4
+Release: alt1
 License: GPL
 Group: Games/Arcade
-Packager: Dmitriy Kulik  <lnkvisitor@altlinux.org>
-Source0: %name-%version.tar.gz
+
+Source0: %name-%version.tar
 Source1: %name.png
-Patch0: pach-%name-desktop.diff
-Patch1: %name-1.0.2-alt-DSO.diff
+Patch0: pach-%name-desktop.patch
+##replace alt-DSO path
+Patch1: %name-1.0.2-fd-dsolink.patch
+Patch2: %name-1.0.2-fd-spelling.patch
 URL: http://lgames.sourceforge.net/index.php?project=Barrage
 
-BuildRequires: ImageMagick-tools libSDL_mixer-devel
+BuildRequires: ImageMagick-tools libSDL_mixer-devel automake
 
 %description
 Barrage is a rather violent action game with the objective to kill
@@ -22,8 +24,9 @@ not that easy to get high scores.
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p2
+#%patch0 -p1
+%patch1
+%patch2
 
 %build
 ./configure --prefix=%prefix --bindir=%_gamesbindir
@@ -45,6 +48,12 @@ convert -resize 48x48 %SOURCE1 %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Fri Sep 28 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 1.0.4-alt1
+- Update to 1.0.4
+- Import fedora patches:
+  + barrage-1.0.2-fd-spelling.patch
+  + barrage-1.0.2-fd-dsolink.patch
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.2
 - Fixed build
 
