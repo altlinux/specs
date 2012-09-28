@@ -16,7 +16,7 @@
 
 Name: %base_name-client
 Version: %version
-Release: alt1%{?cvsbuild:.cvs%cvsbuild}.qa4
+Release: alt1%{?cvsbuild:.cvs%cvsbuild}.qa5
 Summary: Client for connecting to crossfire servers
 Summary(ru_RU.UTF-8): Клиент для подключения к серверам crossfire
 License: GPL
@@ -38,6 +38,7 @@ Source6: %name-gtk.alternatives
 Source7: %name-gtk2.alternatives
 Source8: %name.desktop
 Patch0: %name-1.11.0-alt-DSO.patch
+Patch1: %name-1.11.0-alt-libpng15.patch
 
 Requires: crossfire-client-gui
 
@@ -153,6 +154,7 @@ Sound effects for people who want sounds with their game.
 %setup -q -a 1
 # -a 4
 %patch0 -p2
+%patch1 -p2
 
 %build
 CFLAGS="${CFLAGS:-%optflags}" ./configure \
@@ -278,6 +280,9 @@ install -m755 gtk-v2/src/gcfclient2 %buildroot%_gamesbindir
 
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.qa5
+- Rebuilt with libpng15
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1.qa4
 - Fixed build
 
