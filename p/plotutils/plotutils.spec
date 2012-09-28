@@ -6,7 +6,7 @@
 
 Name: plotutils
 Version: 2.5.1
-Release: alt3.qa2
+Release: alt3.qa3
 
 Summary: GNU Plotutils -- plotting utilities
 
@@ -19,11 +19,13 @@ Url: http://www.gnu.org/software/plotutils/plotutils.html
 Source: ftp://ftp.gnu.org/gnu/plotutils/plotutils-%version.tar.gz
 Patch: %name-info.patch
 Patch1: %name-c++.patch
+Patch2: %name-2.5.1-alt-autoreconf.patch
+Patch3: %name-2.5.1-alt-libpng15.patch
 
 # Automatically added by buildreq on Tue Dec 02 2008
 BuildRequires: flex gcc-c++ imake libXaw-devel libXext-devel libpng-devel rpm-build-java rpm-build-mono rpm-build-seamonkey xorg-cf-files xorg-sdk
 
-BuildPreReq: rpm-build-fonts
+BuildPreReq: rpm-build-fonts gcc-fortran
 
 %description
 The GNU plotting utilities include:
@@ -104,10 +106,13 @@ Version: %LIBXMI_VERSION
 libxmi header files.
 
 %prep
-%setup -q
+%setup
+%patch2 -p2
+%patch3 -p2
 
 %build
 CXXFLAGS="-fno-rtti -fno-exceptions"
+%autoreconf
 %configure \
 	--disable-static \
 	--enable-libplotter \
@@ -166,6 +171,9 @@ gzip -9nf *.pcf || :
 %_includedir/xmi.h
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt3.qa3
+- Rebuilt with libpng15
+
 * Fri Dec 23 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt3.qa2
 - Removed RPATH
 
