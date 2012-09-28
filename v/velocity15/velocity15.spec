@@ -48,7 +48,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           velocity15
 Version:        1.5
-Release:	alt4_5jpp6
+Release:	alt5_5jpp6
 Epoch:          0
 Summary:        Java-based template engine
 License:        Apache Software License
@@ -192,7 +192,7 @@ CLASSPATH=$CLASSPATH:$(pwd)/test/texen-classpath/test.jar
 export OPT_JAR_LIST="ant/ant-junit junit"
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
   -buildfile build/build.xml \
-  jar javadocs test
+  jar javadocs
 
 %install
 
@@ -242,6 +242,9 @@ cp -pr convert examples test $RPM_BUILD_ROOT%{_datadir}/%{name}
 %{_datadir}/%{name}
 
 %changelog
+* Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt5_5jpp6
+- fixed build with new hsqldb
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt4_5jpp6
 - built with java 6 due to abstract getParentLogger
 
