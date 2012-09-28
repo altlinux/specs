@@ -2,7 +2,7 @@
 
 Name: guvcview
 Version: 1.6.0
-Release: alt1
+Release: alt1.1
 
 Summary: A GTK UVC video viewer
 License: GPLv3+
@@ -58,6 +58,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.1
+- Rebuilt with libpng15
+
 * Mon Jun 04 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
 - 1.6.0
 - fixed %%url
