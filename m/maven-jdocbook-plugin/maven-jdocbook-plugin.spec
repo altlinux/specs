@@ -1,3 +1,4 @@
+BuildRequires: maven-enforcer-plugin
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -34,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-jdocbook-plugin
 Version:        2.1.2
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        jDocBook Maven Plugin
 License:        LGPL
@@ -65,8 +66,8 @@ BuildRequires: maven-surefire-plugin
 BuildRequires: docbook-xsl-saxon
 BuildRequires: saxon
 BuildRequires: xml-commons-resolver11
-BuildRequires: xmlgraphics-batik
-BuildRequires: xmlgraphics-fop
+BuildRequires: batik
+BuildRequires: fop
 
 Requires(post): jpackage-utils >= 0:1.7.5
 Requires(postun): jpackage-utils >= 0:1.7.5
@@ -75,8 +76,8 @@ Requires: maven2
 Requires: docbook-xsl-saxon
 Requires: saxon
 Requires: xml-commons-resolver11
-Requires: xmlgraphics-batik
-Requires: xmlgraphics-fop
+Requires: batik
+Requires: fop
 
 BuildArch:      noarch
 BuildRequires: jboss-parent3
@@ -175,6 +176,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt2_1jpp6
+- fixed build
+
 * Thu Sep 30 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.1.2-alt1_1jpp6
 - new version
 
