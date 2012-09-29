@@ -1,3 +1,4 @@
+BuildRequires: servlet_2_5_api
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
@@ -5,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           h2
 Version:        1.2.147
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        Java SQL database
 
 Group:          Development/Java
@@ -75,6 +76,9 @@ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc src/docsrc/html/license.html
 
 %changelog
+* Sat Sep 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.147-alt2_5jpp7
+- fixed build
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.147-alt1_5jpp7
 - new version
 
