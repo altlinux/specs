@@ -1,5 +1,3 @@
-# TODO!!!: enable patch31 for cups1.6!
-
 %def_enable cupstifffilter
 %def_enable sane_backend
 %def_enable python_code
@@ -14,7 +12,7 @@
 Summary: Solution for printing, scanning, and faxing with Hewlett-Packard inkjet and laser printers.
 Name: hplip
 Version: 3.12.9
-Release: alt1
+Release: alt2
 License: GPL/MIT/BSD
 Group: Publishing
 URL: http://hplip.sourceforge.net
@@ -538,7 +536,7 @@ done
 %patch130 -p1 -b .hpaio-localonly
 
 # To build against CUPS-1.6 (launchpad #1026666)
-#patch31 -p1 -b .ipp-accessors
+%patch131 -p1 -b .ipp-accessors
 
 # from fedora 3.9.12-3/3.10.9-9
 sed -i.duplex-constraints \
@@ -1008,6 +1006,9 @@ fi
 #SANE - merge SuSE trigger on installing sane
 
 %changelog
+* Sat Sep 29 2012 Igor Vlasenko <viy@altlinux.ru> 3.12.9-alt2
+- build with cups 1.6
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 3.12.9-alt1
 - new version
 
