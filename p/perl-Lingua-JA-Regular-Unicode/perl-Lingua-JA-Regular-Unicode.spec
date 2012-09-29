@@ -1,5 +1,5 @@
 Name: perl-Lingua-JA-Regular-Unicode
-Version: 0.07
+Version: 0.09
 Release: alt1
 
 Summary: Lingua::JA::Regular::Unicode - convert japanese chars
@@ -30,6 +30,9 @@ BuildRequires: perl-devel perl-Module-Build perl-Test-Base perl-Test-Perl-Critic
 %doc Changes LICENSE
 
 %changelog
+* Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 0.09-alt1
+- 0.07 -> 0.09
+
 * Thu Apr 12 2012 Vladimir Lettiev <crux@altlinux.ru> 0.07-alt1
 - 0.07
 
