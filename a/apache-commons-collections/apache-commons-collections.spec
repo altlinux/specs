@@ -63,18 +63,18 @@ BuildRequires: jpackage-compat
 
 Name:           apache-%{short_name}
 Version:        3.2.1
-Release:        alt5_6jpp6
+Release:        alt6_6jpp6
 Epoch:          0
 Summary:        Apache Commons Collections Package
 License:        ASL 2.0
 Group:          Development/Java
 Url:            http://commons.apache.org/collections
 Source0:        http://www.apache.org/dist/jakarta/commons/%{base_name}/source/%{short_name}-%{version}-src.tar.gz
-Source1:        %{name}-settings.xml
 Source2:        %{name}-jpp-depmap.xml
 Source3:        %{name}-component-info.xml
 Source4:        collections-tomcat5-build.xml
 Patch0:         %{name}-javadoc-nonet.patch
+Patch4:         commons-collections-3.2-build_xml.patch
 
 BuildRequires:  jpackage-utils >= 0:1.7.5
 BuildRequires:  ant >= 0:1.7
@@ -212,18 +212,11 @@ BuildArch: noarch
 find . -name "*.jar" -exec rm -f {} \;
 
 %patch0 -p1 -b .sav0
+%patch4 -b .sav
 
 cp %{SOURCE4} .
 
-cp -p %{SOURCE1} settings.xml
-
 %if %with maven
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
-
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 %endif
@@ -236,7 +229,6 @@ mkdir -p ${MAVEN_REPO_LOCAL}
 export MAVEN_OPTS="-Dmaven2.jpp.mode=true -Dmaven2.jpp.depmap.file=%{SOURCE2} -Dmaven.repo.local=${MAVEN_REPO_LOCAL} -Dproject.build.directory=$(pwd)/target"
 mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
-        -s $(pwd)/settings.xml \
         install javadoc:javadoc
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 tf.javadoc
 %else
@@ -337,7 +329,6 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__sed} -i "s/@VERSION@/%{version}-brew/g" %{buildroot}%{repodir}/component-info.xml
 %{__install} -d -m 0755 %{buildroot}%{repodirsrc}
 %{__install} -p -m 0644 %{SOURCE0} %{buildroot}%{repodirsrc}
-%{__install} -p -m 0644 %{SOURCE1} %{buildroot}%{repodirsrc}
 %{__install} -p -m 0644 %{SOURCE2} %{buildroot}%{repodirsrc}
 %{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/%{short_name}.jar
 %endif
@@ -408,6 +399,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Sat Sep 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt6_6jpp6
+- fixed build with lucene3
+
 * Sat Jan 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.2.1-alt5_6jpp6
 - new jpp relase
 
