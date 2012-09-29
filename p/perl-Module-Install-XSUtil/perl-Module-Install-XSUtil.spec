@@ -1,15 +1,17 @@
 Name: perl-Module-Install-XSUtil
-Version: 0.42
+Version: 0.43
 Release: alt1
-Summary: Module::Install::XSUtil - utility functions for XS modules
 
-Group: Development/Perl
+Summary: Module::Install::XSUtil - utility functions for XS modules
 License: Perl
+Group: Development/Perl
+
 Url: %CPAN Module-Install-XSUtil
+# Cloned from git://github.com/gfx/Perl-Module-Install-XSUtil.git
+Source: %name-%version.tar
 
 BuildArch: noarch
-Source: %name-%version.tar
-BuildRequires: perl-devel perl-Module-Install perl-B-Hooks-OP-Annotation
+BuildRequires: perl-devel perl-Module-Install perl-B-Hooks-OP-Annotation perl-Module-Install-Repository
 
 %description
 Module::Install::XSUtil provides a set of utilities to setup
@@ -17,6 +19,8 @@ distributions which include or depend on XS module.
 
 %prep
 %setup -q
+# skip authors tests
+sed -i "/author_tests/d" Makefile.PL
 
 %build
 %perl_vendor_build
@@ -29,6 +33,10 @@ distributions which include or depend on XS module.
 %doc Changes README 
 
 %changelog
+* Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 0.43-alt1
+- 0.42 -> 0.43
+- sources cloned from upstream git
+
 * Fri Dec 02 2011 Vladimir Lettiev <crux@altlinux.ru> 0.42-alt1
 - New version 0.42
 
