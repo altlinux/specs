@@ -1,13 +1,11 @@
 Name: yafaray
 Version: 0.1.1
-Release: alt2.1
+Release: alt2.2
 
 Summary: YafaRay is a raytracing open source render engine
 License: LGPL
 Group: Graphics
 Url: http://www.yafaray.org/
-
-Packager: Sergey Kurakin <kurakin@altlinux.org>
 
 Source0: YafaRay.%version.zip
 
@@ -76,6 +74,9 @@ install -p -m644 bindings/python/* %buildroot%_libdir/blender/scripts
 %_libdir/blender/scripts/*yafqt.*
 
 %changelog
+* Thu Sep 27 2012 Sergey Kurakin <kurakin@altlinux.org> 0.1.1-alt2.2
+- rebuild with latest libpng
+
 * Mon Nov 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.1-alt2.1
 - Rebuild with Python-2.7
 
