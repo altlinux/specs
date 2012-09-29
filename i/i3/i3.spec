@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.2
-Release: alt2
+Version: 4.3
+Release: alt1
 
 Summary: I3 window manager
 License: BSD-like
@@ -14,8 +14,8 @@ Patch: %name-alt-desktop.patch
 
 Packager: %packager
 
-# Automatically added by buildreq on Sat Apr 14 2012
-BuildRequires: asciidoc-a2x flex libXcursor-devel libev-devel libpcre-devel libstartup-notification-devel libxcbutil-devel libyajl-devel libxcbutil-keysyms-devel libxcbutil-icccm-devel
+# Automatically added by buildreq on Sat Sep 29 2012
+BuildRequires: flex libXcursor-devel libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libyajl-devel
 
 %package devel
 Summary: Development file for IPC interface of i3 window manager
@@ -118,8 +118,8 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
-* Thu Sep  6 2012 Terechkov Evgenii <evg@altlinux.org> 4.2-alt2
-- Build with new libxcbutil
+* Sat Sep 29 2012 Andrey Bergman <vkni@altlinux.org> 4.3-alt1
+- Version update
 
 * Wed May 23 2012 Andrey Bergman <vkni@altlinux.org> 4.2-alt1.3
 - Removed useless .desktop file.
