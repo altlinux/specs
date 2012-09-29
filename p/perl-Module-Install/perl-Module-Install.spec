@@ -1,6 +1,6 @@
 %define dist Module-Install
 Name: perl-%dist
-Version: 1.04
+Version: 1.06
 Release: alt1
 
 Summary: Standalone, extensible Perl module installer
@@ -47,6 +47,9 @@ EOF
 /etc/buildreqs/files/ignore.d/%name
 
 %changelog
+* Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 1.06-alt1
+- 1.04 -> 1.06
+
 * Wed Nov 16 2011 Alexey Tourbin <at@altlinux.ru> 1.04-alt1
 - 1.02 -> 1.04
 - reverted all previous changes
