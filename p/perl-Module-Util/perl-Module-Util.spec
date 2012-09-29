@@ -1,24 +1,23 @@
-%define m_distro Module-Util
+%define dist Module-Util
 Name: perl-Module-Util
-Version: 1.07
-Release: alt2
+Version: 1.08
+Release: alt1
+
 Summary: Module::Util - Module name tools and transformations
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
-
-Group: Development/Perl
 License: Perl
-Url: http://search.cpan.org/~mattlaw/Module-Util/
+Group: Development/Perl
 
-BuildArch: noarch
-Source: %m_distro-%version.tar
+Url: %CPAN %dist
+Source: %dist-%version.tar.gz
+
 BuildRequires: perl-Module-Build perl-podlators
+BuildArch: noarch
 
 %description
 %summary
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %dist-%version
 
 %build
 %perl_vendor_build --install_path bindoc=%_man1dir
@@ -33,6 +32,10 @@ BuildRequires: perl-Module-Build perl-podlators
 %doc Changes README 
 
 %changelog
+* Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 1.08-alt1
+- 1.07 -> 1.08
+- built as plain srpm
+
 * Mon Nov 29 2010 Vladimir Lettiev <crux@altlinux.ru> 1.07-alt2
 - fixed generation of man1 pages
 
