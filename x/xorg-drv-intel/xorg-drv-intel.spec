@@ -1,6 +1,6 @@
 Name: xorg-drv-intel
-Version: 2.20.7
-Release: alt2
+Version: 2.20.9
+Release: alt1
 Epoch: 7
 Summary: Intel integrated graphics chipsets
 License: MIT/X11
@@ -17,6 +17,7 @@ BuildRequires(Pre): xorg-sdk
 BuildRequires: libGL-devel libX11-devel libXext-devel libXvMC-devel xorg-inputproto-devel xorg-fontsproto-devel xorg-randrproto-devel
 BuildRequires: xorg-renderproto-devel xorg-xextproto-devel xorg-xf86driproto-devel xorg-dri2proto-devel xorg-xineramaproto-devel
 BuildRequires: libXrender-devel libxcbutil-devel xorg-util-macros libXfixes-devel libudev-devel intel-gen4asm
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 intel  is  an  Xorg  driver  for  Intel  integrated  graphics
@@ -51,6 +52,12 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Sat Sep 29 2012 Valery Inozemtsev <shrek@altlinux.ru> 7:2.20.9-alt1
+- 2.20.9
+
+* Mon Sep 17 2012 Valery Inozemtsev <shrek@altlinux.ru> 7:2.20.8-alt1
+- 2.20.8
+
 * Fri Sep 14 2012 Valery Inozemtsev <shrek@altlinux.ru> 7:2.20.7-alt2
 - disabled SNA
 
