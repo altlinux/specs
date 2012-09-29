@@ -1,4 +1,4 @@
-%define gcc_branch 4.6
+%define gcc_branch 4.7
 
 # this package can be compiled as cross tool, by defining _cross_platform
 # i.e. rpmbuild -ba --define '_cross_platform armh-alt-linux-gnueabi' gcc4.spec
@@ -8,8 +8,8 @@
 %define if_gcc_arch() %if %(A='%{?_cross_platform:%_cross_platform}%{!?_cross_platform:%_target_platform}'; [ %1 = ${A%%%%-*} ] && echo 1 || echo 0)
 
 Name: gcc%gcc_branch
-Version: 4.6.3
-Release: alt8
+Version: 4.7.2
+Release: alt1
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -23,8 +23,8 @@ Url: http://gcc.gnu.org/
 %define _target_platform ppc64-alt-linux
 %endif
 
-%define priority 463
-%define snapshot 20120306
+%define priority 472
+%define snapshot 20120920
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -58,7 +58,7 @@ Url: http://gcc.gnu.org/
 
 %set_compress_method bzip2
 # due to libmudflap and libmudflapth
-%set_verify_elf_method unresolved=relaxed
+%set_verify_elf_method unresolved=relaxed textrel=relaxed
 # due to libtool.m4-gcj.patch
 %set_libtool_version 2.4
 
@@ -78,7 +78,7 @@ Url: http://gcc.gnu.org/
 
 %else # _cross_platform
 
-%def_enable compat
+%def_disable compat
 %def_enable multilib
 %def_with cxx
 %def_with fortran
@@ -91,7 +91,7 @@ Url: http://gcc.gnu.org/
 %def_with java
 # If you don't have already a usable gcc-java and libgcj for your arch,
 # do on some arch which has it rpmbuild -bc --with java_tar gcc4.spec
-# which creates libjava-classes-%version-%release.tar.bz2
+# which creates libjava-classes-%version-%release.tar
 # With this then on the new arch do rpmbuild -ba -v --with java_bootstrap gcc4.spec
 %def_without java_tar
 %def_without java_bootstrap
@@ -99,7 +99,7 @@ Url: http://gcc.gnu.org/
 %define REQ =
 %ifarch %ix86 x86_64
 %def_with ada
-%def_without go
+%def_with go
 %else
 %def_without ada
 %def_without go
@@ -119,48 +119,53 @@ Url: http://gcc.gnu.org/
 
 Source: %srcfilename.tar
 Source1: gcc-extra.tar
-%{?_with_java_bootstrap:Source2: libjava-classes-%version-%release.tar.bz2}
-
-Patch1: gcc46-svn186612-siginfo.patch
-Patch2: gcc46-svn188229-libgo-mksysinfo.patch
-Patch3: gcc46-svn189373-libgo-mksysinfo.patch
+%{?_with_java_bootstrap:Source2: libjava-classes-%version-%release.tar}
 
 # RH patches.
-Patch100: gcc46-rh-hack.patch
-Patch101: gcc46-rh-c++-builtin-redecl.patch
-Patch102: gcc46-rh-java-nomulti.patch
-Patch103: gcc46-rh-ppc32-retaddr.patch
-Patch104: gcc46-rh-pr33763.patch
-Patch105: gcc46-rh-rh330771.patch
-Patch106: gcc46-rh-i386-libgomp.patch
-Patch107: gcc46-rh-sparc-config-detection.patch
-Patch108: gcc46-rh-libgomp-omp_h-multilib.patch
-Patch109: gcc46-rh-libtool-no-rpath.patch
-Patch110: gcc46-rh-cloog-dl.patch
-Patch111: gcc46-rh-pr38757.patch
-Patch112: gcc46-rh-libstdc++-docs.patch
+Patch100: gcc47-rh-hack.patch
+Patch101: gcc47-rh-c++-builtin-redecl.patch
+Patch102: gcc47-rh-java-nomulti.patch
+Patch103: gcc47-rh-ppc32-retaddr.patch
+Patch104: gcc47-rh-pr33763.patch
+Patch105: gcc47-rh-rh330771.patch
+Patch106: gcc47-rh-i386-libgomp.patch
+Patch107: gcc47-rh-sparc-config-detection.patch
+Patch108: gcc47-rh-libgomp-omp_h-multilib.patch
+Patch109: gcc47-rh-libtool-no-rpath.patch
+Patch110: gcc47-rh-cloog-dl.patch
+Patch111: gcc47-rh-pr38757.patch
+Patch112: gcc47-rh-libstdc++-docs.patch
+Patch113: gcc47-rh-no-add-needed.patch
+Patch114: gcc47-rh-ppl-0.10.patch
+Patch115: gcc47-rh-libitm-fno-exceptions.patch
+Patch116: gcc47-rh-rh837630.patch
+Patch117: gcc47-rh-arm-hfp-ldso.patch
 
 # Debian patches.
-Patch301: gcc46-deb-gcc-textdomain.patch
-Patch302: gcc46-deb-libstdc++-doclink.patch
-Patch303: gcc46-deb-libstdc++-man-3cxx.patch
-Patch304: gcc46-deb-libjava-stacktrace.patch
-Patch305: gcc46-deb-alt-libjava-subdir.patch
-Patch306: gcc46-deb-libjava-jnipath.patch
-Patch307: gcc46-deb-libjava-sjlj.patch
-Patch308: gcc46-deb-boehm-gc-getnprocs.patch
-Patch309: gcc45-deb-pr41848.patch
-Patch310: gcc46-deb-nothumb-check.patch
+Patch301: gcc47-deb-gcc-textdomain.patch
+Patch302: gcc47-deb-libstdc++-doclink.patch
+Patch303: gcc47-deb-libstdc++-man-3cxx.patch
+Patch304: gcc47-deb-libjava-stacktrace.patch
+Patch305: gcc47-deb-alt-libjava-subdir.patch
+Patch306: gcc47-deb-libjava-jnipath.patch
+Patch307: gcc47-deb-libjava-sjlj.patch
+Patch308: gcc47-deb-boehm-gc-getnprocs.patch
+Patch310: gcc47-deb-alt-nothumb-check.patch
 Patch311: gcc46-deb-alt-defaults-format-security.patch
 Patch312: gcc46-deb-alt-testsuite-format.patch
 Patch313: gcc45-deb-alt-testsuite-printf.patch
-Patch314: gcc46-deb-alt-ada-gcc-name.patch
-#Patch315: gcc46-deb-ada-gnatvsn.patch
+Patch314: gcc47-deb-alt-ada-gcc-name.patch
 Patch316: gcc46-deb-libjava-armel-unwind.patch
-Patch317: gcc45-deb-armel-hilo-union-class.patch
-Patch318: gcc45-deb-libjava-disable-static.patch
+Patch318: gcc47-deb-alt-libjava-disable-static.patch
 Patch319: gcc45-deb-libstdc++-arm-wno-abi.patch
-#Patch320: gcc45-deb-arm-unbreak-eabi-armv4t.diff
+Patch320: gcc47-deb-gccgo-version.patch
+Patch321: gcc47-deb-go-fixes.patch
+Patch322: gcc47-deb-libgo-fix-arm.patch
+Patch323: gcc47-deb-libgo-hardening.patch
+Patch324: gcc47-deb-libgo-mksysinfo.patch
+
+# Linaro patches
+Patch400: gcc47-linaro.patch
 
 # SuSE patches.
 #Patch501:
@@ -172,9 +177,9 @@ Patch319: gcc45-deb-libstdc++-arm-wno-abi.patch
 Patch701: gcc45-alt-install.patch
 Patch702: gcc46-alt-nowrap.patch
 Patch703: gcc43-alt-as-needed.patch
-Patch704: gcc46-alt-libgfortran-makefile.patch
+Patch704: gcc47-alt-libgfortran-makefile.patch
 Patch705: gcc46-alt-libjava-makefile.patch
-Patch706: gcc45-alt-ada-link.patch
+Patch706: gcc47-alt-ada-link.patch
 Patch707: gcc43-alt-spp-buffer-size.patch
 Patch708: gcc46-alt-defaults-FORTIFY_SOURCE.patch
 Patch709: gcc46-alt-defaults-stack-protector.patch
@@ -186,7 +191,7 @@ Patch714: gcc44-alt-escalate-always-overflow.patch
 Patch715: gcc44-alt-arm-pr41684-workaround.patch
 Patch716: gcc46-alt-no-copy-dt-needed-entries.patch
 Patch717: gcc45-alt-autoconf-ver.patch
-Patch718: gcc46-alt-armhf.patch
+Patch718: gcc47-alt-libgo-weak.patch
 
 Patch800: libtool.m4-gcj.patch
 
@@ -256,6 +261,35 @@ Requires: %name = %version-%release
 
 %description -n libgcov%gcc_branch-devel
 This package contains GCC profiling support library.
+
+####################################################################
+# ITM libray
+%package -n libitm1
+Summary: The GNU Transactional Memory library
+Group: System/Libraries
+
+%description -n libitm1
+This package contains the GNU Transactional Memory library
+which is a GCC transactional memory support runtime library.
+
+%package -n libitm%gcc_branch-devel
+Summary: The GNU Transactional Memory support
+Group: Development/C
+Provides: libitm-devel = %version-%release
+Requires: libitm1 %REQ %version-%release
+
+%description -n libitm%gcc_branch-devel
+This package contains headers and support files for the
+GNU Transactional Memory library.
+
+%package -n libitm%gcc_branch-devel-static
+Summary: The GNU Transactional Memory static library
+Group: Development/C
+Provides: libitm-devel-static = %version-%release
+Requires: libitm%gcc_branch-devel = %version-%release
+
+%description -n libitm%gcc_branch-devel-static
+This package contains GNU Transactional Memory static libraries.
 
 ####################################################################
 # GCC plugin
@@ -488,14 +522,14 @@ in order to explicitly use the GNU C++ compiler version %version.
 ####################################################################
 # Objective-C Libraries
 
-%package -n libobjc3
+%package -n libobjc4
 Summary: Objective-C runtime library
 Group: System/Libraries
 Provides: libobjc = %version
 Obsoletes: libobjc
 Requires: libgcc1 %REQ %version-%release
 
-%description -n libobjc3
+%description -n libobjc4
 This package contains Objective-C shared library which is needed to run
 Objective-C dynamically linked programs.
 
@@ -504,7 +538,7 @@ Summary: Header files and library for Objective-C development
 Group: Development/Other
 Provides: libobjc-devel = %version-%release
 PreReq: %alternatives_deps, gcc-common >= 1.4.7
-Requires: libobjc3 = %version-%release
+Requires: libobjc4 = %version-%release
 Requires: glibc-devel
 
 %description -n libobjc%gcc_branch-devel
@@ -880,10 +914,6 @@ version %version.
 echo %version >gcc/BASE-VER
 echo '%distribution %version-%release' >gcc/DEV-PHASE
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-
 # RH patches.
 %patch100 -p0
 %patch101 -p0
@@ -899,7 +929,8 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch110 -p0
 %endif
 %patch111 -p0
-#patch112 -p0
+%patch115 -p0
+%patch117 -p0
 
 # Debian patches.
 %patch301 -p2
@@ -910,18 +941,22 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch306 -p2
 %patch307 -p2
 %patch308 -p2
-#patch309 -p2
-%patch310 -p2
+%patch310 -p1
 %patch311 -p2
 %patch312 -p2
 %patch313 -p2
-%patch314 -p2
-#patch315 -p2
+%patch314 -p1
 %patch316 -p2
-%patch317 -p2
-%patch318 -p2
+%patch318 -p1
 %patch319 -p2
-#patch320 -p2
+%patch320 -p2
+%patch321 -p2
+%patch322 -p2
+%patch323 -p2
+%patch324 -p2
+
+# Linaro patches
+%patch400 -p1
 
 # SuSE patches.
 #patch501
@@ -935,7 +970,7 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch703 -p0
 %patch704 -p1
 %patch705 -p1
-%patch706 -p2
+%patch706 -p1
 %patch707 -p0
 %patch708 -p0
 %patch709 -p1
@@ -956,7 +991,7 @@ rm libjava/testsuite/libjava.lang/PR35020*
 rm -f gcc/testsuite/go.test/test/chan/goroutines.go
 
 %if_with java_bootstrap
-tar xjf %SOURCE2
+tar xf %SOURCE2
 %endif
 
 # Remove -I- gcc option.
@@ -1178,6 +1213,11 @@ mv gnat_ug_unx.pdf gnat_ug.pdf
 %endif #with_ada
 %endif #with_pdf
 
+%if_with ada
+# for testsuite
+(cd %buildtarget/gcc; ln -s ada/rts/libgnat-%gcc_branch.so .)
+%endif
+
 %if_with java_tar
 find libjava -name \*.h -type f | xargs grep -l '// DO NOT EDIT THIS FILE - it is machine generated' > libjava-classes.list
 find libjava -name \*.class -type f >> libjava-classes.list
@@ -1210,6 +1250,7 @@ CopyDocs()
 }
 
 CopyDocs gcc gcc
+CopyDocs libitm libitm
 CopyDocs libgomp libgomp
 CopyDocs libmudflap libmudflap
 
@@ -1312,7 +1353,8 @@ pushd %buildroot/%_lib
 	done
 popd
 
-# Relocate gomp and gfortran files.
+# Relocate itm, gomp and gfortran files.
+mv %buildroot%_libdir/libitm.spec %buildroot%gcc_target_libdir/
 mv %buildroot%_libdir/libgomp.spec %buildroot%gcc_target_libdir/
 mv %buildroot%_libdir/libgfortran.spec %buildroot%gcc_target_libdir/
 %endif
@@ -1386,6 +1428,7 @@ mkrel32 %gxx32idir %gxx64idir
 mkdir -p %buildroot%_sysconfdir/buildreqs/packages/substitute.d
 for n in \
     cpp gcc gcc-plugin-devel \
+    libitm-devel libitm-devel-static \
     libgomp-devel libgomp-devel-static \
     libmudflap-devel libmudflap-devel-static \
     %{?_with_cxx:gcc-c++ libstdc++-devel libstdc++-devel-static} \
@@ -1496,22 +1539,27 @@ EOF
 %gcc_target_libdir/include/float.h
 %gcc_target_libdir/include/iso646.h
 %gcc_target_libdir/include/limits.h
+%gcc_target_libdir/include/stdalign.h
 %gcc_target_libdir/include/stdarg.h
 %gcc_target_libdir/include/stdfix.h
 %gcc_target_libdir/include/stdbool.h
 %gcc_target_libdir/include/stddef.h
 %gcc_target_libdir/include/stdint.h
 %gcc_target_libdir/include/stdint-gcc.h
+%gcc_target_libdir/include/stdnoreturn.h
 %gcc_target_libdir/include/syslimits.h
 %gcc_target_libdir/include/unwind.h
 %gcc_target_libdir/include/varargs.h
+
 %if_gcc_arch arm
 %gcc_target_libdir/include/arm_neon.h
 %gcc_target_libdir/include/mmintrin.h
+%gcc_target_libdir/include/unwind-arm-common.h
 %endif
 %if_gcc_arch armh
 %gcc_target_libdir/include/arm_neon.h
 %gcc_target_libdir/include/mmintrin.h
+%gcc_target_libdir/include/unwind-arm-common.h
 %endif
 %ifndef _cross_platform
 %ifarch %ix86 x86_64
@@ -1542,25 +1590,39 @@ EOF
 %endif
 %endif
 %dir %gcc_target_libexecdir
+%dir %gcc_target_libexecdir/plugin
 %gcc_target_libexecdir/collect2
 %gcc_target_libexecdir/lto-wrapper
 %gcc_target_libexecdir/lto1
 %gcc_target_libexecdir/liblto_plugin.so*
+%gcc_target_libexecdir/plugin/gengtype
 
 %if_disabled compat
 %files -n libgcc1
 /%_lib/libgcc_s.so.*
+
+%files -n libitm1
+%_libdir/libitm.so.*
+
+%files -n libitm%gcc_branch-devel
+%config %_sysconfdir/buildreqs/packages/substitute.d/libitm%gcc_branch-devel
+%dir %gcc_target_libdir
+%gcc_target_libdir/libitm.so
+%gcc_target_libdir/libitm.spec
+%dir %gcc_doc_dir
+%gcc_doc_dir/libitm
+%_infodir/libitm.info*
+
+%files -n libitm%gcc_branch-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/libitm%gcc_branch-devel-static
+%dir %gcc_target_libdir
+%gcc_target_libdir/libitm.a
 
 %files -n libgomp1
 %_libdir/libgomp.so.*
 
 %files -n libmudflap0
 %_libdir/libmudflap*.so.*
-
-%ifarch %ix86 x86_64 ia64
-%files -n libquadmath0
-%_libdir/libquadmath.so.0*
-%endif
 %endif #compat
 
 %ifndef _cross_platform
@@ -1602,6 +1664,9 @@ EOF
 %gcc_target_libdir/libmudflap*.a
 
 %ifarch %ix86 x86_64 ia64
+%files -n libquadmath0
+%_libdir/libquadmath.so.0*
+
 %files -n libquadmath%gcc_branch-devel
 %dir %gcc_target_libdir
 %dir %gcc_target_libdir/include
@@ -1671,8 +1736,10 @@ EOF
 %endif #with_cxx
 
 %if_with objc
-%files -n libobjc3
+%if_disabled compat
+%files -n libobjc4
 %_libdir/libobjc*.so.*
+%endif # compat
 
 %files -n libobjc%gcc_branch-devel
 %config %_sysconfdir/buildreqs/packages/substitute.d/libobjc%gcc_branch-devel
@@ -1737,6 +1804,7 @@ EOF
 %dir %gcc_target_libdir
 %gcc_target_libdir/libgfortran.spec
 %gcc_target_libdir/libgfortranbegin.a
+%gcc_target_libdir/libcaf_single.a
 %dir %gcc_target_libexecdir
 %gcc_target_libexecdir/f951
 %endif #with_fortran
@@ -1885,7 +1953,7 @@ EOF
 %dir %gcc_target_libdir
 %gcc_target_libdir/libgo.so
 %gcc_target_libdir/libgobegin.a
-%_libdir/go/%version
+%_libdir/go/%gcc_branch
 
 %files -n libgo%gcc_branch-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/libgo%gcc_branch-devel-static
@@ -1916,8 +1984,8 @@ EOF
 %endif # _cross_platform
 
 %changelog
-* Mon Sep 24 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6.3-alt8
-- rebuilt to coexist with gcc4.7
+* Mon Sep 24 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.7.2-alt1
+- 4.7.2
 
 * Mon Aug 27 2012 Dmitry V. Levin <ldv@altlinux.org> 4.6.3-alt7
 - Backported upstream changes to fix build with glibc-2.16.

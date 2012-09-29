@@ -11,7 +11,7 @@
 
 Name: jdkgcj
 Version: 0.5.9
-Release: alt2
+Release: alt3
 
 Summary: A free Java SDK
 License: GPL
@@ -356,6 +356,9 @@ subst s,%_bindir/gcj-dbtool,%_bindir/%_target_platform-gcj-dbtool-%__gcc_version
 %_jvmjardir/jre-%{javaver}-%{origin}
 
 %changelog
+* Fri Sep 28 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.9-alt3
+- rebuilt with gcc-4.7
+
 * Wed May 16 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.5.9-alt2
 - rebuilt with gcc-4.6
 
