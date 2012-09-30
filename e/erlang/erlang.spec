@@ -52,10 +52,10 @@
 %define Name Erlang
 %define ver R15B
 Name: erlang
-%define subver 1
+%define subver 2
 Version: %ver.%subver
-%define plevel d
-Release: alt7
+%define plevel a
+Release: alt1
 Summary: A programming language developed by Ericsson
 License: %epl
 Group: Development/Erlang
@@ -64,8 +64,7 @@ Url: http://www.%name.org
 Source: otp_src_%ver.%subver.tar
 
 Patch0: otp-%ver-%subver%plevel-beam_lib.patch
-Patch1: otp-%ver-%subver%plevel-ssl_crash_on_no_certificate.patch
-Patch2: otp-%ver-%subver%plevel-alt-arm.patch
+Patch1: otp-%ver-%subver%plevel-alt-arm.patch
 
 
 Requires: %name-otp-modules = %version-%release
@@ -595,8 +594,7 @@ This package contains documentation for %Name/OTP in PDF format.
 %setup -n otp_src_%ver.%subver
 chmod -R u+w ./
 %patch0 -p1 -b .beam_lib
-%patch1 -p1 -b .ssl_crash_on_no_certificate
-%patch2 -p1 -b .alt-arm
+%patch1 -p1 -b .alt-arm
 
 
 %if_with ssl
@@ -1284,6 +1282,9 @@ symlinks -scdr %buildroot
 
 
 %changelog
+* Sun Sep 30 2012 Sergey Shilov <hsv@altlinux.org> R15B.2-alt1
+- R15B01 upstream release
+
 * Mon Aug 06 2012 Sergey Shilov <hsv@altlinux.org> R15B.1-alt7
 - fix ( thanks for the patch led@ )  strip of chunk Attr (ALT #27603)
 
