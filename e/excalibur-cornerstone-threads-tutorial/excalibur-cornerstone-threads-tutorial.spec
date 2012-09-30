@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:		excalibur-cornerstone-threads-tutorial
 Version:	2.1
-Release:	alt5_2jpp5
+Release:	alt6_2jpp5
 Epoch:		0
 Summary:	Cornerstone Threads Tutorial
 License:	Apache Software License 2.0
@@ -51,7 +51,12 @@ Source5:        excalibur-cornerstone-threads-project-common.xml
 Source6:        excalibur-buildsystem.tar.gz
 Source7:        excalibur-cornerstone-project-common.xml
 Patch0:         excalibur-cornerstone-threads-tutorial-2.1-project_xml.patch
-BuildRequires: maven1-plugins >= 0:1.1
+BuildRequires: maven1
+BuildRequires: maven1-plugins-base
+BuildRequires: maven1-plugin-test
+BuildRequires: maven1-plugin-xdoc
+BuildRequires: maven1-plugin-license
+#BuildRequires: maven1-plugin-
 BuildRequires: junit
 BuildRequires: jpackage-utils >= 0:1.6
 BuildRequires: saxon
@@ -144,24 +149,13 @@ $RPM_BUILD_ROOT%{_javadir}/%{grname}/%{usname}-%{version}.jar
 # create unversioned symlinks
 (cd $RPM_BUILD_ROOT%{_javadir}/%{grname} && for jar in *-%{version}*; do ln -sf ${jar} ${jar/-%{version}/}; done)
 
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/docs/apidocs/* \
-	$RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+	$RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 cp LICENSE.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-
-
-%post javadoc
-rm -f %{_javadocdir}/%{name}
-ln -s %{name}-%{version} %{_javadocdir}/%{name}
-
-%postun javadoc
-if [ "$1" = "0" ]; then
-  rm -f %{_javadocdir}/%{name}
-fi
 
 
 %files 
@@ -171,10 +165,12 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
-%ghost %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
 
 %changelog
+* Sun Sep 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt6_2jpp5
+- explicit maven1 plugin deps
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1-alt5_2jpp5
 - build with saxon6-scripts
 
