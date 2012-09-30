@@ -1,17 +1,16 @@
 Name: perl-Plack
-Version: 0.9989
+Version: 1.0004
 Release: alt1
+
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
-
-Group: Development/Perl
 License: Perl
-Url: http://search.cpan.org/~miyagawa/Plack/
+Group: Development/Perl
 
-BuildArch: noarch
+Url: %CPAN Plack
 Source: %name-%version.tar
-BuildRequires: perl-unicore perl-devel perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-File-ShareDir perl-parent perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI perl-libapreq apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose perl-Net-FastCGI perl-Module-Refresh perl-Module-Install perl-podlators
+
+BuildRequires: perl-unicore perl-devel perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-File-ShareDir perl-parent perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI perl-libapreq apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose perl-Net-FastCGI perl-Module-Refresh perl-Module-Install perl-podlators perl-Module-Install-ReadmeFromPod perl-Module-Install-Repository
+BuildArch: noarch
 
 %description
 Plack is a set of tools for using the PSGI stack. It contains middleware
@@ -47,6 +46,9 @@ FastCGI daemon or a .fcgi script.
 
 %prep
 %setup -q
+# don't need this for build
+sed -i "/authority/d" Makefile.PL
+sed -i "/author_tests/d" Makefile.PL
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -64,27 +66,24 @@ FastCGI daemon or a .fcgi script.
 %perl_vendor_privlib/Plack*
 %doc Changes README 
 %exclude %perl_vendor_privlib/Plack/Handler/Apache1.pm
-%exclude %perl_vendor_privlib/Plack/Server/Apache1.pm
 %exclude %perl_vendor_privlib/Plack/Handler/Apache2.pm
 %exclude %perl_vendor_privlib/Plack/Handler/Apache2/Registry.pm
-%exclude %perl_vendor_privlib/Plack/Server/Apache2.pm
-%exclude %perl_vendor_privlib/Plack/Server/FCGI.pm
 %exclude %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %files Apache1
 %perl_vendor_privlib/Plack/Handler/Apache1.pm
-%perl_vendor_privlib/Plack/Server/Apache1.pm
 
 %files Apache2
 %perl_vendor_privlib/Plack/Handler/Apache2.pm
 %perl_vendor_privlib/Plack/Handler/Apache2/Registry.pm
-%perl_vendor_privlib/Plack/Server/Apache2.pm
 
 %files FCGI
-%perl_vendor_privlib/Plack/Server/FCGI.pm
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Sun Sep 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0004-alt1
+- 0.9989 -> 1.0004
+
 * Sat Jul 07 2012 Eugene Prokopiev <enp@altlinux.ru> 0.9989-alt1
 - New version 0.9989
 
@@ -92,7 +91,7 @@ FastCGI daemon or a .fcgi script.
 - New version 0.9985
 
 * Tue Jul 26 2011 Vladimir Lettiev <crux@altlinux.ru> 0.9982-alt1
-- New version 0.9982 
+- New version 0.9982
 
 * Sat Mar 05 2011 Vladimir Lettiev <crux@altlinux.ru> 0.9974-alt1
 - New version 0.9974
