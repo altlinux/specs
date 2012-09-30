@@ -1,5 +1,5 @@
 Name: perl-Plack-Middleware-Session
-Version: 0.14
+Version: 0.15
 Release: alt1
 Summary: Plack::Middleware::Session - Middleware for session management
 
@@ -9,7 +9,7 @@ Url: %CPAN Plack-Middleware-Session
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-Plack perl-Test-Exception perl-Test-Requires perl-Digest-SHA1 perl-Module-Install perl-Digest-HMAC
+BuildRequires: perl-devel perl-Plack perl-Test-Fatal perl-Test-Requires perl-Digest-SHA1 perl-Module-Install perl-Digest-HMAC
 
 %description
 %summary
@@ -29,5 +29,8 @@ BuildRequires: perl-devel perl-Plack perl-Test-Exception perl-Test-Requires perl
 %doc Changes README 
 
 %changelog
+* Sun Sep 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt1
+- 0.14 -> 0.15
+
 * Fri Jul 29 2011 Vladimir Lettiev <crux@altlinux.ru> 0.14-alt1
 - initial build
