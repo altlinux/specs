@@ -1,6 +1,6 @@
 %define dist autodie
 Name: perl-%dist
-Version: 2.11
+Version: 2.12
 Release: alt1
 
 Summary: Replace functions with ones that succeed or die with lexical scope
@@ -34,6 +34,9 @@ of 'Fatal'.
 %perl_vendor_privlib/autodie*
 
 %changelog
+* Sun Sep 30 2012 Vladimir Lettiev <crux@altlinux.ru> 2.12-alt1
+- 2.11 -> 2.12
+
 * Mon Apr 09 2012 Vladimir Lettiev <crux@altlinux.ru> 2.11-alt1
 - 2.10 -> 2.11
 
