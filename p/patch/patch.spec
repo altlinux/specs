@@ -1,6 +1,6 @@
 Name: patch
-Version: 2.7
-Release: alt4
+Version: 2.7.1
+Release: alt1
 
 Summary: The GNU patch command, for modifying/upgrading files
 License: GPLv3+
@@ -43,6 +43,9 @@ echo -n %version > .tarball-version
 %doc AUTHORS NEWS README
 
 %changelog
+* Sun Sep 30 2012 Dmitry V. Levin <ldv@altlinux.org> 2.7.1-alt1
+- Updated to v2.7.1-1-g47191c2.
+
 * Wed Sep 26 2012 Dmitry V. Levin <ldv@altlinux.org> 2.7-alt4
 - Updated to v2.7-24-ge8bfce6.
 
