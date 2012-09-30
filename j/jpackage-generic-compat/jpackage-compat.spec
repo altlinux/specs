@@ -1,9 +1,10 @@
 # deprecated:  ant-nodeps ant-trax
 # TODO: remove ant-antlr
-%define antdeps ant ant-junit ant-antlr
+%define antdeps ant ant-junit
+#ant-antlr
 
 Name: jpackage-generic-compat
-Version: 0.18
+Version: 0.19
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -165,6 +166,9 @@ ln -s /usr/share/xml/docbook/xsl-stylesheets $RPM_BUILD_ROOT/usr/share/sgml/docb
 %files -n jpackage-1.7-core
 
 %changelog
+* Sun Sep 30 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
+- dropped ant-antlr from greneric environment
+
 * Wed Mar 14 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
 - selected java7 as default
 
