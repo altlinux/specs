@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.16
-Release: alt3
+Release: alt4
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -645,6 +645,9 @@ fi
 %_datadir/i18n
 
 %changelog
+* Sun Sep 30 2012 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt4
+- Updated to 2.16 branch with backports from master and fedora.
+
 * Mon Sep 03 2012 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt3
 - nscd: fixed /etc/nscd.conf (closes: #27694).
 
