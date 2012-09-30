@@ -1,8 +1,8 @@
-%define kernel_base_version 3.3
+%define kernel_base_version 3.5
 %define kernel_source kernel-source-%kernel_base_version
 
 Name: glibc-kernheaders
-Version: %kernel_base_version.8
+Version: %kernel_base_version.4
 Release: alt1
 
 Summary: Linux kernel C header files for use by glibc and other userspace software
@@ -74,6 +74,9 @@ done
 %hdr_dir
 
 %changelog
+* Sun Sep 30 2012 Dmitry V. Levin <ldv@altlinux.org> 3.5.4-alt1
+- Updated to v3.5.4.
+
 * Fri Jun 08 2012 Dmitry V. Levin <ldv@altlinux.org> 3.3.8-alt1
 - Updated to v3.3.8.
 
