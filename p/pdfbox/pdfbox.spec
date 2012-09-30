@@ -6,13 +6,14 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           pdfbox
 Version:        1.7.0
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Java library for working with PDF documents
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://pdfbox.apache.org/
 Source0:        http://www.apache.org/dist/pdfbox/%{version}/%{name}-%{version}-src.zip
+Source1:	depmap
 #Don't download anything
 Patch0:         %{name}-nodownload.patch
 #Use sysytem bitream-vera-sans-fonts instead of bundled fonts
@@ -44,7 +45,7 @@ BuildRequires:  bouncycastle-mail
 BuildRequires:  fontconfig
 BuildRequires:  icu4j
 BuildRequires:  junit4
-BuildRequires:  lucene-demo >= 2.4.1
+BuildRequires:  lucene29-demo >= 2.4.1
 BuildRequires:  pcfi
 
 BuildArch:      noarch
@@ -56,7 +57,7 @@ Requires:       fontbox
 Requires:       icu4j
 Requires:       apache-commons-logging
 Requires:       jempbox
-Requires:       lucene-demo >= 2.4.1
+#Requires:       lucene29-demo >= 2.4.1
 
 Obsoletes:      %{name}-app <= 1.6.0-4
 Provides:       %{name}-app = %{version}-%{release}
@@ -129,7 +130,7 @@ specification. JempBox is a subproject of Apache PDFBox.
 Summary:        Apache PDFBox for Lucene
 Group:          Development/Java
 Requires:       pdfbox = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       lucene-demo >= 2.4.1
+Requires:       lucene29-demo >= 2.4.1
 
 %description lucene
 %{summary}.
@@ -155,7 +156,8 @@ rm -r pdfbox/src/main/resources/org/apache/pdfbox/resources/ttf
 
 
 %build
-mvn-rpmbuild -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dadobefiles.jar=%{_javadir}/pcfi.jar install javadoc:aggregate
+mvn-rpmbuild -Dmaven.local.depmap.file=%{SOURCE1} \
+	-Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dadobefiles.jar=%{_javadir}/pcfi.jar install javadoc:aggregate
 
 
 %install
@@ -225,6 +227,9 @@ cp -p parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-pdfbox-parent.pom
 
 
 %changelog
+* Sun Sep 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt2_1jpp7
+- fixed build with lucene3
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt1_1jpp7
 - new release
 
