@@ -37,7 +37,7 @@ BuildRequires: unzip
 Summary:        High-performance, full-featured text search engine
 Name:           lucene29
 Version:        2.9.4
-Release:        alt2_7jpp6
+Release:        alt3_7jpp6
 Epoch:          0
 License:        ASL 2.0
 URL:            http://lucene.apache.org/
@@ -172,15 +172,15 @@ for c in analyzers ant benchmark collation fast-vector-highlighter highlighter \
         $RPM_BUILD_ROOT%{_javadir}/%{name}-contrib/%{name}-${c}.jar
 
     install -m 0644 contrib/$c/pom.xml.template \
-               $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.lucene-contrib-lucene-$c.pom
-    %add_to_maven_depmap org.apache.lucene lucene-$c %{version} JPP/lucene-contrib lucene-$c
+               $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-contrib-%{name}-$c.pom
+    %add_to_maven_depmap org.apache.lucene lucene-$c %{version} JPP/%{name}-contrib %{name}-$c
 done
 
 # main poms
 for pom in contrib core demos parent; do
     install -m 0644 lucene-$pom-pom.xml.template \
-           $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-lucene-$pom.pom
-    %add_to_maven_depmap org.apache.lucene lucene-$pom %{version} JPP lucene-$pom
+           $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}-$pom.pom
+    %add_to_maven_depmap org.apache.lucene lucene-$pom %{version} JPP %{name}-$pom
 done
 
 # javadoc
@@ -223,6 +223,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 #%{_javadir}/lucene2-demos.jar
 
 %changelog
+* Sun Sep 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9.4-alt3_7jpp6
+- fixed depmap
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9.4-alt2_7jpp6
 - compat build
 
