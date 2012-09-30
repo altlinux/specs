@@ -1,5 +1,5 @@
 Name: perl-RRDTool-OO
-Version: 0.31
+Version: 0.32
 Release: alt1
 
 Summary: RRDTool::OO - Object-oriented interface to RRDTool
@@ -30,5 +30,8 @@ BuildArch: noarch
 %doc Changes README 
 
 %changelog
+* Sun Sep 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.32-alt1
+- 0.31 -> 0.32
+
 * Wed Nov 09 2011 Vladimir Lettiev <crux@altlinux.ru> 0.31-alt1
 - initial build
