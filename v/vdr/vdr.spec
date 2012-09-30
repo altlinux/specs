@@ -1,6 +1,6 @@
 Name: vdr
-Version: 1.7.30
-Release: alt2
+Version: 1.7.31
+Release: alt1
 
 Summary: Digital satellite receiver box with advanced features
 License: GPL
@@ -189,6 +189,7 @@ sed -e 's,^MANDIR.\+$,MANDIR = %_mandir,' \
     -e 's,^PLUGINLIBDIR.\+$,PLUGINLIBDIR = %plugindir,g' \
     -e 's,^VIDEODIR.\+$,VIDEODIR = %videodir,g' \
     -e 's,^CONFDIR.\+$,CONFDIR = %confdir,g' \
+    -e 's,^RESDIR.\+$,RESDIR = %_datadir/vdr,g' \
     -e 's,^.\+USEFHS.\+$,USEFHS=1,' \
     -e 's,^.\+VDR_USER.\+$,VDR_USER = vdr,' \
     < Make.config.template > Make.config
@@ -482,6 +483,9 @@ mkdir -p %buildroot%_runtimedir/vdr %buildroot%_cachedir/vdr
 %_libdir/xine/plugins/*/xineplug_inp_xvdr.so
 
 %changelog
+* Sun Sep 30 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.31-alt1
+- 1.7.31 released
+
 * Mon Sep 17 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.30-alt2
 - enigmang skin plugin added
 - softdevice plugin resurrected
