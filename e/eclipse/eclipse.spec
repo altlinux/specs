@@ -30,7 +30,7 @@ Epoch:  1
 Summary:        An open, extensible IDE
 Name:           eclipse
 Version:        %{eclipse_version}
-Release:        alt3_7jpp7
+Release:        alt4_7jpp7
 License:        EPL
 Group:          Editors
 URL:            http://www.eclipse.org/
@@ -714,6 +714,9 @@ touch %buildroot/etc/eclipse.ini
 %{_mavendepmapfragdir}/%{name}-equinox-osgi
 
 %changelog
+* Sat Sep 29 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt4_7jpp7
+- build with lucene3
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.2.0-alt3_7jpp7
 - fixed geronimo-*api dependencies
 

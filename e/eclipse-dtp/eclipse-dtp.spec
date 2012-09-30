@@ -1,4 +1,4 @@
-%def_disable lucene3
+%def_enable lucene3
 # todo: fix provides
 Provides: osgi(org.eclipse.datatools.sqltools.result) = 1.1.3
 # BEGIN SourceDeps(oneline):
@@ -31,7 +31,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:      eclipse-dtp
 Version:   1.10
-Release:   alt1_2jpp7
+Release:   alt2_2jpp7
 Summary:   Eclipse Data Tools Platform
 Group:     System/Libraries
 License:   EPL
@@ -216,6 +216,9 @@ popd
 %doc org.eclipse.datatools.build-%{tag}/features/org.eclipse.datatools.sdk-all.feature/rootfiles/*
 
 %changelog
+* Sat Sep 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2_2jpp7
+- build with lucene3
+
 * Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_2jpp7
 - new version
 
