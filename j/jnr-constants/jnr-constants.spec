@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jnr-constants
 Version:        0.7
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        Java Native Runtime constants 
 Group:          Development/Java
 License:        MIT
@@ -42,6 +42,9 @@ ln -s %{_javadir}/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/constantine.
 %{_javadir}/constantine.jar
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_5jpp7
+- new fc release
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_4jpp7
 - new version
 
