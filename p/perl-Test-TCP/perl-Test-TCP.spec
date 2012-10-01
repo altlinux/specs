@@ -1,5 +1,5 @@
 Name: perl-Test-TCP
-Version: 1.16
+Version: 1.17
 Release: alt1
 
 Summary: Test::TCP - testing TCP program
@@ -7,10 +7,11 @@ Group: Development/Perl
 License: Perl
 
 Url: %CPAN Test-TCP
+# Cloned from git://github.com/tokuhirom/test-tcp.git
 Source: %name-%version.tar
 
 BuildArch: noarch
-BuildRequires: perl-devel perl-Test-SharedFork
+BuildRequires: perl-devel perl-Test-SharedFork perl-Module-Install
 
 %description
 Test::TCP is test utilities for TCP/IP program.
@@ -29,6 +30,10 @@ Test::TCP is test utilities for TCP/IP program.
 %doc Changes README 
 
 %changelog
+* Mon Oct 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.17-alt1
+- 1.16 -> 1.17
+- sources cloned from upstream git
+
 * Fri Jul 06 2012 Vladimir Lettiev <crux@altlinux.ru> 1.16-alt1
 - New version 1.16
 
