@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-archiver
 Version:        2.5
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Epoch:          0
 Summary:        Maven Archiver
 License:        ASL 2.0
@@ -125,6 +125,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_3jpp7
+- new fc release
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_2jpp7
 - complete build
 
