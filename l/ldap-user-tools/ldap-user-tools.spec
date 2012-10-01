@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: ldap-user-tools
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: tools to work with ldap users
@@ -42,6 +42,10 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Mon Oct 01 2012 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
+- Fix user creation in Alterator
+- Correct creation on missed first_name
+
 * Thu Sep 27 2012 Andrey Cherepanov <cas@altlinux.org> 0.7.1-alt1
 - Partial support useradd(8) syntax in ldap-useradd (ALT #27271)
 - ldap-useradd create user homedir
