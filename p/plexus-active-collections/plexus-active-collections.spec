@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-active-collections
 Version:        1.0
-Release:        alt1_0.7.beta2jpp7
+Release:        alt1_0.8.beta2jpp7
 Summary:        Plexus Container-Backed Active Collections
 
 Group:          Development/Java
@@ -94,6 +94,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.8.beta2jpp7
+- new fc release
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.7.beta2jpp7
 - complete build
 
