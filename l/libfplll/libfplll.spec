@@ -1,17 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc-c++ libgmp-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libfplll
-Version:        3.0.12
-Release:        alt2_5.2
-Summary:        LLL-reduces euclidian lattices
+Version:        4.0.1
+Release:        alt1_1
+Summary:        LLL-reduces euclidean lattices
 Group:          System/Libraries
 License:        LGPLv2+
-URL:            http://perso.ens-lyon.fr/damien.stehle/english.html#software
-Source0:        http://perso.ens-lyon.fr/damien.stehle/downloads/libfplll-%{version}.tar.gz
+URL:            http://perso.ens-lyon.fr/damien.stehle/fplll/
+Source0:        http://perso.ens-lyon.fr/damien.stehle/fplll/%{name}-%{version}.tar.gz
 
-BuildRequires:  libgmp-devel libgmp_cxx-devel
 BuildRequires:  libmpfr-devel
 Source44: import.info
 
@@ -25,17 +24,28 @@ estimated best sequence of variants in order to provide a guaranteed
 output as fast as possible. In the case of the wrapper, the
 succession of variants is oblivious to the user. It also includes
 a rigorous floating-point implementation of the Kannan-Fincke-Pohst
-algorithm that finds a shortest non-zero lattice vector.
+algorithm that finds a shortest non-zero lattice vector, and the BKZ
+reduction algorithm.
 
 
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libfplll = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
+
+
+%package        tools
+Summary:        Command line tools that use %{name}
+Group:          Engineering
+Requires:       %{name}%{?_isa} = %{version}-%{release}
+
+%description    tools
+The %{name}-tools package contains command-line tools that expose
+the functionality of %{name}.
 
 
 %prep
@@ -43,39 +53,45 @@ developing applications that use %{name}.
 
 
 %build
-%configure --disable-static
+%configure --disable-static LDFLAGS="-Wl,--as-needed $RPM_LD_FLAGS"
+
+# Eliminate hardcoded rpaths, and workaround libtool moving all -Wl options
+# after the libraries to be linked
+sed -e 's|^hardcode_libdir_flag_spec=.*|hardcode_libdir_flag_spec=""|g' \
+    -e 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' \
+    -e 's|-nostdlib|-Wl,--as-needed &|' \
+    -i libtool
+
 make %{?_smp_mflags}
 
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
-mv $RPM_BUILD_ROOT%{_bindir}/generate \
-  $RPM_BUILD_ROOT%{_bindir}/fplll_generate
-mkdir -p $RPM_BUILD_ROOT%{_includedir}/fplll
-mv $RPM_BUILD_ROOT%{_includedir}/*.{h,cpp} \
-  $RPM_BUILD_ROOT%{_includedir}/fplll
+rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
 
 %check
+export LD_LIBRARY_PATH=$PWD/src/.libs
 make check
 
 
 %files
-%doc COPYING README NEWS
+%doc AUTHORS COPYING NEWS README.html
 %{_libdir}/*.so.*
-%{_bindir}/fplll
-%{_bindir}/fplll_micro
-%{_bindir}/fplll_verbose
-%{_bindir}/fplll_generate
-%{_bindir}/llldiff
 
 %files devel
-%{_includedir}/fplll
+%{_includedir}/fplll.h
+%{_includedir}/fplll/
 %{_libdir}/*.so
+
+%files tools
+%{_bindir}/*
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.12-alt2_5.2
 - update to new release by fcimport
 
