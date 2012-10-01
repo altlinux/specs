@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:           jfreechart
 Version:        1.0.14
-Release:        alt3_2jpp7
+Release:        alt3_3jpp7
 Summary:        Java chart library
 
 Group:          Development/Java
@@ -16,6 +16,8 @@ Source0:        http://download.sourceforge.net/sourceforge/jfreechart/%{name}-%
 Requires:       servlet jpackage-utils
 Requires:       jcommon >= 1.0.17
 BuildRequires:  %{requires} ant eclipse-swt servlet
+# Required for converting jars to OSGi bundles
+BuildRequires:  aqute-bnd
 
 BuildArch:      noarch
 Source44: import.info
@@ -58,13 +60,14 @@ find \( -name '*.jar' -o -name '*.class' \) -exec rm -f '{}' \;
 
 %build
 CLASSPATH=$(build-classpath jcommon servlet) \
-        ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f ant/build.xml \
+        ant -f ant/build.xml \
         compile javadoc
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f ant/build-swt.xml \
-        -Dswt.jar=%{_libdir}/java/swt.jar \
+ant -f ant/build-swt.xml \
+        -Dswt.jar=$(build-classpath swt) \
         -Djcommon.jar=$(build-classpath jcommon) \
         -Djfreechart.jar=lib/jfreechart-%{version}.jar
-
+# Convert to OSGi bundle
+java -jar $(build-classpath aqute-bnd) wrap lib/%{name}-%{version}.jar
 
 %install
 # Directory structure
@@ -73,7 +76,7 @@ install -d $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -d $RPM_BUILD_ROOT%{_mavenpomdir}
 
 # JARs and JavaDoc
-install -m 644 lib/jfreechart-%{version}.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}.jar
+install -m 644 lib/jfreechart-%{version}.bar  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}.jar
 install -m 644 lib/swtgraphics2d.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/swtgraphics2d.jar
 install -m 644 lib/jfreechart-%{version}-swt.jar  $RPM_BUILD_ROOT%{_javadir}/%{name}/%{name}-swt.jar
 cp -rp javadoc/. $RPM_BUILD_ROOT%{_javadocdir}/%{name}
@@ -101,6 +104,9 @@ ln -s %{name}/%{name}.jar %buildroot%{_javadir}/%{name}.jar
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt3_3jpp7
+- new fc release
+
 * Sat Sep 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.14-alt3_2jpp7
 - added jpp compat symlink
 
