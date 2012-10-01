@@ -4,7 +4,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-plugin-testing
 Version:        2.0
-Release:        alt1_3.alpha1jpp7
+Release:        alt1_4.alpha1jpp7
 Summary:        Maven Plugin Testing
 
 Group:          Development/Java
@@ -144,6 +144,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavendepmapfragdir}/%{name}-maven-test-tools
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_4.alpha1jpp7
+- new fc release
+
 * Wed Apr 04 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_3.alpha1jpp7
 - complete build
 
