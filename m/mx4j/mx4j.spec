@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           mx4j
 Version:        3.0.1
-Release:        alt1_15jpp7
+Release:        alt2_15jpp7
 Epoch:          1
 Summary:        Open source implementation of JMX Java API
 License:        ASL 1.1
@@ -64,7 +64,7 @@ BuildRequires:  apache-commons-discovery
 BuildRequires:  docbook-dtds >= 0:1.0
 BuildRequires:  docbook-style-xsl >= 0:1.61
 BuildRequires:  xml-commons-resolver
-BuildRequires:  xml-commons
+BuildRequires:  xml-commons-apis
 BuildRequires:  xerces-j2
 BuildRequires:  dos2unix
 BuildArch:      noarch
@@ -77,7 +77,7 @@ Requires:       xml-commons-apis
 Requires:       bcel >= 0:5.0
 Requires:       axis >= 0:1.1
 Requires:       xml-commons-resolver
-Requires:       xml-commons
+Requires:       xml-commons-apis
 Source44: import.info
 
 %description
@@ -180,6 +180,9 @@ rm -f %{_javadir}/%{name}.jar
 %doc dist/docs/*
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt2_15jpp7
+- fixed xml-commons dep
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.0.1-alt1_15jpp7
 - fc version
 
