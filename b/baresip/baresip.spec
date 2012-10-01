@@ -1,6 +1,6 @@
 Name: baresip
 Version: 0.4.2
-Release: alt1
+Release: alt2
 
 Summary: Baresip is a portable and modular SIP User-Agent with audio and video support
 
@@ -8,13 +8,15 @@ Url: http://www.creytiv.com/baresip.html
 License: BSD Revised
 Group: System/X11
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
 Source: http://www.creytiv.com/pub/baresip-%version.tar
 
-# Automatically added by buildreq on Mon Sep 17 2012
-# optimized out: glib2-devel libX11-devel libavcodec-devel libavutil-devel libxml2-devel pkg-config xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: gstreamer-devel libSDL-devel libXext-devel libalsa-devel libavdevice-devel libavformat-devel libcairo-devel libgsm-devel libmpg123-devel libportaudio2-devel libre-devel librem-devel libsndfile-devel libspeex-devel libssl-devel libswscale-devel libuuid-devel libv4l-devel libx264-devel
+BuildRequires: libSDL-devel libXext-devel libalsa-devel
+BuildRequires: libavdevice-devel libavformat-devel libswscale-devel
+BuildRequires: libcelt-devel libgsm-devel libmpg123-devel
+BuildRequires: libre-devel librem-devel
+BuildRequires: libsndfile-devel libspandsp-devel libspeex-devel
+BuildRequires: libssl-devel libuuid-devel libv4l-devel
+BuildRequires: libvpx-devel libx264-devel
 
 %description
 baresip is a bare-bones SIP user agent. It supports SIP, SDP, RTP/RTCP,
@@ -31,7 +33,7 @@ and srtp media encoding.
 %setup
 
 %build
-%make_build RELEASE=1 MOD_AUTODETECT=1
+%make_build RELEASE=1 MOD_AUTODETECT=1 PREFIX=%_prefix
 
 %install
 %makeinstall_std RELEASE=1 MOD_AUTODETECT=1 LIBDIR=%_libdir
@@ -39,11 +41,13 @@ and srtp media encoding.
 %files
 %doc docs/*
 %_bindir/%name
-%_libdir/%name/
-%_datadir/%name/
-#%_desktopdir/%name.desktop
-#%_man1dir/*
+%_libdir/%name
+%_datadir/%name
 
 %changelog
+* Mon Oct 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4.2-alt2
+- revisit buildreqs and modules
+- fixed module path
+
 * Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 0.4.2-alt1
 - initial build for ALT Linux Sisyphus
