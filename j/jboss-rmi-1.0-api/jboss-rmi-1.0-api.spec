@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name: jboss-rmi-1.0-api
 Version: 1.0.4
-Release: alt1_3jpp7
+Release: alt1_5jpp7
 Summary: Java Remote Method Invocation 1.0 API
 Group: Development/Java
 License: GPLv2 with exceptions
@@ -18,25 +18,24 @@ URL: http://www.jboss.org
 # cd jboss-rmi-api_spec/ && git archive --format=tar --prefix=jboss-rmi-1.0-api-1.0.4.Final/ jboss-rmi-api_1.0_spec-1.0.4.Final | xz > jboss-rmi-1.0-api-1.0.4.Final.tar.xz
 Source0: %{name}-%{namedversion}.tar.xz
 
-# Remove the implementation, as it needs jacorb and we want the interface only
-# at the moment (the sources are removed as well before building):
-Patch0: %{name}-remove-implementation.patch
-
 # Fix the address of the FSF in the license file:
-Patch1: %{name}-fix-fsf-address.patch
+Patch0: %{name}-fix-fsf-address.patch
 
 BuildRequires: jboss-parent
 BuildRequires: jpackage-utils
 BuildRequires: maven
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-enforcer-plugin
+BuildRequires: maven-dependency-plugin
 BuildRequires: maven-install-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
+BuildRequires: jacorb >= 2.3.1-3.20120215git
 
 Requires: jpackage-utils
+Requires: jacorb >= 2.3.1-3.20120215git
 
-BuildArch:noarch
+BuildArch: noarch
 Source44: import.info
 
 
@@ -62,12 +61,6 @@ This package contains the API documentation for %{name}.
 
 # Apply the patches:
 %patch0 -p1
-%patch1 -p1
-
-# Remove all the implementation classes and resources as we want the interfaces
-# only at the moment:
-rm -rf src/main/resources/org
-rm -rf src/main/java/org
 
 
 %build
@@ -105,6 +98,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_5jpp7
+- new fc release
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.4-alt1_3jpp7
 - new version
 
