@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{genericname}-java
 Version:        1.45.0
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Summary:        Client libraries to write Google Data API client applications in Java
 Group:          Development/Java
 License:        ASL 2.0
@@ -118,6 +118,9 @@ install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{genericname}-%{g
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.45.0-alt1_4jpp7
+- new fc release
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.45.0-alt1_3jpp7
 - new version
 
