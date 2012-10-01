@@ -1,6 +1,6 @@
 Name: iptables
 Version: 1.4.15
-Release: alt1
+Release: alt2
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
 License: GPLv2+
@@ -214,6 +214,9 @@ fi
 %endif
 
 %changelog
+* Mon Oct 01 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.15-alt2
+- Updated to v1.4.15-1-ga624e0a.
+
 * Tue Jul 31 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.15-alt1
 - Updated to v1.4.15.
 - Fixed typos in summary and descriptions (closes: #27383).
