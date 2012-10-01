@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:    jnr-netdb
 Version: 1.0.1
-Release: alt1_6jpp7
+Release: alt1_7jpp7
 Summary: Network services database access for java
 
 Group:   System/Libraries
@@ -77,6 +77,9 @@ ant test
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_7jpp7
+- new fc release
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_6jpp7
 - new version
 
