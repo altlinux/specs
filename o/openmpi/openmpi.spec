@@ -40,7 +40,7 @@ Name: openmpi
 #pkgname
 
 Version: 1.6.2
-Release: alt1
+Release: alt2
 
 %define mpi_prefix %_libdir/%name
 %define mpi_sysconfdir %_sysconfdir/%name
@@ -328,6 +328,9 @@ EOF
 %endif
 
 %changelog
+* Mon Oct 01 2012 Denis Pynkin <dans@altlinux.org> 1.6.2-alt2
+- Rebuild with gcc 4.7
+
 * Thu Sep 27 2012 Denis Pynkin <dans@altlinux.org> 1.6.2-alt1
 - New version
 
