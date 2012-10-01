@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-parent
 Version:        20
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        Apache Maven parent POM
 
 Group:          Development/Java
@@ -45,6 +45,9 @@ install -pm 644 pom.xml \
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 20-alt1_3jpp7
+- new fc release
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 20-alt1_2jpp7
 - complete build
 
