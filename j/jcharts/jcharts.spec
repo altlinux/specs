@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		jcharts
 Version:	0.7.5
-Release:	alt3_7jpp7
+Release:	alt3_9jpp7
 Summary:	A java based charts library
 
 Group:		Publishing
@@ -19,10 +19,10 @@ BuildArch:	noarch
 BuildRequires:	jpackage-utils
 BuildRequires:	ant
 BuildRequires:	batik
-BuildRequires:	servlet25
+BuildRequires:	servlet3
 Requires:	batik
 Requires:	jpackage-utils
-Requires:	servlet25
+Requires:	servlet3
 Source44: import.info
 
 
@@ -49,7 +49,7 @@ find -name '*.jar' -exec rm -f '{}' \;
 sed -i 's/\r//' docs/jCharts_license.txt
 
 %build
-export CLASSPATH=$(build-classpath batik/batik-svggen batik/batik-dom batik/batik-awt-util tomcat6-servlet-2.5-api)
+export CLASSPATH=$(build-classpath batik/batik-svggen batik/batik-dom batik/batik-awt-util tomcat-servlet-3.0-api)
 
 cd build
 ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 jar javadocs -Dant.build.javac.source=1.4
@@ -78,6 +78,9 @@ ln -s %{_javadocdir}/%{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.5-alt3_9jpp7
+- new fc release
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7.5-alt3_7jpp7
 - applied repocop patches
 
