@@ -1,4 +1,3 @@
-BuildRequires: icu4j
 Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -7,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:		%{parent}-%{subname}
 Version:	0.8
-Release:	alt1_5jpp7
+Release:	alt1_7jpp7
 BuildArch:	noarch
 Summary:	The Jena IRI Library
 
@@ -26,8 +25,10 @@ BuildRequires:	maven-shared
 BuildRequires:	maven-shared-file-management
 BuildRequires:	maven-assembly-plugin
 BuildRequires:	maven-surefire-provider-junit4
+BuildRequires:	icu4j
 
 Requires:	jpackage-utils
+Requires:	icu4j
 Source44: import.info
 
 %description
@@ -83,6 +84,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_7jpp7
+- new fc release
+
 * Sat Mar 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_5jpp7
 - new version
 
