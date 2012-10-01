@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:           dcm4che-test
 Version:        2.6
-Release:        alt1_0.3.20110530svn15516jpp7
+Release:        alt2_0.3.20110530svn15516jpp7
 Summary:        Test images for dcm4che2
 
 License:        MPLv1.1 or GPLv2 or LGPLv2
@@ -83,6 +83,9 @@ find $RPM_BUILD_ROOT%{_javadocdir}/%{name} -name "javadoc.sh" -exec chmod a-x '{
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.6-alt2_0.3.20110530svn15516jpp7
+- new fc release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.6-alt1_0.3.20110530svn15516jpp7
 - new version
 
