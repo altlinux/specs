@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-release
 Version:        2.2.1
-Release:        alt2_2jpp7
+Release:        alt2_4jpp7
 Summary:        Release a project updating the POM and tagging in the SCM
 
 Group:          Development/Java
@@ -20,7 +20,6 @@ BuildArch:      noarch
 BuildRequires:  jpackage-utils
 BuildRequires:  maven
 BuildRequires:  maven-scm
-BuildRequires:  maven-scm-test
 BuildRequires:  maven-antrun-plugin
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
@@ -95,6 +94,7 @@ EOT
 
 
 %build
+# Skip tests because we don't have dependencies (jmock)
 mvn-rpmbuild -e -Dmaven.test.skip=true install javadoc:aggregate
 
 
@@ -140,6 +140,9 @@ install -pm 644 %{name}-plugin/pom.xml  \
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt2_4jpp7
+- new fc release
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.2.1-alt2_2jpp7
 - applied repocop patches
 
