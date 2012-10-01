@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-repository-plugin
 Version:        2.3.1
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Plugin to create bundles of artifacts for manual uploaded to repository
 
 Group:          Development/Java
@@ -93,6 +93,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_6jpp7
+- new fc release
+
 * Sat Mar 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.1-alt1_5jpp7
 - new version
 
