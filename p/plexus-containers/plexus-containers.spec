@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.5.5
-Release:        alt2_5jpp7
+Release:        alt2_6jpp7
 Summary:        Containers for Plexus
 License:        ASL 2.0 and Plexus
 Group:          Development/Java
@@ -219,6 +219,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/*
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt2_6jpp7
+- new fc release
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.5-alt2_5jpp7
 - applied repocop patches
 
