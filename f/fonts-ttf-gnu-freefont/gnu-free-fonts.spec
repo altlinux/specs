@@ -1,20 +1,19 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: python
+BuildRequires: python-devel
 # END SourceDeps(oneline)
 %define oldname gnu-free-fonts
 %global fontname gnu-free
 %global fontconf 67-%{fontname}
 
 Name:      fonts-ttf-gnu-freefont
-Version:   20100919
-Release:   alt3_6
+Version:   20120503
+Release:   alt1_1
 Summary:   Free UCS Outline Fonts
 Group:     System/Fonts/True type
 # Standard font exception
 License:   GPLv3+ with special font exception
 URL:       http://www.gnu.org/software/freefont/
-Source0:   http://savannah.nongnu.org/download/freefont/freefont-sfd-%{version}.tar.gz
-Source1:   gnu-free-fonts-buildscript
+Source0:   http://savannah.nongnu.org/download/freefont/freefont-src-%{version}.tar.gz
 Source2:   %{fontconf}-mono.conf
 Source3:   %{fontconf}-sans.conf
 Source4:   %{fontconf}-serif.conf
@@ -42,6 +41,7 @@ Source44: import.info
 %package common
 Group: System/Fonts/True type
 Summary:  Common files for freefont (documentationa..)
+Obsoletes: gnu-free-fonts-compat < 20120503
 
 %description common
 %common_desc
@@ -82,31 +82,16 @@ Requires: %{name}-common = %{version}-%{release}
 This package contains the GNU FreeFont serif font.
 
 
-%package compat
-Group: System/Fonts/True type
-Summary: GNU freefont compatibility package
-Obsoletes: freefont < 20090104-4
-Requires:  fonts-ttf-gnu-freefont-mono = %{version}-%{release}
-Requires:  fonts-ttf-gnu-freefont-sans = %{version}-%{release}
-Requires:  fonts-ttf-gnu-freefont-serif = %{version}-%{release}
-
-%description compat
-This package only exists to help transition pre 20090104-4 freefont users to \
-the new package split. It will be removed after one distribution release \
-cycle, please do not reference it or depend on it in any way.\
-\
-It can be safely uninstalled.
-
-
 %prep
 %setup -qn freefont-%{version}
 
 
 %build
-fontforge -lang=ff -script %{SOURCE1} *.sfd
+make
 
 %install
 
+pushd sfd
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -p -m 644 *.ttf  %{buildroot}%{_fontdir}
 
@@ -129,8 +114,6 @@ for fconf in %{fontconf}-mono.conf \
   ln -s %{_fontconfig_templatedir}/$fconf \
         %{buildroot}%{_fontconfig_confdir}/$fconf
 done
-
-rm %{buildroot}%{_datadir}/fonts/gnu-free/Untitled1.ttf
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -180,9 +163,12 @@ fi
 %{_fontbasedir}/*/%{_fontstem}/FreeSerif*.ttf
 
 %files common
-%doc AUTHORS ChangeLog CREDITS COPYING README Untitled1.ttf
+%doc AUTHORS ChangeLog CREDITS COPYING README
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20100919-alt3_6
 - update to new release by fcimport
 
