@@ -5,13 +5,13 @@ BuildRequires: jpackage-compat
 
 Name:    c3p0
 Version: 0.9.2
-Release: alt2_0.7.pre1jpp7
+Release: alt2_0.9.pre1jpp7
 Summary: JDBC DataSources/Resource Pools
 License: LGPLv2
 URL:     http://sourceforge.net/projects/c3p0
 Group:   Development/Java
 
-BuildRequires: java-javadoc 
+BuildRequires: java-javadoc >= 1:1.6.0
 BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: mchange-commons
@@ -63,7 +63,7 @@ find -name '*.jar' -exec rm -f '{}' \;
 sed -i.bak -e "s/<attribute\ name=\"Class-Path\"\ value=\"\${mchange-commons\.jar\.file\.name}\"\ \/>//" build.xml
 
 %build
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
+ant \
   -Dbuild.sysclasspath=first \
   -Dmchange-commons.jar.file.dir=/usr/share/java \
   -Dmchange-commons.jar.file.name=mchange-commons.jar \
@@ -71,7 +71,8 @@ ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
 
 %install
 # jar
-install -pD -T build/%{name}-%{version}-%{prerel}.jar \
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 build/%{name}-%{version}-%{prerel}.jar \
   %{buildroot}%{_javadir}/%{name}.jar
 
 # javadocs
@@ -79,7 +80,8 @@ install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr build/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 # pom
-install -pD -m 644 -T %{SOURCE1} \
+install -d -m 755 %{buildroot}%{_mavenpomdir}
+install -p -m 644 %{SOURCE1} \
   %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 
 %add_maven_depmap JPP-%{name}.pom %{name}.jar
@@ -98,6 +100,9 @@ install -pD -m 644 -T %{SOURCE1} \
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.2-alt2_0.9.pre1jpp7
+- new fc release
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.2-alt2_0.7.pre1jpp7
 - fc version
 
