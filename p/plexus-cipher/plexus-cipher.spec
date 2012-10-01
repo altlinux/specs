@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-cipher
 Version:        1.5
-Release:        alt1_7jpp7
+Release:        alt1_8jpp7
 Summary:        Plexus Cipher: encryption/decryption Component
 
 Group:          Development/Java
@@ -84,6 +84,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_8jpp7
+- new fc release
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt1_7jpp7
 - complete build
 
