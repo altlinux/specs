@@ -44,7 +44,7 @@ BuildRequires: jpackage-1.6.0-compat
 Summary:        An open source data binding framework for Java
 Name:           castor0
 Version:        0.9.9.1
-Release:        alt5_4jpp6
+Release:        alt6_4jpp6
 Epoch:          0
 Group:          Development/Java
 License:        Exolab Software License, BSD-like
@@ -62,7 +62,7 @@ Requires:       adaptx
 Requires:       cglib
 Requires:       apache-commons-logging
 #Requires:       jndi
-Requires:       jta_1_0_1B_api
+Requires:       /usr/share/java/jta.jar
 Requires:       ldapsdk
 Requires:       oro
 Requires:       regexp
@@ -75,7 +75,7 @@ BuildRequires:  apache-commons-logging
 #BuildRequires:  jdbc-stdext
 #BuildRequires:  jndi
 BuildRequires:  jpackage-utils >= 0:1.7.5
-BuildRequires:  jta_1_0_1B_api
+BuildRequires:  /usr/share/java/jta.jar
 BuildRequires:  ldapsdk
 BuildRequires:  log4j
 BuildRequires:  oro
@@ -170,7 +170,7 @@ adaptx \
 cglib \
 checkstyle \
 commons-logging \
-jta_1_0_1B_api \
+jta \
 junit \
 ldapsdk \
 oro \
@@ -269,6 +269,9 @@ touch $RPM_BUILD_ROOT/etc/java/%{name}.conf
 %doc build/doc/*
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.9.1-alt6_4jpp6
+- fixed build
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.9.1-alt5_4jpp6
 - built with java 6
 
