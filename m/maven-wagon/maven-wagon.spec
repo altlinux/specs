@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-%{bname}
 Version:        1.0
-Release:        alt9_3jpp7
+Release:        alt9_6jpp7
 Epoch:          0
 Summary:        Tools to manage artifacts and deployment
 License:        ASL 2.0
@@ -66,11 +66,9 @@ BuildRequires:  maven-surefire-provider-junit
 BuildRequires:  maven-enforcer-plugin
 #BuildRequires:  maven2-default-skin
 BuildRequires:  plexus-containers-component-metadata
-BuildRequires:  maven-scm-test
 BuildRequires:  xerces-j2
 BuildRequires:  classworlds
 BuildRequires:  nekohtml
-BuildRequires:  ganymed-ssh2
 BuildRequires:  apache-commons-codec
 BuildRequires:  apache-commons-collections
 BuildRequires:  apache-commons-net
@@ -82,12 +80,11 @@ BuildRequires:  jtidy
 BuildRequires:  plexus-container-default
 BuildRequires:  plexus-interactivity
 BuildRequires:  plexus-utils
-BuildRequires:  servletapi5
+BuildRequires:  servlet3
 BuildRequires:  xml-commons-apis
 BuildRequires:  easymock
 BuildRequires:  jsoup
 
-Requires:       ganymed-ssh2
 Requires:       jakarta-commons-httpclient
 Requires:       apache-commons-net
 #Requires:       jakarta-slide-webdavclient
@@ -133,6 +130,8 @@ Documents for %{name}.
 
 #FIXME: have to drop wagon-webdav-jackrabbit until jackrabbit is available
 sed -i "s|<module>wagon-webdav-jackrabbit</module>|<!-- <module>wagon-webdav-jackrabbit</module> -->|" wagon-providers/pom.xml
+sed -i "s|org.mortbay.jetty|org.eclipse.jetty|g" wagon-provider-test/pom.xml
+sed -i "s|>jetty<|>jetty-server<|g" wagon-provider-test/pom.xml
 
 %patch1
 %patch2 -p1
@@ -283,6 +282,9 @@ install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 %doc %{_docdir}/%{name}-%{version}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt9_6jpp7
+- new fc release
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt9_3jpp7
 - complete build
 
