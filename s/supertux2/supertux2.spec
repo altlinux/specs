@@ -1,6 +1,6 @@
 Name: supertux2
-Version: 0.3.3
-Release: alt3.1
+Version: 0.3.4
+Release: alt1
 
 Summary: SuperTux is a classic 2D jump'n run sidescroller game in a Super Mario style
 
@@ -10,24 +10,22 @@ URL: http://supertux.lethargik.org/
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-Source0: supertux-%version.tar.bz2
+#Source0: supertux-%version.tar.bz2
+Source0: supertux.tar.bz2
 
 Source1: supertux-16x16.png
 Source2: supertux-32x32.png
 Source3: supertux-48x48.png
 
 Patch0: supertux-alt-desktop-file.patch
-Patch1: supertux-0.3.3-alt-curl.patch
-Patch2: supertux2-0.3.3-alt-gcc4.6.patch
 
 Conflicts: supertux
 
-Requires: %name-data = %version
+Requires: %name-data = %version-%release
 
-# Automatically added by buildreq on Thu Apr 12 2012 (-bi)
-# optimized out: cmake-modules elfutils libGL-devel libGLU-devel libSDL-devel libX11-devel libogg-devel libstdc++-devel python-base xorg-kbproto-devel xorg-xproto-devel
-# WTF? subversion?
-BuildRequires: boost-devel-headers cmake gcc-c++ libSDL_image-devel libXau-devel libXdmcp-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel
+# Automatically added by buildreq on Mon Oct 01 2012 (-bi)
+# WTF? vorbis-tools? really?
+BuildRequires: boost-devel-headers cmake gcc-c++ libSDL_image-devel libSM-devel libXau-devel libXdmcp-devel libXft-devel libcurl-devel libglew-devel libopenal-devel libphysfs-devel libvorbis-devel
 
 %description
 SuperTux is a jump'n run like game, with strong inspiration from the
@@ -42,8 +40,7 @@ Note! This is a still development version.
 %package data
 Summary: Data files for supertux2
 Group: Games/Arcade
-Requires: %name = %version
-Conflicts: %name < %version
+Requires: %name = %version-%release
 BuildArch: noarch
 
 %description data
@@ -57,10 +54,8 @@ on the way.
 This is package contains data files for supertux2.
 
 %prep
-%setup -q -n supertux-%version
+%setup -q -n supertux
 %patch0
-%patch1 -p1
-%patch2 -p2
 
 %build
 cmake \
@@ -70,6 +65,7 @@ cmake \
 %endif
         -D CMAKE_CXX_FLAGS:STRING="%optflags" \
         -D INSTALL_SUBDIR_BIN=bin \
+        -D INSTALL_SUBDIR_SHARE=share/supertux2 \
         -D CMAKE_BUILD_TYPE="Release" \
         -D CMAKE_SKIP_RPATH=YES .
 
@@ -86,6 +82,8 @@ install -m644 %SOURCE3 -D %buildroot/%_liconsdir/supertux.png
 # install game man file
 install -D -m 644 man/man6/%name.6 %buildroot/%_man6dir/%name.6
 
+rm -rf %buildroot/%_docdir/supertux2/
+
 %files -f %name.lang
 %doc README WHATSNEW.txt docs
 %_bindir/supertux2
@@ -97,9 +95,15 @@ install -D -m 644 man/man6/%name.6 %buildroot/%_man6dir/%name.6
 %_man6dir/*
 
 %files data
-%_gamesdatadir/supertux2/*
+%dir %_datadir/supertux2
+%_datadir/supertux2/*
 
 %changelog
+* Mon Oct 01 2012 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt1
+- git snapshot from c7cab5080d6aef977159766cbd8cbdc6b68b38eb
+- relocate data from /usr/share/games/ to /usr/share/
+- buildreq
+
 * Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.3-alt3.1
 - Fixed build
 
