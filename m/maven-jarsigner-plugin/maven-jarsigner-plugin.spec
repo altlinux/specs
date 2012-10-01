@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             maven-jarsigner-plugin
 Version:          1.2
-Release:          alt1_3jpp7
+Release:          alt1_4jpp7
 Summary:          Signs or verifies a project artifact and attachments using jarsigner
 License:          ASL 2.0
 Group:            Development/Java
@@ -83,6 +83,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp7
+- new fc release
+
 * Mon Mar 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3jpp7
 - complete build
 
