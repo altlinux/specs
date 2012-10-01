@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.6.3
-Release: alt8
+Release: alt9
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -1608,7 +1608,6 @@ EOF
 %dir %gcc_target_libdir/include/quadmath.h
 %dir %gcc_target_libdir/include/quadmath_weak.h
 %gcc_target_libdir/libquadmath.so
-%_infodir/libquadmath.info*
 
 %files -n libquadmath%gcc_branch-devel-static
 %dir %gcc_target_libdir
@@ -1894,14 +1893,17 @@ EOF
 
 %files locales -f gcc%psuffix.lang
 
-%ifndef _cross_platfoem
+%ifndef _cross_platform
 
 %files doc
 %{?_enable_doxygen:%_man3dir/*}
 %_infodir/cpp*.info*
 %_infodir/gcc*.info*
-%{!?_cross_platform:%_infodir/libgomp*.info*}
+%_infodir/libgomp*.info*
 %{?_with_fortran:%_infodir/gfortran.info*}
+%ifarch %ix86 x86_64 ia64
+%{?_with_fortran:%_infodir/libquadmath.info*}
+%endif
 %{?_with_java:%_infodir/gcj.info*}
 %{?_with_java:%_infodir/cp-tools.info*}
 %{?_with_ada:%_infodir/gnat*.info*}
@@ -1916,6 +1918,9 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Oct 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6.3-alt9
+- relocate libquadmath info file to doc subpackage
+
 * Mon Sep 24 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.6.3-alt8
 - rebuilt to coexist with gcc4.7
 
