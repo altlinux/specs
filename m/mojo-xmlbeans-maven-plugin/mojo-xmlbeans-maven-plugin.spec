@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           mojo-xmlbeans-maven-plugin
 Version:        2.3.3
-Release:        alt2_1jpp7
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        Maven XmlBeans Plugin
 Group:          Development/Java
@@ -78,7 +78,7 @@ BuildRequires:  maven-plugin-cobertura
 BuildRequires:  mojo-maven2-plugin-jdepend
 BuildArch:      noarch
 Provides:       mojo-maven2-plugin-xmlbeans = %{epoch}:%{version}-%{release}
-Obsoletes:      mojo-maven2-plugin-xmlbeans > 17
+Obsoletes:      mojo-maven2-plugin-xmlbeans = 17
 Source44: import.info
 Patch: mojo-xmlbeans-maven-plugin-alt-maven3.patch
 
@@ -154,6 +154,9 @@ ln -s %{name}-%{namedversion} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.3-alt3_1jpp6
+- jpp6 release
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.3-alt2_1jpp7
 - findbugs plugin
 
