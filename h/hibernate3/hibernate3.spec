@@ -1,4 +1,3 @@
-BuildRequires: maven-antrun-plugin
 Epoch: 1
 BuildRequires: docbook-xml docbook-dtds
 BuildRequires: /proc
@@ -12,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name: hibernate3
 Version: 3.6.10
-Release: alt1_5jpp7
+Release: alt1_6jpp7
 Summary: Relational persistence and query service
 
 Group: Development/Java
@@ -177,6 +176,9 @@ Requires: junit
 rm -r hibernate-envers/src/main/java/org/hibernate/tool/ant/*.java \
   hibernate-envers/src/main/java/org/hibernate/envers/ant/*.java
 
+# Make hibernate-testing back a test dependency...
+sed -i "s|<!-- <scope>test</scope> TODO fix this -->|<scope>test</scope>|" hibernate-infinispan/pom.xml
+
 %build
 
 # Currently 4 tests fail with this error:
@@ -271,6 +273,9 @@ ln -s hibernate3/hibernate-core.jar %buildroot%_javadir/hibernate3.jar
 %{_mavendepmapfragdir}/%{name}-testing
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt1_6jpp7
+- new fc release
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.6.10-alt1_5jpp7
 - new version
 
