@@ -1,9 +1,8 @@
-BuildRequires: maven-dependency-plugin modello
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-verifier-plugin
 Version:        1.0
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Maven Verifier Plugin
 
 Group:          Development/Java
@@ -82,6 +81,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_6jpp7
+- new fc release
+
 * Sat Mar 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_5jpp7
 - new version
 
