@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-digest
 Version:        1.1
-Release:        alt1_6jpp7
+Release:        alt1_9jpp7
 Epoch:          0
 Summary:        Plexus Digest / Hashcode Components
 License:        ASL 2.0
@@ -46,6 +46,7 @@ Source0:        %{name}-%{version}-src.tar.gz
 # tar czf plexus-digest-1.1-src.tar.gz plexus-digest/
 
 Patch0:         %{name}-migration-to-component-metadata.patch
+Patch1:         %{name}-fix-test-dependencies.patch
 
 BuildArch:      noarch
 
@@ -88,6 +89,7 @@ Javadoc for %{name}.
 %prep
 %setup -q -n %{name}
 %patch0 -p1
+%patch1 -p1
 
 %build
 mvn-rpmbuild install javadoc:javadoc
@@ -118,6 +120,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_9jpp7
+- new fc release
+
 * Sat Apr 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt1_6jpp7
 - new jpp release
 
