@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jline2
 Version:          2.5
-Release:          alt1_5jpp7
+Release:          alt1_6jpp7
 Summary:          JLine is a Java library for handling console input
 Group:            Development/Java
 License:          BSD and ASL 2.0
@@ -82,6 +82,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE.txt
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_6jpp7
+- new fc release
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_5jpp7
 - fc version
 
