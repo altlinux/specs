@@ -17,6 +17,7 @@
 %endif
 
 %def_with strict_deps
+%def_with python3
 
 %ifarch %arm
 %def_without mpi
@@ -33,7 +34,7 @@
 
 Name: boost
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Boost libraries
@@ -49,9 +50,15 @@ Patch5: boost-1.50.0-alt-bjam-locate-target.patch
 Patch15: boost-1.36.0-alt-test-include-fix.patch
 Patch23: boost-1.45.0-alt-mpi-mt-only.patch
 Patch27: boost-1.51.0-alt-graph-use-traits.patch
+Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
 
 # we use %%_python_version
 BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
+
+%if_with python3
+BuildRequires(pre): rpm-build-python3
+BuildRequires: python3-devel
+%endif
 
 %if_with mpi
 BuildRequires: %mpiimpl-devel
@@ -185,6 +192,9 @@ Requires: %name-msm-devel = %epoch:%version-%release
 Requires: %name-polygon-devel = %epoch:%version-%release
 Requires: %name-program_options-devel = %epoch:%version-%release
 Requires: %name-python-devel = %epoch:%version-%release
+%if_with python3
+Requires: %name-python3-devel = %epoch:%version-%release
+%endif
 Requires: %name-signals-devel = %epoch:%version-%release
 Requires: %name-timer-devel = %epoch:%version-%release
 Requires: %name-units-devel = %epoch:%version-%release
@@ -450,6 +460,16 @@ Boost Program Options library allows program developers to obtain
 program options, that is (name, value) pairs from the user, via
 conventional methods.
 
+%package python-headers
+Summary: Boost.Python header files.
+Group: Development/C++
+BuildArch: noarch
+AutoReq: yes, nocpp
+
+%description python-headers
+Header files for Boost.Python libraries. This files are shared between
+libraries compiled with Python 2 and Python 3.
+
 
 %package python-devel
 Summary: The Boost Python Library (Boost.Python) development files
@@ -457,6 +477,7 @@ Group: Development/C++
 AutoReq: yes, nocpp
 
 Requires: python-devel = %_python_version
+Requires: %name-python-headers = %epoch:%version-%release
 Requires: libboost_python%version = %epoch:%version-%release
 PreReq: %name-devel = %epoch:%version-%release
 
@@ -473,8 +494,31 @@ In most cases, you should not have to alter your C++ classes in any way
 in order to use them with Boost.Python. The system should simply
 ``reflect'' your C++ classes and functions into Python.
 
-This package contains development files for Boost.Python.
+This package contains development files for Boost.Python build with
+Python 2.
 
+%if_with python3
+%package python3-devel
+Summary: The Boost Python Library (Boost.Python) development files
+Group: Development/C++
+AutoReq: yes, nocpp
+
+Requires: python3-devel = %_python3_version
+Requires: %name-python-headers = %epoch:%version-%release
+Requires: libboost_python3-%version = %epoch:%version-%release
+PreReq: %name-devel = %epoch:%version-%release
+
+%description python3-devel
+Use the Boost Python Library to quickly and easily export a C++ library
+to Python such that the Python interface is very similar to the C++
+interface. It is designed to be minimally intrusive on your C++ design.
+In most cases, you should not have to alter your C++ classes in any way
+in order to use them with Boost.Python. The system should simply
+``reflect'' your C++ classes and functions into Python.
+
+This package contains development files for Boost.Python build with
+Python 3.
+%endif
 
 %package signals-devel
 Summary: The Boost Signals Lirary development files
@@ -572,6 +616,9 @@ Requires: %name-mpi-devel = %epoch:%version-%release
 Requires: %name-locale-devel = %epoch:%version-%release
 Requires: %name-program_options-devel = %epoch:%version-%release
 Requires: %name-python-devel = %epoch:%version-%release
+%if_with python3
+Requires: %name-python3-devel = %epoch:%version-%release
+%endif
 Requires: %name-signals-devel = %epoch:%version-%release
 Requires: %name-timer-devel = %epoch:%version-%release
 Requires: %name-wave-devel = %epoch:%version-%release
@@ -840,6 +887,20 @@ In most cases, you should not have to alter your C++ classes in any way
 in order to use them with Boost.Python. The system should simply
 ``reflect'' your C++ classes and functions into Python.
 
+%if_with python3
+%package -n libboost_python3-%version
+Summary: The Boost Python Library (Boost.Python) for Python 3
+Group: Development/C++
+
+
+%description -n libboost_python3-%version
+Use the Boost Python Library to quickly and easily export a C++ library
+to Python such that the Python interface is very similar to the C++
+interface. It is designed to be minimally intrusive on your C++ design.
+In most cases, you should not have to alter your C++ classes in any way
+in order to use them with Boost.Python. The system should simply
+``reflect'' your C++ classes and functions into Python.
+%endif
 
 %package -n libboost_random%version
 Summary: The Boost.Random library
@@ -1002,12 +1063,18 @@ applications. This package contains python module.
 %patch15 -p1
 %patch23 -p2
 %patch27 -p2
+%patch28 -p3
 
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
 %if_with mpi
 echo "using mpi ; " >> tools/build/v2/user-config.jam
+%endif
+
 echo "using python : %_python_version ; " >> tools/build/v2/user-config.jam
+
+%if_with python3
+echo "using python : %_python3_version : %_prefix :  %_includedir/python%{_python3_version}mu ; " >> tools/build/v2/user-config.jam
 %endif
 
 %build
@@ -1157,7 +1224,13 @@ rm -f %buildroot%_libdir/*.a || :
 # http://lists.altlinux.org/pipermail/devel/2012-April/193731.html
 # and especially message where ldv@ suggested this hack (thanks):
 # http://lists.altlinux.org/pipermail/devel/2012-April/193827.html
+#
+# Adding both python 2 and python 3 creates library hell in requires searches,
+# but we don't care while this works.
 export LD_PRELOAD=%_libdir/libpython%_python_version.so
+%if_with python3
+export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_version}mu.so
+%endif
 
 #files
 
@@ -1260,9 +1333,17 @@ export LD_PRELOAD=%_libdir/libpython%_python_version.so
 %_includedir/%name/program_options*
 %_libdir/*_program_options*.so
 
-%files python-devel
+%files python-headers
 %_includedir/%name/python*
+
+%files python-devel
 %_libdir/*boost_python*.so
+%if_with python3
+%exclude %_libdir/*boost_python3*.so
+
+%files python3-devel
+%_libdir/*boost_python3*.so
+%endif
 
 %files signals-devel
 %_includedir/%name/signal*
@@ -1354,6 +1435,12 @@ export LD_PRELOAD=%_libdir/libpython%_python_version.so
 
 %files -n libboost_python%version
 %_libdir/*boost_python*.so.*
+%if_with python3
+%exclude %_libdir/*boost_python3*.so.*
+
+%files -n libboost_python3-%version
+%_libdir/*boost_python3*.so.*
+%endif
 
 %files -n libboost_random%version
 %_libdir/*_random*.so.*
@@ -1424,6 +1511,12 @@ done
 
 
 %changelog
+* Mon Oct 01 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.51.0-alt4
+- support Python 3 in Boost.Python:
+  - a separate library, install boost-python3-devel to build with it;
+  - no MPI with Python 3 (yet);
+- fix Boost.Polygon build with gcc 4.7 (patch from Scott Tsai).
+
 * Tue Sep 04 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.51.0-alt3
 - add patch #27 to make BGL use traits to make null_vertex
   (see https://svn.boost.org/trac/boost/ticket/7327).
