@@ -1,16 +1,17 @@
 Name: perl-Text-Xslate
-Version: 1.5017
+Version: 1.5018
 Release: alt1
+
 Summary: Text::Xslate - Scalable template engine for Perl5
-
-Group: Development/Perl
 License: Perl
-Url: http://search.cpan.org/~gfuji/Text-Xslate/
+Group: Development/Perl
 
+Url: %CPAN Text-Xslate
+# Cloned from git://github.com/xslate/p5-Text-Xslate.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-devel perl-Mouse perl-MouseX-Getopt perl-Test-Requires perl-Data-MessagePack perl-Any-Moose perl-parent perl-Module-Install-XSUtil perl-Module-Install-TestTarget perl-Module-Install-AuthorTests perl-unicore perl-autodie perl-CGI perl-Encode-JP perl-podlators perl-HTTP-Message perl-IPC-Run perl-File-Which perl-Data-Section-Simple perl-URI-Find perl-HTML-FillInForm-Lite perl-JavaScript-Value-Escape perl-Plack perl-HTML-Shakan perl-Data-Localize perl-Locale-Maketext perl-Locale-Maketext-Lexicon
+BuildRequires: perl-devel perl-Mouse perl-MouseX-Getopt perl-Test-Requires perl-Data-MessagePack perl-Any-Moose perl-parent perl-Module-Install-XSUtil perl-Module-Install-TestTarget perl-unicore perl-autodie perl-CGI perl-Encode-JP perl-podlators perl-HTTP-Message perl-IPC-Run perl-File-Which perl-Data-Section-Simple perl-URI-Find perl-HTML-FillInForm-Lite perl-JavaScript-Value-Escape perl-Plack perl-HTML-Shakan perl-Data-Localize perl-Locale-Maketext perl-Locale-Maketext-Lexicon perl-File-Copy-Recursive
 
 %description
 Xslate is a template engine for Perl5 with the following features:
@@ -39,6 +40,9 @@ Xslate is a template engine for Perl5 with the following features:
 %doc Changes README HACKING 
 
 %changelog
+* Mon Oct 01 2012 Vladimir Lettiev <crux@altlinux.ru> 1.5018-alt1
+- 1.5017 -> 1.5018
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 1.5017-alt1
 - 1.5007 -> 1.5017
 - built for perl-5.16
