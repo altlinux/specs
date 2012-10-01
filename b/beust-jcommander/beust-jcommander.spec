@@ -1,4 +1,3 @@
-BuildRequires:  oss-parent
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -7,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             beust-%{short_name}
 Version:          1.17
-Release:          alt1_4jpp7
+Release:          alt1_5jpp7
 Summary:          Java framework for parsing command line parameters
 License:          ASL 2.0
 Group:            Development/Java
@@ -75,6 +74,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_5jpp7
+- new fc release
+
 * Sat Apr 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1_4jpp7
 - new version
 
