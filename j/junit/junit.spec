@@ -6,9 +6,13 @@ BuildRequires: jpackage-compat
 # fedora bcond_with macro
 %define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-%define version 3.8.2
+# redefine altlinux specific with and without
+%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
+%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name junit
-# Copyright (c) 2000-2009, JPackage Project
+%define version 3.8.2
+# Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -57,10 +61,9 @@ BuildRequires: jpackage-compat
 %define gcj_support 0
 %endif
 
-
 Name:           junit
 Version:        3.8.2
-Release:	alt6_9jpp6
+Release:	alt6_10jpp6
 Epoch:          1
 Summary:        Java regression test package
 License:        CPL
@@ -82,6 +85,7 @@ Buildarch:      noarch
 %endif
 Source44: import.info
 Provides: junit = 0:%{version}
+Provides: junit3 = %{epoch}:%{version}-%{release}
 
 %description
 JUnit is a regression testing framework written by Erich Gamma and Kent
@@ -134,7 +138,7 @@ Demonstrations and samples for %{name}.
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 dist
+%{ant} dist
 
 %install
 
@@ -151,7 +155,7 @@ ant -Dant.build.javac.source=1.4 -Dant.build.javac.target=1.4 dist
 # pom
 %{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
 %{__cp} -p %{SOURCE3} %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap junit junit JPP %{name}
+%add_to_maven_depmap junit junit %{version} JPP %{name}
 
 # demo
 # Not using %%name for last part because it is part of package name
@@ -177,6 +181,8 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/junit.jar
 %{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/junit.pom
 %endif
+# symlink
+ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}3.jar
 
 %files
 %doc cpl-v10.html README.html
@@ -188,6 +194,7 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %dir %{_libdir}/gcj/%{name}
 %{_libdir}/gcj/%{name}/junit-3.8.2.jar.*
 %endif
+%{_javadir}/%{name}3.jar
 
 %files manual
 # FIXME: (dwalluck) Manuals are usually stored in an absolute location inside %%{_docdir}
@@ -209,6 +216,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt6_10jpp6
+- added junit3 provides
+
 * Sat Jan 21 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt6_9jpp6
 - target 4
 
