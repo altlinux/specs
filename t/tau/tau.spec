@@ -3,7 +3,7 @@
 
 Name: tau
 Version: 2.21.4
-Release: alt1
+Release: alt2
 Summary: TAU Portable Profiling Package
 License: BSD-like
 Group: Development/Tools
@@ -23,7 +23,7 @@ Obsoletes: lib%name-devel < %version-%release
 %add_python_req_skip edu java javax
 
 BuildRequires(pre): rpm-build-java rpm-build-python
-BuildPreReq: java-devel-default libgmp-devel %mpiimpl-devel gcc-c++ gcc-fortran
+BuildPreReq: java-devel-default libgmp-devel gcc-c++ gcc-fortran
 BuildPreReq: openpdt libopenpdt-devel libpapi-devel chrpath
 BuildPreReq: jflex postgresql-devel libscalasca-devel binutils-devel
 BuildPreReq: libgomp-devel libotf-devel zlib-devel
@@ -127,7 +127,7 @@ Summary: Java libraries of TAU Portable Profiling Package
 Group: Development/Tools
 BuildArch: noarch
 Requires: java-cup jatha jcommon jfreechart jgraph jython xerces-j2
-Requires: swing-layout jargs
+Requires: swing-layout jargs h2
 Conflicts: libjogl
 
 %description j
@@ -176,7 +176,7 @@ export BUILDROOT=%buildroot
 	-useropt="%optflags %optflags_shared -I$PWD/include -fno-strict-aliasing" \
 	-opari=%prefix -MPITRACE \
 	-openmp \
-	-extrashlibopts="-Wl,-R%mpidir/lib -L%mpidir/lib -lmpi -lgomp"
+	-extrashlibopts="-Wl,-rpath,%mpidir/lib -L%mpidir/lib -lmpi -lgomp"
 
 export BUILDROOTLIB=%buildroot%_libexecdir
 export BUILDROOT=%buildroot
@@ -281,7 +281,7 @@ rm -f libjogl*
 
 install -d %buildroot%_javadir
 rm -f derby.jar java_cup.jar jcommon-*.jar jfreechart-*.jar \
-	jgraph.jar jython.jar xerces.jar
+	jgraph.jar jython.jar xerces.jar h2.jar
 mv *.jar %buildroot%_javadir/
 popd
 
@@ -392,6 +392,9 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 %exclude %_javadir/jargs.jar
 
 %changelog
+* Mon Oct 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.21.4-alt2
+- Avoid conflict with h2
+
 * Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.21.4-alt1
 - Version 2.21.4
 
