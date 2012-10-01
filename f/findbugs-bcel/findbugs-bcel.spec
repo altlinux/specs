@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:           findbugs-bcel
 Version:        5.2
-Release:        alt1_1.3.8.7jpp7
+Release:        alt2_1.3.8.7jpp7
 Summary:        Byte Code Engineering Library with findbugs extensions
 
 Group:          Development/Java
@@ -80,6 +80,9 @@ ln -s findbugs-bcel-%{findbugsver} $RPM_BUILD_ROOT%{_javadocdir}/findbugs-bcel
 %{_javadocdir}/findbugs-bcel*
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 5.2-alt2_1.3.8.7jpp7
+- new fc release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 5.2-alt1_1.3.8.7jpp7
 - new version
 
