@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-i18n
 Version:        1.0
-Release:        alt3_0.b10.2.2jpp7
+Release:        alt3_0.b10.2.5jpp7
 Summary:        Plexus I18N Component
 License:        ASL 2.0
 Group:          Development/Java
@@ -46,6 +46,7 @@ Source0:        plexus-i18n-1.0-beta-10-src.tar.bz2
 # tar cjf plexus-i18n-1.0-beta-10-src.tar.bz2 plexus-i18n-1.0-beta-10/
 
 Patch0:         %{name}-migration-to-component-metadata.patch
+Patch1:         %{name}-plexus-container-default-missing.patch
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.7.2
@@ -89,10 +90,10 @@ Javadoc for %{name}.
 %prep
 %setup -q -n plexus-i18n-1.0-beta-10
 %patch0 -p1
+%patch1 -p1
 
 %build
-mvn-rpmbuild -e -Dmaven.test.skip=true \
-	install javadoc:aggregate
+mvn-rpmbuild -e install javadoc:aggregate
 
 %install
 # jars
@@ -120,6 +121,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_0.b10.2.5jpp7
+- new fc release
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_0.b10.2.2jpp7
 - fc version
 
