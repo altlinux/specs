@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           jnr-x86asm
 Version:        0.1
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        Pure-java port of asmjit
 
 Group:          Development/Java
@@ -60,6 +60,9 @@ cp -r dist/javadoc/* %{buildroot}%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_5jpp7
+- new fc release
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt1_4jpp7
 - new version
 
