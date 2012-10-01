@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		geronimo-parent-poms
 Version:	1.6
-Release:	alt1_7jpp7
+Release:	alt1_10jpp7
 Summary:	Parent POM files for geronimo-specs
 
 Group:		Development/Java
@@ -12,9 +12,6 @@ URL:		http://geronimo.apache.org/
 # Following the parent chain all the way up ...
 Source0:	http://svn.apache.org/repos/asf/geronimo/specs/tags/specs-parent-%{version}/pom.xml
 
-# Remove dependencies from POMs that aren't yet in Fedora
-Patch0:		%{name}-parent.patch
-
 BuildRequires:	jpackage-utils
 
 BuildArch:	noarch
@@ -23,7 +20,6 @@ BuildArch:	noarch
 Requires:	maven-compiler-plugin
 Requires:	maven-idea-plugin
 Requires:	maven-jar-plugin
-Requires:	maven-pmd-plugin
 Requires:	maven-plugin-bundle
 
 Provides:       geronimo-specs = %{version}-%{release}
@@ -36,7 +32,7 @@ The Project Object Model files for the geronimo-specs modules.
 %prep
 %setup -c -T
 cp %SOURCE0 .
-%patch0
+%pom_remove_parent
 
 %build
 # Nothing to do ...
@@ -54,6 +50,9 @@ install -pm 644 pom.xml \
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_10jpp7
+- new fc release
+
 * Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt1_7jpp7
 - full version
 
