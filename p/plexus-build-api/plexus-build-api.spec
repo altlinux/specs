@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           plexus-build-api
 Version:        0.0.7
-Release:        alt1_3jpp7
+Release:        alt1_4jpp7
 Summary:        Plexus Build API
 
 Group:          Development/Java
@@ -87,6 +87,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt1_4jpp7
+- new fc release
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.0.7-alt1_3jpp7
 - fc version
 
