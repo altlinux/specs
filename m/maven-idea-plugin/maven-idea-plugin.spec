@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-idea-plugin
 Version:        2.2
-Release:        alt1_7jpp7
+Release:        alt1_8jpp7
 Summary:        Maven IDEA Plugin
 
 Group:          Development/Java
@@ -86,6 +86,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_8jpp7
+- new fc release
+
 * Mon Mar 26 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_7jpp7
 - complete build
 
