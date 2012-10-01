@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:     yecht
 Version:  0.0.2
-Release:  alt1_6jpp7
+Release:  alt1_7jpp7
 Summary:  A YAML processor based on Syck
 Group:    Development/Java
 License:  MIT
@@ -67,6 +67,9 @@ cp -rp javadocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1_7jpp7
+- new fc release
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.2-alt1_6jpp7
 - new version
 
