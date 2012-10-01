@@ -1,8 +1,10 @@
+AutoReq: yes,noosgi
+BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		javamail
 Version:	1.4.3
-Release:	alt1_8jpp7
+Release:	alt1_12jpp7
 Summary:	Java Mail API
 
 Group:		Development/Java
@@ -27,9 +29,12 @@ Source8:	http://download.java.net/maven/2/com/sun/mail/smtp/%{version}/smtp-%{ve
 # http://kenai.com/projects/javamail/sources/mercurial/content/parent-distrib/pom.xml?raw=true
 Source9:	%{name}-parent-distrib.pom
 
+# Add additional OSGi information to manifest of mail.jar
+Patch0:		%{name}-add-osgi-info.patch
+
 # Remove Maven plugins we don't have yet
 # Remove unavailable-on-Fedora dependencies from pom.xml
-Patch0:		%{name}-cleanup-poms.patch
+Patch1:		%{name}-cleanup-poms.patch
 
 BuildRequires:	jpackage-utils
 BuildRequires:	maven
@@ -43,14 +48,11 @@ BuildRequires:	maven-resources-plugin
 BuildRequires:	maven-site-plugin
 BuildRequires:	maven-plugin-bundle
 BuildRequires:	maven-surefire-plugin
-BuildRequires:  maven-surefire-provider-junit4
+BuildRequires:	maven-surefire-provider-junit4
 BuildRequires:	tomcat6-jsp-2.1-api
 
 
 Requires:	jpackage-utils
-
-# Requirements from POMs
-Requires:	tomcat6-jsp-2.1-api
 
 # Adapted from the classpathx-mail (and JPackage glassfish-javamail) Provides
 Provides:	javamail-monolithic = 0:%{version}
@@ -80,6 +82,8 @@ mkdir -p mail dsn
 (cd mail && jar xvf %SOURCE1 && cp %SOURCE2 ./pom.xml)
 (cd dsn && jar xvf %SOURCE3 && cp %SOURCE4 ./pom.xml)
 
+%patch0 -p1
+
 for sub in *; do
 	pushd $sub
 	mkdir -p src/main/java src/main/resources
@@ -93,7 +97,7 @@ cp %SOURCE0 ./pom.xml
 mkdir poms
 cp %SOURCE5 %SOURCE6 %SOURCE7 %SOURCE8 %SOURCE9 poms
 
-%patch0 -p1
+%patch1 -p1
 
 # Convert license file to UTF-8
 for file in mail/src/main/resources/META-INF/*.txt; do
@@ -131,7 +135,7 @@ install -m 644 dsn/pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-dsn.pom
 # Install the remaining POMs
 for sub in mailapi imap pop3 smtp; do
  install -m 644 poms/$sub-%{version}.pom \
-         $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-$sub.pom
+	 $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.%{name}-$sub.pom
 done
 
 # Add maven dependency information
@@ -146,7 +150,7 @@ install -m 644 poms/%{name}-parent-distrib.pom \
 %files
 %doc mail/src/main/resources/META-INF/LICENSE.txt mail/overview.html
 %{_javadir}/%{name}
-%config(noreplace) %{_mavendepmapfragdir}/*
+%{_mavendepmapfragdir}/*
 %{_mavenpomdir}/*.pom
 
 %files javadoc
@@ -154,6 +158,9 @@ install -m 644 poms/%{name}-parent-distrib.pom \
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_12jpp7
+- added OSGi info
+
 * Thu Mar 15 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_8jpp7
 - new version
 
