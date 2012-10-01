@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-jar-plugin
 Version:        2.4
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        Maven JAR Plugin
 
 Group:          Development/Java
@@ -96,6 +96,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_2jpp7
+- new fc release
+
 * Mon Mar 26 2012 Igor Vlasenko <viy@altlinux.ru> 2.4-alt1_1jpp7
 - complete build
 
