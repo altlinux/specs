@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-gpg-plugin
 Version:        1.4
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        Maven GPG Plugin
 
 Group:          Development/Java
@@ -78,6 +78,9 @@ install -dm 755 %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_3jpp7
+- new fc release
+
 * Sun Mar 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_2jpp7
 - complete build
 
