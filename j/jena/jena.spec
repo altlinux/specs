@@ -1,37 +1,37 @@
-BuildRequires: maven-antrun-plugin
-BuildRequires: icu4j
 Group: Development/Java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-Name:		jena
-Version:	2.6.4
-Release:	alt2_3jpp7
-BuildArch:	noarch
-Summary:	Java framework for building Semantic Web applications
+Name:		    jena
+Version:	    2.6.4
+Release:	    alt2_5jpp7
+BuildArch:	    noarch
+Summary:	    Java framework for building Semantic Web applications
 
-License:	BSD
-URL:		http://jena.sourceforge.net/index.html
+License:	    BSD
+URL:		    http://jena.sourceforge.net/index.html
 # cvs -z3 -d:pserver:anonymous@jena.cvs.sourceforge.net:/cvsroot/jena export -r Jena-2_6_4 jena2
 # rm -rf jena2/lib
 # rm -rf jena2/tools-lib
 # tar caf jena-2.6.4-CLEAN.tar.xz jena2
-Source0:	%{name}-%{version}-CLEAN.tar.xz
+Source0:	    %{name}-%{version}-CLEAN.tar.xz
 
 # Assembly ID was commented out
-Patch0:		%{name}-fixed-assembly.patch
+Patch0:		    %{name}-fixed-assembly.patch
 # Test testSameAdhocClassUS in TestLiteralImpl fails on assert
 # I am communicating with upstream in regard to fix
 # The patch is now not applied as other test failures happen
-Patch1:		%{name}-test-fail.patch
+Patch1:		    %{name}-test-fail.patch
 
 BuildRequires:	jpackage-utils
+BuildRequires:	icu4j
+BuildRequires:	jena-iri
 BuildRequires:	maven
 BuildRequires:	maven-dependency-plugin
-BuildRequires:	jena-iri
 BuildRequires:  maven-surefire-provider-junit4
 
-Requires:	jpackage-utils
-Requires:	jena-iri
+Requires:	    jpackage-utils
+Requires:	    icu4j
+Requires:	    jena-iri
 Source44: import.info
 
 %description
@@ -45,15 +45,15 @@ rule-based inference engine. The Jena Framework includes:
 - In-memory and persistent storage
 - SPARQL query engine
 
+
 %package javadoc
-Summary:	API documentation for %{name}
-Group:		Development/Java
-Requires:	jpackage-utils
+Summary:	    API documentation for %{name}
+Group:		    Development/Java
+Requires:	    jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 The API documentation of %{name}.
-
 
 
 %prep
@@ -95,6 +95,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.6.4-alt2_5jpp7
+- new fc release
+
 * Tue Sep 11 2012 Igor Vlasenko <viy@altlinux.ru> 2.6.4-alt2_3jpp7
 - fixed build
 
