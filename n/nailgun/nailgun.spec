@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:     nailgun
 Version:  0.7.1
-Release:  alt1_5jpp7
+Release:  alt1_6jpp7
 Summary:  Framework for running Java from the cli without the JVM startup overhead
 Group:    Development/Java
 License:  ASL 2.0
@@ -70,6 +70,9 @@ cp -rp docs/api/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_6jpp7
+- new fc release
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt1_5jpp7
 - new version
 
