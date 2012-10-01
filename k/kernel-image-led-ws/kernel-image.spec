@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt13
+Release: alt14
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -29,7 +29,7 @@ Release: alt13
 %define kmandir %{_man9dir}l
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	4.6
+%define kgcc_version	4.7
 
 %def_enable smp
 %def_disable verbose
@@ -199,6 +199,7 @@ Patch0132: linux-%kernel_branch.42-fix-drivers-cpufreq--cpufreq_ondemand.patch
 Patch0141: linux-%kernel_branch.42-fix-drivers-crypto--hifn_795x.patch
 
 Patch0151: linux-%kernel_branch.42-fix-drivers-dma--dmatest.patch
+Patch0152: linux-%kernel_branch.43-fix-drivers-dma--intel_mid_dma.patch
 
 Patch0161: linux-%kernel_branch.43-fix-drivers-edac--e752x_edac.patch
 Patch0162: linux-%kernel_branch.43-fix-drivers-edac--e7xxx_edac.patch
@@ -242,7 +243,8 @@ Patch0242: linux-%kernel_branch.42-fix-drivers-hwmon--coretemp.patch
 Patch0243: linux-%kernel_branch.42-fix-drivers-hwmon--k10temp.patch
 
 Patch0251: linux-%kernel_branch.42-fix-drivers-i2c--i2c-pxa.patch
-Patch0252: linux-%kernel_branch.42-fix-drivers-i2c-busses--scx200_acb.patch
+Patch0252: linux-%kernel_branch.43-fix-drivers-i2c-busses--i2c-intel-mid.patch
+Patch0253: linux-%kernel_branch.42-fix-drivers-i2c-busses--scx200_acb.patch
 
 Patch0260: linux-%kernel_branch.42-fix-drivers-ide.patch
 
@@ -336,6 +338,9 @@ Patch0444: linux-%kernel_branch.42-fix-drivers-pci-hotplug--pci_hotplug.patch
 
 Patch0451: linux-%kernel_branch.42-fix-drivers-platform--hdaps.patch
 Patch0452: linux-%kernel_branch.42-fix-drivers-platform--hp_accel.patch
+Patch0453: linux-%kernel_branch.43-fix-drivers-platform--intel_ips.patch
+Patch0454: linux-%kernel_branch.43-fix-drivers-platform--intel_menlow.patch
+Patch0455: linux-%kernel_branch.43-fix-drivers-platform--intel_oaktrail.patch
 
 Patch0460: linux-%kernel_branch.42-fix-drivers-pnp.patch
 
@@ -610,7 +615,6 @@ ExclusiveArch: %x86_64 %ix86
 
 %ifnarch i386 i486
 %set_disable math_emu
-%set_disable mca
 %endif
 
 %{?_disable_pci:%set_disable drm}
@@ -924,18 +928,6 @@ the Linux kernel package %name-%version-%release.
 %endif
 
 
-%if_enabled wireless
-%package -n kernel-modules-net-wireless-%flavour
-Summary: Linux Wireless LAN driver modules
-%kernel_modules_package_std_body wireless
-%kernel_modules_package_add_provides wimax
-
-%description -n kernel-modules-net-wireless-%flavour
-This package contains Wireless LAN modules for the Linux kernel package
-%name-%version-%release.
-%endif
-
-
 %package -n kernel-modules-fs-extra-%flavour
 Summary: Linux extra filesystems drivers modules
 %kernel_modules_package_std_body fs-extra
@@ -971,15 +963,25 @@ Install this package only if you really need it.
 
 
 %if_enabled alsa
-%package -n kernel-modules-alsa-%flavour
+%package -n kernel-modules-sound-%flavour
 Summary: The Advanced Linux Sound Architecture modules
-%kernel_modules_package_std_body alsa
-Obsoletes: firmware-alsa-%kversion-%flavour-%krelease = %version-%release
-Provides: firmware-alsa-%kversion-%flavour-%krelease = %version-%release
+%kernel_modules_package_std_body sound
+%kernel_modules_package_add_provides alsa
 
-%description -n kernel-modules-alsa-%flavour
+%description -n kernel-modules-sound-%flavour
 The Advanced Linux Sound Architecture (ALSA) provides audio and MIDI
 functionality to the Linux operating system.
+
+
+%package -n kernel-modules-sound-ext-%flavour
+Summary: The Advanced Linux Sound Architecture modules for external adapters
+%kernel_modules_package_std_body sound-ext
+%kernel_modules_package_add_provides alsa-ext
+
+%description -n kernel-modules-sound-ext-%flavour
+The Advanced Linux Sound Architecture (ALSA) provides audio and MIDI
+functionality to the Linux operating system.
+This package contains modules for extarnal (FireWire, USB) adapters.
 %endif
 
 
@@ -998,9 +1000,7 @@ These are old IDE modules for your Linux system.
 %if_enabled drm
 %package -n kernel-modules-drm-%flavour
 Summary: The Direct Rendering Infrastructure modules
-%kernel_modules_package_std_body alsa
-Obsoletes: firmware-drm-%kversion-%flavour-%krelease = %version-%release
-Provides: firmware-drm-%kversion-%flavour-%krelease = %version-%release
+%kernel_modules_package_std_body drm
 
 %description -n kernel-modules-drm-%flavour
 The Direct Rendering Infrastructure, also known as the DRI, is a framework
@@ -1016,8 +1016,6 @@ These are DRM modules for your Linux system.
 %package -n kernel-modules-media-%flavour
 Summary: Linux media driver modules
 %kernel_modules_package_std_body media
-Obsoletes: firmware-media-%kversion-%flavour-%krelease = %version-%release
-Provides: firmware-media-%kversion-%flavour-%krelease = %version-%release
 
 %description -n kernel-modules-media-%flavour
 V4L kernel modules support for video capture and overlay devices,
@@ -1300,7 +1298,9 @@ cd linux-%version
 
 %patch0141 -p1
 
+# fix-drivers-dma--*
 %patch0151 -p1
+%patch0152 -p1
 
 # fix-drivers-edac--*
 %patch0161 -p1
@@ -1346,6 +1346,7 @@ cd linux-%version
 
 %patch0251 -p1
 %patch0252 -p1
+%patch0253 -p1
 
 %patch0260 -p1
 
@@ -1440,6 +1441,9 @@ cd linux-%version
 
 %patch0451 -p1
 %patch0452 -p1
+%patch0453 -p1
+%patch0454 -p1
+%patch0455 -p1
 
 %patch0460 -p1
 
@@ -1806,7 +1810,6 @@ config_disable \
 	%{?_disable_bootsplash:BOOTSPLASH} \
 	%{?_disable_zcache:ZCACHE} \
 	%{?_disable_pci:PCI} \
-	%{?_disable_mca:MCA} \
 	%{?_disable_acpi:ACPI} \
 	%{?_disable_math_emu:MATH_EMULATION} \
 	%{?_disable_kallsyms:KALLSYMS} \
@@ -1823,6 +1826,7 @@ config_enable \
 	%{?_enable_modversions:MODVERSIONS} \
 	%{?_enable_x86_extended_platform:X86_EXTENDED_PLATFORM} \
 	%{?_enable_ext4_for_ext23:EXT4_USE_FOR_EXT23} \
+	%{?_enable_mca:MCA} \
 	%{?_enable_debugfs:DEBUG_FS} \
 	%{?_enable_pcsp:SND_PCSP=m} \
 	%{?_enable_secrm:EXT[234]_SECRM FAT_SECRM} \
@@ -2055,7 +2059,6 @@ gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/i
 %{?_enable_usb_gadget:gen_rpmmodfile usb-gadget %buildroot%modules_dir/kernel/drivers/usb/gadget}
 %{?_enable_video:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' > video.rpmmodlist}
 %{?_enable_watchdog:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/watchdog/* | grep -xv '%modules_dir/kernel/drivers/watchdog/softdog.ko' > watchdog.rpmmodlist}
-%{?_enable_wireless:gen_rpmmodfile net-wireless %buildroot%modules_dir/kernel/{{,drivers/}net/wi{max,reless},net/mac80211}}
 for i in %{?_enable_ide:ide} %{?_enable_media:media} %{?_enable_mtd:mtd} %{?_enable_w1:w1}; do
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/$i
 done
@@ -2063,7 +2066,7 @@ for i in %{?_enable_joystick:joystick} %{?_enable_lirc:lirc} %{?_enable_tablet:t
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/input/$i
 done
 %if "%sub_flavour" != "guest"
-%{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/drivers/{virtio,{char{,/hw_random},net,block}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,vmwgfx}}}}
+%{?_enable_guest:gen_rpmmodfile guest %buildroot%modules_dir/kernel/{drivers/{virtio,{char{,/hw_random},net,block}/virtio*%{?_enable_drm:,gpu/drm/{cirrus,vmwgfx}}},net/9p/*_virtio.ko}}
 %{?_enable_drm:grep -F -f drm.rpmmodlist guest.rpmmodlist | sed 's/^/%%exclude &/' >> drm.rpmmodlist}
 %endif
 sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
@@ -2112,8 +2115,6 @@ fi
 
 %{?_enable_mtd:%kernel_modules_package_post mtd}
 
-%{?_enable_wireless:%kernel_modules_package_post net-wireless}
-
 %kernel_modules_package_post fs-extra
 
 %kernel_modules_package_post net-extra
@@ -2126,7 +2127,11 @@ fi
 
 %{?_enable_media:%kernel_modules_package_post media}
 
-%{?_enable_alsa:%kernel_modules_package_post alsa}
+%if_enabled alsa
+%kernel_modules_package_post sound
+
+%kernel_modules_package_post sound-ext
+%endif
 
 %{?_enable_isdn:%kernel_modules_package_post isdn}
 
@@ -2173,6 +2178,7 @@ fi
 %dir %modules_dir/kernel/sound
 %{?_enable_pci:%modules_dir/kernel/sound/ac97_bus.ko}
 %modules_dir/kernel/sound/soundcore.ko
+%exclude %modules_dir/kernel/drivers/usb/misc/emi*
 %endif
 %{?_enable_kvm:%exclude %modules_dir/kernel/arch/*/kvm}
 %if_enabled hyperv
@@ -2272,8 +2278,6 @@ fi
 
 %{?_enable_mtd:%kernel_modules_package_files mtd}
 
-%{?_enable_wireless:%kernel_modules_package_files net-wireless}
-
 
 %files -n kernel-modules-fs-extra-%flavour
 %modules_dir/kernel/fs/afs
@@ -2353,10 +2357,18 @@ fi
 
 
 %if_enabled alsa
-%files -n kernel-modules-alsa-%flavour
+%files -n kernel-modules-sound-%flavour
 %modules_dir/kernel/sound
 %{?_enable_oss:%exclude %modules_dir/kernel/sound/oss}
 %exclude %modules_dir/kernel/sound/*.ko
+%exclude %modules_dir/kernel/sound/firewire
+%exclude %modules_dir/kernel/sound/usb
+
+
+%files -n kernel-modules-sound-ext-%flavour
+%modules_dir/kernel/sound/firewire
+%modules_dir/kernel/sound/usb
+%modules_dir/kernel/drivers/usb/misc/emi*
 %endif
 
 
@@ -2494,6 +2506,22 @@ fi
 
 
 %changelog
+* Mon Oct 01 2012 Led <led@altlinux.ru> 3.0.43-alt14
+- added:
+  + fix-drivers-dma--intel_mid_dma
+  + fix-drivers-i2c-busses--i2c-intel-mid
+  + fix-drivers-platform--intel_ips
+  + fix-drivers-platform--intel_menlow
+  + fix-drivers-platform--intel_oaktrail
+- build with gcc 4.7
+- fixed kernel-modules-{alsa,drm,media}-* provides and conflicts
+- renamed kernel-modules-alsa to kernel-modules-sound
+- moved sound/{firewire,usb} to new kernel-modules-sound-ext-* subpackage
+- moved drivers/usb/misc/emi* to kernel-modules-sound-ext-*
+- moved net/9p/9pnet_virtio.ko to kernel-modules-guest-*
+- disabled TOI_REPLACE_SWSUSP
+- cleaned up spec
+
 * Mon Oct 01 2012 Led <led@altlinux.ru> 3.0.43-alt13
 - added:
   + fix-Makefile
