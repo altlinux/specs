@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-enforcer
 Version:        1.0.1
-Release:        alt3_4jpp7
+Release:        alt3_5jpp7
 Summary:        Maven Enforcer
 
 Group:          Development/Java
@@ -60,7 +60,7 @@ API documentation for %{name}.
 %package api
 Summary: Enforcer API
 Group: Development/Java
-Requires: maven-enforcer = %{version}-%{release}
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Provides: maven-shared-enforcer-rule-api = %{version}-%{release}
 
 %description api
@@ -70,8 +70,8 @@ implement custom rules for the maven-enforcer-plugin.
 %package rules
 Summary: Enforcer Rules
 Group: Development/Java
-Requires: maven-enforcer = %{version}-%{release}
-Requires: maven-enforcer-api
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-api
 
 %description rules
 This component contains the standard Enforcer Rules.
@@ -79,8 +79,8 @@ This component contains the standard Enforcer Rules.
 %package -n maven-enforcer-plugin
 Summary: Enforcer Rules
 Group: Development/Java
-Requires: maven-enforcer = %{version}-%{release}
-Requires: maven-enforcer-rules
+Requires: %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires: %{name}-rules
 Obsoletes: maven2-plugin-enforcer <= 0:2.0.8
 Provides: maven2-plugin-enforcer = 1:%{version}-%{release}
 
@@ -159,6 +159,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt3_5jpp7
+- new fc release
+
 * Tue Jun 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt3_4jpp7
 - added maven-shared-enforcer-rule-api provides
 
