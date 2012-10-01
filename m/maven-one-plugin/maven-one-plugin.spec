@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           maven-one-plugin
 Version:        1.2
-Release:        alt1_8jpp7
+Release:        alt1_9jpp7
 Summary:        Plugin provides some integration tasks with Maven 1.x
 
 Group:          Development/Java
@@ -94,6 +94,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}/
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_9jpp7
+- new fc release
+
 * Sun Mar 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_8jpp7
 - complete build
 
