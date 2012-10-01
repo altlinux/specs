@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: ant-antlr3
 Version: 20110110
-Release: alt1_4jpp7
+Release: alt1_5jpp7
 Summary: Antlr3 task for Ant
 Group: Development/Java
 License: ASL 2.0
@@ -73,6 +73,9 @@ EOF
 %{_javadocdir}/ant-antlr3
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 20110110-alt1_5jpp7
+- new fc release
+
 * Tue Apr 17 2012 Igor Vlasenko <viy@altlinux.ru> 20110110-alt1_4jpp7
 - new version
 
