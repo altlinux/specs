@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 Summary: Java connection pool library
 Name:    proxool
 Version: 0.9.1
-Release: alt2_6jpp7
+Release: alt2_8jpp7
 Epoch: 0
 License: ASL 2.0
 URL: http://proxool.sourceforge.net/
@@ -65,8 +65,6 @@ rm -rf lib jarjar
 %patch0 -p1 -b .sav0
 
 %build
-echo ant.build.javac.source=1.5 >> %name-ant.properties
-echo ant.build.javac.target=1.5 >> %name-ant.properties
 CLASSPATH=$( build-classpath cglib avalon-framework servlet ) ant build-jar javadoc
 
 %install
@@ -95,6 +93,9 @@ install -m 0644 %{S:1} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_8jpp7
+- new fc release
+
 * Fri Mar 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.9.1-alt2_6jpp7
 - target 5 build
 
