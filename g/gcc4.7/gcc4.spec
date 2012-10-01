@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.7.2
-Release: alt1
+Release: alt2
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -57,8 +57,13 @@ Url: http://gcc.gnu.org/
 %endif
 
 %set_compress_method bzip2
-# due to libmudflap and libmudflapth
+%ifarch %arm
+# due to libmudflap, libmudflapth and libitm
 %set_verify_elf_method unresolved=relaxed textrel=relaxed
+%else
+# due to libmudflap and libmudflapth
+%set_verify_elf_method unresolved=relaxed
+%endif
 # due to libtool.m4-gcj.patch
 %set_libtool_version 2.4
 
@@ -1143,6 +1148,7 @@ export CC=%__cc \
 	%{subst_enable multilib} \
 	--enable-gnu-unique-object \
 	--enable-linker-build-id \
+	--with-linker-hash-style=gnu \
 	--enable-languages="c%{?_with_cxx:,c++}%{?_with_fortran:,fortran}%{?_with_objc:,objc%{?_with_cxx:,obj-c++}}%{?_with_java:,java}%{?_with_ada:,ada}%{?_with_go:,go},lto" \
 	--enable-plugin \
 	%{?_with_objc:%{?_enable_objc_gc:--enable-objc-gc}} \
@@ -1984,6 +1990,9 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Oct 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.7.2-alt2
+- force linker hash style to gnu
+
 * Mon Sep 24 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.7.2-alt1
 - 4.7.2
 
