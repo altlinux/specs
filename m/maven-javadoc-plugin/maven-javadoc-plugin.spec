@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-javadoc-plugin
 Version:        2.8.1
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        Maven Javadoc Plugin
 
 Group:          Development/Java
@@ -114,6 +114,9 @@ rm -rf target/site/api*
 %endif
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_2jpp7
+- new fc release
+
 * Mon Mar 26 2012 Igor Vlasenko <viy@altlinux.ru> 2.8.1-alt1_1jpp7
 - complete build
 
