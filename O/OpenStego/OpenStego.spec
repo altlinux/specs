@@ -1,37 +1,52 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
+Group: File tools
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           OpenStego
 Version:        0.5.2
-Release:        alt2_9jpp7
+Release:        alt2_10jpp7
 Summary:        Free Steganography solution
-Group:          File tools
+Summary(fr):    Solution libre pour la steganographie
+
 License:        GPLv2
 URL:            http://openstego.sourceforge.net/index.html
 Source0:        http://downloads.sourceforge.net/project/openstego/openstego/openstego-%{version}/openstego-src-%{version}.zip
 Source1:        openstego.desktop
+
 BuildArch:      noarch
+
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
 BuildRequires:  desktop-file-utils
 Requires:       jpackage-utils
 Source44: import.info
 
+
 %description
 OpenStego is a tool implemented in Java for generic steganography,
 with support for password-based encryption of the data. It supports
 plugins for various steganographic algorithms.
 
+%description -l fr
+OpenStego est un outil implanté en Java pour la steganographie générique,
+avec le support de l'encryption des données basé sur mot de passe. Il
+supporte les plugins pour des algorithmes steganographiques variés.
+
+
 %package javadoc
-Group:     Development/Java
+Group: Development/Java
 BuildArch: noarch
 Requires:  jpackage-utils
 Summary:   Javadoc generated documentation for Openstego
+Summary(fr):    Documentation javadoc générée pour Openstego
 
 %description javadoc
 Javadoc generated documentation for Openstego.
+
+%description javadoc -l fr
+Documentation javadoc générée pour Openstego
 
 
 %prep
@@ -77,6 +92,9 @@ touch $RPM_BUILD_ROOT/etc/java/OpenStego.conf
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt2_10jpp7
+- new fc release
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt2_9jpp7
 - new version
 
