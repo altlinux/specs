@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:           jdependency
 Version:        0.7
-Release:        alt1_1jpp7
+Release:        alt1_4jpp7
 Summary:        This project provides an API to analyse class dependencies
 
 Group:          Development/Java
@@ -18,7 +18,6 @@ Source0:        tcurdt-jdependency-jdependency-%{version}-0-%{githash}.tar.gz
 BuildArch: noarch
 
 BuildRequires:     maven
-#BuildRequires:     maven2-common-poms
 BuildRequires:     maven-compiler-plugin
 BuildRequires:     maven-install-plugin
 BuildRequires:     maven-jar-plugin
@@ -32,14 +31,11 @@ BuildRequires:  objectweb-asm
 BuildRequires:  apache-commons-io
 Requires:  objectweb-asm >= 3.2
 Requires:  apache-commons-io
-
-Requires(post):    jpackage-utils
-Requires(postun):  jpackage-utils
 Source44: import.info
 
 
 %description
-jdependency is small library that helps you analyze class level 
+jdependency is small library that helps you analyze class level
 dependencies, clashes and missing classes.
 
 %package javadoc
@@ -53,15 +49,12 @@ BuildArch: noarch
 
 %prep
 %setup -q -n tcurdt-jdependency-%{foldhash}
-# asm >= 3.3
-sed -i -e 's,<groupId>asm</groupId>,<groupId>org.objectweb.asm</groupId>,' pom.xml
 
 %build
 mvn-rpmbuild -Dmaven.test.failure.ignore=true \
     install javadoc:javadoc
 
 %install
-
 # Jar
 mkdir -p %{buildroot}%{_javadir}
 install -Dpm 644  target/%{name}-%{version}.jar  \
@@ -90,6 +83,9 @@ install -Dpm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-jdependency.pom
 %doc LICENSE.txt
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7-alt1_4jpp7
+- new fc release
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.7-alt1_1jpp7
 - fc version
 
