@@ -1,9 +1,8 @@
-BuildRequires: maven-antrun-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:     jgroups212
 Version:  2.12.3
-Release:  alt1_2jpp7
+Release:  alt1_3jpp7
 Summary:  A toolkit for reliable multicast communication
 
 Group:    Development/Java
@@ -14,6 +13,7 @@ URL:      http://www.jgroups.org
 # find jgroups212-2.12.3.Final/ -name '*.jar' -type f -delete
 # tar -cJf jgroups212-2.12.3.Final.tar.xz jgroups212-2.12.3.Final
 Source0:  %{name}-%{version}.Final.tar.xz
+Patch0:   %{name}-groupid.patch
 BuildArch:     noarch
 
 BuildRequires: maven
@@ -53,9 +53,13 @@ BuildArch: noarch
 %setup -q -n %{name}-%{version}.Final
 find . -name \*.jar -exec rm -f {} \;
 
+%patch0 -p1
+
 %build
 # Tests to not current run under maven for this project
-mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
+mvn-rpmbuild -Dmaven.test.skip=true install \
+    -Dproject.build.sourceEncoding=UTF-8 \
+    javadoc:aggregate
 
 %install
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
@@ -86,6 +90,9 @@ chmod 644 README
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_3jpp7
+- new fc release
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 2.12.3-alt1_2jpp7
 - new version
 
