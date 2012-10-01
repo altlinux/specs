@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.7.2
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -905,7 +905,7 @@ Summary: GCC documentation
 Group: Development/Other
 BuildArch: noarch
 Provides: gcc-doc = %version-%release
-Obsoletes: gcc-doc gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc
+Obsoletes: gcc-doc gcc3.0-doc gcc3.1-doc gcc3.2-doc gcc3.3-doc gcc3.4-doc gcc4.1-doc gcc4.3-doc gcc4.4-doc gcc4.5-doc gcc4.6-doc
 Conflicts: gcc-doc > %version
 
 %description doc
@@ -1439,6 +1439,7 @@ for n in \
     libmudflap-devel libmudflap-devel-static \
     %{?_with_cxx:gcc-c++ libstdc++-devel libstdc++-devel-static} \
     %{?_with_fortran:gcc-fortran libgfortran-devel libgfortran-devel-static} \
+    %{?_with_fortran:libquadmath-devel libquadmath-devel-static} \
     %{?_with_ada:gcc-gnat libgnat libgnat-devel libgnat-devel-static} \
     %{?_with_java:gcc-java libgcj libgcj-plugins libgcj-devel} \
     %{?_with_objc:gcc-objc libobjc-devel libobjc-devel-static %{?_with_cxx:gcc-objc++}} \
@@ -1617,7 +1618,6 @@ EOF
 %gcc_target_libdir/libitm.spec
 %dir %gcc_doc_dir
 %gcc_doc_dir/libitm
-%_infodir/libitm.info*
 
 %files -n libitm%gcc_branch-devel-static
 %config %_sysconfdir/buildreqs/packages/substitute.d/libitm%gcc_branch-devel-static
@@ -1674,14 +1674,15 @@ EOF
 %_libdir/libquadmath.so.0*
 
 %files -n libquadmath%gcc_branch-devel
+%config %_sysconfdir/buildreqs/packages/substitute.d/libquadmath%gcc_branch-devel
 %dir %gcc_target_libdir
 %dir %gcc_target_libdir/include
 %dir %gcc_target_libdir/include/quadmath.h
 %dir %gcc_target_libdir/include/quadmath_weak.h
 %gcc_target_libdir/libquadmath.so
-%_infodir/libquadmath.info*
 
 %files -n libquadmath%gcc_branch-devel-static
+%config %_sysconfdir/buildreqs/packages/substitute.d/libquadmath%gcc_branch-devel-static
 %dir %gcc_target_libdir
 %gcc_target_libdir/libquadmath.a
 %endif
@@ -1968,14 +1969,18 @@ EOF
 
 %files locales -f gcc%psuffix.lang
 
-%ifndef _cross_platfoem
+%ifndef _cross_platform
 
 %files doc
 %{?_enable_doxygen:%_man3dir/*}
 %_infodir/cpp*.info*
 %_infodir/gcc*.info*
-%{!?_cross_platform:%_infodir/libgomp*.info*}
+%_infodir/libitm.info*
+%_infodir/libgomp*.info*
 %{?_with_fortran:%_infodir/gfortran.info*}
+%ifarch %ix86 x86_64 ia64
+%{?_with_fortran:%_infodir/libquadmath.info*}
+%endif
 %{?_with_java:%_infodir/gcj.info*}
 %{?_with_java:%_infodir/cp-tools.info*}
 %{?_with_ada:%_infodir/gnat*.info*}
@@ -1990,6 +1995,10 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Oct 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.7.2-alt3
+- relocate libquadmath and libitm info files to doc subpackage
+- add libquadmath substitute rule for buildreq
+
 * Mon Oct 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.7.2-alt2
 - force linker hash style to gnu
 
