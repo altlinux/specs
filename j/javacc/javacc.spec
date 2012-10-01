@@ -32,17 +32,17 @@ BuildRequires: jpackage-compat
 
 Name:           javacc
 Version:        5.0
-Release:        alt3_5jpp7
+Release:        alt3_7jpp7
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
-Source0:        https://javacc.dev.java.net/files/documents/17/142527/%{name}-%{version}src.tar.gz
+Source0:        http://java.net/projects/%{name}/downloads/download/%{name}-%{version}src.tar.gz
 Source1:        javacc.sh
 Source2:        jjdoc
 Source3:        jjtree
 #Jar used for bootstrapping
 Source4:        javacc.jar
-URL:            https://javacc.dev.java.net/
+URL:            http://javacc.java.net/
 Group:          Development/Java
 Requires:       jpackage-utils >= 0:1.5
 BuildRequires:  ant ant-junit junit >= 0:3.8.1
@@ -62,7 +62,7 @@ a tool called JJTree included with JavaCC), actions, debugging, etc.
 %package manual
 Summary:        Manual for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description manual
@@ -71,7 +71,7 @@ Manual for %{name}.
 %package demo
 Summary:        Examples for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description demo
 Examples for %{name}.
@@ -97,19 +97,18 @@ find . -name "*.jar" -exec rm {} \;
 ant jar
 
 %install
-rm -fr $RPM_BUILD_ROOT
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 bin/lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-ln -s %{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
-install -d -m 755 $RPM_BUILD_ROOT/%{_bindir}
-install -pD -T -m 755 %{SOURCE1} $RPM_BUILD_ROOT/%{_bindir}/javacc.sh
-install -pD -T -m 755 %{SOURCE2} $RPM_BUILD_ROOT/%{_bindir}/jjdoc
-install -pD -T -m 755 %{SOURCE3} $RPM_BUILD_ROOT/%{_bindir}/jjtree
+# jar
+install -Dpm 644 bin/lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
 
-install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
+# bin
+install -Dp -T -m 755 %{SOURCE1} $RPM_BUILD_ROOT/%{_bindir}/javacc.sh
+install -Dp -T -m 755 %{SOURCE2} $RPM_BUILD_ROOT/%{_bindir}/jjdoc
+install -Dp -T -m 755 %{SOURCE3} $RPM_BUILD_ROOT/%{_bindir}/jjtree
 
-%add_to_maven_depmap net.java.dev.javacc %{name} %{version} JPP %{name}
+# pom
+install -Dpm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
+
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 ln -s javacc.sh %buildroot%_bindir/%name
 
 %files
@@ -127,6 +126,9 @@ ln -s javacc.sh %buildroot%_bindir/%name
 %doc examples
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt3_7jpp7
+- new fc release
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt3_5jpp7
 - applied repocop patches
 
