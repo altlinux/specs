@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       jbosscache-core
 Version:    3.2.8
-Release:    alt1_3jpp7
+Release:    alt1_4jpp7
 Summary:    JBoss objects cache
 
 Group:      Development/Java
@@ -12,6 +12,7 @@ URL:        http://jboss.org/jbosscache
 # tar cJf jbosscache-core-3.2.8.tar.xz jbosscache-core-3.2.8
 Source0:    %{name}-%{version}.tar.xz
 Source1:    %{name}-depmap.xml
+Patch0:     %{name}-jgroups212.patch
 
 BuildRequires:  maven
 BuildRequires:  maven-surefire-plugin
@@ -64,6 +65,8 @@ find . -name \*.jar -exec rm -f {} \;
 # Remove code for amazon-s3 and berkleydb-je dependencies
 rm -rf src/main/java/org/jboss/cache/loader/{s3,bdbje}
 
+%patch0 -p1
+
 %build
 # Not running tests due to missing dependencies
 mvn-rpmbuild install -Dmaven.test.skip=true \
@@ -97,6 +100,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_4jpp7
+- new fc release
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_3jpp7
 - new version
 
