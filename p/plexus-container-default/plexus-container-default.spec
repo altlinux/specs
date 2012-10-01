@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-container-default
 Version:        1.0
-Release:        alt5_0.8.a9jpp7
+Release:        alt5_0.9.a9jpp7
 Epoch:          0
 Summary:        Default Plexus Container
 License:        ASL 2.0 and MIT
@@ -116,6 +116,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.9.a9jpp7
+- new fc release
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.8.a9jpp7
 - fc build
 
