@@ -1,4 +1,3 @@
-%def_with artifact_resolver
 Epoch: 0
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -71,7 +70,7 @@ Summary:        Maven Shared Components
 URL:            http://maven.apache.org/shared/
 Name:           maven-shared
 Version:        15
-Release:        alt9_23jpp7
+Release:        alt9_24jpp7
 License:        ASL 2.0
 Group:          Development/Java
 
@@ -153,7 +152,7 @@ Summary:        Maven Shared File Management API
 Group:          Development/Java
 Version:        %{file_management_version}
 Requires:  %{name}
-Requires:  %{name}-io
+Requires:  %{name}-io >= 0:%{io_version}
 Requires:  maven
 Requires:  plexus-container-default
 Requires:  plexus-utils
@@ -355,7 +354,6 @@ BuildArch: noarch
 %description javadoc
 %{summary}.
 
-%if_with artifact_resolver
 %package artifact-resolver
 Summary:        Maven Artifact Resolution API
 Group:          Development/Java
@@ -365,12 +363,9 @@ Requires:  ant
 Requires:  maven
 Requires:  maven-artifact-manager
 Requires:  maven-project
-%endif #artifact_resolver
 
-%if_with artifact_resolver
 %description artifact-resolver
 Provides a component for plugins to easily resolve project dependencies.
-%endif #artifact_resolver
 
 %package reporting-api
 Summary:        Maven Reporting API
@@ -619,12 +614,10 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_mavenpomdir}/JPP.%{name}-verifier.pom
 %{_mavendepmapfragdir}/%{name}-verifier
 
-%if_with artifact_resolver
 %files artifact-resolver
 %{_javadir}/%{name}/artifact-resolver.jar
 %{_mavenpomdir}/JPP.%{name}-artifact-resolver.pom
 %{_mavendepmapfragdir}/%{name}-artifact-resolver
-%endif #artifact_resolver
 
 %files reporting-api
 %{_javadir}/%{name}/reporting-api.jar
@@ -640,6 +633,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:15-alt9_24jpp7
+- new fc release
+
 * Tue Apr 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:15-alt9_23jpp7
 - dropped versioned requires
 
