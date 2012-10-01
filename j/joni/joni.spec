@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 
 Name:             joni
 Version:          1.1.3
-Release:          alt1_6jpp7
+Release:          alt1_7jpp7
 Summary:          Java port of Oniguruma regexp library 
 Group:            Development/Java
 License:          MIT
@@ -63,6 +63,9 @@ sed -i -e 's|\r||' test/org/joni/test/TestA.java
 %doc test
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_7jpp7
+- new fc release
+
 * Sat Apr 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_6jpp7
 - new version
 
