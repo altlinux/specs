@@ -3,8 +3,8 @@ BuildRequires: guile18-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libmatheval
-Version:        1.1.8
-Release:        alt1_3
+Version:        1.1.9
+Release:        alt1_1
 Summary:        Library for parsing and evaluating symbolic expressions input as text
 
 Group:          System/Libraries
@@ -29,7 +29,7 @@ expressions to strings.
 %package devel
 Summary:        Development files for libmatheval
 Group:          Development/C
-Requires:       libmatheval = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
 This package contains the development files for libmatheval.
@@ -65,6 +65,9 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.9-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.8-alt1_3
 - update to new release by fcimport
 
