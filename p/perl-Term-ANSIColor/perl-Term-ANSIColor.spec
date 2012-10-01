@@ -1,6 +1,6 @@
 %define dist Term-ANSIColor
 Name: perl-Term-ANSIColor
-Version: 3.01
+Version: 3.02
 Release: alt1
 
 Summary: Color output using ANSI escape sequences
@@ -39,6 +39,9 @@ rm t/pod*.t
 %perl_vendor_privlib/Term
 
 %changelog
+* Mon Oct 01 2012 Vladimir Lettiev <crux@altlinux.ru> 3.02-alt1
+- 3.01 -> 3.02
+
 * Sat Aug 06 2011 Alexey Tourbin <at@altlinux.ru> 3.01-alt1
 - 3.00 -> 3.01
 
