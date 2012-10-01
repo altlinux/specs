@@ -4,13 +4,13 @@ BuildRequires: jpackage-compat
 
 Name:    mchange-commons
 Version: 0.2
-Release: alt1_0.5.20110130hgjpp7
+Release: alt1_0.7.20110130hgjpp7
 Summary: A collection of general purpose utilities for c3p0
 License: LGPLv2
 URL:     http://sourceforge.net/projects/c3p0
 Group:   Development/Java
 
-BuildRequires: java-javadoc 
+BuildRequires: java-javadoc >= 1:1.6.0
 BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: junit
@@ -61,15 +61,16 @@ find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
 
 %build
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
+ant \
   -Dbuild.sysclasspath=first \
   -Djunit.jar.file=`build-classpath junit` \
   -Dlog4j.jar.file=`build-classpath log4j`
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 javadoc
+ant javadoc
 
 %install
 # jar
-install -pD -T build/%{name}-%{version}.jar \
+install -d -m 755 %{buildroot}%{_javadir}
+install -p -m 644 build/%{name}-%{version}.jar \
   %{buildroot}%{_javadir}/%{name}.jar
 
 # javadocs
@@ -83,6 +84,9 @@ cp -pr docs/* %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1_0.7.20110130hgjpp7
+- new fc release
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1_0.5.20110130hgjpp7
 - fc version
 
