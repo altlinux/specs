@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           google-%{short_name}
 Version:        3.0
-Release:        alt1_0.6.rc2jpp7
+Release:        alt1_0.7.rc2jpp7
 Summary:        Lightweight dependency injection framework
 
 
@@ -170,6 +170,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 
 
 %changelog
+* Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0-alt1_0.7.rc2jpp7
+- new fc release
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0-alt1_0.6.rc2jpp7
 - complete build
 
