@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	304.51
-%define module_release	alt1
+%define module_release	alt2
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
 %if "%xorg_ver" == ""
@@ -17,14 +17,14 @@
 %define legacy1 %nil
 %endif
 %define legacy1_src %(echo %legacy1 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.11
-%define legacy2 96.43.20
+%nvIF_ver_lt %xorg_ver 1.13
+%define legacy2 96.43.23
 %else
 %define legacy2 %nil
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.13
-%define legacy3 173.14.35
+%define legacy3 173.14.36
 %else
 %define legacy3 %nil
 %endif
@@ -193,8 +193,11 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 304.51-alt1.197892.1
+* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 304.51-alt2.197892.1
 - Build for kernel-image-std-def-3.5.4-alt1.
+
+* Tue Oct 02 2012 Sergey V Turchin <zerg at altlinux dot org> 304.51-alt2
+- new releases 173.14.35 and 96.43.23 with xorg-server-1.12 support)
 
 * Tue Oct 02 2012 Sergey V Turchin <zerg at altlinux dot org> 304.51-alt1
 - new release (304.51)
