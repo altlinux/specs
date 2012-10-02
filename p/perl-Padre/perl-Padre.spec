@@ -1,17 +1,15 @@
-%define m_distro Padre
+%define dist Padre
 Name: perl-Padre
-Version: 0.92
+Version: 0.96
 Release: alt1
+
 Summary: Padre - Perl Application Development and Refactoring Environment
-
-Packager: Vladimir Lettiev <crux@altlinux.ru>
-
-Group: Development/Perl
 License: Perl
-Url: http://search.cpan.org/~plaven/Padre/
+Group: Development/Perl
 
-Source: %m_distro-%version.tar
-Patch0: %name-%version-%release.patch
+Url: %CPAN %dist
+Source: %dist-%version.tar.gz
+Source1: padre.desktop
 
 %add_findreq_skiplist */Padre/Wx/About.pm
 %add_findreq_skiplist */auto/share/dist/Padre/*
@@ -28,8 +26,7 @@ Requires: perl-POD2-Base perl(CGI.pm) perl(CPAN.pm) perl(Capture/Tiny.pm) perl(C
 %summary
 
 %prep
-%setup -q -n %m_distro-%version
-%patch -p1
+%setup -q -n %dist-%version
 
 %build
 xvfb-run -a perl Makefile.PL PREFIX=/usr INSTALLDIRS=vendor
@@ -45,7 +42,7 @@ convert %buildroot%perl_vendor_privlib/auto/share/dist/Padre/icons/padre/64x64/l
     -scale 32x32 %buildroot%_niconsdir/padre.png
 convert %buildroot%perl_vendor_privlib/auto/share/dist/Padre/icons/padre/64x64/logo.png \
     -scale 16x16 %buildroot%_miconsdir/padre.png
-cp padre.desktop %buildroot%_desktopdir
+cp %SOURCE1 %buildroot%_desktopdir
 
 %files
 %_bindir/padre
@@ -58,6 +55,10 @@ cp padre.desktop %buildroot%_desktopdir
 %doc Changes README Artistic COPYING
 
 %changelog
+* Mon Oct 01 2012 Vladimir Lettiev <crux@altlinux.ru> 0.96-alt1
+- 0.92 -> 0.96
+- built as plain srpm
+
 * Mon Nov 14 2011 Vladimir Lettiev <crux@altlinux.ru> 0.92-alt1
 - New version 0.92
 - New builddeps: perl-File-Slurp, perl-Wx-Scintilla, perl-ORLite-Migrate
