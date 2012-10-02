@@ -1,6 +1,6 @@
 Name: dvblast
 Version: 2.2
-Release: alt4
+Release: alt5
 
 Summary: Video/Audio streaming application based on the linux-dvb API
 License: GPLv2+
@@ -29,6 +29,7 @@ these features, switch to VLC.
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %make
@@ -46,6 +47,11 @@ install -pm0644 -D dvblast.1 %buildroot%_man1dir/dvblast.1
 %_man1dir/dvblast.1*
 
 %changelog
+* Tue Oct 02 2012 Alexei Takaseev <taf@altlinux.org> 2.2-alt5
+- Fix build
+- Merge with upstream (git: 45d0fa69350915a099796e7eb6b6b0bd1041ecce)
+- Add missing patch to spec
+
 * Sat Aug 11 2012 Alexei Takaseev <taf@altlinux.org> 2.2-alt4
 - Add support for uncommitted diseqc switch. (git: 05381442b9956fb280d5f4770e710df44b55cf26)
 
