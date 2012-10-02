@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 2.7.0
-Release: alt1
+Release: alt1.1
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -38,8 +38,8 @@ Conflicts: kipi-plugins <= 3:0.1.6-alt5
 BuildRequires(pre): kde4libs-devel kde4graphics-devel
 BuildRequires: gcc-c++ kde4pimlibs-devel libgomp-devel libkgeomap-devel qjson-devel libqca2-devel
 BuildRequires: libgio-devel libgpod-devel libgtk+2-devel
-BuildRequires: libopencv2-devel libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
-BuildRequires: libkvkontakte-devel libmediawiki-devel
+BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
+BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel
 
 %description
 The library of the KDE Image Plugin Interface used by digiKam and Gwenview
@@ -163,6 +163,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.1
+- Rebuilt with libopencv2.4
+
 * Wed Jul 11 2012 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt1
 - new version
 
