@@ -9,24 +9,26 @@ BuildRequires: jpackage-compat
 Summary:        The PDF Tool Kit
 Name:           pdftk
 Version:        1.44
-Release:        alt2_6jpp6
+Release:        alt2_10jpp7
 License:        GPLv2+
 URL:            http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
 Source0:        http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/%{name}-%{version}-src.zip
 Patch0:         pdftk-use-internal-itext.patch
 # Solves ".afm files not found" error. RHBZ#494785:
-Patch4:         pdftk-classpath.patch
+Patch1:         pdftk-classpath.patch
+Patch2:         pdftk-1.44-gcjfix.patch
 Group:          Publishing
-BuildRequires:  gcc-java
-BuildRequires:  libgcj-devel
+# Solves #712013 wjocj requires gcc 4.7.0-2 as minimum
+BuildRequires:  gcc-java >= 4.7.0-2
+BuildRequires:  libgcj-devel >= 4.7.0-2
 
 BuildRequires:  itext >= %{itextvers}
 
-Requires:       itext >= 2.1.7-6
+Requires:       itext%{?_isa} >= 2.1.7-6
 
-%{?filter_setup:
+%{echo 
 %filter_from_requires /\.jar\.so/d
-%filter_setup
+
 }
 Source44: import.info
 
@@ -52,7 +54,8 @@ C++ code to use iText's (itext-paulo) Java classes.
 %prep
 %setup -q -n %{name}-%{version}-dist
 %patch0 -p1
-%patch4 -p0 -b .classpath
+%patch1 -p0 -b .classpath
+%patch2 -p1 -b .gcjfix
 
 # Remove bundled libraries from the source tree
 rm -rf java
@@ -87,6 +90,9 @@ install -m 0644 pdftk.1 $RPM_BUILD_ROOT/%{_mandir}/man1/pdftk.1
 %{_mandir}/man1/%{name}*
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.44-alt2_10jpp7
+- new fc release
+
 * Sat Apr 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.44-alt2_6jpp6
 - build with itext instead of itext2
 
