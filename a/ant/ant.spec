@@ -1,6 +1,6 @@
 Name: ant
 Version: 1.8.4
-Release: alt1
+Release: alt2
 # optional py and pl scripts in /usr/share/ant/bin
 %filter_from_requires /perl/d
 %filter_from_requires /python/d
@@ -370,6 +370,15 @@ Requires: junit
 %description -n %{name}-junit
 JUnit task support for ant, a platform-independent build tool for Java.
 
+%package -n %{name}-junit3
+Summary: JUnit task support for Ant
+Group: Development/Java
+Requires: %name = %version
+Requires: junit3
+
+%description -n %{name}-junit3
+JUnit task support for ant, a platform-independent build tool for Java.
+
 %package -n %{name}-junit4
 Summary: JUnit task support for Ant
 Group: Development/Java
@@ -507,7 +516,7 @@ jai/jai_core \
 jai/jai_codec \
 javamail \
 jdepend \
-junit \
+junit3 \
 junit4 \
 log4j \
 oro \
@@ -556,42 +565,43 @@ install -d -m755 %{buildroot}%ant_home/bin
 
 # jars
 install -d -m 755 %{buildroot}%{_javadir}/%{name}
-install -d -m 755 %{buildroot}%{_datadir}/maven2/poms
+install -d -m 755 %{buildroot}%{_mavenpomdir}
 
 pushd java-repository
-%{__cp} -p org/apache/ant/ant/%{namedversion}/ant-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{__ln_s} %{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-nodeps.pom
-%{__ln_s} %{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-trax.pom
-%{__cp} -p org/apache/ant/ant-antlr/%{namedversion}/ant-antlr-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-antlr.pom
-%{__cp} -p org/apache/ant/ant-apache-bcel/%{namedversion}/ant-apache-bcel-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-bcel.pom
-%{__cp} -p org/apache/ant/ant-apache-bsf/%{namedversion}/ant-apache-bsf-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-bsf.pom
-%{__cp} -p org/apache/ant/ant-apache-log4j/%{namedversion}/ant-apache-log4j-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-log4j.pom
-%{__cp} -p org/apache/ant/ant-apache-oro/%{namedversion}/ant-apache-oro-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-oro.pom
-%{__cp} -p org/apache/ant/ant-apache-regexp/%{namedversion}/ant-apache-regexp-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-regexp.pom
-%{__cp} -p org/apache/ant/ant-apache-resolver/%{namedversion}/ant-apache-resolver-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-resolver.pom
+%{__cp} -p org/apache/ant/ant/%{namedversion}/ant-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%{__ln_s} %{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-nodeps.pom
+%{__ln_s} %{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-trax.pom
+%{__cp} -p org/apache/ant/ant-antlr/%{namedversion}/ant-antlr-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-antlr.pom
+%{__cp} -p org/apache/ant/ant-apache-bcel/%{namedversion}/ant-apache-bcel-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-apache-bcel.pom
+%{__cp} -p org/apache/ant/ant-apache-bsf/%{namedversion}/ant-apache-bsf-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-apache-bsf.pom
+%{__cp} -p org/apache/ant/ant-apache-log4j/%{namedversion}/ant-apache-log4j-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-apache-log4j.pom
+%{__cp} -p org/apache/ant/ant-apache-oro/%{namedversion}/ant-apache-oro-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-apache-oro.pom
+%{__cp} -p org/apache/ant/ant-apache-regexp/%{namedversion}/ant-apache-regexp-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-apache-regexp.pom
+%{__cp} -p org/apache/ant/ant-apache-resolver/%{namedversion}/ant-apache-resolver-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-apache-resolver.pom
 %if 1
-%{__cp} -p org/apache/ant/ant-apache-xalan2/%{namedversion}/ant-apache-xalan2-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-xalan2.pom
+%{__cp} -p org/apache/ant/ant-apache-xalan2/%{namedversion}/ant-apache-xalan2-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-apache-xalan2.pom
 %endif
-%{__cp} -p org/apache/ant/ant-commons-logging/%{namedversion}/ant-commons-logging-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-commons-logging.pom
-%{__cp} -p org/apache/ant/ant-commons-net/%{namedversion}/ant-commons-net-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-commons-net.pom
+%{__cp} -p org/apache/ant/ant-commons-logging/%{namedversion}/ant-commons-logging-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-commons-logging.pom
+%{__cp} -p org/apache/ant/ant-commons-net/%{namedversion}/ant-commons-net-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-commons-net.pom
 %if 1
-%{__cp} -p org/apache/ant/ant-jai/%{namedversion}/ant-jai-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-jai.pom
+%{__cp} -p org/apache/ant/ant-jai/%{namedversion}/ant-jai-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-jai.pom
 %endif
-%{__cp} -p org/apache/ant/ant-javamail/%{namedversion}/ant-javamail-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-javamail.pom
-%{__cp} -p org/apache/ant/ant-jdepend/%{namedversion}/ant-jdepend-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-jdepend.pom
-%{__cp} -p org/apache/ant/ant-jmf/%{namedversion}/ant-jmf-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-jmf.pom
-%{__cp} -p org/apache/ant/ant-jsch/%{namedversion}/ant-jsch-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-jsch.pom
-%{__cp} -p org/apache/ant/ant-junit/%{namedversion}/ant-junit-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-junit.pom
+%{__cp} -p org/apache/ant/ant-javamail/%{namedversion}/ant-javamail-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-javamail.pom
+%{__cp} -p org/apache/ant/ant-jdepend/%{namedversion}/ant-jdepend-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-jdepend.pom
+%{__cp} -p org/apache/ant/ant-jmf/%{namedversion}/ant-jmf-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-jmf.pom
+%{__cp} -p org/apache/ant/ant-jsch/%{namedversion}/ant-jsch-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-jsch.pom
+%{__cp} -p org/apache/ant/ant-junit/%{namedversion}/ant-junit-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-junit.pom
 %if 1
-%{__cp} -p org/apache/ant/ant-junit4/%{namedversion}/ant-junit4-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-junit4.pom
+ln -s JPP.%{name}-ant-junit.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-junit3.pom
+%{__cp} -p org/apache/ant/ant-junit4/%{namedversion}/ant-junit4-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-junit4.pom
 %endif
-%{__cp} -p org/apache/ant/ant-launcher/%{namedversion}/ant-launcher-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-launcher.pom
+%{__cp} -p org/apache/ant/ant-launcher/%{namedversion}/ant-launcher-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}-launcher.pom
 %if_with manifest_only
-%{__cp} -p org/apache/ant/ant-netrexx/%{namedversion}/ant-netrexx-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-netrexx.pom
+%{__cp} -p org/apache/ant/ant-netrexx/%{namedversion}/ant-netrexx-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-netrexx.pom
 %endif
-%{__cp} -p org/apache/ant/ant-parent/%{namedversion}/ant-parent-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-parent.pom
-%{__cp} -p org/apache/ant/ant-swing/%{namedversion}/ant-swing-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-swing.pom
-%{__cp} -p org/apache/ant/ant-testutil/%{namedversion}/ant-testutil-%{namedversion}.pom %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-testutil.pom
+%{__cp} -p org/apache/ant/ant-parent/%{namedversion}/ant-parent-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}-parent.pom
+%{__cp} -p org/apache/ant/ant-swing/%{namedversion}/ant-swing-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-swing.pom
+%{__cp} -p org/apache/ant/ant-testutil/%{namedversion}/ant-testutil-%{namedversion}.pom %{buildroot}%{_mavenpomdir}/JPP-%{name}-testutil.pom
 popd
 
 install -p -m 644 build/lib/ant.jar %{buildroot}%{_javadir}/%{name}-%{version}.jar
@@ -692,6 +702,9 @@ install -p -m 644 build/lib/ant-jsch.jar %{buildroot}%{_javadir}/%{name}/ant-jsc
 install -p -m 644 build/lib/ant-junit.jar %{buildroot}%{_javadir}/%{name}/ant-junit-%{version}.jar
 %add_to_maven_depmap org.apache.ant %{name}-junit %{version} JPP/%{name} ant-junit
 %add_to_maven_depmap ant %{name}-junit %{version} JPP/%{name} ant-junit
+ln -s ant-junit.jar %{buildroot}%{_javadir}/%{name}/ant-junit3.jar
+#add_to_maven_depmap_at ant-junit3 org.apache.ant %{name}-junit3 %{version} JPP/%{name} ant-junit3
+#add_to_maven_depmap_at ant-junit3 ant %{name}-junit %{version} JPP/%{name} ant-junit3
 install -p -m 644 build/lib/ant-junit4.jar %{buildroot}%{_javadir}/%{name}/ant-junit4-%{version}.jar
 %add_to_maven_depmap org.apache.ant %{name}-junit4 %{version} JPP/%{name} ant-junit4
 %add_to_maven_depmap ant %{name}-junit4 %{version} JPP/%{name} ant-junit4
@@ -792,6 +805,7 @@ echo "javamail jaf %{name}/ant-javamail" > %{buildroot}%{_sysconfdir}/%{name}.d/
 echo "jdepend %{name}/ant-jdepend" > %{buildroot}%{_sysconfdir}/%{name}.d/jdepend
 echo "jsch %{name}/ant-jsch" > %{buildroot}%{_sysconfdir}/%{name}.d/jsch
 echo "junit %{name}/ant-junit" > %{buildroot}%{_sysconfdir}/%{name}.d/junit
+echo "junit3 %{name}/ant-junit3" > %{buildroot}%{_sysconfdir}/%{name}.d/junit3
 echo "junit4 %{name}/ant-junit4" > %{buildroot}%{_sysconfdir}/%{name}.d/junit4
 # we have full-fledged ant-stylebook in ALT
 echo "xml-stylebook %{name}/ant-stylebook" > %{buildroot}%{_sysconfdir}/ant.d/stylebook
@@ -814,12 +828,12 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{__install} -p -m 644 %{PATCH1} %{buildroot}%{repodirsrc}
 #{__install} -p -m 644 %{PATCH2} %{buildroot}%{repodirsrc}
 %{__install} -p -m 644 %{PATCH3} %{buildroot}%{repodirsrc}
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom %{buildroot}%{repodirlib}/ant.pom
+%{__cp} -p %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom %{buildroot}%{repodirlib}/ant.pom
 %{__cp} -p %{buildroot}%{_javadir}/%{name}-%{version}.jar %{buildroot}%{repodirlib}/ant.jar
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}-launcher.pom %{buildroot}%{repodirlib}/ant-launcher.pom
+%{__cp} -p %{buildroot}%{_mavenpomdir}/JPP-%{name}-launcher.pom %{buildroot}%{repodirlib}/ant-launcher.pom
 %{__cp} -p %{buildroot}%{_javadir}/%{name}-launcher-%{version}.jar %{buildroot}%{repodirlib}/ant-launcher.jar
 %if_without bootstrap
-%{__cp} -p %{buildroot}%{_datadir}/maven2/poms/JPP.%{name}-ant-junit.pom %{buildroot}%{repodirlib}/ant-junit.pom
+%{__cp} -p %{buildroot}%{_mavenpomdir}/JPP.%{name}-ant-junit.pom %{buildroot}%{repodirlib}/ant-junit.pom
 %{__cp} -p %{buildroot}%{_javadir}/%{name}/ant-junit-%{version}.jar %{buildroot}%{repodirlib}/ant-junit.jar
 %endif
 %endif
@@ -858,11 +872,11 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %_javadir/ant-launcher.jar
 # poms
 %{_mavendepmapfragdir}/%{name}
-%{_datadir}/maven2/poms/JPP-%{name}-launcher.pom
-%{_datadir}/maven2/poms/JPP-%{name}-parent.pom
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_datadir}/maven2/poms/JPP.%{name}-ant-nodeps.pom
-%{_datadir}/maven2/poms/JPP.%{name}-ant-trax.pom
+%{_mavenpomdir}/JPP-%{name}-launcher.pom
+%{_mavenpomdir}/JPP-%{name}-parent.pom
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavenpomdir}/JPP.%{name}-ant-nodeps.pom
+%{_mavenpomdir}/JPP.%{name}-ant-trax.pom
 %{_javadir}/%{name}/ant-nodeps.jar
 %{_javadir}/%{name}/ant-nodeps-%{version}.jar
 %{_javadir}/%{name}/ant-trax.jar
@@ -878,7 +892,7 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{_javadir}/%{name}-testutil-%{version}.jar
 %{_javadir}/%{name}-testutil.jar
 %config(noreplace) %{_sysconfdir}/%{name}.d/testutil
-%{_datadir}/maven2/poms/JPP-%{name}-testutil.pom
+%{_mavenpomdir}/JPP-%{name}-testutil.pom
 
 %files scripts
 %_bindir/*.pl
@@ -931,20 +945,20 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %_javadir/%{name}/ant-xalan1.jar
 %_javadir/%{name}/ant-xslp-%version.jar
 %_javadir/%{name}/ant-xslp.jar
-%{_datadir}/maven2/poms/JPP.%{name}-ant-netrexx.pom
+%{_mavenpomdir}/JPP.%{name}-ant-netrexx.pom
 %endif
 
 %files -n %{name}-antlr
 %_javadir/%{name}/ant-antlr.jar
 %_javadir/%{name}/ant-antlr-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/antlr
-%{_datadir}/maven2/poms/JPP.%{name}-ant-antlr.pom
+%{_mavenpomdir}/JPP.%{name}-ant-antlr.pom
 
 %files -n %{name}-apache-bcel
 %_javadir/%{name}/ant-apache-bcel.jar
 %_javadir/%{name}/ant-apache-bcel-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/apache-bcel
-%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-bcel.pom
+%{_mavenpomdir}/JPP.%{name}-ant-apache-bcel.pom
 # old ant compat symlink
 %_javadir/%{name}/ant-jakarta-bcel.jar
 
@@ -952,25 +966,25 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %_javadir/%{name}/ant-commons-logging.jar
 %_javadir/%{name}/ant-commons-logging-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/commons-logging
-%{_datadir}/maven2/poms/JPP.%{name}-ant-commons-logging.pom
+%{_mavenpomdir}/JPP.%{name}-ant-commons-logging.pom
 
 %files -n %{name}-commons-net
 %_javadir/%{name}/ant-commons-net.jar
 %_javadir/%{name}/ant-commons-net-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/commons-net
-%{_datadir}/maven2/poms/JPP.%{name}-ant-commons-net.pom
+%{_mavenpomdir}/JPP.%{name}-ant-commons-net.pom
 
 %files -n %{name}-jai
 %_javadir/%{name}/ant-jai.jar
 %_javadir/%{name}/ant-jai-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/jai
-%{_datadir}/maven2/poms/JPP.%{name}-ant-jai.pom
+%{_mavenpomdir}/JPP.%{name}-ant-jai.pom
 
 %files -n %{name}-apache-oro
 %_javadir/%{name}/ant-apache-oro.jar
 %_javadir/%{name}/ant-apache-oro-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/apache-oro
-%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-oro.pom
+%{_mavenpomdir}/JPP.%{name}-ant-apache-oro.pom
 # old ant compat symlink
 %_javadir/%{name}/ant-jakarta-oro.jar
 
@@ -978,7 +992,7 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %_javadir/%{name}/ant-apache-regexp.jar
 %_javadir/%{name}/ant-apache-regexp-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/apache-regexp
-%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-regexp.pom
+%{_mavenpomdir}/JPP.%{name}-ant-apache-regexp.pom
 # old ant compat symlink
 %_javadir/%{name}/ant-jakarta-regexp.jar
 
@@ -986,49 +1000,54 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %{_javadir}/%{name}/ant-apache-xalan2.jar
 %_javadir/%{name}/ant-apache-xalan2-%version.jar
 %config(noreplace) %{_sysconfdir}/%{name}.d/apache-xalan2
-%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-xalan2.pom
+%{_mavenpomdir}/JPP.%{name}-ant-apache-xalan2.pom
 
 %files -n %{name}-javamail
 %_javadir/%{name}/ant-javamail.jar
 %_javadir/%{name}/ant-javamail-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/javamail
-%{_datadir}/maven2/poms/JPP.%{name}-ant-javamail.pom
+%{_mavenpomdir}/JPP.%{name}-ant-javamail.pom
 
 %files -n %{name}-jdepend
 %_javadir/%{name}/ant-jdepend.jar
 %_javadir/%{name}/ant-jdepend-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/jdepend
-%{_datadir}/maven2/poms/JPP.%{name}-ant-jdepend.pom
+%{_mavenpomdir}/JPP.%{name}-ant-jdepend.pom
 
 %files -n %{name}-jmf
 %_javadir/%{name}/ant-jmf.jar
 %_javadir/%{name}/ant-jmf-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/jmf
-%{_datadir}/maven2/poms/JPP.%{name}-ant-jmf.pom
+%{_mavenpomdir}/JPP.%{name}-ant-jmf.pom
 
 %files -n %{name}-jsch
 %_javadir/%{name}/ant-jsch.jar
 %_javadir/%{name}/ant-jsch-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/jsch
-%{_datadir}/maven2/poms/JPP.%{name}-ant-jsch.pom
+%{_mavenpomdir}/JPP.%{name}-ant-jsch.pom
 
 %files -n %{name}-junit
 %_javadir/%{name}/ant-junit.jar
 %_javadir/%{name}/ant-junit-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/junit
-%{_datadir}/maven2/poms/JPP.%{name}-ant-junit.pom
+%{_mavenpomdir}/JPP.%{name}-ant-junit.pom
+
+%files -n %{name}-junit3
+%_javadir/%{name}/ant-junit3.jar
+%config(noreplace) %{_sysconfdir}/ant.d/junit3
+%{_mavenpomdir}/JPP.%{name}-ant-junit3.pom
 
 %files -n %{name}-junit4
 %_javadir/%{name}/ant-junit4.jar
 %_javadir/%{name}/ant-junit4-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/junit4
-%{_datadir}/maven2/poms/JPP.%{name}-ant-junit4.pom
+%{_mavenpomdir}/JPP.%{name}-ant-junit4.pom
 
 %files -n %{name}-apache-log4j
 %_javadir/%{name}/ant-apache-log4j.jar
 %_javadir/%{name}/ant-apache-log4j-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/apache-log4j
-%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-log4j.pom
+%{_mavenpomdir}/JPP.%{name}-ant-apache-log4j.pom
 # old ant compat symlink
 %_javadir/%{name}/ant-jakarta-log4j.jar
 
@@ -1043,23 +1062,26 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %_javadir/%{name}/ant-swing.jar
 %_javadir/%{name}/ant-swing-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/swing
-%{_datadir}/maven2/poms/JPP.%{name}-ant-swing.pom
+%{_mavenpomdir}/JPP.%{name}-ant-swing.pom
 
 %files -n %{name}-apache-resolver
 %_javadir/%{name}/ant-apache-resolver.jar
 %_javadir/%{name}/ant-apache-resolver-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/apache-resolver
-%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-resolver.pom
+%{_mavenpomdir}/JPP.%{name}-ant-apache-resolver.pom
 
 %files -n %{name}-apache-bsf
 %_javadir/%{name}/ant-apache-bsf.jar
 %_javadir/%{name}/ant-apache-bsf-%version.jar
 %config(noreplace) %{_sysconfdir}/ant.d/apache-bsf
-%{_datadir}/maven2/poms/JPP.%{name}-ant-apache-bsf.pom
+%{_mavenpomdir}/JPP.%{name}-ant-apache-bsf.pom
 %endif
 # --------------------------------
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt2
+- added ant-junit3 subpackage
+
 * Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.4-alt1
 - new version
 
