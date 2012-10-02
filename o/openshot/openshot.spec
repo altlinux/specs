@@ -1,7 +1,7 @@
 Summary: Non Linear Video Editor using Python and MLT
 Name: openshot
-Version: 1.4.2
-Release: alt3
+Version: 1.4.3
+Release: alt1
 Source: %name-%version.tar.gz
 License: GPLv3
 Group: Video
@@ -45,6 +45,9 @@ video and audio together and render the output in many different formats.
 %_datadir/mime/packages/*
 
 %changelog
+* Tue Oct 02 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.3-alt1
+- New version
+
 * Mon Apr 02 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.2-alt3
 - Rebuild with Blender
 
