@@ -1,9 +1,9 @@
 Name: xNBTscan
 Version: 1.0
-Release: alt2
+Release: alt3
 
 Summary: xNBTscan is a graphical interface to NBTscan written in GTK+ 2.0
-License: GPL
+License: GPLv2+
 Group: Networking/Other
 
 Url: http://md2600.dyndns.org/~daten/
@@ -11,13 +11,14 @@ Url: http://md2600.dyndns.org/~daten/
 Source0: %name-%version.tar.bz2
 
 Patch0: xNBTscan-1.0-alt-build.patch
+Patch1: xnbtscan-alt-fix-warnings.patch
 
 Requires: nbtscan
 
-Packager: Igor Zubkov <icesik@altlinux.ru>
+Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Sat Jan 21 2006
-BuildRequires: fontconfig freetype2 glib2-devel libatk-devel libcairo-devel libgtk+2-devel libpango-devel pkg-config
+# Automatically added by buildreq on Tue Oct 02 2012
+BuildRequires: libgtk+2-devel
 
 %description
 xNBTscan is a graphical interface to NBTscan written in GTK+ 2.0.
@@ -32,18 +33,22 @@ NetBIOS computer name, logged-in user name and MAC address
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p0
 
 %build
 %make_build CFLAGS="%optflags"
 
 %install
-%__install -m755 -pD xnbtscan %buildroot%_bindir/xnbtscan
+install -m755 -pD xnbtscan %buildroot%_bindir/xnbtscan
 
 %files
 %doc README
 %_bindir/xnbtscan
 
 %changelog
+* Tue Oct 02 2012 Igor Zubkov <icesik@altlinux.org> 1.0-alt3
+- rebuilt for debuginfo
+
 * Mon Mar 27 2006 Igor Zubkov <icesik@altlinux.ru> 1.0-alt2
 - fix build with new ld / -Wl,--as-needed
 
