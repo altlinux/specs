@@ -39,7 +39,7 @@ Name:           apache-ibatis2
 Summary:        iBATIS SQL Maps Framework
 Url:            http://ibatis.apache.org/
 Version:        2.3.4
-Release:        alt2_2jpp6
+Release:        alt3_2jpp6
 Epoch:          0
 License:        Apache Software License 2
 Group:          Databases
@@ -160,6 +160,9 @@ ln -s ibator-1.2.1 ibator
 %patch0 -b .sav0
 %patch1 -b .sav1
 
+sed -i -e 's,all" depends="test.coverage,all" depends="src.compile,' ibatis-2-core/build/build.xml
+sed -i -e 's!target name="buildIbator" depends="assemble.zipfile, test.report, emma.report"!target name="buildIbator" depends="assemble.zipfile"!' ibator-1.2.1/core/build/build.xml
+
 %build
 cd ibatis-2-core
 pushd devlib
@@ -258,6 +261,9 @@ cp -pr ibator/core/htmldoc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-ibator-core-%{ave
 %{_docdir}/%{name}-ibator-core-%{aversion}
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.4-alt3_2jpp6
+- fixed build
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.4-alt2_2jpp6
 - built with java 6 due to abstract getParentLogger
 
