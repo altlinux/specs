@@ -2,7 +2,7 @@
 
 Name: libsvm
 Version: 3.12
-Release: alt1
+Release: alt2
 Summary: A Library for Support Vector Machines
 Group: Sciences/Mathematics
 License: BSD
@@ -98,6 +98,9 @@ install -m644 python/*.py %buildroot%python_sitelibdir_noarch
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.12-alt2
+- Fixed build
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.12-alt1
 - Version 3.12
 
