@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-1.6.0-compat
 # fedora bcond_with macro
@@ -6,7 +9,7 @@ BuildRequires: jpackage-1.6.0-compat
 # redefine altlinux specific with and without
 %define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
 %define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-# Copyright (c) 2000-2008, JPackage Project
+# Copyright (c) 2000-2012, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -41,23 +44,15 @@ BuildRequires: jpackage-1.6.0-compat
 %define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
 %define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
 
-#def_with gcj_support
-%bcond_with gcj_support
-#def_with jdk6
-%bcond_without jdk6
 %bcond_without maven
-%bcond_without repolib
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
+#def_with repolib
+%bcond_with repolib
 
 
 %define rsvn r508111
 %define rdate 15022007
 %define main_version 1.0
+%define naming_version 1.0
 %define components_version 2.2.1
 %define containerkit_version 2.2.1
 %define cornerstone_version 2.2.1
@@ -67,7 +62,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           excalibur
 Version:        1.0
-Release:        alt9_0.r508111.16jpp6
+Release:        alt9_0.r508111.18jpp6
 Epoch:          1
 Summary:        Excalibur IOC Frameworks, Containers, Components
 License:        ASL 2.0
@@ -79,6 +74,8 @@ Source3:        excalibur-settings.xml
 Source4:        excalibur-1.0-jpp-depmap.xml
 Source100:      excalibur-avalon-framework-component-info.xml
 Source101:      excalibur-avalon-logkit-component-info.xml
+Source102:      http://archive.apache.org/dist/avalon/excalibur/latest/excalibur-naming-1.0.zip
+Source103:      http://mirrors.ibiblio.org/maven2/excalibur-naming/excalibur-naming/1.0/excalibur-naming-1.0.pom
 # FIXME: patch out maven-gpg-plugin processing
 Patch0:         excalibur-r508111-00-pom_xml.patch
 #### # add saxon-aelfred to dependencies:
@@ -96,6 +93,8 @@ Patch8:         excalibur-components-xmlutil-Saxon8ProcessorImpl.patch
 Patch9:         excalibur-r508111-maven-compile-target.patch
 Patch10:        excalibur-r508111-components-xmlutil-project-xml.patch
 Patch11:        excalibur-qdox.patch
+Patch12:        excalibur-deprecated-pom.patch
+Patch13:        excalibur-deprecated-i18n-pom.patch
 BuildRequires:  commons-parent
 BuildRequires:  geronimo-genesis >= 0:1.1
 BuildRequires:  jpackage-utils >= 0:1.7.5
@@ -154,11 +153,7 @@ BuildRequires:  xml-commons-jaxp-1.3-apis
 BuildRequires:  xml-commons-resolver11
 BuildRequires:  xom
 
-%if %{gcj_support}
-BuildRequires:  java-gcj-compat-devel
-%else
 BuildArch:      noarch
-%endif
 
 Requires(post):    jpackage-utils >= 0:1.7.4
 Requires(postun):  jpackage-utils >= 0:1.7.4
@@ -422,6 +417,24 @@ Requires:       concurrent
 Requires:       apache-commons-collections
 
 %description cornerstone-threads-impl
+%{summary}.
+
+%package naming
+Summary:        Excalibur Naming Component (deprecated)
+Group:          Development/Java
+Version:        %{naming_version}
+Requires:       %{name} = %{epoch}:%{main_version}-%{release}
+
+%description naming
+%{summary}.
+
+%package i18n
+Summary:        Excalibur i18n Component (deprecated)
+Group:          Development/Java
+Version:        %{excalidep_version}
+Requires:       %{name} = %{epoch}:%{main_version}-%{release}
+
+%description i18n
 %{summary}.
 
 %package component
@@ -1269,6 +1282,7 @@ Version:        %{fortress_version}
 %setup -q -n %{name}-src-%{rsvn}-%{rdate}
 %setup -q -n %{name}-src-%{rsvn}-%{rdate} -T -D -a 2
 cp -p %{SOURCE3} settings.xml
+unzip -qq %{SOURCE102}
 find . -name "*.jar" | xargs -t rm
 
 rm components/xmlutil/src/java/org/apache/excalibur/xml/xpath/Saxon6ProcessorImpl.java  
@@ -1292,21 +1306,15 @@ mv components/xmlutil/src/java/org/apache/excalibur/xml/xpath/Saxon7ProcessorImp
 %patch5 -p0 -b .sav05
 #
 %patch6 -p0 -b .sav06
-%if %with jdk6
 %patch7 -p0 -b .sav07
-%endif
 %patch8 -p0 -b .sav08
 %patch9 -p0 -b .sav09
 %patch10 -p0 -b .sav10
 %patch11 -p0 -b .sav11
+%patch12 -p0 -b .sav12
+%patch13 -p0 -b .sav13
 
 %if %with maven
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" settings.xml
-
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 %endif
@@ -1324,9 +1332,10 @@ export CLASSPATH=$(build-classpath xalan-j2-serializer)
 mkdir testDir
 
 export MAVEN_OPTS="-Xmx384m -XX:PermSize=256m -XX:MaxPermSize=512m"
-mvn-jpp -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
+mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  \
         -e \
         -Dmaven2.jpp.mode=true \
+        -Dmaven.test.skip=true \
         -Dmaven.test.failure.ignore=true \
         -Dmaven2.jpp.depmap.file=%{SOURCE4} \
         -Dmaven.repo.local=$MAVEN_REPO_LOCAL \
@@ -1348,14 +1357,14 @@ jms_1_1_api \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd framework/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/containerkit/logkit/target/avalon-logkit-%{containerkit_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd framework/impl
@@ -1369,7 +1378,7 @@ log4j \
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/containerkit/logkit/target/avalon-logkit-%{containerkit_version}.jar
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd containerkit/logger
@@ -1385,14 +1394,14 @@ jms_1_1_api \
 xml-commons-jaxp-1.3-apis \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd containerkit/lifecycle/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd containerkit/lifecycle/impl
@@ -1401,7 +1410,7 @@ CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/containerkit/lifecycle/api/target/excali
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/impl/target/avalon-framework-impl-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd containerkit/instrument/api
@@ -1412,7 +1421,7 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd containerkit/instrument/client
@@ -1420,7 +1429,7 @@ export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/impl/target/avalon-framework-impl-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd containerkit/instrument/mgr-api
@@ -1431,7 +1440,7 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 xml-commons-jaxp-1.3-apis \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd containerkit/instrument/mgr-http
@@ -1444,7 +1453,7 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 xml-commons-jaxp-1.3-apis \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd containerkit/instrument/mgr-impl
@@ -1458,7 +1467,7 @@ junit \
 xml-commons-jaxp-1.3-apis \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd fortress/container-api
@@ -1468,18 +1477,18 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 d-haven-event \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd fortress/meta
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/fortress/container-api/target/excalibur-fortress-container-api-%{fortress_version}.jar
 CLASSPATH=$CLASSPATH:$(build-classpath \
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
 qdox161 \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd fortress/plugin
@@ -1496,14 +1505,14 @@ commons-logging \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/pool/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/pool/impl
@@ -1518,7 +1527,7 @@ junitperf \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/pool/instrumented
@@ -1536,7 +1545,7 @@ junitperf \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd deprecated/component
@@ -1558,7 +1567,7 @@ log4j \
 servlet_2_3_api \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd deprecated/testcase
@@ -1573,7 +1582,7 @@ junit \
 log4j \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/store
@@ -1588,7 +1597,7 @@ jisp2 \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/xmlutil
@@ -1610,14 +1619,14 @@ xml-commons-jaxp-1.3-apis \
 xml-commons-resolver11 \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/thread/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/thread/impl
@@ -1631,7 +1640,7 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/thread/instrumented
@@ -1649,7 +1658,7 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/monitor
@@ -1664,7 +1673,7 @@ commons-collections \
 log4j \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd components/datasource
@@ -1684,7 +1693,7 @@ hsqldb \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd fortress/container-impl
@@ -1709,7 +1718,7 @@ d-haven-event \
 d-haven-mpool \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd fortress/container-test
@@ -1726,13 +1735,13 @@ CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/fortress/container-api/target/excalibur-
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/fortress/container-impl/target/excalibur-fortress-container-impl-%{fortress_version}.jar
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/fortress/meta/target/excalibur-fortress-meta-%{fortress_version}.jar
 CLASSPATH=$CLASSPATH:$(build-classpath \
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  \
 d-haven-event \
 d-haven-mpool \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 # no java sources here
@@ -1753,7 +1762,7 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 servlet_2_3_api \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd fortress/testcase
@@ -1766,7 +1775,7 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd fortress/migration
@@ -1775,7 +1784,7 @@ CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-ap
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/fortress/container-api/target/excalibur-fortress-container-api-%{fortress_version}.jar
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/fortress/container-impl/target/excalibur-fortress-container-impl-%{fortress_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd fortress/bean
@@ -1791,14 +1800,14 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd deprecated/event/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd deprecated/event/impl
@@ -1816,7 +1825,7 @@ concurrent \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd deprecated/component-tests
@@ -1833,27 +1842,27 @@ CLASSPATH=$CLASSPATH:$(build-classpath \
 junit \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/sockets/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/threads/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/components/thread/api/target/excalibur-thread-api-%{components_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/connection/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/components/thread/api/target/excalibur-thread-api-%{components_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/connection/impl
@@ -1873,14 +1882,14 @@ xerces-j2 \
 xml-commons-jaxp-1.3-apis \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/datasources/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/datasources/impl
@@ -1895,7 +1904,7 @@ xerces-j2 \
 xml-commons-jaxp-1.3-apis \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/scheduler/api
@@ -1906,7 +1915,7 @@ xerces-j2 \
 xml-commons-jaxp-1.3-apis \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/scheduler/impl
@@ -1921,7 +1930,7 @@ xerces-j2 \
 xml-commons-jaxp-1.3-apis \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/sockets/impl
@@ -1934,14 +1943,14 @@ xerces-j2 \
 xml-commons-jaxp-1.3-apis \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/store/api
 export CLASSPATH=""
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/store/impl
@@ -1950,7 +1959,7 @@ CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/cornerstone/store/api/target/cornerstone
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/api/target/avalon-framework-api-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:$EXCALIBUR_BASEDIR/framework/impl/target/avalon-framework-impl-%{framework_version}.jar
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 pushd cornerstone/threads/impl
@@ -1967,10 +1976,22 @@ commons-collections \
 concurrent \
 )
 CLASSPATH=$CLASSPATH:target/classes:target/test-classes
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=only jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=only jar javadoc
 popd
 
 %endif
+
+pushd excalibur-naming-1.0
+mkdir src
+pushd src
+unzip -qq ../src.zip
+popd
+mkdir classes
+javac  -target 1.5 -source 1.5 -source 1.4 -d classes $(find src -name "*.java");
+pushd classes
+jar cf ../excalibur-naming-1.0.jar *
+popd
+popd
 
 mkdir aftmp
 pushd aftmp
@@ -2155,7 +2176,6 @@ install -pm 644 containerkit/logger/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/po
 
 install -pm 644 containerkit/logkit/target/avalon-logkit-%{containerkit_version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}/avalon-logkit-%{containerkit_version}.jar
-ln -s %{name}/avalon-logkit-%{containerkit_version}.jar $RPM_BUILD_ROOT%{_javadir}/avalon-logkit-%{containerkit_version}.jar
 %add_to_maven_depmap org.apache.avalon.logkit avalon-logkit %{containerkit_version} JPP/%{name} avalon-logkit
 %add_to_maven_depmap logkit logkit %{containerkit_version} JPP/%{name} avalon-logkit
 %if %{with_maven}
@@ -2163,7 +2183,7 @@ install -pm 644 containerkit/logkit/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/po
 %endif
 
 (cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{containerkit_version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{containerkit_version}||g"`; done)
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{containerkit_version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{containerkit_version}||g"`; done)
+#(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{containerkit_version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{containerkit_version}||g"`; done)
 
 install -pm 644 cornerstone/connection/api/target/cornerstone-connection-api-%{cornerstone_version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}/cornerstone-connection-api-%{cornerstone_version}.jar
@@ -2250,6 +2270,13 @@ install -pm 644 cornerstone/threads/impl/pom.xml $RPM_BUILD_ROOT%{_datadir}/mave
 %endif
 
 (cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{cornerstone_version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{cornerstone_version}||g"`; done)
+
+install -pm 644 deprecated/i18n/target/excalibur-i18n-%{excalidep_version}.jar \
+  $RPM_BUILD_ROOT%{_javadir}/%{name}/excalibur-i18n-%{excalidep_version}.jar
+%add_to_maven_depmap org.apache.excalibur.i18n excalibur-i18n %{excalidep_version} JPP/%{name} excalibur-i18n
+%if %{with_maven}
+install -pm 644 deprecated/i18n/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-excalibur-i18n.pom
+%endif
 
 install -pm 644 deprecated/component/target/excalibur-component-%{excalidep_version}.jar \
   $RPM_BUILD_ROOT%{_javadir}/%{name}/excalibur-component-%{excalidep_version}.jar
@@ -2355,6 +2382,15 @@ install -pm 644 framework/impl/pom.xml $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JP
 
 (cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{framework_version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{framework_version}||g"`; done)
 (cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{framework_version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{framework_version}||g"`; done)
+
+install -pm 644 excalibur-naming-%{naming_version}/excalibur-naming-%{naming_version}.jar \
+  $RPM_BUILD_ROOT%{_javadir}/%{name}/excalibur-naming-%{naming_version}.jar
+%add_to_maven_depmap excalibur-naming excalibur-naming %{naming_version} JPP/%{name} excalibur-naming
+%if %{with_maven}
+install -pm 644 %{SOURCE103} $RPM_BUILD_ROOT%{_datadir}/maven2/poms/JPP.%{name}-excalibur-naming.pom
+%endif
+
+(cd $RPM_BUILD_ROOT%{_javadir}/%{name} && for jar in *-%{naming_version}*; do ln -sf ${jar} `echo $jar| sed  "s|-%{naming_version}||g"`; done)
 
 # other poms and depmap frags
 #./components/pom.xml MISSING
@@ -2603,7 +2639,8 @@ install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/fortress
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/fortress/bin
 install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/fortress/conf
 install -d -m 755 $RPM_BUILD_ROOT%{_var}/log/fortress
-mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}
+# due to maven3fragmentsdir move
+    mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}
 ln -sf %{_datadir}/fortress/conf $RPM_BUILD_ROOT%{_sysconfdir}/fortress
 ln -sf %{_var}/log/fortress $RPM_BUILD_ROOT%{_datadir}/fortress/logs
 
@@ -2632,25 +2669,15 @@ install -p -m 644 %{PATCH6} $RPM_BUILD_ROOT%{repodirsrc}
 cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}/avalon-logkit-%{containerkit_version}.jar $RPM_BUILD_ROOT%{repodirlib}/logkit.jar
 %endif
 
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm \
-        --exclude /usr/share/java/avalon-framework-%{framework_version}.jar
-%endif
 
 %files
 %dir %{_javadir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj/%{name}
-%endif
 %{_datadir}/maven2/poms/*
 %{_mavendepmapfragdir}/*
 
 %files avalon-framework
 %{_javadir}/%{name}/avalon-framework-%{framework_version}.jar
 %{_javadir}/%{name}/avalon-framework.jar
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/avalon-framework*-%{framework_version}.jar.*
-%endif
 
 %if %with repolib
 %define repodir %{_javadir}/repository.jboss.com/apache-avalon/%{framework_version}-brew
@@ -2660,22 +2687,12 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}/avalon-logkit-%{containerkit_version}.j
 
 %files avalon-framework-api
 %{_javadir}/%{name}/avalon-framework-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/avalon-framework-api*-%{framework_version}.jar.*
-%endif
 
 %files avalon-framework-impl
 %{_javadir}/%{name}/avalon-framework-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/avalon-framework-impl*-%{framework_version}.jar.*
-%endif
 
 %files avalon-logkit
 %{_javadir}/%{name}/avalon-logkit*
-
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/avalon-logkit*-%{containerkit_version}.jar.*
-%endif
 
 %if %with repolib
 %define repodir %{_javadir}/repository.jboss.com/apache-avalon-logkit/%{containerkit_version}-brew
@@ -2685,136 +2702,78 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}/avalon-logkit-%{containerkit_version}.j
 
 %files cornerstone-connection-api
 %{_javadir}/%{name}/cornerstone-connection-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-connection-api*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-connection-impl
 %{_javadir}/%{name}/cornerstone-connection-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-connection-impl*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-datasources-api
 %{_javadir}/%{name}/cornerstone-datasources-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-datasources-api*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-datasources-impl
 %{_javadir}/%{name}/cornerstone-datasources-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-datasources-impl*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-scheduler-api
 %{_javadir}/%{name}/cornerstone-scheduler-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-scheduler-api*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-scheduler-impl
 %{_javadir}/%{name}/cornerstone-scheduler-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-scheduler-impl*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-sockets-api
 %{_javadir}/%{name}/cornerstone-sockets-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-sockets-api*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-sockets-impl
 %{_javadir}/%{name}/cornerstone-sockets-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-sockets-impl*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-store-api
 %{_javadir}/%{name}/cornerstone-store-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-store-api*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-store-impl
 %{_javadir}/%{name}/cornerstone-store-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-store-impl*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-threads-api
 %{_javadir}/%{name}/cornerstone-threads-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-threads-api*-%{cornerstone_version}.jar.*
-%endif
 
 %files cornerstone-threads-impl
 %{_javadir}/%{name}/cornerstone-threads-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/cornerstone-threads-impl*-%{cornerstone_version}.jar.*
-%endif
+
+%files naming
+%{_javadir}/%{name}/excalibur-naming.jar
+%{_javadir}/%{name}/excalibur-naming-%{naming_version}.jar
+
+%files i18n
+%{_javadir}/%{name}/excalibur-i18n.jar
+%{_javadir}/%{name}/excalibur-i18n-%{excalidep_version}.jar
 
 %files component
 %{_javadir}/%{name}/excalibur-component.jar
 %{_javadir}/%{name}/excalibur-component-%{excalidep_version}.jar
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-component-%{excalidep_version}.jar.*
-%endif
 
 %files datasource
 %{_javadir}/%{name}/excalibur-datasource*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-datasource-%{components_version}.jar.*
-%endif
 
 %files event-api
 %{_javadir}/%{name}/excalibur-event-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-event-api-%{excalidep_version}.jar.*
-%endif
 
 %files event-impl
 %{_javadir}/%{name}/excalibur-event-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-event-impl-%{excalidep_version}.jar.*
-%endif
 
 %files fortress-bean
 %{_javadir}/%{name}/excalibur-fortress-bean*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-fortress-bean-%{fortress_version}.jar.*
-%endif
 
 %files fortress-container-api
 %{_javadir}/%{name}/excalibur-fortress-container-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-fortress-container-api-%{fortress_version}.jar.*
-%endif
 
 %files fortress-container-impl
 %{_javadir}/%{name}/excalibur-fortress-container-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-fortress-container-impl-%{fortress_version}.jar.*
-%endif
 
 %files fortress-examples
 %{_javadir}/%{name}/excalibur-fortress-examples*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-fortress-examples-%{fortress_version}.jar.*
-%endif
 
 %files fortress-meta
 %{_javadir}/%{name}/excalibur-fortress-meta*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-fortress-meta-%{fortress_version}.jar.*
-%endif
 
 %files fortress-migration
 %{_javadir}/%{name}/excalibur-fortress-migration*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-fortress-migration-%{fortress_version}.jar.*
-%endif
 
 %files fortress-platform
 %dir %{_datadir}/fortress
@@ -2828,130 +2787,67 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}/avalon-logkit-%{containerkit_version}.j
 
 %files fortress-testcase
 %{_javadir}/%{name}/excalibur-fortress-testcase*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-fortress-testcase-%{fortress_version}.jar.*
-%endif
 
 %files instrument-api
 %{_javadir}/%{name}/excalibur-instrument-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-instrument-api-%{containerkit_version}.jar.*
-%endif
 
 %files instrument-client
 %{_javadir}/%{name}/excalibur-instrument-client*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-instrument-client-%{containerkit_version}.jar.*
-%endif
 
 %files instrument-mgr-api
 %{_javadir}/%{name}/excalibur-instrument-mgr-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-instrument-mgr-api-%{containerkit_version}.jar.*
-%endif
 
 %files instrument-mgr-http
 %{_javadir}/%{name}/excalibur-instrument-mgr-http*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-instrument-mgr-http-%{containerkit_version}.jar.*
-%endif
 
 %files instrument-mgr-impl
 %{_javadir}/%{name}/excalibur-instrument-mgr-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-instrument-mgr-impl-%{containerkit_version}.jar.*
-%endif
 
 %files lifecycle-api
 %{_javadir}/%{name}/excalibur-lifecycle-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-lifecycle-api-%{containerkit_version}.jar.*
-%endif
 
 %files lifecycle-impl
 %{_javadir}/%{name}/excalibur-lifecycle-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-lifecycle-impl-%{containerkit_version}.jar.*
-%endif
 
 %files logger
 %{_javadir}/%{name}/excalibur-logger*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-logger-%{containerkit_version}.jar.*
-%endif
 
 %files monitor
 %{_javadir}/%{name}/excalibur-monitor*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-monitor-%{components_version}.jar.*
-%endif
 
 %files pool-api
 %{_javadir}/%{name}/excalibur-pool-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-pool-api-%{components_version}.jar.*
-%endif
 
 %files pool-impl
 %{_javadir}/%{name}/excalibur-pool-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-pool-impl-%{components_version}.jar.*
-%endif
 
 %files pool-instrumented
 %{_javadir}/%{name}/excalibur-pool-instrumented*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-pool-instrumented-%{components_version}.jar.*
-%endif
 
 %files sourceresolve
 %{_javadir}/%{name}/excalibur-sourceresolve*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-sourceresolve-%{components_version}.jar.*
-%endif
 
 %files store
 %{_javadir}/%{name}/excalibur-store*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-store-%{components_version}.jar.*
-%endif
 
 %files testcase
 %{_javadir}/%{name}/excalibur-testcase*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-testcase-%{excalidep_version}.jar.*
-%endif
 
 %files thread-api
 %{_javadir}/%{name}/excalibur-thread-api*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-thread-api-%{components_version}.jar.*
-%endif
 
 %files thread-impl
 %{_javadir}/%{name}/excalibur-thread-impl*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-thread-impl-%{components_version}.jar.*
-%endif
 
 %files thread-instrumented
 %{_javadir}/%{name}/excalibur-thread-instrumented*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-thread-instrumented-%{components_version}.jar.*
-%endif
 
 %files xmlutil
 %{_javadir}/%{name}/excalibur-xmlutil*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/excalibur-xmlutil-%{components_version}.jar.*
-%endif
 
 %if %{with_maven}
 %files maven-fortress-plugin
 %{_javadir}/%{name}/maven-fortress-plugin*
-%if %{gcj_support}
-%{_libdir}/gcj/%{name}/maven-fortress-plugin-%{fortress_version}.jar.*
-%endif
 %endif
 
 %files avalon-framework-api-javadoc
@@ -3147,6 +3043,9 @@ cp -p $RPM_BUILD_ROOT%{_javadir}/%{name}/avalon-logkit-%{containerkit_version}.j
 %endif
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt9_0.r508111.18jpp6
+- new jpp release
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt9_0.r508111.16jpp6
 - build with apache-commons-vfs2 
 
