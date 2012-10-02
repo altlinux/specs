@@ -12,16 +12,18 @@ BuildRequires: jpackage-compat
 %endif
 
 Name:             jansi-native
-Version:          1.2
-Release:          alt1_3jpp7
+Version:          1.4
+Release:          alt1_1jpp7
 Summary:          Jansi Native implements the JNI Libraries used by the Jansi project
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://jansi.fusesource.org/
 
 # git clone git://github.com/fusesource/jansi-native.git
-# cd jansi-native && git archive --format=tar --prefix=jansi-native-1.2/ jansi-native-1.2 | xz > jansi-native-1.2.tar.xz
-Source0:          %{name}-%{version}.tar.xz
+# cd jansi-native && git archive --format=tar --prefix=jansi-native-1.4/ jansi-native-1.4 | xz > jansi-native-1.4.tar.xz
+Source0:          jansi-native-%{version}.tar.xz
+
+Patch0:           0001-Fixing-archiver-requires-AM_PROG_AR-in-configure.ac-.patch
 
 BuildRequires:    jpackage-utils
 BuildRequires:    maven
@@ -64,6 +66,7 @@ This package contains the API documentation for %{name}.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -100,6 +103,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc license.txt
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.4-alt1_1jpp7
+- new version
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_3jpp7
 - new version
 
