@@ -1,6 +1,6 @@
 Name: pete
 Version: 2.1.0
-Release: alt1
+Release: alt2
 Summary: Portable Expression Template Engine
 License: ACL/LANL
 Group: Sciences/Mathematics
@@ -72,5 +72,8 @@ mv %buildroot/html/* %buildroot%_docdir/%name/
 %_docdir/%name
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt2
+- Fixed build with gcc 4.7
+
 * Sun May 17 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1
 - Initial build for Sisyphus
