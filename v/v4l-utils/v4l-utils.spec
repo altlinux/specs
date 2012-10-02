@@ -1,6 +1,6 @@
 Name: v4l-utils
 Version: 0.8.8
-Release: alt1
+Release: alt2
 
 Summary: Collection of video4linux support libraries and utilities
 License: GPLv2+
@@ -94,6 +94,9 @@ cp utils/xc3028-firmware/README README.xc3028-firmware
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Oct 02 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.8-alt2
+- fix build with gcc-4.7
+
 * Tue Jun 05 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.8.8-alt1
 - 0.8.8 released
 
