@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             apiviz
 Version:          1.3.1
-Release:          alt1_7jpp7
+Release:          alt1_8jpp7
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 Group:            Development/Java
 License:          LGPLv2+
@@ -41,6 +41,7 @@ BuildRequires:    ant
 
 Requires:         jdepend
 Requires:         jpackage-utils
+Requires:         graphviz
 Source44: import.info
 
 %description
@@ -94,6 +95,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE.txt
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_8jpp7
+- new fc release
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_7jpp7
 - new release
 
