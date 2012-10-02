@@ -1,4 +1,3 @@
-BuildRequires: maven2-plugin-site
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -35,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-mail-sender
 Version:        1.0
-Release:        alt3_0.a2.21jpp7
+Release:        alt4_0.a2.21.1jpp7
 Epoch:          0
 Summary:        Plexus Mail Sender
 License:        MIT and ASL 1.1
@@ -155,6 +154,9 @@ cp -pr target/site/apidocs/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.a2.21.1jpp7
+- new fc release
+
 * Sat Mar 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_0.a2.21jpp7
 - fc version
 
