@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ perl(Env.pm)
+BuildRequires: gcc4.6-c++
 # END SourceDeps(oneline)
 %define fedora 16
 Name:		Equalizer
-Version:	1.0.1
-Release:	alt5_1.20110922.1
+Version:	1.2.1
+Release:	alt1
 Summary:	Middleware to create and deploy parallel OpenGL-based applications
 
 Group:		Development/C
@@ -17,7 +18,6 @@ BuildRequires:	ctest cmake bison flex
 BuildRequires:  boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel libglew-devel
 BuildRequires:  libX11-devel libGL-devel
 BuildRequires:  libOpenSceneGraph-devel >= 2.9.8
-Source44: import.info
 
 %description
 Equalizer is the standard middleware to create and deploy parallel OpenGL-based
@@ -59,21 +59,33 @@ Summary: Development files for libCollage
 %{summary}
 
 
+%package -n libSequel
+Group: Development/C
+Summary: libSequel
+
+%description -n libSequel
+libSequel provides a simple programming interface
+to the Equalizer parallel rendering framework.
+
+%package -n libSequel-devel
+Group: Development/C
+Requires: libSequel = %{version}-%{release}
+Summary: Development files for libSequel
+
+%description -n libSequel-devel
+%{summary}
+
+
 %prep
 %setup -q
 # Remove -Werror
 sed -i -e 's, -Werror,,' CMakeLists.txt
 
-# Hack multilibs into cmake configury
-find -name '*cmake' -exec grep -li 'DESTINATION lib' {} \; \
-| xargs sed -i -e 's,DESTINATION lib,DESTINATION lib${LIB_SUFFIX},' \
-libs/client/CMakeLists.txt libs/collage/CMakeLists.txt
-
 # Fix bogus permissions
 find \( -type f -a -executable \) -exec chmod -x {} \;
 
 # Dlopen the runtime library, not the devel library.
-sed -i -e 's,"libEqualizerServer.so","libEqualizerServer.so.1.0.0",' libs/client/client.cpp
+sed -i -e 's,"libEqualizerServer.so","libEqualizerServer.so.%version",' libs/eq/client/client.cpp
 
 # Hack around cmake configury bug
 # Package doesn't build if system's GLEW is sufficiently new.
@@ -84,13 +96,13 @@ sed -i -e 's,"libEqualizerServer.so","libEqualizerServer.so.1.0.0",' libs/client
 sed -i -e 's,<eq/GL/,<GL/,' `grep -rl 'include *<eq/GL/' .`
 
 %build
-%{fedora_cmake} .
-
-make %{?_smp_mflags}
-
+export CC=gcc-4.6
+export CXX=g++-4.6
+%cmake
+%make_build -C BUILD
 
 %install
-make install DESTDIR=%{buildroot}
+%makeinstall_std -C BUILD
 
 # Nothing much useful inside
 rm -rf %{buildroot}%{_datadir}/Equalizer/doc
@@ -112,6 +124,11 @@ case ${x} in
 esac
 done
 
+if ! [ -e %buildroot%_libdir/libEqualizerServer.so.%version ]; then
+	echo replace in sed: libEqualizerServer.so.%version with real soname
+	exit 1
+fi
+
 %files
 %doc LICENSE.txt README
 %{_bindir}/*
@@ -119,6 +136,8 @@ done
 %{_datadir}/Equalizer/configs
 %{_datadir}/Equalizer/data
 %{_libdir}/libEqualizer*.so.*
+#files -n libSequel
+%{_libdir}/libSequel*.so.*
 
 %files -n Collage
 %{_libdir}/libCollage*.so.*
@@ -127,6 +146,7 @@ done
 %{_includedir}/co
 %{_libdir}/libCollage*.so
 %{_libdir}/pkgconfig/Collage.pc
+%{_datadir}/CMake/Modules/FindCollage.cmake
 
 %files -n Equalizer-devel
 %{_includedir}/eq
@@ -134,11 +154,22 @@ done
 %{_libdir}/pkgconfig/Equalizer.pc
 %dir %{_datadir}/Equalizer
 %doc %{_datadir}/Equalizer/examples
+%{_datadir}/CMake/Modules/FindEqualizer.cmake
+#files -n libSequel-devel
+%{_includedir}/seq
+%{_libdir}/libSequel*.so
+#%{_libdir}/pkgconfig/Sequel.pc
+
 
 %files -n vmmlib-devel
 %{_includedir}/vmmlib
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.1-alt1
+- updated to release-1.2.1 upstream git tag
+- TODO: drop gcc4.6 and update to 1.3.7 git tag
+  (requires http://eyescale.github.com/Lunchbox-1.4.0/index.html)
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_1.20110922.1
 - rebuild with new boost
 
