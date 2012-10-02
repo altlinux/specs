@@ -6,7 +6,7 @@
 %define ldir %_libdir/petsc-%scalar_type
 Name: %oname-%scalar_type
 Version: 1.0.0
-Release: alt11.bzr20120818
+Release: alt12.bzr20120818
 Epoch: 1
 Summary: C++/Python library for solving differential equations
 License: LGPL v3+
@@ -350,6 +350,9 @@ sed -i 's|debug optimized||' %buildroot%_pkgconfigdir/%name.pc
 %ldir/python/%{oname}_utils
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt12.bzr20120818
+- Rebuilt with gcc 4.7
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt11.bzr20120818
 - Rebuilt with Boost 1.51.0
 
