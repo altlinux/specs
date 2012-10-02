@@ -5,7 +5,7 @@
 
 Summary: A very fast and reliable SQL database engine
 Name: mariadb
-Version: 5.5.25
+Version: 5.5.27
 Release: alt1
 Group: Databases
 License: GPLv2 with exceptions
@@ -523,6 +523,7 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_mandir/man1/perror.1*
 %_mandir/man1/resolveip.1*
 %_mandir/man1/resolve_stack_dump.1*
+%_mandir/man1/mysqlbug.1.*
 %_mandir/man8/mysqld.8*
 %_mandir/man8/mysqlmanager.8*
 
@@ -564,6 +565,8 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_bindir/mysqlslap
 %_bindir/mysql_waitpid
 %_bindir/replace
+%_bindir/mytop
+
 %_mandir/man1/msql2mysql.1*
 %_mandir/man1/myisam_ftdump.1*
 %_mandir/man1/mysql.1*
@@ -622,6 +625,9 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_libdir/libmysqld.so
 
 %changelog
+* Tue Oct 02 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.27-alt1
+- New version
+
 * Sun Jul 08 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.25-alt1
 - New version
 
