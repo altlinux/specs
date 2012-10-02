@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jsoup
 Version:        1.6.1
-Release:        alt1_3jpp7
+Release:        alt1_5jpp7
 Summary:        Java library for working with real-world HTML
 
 Group:          Development/Java
@@ -23,7 +23,6 @@ BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-plugin-plugin
 BuildRequires: maven-jar-plugin
 BuildRequires: maven-surefire-provider-junit4
-Requires: maven
 Requires: jpackage-utils
 Source44: import.info
 
@@ -87,6 +86,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_5jpp7
+- new fc release
+
 * Sat Mar 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.1-alt1_3jpp7
 - complete build
 
