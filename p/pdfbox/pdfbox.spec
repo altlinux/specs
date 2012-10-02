@@ -4,21 +4,21 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
+%define fedora 18
 Name:           pdfbox
 Version:        1.7.0
-Release:        alt2_1jpp7
+Release:        alt2_4jpp7
 Summary:        Java library for working with PDF documents
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://pdfbox.apache.org/
 Source0:        http://www.apache.org/dist/pdfbox/%{version}/%{name}-%{version}-src.zip
-Source1:	depmap
 #Don't download anything
 Patch0:         %{name}-nodownload.patch
 #Use sysytem bitream-vera-sans-fonts instead of bundled fonts
 Patch1:         %{name}-1.2.0-bitstream.patch
-#Patch2:         %{name}-debug.patch
+Patch2:         %{name}-lucene.patch
 
 BuildRequires:  jpackage-utils
 BuildRequires:  ant
@@ -45,7 +45,11 @@ BuildRequires:  bouncycastle-mail
 BuildRequires:  fontconfig
 BuildRequires:  icu4j
 BuildRequires:  junit4
-BuildRequires:  lucene29-demo >= 2.4.1
+%if 0%{?fedora} >= 18
+BuildRequires:  lucene
+%else
+BuildRequires:  lucene-demo >= 2.4.1
+%endif
 BuildRequires:  pcfi
 
 BuildArch:      noarch
@@ -57,7 +61,6 @@ Requires:       fontbox
 Requires:       icu4j
 Requires:       apache-commons-logging
 Requires:       jempbox
-#Requires:       lucene29-demo >= 2.4.1
 
 Obsoletes:      %{name}-app <= 1.6.0-4
 Provides:       %{name}-app = %{version}-%{release}
@@ -84,10 +87,10 @@ This package contains examples for %{name}.
 Summary:        Javadocs for %{name}
 Group:          Development/Java
 Requires:       jpackage-utils
-Provides:       fontbox-javadocs = %{version}-%{release}
-Obsoletes:      fontbox-javadocs < %{version}-%{release}
-Provides:       jempbox-javadocs = %{version}-%{release}
-Obsoletes:      jempbox-javadocs < %{version}-%{release}
+Provides:       fontbox-javadoc = %{version}-%{release}
+Obsoletes:      fontbox-javadoc < %{version}-%{release}
+Provides:       jempbox-javadoc = %{version}-%{release}
+Obsoletes:      jempbox-javadoc < %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
@@ -97,7 +100,7 @@ This package contains the API documentation for %{name}.
 %package ant
 Summary:        Apache PDFBox for Ant
 Group:          Development/Java
-Requires:       pdfbox = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       ant
 
 %description ant
@@ -107,7 +110,7 @@ Requires:       ant
 %package -n fontbox
 Summary:        Apache FontBox
 Group:          Development/Java
-Requires:       pdfbox = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       junit
 
 %description -n fontbox
@@ -118,7 +121,7 @@ files. FontBox is a subproject of Apache PDFBox.
 %package -n jempbox
 Summary:        Apache JempBox
 Group:          Development/Java
-Requires:       pdfbox = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       junit
 
 %description -n jempbox
@@ -126,21 +129,28 @@ JempBox is an open source Java library that implements Adobe's XMP(TM)
 specification. JempBox is a subproject of Apache PDFBox.
 
 
+# Not compatible with lucene 3.6
+%if 0%{?fedora} < 18
 %package lucene
 Summary:        Apache PDFBox for Lucene
 Group:          Development/Java
-Requires:       pdfbox = %{?epoch:%epoch:}%{version}-%{release}
-Requires:       lucene29-demo >= 2.4.1
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
+%if 0%{?fedora} >= 18
+Requires:       lucene
+%else
+Requires:       lucene-demo >= 2.4.1
+%endif
 
 %description lucene
 %{summary}.
+%endif
 
 
 %prep
 %setup -q
 %patch0 -p1 -b .nodownload
 %patch1 -p1 -b .bitstream
-#patch2 -p1 -b .debug
+%patch2 -p1 -b .lucene
 #Use jdk16 version of bcprov
 sed -i -e s/jdk15/jdk16/g */pom.xml
 # Don't build app (it's just a bundle of everything)
@@ -156,8 +166,7 @@ rm -r pdfbox/src/main/resources/org/apache/pdfbox/resources/ttf
 
 
 %build
-mvn-rpmbuild -Dmaven.local.depmap.file=%{SOURCE1} \
-	-Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -Dadobefiles.jar=%{_javadir}/pcfi.jar install javadoc:aggregate
+mvn-rpmbuild -Dadobefiles.jar=%{_javadir}/pcfi.jar install javadoc:aggregate
 
 
 %install
@@ -220,13 +229,19 @@ cp -p parent/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-pdfbox-parent.pom
 %{_javadir}/jempbox.jar
 %{_mavenpomdir}/JPP-jempbox.pom
 
+# Not compatible with lucene 3.6
+%if 0%{?fedora} < 18
 %files lucene
 %doc LICENSE.txt
 %{_javadir}/%{name}-lucene.jar
 %{_mavenpomdir}/JPP-%{name}-lucene.pom
+%endif
 
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt2_4jpp7
+- new fc release
+
 * Sun Sep 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0-alt2_1jpp7
 - fixed build with lucene3
 
