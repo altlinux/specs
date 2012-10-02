@@ -5,7 +5,7 @@
 %define sover %somver.3.0
 Name: BlockSolve95
 Version: 3.0
-Release: alt11
+Release: alt12
 Summary: Solving large sparse symmetric systems of linear equations
 License: MIT
 Group: Sciences/Mathematics
@@ -151,6 +151,9 @@ popd
 %_mandir/manh/*
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt12
+- Fixed build
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0-alt11
 - Built with OpenBLAS instead of GotoBLAS2
 
