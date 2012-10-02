@@ -2,7 +2,7 @@
 
 Name: OpenAD
 Version: 20120830
-Release: alt1
+Release: alt2
 Summary: A tool for automatic differentiation (AD) of numerical computer programs
 License: BSD
 Group: Sciences/Mathematics
@@ -166,6 +166,7 @@ cp Open64/osprey1.0/targ*linux/be/be.so \
 	%buildroot%_libdir/
 ln -s ../be.so %buildroot%_libdir/whirl2f/be.so
 
+%add_optflags -fpermissive
 for i in OpenAnalysis OpenADFortTk
 do
 	pushd $i
@@ -274,6 +275,9 @@ install -m755 openad %buildroot%_bindir
 %doc xaifBooster/doc/*.ps
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120830-alt2
+- Fixed build with gcc 4.7
+
 * Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20120830-alt1
 - Version 20120830
 
