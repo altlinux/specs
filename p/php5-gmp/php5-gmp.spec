@@ -2,7 +2,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%php5_version
-Release:	%php5_release.1
+Release:	%php5_release
 
 Summary:	GNU MP support for PHP5
 Group:		System/Servers
@@ -51,6 +51,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.10.20120202-alt1.1
 - Rebuilt with gmp 5.0.5
 

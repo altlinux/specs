@@ -7,7 +7,7 @@
 
 Name: pecl-%php5_extension
 Version: 1.0.8
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 Summary: Map IP address to geographic places
 License: PHP License
@@ -64,5 +64,8 @@ cd %php5_extension-%version
 %pecl_files
 
 %changelog
+* Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 1.0.8-alt2
+- Rebuild with php5-devel-5.3.17.20120913-alt1
+
 * Tue Apr 24 2012 Aleksey Avdeev <solo@altlinux.ru> 1.0.8-alt1
 - Initial build for ALT Linux Sisyphus

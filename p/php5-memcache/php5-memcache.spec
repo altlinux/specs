@@ -3,7 +3,7 @@
 ###############################################################
 Name:	 	php5-%php5_extension
 Version:	2.2.6
-Release:	alt7
+Release:	alt8
 Group:		System/Servers
 License:	PHP Licence
 
@@ -54,6 +54,9 @@ phpize
 %php5_extension_preun
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 2.2.6-alt8
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Mon Feb 13 2012 Anton Farygin <rider@altlinux.ru> 2.2.6-alt7
 - Rebuild with php5-5.3.10.20120202-alt1
 

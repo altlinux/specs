@@ -7,7 +7,7 @@
 
 Name: pecl-%php5_extension
 Version: 1.0.3
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 Summary: PAM integration
 License: PHP
@@ -62,5 +62,8 @@ cd %php5_extension-%version
 %pecl_files
 
 %changelog
+* Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 1.0.3-alt2
+- Rebuild with php5-devel-5.3.17.20120913-alt1
+
 * Fri May 04 2012 Aleksey Avdeev <solo@altlinux.ru> 1.0.3-alt1
 - Initial build for ALT Linux Sisyphus

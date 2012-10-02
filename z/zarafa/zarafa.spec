@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.0
-Release: alt7
+Release: alt8
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -683,6 +683,9 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 7.1.0-alt8
+- rebuild for php 5.3.17.20120913-alt1
+
 * Wed Sep 12 2012 Radik Usupov <radik@altlinux.org> 7.1.0-alt7
 - New upstreame snapshot (7.1.0 Release)
 - Add support for Boost.Filesystem v3 (thanks iv@!)

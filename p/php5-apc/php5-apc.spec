@@ -63,6 +63,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1.2
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Wed May 16 2012 Nikolay A. Fetisov <naf@altlinux.ru> 5.3.10.20120202-alt1.2
 - New module version 3.1.10
 - Fix default configuration

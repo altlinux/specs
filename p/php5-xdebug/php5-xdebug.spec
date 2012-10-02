@@ -62,6 +62,9 @@ echo "zend_extension=%php5_extdir/xdebug.so" >%buildroot%php5_extconf/%php5_exte
 %php5_extension_preun
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1.1
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Mon Feb 13 2012 Anton Farygin <rider@altlinux.ru> 5.3.10.20120202-alt1.1
 - Rebuild with php5-5.3.10.20120202-alt1
 

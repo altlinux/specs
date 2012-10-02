@@ -255,6 +255,9 @@ done
 %endif
 
 %changelog
+* Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1
+- Rebuild with php5-devel-5.3.17.20120913-alt1
+
 * Sun Aug 26 2012 Nikolay A. Fetisov <naf@altlinux.ru> 5.3.10.20120202-alt1
 - New version
 - Build extension for every mnoGoSearch databases backends
