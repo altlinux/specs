@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt16
+Release: alt17
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -492,8 +492,8 @@ Patch0715: linux-%kernel_branch.42-fix-net-8021q--vlan-core.patch
 Patch0716: linux-%kernel_branch.42-fix-net-bridge.patch
 Patch0717: linux-%kernel_branch.42-fix-net-ceph.patch
 Patch0718: linux-%kernel_branch.42-fix-net-core.patch
-Patch0719: linux-%kernel_branch.42-fix-net-ipv4.patch
-Patch0720: linux-%kernel_branch.42-fix-net-ipv6.patch
+Patch0719: linux-%kernel_branch.43-fix-net-ipv4.patch
+Patch0720: linux-%kernel_branch.43-fix-net-ipv6.patch
 Patch0721: linux-%kernel_branch.42-fix-net-ipv6--ip6_tunnel.patch
 Patch0722: linux-%kernel_branch.42-fix-net-mac80211.patch
 Patch0723: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ecache.patch
@@ -2049,10 +2049,12 @@ install -m 0644 Documentation/DocBook/man/* %buildroot%kmandir/
 
 %if_with src
 install -d -m 0755 %buildroot%kernel_src
+t="%__nprocs"
+[ $t -gt 1 ] && XZ="pxz -T$t" || XZ="xz"
 tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 	--owner=root --group=root --mode=u+w,go-w,go+rX \
 	-T ../kernel-src-%flavour.list -cf - | \
-	pxz -8e -T%__nprocs > %buildroot%kernel_src/kernel-src-%flavour-%kversion-%krelease.tar.xz
+	$XZ -8e -T%__nprocs > %buildroot%kernel_src/kernel-src-%flavour-%kversion-%krelease.tar.xz
 %endif
 
 popd
@@ -2532,6 +2534,13 @@ fi
 
 
 %changelog
+* Tue Oct 02 2012 Led <led@altlinux.ru> 3.0.43-alt17
+- updated:
+  + fix-Makefile
+  + fix-drivers-gpu-drm--nouveau
+  + fix-net-ipv4
+  + fix-net-ipv6
+
 * Tue Oct 02 2012 Led <led@altlinux.ru> 3.0.43-alt16
 - added:
   + fix-drivers-gpu-drm--nouveau
