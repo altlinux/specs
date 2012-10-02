@@ -1,6 +1,6 @@
 Name: coin3d
 Version: 3.1.3
-Release: alt7
+Release: alt8
 Summary: OpenGL-based, 3D graphics library
 License: GPL
 Group: Development/Tools
@@ -109,7 +109,7 @@ This package contains architecture independent files of Coin3D.
 
 %build
 #sed -i 's|^libdir.*|libdir=%_libdir|' Coin.pc.in
-%add_optflags -I%_includedir/directfb
+%add_optflags -I%_includedir/directfb -fpermissive
 %configure \
 	--enable-3ds-import \
 	--enable-threadsafe \
@@ -176,6 +176,9 @@ mv %buildroot%_datadir/aclocal/coin.m4 \
 %exclude %_datadir/Coin/conf/coin-default.cfg
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt8
+- Fixed build with gcc 4.7
+
 * Sun Feb 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.3-alt7
 - libcoin3d-devel-doc: avoid conflict with libtrilinos10-devel-doc
 
