@@ -3,7 +3,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             hawtjni
 Version:          1.5
-Release:          alt1_3jpp7
+Release:          alt1_4jpp7
 Summary:          Code generator that produces the JNI code
 Group:            Development/Java
 License:          ASL 2.0 and EPL and BSD
@@ -67,7 +67,7 @@ Requires:         plexus-interpolation
 Requires:         maven-archiver
 Requires:         plexus-archiver
 Requires:         plexus-io
-Requires:         hawtjni = %{version}-%{release}
+Requires:         hawtjni = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n maven-%{name}-plugin
 This package allows to use HawtJNI from a maven plugin.
@@ -123,6 +123,9 @@ install -pm 644 maven-%{name}-plugin/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-
 %{_javadir}/maven-%{name}-plugin.jar
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_4jpp7
+- new fc release
+
 * Sat Apr 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_3jpp7
 - new version
 
