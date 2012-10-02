@@ -2,7 +2,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             byteman
 Version:          1.5.2
-Release:          alt1_4jpp7
+Release:          alt1_5jpp7
 Summary:          Java agent-based bytecode injection tool
 Group:            Development/Java
 License:          LGPLv2+
@@ -102,6 +102,9 @@ cp -rp htdocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc docs/copyright.txt
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_5jpp7
+- new fc release
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_4jpp7
 - fc build
 
