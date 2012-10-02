@@ -2,7 +2,7 @@
 
 Name: wpa_supplicant
 Version: 0.7.3
-Release: alt3
+Release: alt4
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
 License: GPL/BSD
@@ -87,7 +87,7 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %preun_service %name
 
 %files
-%doc %name/README %name/ChangeLog %name/examples
+%doc %name/README %name/README-WPS %name/ChangeLog %name/examples
 
 %_initdir/%name
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/wpa_supplicant.conf
@@ -122,6 +122,9 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Tue Oct 02 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.3-alt4
+- fixed build witn gcc-4.7
+
 * Sat Feb 26 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.3-alt3
 - updated for use with nm-0.9
 
