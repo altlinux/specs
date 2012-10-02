@@ -1,7 +1,7 @@
 %define oname jquery
 Name: python-module-%oname
 Version: 1.2.3
-Release: alt1.1
+Release: alt2
 Summary: Jquery javascript library for TurboGears
 License: MIT
 Group: Development/Python
@@ -13,6 +13,7 @@ BuildArch: noarch
 
 BuildPreReq: python-devel python-module-distribute
 BuildPreReq: python-module-TurboGears2 python-module-markdown
+BuildPreReq: python-module-TurboGears
 
 %description
 jquery is a jquery javascript library wrapper and ajax helper for happy
@@ -32,6 +33,9 @@ TurboGears web designers.
 %python_sitelibdir/*
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.3-alt2
+- Fixed build
+
 * Mon Oct 24 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2.3-alt1.1
 - Rebuild with Python-2.7
 
