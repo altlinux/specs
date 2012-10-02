@@ -1,6 +1,6 @@
 Name: ants
 Version: 0.5.3
-Release: alt3
+Release: alt4
 Summary: The ANTS Load Balancing System
 License: %gpl2only
 Group: Networking/Other
@@ -12,7 +12,6 @@ BuildPreReq: gcc-c++ libncurses-devel
 BuildPreReq: gkrellm-devel
 
 Source: http://unthought.net/antsd/antsd-0.5.3.tar.gz
-Patch: ants-0.5.3-alt-gcc4.3_libs.patch
 
 %description
 The ANTS Load Balancing System is a piece of software that will allow jobs to be
@@ -38,7 +37,6 @@ ANTS plugin for gkrellm.
 
 %prep
 %setup
-%patch -p0
 
 %build
 %configure \
@@ -78,6 +76,9 @@ cp src/antsd.conf antsd.conf.example
 %_libexecdir/gkrellm2/plugins/*
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt4
+- Fixed build with gcc 4.7
+
 * Fri Mar 11 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.3-alt3
 - Rebuilt for debuginfo
 
