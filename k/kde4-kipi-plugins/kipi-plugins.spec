@@ -11,8 +11,8 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 2.7.0
-Release: alt1.1
+Version: 2.9.0
+Release: alt1
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -163,8 +163,14 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt1
+- new version
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.0-alt1.1
 - Rebuilt with libopencv2.4
+
+* Wed Jul 11 2012 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt0.M60P.1
+- built for M60P
 
 * Wed Jul 11 2012 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt1
 - new version
