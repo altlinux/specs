@@ -2,7 +2,7 @@
 
 Name: mediatomb
 Version: 0.12.1
-Release: alt6
+Release: alt7
 
 Summary: UPnP AV Mediaserver for Linux
 Group: System/Servers
@@ -72,6 +72,9 @@ install -pD -m0644 %SOURCE3 %buildroot%systemd_unitdir/mediatomb.service
 %attr(3770,root,_mediatomb) %dir %_localstatedir/%name
 
 %changelog
+* Tue Oct 02 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt7
+- fix build with gcc-4.7
+
 * Thu May 31 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.12.1-alt6
 - fixed FTBFS with gcc >= 4.6
 
