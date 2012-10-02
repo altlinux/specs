@@ -1,14 +1,13 @@
 %define rname getfem
 Name: getfemxx
-Version: 4.1.1
-Release: alt2
+Version: 4.2
+Release: alt1
 %setup_python_module getfem
 
 Group: Development/C++
 Summary: Generic and efficient C++ library for finite element methods
 Url: http://home.gna.org/getfem/
 License: LGPLv2+
-Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Requires: lib%name = %version-%release
 Provides: %rname = %version-%release
@@ -22,7 +21,7 @@ Patch1: getfem++-3.1-alt-gcc44.patch
 BuildRequires: boost-devel gcc-c++ gcc-fortran glibc-devel-static libnumpy-devel
 
 BuildPreReq: libqhull-devel libmuparser-devel libmumps-devel
-BuildPreReq: liblapack-devel
+BuildPreReq: liblapack-devel libsuperlu-devel
 
 %description
 The Getfem++ project focuses on the development of a generic and efficient
@@ -52,18 +51,20 @@ Python bindings to %name
 
 
 %build
-%add_optflags -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -fpermissive -I%_includedir/metis0
 export CFLAGS="%optflags" CXXFLAGS="%optflags"
 %configure \
     --disable-static \
     --enable-shared \
     --enable-boost \
 		--enable-mumps \
+		--with-mumps="dmumps zmumps smumps cmumps mumps_common pord" \
 		--enable-qhull \
 		--with-blas=openblas \
 		--with-pic \
     --with-matlab-toolbox-dir=%_datadir/getfem_toolbox
 CUT_CFLAGS=`grep "^CXXFLAGS" Makefile | head -n 1| sed "s|^CXXFLAGS[[:space:]][[:space:]]*=||"`
+rm -fR superlu
 %make CFLAGS="$CUT_CFLAGS"
 
 %install
@@ -90,6 +91,9 @@ mv %buildroot%python_sitelibdir_noarch/getfem/* \
 %python_sitelibdir/getfem
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2-alt1
+- Version 4.2
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt2
 - Built with OpenBLAS instead of GotoBLAS2
 
