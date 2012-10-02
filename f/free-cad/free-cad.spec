@@ -3,7 +3,7 @@
 
 Name: free-cad
 Version: 0.13.5443
-Release: alt2.svn20120331
+Release: alt3.svn20120331
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
 Group: Graphics
@@ -288,6 +288,9 @@ fi
 %_libexecdir/qt4/plugins/designer/*
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.5443-alt3.svn20120331
+- Fixed build with gcc 4.7
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.13.5443-alt2.svn20120331
 - Rebuilt with Boost 1.51.0
 
