@@ -4,7 +4,7 @@
 %define over 3.19-1
 Name: freefemxx
 Version: 3.19_1
-Release: alt1
+Release: alt2
 Summary: Implementation of a language dedicated to the finite element method
 License: LGPL v2.1+
 Group: Sciences/Mathematics
@@ -133,6 +133,9 @@ export MPIDIR=%mpidir
 %doc DOC/*.pdf
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.19_1-alt2
+- Fixed build with gcc 4.7
+
 * Wed Aug 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.19_1-alt1
 - Version 3.19-1
 
