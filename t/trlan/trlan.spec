@@ -5,7 +5,7 @@
 %define sover %somver.0.0
 Name: trlan
 Version: 20100901
-Release: alt4
+Release: alt5
 Summary: The thick-restart Lanczos method
 License: BSD-like
 Group: Sciences/Mathematics
@@ -190,6 +190,9 @@ popd
 %_infodir/*
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100901-alt5
+- Rebuilt with gcc 4.7
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100901-alt4
 - Built with OpenBLAS instead of GotoBLAS2
 
