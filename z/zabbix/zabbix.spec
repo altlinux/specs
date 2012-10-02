@@ -6,8 +6,8 @@
 %def_with pgsql
 
 Name: zabbix
-Version: 2.0.2
-Release: alt3
+Version: 2.0.3
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -449,6 +449,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Tue Oct 02 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.3-alt1
+- 2.0.3 release
+
 * Thu Jul 26 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.2-alt3
 - Generate *.mo files
 
