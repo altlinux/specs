@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:     jaffl
 Version:  0.5.9
-Release:  alt1_1jpp7
+Release:  alt2_1jpp7
 Summary:  Java Abstracted Foreign Function Layer
 Group:    System/Libraries
 License:  LGPLv3
@@ -59,6 +59,7 @@ mkdir build_lib
 build-jar-repository -s -p build_lib jffi jnr-x86asm objectweb-asm/asm \
                                      objectweb-asm/analysis objectweb-asm/commons \
                                      objectweb-asm/tree objectweb-asm/util objectweb-asm/xml
+sed -i -e 's,-mimpure-text,,g' `find . -name GNUmakefile`
 
 %build
 ant
@@ -90,6 +91,9 @@ cp pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-jaffl.pom
 %{_javadocdir}/%{name}-%{version}
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.9-alt2_1jpp7
+- gcc47 build
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.9-alt1_1jpp7
 - new version
 
