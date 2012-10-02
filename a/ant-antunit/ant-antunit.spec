@@ -5,7 +5,7 @@ BuildRequires: jpackage-compat
 
 Name:             ant-%{base_name}
 Version:          1.2
-Release:          alt1_3jpp7
+Release:          alt1_4jpp7
 Summary:          Provide antunit ant task
 Group:            Development/Java
 License:          ASL 2.0
@@ -92,6 +92,9 @@ echo "ant/ant-antunit" > %{buildroot}%{_sysconfdir}/%{name}.d/antunit
 
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_4jpp7
+- new fc release
+
 * Tue Apr 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_3jpp7
 - new version
 
