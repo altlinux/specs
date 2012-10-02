@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             bean-validation-api
 Version:          1.0.0
-Release:          alt1_4jpp7
+Release:          alt1_5jpp7
 Summary:          Bean Validation API
 Group:            Development/Java
 License:          ASL 2.0
@@ -77,6 +77,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc license.txt
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_5jpp7
+- new fc release
+
 * Mon Jun 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_4jpp7
 - fc build
 
