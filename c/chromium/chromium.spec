@@ -13,7 +13,7 @@
 
 Name:           chromium
 Version:        21.0.1180.89
-Release:        alt2.r%rev
+Release:        alt3.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -93,6 +93,7 @@ BuildRequires:  bzlib-devel
 BuildRequires:  flex
 BuildRequires:  gcc-c++
 BuildRequires:  gperf
+BuildRequires:	gst-plugins-devel
 BuildRequires:  libalsa-devel
 BuildRequires:  libavcodec-devel
 BuildRequires:  libavformat-devel
@@ -367,6 +368,7 @@ cp -a resources.pak %buildroot%_libdir/chromium/
 cp -a chrome %buildroot%_libdir/chromium/chromium
 cp -a chrome.1 %buildroot%_mandir/man1/chrome.1
 cp -a chrome.1 %buildroot%_mandir/man1/chromium.1
+cp -a libffmpegsumo.so %buildroot%_libdir/chromium/libffmpegsumo.so
 
 # NaCl
 %if_enabled nacl
@@ -417,6 +419,7 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_libdir/chromium/chromium
 %_libdir/chromium/chromedriver
 %_libdir/chromium/chromium-generic
+%_libdir/chromium/libffmpegsumo.so
 %_libdir/chromium/plugins/
 %_libdir/chromium/locales/
 %if_enabled nacl
@@ -442,6 +445,9 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Tue Oct 02 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.89-alt3.r154005
+- Enable video and audio support in HTML5
+
 * Thu Sep 13 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.89-alt2.r154005
 - Disable debug version and fix problem with Google accounts (ALT 27731)
 - Build with system icu libraries
