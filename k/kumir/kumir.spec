@@ -1,6 +1,6 @@
 Name: kumir
 Version: 1.8.0
-Release: alt6
+Release: alt7
 
 Summary: Kumir is a simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Кумир это простой язык программирования и среда разработки, применяемый при обучении
@@ -125,6 +125,9 @@ ln -s ../..%_libdir/kumir/pluginstarter kumpluginstarter
 %_datadir/mimelnk/application/x-kumir-program.desktop
 
 %changelog
+* Tue Oct 02 2012 Denis Kirienko <dk@altlinux.org> 1.8.0-alt7
+- Build fix
+
 * Sat Jun 02 2012 Denis Kirienko <dk@altlinux.org> 1.8.0-alt6
 - SVN snapshot 2780
 
