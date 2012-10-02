@@ -63,7 +63,7 @@ BuildRequires: jpackage-compat
 
 Name:           junit
 Version:        3.8.2
-Release:	alt6_10jpp6
+Release:	alt7_10jpp6
 Epoch:          1
 Summary:        Java regression test package
 License:        CPL
@@ -138,7 +138,7 @@ Demonstrations and samples for %{name}.
 %build
 export CLASSPATH=
 export OPT_JAR_LIST=:
-%{ant} dist
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  dist
 
 %install
 
@@ -216,6 +216,9 @@ ln -s %{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}3.jar
 %endif
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt7_10jpp6
+- target 5 build
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.8.2-alt6_10jpp6
 - added junit3 provides
 
