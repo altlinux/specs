@@ -3,7 +3,7 @@
 
 Name: freefem3d
 Version: 1.0pre10
-Release: alt5
+Release: alt6
 Summary: 3D solver of partial differential equations
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -56,7 +56,7 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 export PATH=%_qt4dir/bin:$PATH
 
-%add_optflags -I%_includedir/vtk-5.10
+%add_optflags -I%_includedir/vtk-5.10 -fpermissive
 %autoreconf
 %configure \
 	--enable-optimize \
@@ -80,6 +80,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %_docdir/%name
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0pre10-alt6
+- Fixed build with gcc 4.7
+
 * Thu Jul 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0pre10-alt5
 - Rebuilt with OpenMPI 1.6
 
