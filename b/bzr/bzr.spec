@@ -6,8 +6,8 @@
 #%%define branch_switch Mxx
 
 Name: bzr
-Version: 2.5.0
-Release: %branch_release alt2
+Version: 2.5.1
+Release: %branch_release alt1
 
 Summary: Bazaar is a decentralized revision control system
 License: %gpl2plus
@@ -19,6 +19,7 @@ Packager: Anatoly Kitaykin <cetus@altlinux.ru>
 Source: %name-%version.tar
 
 Patch0: bzr-2.5.0-alt-ssl-cert-path.patch
+Patch1: bzr-2.5.1-alt-pyftbdlib-version.patch
 
 %add_python_req_skip launchpadlib
 %add_python_req_skip lazr
@@ -68,6 +69,7 @@ package contain documentation and examples for using Bazaar.
 %prep
 %setup
 %patch0 -p0
+%patch1 -p0
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -105,6 +107,9 @@ mv %buildroot%_datadir/share/locale %buildroot%_datadir
 %bzr_docdir/contrib
 
 %changelog
+* Tue Oct 02 2012 Anatoly Kitaykin <cetus@altlinux.org> 2.5.1-alt1
+- 2.5.1 release
+
 * Tue Jul 03 2012 Anatoly Kitaykin <cetus@altlinux.org> 2.5.0-alt2
 - fixed search for SSL CA certificates (Closes: 27138)
 
