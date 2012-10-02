@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           atinject
 Version:        1
-Release:        alt4_6.20100611svn86jpp7
+Release:        alt4_8.20100611svn86jpp7
 Summary:        Dependency injection specification for Java (JSR-330)
 
 Group:          Development/Java
@@ -32,6 +32,7 @@ BuildRequires:       maven-javadoc-plugin
 BuildRequires:       maven-resources-plugin
 BuildRequires:       maven-release-plugin
 BuildRequires:       maven-compiler-plugin
+BuildRequires:       zip
 
 
 Requires:       jpackage-utils
@@ -57,7 +58,7 @@ BuildArch: noarch
 Summary:        TCK for testing %{name} compatibility with JSR-330
 Group:          Development/Java
 Requires:       jpackage-utils
-Requires:       atinject = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       junit
 
 %description    tck
@@ -127,6 +128,9 @@ cp -pr build/tck/javadoc/* %{buildroot}%{_javadocdir}/%{name}-tck
 %doc %{_javadocdir}/%{name}-tck
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1-alt4_8.20100611svn86jpp7
+- new fc release
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1-alt4_6.20100611svn86jpp7
 - fc release
 
