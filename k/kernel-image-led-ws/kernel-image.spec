@@ -15,7 +15,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.43
-Release: alt15
+Release: alt16
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -234,11 +234,12 @@ Patch0202: linux-%kernel_branch.43-fix-drivers-gpu-drm--drm.patch
 Patch0203: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm_kms_helper.patch
 Patch0204: linux-%kernel_branch.43-fix-drivers-gpu-drm--i915.patch
 Patch0205: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
-Patch0206: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
-Patch0207: linux-%kernel_branch.42-fix-drivers-gpu-drm--radeon.patch
-Patch0208: linux-%kernel_branch.42-fix-drivers-gpu-drm--via.patch
-Patch0209: linux-%kernel_branch.42-fix-drivers-gpu-drm--vmwgfx.patch
-Patch0210: linux-%kernel_branch.42-fix-drivers-gpu-vga--vgaarb.patch
+Patch0206: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
+Patch0207: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
+Patch0208: linux-%kernel_branch.42-fix-drivers-gpu-drm--radeon.patch
+Patch0209: linux-%kernel_branch.42-fix-drivers-gpu-drm--via.patch
+Patch0210: linux-%kernel_branch.42-fix-drivers-gpu-drm--vmwgfx.patch
+Patch0211: linux-%kernel_branch.42-fix-drivers-gpu-vga--vgaarb.patch
 
 Patch0221: linux-%kernel_branch.42-fix-drivers-hid--hid-apple.patch
 Patch0222: linux-%kernel_branch.42-fix-drivers-hid--usbhid.patch
@@ -1357,6 +1358,7 @@ cd linux-%version
 %patch0208 -p1
 %patch0209 -p1
 %patch0210 -p1
+%patch0211 -p1
 
 %patch0221 -p1
 %patch0222 -p1
@@ -2530,6 +2532,11 @@ fi
 
 
 %changelog
+* Tue Oct 02 2012 Led <led@altlinux.ru> 3.0.43-alt16
+- added:
+  + fix-drivers-gpu-drm--nouveau
+- enabled DRM_NOUVEAU
+
 * Tue Oct 02 2012 Led <led@altlinux.ru> 3.0.43-alt15
 - updated:
   + fix-drivers-gpu-drm--psb_gfx
