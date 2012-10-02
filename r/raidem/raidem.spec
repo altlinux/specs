@@ -1,9 +1,11 @@
+%set_gcc_version 4.6
+
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ unzip zlib-devel
+BuildRequires: gcc4.6-c++ gcc-c++ unzip zlib-devel
 # END SourceDeps(oneline)
 Name:           raidem
 Version:        0.3.1
-Release:        alt1_21
+Release:        alt2_21
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -18,7 +20,7 @@ Patch1:         raidem-0.3.1-zziplib.patch
 Patch2:         raidem-libpng15.patch
 Patch3:         raidem-gcc4.7-stdio.patch
 Patch4:         raidem-new-api.patch
-BuildRequires:  gcc-objc glyph-keeper-allegro-devel libfreetype-devel libadime-devel
+BuildRequires:  gcc4.6-objc gcc-objc glyph-keeper-allegro-devel libfreetype-devel libadime-devel
 BuildRequires:  zziplib-devel libpng-devel AllegroOGG-devel
 BuildRequires:  automake desktop-file-utils gnustep-base-devel
 Requires:       icon-theme-hicolor
@@ -47,8 +49,10 @@ mv loadpng lib
 aclocal
 autoconf
 
-
 %build
+export CC=gcc-4.6
+export CXX=g++-4.6
+
 # override _datadir otherwise it expects its datafile directly under /use/share
 %configure --datadir=%{_datadir}/%{name} --disable-id3
 make %{?_smp_mflags}
@@ -115,6 +119,9 @@ fi
 
 
 %changelog
+* Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_21
+- gcc46 build
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt1_21
 - update to new release by fcimport
 
