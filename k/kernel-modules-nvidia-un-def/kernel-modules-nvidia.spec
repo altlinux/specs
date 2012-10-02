@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	304.43
-%define module_release	alt1
+%define module_release	alt2
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
 %if "%xorg_ver" == ""
@@ -24,7 +24,7 @@
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.13
-%define legacy3 173.14.35
+%define legacy3 %nil 
 %else
 %define legacy3 %nil
 %endif
@@ -33,7 +33,7 @@
 
 %define upstream_module_name	NVIDIA_kernel
 
-%define kversion	3.5.4
+%define kversion	3.6.0
 %define krelease	alt1
 %define flavour		un-def
 
@@ -49,7 +49,7 @@
 Summary:	nVidia video card drivers
 Name:		kernel-modules-%module_name-%flavour
 Version:	%module_version
-Release:	%module_release.197892.1
+Release:	%module_release.198144.1
 License:	Proprietary
 Group:		System/Kernel and hardware
 URL:		http://www.nvidia.com
@@ -76,6 +76,8 @@ BuildRequires: kernel-source-%module_name-%legacy2_src
 %if "%legacy3" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy3_src
 %endif
+
+Patch0: nvidia-kernel-3.6.patch
 
 Provides:  	kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -117,7 +119,9 @@ do
     %__ln_s Makefile.kbuild Makefile
     popd
 done
-
+pushd kernel-source-nvidia-30443
+%patch0 -p2
+popd
 
 %build
 for ver in %mod_ver_list
@@ -193,8 +197,11 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Sat Sep 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.43-alt1.197892.1
-- Build for kernel-image-un-def-3.5.4-alt1.
+* Mon Oct 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.43-alt2.198144.1
+- Build for kernel-image-un-def-3.6.0-alt1.
+
+* Mon Oct 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.43-alt2
+- build on 3.6 kernel fixed
 
 * Wed Aug 29 2012 Sergey V Turchin <zerg at altlinux dot org> 304.43-alt1
 - new release (304.43)

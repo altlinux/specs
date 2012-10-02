@@ -2,7 +2,7 @@
 %define module_version	4.1.20
 %define module_release	alt1
 
-%define kversion	3.5.4
+%define kversion	3.6.0
 %define krelease	alt1
 %define flavour		un-def
 
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197892.1
+Release: %module_release.198144.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -102,8 +102,8 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Sat Sep 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.20-alt1.197892.1
-- Build for kernel-image-un-def-3.5.4-alt1.
+* Mon Oct 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.1.20-alt1.198144.1
+- Build for kernel-image-un-def-3.6.0-alt1.
 
 * Wed Aug 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1
 - Update to new release
