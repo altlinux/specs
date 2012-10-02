@@ -6,7 +6,7 @@
 %define sover %somver.5
 Name: superlu_dist
 Version: 3.1
-Release: alt2
+Release: alt3
 Summary: Solve a sparse linear system A*X=B for distributed memory
 License: BSD-like
 Group: Sciences/Mathematics
@@ -230,6 +230,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 #exclude %_bindir/test*
 
 %changelog
+* Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt3
+- Rebuilt with gcc 4.7
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt2
 - Built with OpenBLAS instead of GotoBLAS2
 
