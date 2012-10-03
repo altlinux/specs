@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libGL-devel libSDL-devel zlib-devel
 # END SourceDeps(oneline)
 Name:           CriticalMass
 Version:        1.5
-Release:        alt2_5
+Release:        alt2_5.1
 Summary:        SDL/OpenGL space shoot'em up game also known as critter
 Group:          Games/Other
 License:        GPLv2+
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt2_5.1
+- Rebuilt with libpng15
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5-alt2_5
 - update to new release by fcimport
 
