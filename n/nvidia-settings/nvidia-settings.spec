@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 304.43
+Version: 304.51
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -98,6 +98,12 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 304.51-alt1
+- new version
+
+* Thu Aug 30 2012 Sergey V Turchin <zerg@altlinux.org> 304.43-alt0.M60P.1
+- built for M60P
+
 * Thu Aug 30 2012 Sergey V Turchin <zerg@altlinux.org> 304.43-alt1
 - new version
 
