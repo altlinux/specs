@@ -3,7 +3,7 @@
 
 Name: ldap-user-tools
 Version: 0.7.2
-Release: alt1
+Release: alt2
 
 Summary: tools to work with ldap users
 Group: Development/Other
@@ -42,6 +42,9 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Wed Oct 03 2012 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt2
+- Add -r option to ldap-userdel to delete home directory and mail spool
+
 * Mon Oct 01 2012 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
 - Fix user creation in Alterator
 - Correct creation on missed first_name
