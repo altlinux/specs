@@ -1,7 +1,7 @@
 %define module Geo-IPfree
 
 Name: perl-%module
-Version: 1.120460
+Version: 1.121660
 Release: alt1
 
 Summary: Geo::IPfree - Look up country by IP Address
@@ -11,7 +11,7 @@ Group: Development/Perl
 BuildArch: noarch
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/B/BR/BRICAS/Geo-IPfree-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BR/BRICAS/Geo-IPfree-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Nov 16 2010
 BuildRequires: perl-Memoize perl-Test-Pod perl-Test-Pod-Coverage
@@ -34,6 +34,9 @@ is free and small.
 %perl_vendor_privlib/Geo
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.121660-alt1
+- automated CPAN update
+
 * Fri Mar 23 2012 Victor Forsiuk <force@altlinux.org> 1.120460-alt1
 - 1.120460
 
