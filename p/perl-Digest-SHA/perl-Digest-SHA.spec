@@ -1,15 +1,15 @@
 %define module Digest-SHA
 
 Name: perl-%module
-Version: 5.71
-Release: alt2
+Version: 5.72
+Release: alt1
 
 Summary: Perl extension for SHA-1/224/256/384/512
 License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/M/MS/MSHELOR/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MS/MSHELOR/Digest-SHA-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Oct 07 2011
 BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
@@ -38,6 +38,9 @@ module can handle all types of input, including partial-byte data.
 %_man1dir/*
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 5.72-alt1
+- automated CPAN update
+
 * Tue Aug 28 2012 Vladimir Lettiev <crux@altlinux.ru> 5.71-alt2
 - rebuilt for perl-5.16
 
