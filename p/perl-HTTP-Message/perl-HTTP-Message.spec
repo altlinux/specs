@@ -1,6 +1,6 @@
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.03
+Version: 6.04
 Release: alt1
 
 Summary: HTTP style messages
@@ -8,14 +8,14 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GA/GAAS/HTTP-Message-%{version}.tar.gz
 
 Conflicts: perl-libwww < 6
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Mon Feb 20 2012
-BuildRequires: perl-Encode-Locale perl-HTML-Parser perl-HTTP-Date perl-IO-Compress perl-LWP-MediaTypes perl-devel
+BuildRequires: perl-Encode-Locale perl-HTML-Parser perl-HTTP-Date perl-IO-Compress perl-LWP-MediaTypes perl-devel perl(IO/HTML.pm)
 
 %description
 An HTTP::Message object contains some headers and a content body.
@@ -35,6 +35,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1
+- automated CPAN update
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 6.03-alt1
 - 6.02 -> 6.03
 
