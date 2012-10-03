@@ -1,3 +1,4 @@
+BuildRequires: ant-junit
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: ant-log4j
 BuildRequires: /proc
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           jug
 Version:        2.0.0
-Release:        alt1_1jpp6
+Release:        alt2_1jpp6
 Epoch:          0
 Summary:        Java UUID Generator
 License:        Apache Software License 2.0
@@ -152,6 +153,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt2_1jpp6
+- added ant-junit BR:
+
 * Thu Oct 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.0.0-alt1_1jpp6
 - fixed build
 
