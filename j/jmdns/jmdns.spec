@@ -1,3 +1,4 @@
+BuildRequires: ant ant-junit
 BuildRequires: /proc
 BuildRequires: jpackage-1.4-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -38,7 +39,7 @@ Name:		jmdns
 Summary:	JmDNS multicast extensions for DNS
 Url:		http://jmdns.sourceforge.net/
 Version:	1.0
-Release:	alt1_1jpp1.7
+Release:	alt2_1jpp1.7
 Epoch:		0
 License:	LGPL
 Group:		Development/Java
@@ -79,7 +80,7 @@ cp %{SOURCE2} lib/jmdns.manifest
 
 %build
 mkdir classes
-ant build samples jar javadoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  build samples jar javadoc
 
 %install
 # jars
@@ -140,6 +141,9 @@ fi
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_1jpp1.7
+- added ant-junit BR:
+
 * Mon Jun 04 2007 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt1_1jpp1.7
 - converted from JPackage by jppimport script
 
