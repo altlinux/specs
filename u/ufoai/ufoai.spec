@@ -1,6 +1,6 @@
 Name: ufoai
 Version: 2.4
-Release: alt1
+Release: alt1.1
 Source: %name-%version.tar
 Summary: UFO: Alien Invasion - build your team and stop the aliens
 License: GPL
@@ -255,6 +255,9 @@ install -m 644 -pD debian/uforadiant.6 %buildroot/%_man6dir
 #/usr/share/games/ufoai/base/maps
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt1.1
+- Rebuilt with libpng15
+
 * Fri Apr 27 2012 Roman Savochenko <rom_as@altlinux.ru> 2.4-alt1
 - Build version 2.4.
 
