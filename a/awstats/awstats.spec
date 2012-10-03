@@ -4,8 +4,8 @@
 %define	docdir %_docdir/%name-%version
 
 Name: awstats
-Version: 6.95
-Release: alt1
+Version: 7.1
+Release: alt2.cvs20120604
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -36,7 +36,7 @@ BuildRequires(pre): rpm-build-apache
 BuildRequires(pre): rpm-build-apache2
 
 # Automatically added by buildreq on Wed Jul 21 2010 (-bi)
-BuildRequires: apache2-common java-devel perl-libwww tzdata
+BuildRequires: apache2-common java-devel perl-libwww tzdata perl-Switch perl-CGI
 
 %description
 AWStats is a short for Advanced Web Statistics. It's a free tool that generates
@@ -117,6 +117,9 @@ mv %buildroot%_datadir/%name/tools/{awstats_configure.pl,httpd_conf,webmin,xslt}
 mv %buildroot%_datadir/%name/wwwroot/cgi-bin/awredir.pl examples/
 mv %buildroot%_datadir/%name/plugins/example/example.pm examples/
 
+# fix permissions (again)
+find %buildroot%_datadir/%name -name \*.pl -exec chmod 0755 {} \;
+
 install -p -m644 %SOURCE1 %buildroot%_sysconfdir/cron.d/%name
 install -p -m644 %SOURCE2 %buildroot%apache_modconfdir/%name.conf
 install -p -m644 %SOURCE3 %buildroot%apache2_mods_start/%name.conf
@@ -170,6 +173,21 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Wed Oct 03 2012 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt2.cvs20120604
+- update russian search engines.
+- rebuild due /usr/sbin/service -> /sbin/service migration (ALT #27795).
+
+* Wed Oct 03 2012 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt1.cvs20120604
+- Bug fixes:
+  + fix permissions for .pl files.
+  + awstats.pl: fix opera version detection (upstream #3564921)
+  + browsers_phone.pm: add missing %BrowsersFamily (upstream #3430233)
+
+* Tue Oct 02 2012 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt0.1.cvs20120604
+- Updated to CVS 2012/06/04 shapshot.
+- re-apply all azol@ patches.
+- update buildreq: add perl-Switch, perl-CGI.
+
 * Sat Jul 17 2010 Artem Zolochevskiy <azol@altlinux.ru> 6.95-alt1
 - update to 6.95
 - move webserver integration part to subpackages:
@@ -194,6 +212,9 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 - Add dependency on perl-Encode.
 - Prevent unneeded unix -> dos conversion (add "-U" to dos2unix call).
 - Reduce macro abuse in specfile.
+
+* Wed Oct 28 2009 L.A. Kostis <lakostis@altlinux.ru> 6.95-alt0.2009.10.28
+- Update to unreleased 6.95 (2009-10-28 CVS snapshot).
 
 * Sun Dec 07 2008 L.A. Kostis <lakostis@altlinux.ru> 6.9-alt0.b2008.11.30
 - new unstable beta snapshot (2008-11-30).
