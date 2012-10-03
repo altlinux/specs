@@ -19,7 +19,7 @@
 
 Name: xorg-server
 Version: 1.12.4
-Release: alt1
+Release: alt2
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -309,6 +309,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Wed Oct 03 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.4-alt2
+- added modesetting driver to fallback list (closes: #27773)
+
 * Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.4-alt1
 - 1.12.4
 
