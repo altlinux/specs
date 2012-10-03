@@ -2,7 +2,7 @@
 
 Name: speed-dreams
 Version: 1.4.0
-Release: alt4
+Release: alt4.1
 
 Summary: Speed Dreams is a fork of the famous open racing car simulator TORCS, aiming to implement exciting new features
 Summary(ru_RU.UTF-8): Speed Dreams - это ответвление от знаменитого проекта TORCS, ставящее своей основной целью реализацию самых последних возможностей
@@ -18,6 +18,8 @@ Source1: %name.desktop
 # Thanks Gentoo for patch
 Patch0:  %name-%version-gentoo.patch
 Patch1:  %name-%version-makefile-alt.patch
+
+Patch2: %name-1.4.0-alt-libpng15.patch
 
 Requires: %name-data = %version-%release 
 
@@ -70,6 +72,7 @@ Data files for %name
 %setup
 %patch0 -p0
 %patch1 -p0
+%patch2 -p2
 
 %build
 %__autoconf
@@ -106,6 +109,9 @@ Data files for %name
 %exclude %_gamesdatadir/%name/icon.*
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt4.1
+- Rebuilt with libpng15
+
 * Thu Apr 21 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.0-alt4
 - fix build
 
