@@ -1,3 +1,4 @@
+BuildRequires: ant ant-junit
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -39,7 +40,7 @@ Name:		%{name}
 Summary:	MockMaker
 Url:		http://mockmaker.sourceforge.net/
 Version:	%{version}
-Release:	alt2_2jpp1.7
+Release:	alt3_2jpp1.7
 Epoch:		0
 License:	BSD style
 Group:		Development/Java
@@ -124,6 +125,9 @@ ln -s %{name}-%{version} %{_javadocdir}/%{name}
 %ghost %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.12.0-alt3_2jpp1.7
+- added ant-junit BR:
+
 * Sat Feb 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.12.0-alt2_2jpp1.7
 - fixed build with new qdox
 
