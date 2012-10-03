@@ -3,7 +3,7 @@ Url: http://pushover.sourceforge.net/
 License: GPL
 Group: Games/Puzzles
 Version: 0.0.3
-Release: alt1
+Release: alt1.1
 Summary: Puzzle with ant pushing dominoes to fall
 Source: %name-%version.tar.gz
 Source1: %name.png
@@ -71,6 +71,9 @@ install -m 644 %SOURCE1 %buildroot%_datadir/pixmaps
 %_datadir/%name/themes/*
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.1
+- Rebuilt with libpng15
+
 * Sat May 14 2011 Fr. Br. George <george@altlinux.ru> 0.0.3-alt1
 - Autobuild version bump to 0.0.3
 
