@@ -1,6 +1,6 @@
 Name:      and
 Version:   1.2.2
-Release:   alt2_16
+Release:   alt2_17
 Summary:   Auto nice daemon
 
 License:   GPLv2
@@ -64,8 +64,6 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/sysconfig/and
 mkdir -p %{buildroot}%{_unitdir}
 install -p -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}
 
-%postun
-
 %files
 %doc README LICENSE CHANGELOG
 %config(noreplace) %{_sysconfdir}/and/
@@ -76,6 +74,9 @@ install -p -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}
 %{_unitdir}/and.service
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2_17
+- new fc release
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2_16
 - new release
 
