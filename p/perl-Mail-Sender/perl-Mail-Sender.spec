@@ -1,8 +1,8 @@
 %define dist Mail-Sender
 
 Name: perl-%dist
-Version: 0.8.16
-Release: alt1.1
+Version: 0.8.21
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/modules/by-module/Mail/%dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/J/JE/JENDA/Mail-Sender-%{version}.tar.gz
 Source1: Mail-Sender.config
 
 BuildArch: noarch
@@ -23,7 +23,7 @@ BuildArch: noarch
 Requires: perl(Carp.pm), perl(File/Basename.pm), perl(FileHandle.pm), perl(MIME/Base64.pm), perl(MIME/QuotedPrint.pm), perl(Socket.pm), perl(open.pm), perl(warnings.pm)
 
 # Automatically added by buildreq on Fri Aug 01 2008
-BuildRequires: perl-devel
+BuildRequires: perl-devel perl(Encode.pm)
 
 %description
 Mail::Sender provides an object oriented interface to sending mails. It
@@ -52,6 +52,9 @@ rm -f %buildroot%perl_vendor_privlib/Mail/Sender/CType/Win32.pm
 %perl_vendor_privlib/Mail
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.21-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.8.16-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
