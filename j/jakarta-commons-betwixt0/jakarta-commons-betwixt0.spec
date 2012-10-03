@@ -1,3 +1,4 @@
+BuildRequires: ant ant-junit
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -37,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           jakarta-%{base_name}0
 Version:        0.8
-Release:        alt2_2jpp5
+Release:        alt3_2jpp5
 Epoch:          0
 Summary:        Java bean to XML mapping library
 
@@ -164,6 +165,9 @@ cp -pr RELEASE-NOTES.txt $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
 
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.8-alt3_2jpp5
+- added ant-junit BR:
+
 * Fri Mar 16 2012 Igor Vlasenko <viy@altlinux.ru> 0:0.8-alt2_2jpp5
 - fixed build with java 7
 
