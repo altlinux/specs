@@ -1,6 +1,6 @@
 Name: xautomation
 Version: 1.03
-Release: alt1.1
+Release: alt1.2
 
 Summary: Control X from the command line
 Summary(uk_UA.CP1251): Керування X з командного рядка
@@ -11,8 +11,6 @@ URL: http://hoopajoo.net/projects/%name.html
 
 Source: %name-%version.tar
 Patch: xautomation-1.03-alt-DSO.patch
-
-Packager: Andrey Rahmatullin <wrar@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: imake libICE-devel libX11-devel libXtst-devel
@@ -51,6 +49,9 @@ buttons, etc, on the screen to click on.
 
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.03-alt1.2
+- Rebuilt with libpng15
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.03-alt1.1
 - Fixed build
 
