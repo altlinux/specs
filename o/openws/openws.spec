@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           openws
 Version:        1.2.2
-Release:        alt3_2jpp6
+Release:        alt4_2jpp6
 Epoch:          0
 Summary:        Open WS
 License:        ASL 2.0
@@ -63,10 +63,10 @@ BuildRequires: maven-release
 BuildRequires: maven-surefire-maven-plugin
 BuildRequires: maven-surefire-provider-junit
 #BuildRequires: spring-mock
-BuildRequires: spring2-core
+BuildRequires: springframework
 BuildRequires: xmltooling >= 0:1.2.0
 Requires: xmltooling >= 0:1.2.0
-Requires: spring2-core
+#Requires: spring2-core
 
 %description
 Open WS.
@@ -84,23 +84,13 @@ BuildArch: noarch
 %patch0 -b .sav0
 %patch33 -p1
 
-cp -p %{SOURCE2} maven2-settings.xml
-
-sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/m2_repo/repository</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" maven2-settings.xml
-sed -i -e "s|<url>__ECLIPSEDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/eclipse/plugins</url>|g" maven2-settings.xml
-
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 
 %build
-export M2SETTINGS=$(pwd)/maven2-settings.xml
 export MAVEN_REPO_LOCAL=$(pwd)/m2_repo/repository
 
 mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.source=1.5  -e \
-        -s ${M2SETTINGS} \
         -Dmaven.test.skip=true \
         -Dmaven.test.failure.ignore=true \
         -Dmaven.repo.local=${MAVEN_REPO_LOCAL} \
@@ -136,6 +126,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt4_2jpp6
+- build with spring3
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2.2-alt3_2jpp6
 - dropped spring1
 
