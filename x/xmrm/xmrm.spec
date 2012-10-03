@@ -1,7 +1,7 @@
 Name: xmrm
 Version: 2.0
 %define lversion 20
-Release: alt6
+Release: alt6.1
 
 Summary: Multi Resolution Morphing for X
 License: GPL
@@ -71,6 +71,9 @@ install -Dm644 %{SOURCE1} %buildroot%_liconsdir/%{name}.xpm
 %_liconsdir/%{name}.xpm
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt6.1
+- Rebuilt with libtiff5
+
 * Thu Apr 21 2011 Igor Vlasenko <viy@altlinux.ru> 2.0-alt6
 - rebuild with new libxforms
 - added .desktop file
