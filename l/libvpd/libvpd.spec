@@ -1,5 +1,6 @@
+%set_gcc_version 4.6
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc4.6-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define name libvpd
@@ -7,7 +8,7 @@ BuildRequires: gcc-c++
 
 Name:		%{name}
 Version:	%{version}
-Release:	alt2_2
+Release:	alt3_2
 Summary:	VPD Database access library for lsvpd
 
 Group:		System/Libraries
@@ -52,6 +53,9 @@ Contains header files for building with libvpd.
 %{_libdir}/pkgconfig/libvpd_cxx-2.pc
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt3_2
+- gcc46 build
+
 * Fri Dec 23 2011 Igor Vlasenko <viy@altlinux.ru> 2.1.1-alt2_2
 - spec cleanup thanks to ldv@
 
