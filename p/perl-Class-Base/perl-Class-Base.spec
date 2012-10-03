@@ -1,7 +1,7 @@
 %define module Class-Base
 
 Name: perl-%module
-Version: 0.04
+Version: 0.05
 Release: alt1
 
 Summary: Class::Base - useful base class for deriving other modules
@@ -9,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 URL: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Class/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SZ/SZABGAB/Class-Base-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ new(), init(), params(), clone(), error() and debug().
 %perl_vendor_privlib/Class
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- automated CPAN update
+
 * Sun Mar 25 2012 Victor Forsiuk <force@altlinux.org> 0.04-alt1
 - 0.04
 
