@@ -1,7 +1,7 @@
 %define module GD-SecurityImage
 
 Name: perl-%module
-Version: 1.71
+Version: 1.72
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/authors/id/B/BU/BURAK/GD-SecurityImage-1.71.tar.gz
+Source: http://www.cpan.org/authors/id/B/BU/BURAK/GD-SecurityImage-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ gives you a basic interface to create such an image.
 %perl_vendor_privlib/GD
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.72-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.71-alt1
 - automated CPAN update
 
