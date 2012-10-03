@@ -1,12 +1,13 @@
 Serial: 51104
+%set_gcc_version 4.6
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: gcc4.6-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Summary:		Minisip library providing various C++ network classes
 Name:			libmnetutil
 Version:		0.8.0
-Release:		alt3_0.3.20100629svn3775
+Release:		alt4_0.3.20100629svn3775
 License:		LGPLv2+
 URL:			http://www.minisip.org/
 Group:			System/Libraries
@@ -64,6 +65,9 @@ rm -rf $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt4_0.3.20100629svn3775
+- gcc46 build
+
 * Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 51104:0.8.0-alt3_0.3.20100629svn3775
 - applied repocop patches
 
