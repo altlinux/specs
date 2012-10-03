@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Text-vCard
-Version: 2.10
+Version: 2.12
 Release: alt1
 
 Summary: Module for parsing and creating vCards (RFC 2426) address
@@ -26,10 +26,10 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/modules/by-module/MediaWiki/%m_distro-%version.tar
+Source: http://www.cpan.org/authors/id/L/LL/LLAP/Text-vCard-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Feb 13 2010
-BuildRequires: perl-File-Slurp perl-Text-vFile-asData perl-devel
+BuildRequires: perl-File-Slurp perl-Text-vFile-asData perl-devel perl(Encode.pm) perl(Digest/SHA.pm)
 
 %description
 A vCard is an electronic business card.
@@ -55,6 +55,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/Text/*
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 2.12-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1
 - automated CPAN update
 
