@@ -1,7 +1,7 @@
 %define dist Text-TabularDisplay
 
 Name: perl-%dist
-Version: 1.30
+Version: 1.33
 Release: alt1
 
 Summary: Text::TabularDisplay - display text in formatted table output
@@ -9,7 +9,7 @@ License: GPLv2+
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/D/DA/DARREN/%dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DA/DARREN/Text-TabularDisplay-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -35,6 +35,9 @@ mysql text monitor.
 %perl_vendor_privlib/Text
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
+- automated CPAN update
+
 * Sun Apr 01 2012 Victor Forsiuk <force@altlinux.org> 1.30-alt1
 - 1.30
 
