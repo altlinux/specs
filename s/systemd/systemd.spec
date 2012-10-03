@@ -14,7 +14,7 @@
 
 Name: systemd
 Version: 193
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -27,7 +27,6 @@ Source6: altlinux-idetune.service
 Source7: altlinux-update_chrooted.service
 Source8: altlinux-clock-setup.service
 Source9: rtc.conf
-Source10: altlinux-swap.service
 Source11: altlinux-storage-init
 Source12: altlinux-storage-init.service
 Source13: altlinux-wait-storage.service
@@ -387,8 +386,6 @@ ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/sysinit.target.wan
 install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
 ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants
 ln -s altlinux-clock-setup.service %buildroot%_unitdir/clock.service
-install -m644 %SOURCE10 %buildroot%_unitdir/altlinux-swap.service
-ln -s ../altlinux-swap.service %buildroot%_unitdir/basic.target.wants
 install -m755 %SOURCE11 %buildroot/lib/systemd/altlinux-storage-init
 install -m644 %SOURCE12 %buildroot%_unitdir/altlinux-storage-init.service
 ln -s ../altlinux-storage-init.service %buildroot%_unitdir/local-fs.target.wants
@@ -510,14 +507,16 @@ touch %buildroot%_sysconfdir/machine-info
 #popd
 #}
 
-# disable swap enable, use altlinux-swap.service
-sed -i -e 's/^#SwapAuto=yes$/SwapAuto=no/' \
-	%buildroot%_sysconfdir/systemd/system.conf
-
-
 # ALTlinux specific changes
 sed -i -e 's|^d /run/lock/lockdev 0775 root lock -$|d /run/lock/serial 0775 root uucp -|' \
 	%buildroot/lib/tmpfiles.d/legacy.conf
+
+# Set up the pager to make it generally more useful
+mkdir -p %buildroot%_sysconfdir/profile.d
+cat > %buildroot%_sysconfdir/profile.d/systemd.sh << EOF
+export SYSTEMD_PAGER="/usr/bin/less -FR"
+EOF
+chmod 644 %buildroot%_sysconfdir/profile.d/systemd.sh
 
 #######
 # UDEV
@@ -644,6 +643,7 @@ fi
 %dir %_sysconfdir/systemd/ntp-units.d
 
 %_sysconfdir/bash_completion.d/systemd
+%_sysconfdir/profile.d/systemd.sh
 /lib/tmpfiles.d/*.conf
 /lib/modules-load.d/*.conf
 %_sysconfdir/modules-load.d/modules.conf
@@ -858,6 +858,11 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Mon Oct 01 2012 Alexey Shabalin <shaba@altlinux.ru> 193-alt2
+- drop altlinux-swap.service
+- add /etc/profile.d/systemd.sh and export
+  SYSTEMD_PAGER="/usr/bin/less -FR" (ALT#27784)
+
 * Fri Sep 28 2012 Alexey Shabalin <shaba@altlinux.ru> 193-alt1
 - 193
 - add support build with microhttpd, but disable
