@@ -1,3 +1,4 @@
+BuildRequires: ant-junit
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -33,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           jxhtmledit
 Version:        4.0.005
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Summary:        Browser-based HTML/XHTML content authoring tool
 
 Group:          Development/Java
@@ -155,6 +156,9 @@ xmlconfigreader \
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.005-alt3_1jpp6
+- added ant-junit BR:
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.005-alt2_1jpp6
 - fixed build with java 7
 
