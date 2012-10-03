@@ -1,6 +1,6 @@
 %define dist Catalyst-Runtime
 Name: perl-%dist
-Version: 5.90015
+Version: 5.90016
 Release: alt1
 
 Summary: Web application framework
@@ -35,6 +35,9 @@ This is the Runtime distribution for the Catalyst MVC framework.
 %perl_vendor_privlib/Catalyst*
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 5.90016-alt1
+- automated CPAN update
+
 * Tue Sep 25 2012 Igor Vlasenko <viy@altlinux.ru> 5.90015-alt1
 - automated CPAN update
 
