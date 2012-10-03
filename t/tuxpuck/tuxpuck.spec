@@ -1,6 +1,6 @@
 Name: tuxpuck
 Version: 0.8.2
-Release: alt1.qa2
+Release: alt1.qa3
 
 Group: Games/Arcade
 Summary: Clone of ShufflePuck Cafe historical game
@@ -17,6 +17,7 @@ Patch0: tuxpuck-0.30-fix-includes.patch
 Patch1: tuxpuck-0.7.116-fullscreen.patch
 Patch3:         tuxpuck-0.8.2-mandest.patch
 Patch4:         tuxpuck-0.8.2-utils-werror.patch
+Patch5: tuxpuck-0.8.2-alt-libpng15.patch
 
 # Author: d00jkr@efd.lth.se
 
@@ -26,7 +27,7 @@ Patch4:         tuxpuck-0.8.2-utils-werror.patch
 BuildRequires: aalib esound freetype2-devel
 BuildRequires: libSDL-devel libSDL_net-devel libalsa2
 BuildRequires: libaudiofile libjpeg-devel libogg-devel
-BuildRequires: libpng-devel libslang libvorbis-devel zlib-devel
+BuildRequires: libpng-devel libslang2-devel libvorbis-devel zlib-devel
 
 %description
 Anyone remember "Shufflepuck Cafe" for the Amiga/AtariST ?
@@ -37,6 +38,7 @@ Anyone remember "Shufflepuck Cafe" for the Amiga/AtariST ?
 %patch1 -p1
 %patch3 -p0 -z .mandest
 %patch4 -p0 -z .utils-werror
+%patch5 -p2
 
 %build
 CFLAGS="$RPM_OPT_FLAGS" CXXFLAGS="$RPM_OPT_FLAGS" make
@@ -75,6 +77,9 @@ EOF
 %_iconsdir/*/*/*/*.png
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.qa3
+- Rebuilt with libpng15
+
 * Thu Apr 07 2011 Igor Vlasenko <viy@altlinux.ru> 0.8.2-alt1.qa2
 - NMU: converted debian menu to freedesktop
 
