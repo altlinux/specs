@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-XML-Compile
-Version: 1.22
+Version: 1.27
 Release: alt1
 
 Summary: Compilation based XML processing
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/M/MA/MARKOV/%m_distro-%version.tar
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/XML-Compile-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Sep 06 2011
 # optimized out: perl-B-Utils perl-Data-Dump-Streamer perl-Encode perl-File-Slurp perl-Log-Report perl-Math-BigInt perl-Math-BigInt-FastCalc perl-Math-BigRat perl-Text-Balanced perl-XML-LibXML perl-XML-LibXML-Simple perl-devel xml-common
@@ -58,6 +58,9 @@ understand namespaces and other general XML and schema nastiness.
 %perl_vendor_privlib/XML/*
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.27-alt1
+- automated CPAN update
+
 * Tue Sep 06 2011 Vitaly Lipatov <lav@altlinux.ru> 1.22-alt1
 - new version 1.22 (with rpmrb script)
 
