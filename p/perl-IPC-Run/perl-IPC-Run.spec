@@ -2,7 +2,7 @@
 %def_disable test
 
 Name: perl-%module
-Version: 0.91
+Version: 0.92
 Release: alt1
 
 Summary: IPC-Run - system() and background procs w/ piping, redirs, ptys (Unix, Win32)
@@ -10,7 +10,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/T/TO/TODDR/IPC-Run-%version.tar.gz
+Source: http://www.cpan.org/authors/id/T/TO/TODDR/IPC-Run-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ mixed.
 %exclude %perl_vendor_privlib/IPC/Run/Win*
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.92-alt1
+- automated CPAN update
+
 * Sun Mar 25 2012 Victor Forsiuk <force@altlinux.org> 0.91-alt1
 - 0.91
 
