@@ -1,6 +1,6 @@
 Name: vobcopy
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Summary: Copy DVD videos to the hard disk
 Summary(ru_RU.UTF-8): Копирует содержимое DVD на диск
@@ -12,7 +12,7 @@ Source0: http://vobcopy.org/download/%name-%version.tar.bz2
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Sat Sep 19 2009
+# Automatically added by buildreq on Wed Oct 03 2012
 BuildRequires: libdvdread-devel
 
 %description
@@ -48,6 +48,9 @@ install -pD -m 644 vobcopy.1.de %buildroot%_mandir/de/man1/vobcopy.1
 %_mandir/de/man1/vobcopy.*
 
 %changelog
+* Tue Oct 02 2012 Igor Zubkov <icesik@altlinux.org> 1.2.0-alt3
+- rebuilt for debuginfo
+
 * Sat Sep 19 2009 Igor Zubkov <icesik@altlinux.org> 1.2.0-alt2
 - rebuild
 
