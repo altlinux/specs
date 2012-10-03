@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-XML-Compile-Cache
-Version: 0.991
+Version: 0.992
 Release: alt1
 
 Summary: Cache compiled XML translators
@@ -26,7 +26,7 @@ Url: %CPAN %m_distro
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org/CPAN/authors/id/M/MA/MARKOV/%m_distro-%version.tar
+Source: http://www.cpan.org/authors/id/M/MA/MARKOV/XML-Compile-Cache-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Jul 30 2010
 BuildRequires: perl-Test-Pod perl-XML-Compile perl-XML-Compile-Tester perl-XML-LibXML-Simple
@@ -48,6 +48,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/XML/*
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.992-alt1
+- automated CPAN update
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 0.991-alt1
 - automated CPAN update
 
