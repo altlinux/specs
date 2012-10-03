@@ -1,5 +1,5 @@
 Name: valgrind
-Version: 3.7.0
+Version: 3.8.1
 Release: alt1
 
 Summary: Valgrind, an open-source memory debugger for GNU/Linux
@@ -13,30 +13,27 @@ Source: %name-%cvsdate.tar
 Source: http://www.valgrind.org/downloads/%name-%version.tar
 %endif
 
-Patch1: valgrind-3.7.0-up-compiler.patch
-Patch2: valgrind-3.7.0-up-automake.patch
-
-Patch101: valgrind-3.7.0-rh-addToXA.patch
-Patch102: valgrind-3.7.0-rh-cachegrind-improvements.patch
-Patch103: valgrind-3.7.0-rh-capget.patch
-Patch104: valgrind-3.7.0-rh-config_h.patch
-Patch105: valgrind-3.7.0-rh-debug-leak1.patch
-Patch106: valgrind-3.7.0-rh-debug-leak2.patch
-Patch107: valgrind-3.7.0-rh-debug-types.patch
-Patch108: valgrind-3.7.0-rh-enable-armv5.patch
-Patch109: valgrind-3.7.0-rh-f-sgetown-ex.patch
-Patch110: valgrind-3.7.0-rh-glibc-2.15.patch
-Patch111: valgrind-3.7.0-rh-helgrind-race-supp.patch
-Patch112: valgrind-3.7.0-rh-ldso-supp.patch
-Patch113: valgrind-3.7.0-rh-openat.patch
-Patch114: valgrind-3.7.0-rh-pie.patch
-Patch115: valgrind-3.7.0-rh-rvalue-ref.patch
-Patch116: valgrind-3.7.0-rh-scsi-ioctls.patch
-Patch117: valgrind-3.7.0-rh-stat_h.patch
-Patch118: valgrind-3.7.0-rh-tests.patch
-Patch119: valgrind-3.7.0-rh-unspecified-type.patch
-
-Patch201: valgrind-3.5.0-alt-tests.patch
+Patch1: valgrind-3.8.1-rh-cachegrind-improvements.patch
+Patch2: valgrind-3.8.1-rh-openat.patch
+Patch3: valgrind-3.8.1-rh-helgrind-race-supp.patch
+Patch4: valgrind-3.8.1-rh-stat_h.patch
+Patch5: valgrind-3.8.1-rh-config_h.patch
+Patch6: valgrind-3.8.1-rh-capget.patch
+Patch7: valgrind-3.8.1-rh-pie.patch
+Patch8: valgrind-3.8.1-alt-arm.patch
+Patch9: valgrind-3.8.1-rh-ldso-supp.patch
+Patch10: valgrind-3.8.1-rh-x86-backtrace.patch
+Patch11: valgrind-3.8.1-rh-find-buildid.patch
+Patch12: valgrind-3.8.1-rh-abbrev-parsing.patch
+Patch13: valgrind-3.8.1-rh-cfi_dw_ops.patch
+Patch14: valgrind-3.8.1-rh-gdbserver_tests-mcinvoke-ppc64.patch
+Patch15: valgrind-3.8.1-rh-x86_amd64_features-avx.patch
+Patch16: valgrind-3.8.1-rh-gdbserver_tests-syscall-template-source.patch
+Patch17: valgrind-3.8.1-rh-overlap_memcpy_filter.patch
+Patch21: valgrind-3.8.1-rh-avx2-bmi-fma.patch
+Patch22: valgrind-3.8.1-rh-bmi-conf-check.patch
+Patch23: valgrind-3.8.1-rh-memcheck-mc_translate-Iop_8HLto16.patch
+Patch24: valgrind-3.8.1-rh-avx2-prereq.patch
 
 # valgrind needs /proc to work
 Requires: /proc
@@ -94,30 +91,40 @@ needed to compile Valgrind tools separately from the Valgrind core.
 %prep
 %setup %{?cvsdate:-n %name}
 
-%patch1 -p0
-%patch2 -p0
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
+%patch17 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
+%patch24 -p1
 
-%patch101 -p1
-%patch102 -p1
-%patch103 -p1
-%patch104 -p1
-%patch105 -p1
-%patch106 -p1
-%patch107 -p1
-%patch108 -p1
-%patch113 -p1
-%patch114 -p1
-%patch115 -p1
-%patch116 -p1
-%patch117 -p1
-%patch118 -p1
-%patch119 -p1
-
-%patch201 -p1
+chmod a+x memcheck/tests/filter_memcpy
+touch none/tests/amd64/{avx2-1,fma,bmi}.stderr.exp
 
 %build
 #%{?cvsdate:./autogen.sh}
 autoreconf -vi
+
+# Filter out some flags that cause lots of valgrind test failures.
+# Also filter away -O2, valgrind adds it wherever suitable, but
+# not for tests which should be -O0, as they aren't meant to be
+# compiled with -O2 unless explicitely requested.
+%define optflags_optimization %nil
 
 # No need to buildreq gdb just to find out the executable.
 export ac_cv_path_GDB=%_bindir/gdb
@@ -127,6 +134,16 @@ export ac_cv_path_GDB=%_bindir/gdb
 	--without-mpicc
 
 %make_build
+
+%install
+%makeinstall_std
+
+mv %buildroot%_docdir/%name{,-%version}
+install -m644 -p AUTHORS FAQ.txt NEWS \
+	%buildroot%_docdir/%name-%version/
+
+# Most of ELF objects should not be stripped - see README_PACKAGERS
+%brp_strip_none %_libdir/%name/*
 
 %check
 if [ ! -r /proc/self/exe ]; then
@@ -157,23 +174,6 @@ echo "===============TESTING==================="
 ./close_fds make regtest ||:
 echo "===============END TESTING==============="
 
-# Show diffs in the build log.
-# memcheck/tests/x86/scalar diffs are too big for this.
-find */tests -name '*.diff*' -print0 | \
-	grep -zv 'memcheck/tests/x86/scalar\.' | \
-	sort -z | \
-	xargs -r0 grep '^' --
-
-%install
-%makeinstall_std
-
-mv %buildroot%_docdir/%name{,-%version}
-install -m644 -p AUTHORS FAQ.txt NEWS \
-	%buildroot%_docdir/%name-%version/
-
-# Valgrind shared libraries should not be stripped - see README_PACKAGERS
-%brp_strip_none %_libdir/%name/vgpreload*.so
-
 %files
 %_bindir/*
 %_libdir/%name/
@@ -201,6 +201,10 @@ install -m644 -p AUTHORS FAQ.txt NEWS \
 
 
 %changelog
+* Wed Oct 03 2012 Dmitry V. Levin <ldv@altlinux.org> 3.8.1-alt1
+- Updated to 3.8.1.
+- Merged with valgrind-3.8.1-2 from Fedora.
+
 * Mon Jun 18 2012 Dmitry V. Levin <ldv@altlinux.org> 3.7.0-alt1
 - Updated to 3.7.0 release (closes: #27411).
 - Backported upstream build fixes.
