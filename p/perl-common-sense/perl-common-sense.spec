@@ -1,7 +1,7 @@
 %define module common-sense
 
 Name: perl-%module
-Version: 3.5
+Version: 3.6
 Release: alt1
 
 Summary: "Common sense" Perl defaults
@@ -9,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://search.cpan.org/CPAN/authors/id/M/ML/MLEHMANN/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/common-sense-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -37,6 +37,9 @@ typical (or not so typical - use your common sense) specimens of Perl coders:
 %perl_vendor_privlib/common
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 3.6-alt1
+- automated CPAN update
+
 * Sun Apr 01 2012 Victor Forsiuk <force@altlinux.org> 3.5-alt1
 - 3.5
 
