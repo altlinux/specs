@@ -2,7 +2,7 @@
 
 Name: ppracer
 Version: 0.3.1
-Release: alt3.1
+Release: alt3.2
 
 Summary: PlanetPenguin Racer 
 License: GPL
@@ -16,6 +16,7 @@ Patch0: ppracer-0.3.1-alt-i18n.patch
 Patch1: ppracer-0.3.1-alt-ui_lang.patch
 Patch2: ppracer-0.3.1-alt-gcc41.patch
 Patch3: ppracer-contrib-alt-hud.patch
+Patch4: ppracer-0.3.1-alt-libpng15.patch
 
 # Automatically added by buildreq on Fri Sep 01 2006
 BuildRequires: gcc-c++ libSDL-devel libSDL_mixer-devel libX11-devel libXext-devel libXi-devel libXmu-devel libfreetype-devel libGL-devel libpng-devel tcl-devel
@@ -33,6 +34,7 @@ quickly as possible. It is based on the GPL version of TuxRacer.
 pushd %name-contrib-%contrib
 %patch3 -p0
 popd
+%patch4 -p2
 
 %build
 %configure --with-data-dir=%_gamesdatadir/%name --with-tcl=%_libdir
@@ -72,6 +74,9 @@ install -pD -m644 icons/ppracer-48x48.png %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt3.2
+- Rebuilt with libpng15
+
 * Wed Dec 10 2008 Valery Inozemtsev <shrek@altlinux.ru> 0.3.1-alt3.1
 - NMU: updated build dependencies
 
