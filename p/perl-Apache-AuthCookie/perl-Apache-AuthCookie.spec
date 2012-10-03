@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Apache-AuthCookie
-Version: 3.12
-Release: alt1.1
+Version: 3.18
+Release: alt1
 
 Summary: Perl Authentication and Authorization via cookies
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MS/MSCHOUT/Apache-AuthCookie-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Apr 06 2010
 BuildRequires: apache2-mod_perl apache-mod_perl perl-CGI perl-libwww
@@ -78,6 +78,9 @@ verifies them and returns a session key.
 %perl_vendor_privlib/Apache/AuthCookie
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 3.18-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 3.12-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
