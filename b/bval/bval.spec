@@ -6,42 +6,26 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name bval
-%define version 0.4
+%define version 0.5
 %global namedreltag %{nil}
 %global namedversion %{version}%{?namedreltag}
 # disable guice module for now
 %global with_guice 0
 Name:          bval
-Version:       0.4
-Release:       alt1_3jpp7
+Version:       0.5
+Release:       alt1_1jpp7
 Summary:       Apache Bean Validation
 Group:         Development/Java
 License:       ASL 2.0
 Url:           http://bval.apache.org/
 Source0:       http://www.apache.org/dist/%{name}/%{namedversion}/%{name}-parent-%{namedversion}-source-release.zip
 
-# remove 
-#    findbugs-maven-plugin
-#    ianal-maven-plugin
-#    jdepend-maven-plugin
-# change org.apache.geronimo.specs geronimo-jpa_2.0_spec 1.1 with org.hibernate.javax.persistence hibernate-jpa-2.0-api 1.0.1.Final
-Patch0:        %{name}-%{namedversion}-parent-pom.patch
-Patch1:        %{name}-0.3-incubating-core-FeaturesCapable.patch
+Patch0:        %{name}-0.3-incubating-core-FeaturesCapable.patch
 # change org.codehaus.mojo jaxb2-maven-plugin with maven-jaxb22-plugin
 # change org.apache.geronimo.specs geronimo-jpa_2.0_spec 1.1 with org.hibernate.javax.persistence hibernate-jpa-2.0-api 1.0.1.Final
-Patch2:        %{name}-%{namedversion}-jsr303-pom.patch
+Patch1:        %{name}-0.4-jsr303-pom.patch
 # fix jaxb 2.2 apis
-Patch3:        %{name}-%{namedversion}-jsr303-fix-jaxb-apis.patch
-
-# replace bundle with core and jsr303
-Patch4:        %{name}-%{namedversion}-guice-pom.patch
-# build failure bval-guice/src/main/java/org/apache/bval/guice/ValidationModule.java:[61,12] error: cannot find symbol
-Patch5:        %{name}-%{namedversion}-disable-guice.patch
-
-# replace bundle with core and jsr303
-Patch6:        %{name}-%{namedversion}-extras-pom.patch
-# fix koji build problems missing org.apache.geronimo.osgi.locator.ProviderLocator
-Patch7:        %{name}-%{namedversion}-jsr303-osgi-locator.patch
+Patch2:        %{name}-0.4-jsr303-fix-jaxb-apis.patch
 
 BuildRequires: jpackage-utils
 
@@ -122,21 +106,71 @@ find . -name "*.jar" -delete
 %patch0 -p0
 %patch1 -p0
 %patch2 -p0
-%patch3 -p0
+
+# Don't use buildnumber-plugin, because jna is required and currently broken in f17
+%pom_remove_plugin org.codehaus.mojo:buildnumber-maven-plugin
+
+%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:findbugs-maven-plugin bval-xstream
+%pom_remove_plugin org.codehaus.mojo:ianal-maven-plugin
+%pom_remove_plugin org.codehaus.mojo:jdepend-maven-plugin
+
+
+%pom_remove_dep org.apache.geronimo.specs:geronimo-jpa_2.0_spec
+%pom_xpath_inject "pom:project/pom:dependencyManagement/pom:dependencies" "
+  <dependency>
+    <groupId>org.hibernate.javax.persistence</groupId>
+    <artifactId>hibernate-jpa-2.0-api</artifactId>
+    <version>1.0.1.Final</version>
+  </dependency>"
+
 %if %with_guice
-%patch4 -p0
+# require guice with aop support
+# build failure bval-guice/src/main/java/org/apache/bval/guice/ValidationModule.java:[61,12] error: cannot find symbol
+%pom_remove_dep org.apache.bval:org.apache.bval.bundle bval-guice
+%pom_xpath_inject "pom:project/pom:dependencies" '
+  <dependency>
+    <groupId>org.apache.bval</groupId>
+    <artifactId>bval-core</artifactId>
+    <version>${project.version}</version>
+  </dependency>
+  <dependency>
+    <groupId>org.apache.bval</groupId>
+    <artifactId>bval-jsr303</artifactId>
+    <version>${project.version}</version>
+  </dependency>' bval-guice
 %else
-%patch5 -p0
+%pom_disable_module bval-guice
 %endif
-%patch6 -p0
-%patch7 -p0
+%pom_remove_dep org.apache.bval:org.apache.bval.bundle bval-extras
+%pom_xpath_inject "pom:project/pom:dependencies" '
+  <dependency>
+    <groupId>org.apache.bval</groupId>
+    <artifactId>bval-core</artifactId>
+    <version>${project.version}</version>
+  </dependency>' bval-extras
+%pom_xpath_inject "pom:project/pom:dependencies" '
+  <dependency>
+    <groupId>org.apache.bval</groupId>
+    <artifactId>bval-jsr303</artifactId>
+    <version>${project.version}</version>
+  </dependency>' bval-extras
+
+# fix koji build problems missing org.apache.geronimo.osgi.locator.ProviderLocator
+%pom_xpath_inject "pom:project/pom:dependencies" '
+  <dependency>
+    <groupId>org.apache.geronimo.specs</groupId>
+    <artifactId>geronimo-osgi-locator</artifactId>
+    <version>1.0</version>
+    <scope>test</scope>
+  </dependency>' bval-jsr303
 
 # unavailable deps
 # org.hibernate.jsr303.tck jsr303-tck 1.0.6.GA
 # org.jboss.test-harness jboss-test-harness-jboss-as-51 1.0.0
-sed -i "s|<module>bval-tck</module>|<!--module>bval-tck</module-->|" pom.xml
+%pom_disable_module bval-tck
 
-sed -i "s|<module>bundle</module>|<!--module>bundle</module-->|" pom.xml
+%pom_disable_module bundle
 
 # fix non ASCII chars
 for s in bval-extras/src/main/java/org/apache/bval/extras/constraints/net/DomainValidator.java;do
@@ -160,9 +194,9 @@ for m in core \
   json \
   jsr303 \
   xstream;do
-    install -m 644 bval-${m}/target/bval-${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
-    install -pm 644 bval-${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
-    %add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
+    install -m 644 %{name}-${m}/target/%{name}-${m}-%{namedversion}.jar %{buildroot}%{_javadir}/%{name}/${m}.jar
+    install -pm 644 %{name}-${m}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-${m}.pom
+%add_maven_depmap JPP.%{name}-${m}.pom %{name}/${m}.jar
 done
 
 mkdir -p %{buildroot}%{_javadocdir}/%{name}
@@ -179,6 +213,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_1jpp7
+- new fc release
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt1_3jpp7
 - fc version
 
