@@ -1,7 +1,7 @@
 %define oname fuse
 Name: spectrum-fuse
 Version: 0.8.0.1
-Release: alt1.qa1
+Release: alt1.qa2
 
 Summary: The Free Unix Spectrum Emulator
 
@@ -61,6 +61,9 @@ install -D -m 0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0.1-alt1.qa2
+- Rebuilt with libpng15
+
 * Wed Dec 02 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.0.1-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for spectrum-fuse
