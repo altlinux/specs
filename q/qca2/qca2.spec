@@ -5,7 +5,7 @@ Name: qca2
 %define minor 0
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: Networking/Instant messaging
 Summary: QCA - Qt Cryptographic Architecture
@@ -14,7 +14,10 @@ License: LGPL
 Requires: lib%name = %version-%release
 
 Source: qca-%version.tar.bz2
-Patch1: qca-2.0.3-alt-paths.patch
+# FC
+Patch1: qca-2.0.3-gcc47.patch
+# ALT
+Patch10: qca-2.0.3-alt-paths.patch
 
 # Automatically added by buildreq on Fri Feb 25 2011 (-bi)
 #BuildRequires: cmake gcc-c++ glibc-devel-static libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgcrypt-devel libnss-devel libqt4-devel libqt4-gui libqt4-network libsasl2-devel libxkbfile-devel rpm-build-ruby
@@ -187,6 +190,7 @@ utilize the for Qt Cryptographic Architecture (QCA).
 %prep
 %setup -q -n qca-%version
 %patch1 -p1
+%patch10 -p1
 
 
 %build
@@ -247,6 +251,12 @@ popd
 %_includedir/qt4/QtCrypto
 
 %changelog
+* Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt4
+- fix against gcc-4.7
+
+* Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt2.M60P.1
+- built for M60P
+
 * Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.3-alt3
 - built pkcs11 plugin
 
