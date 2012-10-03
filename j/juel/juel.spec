@@ -1,3 +1,4 @@
+BuildRequires: ant-junit
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -34,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           juel
 Version:        2.1.0
-Release:        alt1_1jpp5
+Release:        alt2_1jpp5
 Epoch:          0
 Summary:        Java Unified Expression Language
 
@@ -76,7 +77,7 @@ done
 
 
 %build
-ant jars test apidoc
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jars test apidoc
 
 %install
 # jars
@@ -113,6 +114,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt2_1jpp5
+- added ant-junit BR:
+
 * Tue Mar 03 2009 Igor Vlasenko <viy@altlinux.ru> 0:2.1.0-alt1_1jpp5
 - new version
 
