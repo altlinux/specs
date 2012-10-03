@@ -1,6 +1,6 @@
 %define dist Lingua-EN-Tagger
 Name: perl-%dist
-Version: 0.20
+Version: 0.23
 Release: alt1
 
 Summary: Part-of-speech tagger for English natural language processing
@@ -8,9 +8,9 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AC/ACOBURN/Lingua-EN-Tagger-%{version}.tar.gz
 
-Patch: perl-Lingua-EN-Tagger-0.15-alt-nstore.patch
+Patch: perl-Lingua-EN-Tagger-0.23-alt-nstore.patch
 
 BuildArch: noarch
 
@@ -43,6 +43,9 @@ to be treated as nouns or other parts of speech.
 %perl_vendor_privlib/Lingua*
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 0.20-alt1
 - 0.16 -> 0.20
 
