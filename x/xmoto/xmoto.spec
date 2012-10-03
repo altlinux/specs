@@ -1,6 +1,6 @@
 Name: xmoto
 Version: 0.5.9
-Release: alt1.1
+Release: alt1.2
 
 Summary: A challenging 2D motocross platform game.
 License: GPL
@@ -9,6 +9,8 @@ Packager: Denis Pynkin <dans@altlinux.ru>
 
 Url: http://xmoto.tuxfamily.org
 Source: %name-%version-src.tar.gz
+Patch: xmoto-0.5.9-alt-libpng15.patch
+Patch1: xmoto-0.5.9-alt-gcc4.7.patch
 
 BuildRequires: gcc-c++ libSDL-devel libSDL_mixer-devel libjpeg-devel
 BuildRequires: liblua5-devel libode-devel libpng-devel libstdc++-devel
@@ -26,6 +28,8 @@ XMoto is a challenging 2D motocross platform game, where physics play an all imp
 
 %prep
 %setup -q
+%patch -p3
+%patch1 -p3
 
 %build
 
@@ -68,6 +72,9 @@ ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %buildroot%_datadir/%name/Textures
 [ -L %_datadir/%name/Textures/Fonts/DejaVuSansMono.ttf ] || ln -s %_ttffontsdir/dejavu/DejaVuSansMono.ttf %_datadir/%name/Textures/Fonts/
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt1.2
+- Rebuilt with libpng15
+
 * Thu Mar 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt1.1
 - Rebuilt with updated ODE
 
