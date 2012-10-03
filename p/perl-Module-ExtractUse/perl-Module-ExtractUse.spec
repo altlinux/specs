@@ -1,8 +1,8 @@
 %define module_name Module-ExtractUse
 
 Name: perl-%module_name
-Version: 0.23
-Release: alt1.1
+Version: 0.28
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/modules/by-module/Module/%module_name-%version.tar.gz
+Source: http://www.cpan.org/authors/id/D/DO/DOMM/Module-ExtractUse-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -36,6 +36,9 @@ used by the parsed code.
 %perl_vendor_privlib/Module/
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.28-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
