@@ -1,7 +1,7 @@
 %define dist Image-ExifTool
 
 Name: perl-%dist
-Version: 8.99
+Version: 9.01
 Release: alt1
 
 Summary: Perl module for manipulating EXIF data
@@ -11,7 +11,7 @@ Group: Development/Perl
 # Switched to real homepage from "%CPAN %dist" as CPAN page does not track
 # every released version
 URL: http://owl.phy.queensu.ca/~phil/exiftool
-Source: %url/%dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/E/EX/EXIFTOOL/Image-ExifTool-%{version}.tar.gz
 Patch0: perl-image-exiftools-findreq-alt.patch
 
 BuildArch: noarch
@@ -47,6 +47,9 @@ and Sony.
 %_man1dir/exiftool*
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 9.01-alt1
+- automated CPAN update
+
 * Tue Aug 14 2012 Victor Forsiuk <force@altlinux.org> 8.99-alt1
 - 8.99
 
