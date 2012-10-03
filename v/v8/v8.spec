@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     3
-%define MINOR_VERSION     11
-%define BUILD_NUMBER      10
-%define PATCH_LEVEL       5
+%define MINOR_VERSION     13
+%define BUILD_NUMBER      7
+%define PATCH_LEVEL       1
 %define soversion %{MAJOR_VERSION}
 Name: v8
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
@@ -52,7 +52,7 @@ sed -i "s|'-Wno-unused-but-set-variable'||g" SConstruct
 
 %install
 mkdir -p %buildroot{%_libdir,%_bindir,%_includedir}
-install -p -m644 out/native/d8 %buildroot%_bindir/
+install -p -m755 out/native/d8 %buildroot%_bindir/
 install -p -m644 out/native/lib.target/libv8.so.%soversion %buildroot%_libdir/
 ln -s libv8.so.%soversion %buildroot%_libdir/libv8.so
 install -p -m644 include/*.h %buildroot%_includedir/
@@ -67,9 +67,18 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_libdir/*.so
 
 %changelog
+* Mon Sep 17 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.13.7.1-alt1
+- 3.13.7.1
+
+* Mon Sep 17 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.11.10.22-alt1
+- 3.11.10.22
+
 * Sat Jun 16 2012 Dmitry Kulik <lnkvisitor@altlinux.org> 3.11.10.5-alt1
 - 3.11.10.5
   + Added ECMAScript 5 support
+  
+* Thu Mar 15 2012 Vladimir Lettiev <crux@altlinux.ru> 3.9.19-alt1
+- 3.9.19
 
 * Tue Jan 26 2010 Andrey Rahmatullin <wrar@altlinux.ru> 2.0.6.4-alt1
 - 2.0.6.4

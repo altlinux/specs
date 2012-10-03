@@ -1,5 +1,5 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.11.10.5
+%define v8_ver 3.13.7.1
 %define rev 154005
 
 %def_disable debug
@@ -13,7 +13,7 @@
 
 Name:           chromium
 Version:        21.0.1180.89
-Release:        alt3.r%rev
+Release:        alt4.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -120,7 +120,7 @@ BuildRequires:  libspeex-devel
 BuildRequires:  libsqlite3-devel
 BuildRequires:  libssl-devel
 BuildRequires:  libudev-devel
-BuildRequires:  libv8-devel = %v8_ver
+BuildRequires:  libv8-devel >= %v8_ver
 BuildRequires:  libvpx-devel
 BuildRequires:  libx264-devel
 BuildRequires:  libxslt-devel
@@ -256,35 +256,6 @@ for i in src/build/common.gypi; do
         sed -i "s|'-Werror'|'-Wno-error'|g" $i
 done
 
-# TODO: ARM specific (from Debian rules)
-#ifeq (arm,$(DEB_HOST_ARCH_CPU))
-#GYP_DEFINES += \
-#	target_arch=arm \
-#	enable_webrtc=0 \
-#	use_cups=1 \
-#	$(NULL)
-#ifeq (armel,$(DEB_HOST_ARCH))
-#AVOID_GCC_44 := 0
-#GYP_DEFINES += \
-#	v8_use_arm_eabi_hardfloat=false \
-#	arm_float_abi=soft \
-#	arm_thumb=0 \
-#	armv7=0 \
-#	arm_neon=0 \
-#	$(NULL)
-#endif
-#ifeq (armhf,$(DEB_HOST_ARCH))
-#GYP_DEFINES += -DUSE_EABI_HARDFLOAT 
-#GYP_DEFINES += \
-#	v8_use_arm_eabi_hardfloat=true \
-#	arm_fpu=vfpv3 \
-#	arm_float_abi=hard \
-#	arm_thumb=1 \
-#	armv7=1 \
-#	arm_neon=0 \
-#	$(NULL)
-#endif
-## '
 
 pushd src
 
@@ -321,6 +292,26 @@ pushd src
 %endif
 %ifarch x86_64
 	-Dtarget_arch=x64 \
+%endif
+%ifarch arm armh
+	-Dtarget_arch=arm \
+	-Denable_webrtc=0 \
+	-Duse_cups=1 \
+%ifarch arm
+	-Dv8_use_arm_eabi_hardfloat=false \
+	-Darm_float_abi=soft \
+	-Darm_thumb=0 \
+	-Darmv7=0 \
+	-Darm_neon=0 \
+%endif
+%ifarch armh
+	-Dv8_use_arm_eabi_hardfloat=true \
+	-Darm_fpu=vfpv3 \
+	-Darm_float_abi=hard \
+	-Darm_thumb=1 \
+	-Darmv7=1 \
+	-Darm_neon=0 \
+%endif
 %endif
 	-Dlinux_use_gold_flags=0 \
 	-Dlinux_use_gold_binary=0 \
@@ -445,6 +436,10 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Oct 03 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.89-alt4.r154005
+- Set flags for build on ARM
+- Rebuild with new version of v8
+
 * Tue Oct 02 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.89-alt3.r154005
 - Enable video and audio support in HTML5
 
