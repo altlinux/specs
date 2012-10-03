@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Getopt-Mixed
-Version: 1.10
-Release: alt2.1
+Version: 1.11
+Release: alt1
 
 Summary: getopt processing with both long and short options
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/C/CJ/CJM/Getopt-Mixed-%{version}.tar.gz
 
 # Automatically added by buildreq on Sun Apr 29 2007
 BuildRequires: perl-devel perl-Test-Pod perl-Test-Pod-Coverage
@@ -74,6 +74,9 @@ descriptions.
 %perl_vendor_privlib/Getopt
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.11-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.10-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
