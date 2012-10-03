@@ -3,7 +3,7 @@
 
 Name: icewm
 Version: 1.3.7
-Release: alt7
+Release: alt8
 Epoch: 2
 
 Summary: X11 Window Manager
@@ -26,16 +26,17 @@ Source11: README.ALT
 Source12: %name.desktop
 Source13: restart
 
-Patch0: %name-multibyte.patch
-Patch1: %name-alt-altconf.patch
-Patch2: %name-alt-fonts.patch
-Patch3: %name-alt-icons.patch
-Patch4: %name-alt-findicon.patch
-Patch5: %name-deb-alt-i18n_update.patch
-Patch6: %name-alt-cpustatus.patch
-Patch7: %name-deb-tray_hotfixes.patch
-Patch8: %name-alt-taskbar.patch
-Patch9: %name-alt-ubuntu-fix-deprecated.patch
+Patch0:  %name-multibyte.patch
+Patch1:  %name-alt-altconf.patch
+Patch2:  %name-alt-fonts.patch
+Patch3:  %name-alt-icons.patch
+Patch4:  %name-alt-findicon.patch
+Patch5:  %name-deb-alt-i18n_update.patch
+Patch6:  %name-alt-cpustatus.patch
+Patch7:  %name-deb-tray_hotfixes.patch
+Patch8:  %name-alt-taskbar.patch
+Patch9:  %name-alt-ubuntu-fix-deprecated.patch
+Patch10: %name-gcc47.patch
 
 PreReq: %name-light = %epoch:%version-%release
 
@@ -70,16 +71,17 @@ Recommends: iftop, mutt
 %prep
 %setup
 
-%patch0 -p2
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
-%patch6 -p2
-%patch7 -p2
-%patch8 -p2
-%patch9 -p2
+%patch0  -p2
+%patch1  -p2
+%patch2  -p2
+%patch3  -p2
+%patch4  -p2
+%patch5  -p2
+%patch6  -p2
+%patch7  -p2
+%patch8  -p2
+%patch9  -p2
+%patch10 -p2
 
 %add_optflags %optflags_nocpp
 
@@ -208,6 +210,10 @@ rm -rf %buildroot/%_x11x11dir/%name/themes/*
 %_pixmapsdir/*
 
 %changelog
+* Wed Oct 03 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 2:1.3.7-alt8
+- fixed build with gcc4.7
+- set right path to default background
+
 * Mon Jun 18 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 2:1.3.7-alt7
 - fixed warnings of using deprecated functions
 - updated defaults of 'keys' and 'winoptions' files
