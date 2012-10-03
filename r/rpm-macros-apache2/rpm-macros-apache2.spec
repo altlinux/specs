@@ -13,10 +13,10 @@
 
 Name: rpm-macros-%macrosname
 Version: 3.8
-Release: %branch_release alt1
+Release: %branch_release alt2
 
 Summary: RPM macros to Apache2 Web server
-Summary(ru_RU.KOI8-R): RPM макросы для веб-сервера Apache2
+Summary(ru_RU.UTF-8): RPM п╪п╟п╨я─п╬я│я▀ п╢п╩я▐ п╡п╣п╠-я│п╣я─п╡п╣я─п╟ Apache2
 License: %asl
 Group: Development/Other
 
@@ -39,14 +39,14 @@ Requires: rpm-macros-webserver-common >= 1.4
 The package provide a set of macros for packaging Web applications
 according to the ALT Linux Web Packaging Policy.
 
-%description -l ru_RU.KOI8-R
-Макросы для обеспечения сборки пакетов веб серверов и приложений
-в соответствии с ALT Linux Web Packaging Policy.
+%description -l ru_RU.UTF-8
+п°п╟п╨я─п╬я│я▀ п╢п╩я▐ п╬п╠п╣я│п©п╣я┤п╣п╫п╦я▐ я│п╠п╬я─п╨п╦ п©п╟п╨п╣я┌п╬п╡ п╡п╣п╠ я│п╣я─п╡п╣я─п╬п╡ п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
+п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ ALT Linux Web Packaging Policy.
 
 
 %package compat
 Summary: RPM macros to Apache2 Web server
-Summary(ru_RU.KOI8-R): RPM макросы для веб-сервера Apache2
+Summary(ru_RU.UTF-8): RPM п╪п╟п╨я─п╬я│я▀ п╢п╩я▐ п╡п╣п╠-я│п╣я─п╡п╣я─п╟ Apache2
 Group: Development/Other
 
 Conflicts: apache-devel <= 1.3.41rusPL30.23-alt4.2
@@ -58,9 +58,9 @@ Requires: %name >= %version
 The package provide a set of macros for packaging Web applications
 according to the ALT Linux Web Packaging Policy.
 
-%description compat -l ru_RU.KOI8-R
-Макросы для обеспечения сборки пакетов веб серверов и приложений
-в соответствии с ALT Linux Web Packaging Policy.
+%description compat -l ru_RU.UTF-8
+п°п╟п╨я─п╬я│я▀ п╢п╩я▐ п╬п╠п╣я│п©п╣я┤п╣п╫п╦я▐ я│п╠п╬я─п╨п╦ п©п╟п╨п╣я┌п╬п╡ п╡п╣п╠ я│п╣я─п╡п╣я─п╬п╡ п╦ п©я─п╦п╩п╬п╤п╣п╫п╦п╧
+п╡ я│п╬п╬я┌п╡п╣я┌я│я┌п╡п╦п╦ я│ ALT Linux Web Packaging Policy.
 
 
 %install
@@ -81,6 +81,10 @@ find %buildroot%rpm_masrosdir/ -type f -print0 \
 %rpm_masrosdir/%name-compat
 
 %changelog
+* Wed Oct 03 2012 Aleksey Avdeev <solo@altlinux.ru> 3.8-alt2
+- Fix macros %%post_apache2conf and %%postun_apache2conf:
+  use /sbin/service
+
 * Tue Aug 14 2012 Aleksey Avdeev <solo@altlinux.ru> 3.8-alt1
 - Remove repocop-unittest-data-%%name subpacage (Closes: #26076)
 - Add new macros:
