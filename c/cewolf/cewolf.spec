@@ -1,3 +1,4 @@
+BuildRequires: ant ant-junit
 BuildRequires: crimson
 %define _without_maven 1
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -46,7 +47,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           cewolf
 Version:        1.0
-Release:        alt2_5jpp5
+Release:        alt3_5jpp5
 Epoch:          0
 Summary:        Chart Taglib Library
 License:        LGPLv2+
@@ -217,6 +218,9 @@ export CLASSPATH=$(build-classpath gnu-crypto)
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_5jpp5
+- added ant-junit BR:
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_5jpp5
 - built with java 6 due to com.sun.image.codec.jpeg
 
