@@ -1,17 +1,15 @@
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global oname GMetrics
-%global with_gmaven 0
+%global with_gmaven 1
 Name:          gmetrics
-Version:       0.5
-Release:       alt1_2jpp7
+Version:       0.6
+Release:       alt1_1jpp7
 Summary:       Groovy library that provides reports and metrics for Groovy code
 Group:         Development/Java
 License:       ASL 2.0
 Url:           http://gmetrics.sourceforge.net/
-Source0:       http://downloads.sourceforge.net/project/gmetrics/gmetrics-0.5/GMetrics-0.5-bin.tar.gz
-Source1:       gmetrics-0.5-build.xml
-Source2:       gmetrics-0.5-build.properties
+Source0:       http://downloads.sourceforge.net/project/%{name}/%{name}-%{version}/%{oname}-%{version}-bin.tar.gz
 # remove gmaven
 # remove codenarc
 # change artifactId groovy-all in groovy
@@ -25,11 +23,12 @@ BuildRequires: jpackage-utils
 BuildRequires: ant
 BuildRequires: groovy
 BuildRequires: log4j
-# groovy-all bundled libs
+# groovy-all embedded libs
 BuildRequires: antlr
 BuildRequires: apache-commons-cli
 BuildRequires: objectweb-asm
-%if %with_gmaven
+BuildRequires: fusesource-pom
+
 BuildRequires: gmaven
 BuildRequires: maven
 BuildRequires: maven-compiler-plugin
@@ -39,7 +38,6 @@ BuildRequires: maven-jar-plugin
 BuildRequires: maven-javadoc-plugin
 BuildRequires: maven-resources-plugin
 BuildRequires: maven-surefire-plugin
-%endif
 
 Requires:      ant
 Requires:      apache-commons-cli
@@ -70,16 +68,10 @@ This package contains javadoc for %{name}.
 
 # clean up
 find . -name "*.jar" -delete
-find . -name "*.jar" -delete
+find . -name "*.class" -delete
 rm -rf docs/*
 %patch0 -p0
-%if !%with_gmaven
-# in fedora haven't gmaven yet
-cp -pr %{SOURCE1} build.xml
-cp -pr %{SOURCE2} build.properties
-%else
 %patch1 -p0
-%endif
 
 chmod 644 README.txt
 
@@ -89,12 +81,8 @@ done
 
 %build
 
-%if !%with_gmaven
-ant
-%else
 # test skipped require Codenarc, circular deps
 mvn-rpmbuild -Dmaven.test.skip=true install javadoc:aggregate
-%endif
 
 %install
 
@@ -125,6 +113,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE.txt NOTICE.txt
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt1_1jpp7
+- new version
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.5-alt1_2jpp7
 - new version
 
