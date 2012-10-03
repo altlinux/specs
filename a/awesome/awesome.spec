@@ -1,6 +1,6 @@
 Name: awesome
 Version: 3.4.13
-Release: alt1
+Release: alt2
 Group: Graphical desktop/Other
 License: GPL2+
 
@@ -18,6 +18,7 @@ BuildRequires: ImageMagick-tools asciidoc cmake gcc-c++ gperf imlib2-devel libdb
 BuildPreReq: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8 libxcbutil-icccm-devel >= 0.3.8 libxcbutil-image-devel >= 0.3.8
 
 Requires: libstartup-notification >= 0.10-alt1
+Requires: design-graphics
 
 %description
 awesome is a window manager initialy based on a dwm code rewriting. It's
@@ -80,6 +81,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Wed Oct  3 2012 Terechkov Evgenii <evg@altlinux.org> 3.4.13-alt2
+- Set default background according to WM Policy 1.1
+
 * Sun Sep  9 2012 Terechkov Evgenii <evg@altlinux.org> 3.4.13-alt1
 - 3.4.13 (Octopus)
 
