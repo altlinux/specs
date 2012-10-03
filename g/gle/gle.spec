@@ -2,8 +2,8 @@
 %def_with qt
 %define truename gle-graphics
 Name: gle
-Version: 4.2.4
-%define trueversion %{version}c
+Version: 4.2.4c
+%define trueversion %{version}
 Release: alt1
 Summary: GLE - Graphics language that produces ps/eps/pdf/png/jpg ouput
 Summary(ru_RU.UTF-8): GLE - язык создания изображений. Вывод в ps/eps/pdf/png/jpg
@@ -124,6 +124,9 @@ install -m644 platform/autopackage/gle.png $RPM_BUILD_ROOT/%_liconsdir/
 %endif
 
 %changelog 
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.4c-alt1
+- corrected version
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.4-alt1
 - new version
 
