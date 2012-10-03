@@ -2,7 +2,7 @@
 
 Name: vips
 Version: 7.28.9
-Release: alt1
+Release: alt1.1
 %define majorver %(echo %version |cut -d. -f1,2)
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -106,6 +106,9 @@ Static libraries for developing statically linked VIPS applications.
 # - package python bindings
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.28.9-alt1.1
+- Rebuilt with libpng15
+
 * Mon Jul 09 2012 Michael Shigorin <mike@altlinux.org> 7.28.9-alt1
 - new version (watch file uupdate)
 
