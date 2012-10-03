@@ -1,8 +1,8 @@
 %define module Sort-Naturally
 
 Name: perl-%module
-Version: 1.02
-Release: alt1.1
+Version: 1.03
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,7 +11,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module
-Source: http://www.cpan.org/modules/by-module/Sort/%module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/B/BI/BINGOS/Sort-Naturally-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ Sort::Naturally -- sort lexically, but sort numeral parts numerically.
 %perl_vendor_privlib/Sort
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.03-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
