@@ -51,7 +51,7 @@ BuildRequires: jpackage-compat
 
 Name:           sisu-guice
 Version:        2.9.2
-Release:        alt3_2jpp6
+Release:        alt4_2jpp6
 Epoch:          0
 Summary:        Sisu Guice
 License:        ASL 2.0
@@ -79,8 +79,7 @@ BuildRequires: maven-shared-filtering
 BuildRequires: maven-surefire-provider-junit4
 BuildRequires: servlet_2_5_api
 BuildRequires: slf4j >= 0:1.6.1
-# FIXME: should be spring3
-BuildRequires: spring2-beans
+BuildRequires: springframework-beans
 BuildArch:      noarch
 Source44: import.info
 
@@ -285,6 +284,9 @@ rm -r %{buildroot}%{_docdir}/%{name}-%{version}/apidocs
 %endif
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9.2-alt4_2jpp6
+- build with spring3
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.9.2-alt3_2jpp6
 - fixed build
 
