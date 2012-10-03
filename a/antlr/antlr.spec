@@ -1,3 +1,4 @@
+BuildRequires: ant ant-junit
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/cat /usr/bin/doxygen python-devel
 # END SourceDeps(oneline)
@@ -60,7 +61,7 @@ BuildRequires: jpackage-compat
 
 Name:           antlr
 Version:        2.7.7
-Release:	alt9_13jpp6
+Release:	alt10_13jpp6
 Epoch:          0
 Summary:        ANother Tool for Language Recognition
 License:        Public Domain
@@ -348,6 +349,9 @@ install -m 755 scripts/antlr-config $RPM_BUILD_ROOT%{_bindir}
 
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt10_13jpp6
+- added ant-junit BR:
+
 * Wed Jun 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.7.7-alt9_13jpp6
 - added gcj and tool subpackage
 
