@@ -1,6 +1,6 @@
 Name: xli
 Version: 1.17.0
-Release: alt8
+Release: alt8.1
 
 Summary: X11 Image Loading Utility
 License: MIT
@@ -70,6 +70,9 @@ chmod 644 README*
 # - look at 2006-11-10 snapshot?
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.17.0-alt8.1
+- Rebuilt with libpng15
+
 * Mon Dec 01 2008 Michael Shigorin <mike@altlinux.org> 1.17.0-alt8
 - fixed build (buildreq)
 
