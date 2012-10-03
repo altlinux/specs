@@ -2,12 +2,12 @@
 
 Name:      perl-%pkgname
 Summary:   %pkgname - Tokenize RTF
-Version:   1.10
-Release:   alt1.qa1.1
+Version:   1.13
+Release:   alt1
 License:   GPL or Artistic
 Group:     Development/Perl
 URL:       http://www.cpan.org
-Source:    http://search.cpan.org/CPAN/authors/id/S/SA/SARGIE/%pkgname-%version.tar.gz
+Source:    http://www.cpan.org/authors/id/S/SA/SARGIE/RTF-Tokenizer-%{version}.tar.gz
 
 Buildarch: noarch
 
@@ -30,12 +30,14 @@ implements the RTF standard better than any previous release.
 %install
 %perl_vendor_install
 
+mkdir -p %buildroot%_bindir/
+install -m 755 eg/rtf{dump,diff} %buildroot%_bindir/
+
 # There is a file in the package with a name starting with <tt>._</tt>, 
 # the file name pattern used by Mac OS X to store resource forks in non-native 
 # file systems. Such files are generally useless in packages and were usually 
 # accidentally included by copying complete directories from the source tarball.
 find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 rm -f
-
 
 %files
 %doc README TODO
@@ -43,6 +45,9 @@ find $RPM_BUILD_ROOT -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' 
 %perl_vendor_privlib/RTF*
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1.qa1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
