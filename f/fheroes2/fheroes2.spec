@@ -1,7 +1,7 @@
-%define rev svn2867
+%define rev svn2886
 Name: fheroes2
 Version: 20120301
-Release: alt1.%rev.1
+Release: alt1.%rev
 Summary: Free implementation of Heroes of the Might and Magic II engine
 License: GPL
 Group: Games/Strategy
@@ -14,8 +14,8 @@ Source3: %name.png
 Source4: %name.desktop
 Source5: %name.cfg
 
-# Automatically added by buildreq on Sun Aug 07 2011
-# optimized out: libSDL-devel libstdc++-devel pkg-config zlib-devel
+# Automatically added by buildreq on Wed Oct 03 2012
+# optimized out: libSDL-devel libstdc++-devel zlib-devel
 BuildRequires: gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfreetype-devel libpng-devel
 
 %description
@@ -55,6 +55,9 @@ install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdi
 
 
 %changelog
+* Wed Oct 3 2012 Andrew Clark <andyc@altlinux.ru> 20120301-alt1.svn2886
+- version update 20120301-alt1.svn2886
+
 * Thu Aug 30 2012 Michael Shigorin <mike@altlinux.org> 20120301-alt1.svn2867.1
 - actually use WITH_AI=simple (closes: #27151; see also SF#3467445)
 
