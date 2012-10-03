@@ -5,16 +5,25 @@
 
 Name: setools
 Version: %setools_maj_ver.%setools_min_ver
-Release: alt3.qa1.1.1
+Release: alt4
 License: %gpl2plus
 URL: http://oss.tresys.com/projects/setools
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-3.3.5-javacflags.patch
+Patch2: %name-3.3.5-nonvoid.patch
+Patch3: %name-3.3.5-strcmp.patch
+Patch4: %name-python.patch
+Patch5: %name-setup_py-prefix.patch
+Patch6: %name-swig-2x.patch
+Patch7: %name-swig-2.0.7.patch
+Patch8: %name-am121.patch
+Patch9: %name-3.3.6-libsepol.patch
 Summary: Policy analysis tools for SELinux
 Group: System/Base
 Requires: lib%name = %version-%release lib%name-tcl = %version-%release %name-gui = %version-%release %name-console = %version-%release
 
-BuildRequires(pre): rpm-build-licenses
+BuildPreReq: rpm-build-licenses
 BuildPreReq: /proc
 #libsetools
 BuildRequires: flex bison pkgconfig
@@ -22,7 +31,7 @@ BuildRequires: glibc-devel libstdc++-devel gcc gcc-c++
 BuildRequires: libselinux-devel libsepol-devel
 BuildRequires: libsepol-devel-static
 BuildRequires: libsqlite3-devel libxml2-devel
-BuildRequires: autoconf >= %{autoconf_ver} automake
+BuildRequires: autoconf >= %autoconf_ver automake
 #libsetools,libsetools-tcl
 BuildRequires: tcl-devel
 #libsetools-python,libsetools-java,libsetools-tcl
@@ -176,23 +185,36 @@ This package includes the following graphical tools:
 
 %prep
 %setup -q
-%patch0 -p 1
+%patch -p1
+%patch1 -p0
+%patch2 -p0
+%patch3 -p0
+#patch4 -p1
+%patch5 -p1
+%patch6 -p0
+%patch7 -p0
+%patch8 -p1
+%patch9 -p1
+
+find . -name Makefile.am -exec sed -i -e 's/ -fpic/ -fPIC/' \{} \;
 
 %build
 %autoreconf
-%configure --libdir=%_libdir --disable-bwidget-check --disable-selinux-check \
-    --enable-swig-python --enable-swig-java --enable-swig-tcl --with-java-prefix=/usr/lib/jvm/java
+%configure \
+	--disable-bwidget-check \
+%if 0
+	--disable-selinux-check \
+%endif
+	--enable-swig-python \
+	--enable-swig-java \
+	--enable-swig-tcl \
+	--with-java-prefix=/usr/lib/jvm/java
 # work around issue with gcc 4.3 + gnu99 + swig-generated code:
-sed -i -e 's:$(CC):gcc -std=gnu89:' libseaudit/swig/python/Makefile
-%ifarch sparc sparcv9 sparc64 s390 s390x                                                                                                
-    for file in `find . -name Makefile`; do                                                                                             
-        sed -i -e 's:-fpic:-fPIC:' $file;                                                                                               
-    done                                                                                                                                
-%endif           
+#sed -i -e 's:$(CC):gcc -std=gnu89:' libseaudit/swig/python/Makefile
 %make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 install -pD -m 644 packages/rpm/seaudit.pam %buildroot%_sysconfdir/pam.d/seaudit
 install -pD -m 644 packages/rpm/seaudit.console %buildroot%_sysconfdir/security/console.apps/seaudit
 install -d -m 755 %buildroot%_datadir/applications
@@ -308,6 +330,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/applications/*
 
 %changelog
+* Wed Oct 03 2012 Led <led@altlinux.ru> 3.3.7-alt4
+- fixed build with recent libsepol
+- added patches from openSUSE
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.3.7-alt3.qa1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
