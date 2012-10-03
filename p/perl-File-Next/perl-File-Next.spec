@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-File-Next
-Version: 1.06
+Version: 1.10
 Release: alt1
 
 Summary: File-finding iterator
@@ -27,7 +27,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-Source: http://search.cpan.org//CPAN/authors/id/P/PE/PETDANCE/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/P/PE/PETDANCE/File-Next-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Jan 30 2009
 BuildRequires: perl-Test-Differences perl-Test-Pod perl-Test-Pod-Coverage
@@ -58,6 +58,9 @@ rm -rf %buildroot%perl_vendor_man3dir/
 %perl_vendor_privlib/File/Next.pm
 
 %changelog
+* Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1
+- automated CPAN update
+
 * Fri Jan 29 2010 Vladimir Lettiev <crux@altlinux.ru> 1.06-alt1
 - NMU: New version 1.06
 
