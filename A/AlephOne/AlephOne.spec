@@ -1,6 +1,6 @@
 Name: AlephOne
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 
 Summary: 3D first-person shooter game
 License: %gpl2plus
@@ -38,6 +38,7 @@ alephone "~/Marathon Infinity"
 %setup
 
 %build
+%add_optflags -fpermissive
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir
 %make_build
 
@@ -61,6 +62,9 @@ install -pD -m755 %SOURCE3 %buildroot%_gamesbindir/
 %_man6dir/*
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.1
+- Rebuilt with libpng15
+
 * Sat Mar 17 2012 Artem Zolochevskiy <azol@altlinux.ru> 1.0.1-alt1
 - update to 1.0.1
 
