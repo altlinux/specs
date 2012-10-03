@@ -1,6 +1,6 @@
 Name: xcftools
 Version: 1.0.7
-Release: alt1
+Release: alt1.1
 
 Summary: Tools for extracting information from the Gimp's native file format XCF.
 Group: Graphics
@@ -64,6 +64,9 @@ named on the command line.
 %_man1dir/*
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.7-alt1.1
+- Rebuilt with libpng15
+
 * Wed Jul 08 2009 Afanasov Dmitry <ender@altlinux.org> 1.0.7-alt1
 - 1.0.7 release
 - remove fix-flattenIncrementally (applied in upstream)
