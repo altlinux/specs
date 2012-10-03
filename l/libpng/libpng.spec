@@ -1,5 +1,5 @@
 Name: libpng
-Version: 1.5.12
+Version: 1.5.13
 Release: alt1
 
 Summary: A library of functions for manipulating PNG image format files
@@ -19,6 +19,8 @@ BuildRequires: zlib-devel
 Summary: PNG runtime library
 Group: System/Libraries
 Provides: libpng = %version
+# due to %_man5dir/*
+Conflicts: libpng12 < 1.2.50-alt2
 
 %package devel
 Summary: PNG development library
@@ -96,6 +98,9 @@ xz -9 %buildroot%docdir/*.txt %buildroot%docdir/CHANGES
 %endif
 
 %changelog
+* Wed Oct 03 2012 Dmitry V. Levin <ldv@altlinux.org> 1.5.13-alt1
+- Updated to 1.5.13.
+
 * Fri Sep 14 2012 Dmitry V. Levin <ldv@altlinux.org> 1.5.12-alt1
 - Updated to 1.5.12.
 - Activated chunk size limits by default.
