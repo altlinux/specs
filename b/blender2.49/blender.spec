@@ -2,7 +2,7 @@
 
 Name: blender2.49
 Version: 2.49b
-Release: alt11.2
+Release: alt11.3
 
 Summary: 3D modeling, animation, rendering and post-production
 License: GPL
@@ -202,6 +202,9 @@ popd
 %_datadir/%name/.Blanguages
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.49b-alt11.3
+- Rebuilt with libpng15
+
 * Sun Sep 02 2012 Dmitry V. Levin <ldv@altlinux.org> 2.49b-alt11.2
 - Built with libtiff.so.5.
 
