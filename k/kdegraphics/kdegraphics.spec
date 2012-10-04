@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13
-Release: alt3.qa1
+Release: alt3.qa2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -400,6 +400,8 @@ export PKG_CONFIG_PATH=%_libdir/pkgconfig
 export LD_LIBRARY_PATH=$QTDIR/%_lib:$KDEDIR/%_lib:$LD_LIBRARY_PATH
 export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_libdir/kde3 -L%_libdir"
 
+%add_optflags -fpermissive
+
 %if %cmake
 BD=%_builddir/%name-%version/BUILD
 
@@ -692,6 +694,9 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.13-alt3.qa2
+- Rebuilt with libtiff5
+
 * Wed Aug 29 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.5.13-alt3.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
