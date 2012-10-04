@@ -13,9 +13,9 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 35
-%define pkg_rel alt63
+%define pkg_rel alt64
 %define set_gl_nvidia_ver 0.6.5
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -446,6 +446,9 @@ fi
 %endif
 
 %changelog
+* Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 173.14.35-alt64
+- don't package kernel module sources
+
 * Wed Jun 06 2012 Sergey V Turchin <zerg@altlinux.org> 173.14.35-alt63
 - new release 173.14.35
 
