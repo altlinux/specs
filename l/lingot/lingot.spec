@@ -1,7 +1,7 @@
 
 Name: lingot
-Version: 0.9.0
-Release: alt2
+Version: 0.9.1
+Release: alt1
 
 Summary: LINGOT Is Not a Guitar-Only Tuner
 License: GPLv2+
@@ -13,7 +13,6 @@ BuildRequires: intltool libgtk+2-devel libglade-devel
 
 Packager: Ivan A. Melnikov <iv@altlinux.org>
 Source: %name-%version.tar
-Patch0: lingot-0.9.0-hg-749df5080742-fix-jack.patch
 Patch1: lingot-0.9.0-alt-desktop-category.patch
 
 %description
@@ -27,7 +26,6 @@ estimated frequency.
 
 %prep
 %setup -q
-%patch0 -p 1
 %patch1 -p 2
 
 %build
@@ -49,6 +47,9 @@ rm -rf %buildroot/%_defaultdocdir/%name
 
 
 %changelog
+* Thu Oct 04 2012 Ivan A. Melnikov <iv@altlinux.org> 0.9.1-alt1
+- 0.9.1
+
 * Sat Apr 16 2011 Ivan A. Melnikov <iv@altlinux.org> 0.9.0-alt2
 - Import commit 749df5080742 from upstream hg to fix compatibility
   with recent jack;
