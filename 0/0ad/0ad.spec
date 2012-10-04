@@ -1,7 +1,7 @@
 Name: 0ad
 Epoch: 1
 Version: 0.0.11.alpha
-Release: alt1
+Release: alt1.1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
@@ -73,6 +73,9 @@ install -Dm 0755 build/resources/0ad.sh %buildroot%_bindir/0ad
 %dir %_libdir/%name
 
 %changelog
+* Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.0.11.alpha-alt1.1
+- Rebuilt with libpng15
+
 * Wed Sep 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.11.alpha-alt1
 - build 0.0.11 from scratch
 
