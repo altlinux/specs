@@ -11,7 +11,7 @@
 %define rctag %nil
 
 Name: clamav
-Version: 0.97.5
+Version: 0.97.6
 Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -302,6 +302,9 @@ subst s/^[0-9]*/$RNDM/ %_sysconfdir/cron.d/freshclam
 %endif
 
 %changelog
+* Thu Oct 04 2012 Sergey Y. Afonin <asy@altlinux.ru> 0.97.6-alt1
+- 0.97.6
+
 * Mon Jun 25 2012 Sergey Y. Afonin <asy@altlinux.ru> 0.97.5-alt1
 - 0.97.5 (CVE-2012-1457, CVE-2012-1458, CVE-2012-1459)
 - added check of database to "restart" and "reload" functions of
