@@ -10,7 +10,7 @@
 %define sover 4.4
 Name: %oname%sover
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Game programming library
@@ -137,6 +137,9 @@ gzip CHANGES
 %_pkgconfigdir/*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.2-alt4
+- Rebuilt with libpng15
+
 * Thu Mar 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.4.2-alt3
 - rebuilt on arm
 
