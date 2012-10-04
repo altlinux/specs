@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 
 Name:           grfcodec
 Version:        6.0.0
-Release:        alt2_2
+Release:        alt2_2.1
 Summary:        A suite of programs to modify Transport Tycoon Deluxe's GRF files
 Group:          Development/Tools
 License:        GPLv2+
@@ -55,6 +55,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.0-alt2_2.1
+- Rebuilt with libpng15
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 6.0.0-alt2_2
 - update to new release by fcimport
 
