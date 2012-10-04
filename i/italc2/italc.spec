@@ -43,7 +43,7 @@
 
 Name: italc2
 Version: 2.0.1
-Release: %branch_release alt8
+Release: %branch_release alt8.1
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -58,6 +58,7 @@ Source0: %name-%version.tar
 Source10: iTALC.conf
 Source20: ica-launcher.sh
 Patch10: %name-alt-all.patch
+Patch11: italc2-2.0.1-alt-gcc4.7.patch
 
 Conflicts: %program_name < 2.0.0
 
@@ -71,7 +72,7 @@ BuildPreReq: icoutils
 
 # Automatically added by buildreq on Sat May 12 2012 (-bi)
 # optimized out: cmake-modules elfutils fontconfig java libICE-devel libSM-devel libX11-devel libXau-devel libXcursor-devel libXext-devel libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXtst-devel libXv-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-xml libssl-devel libstdc++-devel pkg-config python-base tzdata tzdata-java xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-recordproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: cmake gcc-c++ java-devel libXdamage-devel libjpeg-devel libpam-devel phonon-devel
+BuildRequires: cmake gcc-c++ java-devel libXdamage-devel libjpeg-devel libpam-devel phonon-devel libpng-devel
 
 %description
 iTALC is a use- and powerful didactical tool for teachers. It lets you view
@@ -218,12 +219,13 @@ Netzwerk finden Sie in /usr/share/italc/doc/INSTALL.
 %prep
 %setup
 %patch10 -p1
+%patch11 -p0
 
 %build
 %cmake -DCMAKE_INSTALL_DOCDIR:PATCH='%docdir'
-%cmake_build update-locales # VERBOSE=1
-%cmake_build finalize-locales # VERBOSE=1
-%cmake_build # VERBOSE=1
+%cmake_build update-locales VERBOSE=1
+%cmake_build finalize-locales VERBOSE=1
+%cmake_build VERBOSE=1
 
 %install
 %cmakeinstall_std
@@ -326,6 +328,9 @@ mv %buildroot%_datadir/italc/JavaViewer %buildroot%docdir/
 %icons16x16dir/imc.png
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt8.1
+- Rebuilt with libpng15
+
 * Thu Aug 30 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.1-alt8
 - Really fix ica autostart (ALT #27684)
 
