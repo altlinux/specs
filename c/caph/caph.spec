@@ -1,9 +1,11 @@
 Name: caph
 Version: 1.1
-Release: alt1
+Release: alt1.1
 Group: Games/Puzzles
 Summary: A sandbox game, based on physics
 Source: %name-%version.tar.bz2
+Patch: caph-1.1-alt-verbose.patch
+Patch1: caph-1.1-alt-debuginfo.patch
 Url: http://caphgame.sourceforge.net/
 License: GPLv3
 
@@ -17,6 +19,8 @@ red object with green object. You can use various objects, solid, wire
 
 %prep
 %setup
+%patch -p2
+%patch1 -p2
 sed -i '
 /^#define SYS_DATA_DIR/c\
 #define SYS_DATA_DIR "%_gamesdatadir/%name/"
@@ -54,7 +58,7 @@ cd src
 %install
 mkdir -p "%buildroot%_gamesdatadir"
 cp -r share/caph "%buildroot%_gamesdatadir/%name"
-install -sD bin/%name %buildroot%_gamesbindir/%name.bin
+install -D bin/%name %buildroot%_gamesbindir/%name.bin
 install -m755 -D %name.sh %buildroot%_gamesbindir/%name
 
 %files
@@ -63,6 +67,9 @@ install -m755 -D %name.sh %buildroot%_gamesbindir/%name
 %_gamesdatadir/%name
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.1
+- Rebuilt with libpng15
+
 * Fri Dec 24 2010 Fr. Br. George <george@altlinux.ru> 1.1-alt1
 - Autobuild version bump to 1.1
 
