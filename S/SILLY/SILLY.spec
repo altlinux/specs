@@ -1,6 +1,6 @@
 Name: SILLY
 Version: 0.1.0
-Release: alt4
+Release: alt4.1
 Summary: Simple and easy to use library for image loading
 Group: System/Libraries
 License: MIT
@@ -9,6 +9,7 @@ Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: http://downloads.sourceforge.net/crayzedsgui/%name-%version.tar.gz
 Source1: http://downloads.sourceforge.net/crayzedsgui/%name-DOCS-%version.tar.gz
+Patch: SILLY-0.1.0-alt-libpng15.patch
 
 BuildRequires: doxygen
 BuildRequires: libpng-devel
@@ -34,6 +35,7 @@ Development files for SILLY
 
 %prep
 %setup -q -a1
+%patch -p2
 # Don't use full path, otherwise it shows buildroot as part of the path
 sed -i 's|\(FULL_PATH_NAMES[ \t][ \t]*= \)YES|\1NO|' Doxyfile
 
@@ -83,6 +85,9 @@ chmod 0755 %buildroot%_libdir/*.so.*
 %doc %name-%version/doc/html
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt4.1
+- Rebuilt with libpng15
+
 * Wed Mar 16 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.0-alt4
 - rebuild for debuginfo
 
