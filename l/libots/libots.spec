@@ -2,7 +2,7 @@
 
 Name: libots
 Version: 0.5.0
-Release: alt4
+Release: alt4.1
 
 Summary: A text summarizer
 License: GPLv2+
@@ -54,6 +54,9 @@ touch ./gtk-doc.make
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.0-alt4.1
+- Rebuilt for debuginfo
+
 * Tue Jan 25 2011 Victor Forsiuk <force@altlinux.org> 0.5.0-alt4
 - Rebuilt for soname set-versions.
 
