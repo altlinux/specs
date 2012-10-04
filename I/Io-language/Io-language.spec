@@ -12,7 +12,7 @@ BuildRequires: gcc-c++
  
 Name:           Io-language
 Version:        20080330
-Release:        alt2_9.2.1
+Release:        alt2_9.2.2
 Summary:        Io is a small, prototype-based programming language
 Group:          System/Libraries
 License:        BSD
@@ -23,6 +23,7 @@ Patch0:         AddonBuilder_io_libdir.patch
 Patch1:         Io-2007-10-10-gcc43.patch
 Patch2:         Io-2007-10-10-missing-protos.patch
 Patch3:         Io-language-20080330-py27.patch
+Patch4:         Io-language-20080330-alt-libpng15.patch
 BuildRequires:  e2fsprogs-devel libe2fs-devel libfreetype-devel libfreeglut-devel libgmp-devel libgmp_cxx-devel
 BuildRequires:  libedit-devel libevent-devel libjpeg-devel libpng-devel
 BuildRequires:  libsamplerate-devel libsndfile-devel libtiffxx-devel libtiff-devel
@@ -96,6 +97,7 @@ Io mysql bindings
 %patch1 -p1 -b .gcc43
 %patch2 -p1 -b .protos
 %patch3 -p1
+%patch4 -p2
 sed -i 's|/lib/io/addons|/%{_lib}/io/addons|g' libs/iovm/io/AddonLoader.io
 # building Io while Io-language-devel is installed results in binaries getting
 # linked against the installed version, instead of the just build one <sigh>
@@ -217,6 +219,9 @@ done
 
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080330-alt2_9.2.2
+- Rebuilt with libtiff5 & libpng15
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20080330-alt2_9.2.1
 - Rebuilt with gmp 5.0.5
 
