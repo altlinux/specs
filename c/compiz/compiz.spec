@@ -3,7 +3,7 @@
 
 Name: compiz
 Version: 0.8.8
-Release: alt4
+Release: alt4.1
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -20,7 +20,7 @@ BuildRequires(Pre): libGConf-devel
 BuildRequires: GConf gcc-c++ intltool gnome-control-center-devel libGLU-devel libXcomposite-devel
 BuildRequires: libdbus-glib-devel libgnome-desktop-devel libmetacity-devel librsvg-devel
 BuildRequires: libwnck-devel libxslt-devel xorg-xextproto-devel kde4libs-devel kde4base-workspace-devel
-BuildRequires: kdebase-devel libdbus-qt-devel libtqt-devel
+BuildRequires: kdebase-devel libdbus-qt-devel libtqt-devel libpng-devel
 
 %description
 Compiz is an OpenGL compositing manager that use GLX_EXT_texture_from_pixmap
@@ -152,6 +152,9 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8-alt4.1
+- Rebuilt with libpng15
+
 * Sun May 20 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt4
 - fix kde4-window-decorator linking
 - fix underlinked plugins
