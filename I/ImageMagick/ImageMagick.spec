@@ -8,7 +8,7 @@
 %def_enable x
 Name: ImageMagick
 Version: %dversion.%drelease
-Release: alt2
+Release: alt2.1
 
 Summary: An X application for displaying and manipulating images
 License: OpenSource
@@ -27,6 +27,8 @@ Patch1: ImageMagick-depends.patch
 
 
 Requires: ghostscript-classic fonts-type1-urw lib%name = %version-%release
+
+BuildPreReq: libpng-devel
 
 # Automatically added by buildreq on Wed Nov 03 2010
 BuildRequires: ImageMagick-tools bzlib-devel curl gcc-c++ glibc-devel-static graphviz groff-base imake libXext-devel libXt-devel libdjvu-devel libjasper-devel libjbig-devel liblcms-devel liblqr-devel librsvg-devel libtiff-devel libwmf-devel libxml2-devel openexr-devel perl-devel transfig xdg-utils xorg-cf-files 
@@ -213,6 +215,9 @@ chrpath -d %buildroot%perl_vendor_archlib/auto/Image/Magick/Magick.so
 %endif
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.7.8.2-alt2.1
+- Rebuilt with libpng15
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 6.7.8.2-alt2
 - rebuilt for perl-5.16
 
