@@ -3,7 +3,7 @@
 Summary: Base library for gmerlin applications
 Name: gmerlin
 Version: 1.0.0
-Release: alt1.1
+Release: alt1.2
 License: GPL
 Group: Development/C++
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
@@ -25,7 +25,7 @@ BuildRequires: libgtk+2-devel jackit-devel libpulseaudio-devel
 BuildRequires: libquicktime-devel libtiff-devel libv4l-devel libxml2-devel
 BuildRequires: xorg-cf-files libalsa-devel libmjpegtools-devel
 BuildRequires: libXext-devel libvisual0.4-devel libmusicbrainz-devel
-BuildRequires: desktop-file-utils
+BuildRequires: desktop-file-utils libpng-devel
 
 %description
 Base library for gmerlin applications.
@@ -641,6 +641,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_niconsdir/%name-plugincfg.png
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.2
+- Rebuilt with libpng15 and libtiff5
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.1
 - Fixed build
 
