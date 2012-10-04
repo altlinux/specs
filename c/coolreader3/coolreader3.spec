@@ -5,7 +5,7 @@
 
 Name:     coolreader3
 Version:  3.0.54
-Release:  alt1
+Release:  alt1.1
 
 Summary: E-Book reader
 
@@ -31,6 +31,8 @@ BuildRequires(pre): rpm-build-licenses
 # optimized out: cmake-modules fontconfig fontconfig-devel libfreetype-devel libpng-devel libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql-sqlite libqt4-svg libqt4-xml libstdc++-devel pkg-config zlib-devel
 BuildRequires: cmake gcc-c++ libjpeg-devel phonon-devel
 
+BuildPreReq: libpng-devel
+
 %description
 CoolReader is fast and small cross-platform XML/CSS based
 E-Book reader for desktops and handheld devices.
@@ -48,8 +50,11 @@ ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 %build
 mkdir qtbuild
 cd qtbuild
-cmake -D GUI=QT -D CMAKE_BUILD_TYPE=Release -D MAX_IMAGE_SCALE_MUL=2 -D DOC_DATA_COMPRESSION_LEVEL=3 -D DOC_BUFFER_SIZE=0x1400000 -D CMAKE_INSTALL_PREFIX=/usr ..
-%make
+cmake -D GUI=QT -D CMAKE_BUILD_TYPE=Release -D MAX_IMAGE_SCALE_MUL=2 -D DOC_DATA_COMPRESSION_LEVEL=3 -D DOC_BUFFER_SIZE=0x1400000 -D CMAKE_INSTALL_PREFIX=/usr \
+	-DCMAKE_C_FLAGS="%optflags" \
+	-DCMAKE_CXX_FLAGS="%optflags" \
+	..
+%make VERBOSE=1
 
 %install
 cd qtbuild
@@ -79,5 +84,8 @@ install -m0644 -- %SOURCE3 %buildroot%_liconsdir/%real_name.png
 %_liconsdir/%{real_name}*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.54-alt1.1
+- Rebuilt with libpng15
+
 * Thu Jan 05 2012 Nikolay A. Fetisov <naf@altlinux.ru> 3.0.54-alt1
 - Initial build for ALT Linux Sisyphus
