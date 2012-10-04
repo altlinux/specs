@@ -3,11 +3,10 @@
 
 Name: %upname%altver
 Version: 0.0.5
-Release: alt3
+Release: alt4
 Summary: DTS Coherent Acoustics decoder
 License: GPL
 
-Packager: Pavlov Konstantin <thresh@altlinux.org>
 Group: System/Libraries
 URL: http://developers.videolan.org/libdca.html
 
@@ -68,6 +67,9 @@ Header files for libdca library.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt4
+- Rebuilt for debuginfo
+
 * Thu Oct 28 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt3
 - Rebuilt for soname set-versions
 
