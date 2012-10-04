@@ -1,5 +1,5 @@
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-core
+BuildRequires: jpackage-1.6.0-compat
 # Copyright (c) 2000-2009, JPackage Project
 # All rights reserved.
 #
@@ -34,7 +34,7 @@ BuildRequires: jpackage-1.6.0-core
 
 Name:           opends
 Version:        1.0.0
-Release:	alt4_5jpp6
+Release:	alt5_5jpp6
 Epoch:          0
 Summary:        OpenDS directory service
 Group:          Development/Java
@@ -252,6 +252,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Oct 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt5_5jpp6
+- use jpackage-1.6.0-compat
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.0-alt4_5jpp6
 - build with glassfish-jaxb21
 
