@@ -1,6 +1,6 @@
 Name: netwalk
 Version: 0.4.10
-Release: alt3.qa2
+Release: alt4
 
 Summary: NetWalk is a puzzle game where the object is to connect every terminal to the main server
 URL: http://code.google.com/p/netwalk/
@@ -12,12 +12,14 @@ Source1: %name-16.png
 Source2: %name-32.png
 Source3: %name-48.png
 
-Patch0: %name-0.4.7-home.patch
+Patch0: %name-0.4.10-alt-font.patch
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Sun Nov 16 2008
-BuildRequires: libSDL-devel libSDL_ttf-devel
+Requires: fonts-ttf-vera
+
+# Automatically added by buildreq on Fri Oct 05 2012
+BuildRequires: libSDL_ttf-devel
 
 %description
 NetWalk is a puzzle game where the object is to connect every terminal to the main server
@@ -31,45 +33,43 @@ There is one shortcut key: F2 starts a new game.
 
 %prep
 %setup -q
-#patch0 -p1
+%patch0 -p1
 
 %build
 %make_build CFLAGS="%optflags -fomit-frame-pointer `sdl-config --cflags`"
 
 %install
-mkdir -p %buildroot%_usr/games/
-install -pm 755 %name %buildroot%_usr/games/%name
-mkdir -p %buildroot%_datadir/%name
-install -D -pm 644 Vera.ttf %buildroot%_datadir/%name/Vera.ttf
-mkdir -p %buildroot%_docdir/%name-%version
+install -D -pm 755 %name %buildroot%_bindir/%name
 install -D -pm 644 %SOURCE1 %buildroot%_miconsdir/%name.png
 install -D -pm 644 %SOURCE2 %buildroot%_niconsdir/%name.png
 install -D -pm 644 %SOURCE3 %buildroot%_liconsdir/%name.png
 
 mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
+cat > %buildroot%_desktopdir/%name.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
 Name=NetWalk
 GenericName=NetWalk game
-Comment=%{summary}
-Icon=%{name}
-Exec=%_usr/games/%name
+Comment=%summary
+Icon=%name
+Exec=%_bindir/%name
 Terminal=false
 Categories=Game;LogicGame;
 EOF
 
 %files
 %doc NEWS README copyright
-%_usr/games/*
-%_datadir/%name
-%_desktopdir/%{name}.desktop
+%_bindir/*
+%_desktopdir/%name.desktop
 %_miconsdir/*.png
 %_niconsdir/*.png
 %_liconsdir/*.png
 
 %changelog
+* Fri Oct 05 2012 Igor Zubkov <icesik@altlinux.org> 0.4.10-alt4
+- Use system fonts-ttf-vera (closes #25319)
+
 * Mon Mar 28 2011 Igor Vlasenko <viy@altlinux.ru> 0.4.10-alt3.qa2
 - NMU: converted debian menu to freedesktop
 
