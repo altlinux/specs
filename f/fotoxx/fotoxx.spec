@@ -1,6 +1,6 @@
 Name: fotoxx
 Version: 12.04
-Release: alt1
+Release: alt1.1
 
 Summary: Software for digital image editing, HDR composites, and panoramas
 License: GPLv3+
@@ -71,6 +71,9 @@ install -pD %_sourcedir/fotoxx16.png %buildroot%_miconsdir/fotoxx.png
 %_man1dir/*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 12.04-alt1.1
+- Rebuilt with libtiff5
+
 * Sun Apr 01 2012 Victor Forsiuk <force@altlinux.org> 12.04-alt1
 - 12.04
 
