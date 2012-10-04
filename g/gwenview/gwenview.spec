@@ -3,7 +3,7 @@
 
 Name: gwenview
 Version: 1.4.2
-Release: alt16
+Release: alt16.1
 Summary: Simple image viewer for KDE.
 License: GPL
 Group: Graphics
@@ -20,6 +20,7 @@ Patch1: gwenview-1.4.2-alt-link.patch
 Patch2: gwenview-1.4.2-automake.patch
 Patch3: gwenview-1.4.2-exiv2.patch
 Patch4: gwenview-1.4.2-fix-autoconf-2.64.patch
+Patch5: gwenview-1.4.2-alt-libpng15.patch
 
 BuildRequires: fontconfig gcc-c++ kdelibs-devel libXcursor-devel libXext-devel
 BuildRequires: libXt-devel libexiv2-devel libjpeg-devel libkipi-devel libmng-devel
@@ -45,6 +46,7 @@ This package contains shared libraries used by %name
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %make -f admin/Makefile.common cvs ||:
 
@@ -83,6 +85,9 @@ tar xf %SOURCE2 -C %buildroot%_K3apps/%name
 %_libdir/libkdeinit_gwenview.so
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt16.1
+- Rebuilt with libpng15
+
 * Wed Nov 02 2011 Sergey V Turchin <zerg@altlinux.org> 1.4.2-alt16
 - rebuilt with new exiv2
 
