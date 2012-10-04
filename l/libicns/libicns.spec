@@ -2,7 +2,7 @@
 
 Name: libicns
 Version: 0.7.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: Library for manipulation of the Mac OS icns resource format
 License: %lgpl21plus/%gpl2plus
@@ -13,6 +13,7 @@ BuildRequires(pre): rpm-build-licenses
 
 # http://downloads.sourceforge.net/icns/libicns-0.7.1.tar.gz
 Source: %name-%version.tar
+Patch: libicns-0.7.1-alt-libpng15.patch
 
 # Automatically added by buildreq on Fri Jul 23 2010
 BuildRequires: gcc-c++ libjasper-devel libpng-devel
@@ -47,6 +48,7 @@ Tools to cope with ICNS (Mac OS icns resource format) files:
 
 %prep
 %setup
+%patch -p2
 
 %build
 %configure %{subst_enable static}
@@ -71,6 +73,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_man1dir/*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.2
+- Rebuilt with libpng15
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt1.1
 - Removed bad RPATH
 
