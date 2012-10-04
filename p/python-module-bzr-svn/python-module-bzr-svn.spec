@@ -1,7 +1,7 @@
 # $Id: python-module-bzr-svn.spec 138 2004-03-26 23:17:36Z cray $
 # -*- coding: utf-8 -*-
 Name: python-module-bzr-svn
-Version: 1.2.1
+Version: 1.2.2
 Release: alt1
 
 %setup_python_module bzr-svn
@@ -63,6 +63,9 @@ This package contain tools and test suites for testing bzr-svn.
 %python_sitelibdir/bzrlib/plugins/svn/tests
 
 %changelog
+* Thu Oct 04 2012 Anatoly Kitaykin <cetus@altlinux.org> 1.2.2-alt1
+- 1.2.2 release
+
 * Fri Mar 16 2012 Anatoly Kitaykin <cetus@altlinux.org> 1.2.1-alt1
 - 1.2.1 release
 - subpackage python-module-bzr-svn-tests
