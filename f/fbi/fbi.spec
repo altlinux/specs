@@ -3,7 +3,7 @@
 # packaging ugly motif apps, so we will name our main package just "fbi".
 Name: fbi
 Version: 2.09
-Release: alt1
+Release: alt1.1
 
 Summary: Image viewer for Linux framebuffer console
 License: GPLv2+
@@ -48,6 +48,9 @@ export CFLAGS="%optflags"
 %_man1dir/exiftran*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.09-alt1.1
+- Rebuilt with libpng15
+
 * Sun Feb 26 2012 Victor Forsiuk <force@altlinux.org> 2.09-alt1
 - 2.09
 
