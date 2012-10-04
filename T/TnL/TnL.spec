@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ pkgconfig(CEGUI-OPENGL) pkgconfig(sigc++-1.2)
 
 Name:           TnL
 Version:        071111
-Release:        alt3_19
+Release:        alt3_19.1
 Summary:        Thunder & Lightning - A futuristic action flight simulator game
 Group:          Games/Other
 License:        GPL+
@@ -87,6 +87,9 @@ desktop-file-install             \
 
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:071111-alt3_19.1
+- Rebuilt with libpng15
+
 * Wed May 09 2012 Igor Vlasenko <viy@altlinux.ru> 1:071111-alt3_19
 - update to new release by fcimport
 
