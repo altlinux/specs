@@ -1,6 +1,6 @@
 Name: libopenjpeg
 Version: 1.3
-Release: alt1.2
+Release: alt1.3
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -87,6 +87,9 @@ install -pm755 codec/{image_to_j2k,j2k_to_image} %buildroot%_bindir/
 %_bindir/*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.3
+- Rebuilt with libtiff5
+
 * Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3-alt1.2
 - Rebuilt for debuginfo
 
