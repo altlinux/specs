@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           libclaw
 Version:        1.7.0
-Release:        alt3_5
+Release:        alt3_5.1
 Summary:        C++ Library of various utility functions
 Group:          System/Libraries
 License:        LGPLv2
@@ -76,6 +76,9 @@ make install DESTDIR=$RPM_BUILD_ROOT VERBOSE=1
 %doc examples
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt3_5.1
+- Rebuilt with libpng15
+
 * Tue Jun 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.7.0-alt3_5
 - fixed build
 
