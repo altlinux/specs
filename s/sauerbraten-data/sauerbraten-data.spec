@@ -1,4 +1,4 @@
-%define rev svn3956
+%define rev svn4252
 %define packname sauerbraten
 Name: sauerbraten-data
 Version: 20100721
@@ -30,6 +30,9 @@ mv %_builddir/%name/packages %buildroot/%_gamesdatadir/%packname/
 %_gamesdatadir/%packname
 
 %changelog
+* Thu Oct 4 2012 Andrew Clark <andyc@altlinux.org> 20100721-alt1.svn4252
+- version update to 20100721-alt1.svn4252
+
 * Fri Jan 6 2012 Andrew Clark <andyc@altlinux.org> 20100721-alt1.svn3956
 - version update to 20100721-alt1.svn3956
 

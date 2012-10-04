@@ -1,4 +1,4 @@
-%define rev svn3956
+%define rev svn4252
 %define origname sauerbraten_2010_07_21_justice_edition_linux
 Name: sauerbraten
 Version: 20100721
@@ -57,6 +57,9 @@ mv %_builddir/%name/server-init.cfg %buildroot/%_gamesdatadir/%name/
 %_gamesdatadir/%name/server-init.cfg
 
 %changelog
+* Thu Oct 4 2012 Andrew Clark <andyc@altlinux.org> 20100721-alt1.svn4252
+- version update to 20100721-alt1.svn4252
+
 * Fri Jan 6 2012 Andrew Clark <andyc@altlinux.org> 20100721-alt1.svn3956
 - version update to 20100721-alt1.svn3956
 
