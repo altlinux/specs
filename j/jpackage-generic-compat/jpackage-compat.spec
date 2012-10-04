@@ -1,10 +1,5 @@
-# deprecated:  ant-nodeps ant-trax
-# TODO: remove ant-antlr
-%define antdeps ant ant-junit
-#ant-antlr
-
 Name: jpackage-generic-compat
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -35,20 +30,6 @@ JPackage compatibility package. The main goal is to provide all nessssary
 symlinks, Requires and BuildRequires for ALTLinux to create a build environment
 compatible with JPackage.org.
 
-%package -n jpackage-1.5.0-core
-Summary: JPackage core build environment with java-1.5.0.
-Group: Development/Java
-
-Requires(pre): java-devel = 1.5.0 java = 1.5.0
-# hack
-Conflicts: java-devel > 1.5.99 java > 1.5.99
-
-Requires: jpackage-generic-compat
-
-%description -n jpackage-1.5.0-core
-JPackage core compatibility package.
-Provides JPackage core build environment with java-1.5.0.
-
 %package -n jpackage-1.5.0-compat
 Summary: JPackage build environment with java-1.5.0.
 Group: Development/Java
@@ -58,27 +39,12 @@ Requires(pre): java-devel = 1.5.0 java = 1.5.0
 Conflicts: java-devel > 1.5.99 java > 1.5.99
 
 Requires: jpackage-generic-compat
-Requires: %antdeps
+Obsoletes: jpackage-1.5.0-core < %version-%release
 
 %description -n jpackage-1.5.0-compat
 JPackage compatibility package. the main goal is to provide all nessssary symlinks,
 Requires and BuildRequires for ALT to be build compatible with JPackage.
 Provides JPackage build environment with java-1.5.0.
-
-%package -n jpackage-1.6.0-core
-Summary: JPackage core build environment with java-1.6.0.
-Group: Development/Java
-
-Requires(pre): java-devel = 1.6.0 java = 1.6.0
-# hack
-Conflicts: java-devel > 1.6.99 java > 1.6.99
-
-Requires: jpackage-generic-compat
-#Provides: jpackage-core = %version-%release
-
-%description -n jpackage-1.6.0-core
-JPackage core compatibility package.
-Provides JPackage core build environment with java-1.6.0.
 
 %package -n jpackage-1.6.0-compat
 Summary: JPackage build environment with java-1.6.0.
@@ -89,35 +55,18 @@ Requires(pre): java-devel = 1.6.0 java = 1.6.0
 Conflicts: java-devel > 1.6.99 java > 1.6.99
 
 Requires: jpackage-generic-compat
+Obsoletes: jpackage-1.6.0-core < %version-%release
+
 #Provides: jpackage-1.5-compat = %version-%release
 #Provides: jpackage-1.4-compat = %version-%release
 #Provides: jpackage-compat = %version-%release
 #Obsoletes: jpackage-1.4-compat < %version
 #Obsoletes: jpackage-1.5-compat < %version
 
-Requires: %antdeps
-
 %description -n jpackage-1.6.0-compat
 JPackage compatibility package. the main goal is to provide all nessssary symlinks,
 Requires and BuildRequires for ALT to be build compatible with JPackage.
 Provides JPackage build environment with java-1.6.0.
-
-
-%package -n jpackage-1.7-core
-Summary: JPackage core build environment with java-1.7.0.
-Group: Development/Java
-
-Requires(pre): java-devel = 1.7.0 java = 1.7.0
-# hack
-Conflicts: java-devel > 1.7.99 java > 1.7.99
-
-Requires: jpackage-generic-compat
-Provides: jpackage-core = %version-%release
-Obsoletes: jpackage-1.6-core < %version
-
-%description -n jpackage-1.7-core
-JPackage core compatibility package.
-Provides JPackage core build environment with java-1.7.0.
 
 %package -n jpackage-1.7-compat
 Summary: JPackage build environment with java-1.7.0.
@@ -128,6 +77,7 @@ Requires(pre): java-devel = 1.7.0 java = 1.7.0
 Conflicts: java-devel > 1.7.99 java > 1.7.99
 
 Requires: jpackage-generic-compat
+Provides: jpackage-core = %version-%release
 Provides: jpackage-1.4-compat = %version-%release
 Provides: jpackage-1.5-compat = %version-%release
 Provides: jpackage-1.6-compat = %version-%release
@@ -135,8 +85,7 @@ Provides: jpackage-compat = %version-%release
 Obsoletes: jpackage-1.4-compat < %version
 Obsoletes: jpackage-1.5-compat < %version
 Obsoletes: jpackage-1.6-compat < %version
-
-Requires: %antdeps
+Obsoletes: jpackage-1.6-core < %version
 
 %description -n jpackage-1.7-compat
 JPackage compatibility package. the main goal is to provide all nessssary symlinks,
@@ -161,11 +110,11 @@ ln -s /usr/share/xml/docbook/xsl-stylesheets $RPM_BUILD_ROOT/usr/share/sgml/docb
 %files -n jpackage-1.5.0-compat
 %files -n jpackage-1.6.0-compat
 %files -n jpackage-1.7-compat
-%files -n jpackage-1.5.0-core
-%files -n jpackage-1.6.0-core
-%files -n jpackage-1.7-core
 
 %changelog
+* Thu Oct 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- dropped jpackage-*-core
+
 * Sun Sep 30 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - dropped ant-antlr from greneric environment
 
