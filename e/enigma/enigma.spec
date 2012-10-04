@@ -1,6 +1,6 @@
 Name: enigma
 Version: 1.01
-Release: alt5.1
+Release: alt5.2
 Summary: Find and uncover all pairs of identical Oxyd stones in each landscape
 License: GPL
 Group: Games/Arcade
@@ -12,6 +12,7 @@ Patch1:         enigma-gcc-4.3-ftbfs.patch
 Patch2:         enigma-gcc-4.4-ftbfs.patch
 Patch3:         enigma-consts.patch
 Patch4:         enigma-1.01-alt-gcc4.6.patch
+Patch5:         enigma-1.01-alt-libpng15.patch
 
 # Automatically added by buildreq on Fri Jan 05 2007
 BuildRequires: esound gcc-c++ libpng-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libSDL_ttf-devel libX11-devel tetex-core xerces-c-devel
@@ -39,9 +40,11 @@ innumerable puzzles blocking your direct way to the Oxyd stones...
 %patch2 -p1
 %patch3 -p1
 %patch4 -p2
+%patch5 -p2
 
 %build
 
+%add_optflags -fpermissive
 %configure --enable-optimize
 %make_build
 
@@ -71,6 +74,9 @@ innumerable puzzles blocking your direct way to the Oxyd stones...
 %_iconsdir/hicolor/*/*/*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.01-alt5.2
+- Rebuilt with libpng15
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.01-alt5.1
 - Fixed build
 
