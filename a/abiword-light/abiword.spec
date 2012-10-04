@@ -5,7 +5,7 @@
 Name: abiword-light
 Summary: Lean and fast full-featured word processor
 Version: 2.8.4
-Release: alt1.2
+Release: alt1.3
 Group: Office
 License: GPL
 Url: http://www.abisource.com/
@@ -23,9 +23,12 @@ Source11: abiword.mime
 Patch: abiword-2.8.1-headers.patch
 Patch1: abiword-2.8.4-alt-glib2.patch
 Patch2: abiword-2.8.4-alt-gcc4.6.patch
+Patch3: abiword-2.8.4-alt-libpng15.patch
 
 #AutoReq: yes, noshell
 Obsoletes: abisuite, abisuite-koi8, abisuite-cp1251, abisuite-iso8859-8
+
+BuildPreReq: libpng-devel
 
 BuildRequires: bzlib-devel gcc-c++ libaiksaurus-gtk-devel libenchant-devel libfribidi-devel
 BuildRequires: libots-devel libreadline-devel libgtkmathview-devel librsvg-devel libwmf-devel
@@ -80,6 +83,7 @@ Headers and pkgconfig support for  Abiword plugin building.
 %patch -p1 -b .headers
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 
@@ -140,6 +144,9 @@ install -D %SOURCE1 %buildroot%_desktopdir/
 #TODO: apply %%lang tags to localized files /usr/share/abiword-2.8/strings/*.strings (5 Mb)
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.4-alt1.3
+- Rebuilt with libpng15
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.4-alt1.2
 - Fixed build
 
