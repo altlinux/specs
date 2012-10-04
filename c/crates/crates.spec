@@ -1,12 +1,13 @@
 Name:		crates
 Version:	0.7.1
-Release:	alt3
+Release:	alt3.1
 Summary:	Extensible 3D crate moving puzzle game
 Group:		Games/Puzzles
 License:	GPL
 Source:		%name-%version.tar.gz
 Source1:	oexedirname.c
 Patch:		%name-localconfig.patch
+Patch1:   %name-0.7.1-alt-debuginfo.patch
 URL:		http://www.octaspire.com/crates/
 
 # Automatically added by buildreq on Sun Aug 29 2010
@@ -27,13 +28,14 @@ better is your position in the hall of fame.
 %setup
 sed 's+@EXEDIRNAME@+%_gamesdatadir/%name/.+g' < %SOURCE1 > src/posix/linux/oexedirname.c
 %patch
+%patch1 -p2
 sed -i 's/target_link_libraries(crates/target_link_libraries(crates -lm/' CMakeLists.txt
 
 %build
 mkdir build
 cd build
 cmake .. -DCMAKE_SKIP_RPATH:BOOL=yes -DCMAKE_BUILD_TYPE=MinSizeRel -DCMAKE_C_FLAGS:STRING='%optflags' -DCMAKE_INSTALL_PREFIX=%prefix 
-%make_build
+%make_build VERBOSE=1
 
 %install
 install -D %name %buildroot%_gamesbindir/%name
@@ -49,6 +51,9 @@ install -D man/man6/%name.6 %buildroot%_man6dir/%name.6
 %_man6dir/*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt3.1
+- Rebuilt with libpng15
+
 * Thu May 24 2012 Fr. Br. George <george@altlinux.ru> 0.7.1-alt3
 - DSO list completion
 
