@@ -18,7 +18,7 @@ BuildRequires: jpackage-compat
 
 Name:           bolzplatz2006
 Version:        1.0.3
-Release:        alt1_20jpp7
+Release:        alt1_20jpp7.1
 Summary:        Slam Soccer 2006 is a funny football game in 3D-comic-style
 Summary(fr):    Coup de Foot 2006 est un jeu comique en 3D
 Summary(de):    Bolzplatz 2006 ist ein spaßiges Fußballspiel im 3D-Comic-Stil
@@ -241,6 +241,9 @@ install -p -m 644 %{name}-functions.sh %{SOURCE8} %{SOURCE9} \
 
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt1_20jpp7.1
+- Rebuilt with libpng15
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.3-alt1_20jpp7
 - update to new release by jppimport
 
