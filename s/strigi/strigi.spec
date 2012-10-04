@@ -1,7 +1,7 @@
 
 Name: strigi
 Version: 0.7.7
-Release: alt3
+Release: alt4
 
 Summary: The fastest and smallest desktop searching program
 License: LGPL2+
@@ -16,7 +16,18 @@ Source2: strigi-daemon.desktop
 Source3: strigiclient.desktop
 
 # FC
-Patch1: strigi-0.7.7-xpmfix.patch
+Patch101: 0001-Minor.-Fix-grammar-typo-in-cmake-output.patch
+Patch102: 0002-gcc47-fix-unistd.h-header-required-unconditionally-f.patch
+Patch103: 0003-Fix-return-value-wrong-type.patch
+Patch201: 0001-Fix-xpm-and-xbm-index.patch
+Patch202: 0002-Extract-tracknumber-and-track-count-from-a-value-lik.patch
+Patch203: 0003-Fixed-indexing-of-m3u-files.patch
+Patch204: 0004-Fix-FLAC-Files-Remove-addtional-db-in-replaygain.patch
+Patch205: 0005-Fix-flac-analizer-was-importing-only-one-artist-tag.patch
+Patch206: 0006-Fix-non-numeric-genres-in-id3-v2-mp3-are-ignored.patch
+Patch207: 0007-Opps-Rmoving-a-wrong-commited-file-id3endanalyzer.cp.patch
+Patch208: 0008-fix-parsing-of-genre-field-in-id3v2-tags-and-clean-c.patch
+
 
 BuildRequires: boost-devel bzlib-devel cmake cppunit-devel dbus-tools-gui gcc-c++ libattr-devel
 BuildRequires: libclucene-core-devel libexiv2-devel libqt4-devel phonon-devel xml-utils libxml2-devel
@@ -59,14 +70,25 @@ This package contains %name development library and headers.
 
 %prep
 %setup
+pushd strigidaemon
+%patch101 -p1
+%patch102 -p1
+%patch103 -p1
+popd
 pushd libstreamanalyzer
-%patch1 -p1
+%patch201 -p1
+%patch202 -p1
+%patch203 -p1
+%patch204 -p1
+%patch205 -p1
+%patch206 -p1
+%patch207 -p1
+%patch208 -p1
 popd
 
 %build
 %Kcmake \
     -DCMAKE_SKIP_RPATH=YES \
-    -DCMAKE_BUILD_TYPE="Release" \
     -DENABLE_FFMPEG:BOOL=OFF \
     -DENABLE_CLUCENE:BOOL=ON \
     -DENABLE_CLUCENE_NG:BOOL=ON \
@@ -110,6 +132,12 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 
 
 %changelog
+* Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt4
+- merge upstream and FC patches
+
+* Tue Jun 05 2012 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt2.M60P.1
+- built for M60P
+
 * Thu May 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt3
 - fix requires
 
