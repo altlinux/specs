@@ -1,6 +1,6 @@
 Name: cmyktool
 Version: 0.1.5
-Release: alt1
+Release: alt1.1
 
 Summary: CMYK separation utility
 License: GPLv3+
@@ -39,6 +39,9 @@ CMYKTool is a new utility intended to build on the functionality of old CMYK sep
 %_desktopdir/*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.5-alt1.1
+- Rebuilt with libtiff5
+
 * Tue Jan 04 2011 Victor Forsiuk <force@altlinux.org> 0.1.5-alt1
 - 0.1.5
 
