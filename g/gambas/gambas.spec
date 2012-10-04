@@ -6,7 +6,7 @@
 
 Name: gambas
 Version: 2.23.1
-Release: alt1
+Release: alt1.1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -19,7 +19,7 @@ BuildRequires: bzlib-devel gcc-c++ imake kdelibs-devel libGL-devel
 BuildRequires: libXtst-devel libcurl-devel libffi-devel libjpeg-devel 
 BuildRequires: libomniORB-devel libpoppler13-devel libqt3-devel librsvg-devel 
 BuildRequires: libsqlite3-devel libxslt-devel xorg-cf-files xorg-inputproto-devel
-BuildRequires: libgtk+2-devel 
+BuildRequires: libgtk+2-devel libpng-devel
 
 %if_enabled firebird 
 BuildRequires: firebird-devel
@@ -804,6 +804,9 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %_datadir/gambas2/info/gb.xml.xslt.list
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.23.1-alt1.1
+- Rebuilt with libpng15
+
 * Wed Nov 16 2011 Andrey Cherepanov <cas@altlinux.org> 2.23.1-alt1
 - New version 2.23.1
 
