@@ -3,7 +3,7 @@
 
 Name: 	 nss-ldapd
 Version: 0.8.10
-Release: alt3
+Release: alt4
 
 Summary: An nsswitch module which uses directory servers
 License: LGPLv2+
@@ -20,9 +20,9 @@ Requires: nscd
 Requires: su
 
 Conflicts: nss_ldap
+Conflicts: pam_ldap
 Provides:  nss-pam-ldapd = %version-%release
-Provides:  pam_ldap = %version-%release
-Obsoletes: pam_ldap > 184
+Provides:  nss-ldap
 
 BuildRequires: libkrb5-devel libldap-devel libsasl2-devel docbook2X libpam0-devel
 
@@ -160,6 +160,10 @@ exit 0
 %attr(644,root,root) %config(noreplace) %_sysconfdir/tmpfiles.d/nslcd.conf
 
 %changelog
+* Thu Oct 04 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.10-alt4
+- Provide nss-ldap for adapted alterator-auth
+- Change obsolete of pam_ldap to conflict
+
 * Tue Oct 02 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.10-alt3
 - Strict check of LDAP use in NSS
 - Auto enable and run daemon
