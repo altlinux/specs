@@ -2,7 +2,7 @@
 
 Name: lbreakout2
 Version: 2.6.4
-Release: alt1
+Release: alt1.1
 
 Summary: Breakout-style arcade game
 License: GPL
@@ -88,6 +88,9 @@ mv %buildroot%_gamesdatadir/locale/* %buildroot%_datadir/locale/
 # - add .desktop for server (NB: http://secunia.com/advisories/9134/)
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.4-alt1.1
+- Rebuilt with libpng15
+
 * Sat Jun 30 2012 Ilya Mashkin <oddity@altlinux.ru> 2.6.4-alt1
 - 2.6.4
 
