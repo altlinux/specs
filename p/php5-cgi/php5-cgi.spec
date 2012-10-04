@@ -127,6 +127,9 @@ EOF
 %php5_servicedir/%php5_sapi
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Fri Feb 10 2012 Anton Farygin <rider@altlinux.ru> 5.3.10.20120202-alt1
 Rebuild with 5.3.10.20120202-alt1
 

@@ -4,7 +4,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%real_version
-Release:	alt1
+Release:	alt2
 
 Summary:	Client extension for Sphinx - opensource SQL full-text search engine
 
@@ -56,6 +56,9 @@ install -D -m 644 -- %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 1.2.0-alt2
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Tue Jun 19 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 1.2.0-alt1
 - 1.2.0
 

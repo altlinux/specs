@@ -2,7 +2,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	0.9.33
-Release:	alt1
+Release:	alt2
 
 Summary:	Advanced PHP5 protection system
 Group:		System/Servers
@@ -49,6 +49,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 0.9.33-alt2
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Fri Feb 10 2012 Anton Farygin <rider@altlinux.ru> 0.9.33-alt1
 - new version for php5-5.3.10.20120202-alt1
 

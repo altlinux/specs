@@ -150,6 +150,9 @@ mkdir -p %buildroot/%_runtimedir/php5-fpm
 %_man8dir/*
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Fri Feb 10 2012 Anton Farygin <rider@altlinux.ru> 5.3.10.20120202-alt1
 - rebuild with php5-devel-5.3.10.20120202-alt1
 

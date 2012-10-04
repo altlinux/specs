@@ -57,6 +57,9 @@ chrpath -d %buildroot%php5_extdir/%php5_extension.so
 %php5_extension_preun
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1.2
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Tue Feb 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.10.20120202-alt1.2
 - Rebuild with 5.3.10.20120202-alt1
 

@@ -2,7 +2,7 @@
 
 Name: php5-eaccelerator
 Version: 0.9.6.1
-Release: alt8
+Release: alt9
 
 Summary: PHP accelerator, optimizer, encoder and dynamic content cache
 License: GPL
@@ -78,6 +78,9 @@ popd
 # - add/separate admin stuff (see also spec attached to #19996)
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 0.9.6.1-alt9
+- Rebuild with php5-5.3.17.20120913-alt1
+
 * Sat Feb 11 2012 Anton Farygin <rider@altlinux.ru> 0.9.6.1-alt8
 - Rebuild with php5-5.3.10.20120202-alt1
 

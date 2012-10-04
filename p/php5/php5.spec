@@ -130,7 +130,7 @@ in use by other PHP5-related packages.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p1
-%patch4 -p2
+%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch9 -p1 -b .scandir
@@ -153,7 +153,7 @@ in use by other PHP5-related packages.
 %patch52 -p2
 
 cp Zend/LICENSE Zend/ZEND_LICENSE
-cp Zend/ChangeLog Zend/ZEND_ChangeLog 
+cp Zend/ZEND_CHANGES Zend/ZEND_ChangeLog 
 mv README.SELF-CONTAINED-EXTENSIONS SELF-CONTAINED-EXTENSIONS
 
 cp -dpR %SOURCE2 .
@@ -328,6 +328,12 @@ chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 %doc tests run-tests.php 
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1
+- new version
+
+* Wed Jun 06 2012 Anton Farygin <rider@altlinux.ru> 5.3.13.20120508-alt1
+- new version
+
 * Fri Feb 10 2012 Anton Farygin <rider@altlinux.ru> 5.3.10.20120202-alt1
 - new version
 

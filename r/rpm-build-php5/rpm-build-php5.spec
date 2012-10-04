@@ -1,7 +1,7 @@
 %define php5_name      php5
-%define _php5_version  5.3.10
+%define _php5_version  5.3.17
 %define _php5_major  5.3
-%define _php5_snapshot 20120202
+%define _php5_snapshot 20120913
 %define php5_release   alt1
 
 %define rpm_build_version %_php5_version%([ -z "%_php5_snapshot" ] || echo ".%_php5_snapshot")
@@ -36,6 +36,12 @@ subst 's,@php5_release@,%php5_release,'     %buildroot/%_sysconfdir/rpm/macros.d
 %_sysconfdir/rpm/macros.d/%php5_name
 
 %changelog
+* Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1
+- new version
+
+* Wed Jun 06 2012 Anton Farygin <rider@altlinux.ru> 5.3.13.20120508-alt1
+- new version
+
 * Fri Feb 10 2012 Anton Farygin <rider@altlinux.ru> 5.3.10.20120202-alt1
 - new version
 
