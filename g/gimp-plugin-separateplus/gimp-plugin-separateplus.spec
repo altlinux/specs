@@ -3,7 +3,7 @@
 
 Name: gimp-plugin-separateplus
 Version: 0.5.8
-Release: alt1
+Release: alt1.1
 Epoch: 1
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -14,6 +14,7 @@ Group: Graphics
 
 Url: http://cue.yellowmagic.info/softwares/separate.html
 Source: http://osdn.dl.sourceforge.jp/separate-plus/47873/separate+-%version.zip
+Patch: gimp-plugin-separateplus-0.5.8-alt-debuginfo.patch
 
 # Automatically added by buildreq on Wed Dec 23 2009
 BuildRequires: libgimp-devel libjpeg-devel liblcms-devel libtiff-devel unzip
@@ -28,6 +29,7 @@ support.
 
 %prep
 %setup -n separate+-%version
+%patch -p2
 
 %build
 %make_build
@@ -49,6 +51,9 @@ install -p -m644 sample-scripts/* %buildroot%gimpdatadir/scripts/
 %doc README*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.5.8-alt1.1
+- Rebuilt with libtiff5
+
 * Thu Nov 25 2010 Victor Forsiuk <force@altlinux.org> 1:0.5.8-alt1
 - 0.5.8
 
