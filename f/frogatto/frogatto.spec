@@ -1,6 +1,6 @@
 Name: frogatto
 Version: 1.1.1
-Release: alt1.4
+Release: alt1.5
 
 Summary: Frogatto & Friends classic adventure game
 License: GPLv3+
@@ -12,6 +12,7 @@ Source1: frogatto.desktop
 Source2: frogatto.xpm
 Source3: frogatto.6
 Patch1: frogatto-1.1-asneeded.patch
+Patch2: frogatto-1.1.1-alt-libpng15.patch
 Packager: Victor Forsiuk <force@altlinux.org>
 
 # Automatically added by buildreq on Wed May 11 2011
@@ -38,6 +39,7 @@ Game data for frogatto.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 subst 's/-lSDLmain//' Makefile
 subst 's/ccache //' Makefile
 subst 's/-O./%optflags/' Makefile
@@ -78,6 +80,9 @@ chmod 755 %buildroot%_gamesbindir/frogatto
 %_datadir/frogatto
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.5
+- Rebuilt with libpng15
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.4
 - Rebuilt with Boost 1.51.0
 
