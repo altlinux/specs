@@ -1,6 +1,6 @@
 Name: libgeotiff
 Version: 1.3.0
-Release: alt2
+Release: alt2.1
 
 Summary: Library for reading and writing GeoTIFF information tags.
 License: Public domain
@@ -93,6 +93,9 @@ This package contains CSV data files derived from the EPSG Tables.
 %endif
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.1
+- Rebuilt with libtiff5
+
 * Mon Dec 26 2011 Dmitry Derjavin <dd@altlinux.org> 1.3.0-alt2
 - RPATH issue fixed on x86_64 (closes: 26704)
 - data package with EPSG csv files is now enabled by default (closes: 24405)
