@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-services
-Version: 1.9
+Version: 1.9.1
 Release: alt1
 
 Summary: Simple SysV services configurator
@@ -46,6 +46,9 @@ Alterator module for SysV services administration
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Oct 04 2012 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt1
+- Don't use deprecated 'find -perm' syntax.
+
 * Wed Oct 14 2009 Vladislav Zavjalov <slazav@altlinux.org> 1.9-alt1
 - ajax.scm: use new card-index module
 
