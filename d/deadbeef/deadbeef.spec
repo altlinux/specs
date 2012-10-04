@@ -2,7 +2,7 @@
 %define rev	bfca08d0
 Name:		deadbeef
 Version:	0.5.4
-Release:	alt3.%rev
+Release:	alt3.%rev.1
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sourceforge.net/
 Source0:	http://kent.dl.sourceforge.net/project/deadbeef/%name-%version.tar
@@ -17,7 +17,7 @@ Patch5:		deadbeef-0.5.1-using-tt.patch
 
 # Automatically added by buildreq on Sun Jun 03 2012 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libpng-devel libsndfile-devel libstdc++-devel libwayland-client libwayland-server perl-XML-Parser pkg-config python-base xorg-xproto-devel zlib-devel
-BuildRequires: gcc-c++ intltool libalsa-devel libavformat-devel libcddb-devel libcdio-devel libcurl-devel libdbus-devel libfaad-devel libflac-devel libgtk+2-devel libjpeg-devel libmad-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel yasm
+BuildRequires: gcc-c++ intltool libalsa-devel libavformat-devel libcddb-devel libcdio-devel libcurl-devel libdbus-devel libfaad-devel libflac-devel libgtk+2-devel libjpeg-devel libmad-devel libpulseaudio-devel libsamplerate-devel libvorbis-devel libwavpack-devel yasm libpng-devel
 
 Requires:	%name-out-alsa %name-gtkui %name-in-mpeg
 
@@ -523,6 +523,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.4-alt3.bfca08d0.1
+- Rebuilt with libpng15
+
 * Sun Jun 10 2012 Andrew Clark <andyc@altlinux.ru> 0.5.4-alt3.bfca08d0
 - relaxed elf check. thanks to real@ for the tip.
 
