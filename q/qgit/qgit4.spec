@@ -1,5 +1,5 @@
 Name: qgit
-Version: 2.4
+Version: 2.5
 Release: alt1
 
 Summary: Git GUI viewer built on Qt4/C++
@@ -57,6 +57,9 @@ install -pD -m755 bin/qgit %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Thu Oct 04 2012 Ivan A. Melnikov <iv@altlinux.org> 2.5-alt1
+- new version
+
 * Thu Mar 08 2012 Ivan A. Melnikov <iv@altlinux.org> 2.4-alt1
 - new upstream
 - new version (closes: #25675)
