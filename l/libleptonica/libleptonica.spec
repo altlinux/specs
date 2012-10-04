@@ -2,7 +2,7 @@
 
 Name: libleptonica
 Version: 1.69
-Release: alt2.2
+Release: alt2.3
 Summary: A library for manipulating images
 Summary(ru_RU.UTF-8): Библиотека для операций над изображениями
 License: Leptonica license (BSD-like)
@@ -130,6 +130,9 @@ mv doc/html_reference %buildroot%docdir
 %docdir/html_reference/*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.69-alt2.3
+- Rebuilt with libpng15
+
 * Tue Sep 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.69-alt2.2
 - Rebuilt for debuginfo
 
