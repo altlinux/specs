@@ -1,6 +1,6 @@
 Name: gpac
 Version: 0.4.5
-Release: alt1.svn3744.2
+Release: alt1.svn3744.2.1
 
 Summary: GPAC is a multimedia framework covering MPEG-4, VRML/X3D and SVG.
 License: LGPL
@@ -108,6 +108,9 @@ like AVI, MPG, TS, but mostly on ISO media files (e.g. MP4, 3GP), e.g.:
 
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1.svn3744.2.1
+- Rebuilt with libpng15
+
 * Fri Feb 10 2012 Michael A. Kangin <prividen@altlinux.org> 0.4.5-alt1.svn3744.2
 - Rebuild with all libav -devel packages
 
