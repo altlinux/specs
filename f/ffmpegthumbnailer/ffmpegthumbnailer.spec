@@ -1,7 +1,7 @@
 Name: ffmpegthumbnailer
 Summary: Lightweight video thumbnailer that can be used by file managers
 Version: 2.0.4
-Release: alt1.4
+Release: alt1.5
 License: GPLv2
 Group: Graphics
 Url: http://code.google.com/p/ffmpegthumbnailer/
@@ -10,6 +10,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source0: http://ffmpegthumbnailer.googlecode.com/files/%name-%version.tar.gz
 Patch: %name-ffmpeg-0.7.1.patch
 Patch1: %name-2.0.4-alt-gcc4.6.patch
+Patch2: %name-2.0.4-alt-libpng15.patch
 
 BuildRequires: gcc-c++ libavformat-devel libjpeg-devel libpng-devel libswscale-devel
 
@@ -49,6 +50,7 @@ developers to generate thumbnails in their projects
 %setup
 %patch0 -p2
 %patch1 -p2
+%patch2 -p2
 
 %build
 %autoreconf
@@ -72,6 +74,9 @@ developers to generate thumbnails in their projects
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1.5
+- Rebuilt with libpng15
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.4-alt1.4
 - Fixed build
 
