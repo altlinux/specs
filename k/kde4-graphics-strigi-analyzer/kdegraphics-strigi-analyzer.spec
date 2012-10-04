@@ -2,7 +2,7 @@
 
 %define rname kdegraphics-strigi-analyzer
 Name: kde4-graphics-strigi-analyzer
-Version: 4.8.2
+Version: 4.9.1
 Release: alt1
 
 Group: Graphics
@@ -60,6 +60,12 @@ KDE 4 core library.
 
 
 %changelog
+* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Wed Apr 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt0.M60P.1
+- built for M60P
+
 * Wed Apr 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
 - new version
 

@@ -1,8 +1,7 @@
-%define _unpackaged_files_terminate_build 1
 %define unstable 0
 %define post_version 1
 %define with_api_docs 0
-%def_enable okteta
+%def_disable okteta
 # from the Project's CMakeLists.txt
 %define build_req_kde_ver_min 4.5.0
 %define build_req_kdeplatform_min 1.3.0
@@ -29,7 +28,7 @@
 
 Name: %kdevelop
 Version: 4.3.1
-Release: alt1.git
+Release: alt2
 Serial: 3
 
 # this should be oneliner :/
@@ -376,6 +375,9 @@ done
 #%doc %_K4doc/en/kdevelop-apidocs/
 
 %changelog
+* Wed Oct 10 2012 Sergey V Turchin <zerg@altlinux.org> 3:4.3.1-alt2
+- rebuilt with kde 4.9
+
 * Thu Apr 19 2012 Alexey Morozov <morozov@altlinux.org> 3:4.3.1-alt1.git
 - a post-v4.3.1 git snapshot (6b95b832d72696df0278ac7b9d290c96b798ef07)
 - Russian translations updated and merged with upstream

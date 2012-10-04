@@ -1,6 +1,6 @@
 Name:  kde-virtual
 Version: 3.5
-Release: alt5
+Release: alt6
 
 %define smr KDE (dependencies package)
 
@@ -71,6 +71,9 @@ Requires: %kde_devel
 %files -n kde-devel
 
 %changelog
+* Thu Oct 11 2012 Sergey V Turchin <zerg@altlinux.org> 3.5-alt6
+- cleanup requires
+
 * Wed Feb 01 2012 Sergey V Turchin <zerg@altlinux.org> 3.5-alt5
 - exclude kdevelop
 

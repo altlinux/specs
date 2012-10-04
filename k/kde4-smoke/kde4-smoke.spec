@@ -2,8 +2,8 @@
 
 %define rname smokekde
 Name: kde4-smoke
-Version: 4.8.0
-Release: alt3
+Version: 4.9.1
+Release: alt1
 
 Group: Development/KDE and QT
 Summary: Bindings for KDE libraries
@@ -377,6 +377,9 @@ NPROCS=1 %K4make
 
 
 %changelog
+* Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
 * Fri Jun 15 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt3
 - rebuilt with new soprano
 

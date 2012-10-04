@@ -3,8 +3,8 @@
 
 %define rname kdepim-runtime
 %define major 4
-%define minor 8
-%define bugfix 5
+%define minor 9
+%define bugfix 1
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -16,6 +16,8 @@ Url: http://www.kde.org
 
 Requires: %name-common = %version-%release
 
+Provides: kde4-pim-runtime-google = %version-%release
+Obsoletes: kde4-pim-runtime-google < %version-%release
 Provides: kde4pim-wizards = %version-%release
 Obsoletes: kde4pim-wizards < %version-%release
 Conflicts: kde4pim-akonadi < 4.8
@@ -24,11 +26,9 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 # Upstream
 # FC
 Patch50: kdepim-runtime-4.4.93-show_akonadi_kcm.patch
-Patch51: kdepim-runtime-4.7.1-sqlite-support.patch
 # ALT
-Patch101: kdepim-4.7.1-alt-allow-hide-nepomuk-error-runtime.patch
-Patch102: kdepim-4.7.2-alt-akonadi-sqlite3.patch
-Patch103: kdepim-4.7.4-alt-def-maildir-path.patch
+Patch102: kdepim-4.9.1-alt-akonadi-sqlite3.patch
+#
 Patch104: kdepim-4.8.0-alt-def-mixedmaildir-path.patch
 Patch105: kdepim-4.7.3-alt-migrate-pop3-passwords.patch
 Patch106: kdepim-4.7.3-alt-ignore-empty-accounts.patch
@@ -41,7 +41,7 @@ Patch109: kdepim-4.8.1-alt-def-nepomuk.patch
 BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel dblatex
-#BuildRequires: libindicate-qt-devel
+BuildRequires: libkgapi4-devel qjson-devel
 
 BuildRequires: kde4libs-devel >= %version
 BuildRequires: kde4pimlibs-devel >= %version
@@ -59,12 +59,12 @@ Conflicts: kdepim-common <= 1:3.5.12-alt1
 %description common
 Common package for  %name
 
-%package core
-Summary: Core files for %name
-Group: Graphical desktop/KDE
-Requires: %name-common = %version-%release
-%description core
-Core files for %name
+#%package core
+#Summary: Core files for %name
+#Group: Graphical desktop/KDE
+#Requires: %name-common = %version-%release
+#%description core
+#Core files for %name
 
 %package -n libkmindexreader4
 Summary: KDE 4 library
@@ -127,14 +127,13 @@ based on kdepim.
 %prep
 %setup -q -n %rname-%version
 %patch50 -p1
-%patch51 -p1
-###%patch101 -p2
+#
 %patch102 -p2
-%patch103 -p2
+#
 %patch104 -p2
 %patch105 -p2
 %patch106 -p2
-%patch107 -p2
+#%patch107 -p2
 %patch108 -p2
 %patch109 -p1
 
@@ -223,6 +222,12 @@ based on kdepim.
 
 
 %changelog
+* Mon Oct 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 

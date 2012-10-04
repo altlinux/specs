@@ -1,7 +1,7 @@
 %add_findpackage_path %_kde4_bindir
 
 Name: smokegen
-Version: 4.8.3
+Version: 4.9.1
 Release: alt1
 
 Group: Graphical desktop/Other
@@ -67,6 +67,12 @@ mkdir -p %buildroot/%_includedir/smoke/
 %_datadir/smokegen/
 
 %changelog
+* Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Thu May 31 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt0.M60P.1
+- built for M60P
+
 * Thu May 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt1
 - new version
 

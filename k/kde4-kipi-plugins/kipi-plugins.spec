@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 2.9.0
-Release: alt1
+Release: alt2
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -163,6 +163,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt2
+- rebuild with new kde
+
 * Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt1
 - new version
 

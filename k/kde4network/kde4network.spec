@@ -22,11 +22,11 @@
 
 %define rname kdenetwork
 %define major 4
-%define minor 8
-%define bugfix 4
+%define minor 9
+%define bugfix 1
 Name: kde4network
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
@@ -47,7 +47,8 @@ Requires: %name-krdc = %version-%release
 Requires: %name-krfb = %version-%release
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
-
+# FC
+Patch1: kdenetwork-4.7.97-fix-for-g++47.patch
 # ALT
 Patch11: kdenetwork-4.7.1-alt-kget-newtransfer-dialog-size.patch
 Patch12: kdenetwork-4.1.96-alt-find-decibel.patch
@@ -82,7 +83,7 @@ BuildRequires: libqimageblitz-devel libxml2-devel libxslt-devel libnxcl-devel li
 BuildRequires: libjpeg-devel libavahi-qt4-devel bzlib-devel libldap-devel
 BuildRequires: libotr-devel libmeanwhile-devel libgadu-devel libv4l-devel libmsn-devel
 BuildRequires: rpm-macros-browser-plugins shared-desktop-ontologies
-BuildRequires: libktorrent-devel
+BuildRequires: libktorrent-devel libtelepathy-qt4-devel
 BuildRequires: kde4libs-devel >= %version kde4pimlibs-devel >= %version
 BuildRequires: kde4base-workspace-devel >= %version kde4base-devel >= %version
 
@@ -217,6 +218,7 @@ based on %name.
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 %patch11 -p1
 #%patch12 -p1
 %patch13 -p1
@@ -284,6 +286,7 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 [ $1 -eq 1 ] || /usr/sbin/control-dump kppp-kde4
 %post kppp
 [ $1 -eq 1 ] || /usr/sbin/control-restore kppp-kde4
+
 
 %files
 %files common
@@ -427,7 +430,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 
 %files krdc
 %_K4bindir/krdc
+%_K4bindir/krdc_rfb_approver
 %_K4apps/krdc/
+%_K4apps/krdc_rfb_approver/
 %_K4xdg_apps/krdc.desktop
 %_K4cfg/krdc.kcfg
 %_K4srv/krdc_*.desktop
@@ -441,6 +446,8 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4lib/krdc_rdpplugin.so
 %_K4lib/krdc_testplugin.so
 %_K4lib/krdc_vncplugin.so
+%_K4dbus_services/org.freedesktop.Telepathy.Client.krdc_*.service
+%_datadir/telepathy/clients/krdc_*.client
 
 %files -n libkrfbprivate4
 %_K4libdir/libkrfbprivate.so.*
@@ -454,6 +461,8 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4srv/krfb_framebuffer_qt.desktop
 %_K4srv/krfb_framebuffer_x11.desktop
 %_K4srvtyp/krfb-framebuffer.desktop
+%_K4dbus_services/org.freedesktop.Telepathy.Client.krfb_*.service
+%_datadir/telepathy/clients/krfb_*.client
 %_K4doc/*/krfb
 
 %files devel
@@ -462,6 +471,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
 * Sun Sep 16 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2
 - rebuilt with new libktorrent
 

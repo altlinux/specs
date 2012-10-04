@@ -13,7 +13,7 @@
 
 Name: koffice
 Version: 2.3.3
-Release: alt11
+Release: alt12
 Serial: 4
 
 Group: Office
@@ -47,6 +47,7 @@ Patch1: koffice-2.1.0-alt-find-gm.patch
 Patch2: koffice-2.3.1-alt-fix-linking.patch
 Patch3: koffice-2.3.3-alt-fix-compile.patch
 Patch4: koffice-2.3.3-alt-glib2.32.patch
+Patch5: koffice-2.3.3-alt-gcc47.patch
 
 # Automatically added by buildreq on Mon Nov 17 2008 (-bi)
 #BuildRequires: eigen2 gcc-c++ getfemxx kde4base-runtime kde4graphics-devel kde4pimlibs-devel koffice-devel libGraphicsMagick-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libbfd-devel libexiv2-devel libglew-devel libgsl-devel libjpeg-devel liblcms-devel libldap-devel libpoppler-qt4-devel libqca2-devel libqimageblitz-devel libwpg-devel libwv2-devel libxkbfile-devel libxslt-devel nvidia_glx_177.80 openexr-devel pstoedit rpm-build-ruby xorg-xf86vidmodeproto-devel xsltproc
@@ -673,6 +674,7 @@ cp -ar %SOURCE1 cmake/modules/
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 #find ./ -type f -name CMakeLists.txt | grep -v -e '\./libs/CMakeLists.txt' | \
 #while read f
@@ -1238,6 +1240,9 @@ done;
 %endif
 
 %changelog
+* Mon Oct 08 2012 Sergey V Turchin <zerg@altlinux.org> 4:2.3.3-alt12
+- fix to build with gcc 4.7
+
 * Thu Jun 21 2012 Sergey V Turchin <zerg@altlinux.org> 4:2.3.3-alt11
 - rebuilt with new poppler
 

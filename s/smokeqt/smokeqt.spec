@@ -1,7 +1,7 @@
 %add_findpackage_path %_kde4_bindir
 
 Name: smokeqt
-Version: 4.8.0
+Version: 4.9.1
 Release: alt1
 
 Group: Development/KDE and QT
@@ -354,6 +354,12 @@ Qt generic bindings library.
 
 
 %changelog
+* Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt0.M60P.1
+- built for M60P
+
 * Thu Jan 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
 - new version
 

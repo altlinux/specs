@@ -4,12 +4,12 @@
 %add_findreq_skiplist %_K4apps/cmake/modules*.py
 
 %define major 4
-%define minor 8
-%define bugfix 5
+%define minor 9
+%define bugfix 1
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -101,8 +101,10 @@ Patch1026: kdelibs-4.7.1-alt-find-pulseaudio.patch
 Patch1027: kdelibs-4.7.4-alt-revert-5960ae9846c333ef381a817af9d63776c4ddc201.patch
 Patch1028: kdelibs-4.8.1-alt-kdesu-export-user-var.patch
 Patch1029: kdelibs-4.8.1-alt-fix-build.patch
-Patch1030: kdelibs-4.8.2-alt-platform-profile.patch
+Patch1030: kdelibs-4.9.1-alt-platform-profile.patch
 Patch1031: kdelibs-4.8.5-alt-add-desktop-translations.patch
+Patch1032: kdelibs-4.9.1-alt-policy-dir.patch
+Patch1033: kdelibs-4.9.1-alt-cmake-spaces.patch
 
 Patch3000: kdelibs-4.4.92-alt-alternate-kconf_update_bin-path.patch
 
@@ -187,11 +189,13 @@ applications for KDE 4.
 %patch1024 -p1
 %patch1025 -p1
 %patch1026 -p1
-%patch1027 -p1
+#%patch1027 -p1
 %patch1028 -p1
 %patch1029 -p1
 %patch1030 -p1
 %patch1031 -p1
+%patch1032 -p1
+%patch1033 -p1
 
 %patch3000 -p1
 
@@ -310,6 +314,12 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Mon Sep 24 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Tue Aug 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2.M60P.1
+- built for M60P
+
 * Tue Aug 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt3
 - update from 4.8 branch (kde bug 268020)
 

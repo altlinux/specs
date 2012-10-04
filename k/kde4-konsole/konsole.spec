@@ -3,8 +3,8 @@
 
 %define rname konsole
 %define major 4
-%define minor 8
-%define bugfix 5
+%define minor 9
+%define bugfix 1
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -22,8 +22,8 @@ Conflicts: kdebase-wm <= 3.5.12-alt2
 
 Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdebase-4.8.0-alt-konsole-allow-sgid.patch
-Patch2: kdebase-4.4.1-alt-konsole-profiles.patch
-Patch3: kdebase-4.6.3-alt-no-transparency.patch
+Patch2: kdebase-4.9.1-alt-konsole-profiles.patch
+Patch3: kdebase-4.9.1-alt-no-transparency.patch
 # Dmitry Prokoptsev
 Patch1000: BR59256fixed.diff
 # upstream
@@ -77,6 +77,7 @@ __EOF__
 %_K4lib/libkonsolepart.so*
 %_K4xdg_apps/konsole.desktop
 %_K4apps/konsole/
+%_K4conf_update/*
 %_K4srv/konsolepart.desktop
 %_K4srv/ServiceMenus/konsolehere.desktop
 %_K4srvtyp/terminalemulator.desktop
@@ -84,6 +85,12 @@ __EOF__
 
 
 %changelog
+* Mon Oct 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 

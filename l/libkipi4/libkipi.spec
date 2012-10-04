@@ -2,7 +2,7 @@
 
 %define rname libkipi
 Name: libkipi4
-Version: 4.8.0
+Version: 4.9.1
 Release: alt1
 
 Group: System/Libraries
@@ -58,6 +58,12 @@ Development files for %name
 
 
 %changelog
+* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt0.M60P.1
+- built for M60P
+
 * Mon Jan 23 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
 - new version
 

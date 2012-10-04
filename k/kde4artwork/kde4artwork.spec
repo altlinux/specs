@@ -9,11 +9,11 @@
 
 %define rname kdeartwork
 %define major 4
-%define minor 8
-%define bugfix 0
+%define minor 9
+%define bugfix 1
 Name: kde4artwork
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Summary: K Desktop Environment - Artwork
 Group: Graphical desktop/KDE
@@ -424,6 +424,12 @@ done
 %endif
 
 %changelog
+* Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1.M60P.1
+- built for M60P
+
 * Fri Feb 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt2
 - fix provides
 

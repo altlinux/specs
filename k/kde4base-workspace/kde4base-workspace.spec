@@ -22,12 +22,12 @@
 
 
 %define major 4
-%define minor 8
-%define bugfix 5
+%define minor 9
+%define bugfix 1
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt8
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -50,10 +50,11 @@ Source3: pam-kde4-kscreensaver
 # upstream
 Patch1: kde-workspace-4.8.0-systemd-shutdown.patch
 # RH
-Patch21: kdebase-workspace-4.5.80-battery-plasmoid-showremainingtime.patch
+Patch21: kde-workspace-4.8.80-battery-plasmoid-showremainingtime.patch
 Patch22: kdebase-workspace-4.5.0-plasma-konsole.patch
 Patch23: kde-workspace-4.7.80-no_HAL.patch
 Patch24: kdebase-workspace-4.5.90-no_HAL2.patch
+Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
 # SuSE
 # MDK
 # upstream
@@ -80,7 +81,7 @@ Patch1014: kdebase-workspace-4.7.1-alt-kdm-kcm-defaults.patch
 Patch1015: kdebase-workspace-4.7.1-alt-gtkrc-custom.patch
 Patch1016: kdebase-workspace-4.8.2-alt-def-plasma.patch
 Patch1017: kdebase-workspace-4.3.0-alt-ksysguardrc.patch
-Patch1018: kdebase-workspace-4.8.0-alt-def-kwin.patch
+Patch1018: kdebase-workspace-4.9.1-alt-def-kwin.patch
 Patch1019: kdebase-workspace-4.8.0-alt-def-fonts.patch
 Patch1020: kdebase-workspace-4.4.92-alt-kdm-guistyle.patch
 Patch1021: kdebase-workspace-4.4.92-alt-kdm-color-scheme.patch
@@ -103,7 +104,7 @@ Patch1037: kdebase-workspace-4.6.4-alt-hide-printer-config.patch
 Patch1038: kdebase-workspace-4.8.5-alt-session-exclude.patch
 Patch1039: kdebase-workspace-4.8.4-alt-digitalclock-compactdate.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
-Patch1041: kdebase-workspace-4.8.0-alt-def-gllegacy.patch
+Patch1041: kdebase-workspace-4.9.1-alt-def-gllegacy.patch
 Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
 Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
 Patch1044: kdebase-workspace-4.8.5-alt-workspaceoptions.patch
@@ -180,7 +181,7 @@ Obsoletes: kdebase-wm < %version-%release
 %endif
 Requires: udev udisks upower media-player-info
 Requires: kde4base-runtime >= %version
-Requires: kde4-icon-theme-oxygen kde4-kactivities
+Requires: kde4-icon-theme-oxygen kde4-kactivities kde4-nepomuk-core
 Requires: /usr/bin/qdbus dbus-tools-gui
 Requires: qalculate-common
 %if_enabled google
@@ -503,6 +504,7 @@ __EOF__
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
+%patch25 -p1
 #
 %patch700 -p1
 #
@@ -748,7 +750,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4exec/fontinst_helper
 %_K4exec/kscreenlocker
 %_K4exec/kwin_rules_dialog
-%_K4exec/test_kcm_xinerama
+#%_K4exec/test_kcm_xinerama
 %endif
 %_K4exec/ksysguardprocesslist_helper
 %_K4exec/kwin_killer_helper
@@ -915,6 +917,12 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Oct 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Tue Aug 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt7.M60P.1
+- built for M60P
+
 * Tue Aug 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt8
 - update from 4.8 branch
 

@@ -5,7 +5,7 @@
 Name: kde4-%rname
 %define lname lib%name
 Version: 2.9.0
-Release: alt1.1
+Release: alt2
 
 Summary: digiKam is an advanced digital photo management application for linux
 License: %gpl2plus
@@ -21,13 +21,14 @@ BuildPreReq: libpng-devel
 
 # Automatically added by buildreq on Wed Sep 01 2010
 BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms-devel liblensfun-devel liblqr-devel libxkbfile-devel soprano libtiff-devel
-             
+BuildRequires: libpgf-devel libclapack-devel
+
 %if_enabled marble
 BuildRequires: kde4edu-devel
 %endif
 
 # buildreq sucks
-BuildRequires: kde4libs-devel soprano-backend-virtuoso soprano-backend-redland libkface-devel libkgeomap-devel boost-geometry-devel
+BuildRequires: kde4libs-devel soprano-backend-virtuoso soprano-backend-redland libkface-devel libkgeomap-devel boost-devel
 
 Requires: libqt4-sql-sqlite kde4base-runtime libkipi4 libqt4-sql-mysql
 Requires: %lname = %version-%release
@@ -208,6 +209,9 @@ rm -rf %buildroot%_man1dir
 %_K4link/*.so
 
 %changelog
+* Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt2
+- rebuilt with new kde
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.0-alt1.1
 - Rebuilt with libpng15
 
@@ -222,6 +226,9 @@ rm -rf %buildroot%_man1dir
 
 * Sat Jul 07 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 2.6.0-alt1
 - 2.6.0
+
+* Mon May 07 2012 Sergey V Turchin <zerg@altlinux.org> 2.5.0-alt1.M60P.1
+- build for M60P
 
 * Fri May 04 2012 Sergey V Turchin <zerg@altlinux.org> 2.5.0-alt2
 - fix compile on arm; thanks sbolshakov@alt

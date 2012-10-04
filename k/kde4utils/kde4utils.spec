@@ -6,8 +6,8 @@
 %define rname kdeutils
 Name: kde4utils
 %define major 4
-%define minor 8
-%define bugfix 5
+%define minor 9
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -283,41 +283,45 @@ done
 %patch6 -p1
 #%patch7 -p1
 
-
-%build
-%add_optflags -D_FILE_OFFSET_BITS=64
+cat <<__EOF__ >CMakeLists.txt
+find_package(KDE4)
+include( KDE4Defaults )
+include_directories(\${KDE4_INCLUDES})
+add_definitions(\${QT_DEFINITIONS} \${KDE4_DEFINITIONS})
+add_definitions(-DQT_USE_FAST_CONCATENATION -DQT_USE_FAST_OPERATOR_PLUS)
+set( CMAKE_REQUIRED_DEFINITIONS \${_KDE4_PLATFORM_DEFINITIONS} )
+__EOF__
 ls -d1 * | \
 while read d
 do
+    [ "$d" == "${d#lib}" ] || continue
     [ -d "$d" ] || continue
-    pushd $d
+    [ -d $d/cmake-modules ] \
+	&& echo "list(APPEND CMAKE_MODULE_PATH \${CMAKE_CURRENT_SOURCE_DIR}/$d/cmake-modules)" >> CMakeLists.txt
+    [ -d $d/cmake/modules ] \
+	&& echo "list(APPEND CMAKE_MODULE_PATH \${CMAKE_CURRENT_SOURCE_DIR}/$d/cmake/modules)" >> CMakeLists.txt
+done
+ls -d1 * | \
+while read d
+do
+    [ "$d" == "${d#lib}" ] || continue
+    [ -d "$d" ] || continue
+    echo "add_subdirectory($d)" >> CMakeLists.txt
+done
+
+
+%build
+%add_optflags -D_FILE_OFFSET_BITS=64
 %K4cmake \
     -DLIBZIP_INCLUDE_DIR=%_includedir/libzip \
     -DLIBLZMA_HAS_AUTO_DECODER=1 \
     -DLIBLZMA_HAS_EASY_ENCODER=1 \
-    -DLIBLZMA_HAS_LZMA_PRESET=1 \
-	|| exit 1
-    popd
-done
-ls -d1 * | \
-while read d
-do
-    [ -d "$d" ] || continue
-    pushd $d
-    %K4make || exit 1
-    popd
-done
+    -DLIBLZMA_HAS_LZMA_PRESET=1
+%K4make
 
 
 %install
-ls -d1 * | \
-while read d
-do
-    [ -d "$d" ] || continue
-    pushd $d
-    %K4install || exit 1
-    popd
-done
+%K4install
 
 
 %files
@@ -506,6 +510,12 @@ done
 
 
 %changelog
+* Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 

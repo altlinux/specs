@@ -2,13 +2,13 @@
 
 %define rname libkcompactdisc
 Name: libkcompactdisc4
-Version: 4.8.4
+Version: 4.9.1
 Release: alt1
 
 Group: System/Libraries
 Summary: KDE CDDB library
 Url: http://projects.kde.org/projects/kde/kdeedu/libkcompactdisc
-License: GPLv2
+License: GPLv2 / LGPLv2
 
 Source: %rname-%version.tar
 Patch1: libkcompactdisc-4.8.4-alt-build.patch
@@ -44,9 +44,16 @@ Development files for %name
 %_K4libdir/libkcompactdisc.so.*
 
 %files devel
+%_libdir/cmake/libkcompactdisc/
 %_K4link/lib*.so
 %_K4includedir/libkcompactdisc/
 
 %changelog
+* Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Jun 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Fri Jun 08 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - initial build
