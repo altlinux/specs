@@ -3,7 +3,7 @@
 
 Name: lib%rname
 Version: 2.2
-Release: alt1.1
+Release: alt1.2
 
 Summary: Little cms color engine, version 2
 License: %mit
@@ -94,6 +94,9 @@ chmod a+x ./configure
 %endif
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.2
+- Rebuilt with libtiff5
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.1
 - Fixed build
 
