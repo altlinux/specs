@@ -4,7 +4,7 @@
 
 Name: nss_ldap
 Version: 265
-Release: alt2
+Release: alt3
 Packager: Anton Gorlov <stalker@altlinux.ru>
 
 Summary: NSS library for LDAP
@@ -16,6 +16,7 @@ Url: http://www.padl.com/
 
 Source0: ftp://ftp.padl.com/pub/%name-%version.tar.gz
 Source1: %name-README.ALT
+Source2: libc-lock.h
 
 Patch0: %name-226-configure.patch
 Patch1: %name-172-null.patch
@@ -27,6 +28,7 @@ Patch10: libdir.fix
 
 
 Requires: nscd
+Provides: nss-ldap
 
 # Automatically added by buildreq on Wed Aug 31 2005
 BuildRequires: libkrb5-devel libldap-devel libsasl2-devel
@@ -54,13 +56,17 @@ Nss_ldap это библиотека, написанная на C, которая позволяет использовать сервера
 %patch10 -p1
 ##patch11 -p1
 
+# Override hacked bits/libc_lock.h from glibc
+mkdir bits
+cp %SOURCE2 bits/libc-lock.h
+
 ###
 ## Install Attention README
 ###
 install -m 0644 %SOURCE1 README.ALT
 
 %build
-autoreconf -fisv
+%autoreconf
 
 %configure \
 	--with-ldap-conf-file=%_sysconfdir/nss_ldap.conf \
@@ -76,7 +82,6 @@ autoreconf -fisv
 %if_enabled debug
 	--enable-debugging
 %endif
-	
 
 %make_build SYSLIBDIR=/%_lib
 %make check
@@ -119,6 +124,10 @@ rm -f $RPM_BUILD_ROOT%_sysconfdir/ldap.conf
 #
 
 %changelog
+* Thu Oct 04 2012 Andrey Cherepanov <cas@altlinux.org> 265-alt3
+- Provide nss-ldap for adapted alterator-auth
+- Override hacked bits/libc_lock.h from glibc
+
 * Mon Aug 01 2011 Anton Gorlov <stalker@altlinux.ru> 265-alt2
 - bind_policy change to soft
 

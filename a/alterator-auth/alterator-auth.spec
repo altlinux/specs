@@ -2,21 +2,21 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.22
-Release: alt5
+Version: 0.23
+Release: alt1
 
 BuildArch: noarch
 
 Source:%name-%version.tar
 
-Summary: alterator module for system wide auth settings
+Summary: Alterator module for system wide auth settings
 License: GPL
 Group: System/Configuration/Other
 Requires: alterator >= 4.7-alt4
 Requires: alterator-l10n >= 2.0-alt1
 Requires: pam-config >= 1.4.0-alt1.1
 Requires: pam_krb5
-Requires: nss_ldap
+Requires: nss-ldap
 Conflicts: alterator-fbi < 5.9-alt2
 Conflicts: alterator-lookout < 1.6-alt6
 
@@ -26,7 +26,7 @@ Obsoletes: alterator-nsswitch
 BuildPreReq: alterator >= 4.7-alt4
 
 %description
-alterator module for system wide auth settings
+Alterator module for system wide auth settings
 
 %prep
 %setup -q
@@ -47,6 +47,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Oct 04 2012 Andrey Cherepanov <cas@altlinux.org> 0.23-alt1
+- Support nss-ldapd
+
 * Thu Apr 19 2012 Mikhail Efremov <sem@altlinux.org> 0.22-alt5
 - Add string for translation.
 - Improve warning message.
