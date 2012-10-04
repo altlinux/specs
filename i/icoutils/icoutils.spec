@@ -1,6 +1,6 @@
 Name: icoutils
 Version: 0.29.1
-Release: alt1
+Release: alt1.1
 
 Summary: Utility for extracting and converting Microsoft icon and cursor files
 Summary(ru_RU.KOI8-R): Утилита для извлечения и преобразования файлов Microsoft пиктограмм и курсоров
@@ -80,6 +80,9 @@ icoutils - набор программ для извлечения и преобразования изображений из/в
 %_man1dir/genresscript.1.*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.29.1-alt1.1
+- Rebuilt with libpng15
+
 * Mon Sep 27 2010 Ilya Mashkin <oddity@altlinux.ru> 0.29.1-alt1
 - 0.29.1
 
