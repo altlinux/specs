@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.1
-Release:	alt3_3
+Release:	alt3_3.1
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -220,6 +220,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt3_3.1
+- Rebuilt with libpng15
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt3_3
 - rebuild with new boost
 
