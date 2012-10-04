@@ -6,7 +6,7 @@ Version: 1.2.1
 %ifdef beta
 Release: alt1.%beta
 %else
-Release: alt1
+Release: alt1.1
 %endif
 Serial: 1
 
@@ -153,6 +153,9 @@ cp -R doc %buildroot%customdocdir
 %exclude %_datadir/evas/examples/evas-buffer-simple.c
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.1-alt1.1
+- Rebuilt with libpng15
+
 * Mon Jun 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1:1.2.1-alt1
 - 1.2.1
 
