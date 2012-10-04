@@ -1,7 +1,7 @@
 %define origname AssaultCube_v1.1.0.4
 Name: assaultcube
 Version: 1.1.0.4
-Release: alt1.svn6772
+Release: alt1.svn6897
 Summary: Free first-person-shooter based on the game Cube
 Group: Games/Arcade
 License: Creative Commons
@@ -57,6 +57,9 @@ mv %_builddir/%origname/README.html %buildroot/%_docdir/%name/
 %_liconsdir/*.png
 
 %changelog
+* Thu Oct 4 2012 Andrew Clark <andyc@altlinux.org> 1.1.0.4-alt1.svn6897
+- version update to 1.1.0.4-alt1.svn6897
+
 * Sun Mar 25 2012 Andrew Clark <andyc@altlinux.org> 1.1.0.4-alt1.svn6772
 - version update to 1.1.0.4-alt1.svn6772
 
