@@ -1,7 +1,7 @@
 # SPEC file for gltron game
 
 %define version 0.70
-%define release alt4.1
+%define release alt4.2
 
 Name: gltron
 Version: %version
@@ -84,6 +84,9 @@ wall while avoiding hitting the AI's own wall themselves.
 
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.70-alt4.2
+- Rebuilt with libpng15
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.70-alt4.1
 - Fixed build
 
