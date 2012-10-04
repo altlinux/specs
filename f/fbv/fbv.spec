@@ -1,6 +1,6 @@
 Name: fbv
 Version: 1.0b
-Release: alt2
+Release: alt2.1
 
 Summary: Framebuffer image viewer
 License: GPLv2+
@@ -10,6 +10,7 @@ URL: http://s-tech.elsat.net.pl/fbv
 Source0: %url/%name-%version.tar.gz
 Patch1: fbv-nocenter.patch
 Patch2: fbv-1.0b-features.h.patch
+Patch3: fbv-1.0b-alt-libpng15.patch
 
 # Automatically added by buildreq on Fri Mar 28 2008
 BuildRequires: libjpeg-devel libpng-devel libungif-devel
@@ -22,6 +23,7 @@ JPEG, GIF and BMP files.
 %setup
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 
@@ -39,6 +41,9 @@ mkdir -p %buildroot{%_bindir,%_man1dir}
 %doc ChangeLog README TODO
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0b-alt2.1
+- Rebuilt with libpng15
+
 * Fri Mar 28 2008 Victor Forsyuk <force@altlinux.org> 1.0b-alt2
 - Fix FTBFS due to new glibc-kernheaders.
 
