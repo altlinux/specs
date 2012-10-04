@@ -1,7 +1,7 @@
 Name: gmerlin-avdecoder
 Summary: A multimedia decoding library
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 Url: http://gmerlin.sourceforge.net/
 License: LGPLv2+
 Group: Video
@@ -75,6 +75,9 @@ rm -f %buildroot%_libdir/gmerlin/plugins/*.la
 %doc %_docdir/%name
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.1
+- Rebuilt with libpng15 and libtiff5
+
 * Thu Sep 22 2011 Hihin Ruslan <ruslandh@altlinux.ru> 1.1.0-alt1
 - New version
 - add patch likes 
