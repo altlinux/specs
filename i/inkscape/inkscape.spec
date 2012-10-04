@@ -1,7 +1,7 @@
 %define pre %nil
 Name: inkscape
 Version: 0.48.2
-Release: alt4
+Release: alt4.1
 
 Summary: A Vector Drawing Application
 
@@ -26,6 +26,8 @@ Patch8: inkscape-0.48.2-alt-glib2-2.32.0.patch
 # from Fedora
 Patch10: inkscape-0.48.2-gcc47.patch
 Patch12: inkscape-0.48.2-poppler_020.patch
+
+Patch13: inkscape-0.48.2-alt-libpng15.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -79,11 +81,14 @@ inkview is standalone viewer for Inkscape files (SVG)
 %patch10 -p0
 %patch12 -p1
 
+%patch13 -p2
+
 cat %SOURCE1 >po/ru.po
 
 %build
+%add_optflags -fpermissive
 %autoreconf
-%__subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%__python_version|" ./configure
+subst "s|.*\(checkPYTHON_LIBS\)=.*|\1=-lpython%_python_version|" ./configure
 %configure \
         --with-gnome-vfs        \
         --with-python           \
@@ -123,6 +128,9 @@ rm -rf %buildroot%_mandir/fr/
 %_man1dir/inkview*
 
 %changelog
+* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.48.2-alt4.1
+- Rebuilt with libpng15
+
 * Sat Aug 04 2012 Vitaly Lipatov <lav@altlinux.ru> 0.48.2-alt4
 - fix build (thanks, Fedora!)
 - update buildreq
