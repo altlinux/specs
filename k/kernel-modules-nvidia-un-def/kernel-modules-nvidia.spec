@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	304.43
+%define module_version	304.51
 %define module_release	alt2
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
@@ -17,14 +17,14 @@
 %define legacy1 %nil
 %endif
 %define legacy1_src %(echo %legacy1 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.11
-%define legacy2 96.43.20
+%nvIF_ver_lt %xorg_ver 1.13
+%define legacy2 96.43.23
 %else
 %define legacy2 %nil
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.13
-%define legacy3 %nil 
+%define legacy3 173.14.36
 %else
 %define legacy3 %nil
 %endif
@@ -34,7 +34,7 @@
 %define upstream_module_name	NVIDIA_kernel
 
 %define kversion	3.6.0
-%define krelease	alt1
+%define krelease	alt2
 %define flavour		un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
@@ -49,7 +49,7 @@
 Summary:	nVidia video card drivers
 Name:		kernel-modules-%module_name-%flavour
 Version:	%module_version
-Release:	%module_release.198144.1
+Release:	%module_release.198144.2
 License:	Proprietary
 Group:		System/Kernel and hardware
 URL:		http://www.nvidia.com
@@ -119,9 +119,6 @@ do
     %__ln_s Makefile.kbuild Makefile
     popd
 done
-pushd kernel-source-nvidia-30443
-%patch0 -p2
-popd
 
 %build
 for ver in %mod_ver_list
@@ -197,8 +194,14 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Mon Oct 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.43-alt2.198144.1
-- Build for kernel-image-un-def-3.6.0-alt1.
+* Thu Oct 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.51-alt2.198144.2
+- Build for kernel-image-un-def-3.6.0-alt2.
+
+* Tue Oct 02 2012 Sergey V Turchin <zerg at altlinux dot org> 304.51-alt2
+- new releases 173.14.35 and 96.43.23 with xorg-server-1.12 support)
+
+* Tue Oct 02 2012 Sergey V Turchin <zerg at altlinux dot org> 304.51-alt1
+- new release (304.51)
 
 * Mon Oct 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.43-alt2
 - build on 3.6 kernel fixed
