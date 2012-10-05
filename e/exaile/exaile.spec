@@ -1,6 +1,6 @@
 Name: exaile
-Version: 0.3.2.2
-Release: alt1.1
+Version: 3.3.0
+Release: alt1
 
 Summary: a music player aiming to be similar to KDE's Amarok, but for GTK+ and written in Python
 License: GPL
@@ -8,7 +8,7 @@ Group: Sound
 Url: http://www.exaile.org
 
 BuildArch: noarch
-Source: http://www.launchpad.net/%name/0.3.2/%version/+download/%name-%version.tar
+Source: https://launchpad.net/%name/3.3.x/%version/+download/%name-%version.tar.gz
 Patch0: %name-%version-%release.patch
 
 %add_python_req_skip xl
@@ -69,6 +69,7 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %exclude %_datadir/%name/plugins/ipod
 %exclude %_datadir/%name/plugins/exfalso
 %_datadir/%name
+%_datadir/dbus-1/services/org.exaile.Exaile.service
 %_liconsdir/%name.png
 %_niconsdir/%name.png
 %_miconsdir/%name.png
@@ -82,6 +83,9 @@ cp %buildroot%_datadir/%name/data/images/48x48/%name.png %buildroot%_liconsdir/
 %_datadir/%name/plugins/exfalso
 
 %changelog
+* Fri Oct 05 2012 Vladimir Lettiev <crux@altlinux.ru> 3.3.0-alt1
+- New version 3.3.0
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.3.2.2-alt1.1
 - Rebuild with Python-2.7
 
