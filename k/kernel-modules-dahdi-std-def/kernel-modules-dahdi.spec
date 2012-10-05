@@ -4,8 +4,8 @@
 %define module_version	2.6.1
 %define module_release	alt1
 
-%define kversion	3.5.4
-%define krelease	alt1
+%define kversion	3.5.5
+%define krelease	alt2
 %define flavour	std-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -16,7 +16,7 @@
 Summary: %module_name modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197892.1
+Release: %module_release.197893.2
 License: GPL
 Group: System/Kernel and hardware
 
@@ -180,8 +180,8 @@ popd
 %kernel_headers_dir/kernel-modules-%module_name.symvers
 
 %changelog
-* Sun Sep 16 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1.197892.1
-- Build for kernel-image-std-def-3.5.4-alt1.
+* Fri Oct 05 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.6.1-alt1.197893.2
+- Build for kernel-image-std-def-3.5.5-alt2.
 
 * Sun Sep 02 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1
 - 2.6.1
