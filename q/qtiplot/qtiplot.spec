@@ -4,7 +4,7 @@
 
 Name: qtiplot
 Version: 0.9.8.9
-Release: alt1.svn20120124
+Release: alt2.svn20120124
 
 Summary: WYSIWYG tool to make two- and three-dimensional plots of scientific data
 Group: Sciences/Other
@@ -121,7 +121,7 @@ install -m644 %SOURCE8 .
 mkdir -p tmp/qtiplot
 export QTI_ROOT=$PWD
 qmake-qt4 %name.pro
-%make_build
+%make
 
 pushd qtiplot/translations
 %_qt4dir/bin/lrelease *.ts
@@ -194,6 +194,9 @@ mv %buildroot%_libexecdir/%name/plugins/* \
 %pkgdocdir/manual/*.pdf
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8.9-alt2.svn20120124
+- Rebuilt with libpng15
+
 * Wed Jan 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8.9-alt1.svn20120124
 - New snapshot
 
