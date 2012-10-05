@@ -1,6 +1,6 @@
 Name:           pymol
 Version:        1.2_b3
-Release:        alt2.svn20090726.3.1.1
+Release:        alt2.svn20090726.4
 Summary:        Python-enhanced molecular graphics tool
 Group:          Sciences/Chemistry
 License:        CNRI Python License
@@ -130,6 +130,9 @@ bzip2 ChangeLog
 %_docdir/PyMOL
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2_b3-alt2.svn20090726.4
+- Rebuilt with libpng15
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2_b3-alt2.svn20090726.3.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
