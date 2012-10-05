@@ -2,7 +2,7 @@
 
 Name: libvigra
 Version: 1.6.0
-Release: alt2.1
+Release: alt2.2
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -12,6 +12,7 @@ Group: System/Libraries
 
 Url: http://kogs-www.informatik.uni-hamburg.de/~koethe/vigra
 Source: %url/vigra%version.tar.gz
+Patch: libvigra-1.6.0-alt-libpng15.patch
 
 # Automatically added by buildreq on Wed Jun 13 2007
 BuildRequires: gcc-c++ libfftw3-devel libjpeg-devel libpng-devel libtiff-devel
@@ -48,11 +49,13 @@ Development documentation for vigra library.
 
 %prep
 %setup -n vigra%version
+%patch -p2
 
 %__subst 's/^CXXFLAGS=.*$//; s/^CFLAGS=.*$//' configure
 
 %build
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
+%add_optflags %optflags_shared -fpermissive
 export CXXFLAGS="%optflags"
 export CFLAGS="%optflags"
 ./configure --prefix=%_prefix --libdir=%_libdir %{subst_enable static} \
@@ -74,6 +77,9 @@ export CFLAGS="%optflags"
 %doc docs/[!L]*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2.2
+- Rebuilt with libpng15
+
 * Thu Jan 20 2011 Igor Vlasenko <viy@altlinux.ru> 1.6.0-alt2.1
 - rebuild for set:provides by request of mithraen
 
