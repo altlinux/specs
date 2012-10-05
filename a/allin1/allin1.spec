@@ -1,6 +1,6 @@
 Name: allin1
 Version: 0.5.0
-Release: alt4
+Release: alt5
 
 Summary: The all-in-one monitoring dockapplet
 License: GPLv2+
@@ -18,7 +18,7 @@ Patch3: allin1-0.5.0-alt-optflags.patch
 Patch4: allin1-0.5.0-alt-seti-off.patch
 Patch5: allin1-0.5.0-alt-config.patch
 
-# Automatically added by buildreq on Thu Jul 10 2008
+# Automatically added by buildreq on Fri Oct 05 2012
 BuildRequires: flex libXext-devel libXpm-devel
 
 %description
@@ -52,6 +52,9 @@ window manager.
 %_mandir/it/man1/allin1.*
 
 %changelog
+* Fri Oct 05 2012 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt5
+- rebuilt for debuginfo
+
 * Thu Jul 10 2008 Igor Zubkov <icesik@altlinux.org> 0.5.0-alt4
 - move config file from /usr to /etc
 
