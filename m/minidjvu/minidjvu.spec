@@ -2,7 +2,7 @@
 
 Name: minidjvu
 Version: 0.8
-Release: alt1.1
+Release: alt1.2
 Summary: A program to create bitonal djvu files.
 Summary(ru_RU.UTF-8): Программа для создания чёрно-белых файлов djvu.
 License: GPLv2
@@ -117,6 +117,9 @@ install -pm644 minidjvu.h %buildroot%_includedir/minidjvu/
 %_libdir/*.a
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.2
+- Rebuilt with libtiff5
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8-alt1.1
 - Removed bad RPATH
 
