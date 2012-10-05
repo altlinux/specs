@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
 Name:           nogravity
 Version:        2.00
-Release:        alt2_17
+Release:        alt2_17.1
 Summary:        Space shooter in 3D
 Group:          Games/Other
 License:        GPLv2+
@@ -29,6 +29,7 @@ Patch9:         nogravity-2.00-rhbz699274.patch
 Patch10:        nogravity-2.00-libpng15.patch
 Patch11:        0001-v3xscene-Remove-some-unused-code.patch
 Patch12:        0002-rlx32-Stop-using-MaxExtentableObjet.patch
+Patch13:        nogravity-2.00-alt-libpng15.patch
 Requires:       nogravity-data = %{version}
 BuildRequires:  libSDL_mixer-devel libopenal-devel libpng-devel libvorbis-devel
 BuildRequires:  automake desktop-file-utils
@@ -60,6 +61,7 @@ cp %{SOURCE6} ./src/Linux/configure.in
 #patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p2
 sed -i 's/\r//g' GNU.TXT README.TXT
 pushd src/Linux
 sh bootstrap
@@ -138,6 +140,9 @@ fi
 
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.00-alt2_17.1
+- Rebuilt with libpng15
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.00-alt2_17
 - update to new release by fcimport
 
