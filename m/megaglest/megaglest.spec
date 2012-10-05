@@ -1,7 +1,7 @@
 %define rev svn3171
 Name: megaglest
 Version: 3.6.0.3
-Release: alt1.%rev
+Release: alt1.%rev.1
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 License: GPLv3
 Group: Games/Strategy
@@ -14,6 +14,7 @@ Source3: %name.png
 Source4: %name.desktop
 
 Patch1: megaglest_map_editor_cmake.patch 
+Patch2: megaglest-3.6.0.3-alt-gcc4.7.patch
 
 # Automatically added by buildreq on Wed Jul 06 2011
 # optimized out: cmake-modules fontconfig libGL-devel libGLU-devel libX11-devel libfreetype-devel libgdk-pixbuf libogg-devel libstdc++-devel libxerces-c pkg-config xorg-kbproto-devel xorg-xproto-devel zlib-devel
@@ -30,11 +31,13 @@ with their corresponding tech trees, units, buildings and some maps.
 %prep
 %setup  -n %name-source-%version
 %patch1 -p2
+%patch2 -p2
 sed -in '/^#include <curl\/types\.h>/d' source/shared_lib/sources/platform/posix/miniftpclient.cpp
 
 %build
+%add_optflags -fpermissive
 cmake --debug-output -D CMAKE_CXX_FLAGS="%optflags" -D CMAKE_C_FLAGS="%optflags" -D WANT_SVN_STAMP="NO" -D CUSTOM_DATA_INSTALL_PATH="%_datadir/games/megaglest/" -D WANT_STATIC_LIBS="no" CMakeLists.txt
-%make_build
+%make_build VERBOSE=1
 
 
 %install
@@ -55,6 +58,9 @@ install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.0.3-alt1.svn3171.1
+- Rebuilt with libpng15
+
 * Sat Mar 24 2012 Andrew Clark <andyc@altlinux.org> 3.6.0.3-alt1.svn3171
 - version update to 3.6.0.3-alt1.svn3171
 
