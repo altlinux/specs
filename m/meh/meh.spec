@@ -1,6 +1,6 @@
 Name: meh
 Version: 0.3
-Release: alt1
+Release: alt1.1
 
 Summary: meh is a small, simple, super fast image viewer using raw XLib
 
@@ -53,5 +53,8 @@ install %name -D %buildroot%_bindir/%name
 %_bindir/%name
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.1
+- Rebuilt with libpng15
+
 * Fri Apr 13 2012 Vitaly Lipatov <lav@altlinux.ru> 0.3-alt1
 - initial build for ALT Linux Sisyphus
