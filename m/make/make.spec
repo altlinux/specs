@@ -1,6 +1,6 @@
 Name: make
 Version: 3.82
-Release: alt4
+Release: alt5
 Epoch: 2
 
 Summary: A GNU tool which simplifies the build process for users
@@ -37,6 +37,10 @@ Patch23: make-3.82-cvs-23.patch
 Patch24: make-3.82-cvs-24.patch
 Patch25: make-3.82-cvs-25.patch
 Patch26: make-3.82-cvs-26.patch
+Patch27: make-3.82-cvs-27.patch
+Patch28: make-3.82-cvs-28.patch
+Patch29: make-3.82-cvs-29.patch
+Patch30: make-3.82-cvs-30.patch
 Patch101: make-3.82-alt-getcwd.patch
 Patch102: make-3.82-alt-job_slots.patch
 Patch103: make-3.82-alt-tests-fixes.patch
@@ -83,6 +87,10 @@ makefile.
 %patch24 -p1
 %patch25 -p1
 %patch26 -p1
+%patch27 -p1
+%patch28 -p1
+%patch29 -p1
+%patch30 -p1
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
@@ -118,6 +126,13 @@ ln -sf make %buildroot%_bindir/gmake
 %doc AUTHORS NEWS README
 
 %changelog
+* Fri Oct 05 2012 Dmitry V. Levin <ldv@altlinux.org> 2:3.82-alt5
+- Backported more upstream changes to fix quotation bugs,
+  thanks to Alexey Morozov for reporting this.
+- Made command-line-length-limit.patch portable to architectures
+  where <sys/user.h> does not define PAGE_SIZE,
+  thanks to Sergey Bolshakov for reporting this.
+
 * Wed Sep 26 2012 Dmitry V. Levin <ldv@altlinux.org> 2:3.82-alt4
 - Adopted a patch from Ralf Wildenhues to evade the command line length limit:
   http://lists.gnu.org/archive/html/bug-make/2009-07/msg00012.html
