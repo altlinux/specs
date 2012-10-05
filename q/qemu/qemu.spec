@@ -124,7 +124,7 @@
 
 Name: qemu
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -497,6 +497,9 @@ fi
 %_defaultdocdir/%name-%version
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.1
+- Rebuilt with libpng15
+
 * Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
