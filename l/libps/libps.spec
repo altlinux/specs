@@ -1,6 +1,6 @@
 Name: libps
 Version: 0.4.5
-Release: alt1
+Release: alt1.1
 
 Summary: Library for creating PostScript files
 License: LGPLv2+
@@ -49,6 +49,9 @@ Libraries, include files, etc you can use to develop PostScript applications.
 %_man3dir/*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1.1
+- Rebuilt with libpng15
+
 * Mon Apr 04 2011 Victor Forsiuk <force@altlinux.org> 0.4.5-alt1
 - 0.4.5
 
