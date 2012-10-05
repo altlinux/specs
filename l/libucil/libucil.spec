@@ -1,13 +1,14 @@
 Summary: Library to access different kinds of (video) capture devices
 Name: libucil
 Version: 0.9.8
-Release: alt4
+Release: alt4.1
 License: GPLv2+
 Group: Development/C
 Url: http://www.unicap-imaging.org/
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: libucil-%version.tar
+Patch: libucil-0.9.8-alt-libpng15.patch
 
 BuildRequires: gtk-doc intltool libunicap-devel glib2-devel libpango-devel libfreetype-devel libpng-devel libtheora-devel libalsa-devel libvorbis-devel
 
@@ -31,6 +32,7 @@ This package provides libucil library development files
 
 %prep
 %setup -q
+%patch -p2
 %autoreconf
 
 %build
@@ -54,6 +56,9 @@ rm -f %buildroot%_libdir/{,unicap2/cpi/}*.{a,la}
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.8-alt4.1
+- Rebuilt with libpng15
+
 * Wed Mar 23 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.8-alt4
 - rebuild with libpng-devel, libvorbis-devel, libtheora-devel,
   libalsa-devel
