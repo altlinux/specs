@@ -1,6 +1,6 @@
 Name: qrencode
 Version: 3.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Generate QR 2D barcodes
 License: LGPLv2+
@@ -62,6 +62,9 @@ chrpath --delete %buildroot%_bindir/qrencode
 %_pkgconfigdir/*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt1.1
+- Rebuilt with libpng15
+
 * Tue May 15 2012 Victor Forsiuk <force@altlinux.org> 3.3.1-alt1
 - 3.3.1
 
