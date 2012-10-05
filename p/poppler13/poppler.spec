@@ -25,7 +25,7 @@
 %define bugfix 7
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt6.1
 %define poppler_devel_name lib%name-devel
 %define poppler_cpp_devel_name lib%name-cpp-devel
 %define poppler_glib_devel_name lib%name-glib-devel
@@ -64,7 +64,7 @@ BuildRequires: gcc-c++ glibc-devel libcurl-devel libgtk+2-devel
 BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms-devel libopenjpeg-devel
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
 BuildRequires: libXt-devel
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel libpng-devel
 
 %description
 Poppler is a fork of the xpdf PDF viewer developed by Derek Noonburg
@@ -401,6 +401,9 @@ export QT3DIR=%_qt3dir QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16.7-alt6.1
+- Rebuilt with libpng15
+
 * Thu Jan 12 2012 Andrey Cherepanov <cas@altlinux.org> 0.16.7-alt6
 - Fix zlib support
 
