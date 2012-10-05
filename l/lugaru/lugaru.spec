@@ -1,7 +1,7 @@
 Name:		lugaru
 # ( cd lugaru; hg log | head -1 | cut -d: -f2 )
 Version:	0.0.r262
-Release:	alt2
+Release:	alt2.1
 Group:		Games/Adventure
 Summary:	A well-trained ninja rabbit fight through a detailed 3D world
 License:	GPL
@@ -66,6 +66,9 @@ rm %buildroot%_gamesdatadir/%name/%name
 %_gamesdatadir/%name
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.r262-alt2.1
+- Rebuilt with libpng15
+
 * Sun May 16 2010 Fr. Br. George <george@altlinux.ru> 0.0.r262-alt2
 - Fix 'user do not saved' bug
 
