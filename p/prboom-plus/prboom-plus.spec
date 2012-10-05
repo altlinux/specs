@@ -1,6 +1,6 @@
 Name: prboom-plus
 Version: 2.5.1.3
-Release: alt1
+Release: alt1.1
 
 Summary: Doom - classic 3D shoot-em-up game
 Group: Games/Arcade
@@ -15,7 +15,7 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 
 # Automatically added by buildreq on Thu Apr 12 2012
 # optimized out: dumb libGL-devel libGLU-devel libSDL-devel libogg-devel libpng-devel libvorbis-devel zlib-devel
-BuildRequires: dumb-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libfluidsynth-devel libmad-devel libpcre-devel
+BuildRequires: dumb-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libfluidsynth-devel libmad-devel libpcre-devel libpng-devel
 
 %description
 Doom is the classic 3D shoot-em-up game. It must have been one of the best
@@ -48,6 +48,9 @@ rm -rf %buildroot%_docdir/%name-%version/COPYING
 %_man6dir/*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1.3-alt1.1
+- Rebuilt with libpng15
+
 * Thu Apr 12 2012 Igor Zubkov <icesik@altlinux.org> 2.5.1.3-alt1
 - 2.5.0.6 -> 2.5.1.3
 
