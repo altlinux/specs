@@ -6,7 +6,7 @@
 Summary: Portable library for handling Apples QuickTime(tm) format
 Name: openquicktime
 Version: 2.0.0
-Release: alt5.%prerel
+Release: alt5.%prerel.1
 License: LGPL
 Group: Video
 URL: http://www.openquicktime.org/
@@ -98,6 +98,9 @@ done
 %{_libdir}/*.so
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt5.a1.1
+- Rebuilt with libpng15
+
 * Thu Apr 17 2008 Igor Vlasenko <viy@altlinux.org> 2.0.0-alt5.a1
 - autoreconf'ed
 
