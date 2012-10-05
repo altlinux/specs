@@ -1,6 +1,6 @@
 Name: nx
 Version: 3.5.0
-Release: alt1
+Release: alt1.1
 
 Summary: Next Generation Remote Display
 
@@ -63,6 +63,7 @@ Patch93: 93_export_remote_keyboard_config.patch
 Patch100: wmclass.patch
 Patch101: byerace.patch
 Patch102: sa_restorer.patch
+Patch103: nx-3.5.0-alt-libpng15.patch
 
 
 Obsoletes: NX
@@ -133,6 +134,8 @@ cd nxcomp
 %patch101 -p1
 %patch102 -p1
 cd ..
+
+%patch103 -p1
 
 cat >> nx-X11/config/cf/host.def << EOF
 #ifdef  i386Architecture
@@ -317,6 +320,9 @@ ln -fs ../libXrender-nx.so.1 %buildroot%_libdir/nxserver/libXrender.so.1
 %_man1dir/*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.0-alt1.1
+- Rebuilt with libpng15
+
 * Thu Jun 16 2011 Boris Savelev <boris@altlinux.org> 3.5.0-alt1
 - remove turbo-jpeg completly
 - remove vendor check
