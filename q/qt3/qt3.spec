@@ -27,7 +27,7 @@
 %define rlz alt1
 Name: %rname%major
 Version: %major.%minor.%bugfix
-Release: %rlz
+Release: %rlz.1
 %define qsa_ver %qsa_major.%qsa_minor.%qsa_bugfix
 
 %define qtdir	%_libdir/%rname%major
@@ -126,6 +126,7 @@ Patch105: qt-3.3.0-alt-shared_libs.patch
 Patch106: qt-3.3.1-alt-iso_c_extension.patch
 Patch107: qt-x11-free-3.3.6-alt-maccyrillic.patch
 Patch108: qt-3.3.8d-alt-arm-no-packed-pointers.patch
+Patch109: qt3-3.3.8d-alt-libpng15.patch
 
 # Sergey A. Sukiyazov <sukiyazov@mail.ru>
 Patch9000: 9000-qt-x11-free-3.3.3-menubar.patch
@@ -485,6 +486,7 @@ Install this package if you want to create RPM packages that use %name.
 %patch106 -p1
 %patch107 -p1
 %patch108 -p1
+%patch109 -p2
 
 # Corwin
 %patch9000 -p1
@@ -1290,6 +1292,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.8d-alt1.1
+- Rebuilt with libpng15
+
 * Wed Nov 16 2011 Sergey V Turchin <zerg@altlinux.org> 3.3.8d-alt1
 - using Trinity 3.3.8d
 
