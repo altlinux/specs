@@ -1,5 +1,5 @@
 Name: imapfilter
-Version: 2.3
+Version: 2.5.3
 Release: alt1
 
 Summary: mail filtering utility
@@ -38,6 +38,9 @@ make BINDIR=%buildroot%_bindir SHAREDIR=%buildroot%_datadir/%name MANDIR=%buildr
 %_mandir/*/*
 
 %changelog
+* Fri Oct 05 2012 Vladimir Lettiev <crux@altlinux.ru> 2.5.3-alt1
+- New version 2.5.3
+
 * Wed Oct 19 2011 Vladimir Lettiev <crux@altlinux.ru> 2.3-alt1
 - New version 2.3
 - Source cloned from upstream git
