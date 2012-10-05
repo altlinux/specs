@@ -5,7 +5,7 @@
 
 Name: awstats
 Version: 7.1
-Release: alt2.cvs20120604
+Release: alt3.cvs20120604
 
 Summary: Real-time logfile analyzer to get advanced web statistics
 Summary(ru_RU.KOI8-R):	Анализатор логов Web-сервера в режиме реального времени
@@ -173,6 +173,9 @@ install -p -m644 %SOURCE6 %buildroot%apache2_ports_start/%name.conf
 %config(noreplace) %apache2_ports_start/%name.conf
 
 %changelog
+* Fri Oct 05 2012 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt3.cvs20120604
+- more fixes for yandex search.
+
 * Wed Oct 03 2012 L.A. Kostis <lakostis@altlinux.ru> 7.1-alt2.cvs20120604
 - update russian search engines.
 - rebuild due /usr/sbin/service -> /sbin/service migration (ALT #27795).
