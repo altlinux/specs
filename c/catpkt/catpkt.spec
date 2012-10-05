@@ -1,11 +1,12 @@
 Name: catpkt
 Version: 1.0
-Release: alt4
+Release: alt5
 
 Summary: FTS Packet Viewer
 License: BSD-like
 Group: Text tools
-Packager: Igor Zubkov <icesik@altlinux.ru>
+
+Packager: Igor Zubkov <icesik@altlinux.org>
 
 Source0: ftp://oskin.macomnet.ru/pub/linux/fido/%name-%version.tar.gz
 
@@ -13,6 +14,7 @@ Patch0: catpkt-1.0-alt-warnings.patch
 Patch1: catpkt-1.0-alt-natspec.patch
 Patch2: catpkt-1.0-alt-newld.patch
 Patch3: catpkt-1.0-alt-gcc4.patch
+Patch4: catpkt-1.0-alt-dont-strip.patch
 
 # Automatically added by buildreq on Thu Sep 15 2005
 BuildRequires: libnatspec-devel
@@ -30,19 +32,23 @@ to koi8-r included by default (you can change this).
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 %make_build FLAGS="%optflags"
 
 %install
-%__mkdir_p %buildroot%_bindir/
-%__install --mode=0755 catpkt %buildroot%_bindir/
+mkdir -p %buildroot%_bindir/
+install -p -m755 catpkt %buildroot%_bindir/
 
 %files
 %doc CHANGES README README.1st README.mc TODO bsd-style-copyright
 %_bindir/catpkt
 
 %changelog
+* Fri Oct 05 2012 Igor Zubkov <icesik@altlinux.org> 1.0-alt5
+- rebuilt for debuginfo
+
 * Sat Jul 22 2006 Igor Zubkov <icesik@altlinux.ru> 1.0-alt4
 - fix build with gcc4
 
