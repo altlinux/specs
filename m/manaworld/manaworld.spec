@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           manaworld
 Version:        0.5.2
-Release:        alt2_9
+Release:        alt2_9.1
 Summary:        2D MMORPG world
 
 Group:          Games/Other
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt2_9.1
+- Rebuilt with libpng15
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.2-alt2_9
 - update to new release by fcimport
 
