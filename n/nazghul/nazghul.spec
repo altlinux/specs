@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libSDL-devel perl(FileHandle.pm) perl(SDL/Rect.pm) perl(S
 # END SourceDeps(oneline)
 Name:           nazghul
 Version:        0.7.1
-Release:        alt2_3.20120228gitb0a402a
+Release:        alt2_3.20120228gitb0a402a.1
 Summary:        A computer role-playing game (CRPG) engine
 
 License:        GPLv2+
@@ -134,6 +134,9 @@ fi
 
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.1-alt2_3.20120228gitb0a402a.1
+- Rebuilt with libpng15
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt2_3.20120228gitb0a402a
 - update to new release by fcimport
 
