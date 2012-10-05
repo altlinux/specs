@@ -3,7 +3,7 @@
 
 Name: pilot-link
 Version: 0.12.5
-Release: alt2
+Release: alt2.1
 
 Summary: File transfer utilities between Linux and PalmPilots
 License: GPL
@@ -18,6 +18,7 @@ Patch2: pilot-link-0.12.2-open.patch
 Patch3: pilot-link-0.12.3-clio.patch
 Patch4: pilot-link-0.12.5-mp.patch
 Patch5: pilot-link-0.12.5-redefinePerlsymbols.patch
+Patch6: pilot-link-0.12.5-alt-libpng15.patch
 
 Requires: lib%name = %version-%release
 
@@ -100,6 +101,7 @@ This package contains pilot-link python bindings.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p2
 
 %build
 %autoreconf
@@ -167,6 +169,9 @@ install -p -m644 doc/60-libpisock.rules %buildroot%_sysconfdir/udev/rules.d/75-l
 %endif
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.5-alt2.1
+- Rebuilt with libpng15
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 0.12.5-alt2
 - rebuilt for perl-5.16
 
