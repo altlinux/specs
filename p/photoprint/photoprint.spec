@@ -2,7 +2,7 @@
 
 Name: photoprint
 Version: 0.4.1
-Release: alt3
+Release: alt3.1
 
 Summary: Photo Print - Prints photos in various layouts and with color management
 License: GPLv2+
@@ -82,6 +82,9 @@ popd
 %_datadir/photoprint
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt3.1
+- Rebuilt with libtiff5
+
 * Sat Jun 16 2012 Michael Shigorin <mike@altlinux.org> 0.4.1-alt3
 - NMU:
 - rebuilt against gutenprint 5.2.8
