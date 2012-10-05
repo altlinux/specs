@@ -1,6 +1,6 @@
 Name: bomberclone
-Version: 0.11.8
-Release: alt2.qa2
+Version: 0.11.9
+Release: alt1
 
 Summary: BomberClone is a Puzzle game clone of bomberman
 License: GPL
@@ -9,16 +9,16 @@ Group: Games/Arcade
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar.gz
 Source2: %name.xpm
 
 Patch0: bomberclone-0.11.7-alt-path.patch
-Patch1: bomberclone-0.11.8-alt-DSO.patch
+Patch1: bomberclone-0.11.9-alt-DSO.patch
 
 Requires: %name-data = %version
 
-# Automatically added by buildreq on Mon Dec 17 2007
-BuildRequires: imake libICE-devel libSDL-devel libSDL_image-devel libSDL_mixer-devel libX11-devel xorg-cf-files
+# Automatically added by buildreq on Fri Oct 05 2012
+BuildRequires: imake libICE-devel libSDL_image-devel libSDL_mixer-devel libjpeg-devel libpng-devel xorg-cf-files
 
 %description
 Clone of bomberman. The goal of the game is to be the last one,
@@ -55,11 +55,14 @@ This is package contains data files for BomberClone.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p2
-%configure --prefix=%buildroot%prefix --disable-debug \
-	--enable-werror=no
+%patch1 -p1
 
 %build
+%configure \
+    --prefix=%buildroot%prefix \
+    --disable-debug \
+    --enable-werror=no
+
 %make_build
 
 %install
@@ -93,6 +96,9 @@ EOF
 %_gamesdatadir/%name
 
 %changelog
+* Fri Oct 05 2012 Igor Zubkov <icesik@altlinux.org> 0.11.9-alt1
+- 0.11.8 -> 0.11.9
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.8-alt2.qa2
 - Fixed build
 
