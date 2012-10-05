@@ -28,7 +28,7 @@
 
 Name: qemu-kvm
 Version: 1.2.0
-Release: alt1
+Release: alt1.1
 Summary: Kernel Virtual Machine virtualization environment
 Group: Emulators
 License: %gpl2plus
@@ -144,6 +144,9 @@ printf '%_bindir/qemu-system-x86_64\t%_bindir/qemu-kvm-system-x86_64\t100\n' >./
 # %_datadir/qemu/*.bin
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.1
+- Rebuilt with libpng15
+
 * Mon Sep 10 2012 Alexey Shabalin <shaba@altlinux.ru> 1.2.0-alt1
 - 1.2.0
 
