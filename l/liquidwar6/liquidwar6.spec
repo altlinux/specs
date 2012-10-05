@@ -3,7 +3,7 @@ Version: 0.0.13beta
 Summary: A unique multiplayer wargame
 Summary(fr): Un "wargame" multijoueur inédit.
 Summary(de): Ein einzigartiges Kriegspiel für mehrere Spieler.
-Release: alt1
+Release: alt1.1
 License: GPL
 Group: Games/Strategy
 Source: %name-%version.tar.gz
@@ -75,6 +75,9 @@ rm -rf %buildroot%prefix/libexec
 %_desktopdir/%{name}*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.13beta-alt1.1
+- Rebuilt with libpng15
+
 * Tue May 29 2012 Fr. Br. George <george@altlinux.ru> 0.0.13beta-alt1
 - Autobuild version bump to 0.0.13beta
 
