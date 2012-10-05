@@ -1,7 +1,7 @@
 %define major 0.9
 Name: podofo
 Version: %major.0
-Release: alt1
+Release: alt1.1
 
 Summary: PDF manipulation library and tools
 Summary(ru_RU.UTF8): Библиотека и инструменты для работы с PDF
@@ -15,7 +15,7 @@ URL: http://sourceforge.net/projects/podofo/
 Source: http://prdownloads.sf.net/podofo/%name/%major/%name-%version.tar
 Patch: %name-64bit.patch
 
-BuildPrereq: rpm-macros-cmake zlib-devel
+BuildPrereq: rpm-macros-cmake zlib-devel libpng-devel
 
 # Automatically added by buildreq on Thu Jan 21 2010
 BuildRequires: cmake fontconfig-devel gcc-c++ libfreetype-devel libjpeg-devel libssl-devel libtiff-devel
@@ -74,6 +74,10 @@ Development files for the PoDoFo library.
 %_libdir/*.so
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.1
+- Rebuilt with libtiff5
+- Built with libpng15
+
 * Mon Jun 11 2012 Vitaly Lipatov <lav@altlinux.ru> 0.9.0-alt1
 - new version 0.9.0 (with rpmrb script)
 
