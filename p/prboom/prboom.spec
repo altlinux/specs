@@ -1,6 +1,6 @@
 Name: prboom
 Version: 2.5.0
-Release: alt0.3
+Release: alt0.3.1
 
 Summary: Doom - classic 3D shoot-em-up game
 Group: Games/Arcade
@@ -8,6 +8,7 @@ URL: http://prboom.sourceforge.net/
 License: GPL
 
 Source0: %name-%version.tar.gz
+Patch: prboom-2.5.0-alt-libpng15.patch
 
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
@@ -24,6 +25,7 @@ could play them.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure \
@@ -44,6 +46,8 @@ rm -rf %buildroot%_docdir/%name-%version/COPYING
 %_man6dir/*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.0-alt0.3.1
+- Rebuilt with libpng15
 
 * Sun May 01 2011 Ilya Mashkin <oddity@altlinux.ru> 2.5.0-alt0.3
 - rebuild
