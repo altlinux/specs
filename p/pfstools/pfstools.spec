@@ -2,7 +2,7 @@
 
 Name: pfstools
 Version: 1.8.5
-Release: alt1.2
+Release: alt1.3
 
 Summary: High Dynamic Range (HDR) Images and Video manipulation tools
 License: GPLv2+
@@ -20,7 +20,7 @@ BuildRequires: gcc-c++ libImageMagick-devel libfftw3-devel libfreeglut-devel lib
 # Optimized out build requirements we want to add as safety belt
 # (so pfstools build will not fail if due to changes in other packages
 # deps listed below packages will not be pulled for build)
-BuildRequires: libqt4-core libqt4-devel libqt4-gui
+BuildRequires: libqt4-core libqt4-devel libqt4-gui libtiff-devel
 
 BuildRequires: gcc-fortran
 
@@ -187,6 +187,9 @@ export CXXFLAGS="%optflags"
 %_man1dir/pfsingdal.*
 
 %changelog
+* Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.5-alt1.3
+- Rebuilt with libtiff5
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.5-alt1.2
 - Fixed build
 
