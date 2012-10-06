@@ -1,40 +1,27 @@
-# TODO
-# - verify-elf: WARNING: ./usr/lib/lilypond/2.11.0/python/midi.so: undefined symbol: PyDict_SetItemString
-# - docs
-
-%define ver_major 2.14
-%define ver_minor 2
-
+%define ver_major 2.16
+%define ver_minor 0
 %define _lily_dir %_datadir/%name/%version
 %define _texmf %_datadir/texmf
-#%%define _texmf %(kpsetool -v '$TEXMF'| %__sed -e "s/\!*//")
 
 Name: lilypond
 Version: %ver_major.%ver_minor
-Release: alt2
+Release: alt0.1
 
 Group: Publishing
 Summary: A program for printing sheet music
-Summary(ru_RU.UTF-8): Издательская система для вёрстки нотных текстов
 License: %gpl2only
 Url: http://www.lilypond.org
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
-Source: ftp://ftp.%name.org/pub/LilyPond/%ver_major/%name-%version.tar.gz
-# russian lirycs example (rulix)
+Source: %name-%version.tar.gz
 Source1: russian-lirycs-test.ly
 
-Patch1: %name-2.12.3-opensuse-gcc4.5.patch
+Requires: ghostscript
 
-PreReq: ghostscript >= 8.15
-
-BuildPreReq: zlib-devel
-#BuildPreReq: mftrace >= 1.1.19
-BuildPreReq: perl-Math-Complex
-BuildPreReq: fontforge >= 20060125
-BuildPreReq: guile-devel >= 1.6.7
-BuildPreReq: emacs-devel emacs24
-BuildPreReq: rpm-build-licenses
+BuildRequires: zlib-devel fontforge guile-devel
+BuildRequires: perl-Math-Complex
+BuildRequires: emacs-devel emacs24
+BuildRequires: rpm-build-licenses
 
 # Automatically added by buildreq on Tue Mar 17 2009
 BuildRequires: flex fontforge fonts-type1-urw gcc-c++ guile18-devel libpango-devel python-devel python-modules-compiler python-modules-encodings t1utils texlive-metapost
@@ -70,13 +57,6 @@ a high level description file as input. Lilypond is part of the GNU
 project. This package contains the utilities for converting the music
 source (.ly) files into printable output.
 
-%description -l ru_RU.UTF-8
-Lilypond - это издательская система для вёрстки нотных текстов. С её помощью можно 
-готовить печатные материалы в формате PS/PDF.  Данные для обработки
-предоставляются в виде текстовых файлов.Lilypond обрабатывает музыку для фортепиано,
-симфонические партитуры, музыку для хора и пр. Обработанные данные 
-могут быть сохранены в MIDI-файл и воспроизведены при помощи MIDI-плеера.
-
 #%description tex
 #TeX extensions for %name
 
@@ -99,7 +79,6 @@ emacs-mode-%name code or see some Lisp examples.
 
 %prep
 %setup -q
-#%patch1 -p1
 subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' config.make.in
 
 %build
@@ -119,16 +98,14 @@ subst 's|package_infodir = $(infodir)/$(package)|package_infodir = $(infodir)|' 
 
 # Move TeX dependent files into system TeX tree locations
 # 30092007: hack for tfm:
-%__mkdir_p %buildroot%_lily_dir/fonts/tfm
-%__mv mf/out/*.tfm %buildroot%_lily_dir/fonts/tfm/
-
-for i in otf source svg tfm type1; do
-    %__mkdir_p %buildroot%_texmf/fonts/$i
-    ln -s %_lily_dir/fonts/$i %buildroot%_texmf/fonts/$i/%name
-done
-
-%__mkdir_p %buildroot%_texmf/tex/%name
-%__mv %buildroot%_lily_dir/tex/* %buildroot%_texmf/tex/%name/
+#%__mkdir_p %buildroot%_lily_dir/fonts/tfm
+#%__mv mf/out/*.tfm %buildroot%_lily_dir/fonts/tfm/
+#for i in otf source svg tfm type1; do
+#    %__mkdir_p %buildroot%_texmf/fonts/$i
+#    ln -s %_lily_dir/fonts/$i %buildroot%_texmf/fonts/$i/%name
+#done
+#%__mkdir_p %buildroot%_texmf/tex/%name
+#%__mv %buildroot%_lily_dir/tex/* %buildroot%_texmf/tex/%name/
 
 # Create documentation tree in %_docdir
 #%__mkdir_p %buildroot%_docdir/%name-%version/Printable
@@ -145,18 +122,11 @@ for i in %buildroot%_emacslispdir/%{name}*.el; do
 %byte_compile_file $i
 done
 
-
 #FIXME:msp:
 # These files cannot pass verify-info check;
 %__rm -f %buildroot%_infodir/lilypond* %buildroot%_infodir/music*
 
 %find_lang %name
-
-#%post tex
-#%_bindir/mktexlsr ||:
-
-#%postun tex
-#%_bindir/mktexlsr ||:
 
 %files -f %name.lang
 %_bindir/*
@@ -186,6 +156,9 @@ done
 #%_datadir/omf/*
 
 %changelog
+* Sat Oct 06 2012 Michael Pozhidaev <msp@altlinux.ru> 2.16.0-alt0.1
+- New version
+
 * Wed Jul 18 2012 Michael Pozhidaev <msp@altlinux.ru> 2.14.2-alt2
 - emacs23 req changed to emacs24
 
