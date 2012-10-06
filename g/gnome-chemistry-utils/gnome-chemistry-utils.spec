@@ -8,8 +8,8 @@
 %endif
 
 Name: gnome-chemistry-utils
-Version: %ver_major.10
-Release: alt2
+Version: %ver_major.13
+Release: alt1
 
 Summary: A set of chemical utilities
 Group: Sciences/Chemistry
@@ -118,6 +118,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Sat Oct 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.13-alt1
+- 0.12.13
+
 * Wed Jun 20 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.10-alt2
 - used GSettings instead GConf as in libgnomeoffice-0.8.17-alt2
 
