@@ -3,9 +3,10 @@
 %def_enable gtk
 %def_enable gtk3
 
-%define ver_major 0.29
+%define ver_major 0.30
 %define gtk_api_ver 2.0
 %define gtk3_api_ver 3.0
+%define gst_api_ver 1.0
 
 Name: libcanberra
 Version: %ver_major
@@ -29,7 +30,7 @@ Requires: libpulseaudio >= %pa_ver
 BuildPreReq: libpulseaudio-devel >= %pa_ver
 %{?_enable_gtk:BuildPreReq: libgtk+2-devel >= %gtk_ver}
 %{?_enable_gtk3:BuildPreReq: libgtk+3-devel >= %gtk3_ver}
-BuildRequires: gcc-c++ gstreamer-devel gtk-doc libalsa-devel libudev-devel
+BuildRequires: gcc-c++ gstreamer%gst_api_ver-devel gtk-doc libalsa-devel libudev-devel
 BuildRequires: libltdl-devel libvorbis-devel vala-tools
 %{?_enable_tdb:BuildRequires: libtdb-devel >= %tdb_ver}
 
@@ -210,6 +211,12 @@ rm -f %buildroot%_docdir/libcanberra/README
 %{?_enable_gtk3:%exclude %_libdir/gtk-%gtk3_api_ver/modules/*.la}
 
 %changelog
+* Sat Oct 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.30-alt1
+- 0.30
+
+* Mon Jun 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.29-alt2
+- rebuilt against libudev.so.1
+
 * Tue May 29 2012 Yuri N. Sedunov <aris@altlinux.org> 0.29-alt1
 - 0.29
 
