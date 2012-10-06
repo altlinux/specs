@@ -1,33 +1,36 @@
 Name: rats
 Version: 2.3
-Release: alt1
+Release: alt2
 
 Summary: Rough Auditing Tool for Security
 License: GPLv2+
 Group: Development/Other
-
-Url: http://www.fortify.com/ssa-elements/threat-intelligence/rats.html
-Source: https://www.fortify.com/downloads2/public/rats-%version.tar.gz
+Url: http://code.google.com/p/rough-auditing-tool-for-security/
+# http://rough-auditing-tool-for-security.googlecode.com/files/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: rats-2.3-alt-flex.patch
 
 # Automatically added by buildreq on Tue Sep 14 2010
 BuildRequires: flex libexpat-devel
 
 %description
-RATS scans through code, finding potentially dangerous function calls. The goal
-of this tool is not to definitively find bugs (yet). The current goal is to
-provide a reasonable starting point for performing manual security audits.
+RATS scans through code, finding potentially dangerous function calls.
+The goal of this tool is not to definitively find bugs (yet).  The
+current goal is to provide a reasonable starting point for performing
+manual security audits.
 
-The initial vulnerability database is taken directly from things that could be
-easily found when starting with the forthcoming book, "Building Secure
-Software" by Viega and McGraw.
+The initial vulnerability database is taken directly from things that
+could be easily found when starting with the forthcoming book,
+"Building Secure Software" by Viega and McGraw.
 
 %prep
 %setup
 rm lex.yy*
+%patch -p1
 
 %build
 %configure --datadir=%_datadir/%name
-%make lex
+%make_build lex
 %make_build
 
 %install
@@ -42,6 +45,9 @@ rm lex.yy*
 %_man1dir/*
 
 %changelog
+* Sat Oct 06 2012 Dmitry V. Levin <ldv@altlinux.org> 2.3-alt2
+- Fixed build with flex >= 2.5.36.
+
 * Tue Sep 14 2010 Victor Forsiuk <force@altlinux.org> 2.3-alt1
 - New version, new URL.
 
