@@ -1,6 +1,6 @@
 Name: fftw3
-Version: 3.2.2
-Release: alt2
+Version: 3.3.2
+Release: alt1
 
 Summary: Library for computing Fast Fourier Transforms
 License: GPLv2+
@@ -9,17 +9,22 @@ Url: http://www.fftw.org/
 
 # ftp://ftp.fftw.org/pub/fftw/fftw-%version.tar.gz
 Source: fftw-%version.tar
-Patch: fftw-3.2.2-alt-makefile.patch
+Patch: fftw-alt-link.patch
 
-# Automatically added by buildreq on Fri Feb 09 2007
-BuildRequires: gcc-fortran ghostscript-classic glibc-devel-static transfig
-%ifnarch %arm
-BuildRequires: ocaml
+%def_enable check
+%def_disable bigcheck
+%def_disable static
+%def_enable openmp
+%def_enable sse
+%def_enable sse2
+%def_enable avx
+%ifarch %ix86 x86_64
+%def_enable quad
+%else
+%def_disable quad
 %endif
 
-%def_disable static
-%def_disable sse
-%def_disable sse2
+BuildRequires: gcc-fortran libgomp-devel %{?_enable_quad:libquadmath-devel}
 
 %description
 FFTW is a free collection of fast C routines for computing the Discrete
@@ -30,11 +35,12 @@ FFT implementations, and is even competitive with vendor-tuned libraries.
 To achieve this performance, FFTW uses novel code-generation and runtime
 self-optimization techniques (along with many other tricks).
 
-%package -n lib%name
-Summary: Dynamic libraries for computing Fast Fourier Transforms
+%package -n libfftw3-common
+Summary: FFTW runtime libraries, common files
 Group: System/Libraries
+BuildArch: noarch
 
-%description -n lib%name
+%description -n libfftw3-common
 FFTW is a free collection of fast C routines for computing the Discrete
 Fourier Transform in one or more dimensions.  It includes complex, real,
 symmetric, and parallel transforms, and can handle arbitrary array sizes
@@ -43,13 +49,83 @@ FFT implementations, and is even competitive with vendor-tuned libraries.
 To achieve this performance, FFTW uses novel code-generation and runtime
 self-optimization techniques (along with many other tricks).
 
-This package contains the shared library versions of the fftw libraries
-in single, double and long double precisions.
- 
+This package contains common files for all FFTW runtime libraries.
+
+%package -n libfftw3
+Summary: FFTW runtime libraries, double precision
+Group: System/Libraries
+Requires: libfftw3-common = %version-%release
+
+%description -n libfftw3
+FFTW is a free collection of fast C routines for computing the Discrete
+Fourier Transform in one or more dimensions.  It includes complex, real,
+symmetric, and parallel transforms, and can handle arbitrary array sizes
+efficiently.  FFTW is typically faster than other publically-available
+FFT implementations, and is even competitive with vendor-tuned libraries.
+To achieve this performance, FFTW uses novel code-generation and runtime
+self-optimization techniques (along with many other tricks).
+
+This package contains FFTW runtime libraries compiled in double precision.
+
+%package -n libfftw3f
+Summary: FFTW runtime libraries, single precision
+Group: System/Libraries
+Requires: libfftw3-common = %version-%release
+Conflicts: libfftw3 < %version
+
+%description -n libfftw3f
+FFTW is a free collection of fast C routines for computing the Discrete
+Fourier Transform in one or more dimensions.  It includes complex, real,
+symmetric, and parallel transforms, and can handle arbitrary array sizes
+efficiently.  FFTW is typically faster than other publically-available
+FFT implementations, and is even competitive with vendor-tuned libraries.
+To achieve this performance, FFTW uses novel code-generation and runtime
+self-optimization techniques (along with many other tricks).
+
+This package contains FFTW runtime libraries compiled in sing precision.
+
+%package -n libfftw3l
+Summary: FFTW runtime libraries, long double precision
+Group: System/Libraries
+Requires: libfftw3-common = %version-%release
+Conflicts: libfftw3 < %version
+
+%description -n libfftw3l
+FFTW is a free collection of fast C routines for computing the Discrete
+Fourier Transform in one or more dimensions.  It includes complex, real,
+symmetric, and parallel transforms, and can handle arbitrary array sizes
+efficiently.  FFTW is typically faster than other publically-available
+FFT implementations, and is even competitive with vendor-tuned libraries.
+To achieve this performance, FFTW uses novel code-generation and runtime
+self-optimization techniques (along with many other tricks).
+
+This package contains FFTW runtime libraries compiled in long double
+precision.
+
+%package -n libfftw3q
+Summary: FFTW runtime libraries, quadruple precision
+Group: System/Libraries
+Requires: libfftw3-common = %version-%release
+
+%description -n libfftw3q
+FFTW is a free collection of fast C routines for computing the Discrete
+Fourier Transform in one or more dimensions.  It includes complex, real,
+symmetric, and parallel transforms, and can handle arbitrary array sizes
+efficiently.  FFTW is typically faster than other publically-available
+FFT implementations, and is even competitive with vendor-tuned libraries.
+To achieve this performance, FFTW uses novel code-generation and runtime
+self-optimization techniques (along with many other tricks).
+
+This package contains FFTW runtime libraries compiled in quadruple
+precision.
+
 %package -n lib%name-devel
-Summary: Development library for computing Fast Fourier Transforms
+Summary: FFTW development libraries and header files
 Group: Development/C
-Requires: lib%name = %version-%release
+Requires: libfftw3 = %version-%release
+Requires: libfftw3f = %version-%release
+Requires: libfftw3l = %version-%release
+%{?_enable_quad:Requires: libfftw3q = %version-%release}
 
 %description -n lib%name-devel
 FFTW is a free collection of fast C routines for computing the Discrete
@@ -77,58 +153,112 @@ FFT implementations, and is even competitive with vendor-tuned libraries.
 To achieve this performance, FFTW uses novel code-generation and runtime
 self-optimization techniques (along with many other tricks).
 
-This package contains static libraries required to develop programs
-using FFTW.
+This package contains static libraries required to develop statically
+linked programs using FFTW.
+
+%package -n lib%name-devel-doc
+Summary: FFTW library manual
+Group: Development/C
+BuildArch: noarch
+Requires: lib%name-devel = %version-%release
+
+%description -n lib%name-devel-doc
+FFTW is a free collection of fast C routines for computing the Discrete
+Fourier Transform in one or more dimensions.  It includes complex, real,
+symmetric, and parallel transforms, and can handle arbitrary array sizes
+efficiently.  FFTW is typically faster than other publically-available
+FFT implementations, and is even competitive with vendor-tuned libraries.
+To achieve this performance, FFTW uses novel code-generation and runtime
+self-optimization techniques (along with many other tricks).
+
+This package contains the manual for the FFTW fast Fourier transform
+library in html and pdf formats.
 
 %prep
 %setup -n fftw-%version
+rm m4/l*.m4
 %patch -p1
-%define _configure_script ../configure
-mkdir single double long-double
 
 %build
+sed -n 's/^[^X]*X(\([^[:space:])]\+\)).*/\1/p' threads/*.c |sort -u >threads-r
+sed -n 's/^[^X]*X(\([^[:space:])]\+\)).*/\1/p' threads/threads.h |sort -u >threads-p
+comm -13 threads-p threads-r >threads-need
+while read n; do
+	grep -lZ "^[^#[:space:]].*X($n)" -- */*.h |
+	xargs -r0 sed -i '/EXTERN/! s/^[^#[:space:]].*X('$n')/__attribute__ ((visibility("default"))) &/' --
+done < threads-need
+
+%add_optflags -fvisibility=hidden
 %autoreconf
-%define options --enable-shared %{subst_enable static} --enable-threads --enable-portable-binary
-
-pushd single
-%configure %options --enable-float \
-%ifarch %ix86
-	%{subst_enable sse} \
+options='--enable-shared %{subst_enable static} --enable-threads %{subst_enable openmp}'
+options_single=
+options_double=
+options_long=
+options_quad=
+%ifarch %ix86 x86_64
+options_single='%{subst_enable sse} %{subst_enable avx}'
+options_double='%{subst_enable sse2} %{subst_enable avx}'
 %endif
-	#
-%make_build
-%make_build -C doc html
-popd
+%define _configure_script ../configure
 
-pushd double
-%configure %options \
-%ifarch %ix86
-	%{subst_enable sse2} \
-%endif
-	#
-%make_build
-popd
-
-pushd long-double
-%configure %options --enable-long-double
-%make_build
-popd
+for m in single double long-double %{?_enable_quad:quad-precision}; do
+	d=${m%%-*}
+	mkdir $d
+	pushd $d
+	eval extraoptions="\"\$options_$d\""
+	%configure $options $extraoptions --enable-$m
+	%make_build
+	popd
+done
 
 %install
-%makeinstall_std -C single
-%makeinstall_std -C double
-%makeinstall_std -C long-double
+for d in single double long %{?_enable_quad:quad}; do
+	%makeinstall_std -C $d
+done
 
 # remove non-packaged files
 rm %buildroot%_libdir/*.la
 
-%check
-%make_build -k check -C single
-%make_build -k check -C double
-%make_build -k check -C long-double
+%define docdir %_docdir/fftw-%version
+mkdir -p %buildroot%docdir
+install -pm644 AUTHORS CONVENTIONS COPYRIGHT NEWS README \
+	doc/fftw3.pdf doc/FAQ/fftw-faq.ascii %buildroot%docdir/
+cp -a doc/html doc/FAQ/fftw-faq.html %buildroot%docdir/
 
-%files -n lib%name
-%_libdir/*.so.*
+%check
+rm -f failed
+for d in single double long %{?_enable_quad:quad}; do
+	make %{?_enable_bigcheck:big}check -C $d/tests ||
+		echo "$d failed" >> failed &
+done
+wait
+if [ -f failed ]; then
+	cat failed
+	exit 1
+fi
+
+%files -n libfftw3-common
+%dir %docdir/
+%docdir/[ACNR]*
+%docdir/*.ascii
+
+%files -n libfftw3
+%_libdir/libfftw3.so.*
+%_libdir/libfftw3_*.so.*
+
+%files -n libfftw3f
+%_libdir/libfftw3f.so.*
+%_libdir/libfftw3f_*.so.*
+
+%files -n libfftw3l
+%_libdir/libfftw3l.so.*
+%_libdir/libfftw3l_*.so.*
+
+%if_enabled quad
+%files -n libfftw3q
+%_libdir/libfftw3q.so.*
+%_libdir/libfftw3q_*.so.*
+%endif # quad
 
 %files -n lib%name-devel
 %_bindir/*
@@ -137,15 +267,27 @@ rm %buildroot%_libdir/*.la
 %_pkgconfigdir/*
 %_infodir/*.info*
 %_man1dir/*
-%doc single/doc/html/ doc/FAQ/fftw-faq.ascii
-%doc AUTHORS CONVENTIONS NEWS README TODO
 
 %if_enabled static
 %files -n lib%name-devel-static
 %_libdir/*.a
 %endif
 
+%files -n lib%name-devel-doc
+%dir %docdir/
+%docdir/*html
+%docdir/*.pdf
+
 %changelog
+* Sat Oct 06 2012 Dmitry V. Levin <ldv@altlinux.org> 3.3.2-alt1
+- Updated to 3.3.2.
+- Enabled OpenMP support.
+- Enabled SSE, SSE2, AVX and quadruple precision support on x86/x86-64.
+- Packaged the manual in html in pdf formats into separate subpackage.
+- Restricted list of symbols exported by shared libraries.
+- Split libfftw3 so that runtime libraries for each precision are
+  packaged separately.
+
 * Wed Mar 09 2011 Dmitry V. Levin <ldv@altlinux.org> 3.2.2-alt2
 - Rebuilt for debuginfo.
 
