@@ -2,7 +2,7 @@
 #%%add_findreq_skiplist %_typelibdir/*
 
 %define _name folks
-%define ver_major 0.7
+%define ver_major 0.8
 %define api_ver 0.6
 %def_disable static
 %def_enable introspection
@@ -11,7 +11,7 @@
 %def_enable tracker
 
 Name: lib%_name
-Version: %ver_major.4.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GObject contact aggregation library
@@ -143,6 +143,9 @@ chrpath --delete %buildroot/%_libdir/%_name/*/backends/*/*.so
 %endif
 
 %changelog
+* Fri Oct 05 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8.0-alt1
+- 0.8.0
+
 * Wed Sep 12 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.4.1-alt1
 - 0.7.4.1
 

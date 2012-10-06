@@ -8,7 +8,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.5.0
+Version: 0.6.0
 Release: alt1
 
 Summary: Telepathy client library to handle call channels
@@ -104,6 +104,9 @@ Farstream library.
 %endif
 
 %changelog
+* Sat Oct 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Sat Sep 15 2012 Yuri N. Sedunov <aris@altlinux.org> 0.5.0-alt1
 - 0.5.0
 
