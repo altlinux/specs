@@ -1,6 +1,6 @@
 Name: cmake
 Version: 2.8.9
-Release: alt1.1
+Release: alt1.2
 
 Summary: Cross-platform, open-source make system
 
@@ -8,7 +8,7 @@ License: BSD
 Group: Development/Tools
 Url: http://cmake.org/
 
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
+Packager: Slava Dubrovskiy <dubrsl@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -125,10 +125,7 @@ Set of RPM macros for packaging applications that use cmake.
 %prep
 %setup
 %patch -p1
-sed -i 's,SET(BUILD_SHARED_LIBS OFF),SET(BUILD_SHARED_LIBS ON),' \
-	CMakeLists.txt
-ln -s 'file with spaces.cxx' \
-	Tests/CompileCommandOutput/file_with_spaces.cxx
+sed -i 's,SET(BUILD_SHARED_LIBS OFF),SET(BUILD_SHARED_LIBS ON),' CMakeLists.txt
 
 %build
 mkdir build
@@ -242,6 +239,10 @@ popd
 
 
 %changelog
+* Sat Oct 06 2012 Dmitry V. Levin <ldv@altlinux.org> 2.8.9-alt1.2
+- Reverted previous change, it was a no longer needed workaround
+  for make-3.82-alt4 quotation bug.
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.9-alt1.1
 - Avoid tests with spaces in names of files and directories
 
