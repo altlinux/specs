@@ -1,6 +1,6 @@
 %define dist RPM-Payload
 Name: perl-%dist
-Version: 0.10
+Version: 0.11
 Release: alt1
 
 Summary: Simple in-memory access to RPM cpio archive
@@ -14,7 +14,7 @@ Requires: /usr/bin/rpm2cpio
 
 BuildArch: noarch
 
-# Automatically added by buildreq on Fri Apr 03 2009
+# Automatically added by buildreq on Sat Oct 06 2012
 BuildRequires: perl-devel
 
 %description
@@ -32,9 +32,12 @@ RPM::Payload uses rpm2cpio program which comes with RPM.
 %perl_vendor_install
 
 %files
-%perl_vendor_privlib/RPM*
+%perl_vendor_privlib/RPM
 
 %changelog
+* Sat Oct 06 2012 Alexey Tourbin <at@altlinux.ru> 0.11-alt1
+- marked read() as method, to suppress warnings
+
 * Fri Apr 03 2009 Alexey Tourbin <at@altlinux.ru> 0.10-alt1
 - implemented $entry->readlink method
 - released under GPLv2+
