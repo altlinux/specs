@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 Name: python-module-qbzr
-Version: 0.22.2
+Version: 0.23.0
 Release: alt1
 
 %setup_python_module qbzr
@@ -44,6 +44,9 @@ This module is built for python %__python_version
 %doc AUTHORS.txt NEWS.txt README.txt
 
 %changelog
+* Sun Oct 07 2012 Anatoly Kitaikin <cetus@altlinux.org> 0.23.0-alt1
+- release 0.23.0
+
 * Thu Apr 19 2012 Anatoly Kitaikin <cetus@altlinux.org> 0.22.2-alt1
 - Qt frontend for bazaar 
 
