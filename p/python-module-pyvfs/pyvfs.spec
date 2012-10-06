@@ -1,5 +1,5 @@
 Name: python-module-pyvfs
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 Summary: Simple python VFS library
 License: GPL
@@ -33,6 +33,12 @@ to represent Python objects as files.
 %{python_sitelibdir}/pyvfs*
 
 %changelog
+* Sat Oct  6 2012 Peter V. Saveliev <peet@altlinux.org> 0.2.2-alt1
+- Read-write FUSE support
+- pyvfs.utils.Server as a dedicated user interface to start FS
+- pyvfs.objectfs: new argument "weakref" for the decorator
+- pyvfs.objectfs: new argument "basedir" for the decorator
+
 * Thu Oct  4 2012 Peter V. Saveliev <peet@altlinux.org> 0.2.1-alt1
 - FUSE support
 
