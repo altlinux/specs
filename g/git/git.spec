@@ -1,5 +1,5 @@
 Name: git
-Version: 1.7.11.7
+Version: 1.7.12.2
 Release: alt1
 
 Summary: Git core and tools
@@ -399,7 +399,7 @@ popd
 %_man1dir/git-relink.*
 %perl_vendor_privlib/Git/
 %perl_vendor_privlib/Git.pm
-%exclude %perl_vendor_privlib/Git/SVN
+%exclude %perl_vendor_privlib/Git/SVN*
 
 %if_with email
 %files email
@@ -415,7 +415,7 @@ popd
 %if_with doc
 %_man1dir/git-svn*.1*
 %endif #doc
-%perl_vendor_privlib/Git/SVN
+%perl_vendor_privlib/Git/SVN*
 %endif #svn
 
 %if_with tk
@@ -465,6 +465,9 @@ popd
 %endif #emacs
 
 %changelog
+* Sat Oct 06 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.12.2-alt1
+- Updated to maint v1.7.12.2-8-g9376c86.
+
 * Sun Sep 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.11.7-alt1
 - Updated to maint v1.7.11.7.
 
