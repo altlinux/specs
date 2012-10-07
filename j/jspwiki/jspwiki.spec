@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           jspwiki
 Version:        2.8.4
-Release:	alt1_1jpp6
+Release:	alt2_1jpp6
 Epoch:          0
 Summary:        JSP based WikiWiki engine
 Group:          Development/Java
@@ -207,6 +207,9 @@ cp -pr build/JSPWiki/* %{buildroot}%{_datadir}/%{name}/webapp
 
 
 %changelog
+* Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.8.4-alt2_1jpp6
+- rebuild with apache-commons-fileupload
+
 * Tue Oct 19 2010 Igor Vlasenko <viy@altlinux.ru> 0:2.8.4-alt1_1jpp6
 - new version
 
