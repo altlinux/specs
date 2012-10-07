@@ -13,8 +13,8 @@
 %def_disable microhttpd
 
 Name: systemd
-Version: 193
-Release: alt2
+Version: 194
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -516,7 +516,7 @@ mkdir -p %buildroot%_sysconfdir/profile.d
 cat > %buildroot%_sysconfdir/profile.d/systemd.sh << EOF
 export SYSTEMD_PAGER="/usr/bin/less -FR"
 EOF
-chmod 644 %buildroot%_sysconfdir/profile.d/systemd.sh
+chmod 755 %buildroot%_sysconfdir/profile.d/systemd.sh
 
 #######
 # UDEV
@@ -858,6 +858,9 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Thu Oct 04 2012 Alexey Shabalin <shaba@altlinux.ru> 194-alt1
+- 194
+
 * Mon Oct 01 2012 Alexey Shabalin <shaba@altlinux.ru> 193-alt2
 - drop altlinux-swap.service
 - add /etc/profile.d/systemd.sh and export
