@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           htmlunit1
 Version:        1.14
-Release:        alt7_4jpp6
+Release:        alt8_4jpp6
 Epoch:          0
 Summary:        Browser for Java programs
 License:        ASL 2.0
@@ -258,6 +258,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt8_4jpp6
+- rebuild with apache-commons-fileupload
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt7_4jpp6
 - compat build
 
