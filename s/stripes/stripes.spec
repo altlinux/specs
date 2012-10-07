@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           stripes
 Version:        1.5.3
-Release:	alt3_1jpp6
+Release:	alt4_1jpp6
 Epoch:          0
 Summary:        JSON-RPC Implementation
 Group:          Development/Java
@@ -141,6 +141,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt4_1jpp6
+- rebuild with apache-commons-fileupload
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt3_1jpp6
 - fixed build (use maven/empty-dep)
 
