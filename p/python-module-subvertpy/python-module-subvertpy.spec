@@ -1,9 +1,9 @@
 # $Id: python-module-subvertpy.spec 138 2004-03-26 23:17:36Z cray $
 # -*- coding: utf-8 -*-
-%define modulename subvertpy
-Name: python-module-%modulename
-Version: 0.8.9
-Release: alt1.1
+%define oname subvertpy
+Name: python-module-%oname
+Version: 0.9.0
+Release: alt1
 
 %setup_python_module subvertpy
 
@@ -14,7 +14,7 @@ Group: Development/Python
 Url: http://www.samba.org/~jelmer/subvertpy/
 Packager: Anatoly Kitaikin <cetus@altlinux.org>
 
-Source: %modulename-%version.tar.gz
+Source: %oname-%version.tar.gz
 #Prefix: #_prefix
 
 BuildRequires(pre): rpm-build-licenses
@@ -36,26 +36,26 @@ C API pretty much directly. Neither provide a hookable server-side.
 
 This module is built for python %__python_version
 
-%package -n python-module-%modulename-doc
-Summary: %modulename documentation and example programs
+%package -n python-module-%oname-doc
+Summary: %oname documentation and example programs
 Group: Development/Python
-Requires: python-module-%modulename = %version
-%description -n  python-module-%modulename-doc
+Requires: python-module-%oname = %version
+%description -n  python-module-%oname-doc
 Python bindings for the Subversion version control system that are
 aimed to be complete, fast and feel native to Python programmers.
-Install python-module-%modulename-doc if you need API documentation
+Install python-module-%oname-doc if you need API documentation
 and examples for this module
 
 %package -n subvertpy-fast-export
 Summary: Generate fastexport stream from a Subversion repository
 Group: Development/Python
-Requires: python-module-%modulename = %version
+Requires: python-module-%oname = %version
 %description -n  subvertpy-fast-export
 Walk through each revision of a local Subversion repository and export it
 in a stream that git-fast-import can consume.
 
 %prep
-%setup -n %modulename-%version
+%setup -n %oname-%version
 
 %build
 %python_build
@@ -67,11 +67,11 @@ install -m0644 man/* %buildroot%_man1dir
 
 
 %files
-%python_sitelibdir/%modulename/
+%python_sitelibdir/%oname/
 %python_sitelibdir/*.egg-info
 %doc NEWS TODO AUTHORS INSTALL
 
-%files -n python-module-%modulename-doc
+%files -n python-module-%oname-doc
 %doc examples
 
 %files -n subvertpy-fast-export
@@ -79,6 +79,9 @@ install -m0644 man/* %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Sun Oct 07 2012 Anatoly Kitaikin <cetus@altlinux.org> 0.9.0-alt1
+- 0.9.0 release
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.9-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
