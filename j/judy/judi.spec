@@ -1,6 +1,6 @@
 Name: judy
 Version: 1.0.5
-Release: alt1
+Release: alt2
 Summary: Judy is a C library that implements a dynamic array
 License: LGPLv2.1
 Group: Sciences/Mathematics
@@ -50,6 +50,7 @@ This package contains development files of Judy.
 %package -n lib%name-devel-doc
 Summary: Documentation for Judy
 Group: Development/Documentation
+BuildArch: noarch
 
 %description -n lib%name-devel-doc
 Judy is a C library that implements a dynamic array. Empty Judy arrays
@@ -66,22 +67,15 @@ This package contains development documentation of Judy.
 rm -fR autom4te.cache
 
 %build
-FLAGS="-DJUDYL -UJUDY1 -I$PWD/src/JudyL -I$PWD/src/JudyCommon -I$PWD/src -I$PWD/src/Judy1"
-%add_optflags $FLAGS -fno-strict-aliasing
+%add_optflags -fno-strict-aliasing -fpermissive
 %autoreconf
 
-%ifarch 86_64
-bits=64
-%else
-bits=32
-%endif
-%configure \
-	--enable-$bits-bit
+%configure
 for i in $(find ./ -name Makefile); do
 	sed -i 's|%_arch-alt-linux-gcc|g++|g' $i
 done
 
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -105,6 +99,9 @@ install -m644 tool/jhton %buildroot%_bindir
 %doc examples
 
 %changelog
+* Sun Oct 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt2
+- Provided Judy1, JudySL and JudyHS (ALT #27813)
+
 * Thu May 26 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt1
 - Initial build for Sisyphus
 
