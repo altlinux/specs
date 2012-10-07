@@ -4,7 +4,7 @@
 %def_enable vala
 
 Name: telepathy-glib
-Version: 0.19.9
+Version: 0.20.0
 Release: alt1
 
 Summary: Telepathy framework - GLib connection manager library
@@ -139,6 +139,9 @@ This package provides Vala language bindings for the %name library
 
 
 %changelog
+* Sat Oct 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.20.0-alt1
+- 0.20.0
+
 * Mon Sep 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.19.9-alt1
 - 0.19.9
 
