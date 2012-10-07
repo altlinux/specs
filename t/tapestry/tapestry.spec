@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           tapestry
 Version:        4.0.2
-Release:        alt5_3jpp5
+Release:        alt6_3jpp5
 Epoch:          0
 Summary:        Tapestry Framework
 License:        ASL 2.0
@@ -345,6 +345,9 @@ cp -pr config/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/config
 %endif
 
 %changelog
+* Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt6_3jpp5
+- rebuild with apache-commons-fileupload
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt5_3jpp5
 - build with spring3
 
