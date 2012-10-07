@@ -1,6 +1,6 @@
 Name: gtkpod
-Version: 2.1.1
-Release: alt3.qa1
+Version: 2.1.2
+Release: alt2
 Summary: A GUI for Apple's iPod using GTK2
 License: GPL
 Group: Sound
@@ -10,7 +10,7 @@ Patch: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
 
-BuildRequires: flex mount intltool desktop-file-utils zlib-devel
+BuildRequires: flex mount intltool desktop-file-utils zlib-devel gcc-c++
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: libgtk+3-devel >= 3.0.8
 BuildRequires: glib2-devel >= 2.28.5
@@ -25,8 +25,9 @@ BuildRequires: libcurl-devel >= 7.10.0
 BuildRequires: libwebkitgtk3-devel >= 1.3
 BuildRequires: libclutter-gtk3-devel >= 1.0
 BuildRequires: gstreamer-devel >= 0.10.25 gst-plugins-devel  >= 0.10.25
-BuildRequires: libflac-devel  libmp4v2-devel libvorbis-devel faad
+BuildRequires: libflac-devel  libvorbis-devel faad
 BuildRequires: glibc-kernheaders glibc-devel
+BuildRequires: libbrasero-devel libmusicbrainz4-devel libdiscid-devel
 
 %add_findreq_skiplist %_datadir/%name/scripts/*
 
@@ -99,6 +100,12 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 2.1.2-alt2
+- upstream snapshot
+
+* Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 2.1.2-alt1
+- 2.1.2
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2.1.1-alt3.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:

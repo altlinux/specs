@@ -8,7 +8,7 @@
 
 Name: gthumb
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: An image file viewer and browser for GNOME
 Summary(ru_RU.UTF-8): Просмотрщик изображений и фотоальбом для GNOME
@@ -163,6 +163,9 @@ gnome-doc-prepare -f
 %_libdir/pkgconfig/*
 
 %changelog
+* Wed Sep 19 2012 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt2
+- rebuilt for people/gnome
+
 * Fri Sep 07 2012 Yuri N. Sedunov <aris@altlinux.org> 3.0.2-alt1
 - 3.0.2
 

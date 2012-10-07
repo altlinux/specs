@@ -1,11 +1,11 @@
 %define _name eog
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 %def_enable map
 %def_enable postasa
 
 Name: %_name-plugins
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: EOG plugins
@@ -77,6 +77,7 @@ export ac_cv_path_POSTR=%_bindir/postr
 %config %_datadir/glib-2.0/schemas/org.gnome.eog.plugins.exif-display.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.eog.plugins.fullscreenbg.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.eog.plugins.pythonconsole.gschema.xml
+%config %_datadir/glib-2.0/schemas/org.gnome.eog.plugins.export-to-folder.gschema.xml
 %doc AUTHORS NEWS README
 
 %files -n %_name-plugins-postr
@@ -91,6 +92,9 @@ export ac_cv_path_POSTR=%_bindir/postr
 %exclude %_libdir/%_name/plugins/*.la
 
 %changelog
+* Thu Sep 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon May 28 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

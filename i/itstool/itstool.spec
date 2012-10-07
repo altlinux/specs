@@ -1,5 +1,5 @@
 Name: itstool
-Version: 1.1.2
+Version: 1.2.0
 Release: alt1
 
 Summary: ITS-based XML translation tool
@@ -26,6 +26,9 @@ translate and how to separate it into PO file messages.
 %install
 %make DESTDIR=%buildroot install
 
+%check
+%make check
+
 %files
 %_bindir/%name
 %_datadir/%name/
@@ -33,6 +36,9 @@ translate and how to separate it into PO file messages.
 %doc NEWS
 
 %changelog
+* Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
+- 1.2.0
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
 - 1.1.2
 

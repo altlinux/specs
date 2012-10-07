@@ -1,4 +1,4 @@
-%define ver_major 0.4
+%define ver_major 0.6
 %def_disable static
 
 Name: libwacom
@@ -9,7 +9,7 @@ Summary: A Wacom tablets library
 Group: System/Libraries
 License: BSD-like
 Url: http://www.gnome.org
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.bz2
 
 Requires: %name-data = %version-%release
 
@@ -44,7 +44,7 @@ This package contains tablets/stylus data for %name.
 
 %package devel-doc
 Summary: Development documentation for %name
-Group: Development/C
+Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name-devel < %version-%release
 
@@ -68,6 +68,7 @@ developing applications that use %name.
 %make check
 
 %files
+%_bindir/%name-list-local-devices
 %_libdir/*.so.*
 %doc NEWS README COPYING
 
@@ -85,6 +86,12 @@ developing applications that use %name.
 #%_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Sep 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6-alt1
+- 0.6
+
+* Mon Jun 25 2012 Yuri N. Sedunov <aris@altlinux.org> 0.5-alt1
+- 0.5
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4-alt1
 - 0.4
 

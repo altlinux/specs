@@ -1,5 +1,4 @@
-%define ver_major 3.4
-%def_enable xevents
+%define ver_major 3.6
 
 Name: gnome-power-manager
 Version: %ver_major.0
@@ -22,7 +21,7 @@ BuildPreReq: rpm-build-licenses
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: gnome-doc-utils >= 0.3.2
 BuildPreReq: glib2-devel >= 2.31.10
-BuildPreReq: libgtk+3-devel >= 2.91.3
+BuildPreReq: libgtk+3-devel >= 3.3.8
 BuildPreReq: libupower-devel >= 0.9.1
 # for docbook2man
 BuildPreReq: docbook-utils
@@ -37,7 +36,7 @@ GNOME Power Manager comes in three parts:
 
 
 %prep
-%setup -q
+%setup
 
 # Fix icons location
 %__subst 's/pkgdatadir/datadir/' data/icons/*/{apps,status}/Makefile.am
@@ -73,6 +72,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Mar 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

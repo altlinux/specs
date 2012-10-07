@@ -1,5 +1,5 @@
 %define _name gst-plugins
-%define ver_major 0.11
+%define ver_major 1.0
 %define api_ver 1.0
 
 %define _gst_libdir %_libdir/gstreamer-%api_ver
@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.99
+Version: %ver_major.0
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -153,6 +153,9 @@ GObject introspection devel data for the GStreamer library
 %_girdir/GstVideo-%api_ver.gir
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Mon Sep 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11.99-alt1
 - 0.11.99
 

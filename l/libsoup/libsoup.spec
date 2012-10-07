@@ -1,12 +1,12 @@
 %define api_ver 2.4
-%define ver_major 2.38
+%define ver_major 2.40
 %def_disable static
 %def_disable gtk_doc
 %def_with gnome
 %def_enable introspection
 
 Name: libsoup
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -29,8 +29,8 @@ Requires: glib-networking >= 2.31.16
 Provides: soup = %version libsoup%api_ver = %version
 Obsoletes: soup < %version libsoup%api_ver < %version
 
-%define glib_ver 2.31.7
-%define gir_ver 0.10.2
+%define glib_ver 2.33.3
+%define gi_ver 1.33.3
 
 # from configure.in
 BuildPreReq: glib2-devel >= %glib_ver
@@ -38,9 +38,9 @@ BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libxml2-devel libsqlite3-devel libgnome-keyring-devel zlib-devel
 
 BuildRequires: docbook-dtds docbook-style-xsl common-licenses
-BuildRequires: gtk-doc xml-common xsltproc
+BuildRequires: gtk-doc xml-common xsltproc intltool
 BuildRequires: glib-networking
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gir_ver}
+%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
 
 %description
 libsoup is an HTTP client/server library for GNOME. It uses GObjects
@@ -81,7 +81,7 @@ This package allows to develop applications that use the Soup library.
 
 %package devel-doc
 Summary: Development documentation for HTTP client/server library for GNOME
-Group: Development/C
+Group: Development/Documentation
 Conflicts: %name < %version
 Provides: libsoup%api_ver-devel-doc = %version
 Obsoletes: libsoup%api_ver-devel-doc < %version
@@ -169,7 +169,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %install
 %makeinstall_std
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %_libdir/%name-%api_ver.so.*
 %doc README NEWS AUTHORS
 
@@ -209,6 +211,10 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 2.40.0-alt1
+- 2.40.0
+- removed soup_connection_get_tunnel_addr from libsoup-compat.lds
+
 * Tue Apr 17 2012 Yuri N. Sedunov <aris@altlinux.org> 2.38.1-alt1
 - 2.38.1
 

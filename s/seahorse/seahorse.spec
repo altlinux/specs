@@ -1,5 +1,5 @@
 %define _unpackaged_files_terminate_build 1
-%define ver_major 3.4
+%define ver_major 3.6
 
 %def_disable debug
 %def_enable ldap
@@ -14,8 +14,8 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.0
+Release: alt1
 
 Summary: A password and encryption key manager
 License: %gpllgpl2plus
@@ -23,7 +23,7 @@ Group: Graphical desktop/GNOME
 Url: http://live.gnome.org/Seahorse
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Requires: gnupg2-gpg
 %{?_enable_ssh:Requires: openssh-clients}
@@ -34,14 +34,14 @@ BuildPreReq: rpm-build-gnome
 # From configure.in
 BuildPreReq: intltool >= 0.35
 BuildPreReq: libgio-devel
-BuildPreReq: gnome-doc-utils
+BuildPreReq: yelp-tools itstool
 BuildPreReq: libgtk+3-devel >= 3.4.0
 BuildPreReq: gnupg2-gpg
 BuildPreReq: libgpgme-devel >= 1.0.0
 BuildPreReq: libgpg-error-devel
 %{?_enable_ldap:BuildPreReq: libldap-devel}
 %{?_enable_hkp:BuildPreReq: libsoup-devel >= 2.4}
-%{?_enable_gnome_keyring:BuildPreReq: libgnome-keyring-devel >= 3.4.0}
+%{?_enable_gnome_keyring:BuildPreReq: libsecret-devel >= 0.5}
 %{?_enable_pkcs11:BuildPreReq: gcr-libs-devel >= 3.4.0}
 %{?_enable_sharing:BuildPreReq: libavahi-glib-devel >= 0.6 libavahi-devel }
 %{?_enable_ssh:BuildPreReq: openssh openssh-clients}
@@ -59,7 +59,6 @@ Seahorse is a password and encryption key manager for GNOME desktop.
 %setup -q
 
 %build
-gnome-doc-prepare -f
 %autoreconf
 export GNUPG=/usr/bin/gpg2
 %configure \
@@ -71,7 +70,6 @@ export GNUPG=/usr/bin/gpg2
 	%{?_enable_gnome-keyring:--enable-gnome-keyring} \
 	%{subst_enable pkcs11} \
 	--disable-static \
-	--disable-scrollkeeper \
 	--disable-schemas-compile
 
 %make_build
@@ -99,6 +97,9 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu May 10 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt2
 - updated from upstream git (7fafa3ccd)
 

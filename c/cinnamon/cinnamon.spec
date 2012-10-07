@@ -1,8 +1,8 @@
-%global _internal_version g3e114c9
+%global _internal_version 1359845
 
 Name: cinnamon
-Version: 1.4.0
-Release: alt7
+Version: 1.6.1
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -10,7 +10,7 @@ Group: Graphical desktop/GNOME
 
 Url: http://cinnamon.linuxmint.com
 # To generate tarball
-# wget https://github.com/linuxmint/Cinnamon/tarball/1.4 -O cinnamon-1.4.0.tar.gz
+# wget https://github.com/linuxmint/Cinnamon/tarball/1.6.1 -O cinnamon-1.6.1.tar.gz
 Source0: cinnamon-%version.tar.gz
 Source1: cinnamon.desktop
 Source2: cinnamon.session
@@ -18,12 +18,11 @@ Source3: %name-menu.png
 
 # fc patches
 # Replace mint favorites with fedora gnome-shell defaults
-Patch0: cinnamon-favourite-apps-firefox.patch
-Patch2: cinnamon-1.4.0_settings.patch
-Patch3: logout_theme.patch
-Patch4: window-attention.patch
-
+Patch0: cinnamon-1.6.1-favourite-apps-firefox.patch
 Patch10: %name-1.4.0-alt-menu.patch
+Patch11: %name-1.6.1-g_thread_init.patch
+# avoid brp-compress error
+Patch12: %name-1.6.1-man.patch
 
 %define clutter_ver 1.7.5
 %define gtk_ver 3.0.0
@@ -42,7 +41,6 @@ Requires: upower
 Requires: polkit >= %polkit_ver
 # needed for session files
 Requires: gnome-session
-Requires(post,preun):  GConf
 # needed for on-screen keyboard
 Requires: caribou
 
@@ -73,6 +71,7 @@ BuildRequires: libpolkit-devel libupower-devel libgudev-devel libsoup-devel Netw
 BuildRequires: libcanberra-gtk3-devel libcroco-devel GConf libGConf-devel
 BuildRequires: gobject-introspection >= %gi_ver libupower-gir-devel libgudev-gir-devel libsoup-gir-devel libfolks-gir-devel
 BuildRequires: libtelepathy-glib-gir-devel libtelepathy-logger-gir-devel libgnome-menus-gir-devel NetworkManager-glib-gir-devel
+BuildRequires: gsettings-desktop-schemas-gir-devel
 
 # for barriers
 BuildRequires: libXfixes-devel >= 5.0
@@ -96,11 +95,9 @@ experience.
 %prep
 %setup -n linuxmint-Cinnamon-%_internal_version
 %patch0 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-
 %patch10
+%patch11
+%patch12
 
 # make changes for settings move to /usr/share
 mv files/usr/lib/cinnamon-settings files/usr/share
@@ -140,7 +137,6 @@ sed -i -e 's,font-size: 8pt,font-size: 10pt,g' data/theme/cinnamon.css
 sed -i -e 's,font-size: 7.5pt,font-size: 10pt,g' data/theme/cinnamon.css
 
 rm -rf debian
-rm configure
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS -Wno-error=deprecated-declarations"
@@ -189,44 +185,44 @@ _WM_
 
 %find_lang %name
 
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-    %gconf2_uninstall %name
-fi
-
 %files -f %name.lang
 %doc NEWS README
 %_bindir/start%name
 %_bindir/cinnamon
+%_bindir/cinnamon2d
 %_bindir/cinnamon-menu-editor
 %_bindir/cinnamon-settings
 %_bindir/cinnamon-extension-tool
-%config %_sysconfdir/gconf/schemas/cinnamon.schemas
+%_bindir/cinnamon-launcher
+%_bindir/gnome-session-cinnamon2d
 %config %_sysconfdir/xdg/menus/cinnamon-applications.menu
 %config %_sysconfdir/xdg/menus/cinnamon-settings.menu
 %_datadir/desktop-directories/cinnamon-*.directory
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/applications/cinnamon.desktop
+%_datadir/applications/cinnamon2d.desktop
 %_datadir/applications/cinnamon-settings.desktop
 %_x11sysconfdir/wmsession.d/02Cinnamon
 %_datadir/gnome-session/sessions/cinnamon.session
+%_datadir/gnome-session/sessions/cinnamon2d.session
+%_datadir/xsessions/cinnamon2d.desktop
 %_datadir/cinnamon/
 %_datadir/cinnamon-menu-editor/
 %_datadir/cinnamon-settings/
-%_datadir/dbus-1/services/org.Cinnamon.CalendarServer.service
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
 %_libdir/cinnamon/
-%_libexecdir/cinnamon-calendar-server
-%_libexecdir/cinnamon-perf-helper
-%_libexecdir/cinnamon-hotplug-sniffer
-%_mandir/man1/%name.1.gz
+%dir %_libexecdir/cinnamon/
+%_libexecdir/cinnamon/cinnamon-hotplug-sniffer
+%_libexecdir/cinnamon/cinnamon-perf-helper
+%_mandir/man1/*.1.*
 %_libdir/browser-plugins/libcinnamon*.so
+
 %exclude %_libdir/browser-plugins/libcinnamon*.la
 
 %changelog
+* Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Tue Jun 12 2012 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt7
 - used %%set_typelibdir macros
 

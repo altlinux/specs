@@ -1,8 +1,8 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_enable systemd
 
 Name: gnome-system-monitor
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Simple process monitor
@@ -41,9 +41,9 @@ BuildPreReq: gnome-icon-theme >= %gnome_icon_theme_ver
 BuildPreReq: libxml2-devel >= %libxml_ver
 BuildPreReq: librsvg-devel >= %rsvg_ver
 BuildPreReq: gnome-doc-utils gnome-common
-BuildRequires: docbook-dtds gnome-doc-utils-xslt librarian
+BuildRequires: yelp-tools itstool
 BuildRequires: gcc-c++
-%{?_enable_systemd:BuildRequires: systemd-devel}
+%{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
 
 %description
 Gnome-system-monitor is a simple process and system monitor.
@@ -53,7 +53,6 @@ Gnome-system-monitor is a simple process and system monitor.
 
 %build
 %configure \
-    --disable-scrollkeeper \
     --disable-schemas-compile \
     %{subst_enable systemd}
 
@@ -73,6 +72,9 @@ Gnome-system-monitor is a simple process and system monitor.
 %config %_datadir/glib-2.0/schemas/org.gnome.gnome-system-monitor.enums.xml
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Apr 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

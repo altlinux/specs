@@ -1,5 +1,5 @@
-%define ver_major 3.4
-%define ver_base 3.4
+%define ver_major 3.6
+%define ver_base 3.6
 %define ver_lib 1.2
 
 %def_disable debug
@@ -15,7 +15,7 @@
 %def_enable vala
 
 Name: evolution-data-server
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Evolution Data Server
@@ -32,6 +32,7 @@ Patch1: %name-1.4.2.1-debug-lock.patch
 %define gtk3_ver 3.2.0
 %define libsoup_ver 2.33.90
 %define gnomekeyring_ver 2.32.0
+%define gcr_ver 3.4
 %define sqlite_ver 3.5
 %define gweather_ver 2.91.6
 %define ical_ver 0.43
@@ -44,7 +45,6 @@ BuildPreReq: gtk-doc >= 1.0
 BuildPreReq: gnome-common
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk3_ver
-BuildPreReq: libGConf-devel libdbus-glib-devel
 BuildPreReq: libxml2-devel
 BuildPreReq: libsoup-devel >= %libsoup_ver
 BuildPreReq: libsqlite3-devel >= %sqlite_ver
@@ -52,6 +52,7 @@ BuildPreReq: libgweather-devel >= %gweather_ver
 BuildPreReq: libical-devel >= %ical_ver
 BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libgnome-keyring-devel >= %gnomekeyring_ver
+BuildPreReq: gcr-libs-devel >= %gcr_ver
 BuildRequires: gperf docbook-utils flex bison libcom_err-devel libnss-devel libnspr-devel zlib-devel
 %{?_enable_goa:BuildRequires: libgnome-online-accounts-devel >= %goa_ver liboauth-devel libgdata-devel >= %gdata_ver}
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel}
@@ -208,6 +209,10 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 %_datadir/dbus-1/services/*
 %_datadir/pixmaps/*
 %_datadir/GConf/gsettings/libedataserver.convert
+%_datadir/GConf/gsettings/evolution-data-server.convert
+%_datadir/glib-2.0/schemas/org.gnome.Evolution.DefaultSources.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.evolution-data-server.addressbook.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.evolution-data-server.calendar.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.eds-shell.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.shell.network-config.gschema.xml
 %doc AUTHORS NEWS README MAINTAINERS
@@ -242,6 +247,9 @@ rm -f %buildroot%_libdir/%name-%ver_lib/*/*.la
 
 
 %changelog
+* Sat Sep 22 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
 - 3.4.4
 

@@ -6,7 +6,7 @@
 %def_enable nss
 %def_disable cyrus_sasl
 %def_disable gnutls
-%def_enable gevolution
+%def_disable gevolution
 %def_enable meanwhile
 %def_enable cap
 %def_enable nm
@@ -33,7 +33,7 @@
 
 Name: pidgin
 Version: 2.10.6
-Release: alt1
+Release: alt2
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -446,6 +446,9 @@ fi
 %endif
 
 %changelog
+* Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10.6-alt2
+- disable gevolution plugin
+
 * Mon Jul 30 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10.6-alt1
 - 2.10.6
 - fixed CVE-2012-3374

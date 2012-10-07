@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 %def_enable introspection
 %def_enable sendto
@@ -6,7 +6,7 @@
 %def_enable gtk_doc
 
 Name: gnome-bluetooth
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GNOME Bluetooth Subsystem
@@ -25,10 +25,10 @@ Source1: 61-gnome-bluetooth-rfkill.rules
 
 Patch: %name-3.3.92-alt-gir.patch
 
-BuildRequires: gnome-common gtk-doc intltool
+BuildRequires: gnome-common gtk-doc intltool yelp-tools itstool
 BuildRequires: libgio-devel libgtk+3-devel libnotify-devel libXi-devel libdbus-glib-devel
 %{?_enable_sendto:BuildRequires: nautilus-sendto-devel}
-%{?_enable_geoclue:BuildRequires: libGConf-devel libgeoclue-devel}
+%{?_enable_geoclue:BuildRequires: libgeoclue-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
@@ -94,7 +94,6 @@ file/files
 %patch -p1
 
 %build
-gnome-doc-prepare -f
 %autoreconf
 %configure \
 	--disable-schemas-compile \
@@ -168,6 +167,9 @@ find %buildroot -name "*.la" -delete
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Wed Jul 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

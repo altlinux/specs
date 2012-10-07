@@ -1,9 +1,9 @@
-%define ver_major 3.4
+%define ver_major 3.6
 # need glade3 > 3.11.0 (for gtk+3)
 %def_disable glade
 
 Name: anjuta
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 Summary: GNOME IDE for C and C++
 Group: Development/GNOME and GTK+
@@ -17,20 +17,20 @@ Provides: %{name}2 = %version-%release lib%name
 Provides: %{name}2-docs = %version-%release %{name}2-core = %version-%release %{name}2-project-templates = %version-%release
 
 Source: %name-%version.tar
-#Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
-BuildRequires: dconf flex gcc-c++ autogen gnome-common gtk-doc intltool
+BuildRequires: dconf flex gcc-c++ autogen gnome-common gtk-doc intltool yelp-tools itstool
 BuildRequires: gobject-introspection-devel >= 0.6.7
 BuildRequires: libgjs-devel
-BuildRequires: glib2-devel >= 2.28.0 libgio-devel
-BuildRequires: libgtk+3-devel >= 3.0.0 libgtk+3-gir-devel
+BuildRequires: glib2-devel >= 2.32.0 libgio-devel
+BuildRequires: libgtk+3-devel >= 3.4.0 libgtk+3-gir-devel
 BuildRequires: libgdk-pixbuf-devel >= 2.0.0 libgdk-pixbuf-gir-devel
 BuildRequires: libxml2-devel >= 2.4.23
-BuildRequires: libgdl3-devel >= 2.91.4
+BuildRequires: libgdl3-devel >= 3.5.4
 BuildRequires: libvte3-devel >= 0.27.6
-BuildRequires: libdevhelp-devel >= 3.0.0
-%{?_enable_glade:BuildRequires: libgladeui-devel >= 3.9.0}
-BuildRequires: libgtksourceview3-devel >= 2.91.8
+BuildRequires: libdevhelp-devel >= 3.4.2
+%{?_enable_glade:BuildRequires: libgladeui-devel >= 3.12.0}
+BuildRequires: libgtksourceview3-devel >= 3.0.0
 BuildRequires: libvala-devel vala
 BuildRequires: python-devel python-modules-compiler
 BuildRequires: libgda4-devel >= 4.2.0 libsqlite3-devel
@@ -101,14 +101,15 @@ This plugin lets you run DevHelp from inside Anjuta.
 
 %prep
 %setup -q
-#%patch -p1
+%patch -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure \
     --disable-static \
-    --disable-schemas-install \
-    --disable-scrollkeeper \
+    --disable-rpath \
+    --disable-silent-rules \
+    --disable-schemas-compile \
     --disable-packagekit \
     --enable-plugin-devhelp \
 %if_enabled glade
@@ -116,7 +117,6 @@ NOCONFIGURE=1 ./autogen.sh
 %else
     --disable-plugin-glade \
 %endif
-    --enable-plugin-sourceview \
     --disable-plugin-subversion \
     --enable-gtk-doc
 
@@ -147,9 +147,10 @@ NOCONFIGURE=1 ./autogen.sh
 %anjuta_datadir/snippets-global-variables.xml
 %anjuta_datadir/snippets.anjuta-snippets
 %anjuta_datadir/sources.list
-%anjuta_datadir/class-templates/
-%anjuta_datadir/build/
-%anjuta_datadir/profiles/
+%anjuta_datadir/class-templates
+%anjuta_datadir/templates
+%anjuta_datadir/build
+%anjuta_datadir/profiles
 %anjuta_datadir/gdb.init
 %anjuta_datadir/tables.sql
 
@@ -216,6 +217,12 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Mon Oct 01 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
+- 3.6.0
+
+* Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 3.5.5-alt1
+- 3.5.5
+
 * Thu May 17 2012 Alexey Shabalin <shaba@altlinux.ru> 3.4.2-alt1
 - 3.4.2
 

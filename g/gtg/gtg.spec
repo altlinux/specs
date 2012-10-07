@@ -1,5 +1,5 @@
 Name: gtg
-Version: 0.2.5
+Version: 0.2.9
 Release: alt1
 
 Source: %name-%version.tar
@@ -22,23 +22,29 @@ it focuses on ease of use and flexibility, while keeping things simple.
 %setup
 
 %build
-%python_build 
+%python_build
 
 %install
 %python_install
+rm -f %buildroot%python_sitelibdir/GTG/backends/backend_launchpad*
 
-%files 
+%find_lang %name
+
+%files -f %name.lang
 %doc %_man1dir/*
 %_bindir/*
 %python_sitelibdir/GTG/
 %_datadir/%name/
-%_datadir/locale/*/LC_MESSAGES/*.mo
 %_desktopdir/%name.desktop
 %_iconsdir/hicolor/*/apps/*
 %_datadir/dbus-1/services/*
 %exclude %python_sitelibdir/GTG/plugins/geolocalized_tasks*
 
 %changelog
+* Thu Oct 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.9-alt1
+- 0.2.9
+- removed launchpad backend
+
 * Tue Jan 31 2012 Alexey Morsov <swi@altlinux.ru> 0.2.5-alt1
 - new version
 - RTM sync plugin added

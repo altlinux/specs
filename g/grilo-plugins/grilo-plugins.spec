@@ -1,7 +1,7 @@
-%define ver_major 0.1
+%define ver_major 0.2
 
 Name: grilo-plugins
-Version: %ver_major.19
+Version: %ver_major.0
 Release: alt1
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -25,6 +25,7 @@ BuildRequires: libgcrypt-devel
 BuildRequires: libgmime-devel
 BuildRequires: tracker-devel
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
+BuildRequires: libquvi-devel >= 0.2.15
 
 Requires: grilo-tools >= %version
 Requires: tracker
@@ -71,6 +72,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Wed Sep 19 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.0-alt1
+- 0.2.0
+
 * Fri May 25 2012 Alexey Shabalin <shaba@altlinux.ru> 0.1.19-alt1
 - 0.1.19
 

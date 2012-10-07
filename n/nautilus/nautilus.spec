@@ -1,5 +1,5 @@
 %define _name nautilus2
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 
 %def_enable exempi
@@ -9,7 +9,7 @@
 %def_enable selinux
 
 Name: nautilus
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Nautilus is a network user environment
@@ -19,8 +19,6 @@ URL: http://gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-
-Patch11: %name-rtl-fix.patch
 
 # http://bugzilla.gnome.org/show_bug.cgi?id=519743 
 Patch17: %name-filetype-symlink-fix.patch
@@ -41,7 +39,7 @@ Provides: gnome-volume-manager
 %define glib_ver 2.31.9
 %define desktop_ver 3.3.3
 %define pango_ver 1.28.3
-%define gtk_ver 3.3.18
+%define gtk_ver 3.5.5
 %define libxml2_ver 2.4.7
 %define exif_ver 0.5.12
 %define exempi_ver 2.1.0
@@ -137,9 +135,7 @@ GObject introspection devel data for the nautilus-extension library
 
 %prep
 %setup -q
-%patch11 -p1 -b .rtl-fix
 %patch17 -p0 -b .symlink
-#%patch35 -p1 -b .umountfstab
 
 rm -f data/*.desktop
 
@@ -177,22 +173,23 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %files -f %name.lang
 %_bindir/*
 %_libexecdir/nautilus-convert-metadata
+%_libexecdir/nautilus-shell-search-provider
 %dir %_libdir/%name-%api_ver
 %dir %_libdir/%name-%api_ver/components
 %_datadir/mime/packages/nautilus.xml
 %_datadir/applications/*.desktop
 %_sysconfdir/xdg/autostart/nautilus-autostart.desktop
 %_datadir/%name
-%_iconsdir/hicolor/*/apps/*.png
-%_iconsdir/hicolor/*/apps/*.svg
 %_datadir/dbus-1/services/org.gnome.Nautilus.service
 %_datadir/dbus-1/services/org.freedesktop.FileManager1.service
+%_datadir/dbus-1/services/org.gnome.Nautilus.SearchProvider.service
+%_datadir/gnome-shell/search-providers/nautilus-search-provider.ini
 # gsettings schemas
 %config %_datadir/glib-2.0/schemas/org.gnome.nautilus.gschema.xml
 %_datadir/GConf/gsettings/nautilus.convert
 # docs
 %doc --no-dereference COPYING
-%doc AUTHORS MAINTAINERS NEWS.bz2 README THANKS TODO
+%doc AUTHORS MAINTAINERS NEWS.bz2 README THANKS
 %_man1dir/*
 
 %files -n lib%name
@@ -220,6 +217,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

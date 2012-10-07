@@ -2,10 +2,10 @@
 # and use those C sources during bootstrap phase. Next package rebuilds must be done
 # without bootstrap define.
 %def_with bootstrap
-%define api_ver 0.16
+%define api_ver 0.18
 
 Name: vala
-Version: 0.16.1
+Version: 0.18.0
 Release: alt1
 Group: Development/C
 Summary: Vala is a programming language which makes GNOME programming easy
@@ -201,6 +201,18 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_man1dir/vapigen*
 
 %changelog
+* Tue Sep 25 2012 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1
+- 0.18.0
+
+* Mon Sep 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.17.7-alt1
+- 0.17.7
+
+* Thu Sep 06 2012 Alexey Shabalin <shaba@altlinux.ru> 0.17.6-alt1
+- 0.17.6
+
+* Thu Jul 19 2012 Alexey Shabalin <shaba@altlinux.ru> 0.17.3-alt1
+- 0.17.3
+
 * Thu Jul 19 2012 Alexey Shabalin <shaba@altlinux.ru> 0.16.1-alt1
 - 0.16.1
 

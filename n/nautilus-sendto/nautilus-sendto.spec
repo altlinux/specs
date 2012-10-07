@@ -1,11 +1,11 @@
-%define ver_major 3.0
+%define ver_major 3.6
 
 %def_enable gtk_doc
 %def_with gupnp
 %def_without gajim
 
 Name: nautilus-sendto
-Version: %ver_major.3
+Version: %ver_major.0
 Release: alt1
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -21,9 +21,11 @@ Obsoletes: %name-balsa
 
 Source: %name-%version.tar.xz
 
+%define eds_ver 3.5.3
+
 BuildPreReq: rpm-build-gnome
 BuildRequires: intltool glib2-devel libgio-devel libgtk+3-devel pidgin-devel libpurple-devel libnautilus-devel
-BuildRequires: libdbus-glib-devel libdbus-devel gtk-doc evolution-data-server-devel gcc-c++ gnome-common
+BuildRequires: libdbus-glib-devel libdbus-devel gtk-doc evolution-data-server-devel >= %eds_ver gcc-c++ gnome-common
 %{?_with_gajim:BuildRequires: gajim}
 %{?_with_gupnp:BuildRequires: libgupnp-devel}
 
@@ -184,6 +186,9 @@ find %buildroot%_libdir -name \*.la -delete
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Fri May 11 2012 Yuri N. Sedunov <aris@altlinux.org> 3.0.3-alt1
 - 3.0.3
 

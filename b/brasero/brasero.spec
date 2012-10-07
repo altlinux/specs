@@ -1,6 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define brasero_api_ver 3
 %define nau_api_ver 3.0
+%define gst_api_ver 1.0
 
 %def_enable gtk_doc
 # Make use of Tracker
@@ -45,8 +46,8 @@ BuildPreReq: gnome-common rpm-build-gnome rpm-build-licenses
 BuildPreReq: glib2-devel >= 2.28.0
 BuildPrereq: libgio-devel >= 2.28.0
 BuildPreReq: libgtk+3-devel >= 3.0.0
-BuildPreReq: gstreamer-devel >= 0.10.15
-BuildPreReq: gst-plugins-devel >= 0.10.0
+BuildPreReq: gstreamer%gst_api_ver-devel >= 0.11.99
+BuildPreReq: gst-plugins%gst_api_ver-devel >= 0.11.99
 BuildPreReq: libxml2-devel >= 2.6.0
 %{?_enable_libburnia:BuildPreReq: libburn-devel >= 0.4.0}
 BuildPreReq: libisofs-devel >= 0.6.4
@@ -55,9 +56,9 @@ BuildPreReq: libnotify-devel >= 0.7
 %{?_enable_playlist:BuildPreReq: libtotem-pl-parser-devel >= 2.30.2}
 BuildPreReq: intltool >= 0.35.0
 BuildPrereq: libcanberra-gtk3-devel
-BuildPreReq: gnome-doc-utils > 0.3.2
 BuildPreReq: gtk-doc >= 1.11
-BuildRequires: libGConf-devel libSM-devel
+BuildRequires: yelp-tools itstool
+BuildRequires: libSM-devel
 # for nautilus extension
 BuildRequires: libnautilus-devel
 # GObject introspection support
@@ -94,7 +95,7 @@ that use libbrasero.
 
 %package -n lib%name-devel-doc
 Summary: Development documentation for Brasero CD/DVD burning application
-Group: Development/C
+Group: Development/Documentation
 BuildArch: noarch
 Conflicts: lib%name < %version
 
@@ -139,7 +140,6 @@ GObject introspection devel data for the Brasero
 %patch2 -b .schemas_convert
 
 %build
-gnome-doc-prepare -c -f
 %autoreconf
 %configure \
 	%{subst_enable libburnia} \
@@ -230,6 +230,9 @@ gnome-doc-prepare -c -f
 %exclude %_libdir/nautilus/extensions-%nau_api_ver/libnautilus-%name-extension.la
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

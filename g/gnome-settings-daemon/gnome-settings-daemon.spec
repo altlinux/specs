@@ -1,14 +1,15 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 %def_disable static
 %def_enable smartcard
 %def_enable systemd
+%def_enable ibus
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt2
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -16,20 +17,17 @@ Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Url: http://gnome.org
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
-Patch: %name-3.2.2-alt-link.patch
+Patch: %name-3.5.5-alt-link.patch
 Patch1: %name-3.3.90.1-alt-link.patch
 
 # From configure.ac
 %define glib2_ver 2.29.14
-%define gtk_ver 3.3.4
-%define gconf_ver 2.6.1
+%define gtk_ver 3.3.18
 %define gio_ver 2.29.14
-%define gnome_desktop_ver 3.3.92
-%define libgnomekbd_ver 3.2.0
-%define libxklavier_ver 5.1
+%define gnome_desktop_ver 3.5.3
 %define notify_ver 0.7.3
 %define pulse_ver 0.9.15
 %define gsds_ver 3.3.0
@@ -37,30 +35,32 @@ Patch1: %name-3.3.90.1-alt-link.patch
 %define dconf_ver 0.8
 %define upower_ver 0.9.1
 %define systemd_ver 40
+%define wacom_ver 0.6
+%define ibus_ver 1.4.99
 
 Requires: dconf >= %dconf_ver
 Requires: colord >= %colord_ver
+%{?_enable_ibus:Requires:ibus >= %ibus_ver}
 
 # From configure.ac
 BuildPreReq: glib2-devel >= %glib2_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: libGConf-devel >= %gconf_ver
 BuildPreReq: libgio-devel >= %gio_ver
 BuildPreReq: libgnome-desktop3-devel >= %gnome_desktop_ver
-BuildPreReq: libgnomekbd-devel >= %libgnomekbd_ver
-BuildPreReq: libxklavier-devel >= %libxklavier_ver
 BuildPreReq: libnotify-devel >= %notify_ver
 BuildPreReq: gsettings-desktop-schemas-devel >= %gsds_ver
 BuildPreReq: libpulseaudio-devel >= %pulse_ver libcanberra-gtk3-devel
 BuildRequires: libdbus-devel libpolkit1-devel
 %{?_enable_smartcard:BuildRequires: libnss-devel}
-%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver}
-BuildRequires: rpm-build-gnome intltool
+%{?_enable_systemd:BuildRequires: systemd-devel >= %systemd_ver libsystemd-login-devel}
+%{?_enable_ibus:BuildRequires: libibus-devel >= %ibus_ver}
+BuildRequires: libxkbfile-devel
+BuildRequires: rpm-build-gnome intltool docbook-style-xsl xsltproc
 BuildRequires: gcc-c++ libcups-devel libgudev-devel libXi-devel libXext-devel libXfixes-devel
 BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel
-BuildRequires: libwacom-devel xorg-drv-wacom-devel libXtst-devel
+BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel libXtst-devel
 
 %description
 GNOME Settings Daemon is a program that organizes access to general GNOME
@@ -77,10 +77,18 @@ Requires: %name = %version-%release
 The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
+%package tests
+Summary: GSD test programms
+Group: Graphical desktop/GNOME
+Requires: %name = %version-%release
+
+%description tests
+The %name-tests package provides programms for testing GSD plugins.
+
 %prep
 %setup -q
 %patch -p1 -b .link
-%patch1 
+%patch1
 
 %build
 %autoreconf
@@ -88,6 +96,7 @@ developing applications that use %name.
 	%{subst_enable static} \
 	%{?_disable_smartcard:--disable-smartcard-support} \
 	%{subst_enable systemd} \
+	%{subst_enable ibus} \
 	--disable-schemas-compile
 
 %make_build
@@ -136,13 +145,14 @@ developing applications that use %name.
 %_libdir/%name-%api_ver/xrandr.gnome-settings-plugin
 %_libdir/%name-%api_ver/xsettings.gnome-settings-plugin
 %_libexecdir/%name
+%_libexecdir/gsd-list-wacom
 %_libexecdir/gsd-locate-pointer
 %_libexecdir/gsd-printer
 %_libexecdir/gnome-fallback-mount-helper
 %_libexecdir/gsd-backlight-helper
 %_libexecdir/gsd-wacom-led-helper
+%_libexecdir/gsd-input-sources-switcher
 %_datadir/%name
-%_datadir/dbus-1/services/org.gnome.SettingsDaemon.service
 %_iconsdir/hicolor/*/*/*.png
 %_iconsdir/hicolor/*/*/*.svg
 %_sysconfdir/xdg/autostart/%name.desktop
@@ -153,6 +163,7 @@ developing applications that use %name.
 %doc AUTHORS NEWS
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.power.policy
 %_datadir/polkit-1/actions/org.gnome.settings-daemon.plugins.wacom.policy
+%{?_enable_ibus:%_datadir/dbus-1/services/org.freedesktop.IBus.service}
 
 %exclude %_libdir/%name-%api_ver/*.la
 %exclude %_datadir/%name-%api_ver/input-device-example.sh
@@ -161,7 +172,34 @@ developing applications that use %name.
 %_includedir/*
 %_pkgconfigdir/*
 
+%files tests
+%_libexecdir/gsd-test-a11y-keyboard
+%_libexecdir/gsd-test-a11y-settings
+%_libexecdir/gsd-test-background
+%_libexecdir/gsd-test-input-helper
+%_libexecdir/gsd-test-keyboard
+%_libexecdir/gsd-test-media-keys
+%_libexecdir/gsd-test-mouse
+%_libexecdir/gsd-test-orientation
+%_libexecdir/gsd-test-power
+%_libexecdir/gsd-test-print-notifications
+%_libexecdir/gsd-test-smartcard
+%_libexecdir/gsd-test-sound
+%_libexecdir/gsd-test-wacom
+%_libexecdir/gsd-test-xsettings
+
 %changelog
+* Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
+- updated to 2184aa5
+- built with ibus
+
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+- new -tests subpackage
+
+* Tue May 29 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt2
+- updated from upstream git (4fb45d63a)
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

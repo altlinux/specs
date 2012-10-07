@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: gnome-icon-theme-symbolic
 Version: %ver_major.0
@@ -52,6 +52,9 @@ the regular name.
 %doc AUTHORS README NEWS COPYING
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

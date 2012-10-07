@@ -5,7 +5,7 @@
 
 Name: NetworkManager-gnome
 Version: 0.9.6.2
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: GNOME applications for use with NetworkManager
@@ -69,7 +69,7 @@ only by nm-applet and the GNOME control center.
     --libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
     --with-gtkver=%gtkver \
-    --enable-more-warnings=error
+    --enable-more-warnings=no
 
 %make_build
 
@@ -115,6 +115,10 @@ fi
 %_pkgconfigdir/libnm-gtk.pc
 
 %changelog
+* Tue Sep 25 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.2-alt2
+- Temporary don't treat warrnings as errors again.
+- Rebuild against libgnome-bluetooth.so.11.
+
 * Tue Aug 14 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.2-alt1
 - Updated to 0.9.6.2.
 

@@ -1,5 +1,5 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3
 %define so_ver 4
 
@@ -18,7 +18,8 @@ Requires: lib%name = %version-%release
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: gcc-c++ gnome-common gnome-doc-utils-xslt gtk-doc gnome-icon-theme intltool libdbus-glib-devel
+BuildRequires: gcc-c++ gnome-common gtk-doc gnome-icon-theme intltool libdbus-glib-devel
+BuildRequires: yelp-tools itstool
 BuildRequires: libdjvu-devel libgnome-keyring-devel libnautilus-devel libpoppler-glib-devel libspectre-devel libtiff-devel
 BuildRequires: libxml2-devel libkpathsea-devel libgail3-devel gsettings-desktop-schemas-devel zlib-devel
 %{?_enable_xps:BuildRequires: libgxps-devel}
@@ -82,7 +83,6 @@ gnome-doc-prepare -f
 %autoreconf
 %configure \
 	--disable-schemas-compile \
-	--disable-scrollkeeper \
 	--enable-pdf \
 	--enable-tiff \
 	--enable-djvu \
@@ -158,6 +158,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Mar 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

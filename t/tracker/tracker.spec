@@ -9,7 +9,7 @@
 %def_enable gdkpixbuf
 %def_enable gnome_keyring
 %def_enable network_manager
-%def_enable evolution
+%def_disable evolution
 %def_disable rss
 %def_enable flickr
 %def_enable explorer
@@ -42,7 +42,7 @@
 
 Name: tracker
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -403,6 +403,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.2-alt2
+- disable evolution plugin
+
 * Mon Jul 30 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.2-alt1
 - 0.14.2
 

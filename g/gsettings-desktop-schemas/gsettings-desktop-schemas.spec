@@ -1,8 +1,8 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: A collection of GSettings schemas
@@ -85,6 +85,7 @@ GObject introspection devel data for %name.
 %_datadir/glib-2.0/schemas/org.gnome.desktop.background.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.default-applications.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.enums.xml
+%_datadir/glib-2.0/schemas/org.gnome.desktop.input-sources.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.interface.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.system.locale.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.desktop.lockdown.gschema.xml
@@ -114,6 +115,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

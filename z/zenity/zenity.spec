@@ -1,5 +1,6 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_enable libnotify
+%def_enable webkitgtk
 
 Name: zenity
 Version: %ver_major.0
@@ -18,12 +19,13 @@ Requires: scrollkeeper
 %define intltool_ver 0.40.0
 %define gtk_ver 3.0.0
 
-BuildPreReq: gnome-common docbook-dtds gnome-doc-utils
+BuildPreReq: gnome-common docbook-dtds yelp-tools itstool
 BuildPreReq: intltool >= %intltool_ver
 BuildPreReq: glib2-devel
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: perl-XML-Parser xsltproc
 %{?_enable_libnotify:BuildPreReq: libnotify-devel >= 0.7.0}
+%{?_enable_webkitgtk:BuildRequires: libwebkitgtk3-devel}
 
 %description
 Zenity is a tool that allows you to display Gtk+ dialog boxes from
@@ -36,24 +38,28 @@ a cooler name.
 %setup -q
 
 %build
-%configure --disable-scrollkeeper \
-	%{subst_enable libnotify}
+%configure \
+	%{subst_enable libnotify} \
+	%{subst_enable webkitgtk}
 
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%doc AUTHORS NEWS README THANKS TODO
 %_bindir/%name
 %_bindir/gdialog
 %_datadir/%name
 %_man1dir/*
+%doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Sun Mar 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

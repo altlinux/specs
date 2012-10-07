@@ -1,8 +1,8 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 
 Name: ghex
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: Binary editor for GNOME
@@ -64,6 +64,12 @@ make DESTDIR=%buildroot install
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
+* Sun Sep 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.90-alt1
+- 3.5.90
+
 * Mon May 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

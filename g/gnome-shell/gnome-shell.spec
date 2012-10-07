@@ -1,11 +1,12 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.4
+%define ver_major 3.6
+%define gst_api_ver 1.0
 %def_enable gnome_bluetooth
 %def_with systemd
 
 Name: gnome-shell
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt1.1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -13,14 +14,13 @@ License: GPLv2+
 Url: http://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Patch1: %name-3.3.91-alt-gir.patch
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar
+Patch1: %name-3.5.92-alt-gir.patch
 # use gnome3-applications.menu
-Patch2: %name-3.2.0-avoid-alt-menus.patch
+Patch2: %name-3.5.91-avoid-alt-menus.patch
 Patch3: %name-3.4.1-alt-invalid_user_shell.patch
 
-# https://bugzilla.gnome.org/show_bug.cgi?id=645433
-Patch10: gnome-shell-3.2.1-subpixel_font_rendering.patch
+Patch4: gnome-shell-3.6.0-alt-hold.relase.patch
 
 # boyarch@
 Patch20: 0001-org-gnome-shell-use-litebox-setting-introduced.patch
@@ -28,14 +28,15 @@ Patch20: 0001-org-gnome-shell-use-litebox-setting-introduced.patch
 Patch21: gnome-shell-show-hide-timer.patch
 
 Requires: %name-data = %version-%release
+Requires: polkit-gnome >= 0.105
 
-%define clutter_ver 1.9.12
-%define gjs_ver 1.29.16
-%define mutter_ver 3.4.1
-%define gtk_ver 3.3.9
+%define clutter_ver 1.11.11
+%define gjs_ver 1.33.2
+%define mutter_ver 3.5.92
+%define gtk_ver 3.5.9
 %define gio_ver 2.31.6
-%define gstreamer_ver 0.10.16
-%define eds_ver 2.91.6
+%define gstreamer_ver 0.11.92
+%define eds_ver 3.5.3
 %define telepathy_ver 0.17.5
 %define telepathy_logger_ver 0.2.4
 %define polkit_ver 0.100
@@ -44,6 +45,10 @@ Requires: %name-data = %version-%release
 %define gi_ver 0.10.1
 %define sn_ver 0.11
 %define gcr_ver 3.3.90
+%define atspi_ver 2.5.91
+%define menus_ver 3.5.3
+%define desktop_ver 3.5.1
+%define json_glib_ver 0.13.2
 
 Requires: mutter-gnome >= %mutter_ver
 Requires: ca-certificates
@@ -57,21 +62,23 @@ BuildRequires: libclutter-devel >= %clutter_ver libclutter-gir-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: libgjs-devel >= %gjs_ver
 BuildRequires: glib2-devel libgio-devel >= %gio_ver
+BuildRequires: at-spi2-atk-devel >= %atspi_ver
 BuildRequires: libxml2-devel
-BuildRequires: libgnome-menus-devel libgnome-menus-gir-devel
+BuildRequires: libgnome-menus-devel >= %menus_ver libgnome-menus-gir-devel
 BuildRequires: libGConf-devel
-BuildRequires: libgnome-desktop3-devel
+BuildRequires: libgnome-desktop3-devel >= %desktop_ver
 BuildRequires: libgnome-keyring-devel
 BuildRequires: gcr-libs-devel >= %gcr_ver
 BuildRequires: libstartup-notification-devel >= %sn_ver
 BuildRequires: gobject-introspection-devel >= %gi_ver
+BuildRequires: libjson-glib-devel >= %json_glib_ver
 BuildRequires: libcroco-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libpulseaudio-devel
 %{?_enable_gnome_bluetooth:BuildRequires: libgnome-bluetooth-devel >= %bluetooth_ver libgnome-bluetooth-gir-devel gnome-bluetooth}
 BuildRequires: evolution-data-server-devel >= %eds_ver
 # for screencast recorder functionality
-BuildRequires: gstreamer-devel >= %gstreamer_ver
+BuildRequires: gstreamer%gst_api_ver-devel >= %gstreamer_ver gst-plugins%gst_api_ver-devel
 BuildRequires: libXfixes-devel
 BuildRequires: libgtk+3-devel >= %gtk_ver libgtk+3-gir-devel
 # used in unused BigThemeImage
@@ -87,7 +94,7 @@ BuildRequires: NetworkManager-glib-devel >= 0.8.995 NetworkManager-glib-gir-deve
 BuildRequires: libsoup-gir-devel ca-certificates
 # for browser plugin
 BuildRequires: browser-plugins-npapi-devel
-%{?_with_systemd:BuildRequires: systemd-devel}
+%{?_with_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
 
 %description
 GNOME Shell provides core user interface functions for the GNOME 3 desktop,
@@ -114,23 +121,25 @@ BuildArch: noarch
 This package contains documentation needed to develop extensions for
 GNOME Shell.
 
+%set_typelibdir %_libdir/%name
+
 %prep
 %setup -q
 %patch1 -p1 -b .gir
 %patch2 -p1 -b .menu
 %patch3 -b .shells
-#%patch10 -p1 -b .font_rend
-%patch20 -p2 -b .modal
-%patch21 -p2 -b .timer
+%patch4 -p1 -b .typo
+
+#%%patch20 -p2 -b .modal
+#%%patch21 -p2 -b .timer
 
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--enable-gtk-doc \
     --disable-schemas-compile \
-    --enable-compile-warnings=minimum \
-    --with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt \
-    %{subst_with systemd}
+    %{subst_with systemd} \
+#    --with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt
 %make
 
 %check
@@ -152,7 +161,7 @@ rm -f %buildroot%_libdir/%name/*.la
 %dir %_libdir/%name
 %_libdir/%name/libgnome-shell.so
 %_libdir/%name/libgnome-shell-js.so
-%_typelibdir/*.typelib
+%_libdir/%name/*.typelib
 # browser plugin
 %browser_plugins_path/libgnome-shell-browser-plugin.so
 %exclude %browser_plugins_path/libgnome-shell-browser-plugin.la
@@ -160,13 +169,13 @@ rm -f %buildroot%_libdir/%name/*.la
 %files data -f %name.lang
 %_datadir/applications/%name.desktop
 %_datadir/applications/%name-extension-prefs.desktop
+%_datadir/applications/evolution-calendar.desktop
 %_datadir/%name/
 %_datadir/dbus-1/services/org.gnome.Shell.CalendarServer.service
 %_datadir/dbus-1/services/org.gnome.Shell.HotplugSniffer.service
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
-%config %_datadir/glib-2.0/schemas/org.gnome.shell.evolution.calendar.gschema.xml
 %_man1dir/*
 %doc README NEWS
 
@@ -175,6 +184,12 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Mon Oct 01 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1.1
+- current snapshot (e8ab0b3)
+
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Sat Jul 21 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

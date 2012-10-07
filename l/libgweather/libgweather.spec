@@ -1,10 +1,10 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 %def_disable static
 %def_enable introspection
 
 Name: libgweather
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 Summary: A library for weather information
 
@@ -16,14 +16,12 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 # From configure.in
 %define gtk_ver 2.91.7
 %define glib_ver 2.27.4
-%define gconf_ver 2.32.0
 %define intltool_ver 0.40.0
 %define soup_ver 2.33.1
 %define gir_ver 0.9.5
 
 Requires: %name-data = %version-%release
 
-BuildPreReq: libGConf-devel >= %gconf_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libsoup-gnome-devel >= %soup_ver
 BuildPreReq: intltool >= %intltool_ver
@@ -62,7 +60,7 @@ developing applications that use %name.
 
 %package devel-doc
 Summary: Development documentation for %name
-Group: Development/C
+Group: Development/Documentation
 BuildArch: noarch
 Conflicts: %name-devel < %version-%release
 
@@ -114,17 +112,10 @@ GObject introspection devel data for the %name library
 find %buildroot -name Locations.*.xml.gz | sed 's:'"%buildroot"'::
 s:\(.*\)/Locations\.\([^.]*\)\.xml.gz:%lang(\2) \1/Locations.\2.xml.gz:' > %name-data.lang
 
-%post
-%gconf2_install gweather
-
-%preun
-if [ $1 = 0 ]; then
-%gconf2_uninstall gweather
-fi
-
 %files -f %name.lang
 %_libdir/*.so.*
-%gconf_schemasdir/*.schemas
+%_datadir/glib-2.0/schemas/org.gnome.GWeather.enums.xml
+%_datadir/glib-2.0/schemas/org.gnome.GWeather.gschema.xml
 %doc AUTHORS NEWS README
 
 %files data -f %name-data.lang
@@ -150,6 +141,9 @@ fi
 %endif
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Fri Mar 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

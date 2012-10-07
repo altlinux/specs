@@ -4,8 +4,8 @@
 %def_enable introspection
 
 Name: lib%pkgname
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Shared libraries of the Totem media player play list parser
 Group: System/Libraries
@@ -14,7 +14,7 @@ URL: http://www.hadess.net/%pkgname.php3
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%pkgname/%ver_major/%pkgname-%version.tar.xz
 
-BuildPreReq: glib2-devel >= 2.31.0 libgio-devel >= 2.24.0
+BuildPreReq: glib2-devel >= 2.33.10 libgio-devel >= 2.24.0
 BuildRequires: gnome-common gtk-doc intltool perl-XML-Parser libgmime-devel
 BuildRequires: libxml2-devel libsoup-gnome-devel libarchive-devel
 BuildRequires: libgcrypt-devel libquvi-devel >= 0.2.15
@@ -100,6 +100,9 @@ GObject introspection devel data for the Totem playlist parser library
 %endif
 
 %changelog
+* Tue Sep 18 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt1
+- 3.4.3
+
 * Sat May 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt2
 - rebuild against libquvi.so.7 (libquvi-0.4.1)
 

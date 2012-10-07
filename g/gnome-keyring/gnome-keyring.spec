@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_disable static
 %def_disable gtk_doc
 %def_disable debug
@@ -7,7 +7,7 @@
 %def_enable selinux
 
 Name: gnome-keyring
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: %name is a password keeper for GNOME
@@ -24,7 +24,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 %define gcrypt_ver 1.2.2
 %define tasn1_ver 0.3.4
 %define p11kit_ver 0.6
-%define gcr_ver 3.3.92
+%define gcr_ver 3.6.0
 
 # From configure.in
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel
@@ -81,7 +81,7 @@ and start the keyring daemon.
 %find_lang --with-gnome %name
 
 %files -f %name.lang
-%_sysconfdir/pkcs11/modules/%name-module
+%_sysconfdir/pkcs11/modules/%name.module
 %_bindir/*
 %_datadir/dbus-1/services/org.gnome.keyring.service
 %_datadir/dbus-1/services/org.freedesktop.secrets.service
@@ -104,6 +104,9 @@ and start the keyring daemon.
 %exclude /%_lib/security/*.la
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Apr 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

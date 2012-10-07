@@ -1,13 +1,13 @@
 %define _name pango
-%define ver_major 1.30
-%define module_ver 1.6.0
+%define ver_major 1.32
+%define module_ver 1.8.0
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: System for layout and rendering of internationalized text
 License: %lgpl2plus
@@ -24,29 +24,24 @@ Source13: pangoft2-compat.lds
 Source14: pangocairo-compat.map
 Source15: pangocairo-compat.lds
 
-Patch: pango-1.28.3-alt-compat-version-script.patch
-# revert http://git.gnome.org/browse/pango/patch/?id=ded299c755fd472bc0eb19789a1f40ab4d61a098
-# this interferences with following patch
-Patch1: pango-1.30.0-ded299c755.commit
-
-# https://bugzilla.altlinux.org/show_bug.cgi?id=25938
-Patch2: pango-1.28.4-alt-modules.patch
-
+Patch: pango-1.32.0-alt-compat-version-script.patch
 # check.defs always true
 Patch3: pango-1.30.0-alt-check_defs.patch
+Patch4: pango-1.28.4-alt-modules.patch
 
 Provides: %_name = %version
 Obsoletes: %_name < %version
 Obsoletes: gscript
 
 # From configure.in
-%define glib_ver 2.31.0
+%define glib_ver 2.33.12
 %define cairo_ver 1.7.6
 %define gtk_doc_ver 1.0
 %define xft_ver 2.0.0
 %define fontconfig_ver 2.5.0
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
+%define hb_ver 0.9.4
 
 # We need to prereq these so we can run pango-querymodules in post
 PreReq: glib2 >= %glib_ver
@@ -58,6 +53,7 @@ BuildPreReq: libfreetype-devel >= %freetype_ver
 BuildPreReq: libXft-devel >= %xft_ver 
 BuildPreReq: libcairo-devel >= %cairo_ver libcairo-gobject-devel
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel
+BuildPreReq: libharfbuzz-devel >= %hb_ver
 BuildPreReq: gtk-doc >= %gtk_doc_ver
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= %gi_ver}
 BuildPreReq: gcc-c++ help2man
@@ -119,10 +115,8 @@ GObject introspection devel data for the Pango library
 %setup -q -n %_name-%version
 %patch -p1
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
-
-%patch1 -p1 -R
-%patch2 -p1
 %patch3
+#%%patch4 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -142,10 +136,11 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 
 %install
 %make DESTDIR=%buildroot install
-touch %buildroot%_sysconfdir/%_name/%_name.modules
+touch %buildroot%_libdir/%_name/%module_ver/modules.cache
+mkdir -p %buildroot%_sysconfdir/%_name
 
 %post
-%_bindir/pango-querymodules >%_sysconfdir/%_name/%_name.modules
+%_bindir/pango-querymodules --system --update-cache
 
 %files
 %_bindir/%_name-querymodules
@@ -156,14 +151,12 @@ touch %buildroot%_sysconfdir/%_name/%_name.modules
 %_libdir/%name-1.0.so.*
 %_libdir/%{name}cairo-1.0.so.*
 %_libdir/%{name}ft2-1.0.so.*
-%_libdir/%{name}x-1.0.so.*
 %_libdir/%{name}xft-1.0.so.*
 %_libdir/%_name/%module_ver/*/*.so
-%dir %_sysconfdir/%_name
-%config %_sysconfdir/%_name/pangox.aliases
-%ghost %_sysconfdir/%_name/%_name.modules
+%ghost %_libdir/%_name/%module_ver/modules.cache
 %_man1dir/%_name-querymodules.*
 %_man1dir/%_name-view.*
+%dir %_sysconfdir/%_name
 %doc AUTHORS NEWS README
 
 %files devel
@@ -191,6 +184,14 @@ touch %buildroot%_sysconfdir/%_name/%_name.modules
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Fri Sep 28 2012 Yuri N. Sedunov <aris@altlinux.org> 1.32.1-alt1
+- 1.32.1
+
+* Tue Jun 05 2012 Yuri N. Sedunov <aris@altlinux.org> 1.30.1-alt1
+- 1.30.1
+- removed obsolete pango-1.28.4-alt-modules.patch
+- added --system option to pango-querymodules in %%post
+
 * Sun May 20 2012 Yuri N. Sedunov <aris@altlinux.org> 1.30.0-alt2
 - made check.defs always true
 

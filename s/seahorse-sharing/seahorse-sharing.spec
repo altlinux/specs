@@ -1,5 +1,5 @@
 %define _name seahorse
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: %_name-sharing
 Version: %ver_major.0
@@ -42,6 +42,9 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Sun Apr 01 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - first build for Sisyphus
 

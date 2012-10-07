@@ -1,13 +1,13 @@
 %set_verify_elf_method unresolved=relaxed
 
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 %def_enable introspection
 %def_enable python
 %def_enable zeitgeist
 
 Name: gedit
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -19,7 +19,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 %{?_enable_python:%py_provides gedit}
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Patch: %name-2.91.4-alt-settings.patch
+Patch: %name-3.6.0-alt-settings.patch
 Patch1: %name-2.91.6-alt-link.patch
 Patch2: %name-2.91.8-alt-gir.patch
 
@@ -198,6 +198,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu May 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

@@ -1,9 +1,9 @@
 %def_enable introspection
-%define ver_major 3.4
+%define ver_major 3.5
 %define api_ver 2.90
 
 Name: gucharmap
-Version: %ver_major.1.1
+Version: %ver_major.99
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -13,11 +13,10 @@ Group: Text tools
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 # From configure.ac
-%define glib_ver 2.28.0
-%define gtk_ver 3.0.5
+%define glib_ver 2.32.0
+%define gtk_ver 3.4.0
 
 Requires: lib%name = %version-%release
-Requires(post,preun): GConf
 
 BuildPreReq: rpm-build-gnome rpm-build-licenses
 # From configure.ac
@@ -25,12 +24,12 @@ BuildPreReq: intltool >= 0.40.0
 BuildPreReq: gnome-common
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
-BuildPreReq: gnome-doc-utils >= 0.9.0
+BuildRequires: yelp-tools itstool
 BuildPreReq: gtk-doc >= 1.0
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel libgtk+3-gir-devel}
 
 %description
-This package provides a featureful Unicode character map for GNOME2.
+This package provides a featureful Unicode character map for GNOME.
 
 %package -n lib%name
 Summary: Shared library needed to run %name
@@ -71,7 +70,6 @@ GObject introspection devel data for the GNOME Unicode character map library
 
 %build
 %configure \
-    --disable-scrollkeeper \
     --disable-static \
     --disable-schemas-compile \
     %{subst_enable introspection}
@@ -107,6 +105,9 @@ GObject introspection devel data for the GNOME Unicode character map library
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.99-alt1
+- 3.5.99
+
 * Mon Apr 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1.1-alt1
 - 3.4.1.1
 

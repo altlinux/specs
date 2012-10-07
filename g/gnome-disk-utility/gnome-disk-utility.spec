@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
-Version: 3.4.1
+Version: 3.6.0
 Release: alt1
 
 Summary: Disk management application
@@ -14,14 +14,20 @@ Requires: udisks2 cryptsetup
 
 Source: %name-%version.tar.xz
 
-%define udisks_ver 1.91.0
+%define udisks_ver 1.99.0
 %define glib_ver 2.31.0
-%define gtk_ver 3.3.11
+%define gtk_ver 3.5.8
+%define secret_ver 0.7
+%define pwquality_ver 1.0.0
 
-BuildRequires: gnome-common intltool
+BuildRequires: gnome-common intltool xsltproc
 BuildPreReq: libudisks2-devel >= %udisks_ver
 BuildPreReq: libgio-devel  >= %glib_ver
 BuildPreReq: libgtk+3-devel >= %gtk_ver
+BuildPreReq: libsecret-devel >= %secret_ver
+BuildPreReq: libpwquality-devel >= %pwquality_ver
+BuildRequires: systemd-devel libsystemd-login-devel
+BuildRequires: xsltproc docbook-style-xsl
 
 %description
 This package contains the Palimpsest disk management application.
@@ -43,12 +49,19 @@ RAID, SMART monitoring, etc
 %find_lang --with-gnome --output=global.lang %name palimpsest
 
 %files -f global.lang
-%_bindir/palimpsest
-%_desktopdir/palimpsest.desktop
+%_bindir/gnome-disk-image-mounter
+%_bindir/gnome-disks
+%_desktopdir/gnome-disk-image-mounter.desktop
+%_desktopdir/gnome-disks.desktop
 %_datadir/%name/
+%_datadir/glib-2.0/schemas/org.gnome.Disks.gschema.xml
 %_iconsdir/hicolor/*/apps/*
+%_man1dir/*.1.*
 
 %changelog
+* Thu Sep 20 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon May 07 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

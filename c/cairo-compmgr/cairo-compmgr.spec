@@ -6,7 +6,7 @@
 
 Name: cairo-compmgr
 Version: 0.3.0
-Release: alt7.git348f149.1
+Release: alt8.git83e50c
 Summary: Cairo Composite Manager
 License: GPL
 Group: System/X11
@@ -14,10 +14,9 @@ Group: System/X11
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
-Patch: cairo-compmgr-0.3.0-alt-DSO.patch
 
 BuildRequires: intltool gtk-doc
-BuildRequires: libXcomposite-devel libXdamage-devel libXext-devel libXi-devel libSM-devel
+BuildRequires: libXcomposite-devel libXdamage-devel libXext-devel libXi-devel libSM-devel libGL-devel libXrandr-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libgtk+2-devel
 BuildRequires: libvala-devel
@@ -67,11 +66,10 @@ Contains developer documentation for %name.
 
 %prep
 %setup
-%patch -p2
 
 %build
-sed -i 's!libvala-0.14!libvala-0.16!' configure.ac
-sed -i 's!libvala-0.14!libvala-0.16!' vapi/cairo-compmgr.deps
+# sed -i 's!libvala-0.14!libvala-0.16!' configure.ac
+# sed -i 's!libvala-0.14!libvala-0.16!' vapi/cairo-compmgr.deps
 
 ./autogen.sh
 %configure \
@@ -134,6 +132,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.0-alt8.git83e50c
+- upstream snapshot 83e50c41239a6e25e839a0b5912d5e100b505ad3
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt7.git348f149.1
 - Fixed build
 

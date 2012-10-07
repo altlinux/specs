@@ -1,8 +1,8 @@
-%define ver_major 6.4
+%define ver_major 6.6
 %def_without newtranslations
 
 Name: gcalctool
-Version: %ver_major.2.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -21,7 +21,7 @@ BuildPreReq: rpm-build-licenses rpm-build-gnome
 # Taken from configure.in
 BuildPreReq: intltool yelp-tools itstool
 BuildPreReq: libgtk+3-devel >= 3.0.7
-BuildRequires: libgio-devel >= 2.31.0 libxml2-devel flex
+BuildRequires: libgio-devel >= 2.31.0 libxml2-devel
 
 %description
 This package provides gcalctool, the calculator application that was
@@ -63,6 +63,9 @@ install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 6.6.0-alt1
+- 6.6.0
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 6.4.2.1-alt1
 - 6.4.2.1
 

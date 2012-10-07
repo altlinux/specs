@@ -9,6 +9,7 @@
 %def_enable totem
 %def_disable bugbuddy
 %def_disable metacity
+%def_disable evolution
 
 %define major 2.32
 %define oname gnome-python-desktop
@@ -16,7 +17,7 @@
 
 Name: python-module-pygnome-desktop
 Version: %major.0
-Release: alt6
+Release: alt7
 
 Summary: Python modules for some GNOME libraries part of the GNOME Desktop
 
@@ -43,8 +44,8 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%oname/%major/%oname-%version.tar
 %{?_enable_wnck:BuildRequires: libwnck-devel}
 %{?_enable_metacity:BuildRequires: libmetacity-devel}
 %{?_enable_bugbuddy:BuildRequires: bug-buddy}
-BuildRequires: evolution-data-server-devel libgnome-keyring-devel
-BuildRequires: libgnomeprintui-devel libgtop-devel
+%{?_enable_evolution:BuildRequires: evolution-data-server-devel}
+BuildRequires: libgnome-keyring-devel libgnomeprintui-devel libgtop-devel
 BuildRequires: librsvg-devel python-module-pycairo-devel libgtksourceview-devel
 BuildRequires: libgnomeui-devel
 
@@ -186,10 +187,9 @@ viewer via Python
 
 %build
 export CFLAGS="$CFLAGS `pkg-config --cflags gtk+-2.0`"
-%configure --enable-metacity \
-	--disable-dependency-tracking \
-	--enable-evolution \
-	--enable-evolution-ecal \
+%configure --disable-dependency-tracking \
+	%{?_enable_evolution:--enable-evolution} \
+	%{?_enable_evolution:--enable-evolution-ecal} \
 	%{subst_enable bugbuddy} \
 	%{subst_enable metacity} \
 	%{subst_enable nautilusburn} \
@@ -260,8 +260,10 @@ cp -R examples %buildroot%_docdir/%name/
 %python_sitelibdir/gtk-2.0/metacity.so
 %endif
 
+%if_enabled evolution
 %files -n %bname-evolution
 %python_sitelibdir/gtk-2.0/evolution/
+%endif
 
 %if_enabled evince
 %files -n %bname-evince
@@ -271,6 +273,9 @@ cp -R examples %buildroot%_docdir/%name/
 %exclude %python_sitelibdir/gtk-2.0/*.la
 
 %changelog
+* Tue Oct 02 2012 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt7
+- disabled evolution module
+
 * Wed Jun 20 2012 Yuri N. Sedunov <aris@altlinux.org> 2.32.0-alt6
 - moved wnck module to separate subpackage
 - removed baseless dependence on python-module-pygnome-extras

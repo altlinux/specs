@@ -1,14 +1,14 @@
-%define ver_major 1.4
+%define ver_major 1.6
 %define api_ver 1.0
 %define gtk_api_ver 3.0
 
-%def_enable js
+%def_disable js
 %def_enable gjs
 %def_enable vala
 %def_enable gtk_doc
 
 Name: libpeas
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A gobject-based plugins engine
@@ -17,9 +17,11 @@ License: LGPLv2+
 Url: ftp://ftp.gnome.org/pub/gnome/sources/%name/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-BuildRequires: gnome-common intltool gtk-doc libgtk+3-devel gobject-introspection-devel >= 1.31.10 libgtk+3-gir-devel
+BuildRequires: gnome-common intltool gtk-doc
+BuildRequires: libgio-devel >= 2.32.0 libgtk+3-devel >= 3.0.0
+BuildRequires: gobject-introspection-devel >= 1.31.10 libgtk+3-gir-devel
 # for python support
 BuildRequires: python-module-pygobject3-devel >= 3.1.1
 # for Javascript support
@@ -66,7 +68,7 @@ that are needed to write applications that use %name.
 
 %package devel-doc
 Summary: Development documentation for the %name
-Group: Development/C
+Group: Development/Documentation
 Conflicts: %name < %version-%release
 BuildArch: noarch
 
@@ -162,6 +164,10 @@ This package contains %name demonstration programs
 
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.0-alt1
+- 1.6.0
+- disabled seed loader (seed unmantained)
+
 * Wed Apr 04 2012 Yuri N. Sedunov <aris@altlinux.org> 1.4.1-alt1
 - 1.4.1 snapshot
 

@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %def_enable python
 %define gedit_pluginsdir %_libdir/gedit/plugins
 
@@ -18,7 +18,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define glib_ver 2.31.0
 %define gtk_ver 3.3.7
 %define gtksourceview_ver 3.3.0
-%define gedit_ver 3.3.7
+%define gedit_ver 3.6.0
 %define peas_ver 1.2.0
 
 BuildPreReq: rpm-build-gnome >= 0.6
@@ -94,6 +94,9 @@ done
 %exclude %gedit_pluginsdir/*.la
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Apr 23 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 

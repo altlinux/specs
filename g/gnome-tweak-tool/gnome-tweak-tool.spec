@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: gnome-tweak-tool
-Version: %ver_major.0.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A tool to customize advanced GNOME 3 options
@@ -16,9 +16,8 @@ BuildArch: noarch
 Requires: gnome-shell >= %ver_major
 
 BuildRequires: GConf gnome-common intltool libgio-devel
-BuildRequires: gsettings-desktop-schemas-devel >= 3.3.2
-BuildRequires: python-module-pygobject-devel >= 2.28.0
-BuildRequires: python-module-pygobject3-devel >= 3.0.0
+BuildRequires: gsettings-desktop-schemas-devel >= 3.4.0
+BuildRequires: python-module-pygobject3-devel >= 3.2.1
 
 %description
 GNOME Tweak Tool is an application for changing the advanced settings
@@ -57,9 +56,13 @@ Features:
 %python_sitelibdir/gtweak
 %_datadir/applications/%name.desktop
 %_datadir/%name
+%_iconsdir/hicolor/*/*/*.png
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon May 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0.1-alt1
 - 3.4.0.1
 

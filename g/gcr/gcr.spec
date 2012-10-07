@@ -1,9 +1,9 @@
 %define _libexecdir %_prefix/libexec
-%define ver_major 3.4
+%define ver_major 3.6
 %def_enable introspection
 
 Name: gcr
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -16,7 +16,9 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 Requires: %name-libs = %version-%release
 Conflicts: gnome-keyring < 3.3.0
 
-BuildRequires: intltool glib2-devel libgtk+3-devel libp11-kit-devel
+%define glib_ver 2.32.0
+
+BuildRequires: intltool glib2-devel >= %glib_ver libgtk+3-devel libp11-kit-devel
 BuildRequires: libgcrypt-devel libtasn1-devel libtasn1-utils gnupg2-gpg
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel}
 BuildRequires: chrpath
@@ -73,7 +75,7 @@ GObject introspection devel data for the GCR libraries.
 
 %package libs-devel-doc
 Summary: Development documentation for GCR libraries
-Group: Development/C
+Group: Development/Documentation
 Conflicts: %name-libs < %version-%release
 BuildArch: noarch
 
@@ -145,6 +147,9 @@ chrpath --delete %buildroot%_libexecdir/gcr-prompter
 %endif
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Apr 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

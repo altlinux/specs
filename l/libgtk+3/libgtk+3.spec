@@ -1,5 +1,5 @@
 %define _name gtk+
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver 3.0
 %define binary_ver 3.0.0
 
@@ -12,7 +12,7 @@
 %def_disable wayland
 
 Name: libgtk+3
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
@@ -25,10 +25,11 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: %gnome_ftp/%_name/%ver_major/%_name-%version.tar.xz
 Patch: gtk+-2.16.5-alt-stop-spam.patch
 
-%define glib_ver 2.32.2
+%define glib_ver 2.33.1
 %define cairo_ver 1.10
 %define pango_ver 1.30.0
-%define atk_ver 1.30
+%define atk_ver 2.5.91
+%define atspi_atk_ver 2.5.91
 %define pixbuf_ver 2.26.0
 %define fontconfig_ver 2.2.1-alt2
 %define gtk_doc_ver 1.6
@@ -49,6 +50,7 @@ BuildPreReq: libcairo-devel >= %cairo_ver
 BuildPreReq: libcairo-gobject-devel >= %cairo_ver
 BuildPreReq: libpango-devel >= %pango_ver
 BuildPreReq: libatk-devel >= %atk_ver
+BuildPreReq: at-spi2-atk-devel >= %atk_ver
 BuildPreReq: libgdk-pixbuf-devel >= %pixbuf_ver
 BuildPreReq: fontconfig-devel >= %fontconfig_ver
 BuildPreReq: gtk-doc >= %gtk_doc_ver
@@ -250,6 +252,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 
 %files -f gtk30.lang
 %_bindir/gtk-query-immodules-%api_ver
+%_bindir/gtk-launch
 %_libdir/libgdk-3.so.*
 %_libdir/libgtk-3.so.*
 %dir %_libdir/gtk-%api_ver/modules
@@ -277,10 +280,12 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 #%config(noreplace) %_sysconfdir/profile.d/*
 %ghost %_libdir/gtk-%api_ver/%binary_ver/immodules.cache
 %_man1dir/gtk-query-immodules*
+%_man1dir/gtk-launch.*
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS.bz2 README
+
 
 %files devel
 %_includedir/gtk-%api_ver/
@@ -348,6 +353,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Mon Jul 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
 - 3.4.4 release
 

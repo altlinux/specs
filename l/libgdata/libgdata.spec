@@ -1,5 +1,7 @@
+%def_enable gnome
+
 Name: libgdata
-Version: 0.13.0
+Version: 0.13.1
 Release: alt1
 
 Summary: Library for the GData protocol
@@ -8,14 +10,16 @@ License: LGPLv2+
 URL: http://live.gnome.org/libgdata
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source0: %name-%version.tar.xz
-#Patch: %name-%version-%release.patch
+Source: %name-%version.tar.xz
 
 %define soup_ver 2.37.91
+%define goa_ver 3.2
 
 BuildRequires: gnome-common gtk-doc intltool libsoup-gnome-devel >= %soup_ver
 BuildRequires: libxml2-devel libgdk-pixbuf-devel libgtk+3-devel liboauth-devel
-BuildRequires: libgnome-keyring-devel gobject-introspection-devel libsoup-gnome-gir-devel
+BuildRequires: gcr-libs-devel libgnome-online-accounts-devel >= %goa_ver
+BuildRequires: gobject-introspection-devel libgnome-online-accounts-gir-devel
+BuildRequires: libsoup-gnome-gir-devel
 
 %description
 libgdata is a GLib-based library for accessing online service APIs using the
@@ -50,12 +54,12 @@ GObject introspection devel data for the GData library.
 
 %prep
 %setup -q
-#%patch -p1
 
 %build
 %autoreconf
 %configure \
 	--enable-gtk-doc \
+	%{subst_enable gnome} \
 	--enable-introspection \
 	--disable-static
 %make_build
@@ -82,6 +86,9 @@ GObject introspection devel data for the GData library.
 %_girdir/*.gir
 
 %changelog
+* Mon Jul 30 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.1-alt1
+- 0.13.1
+
 * Sat Apr 14 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.0-alt1
 - 0.13.0
 

@@ -1,16 +1,23 @@
-%define ver_major 3.4
+%define ver_major 3.6
 %define api_ver %ver_major
 %define ua_ver %ver_major
+
 %def_enable gtk_doc
-%def_enable zeroconf
+%def_without webkit2
+%if_with webkit2
+%def_disable introspection
+%else
 %def_enable introspection
-%if_enabled introspection
-%def_enable seed
 %endif
 
+# seed support removed
+#%if_enabled introspection
+#%def_enable seed
+#%endif
+
 Name: epiphany
-Version: %ver_major.2
-Release: alt1
+Version: %ver_major.0
+Release: alt2
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -18,36 +25,37 @@ Group: Networking/WWW
 License: GPL
 URL: http://www.gnome.org/projects/%name
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Provides: webclient
 
-%define webkit_ver 1.7.92
+%define webkit_ver 1.9.6
 
 Requires: %name-data = %version-%release indexhtml iso-codes libwebkitgtk3-webinspector
 
-BuildPreReq: gnome-common
-BuildPreReq: intltool >= 0.40.0
+BuildRequires: gnome-common
+BuildPreReq: intltool >= 0.50.0
 BuildPreReq: libgio-devel >= 2.31.2
-BuildPreReq: libgtk+3-devel >= 3.3.8
+BuildPreReq: libgtk+3-devel >= 3.5.2
 BuildPreReq: libSM-devel
 BuildPreReq: libxml2-devel >= 2.6.12
 BuildPreReq: libxslt-devel >= 1.1.7
+# Epiphany partially ported to WebKit2
 BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
-BuildPreReq: libsoup-gnome-devel >= 2.37.1
+%{?_with_webkit2:BuildPreReq: libwebkit2gtk-devel >= %webkit_ver}
+BuildPreReq: libsoup-gnome-devel >= 2.39.6
 BuildPreReq: libgnome-keyring-devel >= 2.32.0
-BuildRequires: libnotify-devel libnss-devel libsqlite3-devel
+BuildPreReq: gcr-libs-devel >= 3.5.5
+BuildRequires: libgnome-desktop3-devel libnotify-devel libnss-devel libsqlite3-devel
 # Zeroconf support
-%{?_enable_zeroconf:BuildPreReq: libavahi-devel libavahi-gobject-devel}
+BuildPreReq: libavahi-devel libavahi-gobject-devel
 # GObject introspection support
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libwebkitgtk3-gir-devel}
 # Seed support
 %{?_enable_seed:BuildPreReq: libseed-gtk3-devel >= 3.1.1}
-
 BuildPreReq: iso-codes-devel >= 0.35
-BuildPreReq: lsb-core ca-certificates
-BuildPreReq: gnome-doc-utils gtk-doc db2latex-xsl
-
+BuildRequires: lsb-core ca-certificates gnome-doc-utils gtk-doc db2latex-xsl
 BuildRequires: gcc-c++ gsettings-desktop-schemas-devel
 
 %description
@@ -105,17 +113,15 @@ GObject introspection devel data for the Epiphany
 %setup -q
 
 %build
-gnome-doc-prepare -f
 %autoreconf
 %configure \
 	--disable-schemas-compile \
-	--disable-scrollkeeper \
 	--disable-dependency-tracking \
 	%{?_enable_gtk_doc:--enable-gtk-doc} \
-	%{subst_enable zeroconf} \
-	%{subst_enable introspection} \
-	%{subst_enable seed} \
+	%{?_enable introspection:--enable-introspection=yes} \
+	%{subst_with webkit2} \
 	--with-distributor-name="ALTLinux"
+#	%{subst_enable seed} \
 
 %make_build
 
@@ -157,6 +163,14 @@ gnome-doc-prepare -f
 %endif
 
 %changelog
+* Fri Oct 05 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
+- updated to c85e454e
+- build without WebKit2
+
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+- built with WebKit2
+
 * Sat May 19 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

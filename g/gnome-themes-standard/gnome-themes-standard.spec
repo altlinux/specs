@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: gnome-themes-standard
-Version: %ver_major.2
+Version: %ver_major.0.2
 Release: alt1
 
 Summary: A set of standard themes for GNOME desktop
@@ -23,7 +23,7 @@ Requires: %name-data = %version-%release
 
 %define theme_prefix gnome-theme
 BuildPreReq: intltool >= 0.35.0
-BuildRequires: libgtk+3-devel >= 3.3.8 librsvg-devel
+BuildRequires: libgtk+3-devel >= 3.5.17 librsvg-devel
 
 %description
 This package provides a set of standard GTK+-(2/3) themes, engines,
@@ -71,6 +71,23 @@ This package provides a GTK+3 theme engine Adwaita.
 %_datadir/icons/Adwaita/cursors/
 %dir %_datadir/themes/Adwaita/gtk-2.0
 %_datadir/themes/Adwaita/gtk-2.0/gtkrc
+%_datadir/themes/Adwaita/gtk-2.0/Arrows/
+%_datadir/themes/Adwaita/gtk-2.0/Buttons/
+%_datadir/themes/Adwaita/gtk-2.0/Check-Radio/
+%_datadir/themes/Adwaita/gtk-2.0/Entry/
+%_datadir/themes/Adwaita/gtk-2.0/Expanders/
+%_datadir/themes/Adwaita/gtk-2.0/Handles/
+%_datadir/themes/Adwaita/gtk-2.0/Lines/
+%_datadir/themes/Adwaita/gtk-2.0/Menu-Menubar/
+%_datadir/themes/Adwaita/gtk-2.0/Others/
+%_datadir/themes/Adwaita/gtk-2.0/ProgressBar/
+%_datadir/themes/Adwaita/gtk-2.0/Range/
+%_datadir/themes/Adwaita/gtk-2.0/Scrollbars/
+%_datadir/themes/Adwaita/gtk-2.0/Shadows/
+%_datadir/themes/Adwaita/gtk-2.0/Spin/
+%_datadir/themes/Adwaita/gtk-2.0/Tabs/
+%_datadir/themes/Adwaita/gtk-2.0/Toolbar/
+
 %dir %_datadir/themes/Adwaita/gtk-3.0
 %_datadir/themes/Adwaita/gtk-3.0/gtk.css
 %_datadir/themes/Adwaita/gtk-3.0/settings.ini
@@ -78,20 +95,12 @@ This package provides a GTK+3 theme engine Adwaita.
 %_datadir/themes/Adwaita/gtk-3.0/gtk.gresource
 
 # Accessibility themes from ghome-temes(-default)
-%_datadir/themes/LowContrast/gtk-2.0/gtkrc
-%_datadir/themes/LowContrast/gtk-3.0/gtk.css
-%_datadir/themes/LowContrast/index.theme
-%_iconsdir/LowContrast/
 %_datadir/themes/HighContrast/gtk-2.0/gtkrc
 %_datadir/themes/HighContrast/gtk-3.0/gtk.css
 %_datadir/themes/HighContrast/gtk-3.0/gtk.gresource
 %_datadir/themes/HighContrast/index.theme
+%_datadir/themes/HighContrast/gtk-3.0/settings.ini
 %_iconsdir/HighContrast/
-%_datadir/themes/HighContrastInverse/gtk-2.0/gtkrc
-%_datadir/themes/HighContrastInverse/gtk-3.0/gtk.css
-%_datadir/themes/HighContrastInverse/gtk-3.0/gtk.gresource
-%_datadir/themes/HighContrastInverse/index.theme
-%_iconsdir/HighContrastInverse/
 %doc NEWS README
 
 %files -n libgtk3-engine-adwaita
@@ -99,6 +108,9 @@ This package provides a GTK+3 theme engine Adwaita.
 %exclude %_libdir/gtk-3.0/3.0.0/theming-engines/libadwaita.la
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0.2-alt1
+- 3.6.0.2
+
 * Tue May 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 

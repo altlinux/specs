@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.5
 %define panel_api_ver 4.0
 %def_enable frequency_selector
 %def_disable mixer
@@ -15,7 +15,7 @@
 %def_with hal
 
 Name: gnome-applets
-Version: %ver_major.1
+Version: %ver_major.92
 Release: alt1
 
 Summary: Small applications for the GNOME panel
@@ -29,7 +29,6 @@ Source1: 01-cpufreq.pkla
 Patch: %name-2.6.0-alt-install_makefile.patch
 Patch1: %name-2.9.90-alt-modemlights.patch
 Patch2: %name-2.3.5-alt-geyes_schema.patch
-Patch3: %name-2.16.1-relax-buildreqs.patch
 
 # From configure.in
 %define gtk_ver 2.99.3
@@ -45,7 +44,7 @@ Patch3: %name-2.16.1-relax-buildreqs.patch
 %define system_tools_backends_ver 1.1.3
 %define libnotify_ver 0.7.1
 %define icon_theme_ver 2.91.6
-%define libgweather_ver 2.91.6
+%define libgweather_ver 3.5.1
 %define nm_ver 0.7
 
 Requires: %name-charpick = %version-%release
@@ -462,6 +461,7 @@ fi
 %_datadir/%name/ui/gweather-applet-menu.xml
 %_datadir/gnome-panel/%panel_api_ver/applets/org.gnome.applets.GWeatherApplet.panel-applet
 %_datadir/dbus-1/services/org.gnome.panel.applet.GWeatherAppletFactory.service
+%_datadir/glib-2.0/schemas/org.gnome.applets.GWeatherApplet.gschema.xml
 
 %if_enabled mini_commander
 %files mini-commander -f command-line.lang
@@ -521,6 +521,9 @@ fi
 %exclude %_datadir/gnome-panel/4.0/applets/org.gnome.applets.NullApplet.panel-applet
 
 %changelog
+* Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.92-alt1
+- 3.5.92
+
 * Sun Apr 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

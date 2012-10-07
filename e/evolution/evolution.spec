@@ -1,13 +1,15 @@
-%define ver_major 3.4
-%define ver_base 3.4
+%define ver_major 3.6
+%define ver_base 3.6
+%define gst_api_ver 1.0
+
 %def_disable static
 %def_with openldap
 %def_disable static_ldap
 %def_with krb5
-%def_with clutter
 %def_disable map
 %def_disable image_inline
 %def_enable goa
+
 # %define plugins experimental
 %define plugins all
 
@@ -15,7 +17,7 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.4
+Version: %ver_major.0
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -29,9 +31,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 ### Patches ###
 # hack to properly link against ldap libs
 Patch10: evolution-3.0.3-ldap_libs.patch
-# Part of RH bug 170799:
-Patch14: evolution-3.1.92-hide-switcher-buttons-by-default.patch
-# RH bug #176400 
+# RH bug #176400
 Patch27: evolution-2.9.1-im-context-reset.patch
 
 %define evo_plugin_dir %_libdir/evolution/%ver_base/plugins
@@ -43,21 +43,20 @@ Provides: camel
 %define glib_ver 2.30.0
 %define gtk_ver 3.2
 %define clutter_gtk_ver 0.91.8
-%define eds_ver 3.4.3
+%define eds_ver 3.6.0
 %define gnome_icon_ver 3.0.0
 %define gnome_desktop_ver 2.91.6
-%define gtkhtml_ver 4.4.3
-%define libsoup_ver 2.33.6
-%define dbus_ver 1.0.0
+%define gtkhtml_ver 4.5.2
+%define libsoup_ver 2.38.1
 %define libnotify_ver 0.7.0
-%define gweather_ver 2.91.6
+%define gweather_ver 3.5.0
 %define ical_ver 0.43
-%define gdata_ver 0.8.0
+%define gdata_ver 0.10.0
 %define champlain_ver 0.12
 %define goa_ver 3.1.1
 %define pst_ver 0.6.54
+%define webkit_ver 1.8.0
 
-Requires(post,preun): GConf
 Requires: %name-data = %version-%release
 Requires: evolution-data-server >= %eds_ver
 Requires: gnome-settings-daemon
@@ -69,32 +68,27 @@ BuildPreReq: libgail3-devel >= %gtk_ver
 BuildPreReq: gnome-icon-theme >= %gnome_icon_ver
 BuildPreReq: evolution-data-server-devel >= %eds_ver
 BuildPreReq: libgtkhtml4-devel >= %gtkhtml_ver
-BuildPreReq: libGConf-devel libdbus-glib-devel
-BuildPreReq: libgnomecanvas-devel
 BuildPreReq: libgnome-desktop3-devel >= %gnome_desktop_ver
-BuildPreReq: libxml2-devel
 BuildPreReq: libsoup-gnome-devel >= %libsoup_ver
-BuildPreReq: libdbus-devel >= %dbus_ver
 BuildPreReq: libnotify-devel >= %libnotify_ver
-BuildPreReq: libatk-devel
-BuildPreReq: libX11-devel xorg-xproto-devel
 BuildPreReq: libgweather-devel >= %gweather_ver
 BuildPreReq: NetworkManager-devel >= 0.8.997
 BuildPreReq: libical-devel >= %ical_ver
 BuildPreReq: libgdata-devel >= %gdata_ver
 BuildPreReq: libpst-devel >= %pst_ver
+BuildPreReq: libwebkitgtk3-devel >= %webkit_ver
+BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver
 %{?_enable_goa:BuildPreReq: libgnome-online-accounts-devel >= %goa_ver}
-%{?_with_clutter:BuildPreReq: libclutter-gtk3-devel >= %clutter_gtk_ver libmx-devel}
 %{?_enable_map:BuildPreReq: libchamplain-gtk3-devel >= %champlain_ver libgeoclue-devel}
 %{?_enable_image_inline:BuildRequires: libgtkimageview-devel}
 
+BuildRequires: docbook-utils intltool gnome-doc-utils yelp-tools itstool gtk-doc
+BuildRequires: gcc-c++ flex libSM-devel libcom_err-devel gstreamer%gst_api_ver-devel
+BuildRequires: python-modules-compiler python-modules-encodings libnspr-devel libnss-devel libX11-devel libcanberra-gtk3-devel
+BuildRequires: zlib-devel libxml2-devel
+
 # Some plugins/extensions link with others, resulting in multiple rpath entries
 %set_verify_elf_method rpath=relaxed
-
-BuildRequires: gcc-c++ docbook-utils flex intltool gnome-doc-utils gtk-doc libSM-devel libcom_err-devel gstreamer-devel
-BuildRequires: python-modules-compiler python-modules-encodings libnspr-devel libnss-devel libX11-devel libcanberra-gtk3-devel
-BuildRequires: zlib-devel
-
 
 %if_with krb5
 BuildRequires: libkrb5-devel
@@ -179,7 +173,6 @@ This package contains documentation needed to develop Evolution plugins.
 %prep
 %setup -q
 %patch10 -b .ldaphack
-%patch14 -p1 -b .hide-switcher-buttons-by-default
 %patch27 -p1 -b .im-context-reset
 
 %__subst '/use diagnostics/d' addressbook/tools/csv2vcard.in
@@ -245,9 +238,7 @@ export KILL_PROCESS_CMD=%_bindir/killall
     --with-krb5-libs=%_libdir \
     --with-krb5-includes=%_includedir/krb5 \
 %endif
-    --disable-schemas-install \
     --disable-schemas-compile \
-    %{subst_with clutter} \
     %{?_enable_map:--enable-contact-maps} \
     %{subst_enable goa} \
     %{?_disable_image_inline:--disable-image-inline}
@@ -276,32 +267,6 @@ rm -rf %buildroot%_localstatedir/scrollkeeper
 
 %find_lang --with-gnome --output=%name.lang %name %name-%ver_base
 
-%define schemas apps-evolution-attachment-reminder apps-evolution-mail-notification apps-evolution-mail-prompts-checkdefault apps-evolution-template-placeholders apps_evolution_addressbook apps_evolution_calendar apps_evolution_email_custom_header apps_evolution_eplugin_face apps_evolution_shell evolution-mail
-
-%post data
-%gconf2_install %schemas
-
-%preun data
-if [ $1 = 0 ]; then
-%gconf2_uninstall %schemas
-fi
-
-%post bogofilter
-%gconf2_install evolution-bogofilter
-
-%preun bogofilter
-if [ $1 = 0 ]; then
-%gconf2_uninstall evolution-bogofilter
-fi
-
-%post spamassassin
-%gconf2_install evolution-spamassassin
-
-%preun spamassassin
-if [ $1 = 0 ]; then
-%gconf2_uninstall evolution-spamassassin
-fi
-
 %files
 %_bindir/*
 %_libdir/%name/
@@ -312,26 +277,13 @@ fi
 %_libexecdir/%name/%ver_base/killev
 %doc AUTHORS ChangeLog NEWS README
 
-%exclude %evo_module_dir/libevolution-module-bogofilter.so
-%exclude %evo_module_dir/libevolution-module-spamassassin.so
+%exclude %evo_module_dir/module-bogofilter.so
+%exclude %evo_module_dir/module-spamassassin.so
 
 %files data -f %name.lang
-%_datadir/applications/*
-%_datadir/mime-info/*
-%_datadir/%name
-
 %_sysconfdir/xdg/autostart/evolution-alarm-notify.desktop
-%_sysconfdir/gconf/schemas/apps-evolution-attachment-reminder.schemas
-%_sysconfdir/gconf/schemas/apps-evolution-mail-notification.schemas
-%_sysconfdir/gconf/schemas/apps-evolution-mail-prompts-checkdefault.schemas
-%_sysconfdir/gconf/schemas/apps-evolution-template-placeholders.schemas
-%_sysconfdir/gconf/schemas/apps_evolution_addressbook.schemas
-%_sysconfdir/gconf/schemas/apps_evolution_calendar.schemas
-%_sysconfdir/gconf/schemas/apps_evolution_email_custom_header.schemas
-%_sysconfdir/gconf/schemas/apps_evolution_eplugin_face.schemas
-%_sysconfdir/gconf/schemas/apps_evolution_shell.schemas
-%_sysconfdir/gconf/schemas/evolution-mail.schemas
-
+%_datadir/applications/*
+%_datadir/%name/
 %_datadir/glib-2.0/schemas/org.gnome.evolution.addressbook.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.calendar.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.gschema.xml
@@ -345,6 +297,7 @@ fi
 %_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.itip.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.mail-notification.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.prefer-plain.gschema.xml
+%_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.publish-calendar.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.plugin.templates.gschema.xml
 %_datadir/glib-2.0/schemas/org.gnome.evolution.shell.gschema.xml
 %_datadir/GConf/gsettings/evolution.convert
@@ -359,16 +312,17 @@ fi
 %_datadir/gtk-doc/html/*
 
 %files bogofilter
-%evo_module_dir/libevolution-module-bogofilter.so
-%_sysconfdir/gconf/schemas/evolution-bogofilter.schemas
+%evo_module_dir/module-bogofilter.so
 %_datadir/glib-2.0/schemas/org.gnome.evolution.bogofilter.gschema.xml
 
 %files spamassassin
-%evo_module_dir/libevolution-module-spamassassin.so
-%_sysconfdir/gconf/schemas/evolution-spamassassin.schemas
+%evo_module_dir/module-spamassassin.so
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Sat Sep 22 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.4-alt1
 - 3.4.4
 

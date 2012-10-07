@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.5
 
 Name: gnome-common
-Version: %ver_major.0.1
+Version: %ver_major.91
 Release: alt1
 
 Summary: Gnome-common contains useful things common to building gnome packages
@@ -10,7 +10,7 @@ Group: Development/GNOME and GTK+
 Url: http://www.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar
+Source: %name-%version.tar.xz
 Patch: %name-2.24.0-alt-no-libtool-check.patch
 
 BuildArch: noarch
@@ -37,10 +37,14 @@ cp doc-build/README README.doc
 %_bindir/gnome-doc-common
 %_datadir/aclocal/gnome-common.m4
 %_datadir/aclocal/gnome-compiler-flags.m4
+%_datadir/aclocal/gnome-code-coverage.m4
 %_datadir/%name/
 %doc README* ChangeLog doc/usage.txt
 
 %changelog
+* Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.91-alt1
+- 3.5.91
+
 * Mon Mar 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0.1-alt1
 - 3.4.0.1
 

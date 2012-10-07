@@ -2,10 +2,11 @@
 %def_disable gles2
 %def_disable wayland_egl
 %def_disable wayland_server
+%def_disable kms_egl_platform
 
 
 Name: libcogl
-Version: 1.10.4
+Version: 1.12.0
 Release: alt1
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
@@ -24,11 +25,12 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: libgdk-pixbuf-devel
 BuildRequires: gtk-doc
 BuildRequires: libXcomposite-devel libXext-devel libXdamage-devel libX11-devel libXfixes-devel
-BuildRequires: libGL-devel libdrm-devel
+BuildRequires: libGL-devel 
 BuildRequires: libpango-devel libpango-gir-devel
 %{?_enable_gles2:BuildRequires: libGLES-devel >= 8.0}
 %{?_enable_wayland_egl:BuildRequires: libwayland-client-devel libwayland-egl-devel}
 %{?_enable_wayland_server:BuildRequires: libwayland-server-devel}
+%{?_kms_egl_platform:BuildRequires: libdrm-devel libgbm-devel}
 
 %description
 Cogl is a small open source library for using 3D graphics hardware to draw
@@ -95,6 +97,7 @@ NOCONFIGURE=1 ./autogen.sh
 	--enable-gtk-doc \
 	--enable-introspection \
 	%{subst_enable gles2} \
+	%{?_kms_egl_platform:--enable-kms-egl-platform } \
 	%{?_enable_wayland_egl:--enable-wayland-egl-platform} \
 	%{?_enable_wayland_server:--enable-wayland-egl-server}
 
@@ -124,6 +127,15 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
+- 1.12.0
+
+* Tue Sep 18 2012 Alexey Shabalin <shaba@altlinux.ru> 1.11.6-alt1
+- 1.11.6
+
+* Thu Sep 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.11.4-alt1
+- 1.11.4
+
 * Wed Jul 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.4-alt1
 - 1.10.4
 

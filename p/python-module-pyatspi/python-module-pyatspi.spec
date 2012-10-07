@@ -1,11 +1,11 @@
 %define _name pyatspi
-%define ver_major 2.4
+%define ver_major 2.6
 
 Name: python-module-%_name
 Version: %ver_major.0
 Release: alt1
-Summary: Python bindings for at-spi library
 
+Summary: Python bindings for at-spi library
 Group: Development/Python
 License: LGPLv2+
 Url: http://www.linuxfoundation.org/en/AT-SPI_on_D-Bus
@@ -14,7 +14,7 @@ Source: ftp://ftp.gnome.org/pub/sources/%name/%ver_major/%_name-%version.tar.xz
 
 BuildArch: noarch
 
-BuildRequires: python-module-pygobject3-devel >= 3.1.0
+BuildRequires: python-devel python-module-pygobject3-devel >= 3.1.0
 BuildRequires: libX11-devel libICE-devel libSM-devel
 
 %description
@@ -40,10 +40,14 @@ This package includes a python client library for at-spi.
 %make DESTDIR=%buildroot install
 
 %files
+%_bindir/magFocusTracker.py
 %python_sitelibdir/%_name/
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 2.6.0-alt1
+- 2.6.0
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 2.4.0-alt1
 - 2.4.0
 

@@ -1,8 +1,8 @@
-%define ver_major 0.12
+%define ver_major 0.13
 %def_disable introspection
 
 Name: dconf
-Version: %ver_major.1
+Version: %ver_major.90
 Release: alt1
 
 Summary: A simple configuration system
@@ -18,9 +18,9 @@ Provides: %_rpmlibdir/update-dconf-database.filetrigger
 
 Requires: lib%name = %version-%release dbus
 
-BuildRequires: libgio-devel >= 2.30.0 libgtk+3-devel libxml2-devel vala-tools >= 0.15.1
-BuildRequires: libdbus-devel gtk-doc
-%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.31.10}
+BuildRequires: libgio-devel >= 2.33.3 libgtk+3-devel libxml2-devel vala-tools >= 0.17.0
+BuildRequires: libdbus-devel gtk-doc intltool xsltproc
+%{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 1.33.3}
 
 %description
 dconf is a low-level configuration system. Its main purpose is to
@@ -119,7 +119,9 @@ mkdir -p %buildroot%_sysconfdir/%name/{profile,db}
 # rpm posttrans filetrigger
 install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.filetrigger
 
-%files
+%find_lang %name
+
+%files -f %name.lang
 %_bindir/dconf
 %_libdir/gio/modules/libdconfsettings.so
 %_libexecdir/dconf-service
@@ -128,6 +130,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/profile
 %dir %_sysconfdir/%name/db
+%_man1dir/%name-service.1.*
+%_man1dir/%name.1.*
+%_man7dir/%name.7.*
 %doc NEWS
 
 %files -n lib%name
@@ -145,8 +150,10 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_bindir/dconf-editor
 %dir %_datadir/dconf-editor
 %_datadir/dconf-editor/dconf-editor.ui
+%_datadir/dconf-editor/dconf-editor-menu.ui
 %_datadir/applications/dconf-editor.desktop
 %_iconsdir/hicolor/*/apps/*.*
+%_man1dir/dconf-editor.1.*
 %config %_datadir/glib-2.0/schemas/ca.desrt.dconf-editor.gschema.xml
 
 %if_enabled introspection
@@ -161,9 +168,12 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %_datadir/vala/vapi/dconf.deps
 %_datadir/vala/vapi/dconf.vapi
 
-%exclude %_sysconfdir/bash_completion.d/dconf-bash-completion.sh
+%exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.90-alt1
+- 0.13.90
+
 * Mon May 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.1-alt1
 - 0.12.1
 
