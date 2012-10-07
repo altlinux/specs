@@ -1,7 +1,7 @@
 %define ver_major 0.9
 
 Name: mm-common
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: Common build files of the C++ bindings
@@ -9,7 +9,7 @@ Group: Development/Tools
 BuildArch: noarch
 License: GPLv2+ and GFDL
 Url: http://gtkmm.org
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.bz2
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
 %description
 The mm-common module provides the build infrastructure and utilities
@@ -51,6 +51,9 @@ which could be used as a base for new mm module.
 %_docdir/%name/*
 
 %changelog
+* Sun Oct 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
+- 0.9.6
+
 * Wed Mar 30 2011 Yuri N. Sedunov <aris@altlinux.org> 0.9.5-alt1
 - 0.9.5
 
