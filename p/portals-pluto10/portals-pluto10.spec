@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           portals-%{bname}10
 Version:        1.0.1
-Release:        alt6_2jpp5
+Release:        alt7_2jpp5
 Epoch:          0
 Summary:        Portlet 1.0 Reference Implementation
 License:        Apache Software License 2.0
@@ -416,6 +416,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt7_2jpp5
+- rebuild with apache-commons-fileupload
+
 * Wed Sep 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt6_2jpp5
 - build with saxon6-scripts
 
