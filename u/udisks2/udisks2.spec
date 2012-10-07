@@ -6,15 +6,15 @@
 %def_enable introspection
 
 Name: %{_name}2
-Version: 1.100.0
-Release: alt0.1
+Version: 2.0.0
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-Source: http://udisks.freedesktop.org/releases/%_name-%version.tar
+Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
 Requires: lib%name = %version-%release
@@ -121,7 +121,7 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %_datadir/polkit-1/actions/org.freedesktop.%name.policy
 %_datadir/dbus-1/system-services/org.freedesktop.UDisks2.service
 %_sysconfdir/dbus-1/system.d/org.freedesktop.UDisks2.conf
-%_sysconfdir/bash_completion.d/udisksctl-bash-completion.sh
+%_datadir/bash-completion/completions/udisksctl
 %_mandir/man1/*
 %_mandir/man8/*
 %attr(0700,root,root) %dir %_localstatedir/lib/%name
@@ -150,6 +150,9 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %endif
 
 %changelog
+* Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
+- 2.0.0 release
+
 * Thu Sep 20 2012 Yuri N. Sedunov <aris@altlinux.org> 1.100.0-alt0.1
 - 1.100.0 snapshot
 

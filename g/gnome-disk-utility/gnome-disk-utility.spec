@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-disk-utility
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 
 Summary: Disk management application
@@ -14,7 +14,7 @@ Requires: udisks2 cryptsetup
 
 Source: %name-%version.tar.xz
 
-%define udisks_ver 1.99.0
+%define udisks_ver 2.0.0
 %define glib_ver 2.31.0
 %define gtk_ver 3.5.8
 %define secret_ver 0.7
@@ -59,6 +59,9 @@ RAID, SMART monitoring, etc
 %_man1dir/*.1.*
 
 %changelog
+* Thu Oct 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Thu Sep 20 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
