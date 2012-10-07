@@ -76,7 +76,7 @@ BuildRequires: jpackage-compat
 Name: tomcat5
 Epoch: 0
 Version: %{majversion}.%{minversion}
-Release: alt7_3jpp6
+Release: alt8_3jpp6
 Summary: Apache Servlet/JSP Engine, RI for Servlet 2.4/JSP 2.0 API
 
 Group: Development/Java
@@ -1282,6 +1282,9 @@ fi
 
 
 %changelog
+* Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.5.31-alt8_3jpp6
+- rebuild with apache-commons-fileupload
+
 * Wed Aug 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.5.31-alt7_3jpp6
 - applied repocop patches
 
