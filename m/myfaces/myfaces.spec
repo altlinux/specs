@@ -36,7 +36,7 @@ BuildRequires: struts-taglib struts-tiles
 Summary:        JSF Implementation
 Name:           myfaces
 Version:        1.1.0
-Release:        alt3_3jpp5
+Release:        alt4_3jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -204,6 +204,9 @@ fi
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt4_3jpp5
+- rebuild with apache-commons-fileupload
+
 * Tue Dec 14 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt3_3jpp5
 - fixed build
 
