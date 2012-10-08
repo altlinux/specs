@@ -16,13 +16,13 @@
 %define flavour		%base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.44
-Release: alt6
+Version: 3.0.45
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 44
+%define kernel_stable_version 45
 %define kernel_extra_version	.%kernel_stable_version
 #define kernel_extra_version	%nil
 
@@ -313,7 +313,7 @@ Patch0351: linux-%kernel_branch.42-fix-drivers-leds--leds-lp5521.patch
 Patch0361: linux-%kernel_branch.42-fix-drivers-macintosh--adb.patch
 Patch0362: linux-%kernel_branch.42-fix-drivers-macintosh--adbhid.patch
 
-Patch0371: linux-%kernel_branch.42-fix-drivers-md--dm-mod.patch
+Patch0371: linux-%kernel_branch.45-fix-drivers-md--dm-mod.patch
 Patch0372: linux-%kernel_branch.42-fix-drivers-md--dm-multipath.patch
 Patch0373: linux-%kernel_branch.44-fix-drivers-md--md-mod.patch
 Patch0374: linux-%kernel_branch.42-fix-drivers-md--raid1.patch
@@ -2106,6 +2106,7 @@ for f in \
 	scripts/bin2c \
 	scripts/check{includes,version}.pl \
 	scripts/conmakehash \
+	scripts/depmod.sh \
 	scripts/extract-ikconfig \
 	scripts/gcc-*.sh \
 	scripts/kallsyms \
@@ -2664,6 +2665,12 @@ fi
 
 
 %changelog
+* Mon Oct 08 2012 Led <led@altlinux.ru> 3.0.45-alt1
+- 3.0.45
+- updated:
+  + fix-drivers-md--dm-mod
+- added scripts/depmod.sh to kernel-headers-modules-* subpackage
+
 * Sun Oct 07 2012 Led <led@altlinux.ru> 3.0.44-alt6
 - updated:
   + fix-drivers-hv
