@@ -76,7 +76,7 @@ BuildRequires: jpackage-compat
 Name: tomcat5
 Epoch: 0
 Version: %{majversion}.%{minversion}
-Release: alt8_3jpp6
+Release: alt9_3jpp6
 Summary: Apache Servlet/JSP Engine, RI for Servlet 2.4/JSP 2.0 API
 
 Group: Development/Java
@@ -126,17 +126,17 @@ BuildRequires: ecj >= 0:3.3.1.1
 %endif
 BuildRequires: ant-nodeps
 BuildRequires: xalan-j2
-BuildRequires: jakarta-commons-beanutils >= 0:1.7
-BuildRequires: jakarta-commons-collections >= 0:3.1
-BuildRequires: jakarta-commons-daemon >= 0:1.0.1
-BuildRequires: jakarta-commons-dbcp >= 0:1.2.1
-BuildRequires: jakarta-commons-digester >= 0:1.7
-BuildRequires: jakarta-commons-logging >= 0:1.0.4
-BuildRequires: jakarta-commons-fileupload >= 0:1.0
-BuildRequires: jakarta-commons-io >= 0:1.3
-BuildRequires: jakarta-commons-modeler >= 0:2.0
-BuildRequires: jakarta-commons-pool >= 0:1.2
-BuildRequires: jakarta-commons-launcher >= 0:0.9
+BuildRequires: apache-commons-beanutils >= 0:1.7
+BuildRequires: apache-commons-collections >= 0:3.1
+BuildRequires: apache-commons-daemon >= 0:1.0.1
+BuildRequires: apache-commons-dbcp >= 0:1.2.1
+BuildRequires: apache-commons-digester >= 0:1.7
+BuildRequires: apache-commons-logging >= 0:1.0.4
+BuildRequires: apache-commons-fileupload >= 0:1.0
+BuildRequires: apache-commons-io >= 0:1.3
+BuildRequires: apache-commons-modeler >= 0:2.0
+BuildRequires: apache-commons-pool >= 0:1.2
+BuildRequires: apache-commons-launcher >= 0:0.9
 BuildRequires: jakarta-commons-el10 >= 0:1.0
 BuildRequires: junit >= 0:3.8.1
 BuildRequires: regexp >= 0:1.3
@@ -164,11 +164,11 @@ Requires(preun): chkconfig
 Requires(post): findutils
 Requires(preun): findutils
 Requires(pre): shadow-utils
-Requires(post): jakarta-commons-dbcp >= 0:1.2.1
-Requires(post): jakarta-commons-collections >= 0:3.1
-Requires(post): jakarta-commons-pool >= 0:1.2
-Requires: jakarta-commons-logging >= 0:1.0.4
-Requires(post): jakarta-commons-logging >= 0:1.0.4
+Requires(post): apache-commons-dbcp >= 0:1.2.1
+Requires(post): apache-commons-collections >= 0:3.1
+Requires(post): apache-commons-pool >= 0:1.2
+Requires: apache-commons-logging >= 0:1.0.4
+Requires(post): apache-commons-logging >= 0:1.0.4
 Requires: javamail
 Requires(post): javamail
 %if %{with_ecj}
@@ -181,9 +181,9 @@ Requires: jpackage-utils >= 0:1.7.4
 Requires: xerces-j2 >= 0:2.7.1
 Requires: xml-commons-jaxp-1.3-apis
 # jakarta-commons packages
-Requires: jakarta-commons-daemon >= 0:1.0.1
-Requires(post): jakarta-commons-daemon >= 0:1.0.1
-Requires: jakarta-commons-launcher >= 0:0.9
+Requires: apache-commons-daemon >= 0:1.0.1
+Requires(post): apache-commons-daemon >= 0:1.0.1
+Requires: apache-commons-launcher >= 0:0.9
 # alternatives
 # And it needs its own API subpackages for running
 Requires: %{name}-common-lib = %{epoch}:%{version}-%{release}
@@ -233,10 +233,10 @@ Requires: struts >= 0:1.2.9
 Requires: struts-taglib >= 0:1.3.8
 Requires(post): jpackage-utils >= 0:1.7.4
 Requires(post): findutils
-Requires(post): jakarta-commons-beanutils
-Requires(post): jakarta-commons-collections
-Requires(post): jakarta-commons-digester
-Requires(post): jakarta-commons-io
+Requires(post): apache-commons-beanutils
+Requires(post): apache-commons-collections
+Requires(post): apache-commons-digester
+Requires(post): apache-commons-io
 Requires(post): struts
 Requires(post): struts-taglib
 Requires(preun): findutils
@@ -308,15 +308,15 @@ of the Apache Tomcat JSP API (packages javax.servlet.jsp).
 Group: Development/Java
 Summary: Libraries needed to run the Tomcat Web container (part)
 Requires(post): jpackage-utils >= 0:1.7.4
-Requires: jakarta-commons-collections >= 0:3.1
-Requires(post): jakarta-commons-collections >= 0:3.1
-Requires: jakarta-commons-dbcp >= 0:1.2.1
-Requires(post): jakarta-commons-dbcp >= 0:1.2.1
+Requires: apache-commons-collections >= 0:3.1
+Requires(post): apache-commons-collections >= 0:3.1
+Requires: apache-commons-dbcp >= 0:1.2.1
+Requires(post): apache-commons-dbcp >= 0:1.2.1
 Requires: jakarta-commons-el10 >= 0:1.0
 Requires(post): jakarta-commons-el10 >= 0:1.0
 # FIXME commons-pool is not listed in the Tomcat build.properties.default
-Requires: jakarta-commons-pool >= 0:1.2
-Requires(post): jakarta-commons-pool >= 0:1.2
+Requires: apache-commons-pool >= 0:1.2
+Requires(post): apache-commons-pool >= 0:1.2
 %if %{with_ecj}
 Requires: ecj >= 0:3.3.1.1
 Requires(post): ecj >= 0:3.3.1.1
@@ -341,8 +341,8 @@ Libraries needed to run the Tomcat Web container (part)
 Group: Development/Java
 Summary: Libraries needed to run the Tomcat Web container (part)
 Requires(post): jpackage-utils >= 0:1.7.4
-Requires: jakarta-commons-modeler >= 0:2.0
-Requires(post): jakarta-commons-modeler >= 0:2.0
+Requires: apache-commons-modeler >= 0:2.0
+Requires(post): apache-commons-modeler >= 0:2.0
 # Other subpackages must go in first
 Requires: %{name}-%{jname} = %{epoch}:%{version}-%{release}
 Requires(post): %{name}-%{jname} = %{epoch}:%{version}-%{release}
@@ -1282,6 +1282,9 @@ fi
 
 
 %changelog
+* Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.5.31-alt9_3jpp6
+- rebuild with apache-commons-*
+
 * Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.5.31-alt8_3jpp6
 - rebuild with apache-commons-fileupload
 
