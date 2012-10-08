@@ -9,10 +9,11 @@
 %def_without debug
 %def_without geoip
 %def_enable cache_purge
+%def_enable ctpp2
 
 Name: nginx
 Version: 1.2.3
-Release: alt2
+Release: alt3
 
 Summary: Fast HTTP server
 License: BSD
@@ -26,6 +27,7 @@ Source3: %name.logrotate.in
 Source5: %name.sysconfig
 Source6: default.conf
 Source7: cache_purge.tar
+Source8: ngx_ctpp2.tar
 Patch0: alt-mime-types.patch
 Patch1: nginx-0.8-syslog.patch
 Patch2: nginx-perl-vendor.patch
@@ -52,6 +54,10 @@ BuildRequires: libxml2-devel libxslt-devel
 BuildRequires: google-perftools-devel
 %endif
 
+%if_enabled ctpp2
+BuildRequires: libctpp-devel gcc-c++
+%endif
+
 Requires(pre): shadow-utils
 Requires(post): sed
 
@@ -69,7 +75,7 @@ Provides: webserver
 Fast HTTP server, extremely useful as an Apache frontend
 
 %prep
-%setup -a 7
+%setup -a 7 -a 8
 %patch0 -p1
 %if_with syslog
 %patch1 -p2
@@ -120,6 +126,9 @@ CFLAGS="%optflags $CPU" ./configure \
 	--with-http_ssl_module  \
 %if_enabled cache_purge
 	--add-module=cache_purge \
+%endif
+%if_enabled ctpp2
+	--add-module=ngx_ctpp2 \
 %endif
 	--with-http_mp4_module \
 	--with-http_realip_module \
@@ -241,6 +250,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Mon Oct 08 2012 Denis Smirnov <mithraen@altlinux.ru> 1.2.3-alt3
+- add ngx_ctpp2 module
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.2.3-alt2
 - rebuilt for perl-5.16
 
