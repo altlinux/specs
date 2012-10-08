@@ -1,5 +1,5 @@
 Name: i3status
-Version: 2.5.1
+Version: 2.6
 Release: alt1
 
 Summary: I3 status bar generator for i3bar, dzen2, xmobar or similar programs.
@@ -63,7 +63,7 @@ make DESTDIR=%buildroot install
 # Добавляем нехитрую документацию.
 %define docdir %_docdir/%name-%version
 
-mkdir -p %buildroot%docdir
+mkdir -p %buildroot/%docdir
 install -pm644 LICENSE %buildroot%docdir/
 install -pm644 CHANGELOG %buildroot%docdir/
 
@@ -75,6 +75,9 @@ install -pm644 CHANGELOG %buildroot%docdir/
 %_man1dir/*
 
 %changelog
+* Mon Oct 08 2012 Andrey Bergman <vkni@altlinux.org> 2.6-alt1
+- Version update.
+
 * Sat Aug 18 2012 Andrey Bergman <vkni@altlinux.org> 2.5.1-alt1
 - Initial release for Sisyphus.
 
