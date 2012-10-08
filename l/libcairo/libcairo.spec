@@ -1,6 +1,6 @@
 Name: libcairo
-Version: 1.12.2
-Release: alt2
+Version: 1.12.4
+Release: alt1
 Epoch: 1
 Summary: Multi-platform 2D graphics library
 License: LGPL
@@ -13,7 +13,7 @@ Patch: cairo-%version-%release.patch
 
 BuildRequires: fontconfig-devel ghostscript-classic glib2-devel gtk-doc libGL-devel libXrender-devel
 BuildRequires: libfreetype-devel libpixman-devel libpng-devel librsvg-devel libudev-devel zlib-devel
-BuildRequires: libEGL-devel libGLES-devel
+BuildRequires: libEGL-devel libGLES-devel libXext-devel
 
 %description
 Cairo is a vector graphics library with cross-device output support
@@ -116,6 +116,9 @@ This package contains tools for working with the cairo graphics library.
 %_libdir/cairo
 
 %changelog
+* Mon Oct 08 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.12.4-alt1
+- 1.12.4
+
 * Tue Sep 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.12.2-alt2
 - egl: s/EGL_KHR_surfaceless_opengl/EGL_KHR_surfaceless_context/
 
