@@ -5,8 +5,8 @@
 %def_enable gtk3_module
 
 Name: caribou
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.4
+Release: alt1
 
 Summary: A simplified in-place on-screen keyboard
 Group: Graphical desktop/GNOME
@@ -129,6 +129,9 @@ make clean
 %_girdir/Caribou-1.0.gir
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
+- 0.4.4
+
 * Thu May 03 2012 Paul Wolneykien <manowar@altlinux.ru> 0.4.2-alt2
 - Fix Escape key, add "^" symbol to "touch" and "fullscale" layouts.
 - Use patch for singleton daemon.
