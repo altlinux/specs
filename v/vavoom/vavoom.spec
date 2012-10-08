@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           vavoom
 Version:        1.33
-Release:        alt2_4
+Release:        alt2_4.1
 Summary:        Enhanced Doom, Heretic, Hexen and Strife source port
 Source0:        http://downloads.sourceforge.net/vavoom/%{name}-%{version}.tar.bz2
 Source1:        doom.autodlrc
@@ -135,6 +135,9 @@ fi
 %{_datadir}/icons/hicolor/48x48/apps/*.png
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.33-alt2_4.1
+- Rebuilt with libpng15
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.33-alt2_4
 - update to new release by fcimport
 
