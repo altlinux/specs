@@ -5,7 +5,7 @@
 
 %define rname smb4k
 Name: kde4-%rname
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Group: Networking/Other
@@ -80,6 +80,9 @@ Developemnt files for %name
 
 
 %changelog
+* Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.4-alt1
+- new version
+
 * Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt1
 - new version
 
