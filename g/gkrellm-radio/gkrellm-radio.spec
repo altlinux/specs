@@ -2,7 +2,7 @@
 
 Name: gkrellm-%plugin
 Version: 2.0.4
-Release: alt3
+Release: alt4
 Packager: Roman Savochenko <rom_as at altlinux.ru>
 
 Summary: GKrellM radio tuners control plugin
@@ -49,6 +49,9 @@ install -m 644 -pD %SOURCE1 %buildroot%_sysconfdir/udev/rules.d/20-radio.rules
 %_sysconfdir/udev/rules.d/*
 
 %changelog
+* Mon Oct 08 2012 Roman Savochenko <rom_as@altlinux.ru> 2.0.4-alt4
+- -Wl removed for build by GCC 4.7.
+
 * Sun Jun 19 2011 Roman Savochenko <rom_as@altlinux.ru> 2.0.4-alt3
 - V4L2 integration patch is created and included.
 
