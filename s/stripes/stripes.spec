@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           stripes
 Version:        1.5.3
-Release:	alt4_1jpp6
+Release:	alt5_1jpp6
 Epoch:          0
 Summary:        JSON-RPC Implementation
 Group:          Development/Java
@@ -46,9 +46,9 @@ BuildRequires: jpackage-utils >= 0:5.0.0
 BuildRequires: ant
 BuildRequires: tlddoc
 BuildRequires: testng
-BuildRequires: jakarta-commons-fileupload
-BuildRequires: jakarta-commons-io
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-fileupload
+BuildRequires: apache-commons-io
+BuildRequires: apache-commons-logging
 BuildRequires: el_1_0_api
 BuildRequires: glassfish-jstl
 BuildRequires: jakarta-taglibs-standard
@@ -57,9 +57,9 @@ BuildRequires: jsp_2_1_api
 BuildRequires: log4j
 BuildRequires: servlet_2_5_api
 BuildRequires: spring2-all
-Requires: jakarta-commons-fileupload
-Requires: jakarta-commons-io
-Requires: jakarta-commons-logging
+Requires: apache-commons-fileupload
+Requires: apache-commons-io
+Requires: apache-commons-logging
 Requires: el_1_0_api
 Requires: glassfish-jstl
 Requires: jakarta-taglibs-standard
@@ -141,6 +141,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt5_1jpp6
+- rebuild with apache-commons-*
+
 * Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt4_1jpp6
 - rebuild with apache-commons-fileupload
 
