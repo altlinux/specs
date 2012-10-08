@@ -1,6 +1,6 @@
 Name: rawstudio
 Version: 2.0
-Release: alt4
+Release: alt4.1
 
 Summary: Rawstudio is an open source raw-image converter written in GTK+
 License: GPLv2+
@@ -10,6 +10,7 @@ URL: http://rawstudio.org/
 Source: http://rawstudio.org/files/release/rawstudio-%version.tar.gz
 
 Patch1: rawstudio-2.0-glibthreads.patch
+Patch2: rawstudio-2.0-alt-libpng15.patch
 
 BuildRequires: chrpath
 # Automatically added by buildreq on Wed Apr 13 2011
@@ -21,11 +22,13 @@ Rawstudio can read and convert RAW-images from most digital cameras.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 # Relocates plugins directory:
 subst 's@PACKAGE_DATA_DIR@"%_libdir"@' librawstudio/rs-plugin-manager.c
 
 %build
+%add_optflags -fpermissive
 %configure --disable-static
 %make_build
 
@@ -58,6 +61,9 @@ chrpath --delete %buildroot%_bindir/rawstudio
 %exclude %_pkgconfigdir
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt4.1
+- Rebuilt with libpng15
+
 * Fri Apr 06 2012 Victor Forsiuk <force@altlinux.org> 2.0-alt4
 - Fix g_thread_init() issue with glib 2.32+.
 
