@@ -7,7 +7,7 @@
 
 Name: rawtherapee
 Version: 4.0.7
-Release: alt1
+Release: alt1.1
 
 Summary: THe Experimental RAw Photo Editor
 License: GPLv3+
@@ -80,6 +80,9 @@ rm -f %buildroot/%_datadir/doc/rawtherapee/*.txt
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.7-alt1.1
+- Rebuilt with libpng15
+
 * Mon Mar 26 2012 Victor Forsiuk <force@altlinux.org> 4.0.7-alt1
 - 4.0.7
 
