@@ -52,7 +52,7 @@ BuildRequires: jpackage-compat
 
 Name:           htmlunit1
 Version:        1.14
-Release:        alt8_4jpp6
+Release:        alt9_4jpp6
 Epoch:          0
 Summary:        Browser for Java programs
 License:        ASL 2.0
@@ -69,12 +69,12 @@ Patch3:         htmlunit-1.14-rhino.patch
 Requires(post): jpackage-utils >= 0:1.7.3
 Requires(postun): jpackage-utils >= 0:1.7.3
 Requires: cssparser >= 0:0.9.4
-Requires: jakarta-commons-codec >= 0:1.3
-Requires: jakarta-commons-collections >= 0:3.2
-Requires: jakarta-commons-httpclient >= 0:3.1
-Requires: jakarta-commons-io >= 0:1.3.1
+Requires: apache-commons-codec >= 0:1.3
+Requires: apache-commons-collections >= 0:3.2
+Requires: apache-commons-httpclient >= 0:3.1
+Requires: apache-commons-io >= 0:1.3.1
 Requires: commons-lang >= 0:2.3
-Requires: jakarta-commons-logging >= 0:1.1
+Requires: apache-commons-logging >= 0:1.1
 Requires: jaxen >= 0:1.1.1
 Requires: nekohtml >= 0:0.9.5
 Requires: rhino16 >= 0:1.6-0.R7
@@ -100,13 +100,13 @@ BuildRequires: maven-surefire-provider-junit
 BuildRequires: cssparser
 BuildRequires: excalibur-avalon-framework >= 0:4.1.3
 BuildRequires: gsbase >= 0:2.0.1
-BuildRequires: jakarta-commons-codec >= 0:1.3
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-fileupload >= 0:1.2.1
-BuildRequires: jakarta-commons-httpclient >= 0:3.0.1
-BuildRequires: jakarta-commons-io >= 0:1.3.1
+BuildRequires: apache-commons-codec >= 0:1.3
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-fileupload
+BuildRequires: apache-commons-httpclient >= 0:3.0.1
+BuildRequires: apache-commons-io >= 0:1.3.1
 BuildRequires: commons-lang
-BuildRequires: jakarta-commons-logging >= 0:1.1
+BuildRequires: apache-commons-logging >= 0:1.1
 BuildRequires: apache-commons-parent
 BuildRequires: jaxen >= 0:1.1
 BuildRequires: jetty
@@ -258,6 +258,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt9_4jpp6
+- rebuild with apache-commons-*
+
 * Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.14-alt8_4jpp6
 - rebuild with apache-commons-fileupload
 
