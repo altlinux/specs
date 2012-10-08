@@ -6,7 +6,7 @@
 
 Name: dmd
 Version: 2.060
-Release: alt1
+Release: alt2
 Summary: The D Programming Language
 Group: Development/Other
 License: GPL
@@ -38,7 +38,7 @@ cd dmd/src
 %make_build -f posix.mak MODEL=%MODEL
 
 cd ../../druntime
-%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL DRUNTIME_BASE=libdruntime.a
+%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL DRUNTIME_BASE=druntime
 
 cd ../phobos
 %make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL ROOT=out
@@ -50,21 +50,25 @@ gcc rdmd.o -o rdmd -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
 gcc catdoc.o -o catdoc -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
 
 %install
-mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/d2,%_mandir/man1}
+mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/d,%_mandir/man1}
 
 cp dmd/src/dmd %buildroot%_bindir/
 
 echo '; dmd.conf file for dmd' > %buildroot%_sysconfdir/dmd.conf
 echo '; Names enclosed by %%%% are searched for in the existing environment' >> %buildroot%_sysconfdir/dmd.conf
 echo '; and inserted. The special name %%@P%% is replaced with the path' >> %buildroot%_sysconfdir/dmd.conf
-echo '; to this file.' > %buildroot%_sysconfdir/dmd.conf
+echo '; to this file.' >> %buildroot%_sysconfdir/dmd.conf
+echo '[Environment]' >> %buildroot%_sysconfdir/dmd.conf
+echo 'DFLAGS=-I%_includedir/d' >> %buildroot%_sysconfdir/dmd.conf -lrt
 
 #druntime
-cp -r druntime/import/* %buildroot%_includedir/d2/
+cp -r druntime/import/* %buildroot%_includedir/d/
+cp druntime/lib/libdruntime.a %buildroot%_libdir/
 
 #phobos
 cp phobos/out/libphobos2.a %buildroot%_libdir/
-cp -r phobos/std %buildroot%_includedir/d2/
+ln -s libphobos2.a %buildroot%_libdir/libphobos.a
+cp -r phobos/std %buildroot%_includedir/d/
 
 #tools
 
@@ -73,18 +77,23 @@ cp tools/rdmd %buildroot%_bindir/
 cp -r dmd/docs/man/man1 %buildroot%_mandir/
 
 %files
-%doc dmd/docs
 %doc druntime/doc
 %_bindir/*
 %_sysconfdir/*
 %_mandir/man1/*
-%_includedir/d2/core
+%dir %_includedir/d
+%_includedir/d/core
+%_includedir/d/*.di
+%_libdir/libdruntime.a
 
 %files -n libphobos
-%_includedir/d2/std
-%_libdir/*.a
+%_includedir/d/std
+%_libdir/libphobos*
 
 %changelog
+* Sun Oct 07 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt2
+- Fix dmd.conf
+
 * Tue Sep 25 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt1
 - Initial build
 
