@@ -6,36 +6,24 @@
 %define oname webkit
 # freetype/pango
 %define font_backend freetype
-# no/opengl/cairo/clutter
-%define accelerated_compositing no
+# none/opengl/cairo/clutter
+%define acceleration_backend opengl
 %def_enable introspection
 %def_disable imresize
 %def_enable geolocation
-%def_disable fs
-%def_disable indexed_database
-%def_enable webgl
-%def_enable coverage
-%def_disable web_timing
 %def_disable web_audio
-%def_enable blob
-%def_disable media_statistics
+%def_disable media_stream
 %def_enable spellcheck
-%def_disable notifications
-%def_enable meter_tag
-%def_enable progress_tag
-%def_disable datagrid
-
+%def_disable unstable_features
 
 Summary: Web browser engine
 Name: libwebkitgtk2
-Version: 1.8.3
+Version: 1.10.0
 Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
 Url: http://www.webkitgtk.org/
 Source: %oname-%version.tar
-# Patch1: %name-%version-fix-build.patch
-# Patch2: webkit-1.6.1-alt-fix-TEXTREL.patch
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
@@ -60,29 +48,30 @@ BuildRequires: libgail-devel >= 1.8
 BuildRequires: libenchant-devel >= 0.22
 BuildRequires: libsqlite3-devel >= 3.0
 BuildRequires: libxslt-devel >= 1.1.7
-BuildRequires: gstreamer-devel >= 0.10 gst-plugins-devel >= 0.10.30
+BuildRequires: gstreamer1.0-devel >= 0.11.90 gst-plugins1.0-devel >= 0.11.90
 BuildRequires: librsvg-devel >= 2.2.0
 BuildRequires: gtk-doc >= 1.10
-BuildRequires: libsoup-devel >= 2.37.92
+BuildRequires: libsoup-devel >= 2.39.2
 BuildRequires: libpango-devel >= 1.21.0 libcairo-devel >= 1.10 libcairo-gobject-devel
 BuildRequires: libgio-devel >= 2.25.0
 BuildRequires: python-modules-json
+BuildRequires: ruby ruby-stdlibs
 
 %if %font_backend == freetype
 BuildRequires: fontconfig-devel >= 2.4 libfreetype-devel
 %endif
-%if %accelerated_compositing == clutter
+%if %acceleration_backend == clutter
 BuildRequires: libclutter-devel >= 1.8.2
 BuildRequires: libclutter-gtk-devel >= 1.0.2
 %endif
-%if %accelerated_compositing == opengl
-BuildRequires: libGL-devel
+%if %acceleration_backend == opengl
+BuildRequires: libGL-devel libXcomposite-devel
 %endif
 
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5 libgtk+2-gir-devel libsoup-gir-devel}
 %{?_enable_geolocation:BuildPreReq: libgeoclue-devel}
 %{?_enable_spellcheck:BuildPreReq: libenchant-devel}
-%{?_enable_webgl:BuildPreReq: libGL-devel}
+%{?_enable_media_stream:BuildPreReq: farstream-devel}
 
 %description
 WebKit is an open source web browser engine.
@@ -206,36 +195,35 @@ GObject introspection devel data for the JavaScriptCore library
 
 %prep
 %setup -q -n %oname-%version
-#%patch1 -p1
-#%patch2 -p1
 # fix build translations
 %__subst 's|^all-local:|all-local: stamp-po|' GNUmakefile.am
 rm -f Source/autotools/{compile,config.guess,config.sub,depcomp,install-sh,ltmain.sh,missing,libtool.m4,ltoptions.m4,ltsugar.m4,ltversion.m4,lt~obsolete.m4,gsettings.m4,gtk-doc.m4}
 
 %build
+%ifarch %arm ppc
+# Use linker flags to reduce memory consumption on low-mem architectures
+%add_optflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
+%endif
+
+# Build with -g1 on all platforms to avoid running into 4 GB ar format limit
+# https://bugs.webkit.org/show_bug.cgi?id=91154
+%define optflags_debug -g1
+
 gtkdocize --copy
 %autoreconf -I Source/autotools
 %configure \
 	--enable-video \
 	--with-font-backend=%font_backend \
-	--with-accelerated-compositing=%accelerated_compositing \
-	--with-gstreamer=0.10 \
+	--with-acceleration-backend=%acceleration_backend \
+	--enable-webgl \
+	--with-gstreamer=1.0 \
 	%{subst_enable introspection} \
 	%{subst_enable geolocation} \
-	%{subst_enable coverage} \
-	%{subst_enable blob} \
-	%{?_enable_indexed_database:--enable-indexed-database} \
-	%{?_enable_imresize:--enable-image-resizer} \
-	%{?_enable_fs:--enable-file-system} \
-	%{subst_enable webgl} \
-	%{?_enable_web_timing:--enable-web-timing} \
 	%{?_enable_web_audio:--enable-web-audio} \
-	%{?_enable_media_statistics:--enable-media-statistics} \
-	%{subst_enable notifications} \
-	%{?_enable_meter_tag:--enable-meter-tag} \
-	%{?_enable_progress_tag:--enable-progress-tag} \
-	%{subst_enable datagrid} \
-	--with-gtk=%gtk_ver
+	%{?_enable_media_stream:--enable-media-stream} \
+	--with-gtk=%gtk_ver \
+	--disable-webkit2 \
+	%{?_enable_unstable_features:--enable-unstable-features}
 
 mkdir -p DerivedSources/webkit
 mkdir -p DerivedSources/ANGLE
@@ -247,7 +235,7 @@ mkdir -p DerivedSources/InjectedBundle
 %install
 %make_install DESTDIR=%buildroot install
 
-%find_lang --output=webkitgtk.lang webkit-%gtk_ver
+%find_lang --output=webkitgtk.lang webkitgtk-%gtk_ver
 
 %files -f webkitgtk.lang
 %_libdir/libwebkitgtk-1.0.so.*
@@ -293,6 +281,9 @@ mkdir -p DerivedSources/InjectedBundle
 %endif
 
 %changelog
+* Mon Oct 08 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt1
+- 1.10.0
+
 * Wed Aug 29 2012 Alexey Shabalin <shaba@altlinux.ru> 1.8.3-alt1
 - 1.8.3
 
