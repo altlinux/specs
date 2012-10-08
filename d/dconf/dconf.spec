@@ -1,8 +1,8 @@
-%define ver_major 0.13
+%define ver_major 0.14
 %def_disable introspection
 
 Name: dconf
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: A simple configuration system
@@ -171,6 +171,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/update-dconf-database.file
 %exclude %_datadir/bash-completion/completions/dconf
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.90-alt1
 - 0.13.90
 
