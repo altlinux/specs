@@ -25,7 +25,7 @@
 %define bugfix 2
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt2.1
 %define poppler_devel_name lib%rname-devel
 %define poppler_cpp_devel_name lib%rname-cpp-devel
 %define poppler_glib_devel_name lib%rname-glib-devel
@@ -55,7 +55,7 @@ BuildRequires: glib2-devel
 BuildRequires: gcc-c++ glibc-devel libcurl-devel libgtk+2-devel zlib-devel
 BuildRequires: libgtk+2-gir-devel libjpeg-devel liblcms2-devel libopenjpeg-devel libtiff-devel
 BuildRequires: libxml2-devel gtk-doc libcairo-gobject-devel
-BuildRequires: libXt-devel
+BuildRequires: libXt-devel libpng-devel
 
 %description
 Poppler is a fork of the xpdf PDF viewer developed by Derek Noonburg
@@ -339,6 +339,9 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.20.2-alt2.1
+- Rebuilt with libpng15
+
 * Wed Aug 22 2012 Sergey V Turchin <zerg@altlinux.org> 0.20.2-alt2
 - disable all except libpoppler
 
