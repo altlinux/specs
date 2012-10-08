@@ -10,8 +10,8 @@
 %def_enable ibus
 
 Name: gnome-control-center
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: GNOME Control Center
 License: GPLv2+
@@ -20,8 +20,8 @@ Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 # git archive --format=tar --prefix=gnome-control-center-3.2.2/ --output=gnome-control-center-3.2.2.tar HEAD
-Source: %name-%version.tar
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 # From configure.ac
 %define gtk_ver 3.5.13
@@ -191,6 +191,9 @@ you'll want to install this package.
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
 - updated to c35850649
 - built with ibus

@@ -1,4 +1,4 @@
-%define snapshot 20120917
+%define snapshot 20121006
 %define api_ver 1.0
 
 %def_enable python
@@ -18,7 +18,6 @@ Url: http://code.google.com/p/%name/
 Source: http://%name.googlecode.com/files/%name-%version.tar.gz
 Source1: xinput-ibus
 # fedora's patches
-Patch: ibus-xx-segv-reg-prop.patch
 Patch1: ibus-810211-no-switch-by-no-trigger.patch
 Patch2: ibus-541492-xkb.patch
 Patch3: ibus-530711-preload-sys.patch
@@ -112,6 +111,7 @@ This package contains the header files for IBus library.
 %package -n lib%name-gir-devel
 Summary: GObject introspection devel data for IBus
 Group: Development/Other
+BuildArch: noarch
 Requires: lib%name-gir = %version-%release
 Requires: lib%name-devel = %version-%release
 
@@ -121,6 +121,7 @@ This package contains gir files for IBus library.
 %package -n lib%name-devel-docs
 Summary: Developer documents for IBus
 Group: Development/Other
+BuildArch: noarch
 Requires: %name = %version-%release
 Requires: gtk-doc
 
@@ -139,10 +140,8 @@ This package contains IBus im module for python.
 
 %prep
 %setup
-
-%patch -p1
-%patch92 -p1 -b .g-s-preedit
-cp client/gtk2/ibusimcontext.c client/gtk3/ibusimcontext.c ||
+#%%patch92 -p1 -b .g-s-preedit
+#cp client/gtk2/ibusimcontext.c client/gtk3/ibusimcontext.c ||
 %patch1 -p1 -b .noswitch
 
 %if_enabled xkb
@@ -276,6 +275,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 1.4.99.20121006-alt1
+- updated to 1.4.99.20121006
+
 * Tue Oct 02 2012 Yuri N. Sedunov <aris@altlinux.org> 1.4.99.20120917-alt1
 - 1.4.99.20120917
 
