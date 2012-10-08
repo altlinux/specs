@@ -2,7 +2,7 @@
 Summary: VARKON - a free CAD system
 Name: varkon
 Version: 1.19D
-Release: alt2.1.qa1
+Release: alt2.1.qa2
 License: GPL
 Group: Editors
 Packager: Boris Savelev <boris@altlinux.org>
@@ -104,6 +104,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name/man/m_man
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.19D-alt2.1.qa2
+- Rebuilt with libtiff5
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.19D-alt2.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
