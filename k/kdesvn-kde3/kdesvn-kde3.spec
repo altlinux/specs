@@ -2,7 +2,7 @@
 %define oname kdesvn
 Name: kdesvn-kde3
 Version: 1.0.6
-Release: alt2
+Release: alt3
 
 Summary: A subversion client for the KDE with KIO integration
 
@@ -111,6 +111,9 @@ fi
 %_includedir/svnqt
 
 %changelog
+* Mon Oct 08 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.6-alt3
+- Build by GCC 4.7 fix.
+
 * Sun Mar 11 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.6-alt2
 - Build for TDE 3.5.13 release
 
