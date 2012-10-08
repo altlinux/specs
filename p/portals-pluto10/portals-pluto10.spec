@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           portals-%{bname}10
 Version:        1.0.1
-Release:        alt7_2jpp5
+Release:        alt8_2jpp5
 Epoch:          0
 Summary:        Portlet 1.0 Reference Implementation
 License:        Apache Software License 2.0
@@ -94,20 +94,20 @@ BuildRequires: saxon
 BuildRequires: saxon6-scripts
 %endif
 BuildRequires: castor0
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-digester
-BuildRequires: jakarta-commons-fileupload
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-digester
+BuildRequires: apache-commons-fileupload
+BuildRequires: apache-commons-logging
 BuildRequires: jakarta-taglibs-standard
 BuildRequires: servletapi4
 BuildRequires: xerces-j2
 
 Requires: %{name}-portlet-1.0-api = %{epoch}:%{version}-%{release}
 Requires: castor0
-Requires: jakarta-commons-beanutils
-Requires: jakarta-commons-digester
-Requires: jakarta-commons-fileupload
-Requires: jakarta-commons-logging
+Requires: apache-commons-beanutils
+Requires: apache-commons-digester
+Requires: apache-commons-fileupload
+Requires: apache-commons-logging
 Requires: jakarta-taglibs-standard
 Requires: servletapi4
 Requires: xerces-j2
@@ -416,6 +416,9 @@ fi
 %ghost %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt8_2jpp5
+- rebuild with apache-commons-*
+
 * Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.1-alt7_2jpp5
 - rebuild with apache-commons-fileupload
 
