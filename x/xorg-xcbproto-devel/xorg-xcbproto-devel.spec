@@ -1,6 +1,6 @@
 Name: xorg-xcbproto-devel
-Version: 1.7.1
-Release: alt1.1
+Version: 1.8
+Release: alt1
 
 Summary: XML-XCB protocol descriptions
 License: MIT/X11
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildArch: noarch
-BuildRequires: xml-utils xorg-util-macros python-devel
+BuildRequires: python-devel xml-utils xorg-util-macros
 
 %description
 XML-XCB protocol descriptions.
@@ -38,6 +38,9 @@ XML-XCB protocol descriptions.
 %_datadir/pkgconfig/*.pc
 
 %changelog
+* Mon Oct 08 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.8-alt1
+- 1.8
+
 * Mon Aug 20 2012 Fr. Br. George <george@altlinux.ru> 1.7.1-alt1.1
 - Fix build requirments for python distutils
 
