@@ -6,7 +6,7 @@
 
 Name:    scorched3d
 Version: 43.3d
-Release: alt2
+Release: alt2.1
 License: GPL
 Group:   Games/Arcade
 
@@ -21,6 +21,8 @@ Source2: %name-16.png
 Source3: %name-32.png
 Source4: %name-48.png
 Patch1:  configure.ac.patch
+Patch2: scorched3d-43.3d-alt-gcc4.7.patch
+Patch3: scorched3d-43.3d-alt-libpng15.patch
 
 
 Packager: Evgeny V. Shishkov <shev@altlinux.org>
@@ -59,6 +61,8 @@ This package contains data files for Scorched 3D.
 %prep
 %setup -n scorched
 %patch1 -p1
+%patch2 -p3
+%patch3 -p3
 
 %build
 /bin/touch {INSTALL,AUTHORS,COPYING,ChangeLog,NEWS}
@@ -110,6 +114,9 @@ install -pD -m644 %SOURCE4 %buildroot%_liconsdir/%name.png
 %_gamesdatadir/*
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 43.3d-alt2.1
+- Rebuilt with libpng15
+
 * Tue Jun 26 2012 Evgeny V Shishkov <shev@altlinux.org> 43.3d-alt2
 - Fix linking
 
