@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.45
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2665,6 +2665,11 @@ fi
 
 
 %changelog
+* Mon Oct 08 2012 Led <led@altlinux.ru> 3.0.45-alt2
+- updated:
+  + fix-drivers-md--dm-mod
+  + feat-fs-subfs
+
 * Mon Oct 08 2012 Led <led@altlinux.ru> 3.0.45-alt1
 - 3.0.45
 - updated:
