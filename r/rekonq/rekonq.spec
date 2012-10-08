@@ -1,5 +1,5 @@
 Name:         rekonq
-Version:      1.0
+Version:      1.2
 Release:      alt1
 
 Group:        Networking/WWW
@@ -61,6 +61,12 @@ desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-hand
 %_K4cfg/%name.kcfg
 
 %changelog
+* Mon Oct 08 2012 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1
+- new version
+
+* Mon Jul 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.0-alt0.M60P.1
+- built for M60P
+
 * Mon Jul 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.0-alt1
 - new version
 
