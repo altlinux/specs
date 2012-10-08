@@ -36,7 +36,7 @@ BuildRequires: struts-taglib struts-tiles
 Summary:        JSF Implementation
 Name:           myfaces
 Version:        1.1.0
-Release:        alt4_3jpp5
+Release:        alt5_3jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -49,14 +49,14 @@ BuildRequires: ant >= 0:1.6 ant-junit >= 0:1.6 jpackage-utils >= 0:1.5
 BuildRequires: junit
 BuildRequires: asm
 BuildRequires: cglib
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-codec
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-digester
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-codec
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-digester
 BuildRequires: jakarta-commons-el10
-BuildRequires: jakarta-commons-fileupload
-BuildRequires: jakarta-commons-logging
-BuildRequires: jakarta-commons-validator
+BuildRequires: apache-commons-fileupload
+BuildRequires: apache-commons-logging
+BuildRequires: apache-commons-validator
 BuildRequires: jsp
 BuildRequires: easymock-classextension
 BuildRequires: easymock
@@ -69,14 +69,14 @@ BuildRequires: tlddoc
 BuildRequires: xdoclet
 BuildRequires: xjavadoc
 BuildRequires: xml-commons-apis
-Requires: jakarta-commons-beanutils
-Requires: jakarta-commons-codec
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-digester
+Requires: apache-commons-beanutils
+Requires: apache-commons-codec
+Requires: apache-commons-collections
+Requires: apache-commons-digester
 Requires: jakarta-commons-el10
-Requires: jakarta-commons-fileupload
-Requires: jakarta-commons-logging
-Requires: jakarta-commons-validator
+Requires: apache-commons-fileupload
+Requires: apache-commons-logging
+Requires: apache-commons-validator
 Requires: jsp
 Requires: portlet-1.0-api
 Requires: servletapi5
@@ -204,6 +204,9 @@ fi
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt5_3jpp5
+- rebuild with apache-commons-*
+
 * Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt4_3jpp5
 - rebuild with apache-commons-fileupload
 
