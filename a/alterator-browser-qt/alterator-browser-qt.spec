@@ -7,7 +7,7 @@
 %define alterator_cfg %_sysconfdir/alterator
 
 Name: alterator-browser-qt
-Version: 2.18.3
+Version: 2.18.4
 Release: alt1
 
 Source:%name-%version.tar
@@ -19,7 +19,7 @@ Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Requires: alterator-common >= 2.9-alt0.14
 Requires: alterator-icons
-PreReq(post,preun): alternatives >= 0.2
+PreReq(post,preun): alternatives >= 0.2 /usr/bin/xdg-open
 
 Provides: alterator-browser
 Provides: alterator-browser-x11
@@ -82,6 +82,12 @@ ln -s %alterator_cfg/design-browser-qt %buildroot/%_datadir/%name/design/current
 
 
 %changelog
+* Mon Oct 08 2012 Sergey V Turchin <zerg at altlinux dot org> 2.18.4-alt1
+- fix to build with gcc 4.7
+
+* Wed Jul 18 2012 Sergey V Turchin <zerg at altlinux dot org> 2.18.3-alt0.M60P.1
+- built for M60P
+
 * Wed Jul 18 2012 Sergey V Turchin <zerg at altlinux dot org> 2.18.3-alt1
 - open urls from textbox and help browser by external browser
 - set initial black background if no window manager
