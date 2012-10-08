@@ -1,33 +1,32 @@
-%define docdir %_docdir/%name-%version
-%define develdocdir %_docdir/%name-devel-%version
-
 Name: libfreetype
 Version: 2.4.10
-Release: alt1
+Release: alt2
 
-Summary: The FreeType2 library
-License: FTL/GPL
+Summary: A free and portable font rendering engine
+License: FTL or GPLv2+
 Group: System/Libraries
 Url: http://www.freetype.org/
-
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source0: freetype-%version.tar.bz2
-Source1: ft2demos-%version.tar.bz2
-Source2: freetype-doc-%version.tar.bz2
+Source0: http://download.savannah.gnu.org/releases/freetype/freetype-%version.tar.bz2
+Source2: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%version.tar.bz2
+Source1: http://download.savannah.gnu.org/releases/freetype/ft2demos-%version.tar.bz2
 
-Patch0: freetype-2.4.4-alt-compat-version-script.patch
-Patch1: ft2demos-2.3.10-alt-drop-ftgrid.patch
-Patch2: freetype-2.3.0-alt-enable-subpixel-rendering.patch
+Patch1: freetype-2.4.10-alt-compat-version-script.patch
+Patch2: freetype-2.4.10-alt-freetype-config.patch
+Patch3: freetype-2.4.10-alt-fttrigon.patch
+Patch4: ft2demos-2.4.10-alt-drop-ftgrid.patch
 
-# RedHat patches
-Patch101: ft2demos-2.2.1-rh-makefile.patch
-Patch102: freetype-2.2.1-enable-valid.patch
+Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
+Patch12: freetype-2.4.10-rh-enable-valid.patch
+Patch13: ft2demos-2.4.10-rh-more-demos.patch
 
-Patch200: freetype-2.3.11-bitmap-foundry.patch
+Patch21: ft2demos-2.4.10-deb-fixes.patch
 
 Provides: freetype2 = %version
 Obsoletes: freetype2 < %version
+
+%def_disable static
 
 BuildRequires: libX11-devel zlib-devel
 
@@ -47,7 +46,7 @@ Provides: freetype2-devel = %version
 Obsoletes: freetype2-devel < %version
 
 %description devel
-This package contains the header files and libraries needed
+This package contains the header files and development libraries needed
 to develop programs that use the FreeType2 library.
 
 %package devel-static
@@ -78,24 +77,25 @@ text-rendering library.
 
 This package contains collection of FreeType demonstration programs.
 
-%def_enable static
-
 %prep
-%setup -q -n freetype-%version -a1 -b2
+%setup -n freetype-%version -a1 -b2
+ln -s ft2demos-%version ft2demos
 
-%patch0 -p1
-%patch1 -p0
+%patch1 -p1
 %patch2 -p1
+%patch3 -p1
+%patch4 -p0
 
-%patch101 -p0
-%patch102 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p0
 
-%patch200 -p1
+%patch21 -p0
 
 %build
 %add_optflags -fno-strict-aliasing
-%configure \
-	%{subst_enable static}
+%configure %{subst_enable static}
+
 # get rid of RPATH
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
 
@@ -103,20 +103,44 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
 %make_build -C ft2demos-%version TOP_DIR=..
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 for f in ft2demos-%version/bin/ft*; do
 	builds/unix/libtool --mode=install install -m755 $f %buildroot%_bindir/
 done
 
+wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' |cpp -P)
+[ "$wordsize" -ge 32 ]
+mv %buildroot%_includedir/freetype2/freetype/config/ftconfig{,-$wordsize}.h
+cat >%buildroot%_includedir/freetype2/freetype/config/ftconfig.h <<'EOF'
+#ifndef __FTCONFIG_H__MULTILIB
+#define __FTCONFIG_H__MULTILIB
+
+#include <bits/wordsize.h>
+
+#if __WORDSIZE == 32
+# include <freetype/config/ftconfig-32.h>
+#elif __WORDSIZE == 64
+# include <freetype/config/ftconfig-64.h>
+#else
+# error "unexpected value for __WORDSIZE macro"
+#endif
+
+#endif
+EOF
+
+%define docdir %_docdir/%name-%version
+%define develdocdir %_docdir/%name-devel-%version
 mkdir -p %buildroot%docdir
 mkdir -p %buildroot%develdocdir
 cp -a docs/* %buildroot%develdocdir/
 pushd %buildroot%develdocdir
 	bzip2 -9 CHANGES raster.txt
-	rm -fv GPL.* INSTALL* release UPGRADE.UNX
+	rm INSTALL* release
 popd
 mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
+
+%set_verify_elf_method strict
 
 %files
 %docdir
@@ -139,6 +163,16 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Mon Oct 08 2012 Dmitry V. Levin <ldv@altlinux.org> 2.4.10-alt2
+- Fixed freetype-config script to use pkg-config (closes: #27761).
+- Fixed multilib issues.
+- Fixed fttrigon.h
+- Packaged more demos.
+- Applied demos fixes from Debian.
+- Dropped rh-bitmap-foundry.patch.
+- Rediffed patches, cleaned up specfile.
+- Disabled build and packaging of static library.
+
 * Wed Jul 18 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.4.10-alt1
 - 2.4.10
 
