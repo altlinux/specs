@@ -32,7 +32,7 @@
 
 Name: transcode
 Version: 1.1.5
-Release: alt5.1
+Release: alt5.2
 
 Summary: A linux video stream processing utility
 
@@ -71,6 +71,7 @@ BuildRequires: libavformat-devel libdvdread-devel libfreetype-devel liblame-deve
 BuildRequires: libmjpegtools-devel libmpeg2-devel libnetpbm-devel libpostproc-devel
 BuildRequires: libquicktime-devel libtheora-devel libv4l-devel libx264-devel libxml2-devel
 BuildRequires: libxvid-devel >= %xvid_ver xorg-cf-files
+BuildPreReq: libpng-devel
 
 %description
 transcode  is a linux text-console utility for video stream
@@ -219,6 +220,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %doc contrib/subrip/subtitleripper/{README*,ChangeLog}
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.5-alt5.2
+- Rebuilt with libpng15
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 1.1.5-alt5.1
 - Rebuild with new libImageMagick
 
