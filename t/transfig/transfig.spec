@@ -1,6 +1,6 @@
 Name: transfig
 Version: 3.2.5d
-Release: alt2
+Release: alt2.1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -15,6 +15,7 @@ Source2: transfig-ru_RU.CP1251.ps
 Source3: transfig-uk_UA.KOI8-U.ps
 Patch0: transfig-3.2.5-makefile-fig2dev_libdir.patch
 Patch1: transfig-3.2.5-genps.patch
+Patch2: transfig-3.2.5d-alt-libpng15.patch
 
 # Automatically added by buildreq on Wed Sep 22 2010
 BuildRequires: imake libXpm-devel libpng-devel xorg-cf-files
@@ -34,6 +35,7 @@ PostScript).  Transfig is used to create TeX documents which are portable
 %setup -n %name.%version
 %patch0 -p1
 %patch1 -p0
+%patch2 -p2
 chmod 644 CHANGES LATEX.AND.XFIG NOTES README
 
 %build
@@ -66,6 +68,9 @@ install -p -m644 %SOURCE3 %buildroot%_datadir/fig2dev/uk_UA.KOI8-U.ps
 %doc CHANGES LATEX.AND.XFIG NOTES README
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.5d-alt2.1
+- Rebuilt with libpng15
+
 * Thu Sep 23 2010 Victor Forsiuk <force@altlinux.org> 3.2.5d-alt2
 - Patch to fix bad hatching (closes: #19060).
 
