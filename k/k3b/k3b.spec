@@ -23,7 +23,7 @@
 
 Name: k3b
 Version: 1.0.5
-Release: alt11
+Release: alt12
 
 Group: Archiving/Cd burning
 Summary: The CD Kreator (Complete set)
@@ -187,6 +187,9 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 %_K3includedir/*.h
 
 %changelog
+* Mon Oct 08 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.5-alt12
+- Build by GCC 4.7 fix.
+
 * Thu Apr 26 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.5-alt11
 - Automake version is fixed to 1.11.5 detect.
 
