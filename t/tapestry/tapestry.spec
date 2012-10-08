@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           tapestry
 Version:        4.0.2
-Release:        alt6_3jpp5
+Release:        alt7_3jpp5
 Epoch:          0
 Summary:        Tapestry Framework
 License:        ASL 2.0
@@ -75,10 +75,10 @@ BuildArch:      noarch
 Requires: geronimo-ejb-2.1-api
 Requires: hivemind = 0:1.1.1
 Requires: hivemind-lib = 0:1.1.1
-Requires: jakarta-commons-codec
-Requires: jakarta-commons-fileupload
-Requires: jakarta-commons-io
-Requires: jakarta-commons-logging
+Requires: apache-commons-codec
+Requires: apache-commons-fileupload
+Requires: apache-commons-io
+Requires: apache-commons-logging
 Requires: jakarta-oro
 Requires: javassist
 Requires: ognl
@@ -94,10 +94,10 @@ BuildRequires: easymock-classextension
 BuildRequires: geronimo-ejb-2.1-api
 BuildRequires: hivemind = 0:1.1.1
 BuildRequires: hivemind-lib = 0:1.1.1
-BuildRequires: jakarta-commons-codec
-BuildRequires: jakarta-commons-fileupload
-BuildRequires: jakarta-commons-io
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-codec
+BuildRequires: apache-commons-fileupload
+BuildRequires: apache-commons-io
+BuildRequires: apache-commons-logging
 BuildRequires: jakarta-oro
 BuildRequires: javassist
 BuildRequires: jcharts
@@ -345,6 +345,9 @@ cp -pr config/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}/config
 %endif
 
 %changelog
+* Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt7_3jpp5
+- rebuild with apache-commons-*
+
 * Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:4.0.2-alt6_3jpp5
 - rebuild with apache-commons-fileupload
 
