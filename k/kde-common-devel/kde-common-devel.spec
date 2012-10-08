@@ -3,10 +3,10 @@
 %define K_if_ver_lt() %if "%(rpmvercmp '%2' '%1')" > "0"
 %define K_if_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
-%define rpm_ver %{get_version rpm}
+%define rpm_ver %{get_SVR rpm}
 
 Name: kde-common-devel
-Version: 4.8.5
+Version: 4.9.1
 Release: alt1
 
 Group: Development/KDE and QT
@@ -41,7 +41,7 @@ Install this package if you want to create RPM packages that use %name.
 %prep
 %setup -cT
 install -m 0644 %_libexecdir/rpm/find-lang .
-%K_if_ver_lteq "4.0.4-alt100.50" "%rpm_ver"
+%K_if_ver_lteq "%rpm_ver" "4.0.4-alt100.50"
 %patch1 -p0
 %else
 %patch2 -p0
@@ -58,6 +58,12 @@ install -D -m 0755 find-lang %buildroot/%_bindir/kde-devel-find-lang
 %_rpmmacrosdir/%name
 
 %changelog
+* Mon Sep 24 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- bump version
+
+* Wed Aug 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Wed Aug 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - set default CMAKE_BUILD_TYPE to Release (-g provided by rpm flags)
 
