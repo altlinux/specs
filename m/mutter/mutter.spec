@@ -2,7 +2,7 @@
 
 Name: mutter
 Version: 3.6.0
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: Clutter based compositing GTK3 Window Manager
 License: GPLv2+
@@ -75,6 +75,7 @@ GObject introspection devel data for the Mutter library
 %package gnome
 Summary: GNOME-specific parts of Mutter
 Group: Graphical desktop/GNOME
+BuildArch: noarch
 Provides: gnome-wm
 Requires: %name = %epoch:%version-%release
 
@@ -134,6 +135,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome/wm-properties/%name-wm.desktop
 
 %changelog
+* Mon Oct 08 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.6.0-alt2
+- mutter-gnome as noarch
+
 * Tue Sep 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.6.0-alt1
 - 3.6.0
 
