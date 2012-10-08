@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.45
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -445,7 +445,7 @@ Patch0563: linux-%kernel_branch.43-fix-drivers-scsi-fcoe.patch
 Patch0564: linux-%kernel_branch.42-fix-drivers-scsi-ibmvscsi--ibmvfc.patch
 Patch0565: linux-%kernel_branch.42-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
 Patch0566: linux-%kernel_branch.42-fix-drivers-scsi-megaraid--megaraid_mbox.patch
-Patch0567: linux-%kernel_branch.42-fix-drivers-scsi-megaraid--megaraid_sas.patch
+Patch0567: linux-%kernel_branch.44-fix-drivers-scsi-megaraid--megaraid_sas.patch
 
 Patch0570: linux-%kernel_branch.43-fix-drivers-target.patch
 
@@ -2665,6 +2665,12 @@ fi
 
 
 %changelog
+* Mon Oct 08 2012 Led <led@altlinux.ru> 3.0.45-alt3
+- updated:
+  + fix-drivers-net--sfc
+  + fix-drivers-scsi-megaraid--megaraid_sas
+  + feat-fs-subfs
+
 * Mon Oct 08 2012 Led <led@altlinux.ru> 3.0.45-alt2
 - updated:
   + fix-drivers-md--dm-mod
