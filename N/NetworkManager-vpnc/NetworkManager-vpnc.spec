@@ -6,7 +6,7 @@
 
 Name: NetworkManager-vpnc
 Version: 0.9.6.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: NetworkManager VPN plugin for vpnc
@@ -55,7 +55,8 @@ NetworkManager panel applet.
 	--disable-static \
 	--libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
-	--with-gtkver=%gtkver
+	--with-gtkver=%gtkver \
+	--enable-more-warnings=no
 %make_build
 
 %install
@@ -92,6 +93,9 @@ fi
 %exclude %_libdir/NetworkManager/*.la
 
 %changelog
+* Mon Oct 08 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt2
+- Fix build: temporary don't treat warrnings as errors.
+
 * Wed Aug 08 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt1
 - Updated to 0.9.6.0.
 
