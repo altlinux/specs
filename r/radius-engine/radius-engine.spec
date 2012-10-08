@@ -3,7 +3,7 @@ BuildRequires: libSDL_sound-devel
 # END SourceDeps(oneline)
 Name:		radius-engine
 Version:	1.1
-Release:	alt1_1
+Release:	alt1_1.1
 Summary:	A Lua based real-time 2D graphics game engine
 Group:		System/Libraries
 License:	MIT
@@ -65,6 +65,9 @@ rm -rf %{buildroot}%{_libdir}/*.la
 %{_libdir}/pkgconfig/radius-engine.pc
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1_1.1
+- Rebuilt with libpng15
+
 * Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt1_1
 - update to new release by fcimport
 
