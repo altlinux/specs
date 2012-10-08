@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           jspwiki
 Version:        2.8.4
-Release:	alt2_1jpp6
+Release:	alt3_1jpp6
 Epoch:          0
 Summary:        JSP based WikiWiki engine
 Group:          Development/Java
@@ -44,12 +44,12 @@ Source0:        http://www.ecyrd.com/~jalkanen/JSPWiki/2.8.4/JSPWiki-2.8.4-src.z
 Patch0:         jspwiki-UserManager.patch
 BuildRequires: jpackage-utils >= 0:5.0.0
 BuildRequires: ant
-BuildRequires: jakarta-commons-codec
-BuildRequires: jakarta-commons-fileupload
-BuildRequires: jakarta-commons-httpclient
-BuildRequires: jakarta-commons-io
-BuildRequires: jakarta-commons-lang
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-codec
+BuildRequires: apache-commons-fileupload
+BuildRequires: apache-commons-httpclient
+BuildRequires: apache-commons-io
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-logging
 BuildRequires: ecs
 BuildRequires: freshcookies-security
 BuildRequires: jakarta-taglibs-standard
@@ -79,9 +79,9 @@ BuildRequires: openqa-selenium-rc-server
 BuildRequires: stripes
 BuildRequires: xerces-j2
 
-Requires: jakarta-commons-codec
-Requires: jakarta-commons-fileupload
-Requires: jakarta-commons-lang
+Requires: apache-commons-codec
+Requires: apache-commons-fileupload
+Requires: apache-commons-lang
 Requires: ecs
 Requires: freshcookies-security
 Requires: jaf_1_0_2_api
@@ -207,6 +207,9 @@ cp -pr build/JSPWiki/* %{buildroot}%{_datadir}/%{name}/webapp
 
 
 %changelog
+* Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.8.4-alt3_1jpp6
+- rebuild with apache-commons-*
+
 * Sun Oct 07 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.8.4-alt2_1jpp6
 - rebuild with apache-commons-fileupload
 
