@@ -3,7 +3,7 @@
 
 Name: tetex
 Version: 2.0
-Release: alt11
+Release: alt12
 
 %define pkgname         teTeX
 %define texversion    2.0-rc1
@@ -50,6 +50,8 @@ Patch20: %pkgname-CVE-2004-0888.patch
 Patch21: %pkgname-CVE-2004-1125.patch
 Patch22: %pkgname-CVE-2005-0064.patch
 Patch23: %pkgname-CVE-2005-3191_3192.patch
+
+Patch24: tetex-2.0-alt-libpng15.patch
 
 Obsoletes: tetex-texmf-src
 PreReq: tetex-core = %PACKAGE_VERSION-%release, cm-super-fonts-tex
@@ -303,6 +305,8 @@ grep -ErlZ 'exec /bin/(sh5|bsh)' . |
 %patch22 -p1
 %patch23 -p1
 
+%patch24 -p2
+
 # Fix build with glibc-2.10+
 sed -i s/getline/texk_getline/g \
 	texk/dvipsk/afm2tfm.c texk/web2c/mpware/mpto.c
@@ -522,6 +526,9 @@ x=/usr/bin/updmap && [ -x "$x" ] && "$x"  2>/dev/null ||:
 %doc PROBLEMS* README ChangeLog
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt12
+- Rebuilt with libpng15
+
 * Wed Feb 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt11
 - Repair build with rpm >= 4.0.4-alt100.45 (thanks vitty@)
 
