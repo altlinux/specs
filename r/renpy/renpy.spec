@@ -1,6 +1,6 @@
 Name: renpy
 Version: 6.12.2
-Release: alt1.1.1
+Release: alt1.2
 Summary: A visual novel engine
 Group: Games/Adventure
 License: LGPL
@@ -12,6 +12,7 @@ Patch2: 01_abspaths.patch
 Patch3: 02_traceback.patch
 Patch4: 03_checkdir.patch
 Patch5: 04_editor.patch
+Patch6: renpy-6.12.2-alt-libpng15.patch
 
 %setup_python_module %name
 
@@ -63,6 +64,7 @@ Example game for %name, %summary
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p2
 
 touch $(find . -name \*.pyx)
 
@@ -160,6 +162,9 @@ cd module
 %_iconsdir/hicolor/*/apps/%name-the_question.*
 
 %changelog
+* Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.12.2-alt1.2
+- Rebuilt with libpng15
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 6.12.2-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
