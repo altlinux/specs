@@ -6,7 +6,7 @@
 
 Name: vala
 Version: 0.18.0
-Release: alt1
+Release: alt2
 Group: Development/C
 Summary: Vala is a programming language which makes GNOME programming easy
 License: LGPL
@@ -39,6 +39,7 @@ provide generated bindings for the full GNOME Platform at a later stage.
 %package -n vapi-common
 Summary: Common empty package with dir for vapi files
 Group: Development/Other
+BuildArch: noarch
 Provides: %_datadir/vala/vapi
 
 %description -n vapi-common
@@ -201,6 +202,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_man1dir/vapigen*
 
 %changelog
+* Mon Oct 08 2012 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt2
+- vapi-common as noarch
+
 * Tue Sep 25 2012 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt1
 - 0.18.0
 
