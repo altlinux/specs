@@ -1,17 +1,16 @@
 Name: quodlibet
-Version: 2.2.1
-Release: alt1.qa1.1.1
-Summary: music management program
+Version: 2.4.1
+Release: alt1
 
-Group: Sound
+Summary: audio library tagger, manager, and player for GTK+
 License: GPLv2
-Url: http://code.google.com/p/quodlibet/
+Group: Sound
 
+Url: http://code.google.com/p/quodlibet/
 Source: %name-%version.tar
-Packager: Vladimir Lettiev <crux@altlinux.ru>
 
 PreReq: exfalso = %version-%release
-BuildRequires: libgtk+2-devel python-devel python-module-pygtk-devel python-module-mutagen python-module-gst intltool ImageMagick
+BuildRequires: libgtk+2-devel python-devel python-module-pygtk-devel python-module-mutagen python-module-gst intltool
 BuildRequires: desktop-file-utils
 
 %description
@@ -37,13 +36,9 @@ FLAC, MP3, Musepack, and MOD.
 
 %install
 %python_install --install-purelib %python_sitelibdir
-mkdir -p %buildroot{%_miconsdir,%_niconsdir,%_liconsdir}
-for n in %name exfalso
-do 
-  convert %buildroot%python_sitelibdir/%name/images/$n.png -scale 16x16 %buildroot%_miconsdir/$n.png
-  convert %buildroot%python_sitelibdir/%name/images/$n.png -scale 32x32 %buildroot%_niconsdir/$n.png
-  convert %buildroot%python_sitelibdir/%name/images/$n.png -scale 48x48 %buildroot%_liconsdir/$n.png
-done
+mkdir -p %buildroot%_iconsdir/hicolor/scalable/apps
+cp  %buildroot%python_sitelibdir/%name/images/hicolor/scalable/apps/*.svg \
+    %buildroot%_iconsdir/hicolor/scalable/apps
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
 	--add-category=AudioVideoEditing \
@@ -51,24 +46,23 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 %files
 %_bindir/%name
-%_miconsdir/%name.png
-%_niconsdir/%name.png
-%_liconsdir/%name.png
+%_iconsdir/hicolor/scalable/apps/%name.svg
 %_desktopdir/%name.desktop
 %_man1dir/%name.*
 %doc COPYING NEWS HACKING README
 
 %files -n exfalso -f %name.lang
 %_bindir/exfalso
-%_miconsdir/exfalso.png
-%_niconsdir/exfalso.png
-%_liconsdir/exfalso.png
+%_iconsdir/hicolor/scalable/apps/exfalso.svg
 %_desktopdir/exfalso.desktop
 %_man1dir/exfalso.*
 %python_sitelibdir/%name
 %python_sitelibdir/%name-%version-py*
 
 %changelog
+* Tue Oct 09 2012 Vladimir Lettiev <crux@altlinux.ru> 2.4.1-alt1
+- New version 2.4.1
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.2.1-alt1.qa1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
