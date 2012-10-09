@@ -4,14 +4,14 @@ BuildRequires: gcc-c++
 #global prever r821
 
 Name:           grfcodec
-Version:        6.0.0
-Release:        alt2_2.1
+Version:        6.0.1
+Release:        alt1_1
 Summary:        A suite of programs to modify Transport Tycoon Deluxe's GRF files
 Group:          Development/Tools
 License:        GPLv2+
 URL:            http://dev.openttdcoop.org/projects/grfcodec
-Source0:        http://binaries.openttd.org/extra/grfcodec/%{version}/grfcodec-%{version}-source.tar.gz
-#Source0:        http://binaries.openttd.org/extra/grfcodec-nightly/%{prever}/grfcodec-nightly-%{prever}-source.tar.gz
+Source0:        http://binaries.openttd.org/extra/grfcodec/%{version}/grfcodec-%{version}-source.tar.xz
+#Source0:        http://binaries.openttd.org/extra/grfcodec-nightly/%{prever}/grfcodec-nightly-%{prever}-source.tar.xz
 
 BuildRequires:  boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel libpng-devel
 Obsoletes:      nforenum < 4.0.0-2
@@ -55,6 +55,9 @@ make install DESTDIR=%{buildroot}
 
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_1
+- update to new release by fcimport
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.0.0-alt2_2.1
 - Rebuilt with libpng15
 
