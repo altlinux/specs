@@ -27,7 +27,7 @@
 %define rlz alt1
 Name: %rname%major
 Version: %major.%minor.%bugfix
-Release: %rlz.1
+Release: %rlz.2
 %define qsa_ver %qsa_major.%qsa_minor.%qsa_bugfix
 
 %define qtdir	%_libdir/%rname%major
@@ -126,7 +126,8 @@ Patch105: qt-3.3.0-alt-shared_libs.patch
 Patch106: qt-3.3.1-alt-iso_c_extension.patch
 Patch107: qt-x11-free-3.3.6-alt-maccyrillic.patch
 Patch108: qt-3.3.8d-alt-arm-no-packed-pointers.patch
-Patch109: qt3-3.3.8d-alt-libpng15.patch
+# http://git.overlays.gentoo.org/gitweb/?p=proj/kde-sunset.git;a=commitdiff;h=8ac83bdb7f1ff6563756fc11007b39e685f0e6b1
+Patch109: qt3-3.3.8d-gentoo-libpng15.patch
 
 # Sergey A. Sukiyazov <sukiyazov@mail.ru>
 Patch9000: 9000-qt-x11-free-3.3.3-menubar.patch
@@ -1292,6 +1293,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Oct 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.8d-alt1.2
+- Fixed (thnx, Gentoo!) crash with libpng15 (ALT #27817)
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.8d-alt1.1
 - Rebuilt with libpng15
 
