@@ -10,8 +10,8 @@
 # git archive --format=tar --prefix=geoclue-0.11.1.1/ %git_version | gzip > ~/RPM/SOURCES/geoclue-0.11.1.1-20090310.tar.gz
 
 Name: lib%_name
-Version: 0.12.0
-Release: alt5%snapshot
+Version: 0.12.99
+Release: alt1%snapshot
 
 Summary: A modular geoinformation service
 Group: System/Libraries
@@ -20,10 +20,6 @@ Url: http://geoclue.freedesktop.org/
 
 Source: http://folks.o-hand.com/jku/geoclue-releases/%_name-%version.tar.gz
 #Source: %tarfile
-# from upstream
-Patch: %_name-0.12.0-nm-0.9.patch
-Patch1: %_name-unused-var.patch
-Patch2: %_name-0.12.0-g_thread_init.patch
 
 BuildRequires: libdbus-glib-devel
 BuildRequires: glib2-devel
@@ -87,9 +83,6 @@ A gypsy provider for geoclue
 
 %prep
 %setup -q -n %_name-%version
-%patch -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %autoreconf
@@ -139,6 +132,8 @@ cp test/.libs/geoclue-test-gui %buildroot%_bindir/
 %_libexecdir/geoclue-gsmloc
 %_libexecdir/geoclue-nominatim
 %_libexecdir/geoclue-skyhook
+%_datadir/GConf/gsettings/geoclue
+%_datadir/glib-2.0/schemas/org.freedesktop.Geoclue.gschema.xml
 %doc AUTHORS README
 
 %files devel
@@ -163,6 +158,9 @@ cp test/.libs/geoclue-test-gui %buildroot%_bindir/
 %_datadir/dbus-1/services/org.freedesktop.Geoclue.Providers.Gypsy.service
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.99-alt1
+- 0.12.99
+
 * Thu May 31 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.0-alt5
 - fixed build with gcc-4.6 and glib-2.32
 - built lost skyhook provider
