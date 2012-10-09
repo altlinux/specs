@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: apache-jar-resource-bundle
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           easymock3
 Version:        3.1
-Release:        alt1_6jpp7
+Release:        alt1_7jpp7
 Summary:        Easy mock objects
 Group:          Development/Java
 License:        ASL 2.0
@@ -76,7 +79,6 @@ Javadoc for %{name}.
 
 mvn-rpmbuild \
   -Dmaven.test.failure.ignore \
-  -Dmaven.test.skip=true \
   -Dproject.build.sourceEncoding=ISO-8859-1 \
   install \
   javadoc:aggregate
@@ -103,7 +105,7 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %files
-%{_mavenpomdir}*
+%{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 %{_javadir}/*
 %doc easymock/LICENSE.txt
@@ -115,6 +117,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_7jpp7
+- new fc release
+
 * Thu Aug 16 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_6jpp7
 - new version
 
