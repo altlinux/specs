@@ -1,6 +1,6 @@
 Name: installer-feature-symlinks-from-sbin
 Version: 0.2
-Release: alt3
+Release: alt4
 
 Summary: Make some useful programs from /sbin and /usr/sbin available to user
 License: GPL
@@ -26,6 +26,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Oct 09 2012 Andrey Cherepanov <cas@altlinux.org> 0.2-alt4
+- Remove arp, add lsof. Supress error output.
+
 * Mon May 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt3
 - Add arp to programs list
 
