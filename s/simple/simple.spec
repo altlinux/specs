@@ -1,8 +1,9 @@
+BuildRequires: ant-junit
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          simple
 Version:       4.1.21
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Asynchronous HTTP server for Java
 Group:         Development/Java
 License:       ASL 2.0 and LGPLv2+
@@ -82,6 +83,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE-2.0.txt
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.21-alt2_3jpp7
+- added ant-junit BR:
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 4.1.21-alt1_3jpp7
 - new version
 
