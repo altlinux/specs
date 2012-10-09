@@ -1,5 +1,5 @@
 Name: shotwell
-Version: 0.12.3
+Version: 0.13.1
 Release: alt1
 Summary: digital photo organizer designed for the GNOME desktop environment
 
@@ -9,6 +9,7 @@ Url: http://www.yorba.org/shotwell/
 
 # Cloned from git://yorba.org/shotwell
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 BuildRequires: gstreamer-devel gst-plugins-devel libGConf-devel libdconf-devel libdbus-glib-devel libgee-devel libgexiv2-devel libgphoto2-devel libgudev-devel libjson-glib-devel libraw-devel libsqlite3-devel libstdc++-devel libunique3-devel libwebkitgtk3-devel vala librest-devel
 
@@ -22,6 +23,7 @@ mode, and export them to share with others.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 ./configure --disable-icon-update --prefix=%_prefix --lib=%_lib
@@ -34,6 +36,7 @@ mode, and export them to share with others.
 %files -f %name.lang
 %_bindir/%name
 %_bindir/%name-video-thumbnailer
+%_prefix/libexec/%name/%name-settings-migrator
 %_libdir/%name
 %_desktopdir/%{name}*
 %_iconsdir/hicolor/scalable/apps/%name.svg
@@ -44,6 +47,12 @@ mode, and export them to share with others.
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Tue Oct 09 2012 Vladimir Lettiev <crux@altlinux.ru> 0.13.1-alt1
+- 0.13.1
+
+* Thu Sep 20 2012 Vladimir Lettiev <crux@altlinux.ru> 0.13.0-alt1
+- 0.13.0
+
 * Wed Jun 13 2012 Vladimir Lettiev <crux@altlinux.ru> 0.12.3-alt1
 - 0.12.3
 - build with new shared libraw
