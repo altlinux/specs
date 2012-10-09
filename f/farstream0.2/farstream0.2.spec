@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: %_name%api_ver
-Version: 0.1.91
+Version: 0.2.1
 Release: alt1
 
 Summary: A audio/video conferencing framework (0.2)
@@ -25,8 +25,7 @@ Source: http://freedesktop.org/software/%_name/releases/%_name/%_name-%version.t
 Conflicts: farsight2
 
 Requires: lib%name = %version-%release
-Requires: gst-plugins-nice%gst_api_ver gst-plugins-good%gst_api_ver
-#Requires: gst-plugins-bad%gst_api_ver
+Requires: gst-plugins-nice%gst_api_ver gst-plugins-good%gst_api_ver gst-plugins-bad%gst_api_ver
 
 BuildRequires: libgio-devel >= %glib_ver libnice-devel >= %nice_ver
 BuildRequires: gst-plugins%gst_api_ver-devel  >= %gst_ver
@@ -142,6 +141,9 @@ This package provides development documentation for the Farstream library.
 
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Sat Sep 15 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.91-alt1
 - 0.1.91
 

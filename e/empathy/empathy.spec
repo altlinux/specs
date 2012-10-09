@@ -13,7 +13,7 @@
 %def_enable gst_1
 
 Name: empathy
-Version: %ver_major.0.2
+Version: %ver_major.0.3
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -51,16 +51,17 @@ Requires: %name-data = %version-%release
 %define gnutls_ver 2.8.5
 %define folks_ver 0.7.1
 %define nst_ver 2.91.6
-%define farstream_ver 0.2
 %define nm_ver 0.8.995
 %define goa_ver 3.5.1
 %define secret_ver 0.5
+%define farstream_ver 0.2
 
 Requires: telepathy-gabble >= %tp_gabble_ver
 Requires: telepathy-salut >= %tp_salut_ver
 Requires: telepathy-haze >= %tp_haze_ver
 Requires: libtelepathy-mission-control >= %mission_control_ver
 Requires: telepathy-logger >= %tp_logger_ver
+Requires: farstream0.2 >= %farstream_ver
 
 BuildPreReq: intltool >= %intltool_ver gnome-common itstool
 BuildPreReq: libgio-devel >= %glib_ver
@@ -193,6 +194,9 @@ rm -f data/%name.desktop
 
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0.3-alt1
+- 3.6.0.3
+
 * Mon Oct 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0.2-alt1
 - 3.6.0.2
 

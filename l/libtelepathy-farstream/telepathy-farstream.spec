@@ -9,7 +9,7 @@
 
 Name: lib%_name
 Version: 0.6.0
-Release: alt1
+Release: alt2
 
 Summary: Telepathy client library to handle call channels
 Group: Networking/Instant messaging
@@ -104,6 +104,9 @@ Farstream library.
 %endif
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt2
+- rebuild against farstream0.2-0.2.1
+
 * Sat Oct 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
 - 0.6.0
 
