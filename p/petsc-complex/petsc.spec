@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.3_p2
-Release: alt2
+Release: alt3
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -786,6 +786,9 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 %ldir/sources
 
 %changelog
+* Tue Oct 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p2-alt3
+- Rebuilt with gcc 4.7
+
 * Tue Sep 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p2-alt2
 - Rebuilt with netcdf 4.2
 
@@ -954,4 +957,3 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
-
