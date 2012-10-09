@@ -4,7 +4,7 @@
 %define major 2.24
 Name: python-module-pygtk
 Version: %major.0
-Release: alt4
+Release: alt5
 
 Summary: Python bindings for the GTK+ widget set
 
@@ -109,7 +109,7 @@ NOCONFIGURE=1 gnome-autogen.sh
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 mkdir -p %buildroot%_includedir/python%__python_version
 mv %buildroot%_includedir/pygtk-2.0 %buildroot%_includedir/python%__python_version/pygtk
 subst "s|\${includedir}/pygtk-2.0|\${includedir}/python%__python_version/pygtk|g" %buildroot/%_pkgconfigdir/*.pc
@@ -142,6 +142,9 @@ test -f %buildroot%python_sitelibdir/gtk-2.0/gobject.so && exit 1
 %_datadir/gtk-doc/html/pygtk/
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt5
+- fixed %%install
+
 * Mon May 21 2012 Yuri N. Sedunov <aris@altlinux.org> 2.24.0-alt4
 - -devel subpackage requires python-module-pygobject-devel
 
