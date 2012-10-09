@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -36,7 +39,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-utils
 Version:        3.0
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        Plexus Common Utilities
 License:        ASL 1.1 and ASL 2.0 and MIT
 Group:          Development/Java
@@ -111,6 +114,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0-alt1_3jpp7
+- new fc release
+
 * Fri Mar 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0-alt1_2jpp7
 - complete build
 
