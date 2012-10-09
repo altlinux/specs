@@ -1,5 +1,5 @@
 Name: perl-Moo
-Version: 1.000003
+Version: 1.000004
 Release: alt1
 
 Summary: Moo - Minimalist Object Orientation (with Moose compatiblity)
@@ -36,6 +36,10 @@ BuildArch: noarch
 %doc Changes
 
 %changelog
+* Tue Oct 09 2012 Vladimir Lettiev <crux@altlinux.ru> 1.000004-alt1
+- 1.000003 -> 1.000004
+- don't require Moose
+
 * Wed Sep 12 2012 Vladimir Lettiev <crux@altlinux.ru> 1.000003-alt1
 - 0.009014 -> 1.000003
 
