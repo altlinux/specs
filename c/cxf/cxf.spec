@@ -2,13 +2,13 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cxf
-%define version 2.4.8
+%define version 2.4.9
 # vim: set ts=4 sw=4 sts=4 et:
 %global tarname apache-%{name}-%{version}-src
 
 Name:           cxf
-Version:        2.4.8
-Release:        alt1_5jpp7
+Version:        2.4.9
+Release:        alt1_2jpp7
 Summary:        Apache CXF
 License:        ASL 2.0
 Group:          Development/Java
@@ -226,8 +226,9 @@ mvn-rpmbuild \
 install_pom_file ()
 {
     local pom_file=${1}
+    local module=${2}
     install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/${pom_file}
-    %add_maven_depmap ${pom_file}
+    %add_maven_depmap ${pom_file} -f ${module}
 }
 
 install_jar_file ()
@@ -235,10 +236,11 @@ install_jar_file ()
     local pom_file=${1}
     local source=${2}
     local target=${3}
+    local module=${4}
 
     install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/${pom_file}
     install -pm 644 ${source} %{buildroot}%{_javadir}/${target}
-    %add_maven_depmap ${pom_file} ${target}
+    %add_maven_depmap ${pom_file} ${target} -f ${module}
 }
 
 guess_jar_file_and_target ()
@@ -293,9 +295,9 @@ do
     guess_jar_file_and_target
 
     if $jar_found; then
-        install_jar_file ${pom_file} ${jar_file} ${jar_target}
+        install_jar_file ${pom_file} ${jar_file} ${jar_target} ${module}
     else
-        install_pom_file ${pom_file}
+        install_pom_file ${pom_file} ${module}
     fi
 
     popd
@@ -306,7 +308,6 @@ maven-plugins
 maven-plugins codegen-plugin
 common
 common common utilities
-parent
 rt
 rt bindings
 rt bindings/coloc
@@ -339,6 +340,13 @@ tools wsdlto/databinding/jaxb
 tools wsdlto/frontend/jaxws
 EOM
 
+# parents
+install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-cxf.pom
+install -pm 644 parent/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
+
+%add_maven_depmap JPP.%{name}-cxf.pom
+%add_maven_depmap JPP.%{name}-parent.pom
+
 # javadoc
 cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
@@ -346,8 +354,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %files
 %doc README LICENSE NOTICE
 %doc licenses
+%{_mavenpomdir}/JPP.%{name}-cxf.pom
 %{_mavenpomdir}/JPP.%{name}-parent.pom
-%{_mavendepmapfragdir}/*
+%{_mavendepmapfragdir}/%{name}
 %dir %{_javadir}/%{name}
 
 %files javadoc
@@ -357,26 +366,34 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %files api
 %{_mavenpomdir}/JPP.%{name}-api.pom
+%{_mavendepmapfragdir}/%{name}-api
 %{_javadir}/%{name}/api.jar
 
 %files common
 %{_mavenpomdir}/JPP.%{name}-common*
+%{_mavendepmapfragdir}/%{name}-common
 %{_javadir}/%{name}/common-*
 
 %files maven-plugins
 %{_mavenpomdir}/JPP.%{name}-maven-plugins*
+%{_mavendepmapfragdir}/%{name}-maven-plugins
 %{_javadir}/%{name}/maven-plugins-*
 
 %files rt
 %{_mavenpomdir}/JPP.%{name}-rt*
+%{_mavendepmapfragdir}/%{name}-rt
 %{_javadir}/%{name}/rt-*
 
 %files tools
 %{_mavenpomdir}/JPP.%{name}-tools*
+%{_mavendepmapfragdir}/%{name}-tools
 %{_javadir}/%{name}/tools-*
 
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.9-alt1_2jpp7
+- new version
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.8-alt1_5jpp7
 - new version
 
