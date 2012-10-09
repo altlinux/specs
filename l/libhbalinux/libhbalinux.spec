@@ -1,25 +1,27 @@
 %add_optflags %optflags_shared
-Name:           libhbalinux
-Version:        1.0.14
-Release:        alt1_3
-Summary:        FC-HBAAPI implementation using scsi_transport_fc interfaces
-Group:          System/Libraries
-License:        LGPLv2
-URL:            http://www.open-fcoe.org
-Source0:        %{name}-%{version}.tar.gz
-Patch0:         libhbalinux-1.0.13-conf.patch
-Patch1:         libhbalinux-1.0.14-archiver.patch
-BuildRequires:  libhbaapi-devel libpciaccess-devel libtool automake
-Requires:       libhbaapi
+Name:               libhbalinux
+Version:            1.0.14
+Release:            alt1_4
+Summary:            FC-HBAAPI implementation using scsi_transport_fc interfaces
+Group:              System/Libraries
+License:            LGPLv2
+URL:                http://www.open-fcoe.org
+Source0:            %{name}-%{version}.tar.gz
+Patch0:             libhbalinux-1.0.13-conf.patch
+Patch1:             libhbalinux-1.0.14-archiver.patch
+BuildRequires:      libhbaapi-devel libpciaccess-devel libtool automake
+Requires:           libhbaapi
+Requires(post):     grep
+Requires(postun):   grep
 Source44: import.info
 
 %description
 SNIA HBAAPI vendor library built on top of the scsi_transport_fc interfaces.
 
 %package devel
-Summary:        A file needed for libhbalinux application development
-Group:          Development/C
-Requires:       libhbalinux = %{version}-%{release}
+Summary:            A file needed for libhbalinux application development
+Group:              Development/C
+Requires:           %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 The libhbalinux-devel package contains the library pkgconfig file.
@@ -67,6 +69,9 @@ fi
 %{_libdir}/%{name}.so
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.14-alt1_4
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.14-alt1_3
 - update to new release by fcimport
 
