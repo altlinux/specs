@@ -3,7 +3,7 @@
 %define beta %nil
 Name: libmsn
 Version: 4.2.1
-Release: alt1
+Release: alt2
 
 Group: Development/C++
 Summary: Reusable, open-source and fully documented library for MSN
@@ -11,6 +11,7 @@ Url: http://sourceforge.net/projects/libmsn
 License: GPLv2+
 
 Source: %name-%version%beta.tar.bz2
+Patch1: alt-gcc47.patch
 
 BuildRequires: cmake gcc-c++ libcom_err-devel libssl-devel
 BuildRequires: kde-common-devel
@@ -41,7 +42,7 @@ Files needed to build applications based on %name.
 
 %prep
 %setup -q -n %name-%version%beta
-
+%patch1 -p1
 
 %build
 %Kbuild
@@ -63,6 +64,12 @@ Files needed to build applications based on %name.
 %_libdir/libmsn.so
 
 %changelog
+* Tue Oct 09 2012 Sergey V Turchin <zerg@altlinux.org> 4.2.1-alt2
+- fix to build with gcc 4.7
+
+* Tue Aug 14 2012 Sergey V Turchin <zerg@altlinux.org> 4.2.1-alt0.M60P.1
+- built for M60P
+
 * Tue Jul 24 2012 Sergey V Turchin <zerg@altlinux.org> 4.2.1-alt1
 - new version
 
