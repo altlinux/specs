@@ -2,7 +2,7 @@ Name:    kernel-image-std-pae
 Release: alt1
 Epoch:   1
 %define kernel_base_version	3.5
-%define kernel_sublevel	.4
+%define kernel_sublevel	.6
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -34,6 +34,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kheaders_dir	%_prefix/include/linux-%kversion-%flavour
 %define kbuild_dir	%_prefix/src/linux-%kversion-%flavour-%krelease
 %define old_kbuild_dir	%_prefix/src/linux-%kversion-%flavour
+%define nprocs 16
 
 %brp_strip_none /boot/*
 
@@ -626,6 +627,17 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Sun Oct 07 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.6-alt1
+- Update to 3.5.6
+- Enable gma600, gma3600 (ALT 27812)
+
+* Thu Oct 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.5-alt2
+- kernel preemption enabled
+- nproc set to 16
+
+* Tue Oct 02 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.5-alt1
+- Update to 3.5.5
+
 * Sat Sep 15 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.4-alt1
 - Update to 3.5.4
 

@@ -2,7 +2,7 @@
 %define module_version	4.1.20
 %define module_release	alt2
 
-%define kversion	3.5.4
+%define kversion	3.5.6
 %define krelease	alt1
 %define flavour		std-pae
 
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197892.1
+Release: %module_release.197894.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -102,8 +102,8 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Sat Sep 15 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2.197892.1
-- Build for kernel-image-std-pae-3.5.4-alt1.
+* Tue Oct 09 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2.197894.1
+- Build for kernel-image-std-pae-3.5.6-alt1.
 
 * Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2
 - technical
