@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.45
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -260,10 +260,10 @@ Patch0221: linux-%kernel_branch.42-fix-drivers-firmware--edd.patch
 Patch0222: linux-%kernel_branch.42-fix-drivers-firmware--efivars.patch
 Patch0223: linux-%kernel_branch.42-fix-drivers-firmware--iscsi_ibft.patch
 
-Patch0231: linux-%kernel_branch.42-fix-drivers-gpu-drm.patch
-Patch0232: linux-%kernel_branch.43-fix-drivers-gpu-drm--drm.patch
+Patch0231: linux-%kernel_branch.44-fix-drivers-gpu-drm.patch
+Patch0232: linux-%kernel_branch.44-fix-drivers-gpu-drm--drm.patch
 Patch0233: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm_kms_helper.patch
-Patch0234: linux-%kernel_branch.43-fix-drivers-gpu-drm--i915.patch
+Patch0234: linux-%kernel_branch.44-fix-drivers-gpu-drm--i915.patch
 Patch0235: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0236: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
 Patch0237: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
@@ -2665,6 +2665,13 @@ fi
 
 
 %changelog
+* Tue Oct 09 2012 Led <led@altlinux.ru> 3.0.45-alt4
+- updated
+  + fix-drivers-gpu-drm
+  + fix-drivers-gpu-drm--drm
+  + fix-drivers-gpu-drm--i915
+  + feat-fs-subfs
+
 * Mon Oct 08 2012 Led <led@altlinux.ru> 3.0.45-alt3
 - updated:
   + fix-drivers-net--sfc
