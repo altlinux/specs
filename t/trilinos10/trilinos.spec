@@ -26,7 +26,7 @@ Name: %truename-docs
 Name: %truename
 %endif
 Version: 10.12.2
-Release: alt4
+Release: alt5
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL
 Group: Sciences/Mathematics
@@ -2407,6 +2407,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt5
+- Fixed build with gcc 4.7
+
 * Tue Sep 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt4
 - Rebuilt with Boost 1.51.0
 
