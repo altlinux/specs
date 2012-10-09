@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -37,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subname}
 Version:        1.0
-Release:        alt4_0.8.a7jpp7
+Release:        alt4_0.9.a7jpp7
 Summary:        Plexus Resource Manager
 License:        MIT
 Group:          Development/Java
@@ -123,6 +126,9 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.9.a7jpp7
+- new fc release
+
 * Fri Mar 23 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.8.a7jpp7
 - fixed plexus component generation
 
