@@ -1,8 +1,8 @@
 %define _name gypsy
 
 Name: lib%_name
-Version: 0.8
-Release: alt4
+Version: 0.9
+Release: alt1
 
 Summary: A library for Gypsy
 Group: System/Libraries
@@ -15,6 +15,7 @@ Patch: gypsy-0.8-unusedvar.patch
 BuildRequires: libbluez-devel
 BuildRequires: libdbus-devel
 BuildRequires: libdbus-glib-devel
+BuildRequires: libgudev-devel
 BuildRequires: glib2-devel
 BuildRequires: gtk-doc
 BuildRequires: libxslt
@@ -70,6 +71,7 @@ make install DESTDIR=%buildroot
 %doc AUTHORS COPYING COPYING.lib LICENSE
 
 %files -n %_name-daemon
+%config %_sysconfdir/gypsy.conf
 %_libexecdir/gypsy-daemon
 %_sysconfdir/dbus-1/system.d/Gypsy.conf
 %_datadir/dbus-1/system-services/org.freedesktop.Gypsy.service
@@ -83,6 +85,9 @@ make install DESTDIR=%buildroot
 %_datadir/gtk-doc/html/gypsy
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9-alt1
+- 0.9
+
 * Thu May 31 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8-alt4
 - fixed build with gcc-4.6
 
