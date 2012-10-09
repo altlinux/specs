@@ -2,7 +2,7 @@
 
 Name: menu
 Version: 2.1.41
-Release: alt20
+Release: alt21
 
 Group: System/Base
 Summary: Menu system
@@ -57,6 +57,7 @@ Patch21: menu-2.1.27-alt-remove_stamp.patch
 Patch22: menu-2.1.35-alt-locate_icon-function.patch
 Patch23: menu-2.1.41-alt-disable-menuentries.patch
 Patch24: menu-2.1.41-alt-xdginput.patch
+Patch25: menu-2.1.41-alt-gcc47.patch
 
 # Automatically added by buildreq on Mon Oct 29 2001
 BuildRequires: gcc-c++ libpopt-devel libstdc++-devel zlib-devel
@@ -90,6 +91,7 @@ by-system bases.
 %patch22 -p1 -b .locate_icon
 %patch23 -p1 -b .disable
 %patch24 -p1 -b .xdg
+%patch25 -p1 -b .gcc47
 
 for f in po/*.po
 do
@@ -189,6 +191,9 @@ sh -n %buildroot%_sysconfdir/firsttime.d/menu
 %doc doc/{*html,README*,BUGS,menu.txt*} AUTHORS debian/changelog debian/copyright examples
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 2.1.41-alt21
+- fixed build with gcc4.7
+
 * Wed Jun 01 2011 Igor Vlasenko <viy@altlinux.ru> 2.1.41-alt20
 - bugfix: handle extra groups in desktop files (ALT#25702)
 
