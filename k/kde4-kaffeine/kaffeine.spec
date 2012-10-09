@@ -2,7 +2,7 @@
 %define rname kaffeine
 Name: kde4-%rname
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Group: Video
 Summary: Multimedia Player
@@ -14,7 +14,7 @@ Conflicts: kaffeine <= 0.8.8-alt4
 
 # svn.kde.org/home/kde/trunk/extragear/multimedia/kaffeine
 Source0: %rname-%version.tar.bz2
-
+Patch1: alt-gcc47.patch
 
 BuildRequires: gcc-c++ kde4libs-devel libxine-devel
 
@@ -26,6 +26,7 @@ and Ogg Vorbis. It also handles Video CDs, DVDs, and DVB cards.
 
 %prep
 %setup -q -n %rname-%version
+%patch1 -p1
 echo "X-KDE4-InitialPreference=30" >> src/kaffeine.desktop
 
 %build
@@ -51,6 +52,9 @@ echo "X-KDE4-InitialPreference=30" >> src/kaffeine.desktop
 %_K4xdg_apps/kaffeine.desktop
 
 %changelog
+* Tue Oct 09 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt2
+- fix to build with gcc 4.7
+
 * Mon Apr 25 2011 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1
 - new version
 
