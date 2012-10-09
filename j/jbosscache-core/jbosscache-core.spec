@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:       jbosscache-core
 Version:    3.2.8
-Release:    alt1_4jpp7
+Release:    alt1_5jpp7
 Summary:    JBoss objects cache
 
 Group:      Development/Java
@@ -11,7 +14,6 @@ URL:        http://jboss.org/jbosscache
 # svn export http://anonsvn.jboss.org/repos/jbosscache/core/tags/3.2.8.GA jbosscache-core-3.2.8
 # tar cJf jbosscache-core-3.2.8.tar.xz jbosscache-core-3.2.8
 Source0:    %{name}-%{version}.tar.xz
-Source1:    %{name}-depmap.xml
 Patch0:     %{name}-jgroups212.patch
 
 BuildRequires:  maven
@@ -62,15 +64,23 @@ BuildArch: noarch
 %setup -q
 find . -name \*.jar -exec rm -f {} \;
 
+# Remove optional dependencies
+%pom_remove_dep com.sleepycat:je
+%pom_remove_dep net.noderunner:amazon-s3
+
 # Remove code for amazon-s3 and berkleydb-je dependencies
 rm -rf src/main/java/org/jboss/cache/loader/{s3,bdbje}
+
+# Fix JBoss transaction API dependency
+sed -i -e "s|<groupId>org.jboss.javaee</groupId>|<groupId>org.jboss.spec.javax.transaction</groupId>|" \
+    -e "s|<artifactId>jboss-transaction-api</artifactId>|<artifactId>jboss-transaction-api_1.1_spec</artifactId>|" \
+    -e "s|<version>1.0.1.GA</version>|<version>1.0.1-SNAPSHOT</version>|" pom.xml
 
 %patch0 -p1
 
 %build
 # Not running tests due to missing dependencies
 mvn-rpmbuild install -Dmaven.test.skip=true \
-    -Dmaven.local.depmap.file=%{SOURCE1} \
     -Dproject.build.sourceEncoding=UTF-8 \
     javadoc:aggregate
 
@@ -97,9 +107,13 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
+%doc src/main/release/LICENSE-lgpl-2.1.txt
 %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_5jpp7
+- new fc release
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.8-alt1_4jpp7
 - new fc release
 
