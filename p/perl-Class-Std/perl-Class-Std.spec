@@ -1,37 +1,30 @@
 # SPEC file for building Perl module Class-Std
 
 %define real_name Class-Std
-%define version 0.11
-%define release alt1
 
 Name: perl-Class-Std
-Version: %version
-Release: alt1.1
+Version: 0.011
+Release: alt2
 
 Summary: Perl module for creating standard "inside-out" classes 
-
-License: Perl license
 Group: Development/Perl
-URL: http://search.cpan.org/~dconway/Class-Std/
+License: Perl license
 
+URL: %CPAN %real_name
+Source: http://search.cpan.org/CPAN/authors/id/D/DC/DCONWAY/%real_name-%version.tar.gz
+Patch: %name-0.011-alt-pod.patch
+
+BuildRequires: perl-devel perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
 BuildArch: noarch
 
-Packager: Nikolay A. Fetisov <naf@altlinux.ru>
-
-Source: http://search.cpan.org/CPAN/authors/id/D/DC/DCONWAY/%real_name-%version.tar.gz
-
-AutoReqProv: perl, yes
-BuildRequires(pre): perl-devel
-# Automatically added by buildreq on Sat May 24 2008
-BuildRequires: perl-Module-Build perl-Test-Pod perl-Test-Pod-Coverage
-
 %description
-Perl module Class::Std provides the standard infrastructure 
-required to create "inside-out" classes, as described in 
+Perl module Class::Std provides the standard infrastructure
+required to create "inside-out" classes, as described in
 Chapters 15 and 16 of "Perl Best Practices" (O'Reilly, 2005).
 
 %prep
 %setup -q -n %real_name-%version
+%patch -p2
 
 %build
 %perl_vendor_build
@@ -40,11 +33,14 @@ Chapters 15 and 16 of "Perl Best Practices" (O'Reilly, 2005).
 %perl_vendor_install
 
 %files
+%perl_vendor_privlib/Class/Std*
 %doc README Changes
 
-%perl_vendor_privlib/Class/Std*
-
 %changelog
+* Tue Oct 09 2012 Vladimir Lettiev <crux@altlinux.ru> 0.011-alt2
+- corrected version
+- fixed POD
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.11-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
