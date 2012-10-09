@@ -1,13 +1,14 @@
-BuildRequires: apache-jar-resource-bundle
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
+BuildRequires: apache-jar-resource-bundle
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           wss4j 
 Version:        1.5.12
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        Apache WS-Security implementation
 
 Group:          Development/Java
@@ -94,6 +95,9 @@ install -m 0644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.12-alt1_3jpp7
+- new fc release
+
 * Sat Apr 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.12-alt1_2jpp7
 - fc version
 
