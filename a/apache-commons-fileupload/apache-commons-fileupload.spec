@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:             apache-%{short_name}
 Version:          1.2.2
-Release:          alt1_7jpp7
+Release:          alt2_7jpp7
 Summary:          This package provides an api to work with html file upload
 License:          ASL 2.0
 Group:            Development/Java
@@ -39,7 +39,8 @@ Requires:         apache-commons-io
 Requires:         portlet-2.0-api
 
 Provides:         jakarta-%{short_name} = 1:%{version}-%{release}
-Obsoletes:        jakarta-%{short_name} < 1:1.2.1-alt1_7jpp6
+Obsoletes:        jakarta-%{short_name} < 1:%{version}
+Conflicts:        jakarta-%{short_name} < 1:%{version}
 Provides:         %{short_name} = 1:%{version}-%{release}
 Source44: import.info
 
@@ -119,6 +120,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt2_7jpp7
+- proper Obsoletes on jakarta-* (closes: 27808)
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.2.2-alt1_7jpp7
 - new version
 
