@@ -5,9 +5,16 @@ BuildRequires: gcc-c++ rpm-build-java
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %define fedora 18
+# for a pre-release, define the prerel field e.g. .a1 .rc2 - comment out for official release
+# also remove the space between % and global - this space is needed because
+# fedpkg verrel stupidly ignores comment lines
+%global prerel .a1
+# also need the relprefix field for a pre-release e.g. .0 - also comment out for official release
+%global relprefix 0.
+
 Name:             dogtag-pki-theme
-Version:          9.0.11
-Release:          alt1_2jpp7
+Version:          10.0.0
+Release:          alt1_0.1.a1jpp7
 Summary:          Certificate System - Dogtag PKI Theme Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -23,7 +30,7 @@ BuildRequires:    jpackage-utils >= 1.7.5-10
 BuildRequires:    jpackage-utils
 %endif
 
-Source0:          http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.tar.gz
+Source0:          http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}%{?prerel}.tar.gz
 
 %if 0%{?rhel}
 ExcludeArch:      ppc ppc64 s390 s390x
@@ -269,7 +276,7 @@ This package is used by the Dogtag Certificate System.
 %prep
 
 
-%setup -q
+%setup -q -n %{name}-%{version}%{?prerel}
 
 
 %build
@@ -342,6 +349,9 @@ chmod 755 %{buildroot}%{_datadir}/pki/tps-ui/cgi-bin/sow/cfg.pl
 
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 10.0.0-alt1_0.1.a1jpp7
+- new version
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 9.0.11-alt1_2jpp7
 - new version
 
