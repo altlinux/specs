@@ -1,14 +1,17 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 #
 # spec file for package josm
 
-%global svn_revision 5210
+%global svn_revision 5485
 
 
 Name:           josm
 Version:        0
-Release:        alt1_0.31.5210svnjpp7
+Release:        alt1_0.33.5485svnjpp7
 Summary:        An editor for  OpenStreetMap (OSM)
 Group:          Networking/WWW
 License:        GPLv2+
@@ -20,14 +23,11 @@ Source3:        %{name}-generate-tarball.sh
 Source4:        %{name}.1
 #Source built using the following commands : ./josm-generate-tarball.sh 3751
 
-#patch to add javadoc generation in build.xml
-Patch1:         %{name}-%{version}-add_javadoc.patch
-
 #patch to remove metadata-extractor and signpost-core of final jar
-Patch2:         %{name}-%{version}-add_classpath.patch
+Patch1:         %{name}-%{version}-add_classpath.patch
 
 #remove call to "svn info" and fix in build.xml revision and commit date 
-Patch3:         %{name}-%{version}-remove_svn_call.patch 
+Patch2:         %{name}-%{version}-remove_svn_call.patch 
 
 
 
@@ -74,8 +74,6 @@ This package contains the API documentation for %{name}.
 %setup -q
 %patch1 -p0
 %patch2 -p0
-%patch3 -p0
-
 
 find . -name '*.jar' -exec rm -f '{}' \;
 find . -name '*.class' -exec rm -f '{}' \;
@@ -90,7 +88,7 @@ ln -s $(build-classpath metadata-extractor) lib/metadata-extractor.jar
 ln -s $(build-classpath signpost-core) lib/signpost-core.jar
 ln -s $(build-classpath svgsalamander) lib/svgsalamander.jar
 ln -s $(build-classpath javacc) tools/javacc.jar
-ln -s $(build-classpath apache-commons-codec) lib/apache-commons-codec.jar
+ln -s $(build-classpath commons-codec) lib/apache-commons-codec.jar
 
 iconv -f iso8859-15 -t utf-8 CONTRIBUTION > CONTRIBUTION.conv && mv -f CONTRIBUTION.conv CONTRIBUTION
 
@@ -134,6 +132,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ %SOURCE2
 
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.33.5485svnjpp7
+- new fc release
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.31.5210svnjpp7
 - new version
 
