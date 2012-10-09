@@ -3,7 +3,7 @@
 
 Name: gsettings-desktop-schemas
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: A collection of GSettings schemas
 License: %lgpl21plus
@@ -11,7 +11,7 @@ Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
 
 Requires: %name-data = %version-%release
 
@@ -65,6 +65,7 @@ GObject introspection devel data for %name.
 %setup -q
 
 %build
+%autoreconf
 %configure --disable-schemas-compile \
 	%{?_enable_introspection:--enable-introspection=yes}
 
@@ -115,6 +116,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
+- updated to f5b671c
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
