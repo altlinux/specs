@@ -1,20 +1,13 @@
 %add_optflags %optflags_shared
-%define buildversion 2.2.5
-
 Name:           libhbaapi
-Version:        2.2
-Release:        alt2_15
+Version:        2.2.6
+Release:        alt1_1
 Summary:        SNIA HBAAPI library
 Group:          System/Libraries
 License:        SNIA
-URL:            http://sourceforge.net/projects/hbaapi/
-Source0:        http://downloads.sourceforge.net/hbaapi/hbaapi_src_%{version}.tgz
-# This source was cloned from upstream git. To create tarball, run:
-# git clone git://open-fcoe.org/openfc/hbaapi_build.git
-# cd hbaapi_build
-# git archive v%{buildversion} > ../hbaapi_build.tar
-# cd .. && gzip hbaapi_build.tar
-Source1:        hbaapi_build_%{buildversion}.tar.gz
+URL:            http://open-fcoe.org/
+# This source was cloned from upstream git (libHBAAPI)
+Source:         %{name}-%{version}.tar.bz2
 Patch0:         libhbaapi-2.2-9-dl-linking.patch
 Patch1:         libhbaapi-2.2-archiver.patch
 BuildRequires:  automake libtool
@@ -27,15 +20,14 @@ Fibre Channel Host Bus Adapters.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libhbaapi = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
 developing applications that use %{name}.
 
 %prep
-%setup -q -n hbaapi_src_2.2
-%setup -q -T -D -a 1 -n hbaapi_src_2.2
+%setup
 %patch0 -p1 -b .ld-linking
 %patch1 -p1 -b .archiver
 
@@ -49,7 +41,7 @@ make install DESTDIR=%{buildroot}
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 %files
-%doc readme.txt COPYING
+%doc COPYING
 %config(noreplace) %{_sysconfdir}/hba.conf
 %{_libdir}/*.so.*
 
@@ -59,6 +51,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.6-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_15
 - update to new release by fcimport
 
