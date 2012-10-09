@@ -1,17 +1,10 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java rpm-macros-fedora-compat
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
-# fedora bcond_with macro
-%define bcond_with() %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-# redefine altlinux specific with and without
-%define with()         %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()      %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define version 1.8.0.10
-%define name hsqldb
-# Copyright (c) 2000-2010, JPackage Project
+BuildRequires: jpackage-compat
+# Copyright (c) 2000-2007, JPackage Project
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -41,66 +34,47 @@ BuildRequires: jpackage-1.6.0-compat
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-%define with()          %{expand:%%{?with_%{1}:1}%%{!?with_%{1}:0}}
-%define without()       %{expand:%%{?with_%{1}:0}%%{!?with_%{1}:1}}
-%define bcond_with()    %{expand:%%{?_with_%{1}:%%global with_%{1} 1}}
-%define bcond_without() %{expand:%%{!?_without_%{1}:%%global with_%{1} 1}}
-
-#def_with gcj_support
-%bcond_with gcj_support
-%bcond_without repolib
-
-%if %with gcj_support
-%define gcj_support 0
-%else
-%define gcj_support 0
-%endif
-
-%define version_full %{version}
-
-%define repodir %{_javadir}/repository.jboss.com/hsqldb/%{version_full}
-%define repodirlib %{repodir}/lib
-%define repodirsrc %{repodir}/src
-
-%define reltag patch01
-
-%define cvs_version 1_8_0_10
+%global cvs_version 1_8_1_3
 
 Name:           hsqldb
-Version:        1.8.0.10
-Release:        alt2_3jpp6
+Version:        1.8.1.3
+Release:        alt1_9jpp7
 Epoch:          1
-Summary:        Hsqldb Database Engine
-Group:          Development/Java
+Summary:        HyperSQL Database Engine
 License:        BSD
 URL:            http://hsqldb.sourceforge.net/
-# http://downloads.sourceforge.net/hsqldb/hsqldb_1_8_0_10.zip
-Source0:        %{name}_%{cvs_version}.zip
+Group:          Databases
+
+BuildArch:      noarch
+
+Source0:        http://downloads.sourceforge.net/hsqldb/%{name}_%{cvs_version}.zip
 Source1:        %{name}-1.8.0-standard.cfg
 Source2:        %{name}-1.8.0-standard-server.properties
 Source3:        %{name}-1.8.0-standard-webserver.properties
 Source4:        %{name}-1.8.0-standard-sqltool.rc
-Source5:        hsqldb-component-info.xml
-Source6:        http://repository.jboss.org/maven2/hsqldb/hsqldb/1.8.0.8patch01-brew/hsqldb-1.8.0.8patch01-brew.pom
-Patch0:         hsqldb-1.8.0-scripts.patch
+Source5:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/1.8.0.10/%{name}-1.8.0.10.pom
+# Custom systemd files - talking with upstream about incorporating them, see
+# http://sourceforge.net/projects/hsqldb/forums/forum/73673/topic/5367103
+Source6:        %{name}.systemd
+Source7:        %{name}-wrapper
+Source8:        %{name}-post
+Source9:        %{name}-stop
+
+Patch0:         %{name}-1.8.0-scripts.patch
 Patch1:         hsqldb-tmp.patch
-Patch2:         hsqldb-1.8.0.8-backport.patch
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires(pre):  shadow-utils
-Requires:       jpackage-utils
-Requires:       servlet_2_5_api
+Patch2:         %{name}-1.8.0-specify-su-shell.patch
+Patch3:         %{name}-jdbc-4.1.patch
+
 BuildRequires:  ant
+BuildRequires:  jpackage-utils >= 0:1.5
 BuildRequires:  junit
-BuildRequires:  jpackage-utils
-BuildRequires:  servlet_2_5_api
-%if %{gcj_support}
-BuildRequires:  java-gcj-compat-devel
-%else
-Buildarch:      noarch
-%endif
+BuildRequires:  tomcat-servlet-3.0-api
+
+Requires:       tomcat-servlet-3.0-api
+Requires(pre):  shadow-utils
 Source44: import.info
 Patch33: hsqldb-1.8.0.7-alt-init.patch
+
 
 %description
 HSQLdb is a relational database engine written in JavaTM , with a JDBC
@@ -110,7 +84,6 @@ tables. Embedded and server modes are available. Additionally, it
 includes tools such as a minimal web server, in-memory query and
 management tools (can be run as applets or servlets, too) and a number
 of demonstration examples.
-
 Downloaded code should be regarded as being of production quality. The
 product is currently being used as a database and persistence engine in
 many Open Source Software projects and even in commercial projects and
@@ -120,50 +93,36 @@ memory and its speed. Yet it is a completely functional relational
 database management system that is completely free under the Modified
 BSD License. Yes, that's right, completely free of cost or restrictions!
 
-%if %with repolib
-%package repolib
-Summary:        Artifacts to be uploaded to a repository library
-Group:          Development/Java
-
-%description repolib
-Artifacts to be uploaded to a repository library.
-This package is not meant to be installed but so its contents
-can be extracted through rpm2cpio.
-%endif
-
 %package manual
-Summary:        Manual for %{name}
-Group:          Development/Java
+Summary:    Manual for %{name}
+Group:      Development/Java
 BuildArch: noarch
 
 %description manual
 Documentation for %{name}.
 
 %package javadoc
-Summary:        Javadoc for %{name}
-Group:          Development/Java
-Requires:       jpackage-utils
+Summary:    Javadoc for %{name}
+Group:      Development/Java
+Requires:   jpackage-utils
 BuildArch: noarch
 
 %description javadoc
 Javadoc for %{name}.
 
 %package demo
-Summary:        Demo for %{name}
-Group:          Development/Java
-Requires:       %{name} = %{epoch}:%{version}-%{release}
+Summary:    Demo for %{name}
+Group:      Development/Java
+Requires:   %{name} = %{epoch}:%{version}-%{release}
 
 %description demo
 Demonstrations and samples for %{name}.
 
 %prep
-%setup -q -n %{name}
-
-perl -pi -e 's/\r$//g' doc/*.txt doc/src/hsqldbstylesheet.css
-
-cp -p %{SOURCE6} hsqldb.pom
-perl -pi -e 's|<version>.*</version>|<version>%{version}</version>|' hsqldb.pom
-
+%setup -T -c -n %{name}
+(cd ..
+unzip -q %{SOURCE0} 
+)
 # set right permissions
 find . -name "*.sh" -exec chmod 755 \{\} \;
 # remove all _notes directories
@@ -175,143 +134,124 @@ find . -name "*.war" -exec rm -f {} \;
 # correct silly permissions
 chmod -R go=u-w *
 
-%patch0 -p0
+%patch0
 %patch1 -p1
+%patch2
+%patch3 -p1
+
+cp %{SOURCE5} ./pom.xml
 %patch33 -p1
-#%%patch2 -p1
 
 %build
 export CLASSPATH=$(build-classpath \
-jsse/jsse \
-jsse/jnet \
-jsse/jcert \
-jdbc-stdext \
-servlet_2_5_api \
+servlet \
 junit)
-export OPT_JAR_LIST=:
 pushd build
-%{ant}  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dbuild.sysclasspath=first jar javadoc
+ant jar javadoc
 popd
 
 %install
-
 # jar
-install -d -m 755 $RPM_BUILD_ROOT%{_javadir}
-install -m 644 lib/%{name}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}-%{version}.jar
-(cd $RPM_BUILD_ROOT%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} ${jar/-%{version}/}; done)
+install -d -m 755 %{buildroot}%{_javadir}
+install -m 644 lib/%{name}.jar %{buildroot}%{_javadir}/%{name}.jar
 # bin
-install -d -m 755 $RPM_BUILD_ROOT%{_bindir}
-install -m 755 bin/runUtil.sh $RPM_BUILD_ROOT%{_bindir}/%{name}RunUtil
+install -d -m 755 %{buildroot}%{_bindir}
+install -m 755 bin/runUtil.sh %{buildroot}%{_bindir}/%{name}RunUtil
+# systemd
+install -d -m 755 %{buildroot}%{_unitdir}
+install -d -m 755 %{buildroot}%{_prefix}/lib/%{name}
+install -m 755 %{SOURCE6} %{buildroot}%{_unitdir}/%{name}.service
+install -m 755 %{SOURCE7} %{buildroot}%{_prefix}/lib/%{name}/%{name}-wrapper
+install -m 755 %{SOURCE8} %{buildroot}%{_prefix}/lib/%{name}/%{name}-post
+install -m 755 %{SOURCE9} %{buildroot}%{_prefix}/lib/%{name}/%{name}-stop
+# config
+install -d -m 755 %{buildroot}%{_sysconfdir}/sysconfig
+install -m 644 %{SOURCE1} %{buildroot}%{_sysconfdir}/sysconfig/%{name}
+# serverconfig
+install -d -m 755 %{buildroot}%{_var}/lib/%{name}
+install -m 644 %{SOURCE2} %{buildroot}%{_var}/lib/%{name}/server.properties
+install -m 644 %{SOURCE3} %{buildroot}%{_var}/lib/%{name}/webserver.properties
+install -m 600 %{SOURCE4} %{buildroot}%{_var}/lib/%{name}/sqltool.rc
+# lib
+install -d -m 755 %{buildroot}%{_var}/lib/%{name}/lib
+install -m 644 lib/functions %{buildroot}%{_var}/lib/%{name}/lib
+# data
+install -d -m 755 %{buildroot}%{_var}/lib/%{name}/data
+# demo
+install -d -m 755 %{buildroot}%{_datadir}/%{name}/demo
+install -m 755 demo/*.sh %{buildroot}%{_datadir}/%{name}/demo
+install -m 644 demo/*.html %{buildroot}%{_datadir}/%{name}/demo
+# javadoc
+install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
+cp -r doc/src/* %{buildroot}%{_javadocdir}/%{name}
+rm -rf doc/src
+# manual
+install -d -m 755 %{buildroot}%{_docdir}/%{name}-%{version}
+cp -r doc/* %{buildroot}%{_docdir}/%{name}-%{version}
+cp index.html %{buildroot}%{_docdir}/%{name}-%{version}
+
+# Maven metadata
+install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap
+
+pushd %{buildroot}%{_var}/lib/%{name}/lib
+    # build-classpath can not be used as the jar is not
+    # yet present during the build
+    ln -s %{_javadir}/hsqldb.jar hsqldb.jar
+    ln -s $(build-classpath servlet) servlet.jar
+popd
 # sysv init
 install -d -m 755 $RPM_BUILD_ROOT%{_initrddir}
 install -m 755 bin/%{name} $RPM_BUILD_ROOT%{_initrddir}/%{name}
-# config
-install -d -m 755 $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig
-install -m 644 %{SOURCE1} $RPM_BUILD_ROOT%{_sysconfdir}/sysconfig/%{name}
-# serverconfig
-install -d -m 755 $RPM_BUILD_ROOT%{_var}/lib/%{name}
-install -m 644 %{SOURCE2} $RPM_BUILD_ROOT%{_var}/lib/%{name}/server.properties
-install -m 644 %{SOURCE3} $RPM_BUILD_ROOT%{_var}/lib/%{name}/webserver.properties
-install -m 600 %{SOURCE4} $RPM_BUILD_ROOT%{_var}/lib/%{name}/sqltool.rc
-# lib
-install -d -m 755 $RPM_BUILD_ROOT%{_var}/lib/%{name}/lib
-install -m 644 lib/functions         $RPM_BUILD_ROOT%{_var}/lib/%{name}/lib
-# data
-install -d -m 755 $RPM_BUILD_ROOT%{_var}/lib/%{name}/data
-# demo
-install -d -m 755 $RPM_BUILD_ROOT%{_datadir}/%{name}/demo
-install -m 755 demo/*.sh         $RPM_BUILD_ROOT%{_datadir}/%{name}/demo
-install -m 644 demo/*.html         $RPM_BUILD_ROOT%{_datadir}/%{name}/demo
-# javadoc
-install -d -m 755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-cp -r doc/src/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
-ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
-# manual
-install -d -m 755 $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -pr doc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-cp -p index.html $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}
-rm -r $RPM_BUILD_ROOT%{_docdir}/%{name}-%{version}/src
-
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p hsqldb.pom %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
-%add_to_maven_depmap hsqldb hsqldb %{version_full} JPP %{name}
-
-(cd %{buildroot}%{_var}/lib/%{name}/lib
-    ln -s $(build-classpath hsqldb) hsqldb.jar
-    ln -s $(build-classpath servlet_2_5_api) servlet.jar
-) 2>/dev/null || :
-
-%if %{gcj_support}
-%{_bindir}/aot-compile-rpm
-%endif
-
-%if %with repolib
-install -d -m 755 $RPM_BUILD_ROOT%{repodir}
-install -d -m 755 $RPM_BUILD_ROOT%{repodirlib}
-install -p -m 644 %{SOURCE5} $RPM_BUILD_ROOT%{repodir}/component-info.xml
-sed -i 's/@VERSION@/%{version_full}/g' $RPM_BUILD_ROOT%{repodir}/component-info.xml
-tag=`echo %{name}-%{version}-%{release} | sed 's|\.|_|g'`
-sed -i "s/@TAG@/$tag/g" $RPM_BUILD_ROOT%{repodir}/component-info.xml
-install -d -m 755 $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{PATCH1} $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{PATCH2} $RPM_BUILD_ROOT%{repodirsrc}
-install -p -m 644 %{SOURCE0} $RPM_BUILD_ROOT%{repodirsrc}
-cp -p $RPM_BUILD_ROOT%{_javadir}/hsqldb.jar $RPM_BUILD_ROOT%{repodirlib}/hsqldb.jar
-cp -p %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom $RPM_BUILD_ROOT%{repodirlib}/hsqldb.pom
-%endif
+%preun
+%systemd_preun hsqldb.service
+%preun_service hsqldb
 
 %pre
-%{_sbindir}/groupadd -g 96 -f -r %{name} 2> /dev/null || :
-%{_sbindir}/useradd -u 96 -g %{name} -s /sbin/nologin \
+%{_sbindir}/groupadd  -f -r %{name} 2> /dev/null || :
+%{_sbindir}/useradd  -g %{name} -s /sbin/nologin \
     -d %{_var}/lib/%{name} -r %{name} 2> /dev/null || :
 
+%post
+%post_service hsqldb
+
+%postun
+
 %files
-%doc %dir %{_docdir}/%{name}-%{version}
-%doc %{_docdir}/%{name}-%{version}/hsqldb_lic.txt
-%attr(0755,root,root) %{_bindir}/hsqldbRunUtil
-%attr(0755,root,root) %{_initrddir}/%{name}
-%{_javadir}/%{name}-%{version}.jar
-%{_javadir}/%{name}.jar
-%config(noreplace) %attr(0644,root,root) %{_sysconfdir}/sysconfig/%{name}
-%attr(0755,hsqldb,hsqldb) %{_var}/lib/%{name}/data
-%dir %{_var}/lib/%{name}/lib
-%{_var}/lib/%{name}/lib/functions
-%{_var}/lib/%{name}/lib/hsqldb.jar
-%{_var}/lib/%{name}/lib/servlet.jar
-%attr(0644,root,root) %{_var}/lib/%{name}/server.properties
-%attr(0644,root,root) %{_var}/lib/%{name}/webserver.properties
+%doc doc/hsqldb_lic.txt
+%{_javadir}/*
+%attr(0755,root,root) %{_bindir}/*
+%config(noreplace) %{_sysconfdir}/sysconfig/%{name}
+%{_unitdir}/%{name}.service
+%{_prefix}/lib/%{name}/%{name}-wrapper
+%{_prefix}/lib/%{name}/%{name}-post
+%{_prefix}/lib/%{name}/%{name}-stop
+%attr(0700,hsqldb,hsqldb) %{_var}/lib/%{name}/data
+%{_var}/lib/%{name}/lib
+%{_var}/lib/%{name}/server.properties
+%{_var}/lib/%{name}/webserver.properties
 %attr(0600,hsqldb,hsqldb) %{_var}/lib/%{name}/sqltool.rc
 %dir %{_var}/lib/%{name}
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
-%if %{gcj_support}
-%dir %{_libdir}/gcj
-%{_libdir}/gcj/%{name}/*
-%endif
-# hack; explicitly added docdir if not owned
-%doc %dir %{_docdir}/%{name}-%{version}
-
-%exclude %{_javadir}/repository.jboss.com/*
-%exclude %{_javadir}/repository.jboss.com
+%{_mavendepmapfragdir}/*
+%{_mavenpomdir}/*
+%{_initrddir}/%{name}
 
 %files manual
 %doc %{_docdir}/%{name}-%{version}
+%doc doc/hsqldb_lic.txt
 
 %files javadoc
-%{_javadocdir}/%{name}-%{version}
 %{_javadocdir}/%{name}
+%doc doc/hsqldb_lic.txt
 
 %files demo
 %{_datadir}/%{name}
 
-%if %with repolib
-%files repolib
-%dir %{_javadir}
-%{_javadir}/repository.jboss.com
-%endif
-
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.8.1.3-alt1_9jpp7
+- new version
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.8.0.10-alt2_3jpp6
 - built with java 6
 
