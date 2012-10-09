@@ -14,7 +14,7 @@
 
 Name: systemd
 Version: 194
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -46,13 +46,14 @@ Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
 Source29: tmpfile-systemd-startup-nologin.conf
 Source30: systemd-vconsole-setup@.service
+Source31: 60-raw.rules
 
 # udev rule generator
-Source31: rule_generator.functions
-Source32: write_net_rules
-Source33: 75-persistent-net-generator.rules
-Source34: write_cd_rules
-Source35: 75-cd-aliases-generator.rules
+Source41: rule_generator.functions
+Source42: write_net_rules
+Source43: 75-persistent-net-generator.rules
+Source44: write_cd_rules
+Source45: 75-cd-aliases-generator.rules
 
 Patch1: %name-snapshot.patch
 Patch2: %name-alt-patches.patch
@@ -241,6 +242,7 @@ Requires: udev-rule-generator = %version-%release
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Conflicts: systemd < %version-%release
+Conflicts: util-linux <= 2.22-alt2
 Conflicts: hal DeviceKit
 
 %description -n udev
@@ -572,13 +574,15 @@ touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-net.rules
 touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-cd.rules
 
 # udev rule generator
-install -p -m644 %SOURCE31 %buildroot/lib/udev/
-install -p -m755 %SOURCE32 %buildroot/lib/udev/
-install -p -m644 %SOURCE33 %buildroot/lib/udev/rules.d/
-install -p -m755 %SOURCE34 %buildroot/lib/udev/
-install -p -m644 %SOURCE35 %buildroot/lib/udev/rules.d/
+install -p -m644 %SOURCE41 %buildroot/lib/udev/
+install -p -m755 %SOURCE42 %buildroot/lib/udev/
+install -p -m644 %SOURCE43 %buildroot/lib/udev/rules.d/
+install -p -m755 %SOURCE44 %buildroot/lib/udev/
+install -p -m644 %SOURCE45 %buildroot/lib/udev/rules.d/
 
 echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
+
+install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
 
 install -m644 %SOURCE29 %buildroot/lib/tmpfiles.d/systemd-startup-nologin.conf
 # rpm posttrans filetriggers
@@ -846,7 +850,7 @@ fi
 %exclude /lib/udev/rules.d/73-seat-late.rules
 %exclude /lib/udev/rules.d/99-systemd.rules
 
-%config %_sysconfdir/udev/rules.d/*
+%config(noreplace) %_sysconfdir/udev/rules.d/*
 /lib/udev/initramfs-rules.d
 %exclude /lib/udev/rules.d/75-*-generator.rules
 /lib/udev/rules.d
@@ -858,6 +862,9 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Mon Oct 08 2012 Alexey Shabalin <shaba@altlinux.ru> 194-alt2
+- add 60-raw.rules from util-linux
+
 * Thu Oct 04 2012 Alexey Shabalin <shaba@altlinux.ru> 194-alt1
 - 194
 

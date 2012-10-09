@@ -4,7 +4,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.22
-Release: alt2
+Release: alt3
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
 URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
@@ -44,7 +44,6 @@ BuildRequires: libncursesw-devel libpopt-devel zlib-devel
 Source0: util-linux-%version.tar
 Source1: util-linux-login.pamd
 Source3: util-linux-chsh-chfn.pamd
-Source4: util-linux-60-raw.rules
 Source5: mount.control
 Source6: write.control
 Source8: nologin.c
@@ -110,6 +109,13 @@ BuildArch: noarch
 
 %description control
 This package contains control(8) scripts used by %name and mount packages.
+
+%package -n lsblk
+Summary: List block devices
+Group: System/Base
+
+%description -n lsblk
+lsblk lists information about all or the specified block devices.
 
 %package -n mount
 Summary: Programs for mounting and unmounting filesystems
@@ -473,9 +479,6 @@ install -p -m644 nologin.8 %buildroot/%_man8dir/
 %if_enabled raw
 echo '.so man8/raw.8' > %buildroot/%_man8dir/rawdevices.8
 ln -sf ../../bin/raw %buildroot/%_bindir/raw
-
-# see RH bugzilla #216664
-install -pD -m 644 %SOURCE4 %buildroot/%_sysconfdir/udev/rules.d/60-raw.rules
 %endif
 
 %if_enabled chfn_chsh
@@ -599,12 +602,12 @@ done > setarch.files
 	# man8dir
 	ls -1 %buildroot%_man8dir |
 		egrep -v "^($exclude_archs)\.8*\$" |
-		egrep -v '(mount|^swapo|losetup|clock|getty|fdisk|part)' |
+		egrep -v '(mount|^swapo|losetup|lsblk|clock|getty|fdisk|part)' |
 		sed -e 's|^\(.*\)$|%%_man8dir/\1*|g'
 
 	# /bin
 	ls -1 %buildroot/bin |
-		egrep -v '(getopt|login|mount|taskset|clock_unsynced)' |
+		egrep -v '(getopt|login|lsblk|mount|taskset|clock_unsynced)' |
 		sed -e 's|^\(.*\)$|/bin/\1|g'
 
 	# /sbin
@@ -661,6 +664,10 @@ fi
 %files control
 %config %_controldir/mount
 %config %_controldir/write
+
+%files -n lsblk
+/bin/lsblk
+%_man8dir/lsblk.*
 
 %files -n mount
 /etc/mtab
@@ -796,10 +803,13 @@ fi
 
 %files -f %name.files
 %attr(2711,root,tty) %_bindir/write
-%_sysconfdir/udev/rules.d/60-raw.rules
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Mon Oct 08 2012 Alexey Gladkov <legion@altlinux.ru> 2.22-alt3
+- Move lsblk to subpackage.
+- Remove util-linux-60-raw.rules (moved to udev-rules).
+
 * Wed Sep 26 2012 Alexey Gladkov <legion@altlinux.ru> 2.22-alt2
 - Fix regression in previous release ('pamconsole' mount option
   has been silently lost).
