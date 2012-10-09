@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+# END SourceDeps(oneline)
 Name:      and
 Version:   1.2.2
-Release:   alt2_17
+Release:   alt2_18
 Summary:   Auto nice daemon
 
 License:   GPLv2
@@ -11,7 +14,6 @@ Source0:   http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1:   and.sysconf
 Source2:   and.service
 Patch1:    and-1.2.2-makefile.patch
-
 
 Obsoletes: and-sysvinit < %{version}-%{release}
 Provides:  and-sysvinit = %{version}-%{release}
@@ -64,6 +66,15 @@ install -p -m 0644 %{SOURCE1} %{buildroot}%{_sysconfdir}/sysconfig/and
 mkdir -p %{buildroot}%{_unitdir}
 install -p -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}
 
+%post
+%systemd_post and.service
+
+%preun
+%systemd_preun and.service
+
+%postun
+%systemd_postun_with_restart and.service
+
 %files
 %doc README LICENSE CHANGELOG
 %config(noreplace) %{_sysconfdir}/and/
@@ -74,6 +85,9 @@ install -p -m 0644 %{SOURCE2} %{buildroot}%{_unitdir}
 %{_unitdir}/and.service
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2_18
+- update to new release by fcimport
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt2_17
 - new fc release
 
