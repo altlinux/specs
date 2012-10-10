@@ -1,6 +1,6 @@
 Name: pmacct
-Version: 0.14.0
-Release: alt4
+Version: 0.14.1
+Release: alt1
 License: GPLv2
 Summary: pcap-based accounting tools
 Group: System/Servers
@@ -337,8 +337,8 @@ mv %buildroot%_sbindir/uacctd %buildroot%_sbindir/uacctd-full
 
 %__install -p -m 640 examples/nfacctd-print.conf.example %buildroot%_sysconfdir/%name/nfacctd.conf
 %__install -p -m 640 examples/nfacctd-print.conf.example %buildroot%_sysconfdir/%name/sfacctd.conf
-%__install -p -m 640 pmacctd.conf %buildroot%_sysconfdir/%name/pmacctd.conf
-%__install -p -m 640 pmacctd.conf %buildroot%_sysconfdir/%name/uacctd.conf
+%__install -p -m 640 examples/pmacctd-multiple-plugins.conf.example %buildroot%_sysconfdir/%name/pmacctd.conf
+%__install -p -m 640 examples/pmacctd-multiple-plugins.conf.example %buildroot%_sysconfdir/%name/uacctd.conf
 %__install -p -m 755 pmacctd  %buildroot%_initrddir/pmacctd
 %__install -p -m 755 nfacctd  %buildroot%_initrddir/nfacctd
 %__install -p -m 755 sfacctd  %buildroot%_initrddir/sfacctd
@@ -445,7 +445,7 @@ __EOF__
 %_initdir/pmacctd
 
 %files common
-%doc AUTHORS CONFIG-KEYS COPYING ChangeLog EXAMPLES FAQS NEWS README TODO TOOLS UPGRADE
+%doc AUTHORS CONFIG-KEYS COPYING ChangeLog FAQS KNOWN-BUGS NEWS QUICKSTART README TODO TOOLS UPGRADE
 %doc docs/* examples
 %dir %_sysconfdir/pmacct
 %_datadir/%name
@@ -537,6 +537,9 @@ __EOF__
 %_altdir/uacct-sqlite3
 
 %changelog
+* Wed Oct 10 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.1-alt1
+- New release
+
 * Mon Jul 16 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.14.0-alt4
 - New release
 
