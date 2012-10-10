@@ -9,7 +9,7 @@
 %define sover %somver.2.0
 Name: %oname-%scalar_type
 Version: 3.3_p1
-Release: alt1
+Release: alt2
 Summary: Scalable Library for Eigenvalue Problem Computations (%scalar_type scalars)
 License: LGPL v3
 Group: Sciences/Mathematics
@@ -252,6 +252,9 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 %endif
 
 %changelog
+* Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p1-alt2
+- Rebuilt with gcc 4.7
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p1-alt1
 - Version 3.3-p1
 
@@ -331,3 +334,4 @@ install -m644 %name.pc %buildroot%_pkgconfigdir/
 
 * Mon Jul 13 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p4-alt1
 - Initial build for Sisyphus
+
