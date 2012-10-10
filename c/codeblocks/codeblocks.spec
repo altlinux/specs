@@ -1,5 +1,5 @@
 Name: codeblocks
-%define revision 8247
+%define revision 8438
 Version: 10.05.%revision
 Release: alt1
 
@@ -180,6 +180,7 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %{pkgdata}/Profiler.zip
 %{pkgdata}/RegExTestbed.zip
 %{pkgdata}/ReopenEditor.zip
+%{pkgdata}/*SmartIndent.zip
 %{pkgdata}/SpellChecker.zip
 %{pkgdata}/SymTab.zip
 %{pkgdata}/ThreadSearch.zip
@@ -222,6 +223,7 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %{_libdir}/%{name}/plugins/libProfiler.*
 %{_libdir}/%{name}/plugins/libRegExTestbed.*
 %{_libdir}/%{name}/plugins/libReopenEditor.*
+%{_libdir}/%{name}/plugins/lib*SmartIndent.*
 %{_libdir}/%{name}/plugins/libSpellChecker.*
 %{_libdir}/%{name}/plugins/libSymTab.*
 %{_libdir}/%{name}/plugins/libThreadSearch.*
@@ -236,6 +238,10 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Oct 10 2012 Denis Kirienko <dk@altlinux.org> 10.05.8438-alt1
+- SVN snapshot 8438
+  Added SmartIndent plugins
+
 * Thu Aug 23 2012 Denis Kirienko <dk@altlinux.org> 10.05.8247-alt1
 - SVN snapshot 8247
 - Added EditorConfig plugin
