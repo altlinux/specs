@@ -1,5 +1,5 @@
 %define _oldname gnome2-games
-%define ver_major 3.4
+%define ver_major 3.6
 %define extradata_ver_major 3.2
 %define extradata_ver %extradata_ver_major.0
 %def_without extradata
@@ -10,8 +10,8 @@
 %def_enable staging
 
 Name: gnome-games
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.0.2
+Release: alt1
 
 Summary: GNOME games
 License: %gpl2plus
@@ -22,7 +22,6 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Source1: ftp://ftp.gnome.org/pub/gnome/sources/%name-extra-data/%extradata_ver_major/%name-extra-data-%extradata_ver.tar.xz
-Patch: %name-3.3.92-gir.patch
 # https://launchpadlibrarian.net/106290229/04_fix-segfault.patch
 Patch1: %name-glines-3.4.2-segfault.patch
 
@@ -58,7 +57,7 @@ BuildPreReq: librsvg-devel >= 2.32.0
 BuildPreReq: libcairo-gobject-devel >= 1.0
 BuildPreReq: gstreamer-devel >= 0.10.11
 BuildRequires: libcanberra-gtk3-devel
-BuildPreReq: libclutter-devel >= 1.0 libclutter-gtk3-devel >= 0.9.8
+BuildPreReq: libclutter-devel >= 1.0 libclutter-gtk3-devel >= 0.91.6
 BuildRequires: gnome-common >= %gnome_common_ver yelp-tools xmllint itstool
 BuildRequires: python-devel python-modules-compiler python-module-pygobject-devel
 BuildRequires: guile18-devel libSM-devel libgcrypt-devel libcheck-devel libsqlite3-devel libGLU-devel zlib-devel
@@ -219,7 +218,6 @@ Othello.
 Summary: Lights Off is a puzzle game
 Group: Games/Boards
 PreReq: %name-common = %version-%release
-Requires: %name-gir = %version-%release
 Requires: seed
 
 %description lightsoff
@@ -287,7 +285,6 @@ GObject introspection devel data for the GNOME games
 
 %prep
 %setup -a1
-%patch -b .gir
 %patch1
 
 # fix extra-data install paths
@@ -324,15 +321,15 @@ pushd %name-extra-data-%extradata_ver
 popd
 %endif
 
-%define games quadrapassel lightsoff gnect gnomine swell-foop mahjongg gtali gnotravex gnotski glines iagno gnobots2 gnibbles gnome-sudoku glchess
+%define games quadrapassel lightsoff gnect gnomine swell-foop gnome-mahjongg gtali gnotravex gnotski glines iagno gnobots2 gnibbles gnome-sudoku glchess
 
 %find_lang --with-gnome %name %games
 
 %files
 
 %files common -f %name.lang
-%dir %_datadir/%name
-%config %_datadir/glib-2.0/schemas/org.gnome.Games.WindowState.gschema.xml
+#%dir %_datadir/%name
+#%config %_datadir/glib-2.0/schemas/org.gnome.Games.WindowState.gschema.xml
 %doc AUTHORS TODO NEWS
 
 %files glines -f glines.lang
@@ -446,22 +443,22 @@ popd
 %config %_datadir/glib-2.0/schemas/org.gnome.lightsoff.gschema.xml
 %endif
 
-%files mahjongg -f mahjongg.lang
-%attr(2711,root,games) %_bindir/mahjongg
-%_desktopdir/mahjongg.desktop
-%_datadir/mahjongg
+%files mahjongg -f gnome-mahjongg.lang
+%attr(2711,root,games) %_bindir/gnome-mahjongg
+%_desktopdir/gnome-mahjongg.desktop
+%_datadir/gnome-mahjongg
 #%_datadir/%name/mahjongg
-%_iconsdir/hicolor/*x*/apps/mahjongg.png
-%_iconsdir/hicolor/scalable/apps/mahjongg.svg
-%_man6dir/mahjongg*
-%config %_datadir/glib-2.0/schemas/org.gnome.mahjongg.gschema.xml
-%config(noreplace) %attr(0664,games,games) %_localstatedir/games/mahjongg*
+%_iconsdir/hicolor/*x*/apps/gnome-mahjongg.png
+%_iconsdir/hicolor/scalable/apps/gnome-mahjongg.svg
+%_man6dir/gnome-mahjongg*
+%config %_datadir/glib-2.0/schemas/org.gnome.gnome-mahjongg.gschema.xml
+%config(noreplace) %attr(0664,games,games) %_localstatedir/games/gnome-mahjongg*
 
 %if_enabled staging
 %files swell-foop -f swell-foop.lang
 %attr(-,root,games) %_bindir/swell-foop
 %_desktopdir/swell-foop*
-%_datadir/%name/swell-foop/
+%_datadir/swell-foop/
 %_iconsdir/hicolor/*x*/apps/swell-foop.png
 %_iconsdir/hicolor/scalable/apps/swell-foop.svg
 %config %_datadir/glib-2.0/schemas/org.gnome.swell-foop.gschema.xml
@@ -472,7 +469,7 @@ popd
 %attr(-,root,games) %_bindir/gnome-sudoku
 %_desktopdir/gnome-sudoku.desktop
 %_datadir/gnome-sudoku/
-%python_sitelibdir_noarch/gnome_sudoku
+%python_sitelibdir_noarch/gnome_sudoku/
 %_iconsdir/hicolor/*x*/apps/gnome-sudoku.png
 %_iconsdir/hicolor/scalable/apps/gnome-sudoku.svg
 %_man6dir/gnome-sudoku*
@@ -487,6 +484,7 @@ popd
 %_man6dir/glchess*
 %config %_datadir/glib-2.0/schemas/org.gnome.glchess.gschema.xml
 
+%if 0
 %if_enabled introspection
 %files gir
 %_libdir/%name/*.so.*
@@ -497,8 +495,12 @@ popd
 %_datadir/gir-1.0/*
 %exclude %_libdir/%name/*.la
 %endif
+%endif
 
 %changelog
+* Wed Oct 10 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0.2-alt1
+- 3.6.0.2
+
 * Sat Jun 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt2
 - fixed glines crash (GNOME bug #675628)
 
