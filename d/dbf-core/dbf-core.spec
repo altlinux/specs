@@ -1,6 +1,6 @@
 Name: dbf-core
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 Summary: Program to read and convert dBASE files
 License: BSD-like
@@ -14,8 +14,8 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 Obsoletes: dbf
 Provides: dbf
 
-# Automatically added by buildreq on Wed Feb 21 2007
-#BuildRequires: gcc-c++ gcc-fortran libdbf-devel linux-libc-headers packages-info-i18n-common perl-XML-Parser
+# Automatically added by buildreq on Wed Oct 10 2012
+# optimized out: gnu-config libstdc++-devel
 BuildRequires: gcc-c++ libdbf-devel perl-XML-Parser
 
 %description
@@ -45,6 +45,9 @@ chmod +x install-sh
 %_bindir/dbf
 
 %changelog
+* Wed Oct 10 2012 Igor Zubkov <icesik@altlinux.org> 0.9.0-alt2
+- rebuilt for debuginfo and soname set-versions deps
+
 * Wed Feb 21 2007 Igor Zubkov <icesik@altlinux.org> 0.9.0-alt1
 - build for Sisyphus
 
