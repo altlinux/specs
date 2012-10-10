@@ -1,5 +1,5 @@
 Name: xfce4-mixer
-Version: 4.9.0
+Version: 4.10.0
 Release: alt1
 
 Summary: Audio mixer plugin for the XFce panel
@@ -59,6 +59,9 @@ Includes a simple sound mixer.
 %exclude %_libdir/xfce4/panel/plugins/*.la
 
 %changelog
+* Wed Oct 10 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
+- Updated to 4.10.0.
+
 * Fri Sep 28 2012 Mikhail Efremov <sem@altlinux.org> 4.9.0-alt1
 - Updated from upsteam git (91598f7c34).
 - Drop obsoleted patch.
