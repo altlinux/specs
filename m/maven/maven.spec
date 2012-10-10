@@ -1,11 +1,14 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global debug_package %{nil}
 
 Name:           maven
 Version:        3.0.4
-Release:        alt2_10jpp7
+Release:        alt3_10jpp7
 Summary:        Java project management and project comprehension tool
 
 Group:          Development/Java
@@ -336,6 +339,11 @@ rm -f %buildroot%_datadir/%{name}/repository-jni/JPP
 mkdir -p $RPM_BUILD_ROOT`dirname /etc/mavenrc`
 touch $RPM_BUILD_ROOT/etc/mavenrc
 
+%pre 
+# https://bugzilla.altlinux.org/show_bug.cgi?id=27807 (upgrade from maven1)
+[ -d %_datadir/maven/repository/JPP ] && rm -rf %_datadir/maven/repository/JPP ||:
+
+
 %files
 %doc LICENSE.txt NOTICE.txt README.txt
 %attr(0755,root,root) %{_bindir}/mvn
@@ -368,6 +376,9 @@ touch $RPM_BUILD_ROOT/etc/mavenrc
 
 
 %changelog
+* Wed Oct 10 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt3_10jpp7
+- fix for upgrade from 5.1 (closes: #27807)
+
 * Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt2_10jpp7
 - restored requires: apache-commons-parent
 
