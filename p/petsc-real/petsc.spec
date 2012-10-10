@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.3_p2
-Release: alt3
+Release: alt4
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -716,6 +716,8 @@ sed -i 's|^\(PETSC_FC_INCLUDES.*\)|\1 -I%ldir/include|' \
 	%buildroot%_datadir/%name/conf/petscvariables
 sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 	%buildroot%_datadir/%name/conf/petscvariables
+sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
+	%buildroot%_datadir/%name/conf/petscvariables
 
 %files
 
@@ -786,6 +788,9 @@ sed -i 's|^\(PETSC_CC_INCLUDES.*\)|\1 -I%ldir/include|' \
 %ldir/sources
 
 %changelog
+* Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p2-alt4
+- Forced setting path to library
+
 * Tue Oct 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p2-alt3
 - Rebuilt with gcc 4.7
 
