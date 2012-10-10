@@ -1,5 +1,5 @@
 Name: xtables-addons
-Version: 1.42
+Version: 1.46
 Release: alt1
 Summary: IP tables addons
 Group: System/Kernel and hardware
@@ -99,19 +99,23 @@ tar -cjf %kernel_srcdir/kernel-source-%name-%version.tar.bz2 kernel-source-%name
 
 %files
 %doc README
-%_sbindir/iptaccount
-%attr(0755,root,root) /%_lib/libx*.so*
+%_sbindir/*
+%attr(0755,root,root) /%_lib/lib*.so*
 /%_lib/iptables/*.so*
-%_man8dir/xtables-addons*
+%_man8dir/*
 
 %files geoip-utils
 %_man1dir/*
-%_libexecdir/xtables-addons/*
+%_libexecdir/xtables-addons
 
 %files -n kernel-source-%name
 %kernel_src/*
 
 %changelog
+* Thu Oct 11 2012 Dmitry V. Levin <ldv@altlinux.org> 1.46-alt1
+- Update to v1.46.
+- Built with libxtables.so.9.
+
 * Fri May 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1.42-alt1
 - Fixed build.
 - Built with libxtables.so.7.

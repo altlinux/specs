@@ -1,50 +1,29 @@
 Name: iproute2
-Version: 3.4.0
+Version: 3.6.0
 Release: alt1
 
 Summary: Advanced IP routing and network devices configuration tools
 License: GPLv2+
 Group: Networking/Other
+Url: http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2
+# git://git.altlinux.org/gears/i/%name.git
+Source: %name-%version-%release.tar
 
-URL: http://git.kernel.org/?p=linux/kernel/git/shemminger/iproute2.git;a=summary
-Source0: http://kernel.org/pub/linux/utils/net/iproute2/iproute2-%version.tar.xz
-
-Source11: tcio7.ps.bz2
-Source12: guaranteed.ps.bz2
-Source13: http://www.aciri.org/floyd/papers/link.ps.bz2
-
-# Apply only one of two patches below depending of target arch (32 or 64 bit)
-Patch1: iproute2-iptables.patch
-Patch2: iproute2-iptables64.patch
-
-Patch5: iproute2-2.6.18-alt-ifcfg.patch
-
-Patch20: iproute2-2.6.9-alt-libnetlink.patch
-Patch21: http://rad.peet.spb.ru/files/related/iproute2-2.4.7-alt-rtacct_daemon.patch
-
-Patch30: iproute2-2.6.35-fixrouteget.patch
-
-# Fedora and Mandriva patches
-Patch108: iproute2-2.6.29-IPPROTO_IP_for_SA.patch
-Patch109: iproute2-2.6.39-lnstat-dump-to-stdout.patch
-
-Provides: iproute = %version-%release
-Obsoletes: iproute
-
-# Upstream provides libnetlink without soname versioning, so we manually set versioned
-# package dependency to ensure correct updates.
 Requires: libnetlink = %version-%release
+Provides: iproute = %version-%release
+Obsoletes: iproute < %version
 
-# Automatically added by buildreq on Fri Jan 06 2012
-# optimized out: fontconfig ghostscript-classic ghostscript-common groff-base iptables pkg-config tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex xz
-BuildRequires: OpenSP flex ghostscript-utils libatm-devel libdb4-devel libiptables-devel libnl-devel linuxdoc-tools sgml-common
-# !!! buildreq overoptimized these:
-BuildRequires: texlive-generic-recommended texlive-xetex
+# Automatically added by buildreq on Wed Oct 10 2012
+# optimized out: groff-base pkg-config tex-common texlive-base texlive-base-bin texlive-common texlive-generic-recommended texlive-latex-base texlive-latex-recommended texlive-xetex
+BuildRequires: OpenSP flex libatm-devel libdb4-devel libiptables-devel linuxdoc-tools sgml-common
+
+# buildreq overoptimizes these:
+BuildRequires: texlive-latex-recommended
 
 %description
-The iproute package contains networking utilities (ip and rtmon, for example)
-which are designed to use the advanced networking capabilities of the Linux
-2.4.x and 2.6.x kernel.
+The iproute package contains networking utilities (ip and rtmon, for
+example) which are designed to use the advanced networking capabilities
+of the Linux 2.4.x and 2.6.x kernel.
 
 %package doc
 Summary: Documentation for Advanced IP routing and network device configuration tools
@@ -60,9 +39,9 @@ Group: Networking/Other
 Requires: %name = %version-%release
 
 %description -n arpd
-arpd is a daemon collecting gratuitous ARP information, saving it on local disk
-and feeding it to kernel on demand to avoid redundant broadcasting due to
-limited size of kernel ARP cache.
+arpd is a daemon collecting gratuitous ARP information, saving it on
+local disk and feeding it to kernel on demand to avoid redundant
+broadcasting due to limited size of kernel ARP cache.
 
 %package -n libnetlink
 Summary: Netlink socket library
@@ -80,69 +59,39 @@ Requires: libnetlink = %version-%release
 This package contains libnetlink dynamic library headers.
 
 %prep
-%setup
-
-%patch5 -p1
-
-%if "%_lib" == "lib64"
-%patch2 -p1
-%else
-%patch1 -p1
-%endif
-
-%patch20 -p1
-%patch21 -p1
-
-%patch30 -p1
-
-%patch108 -p1
-%patch109 -p1
+%setup -n %name-%version-%release
+sed -i 's,/sbin/arping,/usr/sbin/arping,g' examples/dhcp-client-script
 
 %build
-# Fix ALT#15409:
-subst 's/TCSO :=/TCSO := q_prio.so/' tc/Makefile
-
-%make_build \
-	DBM_INCLUDE=%_includedir/db4 \
-	LIBDIR=%_libdir \
-	CCOPTS="-D_GNU_SOURCE %optflags"
-
-%make_build -C doc all pdf
-bzip2 -9f doc/*.ps ||:
-
-subst 's,/sbin/arping,/usr/sbin/arping,g' examples/dhcp-client-script
+%add_optflags -D_GNU_SOURCE
+%make_build DBM_INCLUDE=%_includedir/db4 LIBDIR=%_libdir CCOPTS='%optflags'
+%make_build -C doc
+%make_build -C doc pdf
 
 %install
-mkdir -p %buildroot{/sbin,%_sbindir,%_bindir,%_man8dir,%_sysconfdir/iproute2,%_initdir,%_localstatedir/arpd}
+%makeinstall_std LIBDIR=%_libdir
+rm -r %buildroot%_docdir/%name
+mkdir -p %buildroot{%_bindir,%_sbindir,%_localstatedir/arpd}
+pushd %buildroot/sbin
+rm rtpr
+mv arpd bridge ctstat genl ifstat lnstat nstat routef routel rtacct rtstat ss \
+	%buildroot%_sbindir/
+popd
 
-install -p -m755 ip/{ip,ifcfg,rtmon} tc/tc %buildroot/sbin/
-install -p -m755 misc/{arpd,ifstat,lnstat,nstat,rtacct,ss} ip/{routel,routef} %buildroot%_sbindir/
-install -p -m644 etc/iproute2/* %buildroot%_sysconfdir/iproute2/
-install -p -m644 man/man8/*.8 %buildroot%_man8dir/
-
-mkdir -p %buildroot%_libdir/tc
-install -m 755 tc/q_atm.so tc/q_prio.so tc/m_xt.so %buildroot%_libdir/tc
-install -m 644 netem/normal.dist netem/pareto.dist netem/paretonormal.dist %buildroot%_libdir/tc
-
-install -p -m644 %SOURCE11 %SOURCE12 %SOURCE13 doc/
-
-### libnetlink
+# libnetlink
 mkdir -p %buildroot{%_includedir,%_libdir,%_man3dir,/%_lib}
 install -p -m644 lib/libnetlink.so %buildroot/%_lib
 install -p -m644 include/{libnetlink.h,ll_map.h} %buildroot%_includedir
 install -p -m644 man/man3/libnetlink.3 %buildroot%_man3dir/
 ln -s ../../%_lib/libnetlink.so %buildroot%_libdir/libnetlink.so
 
-pushd %buildroot%_sbindir
-    ln -s lnstat ctstat
-    ln -s lnstat rtstat
-popd
-
-ln -s m_xt.so %buildroot%_libdir/tc/m_ipt.so
-
 # Symlinks for unpriviledge users
-for prg in ip rtmon tc; do ln -s ../../sbin/$prg %buildroot%_bindir; done
-for prg in lnstat nstat routel ss; do ln -s ../sbin/$prg %buildroot%_bindir; done
+for prg in ip rtmon tc; do
+	ln -s ../../sbin/$prg %buildroot%_bindir
+done
+for prg in lnstat nstat routel ss; do
+	ln -s ../sbin/$prg %buildroot%_bindir
+done
 
 %files
 /sbin/*
@@ -154,7 +103,7 @@ for prg in lnstat nstat routel ss; do ln -s ../sbin/$prg %buildroot%_bindir; don
 %_man8dir/*
 
 %files doc
-%doc doc/*.bz2 doc/*.pdf doc/actions
+%doc doc/*.pdf doc/actions
 %doc README* examples
 
 %files -n arpd
@@ -170,6 +119,10 @@ for prg in lnstat nstat routel ss; do ln -s ../sbin/$prg %buildroot%_bindir; don
 %_man3dir/*
 
 %changelog
+* Wed Oct 10 2012 Dmitry V. Levin <ldv@altlinux.org> 3.6.0-alt1
+- Updated to 3.6.0.
+- Reviewed patches.
+
 * Fri May 25 2012 Dmitry V. Levin <ldv@altlinux.org> 3.4.0-alt1
 - Updated to 3.4.0.
 - Built with libxtables.so.7.
@@ -361,7 +314,7 @@ for prg in lnstat nstat routel ss; do ln -s ../sbin/$prg %buildroot%_bindir; don
 - BM
 
 * Wed Jul 12 2000 Christian Zoffoli <czoffoli@linux-mandrake.com> 2.2.4-4mdk
-- removed _sysconfdir 
+- removed _sysconfdir
 - added %clean
 
 * Wed Jul 12 2000 Thierry Vignaud <tvignaud@mandrakesoft.com> 2.2.4-3mdk
@@ -376,9 +329,9 @@ for prg in lnstat nstat routel ss; do ln -s ../sbin/$prg %buildroot%_bindir; don
 * Wed Mar 01 2000 Lenny Cartier <lenny@mandrakesoft.com> 2.2.4-1mdk
 - mandrake build
 - used latest release of 2.2.4 series / 000225
- 
+
 * Mon Apr 26 1999 Jan "Yenya" Kasprzak <kas@fi.muni.cz>
 - Added $RPM_OPT_FLAGS
- 
+
 * Fri Apr 23 1999 Damien Miller <damien@ibs.com.au>
-- Built RPM  
+- Built RPM
