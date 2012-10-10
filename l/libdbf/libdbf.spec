@@ -1,6 +1,6 @@
 Name: libdbf
 Version: 0.0.1
-Release: alt3
+Release: alt4
 
 Summary: Library for reading dbase files
 License: GPL
@@ -9,10 +9,11 @@ Url: http://dbf.berlios.de/
 
 Source0: %name-%version.tar.bz2
 
+Patch0: libdbf-0.0.1-alt-fix-build-endian.patch
+
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Wed Feb 21 2007
-BuildRequires: gcc-c++ perl-XML-Parser
+BuildRequires: intltool glib2-devel
 
 %description
 This library allows to read dbase files.
@@ -27,10 +28,11 @@ Libraries, include files, etc you can use to develop dbase applications.
 
 %prep
 %setup -q -n %name
+%patch0 -p1
 
 %build
+%autoreconf
 chmod +x configure
-chmod +x install-sh
 %configure
 %make_build
 
@@ -53,6 +55,10 @@ rm -f %buildroot%_libdir/%name.a
 %_pkgconfigdir/libdbf.pc
 
 %changelog
+* Wed Oct 10 2012 Igor Zubkov <icesik@altlinux.org> 0.0.1-alt4
+- rebuilt for debuginfo
+- fix FTBFS
+
 * Mon Nov 01 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt3
 - Rebuilt for soname set-versions
 
