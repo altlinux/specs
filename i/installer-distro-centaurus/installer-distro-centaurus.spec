@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 6.9
-Release: alt1
+Release: alt2
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -66,6 +66,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Oct 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt2
+- nm and avahi added to systemd-enables, nscd and nslcd to services-on
+
 * Tue Sep 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt1
 - bump version
 - systemd-enabled file added
