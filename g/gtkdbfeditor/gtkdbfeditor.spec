@@ -1,22 +1,22 @@
 Name: gtkdbfeditor
-Version: 0.4.0
+Version: 1.0.4
 Release: alt1
 
 Summary: A GTK+ based DBF Editor
 License: GPL
 Group: Databases
-URL: http://gtkdbfeditor.sourceforge.net/
+URL: http://sdteffen.de/gtkdbfeditor
 
 Source0: %name-%version.tar.gz
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Sat Apr 19 2008
-BuildRequires: gcc-c++ libglade-devel
+# Automatically added by buildreq on Wed Oct 10 2012
+BuildRequires: libglade-devel
 
 %description
 GTK DBF Editor is a program to edit dbf files. It supports simple
-editing functions
+editing functions.
 
 %prep
 %setup -q
@@ -31,12 +31,15 @@ editing functions
 %find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS ChangeLog NEWS README TODO
+%doc ChangeLog NEWS README TODO
 %_bindir/gtkdbfeditor
 %dir %_datadir/gtkdbfeditor/
 %_datadir/gtkdbfeditor/gtkdbfeditor.glade
 
 %changelog
+* Wed Oct 10 2012 Igor Zubkov <icesik@altlinux.org> 1.0.4-alt1
+- 0.4.0 -> 1.0.4
+
 * Sat Apr 19 2008 Igor Zubkov <icesik@altlinux.org> 0.4.0-alt1
 - 0.2.0 -> 0.4.0
 
