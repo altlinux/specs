@@ -4,7 +4,7 @@
 Name: f90gl
 Summary: Fortran 90 bindings for OpenGL and GLU
 Version: 1.2.15
-Release: alt7
+Release: alt8
 Group: Development/Tools
 License: GPLv2
 URL: http://math.nist.gov/f90gl/
@@ -145,6 +145,9 @@ popd
 %doc examples
 
 %changelog
+* Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.15-alt8
+- Rebuilt with gcc 4.7
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.15-alt7
 - Rebuilt
 

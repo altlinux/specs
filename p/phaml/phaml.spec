@@ -7,7 +7,7 @@
 
 Name: phaml
 Version: 1.11.0
-Release: alt1
+Release: alt2
 Summary: The Parallel Hierarchical Adaptive MultiLevel Project
 License: Public domain
 Group: Sciences/Mathematics
@@ -149,6 +149,9 @@ cp -fR examples %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt2
+- Rebuilt with gcc 4.7
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt1
 - Version 1.11.0
 
