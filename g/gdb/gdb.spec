@@ -1,6 +1,6 @@
 Name: gdb
 Version: 7.5.0.20121002
-Release: alt1
+Release: alt2
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -403,7 +403,7 @@ mv readline/doc readline-doc
 %patch271 -p1
 %patch274 -p1
 %patch659 -p1
-%patch353 -p1
+#patch353 -p1
 %patch276 -p1
 %patch282 -p1
 %patch284 -p1
@@ -439,7 +439,7 @@ mv readline/doc readline-doc
 %patch470 -p1
 %patch475 -p1
 %patch415 -p1
-%patch519 -p1
+#patch519 -p1
 %patch490 -p1
 %patch491 -p1
 %patch496 -p1
@@ -460,8 +460,8 @@ mv readline/doc readline-doc
 %patch627 -p1
 %patch634 -p1
 %patch643 -p1
-%patch653 -p1
-%patch657 -p1
+#patch653 -p1
+#patch657 -p1
 %patch661 -p1
 %patch690 -p1
 %patch698 -p1
@@ -579,6 +579,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Wed Oct 10 2012 Dmitry V. Levin <ldv@altlinux.org> 7.5.0.20121002-alt2
+- Disabled few patches that appeared to be too Fedora specific (closes: #27818).
+
 * Fri Oct 05 2012 Dmitry V. Levin <ldv@altlinux.org> 7.5.0.20121002-alt1
 - Updated to 7.5.0.20121002, synced with Fedora and Debian.
 
