@@ -10,7 +10,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt7.beta
+Release: alt8.beta
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -99,7 +99,7 @@ source %_bindir/petsc-%scalar_type.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%ldir/lib -L%mpidir/lib -L%ldir/lib"
 export MPIDIR=%mpidir
 
-%add_optflags -I%_includedir/openblas
+%add_optflags -I%_includedir/openblas -fpermissive
 %make_ext -C src amplidl.o
 for i in depend libpetscfem; do
 	%make_ext $i SOMVER=%somver SOVER=%sover
@@ -110,9 +110,9 @@ done
 
 %if "%scalar_type" == "real"
 %make_build -C doc
-%make_build -C doc/manual ps
-export C2HTML=c2html
-%make_build -C doc/manual man_html
+#make_build -C doc/manual ps
+#export C2HTML=c2html
+#make_build -C doc/manual man_html
 %endif
 
 %install
@@ -146,10 +146,14 @@ done
 
 %if "%scalar_type" == "real"
 %files -n %oname-docs
-%doc doc/*.pdf doc/OBJ/*.pdf doc/manual/html
+#doc doc/*.pdf doc/OBJ/*.pdf doc/manual/html
+%doc doc/OBJ/*.pdf
 %endif
 
 %changelog
+* Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt8.beta
+- Rebuilt with gc 4.7
+
 * Tue Sep 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt7.beta
 - Fixed build
 
@@ -191,3 +195,4 @@ done
 
 * Fri Dec 17 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt1.beta
 - Initial build for Sisyphus
+
