@@ -6,7 +6,7 @@
 
 Name: libgnome
 Version: %ver_major.1
-Release: alt1
+Release: alt1.1
 
 Summary: GNOME base library
 License: LGPLv2
@@ -193,6 +193,9 @@ fi
 %exclude %_libdir/bonobo/monikers/*.la
 
 %changelog
+* Wed Oct 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.32.1-alt1.1
+- use /usr/share/design/current (closes: #27828)
+
 * Mon Jan 31 2011 Yuri N. Sedunov <aris@altlinux.org> 2.32.1-alt1
 - 2.32.1
 
