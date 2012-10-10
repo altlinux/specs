@@ -1,7 +1,7 @@
 
 Name: kvpnc
 Version: 0.9.6
-Release: alt1
+Release: alt2
 #define beta rc1
 
 Group: Networking/Remote access
@@ -14,6 +14,7 @@ Requires: kde4libs >= %{get_version kde4libs} openssl psmisc ppp iptables
 Source: %name-%version%{?beta:-%beta}-kde4.tar.bz2
 Source1: %name-%version%{?beta:-%beta}-kde4-locale.tar.bz2
 Patch1: kvpnc-0.9.3-kde4-alt-ppp-test.patch
+Patch2: kvpnc-0.9.6-kde4-alt-gcc47.patch
 
 # Automatically added by buildreq on Tue Dec 30 2008 (-bi)
 #BuildRequires: gcc-c++ kde4base-runtime kde4libs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libgcrypt-devel libqt3-devel libxkbfile-devel xorg-xf86vidmodeproto-devel
@@ -34,6 +35,7 @@ mv %name-%version%{?beta:-%beta}-kde4-locale/po .
 rm -rf %name-%version%{?beta:-%beta}-kde4-locale
 
 %patch1 -p1
+%patch2 -p1
 
 cat >>CMakeLists.txt <<__EOF__
 find_package(Msgfmt REQUIRED)
@@ -72,6 +74,12 @@ done
 %_K4iconsdir/*/*/actions/fritzboximport.*
 
 %changelog
+* Wed Oct 10 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt2
+- fix to build with gcc 4.7
+
+* Wed May 26 2010 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt0.M51.1
+- built for M51
+
 * Wed May 26 2010 Sergey V Turchin <zerg@altlinux.org> 0.9.6-alt1
 - new version
 
