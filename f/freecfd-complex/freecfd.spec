@@ -6,7 +6,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.0.1
-Release: alt9
+Release: alt10
 Summary: Computational fluid dynamics (CFD) code (%scalar_type scalars)
 
 Group: Sciences/Mathematics
@@ -20,6 +20,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Requires: %oname-common = %version-%release
 Requires: libcgns-mpi libhdf5-mpi
 
+%define gccver 4.6
+%set_gcc_version %gccver
+BuildPreReq: gcc%gccver gcc%gccver-fortran gcc%gccver-c++
 BuildPreReq: python-module-petsc-config
 BuildPreReq: %mpiimpl-devel libhdf5-mpi-devel libcgns-mpi-devel
 BuildPreReq: libpetsc-%scalar_type-devel cmake chrpath
@@ -138,6 +141,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %endif
 
 %changelog
+* Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt10
+- Forced build with gcc 4.6
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt9
 - Rebuilt with PETSc 3.3
 
@@ -176,4 +182,3 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 
 * Mon Oct 19 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt1
 - Initial build for Sisyphus
-
