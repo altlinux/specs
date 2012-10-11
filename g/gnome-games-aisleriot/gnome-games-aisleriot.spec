@@ -1,9 +1,9 @@
 %define _name aisleriot
-%define ver_major 3.4
+%define ver_major 3.6
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.0
 Release: alt1
 
 Summary: A collection of card games
@@ -63,6 +63,9 @@ fi
 %_man6dir/sol.*
 
 %changelog
+* Thu Oct 11 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Apr 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
