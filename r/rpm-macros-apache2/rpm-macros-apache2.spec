@@ -12,8 +12,8 @@
 %def_enable apache_ru_compat
 
 Name: rpm-macros-%macrosname
-Version: 3.8
-Release: %branch_release alt2
+Version: 3.9
+Release: %branch_release alt1
 
 Summary: RPM macros to Apache2 Web server
 Summary(ru_RU.UTF-8): RPM макросы для веб-сервера Apache2
@@ -81,6 +81,13 @@ find %buildroot%rpm_masrosdir/ -type f -print0 \
 %rpm_masrosdir/%name-compat
 
 %changelog
+* Thu Oct 11 2012 Aleksey Avdeev <solo@altlinux.ru> 3.9-alt1
+- Add new macros:
+  + %%apache2_create_rpmfiletriggerdir
+  + %%post_apache2_rpmhttpdrestartfile
+  + %%post_apache2_rpmhtcachecleanrestartfile
+  + %%post_apache2_rpma2chkconfigfile
+
 * Wed Oct 03 2012 Aleksey Avdeev <solo@altlinux.ru> 3.8-alt2
 - Fix macros %%post_apache2conf and %%postun_apache2conf:
   use /sbin/service
