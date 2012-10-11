@@ -2,7 +2,7 @@
 %define major 3.3
 Name: python-module-Ice
 Version: %major.1
-Release: alt4
+Release: alt5
 
 Summary: The Ice runtime for Python applications
 
@@ -64,7 +64,7 @@ mkdir -p cpp
 ln -s %_includedir cpp/include
 tar xfj %SOURCE1
 
-sed -i 's|^\(CPPFLAGS.*\)|\1 -g|' py/config/Make.rules
+sed -i 's|^\(CPPFLAGS.*\)|\1 -g -fpermissive|' py/config/Make.rules
 
 %build
 cd py
@@ -92,6 +92,9 @@ rm -rf %buildroot/slice
 %python_sitelibdir/Ice.pth
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt5
+- Rebuilt with gcc 4.7
+
 * Wed Jun 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt4
 - Fixed build
 
