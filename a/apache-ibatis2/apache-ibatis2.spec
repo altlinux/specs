@@ -39,7 +39,7 @@ Name:           apache-ibatis2
 Summary:        iBATIS SQL Maps Framework
 Url:            http://ibatis.apache.org/
 Version:        2.3.4
-Release:        alt3_2jpp6
+Release:        alt4_2jpp6
 Epoch:          0
 License:        Apache Software License 2
 Group:          Databases
@@ -71,11 +71,11 @@ BuildRequires:  apache-commons-lang
 BuildRequires:  apache-commons-logging
 BuildRequires:  jta_1_0_1B_api
 BuildRequires:  log4j
-BuildRequires:  spring2-beans
-BuildRequires:  spring2-core
-BuildRequires:  spring2-orm
-BuildRequires:  spring2-jdbc
-BuildRequires:  spring2-tx
+BuildRequires:  springframework-beans
+BuildRequires:  springframework
+BuildRequires:  springframework-orm
+BuildRequires:  springframework-jdbc
+BuildRequires:  springframework-tx
 BuildRequires:  xalan-j2
 
 Requires(post):   jpackage-utils >= 0:1.7.5
@@ -189,7 +189,7 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f build/build.xm
 cp build/exploded/lib/ibatis-2.3.4.727.jar ../ibator/core/devlib/ibatis.jar
 pushd ../ibator/core
 ln -sf $(build-classpath hsqldb) devlib/hsqldb.jar
-export CLASSPATH=$(build-classpath hsqldb emma spring2/beans spring2/core spring2/orm spring2/jdbc spring2/tx)
+export CLASSPATH=$(build-classpath hsqldb emma springframework/spring-beans springframework/spring-core springframework/spring-orm springframework/spring-jdbc springframework/spring-tx)
 CLASSPATH=$CLASSPATH:$(pwd)/devlib/ibatis.jar
 ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f build/build.xml
 popd
@@ -261,6 +261,9 @@ cp -pr ibator/core/htmldoc/* $RPM_BUILD_ROOT%{_docdir}/%{name}-ibator-core-%{ave
 %{_docdir}/%{name}-ibator-core-%{aversion}
 
 %changelog
+* Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.4-alt4_2jpp6
+- rebuild with spring3
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3.4-alt3_2jpp6
 - fixed build
 
