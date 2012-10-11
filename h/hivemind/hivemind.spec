@@ -1,3 +1,4 @@
+Patch33: hivemind-1.1.1-alt-spring3.patch
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # fedora bcond_with macro
@@ -50,7 +51,7 @@ BuildRequires: jpackage-compat
 
 Name:           hivemind
 Version:        1.1.1
-Release:        alt2_4jpp6
+Release:        alt3_4jpp6
 Epoch:          0
 Summary:        HiveMind Microkernel
 Group:          Development/Java
@@ -96,7 +97,8 @@ BuildRequires:  junit
 BuildRequires:  log4j
 BuildRequires:  mx4j
 BuildRequires:  servletapi4
-BuildRequires:  spring2-all
+BuildRequires:  springframework
+BuildRequires:  springframework-beans
 #BuildRequires:  xerces-j2
 #BuildRequires:  xml-commons-jaxp-1.3-apis
 %if %{gcj_support}
@@ -121,7 +123,7 @@ Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       aopalliance
 Requires:       ejb
 Requires:       groovy15
-Requires:       spring2-all
+#Requires:       spring2-all
 
 %description lib
 %{summary}.
@@ -179,7 +181,8 @@ ln -s $(build-classpath cglib-nodep) cglib-full-.jar
 ln -s $(build-classpath junit) junit-.jar
 ln -s $(build-classpath xerces-j2) xercesImpl-.jar
 ln -s $(build-classpath geronimo-ejb-2.1-api) geronimo-ejb-2.1-api-.jar
-ln -s $(build-classpath spring2) spring-full-.jar
+ln -s $(build-classpath springframework/spring-core) spring-full-.jar
+ln -s $(build-classpath springframework/spring-beans) spring-beans-.jar
 ln -s $(build-classpath groovy15) groovy-jsr-all-.jar
 ln -s $(build-classpath aopalliance) aopalliance-.jar
 ln -s $(build-classpath mx4j/mx4j) mx4j-.jar
@@ -191,6 +194,8 @@ mkdir tmp
 mkdir -p ext-package/lib
 touch ext-package/download-warning-marker
 ln -s $(build-classpath xml-commons-jaxp-1.3-apis) ext-package/lib/xml-apis-.jar
+
+%patch33 -p1
 
 %build
 export CLASSPATH=$(build-classpath antlr groovy15 asm2)
@@ -277,6 +282,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name} # ghost symlink
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt3_4jpp6
+- build with spring3
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.1-alt2_4jpp6
 - build with spring2
 
