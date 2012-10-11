@@ -2,7 +2,7 @@
 
 Name: linux-atm
 Version: 2.5.1
-Release: alt3
+Release: alt4
 
 Summary: Asynchronous Transfer Mode tools
 License: GPL
@@ -89,6 +89,9 @@ bzip2 -9k ChangeLog
 %endif
 
 %changelog
+* Thu Oct 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.1-alt4
+- rebuilt for debuginfo
+
 * Thu Nov 11 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.5.1-alt3
 - updated from CVS @20091130
 
