@@ -1,6 +1,6 @@
 Name: linphone
 Version: 3.5.2
-Release: alt1
+Release: alt2
 License: GPLv2+
 Url: http://www.linphone.org/
 
@@ -116,6 +116,9 @@ This package contains development files for %name.
 %_libdir/*.so
 
 %changelog
+* Thu Oct 11 2012 Alexei Takaseev <taf@altlinux.org> 3.5.2-alt2
+- remove deprecated calling g_thread_init
+
 * Sun Jun 24 2012 Alexei Takaseev <taf@altlinux.org> 3.5.2-alt1
 - 3.5.2
 
