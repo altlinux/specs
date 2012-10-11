@@ -5,7 +5,7 @@
 
 Name: Xdmf
 Version: 20100923
-Release: alt18
+Release: alt19
 Summary: eXtensible Data Model and Format
 License: Free
 Group: Sciences/Other
@@ -236,6 +236,9 @@ rm -f $(find Examples -name '*.o')
 %doc Examples/*
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100923-alt19
+- Rebuilt with gcc 4.7
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20100923-alt18
 - Rebuilt with OpenMPI 1.6
 
