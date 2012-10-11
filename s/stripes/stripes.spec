@@ -34,7 +34,7 @@ BuildRequires: jpackage-compat
 
 Name:           stripes
 Version:        1.5.3
-Release:	alt5_1jpp6
+Release:	alt6_1jpp6
 Epoch:          0
 Summary:        JSON-RPC Implementation
 Group:          Development/Java
@@ -56,7 +56,10 @@ BuildRequires: javamail_1_4_api
 BuildRequires: jsp_2_1_api
 BuildRequires: log4j
 BuildRequires: servlet_2_5_api
-BuildRequires: spring2-all
+BuildRequires: springframework
+BuildRequires: springframework-beans
+BuildRequires: springframework-context
+BuildRequires: springframework-web
 Requires: apache-commons-fileupload
 Requires: apache-commons-io
 Requires: apache-commons-logging
@@ -110,7 +113,10 @@ ln -sf $(build-classpath maven/empty-dep) stripes/lib/deploy/cos.jar
 ln -sf $(build-classpath commons-fileupload) stripes/lib/test/commons-fileupload-1.2.1.jar
 ln -sf $(build-classpath commons-io) stripes/lib/test/commons-io-1.4.jar
 ln -sf $(build-classpath log4j) stripes/lib/test/log4j-1.2.15.jar
-ln -sf $(build-classpath spring2) stripes/lib/test/spring.jar
+ln -sf $(build-classpath springframework/spring-core) stripes/lib/test/spring.jar
+ln -sf $(build-classpath springframework/spring-beans) stripes/lib/test/spring-beans.jar
+ln -sf $(build-classpath springframework/spring-context) stripes/lib/test/spring-context.jar
+ln -sf $(build-classpath springframework/spring-web) stripes/lib/test/spring-web.jar
 ln -sf $(build-classpath testng) tests/lib/testng-5.5-jdk15.jar
 # cos-multipart is not free
 rm stripes/src/net/sourceforge/stripes/controller/multipart/CosMultipartWrapper.java
@@ -141,6 +147,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt6_1jpp6
+- rebuild with spring3
+
 * Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.5.3-alt5_1jpp6
 - rebuild with apache-commons-*
 
