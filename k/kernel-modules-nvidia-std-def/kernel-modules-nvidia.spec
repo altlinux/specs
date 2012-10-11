@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	304.51
-%define module_release	alt2
+%define module_release	alt3
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
 %if "%xorg_ver" == ""
@@ -193,8 +193,11 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Mon Oct 08 2012 Anton Protopopov <aspsk@altlinux.org> 304.51-alt2.197894.1
+* Thu Oct 11 2012 Anton Protopopov <aspsk@altlinux.org> 304.51-alt3.197894.1
 - Build for kernel-image-std-def-3.5.6-alt1.
+
+* Thu Oct 11 2012 Anton Protopopov <aspsk@altlinux.org> 304.51-alt3
+- Just technical release
 
 * Tue Oct 02 2012 Sergey V Turchin <zerg at altlinux dot org> 304.51-alt2
 - new releases 173.14.35 and 96.43.23 with xorg-server-1.12 support)
