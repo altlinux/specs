@@ -1,6 +1,9 @@
 Name: bind9.8
-Version: 9.8.3
-Release: alt2
+Version: 9.8.4
+Release: alt1
+
+#define vsuffix -P2
+%define vsuffix %nil
 
 %def_enable ipv6
 %def_with openssl
@@ -10,10 +13,8 @@ License: BSD-style
 Group: System/Servers
 
 Url: http://www.isc.org/products/BIND/
-%define vsuffix -P2
-#define vsuffix %nil
 %define srcname %name-%version%vsuffix
-Source0: ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
+Source0: ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version.tar.gz
 Source3: bind.README.bind-devel
 Source4: bind.README.ALT
 
@@ -528,6 +529,11 @@ fi
 %exclude %docdir/README.bind-devel
 
 %changelog
+* Thu Oct 11 2012 Michael Shigorin <mike@altlinux.org> 9.8.4-alt1
+- new version (watch file uupdate)
+  + 9.8.3-P4 fixed CVE-2012-5166:
+    Specially crafted DNS data can cause a lockup in named
+
 * Thu Aug 23 2012 Michael Shigorin <mike@altlinux.org> 9.8.3-alt2
 - 9.8.3-P2
 
