@@ -51,7 +51,7 @@
 
 Name: virtualbox
 Version: 4.1.20
-Release: alt1
+Release: alt1.1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -88,7 +88,7 @@ Source99:	%vboxdbg.in
 Patch0:		%name-%version-%release.patch
 
 BuildPreReq: dev86 iasl gcc4.3-c++ libstdc++4.3-devel-static
-BuildPreReq: libIDL-devel libSDL-devel
+BuildPreReq: libIDL-devel libSDL-devel libpng-devel
 BuildPreReq: libXcursor-devel libXext-devel
 BuildPreReq: xsltproc
 BuildPreReq: kernel-build-tools python-dev
@@ -614,6 +614,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.20-alt1.1
+- Rebuilt with libpng15
+
 * Wed Aug 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.1.20-alt1
 - Update to new stable release
 - Revert exclude for vboxadddir to main virtualbox package
