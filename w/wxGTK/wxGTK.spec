@@ -8,7 +8,7 @@
 
 Name: wxGTK
 Version: %wxbranch.11.0
-Release: alt1.svn20100628.5.qa1
+Release: alt1.svn20100628.5.qa2
 Serial:	2
 
 Summary: The GTK+ port of the wxWidgets library
@@ -26,7 +26,7 @@ BuildPreReq: libgnomeprintui-devel libjpeg-devel libtiff-devel
 BuildPreReq: rpm-build-java libXt-devel gstreamer-devel
 BuildPreReq: libGConf-devel gst-plugins-devel
 
-BuildPreReq: libstdc++-devel
+BuildPreReq: libstdc++-devel libpng-devel
 
 Requires: lib%name = %{?serial:%serial:}%version-%release
 
@@ -316,6 +316,9 @@ cp -fR docs/* %buildroot%_docdir/%name-%version/
 %_datadir/wx/examples
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:2.8.11.0-alt1.svn20100628.5.qa2
+- Rebuilt with libpng15
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2:2.8.11.0-alt1.svn20100628.5.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
