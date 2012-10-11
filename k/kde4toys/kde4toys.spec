@@ -4,8 +4,8 @@
 %define rname kdetoys
 Name: kde4toys
 %define major 4
-%define minor 8
-%define bugfix 0
+%define minor 9
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -136,6 +136,12 @@ applications for %name
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt0.M60P.1
+- built for M60P
+
 * Fri Jan 27 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
 - new version
 

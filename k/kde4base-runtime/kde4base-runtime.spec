@@ -6,8 +6,8 @@
 
 %define rname kdebase-runtime
 %define major 4
-%define minor 8
-%define bugfix 5
+%define minor 9
+%define bugfix 1
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -26,9 +26,9 @@ Source11: search-altbugzilla.desktop
 # ALT
 Patch1001: kdebase-runtime-4.3.2-alt-compiz.patch
 Patch1002: kdebase-runtime-4.8.0-alt-def-nepomuk.patch
-Patch1003: kdebase-runtime-4.8.0-alt-fix-build.patch
+#Patch1003: kdebase-runtime-4.8.0-alt-fix-build.patch
 Patch1004: kdebase-runtime-4.6.0-alt-def-notify-volume.patch
-Patch1005: kdebase-runtime-4.8.0-alt-nepomukdatamanagement-soname.patch
+#Patch1005: kdebase-runtime-4.8.0-alt-nepomukdatamanagement-soname.patch
 Patch1006: kdebase-runtime-4.8.0-alt-def-trash.patch
 Patch1007: kdebase-runtime-4.8.0-alt-nepomuk-backup-on.patch
 
@@ -37,9 +37,11 @@ BuildRequires: gcc-c++ cmake bzlib-devel liblzma-devel xml-utils
 BuildRequires: libalsa-devel libclucene-core-devel libjpeg-devel libpcre-devel
 BuildRequires: libqt4-devel libsmbclient-devel NetworkManager-glib-devel
 BuildRequires: soprano soprano-backend-redland soprano-backend-virtuoso libsoprano-devel libstrigi-devel
+BuildRequires: kde4-nepomuk-core-devel kde4-kactivities-devel
 BuildRequires: libungif-devel libxine-devel libxkbfile-devel openexr-devel
 #BuildRequires: libcanberra-devel
-BuildRequires: libpulseaudio-devel libopenslp-devel libqzeitgeist-devel libqca2-devel
+BuildRequires: libpulseaudio-devel libopenslp-devel libqca2-devel
+#BuildRequires: libqzeitgeist-devel
 %{?_enable_ntrack:BuildRequires: libntrack-qt4-devel}
 BuildRequires: libexiv2-devel exiv2 libssh-devel phonon-devel
 BuildRequires: kde4libs-devel >= %version kde4pimlibs-devel
@@ -83,24 +85,10 @@ Requires: %name-common = %version-%release
 %description -n libmolletnetwork4
 KDE 4 library.
 
-%package -n libnepomuksync4
-Summary: KDE 4 library
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n libnepomuksync4
-KDE 4 library.
-
-%package -n libnepomukdatamanagement4
-Summary: KDE 4 library
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n libnepomukdatamanagement4
-KDE 4 library.
-
 %package devel
 Summary: Headers files for %name
 Group: Development/KDE and QT
-Requires: kde4libs-devel
+Requires: kde4libs-devel kde4-nepomuk-core-devel
 %description devel
 Headers files needed to build applications based on kdegames applications.
 
@@ -117,9 +105,9 @@ Menu resources for the original KDE menu.
 #
 %patch1001 -p1
 %patch1002 -p1
-%patch1003 -p1
+#
 %patch1004 -p1
-%patch1005 -p1
+#
 %patch1006 -p1
 %patch1007 -p1
 
@@ -189,22 +177,17 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4libdir/attica_kde.so
 %_K4libdir/libkdeinit4_*.so
 %_K4libdir/libknotifyplugin.so
-%_K4libdir/libnepomukcommon.so
 #%_K4libdir/strigi/*.so*
 %_K4lib/*.so*
 %_K4lib/platformimports/touch/org/kde/*
 %_K4lib/imports/org/kde/*
-%_K4start/nepomukserver.desktop
 %_K4start/nepomukcontroller.desktop
 %_K4apps/desktoptheme/
-%_K4apps/fileindexerservice/
 %_K4apps/kglobalaccel
 %_K4apps/khelpcenter/
 %_K4apps/ksmserver/
 %_K4apps/konqsidebartng/
 %_K4apps/kwalletd/
-%_K4apps/nepomukstorage/
-%_K4apps/nepomukfilewatch/
 %_K4apps/hardwarenotifications/
 %_K4cfg/*
 %_K4conf/*
@@ -224,7 +207,6 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_system/org.kde.kcontrol.kcmremotewidgets.conf
 %_K4dbus_sys_services/org.kde.kcontrol.kcmremotewidgets.service
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmremotewidgets.policy
-%_datadir/ontology/kde
 %exclude %_K4doc/en/common
 
 %_K4apps/drkonqi/
@@ -243,10 +225,6 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4libdir/libkwalletbackend.so.*
 %files -n libmolletnetwork4
 %_K4libdir/libmolletnetwork.so.*
-%files -n libnepomuksync4
-%_K4libdir/libnepomuksync.so.*
-%files -n libnepomukdatamanagement4
-%_K4libdir/libnepomukdatamanagement.so.*
 
 %files devel
 %_K4link/*.so
@@ -255,6 +233,12 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Sep 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Wed Aug 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 - built without libcanberra

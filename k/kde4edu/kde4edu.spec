@@ -7,8 +7,8 @@
 %define rname kdeedu
 Name: kde4edu
 %define major 4
-%define minor 8
-%define bugfix 4
+%define minor 9
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 Packager: Sergey V Turchin <zerg at altlinux dot org>
@@ -539,6 +539,20 @@ Requires: %name-common = %version-%release
 %description -n librocslib4
 KDE 4 library
 
+%package -n libkhangmanengine4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkhangmanengine4
+KDE 4 library
+
+%package -n libkanagramengine4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkanagramengine4
+KDE 4 library
+
 %package marble
 Summary: A virtual globe and world atlas
 Url: http://edu.kde.org/marble
@@ -614,6 +628,11 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %files
 %files common
 #%doc README
+%ifdef _kde_alternate_placement
+%_kde4_iconsdir/hicolor/*/mimetypes/application-x-k*.*
+%else
+%_K4iconsdir/hicolor/*/mimetypes/application-x-k*.*
+%endif
 
 %files -n libcompoundviewer4
 %_K4libdir/libcompoundviewer.so.*
@@ -687,11 +706,12 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4xdg_apps/kalgebramobile.desktop
 %endif
 %_K4iconsdir/hicolor/*/apps/kalgebra.*
-%_K4apps/kalgebra
+#%_K4apps/kalgebra
+%_K4apps/kalgebramobile/
 %_K4apps/katepart/syntax/kalgebra.xml
 #%_K4srv/kalgebraplasmoid.desktop
 %_K4srv/kalgebra*.desktop
-%_K4srvtyp/kalgebra*.desktop
+#%_K4srvtyp/kalgebra*.desktop
 %_K4lib/plasma_applet_kalgebra.so
 %_K4doc/*/kalgebra
 
@@ -725,7 +745,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4bindir/kanagram
 %_K4xdg_apps/kanagram.desktop
 %endif
-%_K4iconsdir/hicolor/*/apps/kanagram.*
+%_K4iconsdir/hicolor/*/apps/kanagram*.*
 %_K4apps/kanagram
 %_K4cfg/kanagram.kcfg
 %_K4conf/kanagram.knsrc
@@ -766,7 +786,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4bindir/khangman
 %_K4xdg_apps/khangman.desktop
 %endif
-%_K4iconsdir/hicolor/*/apps/khangman.*
+%_K4iconsdir/hicolor/*/apps/khangman*.*
 %_K4apps/khangman
 %_K4cfg/khangman.kcfg
 %_K4conf/khangman.knsrc
@@ -779,13 +799,11 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_kde4_bindir/pykig.py
 %_kde4_xdg_apps/kig.desktop
 %_kde4_iconsdir/hicolor/*/apps/kig.*
-%_kde4_iconsdir/hicolor/*/mimetypes/application-x-kig.*
 %else
 %_K4bindir/kig
 %_K4bindir/pykig.py
 %_K4xdg_apps/kig.desktop
 %_K4iconsdir/hicolor/*/apps/kig.*
-%_K4iconsdir/hicolor/*/mimetypes/application-x-kig.*
 %endif
 %_K4lib/kigpart.so
 %_K4apps/kig
@@ -798,9 +816,13 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %ifdef _kde_alternate_placement
 %_kde4_bindir/kiten*
 %_kde4_xdg_apps/kiten.desktop
+%_kde4_xdg_apps/kitenkanjibrowser.desktop
+%_kde4_xdg_apps/kitenradselect.desktop
 %else
 %_K4bindir/kiten*
 %_K4xdg_apps/kiten.desktop
+%_K4xdg_apps/kitenkanjibrowser.desktop
+%_K4xdg_apps/kitenradselect.desktop
 %endif
 %_K4iconsdir/hicolor/*/apps/kiten.*
 %_K4apps/kiten
@@ -995,7 +1017,8 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4xdg_apps/rocs.desktop
 %endif
 %_K4lib/rocs_*.so
-%_K4apps/rocs
+%_K4apps/rocs/
+%_K4apps/rocs_rootedtree/
 %_K4conf/rocs.knsrc
 %_K4cfg/rocs.kcfg
 %_K4srv/rocs_*.desktop
@@ -1004,8 +1027,17 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 
 %files -n librocslib4
 %_K4libdir/librocslib.so.*
+%files -n libkanagramengine4
+%_K4libdir/libkanagramengine.so.*
+%files -n libkhangmanengine4
+%_K4libdir/libkhangmanengine.so.*
 
 %files devel
+%_includedir/khangman/
+%_includedir/kanagram/
+%_includedir/libkiten/
+%_includedir/marble/
+%_includedir/rocs/
 %_K4link/*.so
 %_K4includedir/*
 %_K4apps/cmake/modules/*
@@ -1013,6 +1045,12 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Jun 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Wed Jun 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 

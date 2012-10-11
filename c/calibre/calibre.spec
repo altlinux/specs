@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 0.8.55
-Release: alt1
+Release: alt1.1
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
 License: GPL
@@ -9,6 +9,7 @@ Group: File tools
 Url: http://calibre-ebook.com/
 Packager: Damir Shayhutdinov <damir@altlinux.ru>
 Source: http://sourceforge.net/projects/%name/files/%version/%name-%version.tar
+Patch1: calibre-0.8.55-alt-no-macmenu.patch
 #.gz
 Requires: fonts-ttf-liberation
 
@@ -40,6 +41,7 @@ TXT, PDF, LRS и FB2.
 
 %prep
 %setup -n %name
+%patch1 -p1
 sed -i "s/env python2/env python/" setup/install.py
 
 %build
@@ -63,6 +65,9 @@ mv %buildroot{/usr,}/etc
 %exclude %_datadir/%name/fonts/liberation/
 
 %changelog
+* Thu Oct 11 2012 Sergey V Turchin <zerg@altlinux.org> 0.8.55-alt1.1
+- disable xbar support
+
 * Tue Jun 19 2012 Anton Farygin <rider@altlinux.ru> 0.8.55-alt1
 - Updated to 0.8.55 release
 

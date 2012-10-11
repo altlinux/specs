@@ -5,10 +5,10 @@
 %define rname kdeplasma-addons
 Name: kde4plasma-addons
 %define major 4
-%define minor 8
-%define bugfix 4
+%define minor 9
+%define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4
@@ -75,6 +75,8 @@ Requires: plasma-dataengine-potd = %version-%release
 Requires: plasma-dataengine-rtm = %version-%release
 Requires: plasma-dataengine-kdeobservatory = %version-%release
 Requires: plasma-dataengine-kimpanel = %version-%release
+Requires: plasma-dataengine-konqprofiles = %version-%release
+Requires: plasma-dataengine-konsoleprofiles = %version-%release
 Requires: plasma-runner-audioplayercontrol = %version-%release
 Requires: plasma-runner-browserhistory = %version-%release
 Requires: plasma-runner-contacts = %version-%release
@@ -88,6 +90,7 @@ Requires: plasma-runner-mediawiki = %version-%release
 Requires: plasma-runner-kopete = %version-%release
 Requires: plasma-runner-charrunner = %version-%release
 Requires: plasma-runner-datetime = %version-%release
+Requires: plasma-runner-youtube = %version-%release
 Requires: plasma-wallpaper-mandelbrot = %version-%release
 Requires: plasma-wallpaper-marble = %version-%release
 Requires: plasma-wallpaper-pattern = %version-%release
@@ -101,7 +104,7 @@ BuildRequires(pre): kde4base-workspace-devel kde4pimlibs-devel
 BuildRequires: gcc-c++ libldap-devel scim-devel attica-devel libqca2-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel libqalculate-devel
 BuildRequires: python-modules-xml shared-mime-info
-BuildRequires: python-devel eigen2 libdbusmenu-qt-devel
+BuildRequires: python-devel eigen2 libdbusmenu-qt-devel qoauth-devel qjson-devel
 BuildRequires: kde4network-devel kde4pim-devel kde4graphics-devel kde4edu-devel
 BuildRequires: kde4base-workspace-devel >= %version kde4pimlibs-devel >= %version
 
@@ -235,17 +238,33 @@ Requires: plasma-dataengine-comic
 %description -n plasma-applet-comic
 Make your day happy with daily desktop comics applet
 
+%package -n plasma-dataengine-konqprofiles
+Summary: Live konqueror profile viewer dataengine
+Group: Graphical desktop/KDE
+Requires: %name-common = %version-%release
+%description -n plasma-dataengine-konqprofiles
+Live konqueror profile viewer dataengine.
+
 %package -n plasma-applet-konqprofiles
 Summary: Live konqueror profile viewer
 Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
+Requires: plasma-dataengine-konqprofiles
 %description -n plasma-applet-konqprofiles
 Live konqueror profile viewer.
+
+%package -n plasma-dataengine-konsoleprofiles
+Summary: Live konsole profile viewer
+Group: Graphical desktop/KDE
+Requires: %name-common = %version-%release
+%description -n plasma-dataengine-konsoleprofiles
+Live konsole profile viewer.
 
 %package -n plasma-applet-konsoleprofiles
 Summary: Live konsole profile viewer
 Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
+Requires: plasma-dataengine-konsoleprofiles
 %description -n plasma-applet-konsoleprofiles
 Live konsole profile viewer.
 
@@ -698,6 +717,13 @@ Requires: %name-common = %version-%release
 %description -n plasma-runner-datetime
 Plasma runner 
 
+%package -n plasma-runner-youtube
+Summary: Plasma runner 
+Group: Graphical desktop/KDE
+Requires: %name-common = %version-%release
+%description -n plasma-runner-youtube
+Plasma runner 
+
 %package -n plasma-applet-plasmaboard
 Summary: A plasmaboard plasma applet
 Group: Graphical desktop/KDE
@@ -787,7 +813,7 @@ based on %name
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
+#%patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
@@ -801,12 +827,11 @@ based on %name
 %K4install
 
 
-
-
 %files maxi
 %files
 %files common
 %dir %_K4apps/kdeplasma-addons/
+%_kde4_iconsdir/*/*/*/*.*
 
 %files -n plasma-applet-icontasks
 %_K4lib/plasma_applet_icontasks.so
@@ -855,6 +880,10 @@ based on %name
 %_K4lib/plasma_runner_datetime.so
 %_K4srv/plasma-runner-datetime.desktop
 
+%files -n plasma-runner-youtube
+%_K4lib/krunner_youtube.so
+%_K4srv/plasma-runner-youtube.desktop
+
 %files -n liblancelot4-datamodels
 %_K4libdir/liblancelot-datamodels.so.*
 
@@ -898,7 +927,6 @@ based on %name
 %files -n plasma-applet-qalculate
 %_K4lib/plasma_applet_qalculate.so
 %_K4srv/plasma-applet-qalculate.desktop
-%_kde4_iconsdir/hicolor/*/apps/qalculate-applet.*
 
 %files -n plasma-applet-knowledgebase
 %_K4lib/plasma_applet_knowledgebase.so
@@ -1004,24 +1032,32 @@ based on %name
 %_K4srvtyp/plasma_comicprovider.desktop
 %_K4conf/comic.knsrc
 
+%files -n plasma-dataengine-konqprofiles
+%_K4apps/plasma/services/org.kde.plasma.dataengine.konqprofiles.operations
+%_K4lib/plasma_engine_konqprofiles.so
+%_K4srv/plasma-dataengine-konqprofiles.desktop
+
 %files -n plasma-applet-konqprofiles
-%_K4lib/plasma_applet_konqprofiles.so
+%_K4apps/plasma/plasmoids/konqprofiles/
 %_K4srv/plasma-applet-konqprofiles.desktop
 
+%files -n plasma-dataengine-konsoleprofiles
+%_K4apps/plasma/services/org.kde.plasma.dataengine.konsoleprofiles.operations
+%_K4lib/plasma_engine_konsoleprofiles.so
+%_K4srv/plasma-dataengine-konsoleprofiles.desktop
+
 %files -n plasma-applet-konsoleprofiles
-%_K4lib/plasma_applet_konsoleprofiles.so
+%_K4apps/plasma/plasmoids/konsoleprofiles/
 %_K4srv/plasma-applet-konsoleprofiles.desktop
 
 %files -n plasma-applet-luna
 %_K4lib/plasma_applet_luna.so
 %_K4apps/desktoptheme/default/widgets/luna.*
 %_K4srv/plasma-applet-luna.desktop
-%_kde4_iconsdir/hicolor/*/apps/luna.*
 
 %files -n plasma-applet-bball
 %_K4lib/plasma_applet_bball.so
 %_K4srv/plasma-applet-bball.desktop
-%_kde4_iconsdir/hicolor/*/apps/bball.*
 %_K4apps/bball/
 
 %files -n plasma-applet-charselect
@@ -1032,7 +1068,6 @@ based on %name
 %_K4lib/plasma_applet_eyes.so
 %_K4apps/desktoptheme/default/widgets/eyes.*
 %_K4srv/plasma-applet-eyes.desktop
-%_kde4_iconsdir/hicolor/*/apps/eyes.*
 
 %files -n plasma-applet-incomingmsg
 %_K4lib/plasma_applet_incomingmsg.so
@@ -1045,7 +1080,6 @@ based on %name
 %files -n plasma-applet-life
 %_K4lib/plasma_applet_life.so
 %_K4srv/plasma-applet-life.desktop
-%_kde4_iconsdir/hicolor/*/apps/lifegame.*
 
 %files -n plasma-applet-news
 %_K4apps/desktoptheme/default/stylesheets/news.css
@@ -1067,7 +1101,6 @@ based on %name
 %_K4srv/plasma-applet-previewer.desktop
 %_K4srv/ServiceMenus/preview.desktop
 %_K4apps/desktoptheme/default/widgets/previewer-*.*
-%_kde4_iconsdir/hicolor/*/apps/previewer.*
 
 %files -n plasma-applet-rssnow
 %_K4lib/plasma_applet_rssnow.so
@@ -1090,8 +1123,6 @@ based on %name
 %_K4lib/plasma_applet_lancelot_part.so
 %_K4lib/plasma_applet_lancelot_launcher.so
 %_K4srv/plasma-applet-lancelot-launcher.desktop
-%_kde4_iconsdir/hicolor/*/apps/lancelot*.*
-%_kde4_iconsdir/hicolor/*/apps/plasmaapplet-shelf.*
 %_K4srv/plasma-applet-lancelot-part.desktop
 %_K4srv/lancelot.desktop
 %_K4xdg_mime/lancelotpart-mime.xml
@@ -1107,8 +1138,7 @@ based on %name
 %_K4apps/desktoptheme/default/widgets/microblog.svgz
 
 %files -n plasma-applet-nowplaying
-%_K4apps/desktoptheme/default/widgets/nowplaying/nocover.svgz
-%_K4lib/plasma_applet_nowplaying.so
+%_K4apps/plasma/plasmoids/nowplaying/
 %_K4srv/plasma-applet-nowplaying.desktop
 
 %files -n plasma-applet-binaryclock
@@ -1118,7 +1148,6 @@ based on %name
 %files -n plasma-applet-dict
 %_K4lib/plasma_applet_dict.so
 %_K4srv/plasma-dict-default.desktop
-%_kde4_iconsdir/*/*/apps/accessories-dictionary.*
 
 %files -n plasma-applet-fuzzy-clock
 %_K4lib/plasma_applet_fuzzy_clock.so
@@ -1140,7 +1169,6 @@ based on %name
 %files -n plasma-applet-fifteenpuzzle
 %_K4lib/plasma_applet_fifteenPuzzle.so
 %_K4srv/plasma-applet-fifteenPuzzle.desktop
-%_kde4_iconsdir/*/*/*/fifteenpuzzle.*
 %dir %_K4apps/desktoptheme/default/fifteenPuzzle/
 %_K4apps/desktoptheme/default/fifteenPuzzle/blanksquare.svg
 
@@ -1230,6 +1258,12 @@ based on %name
 %_K4link/*.so
 
 %changelog
+* Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Mon Aug 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt2.M60P.1
+- built for M60P
+
 * Mon Aug 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt3
 - add altlinux to news applet by default
 

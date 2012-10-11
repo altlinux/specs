@@ -4,8 +4,8 @@
 %define rname kdeaccessibility
 Name: kde4accessibility
 %define major 4
-%define minor 8
-%define bugfix 2
+%define minor 9
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -207,6 +207,12 @@ done
 #%_K4link/*.so
 
 %changelog
+* Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Thu Apr 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt0.M60P.1
+- built for M60P
+
 * Thu Apr 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.2-alt1
 - new version
 

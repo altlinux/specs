@@ -2,12 +2,13 @@
 %add_findpackage_path %_K4bindir
 %add_findreq_skiplist %_K4apps/lokalize/scripts/*.py
 %add_findreq_skiplist %_K4bindir/kdedoc
+%def_disable antlr
 
 %define rname kdesdk
 Name: kde4sdk
 %define major 4
-%define minor 8
-%define bugfix 4
+%define minor 9
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -32,6 +33,7 @@ Requires: %name-kmtrace = %version-%release
 Requires: %name-kcachegrind = %version-%release
 Requires: %name-dolphin = %version-%release
 Requires: %name-okteta = %version-%release
+Requires: %name-thumbnailers = %version-%release
 
 
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
@@ -40,11 +42,13 @@ Patch1: kdesdk-4.0.2-alt-find-libsvn.patch
 BuildRequires(pre): kde4libs-devel
 BuildRequires: libsubversion-devel perl-XML-DOM perl-Switch libldap-devel libltdl-devel gcc-c++
 BuildRequires: libiberty-devel libjpeg-devel libxslt-devel bzlib-devel
-BuildRequires: boost-devel libhunspell-devel desktop-file-utils
+%if_enabled antlr
+BuildRequires: antlr gcj-antlr antlr-native-devel
+%endif
+BuildRequires: boost-devel libhunspell-devel desktop-file-utils perl-Pod-Parser
 BuildRequires: kde4libs-devel >= %version kde4base-devel
 BuildRequires: kde4pimlibs-devel >= %version
 BuildRequires: kde4base-workspace-devel >= %version
-BuildRequires: perl-Pod-Parser
 
 %description
 Software Development Kit for the K Desktop Environment.
@@ -88,25 +92,25 @@ Requires: %name-common = %version-%release
 %description -n libokteta1gui4
 KDE 4 library
 
-%package -n libkasten1okteta1controllers4
+%package -n libkasten2okteta1controllers4
 Summary: KDE 4 library
 Group: System/Libraries
 Requires: %name-common = %version-%release
-%description -n libkasten1okteta1controllers4
+%description -n libkasten2okteta1controllers4
 KDE 4 library
 
-%package -n libkasten1okteta1core4
+%package -n libkasten2okteta1core4
 Summary: KDE 4 library
 Group: System/Libraries
 Requires: %name-common = %version-%release
-%description -n libkasten1okteta1core4
+%description -n libkasten2okteta1core4
 KDE 4 library
 
-%package -n libkasten1okteta1gui4
+%package -n libkasten2okteta1gui4
 Summary: KDE 4 library
 Group: System/Libraries
 Requires: %name-common = %version-%release
-%description -n libkasten1okteta1gui4
+%description -n libkasten2okteta1gui4
 KDE 4 library
 
 %package lokalize
@@ -225,6 +229,13 @@ Requires: kde4base-dolphin
 %description dolphin
 Dolphin plugins for development
 
+%package thumbnailers
+Summary: Thumbnailers for various development files
+Group: Development/Tools
+Requires: kde4base-dolphin
+%description thumbnailers
+Thumbnailers for various development files
+
 %package libs
 Summary: %name core libraries
 Group: System/Libraries
@@ -232,25 +243,25 @@ Group: System/Libraries
 %description libs
 %name core libraries
 
-%package -n libkasten1controllers4
+%package -n libkasten2controllers4
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
-%description -n libkasten1controllers4
+%description -n libkasten2controllers4
 %name library.
 
-%package -n libkasten1core4
+%package -n libkasten2core4
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
-%description -n libkasten1core4
+%description -n libkasten2core4
 %name library.
 
-%package -n libkasten1gui4
+%package -n libkasten2gui4
 Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
-%description -n libkasten1gui4
+%description -n libkasten2gui4
 %name library.
 
 %package -n libkompareinterface4
@@ -270,7 +281,7 @@ Requires: %name-common = %version-%release
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
+#%patch1 -p1
 
 %build
 %K4cmake \
@@ -297,6 +308,8 @@ popd
 mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
+
+
 %files
 %files libs
 %files common
@@ -309,15 +322,18 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4libdir/libkdeinit4_cvsaskpass.so
 %_K4libdir/libkdeinit4_cvsservice.so
 %_K4lib/kio_perldoc.so
-%_K4lib/kabcformat_kdeaccounts.so
 %_K4lib/kstartperf.so
 %_K4apps/kio_perldoc/
 %_K4apps/kpartloader/
 %_K4srv/perldoc.protocol
-%_K4apps/kabc/formats/kdeaccountsplugin.desktop
 %_K4iconsdir/locolor/*/actions/*.*
 %_K4iconsdir/hicolor/*/actions/*.*
 %_K4iconsdir/hicolor/*/mimetypes/application-x-uml.*
+
+%files thumbnailers
+%_K4lib/*thumbnail.so
+%_K4srv/*thumbnail.desktop
+%_K4cfg/pocreatorsettings.kcfg
 
 %files okteta
 %_K4bindir/okteta
@@ -334,22 +350,22 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4xdg_mime/okteta.xml
 %_K4doc/*/okteta
 
-%files -n libkasten1okteta1core4
-%_K4libdir/libkasten1okteta1core.so.*
-%files -n libkasten1okteta1gui4
-%_K4libdir/libkasten1okteta1gui.so.*
-%files -n libkasten1okteta1controllers4
-%_K4libdir/libkasten1okteta1controllers.so.*
-%files -n libkasten1controllers4
-%_K4libdir/libkasten1controllers.so.*
+%files -n libkasten2okteta1core4
+%_K4libdir/libkasten2okteta1core.so.*
+%files -n libkasten2okteta1gui4
+%_K4libdir/libkasten2okteta1gui.so.*
+%files -n libkasten2okteta1controllers4
+%_K4libdir/libkasten2okteta1controllers.so.*
+%files -n libkasten2controllers4
+%_K4libdir/libkasten2controllers.so.*
 %files -n libokteta1core4
 %_K4libdir/libokteta1core.so.*
 %files -n libokteta1gui4
 %_K4libdir/libokteta1gui.so.*
-%files -n libkasten1core4
-%_K4libdir/libkasten1core.so.*
-%files -n libkasten1gui4
-%_K4libdir/libkasten1gui.so.*
+%files -n libkasten2core4
+%_K4libdir/libkasten2core.so.*
+%files -n libkasten2gui4
+%_K4libdir/libkasten2gui.so.*
 
 %files dolphin
 %_K4lib/fileviewgitplugin.so
@@ -385,13 +401,11 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %files kuiviewer
 %_K4bindir/kuiviewer
 %_K4libdir/kde4/kuiviewerpart.so
-%_K4libdir/kde4/quithumbnail.so
 %_K4xdg_apps/kuiviewer.desktop
 %_K4apps/kuiviewer/
 %_K4iconsdir/hicolor/*/apps/kuiviewer.png
 %_K4apps/kuiviewerpart/
 %_K4srv/kuiviewer_part.desktop
-%_K4srv/designerthumbnail.desktop
 
 %files scripts
 %_K4bindir/adddebug
@@ -492,9 +506,11 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4libdir/strigi/strigi*
 
 %files po2xml
-#%_K4bindir/po2xml
+%if_enabled antlr
+%_K4bindir/po2xml
+%_K4bindir/swappo
+%endif
 %_K4bindir/split2po
-#%_K4bindir/swappo
 %_K4bindir/xml2pot
 
 %files umbrello
@@ -583,14 +599,20 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4includedir/kprofilemethod.h
 %_K4includedir/ktrace.h
 %_K4includedir/kompare/
-%_K4includedir/okteta1
-%_K4includedir/kasten1
+%_K4includedir/okteta1/
+%_K4includedir/kasten2/
 %_K4includedir/KDE/*
 %_K4link/*.so
 %_K4lib/plugins/designer/*.so
 
 
 %changelog
+* Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Jun 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Thu Jun 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - new version
 

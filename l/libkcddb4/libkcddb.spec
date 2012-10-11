@@ -2,7 +2,7 @@
 
 %define rname libkcddb
 Name: libkcddb4
-Version: 4.8.4
+Version: 4.9.1
 Release: alt1
 
 Group: System/Libraries
@@ -32,7 +32,6 @@ Development files for %name
 %prep
 %setup -qn %rname-%version
 %patch1 -p1
-ln -s . libkcddb
 mkdir -p cmake/modules/
 install -m 0644 %SOURCE1 cmake/modules/
 
@@ -53,9 +52,16 @@ install -m 0644 %SOURCE1 cmake/modules/
 
 
 %files devel
+%_libdir/cmake/libkcddb/
 %_K4link/lib*.so
 %_K4includedir/libkcddb/
 
 %changelog
+* Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Jun 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt0.M60P.1
+- built for M60P
+
 * Fri Jun 08 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
 - initial build

@@ -4,8 +4,8 @@
 %define rname kdemultimedia
 Name: kde4multimedia
 %define major 4
-%define minor 8
-%define bugfix 5
+%define minor 9
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -28,7 +28,6 @@ Source02: ffmpegthumbs-%version.tar
 Source03: kmix-%version.tar
 Source04: kscd-%version.tar
 Source05: audiocd-kio-%version.tar
-Source06: strigi-multimedia-%version.tar
 Source100: CMakeLists.txt
 Source101: ConfigureChecks.cmake
 Source102: config.h.cmake
@@ -36,9 +35,8 @@ Source103: FindMusicBrainz3.cmake
 Source104: FindCdparanoia.cmake
 Source105: FindTunePimp.cmake
 
-# ALT      ~/GIT/libkcddb4/altlinux
-Patch2: kdemultimedia-4.8.2-alt-cflags.patch
-Patch3: kdemultimedia-4.8.4-alt-audiocd-includedirs.patch
+# ALT
+#
 
 BuildRequires(pre): kde4base-workspace-devel
 BuildRequires: gcc-c++ libcdparanoia-devel
@@ -158,7 +156,7 @@ based on %name.
 
 
 %prep
-%setup -q -cT -n %rname-%version -a0 -a1 -a2 -a3 -a4 -a5 -a6
+%setup -q -cT -n %rname-%version -a0 -a1 -a2 -a3 -a4 -a5
 ls -d1 * | \
 while read d
 do
@@ -166,8 +164,6 @@ do
     newdirname=`echo "$d"| sed 's|-%version$||'`
     [ "$d" == "$newdirname" ] || mv $d $newdirname
 done
-%patch2 -p1
-%patch3 -p1
 
 mkdir -p cmake/modules/
 
@@ -273,6 +269,12 @@ install -m 0644 %SOURCE105 cmake/modules/
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 

@@ -11,14 +11,15 @@
 %def_disable kmobiletools
 %def_disable korn
 %def_enable kjots
+%def_enable ktnef
 
 %define rname kdepim
 %define major 4
-%define minor 8
-%define bugfix 5
+%define minor 9
+%define bugfix 1
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -39,7 +40,6 @@ Requires: %name-kjots = %version-%release
 %endif
 Requires: %name-kleopatra = %version-%release
 Requires: %name-ksendemail = %version-%release
-Requires: %name-kmailcvt = %version-%release
 %if_enabled kmobiletools
 Requires: %name-kmobiletools = %version-%release
 %endif
@@ -63,7 +63,7 @@ Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 # Upstream
 # ALT
 Patch101: kdepim-4.0.80-alt-kmail-acctlocal-lock.patch
-Patch102: kdepim-4.7.1-alt-allow-hide-nepomuk-error.patch
+#
 Patch103: kdepim-4.7.1-alt-force-7bit-cte.patch
 Patch104: kdepim-4.7.2-alt-migration.patch
 
@@ -178,100 +178,100 @@ intervals.
 * and ...
 
 %package -n libkdepim4-copy
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 %description -n libkdepim4-copy
-KDE 4 library
+%name library
 
 %package -n libkorganizer4_core
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 %description -n libkorganizer4_core
-KDE 4 library
+%name library
 
 %package -n libgwsoap4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libgwsoap4
-KDE 4 library
+%name library
 
 %package -n libkabcgroupwise4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkabcgroupwise4
-KDE 4 library
+%name library
 
 %package -n libkcalgroupwise4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkcalgroupwise4
-KDE 4 library
+%name library
 
 %package -n libkleopatraclientcore4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkleopatraclientcore4
-KDE 4 library
+%name library
 
 %package -n libkleopatraclientgui4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkleopatraclientgui4
-KDE 4 library
+%name library
 
 %package -n libkontactinterfaces4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkontactinterfaces4
-KDE 4 library
+%name library
 
 %package -n libkschema4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkschema4
-KDE 4 library
+%name library
 
 %package -n libkschemawidgets4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkschemawidgets4
-KDE 4 library
+%name library
 
 %package -n libkxmlcommon4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkxmlcommon4
-KDE 4 library
+%name library
 
 %package -n libschema4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libschema4
-KDE 4 library
+%name library
 
 %package -n libwscl4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libwscl4
-KDE 4 library
+%name library
 
 %package -n libwsdl4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libwsdl4
-KDE 4 library
+%name library
 
 %package kjots
 Summary: KDE notes books manager
@@ -283,60 +283,60 @@ Obsoletes: kde4utils-kjots < %version-%release
 Manages several "books" with a subject and notes
 
 %package -n libimap4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libimap4
-KDE 4 library
+%name library
 
 %package -n libakonadi4-xml
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libakonadi4-xml
-KDE 4 library
+%name library
 
 %package -n libakonadi4_next
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libakonadi4_next
-KDE 4 library
+%name library
 
 %package -n libakonadi4_kabc
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libakonadi4_kabc
-KDE 4 library
+%name library
 
 %package -n libakonadi4_kcal
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libakonadi4_kcal
-KDE 4 library
+%name library
 
 %package -n libakonadi4_kabccommon
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libakonadi4_kabccommon
-KDE 4 library.
+%name library.
 
 %package -n libkaddressbookprivate4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkaddressbookprivate4
-KDE 4 library
+%name library
 
 %package -n libkontactprivate4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkontactprivate4
-KDE 4 library
+%name library
 
 %package akonadi
 Summary: KDE PIM storage framework
@@ -347,25 +347,25 @@ Requires: kde4-pim-runtime
 KDE PIM storage framework
 
 %package -n libkdepim4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkdepim4
-KDE 4 library
+%name library
 
 %package -n libkholidays4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkholidays4
-KDE 4 library
+%name library
 
 %package -n libkpgp4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkpgp4
-KDE 4 library
+%name library
 
 %package kleopatra
 Summary: Certificate Manager for KDE
@@ -376,32 +376,32 @@ Requires: gnupg2 dirmngr pinentry-x11
 Certificate Manager for KDE
 
 %package -n libksieve4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libksieve4
-KDE 4 library
+%name library
 
 %package -n libmimelib4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libmimelib4
-KDE 4 library
+%name library
 
 %package -n libakregatorinterfaces4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libakregatorinterfaces4
-KDE 4 library
+%name library
 
 %package -n libakregatorprivate4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libakregatorprivate4
-KDE 4 library
+%name library
 
 %package akregator
 Summary: RSS/Atom feed reader for KDE
@@ -411,18 +411,18 @@ Requires: %name-core = %version-%release
 RSS/Atom feed reader for KDE
 
 %package -n libkitchensyncprivate4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-core = %version-%release
 %description -n libkitchensyncprivate4
-KDE 4 library
+%name library
 
 %package -n libqopensync4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libqopensync4
-KDE 4 library
+%name library
 
 %package kitchensync
 Summary: Dialog KDE base widgets
@@ -432,11 +432,11 @@ Requires: %name-core = %version-%release
 Dialog KDE base widgets
 
 %package -n libknodecommon4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libknodecommon4
-KDE 4 library
+%name library
 
 %package knode
 Summary: A newsgroup (NNTP) reader for KDE
@@ -447,11 +447,11 @@ Requires: kde4pimlibs
 A newsgroup (NNTP) reader for KDE
 
 %package -n libkabinterfaces4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkabinterfaces4
-KDE 4 library
+%name library
 
 %package kaddressbook
 Summary: Addressbook for KDE
@@ -472,18 +472,18 @@ Requires: akonadi kde4-pim-runtime %name-akonadi
 Mobile addressbook for KDE
 
 %package -n libkalarm4_resources
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkalarm4_resources
-KDE 4 library
+%name library
 
 %package -n libkmtaddressbook4_service
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkmtaddressbook4_service
-KDE 4 library
+%name library
 
 %package kalarm
 Summary: Personal Alarm Scheduler
@@ -502,11 +502,11 @@ you spent on various tasks. When you start a new task, you start a timer for it.
 At the end of the day, you can see how much time you spent on various task.
 
 %package -n libkmailprivate4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkmailprivate4
-KDE 4 library
+%name library
 
 %package ksendemail
 Summary: %{name} ksendemail
@@ -570,11 +570,11 @@ Requires: akonadi kde4-pim-runtime %name-akonadi
 Post-It notes on the mobile desktop
 
 %package -n libkpinterfaces4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkpinterfaces4
-KDE 4 library
+%name library
 
 %package kontact
 Summary: Integrated solution to your KDE PIM
@@ -585,39 +585,39 @@ Requires: akonadi kde4-pim-runtime %name-akonadi
 Integrated solution to your KDE PIM
 
 %package -n libkocorehelper4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkocorehelper4
-KDE 4 library
+%name library
 
 %package -n libkorg4_stdprinting
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkorg4_stdprinting
-KDE 4 library
+%name library
 
 %package -n libkorganizer4_calendar
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkorganizer4_calendar
-KDE 4 library
+%name library
 
 %package -n libkorganizer4_eventviewer
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkorganizer4_eventviewer
-KDE 4 library
+%name library
 
 %package -n libkorganizer4_interfaces
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkorganizer4_interfaces
-KDE 4 library
+%name library
 
 %package korganizer
 Summary: Electronic organizer for KDE
@@ -646,18 +646,18 @@ Requires: %name-kresources
 Mobile Kontact Touch Tasks
 
 %package -n libkorganizerprivate4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkorganizerprivate4
-KDE 4 library
+%name library
 
 %package -n libkmobiletoolsengineui4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkmobiletoolsengineui4
-KDE 4 library
+%name library
 
 %package kmobiletools
 Summary: Control mobile phones from KDE
@@ -675,11 +675,11 @@ Requires: %name-core = %version-%release
 Multi-folder new mail monitor for KDE
 
 %package -n libkpilot4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkpilot4
-KDE 4 library
+%name library
 
 %package kpilot
 Summary: Synchronizing data with a Palm(tm) or compatible PDA
@@ -689,144 +689,144 @@ Requires: %name-core = %version-%release
 Synchronizing data with a Palm(tm) or compatible PDA
 
 %package -n libkabc4_groupdav
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkabc4_groupdav
-KDE 4 library
+%name library
 
 %package -n libkabc4_slox
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkabc4_slox
-KDE 4 library
+%name library
 
 %package -n libkabc4_xmlrpc
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkabc4_xmlrpc
-KDE 4 library
+%name library
 
 %package -n libkabckolab4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkabckolab4
-KDE 4 library
+%name library
 
 %package -n libkcal4_groupdav
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkcal4_groupdav
-KDE 4 library
+%name library
 
 %package -n libkcal4_resourceblog
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkcal4_resourceblog
-KDE 4 library
+%name library
 
 %package -n libkcal4_resourceremote
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkcal4_resourceremote
-KDE 4 library
+%name library
 
 %package -n libkcal4_slox
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkcal4_slox
-KDE 4 library
+%name library
 
 %package -n libkcal4_xmlrpc
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkcal4_xmlrpc
-KDE 4 library
+%name library
 
 %package -n libkcalkolab4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkcalkolab4
-KDE 4 library
+%name library
 
 %package -n libkgroupwarebase4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkgroupwarebase4
-KDE 4 library
+%name library
 
 %package -n libkgroupwaredav4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkgroupwaredav4
-KDE 4 library
+%name library
 
 %package -n libknotes4_xmlrpc
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libknotes4_xmlrpc
-KDE 4 library
+%name library
 
 %package -n libknoteskolab4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libknoteskolab4
-KDE 4 library
+%name library
 
 %package -n libkslox4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkslox4
-KDE 4 library
+%name library
 
 %package -n libkabcommon4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkabcommon4
-KDE 4 library
+%name library
 
 %package -n libkcal4_resourcefeatureplan
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkcal4_resourcefeatureplan
-KDE 4 library
+%name library
 
 %package -n libkfeed4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkfeed4
-KDE 4 library
+%name library
 
 %package -n libkleo4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkleo4
-KDE 4 library
+%name library
 
 %package -n libkmobiletoolslib4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkmobiletoolslib4
-KDE 4 library
+%name library
 
 %package kresources
 Summary: KDE kresources
@@ -850,172 +850,179 @@ Requires: %name-core = %version-%release
 KDE PIM wizards
 
 %package -n libmaildir4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libmaildir4
-KDE 4 library
+%name library
 
 %package -n libkabcscalix4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkabcscalix4
-KDE 4 library
+%name library
 
 %package -n libkcalscalix4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkcalscalix4
-KDE 4 library
+%name library
 
 %package -n libknotesscalix4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libknotesscalix4
-KDE 4 library
+%name library
 
 %package -n libakonadi4-kcal_next
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libakonadi4-kcal_next
-KDE 4 library
+%name library
 
 %package -n libkalarm4_calendar
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkalarm4_calendar
-KDE 4 library
+%name library
 
 %package -n libmbox4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libmbox4
-KDE 4 library
+%name library
 
 %package -n libmessagecore4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libmessagecore4
-KDE 4 library
+%name library
 
 %package -n libmessagelist4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libmessagelist4
-KDE 4 library
+%name library
 
 %package -n libmessageviewer4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libmessageviewer4
-KDE 4 library
+%name library
 
 %package -n libmessagecomposer4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libmessagecomposer4
-KDE 4 library
+%name library
 
 %package -n libakonadi4-filestore
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libakonadi4-filestore
-KDE 4 library
+%name library
 
 %package -n libcalendarsupport4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libcalendarsupport4
-KDE 4 library
+%name library
 
 %package -n libeventviews4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libeventviews4
-KDE 4 library
+%name library
 
 %package -n libincidenceeditorsng4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libincidenceeditorsng4
-KDE 4 library
+%name library
 
 %package -n libincidenceeditorsngmobile4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libincidenceeditorsngmobile4
-KDE 4 library
+%name library
 
 %package -n libkdepimdbusinterfaces4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkdepimdbusinterfaces4
-KDE 4 library
+%name library
 
 %package -n libkdepimmobileui4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkdepimmobileui4
-KDE 4 library
+%name library
 
 %package -n libkdgantt24
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkdgantt24
-KDE 4 library
+%name library
 
 %package -n libkmanagesieve4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkmanagesieve4
-KDE 4 library
+%name library
 
 %package -n libkmindexreader4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkmindexreader4
-KDE 4 library
+%name library
 
 %package -n libksieveui4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libksieveui4
-KDE 4 library
+%name library
+
+%package -n libmailimporter4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libmailimporter4
+%name library
 
 %package -n libmailcommon4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libmailcommon4
-KDE 4 library
+%name library
 
 %package -n libtemplateparser4
-Summary: KDE 4 library
+Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libtemplateparser4
-KDE 4 library
+%name library
 
 %package devel
 Summary: Devel stuff for %name
@@ -1030,9 +1037,9 @@ based on kdepim.
 %prep
 %setup -q -n %rname-%version
 ###%patch101 -p1
-###%patch102 -p1
+#
 %patch103 -p1
-%patch104 -p1
+#%patch104 -p1
 
 
 %build
@@ -1060,6 +1067,7 @@ based on kdepim.
 %_K4libdir/strigi/*
 %_K4xdg_apps/konsolekalendar.desktop
 #%_K4apps/konsolekalendar/
+%_K4iconsdir/locolor/*/*/*
 %_K4iconsdir/hicolor/*/*/*
 %_K4iconsdir/oxygen/*/*/*
 %_K4srv/kontact/
@@ -1160,7 +1168,9 @@ based on kdepim.
 %_K4bindir/akonadi_*
 %_K4bindir/akonadiconsole
 %_datadir/akonadi/
-%_K4apps/akonadiconsole/akonadiconsoleui.rc
+%_K4apps/akonadiconsole/
+%_K4apps/akonadi_archivemail_agent/
+%_K4apps/akonadi_mailfilter_agent/
 %_K4xdg_apps/akonadiconsole.desktop
 %_K4conf_update/mailfilteragent.upd
 %_K4conf_update/migrate-kmail-filters.pl
@@ -1240,7 +1250,7 @@ based on kdepim.
 %_K4apps/knode
 %_K4apps/kontact/ksettingsdialog/knode.setdlg
 %_K4apps/kconf_update/knode.upd
-%_K4srv/knewsservice.protocol
+#%_K4srv/knewsservice.protocol
 %_K4srv/knode_config_accounts.desktop
 %_K4srv/knode_config_appearance.desktop
 %_K4srv/knode_config_cleanup.desktop
@@ -1291,6 +1301,8 @@ based on kdepim.
 
 %files -n libkmailprivate4
 %_K4libdir/libkmailprivate.so.*
+%files -n libmailimporter4
+%_K4libdir/libmailimporter.so.*
 
 %files ksendemail
 %_K4bindir/ksendemail
@@ -1328,6 +1340,15 @@ based on kdepim.
 %_K4srv/ServiceMenus/kmail_addattachmentservicemenu.desktop
 %_K4srvtyp/dbusmail.desktop
 %_K4doc/en/kmail
+#
+%_K4bindir/kmailcvt
+%_K4apps/kmailcvt/
+#
+%_K4bindir/importwizard
+%_K4xdg_apps/importwizard.desktop
+#
+%_K4bindir/backupmail
+%_K4apps/backupmail/
 
 %files kmail-common
 %_K4lib/messageviewer_bodypartformatter_application_mstnef.so
@@ -1339,10 +1360,6 @@ based on kdepim.
 %_K4apps/libmessageviewer
 %_K4apps/messageviewer
 %_K4apps/messagelist
-
-%files kmailcvt
-%_K4bindir/kmailcvt
-%_K4apps/kmailcvt/pics/step1.png
 
 %files knotes
 %_K4bindir/knotes
@@ -1521,9 +1538,10 @@ based on kdepim.
 
 %if_enabled ktnef
 %files ktnef
-%_K4bindir/ktnefviewer
+%_K4bindir/ktnef
 %_K4xdg_apps/ktnef.desktop
 %_K4apps/ktnef
+%_K4doc/en/ktnef
 %endif
 
 %files -n libcalendarsupport4
@@ -1559,6 +1577,12 @@ based on kdepim.
 
 
 %changelog
+* Mon Oct 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Tue Aug 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1.M60P.1
+- built for M60P
+
 * Tue Aug 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt2
 - update from 4.8 branch (kde bug 295484)
 

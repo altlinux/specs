@@ -4,7 +4,7 @@
 
 %define rname okular
 Name: kde4-okular
-Version: 4.8.5
+Version: 4.9.1
 Release: alt1
 
 Group: Office
@@ -86,6 +86,12 @@ Development files for %name
 
 
 %changelog
+* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 

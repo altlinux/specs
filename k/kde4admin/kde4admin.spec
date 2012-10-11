@@ -6,8 +6,8 @@
 %define rname kdeadmin
 Name: kde4admin
 %define major 4
-%define minor 8
-%define bugfix 0
+%define minor 9
+%define bugfix 1
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -168,9 +168,16 @@ sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/system-config-printer-kde
 %_K4apps/system-config-printer-kde/
 %_K4srv/system-config-printer-kde.desktop
 %_K4xdg_apps/system-config-printer-kde.desktop
+%_K4doc/*/system-config-printer-kde
 %endif
 
 %changelog
+* Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt0.M60P.1
+- built for M60P
+
 * Fri Jan 27 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
 - new version
 

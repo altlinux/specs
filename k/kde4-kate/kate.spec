@@ -9,8 +9,8 @@
 
 %define rname kate
 %define major 4
-%define minor 8
-%define bugfix 5
+%define minor 9
+%define bugfix 1
 Name: kde4-kate
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -26,7 +26,7 @@ Provides: kde4sdk-kate = %version-%release
 Obsoletes: kde4sdk-kate < %version-%release
 
 Source: %rname-%version.tar
-Patch1: kate-4.8.0-alt-acomment-shared.patch
+Patch1: kate-4.8.2-alt-fix-compile.patch
 
 # Automatically added by buildreq on Fri Sep 16 2011 (-bi)
 # optimized out: automoc cmake cmake-modules desktop-file-utils docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base rpm-build-gir ruby shared-mime-info xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -84,13 +84,6 @@ Summary: %name library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libktexteditor4_codesnippets_core
-%name library.
-
-%package -n libacomment4
-Summary: %name library
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n libacomment4
 %name library.
 
 %package devel
@@ -153,7 +146,6 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 
 
 %files common
-%_K4conf/artisticcommentrc
 
 %files core
 %_K4lib/katepart.so
@@ -252,17 +244,20 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4libdir/libkatepartinterfaces.so.*
 %files -n libktexteditor4_codesnippets_core
 %_K4libdir/libktexteditor_codesnippets_core.so.*
-%files -n libacomment4
-%_K4libdir/libacomment.so.*
 
 %files devel
 %_K4includedir/kate/
 %_K4includedir/ktexteditor_codesnippets_core/
 %_K4includedir/kate_*.h
-%_K4includedir/artisticcomment.h
 %_K4link/lib*.so
 
 %changelog
+* Mon Oct 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 

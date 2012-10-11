@@ -2,7 +2,7 @@
 
 %define rname gwenview
 Name: kde4-gwenview
-Version: 4.8.5
+Version: 4.9.1
 Release: alt1
 
 Group: Graphics
@@ -14,12 +14,13 @@ Provides: kde4graphics-gwenview = %version-%release
 Obsoletes: kde4graphics-gwenview < %version-%release
 
 Source: %rname-%version.tar
-Patch1: kdegraphics-4.6.5-alt-cmake-libjpeg-version.patch
+Patch1: gwenview-4.9.1-alt-fix-compile.patch
 
 # Automatically added by buildreq on Mon Sep 12 2011 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4base-devel libexiv2-devel libjpeg-devel libkipi4-devel libqt3-devel rpm-build-ruby soprano zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4base-devel libexiv2-devel libjpeg-devel libkipi4-devel zlib-devel kde-common-devel
+BuildRequires: kde4-nepomuk-core-devel
 BuildRequires: soprano soprano-backend-redland
 
 %description
@@ -40,7 +41,7 @@ KDE 4 core library.
 
 %prep
 %setup -qn %rname-%version
-#%patch1 -p2
+%patch1 -p1
 
 %build
 %K4build
@@ -74,6 +75,12 @@ KDE 4 core library.
 
 
 %changelog
+* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Fri Aug 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt0.M60P.1
+- built for M60P
+
 * Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 

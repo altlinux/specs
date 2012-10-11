@@ -4,7 +4,7 @@
 %define lngg Brazil Portuguese
 
 Name: kde4-i18n-%lng
-Version: 4.8.5
+Version: 4.9.2
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -90,6 +90,9 @@ fi
 #%lang(%lng) %_K4apps/kturtle/examples/%lng/
 
 %changelog
+* Mon Oct 08 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
+- new version
+
 * Wed Aug 15 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.5-alt1
 - new version
 

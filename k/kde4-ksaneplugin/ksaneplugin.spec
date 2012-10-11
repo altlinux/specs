@@ -2,7 +2,7 @@
 
 %define rname ksaneplugin
 Name: kde4-ksaneplugin
-Version: 4.8.0
+Version: 4.9.1
 Release: alt1
 
 Group: Graphics
@@ -61,6 +61,12 @@ KDE 4 core library.
 
 
 %changelog
+* Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
+- new version
+
+* Wed Apr 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt0.M60P.1
+- built for M60P
+
 * Tue Jan 24 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.0-alt1
 - new version
 
