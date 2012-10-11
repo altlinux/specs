@@ -7,7 +7,7 @@
 %def_disable 	debug
 Name:	 	%_newname
 Version: 3.8.1
-Release: alt3
+Release: alt4
 
 Summary:	The bleeding edge branch of Sylpheed, a GTK+ based, lightweight, and fast e-mail client	 
 License: 	%gpl3plus
@@ -23,8 +23,17 @@ Patch8: claws-mail-alt-textviewer-pl.patch
 # http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2697
 Patch9: claws-mail-3.8.1-alt-fix-procmime.patch
 
+# From upstream CVS
+Patch10: claws-mail-3.8.1cvs12.patch
+Patch11: claws-mail-3.8.1cvs26.patch
+Patch12: claws-mail-3.8.1cvs27.patch
+Patch13: claws-mail-3.8.1-alt-fix-overflow.patch
+Patch14: claws-mail-3.8.1cvs67.patch
+Patch15: claws-mail-3.8.1cvs82.patch
+
 # ALT Specific
 Patch119: claws-mail-alt-masquerade-deps.patch
+Patch120: claws-mail-3.8.1-alt-ssl-certs-paths.patch
 
 Obsoletes:	%_name-%branch < %version
 Provides:	%_name-%branch
@@ -222,7 +231,15 @@ echo "Libs: -lenchant -lgnutls" >>%name.pc.in
 %patch8 -p1
 %patch9 -p1
 
+%patch10 -p0
+%patch11 -p0
+%patch12 -p0
+%patch13 -p0
+%patch14 -p0
+%patch15 -p0
+
 %patch119 -p1
+%patch120 -p2
 
 %autoreconf
 
@@ -285,9 +302,12 @@ EOF
 %_iconsdir/%_newname.png
 %_iconsdir/hicolor/*x*/apps/%_newname.png
 %_pixmapsdir/%_newname.png
+%dir %_libdir/%_newname
+%dir %_claws_plugins_path
+%dir %_datadir/%_newname
 
 %files devel
-%_includedir/%_newname/*
+%_includedir/%_newname
 %_pkgconfigdir/%_newname.pc
 %exclude %_rpmmacrosdir/*
 #%_rpmmacrosdir/%name
@@ -321,7 +341,7 @@ EOF
 
 %files tools
 %doc tools/README*
-%_datadir/%name/tools/*
+%_datadir/%name/tools/
 %exclude %_datadir/%name/tools/update-po
 
 %exclude %_claws_plugins_path/*.la
@@ -332,6 +352,15 @@ EOF
 
 
 %changelog
+* Thu Oct 11 2012 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt4
+- Use ALT-specific paths for SSL certs.
+- Patches from upstream:
+    + Fix null pointer crash in procmime strchr.
+    + Fix potential buffer overflow.
+    + Fix failure to check peer hostname when checking certificate.
+    + Fix segfault when trying to view info about pgp/smime sign.
+- Own forgotten directories.
+
 * Thu Jul 12 2012 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt3
 - Fix segfault in parse_parameters().
 
