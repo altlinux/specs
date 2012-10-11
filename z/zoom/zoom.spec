@@ -1,6 +1,6 @@
 Name: zoom
 Version: 1.0.5
-Release: alt2
+Release: alt2.1
 
 Summary: Z-Machine: it plays text adventure games written in ZCode
 License: GPL
@@ -37,6 +37,9 @@ rm manual/Makefile*
 %doc README THANKS TODO manual
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt2.1
+- Rebuilt with libpng15
+
 * Wed Apr 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.5-alt2
 - fix build
 
