@@ -1,4 +1,4 @@
-BuildRequires: jmock
+BuildRequires: jmock caucho-services
 BuildRequires: /proc 
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
@@ -57,7 +57,7 @@ BuildRequires: jpackage-compat
 
 Name:           apache-commons-proxy
 Version:        1.0
-Release:        alt4_4jpp6
+Release:        alt5_4jpp6
 Epoch:          0
 Summary:        Apache Commons Proxy Component
 License:        Apache Software License 2.0
@@ -100,7 +100,7 @@ BuildRequires: maven2-default-skin
 %endif
 BuildRequires: aopalliance
 BuildRequires: axis
-BuildRequires: burlap
+#BuildRequires: burlap
 BuildRequires: cglib
 BuildRequires: concurrent
 BuildRequires: hessian
@@ -198,6 +198,9 @@ cp %{SOURCE5} maven-build.xml
 cp %{SOURCE6} maven-build.properties
 %endif
 
+%pom_remove_dep burlap:burlap
+rm -f /src/main/java/org/apache/commons/proxy/provider/remoting/BurlapProvider.java
+
 %build
 export MAVEN_REPO_LOCAL=$(pwd)/.m2/repository
 mkdir -p ${MAVEN_REPO_LOCAL}
@@ -209,7 +212,7 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %else
 ln -sf $(build-classpath aopalliance) .m2/repository/
 ln -sf $(build-classpath axis/jaxrpc) .m2/repository/axis-jaxrpc.jar
-ln -sf $(build-classpath burlap) .m2/repository/
+#ln -sf $(build-classpath burlap) .m2/repository/
 ln -sf $(build-classpath caucho-services) .m2/repository/
 ln -sf $(build-classpath cglib-nodep) .m2/repository/
 ln -sf $(build-classpath commons-codec) .m2/repository/
@@ -305,6 +308,9 @@ tag=`/bin/echo %{name}-%{version}-%{release} | %{__sed} 's|\.|_|g'`
 %endif
 
 %changelog
+* Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_4jpp6
+- build without burlap
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_4jpp6
 - fixed requires
 
