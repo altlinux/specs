@@ -1,11 +1,11 @@
 %define _name pygobject
-%define major 3.2
+%define major 3.4
 %define api_ver 3.0
 %define gtk_api_ver 2.0
 %def_disable devel_doc
 
 Name: python3-module-%{_name}3
-Version: %major.2
+Version: %major.0
 Release: alt2
 
 Summary: Python 3 bindings for GObject
@@ -23,10 +23,10 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildRequires: python3-devel python3-module-pycairo-devel
-BuildPreReq: gobject-introspection-devel >= 1.29.0
+BuildRequires: python3-devel python3-module-pycairo-devel libcairo-gobject-devel
+BuildPreReq: gobject-introspection-devel >= 1.33.14
 # for tests
-# BuildRequires: libcairo-gobject-devel dbus-tools-gui libgtk+3-gir-devel
+# BuildRequires: dbus-tools-gui libgtk+3-gir-devel
 
 %description
 GObject is a object system used by GTK+, GStreamer and other libraries.
@@ -102,6 +102,12 @@ export LD_PRELOAD=%_libdir/libpython%{_python3_version}mu.so
 %endif
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt2
+- Built for Python 3
+
+* Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
+- 3.4.0
+
 * Sun May 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.2-alt2
 - Built for Python 3
 
