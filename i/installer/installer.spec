@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.7.3
+Version: 1.7.4
 Release: alt1
 
 Summary: Installer common parts
@@ -101,6 +101,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Oct 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.4-alt1
+- added "40-autohostname.sh: re{li,ad}ability fixes" (mike@)
+
 * Wed Sep 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.3-alt1
 - set systemd default target if any dm present
 
