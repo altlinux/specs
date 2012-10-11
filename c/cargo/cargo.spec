@@ -49,7 +49,7 @@ BuildRequires: jpackage-compat
 
 Name:           cargo
 Version:        1.0
-Release:        alt9_3jpp6
+Release:        alt10_3jpp6
 Epoch:          0
 Summary:        Cargo container wrapper
 License:        ASL 2.0
@@ -92,7 +92,8 @@ Requires: geronimo-j2ee-1.4-apis
 Requires: geronimo-j2ee-deployment-1.1-api
 Requires: gnu-trove
 Requires: servlet_2_3_api
-Requires: spring2-all
+Requires: springframework
+Requires: springframework-beans
 Requires: xalan-j2
 Requires: xerces-j2
 Requires: xml-commons-jaxp-1.3-apis
@@ -137,7 +138,10 @@ BuildRequires: modello-maven-plugin >= 0:1.0-0.a17
 BuildRequires: plexus-container-default
 BuildRequires: plexus-utils
 BuildRequires: servlet_2_3_api
-BuildRequires: spring2-all
+BuildRequires: springframework
+BuildRequires: springframework-beans
+BuildRequires: springframework-web
+BuildRequires: springframework-jdbc
 BuildRequires: xalan-j2
 BuildRequires: xerces-j2
 BuildRequires: xml-commons-jaxp-1.3-apis
@@ -248,6 +252,12 @@ sed -i -e 's,<assembly>,<assembly><id>ALT</id>,' core/uberjar/src/assemble/main.
 %pom_remove_dep "org.codehaus.cargo:cargo-core-container-jetty" core/samples
 %pom_remove_dep "org.codehaus.cargo:cargo-core-container-jetty" core/documentation
 %pom_remove_dep "org.codehaus.cargo:cargo-core-container-jetty" extensions
+
+%pom_remove_dep org.springframework:spring resources/testdata/datasource-cmt-local-war
+%pom_add_dep org.springframework:spring-core resources/testdata/datasource-cmt-local-war
+%pom_add_dep org.springframework:spring-beans resources/testdata/datasource-cmt-local-war
+%pom_add_dep org.springframework:spring-jdbc resources/testdata/datasource-cmt-local-war
+%pom_add_dep org.springframework:spring-web resources/testdata/datasource-cmt-local-war
 
 %build
 export LANG=en_US.ISO8859-1
@@ -569,6 +579,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt10_3jpp6
+- build with spring3
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt9_3jpp6
 - fixed uberjar pom depeandencies
 
