@@ -31,8 +31,8 @@ BuildRequires: jpackage-compat
 #
 
 Name:           slf4j
-Version:        1.6.6
-Release:        alt1_2jpp7
+Version:        1.7.1
+Release:        alt1_1jpp7
 Epoch:          0
 Summary:        Simple Logging Facade for Java
 Group:          Development/Java
@@ -233,6 +233,9 @@ done
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_1jpp7
+- new version
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.6-alt1_2jpp7
 - new version
 
