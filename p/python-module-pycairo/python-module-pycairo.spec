@@ -1,7 +1,7 @@
 %define oname pycairo
 Name: python-module-%oname
 Version: 1.10.1
-Release: alt2.git20110619
+Release: alt2.git20120522
 
 Summary: Pycairo is a set of Python bindings for the vector graphics library cairo
 
@@ -151,6 +151,9 @@ rm -fR %python_sitelibdir/%oname/pickle
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.1-alt2.git20120522
+- New snapshot
+
 * Mon Nov 28 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.1-alt2.git20110619
 - Enabled docs (except pdf) and pickles
 
