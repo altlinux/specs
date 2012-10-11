@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.8
-Release: alt14
+Release: alt15
 Summary: C++ library for (adaptive) finite element developping (%scalar_type scalars)
 License: GPLv2+
 Group: Sciences/Mathematics
@@ -16,6 +16,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: http://dsec.pku.edu.cn/~rli/AFEPack-snapshot.tar
 
+%define gccver 4.6
+%set_gcc_version %gccver
+BuildPreReq: gcc%gccver gcc%gccver-c++ gcc%gccver-fortran
 BuildPreReq: python-module-petsc-config
 BuildPreReq: %mpiimpl-devel libdealii-%scalar_type-devel libtbb-devel
 BuildPreReq: doxygen boost-program_options-devel
@@ -170,6 +173,9 @@ done
 %endif
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt15
+- New snapshot
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt14
 - Rebuilt with dealii 7.3-pre
 

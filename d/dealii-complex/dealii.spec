@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 7.3
-Release: alt2.pre.svn20120904
+Release: alt3.pre.svn20120904
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -135,7 +135,7 @@ export MPIDIR=%mpidir
 INCS="-I%_includedir/hypre -I%_includedir/gsl -I%_includedir/tbb"
 DEFS="-DBOOST_FILESYSTEM_VERSION=2 -DHAS_C99_TR1_CMATH"
 DEFS="$DEFS -DDEAL_II_USE_EXTERNAL_BOOST"
-%add_optflags $INCS $DEFS -fno-strict-aliasing -std=gnu99
+%add_optflags $INCS $DEFS -fno-strict-aliasing -std=gnu99 -fpermissive
 %configure \
 	--enable-mpi \
 	--enable-threads \
@@ -217,6 +217,9 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 %endif
 
 %changelog
+* Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt3.pre.svn20120904
+- Rebuilt with gcc 4.7
+
 * Tue Sep 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt2.pre.svn20120904
 - Rebuilt with netcdf 4.2
 
@@ -286,3 +289,4 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 
 * Sat Jan 01 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.4-alt1.pre.svn20101223
 - Initial build for Sisyphus
+
