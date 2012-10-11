@@ -1,11 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name httpcomponents
 
 Name:              httpcomponents-core
 Summary:           Set of low level Java HTTP transport components for HTTP services
-Version:           4.2.1
-Release:           alt1_3jpp7
+Version:           4.2.2
+Release:           alt1_1jpp7
 Group:             Development/Java
 License:           ASL 2.0
 URL:               http://hc.apache.org/
@@ -120,6 +123,9 @@ cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.2-alt1_1jpp7
+- new release
+
 * Sat Sep 08 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.1-alt1_3jpp7
 - new version
 
