@@ -3,7 +3,7 @@
 
 Name: lib%{_name}%api_ver
 Version: 4.0.0
-Release: alt1
+Release: alt2
 
 Summary: A software library for accesing MusicBrainz servers
 License: LGPLv2+
@@ -11,6 +11,7 @@ Group: System/Libraries
 Url: http://www.musicbrainz.org/
 
 Source: ftp://ftp.%_name.org/pub/%_name/lib%_name-%version.tar.gz
+Patch: lib%_name-4.0.0-include.patch
 
 BuildRequires: ccmake cppunit-devel gcc-c++ libdiscid-devel libneon-devel
 
@@ -30,6 +31,7 @@ develop applications which will use libmusicbrainz.
 
 %prep
 %setup -n lib%_name-%version
+%patch
 
 %build
 cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_VERBOSE_MAKEFILE=1 \
@@ -50,6 +52,9 @@ cmake . -DCMAKE_INSTALL_PREFIX=%prefix -DCMAKE_VERBOSE_MAKEFILE=1 \
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Oct 11 2012 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt2
+- fixed includes
+
 * Mon Jun 04 2012 Yuri N. Sedunov <aris@altlinux.org> 4.0.0-alt1
 - first build for Sisyphus
 
