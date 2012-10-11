@@ -6,10 +6,10 @@
 Name: adobe-flash-player
 %define bin_name mozilla-plugin-adobe-flash
 %define ver_fake 11
-%define ver_ix86 11.2.202.338
-%define ver_x86_64 11.2.202.338
-Release: alt11
-Serial: 2
+%define ver_ix86 11.2.202.243
+%define ver_x86_64 11.2.202.243
+Release: alt12
+Serial: 3
 
 %define ver_real %ver_fake
 %ifarch x86_64
@@ -138,6 +138,17 @@ echo "At this moment you must install manually nspluginwrapper and i586-%name (s
 %endif
 
 %changelog
+* Thu Oct 11 2012 Sergey V Turchin <zerg@altlinux.org> 3:11-alt12
+- 11.2.202.243 (x86,x86-64)
+- security fixes:
+  CVE-2012-5248, CVE-2012-5249, CVE-2012-5250, CVE-2012-5251,
+  CVE-2012-5252, CVE-2012-5253, CVE-2012-5254, CVE-2012-5255,
+  CVE-2012-5256, CVE-2012-5257, CVE-2012-5258, CVE-2012-5259,
+  CVE-2012-5260, CVE-2012-5261, CVE-2012-5262, CVE-2012-5263,
+  CVE-2012-5264, CVE-2012-5265, CVE-2012-5266, CVE-2012-5267,
+  CVE-2012-5268, CVE-2012-5269, CVE-2012-5270, CVE-2012-5271,
+  CVE-2012-5272
+
 * Wed Aug 15 2012 Sergey V Turchin <zerg@altlinux.org> 2:11-alt11
 - security fixes:
   CVE-2012-1535
@@ -148,7 +159,7 @@ echo "At this moment you must install manually nspluginwrapper and i586-%name (s
   CVE-2012-2038, CVE-2012-2039, CVE-2012-2040
 
 * Thu May 10 2012 Sergey V Turchin <zerg@altlinux.org> 2:11-alt9
-- 11.2.202.335 (x86,x86-64)
+- 11.2.202.235 (x86,x86-64)
   CVE-2012-0779
 
 * Mon Apr 02 2012 Sergey V Turchin <zerg@altlinux.org> 2:11-alt8
