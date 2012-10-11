@@ -1,6 +1,6 @@
 Name: xmedcon
 Version: 0.10.5
-Release: alt5.1
+Release: alt5.2
 
 Summary: A medical image conversion utility and library
 License: (L)GPL
@@ -13,6 +13,7 @@ Packager: Andrey Yurkovsky <anyr@altlinux.org>
 Source0: %name-%version.tar.bz2
 Source1: %name.desktop
 Source2: %name.png
+Patch: xmedcon-0.10.5-alt-libpng15.patch
 
 BuildRequires: gcc-c++ libgtk+2-devel libpng-devel
 
@@ -40,6 +41,7 @@ necessary for developing programs that make use of the (X)MedCon library
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure
@@ -69,6 +71,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_datadir/aclocal/*
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.5-alt5.2
+- Rebuilt with libpng15
+
 * Tue Feb 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.5-alt5.1
 - Removed bad RPATH
 
