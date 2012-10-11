@@ -1,14 +1,16 @@
 Name: libpri
 Summary: PRI library
-Version: 1.4.12
+Version: 1.4.13
 Release: alt1
 License: %gpl2only
 Group: System/Servers
+BuildRequires: libtonezone-dahdi-devel
 BuildPreReq: rpm-build-licenses
 Epoch: 20080502
 Url: ftp://ftp.asterisk.org/pub/%name/%name-%version.tar.gz
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
+Patch1: %name-%version.patch
 Conflicts: libzap
 Obsoletes: libzap
 
@@ -36,6 +38,7 @@ ISDN PRI library
 
 %prep
 %setup
+%patch1 -p1
 sed -i 's/\$(INSTALL_BASE)\/lib/$(INSTALL_BASE)\/%_lib/' Makefile
 sed -i '/if test/d' Makefile
 sed -i 's!/sbin/ldconfig.*!!g' Makefile
@@ -59,6 +62,9 @@ find -type f -name '.depend' -print0 \
 %_libdir/libpri.a
 
 %changelog
+* Thu Oct 11 2012 Denis Smirnov <mithraen@altlinux.ru> 20080502:1.4.13-alt1
+- 1.4.13
+
 * Thu Jul 07 2011 Denis Smirnov <mithraen@altlinux.ru> 20080502:1.4.12-alt1
 - 1.4.12
 
