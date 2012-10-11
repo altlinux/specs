@@ -1,7 +1,7 @@
 
 Name: strigi
 Version: 0.7.7
-Release: alt4
+Release: alt5
 
 Summary: The fastest and smallest desktop searching program
 License: LGPL2+
@@ -132,6 +132,12 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 
 
 %changelog
+* Wed Oct 10 2012 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt5
+- don't show strigi-client in KDE settings menu section
+
+* Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt3.M60P.1
+- built for M60P
+
 * Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt4
 - merge upstream and FC patches
 
