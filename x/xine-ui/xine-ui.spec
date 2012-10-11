@@ -51,13 +51,14 @@
 %define Name Xine
 Name: xine-ui
 Version: 0.99.6
-Release: alt1
+Release: alt1.1
 Summary: Video Player
 License: %gpl2plus
 Group: Video
 URL: http://xine.sourceforge.net
 Source0: http://xine.sourceforge.net/files/%name-%version.tar
 Source1: %name.desktop
+Patch: xine-ui-0.99.6-alt-libpng15.patch
 %{?_without_X11:Requires: xine-%xinebin = %version-%release}
 Packager: Led <led@altlinux.ru>
 
@@ -145,6 +146,7 @@ This package provide framebuffer version of the video player.
 
 %prep
 %setup
+%patch -p1
 subst 's/cbreak/delch/g' configure.ac
 subst 's|/usr/lib|%_libdir|' m4/_xine.m4
 %if %lirclib == shared
@@ -234,6 +236,9 @@ done
 
 
 %changelog
+* Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.99.6-alt1.1
+- Rebuilt with libpng15
+
 * Tue Jul 26 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.99.6-alt1
 - 0.99.6
 - build fixed
