@@ -1,7 +1,7 @@
 
 Name: virtuoso-opensource
-Version: 6.1.5
-Release: alt2
+Version: 6.1.6
+Release: alt1
 Serial: 2
 
 Group: Databases
@@ -19,10 +19,6 @@ Patch1: virtuoso-opensource-6.1.0-extern-iodbc.patch
 Patch2: virtuoso-opensource-6.1.0-nodemos_buildfix.patch
 Patch3: virtuoso-opensource-6.1.4-no_strip.patch
 Patch4: virtuoso-opensource-6.1.2-no_strip.patch
-# SuSE
-Patch101: virtuoso-wrong-memset.patch
-Patch102: rpmlint-fixes.diff
-Patch103: isql-buffer-overflow.patch
 
 BuildRequires: glibc-devel libssl-devel bison flex gperf libxml2-devel libiodbc-devel libldap-devel /usr/bin/openssl libwbxml2-devel libexpat-devel
 
@@ -77,9 +73,6 @@ functionality.
 %patch2 -p0
 %patch3 -p1
 #%patch4 -p1
-%patch101 -p1
-%patch102 -p0
-%patch103 -p0
 #./autogen.sh
 %autoreconf
 
@@ -146,6 +139,12 @@ mv %buildroot%_var/lib/virtuoso/db/virtuoso.ini %buildroot%_sysconfdir/virtuoso/
 %_libdir/hibernate/virt_dialect.jar
 
 %changelog
+* Fri Oct 12 2012 Sergey V Turchin <zerg@altlinux.org> 2:6.1.6-alt1
+- new version
+
+* Thu Jun 07 2012 Sergey V Turchin <zerg@altlinux.org> 2:6.1.5-alt1.M60P.1
+- built for M60P
+
 * Thu Jun 07 2012 Sergey V Turchin <zerg@altlinux.org> 2:6.1.5-alt2
 - 6.1.5 again; built without aio
 
