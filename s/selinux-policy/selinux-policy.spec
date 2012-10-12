@@ -1,134 +1,132 @@
-%define distro alt
+%define distro redhat
 %define polyinstatiate n
 %define monolithic n
-%if %{?BUILD_TARGETED:0}%{!?BUILD_TARGETED:1}
-%define BUILD_TARGETED 1
-%endif
-%if %{?BUILD_MINIMUM:0}%{!?BUILD_MINIMUM:1}
-%define BUILD_MINIMUM 1
-%endif
-%if %{?BUILD_MLS:0}%{!?BUILD_MLS:1}
-%define BUILD_MLS 1
-%endif
-%define POLICYVER 24
-%define libsepol_ver 2.0.41
-%define policycoreutils_ver 2.0.79
-%define checkpolicy_ver 2.0.21
+%define POLICYVER 27
+%define POLICYCOREUTILSVER 2.1.9
+%define CHECKPOLICYVER 2.1.10
 
-%define fc_ver .fc3.9.13
+%def_with minimum
+%def_with targeted
+%def_with mls
 
 Summary: SELinux policy configuration
 Name: selinux-policy
-Version: 2.20101213
-Release: alt1%fc_ver.1
-License: %gpl2plus
+Version: 3.11.1
+Release: alt1
+License: GPLv2+
 Group: System/Base
-Source: serefpolicy-%version-%release.tar
-Source1: modules-targeted.conf
+Source: serefpolicy-%version.tar
+Patch0: policy-rawhide.patch
+Patch1: policy_contrib-rawhide.patch
+Patch2: policy_contrib-rawhide-roleattribute.patch
+Patch3: policy-rawhide-roleattribute.patch
+Source1: modules-targeted-base.conf
+Source31: modules-targeted-contrib.conf
 Source2: booleans-targeted.conf
 Source3: Makefile.devel
 Source4: setrans-targeted.conf
-Source5: modules-mls.conf
+Source5: modules-mls-base.conf
+Source32: modules-mls-contrib.conf
 Source6: booleans-mls.conf
 Source8: setrans-mls.conf
 Source14: securetty_types-targeted
 Source15: securetty_types-mls
+Source16: modules-minimum.conf
 Source17: booleans-minimum.conf
 Source18: setrans-minimum.conf
 Source19: securetty_types-minimum
 Source20: customizable_types
+Source21: config.tgz
 Source22: users-mls
 Source23: users-targeted
 Source25: users-minimum
-
-Url: http://oss.tresys.com/projects/refpolicy
+Source26: file_contexts.subs_dist
+Source27: selinux-policy.conf
+Source28: permissivedomains.pp
+Source29: serefpolicy-contrib-%version.tar
+Source30: booleans.subs_dist
+Url: http://oss.tresys.com/repos/refpolicy/
 BuildArch: noarch
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: gawk checkpolicy >= %checkpolicy_ver m4 policycoreutils >= %policycoreutils_ver bzip2
-Requires(pre): policycoreutils >= %policycoreutils_ver libsemanage
-Requires: checkpolicy >= %checkpolicy_ver m4 
+Requires: m4
+Requires: checkpolicy >= %CHECKPOLICYVER
+Requires(pre): policycoreutils >= %POLICYCOREUTILSVER libsemanage >= 2.1.8
+Requires(post): %_bindir/sha512sum
 
-%description 
-SELinux Base package
+BuildRequires: python m4 bzip2 policycoreutils
+BuildRequires: checkpolicy >= %CHECKPOLICYVER
 
-%files 
-%_mandir/man*/*
-# policycoreutils owns these manpage directories, we only own the files within them
-%_mandir/ru/*/*
+%description
+SELinux Reference Policy - modular.
+Based off of reference policy: Checked out revision  2.20091117
+
+%files
 %dir %_datadir/selinux
-%dir %_datadir/selinux/devel
-%dir %_datadir/selinux/devel/include
 %dir %_datadir/selinux/packages
 %dir %_sysconfdir/selinux
 %ghost %config(noreplace) %_sysconfdir/selinux/config
 %ghost %_sysconfdir/sysconfig/selinux
+%_usr/lib/tmpfiles.d/selinux-policy.conf
+
+%package devel
+Summary: SELinux policy devel
+Group: Development/Other
+Requires(pre): %name = %version-%release
+
+%description devel
+SELinux policy development and man page package
+
+%files devel -f %name.lang
+%dir %_datadir/selinux/devel
+%dir %_datadir/selinux/devel/include
 %_datadir/selinux/devel/include/*
 %_datadir/selinux/devel/Makefile
 %_datadir/selinux/devel/example.*
-%_datadir/selinux/devel/policy.*
+
 
 %package doc
 Summary: SELinux policy documentation
-Group: System/Base
-Requires(pre): selinux-policy = %version-%release
-Requires: xdg-utils
+Group: Documentation
+Requires(pre): %name = %version-%release
+Requires: %_bindir/xdg-open
 
 %description doc
 SELinux policy documentation package
 
 %files doc
-%doc %_datadir/doc/%name-%version
-%attr(755,root,root) %_datadir/selinux/devel/policyhelp
+%doc %_docdir/%name-%version
+%_datadir/selinux/devel/policyhelp
+%_datadir/selinux/devel/policy.*
 
-%check
-if [ -x /usr/sbin/selinuxenabled ] && /usr/sbin/selinuxenabled; then
-/usr/bin/sepolgen-ifgen -i %buildroot%_datadir/selinux/devel/include -o /dev/null
-fi
-
-%define makeCmds() \
-make UNK_PERMS=%5 NAME=%1 TYPE=%2 DISTRO=%distro UBAC=n DIRECT_INITRC=%3 MONOLITHIC=%monolithic POLY=%4 MLS_CATS=1024 MCS_CATS=1024 bare \
-make UNK_PERMS=%5 NAME=%1 TYPE=%2 DISTRO=%distro UBAC=n DIRECT_INITRC=%3 MONOLITHIC=%monolithic POLY=%4 MLS_CATS=1024 MCS_CATS=1024  conf \
-cp -f selinux_config/modules-%1.conf  ./policy/modules.conf \
-cp -f selinux_config/booleans-%1.conf ./policy/booleans.conf \
-cp -f selinux_config/users-%1 ./policy/users \
-
-%define installCmds() \
-make UNK_PERMS=%5 NAME=%1 TYPE=%2 DISTRO=%distro UBAC=n DIRECT_INITRC=%3 MONOLITHIC=%monolithic POLY=%4 MLS_CATS=1024 MCS_CATS=1024 base.pp \
-make validate UNK_PERMS=%5 NAME=%1 TYPE=%2 DISTRO=%distro UBAC=n DIRECT_INITRC=%3 MONOLITHIC=%monolithic POLY=%4 MLS_CATS=1024 MCS_CATS=1024 modules \
-make UNK_PERMS=%5 NAME=%1 TYPE=%2 DISTRO=%distro UBAC=n DIRECT_INITRC=%3 MONOLITHIC=%monolithic DESTDIR=%buildroot POLY=%4 MLS_CATS=1024 MCS_CATS=1024 install \
-make UNK_PERMS=%5 NAME=%1 TYPE=%2 DISTRO=%distro UBAC=n DIRECT_INITRC=%3 MONOLITHIC=%monolithic DESTDIR=%buildroot POLY=%4 MLS_CATS=1024 MCS_CATS=1024 install-appconfig \
-#cp *.pp %buildroot/%_datadir/selinux/%1/ \
-mkdir -p %buildroot/%_sysconfdir/selinux/%1/policy \
-mkdir -p %buildroot/%_sysconfdir/selinux/%1/modules/active \
-mkdir -p %buildroot/%_sysconfdir/selinux/%1/contexts/files \
-touch %buildroot/%_sysconfdir/selinux/%1/modules/semanage.read.LOCK \
-touch %buildroot/%_sysconfdir/selinux/%1/modules/semanage.trans.LOCK \
-rm -rf %buildroot%_sysconfdir/selinux/%1/booleans \
-touch %buildroot%_sysconfdir/selinux/%1/seusers \
-touch %buildroot%_sysconfdir/selinux/%1/policy/policy.%POLICYVER \
-touch %buildroot%_sysconfdir/selinux/%1/contexts/files/file_contexts \
-touch %buildroot%_sysconfdir/selinux/%1/contexts/files/file_contexts.homedirs \
-install -m0644 selinux_config/securetty_types-%1 %buildroot%_sysconfdir/selinux/%1/contexts/securetty_types \
-install -m0644 selinux_config/setrans-%1.conf %buildroot%_sysconfdir/selinux/%1/setrans.conf \
-install -m0644 selinux_config/customizable_types %buildroot%_sysconfdir/selinux/%1/contexts/customizable_types \
-bzip2 %buildroot/%_datadir/selinux/%1/*.pp \
-awk '$1 !~ "/^#/" && $2 == "=" && $3 == "module" { printf "%%s.pp.bz2 ", $1 }' ./policy/modules.conf > %buildroot/%_datadir/selinux/%1/modules.lst
-%nil
 
 %define fileList() \
 %dir %_datadir/selinux/%1 \
-%_datadir/selinux/%1/*.pp.bz2 \
-%_datadir/selinux/%1/modules.lst \
 %dir %_sysconfdir/selinux/%1 \
 %config(noreplace) %_sysconfdir/selinux/%1/setrans.conf \
-%ghost %_sysconfdir/selinux/%1/seusers \
+%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/selinux/%1/seusers \
+%dir %_sysconfdir/selinux/%1/logins \
 %dir %_sysconfdir/selinux/%1/modules \
-%verify(not mtime) %_sysconfdir/selinux/%1/modules/semanage.read.LOCK \
-%verify(not mtime) %_sysconfdir/selinux/%1/modules/semanage.trans.LOCK \
-%attr(700,root,root) %dir %_sysconfdir/selinux/%1/modules/active \
-#%verify(not md5 size mtime) %attr(600,root,root) %config(noreplace) %_sysconfdir/selinux/%1/modules/active/seusers \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/semanage.read.LOCK \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/semanage.trans.LOCK \
+%dir %attr(700,root,root) %dir %_sysconfdir/selinux/%1/modules/active \
+%dir %_sysconfdir/selinux/%1/modules/active/modules \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/policy.kern \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/commit_num \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/base.pp \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/file_contexts \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/file_contexts.homedirs \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/file_contexts.template \
+%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/seusers.final \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/netfilter_contexts \
+%config(noreplace) %verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/users_extra \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/homedir_template \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/modules/*.pp \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/modules/active/modules/sandbox.disabled \
+%ghost %_sysconfdir/selinux/%1/modules/active/*.local \
+%ghost %_sysconfdir/selinux/%1/modules/active/*.bin \
+%ghost %_sysconfdir/selinux/%1/modules/active/seusers \
 %dir %_sysconfdir/selinux/%1/policy/ \
-%ghost %_sysconfdir/selinux/%1/policy/policy.* \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/policy/policy.%{POLICYVER} \
+%_sysconfdir/selinux/%1/.policy.sha512 \
 %dir %_sysconfdir/selinux/%1/contexts \
 %config %_sysconfdir/selinux/%1/contexts/customizable_types \
 %config(noreplace) %_sysconfdir/selinux/%1/contexts/securetty_types \
@@ -137,6 +135,7 @@ awk '$1 !~ "/^#/" && $2 == "=" && $3 == "module" { printf "%%s.pp.bz2 ", $1 }' .
 %config %_sysconfdir/selinux/%1/contexts/default_contexts \
 %config %_sysconfdir/selinux/%1/contexts/virtual_domain_context \
 %config %_sysconfdir/selinux/%1/contexts/virtual_image_context \
+%config %_sysconfdir/selinux/%1/contexts/lxc_contexts \
 %config %_sysconfdir/selinux/%1/contexts/sepgsql_contexts \
 %config(noreplace) %_sysconfdir/selinux/%1/contexts/default_type \
 %config(noreplace) %_sysconfdir/selinux/%1/contexts/failsafe_context \
@@ -144,106 +143,217 @@ awk '$1 !~ "/^#/" && $2 == "=" && $3 == "module" { printf "%%s.pp.bz2 ", $1 }' .
 %config(noreplace) %_sysconfdir/selinux/%1/contexts/removable_context \
 %config(noreplace) %_sysconfdir/selinux/%1/contexts/userhelper_context \
 %dir %_sysconfdir/selinux/%1/contexts/files \
-%ghost %_sysconfdir/selinux/%1/contexts/files/file_contexts \
-%ghost %_sysconfdir/selinux/%1/contexts/files/file_contexts.homedirs \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/contexts/files/file_contexts \
+%verify(not md5 size mtime) %_sysconfdir/selinux/%1/contexts/files/file_contexts.homedirs \
+#ghost %_sysconfdir/selinux/%1/contexts/files/*.bin \
+%config(noreplace) %_sysconfdir/selinux/%1/contexts/files/file_contexts.local \
+%config(noreplace) %_sysconfdir/selinux/%1/contexts/files/file_contexts.subs \
+%_sysconfdir/selinux/%1/contexts/files/file_contexts.subs_dist \
+%_sysconfdir/selinux/%1/booleans.subs_dist \
 %config %_sysconfdir/selinux/%1/contexts/files/media \
 %dir %_sysconfdir/selinux/%1/contexts/users \
 %config(noreplace) %_sysconfdir/selinux/%1/contexts/users/root \
 %config(noreplace) %_sysconfdir/selinux/%1/contexts/users/guest_u \
 %config(noreplace) %_sysconfdir/selinux/%1/contexts/users/xguest_u \
 %config(noreplace) %_sysconfdir/selinux/%1/contexts/users/user_u \
-%config(noreplace) %_sysconfdir/selinux/%1/contexts/users/staff_u 
-
-%define saveFileContext() \
-if [ -s /etc/selinux/config ]; then \
-     . %_sysconfdir/selinux/config; \
-     FILE_CONTEXT=%_sysconfdir/selinux/%1/contexts/files/file_contexts; \
-     if [ "${SELINUXTYPE}" = %1 -a -f ${FILE_CONTEXT} ]; then \
-        [ -f ${FILE_CONTEXT}.pre ] || cp -f ${FILE_CONTEXT} ${FILE_CONTEXT}.pre; \
-     fi \
-fi
-
-%define loadpolicy() \
-( cd /usr/share/selinux/%1; \
-semodule -b base.pp.bz2 -i %2 -s %1; \
-); \
+%config(noreplace) %_sysconfdir/selinux/%1/contexts/users/staff_u
 
 %define relabel() \
-. %_sysconfdir/selinux/config; \
-FILE_CONTEXT=%_sysconfdir/selinux/%1/contexts/files/file_contexts; \
-if selinuxenabled && [ "${SELINUXTYPE}" = %1 -a -f ${FILE_CONTEXT}.pre ]; then \
-     fixfiles -C ${FILE_CONTEXT}.pre restore; \
-     restorecon -R /root /var/log /var/run /var/lib 2> /dev/null; \
-     rm -f ${FILE_CONTEXT}.pre; \
-fi; 
+. %_sysconfdir/selinux/config \
+FILE_CONTEXT=%_sysconfdir/selinux/%1/contexts/files/file_contexts \
+%_sbindir/selinuxenabled \
+if [ $? = 0  -a "$SELINUXTYPE" = %1 -a -f $FILE_CONTEXT.pre ]; then \
+	/sbin/fixfiles -C $FILE_CONTEXT.pre restore 2> /dev/null \
+	/sbin/restorecon -e /run/media -R /root /var/log /var/run /etc/passwd* /etc/group* 2> /dev/null \
+	rm -f $FILE_CONTEXT.pre \
+fi
 
-%description
-SELinux Reference Policy - modular.
-Based off of reference policy: Checked out revision %version
+%define preInstall() \
+if [ $1 -ne 1 ] && [ -s /etc/selinux/config ]; then \
+	. %_sysconfdir/selinux/config \
+	FILE_CONTEXT=%_sysconfdir/selinux/%1/contexts/files/file_contexts \
+	if [ "$SELINUXTYPE" = %1 -a -f $FILE_CONTEXT ]; then \
+		[ -f $FILE_CONTEXT.pre ] || cp -f $FILE_CONTEXT $FILE_CONTEXT.pre \
+	fi \
+	touch /etc/selinux/%1/.rebuild \
+	if [ -e /etc/selinux/%1/.policy.sha512 ]; then \
+		[ "$(sha512sum /etc/selinux/%1/modules/active/policy.kern | cut -d ' ' -f 1)" != "$(cat /etc/selinux/%1/.policy.sha512)" ] || \
+			rm /etc/selinux/%1/.rebuild \
+	fi \
+fi
+
+%define postInstall() \
+. %_sysconfdir/selinux/config; \
+if [ -e %_sysconfdir/selinux/%2/.rebuild ]; then \
+	rm %_sysconfdir/selinux/%2/.rebuild \
+	if [ %1 -ne 1 ]; then \
+		#%_sbindir/semodule -n -s %2 -r matahari xfs kudzu kerneloops execmem openoffice ada tzdata hal hotplug howl java mono moilscanner gamin audio_entropy audioentropy iscsid polkit_auth polkit rtkit_daemon ModemManager telepathysofiasip ethereal passanger qpidd pyzor razor 2>/dev/null \
+		%_sbindir/semodule -n -s %2 -r matahari xfs kerneloops execmem openoffice ada tzdata hotplug howl java mono moilscanner gamin audio_entropy audioentropy iscsid polkit_auth polkit rtkit_daemon ModemManager telepathysofiasip ethereal passanger qpidd pyzor razor 2>/dev/null \
+	fi \
+	rm -f %_sysconfdir/selinux/%2/modules/active/modules/qemu.pp %_sysconfdir/selinux/%2/modules/active/modules/nsplugin.pp %_sysconfdir/selinux/%2/modules/active/modules/razor.pp %_sysconfdir/selinux/%2/modules/active/modules/pyzord.pp \
+	%_sbindir/semodule -B -n -s %2 \
+else \
+	touch %_sysconfdir/selinux/%2/modules/active/modules/sandbox.disabled \
+fi \
+[ "$SELINUXTYPE" == "%2" ] && selinuxenabled && load_policy \
+if [ %1 -eq 1 ]; then \
+	/sbin/restorecon -R /root /var/log /var/run 2> /dev/null \
+else \
+	%relabel %2 \
+fi
+
+
+%prep
+%setup -q -n serefpolicy-%version -a 21 -a 29
+%patch0 -p1
+pushd serefpolicy-contrib-%version
+%patch1 -p1
+popd
+rm -rf policy/modules/contrib
+mv serefpolicy-contrib-%version policy/modules/contrib
+install -d -m 0755 selinux_config
+install -m 0644 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE8 \
+	%SOURCE14 %SOURCE15 %SOURCE16 %SOURCE17 %SOURCE18 %SOURCE19 %SOURCE20 \
+	%SOURCE22 %SOURCE23 %SOURCE25 %SOURCE26 %SOURCE31 %SOURCE32 \
+	selinux_config/
+
 
 %build
+Make()
+{
+	local conf perms type
 
-%prep 
-%setup -n serefpolicy-%version-%release
+	if [ "$1" = "mls" ]; then
+		conf=mls
+		perms=deny
+		type=mls
+	else
+		conf=targeted
+		perms=allow
+		type=mcs
+	fi
+	make UNK_PERMS=$perms NAME=$1 TYPE=$type DISTRO=%distro \
+		UBAC=n DIRECT_INITRC=n MONOLITHIC=%monolithic \
+		MLS_CATS=1024 MCS_CATS=1024 \
+		bare conf
+	install -m 0644 selinux_config/booleans-$1.conf ./policy/booleans.conf
+	install -m 0644 selinux_config/users-$1 ./policy/users
+
+	install -m 0644 selinux_config/modules-$conf-base.conf ./policy/modules-base.conf
+	install -m 0644 selinux_config/modules-$conf-base.conf ./policy/modules.conf
+	install -m 0644 selinux_config/modules-$conf-contrib.conf ./policy/modules-contrib.conf
+	cat selinux_config/modules-$conf-contrib.conf >> ./policy/modules.conf
+
+	make UNK_PERMS=$perms NAME=$1 TYPE=$type DISTRO=%distro \
+		UBAC=n DIRECT_INITRC=n MONOLITHIC=%monolithic \
+		MLS_CATS=1024 MCS_CATS=1024 SEMOD_EXP="%_bindir/semodule_expand -a" \
+		base.pp validate modules
+}
+
+make clean
+for p in%{?_with_targeted: targeted}%{?_with_minimum: minimum}%{?_with_mls: mls}; do
+	Make $p
+done
 
 
 %install
-mkdir selinux_config
-for i in %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE8 %SOURCE14 %SOURCE15  %SOURCE17 %SOURCE18 %SOURCE19 %SOURCE20 %SOURCE22 %SOURCE23 %SOURCE25;do
- cp $i selinux_config
-done
-ln -s modules-targeted.conf selinux_config/modules-minimum.conf
+Install()
+{
+	local i perms type
 
-# Build targeted policy
-mkdir -p %buildroot%_mandir
-cp -R  man/* %buildroot%_mandir
-mkdir -p %buildroot%_sysconfdir/selinux
-mkdir -p %buildroot%_sysconfdir/sysconfig
+	if [ "$1" = "mls" ]; then
+		perms=deny
+		type=mls
+	else
+		perms=allow
+		type=mcs
+	fi
+	%makeinstall_std UNK_PERMS=$perms NAME=$1 TYPE=$type DISTRO=%distro \
+		UBAC=n DIRECT_INITRC=n MONOLITHIC=%monolithic \
+		MLS_CATS=1024 MCS_CATS=1024 \
+		install-appconfig
+	for i in logins policy modules/active/modules contexts/files; do
+		install -d -m 0755 %buildroot%_sysconfdir/selinux/$1/$i
+	done
+	for i in read trans; do
+		touch %buildroot%_sysconfdir/selinux/$1/modules/semanage.$i.LOCK
+	done
+	rm -rf %buildroot%_sysconfdir/selinux/$1/booleans
+	touch %buildroot%_sysconfdir/selinux/$1/policy/policy.%POLICYVER
+	touch %buildroot%_sysconfdir/selinux/$1/contexts/files/file_contexts.subs
+	install -m 0644 selinux_config/securetty_types-$1 \
+		%buildroot%_sysconfdir/selinux/$1/contexts/securetty_types
+	install -m 0644 selinux_config/file_contexts.subs_dist \
+		%buildroot%_sysconfdir/selinux/$1/contexts/files/
+	install -m 0644 selinux_config/setrans-$1.conf %buildroot%_sysconfdir/selinux/$1/setrans.conf
+	install -m 0644 selinux_config/customizable_types %buildroot%_sysconfdir/selinux/$1/contexts/
+	for i in seusers {file_contexts,nodes,users_extra,users}.local file_contexts{.homedirs,}.bin; do
+		touch %buildroot%_sysconfdir/selinux/$1/modules/active/$i
+	done
+	install -m 0644 %SOURCE30 %buildroot%_sysconfdir/selinux/$1/booleans.subs_dist
+	bzip2 -c %buildroot%_datadir/selinux/$1/base.pp  > %buildroot%_sysconfdir/selinux/$1/modules/active/base.pp
+	rm -f %buildroot%_datadir/selinux/$1/base.pp
+	for i in %buildroot%_datadir/selinux/$1/*.pp; do
+		bzip2 -c $i > %buildroot%_sysconfdir/selinux/$1/modules/active/modules/$(basename $i)
+	done
+	rm -f %buildroot%_datadir/selinux/$1/*pp*
+	touch %buildroot%_sysconfdir/selinux/$1/modules/active/modules/sandbox.disabled
+	%_sbindir/semodule -s $1 -n -B -p %buildroot
+	sha512sum %buildroot%_sysconfdir/selinux/$1/policy/policy.%POLICYVER | \
+		cut -d' ' -f 1 > %buildroot%_sysconfdir/selinux/$1/.policy.sha512
+	rm -rf %buildroot%_sysconfdir/selinux/$1/contexts/netfilter_contexts
+	#rm -f %buildroot%_sysconfdir/selinux/$1/modules/active/policy.kern
+
+	for i in base contrib; do
+		sed -r -n '/^[[:blank:]]*[_[:alnum:]]+[[:blank:]]*=[[:blank:]]*module[[:blank:]]*$/s/^[[:blank:]]*([[:alnum:]]+).*$/\1.pp/p' \
+			./policy/modules-$i.conf > %buildroot%_datadir/selinux/$1/modules-$i.lst
+	done
+}
+
+install -d -m 0755 %buildroot%_sysconfdir/{selinux,sysconfig}
 touch %buildroot%_sysconfdir/selinux/config
 touch %buildroot%_sysconfdir/sysconfig/selinux
+install -D -m 0644 %SOURCE27 %buildroot%_usr/lib/tmpfiles.d/%name.conf
 
-# Always create policy module package directories
-mkdir -p %buildroot%_datadir/selinux/{targeted,mls,minimum,modules}/
+for p in%{?_with_targeted: targeted}%{?_with_minimum: minimum}%{?_with_mls: mls}; do
+	[ "$p" = "mls" ] || install -D -m 0644 %SOURCE28 %buildroot%_datadir/selinux/$p/permissivedomains.pp
+	Install $p
+done
 
-# Install devel
-make clean
-%if %BUILD_TARGETED
-# Build targeted policy
-# Commented out because only targeted ref policy currently builds
-%makeCmds targeted mcs n y allow
-%installCmds targeted mcs n y allow
-%endif
+install -d -m 0755 %buildroot{%_man8dir,%_mandir/ru/man8}
+install -m 0644 man/man8/* %buildroot%_man8dir/
+install -m 0644 man/ru/man8/* %buildroot%_mandir/ru/man8/
+make UNK_PERMS=allow NAME=targeted TYPE=mcs DISTRO=%distro UBAC=n DIRECT_INITRC=n \
+	MONOLITHIC=%monolithic DESTDIR=%buildroot PKGNAME=%name-%version \
+	MLS_CATS=1024 MCS_CATS=1024 \
+	install-docs install-headers
+install -d -m 0755 %buildroot%_datadir/selinux/devel
+mv %buildroot%_datadir/selinux/{targeted,devel}/include
+install -m 0644 selinux_config/Makefile.devel %buildroot%_datadir/selinux/devel/Makefile
+install -m 0644 doc/{example,policy}.* %buildroot%_datadir/selinux/devel/
+echo "xdg-open file:///usr/share/doc/selinux-policy-%version/html/index.html" > %buildroot%_datadir/selinux/devel/policyhelp
+chmod 0755 %buildroot%_datadir/selinux/devel/policyhelp
 
-%if %BUILD_MINIMUM
-# Build minimum policy
-# Commented out because only minimum ref policy currently builds
-%makeCmds minimum mcs n y allow
-%installCmds minimum mcs n y allow
-%endif
+install -d -m 0755 %buildroot%_datadir/selinux/packages
 
-%if %BUILD_MLS
-# Build mls policy
-%makeCmds mls mls n y deny
-%installCmds mls mls n y deny
-%endif
+%find_lang --with-man --all-name %name
 
-make UNK_PERMS=allow NAME=targeted TYPE=mcs DISTRO=%distro UBAC=n DIRECT_INITRC=n MONOLITHIC=%monolithic DESTDIR=%buildroot PKGNAME=%name-%version POLY=y MLS_CATS=1024 MCS_CATS=1024 install-headers install-docs
-mkdir %buildroot%_datadir/selinux/devel/
-mkdir %buildroot%_datadir/selinux/packages/
-mv %buildroot%_datadir/selinux/targeted/include %buildroot%_datadir/selinux/devel/include
-install -m 644 selinux_config/Makefile.devel %buildroot%_datadir/selinux/devel/Makefile
-install -m 644 doc/example.* %buildroot%_datadir/selinux/devel/
-install -m 644 doc/policy.* %buildroot%_datadir/selinux/devel/
-echo  "xdg-open file:///usr/share/doc/selinux-policy-%version/html/index.html"> %buildroot%_datadir/selinux/devel/policyhelp
-chmod +x %buildroot%_datadir/selinux/devel/policyhelp
-rm -rf selinux_config
 
 %post
-if [ ! -s /etc/selinux/config ]; then
-#
-#     New install so we will default to targeted policy
-#
-echo "
+if [ -s %_sysconfdir/selinux/config ]; then
+	. %_sysconfdir/selinux/config
+	# if first time update booleans.local needs to be copied to sandbox
+	[ -f %_sysconfdir/selinux/$SELINUXTYPE/booleans.local ] && \
+		mv %_sysconfdir/selinux/$SELINUXTYPE/booleans.local \
+			%_sysconfdir/selinux/targeted/modules/active/
+	[ -f %_sysconfdir/selinux/$SELINUXTYPE/seusers ] && \
+		cp -f %_sysconfdir/selinux/$SELINUXTYPE/seusers \
+			%_sysconfdir/selinux/$SELINUXTYPE/modules/active/seusers
+else
+	#
+	# New install so we will default to targeted policy
+	#
+	cat > %_sysconfdir/selinux/config <<__EOF__
 # This file controls the state of SELinux on the system.
 # SELINUX= can take one of these three values:
 #     enforcing - SELinux security policy is enforced.
@@ -252,133 +362,147 @@ echo "
 SELINUX=permissive
 # SELINUXTYPE= can take one of these two values:
 #     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected.
 #     mls - Multi Level Security protection.
-SELINUXTYPE=targeted 
-
-" > /etc/selinux/config
-
-     ln -sf ../selinux/config /etc/sysconfig/selinux 
-     restorecon /etc/selinux/config 2> /dev/null || :
-     fixfiles onboot ||:
-else
-     . /etc/selinux/config
-     # if first time update booleans.local needs to be copied to sandbox
-     [ -f /etc/selinux/${SELINUXTYPE}/booleans.local ] && mv /etc/selinux/${SELINUXTYPE}/booleans.local /etc/selinux/targeted/modules/active/
-     [ -f /etc/selinux/${SELINUXTYPE}/seusers ] && cp -f /etc/selinux/${SELINUXTYPE}/seusers /etc/selinux/${SELINUXTYPE}/modules/active/seusers
+SELINUXTYPE=targeted
+__EOF__
+	ln -sf ../selinux/config %_sysconfdir/sysconfig/selinux
+	restorecon %_sysconfdir/selinux/config 2>/dev/null ||:
 fi
-exit 0
+
 
 %postun
 if [ $1 = 0 ]; then
-     setenforce 0 2> /dev/null
-     if [ ! -s /etc/selinux/config ]; then
-          echo "SELINUX=disabled" > /etc/selinux/config
-     else
-          sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
-     fi
+	setenforce 0 2> /dev/null
+	[ -s %_sysconfdir/selinux/config ] &&
+		sed -i '/^SELINUX=/s/^.*$/SELINUX=disabled/' %_sysconfdir/selinux/config ||
+		echo "SELINUX=disabled" > %_sysconfdir/selinux/config
 fi
-exit 0
 
-%if %BUILD_TARGETED
+
+%if_with targeted
 %package targeted
 Summary: SELinux targeted base policy
+Provides: %name-base = %version-%release
 Group: System/Base
-Requires(pre): policycoreutils >= %policycoreutils_ver
+Requires(pre): policycoreutils >= %POLICYCOREUTILSVER
 Requires(pre): coreutils
-Requires(pre): selinux-policy = %version-%release
-Requires: selinux-policy = %version-%release
+Requires(pre): %name = %version-%release
+Requires: %name = %version-%release
+Conflicts: audispd-plugins <= 1.7.7-1
+Conflicts: 389-ds < 1.2.7
+Conflicts: 389-admin < 1.1.12
 
 %description targeted
 SELinux Reference policy targeted base module.
 
+
 %pre targeted
-%saveFileContext targeted
+%preInstall targeted
 
 %post targeted
-packages=`cat /usr/share/selinux/targeted/modules.lst`
-if [ $1 -eq 1 ]; then
-   %loadpolicy targeted $packages
-   restorecon -R /root /var/log /var/run /var/lib 2> /dev/null
-else
-   semodule -n -s targeted -r telepathysofiasip ethereal 2>/dev/null
-   %loadpolicy targeted $packages
-   %relabel targeted
-fi
+%postInstall $1 targeted
 exit 0
+
+
+%triggerpostun targeted -- selinux-policy-targeted < 3.11.0
+restorecon -R -p /home ||:
+
 
 %files targeted
 %config(noreplace) %_sysconfdir/selinux/targeted/contexts/users/unconfined_u
 %fileList targeted
+%_datadir/selinux/targeted/*.lst
 %endif
 
-%if %BUILD_MINIMUM
+%if_with minimum
 %package minimum
 Summary: SELinux minimum base policy
+Provides: %name-base = %version-%release
 Group: System/Base
-Requires(post): policycoreutils >= %policycoreutils_ver
+Requires(post): policycoreutils >= %POLICYCOREUTILSVER
 Requires(pre): coreutils
-Requires(pre): selinux-policy = %version-%release
-Requires: selinux-policy = %version-%release
+Requires(pre): %name = %version-%release
+Requires: %name = %{version}-%{release}
 
 %description minimum
 SELinux Reference policy minimum base module.
 
+
 %pre minimum
-%saveFileContext minimum
+%preInstall minimum
+if [ $1 -ne 1 ]; then
+	%_sbindir/semodule -s minimum -l 2>/dev/null | cut -f1 > %_datadir/selinux/minimum/instmodules.lst
+fi
+
 
 %post minimum
-packages="execmem.pp.bz2 unconfined.pp.bz2 unconfineduser.pp.bz2"
-%loadpolicy minimum $packages
+%if 0
+xargs -a %_datadir/selinux/minimum/modules-contrib.lst -I '{}' \
+	touch '%_sysconfdir/selinux/minimum/modules/active/modules/{}.disabled'
+%endif
 if [ $1 -eq 1 ]; then
-semanage -S minimum -i - << __eof
-login -m  -s unconfined_u -r s0-s0:c0.c1023 __default__
-login -m  -s unconfined_u -r s0-s0:c0.c1023 root
-__eof
-restorecon -R /root /var/log /var/run /var/lib 2> /dev/null
+	xargs -a %_datadir/selinux/minimum/modules-base.lst -I '{}' \
+		rm -f '%_sysconfdir/selinux/minimum/modules/active/modules/{}.disabled'
+%if 0
+	%_sbindir/semanage -S minimum -i - << __EOF__
+login -m -s unconfined_u -r s0-s0:c0.c1023 __default__
+login -m -s unconfined_u -r s0-s0:c0.c1023 root
+__EOF__
+%endif
+	/sbin/restorecon -R /root /var/log /var/run 2> /dev/null
+	%_sbindir/semodule -B -s minimum ||:
 else
-%relabel minimum
+	xargs -a %_datadir/selinux/minimum/instmodules.lst -I '{}' \
+		rm -f '%_sysconfdir/selinux/minimum/modules/active/modules/{}.pp.disabled'
+	%_sbindir/semodule -B -s minimum ||:
+	%relabel minimum
 fi
-exit 0
+
 
 %files minimum
 %config(noreplace) %_sysconfdir/selinux/minimum/contexts/users/unconfined_u
 %fileList minimum
+%_datadir/selinux/minimum/*.lst
 %endif
 
-%if %BUILD_MLS
-%package mls 
+
+%if_with mls
+%package mls
 Summary: SELinux mls base policy
 Group: System/Base
-Requires(pre): policycoreutils >= %policycoreutils_ver
+Provides: %name-base = %version-%release
+Requires: policycoreutils >= %POLICYCOREUTILSVER
+Requires: /sbin/mcstransd
+Requires(pre): policycoreutils >= %POLICYCOREUTILSVER
 Requires(pre): coreutils
-Requires(pre): selinux-policy = %version-%release
-Requires: selinux-policy = %version-%release
+Requires(pre): %name = %version-%release
+Requires: %name = %{version}-%{release}
 
-%description mls 
+%description mls
 SELinux Reference policy mls base module.
 
-%pre mls 
-%saveFileContext mls
+
+%pre mls
+%preInstall mls
+
 
 %post mls
-semodule -n -s mls -r telepathysofiasip ethereal 2>/dev/null
-packages=`cat /usr/share/selinux/mls/modules.lst`
-%loadpolicy mls $packages
-
-if [ $1 -eq 1 ]; then
-   restorecon -R /root /var/log /var/run /var/lib 2> /dev/null
-else
-%relabel mls
-fi
+%postInstall $1 mls
 exit 0
+
 
 %files mls
 %config(noreplace) %_sysconfdir/selinux/mls/contexts/users/unconfined_u
 %fileList mls
-
+%_datadir/selinux/mls/*.lst
 %endif
 
+
 %changelog
+* Fri Oct 12 2012 Led <led@altlinux.ru> 3.11.1-alt1
+- build for ALTLinux
+
 * Wed May 23 2012 Mikhail Efremov <sem@altlinux.org> 2.20101213-alt1.fc3.9.13.1
 - Don't generate context for gadgetfs and 9p
 - Updated config/ from Fedora.
