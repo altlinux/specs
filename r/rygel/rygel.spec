@@ -1,4 +1,4 @@
-%define ver_major 0.14
+%define ver_major 0.16
 %def_enable vala
 %def_enable tracker_plugin
 %def_enable media_export_plugin
@@ -10,7 +10,7 @@
 %def_with ui
 
 Name: rygel
-Version: %ver_major.3
+Version: %ver_major.1
 Release: alt1
 Summary: A UPnP v2 Media Server
 
@@ -21,13 +21,13 @@ Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Source: ftp://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%name-%version.tar
 
-%define vala_ver 0.14.1
+%define vala_ver 0.16.1
 %define gssdp_ver 0.11.0
 %define gupnp_ver 0.17.1
 %define gupnp_av_ver 0.9.0
 %define gupnp_dlna_ver 0.5.0
 %define gupnp_vala_ver 0.10.2
-%define gstreamer_ver 0.10.35
+%define gstreamer_ver 0.10.36
 %define gstreamer_plugins_ver 0.10.35
 %define gio_ver 2.26
 %define gee_ver 0.5.2
@@ -36,7 +36,7 @@ Source: ftp://ftp.gnome.org/pub/GNOME/sources/%name/%ver_major/%name-%version.ta
 %define gtk_ver 2.90.3
 %define libsqlite3_ver 3.5
 
-BuildRequires: intltool gnome-common
+BuildRequires: intltool gnome-common gtk-doc
 BuildRequires: libgssdp-devel >= %gssdp_ver
 BuildRequires: libgupnp-devel >= %gupnp_ver
 BuildRequires: libgupnp-av-devel >= %gupnp_av_ver
@@ -47,12 +47,11 @@ BuildRequires: libgee-devel >= %gee_ver
 BuildRequires: libuuid-devel >= %uuid_ver
 BuildRequires: libsoup-devel >= %libsoup_ver
 BuildRequires: libunistring-devel
+BuildRequires: tracker-devel
 %{?_enable_media_export_plugin:BuildRequires: libsqlite3-devel >= %libsqlite3_ver gst-plugins-devel >= %gstreamer_plugins_ver}
 %{?_enable_vala:BuildRequires: libvala-devel >= %vala_ver vala >= %vala_ver libgupnp-vala >= %gupnp_vala_ver}
 %{?_with_ui:BuildRequires: libgtk+3-devel >= %gtk_ver}
 BuildRequires: xsltproc docbook-style-xsl docbook-dtds
-# ? gconf-2.0.pc in rygel-1.0.pc
-BuildRequires: libGConf-devel
 
 %description
 Rygel is an implementation of the UPnP MediaServer V 2.0 specification that is
@@ -108,6 +107,7 @@ echo %version > .tarball-version
 %doc AUTHORS COPYING README TODO NEWS
 %config(noreplace) %_sysconfdir/rygel.conf
 %_bindir/*
+%_libdir/librygel-*.so.*
 %_libdir/%name-1.0/*.so
 %exclude %_libdir/%name-1.0/librygel-tracker.so
 %_datadir/%name
@@ -122,11 +122,15 @@ echo %version > .tarball-version
 %_libdir/%name-1.0/librygel-tracker.so
 
 %files devel
+%_libdir/librygel-*.so
 %_includedir/%name-*
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
 
 %changelog
+* Fri Oct 12 2012 Alexey Shabalin <shaba@altlinux.ru> 0.16.1-alt1
+- 0.16.1
+
 * Tue Sep 11 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.3-alt1
 - 0.14.3
 
