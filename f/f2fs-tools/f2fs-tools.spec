@@ -1,5 +1,5 @@
 %define fsname f2fs
-Name: %fsname-tool
+Name: %fsname-tools
 Version: 1.0.0
 Release: alt1
 Summary: Tools for Flash-Friendly File System (F2FS)
@@ -11,7 +11,7 @@ Provides: mkfs.%fsname = %version-%release
 
 %description
 Tools for Flash-Friendly File System (F2FS).
-Now only mkfs.%fsname
+Currently, the tools include mkfs.f2fs only.
 
 
 %prep
@@ -35,5 +35,5 @@ Now only mkfs.%fsname
 
 
 %changelog
-* Mon Oct 08 2012 Led <led@altlinux.ru> 1.0.0-alt1
+* Fri Oct 12 2012 Led <led@altlinux.ru> 1.0.0-alt1
 - initial build
