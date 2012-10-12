@@ -1,6 +1,6 @@
 Name: ndisc6
 Version: 1.0.2
-Release: alt1.git20120603
+Release: alt1.git20121003
 
 Summary: IPv6 diagnostic tools
 License: %gpl2plus
@@ -82,6 +82,9 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Fri Oct 12 2012 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1.git20121003
+- Updated from upstream git.
+
 * Tue Jul 17 2012 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1.git20120603
 - rdnssd: Add resolvconf support.
 - Initial build.
