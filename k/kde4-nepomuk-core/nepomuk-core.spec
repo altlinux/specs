@@ -4,7 +4,7 @@
 Name: kde4-nepomuk-core
 %define major  4
 %define minor  9
-%define bugfix 1
+%define bugfix 2
 Version: %major.%minor.%bugfix
 Release: alt1
 %define sover %major
@@ -129,5 +129,8 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4link/*.so
 
 %changelog
+* Fri Oct 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
+- new version
+
 * Wed Sep 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - initial build
