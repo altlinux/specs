@@ -5,7 +5,7 @@
 Summary: CMU Common Lisp compiler
 Name: cmucl
 Version: 20b
-Release: alt2
+Release: alt3
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 License: BSD
 Group: Development/Lisp
@@ -43,7 +43,7 @@ BuildRequires: bc
 BuildRequires: gettext
 BuildRequires: sed
 BuildRequires: time
-BuildRequires: lesstif-devel
+BuildRequires: lesstif-devel gcc4.5
 
 %description
 CMUCL is a free, high performance implementation of the Common Lisp
@@ -67,6 +67,8 @@ Requires: %name = %version-%release
 %setup -q -c %name-%version %{?bootstrap_src}
 
 %build
+export CC=gcc-4.5 CXX=g++-4.5
+
 CFLAGS="$RPM_OPT_FLAGS" ; export CFLAGS
 
 %if 0%{?bootfile:1}
@@ -199,6 +201,9 @@ QA_SKIP_BUILD_ROOT=1; export QA_SKIP_BUILD_ROOT
 #prefix/lib/cmucl/lib/motifd
 
 %changelog
+* Fri Oct 12 2012 Ilya Mashkin <oddity@altlinux.ru> 20b-alt3
+- fix build
+
 * Sun Jan 09 2011 Ilya Mashkin <oddity@altlinux.ru> 20b-alt2
 - minor spec fixes
 
