@@ -12,7 +12,7 @@
 Summary: SELinux policy configuration
 Name: selinux-policy
 Version: 3.11.1
-Release: alt1
+Release: alt2
 License: GPLv2+
 Group: System/Base
 Source: serefpolicy-%version.tar
@@ -500,6 +500,9 @@ exit 0
 
 
 %changelog
+* Fri Oct 12 2012 Led <led@altlinux.ru> 3.11.1-alt2
+- update to Fedora's 3.11.1-36
+
 * Fri Oct 12 2012 Led <led@altlinux.ru> 3.11.1-alt1
 - build for ALTLinux
 
