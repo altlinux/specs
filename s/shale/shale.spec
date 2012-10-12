@@ -1,5 +1,5 @@
 Packager: Igor Vlasenko <viy@altlinux.ru>
-BuildRequires: cssparser
+BuildRequires: cssparser apache-commons-discovery
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2008, JPackage Project
@@ -47,7 +47,7 @@ BuildRequires: jpackage-compat
 
 Name:           shale
 Version:        1.0.4
-Release:        alt9_1jpp5
+Release:        alt10_1jpp5
 Epoch:          0
 Summary:        Shale Framework
 License:        Apache Software License 2.0
@@ -599,6 +599,9 @@ fi
 %doc %dir %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Oct 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt10_1jpp5
+- fixed build
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.4-alt9_1jpp5
 - fixed build
 
