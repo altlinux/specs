@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 
 Name:           aspectj
-Version:        1.6.0
+Version:        1.6.5
 Release:        alt1_1jpp6
 Epoch:          0
 Summary:        AspectJ aspect-oriented language extension to Java
@@ -44,7 +44,7 @@ License:        EPL
 URL:            http://eclipse.org/aspectj/
 Group:          Development/Java
 # git clone http://git.eclipse.org/gitroot/aspectj/org.aspectj.git && git archive --prefix="aspectj-1.6.0/" --format=tar V1_6_0 | bzip2 > ../../SOURCES/aspectj-1.6.0.tar.bz2
-Source0:        aspectj-1.6.0.tar.bz2
+Source0:        aspectj-%{version}.tar.bz2
 Source1:        aspectj-build-build.xml
 Source2:        aspectj-jdtcore4aspectj-build.xml
 Source3:        http://archive.apache.org/dist/jakarta/bcel/source/bcel-5.1-src.zip
@@ -54,10 +54,12 @@ Source6:        aspectj-1.5.3-script-aj5
 Source7:        aspectj-1.5.3-script-ajbrowser
 Source8:        aspectj-1.5.3-script-ajc
 Source9:        aspectj-1.5.3-script-ajdoc
-Source10:       http://repo1.maven.org/maven2/org/aspectj/aspectjlib/1.6.0/aspectjlib-1.6.0.pom
-Source11:       http://repo1.maven.org/maven2/org/aspectj/aspectjrt/1.6.0/aspectjrt-1.6.0.pom
-Source12:       http://repo1.maven.org/maven2/org/aspectj/aspectjtools/1.6.0/aspectjtools-1.6.0.pom
-Source13:       http://repo1.maven.org/maven2/org/aspectj/aspectjweaver/1.6.0/aspectjweaver-1.6.0.pom
+Source10:       http://repo1.maven.org/maven2/org/aspectj/aspectjlib/%{version}/aspectjlib-%{version}.pom
+Source11:       http://repo1.maven.org/maven2/org/aspectj/aspectjrt/%{version}/aspectjrt-%{version}.pom
+Source12:       http://repo1.maven.org/maven2/org/aspectj/aspectjtools/%{version}/aspectjtools-%{version}.pom
+Source13:       http://repo1.maven.org/maven2/org/aspectj/aspectjweaver/%{version}/aspectjweaver-%{version}.pom
+
+Source99: patch.txt
 
 BuildRequires:  jpackage-utils >= 0:1.7.5
 BuildRequires:  junit
@@ -162,6 +164,16 @@ popd
 #sed -i -e 's,classpathref=,classpath refid=,g'  build/build-properties.xml
 sed -i -e 's,<antcall,<antcall inheritRefs="true",g'  build/build-properties.xml
 
+# bcel-builder fixes
+sed -i -e 's,source="1\.4",source="1.5",' bcel-builder/build-bcel.xml
+sed -i -e 's,"diff\.exe","diff",' bcel-builder/build.xml
+cp -a %{SOURCE99} bcel-builder/patch.txt
+
+#pushd lib/bcel/
+#mv bcel-verifier.jar.no bcel-verifier.jar
+#mv bcel.jar.no bcel.jar
+#popd
+
 %build
 #export JAVA_HOME=%{java_home}
 export ANT_OPTS="-Xmx1024M"
@@ -170,6 +182,7 @@ export CLASSPATH=$(build-classpath \
 ant \
 ant-launcher \
 commons-logging \
+objectweb-asm/asm \
 )
 
 # now for eclipse 3.6.X
@@ -188,8 +201,10 @@ CLASSPATH=${CLASSPATH}:$(ls %{_libdir}/eclipse/plugins/org.eclipse.equinox.app_*
 CLASSPATH=${CLASSPATH}:$(ls %{_libdir}/eclipse/plugins/org.eclipse.core.runtime_*.jar)
 
 pushd bcel-builder
-%{ant} -v -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -f build-bcel.xml
+%{ant} -v -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -f build-bcel.xml
 cp bin/bcel.jar .
+cp ../lib/bcel/bcel-verifier.jar.no bcel-verifier.jar
+mv ../lib/bcel/bcel-verifier-src.zip .
 %{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  extractAndPatchAndJar
 %{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  push
 popd
@@ -209,12 +224,18 @@ popd
 touch build/local.properties
 %{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=first
 
+pushd org.aspectj.lib
+%{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=first -f build-aspectjlib.xml 
+#compile
+popd
+
 %install
 # jars, poms, depmap frags
 install -d -m 0755 %{buildroot}%{_javadir}
 install -d -m 0755 %{buildroot}%{_datadir}/maven2/poms
 
-install -m 0644 aj-build/dist/tools/lib/aspectjlib.jar \
+#install -m 0644 aj-build/dist/tools/lib/aspectjlib.jar \
+install -m 0644 org.aspectj.lib/jars/aspectjlib.out.jar \
         %{buildroot}%{_javadir}/%{name}lib-%{version}.jar
 install -m 0644 %{SOURCE10} %{buildroot}%{_datadir}/maven2/poms/JPP-aspectjlib.pom
 %add_to_maven_depmap org.aspectj aspectjlib %{version} JPP %{name}lib
@@ -359,6 +380,9 @@ touch $RPM_BUILD_ROOT/etc/java/aspectj.conf
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Fri Oct 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.5-alt1_1jpp6
+- new version
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0-alt1_1jpp6
 - new version
 
