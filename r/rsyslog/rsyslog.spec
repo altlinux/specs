@@ -2,7 +2,7 @@
 
 Name: rsyslog
 Version: 6.4.2
-Release: alt1
+Release: alt2
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+
@@ -364,6 +364,9 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %doc html_docs/*
 
 %changelog
+* Fri Oct 12 2012 Alexey Shabalin <shaba@altlinux.ru> 6.4.2-alt2
+- fix logging chrooted services - add imuxsock module to generated config
+
 * Thu Sep 20 2012 Alexey Shabalin <shaba@altlinux.ru> 6.4.2-alt1
 - 6.4.2
 
