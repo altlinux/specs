@@ -1,87 +1,68 @@
+Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-# Copyright (c) 2000-2011, JPackage Project
-# All rights reserved.
-#
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions
-# are met:
-#
-# 1. Redistributions of source code must retain the above copyright
-#    notice, this list of conditions and the following disclaimer.
-# 2. Redistributions in binary form must reproduce the above copyright
-#    notice, this list of conditions and the following disclaimer in the
-#    documentation and/or other materials provided with the
-#    distribution.
-# 3. Neither the name of the JPackage Project nor the names of its
-#    contributors may be used to endorse or promote products derived
-#    from this software without specific prior written permission.
-#
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
-# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
-# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
-# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
-# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
-# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
-# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
-# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
-# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
+%define name jbossws-parent
+%define version 1.1.0
+%global namedreltag .GA
+%global namedversion %{version}%{?namedreltag}
 
-%define version_maj 1
-%define version_min 0
-%define version_rev 2
-%define version_tag GA
-%define version_full %{version_maj}.%{version_min}.%{version_rev}.%{version_tag}
- 
-Name:           jbossws-parent
-Version:        %{version_maj}.%{version_min}.%{version_rev}
-Release:	alt2_4jpp6
-Epoch:          0
-Summary:        JBoss Web Services (parent)
-License:        LGPLv2+
-Group:          Development/Java
-URL:            http://labs.jboss.com/jbossws/
-# svn export http://anonsvn.jboss.org/repos/jbossws/maven/parent/tags/jbossws-parent-1.0.2.GA/ jbossws-parent-1.0.2
-# tar cjf jbossws-parent-1.0.2.tar.bz2 jbossws-parent-1.0.2
-Source0:        %{name}-%{version}.tar.bz2
-Patch0:         %{name}-pom.patch
+Name:             jbossws-parent
+Version:          1.1.0
+Release:          alt1_1jpp7
+Summary:          JBossWS Parent
+Group:            Development/Java
+License:          LGPLv2+
+URL:              http://www.jboss.org/jbossws
+Source0:          https://repository.jboss.org/nexus/service/local/repositories/releases/content/org/jboss/ws/jbossws-parent/%{namedversion}/jbossws-parent-%{namedversion}.pom
 
-Requires(post): jpackage-utils
-Requires(postun): jpackage-utils
-Requires:       maven-surefire-report-maven-plugin
-Requires:       maven2
-Requires:       maven2-plugin-compiler
-Requires:       maven2-plugin-jar
-Requires:       maven2-plugin-source
-Requires:       maven-plugin-build-helper
-BuildRequires:  jpackage-utils
-BuildArch:      noarch
+BuildArch:        noarch
+
+BuildRequires:    jpackage-utils
+BuildRequires:    maven
+BuildRequires:    maven-compiler-plugin
+BuildRequires:    maven-install-plugin
+BuildRequires:    maven-jar-plugin
+BuildRequires:    maven-javadoc-plugin
+BuildRequires:    maven-enforcer-plugin
+BuildRequires:    maven-clean-plugin
+BuildRequires:    maven-eclipse-plugin
+BuildRequires:    maven-war-plugin
+BuildRequires:    maven-help-plugin
+BuildRequires:    maven-dependency-plugin
+
+Requires:         jpackage-utils
 Source44: import.info
 
 %description
-JBossWS Parent.
+This package contains the JBossWS Parent
 
 %prep
-%setup -q
-%patch0
+cp %{SOURCE0} pom.xml
 
 %build
+mvn-rpmbuild install javadoc:aggregate
 
 %install
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 
-%add_to_maven_depmap org.jboss.ws jbossws-parent %{version_full} JPP %{name}
+# POM
+install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 
-%{__mkdir_p} %{buildroot}%{_datadir}/maven2/poms
-%{__cp} -p pom.xml %{buildroot}%{_datadir}/maven2/poms/JPP-%{name}.pom
+# DEPMAP
+%add_maven_depmap JPP-%{name}.pom
 
 %files
-%{_datadir}/maven2/poms/JPP-%{name}.pom
-%{_mavendepmapfragdir}/%{name}
+%{_mavenpomdir}/*
+%{_mavendepmapfragdir}/*
 
 %changelog
+* Thu Oct 11 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_1jpp7
+- new release
+
 * Tue Mar 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.2-alt2_4jpp6
 - use maven-plugin-build-helper
 
