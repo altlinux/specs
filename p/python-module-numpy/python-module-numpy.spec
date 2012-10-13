@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt6.git20120502
+Release: alt6.git20121009
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -48,11 +48,9 @@ BuildPreReq: libsuitesparse-devel swig python-module-distribute
 #BuildPreReq: python-module-scipy
 BuildPreReq: python-module-sphinx-devel python-module-Pygments
 #BuildPreReq: python-module-matplotlib
-BuildPreReq: dvipng doxygen
-%if_with latex
+BuildPreReq: dvipng doxygen ghostscript-classic ImageMagick-tools
 BuildPreReq: texlive-latex-base texlive-latex-extra
 BuildPreReq: texmf-latex-preview
-%endif
 #%if_with tests
 #BuildPreReq: libnumpy-devel
 #%endif
@@ -448,6 +446,7 @@ INCS="$INCS -I%buildroot%_includedir"
 DEFS="-DHAVE_FREXPF -DHAVE_FREXPL -DHAVE_FREXP -DHAVE_LDEXP -DHAVE_LDEXPL"
 DEFS="$DEFS -DHAVE_EXPM1 -DHAVE_LOG1P -DHAVE_LDEXPF"
 DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86 -DHAVE_LDOUBLE_IEEE_QUAD_BE"
+DEFS="$DEFS -DNPY_ENABLE_SEPARATE_COMPILATION"
 %add_optflags -fno-strict-aliasing $DEFS $INCS %optflags_shared
 
 %python3_build_debug --fcompiler=gnu95
@@ -504,6 +503,7 @@ INCS="$INCS -I%buildroot%_includedir"
 DEFS="-DHAVE_FREXPF -DHAVE_FREXPL -DHAVE_FREXP -DHAVE_LDEXP -DHAVE_LDEXPL"
 DEFS="$DEFS -DHAVE_EXPM1 -DHAVE_LOG1P -DHAVE_LDEXPF"
 DEFS="$DEFS -UNPY_CPU_AMD64 -UNPY_CPU_X86 -DHAVE_LDOUBLE_IEEE_QUAD_BE"
+DEFS="$DEFS -DNPY_ENABLE_SEPARATE_COMPILATION"
 %add_optflags -fno-strict-aliasing $DEFS $INCS %optflags_shared
 
 %python_build_debug --fcompiler=gnu95
@@ -673,9 +673,9 @@ pushd $i
 %python3_install
 popd
 done
-pushd %buildroot%_bindir
-mv autosummary_generate py3_autosummary_generate
-popd
+#pushd %buildroot%_bindir
+#mv autosummary_generate py3_autosummary_generate
+#popd
 export PYTHONPATH=%buildroot%python_sitelibdir
 popd
 popd
@@ -767,9 +767,9 @@ fi
 %files -f %name.lang
 %doc COMPATIBILITY LICENSE.txt README.txt THANKS.txt
 %_bindir/*
-%exclude %_bindir/py3_autosummary_generate
+#exclude %_bindir/py3_autosummary_generate
 %if_with python3
-%exclude %_bindir/py3_*
+#exclude %_bindir/py3_*
 %exclude %_bindir/f2py3
 %endif
 %python_sitelibdir/%oname
@@ -818,7 +818,7 @@ fi
 %if_with python3
 %files -n python3-module-%oname -f %name.lang
 %doc COMPATIBILITY LICENSE.txt README.txt THANKS.txt
-%_bindir/py3_*
+#_bindir/py3_*
 %_bindir/f2py3
 %python3_sitelibdir/%oname
 %exclude %python3_sitelibdir/%oname/testing
@@ -1037,6 +1037,9 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Fri Oct 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt6.git20121009
+- New snapshot
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt6.git20120502
 - Built with OpenBLAS instead of GotoBLAS2
 
