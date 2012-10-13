@@ -5,7 +5,7 @@
 %define module_release	alt1
 
 %define kversion	2.6.32
-%define krelease	alt77
+%define krelease	alt78
 %define flavour	ovz-el
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -16,7 +16,7 @@
 Summary: %module_name modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.77
+Release: %module_release.132640.78
 License: GPL
 Group: System/Kernel and hardware
 
@@ -180,8 +180,8 @@ popd
 %kernel_headers_dir/kernel-modules-%module_name.symvers
 
 %changelog
-* Sun Sep 30 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1.132640.77
-- Build for kernel-image-ovz-el-2.6.32-alt77.
+* Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1.132640.78
+- Build for kernel-image-ovz-el-2.6.32-alt78.
 
 * Sun Sep 02 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1
 - 2.6.1
