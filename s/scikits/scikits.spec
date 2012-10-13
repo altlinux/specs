@@ -20,7 +20,7 @@ under OSI-approved licenses.
 
 Name: %oname
 Version: 2267
-Release: alt6
+Release: alt7
 Summary: Add-on packages for SciPy
 License: OSI-approved licenses
 Group: Sciences/Other
@@ -644,6 +644,9 @@ done
 %endif
 
 %changelog
+* Sat Oct 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt7
+- Rebuilt with new SciPy
+
 * Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2267-alt6
 - Built with OpenBLAS instead of GotoBLAS2
 
