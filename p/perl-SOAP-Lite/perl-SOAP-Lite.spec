@@ -1,7 +1,7 @@
 %define dist SOAP-Lite
 Name: perl-%dist
 Version: 0.715
-Release: alt2
+Release: alt3
 
 Summary: Perl's Web Services Toolkit
 License: GPL or Artistic
@@ -9,7 +9,8 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: http://www.cpan.org/authors/id/M/MK/MKUTTER/SOAP-Lite-%{version}.tar.gz
-Patch0:     perl-SOAP-Lite-0.715-IO-modules.patch
+Patch0: perl-SOAP-Lite-0.715-IO-modules.patch
+Patch1: perl-SOAP-Lite-0.715-fix-rt78692.patch
 
 BuildArch: noarch
 
@@ -28,6 +29,7 @@ on client and server side.
 %setup -q -n %dist-%version
 sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %patch0 -p1 -b .IO
+%patch1 -p2
 
 %build
 %perl_vendor_build
@@ -55,10 +57,13 @@ sed -i '1s@^#!.*/bin/env perl@#!/usr/bin/perl@' bin/*.pl
 %perl_vendor_privlib/XMLRPC
 
 %changelog
+* Sat Oct 13 2012 Vladimir Lettiev <crux@altlinux.ru> 0.715-alt3
+- Fixed bug rt#78692 (Closes: #27833)
+
 * Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.715-alt2
 - restored perl(IO/SessionData.pm), perl(IO/SessionSet.pm)
   using fc perl-SOAP-Lite-0.715-IO-modules.patch
-  
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.715-alt1
 - automated CPAN update
 
