@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.45
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -525,7 +525,7 @@ Patch0740: linux-%kernel_branch.43-fix-mm.patch
 Patch0741: linux-%kernel_branch.42-fix-mm--compaction.patch
 Patch0742: linux-%kernel_branch.42-fix-mm--huge_memory.patch
 Patch0743: linux-%kernel_branch.43-fix-mm--hugetlb.patch
-Patch0744: linux-%kernel_branch.42-fix-mm--memcontrol.patch
+Patch0744: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0745: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0746: linux-%kernel_branch.43-fix-mm--mmu.patch
 Patch0747: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
@@ -553,9 +553,10 @@ Patch0776: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ecache.patch
 Patch0777: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ftp.patch
 Patch0778: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_netlink.patch
 Patch0779: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
-Patch0780: linux-%kernel_branch.42-fix-net-sctp.patch
-Patch0781: linux-%kernel_branch.43-fix-net-sunrpc.patch
-Patch0782: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
+Patch0780: linux-%kernel_branch.44-fix-net-rds--rds_rdma.patch
+Patch0781: linux-%kernel_branch.42-fix-net-sctp.patch
+Patch0782: linux-%kernel_branch.43-fix-net-sunrpc.patch
+Patch0783: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
 
 Patch0790: linux-%kernel_branch.42-fix-scripts.patch
 
@@ -1754,6 +1755,7 @@ cd linux-%version
 %patch0780 -p1
 %patch0781 -p1
 %patch0782 -p1
+%patch0783 -p1
 
 %patch0790 -p1
 
@@ -2184,7 +2186,7 @@ t="%__nprocs"
 tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 	--owner=root --group=root --mode=u+w,go-w,go+rX \
 	-T ../kernel-src-%flavour.list -cf - | \
-	$XZ -8e -T%__nprocs > %buildroot%kernel_src/kernel-src-%flavour-%kversion-%krelease.tar.xz
+	$XZ -8e > %buildroot%kernel_src/kernel-src-%flavour-%kversion-%krelease.tar.xz
 %endif
 
 popd
@@ -2667,6 +2669,12 @@ fi
 
 
 %changelog
+* Fri Oct 12 2012 Led <led@altlinux.ru> 3.0.45-alt6
+- updated:
+  + fix-mm--memcontrol
+- added:
+  + fix-net-rds--rds_rdma
+
 * Thu Oct 11 2012 Led <led@altlinux.ru> 3.0.45-alt5
 - updated:
   + fix-block
