@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt77
+Release: alt78
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -662,6 +662,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.32-alt78
+- Update to 042stab062.2
+
 * Sun Sep 30 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.32-alt77
 - mm: add numa node symlink for cpu devices in sysfs (ALT 27782)
 
