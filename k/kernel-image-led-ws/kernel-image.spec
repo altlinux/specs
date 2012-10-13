@@ -16,13 +16,13 @@
 %define flavour		%base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.45
-Release: alt6
+Version: 3.0.46
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 45
+%define kernel_stable_version 46
 %define kernel_extra_version	.%kernel_stable_version
 #define kernel_extra_version	%nil
 
@@ -357,36 +357,35 @@ Patch0443: linux-%kernel_branch.42-fix-drivers-net--ne3210.patch
 Patch0444: linux-%kernel_branch.43-fix-drivers-net--qeth.patch
 Patch0445: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
 Patch0446: linux-%kernel_branch.42-fix-drivers-net--qlge.patch
-Patch0447: linux-%kernel_branch.42-fix-drivers-net--r8169.patch
-Patch0448: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
-Patch0449: linux-%kernel_branch.42-fix-drivers-net--tg3.patch
-Patch0450: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
-Patch0451: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
-Patch0452: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
-Patch0453: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
-Patch0454: linux-%kernel_branch.43-fix-drivers-net-mlx4--mlx4_en.patch
-Patch0455: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
-Patch0456: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
-Patch0457: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
-Patch0458: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
-Patch0459: linux-%kernel_branch.42-fix-drivers-net-usb--asix.patch
-Patch0460: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
-Patch0461: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
-Patch0462: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
-Patch0463: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
-Patch0464: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
-Patch0465: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
-Patch0466: linux-%kernel_branch.42-fix-drivers-net-wireless--rt2x00.patch
-Patch0467: linux-%kernel_branch.43-fix-drivers-net-wireless-brcm80211--brcmfmac.patch
-Patch0468: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
-Patch0469: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
+Patch0447: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
+Patch0448: linux-%kernel_branch.46-fix-drivers-net--tg3.patch
+Patch0449: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
+Patch0450: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
+Patch0451: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
+Patch0452: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
+Patch0453: linux-%kernel_branch.43-fix-drivers-net-mlx4--mlx4_en.patch
+Patch0454: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
+Patch0455: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
+Patch0456: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
+Patch0457: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
+Patch0458: linux-%kernel_branch.42-fix-drivers-net-usb--asix.patch
+Patch0459: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
+Patch0460: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
+Patch0461: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
+Patch0462: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
+Patch0463: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
+Patch0464: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
+Patch0465: linux-%kernel_branch.42-fix-drivers-net-wireless--rt2x00.patch
+Patch0466: linux-%kernel_branch.43-fix-drivers-net-wireless-brcm80211--brcmfmac.patch
+Patch0467: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
+Patch0468: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
 
 Patch0471: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
 Patch0480: linux-%kernel_branch.42-fix-drivers-pci.patch
 Patch0481: linux-%kernel_branch.42-fix-drivers-pci--dmar.patch
 Patch0482: linux-%kernel_branch.42-fix-drivers-pci--sn.patch
-Patch0483: linux-%kernel_branch.42-fix-drivers-pci-hotplug--acpiphp.patch
+Patch0483: linux-%kernel_branch.46-fix-drivers-pci-hotplug--acpiphp.patch
 Patch0484: linux-%kernel_branch.42-fix-drivers-pci-hotplug--pci_hotplug.patch
 
 Patch0491: linux-%kernel_branch.42-fix-drivers-platform--hdaps.patch
@@ -432,7 +431,7 @@ Patch0550: linux-%kernel_branch.42-fix-drivers-scsi--ses.patch
 Patch0551: linux-%kernel_branch.42-fix-drivers-scsi--sim710.patch
 Patch0552: linux-%kernel_branch.42-fix-drivers-scsi--sr_mod.patch
 Patch0553: linux-%kernel_branch.42-fix-drivers-scsi--st.patch
-Patch0554: linux-%kernel_branch.43-fix-drivers-scsi--zfcp.patch
+Patch0554: linux-%kernel_branch.46-fix-drivers-scsi--zfcp.patch
 Patch0555: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb3i.patch
 Patch0556: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb4i.patch
 Patch0557: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--libcxgbi.patch
@@ -529,7 +528,7 @@ Patch0744: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0745: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0746: linux-%kernel_branch.43-fix-mm--mmu.patch
 Patch0747: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
-Patch0748: linux-%kernel_branch.44-fix-mm--numa.patch
+Patch0748: linux-%kernel_branch.46-fix-mm--numa.patch
 Patch0749: linux-%kernel_branch.42-fix-mm--slab.patch
 Patch0750: linux-%kernel_branch.42-fix-mm--slub.patch
 Patch0751: linux-%kernel_branch.42-fix-mm--swap.patch
@@ -541,8 +540,8 @@ Patch0764: linux-%kernel_branch.42-fix-net--x25.patch
 Patch0765: linux-%kernel_branch.42-fix-net-8021q--vlan-core.patch
 Patch0766: linux-%kernel_branch.42-fix-net-bridge.patch
 Patch0767: linux-%kernel_branch.42-fix-net-ceph.patch
-Patch0768: linux-%kernel_branch.43-fix-net-core.patch
-Patch0769: linux-%kernel_branch.43-fix-net-ipv4.patch
+Patch0768: linux-%kernel_branch.46-fix-net-core.patch
+Patch0769: linux-%kernel_branch.46-fix-net-ipv4.patch
 Patch0770: linux-%kernel_branch.43-fix-net-ipv6.patch
 Patch0771: linux-%kernel_branch.43-fix-net-ipv6-netfilter--nf_conntrack_ipv6.patch
 Patch0772: linux-%kernel_branch.42-fix-net-ipv6--ip6_tunnel.patch
@@ -1573,7 +1572,6 @@ cd linux-%version
 %patch0466 -p1
 %patch0467 -p1
 %patch0468 -p1
-%patch0469 -p1
 
 %patch0471 -p1
 
@@ -2669,6 +2667,17 @@ fi
 
 
 %changelog
+* Sat Oct 13 2012 Led <led@altlinux.ru> 3.0.46-alt1
+- 3.0.46
+- removed:
+  + fix-drivers-net--r8169
+- updated:
+  + fix-drivers-net--tg3
+  + fix-drivers-pci-hotplug--acpiphp
+  + fix-drivers-scsi--zfcp
+  + fix-mm--numa
+  + fix-net-core
+
 * Fri Oct 12 2012 Led <led@altlinux.ru> 3.0.45-alt6
 - updated:
   + fix-mm--memcontrol
