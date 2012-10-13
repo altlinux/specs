@@ -1,5 +1,5 @@
 Name: codeblocks
-%define revision 8438
+%define revision 8455
 Version: 10.05.%revision
 Release: alt1
 
@@ -238,6 +238,9 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sat Oct 13 2012 Denis Kirienko <dk@altlinux.org> 10.05.8455-alt1
+- SVN snapshot 8455
+
 * Wed Oct 10 2012 Denis Kirienko <dk@altlinux.org> 10.05.8438-alt1
 - SVN snapshot 8438
   Added SmartIndent plugins
