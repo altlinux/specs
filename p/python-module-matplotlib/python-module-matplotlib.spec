@@ -2,14 +2,14 @@
 # TODO: Move mpl-data to share?
 
 %define oname matplotlib
-%define major 1.2
+%define major 1.3
 
 %def_enable docs
 %def_with python3
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt3.git20120608
+Release: alt1.git20121010
 
 Summary: Matlab(TM) style python plotting package
 
@@ -25,6 +25,7 @@ Source1: setup.cfg
 
 %setup_python_module pylab
 
+BuildPreReq: python3-module-pygobject3
 BuildPreReq: python-module-matplotlib python-module-numpydoc ipython 
 BuildRequires: dvipng gcc-c++ libgtk+2-devel python-module-PyQt4
 BuildPreReq: python-module-ctypes python-module-pygtk_git-devel
@@ -595,6 +596,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Sat Oct 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20121010
+- Version 1.3.0
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt3.git20120608
 - Rebuilt with libpng15
 
