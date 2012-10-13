@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	3.6
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -17,7 +17,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
 
-%define nprocs 8
+%define nprocs 12
 # Build options
 # You can change compiler version by editing this line:
 %define kgcc_version	4.5
@@ -578,6 +578,12 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Sat Oct 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.2-alt1
+- 3.6.2
+
+* Thu Oct 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.1-alt2.1
+- POWER_AVS disabled
+
 * Mon Oct 08 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.1-alt2
 - 3.6.1
 

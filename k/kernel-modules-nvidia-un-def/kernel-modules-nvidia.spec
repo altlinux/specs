@@ -33,8 +33,8 @@
 
 %define upstream_module_name	NVIDIA_kernel
 
-%define kversion	3.6.1
-%define krelease	alt2
+%define kversion	3.6.2
+%define krelease	alt1
 %define flavour		un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
@@ -49,7 +49,7 @@
 Summary:	nVidia video card drivers
 Name:		kernel-modules-%module_name-%flavour
 Version:	%module_version
-Release:	%module_release.198145.2
+Release:	%module_release.198146.1
 License:	Proprietary
 Group:		System/Kernel and hardware
 URL:		http://www.nvidia.com
@@ -194,8 +194,8 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Mon Oct 08 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.51-alt2.198145.2
-- Build for kernel-image-un-def-3.6.1-alt2.
+* Sat Oct 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.51-alt2.198146.1
+- Build for kernel-image-un-def-3.6.2-alt1.
 
 * Tue Oct 02 2012 Sergey V Turchin <zerg at altlinux dot org> 304.51-alt2
 - new releases 173.14.35 and 96.43.23 with xorg-server-1.12 support)
