@@ -1,3 +1,4 @@
+%def_with modified_bcel_rebuild
 # BEGIN SourceDeps(oneline):
 BuildRequires: python-devel unzip
 # END SourceDeps(oneline)
@@ -36,7 +37,7 @@ BuildRequires: jpackage-compat
 
 
 Name:           aspectj
-Version:        1.6.5
+Version:        1.6.11
 Release:        alt1_1jpp6
 Epoch:          0
 Summary:        AspectJ aspect-oriented language extension to Java
@@ -59,7 +60,9 @@ Source11:       http://repo1.maven.org/maven2/org/aspectj/aspectjrt/%{version}/a
 Source12:       http://repo1.maven.org/maven2/org/aspectj/aspectjtools/%{version}/aspectjtools-%{version}.pom
 Source13:       http://repo1.maven.org/maven2/org/aspectj/aspectjweaver/%{version}/aspectjweaver-%{version}.pom
 
+%if_with modified_bcel_rebuild
 Source99: patch.txt
+%endif
 
 BuildRequires:  jpackage-utils >= 0:1.7.5
 BuildRequires:  junit
@@ -164,15 +167,17 @@ popd
 #sed -i -e 's,classpathref=,classpath refid=,g'  build/build-properties.xml
 sed -i -e 's,<antcall,<antcall inheritRefs="true",g'  build/build-properties.xml
 
+%if_with modified_bcel_rebuild
 # bcel-builder fixes
 sed -i -e 's,source="1\.4",source="1.5",' bcel-builder/build-bcel.xml
 sed -i -e 's,"diff\.exe","diff",' bcel-builder/build.xml
 cp -a %{SOURCE99} bcel-builder/patch.txt
-
-#pushd lib/bcel/
-#mv bcel-verifier.jar.no bcel-verifier.jar
-#mv bcel.jar.no bcel.jar
-#popd
+%else
+pushd lib/bcel/
+mv bcel-verifier.jar.no bcel-verifier.jar
+mv bcel.jar.no bcel.jar
+popd
+%endif
 
 %build
 #export JAVA_HOME=%{java_home}
@@ -200,6 +205,7 @@ CLASSPATH=${CLASSPATH}:$(ls %{_libdir}/eclipse/plugins/org.eclipse.core.filesyst
 CLASSPATH=${CLASSPATH}:$(ls %{_libdir}/eclipse/plugins/org.eclipse.equinox.app_*.jar)
 CLASSPATH=${CLASSPATH}:$(ls %{_libdir}/eclipse/plugins/org.eclipse.core.runtime_*.jar)
 
+%if_with modified_bcel_rebuild
 pushd bcel-builder
 %{ant} -v -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -f build-bcel.xml
 cp bin/bcel.jar .
@@ -208,6 +214,7 @@ mv ../lib/bcel/bcel-verifier-src.zip .
 %{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  extractAndPatchAndJar
 %{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  push
 popd
+%endif
 
 # rebuild jdtcore-for-aspectj.jar from sources
 pushd org.eclipse.jdt.core
@@ -226,7 +233,6 @@ touch build/local.properties
 
 pushd org.aspectj.lib
 %{ant} -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dbuild.sysclasspath=first -f build-aspectjlib.xml 
-#compile
 popd
 
 %install
@@ -234,7 +240,6 @@ popd
 install -d -m 0755 %{buildroot}%{_javadir}
 install -d -m 0755 %{buildroot}%{_datadir}/maven2/poms
 
-#install -m 0644 aj-build/dist/tools/lib/aspectjlib.jar \
 install -m 0644 org.aspectj.lib/jars/aspectjlib.out.jar \
         %{buildroot}%{_javadir}/%{name}lib-%{version}.jar
 install -m 0644 %{SOURCE10} %{buildroot}%{_datadir}/maven2/poms/JPP-aspectjlib.pom
@@ -380,6 +385,9 @@ touch $RPM_BUILD_ROOT/etc/java/aspectj.conf
 %{_docdir}/%{name}-%{version}
 
 %changelog
+* Sat Oct 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.11-alt1_1jpp6
+- new version
+
 * Fri Oct 12 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.5-alt1_1jpp6
 - new version
 
