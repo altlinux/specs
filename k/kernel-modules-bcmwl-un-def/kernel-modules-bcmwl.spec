@@ -2,8 +2,8 @@
 %define module_version	5.100.82.112
 %define module_release	alt3
 
-%define kversion	3.6.1
-%define krelease	alt2
+%define kversion	3.6.2
+%define krelease	alt1
 %define flavour		un-def
 
 %define norm_version	%kversion
@@ -13,7 +13,7 @@
 Summary: Modules for Broadcom-based WiFi .11a/b/g adapters
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198145.2
+Release: %module_release.198146.1
 License: Proprietary
 Group: System/Kernel and hardware
 
@@ -86,8 +86,8 @@ __EOF__
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm.conf
 
 %changelog
-* Mon Oct 08 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.100.82.112-alt3.198145.2
-- Build for kernel-image-un-def-3.6.1-alt2.
+* Sat Oct 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.100.82.112-alt3.198146.1
+- Build for kernel-image-un-def-3.6.2-alt1.
 
 * Mon Jun 11 2012 Anton Protopopov <aspsk@altlinux.org> 5.100.82.112-alt3
 - fix to build with kernel 3.4
