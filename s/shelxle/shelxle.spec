@@ -1,5 +1,5 @@
 Name: shelxle
-Version: 1.0.576
+Version: 1.0.588
 Release: alt1
 
 Summary: A Qt GUI for SHELX
@@ -41,6 +41,9 @@ qmake-qt4
 %_pixmapsdir/%name.png
 
 %changelog
+
+* Sat Oct 13 2012 Denis G. Samsonenko <ogion@altlinux.org> 1.0.588-alt1
+- new version
 
 * Fri Jul 20 2012 Denis G. Samsonenko <ogion@altlinux.org> 1.0.576-alt1
 - new version
