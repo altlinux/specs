@@ -3,8 +3,8 @@
 %define real_name  Net-OAuth
 
 Name: perl-Net-OAuth
-Version: 0.27
-Release: alt1.1
+Version: 0.28
+Release: alt1
 
 Summary: Perl module that provides OAuth protocol support
 
@@ -20,8 +20,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses perl-Test-Warn
 
-# Automatically added by buildreq on Tue Mar 09 2010
-BuildRequires: perl-Class-Accessor perl-Class-Data-Inheritable perl-Digest-HMAC perl-Module-Build perl-UNIVERSAL-require perl-URI
+# Automatically added by buildreq on Sun Oct 14 2012
+# optimized out: perl-CPAN-Meta perl-CPAN-Meta-Requirements perl-CPAN-Meta-YAML perl-Crypt-OpenSSL-Bignum perl-Digest-SHA perl-Encode perl-HTML-Parser perl-JSON-PP perl-Module-Metadata perl-Parse-CPAN-Meta perl-Perl-OSType perl-Pod-Escapes perl-Pod-Simple perl-Sub-Name perl-Sub-Uplevel perl-Tree-DAG_Node perl-URI perl-devel perl-podlators
+BuildRequires: perl-Class-Accessor perl-Class-Data-Inheritable perl-Crypt-OpenSSL-RSA perl-Digest-HMAC perl-Digest-SHA1 perl-Module-Build perl-Test-Warn perl-libwww
 
 %description
 Perl module Net::OAuth is an implementation of the OAuth protocol.
@@ -44,6 +45,9 @@ http://oauth.net/ for details.
 %perl_vendor_privlib/Net/OAuth*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.28-alt1
+- New version
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.27-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
