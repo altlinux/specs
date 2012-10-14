@@ -3,7 +3,7 @@
 %define real_name CGI-Ex
 
 Name: perl-CGI-Ex
-Version: 2.32
+Version: 2.38
 Release: alt1
 
 Summary: CGI utility suite
@@ -65,5 +65,8 @@ This package sample application and examples for CGI::Ex.
 %doc samples
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.38-alt1
+- New version
+
 * Tue Oct 11 2011 Nikolay A. Fetisov <naf@altlinux.ru> 2.32-alt1
 - Initial build for ALT Linux Sisyphus
