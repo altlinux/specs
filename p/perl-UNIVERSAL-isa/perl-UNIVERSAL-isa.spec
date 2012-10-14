@@ -1,7 +1,7 @@
 ## SPEC file for Perl module UNIVERSAL-isa
 
 Name: perl-UNIVERSAL-isa
-Version: 1.20110614
+Version: 1.20120726
 Release: alt1
 
 Summary: Perl module UNIVERSAL::isa
@@ -44,6 +44,9 @@ UNIVERSAL::isa() as a function, which it is not.
 
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.20120726-alt1
+- New version 1.20120726
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 1.20110614-alt1
 - New version 1.20110614
 
