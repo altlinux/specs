@@ -1,7 +1,7 @@
 ## SPEC file for Perl module String::Flogger
 
 Name: perl-String-Flogger
-Version: 1.101241
+Version: 1.101242
 Release: alt1
 
 Summary: string munging for loggers
@@ -40,6 +40,9 @@ Perl module String::Flogger provides string munging for loggers.
 %perl_vendor_privlib/String/Flogger*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.101242-alt1
+- New version
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.101241-alt1
 - Initial build for ALT Linux Sisyphus
 
