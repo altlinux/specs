@@ -1,7 +1,7 @@
 # Spec file for pv - Pipe Viewer 
 
 Name: pv
-Version: 1.1.4
+Version: 1.3.4
 Release: alt1
 
 Summary: Pipe Viewer
@@ -13,7 +13,7 @@ URL: http://www.ivarch.com/programs/pv.shtml
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
-Source0: http://pipeviewer.googlecode.com/files/%name-%version.tar.bz2
+Source0: %name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -61,5 +61,8 @@ make dep
 %_man1dir/%name.*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.3.4-alt1
+- New version
+
 * Mon May 19 2008 Nikolay A. Fetisov <naf@altlinux.ru> 1.1.4-alt1
 - Initial build for ALT Linux Sisyphus
