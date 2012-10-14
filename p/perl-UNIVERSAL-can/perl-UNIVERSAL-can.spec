@@ -1,7 +1,7 @@
 ## SPEC file for Perl module UNIVERSAL-can
 
 Name: perl-UNIVERSAL-can
-Version: 1.20110617
+Version: 1.20110726
 Release: alt1
 
 Summary: Perl module UNIVERSAL::can
@@ -41,6 +41,9 @@ UNIVERSAL::can() as a function, which it is not.
 
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.20110726-alt1
+- New version 1.20110726-alt1
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 1.20110617-alt1
 - New version 1.20110617
 
