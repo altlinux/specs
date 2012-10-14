@@ -1,6 +1,6 @@
 Name: libx264
 Version: 120
-Release: alt0.1
+Release: alt0.2
 
 Summary: H.264 codec shared library
 License: GPL
@@ -100,6 +100,9 @@ software.
 %_libdir/libx264.so
 
 %changelog
+* Sun Oct 14 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 120-alt0.2
+- made least part of pkgconfig's version always 0
+
 * Sun Jan 29 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 120-alt0.1
 - updated from git.f33c8cb
 
