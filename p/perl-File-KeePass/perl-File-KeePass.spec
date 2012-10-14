@@ -1,10 +1,10 @@
 # Spec file for Perl module File::KeePass
 
 Name: perl-File-KeePass
-Version: 0.03
+Version: 2.03
 Release: alt1
 
-Summary: Perl interface to KeePass V1 database files
+Summary: Perl interface to KeePass V1/V2 database files
 
 %define real_name File-KeePass
 
@@ -26,7 +26,7 @@ BuildRequires(pre): perl-devel rpm-build-licenses
 BuildRequires: perl-Crypt-Rijndael perl-Digest-SHA perl-devel
 
 %description
-Perl module File::KeePass provides interface to KeePass V1 database files.
+Perl module File::KeePass provides interface to KeePass V1/V2 database files.
 
 %prep
 %setup -q -n %real_name-%version
@@ -42,5 +42,8 @@ Perl module File::KeePass provides interface to KeePass V1 database files.
 %perl_vendor_privlib/File/KeePass*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.03-alt1
+- New version
+
 * Sun May 29 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.03-alt1
 - Initial build for ALT Linux Sisyphus
