@@ -1,7 +1,7 @@
 # Spec file for Perl module Term::ShellUI
 
 Name: perl-Term-ShellUI
-Version: 0.91
+Version: 0.92
 Release: alt1
 
 Summary: Perl module to write a fully-featured shell-like CLI
@@ -43,6 +43,9 @@ pretty much everything you would expect of a decent shell.
 %perl_vendor_privlib/Text/Shellwords*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.92-alt1
+- New version
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.91-alt1
 - New version
 
