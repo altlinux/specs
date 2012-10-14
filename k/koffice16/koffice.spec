@@ -25,7 +25,7 @@
 %define rname koffice
 Name: %{rname}16
 Version: 1.6.3
-%define rlz alt24.qa1
+%define rlz alt25
 %define beta %nil
 Serial: 4
 
@@ -40,18 +40,18 @@ Summary: Set of office applications for KDE
 URL: http://www.koffice.org/
 License: GPL
 
-#Requires: koffice-kexi = %version-%release
-Requires: koffice-kivio = %{?serial:%serial:}%version-%release
-#Requires: koffice-karbon = %version-%release
-#Requires: koffice-kchart = %version-%release
-#Requires: koffice-chalk = %version-%release
-#Requires: koffice-kformula = %version-%release
-#Requires: koffice-libs = %version-%release
-#Requires: koffice-kpresenter = %version-%release
-#Requires: koffice-kspread = %version-%release
-#Requires: koffice-kugar = %version-%release
-#Requires: koffice-kword = %version-%release
-#Requires: koffice-kplato = %version-%release
+Requires: %name-kexi = %version-%release
+Requires: %name-kivio = %version-%release
+Requires: %name-karbon = %version-%release
+Requires: %name-kchart = %version-%release
+Requires: %name-chalk = %version-%release
+Requires: %name-kformula = %version-%release
+Requires: %name-libs = %version-%release
+Requires: %name-kpresenter = %version-%release
+Requires: %name-kspread = %version-%release
+Requires: %name-kugar = %version-%release
+Requires: %name-kword = %version-%release
+Requires: %name-kplato = %version-%release
 
 %if "%beta" == "%nil"
 Source: koffice-%version.tar
@@ -69,6 +69,7 @@ Patch25: koffice-1.6.3-alt-disable-gm.patch
 Patch27: koffice-1.6.3-alt-no-tools.patch
 Patch30: tde-3.5.13-build-defdir-autotool.patch
 Patch31: koffice-1.6.3-alt-automake.patch
+Patch32: tde-3.5.13-disable-arts.patch
 
 # Automatically added by buildreq on Thu Mar 18 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs bzlib-devel doxygen fontconfig-devel freetype2-devel gcc-c++ glib2-devel kde-settings kdelibs-devel libImageMagick-devel libart_lgpl-devel libarts-devel libaspell-devel libexif-devel libgsf-devel libjpeg-devel liblcms-devel libpng-devel libqt3-devel libstdc++-devel libtiff-devel libwv2-devel libxml2-devel libxslt-devel pkgconfig python-devel qt3-designer qt3-doc xml-utils zlib-devel
@@ -169,12 +170,12 @@ Requires: %name-common = %serial:%version-%release
 %description kformula
 Formula editor
 
-%package -n koffice-kivio
+%package kivio
 Group: Office
 Summary: Flowcharting tool
 Requires: kdelibs >= %{get_version kdelibs}
 Requires: %name-common = %serial:%version-%release
-%description -n koffice-kivio
+%description kivio
 Flowcharting tool
 
 %package kontour
@@ -241,12 +242,13 @@ Requires: %name-common = %serial:%version-%release
 %description kword
 Word processor
 
-%package -n koffice-kexi
+%package kexi
 Group: Office
 Summary: Database management
 Requires: kdelibs >= %{get_version kdelibs}
 Requires: %name-common = %serial:%version-%release
-%description -n koffice-kexi
+AutoReq: noshell
+%description kexi
 Office database management program
 
 %prep
@@ -267,6 +269,7 @@ Office database management program
 %patch27 -p1
 %patch30
 %patch31 -p0
+%patch32 -p1
 
 # hack to fix add .h .cpp .moc
 #for f in `find ./ -type f -name \*.ui`
@@ -304,7 +307,7 @@ export QTDIR=%qtdir KDEDIR=%kdedir
 export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 export LDFLAGS="-L%qtdir/lib"
 export CXXFLAGS="-I%_includedir/poppler/qt3"
-export DO_NOT_COMPILE="example karbon chalk kword kspread kchart kpresenter kformula kugar chalk kplato kexi"
+# export DO_NOT_COMPILE="example kword kspread kpresenter kformula kugar kplato"
 # add_optflags %optflags_shared -DHAVE_EACCESS -I%_includedir/tqtinterface
 
 %configure \
@@ -340,7 +343,7 @@ export DO_NOT_COMPILE="example karbon chalk kword kspread kchart kpresenter kfor
     --mandir=%_mandir \
     --enable-mysql \
     --enable-scripting \
-		--without-arts
+    --without-arts
 
 #    --enable-pgsql \
 
@@ -394,6 +397,7 @@ mkdir -p %buildroot/%_Kconfig
 %_Klibdir/libthesaurustool.so*
 %_Klibdir/libxsltexport.so*
 %_Klibdir/libxsltimport.so*
+%_Klibdir/libolefilter.so*
 %_libdir/libkformulalib.so*
 %_libdir/libkochart.so*
 %_libdir/libkofficecore.so*
@@ -443,7 +447,7 @@ mkdir -p %buildroot/%_Kconfig
 %_Kservices/thesaurustool.desktop
 %_Kservices/xslt_export.desktop
 %_Kservices/xslt_import.desktop
-#%_Kservices/ole_powerpoint97_import.desktop
+%_Kservices/ole_powerpoint97_import.desktop
 %_Kservicetypes/kochart.desktop
 %_Kservicetypes/kofficepart.desktop
 %_Kservicetypes/kofilter.desktop
@@ -464,11 +468,12 @@ mkdir -p %buildroot/%_Kconfig
 %_libdir/libkdeinit_koshell.so*
 %_Klibdir/koshell.so*
 %_Kcfg/koshell.kcfg
+%_Kmenudir/koffice.desktop
 %_Kmenudir/koshell.desktop
 %_Kapps/koshell
 %_iconsdir/*/*/apps/koshell.*
 #
-#%doc %_docdir/HTML/en/thesaurus
+%doc %_docdir/HTML/en/thesaurus
 #%_Klibdir/kthesaurus.so*
 #%_libdir/libkdeinit_kthesaurus.so*
 #%_Kmenudir/KThesaurus.desktop
@@ -476,13 +481,13 @@ mkdir -p %buildroot/%_Kconfig
 #%_bindir/kthesaurus
 #%_Klibdir/krossruby.so*
 #%_Klibdir/libolefilter.so*
-#%_libdir/libkchartimageexport.so*
-#%_libdir/libkchartcommon.so*
-#%_libdir/libkdchart.so*
-#%_libdir/libkspreadcommon.so*
+%_libdir/libkchartimageexport.so*
+%_libdir/libkchartcommon.so*
+%_libdir/libkdchart.so*
+%_libdir/libkspreadcommon.so*
 
 
-%files -n koffice-kivio
+%files kivio
 %_Klibdir/libkivioimageexport.so*
 %_Kservices/kivio_image_export.desktop
 %_datadir/apps/konqueror/servicemenus/kivio_konqi.desktop
@@ -510,8 +515,7 @@ mkdir -p %buildroot/%_Kconfig
 %_Kservices/kiviotexttool.desktop
 %_Kservices/kiviozoomtool.desktop
 
-%if 0
-%files -n koffice-kexi
+%files kexi
 %_datadir/apps/konqueror/servicemenus/kexi_konqi.desktop
 #
 %doc %_docdir/HTML/en/kexi
@@ -542,8 +546,8 @@ mkdir -p %buildroot/%_Kconfig
 %_libdir/libkformdesigner.so*
 %_Kmenudir/kexi.desktop
 %_datadir/apps/kexi/
-%config %_Kconfig/kexirc
-%config %_Kconfig/magic/kexi.magic
+%config %_datadir/config/kexirc
+%config %_datadir/config/magic/kexi.magic
 %_iconsdir/*/*/mimetypes/kexiproject_*.*
 %_iconsdir/*/*/apps/kexi.*
 %_Kmimelnk/application/x-kexiproject-*.desktop
@@ -586,7 +590,6 @@ mkdir -p %buildroot/%_Kconfig
 %_Kservices/karbonzoomtool.desktop
 %_Kservicetypes/karbon_module.desktop
 
-
 %files kchart
 %doc %_docdir/HTML/en/kchart
 %_Kapps/konqueror/servicemenus/kchart_konqi.desktop
@@ -602,20 +605,19 @@ mkdir -p %buildroot/%_Kconfig
 %_iconsdir/*/*/apps/kchart.png
 %_Kservices/kchartpart.desktop
 
-
 %files chalk
 %_datadir/apps/konqueror/servicemenus/chalk_konqi.desktop
 #
 %_Klibdir/libchalk*export.so*
 %_Klibdir/libchalk*import.so*
 %_Klibdir/chalkselectopaque.so*
-%_Kapplnk/.hidden/chalk_magick.desktop
+#%_Kapplnk/.hidden/chalk_magick.desktop
 %_Kapplnk/.hidden/chalk_jpeg.desktop
 %_Kapplnk/.hidden/chalk_openexr.desktop
 %_Kapplnk/.hidden/chalk_png.desktop
 %_Kapplnk/.hidden/chalk_raw.desktop
 %_Kapplnk/.hidden/chalk_tiff.desktop
-%_Kapplnk/.hidden/chalk_pdf.desktop
+#%_Kapplnk/.hidden/chalk_pdf.desktop
 %_Kservices/chalk_*_export.desktop
 %_Kservices/chalk_*_import.desktop
 %_Kservices/chalkselectopaque.desktop
@@ -756,7 +758,7 @@ mkdir -p %buildroot/%_Kconfig
 %_Kservicetypes/chalk_*.desktop
 
 
-
+####%if 0
 %files kformula
 %_datadir/apps/konqueror/servicemenus/kformula_konqi.desktop
 %_Klibdir/libkfolatexexport.so*
@@ -794,7 +796,7 @@ mkdir -p %buildroot/%_Kconfig
 %_Klibdir/libkprkword.so*
 %_Klibdir/libooimpressexport.so*
 %_Klibdir/libooimpressimport.so*
-%_Klibdir/libpowerpointimport.so*
+#%_Klibdir/libpowerpointimport.so*
 %_libdir/libkpresenterimageexport.so*
 %_Kservices/kpresenter_*_export.desktop
 %_Kservices/kpresenter_*_import.desktop
@@ -945,9 +947,13 @@ mkdir -p %buildroot/%_Kconfig
 %_Klibdir/*.la
 %endif
 
-%endif
+###%endif
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 4:1.6.3-alt25
+- Build for TDE 3.5.13 release
+- All programms build enable.
+
 * Wed Aug 29 2012 Repocop Q. A. Robot <repocop@altlinux.org> 4:1.6.3-alt24.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
