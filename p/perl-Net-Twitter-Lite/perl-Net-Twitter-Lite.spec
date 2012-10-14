@@ -3,7 +3,7 @@
 %define real_name  Net-Twitter-Lite
 
 Name: perl-Net-Twitter-Lite
-Version: 0.10004
+Version: 0.11002
 Release: alt1
 
 Summary: a Perl interface to the Twitter API
@@ -20,9 +20,9 @@ BuildArch: noarch
 AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Tue Jun 21 2011
-# optimized out: perl-Class-Accessor perl-Class-Data-Inheritable perl-Devel-Symdump perl-Digest-HMAC perl-Digest-SHA1 perl-Encode perl-Encode-Locale perl-HTTP-Date perl-HTTP-Message perl-Pod-Coverage perl-Pod-Parser perl-Sub-Name perl-URI perl-common-sense perl-devel perl-libnet
-BuildRequires: perl-Crypt-SSLeay perl-JSON-Any perl-JSON-XS perl-Net-OAuth perl-Pod-Escapes perl-Test-Pod-Coverage perl-libwww
+# Automatically added by buildreq on Sun Oct 14 2012
+# optimized out: perl-Class-Accessor perl-Class-Data-Inheritable perl-Devel-Symdump perl-Digest-HMAC perl-Digest-SHA perl-Encode perl-Encode-Locale perl-HTTP-Date perl-HTTP-Message perl-JSON-XS perl-Pod-Coverage perl-Pod-Escapes perl-Pod-Parser perl-Sub-Name perl-URI perl-common-sense perl-devel perl-libnet
+BuildRequires: perl-Crypt-SSLeay perl-JSON perl-Memoize perl-Net-OAuth perl-Test-Pod-Coverage perl-libwww
 
 %description
 This module provides a perl interface to the Twitter APIs. It uses the
@@ -54,7 +54,7 @@ error handling options.
 %perl_vendor_privlib/Net/Twitter/Lite*
 
 %changelog
-* Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.10004-alt1
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.11002-alt1
 - New version
 
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.08006-alt1.1
