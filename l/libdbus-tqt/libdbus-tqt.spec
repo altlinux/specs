@@ -1,5 +1,5 @@
 Name: libdbus-tqt
-Version: 3.5.13
+Version: 3.5.13.1
 Release: alt1
 Summary: TQT/KDE bindings for D-Bus
 URL: http://dbus.freedesktop.org/
@@ -42,5 +42,8 @@ Developer package for TQT/KDE bindings for D-Bus.
 %_libdir/*.so
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - Initial build for TDE 3.5.13
