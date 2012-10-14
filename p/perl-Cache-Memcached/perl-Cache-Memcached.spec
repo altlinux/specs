@@ -1,8 +1,8 @@
 %define module  Cache-Memcached
 
 Name: perl-%module
-Version: 1.29
-Release: alt2
+Version: 1.30
+Release: alt1
 
 Summary: an object-oriented Perl module for memcached
 License: %perl_license
@@ -43,6 +43,9 @@ See the documentation within the module for details on its use.
 %perl_vendor_privlib/Cache*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.30-alt1
+- New version
+
 * Sat Aug 13 2011 Nikolay A. Fetisov <naf@altlinux.ru> 1.29-alt2
 - Disabing tests in hasher environment
 
