@@ -12,8 +12,8 @@
 %add_findreq_skiplist %_K3bindir/pprof2calltree
 
 Name: kdesdk
-Version: 3.5.13
-Release: alt2
+Version: 3.5.13.1
+Release: alt1
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Group: Development/KDE and QT
@@ -39,7 +39,7 @@ Requires: %name-umbrello = %version-%release
 
 Source: kdesdk-%version.tar
 # ALT
-Patch11: kmtrace-3.5.12-fix-linking.patch
+Patch11: kdesdk-3.5.12-fix-linking.patch
 Patch12: kdesdk-3.5.0-svn_libs.patch
 Patch13: kdesdk-3.5.6-alt-find-libapr.patch
 
@@ -164,6 +164,7 @@ Debugging tools
 Summary: Tool for creating a skeleton KDE application
 Group: Development/KDE and QT
 Requires: %name-common = %version-%release
+AutoReq: noshell
 #
 %description kapptemplate
 kapptemplate creates a skeleton KDE application (configure stuff, automake
@@ -255,6 +256,8 @@ do
     sed -i -e 's|\(.*_la_LIBADD[[:space:]]*\)=\(.*\)|\1= -lkdeinit_kded -lkresources -lDCOP -lkdefx \$(LIB_KABC) \$(LIB_KUTILS) \$(LIB_KHTML) \$(LIB_KIO) \$(LIB_KDEUI) \$(LIB_KDECORE) \$(LIB_QT) \2|' $f
 done
 
+cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
+cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 make -f admin/Makefile.common cvs ||:
 
 
@@ -485,6 +488,9 @@ mv %buildroot/%_K3bindir/svn-clean %buildroot/%_K3bindir/svnclean
 %_K3libdir/libkunittestgui.so*
 %endif
 #
+%_K3bindir/kstartperf
+%_K3libdir/libkstartperf.so*
+
 %_K3lib/kabcformat_kdeaccounts.so**
 %_K3lib/plugins/styles/scheck.so*
 %_K3apps/kabc/formats/kdeaccountsplugin.desktop
@@ -556,8 +562,8 @@ mv %buildroot/%_K3bindir/svn-clean %buildroot/%_K3bindir/svnclean
 %_K3bindir/zonetab2pot.*
 
 %changelog
-* Fri Jun 15 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt2
-- Automake version is fixed to 1.11.5 detect.
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
 
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - TDE 3.5.13 release build

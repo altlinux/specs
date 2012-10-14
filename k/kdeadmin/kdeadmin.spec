@@ -4,7 +4,7 @@
 %define _keep_libtool_files 1
 
 %define unstable 0
-%define lilo 0
+%define lilo 1
 %define kuser 0
 %define kcmlinuz 0
 %define kwuftpd 0
@@ -16,8 +16,8 @@
 %add_findprov_lib_path %_libdir/kde3
 
 Name: kdeadmin
-Version: 3.5.13
-Release: alt2
+Version: 3.5.13.1
+Release: alt1
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -430,8 +430,8 @@ mv %buildroot/%_K3bindir/kwuftpd %buildroot/%_K3sbindir
 %_K3bindir/secpolicy
 
 %changelog
-* Fri Jun 15 2012 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13-alt2
-- Automake version is fixed to 1.11.5 detect.
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.1-alt1
+- Release TDE version 3.5.13.1
 
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13-alt1
 - TDE 3.5.13 release build

@@ -12,8 +12,8 @@
 %add_python_req_skip - karamba
 
 Name: kdeutils
-Version: 3.5.13
-Release: alt4
+Version: 3.5.13.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Utilities
@@ -339,9 +339,9 @@ cp -ar altlinux/admin ./
 %patch1 -p1
 #
 %patch101 -p1
-%patch103 -p1
+#%patch103 -p1
 #%patch104 -p1
-%patch105
+#%patch105
 
 sed -i '\|\${kdeinit}_LDFLAGS[[:space:]]=[[:space:]].*-no-undefined|s|-no-undefined|-no-undefined -Wl,--warn-unresolved-symbols|' admin/am_edit
 for f in `find $PWD -type f -name Makefile.am`
@@ -360,6 +360,8 @@ do
     sed -i -e 's|\(.*_la_LIBADD[[:space:]]*\)=\(.*\)|\1= -lkdeinit_kded -lDCOP \$(LIB_KHTML) \$(LIB_KIO) \$(LIB_KDEUI) \$(LIB_KDECORE) \$(LIB_QT) \2|' $f
 done
 
+cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
+cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 make -f admin/Makefile.common cvs ||:
 
 %build
@@ -653,12 +655,14 @@ desktop-file-install --dir %buildroot%_K3xdg_apps --add-category=FileTools %buil
 %_includedir/*
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Tue Jun 19 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt4
 - klaptop_acpi_helper search path is fixed to /usr/lib/kde3/bin on facilities.
 
 * Sat Jun 16 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt3
 - ARK: LHA checking utilite for unpack and 7Z single directories hide is added.
-- All Ark patches have combined and merged to main tree TDE.
 
 * Thu Jun 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt2
 - ARK: archives filename encode and ZIP archive UTF filename's processing is fixed.

@@ -9,7 +9,7 @@
 %add_findprov_lib_path %_libkde
 
 Name: kdeaccessibility
-Version: 3.5.13
+Version: 3.5.13.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -136,6 +136,8 @@ do
     sed -i -e 's|\(.*_la_LIBADD[[:space:]]*\)=\(.*\)|\1= -lkdefx -lDCOP -lkdeinit_kded \$(LIB_KPARTS) \$(LIB_KHTML) \$(LIB_KIO) \$(LIB_KDEUI) \$(LIB_KDECORE) \$(LIB_QT) \2|' $f
 done
 
+cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
+cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 make -f admin/Makefile.common cvs ||:
 
 %build
@@ -243,6 +245,7 @@ export PATH=%_bindir:$PATH
 %_kde3_iconsdir/*/*/actions/male.*
 %_kde3_iconsdir/*/*/actions/nospeak.png
 %_kde3_iconsdir/*/*/actions/speak.png
+%_iconsdir/*/*/apps/kttsd.png
 %_K3doc/en/kttsd
 %_K3xdg_apps/kcmkttsd.desktop
 %_K3xdg_apps/kttsmgr.desktop
@@ -253,6 +256,9 @@ export PATH=%_bindir:$PATH
 %_K3apps/kicker/applets/kbstateapplet.desktop
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Sun Jun 17 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - TDE 3.5.13 release build
 

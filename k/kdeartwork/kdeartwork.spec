@@ -10,7 +10,7 @@
 %define with_xscreensaver 1
 
 Name: kdeartwork
-Version: 3.5.13
+Version: 3.5.13.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -669,6 +669,9 @@ done
 %_K3apps/kworldclock/maps/*
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - TDE 3.5.13 release build
 
