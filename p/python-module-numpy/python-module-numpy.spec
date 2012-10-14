@@ -14,7 +14,7 @@
 
 Name: python-module-%oname
 Version: %majver.0.0
-Release: alt6.git20121009
+Release: alt7.git20121009
 
 Summary: NumPy: array processing for numbers, strings, records, and objects
 License: BSD
@@ -214,6 +214,22 @@ introduced by numarray as well as an extended C-API and the ability to
 create arrays of arbitrary type.
 
 This package contains numpydoc module for NumPy.
+
+%package -n python-module-numpydoc-tests
+Summary: Tests for numpydoc
+Group: Development/Python
+BuildArch: noarch
+Requires: python-module-numpydoc = %version-%release
+
+%description -n python-module-numpydoc-tests
+NumPy is a general-purpose array-processing package designed to
+efficiently manipulate large multi-dimensional arrays of arbitrary
+records without sacrificing too much speed for small multi-dimensional
+arrays.  NumPy is built on the Numeric code base and adds features
+introduced by numarray as well as an extended C-API and the ability to
+create arrays of arbitrary type.
+
+This package contains tests for numpydoc module for NumPy.
 
 %package pickles
 Summary: Pickles for NumPy
@@ -1026,8 +1042,15 @@ fi
 %endif
 
 %_python_set_noarch
+%pre -n python-module-numpydoc
+rm -fR %python_sitelibdir/numpydoc*.egg-info
+
 %files -n python-module-numpydoc
 %python_sitelibdir/numpydoc*
+%exclude %python_sitelibdir/numpydoc/tests
+
+%files -n python-module-numpydoc-tests
+%python_sitelibdir/numpydoc/tests
 
 #if_with python3
 #files -n python3-module-numpydoc
@@ -1037,6 +1060,10 @@ fi
 # TODO: restore requirement on scipy for tests
 
 %changelog
+* Sun Oct 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt7.git20121009
+- Fixed upgrading of numpydoc
+- Extracted tests for numpydoc into separate package
+
 * Fri Oct 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt6.git20121009
 - New snapshot
 
