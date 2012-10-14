@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Test::Spelling
 
 Name: perl-Test-Spelling
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: check for spelling errors in POD files
@@ -19,9 +19,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses
 
-# Automatically added by buildreq on Tue Jun 21 2011
-# optimized out: perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel
-BuildRequires: perl-Pod-Spell perl-Test-Pod
+# Automatically added by buildreq on Sun Oct 14 2012
+# optimized out: perl-Pod-Escapes perl-Pod-Parser perl-Pod-Simple perl-devel perl-threads
+BuildRequires: perl-Pod-Spell perl-Test-Pod perl-Test-Tester
 
 # Without dictionaries this module is useless
 Requires: aspell aspell-en
@@ -49,6 +49,9 @@ This module requires the spell program.
 %perl_vendor_privlib/Test/Spelling*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.15-alt1
+- New version
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.14-alt1
 - New version
 
