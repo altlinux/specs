@@ -3,7 +3,7 @@
 %define real_name Hash-Case
 
 Name: perl-Hash-Case
-Version: 1.01
+Version: 1.02
 Release: alt1
 
 Summary: base class for hashes with key-casing requirements
@@ -44,5 +44,8 @@ which tie special treatment for the casing of keys.
 %perl_vendor_privlib/Hash/Case*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.02-alt1
+- New version
+
 * Tue Oct 11 2011 Nikolay A. Fetisov <naf@altlinux.ru> 1.01-alt1
 - Initial build for ALT Linux Sisyphus
