@@ -1,5 +1,5 @@
 Name: acpid
-Version: 2.0.15
+Version: 2.0.17
 Release: alt1
 Epoch: 1
 Summary: ACPI kernel daemon and control utility
@@ -23,6 +23,7 @@ support is enabled (kernel 2.3.x or later).
 %package events-power
 Summary: Power event config
 Group: System/Servers
+BuildArch: noarch
 PreReq: acpid = %version
 Conflicts: acpid < 2.0.8
 
@@ -78,6 +79,9 @@ fi
 %config(noreplace) %_sysconfdir/acpi/events/power
 
 %changelog
+* Sun Oct 14 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.17-alt1
+- 2.0.17
+
 * Tue Mar 20 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:2.0.15-alt1
 - 2.0.15
 
