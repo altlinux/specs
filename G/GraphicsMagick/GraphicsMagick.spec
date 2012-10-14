@@ -42,8 +42,8 @@
 %define Name GraphicsMagick
 Name: %Name
 %define lname lib%name
-Version: 1.3.16
-Release: alt2.1
+Version: 1.3.17
+Release: alt1
 Summary: An X application for displaying and manipulating images
 Summary(ru_RU.UTF-8): Программа для отображения и редактирования изображений
 License: %mit
@@ -504,6 +504,10 @@ __MENU__
 %endif
 
 %changelog
+* Sun Oct 14 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.3.17-alt1
+- New version
+- Bugfix release (CVE-2012-3438 and CVE-2012-3386)
+
 * Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.16-alt2.1
 - Rebuilt with libpng15
 
