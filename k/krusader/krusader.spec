@@ -1,5 +1,5 @@
 %define version 1.90.0
-%define altrelease 10
+%define altrelease 11
 
 %define appname krusader
 %define srcname %appname-%{?cvs:cvs-%cvs}%{!?cvs:%version%{?pre:-%pre}}
@@ -17,6 +17,7 @@ Patch10: krusader-cvs-20060412-makefile-kutils.patch
 Patch11: tde-3.5.13-build-defdir-autotool.patch
 Patch12: cvs-auto_version_check.patch
 Patch13: tde-3.5.13-krarc-chdirUTF8.patch
+Patch14: tde-3.5.13-rar_problem_optR.patch
 
 Group: File tools
 Summary: A twin panel file manager for kde %{?cvs:- unstable version from cvs}
@@ -24,7 +25,7 @@ License: GPL
 Url: http://krusader.sourceforge.net
 
 # Automatically added by buildreq on Mon Sep 29 2008
-BuildRequires: gcc-c++ imake kdebase-devel kjsembed-devel libXt-devel libjpeg-devel libqt3-devel xml-utils xorg-cf-files
+BuildRequires: gcc4.5-c++ imake kdebase-devel kjsembed-devel libXt-devel libjpeg-devel libqt3-devel xml-utils xorg-cf-files
 
 %description
 Krusader is an advanced twin-panel (commander-style) file-manager for KDE 3.x (similar to Midnight or Total Commander) but with many extras.
@@ -38,6 +39,7 @@ It is (almost) completely customizable, very user friendly, fast and looks great
 %patch11
 %patch12
 %patch13
+%patch14
 
 cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
 cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
@@ -86,6 +88,10 @@ cp %buildroot/%_kde3_iconsdir/locolor/16x16/apps/%appname.png %buildroot/%_kde3_
 # %_man1dir/*
 
 %changelog
+* Thu Aug 30 2012 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt11
+- Problem rar adding option "-r" is removed for prevent hang and scan source directory.
+- Dependency direct set to GCC C++ version 4.5, for hook build bugs into 4.7.
+
 * Wed Aug 29 2012 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt10
 - Chdir for copy into krarc is fixed for Cyrillic and generic UTF-8.
 
