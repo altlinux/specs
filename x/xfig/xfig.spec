@@ -1,6 +1,6 @@
 Name:         xfig
 Version:      3.2.5b
-Release:      alt6
+Release:      alt7
 
 Summary:      An X Window System tool for drawing basic vector graphics.
 Group:        Graphics
@@ -87,6 +87,11 @@ install -D -m 644 xfig.desktop %buildroot/%_desktopdir/xfig.desktop
 /usr/share/doc/xfig
 
 %changelog
+* Sun Oct 14 2012 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5b-alt7
+- restore colors and figure comments after delete_all + undo
+- fix scrollbar on indpanel after mode change
+- fix some build warnings
+
 * Tue Sep 18 2012 Vladislav Zavjalov <slazav@altlinux.org> 3.2.5b-alt6
 - fix for libpng15
 
