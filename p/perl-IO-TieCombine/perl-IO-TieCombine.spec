@@ -1,7 +1,7 @@
 ## SPEC file for Perl module IO::TieCombine
 
 Name: perl-IO-TieCombine
-Version: 1.001
+Version: 1.002
 Release: alt1
 
 Summary: Perl module to produce tied separate but combined variables
@@ -42,6 +42,9 @@ but combined variables.
 %perl_vendor_privlib/IO/TieCombine*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.002-alt1
+- New version
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.001-alt1
 - Initial build for ALT Linux Sisyphus
 
