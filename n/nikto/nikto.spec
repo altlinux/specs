@@ -1,6 +1,6 @@
 # SPEC file for nikto web server scanner
 
-%define version    2.1.4
+%define version    2.1.5
 %define release    alt1
 
 Name: nikto
@@ -50,7 +50,7 @@ CGI-скриптов для более чем 900 версий серверов,
 
 # Updating sources to current databases
 tar xvf %SOURCE1
-mv -f -- updates/CHANGES.txt docs/
+#mv -f -- updates/CHANGES.txt docs/
 mv -f -- updates/* plugins/
 
 %build
@@ -90,6 +90,9 @@ install -m 0644 -- templates/* %buildroot%execdir/templates/
      %_datadir/%name/*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1:2.1.5-alt1
+- New version 2.1.5
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 1:2.1.4-alt1
 - New version 2.1.4
 
