@@ -2,10 +2,10 @@
 
 Name: ppracer
 Version: 0.3.1
-Release: alt3.2
+Release: alt4
 
-Summary: PlanetPenguin Racer 
-License: GPL
+Summary: PlanetPenguin Racer
+License: GPLv2
 Group: Games/Sports
 URL: http://racer.planetpenguin.de/
 
@@ -17,9 +17,12 @@ Patch1: ppracer-0.3.1-alt-ui_lang.patch
 Patch2: ppracer-0.3.1-alt-gcc41.patch
 Patch3: ppracer-contrib-alt-hud.patch
 Patch4: ppracer-0.3.1-alt-libpng15.patch
+Patch5: ppracer-0.3.1-alt-fonts.patch
 
-# Automatically added by buildreq on Fri Sep 01 2006
-BuildRequires: gcc-c++ libSDL-devel libSDL_mixer-devel libX11-devel libXext-devel libXi-devel libXmu-devel libfreetype-devel libGL-devel libpng-devel tcl-devel
+Requires: fonts-ttf-freefont
+
+# Automatically added by buildreq on Wed Oct 10 2012
+BuildRequires: gcc-c++ imake libSDL_mixer-devel libXi-devel libXmu-devel libfreetype-devel libpng-devel tcl-devel xorg-cf-files
 
 %description
 PlanetPenguin Racer is an OpenGL racing game featuring Tux, the Linux mascot.
@@ -28,24 +31,25 @@ quickly as possible. It is based on the GPL version of TuxRacer.
 
 %prep
 %setup -q -a 1
-%patch -p1
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 pushd %name-contrib-%contrib
 %patch3 -p0
 popd
 %patch4 -p2
+%patch5 -p1
 
 %build
-%configure --with-data-dir=%_gamesdatadir/%name --with-tcl=%_libdir
+%configure --with-data-dir=%_datadir/%name --with-tcl=%_libdir
 %make_build
 
 %install
 %make_install install DESTDIR=%buildroot
 
 cd %name-contrib-%contrib
-cp -a courses/* %buildroot%_gamesdatadir/%name/courses/contrib/
-cp -a themes/* %buildroot%_gamesdatadir/%name/courses/
+cp -a courses/* %buildroot%_datadir/%name/courses/contrib/
+cp -a themes/* %buildroot%_datadir/%name/courses/
 
 cat <<__MENU__ >%name.desktop
 [Desktop Entry]
@@ -64,16 +68,23 @@ install -pD -m644 icons/ppracer-16x16.png %buildroot%_miconsdir/%name.png
 install -pD -m644 icons/ppracer-32x32.png %buildroot%_niconsdir/%name.png
 install -pD -m644 icons/ppracer-48x48.png %buildroot%_liconsdir/%name.png
 
+rm -rf %buildroot%_datadir/fonts/
+
 %files
 %doc AUTHORS ChangeLog
 %_bindir/%name
-%_gamesdatadir/%name
+%dir %_datadir/%name
+%_datadir/%name/
 %_datadir/applications/%name.desktop
 %_miconsdir/%name.png
 %_niconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Wed Oct 10 2012 Igor Zubkov <icesik@altlinux.org> 0.3.1-alt4
+- Relocate data files to /usr/share/ppracer/
+- Use system font (closes #25337)
+
 * Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt3.2
 - Rebuilt with libpng15
 
