@@ -2,7 +2,7 @@
 ## Used in SVK
 
 Name: perl-IPC-Run3
-Version: 0.044
+Version: 0.045
 Release: alt1
 
 Summary: run a subprocess in batch mode (a la system) on Unix, Win32, etc.
@@ -58,6 +58,9 @@ qx`` / open3() путём  замены их  простым и  написан�
 %perl_vendor_privlib/IPC/Run3*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.045-alt1
+- New version 0.045
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.044-alt1
 - New version 0.044
 
