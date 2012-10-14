@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.46
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -515,7 +515,7 @@ Patch0722: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
 Patch0723: linux-%kernel_branch.42-fix-kernel--freezer.patch
 Patch0724: linux-%kernel_branch.42-fix-kernel--watchdog.patch
 Patch0725: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
-Patch0726: linux-%kernel_branch.42-fix-kernel-time.patch
+Patch0726: linux-%kernel_branch.44-fix-kernel-time.patch
 
 Patch0730: linux-%kernel_branch.42-fix-lib.patch
 Patch0731: linux-%kernel_branch.42-fix-lib--genalloc.patch
@@ -2667,6 +2667,10 @@ fi
 
 
 %changelog
+* Sun Oct 14 2012 Led <led@altlinux.ru> 3.0.46-alt2
+- updated:
+  + fix-kernel-time
+
 * Sat Oct 13 2012 Led <led@altlinux.ru> 3.0.46-alt1
 - 3.0.46
 - removed:
