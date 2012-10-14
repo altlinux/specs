@@ -3,7 +3,7 @@
 %define real_name Excel-Template
 
 Name: perl-Excel-Template
-Version: 0.33
+Version: 0.34
 Release: alt1
 
 Summary: creating MS Excel file from HTML::Template data structure
@@ -50,6 +50,9 @@ that it says is bad.
 %perl_vendor_privlib/Excel/Template*
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.34-alt1
+- New version
+
 * Tue Jun 21 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.33-alt1
 - New version
 
