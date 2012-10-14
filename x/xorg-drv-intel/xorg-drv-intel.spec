@@ -1,5 +1,5 @@
 Name: xorg-drv-intel
-Version: 2.20.9
+Version: 2.20.10
 Release: alt1
 Epoch: 7
 Summary: Intel integrated graphics chipsets
@@ -38,7 +38,6 @@ and 24 for the 830M and later
 %configure \
 	--with-xorg-module-dir=%_x11modulesdir \
 	--enable-dri \
-	--disable-sna \
 	--disable-static
 
 %make_build
@@ -52,6 +51,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Sun Oct 14 2012 Valery Inozemtsev <shrek@altlinux.ru> 7:2.20.10-alt1
+- 2.20.10
+
 * Sat Sep 29 2012 Valery Inozemtsev <shrek@altlinux.ru> 7:2.20.9-alt1
 - 2.20.9
 
