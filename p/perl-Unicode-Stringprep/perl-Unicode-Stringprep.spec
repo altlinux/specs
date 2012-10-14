@@ -3,8 +3,8 @@
 %define real_name Unicode-Stringprep
 
 Name: perl-Unicode-Stringprep
-Version: 1.103
-Release: alt1.1
+Version: 1.104
+Release: alt1
 
 Summary: Perl module for preparation of Internationalized Strings
 
@@ -52,6 +52,9 @@ stringprep in order to fully specify the processing options.
 
 
 %changelog
+* Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.104-alt1
+- New version
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.103-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
