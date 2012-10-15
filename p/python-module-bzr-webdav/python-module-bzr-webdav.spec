@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 Name: python-module-bzr-webdav
 Version: 2.5.0
-Release: alt1
+Release: alt2
 
 %setup_python_module bzr-webdav
 
@@ -61,6 +61,9 @@ This package contain tools and test suites for testing bzr-webdav.
 %python_sitelibdir/bzrlib/plugins/webdav/tests
 
 %changelog
+* Mon Oct 15 2012 Anatoly Kitaykin <cetus@altlinux.org> 2.5.0-alt2
+- don't use resigned upstream tags, change gear rules
+
 * Mon Oct 15 2012 Anatoly Kitaykin <cetus@altlinux.org> 2.5.0-alt1
 - 2.5.0 release
 
