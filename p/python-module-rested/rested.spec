@@ -1,7 +1,7 @@
 %define oname rested
 Name: python-module-%oname
 Version: 1.1.0
-Release: alt1.git20111130
+Release: alt1.git20120215
 Summary: ReST Editor
 License: BSD
 Group: Development/Python
@@ -32,6 +32,9 @@ ReStructured Text.
 %python_sitelibdir/*
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20120215
+- New snapshot
+
 * Fri Dec 23 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20111130
 - Initial build for Sisyphus
 
