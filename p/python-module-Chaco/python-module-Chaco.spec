@@ -1,7 +1,7 @@
 %define oname Chaco
 Name: python-module-%oname
-Version: 4.1.1
-Release: alt1.git20120508
+Version: 4.2.1
+Release: alt1.git20120925
 Summary: Interactive 2-Dimensional Plotting
 
 Group: Development/Python
@@ -60,6 +60,9 @@ sphinx-build -E -a -b html -c docs/source -d doctrees docs/source html
 %doc examples html
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20120925
+- Version 4.2.1
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.git20120508
 - New snapshot
 
