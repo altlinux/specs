@@ -1,7 +1,7 @@
 %define oname nfftpy
 Name: python-module-%oname
 Version: 0.1
-Release: alt2.git20110420
+Release: alt3.git20110420
 Summary: Cython wrapper for NFFT library
 License: BSD
 Group: Development/Python
@@ -35,6 +35,9 @@ NFFTPY wraps NFFT using Cython, to make it usable from Python.
 %python_sitelibdir/*
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.git20110420
+- Rebuilt with updated NumPy
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.git20110420
 - Rebuilt with nfft 3.2.1-alt1
 
