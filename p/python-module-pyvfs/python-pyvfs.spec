@@ -1,6 +1,6 @@
 Name: python-module-pyvfs
-Version: 0.2.3
-Release: alt2
+Version: 0.2.4
+Release: alt1
 Summary: Simple python VFS library
 License: GPLv3+
 Group: Development/Python
@@ -31,6 +31,10 @@ to represent Python objects as files.
 %{python_sitelibdir}/pyvfs*
 
 %changelog
+* Mon Oct 15 2012 Peter V. Saveliev <peet@altlinux.org> 0.2.4-alt1
+- Function exports added
+- Method calls (by FS read/write) implemented
+
 * Fri Oct 12 2012 Peter V. Saveliev <peet@altlinux.org> 0.2.3-alt2
 - add README and LICENSE
 - use targz for distribution archive
