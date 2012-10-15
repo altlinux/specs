@@ -3,7 +3,7 @@
 
 Name: propagator
 Version: 20101130
-Release: alt18
+Release: alt20
 
 Summary: 'Early userspace' set of binaries
 License: GPL
@@ -45,6 +45,12 @@ make \
 %_libdir/%name
 
 %changelog
+* Mon Oct 15 2012 Michael Shigorin <mike@altlinux.org> 20101130-alt20
+- kmod-10 still does, remade the workaround as a longer term one
+
+* Mon Aug 13 2012 Michael Shigorin <mike@altlinux.org> 20101130-alt19
+- modprobe suddenly wants modules.dep.bin to exist
+
 * Fri Aug 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20101130-alt18
 - modprobe --list changed to find
 
