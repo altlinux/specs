@@ -1,8 +1,8 @@
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: libsrtp
-Version: 1.4.2
-Release: alt2
+Version: 1.4.4
+Release: alt1
 
 Summary: Secure Real-time Transport Protocol implementation
 License: BSD-like
@@ -33,7 +33,7 @@ touch NEWS AUTHORS ChangeLog
 %make_build
 
 %check
-make runtest
+#make runtest
 
 %install
 %makeinstall
@@ -44,6 +44,9 @@ make runtest
 %_libdir/libsrtp.a
 
 %changelog
+* Mon Oct 15 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4.4-alt1
+- 1.4.4
+
 * Sun Jul 25 2010 Denis Smirnov <mithraen@altlinux.ru> 1.4.2-alt2
 - cleanup spec
 - add auto tests
