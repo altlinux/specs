@@ -1,6 +1,6 @@
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
-BuildRequires: jpackage-1.6.0-compat
+BuildRequires: jpackage-compat
 # Copyright (c) 2000-2010, JPackage Project
 # All rights reserved.
 #
@@ -34,7 +34,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           jdemo
 Version:        1.6.0
-Release:	alt2_1jpp6
+Release:	alt3_1jpp6
 Epoch:          0
 Summary:        Java to Html converter
 Group:          Development/Java
@@ -148,6 +148,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0-alt3_1jpp6
+- java7 build
+
 * Wed Mar 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.0-alt2_1jpp6
 - built with java 6
 
