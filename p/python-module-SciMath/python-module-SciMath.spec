@@ -1,7 +1,7 @@
 %define oname SciMath
 Name: python-module-%oname
-Version: 4.0.2
-Release: alt1.git20120508
+Version: 4.1.1
+Release: alt1.git20120516
 Summary:  Scientific and Mathematical calculations
 
 Group: Development/Python
@@ -52,6 +52,9 @@ This package contains tests for SciMath.
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.git20120516
+- Version 4.1.1
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt1.git20120508
 - New snapshot
 
