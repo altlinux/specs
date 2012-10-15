@@ -1,6 +1,6 @@
 Name: linux-pam
 Version: 1.1.6
-Release: alt1
+Release: alt2
 
 Summary: Pluggable Authentication Modules
 # The library is BSD-style *without* advertising clause, with option to relicense as GPLv2+.
@@ -336,6 +336,9 @@ make check
 %docdir/Linux-PAM*
 
 %changelog
+* Mon Oct 15 2012 Dmitry V. Levin <ldv@altlinux.org> 1.1.6-alt2
+- Updated to v1.1.6-5-g0603b28.
+
 * Fri Aug 24 2012 Dmitry V. Levin <ldv@altlinux.org> 1.1.6-alt1
 - Updated to 1.1.6.
 
