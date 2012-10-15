@@ -16,7 +16,7 @@
 %def_disable upnp
 
 Name: banshee
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 Summary: Easily import, manage, and play selections from your music collection
 Group: Sound
@@ -252,6 +252,9 @@ desktop-file-install --vendor gnome --delete-original		\
 %endif
 
 %changelog
+* Mon Oct 15 2012 Alexey Shabalin <shaba@altlinux.ru> 2.6.0-alt1
+- 2.6.0
+
 * Thu Sep 06 2012 Alexey Shabalin <shaba@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 
