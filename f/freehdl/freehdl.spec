@@ -1,7 +1,7 @@
 Name: freehdl
 Summary: VHDL simulator
-Version: 0.0.7
-Release: alt5
+Version: 0.0.8
+Release: alt1
 License: GPL
 Group: Development/Other
 BuildRequires: flex gcc-c++
@@ -113,6 +113,9 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.a
 
 %changelog
+* Mon Oct 15 2012 Denis Smirnov <mithraen@altlinux.ru> 0.0.8-alt1
+- 0.0.8
+
 * Mon Jan 09 2012 Denis Smirnov <mithraen@altlinux.ru> 0.0.7-alt5
 - fix build
 
