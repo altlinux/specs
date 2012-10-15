@@ -3,8 +3,8 @@
 
 %define oname mayavi
 Name:           Mayavi
-Version:        4.1.1
-Release:        alt3.git20120411
+Version:        4.2.1
+Release:        alt1.git20120930
 Summary:        Scientific data 3-dimensional visualizer
 
 Group:          Graphics
@@ -178,6 +178,9 @@ ln -s %_liconsdir/mayavi2.png %buildroot%_niconsdir/
 %doc docs/*.txt docs/pdf examples docs/build/tvtk docs/build/mayavi
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20120930
+- Version 4.2.1
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt3.git20120411
 - Rebuilt with OpenMPI 1.6
 
