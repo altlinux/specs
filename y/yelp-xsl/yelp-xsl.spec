@@ -1,7 +1,7 @@
 %define ver_major 3.6
 
 Name: yelp-xsl
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: XSLT stylesheets for the Yelp, GNOME help browser
@@ -43,6 +43,9 @@ This package contains XSLT stylesheets that are used by the Yelp.
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
