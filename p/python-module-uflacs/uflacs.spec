@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 0.2.0
-Release: alt2.bzr20120622
+Release: alt2.bzr20120928
 Summary: UFL Analyser and Compiler System
 Group: Development/Python
 License: LGPLv3
@@ -34,6 +34,9 @@ processing UFL code in various fashions.
 %python_sitelibdir/*
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2.bzr20120928
+- New snapshot
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt2.bzr20120622
 - Added %_bindir/%oname
 
