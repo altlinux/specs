@@ -1,7 +1,7 @@
 %define oname Enable
 Name: python-module-%oname
-Version: 4.1.1
-Release: alt1.git20120504
+Version: 4.2.1
+Release: alt1.git20120920
 Summary: Drawing and interaction packages
 
 Group: Development/Python
@@ -17,7 +17,7 @@ BuildPreReq: python-module-sphinx-devel python-module-Pygments
 BuildPreReq: libGL-devel libX11-devel python-module-Cython
 BuildPreReq: libGLU-devel
 
-%add_python_req_skip macport
+%add_python_req_skip macport mac_context
 
 %description
 The Enable project provides two related multi-platform packages for
@@ -118,6 +118,9 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %doc docs/kiva docs/*.txt examples html
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20120920
+- Version 4.2.1
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.git20120504
 - New snapshot
 
