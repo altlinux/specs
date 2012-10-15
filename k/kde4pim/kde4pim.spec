@@ -16,7 +16,7 @@
 %define rname kdepim
 %define major 4
 %define minor 9
-%define bugfix 1
+%define bugfix 2
 Name: kde4pim
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -70,7 +70,7 @@ Patch104: kdepim-4.7.2-alt-migration.patch
 # Automatically added by buildreq on Tue Feb 09 2010
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libassuan-devel libgpgme-devel libindicate-qt-devel libxkbfile-devel soprano soprano-backend-redland xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4libs-devel libassuan-devel
-BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel
+BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel prison-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel dblatex
 BuildRequires: kde4-pim-runtime-devel >= %version
 #BuildRequires: libindicate-qt-devel
@@ -1577,6 +1577,9 @@ based on kdepim.
 
 
 %changelog
+* Mon Oct 15 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
+- new version
+
 * Mon Oct 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
