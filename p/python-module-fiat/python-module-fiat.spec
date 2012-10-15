@@ -4,7 +4,7 @@
 
 Name:           python-module-fiat
 Version:        1.0.0
-Release:        alt2.bzr20120610
+Release:        alt2.bzr20121001
 Summary:        FInite element Automatic Tabulator
 Group:          Development/Python
 License:        LGPLv3+
@@ -80,6 +80,9 @@ install -m644 doc/*.pdf %buildroot%_docdir/%origname
 %_docdir/%origname
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.bzr20121001
+- New snapshot
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.bzr20120610
 - New snapshot
 
