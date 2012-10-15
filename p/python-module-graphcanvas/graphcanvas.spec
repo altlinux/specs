@@ -1,7 +1,7 @@
 %define oname graphcanvas
 Name: python-module-%oname
 Version: 4.0.1
-Release: alt1.git20110627
+Release: alt1.git20120221
 Summary: Interactive graph (network) visualization
 License: BSD
 Group: Development/Python
@@ -33,6 +33,9 @@ simplest means and be able to visualize the graph immediately.
 %python_sitelibdir/*
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.git20120221
+- New snapshot
+
 * Fri Dec 23 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.1-alt1.git20110627
 - Initial build for Sisyphus
 
