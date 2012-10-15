@@ -1,6 +1,6 @@
 Name: syfi
 Version: 1.0.0
-Release: alt1.bzr20120702.1
+Release: alt1.bzr20121002
 Summary: Symbolic Finite Elements (SyFi) and The SyFi Form Compiler (SFC)
 License: GPL v2
 Group: Sciences/Mathematics
@@ -185,6 +185,9 @@ chrpath -d %buildroot%python_sitelibdir/_SyFi.so
 %_datadir/%name/demo
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt1.bzr20121002
+- New snapshot
+
 * Tue Sep 25 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1.0.0-alt1.bzr20120702.1
 - rebuild with libginac to perform a NMU on libginac
 
