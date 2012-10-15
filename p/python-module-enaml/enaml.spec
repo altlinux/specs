@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.1.1
-Release: alt2.git20120508
+Version: 0.2.1
+Release: alt1.git20121008
 Epoch: 1
 Summary: Enaml is not a Markup Language
 License: BSD
@@ -17,6 +17,7 @@ Source: %name-%version.tar
 
 BuildPreReq: python-devel python-module-distribute python-module-ply
 BuildPreReq: python-module-sphinx-devel python-module-ETSDevTools
+BuildPreReq: xvfb-run fonts-ttf-PT
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -94,6 +95,7 @@ This package contains documentation for Enaml.
 
 %prep
 %setup
+rm -f docs/source/api_ref/enaml.util.rst
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -127,8 +129,8 @@ popd
 %python_install
 
 export PYTHONPATH=%buildroot%python_sitelibdir
-%make -C docs pickle
-%make -C docs html
+xvfb-run --server-args="-screen 0 1024x768x24" make -C docs pickle
+xvfb-run --server-args="-screen 0 1024x768x24" make -C docs html
 
 cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname
 
@@ -163,6 +165,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname
 %endif
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.1-alt1.git20121008
+- Version 0.2.1
+
 * Sun Jun 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.1.1-alt2.git20120508
 - Fixed bild
 
