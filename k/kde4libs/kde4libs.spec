@@ -5,7 +5,7 @@
 
 %define major 4
 %define minor 9
-%define bugfix 1
+%define bugfix 2
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
@@ -98,7 +98,7 @@ Patch1023: kdelibs-4.7.4-plasma-tooltip-delay.patch
 Patch1024: kdelibs-4.6.3-alt-samba-sharing.patch
 Patch1025: kdelibs-4.7.1-alt-find-hupnp.patch
 Patch1026: kdelibs-4.7.1-alt-find-pulseaudio.patch
-Patch1027: kdelibs-4.7.4-alt-revert-5960ae9846c333ef381a817af9d63776c4ddc201.patch
+Patch1027: revert-5960ae9846c333ef381a817af9d63776c4ddc201.patch
 Patch1028: kdelibs-4.8.1-alt-kdesu-export-user-var.patch
 Patch1029: kdelibs-4.8.1-alt-fix-build.patch
 Patch1030: kdelibs-4.9.1-alt-platform-profile.patch
@@ -314,6 +314,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Fri Oct 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
+- new version
+
 * Mon Sep 24 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
