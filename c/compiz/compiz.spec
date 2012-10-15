@@ -3,7 +3,7 @@
 
 Name: compiz
 Version: 0.8.8
-Release: alt4.1
+Release: alt5
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -152,7 +152,12 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Fri Oct 12 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt5
+- update to git.51f4f90
+- add kde 4.9 support
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8-alt4.1
+- Fixed for build with gcc 4.7
 - Rebuilt with libpng15
 
 * Sun May 20 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt4
