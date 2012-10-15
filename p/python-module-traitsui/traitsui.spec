@@ -3,14 +3,14 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 4.1.1
-Release: alt1.git20120408
+Version: 4.2.1
+Release: alt1.git20121009
 Summary: A set of user interface tools designed to complement Traits
 
 Group: Development/Python
 License: BSD, EPL and LGPL
 URL: http://www.enthought.com/
-# https://github.com/enthought/apptools.git
+# https://github.com/enthought/traitsui.git
 Source: %oname-%version.tar
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
@@ -160,6 +160,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20121009
+- Version 4.2.1
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1.git20120408
 - New snapshot
 - Added module for Python 3
