@@ -1,3 +1,5 @@
+# vim: set ft=spec: -*- rpm-spec -*-
+
 # %%branch_switch set %%branch_release use
 #%%define branch_switch Mxx
 
@@ -34,7 +36,7 @@
 
 Name: italc
 Version: 1.0.13
-Release: %branch_release alt1.1
+Release: %branch_release alt2
 
 Summary: Didactical software for teachers etc
 Summary(de_DE.UTF-8): Didaktische Software fuer Lehrer usw
@@ -266,6 +268,9 @@ find %buildroot%keysdir -mindepth 2 -maxdepth 2 -type d -print0 \
 %icons16x16dir/italc.png
 
 %changelog
+* Tue Oct 16 2012 Aleksey Avdeev <solo@altlinux.ru> 1.0.13-alt2
+- Fix build with gcc4.7
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.0.13-alt1.1
 - Rebuild with Python-2.7
 
