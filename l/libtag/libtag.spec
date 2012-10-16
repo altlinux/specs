@@ -1,7 +1,7 @@
 %define rname taglib
 
 Name: libtag
-Version: 1.7.2
+Version: 1.8
 Release: alt1
 
 Summary: TagLib, is well, a library for reading and editing audio meta data
@@ -17,8 +17,8 @@ Source1: taglib-csa6.tar.bz2
 Source2: version-script.libtag
 
 Patch1: taglib-1.6-alt-rcc-fix.patch
-Patch2: taglib-1.5-alt-gcc43.patch
-Patch3: taglib-1.6-alt-versioning.patch
+#
+Patch3: taglib-1.8-alt-versioning.patch
 #(tpg) http://foetida.jaist.ac.jp:37565/~yaz/diary/2006/07/taglib-1.4_wchar.diff
 Patch10:         taglib-1.4_wchar.diff
 
@@ -56,9 +56,9 @@ library.
 %prep
 %setup -q -n %rname-%version -a1
 install -m0644 %SOURCE2 ./
-patch -p1 <taglib-csa/taglib-1.5-ds-rusxmms.patch
-%patch1 -p1
-%patch2 -p1
+#patch -p1 <taglib-csa/taglib-1.5-ds-rusxmms.patch
+#%patch1 -p1
+#
 %patch3 -p1
 #
 %patch10 -p1
@@ -91,6 +91,13 @@ patch -p1 <taglib-csa/taglib-1.5-ds-rusxmms.patch
 %_includedir/taglib/*.tcc
 
 %changelog
+* Tue Oct 16 2012 Sergey V Turchin <zerg@altlinux.org> 1.8-alt1
+- new version
+- built without tag encoding detection patch
+
+* Wed May 16 2012 Sergey V Turchin <zerg@altlinux.org> 1.7.2-alt0.M60P.1
+- build for M60P
+
 * Fri May 11 2012 Sergey V Turchin <zerg@altlinux.org> 1.7.2-alt1
 - new version
 
