@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: libvamp
-Version: 2.0
-Release: alt2.1
+Version: 2.4
+Release: alt1
 
 Summary: plugin system for plugins that extract descriptive information from audio data
 License: %bsdstyle
@@ -10,7 +10,9 @@ Group: System/Libraries
 Url: http://www.vamp-plugins.org/
 Packager: Timur Batyrshin <erthad@altlinux.org>
 
-Source0: %name-%version.tar.bz2
+Source0: %name-%version.tar
+Patch0: fix-paths.patch
+
 BuildPreReq: rpm-build-licenses
 
 BuildRequires: gcc-c++ libsndfile-devel
@@ -73,16 +75,15 @@ energy rise metric.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
+%autoreconf
 %configure %{subst_enable static}
-# broken parallel build
-#make_build
-%make
+%make_build LIBS=-ldl
 
 %install
-%makeinstall_std
-mv %buildroot%_prefix/libX %buildroot%_libdir
+%makeinstall_std libdir=%_libdir
 
 %files
 %_libdir/*.so.*
@@ -95,10 +96,14 @@ mv %buildroot%_prefix/libX %buildroot%_libdir
 %dir %_includedir/vamp-sdk
 %dir %_includedir/vamp-hostsdk
 %_includedir/*/*.h
+%if_enabled static
+%else
+%exclude %_libdir/*.a
+%endif
 
 %if_enabled static
 %files devel-static
-%_libdir/lib%name.a
+%_libdir/*.a
 %endif
 
 %files -n vamp-tools
@@ -108,6 +113,9 @@ mv %buildroot%_prefix/libX %buildroot%_libdir
 %_libdir/vamp/vamp-example-plugins*
 
 %changelog
+* Tue Oct 16 2012 Paul Wolneykien <manowar@altlinux.ru> 2.4-alt1
+- New version 2.4.
+
 * Tue Nov 09 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt2.1
 - Rebuilt for soname set-versions
 
