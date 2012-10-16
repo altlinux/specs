@@ -1,7 +1,7 @@
 %define ver_major 3.6
 
 Name: gnome-themes-standard
-Version: %ver_major.0.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: A set of standard themes for GNOME desktop
@@ -23,7 +23,7 @@ Requires: %name-data = %version-%release
 
 %define theme_prefix gnome-theme
 BuildPreReq: intltool >= 0.35.0
-BuildRequires: libgtk+3-devel >= 3.5.17 librsvg-devel
+BuildRequires: libgtk+3-devel >= 3.5.17 libgtk+2-devel librsvg-devel
 
 %description
 This package provides a set of standard GTK+-(2/3) themes, engines,
@@ -48,6 +48,13 @@ Group: Graphical desktop/GNOME
 
 %description -n libgtk3-engine-adwaita
 This package provides a GTK+3 theme engine Adwaita.
+
+%package -n libgtk2-engine-adwaita
+Summary: GTK+2 theme engine Adwaita
+Group: Graphical desktop/GNOME
+
+%description -n libgtk2-engine-adwaita
+This package provides a GTK+2 theme engine Adwaita.
 
 %prep
 %setup -q
@@ -101,13 +108,23 @@ This package provides a GTK+3 theme engine Adwaita.
 %_datadir/themes/HighContrast/index.theme
 %_datadir/themes/HighContrast/gtk-3.0/settings.ini
 %_iconsdir/HighContrast/
+# metacity theme
+%_datadir/themes/HighContrast/metacity-1/metacity-theme-3.xml
 %doc NEWS README
 
 %files -n libgtk3-engine-adwaita
 %_libdir/gtk-3.0/3.0.0/theming-engines/libadwaita.so
 %exclude %_libdir/gtk-3.0/3.0.0/theming-engines/libadwaita.la
 
+%files -n libgtk2-engine-adwaita
+%_libdir/gtk-2.0/2.10.0/engines/libadwaita.so
+%exclude %_libdir/gtk-2.0/2.10.0/engines/libadwaita.la
+
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+- new libgtk2-engine-adwaita subpackage
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0.2-alt1
 - 3.6.0.2
 
