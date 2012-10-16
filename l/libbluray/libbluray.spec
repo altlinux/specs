@@ -1,5 +1,5 @@
 Name: libbluray
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 Summary: BD library
 
@@ -57,6 +57,9 @@ install -pm0644 -D src/.libs/libbluray.jar %buildroot%_datadir/libbluray/libblur
 %_bindir/*
 
 %changelog
+* Tue Oct 16 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.3-alt1
+- 0.2.3 released
+
 * Wed Mar 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.2.2-alt1
 - 0.2.2 released
 
