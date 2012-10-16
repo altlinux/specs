@@ -1,6 +1,6 @@
 Name: tuxpaint
 Version: 0.9.21
-Release: alt3
+Release: alt4
 
 Summary: A drawing program for young children
 Summary(ru_RU.UTF8): Простая детская программа для рисования
@@ -12,6 +12,8 @@ Url: http://www.tuxpaint.org/
 Source: %name-%version.tar.gz
 Source1: %name.desktop
 Patch1: %name-0.9.19-default-size.patch
+Patch4: tuxpaint-0.9.21-memset.patch
+Patch5: tuxpaint-0.9.21-png15.patch
 
 BuildRequires: libSDL-devel >= 1.2.4 libSDL_image-devel libSDL_mixer-devel libSDL_pango-devel libSDL_ttf-devel
 BuildRequires: libpng-devel zlib-devel gettext librsvg-devel libpaper-devel libfribidi-devel
@@ -50,6 +52,8 @@ Development shared library for %name
 %prep
 %setup -n %name-%version
 %patch1 -p1
+%patch4 -p1 -b .memset
+%patch5 -p1 -b .png15
 
 subst "s|/share/doc/tuxpaint|/share/doc/tuxpaint-%version|g" Makefile
 subst "s|\$(PREFIX)/lib|%_libdir|g" Makefile
@@ -105,6 +109,9 @@ cp -aRf %SOURCE1 %buildroot%_datadir/applications/
 %_man1dir/tp-magic-config*
 
 %changelog
+* Tue Oct 16 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.9.21-alt4
+- Fix build
+
 * Mon May 21 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.9.21-alt3
 - Fix DSO linking
 
