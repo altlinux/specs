@@ -1,12 +1,10 @@
 Name: shelxle
-Version: 1.0.588
+Version: 1.0.590
 Release: alt1
 
 Summary: A Qt GUI for SHELX
 License: LGPLv2
 Group: Sciences/Chemistry
-
-#Patch0: shelxle-1.0.519-alt-build-fix.patch
 
 Url: http://ewald.ac.chemie.uni-goettingen.de/shelx/
 Source: %name-%version.tar.bz2
@@ -41,6 +39,9 @@ qmake-qt4
 %_pixmapsdir/%name.png
 
 %changelog
+
+* Tue Oct 16 2012 Denis G. Samsonenko <ogion@altlinux.org> 1.0.590-alt1
+- new version
 
 * Sat Oct 13 2012 Denis G. Samsonenko <ogion@altlinux.org> 1.0.588-alt1
 - new version
