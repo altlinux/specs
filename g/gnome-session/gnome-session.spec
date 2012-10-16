@@ -3,8 +3,8 @@
 %def_enable systemd
 
 Name: gnome-session
-Version: %ver_major.0
-Release: alt2.1
+Version: %ver_major.1
+Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -12,8 +12,8 @@ Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 Source1: gnome-nautilus.png
 Source2: gnome.svg
 Patch: %name-2.91.6-alt-autosave_session.patch
@@ -164,6 +164,9 @@ install -pD -m644 %SOURCE2 %buildroot%_iconsdir/gnome.svg
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Thu Oct 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2.1
 - shaba:
   add fedora patches:

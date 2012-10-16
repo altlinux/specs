@@ -25,7 +25,7 @@
 %def_disable split_authentication
 
 Name: gdm
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: The GNOME Display Manager
@@ -68,7 +68,7 @@ Obsoletes: %name-user-switch-applet
 PreReq: %_rpmlibdir/update-dconf-database.filetrigger
 Requires: %name-libs = %version-%release
 %{?_with_consolekit:Requires: ConsoleKit-x11}
-Requires: coreutils consolehelper zenity xinitrc iso-codes lsb-release
+Requires: coreutils consolehelper zenity xinitrc iso-codes lsb-release shadow-utils
 
 BuildPreReq: desktop-file-utils gnome-common rpm-build-gnome
 BuildPreReq: intltool >= 0.40.0 yelp-tools itstool
@@ -366,6 +366,12 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 %endif
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
+* Thu Oct 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
+- updated to 571ea34
+
 * Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
