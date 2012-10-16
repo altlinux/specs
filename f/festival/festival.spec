@@ -16,7 +16,7 @@
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt1
+Release:	alt2
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs file is GPL+, there is one TCL licensed source file
@@ -140,8 +140,8 @@ Patch231: festival-1.96-kludge-etcpath-into-libarch.patch
 #Patch293: festival-1.96-fefora-gcc43.patch
 
 #TODO: (can't use pulceaudio by default now)
-# Work with pulseaudio (bug 467531)
-Patch294: festival-1.96-fedora-11-use-pacat.patch
+# Native pulseaudio support, https://bugzilla.redhat.com/show_bug.cgi?id=471047
+Patch294: festival-2.0.96-fedora-21-pulse.patch
 #------------------------------------------------------
 
 
@@ -273,9 +273,15 @@ Patch712: festival-1.96-bettersonamehack.patch
 # is contained in suse Patch115
 #Patch793: speech_tools-1.2.96-fefora-gcc43.patch
 
+# Native pulseaudio support, https://bugzilla.redhat.com/show_bug.cgi?id=471047
+Patch794: speech_tools-2.0.96-fedora-21-pulse-alt-rediff.patch
+BuildRequires: libpulseaudio-devel
+
 # is contained in 2.0.95 upstream
 #Patch795: speech_tools-1.2.96-fedora-11-gcc44.patch
 
+# gcc 4.7 is finnicky about ambiguous function references'
+Patch796: speech_tools-2.0.96-fedora-21-gcc47.patch
 
 # SuSE patches (as of festival-1.96-101); note that 2.0.95 ones are manually rediffed.
 Patch111:        speech_tools-1.2.96-gcc4.patch
@@ -466,7 +472,8 @@ cd $RPM_BUILD_DIR/speech_tools
 %patch706 -p2 -b .liblinking
 %patch711 -p2
 %patch712 -p2 -b .soname
-
+%patch794 -p1 -b .pulse
+%patch796 -p1
 
 %patch111 -p1
 %patch112 -p0
@@ -476,9 +483,6 @@ cd $RPM_BUILD_DIR/speech_tools
 
 %patch138 -p1
 %patch139 -p2
-
-
-
 
 # prep Edinburgh Speech Tools
 %__subst s/'# INCLUDE_MODULES += ESD_AUDIO'/'INCLUDE_MODULES += ESD_AUDIO'/ \
@@ -822,6 +826,10 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Tue Oct 16 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.95-alt2
+- fixed build with gcc4.7
+- merged pulse patch from fedora rel 21 (not enabled by default)
+
 * Sat Jul 31 2010 Igor Vlasenko <viy@altlinux.ru> 2.0.95-alt1
 - new version (beta)
 
