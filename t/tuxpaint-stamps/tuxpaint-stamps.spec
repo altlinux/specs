@@ -1,14 +1,15 @@
 Name: tuxpaint-stamps
 Version: 2009.06.28
-Release: alt1
+Release: alt2
 
 Summary: This is a collection of 'rubber stamp' images for Tux Paint
-Summary(ru_RU.KOI8-R): Колекция изображений 'штампов' для программы Tux Paint
+Summary(ru_RU.UTF8): п п╬п╩п╣п╨я├п╦я▐ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧ 'я┬я┌п╟п╪п©п╬п╡' п╢п╩я▐ п©я─п╬пЁя─п╟п╪п╪я▀ Tux Paint
 License: GPL
 Group: Graphics
 
 Url: http://www.newbreedsoftware.com/tuxpaint/
 Source: %name-%version.tar.gz
+Patch: %name-%version.patch
 
 BuildRequires: gettext-tools
 Requires: tuxpaint >= 0.9.15
@@ -19,12 +20,13 @@ BuildArch: noarch
 This is a collection of 'rubber stamp' images for Tux Paint.
 Tux Paint - A simple drawing program for children.
 
-%description -l ru_RU.KOI8-R
-Коллекция изображений 'штампов' для программы "Tux Paint"
-"Tux Paint" является детской программой для рисования.
+%description -l ru_RU.UTF8
+п п╬п╩п╩п╣п╨я├п╦я▐ п╦п╥п╬п╠я─п╟п╤п╣п╫п╦п╧ 'я┬я┌п╟п╪п©п╬п╡' п╢п╩я▐ п©я─п╬пЁя─п╟п╪п╪я▀ "Tux Paint"
+"Tux Paint" я▐п╡п╩я▐п╣я┌я│я▐ п╢п╣я┌я│п╨п╬п╧ п©я─п╬пЁя─п╟п╪п╪п╬п╧ п╢п╩я▐ я─п╦я│п╬п╡п╟п╫п╦я▐.
 
 %prep
 %setup -q
+%patch -p0
 
 %build
 # Compile locales by hand.
@@ -54,6 +56,9 @@ popd
 %_datadir/tuxpaint/stamps/*
 
 %changelog
+* Tue Oct 16 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2009.06.28-alt2
+- Fix build
+
 * Tue Jun 30 2009 Slava Dubrovskiy <dubrsl@altlinux.org> 2009.06.28-alt1
 - Update to 2009.06.28
 
