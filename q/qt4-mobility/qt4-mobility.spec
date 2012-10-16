@@ -3,7 +3,7 @@
 
 Name: qt4-mobility
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Qt Mobility Framework
@@ -17,6 +17,8 @@ Source: qt-mobility-opensource-src-1.2.0.tar
 Patch50: qt-mobility-opensource-src-1.2.0-translationsdir.patch
 Patch51: qt-mobility-opensource-src-1.2.0-pkgconfig.patch
 Patch52: qt-mobility-opensource-src-1.1.0-pulseaudio-lib.patch
+# SuSE
+Patch101: qt-mobility-opensource-src-1.2.0-include-unistdh.patch
 
 # Automatically added by buildreq on Tue Feb 07 2012 (-bi)
 # optimized out: elfutils fontconfig glib2-devel gst-plugins-bad gst-plugins-devel gstreamer-devel libGL-devel libX11-devel libXext-devel libXrandr-devel libXrender-devel libXv-devel libgst-plugins libqt4-clucene libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-xml libqt4-xmlpatterns libstdc++-devel libxml2-devel pkg-config python-base ruby xorg-randrproto-devel xorg-renderproto-devel xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel
@@ -209,6 +211,7 @@ Requires: %name-common = %version-%release
 %patch50 -p1 -b .translationsdir
 %patch51 -p1 -b .pkgconfig
 %patch52 -p1 -b .pulseaudio_lib
+%patch101 -p1
 
 QMFCLIENT_FLAGS=
 QMFMESSAGESERVER_FLAGS=
@@ -368,6 +371,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 16 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt3
+- fix to build with gcc 4.7
+
 * Tue Jun 26 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.0-alt2
 - rebuilt with udev-185
 
