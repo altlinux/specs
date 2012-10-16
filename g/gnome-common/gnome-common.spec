@@ -1,7 +1,7 @@
-%define ver_major 3.5
+%define ver_major 3.6
 
 Name: gnome-common
-Version: %ver_major.91
+Version: %ver_major.0
 Release: alt1
 
 Summary: Gnome-common contains useful things common to building gnome packages
@@ -42,6 +42,9 @@ cp doc-build/README README.doc
 %doc README* ChangeLog doc/usage.txt
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.91-alt1
 - 3.5.91
 
