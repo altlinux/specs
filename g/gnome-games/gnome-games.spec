@@ -10,7 +10,7 @@
 %def_enable staging
 
 Name: gnome-games
-Version: %ver_major.0.2
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME games
@@ -498,6 +498,9 @@ popd
 %endif
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Wed Oct 10 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0.2-alt1
 - 3.6.0.2
 
