@@ -1,5 +1,5 @@
 Name: hasher-priv
-Version: 1.3.10
+Version: 1.4.0
 Release: alt1
 
 Summary: A privileged helper for the hasher project
@@ -59,6 +59,9 @@ groupadd -r -f hashman
 %doc DESIGN
 
 %changelog
+* Tue Oct 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.0-alt1
+- Implemented mount namespace isolation.
+
 * Tue Jun 05 2012 Dmitry V. Levin <ldv@altlinux.org> 1.3.10-alt1
 - Made IPC namespace isolation controllable by share_ipc environment
   variable.
