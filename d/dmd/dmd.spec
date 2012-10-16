@@ -6,7 +6,7 @@
 
 Name: dmd
 Version: 2.060
-Release: alt2
+Release: alt3
 Summary: The D Programming Language
 Group: Development/Other
 License: GPL
@@ -46,8 +46,8 @@ cd ../phobos
 cd ../tools
 ../dmd/src/dmd -c -O -w -d -m%MODEL -property -release -I../druntime/import -I../phobos rdmd.d
 gcc rdmd.o -o rdmd -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
-../dmd/src/dmd -c -O -w -d -m%MODEL -property -release -I../druntime/import -I../phobos catdoc.d
-gcc catdoc.o -o catdoc -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
+#../dmd/src/dmd -c -O -w -d -m%MODEL -property -release -I../druntime/import -I../phobos catdoc.d
+#gcc catdoc.o -o catdoc -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
 
 %install
 mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/d,%_mandir/man1}
@@ -72,7 +72,7 @@ cp -r phobos/std %buildroot%_includedir/d/
 
 #tools
 
-cp tools/catdoc %buildroot%_bindir/
+#cp tools/catdoc %buildroot%_bindir/
 cp tools/rdmd %buildroot%_bindir/
 cp -r dmd/docs/man/man1 %buildroot%_mandir/
 
@@ -91,6 +91,9 @@ cp -r dmd/docs/man/man1 %buildroot%_mandir/
 %_libdir/libphobos*
 
 %changelog
+* Tue Oct 16 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt3
+- Excluded catdoc(conflicts with the package catdoc-0.94.2-alt4)
+
 * Sun Oct 07 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt2
 - Fix dmd.conf
 
