@@ -1,6 +1,6 @@
 Name: vlc
-Version: 2.0.3
-Release: alt2
+Version: 2.0.4
+Release: alt1
 
 Summary: VLC media player
 License: GPLv2
@@ -26,7 +26,7 @@ BuildRequires: libpulseaudio-devel libgoom-devel libx264-devel vim-devel
 BuildRequires: jackit-devel liblame-devel zlib-devel libavahi-devel dbus
 BuildRequires: libtag-devel libfluidsynth-devel libnotify-devel libdbus-devel
 BuildRequires: libzvbi-devel libraw1394-devel libavc1394-devel libfribidi-devel
-BuildRequires: libass-devel libbluray-devel libpcre-devel
+BuildRequires: libass-devel libbluray-devel libpcre-devel libopus-devel
 BuildRequires: libkate-devel libv4l-devel libmtp-devel libshout2-devel
 BuildRequires: libtar-devel libva-devel libxcb-devel libxcbutil-devel libxcbutil-keysyms-devel
 BuildRequires: libdc1394-devel libschroedinger-devel libsmbclient-devel
@@ -36,7 +36,7 @@ BuildRequires: libgtk+3-devel libXpm-devel libXt-devel libminizip-devel
 BuildRequires: fortune-mod >= 1.0-ipl33mdk
 BuildRequires: libdca-devel >= 0.0.5-alt1
 
-%define allplugins a52 aa ass audiocd bluray bonjour caca dbus dv dca dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls goom h264 jack linsys live555 mad matroska modplug mpeg2 mtp musepack notify ogg osd png podcast projectm pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd xcb xml
+%define allplugins a52 aa ass audiocd bluray bonjour caca dbus dv dca dvdnav dvdread ffmpeg flac framebuffer fluidsynth freetype globalhotkeys gnutls goom h264 jack linsys live555 mad matroska modplug mpeg2 mtp musepack notify ogg opus osd png podcast projectm pulseaudio realrtsp schroedinger shout smb speex svg taglib theora twolame upnp v4l videocd xcb xml
 %define baseplugins ass bluray dbus dvdnav dvdread ffmpeg freetype globalhotkeys live555 matroska mpeg2 ogg pulseaudio taglib v4l xcb xml
 %define restplugins %(echo %allplugins %baseplugins |tr '[[:space:]]' '\\n'|sort |uniq -u|tr '\\n' ' ')
 %define mergedplugins alsa dvb ts
@@ -271,6 +271,11 @@ Requires: lib%name = %version-%release
 
 %package plugin-ogg
 Summary: OGG/Vorbis/Kate codec plugin for VLC media player
+Group: Video
+Requires: lib%name = %version-%release
+
+%package plugin-opus
+Summary: OPUS codec plugin for VLC media player
 Group: Video
 Requires: lib%name = %version-%release
 
@@ -542,6 +547,9 @@ This package contains notify plugin for VLC media player.
 This package contains OGG codec and Vorbis muxer/demuxer
 plugin for VLC media player.
 
+%description plugin-opus
+This package contains OPUS codec plugin for VLC media player.
+
 %description plugin-osd
 This package adds support for OSD visualization for VLC media player.
 
@@ -661,6 +669,7 @@ echo %version-%release > src/revision.txt
 	--enable-ncurses \
 	--enable-notify \
 	--enable-ogg \
+	--enable-opus \
 	--enable-png \
 	--enable-postproc \
 	--enable-pulse \
@@ -1124,6 +1133,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %vlc_plugindir/codec/libvorbis_plugin.so
 %vlc_plugindir/codec/libkate_plugin.so
 
+%files plugin-opus
+%vlc_plugindir/codec/libopus_plugin.so
+
 %files plugin-flac
 %vlc_plugindir/demux/libflacsys_plugin.so
 %vlc_plugindir/codec/libflac_plugin.so
@@ -1263,6 +1275,7 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %_gamesdatadir/fortune/vlc*
 
 %files
+%_datadir/kde4/apps/solid/actions/vlc-openbd.desktop
 %_datadir/kde4/apps/solid/actions/vlc-opencda.desktop
 %_datadir/kde4/apps/solid/actions/vlc-opendvd.desktop
 %_datadir/kde4/apps/solid/actions/vlc-openvcd.desktop
@@ -1270,6 +1283,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Tue Oct 16 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.4-alt1
+- 2.0.4 released
+
 * Thu Sep  6 2012 Terechkov Evgenii <evg@altlinux.org> 2.0.3-alt2
 - Rebuild with new libxcbutil
 

@@ -11,7 +11,7 @@
 %define lname mplayer
 %define Name MPlayer
 %define rel 35
-%define subrel 7
+%define subrel 8
 
 #---------------------- BEGIN OF PARAMETERS -------------------------------------
 
@@ -1232,6 +1232,9 @@ ln -sf %lname %buildroot%_bindir/g%lname
 
 
 %changelog
+* Tue Oct 16 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt35.32772.8
+- rebuilt with recent live555
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt35.32772.7
 - Rebuilt with libpng15
 

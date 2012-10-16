@@ -1,5 +1,5 @@
 Name: live555
-Version: 20120125
+Version: 20120913
 Release: alt1
 
 Summary: Live555.com Streaming Media Library Utilities
@@ -95,6 +95,9 @@ done
 %_includedir/liveMedia
 
 %changelog
+* Tue Oct 16 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 20120913-alt1
+- 20120913 snapshot
+
 * Wed Jan 25 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 20120125-alt1
 - 20120125 snapshot
 
