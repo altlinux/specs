@@ -1,6 +1,6 @@
 Name: bind
 Version: 9.3.6
-Release: alt7
+Release: alt8
 
 Summary: ISC BIND - DNS server
 License: BSD-style
@@ -50,6 +50,13 @@ Patch13: bind-9.3.6-rh538744-CVE-2009-4022.patch
 Patch14: bind-9.3.6-rh554851-CVE-2010-0097.patch
 Patch15: bind-9.3.6-rh640730-CVE-2010-3762.patch
 Patch16: bind-9.3.6-rh754398-CVE-2011-4313.patch
+Patch17: bind-9.3.6-rh555848.patch
+Patch18: bind-9.3.6-rh733698.patch
+Patch19: bind-9.3.6-rh758873.patch
+Patch20: bind-9.3.6-rh-CVE-2012-1033.patch
+Patch21: bind-9.3.6-rh-CVE-2012-1667.patch
+Patch22: bind-9.3.6-rh-CVE-2012-4244.patch
+Patch23: bind-9.3.6-rh-CVE-2012-5166.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -176,6 +183,13 @@ the DNS protocol.
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
+%patch17 -p1
+%patch18 -p1
+%patch19 -p1
+%patch20 -p1
+%patch21 -p1
+%patch22 -p1
+%patch23 -p1
 
 install -pm644 %_sourcedir/rfc1912.txt doc/rfc/
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
@@ -395,6 +409,10 @@ fi
 %exclude %docdir/README.bind-devel
 
 %changelog
+* Wed Oct 10 2012 Dmitry V. Levin <ldv@altlinux.org> 9.3.6-alt8
+- Imported fixes for several vulnerabilities from RH bind-9.3.6-20.P1.5
+  (CVE-2012-{1033,1667,4244,5166}).
+
 * Fri Dec 16 2011 Dmitry V. Levin <ldv@altlinux.org> 9.3.6-alt7
 - Imported fixes for several DNSSEC vulnerabilities from RH bind
   (CVE-2009-4022, CVE-2010-0097, CVE-2010-3762, CVE-2011-4313);
