@@ -12,7 +12,7 @@
 Summary: SELinux policy configuration
 Name: selinux-policy
 Version: 3.11.1
-Release: alt2
+Release: alt3
 License: GPLv2+
 Group: System/Base
 Source: serefpolicy-%version.tar
@@ -47,8 +47,6 @@ Source29: serefpolicy-contrib-%version.tar
 Source30: booleans.subs_dist
 Url: http://oss.tresys.com/repos/refpolicy/
 BuildArch: noarch
-Requires: m4
-Requires: checkpolicy >= %CHECKPOLICYVER
 Requires(pre): policycoreutils >= %POLICYCOREUTILSVER libsemanage >= 2.1.8
 Requires(post): %_bindir/sha512sum
 
@@ -343,12 +341,13 @@ install -d -m 0755 %buildroot%_datadir/selinux/packages
 if [ -s %_sysconfdir/selinux/config ]; then
 	. %_sysconfdir/selinux/config
 	# if first time update booleans.local needs to be copied to sandbox
-	[ -f %_sysconfdir/selinux/$SELINUXTYPE/booleans.local ] && \
-		mv %_sysconfdir/selinux/$SELINUXTYPE/booleans.local \
-			%_sysconfdir/selinux/targeted/modules/active/
-	[ -f %_sysconfdir/selinux/$SELINUXTYPE/seusers ] && \
-		cp -f %_sysconfdir/selinux/$SELINUXTYPE/seusers \
-			%_sysconfdir/selinux/$SELINUXTYPE/modules/active/seusers
+	F="%_sysconfdir/selinux/$SELINUXTYPE/booleans.local"
+	D="%_sysconfdir/selinux/targeted/modules/active"
+	[ -f "$F" -a -d "$D" ] && mv "$F" "$D"/
+	F="%_sysconfdir/selinux/$SELINUXTYPE/seusers"
+	D="%_sysconfdir/selinux/$SELINUXTYPE/modules/active"
+	[ -f "$F" ] && cp -f "$F" "$D"/
+	exit 0
 else
 	#
 	# New install so we will default to targeted policy
@@ -500,11 +499,14 @@ exit 0
 
 
 %changelog
+* Tue Oct 16 2012 Led <led@altlinux.ru> 3.11.1-alt3
+- attempt to fix the %%postin script of selinux-policy package
+
 * Fri Oct 12 2012 Led <led@altlinux.ru> 3.11.1-alt2
 - update to Fedora's 3.11.1-36
 
 * Fri Oct 12 2012 Led <led@altlinux.ru> 3.11.1-alt1
-- build for ALTLinux
+- build for ALTLinux based on Fedora's 3.11.1-32
 
 * Wed May 23 2012 Mikhail Efremov <sem@altlinux.org> 2.20101213-alt1.fc3.9.13.1
 - Don't generate context for gadgetfs and 9p
