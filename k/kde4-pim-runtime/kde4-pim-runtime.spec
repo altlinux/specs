@@ -4,7 +4,7 @@
 %define rname kdepim-runtime
 %define major 4
 %define minor 9
-%define bugfix 1
+%define bugfix 2
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -32,7 +32,7 @@ Patch102: kdepim-4.9.1-alt-akonadi-sqlite3.patch
 Patch104: kdepim-4.8.0-alt-def-mixedmaildir-path.patch
 Patch105: kdepim-4.7.3-alt-migrate-pop3-passwords.patch
 Patch106: kdepim-4.7.3-alt-ignore-empty-accounts.patch
-Patch107: kdepim-4.7.4-alt-maildir-checks.patch
+Patch107: kdepim-4.9.1-alt-maildir-checks.patch
 Patch108: kdepim-4.7.4-alt-mixedmaildir-show-error.patch
 Patch109: kdepim-4.8.1-alt-def-nepomuk.patch
 
@@ -133,7 +133,7 @@ based on kdepim.
 %patch104 -p2
 %patch105 -p2
 %patch106 -p2
-#%patch107 -p2
+%patch107 -p2
 %patch108 -p2
 %patch109 -p1
 
@@ -222,6 +222,9 @@ based on kdepim.
 
 
 %changelog
+* Mon Oct 15 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
+- new version
+
 * Mon Oct 01 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
