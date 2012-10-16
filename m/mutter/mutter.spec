@@ -1,8 +1,8 @@
 %def_enable privatelib
 
 Name: mutter
-Version: 3.6.0
-Release: alt2
+Version: 3.6.1
+Release: alt1
 Epoch: 1
 Summary: Clutter based compositing GTK3 Window Manager
 License: GPLv2+
@@ -135,6 +135,9 @@ DATADIRNAME=share %configure \
 %_datadir/gnome/wm-properties/%name-wm.desktop
 
 %changelog
+* Tue Oct 16 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.6.1-alt1
+- 3.6.1
+
 * Mon Oct 08 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.6.0-alt2
 - mutter-gnome as noarch
 
