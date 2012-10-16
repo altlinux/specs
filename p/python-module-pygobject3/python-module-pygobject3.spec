@@ -5,7 +5,7 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.0
+Version: %major.1
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -88,6 +88,8 @@ export LD_PRELOAD=%_libdir/libpython%__python_version.so
 %doc README AUTHORS NEWS examples
 
 %exclude %python_sitelibdir/*/*.la
+# go to pythonpath
+%exclude %python_sitelibdir_noarch/*.egg-info
 
 %if_enabled devel_doc
 %files devel-doc
@@ -95,6 +97,9 @@ export LD_PRELOAD=%_libdir/libpython%__python_version.so
 %endif
 
 %changelog
+* Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
+- 3.4.1
+
 * Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
