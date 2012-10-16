@@ -2,7 +2,7 @@
 %def_without newtranslations
 
 Name: gcalctool
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GTK+3 based desktop calculator
@@ -63,6 +63,9 @@ install -pD -m644 data/%name.1 %buildroot%_man1dir/%name.1
 %doc AUTHORS NEWS README
 
 %changelog
+* Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 6.6.1-alt1
+- 6.6.1
+
 * Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 6.6.0-alt1
 - 6.6.0
 

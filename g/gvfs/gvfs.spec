@@ -20,7 +20,7 @@
 
 Name: gvfs
 Version: %ver_major.1
-Release: alt0.1
+Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -28,8 +28,8 @@ Group: System/Libraries
 URL: ftp://ftp.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 Patch: gvfs-1.11.3-alt-gettext.patch
 Patch1: gvfs-1.0.1-archive-integration.patch
 Patch3: gvfs-1.13.8-libgvfsdaemon+headers_install.patch
@@ -388,6 +388,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
+- 1.14.1 release
+
 * Wed Oct 10 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt0.1
 - 1.14.1 snapshot (407e0eb1b)
 

@@ -1,9 +1,9 @@
 %def_enable introspection
-%define ver_major 3.5
+%define ver_major 3.6
 %define api_ver 2.90
 
 Name: gucharmap
-Version: %ver_major.99
+Version: %ver_major.0
 Release: alt1
 
 Summary: gucharmap is a featureful Unicode character map
@@ -105,6 +105,9 @@ GObject introspection devel data for the GNOME Unicode character map library
 %endif
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.99-alt1
 - 3.5.99
 

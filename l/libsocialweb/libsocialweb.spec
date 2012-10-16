@@ -2,16 +2,17 @@
 %define ver_major 0.25
 
 Name: libsocialweb
-Version: %ver_major.20
-Release: alt2
+Version: %ver_major.21
+Release: alt1
 
 Summary: A social network data aggregator
 Group: System/Libraries
-License: LGPLv2
+License: LGPLv2+
 Url: http://www.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 Source1: flickr
 Source2: twitter
 Source3: lastfm
@@ -20,7 +21,7 @@ Source5: facebook
 Source6: facebook.key
 
 BuildRequires: libdbus-glib-devel libgeoclue-devel libgio-devel libGConf-devel
-BuildRequires: libgnome-keyring-devel gobject-introspection-devel intltool
+BuildRequires: libgnome-keyring-devel gobject-introspection-devel intltool gtk-doc
 BuildRequires: libjson-glib-devel libsoup-gnome-devel libxslt-devel NetworkManager-glib-devel
 BuildRequires: librest-devel libvala-devel vala-tools
 
@@ -94,11 +95,13 @@ Keys allowing access to various web services through libsocialweb.
 chmod 644 examples/*.py
 
 %build
+%autoreconf
 %configure --with-gnome \
 	--with-online=networkmanager \
 	--disable-static \
 	--enable-all-services \
-	--enable-vala-bindings
+	--enable-vala-bindings \
+	--enable-gtk-doc
 
 %make_build
 
@@ -135,7 +138,7 @@ cp %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %buildroot/%_datadir/li
 %dir %_datadir/%name/
 %_datadir/%name/services/
 %_datadir/dbus-1/services/%name.service
-%doc AUTHORS COPYING TODO
+%doc AUTHORS TODO README
 
 %exclude %_libdir/%name/services/*.la
 
@@ -168,6 +171,9 @@ cp %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %buildroot/%_datadir/li
 %_datadir/%name/keys/*
 
 %changelog
+* Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 0.25.21-alt1
+- 0.25.21 snapshot
+
 * Mon Mar 26 2012 Yuri N. Sedunov <aris@altlinux.org> 0.25.20-alt2
 - keys subpackage
 

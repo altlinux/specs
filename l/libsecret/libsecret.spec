@@ -1,4 +1,4 @@
-%define ver_major 0.10
+%define ver_major 0.11
 %define api_ver 1
 
 %def_disable static
@@ -120,6 +120,9 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
+- 0.11
+
 * Tue Sep 18 2012 Yuri N. Sedunov <aris@altlinux.org> 0.10-alt1
 - 0.10
 

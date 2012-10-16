@@ -16,8 +16,8 @@
 #%endif
 
 Name: epiphany
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: Epiphany is a GNOME web browser.
 Summary(ru_RU.UTF-8): Epiphany - интернет-браузер для графической оболочки GNOME.
@@ -25,8 +25,8 @@ Group: Networking/WWW
 License: GPL
 URL: http://www.gnome.org/projects/%name
 
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Provides: webclient
 
@@ -163,6 +163,9 @@ GObject introspection devel data for the Epiphany
 %endif
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Fri Oct 05 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
 - updated to c85e454e
 - build without WebKit2

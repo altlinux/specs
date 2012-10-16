@@ -2,7 +2,7 @@
 
 Name: gnome3
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -93,6 +93,8 @@ Requires: gedit >= %ver_major
 Requires: gnome-icon-theme >= %ver_major
 Requires: gnome-icon-theme-symbolic >= %ver_major
 Requires: gnome-themes-standard >= %ver_major
+Requires: libgtk3-engine-adwaita
+Requires: libgtk2-engine-adwaita
 
 ## Screensaver
 Requires: gnome-screensaver
@@ -128,7 +130,7 @@ Requires: gdm-gnome >= %ver_major
 ## Default web-browser (firefox or galeon?)
 Requires: epiphany >=  %epiphany_ver
 ## Epiphany extensions
-#Requires: epiphany-extensions
+Requires: epiphany-extensions
 ## Default mailer
 Requires: evolution >= %ver_major
 ## Default messenger
@@ -162,8 +164,8 @@ Requires: gnome-media >= %media_ver
 ## Default media player
 Requires: totem
 ## Stock GNOME games
-Requires: gnome-games >= 3.4.0
-#Requires: gnome-games >= %ver_major
+#Requires: gnome-games >= 3.4.0
+Requires: gnome-games >= %ver_major
 ## Default image viewer
 Requires: eog >= %ver_major
 Requires: eog-plugins >= %ver_major
@@ -355,6 +357,10 @@ itself).
 #%files a11y
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
+- restored gnome-games, epiphany-extensions
+- added libgtk2-engine-adwaita to -default
+
 * Fri Oct 05 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - added gnome-contacts in -default
 - temporarily removed buggy epiphany-extensions
