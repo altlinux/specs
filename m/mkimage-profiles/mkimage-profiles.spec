@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 0.8.3
+Version: 0.8.4
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -61,6 +61,10 @@ cp -a * %buildroot%mpdir
 %doc README QUICKSTART
 
 %changelog
+* Tue Oct 16 2012 Michael Shigorin <mike@altlinux.org> 0.8.4-alt1
+- worked around enhancements in current make-initrd-propagator
+  (thus fixed live image boot, finally)
+
 * Mon Oct 15 2012 Michael Shigorin <mike@altlinux.org> 0.8.3-alt1
 - make-3.82 support
 - fixed live image boot to some extent (see #27640, #27852)
