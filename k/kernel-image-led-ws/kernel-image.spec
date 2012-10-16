@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.46
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -490,7 +490,7 @@ Patch0670: linux-%kernel_branch.44-fix-fs.patch
 Patch0671: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0672: linux-%kernel_branch.42-fix-fs--block.patch
 Patch0673: linux-%kernel_branch.42-fix-fs--eventpoll.patch
-Patch0674: linux-%kernel_branch.42-fix-fs-btrfs.patch
+Patch0674: linux-%kernel_branch.45-fix-fs-btrfs.patch
 Patch0675: linux-%kernel_branch.44-fix-fs-cachefiles.patch
 Patch0676: linux-%kernel_branch.42-fix-fs-ceph.patch
 Patch0677: linux-%kernel_branch.42-fix-fs-cifs.patch
@@ -628,7 +628,7 @@ Patch1118: linux-%kernel_branch.43-feat-fs-f2fs.patch
 Patch1119: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
 Patch1120: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
 Patch1121: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1122: linux-%kernel_branch.42-feat-fs-overlayfs.patch
+Patch1122: linux-%kernel_branch.44-feat-fs-overlayfs.patch
 Patch1123: linux-%kernel_branch.44-feat-fs-reiser4.patch
 Patch1124: linux-%kernel_branch-feat-fs-subfs.patch
 Patch1125: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
@@ -1943,6 +1943,12 @@ config_disable CPU_SUP_AMD
 config_disable CPU_SUP_INTEL
 %endif
 
+%ifarch %ix86
+%ifnarch i386 i486 i586
+config_disable EISA
+%endif
+%endif
+
 config_disable \
 %if_disabled sound
 	SOUND USB_EMI\.* \
@@ -2689,6 +2695,11 @@ fi
 
 
 %changelog
+* Tue Oct 16 2012 Led <led@altlinux.ru> 3.0.46-alt4
+- updated:
+  + fix-fs-btrfs
+- enable EISA for i[345]86 only
+
 * Mon Oct 15 2012 Led <led@altlinux.ru> 3.0.46-alt3
 - added:
   + fix-drivers-firewire--firewire-core
