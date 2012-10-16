@@ -2,7 +2,7 @@
 
 Name: libncursesxx
 Version: 0.0.1
-Release: alt15
+Release: alt16
 
 Summary: C++ bindings for ncurses library
 License: LGPL
@@ -61,6 +61,9 @@ Contents static libraries for %name
 %_libdir/*.a
 
 %changelog
+* Tue Oct 16 2012 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt16
+- fix build (disable -pedantic)
+
 * Tue May 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt15
 - fix build
 
