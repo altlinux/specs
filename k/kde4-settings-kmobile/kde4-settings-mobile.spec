@@ -1,3 +1,5 @@
+%define _kde_alternate_placement 1
+%add_findpackage_path %_kde4_bindir
 
 %define theme kmobile
 %define Theme KMobile
@@ -5,11 +7,11 @@
 %define thisconfdir %kdeconfdir/%theme
 
 %define major 0
-%define minor 2
-%define bugfix 13
+%define minor 3
+%define bugfix 0
 Name: kde4-settings-%theme
 Version: %major.%minor.%bugfix
-Release: alt11
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: %Theme - specific KDE settings
@@ -23,8 +25,11 @@ Requires: kde-common >= 4
 
 Source: plasma-contour-config-%version.tar
 Source1: kmobile-settings-%version.tar
+Patch1: alt-startactive-modules.patch
+Patch2: alt-startactive-kwin.patch
+Patch3: alt-startactive-skel.patch
 
-BuildRequires: kde-common-devel qmergeinifiles rpm-macros-alternatives
+BuildRequires: cmake gcc-c++ kde-common-devel qmergeinifiles rpm-macros-alternatives
 
 %description
 %Theme - specific KDE settings
@@ -33,8 +38,33 @@ BuildRequires: kde-common-devel qmergeinifiles rpm-macros-alternatives
 %prep
 %setup -qn plasma-contour-config-%version -a1
 mv kmobile-settings-* kmobile-settings
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
+# addon configs
+ls -1 skel/dotkde/share/config/* kmobile-settings/appconfig/* | \
+while read f; do
+    conffile=`basename "$f"`
+    qmergeinifiles appconfig/$conffile $f
+done
+
+# autostart
+mkdir -p autostart
+for f in skel/dotconfig/autostart/*.desktop kmobile-settings/autostart/*.desktop
+do
+    install -m 0644 $f autostart/
+done
+
+# prifile.d
+rm -rf profile.d/*
+install -m 0755 kmobile-settings/profile.d/startkde profile.d/
+
+# startactive modules
+pushd startactive-modules
+%K4build
+popd
 
 %install
 mkdir -p %buildroot/%_altdir
@@ -42,41 +72,45 @@ cat >%buildroot/%_altdir/%name <<__EOF__
 %kdeconfdir/current	%thisconfdir 50
 __EOF__
 
-#
+# configs
 mkdir -p %buildroot/%thisconfdir/share/config/
-install -m 0644 *rc %buildroot/%thisconfdir/share/config
-install -m 0644 emaildefaults %buildroot/%thisconfdir/share/config
-install -m 0644 kdeglobals %buildroot/%thisconfdir/share/config
+install -m 0644 appconfig/* %buildroot/%thisconfdir/share/config/
 
-#install -m 0644 default-apps %buildroot/%thisconfdir/share/config
 
 #
 #mkdir -p %buildroot/%kdeconfdir/xdg/menus/applications-merged/
 #install -m 0644 %theme.menu %buildroot/%kdeconfdir/xdg/menus/applications-merged/
 
-# addon configs
-pushd kmobile-settings
-ls -1 *rc kdeglobals | \
-while read f; do
-    qmergeinifiles %buildroot/%thisconfdir/share/config/$f $f
-done
-popd
-
 # autostart
 mkdir -p %buildroot/%thisconfdir/share/autostart/
-for f in kmobile-settings/*.desktop
-do
-    install -m 0644 $f %buildroot/%thisconfdir/share/autostart/
-done
+install -m 0644 autostart/* %buildroot/%thisconfdir/share/autostart/
 
 # startkde
-install -m 0755 kmobile-settings/startkde %buildroot/%thisconfdir/
+install -m 0755 profile.d/startkde %buildroot/%thisconfdir/
+
+# startactive modules
+#mkdir -p %buildroot/%_K4apps/startactive/modules
+#install -m 0644 startactive-modules/* %buildroot/%_K4apps/startactive/modules/
+pushd startactive-modules
+%K4install
+popd
+mkdir -p %buildroot/%thisconfdir/share/apps/startactive/modules
+install -m 0644 %buildroot/%_K4apps/startactive/modules/* %buildroot/%thisconfdir/share/apps/startactive/modules/
+rm -rf %buildroot/%_K4apps/startactive/modules
+
+#install -m 0644 default-apps %buildroot/%thisconfdir/share/config
 
 %files
 %config %_altdir/%name
 %config %thisconfdir
 
 %changelog
+* Wed Oct 17 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
+- new version
+
+* Wed Apr 18 2012 Sergey V Turchin <zerg@altlinux.org> 0.2.13-alt10.M60P.1
+- build for M60P
+
 * Wed Mar 14 2012 Sergey V Turchin <zerg@altlinux.org> 0.2.13-alt11
 - increase default font size
 - don't autostart klipper

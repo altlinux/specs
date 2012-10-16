@@ -2,7 +2,7 @@
 %define rname kde-artwork-active
 
 Name: kde4-artwork-active
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Group: Sound
@@ -40,11 +40,17 @@ KDE mobile artwork
 
 
 %files -f %rname.lang
-%_K4apps/kscreenlocker/*
+%_K4apps/ksmserver/screenlocker/*
 %_K4apps/ksplash/Themes/ActiveAir/
 %_K4wall/*.png
 %_K4wall/*.jpg
 
 %changelog
+* Tue Oct 16 2012 Sergey V Turchin <zerg@altlinux.org> 0.3-alt1
+- new version
+
+* Wed Apr 18 2012 Sergey V Turchin <zerg@altlinux.org> 0.2-alt0.M60P.1
+- build for M60P
+
 * Wed Feb 08 2012 Sergey V Turchin <zerg@altlinux.org> 0.2-alt1
 - initial specfile

@@ -2,7 +2,7 @@
 
 %define rname declarative-plasmoids
 Name: kde4-declarative-plasmoids
-Version: 4.9
+Version: 4.10
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -45,5 +45,11 @@ KDE declarative plasmoids
 %_K4srv/*
 
 %changelog
+* Tue Oct 16 2012 Sergey V Turchin <zerg@altlinux.org> 4.10-alt1
+- new version
+
+* Wed Apr 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.9-alt0.M60P.1
+- build for M60P
+
 * Wed Feb 08 2012 Sergey V Turchin <zerg@altlinux.org> 4.9-alt1
 - initial specfile
