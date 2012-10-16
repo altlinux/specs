@@ -1,7 +1,7 @@
 %define ver_major 3.6
 
 Name: gnome-terminal
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME Terminal
@@ -85,6 +85,9 @@ fi
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

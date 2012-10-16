@@ -5,7 +5,7 @@
 %def_enable shape
 
 Name: metacity
-Version: %ver_major.8
+Version: %ver_major.13
 Release: alt1
 
 Summary: Metacity window manager
@@ -303,6 +303,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.13-alt1
+- 2.34.13
+
 * Fri Sep 07 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.8-alt1
 - 2.34.8
 

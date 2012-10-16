@@ -7,7 +7,7 @@
 %def_enable introspection
 
 Name: evince
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Summary: A document viewer
 License: GPL
@@ -158,6 +158,9 @@ subst '/NoDisplay/d' %buildroot%_desktopdir/%name.desktop
 %exclude %_libdir/nautilus/extensions-3.0/libevince-properties-page.la
 
 %changelog
+* Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

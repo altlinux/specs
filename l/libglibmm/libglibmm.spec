@@ -2,7 +2,7 @@
 %define major 2.33
 
 Name: libglibmm
-Version: %major.12
+Version: %major.14
 Release: alt1
 Summary: C++ wrapper for GLib
 License: LGPL
@@ -13,7 +13,7 @@ Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 Source: ftp://ftp.gnome.org/pub/gnome/sources/glibmm/%major/%rname-%version.tar.xz
 
 AutoReq: yes, noperl
-BuildRequires: gcc-c++ mm-common libgio-devel >= 2.33.12 libsigc++2.0-devel
+BuildRequires: gcc-c++ mm-common libgio-devel >= 2.34.0 libsigc++2.0-devel
 
 %description
 A C++ interface for glib library.
@@ -76,6 +76,9 @@ This package contains all API documentation for glibmm.
 %_docdir/%rname-2.4
 
 %changelog
+* Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 2.33.14-alt1
+- 2.33.14
+
 * Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 2.33.12-alt1
 - 2.33.12
 

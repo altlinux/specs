@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-documents
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A document manager application for GNOME
@@ -108,6 +108,9 @@ make DESTDIR=%buildroot install
 %exclude %pkgdatadir/gir-1.0/Gd-%api_ver.gir
 
 %changelog
+* Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Thu Sep 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

@@ -17,7 +17,7 @@
 %define strict_build_settings 1
 
 Name: evolution
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Integrated GNOME mail client, calendar and address book
@@ -320,6 +320,9 @@ rm -rf %buildroot%_localstatedir/scrollkeeper
 %_datadir/glib-2.0/schemas/org.gnome.evolution.spamassassin.gschema.xml
 
 %changelog
+* Sun Oct 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Sat Sep 22 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
