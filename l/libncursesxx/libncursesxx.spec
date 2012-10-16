@@ -1,8 +1,6 @@
-%set_gcc_version 4.1
-
 Name: libncursesxx
 Version: 0.0.1
-Release: alt16
+Release: alt17
 
 Summary: C++ bindings for ncurses library
 License: LGPL
@@ -10,14 +8,11 @@ Group: System/Libraries
 
 Url: http://sisyphus.ru/ru/srpm/Sisyphus/libncursesxx
 
-%define real_name ncursesxx
-
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
 
-# Automatically added by buildreq on Fri Mar 19 2004
-BuildRequires: gcc4.1-c++ libncurses-devel libstdc++4.1-devel libtinfo-devel
+BuildRequires: gcc-c++ libncurses-devel libstdc++-devel libtinfo-devel
 
 Conflicts: libcolorifer <= 1.0.1-alt7
 
@@ -61,6 +56,10 @@ Contents static libraries for %name
 %_libdir/*.a
 
 %changelog
+* Tue Oct 16 2012 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt17
+- fix build with gcc 4.7 (Ivan A. Melnikov)
+- re-enable build with -pedantic
+
 * Tue Oct 16 2012 Denis Smirnov <mithraen@altlinux.ru> 0.0.1-alt16
 - fix build (disable -pedantic)
 
