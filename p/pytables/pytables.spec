@@ -5,7 +5,7 @@
 
 Name: py%oname
 Version: 2.4.0
-Release: alt1.git20120720
+Release: alt2.git20120720
 Epoch: 1
 Summary: Managing hierarchical datasets
 License: MIT
@@ -327,6 +327,9 @@ cp -fR bench contrib %buildroot%python_sitelibdir/%oname/
 %_docdir/%name
 
 %changelog
+* Tue Oct 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.4.0-alt2.git20120720
+- Rebuilt with updated NumPy
+
 * Thu Sep 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.4.0-alt1.git20120720
 - Version 2.4.0
 
