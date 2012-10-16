@@ -1,6 +1,6 @@
 
 Name: deepsolver
-Version: 0.1.0
+Version: 0.1.1
 Release: alt1
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
@@ -32,6 +32,7 @@ Requires: lib%name-devel
 Summary: The utilities for Deepsolver repository administration
 Group: System/Configuration/Packaging
 Requires: %name
+Requires: lib%name = %version-%release
 
 %description
 Deepsolver is a package manipulation tool for GNU/Linux system. It
@@ -84,7 +85,7 @@ make DESTDIR=%buildroot install
 %__rm -f %buildroot%_libdir/lib%name.la
 
 %files
-%doc AUTHORS COPYING NEWS README
+%doc AUTHORS COPYING NEWS README ChangeLog doc/ru/user-manual/user-manual.pdf
 
 %files -n lib%name
 %_libdir/lib%name-*.so*
@@ -101,6 +102,9 @@ make DESTDIR=%buildroot install
 %_bindir/ds-provides
 
 %changelog
+* Tue Oct 16 2012 Michael Pozhidaev <msp@altlinux.ru> 0.1.1-alt1
+- New version (ds-patch utility now has --add-list and --del-list command line options)
+
 * Fri Sep 28 2012 Michael Pozhidaev <msp@altlinux.ru> 0.1.0-alt1
 -Initial package 
 
