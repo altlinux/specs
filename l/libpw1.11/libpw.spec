@@ -4,7 +4,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: libpw1.11
 Version: 1.11.2
-Release: alt0.9cvs20061011.2
+Release: alt0.9cvs20061011.3
 
 Summary: Portable Windows Libary
 Summary(ru_RU.KOI8-R): Переносимая Windows-библиотека
@@ -18,6 +18,7 @@ Url: http://snapshots.gnomemeeting.net/
 Source: http://snapshots.ekiga.net/cvs/%_name-cvs.tar.bz2
 #Source: http://www.ekiga.org/downloads/beta2/sources/pwlib-%version.tar.bz2
 Patch: libpw-1.11.2-alt-v4l.patch
+Patch1: libpw-1.11.gcc47.patch
 
 %def_without dc
 %def_without avc
@@ -99,6 +100,7 @@ This package contains the AVC plugin for pwlib
 %prep
 %setup -q -n %_name
 %patch -p2
+%patch1 -p2
 sed -i "s|LIBRARIES = |LIBRARIES=|" ./configure
 
 %build
@@ -160,6 +162,9 @@ ln -snf %_datadir/%_name/make/ptlib-config %buildroot%_bindir/ptlib-config
 %endif
 
 %changelog
+* Tue Oct 16 2012 Denis Smirnov <mithraen@altlinux.ru> 1.11.2-alt0.9cvs20061011.3
+- fix build with gcc47
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.2-alt0.9cvs20061011.2
 - Fixed build
 
