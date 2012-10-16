@@ -1,7 +1,7 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
-Version: 14.3.2
-Release: alt2
+Version: 14.4.0
+Release: alt1
 License: LGPL
 Group: Sound
 BuildRequires: glibc-devel-static libalsa-devel libao-devel libavformat-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel rpm-build-ruby
@@ -36,8 +36,6 @@ Requires: libsox-fmt-wavpack = %version-%release
 Requires: libsox-fmt-xi = %version-%release
 Requires: libsox-fmt-caf = %version-%release
 Requires: libsox-fmt-fap = %version-%release
-Patch1: %name-13.0.0-alt-gsm.patch
-Patch2: %name.ffmpeg.patch
 
 %package -n libsox
 Summary: The SoX sound file format converter libraries
@@ -290,7 +288,6 @@ or manipulate some sounds.
 %setup -q
 sed -i 's,\-I/lib/modules/`uname -r`/build/include,,' configure*
 sed -i 's,CODEC_TYPE_AUDIO,AVMEDIA_TYPE_AUDIO,' src/ffmpeg.c
-sed -i 's,PKT_FLAG_KEY,AV_PKT_FLAG_KEY,' src/ffmpeg.c
 sed -i 's,av_alloc_format_context,avformat_alloc_context,' src/ffmpeg.c
 
 %build
@@ -400,6 +397,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Fri Oct 12 2012 Denis Smirnov <mithraen@altlinux.ru> 14.4.0-alt1
+- 14.4.0
+
 * Wed May 23 2012 Denis Smirnov <mithraen@altlinux.ru> 14.3.2-alt2
 - fix build
 - build more subpackages
