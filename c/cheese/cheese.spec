@@ -5,7 +5,7 @@
 %def_enable introspection
 
 Name: cheese
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Cheese is a Photobooth-inspired application for taking pictures and videos
@@ -28,6 +28,7 @@ Requires: gnome-video-effects
 Requires: gst-plugins-bad%gst_api_ver
 # matroska (webmmux)
 Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-ugly%gst_api_ver
 
 BuildPreReq: gnome-doc-utils gnome-common intltool yelp-tools itstool
 BuildPreReq: libgio-devel >= %glib_ver
@@ -145,6 +146,9 @@ GObject introspection devel data for the Cheese library.
 %endif
 
 %changelog
+* Wed Oct 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

@@ -1,4 +1,4 @@
-%define ver_major 3.5
+%define ver_major 3.6
 %define api_ver 3.0
 %define panel_api_ver 4.0
 
@@ -8,7 +8,7 @@
 %def_enable ssh
 
 Name: vinagre
-Version: %ver_major.90
+Version: %ver_major.1
 Release: alt1
 
 Summary: VNC client for the GNOME Desktop
@@ -84,6 +84,9 @@ rm -rf %buildroot%_datadir/doc
 %doc AUTHORS NEWS README
 
 %changelog
+* Wed Oct 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Fri Sep 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.90-alt1
 - 3.5.90
 
