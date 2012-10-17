@@ -2,13 +2,11 @@
 
 Summary: Server and Client software to interoperate with Windows machines
 Name: samba
-Version: 3.6.6
+Version: 3.6.8
 Release: alt1
 License: GPLv3+ and LGPLv3+
 Group: System/Servers
 Url: http://www.samba.org/
-
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: http://www.samba.org/samba/ftp/stable/%name-%version.tar.gz
 
@@ -195,10 +193,6 @@ cd ..
 #Remove smbldap-tools, they are already packaged separately in Fedora
 rm -fr examples/LDAP/smbldap-tools-*/
 
-pushd docs-xml
-%autoreconf
-popd
-
 %build
 pushd %samba_source
 sh autogen.sh
@@ -219,29 +213,23 @@ CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE -DLDAP_DEPRECATED" %configure \
     --with-dnsupdate \
     --with-libsmbclient \
     --with-libsmbsharemodes \
-    --with-mmap \
     --with-pam \
     --with-pam_smbpass \
     --with-quotas \
     --with-sendfile-support \
     --with-syslog \
     --with-utmp \
-    --with-vfs \
     --with-winbind \
-    --without-smbwrapper \
     --with-lockdir=/var/lib/samba \
     --with-piddir=/var/run \
     --with-mandir=%_mandir \
     --with-privatedir=/var/lib/samba/private \
     --with-logfilebase=/var/log/samba \
-    --with-libdir=%_libdir \
     --with-modulesdir=%_libdir/samba \
     --with-configdir=%_sysconfdir/samba \
     --with-pammodulesdir=%_lib/security \
     --with-swatdir=%_datadir/swat \
     --with-shared-modules=idmap_ad,idmap_rid,idmap_adex,idmap_hash,idmap_tdb2 \
-    --with-cifsupcall \
-    --with-cifsumount \
     --with-cluster-support \
     --with-libtalloc=no \
     --enable-external-libtalloc=yes \
@@ -249,23 +237,18 @@ CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE -DLDAP_DEPRECATED" %configure \
 #    --enable-external-libtdb=yes \
 #    --with-aio-support \
 
-make  pch
-
-make  LD_LIBRARY_PATH=$RPM_BUILD_DIR/%name-%version/%samba_source/bin \
-%{?_smp_mflags} \
-    all ../nsswitch/libnss_wins.so modules test_pam_modules test_nss_modules test_shlibs
-
-make  LD_LIBRARY_PATH=$RPM_BUILD_DIR/%name-%version/%samba_source/bin \
-%{?_smp_mflags} \
-    -C lib/netapi/examples
-
-make  debug2html smbfilter
+%make_build pch
+%make_build all \
+	../nsswitch/libnss_wins.so modules test_pam_modules test_nss_modules test_shlibs \
+	debug2html smbfilter
+%make_build -C lib/netapi/examples LD_LIBRARY_PATH=$PWD/bin
 popd
 
 pushd docs-xml
-%configure  --with-samba-sources=../source3
-make smbdotconf/parameters.all.xml
-make release
+%autoreconf
+%configure
+%make_build smbdotconf/parameters.all.xml
+%make_build release
 popd
 
 %install
@@ -601,6 +584,10 @@ true
 %_pixmapsdir/samba/logo-small.png
 
 %changelog
+* Wed Oct 17 2012 Led <led@altlinux.ru> 3.6.8-alt1
+- 3.6.8
+- cleaned up spec lightly
+
 * Tue Jun 26 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.6.6-alt1
 - 3.6.6
 
