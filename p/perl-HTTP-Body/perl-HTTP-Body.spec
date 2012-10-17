@@ -1,7 +1,7 @@
 %define module HTTP-Body
 
 Name: perl-%module
-Version: 1.15
+Version: 1.17
 Release: alt1
 
 Summary: %module - HTTP Body Parser
@@ -33,6 +33,9 @@ export TEST_POD=1
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.17-alt1
+- automated CPAN update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
 - automated CPAN update
 
