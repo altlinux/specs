@@ -1,6 +1,6 @@
 %define dist IO-AIO
 Name: perl-%dist
-Version: 4.15
+Version: 4.18
 Release: alt1
 
 Summary: Asynchronous Input/Output
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/ML/MLEHMANN/IO-AIO-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Oct 08 2011
 BuildRequires: perl-common-sense perl-devel
@@ -42,6 +42,9 @@ concurrently.
 %perl_vendor_archlib/IO
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 4.18-alt1
+- automated CPAN update
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 4.15-alt1
 - 4.0 -> 4.15
 - built for perl-5.16
