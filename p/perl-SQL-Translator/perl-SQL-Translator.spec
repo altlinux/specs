@@ -1,5 +1,5 @@
 Name: perl-SQL-Translator
-Version: 0.11013
+Version: 0.11016
 Release: alt1
 
 Summary: Manipulate structured data definitions (SQL and more)
@@ -15,7 +15,7 @@ BuildArch: noarch
 %add_findreq_skiplist */Test/SQL/Translator*
 
 # Automatically added by buildreq on Sat Nov 19 2011 (-bi)
-BuildRequires: perl-Carp-Clan perl-Class-Base perl-Class-Data-Inheritable perl-Class-MakeMethods perl-Class-XSAccessor perl-DBI perl-Digest-SHA1 perl-File-ShareDir perl-GD perl-Graph perl-Moo perl-Spreadsheet-ParseExcel perl-Template perl-Test-Differences perl-Test-Exception perl-Test-Pod perl-Text-RecordParser perl-XML-LibXML perl-XML-Parser perl-XML-Writer perl-YAML perl(Digest/SHA.pm)
+BuildRequires: perl-Carp-Clan perl-Class-Base perl-Class-Data-Inheritable perl-Class-MakeMethods perl-Class-XSAccessor perl-DBI perl-Digest-SHA1 perl-File-ShareDir perl-GD perl-Graph perl-Moo perl-Spreadsheet-ParseExcel perl-Template perl-Test-Differences perl-Test-Exception perl-Test-Pod perl-Text-RecordParser perl-XML-LibXML perl-XML-Parser perl-XML-Writer perl-YAML perl(Digest/SHA.pm) perl(Package/Variant.pm)
 
 %description
 SQL::Translator is a group of Perl modules that converts vendor-specific
@@ -43,6 +43,9 @@ delimited text files.
 %perl_vendor_privlib/auto/share/dist/SQL-Translator
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.11016-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.11013-alt1
 - automated CPAN update
 
