@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-MARC-Charset
-Version: 1.0
-Release: alt2.1
+Version: 1.33
+Release: alt1
 
 Summary: convert MARC-8 encoded strings to UTF-8
 
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/G/GM/GMCHARLT/MARC-Charset-%{version}.tar.gz
 
 # Automatically added by buildreq on Sat Jul 05 2008
 BuildRequires: perl-Class-Accessor perl-DBM perl-Log-Agent perl-Test-Pod perl-Unicode-Normalize perl-XML-SAX perl-unicore
@@ -50,6 +50,9 @@ allows you to put non-Roman scripts in MARC bibliographic records.
 %perl_vendor_privlib/MARC*
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.33-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
