@@ -4,7 +4,7 @@
 %def_disable wayland_compositor
 
 Name: clutter
-Version: 1.12.0
+Version: 1.12.2
 Release: alt1
 Summary: Clutter Core Library
 License: LGPLv2+
@@ -24,7 +24,7 @@ BuildRequires: libcairo-devel libcairo-gobject-devel
 BuildRequires: libgio-devel >= %glib_ver libgudev-devel libpango-devel libpango-gir-devel
 BuildRequires: gobject-introspection-devel libatk-devel libatk-gir-devel libjson-glib-devel libjson-glib-gir-devel
 BuildRequires: libcogl-devel >= %cogl_ver libcogl-gir-devel
-%{?_enable_wayland:BuildRequires: libwayland-client-devel libxkbcommon-devel libgdk-pixbuf-devel}
+%{?_enable_wayland:BuildRequires: libwayland-client-devel libwayland-cursor-devel libxkbcommon-devel libgdk-pixbuf-devel}
 %{?_enable_wayland_compositor:BuildRequires: libwayland-server-devel}
 
 %description
@@ -131,6 +131,9 @@ Contains developer documentation for %name.
 
 
 %changelog
+* Wed Oct 17 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.2-alt1
+- 1.12.2
+
 * Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
 - 1.12.0
 
