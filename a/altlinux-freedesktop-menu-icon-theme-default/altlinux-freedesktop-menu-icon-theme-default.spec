@@ -1,5 +1,5 @@
 Name: altlinux-freedesktop-menu-icon-theme-default
-Version: 0.0.23
+Version: 0.0.24
 Release: alt1
 
 Group: Graphical desktop/Other
@@ -37,6 +37,9 @@ done
 %_iconsdir/hicolor/scalable/categories/*
 
 %changelog
+* Thu Oct 18 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.24-alt1
+- MATE support
+
 * Mon May 16 2011 Igor Vlasenko <viy@altlinux.ru> 0.0.23-alt1
 - fixed missing symlinks
 
