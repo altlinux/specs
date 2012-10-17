@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Net-Syslogd
-Version: 0.04
+Version: 0.09
 Release: alt1
 
 Summary: Perl implementation of Syslog Listener
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Eugene Prokopiev <enp@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/V/VI/VINSWORLD/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/V/VI/VINSWORLD/Net-Syslogd-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Feb 28 2012
 BuildRequires: perl-devel
@@ -48,6 +48,9 @@ and attempt to decode them according to RFC 3164.
 %perl_vendor_privlib/Net/*
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- automated CPAN update
+
 * Tue Feb 28 2012 Eugene Prokopiev <enp@altlinux.ru> 0.04-alt1
 - initial build for ALT Linux Sisyphus
 
