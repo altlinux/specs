@@ -1,6 +1,6 @@
 %define dist IO-Socket-SSL
 Name: perl-%dist
-Version: 1.76
+Version: 1.77
 Release: alt1
 
 Summary: SSL socket interface class
@@ -8,7 +8,7 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SU/SULLR/IO-Socket-SSL-%{version}.tar.gz
 Patch: IO-Socket-SSL-1.76-alt-deps.patch
 
 BuildArch: noarch
@@ -36,6 +36,9 @@ interface methods.
 %perl_vendor_privlib/IO
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.77-alt1
+- automated CPAN update
+
 * Tue Sep 11 2012 Vladimir Lettiev <crux@altlinux.ru> 1.76-alt1
 - 1.49 -> 1.76
 - use perl-IO-Socket-IP instead of IO::Socket::INET6
