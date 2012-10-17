@@ -1,8 +1,8 @@
 %define module_name Barcode-Code128
 
 Name: perl-%module_name
-Version: 2.01
-Release: alt3.1
+Version: 2.21
+Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -11,11 +11,7 @@ License: Public Domain
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/modules/by-module/Barcode/%module_name-%version.tar.gz
-
-# Author thinks that gif no more supported by libgd and perl GD module.
-# But this is not true.
-Patch1: Barcode-Code128-2.01-creategif.patch
+Source: http://www.cpan.org/authors/id/W/WR/WRW/Barcode-Code128-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -30,7 +26,6 @@ technology if desired.
 
 %prep
 %setup -n %module_name-%version
-%patch1 -p1
 
 # From PLD spec:
 # module generates correct image, but a bit different to
@@ -50,6 +45,10 @@ mv t/gif.t{,.broken}
 %perl_vendor_privlib/Barcode/
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.21-alt1
+- automated CPAN update
+- dropped Patch1: Barcode-Code128-2.01-creategif.patch (deprecated)
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 2.01-alt3.1
 - repair after perl 5.12 upgrade using girar-nmu
 
