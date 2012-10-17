@@ -5,8 +5,8 @@
 #%%define patchlevel rc14
 
 Name: dhcp
-Version: 3.0.7
-Release: alt8
+Version: 4.2.4.P2
+Release: alt1
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -30,7 +30,18 @@ Source11: dhcpd.chroot.conf
 Source12: dhcpd.chroot.lib
 Source13: sethostname.sh
 
-Patch: dhcp-%version-%release.patch
+Patch0001: 0001-Apply-dst_api-fd-leak-fixes-from-dhcp-3.0.5-alt-warn.patch
+Patch0002: 0002-Apply-dhcp-3.0.5-alt-warnings.patch.patch
+Patch0003: 0003-Apply-dhcp-3.0.3-alt-defaults.patch.patch
+Patch0004: 0004-Apply-dhcp-3.0.3-alt-daemonize.patch.patch
+Patch0005: 0005-Apply-dhcp-3.0.5-owl-alt-support-contact.patch.patch
+Patch0006: 0006-Update-and-apply-dhcp-3.0.4-owl-bound.patch.patch
+Patch0007: 0007-Apply-dhcp-3.0.3-rh-dhcpctl-man.patch.patch
+Patch0008: 0008-Apply-dhcp-3.0.3-rh-assemble_udp_ip_header.patch.patch
+Patch0009: 0009-Apply-dhcp-3.0.3-rh-failover-ports.patch.patch
+Patch0010: 0010-Apply-manpage-correction-from-RH-184484.patch
+Patch0011: 0011-Update-and-apply-dhcp-3.0.3-owl-alt-drop_priv.patch.patch
+Patch0012: 0012-Build-with-libisc-export-devel-RH-dhcp-4.2.2-remove-.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -39,6 +50,10 @@ BuildPreReq: groff-base, libcap-devel
 
 # Chrooted environments
 %define ROOT %_localstatedir/%name
+
+# Automatically added by buildreq on Wed Sep 26 2012
+# optimized out: libisc-export
+BuildRequires: libcap-devel libisc-export-devel
 
 %package common
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -127,7 +142,18 @@ with the Internet Software Consortium (ISC) dhcpctl API.
 
 %prep
 %setup -n %srcname -a1
-%patch -p1
+%patch0001 -p2
+%patch0002 -p2
+%patch0003 -p2
+%patch0004 -p2
+%patch0005 -p2
+%patch0006 -p2
+%patch0007 -p2
+%patch0008 -p2
+%patch0009 -p2
+%patch0010 -p2
+%patch0011 -p2
+%patch0012 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -142,8 +168,11 @@ find server -type f -not -name Makefile\* -print0 |
 
 %build
 %add_optflags -fpie -fno-strict-aliasing -Wno-unused -Werror -Dlint
-./configure --copts "%optflags"
-%make_build CC=%__cc DEBUG=
+%autoreconf
+%configure --with-libbind=%{_includedir} --with-libbind-libs=%{_libdir}
+## ./configure --copts "%optflags"
+%make_build DEBUG=
+## CC=%__cc DEBUG=
 
 # {{{ install
 
@@ -187,7 +216,7 @@ for n in all conf lib; do
 	install -pD -m750 "%_sourcedir/dhcpd.chroot.$n" \
 		"%buildroot/etc/chroot.d/dhcpd.$n"
 done
-%__subst -p 's,%%ROOT,%ROOT/dhcpd,g' "%buildroot/etc/chroot.d/"*
+sed -i 's,%%ROOT,%ROOT/dhcpd,g' "%buildroot/etc/chroot.d/"*
 mkdir -p %buildroot%ROOT/dhcpd{/etc,/%_lib,/var/{nis,yp/binding}}
 touch %buildroot%ROOT/dhcpd{/etc/{localtime,hosts,services,{host,nsswitch,resolv}.conf},/var/nis/NIS_COLD_START}
 
@@ -198,7 +227,10 @@ install -pD -m644 %_sourcedir/dhcrelay.sysconfig \
 	%buildroot/etc/sysconfig/dhcrelay
 
 # dhclient
+install -pD -m755 client/scripts/linux %buildroot/sbin/dhclient-script
 rln /sbin/dhclient-script /etc/%name/
+rln %_sbindir/dhclient /sbin/dhclient
+
 install -m755 %_sourcedir/dhclient-enter-hooks \
 	%buildroot/etc/%name/
 install -m755 %_sourcedir/dhclient-exit-hooks \
@@ -226,7 +258,7 @@ cp -a LICENSE README RELNOTES update_dhcp.pl doc \
 # {{{ scripts
 
 %pre common
-/usr/sbin/groupadd -r -f %name
+%_sbindir/groupadd -r -f %name
 
 %pre client
 rm -f /var/run/dhclient.restart
@@ -252,7 +284,7 @@ if [ -f /var/run/dhclient.restart ]; then
 fi
 
 %pre server
-/usr/sbin/useradd -r -n -g %name -d %ROOT/dhcpd -s /dev/null -c 'The ISC DHCP server daemon' dhcpd >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -n -g %name -d %ROOT/dhcpd -s /dev/null -c 'The ISC DHCP server daemon' dhcpd >/dev/null 2>&1 ||:
 rm -f /var/run/dhcpd.restart
 # stop _old_ dhcpd if running
 if [ $1 -eq 1 ] && [ -x %_initdir/dhcpd ] && %_initdir/dhcpd status >/dev/null 2>&1; then
@@ -291,7 +323,7 @@ fi
 /sbin/chkconfig --add dhcpd
 
 %pre relay
-/usr/sbin/useradd -r -n -g %name -d /var/empty -s /dev/null -c 'The ISC DHCP relay daemon' dhcrelay >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -n -g %name -d /var/empty -s /dev/null -c 'The ISC DHCP relay daemon' dhcrelay >/dev/null 2>&1 ||:
 rm -f /var/run/dhcrelay.restart
 if [ $1 -ge 2 ] && [ -x %_initdir/dhcrelay ] && %_initdir/dhcrelay status >/dev/null 2>&1; then
 	%_initdir/dhcrelay condstop && touch /var/run/dhcrelay.restart ||:
@@ -323,8 +355,9 @@ fi
 %config /etc/%name/dhclient-*-hooks
 %config(noreplace) /etc/%name/dhclient.d
 %config(noreplace) /etc/%name/dhclient.conf
-/etc/%name/dhclient-script
-/sbin/dhclient*
+%attr(755,root,dhcp) /etc/%name/dhclient-script
+%attr(750,root,dhcp) /sbin/dhclient*
+%attr(750,root,dhcp) %_sbindir/dhclient*
 %_man5dir/dhclient.*
 %_man8dir/dhclient*
 %attr(700,root,dhcp) %dir %ROOT/dhclient
@@ -336,7 +369,7 @@ fi
 %config /etc/chroot.d/dhcpd.*
 %config %_initdir/dhcpd
 %config(noreplace) /etc/sysconfig/dhcpd
-%_sbindir/dhcpd
+%attr(750,root,dhcp) %_sbindir/dhcpd
 %_man5dir/dhcpd.*
 %_man5dir/dhcp-options.*
 %_man5dir/dhcp-eval.*
@@ -378,6 +411,11 @@ fi
 # }}}
 
 %changelog
+* Thu Oct 18 2012 Fr. Br. George <george@altlinux.ru> 1:4.2.4.P2-alt1
+- Major (!) version up to 4.2.4-P2
+- Switching back to patches + upstream packaging scheme
+
+
 * Fri Dec 02 2011 Dmitry V. Levin <ldv@altlinux.org> 1:3.0.7-alt8
 - Fixed build on Linux 3.x.
 

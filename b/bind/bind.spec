@@ -1,6 +1,6 @@
 Name: bind
-Version: 9.3.6
-Release: alt8
+Version: 9.9.2
+Release: alt1
 
 Summary: ISC BIND - DNS server
 License: BSD-style
@@ -27,36 +27,25 @@ Source33: bind.rndc.conf
 Source34: bind.local.conf
 Source35: bind.rfc1912.conf
 Source36: bind.rfc1918.conf
+Source37: bind.sysconfig
 
 Source41: bind.localhost
 Source42: bind.localdomain
 Source43: bind.127.in-addr.arpa
 Source44: bind.empty
 
-Patch0: bind-9.3.6-owl-warnings.patch
-Patch1: bind-9.3.6-openbsd-owl-pidfile.patch
-Patch2: bind-9.3.6-openbsd-owl-chroot-defaults.patch
-Patch3: bind-9.3.6-alt-owl-chroot.patch
-Patch4: bind-9.3.6-owl-checkconf-chroot.patch
-Patch5: bind-9.3.6-rh-h_errno.patch
-Patch6: bind-9.3.6-alt-isc-config.patch
-Patch7: bind-9.3.6-alt-man.patch
-Patch8: bind-9.3.6-alt-owl-rndc-confgen.patch
-Patch9: bind-9.3.6-owl-rfc-index.patch
-Patch10: bind-9.3.6-alt-nofile.patch
-Patch11: bind-9.3.6-up-CVE-2009-0696.patch
-Patch12: bind-9.3.6-up-rt22270-isc_print_vsnprintf.patch
-Patch13: bind-9.3.6-rh538744-CVE-2009-4022.patch
-Patch14: bind-9.3.6-rh554851-CVE-2010-0097.patch
-Patch15: bind-9.3.6-rh640730-CVE-2010-3762.patch
-Patch16: bind-9.3.6-rh754398-CVE-2011-4313.patch
-Patch17: bind-9.3.6-rh555848.patch
-Patch18: bind-9.3.6-rh733698.patch
-Patch19: bind-9.3.6-rh758873.patch
-Patch20: bind-9.3.6-rh-CVE-2012-1033.patch
-Patch21: bind-9.3.6-rh-CVE-2012-1667.patch
-Patch22: bind-9.3.6-rh-CVE-2012-4244.patch
-Patch23: bind-9.3.6-rh-CVE-2012-5166.patch
+# NB: there must be at least one patch :)
+Patch0001: 0001-bind-9.8.3-owl-warnings.patch
+Patch0002: 0002-bind-9.8.3-openbsd-owl-pidfile.patch
+Patch0003: 0003-bind-9.9.1-openbsd-owl-chroot-defaults.patch
+Patch0004: 0004-bind-9.9.1-alt-owl-chroot.patch
+Patch0005: 0005-bind-9.8.3-owl-checkconf-chroot.patch
+Patch0006: 0006-bind-9.8.3-alt-isc-config.patch
+Patch0007: 0007-bind-9.8.3-alt-man.patch
+Patch0008: 0008-bind-9.8.3-alt-owl-rndc-confgen.patch
+Patch0009: 0009-bind-9.8.3-alt-nofile.patch
+Patch0010: 0010-bind-9.8.3-fc-exportlib.patch
+Patch0011: 0011-bind-9.9.1-alt-ads-remove.patch
 
 # root directory for chrooted environment.
 %define _chrootdir %_localstatedir/bind
@@ -113,6 +102,19 @@ Summary: ISC BIND static development libraries
 Group: Development/C
 Requires: %name-devel = %version-%release
 
+%package -n libisc-export
+Summary: ISC BIND exportable libraries to build third party applications with
+Group: System/Libraries
+# RH compat
+Provides: %name-lite
+
+%package -n libisc-export-devel
+Summary: ISC BIND development anvironment for exportable libraries
+Group: Development/C
+Requires: libisc-export = %version-%release
+# RH compat
+Provides: %name-lite-devel
+
 %package doc
 Summary: Documentation for ISC BIND
 Group: Development/Other
@@ -153,6 +155,14 @@ API man pages for libdns, libisc, libisccc, libisccfg and liblwres.
 These are only needed if you want to compile statically linked packages
 that need more nameserver API than the resolver code provided by glibc.
 
+%description -n libisc-export
+This package contains shared libraries used by third-party projects
+that require standard ISC libaries without using nameserver API.
+
+%description -n libisc-export-devel
+This package contains develompent environment for third-party projects
+that require standard ISC libaries without using nameserver API.
+
 %description doc
 This package provides various documents that are useful for maintaining a
 working BIND installation.
@@ -166,32 +176,21 @@ the DNS protocol.
 
 %prep
 %setup -n %srcname
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch18 -p1
-%patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
-%patch23 -p1
 
-install -pm644 %_sourcedir/rfc1912.txt doc/rfc/
+# NB: there must be at least one patch :)
+%patch0001 -p2
+%patch0002 -p2
+%patch0003 -p2
+%patch0004 -p2
+%patch0005 -p2
+%patch0006 -p2
+%patch0007 -p2
+%patch0008 -p2
+%patch0009 -p2
+%patch0010 -p2
+%patch0011 -p2
+
+install -D -pm644 %_sourcedir/rfc1912.txt doc/rfc/rfc1912.txt
 install -pm644 %_sourcedir/bind.README.bind-devel README.bind-devel
 install -pm644 %_sourcedir/bind.README.ALT README.ALT
 
@@ -199,7 +198,7 @@ mkdir addon
 install -pm644 %_sourcedir/{bind,lwresd}.init addon/
 install -pm644 %_sourcedir/bind.{named,options,rndc,local,rfc1912,rfc1918}.conf \
 	addon/
-install -pm644 %_sourcedir/bind.{localhost,localdomain,127.in-addr.arpa,empty} \
+install -pm644 %_sourcedir/bind.{localhost,localdomain,127.in-addr.arpa,empty,sysconfig} \
 	addon/
 install -pm644 %_sourcedir/rndc.{conf,key} addon/
 
@@ -214,7 +213,6 @@ s,@SBINDIR@,%_sbindir,g;
 ' --
 
 %build
-CPP="%__cpp"; export CPP
 %configure \
 	--localstatedir=/var \
 	--with-libtool \
@@ -224,11 +222,14 @@ CPP="%__cpp"; export CPP
 	 %{subst_with openssl} \
 	 %{subst_enable ipv6} \
 	 %{subst_enable static} \
-	 --disable-openssl-version-check
+	--enable-exportlib \
+	--with-export-libdir=%{_libdir} \
+	--with-export-includedir=%{_includedir} \
+	--includedir=%{_includedir}/bind9 \
+	--disable-openssl-version-check
 # Get rid of RPATH.
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-# SMP-incompatible build.
-%__make
+%make_build
 
 # Build queryperf
 pushd contrib/queryperf
@@ -256,9 +257,10 @@ install -pD -m755 addon/lwresd.init %buildroot%_initdir/lwresd
 
 # Install configurations files
 install -pm600 addon/rndc.conf %buildroot%_sysconfdir/
+install -pD -m644 addon/bind.sysconfig %buildroot%_sysconfdir/sysconfig/bind
 
 # Create a chrooted environment...
-mkdir -p %buildroot%_chrootdir/{dev,%_sysconfdir,var/{run,tmp},zone/slave}
+mkdir -p %buildroot%_chrootdir/{dev,%_sysconfdir,var/{run,tmp},session,zone/slave}
 for n in named options rndc local rfc1912 rfc1918; do
 	install -pm640 "addon/bind.$n.conf" \
 		"%buildroot%_chrootdir%_sysconfdir/$n.conf"
@@ -269,8 +271,12 @@ for n in localhost localdomain 127.in-addr.arpa empty; do
 	sed -i s/YYYYMMDDNN/%{timestamp}00/ \
 		"%buildroot%_chrootdir/zone/$n"
 done
+
 install -pm640 addon/rndc.key %buildroot%_chrootdir%_sysconfdir/
 rln %_chrootdir%_sysconfdir/named.conf %_sysconfdir/
+
+install -pm640 bind.keys %buildroot%_chrootdir%_sysconfdir/
+rln %_chrootdir%_sysconfdir/bind.keys %_sysconfdir/
 
 # Make use of syslogd-1.4.1-alt11 /etc/syslog.d/ feature.
 /usr/bin/mksock %buildroot%_chrootdir/dev/log
@@ -288,7 +294,7 @@ touch %buildroot/var/run/{named,lwresd}.pid
 # Package documentation files
 mkdir -p %buildroot%docdir
 cp -a CHANGES COPYRIGHT FAQ README* \
-	doc/{arm,draft,misc,rfc} \
+	doc/{arm,misc,rfc} \
 	%buildroot%docdir/
 install -pm644 contrib/queryperf/README %buildroot%docdir/README.queryperf
 
@@ -329,6 +335,7 @@ fi
 %preun_service lwresd
 
 %files -n libbind
+%exclude  %_libdir/*export.*
 %_libdir/lib*.so.*
 %dir %docdir
 %docdir/COPYRIGHT
@@ -339,10 +346,14 @@ fi
 %_man8dir/lwresd.*
 %ghost %attr(644,root,root) /var/run/lwresd.pid
 
+%files -n libisc-export
+%_libdir/lib*-export.so.*
+
 %files devel
+%exclude  %_libdir/*export.*
 %_libdir/*.so
 %_bindir/isc-config.sh
-%_includedir/*
+%_includedir/bind9
 %_man3dir/*
 %dir %docdir
 %docdir/README.bind-devel
@@ -352,19 +363,25 @@ fi
 %_libdir/*.a
 %endif
 
+%files -n libisc-export-devel
+%exclude %_includedir/bind9
+%_includedir/*
+%_libdir/lib*-export.so
+
 %files
 %exclude %_sbindir/lwresd
+%exclude %_man8dir/lwresd*
 %_sbindir/*
 
 %_sysconfdir/named.conf
+%_sysconfdir/bind.keys
 %config %_initdir/bind
+%config %_sysconfdir/sysconfig/bind
 %config(noreplace) %_sysconfdir/rndc.conf
 
-%_man5dir/named.conf.*
-%_man5dir/rndc.conf.*
-%_man8dir/dnssec*
-%_man8dir/named*
-%_man8dir/*ndc*
+%_man5dir/*
+%_man8dir/*
+%_man1dir/arpaname*
 
 %dir %docdir
 %docdir/README*
@@ -385,8 +402,10 @@ fi
 %dir %attr(700,root,named) %verify(not mode) %_chrootdir/var
 %dir %attr(1770,root,named) %_chrootdir/var/run
 %dir %attr(1770,root,named) %_chrootdir/var/tmp
+%dir %attr(700,root,named) %_chrootdir/session
 %config(noreplace) %_chrootdir%_sysconfdir/*.conf
 %config(noreplace) %verify(not md5 mtime size) %_chrootdir%_sysconfdir/rndc.key
+%_chrootdir%_sysconfdir/bind.keys
 %config %_chrootdir/zone/localhost
 %config %_chrootdir/zone/localdomain
 %config %_chrootdir/zone/127.in-addr.arpa
@@ -403,12 +422,24 @@ fi
 %_man1dir/host.*
 %_man1dir/nslookup.*
 %_man1dir/nsupdate.*
+%_man1dir/isc-config.sh.*
 
 %files doc
 %docdir
-%exclude %docdir/README.bind-devel
+%exclude %docdir/README*
+%exclude %docdir/FAQ.bz2
+%exclude %docdir/misc
+%exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Oct 17 2012 Fr. Br. George <george@altlinux.ru> 9.9.2-alt1
+- Version up to 9.9.2 (CVE 5166 included)
+
+* Wed Oct 15 2012 Fr. Br. George <george@altlinux.ru> 9.9.1-alt1
+- Version up to 9.9.1-P3 (6 middle versions jump!)
+- Drop outdated patches (including CVE 5166, this is insecure build)
+- Adapt actual patches
+
 * Wed Oct 10 2012 Dmitry V. Levin <ldv@altlinux.org> 9.3.6-alt8
 - Imported fixes for several vulnerabilities from RH bind-9.3.6-20.P1.5
   (CVE-2012-{1033,1667,4244,5166}).
