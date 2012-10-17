@@ -1,7 +1,7 @@
 %define module_name PAR-Dist
 
 Name: perl-%module_name
-Version: 0.48
+Version: 0.49
 Release: alt1
 
 Summary: %module_name module for perl
@@ -9,7 +9,7 @@ License: Perl
 Group: Development/Perl
 
 Url: %CPAN %module_name
-Source: http://www.cpan.org/modules/by-module/PAR/%module_name-%version.tar.gz
+Source: http://www.cpan.org/authors/id/R/RS/RSCHUPP/PAR-Dist-%{version}.tar.gz
 
 BuildArch: noarch
 
@@ -34,6 +34,9 @@ export PERL_TEST_POD=1
 %perl_vendor_privlib/PAR/
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.49-alt1
+- automated CPAN update
+
 * Fri Mar 09 2012 Victor Forsiuk <force@altlinux.org> 0.48-alt1
 - 0.48
 
