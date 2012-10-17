@@ -4,7 +4,7 @@
 
 Name: kde4-i18n-%lng
 Version: 4.9.2
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE
@@ -95,6 +95,9 @@ fi
 #%lang(%lng) %_K4apps/kturtle/examples/%lng/
 
 %changelog
+* Wed Oct 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt2
+- fix kmail settings translation
+
 * Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
 - new version
 
