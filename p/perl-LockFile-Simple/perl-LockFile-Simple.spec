@@ -1,14 +1,14 @@
 %define module LockFile-Simple
 
 Name: perl-%module
-Version: 0.207
-Release: alt1.1
+Version: 0.208
+Release: alt1
 
 Summary: %{module} module for perl
 License: Artistic
 Group: Development/Perl
 
-Source: %module-%version.tar.gz
+Source: http://www.cpan.org/authors/id/S/SC/SCHWIGON/lockfile-simple/LockFile-Simple-%{version}.tar.gz
 BuildArch: noarch
 
 Packager: Afanasov Dmitry <ender@altlinux.org>
@@ -33,6 +33,9 @@ BuildRequires: perl-devel
 %perl_vendor_privlib/LockFile*
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.208-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.207-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
