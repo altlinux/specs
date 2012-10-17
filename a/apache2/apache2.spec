@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt8
+Release: %branch_release alt9
 
 License: %asl
 Group: System/Servers
@@ -171,6 +171,8 @@ Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
 Requires: %name-mmn = %mmn
 Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
+Requires: %name-ab
+Requires: %name-htpasswd
 Requires: %apache2_sbindir/%apache2_dname
 Requires: %condstopstart_webdir
 Requires: %condstopstart_webrundir
@@ -639,6 +641,29 @@ Requires: apache2-base >= 2.2.19-alt1.1
 %description htcacheclean
 Htcacheclean is used to keep the size of mod_disk_cache's storage within
 a certain limit. This tool can run either manually or in daemon mode.
+
+%package ab
+Summary: Apache HTTP server benchmarking tool
+Group: System/Servers
+Conflicts: apache-base < 2.2.22-alt9
+
+%description ab
+Ab is a tool for benchmarking your Apache Hypertext Transfer Protocol
+(HTTP) server. It is designed to give you an impression of how your
+current Apache installation performs. This especially shows you how many
+requests per second your Apache installation is capable of serving.
+
+%package htpasswd
+Summary: Manage user files for basic authentication
+Group: System/Servers
+Conflicts: apache-base < 2.2.22-alt9
+
+%description htpasswd
+Htpasswd is used to create and update the flat-files used to store
+usernames and password for basic authentication of HTTP users.
+If htpasswd cannot access a file, such as not being able to write to
+the output file or not being able to read the file in order to update
+it, it returns an error status and makes no changes.
 
 %package suexec
 Summary: Suexec binary for Apache
@@ -1502,8 +1527,8 @@ exit 0
 
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/logrotate.d/%apache2_name
 
-%apache2_bindir/ab*
 %apache2_bindir/ht*
+%exclude %apache2_bindir/htpasswd*
 %apache2_bindir/logresolve*
 %apache2_sbindir/rotatelogs*
 %exclude %apache2_sbindir/htcacheclean*
@@ -1531,6 +1556,8 @@ exit 0
 
 %apache2_mandir/man1/*
 %exclude %apache2_mandir/man1/apxs*
+%exclude %apache2_mandir/man1/ab*
+%exclude %apache2_mandir/man1/htpasswd*
 
 %apache2_mandir/man8/*
 %exclude %apache2_mandir/man8/a2*
@@ -1627,6 +1654,14 @@ exit 0
 
 %_rpmlibdir/*-apache2-htcacheclean.filetrigger
 
+%files ab
+%apache2_bindir/ab*
+%apache2_mandir/man1/ab*
+
+%files htpasswd
+%apache2_bindir/htpasswd*
+%apache2_mandir/man1/htpasswd*
+
 %files -n rpm-build-%name
 %_rpmlibdir/%name-files.req.list
 
@@ -1673,6 +1708,10 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Wed Oct 17 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt9
+- Move %%_bindir/ab2 to %%name-ab subpackage (Closes: #27860)
+- Move %%_bindir/htpasswd2 to %%name-htpasswd subpackage
+
 * Fri Aug 24 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt8
 - Applied repocop fixes:
   * postclean-03-private-rpm-macros for the spec file
