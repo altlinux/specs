@@ -1,5 +1,5 @@
 Name: menu-icons-default
-Version: 0.2.0.13
+Version: 0.2.0.14
 Release: alt1
 
 Group: Graphical desktop/Other
@@ -55,6 +55,9 @@ install -m644 64x64/apps/*.png %buildroot%_iconsdir/hicolor/64x64/apps/
 %_iconsdir/hicolor/scalable/apps/*
 
 %changelog
+* Thu Oct 18 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0.14-alt1
+- added mate section pixmaps
+
 * Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0.13-alt1
 - added altlinux.svg
 
