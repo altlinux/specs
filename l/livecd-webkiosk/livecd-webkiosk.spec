@@ -1,6 +1,6 @@
 Name: livecd-webkiosk
 Version: 0.1
-Release: alt2
+Release: alt3
 
 Summary: start firefox for suitable webkiosk environment
 License: Public domain
@@ -10,14 +10,13 @@ Url: http://www.altlinux.org/Mkimage/Profiles/m-p
 Packager: Michael Shigorin <mike@altlinux.org>
 BuildArch: noarch
 
-Requires: firefox firefox-fullscreen-kiosk
+Requires: livecd-firefox firefox-fullscreen-kiosk
 Requires: ratpoison xinit
 
-# it's *not* noarch
+BuildArch: noarch
 
 %define skeldir %_sysconfdir/skel
 %define ifacedir %_sysconfdir/net/ifaces/eth0
-%define prefsjs %_libdir/firefox/defaults/profile/prefs.js
 
 %description
 %summary
@@ -50,26 +49,15 @@ cat > %buildroot%ifacedir/options << _EOF_
 BOOTPROTO=dhcp
 _EOF_
 
-%post
-# http://permalink.gmane.org/gmane.linux.terminal-server.general/25696
-[ ! -f %prefsjs ] || \
-fgrep -q browser.rights %prefsjs || \
-cat >> %prefsjs << _EOF_
-user_pref("browser.rights.3.shown", true);
-user_pref("browser.shell.checkDefaultBrowser", false);
-user_pref("browser.download.manager.showWhenStarting", false);
-user_pref("extensions.update.notifyUser", false);
-_EOF_
-
 %files
 %skeldir/.xsession
 %skeldir/.ratpoisonrc
 %ifacedir/options
 
-# TODO:
-# - recheck prefs.js on x86_64
-
 %changelog
+* Wed Oct 17 2012 Michael Shigorin <mike@altlinux.org> 0.1-alt3
+- moved firefox prefs.js handling to livecd-firefox package
+
 * Sun Mar 25 2012 Michael Shigorin <mike@altlinux.org> 0.1-alt2
 - disable firefox' default browser check
 
