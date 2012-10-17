@@ -1,6 +1,6 @@
 Name: icu
 Version: 4.8.1.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: International Components for Unicode
 Group: System/Libraries
@@ -9,6 +9,7 @@ URL: http://www.icu-project.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Source: http://download.icu-project.org/files/icu4c/4.8/icu4c-4_8_1_1-src.tgz
+Patch: %name.patch
 
 BuildRequires: doxygen gcc-c++ libstdc++-devel
 
@@ -58,6 +59,7 @@ support. This package contains sample code for ICU
 
 %prep
 %setup -q -n icu
+%patch -p0
 
 %build
 cd source
@@ -98,6 +100,9 @@ rm -f %buildroot%_bindir/icuinfo
 %_datadir/icu/samples
 
 %changelog
+* Wed Oct 17 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:4.8.1.1-alt2
+- support locale and fix NaN in cromium (loses: #2599)
+
 * Fri Jan 03 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:4.8.1.1-alt1
 - 4.8.1.1
 
