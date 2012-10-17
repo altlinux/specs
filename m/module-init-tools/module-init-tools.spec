@@ -1,6 +1,6 @@
 Name: module-init-tools
 Version: 3.16
-Release: alt6
+Release: alt7
 
 Summary: Kernel module management utilities
 License: GPL
@@ -84,6 +84,10 @@ install -p modprobe.mkinitrd %buildroot/lib/mkinitrd/%name/sbin/modprobe
 /lib/mkinitrd/%name
 
 %changelog
+* Wed Oct 17 2012 Michael Shigorin <mike@altlinux.org> 3.16-alt7
+- Rebuilt with klibc-1.5.18-alt2
+  (3.16-alt4 actually meant "klibc-1.5.18-alt1.1").
+
 * Fri Aug 03 2012 Alexey Gladkov <legion@altlinux.ru> 3.16-alt6
 - All files are replaced by kmod except the module-init-tools-initramfs.
 

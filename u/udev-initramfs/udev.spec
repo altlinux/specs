@@ -1,6 +1,6 @@
 Name: udev-initramfs
 Version: 150
-Release: alt9
+Release: alt10
 Summary: udev built with klibc for use in initramfs
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -60,6 +60,10 @@ mv %buildroot/lib/udev \
 /etc/udev/initramfs-rules.d/
 
 %changelog
+* Wed Oct 17 2012 Michael Shigorin <mike@altlinux.org> 150-alt10
+- Rebuilt with klibc-1.5.18-alt2
+  (the previous one actually meant "alt1.1").
+
 * Mon Mar 12 2012 Michael Shigorin <mike@altlinux.org> 150-alt9
 - Rebuilt with klibc-1.5.18-alt2.
 

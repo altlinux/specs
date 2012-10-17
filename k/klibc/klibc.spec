@@ -1,6 +1,6 @@
 Name: klibc
 Version: 1.5.18
-Release: alt1.1
+Release: alt2
 
 Summary: A minimal libc subset for use with initramfs
 License: BSD/GPL
@@ -150,6 +150,10 @@ find %buildroot%klibcdir/include -name \.\* -delete
 /lib/mkinitrd/klibc
 
 %changelog
+* Mon Oct 15 2012 Led <led@altlinux.ru> 1.5.18-alt2
+- fixed build with make 3.82
+- fixed build with kernel >= 3.5
+
 * Mon Mar 12 2012 Michael Shigorin <mike@altlinux.org> 1.5.18-alt1.1
 - tested and rebuilt for Sisyphus
   + NB: misses boyarsh@'s -alt2 changes
