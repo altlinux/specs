@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.46
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -216,7 +216,8 @@ Patch0144: linux-%kernel_branch.43-fix-drivers-char-agp--intel-agp.patch
 Patch0145: linux-%kernel_branch.43-fix-drivers-char-hw_random--amd-rng.patch
 Patch0146: linux-%kernel_branch.43-fix-drivers-char-hw_random--intel-rng.patch
 Patch0147: linux-%kernel_branch.42-fix-drivers-char-hw_random--virtio-rng.patch
-Patch0148: linux-%kernel_branch.42-fix-drivers-char-ipmi--ipmi_si.patch
+Patch0148: linux-%kernel_branch.46-fix-drivers-char-ipmi--ipmi_msghandler.patch
+Patch0149: linux-%kernel_branch.46-fix-drivers-char-ipmi--ipmi_si.patch
 
 Patch0150: linux-%kernel_branch.43-fix-drivers-cio.patch
 Patch0151: linux-%kernel_branch.43-fix-drivers-cio--ccw_device.patch
@@ -346,44 +347,45 @@ Patch0437: linux-%kernel_branch.42-fix-drivers-net--bonding.patch
 Patch0438: linux-%kernel_branch.43-fix-drivers-net--claw.patch
 Patch0439: linux-%kernel_branch.43-fix-drivers-net--cnic.patch
 Patch0440: linux-%kernel_branch.43-fix-drivers-net--ctcm.patch
-Patch0441: linux-%kernel_branch.42-fix-drivers-net--depca.patch
-Patch0442: linux-%kernel_branch.42-fix-drivers-net--dl2k.patch
-Patch0443: linux-%kernel_branch.42-fix-drivers-net--e1000.patch
-Patch0444: linux-%kernel_branch.42-fix-drivers-net--e1000e.patch
-Patch0445: linux-%kernel_branch.42-fix-drivers-net--ehea.patch
-Patch0446: linux-%kernel_branch.42-fix-drivers-net--hp100.patch
-Patch0447: linux-%kernel_branch.42-fix-drivers-net--ibmveth.patch
-Patch0448: linux-%kernel_branch.42-fix-drivers-net--igb.patch
-Patch0449: linux-%kernel_branch.42-fix-drivers-net--ixgbe.patch
-Patch0450: linux-%kernel_branch.43-fix-drivers-net--lcs.patch
-Patch0451: linux-%kernel_branch.42-fix-drivers-net--macvtap.patch
-Patch0452: linux-%kernel_branch.42-fix-drivers-net--natsemi.patch
-Patch0453: linux-%kernel_branch.42-fix-drivers-net--ne3210.patch
-Patch0454: linux-%kernel_branch.43-fix-drivers-net--qeth.patch
-Patch0455: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
-Patch0456: linux-%kernel_branch.42-fix-drivers-net--qlge.patch
-Patch0457: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
-Patch0458: linux-%kernel_branch.46-fix-drivers-net--tg3.patch
-Patch0459: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
-Patch0460: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
-Patch0461: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
-Patch0462: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
-Patch0463: linux-%kernel_branch.43-fix-drivers-net-mlx4--mlx4_en.patch
-Patch0464: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
-Patch0465: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
-Patch0466: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
-Patch0467: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
-Patch0468: linux-%kernel_branch.42-fix-drivers-net-usb--asix.patch
-Patch0469: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
-Patch0470: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
-Patch0471: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
-Patch0472: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
-Patch0473: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
-Patch0474: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
-Patch0475: linux-%kernel_branch.42-fix-drivers-net-wireless--rt2x00.patch
-Patch0476: linux-%kernel_branch.43-fix-drivers-net-wireless-brcm80211--brcmfmac.patch
-Patch0477: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
-Patch0478: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
+Patch0441: linux-%kernel_branch.46-fix-drivers-net--cxgb3.patch
+Patch0442: linux-%kernel_branch.42-fix-drivers-net--depca.patch
+Patch0443: linux-%kernel_branch.42-fix-drivers-net--dl2k.patch
+Patch0444: linux-%kernel_branch.42-fix-drivers-net--e1000.patch
+Patch0445: linux-%kernel_branch.42-fix-drivers-net--e1000e.patch
+Patch0446: linux-%kernel_branch.42-fix-drivers-net--ehea.patch
+Patch0447: linux-%kernel_branch.42-fix-drivers-net--hp100.patch
+Patch0448: linux-%kernel_branch.42-fix-drivers-net--ibmveth.patch
+Patch0449: linux-%kernel_branch.42-fix-drivers-net--igb.patch
+Patch0450: linux-%kernel_branch.42-fix-drivers-net--ixgbe.patch
+Patch0451: linux-%kernel_branch.43-fix-drivers-net--lcs.patch
+Patch0452: linux-%kernel_branch.42-fix-drivers-net--macvtap.patch
+Patch0453: linux-%kernel_branch.42-fix-drivers-net--natsemi.patch
+Patch0454: linux-%kernel_branch.42-fix-drivers-net--ne3210.patch
+Patch0455: linux-%kernel_branch.46-fix-drivers-net--qeth.patch
+Patch0456: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
+Patch0457: linux-%kernel_branch.46-fix-drivers-net--qlge.patch
+Patch0458: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
+Patch0459: linux-%kernel_branch.46-fix-drivers-net--tg3.patch
+Patch0460: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
+Patch0461: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
+Patch0462: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
+Patch0463: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
+Patch0464: linux-%kernel_branch.46-fix-drivers-net-mlx4--mlx4_en.patch
+Patch0465: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
+Patch0466: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
+Patch0467: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
+Patch0468: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
+Patch0469: linux-%kernel_branch.42-fix-drivers-net-usb--asix.patch
+Patch0470: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
+Patch0471: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
+Patch0472: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
+Patch0473: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
+Patch0474: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
+Patch0475: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
+Patch0476: linux-%kernel_branch.42-fix-drivers-net-wireless--rt2x00.patch
+Patch0477: linux-%kernel_branch.43-fix-drivers-net-wireless-brcm80211--brcmfmac.patch
+Patch0478: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
+Patch0479: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
 
 Patch0481: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
@@ -1408,6 +1410,7 @@ cd linux-%version
 %patch0146 -p1
 %patch0147 -p1
 %patch0148 -p1
+%patch0149 -p1
 
 # fix-drivers-cio*
 %patch0150 -p1
@@ -1589,6 +1592,7 @@ cd linux-%version
 %patch0476 -p1
 %patch0477 -p1
 %patch0478 -p1
+%patch0479 -p1
 
 %patch0481 -p1
 
@@ -2206,13 +2210,13 @@ install -m 0644 Documentation/DocBook/man/* %buildroot%kmandir/
 %endif
 
 %if_with src
-install -d -m 0755 %buildroot%kernel_src
+install -d -m 0755 %kernel_srcdir
 t="%__nprocs"
 [ $t -gt 1 ] && XZ="pxz -T$t" || XZ="xz"
 tar --transform='s,^,kernel-src-%flavour-%kversion-%krelease/,' \
 	--owner=root --group=root --mode=u+w,go-w,go+rX \
 	-T ../kernel-src-%flavour.list -cf - | \
-	$XZ -8e > %buildroot%kernel_src/kernel-src-%flavour-%kversion-%krelease.tar.xz
+	$XZ -8e > %kernel_srcdir/kernel-src-%flavour-%kversion-%krelease.tar.xz
 %endif
 
 popd
@@ -2558,6 +2562,7 @@ fi
 
 %if "%sub_flavour" != "guest"
 %{?_enable_guest:%kernel_modules_package_files guest}
+%{?_enable_drm:%dir %modules_dir/kernel/drivers/gpu/drm}
 %endif
 
 
@@ -2599,6 +2604,7 @@ fi
 
 %if_with firmware
 %files -n firmware-kernel-%flavour
+%dir /lib/firmware
 %dir %firmware_dir
 %{?_enable_atm:%{?_enable_pci:%firmware_dir/atm*}}
 %firmware_dir/3com
@@ -2690,11 +2696,22 @@ fi
 
 %if_with src
 %files -n kernel-src-%flavour-%kernel_branch
-%kernel_src/*
+%_usrsrc/kernel
 %endif
 
 
 %changelog
+* Thu Oct 18 2012 Led <led@altlinux.ru> 3.0.46-alt5
+- updated:
+  + fix-drivers-char-ipmi--ipmi_si
+  + fix-drivers-net--qeth
+  + fix-drivers-net--qlge
+  + fix-drivers-net-mlx4--mlx4_en
+- added:
+  + fix-drivers-char-ipmi--ipmi_msghandler
+  + fix-drivers-net--cxgb3
+- fixed of unowned dirs
+
 * Tue Oct 16 2012 Led <led@altlinux.ru> 3.0.46-alt4
 - updated:
   + fix-fs-btrfs
