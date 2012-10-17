@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-MARC-Lint
-Version: 1.44
+Version: 1.46
 Release: alt1
 
 Summary: Perl extension for checking validity of MARC records
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/E/EI/EIJABB/MARC-Lint-1.44.tar.gz
+Source: http://www.cpan.org/authors/id/E/EI/EIJABB/MARC-Lint-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Jul 01 2008
 BuildRequires: perl-Business-ISBN perl-MARC-Record perl-devel
@@ -45,7 +45,8 @@ all 952 tags have a certain call number in them, you can write a function that
 checks for that, and still get all the benefits of the MARC::Lint framework.
 
 %prep
-%setup -q -n %m_distro-%version
+#setup -q -n %m_distro-%version
+%setup -q -n marc-lint
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
 
@@ -58,6 +59,9 @@ checks for that, and still get all the benefits of the MARC::Lint framework.
 %_man1dir/*
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.46-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.44-alt1
 - automated CPAN update
 
