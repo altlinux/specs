@@ -1,6 +1,6 @@
 Name: nish-functions
-Version: 1.01
-Release: alt4
+Version: 1.02
+Release: alt1
 
 Summary: Shell functions collection featuring isolated namespace
 License: Public domain
@@ -32,6 +32,10 @@ No bash/zsh/whatever extension used. Runs on Linux and (losely) FreeBSD.
 %_libexecdir/nish/*
 
 %changelog
+* Wed Oct 17 2012 Fr. Br. George <george@altlinux.ru> 1.02-alt1
+- More accurate main file processing
+- ANSII and autobuild improvements
+
 * Tue Nov 08 2011 Fr. Br. George <george@altlinux.ru> 1.01-alt4
 - Uscan is used for download/rename
 
