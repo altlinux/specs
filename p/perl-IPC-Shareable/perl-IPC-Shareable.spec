@@ -12,8 +12,8 @@
 %def_disable test
 
 Name: perl-IPC-Shareable
-Version: 0.60
-Release: alt2.1
+Version: 0.61
+Release: alt1
 
 Summary: %m_name - share Perl variables between processes
 
@@ -24,7 +24,7 @@ Url: http://search.cpan.org/dist/IPC-Shareable/
 Packager: Michael Bochkaryov <misha@altlinux.ru>
 
 BuildArch: noarch
-Source: http://search.cpan.org//CPAN/authors/id/B/BS/BSUGARS/%m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MS/MSOUTH/IPC-Shareable-%{version}.tar.gz
 
 # Automatically added by buildreq on Mon Sep 08 2008 (-bi)
 BuildRequires: perl-Log-Agent perl-Storable perl-devel
@@ -51,6 +51,9 @@ arrays, hashes of hashes, etc.
 %doc CHANGES COPYING CREDITS DISCLAIMER README TO_DO
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.61-alt1
+- automated CPAN update
+
 * Sat Nov 06 2010 Vladimir Lettiev <crux@altlinux.ru> 0.60-alt2.1
 - rebuilt with perl 5.12
 
