@@ -5,7 +5,7 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.1
+Version: %major.1.1
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -22,10 +22,11 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar
 %add_findprov_lib_path %python_sitelibdir/gtk-%gtk_api_ver
 
 %define glib_ver 2.31.0
+%define gi_ver 1.34.1.1
 
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires: python-devel python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel
-BuildPreReq: gobject-introspection-devel >= 1.33.14
+BuildPreReq: gobject-introspection-devel >= %gi_ver
 # for tests
 # BuildRequires: dbus-tools-gui libgtk+3-gir-devel
 
@@ -80,6 +81,7 @@ export LD_PRELOAD=%_libdir/libpython%__python_version.so
 %files
 %_libdir/libpyglib-gi-2.0-python.so.*
 %python_sitelibdir/gi/
+%python_sitelibdir/*.egg-info/
 
 %files devel
 %_libdir/libpyglib-gi-2.0-python.so
@@ -88,8 +90,6 @@ export LD_PRELOAD=%_libdir/libpython%__python_version.so
 %doc README AUTHORS NEWS examples
 
 %exclude %python_sitelibdir/*/*.la
-# go to pythonpath
-%exclude %python_sitelibdir_noarch/*.egg-info
 
 %if_enabled devel_doc
 %files devel-doc
@@ -97,6 +97,9 @@ export LD_PRELOAD=%_libdir/libpython%__python_version.so
 %endif
 
 %changelog
+* Wed Oct 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1.1-alt1
+- 3.4.1.1
+
 * Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 
