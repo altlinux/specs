@@ -1,6 +1,6 @@
 Name:		audex
 Version:	0.74b1
-Release:	alt1
+Release:	alt1.1
 Summary:	Audex is a new audio grabber tool for CD/DVD drives
 
 Source0:	%name-%version.tar.bz2
@@ -61,6 +61,9 @@ mkdir %buildroot
 %_datadir/apps/solid
 
 %changelog
+* Wed Oct 17 2012 Alex Karpov <karpov@altlinux.ru> 0.74b1-alt1.1
+- build with gcc-4.7 fixed
+
 * Wed Aug 24 2011 Alex Karpov <karpov@altlinux.ru> 0.74b1-alt1
 - new version
 
