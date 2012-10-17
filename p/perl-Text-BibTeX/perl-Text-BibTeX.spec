@@ -1,6 +1,6 @@
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.64
+Version: 0.65
 Release: alt1
 
 Summary: Interface to read and parse BibTeX files
@@ -8,8 +8,9 @@ License: GPL or Artistic
 Group: Development/Perl
 
 URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Source: http://www.cpan.org/authors/id/A/AM/AMBS/Text/Text-BibTeX-%{version}.tar.gz
 Patch0: perl-Text-BibTeX-0.61-alt-rpath.patch
+Patch1:	perl-Text-BibTeX-0.61-alt-gcc47.patch
 
 # Automatically added by buildreq on Wed Oct 19 2011
 BuildRequires: perl-Capture-Tiny perl-Config-AutoConf perl-ExtUtils-LibBuilder perl-Module-Build perl-Pod-Parser
@@ -22,6 +23,7 @@ dealing with BibTeX data.
 %prep
 %setup -q -n %dist-%version
 %patch0 -p1 
+%patch1 -p1 
 
 %build
 %perl_vendor_build
@@ -41,6 +43,10 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %perl_vendor_archlib/Text
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
+- automated CPAN update
+- added gcc47 patch
+
 * Sun Sep 02 2012 Vladimir Lettiev <crux@altlinux.ru> 0.64-alt1
 - 0.61 -> 0.64
 - built for perl-5.16
