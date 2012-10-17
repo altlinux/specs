@@ -14,7 +14,7 @@
 %define _disable_test 1
 
 Name: perl-Schedule-At
-Version: 1.13
+Version: 1.15
 Release: alt1
 
 Summary: OS independent interface to the Unix 'at' command
@@ -26,7 +26,7 @@ Url: http://www.cpan.org
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/J/JO/JOSERODR/Schedule-At-1.13.tar.gz
+Source: http://www.cpan.org/authors/id/J/JO/JOSERODR/Schedule-At-%{version}.tar.gz
 
 # Automatically added by buildreq on Fri Apr 18 2008
 BuildRequires: perl-devel
@@ -111,6 +111,9 @@ The tag specified in the Schedule::At::add subroutine
 %perl_vendor_privlib/Schedule*
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.15-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.13-alt1
 - automated CPAN update
 
