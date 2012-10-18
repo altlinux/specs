@@ -5,7 +5,7 @@
 %def_disable devel_doc
 
 Name: python3-module-%{_name}3
-Version: %major.0
+Version: %major.1.1
 Release: alt2
 
 Summary: Python 3 bindings for GObject
@@ -20,11 +20,12 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar
 %add_findprov_lib_path %python3_sitelibdir/gtk-%gtk_api_ver
 
 %define glib_ver 2.31.0
+%define gi_ver 1.34.1.1
 
 BuildRequires(pre): rpm-build-python3
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
 BuildRequires: python3-devel python3-module-pycairo-devel libcairo-gobject-devel
-BuildPreReq: gobject-introspection-devel >= 1.33.14
+BuildPreReq: gobject-introspection-devel >= %gi_ver
 # for tests
 # BuildRequires: dbus-tools-gui libgtk+3-gir-devel
 
@@ -87,6 +88,7 @@ export LD_PRELOAD=%_libdir/libpython%{_python3_version}mu.so
 %files
 %_libdir/libpyglib-gi-2.0-python3.so.*
 %python3_sitelibdir/gi/
+%python3_sitelibdir/*.egg-info/
 
 %files devel
 %_libdir/libpyglib-gi-2.0-python3.so
@@ -102,6 +104,15 @@ export LD_PRELOAD=%_libdir/libpython%{_python3_version}mu.so
 %endif
 
 %changelog
+* Thu Oct 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.1.1-alt2
+- Built for Python 3
+
+* Wed Oct 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1.1-alt1
+- 3.4.1.1
+
+* Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
+- 3.4.1
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt2
 - Built for Python 3
 
