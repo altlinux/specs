@@ -1,10 +1,10 @@
 %define _name clutter-gtk
-%define ver_major 1.3
+%define ver_major 1.4
 %define api_ver 1.0
 %def_enable introspection
 
 Name: %{_name}3
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library integrating clutter with GTK+3
@@ -102,6 +102,9 @@ touch AUTHORS
 %endif
 
 %changelog
+* Thu Oct 18 2012 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
+- 1.4.0
+
 * Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 1.3.2-alt1
 - 1.3.2
 
