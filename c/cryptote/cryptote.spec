@@ -2,7 +2,7 @@
 
 Name: cryptote
 Version: 0.5.390
-Release: alt1
+Release: alt2
 
 Summary: encrypting text editor
 #Summary(ru_RU.UTF-8): 
@@ -16,6 +16,7 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 Source0: %name-%version.tar
 Source1: %name-16.png
 Source2: %name-32.png
+Patch0:  %name-0.5.390-alt-fix_headers.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -35,6 +36,7 @@ Encryption is transparently performed using the Serpent cipher.
 
 %prep
 %setup
+%patch0
 mv -f -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -72,6 +74,9 @@ mv -- %buildroot%_pixmapsdir/%{name}* %buildroot%_liconsdir/
 %_liconsdir/%{name}*
 
 %changelog
+* Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.390-alt2
+- Fix build with GCC 4.7
+
 * Fri Aug 28 2009 Nikolay A. Fetisov <naf@altlinux.ru> 0.5.390-alt1
 - Initial build for ALT Linux Sisyphus
 
