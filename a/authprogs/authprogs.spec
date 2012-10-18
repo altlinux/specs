@@ -2,7 +2,7 @@
 
 Name: authprogs
 Version: 0.5
-Release: alt1
+Release: alt2
 
 Summary: SSH command authenticator
 
@@ -51,6 +51,9 @@ install -m 0644 %SOURCE1 %buildroot%_sysconfdir/%name/default.conf
 %_sysconfdir/%name/default.conf
 
 %changelog
+* Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.5-alt2
+- Fix setting up config file from command line
+
 * Thu Apr 12 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.5-alt1
 - Initial build for ALT Linux Sisyphus
 
