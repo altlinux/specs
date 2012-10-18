@@ -1,6 +1,6 @@
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
-Version: 2.6.0
+Version: 2.6.1
 Release: alt1
 License: GPL
 Group: System/Kernel and hardware
@@ -250,6 +250,10 @@ echo 'options wct4xxp t1e1override=0xff' >  %buildroot%_initdir/modprobe.d/dahdi
 %_libdir/pppd/*/*.so
 
 %changelog
+* Thu Oct 18 2012 Denis Smirnov <mithraen@altlinux.ru> 2.6.1-alt1
+- 2.6.1
+- fix build
+
 * Mon Feb 13 2012 Denis Smirnov <mithraen@altlinux.ru> 2.6.0-alt1
 - 2.6.0
 - add dahdi_pcap
