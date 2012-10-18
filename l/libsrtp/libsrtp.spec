@@ -2,7 +2,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: libsrtp
 Version: 1.4.4
-Release: alt1
+Release: alt2
 
 Summary: Secure Real-time Transport Protocol implementation
 License: BSD-like
@@ -29,6 +29,8 @@ authentication, and replay protection to that protocol. It is specified in RFC
 %build
 touch NEWS AUTHORS ChangeLog
 %autoreconf
+export CFLAGS
+CFLAGS="$CFLAGS -fPIC -Wall -O2 -fexpensive-optimizations -funroll-loops"
 %configure --enable-pic
 %make_build
 
@@ -44,6 +46,9 @@ touch NEWS AUTHORS ChangeLog
 %_libdir/libsrtp.a
 
 %changelog
+* Thu Oct 18 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4.4-alt2
+- build with -fPIC
+
 * Mon Oct 15 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4.4-alt1
 - 1.4.4
 
