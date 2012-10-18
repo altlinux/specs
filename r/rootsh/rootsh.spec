@@ -1,10 +1,10 @@
 # Spec file for rootsh utility
 
 Name: rootsh
- 
+
 Version: 1.5.3
-Release: alt1
-    
+Release: alt2
+
 Summary: a logging wrapper for shells
 
 License: %gpl3plus
@@ -45,7 +45,7 @@ root privileges. They start rootsh through the sudo mechanism.
 /bin/ln -s -- $(relative %_licensedir/GPL-3 %_docdir/%name/COPYING) COPYING
 
 # Fix typo in program version:
-%__subst 's#1.5.2#1.5.3#g' configure
+/bin/sed -e 's#1.5.2#1.5.3#g' -i configure
 
 %build
 %configure
@@ -62,7 +62,7 @@ install -m 0755 -- %SOURCE4 %buildroot%_sysconfdir/cron.daily/%name
 
 cp %SOURCE5 README.ALT.utf8
 
-%__subst 's#@@conf_file@@#%{conf_file}#g;s#@@logs_dir@@#%{logs_dir}#g' \
+sed -e 's#@@conf_file@@#%{conf_file}#g;s#@@logs_dir@@#%{logs_dir}#g' -i \
 	%buildroot%_sysconfdir/bashrc.d/%name.sh \
 	%buildroot%_sysconfdir/profile.d/%name.csh \
 	%buildroot%conf_file \
@@ -90,6 +90,10 @@ mkdir -p -- %buildroot%logs_dir
 %_man1dir/%name.*
 
 %changelog
+* Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.3-alt2
+- Fix shell aliases
+- Spec file cleanup
+
 * Wed Mar 18 2009 Nikolay A. Fetisov <naf@altlinux.ru> 1.5.3-alt1
 - Initial build for ALT Linux Sisyphus
 
