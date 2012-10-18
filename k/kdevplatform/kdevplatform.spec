@@ -11,7 +11,7 @@
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -unstable
+%define pkg_sfx_other -pre4.4
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
@@ -23,7 +23,7 @@
 
 Name: %kdevplatform
 Version: 1.4.0
-Release: alt1.git
+Release: alt2.git
 Serial: 1
 
 Group: Development/Tools
@@ -324,6 +324,9 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Thu Oct 18 2012 Alexey Morozov <morozov@altlinux.org> 1:1.4.0-alt2.git
+- fixed obsoletes
+
 * Wed Oct 17 2012 Alexey Morozov <morozov@altlinux.org> 1:1.4.0-alt1.git
 - one commit after release 1.4.0 (git ccd4e550469fa8de63ff308591e34d7819a71f54)
 - translations updated to the latest stable snapshot (rev.1320363)

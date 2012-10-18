@@ -1,5 +1,5 @@
 Version: 4.4.0
-Release: alt1.git
+Release: alt2.git
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
@@ -19,7 +19,7 @@ Serial: 3
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -unstable
+%define pkg_sfx_other -pre4.4
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
@@ -432,6 +432,9 @@ done
 #%doc %_K4doc/en/kdevelop-apidocs/
 
 %changelog
+* Thu Oct 18 2012 Alexey Morozov <morozov@altlinux.org> 3:4.4.0-alt2.git
+- fixed obsoletes
+
 * Thu Oct 18 2012 Alexey Morozov <morozov@altlinux.org> 3:4.4.0-alt1.git
 - one commit after release (git 0e2bb7c215b856b5add1fc42a5656260afbb41f0)
 - translations are synchronized with upstream
