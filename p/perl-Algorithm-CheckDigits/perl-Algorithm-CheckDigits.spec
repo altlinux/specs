@@ -14,8 +14,8 @@
 %define _enable_test 1
 
 Name: perl-Algorithm-CheckDigits
-Version: 0.50
-Release: alt2.1
+Version: 1.2.0
+Release: alt1
 
 Summary: Perl extension to generate and test check digits
 
@@ -26,10 +26,10 @@ Url: http://www.cpan.org
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source: %m_distro-%version.tar.gz
+Source: http://www.cpan.org/authors/id/M/MA/MAMAWE/Algorithm-CheckDigits-v%{version}.tar.gz
 
 # Automatically added by buildreq on Thu Jul 03 2008
-BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage
+BuildRequires: perl-Test-Pod perl-Test-Pod-Coverage perl(Probe/Perl.pm) perl(Module/Build.pm)
 
 %description
 perl -MAlgorithm::CheckDigits -e Algorithm::CheckDigits::print_methods
@@ -53,7 +53,7 @@ or
   $bn = $isbn->basenumber('3-930673-48-7'); # $bn = '3-930673-48'
 
 %prep
-%setup -q -n %m_distro-%version
+%setup -q -n %m_distro-v%version
 %build
 %perl_vendor_build
 
@@ -64,6 +64,9 @@ or
 %perl_vendor_privlib/Algorithm*
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1
+- automated CPAN update
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
