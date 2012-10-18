@@ -1,16 +1,16 @@
-Version: 4.3.90
-Release: alt1.4.4RC1.git
+Version: 4.4.0
+Release: alt1.git
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
-%define unstable 1
-%define post_version 0
+%define unstable 0
+%define post_version 1
 %define with_api_docs 0
 %def_enable okteta
 # from the Project's CMakeLists.txt
 %define build_req_kde_ver_min 4.5.0
-%define build_req_kdeplatform_min 1.3.60
-%define req_kdev_php_min 1.3.60
+%define build_req_kdeplatform_min 1.4.0
+%define req_kdev_php_min 1.4.0
 
 %if %unstable
 %define pkg_sfx -pre4.4
@@ -75,7 +75,6 @@ Summary: A KDE-centric IDE - source package
 License: GPLv2
 Group: Development/Tools
 Url: http://www.kdevelop.org/
-
 
 Source: kdevelop-%version.tar.gz
 Source1: kdevelop-translations-%version.tar.gz
@@ -322,6 +321,10 @@ include(MacroOptionalAddSubdirectory)
 macro_optional_add_subdirectory( po )
 EOF
 
+%if_disabled okteta
+find po -name 'kdevokteta.po' -exec rm {} \;
+%endif
+
 %build
 %K4cmake
 %K4make
@@ -429,58 +432,40 @@ done
 #%doc %_K4doc/en/kdevelop-apidocs/
 
 %changelog
-* Fri Oct 12 2012 Alexey Morozov <morozov@altlinux.org> 3:4.3.90-alt1.4.4RC1.git
-- Build of current (post-4.4RC1) git snapshot (938a3bb2c30e9aff92144fda6acec2a8c8336faa)
-- Translations are synchronized with both upstream and 4.3
-- The problem for patch kubuntu_01_appmenu_fix.diff (#11) is fixed by upstream,
-  so the patch is dropped
-- kdevelop_attach is renamed to kdevelop! by upstream
+* Thu Oct 18 2012 Alexey Morozov <morozov@altlinux.org> 3:4.4.0-alt1.git
+- one commit after release (git 0e2bb7c215b856b5add1fc42a5656260afbb41f0)
+- translations are synchronized with upstream
+- re-enabled Okteta module
 
-* Wed Apr 04 2012 Alexey Morozov <morozov@altlinux.org> 3:4.3.60-alt0.1.git
-- Build of current (early-4.4) kdevelop git snapshot (17fa62314a30071296533e8e1cd53d9fca730f18)
-- package names now contain upcoming versions
+* Tue Oct 16 2012 Alexey Morozov <morozov@altlinux.org> 3:4.3.1-alt3.git
+- Updated to the latest post-4.3.1 git snapshot
+  (1f6674f778240741fab2ad1254e326057960ede3)
+- Synchronized translations with the latest upstream revisions suitable
+  for 4.3
+- Okteta module disabled, because it depends on obsoleted (pre-4.9.x)
+  KDE SDK libraries. Use kdevelop-pre4.4 if you need this module.
+
+* Fri Apr 20 2012 Alexey Morozov <morozov@altlinux.org> 3:4.3.1-alt2.git
+- Drop -common subpackage, renamed -base to -mini, carefully set packages
+  architecture (noarch or arch-dependent)
+
+* Thu Apr 19 2012 Alexey Morozov <morozov@altlinux.org> 3:4.3.1-alt1.git
+- a post-v4.3.1 git snapshot (6b95b832d72696df0278ac7b9d290c96b798ef07)
+- Russian translations updated and merged with upstream
+
+* Sat Apr 07 2012 Alexey Morozov <morozov@altlinux.org> 3:4.3.0-alt1.1
+- Added explicit dependency on kdevelop-libs for kdevelop-base as
+  a workaround for apt inability to install built package
+- Deps-only packages are now noarch
+
+* Wed Apr 04 2012 Alexey Morozov <morozov@altlinux.org> 3:4.3.0-alt1
+- v4.3.0 (logs of intermediate unstable builds are in the -unstable package)
 - major spec overhaul and cleanup
-- Synchronized Russian translations both with upstream and 4.3 branch and slightly improved
+- restored okteta module
 
-* Tue Feb 28 2012 Alexey Morozov <morozov@altlinux.org> 2:4.2.90-alt0.1.git
-- Post 4.2.90 (4.3 RC1) build (70a6358443530e13356e78f890a2403fa55ceeff)
-  (source tree cleanup)
-- Translations are synchronized with upstream
-
-* Mon Feb 20 2012 Alexey Morozov <morozov@altlinux.org> 2:4.2.82-alt0.2.git
-- Post-4.2.82 (4.3 Beta 2) build (cd19a8edfb769a27d7b1486001c2bd95bd88a12a)
-  (few minor bugfixes, see upstream)
-- Translations are synchronized with upstream
-
-* Mon Feb 13 2012 Alexey Morozov <morozov@altlinux.org> 2:4.2.82-alt0.1.git
-- Post-4.2.82 (4.3 Beta 2) build (4fcd36f51241c7abbcf6d156b57d8a887cd955d4)
-  (few minor bugfixes, see upstream)
-- Translations are synchronized with upstream
-
-* Wed Feb 08 2012 Alexey Morozov <morozov@altlinux.org> 2:4.2.81-alt0.4.git
-- Post-4.2.81 (pre-4.3) build (8e61ef97c8403458cd09a457d3fdeac25bfbe623)
-  (fixed KDE Bug #292229, and CLang compatibility fixes)
-- Updated/refreshed translations (see git logs), restored translations
-  packaging
-- Re-enable okteta module
-
-* Mon Jan 30 2012 Sergey V Turchin <zerg@altlinux.org> 2:4.2.81-alt0.3.git
+* Sun Jan 29 2012 Sergey V Turchin <zerg@altlinux.org> 3:4.2.3-alt4.git
 - rebuilt with kde-4.8
 - temporary disable okteta module
-
-* Sun Jan 29 2012 Alexey Morozov <morozov@altlinux.org> 2:4.2.81-alt0.2.git
-- Post-4.2.81 (pre-4.3) build (41ac1610cb076ccba21684fda07cae5052b34ef2)
-  (few bugfixes, see upstream git log)
-
-* Thu Jan 26 2012 Alexey Morozov <morozov@altlinux.org> 2:4.2.81-alt0.1.git
-- Post-4.2.81 (pre-4.3) build (987a85aca1ca06e8809ceb4d0dcd50e4b8d74456)
-- Russian translations are merged with stable branch
-
-* Tue Dec 13 2011 Alexey Morozov <morozov@altlinux.org> 2:4.2.60-alt0.1.git
-- Initial build of development branch (3cbb388e31ca202b89a2176f5bf288eb7a921f50)
-- Russian translations are merged with stable branch, now it should be
-  mostly translated
-- Added Russian translation to kdevelop_ps.desktop
 
 * Tue Dec 13 2011 Alexey Morozov <morozov@altlinux.org> 2:4.2.3-alt3.git
 - post-4.2.3 git snapshot (ac7753c16170e82bbfc579822184f22b6fefd1a6)

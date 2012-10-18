@@ -1,32 +1,33 @@
 %define _unpackaged_files_terminate_build 1
 %define unstable 0
 %define post_version 0
+
 %define build_req_kde_ver 4.6.0
-%define build_req_kdevplatform_ver 1.3.0
-%define build_req_kdevelop_ver 4.3.0
+%define build_req_kdevplatform_ver 1.4.0
+%define build_req_kdevelop_ver 4.4.0
 %define build_req_kdev_pg_qt_ver 1.0.0
 
 %if %unstable
-%define pkg_sfx -unstable
+%define pkg_sfx -pre4.4
 %define pkg_sfx_other %nil
 %define if_unstable() %{expand:%*}
 %define if_stable() %nil
 %else
 %define pkg_sfx %nil
-%define pkg_sfx_other -unstable
+%define pkg_sfx_other -pre4.4
 %define if_unstable()  %nil
 %define if_stable() %{expand:%*}
 %endif
 
-%define kdevplatform kdevplatform%{pkg_sfx}
-%define kdevplatform_other kdevplatform%{pkg_sfx_other}
-%define kdevelop kdevelop%{pkg_sfx}
-%define kdevelop_other kdevelop%{pkg_sfx_other}
+%define kdevplatform kdevplatform%pkg_sfx
+%define kdevplatform_other kdevplatform%pkg_sfx_other
+%define kdevelop kdevelop%pkg_sfx
+%define kdevelop_other kdevelop%pkg_sfx_other
 
 %define kdevelop_pg_qt kdevelop-pg-qt
 
-Name: %{kdevelop}-for-php
-Version: 1.3.1
+Name: %kdevelop-for-php
+Version: 1.4.0
 Release: alt1
 Serial: 3
 
@@ -35,25 +36,29 @@ License: GPLv2
 Group: Development/Other
 Url: https://projects.kde.org/projects/extragear/kdevelop/plugins/kdev-php
 
-Requires: %{kdevelop}-base >= %build_req_kdevelop_ver
+Requires: %kdevelop-mini >= %build_req_kdevelop_ver
 Requires: /usr/bin/php
 Provides: kdev-php = %version-%release
 
-Conflicts: %{kdevelop_other}-for-php
+Conflicts: %kdevelop_other-for-php
 # Only stable package replaces unstable counterpart
 %if_stable Obsoletes: %{kdevelop_other}-for-php < %serial:%version-%release
+
+# Replace old -unstable
+Conflicts: kdevelop-unstable-for-php
 
 Source: kdev-php-%version.tar.gz
 %if %post_version
 Patch0: kdev-php-post-%version.patch
 %endif
+Patch1: kdev-php-alt-translations.patch
 Source1: kdev-php-translations-%version.tar.gz
 Source2: kdev-php-docs-%version.tar.gz
 
 BuildRequires(pre): kde4libs-devel
 BuildRequires: kde4libs-devel >= %build_req_kde_ver
-BuildRequires: %{kdevplatform}-devel >= %build_req_kdevplatform_ver gcc-c++
-BuildRequires: %{kdevelop_pg_qt}-devel >= %build_req_kdev_pg_qt_ver
+BuildRequires: %kdevplatform-devel >= %build_req_kdevplatform_ver gcc-c++
+BuildRequires: %kdevelop_pg_qt-devel >= %build_req_kdev_pg_qt_ver
 
 %description
 PHP Language Plugin for KDevelop/Quanta.
@@ -63,6 +68,7 @@ PHP Language Plugin for KDevelop/Quanta.
 %if %post_version
 %patch0 -p1
 %endif
+%patch1 -p1
 
 cat >>CMakeLists.txt <<EOF
 
@@ -92,6 +98,16 @@ EOF
 %_K4srv/*
 
 %changelog
+* Thu Oct 18 2012 Alexey Morozov <morozov@altlinux.org> 3:1.4.0-alt1
+- v1.4.0 with most recent tranbslations
+
+* Fri Oct 12 2012 Alexey Morozov <morozov@altlinux.org> 3:1.3.1-alt3.git
+- synchronized with upstream post-1.3.1 source (2d0dfca61a29dd9959450a131630e3f1e87c3298)
+  and translations (rev. 1317020)
+
+* Fri Apr 20 2012 Alexey Morozov <morozov@altlinux.org> 3:1.3.1-alt2
+- proper dependency on newer kdevelop-mini package
+
 * Thu Apr 19 2012 Alexey Morozov <morozov@altlinux.org> 3:1.3.1-alt1
 - v1.3.1
 
