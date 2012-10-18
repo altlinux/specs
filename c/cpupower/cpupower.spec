@@ -1,6 +1,6 @@
 Name:           cpupower
 Version:        3.5.4
-Release:        alt1
+Release:        alt2
 Summary:        Linux kernel tool to examine and tune power saving related features of your processor
 Group:          System/Kernel and hardware
 License:        GPLv2
@@ -18,6 +18,17 @@ Obsoletes: cpuspeed < 1.5
 %description
 This package contains the tools/power directory from the kernel source
 and the supporting document
+
+%package        devel
+Summary:        Development files for %{name}
+Group:          Development/C
+Requires:       %{name} = %{version}-%{release}
+Requires:       pkgconfig
+Conflicts:      libcpufreq-devel
+
+%description    devel
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 
 %prep
@@ -88,8 +99,6 @@ chmod 0755 %{buildroot}%{_libdir}/libcpupower.so*
 %{_libdir}/libcpupower.so.0
 %{_libdir}/libcpupower.so.0.0.0
 %{_mandir}/man[1-8]/cpupower*
-%{_libdir}/libcpupower.so
-%{_includedir}/cpufreq.h
 
 %ifarch %{ix86} x86_64
 %{_bindir}/centrino-decode
@@ -100,7 +109,15 @@ chmod 0755 %{buildroot}%{_libdir}/libcpupower.so*
 %{_mandir}/man8/turbostat*
 %endif
 
+%files devel
+%defattr(-,root,root,-)
+%{_libdir}/libcpupower.so
+%{_includedir}/cpufreq.h
+
 %changelog
+* Thu Oct 18 2012 Andriy Stepanov <stanv@altlinux.ru> 3.5.4-alt2
+- Bug 27867
+
 * Thu Sep 27 2012 Andriy Stepanov <stanv@altlinux.ru> 3.5.4-alt1
 - RPM package for ALT Linux
 
