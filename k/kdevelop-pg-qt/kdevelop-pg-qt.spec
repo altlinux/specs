@@ -10,7 +10,7 @@
 
 Name: kdevelop%pkg_sfx-pg-qt
 Version: 1.0.0
-Release: alt2
+Release: alt3.git
 %if %unstable
 Conflicts: kdevelop-pg-qt <= %first_unstable_ver
 Provides: kdevelop-pg-qt = %version-%release
@@ -67,6 +67,9 @@ This package contains development files of KDevelop-PG-Qt.
 %_libdir/cmake/*
 
 %changelog
+* Thu Oct 18 2012 Alesey Morozov <morozov@altlinux.org> 1.0.0-alt3.git
+- new post-1.0 git snapshot (2d403c527a697e91441d2ecb94a947d04c55bafb)
+
 * Thu Mar 21 2012 Alexey Morozov <morozov@altlinux.org> 1.0.0-alt2
 - Dropped -unstable suffix because of the official release
 

@@ -5,7 +5,7 @@
 %define _unpackaged_files_terminate_build 1
 
 %if %unstable
-%define pkg_sfx -unstable
+%define pkg_sfx -pre4.4
 %define pkg_sfx_other %nil
 %define if_unstable() %{expand:%*}
 %define if_stable() %nil
@@ -22,7 +22,7 @@
 %define kdevelop_other kdevelop%{pkg_sfx_other}
 
 Name: %kdevplatform
-Version: 1.3.1
+Version: 1.4.0
 Release: alt1.git
 Serial: 1
 
@@ -47,6 +47,9 @@ Conflicts: kde4libs < 4.6.0
 Conflicts: %{kdevplatform_other}
 # Only stable package replaces unstable counterpart
 %if_stable Obsoletes: %{kdevplatform_other} < %serial:%version-%release
+
+# Drop previous -unstable
+Conflicts: kdevplatform-unstable
 
 Requires: %kdevplatform-libs = %serial:%version-%release
 
@@ -74,6 +77,17 @@ Obsoletes: libkdevplatformvcs4%pkg_sfx < %serial:%version-%release
 Obsoletes: libkdevplatformdebugger4%pkg_sfx < %serial:%version-%release
 Obsoletes: libsublime4%pkg_sfx < %serial:%version-%release
 Obsoletes: libkdevplatformdocumentation4%pkg_sfx < %serial:%version-%release
+
+Obsoletes: libkdevplatforminterfaces4-unstable < %serial:%version-%release
+Obsoletes: libkdevplatformlanguage4-unstable < %serial:%version-%release
+Obsoletes: libkdevplatformoutputview4-unstable < %serial:%version-%release
+Obsoletes: libkdevplatformproject4-unstable < %serial:%version-%release
+Obsoletes: libkdevplatformshell4-unstable < %serial:%version-%release
+Obsoletes: libkdevplatformutil4-unstable < %serial:%version-%release
+Obsoletes: libkdevplatformvcs4-unstable < %serial:%version-%release
+Obsoletes: libkdevplatformdebugger4-unstable < %serial:%version-%release
+Obsoletes: libsublime4-unstable < %serial:%version-%release
+Obsoletes: libkdevplatformdocumentation4-unstable < %serial:%version-%release
 
 # Get rid of useless -common subpackage
 Obsoletes: %kdevplatform-common < %serial:%version-%release
@@ -146,6 +160,9 @@ Requires: kde4libs >= %{get_version kde4libs}
 Conflicts: libkdevplatformtests4%{pkg_sfx_other}
 %if_stable Obsoletes: libkdevplatformtests4%{pkg_sfx_other} < %serial:%version-%release
 
+# Drop previous -unstable
+Conflicts: libkdevplatformtests4-unstable
+
 %description -n libkdevplatformtests4%pkg_sfx
 KDevPlatform tests framework.
 
@@ -155,6 +172,9 @@ Group: Development/C++
 
 Conflicts: %{kdevplatform_other}-devel
 %if_stable Obsoletes: %{kdevplatform_other}-devel < %serial:%version-%release
+
+# Drop previous -unstable
+Conflicts: kdevplatform-unstable-devel
 
 Requires: %{kdevplatform}-libs = %serial:%version-%release
 Requires: libkdevplatformtests4%pkg_sfx = %serial:%version-%release
@@ -304,6 +324,14 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Wed Oct 17 2012 Alexey Morozov <morozov@altlinux.org> 1:1.4.0-alt1.git
+- one commit after release 1.4.0 (git ccd4e550469fa8de63ff308591e34d7819a71f54)
+- translations updated to the latest stable snapshot (rev.1320363)
+
+* Fri Oct 05 2012 Alexey Morozov <morozov@altlinux.org> 1:1.3.1-alt2.git
+- a post v1.3.1 git snapshot (8b98fb6b5a93922d8abfe404aae7ff0ed064172c)
+- translations are synchronized with upstream and slightly updated
+
 * Wed Apr 18 2012 Alexey Morozov <morozov@altlinux.org> 1:1.3.1-alt1.git
 - a post v1.3.1 git snapshot (02b62ccfa7c0f3df6b523e55dbd99bbb89b8c694)
 
