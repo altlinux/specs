@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt9
+Release: %branch_release alt10
 
 License: %asl
 Group: System/Servers
@@ -86,7 +86,7 @@ Source63: server-condstart-rpm.sh
 # + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-%version-alt-all-0.3.patch
+Patch1: apache2-%version-alt-all-0.4.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2 >= 3.8
@@ -97,6 +97,8 @@ BuildPreReq: rpm-macros-webserver-cgi-bin-control
 BuildPreReq: rpm-build-licenses
 
 Requires: %name-base = %version-%release
+Requires: %name-ab
+Requires: %name-htpasswd
 Requires: webserver-cgi-bin
 Requires: webserver-html
 Requires: webserver-icons
@@ -171,8 +173,6 @@ Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
 Requires: %name-mmn = %mmn
 Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
-Requires: %name-ab
-Requires: %name-htpasswd
 Requires: %apache2_sbindir/%apache2_dname
 Requires: %condstopstart_webdir
 Requires: %condstopstart_webrundir
@@ -645,7 +645,7 @@ a certain limit. This tool can run either manually or in daemon mode.
 %package ab
 Summary: Apache HTTP server benchmarking tool
 Group: System/Servers
-Conflicts: apache-base < 2.2.22-alt9
+Conflicts: apache2-base < 2.2.22-alt9
 
 %description ab
 Ab is a tool for benchmarking your Apache Hypertext Transfer Protocol
@@ -656,7 +656,7 @@ requests per second your Apache installation is capable of serving.
 %package htpasswd
 Summary: Manage user files for basic authentication
 Group: System/Servers
-Conflicts: apache-base < 2.2.22-alt9
+Conflicts: apache2-base < 2.2.22-alt9
 
 %description htpasswd
 Htpasswd is used to create and update the flat-files used to store
@@ -1708,6 +1708,12 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Thu Oct 18 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt10
+- Fix %%apache2_sbindir/apachectl%%apache2_branch start: use briefstatus
+  loop in poststart (Closes: #27856)
+- Move requires %%name-ab and %%name-htpasswd to %%name subpackage
+- Fix conflicts for %%name-ab and %%name-htpasswd subpackage
+
 * Wed Oct 17 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt9
 - Move %%_bindir/ab2 to %%name-ab subpackage (Closes: #27860)
 - Move %%_bindir/htpasswd2 to %%name-htpasswd subpackage
