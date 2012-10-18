@@ -21,8 +21,8 @@
 
 %define major 3
 %define minor 5
-%define bugfix 13
-%define rel alt2
+%define bugfix 13.1
+%define rel alt1
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -169,7 +169,8 @@ Patch5041: kdelibs-3.5.12-alt-add-translations.patch
 Patch5042: kdelibs-3.5.12-alt-menu-prefix-kde3.patch
 Patch5043: tde-3.5.13-build-defdir.patch
 Patch5044: tdelibs-3.5.13-work-defdir.patch
-Patch5045: tde-3.5.13-tray_icon_scale_dis.patch
+Patch5045: tde-3.5.13-trayIconScaleDis-JobViewerStick.patch
+Patch5046: tde-3.5.13-SpellDialogSavePersonal.patch
 
 # security patches
 # end security patches
@@ -270,7 +271,7 @@ subst "s|kde@MAJOR@rc|kde%{major}rc|" kdecore/kconfigbackend.cpp
 %patch5003 -p1
 %patch5004 -p1
 %patch5005 -p1
-%patch5006 -p1
+###%patch5006 -p1
 %patch5007 -p1
 %patch5008 -p1
 %patch5009 -p1
@@ -311,6 +312,7 @@ subst "s|kde@MAJOR@rc|kde%{major}rc|" kdecore/kconfigbackend.cpp
 %patch5043
 %patch5044
 %patch5045
+%patch5046
 
 # security
 # end security
@@ -648,6 +650,13 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
+* Sat Jun 02 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt3
+- KJobViewer stick by default set for allow autostart.
+- Save personal dictionary into spell dialog for KTextEdit is fixed.
+
 * Sat May 05 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt2
 - Icons resize into tray is disabled for aspect rate broke prevent.
 - Path to make_driver_db_cups is fixed.
