@@ -2,59 +2,77 @@
 %def_without debug
 
 Name: v86d
-%define prerel %nil
-Version: 0.1.9
+Version: 0.1.10
 Release: alt1
 Summary: A x86 Emulation Daemon
-License: %gpl2only
+License: GPLv2
 Group: System/Kernel and hardware
 URL: http://dev.gentoo.org/~spock/projects/uvesafb/
-Source: %name-%version%prerel.tar
-Patch: %name-%version-alt.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
-BuildPreReq: kernel-headers >= 2.6.25
-
-BuildRequires: rpm-build-licenses
+BuildRequires: kernel-headers >= 2.6.25
 %{?_with_klibc:BuildRequires: klibc-devel >= 1.5-alt1.2}
 
 %description
-%name provides a backend for kernel drivers that need to execute ?86
-BIOS code. The code is executed in a controlled environment and the
-results are passed back to the kernel via the netlink interface.
+%name provides a backend for kernel drivers that need to execute ?86 BIOS code.
+The code is executed in a controlled environment and the results are passed back
+to the kernel via the netlink interface.
+
+
+%if_with klibc
+%package initramfs
+Summary: A x86 Emulation Daemon (initramfs variant)
+Group: System/Kernel and hardware
+
+%description initramfs
+%name provides a backend for kernel drivers that need to execute ?86 BIOS code.
+The code is executed in a controlled environment and the results are passed back
+to the kernel via the netlink interface.
+
+This package contains initramfs variant of %name linked with klibc.
+%endif
 
 
 %prep
 %setup
 %patch -p1
-
-# Assume that adjust_kernel_headers --first has been run.
-install -d -m 0755 linux/include
-ln -s "$(readlink -ev /usr/include/linux/../..)"/include/* linux/include/
+sed -i '/^[[:blank:]]*LDFLAGS/s/ -static .*$//' Makefile
 
 
 %build
+%define _optlevel s
+
 %ifarch %ix86
-%define _optlevel s
+%def_without x86emu
 %else
+%def_with x86emu
+%endif
+
 %if_with klibc
-%define _optlevel s
-%else
-%define _optlevel 3
-%endif
-%endif
-export CFLAGS="%optflags"
+export CFLAGS="%optflags -fno-asynchronous-unwind-tables"
+export LDFLAGS="-shared"
 ./configure \
-    %{subst_with debug} \
-%if_with klibc
-    --with-klibc
-%else
-    --default
+	--without-debug \
+	%{subst_with x86emu} \
+	--with-klibc
+%make_build KDIR=%_includedir/linux-default
+mv %name{,.initramfs}
+make clean
 %endif
-%make KDIR=./linux
+
+export CFLAGS="%optflags"
+export LDFLAGS=
+./configure \
+	%{subst_with debug} \
+	%{subst_with x86emu} \
+	--default
+%make_build KDIR=%_includedir/linux-default
 
 
 %install
-%make_install DESTDIR=%buildroot install
+install -pD -m 0755 {,%buildroot/sbin/}%name
+%{?_with_klibc:install -pD -m 0755 %name.initramfs %buildroot/lib/mkinitrd/%name}
 
 
 %files
@@ -62,7 +80,28 @@ export CFLAGS="%optflags"
 /sbin/*
 
 
+%if_with klibc
+%files initramfs
+/lib/mkinitrd/*
+%endif
+
+
 %changelog
+* Thu Oct 18 2012 Led <led@altlinux.ru> 0.1.10-alt1
+- rebuild with klibc-1.5.18-alt2
+- cleaned up spec
+
+* Thu Feb 02 2012 Led <led@massivesolutions.co.uk> 0.1.10-cx2
+- cleaned up spec
+- fixed build warnings
+
+* Mon Mar 21 2011 Led <led@altlinux.ru> 0.1.10-cx1
+- added -initramfs subpackage
+- build with shared klibc
+
+* Sun Mar 13 2011 Led <led@altlinux.ru> 0.1.10-cx0
+- 0.1.10
+
 * Tue Oct 07 2008 Led <led@altlinux.ru> 0.1.9-alt1
 - 0.1.9
 
