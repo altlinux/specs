@@ -4,7 +4,7 @@
 Name: jabber-jit
 
 Version: 1.2.1
-Release: alt0.3
+Release: alt0.4
 
 Summary: Jabber ICQ Transport
 
@@ -109,6 +109,9 @@ subst 's#@configfile@#%_sysconfdir/%name/%name.xml#g' %buildroot%_jabber_compone
 %_jabber_component_dir/%name
 
 %changelog
+* Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.2.1-alt0.4
+- Fix build with GCC 4.7
+
 * Sun Sep 09 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.2.1-alt0.3
 - Fix build with GCC 4.6.3
 
