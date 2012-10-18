@@ -1,28 +1,28 @@
-%define _without_test 1
 ## SPEC file for Perl module Net::IMAP::Simple
 
-%define version    1.2025
-%define release    alt1
-
 Name: perl-Net-IMAP-Simple
-Version: 1.2025
+Version: 1.2034
 Release: alt1
 
 Summary: Perl extension for simple IMAP account handling
 
-License: Perl license
+License: %perl_license
 Group: Development/Perl
-URL: http://search.cpan.org/~cfaber/Net-IMAP-Simple/
+URL: http://search.cpan.org/dist/Net-IMAP-Simple/
+#URL: https://github.com/jettero/net--imap--simple
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
 
 %define real_name Net-IMAP-Simple
-Source: http://www.cpan.org/authors/id/J/JE/JETTERO/Net-IMAP-Simple-%{version}.tar.gz
-Patch0: %name-1.17-alt-fix_require.patch
+Source: %real_name-%{version}.tar
+Patch0: %real_name-%version-%release.patch
 
-AutoReqProv: perl, yes
-BuildRequires: perl-devel perl(Parse/RecDescent.pm) perl-Class-Accessor perl(Regexp/Common.pm) perl(Email/Address.pm) perl(Email/MIME.pm) perl-DateTime perl(DateTime/Format/Strptime.pm) perl(DateTime/Format/Mail.pm)
+BuildRequires(pre): rpm-build-licenses
+
+# Automatically added by buildreq on Thu Oct 18 2012
+# optimized out: perl-Class-Load perl-Class-Singleton perl-Data-OptList perl-DateTime perl-DateTime-Locale perl-DateTime-TimeZone perl-Email-Address perl-Email-MIME-ContentType perl-Email-MIME-Encodings perl-Email-MessageID perl-Email-Simple perl-Encode perl-List-MoreUtils perl-Math-Round perl-Module-Implementation perl-Module-Runtime perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Sub-Install perl-Sub-Name perl-Try-Tiny perl-parent
+BuildRequires: perl-Class-Accessor perl-DateTime-Format-Mail perl-DateTime-Format-Strptime perl-Email-MIME perl-Parse-RecDescent perl-Regexp-Common perl-devel
 
 
 %description
@@ -31,7 +31,8 @@ IMAP accounts.
 
 %prep
 %setup  -n %real_name-%version
-%patch0
+%patch0 -p1
+
 
 %build
 %perl_vendor_build
@@ -40,10 +41,13 @@ IMAP accounts.
 %perl_vendor_install
 
 %files
-%doc README Changes
+%doc README Changes TODO
 %perl_vendor_privlib/Net/IMAP/Simple*
 
 %changelog
+* Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.2034-alt1
+- New version
+
 * Thu Sep 29 2011 Igor Vlasenko <viy@altlinux.ru> 1.2025-alt1
 - automated CPAN update
 
