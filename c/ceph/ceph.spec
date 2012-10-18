@@ -1,5 +1,5 @@
 Name: ceph
-Version: 0.52
+Version: 0.53
 Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
@@ -46,16 +46,6 @@ Group: System/Libraries
 radosgw is an S3 HTTP REST gateway for the RADOS object store. It is
 implemented as a FastCGI module using libfcgi, and can be used in
 conjunction with any FastCGI capable web server.
-
-%package obsync
-Summary: synchronize data between cloud object storage providers or a local directory
-Group: Networking/Other
-License: LGPLv2
-BuildArch: noarch
-%description obsync
-obsync is a tool to synchronize objects between cloud object
-storage providers, such as Amazon S3 (or compatible services), a
-Ceph RADOS cluster, or a local directory.
 
 %package resource-agents
 Summary: OCF-compliant resource agents for Ceph daemons
@@ -174,8 +164,8 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_bindir/rados
 %_bindir/rbd
 %_bindir/ceph-debugpack
-%_bindir/boto_tool
 %_bindir/ceph-coverage
+%_sbindir/ceph-create-keys
 %_sbindir/ceph-disk-activate
 %_sbindir/ceph-disk-prepare
 %_sbindir/mkcephfs
@@ -216,10 +206,6 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %_localstatedir/ceph/
 /var/log/ceph/
 %_runtimedir/ceph/
-
-%files obsync
-%_bindir/obsync
-%_mandir/man1/obsync.1*
 
 %files fuse
 %_bindir/ceph-fuse
@@ -265,6 +251,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Oct 17 2012 Alexei Takaseev <taf@altlinux.org> 0.53-alt1
+- 0.53
+
 * Fri Sep 28 2012 Alexei Takaseev <taf@altlinux.org> 0.52-alt1
 - 0.52
 
