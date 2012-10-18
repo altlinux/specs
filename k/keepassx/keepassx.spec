@@ -1,14 +1,11 @@
-BuildRequires: desktop-file-utils
 # SPEC file for KeePass
 #
 
 %define real_name    KeePassX
-%define version      0.4.3
-%define release      alt1
 
 Name:     keepassx
-Version:  %version
-Release:  %release.qa1
+Version:  0.4.3
+Release:  alt2
 
 Summary: KeePassX Password Safe - light-weight cross-platform password manager
 Summary(ru_RU.UTF-8): простой кросс-платформенный менеджер паролей KeePassX Password Safe
@@ -24,6 +21,7 @@ Source0: %real_name-%version.tar
 
 Patch0:  %name-0.4.0-desktop.patch
 Patch1:  %name-0.4.3-ru_translation.patch
+Patch2:  %name-0.4.3-headers_fix.patch
 
 Source1: %name-16.png
 Source2: %name-32.png
@@ -32,8 +30,10 @@ Source3: %name-48.png
 
 AutoReqProv: yes
 BuildRequires(pre): rpm-build-licenses
-# Automatically added by buildreq on Mon Mar 08 2010
-BuildRequires: gcc-c++ libX11-devel libXtst-devel libqt4-devel xorg-inputproto-devel xorg-xextproto-devel
+# Automatically added by buildreq on Thu Oct 18 2012
+# optimized out: fontconfig libX11-devel libXi-devel libXtst-devel libqt4-core libqt4-devel libqt4-gui libqt4-xml libstdc++-devel xorg-inputproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: gcc-c++ glibc-devel-static phonon-devel
+BuildRequires: desktop-file-utils
 
 
 %description
@@ -74,6 +74,8 @@ KeePassX может сохранять в записях  различную и�
 %setup  -n %name-%version
 %patch0
 %patch1
+%patch2
+
 mv -- COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -117,6 +119,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 
 
 %changelog
+* Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.4.3-alt2
+- Fix build with GCC 4.7
+
 * Tue Jun 07 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.4.3-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
