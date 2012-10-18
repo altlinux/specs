@@ -1,23 +1,42 @@
-%define dist Net-CUPS
-Name: perl-%dist
+## SPEC file for Perl module Net::CUPS
+
+Name: perl-Net-CUPS
 Version: 0.61
-Release: alt2
+Release: alt3
 
 Summary: Perl interface to the Common Unix Printing System API
-License: GPL or Artistic
+Summary(ru_RU.UTF-8): интерфейс Perl к API Common Unix Printing System
+
+License: %perl_license
 Group: Development/Perl
+URL: http://search.cpan.org/dist/Net-CUPS/
 
-URL: %CPAN %dist
-Source: %dist-%version.tar.gz
+Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
-# Automatically added by buildreq on Sat Oct 08 2011
-BuildRequires: libcups-devel perl-devel
+%define real_name Net-CUPS
+Source: %real_name-%version.tar
+Patch0: perl-Net-CUPS-0.61-cups16.patch
+
+BuildRequires(pre): rpm-build-licenses
+
+# Automatically added by buildreq on Thu Oct 18 2012
+# optimized out: libcups-devel
+BuildRequires: cups-filters-devel perl-devel
 
 %description
-Net::CUPS is an object oriented interface to the Common Unix Printing System.
+Perl module  Net::CUPS is an interface to the Common Unix Printing
+System API.  It provides an ability  for calling most functions of 
+the C CUPS API from Perl.
+
+%description -l ru_RU.UTF-8
+Модуль Perl  Net::CUPS  предоставляет интерфейс к  API Common Unix 
+Printing System (CUPS). Он предоставляет возможность использования
+большинства функций C API для CUPS из Perl.
+
 
 %prep
-%setup -n %dist-%version
+%setup  -n %real_name-%version
+%patch0 -p1
 
 %build
 %perl_vendor_build
@@ -26,11 +45,15 @@ Net::CUPS is an object oriented interface to the Common Unix Printing System.
 %perl_vendor_install
 
 %files
-%doc Changes README examples
+%doc README Changes TODO examples
+%exclude /.perl.req
 %perl_vendor_autolib/Net
 %perl_vendor_archlib/Net
 
 %changelog
+* Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.61-alt3
+- Fix build with CUPS 1.6 (Closes: 27848)
+
 * Fri Aug 31 2012 Vladimir Lettiev <crux@altlinux.ru> 0.61-alt2
 - rebuilt for perl-5.16
 
