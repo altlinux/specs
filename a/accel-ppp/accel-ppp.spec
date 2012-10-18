@@ -1,6 +1,6 @@
 Name: accel-ppp
 Version: 1.7.2
-Release: alt1
+Release: alt3
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -14,9 +14,6 @@ Requires: snmp-mibs-std
 AutoProv: yes
 
 BuildRequires: cmake libnet-snmp-devel libpcre-devel libnl-devel libssl-devel
-
-%set_verify_elf_method unresolved=relaxed
-
 
 %description
 The ACCEL-PPP is completly new implementation of PPTP/PPPoE/L2TP
@@ -39,8 +36,15 @@ Features:
 %setup
 %patch0 -p1
 
+for i in `find . -type f -name CMakeLists.txt -print`
+do
+    sed -i 's/lib\/accel-ppp/${LIB_DIR}/' $i
+done
+
 %build
 %cmake \
+      -DCMAKE_SKIP_RPATH=FALSE \
+      -DLIB_DIR=%_libdir/%name \
       -DBUILD_DRIVER=FALSE \
       -DCMAKE_INSTALL_PREFIX=%prefix \
       -DRADIUS=TRUE \
@@ -55,7 +59,6 @@ Features:
 make install/fast DESTDIR=%buildroot -C BUILD
 
 mkdir -p %buildroot%_sysconfdir/ld.so.conf.d
-echo "%_libexecdir/%name" > %buildroot%_sysconfdir/ld.so.conf.d/%name.conf
 
 install -Dpm 644 alt-linux/%name.tmpfiles %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 install -d %buildroot%_sysconfdir/{rc.d/init.d,sysconfig,logrotate.d}
@@ -70,10 +73,9 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %config(noreplace) %_sysconfdir/sysconfig/*
 %config %_sysconfdir/logrotate.d/*
 %config(noreplace) %_sysconfdir/tmpfiles.d/*
-%_sysconfdir/ld.so.conf.d/*
 %_sysconfdir/accel-ppp.conf.dist
 %_sbindir/accel-pppd
-%_libexecdir/%name/
+%_libdir/%name
 %_datadir/accel-ppp/
 %_mandir/man5/accel-ppp.conf.5*
 %_runtimedir/accel-ppp/
@@ -87,6 +89,12 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %preun_service %name
 
 %changelog
+* Thu Oct 18 2012 Alexei Takaseev <taf@altlinux.org> 1.7.2-alt3
+- remove unresolved=relaxed
+
+* Thu Oct 04 2012 Alexei Takaseev <taf@altlinux.org> 1.7.2-alt2
+- Add log messages for terminate sessions
+
 * Thu Sep 06 2012 Alexei Takaseev <taf@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
