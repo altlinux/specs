@@ -3,8 +3,8 @@
 %define real_name Imager-Graph
 
 Name: perl-Imager-Graph
-Version: 0.09
-Release: alt2
+Version: 0.10
+Release: alt1
 
 Summary: producing Graphs using the Imager library
 
@@ -36,8 +36,6 @@ is provided.
 %prep
 %setup -q -n %real_name-%version
 
-sed -e 's#200#400#' -i t/t33_long_labels.t
-
 %build
 %perl_vendor_build
 
@@ -50,6 +48,9 @@ sed -e 's#200#400#' -i t/t33_long_labels.t
 %perl_vendor_privlib/Imager/Graph*
 
 %changelog
+* Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.10-alt1
+- New version
+
 * Fri Nov 04 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.09-alt2
 - Fix build with Imager > 0.84
 
