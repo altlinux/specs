@@ -2,7 +2,7 @@
 %add_findpackage_path %_K4bindir
 %add_findreq_skiplist %_K4apps/lokalize/scripts/*.py
 %add_findreq_skiplist %_K4bindir/kdedoc
-%def_disable antlr
+%def_enable antlr
 
 %define rname kdesdk
 Name: kde4sdk
@@ -10,7 +10,7 @@ Name: kde4sdk
 %define minor 9
 %define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Software Development Kit
@@ -43,7 +43,7 @@ BuildRequires(pre): kde4libs-devel
 BuildRequires: libsubversion-devel perl-XML-DOM perl-Switch libldap-devel libltdl-devel gcc-c++
 BuildRequires: libiberty-devel libjpeg-devel libxslt-devel bzlib-devel
 %if_enabled antlr
-BuildRequires: antlr gcj-antlr antlr-native-devel
+BuildRequires: antlr gcj-antlr antlr-native antlr-native-devel /proc
 %endif
 BuildRequires: boost-devel libhunspell-devel desktop-file-utils perl-Pod-Parser
 BuildRequires: kde4libs-devel >= %version kde4base-devel
@@ -607,6 +607,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Thu Oct 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt2
+- build with antlr (ALT#27427); thanks viy@alt
+
 * Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
