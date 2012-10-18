@@ -14,7 +14,7 @@
 %define _enable_test 1
 
 Name: perl-Font-TTF
-Version: 0.48
+Version: 1.02
 Release: alt1
 
 Summary: TTF font support for Perl
@@ -26,10 +26,10 @@ Url: http://www.cpan.org
 Packager: Vladimir A. Svyatoshenko <svyt@altlinux.ru>
 
 BuildArch: noarch
-Source: http://www.cpan.org/authors/id/M/MH/MHOSKEN/Font-TTF-0.48.tar.gz
+Source: http://www.cpan.org/authors/id/M/MH/MHOSKEN/Font-TTF-%{version}.tar.gz
 
 # Automatically added by buildreq on Tue Oct 07 2008
-BuildRequires: perl-Compress-Zlib perl-devel subversion perl-XML-Parser
+BuildRequires: perl-Compress-Zlib perl-devel subversion perl-XML-Parser perl(IO/String.pm)
 
 %description
 None.
@@ -47,6 +47,9 @@ None.
 %perl_vendor_privlib/ttfmod.pl
 
 %changelog
+* Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.02-alt1
+- automated CPAN update
+
 * Mon Sep 19 2011 Igor Vlasenko <viy@altlinux.ru> 0.48-alt1
 - automated CPAN update
 
