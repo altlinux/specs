@@ -4,7 +4,7 @@
 
 Name: ardour
 Version: 2.8.14
-Release: alt1
+Release: alt1.1
 
 Summary: Ardour is a multichannel hard disk recorder and digital audio workstation
 License: GPL
@@ -70,6 +70,9 @@ DIST_TARGET=x86_64
 %endif
 
 %changelog
+* Thu Oct 18 2012 Alex Karpov <karpov@altlinux.ru> 2.8.14-alt1.1
+- build fixed
+
 * Sun Sep 02 2012 Alex Karpov <karpov@altlinux.ru> 2.8.14-alt1
 - new version
 
