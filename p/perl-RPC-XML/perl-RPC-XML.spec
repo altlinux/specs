@@ -1,18 +1,15 @@
 ## SPEC file for Perl module RPC::XML
 ## Used in ikiwiki
 
-%define version    0.74
-%define release    alt1
-
 Name: perl-RPC-XML
-Version: %version
-Release: %release
+Version: 0.77
+Release: alt1
 
 Summary: an implementation of XML-RPC
 
 License: %perl_license
 Group: Development/Perl
-URL: http://search.cpan.org/~rjray/RPC-XML/
+URL: http://search.cpan.org/dist/RPC-XML/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
@@ -22,8 +19,13 @@ Source: %real_name-%version.tar
 
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Sat Apr 23 2011
-BuildRequires: apache-mod_perl-base perl-CGI perl-HTTP-Daemon perl-XML-LibXML perl-XML-Parser perl-podlators
+# Automatically added by buildreq on Sun Oct 14 2012
+# optimized out: perl-Class-Factory-Util perl-Class-Load perl-Class-Singleton perl-Compress-Raw-Zlib perl-Data-OptList perl-DateTime perl-DateTime-Format-Builder perl-DateTime-Locale perl-DateTime-TimeZone perl-Devel-Symdump perl-Encode perl-HTTP-Date perl-HTTP-Message perl-IO-Compress perl-LWP-MediaTypes perl-List-MoreUtils perl-Math-Round perl-Module-Implementation perl-Module-Runtime perl-Net-HTTP perl-Package-DeprecationManager perl-Package-Stash perl-Package-Stash-XS perl-Params-Util perl-Params-Validate perl-Pod-Escapes perl-Pod-Simple perl-Socket6 perl-Sub-Install perl-Try-Tiny perl-URI perl-XML-LibXML perl-XML-Parser perl-devel perl-libwww perl-parent perl-podlators
+BuildRequires: apache-mod_perl-base perl-CGI perl-DateTime-Format-ISO8601 perl-HTTP-Daemon perl-IO-Socket-INET6 perl-Net-Server perl-XML-LibXML perl-XML-Parser
+
+# automatically added during perl 5.8 -> 5.12 upgrade.
+# perl-podlators is required for pod2man conversion.
+BuildRequires: perl-podlators
 
 %description
 Perl module RPC::XML is an implementation of XML-RPC. The module
@@ -46,7 +48,7 @@ within Apache with mod_perl.
 
 # Ugly patch to obtain build system dependant server name for tests
 HOST=`awk '/^127.0.0.1/ {print $2;}' /etc/hosts`
-%__subst "s/localhost\([':]\)/$HOST\1/g" t/40_server.t
+sed -e "s/localhost\([':]\)/$HOST\1/g" -i t/40_server.t
 
 %build
 %perl_vendor_build INSTALLMAN1DIR=%_man1dir
@@ -56,19 +58,20 @@ HOST=`awk '/^127.0.0.1/ {print $2;}' /etc/hosts`
 
 %files
 %doc README README.apache2 ChangeLog
-%dir %perl_vendor_privlib/RPC
-%perl_vendor_privlib/RPC/XML*
-%dir %perl_vendor_privlib/auto/RPC
-%perl_vendor_privlib/auto/RPC/XML*
+%exclude /.perl.req
+%perl_vendor_privlib/RPC
 
 %_bindir/make_method
 %_man1dir/make_method*
 
 %files -n perl-Apache-RPC-Server
-%perl_vendor_privlib/Apache/RPC*
+%perl_vendor_privlib/Apache
 
 
 %changelog
+* Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.77-alt1
+- New version
+
 * Sat Apr 23 2011 Alexey Tourbin <at@altlinux.ru> 0.74-alt1
 - New version 0.74
 
