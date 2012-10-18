@@ -37,8 +37,8 @@ BuildRequires: jpackage-compat
 
 
 Name:           aspectj
-Version:        1.6.11
-Release:        alt1_1jpp6
+Version:        1.6.12
+Release:        alt3_1jpp6
 Epoch:          0
 Summary:        AspectJ aspect-oriented language extension to Java
 License:        EPL
@@ -64,6 +64,9 @@ Source13:       http://repo1.maven.org/maven2/org/aspectj/aspectjweaver/%{versio
 Source99: patch.txt
 %endif
 
+# fedora aspectjweaver
+Patch0:     aspectjweaver-build-fixes.patch
+
 BuildRequires:  jpackage-utils >= 0:1.7.5
 BuildRequires:  junit
 BuildRequires:  ant >= 0:1.7.1
@@ -83,6 +86,8 @@ Requires:  saxon6
 Requires(post):    jpackage-utils >= 0:1.7.5
 Requires(postun):  jpackage-utils >= 0:1.7.5
 
+Requires: aspectjweaver = %{?epoch:%epoch:}%version-%release
+
 BuildArch:      noarch
 Source44: import.info
 
@@ -99,6 +104,15 @@ AspectJ controls such code-tangling and makes the
 underlying concerns more apparent, making programs 
 easier to develop and maintain. The project goal 
 is to support the AspectJ compiler and core tools. 
+
+%package -n aspectjweaver
+Group:      Development/Java
+Summary:    Java byte-code weaving library
+
+%description -n aspectjweaver
+The AspectJ Weaver supports byte-code weaving for aspect-oriented
+programming (AOP) in java.
+
 
 %package eclipse-plugins
 Summary:        Eclipse Plugins for %{name}
@@ -179,6 +193,10 @@ mv bcel.jar.no bcel.jar
 popd
 %endif
 
+%patch0 -p1
+#grep -rl aj.org.objectweb.asm .
+
+
 %build
 #export JAVA_HOME=%{java_home}
 export ANT_OPTS="-Xmx1024M"
@@ -238,24 +256,24 @@ popd
 %install
 # jars, poms, depmap frags
 install -d -m 0755 %{buildroot}%{_javadir}
-install -d -m 0755 %{buildroot}%{_datadir}/maven2/poms
+install -d -m 0755 %{buildroot}%{_mavenpomdir}
 
 install -m 0644 org.aspectj.lib/jars/aspectjlib.out.jar \
         %{buildroot}%{_javadir}/%{name}lib-%{version}.jar
-install -m 0644 %{SOURCE10} %{buildroot}%{_datadir}/maven2/poms/JPP-aspectjlib.pom
+install -m 0644 %{SOURCE10} %{buildroot}%{_mavenpomdir}/JPP-aspectjlib.pom
 %add_to_maven_depmap org.aspectj aspectjlib %{version} JPP %{name}lib
 install -m 0644 aj-build/dist/tools/lib/aspectjrt.jar \
         %{buildroot}%{_javadir}/%{name}rt-%{version}.jar
-install -m 0644 %{SOURCE11} %{buildroot}%{_datadir}/maven2/poms/JPP-aspectjrt.pom
+install -m 0644 %{SOURCE11} %{buildroot}%{_mavenpomdir}/JPP-aspectjrt.pom
 %add_to_maven_depmap org.aspectj aspectjrt %{version} JPP %{name}rt
 install -m 0644 aj-build/dist/tools/lib/aspectjtools.jar \
         %{buildroot}%{_javadir}/%{name}tools-%{version}.jar
-install -m 0644 %{SOURCE12} %{buildroot}%{_datadir}/maven2/poms/JPP-aspectjtools.pom
+install -m 0644 %{SOURCE12} %{buildroot}%{_mavenpomdir}/JPP-aspectjtools.pom
 %add_to_maven_depmap org.aspectj aspectjtools %{version} JPP %{name}tools
 install -m 0644 aj-build/dist/tools/lib/aspectjweaver.jar \
         %{buildroot}%{_javadir}/%{name}weaver-%{version}.jar
-install -m 0644 %{SOURCE13} %{buildroot}%{_datadir}/maven2/poms/JPP-aspectjweaver.pom
-%add_to_maven_depmap org.aspectj aspectjweaver %{version} JPP %{name}weaver
+install -m 0644 %{SOURCE13} %{buildroot}%{_mavenpomdir}/JPP-aspectjweaver.pom
+%add_to_maven_depmap_at aspectjweaver org.aspectj aspectjweaver %{version} JPP %{name}weaver
 install -m 0644 aj-build/dist/aspectj-DEVELOPMENT.jar \
         %{buildroot}%{_javadir}/%{name}installer-%{version}.jar
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}.jar; do ln -sf ${jar} `echo $jar| sed "s|-%{version}||g"`; done)
@@ -355,16 +373,20 @@ touch $RPM_BUILD_ROOT/etc/java/aspectj.conf
 %{_javadir}/%{name}rt.jar
 %{_javadir}/%{name}tools-%{version}.jar
 %{_javadir}/%{name}tools.jar
-%{_javadir}/%{name}weaver-%{version}.jar
-%{_javadir}/%{name}weaver.jar
-%{_datadir}/maven2/poms/JPP-aspectjlib.pom
-%{_datadir}/maven2/poms/JPP-aspectjrt.pom
-%{_datadir}/maven2/poms/JPP-aspectjtools.pom
-%{_datadir}/maven2/poms/JPP-aspectjweaver.pom
+%{_mavenpomdir}/JPP-aspectjlib.pom
+%{_mavenpomdir}/JPP-aspectjrt.pom
+%{_mavenpomdir}/JPP-aspectjtools.pom
 %{_mavendepmapfragdir}/%{name}
 # hack; explicitly added docdir if not owned
 %doc %dir %{_docdir}/%{name}-%{version}
 %config(noreplace,missingok) /etc/java/aspectj.conf
+
+%files -n aspectjweaver
+%{_javadir}/%{name}weaver-%{version}.jar
+%{_javadir}/%{name}weaver.jar
+%{_mavendepmapfragdir}/%{name}weaver
+%{_mavenpomdir}/JPP-aspectjweaver.pom
+
 
 %files eclipse-plugins
 %{_javadir}/aspectj-eclipse
@@ -384,7 +406,15 @@ touch $RPM_BUILD_ROOT/etc/java/aspectj.conf
 %files manual
 %{_docdir}/%{name}-%{version}
 
+
+
 %changelog
+* Thu Oct 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.12-alt3_1jpp6
+- merged aspectjweaver back
+
+* Mon Oct 15 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.12-alt1_1jpp6
+- new version
+
 * Sat Oct 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.11-alt1_1jpp6
 - new version
 
