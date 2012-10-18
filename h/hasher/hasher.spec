@@ -1,5 +1,5 @@
 Name: hasher
-Version: 1.3.25
+Version: 1.3.25.1
 Release: alt1
 
 Summary: Modern safe package building technology
@@ -58,6 +58,9 @@ network connection or local mirror is highly recommended.
 %doc FAQ QUICKSTART README apt.conf *.sh
 
 %changelog
+* Thu Oct 18 2012 Dmitry V. Levin <ldv@altlinux.org> 1.3.25.1-alt1
+- Fixed harmless but noisy side effect of the previous release.
+
 * Thu Oct 18 2012 Dmitry V. Levin <ldv@altlinux.org> 1.3.25-alt1
 - hsh-initroot: create /sys/devices/system/cpu/online.
 - Robustified nprocs checks.
