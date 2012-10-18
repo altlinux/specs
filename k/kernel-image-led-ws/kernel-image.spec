@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.46
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -492,7 +492,7 @@ Patch0670: linux-%kernel_branch.44-fix-fs.patch
 Patch0671: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0672: linux-%kernel_branch.42-fix-fs--block.patch
 Patch0673: linux-%kernel_branch.42-fix-fs--eventpoll.patch
-Patch0674: linux-%kernel_branch.45-fix-fs-btrfs.patch
+Patch0674: linux-%kernel_branch.46-fix-fs-btrfs.patch
 Patch0675: linux-%kernel_branch.44-fix-fs-cachefiles.patch
 Patch0676: linux-%kernel_branch.42-fix-fs-ceph.patch
 Patch0677: linux-%kernel_branch.42-fix-fs-cifs.patch
@@ -2701,6 +2701,10 @@ fi
 
 
 %changelog
+* Thu Oct 18 2012 Led <led@altlinux.ru> 3.0.46-alt6
+- updated:
+  + fix-fs-btrfs
+
 * Thu Oct 18 2012 Led <led@altlinux.ru> 3.0.46-alt5
 - updated:
   + fix-drivers-char-ipmi--ipmi_si
