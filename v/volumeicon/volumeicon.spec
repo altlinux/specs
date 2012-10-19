@@ -1,6 +1,6 @@
 Name: volumeicon
-Version: 0.4.5
-Release: alt1.1
+Version: 0.4.6
+Release: alt1
 
 Summary: Systray volume control
 License: GPLv3
@@ -41,6 +41,9 @@ Features:
 %_datadir/*
 
 %changelog
+* Fri Oct 12 2012 Alexander Plehanov <tonik@altlinux.org> 0.4.6-alt1
+- New version (0.4.6)
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1.1
 - Fixed build
 
