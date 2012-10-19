@@ -1,7 +1,7 @@
 ## SPEC file for Perl module URI-Encode
 
 Name: perl-URI-Encode
-Version: 0.07
+Version: 0.08
 Release: alt1
 
 Summary: Perl module for simple percent Encoding/Decoding
@@ -51,6 +51,9 @@ characters, use URI::Escape::XS .
 %perl_vendor_privlib/URI/Encode*
 
 %changelog
+* Fri Oct 19 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.08-alt1
+- New version
+
 * Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.07-alt1
 - New version
 
