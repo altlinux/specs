@@ -1,18 +1,15 @@
 ## SPEC file for Perl module CGI::FormBuilder
 ## Used in ikiwiki
 
-%define version    3.0501
-%define release    alt2
-
 Name: perl-CGI-FormBuilder
-Version: %version
-Release: alt2.1
+Version: 3.0800
+Release: alt1
 
 Summary: Perl module for easily generation and processing stateful forms
 
 License: %perl_license
 Group: Development/Perl
-URL: http://search.cpan.org/~nwiger/CGI-FormBuilder/
+URL: http://search.cpan.org/dist/CGI-FormBuilder/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
@@ -23,8 +20,9 @@ Source: %real_name-%version.tar
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-# Automatically added by buildreq on Tue Feb 24 2009
-BuildRequires: perl-CGI-FastTemplate perl-CGI-Session perl-HTML-Template perl-Template perl-Text-Template
+# Automatically added by buildreq on Thu Oct 18 2012
+# optimized out: perl-CGI perl-HTML-SimpleParse perl-HTTP-Cookies perl-HTTP-Date perl-HTTP-Message perl-TimeDate perl-URI perl-libwww
+BuildRequires: perl-CGI-FastTemplate perl-CGI-SSI perl-CGI-Session perl-HTML-Template perl-Template perl-Text-Template perl-devel
 
 %description
 Perl module CGI::FormBuilder (FormBuilder) provides an easy way
@@ -51,6 +49,9 @@ The native HTML generated is valid XHTML 1.0 Transitional.
 %perl_vendor_privlib/CGI/FormBuilder*
 
 %changelog
+* Tue Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 3.0800-alt1
+- New version
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 3.0501-alt2.1
 - repair after perl 5.12 upgrade using girar-nmu
 
