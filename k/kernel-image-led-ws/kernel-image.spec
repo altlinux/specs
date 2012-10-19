@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.46
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2701,6 +2701,10 @@ fi
 
 
 %changelog
+* Fri Oct 19 2012 Led <led@altlinux.ru> 3.0.46-alt7
+- updated:
+  + fix-fs-btrfs
+
 * Thu Oct 18 2012 Led <led@altlinux.ru> 3.0.46-alt6
 - updated:
   + fix-fs-btrfs
