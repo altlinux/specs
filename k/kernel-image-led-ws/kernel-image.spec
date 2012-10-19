@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.46
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -375,7 +375,7 @@ Patch0465: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
 Patch0466: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
 Patch0467: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
 Patch0468: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
-Patch0469: linux-%kernel_branch.42-fix-drivers-net-usb--asix.patch
+Patch0469: linux-%kernel_branch.46-fix-drivers-net-usb--asix.patch
 Patch0470: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
 Patch0471: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
 Patch0472: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
@@ -460,12 +460,12 @@ Patch0591: linux-%kernel_branch.42-fix-drivers-telephony--ixj.patch
 Patch0601: linux-%kernel_branch.42-fix-drivers-tty-serial--8250.patch
 Patch0602: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 
-Patch0610: linux-%kernel_branch.42-fix-drivers-usb.patch
+Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
-Patch0612: linux-%kernel_branch.42-fix-drivers-usb-core.patch
+Patch0612: linux-%kernel_branch.46-fix-drivers-usb-core.patch
 Patch0613: linux-%kernel_branch.42-fix-drivers-usb-host--ehci-hcd.patch
 Patch0614: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
-Patch0615: linux-%kernel_branch.44-fix-drivers-usb-host--xhci-hcd.patch
+Patch0615: linux-%kernel_branch.46-fix-drivers-usb-host--xhci-hcd.patch
 Patch0616: linux-%kernel_branch.42-fix-drivers-usb-misc--usbtest.patch
 Patch0617: linux-%kernel_branch.42-fix-drivers-usb-mon.patch
 Patch0618: linux-%kernel_branch.42-fix-drivers-usb-serial--ftdi_sio.patch
@@ -510,7 +510,7 @@ Patch0688: linux-%kernel_branch.42-fix-fs-pstore.patch
 Patch0689: linux-%kernel_branch.42-fix-fs-reiserfs.patch
 Patch0690: linux-%kernel_branch.42-fix-fs-sysfs.patch
 
-Patch0700: linux-%kernel_branch.42-fix-include.patch
+Patch0700: linux-%kernel_branch.46-fix-include.patch
 
 Patch0711: linux-%kernel_branch.42-fix-init--calibrate.patch
 
@@ -2701,6 +2701,14 @@ fi
 
 
 %changelog
+* Fri Oct 19 2012 Led <led@altlinux.ru> 3.0.46-alt8
+- updated:
+  + fix-drivers-net-usb--asix
+  + fix-drivers-usb
+  + fix-drivers-usb-core
+  + fix-drivers-usb-host--xhci-hcd
+  + fix-include
+
 * Fri Oct 19 2012 Led <led@altlinux.ru> 3.0.46-alt7
 - updated:
   + fix-fs-btrfs
