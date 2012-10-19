@@ -1,5 +1,5 @@
 Name: nvidia-xconfig
-Version: 304.37
+Version: 304.60
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -36,6 +36,12 @@ make install PREFIX=%buildroot/%prefix bindir=%buildroot/%_bindir mandir=%buildr
 
 
 %changelog
+* Fri Oct 19 2012 Sergey V Turchin <zerg@altlinux.org> 304.60-alt1
+- new version
+
+* Tue Aug 14 2012 Sergey V Turchin <zerg@altlinux.org> 304.37-alt0.M60P.1
+- built for M60P
+
 * Tue Aug 14 2012 Sergey V Turchin <zerg@altlinux.org> 304.37-alt1
 - new version
 
