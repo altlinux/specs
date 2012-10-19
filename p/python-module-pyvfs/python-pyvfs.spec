@@ -1,6 +1,6 @@
 Name: python-module-pyvfs
-Version: 0.2.4
-Release: alt2
+Version: 0.2.5
+Release: alt1
 Summary: Simple python VFS library
 License: GPLv3+
 Group: Development/Python
@@ -31,6 +31,10 @@ to represent Python objects as files.
 %{python_sitelibdir}/pyvfs*
 
 %changelog
+* Fri Oct 19 2012 Peter V. Saveliev <peet@altlinux.org> 0.2.5-alt1
+- new cycle detection mechanism for objectfs
+- transaction-like cleanup for Inode class
+
 * Tue Oct 16 2012 Peter V. Saveliev <peet@altlinux.org> 0.2.4-alt2
 - import path fixes
 - urgent fixes for function calls
