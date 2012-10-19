@@ -3,7 +3,7 @@
 %def_disable glade
 
 Name: anjuta
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 Summary: GNOME IDE for C and C++
 Group: Development/GNOME and GTK+
@@ -217,6 +217,9 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Fri Oct 19 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.1-alt1
+- 3.6.1
+
 * Mon Oct 01 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
 - 3.6.0
 
