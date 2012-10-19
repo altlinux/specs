@@ -4,7 +4,7 @@
 
 Name: qgis
 Version: 1.7.4
-Release: alt1
+Release: alt2
 Summary: A user friendly Open Source Geographic Information System
 
 Group: Sciences/Geosciences
@@ -29,13 +29,14 @@ Patch5: %name-alt-sip.patch
 # http://hub.qgis.org/issues/3562
 Patch6: %name-libqwt6.patch
 
-BuildRequires: ccmake flex gcc-c++ grass libexpat-devel libgdal-devel
+BuildRequires: ccmake flex gcc4.5 gcc4.5-c++ libexpat-devel libgdal-devel
 BuildRequires: libgeos-devel libgsl-devel libnss-mysql libpth-devel libqt3-devel
 BuildRequires: libqt4-devel libsqlite3-devel postgresql-devel python-module-PyQt4-devel
 BuildRequires: perl-Net-FastCGI perl-FCGI libfcgi-devel
-BuildRequires: grass-devel libproj-devel python-module-sip-devel subversion chrpath
+BuildRequires:  libproj-devel python-module-sip-devel subversion chrpath
 BuildRequires: libqwtpolar-devel libqwtplot3d-devel libplotmm-devel libqwt6-devel
 BuildRequires: desktop-file-utils
+# BuildRequires: grass grass-devel
 
 %description
 Quantum GIS (QGIS) is a user friendly Open Source Geographic Information
@@ -81,6 +82,8 @@ geotiff). QGIS supports plugins to do things like display tracks from your GPS.
 %prep
 %setup -q -n %{name}-%version
 
+
+
 %patch2 -p1 -b .grass
 ##patch3 -p0
 %patch4 -p2
@@ -88,6 +91,8 @@ geotiff). QGIS supports plugins to do things like display tracks from your GPS.
 %patch6 -p2
 
 %build
+export CC=gcc-4.5 CXX=g++-4.5
+
 # FIXIT in grass package
 #for dir in %_libdir/grass*/ ; do
 #	GRASS_PREFIX=$dir
@@ -216,6 +221,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 #_datadir/%name/themes/nkids
 
 %changelog
+* Fri Oct 19 2012 Ilya Mashkin <oddity@altlinux.ru> 1.7.4-alt2
+- fix build 
+
 * Thu Feb 23 2012 Ilya Mashkin <oddity@altlinux.ru> 1.7.4-alt1
 - 1.7.4
 
