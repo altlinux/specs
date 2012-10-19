@@ -1,7 +1,7 @@
 Name: codeblocks
 %define revision 8455
 Version: 10.05.%revision
-Release: alt1
+Release: alt2
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -12,10 +12,11 @@ Url: http://www.codeblocks.org
 Packager: Denis Kirienko <dk@altlinux.ru>
 
 # http://svn.berlios.de/svnroot/repos/codeblocks/trunk 
-Source0: %name-svn%revision-src.tar.bz2
+Source0: %name-svn%revision-src.tar
 Source1: %name-8.02-alt-icons.tar.bz2
 Source3: %name.desktop
 Source4: %name.po
+Source5: %name-default.conf
 
 Patch0: codeblocks-scriptedwizard-localization.patch
 Patch1: codeblocks-ebuild.conf.patch
@@ -93,6 +94,7 @@ install -m 644 -D alt-icons/32x32/%name.png %buildroot%_niconsdir/%name.png
 install -m 644 -D alt-icons/48x48/%name.png %buildroot%_liconsdir/%name.png
 install -m 644 -D alt-icons/64x64/%name.png %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
+install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 
 %files
 %doc README COPYING AUTHORS BUGS COMPILERS TODO NEWS
@@ -102,6 +104,7 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %_datadir/applications/%name.desktop
 %_datadir/mime/packages/%name.xml
 %_mandir/man?/*
+%_sysconfdir/skel/.codeblocks
 %dir %pkgdata
 %{pkgdata}/abbreviations.zip
 %{pkgdata}/astyle.zip
@@ -238,6 +241,9 @@ install -m 644 -D %name.mo %buildroot%pkgdata/locale/ru_RU/%name.mo
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Oct 19 2012 Denis Kirienko <dk@altlinux.org> 10.05.8455-alt2
+- Added default config in /etc/skel
+
 * Sat Oct 13 2012 Denis Kirienko <dk@altlinux.org> 10.05.8455-alt1
 - SVN snapshot 8455
 
