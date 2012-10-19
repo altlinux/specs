@@ -1,5 +1,5 @@
 Name: firmware-amd-ucode
-Version: 20120117
+Version: 20120910
 Release: alt1
 
 Packager: L.A. Kostis <lakostis@altlinux.ru>
@@ -38,6 +38,10 @@ install -pm644 microcode_amd_fam15h.bin %buildroot/lib/firmware/amd-ucode/
 %doc README INSTALL LICENSE *amd.bin.README *fam15h.bin.README
 
 %changelog
+* Sat Oct 20 2012 L.A. Kostis <lakostis@altlinux.ru> 20120910-alt1
+- Updated to 2012-09-10:
+  + added AMD Family 15h Models 10h-1Fh Processors.
+
 * Fri Aug 03 2012 L.A. Kostis <lakostis@altlinux.ru> 20120117-alt1
 - Initial build.
 
