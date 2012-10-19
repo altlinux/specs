@@ -1,36 +1,30 @@
 # SPEC file for Perl module PDF::API2
 
-%define version    0.73
-%define release    alt1
-
 Name: perl-PDF-API2
-Version: %version
-Release: alt1.1
+Version: 2.019
+Release: alt1
 
 Summary: Perl module for creation and modification PDF files
 Summary(ru_RU.UTF-8): модуль Perl для создания и изменения файлов PDF
 
 License: %lgpl2plus
 Group: Development/Perl
-URL: http://search.cpan.org/~areibens/PDF-API2/
+URL: http://search.cpan.org/dist/PDF-API2/
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 %define real_name PDF-API2
-Source: http://search.cpan.org/CPAN/authors/id/A/AR/AREIBENS/%real_name-%version.tar
-Patch0: PDF-API2-0.51-alt-missed_use.patch
-Patch1: PDF-API2-0.51-alt-Lbrk_pl.patch
+Source: %real_name-%version.tar
+Patch0: %real_name-2.019-alt-fix_fonts_path.patch
+Patch1: %real_name-0.51-alt-Lbrk_pl.patch
 
 BuildArch: noarch
 
-AutoReqProv: perl, yes
 BuildRequires(pre): perl-devel rpm-build-licenses
 
-# Automatically added by buildreq on Sun Dec 14 2008
-BuildRequires: perl-Compress-Zlib perl-Encode perl-devel perl-unicore
-
-BuildRequires: perl-Storable perl-XML-Parser
-BuildRequires: perl-Math-Complex
+# Automatically added by buildreq on Fri Oct 19 2012
+# optimized out: perl-Compress-Raw-Zlib perl-Encode perl-IO-Compress perl-Unicode-Normalize
+BuildRequires: perl-Font-TTF perl-Math-Complex perl-devel perl-unicore
 
 %description
 PDF::API2 is a Perl module to facilitate the creation and
@@ -63,33 +57,32 @@ PDF::API2 - модуль  Perl для  создания и изменения ф
 
 %prep
 %setup  -n %real_name-%version
-find . -type f -print0 | xargs -0i subst 's@\r@@g' {}
-
 %patch0
 %patch1
 
-mv -f -- COPYING COPING.LGPL.orig
-ln -s -- $(relative %_licensedir/LGPL %_docdir/%name/COPYING) COPYING
-
-#%%__bzip2 CHANGELOG
+mv -f -- LICENSE LICENSE.LGPL.orig
+ln -s -- $(relative %_licensedir/LGPL %_docdir/%name/LICENSE) LICENSE
 
 %build
-%perl_vendor_build 
+%perl_vendor_build
 
 %install
 %perl_vendor_install
 
 %files
-%doc AUTHORS README LICENSE TODO CONTACT
+%doc README CONTACT PATENTS HACKING
 %doc examples*
 %doc contrib*
-%doc --no-dereference COPYING
+%doc --no-dereference LICENSE
+
 %perl_vendor_privlib/PDF/API2*
 %exclude /.perl.req
-# We don't want a second DejaVu font's pack in system.
-%exclude %perl_vendor_privlib/PDF/API2/fonts/*
 
 %changelog
+* Fri Oct 19 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.019-alt1
+- New version
+- Fix defaul fonts search path (Closes: 24393)
+
 * Sat Nov 06 2010 Vladimir Lettiev <crux@altlinux.ru> 0.73-alt1.1
 - rebuilt with perl 5.12
 - buildarch -> noarch
