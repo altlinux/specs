@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt10
+Release: %branch_release alt11
 
 License: %asl
 Group: System/Servers
@@ -61,6 +61,7 @@ Source12: README.ALT.ru_RU.KOI8-R
 Source13: apache2-alt-alternatives-0.3.0.tar
 Source14: README.ALT.ru_RU.UTF8
 Source15: tmpfiles.conf
+Source16: httpd.env.conf
 
 Source35: httpd2.init.Sisyphus
 Source36: htcacheclean.init
@@ -86,7 +87,7 @@ Source63: server-condstart-rpm.sh
 # + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-%version-alt-all-0.4.patch
+Patch1: apache2-%version-alt-all-0.5.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2 >= 3.8
@@ -1034,23 +1035,8 @@ install -pD -m755 %SOURCE36 \
 install -pD %SOURCE37 \
         %buildroot%_unitdir/%apache2_dname.service
 
-# generate sysconfig settings file
-mkdir -p %buildroot%_sysconfdir/sysconfig
-echo "# Set HTTPD=%apache2_dname.worker to use a server
-# with the thread-based "worker" MPM; BE WARNED that some modules may not
-# work correctly with a thread-based MPM; notably PHP will refuse to start.
-# Dont't forget to create httpd.worker.conf config file. copying existing
-# httpd.conf could be a good starting point.
-# (!) Warning: Stop httpd2 service BEFORE changing the following line
-#HTTPD=%apache2_dname.worker
-# Or use
-#HTTPD=%apache2_dname.prefork
-#
-# If you want to force proxied (for example by Apache1) mode, which is
-# autodetected by default you could add "-DA1PROXIED"
-#OPTIONS="-DA1PROXIED"
-" > %buildroot%apache2_envconf
-
+# install sysconfig settings file
+install -pD -m 600 %SOURCE16 %buildroot%apache2_envconf
 
 # Generate logrotate file
 mkdir -p %buildroot%_sysconfdir/logrotate.d
@@ -1708,6 +1694,11 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Sat Oct 20 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt11
+- %%apache2_apachectl and %%_initdir/%%apache2_dname use variables
+  (WAITSTOP, WAITGRACEFULSTOP, USLEEPSTART and LOOPSSTART), if they are
+  defined in the file %%apache2_envconf
+
 * Thu Oct 18 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt10
 - Fix %%apache2_sbindir/apachectl%%apache2_branch start: use briefstatus
   loop in poststart (Closes: #27856)
