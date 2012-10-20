@@ -1,6 +1,6 @@
 Name: microcode-data-intel
 Version: 20120606
-Release: alt1
+Release: alt2.v2
 
 Packager: Vicror Forsiuk <force@altlinux.org>
 
@@ -9,7 +9,7 @@ License: INTEL SOFTWARE LICENSE AGREEMENT
 Group: System/Kernel and hardware
 
 URL: http://downloadcenter.intel.com/
-Source0: http://downloadmirror.intel.com/21385/eng/microcode-%version.tgz
+Source0: http://downloadmirror.intel.com/21385/eng/microcode-%version-v2.tgz
 
 Provides: microcode-data
 
@@ -40,6 +40,10 @@ install -pDm644 microcode.dat %buildroot/lib/microcode/microcode.dat
 /lib/microcode/microcode.dat
 
 %changelog
+* Sat Oct 20 2012 L.A. Kostis <lakostis@altlinux.ru> 20120606-alt2.v2
+- NMU:
+  + updated to 20120606-v2.
+
 * Thu Aug 02 2012 L.A. Kostis <lakostis@altlinux.ru> 20120606-alt1
 - NMU:
   + updated to 20120606.
