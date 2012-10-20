@@ -20,7 +20,7 @@
 
 Summary: Web browser engine
 Name: libwebkitgtk3
-Version: 1.10.0
+Version: 1.10.1
 Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
@@ -60,14 +60,14 @@ BuildRequires: libclutter-devel >= 1.8.2
 BuildRequires: libclutter-gtk3-devel >= 1.0.2
 %endif
 %if %acceleration_backend == opengl
-BuildRequires: libGL-devel libXcomposite-devel
+BuildRequires: libGL-devel libXcomposite-devel libXdamage-devel
 %endif
 
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.9.5 libgtk+3-gir-devel libsoup-gir-devel}
 %{?_enable_geolocation:BuildPreReq: libgeoclue-devel}
 %{?_enable_spellcheck:BuildPreReq: libenchant-devel}
 %{?_enable_webkit2:BuildPreReq: libat-spi2-core-devel >= 2.2.1  libgtk+2-devel libgail-devel}
-%{?_enable_media_stream:BuildPreReq: farstream-devel}
+%{?_enable_media_stream:BuildPreReq: farstream0.2-devel}
 
 %description
 WebKit is an open source web browser engine.
@@ -301,6 +301,9 @@ mkdir -p DerivedSources/InjectedBundle
 %endif
 
 %changelog
+* Fri Oct 19 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.1-alt1
+- 1.10.1
+
 * Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.0-alt1
 - 1.10.0
 
