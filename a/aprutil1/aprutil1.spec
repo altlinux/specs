@@ -67,7 +67,7 @@
 
 Name: aprutil%aprver
 Version: 1.3.10
-Release: %{branch_release alt5}%{?release_libdb}
+Release: %{branch_release alt6}%{?release_libdb}
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
@@ -225,6 +225,11 @@ This package provides the ODBC driver for the apr-util DBD
 %patch2 -p1
 %patch3 -p1
 
+# GCC >= 4.6 too smart and warns about unused variable even with 'tmp=0;' line.
+# With -Werror this produce a compilation error and makes this test
+# (style of ldap_set_rebind_proc routine) permanently failed.
+sed -e 's#tmp=0;#return tmp;#' -i build/apu-conf.m4
+
 %build
 LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 \
 	./buildconf --with-apr=%_datadir/apr-%aprver
@@ -292,6 +297,9 @@ find %buildroot%_datadir -type f -print0 |
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
 %changelog
+* Sat Oct 20 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.3.10-alt6
+- Fix build with GCC 4.6
+
 * Sun Apr 24 2011 Dmitry V. Levin <ldv@altlinux.org> 1.3.10-alt5
 - Rebuilt for debuginfo.
 
