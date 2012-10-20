@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.1
-%define rel alt1
+%define rel alt2
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -650,6 +650,12 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Sat Oct 20 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
+- Disable CUPS drivers path /usr/share/foomatic/db/source for prevent
+  double linking by /usr/share/cups/model/foomatic-db-ppds to it and
+  possible crash.
+- Global path /usr/share/ppd to CUPS PPD is added.
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
