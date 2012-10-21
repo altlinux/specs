@@ -3,13 +3,14 @@
 
 %def_without hal
 %def_with gudev
+%def_without webkit
 %def_enable daap
 %def_enable grilo
 %def_disable visualizer
 
 Name: rhythmbox
 Version: %ver_major
-Release: alt1%rev
+Release: alt2%rev
 
 Summary: Music Management Application
 License: GPL
@@ -18,7 +19,10 @@ Url: http://www.gnome.org/projects/rhythmbox/
 
 %define pkgdocdir %_docdir/%name-%version
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+# https://bugzilla.gnome.org/show_bug.cgi?id=686320
+Patch: rhythmbox-2.98-xinitthreads.patch
 
 %define dbus_ver 0.35
 %define glib_ver 2.32.0
@@ -65,7 +69,7 @@ BuildRequires: libICE-devel libSM-devel libgnome-keyring-devel
 BuildRequires: iso-codes-devel libcheck-devel
 BuildRequires: liblirc-devel libnotify-devel >= 0.7.3
 BuildRequires: libjson-glib-devel libpng-devel
-BuildRequires: libwebkitgtk3-devel
+%{?_with_webkit:BuildRequires: libwebkitgtk3-devel}
 BuildRequires: libpeas-devel libtdb-devel zlib-devel
 %{?_enable_grilo:BuildRequires: libgrilo-devel}
 BuildRequires: libavahi-glib-devel
@@ -319,15 +323,14 @@ Requires: %name-plugins-python = %version-%release
 This virtual package installs all Rhythmbox plugins
 
 %prep
-%setup -q -n %name-%version
-#subst 's@\.pyc@\.py@' configure.ac
+%setup -n %name-%version
+%patch -p1
 
 %build
 # Temporary hack
-%set_verify_elf_method unresolved=relaxed
-#%%autoreconf
-./autogen.sh
-export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
+#%%set_verify_elf_method unresolved=relaxed
+gnome-doc-prepare -f
+%autoreconf
 export MOZILLA_PLUGINDIR=%browser_plugins_path
 %configure \
 	--enable-gtk-doc \
@@ -343,6 +346,7 @@ export MOZILLA_PLUGINDIR=%browser_plugins_path
 	--with-ipod \
 	%{subst_with hal} \
 	%{subst_with gudev} \
+	%{subst_with webkit} \
 	%{subst_enable grilo} \
 	%{subst_enable visualizer}
 
@@ -461,7 +465,7 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 %_libdir/%name/plugins/artsearch/
 %_libdir/%name/plugins/lyrics/
 %_libdir/%name/plugins/magnatune/
-%_libdir/%name/plugins/context/
+%{?_with_webkit:%_libdir/%name/plugins/context/}
 %_libdir/%name/plugins/replaygain/
 %_libdir/%name/plugins/sendto/
 %_libdir/%name/plugins/rbzeitgeist/
@@ -478,6 +482,11 @@ ln -s %_licensedir/GPL-2 %buildroot%pkgdocdir/COPYING
 
 
 %changelog
+* Sat Oct 20 2012 Yuri N. Sedunov <aris@altlinux.org> 2.98-alt2
+- updated to 2a405e3
+- webkit support disbaled to avoid mixed gstreamer-0.10/1.0 linkage
+- applied patch from https://bugzilla.gnome.org/show_bug.cgi?id=686320
+
 * Sun Sep 30 2012 Yuri N. Sedunov <aris@altlinux.org> 2.98-alt1
 - 2.98
 - visualizer plugin temporarily disabled
