@@ -1,5 +1,5 @@
 Name: pciids
-Version: 20121014
+Version: 20121021
 Release: alt1
 
 Packager: Victor Forsyuk <force@altlinux.org>
@@ -34,6 +34,9 @@ install -pD -m644 pci.ids %buildroot%_datadir/misc/pci.ids
 %_datadir/misc/pci.ids
 
 %changelog
+* Sun Oct 21 2012 Cronbuild Service <cronbuild@altlinux.org> 20121021-alt1
+- repocop cronbuild 20121021. At your service.
+
 * Sun Oct 14 2012 Cronbuild Service <cronbuild@altlinux.org> 20121014-alt1
 - repocop cronbuild 20121014. At your service.
 
