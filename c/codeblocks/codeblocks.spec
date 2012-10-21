@@ -1,7 +1,7 @@
 Name: codeblocks
-%define revision 8455
+%define revision 8466
 Version: 10.05.%revision
-Release: alt2
+Release: alt1
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -241,6 +241,9 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Oct 21 2012 Denis Kirienko <dk@altlinux.org> 10.05.8466-alt1
+- SVN snapshot 8466
+
 * Fri Oct 19 2012 Denis Kirienko <dk@altlinux.org> 10.05.8455-alt2
 - Added default config in /etc/skel
 
