@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.6
-Release: alt8
+Release: alt9
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -93,17 +93,14 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %files
-%if "%libc_dir" != "/%_lib"
-%if "%libc_dir" != "%_libdir"
-%if "%libc_dir" == "%musl_dir/lib"
+%if "%libc_dir" != "%musl_dir/lib"
 %dir %musl_dir
+%dir %musl_dir/lib
 %endif
-%dir %libc_dir
-%endif
+%if "%libc_dir" != "/%_lib"
 %libc_dir/*.so
-%else
-/%_lib/*
 %endif
+/%_lib/*
 %config %_sysconfdir/ld.so.conf.d/*
 
 
@@ -118,6 +115,10 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Sun Oct 21 2012 Led <led@altlinux.ru> 0.9.6-alt9
+- updated from upstream's SCM
+- fixed unowned dirs
+
 * Sat Oct 20 2012 Led <led@altlinux.ru> 0.9.6-alt8
 - updated from upstream's SCM
 
