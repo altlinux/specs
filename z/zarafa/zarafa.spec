@@ -4,15 +4,15 @@
 #
 ###############################################################################
 
-%define svnrevision	36676
+%define svnrevision	37812
 %define php5_extension	mapi
 %define webprefix	%_datadir/zarafa-webaccess
 %define mobprefix	%_datadir/zarafa-webaccess-mobile
 %define licensepath	%_docdir
 
 Name: zarafa
-Version: 7.1.0
-Release: alt8
+Version: 7.1.1
+Release: alt2
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -22,10 +22,9 @@ Url: http://www.zarafa.com/
 Source: %name-%version.tar.gz
 Source1: php-zarafa.params
 Patch: zarafa-7.1.0beta1-alt-makefile.patch
-Patch1: zarafa-7.0rc2-alt-ossbuild.patch
+Patch1: zarafa-7.1.1-alt-ossbuild.patch
 Patch2: zarafa-7.0rc1-alt-php-ext-makefile.patch
 Patch3: zarafa-7.0.1-alt-fix-userscript-path.patch
-Patch4: zarafa-7.1.0-boost-filesystem-v3-support.patch
 
 BuildRequires(pre): rpm-build-php5
 BuildRequires(pre): rpm-build-apache2
@@ -257,7 +256,6 @@ modern web browser.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
-%patch4 -p2
 
 %build
 %add_optflags -fPIC -L%_libdir
@@ -489,6 +487,8 @@ export LDFLAGS=-lphp-%_php5_version
 %_man1dir/%name-report.1*
 %_man1dir/%name-restore.1*
 %_man1dir/%name.1*
+%_man1dir/za-aclset.1*
+%_man1dir/%name-autorespond.1*
 %_man5dir/%name-ldap.cfg.5*
 %_man5dir/%name-server.cfg.5*
 %_man5dir/%name-msr.cfg.5*
@@ -683,6 +683,12 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Sun Oct 21 2012 Radik Usupov <radik@altlinux.org> 7.1.1-alt2
+- Final release (7.1.1-37812)
+
+* Thu Oct 04 2012 Radik Usupov <radik@altlinux.org> 7.1.1-alt1
+- New upstreame snapshot (7.1.1beta2)
+
 * Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 7.1.0-alt8
 - rebuild for php 5.3.17.20120913-alt1
 
