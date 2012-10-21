@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.46
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -473,8 +473,9 @@ Patch0619: linux-%kernel_branch.42-fix-drivers-usb-serial--ipw.patch
 Patch0620: linux-%kernel_branch.42-fix-drivers-usb-serial--pl2303.patch
 Patch0621: linux-%kernel_branch.42-fix-drivers-usb-serial--usbserial.patch
 Patch0622: linux-%kernel_branch.42-fix-drivers-usb-storage--ums-realtek.patch
-Patch0623: linux-%kernel_branch.42-fix-drivers-usb-usbip--usbip-host.patch
-Patch0624: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
+Patch0623: linux-%kernel_branch.46-fix-drivers-usb-storage--usb-storage.patch
+Patch0624: linux-%kernel_branch.42-fix-drivers-usb-usbip--usbip-host.patch
+Patch0625: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
 
 Patch0631: linux-%kernel_branch.42-fix-drivers-video--intelfb.patch
 Patch0632: linux-%kernel_branch.43-fix-drivers-video--xgifb.patch
@@ -1669,6 +1670,7 @@ cd linux-%version
 %patch0601 -p1
 %patch0602 -p1
 
+# fix-drivers-usb*
 %patch0610 -p1
 %patch0611 -p1
 %patch0612 -p1
@@ -1684,6 +1686,7 @@ cd linux-%version
 %patch0622 -p1
 %patch0623 -p1
 %patch0624 -p1
+%patch0625 -p1
 
 # fix-drivers-video-*
 %patch0631 -p1
@@ -2701,6 +2704,12 @@ fi
 
 
 %changelog
+* Sun Oct 21 2012 Led <led@altlinux.ru> 3.0.46-alt9
+- updated:
+  + fix-drivers-net--qeth
+- added:
+  + fix-drivers-usb-storage--usb-storage
+
 * Fri Oct 19 2012 Led <led@altlinux.ru> 3.0.46-alt8
 - updated:
   + fix-drivers-net-usb--asix
