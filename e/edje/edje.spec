@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: edje
-Version: 1.2.1
+Version: 1.7.1
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -108,11 +108,6 @@ This package contains static libraries
 
 %files -n lib%name
 %_libdir/*.so.*
-%dir %_libdir/%name/modules
-%dir %_libdir/%name/modules/multisense_factory
-%dir %_libdir/%name/modules/multisense_factory/*
-%_libdir/%name/modules/multisense_factory/*/module.so
-%exclude %_libdir/%name/modules/multisense_factory/*/module.la
 
 %files -n lib%name-devel
 %_includedir/*
@@ -126,6 +121,12 @@ This package contains static libraries
 
 
 %changelog
+* Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
+* Tue Sep 04 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Mon Jun 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1.2.1-alt1
 - 1.2.1
 

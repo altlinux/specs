@@ -1,12 +1,13 @@
 %def_disable static
 %def_enable pixman
+%define _libexecdir %_prefix/libexec
 
 Name: evas
-Version: 1.2.1
+Version: 1.7.1
 %ifdef beta
 Release: alt1.%beta
 %else
-Release: alt1.1
+Release: alt1
 %endif
 Serial: 1
 
@@ -16,12 +17,13 @@ Group: System/Libraries
 URL: http://www.enlightenment.org
 
 Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
+Patch: evas-1.7.1-alt-build.patch
 
 %def_disable static
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
 BuildPreReq: libedb-devel >= 1.0.5.007-alt1.20070731
-BuildPreReq: libeet-devel >= 1.6.0 libeina-devel >= 1.2.0
+BuildPreReq: libeet-devel >= 1.7.0 libeina-devel >= 1.7.0
 BuildRequires: fontconfig-devel libX11-devel libXrender-devel libXext-devel libICE-devel libGL-devel
 BuildRequires: libungif-devel libpng-devel libjpeg-devel librsvg-devel
 BuildRequires: libtiff-devel libcairo-devel libSDL-devel doxygen
@@ -76,6 +78,8 @@ documentation
 %else
 %setup -q -n %name-%version
 %endif
+
+%patch -p1
 
 %build
 %autoreconf
@@ -132,10 +136,15 @@ mkdir -p %buildroot%customdocdir
 cp -R doc %buildroot%customdocdir
 
 %files -n lib%name
-%_bindir/evas_cserve
-%_bindir/evas_cserve_tool
+%_bindir/evas_cserve2_client
+%_bindir/evas_cserve2_debug
+%_bindir/evas_cserve2_usage
+%_libexecdir/dummy_slave
+%_libexecdir/evas_cserve2
+%_libexecdir/evas_cserve2_slave
 %_libdir/*.so.*
 %_libdir/evas
+%_datadir/evas/checkme
 
 %files -n lib%name-devel
 %_includedir/*
@@ -153,6 +162,9 @@ cp -R doc %buildroot%customdocdir
 %exclude %_datadir/evas/examples/evas-buffer-simple.c
 
 %changelog
+* Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.1-alt1
+- 1.7.1
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.1-alt1.1
 - Rebuilt with libpng15
 

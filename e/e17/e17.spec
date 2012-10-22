@@ -1,7 +1,7 @@
 %define _name enlightenment
 %define cvs_date 20070918
 %undefine cvs_date
-%define snapshot 2012-04-26
+%define snapshot 2012-10-12
 %define rel alt1
 
 %def_disable static
@@ -9,7 +9,7 @@
 # TODO: pam CoreFoundation
 
 Name: e17
-Version: 0.16.999.70492
+Version: 0.16.999.77927
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -24,7 +24,7 @@ Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
 Source: http://download.enlightenment.org/snapshots/%snapshot/%_name-%version.tar.bz2
-Patch: e17-default-menus.patch
+Patch: e17-default-menus-1.patch
 
 Source1: E-17.xpm
 Source2: start%name
@@ -39,8 +39,9 @@ Requires: edbus
 Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name
 
-BuildPreReq: libeet-devel >= 1.6.0
-BuildPreReq: libecore-devel >= 1.2.0
+BuildPreReq: libeet-devel >= 1.7.0
+BuildPreReq: libecore-devel >= 1.7.0
+BuildPreReq: libeio-devel >= 1.7.0
 BuildRequires: libpam-devel libX11-devel libevas-devel libecore-devel
 BuildRequires: edje libedje-devel libeet-devel libeet-utils libembryo-devel libefreet-devel
 BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
@@ -135,6 +136,12 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.16.999.77927-alt1
+- 0.16.999.77927
+
+* Tue Sep 04 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.16.999.76015-alt1
+- 0.16.999.76015
+
 * Fri May 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.16.999.70492-alt1
 - 0.16.999.70492
 

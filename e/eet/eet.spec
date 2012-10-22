@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: eet
-Version: 1.6.1
+Version: 1.7.1
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -116,6 +116,12 @@ Utils for operate with Eet data
 %_bindir/*
 
 %changelog
+* Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
+* Tue Sep 04 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Mon Jun 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 

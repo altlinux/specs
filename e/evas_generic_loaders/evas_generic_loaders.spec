@@ -1,4 +1,4 @@
-Name: expedite
+Name: evas_generic_loaders
 Version: 1.7.1
 %ifdef beta
 Release: alt1.%beta
@@ -6,7 +6,7 @@ Release: alt1.%beta
 Release: alt1
 %endif
 
-Summary: Evas benchmark tool
+Summary: A set of loaders for Evas
 License: LGPLv2.1+
 Group: System/Libraries
 Url: http://www.enlightenment.org/
@@ -16,18 +16,24 @@ Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
 BuildRequires: gcc-c++
 BuildRequires: libevas-devel >= 1.7.0
-BuildRequires: libeina-devel >= 1.7.0
-BuildRequires: libeet-devel >= 1.7.0
-BuildRequires: libX11-devel
+BuildRequires: libpoppler-devel
+BuildRequires: libraw-devel-static
+BuildRequires: libspectre-devel
+BuildRequires: gst-plugins-devel
+BuildRequires: zlib-devel
 
 %description
-Expedite is the official Evas benchmark tool. It can test different
-engines, such as X11, XRender, OpenGL (also ES variant), SDL, DirectFB
-and so on. Its tests are quite extensive, trying to reproduce real world
-usage cases.
+These are additional "generic" loaders for Evas that are stand-alone
+executables that evas may run from its generic loader module. This means
+that if they crash, the application loading the image does not crash
+also. In addition the licensing of these binaries will not affect the
+license of any application that uses Evas as this uses a completely
+generic execution system that allows anything to be plugged in as a
+loader.
+
 
 %prep
-%setup -q -n %name-%version
+%setup
 
 %build
 %configure
@@ -40,9 +46,8 @@ usage cases.
 %make DESTDIR=%buildroot install
 
 %files
-%_bindir/*
-%_datadir/%name/
-%doc AUTHORS COPYING* README
+%_libdir/evas/utils/*
+%doc AUTHORS COPYING README
 
 %changelog
 * Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
