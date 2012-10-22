@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libgmp-devel
 %add_optflags %optflags_shared
 Name:           libfplll
 Version:        4.0.1
-Release:        alt1_1
+Release:        alt1_2
 Summary:        LLL-reduces euclidean lattices
 Group:          System/Libraries
 License:        LGPLv2+
@@ -12,8 +12,9 @@ URL:            http://perso.ens-lyon.fr/damien.stehle/fplll/
 Source0:        http://perso.ens-lyon.fr/damien.stehle/fplll/%{name}-%{version}.tar.gz
 
 BuildRequires:  libmpfr-devel
-Source44: import.info
 
+Patch0:         %{name}-fplllv31.patch
+Source44: import.info
 
 %description
 fpLLL-3.0 contains several algorithms on lattices that rely on
@@ -50,7 +51,7 @@ the functionality of %{name}.
 
 %prep
 %setup -q
-
+%patch0 -p1
 
 %build
 %configure --disable-static LDFLAGS="-Wl,--as-needed $RPM_LD_FLAGS"
@@ -89,6 +90,9 @@ make check
 
 
 %changelog
+* Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt1_1
 - update to new release by fcimport
 
