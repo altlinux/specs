@@ -1,5 +1,5 @@
 Name: xscope
-Version: 1.3.1
+Version: 1.3.99.901
 Release: alt1
 Summary: A program to monitor X11/Client conversations
 License: MIT/X11
@@ -41,6 +41,9 @@ the client and X11.
 %_man1dir/*
 
 %changelog
+* Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 1.3.99.901-alt1
+- Autobuild version bump to 1.3.99.901
+
 * Wed Feb 22 2012 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
 - Autobuild version bump to 1.3.1
 
