@@ -2,14 +2,15 @@
 BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname nhn-nanum-gothic-coding-fonts
+
 %global fontname nhn-nanum-gothic-coding
 %global fontconf 65-3-%{fontname}.conf
 
-%global archivename NanumGothic_Coding.zip
+%global archivename NanumGothicCoding-2.0.zip
 
 Name:		fonts-ttf-nhn-nanum-gothic-coding
-Version:	1.500
-Release:	alt3_4
+Version:	2.000
+Release:	alt1_1
 Summary:	Nanum Gothic Coding family of Korean TrueType fonts
 
 Group:		System/Fonts/True type
@@ -31,7 +32,17 @@ for source code editing, designed by Sandoll Communication and
 published by NHN Corporation.
 
 %prep
+export LANG=en_US.ISO8859-1
 %setup -q -c
+for i in *.ttf; do
+  case $i in
+    *-Bold.ttf)
+      mv $i NanumGothic_Coding_Bold.ttf
+      ;;
+    *) 
+      mv $i NanumGothic_Coding.ttf
+  esac
+done
 
 
 %build
@@ -89,10 +100,11 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc README COPYING
-
 
 %changelog
+* Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 2.000-alt1_1
+- new version
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.500-alt3_4
 - update to new release by fcimport
 
