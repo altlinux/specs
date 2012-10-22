@@ -17,7 +17,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name java-1.7.0-openjdk
-%define version 1.7.0.6
+%define version 1.7.0.9
 # If gcjbootstrap is 1 OpenJDK is bootstrapped against
 # java-1.6.0-sun-devel.  If gcjbootstrap is 0 OpenJDK is built against
 # java-1.6.0-openjdk-devel.
@@ -29,7 +29,7 @@ BuildRequires: jpackage-compat
 # If runtests is 0 test suites will not be run.
 %global runtests 0
 
-%global icedtea_version 2.3.1
+%global icedtea_version 2.3.3
 %global hg_tag icedtea-{icedtea_version}
 
 %global accessmajorver 1.23
@@ -129,7 +129,7 @@ BuildRequires: jpackage-compat
 
 # Standard JPackage naming and versioning defines.
 %global origin          openjdk
-%global buildver        6
+%global buildver        9
 # Keep priority on 5digits in case buildver>9
 %global priority        1700%{buildver}
 %global javaver         1.7.0
@@ -172,7 +172,7 @@ BuildRequires: jpackage-compat
 
 Name:    java-%{javaver}-%{origin}
 Version: %{javaver}.%{buildver}
-Release: alt1_2.3.1.2jpp7
+Release: alt1_2.3.3jpp7
 # java-1.5.0-ibm from jpackage.org set Epoch to 1 for unknown reasons,
 # and this change was brought into RHEL-4.  java-1.5.0-ibm packages
 # also included the epoch in their virtual provides.  This created a
@@ -250,8 +250,8 @@ Source12: remove-intree-libraries.sh
 # base (icedtea-2.2.1 tag)
 
 # http://icedtea.classpath.org/hg/release/icedtea7-forest-2.1
-# hg tag: icedtea-2.1.1
-Source100:  openjdk-icedtea-2.1.1.tar.gz
+# hg tag: icedtea-2.1.3
+Source100:  openjdk-icedtea-2.1.3.tar.gz
 
 # RPM/distribution specific patches
 
@@ -528,6 +528,7 @@ Provides: java-fonts = %{epoch}:%{version}
 
 # Obsolete older 1.6 packages as it cannot use the new bytecode
 Source44: import.info
+Patch33: java-1.7.0-openjdk-alt-no-Werror.patch
 
 %define altname %name
 %define label -%{name}
@@ -736,6 +737,8 @@ sed -i -e 's,DEF_OBJCOPY=/usr/bin/objcopy,DEF_OBJCOPY=/usr/bin/NO-objcopy,' open
 
 #%patch500
 
+%patch33 -p1
+
 %build
 # How many cpu's do we have?
 export NUM_PROC=`/usr/bin/getconf _NPROCESSORS_ONLN 2> /dev/null || :`
@@ -873,6 +876,7 @@ export ALT_JDK_IMPORT_PATH="$PWD/../bootstrap/jdk1.6.0"
 source jdk/make/jdk_generic_profile.sh
 
 make MEMORY_LIMIT=-J-Xmx512m \
+  WARNINGS_ARE_ERRORS= \
   ANT="/usr/bin/ant" \
   ALT_BOOTDIR="$PWD/../bootstrap/jdk1.6.0" \
   ICEDTEA_RT="$PWD/../bootstrap/jdk1.6.0/jre/lib/rt.jar" \
@@ -956,6 +960,8 @@ make MEMORY_LIMIT=-J-Xmx512m \
   %{debugbuild}
 
 popd >& /dev/null
+
+chmod 644 $(pwd)/%{buildoutputdir}/j2sdk-image/lib/sa-jdi.jar
 
 export JAVA_HOME=$(pwd)/%{buildoutputdir}/j2sdk-image
 
@@ -1395,6 +1401,9 @@ done
 %doc %{buildoutputdir}/j2sdk-image/jre/LICENSE
 
 %changelog
+* Thu Oct 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.9-alt1_2.3.3jpp7
+- new release
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7.0.6-alt1_2.3.1.2jpp7
 - new version
 
