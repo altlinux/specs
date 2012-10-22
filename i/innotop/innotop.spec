@@ -2,7 +2,7 @@
 
 Name: innotop
 Version: 1.9.0
-Release: alt1
+Release: alt2
 
 Summary: a 'top' clone for MySQL with special attention paid to InnoDB
 
@@ -22,6 +22,9 @@ BuildRequires(pre): perl-devel rpm-build-licenses
 # Automatically added by buildreq on Sun Oct 14 2012
 # optimized out: perl-DBI perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators
 BuildRequires: perl-DBD-mysql perl-Pod-Parser perl-Term-ReadKey perl-devel perl-unicore
+
+
+Requires: perl-DBD-mysql
 
 %description
 innotop is a MySQL and InnoDB transaction/status monitor. It can display
@@ -58,6 +61,9 @@ install -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.*
 
 %changelog
+* Mon Oct 22 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.9.0-alt2
+- Add missing requires on DBD::mysql
+
 * Sun Oct 14 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.9.0-alt1
 - New version
 
