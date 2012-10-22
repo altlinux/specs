@@ -1,20 +1,20 @@
-Summary: usb-modeswitch is  a mode switching tool for controlling "flip flop" (multiple device) USB gear. 
-Name: usb-modeswitch 
-Version: 1.2.3
-Release: alt1
+Summary: usb-modeswitch is  a mode switching tool for controlling "flip flop" (multiple device) USB gear
+Name: usb-modeswitch
+Version: 1.2.4
+Release: alt2
 License: GPL
 
-Group:  System/Configuration/Hardware
-URL: http://www.draisberghof.de/usb_modeswitch/
-Source0: %name-%version.tar
+Group: System/Configuration/Hardware
+Url: http://www.draisberghof.de/usb_modeswitch/
+
+Source: %name-%version.tar
+
+Patch: usb_modeswitch_dispatcher-old-kernels.patch
 
 Requires: usb-modeswitch-data
-BuildRequires: tcl libusb-compat-devel 
+BuildRequires: tcl libusb-compat-devel
 Provides: usb_modeswitch
 Obsoletes: usb_modeswitch
-
-%add_findreq_skiplist /usr/sbin/usb_modeswitch_dispatcher
-%add_findprov_skiplist /usr/sbin/usb_modeswitch_dispatcher
 
 %description
 USB_ModeSwitch is (surprise!) a mode switching tool for controlling
@@ -31,8 +31,8 @@ that feature "ZeroCD (TM)".
 Needed for MTS (and others) branded e1550 modems.
 
 %prep
-
-%setup -q
+%setup
+%patch
 
 %build
 %make
@@ -42,13 +42,25 @@ DESTDIR=%buildroot make install
 
 %files
 %doc ChangeLog README
-/usr/sbin/*
+%_sbindir/*
 %_man1dir/*
-/etc/*
+%_sysconfdir/*
 /lib/udev/*
-
+%_localstatedir/usb_modeswitch
 
 %changelog
+* Mon Oct 22 2012 Lenar Shakirov <snejok@altlinux.ru> 1.2.4-alt2
+- turn on findreq and findprov
+
+* Mon Oct 22 2012 Lenar Shakirov <snejok@altlinux.ru> 1.2.4-alt1
+- 1.2.4
+
+* Mon Oct 22 2012 Lenar Shakirov <snejok@altlinux.ru> 1.2.3-alt3
+- %_localstatedir/usb_modeswitch packaged (ALT #27874)
+
+* Mon Oct 22 2012 Lenar Shakirov <snejok@altlinux.ru> 1.2.3-alt2
+- make work on old kernels (older than 2.6.27)
+
 * Thu Aug 09 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.2.3-alt1
 - 1.2.3
 
