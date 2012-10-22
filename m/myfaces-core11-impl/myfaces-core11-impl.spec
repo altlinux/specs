@@ -1,3 +1,4 @@
+BuildRequires: apache-commons-discovery
 BuildRequires: aspectj
 BuildRequires: mojo-parent
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -38,7 +39,7 @@ BuildRequires: jpackage-compat maven2-plugin-checkstyle
 Summary:        Myfaces JSF 1.1 implementation
 Name:           myfaces-core11-impl
 Version:        1.1.5
-Release:        alt7_2jpp5
+Release:        alt8_2jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -76,13 +77,13 @@ BuildRequires: jakarta-cactus
 BuildRequires: junit
 BuildRequires: shale-test
 
-BuildRequires: jakarta-commons-beanutils
-BuildRequires: jakarta-commons-codec
-BuildRequires: jakarta-commons-collections
-BuildRequires: jakarta-commons-digester
+BuildRequires: apache-commons-beanutils
+BuildRequires: apache-commons-codec
+BuildRequires: apache-commons-collections
+BuildRequires: apache-commons-digester
 BuildRequires: jakarta-commons-el10
-BuildRequires: jakarta-commons-lang
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-lang
+BuildRequires: apache-commons-logging
 BuildRequires: jakarta-taglibs-standard
 BuildRequires: jsp_2_0_api
 BuildRequires: myfaces-core11-api = %{version}
@@ -90,13 +91,13 @@ BuildRequires: myfaces-shared11
 BuildRequires: portlet_1_0_api
 BuildRequires: servlet_2_3_api
 
-Requires: jakarta-commons-beanutils
-Requires: jakarta-commons-codec
-Requires: jakarta-commons-collections
-Requires: jakarta-commons-digester
+Requires: apache-commons-beanutils
+Requires: apache-commons-codec
+Requires: apache-commons-collections
+Requires: apache-commons-digester
 Requires: jakarta-commons-el10
-Requires: jakarta-commons-lang
-Requires: jakarta-commons-logging
+Requires: apache-commons-lang
+Requires: apache-commons-logging
 Requires: jakarta-taglibs-standard
 Requires: jsp_2_0_api
 Requires: myfaces-core11-api = %{version}
@@ -198,6 +199,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt8_2jpp5
+- fixed build
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.5-alt7_2jpp5
 - build with aspectj 1.6.0
 
