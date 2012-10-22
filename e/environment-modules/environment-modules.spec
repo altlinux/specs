@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/runtest libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           environment-modules
 Version:        3.2.9c
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -13,6 +13,9 @@ Source0:        http://downloads.sourceforge.net/modules/modules-%{version}.tar.
 Source1:        modules.sh
 Source2:        createmodule.sh
 Patch0:         environment-modules-3.2.7-bindir.patch
+# Patch to fix segfault in module unload due to Tcl RegExp handling
+# https://bugzilla.redhat.com/show_bug.cgi?id=834580
+Patch1:         environment-modules-regex.patch
 
 BuildRequires:  tcl-devel tclx libX11-devel
 BuildRequires:  dejagnu
@@ -49,6 +52,7 @@ have access to the module alias.
 %prep
 %setup -q -n modules-3.2.9
 %patch0 -p1 -b .bindir
+%patch1 -p1 -b .regex
 
 
 %build
@@ -72,7 +76,7 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 
 
 %check
-make test ||:
+#make test
 
 
 %files
@@ -91,6 +95,9 @@ make test ||:
 
 
 %changelog
+* Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.9c-alt1_4
+- update to new release by fcimport
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.9c-alt1_3
 - new release
 
