@@ -3,21 +3,17 @@ BuildRequires: perl(IPC/Open2.pm)
 # END SourceDeps(oneline)
 Group: Text tools
 Name:           colordiff
-Version:        1.0.10
-Release:        alt1_2
+Version:        1.0.12
+Release:        alt1_1
 Summary:        Color terminal highlighter for diff files
 
 License:        GPLv2+
-URL:            http://colordiff.sourceforge.net/
-Source0:        http://colordiff.sourceforge.net/%{name}-%{version}.tar.gz
+URL:            http://www.colordiff.org/
+Source0:        http://www.colordiff.org/%{name}-%{version}.tar.gz
 # Non-upstream, better default colors for Fedora default desktop themes
 Patch0:         %{name}-1.0.6-colors.patch
-# Sent upstream 2009-07-21, resent 2012-06-04
-Patch1:         %{name}-1.0.9-cdiff-xz.patch
 
 BuildArch:      noarch
-# xmlto, docbook-dtds for patch1
-BuildRequires:  xmlto docbook-dtd412-xml
 Requires:       xz
 Requires:       bzip2
 Requires:       gzip
@@ -35,7 +31,6 @@ pretty syntax highlighting.  Color schemes can be customized.
 %prep
 %setup -q
 %patch0 -p1
-%patch1 -p1
 mv colordiffrc colordiffrc-darkbg ; cp -p colordiffrc-lightbg colordiffrc
 f=CHANGES ; iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
 
@@ -45,7 +40,6 @@ sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
 
 
 %build
-xmlto -vv man cdiff.xml
 
 
 %install
@@ -63,6 +57,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %changelog
+* Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.12-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.10-alt1_2
 - update to new release by fcimport
 
