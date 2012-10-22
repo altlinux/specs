@@ -5,7 +5,7 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.1.8
+Version: 2.1.10
 Release: alt1
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
@@ -186,6 +186,12 @@ test "`/usr/sbin/control mailboxes`" != "mailgrp" || /usr/sbin/control mailboxes
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 2.1.10-alt1
+- Autobuild version bump to 2.1.10 (bugfixes + doveadm improvement)
+
+* Tue Aug 21 2012 Fr. Br. George <george@altlinux.ru> 2.1.9-alt1
+- Autobuild version bump to 2.1.9
+
 * Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 2.1.8-alt1
 - Autobuild version bump to 2.1.8
 
