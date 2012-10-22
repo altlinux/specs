@@ -1,3 +1,4 @@
+BuildRequires: apache-commons-discovery
 BuildRequires: aspectj
 BuildRequires: qdox
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -39,7 +40,7 @@ BuildRequires: jpackage-compat testng maven-surefire-provider-testng
 Summary:        MyFaces shared 12
 Name:           myfaces-shared12
 Version:        3.0.4
-Release:        alt5_1jpp5
+Release:        alt6_1jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -75,18 +76,18 @@ BuildRequires: jakarta-cactus
 BuildRequires: junit
 BuildRequires: shale-test
 
-BuildRequires: jakarta-commons-codec
-BuildRequires: jakarta-commons-el
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-codec
+BuildRequires: apache-commons-el
+BuildRequires: apache-commons-logging
 BuildRequires: jsp_2_1_api
 BuildRequires: myfaces-core12-api
 BuildRequires: portlet_1_0_api
 BuildRequires: servlet_2_3_api
 
 
-Requires: jakarta-commons-codec
-Requires: jakarta-commons-el
-Requires: jakarta-commons-logging
+Requires: apache-commons-codec
+Requires: apache-commons-el
+Requires: apache-commons-logging
 Requires: jsp_2_1_api
 Requires: myfaces-core12-api
 Requires: portlet_1_0_api
@@ -200,6 +201,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt6_1jpp5
+- fixed build
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0.4-alt5_1jpp5
 - build with aspectj 1.6.0
 
