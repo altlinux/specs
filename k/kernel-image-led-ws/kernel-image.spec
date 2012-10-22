@@ -16,13 +16,13 @@
 %define flavour		%base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.46
-Release: alt9
+Version: 3.0.47
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 46
+%define kernel_stable_version 47
 %define kernel_extra_version	.%kernel_stable_version
 #define kernel_extra_version	%nil
 
@@ -162,7 +162,7 @@ Patch0051: linux-%kernel_branch.43-fix-crypto--ghash-clmulni-intel.patch
 
 Patch0060: linux-%kernel_branch.42-fix-drivers--connector.patch
 
-Patch0070: linux-%kernel_branch.44-fix-drivers-acpi.patch
+Patch0070: linux-%kernel_branch.47-fix-drivers-acpi.patch
 Patch0071: linux-%kernel_branch.42-fix-drivers-acpi--battery.patch
 Patch0072: linux-%kernel_branch.42-fix-drivers-acpi--processor.patch
 Patch0073: linux-%kernel_branch.42-fix-drivers-acpi--thermal.patch
@@ -272,7 +272,7 @@ Patch0244: linux-%kernel_branch.44-fix-drivers-gpu-drm--i915.patch
 Patch0245: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0246: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
 Patch0247: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
-Patch0248: linux-%kernel_branch.42-fix-drivers-gpu-drm--radeon.patch
+Patch0248: linux-%kernel_branch.47-fix-drivers-gpu-drm--radeon.patch
 Patch0249: linux-%kernel_branch.42-fix-drivers-gpu-drm--via.patch
 Patch0250: linux-%kernel_branch.42-fix-drivers-gpu-drm--vmwgfx.patch
 Patch0251: linux-%kernel_branch.42-fix-drivers-gpu-vga--vgaarb.patch
@@ -365,7 +365,7 @@ Patch0455: linux-%kernel_branch.46-fix-drivers-net--qeth.patch
 Patch0456: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
 Patch0457: linux-%kernel_branch.46-fix-drivers-net--qlge.patch
 Patch0458: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
-Patch0459: linux-%kernel_branch.46-fix-drivers-net--tg3.patch
+Patch0459: linux-%kernel_branch.47-fix-drivers-net--tg3.patch
 Patch0460: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
 Patch0461: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
 Patch0462: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
@@ -2704,6 +2704,17 @@ fi
 
 
 %changelog
+* Sun Oct 21 2012 Led <led@altlinux.ru> 3.0.47-alt1
+- 3.0.47
+- updated:
+  + fix-drivers-acpi
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-net--tg3
+
+* Sun Oct 21 2012 Led <led@altlinux.ru> 3.0.46-alt10
+- updated:
+  + fix-drivers-usb-storage--usb-storage
+
 * Sun Oct 21 2012 Led <led@altlinux.ru> 3.0.46-alt9
 - updated:
   + fix-drivers-net--qeth
