@@ -13,8 +13,8 @@
 %add_verify_elf_skiplist %_libdir/libkommanderwidgets.so*
 
 Name: kdewebdev
-Version: 3.5.13
-Release: alt2
+Version: 3.5.13.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - web development programs
@@ -301,8 +301,8 @@ rm -f %buildroot/%_K3apps/quanta/doc/install.sh
 %_K3xdg_apps/kfilereplace.desktop
 
 %changelog
-* Fri Jun 15 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt2
-- Automake version is fixed to 1.11.5 detect.
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
 
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - TDE 3.5.13 release build

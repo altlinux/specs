@@ -12,20 +12,21 @@
 %add_findpackage_path %_K3bindir
 
 Name: kdebindings
-Version: 3.5.13
-Release: alt2
+Version: 3.5.13.1
+Release: alt1
 
 Summary: bindings to KDE libraries for various programming languages 
 Group: Graphical desktop/KDE
 URL: http://www.kde.org
 License: GPLv2 LGPL
 
-Requires: perl-DCOP = %version-%release
+Requires: %name-perl-DCOP = %version-%release
 %if %ruby
-Requires: ruby-qt = %version-%release
-Requires: ruby-korundum = %version-%release
+Requires: %name-ruby-qt = %version-%release
+Requires: %name-ruby-korundum = %version-%release
 %endif
-Requires: kjsembed = %version-%release
+Requires: %name-kjsembed = %version-%release
+Requires: %name-xparts = %version-%release
 
 
 Source0: %name-%version.tar
@@ -37,7 +38,7 @@ Patch5: kdebindings-3.5.10-alt-ruby-getopts.patch
 Patch6: kdebindings-3.5.12-alt-ruby-paths.patch
 Patch7: kdebindings-3.5.10-alt-ruby-compile.patch
 
-BuildRequires(pre): kdelibs-devel
+BuildRequires(pre): kdelibs-devel gtk+-devel libgtk+2-devel
 BuildRequires: kdebase-devel libstdc++-devel gcc-c++ libjpeg-devel perl-devel libpng-devel
 BuildRequires: xml-utils ruby libssl-devel libruby-devel
 
@@ -58,31 +59,31 @@ Group: Development/KDE and QT
 Requires: %name-common = %version-%release
 Requires: kdelibs-devel >= %{get_version kdelibs-devel}
 %if %ruby
-Requires: ruby-qt-doc = %version-%release
-Requires: ruby-qt-devel = %version-%release
-Requires: ruby-korundum-doc = %version-%release
+Requires: %name-ruby-qt-doc = %version-%release
+Requires: %name-ruby-qt-devel = %version-%release
+Requires: %name-ruby-korundum-doc = %version-%release
 %endif
-Requires: kjsembed-devel = %version-%release
+Requires: %name-kjsembed-devel = %version-%release
 %description devel
 Development files and headers for %name
 %description devel -l ru_RU.UTF-8
 Файлы для разработки приложений с %name
 
-%package -n perl-DCOP
+%package perl-DCOP
 Summary: Perl module for DCOP
 Summary(ru_RU.UTF-8): Модуль Perl для DCOP
 Group: Development/Perl
 Requires: %name-common = %version-%release
-%description -n perl-DCOP
+%description perl-DCOP
 Perl module which allows to create DCOP clients and servers.
 DCOP is a KDE protocol for programmatic access to
 applications data and methods
-%description -l ru_RU.UTF-8
+%description perl-DCOP -l ru_RU.UTF-8
 Модуль Perl, позволяющий создавать клиентские и серверные приложения
 DCOP. DCOP - это используемый в KDE протокол для программного доступа
 к данным и методам приложений
 
-%package -n ruby-qt
+%package ruby-qt
 Summary: Qt bindings for Ruby
 Summary(ru_RU.UTF-8): Расширение Ruby для использования библиотеки Qt
 Group: Development/Ruby
@@ -90,39 +91,39 @@ Requires: %{get_dep libqt3}
 Requires: %name-common = %version-%release
 Provides: ruby-module-qt = %version-%release
 Obsoletes: ruby-module-qt < %version-%release
-%description -n ruby-qt
+%description ruby-qt
 This package contains Ruby modules and service programs to create
 applications with Qt GUI.
-%description -n ruby-qt -l ru_RU.UTF-8
+%description ruby-qt -l ru_RU.UTF-8
 Данный пакет содержит модули языка Ruby и вспомогательные приложения,
 которые позволяют создавать на Ruby приложения с графическим
 интерфейсом, построенным на Qt.
 
-%package -n ruby-qt-doc
+%package ruby-qt-doc
 Summary: Documentation and examples for Qt Ruby bindings
 Summary(ru_RU.UTF-8): Документация и примеры к расширению Qt для Ruby
 Group: Development/Ruby
 Requires: %name-common = %version-%release
 Provides: ruby-module-qt-doc = %version-%release
 Obsoletes: ruby-module-qt-doc < %version-%release
-%description -n ruby-qt-doc
+%description ruby-qt-doc
 Documentation and examples for Qt Ruby bindings
-%description -n ruby-qt-doc -l ru_RU.UTF-8
+%description ruby-qt-doc -l ru_RU.UTF-8
 Документация и примеры к расширению Qt для Ruby
 
-%package -n ruby-qt-devel
+%package ruby-qt-devel
 Summary: Development files for ruby-qt
 Group: Development/Ruby
 #Requires: ruby-qt = %version-%release
 Requires: %name-common = %version-%release
 Provides: ruby-module-qt-devel = %version-%release
 Obsoletes: ruby-module-qt-devel < %version-%release
-%description -n ruby-qt-devel
+%description ruby-qt-devel
 This package contains utility files for ruby-qt package
-%description -n ruby-qt-devel -l ru_RU.UTF-8
+%description ruby-qt-devel -l ru_RU.UTF-8
 Этот пакет содержит утилиты для пакета ruby-qt
 
-%package -n ruby-korundum
+%package ruby-korundum
 Summary: KDE bindings for Ruby
 Summary(ru_RU.UTF-8): Расширение Ruby для использования библиотек KDE
 Provides: korundum = %version-%release
@@ -131,16 +132,16 @@ Requires: kdelibs >= %{get_version kdelibs}
 Requires: %name-common = %version-%release
 Provides: ruby-module-korundum = %version-%release
 Obsoletes: ruby-module-korundum < %version-%release
-%description -n ruby-korundum
+%description ruby-korundum
 This package contains Ruby modules and service programs to create
 applications built upon KDE interface and technologies.
 with KDE GUI.
-%description -n ruby-korundum -l ru_RU.UTF-8
+%description ruby-korundum -l ru_RU.UTF-8
 Данный пакет содержит модули языка Ruby и вспомогательные приложения,
 которые позволяют создавать на Ruby приложения с использованием интерфейса
 и технологий среды KDE.
 
-%package -n ruby-korundum-doc
+%package ruby-korundum-doc
 Summary: Documentation and examples for Korundum
 Summary(ru_RU.UTF-8): Документация и примеры для Korundum
 Provides: korundum = %version-%release
@@ -148,22 +149,22 @@ Group: Development/Ruby
 Requires: %name-common = %version-%release
 Provides: ruby-module-korundum-doc = %version-%release
 Obsoletes: ruby-module-korundum-doc < %version-%release
-%description -n ruby-korundum-doc
+%description ruby-korundum-doc
 Documentation and examples for Korundum
-%description -n ruby-korundum -l ru_RU.UTF-8
+%description ruby-korundum -l ru_RU.UTF-8
 Документация и примеры для Korundum
 
-%package -n kjsembed-devel
+%package kjsembed-devel
 Summary: Development files and headers for kjsembed
 Summary(ru_RU.UTF-8): Заголовочные и другие файлы для разработки приложений с kjsembed
 Group: Development/KDE and QT
 Requires: %name-common = %version-%release
-%description -n kjsembed-devel
+%description kjsembed-devel
 Development files and headers for kjsembed
-%description -n kjsembed-devel -l ru_RU.UTF-8
+%description kjsembed-devel -l ru_RU.UTF-8
 Заголовочные и другие файлы для разработки приложений с kjsembed
 
-%package -n kjsembed
+%package kjsembed
 Summary: KJS Javascript command line interpreter and utilities
 Summary(ru_RU.UTF-8): Интерпретатор Javascript KJS и вспомогательные приложения
 Group: Graphical desktop/KDE
@@ -171,11 +172,26 @@ Requires: kdelibs >= %{get_version kdelibs}
 Requires: %name-common = %version-%release
 Provides: libkjsembed = %version-%release
 Obsoletes: libkjsembed < %version-%release
-%description -n kjsembed
+%description kjsembed
 KJS Javascript command line interpreter and utilities
-%description -n kjsembed -l ru_RU.UTF-8
+%description kjsembed -l ru_RU.UTF-8
 Интерпретатор Javascript KJS (версия для командной строки) и вспомогательные
 приложения.
+
+%package xparts
+Summary: XPart technology
+Summary(ru_RU.UTF-8): XPart технология
+Group: Graphical desktop/KDE
+Requires: kdelibs >= %{get_version kdelibs}
+Requires: %name-common = %version-%release
+%description xparts
+Currently XPart is more a proof of concept than a stabilized and maintained
+technology. The only application using it is kmozilla, which makes the
+Gecko html/browser (the one of mozilla) available as a kpart.
+%description xparts -l ru_RU.UTF-8
+На данный момент XPart больше концепция чем стабильная и поддерживаемая технология.
+Может использоваться только с приложением kmozilla, которое делеает Gecko html/browser
+(один из mozilla) доступным как kpart.
 
 %prep
 %setup -q
@@ -266,14 +282,13 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 %files common
 %files devel
 
-%files -n perl-DCOP
-# doc files
-
-%perl_vendor_archlib/DCOP*
-%perl_vendor_autolib/DCOP
+%files perl-DCOP
+##%perl_vendor_archlib/DCOP*
+##%perl_vendor_autolib/DCOP
+%perl_vendor_archlib/*
 
 %if %ruby
-%files -n ruby-qt
+%files ruby-qt
 %docdir %qtruby_docdir
 %qtruby_docdir/AUTHORS
 %qtruby_docdir/ChangeLog
@@ -288,21 +303,21 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 %ruby_sitearchdir/qui.so*
 %ruby_sitelibdir/Qt*
 
-%files -n ruby-qt-doc
+%files ruby-qt-doc
 %docdir %qtruby_docdir
 %qtruby_docdir/tutorial
 %qtruby_docdir/examples
 %qtruby_docdir/designer_examples
 
 
-%files -n ruby-qt-devel
+%files ruby-qt-devel
 %_K3includedir/smoke.h
 %_libdir/libsmokeqt.so
 %if %_keep_libtool_files
 %_libdir/libsmokeqt.la
 %endif
 
-%files -n ruby-korundum
+%files ruby-korundum
 %docdir %korundum_docdir
 %korundum_docdir/AUTHORS
 %korundum_docdir/ChangeLog
@@ -318,7 +333,7 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 %ruby_sitelibdir/Korundum.*
 %ruby_sitelibdir/KDE
 
-%files -n ruby-korundum-doc
+%files ruby-korundum-doc
 %docdir %korundum_docdir
 %korundum_docdir/tutorials
 %korundum_docdir/examples
@@ -326,14 +341,14 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 %korundum_docdir/rbkconfig_compiler
 %endif
 
-%files -n kjsembed-devel
+%files kjsembed-devel
 %_libdir/libkjsembed.so
 %_K3includedir/kjsembed
 %if %_keep_libtool_files
 %_libdir/libkjsembed.la
 %endif
 
-%files -n kjsembed
+%files kjsembed
 %doc kjsembed/README kjsembed/TODO
 %_bindir/embedjs
 #%_bindir/jsaccess
@@ -361,7 +376,20 @@ cp -pr korundum/rubylib/rbkconfig_compiler/{autoexample.rb,exampleprefs_base.kcf
 # Kate plugin
 %_K3apps/kate/scripts/*
 
+%files xparts
+%_bindir/shell_xparthost
+%_bindir/xp_notepad
+%_libdir/libkdexparts.so*
+%_libdir/libgtkxparts.so*
+%_libdir/libdcopc.so*
+%_libdir/libxp_notepadpart.so
+%_K3includedir/xkparts
+
+
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 3.5.13-alt2
 - rebuilt for perl-5.16
 

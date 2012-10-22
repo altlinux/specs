@@ -11,8 +11,8 @@
 %add_findprov_lib_path %_libdir/kde3
 
 Name: kdegraphics
-Version: 3.5.13
-Release: alt3.qa2
+Version: 3.5.13.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -58,28 +58,24 @@ Patch5: kdegraphics-3.5.2-kpdf-xft.patch
 Patch101: 3.5.12-fix-linking.patch
 Patch102: kdegraphics-3.5.10-alt-fix-compile.patch
 # Security
-Patch301: xpdf-3.02pl4.patch
 Patch302: security_01_CVE-2009-0945.diff
 Patch303: security_02_CVE-2009-1709.diff
 Patch304: xpdf-3.02-CVE-2010-3702.patch
 Patch305: xpdf-3.02-CVE-2010-3704.patch
 Patch306: tde-3.5.13-build-defdir.patch
-Patch307: tde-3.5.13-DSO.patch
-
+Patch307: tde-3.5.13-build-poppler.patch
 
 # Automatically added by buildreq on Tue Apr 13 2004 (-bi)
-#BuildRequires: Mesa XFree86-devel XFree86-libs fontconfig-devel freetype2-devel gcc-c++ gcc-g77 glib2 imlib-devel kde-settings kdelibs-devel libGLU-devel libart_lgpl-devel libarts-devel libgphoto2-devel libieee1284-devel libjpeg-devel liblcms-devel libpng-devel libqt3-devel libsane-devel libstdc++-devel libtiff-devel libungif-devel libusb-devel menu-devel pkgconfig qt3-designer tetex-core xml-utils zlib-devel
 BuildRequires(pre): cmake glibc-core kdelibs-devel
 BuildRequires: fontconfig-devel freetype2-devel
 BuildRequires: gcc-c++ imlib-devel libart_lgpl-devel
 BuildRequires: libieee1284-devel libjpeg-devel openexr-devel
 BuildRequires: liblcms-devel libpng-devel libqt3-devel libsane-devel libstdc++-devel
-BuildRequires: libtiff-devel libungif-devel libusb-devel  pkg-config
-BuildRequires: qt3-designer tetex-core xml-utils zlib-devel
+BuildRequires: libtiff-devel libungif-devel libusb-devel pkg-config
+BuildRequires: qt3-designer xml-utils zlib-devel
 BuildRequires: libfribidi-devel fribidi t1lib-devel libpoppler13-devel
 BuildRequires: libacl-devel libattr-devel
 BuildRequires: libXxf86vm-devel
-#BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
 %if %gphoto
 BuildRequires: libgphoto2 libgphoto2-devel liblockdev-devel
@@ -357,9 +353,6 @@ based on kdegraphic.
 %patch101 -p1
 ###%patch102 -p1
 #
-pushd kpdf/xpdf
-%patch301 -p1
-popd
 %patch302 -p1
 %patch303 -p1
 pushd kpdf/xpdf
@@ -691,9 +684,13 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 %_K3includedir/libtext2path*/
 %_K3includedir/ksvg/
 %_K3includedir/kviewshell/
+%_pkgconfigdir/poppler-tqt.pc
 
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.13-alt3.qa2
 - Rebuilt with libtiff5
 

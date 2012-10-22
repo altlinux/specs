@@ -31,10 +31,10 @@
 
 %define major 3
 %define minor 5
-%define bugfix 13
+%define bugfix 13.1
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt6
+Release: alt1
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -224,9 +224,6 @@ Patch1077: tde-3.5.13-build-defdir.patch
 Patch1078: kdm-3.5.13-greeter.patch
 Patch1079: kdm-3.5.13-noPAMuse.patch
 Patch1080: kdm-3.5.13-SAK_disable_CtrlAltDel-FullCPUusage_SAK_Std.patch
-Patch1081: kdebase-3.5.13-kwin-keramic-pics-emb.patch
-Patch1082: tde-3.5.13-kxdglauncher_locale.patch
-Patch1083: tde-3.5.13-SmoothScrolling-save.patch
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 Patch2000: kdebase-3.5.0-man_recode.patch
@@ -258,7 +255,7 @@ BuildRequires: libsmbclient-devel
 %endif
 BuildRequires: xml-utils zlib-devel glibc-utils glibc-devel
 BuildRequires: flex libalternatives-devel libsasl2-devel libsensors3-devel
-BuildRequires: libdbus-devel
+BuildRequires: libdbus-devel libudev-devel
 %if %with_hal
 BuildRequires: libhal-devel
 %if %int_qt_dbus
@@ -609,7 +606,7 @@ Menu resources for the original KDE menu.
 %patch1044 -p1
 %patch1045 -p1
 #
-%patch1049 -p1
+###%patch1049 -p1
 %patch1051 -p1
 ###%patch1052 -p1
 %patch1053 -p1
@@ -636,12 +633,9 @@ Menu resources for the original KDE menu.
 %patch1075 -p1
 %patch1076 -p1
 %patch1077
-%patch1078 -p1
-%patch1079 -p1
+###%patch1078 -p1
+###%patch1079 -p1
 %patch1080
-%patch1081 -p1
-%patch1082
-%patch1083
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 ###%patch2000 -p1
@@ -1027,10 +1021,10 @@ fi
 
 %files common
 %config(noreplace) %_Kconfig/*
-%config(noreplace) %_K3conf/*
 %config(noreplace) %_sysconfdir/pam.d/kde
 %config(noreplace) %_sysconfdir/pam.d/kde-np
 %config %_sysconfdir/ksysguarddrc
+%config %_K3conf/*
 %_datadir/kde/*bookmarks*
 %_bindir/kde3
 %_bindir/trinity
@@ -1943,6 +1937,13 @@ fi
 
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
+* Thu Aug 30 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt7
+- kdm default bin paths is renamed from "trinity" to "kde3"
+- default splash changed to "Default-kde"
+
 * Mon Jul 16 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt6
 - kdm config directory doubling is fixed by main store into /usr/share/kde/config/kdm and link to it from /etc/X11/kdm.
 

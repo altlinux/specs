@@ -17,8 +17,8 @@
 %set_verify_elf_method no
 
 Name: kdeedu
-Version: 3.5.13
-Release: alt2.2
+Version: 3.5.13.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - kdeedu
@@ -65,7 +65,7 @@ Requires: %name-kgeography = %version-%release
 #BuildRequires: XFree86-devel XFree86-libs freetype2 gcc-c++ kde-common kdebase kdelibs-devel libarts-devel libjpeg-devel liblcms libmng libpng-devel libqt3-devel libstdc++-devel zlib-devel
 
 BuildRequires(pre): kdelibs-devel
-BuildRequires: gcc4.5-c++
+BuildRequires: gcc-c++
 BuildRequires: kde-common libart_lgpl-devel
 BuildRequires: libjpeg-devel liblcms libmng libpng-devel
 BuildRequires: python-devel boost-python-devel
@@ -334,7 +334,7 @@ Vocabulary Trainer
 #%setup -q -n %name-3.0.98
 #%patch10 -p1
 %patch11 -p1
-%patch13 -p1
+#%patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
@@ -647,17 +647,11 @@ chmod a-s %buildroot/%_bindir/*
 %_includedir/libkdeedu/
 
 %changelog
-* Wed Oct 09 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt2.2
-- Set build depends to direct gcc4.5-c++
-
-* Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.13-alt2.1
-- Rebuilt with Boost 1.51.0
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
 
 * Thu Apr 26 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt2
-- Automake version is fixed to 1.11.5 detect.
-
-* Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.13-alt1.1
-- Rebuilt with Boost 1.49.0
+- Automake version is fixed to 1.10
 
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - TDE 3.5.13 release build

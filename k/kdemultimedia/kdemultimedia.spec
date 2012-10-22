@@ -23,8 +23,8 @@
 %endif
 
 Name: kdemultimedia
-Version: 3.5.13
-Release: alt5
+Version: 3.5.13.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -655,6 +655,9 @@ mv %buildroot/%_K3apps/kconf_update/noatun20update %buildroot/%_K3libdir/kconf_u
 %_K3includedir/mpeglib
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Tue Aug 28 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt5
 - Capture mixer's knob processing is fixed.
 

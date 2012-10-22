@@ -14,8 +14,8 @@
 %add_findprov_lib_path %_libkde
 
 Name: kdeaddons
-Version: 3.5.13
-Release: alt1.2.qa1
+Version: 3.5.13.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE addons
@@ -499,6 +499,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %endif
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Wed Aug 29 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.5.13-alt1.2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:

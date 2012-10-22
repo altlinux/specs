@@ -18,8 +18,8 @@
 
 
 Name: kdenetwork
-Version: 3.5.13
-Release: alt4
+Version: 3.5.13.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: KDE - Network Applications
@@ -100,12 +100,13 @@ Patch5034: kdenetwork-3.5.12-kppp-use-search-in-resolv-conf.patch
 Patch5035: kdenetwork-3.5.12-alt-etsnet-resolv-mods.patch
 Patch5036: tde-3.5.13-build-defdir.patch
 Patch5037: tdenetwork-3.5.13-cmake-build.patch
+Patch5038: kdenetwork-3.5.13-jabber-kioslave-IdnLink.patch
 
 # Automatically added by buildreq on Thu Mar 18 2004 (-bi)
 #BuildRequires: XFree86-devel XFree86-libs control fontconfig freetype2 gcc-c++ glib2 gzip-utils kdelibs-devel libarts-devel libjpeg-devel libpam-devel libqt3-devel libssl-devel libstdc++-devel libxml2-devel libxslt-devel qt3-designer wireless-tools zlib-devel
 
 BuildRequires(pre): kdelibs-devel cmake
-BuildRequires: gcc4.5-c++
+BuildRequires: gcc-c++
 BuildRequires: glib2 gzip-utils libjpeg-devel libpng-devel libv4l-devel
 BuildRequires: libpam0-devel libqt3-devel libssl-devel libstdc++-devel libxml2-devel
 BuildRequires: libxslt-devel qt3-designer zlib-devel libopenslp libopenslp-devel
@@ -376,6 +377,7 @@ Simply drag a file or directory to the KPF button to share it.
 %patch5035 -p1 -b .resolv_mods
 %patch5036
 %patch5037 -p1
+%patch5038 -p1
 
 #perl -pi -e "s|^X-KDE-StartupNotify.*||" kppp/Kppp.desktop
 #perl -pi -e "s|^X-DCOP-ServiceType.*||" kppp/Kppp.desktop
@@ -750,11 +752,11 @@ useradd -s /dev/null -r _kdelisa >/dev/null 2>&1 ||:
 %_K3includedir/*
 
 %changelog
-* Sat Jun 02 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt4
-- Fixes from GIT http://www.trinitydesktop.org from 3.5.13 to 01.06.2012 is backported.
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
 
-* Fri Jun 01 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt3
-- Dependency direct set to GCC C++ version 4.5, for hook bugs into 4.6.
+* Sat Jun 02 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt3
+- Fixes from GIT http://www.trinitydesktop.org from 3.5.13 to 01.06.2012 is backported.
 
 * Sun May 13 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt2
 - Build with new linux/videodev.h place.

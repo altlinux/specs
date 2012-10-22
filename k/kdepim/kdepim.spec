@@ -18,8 +18,8 @@
 %define with_gnokii 1
 
 Name: kdepim
-Version: 3.5.13
-Release: alt3
+Version: 3.5.13.1
+Release: alt1
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -95,7 +95,7 @@ BuildRequires: libjpeg-devel liblockdev-devel %libopensync-devel boost-devel
 BuildRequires: libmal-devel libpilot-link-devel libpng-devel libqt3-devel
 BuildRequires: xml-utils zlib-devel libstdc++-devel libsasl2-devel
 BuildRequires: libgpgme-devel >= 1.0.0 libgpg-error-devel >= 1.0
-#BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
+BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
 # hack for apt in hasher
 #BuildRequires: libarts-devel > 1.0.0 libarts-qtmcop-devel > 1.0.0
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
@@ -990,6 +990,9 @@ done
 %_K3includedir/index
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Tue Jun 12 2012 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13-alt3
 - Fixes from GIT http://www.trinitydesktop.org from 3.5.13 to 12.06.2012 is backported.
 

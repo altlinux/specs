@@ -11,7 +11,7 @@
 
 Name: kdegames
 Summary: KDE - Games
-Version: 3.5.13
+Version: 3.5.13.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -83,7 +83,6 @@ Summary: Common empty package for %name
 Group: Graphical desktop/KDE
 Requires: kde-common >= 3.2
 Conflicts: kdegames <= 3.0
-BuildArch: noarch
 #
 %description common
 Common empty package for %name
@@ -145,7 +144,6 @@ Monopoly like games client for KDE
 %package carddecks
 Summary: Card decks for KDE games
 Group: Games/Cards
-BuildArch: noarch
 Requires: %name-common = %version-%release
 #
 %description carddecks
@@ -438,7 +436,7 @@ lskat can be played against the computer.
 #%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
+#%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 
@@ -783,15 +781,11 @@ export PATH=%_bindir:$PATH
 %_K3doc/en/kdegames-%version-apidocs
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Sat Oct 06 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - TDE 3.5.13 release build
-
-* Wed Mar 10 2010 Sergey V Turchin <zerg@altlinux.org> 3.5.10-alt3
-- fix to build with new autotools
-
-* Mon Dec 28 2009 Sergey V Turchin <zerg@altlinux.org> 3.5.10-alt2
-- remove deprecated macroses from %%post
-- fix to build with new autotools
 
 * Tue Aug 26 2008 Sergey V Turchin <zerg at altlinux dot org> 3.5.10-alt1
 - new version
