@@ -1,11 +1,11 @@
-Name:		din
-Version:	4.0
-Release:	alt1
-License:	GPLv2
-Summary:	Edit waveforms in a GUI, and watch the sound change before your ears
-Group:		Sound
-Source:		%name-%version.tar.gz
-URL:		http://dinisnoise.org/
+Name: din
+Version: 4.2.1
+Release: alt1
+License: GPLv2
+Summary: Edit waveforms in a GUI, and watch the sound change before your ears
+Group: Sound
+Source: %name-%version.tar.gz
+Url: http://dinisnoise.org/
 
 # Automatically added by buildreq on Sun Sep 09 2012
 # optimized out: fontconfig libX11-devel libstdc++-devel pkg-config xorg-xproto-devel
@@ -56,6 +56,9 @@ done
 %_pixmapsdir/*
 
 %changelog
+* Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 4.2.1-alt1
+- Autobuild version bump to 4.2.1
+
 * Sun Sep 09 2012 Fr. Br. George <george@altlinux.ru> 4.0-alt1
 - Initial build from scratch
 
