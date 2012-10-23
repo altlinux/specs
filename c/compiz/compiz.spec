@@ -3,7 +3,7 @@
 
 Name: compiz
 Version: 0.8.8
-Release: alt5
+Release: alt6
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -20,7 +20,7 @@ BuildRequires(Pre): libGConf-devel
 BuildRequires: GConf gcc-c++ intltool gnome-control-center-devel libGLU-devel libXcomposite-devel
 BuildRequires: libdbus-glib-devel libgnome-desktop-devel libmetacity-devel librsvg-devel
 BuildRequires: libwnck-devel libxslt-devel xorg-xextproto-devel kde4libs-devel kde4base-workspace-devel
-BuildRequires: kdebase-devel libdbus-qt-devel libtqt-devel libpng-devel
+BuildRequires: kdebase-devel libdbus-tqt-devel libtqt-devel libpng-devel
 
 %description
 Compiz is an OpenGL compositing manager that use GLX_EXT_texture_from_pixmap
@@ -43,6 +43,15 @@ Requires: compizconfig-backend-gconf >= 0.8.4
 
 %description gtk
 Compiz window decorator for Gtk
+
+%package kde
+Summary: KDE Compiz window decorator
+Group: Graphical desktop/KDE
+Requires: %name = %version-%release
+#Requires: compizconfig-backend-kconfig4 >= 0.8.4 simple-ccsm
+
+%description kde
+Compiz window decorator for KDE
 
 %package kde4
 Summary: KDE4 Compiz window decorator
@@ -73,6 +82,8 @@ RPM macros for sawfish-related packages
 %patch -p1
 
 %build
+export CPPFLAGS="$CPPFLAGS -I%_includedir/tqtinterface"
+
 %autoreconf
 %configure \
 	--with-default-plugins="%default_plugins" \
@@ -82,7 +93,7 @@ RPM macros for sawfish-related packages
 	--enable-metacity \
 	--disable-gconf \
 	--disable-gnome-keybindings \
-	--disable-kde \
+	--enable-kde \
 	--enable-kde4 \
 	--disable-static
 
@@ -140,6 +151,11 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 %files gtk
 %_bindir/gtk-window-decorator
 
+%files kde
+%_bindir/kde-window-decorator
+%_K3conf/*
+%_K3cfg/*
+
 %files kde4
 %_bindir/kde4-window-decorator
 
@@ -152,6 +168,9 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Tue Oct 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt6
+- kde3: kde-window-decorator build is reverted.
+
 * Fri Oct 12 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt5
 - update to git.51f4f90
 - add kde 4.9 support
