@@ -1,6 +1,6 @@
 Name: galculator
-Version: 1.3.4
-Release: alt3.qa1
+Version: 2.0
+Release: alt1
 
 Summary: GTK 2 based scientific calculator
 License: GPL
@@ -8,16 +8,13 @@ Group: Sciences/Mathematics
 
 Url: http://galculator.sourceforge.net
 Source: http://prdownloads.sourceforge.net/%name/%name-%version.tar.bz2
+Source100: galculator.watch
 Patch: galculator-1.3.4-alt-desktop.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
-%define gtk_ver 2.6.4
-
-Requires: libgtk2 >= %gtk_ver
-BuildPreReq: libgtk2-devel >= %gtk_ver
-
-# Automatically added by buildreq on Tue Apr 07 2009
-BuildRequires: flex intltool libglade-devel
+# Automatically added by buildreq on Mon Oct 22 2012
+# optimized out: at-spi2-atk fontconfig fontconfig-devel glib2-devel gnu-config libat-spi2-core libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server perl-Encode pkg-config
+BuildRequires: flex intltool libgtk+3-devel
 
 %description
 Galculator is a GTK 2 based scientific RPN calculator
@@ -33,13 +30,13 @@ Galculator is a GTK 2 based scientific RPN calculator
 %install
 %makeinstall
 %find_lang --with-gnome %name
-install -pD %buildroot%_pixmapsdir/%name.svg \
-	%buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
-install -pD %buildroot%_pixmapsdir/%name.png \
-	%buildroot%_liconsdir/%name.png
-install -pD %buildroot%_pixmapsdir/%name.xpm \
-	%buildroot%_liconsdir/%name.xpm
-rm -r %buildroot%_pixmapsdir/
+install -pD pixmaps/%name.svg \
+		%buildroot%_iconsdir/hicolor/scalable/apps/%name.svg
+install -pD pixmaps/%name.png \
+		%buildroot%_liconsdir/%name.png
+install -pD pixmaps/%name.xpm \
+		%buildroot%_liconsdir/%name.xpm
+rm -rf %buildroot%_pixmapsdir/
 
 %files -f %name.lang
 %_bindir/*
@@ -55,6 +52,14 @@ rm -r %buildroot%_pixmapsdir/
 # - 32x32 and 16x16? (%%_niconsdir and %%_miconsdir)
 
 %changelog
+* Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 2.0-alt1
+- new version (watch file uupdate)
+  + it wants gtk3, don't believe the README
+- buildreq
+
+* Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 1.3.4-alt4
+- added watch file
+
 * Mon May 23 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.3.4-alt3.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
