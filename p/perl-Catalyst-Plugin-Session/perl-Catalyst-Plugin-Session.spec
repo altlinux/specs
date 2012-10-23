@@ -11,7 +11,7 @@
 %def_enable test
 
 Name: perl-Catalyst-Plugin-Session
-Version: 0.35
+Version: 0.36
 Release: alt1
 
 Summary: %m_name - Generic Session plugin - ties together server side
@@ -47,6 +47,9 @@ applications.
 %doc Changes README
 
 %changelog
+* Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.36-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.35-alt1
 - automated CPAN update
 
