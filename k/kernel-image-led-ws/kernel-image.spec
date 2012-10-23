@@ -16,13 +16,13 @@
 %define flavour		%base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.47
+Version: 3.0.48
 Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 47
+%define kernel_stable_version 48
 %define kernel_extra_version	.%kernel_stable_version
 #define kernel_extra_version	%nil
 
@@ -2704,6 +2704,9 @@ fi
 
 
 %changelog
+* Tue Oct 23 2012 Led <led@altlinux.ru> 3.0.48-alt1
+- 3.0.48
+
 * Sun Oct 21 2012 Led <led@altlinux.ru> 3.0.47-alt1
 - 3.0.47
 - updated:
