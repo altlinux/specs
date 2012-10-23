@@ -1,6 +1,6 @@
 %define dist HTTP-Message
 Name: perl-%dist
-Version: 6.04
+Version: 6.06
 Release: alt1
 
 Summary: HTTP style messages
@@ -35,6 +35,9 @@ The following methods are available:
 %perl_vendor_privlib/HTTP
 
 %changelog
+* Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 6.06-alt1
+- automated CPAN update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 6.04-alt1
 - automated CPAN update
 
