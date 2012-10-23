@@ -1,7 +1,7 @@
 
 Name: instead
-Version: 1.7.0
-Release: alt2
+Version: 1.8.0
+Release: alt1
 Group: Games/Adventure
 License: GPLv2
 Summary: STEAD text adventures/visual novels engine
@@ -50,7 +50,7 @@ sed -i --follow-symlinks -e '\${x;s/./&/;x;t;q 1};'"\$1"';T;x;s/.*/./;x' "\$2"
 @@@
 chmod +x subst
 
-./subst s/[.]png$// desktop/instead.desktop.in 
+./subst s/[.]png$// desktop/instead.desktop.in
 ln -sf Rules.make.system Rules.make
 for N in 16 32 48 64 128; do convert -resize ${N}x${N} icon/sdl_%name.png ${N}x${N}.png; done
 ./subst 's@char \*games_sw = NULL@char *games_sw = "%_localstatedir/%name/games"@' src/sdl-instead/main.c
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_localstatedir/%name/games
 %_desktopdir/%name.desktop
 
 %changelog
+* Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 1.8.0-alt1
+- Autobuild version bump to 1.8.0
+
 * Thu May 24 2012 Fr. Br. George <george@altlinux.ru> 1.7.0-alt2
 - DSO list completion
 
