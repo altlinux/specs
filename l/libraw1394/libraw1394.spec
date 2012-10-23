@@ -2,7 +2,7 @@
 %define abiversion 11
 
 Name: libraw1394
-Version: 2.0.9
+Version: 2.1.0
 Release: alt1
 
 Summary: FireWire interface library
@@ -136,6 +136,9 @@ rm -f %buildroot%_libdir/*.la
 %endif
 
 %changelog
+* Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
+- Autobuild version bump to 2.1.0
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 2.0.9-alt1
 - Autobuild version bump to 2.0.9
 
