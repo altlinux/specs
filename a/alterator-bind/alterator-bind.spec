@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-bind
-Version: 0.7
-Release: alt8
+Version: 0.8
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -47,6 +47,9 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Tue Oct 23 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt1
+- use all interfaces, not only static
+
 * Tue Oct 16 2012 Andrey Cherepanov <cas@altlinux.org> 0.7-alt8
 - don't hide DHCP-server module in menu
 
