@@ -2,7 +2,7 @@
 %def_disable epdf
 
 Name: ethumb
-Version: 1.0.1
+Version: 1.7.1
 Release: alt1
 
 Summary: Ethumb - Thumbnail generation library
@@ -76,6 +76,12 @@ developing applications that use %name.
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
+* Tue Sep 04 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Mon Jun 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 

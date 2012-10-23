@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: efreet
-Version: 1.2.0
+Version: 1.7.1
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -15,7 +15,7 @@ Url: http://www.enlightenment.org/pages/efreet.html
 
 Source:  http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
-BuildRequires: libecore-devel >= 1.2.0 libeina-devel >= 1.2.0 libeet-devel >= 1.6.0
+BuildRequires: libecore-devel >= 1.7.0 libeina-devel >= 1.7.0 libeet-devel >= 1.7.0
 
 %package -n lib%name
 Group: System/Libraries
@@ -58,7 +58,9 @@ Efreet development files
 %install
 %make_install DESTDIR=%buildroot install
 
-%files -n lib%name
+%find_lang %name
+
+%files -n lib%name -f %name.lang
 %_libdir/*.so.*
 %dir %_libdir/%name/
 %_libdir/%name/efreet_desktop_cache_create
@@ -73,6 +75,12 @@ Efreet development files
 %_includedir/efreet-1
 
 %changelog
+* Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
+- 1.7.1
+
+* Tue Sep 04 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.0-alt1
+- 1.7.0
+
 * Fri May 11 2012 Yuri N. Sedunov <aris@altlinux.org> 1.2.0-alt1
 - 1.2.0
 
