@@ -5,8 +5,8 @@ BuildRequires: /usr/bin/docbook-to-man /usr/bin/docbook2html /usr/bin/doxygen /u
 BuildRequires: chrpath
 %add_optflags %optflags_shared
 Name:           libctl
-Version:        3.1
-Release:        alt2_2
+Version:        3.2.1
+Release:        alt1
 Summary:        Guile-based support for flexible control files
 
 Group:          System/Libraries
@@ -36,6 +36,7 @@ This package contains the development files for libctl.
 %setup -q
 
 %build
+%autoreconf
 %configure F77=gfortran --enable-shared --disable-static \
   --includedir=%{_includedir}/ctl LDFLAGS='%{optflags} -lm'
 make %{?_smp_mflags}
@@ -62,6 +63,9 @@ done
 %{_datadir}/libctl
 
 %changelog
+* Tue Oct 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
+- Version 3.2.1
+
 * Wed Feb 01 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt2_2
 - update to new release by fcimport
 
