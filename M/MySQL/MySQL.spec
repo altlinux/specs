@@ -1,6 +1,6 @@
 Name: MySQL
 Version: 5.5.28
-Release: alt2
+Release: alt4
 
 %def_without debug
 %def_disable static
@@ -30,6 +30,7 @@ Source10: mysqld.sysconfig
 Source14: README.ALT-ru_RU.UTF-8
 Source15: alt-mysql_install_db.sh
 Source16: mysql.control
+Source17: libmysql.version
 
 # ALTLinux
 Patch1: mysql-5.5.28-alt-chroot.patch
@@ -38,6 +39,9 @@ Patch4: mysql-5.5.25-alt-client.patch
 Patch5: mysql-5.5.28-alt-load_defaults.patch
 Patch6: mysql-5.1.50-alt-fPIC-innodb.patch
 Patch7: mysql-5.5.25-alt-mysql_config-libs.patch
+
+# Fedora
+Patch100: mysql-versioning.patch
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
 BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel
@@ -51,6 +55,7 @@ License: LGPL
 Group: System/Libraries
 Provides: libMySQL = %version
 Obsoletes: libMySQL < %version
+Conflicts: libmariadb < 5.6
 
 %package -n libmysqlclient-devel
 Summary: Development header files and libraries for MySQL
@@ -62,6 +67,7 @@ Provides: MySQL-devel = %version mysql-devel = %version
 Obsoletes: MySQL-devel < %version mysql-devel < %version
 Provides: libMySQL-devel = %version
 Obsoletes: libMySQL-devel < %version
+Conflicts: libmariadb-devel
 
 %package -n libmysqlclient-devel-static
 Summary: Development static libraries for MySQL
@@ -71,6 +77,7 @@ Group: Development/C
 Requires: libmysqlclient-devel = %version-%release
 Provides: libMySQL-devel-static = %version
 Obsoletes: libMySQL-devel-static < %version
+Conflicts: libmariadb-devel-static
 
 %package client
 Summary: MySQL Client
@@ -262,6 +269,8 @@ This package contains MySQL benchmark scripts and data.
 %patch5 -p1
 %patch7 -p1
 
+%patch100 -p1
+
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
 
@@ -270,6 +279,9 @@ sed -ne 's/^\(  { "[A-Z][^"]*"\).*/\1, 0, 0, 0, "" },/pg' <sql/lex.h >client/mys
 
 # Not needed with 5.5 but doesn't hurt anyways
 chmod -R a-s,go-w sql-bench
+
+# upstream has fallen down badly on symbol versioning, do it ourselves (c) fedora
+cp %SOURCE17 libmysql/libmysql.version
 
 %build
 # Force HAVE_ERRNO_AS_DEFINE defined to wrong expansion
@@ -592,6 +604,12 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Thu Oct 18 2012 Michael Shigorin <mike@altlinux.org> 5.5.28-alt4
+- added library versioning from fedora (thx ldv@ and rpmsodiff)
+
+* Sun Oct 14 2012 Michael Shigorin <mike@altlinux.org> 5.5.28-alt3
+- added Conficts: libmariadb*
+
 * Thu Oct 11 2012 Michael Shigorin <mike@altlinux.org> 5.5.28-alt2
 - fixed one-byte postun trigger thinko (included current version)
 
