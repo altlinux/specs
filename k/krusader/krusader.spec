@@ -1,5 +1,5 @@
 %define version 1.90.0
-%define altrelease 12
+%define altrelease 13
 
 %define appname krusader
 %define srcname %appname-%{?cvs:cvs-%cvs}%{!?cvs:%version%{?pre:-%pre}}
@@ -25,7 +25,7 @@ License: GPL
 Url: http://krusader.sourceforge.net
 
 # Automatically added by buildreq on Mon Sep 29 2008
-BuildRequires: gcc4.5-c++ imake kdebase-devel kdebindings-kjsembed-devel libXt-devel libjpeg-devel libqt3-devel xml-utils xorg-cf-files
+BuildRequires: gcc-c++ imake kdebase-devel kdebindings-kjsembed-devel libXt-devel libjpeg-devel libqt3-devel xml-utils xorg-cf-files
 
 %description
 Krusader is an advanced twin-panel (commander-style) file-manager for KDE 3.x (similar to Midnight or Total Commander) but with many extras.
@@ -88,7 +88,8 @@ cp %buildroot/%_kde3_iconsdir/locolor/16x16/apps/%appname.png %buildroot/%_kde3_
 # %_man1dir/*
 
 %changelog
-* Tue Oct 23 2012 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt12
+* Tue Oct 23 2012 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt13
+- Rebuild for TDE-3.5.13.1.
 - kjsembed-devel depends changed to kdebindings-kjsembed-devel.
 
 * Thu Aug 30 2012 Roman Savochenko <rom_as@altlinux.ru> 1.90.0-alt11
