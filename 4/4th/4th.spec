@@ -1,4 +1,3 @@
-%define ccomp gcc
 %def_enable shared
 %def_enable static
 %def_disable debug
@@ -6,25 +5,24 @@
 %define Name 4tH
 Name: 4th
 %define lname lib%name
-%define ver 3.5c3
-%define subver %nil
-Version: %ver%subver
-Release: alt4
+Version: 3.61.5
+Release: alt1
 Summary: Basic framework for creating application specific scripting languages
 Summary(uk_UA.CP1251): Базова оболонка для створення специфічних для програм мов сценаріїв
 Summary(ru_RU.CP1251): Базовая оболочка для создания специфических для программ языков сценариев
-License: %gpl2plus
+License: LGPLv3+
 Group: Development/Other
 URL: http://hansoft.come.to/
-Source: http://www.xs4all.nl/~thebeez/%Name/%name-%version-unix.tar
-Patch0: %name-%version-%release.patch
-Patch1: %name-%version-shared.patch
+Source0: https://%name.googlecode.com/files/%name-%version-unix.tar
+Source1: Makefile.ALT
+Patch: %name-%version-%release.patch
 %{?_enable_shared:Requires: %lname = %version-%release}
-Packager: Led <led@altlinux.ru>
 
-BuildRequires(pre): rpm-build-licenses
-%if %ccomp == tcc
+%if "%__cc" == "tcc"
 BuildRequires: tcc >= 0.9.23-alt3
+%endif
+%if "%__cc" == "musl-gcc"
+BuildRequires: musl-devel
 %endif
 
 %description
@@ -69,7 +67,6 @@ Summary: Examples for the %Name
 Summary(uk_UA.CP1251): Приклади для %Name
 Summary(ru_RU.CP1251): Примеры для %Name
 BuildArch: noarch
-Requires: %name = %version
 
 %description examples
 %Name is basic framework for creating application specific scripting
@@ -264,37 +261,52 @@ This package contains %Name manual in plain text format.
 
 
 %prep
-%setup -n %name-%ver-unix
-%patch0 -p1
-%patch1 -p1
+%setup -n %name-%version-unix
+%patch -p1
+install -m 0644 %SOURCE1 sources/Makefile.ALT
 
 
 %build
-%define _optlevel 3
-%add_optflags %{?_enable_shared:%optflags_shared} -DUNIX
-%make_build -C sources \
-    BINARIES=%_bindir LIBRARIES=%_libdir INCLUDES=%_includedir \
-    %{?_enable_shared:SHARED=1} %{?_enable_static:STATIC=1} \
-    CFLAGS="%optflags" %{?ccomp:CC=%ccomp}
+%if "%__cc" == "musl-gcc"
+%define _optlevel s
+%add_optflags -fno-asynchronous-unwind-tables
+%endif
+%add_optflags %{?_enable_shared:%optflags_shared} -fsigned-char -DUNIX -DDIR4TH='\"%_datadir/%name/\"'
+%make_build -C sources -f Makefile.ALT \
+	BINARIES=%_bindir LIBRARIES=%_libdir INCLUDES=%_includedir \
+	%{?_enable_shared:SHARED=1} %{?_enable_static:STATIC=1} \
+	CFLAGS="%optflags" %{?__cc:CC=%__cc} all
 
 sed 's/\r$//' documentation/%{Name}manual.txt > documentation/manual.txt
 
 
 %install
-install -d -m 0755 %buildroot{%_bindir,%_libdir,%_libexecdir/%name,%_includedir/%name,%_docdir/%name-%version/examples}
-%make_install -C sources \
-    %{?_enable_shared:SHARED=1} %{?_enable_static:STATIC=1} \
-    BINARIES=%buildroot%_bindir \
-    LIBRARIES=%buildroot%_libdir \
-    install
-install -pD -m 0644 documentation/%name.1 %buildroot%_man1dir/%name.1
+install -d -m 0755 %buildroot{%_bindir,%_libdir,%_datadir/%name/lib,%_includedir,%_man1dir,%_docdir/%name-%version/examples}
+%make_install -C sources -f Makefile.ALT \
+	BINARIES=%buildroot%_bindir LIBRARIES=%buildroot%_libdir INCLUDES=%buildroot%_includedir \
+	%{?_enable_shared:SHARED=1} %{?_enable_static:STATIC=1} \
+	CFLAGS="%optflags" %{?__cc:CC=%__cc} install
+install -p -m 0644 documentation/%name.1 %buildroot%_man1dir/
 ln -s %name.1 %buildroot%_man1dir/%{name}x.1
 ln -s %name %buildroot%_bindir/%{name}x
-install -m 0644 sources/*%name.h %buildroot%_includedir/%name/
-install -m 0644 lib/* %buildroot%_libexecdir/%name/
-find examples -type f -exec install -pD -m 0644 \{} %buildroot%_docdir/%name-%version/\{} \;
-install -m 0644 documentation/euro.txt %buildroot%_docdir/%name-%version/examples/
-install -m 0644 README documentation/manual.txt %buildroot%_docdir/%name-%version/
+install -p -m 0644 sources/%name.h %buildroot%_includedir/
+install -p -m 0644 %name/lib/*.4th %buildroot%_datadir/%name/lib/
+install -p -m 0644 %name/*.{4th,scr} %buildroot%_docdir/%name-%version/examples/
+for d in 4pp{,/lib}; do
+	install -d -m 0755 %buildroot%_docdir/%name-%version/examples/$d
+	install -p -m 0644 %name/$d/*.4pp %buildroot%_docdir/%name-%version/examples/$d/
+done
+for d in %name/apps/*; do
+	D=$(basename $d)
+	install -d -m 0755 %buildroot%_docdir/%name-%version/examples/apps/$D
+	install -p -m 0644 $d/* %buildroot%_docdir/%name-%version/examples/apps/$D/
+done
+for d in bench demo; do
+	install -d -m 0755 %buildroot%_docdir/%name-%version/examples/$d
+	install -p -m 0644 %name/$d/* %buildroot%_docdir/%name-%version/examples/$d/
+done
+install -p -m 0644 documentation/euro.txt %buildroot%_docdir/%name-%version/examples/
+install -p -m 0644 README documentation/manual.txt %buildroot%_docdir/%name-%version/
 
 # menu
 install -d %buildroot%_desktopdir
@@ -311,13 +323,16 @@ Terminal=true
 Categories=Development;IDE;ConsoleOnly;
 __MENU__
 
+%if "%__cc" == "musl-gcc" || "%__cc" == "tcc"
+%add_verify_elf_skiplist %_bindir/*
+%endif
+
 
 %files
-%dir %_docdir/%name-%version
-%_docdir/%name-%version/README
+%doc %dir %_docdir/%name-%version
+%doc %_docdir/%name-%version/README
 %_bindir/*
-%dir %_libexecdir/%name
-%_libexecdir/%name/*
+%_datadir/%name
 %_man1dir/*
 %_desktopdir/*
 
@@ -329,7 +344,7 @@ __MENU__
 
 
 %files -n %lname-devel
-%_includedir/%name
+%_includedir/*
 %{?_enable_shared:%_libdir/*.so}
 
 
@@ -346,10 +361,45 @@ __MENU__
 
 %files doc-txt
 %dir %_docdir/%name-%version
-%_docdir/%name-%version/manual.txt
+%_docdir/%name-%version/*.txt
 
 
 %changelog
+* Tue Oct 23 2012 Led <led@altlinux.ru> 3.61.5-alt1
+- 3.61.5
+- added Makefile.ALT
+
+* Fri Aug 19 2011 Led <led@massivesolutions.co.uk> 3.61.1-cx1
+- 3.61.1
+
+* Wed Feb 09 2011 Led <led@altlinux.ru> 3.61.0-tmc1
+- 3.61.0
+
+* Wed Feb 09 2011 Led <led@altlinux.ru> 3.60.1-tmc1
+- build with _optlevel s
+- 4th's "libs" moved into %%_datadir/%%name/lib
+- clean up spec
+- fixed License
+
+* Tue Apr 27 2010 Led <led@altlinux.ru> 3.60.1-alt1
+- 3.60.1
+
+* Mon Jan 04 2010 Led <led@altlinux.ru> 3.60.0-alt1
+- 3.60.0
+
+* Mon Sep 28 2009 Led <led@altlinux.ru> 3.5d3-alt1
+- 3.5d3:
+  + the library files now support ANS Forth compatible versions of all
+    floating point input and output words
+
+* Sat Jun 20 2009 Led <led@altlinux.ru> 3.5d2-alt1
+- 3.5d2:
+  + added preprocessor to the toolchain
+  + added another floating point library called ZEN float
+
+* Mon May 11 2009 Led <led@altlinux.ru> 3.5d-alt1
+- 3.5d
+
 * Sat Dec 27 2008 Led <led@altlinux.ru> 3.5c3-alt4
 - cleaned up spec
 
