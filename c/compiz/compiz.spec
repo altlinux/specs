@@ -3,7 +3,7 @@
 
 Name: compiz
 Version: 0.8.8
-Release: alt6
+Release: alt7
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -82,8 +82,6 @@ RPM macros for sawfish-related packages
 %patch -p1
 
 %build
-export CPPFLAGS="$CPPFLAGS -I%_includedir/tqtinterface"
-
 %autoreconf
 %configure \
 	--with-default-plugins="%default_plugins" \
@@ -168,8 +166,11 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Tue Oct 23 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt7
+- fix previous change
+
 * Tue Oct 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt6
-- kde3: kde-window-decorator build is reverted.
+- kde3: fixed and packaged kde-window-decorator
 
 * Fri Oct 12 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt5
 - update to git.51f4f90
