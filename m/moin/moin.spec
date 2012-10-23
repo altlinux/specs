@@ -1,10 +1,10 @@
 Summary: MoinMoin is a Python clone of WikiWiki
-Name:    moin
-Version: 1.9.3
-Release: alt1.1
+Name: moin
+Version: 1.9.5
+Release: alt1
 License: GPL
-Group:   Networking/Other
-URL:     http://moinmo.in/
+Group: Networking/Other
+Url: http://moinmo.in/
 Source0: http://static.moinmo.in/files/%name-%version.tar.gz
 Source1: moin-instance-setup.in
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -40,21 +40,21 @@ Web server and a Python installation.
 
 %package -n python-module-moin-jabberbot
 Summary: Jabber robot used for MoinMoin notification
-Group:   Networking/Other
+Group: Networking/Other
 
 %description -n python-module-moin-jabberbot
 Jabber robot used for MoinMoin notification
 
 %package -n python-module-MoinMoin
 Summary: Pyton modules for MoinMoin WikiWikiWeb engine
-Group:   Development/Python
-Obsoletes:	python-modules-MoinMoin
+Group: Development/Python
+Obsoletes: python-modules-MoinMoin
 
 %description -n python-module-MoinMoin
 Pyton module for MoinMoin WikiWikiWeb engine
 
 %prep
-%setup -q
+%setup
 sed -i 's@^STATIC_FILES_PATH = .*@STATIC_FILES_PATH = "%htdocs"@' MoinMoin/web/static/__init__.py
 
 %build
@@ -87,6 +87,12 @@ cp -a MoinMoin/web/static/htdocs %buildroot%htdocs
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 1.9.5-alt1
+- Autobuild version bump to 1.9.5
+
+* Fri Feb 10 2012 Fr. Br. George <george@altlinux.ru> 1.9.4-alt1
+- Autobuild version bump to 1.9.4
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.9.3-alt1.1
 - Rebuild with Python-2.7
 
@@ -104,14 +110,12 @@ cp -a MoinMoin/web/static/htdocs %buildroot%htdocs
 - Install script fixed
 - htdocs moved from module path
 
-
 * Sat Dec 19 2009 Fr. Br. George <george@altlinux.ru> 1.9.0-alt1
 - Version up
 Rebuild with python 2.6
 
 * Wed Nov 25 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.5-alt1.1
 - Rebuilt with python 2.6
-
 
 * Mon Sep 14 2009 Fr. Br. George <george@altlinux.ru> 1.8.5-alt1
 - Version up
