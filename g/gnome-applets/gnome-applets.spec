@@ -1,4 +1,4 @@
-%define ver_major 3.5
+%define ver_major 3.6
 %define panel_api_ver 4.0
 %def_enable frequency_selector
 %def_disable mixer
@@ -15,8 +15,8 @@
 %def_with hal
 
 Name: gnome-applets
-Version: %ver_major.92
-Release: alt1
+Version: %ver_major.1
+Release: alt0.1
 
 Summary: Small applications for the GNOME panel
 License: GPL
@@ -24,7 +24,8 @@ Group: Graphical desktop/GNOME
 Url: http://www.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 Source1: 01-cpufreq.pkla
 Patch: %name-2.6.0-alt-install_makefile.patch
 Patch1: %name-2.9.90-alt-modemlights.patch
@@ -79,7 +80,7 @@ BuildPreReq: GConf >= %GConf_ver
 BuildRequires: rpm-build-gnome
 BuildRequires: python-devel python-modules-compiler gnome-settings-daemon-devel libxml2-devel
 BuildRequires: libdbus-devel libdbus-glib-devel gst-plugins-devel libSM-devel libgdbm-devel
-BuildRequires: libpolkit-gnome-devel libpolkit1-devel gnome-common xorg-cf-files gnome-doc-utils docbook-utils xsltproc
+BuildRequires: libpolkit1-devel gnome-common xorg-cf-files gnome-doc-utils docbook-utils xsltproc
 
 %if_enabled battstat
 BuildPreReq: libapm-devel
@@ -282,12 +283,13 @@ Nautilus onto this applet to move them to your trash folder.
 
 %prep
 %setup -q
+gnome-doc-common --copy
 %patch -p1
 %patch1 -p1
 %patch2 -p1
 
 %build
-gnome-doc-common --copy
+gnome-doc-prepare -f
 %autoreconf
 # Note: battstat switch is broken; only --disable-battstat works.
 export CFLAGS="$CFLAGS `pkg-config --cflags dbus-glib-1`"
@@ -391,7 +393,7 @@ fi
 %files
 
 %files common -f %name-3.0.lang
-%doc AUTHORS ChangeLog NEWS README
+%doc AUTHORS NEWS README
 %gnome_appletsdir/null_applet
 %dir %_datadir/%name
 %dir %_datadir/%name/builder
@@ -521,6 +523,9 @@ fi
 %exclude %_datadir/gnome-panel/4.0/applets/org.gnome.applets.NullApplet.panel-applet
 
 %changelog
+* Tue Oct 23 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt0.1
+- 3.6.1 snapshot
+
 * Sat Sep 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.5.92-alt1
 - 3.5.92
 
