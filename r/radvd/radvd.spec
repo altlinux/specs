@@ -3,7 +3,7 @@
 %define _pseudouser_home     %_localstatedir/radvd
 
 Name: radvd
-Version: 1.8.2
+Version: 1.9.1
 Release: alt1
 
 Summary: A Router Advertisement daemon
@@ -12,11 +12,12 @@ License: BSD with advertising
 Group: System/Servers
 
 Url: http://www.litech.org/radvd/
-#Source: http://www.litech.org/radvd/dist/%name-%version.tar.gz
+# git://github.com/reubenhwk/radvd.git
 Source0: %name-%version.tar
 Source1: %name.init
 Source2: %name.sysconfig
 
+BuildRequires: libdaemon-devel
 BuildRequires: flex, byacc
 
 %description
@@ -34,15 +35,12 @@ services.
 %setup
 
 %build
+%autoreconf
 %configure --with-pidfile=/var/run/radvd/radvd.pid
-%make
-# make %{?_smp_mflags}
-# Parallel builds still fail because seds that transform y.tab.x into
-# scanner/gram.x are not executed before compile of scanner/gram.x
-#
+%make_build
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 mkdir -p %buildroot%_initdir
@@ -75,6 +73,9 @@ install -m 644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/radvd
 %_sbindir/radvdump
 
 %changelog
+* Tue Oct 23 2012 Mikhail Efremov <sem@altlinux.org> 1.9.1-alt1
+- Updated to 1.9.1 (closes: #27883).
+
 * Fri Oct 07 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 1.8.2-alt1
 - 1.8.2. Security fixes:
   + CVE-2011-3601
