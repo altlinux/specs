@@ -1,5 +1,5 @@
 Name: xorg-drv-wacom
-Version: 0.15.0
+Version: 0.17.0
 Release: alt1
 Epoch: 1
 Summary: Wacom input driver
@@ -54,6 +54,9 @@ Wacom input driver development package
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Oct 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.17.0-alt1
+- 0.17.0
+
 * Thu May 03 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.15.0-alt1
 - 0.15.0
 
