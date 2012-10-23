@@ -1,6 +1,6 @@
 Name: mpb
 Version: 1.4.2
-Release: alt2
+Release: alt3
 Summary: MIT Photonic Bands
 License: GPLv2+
 Group: Sciences/Physics
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 BuildPreReq: libctl-devel liblapack-devel zlib-devel
 BuildPreReq: libreadline-devel libfftw-devel guile18 guile18-devel
-BuildPreReq: gcc-fortran gcc-c++
+BuildPreReq: gcc-fortran gcc-c++ /proc libhdf5-devel
 
 %description
 The MIT Photonic-Bands (MPB) package is a free program for computing the
@@ -48,7 +48,7 @@ This package contains documentation for MIT Photonic Bands (MPB).
 rm -fR autom4te.cache
 
 %build
-%add_optflags -I%_includedir/ctl
+%add_optflags -I%_includedir/ctl -I%_libdir/hdf5-seq/include
 export CPPFLAGS="%optflags"
 
 %autoreconf
@@ -74,6 +74,10 @@ export CPPFLAGS="%optflags"
 %doc doc/*
 
 %changelog
+* Tue Oct 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt3
+- Rebuilt with libctl 3.2.1
+- Built with support of HDF5
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt2
 - Built with OpenBLAS instead of GotoBLAS2
 
