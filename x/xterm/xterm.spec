@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: xterm
-Version: 281
+Version: 284
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -14,27 +14,20 @@ Group: Terminals
 Source0: ftp://invisible-island.net/%name/%name-%version.tgz
 Source1: uxterm
 
-Patch0: xterm-alt-render.patch
-Patch1: xterm-alt-utempter.patch
-Patch2: xterm-alt-tinfo.patch
-Patch3: xterm-alt-perms.patch
-Patch4: xterm-alt-deffont.patch
-Patch5: xterm-alt-makefile-install.patch
-Patch6: xterm-alt-disable-report_win_label.patch
-Patch7: xterm-alt-i18n.patch
-Patch8: xterm-alt-colors.patch
-Patch9: xterm-alt-class.patch
-
-# Fix for bug #11002
-Patch10: xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
-
-# Fix for bugs #595, #21731
-Patch11: xterm-alt-appdef.patch
-
-# Fix for bug #12776
-Patch12: xterm-alt-enable_utf8title.patch
-
-Patch13: xterm-alt-man_suffix.patch
+Patch0001: 0001-xterm-alt-render.patch
+Patch0002: 0002-xterm-alt-utempter.patch
+Patch0003: 0003-xterm-alt-tinfo.patch
+Patch0004: 0004-xterm-alt-perms.patch
+Patch0005: 0005-xterm-alt-deffont.patch
+Patch0006: 0006-xterm-alt-makefile-install.patch
+Patch0007: 0007-xterm-alt-disable-report_win_label.patch
+Patch0008: 0008-xterm-alt-i18n.patch
+Patch0009: 0009-xterm-alt-colors.patch
+Patch0010: 0010-xterm-alt-class.patch
+Patch0011: 0011-xterm-alt-back_old_behavior_for_modifyFunctionKeys.patch
+Patch0012: 0012-xterm-alt-appdef.patch
+Patch0013: 0013-xterm-alt-enable_utf8title.patch
+Patch0014: 0014-xterm-alt-man_suffix.patch
 
 Provides: xvt, %_bindir/xvt
 PreReq: libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
@@ -57,20 +50,20 @@ is resized.
 
 install -pm755 %_sourcedir/uxterm .
 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p2
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p2
-%patch13 -p0
+%patch0001 -p2
+%patch0002 -p2
+%patch0003 -p2
+%patch0004 -p2
+%patch0005 -p2
+%patch0006 -p2
+%patch0007 -p2
+%patch0008 -p2
+%patch0009 -p2
+%patch0010 -p2
+%patch0011 -p2
+%patch0012 -p2
+%patch0013 -p2
+%patch0014 -p2
 
 sed -i 's|^Exec=xterm|& -name XTerm|' %name.desktop
 sed -i 's|_48x48||' *.desktop
@@ -84,6 +77,8 @@ sed -i '/^Encoding=/d' *.desktop
 
 %build
 export ac_cv_path_XTERM_PATH=%_bindir/%name
+# Rebuild this
+touch ctlseqs.ms
 %configure \
 	--with-app-defaults=%_sysconfdir/X11/app-defaults \
 	--with-utempter \
@@ -140,6 +135,10 @@ EOF
 %_iconsdir/hicolor/*/apps/xterm*
 
 %changelog
+* Tue Oct 23 2012 Fr. Br. George <george@altlinux.ru> 284-alt1
+- Autobuild version bump to 284
+- Patches unified and adapted
+
 * Thu Jul 26 2012 Fr. Br. George <george@altlinux.ru> 281-alt1
 - Autobuild version bump to 281
 - Native icons added
