@@ -1,6 +1,6 @@
 Summary: Terminal multiplexer
 Name: tmux
-Version: 1.6
+Version: 1.7
 Release: alt1
 Source0: http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 License: BSD
@@ -33,6 +33,9 @@ install -D -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 1.7-alt1
+- Autobuild version bump to 1.7
+
 * Fri Feb 10 2012 Fr. Br. George <george@altlinux.ru> 1.6-alt1
 - Autobuild version bump to 1.6
 
