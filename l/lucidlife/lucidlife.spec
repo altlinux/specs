@@ -1,6 +1,6 @@
 Name:           lucidlife
 Version:        0.9.2
-Release:        alt3_9.1
+Release:        alt3_10
 Summary:        A Conway's Life simulator
 
 Group:          Games/Other
@@ -9,14 +9,14 @@ URL:            http://linux.softpedia.com/get/GAMES-ENTERTAINMENT/Simulation/Lu
 Source0:        http://mirror.thecodergeek.com/src/lucidlife-0.9.2.tar.gz
 Patch0:		%{name}-make-docs-use-proper-dir.patch
 Patch1: 	%{name}-fix-FSF-address.patch
-Patch2: %name-0.9.2-alt-DSO.patch
 
-BuildRequires:  libgtk+2-devel >= 2.6.0
+BuildRequires:  gtk2-devel >= 2.6.0
 BuildRequires:	gnome-vfs-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	perl(XML/Parser.pm)
 BuildRequires:	gettext
 Source44: import.info
+Patch33: lucidlife-0.9.2-alt-DSO.patch
 
 %description
 LucidLife is a Conway's Life simulator. The rules are rather simple. The game
@@ -33,7 +33,7 @@ more modern user interface and other enhancements.
 %setup -q
 %patch0 -p0 -b .make-docs-use-proper-dir
 %patch1 -p0 -b .fix-FSF-address
-%patch2 -p2
+%patch33 -p2
 
 
 %build
@@ -44,46 +44,12 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=%{buildroot}
 %find_lang %{name}
-desktop-file-install 	\
+desktop-file-install --vendor fedora	\
 	--dir %{buildroot}%{_datadir}/applications	\
 	--delete-original	\
 	--remove-category=Application	\
 	--add-category=LogicGame	\
 	%{buildroot}%{_datadir}/applications/lucidlife.desktop
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
  
 
 %files -f %{name}.lang 
@@ -92,10 +58,13 @@ fi
 %{_bindir}/%{name}
 %{_datadir}/%{name}
 %{_datadir}/pixmaps/%{name}.png
-%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/fedora-%{name}.desktop
 
 
 %changelog
+* Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.2-alt3_10
+- new fc release and picked up real@'s patch
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3_9.1
 - Fixed build
 
