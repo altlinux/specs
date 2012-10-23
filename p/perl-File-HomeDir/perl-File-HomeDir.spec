@@ -1,6 +1,6 @@
 %define dist File-HomeDir
 Name: perl-%dist
-Version: 0.99
+Version: 1.00
 Release: alt1
 
 Summary: Get the home directory for yourself or other users
@@ -35,6 +35,9 @@ platforms.
 %perl_vendor_privlib/File
 
 %changelog
+* Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 1.00-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.99-alt1
 - automated CPAN update
 
