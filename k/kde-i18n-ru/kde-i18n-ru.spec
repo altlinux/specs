@@ -3,7 +3,7 @@
 %undefine __libtoolize
 
 Name: kde-i18n-%lng
-Version: 3.5.13
+Version: 3.5.13.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -95,6 +95,9 @@ cat %SOURCE113 >> messages/kdeutils/ark.po
 %lang(%lng) %_K3apps/kanagram/data/%lng/
 
 %changelog
+* Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
+- Release TDE version 3.5.13.1
+
 * Sun Mar 25 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13-alt1
 - Build for TDE 3.5.13 release
 
