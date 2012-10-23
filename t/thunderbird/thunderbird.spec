@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	15.0
+Version:	16.0.1
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -19,10 +19,8 @@ Source4:	thunderbird-mozconfig
 Source5:	thunderbird-default-prefs.js
 
 Patch1:		xulrunner-gio-protocol-handler.patch
-#Patch2:	xulrunner-lighting-version.patch
 Patch6:		01_locale.patch
 Patch7:		xulrunner-noarch-extensions.patch
-#Patch8:	thunderbird-asm-directive.patch
 Patch9:		thunderbird-install-paths.patch
 
 # https://bugzilla.mozilla.org/show_bug.cgi?id=537089
@@ -66,7 +64,7 @@ BuildRequires: python-modules-sqlite3
 BuildRequires:	libnspr-devel       >= 4.9.2-alt1
 BuildRequires:	libnss-devel        >= 3.13.6-alt1
 BuildRequires:	libnss-devel-static >= 3.13.6-alt1
-BuildRequires:	xulrunner-devel     >= 15.0-alt1
+BuildRequires:	xulrunner-devel     >= 16.0.1-alt1
 
 Provides:	mailclient
 Obsoletes:	thunderbird-calendar
@@ -106,7 +104,7 @@ Summary: Enigmail - GPG support for Mozilla Thunderbird
 Group: Networking/Mail
 Url: http://enigmail.mozdev.org/
 
-Provides: %name-enigmail = 1.4.3
+Provides: %name-enigmail = 1.4.5
 Requires: %name = %version-%release
 
 Obsoletes: thunderbird-enigmail < 0.95.7-alt2
@@ -124,7 +122,7 @@ Summary: An integrated calendar for Thunderbird
 Group: Office
 Url: http://www.mozilla.org/projects/calendar/lightning/
 
-Provides: %name-lightning = 1.6b1
+Provides: %name-lightning = 1.8b1
 Requires: %name = %version-%release
 
 %description lightning
@@ -191,11 +189,8 @@ tar -xf %SOURCE1 -C mailnews/extensions/
 
 tar -xf %SOURCE2
 
-#patch1 -p1
-#patch2 -p2
 %patch6 -p1
 %patch7 -p1
-#patch8 -p1
 %patch9 -p1
 %patch15 -p1 -b .mozldap
 
@@ -507,6 +502,26 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Tue Oct 23 2012 Alexey Gladkov <legion@altlinux.ru> 16.0.1-alt1
+- New version (16.0.1).
+- Enigmail (1.4.5).
+- Fixed:
+  + MFSA 2012-89 defaultValue security checks not applied
+  + MFSA 2012-88 Miscellaneous memory safety hazards (rv:16.0.1)
+  + MFSA 2012-87 Use-after-free in the IME State Manager
+  + MFSA 2012-86 Heap memory corruption issues found using Address Sanitizer
+  + MFSA 2012-85 Use-after-free, buffer overflow, and out of bounds read issues found using Address Sanitizer
+  + MFSA 2012-84 Spoofing and script injection through location.hash
+  + MFSA 2012-83 Chrome Object Wrapper (COW) does not disallow acces to privileged functions or properties
+  + MFSA 2012-82 top object and location property accessible by plugins
+  + MFSA 2012-81 GetProperty function can bypass security checks
+  + MFSA 2012-80 Crash with invalid cast when using instanceof operator
+  + MFSA 2012-79 DOS and crash with full screen and history navigation
+  + MFSA 2012-77 Some DOMWindowUtils methods bypass security checks
+  + MFSA 2012-76 Continued access to initial origin after setting document.domain
+  + MFSA 2012-75 select element persistance allows for attacks
+  + MFSA 2012-74 Miscellaneous memory safety hazards (rv:16.0/ rv:10.0.8)
+
 * Wed Aug 29 2012 Alexey Gladkov <legion@altlinux.ru> 15.0-alt1
 - New version (15.0).
 - Fixed:

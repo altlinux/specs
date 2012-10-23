@@ -2,7 +2,7 @@
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		firefox-ru
-Version:	15.0
+Version:	16.0.1
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Firefox
 
@@ -46,6 +46,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %ciddir
 
 %changelog
+* Mon Oct 29 2012 Alexey Gladkov <legion@altlinux.ru> 16.0.1-alt1
+- New version (16.0.1)
+
 * Sun Sep 02 2012 Alexey Gladkov <legion@altlinux.ru> 15.0-alt1
 - New version (15.0)
 
