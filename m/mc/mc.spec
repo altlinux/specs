@@ -1,8 +1,8 @@
 Name: mc
-Version: 4.7.5.6
-Release: alt1
+Version: 4.8.6
+Release: alt4
 
-License: %gpllgpl2plus
+License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
 Group: File tools
 Url: http://midnight-commander.org/
@@ -15,24 +15,31 @@ Source4: mc-16.png
 Source5: mc-32.png
 Source6: mc.zsh
 
+%add_findreq_skiplist */lib/mc/ext.d/*
+%add_findreq_skiplist */lib/mc/extfs.d/*
+
 Patch0: %name-%version-%release.patch
 
-Patch1: mc-4.7.0.2-alt-esc.patch
-Patch2: mc-4.7.5-alt-wrapper.patch
-Patch5: mc-4.7.5-alt-filetypes.patch
-Patch6: mc-4.7.5.1-alt-forceexec.patch
-Patch7: mc-4.7.0-alt-po.patch
-Patch8: mc-4.7.0.2-alt-syntax-mak.patch
-Patch9: mc-4.7.5.1-alt-defaults.patch
-Patch10: mc-4.7.0.2-alt-menu.patch
-Patch11: mc-4.7.5.3-alt-extfs-udar.patch
-
-# Debian
-Patch51: mc-4.7.0-debian-mc.ext-use-arj.patch
+Patch1: mc-4.7.5-alt-wrapper.patch
+Patch2: mc-4.7.5.1-alt-defaults.patch
+Patch3: mc-4.7.0.2-alt-menu.patch
 
 # Misc
-# https://savannah.gnu.org/patch/?4211
+
+# a part of http://www.midnight-commander.org/ticket/1480
 Patch101: mc-4.7.0.2-savannah-edit-homekey.patch
+
+# http://www.midnight-commander.org/ticket/2496
+Patch102: mc-4.8.6-alt-forceexec.patch
+
+# http://www.midnight-commander.org/ticket/2896
+Patch103: mc-4.8.6-alt-syntax-mak.patch
+
+# http://www.midnight-commander.org/ticket/34
+Patch104: mc-4.8.6-alt-extfs-udar.patch
+
+# http://www.midnight-commander.org/ticket/2812
+Patch105: mc-4.8.6-alt-extfs-rpm.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -79,21 +86,16 @@ needed for working all components (some vfs for example)
 %patch0 -p1
 
 # ALT
-#patch1 -p1
+%patch1 -p1
 %patch2 -p1
-%patch5 -p1
-%patch6 -p1
-#patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-
-# Debian
-%patch51 -p1
+%patch3 -p1
 
 # Misc
 %patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
 
 cat <<EOF > version.h
 #ifndef MC_CURRENT_VERSION
@@ -106,11 +108,6 @@ subst 's|@@VERSION@@|%version-%release|' version.h
 #%%autoreconf
 ./autogen.sh
 
-mkdir doc/vfs/
-cp -a lib/vfs/mc-vfs/{COPYING.LGPL,README*,HACKING} doc/vfs/
-
-rm -rf lib/vfs/mc-vfs/samba/
-
 %build
 %configure \
 	--enable-extcharset \
@@ -119,7 +116,7 @@ rm -rf lib/vfs/mc-vfs/samba/
 %make_build
 
 %install
-%makeinstall
+%makeinstall_std
 
 install -d %buildroot%_sysconfdir/{profile.d,bashrc.d}
 mv %buildroot%_libexecdir/mc/mc.csh %buildroot%_sysconfdir/profile.d/
@@ -129,11 +126,9 @@ install -m755 %SOURCE6 %buildroot%_sysconfdir/profile.d/mc.sh
 install -m644 %SOURCE2 .
 # Install Dark color scheme
 install -m644 %SOURCE3 .
-# Install SynCE VFS
-install -m755 synce-mcfs/src/synce* %buildroot%_libexecdir/%name/extfs.d/
 
-# remove bash wrapper
-# rm -f %buildroot%_datadir/mc/bin/mc-wrapper.sh
+# Install SynCE VFS ( http://www.midnight-commander.org/ticket/2905 )
+install -m755 synce-mcfs/src/synce* %buildroot%_libexecdir/%name/extfs.d/
 
 # .desktop
 cat <<__EOF__>%name.desktop
@@ -152,7 +147,7 @@ install -pD -m644 %name.desktop %buildroot%_desktopdir/%name.desktop
 install -pD -m644 %SOURCE4 %buildroot%_miconsdir/%name.png
 install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 
-%find_lang %name
+%find_lang --with-man %name
 
 %files -f %name.lang
 %_bindir/mc
@@ -174,6 +169,7 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %config(noreplace) %_sysconfdir/mc/sfs.ini
 
 %_man1dir/*
+
 %_datadir/mc/
 %_desktopdir/%name.desktop
 %_niconsdir/%name.png
@@ -181,12 +177,32 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 
 %doc AUTHORS doc/FAQ doc/HACKING doc/MAINTAINERS doc/NEWS doc/README
 %doc doc/README.QNX doc/TODO doc/filehighlight.txt contrib/README.xterm
-%doc doc/vfs/
 %doc mc-dnlike.color mc-dark.color
 
 %files full
 
 %changelog
+* Tue Oct 23 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt4
+- added lib/mc/ext.d and lib/mc/extfs.d to findreq_skiplist
+
+* Mon Oct 22 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt3
+- merged with git://github.com/MidnightCommander/mc.git
+- adapted alt-extfs-udar.patch for 4.8.6
+- added alt-extfs-rpm.patch (ALT #27357)
+
+* Sun Oct 14 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt2
+- merged with git://github.com/MidnightCommander/mc.git
+  (ticket 2897 closed)
+
+* Sat Sep 22 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt1
+- 4.8.6 (License changed to GPLv3+)
+- removed ALT patches which subject of metaticket
+  http://www.midnight-commander.org/ticket/2897 (Milestone: 4.8.7)
+  - mc-4.7.5-alt-filetypes.patch
+  - mc-4.7.0-debian-mc.ext-use-arj.patch
+- removed mc-4.7.5.3-alt-extfs-udar.patch
+  http://www.midnight-commander.org/ticket/34
+
 * Sat Jan 07 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.7.5.6-alt1
 - 4.7.5.6
 
