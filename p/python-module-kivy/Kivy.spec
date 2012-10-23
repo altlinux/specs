@@ -1,5 +1,5 @@
 Name: python-module-kivy
-Version: 1.3.0
+Version: 1.4.1
 Release: alt1
 Summary: Open source library for rapid development of applications
 License: LGPLv3
@@ -53,6 +53,9 @@ make html
 %_datadir/kivy-examples
 
 %changelog
+* Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 1.4.1-alt1
+- Autobuild version bump to 1.4.1
+
 * Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 1.3.0-alt1
 - Autobuild version bump to 1.3.0
 
