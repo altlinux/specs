@@ -1,6 +1,6 @@
 %define dist Geo-Distance
 Name: perl-%dist
-Version: 0.19
+Version: 0.20
 Release: alt1
 
 Summary: Calculate Distances and Closest Locations
@@ -37,6 +37,9 @@ distance calculations.
 %perl_vendor_privlib/Geo
 
 %changelog
+* Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
+- automated CPAN update
+
 * Wed Sep 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.19-alt1
 - automated CPAN update
 
