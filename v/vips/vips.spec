@@ -1,8 +1,10 @@
 %def_disable static
+# there's a cipsCC.pc dependency on vips.pc
+%def_enable bootstrap
 
 Name: vips
-Version: 7.28.9
-Release: alt1.1
+Version: 7.30.3
+Release: alt1.2
 %define majorver %(echo %version |cut -d. -f1,2)
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -79,6 +81,10 @@ Static libraries for developing statically linked VIPS applications.
 %makeinstall_std
 %find_lang vips7
 
+%if_enabled bootstrap
+rm -f %buildroot%_pkgconfigdir/vipsCC.pc
+%endif
+
 %files -f vips7.lang
 %_bindir/*
 %_man1dir/*
@@ -91,7 +97,7 @@ Static libraries for developing statically linked VIPS applications.
 %files -n lib%name-devel
 %_includedir/vips/*
 %_libdir/lib*.so
-%_pkgconfigdir/*
+%_pkgconfigdir/*.pc
 
 %files -n lib%name-devel-doc
 %_datadir/gtk-doc/html/*
@@ -106,8 +112,21 @@ Static libraries for developing statically linked VIPS applications.
 # - package python bindings
 
 %changelog
+* Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 7.30.3-alt1.2
+- actually bootstrap 7.30 by temporarily dropping vipsCC-7.30.pc
+  + there's a new shiny knob for bootstrapping, btw
+
+* Fri Oct 12 2012 Michael Shigorin <mike@altlinux.org> 7.30.3-alt1
+- new version (watch file uupdate)
+
 * Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.28.9-alt1.1
 - Rebuilt with libpng15
+
+* Mon Sep 17 2012 Michael Shigorin <mike@altlinux.org> 7.30.2-alt1
+- new version (watch file uupdate)
+
+* Thu Aug 23 2012 Michael Shigorin <mike@altlinux.org> 7.30.0-alt1
+- new version (watch file uupdate)
 
 * Mon Jul 09 2012 Michael Shigorin <mike@altlinux.org> 7.28.9-alt1
 - new version (watch file uupdate)
