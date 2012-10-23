@@ -1,4 +1,4 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: gnome-devel-docs
 Version: %ver_major.1
@@ -43,11 +43,12 @@ Requires: %name = %version-%release
 This package is a part of %name and provides demos for GNOME developpers
 
 %prep
-%setup -q
+%setup
 
 %build
-%configure
-
+gnome-doc-prepare -f
+%autoreconf
+%configure --disable-scrollkeeper
 %make_build
 
 %install
@@ -63,6 +64,12 @@ This package is a part of %name and provides demos for GNOME developpers
 %_datadir/gnome/help/gnome-devel-demos/
 
 %changelog
+* Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
+* Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
+- 3.6.0
+
 * Tue Apr 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1-alt1
 - 3.4.1
 

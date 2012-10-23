@@ -4,7 +4,7 @@
 
 Name: gnome-doc-utils
 Version: %ver_major.10
-Release: alt1
+Release: alt2
 
 Summary: Documentation utilities for GNOME
 Group: Development/Other
@@ -17,6 +17,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Source1: scrollkeeper-omf.dtd
 # GNOME bug #524207
 Patch1: gnome-doc-utils-0.14.0-package.patch
+Patch2: gnome-doc-utils-fig-path.patch
 
 %define pkgdocdir %_docdir/%name-%version
 
@@ -63,6 +64,7 @@ export SGML_CATALOG_FILES=catalog
 %endif
 
 %patch1 -p1 -b .package
+%patch2 -p1 -b .fig
 
 # Update URLs of external entities to fix build in isolated network environment.
 find -type f -print0 |
@@ -110,6 +112,10 @@ ln -s %_licensedir/LGPL-2.1 %buildroot%pkgdocdir/COPYING.LGPL
 %_datadir/xml/gnome
 
 %changelog
+* Tue Oct 23 2012 Yuri N. Sedunov <aris@altlinux.org> 0.20.10-alt2
+- Fixed linking of figures in subfolders, where a relative path to
+  ../../C doesn't work properly (gnome-doc-utils-fig-path.patch)
+
 * Mon Mar 26 2012 Yuri N. Sedunov <aris@altlinux.org> 0.20.10-alt1
 - 0.20.10
 
