@@ -13,8 +13,8 @@
 %def_disable microhttpd
 
 Name: systemd
-Version: 194
-Release: alt2
+Version: 195
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -63,10 +63,11 @@ Patch2: %name-alt-patches.patch
 BuildRequires: glibc-kernheaders
 BuildRequires: intltool >= 0.40.0
 BuildRequires: gperf
-BuildRequires: libcap-devel
+BuildRequires: libcap-devel libcap-utils
 BuildRequires: libwrap-devel
 BuildRequires: libpam-devel
 BuildRequires: libacl-devel
+BuildRequires: libattr-devel
 BuildRequires: xsltproc
 BuildRequires: docbook-style-xsl docbook-dtds
 BuildRequires: libdbus-devel >= %dbus_ver
@@ -77,6 +78,7 @@ BuildRequires: gobject-introspection-devel
 BuildRequires: liblzma-devel
 BuildRequires: kmod-devel >= 5
 BuildRequires: python-devel
+BuildRequires: quota
 BuildRequires: gtk-doc
 BuildRequires: pciids usbids
 BuildRequires: libblkid-devel >= 2.20
@@ -96,6 +98,7 @@ Requires: agetty
 
 Requires: libsystemd-daemon = %version-%release
 Requires: libsystemd-login = %version-%release
+Requires: libsystemd-journal = %version-%release
 
 # Copy from SysVinit
 PreReq: coreutils
@@ -704,6 +707,7 @@ fi
 %_datadir/polkit-1/actions/*.policy
 # %%_docdir/systemd
 %doc DISTRO_PORTING LICENSE.LGPL2.1 README NEWS TODO
+%_localstatedir/log/README
 %exclude %_unitdir/*udev*
 %exclude %_unitdir/*/systemd-udev*
 %exclude /lib/systemd/systemd-udevd
@@ -763,6 +767,7 @@ fi
 %_man8dir/poweroff.*
 %_man8dir/telinit.*
 %_man8dir/runlevel.*
+%_initdir/README
 
 %files analyze
 %_bindir/systemd-analyze
@@ -862,6 +867,9 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Tue Oct 23 2012 Alexey Shabalin <shaba@altlinux.ru> 195-alt1
+- 195
+
 * Mon Oct 08 2012 Alexey Shabalin <shaba@altlinux.ru> 194-alt2
 - add 60-raw.rules from util-linux
 
