@@ -1,13 +1,17 @@
 Name: autoconf-archive
-Version: 2012.04.07
+Version: 2012.09.08
 Release: alt1
 Summary: The Autoconf Macro Archive
 
 Group: Development/Other
 License: GPLv3+ with exceptions
 URL: http://www.gnu.org/software/autoconf-archive/
-Source: ftp://ftp.gnu.org/gnu/autoconf-archive/%name-%version.tar.xz
+Source: ftp://ftp.gnu.org/gnu/autoconf-archive/%name-%version.tar
+Source2: AUTHORS
+Patch: %name-%version-%release.patch
 BuildArch: noarch
+
+BuildRequires: gnulib python-modules
 
 %description
 The GNU Autoconf Archive is a collection of more than 450 macros for
@@ -16,9 +20,22 @@ supporters of the cause from all over the Internet.
 
 %prep
 %setup -q
+%patch -p1
+
+# Use fresh bootstrap from gnulib
+mkdir build-aux
+install -pm755 %_datadir/gnulib/build-aux/git-version-gen ./build-aux/
+install -pm644 %SOURCE2 ./
+touch ChangeLog
+
+# Build scripts expect to find the autoconf-archive version in this file.
+echo -n %version > .tarball-version
 
 %build
+# %autoreconf
+./bootstrap.sh
 %configure
+%make maintainer-all
 %make_build
 
 %install
@@ -30,10 +47,13 @@ rm -f %buildroot%_infodir/dir
 rm -rf %buildroot%_datadir/%name
 
 %files
-%doc AUTHORS COPYING* ChangeLog NEWS README TODO
+%doc AUTHORS COPYING* NEWS README TODO
 %_datadir/aclocal/*.m4
 %_infodir/autoconf-archive.info*
 
 %changelog
+* Wed Oct 24 2012 Alexey Shabalin <shaba@altlinux.ru> 2012.09.08-alt1
+- 2012.09.08
+
 * Mon Sep 03 2012 Alexey Shabalin <shaba@altlinux.ru> 2012.04.07-alt1
 - initial build
