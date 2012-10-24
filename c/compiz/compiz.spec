@@ -3,7 +3,7 @@
 
 Name: compiz
 Version: 0.8.8
-Release: alt7
+Release: alt7.1
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -125,6 +125,7 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 #exclude %_libdir/%name/libgconf.so
 %exclude %_libdir/%name/libgnomecompat.so
 %exclude %_libdir/%name/libglib.so
+%exclude %_libdir/%name/libkconfig.so
 %_libdir/%name/lib*.so
 %_datadir/%name
 %exclude %_datadir/%name/kc*
@@ -151,6 +152,7 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 
 %files kde
 %_bindir/kde-window-decorator
+%_libdir/%name/libkconfig.so
 %_K3conf/*
 %_K3cfg/*
 
@@ -166,6 +168,9 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Wed Oct 24 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt7.1
+- package libkconfig.so in kde subpackage
+
 * Tue Oct 23 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt7
 - fix previous change
 
