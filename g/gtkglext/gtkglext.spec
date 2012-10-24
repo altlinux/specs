@@ -1,6 +1,6 @@
 Name: gtkglext
 Version: 1.2.0
-Release: alt2.3
+Release: alt2.4
 
 Summary: An OpenGL extention to GTK2
 License: LGPLv2+
@@ -13,6 +13,7 @@ Source: %name-%version.tar
 Patch0: gtkglext-support-pango.patch
 Patch1: gtkglext-1.2.0-newer-gtk.patch
 Patch2: gtkglext-1.2.0-alt-DSO.patch
+Patch3: gtkglext-1.2.0-alt-pangox.patch
 
 %define gtk_ver 2.4.0
 %define gtk_doc_ver 1.1
@@ -24,6 +25,7 @@ BuildPreReq: gtk-doc >= %gtk_doc_ver
 # Automatically added by buildreq on Wed Dec 08 2010
 BuildRequires: gtk-doc imake libGLU-devel libXmu-devel libgtk+2-devel
 BuildPreReq: xorg-cf-files libGL-devel libXext-devel gcc-c++
+BuildPreReq: pkgconfig(pangox)
 
 %description
 GtkGLExt is an OpenGL extension to GTK2.
@@ -65,6 +67,7 @@ statically linked against GtkGLExt.
 %patch0 -p0
 %patch1 -p2
 %patch2 -p2
+%patch3 -p2
 
 %build
 %autoreconf
@@ -94,6 +97,9 @@ statically linked against GtkGLExt.
 %endif
 
 %changelog
+* Wed Oct 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.4
+- Fixed build
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.3
 - Fixed build
 
