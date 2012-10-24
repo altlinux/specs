@@ -1,8 +1,8 @@
 %define module fedora-compat
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
-Version: 0.07
-Release: alt2
+Version: 0.08
+Release: alt1
 License: GPL
 Group: System/Base
 BuildArch: noarch
@@ -28,6 +28,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Oct 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
+- added sugar activity dir
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.07-alt2
 - fixes in systemd macros
 
