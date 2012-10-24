@@ -1,10 +1,8 @@
 %def_disable static
-# there's a cipsCC.pc dependency on vips.pc
-%def_enable bootstrap
 
 Name: vips
 Version: 7.30.3
-Release: alt1.2
+Release: alt1.3
 %define majorver %(echo %version |cut -d. -f1,2)
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -14,8 +12,9 @@ License: LGPLv2.1
 Group: Graphics
 
 Url: http://www.vips.ecs.soton.ac.uk
-Source0: %{name}-%{version}.tar.gz
+Source0: %name-%version.tar.gz
 Source100: vips.watch
+Patch: vips-7.30.3-alt-pkgconfig.patch
 
 BuildPreReq: libxml2-devel
 # Automatically added by buildreq on Sat Oct 08 2011
@@ -71,6 +70,7 @@ Static libraries for developing statically linked VIPS applications.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -80,10 +80,6 @@ Static libraries for developing statically linked VIPS applications.
 %install
 %makeinstall_std
 %find_lang vips7
-
-%if_enabled bootstrap
-rm -f %buildroot%_pkgconfigdir/vipsCC.pc
-%endif
 
 %files -f vips7.lang
 %_bindir/*
@@ -95,7 +91,7 @@ rm -f %buildroot%_pkgconfigdir/vipsCC.pc
 %_libdir/lib*.so.*
 
 %files -n lib%name-devel
-%_includedir/vips/*
+%_includedir/vips/
 %_libdir/lib*.so
 %_pkgconfigdir/*.pc
 
@@ -109,9 +105,13 @@ rm -f %buildroot%_pkgconfigdir/vipsCC.pc
 %endif
 
 # TODO:
+# - OpenSlide, linux/videodev.h
 # - package python bindings
 
 %changelog
+* Wed Oct 24 2012 Michael Shigorin <mike@altlinux.org> 7.30.3-alt1.3
+- patched vipsCC.pc and dropped "bootstrap" scaffolding altogether
+
 * Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 7.30.3-alt1.2
 - actually bootstrap 7.30 by temporarily dropping vipsCC-7.30.pc
   + there's a new shiny knob for bootstrapping, btw
