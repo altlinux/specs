@@ -1,12 +1,12 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 1.1
+Version: 1.2
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
-Requires: libshell >= 0.1.0-alt2 etcnet alterator-hw-functions
+Requires: libshell >= 0.1.3 etcnet alterator-hw-functions
 
 Provides: alterator-net-common = %version
 Obsoletes: alterator-net-common
@@ -40,6 +40,10 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.2-alt1
+- added initial IPv6 support (sem@)
+- added read_iface_current_addr* functions
+
 * Thu Sep 09 2010 Sergey V Turchin <zerg@altlinux.org> 1.1-alt1
 - add multiple interface addresses support
 
