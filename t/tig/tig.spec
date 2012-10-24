@@ -1,6 +1,6 @@
 Name: tig
-Version: 1.0
-Release: alt2
+Version: 1.1
+Release: alt1
 
 Summary: text-mode interface for git
 License: GPL
@@ -12,7 +12,7 @@ Patch: tig-%version-%release.patch
 
 Requires: git-core
 
-# Automatically added by buildreq on Fri Sep 21 2012
+# Automatically added by buildreq on Wed Oct 24 2012
 BuildRequires: asciidoc libncursesw-devel python-modules-encodings xmlto
 
 %description
@@ -47,6 +47,9 @@ install -pD -m644 tigmanual.7 %buildroot%_man7dir/tigmanual.7
 %_man7dir/tigmanual.7*
 
 %changelog
+* Wed Oct 24 2012 Alexey Tourbin <at@altlinux.ru> 1.1-alt1
+- 1.0 -> 1.1
+
 * Fri Sep 21 2012 Alexey Tourbin <at@altlinux.ru> 1.0-alt2
 - packaged tigmanual(7)
 
