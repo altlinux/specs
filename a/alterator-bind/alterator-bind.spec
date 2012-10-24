@@ -2,7 +2,7 @@
 
 Name: alterator-bind
 Version: 0.8
-Release: alt1
+Release: alt2
 
 Source:%name-%version.tar
 
@@ -47,6 +47,9 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt2
+- really use all interfaces
+
 * Tue Oct 23 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt1
 - use all interfaces, not only static
 
