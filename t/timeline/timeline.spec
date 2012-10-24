@@ -1,6 +1,6 @@
 Name: timeline
 Version: 0.18.0
-Release: alt1
+Release: alt2
 Group: Office
 Summary: Displaying and navigating events on a timeline
 License: GPLv3
@@ -11,7 +11,7 @@ BuildArch: noarch
 Url: http://thetimelineproj.sourceforge.net/
 %setup_python_module timelinelib
 
-Requires: python-module-wx
+Requires: python-module-wx python-module-timelinelib = %version
 
 # Automatically added by buildreq on Mon Jul 04 2011
 # optimized out: python-base python-modules python-modules-compiler python-modules-email python-modules-logging python-modules-xml
@@ -104,6 +104,9 @@ done
 %python_sitelibdir_noarch/%modulename
 
 %changelog
+* Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 0.18.0-alt2
+- Add library dependence
+
 * Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 0.18.0-alt1
 - Autobuild version bump to 0.18.0
 
