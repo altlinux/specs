@@ -1,18 +1,13 @@
-%define		libpath		/usr/lib/angband
-%define		varpath		/var/lib/angband
+Name: angband
+Version: 3.4.1
+Release: alt1
 
-Name:		angband
-Version: 	3.4.0
-Release: 	alt1
-
-Summary:	Angband is a "graphical" dungeon adventure game
-Summary(ru_RU.KOI8-R): 	Angband - ÐÒÉËÌÀÞÅÎÞÅÓËÁÑ ÉÇÒÁ.
-License:	Moria/Angband license
-Group:		Games/Adventure
-Source:		%name-v%version.tar.gz
-Source1:	%name-graf.tar.bz2
-Source2:	graf-32x32-304.tar.bz2
-URL:		http://rephial.org
+Summary: Angband is a "graphical" dungeon adventure game
+Summary(ru_RU.UTF-8): 	Angband - Ð¿Ñ€Ð¸ÐºÐ»ÑŽÑ‡ÐµÐ½Ñ‡ÐµÑÐºÐ°Ñ Ð¸Ð³Ñ€Ð°.
+License: Moria/Angband license
+Group: Games/Adventure
+Source: %name-v%version.tar.gz
+Url: http://rephial.org
 
 # Automatically added by buildreq on Fri Sep 21 2012
 # optimized out: gnu-config libICE-devel libncurses-devel libtinfo-devel termutils xorg-kbproto-devel xorg-xproto-devel
@@ -23,104 +18,51 @@ Angband is a "graphical" dungeon adventure game using textual characters
 to represent the walls and floors of a dungeon and the inhabitants therein,
 in the vein of "rogue", "hack", "nethack" and "moria"
 
-%description -l ru_RU.KOI8-R
-Angband - ÐÒÉËÌÀÞÅÎÞÅÓËÁÑ ÉÇÒÁ. äÌÑ ÉÚÏÂÒÁÖÅÎÉÑ ÓÔÅÎ ÐÏÄÚÅÍÅÌØÑ, Á ÔÁË ÖÅ ÅÇÏ 
-ÏÂÉÔÁÔÅÌÅÊ ÉÓÐÏÌØÚÕÀÔÓÑ ÁÌÆÁ×ÉÔÎÏ-ÃÉÆÒÏ×ÙÅ ÓÉÍ×ÏÌÙ, ÄÏÓÔÕÐÎÙÅ ÎÁ ÌÀÂÏÍ ÔÅÒÍÉÎÁÌÅ.
-éÇÒÁ Ñ×ÌÑÅÔÓÑ ÐÒÑÍÙÍ ÐÏÔÏÍËÏÍ ÉÇÒÙ moria. 
+%description -l ru_RU.UTF-8
+Angband - Ð¿Ñ€Ð¸ÐºÐ»ÑŽÑ‡ÐµÐ½Ñ‡ÐµÑÐºÐ°Ñ Ð¸Ð³Ñ€Ð°. Ð”Ð»Ñ Ð¸Ð·Ð¾Ð±Ñ€Ð°Ð¶ÐµÐ½Ð¸Ñ ÑÑ‚ÐµÐ½ Ð¿Ð¾Ð´Ð·ÐµÐ¼ÐµÐ»ÑŒÑ, Ð° Ñ‚Ð°Ðº Ð¶Ðµ ÐµÐ³Ð¾
+Ð¾Ð±Ð¸Ñ‚Ð°Ñ‚ÐµÐ»ÐµÐ¹ Ð¸ÑÐ¿Ð¾Ð»ÑŒÐ·ÑƒÑŽÑ‚ÑÑ Ð°Ð»Ñ„Ð°Ð²Ð¸Ñ‚Ð½Ð¾-Ñ†Ð¸Ñ„Ñ€Ð¾Ð²Ñ‹Ðµ ÑÐ¸Ð¼Ð²Ð¾Ð»Ñ‹, Ð´Ð¾ÑÑ‚ÑƒÐ¿Ð½Ñ‹Ðµ Ð½Ð° Ð»ÑŽÐ±Ð¾Ð¼ Ñ‚ÐµÑ€Ð¼Ð¸Ð½Ð°Ð»Ðµ.
+Ð˜Ð³Ñ€Ð° ÑÐ²Ð»ÑÐµÑ‚ÑÑ Ð¿Ñ€ÑÐ¼Ñ‹Ð¼ Ð¿Ð¾Ñ‚Ð¾Ð¼ÐºÐ¾Ð¼ Ð¸Ð³Ñ€Ñ‹ moria.
 
 %prep
-%setup -q -a1 -a2 -n %name-v%version
+%setup -n %name-v%version
 
-%build
-%configure --enable-x11 --enable-curses --disable-sdl --with-libpath=%libpath
-%make_build
- 
-%install
-mkdir -p $RPM_BUILD_ROOT/%_bindir
-mkdir -p $RPM_BUILD_ROOT/%varpath/{apex,bone,data,save}
-mkdir -p $RPM_BUILD_ROOT/%libpath/{edit,file,help,info,pref,xtra/{font,graf,sound}}
-cp src/angband $RPM_BUILD_ROOT/%_bindir
-cp lib/edit/*.txt $RPM_BUILD_ROOT/%libpath/edit/
-cp lib/file/*.txt $RPM_BUILD_ROOT/%libpath/file/
-cp lib/help/*.{txt,hlp} $RPM_BUILD_ROOT/%libpath/help/
-cp lib/pref/*.prf $RPM_BUILD_ROOT/%libpath/pref/
-# TODO what happens to .txt? cp lib/xtra/font/*.{txt,fon} ...
-cp lib/xtra/font/*.fon $RPM_BUILD_ROOT/%libpath/xtra/font/
-# TODO what happens to .bmp? cp lib/xtra/graf/*.{png,bmp} ...
-cp lib/xtra/graf/*.png $RPM_BUILD_ROOT/%libpath/xtra/graf/
-cp lib/xtra/sound/*.{wav,cfg} $RPM_BUILD_ROOT/%libpath/xtra/sound/
-
-cp angband-graf/*.bmp $RPM_BUILD_ROOT/%libpath/xtra/graf/
-cp {mask32,32x32}.bmp $RPM_BUILD_ROOT%libpath/xtra/graf
-
-touch $RPM_BUILD_ROOT%varpath/apex/scores.raw
-
-mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%{name}.desktop <<EOF
+cat > %name.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
 Name=Angband
 Comment=Angband is a "graphical" dungeon adventure game
 Comment[ru]=Angband - Ð¿Ñ€Ð¸ÐºÐ»ÑŽÑ‡ÐµÐ½Ñ‡ÐµÑÐºÐ°Ñ Ð¸Ð³Ñ€Ð°
-Icon=%{name}
-#Exec=%_gamesbindir/%name
-Exec=%name -mx11 -- -g -b
+Icon=%name
+#Exec=%_bindir/%name
+Exec=%name -mx11
 Terminal=false
 Categories=Game;AdventureGame;
 EOF
 
-%post
-if [ -d %libpath/apex/ ]; then
-	for f in %libpath/apex/*; do
-		[ -e $f ] && install -m0664 -g games -o games $f %varpath/apex/
-	done
-	rm -rf %libpath/apex
-fi
-if [ -d %libpath/data/ ]; then
-	rm -rf %libpath/data
-fi
-if [ -d %libpath/save/ ]; then
-	for f in %libpath/save/*; do
-		[ -e $f ] && install -m0664 -g games -o games $f %varpath/save/
-	done
-	rm -rf %libpath/save
-fi
+%build
+%configure --enable-x11 --enable-curses --disable-sdl
+%make_build configdir=%_sysconfdir/%name libdatadir=%_datadir/%name
 
-%preun
-if [ -d %varpath/data/ ]; then
-	rm -rf %varpath/data/*
-fi
+%install
+%makeinstall configdir=%buildroot%_sysconfdir/%name libdatadir=%buildroot%_datadir/%name
+install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 
 %files
 %doc copying.txt readme.txt thanks.txt changes.txt faq.txt
-%attr(02711,games,games) %_bindir/%name
-%attr(0755,games,games) %dir %libpath
-%attr(0755,games,games) %dir %varpath
-%attr(0775,games,games) %dir %varpath/apex/
-%attr(0664,games,games) %config(noreplace) %varpath/apex/*
-%attr(0070,games,games) %dir %varpath/bone/
-%attr(0775,games,games) %dir %varpath/data/
-%attr(0070,games,games) %dir %varpath/save/
-%dir %libpath/edit/
-%dir %libpath/file/
-%dir %libpath/help/
-%dir %libpath/info/
-%dir %libpath/pref/
-%dir %libpath/xtra/
-%dir %libpath/xtra/graf/
-%dir %libpath/xtra/font/
-%dir %libpath/xtra/sound/
-%libpath/edit/*
-%libpath/file/*
-%libpath/help/*
-%libpath/pref/*
-%libpath/xtra/graf/*
-%libpath/xtra/font/*
-%libpath/xtra/sound/*
+%dir %_sysconfdir/%name
+%config %_sysconfdir/%name/*
+#attr(02711,games,games) %_bindir/%name
+%_bindir/%name
+%dir %_datadir/%name
+%_datadir/%name/*
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 3.4.1-alt1
+- Autobuild version bump to 3.4.1
+- Heavy path fixes (no more shared hiscores supported by upstream)
+
 * Sat Sep 22 2012 Fr. Br. George <george@altlinux.ru> 3.4.0-alt1
 - Version up
 
@@ -208,4 +150,4 @@ NMU: converted menu to desktop file
 - new version
 
 * Sun Mar 13 2001 Alexey Voinov <voins@voins.program.ru>
-- initial build 
+- initial build
