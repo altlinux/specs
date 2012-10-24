@@ -1,18 +1,18 @@
-%define rel 2
+%define rel 1
 Summary: 2D Platform Game
 Name: edgar
-Version: 1.02
+Version: 1.04
 Release: alt1
-Source: %name-%version-2.tar.gz
+Source: %name-%version-1.tar.gz
 Url: http://www.parallelrealities.co.uk/p/legend-of-edgar.html
 Group: Games/Arcade
 License: GPL
-Patch: %name-0.60-icons.patch
+Patch: %name-1.04-icons.patch
 Packager: Fr. Br. George <george@altlinux.ru>
 Requires: %name-data = %version
 
 # Automatically added by buildreq on Sun Feb 28 2010
-BuildRequires: ImageMagick-tools libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel zlib-devel
+BuildRequires: libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel zlib-devel
 BuildRequires: desktop-file-utils
 
 %description
@@ -41,9 +41,6 @@ This package contains official level set for Edgar.
 
 %install
 %makeinstall VERSION=%version RELEASE=%rel DATA_DIR=%buildroot%_gamesdatadir/%name/ BIN_DIR=%buildroot%_gamesbindir/ DOC_DIR=`pwd`/localdoc ICON_DIR=%buildroot%_iconsdir/hicolor/ DESKTOP_DIR=%buildroot%_desktopdir/ LOCALE_DIR=%buildroot%_datadir/locale/
-# XXX This file was insane google-translated junk by the time of 0.55
-# All localisation are gone by the time of 0.60
-#rm -rf %buildroot%_datadir/locale/ru
 
 %find_lang %name
 desktop-file-install --dir %buildroot%_desktopdir \
@@ -62,6 +59,10 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_gamesdatadir/%name/*
 
 %changelog
+* Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 1.04-alt1
+- Autobuild version bump to 1.04
+- Fix patch
+
 * Thu Jul 26 2012 Fr. Br. George <george@altlinux.ru> 1.02-alt1
 - Autobuild version bump to 1.02
 
