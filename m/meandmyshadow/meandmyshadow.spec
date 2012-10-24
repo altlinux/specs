@@ -1,5 +1,5 @@
 Name: meandmyshadow
-Version: 0.3
+Version: 0.4
 Release: alt1
 License: GPLv3
 Summary: Puzzle/platform game with two protagonists performing shared task
@@ -33,26 +33,20 @@ Data files for %name, %summary
 %setup
 
 %build
-
 %cmake
-(
-cd BUILD
-%make_build
-)
+%make_build -C BUILD
 
 %install
-(
-cd BUILD
-cp -al ../data .
-%makeinstall DESTDIR=%buildroot
-)
+cp -al data BUILD
+%makeinstall DESTDIR=%buildroot -C BUILD
+
 for i in icons/*/%name.png; do
   d=$(basename $(dirname $i))
   install -D $i %buildroot%_iconsdir/hicolor/$d/apps/%name.png
 done
 
 %files
-%doc ?[a-z]*.txt
+%doc docs
 %_bindir/*
 %dir %_datadir/%name
 %_desktopdir/%name.desktop
@@ -62,6 +56,10 @@ done
 %_datadir/%name/*
 
 %changelog
+* Tue Oct 23 2012 Fr. Br. George <george@altlinux.ru> 0.4-alt1
+- Autobuild version bump to 0.4
+- Fix build and cleanup spec from error-unaware subshells
+
 * Tue Mar 27 2012 Fr. Br. George <george@altlinux.ru> 0.3-alt1
 - Autobuild version bump to 0.3
 - Native icons used
