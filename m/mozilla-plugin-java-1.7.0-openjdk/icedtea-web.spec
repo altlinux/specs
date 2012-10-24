@@ -53,13 +53,14 @@ BuildRequires: jpackage-generic-compat
 
 Name:		mozilla-plugin-java-1.7.0-openjdk
 Version:	1.3
-Release:	alt1.hg468_2jpp7
+Release:	alt2.hg478_1jpp7
 Summary:	Additional Java components for OpenJDK
 
 Group:      Development/Java
 License:    LGPLv2+ and GPLv2 with exceptions
 URL:        http://icedtea.classpath.org/wiki/IcedTea-Web
 Source0:    http://icedtea.classpath.org/download/source/%{oldname}-1.4pre.tar.gz
+Patch: rhbz753960.patch
 
 BuildRequires:  java-%{javaver}-openjdk-devel
 BuildRequires:  desktop-file-utils
@@ -141,6 +142,7 @@ This package contains Javadocs for the IcedTea-Web project.
 
 %prep
 %setup -q -n %{oldname}-1.4pre
+%patch -p0
 
 %build
 ./autogen.sh
@@ -286,6 +288,10 @@ done
 
 
 %changelog
+* Wed Oct 24 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt2.hg478_1jpp7
+- added rhbz753960.patch (closes: #27881)
+- note that this is 1.4 pre. waiting for 1.4 release, Nov. 1st
+
 * Thu Jul 12 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt1.hg468_2jpp7
 - updated to the latest tip version from the upstream Mercurial repository.
   thanks to (GalaxyMaster) <gm.outside+altlinux@gmail.com>.
