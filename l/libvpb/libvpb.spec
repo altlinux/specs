@@ -1,6 +1,6 @@
 Name: libvpb
 Version: 4.2.42
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: Voicetronix VPB interface library
 
@@ -13,6 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 %define oname vpb-driver
 Source: http://www.voicetronix.com/Downloads/vpb-driver-4.x/%oname-%version.tar.bz2
 Patch: libvpb-4.2.42-alt-DSO.patch
+Patch1: libvpb-4.2.42-alt-gcc4.7.patch
 
 # Automatically added by buildreq on Fri Jan 16 2009
 BuildRequires: gcc-c++ libpci-devel zlib-devel
@@ -37,6 +38,7 @@ Header files for %name library.
 %prep
 %setup -q -n %oname-%version
 %patch -p2
+%patch1 -p2
 # disable build kernel module
 %__subst "s|\$(srcdir)/vtcore.*||g" src/Makefile.in
 %__subst "s|/sbin/ldconfig||g" src/libvpb/Makefile.in
@@ -60,6 +62,9 @@ Header files for %name library.
 %_includedir/*
 
 %changelog
+* Wed Oct 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.42-alt1.qa3
+- Fixed build with gcc 4.7
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.42-alt1.qa2
 - Fixed build
 
