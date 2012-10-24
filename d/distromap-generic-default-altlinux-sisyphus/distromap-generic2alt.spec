@@ -4,7 +4,7 @@
 
 Name: distromap-%module
 Version: 0.05
-Release: alt5
+Release: alt6
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -37,6 +37,9 @@ ln -s default %buildroot/usr/share/distromap/%orepo/generic
 /usr/share/distromap/*
 
 %changelog
+* Wed Oct 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt6
+- new groups
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt5
 - more groups
 
