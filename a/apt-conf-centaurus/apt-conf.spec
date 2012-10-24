@@ -3,8 +3,8 @@
 %define Distro ALT Linux Centaurus
 
 Name: %base_name-%distro
-Version: 6.0.0
-Release: alt7
+Version: 6.9.0
+Release: alt1
 
 Summary: A set of apt configuration files for %distribution %Distro
 License: GPL
@@ -24,7 +24,7 @@ This package contains default apt configuration for %distribution %Distro.
 %setup
 
 %build
-%make_build REPOSITORIES=p6
+%make_build REPOSITORIES=sisyphus
 
 %install
 %makeinstall
@@ -43,6 +43,9 @@ fi
 %config(noreplace) %_sysconfdir/apt
 
 %changelog
+* Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt1
+- moved to sisyphus
+
 * Wed Aug 08 2012 Sergey V Turchin <zerg@altlinux.org> 6.0.0-alt7
 - add x86_64-i586 repo
 
