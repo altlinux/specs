@@ -1,7 +1,7 @@
 %define rel %nil
 Name: qdvdauthor
 Version: 1.5.0
-Release: alt2.qa3
+Release: alt2.qa4
 
 Summary: The GUI frontend for dvdauthor and other related tools
 
@@ -15,6 +15,7 @@ Source: http://prdownloads.sf.net/%name/%name-%version%rel.tar.bz2
 # remove make from configure :)
 Patch: %name.patch
 Patch1: %name-1.5.0-alt-DSO.patch
+Patch2: %name-1.5.0-alt-gcc4.7.patch
 
 # manually removed: nvidia_glx_169.12 qt3-designer
 # Automatically added by buildreq on Wed Nov 12 2008
@@ -35,6 +36,7 @@ Build with MPlayer for playing.
 sed -i "s|cd qdvdauthor|exit 0|g" configure
 #%patch
 %patch1 -p2
+%patch2 -p2
 
 %build
 unset QTDIR || : ; . %_sysconfdir/profile.d/qt3dir.sh
@@ -96,6 +98,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/qdvdauthor.desktop
 
 %changelog
+* Wed Oct 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.qa4
+- Fixed build with gcc 4.7
+
 * Tue Jun 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.qa3
 - Fixed build
 
