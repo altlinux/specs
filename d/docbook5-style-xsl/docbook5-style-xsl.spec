@@ -1,6 +1,6 @@
 Name: docbook5-style-xsl
 Version: 1.77.1
-Release: alt1_2
+Release: alt1_2.1
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -43,6 +43,7 @@ DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version
 cp -a [[:lower:]]* $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/
 cp -a VERSION $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/
+ln -s VERSION $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/VERSION.xsl
 ln -s xsl-ns-stylesheets-%{version} \
  $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets
 
@@ -83,6 +84,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 1.77.1-alt1_2.1
+- Provide VERSION.xsl, which included from source
+
 * Sun Sep 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.77.1-alt1_2
 - new version
 
