@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt41
+Release: alt42
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -108,6 +108,9 @@ make check
 %lang(es) %_datadir/locale/es/LC_MESSAGES/*.mo
 
 %changelog
+* Thu Oct 25 2012 Andrey Cherepanov <cas@altlinux.org> 2.9-alt42
+- Fix typo in 2.9-alt41
+
 * Fri Oct 05 2012 Andrey Cherepanov <cas@altlinux.org> 2.9-alt41
 - Update alterator-rd translatation
 
