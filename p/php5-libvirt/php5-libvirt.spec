@@ -1,8 +1,8 @@
 %define php5_extension libvirt
 
 Name: php5-libvirt
-Version: 0.4.5
-Release: alt2
+Version: 0.4.6
+Release: alt1
 
 Summary: PHP language binding for Libvirt
 Group: System/Servers
@@ -50,6 +50,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extdir/*
 
 %changelog
+* Thu Oct 25 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.6-alt1
+- 0.4.6
+
 * Tue Mar 20 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.5-alt2
 - git snapshot 22da0e3cfe42c0181c86ae334de713666fac774a
 - rebuild with php5-5.3.10.20120202-alt1
