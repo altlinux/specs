@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.26
-Release: alt5
+Version: 5.27
+Release: alt2
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -29,6 +29,8 @@ Requires(pre): libguile-vhttpd >= 0.7-alt1
 Requires(pre): shadow-utils
 
 BuildPreReq: alterator >= 4.12-alt1, libguile-vhttpd, guile18-devel, libexpat-devel
+
+Provides: alterator-etcgit-bar
 
 %description
 this is an alterator based engine (form based interface) to create a simple form based html interface
@@ -127,6 +129,21 @@ fi ||:
 
 
 %changelog
+* Thu Sep 20 2012 Paul Wolneykien <manowar@altlinux.ru> 5.27-alt2
+- Reply with session info to a /ahttpd-cache/sessions/<session> URI.
+- List only allowed modules in the menu.
+- Add operation to list allowed URIs for a given user.
+
+* Fri Aug 31 2012 Paul Wolneykien <manowar@altlinux.ru> 5.27-alt1
+- Substitute %%H in X-Alterator-URI with the requested host address.
+- Fix output of Unicode characters.
+- Invoke message dialogs synchronously.
+- Define procs for JS invocation.
+- Allow clickable links.
+- Provide alterator-etcgit-bar.
+- JS function to update the profile name and modification status.
+- Show profile name (link) in the presence of /etcgit backend.
+
 * Tue May 29 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.26-alt5
 - Fix LSB init header
 
