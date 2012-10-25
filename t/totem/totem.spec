@@ -34,7 +34,7 @@
 %endif
 
 Name: totem
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -53,6 +53,8 @@ Requires: lib%name = %version-%release
 Requires: gstreamer%gst_api_ver >= %gst_ver
 Requires: gst-plugins-base%gst_api_ver
 Requires: gst-plugins-good%gst_api_ver
+Requires: gst-plugins-bad%gst_api_ver
+Requires: gst-plugins-ugly%gst_api_ver
 Requires: iso-codes
 
 Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
@@ -67,7 +69,7 @@ BuildRequires: gst-plugins%gst_api_ver-devel >= %gst_plugins_ver
 BuildRequires: gstreamer%gst_api_ver-utils >= %gst_ver
 BuildRequires: gst-plugins-base%gst_api_ver
 BuildRequires: gst-plugins-good%gst_api_ver
-BuildRequires: gst-plugins-bad%gst_api_ver
+BuildRequires: gst-plugins-bad%gst_api_ver-devel
 BuildRequires: browser-plugins-npapi-devel
 
 BuildPreReq: iso-codes-devel gnome-icon-theme
@@ -410,6 +412,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Oct 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 - removed obsolete publish and iplayer plugins
