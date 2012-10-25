@@ -1,6 +1,6 @@
 Name: repocop
-Version: 0.62
-Release: alt2
+Version: 0.63
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -84,6 +84,8 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 %_man1dir/repocop-*
 %exclude %_bindir/repocop-fix*
 %exclude %_man1dir/repocop-fix*
+%exclude %_bindir/repocop-report-diff
+%exclude %_man1dir/repocop-report-diff.*
 %exclude %_bindir/repocop-tools-*
 %exclude %_man1dir/repocop-tools-*
 %exclude %perl_vendor_privlib/Test/Repocop/Fixscripts.pm
@@ -103,10 +105,15 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 %_man1dir/repocop-fix*
 %_bindir/repocop-tools-*
 %_man1dir/repocop-tools-*
+%_bindir/repocop-report-diff
+%_man1dir/repocop-report-diff.*
 %perl_vendor_privlib/Test/Repocop/Fixscripts.pm
 %dir %_datadir/repocop/fixscripts
 
 %changelog
+* Thu Oct 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
+- repocop-check and repocop-check-against-repository
+
 * Tue Aug 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.62-alt2
 - maintainance release
 
