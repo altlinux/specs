@@ -1,14 +1,14 @@
-%define _hooksdir %_libexecdir/alterator/hooks/firsttime.d
+%define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-ldap-groups
-Version: 0.6
-Release: alt2
+Version: 0.6.1
+Release: alt1
 
 Source: %name-%version.tar
 
-Packager: Lebedev Sergey <barabashka@altlinux.org>
+Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Summary: alterator module for ldap groups administration
+Summary: Alterator module for LDAP groups administration
 License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
@@ -17,13 +17,16 @@ Requires: alterator >= 2.9 ldap-user-tools >= 0.2 alterator-auth >= 0.9-alt3
 Requires: alterator-sh-functions >= 0.11-alt2
 Requires: shadow-groups >= 4.0.4.1-alt9
 Requires: alterator-l10n >= 2.7-alt6
+
 Conflicts: alterator-fbi < 0.16-alt2
+Obsoletes: alterator-ldap-groups-school-server < %version
+Provides:  alterator-ldap-groups-school-server = %version-%release
 
 BuildPreReq: alterator >= 3.2-alt3 
 BuildRequires: alterator-l10n alterator-fbi
 
 %description
-alterator module for ldap groups administration
+Alterator module for LDAP groups administration
 
 %prep
 %setup -q
@@ -43,6 +46,15 @@ alterator module for ldap groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Thu Oct 25 2012 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
+- Move init script from firsttime.d to hostname.d hooks directory.
+  Please, run /etc/hooks/hostname.d/91-ldap-groups manually
+  to create initial groups for existing domain (ALT #24494)
+- Obsoletes alterator-ldap-groups-school-server package
+- Hide registered workstations groups (with trailing $)
+- Support School Server specific default groups. If they are
+  unnecessary, just remove it manually
+
 * Wed Dec 15 2010 Dmitriy Kruglikov <dkr@altlinux.org> 0.6-alt2
 - Released as  0.6-alt2 for test
 
@@ -50,7 +62,7 @@ alterator module for ldap groups administration
 - Manage local and LDAP groups.
 
 * Fri Apr 02 2010 Dmitriy Kruglikov <dkr@altlinux.org> 0.5-alt1
-- Redesigned membership. 
+- Redesigned membership.
 - Fixed bug with space in group name.
 
 * Mon Oct 26 2009 Stanislav Ievlev <inger@altlinux.org> 0.4-alt3
