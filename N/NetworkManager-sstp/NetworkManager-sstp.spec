@@ -5,7 +5,7 @@
 
 Name: NetworkManager-sstp
 Version: 0.9.4.0
-Release: alt1
+Release: alt2
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for SSTP
@@ -18,7 +18,7 @@ Requires: sstp-client
 Requires: ppp = %ppp_version
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: ppp-devel sstp-client-devel
+BuildRequires: ppp-devel libsstp-devel >= 1.0.8
 BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: NetworkManager-glib-devel >= %nm_version
 BuildRequires: libgtk+%gtkver-devel
@@ -47,9 +47,11 @@ NetworkManager panel applet.
 %setup
 
 %build
+rm -f m4/{intltool,libtool,lt~obsolete,ltoptions,ltsugar,ltversion}.m4
 %autoreconf
 %configure \
     --disable-static \
+    --enable-more-warnings=no \
     --libexecdir=%_libexecdir/NetworkManager \
     --localstatedir=%_var \
     --with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
@@ -75,6 +77,8 @@ fi
 %_libexecdir/NetworkManager/nm-sstp-service
 %_libdir/pppd/%ppp_version/*.so
 
+%exclude %_libdir/pppd/%ppp_version/*.la
+
 %files gnome -f %name.lang
 %_libdir/NetworkManager/lib*.so*
 %_libexecdir/NetworkManager/nm-sstp-auth-dialog
@@ -83,6 +87,10 @@ fi
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Thu Oct 25 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.4.0-alt2
+- snapshot build
+- rebuild with new sstp-client
+
 * Mon May 21 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.4.0-alt1
 - initial build
 

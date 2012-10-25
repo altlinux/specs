@@ -1,7 +1,7 @@
 %define ppp_version 2.4.5
 
 Name: sstp-client
-Version: 1.0.7
+Version: 1.0.8
 Release: alt1
 Summary: Secure Socket Tunneling Protocol (SSTP) Client
 Group: System/Servers
@@ -12,22 +12,35 @@ Source: %name-%version.tar
 Source2: %name.tmpfiles
 
 Requires: ppp >= %ppp_version
+Requires: libsstp = %version-%release
 BuildRequires: libevent-devel >= 2.0.10
 BuildRequires: libssl-devel glibc-devel ppp-devel
-
-%package devel
-Summary: Provide development headers for sstp-client
-Group: Development/C
-
-%description devel
-This package contains the necessary header files for sstp-client development
-
-This package is required to compile plugin's for sstp-client.
 
 %description
 Client for the proprietary Microsoft Secure Socket Tunneling Protocol, SSTP.
 Allows connection to a SSTP based VPN as used by employers and some cable
 and ADSL service providers.
+
+%package -n libsstp
+Summary: Provide development headers for sstp-client
+Group: System/Libraries
+
+%description -n libsstp
+This package contains the necessary header files for sstp-client development
+
+This package is required to compile plugin's for sstp-client.
+
+%package -n libsstp-devel
+Summary: Provide development headers for sstp-client
+Group: Development/C
+Requires: libsstp = %version-%release
+Provides: %name-devel = %version-%release
+Obsoletes: %name-devel < %version-%release
+
+%description -n libsstp-devel
+This package contains the necessary header files for sstp-client development
+
+This package is required to compile plugin's for sstp-client.
 
 %prep
 %setup
@@ -59,20 +72,25 @@ install -Dpm 644 %SOURCE2 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %doc sstp-test-nopty.example sstp-test.example
 %_sbindir/sstpc
 %_man8dir/sstpc.8*
-%_libdir/*.so.*
 %_libdir/pppd/%ppp_version/*.so
 %dir %attr(755,sstpc,sstpc) %_runtimedir/sstpc
 %config(noreplace) %_sysconfdir/tmpfiles.d/%name.conf
-
 %exclude %_libdir/pppd/%ppp_version/*.la
 
+%files -n libsstp
+%_libdir/libsstp_api-0.so
 
-%files devel
-%_libdir/*.so
+%files -n libsstp-devel
+%_libdir/libsstp_api.so
 %_includedir/*
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Oct 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.8-alt1
+- 1.0.8
+- add libsstp package
+- rename sstp-client to libsstp-devel
+
 * Mon May 21 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.7-alt1
 - 1.0.7
 
