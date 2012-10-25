@@ -4,7 +4,7 @@
 %define module_release	alt2
 
 %define kversion  	3.6.3	
-%define krelease	alt1
+%define krelease	alt2
 %define flavour		un-def
 
 %define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
@@ -14,7 +14,7 @@
 Summary: acpi_call module
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198147.1
+Release: %module_release.198147.2
 License: GPL
 Group: System/Kernel and hardware
 
@@ -66,8 +66,8 @@ make KDIR=%_usrsrc/linux-%kversion-%flavour-%krelease
 %module_dir
 
 %changelog
-* Mon Oct 22 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1-alt2.198147.1
-- Build for kernel-image-un-def-3.6.3-alt1.
+* Thu Oct 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1-alt2.198147.2
+- Build for kernel-image-un-def-3.6.3-alt2.
 
 * Wed May 11 2011 Anton Protopopov <aspsk@altlinux.org> 0.1-alt2
 - Use kernelarch macro for %%buildarch
