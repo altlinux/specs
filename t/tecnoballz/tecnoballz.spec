@@ -1,8 +1,7 @@
 Name: tecnoballz
 Version: 0.92
-Release: alt2
+Release: alt3
 Summary: A Brick Busting game
-Packager: Fr. Br. George <george@altlinux.ru>
 
 Group: Games/Arcade
 License: GPLv3+
@@ -10,23 +9,8 @@ Url: http://linux.tlk.fr/games/TecnoballZ/
 Source0: http://linux.tlk.fr/games/TecnoballZ/download/%name-%version.tgz
 Source1: %name.xpm
 Source2: %name.desktop
-# Vine Linux
-Patch0: %name-0.91-datadir-ALT.patch
-Patch1: %name-0.91-owner.patch
-# Debian
-#Patch2: %name-0.91-hiscorepath.patch
-# BoredByPolitics
-Patch3: %name-0.91-build.patch
-# Martin Michlmayr
-Patch4: %name-0.91-gcc41.patch
-# Upstream CVS
-Patch5: %name-0.91-configfile.patch
-# Hans de Goede
-Patch6: %name-0.91-64-bit.patch
-Patch7: %name-0.91-no-smpeg.patch
-Patch8: %name-0.91-dropsgid-ALT.patch
-Patch9: %name-0.91-as-needed.patch
-Patch10: tecnoballz-0.92-alt-coord_x.patch
+
+Patch: tecnoballz-0.92-alt-coord_x.patch
 
 BuildRequires: desktop-file-utils xorg-util-macros
 
@@ -44,24 +28,17 @@ with the money earned during the game.
 
 %prep
 %setup -q
-#patch0 -p1
-#patch1 -p1
-#patch2 -p1
-#patch3 -p2
-#patch4 -p1
-#patch5 -p1
-#patch6 -p1
-#patch7 -p1
-##patch8 -p1
-##patch9 -p1
-%patch10
+%patch
+
+# fix .am bug
+sed -i 's/supervisor.c /supervisor.cc /' src/Makefile.am
 
 #fix man encodig
 #iconv -f ASCII -t UTF-8 man/tecnoballz.1 > man/tecnoballz.1.conv && mv -f man/tecnoballz.1.conv man/tecnoballz.1
 iconv -f ISO8859-1 -t UTF-8 man/%name.fr.6 > man/%name.fr.6.conv && mv -f man/%name.fr.6.conv man/%name.fr.6
 
 %build
-rm -rf autom4te.cache config.log config.status Makefile configure config.h
+rm -rf a* config.log config.status Makefile configure config.h
 %autoreconf
 %configure --bindir=%_gamesbindir --datadir=%_gamesdatadir --localstatedir=%_localstatedir/games
 
@@ -101,6 +78,9 @@ install -p -m 0644 %SOURCE1 %buildroot%_niconsdir/%name.xpm
 %attr(664,root,games) %config(noreplace) %_localstatedir/games/%name.hi
 
 %changelog
+* Thu Oct 25 2012 Fr. Br. George <george@altlinux.ru> 0.92-alt3
+- Fix .am typo and remove inactual patches
+
 * Thu Dec 10 2009 Fr. Br. George <george@altlinux.ru> 0.92-alt2
 - Fix missing highscore bug
 
