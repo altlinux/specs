@@ -1,9 +1,9 @@
-%define nm_version 0.9.5.95
-%define nm_applet_version 0.9.5.95
+%define nm_version 0.9.6
+%define nm_applet_version 0.9.6
 %define gtkver 3
 
 Name: NetworkManager-openconnect
-Version: 0.9.5.95
+Version: 0.9.6.2
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -17,7 +17,7 @@ Requires: NetworkManager >= %nm_version
 Requires: openconnect
 
 BuildRequires(pre): rpm-build-licenses
-BuildRequires: libopenconnect-devel
+BuildRequires: libopenconnect-devel >= 3.02
 BuildRequires: perl-XML-Parser
 BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: NetworkManager-glib-devel >= %nm_version
@@ -86,6 +86,9 @@ fi
 %exclude %_libdir/NetworkManager/lib*.la
 
 %changelog
+* Thu Oct 25 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.6.2-alt1
+- 0.9.6.2
+
 * Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.5.95-alt1
 - 0.9.5.95
 
