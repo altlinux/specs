@@ -1,24 +1,24 @@
 Name: libfprint
-Version: 0.2.0
-Release: alt3
+Version: 0.4.0
+Release: alt1
 Summary: Tool kit for fingerprint scanner
 Group: System/Libraries
 License: LGPLv2+
-URL: http://www.reactivated.net/fprint/wiki/Main_Page 
+URL: http://www.freedesktop.org/wiki/Software/fprint/libfprint
 # git://anongit.freedesktop.org/libfprint/libfprint
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
+Packager: Ivan Ovcherenko <asdus@altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: %name-%version-alt-build.patch
+Patch2: %name-%version-alt-fixes.patch
 
-# Automatically added by buildreq on Thu Sep 02 2010
-BuildRequires: libgio-devel libgtk+2-common-devel libnss-devel libusb-devel libImageMagick-devel
+BuildRequires: libusb-devel libnss-devel glib2-devel libImageMagick-devel libXv-devel
+BuildRequires: gcc-c++ doxygen
 
 %description
-The fprint project aims to plug a gap in the Linux desktop: support for 
-consumer fingerprint reader devices.
-This project provides the drivers for the fingerprint scanner including
-the ones with a usb id 08ff:2580.
+The fprint project aims to support for consumer fingerprint reader
+devices.
 
 %package devel
 Summary: Development files for %name
@@ -32,31 +32,41 @@ developing applications that use %name.
 %prep
 %setup -q
 %patch -p1
-
+%patch1 -p1
+%patch2 -p1
 mkdir -p m4
 
 %build
 %autoreconf
 %configure \
 	--disable-static \
-	--enable-examples-build
+	--enable-udev-rules \
+	--with-udev-rules-dir=%_sysconfdir/udev/rules.d \
+	--enable-examples-build \
+	--enable-x11-examples-build
 %make_build
+pushd doc
+%make docs
+popd
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 %files
-%doc INSTALL NEWS TODO THANKS AUTHORS
+%doc COPYING INSTALL NEWS TODO THANKS AUTHORS README
 %_libdir/*.so.*
 %_sysconfdir/udev/rules.d/60-fprint-autosuspend.rules
 
 %files devel
-%doc HACKING
+%doc HACKING doc/html
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Thu Oct 25 2012 Ivan Ovcherenko <asdus@altlinux.org> 0.4.0-alt1
+- 0.4.0 with git updates
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 0.2.0-alt3
 - Rebuild with new libImageMagick
 

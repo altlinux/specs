@@ -1,17 +1,19 @@
 Name: fprintd
-Version: 0.1
-Release: alt3
+Version: 0.4.1
+Release: alt1
 Summary: D-Bus service for Fingerprint reader access
 Group: System/Servers
 License: GPLv2+
 
-Requires: hal polkit
-Requires: pam_fprintd = %version-%release
-
 Source: %name-%version.tar
+Source1: system-auth-fprintd
 Patch: %name-%version-%release.patch
+Patch1: %name-%version-alt-build.patch
+Patch2: %name-%version-debian-pam_args.patch
+Patch3: %name-%version-alt-pam_docs.patch
 
-BuildRequires: gtk-doc intltool libdbus-glib-devel libfprint-devel libpam-devel libpolkit1-devel
+BuildRequires: libdbus-glib-devel libfprint-devel libpam0-devel libpolkit-devel
+BuildRequires: gtk-doc intltool
 
 %description
 D-Bus service to access fingerprint readers.
@@ -38,6 +40,9 @@ fingerprint readers access.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 gtkdocize
@@ -48,18 +53,17 @@ gtkdocize
 	--enable-gtk-doc \
 	--enable-pam \
 	--disable-static
-
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
-
+%makeinstall_std
 mkdir -p %buildroot%_sysconfdir/pam.d
-cat %_sysconfdir/pam.d/system-auth-local | sed 's|^#%PAM-1.0|#%PAM-1.0\nauth     sufficient\tpam_fprintd.so|' > \
-	%buildroot%_sysconfdir/pam.d/system-auth-fprintd
+cp system-auth-fprintd %buildroot%_sysconfdir/pam.d
 mkdir -p %buildroot%_localstatedir/fprint
+rm -fv %buildroot/%_lib/security/pam_fprintd.{a,la,so.*}
+%find_lang %name
 
-%files
+%files -f %name.lang
 %doc README COPYING AUTHORS TODO
 %config(noreplace) %_sysconfdir/fprintd.conf
 %_sysconfdir/pam.d/system-auth-fprintd
@@ -69,6 +73,7 @@ mkdir -p %buildroot%_localstatedir/fprint
 %_datadir/dbus-1/system-services/net.reactivated.Fprint.service
 %_datadir/polkit-1/actions/net.reactivated.fprint.device.policy
 %dir %_localstatedir/fprint
+%_mandir/man1/fprintd.1.gz
 
 %files -n pam_fprintd
 %doc pam/README
@@ -80,6 +85,9 @@ mkdir -p %buildroot%_localstatedir/fprint
 %_datadir/dbus-1/interfaces/net.reactivated.Fprint.Manager.xml
 
 %changelog
+* Fri Oct 26 2012 Ivan Ovcherenko <asdus@altlinux.org> 0.4.1-alt1
+- 0.4.1 with git updates (closes: #27851)
+
 * Mon Aug 17 2009 Valery Inozemtsev <shrek@altlinux.ru> 0.1-alt3
 - ported to PolicyKit 1
 
@@ -88,4 +96,3 @@ mkdir -p %buildroot%_localstatedir/fprint
 
 * Wed May 27 2009 Valery Inozemtsev <shrek@altlinux.ru> 0.1-alt1
 - initial release
-
