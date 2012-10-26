@@ -1,7 +1,7 @@
 %define orig_name GNS3
 Name: gns3
-Version: 0.7.3
-Release: alt1.1
+Version: 0.8.3.1
+Release: alt1
 
 Summary: GNS-3  is a graphical network simulator
 
@@ -14,31 +14,60 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 Source0: http://downloads.sourceforge.net/gns-3/%orig_name-%version-src.tar.bz2
 Source1: GNS3-icons.tar.gz
 Source2: gns3.desktop
-Source3: GNS3-0.5-tutorial.pdf
+Source3: virtualbox.pth
 
 BuildArch: noarch
 Requires: python-module-sip dynamips
 
-# Automatically added by buildreq on Sat Mar 22 2008
 BuildRequires: python-devel
 
-
 %description
-GNS3 is a graphical network simulator that allows you to design complex network
-topologies. You may run simulations or configure devices ranging from simple
-workstations to powerful Cisco routers. It is based on Dynamips, an IOS emulator
-which allows users to run IOS binary images from Cisco Systems and Pemu, an
-PIX firewall emulator based on Qemu.
+GNS3 is a graphical network simulator that allows you to design
+complex network topologies. You may run simulations or configure
+devices ranging from simple workstations to powerful Cisco and Juniper
+routers. It is based on Dynamips, an IOS emulator which allows users
+to run IOS binary images from Cisco Systems, Pemu, an PIX firewall
+emulator, Qemu and VirtualBox.
+
+See 'virtualbox' and 'qemu' subpackages for guest support.
+
+%package -n python-module-virtualbox
+Summary: VirtualBox management support for python
+Group: File tools
+Requires: virtualbox-sdk
+
+%description -n python-module-virtualbox
+VirtualBox management support for python
+
+%package virtualbox
+Summary: VirtualBox guest support for GNS3
+Group: File tools
+Requires: %name = %version
+Requires: python-module-virtualbox
+
+%description virtualbox
+VirtualBox guest support for GNS3
+
+%package qemu
+Summary: Qemu guest support for GNS3
+Group: File tools
+Requires: %name = %version
+Requires: qemu-system
+
+%description qemu
+Qemu guest support for GNS3
 
 %prep
-%setup -q -n %orig_name-%version-src
+%setup -n %orig_name-%version-src
 
 %build
-%__python setup.py build
+python setup.py build
 
 %install
-%__python setup.py install --root %buildroot
-%__python setup.py install -O1 --skip-build --root %buildroot
+python setup.py install --root %buildroot
+python setup.py install -O1 --root %buildroot
+pushd %buildroot/%_bindir
+popd
 mkdir -p %buildroot/%_man1dir
 install -m 0644 docs/man/gns3.1 %buildroot/%_man1dir
 
@@ -57,17 +86,13 @@ mv %buildroot/%_iconsdir/*.xpm %buildroot/%_niconsdir
 mv %buildroot/%_iconsdir/large/*.xpm %buildroot/%_liconsdir
 rmdir %buildroot/%_iconsdir/large
 
-#docs
-install -d %buildroot/%_docdir/%name-%version
-install -m 0644 %SOURCE3 %buildroot/%_docdir/%name-%version/
-for f in  AUTHORS CHANGELOG README TODO; do
-	install -m 0644 $f %buildroot/%_docdir/%name-%version/
-done
+# virtualbox
+install -d %buildroot/%python_sitelibdir
+install -m 0644 %SOURCE3 %buildroot/%python_sitelibdir/virtualbox.pth
 
 %files
-%dir %_docdir/%name-%version
-%_docdir/%name-%version/*
-%_bindir/gns3
+%doc baseconfig*txt AUTHORS CHANGELOG README TODO
+%_bindir/gns3*
 
 %dir %python_sitelibdir/GNS3
 %dir %python_sitelibdir/GNS3/Config
@@ -102,7 +127,26 @@ done
 %_niconsdir/*.xpm
 %_liconsdir/*.xpm
 
+%files -n python-module-virtualbox
+%python_sitelibdir/virtualbox.pth
+
+%files virtualbox
+/usr/lib/gns3/vboxcontroller_4_1.py
+/usr/lib/gns3/vboxwrapper.py
+/usr/lib/gns3/tcp_pipe_proxy.py
+
+%files qemu
+/usr/lib/gns3/qemuwrapper.py
+
 %changelog
+* Sat Oct 27 2012 Terechkov Evgenii <evg@altlinux.org> 0.8.3.1-alt1
+- 0.8.3.1
+
+* Sun Dec 25 2011 Terechkov Evgenii <evg@altlinux.org> 0.8.2-alt1.beta
+- Drop old tutorial (see http://www.gns3.net/documentation/ for latest version)
+- 0.8.2 BETA
+- New package and subpackages
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.3-alt1.1
 - Rebuild with Python-2.7
 
