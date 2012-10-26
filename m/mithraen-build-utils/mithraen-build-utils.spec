@@ -1,32 +1,48 @@
 Name: mithraen-build-utils
 Summary: Simple utilites that simplify development to me
-Version: 0.1.10
+Version: 0.1.13
 Release: alt1
 License: GPL
 Group: Development/Other
-BuildArch: noarch
-BuildRequires: apt-repo-tools dialog etersoft-build-utils gear perl-DBM perl-RPM subversion termutils
+
 Obsoletes: seiros-build-utils
+
+BuildArch: noarch
+
 Packager: Denis Smirnov <mithraen@altlinux.ru>
+
 Requires: git-svn
+
 Source: %name-%version.tar
+
+# Automatically added by buildreq on Wed Sep 12 2012 (-bb)
+# optimized out: apt-repo-tools diffstat gear git-core hasher openssh-clients perl-Gear-Rules perl-Log-Agent perl-RPM python-base rpm-utils termutils
+BuildRequires: csed dialog etersoft-build-utils girar-nmu perl-DBM perl-LockFile-Simple perl-unicore specgen
+
 Requires: specgen
 
 %description
-Simple utilites that simplify development to me
-
+%summary
 
 %prep
 %setup
-
+%build
 %install
 mkdir -p %buildroot%_bindir
 install -m755 * %buildroot/%_bindir/
-
 %files
 %_bindir/*
-
 %changelog
+* Sat Oct 27 2012 Denis Smirnov <mithraen@altlinux.ru> 0.1.13-alt1
+- cl-add/cl-edit refactoring and specgen support
+
+* Tue Oct 02 2012 Denis Smirnov <mithraen@altlinux.ru> 0.1.12-alt1
+- huge refactoring
+
+* Wed Sep 12 2012 Denis Smirnov <mithraen@altlinux.ru> 0.1.11-alt1
+- fix build-daemon
+- use $EDITOR in cl-edit
+
 * Mon Jun 25 2012 Denis Smirnov <mithraen@altlinux.ru> 0.1.10-alt1
 - gear-clone: fix work with new girar-nmu
 
@@ -77,4 +93,3 @@ install -m755 * %buildroot/%_bindir/
 
 * Sat Aug 29 2009 Denis Smirnov <mithraen@altlinux.ru> 0.1-alt1
 - first build for Sisyphus
-
