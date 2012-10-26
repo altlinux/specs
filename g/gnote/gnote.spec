@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: gnote
-Version: 0.9.1
+Version: 3.6.0
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -16,18 +16,19 @@ Patch0: %name-%version-%release.patch
 %define gtkmm_ver 3.4
 %define glibmm_ver 2.28
 %define gtkspell_ver 2.0.9
-%define gnome_keyring_ver 3.0
+%define libsecret_ver 0.8
 
 BuildRequires: gcc-c++ boost-devel
-BuildRequires: gnome-common gnome-doc-utils intltool
-BuildRequires: libxml2-devel libxslt-devel
-BuildRequires: libgtk+3-devel >= %gtk_ver
-BuildRequires: libglibmm-devel >= %glibmm_ver
-BuildRequires: libgtkmm3-devel >= %gtkmm_ver
+BuildRequires: gnome-common yelp-tools intltool
+BuildRequires: pkgconfig(glibmm-2.4)  >= %glibmm_ver
+BuildRequires: pkgconfig(gtk+-3.0) >= %gtk_ver
+BuildRequires: pkgconfig(x11)
+BuildRequires: pkgconfig(gtkmm-3.0) >= %gtkmm_ver
+BuildRequires: pkgconfig(glib-2.0) >= 2.32
+BuildRequires: pkgconfig(libxml-2.0) pkgconfig(libxslt)
 # BuildRequires: libgtkspell-devel >= %gtkspell_ver
-BuildRequires: libgnome-keyring-devel >= %gnome_keyring_ver
-BuildRequires: libpcrecpp-devel
-BuildRequires: libuuid-devel
+BuildRequires: pkgconfig(libsecret-1) >= %libsecret_ver
+BuildRequires: pkgconfig(uuid)
 BuildRequires: desktop-file-utils
 
 %description
@@ -69,6 +70,9 @@ desktop-file-install \
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Fri Oct 26 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
+- 3.6.0
+
 * Fri Jul 20 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.1-alt1
 - 0.9.1
 - upstream drop support for panel applet
