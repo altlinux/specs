@@ -1,8 +1,8 @@
-%define major 1.6
+%define major 1.12
 
 Name: tomboy
 Version: %major.1
-Release: alt2
+Release: alt1
 
 Summary: Tomboy is a desktop note-taking application
 
@@ -23,15 +23,15 @@ Requires(post,postun): librarian
 BuildPreReq: libGConf-devel
 BuildPreReq: desktop-file-utils
 
-BuildRequires: libgtkspell-devel >= 2.0.9
 BuildRequires: gcc-c++ intltool >= 0.35.0
-BuildRequires: ndesk-dbus-devel >= 0.4 ndesk-dbus-glib-devel >= 0.3
-BuildRequires: libgtk+2-devel >= 2.14.0
-BuildRequires: libatk-devel >= 1.2.4
-BuildRequires: mono-addins-devel  >= 0.3
-BuildRequires: libgtk-sharp2-devel >= 2.10.1
-BuildRequires: libgnome-sharp-devel  >= 2.15
-BuildRequires: mono-nunit-devel
+BuildRequires: pkgconfig(dbus-sharp-1.0) >= 0.4 pkgconfig(dbus-sharp-glib-1.0) >= 0.3
+BuildRequires: pkgconfig(gdk-2.0) >= 2.6.0
+BuildRequires: pkgconfig(gtk+-2.0) >= 2.14.0
+BuildRequires: pkgconfig(atk) >= 1.2.4
+BuildRequires: pkgconfig(gtkspell-2.0) >= 2.0.9
+BuildRequires: pkgconfig(mono-addins) >= 0.3 pkgconfig(mono-addins-gui) >= 0.3 pkgconfig(mono-addins-setup) >= 0.3
+BuildRequires: pkgconfig(gconf-sharp-2.0)
+BuildRequires: pkgconfig(gtk-sharp-2.0) >= 2.10.1
 BuildRequires: libX11-devel
 
 BuildPreReq: gnome-doc-utils gnome-common
@@ -95,6 +95,9 @@ fi
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Fri Oct 26 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.1-alt1
+- 1.12.1
+
 * Tue Jun 07 2011 Alexey Shabalin <shaba@altlinux.ru> 1.6.1-alt2
 - build without galago support
 - build without evolution support
