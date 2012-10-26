@@ -12,8 +12,8 @@
 %def_enable ctpp2
 
 Name: nginx
-Version: 1.2.3
-Release: alt3
+Version: 1.2.4
+Release: alt1
 
 Summary: Fast HTTP server
 License: BSD
@@ -250,6 +250,9 @@ sed -i 's/\(types_hash_bucket_size[[:space:]]*\)[[:space:]]32[[:space:]]*;[[:spa
 %preun_service %name
 
 %changelog
+* Fri Oct 26 2012 Anton Farygin <rider@altlinux.ru> 1.2.4-alt1
+- new version
+
 * Mon Oct 08 2012 Denis Smirnov <mithraen@altlinux.ru> 1.2.3-alt3
 - add ngx_ctpp2 module
 
