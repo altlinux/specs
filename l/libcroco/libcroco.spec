@@ -1,7 +1,7 @@
 %define ver_major 0.6
 
 Name: libcroco
-Version: %ver_major.7
+Version: %ver_major.8
 Release: alt1
 
 Summary: A CSS2 parsing library
@@ -89,6 +89,9 @@ export LDFLAGS="-Wl,--as-needed"
 %_bindir/csslint-%ver_major
 
 %changelog
+* Fri Oct 26 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.8-alt1
+- 0.6.8
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.7-alt1
 - 0.6.7
 
