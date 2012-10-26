@@ -7,7 +7,7 @@
 Name: quagga
 
 %define baseversion 0.99.20.1
-Release: alt2
+Release: alt3
 
 %if %cvs
 %define cvsdate 20060505
@@ -304,6 +304,11 @@ cp -f tools/zc.pl $RPM_BUILD_ROOT%_bindir
 %doc doc/draft-zebra-00.* doc/BGP-TypeCode
 
 %changelog
+* Fri Oct 26 2012 Sergey Y. Afonin <asy@altlinux.ru> 0.99.20.1-alt3
+- fixed isisd startup:
+  networking check for IPv4 instead of IPv6 in init script
+  listen vty-address changed to 127.0.0.1 from ::1
+
 * Wed Jun 06 2012 Sergey Y. Afonin <asy@altlinux.ru> 0.99.20.1-alt2
 - added patch for CVE-2012-1820
 
