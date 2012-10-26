@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.48
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -268,7 +268,7 @@ Patch0233: linux-%kernel_branch.42-fix-drivers-firmware--iscsi_ibft.patch
 Patch0241: linux-%kernel_branch.44-fix-drivers-gpu-drm.patch
 Patch0242: linux-%kernel_branch.44-fix-drivers-gpu-drm--drm.patch
 Patch0243: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm_kms_helper.patch
-Patch0244: linux-%kernel_branch.44-fix-drivers-gpu-drm--i915.patch
+Patch0244: linux-%kernel_branch.46-fix-drivers-gpu-drm--i915.patch
 Patch0245: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0246: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
 Patch0247: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
@@ -500,16 +500,17 @@ Patch0677: linux-%kernel_branch.42-fix-fs-cifs.patch
 Patch0678: linux-%kernel_branch.42-fix-fs-dlm.patch
 Patch0679: linux-%kernel_branch.42-fix-fs-ecryptfs.patch
 Patch0680: linux-%kernel_branch.42-fix-fs-ext3.patch
-Patch0681: linux-%kernel_branch.42-fix-fs-hfs.patch
-Patch0682: linux-%kernel_branch.42-fix-fs-jbd.patch
-Patch0683: linux-%kernel_branch.42-fix-fs-nfs.patch
-Patch0684: linux-%kernel_branch.42-fix-fs-ocfs2.patch
-Patch0685: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
-Patch0686: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
-Patch0687: linux-%kernel_branch.43-fix-fs-proc.patch
-Patch0688: linux-%kernel_branch.42-fix-fs-pstore.patch
-Patch0689: linux-%kernel_branch.42-fix-fs-reiserfs.patch
-Patch0690: linux-%kernel_branch.42-fix-fs-sysfs.patch
+Patch0681: linux-%kernel_branch.46-fix-fs-ext4.patch
+Patch0682: linux-%kernel_branch.42-fix-fs-hfs.patch
+Patch0683: linux-%kernel_branch.42-fix-fs-jbd.patch
+Patch0684: linux-%kernel_branch.42-fix-fs-nfs.patch
+Patch0685: linux-%kernel_branch.42-fix-fs-ocfs2.patch
+Patch0686: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
+Patch0687: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
+Patch0688: linux-%kernel_branch.43-fix-fs-proc.patch
+Patch0689: linux-%kernel_branch.42-fix-fs-pstore.patch
+Patch0690: linux-%kernel_branch.42-fix-fs-reiserfs.patch
+Patch0691: linux-%kernel_branch.42-fix-fs-sysfs.patch
 
 Patch0700: linux-%kernel_branch.46-fix-include.patch
 
@@ -1723,6 +1724,7 @@ cd linux-%version
 %patch0688 -p1
 %patch0689 -p1
 %patch0690 -p1
+%patch0691 -p1
 
 %patch0700 -p1
 
@@ -2704,6 +2706,14 @@ fi
 
 
 %changelog
+* Fri Oct 26 2012 Led <led@altlinux.ru> 3.0.48-alt3
+- added:
+  + fix-fs-ext4
+
+* Thu Oct 25 2012 Led <led@altlinux.ru> 3.0.48-alt2
+- updated:
+  + fix-drivers-gpu-drm--i915
+
 * Tue Oct 23 2012 Led <led@altlinux.ru> 3.0.48-alt1
 - 3.0.48
 
