@@ -1,6 +1,6 @@
 Name: gnupg
 Version: 1.4.12
-Release: alt1
+Release: alt2
 
 Summary: The GNU Privacy Guard
 License: GPLv3+ with exceptions
@@ -136,6 +136,10 @@ rm -rv %buildroot%_datadir/%name
 %endif #enabled ldap
 
 %changelog
+* Fri Oct 26 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.12-alt2
+- Fixed potential heap corruption in "gpg -v --version"
+  (reported by amike@; closes: #26666).
+
 * Mon Jan 30 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.12-alt1
 - Updated to 1.4.12.
 
