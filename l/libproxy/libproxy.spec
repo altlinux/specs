@@ -10,8 +10,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libproxy
-Version: 0.4.7
-Release: alt3
+Version: 0.4.10
+Release: alt1
 Summary: A library handling all the details of proxy configuration
 
 Group: System/Libraries
@@ -242,6 +242,9 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Fri Oct 26 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.10-alt1
+- 0.4.10
+
 * Tue Jan 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.7-alt3
 - disable build with RPATH
 
