@@ -36,7 +36,7 @@ BuildRequires: jpackage-compat
 
 Name:           xmlgraphics-fop
 Version:        1.0
-Release:        alt2_4jpp6
+Release:        alt3_4jpp6
 Epoch:          0
 Summary:        XSL-driven print formatter
 License:        ASL 2.0
@@ -184,7 +184,7 @@ touch $RPM_BUILD_ROOT/etc/xmlgraphics-fop.conf
 # avalon-framework is not in requires
 subst 's,excalibur/avalon-framework,excalibur/avalon-framework-api excalibur/avalon-framework-impl,' %buildroot%_bindir/%name
 # add xmlgraphics-commons to classpath
-grep xmlgraphics-commons %buildroot%_bindir/xmlgraphics-fop || sed -i 's,xmlgraphics-batik,xmlgraphics-batik-all xmlgraphics-commons commons-io commons-logging,' %buildroot%_bindir/xmlgraphics-fop
+grep xmlgraphics-commons %buildroot%_bindir/xmlgraphics-fop || sed -i 's,xmlgraphics-batik,batik-all xmlgraphics-commons commons-io commons-logging,' %buildroot%_bindir/xmlgraphics-fop
 
 # fop compat symlinks
 pushd $RPM_BUILD_ROOT/%_javadir
@@ -227,6 +227,9 @@ popd
 %{_javadocdir}/%{name}
 
 %changelog
+* Sat Oct 27 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt3_4jpp6
+- fixed classpath for new batik
+
 * Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt2_4jpp6
 - fixed build w/new batik
 
