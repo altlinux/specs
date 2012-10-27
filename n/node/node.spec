@@ -1,7 +1,7 @@
 %define node_name      node
-%define node_version  0.8.3
+%define node_version  0.8.14
 %define node_release   alt1
-%define npmver 1.1.43
+%define npmver 1.1.65
 
 Name: %node_name
 Version: %node_version
@@ -10,7 +10,7 @@ Summary: Evented I/O for V8 Javascript
 Group: Development/Tools
 License: MIT License
 Url: http://nodejs.org/
-Source: node-source.tar
+Source: %name-%version.tar
 Source1: node.macros
 
 BuildRequires: python-devel gcc-c++ openssl-devel zlib-devel libv8-devel gyp
@@ -61,7 +61,7 @@ npm is a package manager for node. You can use it to install and publish your
 node programs. It manages dependencies and does other cool stuff.
 
 %prep
-%setup -q -n node-source
+%setup -q
 
 %build
 ./configure --no-ssl2 \
@@ -113,6 +113,10 @@ subst 's,@node_release@,%node_release,'     %buildroot%_rpmmacrosdir/%node_name
 %_rpmmacrosdir/%node_name
 
 %changelog
+* Sat Oct 27 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.8.14-alt1
+- v0.8.14
+- npm v1.1.65
+
 * Mon Jul 23 2012 Mikhail Pokidko <pma@altlinux.org> 0.8.3-alt1
 - v0.8.3
 
