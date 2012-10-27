@@ -1,6 +1,6 @@
 Name: tzdata
-Version: 2012d
-Release: alt2
+Version: 2012h
+Release: alt1
 
 Summary: Timezone data
 # tzdata itself is Public Domain, but tzupdate is GPLv2+,
@@ -9,26 +9,16 @@ License: GPLv2+
 Group: System/Base
 Url: http://www.iana.org/time-zones
 BuildArch: noarch
+# git://git.altlinux.org/gears/t/tzdata.git
+Source: %name-%version-%release.tar
 
 %def_with java
 
-# The tzdata-base-0.tar.bz2 is a simple building infrastructure and
-# test suite.  It is occasionally updated from glibc sources, and as
-# such is under LGPLv2+, but none of this ever gets to be part of
-# final zoneinfo files.
-Source0: tzdata-base-0.tar
+%if_with java
+BuildRequires: gcc-java javazic
+%endif #with java
 
-# These are official upstream.
-# ftp://ftp.iana.org/tz/releases/tzdata%version.tar.gz
-Source1: tzdata%version.tar
-# ftp://ftp.iana.org/tz/releases/tzcode%version.tar.gz
-Source2: tzcode%version.tar
-
-Source9: tzupdate
-
-Patch1: javazic-fixup.patch
-
-Provides: zoneinfo, /usr/sbin/tzupdate
+Provides: zoneinfo /usr/sbin/tzupdate
 Obsoletes: zoneinfo
 Conflicts: glibc-timezones <= 6:2.5.1-alt7
 
@@ -38,88 +28,54 @@ BuildRequires: hardlink /usr/sbin/zic
 This package contains data files with rules for various timezones around
 the world.
 
-%if_with java
 %package java
 Summary: Timezone data for Java
 Group: System/Base
 Requires: %name = %version-%release
-BuildRequires: gcc-java
-Source3: javazic.tar
 
 %description java
 This package contains timezone information for use by Java runtimes.
-%endif #with java
 
 %prep
-%setup -n tzdata
-mkdir tzdata%version
-tar xf %SOURCE1 -C tzdata%version
-mkdir tzcode%version
-tar xf %SOURCE2 -C tzcode%version
-sed -e 's|@objpfx@|'`pwd`'/obj/|' \
-    -e 's|@datadir@|%_datadir|' \
-  Makeconfig.in > Makeconfig
-
-%if_with java
-mkdir javazic
-tar xf %SOURCE3 -C javazic
-pushd javazic
-%patch1
-
-# Hack alert! sun.tools may be defined and installed in the
-# VM. In order to guarantee that we are using IcedTea/OpenJDK
-# for creating the zoneinfo files, rebase all the packages
-# from "sun." to "alt.". Unfortunately, gcj does not support
-# any of the -Xclasspath options, so we must go this route
-# to ensure the greatest compatibility.
-mv sun alt
-find . -type f -name '*.java' -print0 \
-    | xargs -0 -- sed -i -e 's:sun\.tools\.:alt.tools.:g' \
-                         -e 's:sun\.util\.:alt.util.:g'
-popd
-%endif #with java
+%setup -n %name-%version-%release
 
 %build
-make
-grep -v tz-art.htm tzcode%version/tz-link.htm > tzcode%version/tz-link.html
+make CFLAGS='%optflags' TZDIR=%_datadir/zoneinfo
+grep -Fv tz-art.htm tz-link.htm > tz-link.html
 
 %if_with java
-pushd javazic
-gcj -C -classpath . $(find -name \*.java)
-popd
-pushd tzdata%version
-gij -classpath ../javazic/ alt.tools.javazic.Main -V %version \
-  -d ../zoneinfo/java \
+gij -jar %_datadir/java/javazic.jar -V %version -d zoneinfo/javazi \
   africa antarctica asia australasia europe northamerica pacificnew \
   southamerica backward etcetera solar87 solar88 solar89 systemv \
-  ../javazic/tzdata_jdk/gmt ../javazic/tzdata_jdk/jdk11_backward
-popd
+  %_datadir/javazic/tzdata_jdk/gmt \
+  %_datadir/javazic/tzdata_jdk/jdk11_backward
 %endif #with java
 
 %install
-sed -i 's|@install_root@|%buildroot|' Makeconfig
-make install
+make install TOPDIR=%buildroot/usr/local TZDIR=%buildroot%_datadir/zoneinfo
+mv %buildroot%_datadir/zoneinfo{-,/}posix
+mv %buildroot%_datadir/zoneinfo{-leaps,/right}
+rm %buildroot%_datadir/zoneinfo/localtime
+rm -r %buildroot/usr/local
 
 %if_with java
-cp -pr zoneinfo/java %buildroot%_datadir/javazi
+cp -a zoneinfo/javazi %buildroot%_datadir/
 %endif #with java
 
-install -pDm755 %_sourcedir/tzupdate %buildroot%_sbindir/tzupdate
+install -pDm755 tzupdate %buildroot%_sbindir/tzupdate
 
 # Hardlink identical files together.
 %define __spec_install_custom_post hardlink -vc %buildroot
 
 %check
-make -k check
+make -k check_tables AWK=awk
 
 %post -p %_sbindir/tzupdate
 
 %files
 %_sbindir/tzupdate
 %_datadir/zoneinfo
-%doc tzcode%version/README
-%doc tzcode%version/Theory
-%doc tzcode%version/tz-link.html
+%doc README Theory tz-link.html
 
 %if_with java
 %files java
@@ -127,6 +83,9 @@ make -k check
 %endif #with java
 
 %changelog
+* Sat Oct 27 2012 Dmitry V. Levin <ldv@altlinux.org> 2012h-alt1
+- Updated to 2012h.
+
 * Fri Jul 27 2012 Dmitry V. Levin <ldv@altlinux.org> 2012d-alt2
 - Packaged and made use of %_sbindir/tzupdate (closes: #27568).
 
