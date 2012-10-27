@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.787
+Version: 0.788
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -77,6 +77,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/srpmtools/data/stdheaders.txt
 %_man1dir/hashertarbuild*
 
 %changelog
+* Sat Oct 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.788-alt1
+- stable release before action-based refactoring
+
 * Tue Sep 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.787-alt1
 - auto serial/epoch adjustment in requires:
 
