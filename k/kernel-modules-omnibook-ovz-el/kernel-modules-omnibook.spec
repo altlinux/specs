@@ -3,7 +3,7 @@
 %define module_release	alt4
 
 %define kversion	2.6.32
-%define krelease	alt78
+%define krelease	alt79
 %define flavour		ovz-el
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -11,7 +11,7 @@
 Summary: Kernel module for some Toshiba and HP laptops
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.78
+Release: %module_release.132640.79
 License: GPL
 Group: System/Kernel and hardware
 
@@ -79,8 +79,8 @@ cp -pr misc %buildroot%_docdir/%name-%version-%release
 %doc %_docdir/%name-%version-%release
 
 %changelog
-* Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 20090714-alt4.132640.78
-- Build for kernel-image-ovz-el-2.6.32-alt78.
+* Sat Oct 27 2012 Anton Protopopov <aspsk@altlinux.org> 20090714-alt4.132640.79
+- Build for kernel-image-ovz-el-2.6.32-alt79.
 
 * Tue Nov 15 2011 Anton Protopopov <aspsk@altlinux.org> 20090714-alt4
 - Fix build with 3.1.1
