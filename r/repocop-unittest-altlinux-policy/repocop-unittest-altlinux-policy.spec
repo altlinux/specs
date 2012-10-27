@@ -1,6 +1,6 @@
 Name: repocop-unittest-altlinux-policy
 Version: 0.29
-Release: alt8
+Release: alt9
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Url: http://repocop.altlinux.org
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Thu Oct 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt9
+- added altlinux-policy-rpm-group-should-be-ttf
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt8
 - added tests:
   + altlinux-policy-obsolete-httpd2-reload
