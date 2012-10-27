@@ -2,7 +2,7 @@
 
 Name: vips
 Version: 7.30.3
-Release: alt1.3
+Release: alt1.4
 %define majorver %(echo %version |cut -d. -f1,2)
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -109,6 +109,9 @@ Static libraries for developing statically linked VIPS applications.
 # - package python bindings
 
 %changelog
+* Sun Oct 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.30.3-alt1.4
+- Rebuilt with libmatio 1.5.0
+
 * Wed Oct 24 2012 Michael Shigorin <mike@altlinux.org> 7.30.3-alt1.3
 - patched vipsCC.pc and dropped "bootstrap" scaffolding altogether
 
