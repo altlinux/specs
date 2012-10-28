@@ -7,7 +7,7 @@
 
 Name: %oname-%scalar_type
 Version: 7.3
-Release: alt3.pre.svn20120904
+Release: alt3.pre.svn20121027
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
@@ -205,11 +205,11 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 
 %files -n lib%name
 %ldir/lib/*.so.*
-%exclude %ldir/lib/*.g.so.*
+#exclude %ldir/lib/*.g.so.*
 
 %files -n lib%name-devel
 %ldir/lib/*.so
-%exclude %ldir/lib/*.g.so
+#exclude %ldir/lib/*.g.so
 
 %if "%scalar_type" == "real"
 %files -n lib%oname-devel-doc
@@ -217,6 +217,9 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 %endif
 
 %changelog
+* Sun Oct 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt3.pre.svn20121027
+- New snapshot
+
 * Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt3.pre.svn20120904
 - Rebuilt with gcc 4.7
 
