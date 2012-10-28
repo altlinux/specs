@@ -11,20 +11,20 @@
 %define via_32 c3 c3_2
 %define x86_64 x86_64 %intel_64 %amd_64 %via_64
 
-%define base_flavour	led
-%define sub_flavour	ws
-%define flavour		%base_flavour-%sub_flavour
+%define base_flavour led
+%define sub_flavour ws
+%define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.48
-Release: alt4
+Version: 3.0.49
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 48
-%define kernel_extra_version	.%kernel_stable_version
-#define kernel_extra_version	%nil
+%define kernel_stable_version 49
+%define kernel_extra_version .%kernel_stable_version
+#define kernel_extra_version %nil
 
 %define krelease %release
 
@@ -269,7 +269,7 @@ Patch0233: linux-%kernel_branch.42-fix-drivers-firmware--iscsi_ibft.patch
 Patch0241: linux-%kernel_branch.44-fix-drivers-gpu-drm.patch
 Patch0242: linux-%kernel_branch.44-fix-drivers-gpu-drm--drm.patch
 Patch0243: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm_kms_helper.patch
-Patch0244: linux-%kernel_branch.46-fix-drivers-gpu-drm--i915.patch
+Patch0244: linux-%kernel_branch.49-fix-drivers-gpu-drm--i915.patch
 Patch0245: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0246: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
 Patch0247: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
@@ -466,7 +466,7 @@ Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
 Patch0612: linux-%kernel_branch.46-fix-drivers-usb-core.patch
 Patch0613: linux-%kernel_branch.42-fix-drivers-usb-host--ehci-hcd.patch
 Patch0614: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
-Patch0615: linux-%kernel_branch.46-fix-drivers-usb-host--xhci-hcd.patch
+Patch0615: linux-%kernel_branch.49-fix-drivers-usb-host--xhci-hcd.patch
 Patch0616: linux-%kernel_branch.42-fix-drivers-usb-misc--usbtest.patch
 Patch0617: linux-%kernel_branch.42-fix-drivers-usb-mon.patch
 Patch0618: linux-%kernel_branch.42-fix-drivers-usb-serial--ftdi_sio.patch
@@ -2709,6 +2709,12 @@ fi
 
 
 %changelog
+* Sun Oct 28 2012 Led <led@altlinux.ru> 3.0.49-alt1
+- 3.0.49
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-usb-host--xhci-hcd
+
 * Fri Oct 26 2012 Led <led@altlinux.ru> 3.0.48-alt4
 - updated:
   + fix-mm--mmu
