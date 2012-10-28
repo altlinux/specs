@@ -1,6 +1,6 @@
 Name: MySQL
 Version: 5.5.28
-Release: alt4
+Release: alt5
 
 %def_without debug
 %def_disable static
@@ -42,6 +42,7 @@ Patch7: mysql-5.5.25-alt-mysql_config-libs.patch
 
 # Fedora
 Patch100: mysql-versioning.patch
+Patch101: mysql-dubious-exports.patch
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
 BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel
@@ -270,6 +271,7 @@ This package contains MySQL benchmark scripts and data.
 %patch7 -p1
 
 %patch100 -p1
+%patch101 -p1
 
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
@@ -349,6 +351,18 @@ ln -snf ../sbin/safe_mysqld %buildroot%_bindir/mysqld_safe
 # Install configuration files.
 install -pD -m644 /dev/null %buildroot%_sysconfdir/my.cnf
 install -pD -m600 %SOURCE5 %buildroot%ROOT/my.cnf
+
+# Fix libmysqlclient_r symlinks
+(
+	cd %buildroot%_libdir
+	N="libmysqlclient_r.so"
+	for l in $N.*; do
+		if [ -h $l ]; then
+			t=${l#$N}
+			ln -sf libmysqlclient.so$t $N$t
+		fi
+	done
+)
 
 # FIXME! bdb might work on x86/Linux and amd64/Linux
 %ifarch %ix86
@@ -604,6 +618,10 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 5.5.28-alt5
+- added forgotten complimentary libmysqlclient patch from fedora
+- libmysqlclient18 -> libmysqlclient-devel dependency expunged
+
 * Thu Oct 18 2012 Michael Shigorin <mike@altlinux.org> 5.5.28-alt4
 - added library versioning from fedora (thx ldv@ and rpmsodiff)
 
