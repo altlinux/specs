@@ -1,6 +1,6 @@
 Name: libmatio
-Version: 1.3.3
-Release: alt3
+Version: 1.5.0
+Release: alt1
 Summary: Library for reading/writing Matlab MAT files
 
 Group: Development/Other
@@ -37,25 +37,25 @@ developing applications that use %name.
 %prep
 %setup -q -n matio-%version
 #To fix matio.x86_64: W: undefined-non-weak-symbol /usr/lib64/libmatio.so.0.0.0 inflateEnd, etc.
-%patch0 -p1 -b .zlibldflag
-%patch1 -p1 -b .fortranpath
-#sed -i.fortranpath2 -e 's|src/fortran/matio_t.inc|src/matio_t.inc|' configure.ac configure
-%patch2 -p1 -b .fortranpath2
-%patch3 -p1 -b .automake
+#patch0 -p1 -b .zlibldflag
+#patch1 -p1 -b .fortranpath
+#patch2 -p1 -b .fortranpath2
+#patch3 -p1 -b .automake
 
 #Doxygen
-pushd doxygen
-  doxygen -u doxygen.config
+#pushd doxygen
+#  doxygen -u doxygen.config
   #Fake the pdf creation
-  mkdir -p latex
-  touch latex/refman.pdf
-popd
+#  mkdir -p latex
+#  touch latex/refman.pdf
+#popd
 
 #Prevent some files to be missed at -debuginfo extraction
-mv src/fortran/* src
+#mv src/fortran/* src
 
 %build
 export FCFLAGS=$RPM_OPT_FLAGS
+./autogen.sh
 %configure \
   --enable-shared \
   --disable-static \
@@ -72,9 +72,6 @@ make
 #Parallele make fails with
 #make[2]: *** No rule to make target `../src/matio.mod', needed by `all-am'.  Stop.
 #{?_smp_mflags}
-pushd test
-  make check
-popd
 
 %install
 %makeinstall_std INSTALL="install -p"
@@ -84,22 +81,29 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 rm -rf %buildroot%_docdir/matio/libmatio.pdf
 
 #Fix html docs timestramps generation.
-for f in $(find doxygen/html -type f); do
-  touch -r doxygen/Makefile.am ${f}
-done
+#for f in $(find doxygen/html -type f); do
+#  touch -r doxygen/Makefile.am ${f}
+#done
 
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+%make -C test check
 
 %files
-%doc ChangeLog COPYING NEWS README
+%doc COPYING NEWS README
+%_bindir/*
 %_libdir/*.so.*
 
 %files devel
-%doc doxygen/html
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*.pc
+%_man3dir/*
 
 %changelog
+* Sun Oct 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1
+- Version 1.5.0 (ALT #27897)
+
 * Wed Aug 03 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.3.3-alt3
 - rebuild for debuginfo
 
