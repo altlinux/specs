@@ -14,7 +14,7 @@ interchanging, and provides a full-featured set of concrete classes that \
 implement all abstract interfaces.
 
 %define somver 10
-%define sover %somver.12.2
+%define sover %somver.11.0
 %define scalar_type real
 %define ldir %_libdir/petsc-%scalar_type
 
@@ -25,8 +25,8 @@ Name: %truename-docs
 %else
 Name: %truename
 %endif
-Version: 10.12.2
-Release: alt5
+Version: 11.0.3
+Release: alt1
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL
 Group: Sciences/Mathematics
@@ -49,7 +49,7 @@ BuildRequires(pre): rpm-build-python
 BuildPreReq: gcc-fortran libgfortran-devel gcc-c++ libnumpy-devel
 BuildPreReq: liblapack-devel doxygen getfemxx binutils-devel
 BuildPreReq: openmpi-devel expat libexpat-devel swig graphviz
-BuildPreReq: libgmp_cxx-devel libgmp-devel libxml2-devel
+BuildPreReq: libgmp_cxx-devel libgmp-devel libxml2-devel libmatio-devel
 BuildPreReq: boost-devel libsuperlu-devel libarprec-devel libqd-devel
 BuildPreReq: liby12m-devel libsuitesparse-devel libhdf5-mpi-devel
 BuildPreReq: libmtl4-devel libsundials-devel python-devel
@@ -66,6 +66,7 @@ BuildPreReq: libtbb-devel libqt4-devel boost-program_options-devel
 BuildPreReq: chaco libnetcdf-mpi-devel libexodusii-devel libnewmat-devel
 BuildPreReq: libsparskit-devel boost-signals-devel tinyxml-devel Xdmf-devel
 BuildPreReq: python-module-mpi4py-devel libparmetis-devel
+BuildPreReq: libnetcdff-mpi-devel libnetcdf_c++4-mpi-devel
 %if_with dakota
 BuildPreReq: libdakota-devel
 %endif
@@ -1698,6 +1699,37 @@ SEACAS is a set of additional libraries for Trilinos.
 
 This package contains development files of SEACAS.
 
+%package -n libxpetra%somver
+Summary: Unified interface to the underlying sparse linear algebra library
+Group: System/Libraries
+Provides: libxpetra = %version-%release
+
+%description -n libxpetra%somver
+%longdesc
+
+Xpetra is a lightweight wrapper package that provides algorithm
+developers with a unified interface to the underlying sparse linear
+algebra library.
+
+%package -n libxpetra%somver-devel
+Summary: Development files of Xpetra
+Group: Development/C++
+Requires: libxpetra%somver = %version-%release
+Requires: %name-headers = %version-%release
+Requires: libepetra%somver-devel = %version-%release
+Requires: libkokkos%somver-devel = %version-%release
+Requires: libteuchos%somver-devel = %version-%release
+Provides: libxpetra-devel = %version-%release
+
+%description -n libxpetra%somver-devel
+%longdesc
+
+Xpetra is a lightweight wrapper package that provides algorithm
+developers with a unified interface to the underlying sparse linear
+algebra library.
+
+This package contains development files of Xpetra.
+
 %package -n libseacas%somver-apps
 Summary: Libraries for SEACAS applications
 Group: System/Libraries
@@ -1793,7 +1825,7 @@ install -p -m644 %SOURCE3 %SOURCE4 %SOURCE5 %SOURCE6 %SOURCE7 %SOURCE8 \
 %build
 mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %if_with petsc
 source %_bindir/petsc-%scalar_type.sh
 %endif
@@ -1807,6 +1839,8 @@ cmake \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DMPI4PY_INCLUDE_DIR:PATH=%python_sitelibdir/mpi4py/include \
 	..
+sed -i 's|.*HAVE_STOKHOS_DAKOTA.*||' \
+	packages/stokhos/src/Stokhos_config.h
 %if_without docs
 %make -j2 VERBOSE=1
 #make VERBOSE=1
@@ -1833,7 +1867,7 @@ popd
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib -L%mpidir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %if_with petsc
 source %_bindir/petsc-%scalar_type.sh
 %endif
@@ -2125,10 +2159,10 @@ popd
 %_libdir/libfei*.so
 
 %files -n libgaleri%somver
-%_libdir/libgaleri.so.*
+%_libdir/libgaleri*.so.*
 
 %files -n libgaleri%somver-devel
-%_libdir/libgaleri.so
+%_libdir/libgaleri*.so
 
 %files -n libifpack%somver
 %_libdir/libifpack*.so.*
@@ -2356,6 +2390,12 @@ popd
 %_libdir/libchaco.so
 %_libdir/libmapvarlib.so
 
+%files -n libxpetra%somver
+%_libdir/libmuelu-xpetra*.so.*
+
+%files -n libxpetra%somver-devel
+%_libdir/libmuelu-xpetra*.so
+
 %files -n libseacas%somver-apps
 %_libdir/libepu_lib.so.*
 %_libdir/*app_lib*.so.*
@@ -2407,6 +2447,9 @@ popd
 %endif
 
 %changelog
+* Sun Oct 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt1
+- Version 11.0.3
+
 * Tue Oct 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.12.2-alt5
 - Fixed build with gcc 4.7
 
