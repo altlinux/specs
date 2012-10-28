@@ -1,5 +1,5 @@
 Name: bison
-Version: 2.6.2
+Version: 2.6.4
 Release: alt1
 
 Summary: A GNU general-purpose parser generator
@@ -19,7 +19,7 @@ Provides: byacc = %version-%release
 Obsoletes: byacc
 
 BuildRequires: flex, gcc-c++, help2man
-BuildRequires: gnulib >= 0.0.7591.898f143
+BuildRequires: gnulib >= 0.0.7677.4027785
 
 %description
 Bison is a general purpose parser generator which converts a grammar
@@ -88,6 +88,11 @@ touch src/scan-????.l
 %files -f %name-runtime.lang runtime
 
 %changelog
+* Mon Oct 29 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.4-alt1
+- Updated to bison 2.6.4.
+- Updated translations from translationproject.org.
+- Built with system gnulib v0.0-7677-g4027785.
+
 * Fri Aug 31 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.2-alt1
 - Updated to bison 2.6.2.
 - Updated translations from translationproject.org.
