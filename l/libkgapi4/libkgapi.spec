@@ -2,7 +2,7 @@
 
 %define rname libkgapi
 Name: libkgapi4
-Version: 0.4.2
+Version: 0.4.3
 Release: alt1
 
 Group: System/Libraries
@@ -55,6 +55,12 @@ Development files for %name
 
 
 %changelog
+* Mon Oct 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.3-alt1
+- new version
+
+* Fri Aug 31 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.2-alt0.M60P.1
+- built for M60P
+
 * Fri Aug 31 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.2-alt1
 - new version
 
