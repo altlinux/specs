@@ -1,12 +1,12 @@
 Name:    ucarp
-Version: 1.3
-Release: alt2
+Version: 1.5.2
+Release: alt1
 License: BSD
 Group:	 System/Base
-Packager: Alexey Gladkov <legion@altlinux.ru>
+Packager: Alexei Takaseev <taf@altlinux.ru>
+URL: http://www.ucarp.org
 
 Source: %name-%version.tar
-Patch0: %name-alt-gratuitous-arp.patch
 
 Summary: UCARP is a portable implementation of the CARP protocol. 
 
@@ -20,8 +20,7 @@ implementation of the secure and patent-free Common Address Redundancy
 Protocol (CARP, OpenBSD's alternative to the patents-bloated VRRP).
 
 %prep
-%setup -q
-%patch0 -p2
+%setup
 
 %build
 %configure
@@ -36,6 +35,9 @@ rm -rf -- %buildroot/%_datadir/locale
 %doc AUTHORS COPYING README examples/linux/*.sh
 
 %changelog
+* Mon Oct 29 2012 Alexei Takaseev <taf@altlinux.org> 1.5.2-alt1
+- 1.5.2
+
 * Fri Dec 14 2007 Alexey Gladkov <legion@altlinux.ru> 1.3-alt2
 - Add docs and examples.
 
