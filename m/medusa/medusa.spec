@@ -1,18 +1,17 @@
 Name: medusa
-Version: 2.0
-Release: alt1.6
+Version: 2.1.1
+Release: alt1
 
 Summary: Medusa is intended to be a speedy, massively parallel, modular, login brute-forcer
 License: GPLv2
 Group: Networking/Other
-Url: http://www.foofus.net
+Url: http://www.foofus.net/jmk/medusa/medusa.html
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-Source0: %name-%version.tar.gz
-Patch0: medusa-2.0-alt-DSO.patch
+# http://www.foofus.net/jmk/tools/%name-%version.tar.gz
+Source: %name-%version.tar
+Patch: medusa-2.1.1-rh-configure.patch
 
-# Automatically added by buildreq on Tue May 26 2009
-BuildRequires: libssh2-devel libncp-devel libssl-devel libapr1-devel postgresql-devel librtmp-devel libsubversion-devel postfix telnet perl-LWPx-ParanoidAgent
-#BuildRequires: libapr1-devel libsubversion-devel
+BuildRequires: libapr1-devel libcom_err-devel libkrb5-devel libncp-devel libpq-devel libssh2-devel libssl-devel libsubversion-devel postgresql-devel perl-LWPx-ParanoidAgent
 
 %description
 Medusa is intended to be a speedy, massively parallel,  modular,  login
@@ -84,31 +83,21 @@ Brute force module for svn
 
 %prep
 %setup
-%patch0 -p2
-sed -i "s|/include/postgresql|/include/pgsql|g" configure.in
-sed -i "s|/usr/local/include|/usr/include|g" configure.in
-sed -i "s|/usr/local/ssl/include|/usr/include/openssl|g" configure.in
-sed -i "s|/usr/local/lib|%_libdir|g" configure.in
-sed -i "s|apr-1.0|apr-1|g" configure.in
-
+%patch -p1
 
 %build
 %autoreconf
-%configure
-%make LIBS="-lssl -lcrypto -rdynamic -ldl -lrt -lm -lncp -lssh2 -lpostfix-$(rpmquery --qf %%{version} postfix) -lpq"
+%configure --with-default-mod-path=%_libdir/%name/modules
+%make_build
 
 %install
 %makeinstall_std
 mkdir -p %buildroot%perl_vendor_privlib/%name
-install -m644 src/modsrc/wrapper/apache-userdir.pl %buildroot%perl_vendor_privlib/%name/
-install -m644 src/modsrc/wrapper/null-session.pl %buildroot%perl_vendor_privlib/%name/
-install -m644 src/modsrc/wrapper/sample-single.pl %buildroot%perl_vendor_privlib/%name/
-install -m644 src/modsrc/wrapper/sample-stdin.pl %buildroot%perl_vendor_privlib/%name/
-
+install -m644 src/modsrc/wrapper/*-*.pl %buildroot%perl_vendor_privlib/%name/
 
 %files
 %_bindir/*
-%_libdir/%name
+%_libdir/%name/
 %_man1dir/*
 
 %exclude %_libdir/%name/modules/ncp.mod
@@ -119,7 +108,6 @@ install -m644 src/modsrc/wrapper/sample-stdin.pl %buildroot%perl_vendor_privlib/
 %exclude %_libdir/%name/modules/http.mod
 %exclude %_libdir/%name/modules/wrapper.mod
 %exclude %_libdir/%name/modules/svn.mod
-
 
 %files doc
 %doc doc/*.html
@@ -146,6 +134,12 @@ install -m644 src/modsrc/wrapper/sample-stdin.pl %buildroot%perl_vendor_privlib/
 %_libdir/%name/modules/svn.mod
 
 %changelog
+* Mon Oct 29 2012 Dmitry V. Levin <ldv@altlinux.org> 2.1.1-alt1
+- Blind update to 2.1.1.
+
+* Mon Oct 29 2012 Dmitry V. Levin <ldv@altlinux.org> 2.0-alt1.7
+- Blind rebuild with new postfix.
+
 * Tue Jul 31 2012 Fr. Br. George <george@altlinux.ru> 2.0-alt1.6
 - Blind rebuild with postfix 2.9.3
 
