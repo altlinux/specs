@@ -10,7 +10,7 @@ Name: kde4edu
 %define minor 9
 %define bugfix 1
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Group: Graphical desktop/KDE
@@ -20,8 +20,8 @@ Url: http://edu.kde.org
 
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu = %version-%release
-Obsoletes: kdeedu < %version-%release
+#Provides: kdeedu = %version-%release
+#Obsoletes: kdeedu < %version-%release
 %endif
 
 Requires: %name-blinken = %version-%release
@@ -116,8 +116,8 @@ Group: Games/Educational
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-blinken = %version-%release
-Obsoletes: kdeedu-blinken < %version-%release
+#Provides: kdeedu-blinken = %version-%release
+#Obsoletes: kdeedu-blinken < %version-%release
 %endif
 %description blinken
 Blinken is the KDE version of the well-known game Simon Says.
@@ -131,8 +131,8 @@ Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-rocs = %version-%release
-Obsoletes: kdeedu-rocs < %version-%release
+#Provides: kdeedu-rocs = %version-%release
+#Obsoletes: kdeedu-rocs < %version-%release
 %endif
 %description rocs
 rocs aims to provide a full featured Graph - Editor and a Programming
@@ -146,8 +146,8 @@ Requires: %name-common = %version-%release
 Requires: kde4base-runtime-core
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-cantor = %version-%release
-Obsoletes: kdeedu-cantor < %version-%release
+#Provides: kdeedu-cantor = %version-%release
+#Obsoletes: kdeedu-cantor < %version-%release
 %endif
 %description cantor
 Cantor is a KDE Application aimed to provide a nice Interface 
@@ -163,8 +163,8 @@ Requires: %name-common = %version-%release
 Requires: kde4-calgebra
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kalgebra = %version-%release
-Obsoletes: kdeedu-kalgebra < %version-%release
+#Provides: kdeedu-kalgebra = %version-%release
+#Obsoletes: kdeedu-kalgebra < %version-%release
 %endif
 %description kalgebra
 KAlgebra is a mathematical calculator based content markup MathML
@@ -180,8 +180,8 @@ Requires: %name-common = %version-%release
 Requires: avogadro
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kalzium = %version-%release
-Obsoletes: kdeedu-kalzium < %version-%release
+#Provides: kdeedu-kalzium = %version-%release
+#Obsoletes: kdeedu-kalzium < %version-%release
 %endif
 %description kalzium
 Kalzium is an application which will show you some information about the
@@ -209,8 +209,8 @@ Group: Games/Educational
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kanagram = %version-%release
-Obsoletes: kdeedu-kanagram < %version-%release
+#Provides: kdeedu-kanagram = %version-%release
+#Obsoletes: kdeedu-kanagram < %version-%release
 %endif
 %description kanagram
 Kanagram is a replacement for KMessedWords. Kanagram mixes up the letters
@@ -227,8 +227,8 @@ Group: Education
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kbruch = %version-%release
-Obsoletes: kdeedu-kbruch < %version-%release
+#Provides: kdeedu-kbruch = %version-%release
+#Obsoletes: kdeedu-kbruch < %version-%release
 %endif
 %description kbruch
 KBruch is a small program to practice calculating with fractions.
@@ -240,8 +240,8 @@ Group: Education
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kgeography = %version-%release
-Obsoletes: kdeedu-kgeography < %version-%release
+#Provides: kdeedu-kgeography = %version-%release
+#Obsoletes: kdeedu-kgeography < %version-%release
 %endif
 %description kgeography
 KGeography is a geography learning program.
@@ -253,8 +253,8 @@ Group: Games/Educational
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-khangman = %version-%release
-Obsoletes: kdeedu-khangman < %version-%release
+#Provides: kdeedu-khangman = %version-%release
+#Obsoletes: kdeedu-khangman < %version-%release
 %endif
 %description khangman
 KHangman is the classical hangman game. The child should guess a word
@@ -269,8 +269,8 @@ Group: Education
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kig = %version-%release
-Obsoletes: kdeedu-kig < %version-%release
+#Provides: kdeedu-kig = %version-%release
+#Obsoletes: kdeedu-kig < %version-%release
 %endif
 %description kig
 Kig is a program for exploring geometric constructions.
@@ -281,8 +281,8 @@ Url: http://edu.kde.org/kiten/
 Group: Games/Educational
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kiten = %version-%release
-Obsoletes: kdeedu-kiten < %version-%release
+#Provides: kdeedu-kiten = %version-%release
+#Obsoletes: kdeedu-kiten < %version-%release
 %endif
 %description kiten
 Kiten is a Japanese reference/learning tool.
@@ -318,8 +318,8 @@ Group: Games/Educational
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-klettres = %version-%release
-Obsoletes: kdeedu-klettres < %version-%release
+#Provides: kdeedu-klettres = %version-%release
+#Obsoletes: kdeedu-klettres < %version-%release
 %endif
 %description klettres
 KLettres aims to help to learn the alphabet and then to read some syllables
@@ -333,8 +333,8 @@ Group: Education
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kmplot = %version-%release
-Obsoletes: kdeedu-kmplot < %version-%release
+#Provides: kdeedu-kmplot = %version-%release
+#Obsoletes: kdeedu-kmplot < %version-%release
 %endif
 %description kmplot
 KmPlot is a mathematical function plotter for the KDE-Desktop.
@@ -352,8 +352,8 @@ Group: Education
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kpercentage = %version-%release
-Obsoletes: kdeedu-kpercentage < %version-%release
+#Provides: kdeedu-kpercentage = %version-%release
+#Obsoletes: kdeedu-kpercentage < %version-%release
 %endif
 %description kpercentage
 KPercentage is a small math application that will help pupils to improve
@@ -367,8 +367,8 @@ Requires: %name-common = %version-%release
 Requires: indi
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kstars = %version-%release
-Obsoletes: kdeedu-kstars < %version-%release
+#Provides: kdeedu-kstars = %version-%release
+#Obsoletes: kdeedu-kstars < %version-%release
 %endif
 %description kstars
 KStars is a Desktop Planetarium for KDE. It provides an accurate graphical
@@ -411,8 +411,8 @@ Group: Education
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-ktouch = %version-%release
-Obsoletes: kdeedu-ktouch < %version-%release
+#Provides: kdeedu-ktouch = %version-%release
+#Obsoletes: kdeedu-ktouch < %version-%release
 %endif
 %description ktouch
 KTouch is a program for learning touch typing. KTouch is a way to learn
@@ -429,8 +429,8 @@ Group: Education
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kturtle = %version-%release
-Obsoletes: kdeedu-kturtle < %version-%release
+#Provides: kdeedu-kturtle = %version-%release
+#Obsoletes: kdeedu-kturtle < %version-%release
 %endif
 %description kturtle
 KTurtle is an educational programming environment for the KDE Desktop.
@@ -446,8 +446,8 @@ Requires: %name-common = %version-%release
 Requires: python-module-kde4
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-parley = %version-%release
-Obsoletes: kdeedu-parley < %version-%release
+#Provides: kdeedu-parley = %version-%release
+#Obsoletes: kdeedu-parley < %version-%release
 %endif
 %description parley
 Parley is a program to help you memorize things.
@@ -463,8 +463,8 @@ Group: Education
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-kwordquiz = %version-%release
-Obsoletes: kdeedu-kwordquiz < %version-%release
+#Provides: kdeedu-kwordquiz = %version-%release
+#Obsoletes: kdeedu-kwordquiz < %version-%release
 %endif
 %description kwordquiz
 KWordQuiz is a general purpose flash card program. It can be used for
@@ -478,8 +478,8 @@ Group: Education
 Requires: %name-common = %version-%release
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-step = %version-%release
-Obsoletes: kdeedu-step < %version-%release
+#Provides: kdeedu-step = %version-%release
+#Obsoletes: kdeedu-step < %version-%release
 %endif
 %description step
 Step is an interactive physical simulator. It works like this:
@@ -561,8 +561,8 @@ Requires: %name-common = %version-%release
 Requires: xplanet
 %ifdef _kde_alternate_placement
 %else
-Provides: kdeedu-marble = %version-%release
-Obsoletes: kdeedu-marble < %version-%release
+#Provides: kdeedu-marble = %version-%release
+#Obsoletes: kdeedu-marble < %version-%release
 %endif
 %description marble
 Marble is a Virtual Globe and World Atlas that you can use to learn more
@@ -1045,6 +1045,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Oct 29 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt2
+- don't obsolete KDE3 kdeedu (ALT#27900)
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
