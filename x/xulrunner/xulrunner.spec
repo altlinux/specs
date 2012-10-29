@@ -13,8 +13,8 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	15.0
-Release:	alt2
+Version:	16.0.1
+Release:	alt1
 
 License:	MPL/GPL/LGPL
 Group:		Networking/Other
@@ -362,6 +362,26 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Fri Oct 19 2012 Alexey Gladkov <legion@altlinux.ru> 16.0.1-alt1
+- New release (16.0.1).
+- Fixed:
+  + MFSA 2012-89 defaultValue security checks not applied
+  + MFSA 2012-88 Miscellaneous memory safety hazards (rv:16.0.1)
+  + MFSA 2012-87 Use-after-free in the IME State Manager
+  + MFSA 2012-86 Heap memory corruption issues found using Address Sanitizer
+  + MFSA 2012-85 Use-after-free, buffer overflow, and out of bounds read issues found using Address Sanitizer
+  + MFSA 2012-84 Spoofing and script injection through location.hash
+  + MFSA 2012-83 Chrome Object Wrapper (COW) does not disallow acces to privileged functions or properties
+  + MFSA 2012-82 top object and location property accessible by plugins
+  + MFSA 2012-81 GetProperty function can bypass security checks
+  + MFSA 2012-80 Crash with invalid cast when using instanceof operator
+  + MFSA 2012-79 DOS and crash with full screen and history navigation
+  + MFSA 2012-78 Reader Mode pages have chrome privileges
+  + MFSA 2012-77 Some DOMWindowUtils methods bypass security checks
+  + MFSA 2012-76 Continued access to initial origin after setting document.domain
+  + MFSA 2012-75 select element persistance allows for attacks
+  + MFSA 2012-74 Miscellaneous memory safety hazards (rv:16.0/ rv:10.0.8)
+
 * Thu Sep 06 2012 Alexey Gladkov <legion@altlinux.ru> 15.0-alt2
 - Disable gstreamer for now.
 

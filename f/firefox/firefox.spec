@@ -10,7 +10,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        15.0
+Version:        16.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -61,7 +61,7 @@ BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 
 # Mozilla requires
-BuildRequires: xulrunner-devel     >= 15.0-alt1
+BuildRequires: xulrunner-devel     >= 16.0.1-alt1
 BuildRequires: libnspr-devel       >= 4.9.2-alt1
 BuildRequires: libnss-devel        >= 3.13.6-alt1
 BuildRequires: libnss-devel-static >= 3.13.6-alt1
@@ -106,10 +106,10 @@ cd mozilla
 tar -xf %SOURCE1
 tar -xf %SOURCE2
 
-%patch6 -p1 -b .fix6
-%patch14 -p1 -b .fix14
-%patch16 -p1 -b .fix16
-%patch17 -p1 -b .fix17
+%patch6  -p1
+%patch14 -p1
+%patch16 -p1
+%patch17 -p1
 
 #echo %firefox_version > browser/config/version.txt
 
@@ -263,6 +263,26 @@ done
 %_sysconfdir/rpm/macros.d/firefox
 
 %changelog
+* Mon Oct 22 2012 Alexey Gladkov <legion@altlinux.ru> 16.0.1-alt1
+- New release (16.0.1).
+- Fixed:
+  + MFSA 2012-89 defaultValue security checks not applied
+  + MFSA 2012-88 Miscellaneous memory safety hazards (rv:16.0.1)
+  + MFSA 2012-87 Use-after-free in the IME State Manager
+  + MFSA 2012-86 Heap memory corruption issues found using Address Sanitizer
+  + MFSA 2012-85 Use-after-free, buffer overflow, and out of bounds read issues found using Address Sanitizer
+  + MFSA 2012-84 Spoofing and script injection through location.hash
+  + MFSA 2012-83 Chrome Object Wrapper (COW) does not disallow acces to privileged functions or properties
+  + MFSA 2012-82 top object and location property accessible by plugins
+  + MFSA 2012-81 GetProperty function can bypass security checks
+  + MFSA 2012-80 Crash with invalid cast when using instanceof operator
+  + MFSA 2012-79 DOS and crash with full screen and history navigation
+  + MFSA 2012-78 Reader Mode pages have chrome privileges
+  + MFSA 2012-77 Some DOMWindowUtils methods bypass security checks
+  + MFSA 2012-76 Continued access to initial origin after setting document.domain
+  + MFSA 2012-75 select element persistance allows for attacks
+  + MFSA 2012-74 Miscellaneous memory safety hazards (rv:16.0/ rv:10.0.8)
+
 * Wed Aug 29 2012 Alexey Gladkov <legion@altlinux.ru> 15.0-alt1
 - New release (15.0).
 - Fixed:
