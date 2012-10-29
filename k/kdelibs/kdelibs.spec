@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.1
-%define rel alt2
+%define rel alt3
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -372,6 +372,7 @@ export DESTDIR=%buildroot
 if ! [ -f $BD/CMakeCache.txt ]
 then
 %K3cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DKDE_MALLOC=OFF \
     -DKDE_MALLOC_DEBUG=OFF \
     -DKDE_MALLOC_FULL=OFF \
@@ -650,6 +651,9 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt3
+- Build with -O2 and -g.
+
 * Sat Oct 20 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
 - Disable CUPS drivers path /usr/share/foomatic/db/source for prevent
   double linking by /usr/share/cups/model/foomatic-db-ppds to it and
