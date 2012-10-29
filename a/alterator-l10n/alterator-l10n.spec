@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt44
+Release: alt45
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -76,7 +76,6 @@ make check
 %exclude %_datadir/locale/*/LC_MESSAGES/alterator-mkbootflash.mo
 %exclude %_datadir/locale/*/LC_MESSAGES/alterator-mkve.mo
 %exclude %_datadir/locale/*/LC_MESSAGES/alterator-packages.mo
-#%exclude %_datadir/locale/*/LC_MESSAGES/alterator-printers.mo
 
 %lang(en) %config(noreplace) %_sysconfdir/alterator/l10n/*-en_*
 %lang(ru) %config(noreplace) %_sysconfdir/alterator/l10n/*-ru_*
@@ -108,6 +107,10 @@ make check
 %lang(es) %_datadir/locale/es/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Oct 29 2012 Andrey Cherepanov <cas@altlinux.org> 2.9-alt45
+- Add new Russian translations of alterator-net-domain
+- Complete rewrite alterator-net-domain help on Russian
+
 * Sun Oct 28 2012 Paul Wolneykien <manowar@altlinux.ru> 2.9-alt44
 - Merge-in translations for etcgit, mastercontrol and zabbix-agent
   modules.

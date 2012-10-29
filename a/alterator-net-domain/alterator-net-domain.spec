@@ -2,7 +2,7 @@
 
 Name: alterator-net-domain
 Version: 0.4
-Release: alt11
+Release: alt12
 Source:%name-%version.tar
 
 Summary: alterator module to edit system network domain
@@ -38,6 +38,9 @@ alterator module to edit system network domain
 
 
 %changelog
+* Mon Oct 29 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt12
+- Check domain name validity according RFC 1035
+
 * Tue May 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt11
 - fix enabling krb5 without name change
 
