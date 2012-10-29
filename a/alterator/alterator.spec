@@ -1,6 +1,6 @@
 Name: alterator
 Version: 4.22
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -137,6 +137,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Oct 25 2012 Paul Wolneykien <manowar@altlinux.ru> 4.22-alt2
+- Add "Version control" menu section.
+
 * Tue May 22 2012 Michael Shigorin <mike@altlinux.org> 4.22-alt1
 - fix root alteratord socket location back to the usual one
   (as expected by installer)
