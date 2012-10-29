@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt25
+Release: alt26
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -165,6 +165,9 @@ EOF
 %endif
 
 %changelog
+* Mon Oct 29 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt26
+- luks plugin: enter password on create
+
 * Wed Sep 12 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt25
 - added LUKS
 
