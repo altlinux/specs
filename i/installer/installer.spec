@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 
 Summary: Installer common parts
@@ -101,6 +101,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Sat Oct 27 2012 Michael Shigorin <mike@altlinux.org> 1.7.6-alt1
+- fixed wrong presumption in 10-xorg.sh (failed with current udev)
+
 * Thu Oct 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.5-alt1
 - 20-systemd and 65-setup services fixed
 
