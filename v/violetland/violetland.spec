@@ -1,12 +1,12 @@
 Name: violetland
 Version: 0.4.3
-Release: alt1.1
+Release: alt2
 Summary: An open source cross-platform game similar to Crimsonland
 Group: Games/Arcade
 License: GPLv3
-Url: http://code.google.com/p/vialetland
+Url: http://code.google.com/p/violetland
 Source0: http://%name.googlecode.com/files/%name-v%version-src.zip
-Packager: Fr. Br. George <george@altlinux.ru>
+Patch: violetland-v0.4.3-boost1.51.patch
 
 Requires: %name-data
 
@@ -44,8 +44,12 @@ This package contanis data files required for the game
 %prep
 %setup -n %name-v%version
 dos2unix     README_EN.TXT
+%patch -p1
+# prevent wrong timestamp unzip
+find . -type f -exec touch {} \;
 
 %build
+%define warns -Wall -Wno-delete-non-virtual-dtor -Wno-narrowing
 install -dm 755 build
 pushd build
 	#cmake \
@@ -55,8 +59,8 @@ pushd build
         cmake .. \
             -DCMAKE_SKIP_RPATH:BOOL=yes \
             -DCMAKE_BUILD_TYPE=MinSizeRel \
-            -DCMAKE_C_FLAGS:STRING='-pipe -Wall -O2' \
-            -DCMAKE_CXX_FLAGS:STRING='-pipe -Wall -O2' \
+            -DCMAKE_C_FLAGS:STRING='-pipe %warns -O2' \
+            -DCMAKE_CXX_FLAGS:STRING='-pipe %warns -O2' \
             -DCMAKE_INSTALL_PREFIX=%prefix \
             -DDATA_INSTALL_DIR=%_gamesdatadir/%name \
             -DLIB_DESTINATION=lib64 \
@@ -66,7 +70,7 @@ pushd build
             -DLIB_SUFFIX="" \
             %endif
 
-	#make_build
+	%make_build
 popd
 
 cat > %name.desktop << EOF
@@ -112,6 +116,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/*
 
 %changelog
+* Thu Oct 25 2012 Fr. Br. George <george@altlinux.ru> 0.4.3-alt2
+- Fix to build with boot filesystem v3
+
 * Thu Apr 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt1.1
 - Rebuilt with Boost 1.49.0
 
