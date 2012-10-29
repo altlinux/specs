@@ -19,7 +19,7 @@
 
 Name: kdepim
 Version: 3.5.13.1
-Release: alt1
+Release: alt2
 Serial: 1
 
 Group: Graphical desktop/KDE
@@ -414,6 +414,7 @@ export LD_LIBRARY_PATH=$BD/kode:$BD/wizards:$LD_LIBRARY_PATH
 if ! [ -f $BD/CMakeCache.txt ]
 then
 %K3cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DWITH_ARTS=OFF \
     -DWITH_SASL=ON \
     -DWITH_NEWDISTRLISTS=ON  \
@@ -990,6 +991,9 @@ done
 %_K3includedir/index
 
 %changelog
+* Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.1-alt2
+- Build with -O2 and -g.
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 1:3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
