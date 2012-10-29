@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 
 Summary: Installer common parts
@@ -101,6 +101,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Oct 29 2012 Timur Aitov <timonbl4@altlinux.org> 1.7.7-alt1
+- added preinstall.d/08-crypttab.sh
+
 * Sat Oct 27 2012 Michael Shigorin <mike@altlinux.org> 1.7.6-alt1
 - fixed wrong presumption in 10-xorg.sh (failed with current udev)
 
