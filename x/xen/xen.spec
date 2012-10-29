@@ -3,7 +3,7 @@
 
 Summary: Xen is a virtual machine monitor
 Name: xen
-Version: 4.1.2
+Version: 4.1.3
 Release: alt3
 Group: Development/Kernel
 License: GPLv2+ and LGPLv2+ and BSD
@@ -19,6 +19,7 @@ Source11: newlib-1.16.0.tar.gz
 Source12: zlib-1.2.3.tar.gz
 Source13: pciutils-2.2.9.tar.bz2
 Source14: grub-0.97.tar.gz
+Source15: ipxe.tar.gz
 
 Patch4: xen-dumpdir.patch
 
@@ -31,8 +32,8 @@ Patch106: xen-4.0.0-libfsimage-soname-alt.patch
 Patch107: xen-4.0.0-i586-fpic.patch
 Patch108: xen-4.0.1-stubdom-secure-tmp-alt.patch
 Patch109: xen-4.0.1-linux-fs-includes-fix-alt.patch
-Patch110: xen-4.1-xsa7-xsa8.patch
-Patch111: xen-4.1-xsa9.patch
+Patch110: xen-4.1.2-ipxe-makefile-gcc-version.patch
+Patch111: xen-4.1.3-qemu-revert-O_DIRECT.patch
 
 # Automatically added by buildreq on Mon Jan 18 2010
 %set_gcc_version 4.4
@@ -121,10 +122,11 @@ which manage Xen virtual machines.
 %patch108 -p2
 %patch109 -p2
 %patch110 -p1
-%patch111 -p1
+%patch111 -p2
 
 # stubdom sources
 cp -v %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 %SOURCE14 stubdom
+cp -v %SOURCE15 tools/firmware/etherboot
 
 %build
 export XEN_VENDORVERSION="-%release"
@@ -407,6 +409,19 @@ diff -u f1.list f2.list || true
 %_libdir/*.a
 
 %changelog
+* Mon Oct 29 2012 Lenar Shakirov <snejok@altlinux.ru> 4.1.3-alt3
+- xen-4.1.3-qemu-revert-O_DIRECT.patch added:
+  * fix loading from boot discs with phy:/dev/cdrom
+  * http://xenbits.xen.org/gitweb/?p=qemu-xen-4.2-testing.git;
+    a=commit;h=effd5676225761abdab90becac519716515c3be4
+  
+* Fri Oct 26 2012 Lenar Shakirov <snejok@altlinux.ru> 4.1.3-alt2
+- build witch ipxe
+
+* Wed Oct 03 2012 Lenar Shakirov <snejok@altlinux.ru> 4.1.3-alt1
+- 4.1.3
+- old patched dropped: applied in upstream
+
 * Wed Jun 13 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 4.1.2-alt3
 - CVE-2012-0217, CVE-2012-0218, CVE-2012-2934
 
