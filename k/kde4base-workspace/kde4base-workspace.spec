@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -116,7 +116,7 @@ BuildRequires: libConsoleKit-devel
 %if_enabled google
 BuildRequires: google-gadgets-devel
 %endif
-BuildRequires: bzlib-devel gcc-c++ libXft-devel
+BuildRequires: bzlib-devel gcc-c++ libXft-devel libGLES-devel
 BuildRequires: libbluez-devel libkrb5-devel libpam-devel libaudit-devel
 BuildRequires: libqimageblitz-devel libraw1394-devel libsensors3-devel libgps-devel
 BuildRequires: libstrigi-devel libusb-compat-devel xml-utils
@@ -464,6 +464,13 @@ Summary: KDE 4 library
 Group: System/Libraries
 Requires: %name-common = %version-%release
 %description -n libkwinglutils4
+KDE 4 library
+
+%package -n libkwinglesutils4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkwinglesutils4
 KDE 4 library
 
 %package -n liboxygenstyleconfig4
@@ -904,6 +911,8 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4libdir/liboxygenstyle.so.*
 %files -n libkwinglutils4
 %_K4libdir/libkwinglutils.so.*
+%files -n libkwinglesutils4
+%_K4libdir/libkwinglesutils.so.*
 %files -n liboxygenstyleconfig4
 %_K4libdir/liboxygenstyleconfig.so.*
 
@@ -917,6 +926,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Oct 29 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt2
+- built kwin_gles
+
 * Mon Oct 15 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
 - new version
 
