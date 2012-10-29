@@ -1,6 +1,6 @@
 Name: git-merge-changelog
 Version: %{get_version gnulib}
-Release: alt1
+Release: alt2
 
 Summary: git merge driver for GNU style ChangeLog files
 License: GPLv2+
@@ -48,7 +48,7 @@ gnulib-tool --create-testdir --dir=$PWD %name
 %_bindir/*
 
 %changelog
-* Mon Oct 29 2012 Dmitry V. Levin <ldv@altlinux.org> 0.0.7677.4027785-alt1
+* Mon Oct 29 2012 Dmitry V. Levin <ldv@altlinux.org> 0.0.7677.4027785-alt2
 - Rebuilt with gnulib snapshot v0.0-7677-g4027785.
 
 * Mon Aug 20 2012 Dmitry V. Levin <ldv@altlinux.org> 0.0.7591.898f143-alt1
