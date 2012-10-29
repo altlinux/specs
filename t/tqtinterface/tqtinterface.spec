@@ -5,7 +5,7 @@
 
 Name: tqtinterface
 Version: 3.5.13.1
-Release: alt1
+Release: alt2
 
 Group: System/Libraries
 Summary: Interface and abstraction library for Qt and Trinity
@@ -42,6 +42,7 @@ Interface for Qt and Trinity
 
 %build
 %Kbuild \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DQT_VERSION=3 \
     -DINCLUDE_INSTALL_DIR=%_includedir/%name \
     -DPKGCONFIG_INSTALL_DIR=%_pkgconfigdir
@@ -60,6 +61,9 @@ Interface for Qt and Trinity
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
+- Build with -O2 and -g.
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
