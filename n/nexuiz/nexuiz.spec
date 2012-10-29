@@ -1,6 +1,6 @@
 Name: nexuiz
 Version: 2.5.2
-Release: alt1.2
+Release: alt2
 
 Summary: 3D deathmatch shooter game
 License: GPL
@@ -11,10 +11,10 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 
 Source0: enginesource20091001.zip
 
-# Automatically added by buildreq on Wed Dec 09 2009
-BuildRequires: libGL-devel libSDL-devel libXext-devel libXpm-devel libXxf86dga-devel libalsa-devel unzip
+Patch0: nexuiz-2.5.2-watercrash.patch
 
-BuildPreReq: libXxf86vm-devel
+# Automatically added by buildreq on Mon Oct 29 2012
+BuildRequires: libSDL-devel libXext-devel libXpm-devel libXxf86dga-devel libXxf86vm-devel libalsa-devel unzip
 
 %description
 Nexuiz is a 3d deathmatch shooter based on a darkplaces engine.
@@ -58,20 +58,21 @@ This package contains dedicated server for Nexuiz.
 
 %prep
 %setup -q -n darkplaces
+%patch0 -p0
 sed -i 's/\r//' darkplaces.txt
 sed -i 's,/usr/X11R6/,/usr/,g' makefile makefile.inc
 
 %build
 export DP_FS_BASEDIR=%_datadir/nexuiz
-%make nexuiz OPTIM_RELEASE="%optflags"
+%make nexuiz OPTIM_RELEASE="%optflags" STRIP=:
 
 %install
-mkdir -p %buildroot%_gamesbindir
-mkdir -p %buildroot%_iconsdir
+mkdir -p %buildroot%_bindir/
+mkdir -p %buildroot%_iconsdir/
 
-install -pm755 nexuiz-sdl %buildroot%_gamesbindir
-install -pm755 nexuiz-glx %buildroot%_gamesbindir
-install -pm755 nexuiz-dedicated %buildroot%_gamesbindir
+install -pm755 nexuiz-sdl %buildroot%_bindir/
+install -pm755 nexuiz-glx %buildroot%_bindir/
+install -pm755 nexuiz-dedicated %buildroot%_bindir/
 install -D -pm644 darkplaces16x16.png %buildroot%_iconsdir/hicolor/16x16/apps/nexuiz.png
 install -D -pm644 darkplaces24x24.png %buildroot%_iconsdir/hicolor/24x24/apps/nexuiz.png
 install -D -pm644 darkplaces32x32.png %buildroot%_iconsdir/hicolor/32x32/apps/nexuiz.png
@@ -79,50 +80,56 @@ install -D -pm644 darkplaces48x48.png %buildroot%_iconsdir/hicolor/48x48/apps/ne
 install -D -pm644 darkplaces64x64.png %buildroot%_iconsdir/hicolor/64x64/apps/nexuiz.png
 install -D -pm644 darkplaces72x72.png %buildroot%_iconsdir/hicolor/72x72/apps/nexuiz.png
 
-mkdir -p %buildroot%_desktopdir
-cat > %buildroot%_desktopdir/%{name}-sdl.desktop <<EOF
+mkdir -p %buildroot%_desktopdir/
+
+cat > %buildroot%_desktopdir/%name-sdl.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
 Name=Nexuiz (SDL client)
 Comment=3D DeathMatch shooter
-Icon=%{name}
-Exec=%_gamesbindir/%name-sdl
-#Exec=%name
+Icon=%name
+Exec=%_bindir/%name-sdl
 Terminal=false
 Categories=Game;ActionGame;
 EOF
-cat > %buildroot%_desktopdir/%{name}-glx.desktop <<EOF
+
+cat > %buildroot%_desktopdir/%name-glx.desktop <<EOF
 [Desktop Entry]
 Version=1.0
 Type=Application
 Name=Nexuiz (GLX client)
 Comment=3D DeathMatch shooter
-Icon=%{name}
-Exec=%_gamesbindir/%name-glx
-#Exec=%name
+Icon=%name
+Exec=%_bindir/%name-glx
 Terminal=false
 Categories=Game;ActionGame;
 EOF
 
 %files client-glx
 %doc darkplaces.txt
-%_gamesbindir/nexuiz-glx
-%_desktopdir/%{name}-glx.desktop
+%_bindir/nexuiz-glx
+%_desktopdir/%name-glx.desktop
 
 %files client-sdl
 %doc darkplaces.txt
-%_gamesbindir/nexuiz-sdl
-%_desktopdir/%{name}-sdl.desktop
+%_bindir/nexuiz-sdl
+%_desktopdir/%name-sdl.desktop
 
 %files server
 %doc darkplaces.txt
-%_gamesbindir/nexuiz-dedicated
+%_bindir/nexuiz-dedicated
 
 %files client-common
 %_iconsdir/*/*/apps/*
 
 %changelog
+* Mon Oct 29 2012 Igor Zubkov <icesik@altlinux.org> 2.5.2-alt2
+- relocate binaries from /usr/games/ to /usr/bin/
+- buildreq
+- sync patches with nexuiz-2.5.2-5.fc18
+- add debuginfo packages
+
 * Sat Apr 23 2011 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1.2
 - NMU: converted menu to desktop file
 
