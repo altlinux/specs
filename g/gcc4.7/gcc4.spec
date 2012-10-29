@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.7.2
-Release: alt3
+Release: alt4
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -24,7 +24,7 @@ Url: http://gcc.gnu.org/
 %endif
 
 %define priority 472
-%define snapshot 20120920
+%define snapshot 20121015
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -131,7 +131,6 @@ Patch100: gcc47-rh-hack.patch
 Patch101: gcc47-rh-c++-builtin-redecl.patch
 Patch102: gcc47-rh-java-nomulti.patch
 Patch103: gcc47-rh-ppc32-retaddr.patch
-Patch104: gcc47-rh-pr33763.patch
 Patch105: gcc47-rh-rh330771.patch
 Patch106: gcc47-rh-i386-libgomp.patch
 Patch107: gcc47-rh-sparc-config-detection.patch
@@ -164,7 +163,6 @@ Patch316: gcc46-deb-libjava-armel-unwind.patch
 Patch318: gcc47-deb-alt-libjava-disable-static.patch
 Patch319: gcc45-deb-libstdc++-arm-wno-abi.patch
 Patch320: gcc47-deb-gccgo-version.patch
-Patch321: gcc47-deb-go-fixes.patch
 Patch322: gcc47-deb-libgo-fix-arm.patch
 Patch323: gcc47-deb-libgo-hardening.patch
 Patch324: gcc47-deb-libgo-mksysinfo.patch
@@ -924,7 +922,6 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch101 -p0
 %patch102 -p0
 %patch103 -p0
-%patch104 -p0
 #patch105 -p0
 %patch106 -p0
 %patch107 -p0
@@ -955,7 +952,6 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch318 -p1
 %patch319 -p2
 %patch320 -p2
-%patch321 -p2
 %patch322 -p2
 %patch323 -p2
 %patch324 -p2
@@ -1995,6 +1991,9 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Mon Oct 29 2012 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt4
+- Synced with fedora gcc-4.7.2-5.
+
 * Mon Oct 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 4.7.2-alt3
 - relocate libquadmath and libitm info files to doc subpackage
 - add libquadmath substitute rule for buildreq

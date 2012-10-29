@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.56
+Release: alt100.57
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -44,7 +44,7 @@ Conflicts: rpm-utils <= 0:0.9.10-alt1
 %{?_with_python:BuildPreReq: python-devel}
 %{?_with_apidocs:BuildPreReq: ctags doxygen}
 %{?_with_libelf:BuildPreReq: libelf-devel-static}
-%{?_with_selinux:BuildPreReq: libselinux-devel-static >= 2.0.96}
+%{?_with_selinux:BuildPreReq: libselinux-devel >= 2.0.96}
 %{?_with_profile:BuildPreReq: coreutils >= 6.0}
 
 BuildPreReq: automake >= 1.7.1, autoconf >= 2.53, libbeecrypt-devel-static >= 4.2.1,
@@ -219,6 +219,7 @@ export ac_cv_path___LZMA=/usr/bin/lzma
 export ac_cv_path___XZ=/usr/bin/xz
 export ac_cv_path___GPG=/usr/bin/gpg
 export ac_cv_path___SSH=/usr/bin/ssh
+export LDFLAGS="-L$PWD/stub"
 %configure \
 	%{?_with_python} %{?_without_python} \
 	%{?_with_apidocs} %{?_without_apidocs} \
@@ -226,23 +227,32 @@ export ac_cv_path___SSH=/usr/bin/ssh
 	%{subst_with selinux} \
 	--program-transform-name=
 
+# create a stub libselinux.a so that -lselinux would work in -static mode
+mkdir stub
+ar cq stub/libselinux.a
+ln -s %_libdir/libselinux.so stub/
+
 set_c_cflags="$(sed -n 's/^CFLAGS = //p' lib/Makefile) -W -Wno-missing-prototypes -Wno-override-init %{!?_enable_debug:-O3} -fno-builtin-memcmp"
 %make_build -C lib set.lo CFLAGS="$set_c_cflags"
 %make_build
+
+rpmquery -a --provides |fgrep '= set:' |sort >P
+rpmquery -a --requires |fgrep '= set:' |sort >R
+join -o 1.3,2.3 P R |shuf >setcmp-data
 
 %if_with profile
 rm lib/set.lo lib/librpm.la tools/setcmp.static
 %make_build -C lib set.lo librpm.la CFLAGS="$set_c_cflags -fprofile-generate"
 %make_build -C tools setcmp.static CFLAGS="$(sed -n 's/^CFLAGS = //p' tools/Makefile) -fprofile-generate"
-rpmquery -a --provides |fgrep '= set:' |sort >P
-rpmquery -a --requires |fgrep '= set:' |sort >R
-join -o 1.3,2.3 P R |shuf >setcmp-data
 ./tools/setcmp <setcmp-data >/dev/null
 ./tools/setcmp.static <setcmp-data >/dev/null
 ls -l lib/.libs/set.gcda lib/set.gcda
 rm lib/set.lo lib/librpm.la tools/setcmp.static
 %make_build -C lib set.lo CFLAGS="$set_c_cflags -fprofile-use"
 %make_build
+%else
+./tools/setcmp <setcmp-data >/dev/null
+./tools/setcmp.static <setcmp-data >/dev/null
 %endif #with profile
 
 %if_with apidocs
@@ -506,6 +516,11 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Tue Oct 09 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.57
+- Build selinux support in dynamically linked objects only.
+- %%configure: export -m* part of %%optflags as ASFLAGS (for assembler)
+  along with other *FLAGS exported for compilers.
+
 * Fri Aug 31 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.56
 - Removed obsolete getdate.y.
 
