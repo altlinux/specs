@@ -2,7 +2,7 @@
 # $Id: fonts-bitmap-terminus.spec,v 1.5 2006/05/05 08:01:35 eugene Exp $
 
 %define cname terminus
-%define version 4.30
+%define version 4.38
 %define fontsdir %_datadir/fonts/bitmap/terminus
 %define cfontsdir /lib/kbd/consolefonts
 
@@ -13,7 +13,7 @@ Summary: Terminus Font - a clean fixed width font
 Summary(ru_RU.UTF-8): Шрифт Terminus - растровый моноширинный шрифт
 License: GPL
 Group: System/Fonts/X11 bitmap
-URL: http://www.is-vn.bg/hamster/
+URL: http://sourceforge.net/projects/terminus-font/
 BuildArch: noarch
 
 Packager: Eugene Vlasov <eugvv@altlinux.ru>
@@ -21,9 +21,9 @@ Packager: Eugene Vlasov <eugvv@altlinux.ru>
 Source0: %cname-font-%version.tar.gz
 Source1: %cname-FAQ
 
-# Patch0: %cname-font-4.16-kacyrillic.patch.gz
-# Patch0: %cname-4.16-be_ve_ka_cyrillic.patch
-Patch0: %cname-4.26-be_ve_cyrillic.patch
+# Patch0: %%cname-font-4.16-kacyrillic.patch.gz
+# Patch0: %%cname-4.16-be_ve_ka_cyrillic.patch
+# Patch0: %%cname-4.26-be_ve_cyrillic.patch
 
 Provides: terminus-font = %version-%release
 
@@ -51,7 +51,7 @@ This package contains Terminus Font for X Window System.
 %description -l ru_RU.UTF-8
 Шрифт Terminus разработан для длительной (8 часов и более) работы с
 компьютером. Версия 4.30 содержит 850 символов, полностью охватывая
-около 120 языковых наборов и поддерживая ISO8859-1/2/5/9/13/15/16, 
+около 120 языковых наборов и поддерживая ISO8859-1/2/5/9/13/15/16,
 Paratype-PT154/PT254, KOI8-R/U/E/F, Esperanto, многие кодовые страницы IBM,
 Windows и Macintosh. Также включены псевдографические символы IBM VGA, vt100 и
 xterm.
@@ -95,9 +95,11 @@ xterm.
 
 %prep
 %setup -q -n %cname-font-%version
-%patch0 -p1
 
 %build
+patch -i alt/dv1.diff
+patch -i alt/ij1.diff
+chmod +x configure
 ./configure --psfdir=%buildroot%cfontsdir \
 	    --x11dir=%buildroot%fontsdir
 make
@@ -131,6 +133,9 @@ fi
 %cfontsdir/*.psf.gz
 
 %changelog
+* Fri Oct 26 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.38-alt1
+- 4.38
+
 * Sun Dec 13 2009 Eugene Vlasov <eugvv@altlinux.ru> 4.30-alt1
 - New version, upstream changes:
   * size 22 (not very good), another 25 characters, various small fixes and
@@ -141,7 +146,7 @@ fi
 - New version, upstream changes:
   * heavy frames (written mostly by Tim Allen) and a few more letters, altered
     trianges and arrows, small bugfixes
-  * reorganized the 512-character console font to include many more letters 
+  * reorganized the 512-character console font to include many more letters
     instead of the IBM-437 specific pseudographics
 - Updated description and FAQ
 - fonts-console-terminus subpackage comeback, console font dir changed to
@@ -159,7 +164,7 @@ fi
   + used %_sysconfdir/X11/fontpath.d, adieu chkfontpath
 
 * Thu Jun 07 2007 Eugene Vlasov <eugvv@altlinux.ru> 4.20-alt2
-- fonts-console-terminus build now from separate source package, location 
+- fonts-console-terminus build now from separate source package, location
   of console fonts is arch-dependent (#11809)
 - Removed %%__ macro
 
