@@ -1,6 +1,6 @@
 Name: postfix
-Version: 2.9.3
-Release: alt2
+Version: 2.9.4
+Release: alt1
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -9,7 +9,7 @@ Group: System/Servers
 Url: http://www.postfix.org/
 
 # ftp://ftp.porcupine.org/mirrors/postfix-release/official/postfix-%version.tar.gz
-Source: postfix-%version.tar
+Source: %name-%version.tar.gz
 
 Patch: postfix-%version-%release.patch
 
@@ -18,7 +18,6 @@ Patch: postfix-%version-%release.patch
 %def_with mysql
 %def_with pcre
 %def_with pgsql
-%def_without ipv6
 %def_with sasl
 %def_with cyrus
 %def_with tls
@@ -212,11 +211,6 @@ touch -t 01010000 man/*/* html/*
 
 ### BUILD ###
 %build
-
-MAKEFLAGS="$MAKEFLAGS DEF_MAIL_VERSION=%version"
-%{?_without_ipv6:MAKEFLAGS="$MAKEFLAGS NO_IPV6=1"}
-export MAKEFLAGS
-
 OPT="%optflags -fno-strict-aliasing -Wno-comment -Wno-missing-braces"
 CCARGS="\
  -DDEF_COMMAND_DIR=\\\"%command_directory\\\" \
@@ -318,7 +312,7 @@ ln -s %libpostfix ../lib/libpostfix.so
 gcc -shared -o ../lib/%libpostfix_dict \
 	-Wl,-O1 -Wl,-soname,%libpostfix_dict \
 	`cat postfix_dict_obj.list` \
-	../lib/libpostfix.so $DICT_LIBS 
+	../lib/libpostfix.so $DICT_LIBS
 ln -s %libpostfix_dict ../lib/libpostfix_dict.so
 
 # 5.1 build libtls.a.
@@ -407,7 +401,6 @@ mv bin/postqueue libexec/postqueue/
 
 ### INSTALL ###
 %install
-
 rln()
 {
 	local target=$1 && shift
@@ -487,10 +480,8 @@ cp -a TLS_* %buildroot%docdir/
 bzip2 -9 %buildroot%docdir/TLS_CHANGES
 %endif #with tls
 
-%if_with ipv6
 install -pm644 IPv6-ChangeLog %buildroot%docdir/
 bzip2 -9 %buildroot%docdir/IPv6-ChangeLog
-%endif #with ipv6
 
 # Install README_FILES.
 rm -rf %buildroot%config_directory/README_FILES
@@ -681,6 +672,14 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Mon Oct 29 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.4-alt1
+- Autobuild version bump to 2.9.4
+- Bugfix release
+
+* Tue Aug 14 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.3-alt3
+- Remove obsoleted MAKEFLAGS from spec
+- Implement and settle "inet_protocols = any" configuration option
+
 * Tue Jul 31 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.3-alt2
 - Fix postscreen open after close + chroot misfeature
 
@@ -947,7 +946,7 @@ ln -snf %name/aliases %_sysconfdir/aliases
 - TODO:
   + html-docs
   ? make cdb default
- 
+
 * Sat Jan 15 2005 LAKostis <lakostis at altlinux.ru> 1:2.1.5-alt0.1
 - 2.1.5.
 - update patches & spec.
