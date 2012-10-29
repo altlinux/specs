@@ -34,7 +34,7 @@
 %define bugfix 13.1
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -680,6 +680,7 @@ export CPPFLAGS="%optflags"
 if ! [ -f $BD/CMakeCache.txt ]
 then
 %K3cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DBUILD_ALL=ON \
     -DWITH_SASL=ON \
     -DWITH_LDAP=ON \
@@ -1937,6 +1938,9 @@ fi
 
 
 %changelog
+* Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
+- Build with -O2 and -g.
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
