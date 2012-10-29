@@ -3,7 +3,7 @@
 
 Name: knowit
 Version:0.10
-Release:alt10
+Release:alt11
 
 Summary: Knowledge management program for KDE
 License: GPL
@@ -55,12 +55,16 @@ install -pD %SOURCE1 %buildroot/%_desktopdir/%name.desktop
 
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog README NEWS TODO
+%doc %_K3doc/*/knowit/
 %_K3bindir/%name
 %_desktopdir/%name.desktop
 %_kde3_iconsdir/*/*/*/%name.png
 %_K3apps/%name
 
 %changelog
+* Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 0.10-alt11
+- Release TDE version 3.5.13.1
+
 * Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 0.10-alt10
 - Build for TDE 3.5.13 release
 
