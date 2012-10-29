@@ -1,3 +1,4 @@
+BuildRequires: apache-commons-discovery
 BuildRequires: aspectj
 Packager: Igor Vlasenko <viy@altlinux.ru>
 BuildRequires: /proc
@@ -37,7 +38,7 @@ BuildRequires: jpackage-compat
 Summary:        MyFaces shared for JSF 11
 Name:           myfaces-shared11
 Version:        2.0.5
-Release:        alt5_2jpp5
+Release:        alt6_2jpp5
 Epoch:          0
 License:        Apache Software License 2.0
 URL:            http://myfaces.apache.org/
@@ -77,16 +78,16 @@ BuildRequires: maven2-plugin-resources
 BuildRequires: maven2-plugin-source
 BuildRequires: maven-surefire-plugin
 
-BuildRequires: jakarta-commons-codec
+BuildRequires: apache-commons-codec
 BuildRequires: jakarta-commons-el10
-BuildRequires: jakarta-commons-logging
+BuildRequires: apache-commons-logging
 BuildRequires: jsp_2_0_api
 BuildRequires: myfaces-core11-api
 BuildRequires: portlet_1_0_api
 
-Requires: jakarta-commons-codec
+Requires: apache-commons-codec
 Requires: jakarta-commons-el10
-Requires: jakarta-commons-logging
+Requires: apache-commons-logging
 Requires: jsp_2_0_api
 Requires: myfaces-core11-api
 Requires: portlet_1_0_api
@@ -195,6 +196,9 @@ ln -s %{name}-%{version} $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Mon Oct 29 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt6_2jpp5
+- fixed build
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.0.5-alt5_2jpp5
 - build with aspectj 1.6.0
 
