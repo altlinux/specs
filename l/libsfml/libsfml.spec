@@ -1,6 +1,6 @@
 Name:		libsfml
 Version:	1.6
-Release:	alt3
+Release:	alt4
 Group:		System/Libraries
 License:	zlib
 Summary:	Multimedia C++ API that provides low and high level access to graphics, input, audio, etc.
@@ -71,6 +71,9 @@ for s in audio graphics network system window; do
   ln -s libsfml-$s.so.%version lib/libsfml-$s.so
 done
 
+mkdir examples
+cp -a samples/[^b]* examples/
+
 #(
 #cd src/SFML
 #sed -i '/ -l[a-zA-Z]/s@\( -l[a-zA-Z]\)@ -L../../../lib -lsfml-system\1@' Audio/Makefile
@@ -99,10 +102,13 @@ cp -r samples/bin %buildroot%_libdir/%name-samples
 %_libdir/*.so
 
 %files samples
-%doc samples/[^b]*
+%doc examples/*
 %_libdir/%name-samples
 
 %changelog
+* Tue Oct 30 2012 Fr. Br. George <george@altlinux.ru> 1.6-alt4
+- Do not package ELF *-bit LSB relocatable into /usr/share/doc
+
 * Tue Oct 30 2012 Fr. Br. George <george@altlinux.ru> 1.6-alt3
 - Switch to Debian patcheset
 
