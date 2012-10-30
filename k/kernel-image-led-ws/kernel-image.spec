@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.49
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -92,6 +92,7 @@ Release: alt1
 %def_enable tomoyo
 %def_enable apparmor
 %def_enable smack
+%def_enable yama
 %def_enable thp
 %def_enable kvm
 %def_enable hyperv
@@ -651,9 +652,11 @@ Patch1152: linux-%kernel_branch.43-feat-mm--uksm.patch
 
 Patch1161: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
 
-Patch1171: linux-%kernel_branch.44-feat-sound-firewire--snd-dice.patch
-Patch1172: linux-%kernel_branch.44-feat-sound-firewire--snd-fireworks.patch
-Patch1173: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
+Patch1171: linux-%kernel_branch-feat-security--yama.patch
+
+Patch1181: linux-%kernel_branch.44-feat-sound-firewire--snd-dice.patch
+Patch1182: linux-%kernel_branch.44-feat-sound-firewire--snd-fireworks.patch
+Patch1183: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %x86_64 %ix86
@@ -1875,10 +1878,13 @@ cd linux-%version
 
 %patch1161 -p1
 
-# feat-sound-*
+# feat-security--*
 %patch1171 -p1
-%patch1172 -p1
-%patch1173 -p1
+
+# feat-sound-*
+%patch1181 -p1
+%patch1182 -p1
+%patch1183 -p1
 
 # get rid of unwanted files resulting from patch fuzz
 #find . -name "*.orig" -delete -or -name "*~" -delete
@@ -2005,7 +2011,8 @@ config_disable \
 	%{?_disable_selinux:SECURITY_SELINUX} \
 	%{?_disable_tomoyo:SECURITY_TOMOYO} \
 	%{?_disable_apparmor:SECURITY_APPARMOR} \
-	%{?_disable_tomoyo:SECURITY_SMACK} \
+	%{?_disable_smack:SECURITY_SMACK} \
+	%{?_disable_yama:SECURITY_YAMA} \
 	%{?_disable_thp:TRANSPARENT_HUGEPAGE} \
 	%{?_disable_guest:VIRTIO DRM_KVM_CIRRUS DRM_VMWGFX} \
 	%{?_disable_kvm:KVM} \
@@ -2709,6 +2716,10 @@ fi
 
 
 %changelog
+* Mon Oct 29 2012 Led <led@altlinux.ru> 3.0.49-alt2
+- added:
+  + feat-security--yama
+
 * Sun Oct 28 2012 Led <led@altlinux.ru> 3.0.49-alt1
 - 3.0.49
 - updated:
