@@ -1,7 +1,7 @@
 %define realname stg
 Name: stargazer
 Version: 2.407.cvs20100811
-Release: alt3.2
+Release: alt4
 License: GPLv2
 Group: System/Servers
 Source0: %realname-%version.src.tgz
@@ -21,6 +21,7 @@ Patch6: %name-clean_db.diff
 Patch7: %name-rscriptd-install.patch
 Patch8: %name-wildcards_dotconfpp.patch
 Patch9: %name-2.407-alt-DSO.patch
+Patch10: %name-alt-without_ipq.diff
 
 Summary: Stargazer billing system
 Summary(ru_RU.UTF8): Биллинг-система Stargazer
@@ -294,21 +295,21 @@ This plugin allows to use sgconf or sgconfig for remote system configuration
 
 ###############################################################################
 
-%package mod_cap_ipq
-Summary: Stargazer's plugin for traffic capturing via IP_QUEUE
-Group: System/Libraries
-Requires: %name = %version-%release
+#%package mod_cap_ipq
+#Summary: Stargazer's plugin for traffic capturing via IP_QUEUE
+#Group: System/Libraries
+#Requires: %name = %version-%release
 
-%description mod_cap_ipq
-This plugin allows to use iptables QUEUE target to collect traffic
+#%description mod_cap_ipq
+#This plugin allows to use iptables QUEUE target to collect traffic
 
-%post mod_cap_ipq
-%_initdir/%name condrestart
+#%post mod_cap_ipq
+#%_initdir/%name condrestart
 
-%files mod_cap_ipq
-%_libdir/%realname/mod_cap_ipq.so
-%config(noreplace,missingok) %_sysconfdir/%name/available-conf.d/mod_cap_ipq.conf
-%_sysconfdir/%name/enabled-conf.d/mod_cap_ipq.conf
+#%files mod_cap_ipq
+#%_libdir/%realname/mod_cap_ipq.so
+#%config(noreplace,missingok) %_sysconfdir/%name/available-conf.d/mod_cap_ipq.conf
+#%_sysconfdir/%name/enabled-conf.d/mod_cap_ipq.conf
 
 ###############################################################################
 
@@ -414,6 +415,7 @@ tar -xjf %SOURCE4
 %patch7 -p1
 %patch8 -p1
 %patch9 -p2
+%patch10 -p2
 
 find -name 'Makefile*' -print0 | xargs -r0 -- sed -i 's@-rpath.*@-rpath,%_libdir/%realname -Wl,-rpath-link,'`pwd`'/lib@'
 
@@ -477,6 +479,10 @@ cp projects/stargazer/inst/var/00-base-00.sql %buildroot%_localstatedir/%name/fi
 cp -R mod_store_files/* %buildroot%_localstatedir/%name/
 
 %changelog
+* Tue Oct 30 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.407.cvs20100811-alt4
+- Fixed build
+  + Without mod_cap_ipq
+
 * Mon Jun 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.407.cvs20100811-alt3.2
 - Fixed build
 
