@@ -10,8 +10,8 @@
 
 %add_findprov_lib_path %_libkde
 %add_findpackage_path %_K3bindir
-%add_findreq_skiplist %_Kapps/kross/python/RestrictedPython/*
-%add_findreq_skiplist %_Kapps/chalk/scripts/*/*.rb
+%add_findreq_skiplist %_K3apps/kross/python/RestrictedPython/*
+%add_findreq_skiplist %_K3apps/chalk/scripts/*/*.rb
 %add_verify_elf_skiplist %_libdir/libkexiformutils.so*
 %add_verify_elf_skiplist %_libdir/libkexirelationsview.so*
 %add_verify_elf_skiplist %_libdir/libkexidb.so*
@@ -25,7 +25,7 @@
 %define rname koffice
 Name: %{rname}16
 Version: 1.6.3
-%define rlz alt25
+%define rlz alt26
 %define beta %nil
 Serial: 4
 
@@ -71,9 +71,6 @@ Patch30: tde-3.5.13-build-defdir-autotool.patch
 Patch31: koffice-1.6.3-alt-automake.patch
 Patch32: tde-3.5.13-disable-arts.patch
 
-# Automatically added by buildreq on Thu Mar 18 2004 (-bi)
-#BuildRequires: XFree86-devel XFree86-libs bzlib-devel doxygen fontconfig-devel freetype2-devel gcc-c++ glib2-devel kde-settings kdelibs-devel libImageMagick-devel libart_lgpl-devel libarts-devel libaspell-devel libexif-devel libgsf-devel libjpeg-devel liblcms-devel libpng-devel libqt3-devel libstdc++-devel libtiff-devel libwv2-devel libxml2-devel libxslt-devel pkgconfig python-devel qt3-designer qt3-doc xml-utils zlib-devel
-
 BuildRequires(pre): kdelibs-devel
 BuildRequires: bzlib-devel doxygen openexr-devel
 BuildPreReq: libX11-devel libXaw-devel libXext-devel libXv-devel libICE-devel
@@ -86,12 +83,8 @@ BuildRequires: kdelibs-devel libart_lgpl-devel
 BuildRequires: libaspell-devel libexif-devel libgsf-devel libjpeg-devel liblcms-devel
 BuildRequires: libpng-devel libqt3-devel libstdc++-devel libtiff-devel libwv2-devel
 BuildRequires: libxml2-devel libxslt-devel pkg-config python-devel ruby libruby-devel
-#BuildRequires: libpoppler-qt-devel
 BuildRequires: libMySQL-devel libwpd-devel
-#BuildRequires: libpqxx-devel
-#libacl-devel libattr-devel
 BuildRequires: qt3-designer qt3-doc xml-utils zlib-devel libreadline-devel
-#BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
 BuildRequires: kdelibs >= 3.0.0 kdelibs-devel >= 3.0.0
 
 %description
@@ -271,14 +264,6 @@ Office database management program
 %patch31 -p0
 %patch32 -p1
 
-# hack to fix add .h .cpp .moc
-#for f in `find ./ -type f -name \*.ui`
-#do
-#    %qtdir/bin/uic $f -o `echo $f|sed "s/\.ui/.h/"` 2>/dev/null ||:
-#    %qtdir/bin/uic $f -impl `echo $f|sed "s/\.ui/.h/"` $f -o `echo $f|sed "s/\.ui/.cpp/"` 2>/dev/null ||:
-#done
-#for f in `find ./ -type f -name \*.h`; do %qtdir/bin/moc $f -o `echo $f|sed "s/\.h/.moc/"` 2>/dev/null ||:; done
-
 # fix compile with qt-3.3.8d
 sed -i "s|QSplitterLayoutStruct|KDGanttSplitterLayoutStruct|g" kdgantt/KDGanttMinimizeSplitter.*
 
@@ -300,18 +285,13 @@ cp -Rp /usr/share/libtool/aclocal/libtool.m4 admin/libtool.m4.in
 cp -Rp /usr/share/libtool/config/ltmain.sh admin/ltmain.sh
 make -f admin/Makefile.common cvs
 
-
 %build
-#export PYTHONDIR=/usr/lib/python2.2
 export QTDIR=%qtdir KDEDIR=%kdedir
 export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 export LDFLAGS="-L%qtdir/lib"
 export CXXFLAGS="-I%_includedir/poppler/qt3"
-# export DO_NOT_COMPILE="example kword kspread kpresenter kformula kugar kplato"
-# add_optflags %optflags_shared -DHAVE_EACCESS -I%_includedir/tqtinterface
 
-%configure \
-    \
+%K3configure \
 %if "%beta" != "%nil" || %unstable
     --disable-final \
 %else
@@ -345,48 +325,23 @@ export CXXFLAGS="-I%_includedir/poppler/qt3"
     --enable-scripting \
     --without-arts
 
-#    --enable-pgsql \
-
 %make_build
-#make_build -C filters/kpresenter/powerpoint
-#make_build -C filters/chalk/magick
 
 %install
 %if %unstable
 %set_strip_method none
 %endif
 
-%make install DESTDIR=%buildroot RUN_KAPPFINDER=no
-#make install DESTDIR=%buildroot RUN_KAPPFINDER=no -C filters/kpresenter/powerpoint
-#make install DESTDIR=%buildroot RUN_KAPPFINDER=no -C filters/chalk/magick
+%K3install
 
-# delete files same with kdelibs
-#for n in `rpm -ql kdelibs| grep /usr/share/mimelnk`
-#do
-#    [ -f %buildroot/$n ] && rm -f  %buildroot/$n
-#done
-
-# move .desktop-s
-for f in `find %buildroot/%_Kapplnk -type f -name *.desktop| grep -v chalk_`
-do
-    mv $f %buildroot/%_Kmenudir/
-done
-for f in `find %buildroot/%_Kapplnk -type f -name *.desktop| grep -v '.hidden'`
-do
-    mv $f %buildroot/%_Kapplnk/.hidden/
-done
-
-# move configs
-mkdir -p %buildroot/%_Kconfig
-#mv %buildroot/%_datadir/config/* %buildroot/%_Kconfig/
-
+mv %buildroot/%_iconsdir/crystalsvg %buildroot/%_kde3_iconsdir
 
 %files
 %files common
 
 %files libs
-%doc %_docdir/HTML/en/koffice
-%_bindir/krossrunner
+%doc %_K3doc/en/koffice
+%_K3bindir/krossrunner
 %_Klibdir/clipartthumbnail.so*
 %_Klibdir/kodocinfopropspage.so*
 %_Klibdir/kofficescan.so*
@@ -411,74 +366,74 @@ mkdir -p %buildroot/%_Kconfig
 %_libdir/libkrossmain.so*
 %_libdir/libkstore.so*
 %_libdir/libkwmf.so*
-%_Kapps/koffice/
-%_Kapps/kofficewidgets/
-%_Kapps/kross/
-%_Kapps/thesaurus/
-%_Kapps/xsltfilter/
-%_iconsdir/*/*/actions/abs.png
-%_iconsdir/*/*/actions/brackets.png
-%_iconsdir/*/*/actions/frac.png
-%_iconsdir/*/*/actions/gsub.png
-%_iconsdir/*/*/actions/gsup.png
-%_iconsdir/*/*/actions/int.png
-%_iconsdir/*/*/actions/lsub.png
-%_iconsdir/*/*/actions/lsup.png
-%_iconsdir/*/*/actions/matrix.png
-%_iconsdir/*/*/actions/multiline.png
-%_iconsdir/*/*/actions/onetwomatrix.png
-%_iconsdir/*/*/actions/over.png
-%_iconsdir/*/*/actions/paren.png
-%_iconsdir/*/*/actions/prod.png
-%_iconsdir/*/*/actions/rsub.png
-%_iconsdir/*/*/actions/rsup.png
-%_iconsdir/*/*/actions/sqrt.png
-%_iconsdir/*/*/actions/sum.png
-%_iconsdir/*/*/actions/under.png
-%_iconsdir/*/*/actions/inscol.png
-%_iconsdir/*/*/actions/insrow.png
-%_iconsdir/*/*/actions/remcol.png
-%_iconsdir/*/*/actions/remrow.png
-%_Kservices/clipartthumbnail.desktop
-%_Kservices/generic_filter.desktop
-%_Kservices/kodocinfopropspage.desktop
-%_Kservices/kofficethumbnail.desktop
-%_Kservices/kounavail.desktop
-%_Kservices/thesaurustool.desktop
-%_Kservices/xslt_export.desktop
-%_Kservices/xslt_import.desktop
-%_Kservices/ole_powerpoint97_import.desktop
-%_Kservicetypes/kochart.desktop
-%_Kservicetypes/kofficepart.desktop
-%_Kservicetypes/kofilter.desktop
-%_Kservicetypes/kofilterwrapper.desktop
-%_Kservicetypes/koplugin.desktop
+%_K3apps/koffice/
+%_K3apps/kofficewidgets/
+%_K3apps/kross/
+%_K3apps/thesaurus/
+%_K3apps/xsltfilter/
+%_kde3_iconsdir/*/*/actions/abs.png
+%_kde3_iconsdir/*/*/actions/brackets.png
+%_kde3_iconsdir/*/*/actions/frac.png
+%_kde3_iconsdir/*/*/actions/gsub.png
+%_kde3_iconsdir/*/*/actions/gsup.png
+%_kde3_iconsdir/*/*/actions/int.png
+%_kde3_iconsdir/*/*/actions/lsub.png
+%_kde3_iconsdir/*/*/actions/lsup.png
+%_kde3_iconsdir/*/*/actions/matrix.png
+%_kde3_iconsdir/*/*/actions/multiline.png
+%_kde3_iconsdir/*/*/actions/onetwomatrix.png
+%_kde3_iconsdir/*/*/actions/over.png
+%_kde3_iconsdir/*/*/actions/paren.png
+%_kde3_iconsdir/*/*/actions/prod.png
+%_kde3_iconsdir/*/*/actions/rsub.png
+%_kde3_iconsdir/*/*/actions/rsup.png
+%_kde3_iconsdir/*/*/actions/sqrt.png
+%_kde3_iconsdir/*/*/actions/sum.png
+%_kde3_iconsdir/*/*/actions/under.png
+%_kde3_iconsdir/*/*/actions/inscol.png
+%_kde3_iconsdir/*/*/actions/insrow.png
+%_kde3_iconsdir/*/*/actions/remcol.png
+%_kde3_iconsdir/*/*/actions/remrow.png
+%_K3services/clipartthumbnail.desktop
+%_K3services/generic_filter.desktop
+%_K3services/kodocinfopropspage.desktop
+%_K3services/kofficethumbnail.desktop
+%_K3services/kounavail.desktop
+%_K3services/thesaurustool.desktop
+%_K3services/xslt_export.desktop
+%_K3services/xslt_import.desktop
+%_K3services/ole_powerpoint97_import.desktop
+%_K3srvtyp/kochart.desktop
+%_K3srvtyp/kofficepart.desktop
+%_K3srvtyp/kofilter.desktop
+%_K3srvtyp/kofilterwrapper.desktop
+%_K3srvtyp/koplugin.desktop
 # ---------- kfile ------------
 %_Klibdir/kfile_abiword.so*
 %_Klibdir/kfile_gnumeric.so*
 %_Klibdir/kfile_koffice.so*
 %_Klibdir/kfile_ooo.so*
-%_Kservices/kfile_abiword.desktop
-%_Kservices/kfile_gnumeric.desktop
-%_Kservices/kfile_koffice.desktop
-%_Kservices/kfile_ooo.desktop
+%_K3services/kfile_abiword.desktop
+%_K3services/kfile_gnumeric.desktop
+%_K3services/kfile_koffice.desktop
+%_K3services/kfile_ooo.desktop
 # ---------- koshell ------------
-%doc %_docdir/HTML/en/koshell
-%_bindir/koshell
+%doc %_K3doc/en/koshell
+%_K3bindir/koshell
 %_libdir/libkdeinit_koshell.so*
 %_Klibdir/koshell.so*
-%_Kcfg/koshell.kcfg
-%_Kmenudir/koffice.desktop
-%_Kmenudir/koshell.desktop
-%_Kapps/koshell
-%_iconsdir/*/*/apps/koshell.*
+%_K3cfg/koshell.kcfg
+%_K3xdg_apps/koffice.desktop
+%_K3xdg_apps/koshell.desktop
+%_K3apps/koshell
+%_kde3_iconsdir/*/*/apps/koshell.*
 #
-%doc %_docdir/HTML/en/thesaurus
+%doc %_K3doc/en/thesaurus
 #%_Klibdir/kthesaurus.so*
 #%_libdir/libkdeinit_kthesaurus.so*
-#%_Kmenudir/KThesaurus.desktop
-#%_bindir/koconverter
-#%_bindir/kthesaurus
+#%_K3xdg_apps/KThesaurus.desktop
+#%_K3bindir/koconverter
+#%_K3bindir/kthesaurus
 #%_Klibdir/krossruby.so*
 #%_Klibdir/libolefilter.so*
 %_libdir/libkchartimageexport.so*
@@ -489,12 +444,12 @@ mkdir -p %buildroot/%_Kconfig
 
 %files kivio
 %_Klibdir/libkivioimageexport.so*
-%_Kservices/kivio_image_export.desktop
-%_datadir/apps/konqueror/servicemenus/kivio_konqi.desktop
-%_Kcfg/kivio.kcfg
+%_K3services/kivio_image_export.desktop
+%_K3datadir/apps/konqueror/servicemenus/kivio_konqi.desktop
+%_K3cfg/kivio.kcfg
 #
-%doc %_docdir/HTML/en/kivio
-%_bindir/kivio
+%doc %_K3doc/en/kivio
+%_K3bindir/kivio
 %_Klibdir/kivio.so*
 %_Klibdir/libkivioconnectortool.so*
 %_Klibdir/libkiviopart.so*
@@ -505,23 +460,23 @@ mkdir -p %buildroot/%_Kconfig
 %_Klibdir/straight_connector.so*
 %_libdir/libkdeinit_kivio.so
 %_libdir/libkiviocommon.so*
-%_Kmenudir/kivio.desktop
-%_Kapps/kivio/
-%_iconsdir/*/*/apps/kivio.png
-%_Kservices/kivioconnectortool.desktop
-%_Kservices/kiviopart.desktop
-%_Kservices/kivioselecttool.desktop
-%_Kservices/kiviotargettool.desktop
-%_Kservices/kiviotexttool.desktop
-%_Kservices/kiviozoomtool.desktop
+%_K3xdg_apps/kivio.desktop
+%_K3apps/kivio/
+%_kde3_iconsdir/*/*/apps/kivio.png
+%_K3services/kivioconnectortool.desktop
+%_K3services/kiviopart.desktop
+%_K3services/kivioselecttool.desktop
+%_K3services/kiviotargettool.desktop
+%_K3services/kiviotexttool.desktop
+%_K3services/kiviozoomtool.desktop
 
 %files kexi
-%_datadir/apps/konqueror/servicemenus/kexi_konqi.desktop
+%_K3datadir/apps/konqueror/servicemenus/kexi_konqi.desktop
 #
-%doc %_docdir/HTML/en/kexi
-%_bindir/kexi
-%_bindir/kexi_*
-%_bindir/ksqlite*
+%doc %_K3doc/en/kexi
+%_K3bindir/kexi
+%_K3bindir/kexi_*
+%_K3bindir/ksqlite*
 %_Klibdir/kexidb_*.so*
 %_Klibdir/kexihandler_*.so*
 %_Klibdir/keximigrate_*.so*
@@ -544,86 +499,86 @@ mkdir -p %buildroot/%_Kconfig
 %_libdir/libkexisql2.so*
 %_libdir/libkexisql3.so*
 %_libdir/libkformdesigner.so*
-%_Kmenudir/kexi.desktop
-%_datadir/apps/kexi/
-%config %_datadir/config/kexirc
-%config %_datadir/config/magic/kexi.magic
-%_iconsdir/*/*/mimetypes/kexiproject_*.*
-%_iconsdir/*/*/apps/kexi.*
-%_Kmimelnk/application/x-kexiproject-*.desktop
-%_Kmimelnk/application/x-kexi-connectiondata.desktop
-%_Kservices/kexidb_*.desktop
-%_Kservices/kexi/
-%_Kservices/keximigrate_*.desktop
-%_Kservices/kformdesigner/
-%_Kservicetypes/kexidb_driver.desktop
-%_Kservicetypes/kexihandler.desktop
-%_Kservicetypes/keximigration_driver.desktop
-%_Kservicetypes/widgetfactory.desktop
+%_K3xdg_apps/kexi.desktop
+%_K3datadir/apps/kexi/
+%config %_K3datadir/config/kexirc
+%config %_K3datadir/config/magic/kexi.magic
+%_kde3_iconsdir/*/*/mimetypes/kexiproject_*.*
+%_kde3_iconsdir/*/*/apps/kexi.*
+%_K3mimelnk/application/x-kexiproject-*.desktop
+%_K3mimelnk/application/x-kexi-connectiondata.desktop
+%_K3services/kexidb_*.desktop
+%_K3services/kexi/
+%_K3services/keximigrate_*.desktop
+%_K3services/kformdesigner/
+%_K3srvtyp/kexidb_driver.desktop
+%_K3srvtyp/kexihandler.desktop
+%_K3srvtyp/keximigration_driver.desktop
+%_K3srvtyp/widgetfactory.desktop
 
 %files karbon
-%_datadir/apps/konqueror/servicemenus/karbon_konqi.desktop
-%_datadir/templates/Illustration.desktop
-%_datadir/templates/.source/Illustration.karbon
+%_K3datadir/apps/konqueror/servicemenus/karbon_konqi.desktop
+%_K3datadir/templates/Illustration.desktop
+%_K3datadir/templates/.source/Illustration.karbon
 #
 %_Klibdir/libkarbon*import.so*
 %_Klibdir/libkarbon*export.so*
 %_Klibdir/liboodrawimport.so*
 %_Klibdir/libwmfexport.so*
 %_Klibdir/libwmfimport.so*
-%_Kservices/karbon_*_import.desktop
-%_Kservices/karbon_*_export.desktop
+%_K3services/karbon_*_import.desktop
+%_K3services/karbon_*_export.desktop
 #
-%doc %_docdir/HTML/en/karbon
-%_bindir/karbon
+%doc %_K3doc/en/karbon
+%_K3bindir/karbon
 %_Klibdir/karbon_*.so*
 %_Klibdir/karbon.so*
 %_Klibdir/libkarbonpart.so*
 %_libdir/libkarboncommon.so*
 %_libdir/libkdeinit_karbon.so*
-%_Kmenudir/karbon.desktop
-%_Kapps/karbon/
-%_iconsdir/*/*/apps/karbon.*
-%_Kservices/karbondefaulttools.desktop
-%_Kservices/karbonimagetool.desktop
-%_Kservices/karbonpart.desktop
-%_Kservices/karbonzoomtool.desktop
-%_Kservicetypes/karbon_module.desktop
+%_K3xdg_apps/karbon.desktop
+%_K3apps/karbon/
+%_kde3_iconsdir/*/*/apps/karbon.*
+%_K3services/karbondefaulttools.desktop
+%_K3services/karbonimagetool.desktop
+%_K3services/karbonpart.desktop
+%_K3services/karbonzoomtool.desktop
+%_K3srvtyp/karbon_module.desktop
 
 %files kchart
-%doc %_docdir/HTML/en/kchart
-%_Kapps/konqueror/servicemenus/kchart_konqi.desktop
+%doc %_K3doc/en/kchart
+%_K3apps/konqueror/servicemenus/kchart_konqi.desktop
 %_Klibdir/libkchart*export.so*
-%_datadir/services/kchart_*_export.desktop
+%_K3datadir/services/kchart_*_export.desktop
 #
-%_bindir/kchart
+%_K3bindir/kchart
 %_Klibdir/kchart.so*
 %_Klibdir/libkchartpart.so*
 %_libdir/libkdeinit_kchart.so*
-%_Kmenudir/kchart.desktop
-%_Kapps/kchart
-%_iconsdir/*/*/apps/kchart.png
-%_Kservices/kchartpart.desktop
+%_K3xdg_apps/kchart.desktop
+%_K3apps/kchart
+%_kde3_iconsdir/*/*/apps/kchart.png
+%_K3services/kchartpart.desktop
 
 %files chalk
-%_datadir/apps/konqueror/servicemenus/chalk_konqi.desktop
+%_K3datadir/apps/konqueror/servicemenus/chalk_konqi.desktop
 #
 %_Klibdir/libchalk*export.so*
 %_Klibdir/libchalk*import.so*
 %_Klibdir/chalkselectopaque.so*
-#%_Kapplnk/.hidden/chalk_magick.desktop
-%_Kapplnk/.hidden/chalk_jpeg.desktop
-%_Kapplnk/.hidden/chalk_openexr.desktop
-%_Kapplnk/.hidden/chalk_png.desktop
-%_Kapplnk/.hidden/chalk_raw.desktop
-%_Kapplnk/.hidden/chalk_tiff.desktop
-#%_Kapplnk/.hidden/chalk_pdf.desktop
-%_Kservices/chalk_*_export.desktop
-%_Kservices/chalk_*_import.desktop
-%_Kservices/chalkselectopaque.desktop
+#%_K3applnk/.hidden/chalk_magick.desktop
+%_K3applnk/.hidden/chalk_jpeg.desktop
+%_K3applnk/.hidden/chalk_openexr.desktop
+%_K3applnk/.hidden/chalk_png.desktop
+%_K3applnk/.hidden/chalk_raw.desktop
+%_K3applnk/.hidden/chalk_tiff.desktop
+#%_K3applnk/.hidden/chalk_pdf.desktop
+%_K3services/chalk_*_export.desktop
+%_K3services/chalk_*_import.desktop
+%_K3services/chalkselectopaque.desktop
 #
-%doc %_docdir/HTML/en/chalk
-%_bindir/chalk
+%doc %_K3doc/en/chalk
+%_K3bindir/chalk
 %_Klibdir/chalkbumpmap.so*
 %_Klibdir/chalkcimg.so*
 %_Klibdir/chalkcmykplugin.so*
@@ -692,99 +647,99 @@ mkdir -p %buildroot/%_Kconfig
 %_libdir/libchalkrgb.so*
 %_libdir/libchalkscripting.so*
 %_libdir/libchalkui.so*
-%_Kmenudir/chalk.desktop
-%_Kapps/chalk/
-%_Kapps/chalkplugins/
-%_iconsdir/*/*/apps/chalk.*
-%_Kservices/chalkbumpmapfilter.desktop
-%_Kservices/chalkcimg.desktop
-%_Kservices/chalkcmykplugin.desktop
-%_Kservices/chalk_*_plugin.desktop
-%_Kservices/chalkcolorrange.desktop
-%_Kservices/chalkcolorsfilter.desktop
-%_Kservices/chalkcolorifyfilter.desktop
-%_Kservices/chalkcolorspaceconversion.desktop
-%_Kservices/chalkconvolutionfilters.desktop
-%_Kservices/chalkdefaultpaintops.desktop
-%_Kservices/chalkdefaulttools.desktop
-%_Kservices/chalkdropshadow.desktop
-%_Kservices/chalkembossfilter.desktop
-%_Kservices/chalkexample.desktop
-%_Kservices/chalkfiltersgallery.desktop
-%_Kservices/chalkgrayplugin.desktop
-%_Kservices/chalkhistogram.desktop
-%_Kservices/chalkhistogramdocker.desktop
-%_Kservices/chalkimageenhancement.desktop
-%_Kservices/chalkimagesize.desktop
-%_Kservices/chalkoilpaintfilter.desktop
-%_Kservices/chalklevelfilter.desktop
-%_Kservices/chalkpart.desktop
+%_K3xdg_apps/chalk.desktop
+%_K3apps/chalk/
+%_K3apps/chalkplugins/
+%_kde3_iconsdir/*/*/apps/chalk.*
+%_K3services/chalkbumpmapfilter.desktop
+%_K3services/chalkcimg.desktop
+%_K3services/chalkcmykplugin.desktop
+%_K3services/chalk_*_plugin.desktop
+%_K3services/chalkcolorrange.desktop
+%_K3services/chalkcolorsfilter.desktop
+%_K3services/chalkcolorifyfilter.desktop
+%_K3services/chalkcolorspaceconversion.desktop
+%_K3services/chalkconvolutionfilters.desktop
+%_K3services/chalkdefaultpaintops.desktop
+%_K3services/chalkdefaulttools.desktop
+%_K3services/chalkdropshadow.desktop
+%_K3services/chalkembossfilter.desktop
+%_K3services/chalkexample.desktop
+%_K3services/chalkfiltersgallery.desktop
+%_K3services/chalkgrayplugin.desktop
+%_K3services/chalkhistogram.desktop
+%_K3services/chalkhistogramdocker.desktop
+%_K3services/chalkimageenhancement.desktop
+%_K3services/chalkimagesize.desktop
+%_K3services/chalkoilpaintfilter.desktop
+%_K3services/chalklevelfilter.desktop
+%_K3services/chalkpart.desktop
 #%_Klibdir/chalkperftest.so*
-#%_Kservices/chalkperftest.desktop
-%_Kservices/chalkpixelizefilter.desktop
-%_Kservices/chalkraindropsfilter.desktop
-%_Kservices/chalkrgbplugin.desktop
-%_Kservices/chalkrotateimage.desktop
-%_Kservices/chalkroundcornersfilter.desktop
-%_Kservices/chalkscreenshot.desktop
-%_Kservices/chalkscripting.desktop
-%_Kservices/chalkselectiontools.desktop
-%_Kservices/chalkseparatechannels.desktop
-%_Kservices/chalkshearimage.desktop
-%_Kservices/chalksmalltilesfilter.desktop
-#%_Kservices/chalksmearybrush.desktop
-%_Kservices/chalksobelfilter.desktop
-%_Kservices/chalktoolcrop.desktop
-%_Kservices/chalktoolfilter.desktop
-%_Kservices/chalktoolpolygon.desktop
-%_Kservices/chalktoolpolyline.desktop
-%_Kservices/chalktoolselectsimilar.desktop
-%_Kservices/chalktoolstar.desktop
-%_Kservices/chalktooltransform.desktop
-%_Kservices/chalkwetplugin.desktop
-%_Kservices/chalkblurfilter.desktop
-%_Kservices/chalkextensioncolorsfilters.desktop
-%_Kservices/chalkfastcolortransfer.desktop
-%_Kservices/chalklenscorrectionfilter.desktop
-%_Kservices/chalkmodifyselection.desktop
-%_Kservices/chalknoisefilter.desktop
-%_Kservices/chalkrandompickfilter.desktop
-%_Kservices/chalksubstrate.desktop
-%_Kservices/chalktoolcurves.desktop
-%_Kservices/chalktoolperspectivegrid.desktop
-%_Kservices/chalktoolperspectivetransform.desktop
-%_Kservices/chalkunsharpfilter.desktop
-%_Kservices/chalkwavefilter.desktop
-%_Kservicetypes/chalk_*.desktop
+#%_K3services/chalkperftest.desktop
+%_K3services/chalkpixelizefilter.desktop
+%_K3services/chalkraindropsfilter.desktop
+%_K3services/chalkrgbplugin.desktop
+%_K3services/chalkrotateimage.desktop
+%_K3services/chalkroundcornersfilter.desktop
+%_K3services/chalkscreenshot.desktop
+%_K3services/chalkscripting.desktop
+%_K3services/chalkselectiontools.desktop
+%_K3services/chalkseparatechannels.desktop
+%_K3services/chalkshearimage.desktop
+%_K3services/chalksmalltilesfilter.desktop
+#%_K3services/chalksmearybrush.desktop
+%_K3services/chalksobelfilter.desktop
+%_K3services/chalktoolcrop.desktop
+%_K3services/chalktoolfilter.desktop
+%_K3services/chalktoolpolygon.desktop
+%_K3services/chalktoolpolyline.desktop
+%_K3services/chalktoolselectsimilar.desktop
+%_K3services/chalktoolstar.desktop
+%_K3services/chalktooltransform.desktop
+%_K3services/chalkwetplugin.desktop
+%_K3services/chalkblurfilter.desktop
+%_K3services/chalkextensioncolorsfilters.desktop
+%_K3services/chalkfastcolortransfer.desktop
+%_K3services/chalklenscorrectionfilter.desktop
+%_K3services/chalkmodifyselection.desktop
+%_K3services/chalknoisefilter.desktop
+%_K3services/chalkrandompickfilter.desktop
+%_K3services/chalksubstrate.desktop
+%_K3services/chalktoolcurves.desktop
+%_K3services/chalktoolperspectivegrid.desktop
+%_K3services/chalktoolperspectivetransform.desktop
+%_K3services/chalkunsharpfilter.desktop
+%_K3services/chalkwavefilter.desktop
+%_K3srvtyp/chalk_*.desktop
 
 
 ####%if 0
 %files kformula
-%_datadir/apps/konqueror/servicemenus/kformula_konqi.desktop
+%_K3datadir/apps/konqueror/servicemenus/kformula_konqi.desktop
 %_Klibdir/libkfolatexexport.so*
 %_Klibdir/libkfomathmlexport.so*
 %_Klibdir/libkfomathmlimport.so*
 %_Klibdir/libkfopngexport.so*
 %_Klibdir/libkfosvgexport.so*
-%_datadir/services/kformula_*_import.desktop
-%_datadir/services/kformula_*_export.desktop
+%_K3datadir/services/kformula_*_import.desktop
+%_K3datadir/services/kformula_*_export.desktop
 #
-%doc %_docdir/HTML/en/kformula
-%_bindir/kformula
+%doc %_K3doc/en/kformula
+%_K3bindir/kformula
 %_Klibdir/kformula.so*
 %_Klibdir/libkformulapart.so*
 %_libdir/libkdeinit_kformula.so*
-%_Kmenudir/kformula.desktop
-%_Kapps/kformula/
-%_iconsdir/*/*/apps/kformula.png
-%_Kservices/kformulapart.desktop
+%_K3xdg_apps/kformula.desktop
+%_K3apps/kformula/
+%_kde3_iconsdir/*/*/apps/kformula.png
+%_K3services/kformulapart.desktop
 
 
 
 %files kpresenter
-%_datadir/apps/konqueror/servicemenus/kpresenter_konqi.desktop
-%_datadir/templates/.source/Presentation.kpt
-%_datadir/templates/Presentation.desktop
+%_K3datadir/apps/konqueror/servicemenus/kpresenter_konqi.desktop
+%_K3datadir/templates/.source/Presentation.kpt
+%_K3datadir/templates/Presentation.desktop
 #
 %_Klibdir/libkpresenterbmpexport.so*
 %_Klibdir/libkpresenterjpegexport.so*
@@ -798,30 +753,30 @@ mkdir -p %buildroot/%_Kconfig
 %_Klibdir/libooimpressimport.so*
 #%_Klibdir/libpowerpointimport.so*
 %_libdir/libkpresenterimageexport.so*
-%_Kservices/kpresenter_*_export.desktop
-%_Kservices/kpresenter_*_import.desktop
-%_Kservices/kprkword.desktop
+%_K3services/kpresenter_*_export.desktop
+%_K3services/kpresenter_*_import.desktop
+%_K3services/kprkword.desktop
 #
-%doc %_docdir/HTML/en/kpresenter
-%_bindir/kpresenter
-%_bindir/kprconverter.pl
+%doc %_K3doc/en/kpresenter
+%_K3bindir/kpresenter
+%_K3bindir/kprconverter.pl
 %_Klibdir/kpresenter.so*
 %_Klibdir/libkpresenterpart.so*
 %_libdir/libkdeinit_kpresenter.so*
 %_libdir/libkpresenterprivate.so*
-%_Kapps/kpresenter/
-%_Kmenudir/kpresenter.desktop
-%_iconsdir/*/*/apps/kpresenter.png
-%_Kservices/kpresenterpart.desktop
+%_K3apps/kpresenter/
+%_K3xdg_apps/kpresenter.desktop
+%_kde3_iconsdir/*/*/apps/kpresenter.png
+%_K3services/kpresenterpart.desktop
 
 
 %files kspread
-%_Kapps/konqueror/servicemenus/kspread_konqi.desktop
-%_datadir/templates/SpreadSheet.desktop
-%_datadir/templates/.source/SpreadSheet.kst
+%_K3apps/konqueror/servicemenus/kspread_konqi.desktop
+%_K3datadir/templates/SpreadSheet.desktop
+%_K3datadir/templates/.source/SpreadSheet.kst
 #
-%_datadir/services/kspread_*_import.desktop
-%_datadir/services/kspread_*_export.desktop
+%_K3datadir/services/kspread_*_import.desktop
+%_K3datadir/services/kspread_*_export.desktop
 %_Klibdir/libcsvexport.so*
 %_Klibdir/libcsvimport.so*
 %_Klibdir/libapplixspreadimport.so
@@ -837,26 +792,26 @@ mkdir -p %buildroot/%_Kconfig
 %_Klibdir/kspreadscripting.so*
 %_Klibdir/libkspreadkexiimport.so*
 #
-%doc %_docdir/HTML/en/kspread
-%_bindir/kspread
+%doc %_K3doc/en/kspread
+%_K3bindir/kspread
 %_libdir/libkdeinit_kspread.so*
 %_Klibdir/libkspreadinsertcalendar.so*
 %_Klibdir/libkspreadpart.so*
 %_Klibdir/kspread.so*
-%_Kmenudir/kspread.desktop
-%_datadir/apps/kspread/
-%_iconsdir/*/*/apps/kspread.png
-%_Kservices/kspreadpart.desktop
-%_Kservices/kspreadscripting.desktop
+%_K3xdg_apps/kspread.desktop
+%_K3datadir/apps/kspread/
+%_kde3_iconsdir/*/*/apps/kspread.png
+%_K3services/kspreadpart.desktop
+%_K3services/kspreadscripting.desktop
 
 
 %files kugar
 %_Klibdir/libkugarnopimport.so*
-%_Kservices/kugar_kugar_import.desktop
+%_K3services/kugar_kugar_import.desktop
 #
-%doc %_docdir/HTML/en/kugar
-%_bindir/kugar
-%_bindir/kudesigner
+%doc %_K3doc/en/kugar
+%_K3bindir/kugar
+%_K3bindir/kudesigner
 %_Klibdir/kugar.so*
 %_Klibdir/kudesigner.so*
 %_Klibdir/libkudesignerpart.so*
@@ -865,20 +820,20 @@ mkdir -p %buildroot/%_Kconfig
 %_libdir/libkdeinit_kudesigner.so*
 %_libdir/libkudesignercore.so*
 %_libdir/libkugarlib.so*
-%_Kmenudir/kugar.desktop
-%_Kmenudir/kudesigner.desktop
-%_Kapps/kudesigner/
-%_Kapps/kugar
-%_iconsdir/*/*/apps/kugar.png
-%_iconsdir/*/*/apps/kudesigner.png
-%_iconsdir/*/*/mimetypes/kugardata.png
-%_Kservices/kugarpart.desktop
+%_K3xdg_apps/kugar.desktop
+%_K3xdg_apps/kudesigner.desktop
+%_K3apps/kudesigner/
+%_K3apps/kugar
+%_kde3_iconsdir/*/*/apps/kugar.png
+%_kde3_iconsdir/*/*/apps/kudesigner.png
+%_kde3_iconsdir/*/*/mimetypes/kugardata.png
+%_K3services/kugarpart.desktop
 
 
 %files kword
-%_Kapps/konqueror/servicemenus/kword_*.desktop
-%_datadir/templates/.source/TextDocument.kwt
-%_datadir/templates/TextDocument.desktop
+%_K3apps/konqueror/servicemenus/kword_*.desktop
+%_K3datadir/templates/.source/TextDocument.kwt
+%_K3datadir/templates/TextDocument.desktop
 #
 %_libdir/libkwordexportfilters.so*
 %_Klibdir/libabiwordexport.so*
@@ -908,39 +863,39 @@ mkdir -p %buildroot/%_Kconfig
 %_Klibdir/libwmlimport.so*
 %_Klibdir/libwpexport.so*
 %_Klibdir/libwpimport.so*
-%_Kservices/kword_*_export.desktop
-%_Kservices/kword_*_import.desktop
+%_K3services/kword_*_export.desktop
+%_K3services/kword_*_import.desktop
 #
-%doc %_docdir/HTML/en/kword
-%_bindir/kword
+%doc %_K3doc/en/kword
+%_K3bindir/kword
 %_Klibdir/kwmailmerge_*.so*
 %_Klibdir/kword.so*
 %_Klibdir/libkwordpart.so*
 %_libdir/libkdeinit_kword.so*
 %_libdir/libkwmailmerge_interface.so*
 %_libdir/libkwordprivate.so*
-%_Kapps/kword/
-%_iconsdir/*/*/apps/kword.png
-%_Kmenudir/kword.desktop
-%_Kservices/kwmailmerge_*.desktop
-%_Kservices/kwordpart.desktop
-%_Kservices/kwserialletter_*
-%_Kservicetypes/kwmailmerge.desktop
+%_K3apps/kword/
+%_kde3_iconsdir/*/*/apps/kword.png
+%_K3xdg_apps/kword.desktop
+%_K3services/kwmailmerge_*.desktop
+%_K3services/kwordpart.desktop
+%_K3services/kwserialletter_*
+%_K3srvtyp/kwmailmerge.desktop
 
 
 %files kplato
-%doc %_docdir/HTML/en/kplato
-%_bindir/kplato
+%doc %_K3doc/en/kplato
+%_K3bindir/kplato
 %_libdir/libkdeinit_kplato.so*
 %_Klibdir/kplato.so*
 %_Klibdir/libkplatopart.so*
-%_Kapps/kplato/
-%_Kservices/kplatopart.desktop
-%_iconsdir/*/*/apps/kplato.*
-%_Kmenudir/kplato.desktop
+%_K3apps/kplato/
+%_K3services/kplatopart.desktop
+%_kde3_iconsdir/*/*/apps/kplato.*
+%_K3xdg_apps/kplato.desktop
 
 %files devel
-%doc %_docdir/HTML/en/koffice-apidocs/
+%doc %_K3doc/en/koffice-apidocs/
 %_includedir/*
 %if %_keep_libtool_files
 %_libdir/*.la
@@ -950,8 +905,11 @@ mkdir -p %buildroot/%_Kconfig
 ###%endif
 
 %changelog
+* Tue Oct 30 2012 Roman Savochenko <rom_as@altlinux.ru> 4:1.6.3-alt26
+- Move conflicted with KOffice 2 files to /usr/lib/kde3.
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 4:1.6.3-alt25
-- Build for TDE 3.5.13 release
+- Release TDE version 3.5.13.1
 - All programms build enable.
 
 * Wed Aug 29 2012 Repocop Q. A. Robot <repocop@altlinux.org> 4:1.6.3-alt24.qa1
