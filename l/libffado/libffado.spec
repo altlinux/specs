@@ -1,19 +1,20 @@
 Summary: Free firewire audio driver library
 Name: libffado
-Version: 2.0.1
-Release: alt2
+Version: 2.1.0
+Release: alt1
 License: GPLv2+
 Group: Sound
 Url: http://www.ffado.org/
-Source: http://www.ffado.org/files/%name-%version.tar.gz
+Source: %name-%version.tgz
 Patch0: libffado-2.0.0-rc1-dbus-mainloop-qt-detect.patch
 Patch1: libffado-2.0.0-ffado-diag-path.patch
 Patch2: libffado-2.0-rc1-includes.patch
 Patch3: libffado-2.0-alt.patch
-Patch4:	libffado-2.0.1-alt.DSO.patch
+Patch4: libffado-2.0.1-alt.DSO.patch
+%setup_python_module ffado
 
 # Automatically added by buildreq on Fri Sep 10 2010
-BuildRequires: gcc-c++ libdbus-devel libexpat-devel libiec61883-devel libxml++2-devel python-module-PyQt4 python-module-dbus python-modules-encodings scons subversion xdg-utils
+BuildRequires: gcc-c++ libdbus-devel libexpat-devel libiec61883-devel libxml++2-devel python-module-PyQt4 python-module-dbus python-modules-encodings scons subversion xdg-utils libconfig-c++-devel          
 
 %description
 The FFADO project aims to provide a generic, open-source solution for the
@@ -36,8 +37,17 @@ Requires: %name = %version-%release
 %description -n ffado
 Applications and utilities for use with libffado.
 
+%package -n %packagename
+Summary: Python bindings for %name, %summary
+Group: Development/Python
+Buildarch: noarch
+%description -n  %packagename
+Python bindings for %name, %summary
+
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
+# XXX this uses non-existed module and is not used itself!
+rm support/mixer-qt4/ffado/mixer/nodevice.py
 #patch0 -p1
 # This patch may be useful
 %patch1
@@ -46,12 +56,13 @@ Applications and utilities for use with libffado.
 %patch4 -p1
 
 %build
-[ -n "$NPROCS" ] || NPROCS=%__nprocs; scons -j$NPROCS PREFIX=%prefix LIBDIR=%_libdir WILL_DEAL_WITH_XDG_MYSELF=YES COMPILE_FLAGS='%optflags'
+[ -n "$NPROCS" ] || NPROCS=%__nprocs; scons -j$NPROCS PREFIX=%prefix LIBDIR=%_libdir WILL_DEAL_WITH_XDG_MYSELF=YES COMPILE_FLAGS='%optflags' MANDIR=%_mandir
 
 %install
 rm -rf %buildroot
 scons PREFIX=%prefix LIBDIR=%_libdir \
       WILL_DEAL_WITH_XDG_MYSELF=YES \
+      MANDIR=%_mandir \
       DESTDIR=%buildroot install
 # install missing python modules
 install -m 0644 support/tools/listirqinfo.py %buildroot%_datadir/libffado/python
@@ -72,13 +83,20 @@ rm -rf %buildroot
 
 %files -n ffado
 %_bindir/*
+%_man1dir/*
 %dir %_datadir/libffado
-%_datadir/libffado/python
-%dir  %_datadir/libffado/icons
-%_datadir/libffado/icons/hi64-apps-ffado.png
-%_datadir/libffado/configuration
+%_datadir/libffado/*
+/lib/udev/rules.d/*ffado*.rules
+
+%files -n %packagename
+%python_sitelibdir_noarch/%modulename
 
 %changelog
+* Tue Oct 30 2012 Fr. Br. George <george@altlinux.ru> 2.1.0-alt1
+- Autobuild version bump to 2.1.0
+- Separate python module
+- Remove unused python file with non-existent requirement
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 2.0.1-alt2
 - DSO list completion
 
