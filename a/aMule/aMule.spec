@@ -2,14 +2,14 @@
 %define		_rc	rc8
 Name:		aMule
 Version:	2.3.1
-Release:	alt1.3
+Release:	alt2
 
 Summary:	aMule - eMule client.
 License:	GPL
 Group: 		Networking/File transfer
 
 Url:		http://www.amule.org
-Packager: Ilya Mashkin <oddity@altlinux.ru>
+Packager:	Ilya Mashkin <oddity@altlinux.ru>
 
 Source:		%name-%version.tar.bz2
 
@@ -18,7 +18,7 @@ Conflicts:	xmule
 Patch2:		%name-2.0.0%_rc-alt-up-down-ratio.patch
 
 # Automatically added by buildreq on Mon Jun 16 2008
-BuildRequires: flex gcc-c++ imake libcryptopp-devel libpng-devel libreadline-devel libwxGTK2.9-devel xorg-cf-files
+BuildRequires: flex gcc4.5 gcc4.5-c++ imake libcryptopp-devel libpng-devel libreadline-devel libwxGTK2.9-devel xorg-cf-files
 BuildRequires: libupnp-devel
 
 #BuildRequires: rpm-build-compat >= 0.95
@@ -41,6 +41,8 @@ for multiplatform support.
 
 
 %build
+export CC=gcc-4.5 CXX=g++-4.5
+
 %configure 	--enable-amulecmd \
 		--enable-amulecmdgui \
 		--enable-optimize \
@@ -74,6 +76,9 @@ for multiplatform support.
 %dir %_docdir/amule
 
 %changelog
+* Tue Oct 30 2012 Ilya Mashkin <oddity@altlinux.ru> 2.3.1-alt2
+- fix build
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.1-alt1.3
 - Rebuilt with libpng15
 
