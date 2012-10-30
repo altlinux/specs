@@ -1,11 +1,10 @@
 Name: fldigi
-Version: 3.21.8
-Release: alt3
+Version: 3.21.58
+Release: alt1
 Summary: Digital modem program
 License: GPL
 Group: Communications
-Source0: %name-%version.tar.gz
-Packager: Dmitriy Kulik <lnkvisitor@altlinux.ru>
+Source0: %name-%version.tar
 
 # Automatically added by buildreq on Mon Jan 04 2010 (-bi)
 BuildRequires: gcc-c++ libX11-devel libXext-devel libXft-devel libfltk-devel libjpeg-devel libpng-devel libsamplerate-devel
@@ -34,6 +33,9 @@ Digital modem program
 %_man1dir/*
 
 %changelog
+* Tue Oct 30 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.21.58-alt1
+- Version 3.21.58
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.21.8-alt3
 - Rebuilt with libpng15
 
