@@ -23,7 +23,7 @@
 
 Name: %kdevplatform
 Version: 1.4.0
-Release: alt2.git
+Release: alt3.git
 Serial: 1
 
 Group: Development/Tools
@@ -324,6 +324,10 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Tue Oct 30 2012 Alexey Morozov <morozov@altlinux.org> 1:1.4.0-alt3.git
+- new post-1.4.0 git snapshot (e67e288f6cda792d07523bb93e6de3a732ade856)
+- translations are sync'ed with upstream and slightly fixed
+
 * Thu Oct 18 2012 Alexey Morozov <morozov@altlinux.org> 1:1.4.0-alt2.git
 - fixed obsoletes
 
