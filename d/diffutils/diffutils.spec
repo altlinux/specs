@@ -1,6 +1,6 @@
 Name: diffutils
 Version: 3.2
-Release: alt2
+Release: alt3
 %define srcname %name-%version-%release
 
 Summary: A GNU collection of diff utilities
@@ -20,7 +20,7 @@ Patch: %name-%version-%release.patch
 
 Conflicts: man-pages <= 1.52-alt1
 
-BuildRequires: gnulib >= 0.0.7557.ee60576
+BuildRequires: gnulib >= 0.0.7677.4027785
 BuildRequires: gperf help2man
 
 %description
@@ -72,6 +72,10 @@ export PR_PROGRAM=%_bindir/pr
 %doc AUTHORS NEWS README THANKS
 
 %changelog
+* Tue Oct 30 2012 Dmitry V. Levin <ldv@altlinux.org> 3.2-alt3
+- Updated to v3.2-36-g01d92db.
+- Built with gnulib v0.0-7677-g4027785.
+
 * Sun Aug 05 2012 Dmitry V. Levin <ldv@altlinux.org> 3.2-alt2
 - Updated to v3.2-28-g1f281b3.
 - Updated translations from translationproject.org.
