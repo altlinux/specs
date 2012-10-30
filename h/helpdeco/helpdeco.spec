@@ -1,12 +1,13 @@
 Name: helpdeco
 Version: 2.1.3
-Release: alt1
+Release: alt2
 
-Summary: helpdeco -- utility program to dissect Windows help files
-License: GPL v2
+Summary: Utility program to dissect Windows help files
+License: GPLv2+
 Group: Text tools
 URL: http://sourceforge.net/projects/helpdeco/
-Packager: Igor Zubkov <icesik@altlinux.ru>
+
+Packager: Igor Zubkov <icesik@altlinux.org>
 
 Source0: %name-%version.tar.gz
 
@@ -30,14 +31,17 @@ Baggage - all baggage files contained in help file
 %make_build CC="%__cc %optflags"
 
 %install
-%__mkdir_p %buildroot%_bindir/
-%__install -pD -m755 helpdeco zapres splitmrb %buildroot%_bindir/
+mkdir -p %buildroot%_bindir/
+install -pD -m755 helpdeco zapres splitmrb %buildroot%_bindir/
 
 %files
-%doc ChangeLog helpfile.txt NEWS README.de README
+%doc ChangeLog NEWS README README.de helpfile.txt
 %_bindir/*
 
 %changelog
+* Tue Oct 30 2012 Igor Zubkov <icesik@altlinux.org> 2.1.3-alt2
+- rebuilt for debuginfo
+
 * Sat Nov 19 2005 Igor Zubkov <icesik@altlinux.ru> 2.1.3-alt1
 - 2.1.3
 - remove helpdeco-2.1.2-alt-strlcpy.patch (fixed in upstream)
