@@ -1,4 +1,3 @@
-%def_enable sane
 %def_enable reverse
 %def_enable introspection
 %def_enable vala
@@ -6,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: colord
-Version: 0.1.23
+Version: 0.1.24
 Release: alt1
 
 Summary: Color daemon
@@ -15,7 +14,7 @@ Group: Graphics
 
 URL: http://www.freedesktop.org/software/%name/
 Source: http://www.freedesktop.org/software/%name/releases/colord-%version.tar.xz
-Patch1: %name-0.1.18-alt-localstatedir.patch
+Patch1: %name-0.1.24-alt-localstatedir.patch
 
 %define colord_group %name
 %define colord_user %name
@@ -27,9 +26,8 @@ Requires: shared-color-profiles
 
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: docbook-utils gtk-doc intltool libdbus-devel libgudev-devel libudev-devel
-BuildRequires: liblcms2-devel >= %lcms_ver libpolkit-devel >= 0.103 libsane-devel
-BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel
-%{?_enable_sane:BuildRequires: libsane-devel}
+BuildRequires: liblcms2-devel >= %lcms_ver libpolkit-devel >= 0.103
+BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel libsystemd-login-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 
@@ -94,7 +92,7 @@ This package provides Vala language bindings for %name library
 %configure --disable-static \
 	--disable-rpath \
 	%{subst_enable reverse} \
-	%{subst_enable sane} \
+	%{subst_enable vala} \
 	--with-daemon-user=%colord_user
 
 %make_build
@@ -119,12 +117,8 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 %_bindir/*
 %config %_sysconfdir/%name.conf
 %_libexecdir/%name
-%_libexecdir/%name-sane
 %_sysconfdir/dbus-1/system.d/org.freedesktop.ColorManager.conf
-%_sysconfdir/dbus-1/system.d/org.freedesktop.colord-sane.conf
-%_datadir/dbus-1/interfaces/org.freedesktop.colord.sane.xml
 %_datadir/dbus-1/interfaces/org.freedesktop.ColorManager*.xml
-%_datadir/dbus-1/system-services/org.freedesktop.colord-sane.service
 %_datadir/dbus-1/system-services/org.freedesktop.ColorManager.service
 %_datadir/polkit-1/actions/org.freedesktop.color.policy
 /lib/udev/rules.d/*.rules
@@ -132,6 +126,9 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 %_libdir/colord-sensors/libcolord_sensor_dummy.so
 %_libdir/colord-sensors/libcolord_sensor_huey.so
 %_libdir/colord-sensors/libcolord_sensor_colorhug.so
+%dir %_libdir/colord-plugins
+%_libdir/colord-plugins/libcd_plugin_camera.so
+%_libdir/colord-plugins/libcd_plugin_scanner.so
 %dir %_datadir/color/icc/colord
 %_datadir/color/icc/%name/x11-colors.icc
 %_datadir/color/icc/%name/crayons.icc
@@ -148,6 +145,7 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 %_sysconfdir/bash_completion.d/colormgr-completion.bash
 
 %exclude %_libdir/%name-sensors/*.la
+%exclude %_libdir/colord-plugins/*.la
 
 %files -n lib%name
 %_libdir/libcolord.so.*
@@ -172,6 +170,9 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 
 
 %changelog
+* Tue Oct 30 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.24-alt1
+- 0.1.24
+
 * Tue Sep 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.23-alt1
 - 0.1.23
 
