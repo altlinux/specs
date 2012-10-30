@@ -6,7 +6,7 @@
 
 Name: dhcp
 Version: 4.2.4.P2
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -21,14 +21,14 @@ Source2: dhcpd.conf.sample
 Source3: update_dhcp.pl
 Source4: dhcpd.init
 Source5: dhcrelay.init
-Source6: dhclient-enter-hooks
-Source7: dhclient-exit-hooks
 Source8: dhcpd.sysconfig
 Source9: dhcrelay.sysconfig
 Source10: dhcpd.chroot.all
 Source11: dhcpd.chroot.conf
 Source12: dhcpd.chroot.lib
-Source13: sethostname.sh
+Source14: dhclient-script.alt
+Source15: dhclient-hooks.tar
+Source16: dhclient.sysconfig
 
 Patch0001: 0001-Apply-dst_api-fd-leak-fixes-from-dhcp-3.0.5-alt-warn.patch
 Patch0002: 0002-Apply-dhcp-3.0.5-alt-warnings.patch.patch
@@ -42,6 +42,33 @@ Patch0009: 0009-Apply-dhcp-3.0.3-rh-failover-ports.patch.patch
 Patch0010: 0010-Apply-manpage-correction-from-RH-184484.patch
 Patch0011: 0011-Update-and-apply-dhcp-3.0.3-owl-alt-drop_priv.patch.patch
 Patch0012: 0012-Build-with-libisc-export-devel-RH-dhcp-4.2.2-remove-.patch
+Patch0013: 0013-dhclient-Add-several-command-line-options-which-etcn.patch
+Patch0014: 0014-Don-t-build-libdst.patch
+Patch0015: 0015-dhclient-Check-if-dhclient-already-running.patch
+Patch0016: 0016-dhclient-Wait-if-DHCP-offer-was-DECLINEd.patch
+Patch0017: 0017-dhclient-Request-more-options-by-default.patch
+Patch0018: 0018-Prevent-file-descriptors-leak.patch
+Patch0019: 0019-Drop-garbage-char.patch
+Patch0020: 0020-Do-not-segfault-if-the-ipv6-kernel-module-is-not-loa.patch
+Patch0021: 0021-Fix-segfault-in-case-of-NULL-timeout.patch
+Patch0022: 0022-Ensure-64-bit-platforms-parse-lease-file-dates-times.patch
+Patch0023: 0023-dhclient-Log-pid.patch
+Patch0024: 0024-dhcpv6-Reject-unicast-messages-unless-we-set-unicast.patch
+Patch0025: 0025-dhclient-Send-a-Decline-message-to-the-server.patch
+Patch0026: 0026-dhclient-Fix-MRD-handling.patch
+Patch0027: 0027-Support-Classless-Static-Route-Option-for-DHCPv4-RFC.patch
+Patch0028: 0028-dhclient-Don-t-confirm-expired-lease.patch
+Patch0029: 0029-Build-dhcp-s-libraries-as-shared-libs-instead-of-sta.patch
+Patch0030: 0030-dhclient-Don-t-retry-on-DECLINE-when-1-option-used.patch
+Patch0031: 0031-Don-t-send-log-messages-to-the-stderr-with-f-option.patch
+Patch0032: 0032-Use-getifaddrs-to-scan-for-interfaces.patch
+Patch0033: 0033-dhclient-Don-t-use-fallback_interface-when-releasing.patch
+Patch0034: 0034-Support-DHCPv6-Options-for-Network-Boot-RFC5970.patch
+Patch0035: 0035-dhclient-Fix-parsing-zero-length-options-in-dhclient.patch
+Patch0036: 0036-Fix-infinite-leases-on-x64.patch
+Patch0037: 0037-Fix-do-forward-updates-statement.patch
+Patch0038: 0038-Document-ALT-specific-in-the-dhclient-script-manpage.patch
+Patch0039: 0039-Ignore-checksums-on-the-loopback-interface.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -64,11 +91,13 @@ BuildArch: noarch
 Summary: The ISC DHCP client daemon
 Group: System/Servers
 PreReq: %name-common = %epoch:%version-%release
+Requires: %name-libs = %epoch:%version-%release
 
 %package server
 Summary: The ISC DHCP server daemon
 Group: System/Servers
 PreReq: %name-common = %epoch:%version-%release
+Requires: %name-libs = %epoch:%version-%release
 Requires: /var/empty
 Provides: %name = %epoch:%version-%release
 Obsoletes: dhcp, dhcpd
@@ -77,17 +106,24 @@ Obsoletes: dhcp, dhcpd
 Summary: The ISC DHCP relay daemon
 Group: System/Servers
 PreReq: %name-common = %epoch:%version-%release
+Requires: %name-libs = %epoch:%version-%release
 Requires: /var/empty
 
 %package omshell
 Summary: The ISC DHCP OMAPI command shell tool
 Group: System/Servers
 PreReq: %name-common = %epoch:%version-%release
+Requires: %name-libs = %epoch:%version-%release
 
 %package devel
-Summary: Development headers and static libraries for the dhcpctl API
+Summary: Development headers and libraries for interfacing to the DHCP server
 Group: Development/Other
 Requires: dhcp-common = %epoch:%version-%release
+Requires: %name-libs = %epoch:%version-%release
+
+%package libs
+Summary: Shared libraries used by ISC dhcp client and server
+Group: System/Libraries
 
 # {{{ descriptions
 %description
@@ -135,13 +171,17 @@ the changes while the server is running.  Omshell provides a way of
 accessing OMAPI.
 
 %description devel
-DHCP devel contains header files and static libraries for developing
+DHCP devel contains header files and libraries for developing
 with the Internet Software Consortium (ISC) dhcpctl API.
+
+%description libs
+This package contains shared libraries used by ISC dhcp client and
+server
 
 # }}}
 
 %prep
-%setup -n %srcname -a1
+%setup -n %srcname -a1 -a15
 %patch0001 -p2
 %patch0002 -p2
 %patch0003 -p2
@@ -154,6 +194,33 @@ with the Internet Software Consortium (ISC) dhcpctl API.
 %patch0010 -p2
 %patch0011 -p2
 %patch0012 -p2
+%patch0013 -p2
+%patch0014 -p2
+%patch0015 -p2
+%patch0016 -p2
+%patch0017 -p2
+%patch0018 -p2
+%patch0019 -p2
+%patch0020 -p2
+%patch0021 -p2
+%patch0022 -p2
+%patch0023 -p2
+%patch0024 -p2
+%patch0025 -p2
+%patch0026 -p2
+%patch0027 -p2
+%patch0028 -p2
+%patch0029 -p2
+%patch0030 -p2
+%patch0031 -p2
+%patch0032 -p2
+%patch0033 -p2
+%patch0034 -p2
+%patch0035 -p2
+%patch0036 -p2
+%patch0037 -p2
+%patch0038 -p2
+%patch0039 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -227,24 +294,21 @@ install -pD -m644 %_sourcedir/dhcrelay.sysconfig \
 	%buildroot/etc/sysconfig/dhcrelay
 
 # dhclient
-install -pD -m755 client/scripts/linux %buildroot/sbin/dhclient-script
+mkdir -p %buildroot/%_sysconfdir/sysconfig/
+install -pD -m644 %_sourcedir/dhclient.sysconfig \
+	%buildroot/%_sysconfdir/sysconfig/dhclient
+
+install -pD -m755 %SOURCE14 %buildroot/sbin/dhclient-script
 rln /sbin/dhclient-script /etc/%name/
 rln %_sbindir/dhclient /sbin/dhclient
 
-install -m755 %_sourcedir/dhclient-enter-hooks \
-	%buildroot/etc/%name/
-install -m755 %_sourcedir/dhclient-exit-hooks \
-	%buildroot/etc/%name/
 mkdir -p %buildroot%ROOT/dhclient/state
 touch %buildroot%ROOT/dhclient/state/dhclient.leases
 echo '# DHCP client config file' > %buildroot/etc/%name/dhclient.conf
 chmod 644 %buildroot/etc/%name/dhclient.conf
-mkdir -p %buildroot/etc/%name/dhclient.d
-echo '#!/bin/sh' > %buildroot/etc/%name/dhclient.d/enter001.null-hook
-echo '#!/bin/sh' > %buildroot/etc/%name/dhclient.d/exit001.null-hook
-install -pm644 %_sourcedir/sethostname.sh \
-	%buildroot/etc/%name/dhclient.d/enter010.sethostname
-chmod 644 %buildroot/etc/%name/dhclient.d/*
+mkdir -p %buildroot/etc/%name/dhclient-hooks.d
+cp -a dhclient-hooks/* %buildroot/etc/%name/dhclient-hooks.d
+chmod 644 %buildroot/etc/%name/dhclient-hooks.d/*
 
 # docs
 %define docdir %_docdir/%srcname
@@ -308,7 +372,6 @@ if [ $1 = 0 ]; then
 fi
 
 %post server
-/etc/chroot.d/dhcpd.all
 %post_service dhcpd
 if [ -f /var/run/dhcpd.restart ]; then
 	rm -f /var/run/dhcpd.restart
@@ -351,10 +414,12 @@ fi
 %docdir/[A-Z]*
 %docdir/doc
 
+%exclude %docdir/doc/ja_JP.eucJP
+
 %files client
-%config /etc/%name/dhclient-*-hooks
-%config(noreplace) /etc/%name/dhclient.d
 %config(noreplace) /etc/%name/dhclient.conf
+%config(noreplace) %_sysconfdir/sysconfig/dhclient
+%_sysconfdir/%name/dhclient-hooks.d
 %attr(755,root,dhcp) /etc/%name/dhclient-script
 %attr(750,root,dhcp) /sbin/dhclient*
 %attr(750,root,dhcp) %_sbindir/dhclient*
@@ -363,6 +428,8 @@ fi
 %attr(700,root,dhcp) %dir %ROOT/dhclient
 %attr(700,root,dhcp) %dir %ROOT/dhclient/state
 %attr(644,root,dhcp) %config(noreplace) %verify(not md5 mtime size) %ROOT/dhclient/state/dhclient.leases
+
+%exclude %_sysconfdir/dhclient.conf
 
 %files server
 /etc/syslog.d/*
@@ -393,6 +460,8 @@ fi
 %dir %docdir
 %docdir/update_dhcp.pl
 
+%exclude %_sysconfdir/dhcpd.conf
+
 %files relay
 %config %_initdir/dhcrelay
 %config(noreplace) /etc/sysconfig/dhcrelay
@@ -405,12 +474,28 @@ fi
   
 %files devel
 %_includedir/*
-%_libdir/lib*.a
+%_libdir/libdhcpctl.so
+%_libdir/libomapi.so
 %_man3dir/*
+
+%files libs
+%_libdir/libdhcpctl.so.*
+%_libdir/libomapi.so.*
+
+%exclude %_libdir/lib*.a
 
 # }}}
 
 %changelog
+* Tue Oct 30 2012 Mikhail Efremov <sem@altlinux.org> 1:4.2.4.P2-alt2
+- Don't package ja_JP man pages.
+- dhcpd.init: Update dhcpd chroot jail on start.
+- Add patch from Debian and patch for manpage.
+- Package libdhcpctl.so.* and libomapi.so.* as separate subpackage.
+- Package dhclient.sysconfig.
+- Add patches from Fedora.
+- Add ALT-specific dhclient script.
+
 * Thu Oct 18 2012 Fr. Br. George <george@altlinux.ru> 1:4.2.4.P2-alt1
 - Major (!) version up to 4.2.4-P2
 - Switching back to patches + upstream packaging scheme
