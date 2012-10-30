@@ -1,5 +1,5 @@
 Version: 4.4.0
-Release: alt2.git
+Release: alt3.git
 Serial: 3
 
 %define _unpackaged_files_terminate_build 1
@@ -432,6 +432,11 @@ done
 #%doc %_K4doc/en/kdevelop-apidocs/
 
 %changelog
+* Tue Oct 30 2012 Alexey Morozov <morozov@altlinux.org> 3:4.4.0-alt3.git
+- a new post-4.4.0 snapshot (87ae4b8ce8af46a4dc56f940e1f40831f2589ed7)
+  Splash screen now says it's actually KDevelop-4.4 :-)
+- translations are synchronized with upstream.
+
 * Thu Oct 18 2012 Alexey Morozov <morozov@altlinux.org> 3:4.4.0-alt2.git
 - fixed obsoletes
 
