@@ -6,7 +6,7 @@
 %define mciddir 	%tbird_noarch_extensionsdir/%mcid
 %define ver 3.6
 %define mver 1.2
-%define ft_release alt1.hg20120828
+%define ft_release alt1.hg20121005
 %define workdir %firefox_name-%vname-%ver
 %define mworkdir %tbird_name-%mname-%mver
 
@@ -25,7 +25,7 @@ Requires: vim
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 BuildArch: noarch
 BuildRequires(pre): rpm-build-firefox rpm-build-thunderbird rpm-build-vim
-BuildRequires(pre): java-devel-default
+BuildRequires(pre): java-devel-default /proc
 BuildPreReq: zip python-modules
 
 %description 
@@ -112,6 +112,9 @@ install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 %vim_ftdetect_dir/%mname.vim
 
 %changelog
+* Tue Oct 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6-alt1.hg20121005
+- New snapshot
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6-alt1.hg20120828
 - Version 3.6pre
 
