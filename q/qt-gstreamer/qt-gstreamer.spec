@@ -1,6 +1,6 @@
 Name:    qt-gstreamer
 Version: 0.10.2
-Release: alt2
+Release: alt3
 
 Summary: C++ bindings for GStreamer with a Qt-style API
 License: LGPLv2+
@@ -21,7 +21,7 @@ BuildRequires: flex
 BuildRequires: boost-devel
 BuildRequires: gstreamer-devel >= 0.10.31
 BuildRequires: gst-plugins-devel
-BuildRequires: libqt4-devel
+BuildRequires: libqt4-devel libGLES-devel
 BuildRequires: doxygen kde-common-devel
 
 %description
@@ -72,6 +72,9 @@ for %name.
 
 
 %changelog
+* Wed Oct 31 2012 Sergey V Turchin <zerg@altlinux.org> 0.10.2-alt3
+- rebuild
+
 * Wed May 30 2012 Sergey V Turchin <zerg@altlinux.org> 0.10.2-alt2
 - fix requires
 
