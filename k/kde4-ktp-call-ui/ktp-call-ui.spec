@@ -3,7 +3,7 @@
 
 %define rname ktp-call-ui
 Name: kde4-ktp-call-ui
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -16,7 +16,10 @@ Source0: %rname-%version.tar
 # Automatically added by buildreq on Mon Jun 18 2012 (-bi)
 # optimized out: automoc boost-devel-headers cmake cmake-modules elfutils farstream farstream-devel fontconfig fontconfig-devel glib2-devel glibc-devel-static gstreamer-devel kde-common-devel kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbus-glib libdbus-glib-devel libdbusmenu-qt2 libfreetype-devel libgio-devel libgst-plugins libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-svg libqt4-xml libssl-devel libstdc++-devel libtelepathy-farstream libtelepathy-glib libtelepathy-glib-devel libtelepathy-qt4 libtelepathy-qt4-devel libxkbfile-devel libxml2-devel phonon-devel pkg-config python-base qt-gstreamer xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ kde4-ktp-common-internals-devel kde4libs-devel libqt3-devel libtelepathy-farstream-devel qt-gstreamer-devel qt4-designer zlib-devel-static
-BuildRequires: gcc-c++ kde4-ktp-common-internals-devel kde4libs-devel libtelepathy-farstream-devel qt-gstreamer-devel
+BuildRequires: gcc-c++ kde4-ktp-common-internals-devel kde4libs-devel qt-gstreamer-devel
+BuildRequires: pkgconfig(farstream-0.1)
+BuildRequires: pkgconfig(QtGStreamer-0.10)
+BuildRequires: libtelepathy-farstream0.4-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -59,6 +62,9 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Oct 31 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.1-alt1
+- new version
+
 * Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.0-alt1
 - new version
 
