@@ -1,6 +1,6 @@
 Name: MySQL
 Version: 5.5.28
-Release: alt5
+Release: alt6
 
 %def_without debug
 %def_disable static
@@ -43,6 +43,10 @@ Patch7: mysql-5.5.25-alt-mysql_config-libs.patch
 # Fedora
 Patch100: mysql-versioning.patch
 Patch101: mysql-dubious-exports.patch
+Patch102: mysql-strmov.patch
+Patch103: mysql-stack-guard.patch
+Patch104: mysql-va-list.patch
+Patch105: mysql-string-overflow.patch
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
 BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel
@@ -272,6 +276,10 @@ This package contains MySQL benchmark scripts and data.
 
 %patch100 -p1
 %patch101 -p1
+%patch102 -p1
+%patch103 -p1
+%patch104 -p1
+%patch105 -p1
 
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
@@ -618,6 +626,9 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 5.5.28-alt6
+- applied several more fedora patches
+
 * Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 5.5.28-alt5
 - added forgotten complimentary libmysqlclient patch from fedora
 - libmysqlclient18 -> libmysqlclient-devel dependency expunged
