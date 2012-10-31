@@ -2,7 +2,7 @@
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
 Version: 0.08
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Base
 BuildArch: noarch
@@ -28,6 +28,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Oct 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt3
+- fc sugar macros fix
+
 * Tue Oct 30 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2
 - added sugar libdir
 
