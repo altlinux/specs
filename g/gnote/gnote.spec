@@ -1,7 +1,7 @@
 %define _libexecdir /usr/libexec
 
 Name: gnote
-Version: 3.6.0
+Version: 3.6.1
 Release: alt1
 Summary: Note-taking application
 Group: Graphical desktop/GNOME
@@ -10,7 +10,6 @@ Url: http://live.gnome.org/Gnote
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Source0: http://ftp.gnome.org/pub/GNOME/sources/gnote/%version/%name-%version.tar
-Patch0: %name-%version-%release.patch
 
 %define gtk_ver 3.0
 %define gtkmm_ver 3.4
@@ -39,7 +38,6 @@ and consumes fewer resources.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -70,6 +68,9 @@ desktop-file-install \
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Wed Oct 31 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.1-alt1
+- 3.6.1
+
 * Fri Oct 26 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
 - 3.6.0
 
