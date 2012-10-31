@@ -41,8 +41,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: tracker
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -403,6 +403,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Wed Oct 31 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.3-alt1
+- 0.14.3
+
 * Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.2-alt2
 - disable evolution plugin
 
