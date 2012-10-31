@@ -3,7 +3,7 @@
 
 %define rname ktp-filetransfer-handler
 Name: kde4-ktp-filetransfer-handler
-Version: 0.5.0
+Version: 0.5.1
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -65,6 +65,9 @@ Requires: libtelepathy-qt4-devel
 #%_K4includedir/KTp/
 
 %changelog
+* Wed Oct 31 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.1-alt1
+- new version
+
 * Wed Aug 29 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.0-alt1
 - new version
 
