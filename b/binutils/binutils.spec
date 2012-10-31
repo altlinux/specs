@@ -1,6 +1,6 @@
 Name: binutils
 Version: 2.23.51.0.1
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: GNU Binary Utility Development Utilities
@@ -36,9 +36,7 @@ Patch104: binutils-2.22.52.0.4-alt-ld-testsuite.patch
 Patch105: binutils-2.22.52.0.3-alt-gold-testsuite.patch
 Patch106: binutils-2.22.52.0.3-alt-export-headers.patch
 
-Patch111: binutils-2.22.52.0.4-alt-gold-testsuite-workaround-x86.patch
-Patch112: binutils-2.22.52.0.4-alt-ld-testsuite-workaround-x86.patch
-Patch113: binutils-2.22.52.0.4-alt-ld-testsuite-workaround-x86_64.patch
+Patch111: binutils-2.23.51.0.1-alt-ld-testsuite-workaround-x86.patch
 
 PreReq: alternatives >= 0:0.4
 Conflicts: libbfd
@@ -100,10 +98,6 @@ libiberty.
 
 %ifarch %ix86
 %patch111 -p1
-%patch112 -p1
-%endif
-%ifarch x86_64
-%patch113 -p1
 %endif
 
 grep -Fl 'x86_64-*kfreebsd*-gnu)' */configure |while read f; do
@@ -139,7 +133,9 @@ ADDITIONAL_TARGETS="--enable-targets=powerpc64-alt-linux --enable-targets=spu --
 	--enable-gold=yes --enable-ld=default \
 	$ADDITIONAL_TARGETS
 
-%make_build tooldir=%_prefix all
+for t in configure-host maybe-all-{libiberty,bfd,opcodes} all; do
+	%make_build tooldir=%_prefix $t
+done
 
 %install
 %makeinstall_std tooldir=%_prefix install-info
@@ -247,7 +243,10 @@ done
 RUNTESTFLAGS=
 XFAIL_TESTS=
 %ifarch x86_64
-XFAIL_TESTS=exception_static_test
+XFAIL_TESTS='exception_static_test incremental_test_2 incremental_test_3 incremental_test_4 incremental_test_5 incremental_test_6 incremental_copy_test incremental_common_test_1 incremental_comdat_test_1'
+%endif
+%ifarch %ix86
+XFAIL_TESTS=debug_msg.sh
 %endif
 %make_build -k check CC="%_sourcedir/gcc.sh" CXX="%_sourcedir/gxx.sh" \
 	XFAIL_TESTS="$XFAIL_TESTS" RUNTESTFLAGS="$RUNTESTFLAGS"
@@ -269,6 +268,9 @@ XFAIL_TESTS=exception_static_test
 %doc NEWS*
 
 %changelog
+* Wed Oct 31 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.23.51.0.1-alt2
+- Fixed build.
+
 * Wed Aug 29 2012 Dmitry V. Levin <ldv@altlinux.org> 1:2.23.51.0.1-alt1
 - Updated to 2.23.51.0.1.
 
