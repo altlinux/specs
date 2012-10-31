@@ -12,34 +12,43 @@
 
 Name: quake3
 Version: 1.34
-Release: alt9.svn%revision
+Release: alt10.svn%revision
 
 Summary: Quake 3: Arena by ID Software
 License: GPL
 Group: Games/Arcade
 Url: http://ioquake3.org
 
-Source: quake3-%version.tar.bz2
+Source0: ioquake3-r%revision.tar.bz2
+
 Source1: quake3-client.desktop
 Source2: quake3-client-smp.desktop
 Source3: quake3.png
 
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
+Source10: quake3.init
+Source11: quake3.sysconfig
+Source12: quake3-ctf.init
+Source13: quake3-ctf.sysconfig
+
+Patch0: quake3-alt-bug14027.patch
+Patch1: quake3-alt-build-smp.patch
+Patch2: quake3-alt-disable-werror.patch
+
+Packager: Igor Zubkov <icesik@altlinux.org>
 
 Requires: %name-server = %version-%release
 Requires: %name-client-smp = %version-%release
 Requires: %name-client-up = %version-%release
 
-BuildRequires: nasm gcc
+# Automatically added by buildreq on Fri Nov 02 2012
 BuildRequires: libSDL-devel libopenal-devel
-BuildRequires: libXt-devel libGL-devel
 
 %description
 Quake 3: Arena by ID Software.
 
-%description -l ru_RU.KOI8-R
+%description -l ru_RU.UTF-8
 Quake 3: Arena by ID Software.
-Превосходная 3D-стрелялка.
+п÷я─п╣п╡п╬я│я┘п╬п╢п╫п╟я▐ 3D-я│я┌я─п╣п╩я▐п╩п╨п╟.
 
 %package common
 Group: Games/Arcade
@@ -49,9 +58,9 @@ Summary: Common files for Quake 3: Arena
 Quake 3: Arena by ID Software.
 This package contains common files.
 
-%description common -l ru_RU.KOI8-R
+%description common -l ru_RU.UTF-8
 Quake 3: Arena by ID Software.
-Этот пакет содержит общие файлы, используемые в других пакетах quake3.
+п╜я┌п╬я┌ п©п╟п╨п╣я┌ я│п╬п╢п╣я─п╤п╦я┌ п╬п╠я┴п╦п╣ я└п╟п╧п╩я▀, п╦я│п©п╬п╩я▄п╥я┐п╣п╪я▀п╣ п╡ п╢я─я┐пЁп╦я┘ п©п╟п╨п╣я┌п╟я┘ quake3.
 
 %package client-up
 Group: Games/Arcade
@@ -62,8 +71,8 @@ Provides: %name-client = %version-%release
 %description client-up
 Uniprocessor Quake 3: Arena client.
 
-%description client-up -l ru_RU.KOI8-R
-Клиент для игры Quake 3: Arena by ID Software. Однопроцессорная версия.
+%description client-up -l ru_RU.UTF-8
+п п╩п╦п╣п╫я┌ п╢п╩я▐ п╦пЁя─я▀ Quake 3: Arena by ID Software. п·п╢п╫п╬п©я─п╬я├п╣я│я│п╬я─п╫п╟я▐ п╡п╣я─я│п╦я▐.
 
 %package client-smp
 Group: Games/Arcade
@@ -74,8 +83,8 @@ Provides: %name-client = %version-%release
 %description client-smp
 Multiprocessor Quake 3: Arena client.
 
-%description client-smp -l ru_RU.KOI8-R
-Клиент для игры Quake 3: Arena by ID Software. Многопроцессорная версия.
+%description client-smp -l ru_RU.UTF-8
+п п╩п╦п╣п╫я┌ п╢п╩я▐ п╦пЁя─я▀ Quake 3: Arena by ID Software. п°п╫п╬пЁп╬п©я─п╬я├п╣я│я│п╬я─п╫п╟я▐ п╡п╣я─я│п╦я▐.
 
 %package server
 Group: Games/Arcade
@@ -86,12 +95,15 @@ Requires: %name-common = %version-%release
 Quake 3: Arena by ID Software.
 Dedicated server.
 
-%description server -l ru_RU.KOI8-R
+%description server -l ru_RU.UTF-8
 Quake 3: Arena by ID Software.
-Выделенный сервер.
+п▓я▀п╢п╣п╩п╣п╫п╫я▀п╧ я│п╣я─п╡п╣я─.
 
 %prep
-%setup -q
+%setup -q -n ioquake3
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
 %make_build release
@@ -118,7 +130,7 @@ chmod +x %buildroot%_bindir/quake3
 chmod +x %buildroot%_bindir/quake3-smp
 ln -sf %_libdir/games/quake3/ioq3ded.%__arch %buildroot%_bindir/q3ded
 
-install -D -p -m 0644 %{SOURCE3} %buildroot%_miconsdir/quake3.png
+install -D -p -m 0644 %SOURCE3 %buildroot%_miconsdir/quake3.png
 
 mkdir -p %buildroot%_libdir/games/quake3/baseq3/
 make copyfiles COPYDIR="%buildroot%_libdir/games/quake3"
@@ -129,10 +141,10 @@ files from latest quake3 point release! Put them into %_libdir/games/quake3/base
 EOF
 
 # initscript for dedicated server
-install -pDm0755 %name.init %buildroot%_initdir/%name
-install -pDm0755 %name-ctf.init %buildroot%_initdir/%name-ctf
-install -pDm0644 %name.sysconfig %buildroot%_sysconfdir/sysconfig/%name
-install -pDm0644 %name-ctf.sysconfig %buildroot%_sysconfdir/sysconfig/%name-ctf
+install -pDm0755 %SOURCE10 %buildroot%_initdir/%name
+install -pDm0755 %SOURCE12 %buildroot%_initdir/%name-ctf
+install -pDm0644 %SOURCE11 %buildroot%_sysconfdir/sysconfig/%name
+install -pDm0644 %SOURCE13 %buildroot%_sysconfdir/sysconfig/%name-ctf
 
 install -dm1700 %buildroot%_home
 
@@ -178,13 +190,17 @@ echo "In order to actually play the game, you'll need pak-files from original ga
 %_datadir/applications/quake3-client-smp.desktop
 
 %files server
+%_initdir/*
 %_bindir/q3ded
 %_libdir/games/quake3/ioq3ded.%__arch
 %config(noreplace) %_sysconfdir/sysconfig/*
 %dir %attr(1770,root,%_group) %_home
-%_initdir/*
 
 %changelog
+* Wed Oct 31 2012 Igor Zubkov <icesik@altlinux.org> 1.34-alt10.svn1114
+- convert spec to UTF-8
+- buildreq
+
 * Sun Apr 10 2011 Lenar Shakirov <snejok@altlinux.ru> 1.34-alt9.svn1114
 - Fixed build: BuildReqs: libmesa-devel -> libGL-devel
 - Desktop file fixed and cleaned: thanks to repocop!
