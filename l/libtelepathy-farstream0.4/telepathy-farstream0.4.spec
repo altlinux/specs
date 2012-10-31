@@ -4,7 +4,7 @@
 
 Name: lib%_name%ver_major
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Telepathy client library to handle call channels
 Group: Networking/Instant messaging
@@ -13,12 +13,12 @@ URL: http://telepathy.freedesktop.org/
 
 Source: http://telepathy.freedesktop.org/releases/%_name/%_name-%version.tar.gz
 
-BuildPreReq: glib2-devel >= 2.30.0
-BuildPreReq: libtelepathy-glib-devel >= 0.18.0
-BuildPreReq: farstream-devel >= 0.1.2
+BuildRequires(pre): glib2-devel >= 2.30.0
+BuildRequires(pre): libtelepathy-glib-devel >= 0.18.0
+BuildRequires(pre): pkgconfig(farstream-0.1)
 BuildRequires: libdbus-devel libdbus-glib-devel
 BuildRequires: gtk-doc
-%{?_enable_python:BuildRequires: python-module-gst-devel}
+%{?_enable_python:BuildRequires: pkgconfig(gst-python-0.10)}
 
 %description
 Telepathy Farstream is a Telepathy client library that uses Farstream to
@@ -29,7 +29,7 @@ library for old Farstream.
 Summary: Libraries and include files for developing with %name
 Group: Development/C
 Requires: %name = %version-%release
-
+Conflicts: libtelepathy-farstream-devel
 %description devel
 This package provides the necessary development libraries and include
 files to allow you to develop with Telepathy Farstream library.
@@ -39,7 +39,7 @@ Summary: Development documentation for %name
 Group: Development/C
 BuildArch: noarch
 Conflicts: %name < %version-%release
-
+Conflicts: libtelepathy-farstream-devel-doc
 %description devel-doc
 This package contains development documentation for the Telepathy
 Farstream library.
@@ -71,7 +71,6 @@ library.
 %files
 %_libdir/lib%_name.so.*
 
-%if 0
 %files devel
 %_includedir/telepathy-1.0/%_name/
 %_libdir/lib%_name.so
@@ -84,9 +83,11 @@ library.
 %python_sitelibdir/tpfarstream.so
 
 %exclude %python_sitelibdir/tpfarstream.la
-%endif
 
 %changelog
+* Wed Oct 31 2012 Sergey V Turchin <zerg@altlinux.org> 0.4.0-alt3
+- package devel files
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.0-alt2
 - compatibility package
 
