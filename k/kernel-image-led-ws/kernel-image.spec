@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.49
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -531,7 +531,7 @@ Patch0736: linux-%kernel_branch.44-fix-kernel-time.patch
 Patch0740: linux-%kernel_branch.42-fix-lib.patch
 Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
-Patch0750: linux-%kernel_branch.43-fix-mm.patch
+Patch0750: linux-%kernel_branch.49-fix-mm.patch
 Patch0751: linux-%kernel_branch.42-fix-mm--compaction.patch
 Patch0752: linux-%kernel_branch.42-fix-mm--huge_memory.patch
 Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
@@ -542,7 +542,7 @@ Patch0757: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
 Patch0758: linux-%kernel_branch.46-fix-mm--numa.patch
 Patch0759: linux-%kernel_branch.42-fix-mm--slab.patch
 Patch0760: linux-%kernel_branch.42-fix-mm--slub.patch
-Patch0761: linux-%kernel_branch.42-fix-mm--swap.patch
+Patch0761: linux-%kernel_branch.49-fix-mm--swap.patch
 
 Patch0771: linux-%kernel_branch.42-fix-net--batman-adv.patch
 Patch0772: linux-%kernel_branch.42-fix-net--dcb.patch
@@ -2716,6 +2716,11 @@ fi
 
 
 %changelog
+* Wed Oct 31 2012 Led <led@altlinux.ru> 3.0.49-alt4
+- updated:
+  + fix-mm
+  + firx-mm--swap
+
 * Wed Oct 31 2012 Led <led@altlinux.ru> 3.0.49-alt3
 - updated:
   + fix-drivers-watchdog--hpwdt
