@@ -1,12 +1,12 @@
 %define _optlevel s
 
 Name: grub2-pc
-Version: 1.99
-Release: alt9
+Version: 2.00
+Release: alt1
 
 Summary: GRand Unified Bootloader
 License: GPL
-Url: http://www.gnu.org/software/grub/grub.en.html
+Url: http://www.gnu.org/software/grub
 Group: System/Kernel and hardware
 Source0: grub2-%version.tar.bz2
 Source1: grub2-sysconfig
@@ -19,21 +19,22 @@ Source5: grub-extras-%version.tar.bz2
 Source6: grub-autoupdate
 Source7: firsttime
 
-Patch1: grub-1.99-os-alt.patch
+Patch0: grub-2.00-gnulib-gets.patch
+Patch1: grub-2.00-os-alt.patch
 Patch2: grub-1.98-sysconfig-path-alt.patch
-Patch3: grub-1.99-altlinux-theme.patch
-Patch4: grub-1.99-evms-crap-alt.patch
-Patch5: grub-1.99-os-alt-xen.patch
+Patch3: grub-2.00-altlinux-theme.patch
+Patch4: grub-2.00-evms-crap-alt.patch
+Patch5: grub-2.00-os-alt-xen.patch
 Patch6: grub-1.99-debian-disable_floppies.patch
-Patch7: grub-1.99-grubinstall-evms-sync-alt.patch
+Patch7: grub-2.00-grubinstall-evms-sync-alt.patch
 Patch8: grub-1.99-efibootmgr-req.patch
-Patch9: grub-1.99_fix_for_automake_1.11.2.patch
-Patch10: grub-1.99_alt_datadir_scripts.patch
+Patch9: grub2-fix-locale-en.mo.gz-not-found-error-message.patch
 
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Packager: Michael Shigorin <mike@altlinux.org>
 
-BuildRequires: flex fonts-bitmap-misc libfreetype-devel python-modules ruby autogen
+BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
+BuildRequires: libdevmapper-devel
 
 Exclusivearch: %ix86 x86_64
 
@@ -60,18 +61,18 @@ of multiple boot images (needed for modular kernels such as the GNU
 Hurd).
 
 %prep
-%setup -q -n grub2-%version
+%setup -n grub2-%version
 %setup -b 5 -n grub2-%version
+%patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p2
+%patch7 -p1
 %patch8 -p1
 %patch9 -p1
-%patch10 -p2
 
 mv ../grub-extras-%version ./grub-extras
 
@@ -82,6 +83,7 @@ export GRUB_CONTRIB=`pwd`/grub-extras
 ./autogen.sh
 %configure --prefix=/ --disable-werror
 %make_build
+# NB: make unicode.pf2 results in a broken font file, argh
 
 %install
 export GRUB_CONTRIB=`pwd`/grub-extras
@@ -89,8 +91,9 @@ export GRUB_CONTRIB=`pwd`/grub-extras
 mkdir -p %buildroot/etc/sysconfig
 install -pD -m644 %SOURCE1 %buildroot/etc/sysconfig/grub2
 %find_lang grub
-mkdir -p %buildroot/boot/grub
+mkdir -p %buildroot/boot/grub/fonts
 %buildroot/%_bindir/grub-mkfont -o %buildroot/boot/grub/unifont.pf2 %_datadir/fonts/bitmap/misc/8x13.pcf.gz
+%buildroot/%_bindir/grub-mkfont -o %buildroot/boot/grub/fonts/unicode.pf2 %_datadir/fonts/ttf/dejavu/DejaVuSansMono.ttf
 install -pD -m755 %SOURCE3 %buildroot/etc/grub.d/
 sed -i 's,^libdir=,libdir=%_libdir,g' %buildroot/etc/grub.d/39_memtest
 sed -i 's,@LOCALEDIR@,%_datadir/locale,g' %buildroot/etc/grub.d/*
@@ -104,6 +107,7 @@ install -pD -m755 %SOURCE7 %buildroot/%_sysconfdir/firsttime.d/grub-mkconfig
 %dir %_sysconfdir/grub.d
 %dir /boot/grub
 /boot/grub/*.pf2
+/boot/grub/fonts/
 %_sysconfdir/grub.d/00_header
 %_sysconfdir/grub.d/05_altlinux_theme
 %_sysconfdir/grub.d/10_linux
@@ -127,6 +131,16 @@ install -pD -m755 %SOURCE7 %buildroot/%_sysconfdir/firsttime.d/grub-mkconfig
 %_sbindir/grub-autoupdate
 
 %changelog
+* Fri Oct 26 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt1
+- 2.00 (closes: #27803)
+- updated patches
+  + fixed 05_altlinux_theme (closes: #27642)
+- built with devmapper support
+  + alterator-grub needs one-line fix to work again on mdraid though
+- updated an Url: (closes: #26901)
+- added a redundant but compatible unicode.pf2 font file
+  (might be split off to a separate subpackage soonish)
+
 * Fri May 11 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.99-alt9
 - fix build with automake >= 1.11.2
 
