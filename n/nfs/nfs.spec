@@ -1,6 +1,6 @@
 Name: nfs
 Version: 1.2.6
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: The Linux NFS clients, utilities and server
@@ -140,7 +140,10 @@ touch /var/lock/subsys/rpc.svcgssd
 %files server
 %_initdir/nfs
 %_initdir/svcgssd
+%systemd_unitdir/nfs.target
 %systemd_unitdir/nfs.service
+%systemd_unitdir/rquotad.service
+%systemd_unitdir/mountd.service
 %systemd_unitdir/svcgssd.service
 %systemd_unitdir/proc-fs-nfsd.mount
 
@@ -231,6 +234,10 @@ touch /var/lock/subsys/rpc.svcgssd
 %_man8dir/nfsiostat.*
 
 %changelog
+* Wed Oct 31 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.2.6-alt2
+- selinux security_label exports option support added (closes: 27906)
+- more systemd related changes (shaba@)
+
 * Fri Jun 22 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:1.2.6-alt1
 - 1.2.6 released
 
