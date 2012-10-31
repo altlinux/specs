@@ -1,5 +1,5 @@
 Name: cifs-utils
-Version: 5.4
+Version: 5.7
 Release: alt1
 
 Summary: Utilities for doing and managing mounts of the Linux CIFS filesystem
@@ -50,6 +50,9 @@ mv %buildroot/%_sbindir/cifs.upcall %buildroot/sbin/
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Wed Oct 31 2012 Michael Shigorin <mike@altlinux.org> 5.7-alt1
+- 5.7 (closes: #27909)
+
 * Sat Apr 28 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 5.4-alt1
 - 5.4 (cifs-utils-5.3-19-ga91fb06)
 
