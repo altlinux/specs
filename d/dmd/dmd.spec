@@ -6,10 +6,11 @@
 
 Name: dmd
 Version: 2.060
-Release: alt3
+Release: alt4
 Summary: The D Programming Language
 Group: Development/Other
 License: GPL
+Url: http://dlang.org/
 
 Source: %name-%version.tar
 BuildRequires: gcc-c++
@@ -50,7 +51,7 @@ gcc rdmd.o -o rdmd -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
 #gcc catdoc.o -o catdoc -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
 
 %install
-mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/d,%_mandir/man1}
+mkdir -p %buildroot{%_bindir,%_sysconfdir,%_libdir,%_includedir/d/etc/c,%_mandir/man1}
 
 cp dmd/src/dmd %buildroot%_bindir/
 
@@ -59,7 +60,7 @@ echo '; Names enclosed by %%%% are searched for in the existing environment' >> 
 echo '; and inserted. The special name %%@P%% is replaced with the path' >> %buildroot%_sysconfdir/dmd.conf
 echo '; to this file.' >> %buildroot%_sysconfdir/dmd.conf
 echo '[Environment]' >> %buildroot%_sysconfdir/dmd.conf
-echo 'DFLAGS=-I%_includedir/d' >> %buildroot%_sysconfdir/dmd.conf -lrt
+echo 'DFLAGS=-I%_includedir/d' >> %buildroot%_sysconfdir/dmd.conf -L-lrt
 
 #druntime
 cp -r druntime/import/* %buildroot%_includedir/d/
@@ -69,6 +70,8 @@ cp druntime/lib/libdruntime.a %buildroot%_libdir/
 cp phobos/out/libphobos2.a %buildroot%_libdir/
 ln -s libphobos2.a %buildroot%_libdir/libphobos.a
 cp -r phobos/std %buildroot%_includedir/d/
+
+cp phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
 
 #tools
 
@@ -88,9 +91,15 @@ cp -r dmd/docs/man/man1 %buildroot%_mandir/
 
 %files -n libphobos
 %_includedir/d/std
+%_includedir/d/etc
 %_libdir/libphobos*
 
 %changelog
+* Wed Oct 31 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt4
+- Added Url in spec
+- Added missed headers
+- Fix dmd.config
+
 * Tue Oct 16 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt3
 - Excluded catdoc(conflicts with the package catdoc-0.94.2-alt4)
 
