@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.49
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -486,7 +486,7 @@ Patch0634: linux-%kernel_branch.42-fix-drivers-video-via.patch
 
 Patch0641: linux-%kernel_branch.42-fix-drivers-virtio--virtio_ballon.patch
 
-Patch0651: linux-%kernel_branch.42-fix-drivers-watchdog--hpwdt.patch
+Patch0651: linux-%kernel_branch.49-fix-drivers-watchdog--hpwdt.patch
 Patch0652: linux-%kernel_branch.42-fix-drivers-watchdog--iTCO_wdt.patch
 
 Patch0661: linux-%kernel_branch.42-fix-firmware--vicam.patch
@@ -582,7 +582,7 @@ Patch0826: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 
 Patch0831: linux-%kernel_branch.42-fix-tools--perf.patch
 
-Patch0841: linux-%kernel_branch.42-fix-virt-kvm.patch
+Patch0841: linux-%kernel_branch.49-fix-virt-kvm.patch
 Patch0842: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
 Patch0843: linux-%kernel_branch.43-fix-virt-kvm--kvm-intel.patch
 
@@ -2716,6 +2716,11 @@ fi
 
 
 %changelog
+* Wed Oct 31 2012 Led <led@altlinux.ru> 3.0.49-alt3
+- updated:
+  + fix-drivers-watchdog--hpwdt
+  + fix-virt-kvm (CVE-2012-1601)
+
 * Mon Oct 29 2012 Led <led@altlinux.ru> 3.0.49-alt2
 - added:
   + feat-security--yama
