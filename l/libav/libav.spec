@@ -24,7 +24,11 @@
 %def_enable static
 %def_enable pthreads
 %def_enable zlib
+%ifarch %ix86 x86_64
 %def_enable mmx
+%else
+%def_disable mmx
+%endif
 %def_disable iwmmxt
 %def_disable memalign_hack
 %def_enable avserver
@@ -37,8 +41,13 @@
 %def_enable libtheora
 %def_disable debug
 %def_enable bzlib
+%ifarch %ix86 x86_64
 %def_enable vaapi
 %def_enable vdpau
+%else
+%def_disable vaapi
+%def_disable vdpau
+%endif
 %def_enable libopencore_amrwb
 %def_enable libopencore_amrnb
 %def_enable libvpx
@@ -65,14 +74,17 @@
 %if_enabled mmx
 %set_verify_elf_method textrel=relaxed
 %endif
+%ifarch %arm
+%set_verify_elf_method textrel=relaxed
+%endif
 # }}}
 
 Name: libav
-Version: 0.8.2
+Version: 0.8.4
 Release: alt1
 Epoch: 1
 
-%define gitrev 43e5fda4
+%define gitrev 2c8ce462
 
 Summary: Hyper fast MPEG1/MPEG4/H263/RV and AC3/MPEG audio encoder
 License: %{!?_enable_gpl:L}GPL%{?_enable_version3:3}
@@ -588,6 +600,9 @@ bzip2 --best --force --keep -- Changelog
 
 # {{{ Changelog
 %changelog
+* Thu Nov 01 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.8.4-alt1
+- 0.8.4 released
+
 * Sat May 05 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1:0.8.2-alt1
 - 0.8.2 released
 
