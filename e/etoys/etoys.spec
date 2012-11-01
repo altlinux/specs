@@ -2,7 +2,7 @@
 #       See http://wiki.sugarlabs.org/go/Deployment_Team/jhconvert for details
 
 Name: etoys
-Version: 4.0.2340
+Version: 5.0.2048
 Release: alt1
 Summary: An educational tool for teaching children powerful ideas in compelling ways
 License: MIT/Apache
@@ -55,6 +55,9 @@ make ROOT=%{buildroot} datadir=%{buildroot}/%{_prefix}/share bindir=%{buildroot}
 %{_datadir}/applications/*
 
 %changelog
+* Thu Nov 01 2012 Igor Vlasenko <viy@altlinux.ru> 5.0.2048-alt1
+- new version
+
 * Tue Apr 06 2010 Aleksey Lim <alsroot@altlinux.org> 4.0.2340-alt1
 - first build for ALT Linux Sisyphus
 
