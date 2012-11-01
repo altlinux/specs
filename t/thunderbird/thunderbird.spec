@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	16.0.1
+Version:	16.0.2
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -502,6 +502,12 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Nov 01 2012 Alexey Gladkov <legion@altlinux.ru> 16.0.2-alt1
+- New version (16.0.2).
+- Fixed:
+  + MFSA 2012-90 Fixes for Location object issues
+  + MFSA 2012-67 Installer will launch incorrect executable following new installation
+
 * Tue Oct 23 2012 Alexey Gladkov <legion@altlinux.ru> 16.0.1-alt1
 - New version (16.0.1).
 - Enigmail (1.4.5).
