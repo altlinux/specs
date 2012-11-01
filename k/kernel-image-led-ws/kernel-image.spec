@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.50
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -358,7 +358,7 @@ Patch0446: linux-%kernel_branch.42-fix-drivers-net--ehea.patch
 Patch0447: linux-%kernel_branch.42-fix-drivers-net--hp100.patch
 Patch0448: linux-%kernel_branch.42-fix-drivers-net--ibmveth.patch
 Patch0449: linux-%kernel_branch.42-fix-drivers-net--igb.patch
-Patch0450: linux-%kernel_branch.42-fix-drivers-net--ixgbe.patch
+Patch0450: linux-%kernel_branch.49-fix-drivers-net--ixgbe.patch
 Patch0451: linux-%kernel_branch.43-fix-drivers-net--lcs.patch
 Patch0452: linux-%kernel_branch.42-fix-drivers-net--macvtap.patch
 Patch0453: linux-%kernel_branch.42-fix-drivers-net--natsemi.patch
@@ -2719,6 +2719,10 @@ fi
 
 
 %changelog
+* Fri Nov 02 2012 Led <led@altlinux.ru> 3.0.50-alt3
+- updated:
+  + fix-drivers-net--ixgbe
+
 * Thu Nov 01 2012 Led <led@altlinux.ru> 3.0.50-alt2
 - updated:
   + fix-arch-ia64
