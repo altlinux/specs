@@ -1,7 +1,7 @@
-%define rev svn3171
+%define rev svn3819
 Name: megaglest
 Version: 3.6.0.3
-Release: alt1.%rev.1
+Release: alt1.%rev
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 License: GPLv3
 Group: Games/Strategy
@@ -30,7 +30,7 @@ with their corresponding tech trees, units, buildings and some maps.
 
 %prep
 %setup  -n %name-source-%version
-%patch1 -p2
+#patch1 -p2
 %patch2 -p2
 sed -in '/^#include <curl\/types\.h>/d' source/shared_lib/sources/platform/posix/miniftpclient.cpp
 
@@ -58,6 +58,9 @@ install -pm 644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Nov 1 2012 Andrew Clark <andyc@altlinux.org> 3.6.0.3-alt1.svn3819
+- version update to 3.6.0.3-alt1.svn3819
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.0.3-alt1.svn3171.1
 - Rebuilt with libpng15
 

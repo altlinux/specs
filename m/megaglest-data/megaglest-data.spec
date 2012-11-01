@@ -1,8 +1,8 @@
-%define rev svn3171
+%define rev svn3813
 %define packname megaglest
 Name: megaglest-data
 Version: 3.6.0.3
-Release: alt1.%rev
+Release: alt2.%rev
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 License: GPL
 Group: Games/Strategy
@@ -31,6 +31,12 @@ install -pm644 %SOURCE2 %buildroot%_gamesdatadir/%packname/glest.ini
 %_gamesdatadir/%packname
 
 %changelog
+* Thu Nov 1 2012 Andrew Clark <andyc@altlinux.org> 3.6.0.3-alt2.svn3813
+- version update to 3.6.0.3-alt2.svn3813
+
+* Wed Oct 31 2012 Andrew Clark <andyc@altlinux.org> 3.6.0.3-alt1.svn3813
+- version update to 3.6.0.3-alt1.svn3813
+
 * Sat Mar 24 2012 Andrew Clark <andyc@altlinux.org> 3.6.0.3-alt1.svn3171
 - version update to 3.6.0.3-alt1.svn3171
 
