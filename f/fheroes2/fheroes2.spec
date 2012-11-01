@@ -1,4 +1,4 @@
-%define rev svn2886
+%define rev svn2951
 Name: fheroes2
 Version: 20120301
 Release: alt1.%rev
@@ -55,6 +55,9 @@ install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdi
 
 
 %changelog
+* Thu Nov 1 2012 Andrew Clark <andyc@altlinux.ru> 20120301-alt1.svn2951
+- version update 20120301-alt1.svn2951
+
 * Wed Oct 3 2012 Andrew Clark <andyc@altlinux.ru> 20120301-alt1.svn2886
 - version update 20120301-alt1.svn2886
 
