@@ -13,11 +13,11 @@ BuildRequires(pre): rpm-macros-mate-conf
 %define fedora 18
 Name:		mate-display-manager	
 Version:	1.4.0
-Release:	alt2_1.2
+Release:	alt3
 Summary:	Displays login screen for MATE Desktop
 License:	LPLv2+ and GPLv2+ 
 URL:		http://mate-desktop.org
-Source0:	http://vicodan.fedorapeople.org/mate-display-manager-1.4.0.tar.gz
+Source0:	http://vicodan.fedorapeople.org/mate-display-manager-1.4.0.tar
 
 %if %{fedora} >= 18
 BuildRequires:	libnm-gtk-devel
@@ -70,7 +70,7 @@ aclocal
 intltoolize --automake --copy --force
 automake --add-missing
 %configure --disable-static --disable-scrollkeeper --disable-schemas-install --disable-nls
-make %{?_smp_mflags} V=1
+%make_build V=1
 
 
 %install
@@ -129,7 +129,7 @@ install -pDm755 %SOURCE45 %buildroot%_controldir/mdm_xdmcp
 %{_datadir}/locale/*/*/mdm*
 %{_datadir}/icons/hicolor/*/*/*
 %{_libdir}/matecomponent/servers/MATE_FastUserSwitchApplet.server
-%{_sharedstatedir}/mdm
+#%{_sharedstatedir}/mdm
 # alt specific
 %dir %_sysconfdir/X11/sessions
 %config %_controldir/mdm_xdmcp
@@ -138,12 +138,12 @@ install -pDm755 %SOURCE45 %buildroot%_controldir/mdm_xdmcp
 %dir %_localstatedir/log/mdm
 %attr(775, mdm, mdm) %dir %_localstatedir/cache/mdm
 ## %attr(775, root, mdm) %dir %_localstatedir/spool/mdm
-#%attr(1770, mdm, mdm) %dir %_localstatedir/lib/mdm
-#%attr(1750, mdm, mdm) %dir %_localstatedir/lib/mdm/.mateconf.mandatory
-#%attr(1640, mdm, mdm) %_localstatedir/lib/mdm/.mateconf.mandatory/*.xml
-#%attr(1750, mdm, mdm) %dir %_localstatedir/lib/mdm/.mateconf.defaults
-#%attr(1640, mdm, mdm) %_localstatedir/lib/mdm/.mateconf.defaults/*.xml
-#%attr(1640, mdm, mdm) %_localstatedir/lib/mdm/.mateconf.path
+%attr(1770, root, mdm) %dir %_localstatedir/lib/mdm
+%attr(1750, root, mdm) %dir %_localstatedir/lib/mdm/.mateconf.mandatory
+%attr(1640, root, mdm) %_localstatedir/lib/mdm/.mateconf.mandatory/*.xml
+%attr(1750, root, mdm) %dir %_localstatedir/lib/mdm/.mateconf.defaults
+%attr(1640, root, mdm) %_localstatedir/lib/mdm/.mateconf.defaults/*.xml
+%attr(1640, root, mdm) %_localstatedir/lib/mdm/.mateconf.path
 ##%attr(1750, mdm, mdm) %dir %_localstatedir/lib/mdm/.local
 ##%attr(1750, mdm, mdm) %dir %_localstatedir/lib/mdm/.local/share
 ##%attr(1750, mdm, mdm) %dir %_localstatedir/lib/mdm/.local/share/applications
@@ -152,6 +152,9 @@ install -pDm755 %SOURCE45 %buildroot%_controldir/mdm_xdmcp
 
 
 %changelog
+* Thu Nov 01 2012 Led <led@altlinux.ru> 1.4.0-alt3
+- fixed mdm's home dir permissions (ALT#27912)
+
 * Thu Oct 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt2_1.2
 - mate-control-center-filesystem dependence temporary removed
 
