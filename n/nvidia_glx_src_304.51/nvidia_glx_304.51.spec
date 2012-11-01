@@ -15,9 +15,9 @@
 %define nv_version 304
 %define nv_release 51
 %define nv_minor %nil
-%define pkg_rel alt105
+%define pkg_rel alt106
 %def_disable common
-%def_enable kernelsource
+%def_disable kernelsource
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -361,6 +361,9 @@ fi
 %endif
 
 %changelog
+* Thu Nov 01 2012 Sergey V Turchin <zerg@altlinux.org> 304.51-alt106
+- don't package kernel module sources
+
 * Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 304.51-alt105
 - new version
 
