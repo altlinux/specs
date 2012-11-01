@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	16.0.1
+Version:	16.0.2
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -362,6 +362,11 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Thu Nov 01 2012 Alexey Gladkov <legion@altlinux.ru> 16.0.2-alt1
+- New release (16.0.2).
+- Fixed:
+  + MFSA 2012-90 Fixes for Location object issues
+
 * Fri Oct 19 2012 Alexey Gladkov <legion@altlinux.ru> 16.0.1-alt1
 - New release (16.0.1).
 - Fixed:
