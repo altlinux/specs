@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt45
+Release: alt46
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -107,6 +107,9 @@ make check
 %lang(es) %_datadir/locale/es/LC_MESSAGES/*.mo
 
 %changelog
+* Thu Nov 01 2012 Andrey Cherepanov <cas@altlinux.org> 2.9-alt46
+- Update alterator-auth translations
+
 * Mon Oct 29 2012 Andrey Cherepanov <cas@altlinux.org> 2.9-alt45
 - Add new Russian translations of alterator-net-domain
 - Complete rewrite alterator-net-domain help on Russian
