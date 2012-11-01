@@ -16,13 +16,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.49
-Release: alt4
+Version: 3.0.50
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 49
+%define kernel_stable_version 50
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -146,7 +146,7 @@ Patch0024: linux-%kernel_branch.42-fix-arch-powerpc-platforms--chrp.patch
 Patch0025: linux-%kernel_branch.42-fix-arch-powerpc-platforms--pseries.patch
 Patch0026: linux-%kernel_branch.43-fix-arch-s390.patch
 Patch0027: linux-%kernel_branch.43-fix-arch-s390--lib.patch
-Patch0028: linux-%kernel_branch.44-fix-arch-x86.patch
+Patch0028: linux-%kernel_branch.50-fix-arch-x86.patch
 Patch0029: linux-%kernel_branch.42-fix-arch-x86--apic.patch
 Patch0030: linux-%kernel_branch.42-fix-arch-x86--apm.patch
 Patch0031: linux-%kernel_branch.44-fix-arch-x86--mcheck.patch
@@ -475,9 +475,8 @@ Patch0619: linux-%kernel_branch.42-fix-drivers-usb-serial--ipw.patch
 Patch0620: linux-%kernel_branch.42-fix-drivers-usb-serial--pl2303.patch
 Patch0621: linux-%kernel_branch.42-fix-drivers-usb-serial--usbserial.patch
 Patch0622: linux-%kernel_branch.42-fix-drivers-usb-storage--ums-realtek.patch
-Patch0623: linux-%kernel_branch.46-fix-drivers-usb-storage--usb-storage.patch
-Patch0624: linux-%kernel_branch.42-fix-drivers-usb-usbip--usbip-host.patch
-Patch0625: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
+Patch0623: linux-%kernel_branch.42-fix-drivers-usb-usbip--usbip-host.patch
+Patch0624: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
 
 Patch0631: linux-%kernel_branch.42-fix-drivers-video--intelfb.patch
 Patch0632: linux-%kernel_branch.43-fix-drivers-video--xgifb.patch
@@ -1693,7 +1692,6 @@ cd linux-%version
 %patch0622 -p1
 %patch0623 -p1
 %patch0624 -p1
-%patch0625 -p1
 
 # fix-drivers-video-*
 %patch0631 -p1
@@ -2716,6 +2714,13 @@ fi
 
 
 %changelog
+* Thu Nov 01 2012 Led <led@altlinux.ru> 3.0.50-alt1
+- 3.0.50
+- removed:
+  + fix-drivers-usb-storage--usb-storage
+- updated:
+  + fix-arch-x86
+
 * Wed Oct 31 2012 Led <led@altlinux.ru> 3.0.49-alt4
 - updated:
   + fix-mm
