@@ -1,7 +1,7 @@
 Name: asterisk11
 Summary: Open source PBX
 Version: 11.0.0
-Release: alt1.beta2
+Release: alt2
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
@@ -1065,6 +1065,9 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl.so
 
 %files docs
+%_docdir/%name-%version/Asterisk-Admin-Guide.pdf
+%_docdir/%name-%version/Asterisk-Admin-Guide
+%_docdir/%name-%version/CODING-GUIDELINES
 %dir %_docdir/%name-%version
 %dir %_docdir/%name-%version/samples
 %attr(0644,root,root) %_docdir/%name-%version/sample.call
@@ -1224,6 +1227,9 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl.so.1
 
 %changelog
+* Thu Nov 01 2012 Denis Smirnov <mithraen@altlinux.ru> 11.0.0-alt2
+- 11.0.0 release
+
 * Mon Sep 24 2012 Denis Smirnov <mithraen@altlinux.ru> 11.0.0-alt1.beta2
 - 11.0.0-beta2
 - disable build with -march=native
