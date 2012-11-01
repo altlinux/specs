@@ -1,5 +1,5 @@
 Name: liboauth
-Version: 0.9.7
+Version: 1.0.0
 Release: alt1
 
 Summary: OAuth functions library
@@ -49,6 +49,9 @@ developing applications that use %name.
 %_man3dir/oauth.*
 
 %changelog
+* Thu Nov 01 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
+- 1.0.0
+
 * Thu Jul 26 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9.7-alt1
 - 0.9.7
 
