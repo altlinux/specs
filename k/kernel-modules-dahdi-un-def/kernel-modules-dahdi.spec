@@ -4,8 +4,8 @@
 %define module_version	2.6.1
 %define module_release	alt1
 
-%define kversion	3.6.4
-%define krelease	alt2
+%define kversion	3.6.5
+%define krelease	alt1
 %define flavour	un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -16,7 +16,7 @@
 Summary: %module_name modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198148.2
+Release: %module_release.198149.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -180,8 +180,8 @@ popd
 %kernel_headers_dir/kernel-modules-%module_name.symvers
 
 %changelog
-* Mon Oct 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.6.1-alt1.198148.2
-- Build for kernel-image-un-def-3.6.4-alt2.
+* Thu Nov 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.6.1-alt1.198149.1
+- Build for kernel-image-un-def-3.6.5-alt1.
 
 * Sun Sep 02 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1
 - 2.6.1
