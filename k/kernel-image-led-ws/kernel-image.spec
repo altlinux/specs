@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.50
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -282,7 +282,7 @@ Patch0251: linux-%kernel_branch.42-fix-drivers-gpu-vga--vgaarb.patch
 Patch0261: linux-%kernel_branch.42-fix-drivers-hid--hid-apple.patch
 Patch0262: linux-%kernel_branch.42-fix-drivers-hid--usbhid.patch
 
-Patch0270: linux-%kernel_branch.43-fix-drivers-hv.patch
+Patch0270: linux-%kernel_branch.49-fix-drivers-hv.patch
 
 Patch0281: linux-%kernel_branch.43-fix-drivers-hwmon--abituguru.patch
 Patch0282: linux-%kernel_branch.43-fix-drivers-hwmon--applesmc.patch
@@ -437,23 +437,24 @@ Patch0557: linux-%kernel_branch.42-fix-drivers-scsi--scsi_transport_sas.patch
 Patch0558: linux-%kernel_branch.42-fix-drivers-scsi--scsi_transport_spi.patch
 Patch0559: linux-%kernel_branch.42-fix-drivers-scsi--sd_mod.patch
 Patch0560: linux-%kernel_branch.42-fix-drivers-scsi--ses.patch
-Patch0561: linux-%kernel_branch.42-fix-drivers-scsi--sim710.patch
-Patch0562: linux-%kernel_branch.42-fix-drivers-scsi--sr_mod.patch
-Patch0563: linux-%kernel_branch.42-fix-drivers-scsi--st.patch
-Patch0564: linux-%kernel_branch.46-fix-drivers-scsi--zfcp.patch
-Patch0565: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb3i.patch
-Patch0566: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb4i.patch
-Patch0567: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--libcxgbi.patch
-Patch0568: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh.patch
-Patch0569: linux-%kernel_branch.45-fix-drivers-scsi-device_handler--scsi_dh_alua.patch
-Patch0570: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh_emc.patch
-Patch0571: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh_hp_sw.patch
-Patch0572: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh_rdac.patch
-Patch0573: linux-%kernel_branch.43-fix-drivers-scsi-fcoe.patch
-Patch0574: linux-%kernel_branch.42-fix-drivers-scsi-ibmvscsi--ibmvfc.patch
-Patch0575: linux-%kernel_branch.42-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
-Patch0576: linux-%kernel_branch.42-fix-drivers-scsi-megaraid--megaraid_mbox.patch
-Patch0577: linux-%kernel_branch.44-fix-drivers-scsi-megaraid--megaraid_sas.patch
+Patch0561: linux-%kernel_branch.49-fix-drivers-scsi--sg.patch
+Patch0562: linux-%kernel_branch.42-fix-drivers-scsi--sim710.patch
+Patch0563: linux-%kernel_branch.42-fix-drivers-scsi--sr_mod.patch
+Patch0564: linux-%kernel_branch.42-fix-drivers-scsi--st.patch
+Patch0565: linux-%kernel_branch.46-fix-drivers-scsi--zfcp.patch
+Patch0566: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb3i.patch
+Patch0567: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb4i.patch
+Patch0568: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--libcxgbi.patch
+Patch0569: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh.patch
+Patch0570: linux-%kernel_branch.45-fix-drivers-scsi-device_handler--scsi_dh_alua.patch
+Patch0571: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh_emc.patch
+Patch0572: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh_hp_sw.patch
+Patch0573: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh_rdac.patch
+Patch0574: linux-%kernel_branch.43-fix-drivers-scsi-fcoe.patch
+Patch0575: linux-%kernel_branch.42-fix-drivers-scsi-ibmvscsi--ibmvfc.patch
+Patch0576: linux-%kernel_branch.42-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
+Patch0577: linux-%kernel_branch.42-fix-drivers-scsi-megaraid--megaraid_mbox.patch
+Patch0578: linux-%kernel_branch.44-fix-drivers-scsi-megaraid--megaraid_sas.patch
 
 Patch0580: linux-%kernel_branch.43-fix-drivers-target.patch
 
@@ -522,10 +523,11 @@ Patch0721: linux-%kernel_branch.42-fix-ipc--mqueue.patch
 Patch0730: linux-%kernel_branch.44-fix-kernel.patch
 Patch0731: linux-%kernel_branch.42-fix-kernel--cgroup.patch
 Patch0732: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
-Patch0733: linux-%kernel_branch.42-fix-kernel--freezer.patch
-Patch0734: linux-%kernel_branch.42-fix-kernel--watchdog.patch
-Patch0735: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
-Patch0736: linux-%kernel_branch.44-fix-kernel-time.patch
+Patch0733: linux-%kernel_branch.49-fix-kernel--events.patch
+Patch0734: linux-%kernel_branch.42-fix-kernel--freezer.patch
+Patch0735: linux-%kernel_branch.42-fix-kernel--watchdog.patch
+Patch0736: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
+Patch0737: linux-%kernel_branch.44-fix-kernel-time.patch
 
 Patch0740: linux-%kernel_branch.42-fix-lib.patch
 Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
@@ -579,7 +581,7 @@ Patch0824: linux-%kernel_branch.42-fix-sound-pci-hda.patch
 Patch0825: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
 Patch0826: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 
-Patch0831: linux-%kernel_branch.42-fix-tools--perf.patch
+Patch0831: linux-%kernel_branch.49-fix-tools--perf.patch
 
 Patch0841: linux-%kernel_branch.49-fix-virt-kvm.patch
 Patch0842: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
@@ -1667,6 +1669,7 @@ cd linux-%version
 %patch0575 -p1
 %patch0576 -p1
 %patch0577 -p1
+%patch0578 -p1
 
 # fix-drivers-target*
 %patch0580 -p1
@@ -1736,6 +1739,7 @@ cd linux-%version
 
 %patch0721 -p1
 
+# fix-kernel*
 %patch0730 -p1
 %patch0731 -p1
 %patch0732 -p1
@@ -1743,6 +1747,7 @@ cd linux-%version
 %patch0734 -p1
 %patch0735 -p1
 %patch0736 -p1
+%patch0737 -p1
 
 %patch0740 -p1
 %patch0741 -p1
@@ -2714,6 +2719,16 @@ fi
 
 
 %changelog
+* Thu Nov 01 2012 Led <led@altlinux.ru> 3.0.50-alt2
+- updated:
+  + fix-arch-ia64
+  + fix-drivers-hv
+  + fix-drivers-pci--sn
+  + fix-tools--perf
+- added:
+  + fix-drivers-scsi--sg
+  + fix-kernel--events
+
 * Thu Nov 01 2012 Led <led@altlinux.ru> 3.0.50-alt1
 - 3.0.50
 - removed:
