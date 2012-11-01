@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.8.35
+Version: 0.9.8.36
 Release: alt1
 
 Summary: The system startup scripts
@@ -162,6 +162,10 @@ done
 %dir %_localstatedir/rsbac
 
 %changelog
+* Thu Nov 01 2012 Timur Aitov <timonbl4@altlinux.org> 0.9.8.36-alt1
+- rc.sysinit: activate encrypted block devices.
+- init.d/halt: turn off encrypted block devices.
+
 * Fri Jul 27 2012 Dmitry V. Levin <ldv@altlinux.org> 0.9.8.35-alt1
 - init.d/clock: changed to use tzupdate from tzdata >= 2012d-alt2.
 
