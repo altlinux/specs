@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.52
+Version: 0.53
 %if_without backport
 %def_with gnome3
 %def_without gnome2
@@ -215,6 +215,7 @@ altlinux-game-roleplaying.directory
 altlinux-graphics-rastergraphics.directory
 altlinux-java.directory
 altlinux-lxde.directory
+altlinux-mate.directory
 altlinux-network-instantmessaging.directory
 altlinux-network-p2p.directory
 altlinux-network-telephony.directory
@@ -223,6 +224,7 @@ altlinux-office-flowchart.directory
 altlinux-science-medicalsoftware.directory
 altlinux-settings-java.directory
 altlinux-settings-lxde.directory
+altlinux-settings-mate.directory
 altlinux-settings-xfce.directory
 altlinux-xfce.directory
 EOF
@@ -338,6 +340,12 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Thu Nov 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.53-alt1
+- MATE settings submenu
+
+* Wed Aug 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.52-alt0.M60P.1
+- backport
+
 * Wed Aug 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.52-alt1
 - merged directories from altlinux-menus
 
