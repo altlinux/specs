@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt1
 epoch:1 
 %define kernel_base_version	3.6
-%define kernel_sublevel	.4
+%define kernel_sublevel	.5
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -578,6 +578,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Nov 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.5-alt1
+- 3.6.4
+- FB_EFI enabled
+
 * Mon Oct 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.4-alt2
 - 3.6.3
 

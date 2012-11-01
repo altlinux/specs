@@ -2,15 +2,15 @@
 %define module_release	alt2
 %define module_version	0.51
 
-%define kversion	3.6.4
-%define krelease	alt2
+%define kversion	3.6.5
+%define krelease	alt1
 %define flavour		un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198148.2
+Release: %module_release.198149.1
 
 Summary: emlog is a kernel module used in Embedded Linux for logging purposes
 
@@ -64,8 +64,8 @@ install -m644 -D %{module_name}.ko %buildroot/%module_dir/%{module_name}.ko
 %module_dir
 
 %changelog
-* Mon Oct 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.51-alt2.198148.2
-- Build for kernel-image-un-def-3.6.4-alt2.
+* Thu Nov 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.51-alt2.198149.1
+- Build for kernel-image-un-def-3.6.5-alt1.
 
 * Mon Sep 06 2011 Andriy Stepanov <stanv@altlinux.ru> 0.51-alt2
 - Fix summary.
