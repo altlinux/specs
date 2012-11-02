@@ -3,7 +3,7 @@
 Name: asterisk1.8-devel-doc
 Summary: Asterisk API documentation
 Version: 1.8
-Release: alt18
+Release: alt19
 License: GPL
 Group: System/Servers
 Url: http://www.asterisk.org/
@@ -34,6 +34,9 @@ tar xfj %_usrsrc/asterisk1.8.tar.bz2
 %doc doc
 
 %changelog
+* Fri Nov 02 2012 Denis Smirnov <mithraen@altlinux.ru> 1.8-alt19
+- Asterisk update
+
 * Sat May 05 2012 Denis Smirnov <mithraen@altlinux.ru> 1.8-alt18
 - Asterisk update
 
