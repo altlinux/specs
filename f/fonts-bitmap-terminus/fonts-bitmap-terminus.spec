@@ -2,16 +2,15 @@
 # $Id: fonts-bitmap-terminus.spec,v 1.5 2006/05/05 08:01:35 eugene Exp $
 
 %define cname terminus
-%define version 4.38
 %define fontsdir %_datadir/fonts/bitmap/terminus
 %define cfontsdir /lib/kbd/consolefonts
 
 Name: fonts-bitmap-%cname
-Version: %version
-Release: alt1
+Version: 4.38
+Release: alt2
 Summary: Terminus Font - a clean fixed width font
 Summary(ru_RU.UTF-8): Шрифт Terminus - растровый моноширинный шрифт
-License: GPL
+License: OFL
 Group: System/Fonts/X11 bitmap
 URL: http://sourceforge.net/projects/terminus-font/
 BuildArch: noarch
@@ -21,25 +20,19 @@ Packager: Eugene Vlasov <eugvv@altlinux.ru>
 Source0: %cname-font-%version.tar.gz
 Source1: %cname-FAQ
 
-# Patch0: %%cname-font-4.16-kacyrillic.patch.gz
-# Patch0: %%cname-4.16-be_ve_ka_cyrillic.patch
-# Patch0: %%cname-4.26-be_ve_cyrillic.patch
+Patch0: %cname-4.38-alt-12pt_ve_fix.patch
+Patch1: %cname-4.38-alt-be2.patch
 
 Provides: terminus-font = %version-%release
 
-PreReq: fontconfig >= 2.4.2
-
-Obsoletes: %cname-fonts-bitmap <= 4.14-alt1
+Obsoletes: %cname-fonts-bitmap < %version
 Provides: %cname-fonts-bitmap = %version-%release
 
-BuildPreReq: fontconfig
-
-# Automatically added by buildreq on Tue Oct 19 2004
-BuildRequires: xorg-x11-font-utils
+BuildPreReq: fontconfig xorg-font-utils
 
 %description
 Terminus Font is designed for long (8 and more hours per day) work with
-computers. Version 4.30 contains 850 characters, covers about 120 language
+computers. Version 4.38 contains 879 characters, covers about 120 language
 sets and supports ISO8859-1/2/5/9/13/15/16, Paratype-PT154/PT254, KOI8-R/U/E/F,
 Esperanto many IBM, Windows and Macintosh code pages, as well as the IBM VGA,
 vt100 and xterm pseudographic characters.
@@ -50,7 +43,7 @@ This package contains Terminus Font for X Window System.
 
 %description -l ru_RU.UTF-8
 Шрифт Terminus разработан для длительной (8 часов и более) работы с
-компьютером. Версия 4.30 содержит 850 символов, полностью охватывая
+компьютером. Версия 4.38 содержит 879 символов, полностью охватывая
 около 120 языковых наборов и поддерживая ISO8859-1/2/5/9/13/15/16,
 Paratype-PT154/PT254, KOI8-R/U/E/F, Esperanto, многие кодовые страницы IBM,
 Windows и Macintosh. Также включены псевдографические символы IBM VGA, vt100 и
@@ -71,7 +64,7 @@ Provides: %cname-fonts-console = %version-%release
 
 %description -n fonts-console-%cname
 Terminus Font is designed for long (8 and more hours per day) work with
-computers. Version 4.30 contains 850 characters, covers about 120 language
+computers. Version 4.38 contains 879 characters, covers about 120 language
 sets and supports ISO8859-1/2/5/9/13/15/16, Paratype-PT154/PT254, KOI8-R/U/E/F,
 Esperanto many IBM, Windows and Macintosh code pages, as well as the IBM VGA,
 vt100 and xterm pseudographic characters.
@@ -82,7 +75,7 @@ This package contains Terminus Font for Linux console.
 
 %description -l ru_RU.UTF-8 -n fonts-console-%cname
 Шрифт Terminus разработан для длительной (8 часов и более) работы с
-компьютером. Версия 4.30 содержит 850 символов, полностью охватывая
+компьютером. Версия 4.38 содержит 879 символов, полностью охватывая
 около 120 языковых наборов и поддерживая ISO8859-1/2/5/9/13/15/16,
 Paratype-PT154/PT254, KOI8-R/U/E/F, Esperanto, многие кодовые страницы IBM,
 Windows и Macintosh. Также включены псевдографические символы IBM VGA, vt100 и
@@ -92,47 +85,50 @@ xterm.
 шрифт для EGA/VGA размером 8x14 и 8x16.
 Этот пакет содержит шрифт Terminus для консоли Linux.
 
-
 %prep
-%setup -q -n %cname-font-%version
+%setup -n %cname-font-%version
+%patch0
+%patch1
 
 %build
-patch -i alt/dv1.diff
-patch -i alt/ij1.diff
+patch < alt/ge2.diff
 chmod +x configure
-./configure --psfdir=%buildroot%cfontsdir \
-	    --x11dir=%buildroot%fontsdir
-make
-
+./configure --prefix=%_prefix \
+    --psfdir=%cfontsdir \
+    --x11dir=%fontsdir
+export GZIP=--best
+%make_build
 
 %install
-mkdir -p %buildroot%fontsdir
-mkdir -p %buildroot%cfontsdir
 cp %SOURCE1 FAQ
-make install
-make fontdir
+%makeinstall_std fontdir
 
 mkdir -p %buildroot%_sysconfdir/X11/fontpath.d
 ln -s ../../..%fontsdir %buildroot%_sysconfdir/X11/fontpath.d/bitmap-terminus:unscaled:pri=20
 
-%post
-%_bindir/fc-cache %fontsdir ||:
-
-%triggerun -- %name <= 4.20-alt2
+%triggerun -- %name < 4.20-alt2.1
 if [ -x %_sbindir/chkfontpath -a -f %_sysconfdir/X11/fs/config ]; then
-	%_sbindir/chkfontpath -q -r %fontsdir ||:
+    %_sbindir/chkfontpath -q -r %fontsdir ||:
 fi
 
 %files
-%doc README README-BG FAQ
+%doc CHANGES README FAQ OFL.TXT
 %_sysconfdir/X11/fontpath.d/*
 %fontsdir
 
 %files -n fonts-console-%cname
-%doc README README-BG FAQ
+%doc CHANGES README FAQ OFL.TXT
 %cfontsdir/*.psf.gz
 
 %changelog
+* Thu Nov 01 2012 Ivan Ovcherenko <asdus@altlinux.org> 4.38-alt2
+- Update specfile
+- Some enhancement in the "ve" character
+- Changes in the next character variants:
+  + "dv" and "ij" character variants resetted to default
+  + "ge" character variant applied
+  + custom "be" character variant applied
+
 * Fri Oct 26 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.38-alt1
 - 4.38
 
