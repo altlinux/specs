@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.99.3
+Version: 0.99.4
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -33,16 +33,16 @@ RPM macros used to build kernel packages according to ALT Linux
 kernel packaging conventions.
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
 asciidoc README.ru.koi8
 
 %install
-%make_install install DESTDIR=%buildroot
-%__install -p -m0644 -D kernel-macros \
-	%buildroot%_sysconfdir/rpm/macros.d/kernel
+%makeinstall_std
+install -Dpm644 kernel-macros \
+	%buildroot%_rpmmacrosdir/kernel
 
 %files
 %_bindir/*
@@ -50,9 +50,15 @@ asciidoc README.ru.koi8
 %doc README* config.sh.sample kernel-policy.txt kernel-spec-example.txt
 
 %files -n rpm-build-kernel
-%_sysconfdir/rpm/macros.d/kernel
+%_rpmmacrosdir/kernel
 
 %changelog
+* Fri Nov 02 2012 Dmitry V. Levin <ldv@altlinux.org> 0.99.4-alt1
+- Relocated kernel macros to %_rpmmacrosdir.
+- kernel-macros:
+  + removed %%kgcc and %%kgcc_package;
+  + made %%post_kernel_image and %%preun_kernel_image obsolete.
+
 * Mon Sep 19 2011 Anton Protopopov <aspsk@altlinux.org> 0.99.3-alt1
 - Add -d option (the same as in buildmodules)
 
