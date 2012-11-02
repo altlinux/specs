@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen libICE-devel libSM-devel libcheck-devel pkgconfi
 
 Name: libmatchbox
 Version: 1.9
-Release: alt3
+Release: alt4
 Summary: Libraries for the Matchbox Desktop
 License: LGPLv2+
 Group: System/Libraries
@@ -25,6 +25,7 @@ BuildRequires: libXext-devel
 BuildRequires: libpango-devel
 BuildRequires: libpng-devel
 BuildRequires: libjpeg-devel
+BuildRequires: libxsettings-client-devel
 
 %description
 Matchbox is a base environment for the X Window System running on non-desktop
@@ -65,6 +66,7 @@ autoreconf -fisv
 	--enable-pango \
 	--enable-jpeg \
 	--enable-png \
+	--enable-xsettings \
 	%{subst_enable static}
 %make_build
 
@@ -87,6 +89,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Fri Nov 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.9-alt4
+- build with libxsettings-client-devel
+
 * Fri Nov 02 2012 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3
 - added patches 10 and 11 from fedora
 
