@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 %define fedora 18
 Name:           jss
 Version:        4.2.6
-Release:        alt2_25jpp7
+Release:        alt3_25jpp7
 Summary:        Java Security Services (JSS)
 
 Group:          System/Libraries
@@ -49,9 +49,8 @@ Patch20:        jss-ECC-Phase2KeyArchivalRecovery.patch
 Patch21:        jss-undo-JCA-deprecations.patch
 Patch22:        jss-undo-BadPaddingException-deprecation.patch
 Source44: import.info
-
-# don't use sun.net.www.protocol.http.HttpURLConnection.userAgent
 Patch33: jss-link-alt.patch
+
 
 %description
 Java Security Services (JSS) is a java native interface which provides a bridge
@@ -134,11 +133,12 @@ cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.2.m
 sed -i -e 's;LINUX3_1;LINUX3_2;' mozilla/security/coreconf/Linux3.2.mk
 %endif
 
-for i in 0 5; do
+
+# 3.0(t6), 3.5(SIS) kernels support
+for i in 0 3 4 5; do
 cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.$i.mk
 sed -i -e 's;LINUX3_1;LINUX3_'$i';' mozilla/security/coreconf/Linux3.$i.mk
 done
-
 # The Makefile is not thread-safe
 make -C mozilla/security/coreconf
 make -C mozilla/security/jss
@@ -180,11 +180,14 @@ popd
 # javadoc
 install -d -m 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 cp -rp mozilla/dist/jssdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
+mkdir -p %buildroot%_javadir/
+ln -s %_libdir/java/jss4.jar %buildroot%_javadir/jss4.jar
 
 %files
 %doc mozilla/security/jss/jss.html MPL-1.1.txt gpl.txt lgpl.txt
 %{_libdir}/jss/*
 %{_jnidir}/*
+%_javadir/jss4.jar
 
 %files javadoc
 %dir %{_javadocdir}/%{name}-%{version}
@@ -192,6 +195,9 @@ cp -rp mozilla/dist/jssdoc/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 
 %changelog
+* Fri Nov 02 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt3_25jpp7
+- added jss4 compat symlink
+
 * Tue Oct 30 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt2_25jpp7
 - new release; fixed build, updated fedora patches
 
