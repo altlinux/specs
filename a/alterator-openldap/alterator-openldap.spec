@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-openldap
-Version: 0.8
-Release: alt2
+Version: 0.8.1
+Release: alt1
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.ru>
 BuildArch: noarch
@@ -45,6 +45,9 @@ Alterator module for OpenLDAP server.
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Oct 31 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt1
+- Add default organization unit Computers
+
 * Mon Mar 14 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt2
 - Management of TLS settings fixed (closes #25190)
 - use samba.scheme from samba package due to set by installer
