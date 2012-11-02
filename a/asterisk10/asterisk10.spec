@@ -1,6 +1,6 @@
 Name: asterisk10
 Summary: Open source PBX
-Version: 10.8.0
+Version: 10.9.0
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -106,6 +106,8 @@ Requires: pbx-streamplayer
 Requires: pbx-stereorize
 Source: %name-%version.tar
 Source2: %name-altlinux.tar
+Source100: %name.watch
+Patch: %name-%version.patch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 %package -n aelparse10
@@ -589,7 +591,7 @@ equipment using relatively inexpensive hardware.
 %prep
 %setup -c -T
 %setup -a2 -D
-tar cjf ../%name.tar.bz2 .
+%patch -p1
 sed -i "s!MODULES_DIR=.*!MODULES_DIR=%modules_dir!" Makefile
 sed -i "s!AGI_DIR=.*!AGI_DIR=%agi_dir!" Makefile
 sed -i 's!^[[:space:]]*ASTVARRUNDIR=.*!ASTVARRUNDIR=$(INSTALL_PREFIX)/var/run/asterisk!' Makefile
@@ -599,6 +601,7 @@ rm -f */.*.makeopts
 rm -f menuselect-tree
 rm -f */.moduleinfo
 rm -f */.makeopts
+tar cjf ../%name.tar.bz2 .
 
 %build
 export CC=gcc
@@ -1199,6 +1202,12 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %_altdir/conf2ael-%version
 
 %changelog
+* Fri Nov 02 2012 Denis Smirnov <mithraen@altlinux.ru> 10.9.0-alt1
+- 1.9.0
+
+* Mon Sep 24 2012 Denis Smirnov <mithraen@altlinux.ru> 10.8.0-alt2
+- add watch-file
+
 * Sun Sep 16 2012 Denis Smirnov <mithraen@altlinux.ru> 10.8.0-alt1
 - 10.8.0
 
