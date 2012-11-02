@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.50
-Release: alt3
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -332,10 +332,11 @@ Patch0392: linux-%kernel_branch.44-fix-drivers-media-dvb-firewire--firedtv.patch
 
 Patch0401: linux-%kernel_branch.42-fix-drivers-message-fusion.patch
 
-Patch0411: linux-%kernel_branch.42-fix-drivers-misc--rts_pstor.patch
-Patch0412: linux-%kernel_branch.42-fix-drivers-misc--vmw_balloon.patch
-Patch0413: linux-%kernel_branch.42-fix-drivers-misc--zcache.patch
-Patch0414: linux-%kernel_branch.42-fix-drivers-misc-lis3lv02d--lis3lv02d.patch
+Patch0411: linux-%kernel_branch.50-fix-drivers-misc--hpilo.patch
+Patch0412: linux-%kernel_branch.42-fix-drivers-misc--rts_pstor.patch
+Patch0413: linux-%kernel_branch.42-fix-drivers-misc--vmw_balloon.patch
+Patch0414: linux-%kernel_branch.42-fix-drivers-misc--zcache.patch
+Patch0415: linux-%kernel_branch.42-fix-drivers-misc-lis3lv02d--lis3lv02d.patch
 
 Patch0421: linux-%kernel_branch.42-fix-drivers-mmc-card--mmc_block.patch
 
@@ -1545,10 +1546,12 @@ cd linux-%version
 
 %patch0401 -p1
 
+# fix-drivers-misc-*
 %patch0411 -p1
 %patch0412 -p1
 %patch0413 -p1
 %patch0414 -p1
+%patch0415 -p1
 
 %patch0421 -p1
 
@@ -2283,14 +2286,10 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 
 %post
-if ! [ -x /usr/lib/rpm/boot_kernel.filetrigger ]; then
-	%post_kernel_image %kversion-%flavour-%krelease
-fi
+[ -x /usr/lib/rpm/boot_kernel.filetrigger ] || /sbin/installkernel %kversion-%flavour-%krelease
 
 %preun
-if ! [ -x /usr/lib/rpm/boot_kernel.filetrigger ]; then
-	%preun_kernel_image %kversion-%flavour-%krelease
-fi
+[ -x /usr/lib/rpm/boot_kernel.filetrigger ] || /sbin/installkernel --remove %kversion-%flavour-%krelease
 
 
 %kernel_modules_package_post scsi
@@ -2719,6 +2718,16 @@ fi
 
 
 %changelog
+* Fri Nov 02 2012 Led <led@altlinux.ru> 3.0.50-alt5
+- updated post/preun scripts: %%{post,preun}_kernel_image macros obsoleted now
+
+* Fri Nov 02 2012 Led <led@altlinux.ru> 3.0.50-alt4
+- updated:
+  + fix-arch-x86
+- added:
+  + fix-drivers-misc--hpilo
+- CONFIG_PHYSICAL_ALIGN=0x200000 for x86
+
 * Fri Nov 02 2012 Led <led@altlinux.ru> 3.0.50-alt3
 - updated:
   + fix-drivers-net--ixgbe
