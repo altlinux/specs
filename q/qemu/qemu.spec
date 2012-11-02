@@ -124,7 +124,7 @@
 
 Name: qemu
 Version: 1.2.0
-Release: alt1.1
+Release: alt2
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -228,7 +228,7 @@ cross-debugging.
 %package user-binfmt_misc
 Summary: QEMU CPU Emulator - user mode emulation, binfmt_misc version
 Group: Emulators
-Requires: %name-common = %version-%release
+Requires: %name-aux = %version-%release
 
 %description user-binfmt_misc
 User mode emulation.  In this mode, QEMU can launch Linux processes
@@ -238,11 +238,12 @@ cross-debugging.
 This package contains static version with enabled binfmt_misc support.
 Suitable for hasher.
 
-%package  img
+%package img
 Summary: QEMU command line tool for manipulating disk images
 Group: Emulators
 Provides: qemu-kvm-img
 Obsoletes: qemu-kvm-img < %version-%release
+Requires: %name-aux = %version-%release
 
 %description img
 This package provides a command line tool for manipulating disk images
@@ -250,6 +251,7 @@ This package provides a command line tool for manipulating disk images
 %package guest-agent
 Summary: QEMU guest agent
 Group: Emulators
+Requires: %name-aux = %version-%release
 
 %description guest-agent
 QEMU is a generic and open source processor emulator which achieves a good
@@ -264,14 +266,25 @@ This package does not need to be installed on the host OS.
 Summary: User documentation for %name
 Group: Documentation
 BuildArch: noarch
-Conflicts: %name < %version-%release
+Requires: %name-aux = %version-%release
 
 %description doc
 User documentation for %name
 
+%package aux
+Summary: QEMU auxiliary package
+Group: Emulators
+BuildArch: noarch
+
+%description aux
+QEMU is a generic and open source processor emulator which achieves
+good emulation speed by using dynamic translation.
+
+This is an auxiliary package.
+
 %prep
-%setup -q
-%patch0 -p1
+%setup
+%patch -p1
 cp -f %SOURCE2 qemu-kvm.control.in
 
 %build
@@ -356,10 +369,11 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 sed -i 's/@GROUP@/%_group/g' qemu-kvm.control.in
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
-mv %buildroot%_defaultdocdir/qemu %buildroot%_defaultdocdir/%name-%version
-install -m644 TODO Changelog %buildroot%_defaultdocdir/%name-%version
+%define docdir %_docdir/%name-%version
+mv %buildroot%_docdir/qemu %buildroot%docdir
+install -m644 Changelog LICENSE TODO %buildroot%docdir/
 
 %if_enabled binfmt_misc
 find -regex '.*linux-user/qemu.*\.static' -exec install -m755 '{}' %buildroot%_bindir ';'
@@ -494,9 +508,17 @@ fi
 %_unitdir/%name-guest-agent.service
 
 %files doc
-%_defaultdocdir/%name-%version
+%docdir/
+%exclude %docdir/LICENSE
+
+%files aux
+%dir %docdir/
+%docdir/LICENSE
 
 %changelog
+* Fri Nov 02 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.0-alt2
+- Introduced -aux subpackage, updated interpackage dependencies.
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.1
 - Rebuilt with libpng15
 
