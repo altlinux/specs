@@ -1,7 +1,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-ldap-groups
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Source: %name-%version.tar
@@ -46,6 +46,10 @@ Alterator module for LDAP groups administration
 %_hooksdir/91-ldap-groups
 
 %changelog
+* Thu Nov 01 2012 Andrey Cherepanov <cas@altlinux.org> 0.6.2-alt1
+- Support empty lines and comments beginning from # in group-init-list
+- Add groups 'users' and 'admins' for NT domain
+
 * Thu Oct 25 2012 Andrey Cherepanov <cas@altlinux.org> 0.6.1-alt1
 - Move init script from firsttime.d to hostname.d hooks directory.
   Please, run /etc/hooks/hostname.d/91-ldap-groups manually

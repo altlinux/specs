@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.23
+Version: 0.24
 Release: alt1
 
 BuildArch: noarch
@@ -17,6 +17,7 @@ Requires: alterator-l10n >= 2.0-alt1
 Requires: pam-config >= 1.4.0-alt1.1
 Requires: pam_krb5
 Requires: nss-ldap
+Requires: avahi-daemon
 Conflicts: alterator-fbi < 5.9-alt2
 Conflicts: alterator-lookout < 1.6-alt6
 
@@ -47,6 +48,11 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Oct 31 2012 Andrey Cherepanov <cas@altlinux.org> 0.24-alt1
+- Autostart nslcd daemon if ldap or krb5 authentication is used
+- Warning about stopped avahi-daemon
+- Add avahi-daemon in requires
+
 * Thu Oct 04 2012 Andrey Cherepanov <cas@altlinux.org> 0.23-alt1
 - Support nss-ldapd
 

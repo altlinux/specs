@@ -2,7 +2,7 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: ldap-user-tools
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: tools to work with ldap users
@@ -42,6 +42,13 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Tue Oct 30 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt1
+- ldap-groupadd --default reads initial group list and put all users
+  to groups
+- Add -m and -x options to ldap-groupmod to manage group membership
+- Add -g option to ldap-usermod to set user primary group
+- More significant error messages
+
 * Mon Oct 22 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.0-alt1
 - Support add, list and delete workstation records:
   * add: ldap-useradd -w -i <ws>

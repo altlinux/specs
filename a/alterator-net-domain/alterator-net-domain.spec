@@ -2,7 +2,7 @@
 
 Name: alterator-net-domain
 Version: 0.4
-Release: alt12
+Release: alt13
 Source:%name-%version.tar
 
 Summary: alterator module to edit system network domain
@@ -38,6 +38,9 @@ alterator module to edit system network domain
 
 
 %changelog
+* Fri Nov 02 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt13
+- Create Samba configuration for NT domain
+
 * Mon Oct 29 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt12
 - Check domain name validity according RFC 1035
 
