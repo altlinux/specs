@@ -4,8 +4,8 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	304.51
-%define module_release	alt2
+%define module_version	304.60
+%define module_release	alt1
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
 %if "%xorg_ver" == ""
@@ -77,6 +77,8 @@ BuildRequires: kernel-source-%module_name-%legacy2_src
 BuildRequires: kernel-source-%module_name-%legacy3_src
 %endif
 
+Patch0: nvidia-kernel-3.6.patch
+
 Provides:  	kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
@@ -117,7 +119,6 @@ do
     %__ln_s Makefile.kbuild Makefile
     popd
 done
-
 
 %build
 for ver in %mod_ver_list
@@ -193,14 +194,20 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 304.51-alt2.132640.24
+* Sat Nov 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 304.60-alt1.132640.24
 - Build for kernel-image-hpc-skif-2.6.32-alt24.
+
+* Mon Oct 29 2012 Sergey V Turchin <zerg at altlinux dot org> 304.60-alt1
+- new release (304.60)
 
 * Tue Oct 02 2012 Sergey V Turchin <zerg at altlinux dot org> 304.51-alt2
 - new releases 173.14.35 and 96.43.23 with xorg-server-1.12 support)
 
 * Tue Oct 02 2012 Sergey V Turchin <zerg at altlinux dot org> 304.51-alt1
 - new release (304.51)
+
+* Mon Oct 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.43-alt2
+- build on 3.6 kernel fixed
 
 * Wed Aug 29 2012 Sergey V Turchin <zerg at altlinux dot org> 304.43-alt1
 - new release (304.43)
