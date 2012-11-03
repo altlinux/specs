@@ -4,7 +4,7 @@
 
 Name: Mesa
 Version: 9.0
-Release: alt2
+Release: alt3
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -156,6 +156,8 @@ Requires: libGL = %epoch:%version-%release
 %description -n glxgears
 glxgears  is a GLX demo that draws three rotating gears, and prints out
 framerate information to stdout
+
+%set_verify_elf_method unresolved=relaxed
 
 %define dri_common	r200,radeon
 %define dri_ix86	%dri_common,i915,i965,nouveau
@@ -319,6 +321,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sat Nov 03 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0-alt3
+- intel-2012q4.1
+
 * Tue Oct 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0-alt2
 - enabled radeonsi gallium driver
 - rebuild with wayland 1.0.0
