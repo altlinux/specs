@@ -3,7 +3,7 @@
 
 Name: alterator-auth
 Version: 0.24
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Sat Nov 03 2012 Andrey Cherepanov <cas@altlinux.org> 0.24-alt2
+- Don't hide local base selection if avahi-daemon is stopped
+
 * Wed Oct 31 2012 Andrey Cherepanov <cas@altlinux.org> 0.24-alt1
 - Autostart nslcd daemon if ldap or krb5 authentication is used
 - Warning about stopped avahi-daemon

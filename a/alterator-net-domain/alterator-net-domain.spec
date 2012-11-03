@@ -2,7 +2,7 @@
 
 Name: alterator-net-domain
 Version: 0.4
-Release: alt13
+Release: alt14
 Source:%name-%version.tar
 
 Summary: alterator module to edit system network domain
@@ -10,6 +10,9 @@ License: GPL
 Group: System/Configuration/Other
 Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.0-alt2
+Requires: samba
+Requires: ldap-user-tools >= 0.8.1
+
 Conflicts: alterator-lookout < 1.6-alt6
 Conflicts: alterator-fbi < 5.9-alt2
 
@@ -38,6 +41,10 @@ alterator module to edit system network domain
 
 
 %changelog
+* Sat Nov 03 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt14
+- Fix group create
+- Add requires on samba and ldap-user-tools
+
 * Fri Nov 02 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt13
 - Create Samba configuration for NT domain
 
