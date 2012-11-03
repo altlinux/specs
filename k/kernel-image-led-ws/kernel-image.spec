@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.50
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -231,7 +231,7 @@ Patch0161: linux-%kernel_branch.44-fix-drivers-cpufreq--acpi-cpufreq.patch
 Patch0162: linux-%kernel_branch.42-fix-drivers-cpufreq--cpufreq_conservative.patch
 Patch0163: linux-%kernel_branch.42-fix-drivers-cpufreq--cpufreq_ondemand.patch
 Patch0164: linux-%kernel_branch.44-fix-drivers-cpufreq--p4-clockmod.patch
-Patch0165: linux-%kernel_branch.44-fix-drivers-cpufreq--powernow-k8.patch
+Patch0165: linux-%kernel_branch.50-fix-drivers-cpufreq--powernow-k8.patch
 
 Patch0171: linux-%kernel_branch.43-fix-drivers-crypto--ap.patch
 Patch0172: linux-%kernel_branch.42-fix-drivers-crypto--hifn_795x.patch
@@ -496,7 +496,7 @@ Patch0670: linux-%kernel_branch.44-fix-fs.patch
 Patch0671: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0672: linux-%kernel_branch.42-fix-fs--block.patch
 Patch0673: linux-%kernel_branch.42-fix-fs--eventpoll.patch
-Patch0674: linux-%kernel_branch.46-fix-fs-btrfs.patch
+Patch0674: linux-%kernel_branch.50-fix-fs-btrfs.patch
 Patch0675: linux-%kernel_branch.44-fix-fs-cachefiles.patch
 Patch0676: linux-%kernel_branch.42-fix-fs-ceph.patch
 Patch0677: linux-%kernel_branch.42-fix-fs-cifs.patch
@@ -2718,6 +2718,11 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 
 %changelog
+* Sat Nov 03 2012 Led <led@altlinux.ru> 3.0.50-alt6
+- updated:
+  + fix-drivers-cpufreq--powernow-k8
+  + fix-fs-btrfs
+
 * Fri Nov 02 2012 Led <led@altlinux.ru> 3.0.50-alt5
 - updated post/preun scripts: %%{post,preun}_kernel_image macros obsoleted now
 
