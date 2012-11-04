@@ -1,14 +1,15 @@
-%define sover 6
-%define sover_port 10
+%define pname libgphoto2
+%define soname 2
+%define soname_port 0
 %def_disable static
 %def_enable hal
 %def_disable libhal
 
-Name: libgphoto2
-Version: 2.5.0
-Release: alt1
+Name: %{pname}_2.4
+Version: 2.4.14
+Release: alt3
 
-Group: System/Libraries
+Group: System/Legacy libraries
 Summary: Library to access to digital cameras
 Summary (ru_RU.UTF-8): Библиотека функций для работы с цифровыми фотокамерами
 Url: http://www.gphoto.org/
@@ -24,10 +25,12 @@ BuildRequires: libhal-devel
 # IMHO, this build requires are needs when build with cdk
 #BuildRequires: libncurses-devel libtinfo-devel
 
+Requires: %pname >= 2.5.0
+
 # Url for source code downloads now http://sourceforge.net/project/showfiles.php?group_id=8874
-Source0: %name-%version.tar
-Patch0:  %name-2.4.14-alt-fix-underlinked_libraries.patch
-Patch1:  %name-2.5.0-alt-fix-undef-symbols.patch
+Source0: %pname-%version.tar
+Patch0:  %pname-2.4.0-deb-70_increase_max_entries.patch
+Patch1:  %pname-2.4.14-alt-fix-underlinked_libraries.patch
 
 %description
 This library contains all the functionality to access to modern digital
@@ -35,28 +38,28 @@ cameras via USB or the serial port.
 
 %package -n %name-devel
 Group: Development/C
-Summary: Headers and links to compile against the %name library
+Summary: Headers and links to compile against the %pname library
 Summary (ru_RU.UTF-8): Заголовочные и другие файлы для компиляции приложений с библиотекой libgphoto2
 License: LGPLv2+
 Requires: %name = %version-%release
-Conflicts: %{name}_2.4-devel
+Conflicts: %pname-devel
 
 %description -n %name-devel
 This package contains all files which one needs to compile programs using
-the %name library.
+the %pname library.
 
 %if_enabled static
 %package -n %name-devel-static
 Group: Development/C
-Summary: Static versions of %name
+Summary: Static versions of %pname
 Summary (ru_RU.UTF-8): Статические версии библиотек libgphoto2
 License: LGPLv2+
 Requires: %name-devel = %version-%release
-Conflicts: %{name}_2.4-devel-static
+Conflicts: %pname-devel-static
 
 %description -n %name-devel-static
 This package contains libraries which one needs to compile programs statically linked
-against %name library.
+against %pname library.
 %endif
 
 ##### TRANSLATED DESCRIPTIONS  #####
@@ -76,7 +79,7 @@ against %name library.
 %endif
 
 %prep
-%setup -n %name-%version
+%setup -n %pname-%version
 %patch0 -p1
 %patch1 -p1
 
@@ -96,18 +99,8 @@ export udevscriptdir=/lib/udev
 %install
 %makeinstall_std
 
-# create udev support
-/bin/mkdir -p %buildroot/lib/udev/rules.d/
-/bin/touch %buildroot/lib/udev/rules.d/40-%name.rules
-
-%if_enabled hal
-# create hal support
-/bin/mkdir -p %buildroot%_datadir/hal/fdi/information/20thirdparty/
-/bin/touch %buildroot%_datadir/hal/fdi/information/20thirdparty/10-camera-%name.fdi
-%endif
-
 # correct content of doc. directory
-for f in %{name}_port/{AUTHORS,NEWS,README}
+for f in %{pname}_port/{AUTHORS,NEWS,README}
 do /bin/cp -pr $f ${f}.port ; done
 
 # remove circular symlink in /usr/include/gphoto2
@@ -115,70 +108,42 @@ do /bin/cp -pr $f ${f}.port ; done
 # udev helper not used now
 /bin/rm -f %buildroot/lib/udev/check-ptp-camera
 # remove .la files
-/bin/rm -f %buildroot%_libdir/%name/*/*.la
+/bin/rm -f %buildroot%_libdir/%pname/*/*.la
 /bin/rm -f %buildroot%_libdir/%{name}_port/*/*.la
 
-%find_lang --output=%name.lang %name-%sover
-%find_lang --append --output=%name.lang %{name}_port-%sover_port
-
-##### PRE/POST INSTALL SCRIPTS #####
-
-%pre
-# create group
-/usr/sbin/groupadd -fr camera || :
-
-%post
-# create udev rules
-%_libdir/%name/print-camera-list --verbose udev-rules version 175 owner root mode 0660 group camera > /lib/udev/rules.d/40-%name.rules
-%if_enabled hal
-# create .fdi file
-%_libdir/%name/print-camera-list hal-fdi > %_datadir/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
-%endif
-
-%triggerpostun -- %name <= 2.4.0
-/sbin/ldconfig
-
+%find_lang --output=%pname.lang %pname-%soname
+%find_lang --append --output=%pname.lang %{pname}_port-%soname_port
 
 ##### FILE LISTS FOR ALL BINARY PACKAGES #####
 
-%files -f %name.lang
+%files -f %pname.lang
 %_libdir/*.so.*
-%dir %_libdir/%name
-%dir %_libdir/%name/*
-%_libdir/%name/*/*.so
-%dir %_libdir/%{name}_port
-%dir %_libdir/%{name}_port/*
-%_libdir/%{name}_port/*/*.so
-%_datadir/%name
-%ghost /lib/udev/rules.d/*
+%_libdir/%pname/*/*.so
+%_libdir/%{pname}_port/*/*.so
+%_datadir/%pname
 %doc {AUTHORS,NEWS,README}
-%doc %{name}_port/{AUTHORS,NEWS,README}.port
-%if_enabled hal
-%_datadir/hal/fdi/information/20thirdparty/*
-%endif
+%doc %{pname}_port/{AUTHORS,NEWS,README}.port
 
 %files -n %name-devel
 %_bindir/*-config
 %_includedir/gphoto2
 %_libdir/*.so
 %_libdir/pkgconfig/*
-%_man3dir/%{name}*
-%doc %_docdir/%name/README.apidocs
-%doc %_docdir/%name/libgphoto2-api.html
-%doc %_docdir/%name/camlibs
+%_man3dir/%{pname}*
+%doc %_docdir/%pname/README.apidocs
+%doc %_docdir/%pname/apidocs.html
+%doc %_docdir/%pname/camlibs
 
 %if_enabled static
 %files -n %name-devel-static
 %_libdir/*.a
-%_libdir/%name/*/*.a
-%_libdir/%{name}_port/*/*.a
+%_libdir/%pname/*/*.a
+%_libdir/%{pname}_port/*/*.a
 %endif
 
 %changelog
-* Tue Jul 10 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 2.5.0-alt1
-- 2.5.0
-- dropped increase_max_entries patch
-- fixed warnings of undefined symbols
+* Sat Nov 03 2012 Dmitriy Khanzhin <jinn@altlinux.org> 2.4.14-alt3
+- compat package
 
 * Sun May 20 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 2.4.14-alt2
 - added libgd2-devel to BuildRequires and recovered libusb-compat-devel
@@ -252,16 +217,16 @@ do /bin/cp -pr $f ${f}.port ; done
 * Wed Aug 27 2008 Dmitriy Khanzhin <jinn@altlinux.ru> 2.4.2-alt1
 - 2.4.2
 - updated BuildRequires
-- soname changed back to %name.so.2 (#16542) and saved so.6 for
+- soname changed back to %pname.so.2 (#16542) and saved so.6 for
   compatibility with previous build (thanks to eostapets@ and rider@)
 - returned russian summaries and descriptions from slava@
 
 * Sat May 24 2008 Dmitriy Khanzhin <jinn@altlinux.ru> 2.4.0-alt2.svn10945
-- moved HAL support into %name, %name-hal has deleted
+- moved HAL support into %pname, %pname-hal has deleted
 - changed postinstall script (#15548)
 
 * Thu May 22 2008 Dmitriy Khanzhin <jinn@altlinux.ru> 2.4.0-alt1.svn10945
-- hal supported (#15547, added %name-hal subpackage)
+- hal supported (#15547, added %pname-hal subpackage)
 - perfected location of docs
 
 * Wed Mar 26 2008 Dmitriy Khanzhin <jinn@altlinux.ru> 2.4.0-alt0.svn10945.3
@@ -271,7 +236,7 @@ do /bin/cp -pr $f ${f}.port ; done
 - switched back to build with separate source code tarballs
 - disabled build hotplug subpackage
 - corrected content of doc. directory
-- turn back requires = %%version-%%release for %name
+- turn back requires = %%version-%%release for %pname
 - build with included .la files
 
 * Sun Mar 09 2008 Dmitriy Khanzhin <jinn@altlinux.ru> 2.4.0-alt0.svn10945.1
@@ -293,7 +258,7 @@ do /bin/cp -pr $f ${f}.port ; done
 * Tue Jun 05 2007 Dmitriy Khanzhin <jinn@altlinux.ru> 2.3.1-alt5
 - disable Canon fast directory retrieval (even so patch2 imported from SVN)
 - bzip ChangeLog
-- added tag License into %name-hotplug
+- added tag License into %pname-hotplug
 
 * Sat May 26 2007 Dmitriy Khanzhin <jinn@altlinux.ru> 2.3.1-alt4.10
 - renamed patch1
@@ -301,7 +266,7 @@ do /bin/cp -pr $f ${f}.port ; done
 
 * Sun Mar 11 2007 Dmitriy Khanzhin <jinn@altlinux.ru> 2.3.1-alt4
 - fix requires
-- move creating udev rules back into %name package
+- move creating udev rules back into %pname package
 
 * Mon Jan 29 2007 Dmitriy Khanzhin <jinn@altlinux.ru> 2.3.1-alt3
 - Requires: hotplug removed from libgphoto2 package (#10695)
@@ -396,7 +361,7 @@ do /bin/cp -pr $f ${f}.port ; done
 - Rebuild with new binutils
 
 * Fri Mar 01 2002 Konstantin Volckov <goldhead@altlinux.ru> 2.0-alt1
-- Release %name 2.0
+- Release %pname 2.0
 
 * Thu Dec 06 2001 Konstantin Volckov <goldhead@altlinux.ru> 2.0-alt0.3cvs20011204
 - Build from CVS
