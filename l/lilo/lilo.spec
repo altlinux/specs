@@ -1,21 +1,17 @@
 Name: lilo
 Version: 22.7.3
-Release: alt7
-
+Release: alt8
 Summary: The boot loader for Linux and other operating systems
 License: MIT
 Group: System/Kernel and hardware
-Url: http://lilo.go.dyndns.org/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
-
-Source: http://home.san.rr.com/johninsd/pub/linux/lilo/%name-%version.tar
+Url: http://%name.alioth.debian.org
+Source0: %url/ftp/archiv/%name-%version.tar
 Source1: keytab-lilo.c
-
 Patch1: lilo-22.7.3-owl-makefile.patch
 Patch2: lilo-22.7.3-alt-owl-fixes.patch
 Patch3: lilo-22.7.1-owl-tmp.patch
 Patch4: lilo-22.7-deb-owl-man.patch
-
+Patch5: lilo-22.7.3-enlarge-max-number-of-setupsecs.patch
 Patch11: lilo-22.7.1-mdk-part.patch
 Patch12: lilo-22.7.3-alt-constants.patch
 Patch13: lilo-22.7.1-alt-defaults.patch
@@ -27,23 +23,24 @@ Patch18: lilo-22.7.3-alt-raid_index.patch
 Patch19: lilo-22.7.3-alt-devmapper.patch
 Patch20: lilo-22.7.3-alt-md-devmapper.patch
 Patch21: lilo-22.7-suse-gfx.patch
-
+Patch22: lilo-22.7.3-alt-format.patch
 ExclusiveArch: %ix86 x86_64
 
 # Automatically added by buildreq on Tue Nov 24 2009
 BuildRequires: dev86 libblkid-devel libdevmapper-devel texlive-latex-base
-
-%package doc
-Summary: More documentation for %name
-Group: System/Kernel and hardware
-BuildArch: noarch
-Requires: %name = %version-%release
 
 %description
 LILO (LInux LOader) is a basic system program which boots your Linux
 system.  LILO loads the Linux kernel from a floppy or a hard drive, boots
 the kernel and passes control of the system to the kernel.  LILO can also
 boot other operating systems.
+
+
+%package doc
+Summary: More documentation for %name
+Group: System/Kernel and hardware
+BuildArch: noarch
+Requires: %name = %version-%release
 
 %description doc
 LILO (LInux LOader) is a basic system program which boots your Linux
@@ -53,12 +50,14 @@ boot other operating systems.
 
 This package contains extra documentation for LILO.
 
+
 %prep
 %setup -q
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %patch11 -p1
 %patch12 -p1
@@ -71,44 +70,62 @@ This package contains extra documentation for LILO.
 %patch19 -p1
 %patch20 -p1
 %patch21 -p1
+%patch22 -p1
 
-find -type f -name \*.orig -delete
-sed -i -e 's/mkdir /mkdir -p /g' Makefile
-sed -i -e 's/keytab-lilo\.pl/keytab-lilo/g' Makefile doc/user.tex
-bzip2 -9k CHANGES README
+sed -i 's/\(mkdir \)/\1-p /g' Makefile
+sed -i 's/\(keytab-lilo\)\.pl/\1/g' Makefile doc/user.tex
+
 
 %build
-%make_build lilo
-%__cc %optflags -o keytab-lilo %_sourcedir/keytab-lilo.c
-make -C doc user.ps tech.ps
+%make_build OPT="%optflags" all docs
+%__cc %optflags -o keytab-lilo %SOURCE1
+gzip -9c CHANGES > CHANGES.gz
+
 
 %install
-%make_install install ROOT=%buildroot MAN_DIR=%_mandir
+%make_install ROOT=%buildroot MAN_DIR=%_mandir install
 
-%define docdir %_defaultdocdir/%name-%version
-mkdir -p %buildroot%docdir
-install -p -m644 README.* CHANGES.bz2 COPYING INCOMPAT QuickInst doc/*.ps %buildroot%docdir/
-bzip2 -9 %buildroot%docdir/*.ps
+%define docdir %_docdir/%name-%version
+install -d -m 0755 %buildroot%docdir
+install -p -m644 README* CHANGES.* COPYING INCOMPAT QuickInst doc/*.ps %buildroot%docdir/
+for f in doc/*.ps; do
+	gzip -9c "$f" > %buildroot%docdir/$(basename "$f").gz
+done
+
 
 %post
-if [ -f /etc/%name.conf -a -x /usr/sbin/detectloader -a -f /proc/partitions ]; then
-	if [ "`/usr/sbin/detectloader`" = LILO ]; then
+if [ -f /etc/%name.conf -a -x %_sbindir/detectloader.sh -a -x %_sbindir/detectliloboot.sh -a -f /proc/partitions ]; then
+	if %_sbindir/detectloader.sh $(%_sbindir/detectliloboot.sh) | grep -q '^lilo$'; then
 		/sbin/%name || echo "Please run %name manually." >&2
 	fi
 fi
 
+
 %files
 /sbin/*
 %_sbindir/*
-%_mandir/man?/*
+%_man5dir/*
+%_man8dir/*
 %dir %docdir
-%docdir/[A-Z]*
+%docdir/COPYING
+
 
 %files doc
 %dir %docdir
-%docdir/*.ps.*
+%docdir/*
+%exclude %docdir/COPYING
+
 
 %changelog
+* Sun Nov 04 2012 Led <led@altlinux.ru> 22.7.3-alt8
+- Enlarge maximum number of sectors for kernel setup code
+  (lilo-22.7.3-enlarge-max-number-of-setupsecs.patch) (ALT#27143)
+- added lilo-22.7.3-alt-format.patch
+- build with default %%optflags
+- fixed post script
+- fixed Url (ALT#23630)
+- cleaned up spec
+
 * Mon Mar 22 2010 Dmitry V. Levin <ldv@altlinux.org> 22.7.3-alt7
 - Bumped MAX_IMAGE_NAME constant value once more (closes: #22616).
 
