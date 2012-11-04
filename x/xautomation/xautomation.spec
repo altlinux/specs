@@ -1,21 +1,17 @@
-Name: xautomation
-Version: 1.03
-Release: alt1.2
+%def_disable debug
 
+Name: xautomation
+Version: 1.07
+Release: alt1
 Summary: Control X from the command line
 Summary(uk_UA.CP1251): Керування X з командного рядка
-License: %gpl2plus
+License: GPLv2+
 Group: System/X11
-
 URL: http://hoopajoo.net/projects/%name.html
+Source: http://hoopajoo.net/projects/%name-%version.tar
+Patch: %name-%version-%release.patch
 
-Source: %name-%version.tar
-Patch: xautomation-1.03-alt-DSO.patch
-
-BuildRequires(pre): rpm-build-licenses
-BuildRequires: imake libICE-devel libX11-devel libXtst-devel
-BuildRequires: libpng-devel xorg-cf-files xorg-inputproto-devel
-BuildRequires: xorg-xextproto-devel
+BuildRequires: imake libICE-devel libXtst-devel libpng-devel xorg-cf-files
 
 %description
 Control X from the command line for scripts, and do "visual scraping"
@@ -28,27 +24,32 @@ buttons, etc, on the screen to click on.
 
 
 %prep
-%setup
-%patch -p0
+%setup -q
+%patch -p1
 
 
 %build
-%configure
+%configure %{subst_enable debug}
 %make_build
+gzip -9c ChangeLog > ChangeLog.gz
 
 
 %install
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 
 
 %files
-%doc AUTHORS ChangeLog README
+%doc AUTHORS ChangeLog.* README
 %_bindir/*
 %_man1dir/*
 %_man7dir/*
 
 
 %changelog
+* Sun Nov 04 2012 Led <led@altlinux.ru> 1.07-alt1
+- 1.07
+- cleaned up BuildRequires
+
 * Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.03-alt1.2
 - Rebuilt with libpng15
 
