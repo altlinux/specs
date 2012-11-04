@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.14
+Version: 0.4.15
 Release: alt1
 
 Summary: Bootloader utilities
@@ -11,6 +11,7 @@ Source: %name-%version-%release.tar
 
 PreReq: getopt, make-initrd >= 0.4.3-alt2
 Conflicts: grub2 < 1.98-alt13
+Conflicts: lilo < 22.7.3-alt7
 
 # Automatically added by buildreq on Thu Feb 22 2007
 BuildRequires: perl-devel
@@ -78,6 +79,10 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Sun Nov 04 2012 Led <led@altlinux.ru> 0.4.15-alt1
+- lilo: don't strip label
+- conflicts lilo < 22.7.3-alt7
+
 * Thu Oct 20 2011 Anton Protopopov <aspsk@altlinux.org> 0.4.14-alt1
 - installkernel: run depmod before creating initrd
 
