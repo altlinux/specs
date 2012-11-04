@@ -1,5 +1,5 @@
 Name: tzdata
-Version: 2012h
+Version: 2012i
 Release: alt1
 
 Summary: Timezone data
@@ -68,7 +68,7 @@ install -pDm755 tzupdate %buildroot%_sbindir/tzupdate
 %define __spec_install_custom_post hardlink -vc %buildroot
 
 %check
-make -k check_tables AWK=awk
+make -k check_tables
 
 %post -p %_sbindir/tzupdate
 
@@ -83,6 +83,9 @@ make -k check_tables AWK=awk
 %endif #with java
 
 %changelog
+* Sun Nov 04 2012 Dmitry V. Levin <ldv@altlinux.org> 2012i-alt1
+- Updated to 2012i.
+
 * Sat Oct 27 2012 Dmitry V. Levin <ldv@altlinux.org> 2012h-alt1
 - Updated to 2012h.
 
