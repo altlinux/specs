@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Dist::Zilla
 
 Name: perl-Dist-Zilla
-Version: 4.300006
+Version: 4.300028
 Release: alt1
 
 Summary: scary tools for building CPAN distributions
@@ -22,7 +22,7 @@ Patch0: %real_name-%version-%release.patch
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel
 
-BuildRequires: perl-Config-MVP-Reader-INI perl-Perl-Version perl-Term-UI perl-Devel-StackTrace
+BuildRequires: perl-Config-MVP-Reader-INI perl-Perl-Version perl-Term-UI perl-Devel-StackTrace perl-Test-File-ShareDir perl-CPAN-Meta perl-List-AllUtils perl-Test-Pod
 Requires: perl-Config-MVP-Reader-INI perl-Devel-StackTrace
 
 # Automatically added by buildreq on Sat Jan 28 2012
@@ -61,6 +61,9 @@ dozens of boring steps.
 
 
 %changelog
+* Sun Nov 04 2012 Nikolay A. Fetisov <naf@altlinux.ru> 4.300028-alt1
+- New version
+
 * Fri Jan 27 2012 Nikolay A. Fetisov <naf@altlinux.ru> 4.300006-alt1
 - Initial build for ALT Linux Sisyphus
 
