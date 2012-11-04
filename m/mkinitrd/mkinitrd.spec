@@ -1,46 +1,41 @@
 Name: mkinitrd
-Version: 3.0.11
+Version: 3.0.12
 Release: alt1
-Serial: 1
-
+Epoch: 1
 Summary: Creates an initial ramdisk image for preloading modules
 License: GPL
 Group: System/Kernel and hardware
 BuildArch: noarch
-
-Packager: Sergey Vlasov <vsu@altlinux.ru>
-
 Source: %name-%version.tar
-
 PreReq: module-init-tools >= 3.1, mktemp >= 1:1.3.1
 PreReq: coreutils findutils gawk getopt sed
-PreReq: %name-initramfs = %serial:%version-%release
+PreReq: %name-initramfs = %epoch:%version-%release
 PreReq: klibc-utils-initramfs
 PreReq: module-init-tools-initramfs
 PreReq: udev-initramfs
-
 # lspci is used for device detection in some cases
 Requires: pciutils
 
 %description
-Mkinitrd creates filesystem images which are suitable for use as
-Linux initial ramdisk (initrd) images.  Such images are often used
-for preloading the block device modules (such as IDE, SCSI or RAID)
-which are needed to access the root filesystem.  Mkinitrd automatically
-loads IDE modules, all scsi_hostadapter entries in /etc/modules.conf,
-and raid modules if the system's root partition is on raid, which
-makes it simple to build and use kernels using modular device drivers.
+Mkinitrd creates filesystem images which are suitable for use as Linux
+initial ramdisk (initrd) images. Such images are often used for
+preloading the block device modules (such as IDE, SCSI or RAID) which
+are needed to access the root filesystem. Mkinitrd automatically loads
+IDE modules, all scsi_hostadapter entries in /etc/modules.conf, and
+raid modules if the system's root partition is on raid, which makes it
+simple to build and use kernels using modular device drivers.
 
 In other words, generic kernels can be built without drivers for any
-IDE/SCSI/RAID adapters which load appropriate driver as a module.
-Since the kernel needs to read those modules, but in this case it
-isn't able to address the IDE/SCSI/RAID adapter, an initial ramdisk
-is used.  The initial ramdisk is loaded by the operating system loader
-(such as LILO or GRUB) and is available to the kernel as soon as the
-ramdisk is loaded.  The ramdisk image loads the proper IDE/SCSI/RAID
-adapter and allows the kernel to mount the root filesystem.
-The %name program creates such a ramdisk using information found in
-the /etc/modules.conf file.
+IDE/SCSI/RAID adapters which load appropriate driver as a module. Since
+the kernel needs to read those modules, but in this case it isn't able
+to address the IDE/SCSI/RAID adapter, an initial ramdisk is used. The
+initial ramdisk is loaded by the operating system loader (such as LILO
+or GRUB) and is available to the kernel as soon as the ramdisk is
+loaded. The ramdisk image loads the proper IDE/SCSI/RAID adapter and
+allows the kernel to mount the root filesystem. The %name program
+creates such a ramdisk using information found in the /etc/modules.conf
+file.
+
 
 %package initramfs
 Summary: Scripts for initramfs images created by mkinitrd
@@ -50,32 +45,53 @@ AutoReq: no
 %description initramfs
 This package contains scripts for initramfs images created by mkinitrd.
 
-%prep
-%setup -q
 
-%build
-sed -i 's/@VERSION@/%version/g' -- %name
+%prep
+%setup
+
 
 %install
-install -pDm755 %name %buildroot/sbin/%name
-install -pDm644 %name.8 %buildroot%_man8dir/%name.8
+install -pD -m 0755 %name.sh %buildroot/sbin/%name
+install -pD -m 0644 %name.8 %buildroot%_man8dir/%name.8
+install -pD -m 0755 init.sh %buildroot/lib/mkinitrd/initramfs-base/init
+install -pD -m 0755 sbin/udevadm.sh %buildroot/lib/mkinitrd/initramfs-base/sbin/udevadm
+install -d -m 0755 %buildroot/lib/mkinitrd/initramfs-base/scripts
+install -p -m 0644 scripts/* %buildroot/lib/mkinitrd/initramfs-base/scripts/
 
-mkdir -p %buildroot/lib/mkinitrd/initramfs-base/scripts
-install -pm755 init %buildroot/lib/mkinitrd/initramfs-base/
-install -pm644 scripts/{functions,local,nfs} \
-	%buildroot/lib/mkinitrd/initramfs-base/scripts/
-
-mkdir -p %buildroot/lib/mkinitrd/initramfs-base/sbin
-install -pm755 sbin/udevadm %buildroot/lib/mkinitrd/initramfs-base/sbin/
 
 %files
 /sbin/*
 %_man8dir/*
 
+
 %files initramfs
-/lib/mkinitrd
+/lib/%name
+
 
 %changelog
+* Sun Nov 04 2012 Led <led@altlinux.ru> 1:3.0.12-alt1
+- 3.0.12:
+  + mkinitrd: find modules in modules.alias if modules.pcimap not exists
+  + mkinitrd: added modules.builtin and modules.order to tree
+  + mkinitrd: added kmod support
+  + mkinitrd: copy /lib/udev/dm_export only if it exists
+  + mkinitrd: added support xz and lzo compressing
+  + mkinitrd: added --with-nbd
+  + scripts/local: use fs type 'auto' if unknown
+  + init: added support parameters for loading modules
+  + init: added 'modules=' kernel parameter support
+  + rewrote script 'dhcp' to 'ip'
+  + added support 'netdev' kernel parameter
+  + added scripts/nbd_*
+  + mkinitrd: added --root and --rootfs options
+  + added support boot from nbd (ALT#15466)
+  + mkinitrd: added support list file for --preload|--with|--extra (ALT#11375)
+  + mkinitrd: removed unsupported image types
+  + mkinitrd: added support /etc/sysconfig/mkinitrd config
+  + mkinitrd: added lzma, xz, lzo and bzip2 compression (ALT#21588)
+  + applied patch from http://bugzilla.altlinux.org/show_bug.cgi?id=19388
+    for LVM2 support in initrd
+
 * Sat Jan 08 2011 Sergey Vlasov <vsu@altlinux.ru> 1:3.0.11-alt1
 - mkinitrd: Fix RAID level detection for mdadm >= 3.0 (ALT#24875).
 
