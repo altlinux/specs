@@ -1,23 +1,25 @@
-%define oldname google-lato-fonts
-%global fontname google-lato
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
+%define oldname lato-fonts
+%global fontname lato
 %global fontconf 61-%{fontname}.conf
 
 Name:           fonts-ttf-google-lato
-Version:        1.011
-Release:        alt3_4
+Version:        1.014
+Release:        alt1_2
 Summary:        A sanserif typeface family
 
 Group:          System/Fonts/True type
 License:        OFL
-URL:            http://code.google.com/webfonts/family?family=Lato
-Source0:        %{oldname}-%{version}.tar.bz2
-# Most recent versions of the fonts are in the Google Font Directory Mercurial
-# repository. To retrieve them, invoke this script.
-Source1:        %{oldname}-generate-tarball.sh
-Source2:        %{oldname}-fontconfig.conf
+URL:            http://www.latofonts.com/
+Source0:        http://www.latofonts.com/download/LatoOFL.zip
+Source1:        %{oldname}-fontconfig.conf
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
+Provides:       google-lato-fonts = %{version}-%{release}
+Obsoletes:      google-lato-fonts < 1.014-1
 Source44: import.info
 
 %description
@@ -39,13 +41,11 @@ strong structure provides stability and seriousness. "Male and female, serious
 but friendly. With the feeling of the Summer," says A.ukasz.
 
 Lato consists of five weights (plus corresponding italics), including a
-beautiful hairline style. The first release only includes the Western character
-set, but pan-European Latin, Cyrillic and Greek extensions, as well as small
-caps and other typographic niceties are expected in 2011.
+beautiful hairline style.
 
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -q -c
 
 # Fix wrong end-of-lines encoding
 sed "s/\r//" OFL.txt > OFL.txt.new
@@ -57,14 +57,12 @@ mv OFL.txt.new OFL.txt
 
 
 %install
-rm -fr $RPM_BUILD_ROOT
-
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
 install -m 0644 -p *.ttf $RPM_BUILD_ROOT%{_fontdir}
 
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontconfig_templatedir} $RPM_BUILD_ROOT%{_fontconfig_confdir}
 
-install -m 0644 -p %{SOURCE2} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
+install -m 0644 -p %{SOURCE1} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}
 ln -s %{_fontconfig_templatedir}/%{fontconf} $RPM_BUILD_ROOT%{_fontconfig_confdir}/%{fontconf}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -106,10 +104,13 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc OFL.txt
+%doc OFL.txt README.txt
 
 
 %changelog
+* Mon Nov 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.014-alt1_2
+- fc import
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.011-alt3_4
 - update to new release by fcimport
 
