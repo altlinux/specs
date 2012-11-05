@@ -2,7 +2,7 @@
 
 Name: grub2-pc
 Version: 2.00
-Release: alt1
+Release: alt2
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -29,6 +29,7 @@ Patch6: grub-1.99-debian-disable_floppies.patch
 Patch7: grub-2.00-grubinstall-evms-sync-alt.patch
 Patch8: grub-1.99-efibootmgr-req.patch
 Patch9: grub2-fix-locale-en.mo.gz-not-found-error-message.patch
+Patch10: grub-2.00-r4586-one-by-off.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -73,6 +74,7 @@ Hurd).
 %patch7 -p1
 %patch8 -p1
 %patch9 -p1
+%patch10 -p0
 
 mv ../grub-extras-%version ./grub-extras
 
@@ -128,9 +130,20 @@ install -pD -m755 %SOURCE7 %buildroot/%_sysconfdir/firsttime.d/grub-mkconfig
 %_man8dir/*.gz
 
 %post
-%_sbindir/grub-autoupdate
+%_sbindir/grub-autoupdate || {
+	echo "** WARNING: grub-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
+	echo "** WARNING: please run it by hand, record the output offline,"
+	echo "** WARNING: make sure you have bootable rescue CD/flash media handy"
+	echo "** WARNING: and try \`grub-install /dev/sdX' manually"
+} >&2
 
 %changelog
+* Sun Nov 04 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt2
+- applied upstream patch to revert broken fix resulting in wrong
+  assessment of core.img size and a failure to install grub:
+  http://bzr.savannah.gnu.org/lh/grub/trunk/grub/revision/4586
+  (closes: #25666)
+
 * Fri Oct 26 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt1
 - 2.00 (closes: #27803)
 - updated patches
