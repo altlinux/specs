@@ -1,5 +1,5 @@
 Name: sphinx
-Version: 2.0.5
+Version: 2.0.6
 Release: alt1
 Summary: Free open-source SQL full-text search engine
 
@@ -167,6 +167,9 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Mon Nov 05 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.0.6-alt1
+- 2.0.6
+
 * Wed Aug 15 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.0.5-alt1
 - 2.0.5
 
