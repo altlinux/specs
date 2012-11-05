@@ -16,13 +16,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.50
-Release: alt6
+Version: 3.0.51
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 50
+%define kernel_stable_version 51
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -194,7 +194,7 @@ Patch0104: linux-%kernel_branch.43-fix-drivers-block--dasd_eckd_mod.patch
 Patch0105: linux-%kernel_branch.43-fix-drivers-block--dasd_fba_mod.patch
 Patch0106: linux-%kernel_branch.43-fix-drivers-block--dasd_mod.patch
 Patch0107: linux-%kernel_branch.42-fix-drivers-block--drbd.patch
-Patch0108: linux-%kernel_branch.42-fix-drivers-block--floppy.patch
+Patch0108: linux-%kernel_branch.51-fix-drivers-block--floppy.patch
 Patch0109: linux-%kernel_branch.43-fix-drivers-block--nbd.patch
 Patch0110: linux-%kernel_branch.42-fix-drivers-block--rbd.patch
 Patch0111: linux-%kernel_branch.42-fix-drivers-block--virtio_blk.patch
@@ -302,6 +302,7 @@ Patch0303: linux-%kernel_branch.42-fix-drivers-i2c-busses--scx200_acb.patch
 Patch0310: linux-%kernel_branch.42-fix-drivers-ide.patch
 
 Patch0321: linux-%kernel_branch.43-fix-drivers-idle--i7300_idle.patch
+Patch0322: linux-%kernel_branch.50-fix-drivers-idle--intel_idle.patch
 
 Patch0331: linux-%kernel_branch.42-fix-drivers-infiniband-core.patch
 Patch0332: linux-%kernel_branch.42-fix-drivers-infiniband-hw-cxgb4.patch
@@ -533,7 +534,7 @@ Patch0737: linux-%kernel_branch.44-fix-kernel-time.patch
 Patch0740: linux-%kernel_branch.42-fix-lib.patch
 Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
-Patch0750: linux-%kernel_branch.49-fix-mm.patch
+Patch0750: linux-%kernel_branch.51-fix-mm.patch
 Patch0751: linux-%kernel_branch.42-fix-mm--compaction.patch
 Patch0752: linux-%kernel_branch.42-fix-mm--huge_memory.patch
 Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
@@ -1510,8 +1511,9 @@ cd linux-%version
 
 %patch0310 -p1
 
-# fix-drivers-idle--&
+# fix-drivers-idle--*
 %patch0321 -p1
+%patch0322 -p1
 
 # fix-drivers-infiniband-*
 %patch0331 -p1
@@ -2718,6 +2720,14 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 
 %changelog
+* Mon Nov 05 2012 Led <led@altlinux.ru> 3.0.51-alt1
+- 3.0.51
+- updated:
+  + fix-drivers-block--floppy
+  + fix-mm
+- added:
+  + fix-drivers-idle--intel_idle
+
 * Sat Nov 03 2012 Led <led@altlinux.ru> 3.0.50-alt6
 - updated:
   + fix-drivers-cpufreq--powernow-k8
