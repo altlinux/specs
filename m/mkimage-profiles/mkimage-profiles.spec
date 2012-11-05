@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -11,6 +11,9 @@ Source: %name-%version.tar
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildArch: noarch
+BuildRequires: rsync asciidoc-a2x xmlgraphics-fop fonts-ttf-dejavu
+BuildRequires: /proc
+
 Requires: rsync git-core
 Requires: time schedutils
 Requires: mkimage >= 0.2.0
@@ -19,6 +22,12 @@ Requires: mkimage >= 0.2.0
 
 %define mpdir %_datadir/%name
 %add_findreq_skiplist %mpdir/*.in/*
+
+%define docs $HOME/docs
+
+%package doc
+Summary: %name documentation
+Group: Development/Documentation
 
 %description
 mkimage-profiles is a collection of bits and pieces useful for
@@ -46,10 +55,15 @@ and modest metaprogramming (some code generation and introspection),
 welcome to the metaprofile itself; read the docs and get the git:
 %url
 
+%description doc
+This package holds developer docs for %name
+as a book in HTML and PDF formats.
+
 %prep
 %setup
 
 %build
+make BUILDDIR=%docs docs
 
 %install
 mkdir -p %buildroot%mpdir
@@ -57,10 +71,16 @@ cp -a * %buildroot%mpdir
 
 %files
 %mpdir/
-%doc doc/
-%doc README QUICKSTART
+
+%files doc
+%doc README
+%doc QUICKSTART
+%doc %docs/*
 
 %changelog
+* Mon Nov 05 2012 Michael Shigorin <mike@altlinux.org> 0.8.6-alt1
+- docs subpackage (HTML/PDF book)
+
 * Mon Oct 29 2012 Michael Shigorin <mike@altlinux.org> 0.8.5-alt1
 - diffable logs
 - AMD APU support
