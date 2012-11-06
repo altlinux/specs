@@ -5,7 +5,7 @@
 
 Name: lib%rname
 Version: %major.%minor
-Release: alt4
+Release: alt5
 
 Summary: Little cms color engine
 License: LGPL
@@ -114,6 +114,9 @@ popd
 %_libdir/*.a
 
 %changelog
+* Tue Nov 06 2012 Sergey V Turchin <zerg@altlinux.org> 1.19-alt5
+- rebuilt with new libtiff
+
 * Thu Jun 14 2012 Sergey V Turchin <zerg@altlinux.org> 1.19-alt4
 - fix to build with gcc-4.6
 
