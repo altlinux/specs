@@ -9,22 +9,22 @@
 %def_enable gtk_doc
 
 Name: %_name-good%api_ver
-Version: %ver_major.1
-Release: alt1
+Version: %ver_major.2
+Release: alt2
 
 Summary: A set of GStreamer plugins considered good
 Group: System/Libraries
 License: LGPL
 URL: http://gstreamer.freedesktop.org/
 
-Source:  http://download.gnome.org/sources/%_name-good/%ver_major/%_name-good-%version.tar.xz
+Source: http://download.gnome.org/sources/%_name-good/%ver_major/%_name-good-%version.tar.xz
 Patch: gst-plugins-good-0.11.94-alt-intltool.patch
 
 BuildRequires: bzlib-devel gcc-c++ gst-plugins%api_ver-devel gtk-doc intltool libSM-devel libXdamage-devel libXext-devel
 BuildRequires: libXv-devel libavc1394-devel libcairo-devel libdv-devel libflac-devel libiec61883-devel libjpeg-devel
 BuildRequires: liboil-devel libpulseaudio-devel libshout2-devel libsoup-devel libtag-devel libv4l-devel libwavpack-devel
 BuildRequires: python-module-PyXML python-modules-email python-modules-encodings liborc-devel orc libgdk-pixbuf-devel
-BuildRequires: libjack-devel libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel
+BuildRequires: libjack-devel libpng-devel libcairo-gobject-devel libgudev-devel libspeex-devel zlib-devel libvpx-devel
 
 %description
 GStreamer Good Plug-ins is is a set of plug-ins that the developers consider
@@ -73,6 +73,12 @@ This package contains development documentation for GStreamer Good Plugins
 %_gtk_docdir/*
 
 %changelog
+* Tue Nov 06 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt2
+- built lost vp8 plugins
+
+* Thu Oct 25 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
+- 1.0.2
+
 * Sun Oct 07 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
