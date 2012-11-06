@@ -6,7 +6,7 @@
 
 Name: opengtl
 Version: 0.9.15.2
-Release: alt2
+Release: alt3
 
 Group: System/Libraries
 Summary: Open Graphics Transformation Languages
@@ -85,6 +85,9 @@ popd
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Tue Nov 06 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.15.2-alt3
+- rebuild with new libpng
+
 * Mon May 21 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.15.2-alt2
 - rebuild with new llvm
 
