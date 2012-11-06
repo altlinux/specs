@@ -3,11 +3,11 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 %define oldname gnu-free-fonts
 %global fontname gnu-free
-%global fontconf 67-%{fontname}
+%global fontconf 69-%{fontname}
 
 Name:      fonts-ttf-gnu-freefont
 Version:   20120503
-Release:   alt1_1
+Release:   alt1_2
 Summary:   Free UCS Outline Fonts
 Group:     System/Fonts/True type
 # Standard font exception
@@ -166,6 +166,9 @@ fi
 %doc AUTHORS ChangeLog CREDITS COPYING README
 
 %changelog
+* Wed Nov 07 2012 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_1
 - update to new release by fcimport
 
