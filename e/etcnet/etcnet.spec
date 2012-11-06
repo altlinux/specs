@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt6
+Release:	alt7
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -137,6 +137,12 @@ fi
 %files full
 
 %changelog
+* Tue Nov 06 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt7
+- CONFIG_WIRELESS and USE_IFPLUGD options are mutually exclusive now
+- do not rely on /sys/class/net/<iface>/wireless anymore (closes: #27797)
+- added per-iface 'disable_ipv6' sysctl shortcut (closes: #27933)
+- always use 'resolvconf -d' during ifdown (closes: #24637)
+
 * Thu Oct 27 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt6
 - no not use AUTO as valid DHCP_HOSTNAME value anymore (sem@) (#26512)
 
