@@ -1,6 +1,6 @@
-Name: icu
-Version: 5.1
-Release: alt1
+Name: icu4.8
+Version: 4.8.1.1
+Release: alt3
 Epoch: 1
 Summary: International Components for Unicode
 Group: System/Libraries
@@ -8,7 +8,8 @@ License: X License
 URL: http://www.icu-project.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: http://download.icu-project.org/files/icu4c/5.1/icu4c-50_1-src.tgz
+Source: http://download.icu-project.org/files/icu4c/4.8/icu4c-4_8_1_1-src.tgz
+Patch: %name.patch
 
 BuildRequires: doxygen gcc-c++ libstdc++-devel
 
@@ -16,48 +17,17 @@ BuildRequires: doxygen gcc-c++ libstdc++-devel
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support
 
-%package utils
-Summary: International Components for Unicode (utilities)
-Group: Text tools
-Requires: libicu = %epoch:%version-%release
-Provides: icu = %version
-Obsoletes: icu < %version
-
-%description utils
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the utilites for compiling and developing
-programs with ICU
-
-%package -n libicu
+%package -n lib%name
 Summary: International Components for Unicode (libraries)
 Group: System/Libraries
 
-%description -n libicu
+%description -n lib%name
 ICU is a C++ and C library that provides robust and full-featured Unicode
 support. This package contains the runtime libraries for ICU
 
-%package -n libicu-devel
-Summary: International Components for Unicode (development files)
-Group: Development/C++
-Requires: libicu = %epoch:%version-%release
-Requires: icu-utils = %epoch:%version-%release
-
-%description -n libicu-devel
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains the development files for ICU
-
-%package samples
-Summary: Sample programs for ICU
-Group: Development/Other
-Requires: libicu-devel = %epoch:%version-%release
-BuildArch: noarch
-
-%description samples
-ICU is a C++ and C library that provides robust and full-featured Unicode
-support. This package contains sample code for ICU
-
 %prep
 %setup -q -n icu
+%patch -p0
 
 %build
 cd source
@@ -72,34 +42,13 @@ cd source
 cp -a samples %buildroot%_datadir/icu
 rm -f %buildroot%_bindir/icuinfo
 
-%files utils
-%_bindir/*
-%exclude %_bindir/icu-config
-%_sbindir/*
-%exclude %_man1dir/icu-config.1*
-%_man1dir/*
-%_man8dir/*
-
-%files -n libicu
-%doc *.html *.css
+%files -n lib%name
+%doc *.html *.txt
 %_libdir/*.so.*
 
-%files -n libicu-devel
-%_includedir/*
-%_bindir/icu-config
-%_libdir/*.so
-%_libdir/icu
-%_pkgconfigdir/*.pc
-%_datadir/icu
-%exclude %_datadir/icu/samples
-%_man1dir/icu-config.1*
-
-%files samples
-%_datadir/icu/samples
-
 %changelog
-* Tue Nov 06 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:5.1-alt1
-- 5.1
+* Tue Nov 06 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:4.8.1.1-alt3
+- build library only
 
 * Wed Oct 17 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:4.8.1.1-alt2
 - support locale and fix NaN in cromium (loses: #2599)
