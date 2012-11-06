@@ -1,6 +1,6 @@
 Name: repocop-unittest-altlinux-policy
 Version: 0.29
-Release: alt9
+Release: alt10
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Url: http://repocop.altlinux.org
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Tue Nov 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt10
+- added requires-ImageMagick.posttest
+
 * Thu Oct 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt9
 - added altlinux-policy-rpm-group-should-be-ttf
 
