@@ -1,17 +1,19 @@
 Name: libfm
-Summary: core part of pcmanfm-ng
-Version: 0.1.17
+Summary: core part of pcmanfm
+Version: 1.1.0
 Release: alt1
 License: GPL
 Group: File tools
 Url: http://pcmanfm.sourceforge.net/
 
 Source: %name-%version.tar.gz
-#Source1: %name.watch
 
 BuildPreReq: rpm-build-xdg
-BuildRequires: intltool libgtk+2-devel libmenu-cache-devel gtk-doc
+BuildRequires: intltool libmenu-cache-devel gtk-doc
 BuildRequires: libdbus-glib-devel udisks-devel
+BuildRequires: libgtk+2-devel >= 2.18.0
+BuildRequires: glib2-devel >= 2.27.1
+BuildRequires: vala >= 0.13.0
 
 %description
 Description: LibFM is a GIO-based library used to develop file
@@ -39,7 +41,8 @@ This package contains files needed to statically link to libfm
 %setup
 
 %build
-%autoreconf
+# unpack git version with builtin script
+./autogen.sh
 %configure \
     --enable-largefile \
     --enable-udisks \
@@ -47,9 +50,15 @@ This package contains files needed to statically link to libfm
 
 %make
 
+# FIXME: tilda versions don't work with RPM in general
+sed -i 's,\~[a-z0-9]*,,g' libfm*.pc
+
 %install
 make DESTDIR=%buildroot install
 %find_lang %name
+
+# FIXME: consider gtk3 build later, don't pull it in right now
+rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 
 %files -f %name.lang
 %_xdgconfigdir/*
@@ -59,16 +68,35 @@ make DESTDIR=%buildroot install
 %_xdgmimedir/packages/*
 %_datadir/%name/
 %_desktopdir/*
+%_man1dir/*
 
 %files devel
 %_libdir/*.so
-%_includedir/%name
+%_includedir/*
 %_pkgconfigdir/*
 
 %files devel-static
 %_libdir/*.a
 
 %changelog
+* Tue Nov 06 2012 Radik Usupov <radik@altlinux.org> 1.1.0-alt1
+- new version (1.1.0)
+
+* Wed Oct 31 2012 Radik Usupov <radik@altlinux.org> 1.0.2-alt1
+- new version (1.0.2). Thanks Andrej N. Gritsenko!
+
+* Thu Oct 04 2012 Radik Usupov <radik@altlinux.org> 1.0.1-alt1
+- new version (1.0.1)
+
+* Thu Aug 16 2012 Radik Usupov <radik@altlinux.org> 1.0-alt1
+- new version (1.0)
+
+* Tue Jun 12 2012 Radik Usupov <radik@altlinux.org> 0.1.17-alt3
+- new snapshot
+
+* Wed Feb 22 2012 Radik Usupov <radik@altlinux.org> 0.1.17-alt2
+- new snapshot
+
 * Tue Jan 31 2012 Radik Usupov <radik@altlinux.org> 0.1.17-alt1
 - new version (0.1.17)
 
