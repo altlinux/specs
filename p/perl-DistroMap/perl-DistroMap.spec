@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.14
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -34,6 +34,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distromap*
 
 %changelog
+* Tue Nov 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2
+- mageia support
+
 * Mon Oct 15 2012 Igor Vlasenko <viy@altlinux.ru> 0.14-alt1
 - development release
 
