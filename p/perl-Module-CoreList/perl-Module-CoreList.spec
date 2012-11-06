@@ -1,6 +1,6 @@
 %define dist Module-CoreList
 Name: perl-%dist
-Version: 2.75
+Version: 2.76
 Release: alt1
 
 Summary: What modules shipped with versions of perl
@@ -34,6 +34,9 @@ shipped with each version of perl.
 %perl_vendor_privlib/Module
 
 %changelog
+* Tue Nov 06 2012 Vladimir Lettiev <crux@altlinux.ru> 2.76-alt1
+- 2.75 -> 2.76
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 2.75-alt1
 - automated CPAN update
 
