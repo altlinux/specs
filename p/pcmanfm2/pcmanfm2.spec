@@ -1,30 +1,21 @@
 Summary: PCMan File Manager
 Name: pcmanfm2
-Version: 0.9.10
-Release: alt2
+Version: 1.1.0
+Release: alt1
 License: GPL
 Group: File tools
 Url: http://pcmanfm.sourceforge.net/
 
 Source: %name-%version.tar.gz
 
-Patch1: pcmanfm2-gtk2.16.patch
-Patch2: pcmanfm2-alt-fix-pseudotransparency.patch
-Patch3: pcmanfm2-alt-fix-rmb-selection.patch
-Patch4: pcmanfm2-delete-win-on-close.patch
-Patch5: pcmanfm2-temp-close-unmount-fix.patch
-Patch6: pcmanfm2-opencwd.patch
-
 Conflicts: pcmanfm < 0.9
 
-# Automatically added by buildreq on Sun Nov 12 2006
-BuildRequires: libdbus-glib-devel libgtk+2-devel libstartup-notification-devel libgamin-devel intltool libmenu-cache-devel
+BuildRequires: libgtk+2-devel >= 2.18.0
+BuildRequires: intltool
 
-BuildRequires: libfm-devel >= 0.1.14
+BuildRequires: libfm-devel >= 1.0.2
 
-BuildRequires: libgio-devel gvfs-devel
-
-Requires: menu-cache
+BuildRequires: libgio-devel
 
 %description
 Features:
@@ -44,19 +35,11 @@ Features:
 
 %prep
 %setup
-##patch1 -p2
-%patch2 -p1
-#patch3 -p2
-%patch4 -p2
-%patch5 -p2
-%patch6 -p2
 
 %build
-#ln -s %_bindir/libtool
-%autoreconf
+# unpack git version with builtin script
+./autogen.sh
 %configure \
-    --disable-inotify \
-    --enable-hal \
     --enable-largefile
 
 %make
@@ -72,8 +55,19 @@ ln -s pcmanfm pcmanfm2
 %_desktopdir/*.desktop
 %_datadir/pcmanfm
 %_sysconfdir/xdg/pcmanfm/*
+%_mandir/man1/*
 
 %changelog
+* Tue Nov 06 2012 Radik Usupov <radik@altlinux.org> 1.1.0-alt1
+- new version (1.1.0)
+
+* Wed Oct 31 2012 Radik Usupov <radik@altlinux.org> 1.0.2-alt1
+- new version (1.0.2)
+
+* Wed Oct 10 2012 Andriy Grytsenko <andrej@rep.kiev.ua> 1.0.2
+- New upstream RC version 1.0.2~alpha1.
+- Removed all patches - upstream has changed everything since 0.9.x series.
+
 * Wed Feb 22 2012 Radik Usupov <radik@altlinux.org> 0.9.10-alt2
 - Revert "Apply patch #3438582 to fix bug #3325415 - window resize problem." (Closes: 26981)
 
