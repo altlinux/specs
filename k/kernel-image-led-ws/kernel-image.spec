@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.51
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -585,7 +585,7 @@ Patch0826: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 
 Patch0831: linux-%kernel_branch.49-fix-tools--perf.patch
 
-Patch0841: linux-%kernel_branch.49-fix-virt-kvm.patch
+Patch0841: linux-%kernel_branch.50-fix-virt-kvm.patch
 Patch0842: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
 Patch0843: linux-%kernel_branch.43-fix-virt-kvm--kvm-intel.patch
 
@@ -2720,6 +2720,10 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 
 %changelog
+* Tue Nov 06 2012 Led <led@altlinux.ru> 3.0.51-alt2
+- updated:
+  + fix-virt-kvm
+
 * Mon Nov 05 2012 Led <led@altlinux.ru> 3.0.51-alt1
 - 3.0.51
 - updated:
