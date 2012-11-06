@@ -3,7 +3,7 @@
 %define pre %nil
 
 Name: recoll
-Version: 1.17.3
+Version: 1.18.1
 Release: alt1
 
 Summary: A personal full text search package
@@ -109,6 +109,9 @@ sed -i 's/xterm/xvt/g' %buildroot%_datadir/%name/filters/*
 #  ("small recoll integration and extension hacks")
 
 %changelog
+* Tue Nov 06 2012 Michael Shigorin <mike@altlinux.org> 1.18.1-alt1
+- 1.18.1
+
 * Fri May 25 2012 Michael Shigorin <mike@altlinux.org> 1.17.3-alt1
 - 1.17.3
   + email indexing crash fix
