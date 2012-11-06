@@ -1,6 +1,6 @@
 Name: perl
-Version: 5.16.1
-Release: alt3
+Version: 5.16.2
+Release: alt1
 Epoch: 1
 
 Summary: Practical Extraction and Report Language
@@ -235,7 +235,7 @@ rm -r %buildroot%privlib/Memoize*
 rm -r %buildroot%privlib/Module/Build* %buildroot%privlib/inc %buildroot%_bindir/config_data
 rm -r %buildroot%privlib/Module/Load*
 rm -r %buildroot%privlib/Module/Pluggable* %buildroot%privlib/Devel/InnerPackage.pm
-rm %buildroot%privlib/Module/CoreList.* %buildroot%_bindir/corelist
+rm -r %buildroot%privlib/Module/CoreList* %buildroot%_bindir/corelist
 rm %buildroot%privlib/Module/Metadata.pm
 rm %buildroot%privlib/NEXT.pm
 rm %buildroot%privlib/Object/Accessor.pm
@@ -708,6 +708,9 @@ EOF
 	%autolib/Unicode/Normalize
 
 %changelog
+* Tue Nov 06 2012 Vladimir Lettiev <crux@altlinux.ru> 1:5.16.2-alt1
+- 5.16.1 -> 5.16.2
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 1:5.16.1-alt3
 - Storable.pm: restored patch to avoid early dependency on Log::Agent
 - ExtUtils/MM_Any.pm: disabled CPAN::Meta under rpm
