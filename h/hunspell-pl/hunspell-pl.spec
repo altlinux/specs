@@ -5,11 +5,11 @@ Name: hunspell-pl
 Summary: Polish hunspell dictionaries
 %define upstreamid 20120912
 Version: 0.%{upstreamid}
-Release: alt1_1
+Release: alt1_2
 Source: http://sjp.pl/slownik/ort/sjp-myspell-pl-%{upstreamid}.zip
 Group: Text tools
 URL: http://www.kurnik.pl/dictionary/
-License: LGPLv2+ or GPL+ or MPLv1.1
+License: LGPLv2+ or GPL+ or MPLv1.1 or CC-BY-SA
 BuildArch: noarch
 
 Requires: hunspell
@@ -33,6 +33,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Nov 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.20120912-alt1_2
+- update to new release by fcimport
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.20120912-alt1_1
 - update to new release by fcimport
 
