@@ -2,9 +2,9 @@
 %define EVR %{?epoch:%epoch:}%version-%release
 
 Name: check
-Version: 0.9.8
-Release: alt3
-Epoch: 20120522
+Version: 0.9.9
+Release: alt1
+Epoch: 20121107
 
 Summary: A unit test framework for C
 License: LGPL
@@ -76,6 +76,8 @@ This package contains a static development library.
 rm -rf %buildroot/usr/share/doc/check/
 
 %files
+%_bindir/checkmk
+%_man1dir/checkmk.1*
 
 %files -n lib%name
 %doc AUTHORS NEWS THANKS TODO
@@ -95,6 +97,10 @@ rm -rf %buildroot/usr/share/doc/check/
 %endif
 
 %changelog
+* Tue Nov 06 2012 Michael Shigorin <mike@altlinux.org> 20121107:0.9.9-alt1
+- new version (watch file uupdate)
+- added checkmk(1) to the main package
+
 * Tue May 22 2012 Michael Shigorin <mike@altlinux.org> 20120522:0.9.8-alt3
 - clarified intersubpackage Requires: with Epoch:
   to be strict (thanks led@ for spotting the incompleteness
