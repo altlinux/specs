@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 2.2.0
-Release: alt1
+Release: alt2
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -11,6 +11,7 @@ Source0: %name-%version.tar
 Source100: freeradius-radiusd-init
 Source102: freeradius-logrotate
 Source103: freeradius-pam-conf
+Source104: freeradius-tmpfiles
 
 Patch1: %name-%version-%release.patch
 
@@ -160,11 +161,12 @@ mkdir -p %buildroot%_logdir/radius/radacct
 touch %buildroot%_logdir/radius/{radutmp,radius.log}
 
 mkdir -p %buildroot%_runtimedir/radiusd
-mkdir -p %buildroot%_sysconfdir/{logrotate.d,pam.d,rc.d/init.d}
+mkdir -p %buildroot%_sysconfdir/{logrotate.d,pam.d,rc.d/init.d,tmpfiles.d}
 mkdir -p %buildroot%_localstatedir/radiusd
 install -m 755 %SOURCE100 %buildroot%_initdir/radiusd
 install -m 644 %SOURCE102 %buildroot%_sysconfdir/logrotate.d/radiusd
 install -m 644 %SOURCE103 %buildroot%_sysconfdir/pam.d/radiusd
+install -m 644 %SOURCE104 %buildroot%_sysconfdir/tmpfiles.d/radiusd.conf
 
 # remove unneeded stuff
 rm %buildroot%_sbindir/rc.radiusd
@@ -196,6 +198,7 @@ fi
 %config(noreplace) %_sysconfdir/pam.d/radiusd
 %config(noreplace) %_sysconfdir/logrotate.d/radiusd
 %config(noreplace) %_initdir/radiusd
+%_sysconfdir/tmpfiles.d/radiusd.conf
 %dir %attr(775,root,radiusd) %_localstatedir/radiusd
 # configs
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb
@@ -245,7 +248,6 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/detail
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/detail.example.com
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/detail.log
-%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/dhcp_sqlippool
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/digest
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/dynamic_clients
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/echo
@@ -427,6 +429,7 @@ fi
 %_libdir/freeradius/rlm_python-%version.so
 
 %files mysql
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/modules/dhcp_sqlippool
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/sql/mysql
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/sql/mysql/*
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/sql/ndb
@@ -451,6 +454,11 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Tue Nov 06 2012 Vladimir Lettiev <crux@altlinux.ru> 2.2.0-alt2
+- fixed handling of relative path in $INCLUDE in users files (Closes: #27927)
+- systemd compatibility (Closes: #27928)
+- moved dhcp_sqlippool config to mysql subpackage
+
 * Fri Sep 14 2012 Vladimir Lettiev <crux@altlinux.ru> 2.2.0-alt1
 - 2.1.12 -> 2.2.0
 - Security fixes: CVE-2012-3547
