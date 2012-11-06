@@ -1,5 +1,5 @@
 Name: xorg-drv-ati
-Version: 6.14.6
+Version: 7.0.0
 Release: alt1
 Epoch: 4
 Summary: ATI video driver
@@ -29,7 +29,7 @@ See those manpages for specific cards supported.
 Summary: ATI RADEON video driver
 Group: System/X11
 Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
-Requires: xorg-dri-radeon xorg-drv-multimedia
+Requires: xorg-dri-radeon
 
 %description -n xorg-drv-radeon
 radeon is an Xorg driver for ATI RADEON based video cards. It contains full support for 8, 15, 16 and 24 bit pixel
@@ -44,7 +44,6 @@ and the Xinerama extension.
 %autoreconf
 %configure \
 	--with-xorg-module-dir=%_x11modulesdir \
-	--enable-dri \
 	--disable-static
 
 %make_build
@@ -58,11 +57,12 @@ and the Xinerama extension.
 
 %files -n xorg-drv-radeon
 %_x11modulesdir/drivers/radeon_drv.so
-%dir %_x11modulesdir/multimedia
-%_x11modulesdir/multimedia/*.so
 %_man4dir/radeon.4*
 
 %changelog
+* Tue Nov 06 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:7.0.0-alt1
+- 7.0.0
+
 * Mon Sep 10 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:6.14.6-alt1
 - 6.14.6
 
