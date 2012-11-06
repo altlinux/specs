@@ -1,10 +1,11 @@
 %define nm_version 0.9.4
 %define nm_applet_version 0.9.4
-%define git_date .git20120624
+#define git_date .git20120624
+%define git_date %nil
 %define ppp_version 2.4.5
 
 Name: NetworkManager-l2tp
-Version: 0.9.4
+Version: 0.9.6
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -23,10 +24,9 @@ BuildRequires: ppp-devel
 BuildRequires: rpm-build-licenses
 BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: NetworkManager-glib-devel >= %nm_version
-BuildRequires: libgtk+2-devel             >= 2.10.0
+BuildRequires: libgtk+3-devel
 BuildRequires: libdbus-devel             >= 1.1
 BuildRequires: libGConf-devel
-BuildRequires: libglade2-devel
 BuildRequires: libpng-devel
 BuildRequires: intltool gettext
 
@@ -89,6 +89,10 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Tue Nov 06 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6-alt1
+- Build with GTK+3.
+- Updated to 0.9.6.
+
 * Fri Aug 31 2012 Mikhail Efremov <sem@altlinux.org> 0.9.4-alt1.git20120624
 - Updated to 0.9.4 + changes from upstream git (closes: #27508).
 
