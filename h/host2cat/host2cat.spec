@@ -3,7 +3,7 @@
 
 Name: host2cat
 Version: 1.01
-Release: alt3
+Release: alt4
 Packager: Grigory Batalov <bga@altlinux.ru>
 
 Summary: Custom DNS resolver
@@ -27,6 +27,7 @@ BuildRequires: perl-DBI perl-Net-DNS perl-CGI
 Requires(pre): apache2-common
 # for cgi-bin dir
 Requires: apache2
+Requires: apache2-htpasswd
 Requires: perl-DBD-SQLite memcached
 Requires: netpolice-filter squid-conf-%name squid-server >= 3.0
 Requires: openresolv-%name
@@ -137,6 +138,9 @@ htpasswd2 -b %_sysconfdir/squid/passwd netpolice netpolice
 %subscribers_dir/%name
 
 %changelog
+* Wed Nov 07 2012 Paul Wolneykien <manowar@altlinux.ru> 1.01-alt4
+- Fix the post-install hook: require apache2-htpasswd.
+
 * Mon May 21 2012 Andrey Cherepanov <cas@altlinux.org> 1.01-alt3
 - Make hook for openresolv to fill configuration file
 - Adapt configuration for Squid >= 3.1.0

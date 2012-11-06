@@ -1,6 +1,6 @@
 Name: alterator-squid
-Version: 1.2
-Release: alt17
+Version: 1.3
+Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -60,132 +60,15 @@ cp -rp caterva/* %buildroot%_sysconfdir/caterva/squid/
 %config(noreplace) %_sysconfdir/metalterator/squid
 %_sysconfdir/caterva/squid
 %_alterator_backend3dir/squid-commit
-
-%post
-/usr/bin/guile18 -q 1>/dev/null <<EOF
-(use-modules (ice-9 getopt-long)
-             (srfi srfi-1)
-             (srfi srfi-13)
-             (alterator common)
-             (alterator plist)
-             (alterator metalterator)
-             (alterator backend meta))
-
-(define (netmask->bits mask)
-  (fold (lambda (mpart cnt)
-          (let loop ((x 128) (cnt cnt))
-            (if (>= x 1)
-                (loop (if (> x 1) (/ x 2) 0)
-                      (+ cnt (if (> (logand (string->number mpart) x) 0)
-                                 1 0)))
-                cnt)))
-        0
-        (string-split mask #\.)))
-
-(define (address/mask->network address mask)
-  (string-append address "/"
-    (cond
-     ((and (equal? (cdr (reverse (string-split address #\.)))
-                    '("0" "0" "127"))
-           (or (equal? mask "255.255.255.255")
-               (equal? mask "0.0.0.0")))
-      "8")
-     (else
-      (number->string (netmask->bits mask))))))
-
-(define (migrate-networks)
-  (fold
-    (lambda (net f)
-      (let ((name (car net))
-            (address (cond-plistq 'address (cdr net)))
-            (mask (cond-plistq 'mask (cdr net))))
-       (if mask
-           (let ((newaddress (address/mask->network address mask)))
-            (meta-cmd (list 'squid 'networks name)
-                      (list 'action "write" 'address newaddress 'mask #f))
-            (format (current-error-port)
-                    "Convert network ~a/~a to ~a~%%"
-                    address mask newaddress)
-            #t)
-            f)))
-    #f
-    (meta-cmd '(squid networks)
-              '(action "list" address #t mask #t))))
-
-(define (read-domain-suffixes name)
-  (catch 'meta-error
-    (lambda ()
-      (fold
-        (lambda (dom suffixes)
-          (append suffixes
-	          (cond
-	            ((cond-plistq 'suffix (cdr dom)) =>
-                     (lambda (suf) (list suf)))
-	            (else '()))))
-        '()
-        (meta-cmd (list 'squid 'groups name 'domains)
-                  '(action "list" suffix #t))))
-    (lambda (key . args)
-      (if (not (string-prefix? "no-such-object" (car args)))
-        (format (current-error-port)
-  	        "Error list group domain information ~a : ~a~%%"
-                name args))
-      #f)))
-
-(define (read-group-suffix name)
-  (catch 'meta-error
-    (lambda ()
-      (let ((current
-              (meta-cmd (list 'squid 'groups name)
-                        '(action "read" suffix #t))))
-        (cond-plistq 'suffix (cdar current))))
-    (lambda (key . args)
-      (if (not (string-prefix? "no-such-object" (car args)))
-        (format (current-error-port)
-                "Error read group information ~a : ~a~%%"
-                name args))
-      #f)))
-
-(define (migrate-domains)
-  (fold
-    (lambda (grp f)
-      (let* ((name (car grp))
-             (suffix-list (read-domain-suffixes name)))
-        (if suffix-list
-          (begin
-            (format (current-error-port)
-                    "Migrate domain settings for the group ~a~%%"
-                    name)
-            (let* ((suffix (read-group-suffix name))
-                   (suffix-list
-                     (append suffix-list
-                            (if (and suffix (not (string-null? suffix)))
-                              (list suffix)
-                              '()))))
-              (meta-cmd (list 'squid 'groups name)
-                        (list 'action "write"
-                        'suffix (string-join suffix-list " "))))
-            (catch 'meta-error
-              (lambda ()
-                (meta-cmd (list 'squid 'groups name 'domains)
-                          '(action "delete")))
-              (lambda (key . args)
-                (if (not (string-prefix? "no-such-object" (car args)))
-                  (format (current-error-port)
-                          "Error delete domains for the group ~a : ~a~%%"
-                          name args))))
-            #t)
-            f)))
-    #f
-    (meta-cmd '(squid groups) '(action "list"))))
-
-(if (migrate-networks)
-    (format (current-error-port) "Migration of the network settings finished~%%"))
-(if (migrate-domains)
-    (format (current-error-port) "Migration of the group domain settings finished~%%"))
-EOF
+%_bindir/*
 
 %changelog
+* Tue Nov 06 2012 Paul Wolneykien <manowar@altlinux.ru> 1.3-alt1
+- Backup the squid.conf before making any changes.
+- Remove the configuration migration script.
+- Do not redirect the 21st (FTP) port in transparent mode.
+- Parse the Squid configuration on the fly.
+
 * Fri Jul 06 2012 Cronbuild Service <cronbuild@altlinux.org> 1.2-alt17
 - repocop cronbuild 20120706. At your service.
 
