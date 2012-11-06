@@ -2,7 +2,7 @@
 %define module_version          2.0.1
 %define module_release          alt1
 
-%define kversion	3.5.7
+%define kversion	3.6.6
 %define krelease	alt1
 %define flavour		std-def
 
@@ -10,7 +10,7 @@
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197895.1
+Release: %module_release.198150.1
 
 Summary: Linux Kernel drivers supporting Hitachi StarBoard interactive whiteboard.
 License: GPL
@@ -71,8 +71,8 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %module_dir
 
 %changelog
-* Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 2.0.1-alt1.197895.1
-- Build for kernel-image-std-def-3.5.7-alt1.
+* Tue Nov 06 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.0.1-alt1.198150.1
+- Build for kernel-image-std-def-3.6.6-alt1.
 
 * Fri Feb 4 2011 Rinat Bikov <becase@altlinux.ru> 2.0.1-alt1
 - intial build for altlinux 
