@@ -1,11 +1,12 @@
 %define version 0.18
-%define release alt1.4
+%define release alt1.5
 
 Summary: Gearman provides a generic application framework to farm out work to other machines.
 Name: gearmand
 Version: %version
 Release: %release
 Source0: %name.tar
+Patch0:  %name-0.18-alt-fix_headers.patch
 License: BSD
 Group: Development/C
 Packager: Sergey Alembekov <rt@altlinux.ru>
@@ -26,6 +27,7 @@ This package contains necessary header files for Gearman development.
 
 %prep
 %setup -q -n %name
+%patch0
 
 %build
 %configure
@@ -43,7 +45,7 @@ make install DESTDIR=%buildroot
 %_libdir/libgearman.so.4
 %_libdir/libgearman.so.4.0.0
 %_sbindir/gearmand
- 
+
 %files devel
 %_includedir/libgearman/*
 %_libdir/libgearman.so
@@ -51,6 +53,9 @@ make install DESTDIR=%buildroot
 
 
 %changelog
+* Tue Nov 06 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.18-alt1.5
+- Fix build with GCC 4.6
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt1.4
 - Rebuilt with Boost 1.51.0
 
