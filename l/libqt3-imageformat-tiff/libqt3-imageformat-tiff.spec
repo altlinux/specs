@@ -3,7 +3,7 @@
 %define minor 2
 %define beta  0
 %define distrel   e
-%define altrel  alt3
+%define altrel  alt4
 #
 %define tar  %dist-%major%minor%beta%distrel
 %define INSTDIR	%_qt3dir/plugins/imageformats
@@ -65,6 +65,9 @@ install -m 0644 %PLUGIN %buildroot/%INSTDIR
 %docdir %DOCDIR
 
 %changelog
+* Tue Nov 06 2012 Sergey V Turchin <zerg@altlinux.org> 120-alt4.e
+- rebuilt with new libtiff
+
 * Thu Apr 21 2011 Sergey V Turchin <zerg@altlinux.org> 120-alt3.e
 - fix build requires
 
