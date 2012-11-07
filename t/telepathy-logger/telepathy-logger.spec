@@ -4,7 +4,7 @@
 %define api_ver 0.2
 
 Name: telepathy-logger
-Version: 0.2.13
+Version: 0.6.0
 Release: alt1
 
 Summary: Telepathy client that logs information received by the Telepathy framework
@@ -18,7 +18,7 @@ Requires: lib%name = %version-%release
 Requires: libtelepathy-mission-control >= 5.4.0
 
 BuildRequires: gtk-doc intltool libgio-devel >= 2.28.0
-BuildRequires: libdbus-devel libdbus-glib-devel libtelepathy-glib-devel >= 0.15.6
+BuildRequires: libdbus-devel libdbus-glib-devel libtelepathy-glib-devel >= 0.19.2
 BuildRequires: libxml2-devel
 BuildRequires: libsqlite3-devel python-module-twisted-words python-module-xmpp
 %{?_enable_introspection:BuildRequires: libtelepathy-glib-gir-devel}
@@ -84,14 +84,12 @@ GObject introspection devel data for %name library.
 
 %build
 %autoreconf
-export CFLAGS="$CFLAGS `pkg-config --cflags dbus-glib-1`"
 %configure \
 	--disable-schemas-compile \
 	%{subst_enable static} \
 	%{?_enable_gtk_doc:--enable-gtk-doc}
 
-# SMP-incompatible build
-%make
+%make_build
 
 %check
 # x11 session required
@@ -128,6 +126,9 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-glib-1`"
 
 
 %changelog
+* Wed Nov 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.6.0-alt1
+- 0.6.0
+
 * Tue Apr 03 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.13-alt1
 - 0.2.13
 

@@ -14,7 +14,7 @@
 
 Name: empathy
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
@@ -22,6 +22,7 @@ Group: Networking/Instant messaging
 Url: http://live.gnome.org/Empathy
 
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Conflicts: telepathy-haze-aim
 Obsoletes: libempathy libempathy-gtk python-module-empathy
@@ -194,6 +195,9 @@ rm -f data/%name.desktop
 
 
 %changelog
+* Wed Nov 07 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt2
+- rebuilt against libtelepathy-logger.so.3
+
 * Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
