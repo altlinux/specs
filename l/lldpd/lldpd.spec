@@ -1,10 +1,15 @@
 Name: lldpd
 Version: 0.6.1
-Release: alt1
+Release: alt2
 Summary: Link Layer Discovery Protocol Daemon
 Source: %name-%version.tar
 Group: Networking/Other
 License: GPL
+
+Source1: lldpd.init
+Source2: lldpd.sysconfig
+Source3: lldpd.all
+Source4: lldpd.conf
 
 %def_enable cdp
 %def_enable fdp
@@ -64,23 +69,42 @@ Header files for LLDP Daemon
     %{subst_enable dot1} \
     %{subst_enable dot3} \
     %{subst_with snmp} \
-    %{subst_with xml}
+    %{subst_with xml} \
+    --with-privsep-chroot=%_localstatedir/%name
 
 %make
 
 %install
 %make_install DESTDIR=%buildroot install
 mv %buildroot%_datadir/doc/lldpd %buildroot%_datadir/doc/%name-%version
+install -m755 -D %SOURCE1 %buildroot%_initdir/lldpd
+install -m644 -D %SOURCE2 %buildroot%_sysconfdir/sysconfig/lldpd
+install -m750 -D %SOURCE3 %buildroot%_sysconfdir/chroot.d/lldpd.all
+install -m750 -D %SOURCE4 %buildroot%_sysconfdir/chroot.d/lldpd.conf
+mkdir -p %buildroot%_localstatedir/%name/etc
+
+%pre
+if [ $1 = 1 ]; then
+        %_sbindir/groupadd -r _lldpd >/dev/null 2>&1 ||:
+        %_sbindir/useradd -M -r _lldpd -g _lldpd -s /dev/null -c "LLDP Daemon" \
+        -d / >/dev/null 2>&1 ||:
+fi
 
 %post
+%post_service %name
 
 %preun
+%preun_service %name
 
 %files
+%_initdir/*
+%_sysconfdir/sysconfig/lldpd
+%_sysconfdir/chroot.d/*
 %_sbindir/*
 %_libdir/liblldpctl.so*
 %_datadir/doc/%name-%version/
 %_man8dir/*
+%attr(0750, _lldpd, _lldpd) %_localstatedir/%name/
 
 %files devel
 %_includedir/*
@@ -88,6 +112,9 @@ mv %buildroot%_datadir/doc/lldpd %buildroot%_datadir/doc/%name-%version
 %_pkgconfigdir/*
 
 %changelog
+* Fri Nov 02 2012 Afanasov Dmitry <ender@altlinux.org> 0.6.1-alt2
+- add init scripts
+
 * Wed Oct 31 2012 Afanasov Dmitry <ender@altlinux.org> 0.6.1-alt1
 - first build
 
