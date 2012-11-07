@@ -28,7 +28,7 @@
 %define new_name xawdecode
 
 %define branch_point alt11.%cvsversion
-%define revision 12.2
+%define revision 12.3
 
 Name: xdtv
 Summary: XdTV is a software to record & watch TV
@@ -53,6 +53,7 @@ Patch7: xawdecode-20080708-autotools1.patch
 Patch8: xawdecode-20080708-device.1.patch
 Patch9: xawdecode-20101011-video4linux2.patch
 Patch10: xawdecode-20080708-ffmpeg.patch
+Patch11: xdtv-2.4.1-alt-libpng15.patch
 
 Group: Video
 
@@ -262,6 +263,7 @@ mkdir m4
 
 %patch9 -p1
 %patch10 -p1
+%patch11 -p2
 
 %build
 %autoreconf
@@ -426,6 +428,9 @@ install -pD -m 644 %name-48.png %buildroot/%_liconsdir/%name.png
 %_fontpathdir/*
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt11.cvs20080708.12.3
+- Fixed build with libpng15
+
 * Mon Jun 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.1-alt11.cvs20080708.12.2
 - Fixed build
 
