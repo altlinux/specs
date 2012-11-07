@@ -1,14 +1,15 @@
 Name: unrtf
-Version: 0.21.1
+Version: 0.21.2
 Release: alt1
 
 Summary: UnRTF is a moderately complicated converter from RTF to other formats
-License: GPL
+License: GPLv3
 Group: Text tools
 Url: http://www.gnu.org/software/unrtf/unrtf.html
+
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
-Source: %{name}-%{version}.tar.gz
+Source0: %name-%version.tar.gz
 
 %description
 The program unrtf is a converter from Rich Text Format (RTF) to a
@@ -23,25 +24,29 @@ compress and both foreground and background colors. Images are always stored
 to separate files in the current directory, or they can be ignored.
 
 %prep
-%setup -q -n %{name}-%{version}
-#%__rm %name *.o
+%setup -q
+# ALT bug#27309
+sed -i 's,/usr/local/lib/unrtf/,%_libdir/unrtf/,g' src/path.h
 
 %build
 %configure
 %make_build
 
 %install
-#%__install -pD -m755 ./%name %buildroot%_bindir/%name
-#%__install -pD -m644 ./%name.1 %buildroot%_man1dir/%name.1
 %makeinstall
 
 %files
-%doc NEWS README tests
+%doc AUTHORS ChangeLog NEWS README tests
 %_bindir/*
 %_libdir/%name/*
 %_man1dir/*
 
 %changelog
+* Wed Nov 07 2012 Igor Zubkov <icesik@altlinux.org> 0.21.2-alt1
+- 0.21.1 -> 0.21.2
+- debuginfo
+- fix search path (closes: #27309)
+
 * Wed Dec 01 2010 Ilya Mashkin <oddity@altlinux.ru> 0.21.1-alt1
 - 0.21.1
 
