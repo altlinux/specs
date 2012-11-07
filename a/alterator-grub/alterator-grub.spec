@@ -2,7 +2,7 @@
 
 Name: alterator-grub
 Version: 0.7
-Release: alt3
+Release: alt4
 
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
@@ -41,6 +41,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Wed Nov 07 2012 Timur Aitov <timonbl4@altlinux.org> 0.7-alt4
+- add hack for luks devices
+
 * Thu Jun 16 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7-alt3
 - mike@: set default input focus to the combobox
 
