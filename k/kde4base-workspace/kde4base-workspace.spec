@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 9
-%define bugfix 2
+%define bugfix 3
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -179,7 +179,7 @@ Requires: %name-common = %version-%release
 Provides: kdebase-wm = %version-%release
 Obsoletes: kdebase-wm < %version-%release
 %endif
-Requires: udev udisks upower media-player-info
+Requires: udev udisks2 upower media-player-info
 Requires: kde4base-runtime >= %version
 Requires: kde4-icon-theme-oxygen kde4-kactivities kde4-nepomuk-core
 Requires: /usr/bin/qdbus dbus-tools-gui
@@ -698,7 +698,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %config %_sysconfdir/alternatives/packages.d/kde4-kdm
 %_sysconfdir/firsttime.d/kdm4
 %config(noreplace) %_sysconfdir/dbus-1/system.d/org.kde.kcontrol.kcmkdm.conf
-%_K4conf/kdm*
+%exclude %_K4conf/kdm
 %_kde4_bindir/genkdmconf
 %_K4exec/kdm
 %_K4exec/kdm_config
@@ -926,6 +926,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Nov 08 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Mon Oct 29 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt2
 - built kwin_gles
 

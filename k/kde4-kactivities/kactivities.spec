@@ -3,7 +3,7 @@
 
 %define rname kactivities
 Name: kde4-kactivities
-Version: 4.9.1
+Version: 4.9.3
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -85,6 +85,9 @@ sed -i 's|^\(INCLUDE.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4link/*.so
 
 %changelog
+* Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Wed Sep 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
