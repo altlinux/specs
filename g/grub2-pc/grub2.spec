@@ -2,7 +2,7 @@
 
 Name: grub2-pc
 Version: 2.00
-Release: alt2
+Release: alt3
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -19,9 +19,12 @@ Source5: grub-extras-%version.tar.bz2
 Source6: grub-autoupdate
 Source7: firsttime
 
+Source8: update-grub
+Source9: update-grub.8
+
 Patch0: grub-2.00-gnulib-gets.patch
 Patch1: grub-2.00-os-alt.patch
-Patch2: grub-1.98-sysconfig-path-alt.patch
+Patch2: grub-2.00-sysconfig-path-alt.patch
 Patch3: grub-2.00-altlinux-theme.patch
 Patch4: grub-2.00-evms-crap-alt.patch
 Patch5: grub-2.00-os-alt-xen.patch
@@ -104,6 +107,8 @@ install -pD -m755 %SOURCE4 %buildroot/%_rpmlibdir/
 install -pD -m755 %SOURCE6 %buildroot/%_sbindir/
 mkdir -p %buildroot/%_sysconfdir/firsttime.d
 install -pD -m755 %SOURCE7 %buildroot/%_sysconfdir/firsttime.d/grub-mkconfig
+install -pD -m755 %SOURCE8 %buildroot%_sbindir/
+install -pD -m644 %SOURCE9 %buildroot%_man8dir/update-grub.8
 
 %files -f grub.lang
 %dir %_sysconfdir/grub.d
@@ -138,6 +143,12 @@ install -pD -m755 %SOURCE7 %buildroot/%_sysconfdir/firsttime.d/grub-mkconfig
 } >&2
 
 %changelog
+* Mon Nov 05 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt3
+- try harder to warn that the configuration is not complete
+  for automated grub upgrades thus needs to be updated manually
+  (closes: #27916)
+- adapted update-grub(8) from debian
+
 * Sun Nov 04 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt2
 - applied upstream patch to revert broken fix resulting in wrong
   assessment of core.img size and a failure to install grub:
