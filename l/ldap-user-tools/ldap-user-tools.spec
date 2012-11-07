@@ -1,16 +1,16 @@
 %define _ldapconfdir %_sysconfdir/openldap
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
-Name: ldap-user-tools
-Version: 0.8.1
+Name:    ldap-user-tools
+Version: 0.8.2
 Release: alt1
 
-Summary: tools to work with ldap users
-Group: Development/Other
+Summary: Utilities to work with LDAP users
+Group:   Development/Other
 License: GPL
 
 
-Source: %name-%version.tar
+Source:  %name-%version.tar
 
 BuildArch: noarch
 # HEREDOC code
@@ -18,7 +18,7 @@ Requires: ruby(ldap) ruby(ldap/ldif) openldap-servers perl-Crypt-SmbHash alterat
 Requires: alterator-openldap-functions >= 0.3
 
 %description
-tools to work with ldap users
+Utilities to work with LDAP users
 
 %prep
 %setup
@@ -42,6 +42,9 @@ install -pm755 -d %buildroot/%_sysconfdir/alterator/openldap
 %dir %_sysconfdir/alterator/openldap
 
 %changelog
+* Wed Nov 07 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.2-alt1
+- Check if Kerberos is working
+
 * Tue Oct 30 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.1-alt1
 - ldap-groupadd --default reads initial group list and put all users
   to groups
