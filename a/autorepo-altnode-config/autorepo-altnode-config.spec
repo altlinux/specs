@@ -1,5 +1,5 @@
 Name: autorepo-altnode-config
-Version: 0.05
+Version: 0.06
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -73,6 +73,9 @@ service nginx restart ||:
 %_sysconfdir/nginx/sites-enabled.d/autorepo.conf
 
 %changelog
+* Wed Nov 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- added debuginfo for t6 and p6
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - support for p6 and 5.1
 
