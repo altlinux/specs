@@ -10,12 +10,14 @@
 %define lighttpd_spool %_spooldir/%name
 
 %define docdir %_docdir/%name-%version-doc
-%define svnrev 2710
+%define svnrev 2849
 
 Name: lighttpd
-Version: 1.4.28
+Version: 1.4.32
 #Release: alt1.svn.%svnrev
-Release: alt2
+Release: alt1
+
+Packager: Alexei Takaseev <taf@altlinux.ru>
 
 Summary: A fast webserver with minimal memory-footprint
 License: BSD
@@ -24,7 +26,8 @@ Group: System/Servers
 # git svn init -Ttrunk -ttags -bbranches svn://svn.lighttpd.net/lighttpd/
 Url: http://www.lighttpd.net
 
-Source0: lighttpd.tar
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
 
 Requires(pre): shadow-utils shadow-groups webserver-common
 Provides: webserver
@@ -85,7 +88,9 @@ Group: Documentation
 Documentation for %name.
 
 %prep
-%setup -n %name
+%setup
+%patch0 -p1
+
 libtoolize -f -c
 %autoreconf
 
@@ -193,6 +198,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Wed Nov 07 2012 Alexei Takaseev <taf@altlinux.org> 1.4.32-alt1
+- 1.4.32
+
 * Mon Oct 18 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 1.4.28-alt2
 - Rebuild with libssl.so.10 and libcrypto.so.10.
 
