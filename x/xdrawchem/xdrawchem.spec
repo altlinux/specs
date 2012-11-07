@@ -1,6 +1,6 @@
 Name: xdrawchem
 Version: 1.9.9
-Release: alt3.qa2
+Release: alt3.qa3
 
 Summary: XDrawChem is a two-dimensional molecule drawing program
 Summary(ru_RU.KOI8-R): XDrawChem - программа двумерного рисования молекул
@@ -18,6 +18,7 @@ Source2: xdrawchem.png
 Patch0: %name-gcc43.patch
 Patch1: xdrawchem-ob22.patch
 Patch2: new-openbabel-string-type-fix.patch
+Patch3: xdrawchem-1.9.9-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Fri Dec 16 2005
 BuildRequires: fontconfig freetype2 gcc-c++ libopenbabel-devel libqt3-devel libqt3-qsa-devel libstdc++-devel pkg-config 
@@ -43,6 +44,7 @@ XDrawChem - это программа двумерного рисования молекул для операционных
 %patch0
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 
 %build
 %configure --with-qtdir=%_prefix --with-qtlibdir=%_qt3dir/lib
@@ -62,6 +64,9 @@ install -pD -m 644 %SOURCE2 %buildroot/%_niconsdir/xdrawchem.png
 %_niconsdir/xdrawchem.png
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.9-alt3.qa3
+- Fixed build with glibc 2.16
+
 * Fri Dec 16 2011 Michael Shigorin <mike@altlinux.org> 1.9.9-alt3.qa2
 - NMU: rebuilt with new openbabel (using patches from opensuse)
 - minor spec cleanup
