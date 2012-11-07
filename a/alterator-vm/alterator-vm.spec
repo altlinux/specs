@@ -2,7 +2,7 @@
 
 Name: alterator-vm
 Version: 0.4.1
-Release: alt18
+Release: alt19
 
 Summary: Alterator module for volume management
 License: GPL
@@ -42,6 +42,9 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Wed Nov 07 2012 Timur Aitov <timonbl4@altlinux.org> 0.4.1-alt19
+- added support for luks
+
 * Wed Sep 07 2011 Timur Aitov <timonbl4@altlinux.org> 0.4.1-alt18
 - fixed crushing on changing value in combobox (#25257)
 
