@@ -26,8 +26,8 @@
 
 # name-version-release
 %define rname licq
-%define ver 1.6.1
-%define rlz alt1.1
+%define ver 1.7.0
+%define rlz alt1
 
 Name: %rname
 Version: %ver
@@ -82,7 +82,7 @@ Source22: %name.32.xpm.bz2
 Source23: %name.48.xpm.bz2
 
 Patch2: licq-1.5.0-alt-xvt.patch
-Patch3: licq-1.5.0-alt-qt4-def-encoding.patch
+Patch3: licq-1.7.0-alt-qt4-def-encoding.patch
 #
 Patch17: licq_osd_plugin-1.3.2.1-defaults.patch
 #
@@ -679,6 +679,9 @@ popd
 
 ########################################################
 %changelog
+* Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 1.7.0-alt1
+- new version
+
 * Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1.1
 - Rebuilt with Boost 1.51.0
 
