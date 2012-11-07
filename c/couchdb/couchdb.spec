@@ -1,7 +1,7 @@
 %define oname apache-couchdb
 Name: couchdb
 Version: 1.0.2
-Release: alt1
+Release: alt1.1
 Packager: Mikhail Pokidko <pma@altlinux.org>
 Url: http://couchdb.apache.org/
 License: Apache
@@ -93,6 +93,9 @@ sed -i s#/usr/lib/couchdb#/usr/lib# %buildroot%_sysconfdir/%name/default.ini
 
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.1
+- Rebuilt with icu 5.1
+
 * Wed Jan 19 2011 Mikhail Pokidko <pma@altlinux.org> 1.0.2-alt1
 - Version 1.0.2
 
