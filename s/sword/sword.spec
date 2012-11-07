@@ -1,7 +1,7 @@
 %define major 1.6
 Name: sword
 Version: %major.0
-Release: alt3.qa3
+Release: alt3.qa4
 
 Summary: The SWORD Project framework for manipulating Bible texts
 Summary(ru_RU.UTF-8): Проект SWORD - оболочка для работы с текстами Библии
@@ -60,6 +60,7 @@ cp sapphire/SAPPHIRE.H include/sapphire.h
 cp sapphire/SAPPHIRE.CPP src/modules/common/sapphire.cpp
 
 %build
+%add_optflags -fpermissive
 %configure --with-lucene --with-icu --with-curl --disable-static
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make_build
@@ -88,6 +89,9 @@ popd
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt3.qa4
+- Fixed build with gcc 4.7
+
 * Tue Feb 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt3.qa3
 - Removed bad RPATH
 
