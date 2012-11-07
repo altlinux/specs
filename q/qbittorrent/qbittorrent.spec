@@ -1,7 +1,7 @@
 Name: qbittorrent
 Version: 2.9.3
 Epoch: 1
-Release: alt1.2
+Release: alt1.3
 
 Summary: qBittorrent is a bittorrent client written in C++ / Qt4 using the good libtorrent library.
 Summary(ru_RU.UTF-8): qBittorrent - bittorrent клиент написаный на C++ / Qt4, использующий библиотеку libtorrent.
@@ -13,6 +13,7 @@ Packager: Alexey Morsov <swi@altlinux.ru>
 Source: %name-%version.tar
 Source2: %{name}_ru.ts
 Source3: %{name}_ru.qm
+Patch: qbittorrent-2.9.3-alt-glibc-2.16.patch
 
 %define libtorrent_version 2:0.15.9-alt0.1.svn6292
 
@@ -46,6 +47,7 @@ qBittorrent стремиться быть хорошей альтернатив�
    
 %prep
 %setup -q
+%patch -p0
 #cp -f %SOURCE2 %SOURCE3 src/lang/
 
 %build
@@ -64,6 +66,9 @@ qBittorrent стремиться быть хорошей альтернатив�
 %_datadir/icons/hicolor/*/*/*
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.9.3-alt1.3
+- Fixed build with glibc 2.16
+
 * Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:2.9.3-alt1.2
 - Rebuilt with Boost 1.51.0
 
