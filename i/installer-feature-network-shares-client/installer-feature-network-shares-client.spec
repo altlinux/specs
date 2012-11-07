@@ -1,6 +1,6 @@
 Name: installer-feature-network-shares-client
-Version: 0.7
-Release: alt3
+Version: 0.8
+Release: alt1
 
 %define hookdir %_datadir/install2/postinstall.d
 
@@ -38,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Nov 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt1
+- use root mount and cruid parameter to work with new cifs-utils
+
 * Fri Mar 25 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt3
 - path to u?mount.cifs fixed
 
