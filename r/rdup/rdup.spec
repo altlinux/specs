@@ -1,7 +1,7 @@
 # TODO: send patches to mainstream
 Name: rdup
 Version: 0.6.3
-Release: alt1
+Release: alt1.1
 
 Summary: prints filenames for backup
 
@@ -30,6 +30,7 @@ this list and implement the backup strategy.
 %patch
 
 %build
+%add_optflags -fno-strict-aliasing
 %configure
 %make_build
 
@@ -45,6 +46,9 @@ mkdir -p %buildroot%_bindir
 
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3-alt1.1
+- Fixed build
+
 * Thu Dec 11 2008 Vitaly Lipatov <lav@altlinux.ru> 0.6.3-alt1
 - new version 0.6.3 (with rpmrb script)
 
