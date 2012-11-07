@@ -3,7 +3,7 @@
 
 %define rname lightdm-kde
 Name: lightdm-kde-greeter
-Version: 0.2.1
+Version: 0.3.0
 Release: alt1
 
 Group: Graphical desktop/Other
@@ -36,6 +36,9 @@ This package provides a KDE-based LightDM greeter engine.
 %K4install
 
 %K4find_lang --with-kde %name
+%K4find_lang --with-kde --append --output=%name.lang kcm_lightdm
+%K4find_lang --with-kde --append --output=%name.lang lightdm_theme_classic
+%K4find_lang --with-kde --append --output=%name.lang lightdm_theme_userbar
 
 cd %buildroot
 # Add alternatives for xgreeters
@@ -49,11 +52,15 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_K4dbus_system/org.kde.kcontrol.kcmlightdm.conf
 %_K4lib/kcm_lightdm.so
 %_K4exec/kcmlightdmhelper
+%_K4exec/lightdm-kde-greeter-rootimage
 %_K4dbus_sys_services/org.kde.kcontrol.kcmlightdm.service
 %_K4apps/lightdm-kde-greeter/
 %_K4srv/kcm_lightdm.desktop
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
+- new version
+
 * Wed Jul 25 2012 Sergey V Turchin <zerg@altlinux.org> 0.2.1-alt1
 - initial build
