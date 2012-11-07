@@ -1,6 +1,6 @@
 Name: rutilt
 Version: 0.18
-Release: alt2.1
+Release: alt2.2
 
 Summary: Configure your wireless network devices with special support for rt2400/rt2500/rt2570
 
@@ -18,6 +18,7 @@ Patch2: %name-0.13.patch
 Patch1: %name-0.16.patch
 Patch3: %name-0.18-alt-DSO.patch
 Patch4: %name-0.18-alt-no-double-slash.patch
+Patch5: %name-0.18-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Thu Jan 18 2007
 BuildRequires: gcc-c++ libgtk+2-devel
@@ -33,6 +34,7 @@ It also features special support for rt2400, rt2500 and rt2570 devices.
 %patch -b .orig
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 
 %build
 ./configure.sh \
@@ -57,6 +59,9 @@ It also features special support for rt2400, rt2500 and rt2570 devices.
 %_man1dir/*
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt2.2
+- Fixed build with glibc 2.16
+
 * Mon Jul 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt2.1
 - Fixed build
 
