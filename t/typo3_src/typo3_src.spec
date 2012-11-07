@@ -7,7 +7,7 @@
 
 Name: typo3_src
 Version: 4.5.20
-Release: alt1
+Release: alt2
 
 Summary: A free, feature rich, Content Management Framework/System
 License: GPL
@@ -23,7 +23,7 @@ AutoReqProv: no
 
 #Requires: php-engine
 Requires: typo3-webserver
-Requires: ImageMagick
+Requires: /usr/bin/convert
 Requires: freetype2
 
 %define installdir %_datadir/%name-%version
@@ -90,6 +90,10 @@ ln -s %name-%version %buildroot%_datadir/%name-%t3branch
 %files -n typo3-apache2
 
 %changelog
+* Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 4.5.20-alt2
+- changed ImageMagick manual dependency to /usr/bin/convert
+  (see also #27929)
+
 * Tue Oct 16 2012 Michael Shigorin <mike@altlinux.org> 4.5.20-alt1
 - 4.5.20: bugfixes
 
