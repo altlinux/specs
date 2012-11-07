@@ -1,5 +1,5 @@
 Name: phantomjs
-Version: 1.6.0
+Version: 1.7.0
 Release: alt1
 
 Summary: headless WebKit with JavaScript API
@@ -28,20 +28,19 @@ FreeBSD, and Mac OS X.
 MAKEFLAGS=-j1 ./build.sh
 
 %install
-mkdir -p %buildroot{%_libdir/%name,%_bindir}
-for lib in Core Gui Network WebKit; do
-    cp -a src/qt/lib/libQt$lib.so.* %buildroot%_libdir/%name
-    chrpath -r %_libdir/%name %buildroot%_libdir/%name/libQt$lib.so.?
-done
+mkdir -p %buildroot%_bindir
 cp bin/%name %buildroot%_bindir/%name
-chrpath -r %_libdir/%name %buildroot%_bindir/%name
+chrpath -d %buildroot%_bindir/%name
 
 %files
 %_bindir/%name
-%_libdir/%name
 %doc ChangeLog LICENSE.BSD examples
 
 %changelog
+* Wed Nov 07 2012 Vladimir Lettiev <crux@altlinux.ru> 1.7.0-alt1
+- 1.7.0
+- Statical build with bundled Qt
+
 * Tue Jun 26 2012 Vladimir Lettiev <crux@altlinux.ru> 1.6.0-alt1
 - 1.6.0
 
