@@ -1,6 +1,6 @@
 Name: nted
 Version: 1.10.17
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: A new musical score editor for Linux
 
@@ -24,6 +24,7 @@ NtEd is a new musical score editor for Linux.
 %setup
 
 %build
+%add_optflags -fpermissive
 %configure
 %make_build
 
@@ -49,6 +50,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.17-alt1.qa3
+- Fixed build with gcc 4.7
+
 * Tue Jun 07 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.10.17-alt1.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
