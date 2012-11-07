@@ -1,6 +1,6 @@
 Name: bind
 Version: 9.9.2
-Release: alt1
+Release: alt2
 
 Summary: ISC BIND - DNS server
 License: BSD-style
@@ -432,6 +432,10 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Wed Nov 07 2012 Fr. Br. George <george@altlinux.ru> 9.9.2-alt2
+- Fix pidfile recreation try on reload
+- Replace index IDs in patches to dummy ones
+
 * Wed Oct 17 2012 Fr. Br. George <george@altlinux.ru> 9.9.2-alt1
 - Version up to 9.9.2 (CVE 5166 included)
 
