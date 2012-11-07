@@ -2,7 +2,7 @@
 
 Name: alterator-net-domain
 Version: 0.4
-Release: alt14
+Release: alt15
 Source:%name-%version.tar
 
 Summary: alterator module to edit system network domain
@@ -41,6 +41,10 @@ alterator module to edit system network domain
 
 
 %changelog
+* Wed Nov 07 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt15
+- Fix system group 'users' mapping
+- Fix Samba scripts call
+
 * Sat Nov 03 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt14
 - Fix group create
 - Add requires on samba and ldap-user-tools
