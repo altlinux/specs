@@ -1,6 +1,6 @@
 Name: uncrustify
 Version: 0.59
-Release: alt1
+Release: alt1.1
 
 Summary: Uncrustify is a source code beautifier
 
@@ -11,6 +11,7 @@ Url: http://uncrustify.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar
+Patch: uncrustify-0.59-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Tue Jul 18 2006
 BuildRequires: gcc-c++
@@ -24,6 +25,7 @@ configurable, and is easy to modify.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %configure
@@ -39,6 +41,9 @@ configurable, and is easy to modify.
 %_man1dir/*
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.59-alt1.1
+- Fixed build with glibc 2.16
+
 * Mon Oct 10 2011 Vitaly Lipatov <lav@altlinux.ru> 0.59-alt1
 - new version 0.59
 
