@@ -1,11 +1,12 @@
 Name: libisofs
-Version: 1.2.0
-Release: alt1
+Version: 1.2.4
+Release: alt2
 
 Summary: ISO9660 filesystem creation library
 Url: http://libburnia.pykix.org/
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: libisofs-1.2.4-upstream-r1044.patch
 License: %gpl2plus
 
 Packager: Anton V. Boyarshinov <boyarsh@altlinux.org>
@@ -14,11 +15,11 @@ Group: System/Libraries
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: zlib-devel libacl-devel libattr-devel
-BuildRequires: libburn-devel
+BuildRequires: libburn-devel >= %version
 
 %description
-libisofs is the library to pack up hard disk files and directories into a
-ISO 9660 disk image. This may then be brought to CD via libburn.
+libisofs is the library to pack up hard disk files and directories
+into an ISO 9660 disk image. This may then be brought to CD via libburn.
 libisofs is to be the foundation of our upcoming mkisofs emulation.
 
 %package devel
@@ -27,13 +28,14 @@ Group: System/Libraries
 Requires: %name = %version
 
 %description devel
-libisofs is the library to pack up hard disk files and directories into a
-ISO 9660 disk image. This may then be brought to CD via libburn.
+libisofs is the library to pack up hard disk files and directories
+into an ISO 9660 disk image. This may then be brought to CD via libburn.
 libisofs is to be the foundation of our upcoming mkisofs emulation.
 
 %prep
 %setup
 %patch -p1
+%patch1 -p0
 
 %build
 %autoreconf
@@ -55,6 +57,14 @@ libisofs is to be the foundation of our upcoming mkisofs emulation.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 1.2.4-alt2
+- added temporary patch off upstream revision 1044 (MBR tweak)
+- clarified libburn-devel build dependency as versioned
+- minor description readability fixup
+
+* Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 1.2.4-alt1
+- 1.2.4
+
 * Tue Mar 20 2012 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
