@@ -1,7 +1,7 @@
 %define oname qsopcast_vlc_mplayer
 Name: qsopcast
 Version: 0.4.16
-Release: alt1
+Release: alt1.1
 
 Summary: A QT GUI front-end for the executive of P2P TV sopcast
 
@@ -17,6 +17,7 @@ Patch: %name-channel.patch
 Patch4: %name-0.3.1-trayicon.patch
 Patch5: %name-arg.patch
 Patch6: %name-gcc43.patch
+Patch7: %name-0.4.16-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Wed Sep 07 2011
 # optimized out: fontconfig libqt4-core libqt4-devel libqt4-gui libqt4-network libqt4-qt3support libqt4-sql libqt4-xml libstdc++-devel
@@ -37,6 +38,7 @@ you can download sp-sc package from ftp://updates.etersoft.ru/pub/Etersoft/Build
 # use arg as url
 #%patch5
 #%patch6
+%patch7 -p2
 
 %build
 export PATH=%_qt4dir/bin:$PATH
@@ -79,6 +81,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.16-alt1.1
+- Fixed build with glibc 2.16
+
 * Tue Sep 06 2011 Vitaly Lipatov <lav@altlinux.ru> 0.4.16-alt1
 - new version (0.4.16) with rpmgs script
 - build with Qt4
