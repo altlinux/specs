@@ -1,5 +1,5 @@
 Name: sleuthkit
-Version: 3.2.3
+Version: 4.0.0
 Release: alt1
 
 Summary: The Sleuth Kit
@@ -139,6 +139,9 @@ install -m755 mac-robber %buildroot%_bindir/
 %_includedir/tsk3/
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.0-alt1
+- Version 4.0.0
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.3-alt1
 - Version 3.2.3
 
