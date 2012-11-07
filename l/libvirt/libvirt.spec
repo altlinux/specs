@@ -95,7 +95,7 @@
 %def_with sasl
 
 Name: libvirt
-Version: 0.10.2.1
+Version: 1.0.0
 Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
@@ -585,10 +585,7 @@ rm -rf %buildroot%_sysconfdir/libvirt/nwfilter
 %endif
 
 
-install -pD -m644 libvirtd.service %buildroot%systemd_unitdir/libvirtd.service
-install -pD -m644 libvirtd.tmpfiles %buildroot%_sysconfdir/tmpfiles.d/libvirtd.conf
-# fix perm
-install -pD -m644 tools/libvirt-guests.service %buildroot%systemd_unitdir/libvirt-guests.service
+install -pD -m644 libvirtd.tmpfiles %buildroot/lib/tmpfiles.d/libvirtd.conf
 
 %find_lang %name
 
@@ -687,7 +684,7 @@ fi
 %dir %_localstatedir/run/libvirt
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/nwfilter
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
-%config(noreplace) %_sysconfdir/tmpfiles.d/libvirtd.conf
+%config /lib/tmpfiles.d/libvirtd.conf
 %systemd_unitdir/libvirtd.service
 %_initdir/libvirtd
 %config(noreplace) %_sysconfdir/libvirt/libvirtd.conf
@@ -849,6 +846,11 @@ fi
 %doc examples/python
 
 %changelog
+* Tue Nov 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
+- 1.0.0
+- drop local systemd unit files, use upstream
+- move tmpfiles to /lib
+
 * Mon Oct 29 2012 Alexey Shabalin <shaba@altlinux.ru> 0.10.2.1-alt1
 - 0.10.2.1
 
