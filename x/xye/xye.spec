@@ -1,7 +1,7 @@
 
 Name:	xye
 Version:	0.12.1
-Release:	alt1
+Release:	alt1.1
 Summary:	Puzzle game that reproduces and extends Kye
 License:	GPL
 Packager: Alex Karpov <karpov@altlinux.ru>
@@ -9,6 +9,8 @@ Packager: Alex Karpov <karpov@altlinux.ru>
 Url:	http://xye.sourceforge.net
 Group:	Games/Puzzles
 Source:	http://heanet.dl.sourceforge.net/sourceforge/xye/%name-%version.tar.gz
+Patch: xye-0.12.1-alt-glibc-2.16.patch
+Patch1: xye-0.12.1-alt-gcc4.7.patch
 
 
 # Automatically added by buildreq on Sun Feb 03 2008
@@ -27,6 +29,8 @@ Yet it was a very simple game to understand the nice thing was the way the objec
 
 %prep
 %setup -q
+%patch -p2
+%patch1 -p2
 
 %build
 autoreconf -fisv
@@ -43,6 +47,9 @@ make docdir=%_defaultdocdir/%name-%version DESTDIR=%buildroot install
 #exclude %_datadir/%name/*.ttf
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.1-alt1.1
+- Fixed build with glibc 2.16
+
 * Thu Mar 15 2012 Alex Karpov <karpov@altlinux.ru> 0.12.1-alt1
 - new version
 
