@@ -1,6 +1,6 @@
 Name: vice
 Version: 2.1
-Release: alt7.1
+Release: alt7.2
 
 Summary: Versatile Commodore Emulator
 License: GPL v2+
@@ -26,6 +26,7 @@ Patch3: vice-2.1-fix-str-fmt.patch
 Patch4: vice-2.1-fix-alsa-fragment.patch
 Patch5: vice-2.1-gcc44.patch
 Patch6: vice-2.1-alt-DSO.patch
+Patch7: vice-2.1-alt-libpng15.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Mon Mar 16 2009
@@ -57,9 +58,11 @@ pasował do tej linii), CBM-II (C610) oraz Plus4.
 %patch4 -p2
 %patch5 -p0
 %patch6 -p2
+%patch7 -p2
 
 %build
 touch ABOUT-NLS config.rpath
+%add_optflags -fno-strict-aliasing
 %autoreconf
 %configure \
 	--enable-autobpp \
@@ -111,6 +114,9 @@ popd
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt7.2
+- Fixed build with libpng15
+
 * Tue Jun 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt7.1
 - Fixed build
 
