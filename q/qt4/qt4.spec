@@ -35,7 +35,7 @@
 %define minor	8
 %define bugfix	3
 %define beta	%nil
-%define rlz alt1
+%define rlz alt2
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -77,6 +77,7 @@ Source104: %rname.64.png
 # upstream
 # security
 Patch51: CVE-2011-3922.diff
+Patch52: 0041-Disable-SSL-compression-by-default.patch
 # KDE-QT
 Patch101: 0180-window-role.diff
 Patch102: 0188-fix-moc-parser-same-name-header.diff
@@ -94,9 +95,12 @@ Patch207: qt-everywhere-opensource-src-4.8.1-icu_no_debug.patch
 Patch208: qt-everywhere-opensource-src-4.8.0-QTBUG-14724.patch
 Patch209: qt-everywhere-opensource-src-4.8.0-QTBUG-21900.patch
 Patch210: qt-everywhere-opensource-src-4.8.0-QTBUG-22037.patch
-#
+Patch211: qt-everywhere-opensource-src-4.8.2--assistant-crash.patch
+Patch212: qt-everywhere-opensource-src-4.8.3-qdevice_pri.patch
 Patch213: qt-everywhere-opensource-src-4.8.0-tp-qtreeview-kpackagekit-crash.patch
 Patch214: qt-everywhere-opensource-src-4.8.3-no_Werror.patch
+Patch215: qt-everywhere-opensource-src-4.8.3-QTBUG-27322.patch
+Patch216: qt-everywhere-opensource-src-4.8.3-QTBUG-4862.patch
 # MDV
 # ALT
 # by raorn@altlinux
@@ -719,6 +723,7 @@ Install this package if you want to create RPM packages that use %name
 # upstream
 # security
 %patch51 -p0
+%patch52 -p1
 # KDE-QT
 %patch101 -p0
 %patch102 -p0
@@ -736,9 +741,12 @@ Install this package if you want to create RPM packages that use %name
 %patch208 -p1
 %patch209 -p1
 %patch210 -p1
-#
+%patch211 -p1
+%patch212 -p1
 %patch213 -p1
 %patch214 -p1
+%patch215 -p1
+%patch216 -p1
 # MDV
 # ALT
 %patch501 -p1
@@ -883,8 +891,8 @@ fi
 %endif #static_thread
 
 # Build   SHARED THREADED   libraries #
-if ! [ -e lib/libQtCore.so ] ; then
 %if_enabled shared_thread
+if ! [ -e lib/libQtCore.so ] ; then
 echo -e "o\nyes" |./configure $CNFGR_SHARED $CNFGR %{!?_enable_docs:-nomake examples -nomake demos -nomake tests -nomake docs}
 %make_build
 fi
@@ -1520,6 +1528,13 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt2
+- update FC patches
+- disable SSL compression by default
+
+* Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt0.M60P.1
+- build for M60P
+
 * Mon Sep 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt1
 - new version
 
