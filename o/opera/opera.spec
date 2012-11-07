@@ -1,5 +1,5 @@
-%define		softver 12.02
-%define		buildver 1578
+%define		softver 12.10
+%define		buildver 1652
 
 Name:		opera
 Version:	%softver.%buildver
@@ -28,7 +28,10 @@ BuildArch:	i586
 BuildArch:	x86_64
 %endif
 
-BuildRequires: kde4libs libXt libgst-plugins libgtk+2 libgtk+3
+# rem for M51
+BuildRequires: libgtk+3
+
+BuildRequires: kde4libs libXt libgst-plugins libgtk+2
 
 %description
 Opera is a small, fast, customizable, powerful and user-friendly web
@@ -103,9 +106,11 @@ rm -rf %buildroot%_libdir/%name/pluginwrapper/operapluginwrapper-ia32-linux
 %_datadir/mime/packages/*.xml
 %_datadir/opera
 
+# rem for M51
 %files -n %name-engines-gtk2
 %_libdir/opera/lib%{name}gtk2.so
 
+# rem for M51
 %files -n %name-engines-gtk3
 %_libdir/opera/lib%{name}gtk3.so
 
@@ -113,6 +118,9 @@ rm -rf %buildroot%_libdir/%name/pluginwrapper/operapluginwrapper-ia32-linux
 %_libdir/opera/lib%{name}kde4.so
 
 %changelog
+* Wed Nov 07 2012 Motsyo Gennadi <drool@altlinux.ru> 12.10.1652-alt1
+- 12.10 released
+
 * Fri Aug 31 2012 Motsyo Gennadi <drool@altlinux.ru> 12.02.1578-alt1
 - 12.02 released
 
