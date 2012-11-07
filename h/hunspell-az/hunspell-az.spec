@@ -5,11 +5,11 @@ Name: hunspell-az
 Summary: Azerbaijani hunspell dictionaries
 %define upstreamid 20040827
 Version: 0.%{upstreamid}
-Release: alt2_7
+Release: alt2_8
 Group: Text tools
 Source: ftp://ftp.gnu.org/gnu/aspell/dict/az/aspell6-az-0.02-0.tar.bz2
 URL: http://borel.slu.edu/crubadan/apps.html
-License: GPL+
+License: GPLv2+
 BuildArch: noarch
 BuildRequires: aspell libhunspell-devel hunspell-utils
 
@@ -46,6 +46,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Wed Nov 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.20040827-alt2_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20040827-alt2_7
 - update to new release by fcimport
 
