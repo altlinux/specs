@@ -1,5 +1,5 @@
 Name: iso-codes
-Version: 3.30
+Version: 3.40
 Release: alt1
 
 Group: System/Internationalization
@@ -7,6 +7,7 @@ Summary: ISO code lists and translations
 License: LGPL 2.1
 URL: http://packages.debian.org/unstable/source/iso-codes
 
+# Cloned from git://git.debian.org/git/iso-codes/iso-codes.git
 Source: %name-%version.tar
 BuildArch: noarch
 
@@ -52,6 +53,9 @@ ln -sf %_licensedir/LGPL-2.1 LICENSE
 %_datadir/pkgconfig/iso-codes.pc
 
 %changelog
+* Wed Nov 07 2012 Vladimir Lettiev <crux@altlinux.ru> 3.40-alt1
+- New version 3.40
+
 * Mon Nov 28 2011 Vladimir Lettiev <crux@altlinux.ru> 3.30-alt1
 - New version 3.30
 
