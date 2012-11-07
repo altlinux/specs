@@ -10,7 +10,7 @@
 
 Name: ejudge
 Version: 2.3.24
-Release: alt5
+Release: alt6
 
 
 Summary: Ejudge is a programming contest managment system
@@ -21,7 +21,7 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: %name-svn7148.tar
+Source0: %name-svn7151.tar
 Source1: %name.rc
 Source2: %name.logrotate
 Source3: ejudge-install.sh
@@ -33,7 +33,7 @@ Patch1: ejudge-stylecheck.patch
 Patch2: ejudge-tsc.c.patch
 Patch3: ejudge-compilers.patch
 
-BuildPreReq: flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libmysqlclient-devel, libcurl-devel, autoconf
+BuildPreReq: flex, sed, mktemp, libexpat-devel, zlib-devel, libzip-devel, libncursesw-devel, libMySQL-devel, libcurl-devel, autoconf
 BuildRequires: libzip-devel
 Requires: sharutils, apache2, iconv, gawk, a2ps
 
@@ -135,6 +135,9 @@ install -d %buildroot%lang_config_dir
 %doc ejudge-*.pdf
 
 %changelog
+* Wed Nov 07 2012 Denis Kirienko <dk@altlinux.org> 2.3.24-alt6
+- SVN 7151
+
 * Wed Nov 07 2012 Denis Kirienko <dk@altlinux.org> 2.3.24-alt5
 - SVN 7148
 
