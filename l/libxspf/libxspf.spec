@@ -1,6 +1,6 @@
 Name: libxspf
 Version: 1.2.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: XSPF playlist reading and writing support
 
@@ -11,6 +11,7 @@ Url: http://libspiff.sourceforge.net/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sourceforge.net/libspiff/%name-%version.tar.bz2
+Patch: libxspf-1.2.0-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Sat Mar 07 2009
 BuildRequires: gcc-c++ libexpat-devel liburiparser-devel libcpptest-devel
@@ -34,6 +35,7 @@ Header files for libspiff.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 %configure --disable-static
@@ -55,6 +57,9 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %doc examples/
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.2
+- Fixed build with glibc 2.16
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt1.1
 - Removed bad RPATH
 
