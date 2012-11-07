@@ -54,8 +54,8 @@
 Name: erlang
 %define subver 2
 Version: %ver.%subver
-%define plevel a
-Release: alt1
+%define plevel b
+Release: alt2
 Summary: A programming language developed by Ericsson
 License: %epl
 Group: Development/Erlang
@@ -1282,6 +1282,9 @@ symlinks -scdr %buildroot
 
 
 %changelog
+* Tue Oct 23 2012 Pavel Shilovsky <piastry@altlinux.org> R15B.2-alt2
+- Not include deleted win32reg into stdlib
+
 * Sun Sep 30 2012 Sergey Shilov <hsv@altlinux.org> R15B.2-alt1
 - R15B01 upstream release
 
