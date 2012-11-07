@@ -1,6 +1,6 @@
 Name: ORBit
 Version: 0.5.17
-Release: alt3.qa3
+Release: alt3.qa4
 
 Summary: High-performance CORBA Object Request Broker
 License: LGPL/GPL
@@ -10,6 +10,7 @@ Url: http://orbit-resource.sourceforge.net/
 Source: %url/%name-%version.tar.bz2
 Patch0: %name-0.5.5-texinfo.patch
 Patch1: %name-%version-libs-alt.patch
+Patch2: %name-0.5.17-alt-libpopt.patch
 
 Prefix: %prefix
 
@@ -17,6 +18,8 @@ Requires: lib%name = %version-%release
 
 # Automatically added by buildreq on Sun Nov 10 2002
 BuildRequires: flex glib-devel glibc-devel libwrap-devel
+
+BuildPreReq: libpopt-devel
 
 %description
 %name is a high-performance CORBA ORB (object request broker).
@@ -76,15 +79,18 @@ statically linked programs that use CORBA technology.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 touch .now
 find -type f -newer .now -print0 |xargs -r0 touch
 rm -f .now
 %set_automake_version 1.4
 #needed by patch #1
-%__automake
+automake
 
 %build
+%add_optflags -fno-strict-aliasing
 %configure
+rm -fR popt
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 export LD_LIBRARY_PATH=$PWD/libIDL/.libs
 #NO SMP
@@ -124,6 +130,9 @@ mkdir -p $RPM_BUILD_ROOT%prefix
 %_libdir/libORBit*.a
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.17-alt3.qa4
+- Built with external libpopt
+
 * Tue Jul 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.17-alt3.qa3
 - Removed bad RPATH
 
