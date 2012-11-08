@@ -3,7 +3,7 @@
 #
 Name:		openstack-keystone
 Version:	2012.2.0.6
-Release:	alt1
+Release:	alt2
 Summary:	OpenStack Identity Service
 
 Group:		System/Servers
@@ -130,7 +130,7 @@ install -p -D -m 755 tools/sample_data.sh %{buildroot}%{_datadir}/%{name}/sample
 install -p -D -m 755 %{SOURCE5} %{buildroot}%{_bindir}/openstack-keystone-sample-data
 
 install -d -m 755 %{buildroot}%{_sharedstatedir}/keystone
-install -d -m 755 %{buildroot}%{_localstatedir}/log/keystone
+install -d -m 755 %{buildroot}%{_logdir}/keystone
 
 # docs generation requires everything to be installed first
 export PYTHONPATH="$( pwd ):$PYTHONPATH"
@@ -209,7 +209,7 @@ fi
 %config(noreplace) %attr(-, keystone, keystone) %{_sysconfdir}/keystone/policy.json
 %config(noreplace) %{_sysconfdir}/logrotate.d/openstack-keystone
 %dir %attr(-, keystone, keystone) %{_sharedstatedir}/keystone
-%dir %attr(-, keystone, keystone) %{_localstatedir}/log/keystone
+%dir %attr(-, keystone, keystone) %{_logdir}/keystone
 
 %files -n python-module-keystone
 %defattr(-,root,root,-)
@@ -231,5 +231,8 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Nov 08 2012 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.6-alt2
+- Fix unowned files
+
 * Mon Sep 17 2012 Pavel Shilovsky <piastry@altlinux.org> 2012.2.0.6-alt1
 - Initial release for Sisyphus (based on Fedora)
