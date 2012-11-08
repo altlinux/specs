@@ -1,6 +1,6 @@
 Name: openssh
 Version: 5.9p1
-Release: alt2
+Release: alt3
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
@@ -215,12 +215,6 @@ install -pD -m755 alt/sshd-password-auth.control \
 
 install -pD -m644 alt/sshd.service \
 	%buildroot%systemd_unitdir/sshd.service
-install -pD -m644 alt/sshd@.service \
-	%buildroot%systemd_unitdir/sshd@.service
-install -pD -m644 alt/sshd.socket \
-	%buildroot%systemd_unitdir/sshd.socket
-install -pD -m644 alt/ssh-keygen.service \
-	%buildroot%systemd_unitdir/ssh-keygen.service
 
 sed -i 's,@LIBEXECDIR@,%_libexecdir,g' \
         %buildroot%_sysconfdir/control.d/facilities/sftp
@@ -352,6 +346,10 @@ printf 'op\nsgr0\n' | tput -S 2>/dev/null ||:
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Thu Nov 08 2012 Dmitry V. Levin <ldv@altlinux.org> 5.9p1-alt3
+- sshd: updated systemd support: merged ssh-keygen.service into
+  sshd.service, dropped sshd@.service and sshd.socket.
+
 * Mon Nov 14 2011 Dmitry V. Levin <ldv@altlinux.org> 5.9p1-alt2
 - Applied upstream fix for ssh -W with ControlPersistssh (bz#1943).
 - Fixed %%triggerpostun exit code on dumb terminals.
