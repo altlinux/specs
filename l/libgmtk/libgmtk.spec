@@ -1,5 +1,5 @@
 Name: libgmtk
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: a set of gtk widgets to use with gnome-mplayer
@@ -71,6 +71,9 @@ rm -r %buildroot%_datadir/doc/gmtk
 %_includedir/gmtk/gmlib.h
 
 %changelog
+* Thu Nov 08 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0.7-alt1
+- 1.0.7 (Closes: #27937)
+
 * Thu Jun 14 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0.6-alt1
 - Initial build for Sisyphus
 
