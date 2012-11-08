@@ -1,6 +1,6 @@
 Name:		openstack-swift
 Version:	1.7.0
-Release:	alt1
+Release:	alt2
 Summary:	OpenStack Object Storage (swift)
 
 Group:		System/Servers
@@ -80,7 +80,7 @@ This package contains the Swift Python library.
 Summary:	A swift account server
 Group:		System/Servers
 
-Requires:	%{name} = %{version}-%{release}
+Requires:	python-module-swift = %{version}-%{release}
 
 %description account
 OpenStack Object Storage (swift) aggregates commodity servers to work
@@ -93,7 +93,7 @@ This package contains the %{name} account server.
 Summary:	A swift container server
 Group:		System/Servers
 
-Requires:	%{name} = %{version}-%{release}
+Requires:	python-module-swift = %{version}-%{release}
 
 %description container
 OpenStack Object Storage (swift) aggregates commodity servers to work
@@ -106,7 +106,7 @@ This package contains the %{name} container server.
 Summary:	A swift object server
 Group:		System/Servers
 
-Requires:	%{name} = %{version}-%{release}
+Requires:	python-module-swift = %{version}-%{release}
 Requires:	rsync >= 3.0
 
 %description object
@@ -120,7 +120,7 @@ This package contains the %{name} object server.
 Summary:	A swift proxy server
 Group:		System/Servers
 
-Requires:	%{name} = %{version}-%{release}
+Requires:	python-module-swift = %{version}-%{release}
 
 %description proxy
 OpenStack Object Storage (swift) aggregates commodity servers to work
@@ -187,11 +187,11 @@ install -p -D -m 660 %{SOURCE52} %{buildroot}%{_sysconfdir}/swift/object-server.
 install -p -D -m 660 %{SOURCE61} %{buildroot}%{_sysconfdir}/swift/proxy-server.conf
 install -p -D -m 660 %{SOURCE7} %{buildroot}%{_sysconfdir}/swift/swift.conf
 # Install pid directory
-install -d -m 755 %{buildroot}%{_localstatedir}/run/swift
-install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/account-server
-install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/container-server
-install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/object-server
-install -d -m 755 %{buildroot}%{_localstatedir}/run/swift/proxy-server
+install -d -m 755 %{buildroot}%{_runtimedir}/swift
+install -d -m 755 %{buildroot}%{_runtimedir}/swift/account-server
+install -d -m 755 %{buildroot}%{_runtimedir}/swift/container-server
+install -d -m 755 %{buildroot}%{_runtimedir}/swift/object-server
+install -d -m 755 %{buildroot}%{_runtimedir}/swift/proxy-server
 # Swift run directories
 mkdir -p %{buildroot}%{_sysconfdir}/tmpfiles.d
 install -p -m 0644 %{SOURCE20} %{buildroot}%{_sysconfdir}/tmpfiles.d/openstack-swift.conf
@@ -318,7 +318,7 @@ fi
 %config(noreplace) %{_sysconfdir}/tmpfiles.d/openstack-swift.conf
 %dir %{_sysconfdir}/swift
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/swift.conf
-%dir %attr(0755, swift, root) %{_localstatedir}/run/swift
+%dir %attr(0755, swift, root) %{_runtimedir}/swift
 %{_bindir}/swift-account-audit
 %{_bindir}/swift-bench
 %{_bindir}/swift-drive-audit
@@ -354,7 +354,7 @@ fi
 %dir %{_unitdir}/%{name}-account@.service
 %dir %{_sysconfdir}/swift/account-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/account-server.conf
-%dir %attr(0755, swift, root) %{_localstatedir}/run/swift/account-server
+%dir %attr(0755, swift, root) %{_runtimedir}/swift/account-server
 %{_bindir}/swift-account-auditor
 %{_bindir}/swift-account-reaper
 %{_bindir}/swift-account-replicator
@@ -374,7 +374,7 @@ fi
 %dir %{_unitdir}/%{name}-container@.service
 %dir %{_sysconfdir}/swift/container-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/container-server.conf
-%dir %attr(0755, swift, root) %{_localstatedir}/run/swift/container-server
+%dir %attr(0755, swift, root) %{_runtimedir}/swift/container-server
 %{_bindir}/swift-container-auditor
 %{_bindir}/swift-container-server
 %{_bindir}/swift-container-replicator
@@ -397,7 +397,7 @@ fi
 %dir %{_unitdir}/%{name}-object@.service
 %dir %{_sysconfdir}/swift/object-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/object-server.conf
-%dir %attr(0755, swift, root) %{_localstatedir}/run/swift/object-server
+%dir %attr(0755, swift, root) %{_runtimedir}/swift/object-server
 %{_bindir}/swift-object-auditor
 %{_bindir}/swift-object-info
 %{_bindir}/swift-object-replicator
@@ -413,7 +413,7 @@ fi
 %dir %{_unitdir}/%{name}-proxy.service
 %dir %{_sysconfdir}/swift/proxy-server
 %config(noreplace) %attr(660, root, swift) %{_sysconfdir}/swift/proxy-server.conf
-%dir %attr(0755, swift, root) %{_localstatedir}/run/swift/proxy-server
+%dir %attr(0755, swift, root) %{_runtimedir}/swift/proxy-server
 %{_bindir}/swift-proxy-server
 %{python_sitelibdir}/swift/proxy
 
@@ -422,5 +422,8 @@ fi
 %doc LICENSE doc/build/html
 
 %changelog
+* Thu Nov 08 2012 Pavel Shilovsky <piastry@altlinux.org> 1.7.0-alt2
+- Fix dependence and unowned files
+
 * Mon Sep 17 2012 Pavel Shilovsky <piastry@altlinux.org> 1.7.0-alt1
 - Initial release for Sisyphus (based on Fedora)
