@@ -1,5 +1,5 @@
 Name: pam-config
-Version: 1.5.4
+Version: 1.6.0
 Release: alt1
 
 Summary: Systemwide PAM config files
@@ -145,6 +145,7 @@ fi
 %config(noreplace) %_pamdir/*-local
 %config(noreplace) %_pamdir/*-ldap
 %config(noreplace) %_pamdir/*-krb5
+%config(noreplace) %_pamdir/*-krb5_ccreds
 %config(noreplace) %_pamdir/*-multi
 %config(noreplace) %_pamdir/*-pkcs11
 %config(noreplace) %_pamdir/common-login*
@@ -158,6 +159,11 @@ fi
 %files -n pam0-config
 
 %changelog
+* Thu Nov 08 2012 Dmitry V. Levin <ldv@altlinux.org> 1.6.0-alt1
+- Added krb5+ccreds authentication support (by boyarsh@).
+- system-auth*-pkcs11: changed to use system-auth*-local
+  instead of cut-n-pasting from there.
+
 * Wed Sep 19 2012 Dmitry V. Levin <ldv@altlinux.org> 1.5.4-alt1
 - common-login: added pam_nologin.so to account management list.
 
