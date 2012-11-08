@@ -6,8 +6,8 @@
 %define beta %nil
 
 Name: typo3_src
-Version: 4.5.20
-Release: alt2
+Version: 4.5.21
+Release: alt1
 
 Summary: A free, feature rich, Content Management Framework/System
 License: GPL
@@ -90,6 +90,11 @@ ln -s %name-%version %buildroot%_datadir/%name-%t3branch
 %files -n typo3-apache2
 
 %changelog
+* Thu Nov 08 2012 Michael Shigorin <mike@altlinux.org> 4.5.21-alt1
+- 4.5.21: security fixes (including SQL injection, XSS, infoleak
+  in TYPO3 Core and several low-impact backend vulnerabilities), see
+  http://typo3.org/teams/security/security-bulletins/typo3-core/typo3-core-sa-2012-005/
+
 * Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 4.5.20-alt2
 - changed ImageMagick manual dependency to /usr/bin/convert
   (see also #27929)
