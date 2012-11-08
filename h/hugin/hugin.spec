@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: hugin
 Version: 2012.0.0
-Release: alt1rc1.qa1
+Release: alt2
 
 Group: Graphics
 Summary: hugin - Goal: an easy to use cross-platform GUI for Panorama Tools.
@@ -65,7 +65,6 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/hugin/
 %_datadir/pixmaps/*
 %_datadir/mime/packages/hugin.xml
-%_libdir/libhuginlevmar.so*
 %_libdir/hugin
 %python_sitelibdir/*
 %_niconsdir/*
@@ -75,6 +74,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 /usr/share/icons/hicolor/32x32/apps/hugin.png
 
 %changelog
+* Tue Nov 06 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2012.0.0-alt2
+- 2012.0.0
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2012.0.0-alt1rc1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
