@@ -2,7 +2,7 @@
 
 Name: alterator-net-domain
 Version: 0.4
-Release: alt16
+Release: alt17
 Source:%name-%version.tar
 
 Summary: alterator module to edit system network domain
@@ -41,6 +41,9 @@ alterator module to edit system network domain
 
 
 %changelog
+* Thu Nov 08 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt17
+- Fix netlogon section creation
+
 * Wed Nov 07 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt16
 - Add netlogon share for netlogon script
 
