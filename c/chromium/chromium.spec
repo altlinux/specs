@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.13.7.1
-%define rev 154005
+%define v8_ver 3.13.7.5
+%define rev 165196
 
 %def_disable debug
 %def_disable nacl
@@ -12,8 +12,8 @@
 %endif
 
 Name:           chromium
-Version:        21.0.1180.89
-Release:        alt4.r%rev
+Version:        23.0.1271.64
+Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
 License:        BSD-3-Clause and LGPL-2.1+
@@ -45,13 +45,13 @@ Patch17:        chromium-system-glew.patch
 # PATCH-FIX-OPENSUSE disables the requirement for ffmpeg
 Patch20:        chromium-6.0.425.0-ffmpeg-no-pkgconfig.patch
 # PATCH-FIX-OPENSUSE patches in system speex library
-Patch28:        chromium-7.0.500.0-system-speex.patch
+Patch28:        chromium-23.0.1271.64-system-speex.patch
 # PATCH-FIX-OPENSUSE patches in the system libvpx library
 Patch32:        chromium-7.0.542.0-system-libvpx.patch
 # PATCH-FIX-OPENSUSE remove the rpath in the libraries
 Patch62:        chromium-norpath.patch
 # PATCH-FIX-OPENSUSE patches in the system v8 library
-Patch63:        chromium-6.0.406.0-system-gyp-v8.patch
+Patch63:        chromium-23.0.1271.64-system-gyp-v8.patch
 # PATCH-FIX-UPSTREAM Add more charset aliases
 Patch64:        chromium-more-codec-aliases.patch
 # PATCH-FIX-OPENSUSE Compile the sandbox with -fPIE settings
@@ -69,7 +69,6 @@ Patch72:	chromium-20.0.1132.57-glib-2.16-use-siginfo_t.patch
 Patch80:	nspr.patch
 Patch81:	nss.patch
 Patch82:	expat.patch
-Patch83:	armv4.patch
 Patch84:	ffmpeg_arm.patch
 Patch85:	fix-manpage.patch
 Patch86:	webkit-version.patch
@@ -79,8 +78,6 @@ Patch90:	gcc4.7.patch
 Patch91:	arm.patch
 
 # Patches from upstream
-# Fix build WebKit with bison 1.6 (see http://trac.webkit.org/changeset/124099)
-Patch100:	chromium-fix-build-with-new-bison.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -108,7 +105,7 @@ BuildRequires:  libglew-devel
 BuildRequires:  libgcrypt-devel
 BuildRequires:  libgnome-keyring-devel
 BuildRequires:  libhunspell-devel
-BuildRequires:  libicu-devel >= 4.0
+#BuildRequires:  libicu-devel >= 4.0
 BuildRequires:  libkrb5-devel
 BuildRequires:  libnspr-devel
 BuildRequires:  libnss-devel
@@ -123,6 +120,7 @@ BuildRequires:  libudev-devel
 BuildRequires:  libv8-devel >= %v8_ver
 BuildRequires:  libvpx-devel
 BuildRequires:  libx264-devel
+BuildRequires:  libXrandr-devel
 BuildRequires:  libxslt-devel
 BuildRequires:  libyasm-devel
 BuildRequires:  perl-Switch
@@ -152,11 +150,11 @@ BuildRequires:  python-modules-logging
 BuildRequires:  subversion
 BuildRequires:  wdiff
 BuildRequires:  yasm
-BuildRequires:  zlib-devel
+#BuildRequires:  zlib-devel
 
-Requires:       libv8 = %v8_ver
+Requires:       libv8 >= %v8_ver
 
-Provides: 	webclient, /usr/bin/xbrowser
+Provides: 		webclient, /usr/bin/xbrowser
 BuildPreReq: 	alternatives >= 0.2.0
 PreReq(post,preun): alternatives >= 0.2
 
@@ -172,8 +170,8 @@ Group:          Networking/WWW
 Conflicts:      chromium-gnome
 Conflicts:      chromium-desktop-gnome
 Provides:       chromium-password = %version
-Provides:	chromium-desktop-kde = %version
-Obsoletes:	chromium-desktop-kde < %version
+Provides:		chromium-desktop-kde = %version
+Obsoletes:		chromium-desktop-kde < %version
 Requires:       chromium = %version
 Requires:       kde4base-runtime-core
 
@@ -191,8 +189,8 @@ Group:          Networking/WWW
 Conflicts:      chromium-desktop-kde
 Conflicts:      chromium-kde
 Provides:       chromium-password = %version
-Provides:	chromium-desktop-gnome = %version
-Obsoletes:	chromium-desktop-gnome < %version
+Provides:		chromium-desktop-gnome = %version
+Obsoletes:		chromium-desktop-gnome < %version
 Requires:       chromium = %version
 Requires:       gnome-keyring
 
@@ -206,14 +204,14 @@ to Gnome's Keyring.
 %setup -q -n %name
 
 %patch62 -p1
-%patch63 -p1
+%patch63 -p2
 %patch64
 %patch8 -p1
-%patch13 -p1
+%patch13 -p2
 %patch14 -p1
 %patch17 -p1
 #%%patch20 -p1
-%patch28 -p1
+%patch28 -p2
 %patch32 -p1
 %patch66 -p1
 #%%patch67 -p1
@@ -224,7 +222,6 @@ to Gnome's Keyring.
 %patch80 -p1
 %patch81 -p1
 %patch82 -p1
-%patch83 -p1
 %patch84 -p1
 %patch85 -p1
 %patch86 -p1
@@ -233,7 +230,10 @@ to Gnome's Keyring.
 %patch90 -p1
 %patch91 -p1
 
-%patch100 -p0
+# Replace anywhere v8 to system package
+subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
+sed -i '/v8_shell#host/d' src/chrome/chrome_tests.gypi
+grep -Rl '^#include [<"]v8/include' * 2>/dev/null | while read f;do subst 's,^\(#include [<"]\)v8/include/,\1,' "$f";done
 
 echo "svn%rev" > src/build/LASTCHANGE.in
 
@@ -266,7 +266,7 @@ pushd src
 	-Duse_system_bzip2=1 \
 	-Duse_system_ffmpeg=0 \
 	-Duse_system_flac=1 \
-	-Duse_system_icu=1 \
+	-Duse_system_icu=0 \
 	-Duse_system_libbz2=1 \
 	-Duse_system_libevent=1 \
 	-Duse_system_libjpeg=0 \
@@ -280,7 +280,7 @@ pushd src
 	-Duse_system_vpx=1 \
 	-Duse_system_xdg_utils=0 \
 	-Duse_system_yasm=1 \
-	-Duse_system_zlib=1 \
+	-Duse_system_zlib=0 \
 	-Dremove_webcore_debug_symbols=1 \
 	-Dproprietary_codecs=1 \
 %if_disabled nacl
@@ -349,13 +349,12 @@ mkdir -p %buildroot%_mandir/man1/
 pushd src/out/%buildtype
 
 cp -a chrome_sandbox %buildroot%_libexecdir/chrome_sandbox
-cp -a chrome.pak ui_resources_standard.pak theme_resources_standard.pak locales xdg-mime %buildroot%_libdir/chromium/
+cp -a *.pak locales xdg-mime %buildroot%_libdir/chromium/
 cp -a chromedriver %buildroot%_libdir/chromium/
 
 # Patch xdg-settings to use the chromium version of xdg-mime as that the system one is not KDE4 compatible
 sed "s|xdg-mime|%_libdir/chromium/xdg-mime|g" xdg-settings > %{buildroot}%{_libdir}/chromium/xdg-settings
 
-cp -a resources.pak %buildroot%_libdir/chromium/
 cp -a chrome %buildroot%_libdir/chromium/chromium
 cp -a chrome.1 %buildroot%_mandir/man1/chrome.1
 cp -a chrome.1 %buildroot%_mandir/man1/chromium.1
@@ -436,6 +435,34 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu Nov 08 2012 Andrey Cherepanov <cas@altlinux.org> 23.0.1271.64-alt1.r165196
+- New version 23.0.1271.64
+- Fixes:
+  - High CVE-2012-5116: Use-after-free in SVG filter handling.
+  - High CVE-2012-5121: Use-after-free in video layout.
+  - High CVE-2012-5124: Memory corruption in texture handling.
+  - Critical CVE-2012-5112: SVG use-after-free and IPC arbitrary file
+    write.
+  - High CVE-2012-2900: Crash in Skia text rendering.
+  - Critical CVE-2012-5108: Race condition in audio device handling.
+  - High CVE-2012-2896: Integer overflow in WebGL
+  - High CVE-2012-2895: Out-of-bounds writes in PDF viewer.
+  - High CVE-2012-2894: Crash in graphics context handling.
+  - High CVE-2012-2893: Double free in XSL transforms.
+  - High CVE-2012-2890: Use-after-free in PDF viewer.
+  - High CVE-2012-2889: UXSS in frame handling.
+  - High CVE-2012-2888: Use-after-free in SVG text references.
+  - High CVE-2012-2887: Use-after-free in onclick handling.
+  - High CVE-2012-2886: UXSS in v8 bindings.
+  - High CVE-2012-2883: Out-of-bounds write in Skia.
+  - High CVE-2012-2882: Wild pointer in OGG container handling.
+  - High CVE-2012-2881: DOM tree corruption with plug-ins.
+  - High CVE-2012-2878: Use-after-free in plug-in handling.
+  - High CVE-2012-2876: Buffer overflow in SSE2 optimizations.
+  - High CVE-2012-2874: Out-of-bounds write in Skia.
+- Total move to system v8
+- Use builtin icu-4.6 and patched zlib (see http://code.google.com/p/chromium/issues/detail?id=143623)
+
 * Wed Oct 03 2012 Andrey Cherepanov <cas@altlinux.org> 21.0.1180.89-alt4.r154005
 - Set flags for build on ARM
 - Rebuild with new version of v8
