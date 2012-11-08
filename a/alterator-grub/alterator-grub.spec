@@ -2,7 +2,7 @@
 
 Name: alterator-grub
 Version: 0.7
-Release: alt4
+Release: alt5
 
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
@@ -15,6 +15,7 @@ Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.9-alt10
 Requires: alterator-sh-functions >= 0.6-alt1
 Requires: alterator-hw-functions >= 0.4-alt1
+# potentially >= 2.00
 Requires: grub2 >= 1.99-alt1
 
 BuildPreReq: alterator >= 4.7-alt5
@@ -24,7 +25,7 @@ BuildRequires: grub2 >= 1.98-alt4 libdevmapper-devel
 alterator module to setup grub bootloader
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
@@ -41,6 +42,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Thu Nov 08 2012 Michael Shigorin <mike@altlinux.org> 0.7-alt5
+- replace symlink with bindmount for grub 2.00
+
 * Wed Nov 07 2012 Timur Aitov <timonbl4@altlinux.org> 0.7-alt4
 - add hack for luks devices
 
