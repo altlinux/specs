@@ -34,7 +34,7 @@
 %endif
 
 Name: totem
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Movie player for GNOME 3
@@ -412,6 +412,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Nov 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
 * Thu Oct 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
