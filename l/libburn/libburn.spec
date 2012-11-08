@@ -1,5 +1,5 @@
 Name: libburn
-Version: 1.2.0
+Version: 1.2.4
 Release: alt1
 
 Summary: CD-R/CD-RW disc reading/writing library
@@ -104,6 +104,9 @@ runs, though.
 %_man1dir/*
 
 %changelog
+* Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 1.2.4-alt1
+- 1.2.4
+
 * Tue Mar 20 2012 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 

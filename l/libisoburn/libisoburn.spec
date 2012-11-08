@@ -1,6 +1,6 @@
 Name: libisoburn
-Version: 1.2.0
-Release: alt1
+Version: 1.2.4
+Release: alt3
 
 Summary: ISO9660 filesystem creation library
 Url: http://libburnia.pykix.org/
@@ -9,19 +9,21 @@ Patch: %name-%version-%release.patch
 License: GPL2
 Group: System/Libraries
 BuildRequires: zlib-devel libacl-devel libattr-devel libreadline-devel
-BuildRequires: libburn-devel >= 0.4.2, libisofs-devel >= 0.6.2
+BuildRequires: libburn-devel >= %version, libisofs-devel >= %version
 # For tests
 BuildRequires: gcc-c++
 
 %description
-libisoburn is a frontend for libraries libburn and libisofs which enables
-creation and expansion of ISO-9660 filesystems on all CD/DVD media supported
-by libburn. This includes media like DVD+RW, which do not support multi-session
-management on media level and even plain disk files or block devices.
+libisoburn is a frontend for libraries libburn and libisofs
+which enables creation and expansion of ISO-9660 filesystems
+on all CD/DVD media supported by libburn. This includes media
+like DVD+RW, which do not support multi-session management
+on media level and even plain disk files or block devices.
 
-The price for that is thorough specialization on data files in ISO-9660
-filesystem images. So libisoburn is not suitable for audio (CD-DA) or any
-other CD layout which does not entirely consist of ISO-9660 sessions.
+The price for that is thorough specialization on data files
+in ISO-9660 filesystem images. So libisoburn is not suitable
+for audio (CD-DA) or any other CD layout which does not entirely
+consist of ISO-9660 sessions.
 
 Currently it is only supported on Linux with kernels >= 2.4.
 
@@ -31,34 +33,39 @@ Group: System/Libraries
 Requires: %name = %version
 
 %description devel
-libisoburn is a frontend for libraries libburn and libisofs which enables
-creation and expansion of ISO-9660 filesystems on all CD/DVD media supported
-by libburn. This includes media like DVD+RW, which do not support multi-session
-management on media level and even plain disk files or block devices.
+libisoburn is a frontend for libraries libburn and libisofs
+which enables creation and expansion of ISO-9660 filesystems
+on all CD/DVD media supported by libburn. This includes media
+like DVD+RW, which do not support multi-session management
+on media level and even plain disk files or block devices.
 
-The price for that is thorough specialization on data files in ISO-9660
-filesystem images. So libisoburn is not suitable for audio (CD-DA) or any
-other CD layout which does not entirely consist of ISO-9660 sessions.
+The price for that is thorough specialization on data files
+in ISO-9660 filesystem images. So libisoburn is not suitable
+for audio (CD-DA) or any other CD layout which does not entirely
+consist of ISO-9660 sessions.
 
 Currently it is only supported on Linux with kernels >= 2.4.
+
+This package contains development headers.
 
 %package -n xorriso
 Summary: Creates an image of an ISO9660 filesystem
 Group: Archiving/Cd burning
 Requires: %name = %version
+Requires: libburn >= %version
 
 %description -n xorriso
 xorriso is a program which maps file objects from POSIX compliant
-filesystems into Rock Ridge enhanced ISO 9660 filesystems and allows
-session-wise manipulation of such filesystems. It can load the management
-information of existing ISO images and it writes the session results to
-optical media or to filesystem objects.
+filesystems into Rock Ridge enhanced ISO 9660 filesystems and
+allows session-wise manipulation of such filesystems. It can load
+the management information of existing ISO images and it writes
+the session results to optical media or to filesystem objects.
 
 Currently it is only supported on Linux with kernels >= 2.4.
 
-A special property of xorriso is that it needs neither an external ISO 9660
-formatter program nor an external burn program for CD or DVD but rather
-incorporates the libraries of libburnia-project.org .
+A special property of xorriso is that it needs neither an external
+ISO 9660 formatter program nor an external burn program for CD
+or DVD but rather incorporates the libraries of libburnia-project.org .
 
 %prep
 %setup
@@ -100,6 +107,16 @@ fi
 %_infodir/*
 
 %changelog
+* Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 1.2.4-alt3
+- clarified libburn dependency as versioned for xorriso (thx amike@)
+
+* Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 1.2.4-alt2
+- clarified libburn-devel build dependency as versioned
+- minor description readability fixup
+
+* Wed Nov 07 2012 Michael Shigorin <mike@altlinux.org> 1.2.4-alt1
+- 1.2.4
+
 * Wed Mar 21 2012 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt1
 - Updated to 1.2.0.
 
