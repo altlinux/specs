@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.1
-%define rel alt3
+%define rel alt4
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -187,7 +187,7 @@ BuildRequires: qt3-doc xml-utils zlib-devel libkrb5-devel libidn-devel
 BuildRequires: libkrb5-devel libaspell-devel libacl-devel libattr-devel
 BuildRequires: libavahi-qt3-devel pkg-config liblua5-devel libjasper-devel
 BuildRequires: glibc-utils glibc-devel glib2-devel
-BuildRequires: openexr-devel libXdmcp-devel libXcomposite-devel
+BuildRequires: openexr-devel libXdmcp-devel libXcomposite-devel libgamin-devel
 #BuildRequires: libqt3-devel-cxx = %__gcc_version_base
 BuildRequires: libqt3 >= 3.2.0 libqt3-devel >= 3.2.0
 BuildRequires: flex su sudo
@@ -365,10 +365,6 @@ export LDFLAGS="-L%buildroot/%_libdir -L%buildroot/%_libdir/kde3 -L%qtdir/lib"
 export DESTDIR=%buildroot
 # export LIBDIR=/%_libdir/kde3
 
-%if %unstable
-%define _K4buildtype RelWithDebInfo
-%endif
-
 if ! [ -f $BD/CMakeCache.txt ]
 then
 %K3cmake \
@@ -387,9 +383,14 @@ then
     -DWITH_SSL=ON \
     -DWITH_CUPS=ON \
     -DWITH_LUA=OFF \
-    -DWITH_TIFF=OFF \
-    -DWITH_JASPER=OFF \
-    -DWITH_OPENEXR=OFF \
+    -DWITH_TIFF=ON \
+    -DWITH_JASPER=ON \
+    -DWITH_OPENEXR=ON \
+    -DWITH_UTEMPTER=ON \
+    -DWITH_AVAHI=ON \
+    -DWITH_PCRE=ON \
+    -DWITH_INOTIFY=ON \
+    -DWITH_GAMIN=ON \
     -DWITH_ASPELL=ON \
     -DASPELL_DATADIR=/usr/lib/aspell \
     -DWITH_HSPELL=OFF \
@@ -651,6 +652,9 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Thu Nov 08 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt4
+- Some new features enable: TIFF, JASPER, OPENEXR, UTEMPTER, AVAHI, PCRE, INOTIFY, GAMIN.
+
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt3
 - Build with -O2 and -g.
 
