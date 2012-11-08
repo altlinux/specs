@@ -1,6 +1,6 @@
 Name: vim-plugin-mediawiki-syntax
 Version: 0.0
-Release: alt3
+Release: alt4
 URL: http://en.wikipedia.org/wiki/Wikipedia:Text_editor_support#Vim
 License: GPL
 Group: Editors
@@ -45,6 +45,9 @@ done
 %doc *.wiki
 
 %changelog
+* Thu Nov 08 2012 Fr. Br. George <george@altlinux.ru> 0.0-alt4
+- Synchronizing with Wikipedia
+
 * Wed Jul 27 2011 Fr. Br. George <george@altlinux.ru> 0.0-alt3
 - New snippet cutting scheme
 
