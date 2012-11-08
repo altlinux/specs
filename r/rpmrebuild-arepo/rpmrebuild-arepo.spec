@@ -1,5 +1,5 @@
 Name: rpmrebuild-arepo
-Version: 3.1.3
+Version: 3.1.4
 Release: alt1
 
 Summary: biarch repackager for Sisyphus packages
@@ -44,8 +44,13 @@ install -m755 arepo.sh %buildroot%_libexecdir/rpmrebuild/plugins/
 %_bindir/arepo_pre.py
 
 %changelog
+* Thu Nov 08 2012 Dmitry V. Levin <ldv@altlinux.org> 3.1.4-alt1
+- rpmrebuild-arepo.conf: added /usr/lib/pango/ to lib_files.
+- arepo.sh: changed scripts filtering in 'lib' mode to copy scripts
+  when they differ between native and compat packages.
+
 * Wed Jun 13 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.3-alt1
-- arepo_pre.py, arepo.sh: filter out %ghost files in 'lib' mode
+- arepo_pre.py, arepo.sh: filter out %%ghost files in 'lib' mode
 
 * Tue Apr 24 2012 Dmitry V. Levin <ldv@altlinux.org> 3.1.2-alt1
 - rpmrebuild-arepo.conf: added /etc/X11/lib to lib_files.

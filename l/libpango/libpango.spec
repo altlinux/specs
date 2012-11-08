@@ -7,7 +7,7 @@
 
 Name: lib%_name
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: System for layout and rendering of internationalized text
 License: %lgpl2plus
@@ -27,7 +27,6 @@ Source15: pangocairo-compat.lds
 Patch: pango-1.32.0-alt-compat-version-script.patch
 # check.defs always true
 Patch3: pango-1.30.0-alt-check_defs.patch
-Patch4: pango-1.28.4-alt-modules.patch
 
 Provides: %_name = %version
 Obsoletes: %_name < %version
@@ -116,7 +115,6 @@ GObject introspection devel data for the Pango library
 %patch -p1
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %patch3
-#%%patch4 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -135,12 +133,13 @@ install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %make check
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
+ln %buildroot%_bindir/%_name-querymodules %buildroot%_libdir/%_name/
 touch %buildroot%_libdir/%_name/%module_ver/modules.cache
 mkdir -p %buildroot%_sysconfdir/%_name
 
 %post
-%_bindir/pango-querymodules --system --update-cache
+%_libdir/%_name/%_name-querymodules --system --update-cache
 
 %files
 %_bindir/%_name-querymodules
@@ -153,6 +152,7 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %_libdir/%{name}ft2-1.0.so.*
 %_libdir/%{name}xft-1.0.so.*
 %_libdir/%_name/%module_ver/*/*.so
+%_libdir/%_name/%_name-querymodules
 %ghost %_libdir/%_name/%module_ver/modules.cache
 %_man1dir/%_name-querymodules.*
 %_man1dir/%_name-view.*
@@ -184,6 +184,11 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Thu Nov 08 2012 Dmitry V. Levin <ldv@altlinux.org> 1.32.1-alt2
+- Packaged %_libdir/%_name/%_name-querymodules hard link to
+  %_bindir/%_name-querymodules, changed %%post script
+  to use this hard link (closes: #25938).
+
 * Fri Sep 28 2012 Yuri N. Sedunov <aris@altlinux.org> 1.32.1-alt1
 - 1.32.1
 
