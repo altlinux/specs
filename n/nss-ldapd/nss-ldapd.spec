@@ -1,9 +1,10 @@
 %def_disable test
 %def_disable debug
+%def_enable  systemd
 
 Name: 	 nss-ldapd
-Version: 0.8.10
-Release: alt4
+Version: 0.8.11
+Release: alt1
 
 Summary: An nsswitch module which uses directory servers
 License: LGPLv2+
@@ -14,6 +15,7 @@ Source:  %name-%version.tar
 Source1: nslcd.init
 Source2: nslcd.sysconfig
 Source3: nslcd.tmpconf
+Source4: nslcd.service
 Patch:   nss-ldapd-0.8.10-alt-DSO.patch
 
 Requires: nscd
@@ -25,6 +27,9 @@ Provides:  nss-pam-ldapd = %version-%release
 Provides:  nss-ldap
 
 BuildRequires: libkrb5-devel libldap-devel libsasl2-devel docbook2X libpam0-devel
+%if_enabled systemd
+BuildRequires: systemd
+%endif
 
 %description
 The nss-pam-ldapd daemon, nslcd, uses a directory server to look up name
@@ -64,6 +69,9 @@ mv %buildroot%_libdir/* %buildroot/%_lib/
 install -pD -m755 %SOURCE1 %buildroot%_initdir/nslcd
 install -pD -m644 %SOURCE2 %buildroot%_sysconfdir/sysconfig/nslcd
 install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/tmpfiles.d/nslcd.conf
+%if_enabled systemd
+install -pD -m755 %SOURCE4 %buildroot/lib/systemd/system/nslcd.service
+%endif
 chmod 755 %buildroot/%_lib/*.so*
 
 chmod 600 %buildroot%_sysconfdir/nslcd.conf
@@ -138,8 +146,8 @@ fi
 %post_service nslcd
 if [ "$1" -eq "1" ]; then
 	if grep -qs '^passwd:.*ldap' /etc/nsswitch.conf; then
-        	/sbin/chkconfig nslcd on
-		service nslcd start
+        /sbin/chkconfig nslcd on
+        service nslcd start
 	fi
 fi
 exit 0
@@ -158,8 +166,15 @@ exit 0
 %attr(711,_nslcd,root) %dir /var/run/nslcd
 %attr(666,_nslcd,_nslcd) %ghost /var/run/nslcd/socket
 %attr(644,root,root) %config(noreplace) %_sysconfdir/tmpfiles.d/nslcd.conf
+%if_enabled systemd
+%config(noreplace) /lib/systemd/system/*
+%endif
 
 %changelog
+* Thu Nov 08 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.11-alt1
+- New version 0.8.11
+- Add real systemd support
+
 * Thu Oct 04 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.10-alt4
 - Provide nss-ldap for adapted alterator-auth
 - Change obsolete of pam_ldap to conflict
