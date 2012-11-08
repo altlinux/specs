@@ -96,7 +96,7 @@
 
 Name: libvirt
 Version: 1.0.0
-Release: alt1
+Release: alt2
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -235,10 +235,7 @@ Requires: %name-daemon = %version-%release
 The nodedev driver plugin for the libvirtd daemon, providing
 an implementation of the node device APIs using the udev
 capabilities.
-%endif
 
-
-%if_with netcf
 %package daemon-driver-interface
 Summary: Interface driver plugin for the libvirtd daemon
 Group: System/Libraries
@@ -247,7 +244,7 @@ Requires: %name-daemon = %version-%release
 %description daemon-driver-interface
 The interface driver plugin for the libvirtd daemon, providing
 an implementation of the network interface APIs using the
-netcf library
+netcf library or udev.
 %endif
 
 %package daemon-driver-secret
@@ -729,11 +726,6 @@ fi
 %endif
 
 %if_with driver_modules
-%if_with netcf
-%files daemon-driver-interface
-%_libdir/%name/connection-driver/libvirt_driver_interface.so
-%endif
-
 %if_with network
 %files daemon-driver-network
 %_libdir/%name/connection-driver/libvirt_driver_network.so
@@ -742,6 +734,9 @@ fi
 %if_with udev
 %files daemon-driver-nodedev
 %_libdir/%name/connection-driver/libvirt_driver_nodedev.so
+
+%files daemon-driver-interface
+%_libdir/%name/connection-driver/libvirt_driver_interface.so
 %endif
 
 %if_with nwfilter
@@ -846,6 +841,9 @@ fi
 %doc examples/python
 
 %changelog
+* Thu Nov 08 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt2
+- build libvirt-daemon-driver-interface package
+
 * Tue Nov 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 - drop local systemd unit files, use upstream
