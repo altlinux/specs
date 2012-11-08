@@ -1,6 +1,6 @@
 Name: apmd
 Version: 3.2.2
-Release: alt5
+Release: alt6
 Epoch: 1
 %define subver 3
 
@@ -23,6 +23,9 @@ Patch2: %name-3.2.1-alt-makefile.patch
 Patch3: %name-3.2.1-alt-doc.patch
 Patch4: %name-3.2.1-alt-fixes.patch
 Patch5: apmd-3.2.2-pld-libtool.patch
+Patch10: apmd-3.2.2-mageia-lib64.patch
+Patch11: apmd-3.2.2-mageia-graphicswitch.patch
+
 Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Wed May 13 2009
@@ -33,13 +36,13 @@ PreReq: powermgmt-base
 Requires(post): %post_service
 Requires(preun): %preun_service
 
-ExclusiveArch: %ix86
+ExclusiveArch: %{ix86} x86_64 ppc %arm
 
-Summary(ru_RU.KOI8-R): ı‘…Ã…‘Ÿ ’–“¡◊Ã≈Œ…— ”…”‘≈Õœ  –…‘¡Œ…— (APM BIOS)
+Summary(ru_RU.UTF-8): –£—Ç–∏–ª–∏—Ç—ã —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è —Å–∏—Å—Ç–µ–º–æ–π –ø–∏—Ç–∞–Ω–∏—è (APM BIOS)
 
 %package -n xapm
 Summary: The X11 utility that displays APM BIOS information
-Summary(ru_RU.KOI8-R): Á“¡∆…ﬁ≈”À¡— ’‘…Ã…‘¡ ƒÃ— –œÀ¡⁄¡ …Œ∆œ“Õ¡√…… BIOS œ¬ APM
+Summary(ru_RU.UTF-8): –ì—Ä–∞—Ñ–∏—á–µ—Å–∫–∞—è —É—Ç–∏–ª–∏—Ç–∞ –¥–ª—è –ø–æ–∫–∞–∑–∞ –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–∏ BIOS –æ–± APM
 Group: System/XFree86
 Requires: %name = %version-%release
 Provides: %name-x11 = %version-%release
@@ -47,12 +50,12 @@ Obsoletes: %name-x11
 
 %package -n libapm
 Summary: The shared library for interacting with the kernel APM driver
-Summary(ru_RU.KOI8-R): ‚…¬Ã…œ‘≈À¡ ƒÃ— ◊⁄¡…Õœƒ≈ ”‘◊…— ” APM-ƒ“¡ ◊≈“œÕ —ƒ“¡
+Summary(ru_RU.UTF-8): –ë–∏–±–ª–∏–æ—Ç–µ–∫–∞ –¥–ª—è –≤–∑–∞–∏–º–æ–¥–µ–π—Å—Ç–≤–∏—è —Å APM-–¥—Ä–∞–π–≤–µ—Ä–æ–º —è–¥—Ä–∞
 Group: System/Libraries
 
 %package -n libapm-devel
 Summary: The development library and header files for APM
-Summary(ru_RU.KOI8-R): Û“≈ƒ”‘◊¡ “¡⁄“¡¬œ‘À… ƒÃ— ƒœ”‘’–¡ À APM
+Summary(ru_RU.UTF-8): –°—Ä–µ–¥—Å—Ç–≤–∞ —Ä–∞–∑—Ä–∞–±–æ—Ç–∫–∏ –¥–ª—è –¥–æ—Å—Ç—É–ø–∞ –∫ APM
 Group: Development/C
 Requires: libapm = %version-%release
 Provides: apmd-devel = %version-%release
@@ -61,7 +64,7 @@ Obsoletes: apmd-devel
 %if_with static
 %package -n libapm-devel-static
 Summary: The development library for linking APM access functions statically
-Summary(ru_RU.KOI8-R): Û‘¡‘…ﬁ≈”À¡— ¬…¬Ã…œ‘≈À¡ ƒÃ— “¡¬œ‘Ÿ ” APM
+Summary(ru_RU.UTF-8): –°—Ç–∞—Ç–∏—á–µ—Å–∫–∞—è –±–∏–±–ª–∏–æ—Ç–µ–∫–∞ –¥–ª—è —Ä–∞–±–æ—Ç—ã —Å APM
 Group: Development/C
 Requires: libapm-devel = %version-%release
 %endif
@@ -78,18 +81,18 @@ This package contains apmd(8), a daemon for logging and acting on APM
 events; and apm(1), a client that prints the information in /proc/apm
 in a readable format.
 
-%description -l ru_RU.KOI8-R
-Ó¡ –œ“‘¡‘…◊ŒŸ» ÀœÕ–ÿ¿‘≈“¡» ∆’ŒÀ√…… “¡”€…“≈ŒŒœ«œ ’–“¡◊Ã≈Œ…— –…‘¡Œ…≈Õ
-(Advanced Power Management, APM) ”Ã’÷¡‘ ƒÃ— ƒœ”‘’–¡ À …Œ∆œ“Õ¡√……
-œ ”œ”‘œ—Œ…… ¬¡‘¡“≈… … ’–“¡◊Ã≈Œ…— “≈÷…ÕœÕ ‹Œ≈“«œ–œ‘“≈¬Ã≈Œ…—.
+%description -l ru_RU.UTF-8
+–ù–∞ –ø–æ—Ä—Ç–∞—Ç–∏–≤–Ω—ã—Ö –∫–æ–º–ø—å—é—Ç–µ—Ä–∞—Ö —Ñ—É–Ω–∫—Ü–∏–∏ —Ä–∞—Å—à–∏—Ä–µ–Ω–Ω–æ–≥–æ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è –ø–∏—Ç–∞–Ω–∏–µ–º
+(Advanced Power Management, APM) —Å–ª—É–∂–∞—Ç –¥–ª—è –¥–æ—Å—Ç—É–ø–∞ –∫ –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–∏
+–æ —Å–æ—Å—Ç–æ—è–Ω–∏–∏ –±–∞—Ç–∞—Ä–µ–∏ –∏ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è —Ä–µ–∂–∏–º–æ–º —ç–Ω–µ—Ä–≥–æ–ø–æ—Ç—Ä–µ–±–ª–µ–Ω–∏—è.
 
-‰¡ŒŒŸ  –¡À≈‘ ”œƒ≈“÷…‘ apmd(8), ƒ≈ÕœŒ ƒÃ— –“œ‘œÀœÃ…“œ◊¡Œ…— … “≈¡À√……
-Œ¡ …”»œƒ—›…≈ œ‘ APM ”œ¬Ÿ‘…—, ¡ ‘¡À÷≈ ÀœŒ”œÃÿŒ’¿ ’‘…Ã…‘’ apm(1)
-ƒÃ— “¡”–≈ﬁ¡‘À… …Œ∆œ“Õ¡√…… …⁄ /proc/apm ◊ ﬁ…‘¡¬≈ÃÿŒœÕ ◊…ƒ≈.
+–î–∞–Ω–Ω—ã–π –ø–∞–∫–µ—Ç —Å–æ–¥–µ—Ä–∂–∏—Ç apmd(8), –¥–µ–º–æ–Ω –¥–ª—è –ø—Ä–æ—Ç–æ–∫–æ–ª–∏—Ä–æ–≤–∞–Ω–∏—è –∏ —Ä–µ–∞–∫—Ü–∏–∏
+–Ω–∞ –∏—Å—Ö–æ–¥—è—â–∏–µ –æ—Ç APM —Å–æ–±—ã—Ç–∏—è, –∞ —Ç–∞–∫–∂–µ –∫–æ–Ω—Å–æ–ª—å–Ω—É—é —É—Ç–∏–ª–∏—Ç—É apm(1)
+–¥–ª—è —Ä–∞—Å–ø–µ—á–∞—Ç–∫–∏ –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–∏ –∏–∑ /proc/apm –≤ —á–∏—Ç–∞–±–µ–ª—å–Ω–æ–º –≤–∏–¥–µ.
 
-“…Õ≈“¡Õ… “≈¡À√…… Œ¡ APM-”œ¬Ÿ‘…— Õœ«’‘ ”Ã’÷…‘ÿ œ‘ÀÃ¿ﬁ≈Œ…≈ PCMCIA-’”‘“œ ”‘◊
-–“… –≈“≈»œƒ≈ ◊ ”–—›…  “≈÷…Õ …Ã… ’◊≈Ã…ﬁ≈Œ…≈ ‘¡ Õ¡’‘¡ ¬≈⁄ƒ≈ ”‘◊…— ƒ…”À¡
-–“… –œƒÀÃ¿ﬁ≈Œ…… ƒœ–œÃŒ…‘≈ÃÿŒœ  ¬¡‘¡“≈….
+–ü—Ä–∏–º–µ—Ä–∞–º–∏ —Ä–µ–∞–∫—Ü–∏–∏ –Ω–∞ APM-—Å–æ–±—ã—Ç–∏—è –º–æ–≥—É—Ç —Å–ª—É–∂–∏—Ç—å –æ—Ç–∫–ª—é—á–µ–Ω–∏–µ PCMCIA-—É—Å—Ç—Ä–æ–π—Å—Ç–≤
+–ø—Ä–∏ –ø–µ—Ä–µ—Ö–æ–¥–µ –≤ —Å–ø—è—â–∏–π —Ä–µ–∂–∏–º –∏–ª–∏ —É–≤–µ–ª–∏—á–µ–Ω–∏–µ —Ç–∞–π–º–∞—É—Ç–∞ –±–µ–∑–¥–µ–π—Å—Ç–≤–∏—è –¥–∏—Å–∫–∞
+–ø—Ä–∏ –ø–æ–¥–∫–ª—é—á–µ–Ω–∏–∏ –¥–æ–ø–æ–ª–Ω–∏—Ç–µ–ª—å–Ω–æ–π –±–∞—Ç–∞—Ä–µ–∏.
 
 %description -n xapm
 On laptop computers, the Advanced Power Management (APM) support provides
@@ -99,13 +102,13 @@ power, depending on your laptop and the APM implementation.
 This package contains xapm(1), an X11 utility that displays APM BIOS
 information.
 
-%description -n xapm -l ru_RU.KOI8-R
-Ó¡ –œ“‘¡‘…◊ŒŸ» ÀœÕ–ÿ¿‘≈“¡» ∆’ŒÀ√…… “¡”€…“≈ŒŒœ«œ ’–“¡◊Ã≈Œ…— –…‘¡Œ…≈Õ
-(Advanced Power Management, APM) ”Ã’÷¡‘ ƒÃ— ƒœ”‘’–¡ À …Œ∆œ“Õ¡√……
-œ ”œ”‘œ—Œ…… ¬¡‘¡“≈… … ’–“¡◊Ã≈Œ…— “≈÷…ÕœÕ ‹Œ≈“«œ–œ‘“≈¬Ã≈Œ…—.
+%description -n xapm -l ru_RU.UTF-8
+–ù–∞ –ø–æ—Ä—Ç–∞—Ç–∏–≤–Ω—ã—Ö –∫–æ–º–ø—å—é—Ç–µ—Ä–∞—Ö —Ñ—É–Ω–∫—Ü–∏–∏ —Ä–∞—Å—à–∏—Ä–µ–Ω–Ω–æ–≥–æ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è –ø–∏—Ç–∞–Ω–∏–µ–º
+(Advanced Power Management, APM) —Å–ª—É–∂–∞—Ç –¥–ª—è –¥–æ—Å—Ç—É–ø–∞ –∫ –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–∏
+–æ —Å–æ—Å—Ç–æ—è–Ω–∏–∏ –±–∞—Ç–∞—Ä–µ–∏ –∏ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è —Ä–µ–∂–∏–º–æ–º —ç–Ω–µ—Ä–≥–æ–ø–æ—Ç—Ä–µ–±–ª–µ–Ω–∏—è.
 
-‰¡ŒŒŸ  –¡À≈‘ ”œƒ≈“÷…‘ xapm, ’‘…Ã…‘’ ƒÃ— –œÀ¡⁄¡ ”œ”‘œ—Œ…— APM
-◊ «“¡∆…ﬁ≈”ÀœÕ “≈÷…Õ≈.
+–î–∞–Ω–Ω—ã–π –ø–∞–∫–µ—Ç —Å–æ–¥–µ—Ä–∂–∏—Ç xapm, —É—Ç–∏–ª–∏—Ç—É –¥–ª—è –ø–æ–∫–∞–∑–∞ —Å–æ—Å—Ç–æ—è–Ω–∏—è APM
+–≤ –≥—Ä–∞—Ñ–∏—á–µ—Å–∫–æ–º —Ä–µ–∂–∏–º–µ.
 
 %description -n libapm
 On laptop computers, the Advanced Power Management (APM) support provides
@@ -115,14 +118,14 @@ power, depending on your laptop and the APM implementation.
 This package contains a shared library that provides support for
 interacting with the APM driver in the kernel.
 
-%description -n libapm -l ru_RU.KOI8-R
-Ó¡ –œ“‘¡‘…◊ŒŸ» ÀœÕ–ÿ¿‘≈“¡» ∆’ŒÀ√…… “¡”€…“≈ŒŒœ«œ ’–“¡◊Ã≈Œ…— –…‘¡Œ…≈Õ
-(Advanced Power Management, APM) ”Ã’÷¡‘ ƒÃ— ƒœ”‘’–¡ À …Œ∆œ“Õ¡√……
-œ ”œ”‘œ—Œ…… ¬¡‘¡“≈… … ’–“¡◊Ã≈Œ…— “≈÷…ÕœÕ ‹Œ≈“«œ–œ‘“≈¬Ã≈Œ…—.
+%description -n libapm -l ru_RU.UTF-8
+–ù–∞ –ø–æ—Ä—Ç–∞—Ç–∏–≤–Ω—ã—Ö –∫–æ–º–ø—å—é—Ç–µ—Ä–∞—Ö —Ñ—É–Ω–∫—Ü–∏–∏ —Ä–∞—Å—à–∏—Ä–µ–Ω–Ω–æ–≥–æ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è –ø–∏—Ç–∞–Ω–∏–µ–º
+(Advanced Power Management, APM) —Å–ª—É–∂–∞—Ç –¥–ª—è –¥–æ—Å—Ç—É–ø–∞ –∫ –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–∏
+–æ —Å–æ—Å—Ç–æ—è–Ω–∏–∏ –±–∞—Ç–∞—Ä–µ–∏ –∏ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è —Ä–µ–∂–∏–º–æ–º —ç–Ω–µ—Ä–≥–æ–ø–æ—Ç—Ä–µ–±–ª–µ–Ω–∏—è.
 
-‰¡ŒŒŸ  –¡À≈‘ ”œƒ≈“÷…‘ ƒ…Œ¡Õ…ﬁ≈”À’¿ “¡⁄ƒ≈Ã—≈Õ’¿ ¬…¬Ã…œ‘≈À’,
-ﬁ≈“≈⁄ Àœ‘œ“’¿ –“œ«“¡ÕÕŸ œ”’›≈”‘◊Ã—¿‘ ◊⁄¡…Õœƒ≈ ”‘◊…≈ ” ƒ“¡ ◊≈“œÕ APM,
-“¡”–œÃœ÷≈ŒŒŸÕ ◊ —ƒ“≈.
+–î–∞–Ω–Ω—ã–π –ø–∞–∫–µ—Ç —Å–æ–¥–µ—Ä–∂–∏—Ç –¥–∏–Ω–∞–º–∏—á–µ—Å–∫—É—é —Ä–∞–∑–¥–µ–ª—è–µ–º—É—é –±–∏–±–ª–∏–æ—Ç–µ–∫—É,
+—á–µ—Ä–µ–∑ –∫–æ—Ç–æ—Ä—É—é –ø—Ä–æ–≥—Ä–∞–º–º—ã –æ—Å—É—â–µ—Å—Ç–≤–ª—è—é—Ç –≤–∑–∞–∏–º–æ–¥–µ–π—Å—Ç–≤–∏–µ —Å –¥—Ä–∞–π–≤–µ—Ä–æ–º APM,
+—Ä–∞—Å–ø–æ–ª–æ–∂–µ–Ω–Ω—ã–º –≤ —è–¥—Ä–µ.
 
 %description -n libapm-devel
 On laptop computers, the Advanced Power Management (APM) support provides
@@ -132,14 +135,14 @@ power, depending on your laptop and the APM implementation.
 This package contains a library and header files needed to write programs
 that interact with the APM driver in the kernel.
 
-%description -n libapm-devel -l ru_RU.KOI8-R
-Ó¡ –œ“‘¡‘…◊ŒŸ» ÀœÕ–ÿ¿‘≈“¡» ∆’ŒÀ√…… “¡”€…“≈ŒŒœ«œ ’–“¡◊Ã≈Œ…— –…‘¡Œ…≈Õ
-(Advanced Power Management, APM) ”Ã’÷¡‘ ƒÃ— ƒœ”‘’–¡ À …Œ∆œ“Õ¡√……
-œ ”œ”‘œ—Œ…… ¬¡‘¡“≈… … ’–“¡◊Ã≈Œ…— “≈÷…ÕœÕ ‹Œ≈“«œ–œ‘“≈¬Ã≈Œ…—.
+%description -n libapm-devel -l ru_RU.UTF-8
+–ù–∞ –ø–æ—Ä—Ç–∞—Ç–∏–≤–Ω—ã—Ö –∫–æ–º–ø—å—é—Ç–µ—Ä–∞—Ö —Ñ—É–Ω–∫—Ü–∏–∏ —Ä–∞—Å—à–∏—Ä–µ–Ω–Ω–æ–≥–æ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è –ø–∏—Ç–∞–Ω–∏–µ–º
+(Advanced Power Management, APM) —Å–ª—É–∂–∞—Ç –¥–ª—è –¥–æ—Å—Ç—É–ø–∞ –∫ –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–∏
+–æ —Å–æ—Å—Ç–æ—è–Ω–∏–∏ –±–∞—Ç–∞—Ä–µ–∏ –∏ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è —Ä–µ–∂–∏–º–æ–º —ç–Ω–µ—Ä–≥–æ–ø–æ—Ç—Ä–µ–±–ª–µ–Ω–∏—è.
 
-‰¡ŒŒŸ  –¡À≈‘ ”œƒ≈“÷…‘ ⁄¡«œÃœ◊œﬁŒŸ≈ ∆¡ ÃŸ … –œƒ”À¡⁄À…, Œ≈œ¬»œƒ…ÕŸ≈
-ƒÃ— “¡⁄“¡¬œ‘À… … ”¬œ“À… –“œ«“¡ÕÕ, …”–œÃÿ⁄’¿›…» ¬…¬Ã…œ‘≈À’ ƒœ”‘’–¡
-À ∆’ŒÀ√…—Õ ƒ“¡ ◊≈“¡ APM.
+–î–∞–Ω–Ω—ã–π –ø–∞–∫–µ—Ç —Å–æ–¥–µ—Ä–∂–∏—Ç –∑–∞–≥–æ–ª–æ–≤–æ—á–Ω—ã–µ —Ñ–∞–π–ª—ã –∏ –ø–æ–¥—Å–∫–∞–∑–∫–∏, –Ω–µ–æ–±—Ö–æ–¥–∏–º—ã–µ
+–¥–ª—è —Ä–∞–∑—Ä–∞–±–æ—Ç–∫–∏ –∏ —Å–±–æ—Ä–∫–∏ –ø—Ä–æ–≥—Ä–∞–º–º, –∏—Å–ø–æ–ª—å–∑—É—é—â–∏—Ö –±–∏–±–ª–∏–æ—Ç–µ–∫—É –¥–æ—Å—Ç—É–ø–∞
+–∫ —Ñ—É–Ω–∫—Ü–∏—è–º –¥—Ä–∞–π–≤–µ—Ä–∞ APM.
 
 %if_with static
 
@@ -151,13 +154,13 @@ power, depending on your laptop and the APM implementation.
 This package contains a library needed to static linking programs
 that interact with the APM driver in the kernel.
 
-%description -n libapm-devel-static -l ru_RU.KOI8-R
-Ó¡ –œ“‘¡‘…◊ŒŸ» ÀœÕ–ÿ¿‘≈“¡» ∆’ŒÀ√…… “¡”€…“≈ŒŒœ«œ ’–“¡◊Ã≈Œ…— –…‘¡Œ…≈Õ
-(Advanced Power Management, APM) ”Ã’÷¡‘ ƒÃ— ƒœ”‘’–¡ À …Œ∆œ“Õ¡√……
-œ ”œ”‘œ—Œ…… ¬¡‘¡“≈… … ’–“¡◊Ã≈Œ…— “≈÷…ÕœÕ ‹Œ≈“«œ–œ‘“≈¬Ã≈Œ…—.
+%description -n libapm-devel-static -l ru_RU.UTF-8
+–ù–∞ –ø–æ—Ä—Ç–∞—Ç–∏–≤–Ω—ã—Ö –∫–æ–º–ø—å—é—Ç–µ—Ä–∞—Ö —Ñ—É–Ω–∫—Ü–∏–∏ —Ä–∞—Å—à–∏—Ä–µ–Ω–Ω–æ–≥–æ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è –ø–∏—Ç–∞–Ω–∏–µ–º
+(Advanced Power Management, APM) —Å–ª—É–∂–∞—Ç –¥–ª—è –¥–æ—Å—Ç—É–ø–∞ –∫ –∏–Ω—Ñ–æ—Ä–º–∞—Ü–∏–∏
+–æ —Å–æ—Å—Ç–æ—è–Ω–∏–∏ –±–∞—Ç–∞—Ä–µ–∏ –∏ —É–ø—Ä–∞–≤–ª–µ–Ω–∏—è —Ä–µ–∂–∏–º–æ–º —ç–Ω–µ—Ä–≥–æ–ø–æ—Ç—Ä–µ–±–ª–µ–Ω–∏—è.
 
-‰¡ŒŒŸ  –¡À≈‘ ”œƒ≈“÷…‘ ¬…¬Ã…œ‘≈À’ ƒÃ— ”‘¡‘…ﬁ≈”Àœ  ÀœÕ–œŒœ◊À… –“œ«“¡ÕÕ,
-…”–œÃÿ⁄’¿›…» APM.
+–î–∞–Ω–Ω—ã–π –ø–∞–∫–µ—Ç —Å–æ–¥–µ—Ä–∂–∏—Ç –±–∏–±–ª–∏–æ—Ç–µ–∫—É –¥–ª—è —Å—Ç–∞—Ç–∏—á–µ—Å–∫–æ–π –∫–æ–º–ø–æ–Ω–æ–≤–∫–∏ –ø—Ä–æ–≥—Ä–∞–º–º,
+–∏—Å–ø–æ–ª—å–∑—É—é—â–∏—Ö APM.
 
 %endif
 
@@ -168,7 +171,12 @@ that interact with the APM driver in the kernel.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch10 -p1
+# TODO: review and apply or reject
+#patch11 -p1
+
 install -p -m644 %SOURCE4 README.ALT
+echo "LIB = %_lib" > config.make
 
 %build
 #make_build
@@ -219,6 +227,10 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 %endif
 
 %changelog
+* Thu Nov 08 2012 Igor Vlasenko <viy@altlinux.ru> 1:3.2.2-alt6
+- fixed x86_64 build
+- added but not applied apmd-3.2.2-mageia-graphicswitch.patch
+
 * Wed May 13 2009 Michael Shigorin <mike@altlinux.org> 1:3.2.2-alt5
 - applied three-year-and-two-days old PLD patch
   to fix build with newer libtool
@@ -363,7 +375,7 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/sysconfig/%name
 - 3.0beta9.
 - Split package with -devel.
 
-* Wed Jun 23 1999 Bernhard Rosenkr‰nzer <bero@mandrakesoft.com>
+* Wed Jun 23 1999 Bernhard Rosenkr–înzer <bero@mandrakesoft.com>
 - 3.0beta8
 
 * Tue Jun 22 1999 Chmouel Boudjnah <chmouel@mandrakesoft.com>
