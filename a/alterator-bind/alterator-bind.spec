@@ -2,7 +2,7 @@
 
 Name: alterator-bind
 Version: 0.8
-Release: alt2
+Release: alt3
 
 Source:%name-%version.tar
 
@@ -47,6 +47,10 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Thu Nov 08 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt3
+- set ns address in static zone
+- select 'master' ip address and use it in all zones 
+
 * Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt2
 - really use all interfaces
 
