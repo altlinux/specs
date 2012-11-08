@@ -1,6 +1,6 @@
 Name:		etcnet
 Version:	0.9.10
-Release:	alt7
+Release:	alt8
 
 Summary:	/etc/net network configuration system
 License:	GPL-2
@@ -137,6 +137,10 @@ fi
 %files full
 
 %changelog
+* Thu Nov 08 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt8
+- service network should not start on 2nd runevel (closes: #25700)
+- DHCPv6 support added (closes: #27780)
+
 * Tue Nov 06 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.10-alt7
 - CONFIG_WIRELESS and USE_IFPLUGD options are mutually exclusive now
 - do not rely on /sys/class/net/<iface>/wireless anymore (closes: #27797)
