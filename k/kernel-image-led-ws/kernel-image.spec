@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.51
-Release: alt2
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -192,7 +192,7 @@ Patch0102: linux-%kernel_branch.43-fix-drivers-block--cciss.patch
 Patch0103: linux-%kernel_branch.43-fix-drivers-block--dasd_diag_mod.patch
 Patch0104: linux-%kernel_branch.43-fix-drivers-block--dasd_eckd_mod.patch
 Patch0105: linux-%kernel_branch.43-fix-drivers-block--dasd_fba_mod.patch
-Patch0106: linux-%kernel_branch.43-fix-drivers-block--dasd_mod.patch
+Patch0106: linux-%kernel_branch.50-fix-drivers-block--dasd_mod.patch
 Patch0107: linux-%kernel_branch.42-fix-drivers-block--drbd.patch
 Patch0108: linux-%kernel_branch.51-fix-drivers-block--floppy.patch
 Patch0109: linux-%kernel_branch.43-fix-drivers-block--nbd.patch
@@ -274,7 +274,7 @@ Patch0244: linux-%kernel_branch.49-fix-drivers-gpu-drm--i915.patch
 Patch0245: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0246: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
 Patch0247: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
-Patch0248: linux-%kernel_branch.47-fix-drivers-gpu-drm--radeon.patch
+Patch0248: linux-%kernel_branch.50-fix-drivers-gpu-drm--radeon.patch
 Patch0249: linux-%kernel_branch.42-fix-drivers-gpu-drm--via.patch
 Patch0250: linux-%kernel_branch.42-fix-drivers-gpu-drm--vmwgfx.patch
 Patch0251: linux-%kernel_branch.42-fix-drivers-gpu-vga--vgaarb.patch
@@ -369,27 +369,28 @@ Patch0455: linux-%kernel_branch.46-fix-drivers-net--qeth.patch
 Patch0456: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
 Patch0457: linux-%kernel_branch.46-fix-drivers-net--qlge.patch
 Patch0458: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
-Patch0459: linux-%kernel_branch.47-fix-drivers-net--tg3.patch
-Patch0460: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
-Patch0461: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
-Patch0462: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
-Patch0463: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
-Patch0464: linux-%kernel_branch.46-fix-drivers-net-mlx4--mlx4_en.patch
-Patch0465: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
-Patch0466: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
-Patch0467: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
-Patch0468: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
-Patch0469: linux-%kernel_branch.46-fix-drivers-net-usb--asix.patch
-Patch0470: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
-Patch0471: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
-Patch0472: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
-Patch0473: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
-Patch0474: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
-Patch0475: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
-Patch0476: linux-%kernel_branch.42-fix-drivers-net-wireless--rt2x00.patch
-Patch0477: linux-%kernel_branch.43-fix-drivers-net-wireless-brcm80211--brcmfmac.patch
-Patch0478: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
-Patch0479: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
+Patch0459: linux-%kernel_branch.50-fix-drivers-net--smsguicv.patch
+Patch0460: linux-%kernel_branch.47-fix-drivers-net--tg3.patch
+Patch0461: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
+Patch0462: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
+Patch0463: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
+Patch0464: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
+Patch0465: linux-%kernel_branch.46-fix-drivers-net-mlx4--mlx4_en.patch
+Patch0466: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
+Patch0467: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
+Patch0468: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
+Patch0469: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
+Patch0470: linux-%kernel_branch.46-fix-drivers-net-usb--asix.patch
+Patch0471: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
+Patch0472: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
+Patch0473: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
+Patch0474: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
+Patch0475: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
+Patch0476: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
+Patch0477: linux-%kernel_branch.42-fix-drivers-net-wireless--rt2x00.patch
+Patch0478: linux-%kernel_branch.43-fix-drivers-net-wireless-brcm80211--brcmfmac.patch
+Patch0479: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
+Patch0480: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
 
 Patch0481: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
@@ -1607,6 +1608,7 @@ cd linux-%version
 %patch0477 -p1
 %patch0478 -p1
 %patch0479 -p1
+%patch0480 -p1
 
 %patch0481 -p1
 
@@ -2720,6 +2722,18 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 
 %changelog
+* Thu Nov 08 2012 Led <led@altlinux.ru> 3.0.51-alt4
+- updated:
+  + fix-drivers-gpu-drm--radeon
+
+* Wed Nov 07 2012 Led <led@altlinux.ru> 3.0.51-alt3
+- updated:
+  + fix-arch-x86
+  + fix-drivers-block--dasd_mod
+  + fix-mm
+- addded:
+  + fix-drivers-net--smsguicv
+
 * Tue Nov 06 2012 Led <led@altlinux.ru> 3.0.51-alt2
 - updated:
   + fix-virt-kvm
