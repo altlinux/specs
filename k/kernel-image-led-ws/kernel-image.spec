@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.51
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -359,7 +359,7 @@ Patch0445: linux-%kernel_branch.42-fix-drivers-net--e1000e.patch
 Patch0446: linux-%kernel_branch.42-fix-drivers-net--ehea.patch
 Patch0447: linux-%kernel_branch.42-fix-drivers-net--hp100.patch
 Patch0448: linux-%kernel_branch.42-fix-drivers-net--ibmveth.patch
-Patch0449: linux-%kernel_branch.42-fix-drivers-net--igb.patch
+Patch0449: linux-%kernel_branch.50-fix-drivers-net--igb.patch
 Patch0450: linux-%kernel_branch.49-fix-drivers-net--ixgbe.patch
 Patch0451: linux-%kernel_branch.43-fix-drivers-net--lcs.patch
 Patch0452: linux-%kernel_branch.42-fix-drivers-net--macvtap.patch
@@ -2722,6 +2722,10 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 
 %changelog
+* Thu Nov 08 2012 Led <led@altlinux.ru> 3.0.51-alt5
+- updated:
+  + fix-drivers-net--igb
+
 * Thu Nov 08 2012 Led <led@altlinux.ru> 3.0.51-alt4
 - updated:
   + fix-drivers-gpu-drm--radeon
