@@ -4,27 +4,27 @@
 %define popIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %def_disable static
-%def_disable cpp
-%def_disable glib
-%def_disable qt4
+%def_enable cpp
+%def_enable glib
+%def_enable qt4
 %def_disable qt3
-%def_disable devel
-%def_disable utils
-%def_disable xpdfheaders
-%def_disable gir
+%def_enable devel
+%def_enable utils
+%def_enable xpdfheaders
+%def_enable gir
 
 %define rname poppler
-%define somajor 27
+%define somajor 28
 %define somajor_cpp 0
 %define somajor_qt 3
 %define somajor_qt4 4
 %define somajor_glib 8
 %define major 0
 %define minor 20
-%define bugfix 3
+%define bugfix 5
 Name: %rname%somajor
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt1
 %define poppler_devel_name lib%rname-devel
 %define poppler_cpp_devel_name lib%rname-cpp-devel
 %define poppler_glib_devel_name lib%rname-glib-devel
@@ -335,8 +335,8 @@ export QT4DIR=%_qt4dir
 %endif
 
 %changelog
-* Thu Nov 08 2012 Sergey V Turchin <zerg@altlinux.org> 0.20.3-alt5
-- don't package all exept main library
+* Thu Nov 08 2012 Sergey V Turchin <zerg@altlinux.org> 0.20.5-alt1
+- new version
 
 * Mon Sep 17 2012 Dmitry V. Levin <ldv@altlinux.org> 0.20.3-alt4
 - Rebuilt with libpng15.
