@@ -1,82 +1,134 @@
-Name: dietlibc
-Version: 0.30
-Release: alt3
 %define diethome %_prefix/lib/%name
 
+Name: dietlibc
+%define cvsdate 20121030
+Version: 0.33
+Release: alt0.1
 Summary: C library optimized for size
-License: GPL
+License: GPLv2+
 Group: Development/C
 Url: http://www.fefe.de/%name/
-
+%if %cvsdate
+Source: %name-cvs-%cvsdate.tar
+%else
 Source: ftp://ftp.kernel.org/pub/linux/libs/%name/%name-%version.tar
+%endif
 Source1: %name-Makefile.rules
-
-Patch1: %name-0.23-alt-getline.patch
-Patch2: %name-0.27-alt-ioverflow.patch
-Patch3: %name-0.30-alt-config.patch
-Patch4: %name-0.27-alt-define.patch
-Patch5: %name-0.30-alt-fstatfs64-typo.patch
-Patch6: %name-0.30-alt-getmntent_r.patch
-Patch7: %name-0.30-alt-no-stack-protector.patch
-
-# MDK
-Patch31: %name-0.29-biarch.patch
-Patch32: %name-0.27-kernel2.6-types.patch
-Patch33: %name-0.27-x86_64-lseek64.patch
-Patch34: %name-0.27-x86_64-stat64.patch
-
-# Annvix
-Patch60: %name-0.29-avx-fix_no_ipv6.patch
-
-# Fedora
-Patch80: %name-0.28-setpriority.patch
-Patch81: %name-0.29-scall.patch
-
-Packager: Anton D. Kachalov <mouse@altlinux.org>
+Patch: %name-%version-%release.patch
 
 %description
 Small libc for building embedded applications.
 
+
 %prep
-%setup -q
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
+%if %cvsdate
+%setup -n %name-cvs-%cvsdate
+%else
+%setup
+%endif
+%patch -p1
 
-%patch31 -p1
-%patch32 -p1
-%patch33 -p1
-%patch34 -p1
-
-%patch60 -p1
-
-%patch80 -p1
-%patch81 -p1
 
 %build
-%__subst 's,\-W\ ,-Wextra ,g' Makefile
-%make_build CC="gcc -fno-stack-protector" prefix=%diethome
+%add_optflags -fno-stack-protector -U_FORTIFY_SOURCE
+
+DisableFeatures()
+{
+local F
+for F in $@; do
+	sed -i -r -e '/^#[[:blank:]]*define[[:blank:]]+WANT_'"$F"'[[:blank:]]*$/s|^.*$|/* & */|' dietfeatures.h
+done
+}
+
+EnableFeatures()
+{
+local F
+for F in $@; do
+	sed -i -r -e '/^\/\*[[:blank:]]*#[[:blank:]]*define[[:blank:]]+WANT_'"$F"'[[:blank:]]*\*\/$/s|^.*(#.*)[[:blank:]]*\*\/|\1|' \
+	          -e 's/[[:blank:]]*$//' dietfeatures.h
+done
+}
+
+DisableFeatures \
+	FASTER_STRING_ROUTINES \
+	LLMNR \
+	VALGRIND_SUPPORT \
+	FREAD_OPTIMIZATION \
+	LD_SO_GDB_SUPPORT \
+	IPV6_DNS \
+	HIGH_PRECISION_MATH \
+	SSP \
+	STACKGAP
+EnableFeatures \
+	MALLOC_ZERO
+
+%make_build CC="%__cc %optflags" prefix=%diethome
+gzip -9c CHANGES > CHANGES.gz
+
 
 %install
-%make_install install \
-	prefix=%diethome \
-	BINDIR=%_bindir \
-	MAN1DIR=%_man1dir \
-	DESTDIR=%buildroot
+%make_install prefix=%diethome BINDIR=%_bindir MAN1DIR=%_man1dir DESTDIR=%buildroot install
+install -p -m 0644 %SOURCE1 %buildroot%diethome/Makefile.rules
 
-%__install -m644 %SOURCE1 %buildroot%diethome/Makefile.rules
 
 %files
+%doc AUTHOR BUGS CAVEAT CHANGES.* FAQ PORTING README* THANKS SECURITY TODO
 %_bindir/*
 %_man1dir/*
 %diethome
-%doc AUTHOR BUGS CAVEAT CHANGES FAQ README README.* THANKS SECURITY
+
 
 %changelog
+* Thu Nov 08 2012 Led <led@altlinux.ru> 0.33-alt0.1
+- CVS 20121030
+- fixed Url
+
+* Tue Apr 26 2011 Led <led@altlinux.ru> 0.33-cx0.1
+- CVS 20110303
+- err(), errx(), verr(), verrx(), warn(), warnx(), vwarn(), vwarnx() moved
+  from libcompat into main lib
+- features.h: add include sys/cdefs.h
+
+* Wed May 05 2010 Led <led@altlinux.ru> 0.33-tmc0.6
+- getdelim(), mempcpy(), getdelim(), getline() moved into main lib
+
+* Thu Apr 01 2010 Led <led@altlinux.ru> 0.33-tmc0.5
+- CVS 20100320
+
+* Tue Mar 09 2010 Led <led@altlinux.ru> 0.33-tmc0.4
+- in.h: define IPV6_V6ONLY
+
+* Tue Feb 23 2010 Led <led@altlinux.ru> 0.33-tmc0.3
+- CVS 20100209
+- diet.c: change default gcc options for i386 and x86_64
+
+* Fri Jan 29 2010 Led <led@altlinux.ru> 0.33-tmc0.2
+- enabled:
+  + MALLOC_ZERO
+- disabled:
+  + FASTER_STRING_ROUTINES
+  + STACKGAP
+
+* Sun Jan 24 2010 Led <led@altlinux.ru> 0.33-tmc0.1
+- CVS 20100119
+
+* Fri Jan 22 2010 Led <led@altlinux.ru> 0.32-tmc2
+- stdint.h: add limits macros
+
+* Thu Jan 21 2010 Led <led@altlinux.ru> 0.32-tmc1
+- 0.32
+- cleaned up spec
+
+* Wed Sep 03 2008 Led <led@altlinux.ru> 0.31-alt0.2
+- added %name-0.31-x86_64-lseek64.patch
+
+* Wed Nov 21 2007 Led <led@altlinux.ru> 0.31-alt0.1
+- 0.31
+- updated dietlibc-0.31-avx-fix_no_ipv6.patch
+- removed dietlibc-0.30-alt-fstatfs64-typo.patch
+- disabled dietlibc-0.27-x86_64-lseek64.patch
+- cleaned up spec
+
 * Sat Feb 03 2007 Sergey Vlasov <vsu@altlinux.ru> 0.30-alt3
 - diet wrapper: Add -fno-stack-protector to compiler options for gcc >= 4.
   Version is determined either from the compiler name (gcc-<version>) or
