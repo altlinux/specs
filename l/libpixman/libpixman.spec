@@ -1,7 +1,7 @@
 %define srcname pixman
 
 Name: libpixman
-Version: 0.26.2
+Version: 0.28.0
 Release: alt1
 Epoch: 3
 Summary: Pixel manipulation library
@@ -48,6 +48,9 @@ develop programs which make use of %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Nov 08 2012 Valery Inozemtsev <shrek@altlinux.ru> 3:0.28.0-alt1
+- 0.28.0
+
 * Sun Jul 01 2012 Valery Inozemtsev <shrek@altlinux.ru> 3:0.26.2-alt1
 - 0.26.2
 
