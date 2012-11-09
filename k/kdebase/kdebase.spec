@@ -34,7 +34,7 @@
 %define bugfix 13.1
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -690,8 +690,11 @@ then
     -DWITH_XRENDER=ON \
     -DWITH_XFIXES=ON \
     -DWITH_XDAMAGE=ON \
-    -DWITH_XRANDR=ON \
     -DWITH_XEXT=ON \
+    -DWITH_XTEST=ON \
+    -DWITH_XSCREENSAVER=ON \
+    -DWITH_LIBART=ON \
+    -DWITH_XRANDR=ON \
     -DWITH_LIBRAW1394=ON \
     -DWITH_LIBUSB=ON \
     -DWITH_PAM=ON \
@@ -1737,6 +1740,9 @@ fi
 %doc %_K3doc/en/konqueror
 
 %if %with_kdm
+%pre kdm
+test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
+
 %files kdm
 %x11confdir/kdm
 #dir %x11confdir/kdm
@@ -1938,6 +1944,10 @@ fi
 
 
 %changelog
+* Fri Nov 09 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt3
+- Some new features enabled: XTEST, XSCREENSAVER, LIBART.
+- Previous copy /etc/X11/kdm removing if not link to original kdm config.
+
 * Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
 - Build with -O2 and -g.
 
