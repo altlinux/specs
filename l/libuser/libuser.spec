@@ -7,7 +7,7 @@ BuildRequires: OpenSP
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name: libuser
-Version: 0.57.7
+Version: 0.58
 Release: alt1_1
 Group: System/Base
 License: LGPLv2+
@@ -100,6 +100,9 @@ python -c "import libuser"
 %{_datadir}/gtk-doc/html/*
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.57.7-alt1_1
 - update to new release by fcimport
 
