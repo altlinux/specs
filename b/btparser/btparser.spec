@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/python-config
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name: btparser
-Version: 0.20
+Version: 0.22
 Release: alt1_1
 Summary: Parser and analyzer for backtraces produced by GDB
 Group: Development/C
@@ -95,6 +95,9 @@ make check
 %{python_sitelibdir}/%{name}/*
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1_1
 - update to new release by fcimport
 
