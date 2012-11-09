@@ -1,7 +1,7 @@
 %define theme oxygen
 
 Name: icon-theme-%theme
-Version: 4.9.2
+Version: 4.9.3
 Release: alt1
 
 Summary: A set of Icons for KDE
@@ -87,6 +87,9 @@ done < %SOURCE10
 %_iconsdir/%theme/???x???
 
 %changelog
+* Fri Nov 09 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
 - new version
 
