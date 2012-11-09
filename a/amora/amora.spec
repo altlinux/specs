@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/pkg-config pkgconfig(x11)
+BuildRequires: /usr/bin/pkg-config
 # END SourceDeps(oneline)
 Name:           amora
 Version:        1.1
-Release:        alt2_8
+Release:        alt2_9
 Summary:        A mobile remote assistant
 
 Group:          Communications
@@ -11,9 +11,13 @@ License:        GPLv2+
 URL:            http://code.google.com/p/amora
 Source0:        http://amora.googlecode.com/files/amora-server-%{version}.tar.gz
 
-BuildRequires:  libX11 libXtst-devel libbluez-devel imlib2-devel libdbus-devel
+BuildRequires:  libbluez-devel
+BuildRequires:  libdbus-devel
+BuildRequires:  imlib2-devel
+BuildRequires:  libX11-devel
+BuildRequires:  libXi-devel
+BuildRequires:  libXtst-devel
 Source44: import.info
-#Requires:       
 
 %description
 Amora is an application that enables you to control your PC desktop using a
@@ -40,6 +44,7 @@ make %{?_smp_mflags}
 %install
 make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 
+
 %files
 %doc README COPYING
 %{_bindir}/amorad
@@ -47,6 +52,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL="%{__install} -p"
 %{_mandir}/man8/amorad.8.*
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_8
 - update to new release by fcimport
 
