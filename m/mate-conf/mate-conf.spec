@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gio-querymodules /usr/bin/glib-genmarshal /usr/bin/gtkdocize gcc-c++ libldap-devel pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/gio-querymodules /usr/bin/glib-genmarshal /usr/bin/gtkdocize gcc-c++ libldap-devel pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
 Group: System/Base
 %define _libexecdir %_prefix/libexec
@@ -9,9 +9,9 @@ Group: System/Base
 %else
 %define __isa_bits 32
 %endif
-Name:	mate-conf	
+Name:	        mate-conf	
 Version:	1.4.0
-Release:	alt3_20
+Release:	alt3_21
 Summary:	MATE Desktop configuration tool
 License:	GPLv2+	
 URL:		http://mate-desktop.org
@@ -23,7 +23,23 @@ Source0:	http://pub.mate-desktop.org/releases/1.4/%{name}-%{version}.tar.xz
 # Remove schemas on package removal (not upgrade).
 Source1:	macros.mateconf
 
-BuildRequires:	desktop-file-utils libpolkit-devel libglade2-devel libdbus-glib-devel gobject-introspection-devel libxml2-devel libxslt-devel mate-corba-devel glib2-devel gtk-doc openldap-devel gtk2-devel gobject-introspection-devel mate-common mate-doc-utils libcairo-gobject-devel libgtk+3-devel
+BuildRequires:	desktop-file-utils
+BuildRequires:  libpolkit-devel
+BuildRequires:  libglade2-devel
+BuildRequires:  libdbus-glib-devel
+BuildRequires:  gobject-introspection-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  libxslt-devel
+BuildRequires:  mate-corba-devel
+BuildRequires:  glib2-devel
+BuildRequires:  gtk-doc
+BuildRequires:  openldap-devel
+BuildRequires:  gtk2-devel
+BuildRequires:  gobject-introspection-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-doc-utils
+BuildRequires:  libcairo-gobject-devel
+
 Requires:	dbus
 
 # for patch0
@@ -77,7 +93,14 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %build
-%configure --disable-static --enable-gtk --with-openldap --enable-defaults-service --enable-gtk --enable-gsettings-backend=yes --enable-introspection --enable-gtk-doc
+%configure \
+ --disable-static \
+ --with-openldap \
+ --enable-defaults-service \
+ --enable-gtk \
+ --enable-gsettings-backend=yes \
+ --enable-introspection \
+ --enable-gtk-doc
 
 # drop unneeded direct library deps with --as-needed
 # libtool doesn't make this easy, so we do it the hard way
@@ -94,17 +117,15 @@ mkdir -p %{buildroot}%{_sysconfdir}/mateconf/schemas
 mkdir -p %{buildroot}%{_sysconfdir}/mateconf/mateconf.xml.system
 mkdir -p %{buildroot}%{_sysconfdir}/rpm/
 mkdir -p %{buildroot}%{_var}/lib/rpm-state/mateconf
-mkdir -p %{buildroot}%{_datadir}/MateConf/matesettings
+mkdir -p %{buildroot}%{_datadir}/MateConf/gsettings
 
 install -p -m 644 -D %{SOURCE1} $RPM_BUILD_ROOT%{_rpmmacrosdir}/mateconf
 
 # unpackaged files
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 
-mkdir -p %{buildroot}%{_datadir}/GConf/gsettings
-
 %find_lang %{name}
-sed -i -e 's,%%{_localstatedir}/lib,%%{_var}/lib,g' $RPM_BUILD_ROOT%{_rpmmacrosdir}/mateconf
+sed -i -e 's,%%{_localstatedir}/lib,%%{_var}/lib,g' %{buildroot}%{_rpmmacrosdir}/mateconf
 
 
 %post
@@ -120,16 +141,9 @@ gio-querymodules-%{__isa_bits} %{_libdir}/gio/modules || :
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS README
-%config(noreplace) %{_sysconfdir}/mateconf/2/path
-%dir %{_sysconfdir}/mateconf/
-%dir %{_sysconfdir}/mateconf/2/
-%dir %{_sysconfdir}/mateconf/mateconf.xml.defaults/
-%dir %{_sysconfdir}/mateconf/mateconf.xml.mandatory/
-%dir %{_sysconfdir}/mateconf/mateconf.xml.system/
-%dir %{_sysconfdir}/mateconf/schemas/
-%dir %{_var}/lib/rpm-state/mateconf/
+%{_sysconfdir}/mateconf/
+%{_var}/lib/rpm-state/mateconf/
 #%{_rpmmacrosdir}/mateconf
-%{_sysconfdir}/mateconf/2/evoldap.conf
 %{_sysconfdir}/xdg/autostart/mateconf-gsettings-data-convert.desktop
 %{_mandir}/man1/*
 %{_bindir}/mateconf-gsettings-data-convert
@@ -137,10 +151,8 @@ gio-querymodules-%{__isa_bits} %{_libdir}/gio/modules || :
 %{_bindir}/mateconf-merge-tree
 %{_bindir}/mateconftool-2
 %{_sysconfdir}/dbus-1/system.d/org.mate.MateConf.Defaults.conf
-%dir %{_datadir}/sgml
 %{_datadir}/sgml/mateconf/
 %{_libexecdir}/mateconf-defaults-mechanism
-%{_libexecdir}/mateconf-sanity-check-2
 %{_libexecdir}/mateconfd-2
 %{_libdir}/libmateconf-2.so.4*
 %{_libdir}/MateConf/
@@ -149,7 +161,7 @@ gio-querymodules-%{__isa_bits} %{_libdir}/gio/modules || :
 %{_datadir}/dbus-1/services/org.mate.MateConf.service
 %{_datadir}/dbus-1/system-services/org.mate.MateConf.Defaults.service
 %{_datadir}/polkit-1/actions/org.mate.mateconf.defaults.policy
-%{_datadir}/MateConf/schema/evoldap.schema
+%{_datadir}/MateConf/
 
 %files gtk
 %{_libexecdir}/mateconf-sanity-check-2
@@ -167,6 +179,9 @@ gio-querymodules-%{__isa_bits} %{_libdir}/gio/modules || :
 %_rpmmacrosdir/*
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_21
+- new fc release
+
 * Thu Nov 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_20
 - use F19 import base
 
