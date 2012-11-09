@@ -4,9 +4,10 @@ BuildRequires: pkgconfig(cairo) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0)
 Summary(de): Logikpuzzle für GNOME
 Summary(de): Logikpuzzle für GNOME
 Summary(de): Logikpuzzle für GNOME
+Summary(de): Logikpuzzle für GNOME
 Name:		hitori
-Version:	0.3.2
-Release:	alt1_2
+Version:	0.4.0
+Release:	alt1_1
 Summary:	Logic puzzle game for GNOME
 Summary(de):	Logikpuzzle für GNOME
 
@@ -14,15 +15,13 @@ Group:		Games/Other
 # The executable is licensed under GPLv3+, while the user manual is CC-BY-SA.
 License:	GPLv3+ and CC-BY-SA
 URL:		http://live.gnome.org/Hitori
-Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.3/%{name}-%{version}.tar.xz
+Source0:	http://ftp.gnome.org/pub/GNOME/sources/%{name}/0.4/%{name}-%{version}.tar.xz
+Patch0:         %{name}-%{version}-translation.patch
 
 BuildRequires:	desktop-file-utils
-BuildRequires:	gettext
-BuildRequires:	gnome-doc-utils
+BuildRequires:	itstool
 BuildRequires:	libgtk+3-devel
 BuildRequires:	intltool
-
-Requires:	icon-theme-hicolor
 Source44: import.info
 
 %description
@@ -47,6 +46,7 @@ Lösung zu erleichtern. Mögliche Spielfeldgrößen reichen von 5x5 bis hin zu
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %configure
@@ -54,57 +54,26 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
 %find_lang %{name}
 
 desktop-file-validate %{buildroot}/%{_datadir}/applications/%{name}.desktop
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 %files -f %{name}.lang
 %%doc AUTHORS ChangeLog COPYING COPYING-DOCS MAINTAINERS NEWS README
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/gnome/help/%{name}/
+%{_datadir}/help/*/%{name}
 %dir %{_datadir}/%{name}/
 %{_datadir}/%{name}/%{name}.ui
 %{_datadir}/icons/hicolor/*x*/apps/%{name}.png
 
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_2
 - update to new release by fcimport
 
