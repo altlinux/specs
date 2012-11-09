@@ -5,11 +5,11 @@ Name: hunspell-zu
 Summary: Zulu hunspell dictionaries
 %define upstreamid 20100126
 Version: 0.%{upstreamid}
-Release: alt2_5
+Release: alt2_6
 Source: http://releases.mozilla.org/pub/mozilla.org/addons/46490/zulu__south_africa__dictionary-20100125-fx+tb.xpi
 Group: Text tools
 URL: http://www.translate.org.za/
-License: LGPLv2+
+License: GPLv3+
 BuildArch: noarch
 
 Requires: hunspell
@@ -44,6 +44,9 @@ cp -p dictionaries/zu-ZA.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/zu.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.20100126-alt2_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20100126-alt2_5
 - update to new release by fcimport
 
