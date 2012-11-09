@@ -8,7 +8,7 @@ BuildRequires(pre): rpm-macros-mate-conf
 Summary:			The MATE virtual file-system libraries
 Name:				mate-vfs
 Version:			1.4.0
-Release:			alt3_14
+Release:			alt4_14
 License:			LGPLv2+ and GPLv2+
 					# the daemon and the library are LGPLv2+
 					# the modules are LGPLv2+ and GPLv2+
@@ -109,7 +109,6 @@ shares (SMB) to applications using MATE VFS.
 %patch4 -p1 -b .utf8-mounts
 
 %patch33 -p1
-NOCONFIGURE=1 ./autogen.sh
 %patch34 -p1
 %patch35 -p1
 %patch36 -p1
@@ -120,6 +119,7 @@ NOCONFIGURE=1 ./autogen.sh
 %patch41 -p1
 %patch42 -p1
 %patch43 -p1
+NOCONFIGURE=1 ./autogen.sh
 
 %build
 if pkg-config openssl ; then
@@ -194,6 +194,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %config(noreplace) %{_sysconfdir}/mate-vfs-2.0/modules/smb-module.conf
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt4_14
+- reordered patches
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_14
 - use F19 import base
 
