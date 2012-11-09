@@ -7,13 +7,13 @@ BuildRequires: python-devel
 
 Name:      fonts-ttf-gnu-freefont
 Version:   20120503
-Release:   alt1_2
+Release:   alt1_3
 Summary:   Free UCS Outline Fonts
 Group:     System/Fonts/True type
 # Standard font exception
-License:   GPLv3+ with special font exception
+License:   GPLv3+ with exceptions
 URL:       http://www.gnu.org/software/freefont/
-Source0:   http://savannah.nongnu.org/download/freefont/freefont-src-%{version}.tar.gz
+Source0:   http://ftp.gnu.org/gnu/freefont/freefont-src-%{version}.tar.gz
 Source2:   %{fontconf}-mono.conf
 Source3:   %{fontconf}-sans.conf
 Source4:   %{fontconf}-serif.conf
@@ -166,6 +166,9 @@ fi
 %doc AUTHORS ChangeLog CREDITS COPYING README
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_3
+- update to new release by fcimport
+
 * Wed Nov 07 2012 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_2
 - update to new release by fcimport
 
