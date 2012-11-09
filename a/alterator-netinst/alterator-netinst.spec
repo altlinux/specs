@@ -1,5 +1,5 @@
 Name: alterator-netinst
-Version: 1.8.7
+Version: 1.8.9
 Release: alt1
 
 Source:%name-%version.tar
@@ -40,6 +40,12 @@ alterator module for network installations management
 %_bindir/alterator-netinst
 
 %changelog
+* Fri Nov 09 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.9-alt1
+- workaround for mount bug: udf mages are not supported now
+
+* Thu Oct 13 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.8-alt1
+- blocksize for cdrom fixed
+
 * Wed Sep 28 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.7-alt1
 - add 'krb5' option for all boot types
 
