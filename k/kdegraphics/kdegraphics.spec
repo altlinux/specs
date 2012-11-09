@@ -12,7 +12,7 @@
 
 Name: kdegraphics
 Version: 3.5.13.1
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Graphics
@@ -78,7 +78,7 @@ BuildRequires: libacl-devel libattr-devel
 BuildRequires: libXxf86vm-devel
 BuildRequires: kdelibs >= %version kdelibs-devel >= %version
 %if %gphoto
-BuildRequires: libgphoto2 libgphoto2-devel liblockdev-devel
+BuildRequires: libgphoto2_2.4-devel liblockdev-devel
 %endif
 
 %description
@@ -401,6 +401,7 @@ BD=%_builddir/%name-%version/BUILD
 if ! [ -f $BD/CMakeCache.txt ]
 then
 %K3cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
     -DWITH_T1LIB=ON \
     -DWITH_LIBPAPER=ON \
     -DWITH_TIFF=ON \
@@ -688,6 +689,9 @@ install -m 0644 %SOURCE1 %buildroot/%_K3conf/kghostviewrc
 
 
 %changelog
+* Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
+- Build with -O2 and -g.
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
