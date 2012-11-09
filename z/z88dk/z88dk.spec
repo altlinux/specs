@@ -1,15 +1,16 @@
-Summary: A Z80 cross compiler
-Name: z88dk
-Version: 1.9
-Release: alt2_5
-License: Artistic clarified
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(File/Slurp.pm) perl(List/AllUtils.pm) perl(Modern/Perl.pm) perl(Test/Differences.pm)
+# END SourceDeps(oneline)
 Group: Development/Tools
+Name: z88dk
+Version: 1.10
+Release: alt1_1
+Summary: A Z80 cross compiler
+License: Artistic clarified
+URL: http://www.z88dk.org/
 Source: http://downloads.sourceforge.net/z88dk/z88dk-src-%{version}.tgz
-Patch0: z88dk-1.8-makefile-usr-share.patch
-Patch1: z88dk-1.8-makefile-fixes.patch
-Patch2: z88dk-1.9-64bit.patch
-Patch3: z88dk-1.8-getline-name-conflict.patch
-URL: http://z88dk.sourceforge.net/
+Patch0: z88dk-1.10-makefile-usr-share.patch
+Patch1: z88dk-1.10-64bit.patch
 Source44: import.info
 
 %description
@@ -19,22 +20,18 @@ calculators).
 
 %prep
 %setup -q -n z88dk
-# Put files in %{_datadir}/z88dk rather than /usr/lib/z88dk
+# Put files in %%{_datadir}/z88dk rather than /usr/lib/z88dk
 # Also support DESTDIR in install-libs
 %patch0 -p1
-# Lots of buggy makefiles there
-%patch1 -p1
 # 64-bit fixes
-%patch2 -p1
-# Fix name conflict with the getline function in POSIX 2008
-%patch3 -p1
-%{_bindir}/find . -depth -name CVS -type d -exec %{__rm} -rf {} \;
+%patch1 -p1
+find . -depth -name CVS -type d -exec rm -rf {} \;
 # Separate manpages from other docs and fix their permissions
-%{__mv} doc/netman .
-%{__chmod} 644 netman/man3z/*
+mv doc/netman .
+chmod 644 netman/man3z/*
 # Fix files with wrong line endings and bad permissions
-/usr/bin/find doc examples src -type f -exec %{__sed} -i -e 's/\r*$//' {} \;
-/usr/bin/find doc examples src -type f -exec %{__chmod} 644 {} \;
+find doc examples src -type f -exec sed -i -e 's/\r*$//' {} \;
+find doc examples src -type f -exec chmod 644 {} \;
 
 %build
 export Z80_OZFILES=%{_builddir}/z88dk/lib/
@@ -42,21 +39,23 @@ export ZCCCFG=%{_builddir}/z88dk/lib/config/
 export PATH=%{_builddir}/z88dk/bin:$PATH
 export CC=gcc
 export CFLAGS="%{optflags}"
-# Note: do not use %{?_smp_mflags} with make because the Makefiles don't support parallel builds
-%{__make} clean
-%{__make} -e
-# libs are target libraries, they won't build with host CFLAGS
+%{?__global_ldflags:export LDFLAGS="%{__global_ldflags}"}
+# Note: do not use %%{?_smp_mflags} with make because the Makefiles don't support parallel builds
+make clean
+make -e
+# libs are target libraries, they won't build with host CFLAGS/LDFLAGS
 unset CFLAGS
 export CFLAGS
-%{__make} -e libs
+unset LDFLAGS
+export LDFLAGS
+make -e libs
 
 %install
 export Z80_OZFILES=%{_datadir}/z88dk-%{version}/lib/
 export ZCCCFG=%{_datadir}/z88dk-%{version}/lib/config/
-%{__mkdir} %{buildroot}
-%{__make} install install-libs DESTDIR=%{buildroot}
-%{__mkdir_p} %{buildroot}%{_mandir}/man3z
-%{__cp} -p netman/man3z/* %{buildroot}%{_mandir}/man3z
+make install install-libs DESTDIR=%{buildroot}
+mkdir -p %{buildroot}%{_mandir}/man3z
+cp -p netman/man3z/* %{buildroot}%{_mandir}/man3z
 
 %files
 %doc doc/*.html doc/*.gif doc/copt.man
@@ -75,6 +74,9 @@ export ZCCCFG=%{_datadir}/z88dk-%{version}/lib/config/
 %{_mandir}/man3z/
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.9-alt2_5
 - update to new release by fcimport
 
