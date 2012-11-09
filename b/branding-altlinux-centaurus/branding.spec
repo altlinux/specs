@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt2
+Release: alt3
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -23,7 +23,9 @@ BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
 %define status альфа 
 %define status_en alpha
-%define variants altlinux-office-desktop altlinux-office-server altlinux-lite altlinux-workbench school-master altlinux-desktop altlinux-gnome-desktop
+
+# All existing branding without this branding
+%define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light 
 
 Packager: Anton V. Boyarshinov <boyarsh at altlinux dot org>
 
@@ -415,6 +417,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Nov 09 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt3
+- New design of indexhtml
+- Set fill list of available variant
+
 * Tue Sep 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9.0-alt2
 - installer background resizing removed
 - status set
