@@ -3,12 +3,12 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: hunspell-sv
 Summary: Swedish hunspell dictionaries
-Version: 1.48
-Release: alt1_3
+Version: 2.10
+Release: alt1_1
 Source: http://dsso.googlecode.com/files/sv-%{version}.zip
 Group: Text tools
 URL: http://dsso.se/
-License: LGPLv2+ or GPLv2+ or MPLv1.1
+License: LGPLv3
 BuildArch: noarch
 
 Requires: hunspell
@@ -26,20 +26,15 @@ Swedish hunspell dictionaries.
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/myspell
 cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 
-pushd $RPM_BUILD_ROOT/%{_datadir}/myspell/
-sv_SE_aliases="sv_FI"
-for lang in $sv_SE_aliases; do
-        ln -s sv_SE.aff $lang.aff
-        ln -s sv_SE.dic $lang.dic
-done
-popd
-
 %files
-%doc README_sv_SE.txt
+%doc README.txt
 
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 2.10-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.48-alt1_3
 - update to new release by fcimport
 
