@@ -1,7 +1,7 @@
 Summary: High-performance and highly configurable free RADIUS server
 Name: freeradius
 Version: 2.2.0
-Release: alt2
+Release: alt3
 License: GPLv2+ and LGPLv2+
 Group: System/Servers
 Url: http://www.freeradius.org/
@@ -227,7 +227,7 @@ fi
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/certs/*.cnf
 %attr(750,root,radiusd) %_sysconfdir/raddb/certs/bootstrap
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/sites-available
-%attr(640,root,radiusd) %_sysconfdir/raddb/sites-available/*
+%attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/sites-available/*
 %dir %attr(750,root,radiusd) %_sysconfdir/raddb/sites-enabled
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/sites-enabled/*
 %attr(640,root,radiusd) %config(noreplace) %_sysconfdir/raddb/eap.conf
@@ -454,6 +454,9 @@ fi
 %_libdir/freeradius/rlm_sql_unixodbc-%version.so
 
 %changelog
+* Fri Nov 09 2012 Vladimir Lettiev <crux@altlinux.ru> 2.2.0-alt3
+- preserve files /etc/raddb/sites-available/* (Closes: #29750)
+
 * Tue Nov 06 2012 Vladimir Lettiev <crux@altlinux.ru> 2.2.0-alt2
 - fixed handling of relative path in $INCLUDE in users files (Closes: #27927)
 - systemd compatibility (Closes: #27928)
