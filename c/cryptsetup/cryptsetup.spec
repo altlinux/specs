@@ -5,7 +5,7 @@
 
 Name: cryptsetup
 Version: 1.4.2
-Release: alt1
+Release: alt2
 
 Summary: utility to setup a encrypted disks with LUKS support
 Summary(ru_RU.UTF-8): утилита управления зашифрованными дисковыми разделами с поддержкой LUKS
@@ -16,6 +16,7 @@ URL: http://code.google.com/p/cryptsetup/
 
 Source0: %name-%version.tar
 Source1: %name.README.ALT.utf-8
+Source2: debian.tar
 Patch0: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
@@ -108,7 +109,7 @@ LUKS ( Linux Unified Key Setup ) - разрабатываемый стандар
 компилировать какие-либо приложения с поддержкой LUKS.
 
 %prep
-%setup -n %name-%version
+%setup -n %name-%version -a2
 %patch0 -p1
 
 cp -- %SOURCE1 README.ALT.utf-8
@@ -122,6 +123,8 @@ NOCONFIGURE=1 ./autogen.sh
 %configure --sbindir=%_root_sbindir --libdir=/%_lib
 %make
 
+gcc debian/askpass.c -o debian/askpass
+
 %install
 %make DESTDIR=%buildroot install
 # move libcryptsetup.so to %%_libdir
@@ -134,6 +137,16 @@ popd
 mkdir -p %buildroot/%_sbindir
 ln -s ../../sbin/%name %buildroot/%_sbindir/%name
 
+install -Dpm 755 debian/cryptdisks-early.init %buildroot%_sysconfdir/rc.d/scripts/cryptdisks-early
+install -Dpm 755 debian/cryptdisks.init %buildroot%_sysconfdir/rc.d/scripts/cryptdisks
+mkdir -p %buildroot/lib/%name
+install -Dpm 755 debian/cryptdisks.functions %buildroot%_sysconfdir/rc.d/init.d/cryptdisks.functions
+install -Dpm 600 debian/cryptdisks.default %buildroot%_sysconfdir/sysconfig/cryptdisks
+mkdir -p %buildroot/lib/%name/checks
+install -Dpm 755 debian/checks/blkid %buildroot/lib/%name/checks/blkid
+install -Dpm 755 debian/checks/un_blkid %buildroot/lib/%name/checks/un_blkid
+install -Dpm 755 debian/askpass %buildroot/lib/%name/askpass
+
 %find_lang %name
 
 
@@ -145,6 +158,14 @@ ln -s ../../sbin/%name %buildroot/%_sbindir/%name
 %_root_sbindir/%name
 %_sbindir/%name
 %_man8dir/*
+%attr(600,root,root) %config(noreplace) %_sysconfdir/sysconfig/cryptdisks
+%_sysconfdir/rc.d/scripts/cryptdisks-early
+%_sysconfdir/rc.d/scripts/cryptdisks
+%dir /lib/%name
+%_sysconfdir/rc.d/init.d/cryptdisks.functions
+/lib/%name/askpass
+%dir /lib/%name/checks
+/lib/%name/checks/*
 
 %files -n lib%name
 /%_lib/lib%name.so.*
@@ -155,6 +176,9 @@ ln -s ../../sbin/%name %buildroot/%_sbindir/%name
 %_pkgconfigdir/*
 
 %changelog
+* Fri Nov 09 2012 Timur Aitov <timonbl4@altlinux.org> 1.4.2-alt2
+- add init scripts
+
 * Mon May 21 2012 Alexey Shabalin <shaba@altlinux.ru> 1.4.2-alt1
 - 1.4.2
 
