@@ -19,7 +19,7 @@
 
 Name: kdenetwork
 Version: 3.5.13.1
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE - Network Applications
@@ -421,6 +421,7 @@ BD=%_builddir/%name-%version/BUILD
 if ! [ -f $BD/CMakeCache.txt ]
 then
 %K3cmake \
+    -DCMAKE_BUILD_TYPE=RelWithDebInfo \
 %if %jingle
     -DWITH_JINGLE=ON \
 %endif
@@ -483,6 +484,9 @@ install -m 0644 knewsticker/knewstickerstub/*.desktop %buildroot/%_K3applnk/.hid
 install -m 0644 lanbrowsing/kcmlisa/*.desktop %buildroot/%_K3applnk/.hidden/
 
 %endif
+
+mkdir -p %buildroot/%_sysconfdir/ppp/peers
+>%buildroot/%_sysconfdir/ppp/peers/kppp-options
 
 %if %etc_kppp_allow
 >%buildroot/%_sysconfdir/kppp.allow
@@ -580,6 +584,7 @@ useradd -s /dev/null -r _kdelisa >/dev/null 2>&1 ||:
 %attr(4711, root, root) %_K3bindir/kppp
 %_K3bindir/kppplogview
 %config %_sysconfdir/control.d/facilities/kppp
+%config %_sysconfdir/ppp/peers/kppp-options
 %_K3xdg_apps/*ppp*.desktop
 %_K3apps/kppp
 %_kde3_iconsdir/*/*/apps/kppp.*
@@ -752,6 +757,10 @@ useradd -s /dev/null -r _kdelisa >/dev/null 2>&1 ||:
 %_K3includedir/*
 
 %changelog
+* Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt2
+- Build with -O2 and -g.
+- Empty file /ppp/peers/kppp-options is added for correct connection establish into kppp.
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
