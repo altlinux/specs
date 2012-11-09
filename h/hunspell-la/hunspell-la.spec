@@ -5,11 +5,11 @@ Name: hunspell-la
 Summary: Latin hunspell dictionaries
 %define upstreamid 20110807
 Version: 0.%{upstreamid}
-Release: alt1_3
+Release: alt1_4
 Group: Text tools
 Source: http://extensions.services.openoffice.org/e-files/1141/2/dict-la_2011-08-07.oxt
 URL: http://extensions.services.openoffice.org/project/dict-la
-License: GPLv2+
+License: GPLv2+ and LGPLv2+
 BuildArch: noarch
 
 Requires: hunspell
@@ -43,6 +43,9 @@ cp -p la/la.aff $RPM_BUILD_ROOT/%{_datadir}/myspell/la.aff
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.20110807-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20110807-alt1_3
 - update to new release by fcimport
 
