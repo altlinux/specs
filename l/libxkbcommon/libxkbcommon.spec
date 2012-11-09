@@ -1,9 +1,9 @@
 %add_optflags %optflags_shared
-%global gitdate  20120917
+#global gitdate  20120917
 
 Name:           libxkbcommon
-Version:        0.1.0
-Release:        alt2_8.20120917
+Version:        0.2.0
+Release:        alt1_1
 Summary:        X.Org X11 XKB parsing library
 License:        MIT
 Group:          System/Libraries
@@ -12,7 +12,7 @@ URL:            http://www.x.org
 %if 0%{?gitdate}
 Source0:       %{name}-%{gitdate}.tar.bz2
 %else
-Source0:        ftp://ftp.x.org/pub/individual/lib/%{name}-%{version}.tar.bz2
+Source0:        http://xkbcommon.org/download/%{name}-%{version}.tar.bz2
 %endif
 Source1:        make-git-snapshot.sh
 
@@ -59,6 +59,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/xkbcommon.pc
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.0-alt2_8.20120917
 - update to new release by fcimport
 
