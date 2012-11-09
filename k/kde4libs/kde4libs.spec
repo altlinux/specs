@@ -5,7 +5,7 @@
 
 %define major 4
 %define minor 9
-%define bugfix 2
+%define bugfix 3
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
@@ -61,7 +61,7 @@ Patch101: kdelibs-4.3.90-install_all_css.patch
 Patch102: kdelibs-4.5.80-parallel_devel.patch
 Patch103: kdelibs-4.7.0-knewstuff_gpg2.patch
 Patch104: kdelibs-4.5.80-no_rpath.patch
-Patch105: kdelibs-4.7.3-halectomy.patch
+Patch105: kdelibs-udisks2-backend.patch
 Patch106: kdelibs-4.7.4-SOLID_UPNP.patch
 # Debian
 Patch201: 14_hardcode_ptm_device.diff
@@ -213,7 +213,7 @@ export XDG_DATA_DIRS=%_K4datadir:%_datadir
 #    -DKDE4_ENABLE_FINAL:BOOL=ON \
 %K4cmake \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
-%ifarch arm
+%ifarch %arm
     -DKDE_PLATFORM_PROFILE="Mobile" \
 %else
     -DKDE_PLATFORM_PROFILE="Desktop" \
@@ -314,6 +314,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Fri Oct 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
 - new version
 
