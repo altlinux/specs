@@ -5,11 +5,11 @@ Name: hunspell-sl
 Summary: Slovenian hunspell dictionaries
 %define upstreamid 20070127
 Version: 0.%{upstreamid}
-Release: alt2_7
+Release: alt2_8
 Source: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/sl_SI.zip
 Group: Text tools
 URL: http://ftp.services.openoffice.org/pub/OpenOffice.org/contrib/dictionaries/
-License: LGPLv2+
+License: GPL+ or LGPLv2+
 BuildArch: noarch
 
 Requires: hunspell
@@ -33,6 +33,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.20070127-alt2_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20070127-alt2_7
 - update to new release by fcimport
 
