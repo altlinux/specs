@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.12
+Version: 0.13
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -10,7 +10,7 @@ Source0: %name-%version.tar
 
 Requires: console-vt-tools fdisk /sbin/addpart grep
 Requires: aufs2-util sysvinit-utils net-tools
-Requires: sed procps psmisc findutils
+Requires: sed procps psmisc findutils nfs-utils
 Requires: make-initrd
 Requires: e2fsprogs
 
@@ -36,6 +36,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Fri Nov 09 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.13-alt1
+- mount.nfs added
+
 * Mon Sep 17 2012 Fr. Br. George <george@altlinux.ru> 0.12-alt1
 - Provide /proc/cmdline parser
 - Add overlays profiling support
