@@ -2,7 +2,7 @@
 
 Name: twolame
 Version: 0.3.12
-Release: alt2
+Release: alt2.1
 
 Summary: TwoLAME, an optimized MPEG Audio Layer 2 encoder
 License: LGPL
@@ -61,7 +61,7 @@ This package contains static library required to develop
 %setup -q
 
 %build
-%__autoreconf
+%autoreconf
 %configure \
 	%{subst_enable static}
 
@@ -95,6 +95,9 @@ ln -sf /usr/share/license/LGPL-2.1 %buildroot%_docdir/%name-%version/COPYING
 %endif
 
 %changelog
+* Sat Nov 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.12-alt2.1
+- Rebuilt for debuginfo
+
 * Mon Nov 01 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.12-alt2
 - Rebuilt for soname set-versions
 
