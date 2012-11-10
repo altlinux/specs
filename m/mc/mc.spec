@@ -1,6 +1,6 @@
 Name: mc
 Version: 4.8.6
-Release: alt4
+Release: alt5
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -182,6 +182,9 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Sun Nov 11 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt5
+- merged with git://github.com/MidnightCommander/mc.git
+
 * Tue Oct 23 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt4
 - added lib/mc/ext.d and lib/mc/extfs.d to findreq_skiplist
 
