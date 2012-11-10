@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.7
-Release: alt5
+Release: alt6
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -115,6 +115,10 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Sat Nov 10 2012 Led <led@altlinux.ru> 0.9.7-alt6
+- added defines to sched.h, termios.h
+- updated from upstream's SCM
+
 * Fri Nov 09 2012 Led <led@altlinux.ru> 0.9.7-alt5
 - updated from upstream's SCM
 
