@@ -2,7 +2,7 @@
 %define oname kdesvn
 Name: kdesvn-kde3
 Version: 1.0.6
-Release: alt3
+Release: alt4
 
 Summary: A subversion client for the KDE with KIO integration
 
@@ -73,7 +73,7 @@ export PATH=$QTDIR/bin:$KDEDIR/bin:$PATH
 
 if ! [ -f $BD/CMakeCache.txt ]
 then
-%K3cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr
+%K3cmake -DCMAKE_BUILD_TYPE=RelWithDebInfo -DCMAKE_INSTALL_PREFIX=/usr
 fi
 %K3make
 
@@ -111,10 +111,11 @@ fi
 %_includedir/svnqt
 
 %changelog
-* Mon Oct 08 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.6-alt3
-- Build by GCC 4.7 fix.
+* Mon Oct 29 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.6-alt4
+- Build with -O2 and -g.
+- Release TDE version 3.5.13.1
 
-* Sun Mar 11 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.6-alt2
+* Thu Feb 23 2012 Roman Savochenko <rom_as@altlinux.ru> 1.0.6-alt2
 - Build for TDE 3.5.13 release
 
 * Tue Aug 25 2009 Boris Savelev <boris@altlinux.org> 1.0.6-alt1
