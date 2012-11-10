@@ -7,7 +7,7 @@
 %def_with x11
 
 Name: lib%_name
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 
 Summary: An image loading and rendering library for Gdk
@@ -190,6 +190,9 @@ touch %buildroot%_libdir/%_name-%api_ver/%binary_ver/loaders.cache
 %endif
 
 %changelog
+* Sat Nov 10 2012 Yuri N. Sedunov <aris@altlinux.org> 2.26.5-alt1
+- 2.26.5
+
 * Tue Sep 18 2012 Yuri N. Sedunov <aris@altlinux.org> 2.26.4-alt1
 - 2.26.4
 
