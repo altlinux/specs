@@ -1,17 +1,14 @@
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: mithraen-scanutils
-Version: 0.4
-Release: alt3
+Version: 0.5
+Release: alt1
 License: GPL
 Summary: Simple utility for easy scanning with ADF
 Group: System/Kernel and hardware
 BuildArch: noarch
 
 Source: %name-%version.tar
-
-Requires: sane xosd-utils ImageMagick ghostscript-utils
-Requires: hplip-sane
 
 %description
 Simple utility for easy scanning with HP scanners with ADF supported by hpaio
@@ -31,6 +28,9 @@ sane backend.
 %doc fvwm.txt
 
 %changelog
+* Sat Nov 10 2012 Denis Smirnov <mithraen@altlinux.ru> 0.5-alt1
+- fix requires
+
 * Sun Oct 24 2010 Denis Smirnov <mithraen@altlinux.ru> 0.4-alt3
 - auto rebuild
 
