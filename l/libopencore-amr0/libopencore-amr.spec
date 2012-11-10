@@ -5,10 +5,9 @@
 
 Name: %libname%soversion
 Version: 0.1.2
-Release: alt2
+Release: alt2.1
 Summary: OpenCore implementation of AMR speech codec.
 
-Packager: Konstantin Pavlov <thresh@altlinux.org>
 Group: System/Libraries
 License: GPLv3
 
@@ -103,6 +102,9 @@ the Google Android project.
 %_pkgconfigdir/opencore-amrnb.pc
 
 %changelog
+* Sat Nov 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.1
+- Rebuilt for debuginfo
+
 * Thu Oct 28 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2
 - Rebuilt for soname set-versions
 
