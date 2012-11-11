@@ -1,6 +1,6 @@
 Name: asterisk1.8
 Summary: Open source PBX
-Version: 1.8.17.0
+Version: 1.8.18.0
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -1203,6 +1203,9 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %_altdir/conf2ael-%version
 
 %changelog
+* Sun Nov 11 2012 Denis Smirnov <mithraen@altlinux.ru> 1.8.18.0-alt1
+- 1.8.18.0
+
 * Fri Nov 02 2012 Denis Smirnov <mithraen@altlinux.ru> 1.8.17.0-alt1
 - 1.8.17.0
 
