@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/pkg-config libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name: matchbox-window-manager
 Version: 1.2
-Release: alt3
+Release: alt4
 Summary: Window manager for the Matchbox Desktop
 License: GPLv2+
 Group: Graphical desktop/Other
@@ -14,6 +14,7 @@ Packager: Aleksey Lim <alsroot@altlinux.org>
 Source0: http://ftp.de.debian.org/debian/pool/main/m/matchbox-window-manager/matchbox-window-manager_1.2-osso21.orig.tar
 Source1: http://ftp.de.debian.org/debian/pool/main/m/matchbox-window-manager/matchbox-window-manager_1.2-osso21-1.debian.tar
 Source2: %name.watch
+Source3: kbdconfig
 
 BuildRequires: libmatchbox-devel >= %version
 BuildRequires: pkgconfig
@@ -84,19 +85,24 @@ pushd %name-embedded
 install -m755 ./src/matchbox-window-manager %buildroot%_bindir/matchbox-window-manager-light
 popd
 
+install -D -m 644 %{SOURCE3} %buildroot/%_sysconfdir/matchbox/kbdconfig
+
 %files
 %_bindir/matchbox-remote
 %_bindir/matchbox-window-manager
 %_man1dir/*
 %_datadir/matchbox
 %_datadir/themes/*
-%_sysconfdir/*
+%_sysconfdir/matchbox
 %doc %name/{AUTHORS,README,ChangeLog,COPYING}
 
 %files light
 %_bindir/matchbox-window-manager-light
 
 %changelog
+* Sun Nov 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt4
+- restored kbdconfig
+
 * Sat Nov 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt3
 - updated url
 - added debian patches
