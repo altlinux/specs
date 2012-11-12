@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: grilo-plugins
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -16,6 +16,7 @@ BuildRequires: libgrilo-devel = %version
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
+BuildRequires: libgssdp-devel
 BuildRequires: libsqlite3-devel
 BuildRequires: libgdata-devel >= 0.7.0
 BuildRequires: libquvi-devel >= 0.4.0
@@ -74,6 +75,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Mon Nov 12 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.3-alt1
+- 0.2.3
+
 * Mon Oct 08 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.2-alt1
 - 0.2.2
 - add DMAP plugin
