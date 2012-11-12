@@ -2,8 +2,8 @@
 %def_with splash
 
 Name: propagator
-Version: 20101130
-Release: alt20
+Version: 20121109
+Release: alt1
 
 Summary: 'Early userspace' set of binaries
 License: GPL
@@ -13,17 +13,10 @@ Url: http://www.altlinux.org/propagator
 Source: %name-%version-%release.tar
 
 BuildRequires: libnewt-devel-static libslang2-devel-static
-BuildRequires: klibc-utils-initramfs module-init-tools-initramfs udev-initramfs >= 127-alt3
 
 %description
 %name is a set of binaries useful in 'early userspace' environment,
 including init and various helpers for hw probing and bootstrapping.
-%name was built with and contains parts of following packages:
-
-%{get_NSVR klibc}
-%{get_NSVR udev-initramfs}
-%{get_NSVR klibc-utils-initramfs}
-%{get_NSVR module-init-tools-initramfs}
 
 %prep
 %setup
@@ -42,11 +35,16 @@ make \
 %_bindir/gencpio
 %_bindir/mkmodpack
 %_sbindir/propagator
-%_libdir/%name
 
 %changelog
+* Fri Nov 09 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20121109-alt1
+- use /sbun/mount.nfs instead of /bin/nfsmount
+
 * Mon Oct 15 2012 Michael Shigorin <mike@altlinux.org> 20101130-alt20
 - kmod-10 still does, remade the workaround as a longer term one
+
+* Tue Oct 02 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20121002-alt1
+- no more initfs
 
 * Mon Aug 13 2012 Michael Shigorin <mike@altlinux.org> 20101130-alt19
 - modprobe suddenly wants modules.dep.bin to exist
