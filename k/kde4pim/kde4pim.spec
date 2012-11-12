@@ -16,7 +16,7 @@
 %define rname kdepim
 %define major 4
 %define minor 9
-%define bugfix 2
+%define bugfix 3
 Name: kde4pim
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -1577,6 +1577,9 @@ based on kdepim.
 
 
 %changelog
+* Mon Nov 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Mon Oct 15 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt1
 - new version
 
