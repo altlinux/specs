@@ -3,20 +3,19 @@
 Summary:	Gecko Media Player browser plugin
 Summary(ru_RU.UTF-8): Дополнение для браузера - Gecko Media Player
 Name:		gecko-mediaplayer
-Version:	1.0.4
-Release:	alt2
+Version:	1.0.7
+Release:	alt1
 License:	GPLv2+
 Group:		Networking/WWW
 Source0:	http://gecko-mediaplayer.googlecode.com/files/%{name}-%{version}.tar.gz
 URL:		http://kdekorte.googlepages.com/gecko-mediaplayer
 Packager:	Radik Usupov <radik@altlinux.org>
-Patch: gecko-mediaplayer-1.0.4-fix-build-ff8.patch
+Patch: Add-ru-and-tt-translations.patch
 
 BuildPreReq:    GConf rpm-build-gnome rpm-build-firefox libdbus-devel
 # Automatically added by buildreq on Sun Sep 27 2009
-BuildRequires: 	gcc-c++ libGConf-devel libX11-devel libdbus-glib-devel libgio-devel xulrunner-devel
+BuildRequires: 	gcc-c++ libGConf-devel libX11-devel libdbus-glib-devel libgio-devel xulrunner-devel libgmlib-devel
 Requires:      	gnome-mplayer >= 0.9.6 browser-plugins-npapi
-Requires(post,preun): GConf
 
 %description
 Gecko Media Player is a browser plugin that uses GNOME MPlayer to play media in a browser.
@@ -33,32 +32,29 @@ GNOME Mplayer показывать видео прямо в окне интер�
 
 %build
 %autoreconf
-%configure --with-gconf=yes
+%configure
 %make
 
 %install
 %makeinstall_std
-%__mkdir %buildroot%plugdir
-%__mv %buildroot%_libdir/mozilla/plugins/* %buildroot%plugdir
+mkdir %buildroot%plugdir
+mv %buildroot%_libdir/mozilla/plugins/* %buildroot%plugdir
+
 %find_lang %name
 
 # Removed files
-%__rm -rf %buildroot%_docdir/%name
-
-%post
-%gconf2_install %name
-
-%preun
-if [ $1 = 0 ]; then
-    %gconf2_uninstall %name
-fi
+rm -rf %buildroot%_docdir/%name
 
 %files -f %name.lang
 %doc AUTHORS COPYING ChangeLog INSTALL NEWS README DOCS/tech/javascript.txt
 %plugdir/*
-%config %_sysconfdir/gconf/schemas/*
 
 %changelog
+* Wed Nov 07 2012 Radik Usupov <radik@altlinux.org> 1.0.7-alt1
+- New version (1.0.7) (Closes: 27926)
+- Added russian and tatar translation (tnx Ainur Shakirov)
+- Small cleaned spec
+
 * Mon Nov 28 2011 Radik Usupov <radik@altlinux.org> 1.0.4-alt2
 - Fixed build with ff8
 
