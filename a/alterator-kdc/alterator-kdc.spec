@@ -1,5 +1,5 @@
 Name: alterator-kdc
-Version: 0.3
+Version: 0.4
 Release: alt1
 
 BuildArch: noarch
@@ -31,8 +31,12 @@ find etc usr |cpio -pmd %buildroot
 %_libexecdir/alterator/hooks/trust.d/*
 
 %changelog
+* Mon Nov 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt1
+- master key cipher changed from des-cbc-crc (OMG!)
+  to aes256-cts-hmac-sha1-96
+
 * Tue May 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
-- do full kdc reset if old and new domains are equal, but no krb base 
+- do full kdc reset if old and new domains are equal, but no krb base
   for new domain
 
 * Fri Mar 18 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt9
