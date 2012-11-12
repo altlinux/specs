@@ -1,8 +1,8 @@
 %define cid	langpack-ru@seamonkey.mozilla.org
-%define ciddir	%seamonkey_prefix/extensions/%cid
+%define ciddir	%sm_prefix/extensions/%cid
 
 Name:		seamonkey-ru
-Version:	2.8
+Version:	2.13.2
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Seamonkey
 
@@ -14,7 +14,7 @@ Packager:	Radik Usupov <radik@altlinux.org>
 Source0:	ru-%version.xpi
 
 Requires:	hunspell-ru
-Requires:	seamonkey
+Requires:	seamonkey = 2.13.2
 
 BuildRequires(pre):	rpm-build-seamonkey
 BuildRequires:		unzip
@@ -28,18 +28,21 @@ The Mozilla Seamonkey Russian translation.
 %install
 cd ..
 
-%__mkdir_p %buildroot/%ciddir/dictionaries
+mkdir -p %buildroot/%ciddir/dictionaries
 
-%__cp -r %cid/* %buildroot/%ciddir
+cp -r %cid/* %buildroot/%ciddir
 ln -s %_datadir/myspell/ru_RU.aff %buildroot/%ciddir/dictionaries/ru.aff
 ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 
 %files
-%dir %seamonkey_prefix
-%dir %seamonkey_prefix/extensions
+%dir %sm_prefix
+%dir %sm_prefix/extensions
 %ciddir
 
 %changelog
+* Wed Oct 31 2012 Radik Usupov <radik@altlinux.org> 2.13.2-alt1
+- New version (2.13.2)
+
 * Sun Feb 19 2012 Radik Usupov <radik@altlinux.org> 2.8-alt1
 - New version (2.8b3)
 
