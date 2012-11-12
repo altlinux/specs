@@ -5,7 +5,7 @@
 %def_enable gtk3_module
 
 Name: caribou
-Version: %ver_major.4
+Version: %ver_major.4.2
 Release: alt1
 
 Summary: A simplified in-place on-screen keyboard
@@ -129,6 +129,9 @@ make clean
 %_girdir/Caribou-1.0.gir
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.4.2-alt1
+- 0.4.4.2
+
 * Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.4-alt1
 - 0.4.4
 
