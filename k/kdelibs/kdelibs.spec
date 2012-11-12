@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.1
-%define rel alt4
+%define rel alt5
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -389,8 +389,8 @@ then
     -DWITH_UTEMPTER=ON \
     -DWITH_AVAHI=ON \
     -DWITH_PCRE=ON \
-    -DWITH_INOTIFY=ON \
-    -DWITH_GAMIN=ON \
+    -DWITH_INOTIFY=OFF \
+    -DWITH_GAMIN=OFF \
     -DWITH_ASPELL=ON \
     -DASPELL_DATADIR=/usr/lib/aspell \
     -DWITH_HSPELL=OFF \
@@ -652,6 +652,10 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Mon Nov 12 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt5
+- Disable features INOTIFY and GAMIN for prevent KDED hang into:
+    konqueror start, krusader::fish, kmail.
+
 * Thu Nov 08 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt4
 - Some new features enable: TIFF, JASPER, OPENEXR, UTEMPTER, AVAHI, PCRE, INOTIFY, GAMIN.
 
