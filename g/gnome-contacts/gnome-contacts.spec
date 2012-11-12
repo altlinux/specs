@@ -4,7 +4,7 @@
 %def_with cheese
 
 Name: gnome-contacts
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Contacts manager for GNOME
@@ -53,6 +53,9 @@ BuildRequires: intltool
 %doc AUTHORS README NEWS
 
 %changelog
+* Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
