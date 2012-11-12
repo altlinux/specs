@@ -5,7 +5,7 @@
 Name: kde4multimedia
 %define major 4
 %define minor 9
-%define bugfix 1
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -269,6 +269,9 @@ install -m 0644 %SOURCE105 cmake/modules/
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Mon Nov 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
