@@ -1,8 +1,31 @@
 # Unpackaged files in buildroot should terminate build
 %define _unpackaged_files_terminate_build 1
 
+%define xterm_stdfalgs \\\
+	--with-app-defaults=%_sysconfdir/X11/app-defaults \\\
+	--with-utempter \\\
+	--enable-warnings \\\
+	--enable-wide-chars \\\
+	--enable-dec-locator \\\
+	--enable-narrowproto \\\
+	--disable-full-tgetent \\\
+	--disable-echo \\\
+	--enable-256-color \\\
+	--enable-doublechars \\\
+	--with-icondir=%_iconsdir
+
+%define xterm_expflags \\\
+  --with-neXtaw          \\\
+  --enable-dabbrev       \\\
+  --enable-double-buffer \\\
+  --enable-exec-xterm    \\\
+  --enable-load-vt-fonts \\\
+  --enable-logfile-exec  \\\
+  --enable-logging       \\\
+  --enable-toolbar
+
 Name: xterm
-Version: 284
+Version: 286
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -32,6 +55,10 @@ Patch0014: 0014-xterm-alt-man_suffix.patch
 Provides: xvt, %_bindir/xvt
 PreReq: libutempter >= 1.0.7, alternatives >= 0.3.5-alt1
 BuildPreReq: alternatives groff-base imake libXaw-devel libXft-devel libncurses-devel libutempter-devel libxkbfile-devel xorg-cf-files
+# Automatically added by buildreq on Wed Nov 14 2012
+# optimized out: alternatives fontconfig fontconfig-devel gnu-config libICE-devel libSM-devel libX11-devel libXmu-devel libXrender-devel libXt-devel libfreetype-devel libtinfo-devel pkg-config xorg-kbproto-devel xorg-renderproto-devel xorg-xextproto-devel xorg-xproto-devel
+BuildRequires: ctags desktop-file-utils groff-base imake libXaw-devel libXext-devel libXft-devel libncurses-devel libneXtaw-devel libutempter-devel libxkbfile-devel xorg-cf-files
+
 BuildRequires: desktop-file-utils
 
 Requires: /etc/X11/app-defaults
@@ -44,6 +71,14 @@ operating system supports terminal resizing capabilities (for example,
 the SIGWINCH signal in systems derived from 4.3bsd), xterm will use
 the facilities to notify programs running in the window whenever it
 is resized.
+
+%package experimental
+Group:	Terminals
+Summary: experimental version of xterm
+%description experimental
+XTerm build with some experimental/unsafe features:
+%xterm_expflags
+
 
 %prep
 %setup
@@ -79,25 +114,21 @@ sed -i '/^Encoding=/d' *.desktop
 export ac_cv_path_XTERM_PATH=%_bindir/%name
 # Rebuild this
 touch ctlseqs.ms
-%configure \
-	--with-app-defaults=%_sysconfdir/X11/app-defaults \
-	--with-utempter \
-	--enable-warnings \
-	--enable-wide-chars \
-	--enable-dec-locator \
-	--enable-narrowproto \
-	--disable-full-tgetent \
-	--disable-echo \
-	--enable-256-color \
-	--enable-dublechars \
-	--with-icondir=%_iconsdir \
-	#
 
+%configure %xterm_stdfalgs
 %make_build all ctlseqs.txt
+cp xterm xterm.std
 bzip2 -9fk ctlseqs.txt
+
+make distclean
+%configure %xterm_stdfalgs %xterm_expflags
+%make_build
+cp xterm xterm.extd
+cp xterm.std xterm
 
 %install
 %makeinstall_std
+install xterm.extd %buildroot%_bindir/XTerm
 # TODO this getting strange (some "=auto" in desktop-file-install)
 # but may be improved later (see icon theme configure option)
 # install-desktop --silent --no-print-directory
@@ -134,7 +165,16 @@ EOF
 %_pixmapsdir/*.xpm
 %_iconsdir/hicolor/*/apps/xterm*
 
+%files experimental
+%attr(2711,root,utempter) %_bindir/XTerm
+
 %changelog
+* Mon Nov 12 2012 Fr. Br. George <george@altlinux.ru> 286-alt1
+- Autobuild version bump to 286
+- Patch fix
+- Use gear-am/gear-format-patch
+- Build XTerm, an exprerimental version of xterm
+
 * Tue Oct 23 2012 Fr. Br. George <george@altlinux.ru> 284-alt1
 - Autobuild version bump to 284
 - Patches unified and adapted
