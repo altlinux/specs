@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: at-spi2-core
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Protocol definitions and daemon for D-Bus at-spi
@@ -124,6 +124,9 @@ This package contains documentation for developing applications that use
 %_datadir/gtk-doc/html/libatspi
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 2.6.2-alt1
+- 2.6.2
+
 * Wed Oct 17 2012 Yuri N. Sedunov <aris@altlinux.org> 2.6.1-alt1
 - 2.6.1
 
