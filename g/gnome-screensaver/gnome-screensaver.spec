@@ -8,7 +8,7 @@
 
 Name: gnome-screensaver
 Version: %ver_major.1
-Release: alt1
+Release: alt2
 
 Summary: GNOME Screensaver
 License: GPLv2+
@@ -21,13 +21,11 @@ Provides: screen-saver-frontend
 Provides: gnome-screensaver-module
 
 Source: http://download.gnome.org/sources/gnome-screensaver/%ver_major/%name-%version.tar.xz
-Source1: unix2_chkpwd.c
 
 Patch: gnome-screensaver-2.28.0-alt-pam.patch
-# Put back helper authentication, removed by upstream
-Patch1: gnome-screensaver-3.2.1-helper.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=579430
 Patch2: gnome-screensaver-2.28.0-user_activity.patch
+Patch3: gnome-screensaver-3.6.1-alt-setuid.patch
 
 # From configure.ac
 %define dbus_ver 0.30
@@ -43,7 +41,7 @@ BuildPreReq: xscreensaver-devel
 BuildPreReq: intltool >= 0.35
 BuildPreReq: libdbus-glib-devel >= %dbus_ver libdbus-devel >= %dbus_ver
 BuildPreReq: libgio-devel >= %glib_ver
-BuildPreReq: libgtk+3-devel >= %gtk_ver GConf
+BuildPreReq: libgtk+3-devel >= %gtk_ver
 BuildPreReq: libgnome-desktop3-devel >= %desktop_ver
 BuildPreReq: libgnomekbd-devel >= %libgnomekbd_ver
 BuildRequires: libpam-devel gsettings-desktop-schemas-devel
@@ -59,9 +57,9 @@ simple, sane, secure defaults and be well integrated with the desktop.
 
 %prep
 %setup -q
-%patch -p1
-%patch1 -p1
+%patch -p1 -b .pam
 %patch2 -p1 -b .user_activity
+%patch3 -p1 -b .setuid
 
 %build
 %autoreconf
@@ -71,35 +69,29 @@ simple, sane, secure defaults and be well integrated with the desktop.
 	--enable-locking \
 	--with-pam-prefix=%_sysconfdir \
 	--with-kbd-layout-indicator \
-	--enable-authentication-scheme=helper \
-	--with-passwd-helper="%_libexecdir/%name/%name-chkpwd-helper" \
 	%{?_enable_docbook:--enable-docbook-docs} \
 	%{?_enable_consolekit:--with-console-kit} \
 	%{subst_with systemd}
 
 %make_build
 
-gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS %SOURCE1 -lpam
-
 %install
-%make DESTDIR=%buildroot install
-mkdir -p %buildroot%_libexecdir/%name
-install %name-chkpwd-helper %buildroot%_libexecdir/%name/
+%makeinstall_std
 
 %find_lang %name
 
 %files -f %name.lang
 %_bindir/*
-%dir %_libexecdir/%name
-%attr(4511,root,root) %_libexecdir/%name/%name-chkpwd-helper
-%_libexecdir/%name-dialog
+%attr(2711,root,chkpwd) %_libexecdir/%name-dialog
 %_man1dir/*
 %_sysconfdir/xdg/autostart/gnome-screensaver.desktop
-%config(noreplace) %_sysconfdir/pam.d/*
+%attr(640,root,chkpwd) %config(noreplace) %_sysconfdir/pam.d/*
 %doc AUTHORS NEWS README
 
-
 %changelog
+* Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt2
+- used pam authentication scheme instead helper (ALT #27884)
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
