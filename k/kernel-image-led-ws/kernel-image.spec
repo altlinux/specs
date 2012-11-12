@@ -17,7 +17,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.51
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -264,7 +264,7 @@ Patch0222: linux-%kernel_branch.44-fix-drivers-firewire--firewire-net.patch
 Patch0223: linux-%kernel_branch.44-fix-drivers-firewire--firewire-ohci.patch
 
 Patch0231: linux-%kernel_branch.42-fix-drivers-firmware--edd.patch
-Patch0232: linux-%kernel_branch.42-fix-drivers-firmware--efivars.patch
+Patch0232: linux-%kernel_branch.51-fix-drivers-firmware--efivars.patch
 Patch0233: linux-%kernel_branch.42-fix-drivers-firmware--iscsi_ibft.patch
 
 Patch0241: linux-%kernel_branch.44-fix-drivers-gpu-drm.patch
@@ -494,7 +494,7 @@ Patch0652: linux-%kernel_branch.42-fix-drivers-watchdog--iTCO_wdt.patch
 
 Patch0661: linux-%kernel_branch.42-fix-firmware--vicam.patch
 
-Patch0670: linux-%kernel_branch.44-fix-fs.patch
+Patch0670: linux-%kernel_branch.51-fix-fs.patch
 Patch0671: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0672: linux-%kernel_branch.42-fix-fs--block.patch
 Patch0673: linux-%kernel_branch.42-fix-fs--eventpoll.patch
@@ -639,7 +639,7 @@ Patch1119: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
 Patch1120: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
 Patch1121: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
 Patch1122: linux-%kernel_branch.44-feat-fs-overlayfs.patch
-Patch1123: linux-%kernel_branch.44-feat-fs-reiser4.patch
+Patch1123: linux-%kernel_branch.51-feat-fs-reiser4.patch
 Patch1124: linux-%kernel_branch-feat-fs-subfs.patch
 Patch1125: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
 Patch1126: linux-%kernel_branch.42-feat-fs-unionfs.patch
@@ -2722,6 +2722,11 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 
 %changelog
+* Mon Nov 12 2012 Led <led@altlinux.ru> 3.0.51-alt6
+- updated:
+  + fix-drivers-firmware--efivars
+  + fix-fs
+
 * Thu Nov 08 2012 Led <led@altlinux.ru> 3.0.51-alt5
 - updated:
   + fix-drivers-net--igb
