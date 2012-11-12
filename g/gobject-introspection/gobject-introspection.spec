@@ -1,7 +1,7 @@
 %define ver_major 1.34
 
 Name: gobject-introspection
-Version: %ver_major.1.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Introspection system for GObject-based libraries
@@ -81,6 +81,9 @@ find %buildroot%_libdir -name \*.la -delete
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 1.34.2-alt1
+- 1.34.2
+
 * Wed Oct 17 2012 Yuri N. Sedunov <aris@altlinux.org> 1.34.1.1-alt1
 - 1.34.1.1
 

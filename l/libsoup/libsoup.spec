@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libsoup
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: HTTP client/server library for GNOME
@@ -211,6 +211,9 @@ install -p -m644 %_sourcedir/%name-{,gnome-}compat.{map,lds} %name/
 %endif
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 2.40.2-alt1
+- 2.40.2
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 2.40.1-alt1
 - 2.40.1
 
