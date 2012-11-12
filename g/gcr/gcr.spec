@@ -3,7 +3,7 @@
 %def_enable introspection
 
 Name: gcr
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A GNOME crypto viewer and prompter
@@ -147,6 +147,9 @@ chrpath --delete %buildroot%_libexecdir/gcr-prompter
 %endif
 
 %changelog
+* Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 

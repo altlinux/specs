@@ -19,7 +19,7 @@
 %def_disable gtk_doc
 
 Name: gvfs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The GNOME virtual filesystem libraries
@@ -32,7 +32,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 #Source: %name-%version.tar
 Patch: gvfs-1.11.3-alt-gettext.patch
 Patch1: gvfs-1.0.1-archive-integration.patch
-Patch3: gvfs-1.13.8-libgvfsdaemon+headers_install.patch
+Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
@@ -42,7 +42,7 @@ Patch3: gvfs-1.13.8-libgvfsdaemon+headers_install.patch
 %define glib_ver 2.33.4
 %define libsoup_ver 2.26.0
 %define avahi_ver 0.6
-%define libcdio_paranoia_ver 0.78.2
+%define libcdio_paranoia_ver 0.82
 %define hal_ver 0.5.10
 %define bluez_ver 4.0
 %define gdu_ver 3.3.91
@@ -388,6 +388,10 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
+- 1.14.2
+- rediffed headers_install.patch
+
 * Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.1-alt1
 - 1.14.1 release
 

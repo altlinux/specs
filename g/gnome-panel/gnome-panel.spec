@@ -13,7 +13,7 @@
 %def_without in_process_applets
 
 Name: gnome-panel
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: The core programs for the GNOME GUI desktop environment
@@ -211,6 +211,9 @@ gnome-doc-common --copy
 %endif
 
 %changelog
+* Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 

@@ -14,7 +14,7 @@
 %endif
 
 Name: seahorse
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A password and encryption key manager
@@ -97,6 +97,9 @@ export GNUPG=/usr/bin/gpg2
 %doc AUTHORS NEWS README THANKS TODO HACKING
 
 %changelog
+* Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
 * Tue Oct 23 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

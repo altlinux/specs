@@ -5,7 +5,7 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.1.1
+Version: %major.2
 Release: alt1
 
 Summary: Python bindings for GObject
@@ -97,6 +97,9 @@ export LD_PRELOAD=%_libdir/libpython%__python_version.so
 %endif
 
 %changelog
+* Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Wed Oct 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.1.1-alt1
 - 3.4.1.1
 
