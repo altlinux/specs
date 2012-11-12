@@ -3,7 +3,7 @@
 
 Name: alterator-auth
 Version: 0.24
-Release: alt2
+Release: alt3
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Nov 12 2012 Andrey Cherepanov <cas@altlinux.org> 0.24-alt3
+- Check avahi-daemon activity in more convinent way compatible with systemd
+
 * Sat Nov 03 2012 Andrey Cherepanov <cas@altlinux.org> 0.24-alt2
 - Don't hide local base selection if avahi-daemon is stopped
 
