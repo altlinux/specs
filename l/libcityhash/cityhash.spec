@@ -1,5 +1,5 @@
 Name: libcityhash
-Version: 1.0.3
+Version: 1.1.0
 Release: alt1
 Summary: A family of hash functions for strings
 Group: Development/C++
@@ -58,6 +58,9 @@ Static development environment for %name, %summary
 %_libdir/*.a
 
 %changelog
+* Mon Nov 12 2012 Fr. Br. George <george@altlinux.ru> 1.1.0-alt1
+- Autobuild version bump to 1.1.0
+
 * Thu Jan 12 2012 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Autobuild version bump to 1.0.3
 
