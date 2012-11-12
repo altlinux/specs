@@ -1,7 +1,7 @@
 %define ver_major 3.6
 
 Name: gnome-user-docs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: General GNOME User Documentation
@@ -44,6 +44,9 @@ directly associated with any particular GNOME application or package.
 %doc AUTHORS README NEWS
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
