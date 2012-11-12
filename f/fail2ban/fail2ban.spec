@@ -1,7 +1,7 @@
 %define module_name fail2ban
 Name: %module_name
-Version: 0.8.4
-Release: alt4.1.1
+Version: 0.8.7.1
+Release: alt1
 
 Summary: Fail2Ban is an intrusion prevention framework
 
@@ -11,7 +11,6 @@ Url: http://www.fail2ban.org
 
 Source: %name-%version.tar
 Source1: alt-initd
-Packager: Denis Klimov <zver@altlinux.org>
 
 BuildArch: noarch
 
@@ -43,12 +42,18 @@ install -pD -m 744 %SOURCE1 %buildroot%_initdir/fail2ban
 %doc README
 %_datadir/%module_name
 %_bindir/%module_name-*
-%_sysconfdir/%module_name
+%dir %_sysconfdir/%module_name
+%dir %_sysconfdir/%module_name/*.d
+%config(noreplace) %_sysconfdir/%module_name/*.conf
+%config(noreplace) %_sysconfdir/%module_name/*.d/*.conf
 %_var/run/fail2ban
 %_initdir/fail2ban
 %_man1dir/fail2ban-*
 
 %changelog
+* Mon Nov 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.7.1-alt1
+- Version 0.8.7.1 (ALT #27951)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.4-alt4.1.1
 - Rebuild with Python-2.7
 
