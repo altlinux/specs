@@ -1,7 +1,7 @@
 %define ver_major 3.6
 
 Name: gnome-devel-docs
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: General GNOME Developper Documentation
@@ -64,6 +64,9 @@ gnome-doc-prepare -f
 %_datadir/gnome/help/gnome-devel-demos/
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Mon Oct 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
