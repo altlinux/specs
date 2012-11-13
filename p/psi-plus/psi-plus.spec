@@ -1,7 +1,7 @@
-%define subver 5337
+%define subver 25
 
 Name: psi-plus
-Version: 0.15.%subver
+Version: 0.16.%subver
 Release: alt1
 Group: Networking/Instant messaging
 
@@ -9,12 +9,12 @@ Summary: Psi+ Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi+
 License: GPL
 
-Url: http://code.google.com/p/psi-dev/
+Url: http://www.psi-plus.com/
 Source0: psi.tar
 Source1: psi-plus.tar
 Source2: psi-plus-resources.tar
 Source3: psi-plus-plugins.tar
-Source4: psi-plus-ru.tar
+Source4: psi-plus-l10n.tar
 
 Packager: Anton A. Vinogradov <arc@altlinux.org>
 BuildRequires(pre): libqt4-devel libqt4-webkit
@@ -402,13 +402,13 @@ Watcher support plugin for %name
 %__cp -a -f psi-plus-resources/{iconsets,skins,sound,themes} ./
 %__cp -a -f psi-plus-plugins/* src/plugins/
 
-%__mkdir_p lang/ru
-
-%__cp -a -f psi-plus-ru/{psi_ru.ts,qt} lang/ru
+%__cp -a -f psi-plus-l10n/translations ./
 
 for f in `ls -1 psi-plus/patches/*diff | sort`; do if (patch -p1 --dry-run -i "$f"); then patch -p1 -i "$f"; fi; done
 VER=`cat psi-plus/version.txt`
-%__subst "s/0.15.xxx/$VER/" src/applicationinfo.cpp
+%__subst "s/0.16.xx/$VER/" src/applicationinfo.cpp
+
+%__rm -rf psi-plus
 
 %build
 qconf
@@ -418,14 +418,12 @@ qconf
     --libdir=%_libdir \
     --datadir=%_datadir \
     --qtdir=%_qt4dir \
-    --disable-bundled-qca \
     --enable-plugins \
-    --enable-webkit \
-    --certstore-path=%_datadir/ca-certificates/ca-bundle.crt
+    --enable-webkit
 
 %make_build
 
-lrelease-qt4 lang/ru/psi_ru.ts lang/ru/qt/qt_ru.ts
+lrelease-qt4 translations/*.ts
 
 # Attention
 pushd src/plugins/generic/attentionplugin
@@ -592,8 +590,7 @@ popd
 %install
 %makeinstall INSTALL_ROOT=%buildroot
 mkdir -p %buildroot%_libdir/%name/plugins
-install -Dp -m 0644 lang/ru/psi_ru.qm %buildroot%_datadir/%name/psi_ru.qm
-install -Dp -m 0644 lang/ru/qt/qt_ru.qm %buildroot%_datadir/%name/qt_ru.qm
+install -Dp -m 0644 translations/*.qm %buildroot%_datadir/%name
 
 #Plugins
 pushd src/plugins/generic
@@ -758,6 +755,12 @@ popd
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Wed Nov 14 2012 Nazarov Denis <nenderus@altlinux.org> 0.16.25-alt1
+- Version 0.16.25
+
+* Sat Jun 09 2012 Nazarov Denis <nenderus@altlinux.org> 0.15.5337-alt0.M60T.1
+- Build for branch t6
+
 * Fri Jun 08 2012 Nazarov Denis <nenderus@altlinux.org> 0.15.5337-alt1
 - Version 0.15.5337
 
@@ -797,6 +800,9 @@ popd
 * Tue Sep 13 2011 Nazarov Denis <nenderus@altlinux.org> 0.15.5116-alt1.svn4128
 - Version 0.15.5116
 - SVN revision 4128
+
+* Sun Sep 04 2011 Nazarov Denis <nenderus@altlinux.org> 0.15.5106-alt0.M60P.1.svn4127
+- Build for branch p6
 
 * Fri Sep 02 2011 Nazarov Denis <nenderus@altlinux.org> 0.15.5106-alt0.M60T.1.svn4127
 - Build for branch t6
