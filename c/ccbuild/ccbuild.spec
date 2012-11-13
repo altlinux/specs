@@ -1,6 +1,6 @@
 Name: ccbuild
 Version: 1.5.7
-Release: alt1
+Release: alt1.1
 
 Summary: Dynamic Makefile
 License: GPL
@@ -8,6 +8,7 @@ Group: Development/Other
 Url: http://ccbuild.sourceforge.net/
 
 Source: http://prdownloads.sf.net/%name/%name-%version.tar.bz2
+Patch: ccbuild-1.5.7-alt-gcc4.7.patch
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -29,7 +30,7 @@ dependencies using DOT (graphviz) graphs.
 
 %prep
 %setup -q
-#%patch0 -b .env
+%patch -p2
 
 %build
 %configure
@@ -45,6 +46,9 @@ dependencies using DOT (graphviz) graphs.
 %_man1dir/*
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.7-alt1.1
+- Fixed build with gcc 4.7
+
 * Tue Nov 04 2008 Vitaly Lipatov <lav@altlinux.ru> 1.5.7-alt1
 - new version 1.5.7 (with rpmrb script)
 
