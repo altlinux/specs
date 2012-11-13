@@ -1,6 +1,6 @@
 Name: madbomber
 Version: 0.2.5
-Release: alt1.qa2
+Release: alt1.qa3
 
 Summary: Catch the bombs
 License: GPL
@@ -12,7 +12,7 @@ Patch: %name-0.1.8-fix-CFLAGS.patch.bz2
 Patch1: %name-0.2.4-add-keypad-keys.patch.bz2
 
 # Automatically added by buildreq on Втр Мар 25 2003
-BuildRequires: aalib esound libSDL-devel libSDL_image-devel libSDL_mixer-devel libalsa2 libaudiofile libjpeg libogg libslang libsmpeg libtiff libvorbis
+BuildRequires: aalib esound libSDL-devel libSDL_image-devel libSDL_mixer-devel libalsa2 libaudiofile libjpeg libogg libslang2 libsmpeg libtiff libvorbis
 
 %description
 The Mad Bomber is loose in the city and he's dropping bombs everywhere! It's
@@ -63,6 +63,9 @@ EOF
 %_desktopdir/%{name}.desktop
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.qa3
+- Fixed build
+
 * Thu Apr 07 2011 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt1.qa2
 - NMU: converted debian menu to freedesktop
 
