@@ -1,7 +1,7 @@
 Summary:        Open source color profiler
 Name:           lprof
 Version:        1.11.4.1
-Release:       	alt6.20100921.1
+Release:       	alt6.20100921.2
 License:        GPL
 Group:          Graphics
 Url:		http://www.mozilla.org/projects/security/pki/nss
@@ -13,7 +13,7 @@ Source0:	%name.tar
 BuildRequires: scons gcc4.1-c++ libvigra-devel libX11-devel libusb-devel libjpeg-devel libusb-compat-devel libvigra strace vim
 BuildRequires: qt4-devel libqt4-assistant-devel
 
-BuildPreReq: libXxf86vm-devel libXdmcp-devel
+BuildPreReq: libXxf86vm-devel libXdmcp-devel libtiff-devel
 
 %description
 LProf is an open source color profiler that creates ICC compliant profiles for devices such as cameras, scanners and monitors.
@@ -38,6 +38,9 @@ scons install PREFIX=%buildroot/usr
 %_datadir/lprof
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.4.1-alt6.20100921.2
+- Fixed build
+
 * Mon Jul 04 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.4.1-alt6.20100921.1
 - Fixed build
 
