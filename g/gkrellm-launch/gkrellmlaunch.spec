@@ -3,7 +3,7 @@
 
 Name: gkrellm-%plugin
 Version: 0.5
-Release: alt3
+Release: alt3.1
 
 Summary: GKrellM launch plugin
 Summary(ru_RU.CP1251): Плагин launch для GKrellM
@@ -50,6 +50,9 @@ mkdir -p %buildroot%_libdir/gkrellm2/plugins
 %_libdir/gkrellm2/plugins/gkrellm%plugin.so
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt3.1
+- Fixed build with gcc 4.7
+
 * Tue May 18 2004 Alex Murygin <murygin@altlinux.ru> 0.5-alt3
 - renamed to gkrellm-{NAME}
 - added russian summary, description
