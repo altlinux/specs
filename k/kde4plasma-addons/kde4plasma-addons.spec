@@ -6,7 +6,7 @@
 Name: kde4plasma-addons
 %define major 4
 %define minor 9
-%define bugfix 1
+%define bugfix 3
 Version: %major.%minor.%bugfix
 Release: alt1
 
@@ -1258,6 +1258,9 @@ based on %name
 %_K4link/*.so
 
 %changelog
+* Tue Nov 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
