@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: qtemu
 Version: 2.0
-Release: alt0.1.1.qa3
+Release: alt0.1.1.qa4
 
 Summary: QtEmu is a graphical user interface for QEMU written in Qt4
 Summary(ru_RU.UTF-8): QtEmu - графический интерфейс для QEMU, написаный на Qt4
@@ -15,6 +15,7 @@ Source1: %name.desktop
 Patch0: qtemu-help-transl-alt.patch
 Patch1: qtemu-alt-qt4.patch
 Patch2: qtemu-alt-DSO.patch
+Patch3: qtemu-2.0-alt-glibc-2.16.patch
 
 
 # Automatically added by buildreq on Wed Sep 12 2007
@@ -35,6 +36,7 @@ QtEmu - графический интерфейс для QEMU, написаны�
 %patch0 -p1
 %patch1 -p2
 %patch2 -p2
+%patch3 -p0
 
 #subst 's|DESTINATION translations|DESTINATION %_datadir/qt4/translations/|g' CMakeLists.txt
 #subst 's|DESTINATION help|DESTINATION %_docdir/%name-%version/|g' CMakeLists.txt
@@ -66,6 +68,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc COPYING CHANGELOG README help/
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt0.1.1.qa4
+- Fixed build with glibc 2.16
+
 * Tue Jun 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt0.1.1.qa3
 - Fixed build
 
