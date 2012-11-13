@@ -8,9 +8,9 @@
 Name: kde4edu
 %define major 4
 %define minor 9
-%define bugfix 1
+%define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Group: Graphical desktop/KDE
@@ -1045,6 +1045,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Nov 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Mon Oct 29 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt2
 - don't obsolete KDE3 kdeedu (ALT#27900)
 
