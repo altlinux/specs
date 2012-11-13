@@ -1,7 +1,7 @@
 %define major 3.2
 Name: drwright
 Version: %major.5
-Release: alt1
+Release: alt1.1
 
 Summary: A program that reminds you to take wrist breaks
 Summary(be_BY.UTF-8):	Праграма, якая нагадвае пра неабходнасьць адпачынку для рук
@@ -19,6 +19,7 @@ BuildPreReq: libGConf2-devel
 BuildPreReq: desktop-file-utils
 
 Source: http://ftp.gnome.org/pub/GNOME/sources/drwright/%major/%name-%version.tar
+Patch: drwright-3.2.5-alt.patch
 
 # Automatically added by buildreq on Thu Apr 12 2012
 # optimized out: fontconfig fontconfig-devel glib2-devel gtk-builder-convert libICE-devel libX11-devel libatk-devel libcairo-devel libcairo-gobject libcairo-gobject-devel libcanberra-devel libcanberra-gtk-common-devel libcanberra-gtk3 libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+3-devel libpango-devel libwayland-client libwayland-server perl-Encode perl-XML-Parser pkg-config python-base python-module-distribute python-module-peak python-modules python-modules-encodings python-modules-xml time xml-common xml-utils xorg-scrnsaverproto-devel xorg-xproto-devel
@@ -38,6 +39,7 @@ DrWright это программа, которая напоминает про �
 
 %prep
 %setup -n %name-%version
+%patch -p2
 
 %build
 %configure --disable-schemas-install
@@ -72,6 +74,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/%name/
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.5-alt1.1
+- Fixed build
+
 * Thu Apr 12 2012 Vitaly Lipatov <lav@altlinux.ru> 3.2.5-alt1
 - new version 3.2.5 (with rpmrb script) (ALT bug #27192)
 
