@@ -1,6 +1,6 @@
 Name: mygui
 Version: 3.0.3
-Release: alt3
+Release: alt3.1
 Summary: MyGUI is a graphical user interface library developed especialy for using with Ogre (http://www.ogre3d.org)
 License: LGPLv2+
 Group: System/Libraries
@@ -9,6 +9,7 @@ Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Source0: %name-%version.tar
 #Patch: %name-%version-alt-changes.patch
 Source1: %name.png
+Patch1: mygui-3.0.3-alt-DSO.patch
 
 # Automatically added by buildreq on Mon Jul 20 2009
 BuildRequires: cmake doxygen gcc-c++ libfreetype-devel ogre libogre-devel libois-devel libuuid-devel graphviz boost-devel
@@ -73,6 +74,7 @@ MyGUI api documentation
 %prep
 %setup -q
 #%patch -p1
+%patch1 -p0
 
 sed -i 's/FREETYPE_LIBRARIES}/FREETYPE_LIBRARIES} -ldl -luuid/' MyGUIEngine/CMakeLists.txt
 
@@ -190,6 +192,9 @@ mv -f %buildroot/usr/lib %buildroot%_libdir
 %exclude %_libdir/libPlugin_StrangeButton.so
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt3.1
+- Fixed build
+
 * Sat May 26 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 3.0.3-alt3
 - Rebuild with new ois
 
