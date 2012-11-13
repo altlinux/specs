@@ -3,7 +3,7 @@
 Summary: An open source software for the creation of electronic schematic diagrams
 Name: kicad
 Version: 20110522
-Release: alt2
+Release: alt2.1
 Source0: %name-%version.tar.bz2
 License: GPLv2+
 Group: Sciences/Computer science
@@ -39,7 +39,13 @@ Kicad:      project manager.
 
 %build
 export LC_ALL=C
-cmake -DBUILD_SHARED_LIBS:BOOL=OFF -DCMAKE_INSTALL_PREFIX=/usr -DKICAD_STABLE_VERSION=ON
+%add_optflags -fpermissive
+cmake \
+	-DBUILD_SHARED_LIBS:BOOL=OFF \
+	-DCMAKE_INSTALL_PREFIX=/usr \
+	-DCMAKE_C_FLAGS="%optflags" \
+	-DCMAKE_CXX_FLAGS="%optflags" \
+	-DKICAD_STABLE_VERSION=ON
 %make
 
 %install
@@ -70,6 +76,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc %_datadir/doc/%name
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20110522-alt2.1
+- Fixed build with gcc 4.7
+
 * Tue Jun 07 2011 Denis Klimov <zver@altlinux.org> 20110522-alt2
 - fix inherit
 
