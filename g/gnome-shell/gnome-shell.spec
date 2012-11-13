@@ -5,7 +5,7 @@
 %def_with systemd
 
 Name: gnome-shell
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -18,7 +18,7 @@ Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.t
 Patch1: %name-3.5.92-alt-gir.patch
 # use gnome3-applications.menu
 Patch2: %name-3.5.91-avoid-alt-menus.patch
-Patch3: %name-3.4.1-alt-invalid_user_shell.patch
+Patch3: %name-3.6.2-alt-invalid_user_shell.patch
 
 # boyarch@
 Patch20: 0001-org-gnome-shell-use-litebox-setting-introduced.patch
@@ -30,7 +30,7 @@ Requires: polkit-gnome >= 0.105
 
 %define clutter_ver 1.11.11
 %define gjs_ver 1.33.2
-%define mutter_ver 3.6.1
+%define mutter_ver 3.6.2
 %define gtk_ver 3.5.9
 %define gio_ver 2.31.6
 %define gstreamer_ver 0.11.92
@@ -181,6 +181,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
