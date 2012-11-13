@@ -1,7 +1,7 @@
 %define oname	cryptopp
 Name: libcryptopp
 Version: 5.6.0
-Release: alt3.qa2
+Release: alt3.qa3
 
 # convert 5.6.0 -> 560 format
 %define orig_version	%(echo %version | sed -e "s/\\.//g")
@@ -64,6 +64,7 @@ rm -f GNUmakefile
 #touch NEWS README AUTHORS ChangeLog
 
 %build
+%add_optflags -fpermissive
 %autoreconf
 %configure
 %ifnarch x86_64
@@ -110,6 +111,9 @@ EOF
 #%_datadir/cryptopp/
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.0-alt3.qa3
+- Fixed build with gcc 4.7
+
 * Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.6.0-alt3.qa2
 - Rebuilt for debuginfo
 
