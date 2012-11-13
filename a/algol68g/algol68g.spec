@@ -1,5 +1,5 @@
 Name: algol68g
-Version: 2.5
+Version: 2.6
 Release: alt1
 Summary: Algol 68 interpreter
 License: GPL
@@ -48,6 +48,9 @@ install -pm644 ChangeLog %buildroot%_docdir/
 %_docdir/*
 
 %changelog
+* Tue Nov 13 2012 Andrey Bergman <vkni@altlinux.org> 2.6-alt1
+- Version update
+
 * Wed Oct 24 2012 Andrey Bergman <vkni@altlinux.org> 2.5-alt1
 - Version update
 
