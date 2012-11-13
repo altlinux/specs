@@ -1,7 +1,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-boxes
-Version: 3.6.1
+Version: 3.6.2
 Release: alt1
 Summary: A simple GNOME 3 application to access remote or virtual systems
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -22,7 +22,7 @@ Source2: libgd.tar
 %define libxml2_ver 2.7.8
 %define spice_gtk_ver 0.12.101
 %define gudev_ver 165
-%define osinfo_ver 0.2.0
+%define osinfo_ver 0.2.1
 %define tracker_ver 0.13.1
 %define uuid_ver 1.41.3
 %define libsoup_ver 2.38
@@ -90,6 +90,9 @@ tar -xf %SOURCE2 -C libgd
 %_datadir/gnome-shell/search-providers/gnome-boxes-search-provider.ini
 
 %changelog
+* Tue Nov 13 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.2-alt1
+- 3.6.2
+
 * Mon Oct 15 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.1-alt1
 - 3.6.1
 
