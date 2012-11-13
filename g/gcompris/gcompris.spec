@@ -1,6 +1,6 @@
 Name: gcompris
 Version: 11.12.01
-Release: alt1
+Release: alt1.1
 Summary: Educational suite for kids 3-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 3-х до 10 лет
 License: GPLv3
@@ -355,6 +355,7 @@ sed -i "s|LIBADD =|LIBADD = -lgnomecanvas-2 \$(GCOMPRIS_LIBS) \$(XML_LIBS)|g"  s
 sed -i "s|LIBADD =|LIBADD = -lgnomecanvas-2 \$(GCOMPRIS_LIBS) \$(XML_LIBS)|g"  src/boards/Makefile.in
 
 #add_optflags -UGTK_DISABLE_DEPRECATED -UGDK_DISABLE_DEPRECATED
+sed -i 's|\-Werror||g' configure
 %configure
 #	--enable-binreloc
 
@@ -553,6 +554,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_datadir/gcompris/boards/voices/af
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.12.01-alt1.1
+- Disabled -Werror flag
+
 * Mon Jan 09 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 11.12.01-alt1
 - Update to 11.12.01 (Bugfix release)
 
