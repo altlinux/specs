@@ -1,6 +1,6 @@
 Name: ksudoku
 Version: 0.4
-Release: alt2.qa2
+Release: alt2.qa3
 
 Summary: Sudoku Puzzle Generator and solver for KDE
 
@@ -13,6 +13,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 Source: http://dl.sourceforge.net/ksudoku/%name-%version.tar.bz2
 Patch: %name-gcc43.patch
 Patch1: %name-0.4-alt-DSO.patch
+Patch2: %name-0.4-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Sun Oct 26 2008
 BuildRequires: ccmake gcc-c++ kdepim-devel libGL-devel libXScrnSaver-devel libXcomposite-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libxkbfile-devel qt3-designer xorg-xf86vidmodeproto-devel
@@ -27,6 +28,7 @@ any general graph coloring problem.
 %setup -q
 %patch
 %patch1 -p2
+%patch2 -p2
 find -name "CMakeLists.txt" | xargs %__subst "s/QT_AND_KDECORE_LIBRARIES/QT_AND_KDECORE_LIBS/g"
 
 %build
@@ -45,6 +47,9 @@ find -name "CMakeLists.txt" | xargs %__subst "s/QT_AND_KDECORE_LIBRARIES/QT_AND_
 %_K3conf/*
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt2.qa3
+- Fixed build with glibc 2.16
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4-alt2.qa2
 - Fixed build
 
