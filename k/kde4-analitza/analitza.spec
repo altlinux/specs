@@ -2,7 +2,7 @@
 
 %define rname analitza
 Name: kde4-analitza
-Version: 4.9.1
+Version: 4.9.3
 Release: alt1
 
 Group: System/Libraries
@@ -93,6 +93,9 @@ Development files for %name
 
 
 %changelog
+* Tue Nov 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
