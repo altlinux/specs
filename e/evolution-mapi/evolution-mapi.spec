@@ -1,7 +1,7 @@
 %define ver_major 3.6
 
 Name: evolution-mapi
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 Group: Networking/Mail
 Summary: Evolution extension for MS Exchange 2007 servers
@@ -100,6 +100,9 @@ find %buildroot%_libdir -name '*.la' -exec rm {} \;
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Nov 13 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.2-alt1
+- 3.6.2
+
 * Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
 - 3.6.0
 
