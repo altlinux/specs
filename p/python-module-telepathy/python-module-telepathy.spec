@@ -1,5 +1,5 @@
 %define version 0.15.19
-%define release alt2
+%define release alt3
 
 %setup_python_module telepathy
 
@@ -13,6 +13,8 @@ Group: Development/Python
 URL: http://telepathy.freedesktop.org/
 
 Source0: http://telepathy.freedesktop.org/releases/telepathy-python/telepathy-python-%version.tar.gz
+#Upstream git commit 0c4e6e9f41b24bbb7ea33653b8a81ff79c0ea032
+Patch: python-telepathy-0.15.19-autotools.patch
 
 Packager: Python Development Team <python@packages.altlinux.org>
 
@@ -28,10 +30,11 @@ Telepathy python bindings for use with python programs.
 
 %prep
 %setup -n telepathy-python-%version
+%patch -p1
 
 %build
-%define __libtoolize true
-%autoreconf
+#define __libtoolize true
+#autoreconf
 %configure \
 	am_cv_python_pythondir=%python_sitelibdir \
 	am_cv_python_pyexecdir=%python_sitelibdir
@@ -44,6 +47,9 @@ Telepathy python bindings for use with python programs.
 %python_sitelibdir/*
 
 %changelog
+* Tue Nov 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.15.19-alt3
+- bugfix (closes: #27962); added patch from fedora.
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.15.19-alt2
 - Fixed build with make 3.82
 
