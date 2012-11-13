@@ -1,7 +1,7 @@
 %define MAJOR_VERSION     3
 %define MINOR_VERSION     13
 %define BUILD_NUMBER      7
-%define PATCH_LEVEL       1
+%define PATCH_LEVEL       5
 %define soversion %{MAJOR_VERSION}
 Name: v8
 Version: %MAJOR_VERSION.%MINOR_VERSION.%BUILD_NUMBER.%PATCH_LEVEL
@@ -67,6 +67,10 @@ install -p -m644 include/*.h %buildroot%_includedir/
 %_libdir/*.so
 
 %changelog
+* Thu Nov 08 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.13.7.5-alt1
+- 3.13.7.5 (closes: #27940)
+  + CVE-2012-5128
+
 * Mon Sep 17 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.13.7.1-alt1
 - 3.13.7.1
 
