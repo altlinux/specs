@@ -1,7 +1,7 @@
 
 Summary: A library for managing OS information for virtualization
 Name: libosinfo
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 License: LGPLv2+
 Group: System/Libraries
@@ -132,6 +132,9 @@ ln -sf ../../misc/pci.ids %buildroot%_datadir/%name/db/pci.ids
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Nov 13 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.1-alt1
+- 0.2.1
+
 * Wed Sep 26 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.0-alt1
 - 0.2.0
 - add "ALT Linux 7.0.0 Centaurus" support
