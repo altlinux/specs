@@ -5,7 +5,7 @@
 %def_enable introspection
 
 Name: sushi
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: A quick previewer for Nautilus
@@ -94,6 +94,9 @@ GObject introspection devel data for the Sushi library.
 %doc README AUTHORS NEWS TODO
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Mon Sep 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
