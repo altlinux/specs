@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-games-%_name
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: A collection of card games
@@ -63,6 +63,9 @@ fi
 %_man6dir/sol.*
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
