@@ -1,12 +1,13 @@
 Name:           ois
 Version:        1.3.0
-Release:        alt2
+Release:        alt2.1
 Summary:        Open Input System, OO gaming input library
 Group:          System/Libraries
 License:        zlib
 URL:            http://sourceforge.net/projects/wgois
 Packager: 	Alexey Shentzev <ashen@altlinux.ru>
 Source0:        %name-%version.tar
+Patch: ois-1.3.0-alt-glibc-2.16.patch
 # Automatically added by buildreq on Wed Jun 17 2009
 BuildRequires: gcc-c++ glibc-devel-static libXaw-devel
 
@@ -38,6 +39,7 @@ developing applications that use %name.
 
 %prep
 %setup -q -n %name
+%patch -p2
 
 %build
 sh bootstrap
@@ -59,6 +61,9 @@ export LIBS=-lX11
 %_libdir/pkgconfig/OIS.pc
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.1
+- Fixed build with glibc 2.16
+
 * Sat May 26 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.3.0-alt2
 - Fix DSO linking
 
