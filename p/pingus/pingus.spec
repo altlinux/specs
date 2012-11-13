@@ -3,7 +3,7 @@
 
 Name: pingus
 Version: 0.7.6
-Release: alt1.3
+Release: alt1.4
 
 
 Summary: A free Lemmings clone
@@ -24,6 +24,7 @@ Patch0:         pingus-0.7.0-cflags.patch
 Patch6:         pingus-0.7.2-gcc43.patch
 
 Patch7:         pingus-0.7.2-gcc44.patch
+Patch8:         pingus-0.7.6-alt-VERSION.patch
 
 #Patch1: pingus-0.6.0-alt-gcc33.patch
 #Patch2: pingus-0.6.0-alt-gcc34.patch
@@ -61,6 +62,7 @@ SDL, что должно сделать его портируемым на мн�
 %setup -q 
 #patch6 -p1
 #patch7 -p1
+%patch8 -p2
 
 %build
 
@@ -143,6 +145,9 @@ EOF
 %doc AUTHORS NEWS README TODO
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1.4
+- Fixed build
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt1.3
 - Rebuilt with libpng15
 
