@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.1.10
-Release: alt2
+Release: alt3
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
 Group: System/Servers
@@ -26,6 +26,7 @@ Patch1: fix-mail_plugin_dir-default.patch
 Patch2: dovecot-2.0-defaultconfig.patch
 Patch3: dovecot-2.1-privatetmp.patch
 Patch4: dovecot-2.1.4-postreleasefix.patch
+Patch5: dovecot-2.1-systemd_firsttime.patch
 
 PreReq: mailboxes-control
 
@@ -63,6 +64,7 @@ Libraries and headers for Dovecot
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 sed -i 's@/usr/local@/usr@g' src/plugins/fts/decode2text.sh
 sed -i 's@/usr/local@/usr@g' doc/example-config/conf.d/90-quota.conf
@@ -185,6 +187,9 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Tue Nov 13 2012 Fr. Br. George <george@altlinux.ru> 2.1.10-alt3
+- Add systemd first run service
+
 * Tue Nov 13 2012 Fr. Br. George <george@altlinux.ru> 2.1.10-alt2
 - Fix post_control
 
