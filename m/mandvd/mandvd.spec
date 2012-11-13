@@ -1,6 +1,6 @@
 Name: mandvd
 Version: 2.5
-Release: alt1.qa1
+Release: alt1.qa2
 %define sffx -4.fc9
 
 Summary: Video DVD creation tool
@@ -10,6 +10,7 @@ Group: Video
 
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 Source: %name-%version%sffx.tar.gz
+Patch: mandvd-2.5-alt-glibc-2.16.patch
 
 Requires: dvd-slideshow >= 0.7.5
 Requires: mplayer mencoder
@@ -29,6 +30,7 @@ ManDVD is a graphical tool for creating Video DVDs, including menus.
 
 %prep
 %setup -q
+%patch -p2
 qmake-qt3 mandvd.pro
 
 %build
@@ -50,6 +52,9 @@ convert -resize 48x48 pixmaps/%name.png %buildroot/%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1.qa2
+- Fixed build with glibc 2.16
+
 * Thu Feb 04 2010 Repocop Q. A. Robot <repocop@altlinux.org> 2.5-alt1.qa1
 - NMU (by repocop): the following fixes applied:
   * update_menus for mandvd
