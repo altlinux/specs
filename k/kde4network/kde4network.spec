@@ -10,7 +10,7 @@
 %endif
 %add_findreq_skiplist %_K4apps/kopete_skype/call_*
 
-%ifarch arm
+%ifarch %arm
 %def_disable desktop
 %else
 %def_enable desktop
@@ -23,7 +23,7 @@
 %define rname kdenetwork
 %define major 4
 %define minor 9
-%define bugfix 1
+%define bugfix 3
 Name: kde4network
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -471,6 +471,9 @@ chmod 0755 %buildroot/etc/control.d/facilities/kppp-kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Nov 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
