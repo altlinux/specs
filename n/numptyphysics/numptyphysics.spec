@@ -1,6 +1,6 @@
 Name: numptyphysics
 Version: 0.3.146
-Release: alt1
+Release: alt1.1
 Summary: A crayon-drawing based physics puzzle game
 
 Group: Games/Puzzles
@@ -15,6 +15,7 @@ Patch0: numptyphysics-0.3-gcc43.patch
 Patch1: numptyphysics-nonvoid.patch
 Patch2: numptyphysics-setAttribute.patch
 Patch3: numptyphysics-nospot.patch
+Patch4: numptyphysics-0.3.146-alt-glibc-2.16.patch
 Packager: Fr. Br. George <george@altlinux.ru>
 
 Requires: %name-levels
@@ -55,6 +56,7 @@ This meta-package also contains full additional level set.
 %patch1 -b .nonvoid
 %patch2 -p1 -b .setAttribute
 %patch3 -p1 -b .nospot
+%patch4 -p2
 
 %build
 # Note the ARCH variable doesn't denote real arch. It's just used to hit a
@@ -93,6 +95,9 @@ rm %buildroot%_datadir/numptyphysics/levels/*/*npz
 %files full
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.146-alt1.1
+- Fixed build with glibc 2.16
+
 * Fri Feb 12 2010 Fr. Br. George <george@altlinux.ru> 0.3.146-alt1
 - Version up
 
