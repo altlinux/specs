@@ -3,7 +3,7 @@
 
 Name: avidemux
 Version: 2.4.4
-Release: alt4.1
+Release: alt4.2
 
 Summary: Avidemux is a graphical AVI files editor
 Summary(ru_RU.KOI8-R): Avidemux -- это редактор AVI-файлов с графическим интерфейсом
@@ -35,13 +35,16 @@ Requires: xvid >= %xvid_ver
 BuildPreReq: xvid-devel >= %xvid_ver
 BuildPreReq: mjpegtools-devel >= %mjpegtools_ver
 
+%define gccver 4.6
+%set_gcc_version %gccver
+
 # manual removed: gcc-java imake  xorg-cf-files
 # Automatically added by buildreq on Tue Jul 15 2008
-BuildRequires: gcc-c++ libSDL-devel libXt-devel libXv-devel libaften-devel libdca-devel libfaad-devel libgtk+2-devel liblame-devel libqt4-devel libx264-devel libxml2-devel libxvid-devel
+BuildRequires: libSDL-devel libXt-devel libXv-devel libaften-devel libdca-devel libfaad-devel libgtk+2-devel liblame-devel libqt4-devel libx264-devel libxml2-devel libxvid-devel
 
 #BuildRequires: seamonkey-devel
 #BuildRequires: firefox firefox-devel
-BuildRequires: xulrunner-devel
+BuildRequires: xulrunner-devel gcc%gccver-c++
 
 %description
 Avidemux is a graphical tool to edit AVI. It allows you to multiplex and
@@ -94,6 +97,9 @@ ln -s avidemux2_gtk %buildroot%_bindir/%name
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt4.2
+- Forced build with gcc 4.6
+
 * Thu Jun 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.4-alt4.1
 - Fixed build
 
