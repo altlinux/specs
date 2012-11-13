@@ -2,8 +2,8 @@
 %def_enable introspection
 
 Name: gsettings-desktop-schemas
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.1
+Release: alt1
 
 Summary: A collection of GSettings schemas
 License: %lgpl21plus
@@ -11,7 +11,7 @@ Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 Requires: %name-data = %version-%release
 
@@ -116,6 +116,9 @@ GObject introspection devel data for %name.
 %endif
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
 - updated to f5b671c
 
