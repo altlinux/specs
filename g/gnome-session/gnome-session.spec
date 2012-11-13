@@ -3,7 +3,7 @@
 %def_enable systemd
 
 Name: gnome-session
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
@@ -164,6 +164,9 @@ install -pD -m644 %SOURCE2 %buildroot%_iconsdir/gnome.svg
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
