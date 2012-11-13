@@ -3,7 +3,7 @@
 %def_disable glade
 
 Name: anjuta
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Summary: GNOME IDE for C and C++
 Group: Development/GNOME and GTK+
@@ -26,7 +26,7 @@ BuildRequires: glib2-devel >= 2.32.0 libgio-devel
 BuildRequires: libgtk+3-devel >= 3.4.0 libgtk+3-gir-devel
 BuildRequires: libgdk-pixbuf-devel >= 2.0.0 libgdk-pixbuf-gir-devel
 BuildRequires: libxml2-devel >= 2.4.23
-BuildRequires: libgdl3-devel >= 3.5.4
+BuildRequires: libgdl3-devel >= 3.5.5
 BuildRequires: libvte3-devel >= 0.27.6
 BuildRequires: libdevhelp-devel >= 3.4.2
 %{?_enable_glade:BuildRequires: libgladeui-devel >= 3.12.0}
@@ -217,6 +217,9 @@ NOCONFIGURE=1 ./autogen.sh
 %exclude %anjuta_pixmapsdir/*devhelp*
 
 %changelog
+* Tue Nov 13 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.2-alt1
+- 3.6.2
+
 * Fri Oct 19 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.1-alt1
 - 3.6.1
 
