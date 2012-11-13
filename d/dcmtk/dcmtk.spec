@@ -2,7 +2,7 @@
 
 Name: dcmtk
 Version: 3.5.4
-Release: alt3.2
+Release: alt3.3
 
 Summary: DCMTK - DICOM Toolkit
 License: MIT license
@@ -49,7 +49,7 @@ Headers for building software that uses %name.
 %patch1 -p1
 
 %build
-%add_optflags -fPIC
+%add_optflags -fPIC -fpermissive
 %configure
 make
 
@@ -72,6 +72,9 @@ make
 %_libdir/*.a
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.4-alt3.3
+- Fixed build with gcc 4.7
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.4-alt3.2
 - Rebuilt with libpng15
 
