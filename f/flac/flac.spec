@@ -6,7 +6,7 @@
 
 Name: flac
 Version: 1.2.1
-Release: alt10
+Release: alt11
 
 Summary: Free Lossless Audio Codec
 License: GPLv2+
@@ -175,6 +175,9 @@ install -pm644 COPYING.Xiph AUTHORS README %buildroot%flacdocs/
 %_libdir/xmms/Input/*
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt11
+- Fixed overflow of destination buffer
+
 * Thu Sep 06 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.1-alt10
 - Fixed packaging of %flacdocs.
 
