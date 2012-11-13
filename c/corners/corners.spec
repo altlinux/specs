@@ -1,12 +1,13 @@
 Name: corners
 Version: 1.4
-Release: alt1
+Release: alt1.1
 License: GPLv.2
 Summary: A logical board game as known as Halma
 Summary (ru_RU.KOI8-R):	Игра в уголки (другое название -- хальма)
 Group: Games/Boards
 Source: %name-%version.tar.bz2
 Source1: %name.desktop
+Patch: corners-1.4-alt-gcc4.7.patch
 
 # Automatically added by buildreq on Fri Apr 17 2009
 BuildRequires: ImageMagick-tools ctags gcc-c++ libgtk+2-devel
@@ -27,6 +28,7 @@ strong and you need to have good mathematical abilities to defeat it
 
 %prep
 %setup
+%patch -p2
 
 %build
 make
@@ -54,6 +56,9 @@ install -D %SOURCE1 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1.1
+- Fixed build with gcc 4.7
+
 * Wed Jul 27 2011 Fr. Br. George <george@altlinux.ru> 1.4-alt1
 - Autobuild version bump to 1.4
 
