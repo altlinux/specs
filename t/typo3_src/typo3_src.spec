@@ -6,7 +6,7 @@
 %define beta %nil
 
 Name: typo3_src
-Version: 4.5.21
+Version: 4.5.22
 Release: alt1
 
 Summary: A free, feature rich, Content Management Framework/System
@@ -90,6 +90,9 @@ ln -s %name-%version %buildroot%_datadir/%name-%t3branch
 %files -n typo3-apache2
 
 %changelog
+* Tue Nov 13 2012 Michael Shigorin <mike@altlinux.org> 4.5.22-alt1
+- 4.5.22: bugfixes
+
 * Thu Nov 08 2012 Michael Shigorin <mike@altlinux.org> 4.5.21-alt1
 - 4.5.21: security fixes (including SQL injection, XSS, infoleak
   in TYPO3 Core and several low-impact backend vulnerabilities), see
