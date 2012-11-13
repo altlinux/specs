@@ -2,7 +2,7 @@
 
 Name: cinnamon
 Version: 1.6.1
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -48,6 +48,7 @@ Requires: caribou
 Requires: python-module-dbus
 Requires: python-module-pygnome-gconf
 Requires: python-modules-json
+Requires: python-module-lxml
 
 # Cinnamon.typelib should be installed in %%_typelibdir for automatic provides,
 # but other typelibs (Gvs, St) conflict with gnome-shell
@@ -220,6 +221,10 @@ _WM_
 %exclude %_libdir/browser-plugins/libcinnamon*.la
 
 %changelog
+* Tue Nov 13 2012 Michael Shigorin <mike@altlinux.org> 1.6.1-alt2
+- added Requires: python-module-lxml to fix cinnamon-settings
+  (closes: #27964)
+
 * Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
 - 1.6.1
 
