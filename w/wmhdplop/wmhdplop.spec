@@ -1,6 +1,6 @@
 Name: wmhdplop
 Version: 0.9.9
-Release: alt5
+Release: alt5.1
 
 Summary: Cute hard drive monitoring applet
 License: GPL
@@ -85,6 +85,9 @@ install -pD -m755 gkhdplop.so %buildroot%_libdir/gkrellm2/plugins/gkhdplop.so
 %_libdir/gkrellm2/plugins/gkhdplop.so
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.9-alt5.1
+- Fixed build with gcc 4.7
+
 * Sat Aug 21 2010 Michael Shigorin <mike@altlinux.org> 0.9.9-alt5
 - built for Sisyphus (closes: #23564)
   + thanks NotHAM
