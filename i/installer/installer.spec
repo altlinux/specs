@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.7.7
-Release: alt2
+Release: alt3
 
 Summary: Installer common parts
 License: GPLv2+
@@ -101,6 +101,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Nov 13 2012 Timur Aitov <timonbl4@altlinux.org> 1.7.7-alt3
+- fixed search raid/lvm devices in preinstall.d/08-crypttab.sh
+
 * Tue Nov 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.7-alt2
 - mdm added to dms list
 
