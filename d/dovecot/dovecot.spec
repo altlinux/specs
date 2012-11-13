@@ -6,7 +6,7 @@
 
 Name: dovecot
 Version: 2.1.10
-Release: alt1
+Release: alt2
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
 Group: System/Servers
@@ -135,8 +135,7 @@ groupadd -r -f dovenull 2>/dev/null ||:
 useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 		-d %_var/run/%name -s /dev/null dovenull 2>/dev/null ||:
 %post
-%post_control mailboxes
-test "`/usr/sbin/control mailboxes`" != "mailgrp" || /usr/sbin/control mailboxes private
+%post_control -s private mailboxes
 %post_service %name
 
 # TODO postun old mailboxes access?
@@ -186,6 +185,9 @@ test "`/usr/sbin/control mailboxes`" != "mailgrp" || /usr/sbin/control mailboxes
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Tue Nov 13 2012 Fr. Br. George <george@altlinux.ru> 2.1.10-alt2
+- Fix post_control
+
 * Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 2.1.10-alt1
 - Autobuild version bump to 2.1.10 (bugfixes + doveadm improvement)
 
