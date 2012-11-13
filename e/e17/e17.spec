@@ -1,6 +1,6 @@
 %define _name enlightenment
-%define cvs_date 20070918
-%undefine cvs_date
+%define cvs_date alpha2
+#%%undefine cvs_date
 %define snapshot 2012-10-12
 %define rel alt1
 
@@ -9,7 +9,7 @@
 # TODO: pam CoreFoundation
 
 Name: e17
-Version: 0.16.999.77927
+Version: 0.17.0
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -23,7 +23,7 @@ License: BSD
 Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/snapshots/%snapshot/%_name-%version.tar.bz2
+Source: http://download.enlightenment.org/releases/%_name-%version-%cvs_date.tar.bz2
 Patch: e17-default-menus-1.patch
 
 Source1: E-17.xpm
@@ -46,6 +46,7 @@ BuildRequires: libpam-devel libX11-devel libevas-devel libecore-devel
 BuildRequires: edje libedje-devel libeet-devel libeet-utils libembryo-devel libefreet-devel
 BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
 BuildRequires: libalsa-devel libeina-devel libeeze-devel libudev-devel
+BuildRequires: libxcbutil-keysyms-devel
 
 %description
 Enlightenment is a window manager.
@@ -74,7 +75,7 @@ to use Enlightenment as windowmanager in GNOME session
 
 %prep
 %ifdef cvs_date
-%setup -q -n %_name
+%setup -q -n %_name-%version-%cvs_date
 %else
 %setup -q -n %_name-%version
 %endif
@@ -136,6 +137,9 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.alpha2
+- 0.17.0 alpha2
+
 * Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.16.999.77927-alt1
 - 0.16.999.77927
 
