@@ -3,7 +3,7 @@
 
 Name: alterator-auth
 Version: 0.24
-Release: alt3
+Release: alt4
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Nov 13 2012 Andrey Cherepanov <cas@altlinux.org> 0.24-alt4
+- Fix check avahi-daemon under systemd
+
 * Mon Nov 12 2012 Andrey Cherepanov <cas@altlinux.org> 0.24-alt3
 - Check avahi-daemon activity in more convinent way compatible with systemd
 
