@@ -1,20 +1,20 @@
-%define _optlevel s
-
-Name: grub2-pc
+Name: grub2
 Version: 2.00
-Release: alt3
+Release: alt4
 
 Summary: GRand Unified Bootloader
 License: GPL
-Url: http://www.gnu.org/software/grub
 Group: System/Kernel and hardware
-Source0: grub2-%version.tar.bz2
+
+Url: http://www.gnu.org/software/grub
+
+Source0: grub2-%version.tar
 Source1: grub2-sysconfig
 
 Source3: 39_memtest
 Source4: grub2.filetrigger
 
-Source5: grub-extras-%version.tar.bz2
+Source5: grub-extras-%version.tar
 
 Source6: grub-autoupdate
 Source7: firsttime
@@ -42,31 +42,89 @@ BuildRequires: libdevmapper-devel
 
 Exclusivearch: %ix86 x86_64
 
+Requires: gettext
+
+# NB: not a fashion but the critical need to fit into 62 sectors
+%define _optlevel s
+
+# build efi bootloader on some platforms only:
+%if ! 0%{?efi}
+%define efi %ix86 x86_64 ia64
+%endif
+
+%ifarch %ix86
+%global grubefiarch i386-efi
+%global grubefiname grubia32.efi
+%global grubeficdname gcdia32.efi
+%endif
+%ifarch x86_64
+%global grubefiarch x86_64-efi
+%global grubefiname grubx64.efi
+%global grubeficdname gcdx64.efi
+%endif
+
+# OLPC is rumoured to use IEEE1275 either
+%ifarch ppc ppc64
+%define platform ieee1275
+%else
+%define platform pc
+%endif
+
+%package common
+Summary: GRand Unified Bootloader (common part)
+Group: System/Kernel and hardware
+
+%package pc
+Summary: GRand Unified Bootloader (PC BIOS variant)
+Group: System/Kernel and hardware
+Requires: %name-common = %version-%release
+
 Conflicts: grub
 Obsoletes: grub < %version-%release
 
 Provides: grub2 = %version-%release
 Obsoletes: grub2 < %version-%release
 
-Conflicts: grub2-efi
+%package efi
+Summary: GRand Unified Bootloader (EFI variant)
+Group: System/Kernel and hardware
+Requires: %name-common = %version-%release
+%ifarch ia64 x86_64
+Requires: efibootmgr
+%endif
 
-Requires: gettext
+%define desc_generic \
+GNU GRUB is a multiboot boot loader. It was derived from GRUB. It is an \
+attempt to produce a boot loader for IBM PC-compatible machines that \
+has both the ability to be friendly to beginning or otherwise \
+nontechnically interested users and the flexibility to help experts in \
+diverse environments. It is compatible with Free/Net/OpenBSD and Linux. \
+It supports Win 9x/NT and OS/2 via chainloaders. It has a menu \
+interface and a command line interface. \
+It implements the Multiboot standard, which allows for flexible loading \
+of multiple boot images (needed for modular kernels such as the GNU Hurd).
 
 %description
-GNU GRUB is a multiboot boot loader. It was derived from GRUB. It is an
-attempt to produce a boot loader for IBM PC-compatible machines that
-has both the ability to be friendly to beginning or otherwise
-nontechnically interested users and the flexibility to help experts in
-diverse environments. It is compatible with Free/Net/OpenBSD and Linux.
-It supports Win 9x/NT and OS/2 via chainloaders. It has a menu
-interface and a command line interface.
-It implements the Multiboot standard, which allows for flexible loading
-of multiple boot images (needed for modular kernels such as the GNU
-Hurd).
+%desc_generic
+
+%description common
+%desc_generic
+
+This package carries the shared code and data.
+
+%description pc
+%desc_generic
+
+This package provides PC BIOS support.
+
+%description efi
+%desc_generic
+
+This package provides EFI systems support.
 
 %prep
-%setup -n grub2-%version
-%setup -b 5 -n grub2-%version
+#setup
+%setup -b 5
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -79,42 +137,105 @@ Hurd).
 %patch9 -p1
 %patch10 -p0
 
+sed -i "/^AC_INIT(\[GRUB\]/ s/%version/%version-%release/" configure.ac
+
 mv ../grub-extras-%version ./grub-extras
 
-sed -i configure.ac -e "s/^AC_INIT.*/AC_INIT(\[GRUB\],\[%version-%release\],\[bug-grub@gnu.org\])/"
+%ifarch %efi
+cd ..
+rm -rf %name-efi-%version
+cp -a %name-%version %name-efi-%version
+cd %name-efi-%version
+%endif
 
 %build
 export GRUB_CONTRIB=`pwd`/grub-extras
 ./autogen.sh
-%configure --prefix=/ --disable-werror
+%configure \
+	TARGET_LDFLAGS=-static \
+	--with-platform=%platform \
+	--disable-werror
+
 %make_build
 # NB: make unicode.pf2 results in a broken font file, argh
 
+%ifarch %efi
+cd ../%name-efi-%version
+export GRUB_CONTRIB=`pwd`/grub-extras
+./autogen.sh
+%configure \
+	TARGET_LDFLAGS=-static \
+	--with-platform=efi \
+	--disable-werror
+
+%make_build
+
+# NB: 32-bit operation NOT tested at all (things are quite 64-bittish, btw)
+%ifarch %ix86
+%define grubefiarch i386-efi
+%else
+%define grubefiarch %_arch-efi
+%endif
+
+# NB: this isn't tested all too well, might be broken or lacking;
+#     grub-install --target=x86_64-efi will assemble another one
+./grub-mkimage -O %grubefiarch -o grub.efi -d grub-core -p "" \
+	part_gpt hfsplus fat ext2 btrfs normal chain boot configfile linux \
+	appleldr minicmd loadbios reboot halt search font gfxterm
+%endif
+
 %install
 export GRUB_CONTRIB=`pwd`/grub-extras
-%makeinstall
-mkdir -p %buildroot/etc/sysconfig
-install -pD -m644 %SOURCE1 %buildroot/etc/sysconfig/grub2
+%makeinstall_std
+
+install -pDm644 %SOURCE1 %buildroot%_sysconfdir/sysconfig/%name
+
 %find_lang grub
+
 mkdir -p %buildroot/boot/grub/fonts
-%buildroot/%_bindir/grub-mkfont -o %buildroot/boot/grub/unifont.pf2 %_datadir/fonts/bitmap/misc/8x13.pcf.gz
-%buildroot/%_bindir/grub-mkfont -o %buildroot/boot/grub/fonts/unicode.pf2 %_datadir/fonts/ttf/dejavu/DejaVuSansMono.ttf
-install -pD -m755 %SOURCE3 %buildroot/etc/grub.d/
-sed -i 's,^libdir=,libdir=%_libdir,g' %buildroot/etc/grub.d/39_memtest
-sed -i 's,@LOCALEDIR@,%_datadir/locale,g' %buildroot/etc/grub.d/*
-mkdir -p %buildroot/%_rpmlibdir
-install -pD -m755 %SOURCE4 %buildroot/%_rpmlibdir/
-install -pD -m755 %SOURCE6 %buildroot/%_sbindir/
-mkdir -p %buildroot/%_sysconfdir/firsttime.d
-install -pD -m755 %SOURCE7 %buildroot/%_sysconfdir/firsttime.d/grub-mkconfig
+
 install -pD -m755 %SOURCE8 %buildroot%_sbindir/
 install -pD -m644 %SOURCE9 %buildroot%_man8dir/update-grub.8
 
-%files -f grub.lang
+%buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/unifont.pf2 %_datadir/fonts/bitmap/misc/8x13.pcf.gz
+%buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/fonts/unicode.pf2 %_datadir/fonts/ttf/dejavu/DejaVuSansMono.ttf
+
+mkdir -p %buildroot/boot/grub/themes
+
+install -pDm755 %SOURCE3 %buildroot%_sysconfdir/grub.d/
+sed -i 's,^libdir=,libdir=%_libdir,g' %buildroot%_sysconfdir/grub.d/39_memtest
+sed -i 's,@LOCALEDIR@,%_datadir/locale,g' %buildroot%_sysconfdir/grub.d/*
+
+install -pDm755 %SOURCE4 %buildroot%_rpmlibdir/grub2.filetrigger
+install -pDm755 %SOURCE6 %buildroot%_sbindir/grub-autoupdate
+install -pDm755 %SOURCE7 %buildroot%_sysconfdir/firsttime.d/grub-mkconfig
+
+# Ghost config file
+install -d %buildroot/boot/grub
+touch %buildroot/boot/grub/grub.cfg
+ln -s ../boot/grub/grub.cfg %buildroot%_sysconfdir/grub.cfg
+
+%ifarch %efi
+cd ../%name-efi-%version
+%makeinstall_std
+
+install -pDm644 grub.efi %buildroot%_libdir/efi/grub.efi
+
+# Ghost config file
+mkdir -p %buildroot/boot/efi/EFI/altlinux
+touch %buildroot/boot/efi/EFI/altlinux/grub.cfg
+ln -s ../boot/efi/EFI/altlinux/grub.cfg %buildroot%_sysconfdir/grub-efi.cfg
+
+# Remove headers
+rm -f %buildroot%_libdir/grub-efi/*/*.h
+%endif
+
+%files common -f grub.lang
 %dir %_sysconfdir/grub.d
 %dir /boot/grub
 /boot/grub/*.pf2
 /boot/grub/fonts/
+/boot/grub/themes/
 %_sysconfdir/grub.d/00_header
 %_sysconfdir/grub.d/05_altlinux_theme
 %_sysconfdir/grub.d/10_linux
@@ -122,19 +243,57 @@ install -pD -m644 %SOURCE9 %buildroot%_man8dir/update-grub.8
 %_sysconfdir/grub.d/30_os-prober
 %_sysconfdir/grub.d/39_memtest
 %config(noreplace) %_sysconfdir/grub.d/40_custom
-%config(noreplace) /etc/sysconfig/grub2
+%config(noreplace) %_sysconfdir/sysconfig/%name
 %_sysconfdir/firsttime.d/*
-%_bindir/*
-%_libdir/grub
-%_datadir/grub
-%_sbindir/*
+%_sysconfdir/bash_completion.d/grub
+%_sbindir/grub-bios-setup
+%_sbindir/grub-install
+%_sbindir/grub-mkconfig
+%_sbindir/grub-mknetdir
+%_sbindir/grub-ofpathname
+%_sbindir/grub-probe
+%_sbindir/grub-reboot
+%_sbindir/grub-set-default
+%_sbindir/grub-sparc64-setup
+%_sbindir/update-grub
+%_bindir/grub-editenv
+%_bindir/grub-fstest
+%_bindir/grub-kbdcomp
+%_bindir/grub-menulst2cfg
+%_bindir/grub-mkstandalone
+%_bindir/grub-mkfont
+%_bindir/grub-mklayout
+%_bindir/grub-mkimage
+%_bindir/grub-mkpasswd-pbkdf2
+%_bindir/grub-mkrelpath
+%_bindir/grub-script-check
+%ifnarch ppc ppc64
+%_bindir/grub-mkrescue
+%endif
+%_datadir/grub/grub-mkconfig_lib
+%_man1dir/*
+%_man8dir/*
 %_infodir/grub.info.*
 %_infodir/grub-dev.info.*
-%_rpmlibdir/*.filetrigger
-%_man1dir/*.gz
-%_man8dir/*.gz
 
-%post
+%files pc
+%_libdir/grub/*-%platform/
+%config(noreplace) %_sysconfdir/grub.cfg
+%ghost %config(noreplace) /boot/grub/grub.cfg
+%_sbindir/grub-autoupdate
+%_rpmlibdir/%name.filetrigger
+
+%ifarch %efi
+%files efi
+%dir /boot/efi/EFI/altlinux
+%ghost /boot/efi/EFI/altlinux/grub.cfg
+%_libdir/efi/grub.efi
+%_libdir/grub/%grubefiarch
+%config(noreplace) %_sysconfdir/grub-efi.cfg
+%ghost %config(noreplace) /boot/efi/EFI/altlinux/grub.cfg
+%endif
+
+%post pc
 %_sbindir/grub-autoupdate || {
 	echo "** WARNING: grub-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
 	echo "** WARNING: please run it by hand, record the output offline,"
@@ -142,7 +301,14 @@ install -pD -m644 %SOURCE9 %buildroot%_man8dir/update-grub.8
 	echo "** WARNING: and try \`grub-install /dev/sdX' manually"
 } >&2
 
+# TODO: post efi
+
 %changelog
+* Tue Nov 13 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt4
+- initial EFI support merge
+- NB: grub2-pc package got split into -pc and -common,
+  please double-check that things went well
+
 * Mon Nov 05 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt3
 - try harder to warn that the configuration is not complete
   for automated grub upgrades thus needs to be updated manually
