@@ -29,7 +29,7 @@
 
 Name: pure-ftpd
 Version: 1.0.29
-Release: alt1.1
+Release: alt1.2
 URL: http://www.pureftpd.org
 Source: %name-%version.tar
 Packager: Afanasov Dmitry <ender@altlinux.org>
@@ -44,6 +44,7 @@ Source7: %name.default
 Patch1: %name-1.0.18-conf.patch
 Patch2: %name-1.0.26-docs.patch
 Patch3: %name-1.0.26-VHOST_PATH.patch
+Patch4: %name-1.0.29-alt-mysql.patch
 
 Group: System/Servers
 License: BSD
@@ -233,6 +234,7 @@ This package contains of Pure-FTPd server builded with:
 %patch1 -p1
 %patch2 -p1 
 %patch3 -p1
+%patch4 -p2
 
 %build
 # configure options for all parts
@@ -456,6 +458,9 @@ ln -s pure-ftpd-pgsql %_sbindir/%name ||:
 %endif
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.29-alt1.2
+- Fixed build
+
 * Mon Dec 06 2010 Igor Vlasenko <viy@altlinux.ru> 1.0.29-alt1.1
 - rebuild with new libmysqlclient by request of libmysqlclient maintainer
 
