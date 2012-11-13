@@ -1,7 +1,7 @@
 %define major 3.3
 Name: ice
 Version: %major.1
-Release: alt2.2
+Release: alt2.3
 
 Summary: Files common to all Ice packages
 
@@ -20,6 +20,7 @@ Patch2: ice-3.3-alt-build.patch
 Patch3: ice-3.3-ssl-krb.patch
 Patch4: ice-3.3.1-alt-no-dbl-mv.patch
 Patch5: ice-3.3.1-alt-gcc4.6.patch
+Patch6: ice-3.3.1-alt-glibc-2.16.patch
 
 %def_with krb
 
@@ -111,6 +112,7 @@ icebox, iceboxnet, icepatch2server and related files.
 %patch1 -p1
 %patch4 -p2
 %patch5 -p2
+%patch6 -p2
 
 cd cpp
 %patch2 -p1
@@ -118,7 +120,8 @@ cd cpp
 %patch3 -p1
 %endif
 
-sed -i 's|\(\$(CPPFLAGS)\)|\1 -g|g' $(find ./ -name Makefile)
+sed -i 's|\(\$(CPPFLAGS)\)|\1 -g -fpermissive|g' \
+	$(find ./ -name Makefile) config/Make.rules
 
 %build
 cd cpp
@@ -278,6 +281,9 @@ fi
 
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.3
+- Fixed build with glibc 2.16
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.1-alt2.2
 - Fixed build
 
