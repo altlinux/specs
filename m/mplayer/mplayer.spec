@@ -11,7 +11,7 @@
 %define lname mplayer
 %define Name MPlayer
 %define rel 35
-%define subrel 8
+%define subrel 9
 
 #---------------------- BEGIN OF PARAMETERS -------------------------------------
 
@@ -325,7 +325,8 @@ Requires: %name-fonts
 %endif
 
 Source0: %lname-%pkgver.tar
-
+# register console mplayer as mime handler
+Source2: mplayer-console.desktop
 Source3: %lname.sh
 Source4: standard-1.9.tar
 Source5: %lname.conf.in
@@ -1063,6 +1064,7 @@ install -D -m 0644 {etc/%lname,%buildroot%_desktopdir/%name}.desktop
 ln -sf %lname %buildroot%_bindir/g%lname
 %endif
 
+install -D -m 644 %{SOURCE2} %buildroot/%_desktopdir/%{name}-console.desktop
 
 %if_enabled mplayer
 %files
@@ -1077,6 +1079,7 @@ ln -sf %lname %buildroot%_bindir/g%lname
 %{?_enable_dvb:%config(noreplace) %verify(not size mtime md5) %_sysconfdir/%name/dvb-menu.conf}
 %{?_with_soundwrapper:%_sysconfdir/bashrc.d/*}
 %dir %_datadir/%name
+%_desktopdir/%{name}-console.desktop
 %if_disabled fontconfig
 %if_enabled freetype
 %config(missingok,noreplace) %verify(not link size mtime md5) %_datadir/%name/subfont.ttf
@@ -1089,7 +1092,7 @@ ln -sf %lname %buildroot%_bindir/g%lname
 %if_enabled gui
 %files gui
 %_bindir/%gname
-%_desktopdir/*
+%_desktopdir/%{name}.desktop
 #%%_datadir/pixmaps/*
 %_iconsdir/hicolor/*/apps/*
 %dir %_datadir/%name/skins
@@ -1232,6 +1235,10 @@ ln -sf %lname %buildroot%_bindir/g%lname
 
 
 %changelog
+* Tue Nov 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt35.32772.9
+- added mplayer-console.desktop - a mime handler for the console mplayer.
+  Nowadays even mc use mime to launch applications ;) (closes: 27953)
+
 * Tue Oct 16 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.0-alt35.32772.8
 - rebuilt with recent live555
 
