@@ -1,6 +1,6 @@
 Name:		last.fm
 Version:	1.5.1.31879
-Release:	alt4
+Release:	alt4.1
 Packager:	Fr. Br. George <george@altlinux.ru>
 Summary:	Free Last.fm internet radio player on demand
 
@@ -27,6 +27,7 @@ Patch13: dirpaths.diff
 Patch52: browser-select.diff
 Patch53: last.fm-1.5.1.31879-alt-glib2-2.32.0.patch
 Patch54: last.fm-1.5.1.31879-alt-DSO-linkage.patch
+Patch55: last.fm-1.5.1.31879-alt-glibc-2.16.patch
 
 License: GPL
 Group: Sound
@@ -61,6 +62,7 @@ This is "official" version of http://last.fm client.
 %patch52 -p1
 %patch53 -p2
 %patch54 -p1
+%patch55 -p2
 ##sed -i 's/ -lMoose/ -lmad -lMoose/' definitions.pro.inc
 ##sed -i 's@/usr/lib/glib@%_libdir/glib@g' src/mediadevices/ipod/ipod.pro
 ##sed -i 's@/usr/lib/glib@%_libdir/glib@g' src/mediadevices/gpod/gpod.pro
@@ -72,7 +74,7 @@ perl -pi -e "s|\r\n|\n|" ChangeLog
 
 %build
 qmake-qt4 -config release
-%make_build CXX="g++ -fPIC $(pkg-config --cflags libgpod-1.0)"
+%make_build CXX="g++ -fPIC $(pkg-config --cflags libgpod-1.0) -fpermissive"
 
 cd i18n
 lrelease-qt4 *.ts
@@ -142,6 +144,9 @@ install -D %SOURCE3 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 %_datadir/services/lastfm.protocol
 
 %changelog
+* Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1.31879-alt4.1
+- Fixed build with glibc 2.16
+
 * Sun May 20 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.5.1.31879-alt4
 - fix DSO linking
 
