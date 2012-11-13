@@ -10,7 +10,7 @@
 %def_with ui
 
 Name: rygel
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 Summary: A UPnP v2 Media Server
 
@@ -128,6 +128,9 @@ echo %version > .tarball-version
 %_datadir/vala/vapi/*
 
 %changelog
+* Tue Nov 13 2012 Alexey Shabalin <shaba@altlinux.ru> 0.16.2-alt1
+- 0.16.2
+
 * Fri Oct 12 2012 Alexey Shabalin <shaba@altlinux.ru> 0.16.1-alt1
 - 0.16.1
 
