@@ -7,7 +7,7 @@
 %def_enable zeitgeist
 
 Name: gedit
-Version: %ver_major.1
+Version: %ver_major.2
 Release: alt1
 
 Summary: gEdit is a small but powerful text editor for GNOME
@@ -198,6 +198,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %endif
 
 %changelog
+* Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
 - 3.6.1
 
