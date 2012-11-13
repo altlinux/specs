@@ -1,5 +1,5 @@
 Name: ctemplate
-Version: 2.1
+Version: 2.2
 Release: alt1
 License: BSD
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
@@ -62,6 +62,9 @@ Use library to build a variable list and pass it to a template.
 %_pkgconfigdir/*
 
 %changelog
+* Tue Nov 13 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2-alt1
+- Update to new version
+
 * Mon Apr 16 2012 Evgeny Sinelnikov <sin@altlinux.ru> 2.1-alt1
 - Update to new version
 - Replace build utilities to devel subpackage
