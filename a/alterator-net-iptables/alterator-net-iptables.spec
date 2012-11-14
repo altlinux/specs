@@ -1,6 +1,6 @@
 Name: alterator-net-iptables
-Version: 4.18
-Release: alt2
+Version: 4.19
+Release: alt1
 
 Packager: Vladislav Zavjalov <slazav@altlinux.org>
 
@@ -41,6 +41,11 @@ touch -- %buildroot%_logdir/%name
 %config(noreplace) %_sysconfdir/alterator/net-iptables/*.conf
 %_sysconfdir/alterator/net-iptables/List
 %_sysconfdir/alterator/net-iptables/*.desktop
+%dir %_sysconfdir/alterator/net-ip6tables/
+%config(noreplace) %_sysconfdir/alterator/net-ip6tables.conf
+%config(noreplace) %_sysconfdir/alterator/net-ip6tables/*.conf
+%_sysconfdir/alterator/net-ip6tables/List
+%_sysconfdir/alterator/net-ip6tables/*.desktop
 %_alterator_backend3dir/*
 %_datadir/alterator/applications/*
 %_datadir/alterator/ui/*
@@ -52,6 +57,21 @@ touch -- %buildroot%_logdir/%name
 %_logdir/alterator-net-iptables
 
 %changelog
+* Wed Nov 14 2012 Mikhail Efremov <sem@altlinux.org> 4.19-alt1
+- iptables_helper: Allow networks in the IR module.
+- iptables_helper: Fix regexp for default services.
+- iptables_helper: Add default services for each IP.
+- iptables_helper: Allow default services for internal ifaces.
+- net-iptables-manual: Add IPv6 support.
+- net-tc: Add IPv6 support.
+- net-tc: Use 'ip neighbour' instead of 'arp'.
+- net-bl: Add IPv6 support.
+- net-iptables: Add IPv6 support.
+- Add *.desktop files and config files for IPv6.
+- iptables_helper: Add ip6tables support.
+- Use 'conntrack' match instead of 'state'.
+- ip comments support in ir module (by Vladislav Zavjalov).
+
 * Tue Apr 19 2011 Vladislav Zavjalov <slazav@altlinux.org> 4.18-alt2
 - cups.desktop: add udp:631 (closes: 25467)
 
