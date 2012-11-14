@@ -1,5 +1,5 @@
 Name: libshell
-Version: 0.1.7
+Version: 0.1.8
 Release: alt1
 
 Summary: A library of shell functions
@@ -41,6 +41,12 @@ as single file.
 /bin/shell-lib
 
 %changelog
+* Wed Nov 14 2012 Alexey Gladkov <legion@altlinux.ru> 0.1.8-alt1
+- shell-ini-config changes:
+  + Fix empty lines at EOF (ALT#27974).
+  + Indentation in the ini-file can be configured by
+    shell_ini_config_prefix (ALT#27915).
+
 * Sun Apr 01 2012 Alexey Gladkov <legion@altlinux.ru> 0.1.7-alt1
 - Packaged -single subpackage with all libshell functions bundled into
   the single shell-lib file.
