@@ -1,14 +1,16 @@
 %define _name harfbuzz
 
 Name: lib%_name
-Version: 0.9.4
+Version: 0.9.6
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
 Group: System/Libraries
 License: MIT
 Url: http://freedesktop.org/wiki/Software/HarfBuzz
+
 Source: http://www.freedesktop.org/software/%_name/release/%_name-%version.tar.bz2
+#Source: %_name-%version.tar
 
 BuildRequires: gcc-c++ glib2-devel libfreetype-devel libcairo-devel libicu-devel
 
@@ -65,6 +67,9 @@ The %name-utils package provides utilities from %name package.
 
 
 %changelog
+* Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9.6-alt1
+- 0.9.6
+
 * Tue Sep 18 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9.4-alt1
 - first build for Sisyphus
 
