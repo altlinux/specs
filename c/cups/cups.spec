@@ -1,6 +1,6 @@
 Name: cups
 Version: 1.6.1
-Release: alt2
+Release: alt3
 
 Summary: Common Unix Printing System - server package
 License: GPL
@@ -20,6 +20,7 @@ Source110: %name.systemd.path
 Source111: %name.systemd.service
 Source112: %name.systemd.socket
 Source113: %name.systemd.tmpfiles
+Source114: %name-alt-locale.tar
 
 Patch1: cups-1.6.0-debian-pidfile.patch
 Patch2: cups-1.6.1-alt-hardening.patch
@@ -149,6 +150,8 @@ Sends IPP requests to the specified URI and tests and/or displays the results.
 %prep
 %setup
 %setup -T -D
+
+tar xf %SOURCE114
 
 %patch1 -p1
 %patch2 -p2
@@ -385,6 +388,9 @@ rm -f /var/cache/cups/ppds.dat
 %_man1dir/ipptool.1.gz
 
 %changelog
+* Tue Nov 06 2012 Alexander Plehanov <tonik@altlinux.org> 1.6.1-alt3
+- Edit russian translation
+
 * Tue Oct 30 2012 Anton Farygin <rider@altlinux.ru> 1.6.1-alt2
 - Added from ubuntu (closes: #27907):
     cups-1.4-ubuntu-default-error-policy-retry-job.patch
