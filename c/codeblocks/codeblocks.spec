@@ -1,5 +1,5 @@
 Name: codeblocks
-%define revision 8466
+%define revision 8549
 Version: 10.05.%revision
 Release: alt1
 
@@ -183,7 +183,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %{pkgdata}/Profiler.zip
 %{pkgdata}/RegExTestbed.zip
 %{pkgdata}/ReopenEditor.zip
-%{pkgdata}/*SmartIndent.zip
+#  %{pkgdata}/*SmartIndent.zip
 %{pkgdata}/SpellChecker.zip
 %{pkgdata}/SymTab.zip
 %{pkgdata}/ThreadSearch.zip
@@ -226,7 +226,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %{_libdir}/%{name}/plugins/libProfiler.*
 %{_libdir}/%{name}/plugins/libRegExTestbed.*
 %{_libdir}/%{name}/plugins/libReopenEditor.*
-%{_libdir}/%{name}/plugins/lib*SmartIndent.*
+# %{_libdir}/%{name}/plugins/lib*SmartIndent.*
 %{_libdir}/%{name}/plugins/libSpellChecker.*
 %{_libdir}/%{name}/plugins/libSymTab.*
 %{_libdir}/%{name}/plugins/libThreadSearch.*
@@ -241,6 +241,12 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 14 2012 Denis Kirienko <dk@altlinux.org> 10.05.8549-alt1
+- 12.11 RC1 (SVN 8549)
+
+* Sun Nov 04 2012 Denis Kirienko <dk@altlinux.org> 10.05.8500-alt1
+- SVN snapshot 8500
+
 * Sun Oct 21 2012 Denis Kirienko <dk@altlinux.org> 10.05.8466-alt1
 - SVN snapshot 8466
 
