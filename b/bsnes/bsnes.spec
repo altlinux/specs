@@ -2,7 +2,7 @@
 
 Name: bsnes
 Version: 0.%vernumber
-Release: alt1
+Release: alt1.1
 Summary: SNES emulator focused on accuracy
 
 License: GPLv3
@@ -40,9 +40,10 @@ minimum system requirements for bsnes are quite high.
 find . -type f -not -name \*.sh -exec chmod 644 {} \;
 
 #use system optflags
-sed -i "s/-O3/$RPM_OPT_FLAGS/" bsnes/Makefile
-sed -i "s/-O3/$RPM_OPT_FLAGS -fPIC/" snesfilter/Makefile
-sed -i "s/-O3/$RPM_OPT_FLAGS/" snespurify/cc-gtk.sh
+%add_optflags -fpermissive
+sed -i "s/-O3/%optflags/" bsnes/Makefile
+sed -i "s/-O3/%optflags -fPIC/" snesfilter/Makefile
+sed -i "s/-O3/%optflags/" snespurify/cc-gtk.sh
 
 #don't strip the binaries prematurely
 sed -i "s/link += -s/link +=/" bsnes/Makefile
@@ -118,6 +119,9 @@ install -pm 644 snesshader/*.shader $RPM_BUILD_ROOT%_datadir/%name/shaders
 %_datadir/applications/altlinux-bsnes.desktop
 
 %changelog
+* Wed Nov 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.086-alt1.1
+- Fixed build with gcc 4.7
+
 * Thu May 31 2012 Ilya Mashkin <oddity@altlinux.ru> 0.086-alt1
 - Build for Sisyphus
 
