@@ -1,6 +1,6 @@
 Name: R-base
 Version: 2.15.1
-Release: alt2
+Release: alt3
 
 Summary: A language for data analysis and graphics
 License: GPL
@@ -321,6 +321,9 @@ classification, clustering, ...).
 %_infodir/R-*.info*
 
 %changelog
+* Wed Nov 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.15.1-alt3
+- Rebuilt with icu 5.1
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.15.1-alt2
 - Rebuilt with libpng15
 
