@@ -13,7 +13,7 @@ BuildRequires(pre): rpm-macros-mate-conf
 %define fedora 18
 Name:		mate-display-manager	
 Version:	1.4.0
-Release:	alt3
+Release:	alt4
 Summary:	Displays login screen for MATE Desktop
 License:	LPLv2+ and GPLv2+ 
 URL:		http://mate-desktop.org
@@ -43,6 +43,7 @@ Patch39: mdm-alt-disable-a11y-default.patch
 Patch40: mdm-alt-Init.patch
 Patch41: mdm-alt-focus.patch
 Patch42: mdm-alt-ru-cancel.patch
+Patch43: mdm-alt-iso-codes-prefix.patch
 
 %description
 Displays login screen for MATE Desktop
@@ -59,6 +60,7 @@ Displays login screen for MATE Desktop
 %patch40 -p1
 %patch41 -p1
 %patch42 -p1
+%patch43 -p2
 
 
 %build
@@ -152,6 +154,9 @@ install -pDm755 %SOURCE45 %buildroot%_controldir/mdm_xdmcp
 
 
 %changelog
+* Wed Nov 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt4
+- login fixed
+
 * Thu Nov 01 2012 Led <led@altlinux.ru> 1.4.0-alt3
 - fixed mdm's home dir permissions (ALT#27912)
 
