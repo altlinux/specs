@@ -13,8 +13,8 @@
 %def_enable gst_1
 
 Name: empathy
-Version: %ver_major.1
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: Instant Messaging Client for GNOME
 License: GPL/LGPL
@@ -53,7 +53,7 @@ Requires: %name-data = %version-%release
 %define folks_ver 0.7.1
 %define nst_ver 2.91.6
 %define nm_ver 0.8.995
-%define goa_ver 3.5.1
+%define goa_ver 3.6.2
 %define secret_ver 0.5
 %define farstream_ver 0.2
 
@@ -195,6 +195,9 @@ rm -f data/%name.desktop
 
 
 %changelog
+* Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Wed Nov 07 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt2
 - rebuilt against libtelepathy-logger.so.3
 
