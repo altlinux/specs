@@ -8,7 +8,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A program that manages general GNOME settings
@@ -189,6 +189,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-test-xsettings
 
 %changelog
+* Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
 * Thu Nov 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

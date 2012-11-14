@@ -10,7 +10,7 @@
 %def_enable ibus
 
 Name: gnome-control-center
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GNOME Control Center
@@ -36,7 +36,7 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 %define nm_ver 0.9.1.90
 %define gnome_menus_ver 3.5.5
 %define goa_ver 3.5.90
-%define sett_daemon_ver 3.6.0
+%define sett_daemon_ver 3.6.3
 %define cheese_ver 3.5.92
 %define bt_ver 3.5.92
 %define systemd_ver 40
@@ -191,6 +191,9 @@ you'll want to install this package.
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
 * Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
