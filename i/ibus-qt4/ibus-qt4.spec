@@ -2,7 +2,7 @@
 
 Name: %{_name}4
 Version: 1.3.1
-Release: alt1
+Release: alt2
 
 Summary: Qt IBus library and Qt input method plugin
 License: GPLv2+
@@ -74,6 +74,9 @@ pushd BUILD
 #%doc docs/html
 
 %changelog
+* Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt2
+- rebuild against libicu-5.1
+
 * Tue Jan 17 2012 Yuri N. Sedunov <aris@altlinux.org> 1.3.1-alt1
 - first build for Sisyphus
 
