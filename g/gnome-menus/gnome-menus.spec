@@ -3,7 +3,7 @@
 %def_enable introspection
 
 Name: gnome-menus
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: GNOME desktop menu
@@ -165,6 +165,9 @@ mv %buildroot%_xdgmenusdir/{,gnome3-}applications.menu
 %python_sitelibdir/GMenuSimpleEditor/*
 
 %changelog
+* Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Thu Sep 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
