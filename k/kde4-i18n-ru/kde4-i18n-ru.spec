@@ -3,8 +3,8 @@
 %define lngg Russian
 
 Name: kde4-i18n-%lng
-Version: 4.9.2
-Release: alt2
+Version: 4.9.3
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE
@@ -16,7 +16,6 @@ Requires: kde-common >= 4.1
 BuildArch: noarch
 
 Source: kde-l10n-%lng-%version.tar
-Patch1: kmail-migration.patch
 
 BuildRequires: gcc-c++ kde4libs-devel
 
@@ -26,7 +25,6 @@ BuildRequires: gcc-c++ kde4libs-devel
 
 %prep
 %setup -q -n kde-l10n-%lng-%version
-%patch1 -p1
 #find -type f -name *.gmo | while read f; do rm -f $f; done
 #find -type f -name index.cache.bz2 | while read f; do rm -f $f; done
 find -type f -name CMakeLists.txt | \
@@ -49,8 +47,6 @@ do
 	|| echo "add_subdirectory( kdepim )" >> CMakeLists.txt
     popd
 done
-
-sed -i 's|изобрадени|изображени|g' messages/kdewebdev/kimagemapeditor.po
 
 
 %build
@@ -95,6 +91,9 @@ fi
 #%lang(%lng) %_K4apps/kturtle/examples/%lng/
 
 %changelog
+* Wed Nov 14 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
+- new version
+
 * Wed Oct 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.2-alt2
 - fix kmail settings translation
 
