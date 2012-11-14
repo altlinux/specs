@@ -3,7 +3,7 @@
 Summary: OpenPrinting CUPS filters and backends
 Name: cups-filters
 Version: 1.0.24
-Release: alt2
+Release: alt3
 
 # For a breakdown of the licensing, see COPYING file
 # GPLv2:   filters: commandto*, imagetoraster, pdftops, rasterto*,
@@ -167,6 +167,9 @@ install -D -m 644 scripting/php/php-cups-params.sh %buildroot/%php5_extconf/%php
 %_libdir/libfontembed.so
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.0.24-alt3
+- rebuild with php5-5.3.18.20121017-alt1
+
 * Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 1.0.24-alt2
 - rebuild with php5-5.3.17.20120913-alt1
 

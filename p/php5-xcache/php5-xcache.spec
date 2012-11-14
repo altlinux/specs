@@ -2,7 +2,7 @@
 
 Name: php5-xcache
 Version: 1.3.0
-Release: alt12
+Release: alt13
 
 Summary: XCache is a fast, stable  PHP opcode cacher
 License: GPL
@@ -60,6 +60,9 @@ popd
 %php5_extension_preun
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.3.0-alt13
+- Rebuild with php5-5.3.18.20121017-alt1
+
 * Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 1.3.0-alt12
 - Rebuild with php5-5.3.17.20120913-alt1
 

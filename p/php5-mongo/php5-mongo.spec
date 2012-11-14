@@ -2,7 +2,7 @@
 
 Name: php5-mongo
 Version: 1.1.0
-Release: alt8
+Release: alt9
 
 Summary: PHP MongoDB driver
 License: Apache license
@@ -56,6 +56,9 @@ install -pDm644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 # - add/separate admin stuff (see also spec attached to #19996)
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.1.0-alt9
+- Rebuild with php5-5.3.18.20121017-alt1
+
 * Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 1.1.0-alt8
 - Rebuild with php5-5.3.17.20120913-alt1
 

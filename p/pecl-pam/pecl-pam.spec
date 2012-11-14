@@ -1,13 +1,9 @@
 # vim: set ft=spec: -*- rpm-spec -*-
-
-# %%branch_switch set %%branch_release use
-#%%define branch_switch Mxx
-
 %define php5_extension pam
 
 Name: pecl-%php5_extension
 Version: 1.0.3
-Release: %branch_release alt2
+Release: alt3
 
 Summary: PAM integration
 License: PHP
@@ -62,6 +58,9 @@ cd %php5_extension-%version
 %pecl_files
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.0.3-alt3
+- Rebuild with php5-5.3.18.20121017-alt1
+
 * Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 1.0.3-alt2
 - Rebuild with php5-devel-5.3.17.20120913-alt1
 

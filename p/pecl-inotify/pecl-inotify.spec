@@ -3,7 +3,7 @@
 
 Name: pecl-%pecl_name
 Version: 0.1.4
-Release: alt7
+Release: alt8
 
 Summary: The inotify extension allows to use inotify functions in a PHP script
 
@@ -46,6 +46,9 @@ phpize
 %pecl_files
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 0.1.4-alt8
+- Rebuild with php5-5.3.18.20121017-alt1
+
 * Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 0.1.4-alt7
 - Rebuild with php5-5.3.17.20120913-alt1
 
