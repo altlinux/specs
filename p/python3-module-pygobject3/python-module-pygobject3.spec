@@ -5,7 +5,7 @@
 %def_disable devel_doc
 
 Name: python3-module-%{_name}3
-Version: %major.1.1
+Version: %major.2
 Release: alt2
 
 Summary: Python 3 bindings for GObject
@@ -104,6 +104,12 @@ export LD_PRELOAD=%_libdir/libpython%{_python3_version}mu.so
 %endif
 
 %changelog
+* Wed Nov 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.2-alt2
+- Built for Python 3
+
+* Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
+- 3.4.2
+
 * Thu Oct 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.1.1-alt2
 - Built for Python 3
 
