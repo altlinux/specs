@@ -2,7 +2,7 @@
 
 Name: php5-ctpp
 Version: 2.6.0
-Release: alt8
+Release: alt9
 
 Summary: PHP ctpp2 template engine driver
 License: BSD
@@ -54,6 +54,9 @@ install -pDm644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 2.6.0-alt9
+- Rebuild with php5-5.3.18.20121017-alt1
+
 * Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 2.6.0-alt8
 - Rebuild with php5-5.3.17.20120913-alt1
 

@@ -15,6 +15,7 @@ Provides: php-engine = %php5_version-%php5_release
 Source1: php.ini
 Source2: %name-browscap.ini
 Source3: php5-fpm.init
+Source4: php5-fpm.logrotate
 
 Patch0: php5-fpm-fcgi-5.3.3.20100722-config.m4.patch
 Patch2: php5-fpm-fcgi-5.3.3.20100722-build.patch
@@ -117,6 +118,9 @@ EOF
 mkdir -p %buildroot/%_logdir/php5-fpm
 mkdir -p %buildroot/%_runtimedir/php5-fpm
 
+# config for logrotate
+install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/logrotate.d/php5-fpm
+
 %pre
 /usr/sbin/groupadd -r -f _php_fpm 2>/dev/null ||:
 /usr/sbin/groupadd -r -f _webserver 2>/dev/null ||:
@@ -146,10 +150,15 @@ mkdir -p %buildroot/%_runtimedir/php5-fpm
 %config(noreplace) %_sysconfdir/fpm/php5-fpm.conf
 %config(noreplace) %php5_sysconfdir/%php5_sapi/php.ini
 %config(noreplace) %php5_sysconfdir/%php5_sapi/browscap.ini
+%config(noreplace) %_sysconfdir/logrotate.d/php5-fpm
 %php5_servicedir/%php5_sapi
 %_man8dir/*
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
+- Rebuild with php5-5.3.18.20121017-alt1
+- added logrotate support
+
 * Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1
 - Rebuild with php5-5.3.17.20120913-alt1
 

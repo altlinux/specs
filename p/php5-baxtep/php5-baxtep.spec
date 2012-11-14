@@ -3,7 +3,7 @@
 ###############################################################
 Name:	 	php5-%php5_extension
 Version:	2.2.6
-Release:	alt3
+Release:	alt4
 
 Summary:	PHP security extension to intercept execution of system commands with PHP scripts
 
@@ -61,6 +61,9 @@ phpize
 %php5_extension_preun
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 2.2.6-alt4
+- rebuild with php5-5.3.18.20121017-alt1
+
 * Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 2.2.6-alt3
 - rebuild with php5-5.3.17.20120913-alt1
 

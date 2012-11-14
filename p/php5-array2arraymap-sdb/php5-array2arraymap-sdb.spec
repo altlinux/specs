@@ -2,7 +2,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	0.13
-Release:	alt7
+Release:	alt8
 
 Summary:	php5 module to access static db (SDB) files.
 Group:		System/Servers
@@ -55,6 +55,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 0.13-alt8
+- Rebuild with php5-5.3.18.20121017-alt1
+
 * Fri Sep 14 2012 Anton Farygin <rider@altlinux.ru> 0.13-alt7
 - Rebuild with php5-5.3.17.20120913-alt1
 

@@ -255,6 +255,9 @@ done
 %endif
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
+- Rebuild with php5-5.3.18.20121017-alt1
+
 * Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 5.3.17.20120913-alt1
 - Rebuild with php5-devel-5.3.17.20120913-alt1
 

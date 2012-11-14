@@ -3,7 +3,7 @@
 
 Name: pecl-%pecl_name
 Version: 1.0.0
-Release: alt16
+Release: alt17
 
 Summary: Embedded Perl
 
@@ -53,6 +53,9 @@ phpize
 %pecl_files
 
 %changelog
+* Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 1.0.0-alt17
+- Rebuild with php5-5.3.18.20121017-alt1
+
 * Tue Oct 02 2012 Anton Farygin <rider@altlinux.ru> 1.0.0-alt16
 - Rebuild with PHP 5.3.17.20120913-alt1
 
