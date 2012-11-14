@@ -1,6 +1,6 @@
 Name: asymptote
 Version: 1.91
-Release: alt1.2
+Release: alt1.3
 
 Summary: Descriptive vector graphics language
 
@@ -12,6 +12,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version.src.tar
 Patch: asymptote-1.91-alt-DSO.patch
+Patch1: asymptote-1.91-alt-glibc-2.16.patch
 
 # manually removed: libsubversion-auth-gnome-keyring libsubversion-auth-kwallet subversion tetex-core
 # Automatically added by buildreq on Sat Feb 20 2010
@@ -35,6 +36,7 @@ Documentation and examples for %name.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
 # some incompatibilities?
 %__subst "s|@printindex cp||g" doc/%name.texi
 gzip ChangeLog
@@ -63,6 +65,9 @@ gzip ChangeLog
 %_infodir/%name/*.info*
 
 %changelog
+* Wed Nov 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.91-alt1.3
+- Fixed build with glibc 2.16
+
 * Thu Jun 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.91-alt1.2
 - Fixed build
 
