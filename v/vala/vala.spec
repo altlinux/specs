@@ -5,8 +5,8 @@
 %define api_ver 0.18
 
 Name: vala
-Version: 0.18.0
-Release: alt2
+Version: 0.18.1
+Release: alt1
 Group: Development/C
 Summary: Vala is a programming language which makes GNOME programming easy
 License: LGPL
@@ -202,6 +202,9 @@ mkdir -p %buildroot%_datadir/vala/vapi
 %_man1dir/vapigen*
 
 %changelog
+* Wed Nov 14 2012 Alexey Shabalin <shaba@altlinux.ru> 0.18.1-alt1
+- 0.18.1
+
 * Mon Oct 08 2012 Alexey Shabalin <shaba@altlinux.ru> 0.18.0-alt2
 - vapi-common as noarch
 
