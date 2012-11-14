@@ -2,7 +2,7 @@
 
 Name: psi-plus
 Version: 0.16.%subver
-Release: alt1
+Release: alt2
 Group: Networking/Instant messaging
 
 Summary: Psi+ Jabber client
@@ -405,8 +405,8 @@ Watcher support plugin for %name
 %__cp -a -f psi-plus-l10n/translations ./
 
 for f in `ls -1 psi-plus/patches/*diff | sort`; do if (patch -p1 --dry-run -i "$f"); then patch -p1 -i "$f"; fi; done
-VER=`cat psi-plus/version.txt`
-%__subst "s/0.16.xx/$VER/" src/applicationinfo.cpp
+
+%__cat psi-plus/version.txt > version
 
 %__rm -rf psi-plus
 
@@ -755,6 +755,12 @@ popd
 %_libdir/%name/plugins/libwatcherplugin.so
 
 %changelog
+* Wed Nov 14 2012 Nazarov Denis <nenderus@altlinux.org> 0.16.25-alt2
+- Fix version
+
+* Wed Nov 14 2012 Nazarov Denis <nenderus@altlinux.org> 0.16.25-alt0.M60T.1
+- Build for branch t6
+
 * Wed Nov 14 2012 Nazarov Denis <nenderus@altlinux.org> 0.16.25-alt1
 - Version 0.16.25
 
