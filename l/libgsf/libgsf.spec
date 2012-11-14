@@ -6,7 +6,7 @@
 %def_without gnome_vfs
 
 Name: libgsf
-Version: %ver_major.24
+Version: %ver_major.25
 Release: alt1
 
 Summary: GNOME Structured file library
@@ -150,7 +150,6 @@ subst 's/pythondir/pyexecdir/' python/Makefile.am
 %build
 %autoreconf
 %configure \
-    --with-gio \
     --with-gdk-pixbuf \
     --with-bz2 \
     --with-python \
@@ -236,6 +235,9 @@ fi
 %exclude %python_sitelibdir/gsf/*.la
 
 %changelog
+* Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.25-alt1
+- 1.14.25
+
 * Fri Sep 07 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.24-alt1
 - 1.14.24
 
