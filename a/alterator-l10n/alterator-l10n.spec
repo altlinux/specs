@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt46
+Release: alt47
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -107,6 +107,9 @@ make check
 %lang(es) %_datadir/locale/es/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Nov 14 2012 Andrey Cherepanov <cas@altlinux.org> 2.9-alt47
+- Add note to use domain with Windows 7/8
+
 * Thu Nov 01 2012 Andrey Cherepanov <cas@altlinux.org> 2.9-alt46
 - Update alterator-auth translations
 
