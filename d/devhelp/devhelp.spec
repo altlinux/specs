@@ -1,7 +1,7 @@
 %define ver_major 3.6
 
 Name: devhelp
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Developer's help program
@@ -132,6 +132,9 @@ fi
 %gedit_pluginsdir/*
 
 %changelog
+* Wed Nov 14 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.1-alt1
+- 3.6.1
+
 * Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 3.6.0-alt1
 - 3.6.0
 
