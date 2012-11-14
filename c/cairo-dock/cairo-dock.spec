@@ -1,6 +1,6 @@
 Name: cairo-dock
 Version: 3.0.2
-Release: alt1
+Release: alt1.1
 Summary: A light and eye-candy dock to launch your programs easily
 License: GPLv3+
 Group: Graphical desktop/Other
@@ -16,6 +16,10 @@ BuildRequires: GConf apt cmake desktop-file-utils gcc-c++ libGLU-devel libXcompo
 # removing GraphicsMagick-ImageMagick-compat and adding
 #FIXME: BuildRequires: /usr/bin/convert
 BuildRequires: ImageMagick-tools
+BuildPreReq: libXdmcp-devel libpixman-devel libpangox-compat-devel
+BuildPreReq: libpng-devel libharfbuzz-devel libXcursor-devel
+BuildPreReq: at-spi2-atk-devel
+BuildPreReq: pkgconfig(xdamage) pkgconfig(xxf86vm) pkgconfig(xrandr)
 
 %description
 cairo-dock uses cairo to render nice graphics, and Glitz to use hardware
@@ -76,6 +80,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Nov 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.2-alt1.1
+- Fixed build
+
 * Thu Jun 28 2012 Ildar Mulyukov <ildar@altlinux.ru> 3.0.2-alt1
 - new version
 - cairo-dock-alt-glib2-2.32.0.patch removed
