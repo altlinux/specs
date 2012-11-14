@@ -1,7 +1,7 @@
-%define ver_major 3.4
+%define ver_major 3.6
 
 Name: gnome-icon-theme-extras
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Extra GNOME icons for specific devices and file types
@@ -52,6 +52,9 @@ the regular name.
 %doc AUTHORS README NEWS COPYING
 
 %changelog
+* Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Tue Mar 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.0-alt1
 - 3.4.0
 
