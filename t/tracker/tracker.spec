@@ -42,7 +42,7 @@
 
 Name: tracker
 Version: %ver_major.4
-Release: alt1
+Release: alt1.1
 
 Summary: Tracker is a powerfull desktop-oriented search tool and indexer
 License: GPLv2+
@@ -403,6 +403,9 @@ find %{buildroot} -type f -name "*.la" -exec rm -f {} ';'
 %endif
 
 %changelog
+* Thu Nov 15 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.4-alt1.1
+- rebuild with libicu-5.1
+
 * Fri Nov 02 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14.4-alt1
 - 0.14.4
 
