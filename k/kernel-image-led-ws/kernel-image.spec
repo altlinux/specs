@@ -11,13 +11,17 @@
 %define via_32 c3 c3_2
 %define x86_64 x86_64 %intel_64 %amd_64 %via_64
 
+%define extra_modules %nil
+%define Extra_modules() BuildRequires: kernel-source-%1 = %2 \
+%global extra_modules %extra_modules %1=%2
+
 %define base_flavour led
 %define sub_flavour ws
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
 Version: 3.0.51
-Release: alt6
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -111,6 +115,10 @@ Release: alt6
 
 %define allocator SLQB
 
+%Extra_modules vboxhost 4.1.22
+#Extra_modules vboxguest 4.1.22
+%Extra_modules fglrx 8.97.100.3
+
 %define strip_mod_opts --strip-unneeded -R .comment
 
 ## Don't edit below this line ##################################
@@ -131,6 +139,7 @@ Url: http://www.kernel.org/
 Source0: linux-%version.tar
 Source1: %flavour-%kernel_branch-config-x86_64
 Source2: %flavour-%kernel_branch-config-i386
+Source10: Makefile.external
 
 #Patch0000: patch-%kernel_branch.%kernel_stable_version
 
@@ -468,10 +477,10 @@ Patch0602: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 
 Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
-Patch0612: linux-%kernel_branch.46-fix-drivers-usb-core.patch
+Patch0612: linux-%kernel_branch.51-fix-drivers-usb-core.patch
 Patch0613: linux-%kernel_branch.42-fix-drivers-usb-host--ehci-hcd.patch
 Patch0614: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
-Patch0615: linux-%kernel_branch.49-fix-drivers-usb-host--xhci-hcd.patch
+Patch0615: linux-%kernel_branch.51-fix-drivers-usb-host--xhci-hcd.patch
 Patch0616: linux-%kernel_branch.42-fix-drivers-usb-misc--usbtest.patch
 Patch0617: linux-%kernel_branch.42-fix-drivers-usb-mon.patch
 Patch0618: linux-%kernel_branch.42-fix-drivers-usb-serial--ftdi_sio.patch
@@ -498,7 +507,7 @@ Patch0670: linux-%kernel_branch.51-fix-fs.patch
 Patch0671: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0672: linux-%kernel_branch.42-fix-fs--block.patch
 Patch0673: linux-%kernel_branch.42-fix-fs--eventpoll.patch
-Patch0674: linux-%kernel_branch.50-fix-fs-btrfs.patch
+Patch0674: linux-%kernel_branch.51-fix-fs-btrfs.patch
 Patch0675: linux-%kernel_branch.44-fix-fs-cachefiles.patch
 Patch0676: linux-%kernel_branch.42-fix-fs-ceph.patch
 Patch0677: linux-%kernel_branch.42-fix-fs-cifs.patch
@@ -541,12 +550,13 @@ Patch0752: linux-%kernel_branch.42-fix-mm--huge_memory.patch
 Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
 Patch0754: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0755: linux-%kernel_branch.42-fix-mm--memory-failure.patch
-Patch0756: linux-%kernel_branch.46-fix-mm--mmu.patch
-Patch0757: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
-Patch0758: linux-%kernel_branch.46-fix-mm--numa.patch
-Patch0759: linux-%kernel_branch.42-fix-mm--slab.patch
-Patch0760: linux-%kernel_branch.42-fix-mm--slub.patch
-Patch0761: linux-%kernel_branch.49-fix-mm--swap.patch
+Patch0756: linux-%kernel_branch.51-fix-mm--memory_hotplug.patch
+Patch0757: linux-%kernel_branch.46-fix-mm--mmu.patch
+Patch0758: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
+Patch0759: linux-%kernel_branch.46-fix-mm--numa.patch
+Patch0760: linux-%kernel_branch.42-fix-mm--slab.patch
+Patch0761: linux-%kernel_branch.42-fix-mm--slub.patch
+Patch0762: linux-%kernel_branch.49-fix-mm--swap.patch
 
 Patch0771: linux-%kernel_branch.42-fix-net--batman-adv.patch
 Patch0772: linux-%kernel_branch.42-fix-net--dcb.patch
@@ -772,6 +782,10 @@ ExclusiveArch: %x86_64 %ix86
 %endif
 %endif
 
+%if "x%extra_modules" != "x"
+%define extra_mods %(echo "%extra_modules" | sed 's/=[^ ]*//g')
+%endif
+
 BuildPreReq: rpm-build-kernel
 BuildRequires: dev86 flex
 BuildRequires: libdb4-devel
@@ -813,13 +827,13 @@ Provides: kernel-modules-%{1}-%kversion-%flavour-%krelease = %version-%release
 
 %define kernel_modules_package_std_body() \
 Group: System/Kernel and hardware \
-Provides: kernel-modules-%{1}-%kversion-%flavour-%krelease = %version-%release \
-Conflicts: kernel-modules-%{1}-%kversion-%flavour-%krelease < %version-%release \
-Conflicts: kernel-modules-%{1}-%kversion-%flavour-%krelease > %version-%release \
-Requires(postun): %name = %version-%release \
+Provides: kernel-modules-%{1}-%kversion-%flavour-%krelease = %kversion-%release \
+Conflicts: kernel-modules-%{1}-%kversion-%flavour-%krelease < %kversion-%release \
+Conflicts: kernel-modules-%{1}-%kversion-%flavour-%krelease > %kversion-%release \
+Requires(postun): %name = %kversion-%release \
 AutoProv: no, %kernel_prov \
 AutoReq: no, %kernel_req \
-PreReq: coreutils module-init-tools >= 3.1 %name = %version-%release
+PreReq: coreutils module-init-tools >= 3.1 %name = %kversion-%release
 
 %define kernel_doc_package_std_body() \
 Group: Documentation \
@@ -1323,6 +1337,21 @@ kernel-image-%flavour-%kversion-%krelease
 %endif
 
 
+%ifdef extra_mods
+%(for m in %extra_mods; do
+cat <<__PACKAGE__
+%%package -n kernel-modules-$m-%flavour
+Summary: $m kernel modules
+%kernel_modules_package_std_body $m
+
+%%description -n kernel-modules-$m-%flavour
+$m kernel modules.
+
+__PACKAGE__
+done)
+%endif
+
+
 %prep
 %setup -c -n kernel-image-%flavour-%kversion-%krelease
 cd linux-%version
@@ -1759,6 +1788,7 @@ cd linux-%version
 %patch0740 -p1
 %patch0741 -p1
 
+# fix-mm*
 %patch0750 -p1
 %patch0751 -p1
 %patch0752 -p1
@@ -1771,6 +1801,7 @@ cd linux-%version
 %patch0759 -p1
 %patch0760 -p1
 %patch0761 -p1
+%patch0762 -p1
 
 # fix-net-*
 %patch0771 -p1
@@ -1914,14 +1945,18 @@ sed -i	-e 's/CC.*$(CROSS_COMPILE)gcc/CC\t\t:= '"gcc-$GCC_VERSION/g" Makefile
 
 install -m644 %SOURCE1 %SOURCE2 .
 
+%ifdef extra_mods
+install -m 0644 %SOURCE10 ./Makefile.external
+install -d -m 0755 external
+for m in %extra_modules; do
+	tar -C external -xf %kernel_src/${m%%=*}-${m#*=}.tar*
+done
+%endif
+
 
 %build
 cd linux-%version
 export ARCH=%base_arch
-
-echo "Building kernel %kversion-%flavour-%krelease"
-
-%make_build distclean
 
 config_disable()
 {
@@ -2094,6 +2129,8 @@ sed -i '/^CONFIG_USB_UHCI_HCD=y$/s/=y/=m/' .config
 %endif
 %endif
 
+echo "Building kernel %kversion-%flavour-%krelease"
+
 %make_build oldconfig
 %make_build %{?_enable_verbose:V=1} bzImage modules
 %if_with perf
@@ -2104,6 +2141,11 @@ sed -i '/^CONFIG_USB_UHCI_HCD=y$/s/=y/=m/' .config
 %endif
 
 echo "Kernel built %kversion-%flavour-%krelease"
+
+%ifdef extra_mods
+%make_build -f Makefile.external %extra_mods
+echo "External modules built"
+%endif
 
 # psdocs, pdfdocs don't work yet
 %{?_enable_htmldocs:%def_enable builddocs}
@@ -2128,6 +2170,13 @@ install -Dp -m644 .config %buildroot/boot/config-%kversion-%flavour-%krelease
 	INSTALL_FW_PATH=%buildroot%firmware_dir \
 	%{!?_enable_debug:%{?strip_mod_opts:INSTALL_MOD_STRIP="%strip_mod_opts"}} \
 	modules_install
+
+%ifdef extra_mods
+make -f Makefile.external DESTDIR=%buildroot \
+	%{!?_enable_debug:%{?strip_mod_opts:INSTALL_MOD_STRIP="%strip_mod_opts"}} \
+	INSTALL_MOD_PATH=%modules_dir \
+	%extra_mods
+%endif
 
 %{?_enable_oprofile:install -m 0644 vmlinux %buildroot%modules_dir/}
 
@@ -2361,6 +2410,16 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 %postun -n kernel-headers-%flavour-%kernel_branch
 %postun_kernel_headers %kversion-%flavour-%krelease
+
+
+%ifdef extra_mods
+%(for m in %extra_mods; do
+cat <<__PACKAGE__
+%kernel_modules_package_post $m
+
+__PACKAGE__
+done)
+%endif
 
 
 %files -f exclude-drivers.rpmmodlist
@@ -2684,6 +2743,16 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 %endif
 
 
+%ifdef extra_mods
+%(for m in %extra_mods; do
+cat <<__PACKAGE__
+%%files -n kernel-modules-$m-%flavour -f linux-%kversion/external/$m.rpmmodlist
+
+__PACKAGE__
+done)
+%endif
+
+
 %files -n kernel-headers-asm-%flavour-%kernel_branch
 %kheaders_dir/include/asm
 
@@ -2722,6 +2791,24 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 
 
 %changelog
+* Thu Nov 15 2012 Led <led@altlinux.ru> 3.0.51-alt8
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+- strip external modules
+- disabled external modules:
+  + vboxguest
+
+* Thu Nov 15 2012 Led <led@altlinux.ru> 3.0.51-alt7
+- updated:
+  + fix-drivers-usb-core
+  + fix-fs-btrfs
+- added:
+  + fix-mm--memory_hotplug
+- added external modules build:
+  + vboxguest
+  + vboxhost
+  + fglrx
+
 * Mon Nov 12 2012 Led <led@altlinux.ru> 3.0.51-alt6
 - updated:
   + fix-drivers-firmware--efivars
