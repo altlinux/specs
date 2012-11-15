@@ -2,7 +2,7 @@
 
 Name: alterator-vm
 Version: 0.4.1
-Release: alt19
+Release: alt20
 
 Summary: Alterator module for volume management
 License: GPL
@@ -42,6 +42,10 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Thu Nov 15 2012 Timur Aitov <timonbl4@altlinux.org> 0.4.1-alt20
+- fixed create luks in raid/lvm
+- fixed build tree with luks devices
+
 * Wed Nov 07 2012 Timur Aitov <timonbl4@altlinux.org> 0.4.1-alt19
 - added support for luks
 
