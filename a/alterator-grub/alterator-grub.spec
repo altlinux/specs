@@ -1,25 +1,25 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.7
-Release: alt5
-
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
-
-Source:%name-%version.tar
+Version: 0.8
+Release: alt1
 
 Summary: alterator module to setup grub bootloader
 License: GPL
 Group: System/Configuration/Other
+
+Url: http://www.altlinux.org/Alterator
+Source: %name-%version.tar
+
 Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.9-alt10
 Requires: alterator-sh-functions >= 0.6-alt1
 Requires: alterator-hw-functions >= 0.4-alt1
-# potentially >= 2.00
-Requires: grub2 >= 1.99-alt1
+Requires: grub2 >= 2.00-alt4
 
 BuildPreReq: alterator >= 4.7-alt5
-BuildRequires: grub2 >= 1.98-alt4 libdevmapper-devel
+BuildRequires: grub2 >= 2.00-alt4
+BuildRequires: libdevmapper-devel
 
 %description
 alterator module to setup grub bootloader
@@ -42,6 +42,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Thu Nov 15 2012 Michael Shigorin <mike@altlinux.org> 0.8-alt1
+- added initial EFI support
+
 * Thu Nov 08 2012 Michael Shigorin <mike@altlinux.org> 0.7-alt5
 - replace symlink with bindmount for grub 2.00
 
