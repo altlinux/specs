@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt3
+Release: alt5
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -22,11 +22,17 @@ Patch5: syslinux-4.04-md5pass.diff
 Patch6: syslinux-4.04-noinitrd.diff
 # ALT
 Patch100: syslinux-4.04-alt-ext2fs-header.patch
+# upstream
+Patch200: syslinux-4.04-isohybrid-0.12.patch
 
 #BuildPrereq: nasm perl-base
 # Automatically added by buildreq on Tue Oct 28 2008 (-bi)
 BuildRequires: nasm perl-Crypt-PasswdMD5 perl-Digest-SHA1 libe2fs-devel
 #linux-libc-headers
+BuildRequires: libuuid-devel
+
+# NB: 4.06 compiles with 4.7 just fine, 4.04's gfxboot miscompiles
+%set_gcc_version 4.6
 
 %description
 Syslinux is a simple kernel loader. It normally loads the kernel (and an 
@@ -61,19 +67,23 @@ Read main packages description
 %setup -q
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch100 -p1
+%patch200 -p2
 install -m 0644 %SOURCE2 .
+# argh.
+sed -i -e 's,^HOST_CC.*$,HOST_CC := gcc-%_gcc_version,' \
+       -e 's,^CC.*$,CC := gcc-%_gcc_version,' gpxe/src/Makefile
 
 %build
-export CFLAGS="%optflags"
-%make_build CC="gcc -fno-stack-protector" spotless
-%make_build CC="gcc -fno-stack-protector"
-#make_build spotless
-#make_build
+export CFLAGS="%optflags -fno-stack-protector"
+export CC="gcc-%_gcc_version"
+export HOST_CC="$CC"
+%make_build spotless
+%make_build
 
 
 %install
@@ -116,6 +126,13 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Thu Nov 15 2012 Michael Shigorin <mike@altlinux.org> 2:4.04-alt5
+- built with gcc 4.6 (gfxboot hangs when built with 4.7)
+
+* Thu Nov 15 2012 Michael Shigorin <mike@altlinux.org> 2:4.04-alt4
+- backported isohybrid-0.12 from syslinux-4.06 (UEFI/GPT support)
+  + disabled patch3 for that matter
+
 * Wed Jul 04 2012 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt3
 - package extlinux separately
 
