@@ -1,6 +1,6 @@
 Name: alterator-net-shares
-Version: 0.1
-Release: alt4
+Version: 0.2
+Release: alt1
 
 Summary: Enable/disable mounting samba shares from "domain" server
 License: GPL
@@ -34,6 +34,9 @@ BuildPreReq: alterator >= 3.1
 /usr/lib/alterator/backend3/*
 
 %changelog
+* Thu Nov 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
+- adapted to "p7 domain"
+
 * Thu Jun 09 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1-alt4
 - dependence on bind-utils added
 
