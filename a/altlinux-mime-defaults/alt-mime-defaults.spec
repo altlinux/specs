@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.21
+Version: 0.22
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -27,14 +27,21 @@ install -D -m 644 %{S:1} %buildroot/%_datadir/kde4/applications/kde4/mimeapps.li
 install -D -m 644 %{S:2} %buildroot/%_datadir/gnome/applications/defaults.list
 ln -s kde4/mimeapps.list %buildroot/%_datadir/kde4/applications/mimeapps.list
 
+touch %buildroot/%_desktopdir/defaults.list
+
+
 %files
 #%doc README
 %_desktopdir/mimeapps.list
 %_datadir/kde4/applications/kde4/mimeapps.list
 %_datadir/kde4/applications/mimeapps.list
 %_datadir/gnome/applications/defaults.list
+%_desktopdir/defaults.list
 
 %changelog
+* Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- updated to fresh Sisyphus
+
 * Tue Jun 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - added %_datadir/kde4/applications/kde4/mimeapps.list
 
