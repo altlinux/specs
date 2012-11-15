@@ -2,12 +2,13 @@ Name: papi
 License: BSD-like
 Group: Development/Tools
 Summary: Performance Application Programming Interface
-Version: 5.0.0
+Version: 5.0.1
 Release: alt1
 Url: http://icl.cs.utk.edu/papi/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 Source: %name-%version.tar.gz
+Patch: papi-5.0.1-alt-i586.patch
 
 Requires: lib%name = %version-%release
 
@@ -60,6 +61,9 @@ This package contains documentation for PAPI.
 
 %prep
 %setup
+%ifarch %ix86
+%patch -p1
+%endif
 
 rm -fR src/perfctr-*
 cp -f src/Rules.pfm src/Rules.perfctr
@@ -126,6 +130,9 @@ ln -s libpfm.so %buildroot%_libdir/libpfm64.so
 %_docdir/%name
 
 %changelog
+* Thu Nov 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.1-alt1
+- Version 5.0.1
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.0-alt1
 - Version 5.0.0
 
