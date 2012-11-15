@@ -4,7 +4,7 @@
 Summary: A collection of basic system utilities
 Name: util-linux
 Version: 2.22
-Release: alt3
+Release: alt4
 License: GPLv2 and GPLv2+ and BSD with advertising and Public Domain
 Group: System/Base
 URL: ftp://ftp.kernel.org/pub/linux/utils/util-linux
@@ -81,6 +81,9 @@ Patch8: util-linux-2.21-ipcs-32bit.patch
 
 # move /var/lib/lastdate -> /var/lib/hwclock/lastdate
 Patch13: util-linux-2.20-alt-hwclock-badyear.patch
+
+# libmount: fix support of comma-separated fs types lists
+Patch14: util-linux-alt-libmount-comma-separated-fstypes.patch
 
 # Owl
 Patch40: util-linux-2.22-owl-alt-mtab-umask-for-mount-deprecated.patch
@@ -364,6 +367,7 @@ cp -r -- %SOURCE8 %SOURCE9 %SOURCE10 %SOURCE11 %SOURCE12 .
 %patch5 -p1
 %patch8 -p1
 %patch13 -p1
+%patch14 -p1
 
 %patch40 -p1
 %patch41 -p1
@@ -806,6 +810,9 @@ fi
 %doc Documentation/*.txt NEWS AUTHORS README* Documentation/licenses/* Documentation/TODO
 
 %changelog
+* Thu Nov 15 2012 Alexey Gladkov <legion@altlinux.ru> 2.22-alt4
+- libmount: fix support of comma-separated fs types lists (thx: glebfm@) (ALT#27942).
+
 * Mon Oct 08 2012 Alexey Gladkov <legion@altlinux.ru> 2.22-alt3
 - Move lsblk to subpackage.
 - Remove util-linux-60-raw.rules (moved to udev-rules).
