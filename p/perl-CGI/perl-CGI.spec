@@ -1,6 +1,6 @@
 %define dist CGI.pm
 Name: perl-CGI
-Version: 3.60
+Version: 3.63
 Release: alt1
 
 Summary: Simple CGI class for Perl
@@ -42,6 +42,9 @@ bzip2 -k Changes
 %perl_vendor_privlib/CGI*
 
 %changelog
+* Thu Nov 15 2012 Vladimir Lettiev <crux@altlinux.ru> 3.63-alt1
+- 3.60 -> 3.63
+
 * Wed Sep 26 2012 Alexey Tourbin <at@altlinux.ru> 3.60-alt1
 - 3.59 -> 3.60
 
