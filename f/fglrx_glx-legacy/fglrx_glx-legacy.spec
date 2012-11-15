@@ -15,23 +15,25 @@
 %define bname fglrx
 Name: %{bname}_glx%legacy
 Version: 8.97.100.3
-Release: alt2
+Release: alt3
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://ati.amd.com
 License: Proprietary
-Provides: xorg-drv-fglrx
+Provides: xorg-drv-%bname
 Provides: %{bname}_glx = %version-%release
 Conflicts: %{bname}_glx
 Source0: http://www2.ati.com/drivers/linux/amd-driver-installer-%cat_ver-x86.x86_64.run
-Source2: fglrx-switch.c
+Source2: %bname-switch.c
 Source7: a-ac-aticonfig
 Source8: a-lid-aticonfig
 Source9: ati-powermode.sh
 Source11: atieventsd.init
 Source12: aticonfig.1
-Source13: fglrx_create.xinf
+Source13: %{bname}_create.xinf
 Source14: xinf2fdi
+Patch10: fglrx-8.95.1-kernel.patch
+Patch11: fglrx-8.96.1-kernel.patch
 Requires: xorg-server < 1.13 libdrm >= 2.4.5-alt2
 Requires: hwdatabase
 Requires: libGL libXrandr libXi libXcursor libXinerama
@@ -57,7 +59,7 @@ products. AMD recommends using the AMD Proprietary Linux software driver
 version <= 8.40.4.
 
 
-%package -n fglrx-tools%legacy
+%package -n %bname-tools%legacy
 Summary: Utilities for ATI/AMD Radeon drivers
 Group: System/Configuration/Hardware
 Requires: %name = %version-%release
@@ -65,7 +67,7 @@ Requires: acpid
 Provides: %bname-tools = %version-%release
 Conflicts: %bname-tools
 
-%description -n fglrx-tools%legacy
+%description -n %bname-tools%legacy
 ATI/AMD Radeon configuration utilities:
   - the AMD Catalyst Control Center for ATI Radeon graphics cards
   - fglrxinfo is an analogue for glxinfo
@@ -77,56 +79,61 @@ ATI/AMD Radeon configuration utilities:
     interface that the event has occured.
 
 
-%package -n kernel-source-fglrx-%version
+%package -n kernel-source-%bname-%version
 Summary: ATI/AMD fglrx (Radeon video card driver) module sources
 Group: Development/Kernel
+Provides: kernel-source-%bname = %version-%release
 
-%description -n kernel-source-fglrx-%version
+%description -n kernel-source-%bname-%version
 ATI/AMD fglrx (Radeon video card driver) module sources for Linux kernel.
 
 
 %prep
 %setup -T -c
 /bin/sh %SOURCE0 --extract .
-for d in common/usr/share/doc/fglrx {common,%archdir}/lib/modules/fglrx/build_mod; do
+for d in common/usr/share/doc/%bname {common,%archdir}/lib/modules/%bname/build_mod; do
 	find $d -type f -exec chmod 644 \{} \;
 done
-pushd common/lib/modules/fglrx/build_mod
-ln -sf ../../../../../%archdir/lib/modules/fglrx/build_mod/* ./
+pushd common/lib/modules/%bname/build_mod
+ln -sf ../../../../../%archdir/lib/modules/%bname/build_mod/* ./
+%patch10 -p1
+%patch11 -p1
+mv 2.6.x/Makefile Makefile
+rmdir 2.6.x
+rm -f *.orig
 popd
-ln -sf common/lib/modules/fglrx/build_mod kernel-source-fglrx-%version
-#tar -xf common/usr/src/ati/fglrx_sample_source.tgz
+#tar -xf common/usr/src/ati/%{bname}_sample_source.tgz
 
 
 %build
 %add_optflags -fpic
-gcc %optflags %SOURCE2 -o fglrx
+gcc %optflags %SOURCE2 -o %bname
 
 
 %install
-install -d -m 0755 %buildroot{%_bindir,%_sbindir,%_libdir/{dri,fglrx,X11/{modules/{drivers,dri,linux},fglrx}},%_includedir/X11/extensions,%_man1dir,%_man8dir,%_niconsdir,%_liconsdir,%_sysconfdir/{acpi/events,ati},%_initrddir,%_datadir/{ati/amdcccle,hwdatabase/videoaliases},%_docdir/%name-%version}
+install -d -m 0755 %buildroot{%_bindir,%_sbindir,%_libdir/{dri,%bname,X11/{modules/{drivers,dri,linux},%bname}},%_includedir/X11/extensions,%_man1dir,%_man8dir,%_niconsdir,%_liconsdir,%_sysconfdir/{acpi/events,ati},%_initrddir,%_datadir/{ati/amdcccle,hwdatabase/videoaliases},%_docdir/%name-%version}
 
 install -p -m 0644 %xfdir/usr/X11R6/%_lib/modules/{amdxmm,glesx}.so %buildroot%_libdir/X11/modules/
-install -p -m 0644 %xfdir/usr/X11R6/%_lib/modules/drivers/fglrx_drv.so %buildroot%_libdir/X11/modules/drivers/
-install -p -m 0644 %archdir/usr/X11R6/%_lib/modules/dri/fglrx_dri.so %buildroot%_libdir/X11/modules/dri/
+install -p -m 0644 %xfdir/usr/X11R6/%_lib/modules/drivers/%{bname}_drv.so %buildroot%_libdir/X11/modules/drivers/
+install -p -m 0644 %archdir/usr/X11R6/%_lib/modules/dri/%{bname}_dri.so %buildroot%_libdir/X11/modules/dri/
 
-ln -s ../X11/modules/dri/fglrx_dri.so %buildroot%_libdir/dri/
-ln -s ../modules/dri/fglrx_dri.so %buildroot%_libdir/X11/fglrx/libdri.so
+ln -s ../X11/modules/dri/%{bname}_dri.so %buildroot%_libdir/dri/
+ln -s ../modules/dri/%{bname}_dri.so %buildroot%_libdir/X11/%bname/libdri.so
 
 install -p -m 0644 %xfdir/usr/X11R6/%_lib/modules/linux/libfglrxdrm.so %buildroot%_libdir/X11/modules/linux/
-install -p -m 0644 %xfdir/usr/X11R6/%_lib/modules/extensions/fglrx/fglrx-libglx.so %buildroot%_libdir/X11/fglrx/libglx.so
-install -p -m 0644 %xfdir/usr/X11R6/%_lib/modules/extensions/fglrx/*.so %buildroot%_libdir/X11/fglrx/
-install -p -m 0644 %archdir/usr/X11R6/%_lib/fglrx/fglrx-libGL.so.1.2 %buildroot%_libdir/X11/fglrx/libGL.so.1
+install -p -m 0644 %xfdir/usr/X11R6/%_lib/modules/extensions/%bname/%bname-libglx.so %buildroot%_libdir/X11/%bname/libglx.so
+install -p -m 0644 %xfdir/usr/X11R6/%_lib/modules/extensions/%bname/*.so %buildroot%_libdir/X11/%bname/
+install -p -m 0644 %archdir/usr/X11R6/%_lib/%bname/%bname-libGL.so.1.2 %buildroot%_libdir/X11/%bname/libGL.so.1
 
 install -p -m 0644 %archdir/usr/{,X11R6/}%_lib/lib*.so* %buildroot%_libdir/
-install -p -m 0644 %archdir/usr/%_lib/fglrx/switchlib* %buildroot%_libdir/fglrx/
+install -p -m 0644 %archdir/usr/%_lib/%bname/switchlib* %buildroot%_libdir/%bname/
 
 # amdcccle install
 install -p -m 0755 %archdir/usr/X11R6/bin/amdcccle %buildroot%_bindir/
 install -p -m 0644 common/usr/share/icons/ccc_large.xpm %buildroot%_liconsdir/ccc.xpm
 install -p -m 0644 common/usr/share/ati/amdcccle/* %buildroot%_datadir/ati/amdcccle/
 
-# other tools (fgl_glxgears,fglrxinfo,fglrx_xgamma,aticonfig,atieventsd)
+# other tools (fgl_glxgears,fglrxinfo,%{bname}_xgamma,aticonfig,atieventsd)
 install -p -m 0755 %archdir/usr/X11R6/bin/{fgl{_glxgears,rxinfo},aticonfig,atiod*} common/usr/X11R6/bin/amd* %buildroot%_bindir/
 install -p -m 0755 {%archdir,common}%_sbindir/* %buildroot%_sbindir/
 install -p -m 0644 %SOURCE7 %SOURCE8 %buildroot%_sysconfdir/acpi/events/
@@ -135,45 +142,46 @@ install -p -m 0755 %SOURCE11 %buildroot%_initrddir/atieventsd
 install -p -m 0644 %SOURCE12 %buildroot%_man1dir/
 install -p -m 0644 common%_man8dir/* %buildroot%_man8dir/
 install -d -m 0755 %kernel_srcdir
-tar -chJ --exclude make.sh -f %kernel_srcdir/kernel-source-fglrx-%version.tar.xz kernel-source-fglrx-%version
+tar -chJ --exclude make.sh --transform 's,common/lib/modules/%bname/build_mod,%bname-%version,' \
+	-f %kernel_srcdir/%bname-%version.tar.xz common/lib/modules/%bname/build_mod
 
-install -pD -m 0755 {,%buildroot%_libexecdir/X11/drv.d/}fglrx
+install -pD -m 0755 {,%buildroot%_libexecdir/X11/drv.d/}%bname
 
 install -p -m 0644 common/etc/ati/* %buildroot%_sysconfdir/ati/
 chmod +x %buildroot%_sysconfdir/ati/authatieventsd.sh
 
 # generate .xinf
-sh %SOURCE13 common/lib/modules/fglrx/build_mod/fglrxko_pci_ids.h \
+sh %SOURCE13 common/lib/modules/%bname/build_mod/fglrxko_pci_ids.h \
 	%buildroot%_datadir/hwdatabase/videoaliases/fglrx.xinf > /dev/null 2>&1
 install -d -m 0755 %buildroot%_fdidir
-sh %SOURCE14 -x %buildroot%_datadir/hwdatabase/videoaliases/fglrx.xinf \
-	-f %buildroot%_fdidir/20-x11-video-fglrx.fdi -d fglrx
+sh %SOURCE14 -x %buildroot%_datadir/hwdatabase/videoaliases/%bname.xinf \
+	-f %buildroot%_fdidir/20-x11-video-%bname.fdi -d %bname
 
 %brp_strip_none %_libdir/X11/fgl*.so
 %set_verify_elf_method textrel=relaxed,rpath=relaxed,unresolved=relaxed,lint=relaxed
 
 
-%post -n fglrx-tools%legacy
+%post -n %bname-tools%legacy
 %post_service atieventsd
 
-%preun -n fglrx-tools%legacy
+%preun -n %bname-tools%legacy
 %preun_service atieventsd
 
 
 %files
-%doc common/usr/share/doc/fglrx/*
+%doc common/usr/share/doc/%bname/*
 %dir %_sysconfdir/ati
 %_sysconfdir/ati/*
 %_libdir/X11/*
 %_libdir/dri
 %_libdir/lib*.so*
-%_libdir/fglrx
+%_libdir/%bname
 %_datadir/hwdatabase/videoaliases
 %_fdidir/*
 %_libexecdir/X11/drv.d/*
 
 
-%files -n fglrx-tools%legacy
+%files -n %bname-tools%legacy
 %_bindir/*
 %_liconsdir/*
 %_datadir/ati
@@ -184,11 +192,15 @@ sh %SOURCE14 -x %buildroot%_datadir/hwdatabase/videoaliases/fglrx.xinf \
 %_sbindir/*
 
 
-%files -n kernel-source-fglrx-%version
+%files -n kernel-source-%bname-%version
 %_usrsrc/*
 
 
 %changelog
+* Thu Nov 15 2012 Led <led@altlinux.ru> 8.97.100.3-alt3
+- repack kernel-source-fglrx-*
+- added patches for fglrx.ko
+
 * Mon Oct 22 2012 Led <led@altlinux.ru> 8.97.100.3-alt2
 - cleaned up spec
 
