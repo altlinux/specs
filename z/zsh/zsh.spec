@@ -1,5 +1,5 @@
 Name: zsh
-Version: 4.3.17
+Version: 5.0.0
 Release: alt1
 Epoch: 1
 
@@ -95,6 +95,9 @@ rm -f %buildroot%_datadir/zsh/Completion/Linux/_rpmbuild
 make check
 
 %files
+# Completions that provided by upstream
+%exclude %_datadir/zsh/Completion/Unix/_systemd
+
 /bin/zsh
 %_bindir/zsh
 %_libdir/zsh/
@@ -106,6 +109,10 @@ make check
 %doc Etc/BUGS Etc/CONTRIBUTORS Etc/FAQ Etc/STD-TODO Etc/TODO
 
 %changelog
+* Thu Nov 15 2012 Fr. Br. George <george@altlinux.ru> 1:5.0.0-alt1
+- Autobuild version bump to 5.0.0
+- Exclude upstream-privided systemd completion
+
 * Mon Apr 16 2012 Fr. Br. George <george@altlinux.ru> 1:4.3.17-alt1
 - Autobuild version bump to 4.3.17
 - _vzctl completion bt mike@
