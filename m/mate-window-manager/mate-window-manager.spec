@@ -4,10 +4,15 @@ BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/mat
 Group: Graphical desktop/Other
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
+%{echo 
+%filter_from_requires /^libmarco-private.so/d;
+
+}
+
 
 Name:           mate-window-manager
 Version:        1.5.2
-Release:        alt3_7
+Release:        alt4_7
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -55,13 +60,6 @@ Patch35: Dont-focus-ancestor-window-on-a-different-workspac.patch
 Patch36: metacity-2.28-empty-keybindings.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=604319
 Patch37: metacity-2.28-xioerror-unknown-display.patch
-Requires: libmarco-private = %{version}-%{release}
-
-# DROP ME!!!
-# hack til transaction will be finished
-%ifarch x86_64
-Provides: i586-mate-window-manager = %version
-%endif
 
 %description
 MATE Desktop window manager
@@ -69,18 +67,10 @@ MATE Desktop window manager
 %package devel
 Group: Development/C
 Summary: Development files for mate-window-manager
-Requires: libmarco-private = %{version}-%{release}
+Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 Development files for mate-window-manager
-
-%package -n libmarco-private
-Group: System/Libraries
-Summary: mate-window-manager internal library
-
-%description -n libmarco-private
-Development files for mate-window-manager
-
 
 
 %prep
@@ -143,12 +133,6 @@ desktop-file-install                                \
 %{_libdir}/libmarco-private.so.0*
 %{_mandir}/man1/marco.1.*
 %{_mandir}/man1/marco-message.1.*
-# moved to lib
-%exclude %{_libdir}/libmarco-private.so.*
-
-%files -n libmarco-private
-%{_libdir}/libmarco-private.so.*
-
 
 %files devel
 %{_bindir}/marco-theme-viewer
@@ -161,6 +145,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt4_7
+- dropped libmarco-private subpackage (no more needed, 1.5.0 transaction is complete)
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt3_7
 - added libmarco-private subpackage
 
