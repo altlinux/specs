@@ -3,8 +3,6 @@ BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/mat
 # END SourceDeps(oneline)
 Group: Graphical desktop/Other
 BuildRequires: libcanberra-gtk2-devel
-# TODO: comment me and rediff patches
-%define _default_patch_fuzz 999
 %define _libexecdir %_prefix/libexec
 %{echo 
 %filter_from_requires /^libmarco-private.so/d;
@@ -14,7 +12,7 @@ BuildRequires: libcanberra-gtk2-devel
 
 Name:           mate-window-manager
 Version:        1.5.2
-Release:        alt1_7
+Release:        alt2_7
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -147,6 +145,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt2_7
+- fuzzless patches
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_7
 - use F19 import base
 
