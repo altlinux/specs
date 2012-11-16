@@ -66,8 +66,8 @@
 %define apudir %name-%version
 
 Name: aprutil%aprver
-Version: 1.3.10
-Release: %{branch_release alt6}%{?release_libdb}
+Version: 1.3.12
+Release: %{branch_release alt1}%{?release_libdb}
 
 Summary: Apache Portable Runtime Utility shared library
 Group: System/Libraries
@@ -77,9 +77,14 @@ Packager: Boris Savelev <boris@altlinux.org>
 
 #Source url: http://archive.apache.org/dist/apr/apr-util-%version.tar.gz
 Source: %name-%version.tar
-Patch1: apr-util-%version-alt-pkgconfig.patch
-Patch2: apr-util-%version-alt-installbuilddir.patch
-Patch3: apr-util-%version-queue-pop-tmout.patch
+# ALT patchs and:
+# * FreeSWITCH patchs:
+#   + commit de417e99f0c41421f701f86ee5e4e507868be81f of
+#     git://git.freeswitch.org/freeswitch.git
+# * Debian patchs:
+#   + 014_apu_config_dont_list_indep_libs.dpatch
+#   + 017_thread_pool_fix.dpatch
+Patch1: %name-%version-alt-all-0.1.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
@@ -222,8 +227,6 @@ This package provides the ODBC driver for the apr-util DBD
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
 
 # GCC >= 4.6 too smart and warns about unused variable even with 'tmp=0;' line.
 # With -Werror this produce a compilation error and makes this test
@@ -255,7 +258,7 @@ find %buildroot%_datadir -type f -print0 |
 	xargs -r0 sed -i "s,%_builddir/%apudir\(/build\)\?,%_datadir/apr-%aprver/build," --
 
 %check
-%make_build check
+%make check
 
 %files -n lib%name
 %_libdir/lib*.so.*
@@ -297,6 +300,9 @@ find %buildroot%_datadir -type f -print0 |
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
 %changelog
+* Thu Nov 15 2012 Aleksey Avdeev <solo@altlinux.ru> 1.3.12-alt1
+- New version (1.3.12) (ALT#27746)
+
 * Sat Oct 20 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.3.10-alt6
 - Fix build with GCC 4.6
 
