@@ -8,8 +8,8 @@
 %add_findreq_skiplist %_datadir/apr-1/build/config.guess
 
 Name: apr%aprver
-Version: 1.4.4
-Release: %branch_release alt1.1
+Version: 1.4.6
+Release: %branch_release alt1
 
 Summary: Apache Portable Runtime
 Group: System/Libraries
@@ -19,17 +19,18 @@ Packager: Boris Savelev <boris@altlinux.org>
 
 #Source: http://archive.apache.org/dist/apr/apr-%version.tar.gz
 Source: %name-%version.tar
-Patch1: apr-%version-alt-linkage.patch
-Patch2: apr-%version-alt-pkgconfig.patch
-Patch3: apr-%version-alt-015_sendfile_lfs.dpatch
-Patch4: apr-%version-alt-016_sendfile_hurd.dpatch
-Patch5: apr-%version-alt-022_hurd_path_max.dpatch
-Patch6: apr-%version-alt-023_fix_doxygen.dpatch
-Patch25: apr-%version-alt-025_GNU_SOURCE_earlier.dpatch
-Patch27: apr-%version-alt-027_apr_socket_addr_get_lifetime.dpatch
-Patch50: apr-%version-alt-0001-backport-apr_pool_mutex_set.patch
-Patch51: apr-%version-alt-0002-fix-build-with-recent-libtool.patch
-Patch52: apr-%version-alt-configure_api.patch
+
+# ALT patchs and:
+# * Debian patchs:
+#   + fix-apr.pc.patch
+#   + hurd_path_max.patch
+#   + fix_doxygen.patch
+#   + omit_extra_libs.patch
+#   + debug-kfreebsd-issues.patch
+#   + updates-from-1.4.x-branch.patch
+# * UniMRCP patchs (see https://sites.google.com/a/unimrcp.org/unimrcp/dependencies):
+#   + apr-1.4.5.patch
+Patch1: %name-%version-alt-all-0.1.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
@@ -89,17 +90,6 @@ This package contains APR static library.
 %prep
 %setup
 %patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch25 -p1
-%patch27 -p1
-
-%patch50 -p1
-%patch51 -p1
-%patch52 -p1
 
 %build
 LIBTOOL_M4=%_datadir/libtool/aclocal/libtool.m4 ./buildconf
@@ -149,6 +139,10 @@ find %buildroot%_datadir -type f -print0 |
 %endif
 
 %changelog
+* Fri Nov 16 2012 Aleksey Avdeev <solo@altlinux.ru> 1.4.6-alt1
+- New version (1.4.6)
+- Security fixes (CVE-2011-1928, oCERT-2011-003)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4.4-alt1.1
 - Rebuild with Python-2.7
 
