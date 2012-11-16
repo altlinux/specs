@@ -1,4 +1,4 @@
-%define svn svn5042
+%define svn svn5065
 
 Name: handbrake
 Version: 0.9.9
@@ -35,7 +35,7 @@ License: GPLv2
 
 # Automatically added by buildreq on Sun Nov 04 2012 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gstreamer-devel gtk-update-icon-cache libX11-devel libatk-devel libcairo-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libgtk+2-devel libncurses-devel libogg-devel libpango-devel libsoup-devel libstdc++-devel libtinfo-devel libxml2-devel perl-XML-Parser pkg-config python-base python-modules python-modules-compiler python-modules-encodings shared-mime-info xorg-xproto-devel
-BuildRequires: bzlib-devel gcc-c++ gst-plugins-devel intltool libalsa-devel libass-devel libdbus-glib-devel libfribidi-devel libgudev-devel libnotify-devel libsamplerate-devel libtheora-devel libvorbis-devel libwebkitgtk2-devel python-module-distribute subversion wget yasm zlib-devel
+BuildRequires: bzlib-devel gcc-c++ gst-plugins-devel intltool libalsa-devel libass-devel libdbus-glib-devel libfribidi-devel libgudev-devel libnotify-devel libsamplerate-devel libtheora-devel libvorbis-devel libwebkitgtk2-devel subversion wget yasm zlib-devel
 
 %description
 HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video
@@ -109,6 +109,10 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Fri Nov 16 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5065
+- build svn5065
+- cleanup BuildRequres
+
 * Sat Nov 03 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5042
 - build svn5042
 - cleanup spec
