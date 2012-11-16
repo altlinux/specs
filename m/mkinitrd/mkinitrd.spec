@@ -1,5 +1,5 @@
 Name: mkinitrd
-Version: 3.0.12
+Version: 3.0.13
 Release: alt1
 Epoch: 1
 Summary: Creates an initial ramdisk image for preloading modules
@@ -69,6 +69,11 @@ install -p -m 0644 scripts/* %buildroot/lib/mkinitrd/initramfs-base/scripts/
 
 
 %changelog
+* Fri Nov 16 2012 Led <led@altlinux.ru> 1:3.0.13-alt1
+- 3.0.13:
+  + mkinitrd: remove bashisms
+  + mkinitrd: support /lib/mkinitrd/initramfs/ as source of utils for image
+
 * Sun Nov 04 2012 Led <led@altlinux.ru> 1:3.0.12-alt1
 - 3.0.12:
   + mkinitrd: find modules in modules.alias if modules.pcimap not exists
