@@ -1,7 +1,7 @@
 Name: ssmtp
 Summary: ssmtp - extremely simple MTA to get mail off the system to a mail hub
 Version: 2.64
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Servers
 BuildRequires: libssl-devel
@@ -19,6 +19,7 @@ Requires: ssmtp-common = %version-%release
 Summary: ssmtp - common files
 Group: System/Servers
 Conflicts: exim-common
+Requires: sendmail-common %_sbindir/mailq %_sbindir/newaliases
 
 %description common
 extremely simple MTA to get mail off the system to a mail hub
@@ -96,8 +97,6 @@ install -m 644 %name.conf %buildroot%_sysconfdir/%name
 install -m 644 revaliases %buildroot%_sysconfdir/%name
 install -m 644 %name.8 %buildroot%_man8dir
 ln -sf %_sbindir/%name %buildroot%_sbindir/sendmail
-ln -sf %_sbindir/sendmail %buildroot%_sbindir/mailq
-ln -sf %_sbindir/sendmail %buildroot%_sbindir/newaliases
 
 %preun ssl
 rm -f %_sbindir/sendmail
@@ -110,8 +109,6 @@ ln -sf %_sbindir/%name-ssl	%_sbindir/sendmail
 %_sbindir/%name
 
 %files common
-%_sbindir/mailq
-%_sbindir/newaliases
 %config(noreplace) %_sysconfdir/%name
 %_man8dir/*
 
@@ -123,6 +120,10 @@ ln -sf %_sbindir/%name-ssl	%_sbindir/sendmail
 %_sbindir/%name-ssl
 
 %changelog
+* Fri Nov 16 2012 Dmitry V. Levin <ldv@altlinux.org> 2.64-alt3
+- %name-common: Removed %_sbindir/{mailq,newaliases},
+  added sendmail-common requirements.
+
 * Tue Jun 19 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.64-alt2
 - fixed build with recent toolchain
 - ipv6 support enabled
