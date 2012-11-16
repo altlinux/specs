@@ -1,6 +1,6 @@
 Name: curlftpfs
 Version: 0.9.2
-Release: alt1
+Release: alt2
 
 Summary: FTP filesystem, based on Curl and FUSE
 License: GPL
@@ -12,8 +12,9 @@ BuildRequires: glib2-devel libcurl-devel libfuse-devel
 Source: %name-%version-%release.tar
 
 %description
-CurlFtpFS is a filesystem for accessing FTP hosts based on FUSE and libcurl.
-CurlFtpFS differentiates itself from other FTP filesystems because it features:
+CurlFtpFS is a filesystem for accessing FTP hosts based on FUSE and
+libcurl. CurlFtpFS differentiates itself from other FTP filesystems
+because it features:
 - SSLv3 and TLSv1 support
 - connecting through tunneling HTTP proxies
 - automatically reconnection if the server times out
@@ -35,6 +36,9 @@ CurlFtpFS differentiates itself from other FTP filesystems because it features:
 %_man1dir/curlftpfs.1.*
 
 %changelog
+* Fri Nov 09 2012 Pavel Shilovsky <piastry@altlinux.org> 0.9.2-alt2
+- Fix missed 0.9.2 sources
+
 * Wed Aug 25 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9.2-alt1
 - 0.9.2 released
 
