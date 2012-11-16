@@ -2,17 +2,19 @@
 
 Name: mISDN
 Summary: %name library utilites
-Version: 1.1.3
-Release: alt0.%svndate
+Version: 1.1.5
+Release: alt1
 License: LGPL
 Group: System/Servers
+Url: http://www.misdn.org/
 
 Obsoletes: misdn
 Conflicts: misdn
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
-Source: misdn.tar
+Source: misdn-%version.tar
+Patch1: misdn-%version-%release.patch
 Source2: mISDN.rules
 
 Requires: asterisk-base
@@ -64,11 +66,10 @@ Group: Development/Kernel
 %description -n kernel-source-%name
 This package contains %name sources for Linux kernel module
 
-%description -n kernel-source-%name -l ru_RU.KOI8-R
-Этот пакет содержит исходники %name для модуля ядра Линукс
-
 %prep
-%setup -c
+%setup -n misdn-%version
+%patch1 -p1
+
 
 cp -a mISDN/include/linux mISDNuser/include/
 
@@ -136,6 +137,9 @@ mv %buildroot/usr/lib/* %buildroot%_libdir/
 %_usrsrc/kernel/sources/kernel-source-%name-%version.tar.bz2
 
 %changelog
+* Fri Nov 16 2012 Denis Smirnov <mithraen@altlinux.ru> 1.1.5-alt1
+- 1.1.5
+
 * Sat Jan 14 2012 Denis Smirnov <mithraen@altlinux.ru> 1.1.3-alt0.20110114
 - svn update
 - fix rpath
