@@ -1,6 +1,6 @@
 Summary: Data and udev-rules for usb-modeswitch
 Name: usb-modeswitch-data
-Version: 20120815
+Version: 20121109
 Release: alt1
 License: GPL
 
@@ -8,7 +8,6 @@ Group: System/Configuration/Hardware
 Url: http://www.draisberghof.de/usb_modeswitch/
 
 Source: %name-%version.tar
-Patch: huawei-E171.patch
 
 BuildArch: noarch
 Requires: usb-modeswitch >= 1.2.2
@@ -20,7 +19,6 @@ Data and udev-rules for usb-modeswitch
 
 %prep
 %setup
-%patch
 
 %install
 DESTDIR=%buildroot make install
@@ -31,6 +29,10 @@ DESTDIR=%buildroot make install
 /lib/udev/rules.d/*
 
 %changelog
+* Fri Nov 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20121109-alt1
+- 20121109
+- huawei-E171 patch removed (merged in upstream)
+
 * Mon Oct 22 2012 Lenar Shakirov <snejok@altlinux.ru> 20120815-alt1
 - 20120815
 
