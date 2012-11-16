@@ -1,6 +1,6 @@
 Name: sendmail-common
 Version: 1.7
-Release: alt2
+Release: alt3
 
 Summary: Common files for sendmail-compatible MTAs
 License: GPL
@@ -11,6 +11,8 @@ AutoReq: yes, nosymlinks
 Source: %name-%version.tar
 
 Requires: mktemp >= 1:1.3.1, sed
+# due to %_sbindir/{mailq,newaliases} symlinks
+Conflicts: ssmtp-common <= 2.64-alt2
 
 %description
 This package contains files common for sendmail-compatible
@@ -22,19 +24,27 @@ Mail Transport Agent packages, e.g. postfix and sendmail.
 %install
 mkdir -p %buildroot
 cp -av install/* %buildroot/
-mkdir -p %buildroot{%_bindir,/usr/lib}
+mkdir -p %buildroot{%_bindir,%_sbindir,/usr/lib}
 
 for f in %_bindir/mailq %_bindir/newaliases /usr/lib/sendmail; do
 	ln -s ../sbin/sendmail "%buildroot$f"
+done
+for f in mailq newaliases; do
+	ln -s sendmail "%buildroot%_sbindir/$f"
 done
 
 %files
 %config %_sysconfdir/ppp/ip-up.d/*
 %_bindir/*
+%_sbindir/*
 /usr/lib/*
 %_datadir/%name
 
 %changelog
+* Fri Nov 16 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7-alt3
+- Packaged %_sbindir/{mailq,newaliases} symlinks to eliminate unwanted
+  dependencies on ssmtp-common.
+
 * Tue Aug 14 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7-alt2
 - Disabled /usr/sbin/sendmail requirement.
 
