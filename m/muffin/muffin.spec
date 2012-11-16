@@ -1,10 +1,8 @@
 # typelibs/girs dependencies (see below) added manually because of conflict with gnome-shell names
 
-%global _internal_version 392f000
-
 Name: muffin
-Version: 1.1.1
-Release: alt1
+Version: 1.1.2
+Release: alt2
 
 Summary: Window and compositing manager based on Clutter
 License: GPLv2+
@@ -13,8 +11,8 @@ Group: Graphical desktop/GNOME
 Url: https://github.com/linuxmint/muffin
 # To generate tarball
 # wget https://github.com/linuxmint/muffin/tarball/1.0.2 -O muffin-1.0.2.tar.gz
-Source: %name-%version.tar.gz
-Patch: %name-XKeycodeToKeySum-fix.patch
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Requires: lib%name = %version-%release
 Requires(post,preun): GConf
@@ -69,7 +67,7 @@ Requires: gir(Clutter) = 1.0 gir(Gtk) = 3.0
 Header files and libraries for developing Muffin plugins.
 
 %prep
-%setup -n linuxmint-%name-%_internal_version
+%setup -n %name-%version
 %patch -p1
 
 %build
@@ -117,6 +115,12 @@ Header files and libraries for developing Muffin plugins.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Nov 16 2012 Vladimir Didenko <cow@altlinux.org> 1.1.2-alt2
+- rebuilt for Sisyphus
+
+* Wed Oct 31 2012 Vladimir Didenko <vladimir.didenko@gmail.com> 1.1.2-alt1
+- 1.1.2
+
 * Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
 - 1.1.1
 
