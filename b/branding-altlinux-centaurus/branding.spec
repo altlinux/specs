@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt3
+Release: alt5
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -177,6 +177,7 @@ Summary: GNOME settings for %Brand %version %Theme
 License: Distributable
 Group: Graphical desktop/GNOME
 Requires: gtk2-theme-mist
+Requires: gksu
 Requires: altlinux-freedesktop-menu-gnomish-menu
 PreReq: gnome-panel
 Provides: gnome-theme-%brand-%theme = %version-%release
@@ -411,12 +412,27 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 
 %files indexhtml
 %ghost %indexhtmldir/index.html
+%indexhtmldir/alt-docs
+%indexhtmldir/documentation
 %indexhtmldir/index-*.html
 %indexhtmldir/index.css
 %indexhtmldir/images
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Nov 15 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt5
+- Fix grub2 console font
+- Fix attribute name for meta http-equiv
+- Adapt indexhtml to use from httpd2
+- Add gksu for apt-indicator in GNOME
+- Modernize appearance of Alterator web interface
+
+* Tue Nov 13 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt4
+- Set wallpapers for Centaurus 7.0
+- Set product logo for Centaurus 7.0
+- Fix search entry background
+- Don't overwrite specific product-logo.png
+
 * Fri Nov 09 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt3
 - New design of indexhtml
 - Set fill list of available variant
