@@ -13,7 +13,7 @@ BuildRequires(pre): rpm-macros-mate-conf
 %define fedora 18
 Name:		mate-display-manager	
 Version:	1.4.0
-Release:	alt5
+Release:	alt6
 Summary:	Displays login screen for MATE Desktop
 License:	LPLv2+ and GPLv2+ 
 URL:		http://mate-desktop.org
@@ -62,6 +62,7 @@ Displays login screen for MATE Desktop
 %patch41 -p1
 %patch42 -p1
 %patch43 -p2
+%patch44 -p2
 
 
 %build
@@ -155,6 +156,10 @@ install -pDm755 %SOURCE45 %buildroot%_controldir/mdm_xdmcp
 
 
 %changelog
+* Fri Nov 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt6
+- patch from previous build really applied
+- default session name fixed
+
 * Thu Nov 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt5
 - sessions search in /usr/share/xsessions disabled
 
