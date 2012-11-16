@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.7.2
-Release: alt4
+Release: alt5
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -24,7 +24,7 @@ Url: http://gcc.gnu.org/
 %endif
 
 %define priority 472
-%define snapshot 20121015
+%define snapshot 20121109
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -144,6 +144,8 @@ Patch114: gcc47-rh-ppl-0.10.patch
 Patch115: gcc47-rh-libitm-fno-exceptions.patch
 Patch116: gcc47-rh-rh837630.patch
 Patch117: gcc47-rh-arm-hfp-ldso.patch
+Patch118: gcc47-rh-pr55137.patch
+Patch119: gcc47-rh-pr55236.patch
 
 # Debian patches.
 Patch301: gcc47-deb-gcc-textdomain.patch
@@ -933,6 +935,8 @@ echo '%distribution %version-%release' >gcc/DEV-PHASE
 %patch111 -p0
 %patch115 -p0
 %patch117 -p0
+%patch118 -p0
+%patch119 -p0
 
 # Debian patches.
 %patch301 -p2
@@ -1991,6 +1995,9 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Fri Nov 16 2012 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt5
+- Synced with fedora gcc-4.7.2-8.
+
 * Mon Oct 29 2012 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt4
 - Synced with fedora gcc-4.7.2-5.
 
