@@ -1,5 +1,5 @@
 Name: mkinitrd
-Version: 3.0.13
+Version: 3.0.14
 Release: alt1
 Epoch: 1
 Summary: Creates an initial ramdisk image for preloading modules
@@ -51,11 +51,12 @@ This package contains scripts for initramfs images created by mkinitrd.
 
 
 %install
+install -d -m 0755 %buildroot/lib/mkinitrd/initramfs-base/{sbin,scripts}
 install -pD -m 0755 %name.sh %buildroot/sbin/%name
 install -pD -m 0644 %name.8 %buildroot%_man8dir/%name.8
-install -pD -m 0755 init.sh %buildroot/lib/mkinitrd/initramfs-base/init
-install -pD -m 0755 sbin/udevadm.sh %buildroot/lib/mkinitrd/initramfs-base/sbin/udevadm
-install -d -m 0755 %buildroot/lib/mkinitrd/initramfs-base/scripts
+for f in init.sh sbin/*.sh; do
+	install -p -m 0755 $f %buildroot/lib/mkinitrd/initramfs-base/${f%%.sh}
+done
 install -p -m 0644 scripts/* %buildroot/lib/mkinitrd/initramfs-base/scripts/
 
 
@@ -69,6 +70,12 @@ install -p -m 0644 scripts/* %buildroot/lib/mkinitrd/initramfs-base/scripts/
 
 
 %changelog
+* Sat Nov 17 2012 Led <led@altlinux.ru> 1:3.0.14-alt1
+- 3.0.14:
+  + add /sbin/findfs wrapper
+  + cleaned up scripts
+  + init: cleaned up and change use root and resume part by label and uuid
+
 * Fri Nov 16 2012 Led <led@altlinux.ru> 1:3.0.13-alt1
 - 3.0.13:
   + mkinitrd: remove bashisms
