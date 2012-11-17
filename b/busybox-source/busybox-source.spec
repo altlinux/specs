@@ -1,10 +1,11 @@
 %define bname busybox
 Name: %bname-source
 Version: 1.20.2
-Release: alt1
+Release: alt2
 Summary: Sources of %bname
 License: GPLv2
 Group: Development/Other
+URL: http://%bname.net
 Source: %bname-%version.tar
 Patch: %bname-%version-%release.patch
 BuildArch: noarch
@@ -52,6 +53,10 @@ tar -chJf %buildroot%_usrsrc/%bname-%version.tar.xz .
 
 
 %changelog
+* Sat Nov 17 2012 Led <led@altlinux.ru> 1.20.2-alt2
+- cpio: enabled some long options
+- added Url
+
 * Fri Nov 16 2012 Led <led@altlinux.ru> 1.20.2-alt1
 - 1.20.2
 - modprobe: add /lib/modprobe.d and /run/modprobe.d as config dirs
