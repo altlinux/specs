@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 1.6.7
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -237,6 +237,9 @@ _WM_
 %exclude %_libdir/browser-plugins/libcinnamon*.la
 
 %changelog
+* Thu Nov 15 2012 Vladimir Didenko <cow@altlinux.org> 1.6.7-alt2
+- fixed session files - changed fallback to cinnamon2d
+
 * Thu Nov 15 2012 Vladimir Didenko <cow@altlinux.org> 1.6.7-alt1
 - 1.6.7
 - added desktop files to start gnome-screensaver
