@@ -1,5 +1,5 @@
 Name: ldns
-Version: 1.6.13
+Version: 1.6.16
 Release: alt1
 License: BSD
 Url: http://www.nlnetlabs.nl/%name/
@@ -147,6 +147,9 @@ install -pD -m644 libdns.vim %buildroot%_sysconfdir/vim/libldns
 %endif
 
 %changelog
+* Sat Nov 17 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.6.16-alt1
+- 1.6.16
+
 * Mon May 21 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.6.13-alt1
 - 1.6.13
 
