@@ -6,7 +6,7 @@
 %def_enable python
 
 Name: libgupnp-igd
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: A library to handle UPnP IGD port mapping
@@ -129,6 +129,9 @@ export LDFLAGS="$LDFLAGS -lgthread-2.0"
 %exclude %python_sitelibdir/gupnp/*.la
 
 %changelog
+* Sat Nov 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.1-alt1
+- 0.2.1
+
 * Tue Nov 08 2011 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt1
 - 0.2.0
 
