@@ -1,56 +1,51 @@
-%define ver_major 1.10
-%define build_cvs 0
+%define ver_major 1.11
+%define api_ver 1.12
+%define goffice_api_ver 0.10
+%define _unpackaged_files_terminate_build 1
 %def_without gda
 %def_with python
 %def_with perl
-%def_without gnome
-%def_without new_translation
-%define abiversion 1.10
-
-%define _unpackaged_files_terminate_build 1
+%def_disable introspection
 
 Name: gnumeric
-Version: 1.10.17
-Release: alt5
+Version: %ver_major.90
+Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
-License: GPL
+License: GPLv2+ GPLv3+
 Group: Office
 Url: http://www.gnome.org/gnumeric/
 
-Source: %name-%version.tar
-Patch0: gnumeric-desktop-alt.patch
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Patch: gnumeric-desktop-alt.patch
 
-%if_without gnome
 Obsoletes: %name-light
-Provides:  %name-light = %version-%release
-%endif
+Provides: %name-light = %version-%release
 
 %if_with python
 # Provided by python_loader.so
 Provides: python%__python_version(Gnumeric)
-Provides: python%__python_version(gsf)
 %endif
 
 %define scrollkeeper_ver 0.3.14
 %define gsf_ver 1.14.23
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.8.17
+%define goffice_ver 0.9.90
 
 PreReq: scrollkeeper >= %scrollkeeper_ver
-PreReq: libgda4 >= %gda_ver
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
-Requires: libspreadsheet%{abiversion} = %version-%release
-Requires: libgnomeoffice >= %goffice_ver
-Requires: %_bindir/evince
+Requires: libspreadsheet%{api_ver} = %version-%release
 
-BuildRequires: flex libgnomeoffice-devel >= %goffice_ver libgsf-devel >= %gsf_ver
+BuildRequires: rpm-build-gnome
+BuildRequires: libgnomeoffice%goffice_api_ver-devel >= %goffice_ver
+BuildRequires: libgsf-devel >= %gsf_ver
+BuildRequires: libgtk+3-devel
 BuildRequires: intltool gnome-doc-utils zlib-devel librarian
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgsf-gir-devel libgnomeoffice%goffice_api_ver-gir-devel}
 %{?_with_perl:BuildRequires: perl-devel}
-%{?_with_python:BuildRequires: python-module-pygobject-devel}
+%{?_with_python:BuildRequires: python-module-pygobject3-devel}
 %{?_with_gda:BuildRequires: libgda4-devel >= %gda_ver libgnomedb4-devel}
-%{?_with_gnome:BuildRequires: libgnomeui-devel libgsf-gnome-devel}
 
 %description
 Gnumeric is a modern full-featured spreadsheet program.  Gnumeric
@@ -70,76 +65,71 @@ Gnumeric - это современная полнофункциональная 
 языке Python и Perl.  Среди поддерживаемых форматов - Lotus 1-2-3,
 MS Excel 95/98/2000/XP, SYLK.
 
-%package -n libspreadsheet%{abiversion}
+%package -n libspreadsheet%{api_ver}
 Summary: libspreadsheet library
 Group: System/Libraries
-Requires: libgnomeoffice >= %goffice_ver
-Obsoletes: libspreadsheet <= 1.8.1-alt1
+Obsoletes: libspreadsheet1.10
 
-%description -n libspreadsheet%{abiversion}
+%description -n libspreadsheet%{api_ver}
 This package provide libspreadsheet library
 
 %package -n libspreadsheet-devel
 Summary: libspreadsheet library headers
 Group: Development/C
-Provides: libspreadsheet%{abiversion}-devel = %version-%release
-Requires: libspreadsheet%{abiversion} = %version-%release
+Provides: libspreadsheet%{api_ver}-devel = %version-%release
+Requires: libspreadsheet%{api_ver} = %version-%release
 
 %description -n libspreadsheet-devel
 This package provide libspreadsheet library headers
 
+%package gir
+Summary: GObject introspection data for the Gnumeric
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+GObject introspection data for the Gnumeric.
+
+%package gir-devel
+Summary: GObject introspection devel data for the Gnumeric
+Group: System/Libraries
+BuildArch: noarch
+Requires: %name-gir = %version-%release
+
+%description gir-devel
+GObject introspection devel data for the Gnumeric.
+
+
 %set_perl_req_method relaxed
 
 %prep
-%if %build_cvs
-%setup -q -n %name
-%else
-%setup -q
-%endif
-
-rm -f schemas/*.schemas
-
-%if_with new_translation
-pushd po
-# already merged po
-bzcat %SOURCE4 > ru.po
-#bzcat %SOURCE4 > ru.po.new
-#msgmerge ru.po.new gnumeric.pot |bzip2 > ../../../SOURCES/%name-%version-ru.po.bz2
-popd
-%endif
-
-%patch0 -p1
-
-sed -i 's|@LIBGOFFICE@|libgoffice-0.8|g' libspreadsheet.pc.in
+%setup
+%patch -p1
 
 %build
 gnome-doc-prepare --copy --force
 %autoreconf
-%configure --disable-schemas-install \
+%configure \
 	--disable-schemas-compile \
 	--enable-ssindex \
 	%{subst_with gnome} \
 	%{subst_with gda} \
 	%{subst_with python} \
 	%{subst_with perl} \
+	%{?_enable_introspection:--enable-introspection=yes}
 
-# SMP build
 %make_build
 
 %install
 %makeinstall_std
 
-# remove none-packaged files
-rm -rf %buildroot%_var
-
-%find_lang --with-gnome %name %name-functions
-cat %name-functions.lang >> %name.lang
+%find_lang --with-gnome --output=%name.lang %name %name-functions
 
 %files -f %name.lang
 %_bindir/*
 %_libdir/%name/
-%_libdir/goffice/%goffice_ver/plugins/gnumeric/gnumeric.so
-%_libdir/goffice/%goffice_ver/plugins/gnumeric/plugin.xml
+%_libdir/goffice/%goffice_api_ver/plugins/gnumeric/gnumeric.so
+%_libdir/goffice/%goffice_api_ver/plugins/gnumeric/plugin.xml
 %dir %_datadir/%name
 %_datadir/%name/%version
 %_datadir/applications/*
@@ -152,16 +142,27 @@ cat %name-functions.lang >> %name.lang
 %config %_datadir/glib-2.0/schemas/org.gnome.gnumeric.plugin.gschema.xml
 
 %exclude %_libdir/%name/%version/plugins/*/*.la
-%exclude %_libdir/goffice/%goffice_ver/plugins/gnumeric/gnumeric.la
+%exclude %_libdir/goffice/%goffice_api_ver/plugins/gnumeric/gnumeric.la
 
-%files -n libspreadsheet-devel
-%_includedir/libspreadsheet-%{abiversion}
-%_pkgconfigdir/*
+%if_enabled introspection
+%files gir
+%_typelibdir/Gnm-%api_ver.typelib
 
-%files -n libspreadsheet%{abiversion}
+%files gir-devel
+%_girdir/Gnm-%api_ver.gir
+%endif
+
+%files -n libspreadsheet%{api_ver}
 %_libdir/libspreadsheet*
 
+%files -n libspreadsheet-devel
+%_includedir/libspreadsheet-%{api_ver}
+%_pkgconfigdir/*
+
 %changelog
+* Sat Nov 17 2012 Yuri N. Sedunov <aris@altlinux.org> 1.11.90-alt1
+- 1.11.90
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.10.17-alt5
 - rebuilt for perl-5.16
 
