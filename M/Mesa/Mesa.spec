@@ -3,8 +3,8 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 9.0
-Release: alt3
+Version: 9.0.1
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -321,6 +321,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Sat Nov 17 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0.1-alt1
+- 9.0.1
+
 * Sat Nov 03 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0-alt3
 - intel-2012q4.1
 
