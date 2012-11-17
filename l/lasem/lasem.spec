@@ -1,17 +1,22 @@
 Name: lasem
-Version: 0.3.0
-Release: alt1.1
+Version: 0.3.4
+Release: alt1
+
 Summary: C/Gobject based SVG/Mathml renderer and editor - tools
-
-Group: Graphics
 License: GPL
-Url: http://blogs.gnome.org/emmanuel/category/lasem
+Group: Graphics
 
+Url: https://live.gnome.org/Lasem
+
+# Cloned from git://git.gnome.org/lasem as subtree lasem
+#
+# To update sources from upstream git:
+#
+#   $ git remote add upstream git://git.gnome.org/lasem
+#   $ git pull -s subtree -X subtree=lasem upstream LASEM_0_3_4
 Source: %name-%version.tar
-Patch: lasem-0.3.0-alt-glib2.patch
-Packager: Vladimir Lettiev <crux@altlinux.ru>
 
-BuildRequires: glib2-devel libgio-devel libgtk+2-devel libxml2-devel libpango-devel libcairo-devel autogen intltool flex libgtk+2-gir-devel
+BuildRequires: glib2-devel libgio-devel libgtk+2-devel libxml2-devel libpango-devel libcairo-devel autogen intltool flex libgtk+2-gir-devel gtk-doc
 PreReq: lib%name = %version-%release
 
 %description
@@ -53,7 +58,6 @@ Requires: lib%name-gir = %version-%release
 
 %prep
 %setup
-%patch -p2
 
 %build
 NOCONOFIGURE=true ./autogen.sh
@@ -62,12 +66,13 @@ NOCONOFIGURE=true ./autogen.sh
 
 %install
 %makeinstall_std
+%find_lang %name-0.4
 
 %files
-%_bindir/lasemrender
+%_bindir/lasem-render-0.4
 %doc README COPYING ChangeLog AUTHORS NEWS
 
-%files -n lib%name
+%files -n lib%name -f %name-0.4.lang
 %_libdir/lib%name-0.4.so.*
 
 %files -n lib%name-devel
@@ -82,6 +87,10 @@ NOCONOFIGURE=true ./autogen.sh
 %_datadir/gir-1.0/Lasem-0.4.gir
 
 %changelog
+* Sat Nov 17 2012 Vladimir Lettiev <crux@altlinux.ru> 0.3.4-alt1
+- New version 0.3.4 (Closes: #27993)
+- Dropped patch
+
 * Thu Jul 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.0-alt1.1
 - Fixed build
 
