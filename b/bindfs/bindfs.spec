@@ -1,5 +1,5 @@
 Name: bindfs
-Version: 1.9
+Version: 1.11
 Release: alt1
 License: GPLv2
 Summary: %name is a FUSE filesystem for mounting a directory to another location, similarly to mount --bind
@@ -31,5 +31,8 @@ The permissions inside the mountpoint can be altered using various rules.
 %_man1dir/*
 
 %changelog
+* Sat Nov 17 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.11-alt1
+- New version
+
 * Tue Nov 15 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.9-alt1
 - Build for ALT
