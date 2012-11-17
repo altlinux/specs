@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/perl pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmatenotify) pkgconfig(x11)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/perl pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmatenotify) pkgconfig(x11)
 # END SourceDeps(oneline)
 Group: File tools
 %define _libexecdir %_prefix/libexec
 Name:           mate-dialogs
 Version:        1.5.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Displays dialog boxes from shell scripts
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -47,8 +47,12 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/mate/help/matedialog/
 %{_datadir}/omf/matedialog/
 %{_datadir}/matedialog/
+%exclude %_bindir/gdialog
 
 %changelog
+* Sat Nov 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_1
+- dropped gdialog compat script (conflicts with real gdialog)
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 
