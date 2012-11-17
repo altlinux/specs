@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 Group: System/Libraries
 %define _libexecdir %_prefix/libexec
 Summary:	Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:		mate-desktop
 Version:	1.5.3
-Release:	alt1_4
+Release:	alt1_5
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 Source1:        user-dirs-update-mate.desktop
@@ -25,6 +25,7 @@ Requires:	altlinux-freedesktop-menu-common
 Requires:	pygtk2
 Requires:       xdg-user-dirs-gtk
 Source44: import.info
+Patch33: mate-desktop-1.5.0-alt-settings.patch
 
 # DROP ME!!!
 # hack til transaction will be finished
@@ -58,6 +59,7 @@ libmatedesktop.
 
 %prep
 %setup -q
+%patch33 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 
@@ -69,7 +71,8 @@ NOCONFIGURE=1 ./autogen.sh
 	--with-pnp-ids-path="%{_datadir}/hwdatabase/pnp.ids"	\
 	--enable-unique						\
 	--enable-gnucat						\
-	--enable-gtk-doc
+	--enable-gtk-doc                                        \
+        --with-omf-dir=%{_datadir}/omf/mate-desktop
 
 make %{?_smp_mflags} V=1
 
@@ -77,11 +80,6 @@ make %{?_smp_mflags} V=1
 %install
 make install DESTDIR=%{buildroot} INSTALL='install -p'
 find %{buildroot}  -name '*.la' -exec rm -f {} ';'
-
-
-# to avoid conflicts with gnome
-mkdir %{buildroot}%{_datadir}/omf/mate
-mv -f %{buildroot}%{_datadir}/omf/{fdl,gpl,lgpl} %{buildroot}%{_datadir}/omf/mate
 
 
 desktop-file-install \
@@ -104,7 +102,7 @@ mkdir -p %buildroot%{_datadir}/mate-about
 %{_sysconfdir}/xdg/autostart/user-dirs-update-mate.desktop
 %{_datadir}/applications/mate-about.desktop
 %{_datadir}/mate/help/*/*/*.xml
-%{_datadir}/omf/mate/
+%{_datadir}/omf/mate-desktop/
 %{_datadir}/mate-about/
 %{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
 %{_mandir}/man1/mate-about.1*
@@ -121,6 +119,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Sat Nov 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_5
+- added mate-desktop-1.5.0-alt-settings.patch - font settings
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_4
 - use F19 import base
 
