@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.51
-Release: alt8
+Version: 3.0.52
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 51
+%define kernel_stable_version 52
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -279,11 +279,11 @@ Patch0233: linux-%kernel_branch.42-fix-drivers-firmware--iscsi_ibft.patch
 Patch0241: linux-%kernel_branch.44-fix-drivers-gpu-drm.patch
 Patch0242: linux-%kernel_branch.44-fix-drivers-gpu-drm--drm.patch
 Patch0243: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm_kms_helper.patch
-Patch0244: linux-%kernel_branch.49-fix-drivers-gpu-drm--i915.patch
+Patch0244: linux-%kernel_branch.52-fix-drivers-gpu-drm--i915.patch
 Patch0245: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0246: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
 Patch0247: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
-Patch0248: linux-%kernel_branch.50-fix-drivers-gpu-drm--radeon.patch
+Patch0248: linux-%kernel_branch.52-fix-drivers-gpu-drm--radeon.patch
 Patch0249: linux-%kernel_branch.42-fix-drivers-gpu-drm--via.patch
 Patch0250: linux-%kernel_branch.42-fix-drivers-gpu-drm--vmwgfx.patch
 Patch0251: linux-%kernel_branch.42-fix-drivers-gpu-vga--vgaarb.patch
@@ -463,7 +463,7 @@ Patch0571: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh_emc.
 Patch0572: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh_hp_sw.patch
 Patch0573: linux-%kernel_branch.42-fix-drivers-scsi-device_handler--scsi_dh_rdac.patch
 Patch0574: linux-%kernel_branch.43-fix-drivers-scsi-fcoe.patch
-Patch0575: linux-%kernel_branch.42-fix-drivers-scsi-ibmvscsi--ibmvfc.patch
+Patch0575: linux-%kernel_branch.51-fix-drivers-scsi-ibmvscsi--ibmvfc.patch
 Patch0576: linux-%kernel_branch.42-fix-drivers-scsi-ibmvscsi--ibmvscsic.patch
 Patch0577: linux-%kernel_branch.42-fix-drivers-scsi-megaraid--megaraid_mbox.patch
 Patch0578: linux-%kernel_branch.44-fix-drivers-scsi-megaraid--megaraid_sas.patch
@@ -505,7 +505,7 @@ Patch0661: linux-%kernel_branch.42-fix-firmware--vicam.patch
 
 Patch0670: linux-%kernel_branch.51-fix-fs.patch
 Patch0671: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
-Patch0672: linux-%kernel_branch.42-fix-fs--block.patch
+Patch0672: linux-%kernel_branch.51-fix-fs--block.patch
 Patch0673: linux-%kernel_branch.42-fix-fs--eventpoll.patch
 Patch0674: linux-%kernel_branch.51-fix-fs-btrfs.patch
 Patch0675: linux-%kernel_branch.44-fix-fs-cachefiles.patch
@@ -517,7 +517,7 @@ Patch0680: linux-%kernel_branch.42-fix-fs-ext3.patch
 Patch0681: linux-%kernel_branch.46-fix-fs-ext4.patch
 Patch0682: linux-%kernel_branch.42-fix-fs-hfs.patch
 Patch0683: linux-%kernel_branch.42-fix-fs-jbd.patch
-Patch0684: linux-%kernel_branch.42-fix-fs-nfs.patch
+Patch0684: linux-%kernel_branch.52-fix-fs-nfs.patch
 Patch0685: linux-%kernel_branch.42-fix-fs-ocfs2.patch
 Patch0686: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
 Patch0687: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
@@ -537,9 +537,10 @@ Patch0731: linux-%kernel_branch.42-fix-kernel--cgroup.patch
 Patch0732: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
 Patch0733: linux-%kernel_branch.49-fix-kernel--events.patch
 Patch0734: linux-%kernel_branch.42-fix-kernel--freezer.patch
-Patch0735: linux-%kernel_branch.42-fix-kernel--watchdog.patch
-Patch0736: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
-Patch0737: linux-%kernel_branch.44-fix-kernel-time.patch
+Patch0735: linux-%kernel_branch.51-fix-kernel--smp.patch
+Patch0736: linux-%kernel_branch.42-fix-kernel--watchdog.patch
+Patch0737: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
+Patch0738: linux-%kernel_branch.44-fix-kernel-time.patch
 
 Patch0740: linux-%kernel_branch.42-fix-lib.patch
 Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
@@ -567,7 +568,7 @@ Patch0776: linux-%kernel_branch.42-fix-net-bridge.patch
 Patch0777: linux-%kernel_branch.42-fix-net-ceph.patch
 Patch0778: linux-%kernel_branch.46-fix-net-core.patch
 Patch0779: linux-%kernel_branch.46-fix-net-ipv4.patch
-Patch0780: linux-%kernel_branch.43-fix-net-ipv6.patch
+Patch0780: linux-%kernel_branch.52-fix-net-ipv6.patch
 Patch0781: linux-%kernel_branch.43-fix-net-ipv6-netfilter--nf_conntrack_ipv6.patch
 Patch0782: linux-%kernel_branch.42-fix-net-ipv6--ip6_tunnel.patch
 Patch0783: linux-%kernel_branch.43-fix-net-iucv--af_iucv.patch
@@ -1784,6 +1785,7 @@ cd linux-%version
 %patch0735 -p1
 %patch0736 -p1
 %patch0737 -p1
+%patch0738 -p1
 
 %patch0740 -p1
 %patch0741 -p1
@@ -2791,6 +2793,19 @@ done)
 
 
 %changelog
+* Sun Nov 18 2012 Led <led@altlinux.ru> 3.0.52-alt1
+- 3.0.52
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-gpu-drm--radeon
+  + fix-drivers-scsi-ibmvscsi--ibmvfc
+  + fix-fs--block
+  + fix-fs-btrfs
+  + fix-fs-nfs
+  + fix-net-ipv6
+- added:
+  + fix-kernel--smp
+
 * Thu Nov 15 2012 Led <led@altlinux.ru> 3.0.51-alt8
 - updated:
   + fix-drivers-usb-host--xhci-hcd
