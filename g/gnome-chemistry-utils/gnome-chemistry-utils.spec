@@ -1,14 +1,16 @@
-%define ver_major 0.12
+%define ver_major 0.13
+%define api_ver 0.14
 %define _libexecdir %_prefix/libexec
 %def_enable mozilla
 %def_enable gnumeric
 %if_enabled gnumeric
-%define gnumeric_api_ver 1.10
+%define goffice_api_ver 0.10
+%define gnumeric_api_ver 1.12
 %define gnumeric_plugindir %(pkg-config --variable PluginDir libspreadsheet-%gnumeric_api_ver)
 %endif
 
 Name: gnome-chemistry-utils
-Version: %ver_major.13
+Version: %ver_major.98
 Release: alt1
 
 Summary: A set of chemical utilities
@@ -23,9 +25,9 @@ Requires: bodr chemical-mime-data
 
 BuildRequires: gcc-c++ doxygen docbook-dtds
 BuildRequires: gnome-doc-utils gnome-common intltool
-BuildRequires: libgio-devel libgnomeoffice-devel
+BuildRequires: libgio-devel libgnomeoffice%goffice_api_ver-devel
 %{?_enable_gnumeric:BuildRequires: libspreadsheet-devel}
-BuildRequires: libgsf-devel libgtkglext-devel libopenbabel-devel
+BuildRequires: libgsf-devel libopenbabel-devel libGLU-devel
 BuildRequires: bodr chemical-mime-data scrollkeeper
 %{?_enable_mozilla:BuildRequires: xulrunner-devel browser-plugins-npapi-devel}
 
@@ -78,17 +80,20 @@ spreadsheet program.
 %install
 %make DESTDIR=%buildroot install
 
-%define apps gchem3d-%ver_major gchemcalc-%ver_major gchempaint-%ver_major gchemtable-%ver_major gcrystal-%ver_major gspectrum-%ver_major
+%define apps gchem3d-%api_ver gchemcalc-%api_ver gchempaint-%api_ver gchemtable-%api_ver gcrystal-%api_ver gspectrum-%api_ver
 
-%find_lang --with-gnome --output=%name.lang gchemutils-%ver_major %apps
+%find_lang --with-gnome --output=%name.lang gchemutils-%api_ver %apps
 
 %files -f %name.lang
 %_bindir/*
+%_libexecdir/babelserver
 %_libdir/gchemutils
 %_libdir/goffice/*/plugins/gchemutils
-%_libdir/libgccv-%ver_major.so.*
-%_libdir/libgcp-%ver_major.so.*
-%_libdir/libgcu-%ver_major.so.*
+%_libdir/libgccv-%api_ver.so.*
+%_libdir/libgcp-%api_ver.so.*
+%_libdir/libgcu-%api_ver.so.*
+%_libdir/libgcrystal-%api_ver.so.*
+%_libdir/libgcugtk-%api_ver.so.*
 %_datadir/applications/*
 %_datadir/gchemutils
 %_datadir/icons/hicolor/*/*/*
@@ -118,6 +123,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Sun Nov 18 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.98-alt1
+- 0.13.98
+
 * Sat Oct 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.13-alt1
 - 0.12.13
 
