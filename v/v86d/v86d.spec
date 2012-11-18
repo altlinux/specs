@@ -3,7 +3,7 @@
 
 Name: v86d
 Version: 0.1.10
-Release: alt1
+Release: alt2
 Summary: A x86 Emulation Daemon
 License: GPLv2
 Group: System/Kernel and hardware
@@ -87,6 +87,9 @@ install -pD -m 0755 {,%buildroot/sbin/}%name
 
 
 %changelog
+* Sun Nov 18 2012 Led <led@altlinux.ru> 0.1.10-alt2
+- rebuild with klibc-1.5.18-alt3
+
 * Thu Oct 18 2012 Led <led@altlinux.ru> 0.1.10-alt1
 - rebuild with klibc-1.5.18-alt2
 - cleaned up spec
