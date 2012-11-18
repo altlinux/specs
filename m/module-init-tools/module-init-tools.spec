@@ -1,6 +1,6 @@
 Name: module-init-tools
 Version: 3.16
-Release: alt7
+Release: alt8
 
 Summary: Kernel module management utilities
 License: GPL
@@ -8,7 +8,6 @@ Group: System/Kernel and hardware
 URL: http://www.kerneltools.org
 ExclusiveOS: Linux
 ExclusiveArch: %ix86 x86_64
-Packager: Alexey Gladkov <legion@altlinux.ru>
 
 Source0: %name-%version.tar
 Patch0:  mit-klibc-support.patch
@@ -84,6 +83,9 @@ install -p modprobe.mkinitrd %buildroot/lib/mkinitrd/%name/sbin/modprobe
 /lib/mkinitrd/%name
 
 %changelog
+* Sun Nov 18 2012 Led <led@altlinux.ru> 3.16-alt8
+- Rebuilt with klibc-1.5.18-alt3
+
 * Wed Oct 17 2012 Michael Shigorin <mike@altlinux.org> 3.16-alt7
 - Rebuilt with klibc-1.5.18-alt2
   (3.16-alt4 actually meant "klibc-1.5.18-alt1.1").
