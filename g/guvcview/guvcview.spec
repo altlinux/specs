@@ -1,8 +1,8 @@
 %def_enable pulse
 
 Name: guvcview
-Version: 1.6.0
-Release: alt1.1
+Version: 1.6.1
+Release: alt1
 
 Summary: A GTK UVC video viewer
 License: GPLv3+
@@ -15,7 +15,7 @@ Source: http://prdownload.sourceforge.net/%name/%name-src-%version.tar.gz
 # From configure.ac
 BuildPreReq: libSDL-devel >= 1.2.10
 BuildRequires: desktop-file-utils intltool
-BuildRequires: libavutil-devel libavcodec-devel 
+BuildRequires: libavutil-devel libavcodec-devel
 BuildRequires: libgtk+3-devel libportaudio2-devel libv4l-devel libpng-devel libudev-devel
 %{?_enable_pulse:BuildRequires: libpulseaudio-devel}
 
@@ -58,6 +58,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/doc/%name
 
 %changelog
+* Sun Nov 18 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.1-alt1
+- 1.6.1
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.1
 - Rebuilt with libpng15
 
