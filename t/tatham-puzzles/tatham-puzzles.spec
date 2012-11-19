@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 9682
+Version: 9694
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -19,12 +19,11 @@ BuildRequires: ImageMagick-tools fonts-type1-urw libgtk+2-devel xvfb-run xauth h
 
 %description
 A collection of little puzzle games you can pop up in a window and play for two or three minutes while you take a break from whatever else you were doing.
-Their names: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Twiddle, Unequal, Untangle. Rules, descriptions and tips can be found in documentation.
+Their names: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Twiddle, Undead, Unequal, Unruly, Untangle. Rules, descriptions and tips can be found in documentation.
 
 %description -l ru_RU.KOI8-R
 Коллекция из небольших логических головоломок класса "открой в окошке, потыкай пять минут -- отдохни"; сложность можно настроить.
-Названия головоломок: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Twiddle, Unequal, Untangle. Описания, правила и подсказки -- в докуметации.
-
+Названия головоломок: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Twiddle, Undead, Unequal, Unruly, Untangle. Описания, правила и подсказки -- в докуметации.
 %package -n %name-solvers
 Summary: Stand-alone solvers for some of the %name puzzles
 Summary(ru_RU.KOI8-R): Набор "решалок" к некоторым головоломкам из %name
@@ -35,7 +34,6 @@ Stand-alone solvers for some of the %name puzzles.
 
 %description -l ru_RU.KOI8-R -n %name-solvers
 Набор "решалок" к некоторым головоломкам из %name.
-
 %prep
 %setup -n puzzles-r%version
 ./mkfiles.pl
@@ -105,6 +103,10 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Wed Nov 14 2012 Fr. Br. George <george@altlinux.ru> 9694-alt1
+- Autobuild version bump to 9694
+- New puzzle: Undead
+
 * Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 9682-alt1
 - Autobuild version bump to 9682
 
