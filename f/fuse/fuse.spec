@@ -1,6 +1,6 @@
 Name: fuse
-Version: 2.8.7
-Release: alt4
+Version: 2.9.2
+Release: alt1
 
 Summary: a tool for creating virtual filesystems
 License: GPL
@@ -14,7 +14,6 @@ Source1: fusermount-control
 Patch0: %name.Makefile.patch
 Patch1: %name.udev.patch
 Patch2: %name.link.patch
-Patch3: %name-2.8.0-alt-mmap.patch
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
@@ -58,7 +57,6 @@ This package contains development headers.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p0
-%patch3 -p1
 
 %build
 %autoreconf
@@ -98,6 +96,8 @@ touch %buildroot/lib/udev/devices/{f,c}use
 %_bindir/ulockmgr_server
 %attr(0660,root,fuse) %dev(c,10,229) /lib/udev/devices/fuse
 %attr(0660,root,cuse) %dev(c,10,59) /lib/udev/devices/cuse
+%_man1dir/*
+%_man8dir/*
 
 %files -n lib%name
 /%_lib/lib%name.so.*
@@ -109,6 +109,10 @@ touch %buildroot/lib/udev/devices/{f,c}use
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Nov 19 2012 Pavel Shilovsky <piastry@altlinux.org> 2.9.2-alt1
+- 2.9.2
+- remove mmap patch
+
 * Thu May 10 2012 Michael Shigorin <mike@altlinux.org> 2.8.7-alt4
 - relaxed /lib/udev/devices/{c,f}use permissions somewhat
   so that at least the default configuration is coherent
