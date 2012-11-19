@@ -1,13 +1,8 @@
 %define oname glusterfs
-%define major 3.2
+%define major 3.3
 # if you wish to compile an rpm without rdma support, compile like this...
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without rdma
 %{?_without_rdma:%global _without_rdma --disable-ibverbs}
-
-# No RDMA Support on s390(x)
-%ifarch s390 s390x
-%global _without_rdma --disable-ibverbs
-%endif
 
 # if you wish to compile an rpm without epoll...
 # rpmbuild -ta @PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz --without epoll
@@ -23,14 +18,15 @@
 
 Summary: Cluster File System
 Name: glusterfs3
-Version: %major.5
-Release: alt5.qa1
-License: GPLv3
+Version: %major.0
+Release: alt1
+License: GPLv2/LGPLv3
 Group: System/Base
-Url: http://www.gluster.org/docs/index.php/GlusterFS
-Packager: Denis Baranov <baraka@altlinux.ru>
+Url: http://www.gluster.org/
 
-Source: http://download.gluster.com/pub/gluster/glusterfs/%major/%version/glusterfs-%version.tar
+Packager: Alexei Takaseev <taf@altlinux.ru>
+
+Source0: %name-%version.tar
 Source1: glusterd.sysconfig
 Source2: glusterfsd.sysconfig
 Source3: umount.glusterfs
@@ -40,13 +36,15 @@ Source6: glusterfsd.logrotate
 
 Source7: glusterd.init
 Source8: glusterfsd.init
+
+Patch0: %name-%version-%release.patch
+
 %define _init_install() install -D -p -m 0755 %1 %buildroot%_initdir/%2 ;
 %define _init_file1     %_initdir/glusterd
 %define _init_file2     %_initdir/glusterfsd
 
-# Automatically added by buildreq on Sun Mar 11 2012
-# optimized out: libncurses-devel libtinfo-devel pkg-config python-base python-devel python-module-distribute python-module-peak python-modules python-modules-ctypes
-BuildRequires: flex glibc-devel-static libibverbs-devel libreadline-devel libxml2-devel python-module-mwlib python-module-paste
+# Automatically added by buildreq on Mon Nov 19 2012
+BuildRequires: flex glibc-devel-static libibverbs-devel libreadline-devel libssl-devel libxml2-devel python-module-mwlib
 
 Conflicts: %oname
 
@@ -179,10 +177,11 @@ is in user space and easily manageable.
 This package provides the development libraries.
 
 %prep
-%setup -n %oname-%version
+%setup
+%patch0 -p1
 
 %build
-#autoreconf
+./autogen.sh
 %configure %{?_without_rdma} %{?_without_epoll} %{?_with_fusermount} %{?_without_georeplication} --localstatedir=/var/
 
 # Remove rpath
@@ -225,9 +224,9 @@ find %buildroot%_libdir -name '*.la' -delete
 rm -rf %buildroot%_docdir/glusterfs/
 
 # Rename the samples, so we can include them as %%config
-for file in %buildroot%_sysconfdir/glusterfs/*.sample; do
-  mv ${file} `dirname ${file}`/`basename ${file} .sample`
-done
+#for file in %buildroot%_sysconfdir/glusterfs/*.sample; do
+#  mv ${file} `dirname ${file}`/`basename ${file} .sample`
+#done
 
 # Create working directory
 mkdir -p %buildroot%_sharedstatedir/glusterd
@@ -265,7 +264,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 %buildroot%_datadir/vim/vimfiles/syntax/glusterfs.vim
 
 %files
-%doc ChangeLog COPYING INSTALL README THANKS
+%doc ChangeLog INSTALL README THANKS COPYING-GPLV2 COPYING-LGPLV3
 #%config(noreplace) %_sysconfdir/logrotate.d/glusterd
 #%config(noreplace) %_sysconfdir/sysconfig/glusterd
 #%_libdir/glusterfs
@@ -280,7 +279,8 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_libdir/glusterfs/%version/xlator/
 %exclude %_libdir/glusterfs/%version/xlator/mount/fuse*
 %_logdir/gluster/*
-%_man8dir/*gluster*.8*
+# TODO: update man pages and uncomment this section
+#%%_man8dir/*gluster*.8*
 %if 0%{!?_without_rdma:1}
 %exclude %_libdir/glusterfs/%version/rpc-transport/rdma*
 %endif
@@ -321,7 +321,7 @@ install -D -p -m 644 extras/glusterfs.vim \
 %_init_file2
 
 %files vim
-%doc COPYING
+%doc COPYING-GPLV2 COPYING-LGPLV3
 %_datadir/vim/vimfiles/syntax/glusterfs.vim
 
 %files devel
@@ -338,6 +338,9 @@ install -D -p -m 644 extras/glusterfs.vim \
 %preun_service glusterd
 
 %changelog
+* Mon Nov 19 2012 Alexei Takaseev <taf@altlinux.org> 3.3.0-alt1
+- 3.3.0
+
 * Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 3.2.5-alt5.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
