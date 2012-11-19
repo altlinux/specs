@@ -25,7 +25,7 @@
 %define corename %libname-core
 Name: %libname
 Version: 1.2.2
-Release: alt1.5
+Release: alt1.6
 
 Summary: A library for manipulating QuickTime files
 %if_with gpl
@@ -42,7 +42,7 @@ Source: libquicktime-%version.tar
 Patch1: libquicktime-1.1.1-soname_hack-alt.patch
 Patch2: libquicktime-1.0.2-alt-fix-libswscale.patch
 Patch3: libquicktime-%version-alt-versioned-gettext-domain.patch
-Patch4: libquicktime-1.1.1-libav07.patch
+Patch4: libquicktime-1.1.1-libav9.patch
 
 Patch100: libquicktime-%version-alt-changes.patch
 
@@ -234,7 +234,7 @@ Static libquicktime libraries.
 %patch1 -p1
 #patch2 -p1
 %patch3 -p1
-%patch4 -p1
+%patch4 -p1 -b .libav
 
 %patch100 -p1
 
@@ -347,6 +347,9 @@ rm -f %buildroot%pluginsdir/*.la
 %endif
 
 %changelog
+* Thu Sep 12 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.2.2-alt1.6
+- rebuilt with recent libav/libx264
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.5
 - Rebuilt with libpng15
 

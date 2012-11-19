@@ -6,7 +6,7 @@
 
 Name: %gst_plugins-ugly
 Version: %ver_major.19
-Release: alt1
+Release: alt2
 Summary: A set of encumbered GStreamer plugins
 Group: System/Libraries
 License: LGPL
@@ -78,6 +78,9 @@ touch ABOUT-NLS config.rpath
 %_gtk_docdir/%name-plugins-%ver_major
 
 %changelog
+* Wed Sep 11 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.10.19-alt2
+- rebuilt with recent x264
+
 * Tue Feb 21 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.10.19-alt1
 - 0.10.19
 

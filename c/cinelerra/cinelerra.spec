@@ -1,6 +1,6 @@
 Name: cinelerra
 Version: 2.2.0CV
-Release: alt2.20111217.2
+Release: alt2.20111217.3
 
 # inline mmx assembly can cause text relocations
 %set_verify_elf_method textrel=relaxed
@@ -41,7 +41,7 @@ Patch37: cinelerra-2.1-faac.patch
 Patch38: cinelerra-2.1-freefont2.patch
 Patch39: cinelerra-2.1.5-alt-titler_font.patch
 Patch40: cinelerra-2.1-alt-constant_macros.patch
-Patch41: cinelerra-2.1-alt-libav.patch
+Patch41: cinelerra-2.2-alt-libav09.patch
 %def_without libsndfilehv
 
 # Automatically added by buildreq on Fri Mar 11 2011
@@ -193,7 +193,7 @@ document, packaged here.
 %patch38 -p1
 %patch39 -p1
 %patch40 -p1
-%patch41 -p1
+%patch41 -p2
 
 %build
 #./autogen.sh
@@ -343,6 +343,9 @@ cp guicast/bootstrap %buildroot%_bindir/guicast_bootstrap1
 %doc doc/README_en
 
 %changelog
+* Tue Sep 10 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0CV-alt2.20111217.3
+- rebuilt with recent libav/ibx264
+
 * Mon May 13 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.2.0CV-alt2.20111217.2
 - use mmx on x86 only
 

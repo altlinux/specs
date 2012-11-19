@@ -1,6 +1,6 @@
 Name: vlc
 Version: 2.0.8
-Release: alt2
+Release: alt3
 
 Summary: VLC media player
 License: GPLv2
@@ -1285,6 +1285,9 @@ chmod 755 %buildroot%_libexecdir/rpm/vlc.filetrigger
 %files maxi
 
 %changelog
+* Thu Sep 12 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.8-alt3
+- rebuilt with recent libav/libx264
+
 * Fri Jul 26 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.8-alt2
 - segfault in ffmpeg plugin fixed (closes: #29230)
 
