@@ -2,7 +2,7 @@
 %define sover 9
 
 Name: libmtp
-Version: 1.1.3
+Version: 1.1.5
 Release: alt1
 Packager: Dmitriy Khanzhin <jinn@altlinux.ru>
 
@@ -99,6 +99,9 @@ rm -rf %buildroot%_docdir/%name-%version/html
 %_bindir/*
 
 %changelog
+* Mon Nov 19 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.1.5-alt1
+- 1.1.5
+
 * Sun May 20 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 1.1.3-alt1
 - 1.1.3
 - replaced libusb-compat-devel to libusb-devel in BuildRequires
