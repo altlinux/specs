@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 0.8.7
+Version: 0.9.0
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -15,10 +15,10 @@ BuildRequires: rsync asciidoc-a2x xmlgraphics-fop fonts-ttf-dejavu
 BuildRequires: /proc
 
 Requires: rsync git-core
-Requires: time schedutils
+Requires: time schedutils sfdisk
 Requires: mkimage >= 0.2.0
 
-# Recommends: graphviz
+# Recommends: graphviz qemu-img
 
 %define mpdir %_datadir/%name
 %add_findreq_skiplist %mpdir/*.in/*
@@ -78,6 +78,10 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Nov 19 2012 Michael Shigorin <mike@altlinux.org> 0.9.0-alt1
+- initial uefi, luks, armh support
+- enhanced arm, gnome3/systemd, vm support
+
 * Sun Nov 11 2012 Michael Shigorin <mike@altlinux.org> 0.8.7-alt1
 - regressions--
 
