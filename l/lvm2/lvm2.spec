@@ -1,8 +1,9 @@
-%define lvm2version 2.02.97
-%define dmversion 1.02.76
+%define lvm2version 2.02.98
+%define dmversion 1.02.77
 
 %def_disable cluster
 %def_enable selinux
+%def_enable lvmetad
 
 Summary: Userland logical volume management tools
 Name: lvm2
@@ -16,6 +17,8 @@ Source: %name-%version.tar
 
 Source1: dmcontrol_update
 Source3: lvm2-monitor.init
+Source4: lvm2-lvmetad.init
+Source5: blk-availability.init
 
 Patch: %name-%version-%release.patch
 
@@ -197,6 +200,7 @@ mv libdm/ioctl/libdevmapper.a .
 
 %configure \
 	%{subst_enable selinux} \
+	%{subst_enable lvmetad} \
 	--disable-static_link \
 	--enable-lvm1_fallback \
 	--enable-readline \
@@ -270,6 +274,8 @@ install -pm755 scripts/lvmconf.sh %buildroot/sbin/lvmconf
 
 mkdir -p %buildroot%_initdir
 install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
+install -m 0755 %SOURCE4 %buildroot%_initdir/lvm2-lvmetad
+install -m 0755 %SOURCE5 %buildroot%_initdir/blk-availability
 
 %make install_systemd_generators DESTDIR=%buildroot
 %make install_systemd_units DESTDIR=%buildroot
@@ -277,9 +283,17 @@ install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 
 %post
 %post_service lvm2-monitor
+%if_enabled lvmetad
+%post_service lvm2-lvmetad
+%endif
+%post_service blk-availability
 
 %preun
 %preun_service lvm2-monitor
+%if_enabled lvmetad
+%preun_service lvm2-lvmetad
+%endif
+%preun_service blk-availability
 
 %files
 %doc README WHATS_NEW udev/12-dm-permissions.rules
@@ -299,6 +313,14 @@ install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 %config(noreplace) /etc/lvm/lvm.conf
 %_initdir/lvm2-monitor
 %_unitdir/lvm2-monitor.service
+%_initdir/blk-availability
+%_unitdir/blk-availability.service
+%if_enabled lvmetad
+%_initdir/lvm2-lvmetad
+%_unitdir/lvm2-lvmetad.service
+%_unitdir/lvm2-lvmetad.socket
+/lib/udev/rules.d/69-dm-lvm-metad.rules
+%endif
 /lib/systemd/system-generators/lvm2-activation-generator
 /lib/tmpfiles.d/%name.conf
 %dir /etc/lvm/
@@ -350,6 +372,9 @@ install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 %_sbindir/dmsetup
 %_sbindir/dmcontrol_update
 /lib/udev/rules.d/*
+%if_enabled lvmetad
+%exclude /lib/udev/rules.d/69-dm-lvm-metad.rules
+%endif
 
 %files -n dmeventd
 %_sbindir/dmeventd
@@ -372,6 +397,12 @@ install -m 0755 %SOURCE3 %buildroot%_initdir/lvm2-monitor
 %_pkgconfigdir/devmapper-event.pc
 
 %changelog
+* Mon Nov 19 2012 Alexey Shabalin <shaba@altlinux.ru> 2.02.98-alt1
+- git snapshot 7a34db0c
+- build with lvmetad support
+- add lvm2-lvmetad and blk-availability services
+- adapt blkdeactivate.sh for bash3 (tnx iv@)
+
 * Sat Aug 18 2012 Alexey Shabalin <shaba@altlinux.ru> 2.02.97-alt1
 - 2.02.97
 
