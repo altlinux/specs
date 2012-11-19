@@ -5,20 +5,23 @@
 %define Theme KMobile
 %define kdeconfdir %_K4sysconfdir/kde4
 %define thisconfdir %kdeconfdir/%theme
+%ifarch %arm
+%def_disable desktop
+%else
+%def_enable desktop
+%endif
 
 %define major 0
 %define minor 3
 %define bugfix 0
 Name: kde4-settings-%theme
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: %Theme - specific KDE settings
 License: GPL
 Url: http://www.altlinux.ru/
-
-BuildArch: noarch
 
 PreReq(post,preun): alternatives >= 0.2
 Requires: kde-common >= 4
@@ -26,8 +29,7 @@ Requires: kde-common >= 4
 Source: plasma-contour-config-%version.tar
 Source1: kmobile-settings-%version.tar
 Patch1: alt-startactive-modules.patch
-Patch2: alt-startactive-kwin.patch
-Patch3: alt-startactive-skel.patch
+Patch2: alt-startactive-skel.patch
 
 BuildRequires: cmake gcc-c++ kde-common-devel qmergeinifiles rpm-macros-alternatives
 
@@ -40,7 +42,11 @@ BuildRequires: cmake gcc-c++ kde-common-devel qmergeinifiles rpm-macros-alternat
 mv kmobile-settings-* kmobile-settings
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+%if_enabled desktop
+sed -i 's|^exec=.*|exec=kwin|'            startactive-modules/kwin.module
+%else
+sed -i 's|^exec=.*|exec=kwinactive_gles|' startactive-modules/kwin.module
+%endif
 
 %build
 # addon configs
@@ -60,6 +66,9 @@ done
 # prifile.d
 rm -rf profile.d/*
 install -m 0755 kmobile-settings/profile.d/startkde profile.d/
+%ifarch x86_64
+echo -e "\n" > profile.d/startkde
+%endif
 
 # startactive modules
 pushd startactive-modules
@@ -105,6 +114,12 @@ rm -rf %buildroot/%_K4apps/startactive/modules
 %config %thisconfdir
 
 %changelog
+* Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt3
+- clean requires
+
+* Fri Nov 16 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt2
+- start proper kwin on arm
+
 * Wed Oct 17 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt1
 - new version
 
