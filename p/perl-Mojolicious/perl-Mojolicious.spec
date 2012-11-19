@@ -1,5 +1,5 @@
 Name: perl-Mojolicious
-Version: 3.44
+Version: 3.57
 Release: alt1
 Summary: Real-time web framework
 
@@ -9,7 +9,7 @@ Url: %CPAN Mojolicious
 
 BuildArch: noarch
 Source: %name-%version.tar
-BuildRequires: perl-devel perl-EV perl-Digest-SHA perl-Encode perl-I18N-LangTags perl-Locale-Maketext perl-unicore perl-Encode-JP perl-Pod-Simple perl-IO-Socket-SSL perl-podlators
+BuildRequires: perl-devel perl-EV perl-Digest-SHA perl-Encode perl-I18N-LangTags perl-Locale-Maketext perl-unicore perl-Encode-JP perl-Pod-Simple perl-IO-Socket-SSL perl-podlators perl-Compress-Raw-Zlib perl-IO-Compress
 
 %description
 Mojolicious is a next generation web framework for the Perl programming
@@ -54,6 +54,9 @@ Features:
 %doc LICENSE Changes README.pod
 
 %changelog
+* Mon Nov 19 2012 Eugene Prokopiev <enp@altlinux.ru> 3.57-alt1
+- 3.44 -> 3.57
+
 * Sat Sep 29 2012 Vladimir Lettiev <crux@altlinux.ru> 3.44-alt1
 - 3.05 -> 3.44
 
