@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.54
+Version: 0.55
 %if_without backport
 %def_with gnome3
 %def_without gnome2
@@ -331,7 +331,10 @@ touch /etc/xdg/menus/lxde-applications.menu
 %config %_sysconfdir/xdg/menus/applications.menu
 
 %files enlightenment
-%config %_sysconfdir/xdg/menus/enlightenment-applications.menu
+%config %_sysconfdir/xdg/menus/enlightenment.menu
+# Enlightenment is too buggy to display a proper menu :(
+#%config %_sysconfdir/xdg/menus/enlightenment-applications.menu
+%exclude %_sysconfdir/xdg/menus/enlightenment-applications.menu
 %dir %_sysconfdir/xdg/menus/enlightenment-applications-merged
 
 %files kde4
@@ -340,6 +343,9 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Mon Nov 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
+- updated enlightenment menu to be compatible with its bugs (closes: 27998)
+
 * Tue Nov 13 2012 Igor Vlasenko <viy@altlinux.ru> 0.54-alt1
 - support for X-Teaching
 
