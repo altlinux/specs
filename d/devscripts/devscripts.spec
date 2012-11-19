@@ -1,7 +1,9 @@
 Name: devscripts
-Version: 2.12.4
+Version: 2.12.5
 Release: alt1
 Source: %{name}_%version.tar.gz
+# XXX We have awfully old po4a
+Source1: devscripts-po4a.conf
 Patch: devscripts-uscan-no_ssl_namecheck.patch
 License: GPLv2
 Group: Development/Other
@@ -58,6 +60,8 @@ grep -rl /usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl . |
 	while read N; do
 		sed -i 's@/usr/share/sgml/docbook/stylesheet/xsl/nwalsh/manpages/docbook.xsl@/usr/share/sgml/docbook/xsl-ns-stylesheets/manpages/docbook.xsl@g' "$N"
 	done
+# XXX We have awfully old po4a
+cp %SOURCE1 po4a/
 touch po4a/fr/deb-reversion.fr.1
 sed -i 's/ --install-layout=deb//' scripts/Makefile
 
@@ -103,6 +107,10 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Nov 15 2012 Fr. Br. George <george@altlinux.ru> 2.12.5-alt1
+- Autobuild version bump to 2.12.5
+- Hack in old po4a config file
+
 * Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 2.12.4-alt1
 - Autobuild version bump to 2.12.4
 
