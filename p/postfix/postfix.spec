@@ -1,6 +1,6 @@
 Name: postfix
 Version: 2.9.4
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -409,6 +409,7 @@ rln()
 	ln -snf "$target" "%buildroot$source"
 }
 
+install -D %name.service %buildroot%_unitdir/%name.service
 mkdir -p %buildroot{%ROOT,%_bindir,%_sbindir,%_libdir,%daemon_directory/postqueue,%plugin_directory,%_mandir}
 
 # Install shared libraries and dictionaries.
@@ -593,6 +594,7 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %attr(-,root,root) %daemon_directory/lmtp
 %attr(-,root,root) %daemon_directory/smtp
 %attr(-,root,root) %daemon_directory/smtpd
+%_unitdir/%name.service
 %_sysconfdir/syslog.d/%name
 %_libdir/%libpostfix
 %_libdir/%libpostfix_dict
@@ -672,6 +674,10 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Mon Nov 19 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.4-alt2
+- Fix ill-applied ignore-system-user patch
+- Add systemd service
+
 * Mon Oct 29 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.4-alt1
 - Autobuild version bump to 2.9.4
 - Bugfix release
