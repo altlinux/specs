@@ -41,7 +41,7 @@ BuildRequires: xvfb-run
 Summary:        Small applications for the MATE panel
 Name:			mate-applets
 Version:		1.4.0
-Release:        alt2_1.1
+Release:        alt2_1.1.1
 License:		GPLv2+ and GFDL
 Group:          Graphical desktop/Other
 URL:			http://pub.mate-desktop.org
@@ -77,7 +77,7 @@ BuildRequires:  xorg-x11-proto-devel
 BuildRequires:  mate-doc-utils
 BuildRequires:  which
 BuildRequires:  libtool autoconf gettext intltool
-BuildRequires:  mate-icon-theme
+BuildRequires:  mate-icon-theme-devel
 BuildRequires:  libmatekbd-devel >= %{libmatekbd_version}
 BuildRequires:  xsltproc libxslt
 BuildRequires:  mate-polkit-devel >= %{mate_polkit_version}
@@ -262,6 +262,9 @@ touch --no-create %{_datadir}/icons/mate
 %_sysconfdir/polkit-1/localauthority/50-local.d/01-cpufreq.pkla
 
 %changelog
+* Mon Nov 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_1.1.1
+- fixed build
+
 * Fri Oct 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt2_1.1
 - Build for Sisyphus
 
