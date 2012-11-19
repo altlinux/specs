@@ -1,6 +1,6 @@
 Name: installer-feature-runlevel5-stage3
-Version: 0.3
-Release: alt2
+Version: 0.4
+Release: alt1
 
 Summary: Provide a system with graphical boot
 License: GPL
@@ -8,6 +8,7 @@ Group: System/Configuration/Other
 
 Url: http://www.altlinux.org/Installer/beans
 BuildArch: noarch
+Requires: /sbin/init
 
 %description
 %summary
@@ -16,17 +17,18 @@ BuildArch: noarch
 
 %post
 if [ -f /etc/inittab ]; then
-	sed -r 's,^id:[^:]+:initdefault(.*),id:5:initdefault\1,' -i /etc/inittab
-else
-	echo "** no inittab, no-op"
+	sed -ri 's,^id:[^:]+:initdefault,id:5:initdefault,' /etc/inittab
 fi
+
+# https://wiki.archlinux.org/index.php/Systemd#Running_DEs_under_systemd
+rm -f /etc/systemd/system/default.target
 
 %files
 
-# TODO:
-# - manipulate /etc/systemd/system/default.target for systemd case
-
 %changelog
+* Mon Nov 19 2012 Michael Shigorin <mike@altlinux.org> 0.4-alt1
+- systemd adaptation (that's called "intuitive" by now probably)
+
 * Tue Jun 19 2012 Michael Shigorin <mike@altlinux.org> 0.3-alt2
 - dropped extra installer-common-stage3 dependency
 - spec update/cleanup
