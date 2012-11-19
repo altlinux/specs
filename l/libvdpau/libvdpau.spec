@@ -1,8 +1,8 @@
 %define docdir %_docdir/%name
 
 Name: libvdpau
-Version: 0.4.1
-Release: alt2.qa2
+Version: 0.5
+Release: alt1
 Epoch: 1
 Group: System/Libraries
 Summary: VDPAU library
@@ -58,6 +58,7 @@ Documentation for VDPAU library
 
 %files
 %doc AUTHORS COPYING
+%config(noreplace) %_sysconfdir/vdpau_wrapper.cfg
 %dir %_libdir/vdpau
 %_libdir/vdpau/*.so*
 %_libdir/libvdpau*.so.*
@@ -72,6 +73,9 @@ Documentation for VDPAU library
 %docdir/html
 
 %changelog
+* Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 1:0.5-alt1
+- new version
+
 * Tue Aug 28 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.4.1-alt2.qa2
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
