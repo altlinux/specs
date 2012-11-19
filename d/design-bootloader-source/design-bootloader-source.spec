@@ -2,7 +2,7 @@
 
 Name: %base_name-source
 Version: 6.0
-Release: alt5
+Release: alt6
 
 Group: Graphics
 Summary: Graphical boot logo sources
@@ -32,6 +32,9 @@ cp -a * %buildroot/usr/src/%base_name-source
 /usr/src/%base_name-source
 
 %changelog
+* Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 6.0-alt6
+- fix detect isohybrid image booted as disk
+
 * Mon Sep 10 2012 Andrey Cherepanov <cas@altlinux.org> 6.0-alt5
 - Language item should be in English because it's one way to change
   language for English-speaking people
