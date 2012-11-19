@@ -1,5 +1,5 @@
 Name: starman
-Version: 0.3003
+Version: 0.3005
 Release: alt1
 Serial: 1
 Summary: High-performance preforking PSGI/Plack web server
@@ -86,6 +86,10 @@ mkdir -p %buildroot/var/log/%name
 %doc Changes README
 
 %changelog
+* Mon Nov 19 2012 Eugene Prokopiev <enp@altlinux.ru> 1:0.3005-alt1
+- New version 0.3005
+- add --retry option for start-stop-daemon in initscript
+
 * Sat Oct 06 2012 Vladimir Lettiev <crux@altlinux.ru> 1:0.3003-alt1
 - New version 0.3003
 
