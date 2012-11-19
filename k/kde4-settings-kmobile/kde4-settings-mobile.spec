@@ -16,7 +16,7 @@
 %define bugfix 0
 Name: kde4-settings-%theme
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: %Theme - specific KDE settings
@@ -67,7 +67,7 @@ done
 rm -rf profile.d/*
 install -m 0755 kmobile-settings/profile.d/startkde profile.d/
 %ifarch x86_64
-echo -e "\n" > profile.d/startkde
+echo -e "\n" >> profile.d/startkde
 %endif
 
 # startactive modules
@@ -114,6 +114,9 @@ rm -rf %buildroot/%_K4apps/startactive/modules
 %config %thisconfdir
 
 %changelog
+* Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt4
+- fix deleting script contents
+
 * Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt3
 - clean requires
 
