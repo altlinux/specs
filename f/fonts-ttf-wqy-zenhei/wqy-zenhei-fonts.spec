@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
+BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel unzip
+# END SourceDeps(oneline)
 %define oldname wqy-zenhei-fonts
 %global fontname wqy-zenhei
 %global fontconf1 65-0-%{fontname}.conf
 %global fontconf2 65-0-%{fontname}-sharp.conf
-%define common_desc \
+%global common_desc \
 WenQuanYi Zen Hei is a Hei-Ti style (sans-serif type) Chinese \
 outline font. It is designed for general purpose text formatting \
 and on-screen display of Chinese characters and symbols from \
@@ -21,11 +25,11 @@ and ko (Korean) locales for fontconfig. Starting from version \
 the proportionally-spaced Zen Hei, and a mono-spaced face \
 named "WenQuanYi Zen Hei Mono".
 
-%define setscript zenheiset
+%global setscript zenheiset
 
 Name:           fonts-ttf-wqy-zenhei
 Version:        0.9.46
-Release:        alt3_6
+Release:        alt3_9
 Summary:        WenQuanYi Zen Hei CJK Font
 
 Group:          System/Fonts/True type
@@ -38,7 +42,8 @@ Source3:        %{setscript}
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
-Obsoletes:      wqy-zenhei-fonts-common < 0.9.45-5 
+Obsoletes:      wqy-zenhei-fonts-common < 0.9.45-5
+Provides:       wqy-zenhei-fonts-common = %{version}-%{release}
 Source44: import.info
 
 %description
@@ -47,12 +52,18 @@ Source44: import.info
 %prep
 %setup -q -n %{fontname}
 
+iconv -f GB18030 -t UTF-8 -o AUTHORS.utf8 AUTHORS
+touch -r AUTHORS AUTHORS.utf8
+mv AUTHORS.utf8 AUTHORS
+
+iconv -f ISO-8859-1 -t UTF-8 -o README.utf8 README
+touch -r README README.utf8
+mv README.utf8 README
+
 %build
 %{nil}
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttc %{buildroot}%{_fontdir}
 
@@ -69,7 +80,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf2} \
 
 install -m 0755 -d %{buildroot}%{_bindir}
 
-install -m 0744 -p %{SOURCE3} \
+install -m 0755 -p %{SOURCE3} \
         %{buildroot}%{_bindir}/%{setscript}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -106,16 +117,20 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
 %{_fontconfig_templatedir}/??-?-%{fontname}*.conf
 %config(noreplace) %{_fontconfig_confdir}/??-?-%{fontname}*.conf
 %{_fontbasedir}/*/%{_fontstem}/*.ttc
 %dir %{_fontbasedir}/*/%{_fontstem}
 %doc AUTHORS ChangeLog COPYING README
-%attr(755, root, root) %{_bindir}/%{setscript}
+%{_bindir}/%{setscript}
 
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_9
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.46-alt3_6
 - update to new release by fcimport
 
