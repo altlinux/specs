@@ -11,7 +11,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-mkenums /usr/bin/gtkdocize
 
 Name:           mate-document-viewer
 Version:        1.4.0
-Release:        alt2_1.1
+Release:        alt2_1.1.1
 Summary:        Document viewer
 
 License:        GPLv2+ and GFDL
@@ -32,7 +32,7 @@ BuildRequires:  mate-doc-utils
 BuildRequires:  scrollkeeper
 BuildRequires:  gettext
 BuildRequires:  desktop-file-utils
-BuildRequires:  mate-icon-theme >= %{theme_version}
+BuildRequires:  mate-icon-theme-devel
 BuildRequires:  libtool
 BuildRequires:  gtk-doc
 BuildRequires:  intltool
@@ -239,6 +239,9 @@ fi
 %{_libdir}/caja/extensions-2.0/libatril-properties-page.so
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_1.1.1
+- fixed build
+
 * Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt2_1.1
 - Build for Sisyphus
 
