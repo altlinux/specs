@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt5
+Release: alt6
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -420,6 +420,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Nov 20 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt6
+- Set TraditionalOk theme for Mate
+- Grow section width, set attention box as block
+
 * Thu Nov 15 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt5
 - Fix grub2 console font
 - Fix attribute name for meta http-equiv
