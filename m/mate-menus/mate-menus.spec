@@ -7,7 +7,7 @@ Requires: altlinux-freedesktop-menu-mate
 %define _libexecdir %_prefix/libexec
 Name:	mate-menus
 Version:	1.5.0
-Release:	alt1_1
+Release:	alt2_1
 Summary:	Displays menus for MATE Desktop
 License:	GPLv2+ and LGPLv2+
 URL:		http://mate-desktop.org
@@ -20,12 +20,6 @@ BuildRequires:  python-devel
 Source44: import.info
 Patch33: gnome-menus-2.14-alt-add-config-dir.patch
 Patch34: gnome-menus-alt-applications-menu-no-legacy-kde.patch
-
-# DROP ME!!!
-# hack til transaction will be finished
-%ifarch x86_64
-Provides: i586-mate-menus = %version
-%endif
 
 %description
 Displays menus for MATE Desktop
@@ -89,6 +83,9 @@ find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_1
+- dropped hack with 586 provides
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 
