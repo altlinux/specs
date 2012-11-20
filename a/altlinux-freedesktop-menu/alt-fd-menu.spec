@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.55
+Version: 0.56
 %if_without backport
 %def_with gnome3
 %def_without gnome2
@@ -145,6 +145,16 @@ Requires: %name
 %description gnome3
 ALTLinux freedesktop.org menu for GNOME3
 
+%package cinnamon
+Summary: cinnamon freedesktop menu
+Group: Graphical desktop/GNOME
+Provides: cinnamon-freedesktop-menu
+Conflicts: cinnamon <= 1.6.7-alt2
+Requires: %name
+
+%description cinnamon
+ALTLinux freedesktop.org menu for Cinnamon
+
 %package kde3
 Summary: kde3 freedesktop menu
 Group: Graphical desktop/KDE
@@ -248,8 +258,8 @@ rm ignore.list
 sed -i s/xfce4-run.desktop/xfrun4.desktop/ %buildroot%_sysconfdir/xdg/menus/xfce-applications.menu
 %endif
 
-mkdir -p %buildroot%_sysconfdir/xdg/menus/{,enlightenment-,gnome-,gnome3-,kde3-,lxde-,mate-,xfce-}applications-merged
-mkdir -p %buildroot%_sysconfdir/xdg/menus/{,mate-}settings-merged
+mkdir -p %buildroot%_sysconfdir/xdg/menus/{,enlightenment-,gnome-,gnome3-,cinnamon-,kde3-,lxde-,mate-,xfce-}applications-merged
+mkdir -p %buildroot%_sysconfdir/xdg/menus/{,mate-,cinnamon-}settings-merged
 
 install -D -m644 layout/kde4-merged.menu %buildroot%_sysconfdir/kde4/xdg/menus/applications-merged/50-kde4-merged.menu
 
@@ -314,6 +324,12 @@ touch /etc/xdg/menus/lxde-applications.menu
 %files gnome3
 %config %_sysconfdir/xdg/menus/gnome3-applications.menu
 %dir %_sysconfdir/xdg/menus/gnome3-applications-merged
+
+%files cinnamon
+%config %_sysconfdir/xdg/menus/cinnamon-applications.menu
+%dir %_sysconfdir/xdg/menus/cinnamon-applications-merged
+%config %_sysconfdir/xdg/menus/cinnamon-settings.menu
+%dir %_sysconfdir/xdg/menus/cinnamon-settings-merged
 %endif
 
 %files mate
@@ -343,6 +359,9 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.56-alt1
+- added cinnamon freedesktop menu
+
 * Mon Nov 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.55-alt1
 - updated enlightenment menu to be compatible with its bugs (closes: 27998)
 
