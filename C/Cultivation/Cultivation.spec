@@ -1,12 +1,13 @@
 Name: Cultivation
 Version: 8
-Release: alt3
+Release: alt3.1
 Summary: Cultivation is a game about the interactions within a gardening community
 License: GPL
 Group: Games/Arcade
 Url: http://cultivation.sourceforge.net/
 Packager: Fr. Br. George <george@altlinux.ru>
 Source0: Cultivation_8_UnixSource.tar.gz
+Patch0: Cultivation-8-alt-Makefile.patch
 
 # Automatically added by buildreq on Tue Apr 05 2011
 # optimized out: libGL-devel libGLU-devel libX11-devel libstdc++-devel
@@ -33,6 +34,7 @@ Cultivation generates fresh visuals, music, and behaviors.
 
 %prep
 %setup -q -n %{name}_%{version}_UnixSource
+%patch0 -p2
 
 %build
 sed -i -e "s|/usr/X11R6/lib|%_lib|g" game2/Makefile.GnuLinux
@@ -42,7 +44,6 @@ pushd minorGems/sound/portaudio
 	%configure
 	%make
 popd
-
 pushd game2
 rm -f gameSource/Makefile
 cat \
@@ -121,6 +122,9 @@ desktop-file-install --dir=%buildroot%_datadir/applications %name.desktop --vend
 %_datadir/pixmaps/*.png
 
 %changelog
+* Tue Nov 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 8-alt3.1
+- Fixed build
+
 * Tue Apr 05 2011 Fr. Br. George <george@altlinux.ru> 8-alt3
 - Forbidden requires eliminated
 
