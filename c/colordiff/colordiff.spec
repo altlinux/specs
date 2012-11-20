@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(IPC/Open2.pm)
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
+BuildRequires: /usr/bin/python-config binutils-devel cmake elfutils-devel gcc-c++ libelf-devel perl(IPC/Open2.pm) python-devel
 # END SourceDeps(oneline)
 Group: Text tools
 Name:           colordiff
-Version:        1.0.12
+Version:        1.0.13
 Release:        alt1_1
 Summary:        Color terminal highlighter for diff files
 
@@ -32,7 +33,6 @@ pretty syntax highlighting.  Color schemes can be customized.
 %setup -q
 %patch0 -p1
 mv colordiffrc colordiffrc-darkbg ; cp -p colordiffrc-lightbg colordiffrc
-f=CHANGES ; iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
 
 # those are defaults of old 1.0.8a-alt1 by Pavlov Konstantin <thresh@>
 sed -i -e 's/banner=yes/banner=no/' colordiffrc-*
@@ -57,6 +57,9 @@ make install DESTDIR=$RPM_BUILD_ROOT INSTALL_DIR=%{_bindir} \
 
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.13-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.12-alt1_1
 - update to new release by fcimport
 
