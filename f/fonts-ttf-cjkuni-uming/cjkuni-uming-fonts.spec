@@ -1,24 +1,27 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
+BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel
+# END SourceDeps(oneline)
 %define oldname cjkuni-uming-fonts
 # %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name cjkuni-uming-fonts
 %define version 0.2.20080216.1
 %global fontname cjkuni-uming
 %global fontconf 65-0-ttf-arphic-uming.conf
-#%global fontconf2 25-ttf-arphic-uming-render.conf
 %global fontconf3 90-ttf-arphic-uming-embolden.conf
 
-%define catalogue        %{_sysconfdir}/X11/fontpath.d
+%global catalogue        %{_sysconfdir}/X11/fontpath.d
 
-%define common_desc \
+%global common_desc \
 CJK Unifonts are Unicode TrueType fonts derived from original fonts made \
 available by Arphic Technology under "Arphic Public License" and extended by \
 the CJK Unifonts project.
 
-%define umingbuilddir %{oldname}-%{version}
+%global umingbuilddir %{oldname}-%{version}
 
 Name:           fonts-ttf-cjkuni-uming
 Version:        0.2.20080216.1
-Release:        alt4_50
+Release:        alt4_51
 Summary:        Chinese Unicode TrueType font in Ming face
 
 Group:          System/Fonts/True type
@@ -26,12 +29,12 @@ License:        Arphic
 URL:            http://www.freedesktop.org/wiki/Software/CJKUnifonts
 Source0:        http://ftp.debian.org/debian/pool/main/t/ttf-arphic-uming/ttf-arphic-uming_%{version}.orig.tar.gz
 Source1:        %{oldname}-fontconfig.conf
-#Source2:        %{fontconf2}
 Source3:        %{fontconf3}
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 Obsoletes:      cjkuni-fonts-common < 0.2.20080216.1-42
+Provides:       cjkuni-fonts-common = 0.2.20080216.1-42
 Source44: import.info
 
 %description
@@ -58,11 +61,6 @@ install -m 0644 -p %{SOURCE1} \
 ln -s %{_fontconfig_templatedir}/%{fontconf} \
       %{buildroot}%{_fontconfig_confdir}/%{fontconf}
 
-
-#install -m 0644 -p %{SOURCE2} \
-#        %{buildroot}%{_fontconfig_templatedir}/%{fontconf2}
-#ln -s %{_fontconfig_templatedir}/%{fontconf2} \
-#      %{buildroot}%{_fontconfig_confdir}/%{fontconf2}
 
 install -m 0644 -p %{SOURCE3} \
         %{buildroot}%{_fontconfig_templatedir}/%{fontconf3}
@@ -120,6 +118,9 @@ fi
 %doc ../%{umingbuilddir}/README
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_51
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.20080216.1-alt4_50
 - update to new release by fcimport
 
