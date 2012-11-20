@@ -1,20 +1,24 @@
-%define common_desc \
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
+BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel
+# END SourceDeps(oneline)
+%global common_desc \
 ghostscript font configuration files for Chinese fonts.
 
 
-%define gsdir            %{_datadir}/ghostscript/conf.d
-%define umingver         0.2.20080216.1
-%define ukaiver          0.2.20080216.1
-%define zenheiver        0.9.45
+%global gsdir            %{_datadir}/ghostscript/conf.d
+%global umingver         0.2.20080216.1
+%global ukaiver          0.2.20080216.1
+%global zenheiver        0.9.45
 
 Name:           ghostscript-chinese
-Version:        0.3.1
-Release:        alt2_5
+Version:        0.4.0
+Release:        alt1_1
 Summary:        Ghostscript Chinese fonts configuration files
 Group:          System/Fonts/True type
 License:        GPLv2+
 URL:            http://www.freedesktop.org/wiki/Software/CJKUnifonts
-Source0:        http://pwu.fedorapeople.org/ghostscript-chinese/ghostscript-chinese-%{version}.tar.gz
+Source0:        http://pwu.fedorapeople.org/ghostscript-chinese/%{name}-%{version}.tar.gz
 BuildArch:      noarch
 
 #BuildRequires:
@@ -30,7 +34,7 @@ Summary:      Ghostscript Simplified Chinese fonts configuration files
 Group:        System/Fonts/True type
 Requires:     ghostscript-utils ghostscript
 Requires:     fonts-ttf-wqy-zenhei >= %{zenheiver}
-Requires:     ghostscript-chinese = %{version}-%{release}
+Requires:     %{name} = %{version}-%{release}
 
 %description zh_CN
 %common_desc
@@ -43,7 +47,7 @@ Group:        System/Fonts/True type
 Requires:     ghostscript-utils ghostscript
 Requires:     fonts-ttf-cjkuni-uming = %{umingver}
 Requires:     fonts-ttf-cjkuni-ukai = %{ukaiver}
-Requires:     ghostscript-chinese = %{version}-%{release}
+Requires:     %{name} = %{version}-%{release}
 
 %description zh_TW
 %common_desc
@@ -61,19 +65,8 @@ For Traditional Chinese.
 %install
 install -m 0755 -d %{buildroot}%{gsdir}
 
-#Note modify the absolute path of zenhei fonts in ghostscript files.
-for gscid in `ls *.zh_CN`
+for gscid in `ls *.zh_CN *.zh_TW`
 do
-    cat $gscid | sed --expression='s/###zenheiloc###/\/usr\/share\/fonts\/wqy-zenhei/g' > tmp_gs
-    mv tmp_gs $gscid
-    install -m 0644 -p $gscid %{buildroot}%{gsdir}
-done
-
-#Note modify the absolute path of uming/ukai fonts in ghostscript files.
-for gscid in `ls *.zh_TW`
-do
-    cat $gscid | sed --expression='s/###ukailoc###/\/usr\/share\/fonts\/cjkuni-ukai/g' --expression='s/###umingloc###/\/usr\/share\/fonts\/cjkuni-uming/g' > tmp_gs
-    mv tmp_gs $gscid
     install -m 0644 -p $gscid %{buildroot}%{gsdir}
 done
 
@@ -93,8 +86,10 @@ done
 %{gsdir}/CIDFnmap.zh_TW
 
 
-
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.0-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_5
 - update to new release by fcimport
 
