@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
+BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel unzip
 # END SourceDeps(oneline)
 %define oldname ipa-ex-mincho-fonts
 %global		priority	65-2
 %global		fontname	ipa-ex-mincho
 %global		fontconf	%{priority}-%{fontname}.conf
-%global		archiveversion	00103
+%global		archiveversion	00201
 %global		archivename	ipaexm%{archiveversion}
 
 Name:		fonts-ttf-ipa-ex-mincho
-Version:	001.03
-Release:	alt3_6
+Version:	002.01
+Release:	alt1_1
 Summary:	Japanese Mincho-typeface OpenType font by IPA
 
 Group:		System/Fonts/True type
@@ -90,6 +91,9 @@ fi
 
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 002.01-alt1_1
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 001.03-alt3_6
 - update to new release by fcimport
 
