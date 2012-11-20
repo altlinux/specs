@@ -1,6 +1,6 @@
 Name: mc
 Version: 4.8.6
-Release: alt5
+Release: alt6
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -40,6 +40,9 @@ Patch104: mc-4.8.6-alt-extfs-udar.patch
 
 # http://www.midnight-commander.org/ticket/2812
 Patch105: mc-4.8.6-alt-extfs-rpm.patch
+
+#
+Patch106: mc-4.8.6-alt-video.sh.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -96,6 +99,7 @@ needed for working all components (some vfs for example)
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
+%patch106 -p1
 
 cat <<EOF > version.h
 #ifndef MC_CURRENT_VERSION
@@ -182,6 +186,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Tue Nov 20 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt6
+- added mc-4.8.6-alt-video.sh.patch
+  (you can use $MCVIDEOPLAYER="legacy" for disable xdg-open usage)
+
 * Sun Nov 11 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt5
 - merged with git://github.com/MidnightCommander/mc.git
 
