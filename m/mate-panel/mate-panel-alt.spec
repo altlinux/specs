@@ -26,7 +26,7 @@ BuildRequires: /usr/bin/gio-querymodules /usr/bin/glib-genmarshal /usr/bin/gtkdo
 Summary: 			MATE panel
 Name: 				mate-panel
 Version: 			1.4.0
-Release: 			alt3_1.1
+Release: 			alt4_1.1
 URL: 				http://pub.mate-desktop.org
 Source0: 			http://pub.mate-desktop.org/releases/1.4/%{name}-%{version}.tar.xz
 Source3: 			redhat-panel-default-setup.entries
@@ -318,6 +318,9 @@ fi
 
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt4_1.1
+- rebuild with mate-desktop
+
 * Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt3_1.1
 - Build for Sisyphus
 
