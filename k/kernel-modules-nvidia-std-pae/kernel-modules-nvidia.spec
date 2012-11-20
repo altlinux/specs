@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	304.60
+%define module_version	304.64
 %define module_release	alt1
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
@@ -193,8 +193,11 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Fri Nov 02 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 304.60-alt1.197895.1
+* Sun Nov 18 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 304.64-alt1.197895.1
 - Build for kernel-image-std-pae-3.5.7-alt1.
+
+* Thu Nov 08 2012 Sergey V Turchin <zerg at altlinux dot org> 304.64-alt1
+- new release (304.64)
 
 * Mon Oct 29 2012 Sergey V Turchin <zerg at altlinux dot org> 304.60-alt1
 - new release (304.60)
