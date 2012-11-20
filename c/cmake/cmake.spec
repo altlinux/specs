@@ -1,6 +1,6 @@
 Name: cmake
-Version: 2.8.9
-Release: alt1.2
+Version: 2.8.10.1
+Release: alt1
 
 Summary: Cross-platform, open-source make system
 
@@ -125,7 +125,6 @@ Set of RPM macros for packaging applications that use cmake.
 %prep
 %setup
 %patch -p1
-sed -i 's,SET(BUILD_SHARED_LIBS OFF),SET(BUILD_SHARED_LIBS ON),' CMakeLists.txt
 
 %build
 mkdir build
@@ -154,7 +153,7 @@ mv %buildroot/usr/lib %buildroot%_libdir || :
 for i in 32 128; do
     install -pD -m644 Source/QtDialog/CMakeSetup$i.png %buildroot%_iconsdir/hicolor/${i}x$i/apps/CMakeSetup.png
 done
-mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir,%_sysconfdir}
+mkdir -p %buildroot{%vim_indent_dir,%vim_syntax_dir,%_sysconfdir/bash_completion.d}
 install -m644 Docs/cmake-indent.vim %buildroot%vim_indent_dir/%name.vim
 install -m644 Docs/cmake-syntax.vim %buildroot%vim_syntax_dir/%name.vim
 install -pD -m644 %name.macros %buildroot%_rpmmacrosdir/%name
@@ -239,6 +238,9 @@ popd
 
 
 %changelog
+* Tue Nov 20 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.8.10.1-alt1
+- 2.8.10.1
+
 * Sat Oct 06 2012 Dmitry V. Levin <ldv@altlinux.org> 2.8.9-alt1.2
 - Reverted previous change, it was a no longer needed workaround
   for make-3.82-alt4 quotation bug.
