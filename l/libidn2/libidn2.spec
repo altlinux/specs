@@ -1,16 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize
+BuildRequires: /usr/bin/gtkdocize gcc-c++ libglibmm-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Summary:          Library to support IDNA2008 internationalized domain names
 Name:             libidn2
 Version:          0.8
-Release:          alt1_2
+Release:          alt1_3
 License:          GPLv3+
 Group:            System/Libraries
 URL:              http://www.gnu.org/software/libidn/#libidn2
 Source:           http://alpha.gnu.org/gnu/libidn/%{name}-%{version}.tar.gz
 Patch0:           libidn2-0.3-rpath.patch
+Provides:         bundled(gnulib)
 Source44: import.info
 
 %description
@@ -21,7 +22,7 @@ It is a standalone library, without any dependency on libidn.
 %package devel
 Summary:          Development files for libidn2
 Group:            Development/C
-Requires:         libidn2 = %{version}-%{release}
+Requires:         %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
 The libidn2-devel package contains libraries and header files for
@@ -70,6 +71,9 @@ make %{?_smp_mflags} -C tests check
 %{_datadir}/gtk-doc/
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_3
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt1_2
 - update to new release by fcimport
 
