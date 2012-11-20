@@ -6,7 +6,7 @@ Group: System/Libraries
 Summary:	Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:		mate-desktop
 Version:	1.5.3
-Release:	alt1_5
+Release:	alt2_5
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 Source1:        user-dirs-update-mate.desktop
@@ -26,12 +26,6 @@ Requires:	pygtk2
 Requires:       xdg-user-dirs-gtk
 Source44: import.info
 Patch33: mate-desktop-1.5.0-alt-settings.patch
-
-# DROP ME!!!
-# hack til transaction will be finished
-%ifarch x86_64
-Provides: i586-mate-desktop = %version
-%endif
 
 %description
 The mate-desktop package contains an internal library
@@ -119,6 +113,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt2_5
+- dropped transaction hack
+
 * Sat Nov 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_5
 - added mate-desktop-1.5.0-alt-settings.patch - font settings
 
