@@ -1,5 +1,5 @@
 Name:     apt-repo
-Version:  1.1.0
+Version:  1.1.1
 Release:  alt1
 
 Summary:  Script for manipulation APT repository list
@@ -36,6 +36,12 @@ gzip %buildroot%_man1dir/%name.1
 %doc %_man1dir/%{name}*
 
 %changelog
+* Tue Nov 20 2012 Andrey Cherepanov <cas@altlinux.org> 1.1.1-alt1
+- Add apt-repo clear command to remove all cdrom and task repositories
+- Fix add cdrom source if it exist in list
+- Check for wrong type on mass source deletion
+- Remove error message on empty deletion
+
 * Tue Nov 29 2011 Andrey Cherepanov <cas@altlinux.org> 1.1.0-alt1
 - Remove man page from program to separate file
 - Support remove only specified type of sources
