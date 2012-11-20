@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 %define fedora 18
 Name:           jss
 Version:        4.2.6
-Release:        alt3_25jpp7
+Release:        alt4_25jpp7
 Summary:        Java Security Services (JSS)
 
 Group:          System/Libraries
@@ -135,7 +135,7 @@ sed -i -e 's;LINUX3_1;LINUX3_2;' mozilla/security/coreconf/Linux3.2.mk
 
 
 # 3.0(t6), 3.5(SIS) kernels support
-for i in 0 3 4 5; do
+for i in 0 3 4 5 6; do
 cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.$i.mk
 sed -i -e 's;LINUX3_1;LINUX3_'$i';' mozilla/security/coreconf/Linux3.$i.mk
 done
@@ -195,6 +195,9 @@ ln -s %_libdir/java/jss4.jar %buildroot%_javadir/jss4.jar
 
 
 %changelog
+* Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt4_25jpp7
+- added jss4 compat symlink
+
 * Fri Nov 02 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt3_25jpp7
 - added jss4 compat symlink
 
