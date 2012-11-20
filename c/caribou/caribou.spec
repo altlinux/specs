@@ -5,7 +5,7 @@
 %def_enable gtk3_module
 
 Name: caribou
-Version: %ver_major.4.2
+Version: %ver_major.5
 Release: alt1
 
 Summary: A simplified in-place on-screen keyboard
@@ -24,9 +24,12 @@ Patch5: %name-0.4.2-fix-keys.patch
 Provides: on-screen-keyboard
 Requires: lib%name = %version-%release
 
+%define gee_ver 0.8
+
 %{?_enable_gtk2_module:BuildRequires: libgtk+2-devel}
 %{?_enable_gtk3_module:BuildRequires: libgtk+3-devel}
-BuildRequires: libclutter-devel libxklavier-devel libgee-devel libXtst-devel
+BuildPreReq: libgee-devel >= %gee_ver
+BuildRequires: libclutter-devel libxklavier-devel libXtst-devel
 BuildRequires: gobject-introspection-devel python-module-pygobject3-devel libxml2-devel
 BuildRequires: intltool xsltproc gnome-doc-utils vala-tools >= 0.13
 
@@ -129,6 +132,9 @@ make clean
 %_girdir/Caribou-1.0.gir
 
 %changelog
+* Tue Nov 20 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.5-alt1
+- 0.4.5
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.4.2-alt1
 - 0.4.4.2
 
