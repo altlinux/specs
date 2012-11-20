@@ -5,31 +5,26 @@
 %define Theme KMobile
 %define kdeconfdir %_K4sysconfdir/kde4
 %define thisconfdir %kdeconfdir/%theme
-%ifarch %arm
-%def_disable desktop
-%else
-%def_enable desktop
-%endif
 
 %define major 0
 %define minor 3
 %define bugfix 0
 Name: kde4-settings-%theme
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: %Theme - specific KDE settings
 License: GPL
 Url: http://www.altlinux.ru/
 
+BuildArch: noarch
+
 PreReq(post,preun): alternatives >= 0.2
 Requires: kde-common >= 4
 
 Source: plasma-contour-config-%version.tar
 Source1: kmobile-settings-%version.tar
-Patch1: alt-startactive-modules.patch
-Patch2: alt-startactive-skel.patch
 
 BuildRequires: cmake gcc-c++ kde-common-devel qmergeinifiles rpm-macros-alternatives
 
@@ -40,13 +35,6 @@ BuildRequires: cmake gcc-c++ kde-common-devel qmergeinifiles rpm-macros-alternat
 %prep
 %setup -qn plasma-contour-config-%version -a1
 mv kmobile-settings-* kmobile-settings
-%patch1 -p1
-%patch2 -p1
-%if_enabled desktop
-sed -i 's|^exec=.*|exec=kwin|'            startactive-modules/kwin.module
-%else
-sed -i 's|^exec=.*|exec=kwinactive_gles|' startactive-modules/kwin.module
-%endif
 
 %build
 # addon configs
@@ -70,10 +58,6 @@ install -m 0755 kmobile-settings/profile.d/startkde profile.d/
 echo -e "\n" >> profile.d/startkde
 %endif
 
-# startactive modules
-pushd startactive-modules
-%K4build
-popd
 
 %install
 mkdir -p %buildroot/%_altdir
@@ -97,16 +81,6 @@ install -m 0644 autostart/* %buildroot/%thisconfdir/share/autostart/
 # startkde
 install -m 0755 profile.d/startkde %buildroot/%thisconfdir/
 
-# startactive modules
-#mkdir -p %buildroot/%_K4apps/startactive/modules
-#install -m 0644 startactive-modules/* %buildroot/%_K4apps/startactive/modules/
-pushd startactive-modules
-%K4install
-popd
-mkdir -p %buildroot/%thisconfdir/share/apps/startactive/modules
-install -m 0644 %buildroot/%_K4apps/startactive/modules/* %buildroot/%thisconfdir/share/apps/startactive/modules/
-rm -rf %buildroot/%_K4apps/startactive/modules
-
 #install -m 0644 default-apps %buildroot/%thisconfdir/share/config
 
 %files
@@ -114,6 +88,9 @@ rm -rf %buildroot/%_K4apps/startactive/modules
 %config %thisconfdir
 
 %changelog
+* Tue Nov 20 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt5
+- don't package arch-dependent files
+
 * Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt4
 - fix deleting script contents
 
