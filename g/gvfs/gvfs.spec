@@ -13,6 +13,7 @@
 %def_enable afc
 %def_enable afp
 %def_enable udisks2
+%def_enable libmtp
 %def_enable bluray
 %def_enable gtk
 %def_enable systemd_login
@@ -20,7 +21,7 @@
 
 Name: gvfs
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The GNOME virtual filesystem libraries
 License: %lgpl2plus
@@ -33,6 +34,8 @@ Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 Patch: gvfs-1.11.3-alt-gettext.patch
 Patch1: gvfs-1.0.1-archive-integration.patch
 Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
+# ALT #27989
+Patch4: gvfs-1.14.2-add-mtp.patch
 
 %{?_enable_gdu:Obsoletes: gnome-mount <= 0.8}
 %{?_enable_gdu:Obsoletes: gnome-mount-nautilus-properties <= 0.8}
@@ -47,6 +50,7 @@ Patch3: gvfs-1.14.1-libgvfsdaemon+headers_install.patch
 %define bluez_ver 4.0
 %define gdu_ver 3.3.91
 %define udisks_ver 1.99
+%define mtp_ver 1.1.0
 
 %{?_enable_hal:Requires: gnome-mount}
 %{?_enable_gdu:Requires: gnome-disk-utility >= %gdu_ver}
@@ -79,6 +83,7 @@ BuildRequires: libgcrypt-devel
 %{?_enable_afc:BuildPreReq: libimobiledevice-devel >= 1.1.3}
 %{?_enable_afp:BuildPreReq: libgcrypt-devel}
 %{?_enable_udisks2:BuildPreReq: libudisks2-devel >= %udisks_ver}
+%{?_enable_libmtp:BuildPreReq: libmtp-devel >= %mtp_ver}
 %{?_enable_bluray:BuildPreReq: libbluray-devel}
 %{?_enable_systemd_login:BuildPreReq: libsystemd-login-devel}
 
@@ -216,6 +221,7 @@ Bash completion for gvfs.
 %patch -p1
 %patch1 -p1 -b .archive-integration
 %patch3 -p1 -b .headers-install
+%{?_enable_libmtp:%patch4 -p1 -b .mtp}
 
 %build
 %autoreconf
@@ -234,6 +240,7 @@ Bash completion for gvfs.
         %{subst_enable afp} \
         %{subst_enable gdu} \
         %{subst_enable udisks2} \
+        %{subst_enable libmtp} \
         %{subst_enable bluray} \
         %{subst_enable gtk} \
         %{?_enable_systemd_login:--enable-libsystemd-login}
@@ -256,6 +263,12 @@ killall -USR1 gvfsd >&/dev/null || :
 %doc AUTHORS NEWS README monitor/udisks2/what-is-shown.txt
 # lib
 %_libdir/libgvfs*.so.*
+%if_enabled libmtp
+%dir %_libdir/gvfs
+%_libdir/gvfs/libgvfscommon.so
+%exclude %_libdir/gvfs/libgvfscommon.la
+%endif
+
 %dir %_libexecdir
 # daemon
 %_libexecdir/gvfsd
@@ -265,6 +278,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %{?_enable_hal:%_libexecdir/gvfs-hal-volume-monitor}
 %{?_enable_gdu:%_libexecdir/gvfs-gdu-volume-monitor}
 %{?_enable_udisks2:%_libexecdir/gvfs-udisks2-volume-monitor}
+%{?_enable_libmtp:%_libexecdir/gvfs-mtp-volume-monitor}
 
 %_datadir/dbus-1/services/*
 # gio modules
@@ -279,6 +293,7 @@ killall -USR1 gvfsd >&/dev/null || :
 %{?_enable_hal:%_datadir/%name/remote-volume-monitors/hal.monitor}
 %{?_enable_gdu:%_datadir/%name/remote-volume-monitors/gdu.monitor}
 %{?_enable_udisks2:%_datadir/%name/remote-volume-monitors/udisks2.monitor}
+%{?_enable_libmtp:%_datadir/%name/remote-volume-monitors/mtp.monitor}
 %_datadir/%name/mounts
 %_datadir/applications/mount-archive.desktop
 
@@ -388,6 +403,9 @@ killall -USR1 gvfsd >&/dev/null || :
 %exclude %_libdir/gio/modules/*.la
 
 %changelog
+* Tue Nov 20 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt2
+- mtp devices support via libmtp (ALT #27989)
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 1.14.2-alt1
 - 1.14.2
 - rediffed headers_install.patch
