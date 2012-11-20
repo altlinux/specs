@@ -1,22 +1,20 @@
 Name: figlet
-Version: 2.2.2
+Version: 2.2.5
 Release: alt1
 
 Summary: ASCII-art banners generator
 License: Academic Free License
 Group: Graphics
 
-URL: http://www.figlet.org
-Source: ftp://ftp.figlet.org/pub/figlet/program/unix/figlet222.tar.gz
-Patch0: ftp://ftp.debian.org/debian/pool/non-free/f/figlet/figlet_2.2.1-4.diff.gz
+Url: http://www.figlet.org
+Source: %name-%version.tar.gz
 
 %description
 Program for generating ASCII-art-like banners by using plenty of
 fonts. It can be used for generating logos, e-mail signatures, etc.
 
 %prep
-%setup -q -n figlet222
-%patch0 -p1
+%setup
 
 %build
 %make_build \
@@ -26,18 +24,22 @@ fonts. It can be used for generating logos, e-mail signatures, etc.
 	MANDIR=%_man1dir
 
 %install
-%__mkdir_p %buildroot{%_bindir,%_man6dir,%_datadir/%name}
-%__install -p -m755 figlet figlist chkfont showfigfonts %buildroot%_bindir/
-%__install -p -m644 *.6 debian/*.6 %buildroot%_man6dir/
-%__install -p -m644 fonts/* %buildroot%_datadir/%name/
+mkdir -p %buildroot{%_bindir,%_man6dir,%_datadir/%name}
+install -p -m755 figlet figlist chkfont showfigfonts %buildroot%_bindir/
+install -p -m644 *.6 %buildroot%_man6dir/
+install -p -m644 fonts/* %buildroot%_datadir/%name/
 
 %files
-%doc README FAQ CHANGES LICENSE figfont.txt debian/README.Debian
+%doc README FAQ CHANGES LICENSE figfont.txt
 %_bindir/*
 %_datadir/%name/
 %_man6dir/*.*
 
 %changelog
+* Tue Nov 20 2012 Fr. Br. George <george@altlinux.ru> 2.2.5-alt1
+- Autobuild version bump to 2.2.5
+- Remove debian patch
+
 * Sun Apr 23 2006 Alexey Tourbin <at@altlinux.ru> 2.2.2-alt1
 - 2.2.1 -> 2.2.2
 - sync debian figlet_2.2.1-4.diff.gz
