@@ -1,6 +1,6 @@
 Name: SimGear
 Version: 2.8.0
-Release: alt2
+Release: alt2.1
 
 Summary: Simulator Construction Tools
 License: GPL
@@ -45,17 +45,21 @@ This package contains header files for SimGear.
 %patch1 -p2
 
 %build
+%add_optflags %optflags_shared
 %cmake
-%make_build -C BUILD
+%make_build -C BUILD VERBOSE=1
 
 %install
-%makeinstall_std -C BUILD
+%makeinstall_std -C BUILD VERBOSE=1
 
 %files -n libsimgear-devel-static
 %_libdir/*.a
 %_includedir/simgear
 
 %changelog
+* Wed Nov 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt2.1
+- Rebuilt with -fPIC
+
 * Thu Sep 06 2012 Michael Shigorin <mike@altlinux.org> 2.8.0-alt2
 - added patch by iv@ to fix FTBFS against boost-1.51
 
