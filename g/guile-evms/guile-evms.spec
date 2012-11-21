@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.4
-Release: alt11
+Release: alt12
 
 Summary: Guile bindings for EVMS
 License: GPL
@@ -28,6 +28,9 @@ make install DESTDIR=%buildroot
 %_datadir/guile/site/evms.scm
 
 %changelog
+* Wed Nov 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4-alt12
+- adapted for recent swig
+
 * Thu Jul 07 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.4-alt11
 - revert back to pre-alt10 state (#25774, #25861)
 
