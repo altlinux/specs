@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.8
+Version: 0.8.1
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -16,6 +16,7 @@ Requires: alterator-l10n >= 2.9-alt10
 Requires: alterator-sh-functions >= 0.6-alt1
 Requires: alterator-hw-functions >= 0.4-alt1
 Requires: grub2 >= 2.00-alt4
+Requires: guile-evms >= 0.4-alt13
 
 BuildPreReq: alterator >= 4.7-alt5
 BuildRequires: grub2 >= 2.00-alt4
@@ -42,6 +43,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Wed Nov 21 2012 Michael Shigorin <mike@altlinux.org> 0.8.1-alt1
+- amended EFI support (closes: #27972)
+
 * Thu Nov 15 2012 Michael Shigorin <mike@altlinux.org> 0.8-alt1
 - added initial EFI support
 
