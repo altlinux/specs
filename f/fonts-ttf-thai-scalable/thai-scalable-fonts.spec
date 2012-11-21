@@ -1,5 +1,6 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/ttmkfdir /usr/bin/vptovf
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/runtest /usr/bin/ttmkfdir /usr/bin/vptovf cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
 # END SourceDeps(oneline)
 %define oldname thai-scalable-fonts
 %define fontname thai-scalable
@@ -12,7 +13,7 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mk
 
 Name:      fonts-ttf-thai-scalable
 Version:   0.5.0
-Release:   alt2_3
+Release:   alt2_4
 Summary:   Thai TrueType fonts
 Group:     System/Fonts/True type
 License:   GPLv2+
@@ -22,7 +23,7 @@ Source1:   %{fontconf}-garuda.conf
 Source2:   %{fontconf}-kinnari.conf
 Source3:   %{fontconf}-umpush.conf
 BuildArch: noarch
-BuildRequires: fontforge >= 20071110 ttmkfdir xorg-x11-font-utils
+BuildRequires: fontforge >= 20071110
 BuildRequires: fontpackages-devel
 Source44: import.info
 Provides: fonts-ttf-thai = 0.1-alt7
@@ -45,32 +46,6 @@ Group:     System/Fonts/True type
 %common_desc
 
 This package consists of files used by other %{oldname} packages.
-
-
-# added for F11 can be obsoleted for F13
-%package compat
-Summary:   thaifonts-scalable compatibility package
-Group:     System/Fonts/True type
-Obsoletes: thaifonts-scalable < 0.4.11-1
-Requires: fonts-ttf-thai-scalable-garuda
-Requires: fonts-ttf-thai-scalable-kinnari
-Requires: fonts-ttf-thai-scalable-loma
-Requires: fonts-ttf-thai-scalable-norasi
-Requires: fonts-ttf-thai-scalable-purisa
-Requires: fonts-ttf-thai-scalable-sawasdee
-Requires: fonts-ttf-thai-scalable-tlwgmono
-Requires: fonts-ttf-thai-scalable-tlwgtypewriter
-Requires: fonts-ttf-thai-scalable-tlwgtypist
-Requires: fonts-ttf-thai-scalable-tlwgtypo
-Requires: fonts-ttf-thai-scalable-umpush
-Requires: fonts-ttf-thai-scalable-waree
-
-%description compat
-This package only exists to help transition thaifonts-scalable users to the new
-split renamed package. It will be removed after one distribution release cycle,
-please do not reference it or depend on it in any way.
-
-It can be safely uninstalled.
 
 
 %package -n fonts-ttf-thai-scalable-garuda
@@ -252,7 +227,8 @@ This package provides the Waree family of Thai fonts.
 
 
 %build
-%configure --with-ttfdir=%{_fontdir} --enable-ttf --enable-xfontsdir
+%configure --with-ttfdir=%{_fontdir} --enable-ttf
+make
 
 
 %install
@@ -318,12 +294,11 @@ fi
 %files common
 %doc AUTHORS README COPYING NEWS
 
-%files compat
-%{_fontbasedir}/*/%{_fontstem}/fonts.dir
-%{_fontbasedir}/*/%{_fontstem}/fonts.scale
-
 
 %changelog
+* Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_3
 - update to new release by fcimport
 
