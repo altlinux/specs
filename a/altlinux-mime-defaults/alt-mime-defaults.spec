@@ -1,5 +1,5 @@
 Name: altlinux-mime-defaults
-Version: 0.22
+Version: 0.23
 Release: alt1
 
 Summary: System-wide MIME preferences.
@@ -39,6 +39,9 @@ touch %buildroot/%_desktopdir/defaults.list
 %_desktopdir/defaults.list
 
 %changelog
+* Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1
+- mplayer priority is raised.
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
 - updated to fresh Sisyphus
 
