@@ -1,20 +1,24 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/runtest /usr/bin/ttmkfdir /usr/bin/vptovf cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname vemana2000-fonts
 %global fontname vemana2000
 %global fontconf 69-%{fontname}.conf
 
 Name: fonts-ttf-vemana2000
 Version: 1.1.3
-Release: alt3_3
+Release: alt3_4
 Summary: Unicode compliant OpenType font for Telugu
 
 Group: System/Fonts/True type
 License: GPLv2+ with exceptions
 URL: https://fedorahosted.org/pothana_vemana/
 
-Source0: https://fedorahosted.org/releases/p/o/pothana_vemana/vemana2000-fonts-1.1.3.tar.gz
+Source0: https://fedorahosted.org/releases/p/o/pothana_vemana/%{oldname}-%{version}.tar.gz
 
 BuildArch: noarch
-BuildRequires: fontforge >= 20080429
+BuildRequires: fontforge
 BuildRequires: fontpackages-devel
 Source44: import.info
 
@@ -29,7 +33,6 @@ Dr. Tirumala Krishna Desikacharyulu.
 make
 
 %install
-rm -fr %{buildroot}
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
@@ -81,6 +84,9 @@ fi
 %doc ChangeLog COPYRIGHT COPYING AUTHORS README
 
 %changelog
+* Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt3_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt3_3
 - update to new release by fcimport
 
