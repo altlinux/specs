@@ -1,17 +1,21 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname paktype-ajrak-fonts
 %define fontname paktype-ajrak
 %define fontconf 67-paktype
 %define fontdir %{_datadir}/fonts/%{fontname}
 
 Name:	fonts-ttf-paktype-ajrak
-Version:     2.1
+Version:     4.0
 Release:     alt1_1
 Summary:     Fonts for Arabic from PakType
 
 Group:	System/Fonts/True type
 License:     GPLv2 with exceptions
 URL:	https://sourceforge.net/projects/paktype/
-Source0:     http://nchc.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Ajrak-2.1.tar.gz
+Source0:     http://nchc.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Ajrak-%{version}.tar.gz
 Source1:	%{fontconf}-ajrak.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
@@ -91,6 +95,9 @@ fi
 
 
 %changelog
+* Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_1
 - update to new release by fcimport
 
