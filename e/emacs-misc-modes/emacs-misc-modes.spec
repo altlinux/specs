@@ -2,7 +2,7 @@
 # $Id: emacs-misc-modes.spec,v 1.8 2006/02/04 17:54:06 eugene Exp $
 
 Version: 0.2
-Release: alt9
+Release: alt10
 Name: emacs-misc-modes
 License: GPL
 Group: Editors
@@ -17,10 +17,10 @@ Source: %name.tar.gz
 BuildArch: noarch
 
 BuildPreReq: emacs-devel >= 0.0.1-alt2
-BuildPreReq: emacs22-X11-athena
+BuildPreReq: emacs-nox
 
 # Automatically added by buildreq on Tue Dec 24 2002
-BuildRequires: emacs-bbdb emacs-cedet emacs-elib emacs-gnus emacs-w3 emacs-w3m
+BuildRequires: emacs-bbdb emacs-cedet emacs-elib emacs-gnus
 
 %description
 Various packages for Emacs.
@@ -29,21 +29,23 @@ Various packages for Emacs.
 Дополнительные пакеты Emacs для самых разных задач.
 
 %prep
-%setup -q -n %name
+%setup -n %name
 
 %install
-%__mkdir_p %buildroot%_emacslispdir/
-%__install -m 644 *.el* %buildroot%_emacslispdir/
-%__mkdir_p %buildroot%_infodir/
-%__install -m 644 *.info* %buildroot%_infodir/
+mkdir -p %buildroot%_emacslispdir/
+install -m 644 *.el* %buildroot%_emacslispdir/
+mkdir -p %buildroot%_infodir/
+install -m 644 *.info* %buildroot%_infodir/
 %byte_recompile_lispdir
 
 %files
 %_emacslispdir/*.el*
 %_infodir/*
 
-
 %changelog
+* Wed Nov 21 2012 Terechkov Evgenii <evg@altlinux.org> 0.2-alt10
+- Requires to w3 removed
+
 * Tue Feb 23 2010 Terechkov Evgenii <evg@altlinux.ru> 0.2-alt9
 - Removed password.el
 
@@ -55,7 +57,7 @@ Various packages for Emacs.
 
 * Mon Nov 05 2007 Eugene Vlasov <eugvv@altlinux.ru> 0.2-alt6
 - Added password.el
-- Updated ascii, blank-mode, csv, highline, icicles, icicles-menu, 
+- Updated ascii, blank-mode, csv, highline, icicles, icicles-menu,
   spell-number, sys, xray
 
 * Tue Dec 12 2006 Eugene Vlasov <eugvv@altlinux.ru> 0.2-alt5
@@ -75,7 +77,7 @@ Various packages for Emacs.
 - Updated bm, csv, eperiodic, htmlize, icicles
 - Fixed bookmark-menu, lynx, organizer-mode
 - Added all, cgi, httpd, mutt-alias, muttrc-mode
-- Removed basis-utils, cua-mode, icalendar, image-mode, ljcheckf, 
+- Removed basis-utils, cua-mode, icalendar, image-mode, ljcheckf,
   newsticker, org, wotd
 - Build with emacs-devel
 - Fixed BuildRequires
