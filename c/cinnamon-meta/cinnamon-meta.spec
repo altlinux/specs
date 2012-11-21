@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -48,8 +48,6 @@ Requires: gnome-terminal
 Requires: gnome-screensaver  
 #Gvfs
 Requires: gvfs gvfs-backends
-#Cinnamon doesn't have own freedesktop menu yet
-Requires: altlinux-freedesktop-menu-gnome3
 
 # Look and Feel
 Requires: gnome-icon-theme >= %ver_major
@@ -123,6 +121,9 @@ of default applications.
 %files -n cinnamon-full
 
 %changelog
+* Wed Nov 21 2012 Vladimir Didenko <cow@altlinux.org> 1.6.0-alt2
+- dropped dependency to gnome menu
+
 * Sat Nov 17 2012 Vladimir Didenko <cow@altlinux.org> 1.6.0-alt1
 - dropped fallback package: cinnamon has own fallback
 - dropped sound package: moved dependencies to default package
