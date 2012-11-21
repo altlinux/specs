@@ -1,14 +1,18 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname lohit-gujarati-fonts
 %global fontname lohit-gujarati
 %global fontconf 66-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-gujarati
 Version:        2.5.1
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Free Gujarati font
 
 Group:          System/Fonts/True type
-License:        GPLv2 with exceptions
+License:        OFL
 URL:            https://fedorahosted.org/lohit/
 Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
 BuildArch:      noarch
@@ -21,7 +25,6 @@ Source44: import.info
 %description
 This package provides a free Gujarati truetype/opentype font.
 
-
 %prep
 %setup -q -n %{fontname}-%{version} 
 %patch1 -p1 -b .1-panose-setting
@@ -30,8 +33,6 @@ This package provides a free Gujarati truetype/opentype font.
 make
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -77,7 +78,6 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
@@ -87,6 +87,9 @@ fi
 
 
 %changelog
+* Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_3
 - update to new release by fcimport
 
