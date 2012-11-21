@@ -7,7 +7,7 @@
 %def_disable systemd
 %endif
 %def_disable google
-%ifarch arm
+%ifarch %arm
 %def_disable desktop
 %else
 %def_enable desktop
@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -81,7 +81,7 @@ Patch1014: kdebase-workspace-4.7.1-alt-kdm-kcm-defaults.patch
 Patch1015: kdebase-workspace-4.7.1-alt-gtkrc-custom.patch
 Patch1016: kdebase-workspace-4.8.2-alt-def-plasma.patch
 Patch1017: kdebase-workspace-4.3.0-alt-ksysguardrc.patch
-Patch1018: kdebase-workspace-4.9.1-alt-def-kwin.patch
+Patch1018: kdebase-workspace-4.9.3-alt-def-kwin.patch
 Patch1019: kdebase-workspace-4.8.0-alt-def-fonts.patch
 Patch1020: kdebase-workspace-4.4.92-alt-kdm-guistyle.patch
 Patch1021: kdebase-workspace-4.4.92-alt-kdm-color-scheme.patch
@@ -926,6 +926,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Nov 21 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt2
+- don't use compositing for full-screen windows by default
+
 * Thu Nov 08 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
