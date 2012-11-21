@@ -13,8 +13,8 @@
 %define nv_version 310
 %define nv_release 19
 %define nv_minor %nil
-%define pkg_rel alt112
-%define set_gl_nvidia_ver 0.8.1
+%define pkg_rel alt113
+%define set_gl_nvidia_ver 0.8.2
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -168,19 +168,9 @@ ld --shared nvidianull.o -o libnvidianull.so
 %__install -m 0755 set_gl_nvidia*/nvidia_preset %buildroot/%xdrv_pre_d/nvidia
 %__install -m 0644 libnvidianull.so %buildroot/%x11_lib_dir/
 
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib_sym_dir/libXvMCNVIDIA_dynamic.so.1
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib_sym_dir/libNVIDIAXvMC.so
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib_sym_dir/libnvidia-cfg.so.1
 %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib_sym_dir/libvdpau_nvidia.so
-%if "%_lib" == "lib64"
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib32_sym_dir/libXvMCNVIDIA_dynamic.so.1
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib32_sym_dir/libNVIDIAXvMC.so
-%endif
 
-%__ln_s ../..%nv_lib_sym_dir/libXvMCNVIDIA_dynamic.so.1 \
-    %buildroot/%x11_lib_dir/libXvMCNVIDIA_dynamic.so.1
-%__ln_s ../..%nv_lib_sym_dir/libNVIDIAXvMC.so \
-    %buildroot/%x11_lib_dir/libNVIDIAXvMC.so
 %__ln_s ../..%nv_lib_sym_dir/libvdpau_nvidia.so %buildroot/%x11_lib_dir/libvdpau_nvidia.so
 %__ln_s ../..%nv_lib_sym_dir/libnvidia-cfg.so.1 %buildroot/%x11_lib_dir/libnvidia-cfg.so.1
 
@@ -231,24 +221,21 @@ fi
 #%ghost %x11_drv_old/nvidia_drv.*
 #
 %nv_workdirdir
-%nv_lib_sym_dir/libXvMCNVIDIA_dynamic.so.?
-%nv_lib_sym_dir/libNVIDIAXvMC.so
 %nv_lib_sym_dir/libnvidia-cfg.so.?
 %nv_lib_sym_dir/libvdpau_nvidia.so
 #%nv_lib_sym_dir/nvidia.xinf
 %if "%_lib" == "lib64"
 %dir %nv_lib32_sym_dir/
-%nv_lib32_sym_dir/libXvMCNVIDIA_dynamic.so.?
-%nv_lib32_sym_dir/libNVIDIAXvMC.so
 %endif
 #
-%x11_lib_dir/libXvMCNVIDIA_dynamic.so.?
-%x11_lib_dir/libNVIDIAXvMC.so
 %x11_lib_dir/libnvidia-cfg.so.?
 %x11_lib_dir/libvdpau_nvidia.so
 
 
 %changelog
+* Wed Nov 21 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt113
+- remove XvMC plugin support
+
 * Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt112
 - bump version
 
