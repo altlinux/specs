@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 Name:		mate-file-manager
 Summary:	File manager for MATE
 Version:	1.5.0
-Release:	alt1_4
+Release:	alt2_4
 License:	GPLv2+ and LGPLv2+
 Group:		Graphical desktop/Other
 URL:		http://mate-desktop.org
@@ -41,7 +41,7 @@ Requires:	%{name}-extensions%{?_isa} = %{version}-%{release}
 Source44: import.info
 Patch33: mate-file-manager-1.2.2-alt-fix-linkage.patch
 Patch34: nautilus-2.22.1-umountfstab.patch
-Patch35: mate-file-manager-1.5.0-ru-po.patch
+Patch35: mate-file-manager-1.5.0-alt-desktop-labels-po-ru.patch
 
 # Some changes to default config
 #Patch0:	caja-config.patch
@@ -104,7 +104,7 @@ sed -i -e 's,Categories=MATE,Categories=X-MATE,g' src/mate-network-scheme.deskto
 #patch8 -p1 -b .close_earlier
 
 %patch33 -p1
-%patch35 -p0
+%patch35 -p1
 NOCONFIGURE=1 ./autogen.sh
 %patch34 -p1
 
@@ -176,6 +176,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/mate-network-scheme.
 
 
 %changelog
+* Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_4
+- added desktop label localization patch
+
 * Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_4
 - new bugfix fc release
 
