@@ -4,7 +4,7 @@
 %define sover 1
 Name: qt4-qmf
 Version: 1.0.0
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Qt Messaging Framework
@@ -17,6 +17,8 @@ Source: qt-labs-messagingframework-%version.tar
 Patch1: add_headers.patch
 # ALT
 Patch100: qmf-alt-rpath.patch
+Patch101: qmf-alt-gcc47.patch
+Patch102: qmf-alt-no-gcc-hidden.patch
 
 # Automatically added by buildreq on Mon Feb 06 2012 (-bi)
 # optimized out: elfutils fontconfig glibc-devel-static libqt4-clucene libqt4-core libqt4-devel libqt4-gui libqt4-help libqt4-network libqt4-sql libqt4-sql-sqlite libqt4-test libqt4-xml libstdc++-devel pkg-config python-base ruby zlib-devel
@@ -82,6 +84,8 @@ Requires: %name-common = %version-%release
 %setup -n qt-labs-messagingframework-%version
 %patch1 -p1
 %patch100 -p1
+%patch101 -p1
+%patch102 -p1
 # fix installation for lib64
 find -name '*.pr[oi]' -exec sed -i 's|$$QMF_INSTALL_ROOT/lib/qmf|__X_ALTLINUX_QT4DIR__|g' {} ";"
 find -name '*.pr[oi]' -exec sed -i 's|$$QMF_INSTALL_ROOT/lib|%_libdir|g' {} ";"
@@ -92,6 +96,7 @@ find -name '*.pr[oi]' -exec sed -i 's|$$QMF_INSTALL_ROOT/tests|%_qt4dir/tests|g'
 %build
 export PATH=%_qt4dir/bin:$PATH
 export QMF_INSTALL_ROOT=%prefix
+%add_optflags -fno-inline-small-functions
 qmake-qt4 -config release QMF_INSTALL_ROOT=$QMF_INSTALL_ROOT QMAKE_CFLAGS+="%optflags" QMAKE_CXXFLAGS+="%optflags"
 %make_build
 %make_build docs
@@ -149,6 +154,9 @@ cp -ar doc/html/* %buildroot/%qt4_docdir/html/qmf/
 %_libdir/libqmfutil.so.%sover.*
 
 %changelog
+* Wed Nov 21 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt4
+- fix to build with gcc-4.7
+
 * Wed Jul 25 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt3
 - update to 2012W09
 
