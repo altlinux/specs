@@ -1,10 +1,10 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 # /usr/bin/hg identify | cut -c -12
-%define rev 0c5babd64674
+%define rev 50b234e492b
 
 Name: photivo
 Version: 0
-Release: alt5.%{rev}
+Release: alt6.%{rev}
 
 Summary: Photivo photo processor
 Group: Graphics
@@ -76,10 +76,6 @@ qmake-qt4 PREFIX=%_prefix
 
 %install
 %make INSTALL_ROOT=%buildroot install
-
-# quick hack to evade probably qmake bug
-install -m644 Curves/DeltaGamma\(*\).ptc %buildroot/usr/share/photivo/Curves/
-
 # install gimp plugin
 install -pD -m755 ptGimp %buildroot%gimpplugindir/ptGimp
 
@@ -108,6 +104,9 @@ find %buildroot%_datadir/%name -type f -print0|xargs -r0 chmod 644 --
 %gimpplugindir/ptGimp
 
 %changelog
+* Wed Nov 21 2012 Yuri N. Sedunov <aris@altlinux.org> 0-alt6.50b234e492b
+- built current snapshot
+
 * Mon Feb 27 2012 Yuri N. Sedunov <aris@altlinux.org> 0-alt5.0c5babd64674
 - built current snapshot
 
