@@ -1,16 +1,20 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname paktype-naqsh-fonts
 %global fontname paktype-naqsh
 %global fontconf 67-paktype
 
 Name:	fonts-ttf-paktype-naqsh
-Version:     3.1
+Version:     4.0
 Release:     alt1_1
 Summary:     Fonts for Arabic from PakType
 
 Group:	System/Fonts/True type
 License:     GPLv2 with exceptions
 URL:	https://sourceforge.net/projects/paktype/
-Source0:    http://nchc.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Naqsh-3.1.tar.gz
+Source0:    http://nchc.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Naqsh-%{version}.tar.gz
 Source1:	%{fontconf}-naqsh.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
@@ -92,6 +96,9 @@ fi
 %doc PakType_Naqsh_License.txt PakType_Naqsh_Features.pdf 
 
 %changelog
+* Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_1
 - update to new release by fcimport
 
