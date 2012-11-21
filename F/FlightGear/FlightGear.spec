@@ -2,7 +2,7 @@
 
 Name: FlightGear
 Version: 2.8.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: open-source flight simulator
 License: GPL
@@ -25,6 +25,7 @@ Patch1: FlightGear-1.0.0-alt-expat-fix.patch
 Patch2: FlightGear-1.0.0-alt-fix-build.patch
 Patch3: flightgear-2.6.0-fedora-format.patch
 Patch4: flightgear-2.6.0-fedora-snprintf.patch
+Patch5: FlightGear-2.8.0-alt-Boost.patch
 
 Requires: fgfs-data >= %branch
 #Requires: fgrun >= 1.6.1
@@ -34,6 +35,13 @@ Requires: fgfs-data >= %branch
 BuildRequires: boost-devel-headers cmake fakeroot gcc-c++ imake libXi-devel libXmu-devel libalut-devel libfltk-devel libfreeglut-devel libjpeg-devel libpng-devel libsimgear-devel-static libsubversion-devel libudev-devel plib-devel rpm-utils sisyphus_check vim-console vitmp
 
 BuildRequires: cmake libpng-devel libfltk-devel libudev-devel
+BuildPreReq: libOpenSceneGraph-devel boost-devel libXres-devel
+BuildPreReq: libXtst-devel libXcomposite-devel libXcursor-devel
+BuildPreReq: libXdamage-devel libXdmcp-devel libXfixes-devel
+BuildPreReq: libXft-devel libXinerama-devel libxkbfile-devel
+BuildPreReq: libXpm-devel libXrandr-devel libXrender-devel
+BuildPreReq: libXScrnSaver-devel libXv-devel libXxf86misc-devel
+BuildPreReq: libXxf86vm-devel libXxf86vm-devel libapr1-devel
 
 %description
 FlightGear is a free, open-source, multi-platform, and sophisticated
@@ -50,6 +58,7 @@ http://www.4p8.com/eric.brasseur/flight_simulator_tutorial.html
 %setup
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 sed -i 's/\r//' docs-mini/AptNavFAQ.FlightGear.html
 for ext in Cygwin IRIX Joystick Linux MSVC MSVC8 MacOS SimGear Unix \
@@ -62,7 +71,7 @@ sed -i 's,/lib/FlightGear,/share/flightgear,' CMakeLists.txt
 
 %build
 %cmake
-%make_build -C BUILD
+%make_build -C BUILD VERBOSE=1
 
 %install
 %makeinstall_std -C BUILD
@@ -91,6 +100,9 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Wed Nov 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt1.2
+- Fixed build
+
 * Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt1.1
 - Rebuilt with libpng15
 
