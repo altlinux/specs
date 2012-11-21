@@ -1,7 +1,7 @@
 %define dist qa-rpmelfsym
 Name: perl-%dist
 Version: 0.12
-Release: alt1
+Release: alt2
 
 Summary: Faster rpmelfsym(1) and bad_elf_symbols implementation
 License: GPLv2+
@@ -9,6 +9,9 @@ Group: Development/Perl
 
 URL: %CPAN %dist
 Source: %dist-%version.tar
+
+# rpmelfsym.pm uses nm(1)
+Requires: binutils
 
 # Automatically added by buildreq on Mon Oct 10 2011 (-bi)
 BuildRequires: perl-File-LibMagic perl-devel perl-qa-cache
@@ -34,6 +37,9 @@ rm %buildroot%perl_vendor_archlib/qa/*.pl
 %perl_vendor_autolib/qa*
 
 %changelog
+* Wed Nov 21 2012 Dmitry V. Levin <ldv@altlinux.org> 0.12-alt2
+- Added binutils to package requirements.
+
 * Tue Oct 02 2012 Alexey Tourbin <at@altlinux.ru> 0.12-alt1
 - rpmelfsym.pl: reimplemented print_elfysm() routine in XS
 - rpmelfsym.xs: further optimized PerlIO_write() calls
