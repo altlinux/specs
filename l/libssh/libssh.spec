@@ -1,6 +1,6 @@
 
 Name: libssh
-Version: 0.5.2
+Version: 0.5.3
 Release: alt1
 
 Group: System/Libraries
@@ -79,6 +79,13 @@ install -m 0644 %SOURCE2 ./
 %_libdir/*.so
 
 %changelog
+* Wed Nov 21 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.3-alt1
+- new version
+- security fixes: CVE-2012-4559, CVE-2012-4560, CVE-2012-4561
+
+* Thu Jun 14 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.2-alt0.M60P.1
+- built for M60P
+
 * Wed Jun 13 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.2-alt1
 - new version
 
