@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 1.6.7
-Release: alt2
+Release: alt3
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -37,6 +37,9 @@ Requires: gnome-session
 Requires(post,preun):  GConf
 # needed for on-screen keyboard
 Requires: caribou
+Requires: cinnamon-freedesktop-menu
+Requires: %name-data = %version-%release
+Requires: muffin >= %muffin_ver
 
 # needed for settings (python.req ignores /usr/share/cinnamon-settings/cinnamon-settings.py)
 Requires: python-module-dbus
@@ -80,6 +83,14 @@ forked from Gnome Shell. The emphasis is put on making users feel at
 home and providing them with an easy to use and comfortable desktop
 experience.
 
+%package data
+Summary: Arch independent files for Cinnamon
+Group: Graphical desktop/GNOME
+BuildArch: noarch
+
+%description data
+This package provides noarch data needed for Cinnamon to work.
+
 # Cinnamon.typelib should be installed in %%_typelibdir for automatic provides,
 # but other typelibs (Gvs, St) conflict with gnome-shell
 # Provides: typelib(Cinnamon)
@@ -111,19 +122,11 @@ rm -f files/usr/bin/gnome-session-cinnamon  \
  files/usr/share/gnome-session/sessions/cinnamon.session 
 cp %SOURCE2 files/usr/share/gnome-session/sessions/
 cp %SOURCE4 files/usr/share/gnome-session/sessions/
+
 # files replaced with alt linux files
-rm -f files/usr/share/desktop-directories/cinnamon-menu-applications.directory \
- files/usr/share/desktop-directories/cinnamon-utility.directory                \
- files/usr/share/desktop-directories/cinnamon-utility-accessibility.directory  \
- files/usr/share/desktop-directories/cinnamon-development.directory            \
- files/usr/share/desktop-directories/cinnamon-education.directory              \
- files/usr/share/desktop-directories/cinnamon-game.directory                   \
- files/usr/share/desktop-directories/cinnamon-graphics.directory               \
- files/usr/share/desktop-directories/cinnamon-network.directory                \
- files/usr/share/desktop-directories/cinnamon-audio-video.directory            \
- files/usr/share/desktop-directories/cinnamon-office.directory                 \
- files/usr/share/desktop-directories/cinnamon-system-tools.directory           \
- files/usr/share/desktop-directories/cinnamon-other.directory
+rm -f files/usr/share/desktop-directories/cinnamon-*.directory \
+      files/etc/xdg/menus/cinnamon-applications.menu \
+      files/etc/xdg/menus/cinnamon-settings.menu
 
 # adjust font size
 sed -i -e 's,font-size: 9.5pt,font-size: 10pt,g' data/theme/cinnamon.css
@@ -197,8 +200,7 @@ _WM_
 
 %find_lang %name
 
-%files -f %name.lang
-%doc NEWS README
+%files
 %_bindir/start%name
 %_bindir/start%{name}2d
 %_bindir/cinnamon
@@ -207,9 +209,15 @@ _WM_
 %_bindir/cinnamon-settings
 %_bindir/cinnamon-extension-tool
 %_bindir/gnome-session-cinnamon2d
-%config %_sysconfdir/xdg/menus/cinnamon-applications.menu
-%config %_sysconfdir/xdg/menus/cinnamon-settings.menu
-%_datadir/desktop-directories/cinnamon-*.directory
+%_libdir/cinnamon/
+%dir %_libexecdir/cinnamon/
+%_libexecdir/cinnamon/cinnamon-hotplug-sniffer
+%_libexecdir/cinnamon/cinnamon-perf-helper
+%_libdir/browser-plugins/libcinnamon*.so
+
+%exclude %_libdir/browser-plugins/libcinnamon*.la
+
+%files data -f %name.lang
 %_datadir/glib-2.0/schemas/*.xml
 %_datadir/applications/cinnamon.desktop
 %_datadir/applications/cinnamon2d.desktop
@@ -227,16 +235,15 @@ _WM_
 %_datadir/cinnamon-menu-editor/
 %_datadir/cinnamon-settings/
 %_datadir/dbus-1/services/org.Cinnamon.HotplugSniffer.service
-%_libdir/cinnamon/
-%dir %_libexecdir/cinnamon/
-%_libexecdir/cinnamon/cinnamon-hotplug-sniffer
-%_libexecdir/cinnamon/cinnamon-perf-helper
 %_mandir/man1/*.1.*
-%_libdir/browser-plugins/libcinnamon*.so
-
-%exclude %_libdir/browser-plugins/libcinnamon*.la
+%doc NEWS README
 
 %changelog
+* Wed Nov 21 2012 Vladimir Didenko <cow@altlinux.org> 1.6.7-alt3
+- switched to cinnamon-freedesktop-menu (closes: #28004)
+- moved arch independent data to cinnamon-data subpackage
+- added dependency to muffin
+
 * Thu Nov 15 2012 Vladimir Didenko <cow@altlinux.org> 1.6.7-alt2
 - fixed session files - changed fallback to cinnamon2d
 
