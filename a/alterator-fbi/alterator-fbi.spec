@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-fbi
-Version: 5.27
-Release: alt2
+Version: 5.28
+Release: alt1
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -19,13 +19,13 @@ Obsoletes: alterator-http, ahttpd, httpd-alterator, alterator-ahttpd
 Requires: alterator-sh-functions >= 0.13-alt2
 Requires: avahi-sh-functions >= 0.1-alt2
 Requires: design-alterator
-Requires: alterator >= 4.14-alt1
+Requires: alterator >= 4.23-alt1
 Requires: alterator-l10n >= 2.7-alt4
 Requires: alterator-sslkey
 Requires: gettext
 Requires: alterator-l10n >= 0.15
 
-Requires(pre): libguile-vhttpd >= 0.7-alt1
+Requires(pre): libguile-vhttpd >= 0.7.3-alt1
 Requires(pre): shadow-utils
 
 BuildPreReq: alterator >= 4.12-alt1, libguile-vhttpd, guile18-devel, libexpat-devel
@@ -44,7 +44,7 @@ this is an alterator based engine (form based interface) to create a simple form
 
 %install
 export LD_LIBRARY_PATH=$(pwd)/src/libguile-xmltokenizer/
-%makeinstall HTMLROOT=%buildroot%_var/www/
+%makeinstall HTMLROOT=%buildroot%_var/www/ unitdir=%buildroot%_unitdir
 
 #ahttpd
 %__install -d %buildroot%_var/run/ahttpd
@@ -122,6 +122,8 @@ fi ||:
 %config(noreplace) %_sysconfdir/ahttpd/ahttpd.conf
 %config(noreplace) %_sysconfdir/ahttpd/acl.conf
 %attr(750,_ahttpd,root) %_cachedir/ahttpd
+%_unitdir/ahttpd.service
+%_unitdir/ahttpd.socket
 
 #ssl
 %ghost  %config(noreplace) %_sysconfdir/ahttpd/ahttpd.cnf
@@ -129,6 +131,11 @@ fi ||:
 
 
 %changelog
+* Thu Nov 22 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt1
+- Do not daemonize in socket-activation mode (closes: 27865).
+- Add the systemd unit files.
+- Start the server on the given socket if any (closes: 27987).
+
 * Thu Sep 20 2012 Paul Wolneykien <manowar@altlinux.ru> 5.27-alt2
 - Reply with session info to a /ahttpd-cache/sessions/<session> URI.
 - List only allowed modules in the menu.
