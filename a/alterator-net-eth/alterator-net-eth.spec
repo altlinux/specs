@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-eth
-Version: 4.15.2
+Version: 4.16.0
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -11,14 +11,16 @@ Source:%name-%version.tar
 Summary: alterator module for tcp/ip connections configuration
 License: GPL
 Group: System/Configuration/Other
-Requires: alterator >= 4.19 libshell >= 0.0.1-alt4
+Requires: alterator >= 4.24 libshell >= 0.0.1-alt4
 Requires: alterator-l10n >= 2.1-alt9
 Requires: alterator-sh-functions >= 0.12-alt1
 Requires: alterator-hw-functions >= 0.7-alt2
-Requires: alterator-net-functions >= 1.1
+Requires: alterator-net-functions >= 1.2
 Requires: alterator-net-wifi >= 0.5-alt1
 Requires: etcnet openresolv avahi-autoipd startup >= 0.9.8.21-alt1
 Requires: bridge-utils
+# For use in netdev_is_wireless() from alterator-hw-functions.
+Requires: iw
 
 Conflicts: alterator-lookout < 1.7-alt1
 Conflicts: alterator-fbi < 5.14-alt1
@@ -81,6 +83,14 @@ mapping current hostname to 127.0.0.1 in /etc/hosts.
 %_sysconfdir/hooks/hostname.d/*
 
 %changelog
+* Thu Nov 22 2012 Mikhail Efremov <sem@altlinux.org> 4.16.0-alt1
+- Add iw to requires.
+- Disable DNS and search lists if configuration is not static.
+- Write CONFIG_WIRELESS etcnet option.
+- Drop ip_string parameter.
+- Implement IPv6 support.
+- hosts-hook-hostname: Drop all lines with old hostname.
+
 * Tue Jul 05 2011 Mikhail Efremov <sem@altlinux.org> 4.15.2-alt1
 - Add bridge-utils to requires (see #25740).
 - Fix reading addresses for iface (closes: #23689).

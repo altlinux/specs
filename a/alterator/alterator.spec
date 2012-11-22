@@ -1,5 +1,5 @@
 Name: alterator
-Version: 4.23
+Version: 4.24
 Release: alt1
 
 Summary: ALT Linux configurator engine
@@ -140,6 +140,11 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Nov 22 2012 Mikhail Efremov <sem@altlinux.org> 4.24-alt1
+- Added ip-address and ip-address-list types.
+- Added tests for ipv6-* types.
+- Added ipv6-address and ipv6-network types.
+
 * Wed Nov 21 2012 Paul Wolneykien <manowar@altlinux.ru> 4.23-alt1
 - Require libguile-vhttpd >= 0.7.3.
 - Add the systemd unit files. Make systemd to listen on
