@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt1
+Release: alt2
 epoch:1 
 %define kernel_base_version	3.6
 %define kernel_sublevel	.7
@@ -396,6 +396,7 @@ KbuildFiles="
 	scripts/mod/modpost
 	scripts/mkmakefile
 	scripts/mkversion
+	scripts/link-vmlinux.sh
 	scripts/mod/mk_elfconfig
 	scripts/kconfig/conf
 	scripts/mkcompile_h
@@ -578,6 +579,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Nov 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.7-alt2
+- 32 bpp framebuffer on kvm's cirrus disabled back
+- link-vmlinux.sh packaged (closes: #28016)
+
 * Mon Nov 19 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.7-alt1
 - 3.6.7
 
