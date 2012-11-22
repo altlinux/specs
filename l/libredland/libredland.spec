@@ -6,7 +6,7 @@
 
 Name: libredland
 Version: 1.0.15
-Release: alt1
+Release: alt2
 
 Summary: Redland - a library that provides a high-level interface for RDF
 
@@ -113,6 +113,12 @@ Python bindings for Redland RDF library
 %_gtkdocdir/redland/
 
 %changelog
+* Thu Nov 22 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.15-alt2
+- rebuilt with new libmysqlclient
+
+* Fri May 25 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.15-alt0.M60P.1
+- build for M60P
+
 * Thu May 24 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.15-alt1
 - new version
 
