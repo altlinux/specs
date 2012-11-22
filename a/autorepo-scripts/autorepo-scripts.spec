@@ -3,7 +3,7 @@ BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.
 # END SourceDeps(oneline)
 Name: autorepo-scripts
 Version: 0.16
-Release: alt3
+Release: alt4
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -41,6 +41,9 @@ rm $RPM_BUILD_ROOT%_bindir/autorepo-config.*
 %perl_vendor_privlib/Autorepo*
 
 %changelog
+* Thu Nov 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.16-alt4
+- rm-out-dups hasher tars as well
+
 * Wed Nov 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.16-alt3
 - support for install environment apt.conf
 
