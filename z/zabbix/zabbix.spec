@@ -7,7 +7,7 @@
 
 Name: zabbix
 Version: 2.0.3
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -286,6 +286,7 @@ install -dm0755 %buildroot%_sbindir
 install -dm0750 %buildroot%_sysconfdir/%name
 install -dm0750 %buildroot%_sysconfdir/%name/zabbix_agentd.conf.d
 install -dm0755 %buildroot%webserver_webappsdir/%name
+install -dm0755 %buildroot%_unitdir
 
 # binaries
 install -m0755 src/%{name}_*/%{name}_{mysql,agentd} %buildroot%_sbindir
@@ -296,6 +297,7 @@ install -m0755 src/%{name}_server/%{name}_pgsql %buildroot%_sbindir
 # conf files
 install -m0640 conf/%{name}_{server,agentd,proxy}.conf %buildroot%_sysconfdir/%name
 #install -m0640 misc/conf/%{name}_agentd/userparameter_{examples,mysql}.conf %buildroot%_sysconfdir/%name
+install -Dpm 644 sources/%name-tmpfiles.conf %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 
 # frontends
 cp -r frontends %buildroot%webserver_webappsdir/%name/
@@ -308,12 +310,16 @@ install -pDm0644 sources/%name.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A
 
 # start scripts
 install -pDm0755 sources/%{name}_agentd.init %buildroot%_initdir/%{name}_agentd
-install -pDm0755 sources/%{name}_mysql.init %buildroot%_initdir/%{name}_mysql
+install -pDm0755 sources/%{name}-agent.service %buildroot%_unitdir/%{name}-agent.service
+install -pDm0644 sources/zabbix_server %buildroot%_sysconfdir/sysconfig/zabbix_server
 %if_with pgsql
 install -pDm0755 sources/%{name}_pgsql.init %buildroot%_initdir/%{name}_pgsql
+install -pDm0755 sources/%{name}-server-pgsql.service %buildroot%_unitdir/%{name}-server-pgsql.service
 %endif
-install -pDm0644 sources/zabbix_server %buildroot%_sysconfdir/sysconfig/zabbix_server
+install -pDm0755 sources/%{name}_mysql.init %buildroot%_initdir/%{name}_mysql
+install -pDm0755 sources/%{name}-server-mysql.service %buildroot%_unitdir/%{name}-server-mysql.service
 install -pDm0755 sources/%{name}_proxy.init %buildroot%_initdir/%{name}_proxy
+install -pDm0755 sources/%{name}-proxy.service %buildroot%_unitdir/%{name}-proxy.service
 
 # migrator
 install -m0755 sources/zabbix.migrate.sh migrate.sh
@@ -379,15 +385,10 @@ fi
 %postun phpfrontend-apache
 %_initdir/httpd reload >/dev/null 2>&1 ||:
 
-%post phpfrontend-apache2
-%_initdir/httpd2 reload >/dev/null 2>&1 ||:
-
-%postun phpfrontend-apache2
-%_initdir/httpd2 reload >/dev/null 2>&1 ||:
-
 %files common
 %dir %attr(1775,root,%zabbix_group) %_logdir/%name
 %dir %_sysconfdir/%name
+%_sysconfdir/tmpfiles.d/*
 
 %files server-common
 %_bindir/%{name}_get
@@ -398,6 +399,7 @@ fi
 %files server-mysql
 %_sbindir/%{name}_mysql
 %_initdir/%{name}_mysql
+%_unitdir/*mysql*
 %doc database/mysql/schema.sql database/mysql/data.sql database/mysql/images.sql
 %doc upgrades-mysql
 %doc UPGRADING.ALT
@@ -406,6 +408,7 @@ fi
 %files server-pgsql
 %_sbindir/%{name}_pgsql
 %_initdir/%{name}_pgsql
+%_unitdir/*pgsql*
 %doc database/postgresql/schema.sql database/postgresql/data.sql database/postgresql/images.sql
 %doc upgrades-postgresql
 %doc UPGRADING.ALT
@@ -414,6 +417,7 @@ fi
 %files proxy
 %_sbindir/%{name}_proxy
 %_initdir/%{name}_proxy
+%_unitdir/*proxy*
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_proxy.conf
 %_man8dir/%{name}_proxy.*
 
@@ -421,6 +425,7 @@ fi
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/%name/%{name}_agentd.conf
 %dir %attr(0750,root,%zabbix_group) %_sysconfdir/%name/zabbix_agentd.conf.d
 %_initdir/%{name}_agentd
+%_unitdir/*agent*
 %_sbindir/%{name}_agentd
 %_bindir/%{name}_sender
 %_man8dir/%{name}_agentd.*
@@ -449,6 +454,11 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Thu Nov 22 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.3-alt2
+- Remove httpd2 restart/reload calls in its post/un scripts,
+  deprecated by httpd2.filetrigger
+- Add systemd unit files
+
 * Tue Oct 02 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.3-alt1
 - 2.0.3 release
 
