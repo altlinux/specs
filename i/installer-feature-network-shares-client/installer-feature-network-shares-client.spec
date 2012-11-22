@@ -1,6 +1,6 @@
 Name: installer-feature-network-shares-client
 Version: 0.8
-Release: alt1
+Release: alt2
 
 %define hookdir %_datadir/install2/postinstall.d
 
@@ -38,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Nov 22 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt2
+- unneded controls removed
+
 * Wed Nov 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt1
 - use root mount and cruid parameter to work with new cifs-utils
 
