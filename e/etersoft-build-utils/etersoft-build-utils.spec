@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.14
+Version: 2.0.15
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -68,6 +68,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Nov 22 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.15-alt1
+- /etc/rpm/etersoft-build-functions: remove publish-compat loading
+- update srpms (srpm source list)
+- add all repl rules for Slackware
+- repl: impove autoreplace, make recursive search
+- gpull: check for severy remote branch case
+- estrlist: add count method, fix --help
+- s/epmu/epmi
+
 * Fri Aug 17 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.14-alt1
 - introduce rpmbk: short command for build package from repo in any system
 - set EPMCMD, update version to 2014
