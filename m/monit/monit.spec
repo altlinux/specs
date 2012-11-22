@@ -5,7 +5,7 @@
 
 Name: monit
 Version: 5.5
-Release: alt2
+Release: alt3
 
 Summary: Process monitor and restart utility
 License: AGPLv3
@@ -99,6 +99,10 @@ sh bootstrap
 %install
 %makeinstall_std
 
+# see also #27990
+install -pD %buildroot{%_bindir,/bin}/monit
+ln -sf ../../bin/monit %buildroot%_bindir/monit
+
 cat %SOURCE3 >>monitrc
 install -pDm755 %SOURCE2  %buildroot%_initdir/%name
 install -pDm600 monitrc %buildroot%_sysconfdir/monitrc
@@ -139,8 +143,9 @@ fi
 %config(noreplace) %_ssldir/%name.cnf
 %_sysconfdir/monitrc.d/EXAMPLES
 %_sysconfdir/monit.d
-%_bindir/%name
 %_man1dir/%name.1.*
+%_bindir/%name
+/bin/monit
 
 %files base
 %dir %_sysconfdir/monitrc.d
@@ -152,6 +157,9 @@ fi
 # - each "check file" += "every 48 cycles"
 
 %changelog
+* Thu Nov 22 2012 Michael Shigorin <mike@altlinux.org> 5.5-alt3
+- relocated monit binary from %_bindir to /bin (closes: #27990)
+
 * Sat Sep 08 2012 Michael Shigorin <mike@altlinux.org> 5.5-alt2
 - added apache2 and rsyslog config snippet examples
 
