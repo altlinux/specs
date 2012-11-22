@@ -14,7 +14,7 @@
 
 Name: systemd
 Version: 195
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -26,7 +26,6 @@ Source4: prefdm.service
 Source6: altlinux-idetune.service
 Source7: altlinux-update_chrooted.service
 Source8: altlinux-clock-setup.service
-Source9: rtc.conf
 Source11: altlinux-storage-init
 Source12: altlinux-storage-init.service
 Source13: altlinux-wait-storage.service
@@ -475,7 +474,6 @@ ln -s ../modules %buildroot%_sysconfdir/modules-load.d/modules.conf
 
 # add load rtc module at boot time
 mkdir -p %buildroot/lib/modules-load.d
-install -m644 %SOURCE9 %buildroot/lib/modules-load.d/rtc.conf
 
 # Make sure the NTP units dir exists
 mkdir -p %buildroot/lib/systemd/ntp-units.d
@@ -652,7 +650,6 @@ fi
 %_sysconfdir/bash_completion.d/systemd
 %_sysconfdir/profile.d/systemd.sh
 /lib/tmpfiles.d/*.conf
-/lib/modules-load.d/*.conf
 %_sysconfdir/modules-load.d/modules.conf
 %_sysconfdir/xdg/systemd
 
@@ -867,6 +864,9 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Thu Nov 22 2012 Alexey Shabalin <shaba@altlinux.ru> 195-alt2
+- drop rtc.conf from modules-load.d
+
 * Tue Oct 23 2012 Alexey Shabalin <shaba@altlinux.ru> 195-alt1
 - 195
 
