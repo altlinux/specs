@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt4
+Release: alt5
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -232,6 +232,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 
 %files common -f grub.lang
 %dir %_sysconfdir/grub.d
+%dir %_libdir/grub
 %dir /boot/grub
 /boot/grub/*.pf2
 /boot/grub/fonts/
@@ -293,6 +294,10 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %ghost %config(noreplace) /boot/efi/EFI/altlinux/grub.cfg
 %endif
 
+# see #27935: grub1 would have /usr/lib/grub -> /boot/grub symlink
+%pre common
+[ -L %_libdir/grub ] && rm -f %_libdir/grub ||:
+
 %post pc
 %_sbindir/grub-autoupdate || {
 	echo "** WARNING: grub-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
@@ -304,6 +309,11 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 # TODO: post efi
 
 %changelog
+* Thu Nov 22 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt5
+- maintenance release:
+  + fixed filetrigger lapse (thanks crux@, see also #27916)
+  + grub2-common is now aware of grub-0.9x symlink (closes: #27935)
+
 * Tue Nov 13 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt4
 - initial EFI support merge
 - NB: grub2-pc package got split into -pc and -common,
