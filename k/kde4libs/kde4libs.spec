@@ -9,7 +9,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -137,7 +137,7 @@ Summary: Header files for compiling KDE 4 applications
 Requires: %name = %version-%release
 Requires: cmake libqt4-devel kde-common-devel >= %major.%minor
 Requires: libXdmcp-devel libXcomposite-devel libXdamage-devel libxkbfile-devel libXtst-devel libXScrnSaver-devel
-Requires: libXpm-devel libXxf86misc-devel libXxf86vm-devel libXt-devel libXft-devel
+Requires: libXpm-devel libXxf86vm-devel libXt-devel libXft-devel
 Requires: libstrigi-devel libsoprano-devel libpcre-devel libgif-devel xml-utils
 Requires: libutempter-devel bzlib-devel phonon-devel automoc shared-desktop-ontologies-devel
 Requires: docbook-style-xsl docbook-dtds
@@ -148,6 +148,7 @@ applications for KDE 4.
 
 %prep
 %setup -q -n %rname-%version
+cp -ar altlinux/udisks2 solid/solid/backends/
 
 %patch101 -p1
 %patch102 -p1
@@ -314,6 +315,10 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Thu Nov 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt2
+- update from KDE/4.9 branch
+- update udisks2 backend from KDE/4.10 branch
+
 * Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
