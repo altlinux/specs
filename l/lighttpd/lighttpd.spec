@@ -15,7 +15,7 @@
 Name: lighttpd
 Version: 1.4.32
 #Release: alt1.svn.%svnrev
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -198,6 +198,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Thu Nov 22 2012 Alexei Takaseev <taf@altlinux.org> 1.4.32-alt2
+- fix DoS in Connection header value split (CVE-2012-5533)
+
 * Wed Nov 07 2012 Alexei Takaseev <taf@altlinux.org> 1.4.32-alt1
 - 1.4.32
 
