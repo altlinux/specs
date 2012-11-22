@@ -1,6 +1,6 @@
 Name: alterator
-Version: 4.22
-Release: alt2
+Version: 4.23
+Release: alt1
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -18,7 +18,7 @@ Requires: rpm-macros-%name = %version-%release
 Requires: alterator-l10n >= 2.0-alt2
 Requires: guile18 >= 1.6.8-alt4
 
-Requires(pre): libguile-vhttpd >= 0.7-alt1
+Requires(pre): libguile-vhttpd >= 0.7.3-alt1
 Requires(pre): shadow-utils
 
 #incompatibility
@@ -70,7 +70,7 @@ Install this package if you want to create RPM packages that use %name.
 %make check-api
 
 %install
-%makeinstall GUILE_VERSION=%guile_version
+%makeinstall GUILE_VERSION=%guile_version unitdir=%buildroot%_unitdir
 ln -s ../bin/alterator-cmdline %buildroot%_sbindir/
 
 #create special directories
@@ -128,6 +128,9 @@ EOF
 %_mandir/man?/*
 %dir /var/run/alteratord
 
+%_unitdir/alteratord.service
+%_unitdir/alteratord.socket
+
 %attr(640,root,root) %_sysconfdir/pam.d/alterator-chkpwd
 
 %files doc
@@ -137,6 +140,17 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Nov 21 2012 Paul Wolneykien <manowar@altlinux.ru> 4.23-alt1
+- Require libguile-vhttpd >= 0.7.3.
+- Add the systemd unit files. Make systemd to listen on
+  /var/run/alteratord/socket.
+- Log the way the server was started (either new socket, or an
+  existing socket).
+- Try systemd-related calls first on init, connect, start and
+  stop (closes: 27988).
+- Add the systemctl helper script.
+- Implement the `sd-listen-fds` call from the systemd API.
+
 * Thu Oct 25 2012 Paul Wolneykien <manowar@altlinux.ru> 4.22-alt2
 - Add "Version control" menu section.
 
