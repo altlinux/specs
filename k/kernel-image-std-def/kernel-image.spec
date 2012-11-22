@@ -1,5 +1,5 @@
 Name:    kernel-image-std-def
-Release: alt1
+Release: alt2
 Epoch:   1
 %define kernel_base_version	3.6
 %define kernel_sublevel	.7
@@ -625,6 +625,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Nov 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.7-alt2
+- CONFIG_RTC changed from m to y (see https://bugzilla.altlinux.org/28014)
+
 * Sun Nov 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.7-alt1
 - Update to 3.6.7
 
