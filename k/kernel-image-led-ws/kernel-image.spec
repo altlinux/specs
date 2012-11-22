@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.52
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2793,6 +2793,10 @@ done)
 
 
 %changelog
+* Thu Nov 22 2012 Led <led@altlinux.ru> 3.0.52-alt2
+- updated:
+  + fix-fs-btrfs
+
 * Sun Nov 18 2012 Led <led@altlinux.ru> 3.0.52-alt1
 - 3.0.52
 - updated:
