@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	304.64
+%define module_version	310.19
 %define module_release	alt1
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
@@ -23,13 +23,19 @@
 %define legacy2 %nil
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
-%nvIF_ver_lt %xorg_ver 1.13
+%nvIF_ver_lt %xorg_ver 1.14
 %define legacy3 173.14.36
 %else
 %define legacy3 %nil
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
-%define mod_ver_list %version %legacy1 %legacy2 %legacy3
+%nvIF_ver_lt %xorg_ver 1.14
+%define legacy4 304.64
+%else
+%define legacy4 %nil
+%endif
+%define legacy4_src %(echo %legacy4 | tr -d .)
+%define mod_ver_list %version %legacy1 %legacy2 %legacy3 %legacy4
 
 %define upstream_module_name	NVIDIA_kernel
 
@@ -76,6 +82,9 @@ BuildRequires: kernel-source-%module_name-%legacy2_src
 %if "%legacy3" != "%nil"
 BuildRequires: kernel-source-%module_name-%legacy3_src
 %endif
+%if "%legacy4" != "%nil"
+BuildRequires: kernel-source-%module_name-%legacy4_src
+%endif
 
 Provides:  	kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -96,6 +105,9 @@ Requires:       nvidia_glx_%legacy2
 %endif
 %if "%legacy3" != "%nil"
 Requires:       nvidia_glx_%legacy3
+%endif
+%if "%legacy4" != "%nil"
+Requires:       nvidia_glx_%legacy4
 %endif
 Provides:       NVIDIA_kernel = %version
 
@@ -193,8 +205,13 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Sun Nov 18 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 304.64-alt1.197895.1
+* Thu Nov 22 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 310.19-alt1.197895.1
 - Build for kernel-image-std-pae-3.5.7-alt1.
+
+* Mon Nov 19 2012 Sergey V Turchin <zerg at altlinux dot org> 310.19-alt1
+- new release (310.19)
+- add new legacy branch (304.64)
+- fix 173.X xorg dependency
 
 * Thu Nov 08 2012 Sergey V Turchin <zerg at altlinux dot org> 304.64-alt1
 - new release (304.64)
