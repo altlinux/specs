@@ -1,7 +1,7 @@
 %define _kde_alternate_placement 1
 
 Name: bluedevil
-Version: 1.2.3
+Version: 1.2.4
 Release: alt1
 
 Group: Graphical desktop/KDE
@@ -86,6 +86,12 @@ mv %buildroot/%_K4datadir/include/* %buildroot/%_K4includedir
 %_K4includedir/actionplugin.h
 
 %changelog
+* Fri Nov 23 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.4-alt1
+- new version
+
+* Mon Jun 25 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt0.M60P.1
+- built for M60P
+
 * Wed Jun 20 2012 Sergey V Turchin <zerg@altlinux.org> 1.2.3-alt1
 - new version
 
