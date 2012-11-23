@@ -1,5 +1,5 @@
-%define		softver 12.10
-%define		buildver 1652
+%define		softver 12.11
+%define		buildver 1661
 
 Name:		opera
 Version:	%softver.%buildver
@@ -118,6 +118,9 @@ rm -rf %buildroot%_libdir/%name/pluginwrapper/operapluginwrapper-ia32-linux
 %_libdir/opera/lib%{name}kde4.so
 
 %changelog
+* Fri Nov 23 2012 Motsyo Gennadi <drool@altlinux.ru> 12.11.1661-alt1
+- 12.11 released
+
 * Wed Nov 07 2012 Motsyo Gennadi <drool@altlinux.ru> 12.10.1652-alt1
 - 12.10 released
 
