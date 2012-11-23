@@ -1,6 +1,6 @@
 Name: udev-initramfs
 Version: 150
-Release: alt12
+Release: alt13
 Summary: udev built with klibc for use in initramfs
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -127,6 +127,9 @@ done
 
 
 %changelog
+* Fri Nov 23 2012 Led <led@altlinux.ru> 150-alt13
+- rebuild with klibc-2.0.2-alt1
+
 * Thu Nov 22 2012 Led <led@altlinux.ru> 150-alt12
 - build udevadm, udev and udev tools as solid binary (for smaller total size)
 
