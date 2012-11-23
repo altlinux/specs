@@ -3,7 +3,7 @@
 %define module_release	alt4
 
 %define kversion       3.6.7
-%define krelease       alt2
+%define krelease       alt3
 %define flavour                std-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
@@ -12,7 +12,7 @@
 Summary:	AMD/ATI Proprietary Linux Display Driver
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.198151.2
+Release:	%module_release.198151.3
 License:	Proprietary
 Group:		System/Kernel and hardware
 
@@ -117,8 +117,8 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Thu Nov 22 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.8.98-alt4.198151.2
-- Build for kernel-image-std-def-3.6.7-alt2.
+* Fri Nov 23 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.8.98-alt4.198151.3
+- Build for kernel-image-std-def-3.6.7-alt3.
 
 * Sat Aug 18 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.98-alt4
 - Fixed build for kernel 3.5.2+
