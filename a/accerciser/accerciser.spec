@@ -1,7 +1,7 @@
 
 Name: accerciser
-Version: 1.12.1
-Release: alt5.1
+Version: 3.6.2
+Release: alt1
 
 Summary: An interactive Python tool for querying accessibility information
 Url: http://live.gnome.org/Accerciser
@@ -11,17 +11,16 @@ Group: Accessibility
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
 # Automatically added by buildreq on Sun Sep 28 2008
-BuildRequires: GConf docbook-dtds gnome-doc-utils-xslt perl-XML-Parser python-devel libgio-devel libgtk+3-devel python-module-pyatspi
+BuildRequires: GConf docbook-dtds gnome-doc-utils-xslt perl-XML-Parser python-devel
 
 BuildRequires: rpm-build-licenses rpm-build-gnome gnome-doc-utils libGConf-devel
-BuildPreReq: intltool
-BuildRequires: desktop-file-utils
+BuildPreReq: intltool yelp yelp-tools libgio-devel libgtk+3-devel gconf-editor
+BuildPreReq: python-module-pygobject3-devel libat-spi2-core-devel
 
 BuildArch: noarch
-Source: %name-%version.tar
-
-# debian watch file (for automation)
-Source100: %name.watch
+Source: %name-%version.tar.gz
+Source1: accerciser.schemas
+Patch: accerciser-3.6.2-alt-config.patch
 
 Requires: python-module-%name = %version-%release
 
@@ -34,8 +33,7 @@ An interactive Python accessibility explorer.
 Summary: Python module for accerciser
 Group: Development/Python
 BuildArch: noarch
-# The macro below is resolved into an empty string but confuses build process
-#%_python_set_noarch
+%_python_set_noarch
 
 %description -n python-module-%name
 An interactive Python accessibility explorer.
@@ -43,17 +41,23 @@ An interactive Python accessibility explorer.
 This package contains Python module for accerciser.
 
 %prep
-%setup -q
+%setup
+%patch -p2
 
 %build
-%configure  --disable-scrollkeeper --without-pyreqs
+%autoreconf
+%configure \
+	--disable-scrollkeeper \
+	--without-pyreqs \
+	--with-help-dir=%gnome_helpdir/%name \
+	--enable-schemas-compile=yes
 %make_build
 
 %install
 %makeinstall_std
-desktop-file-install --dir %buildroot%_desktopdir \
-	--add-category=X-Development-Accessibility \
-        %buildroot%_desktopdir/%name.desktop
+
+install -d %buildroot%gconf_schemasdir
+install -p -m644 %SOURCE1 %buildroot%gconf_schemasdir/
 
 %find_lang --with-gnome %name
 
@@ -71,37 +75,23 @@ fi
 %_datadir/%name
 %_datadir/applications/*
 %_man1dir/*
+%gnome_helpdir/%name
 %gconf_schemasdir/*
 %_datadir/icons/hicolor/16x16/apps/%name.png
 %_datadir/icons/hicolor/22x22/apps/%name.png
 %_datadir/icons/hicolor/32x32/apps/%name.png
 %_datadir/icons/hicolor/48x48/apps/accerciser.png
 %_datadir/icons/hicolor/scalable/apps/accerciser.svg
+#_omfdir/%name
+%_datadir/locale/*/*/accerciser*
+%_datadir/glib-2.0/schemas/*.xml
 
 %files -n python-module-%name
 %python_sitelibdir/%name/
 
 %changelog
-* Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.12.1-alt5.1
-- Rebuild with Python-2.7
-
-* Wed Oct 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt5
-- updated watch file, updated future BuildRequires: for 3.2.x version
-
-* Wed Oct 19 2011 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt4
-- added future BuildRequires: for 3.2.x version
-
-* Tue Oct 11 2011 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt3
-- find_lang finds gnome_helpdir, no need to package it explicitly
-
-* Mon Oct 10 2011 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt2
-- use find_lang, updated desktop file categories
-
-* Sun Oct 09 2011 Igor Vlasenko <viy@altlinux.ru> 1.12.1-alt1
-- intermediate update to 1.12.1. added watch file.
-
-* Sun Oct 10 2010 Michael Pozhidaev <msp@altlinux.ru> 1.11.1-alt1
-- New version 1.11.1 (closes: #23423)
+* Fri Nov 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.2-alt1
+- Version 3.6.2 (ALT #28019)
 
 * Thu Jul 29 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.3-alt1
 - Version 1.9.3
