@@ -13,8 +13,8 @@
 %define nv_version 310
 %define nv_release 19
 %define nv_minor %nil
-%define pkg_rel alt113
-%define set_gl_nvidia_ver 0.8.2
+%define pkg_rel alt114
+%define set_gl_nvidia_ver 0.9.0
 
 %define tbver %{nv_version}.%{nv_release}.%{nv_minor}
 %if "%nv_minor" == "%nil"
@@ -30,8 +30,8 @@
 %define mods /modules
 %define exts /modules/extensions
 %define drvs /modules/drivers
-%define lib_sym_dir %_sysconfdir/X11/%_lib
-%define nv_lib_sym_dir %{lib_sym_dir}_nvidia
+%define x_etclib_sym_dir %_sysconfdir/X11/%_lib
+%define nv_etclib_sym_dir %{x_etclib_sym_dir}_nvidia
 %define nv_lib32_sym_dir %_sysconfdir/X11/lib_nvidia
 %define xdrv_d /usr/libexec/X11/drv.d
 %define xdrv_d_old /usr/X11R6/lib/drv.d
@@ -110,8 +110,8 @@ tar xvfj %SOURCE0
 pushd set_gl_nvidia*
 cp settings.h.in settings.h
 subst "s|@DEFAULT_VERSION@|%version|" settings.h
-subst "s|@LIB_SYML_DIR@|%lib_sym_dir|" settings.h
-subst "s|@NV_LIB_SYML_DIR@|%nv_lib_sym_dir|" settings.h
+subst "s|@X_ETCLIB_SYML_DIR@|%x_etclib_sym_dir|" settings.h
+subst "s|@NV_ETCLIB_SYML_DIR@|%nv_etclib_sym_dir|" settings.h
 subst "s|@TLS_LIB_DIR@|%tls_lib_dir|" settings.h
 
 subst "s|@XLIB_DIR@|%x11_lib_dir|" settings.h
@@ -126,7 +126,7 @@ subst "s|@XDRV_DIR_OLD@|%x11_drv_old|" settings.h
 subst "s|@XEXT_DIR@|%x11_ext_dir|" settings.h
 subst "s|@XEXT_DIR_OLD@|%x11_ext_old|" settings.h
 
-subst "s|@X11PRIVATE_DIR@|%x11driver_dir|" settings.h
+subst "s|@X_DRV_DIR@|%x11driver_dir|" settings.h
 subst "s|@NV_DRV_DIR_PREFIX@|%nv_lib_dir_prefix|" settings.h
 subst "s|@NV_DRV_DIR_PREFIX_OLD@|%nv_lib_dir_prefix_old|" settings.h
 
@@ -153,8 +153,8 @@ ld --shared nvidianull.o -o libnvidianull.so
 #%__mkdir_p %buildroot/%x11_drv_old
 %__mkdir_p %buildroot/%x11_ext_dir
 #%__mkdir_p %buildroot/%x11_ext_old
-%__mkdir_p %buildroot/%lib_sym_dir
-%__mkdir_p %buildroot/%nv_lib_sym_dir
+%__mkdir_p %buildroot/%x_etclib_sym_dir
+%__mkdir_p %buildroot/%nv_etclib_sym_dir
 %__mkdir_p %buildroot/%nv_lib32_sym_dir
 %__mkdir_p %buildroot/%xdrv_d
 #%__mkdir_p %buildroot/%xdrv_d_old
@@ -168,24 +168,24 @@ ld --shared nvidianull.o -o libnvidianull.so
 %__install -m 0755 set_gl_nvidia*/nvidia_preset %buildroot/%xdrv_pre_d/nvidia
 %__install -m 0644 libnvidianull.so %buildroot/%x11_lib_dir/
 
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib_sym_dir/libnvidia-cfg.so.1
-%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib_sym_dir/libvdpau_nvidia.so
+%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libnvidia-cfg.so.1
+%__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/libvdpau_nvidia.so
 
-%__ln_s ../..%nv_lib_sym_dir/libvdpau_nvidia.so %buildroot/%x11_lib_dir/libvdpau_nvidia.so
-%__ln_s ../..%nv_lib_sym_dir/libnvidia-cfg.so.1 %buildroot/%x11_lib_dir/libnvidia-cfg.so.1
+%__ln_s ../..%nv_etclib_sym_dir/libvdpau_nvidia.so %buildroot/%x11_lib_dir/libvdpau_nvidia.so
+%__ln_s ../..%nv_etclib_sym_dir/libnvidia-cfg.so.1 %buildroot/%x11_lib_dir/libnvidia-cfg.so.1
 
 
 # nvidia_drv.o
 if false ; then
-    %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib_sym_dir/nvidia_drv.o
-    %__ln_s ../../../../..%nv_lib_sym_dir/nvidia_drv.o %buildroot/%x11_drv_dir/nvidia_drv.o
-    #%__ln_s ../../../../..%nv_lib_sym_dir/nvidia_drv.o %buildroot/%x11_drv_old/nvidia_drv.o
+    %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/nvidia_drv.o
+    %__ln_s ../../../../..%nv_etclib_sym_dir/nvidia_drv.o %buildroot/%x11_drv_dir/nvidia_drv.o
+    #%__ln_s ../../../../..%nv_etclib_sym_dir/nvidia_drv.o %buildroot/%x11_drv_old/nvidia_drv.o
 fi
 # nvidia_drv.so
 if true ; then
-    %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_lib_sym_dir/nvidia_drv.so
-    %__ln_s ../../../../..%nv_lib_sym_dir/nvidia_drv.so %buildroot/%x11_drv_dir/nvidia_drv.so
-    #%__ln_s ../../../../..%nv_lib_sym_dir/nvidia_drv.so %buildroot/%x11_drv_old/nvidia_drv.so
+    %__ln_s ../../..%x11_lib_dir/libnvidianull.so %buildroot/%nv_etclib_sym_dir/nvidia_drv.so
+    %__ln_s ../../../../..%nv_etclib_sym_dir/nvidia_drv.so %buildroot/%x11_drv_dir/nvidia_drv.so
+    #%__ln_s ../../../../..%nv_etclib_sym_dir/nvidia_drv.so %buildroot/%x11_drv_old/nvidia_drv.so
 fi
 
 
@@ -214,16 +214,16 @@ fi
 %xdrv_d/nvidia
 #%xdrv_d_old/nvidia
 %x11_lib_dir/libnvidianull.so
-%dir %nv_lib_sym_dir/
+%dir %nv_etclib_sym_dir/
 #
-%nv_lib_sym_dir/nvidia_drv.*
+%nv_etclib_sym_dir/nvidia_drv.*
 %x11_drv_dir/nvidia_drv.*
 #%ghost %x11_drv_old/nvidia_drv.*
 #
 %nv_workdirdir
-%nv_lib_sym_dir/libnvidia-cfg.so.?
-%nv_lib_sym_dir/libvdpau_nvidia.so
-#%nv_lib_sym_dir/nvidia.xinf
+%nv_etclib_sym_dir/libnvidia-cfg.so.?
+%nv_etclib_sym_dir/libvdpau_nvidia.so
+#%nv_etclib_sym_dir/nvidia.xinf
 %if "%_lib" == "lib64"
 %dir %nv_lib32_sym_dir/
 %endif
@@ -233,6 +233,9 @@ fi
 
 
 %changelog
+* Fri Nov 23 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt114
+- switch libGLESv2.so.2 and libEGL.so.1
+
 * Wed Nov 21 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt113
 - remove XvMC plugin support
 
@@ -595,7 +598,7 @@ fi
 - restore symlinks for libglx.a and libGL.so.1 in /usr/X11R6/lib if absent
 
 * Fri Jun 10 2005 Sergey V Turchin <zerg at altlinux dot org> 1.0.7174-alt6
-- move writable symlinks to %nv_lib_sym_dir
+- move writable symlinks to nv_etclib_sym_dir
 - add check for tls to link libnvidia-tls.so correctly
 
 * Tue Jun 07 2005 Sergey V Turchin <zerg at altlinux dot org> 1.0.7174-alt5
