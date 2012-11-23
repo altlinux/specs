@@ -7,14 +7,14 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt26
+Release: alt27
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
 Group: System/Kernel and hardware
 Url: http://www.sourceforge.net/projects/evms
 
-Source: %name-%version-%release.tar.bz2
+Source: %name-%version-%release.tar
 
 BuildRequires: glib2-devel libe2fs-devel libncurses-devel libreadline-devel libuuid-devel
 BuildRequires: libcryptsetup-devel >= 1.4.0
@@ -165,6 +165,13 @@ EOF
 %endif
 
 %changelog
+* Fri Nov 23 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt27
+- md plugin: fix check kernel version
+- gpt plugin: add EFI_SYSTEM_PARTITION to type list
+- luks plugin:
+  + fix find luks objects in LVM, RAID (closes: 28122)
+  + disable not active objects (closes: 28113)
+
 * Mon Oct 29 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt26
 - luks plugin: enter password on create
 
