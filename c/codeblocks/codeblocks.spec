@@ -1,7 +1,7 @@
 Name: codeblocks
-%define revision 8549
-Version: 10.05.%revision
-Release: alt1
+%define revision 8598
+Version: 12.11
+Release: alt0.2
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -183,7 +183,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %{pkgdata}/Profiler.zip
 %{pkgdata}/RegExTestbed.zip
 %{pkgdata}/ReopenEditor.zip
-#  %{pkgdata}/*SmartIndent.zip
+%{pkgdata}/SmartIndent*.zip
 %{pkgdata}/SpellChecker.zip
 %{pkgdata}/SymTab.zip
 %{pkgdata}/ThreadSearch.zip
@@ -226,7 +226,7 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %{_libdir}/%{name}/plugins/libProfiler.*
 %{_libdir}/%{name}/plugins/libRegExTestbed.*
 %{_libdir}/%{name}/plugins/libReopenEditor.*
-# %{_libdir}/%{name}/plugins/lib*SmartIndent.*
+%{_libdir}/%{name}/plugins/libSmartIndent*.*
 %{_libdir}/%{name}/plugins/libSpellChecker.*
 %{_libdir}/%{name}/plugins/libSymTab.*
 %{_libdir}/%{name}/plugins/libThreadSearch.*
@@ -241,6 +241,9 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Nov 23 2012 Denis Kirienko <dk@altlinux.org> 12.11-alt0.2
+- 12.11 RC2 (SVN 8598)
+
 * Wed Nov 14 2012 Denis Kirienko <dk@altlinux.org> 10.05.8549-alt1
 - 12.11 RC1 (SVN 8549)
 
