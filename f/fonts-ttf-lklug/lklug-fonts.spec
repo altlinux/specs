@@ -1,6 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname lklug-fonts
-%define fontname lklug
-%define cvsdate 20090803
+%global fontname lklug
+%global cvsdate 20090803
 %global fontconf	65-%{fontname}.conf
 
 Name:	fonts-ttf-lklug
@@ -8,7 +12,7 @@ Name:	fonts-ttf-lklug
 # update versions on file changes. When in doubt use the timestamp of the most
 # recent file as version.
 Version:	0.6
-Release:	alt3_7.20090803cvs
+Release:	alt3_8.20090803cvs
 Summary:	Fonts for Sinhala language
 Group:	System/Fonts/True type
 License:	GPLv2
@@ -17,7 +21,6 @@ URL:	http://sinhala.sourceforge.net/
 #cvs -z3 -d:pserver:anonymous@sinhala.cvs.sourceforge.net:/cvsroot/sinhala co -P sinhala/fonts
 #cd sinhala/fonts/
 #tar -czf lklug-%{cvsdate}.tar.gz convert.ff COPYING  CREDITS lklug.sfd Makefile README.fonts
-
 
 Source:	lklug-%{cvsdate}.tar.gz
 Source1:	%{fontconf}
@@ -38,8 +41,6 @@ Ratnaweera and Harshani Devadithya.
 make
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -86,15 +87,18 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 %doc CREDITS COPYING README.fonts 
-%dir %{_fontbasedir}/*/%{_fontstem}
 
 
 %changelog
+* Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_8.20090803cvs
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_7.20090803cvs
 - update to new release by fcimport
 
