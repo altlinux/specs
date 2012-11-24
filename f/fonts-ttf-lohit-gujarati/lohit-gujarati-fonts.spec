@@ -7,8 +7,8 @@ BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-de
 %global fontconf 66-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-gujarati
-Version:        2.5.1
-Release:        alt1_4
+Version:        2.5.2
+Release:        alt1_1
 Summary:        Free Gujarati font
 
 Group:          System/Fonts/True type
@@ -19,20 +19,20 @@ BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
 Obsoletes: lohit-fonts-common < %{version}-%{release}
-Patch1: bug-803192.patch
 Source44: import.info
 
 %description
 This package provides a free Gujarati truetype/opentype font.
 
+
 %prep
 %setup -q -n %{fontname}-%{version} 
-%patch1 -p1 -b .1-panose-setting
 
 %build
-make
+make %{?_smp_mflags}
 
 %install
+
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -78,6 +78,7 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
@@ -87,6 +88,9 @@ fi
 
 
 %changelog
+* Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_1
+- update to new release by fcimport
+
 * Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_4
 - update to new release by fcimport
 
