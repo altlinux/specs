@@ -2,7 +2,7 @@
 %define domain gcampax.github.com
 
 Name: gnome-shell-extensions
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: GNOME Shell Extensions
@@ -167,6 +167,9 @@ NOCONFIGURE=1 ./autogen.sh
 %doc README
 
 %changelog
+* Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- 3.6.2
+
 * Fri Oct 05 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
