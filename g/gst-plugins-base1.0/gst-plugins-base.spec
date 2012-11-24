@@ -8,7 +8,7 @@
 %def_disable gtk_doc
 
 Name: %_name-base%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: An essential set of GStreamer plugins
@@ -26,7 +26,7 @@ Source: http://download.gnome.org/sources/%_name-base/%ver_major/%_name-base-%ve
 Patch: gst-plugins-base-0.11.94-alt-intltool.patch
 
 BuildRequires: gstreamer%api_ver-devel libgstreamer%api_ver-gir-devel gtk-doc intltool libSM-devel
-BuildRequires: libXext-devel libXv-devel libalsa-devel libgtk+3-devel
+BuildRequires: libXext-devel libXv-devel libalsa-devel libgtk+3-devel libvisual0.4-devel iso-codes-devel
 BuildRequires: libcdparanoia-devel liboil-devel libtheora-devel libvorbis-devel orc liborc-test-devel
 BuildRequires: python-module-PyXML python-modules-encodings gobject-introspection-devel
 
@@ -153,6 +153,9 @@ GObject introspection devel data for the GStreamer library
 %_girdir/GstVideo-%api_ver.gir
 
 %changelog
+* Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+
 * Thu Oct 25 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.2-alt1
 - 1.0.2
 
