@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -47,6 +47,10 @@ install -m644 examples/* %buildroot%_sysconfdir/nginx/examples/
 %_sysconfdir/nginx/examples/
 
 %changelog
+* Sat Nov 24 2012 Vitaly Lipatov <lav@altlinux.ru> 0.2.1-alt1
+- add nodelay to limit_req
+- add initial stop-injection.conf
+
 * Wed Mar 21 2012 Vitaly Lipatov <lav@altlinux.ru> 0.2.0-alt1
 - moved to nginx >= 1.1.8
 - too many incompatible changes
