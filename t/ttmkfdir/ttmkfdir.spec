@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
 # END SourceDeps(oneline)
 Summary: Utility to create fonts.scale files for truetype fonts
 Name: ttmkfdir
 Version: 3.0.9
-Release: alt1_36
+Release: alt1_37
 # This is a Red Hat maintained package which is specific to
 # our distribution.  Thus the source is only available from
 # within this srpm.
@@ -52,16 +53,19 @@ by the font server.
 %patch33 -p0
 
 %build
-make OPTFLAGS="$RPM_OPT_FLAGS"
+make %{?_smp_mflags} OPTFLAGS="$RPM_OPT_FLAGS"
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT install
+make DESTDIR=$RPM_BUILD_ROOT install INSTALL="install -p"
 
 %files
 %doc README
 %{_bindir}/ttmkfdir
 
 %changelog
+* Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt1_37
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.9-alt1_36
 - update to new release by fcimport
 
