@@ -1,10 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname lohit-telugu-fonts
 %global fontname lohit-telugu
 %global fontconf 66-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-telugu
-Version:        2.5.1
-Release:        alt1_3
+Version:        2.5.2
+Release:        alt1_1
 Summary:        Free Telugu font
 
 Group:          System/Fonts/True type
@@ -15,23 +19,19 @@ BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
 Obsoletes: lohit-fonts-common < %{version}-%{release}
-Patch1: bug-803563.patch
 Source44: import.info
 
 %description
 This package provides a free Telugu truetype/opentype font.
 
-
 %prep
 %setup -q -n %{fontname}-%{version} 
-%patch1 -p1 -b .1-removed-unnecessary-glyphs
 
 
 %build
-make
+make %{?_smp_mflags}
 
 %install
-rm -fr %{buildroot}
 
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
@@ -88,6 +88,9 @@ fi
 
 
 %changelog
+* Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_3
 - update to new release by fcimport
 
