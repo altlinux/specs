@@ -1,10 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname lohit-kannada-fonts
 %global fontname lohit-kannada
 %global fontconf 66-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-kannada
 Version:        2.5.1
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Free Kannada font
 
 Group:          System/Fonts/True type
@@ -15,7 +19,7 @@ BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
 Obsoletes: lohit-fonts-common < %{version}-%{release}
-Patch1:	bug-825104.patch
+Patch1:	%{oldname}-bug-825104.patch
 Source44: import.info
 
 %description
@@ -28,10 +32,9 @@ This package provides a free Kannada truetype/opentype font.
 
 
 %build
-make
+make %{?_smp_mflags}
 
 %install
-rm -fr %{buildroot}
 
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
@@ -88,6 +91,9 @@ fi
 
 
 %changelog
+* Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_3
 - update to new release by fcimport
 
