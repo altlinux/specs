@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: embryo
-Version: 1.7.1
+Version: 1.7.2
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -75,7 +75,7 @@ This package contains shared embryo library.
 %package -n lib%name-devel
 Summary: embryo headers and development libraries
 Group: Development/C
-Requires: lib%name = %version
+Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 Embryo is primarily a shared library that gives you an API to load and control
@@ -96,7 +96,7 @@ This package contains embryo headers and development libraries
 %package -n lib%name-devel-static
 Summary: embryo static libraries
 Group: Development/C
-Requires: lib%name-devel = %version
+Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
 Embryo is primarily a shared library that gives you an API to load and control
@@ -149,6 +149,9 @@ This package contains static libraries
 %endif
 
 %changelog
+* Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
+- 1.7.2
+
 * Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - 1.7.1
 

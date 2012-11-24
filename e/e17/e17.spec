@@ -1,5 +1,5 @@
 %define _name enlightenment
-%define cvs_date alpha3
+%define cvs_date alpha5
 #%%undefine cvs_date
 %define snapshot 2012-10-12
 %define rel alt1
@@ -24,7 +24,6 @@ Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
 Source: http://download.enlightenment.org/releases/%_name-%version-%cvs_date.tar.bz2
-Patch: e17-default-menus-1.patch
 
 Source1: E-17.xpm
 Source2: start%name
@@ -37,7 +36,7 @@ Source9: %_name-wm.desktop
 Requires: edbus
 # for menu
 Requires: wm-common-freedesktop
-Requires: altlinux-freedesktop-menu-%_name
+Requires: altlinux-freedesktop-menu-%_name >= 0.55
 
 BuildPreReq: libeet-devel >= 1.7.0
 BuildPreReq: libecore-devel >= 1.7.0
@@ -71,7 +70,7 @@ Requires: gnome-session >= 2.24
 %description gnome
 Install this package and run:
 "gconftool-2 --set --type string /desktop/gnome/session/required_components/windowmanager enlightenment"
-to use Enlightenment as windowmanager in GNOME session
+to use Enlightenment as windowmanager in GNOME 2 session
 
 %prep
 %ifdef cvs_date
@@ -79,8 +78,6 @@ to use Enlightenment as windowmanager in GNOME session
 %else
 %setup -q -n %_name-%version
 %endif
-
-%patch -b .menus
 
 %build
 %autoreconf
@@ -137,6 +134,10 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.alpha5
+- 0.17.0 alpha5
+- requires altlinux-freedesktop-menu-enlightenment >= 0.55
+
 * Fri Nov 16 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.alpha3
 - 0.17.0 alpha3
 

@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: eeze
-Version: 1.7.1
+Version: 1.7.2
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -95,6 +95,9 @@ This package contains static library required for development statically linked
 %endif
 
 %changelog
+* Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
+- 1.7.2
+
 * Mon Oct 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.1-alt1
 - 1.7.1
 
