@@ -1,3 +1,7 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname abattis-cantarell-fonts
 %global actualname cantarell
 
@@ -8,7 +12,7 @@
 %global archivename2 Cantarell-Regular
 
 Name: fonts-otf-abattis-cantarell
-Version: 0.0.10.1
+Version: 0.0.11
 Release: alt1_1
 Summary: Cantarell, a Humanist sans-serif font family
 
@@ -87,6 +91,9 @@ fi
 %doc COPYING NEWS README
 
 %changelog
+* Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.11-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.0.10.1-alt1_1
 - update to new release by fcimport
 
