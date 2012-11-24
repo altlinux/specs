@@ -1,7 +1,7 @@
 %define module_name	virtualbox
-%define module_version	4.1.20
+%define module_version	4.2.4
 
-%define module_release	alt2
+%define module_release	alt1
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
@@ -101,8 +101,11 @@ cp kernel-source-%drv_module_name-%module_version/Module.symvers \
 %module_dir
 
 %changelog
-* Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2.197895.1
+* Fri Nov 23 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.4-alt1.197895.1
 - Build for kernel-image-std-pae-3.5.7-alt1.
+
+* Thu Nov 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.4-alt1
+- Update to new release
 
 * Wed Aug 29 2012 Anton Protopopov <aspsk@altlinux.org> 4.1.20-alt2
 - technical

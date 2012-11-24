@@ -50,8 +50,8 @@
 
 
 Name: virtualbox
-Version: 4.1.20
-Release: alt1.1
+Version: 4.2.4
+Release: alt1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -76,8 +76,6 @@ Source13:	http://download.virtualbox.org/%name/%version/UserManual.pdf
 Source15:	os_altlinux.png
 Source16:	os_altlinux_64.png
 Source17:	http://download.virtualbox.org/%name/%version/%distname.chm
-Source18:	xorg-vboxmouse.rules
-Source19:	xorg-vboxmouse.conf
 Source20:	http://download.virtualbox.org/%name/%version/SDKRef.pdf
 Source21:	%distname-HTML-%{version}_OSE.tar
 
@@ -113,6 +111,7 @@ BuildRequires: libvncserver-devel < 0.9.9
 %define libvncserver_version 98
 %endif
 BuildRequires: rpm-build-xdg rpm-macros-pam
+BuildRequires: /proc
 
 PreReq: %name-common = %version-%release
 
@@ -127,7 +126,6 @@ software solution on the market.
 %package guest-additions
 Summary: Full package of additions for VirtualBox OSE guest systems
 Group: Emulators
-Requires: xorg-drv-vboxmouse
 Requires: xorg-drv-vboxvideo
 Requires: %name-guest-utils
 
@@ -207,15 +205,6 @@ Provides: %oldmodnamevideo = %version-%release
 
 %description -n %modnamevideo
 Sources for VirtualBox kernel module for OSE Video DRM.
-
-%package -n xorg-drv-vboxmouse
-Summary: The X.org driver for mouse in VirtualBox guests
-Group: System/X11
-Provides: xorg-x11-drv-vboxmouse = %version-%release
-Obsoletes: xorg-x11-drv-vboxmouse < %version
-
-%description -n xorg-drv-vboxmouse
-The X.org driver for mouse in VirtualBox guests
 
 %package -n xorg-drv-vboxvideo
 Summary: The X.org driver for video in VirtualBox guests
@@ -310,6 +299,8 @@ echo "VBOX_PRODUCT               := VM VirtualBox OSE" >> LocalConfig.kmk
 echo "LIBVNCSERVER_VERSION_NR    := %libvncserver_version" >> LocalConfig.kmk
 %endif
 
+echo "VBOX_USE_SYSTEM_XORG_HEADERS := 1" >> LocalConfig.kmk
+
 source env.sh
 [ -n "$NPROCS" ] || NPROCS=%__nprocs
 kmk -j$NPROCS VBOXDIR=%vboxdir
@@ -348,12 +339,6 @@ install -Dp -m644 %SOURCE3 %buildroot%_sysconfdir/udev/rules.d/60-vboxadd.rules
 
 install -d %buildroot%_sysconfdir/X11/xinit.d
 install -m755 src/VBox/Additions/x11/Installer/98vboxadd-xclient %buildroot%_sysconfdir/X11/xinit.d
-
-install -Dp -m644 %SOURCE18 \
-	%buildroot%_sysconfdir/udev/rules.d/70-xorg-vboxmouse.rules
-mkdir -p %buildroot%_x11sysconfdir/xorg.conf.d
-install -Dp -m644 %SOURCE19 \
-	%buildroot%_x11sysconfdir/xorg.conf.d/50-vboxmouse.conf
 %endif
 
 # install application
@@ -455,9 +440,8 @@ cd additions >/dev/null
   install -m644 %SOURCE5 %buildroot%_sysconfdir/security/console.perms.d/
 
 # install x11 drivers
-  install -d %buildroot%_x11modulesdir/{input,drivers}
-  install ../vboxmouse_drv.so %buildroot%_x11modulesdir/input/vboxmouse_drv.so
-  install vboxvideo_drv.so %buildroot%_x11modulesdir/drivers/vboxvideo_drv.so
+  install -d %buildroot%_x11modulesdir/drivers
+  install vboxvideo_drv_system.so %buildroot%_x11modulesdir/drivers/vboxvideo_drv.so
 
   mkdir -p %buildroot%_x11modulesdir/dri/
   ln -s $(relative %vboxadddir/VBoxOGL.so %_x11modulesdir/dri/) %buildroot%_x11modulesdir/dri/vboxvideo_dri.so
@@ -569,9 +553,6 @@ mountpoint -q /dev || {
 %kernel_src/%modnamevideo-%version.tar.bz2
 
 %if_with additions
-%files -n xorg-drv-vboxmouse
-%_x11modulesdir/input/vboxmouse_drv.so
-
 %files -n xorg-drv-vboxvideo
 %_x11modulesdir/drivers/vboxvideo_drv.so
 
@@ -590,8 +571,6 @@ mountpoint -q /dev || {
 
 %files guest-additions
 %_sysconfdir/X11/xinit.d/98vboxadd-xclient
-%config %_sysconfdir/udev/rules.d/70-xorg-vboxmouse.rules
-%config %_x11sysconfdir/xorg.conf.d/50-vboxmouse.conf
 %_bindir/VBoxClient
 %dir %vboxadddir
 %vboxadddir/VBoxOGL*.so
@@ -614,6 +593,10 @@ mountpoint -q /dev || {
 %vboxdir/sdk
 
 %changelog
+* Thu Nov 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.4-alt1
+- Update to last stable release 4.2
+- Remove vboxmouse_drv due it not needed at all for X.Org Server 1.7 and later
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.20-alt1.1
 - Rebuilt with libpng15
 
