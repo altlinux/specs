@@ -7,7 +7,7 @@
 
 Name: zabbix
 Version: 2.0.3
-Release: alt2
+Release: alt3
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -310,16 +310,16 @@ install -pDm0644 sources/%name.conf %buildroot%_sysconfdir/httpd2/conf/addon.d/A
 
 # start scripts
 install -pDm0755 sources/%{name}_agentd.init %buildroot%_initdir/%{name}_agentd
-install -pDm0755 sources/%{name}-agent.service %buildroot%_unitdir/%{name}-agent.service
+install -pDm0755 sources/%{name}_agentd.service %buildroot%_unitdir/%{name}_agentd.service
 install -pDm0644 sources/zabbix_server %buildroot%_sysconfdir/sysconfig/zabbix_server
 %if_with pgsql
 install -pDm0755 sources/%{name}_pgsql.init %buildroot%_initdir/%{name}_pgsql
-install -pDm0755 sources/%{name}-server-pgsql.service %buildroot%_unitdir/%{name}-server-pgsql.service
+install -pDm0755 sources/%{name}_pgsql.service %buildroot%_unitdir/%{name}_pgsql.service
 %endif
 install -pDm0755 sources/%{name}_mysql.init %buildroot%_initdir/%{name}_mysql
-install -pDm0755 sources/%{name}-server-mysql.service %buildroot%_unitdir/%{name}-server-mysql.service
+install -pDm0755 sources/%{name}_mysql.service %buildroot%_unitdir/%{name}_mysql.service
 install -pDm0755 sources/%{name}_proxy.init %buildroot%_initdir/%{name}_proxy
-install -pDm0755 sources/%{name}-proxy.service %buildroot%_unitdir/%{name}-proxy.service
+install -pDm0755 sources/%{name}_proxy.service %buildroot%_unitdir/%{name}_proxy.service
 
 # migrator
 install -m0755 sources/zabbix.migrate.sh migrate.sh
@@ -454,6 +454,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Sat Nov 24 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.3-alt3
+- Fix name unit files
+
 * Thu Nov 22 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.3-alt2
 - Remove httpd2 restart/reload calls in its post/un scripts,
   deprecated by httpd2.filetrigger
