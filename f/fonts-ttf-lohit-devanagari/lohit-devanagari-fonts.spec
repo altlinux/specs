@@ -1,10 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname lohit-devanagari-fonts
 %global fontname lohit-devanagari
 %global fontconf 66-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-devanagari
-Version:        2.5.1
-Release:        alt1_4
+Version:        2.5.2
+Release:        alt1_1
 Summary:        Free Devanagari Script Font
 Group:          System/Fonts/True type
 License:        OFL
@@ -13,23 +17,18 @@ Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{versio
 BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
-Patch1: bug-803308-799004.patch
 Source44: import.info
 
 %description
 This package provides a free Devanagari Script TrueType/OpenType font.
 
-
 %prep
 %setup -q -n %{fontname}-%{version} 
-%patch1 -p1 -b .1-panose-and-sa-shape
-
 
 %build
-make
+make %{?_smp_mflags}
 
 %install
-rm -fr %{buildroot}
 
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
@@ -77,6 +76,7 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
+
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
@@ -86,6 +86,9 @@ fi
 
 
 %changelog
+* Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_4
 - update to new release by fcimport
 
