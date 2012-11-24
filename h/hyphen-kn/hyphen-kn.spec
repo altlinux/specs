@@ -4,7 +4,7 @@
 Name: hyphen-kn
 Summary: Kannada hyphenation rules
 Version: 0.%{upstreamid}
-Release: alt1_1
+Release: alt1_2
 Source: http://download.savannah.gnu.org/releases/smc/hyphenation/patterns/%{name}-%{upstream_version}.tar.bz2
 Group: Text tools
 URL: http://wiki.smc.org.in
@@ -26,9 +26,13 @@ mkdir -p $RPM_BUILD_ROOT/%{_datadir}/hyphen
 install -m644 -p *.dic $RPM_BUILD_ROOT/%{_datadir}/hyphen
 
 %files
+%doc README COPYING ChangeLog
 %{_datadir}/hyphen/*
 
 %changelog
+* Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.20111229-alt1_2
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20111229-alt1_1
 - update to new release by fcimport
 
