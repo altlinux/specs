@@ -1,10 +1,14 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+# END SourceDeps(oneline)
 %define oldname lohit-marathi-fonts
 %global fontname lohit-marathi
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-marathi
-Version:        2.5.1
-Release:        alt1_2
+Version:        2.5.2
+Release:        alt1_1
 Summary:        Free Marathi font
 
 Group:          Graphical desktop/Other
@@ -24,7 +28,7 @@ This package provides a free Marathi truetype/opentype font.
 %setup -q -n %{fontname}-%{version} 
 
 %build
-make
+make %{?_smp_mflags}
 
 %install
 
@@ -82,6 +86,9 @@ fi
 %doc ChangeLog OFL.txt COPYRIGHT AUTHORS README ChangeLog.old
 
 %changelog
+* Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_2
 - update to new release by fcimport
 
