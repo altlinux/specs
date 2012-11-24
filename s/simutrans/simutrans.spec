@@ -5,7 +5,7 @@
 
 Name: simutrans
 Version: 0.111.2.1
-Release: %branch_release alt1
+Release: %branch_release alt1.1
 
 Summary: Transport and Economic Simulation Game
 License: Artistic
@@ -20,6 +20,7 @@ Source4: simutrans.png
 Source5: simutrans_langtabs-99-17.tar.bz2
 Patch10: simutrans-alt-ru.patch
 Patch20: simutrans-no-x86-specifics.patch
+Patch21: simutrans-0.111.2.1-alt-zlib-1.2.7.patch
 
 Requires: simutrans-pak >= 0.111.2
 
@@ -66,6 +67,7 @@ Transport Tycoon, Transport Tycoon Deluxe и Transport Giant.
 %ifnarch %ix86
 %patch20 -p1
 %endif
+%patch21 -p0
 cp -pr %SOURCE1 .
 
 %build
@@ -90,6 +92,9 @@ install -m 0644 %SOURCE4 %buildroot%_iconsdir/
 %_desktopdir/*
 
 %changelog
+* Sat Nov 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.111.2.1-alt1.1
+- Fixed build with zlib 1.2.7
+
 * Thu Mar 22 2012 Aleksey Avdeev <solo@altlinux.ru> 0.111.2.1-alt1
 - new version
 
