@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/runtest gcc-c++ libICE-devel libSM-devel libX11-devel unzip
+# END SourceDeps(oneline)
 %define oldname samyak-fonts
 %define	fontname	samyak
 %global fontconf	67-%{fontname}
@@ -9,7 +12,7 @@ Scripts Devanagari, Gujarati, Malayalam, Oriya and Tamil
 
 Name:	 fonts-ttf-samyak
 Version:	1.2.2
-Release:	alt3_7
+Release:	alt3_8
 Summary:	Free Indian truetype/opentype fonts
 Group:	System/Fonts/True type
 License:	GPLv3+ with exceptions
@@ -192,11 +195,16 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
+
+
 %files common
 %doc COPYING README AUTHORS
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_7
 - update to new release by fcimport
 
