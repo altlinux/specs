@@ -1,7 +1,7 @@
 %define module fedora-rawhide-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.21
+Version: 0.22
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -24,16 +24,25 @@ Requires: distromap-generic-default-altlinux-sisyphus
 
 %install
 destdir=%buildroot/usr/share/distromap/fedora/rawhide/altlinux/sisyphus
-for type in binary source noversion; do
+for type in binary source ; do
 	install -m755 -d $destdir/$type
 	install -m644 $type/* $destdir/$type/
 done
 ln -s rawhide %buildroot/usr/share/distromap/fedora/default
+for type in binary source ; do
+	for flag in flags/$type/* ; do
+		install -m755 -d $destdir/$flag
+		install -m644 $flag/* $destdir/$flag/
+	done
+done
 
 %files
 /usr/share/distromap/*
 
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.22-alt1
+- db updates
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
 - db updates
 
