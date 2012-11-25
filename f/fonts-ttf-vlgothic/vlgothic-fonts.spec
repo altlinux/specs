@@ -1,33 +1,32 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel unzip
+BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/runtest /usr/bin/ttmkfdir /usr/bin/vptovf gcc-c++ libICE-devel libSM-devel libX11-devel unzip
 # END SourceDeps(oneline)
 %define oldname vlgothic-fonts
 # %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name vlgothic-fonts
 %define version 20121109
-%define priority	65-1
-%define ppriority	65-0
-%define fontname	vlgothic
-%define	archivename	VLGothic-%{version}
-%define	fontconf	%{priority}-%{fontname}-gothic
-%define	pfontconf	%{ppriority}-%{fontname}-pgothic
-%define	common_desc	\
+%global	priority	65-1
+%global	ppriority	65-0
+%global	fontname	vlgothic
+%global	archivename	VLGothic-%{version}
+%global	fontconf	%{priority}-%{fontname}-gothic
+%global	pfontconf	%{ppriority}-%{fontname}-pgothic
+%global	common_desc	\
 VLGothic provides Japanese TrueType fonts from the Vine Linux project.\
 Most of the glyphs are taken from the M+ and Sazanami Gothic fonts,\
 but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
 Version:	20121109
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
 Group:		System/Fonts/True type
 URL:		http://dicey.org/vlgothic
 Source0:	http://osdn.dl.sourceforge.jp/vlgothic/57344/%{archivename}.tar.bz2
-Source1:	%{fontname}-fontconfig-pgothic.conf
-Source2:	%{fontname}-fontconfig-gothic.conf
+Source1:	%{oldname}-fontconfig-pgothic.conf
+Source2:	%{oldname}-fontconfig-gothic.conf
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 
@@ -75,7 +74,7 @@ install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
 install -m 0644 -p *.ttf $RPM_BUILD_ROOT%{_fontdir}
 
 install -m 0755 -d	$RPM_BUILD_ROOT%{_fontconfig_templatedir} \
-	 		$RPM_BUILD_ROOT%{_fontconfig_confdir}
+			$RPM_BUILD_ROOT%{_fontconfig_confdir}
 
 install -m 0644 -p %{SOURCE1} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{pfontconf}.conf
 install -m 0644 -p %{SOURCE2} $RPM_BUILD_ROOT%{_fontconfig_templatedir}/%{fontconf}.conf
@@ -135,6 +134,9 @@ fi
 
 
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 20121109-alt1_2
+- update to new release by fcimport
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 20121109-alt1_1
 - update to new release by fcimport
 
