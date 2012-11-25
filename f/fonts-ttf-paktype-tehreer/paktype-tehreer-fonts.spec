@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+BuildRequires: /usr/bin/runtest gcc-c++ libICE-devel libSM-devel libX11-devel unzip
 # END SourceDeps(oneline)
 %define oldname paktype-tehreer-fonts
 %global fontname paktype-tehreer
@@ -8,12 +7,12 @@ BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-de
 
 Name:	fonts-ttf-paktype-tehreer
 Version:     4.0
-Release:     alt1_1
+Release:     alt1_2
 Summary:     Fonts for Arabic from PakType
 Group:		System/Fonts/True type
 License:     GPLv2 with exceptions
 URL:		https://sourceforge.net/projects/paktype/
-Source0:     http://citylan.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Tehreer-%{version}.tar.gz
+Source0:     http://downloads.sourceforge.net/paktype/Individual-Release/PakType-Tehreer-%{version}.tar.gz
 Source1:	%{fontconf}-tehreer.conf
 BuildArch:   noarch
 BuildRequires:	fontpackages-devel
@@ -94,6 +93,9 @@ fi
 %doc PakType_Tehreer_License.txt PakType_Tehreer_Features.pdf
 
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
+- update to new release by fcimport
+
 * Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_1
 - update to new release by fcimport
 
