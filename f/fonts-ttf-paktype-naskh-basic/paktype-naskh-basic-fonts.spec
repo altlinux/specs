@@ -1,152 +1,55 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/runtest gcc-c++ libICE-devel libSM-devel libX11-devel unzip
+# END SourceDeps(oneline)
 %define oldname paktype-naskh-basic-fonts
 %global fontname paktype-naskh-basic
-%global fontconf 67-%{fontname}
+%global fontconf 67-paktype-naskh-basic
 
-# Common description
-%define common_desc \
-The paktype-naskh-basic-fonts package contains fonts for the display of \
-Arabic, Farsi, Urdu and Sindhi from PakType by Lateef Sagar.
-
-Name:    fonts-ttf-paktype-naskh-basic
-Version: 3.1
-Release: alt1_1
-License: GPLv2 with exceptions
-URL: https://sourceforge.net/projects/paktype/
-Source0: http://citylan.dl.sourceforge.net/project/paktype/Individual-Release/PakType-Naskh-Basic-3.1.tar.gz
-Source1: %{fontconf}-sa.conf
-Source2: %{fontconf}-sindhi.conf
-Source3: %{fontconf}-farsi.conf
-Source4: %{fontconf}-urdu.conf
-Source5: %{fontconf}.conf
-BuildArch: noarch
-BuildRequires:  fontpackages-devel
-Requires:       %{name}-common
-Group: System/Fonts/True type
-Summary: Fonts for Arabic, Farsi, Urdu and Sindhi from PakType
+Name:	fonts-ttf-paktype-naskh-basic
+Version:     4.0
+Release:     alt1_1
+Summary:     Fonts for Arabic, Farsi, Urdu and Sindhi from PakType
+Group:		System/Fonts/True type
+License:     GPLv2 with exceptions
+URL:		https://sourceforge.net/projects/paktype/
+Source0:     http://downloads.sourceforge.net/paktype/Individual-Release/PakType-Naskh-Basic-%{version}.tar.gz
+Source1:	%{fontconf}.conf
+BuildArch:   noarch
+BuildRequires:	fontpackages-devel
 Source44: import.info
 
- 
-%description
-%common_desc
-
-%package common
-Summary:  Common files for paktype-naskh fonts
-Group:  System/Fonts/True type
-%description common
-%common_desc
-
-
-%package -n fonts-ttf-paktype-naskh-basic-farsi
-Summary: Font for Farsi from PakType
-Group: System/Fonts/True type
-Requires: %{name}-common = %{version}-%{release}
-%description -n fonts-ttf-paktype-naskh-basic-farsi
-%common_desc 
-This package provides a free Farsi truetype/opentype font 
-
-%files -n fonts-ttf-paktype-naskh-basic-farsi
-%{_fontconfig_templatedir}/%{fontconf}-farsi.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-farsi.conf
-%{_fontbasedir}/*/%{_fontstem}/PakTypeNaskhBasicFarsi.ttf
-
-%package -n fonts-ttf-paktype-naskh-basic-sa
-Summary: Fonts for Arabic, Farsi, Urdu and Sindhi from PakType
-Group: System/Fonts/True type
-Requires: %{name}-common = %{version}-%{release}
-%description -n fonts-ttf-paktype-naskh-basic-sa
-%common_desc
-
-%files -n fonts-ttf-paktype-naskh-basic-sa
-%{_fontconfig_templatedir}/%{fontconf}-sa.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sa.conf
-%{_fontbasedir}/*/%{_fontstem}/PakTypeNaskhBasicSA.ttf
-
-%package -n fonts-ttf-paktype-naskh-basic-sindhi
-Summary: Font for Sindhi from PakType
-Group: System/Fonts/True type
-Requires: %{name}-common = %{version}-%{release}
-%description -n fonts-ttf-paktype-naskh-basic-sindhi
-%common_desc 
-This package provides a free Sindhi truetype/opentype font 
-
-%files -n fonts-ttf-paktype-naskh-basic-sindhi
-%{_fontconfig_templatedir}/%{fontconf}-sindhi.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-sindhi.conf
-%{_fontbasedir}/*/%{_fontstem}/PakTypeNaskhBasicSindhi.ttf
-
-%package -n fonts-ttf-paktype-naskh-basic-urdu
-Summary: Font for Urdu from PakType
-Group: System/Fonts/True type
-Requires: %{name}-common = %{version}-%{release}
-%description -n fonts-ttf-paktype-naskh-basic-urdu
-%common_desc 
-This package provides a free Urdu truetype/opentype font 
-
-%files -n fonts-ttf-paktype-naskh-basic-urdu
-%{_fontconfig_templatedir}/%{fontconf}-urdu.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}-urdu.conf
-%{_fontbasedir}/*/%{_fontstem}/PakTypeNaskhBasicUrdu.ttf
-
-%files
-%{_fontconfig_templatedir}/%{fontconf}.conf
-%config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
-%{_fontbasedir}/*/%{_fontstem}/PakTypeNaskhBasic.ttf
+%description 
+The paktype-naskh-basic-fonts package contains fonts for the display of \
+Arabic, Farsi, Urdu and Sindhi from PakType by Lateef Sagar.
 
 %prep
 %setup -q -c
 rm -rf Code
-mv PakType\ Naskh\ Basic\ Farsi.ttf PakTypeNaskhBasicFarsi.ttf
+# get rid of the white space (' ')
 mv PakType\ Naskh\ Basic.ttf PakTypeNaskhBasic.ttf
-mv PakType\ Naskh\ Basic\ SA.ttf PakTypeNaskhBasicSA.ttf
-mv PakType\ Naskh\ Basic\ Urdu.ttf PakTypeNaskhBasicUrdu.ttf
-mv PakType\ Naskh\ Basic\ Sindhi.ttf PakTypeNaskhBasicSindhi.ttf
-
-mv Features/PakType\ Naskh\ Basic\ Farsi\ Features.pdf PakTypeNaskhBasicFarsiFeatures.pdf
-mv Features/PakType\ Naskh\ Basic\ Features.pdf PakTypeNaskhBasicFeatures.pdf
-mv Features/PakType\ Naskh\ Basic\ SA\ Features.pdf PakTypeNaskhBasicSAFeatures.pdf
-mv Features/PakType\ Naskh\ Basic\ Sindhi\ Features.pdf PakTypeNaskhBasicSindhiFeatures.pdf
-mv Features/PakType\ Naskh\ Basic\ Urdu\ Features.pdf PakTypeNaskhBasicUrduFeatures.pdf
-
+mv PakType\ Naskh\ Basic\ Features.pdf PakTypeNaskhBasicFeatures.pdf
 mv PakType\ Naskh\ Basic\ License.txt  PakType_Naskh_Basic_License.txt
+
 %{__sed} -i 's/\r//' PakType_Naskh_Basic_License.txt
-chmod a-x PakTypeNaskhBasicFarsiFeatures.pdf PakType_Naskh_Basic_License.txt PakTypeNaskhBasicSindhiFeatures.pdf PakTypeNaskhBasicFeatures.pdf PakTypeNaskhBasicSAFeatures.pdf PakTypeNaskhBasicUrduFeatures.pdf
+chmod a-x PakType_Naskh_Basic_License.txt PakTypeNaskhBasicFeatures.pdf
+
+
 
 %build
 echo "Nothing to do in Build."
 
 %install
 install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
-install -m 0644 -p PakTypeNaskhBasicFarsi.ttf PakTypeNaskhBasic.ttf PakTypeNaskhBasicSA.ttf PakTypeNaskhBasicUrdu.ttf PakTypeNaskhBasicSindhi.ttf $RPM_BUILD_ROOT%{_fontdir}
+install -m 0644 -p PakTypeNaskhBasic.ttf $RPM_BUILD_ROOT%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
-                %{buildroot}%{_fontconfig_confdir}
+		%{buildroot}%{_fontconfig_confdir}
 
 install -m 0644 -p %{SOURCE1} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sa.conf
+	%{buildroot}%{_fontconfig_templatedir}/%{fontconf}.conf
 
-
-install -m 0644 -p %{SOURCE2} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-sindhi.conf
-
-install -m 0644 -p %{SOURCE3} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-farsi.conf
-
-
-install -m 0644 -p %{SOURCE4} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}-urdu.conf
-
-install -m 0644 -p %{SOURCE5} \
-        %{buildroot}%{_fontconfig_templatedir}/%{fontconf}.conf
-
-
-for fconf in %{fontconf}-sa.conf \
-             %{fontconf}-sindhi.conf \
-             %{fontconf}-farsi.conf \
-             %{fontconf}-urdu.conf \
-             %{fontconf}.conf ; do
-  ln -s %{_fontconfig_templatedir}/$fconf \
-        %{buildroot}%{_fontconfig_confdir}/$fconf
-done
+ln -s %{_fontconfig_templatedir}/%{fontconf}.conf \
+      %{buildroot}%{_fontconfig_confdir}/%{fontconf}.conf
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -182,11 +85,17 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-%files common
-%doc PakType_Naskh_Basic_License.txt PakTypeNaskhBasicFarsiFeatures.pdf PakTypeNaskhBasicFeatures.pdf PakTypeNaskhBasicSAFeatures.pdf PakTypeNaskhBasicUrduFeatures.pdf PakTypeNaskhBasicSindhiFeatures.pdf
+%files
+%{_fontconfig_templatedir}/%{fontconf}.conf
+%config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
+%{_fontbasedir}/*/%{_fontstem}/PakTypeNaskhBasic.ttf
 
+%doc PakType_Naskh_Basic_License.txt PakTypeNaskhBasicFeatures.pdf
 
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 10 2012 Igor Vlasenko <viy@altlinux.ru> 3.1-alt1_1
 - update to new release by fcimport
 
