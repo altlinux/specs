@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: /usr/bin/runtest gcc-c++ libICE-devel libSM-devel libX11-devel unzip
 # END SourceDeps(oneline)
 %define oldname jomolhari-fonts
 %global	fontname jomolhari
@@ -7,12 +7,15 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-jomolhari
 Version:	0.003
-Release:	alt3_14
+Release:	alt3_15
 Summary:	Jomolhari a Bhutanese style font for Tibetan and Dzongkha
 
 Group:		System/Fonts/True type
 License:	OFL
-URL:		http://chris.fynn.googlepages.com/jomolhari
+# Looks like currently following URL is gone now. Maybe temporary issue
+#URL:		http://chris.fynn.googlepages.com/jomolhari
+# Try following URL for this package
+#URL:           https://sites.google.com/site/chrisfynn2/home/fonts/jomolhari
 Source0:	http://chris.fynn.googlepages.com/jomolhari-alpha003c.zip
 Source1:        %{oldname}-fontconfig.conf
 
@@ -91,6 +94,9 @@ fi
 %doc FONTLOG.txt OFL-FAQ.txt OFL.txt
 
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_15
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_14
 - update to new release by fcimport
 
