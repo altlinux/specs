@@ -1,5 +1,5 @@
 Name: python-doc
-Version: 2.6
+Version: 2.7.3
 Release: alt1
 
 Summary: Documentation for the Python programming language
@@ -9,14 +9,14 @@ Packager: Python Development Team <python@packages.altlinux.org>
 
 License: PSF
 Group: Development/Python
-Url: http://www.python.org/doc/current/
+Url: http://docs.python.org/2/
 
 BuildArch: noarch
 AutoReqProv: no
 
 #%define python_infofiles python-{api,ext,lib,ref,tut}.info
 
-Source: http://docs.python.org/ftp/python/doc/%version/python-docs-html.tar.bz2
+Source: python-%version-docs-html.tar.bz2
 #Source1: python-info-%version.tar.bz2
 
 %description
@@ -28,12 +28,15 @@ and bundled module library in the HTML format.
 и распространяемой с ним библиотеке модулей, в формате HTML.
 
 %prep
-%setup -q -n python-docs-html
+%setup -n python-%version-docs-html
 
 %files
 %doc *
 
 %changelog
+* Sun Nov 25 2012 Fr. Br. George <george@altlinux.ru> 2.7.3-alt1
+- Autobuild version bump to 2.7.3
+
 * Thu Jan 28 2010 Evgeny Sinelnikov <sin@altlinux.ru> 2.6-alt1
 - new version for python 2.6 updated at October 02, 2008
 
