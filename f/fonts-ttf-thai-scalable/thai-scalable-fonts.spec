@@ -1,6 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/runtest /usr/bin/ttmkfdir /usr/bin/vptovf cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
+BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/runtest /usr/bin/ttmkfdir /usr/bin/vptovf gcc-c++ libICE-devel libSM-devel libX11-devel unzip
 # END SourceDeps(oneline)
 %define oldname thai-scalable-fonts
 %define fontname thai-scalable
@@ -13,10 +12,10 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mk
 
 Name:      fonts-ttf-thai-scalable
 Version:   0.5.0
-Release:   alt2_4
+Release:   alt2_5
 Summary:   Thai TrueType fonts
 Group:     System/Fonts/True type
-License:   GPLv2+
+License:   GPLv2+ and Bitstream Vera
 URL:       http://linux.thai.net/projects/thaifonts-scalable
 Source0:   http://linux.thai.net/pub/ThaiLinux/software/%{archivename}/%{archivename}-%{version}.tar.gz
 Source1:   %{fontconf}-garuda.conf
@@ -296,6 +295,9 @@ fi
 
 
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_5
+- update to new release by fcimport
+
 * Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_4
 - update to new release by fcimport
 
