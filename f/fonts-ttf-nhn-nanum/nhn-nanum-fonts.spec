@@ -13,7 +13,7 @@ publisher is NHN Corporation.
 
 Name:		fonts-ttf-nhn-nanum
 Version:	3.020
-Release:	alt4_4
+Release:	alt4_6
 Summary:	Nanum family of Korean TrueType fonts
 
 Group:		System/Fonts/True type
@@ -24,6 +24,9 @@ Source1:	%{oldname}-brush-fontconfig.conf
 Source2:	%{oldname}-gothic-fontconfig.conf
 Source3:	%{oldname}-myeongjo-fontconfig.conf
 Source4:	%{oldname}-pen-fontconfig.conf
+# License text was taken from the upstream web on Nov 21 2012:
+# http://help.naver.com/ops/step2/faq.nhn?faqId=15879
+Source5:	%{oldname}-license.txt
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -31,6 +34,16 @@ Source44: import.info
 
 %description
 %common_desc
+
+
+%package common
+Summary:   Common files of %{oldname}
+Group:	   Graphical desktop/Other
+
+%description common
+%common_desc
+
+This package consists of files used by other %{oldname} packages.
 
 
 %package -n fonts-ttf-nhn-nanum-brush
@@ -101,6 +114,7 @@ This package consists of the Nanum fonts Pen font faces.
 
 %prep
 %setup -q -c
+cp -p %{SOURCE5} COPYING
 
 
 %build
@@ -165,7 +179,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
+%files common
+%doc COPYING
+
+
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 3.020-alt4_6
+- converted for ALT Linux by srpmconvert tools
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.020-alt4_4
 - update to new release by fcimport
 
