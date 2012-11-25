@@ -10,7 +10,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        16.0.2
+Version:        17.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -29,7 +29,7 @@ Source8:	firefox-prefs.js
 Patch6:		firefox3-alt-disable-werror.patch
 Patch14:	firefox-fix-install.patch
 Patch16:	firefox-cross-desktop.patch
-Patch17:	firefox-disable-installer.patch
+#Patch17:	firefox-disable-installer.patch
 
 BuildRequires(pre): mozilla-common-devel
 BuildRequires(pre): rpm-build-mozilla.org
@@ -109,7 +109,7 @@ tar -xf %SOURCE2
 %patch6  -p1
 %patch14 -p1
 %patch16 -p1
-%patch17 -p1
+#patch17 -p1
 
 #echo %firefox_version > browser/config/version.txt
 
@@ -263,6 +263,26 @@ done
 %_sysconfdir/rpm/macros.d/firefox
 
 %changelog
+* Wed Nov 21 2012 Alexey Gladkov <legion@altlinux.ru> 17.0-alt1
+- New release (17.0).
+- Fixed:
+  + MFSA 2012-106 Use-after-free, buffer overflow, and memory corruption issues found using Address Sanitizer
+  + MFSA 2012-105 Use-after-free and buffer overflow issues found using Address Sanitizer
+  + MFSA 2012-104 CSS and HTML injection through Style Inspector
+  + MFSA 2012-103 Frames can shadow top.location
+  + MFSA 2012-102 Script entered into Developer Toolbar runs with chrome privileges
+  + MFSA 2012-101 Improper character decoding in HZ-GB-2312 charset
+  + MFSA 2012-100 Improper security filtering for cross-origin wrappers
+  + MFSA 2012-99 XrayWrappers exposes chrome-only properties when not in chrome compartment
+  + MFSA 2012-98 Firefox installer DLL hijacking
+  + MFSA 2012-97 XMLHttpRequest inherits incorrect principal within sandbox
+  + MFSA 2012-96 Memory corruption in str_unescape
+  + MFSA 2012-95 Javascript: URLs run in privileged context on New Tab page
+  + MFSA 2012-94 Crash when combining SVG text on path with CSS
+  + MFSA 2012-93 evalInSanbox location context incorrectly applied
+  + MFSA 2012-92 Buffer overflow while rendering GIF images
+  + MFSA 2012-91 Miscellaneous memory safety hazards (rv:17.0/ rv:10.0.11)
+
 * Thu Nov 01 2012 Alexey Gladkov <legion@altlinux.ru> 16.0.2-alt1
 - New release (16.0.2).
 - Fixed:
