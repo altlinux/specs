@@ -1,7 +1,7 @@
 # Copyright (C) 2006-2012  Dmitry V. Levin <ldv@altlinux.org>
 
 Name: gear
-Version: 1.7.5
+Version: 1.7.6
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -58,6 +58,9 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Sun Nov 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.6-alt1
+- gear-srpmimport: added support of srpms with type RPMLEAD_BINARY.
+
 * Sun Oct 28 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.5-alt1
 - gear-commit: improved specfile guess logic (closes: #27754).
 - gear-srpmimport: fixed import of archives containing .git
