@@ -1,7 +1,7 @@
 # Spec file for Perl module Proc::Simple
 
 Name: perl-Proc-Simple
-Version: 1.30
+Version: 1.31
 Release: alt1
 
 Summary: Perl module Proc::Simple
@@ -11,7 +11,7 @@ Summary(ru_RU.UTF-8): модуль Perl Proc::Simple
 
 License: %perl_license
 Group: Development/Perl
-URL: http://search.cpan.org/~mschilli/Proc-Simple/
+URL: http://search.cpan.org/dist/Proc-Simple/
 
 Packager: Nikolay Fetisov <naf@altlinux.ru>
 BuildArch: noarch
@@ -24,7 +24,7 @@ BuildRequires(pre): perl-devel rpm-build-licenses
 %description
 Perl module Proc::Simple provides objects mimicing real-life
 processes from a user's point of view.
- 
+
 %description -l ru_RU.UTF-8
 Модуль Perl Proc::Simple позволяет создавать объекты, имитирующие
 процессы реального времени с точки зрения пользователя.
@@ -40,11 +40,13 @@ processes from a user's point of view.
 
 %files
 %doc README Changes
-%exclude %perl_vendor_privlib/auto/Proc/Simple/autosplit.ix
 %perl_vendor_privlib/Proc/Simple*
 %exclude /.perl.req
 
 %changelog
+* Sun Nov 25 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.31-alt1
+- New version
+
 * Thu Sep 22 2011 Igor Vlasenko <viy@altlinux.ru> 1.30-alt1
 - automated CPAN update
 
