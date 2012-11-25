@@ -1,6 +1,6 @@
 Name: gcompris
-Version: 11.12.01
-Release: alt1.1
+Version: 12.11
+Release: alt2
 Summary: Educational suite for kids 3-10 years old
 Summary(ru_RU.UTF8): Набор образовательных игр для детей от 3-х до 10 лет
 License: GPLv3
@@ -340,6 +340,14 @@ Requires: %name = %version-%release
 %description voices-af
 All voices in Afrikaans for GCompris
 
+%package voices-th
+Summary: All voices in Thai for GCompris
+Group: Games/Educational
+BuildArch: noarch
+Requires: %name = %version-%release
+%description voices-th
+All voices in Thai for GCompris
+
 %prep
 %setup -q
 %patch -p1
@@ -371,7 +379,7 @@ mkdir -p %buildroot%_miconsdir
 mkdir -p %buildroot%_liconsdir
 mkdir -p %buildroot%_niconsdir
 
-install -p -m 644 docs/C/*.info %buildroot%_infodir
+#install -p -m 644 docs/C/*.info %buildroot%_infodir
 install -p -m 644 %SOURCE2 %buildroot%_datadir/applications
 install -p -m 644 %SOURCE3 %buildroot%_datadir/applications
 install -p -m 644 %SOURCE4 %buildroot%_miconsdir/%name.png
@@ -410,7 +418,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 ##%_datadir/assetml/gcompris_flags.assetml
 
 # help
-%_infodir/*
+#_infodir/*
 %_man6dir/*
 
 # exclude sounds
@@ -449,6 +457,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_datadir/gcompris/boards/voices/ast
 %exclude %_datadir/gcompris/boards/voices/sl
 %exclude %_datadir/gcompris/boards/voices/af
+%exclude %_datadir/gcompris/boards/voices/th
 
 %files voices-en
 %_datadir/gcompris/boards/voices/en
@@ -553,7 +562,14 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %files voices-af
 %_datadir/gcompris/boards/voices/af
 
+%files voices-th
+%_datadir/gcompris/boards/voices/th
+
 %changelog
+* Sun Nov 25 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 12.11-alt2
+- Update to 12.11
+- Add package voices-th (Thai by Thummarat Phromphing)
+
 * Tue Nov 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.12.01-alt1.1
 - Disabled -Werror flag
 
