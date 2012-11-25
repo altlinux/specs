@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 Name:		aqsis
-Version:	1.8.1
-Release:	alt3_3.1
+Version:	1.8.2
+Release:	alt1_1
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -30,7 +30,6 @@ BuildRequires:  openexr-devel
 BuildRequires:  python-module-sphinx
 BuildRequires:  zlib-devel >= 1.1.4
 
-Requires: qt4
 Requires: aqsis-core = %{version}-%{release}
 Requires: aqsis-data = %{version}-%{release}
 Source44: import.info
@@ -45,7 +44,7 @@ This package contains graphical utilities and desktop integration.
 
 
 %package core
-Requires:	aqsis-libs = %{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
 Summary:	Command-line tools for Aqsis Renderer
 Group:		Video
 
@@ -59,11 +58,11 @@ for shaders written using the RenderMan shading language, a texture
 pre-processor for optimizing textures and a RIB processor.
 
 
-%package libs
+%package -n aqsis-libs
 Summary:        Library files for Aqsis Renderer
 Group:          System/Libraries
 
-%description libs
+%description -n aqsis-libs
 Aqsis is a cross-platform photo-realistic 3D rendering solution,
 adhering to the RenderMan interface standard defined by Pixar
 Animation Studios.
@@ -72,7 +71,7 @@ This package contains the shared libraries for Aqsis Renderer.
 
 
 %package data
-Requires:	aqsis = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Summary:	Example content for Aqsis Renderer
 Group:		Video
 BuildArch:      noarch
@@ -88,7 +87,7 @@ scenes, procedurals and shaders.
 
 
 %package devel
-Requires:	aqsis = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 Requires:	aqsis-core = %{version}-%{release}
 Requires:	aqsis-libs = %{version}-%{release}
 Requires:	aqsis-data = %{version}-%{release}
@@ -190,7 +189,7 @@ desktop-file-install --vendor "" --delete-original \
 %{_bindir}/teqser
 
 
-%files libs
+%files -n aqsis-libs
 %dir %{_sysconfdir}/%{name}
 ## Do not use noreplace with aqsis release
 ## This may definitly change in future releases.
@@ -220,6 +219,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_1
+- converted for ALT Linux by srpmconvert tools
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt3_3.1
 - Rebuilt with libpng15
 
