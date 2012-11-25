@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.52
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2793,6 +2793,10 @@ done)
 
 
 %changelog
+* Sat Nov 24 2012 Led <led@altlinux.ru> 3.0.52-alt4
+- updated:
+  + fix-drivers-usb-host--xhci-hcd
+
 * Fri Nov 23 2012 Led <led@altlinux.ru> 3.0.52-alt3
 - updated:
   + fix-fs-btrfs
