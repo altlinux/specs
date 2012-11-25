@@ -3,7 +3,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.1.13
-Release: alt1
+Release: alt2
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -17,6 +17,8 @@ Source6: system-config-selinux.console
 Source7: selinux-polgengui.desktop
 Source8: selinux-polgengui.console
 Source9: mcstrans.init
+Source11: restorecond.service
+Source12: mcstransd.service
 Patch0: %name-%version-%release.patch
 Patch1: policycoreutils-alt-autorelabel-fix-path.patch
 %define mcstrans_ver 0.3.3
@@ -131,9 +133,14 @@ install -D -m 0644 %SOURCE8 %buildroot%_sysconfdir/security/console.apps/selinux
 %makeinstall_std -C gui LIBDIR="%buildroot%_libdir"
 %makeinstall_std -C mcstrans
 
+# sysvinit
 install -m 0755 %SOURCE1 %buildroot%_initddir/restorecond
 install -m 0755 %SOURCE2 %buildroot%_initddir/sandbox
 install -m 0755 %SOURCE9 %buildroot%_initddir/mcstrans
+
+# systemd
+install -pD -m 0644 %SOURCE11 %buildroot%_unitdir/restorecond.service
+install -pD -m 0644 %SOURCE12 %buildroot%_unitdir/mcstrans.service
 
 for f in system-config-selinux selinux-polgengui; do
 	ln -sf consolehelper %buildroot%_bindir/$f
@@ -222,7 +229,8 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 %files restorecond
 %_sbindir/restorecond
-%attr(755,root,root) %_initddir/restorecond
+%_initddir/restorecond
+%_unitdir/restorecond.service
 %config(noreplace) %_sysconfdir/selinux/restorecond*
 %_man8dir/restorecond.*
 #%_datadir/dbus-1/services/*
@@ -232,6 +240,7 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 %files mcstransd
 /sbin/mcstransd
 %_initrddir/mcstrans
+%_unitdir/mcstrans.service
 %dir %_sysconfdir/selinux/mls/setrans.d
 %_man8dir/mcs.*
 %_man8dir/mcstransd.*
@@ -263,6 +272,10 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Sun Nov 25 2012 Led <led@altlinux.ru> 2.1.13-alt2
+- added restorecond.service for systemd (ALT#28074)
+- added mcstrans.service for systemd (ALT#28073)
+
 * Mon Sep 24 2012 Led <led@altlinux.ru> 2.1.13-alt1
 - 2.1.13
 - fixed License
