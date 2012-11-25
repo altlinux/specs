@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/runtest libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           environment-modules
 Version:        3.2.9c
-Release:        alt1_4
+Release:        alt1_5
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -12,6 +12,7 @@ URL:            http://modules.sourceforge.net/
 Source0:        http://downloads.sourceforge.net/modules/modules-%{version}.tar.bz2
 Source1:        modules.sh
 Source2:        createmodule.sh
+Source3:        createmodule.py
 Patch0:         environment-modules-3.2.7-bindir.patch
 # Patch to fix segfault in module unload due to Tcl RegExp handling
 # https://bugzilla.redhat.com/show_bug.cgi?id=834580
@@ -70,12 +71,12 @@ make %{?_smp_mflags}
 make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/profile.d
 cp -p %SOURCE1 $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/modules.sh
-cp -p %SOURCE2 $RPM_BUILD_ROOT%{_datadir}/Modules/bin
+cp -p %SOURCE2 %SOURCE3 $RPM_BUILD_ROOT%{_datadir}/Modules/bin
 ln -s %{_datadir}/Modules/init/csh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/modules.csh
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 
 
-%check
+#check
 #make test
 
 
@@ -95,6 +96,9 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 
 
 %changelog
+* Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.9c-alt1_5
+- update to new release by fcimport
+
 * Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.9c-alt1_4
 - update to new release by fcimport
 
