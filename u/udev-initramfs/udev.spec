@@ -1,6 +1,6 @@
 Name: udev-initramfs
 Version: 150
-Release: alt13
+Release: alt14
 Summary: udev built with klibc for use in initramfs
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -16,7 +16,7 @@ BuildRequires: gtk-doc klibc-devel
 # Find dependencies on klibc-*.so
 %global __find_requires %_libdir/klibc/klibc-find-requires %__find_requires
 
-%define tools ata_id cdrom_id edd_id path_id scsi_id usb_id firmware
+%define tools ata_id cdrom_id path_id scsi_id usb_id firmware
 
 %description
 This package contains a version of udev which is built with klibc,
@@ -127,6 +127,9 @@ done
 
 
 %changelog
+* Mon Nov 26 2012 Led <led@altlinux.ru> 150-alt14
+- removed edd_id extra
+
 * Fri Nov 23 2012 Led <led@altlinux.ru> 150-alt13
 - rebuild with klibc-2.0.2-alt1
 
