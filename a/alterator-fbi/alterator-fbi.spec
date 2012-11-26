@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.28
-Release: alt1
+Release: alt2
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -131,6 +131,9 @@ fi ||:
 
 
 %changelog
+* Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 5.28-alt2
+- Add favicon support with design/images/product.png
+
 * Thu Nov 22 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt1
 - Do not daemonize in socket-activation mode (closes: 27865).
 - Add the systemd unit files.
