@@ -4,10 +4,9 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-
 Group: System/Servers
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
-
 Name:           mate-settings-daemon
 Version:        1.5.3
-Release:        alt1_1
+Release:        alt1_4
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -16,7 +15,6 @@ Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.
 BuildRequires:  pkgconfig(clutter-gst-1.0)
 BuildRequires:  icon-naming-utils
 BuildRequires:  mate-common
-BuildRequires:  pkgconfig(MateCORBA-2.0)
 BuildRequires:  pkgconfig(mate-desktop-2.0)
 BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(gtk+-2.0)
@@ -31,8 +29,13 @@ BuildRequires:  pkgconfig(gsettings-desktop-schemas)
 
 Requires: gsettings-desktop-schemas
 Requires: mate-icon-theme
+
+#Fix CVE-2012-5560 and stop generating version specific libdirs
+#https://github.com/mate-desktop/mate-settings-daemon/pull/22
+Patch0: commit_rollup.patch
 Source44: import.info
 Patch33: mate-settings-daemon-keyboard-icon.patch
+Requires: dconf
 
 %description
 MATE Desktop settings daemon
@@ -43,10 +46,11 @@ Summary:        Development files for mate-settings-daemon
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
-Development files for mate-panel
+Development files for mate-settings-daemon
 
 %prep
 %setup -q
+%patch0 -p1 -b .commit_rollup.patch
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 
@@ -54,7 +58,6 @@ NOCONFIGURE=1 ./autogen.sh
 %build
 %configure --disable-static \
            --enable-polkit \
-           --enable-profiling \
            --with-x \
            --with-nssdb
 make %{?_smp_mflags} V=1
@@ -74,7 +77,7 @@ find ${RPM_BUILD_ROOT} -type f -name "*.a" -exec rm -f {} ';'
 %doc AUTHORS COPYING README
 %config %{_sysconfdir}/dbus-1/system.d/org.mate.SettingsDaemon.DateTimeMechanism.conf
 %config %{_sysconfdir}/xdg/autostart/mate-settings-daemon.desktop
-%{_libdir}/mate-settings-daemon-1.5.3/
+%{_libdir}/mate-settings-daemon
 %{_libexecdir}/mate-settings-daemon
 %{_libexecdir}/msd-datetime-mechanism
 %{_libexecdir}/msd-locate-pointer
@@ -91,6 +94,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.a" -exec rm -f {} ';'
 
 
 %changelog
+* Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_4
+- added dconf dependency (closes: 28110)
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_1
 - use F19 import base
 
