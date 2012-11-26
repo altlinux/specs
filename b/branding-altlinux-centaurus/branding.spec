@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt7
+Release: alt8
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -420,6 +420,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt8
+- Set favicon for Alterator
+
 * Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt7
 - Set official Centaurus 7.0 wallpapers
 - Remove obsoleted group icons
