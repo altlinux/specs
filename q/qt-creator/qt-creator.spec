@@ -1,7 +1,7 @@
 %add_findreq_skiplist *gdbmacros*
 
 Name: qt-creator
-Version: 2.5.0
+Version: 2.6.0
 Release: alt1
 Summary: Lightweight and cross-platform IDE for Qt
 
@@ -93,6 +93,9 @@ done
 %exclude %_datadir/qtcreator/doc
 
 %changelog
+* Mon Nov 26 2012 Anatoly Lyutin <vostok@altlinux.org> 2.6.0-alt1
+- new version (closes #27938)
+
 * Fri May 11 2012 Anatoly Lyutin <vostok@altlinux.org> 2.5.0-alt1
 - new version
 
