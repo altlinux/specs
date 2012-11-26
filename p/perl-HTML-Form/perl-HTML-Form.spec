@@ -1,43 +1,61 @@
-%define dist HTML-Form
-Name: perl-%dist
-Version: 6.03
-Release: alt1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(Encode.pm) perl(LWP/UserAgent.pm) perl(Test.pm) perl-devel perl-podlators
+# END SourceDeps(oneline)
+Name:           perl-HTML-Form
+Version:        6.03
+Release:        alt1_3
+Summary:        Class that represents an HTML form element
+License:        GPL+ or Artistic
+Group:          Development/Perl
+URL:            http://search.cpan.org/dist/HTML-Form/
+Source0:        http://www.cpan.org/authors/id/G/GA/GAAS/HTML-Form-%{version}.tar.gz
+BuildArch:      noarch
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(HTML/TokeParser.pm)
+BuildRequires:  perl(HTTP/Request.pm)
+BuildRequires:  perl(HTTP/Request/Common.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(URI.pm)
+Requires:       perl(HTML/TokeParser.pm)
+Requires:       perl(HTTP/Request.pm) >= 6
+Requires:       perl(HTTP/Request/Common.pm) >= 6
 
-Summary: Class that represents an HTML form element
-License: GPL or Artistic
-Group: Development/Perl
 
-URL: %CPAN %dist
-Source: http://www.cpan.org/authors/id/G/GA/GAAS/HTML-Form-%{version}.tar.gz
-
-Conflicts: perl-libwww < 6
-
-BuildArch: noarch
-
-# Automatically added by buildreq on Sat Mar 10 2012
-BuildRequires: perl-HTTP-Message perl-devel
+Source44: import.info
 
 %description
-Objects of the HTML::Form class represents a single HTML <form> ...
-</form> instance. A form consists of a sequence of inputs that usually
-have names, and which can take on various values. The state of a form
-can be tweaked and it can then be asked to provide HTTP::Request
-objects that can be passed to the request() method of LWP::UserAgent.
+Objects of the HTML::Form class represents a single HTML <form> ... </form>
+instance. A form consists of a sequence of inputs that usually have names,
+and which can take on various values. The state of a form can be tweaked
+and it can then be asked to provide HTTP::Request objects that can be
+passed to the request() method of LWP::UserAgent.
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n HTML-Form-%{version}
 
 %build
-%perl_vendor_build
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+make %{?_smp_mflags}
 
 %install
-%perl_vendor_install
+make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
+
+find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
+find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
+
+
+%check
+make test
 
 %files
 %doc Changes README
-%perl_vendor_privlib/HTML
+%{perl_vendor_privlib}/*
 
 %changelog
+* Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1_3
+- fixed build by auto update
+
 * Mon Sep 24 2012 Igor Vlasenko <viy@altlinux.ru> 6.03-alt1
 - automated CPAN update
 
