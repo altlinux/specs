@@ -1,9 +1,7 @@
 # -*- rpm-spec -*-
 
 # for set release
-%define release_pre alt2
-%define autoreconf autoreconf -fiv
-#%define autoreconf #
+%define release_pre alt1
 
 # for distr selected
 %def_without M24
@@ -57,7 +55,7 @@
 %define package_release %{release_pre}%{release_distr}
 
 Name: nut
-Version: 2.6.3
+Version: 2.6.5
 Release: %package_release
 
 Summary: Network UPS Tools
@@ -74,6 +72,8 @@ Source2: upsd.init
 Source3: upsmon.init
 Source4: upsd.sysconfig
 
+Source104: libs.sh
+
 #Patch1: nut-2.2.2-alt-makefile.patch
 #Patch2: nut-2.2.2-alt-powercom-make.patch
 #Patch3: nut-2.2.0-alt-man.patch
@@ -87,13 +87,22 @@ Patch10: nut-2.6.0-alt-usb.patch
 Patch20: nut-2.6.2-snmp-noAES.patch
 Patch21: nut-2.6.0-upsd-listen.patch
 Patch22: nut-2.6.0-usb_submit_urb.patch
-Patch23: nut-2.6.3-CVE-2012-2944.patch
+Patch23: nut-2.6.5-alt-systemd.patch
+
+# Fedora patches
+Patch103: nut-2.6.5-quickfix.patch
+Patch104: nut-2.6.5-ipmifix.patch
+Patch105: nut-2.6.5-dlfix.patch
+Patch106: nut-2.6.5-pthreadfix.patch
+Patch107: nut-2.6.5-foreground.patch
 
 %def_with ssl
 %def_with cgi
 %def_with snmp
 %def_with usb
 %def_without hal
+%def_with avahi
+%def_with freeipmi
 
 %if_with M24
 %def_with hotplug
@@ -116,10 +125,9 @@ Patch23: nut-2.6.3-CVE-2012-2944.patch
 PreReq: shadow-utils
 PreReq: libupsclient = %version-%release
 
-Requires(post): %post_service
-Requires(preun): %preun_service
-
 BuildRequires: pkgconfig libtool-common
+BuildRequires: libltdl-devel
+BuildRequires: systemd-devel
 
 %if_with ssl
 BuildRequires: libssl-devel
@@ -134,6 +142,14 @@ BuildRequires: libXpm-devel
 
 %if_with snmp
 BuildRequires: libnet-snmp-devel python-modules
+%endif
+
+%if_with avahi
+BuildRequires: libavahi-devel
+%endif
+
+%if_with freeipmi
+BuildRequires: libfreeipmi-devel
 %endif
 
 %if_with usb
@@ -167,34 +183,29 @@ BuildRequires: glib-devel
 %package server
 Summary: The UPS information server
 Group: System/Servers
-PreReq: %name-driver = %version-%release
-PreReq: shadow-utils
-Requires(post): %post_service
-Requires(preun): %preun_service
-
-%package driver
-Summary: The UPS drivers
-Group: System/Servers
-PreReq: %name = %version-%release
-PreReq: shadow-utils
-PreReq: libupsclient = %version-%release
-Requires(post): %post_service
-Requires(preun): %preun_service
+Requires: shadow-utils
+Requires: libnutscan = %version-%release
+Requires: libupsclient = %version-%release
+Provides: %name-driver = %version-%release
+Obsoletes: %name-driver < %version-%release
+Provides: %name-driver-usb = %version-%release
+Obsoletes: %name-driver-usb < %version-%release
 
 %package driver-snmp
 Summary: Multi-MIB Driver for SNMP UPS equipment
 Group: System/Servers
-PreReq: %name-driver = %version-%release
+Requires: %name-server = %version-%release
 
-%package driver-usb
-Summary: Multi-HID Driver for USB/HID UPS equipment
+%package driver-ipmi
+Summary: Multi-HID Driver for IPMI UPS equipment
 Group: System/Servers
-PreReq: %name-driver = %version-%release
+Requires: %name-server = %version-%release
 
 %package cgi
 Summary: CGI utilities for the Network UPS Tools
 Group: System/Servers
 Requires: webserver
+Requires: libupsclient = %version-%release
 
 %package hal
 Summary: HAL addons and fdi info, for monitoring UPS state from KDE/GNOME/etc
@@ -205,16 +216,20 @@ Requires: libdbus
 Requires: libdbus-glib
 
 %package -n libupsclient
-Summary: Shared library of nut
+Summary: Shared library libupsclient of nut
 Group: Development/C
 Conflicts: nut-devel
+
+%package -n libnutscan
+Summary: Shared library libnutscan of nut
+Group: Development/C
 
 %package -n libupsclient-devel
 Summary: Header files and C programming manuals for nut
 Group: Development/C
 Conflicts: nut-devel
-PreReq: libupsclient = %version-%release
-
+Requires: libupsclient = %version-%release
+Requires: libnutscan = %version-%release
 
 %description
 These programs are part of a developing project to monitor the assortment 
@@ -237,16 +252,7 @@ serial ports of some kind that allow some form of state checking.  This
 capability has been harnessed where possible to allow for safe shutdowns, 
 live status tracking on web pages, and more.
 
-This package contains the UPS information server.
-
-%description driver
-These programs are part of a developing project to monitor the assortment 
-of UPSes that are found out there in the field.  Many models have serial 
-serial ports of some kind that allow some form of state checking.  This
-capability has been harnessed where possible to allow for safe shutdowns, 
-live status tracking on web pages, and more.
-
-This package contains NUT per-UPS-model drivers which talk to the UPSes.
+This package contains the UPS information server and per-UPS-model drivers which talk to the UPSes.
 
 %description driver-snmp
 These programs are part of a developing project to monitor the assortment 
@@ -259,15 +265,15 @@ This package contains somewhat experimental support of a wide range
 of SNMP-aware UPS devices, including MGE and APC, for details
 see snmp-ups(8).
 
-%description driver-usb
+%description driver-ipmi
 These programs are part of a developing project to monitor the assortment 
 of UPSes that are found out there in the field.  Many models have serial 
 serial ports of some kind that allow some form of state checking.  This
 capability has been harnessed where possible to allow for safe shutdowns, 
 live status tracking on web pages, and more.
 
-This package contains somewhat experimental support of USB UPS devices,
-for details see usbhid-ups(8).
+This package contains somewhat experimental support of IPMI UPS devices,
+for details see nut-ipmipsu(8).
 
 %description cgi
 These programs are part of a developing project to monitor the assortment 
@@ -299,6 +305,15 @@ live status tracking on web pages, and more.
 
 This package includes shared library of NUT project.
 
+%description -n libnutscan
+These programs are part of a developing project to monitor the assortment 
+of UPSes that are found out there in the field.  Many models have serial 
+serial ports of some kind that allow some form of state checking.  This
+capability has been harnessed where possible to allow for safe shutdowns, 
+live status tracking on web pages, and more.
+
+This package includes shared library of NUT project.
+
 %description -n libupsclient-devel
 These programs are part of a developing project to monitor the assortment 
 of UPSes that are found out there in the field.  Many models have serial 
@@ -322,7 +337,14 @@ This package includes header files and C programming manuals for nut.
 %if_with M24
 %patch22 -p1
 %endif
-%patch23 -p1 -b .CVE-2012-2944
+
+%patch103 -p1 -b .quickfix
+#%patch104 -p1 -b .ipmifix
+%patch105 -p1 -b .dlfix
+%patch106 -p1 -b .pthreadfix
+%patch107 -p1 -b .foreground
+
+%patch23 -p1
 
 # fix cgi path in html links for current %%cgidir
 sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/html/header.html.in
@@ -335,39 +357,32 @@ sed -i 's@/cgi-bin/nut/@/cgi-bin/@g' data/html/header.html.in
 %endif
 %autoreconf
 %configure \
+	--disable-static \
 	--sysconfdir=%confdir --datadir=%confdir \
 	--includedir=%_includedir/%name \
 	--with-pkgconfig-dir=%_pkgconfigdir \
 	%{subst_with cgi} --with-cgipath=%cgidir \
 	--with-htmlpath=%htmldir \
 	%{subst_with ssl} \
-	%{?_with_usb:--with-linux-hiddev=%_includedir/linux/hiddev.h} \
 	--with-drvpath=%drvdir \
 	--with-statepath=%_localstatedir/upsd \
 	%{subst_with usb} \
-	%{subst_with hal} --with-udev-dir=%_sysconfdir/udev \
+	%{subst_with hal} \
+	--with-udev-dir=/lib/udev \
 	%{subst_with snmp} %snmp_opts \
+	--with-pkgconfig-dir=%_pkgconfigdir \
 	--with-dev \
 	--with-user=%runas \
 	--with-group=%runas \
 	--disable-strip
 
-	test -f libtool && rm -f libtool && ln -s `which libtool` libtool
+sh %SOURCE104 >>include/config.h
+test -f libtool && rm -f libtool && ln -s `which libtool` libtool
 
-%make_build USE_PKG_CFG=yes PKG_CFG_DIR=%_pkgconfigdir all
-#%{?_with_cgi:%make_build build-cgi}
-#%{?_with_usb:%make_build build-usb}
-#%{?_with_snmp:%make_build build-snmp}
+%make_build
 
 %install
-%make_install install \
-	DESTDIR=%buildroot \
-	USE_PKG_CFG=yes \
-	PKG_CFG_DIR=%buildroot%{_pkgconfigdir}
-#	%{?_with_cgi:install-cgi install-cgi-conf} \
-#	%{?_with_snmp:install-snmp} \
-#	%{?_with_usb:install-usb} \
-#	#
+%make_install install DESTDIR=%buildroot
 
 # Since %drvdir != /sbin, we have to create /sbin/upsdrvctl manually.
 mkdir -p %buildroot/sbin
@@ -384,11 +399,6 @@ ln -s blazer_ser %buildroot%drvdir/megatec
 install -pD -m755 %SOURCE1 %buildroot%_initdir/upsdrv
 install -pD -m755 %SOURCE2 %buildroot%_initdir/upsd
 install -pD -m755 %SOURCE3 %buildroot%_initdir/upsmon
-install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/upsd
-# Fix runlevels
-sed -i -e 's/^# chkconfig:.*/# chkconfig: 2345 51 89/' %buildroot%_initdir/upsdrv
-sed -i -e 's/^# chkconfig:.*/# chkconfig: 2345 52 88/' %buildroot%_initdir/upsd
-sed -i -e 's/^# chkconfig:.*/# chkconfig: 2345 53 87/' %buildroot%_initdir/upsmon
 install -pD -m644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/upsd
 
 # SSL infrastucture.
@@ -420,7 +430,7 @@ mksock %buildroot%ROOT/dev/log
 mkdir -p %buildroot%_sysconfdir/syslog.d
 ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%name
 
-cp -a ChangeLog COPYING INSTALL MAINTAINERS NEWS README UPGRADING \
+cp -a ChangeLog COPYING MAINTAINERS NEWS README UPGRADING \
       docs/*.txt docs/cables \
 	%buildroot%docdir/
 cp -a data/html/README %buildroot%cgidocdir/
@@ -440,8 +450,13 @@ test -f scripts/hal/20-ups-nut-device.fdi && cp scripts/hal/20-ups-nut-device.fd
 %endif
 
 # Rename udev rules file
-%define udev_rules_dir %_sysconfdir/udev/rules.d
-test -f %buildroot%udev_rules_dir/52-nut-usbups.rules && mv %buildroot%udev_rules_dir/52-nut-usbups.rules %buildroot%udev_rules_dir/98-nut-usbups.rules
+mv %buildroot/lib/udev/rules.d/52-nut-usbups.rules %buildroot/lib/udev/rules.d/98-nut-usbups.rules
+mv %buildroot/lib/udev/rules.d/52-nut-ipmipsu.rules %buildroot/lib/udev/rules.d/98-nut-ipmipsu.rules
+
+# Add symlink for SysV compatibility
+ln -s nut-monitor.service %buildroot%_unitdir/upsmon.service
+ln -s nut-driver.service %buildroot%_unitdir/upsdrv.service
+ln -s nut-server.service %buildroot%_unitdir/upsd.service
 
 %pre
 if [ $1 -gt 1 -a -x /sbin/upsmon -a ! -d /etc/nut/certs ]; then
@@ -465,27 +480,22 @@ fi
 %preun
 %preun_service upsmon
 
-%pre driver
+%pre server
 /usr/sbin/groupadd -r -f upsdrv
 /usr/sbin/useradd -r -g upsdrv -G uucp -d %ROOT -s /dev/null \
 	-c "NUT drivers" -n upsdrv >/dev/null 2>&1 ||:
 
-%post driver
-%post_service upsdrv
-
-%preun driver
-%preun_service upsdrv
-
-%pre server
 /usr/sbin/groupadd -r -f upsd
 /usr/sbin/useradd -r -g upsd -G upsdrv -d %ROOT -s /dev/null \
 	-c "NUT information server" -n upsd >/dev/null 2>&1 ||:
 
 %post server
+%post_service upsdrv
 %post_service upsd
 
 %preun server
 %preun_service upsd
+%preun_service upsdrv
 
 #post hal
 #post_service haldaemon
@@ -496,6 +506,10 @@ fi
 %config(noreplace) %attr(640,root,%runas) %confdir/upsmon.conf
 %config(noreplace) %attr(640,root,%runas) %confdir/upssched.conf
 %_initdir/upsmon
+%_unitdir/nut-monitor.service
+%_unitdir/upsmon.service
+# What is ?
+#/lib/systemd/system-shutdown/nutshutdown
 
 %_bindir/upsc
 %_bindir/upscmd
@@ -521,6 +535,7 @@ fi
 %docdir/ChangeLog
 %docdir/upsmon.conf.sample
 %docdir/upssched.conf.sample
+%docdir/nut.conf.sample
 %exclude %docdir/*driver*
 #%exclude %docdir/hosts.conf.sample
 %exclude %docdir/ups.conf.sample
@@ -528,74 +543,27 @@ fi
 %exclude %docdir/upsd.users.sample
 #%exclude %docdir/upsset.conf.sample
 
-%files driver
-%config(noreplace) %_sysconfdir/sysconfig/upsd
-%config %_initdir/upsdrv
-%dir %confdir
-%config %confdir/driver.list
-%config(noreplace) %attr(640,root,upsdrv) %confdir/ups.conf
-
-%drvdir
-%if_with snmp
-%exclude %drvdir/snmp-ups
-%endif # with_snmp
-%if_with usb
-%exclude %drvdir/usbhid-ups
-%exclude %drvdir/bcmxcp_usb
-%exclude %drvdir/tripplite_usb
-%endif # with_usb
+%files server
+%_sbindir/upsd
+%_bindir/nut-scanner
 /sbin/upsdrvctl
 
-%_man5dir/ups.conf.*
-%_man8dir/*
-%exclude %_man8dir/upsc.*
-%exclude %_man8dir/upscmd.*
-%exclude %_man8dir/upsd.*
-%exclude %_man8dir/upslog.*
-%exclude %_man8dir/upsmon.*
-%exclude %_man8dir/upsrw.*
-%exclude %_man8dir/upssched.*
-%if_with cgi
-%exclude %_man8dir/upsimage.cgi.*
-%exclude %_man8dir/upsset.cgi.*
-%exclude %_man8dir/upsstats.cgi.*
-%endif # with_cgi
-%if_with snmp
-%exclude %_man8dir/snmp-ups.*
-%endif # with_snmp
-%if_with usb
-%exclude %_man8dir/usbhid-ups.*
-%exclude %_man8dir/bcmxcp_usb.*
-%exclude %_man8dir/tripplite_usb.*
-%endif # with_usb
-
-%_localstatedir/upsd
-%_sysconfdir/syslog.d/*
-%dir %attr(0710,root,upsdrv) %ROOT
-%dir %attr(0710,root,upsdrv) %ROOT/dev
-%ghost %attr(666,root,root) %ROOT/dev/*
-%dir %attr(0710,root,upsdrv) %ROOT/var
-%dir %attr(0710,root,upsdrv) %ROOT%_localstatedir
-%dir %attr(1730,root,upsdrv) %ROOT%_localstatedir/upsd
-%dir %attr(0710,root,upsdrv) %ROOT%_sysconfdir
-%dir %attr(0710,root,upsdrv) %ROOT%confdir
-%attr(640,root,upsdrv) %ROOT%confdir/ups.conf
-
-%dir %docdir
-%docdir/*driver*
-%docdir/cables
-
-%files server
-%config %_initdir/upsd
+%_initdir/upsd
+%_unitdir/nut-server.service
+%_unitdir/upsd.service
+%_initdir/upsdrv
+%_unitdir/nut-driver.service
+%_unitdir/upsdrv.service
 %dir %confdir
+
+%config(noreplace) %_sysconfdir/sysconfig/upsd
+
 %confdir/cmdvartab
 %confdir/nut.conf
 %confdir/upsd.conf
 %confdir/upsd.users
 %confdir/upsd.pem
 %config(noreplace) %attr(640,root,upsdrv) %confdir/ups.conf
-
-%_sbindir/upsd
 
 %_man5dir/upsd.conf.*
 %_man5dir/upsd.users.*
@@ -616,11 +584,47 @@ fi
 %config(noreplace) %attr(640,root,upsd) %ROOT%confdir/upsd.pem
 %attr(640,root,upsdrv) %ROOT%confdir/ups.conf
 
+%_localstatedir/upsd
+%_sysconfdir/syslog.d/*
+
 %dir %docdir
 %docdir/upsd.conf.sample
 %docdir/upsd.users.sample
 %docdir/ups.conf.sample
 #%docdir/hosts.conf.sample
+%docdir/*driver*
+%docdir/cables
+
+%config %confdir/driver.list
+%attr(644,root,root) /lib/udev/rules.d/98-nut-usbups.rules
+
+%drvdir
+%if_with snmp
+%exclude %drvdir/snmp-ups
+%endif # with_snmp
+%if_with freeipmi
+%exclude %drvdir/nut-ipmipsu
+%endif # with_freeipmi
+
+%_man5dir/ups.conf.*
+%_man8dir/*
+%exclude %_man8dir/upsc.*
+%exclude %_man8dir/upscmd.*
+%exclude %_man8dir/upslog.*
+%exclude %_man8dir/upsmon.*
+%exclude %_man8dir/upsrw.*
+%exclude %_man8dir/upssched.*
+%if_with cgi
+%exclude %_man8dir/upsimage.cgi.*
+%exclude %_man8dir/upsset.cgi.*
+%exclude %_man8dir/upsstats.cgi.*
+%endif # with_cgi
+%if_with snmp
+%exclude %_man8dir/snmp-ups.*
+%endif # with_snmp
+%if_with freeipmi
+%exclude %_man8dir/nut-ipmipsu.*
+%endif # with_freeipmi
 
 %if_with snmp
 %files driver-snmp
@@ -629,16 +633,12 @@ fi
 %_man8dir/snmp-ups.*
 %endif # with_snmp
 
-%if_with usb
-%files driver-usb
-%dir %drvdir
-%drvdir/usbhid-ups
-%drvdir/bcmxcp_usb
-%drvdir/tripplite_usb
-%_man8dir/usbhid-ups.*
-%_man8dir/bcmxcp_usb.*
-%_man8dir/tripplite_usb.*
-%endif # with_usb
+%if_with freeipmi
+%files driver-ipmi
+%drvdir/nut-ipmipsu
+%attr(644,root,root) /lib/udev/rules.d/98-nut-ipmipsu.rules
+%_man8dir/nut-ipmipsu.*
+%endif # with_freeipmi
 
 %if_with cgi
 %files cgi
@@ -660,6 +660,10 @@ fi
 %_man8dir/upsimage.cgi.*
 %_man8dir/upsset.cgi.*
 %_man8dir/upsstats.cgi.*
+%docdir/hosts.conf.sample
+%docdir/upsset.conf.sample
+%docdir/upsstats.html.sample
+%docdir/upsstats-single.html.sample
 %endif # with_cgi
 
 %if_with hotplug
@@ -670,16 +674,17 @@ fi
 %files hal
 %fdi_hal/20-ups-nut-device.fdi
 /usr/share/hal/fdi/information/20thirdparty/20-ups-nut-device.fdi
-%udev_rules_dir/98-nut-usbups.rules
 %hal_addon_dir/hald-addon-*
 %endif
 
 %files -n libupsclient
-%_libdir/libupsclient.so
-%_libdir/libupsclient.so.1
-%_libdir/libupsclient.so.1.1.0
+%_libdir/libupsclient.so.*
+
+%files -n libnutscan
+%_libdir/libnutscan.so.*
 
 %files -n libupsclient-devel
+%_libdir/*.so
 %_includedir/*
 %if_without M24
 %_pkgconfigdir/*.pc
@@ -687,6 +692,15 @@ fi
 %_man3dir/*
 
 %changelog
+* Tue Nov 20 2012 Alexey Shabalin <shaba@altlinux.ru> 2.6.5-alt1
+- 2.6.5
+- add fedora patches (fixed nut-scanner, foreground start daemons for systemd)
+- enabled avahi support
+- enabled freeipmi support
+- enabled systemd support
+- add libupsclient package
+- merge driver, driver-usb, server packages to server package
+
 * Thu May 31 2012 Michael Shigorin <mike@altlinux.org> 2.6.3-alt2
 - applied upstream patch to fix CVE-2012-2944 (closes: #27386)
   + thanks ldv@ for heads-up
