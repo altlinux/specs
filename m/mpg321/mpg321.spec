@@ -1,5 +1,5 @@
 Name: mpg321
-Version: 0.2.11
+Version: 0.3.2
 Release: alt1
 
 Summary: A Free command-line mp3 player, compatible with mpg123
@@ -10,7 +10,7 @@ Url: http://mpg321.sourceforge.net/
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-Source0: %{name}_%{version}.tar.gz
+Source0: %{name}_%{version}.orig.tar.gz
 
 # whether to replace mpg123 or not?
 # on PII 350Mhz mpg321 uses 25 percents CPU time against 4.5 percents for mpg123.
@@ -22,7 +22,8 @@ Provides: mpg123 = 0.59q
 
 %define mad_ver 0.14.2b
 
-# Automatically added by buildreq on Wed Dec 23 2009
+# Automatically added by buildreq on Mon Nov 26 2012
+# optimized out: zlib-devel
 BuildRequires: libao-devel libid3tag-devel libmad-devel
 
 %description
@@ -49,13 +50,18 @@ mpg321 - проигрыватель mp3 файлов с интерфейсом �
 функциональность, однако, уступает в производительности.
 
 %prep
-%setup -q -n %name
+%setup -q -n %name-%version-orig
 
 %build
 %if %REPLACE_123
-%configure
+%configure \
+    --enable-alsa=no \
+    --enable-ipv6
 %else
-%configure --enable-mpg123-symlink=no
+%configure \
+    --enable-mpg123-symlink=no \
+    --enable-alsa=no \
+    --enable-ipv6
 %endif
 
 %make_build
@@ -64,11 +70,16 @@ mpg321 - проигрыватель mp3 файлов с интерфейсом �
 %make_install DESTDIR=%buildroot install
 
 %files
+%doc AUTHORS BUGS HACKING NEWS README README.remote THANKS
 %_bindir/*
 %_man1dir/*
-%doc AUTHORS BUGS HACKING TODO README README.remote THANKS debian/changelog
 
 %changelog
+* Mon Nov 26 2012 Igor Zubkov <icesik@altlinux.org> 0.3.2-alt1
+- 0.2.11 -> 0.3.2
+- Enable IPv6
+- Add -debuginfo subpackage
+
 * Wed Dec 23 2009 Igor Zubkov <icesik@altlinux.org> 0.2.11-alt1
 - 0.2.10.2 -> 0.2.11
 
