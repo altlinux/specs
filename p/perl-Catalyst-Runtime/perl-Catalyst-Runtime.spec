@@ -1,40 +1,191 @@
-%define dist Catalyst-Runtime
-Name: perl-%dist
-Version: 5.90017
-Release: alt1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(Catalyst/Helper.pm) perl(Class/Accessor.pm) perl(Class/MOP/Object.pm) perl(Config.pm) perl(Devel/InnerPackage.pm) perl(Encode.pm) perl(Errno.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IO/Socket.pm) perl(IPC/Open3.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Pluggable/Object.pm) perl(Moose/Meta/Class.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/MethodAttributes.pm) perl(MooseX/Role/Parameterized.pm) perl(MooseX/Types/Moose.pm) perl(Path/Class/Dir.pm) perl(Path/Class/File.pm) perl(Plack/Loader.pm) perl(Plack/Middleware/Conditional.pm) perl(Plack/Middleware/IIS6ScriptNameFix.pm) perl(Plack/Middleware/IIS7KeepAliveFix.pm) perl(Plack/Middleware/LighttpdScriptNameFix.pm) perl(Plack/Test.pm) perl(Pod/Usage.pm) perl(Term/Size/Any.pm) perl(Tree/Simple/Visitor/FindByUID.pm) perl(URI/QueryParam.pm) perl(URI/http.pm) perl(URI/https.pm) perl(attributes.pm) perl(mro.pm) perl(overload.pm) perl-devel perl-pod perl-podlators perldoc
+# END SourceDeps(oneline)
+Name:           perl-Catalyst-Runtime
+Summary:        Catalyst Framework Runtime
+Version:        5.90018
+Release:        alt1_1
+License:        GPL+ or Artistic
+Group:          Development/Perl
+Source0:        http://search.cpan.org/CPAN/authors/id/J/JJ/JJNAPIORK/Catalyst-Runtime-%{version}.tar.gz
+URL:            http://search.cpan.org/dist/Catalyst-Runtime/
+BuildArch:      noarch
 
-Summary: Web application framework
-License: GPL or Artistic
-Group: Development/Perl
+BuildRequires:  groff
+BuildRequires:  /usr/bin/perldoc
+BuildRequires:  perl(Carp.pm)
+BuildRequires:  perl(CGI/Simple/Cookie.pm)
+BuildRequires:  perl(Class/C3/Adopt/NEXT.pm)
+BuildRequires:  perl(Class/Data/Inheritable.pm)
+BuildRequires:  perl(Class/Load.pm)
+BuildRequires:  perl(Class/MOP.pm)
+BuildRequires:  perl(CPAN.pm)
+BuildRequires:  perl(Data/Dump.pm)
+BuildRequires:  perl(Data/OptList.pm)
+BuildRequires:  perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(HTML/Entities.pm)
+BuildRequires:  perl(HTML/HeadParser.pm)
+BuildRequires:  perl(HTTP/Body.pm)
+BuildRequires:  perl(HTTP/Headers.pm)
+BuildRequires:  perl(HTTP/Request.pm)
+BuildRequires:  perl(HTTP/Request/AsCGI.pm)
+BuildRequires:  perl(HTTP/Request/Common.pm)
+BuildRequires:  perl(HTTP/Response.pm)
+BuildRequires:  perl(List/MoreUtils.pm)
+BuildRequires:  perl(LWP/UserAgent.pm)
+BuildRequires:  perl(Module/Pluggable.pm)
+BuildRequires:  perl(Moose.pm)
+BuildRequires:  perl(MooseX/Emulate/Class/Accessor/Fast.pm)
+BuildRequires:  perl(MooseX/Getopt.pm)
+BuildRequires:  perl(MooseX/MethodAttributes/Inheritable.pm)
+BuildRequires:  perl(MooseX/Role/WithOverloading.pm)
+BuildRequires:  perl(MooseX/Types.pm)
+BuildRequires:  perl(MooseX/Types/Common/Numeric.pm)
+BuildRequires:  perl(MooseX/Types/LoadableClass.pm)
+BuildRequires:  perl(MRO/Compat.pm)
+BuildRequires:  perl(namespace/autoclean.pm)
+BuildRequires:  perl(namespace/clean.pm)
+BuildRequires:  perl(Path/Class.pm)
+BuildRequires:  perl(Plack.pm)
+BuildRequires:  perl(Plack/Middleware/ReverseProxy.pm)
+BuildRequires:  perl(Plack/Test/ExternalServer.pm)
+BuildRequires:  perl(Safe/Isa.pm)
+BuildRequires:  perl(Scalar/Util.pm)
+BuildRequires:  perl(String/RewritePrefix.pm)
+BuildRequires:  perl(Sub/Exporter.pm)
+BuildRequires:  perl(Task/Weaken.pm)
+BuildRequires:  perl(Test/Exception.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:  perl(Text/Balanced.pm)
+BuildRequires:  perl(Text/SimpleTable.pm)
+BuildRequires:  perl(Time/HiRes.pm)
+BuildRequires:  perl(Tree/Simple.pm)
+BuildRequires:  perl(Tree/Simple/Visitor/FindByPath.pm)
+BuildRequires:  perl(Try/Tiny.pm)
+BuildRequires:  perl(URI.pm)
 
-URL: http://search.cpan.org/dist/Catalyst-Runtime/
-Source: http://www.cpan.org/authors/id/B/BO/BOBTFISH/Catalyst-Runtime-%{version}.tar.gz
+BuildRequires:  perl(Class/Accessor/Fast.pm)
+BuildRequires:  perl(Class/C3.pm)
+BuildRequires:  perl(Class/Inspector.pm)
+BuildRequires:  perl(FCGI.pm)
+BuildRequires:  perl(File/Copy/Recursive.pm)
+BuildRequires:  perl(File/Modified.pm)
+BuildRequires:  perl(Proc/ProcessTable.pm)
+BuildRequires:  perl(Test/Harness.pm)
+BuildRequires:  perl(Test/Pod.pm)
+BuildRequires:  perl(Test/Spelling.pm)
+BuildRequires:  perl(Test/Without/Module.pm)
+BuildRequires:  perl(YAML.pm)
 
-BuildArch: noarch
 
-# Automatically added by buildreq on Sun Jan 16 2011 (-bi)
-BuildRequires: perl-CGI-Simple perl-Catalyst-Devel perl-Class-C3-Adopt-NEXT perl-Class-Data-Inheritable perl-Data-Dump perl-FCGI perl-HTTP-Body perl-HTTP-Request-AsCGI perl-Module-Pluggable perl-MooseX-Getopt perl-MooseX-MethodAttributes perl-MooseX-Role-WithOverloading perl-MooseX-Types-Common perl-Pod-Parser perl-String-RewritePrefix perl-Task-Weaken perl-Test-Exception perl-Text-Balanced perl-Text-SimpleTable perl-Tree-Simple-VisitorFactory perl-YAML perl(Plack/Test.pm) perl(Plack/Middleware/ReverseProxy.pm) perl(MooseX/Types/LoadableClass.pm) perl(Safe/Isa.pm)
+Requires:       perl(B/Hooks/EndOfScope.pm) >= 0.08
+Requires:       perl(CGI/Simple/Cookie.pm) >= 1.109
+Requires:       perl(Class/C3/Adopt/NEXT.pm) >= 0.07
+Requires:       perl(Class/Load.pm) >= 0.12
+Requires:       perl(Class/MOP.pm) >= 0.95
+Requires:       perl(HTML/HeadParser.pm)
+Requires:       perl(HTTP/Body.pm) >= 1.06
+Requires:       perl(HTTP/Headers.pm) >= 1.64
+Requires:       perl(HTTP/Request.pm) >= 5.814
+Requires:       perl(HTTP/Request/AsCGI.pm) >= 1.0
+Requires:       perl(HTTP/Response.pm) >= 5.813
+Requires:       perl(LWP/UserAgent.pm)
+Requires:       perl(Module/Pluggable.pm) >= 3.9
+Requires:       perl(Moose.pm) >= 1.03
+Requires:       perl(MooseX/Emulate/Class/Accessor/Fast.pm) >= 0.009.030
+Requires:       perl(MooseX/Getopt.pm) >= 0.30
+Requires:       perl(MooseX/MethodAttributes/Inheritable.pm) >= 0.24
+Requires:       perl(MooseX/Role/WithOverloading.pm) >= 0.09
+Requires:       perl(MooseX/Types.pm)
+Requires:       perl(MooseX/Types/LoadableClass.pm) >= 0.003
+Requires:       perl(namespace/autoclean.pm) >= 0.09
+Requires:       perl(namespace/clean.pm) >= 0.23
+Requires:       perl(Path/Class.pm) >= 0.09
+Requires:       perl(Plack.pm) >= 0.999.100
+Requires:       perl(Plack/Middleware/ReverseProxy.pm) >= 0.04
+Requires:       perl(Plack/Test/ExternalServer.pm)
+Requires:       perl(String/RewritePrefix.pm) >= 0.004
+Requires:       perl(Task/Weaken.pm)
+Requires:       perl(Text/SimpleTable.pm) >= 0.03
+Requires:       perl(Tree/Simple.pm) >= 1.15
+Requires:       perl(URI.pm) >= 1.35
+
+# obolete/provide old tests subpackage
+# can be removed during F19 development cycle
+Obsoletes:      %{name}-tests < 5.90007-2
+Provides:       %{name}-tests = %{version}-%{release}
+
+
+Source44: import.info
 
 %description
-This is the Runtime distribution for the Catalyst MVC framework.
+This is the primary class for the Catalyst-Runtime distribution.  It provides
+the core of any runtime Catalyst instance.
+ 
+%package        scripts
+Summary:        Scripts for %{name}
+Group:          Development/Perl
+Requires:       %{name} = %{version}-%{release}
+
+%description    scripts
+
+The %{name}-scripts package contains scripts distributed with
+%{name} but generally used for developing Catalyst applications.
+
 
 %prep
-%setup -q -n %dist-%version
+%setup -q -n Catalyst-Runtime-%{version}
+
+# something like this seems to beg for explicitness
+perldoc perlgpl      > COPYING.gpl
+perldoc perlartistic > COPYING.artistic
+
+find .  -type f -exec chmod -c -x {} +
+find t/ -type f -exec perl -pi -e 's|^#!perl|#!%{__perl}|' {} +
 
 %build
-%perl_vendor_build INSTALLMAN1DIR=%_man1dir
+PERL5_CPANPLUS_IS_RUNNING=1 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+make %{?_smp_mflags}
 
 %install
-%perl_vendor_install
+make pure_install DESTDIR=%{buildroot}
+
+find %{buildroot} -type f -name .packlist -exec rm -f {} \;
+
+
+%check
+# note that some of the optional tests we're enabling here will be skipped
+# anyways, due to deps on Catalyst::Devel, etc.  We cannot depend on
+# Catalyst::Devel, however, as it depends on us, and circular dep loops are
+# never fun.  (Well, maybe to Zeno.)
+#
+# See also http://rt.cpan.org/Public/Bug/Display.html?id=27123
+
+export TEST_LIGHTTPD=1
+export TEST_HTTP=1
+
+# see https://rt.cpan.org/Public/Bug/Display.html?id=42540
+#export TEST_MEMLEAK=1
+
+export TEST_POD=1
+export TEST_STRESS=1
+
+make test
+make clean
 
 %files
-# FIXME: Circular deps on Catalyst::Devel
-%doc Changes README
-%_bindir/catalyst.pl
-%_man1dir/catalyst.pl.1*
-%perl_vendor_privlib/Catalyst*
+%doc Changes COPYING* README t/
+%{perl_vendor_privlib}/*
+
+%files scripts
+%{_bindir}/*
+%{_mandir}/man1/*
 
 %changelog
+* Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 5.90018-alt1_1
+- fixed build by version update
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 5.90017-alt1
 - automated CPAN update
 
