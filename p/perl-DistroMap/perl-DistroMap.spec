@@ -1,8 +1,8 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.14
-Release: alt2
+Version: 0.15
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -34,6 +34,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distromap*
 
 %changelog
+* Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
+- added flags/binary/exclude
+
 * Tue Nov 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.14-alt2
 - mageia support
 
