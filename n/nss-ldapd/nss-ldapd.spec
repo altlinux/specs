@@ -3,7 +3,7 @@
 %def_enable  systemd
 
 Name: 	 nss-ldapd
-Version: 0.8.11
+Version: 0.8.12
 Release: alt1
 
 Summary: An nsswitch module which uses directory servers
@@ -16,7 +16,8 @@ Source1: nslcd.init
 Source2: nslcd.sysconfig
 Source3: nslcd.tmpconf
 Source4: nslcd.service
-Patch:   nss-ldapd-0.8.10-alt-DSO.patch
+Patch:   %name-0.8.10-alt-DSO.patch
+Patch1:	 %name-nslcd-user-name.patch
 
 Requires: nscd
 Requires: su
@@ -40,6 +41,7 @@ nsswitch module.
 %prep
 %setup
 %patch -p2
+%patch1 -p2
 %autoreconf
 
 
@@ -171,6 +173,10 @@ exit 0
 %endif
 
 %changelog
+* Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.12-alt1
+- New verison 0.8.12 (see http://arthurdejong.org/nss-pam-ldapd/release-0-8-12)
+- Fix nslcd user and group name in configuration file
+
 * Thu Nov 08 2012 Andrey Cherepanov <cas@altlinux.org> 0.8.11-alt1
 - New version 0.8.11
 - Add real systemd support
