@@ -6,7 +6,7 @@
 
 Name: dhcp
 Version: 4.2.4.P2
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -29,6 +29,13 @@ Source12: dhcpd.chroot.lib
 Source14: dhclient-script.alt
 Source15: dhclient-hooks.tar
 Source16: dhclient.sysconfig
+Source17: dhcpd6.init
+Source18: dhcpd6.sysconfig
+Source19: dhcpd6.chroot.all
+Source20: dhcpd6.chroot.conf
+Source21: dhcpd6.chroot.lib
+Source22: dhcrelay6.init
+Source23: dhcrelay6.sysconfig
 
 Patch0001: 0001-Apply-dst_api-fd-leak-fixes-from-dhcp-3.0.5-alt-warn.patch
 Patch0002: 0002-Apply-dhcp-3.0.5-alt-warnings.patch.patch
@@ -69,6 +76,7 @@ Patch0036: 0036-Fix-infinite-leases-on-x64.patch
 Patch0037: 0037-Fix-do-forward-updates-statement.patch
 Patch0038: 0038-Document-ALT-specific-in-the-dhclient-script-manpage.patch
 Patch0039: 0039-Ignore-checksums-on-the-loopback-interface.patch
+Patch0040: 0040-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -221,6 +229,7 @@ server
 %patch0037 -p2
 %patch0038 -p2
 %patch0039 -p2
+%patch0040 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -232,6 +241,9 @@ find client -type f -not -name Makefile\* -print0 |
 find server -type f -not -name Makefile\* -print0 |
 	xargs -r0 grep -FZl DBDIR -- |
 	xargs -r0 sed -i 's,DBDIR,%ROOT/dhcpd/state,g' --
+find server -type f -not -name Makefile\* -print0 |
+	xargs -r0 grep -FZl '%ROOT/dhcpd/state/dhcpd6' -- |
+	xargs -r0 sed -i 's,%ROOT/dhcpd/state/dhcpd6,%ROOT/dhcpd6/state/dhcpd6,g' --
 
 %build
 %add_optflags -fpie -fno-strict-aliasing -Wno-unused -Werror -Dlint
@@ -265,33 +277,39 @@ mkdir -p %buildroot{%ROOT,/etc/{sysconfig,%name/dhclient.d}}
 	#
 
 # dhcpd
-install -pD -m755 %_sourcedir/dhcpd.init \
-	%buildroot%_initdir/dhcpd
-install -pD -m644 %_sourcedir/dhcpd.sysconfig \
-	%buildroot/etc/sysconfig/dhcpd
 install -pD -m600 %_sourcedir/dhcpd.conf.sample \
 	%buildroot/etc/%name/dhcpd.conf.sample
-mkdir -p %buildroot%ROOT/dhcpd/state
-touch %buildroot%ROOT/dhcpd/state/dhcpd.leases
-# Make use of syslogd-1.4.1-alt11 /etc/syslog.d/ feature.
-mkdir -p %buildroot%ROOT/dhcpd/dev
-mksock %buildroot%ROOT/dhcpd/dev/log
-mkdir -p %buildroot/etc/syslog.d
-ln -s %ROOT/dhcpd/dev/log %buildroot/etc/syslog.d/dhcpd
-# Resolver infrastructure
-for n in all conf lib; do
-	install -pD -m750 "%_sourcedir/dhcpd.chroot.$n" \
-		"%buildroot/etc/chroot.d/dhcpd.$n"
+
+for dhcpd in dhcpd dhcpd6; do
+	install -pD -m755 %_sourcedir/$dhcpd.init \
+		%buildroot%_initdir/$dhcpd
+	install -pD -m644 %_sourcedir/$dhcpd.sysconfig \
+		%buildroot/etc/sysconfig/$dhcpd
+
+	mkdir -p %buildroot%ROOT/$dhcpd/state
+	touch %buildroot%ROOT/$dhcpd/state/$dhcpd.leases
+	# Make use of syslogd-1.4.1-alt11 /etc/syslog.d/ feature.
+	mkdir -p %buildroot%ROOT/$dhcpd/dev
+	mksock %buildroot%ROOT/$dhcpd/dev/log
+	mkdir -p %buildroot/etc/syslog.d
+	ln -s %ROOT/$dhcpd/dev/log %buildroot/etc/syslog.d/$dhcpd
+	# Resolver infrastructure
+	for n in all conf lib; do
+		install -pD -m750 "%_sourcedir/$dhcpd.chroot.$n" \
+			"%buildroot/etc/chroot.d/$dhcpd.$n"
+	done
+	sed -i "s,%%ROOT,%ROOT/$dhcpd,g" "%buildroot/etc/chroot.d/$dhcpd."*
+	mkdir -p %buildroot%ROOT/$dhcpd{/etc,/%_lib,/var/{nis,yp/binding}}
+	touch %buildroot%ROOT/$dhcpd{/etc/{localtime,hosts,services,{host,nsswitch,resolv}.conf},/var/nis/NIS_COLD_START}
 done
-sed -i 's,%%ROOT,%ROOT/dhcpd,g' "%buildroot/etc/chroot.d/"*
-mkdir -p %buildroot%ROOT/dhcpd{/etc,/%_lib,/var/{nis,yp/binding}}
-touch %buildroot%ROOT/dhcpd{/etc/{localtime,hosts,services,{host,nsswitch,resolv}.conf},/var/nis/NIS_COLD_START}
 
 # dhcrelay
-install -pD -m755 %_sourcedir/dhcrelay.init \
-	%buildroot%_initdir/dhcrelay
-install -pD -m644 %_sourcedir/dhcrelay.sysconfig \
-	%buildroot/etc/sysconfig/dhcrelay
+for dhcrelay in dhcrelay dhcrelay6; do
+	install -pD -m755 %_sourcedir/$dhcrelay.init \
+		%buildroot%_initdir/$dhcrelay
+	install -pD -m644 %_sourcedir/$dhcrelay.sysconfig \
+		%buildroot/etc/sysconfig/$dhcrelay
+done
 
 # dhclient
 mkdir -p %buildroot/%_sysconfdir/sysconfig/
@@ -349,6 +367,7 @@ fi
 
 %pre server
 %_sbindir/useradd -r -n -g %name -d %ROOT/dhcpd -s /dev/null -c 'The ISC DHCP server daemon' dhcpd >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -n -g %name -d %ROOT/dhcpd6 -s /dev/null -c 'The ISC DHCPv6 server daemon' dhcpd6 >/dev/null 2>&1 ||:
 rm -f /var/run/dhcpd.restart
 # stop _old_ dhcpd if running
 if [ $1 -eq 1 ] && [ -x %_initdir/dhcpd ] && %_initdir/dhcpd status >/dev/null 2>&1; then
@@ -373,6 +392,7 @@ fi
 
 %post server
 %post_service dhcpd
+%post_service dhcpd6
 if [ -f /var/run/dhcpd.restart ]; then
 	rm -f /var/run/dhcpd.restart
 	%_initdir/dhcpd start ||:
@@ -380,6 +400,7 @@ fi
 
 %preun server
 %preun_service dhcpd
+%preun_service dhcpd6
 
 %triggerpostun -- %name
 [ $1 = 0 ] || exit 0
@@ -387,6 +408,7 @@ fi
 
 %pre relay
 %_sbindir/useradd -r -n -g %name -d /var/empty -s /dev/null -c 'The ISC DHCP relay daemon' dhcrelay >/dev/null 2>&1 ||:
+%_sbindir/useradd -r -n -g %name -d /var/empty -s /dev/null -c 'The ISC DHCPv6 relay daemon' dhcrelay6 >/dev/null 2>&1 ||:
 rm -f /var/run/dhcrelay.restart
 if [ $1 -ge 2 ] && [ -x %_initdir/dhcrelay ] && %_initdir/dhcrelay status >/dev/null 2>&1; then
 	%_initdir/dhcrelay condstop && touch /var/run/dhcrelay.restart ||:
@@ -399,9 +421,11 @@ if [ -f /var/run/dhcrelay.restart ]; then
 else
 	%post_service dhcrelay
 fi
+%post_service dhcrelay6
 
 %preun relay
 %preun_service dhcrelay
+%preun_service dhcrelay6
 
 # }}}
 
@@ -434,19 +458,31 @@ fi
 %files server
 /etc/syslog.d/*
 %config /etc/chroot.d/dhcpd.*
+%config /etc/chroot.d/dhcpd6.*
 %config %_initdir/dhcpd
+%config %_initdir/dhcpd6
 %config(noreplace) /etc/sysconfig/dhcpd
+%config(noreplace) /etc/sysconfig/dhcpd6
 %attr(750,root,dhcp) %_sbindir/dhcpd
 %_man5dir/dhcpd.*
 %_man5dir/dhcp-options.*
 %_man5dir/dhcp-eval.*
 %_man8dir/dhcpd.*
+# IPv4 chroot
 %attr(0750,root,dhcp) %dir %ROOT/dhcpd
 %attr(1770,root,dhcp) %dir %ROOT/dhcpd/state
 %attr(0644,dhcpd,dhcp) %config(noreplace) %verify(not md5 mtime size) %ROOT/dhcpd/state/dhcpd.leases
 %dir %attr(0710,root,dhcp) %ROOT/dhcpd/dev
 %ghost %attr(666,root,root) %ROOT/dhcpd/dev/*
+#IPv6 chroot
+%attr(0750,root,dhcp) %dir %ROOT/dhcpd6
+%attr(1770,root,dhcp) %dir %ROOT/dhcpd6/state
+%attr(0644,dhcpd6,dhcp) %config(noreplace) %verify(not md5 mtime size) %ROOT/dhcpd6/state/dhcpd6.leases
+%dir %attr(0710,root,dhcp) %ROOT/dhcpd6/dev
+%ghost %attr(666,root,root) %ROOT/dhcpd6/dev/*
+
 # Resolver infrastructure
+# IPv4
 %dir %ROOT/dhcpd/%_lib
 %dir %ROOT/dhcpd/etc
 %ghost %verify(not md5 mtime size) %ROOT/dhcpd/etc/*
@@ -455,6 +491,16 @@ fi
 %ghost %config(missingok) %verify(not md5 mtime size) %ROOT/dhcpd/var/nis/NIS_COLD_START
 %dir %ROOT/dhcpd/var/yp
 %dir %ROOT/dhcpd/var/yp/binding
+# IPv6
+%dir %ROOT/dhcpd6/%_lib
+%dir %ROOT/dhcpd6/etc
+%ghost %verify(not md5 mtime size) %ROOT/dhcpd6/etc/*
+%dir %ROOT/dhcpd6/var
+%dir %ROOT/dhcpd6/var/nis
+%ghost %config(missingok) %verify(not md5 mtime size) %ROOT/dhcpd6/var/nis/NIS_COLD_START
+%dir %ROOT/dhcpd6/var/yp
+%dir %ROOT/dhcpd6/var/yp/binding
+
 %dir /etc/%name
 %doc /etc/%name/dhcpd.conf.sample
 %dir %docdir
@@ -465,7 +511,9 @@ fi
 %files relay
 %config %_initdir/dhcrelay
 %config(noreplace) /etc/sysconfig/dhcrelay
-%_sbindir/dhcrelay
+%config %_initdir/dhcrelay6
+%config(noreplace) /etc/sysconfig/dhcrelay6
+%attr(750,root,dhcp) %_sbindir/dhcrelay
 %_man8dir/dhcrelay.*
 
 %files omshell
@@ -487,6 +535,13 @@ fi
 # }}}
 
 %changelog
+* Mon Nov 26 2012 Mikhail Efremov <sem@altlinux.org> 1:4.2.4.P2-alt3
+- Fix dhcrelay permissions.
+- dhcrelay6: Added init script and config.
+- dhcpd6: Added init script and configs.
+- dhcpd and dhcrelay: Override default user and jail dir for DHCPv6.
+- Added lost command-line options.
+
 * Tue Oct 30 2012 Mikhail Efremov <sem@altlinux.org> 1:4.2.4.P2-alt2
 - Don't package ja_JP man pages.
 - dhcpd.init: Update dhcpd chroot jail on start.
