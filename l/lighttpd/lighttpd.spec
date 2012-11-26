@@ -15,7 +15,7 @@
 Name: lighttpd
 Version: 1.4.32
 #Release: alt1.svn.%svnrev
-Release: alt2
+Release: alt3
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -115,11 +115,13 @@ libtoolize -f -c
 %makeinstall libdir=%buildroot%_libdir/%name
 
 mkdir -p %buildroot%_sysconfdir/{rc.d/init.d,sysconfig}
+mkdir -p %buildroot%_unitdir
 mkdir -p %buildroot{%_spooldir/%name/tmp,%_var/log/%name}
 
-# inirscript and sysconfig
+# inirscript, sysconfig and unit
 install -m755 %name.init %buildroot%_initdir/%name
 install -m644 doc/initscripts/sysconfig.lighttpd %buildroot%_sysconfdir/sysconfig/lighttpd
+install -m644 doc/systemd/lighttpd.service %buildroot%_unitdir/lighttpd.service
 
 # configs
 cp -rp doc/config %buildroot%_sysconfdir/%name
@@ -150,6 +152,7 @@ gpasswd -a %lighttpd_user %webserver_group
 %config %_initdir/%name
 %config(noreplace) %_sysconfdir/sysconfig/lighttpd
 %config(noreplace) %_sysconfdir/logrotate.d/%name
+%_unitdir/*
 %dir %attr(0750,root,%lighttpd_group) %_sysconfdir/%name
 %dir %attr(0750,root,%lighttpd_group) %_sysconfdir/%name/conf.d
 %dir %attr(0750,root,%lighttpd_group) %_sysconfdir/%name/vhosts.d
@@ -198,6 +201,9 @@ gpasswd -a %lighttpd_user %webserver_group
 %_libdir/%name/*rrdtool.so
 
 %changelog
+* Mon Nov 26 2012 Alexei Takaseev <taf@altlinux.org> 1.4.32-alt3
+- Add systemd unit
+
 * Thu Nov 22 2012 Alexei Takaseev <taf@altlinux.org> 1.4.32-alt2
 - fix DoS in Connection header value split (CVE-2012-5533)
 
