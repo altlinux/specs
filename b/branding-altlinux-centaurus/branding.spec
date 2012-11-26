@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt6
+Release: alt7
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -420,6 +420,14 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt7
+- Set official Centaurus 7.0 wallpapers
+- Remove obsoleted group icons
+- Set new icons of Platform 7 for acc
+- Draw allerator-browser-qt background from top left corner
+- Draw title as 100% white and other labels in 80% white
+- Replace all steps icons by transparent icon
+
 * Tue Nov 20 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt6
 - Set TraditionalOk theme for Mate
 - Grow section width, set attention box as block
