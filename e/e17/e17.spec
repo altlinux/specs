@@ -1,5 +1,5 @@
 %define _name enlightenment
-%define cvs_date alpha5
+%define cvs_date alpha6
 #%%undefine cvs_date
 %define snapshot 2012-10-12
 %define rel alt1
@@ -134,6 +134,9 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Wed Nov 28 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.alpha6
+- 0.17.0 alpha6
+
 * Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.alpha5
 - 0.17.0 alpha5
 - requires altlinux-freedesktop-menu-enlightenment >= 0.55
