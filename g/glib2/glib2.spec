@@ -13,7 +13,7 @@
 %endif
 
 Name: glib2
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A library of handy utility functions
@@ -37,9 +37,6 @@ Source6: gio-compat.lds
 Source10: glib2.sh
 Source11: glib2.csh
 
-# some tests broken
-Patch: glib-2.29.16-alt-no_gapplication_tests.patch
-
 %def_with locales
 %if_with locales
 Requires: %name-locales = %version
@@ -55,7 +52,6 @@ Obsoletes: %name-core < %version
 BuildPreReq: libpcre-devel >= %pcre_ver
 Requires: pcre-config(utf8) pcre-config(unicode-properties)
 BuildPreReq: pcre-config(utf8) pcre-config(unicode-properties)
-
 %endif
 
 BuildRequires(pre): rpm-build-licenses
@@ -68,7 +64,6 @@ BuildRequires: libffi-devel python-devel zlib-devel libelf-devel
 
 # for check
 BuildRequires: /proc dbus-tools-gui desktop-file-utils
-#BuildRequires: python-module-pygobject python-module-dbus
 
 %description
 GLib is the low-level core library that forms the basis for projects
@@ -198,9 +193,6 @@ install -p -m644 %_sourcedir/gobject-compat.lds gobject/compat.lds
 install -p -m644 %_sourcedir/gio-compat.map gio/compat.map
 install -p -m644 %_sourcedir/gio-compat.lds gio/compat.lds
 
-# gapplication tests require x11
-#%patch -b .tests
-
 # abicheck always ok
 for d in glib gio gobject; do
 echo : >> $d/abicheck.sh
@@ -267,6 +259,7 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 %check
 # g_mapped_file_new fails on /dev/null in hasher
+# GLib:ERROR:mappedfile.c:52:test_device: assertion failed (error == (g-file-error-quark, 17)): Failed to map /dev/null' /dev/null': mmap() failed: No such device (g-file-error-quark, 7)
 #%%make check
 
 %files
@@ -374,6 +367,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Tue Nov 27 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.3-alt1
+- 2.34.3
+
 * Sat Nov 10 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.2-alt1
 - 2.34.2
 
