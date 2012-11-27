@@ -1,12 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-plugins-base-0.10) pkgconfig(gthread-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libmatekbdui) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(polkit-gobject-1)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database gcc-c++ gobject-introspection-devel libICE-devel libSM-devel libX11-devel libXrender-devel libgtk+2-gir-devel libselinux-devel pkgconfig(dbus-1) pkgconfig(exempi-2.0) pkgconfig(fontconfig) pkgconfig(gail) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-plugins-base-0.10) pkgconfig(gthread-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libexif) pkgconfig(libmatekbdui) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(libstartup-notification-1.0) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(polkit-gobject-1) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr) xorg-xproto-devel
 # END SourceDeps(oneline)
 Group: System/Servers
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-settings-daemon
 Version:        1.5.3
-Release:        alt1_4
+Release:        alt1_5
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -32,6 +32,7 @@ Requires: mate-icon-theme
 
 #Fix CVE-2012-5560 and stop generating version specific libdirs
 #https://github.com/mate-desktop/mate-settings-daemon/pull/22
+#Remove archlinux bits from configure.ac
 Patch0: commit_rollup.patch
 Source44: import.info
 Patch33: mate-settings-daemon-keyboard-icon.patch
@@ -94,6 +95,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.a" -exec rm -f {} ';'
 
 
 %changelog
+* Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_5
+- new fc release
+
 * Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_4
 - added dconf dependency (closes: 28110)
 
