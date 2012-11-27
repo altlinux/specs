@@ -4,7 +4,7 @@
 Summary: Partition Image
 Name: partimage
 Version: 0.6.9
-Release: alt1.1
+Release: alt1.2
 License: GPL
 Group: System/Configuration/Hardware
 URL:     http://www.partimage.org/
@@ -15,6 +15,7 @@ Source: %name-%version.tar.bz2
 Patch1: partimage-0.6.7-autoconf.patch
 Patch2:  partimage-0.6.7-gcc43.patch
 Patch3:  partimage-0.6.7-gcc44.patch
+Patch4: partimage-0.6.9-alt-zlib-1.2.7.patch
 
 Source1: partimaged.pam
 Source2: partimaged.init
@@ -50,6 +51,7 @@ Server to store images from partimage accross the network
 #patch1
 #patch2 -p1 -b .gcc43
 #patch3 -p1 -b .gcc44
+%patch4 -p2
 
 
 sed -i '/^#define PARTIMAGED_USER/ s,"partimag","%{partimaged_user}",' -i src/shared/pathnames.h.in
@@ -96,6 +98,9 @@ install -D -m 755 %SOURCE2  %buildroot/%_initdir/partimaged
 %attr(700,%partimaged_user,%partimaged_group)%_spooldir/partimaged
 
 %changelog
+* Tue Nov 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.9-alt1.2
+- Fixed build with zlib 1.2.7
+
 * Wed Dec 08 2010 Igor Vlasenko <viy@altlinux.ru> 0.6.9-alt1.1
 - rebuild with new openssl and/or boost by request of git.alt administrator
 
