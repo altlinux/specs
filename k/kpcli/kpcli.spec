@@ -1,10 +1,10 @@
 # SPEC file for kpcli package
 
 Name: kpcli
-Version: 1.4
+Version: 1.6
 Release: alt1
 
-Summary: command line interface to work with KeePass 1.x database files
+Summary: command line interface to work with KeePass database files
 
 License: %perl_license
 Group: Networking/Other
@@ -27,7 +27,7 @@ BuildRequires: perl-File-KeePass perl-Term-ShellUI perl-Clone
 %description
 kpcli is a KeePass Command Line Interface (CLI) / interactive shell.
 
-This program provides a way to access and manage KeePass 1.x
+This program provides a way to access and manage KeePass 1.x and 2.x
 database from a Unix-like command line.
 
 %prep
@@ -50,6 +50,9 @@ install -m 0644 -- %name.1 %buildroot/%_man1dir/
 %_man1dir/%{name}*
 
 %changelog
+* Tue Nov 27 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.6-alt1
+- New version
+
 * Sun Aug 26 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.4-alt1
 - New version
 
