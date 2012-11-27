@@ -1,22 +1,16 @@
-BuildRequires: libsystemd-login-devel
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libICE-devel libSM-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(x11)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libICE-devel libSM-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libsystemd-login) pkgconfig(x11)
 # END SourceDeps(oneline)
 Group: Toys
 %define _libexecdir %_prefix/libexec
 Name:           mate-screensaver
-Version:        1.5.0
-Release:        alt1_3
+Version:        1.5.1
+Release:        alt1_1
 Summary:        MATE Screensaver
 
 License:        GPLv2+ and LGPLv2+
 URL:            http://pub.mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-# upstream commits
-# https://github.com/mate-desktop/mate-screensaver/commit/8fbe2e552847b4ec1d5f49f35a2c2565cf3afeba
-# https://github.com/mate-desktop/mate-screensaver/commit/49b028e85839da7006b4857cf323a7cbee91316c
-# https://github.com/mate-desktop/mate-screensaver/commit/77ac5c607d0f0562aad4ab9573c4b85003216c0c
-Patch0:         upstream_commits.patch
 
 BuildRequires: gtk2-devel
 BuildRequires: libmateui-devel
@@ -49,6 +43,7 @@ Requires: mate-backgrounds
 Source44: import.info
 Patch33: gnome-screensaver-2.28.0-alt-pam.patch
 Patch34: mate-screensaver-2.28.0-user_activity.patch
+Patch35: mate-screensaver-1.5.1-alt-ru-po-mate-logo-isnt-foot.patch
 Source45: unix2_chkpwd.c
       
 
@@ -67,10 +62,10 @@ Development files for mate-screensaver
 
 %prep
 %setup -q
-%patch0 -p1
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 %patch34 -p1
+%patch35 -p0
 
 
 %build
@@ -79,9 +74,7 @@ NOCONFIGURE=1 ./autogen.sh
         --with-xscreensaverdir=%{_datadir}/xscreensaver/config \
         --with-xscreensaverhackdir=%{_libexecdir}/xscreensaver  \
         --enable-locking \
-	--with-passwd-helper=/usr/libexec/mate-screensaver/mate-screensaver-chkpwd-helper  \
-	--disable-pam
-#        --enable-pam
+        --enable-pam
 
 make V=1 %{?_smp_mflags}
 gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS %SOURCE45 -lpam
@@ -89,6 +82,18 @@ gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS %SOURCE45 -lpam
 
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
+
+desktop-file-install --delete-original             \
+  --remove-category=MATE                           \
+  --add-category=X-Mate                            \
+  --dir $RPM_BUILD_ROOT%{_datadir}/applications    \
+  $RPM_BUILD_ROOT%{_datadir}/applications/mate-screensaver-preferences.desktop
+
+desktop-file-install --delete-original             \
+  --remove-category=MATE                           \
+  --add-category=X-Mate                            \
+  --dir $RPM_BUILD_ROOT%{_datadir}/applications/screensavers    \
+  $RPM_BUILD_ROOT%{_datadir}/applications/screensavers/*.desktop
 
 %find_lang %{name} --with-gnome
 install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
@@ -119,6 +124,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new version; updated ru translation
+
 * Sat Nov 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
 - dropped gdialog compat script (conflicts with real gdialog)
 
