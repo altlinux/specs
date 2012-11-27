@@ -1,6 +1,6 @@
 Name: pdfedit
 Version: 0.4.5
-Release: alt2
+Release: alt2.1
 
 Summary: Editor for manipulating PDF documents
 License: GPL
@@ -11,12 +11,19 @@ Source0: %name-%version.tar.bz2
 Source1: %name.desktop
 Source100: %name.watch
 Patch0: pdfedit-0.4.1-alt-fontpath.patch
+Patch1: pdfedit-0.4.5-alt-gcc4.7.patch
+Patch2: pdfedit-0.4.5-alt-docbook.patch
+Patch3: pdfedit-0.4.5-alt-libpng15.patch
+Patch4: pdfedit-0.4.5-alt-gcc4.7-i586.patch
 Packager: Michael Shigorin <mike@altlinux.org>
 
 Requires: fonts-type1-urw
 
 # Automatically added by buildreq on Tue Apr 07 2009
 BuildRequires: boost-devel gcc-c++ imake libqt3-devel t1lib-devel xorg-cf-files
+
+BuildPreReq: /proc xsltproc docbook5-style-xsl
+BuildPreReq: boost-program_options-devel libpng-devel
 
 %{?!_desktopdir:%define _desktopdir %_datadir/applications}
 
@@ -29,9 +36,29 @@ is based on a scripts.
 Scripting is used to a great extent in editor and almost anything can
 be scripted, it is possible to create own scripts or plugins.
 
+%package manual
+Summary: User manual for PDFedit
+Group: Documentation
+BuildArch: noarch
+
+%description manual
+Complete editing of pdf documents is made possible with PDFedit.
+You can change either raw pdf objects (for advanced users) or use
+predefined gui functions. Functions can be easily added as everything
+is based on a scripts.
+
+This package contains user manual for PDFedit.
+
 %prep
 %setup
 %patch0 -p1
+%ifarch x86_64
+%patch1 -p2
+%else
+%patch4 -p2
+%endif
+%patch2 -p2
+%patch3 -p2
 sed -i 's,bin/qmake,& "CONFIG+=no_fixpath",' src/Makefile
 
 %build
@@ -42,7 +69,11 @@ autoconf
 	--enable-stack-protector \
 	--with-root-dir=%buildroot \
 	--with-boost-lib=%_libdir \
-	--docdir='$(datarootdir)/doc/$(package_name)-$(version)'
+	--docdir='$(datarootdir)/doc/$(package_name)-$(version)' \
+	--with-boost-program-options=mt \
+	--enable-user-manual \
+	--enable-pdfedit-core-dev \
+	--enable-tools
 %make
 
 %install
@@ -52,12 +83,20 @@ install -pDm644 %SOURCE1 %buildroot%_desktopdir/%name.desktop
 
 %files
 %_bindir/*
+%exclude %_bindir/pdfedit-core-dev-config
 %_datadir/%name/
 %_desktopdir/*
 %_man1dir/*
 %doc Changelog README
 
+%files manual
+%doc doc/user/OEBPS/*
+
 %changelog
+* Tue Nov 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt2.1
+- Fixed build
+- Added user manual and tools
+
 * Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 0.4.5-alt2
 - updated an Url:
 - added watch file
