@@ -1,7 +1,7 @@
 Name: gnome-shell-extension-weather
 Summary: GNOME Shell extension for displaying weather info from several cities
 Version: 1.0
-Release: alt5.git.g77273a
+Release: alt6.git.g369646
 License: GPL3
 Group: Graphical desktop/GNOME
 Url: https://github.com/Neroth/gnome-shell-extension-weather/
@@ -23,8 +23,11 @@ notifications in GNOME Shell.
 %prep
 %setup -n %name
 
-# Moscow
-%__subst "s|<default>'Cambridge, MA'</default>|<default>'Moscow, RS'</default>|" src/org.gnome.shell.extensions.weather.gschema.xml.in
+# Fix defaults to Moscow / celsius
+%__subst "
+	s|<default>'2373572>Cambridge, Massachusetts (US)'</default>|<default>'2122265>Moscow, Moscow Federal City (RU)'</default>|;
+	s|<default>'fahrenheit'</default>|<default>'celsius'</default>|;
+	" src/org.gnome.shell.extensions.weather.gschema.xml.in
 
 %build
 ./autogen.sh
@@ -43,6 +46,10 @@ make
 %doc README.md
 
 %changelog
+* Tue Nov 27 2012 Ildar Mulyukov <ildar@altlinux.ru> 1.0-alt6.git.g369646
+- new snapshot
+- now works with Gnome-shell 3.6 (closes: #27830)
+
 * Thu May 10 2012 Ildar Mulyukov <ildar@altlinux.ru> 1.0-alt5.git.g77273a
 - new snapshot
 - fix default location (Moscow)
