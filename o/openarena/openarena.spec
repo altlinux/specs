@@ -1,5 +1,5 @@
 Name: openarena
-Version: 0.8.5
+Version: 0.8.8
 Release: alt1
 
 Summary: Open source first person shooter
@@ -9,63 +9,56 @@ URL: http://openarena.ws/
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-Source0: http://download.tuxfamily.org/openarena/rel/081/oa081.zip
-Source1: http://download.tuxfamily.org/openarena/rel/085/oa085p.zip
+Source0: openarena-0.8.8.zip
+#Source0: http://download.tuxfamily.org/openarena/rel/081/oa081.zip
+#Source1: http://download.tuxfamily.org/openarena/rel/085/oa085p.zip
 Source2: %name.sh
 Source3: %name.png
 Source4: %name.desktop
-
-Requires: quake3
 
 AutoReq: yes, noshell
 
 # We need 1.36-11 or newer for the new standalone game and protocol cvars
 #Requires: quake3 >= 1.36-11
+Requires: quake3
 Requires: opengl-games-utils
 
-#BuildRequires:  ImageMagick
-#BuildRequires:  desktop-file-utils
+BuildArch: noarch
 
-BuildArch:      noarch
-
-# Automatically added by buildreq on Sun Nov 25 2012
-BuildRequires: unzip
+# Automatically added by buildreq on Tue Nov 27 2012
+BuildRequires: dos2unix unzip
 
 %description
 OpenArena is an open-source content package for Quake III Arena licensed under
 the GPL, effectively creating a free stand-alone game.
 
 %prep
-%setup -q -c
-unzip -qq -o %SOURCE1
-mkdir doc
-for file in CHANGES COPYING CREDITS README readme_085.txt; do
-    cat %name-0.8.1/$file | sed s/\\r// > doc/$file
-    touch -r %name-0.8.1/$file doc/$file
-done
+%setup -q
+dos2unix CHANGES CREDITS LINUXNOTES README WENEED readme_085.txt
 
 %install
 mkdir -p %buildroot%_datadir/%name
 mkdir -p %buildroot%_datadir/pixmaps
 mkdir -p %buildroot%_bindir/
 
-cp -pr %name-0.8.1/baseoa %buildroot%_datadir/%name
+cp -pr baseoa missionpack %buildroot%_datadir/%name
 install -p -m755 %SOURCE2 %buildroot%_bindir/%name
 ln -s %name %buildroot%_bindir/%{name}_ded
 cp -p %SOURCE3 %buildroot%_datadir/pixmaps
 
-chmod 644 %buildroot%_datadir/%name/baseoa/*
-
 install -pD -m644 %SOURCE4 %buildroot%_datadir/applications/%name.desktop
 
 %files
-%doc doc/*
+%doc CHANGES CREDITS LINUXNOTES README WENEED readme_085.txt readme_088.txt
 %_bindir/%{name}*
 %_datadir/%name
 %_datadir/applications/%name.desktop
 %_datadir/pixmaps/%name.png
 
 %changelog
+* Tue Nov 27 2012 Igor Zubkov <icesik@altlinux.org> 0.8.8-alt1
+- 0.8.5 -> 0.8.8
+
 * Sun Nov 04 2012 Igor Zubkov <icesik@altlinux.org> 0.8.5-alt1
 - build for Sisyphus
 
