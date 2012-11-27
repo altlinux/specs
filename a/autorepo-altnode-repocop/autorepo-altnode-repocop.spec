@@ -1,7 +1,9 @@
+%filter_from_requires /^repocop-unittest-build-logs/d
+
 #BuildRequires: 
 Name: autorepo-altnode-repocop
 Version: 0.06
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -32,6 +34,9 @@ cp repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2
+- dropped optional dependency on repocop-unittest-build-logs
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
 - prometheus2 support
 
