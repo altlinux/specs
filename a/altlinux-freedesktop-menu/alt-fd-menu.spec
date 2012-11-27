@@ -3,7 +3,7 @@
 %define gnome3ver 3.90
 
 Name: altlinux-freedesktop-menu
-Version: 0.58
+Version: 0.59
 %if_without backport
 %def_with gnome3
 %def_without gnome2
@@ -359,6 +359,10 @@ touch /etc/xdg/menus/lxde-applications.menu
 %_datadir/kde4/desktop-directories/altlinux-*.directory
 
 %changelog
+* Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.59-alt1
+- explicitly excluded Settings in mate-applications.menu
+- closes: #28121
+
 * Fri Nov 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1
 - bugfixes in mate-applications.menu
 
