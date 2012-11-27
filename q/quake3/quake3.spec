@@ -12,7 +12,7 @@
 
 Name: quake3
 Version: 1.34
-Release: alt11.svn%revision
+Release: alt12.svn%revision
 
 Summary: Quake 3: Arena by ID Software
 License: GPL
@@ -36,13 +36,9 @@ Packager: Igor Zubkov <icesik@altlinux.org>
 Requires: %name-server = %version-%release
 Requires: %name-common = %version-%release
 
-# Automatically added by buildreq on Sun Nov 25 2012
-# optimized out: libGL-devel libGLU-devel pkg-config
-# WTF??? subversion?
-#BuildRequires: libSDL-devel subversion
-BuildRequires: libSDL-devel
-
-#BuildRequires: libSDL-devel libopenal-devel
+# Automatically added by buildreq on Tue Nov 27 2012
+# optimized out: libGL-devel libGLU-devel libogg-devel pkg-config
+BuildRequires: libSDL-devel libcurl-devel libopenal-devel libspeex-devel libvorbis-devel zlib-devel
 
 Obsoletes: quake3-client-up
 Provides: quake3-client-up = %version-%release
@@ -87,10 +83,21 @@ Quake 3: Arena by ID Software.
 
 %prep
 %setup -q -n ioquake3
-%patch0 -p1
+
+#rm -rf code/zlib code/libspeex
+
+rm -rf `find -name .svn` code/AL code/SDL12 code/libcurl code/libs
+rm -rf code/zlib code/libspeex
+
+# rm -rf code/jpeg-8c code/tools/lcc
 
 %build
-%make_build release V=1 BUILD_CLIENT_SMP=1
+%make_build release V=1 \
+    BUILD_CLIENT_SMP=1 \
+    USE_LOCAL_HEADERS=0 \
+    USE_CODEC_VORBIS=1 \
+    USE_INTERNAL_SPEEX=0 \
+    USE_INTERNAL_ZLIB=0
 
 %install
 mkdir -p %buildroot%_bindir/
@@ -100,21 +107,26 @@ install -p -D -m644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 cat << __EOF__ > %buildroot%_bindir/quake3
 #!/bin/sh
 
-%_libdir/games/quake3/ioquake3.%__arch +set sv_pure 0 +set vm_cgame 0 +set vm_game 0 +set vm_ui 0 $@
+%_libdir/quake3/ioquake3.%__arch +set sv_pure 0 +set vm_cgame 0 +set vm_game 0 +set vm_ui 0 $@
 __EOF__
 
 chmod +x %buildroot%_bindir/quake3
-ln -sf %_libdir/games/quake3/ioq3ded.%__arch %buildroot%_bindir/q3ded
+ln -sf %_libdir/quake3/ioq3ded.%__arch %buildroot%_bindir/q3ded
 
 install -D -p -m 0644 %SOURCE2 %buildroot%_miconsdir/quake3.png
 
-mkdir -p %buildroot%_libdir/games/quake3/baseq3/
-make copyfiles COPYDIR="%buildroot%_libdir/games/quake3"
+mkdir -p %buildroot%_libdir/quake3/baseq3/
+make copyfiles COPYDIR="%buildroot%_libdir/quake3" V=1 \
+    BUILD_CLIENT_SMP=1 \
+    USE_LOCAL_HEADERS=0 \
+    USE_CODEC_VORBIS=1 \
+    USE_INTERNAL_SPEEX=0 \
+    USE_INTERNAL_ZLIB=0
 
 cat > README.ALT <<EOF
 In order to actually play the game, you will need pak-files from original game
 CD (pak0.pk3) plus pak-files from latest quake3 point release! Put them into
-%_libdir/games/quake3/baseq3/!
+%_libdir/quake3/baseq3/!
 EOF
 
 # initscript for dedicated server
@@ -131,12 +143,12 @@ install -dm1700 %buildroot%_home/
         -d %_home -s /dev/null -r %_user >/dev/null 2>&1 ||:
 
 %post
-echo "In order to actually play the game, you'll need pak-files from original game CD (pak0.pk3) plus pak-files from latest quake3 point release! Put them into %_libdir/games/quake3/baseq3/ ! "
+echo "In order to actually play the game, you'll need pak-files from original game CD (pak0.pk3) plus pak-files from latest quake3 point release! Put them into %_libdir/quake3/baseq3/ or ~/.q3a/baseq3/ ! "
 
 %post server
 %post_service %name
 %post_service %name-ctf
-echo "In order to actually play the game, you'll need pak-files from original game CD (pak0.pk3) plus pak-files from latest quake3 point release! Put them into %_libdir/games/quake3/baseq3/ ! "
+echo "In order to actually play the game, you'll need pak-files from original game CD (pak0.pk3) plus pak-files from latest quake3 point release! Put them into %_libdir/quake3/baseq3/ or ~/.q3a/baseq3/ ! "
 
 %preun server
 %preun_service %name
@@ -145,32 +157,40 @@ echo "In order to actually play the game, you'll need pak-files from original ga
 %files
 %doc BUGS ChangeLog NOTTODO README README.ALT TODO id-readme.txt md4-readme.txt rend2-readme.txt voip-readme.txt
 %_bindir/%name
-%_libdir/games/quake3/ioquake3.%__arch
-%_libdir/games/quake3/renderer_opengl1_%__arch.so
-%_libdir/games/quake3/renderer_rend2_%__arch.so
+%_libdir/quake3/ioquake3.%__arch
+%_libdir/quake3/renderer_opengl1_%__arch.so
+%_libdir/quake3/renderer_opengl1_smp_%__arch.so
+%_libdir/quake3/renderer_rend2_%__arch.so
 %_datadir/applications/quake3.desktop
 %_miconsdir/*.png
 
 %files common
-%dir %_libdir/games/quake3/
-%dir %_libdir/games/quake3/baseq3/
-%_libdir/games/quake3/baseq3/cgame%__arch.so
-%_libdir/games/quake3/baseq3/qagame%__arch.so
-%_libdir/games/quake3/baseq3/ui%__arch.so
-%dir %_libdir/games/quake3/missionpack/
-%_libdir/games/quake3/missionpack/cgame%__arch.so
-%_libdir/games/quake3/missionpack/qagame%__arch.so
-%_libdir/games/quake3/missionpack/ui%__arch.so
+%dir %_libdir/quake3/
+%dir %_libdir/quake3/baseq3/
+%_libdir/quake3/baseq3/cgame%__arch.so
+%_libdir/quake3/baseq3/qagame%__arch.so
+%_libdir/quake3/baseq3/ui%__arch.so
+%dir %_libdir/quake3/missionpack/
+%_libdir/quake3/missionpack/cgame%__arch.so
+%_libdir/quake3/missionpack/qagame%__arch.so
+%_libdir/quake3/missionpack/ui%__arch.so
 
 %files server
 %doc BUGS ChangeLog NOTTODO README README.ALT TODO id-readme.txt md4-readme.txt rend2-readme.txt voip-readme.txt
 %_initdir/*
 %_bindir/q3ded
-%_libdir/games/quake3/ioq3ded.%__arch
+%_libdir/quake3/ioq3ded.%__arch
 %config(noreplace) %_sysconfdir/sysconfig/*
 %dir %attr(1770,root,%_group) %_home
 
 %changelog
+* Sun Nov 25 2012 Igor Zubkov <icesik@altlinux.org> 1.34-alt12.svn2349
+- Remove quake3-alt-bug14027.patch
+- Move %%_libdir/games/quake3/ -> %%_libdir/quake3/
+- Build and link with system zlib
+- Build and link with system libspeex
+- Build with Ogg Vorbis support
+
 * Sun Nov 25 2012 Igor Zubkov <icesik@altlinux.org> 1.34-alt11.svn2349
 - svn1114 -> 2349
 - Merge quake3-client-up and quake3-client-smp to quake3
