@@ -1,7 +1,7 @@
 %define dist Net-Packet
 Name: perl-%dist
 Version: 3.27
-Release: alt1
+Release: alt2
 
 Summary: A framework to easily send and receive frames from layer 2 to layer 7
 License: Artistic
@@ -32,6 +32,8 @@ and matched against the request.
 %setup -q -n %dist-%version
 %patch -p1
 
+sed -i -e 's,^=head1,=encoding ISO8859-1\n\n=head1,' `find . -name '*.pm'`
+
 %build
 %perl_vendor_build
 
@@ -43,6 +45,9 @@ and matched against the request.
 %perl_vendor_privlib/Net
 
 %changelog
+* Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.27-alt2
+- fixed build (pod encoding patch)
+
 * Fri Nov 11 2011 Alexey Tourbin <at@altlinux.ru> 3.27-alt1
 - 3.26 -> 3.27
 
