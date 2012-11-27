@@ -1,6 +1,6 @@
 Name: sdcc
 Version: 5119
-Release: alt1.qa2
+Release: alt1.qa3
 Group: Development/C
 URL: http://sdcc.sourceforge.net
 License: GPL
@@ -8,6 +8,7 @@ Summary: Small Device C Compiler
 Source: %name.tar
 Patch: sdcc-5119-alt-glibc-2.11.3.patch
 Patch1: sdcc-5119-alt-SDCCicode.patch
+Patch2: sdcc-5119-alt-make-3.82.patch
 BuildPreReq: flex gcc-c++
 %description
 SDCC is a retargettable, optimizing ANSI - C compiler that targets the Intel 8051, 
@@ -18,6 +19,7 @@ distributed under GNU General Public License (GPL).
 %setup -q -n %name
 %patch -p2
 %patch1 -p2
+%patch2 -p2
 %build
 %configure --disable-debug --docdir=%_docdir/%name-%version
 %make_build
@@ -36,6 +38,9 @@ rm -fr /usr/src/tmp/sdcc-buildroot/usr/share/sdcc/lib/src
 
 
 %changelog
+* Tue Nov 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5119-alt1.qa3
+- Fixed build with make 3.82
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5119-alt1.qa2
 - Fixed build with glibc 2.11.3
 
