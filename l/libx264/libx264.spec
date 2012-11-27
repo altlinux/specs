@@ -1,6 +1,6 @@
 Name: libx264
 Version: 120
-Release: alt0.2
+Release: alt0.3
 
 Summary: H.264 codec shared library
 License: GPL
@@ -66,6 +66,10 @@ software.
 %setup
 
 %build
+%ifarch %ix86 x86_64
+# prevent use of -mfoo part of CFLAGS on x86 with YASM
+export ASFLAGS=' '
+%endif
 %define _optlevel 3
 %configure \
 	--disable-cli \
@@ -100,6 +104,9 @@ software.
 %_libdir/libx264.so
 
 %changelog
+* Tue Nov 27 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 120-alt0.3
+- unset ASFLAGS on x86 for yasm
+
 * Sun Oct 14 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 120-alt0.2
 - made least part of pkgconfig's version always 0
 
