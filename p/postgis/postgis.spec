@@ -1,7 +1,7 @@
 %define pg_ver 9.1
 
 Name: postgis
-Version: 1.5.3
+Version: 1.5.8
 Release: alt1
 
 Summary: Geographic Information Systems Extensions to PostgreSQL
@@ -12,7 +12,7 @@ Url: http://postgis.refractions.net
 
 Source: %name-%version.tar
 Source1: create_template_postgis
-Patch: %name-%version-install-dirs.patch
+Patch: %name-%version-%release.patch
 
 BuildPreReq: postgresql%pg_ver-devel
 
@@ -45,14 +45,15 @@ This package contains shared library for PostgreSQL server
 %prep
 %setup
 %patch -p1
+%__subst "s|PGSQL_DOCDIR|DOCDIR|g" doc/Makefile.in
 
 %build
-AUTOHEADER=true autoreconf -fisv -I macros
+./autogen.sh
 %configure \
 	--with-gui \
 	--with-xsldir=%_datadir/xml/docbook/xsl-stylesheets
 
-%make_build all docs comments
+%make all docs comments
 
 
 %install
@@ -62,7 +63,6 @@ install -d %buildroot%_libdir/pgsql/
 %make_install \
 	DESTDIR=%buildroot \
 	DOCDIR=%_docdir/%name-%version \
-	MAN1DIR=%_man1dir \
 	install docs-install comments-install
 
 %files
@@ -78,6 +78,12 @@ install -d %buildroot%_libdir/pgsql/
 
 
 %changelog
+* Tue Nov 27 2012 Alexey Shabalin <shaba@altlinux.ru> 1.5.8-alt1
+- 1.5.8
+
+* Mon Jul 30 2012 Alexey Shabalin <shaba@altlinux.ru> 1.5.5-alt1
+- 1.5.5
+
 * Thu Apr 19 2012 Alexey Shabalin <shaba@altlinux.ru> 1.5.3-alt1
 - 1.5.3
 
