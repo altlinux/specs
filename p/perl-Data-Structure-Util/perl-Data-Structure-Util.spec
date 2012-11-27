@@ -1,7 +1,7 @@
 %define dist Data-Structure-Util
 Name: perl-%dist
 Version: 0.15
-Release: alt3
+Release: alt4
 
 Summary: Change nature of data within a structure
 License: GPL or Artistic
@@ -25,6 +25,9 @@ detect if there is a circular reference.
 
 %prep
 %setup -q -n %dist-%version
+if [ %version = 0.15 ]; then
+sed -i -e '43,$d' Makefile.PL
+fi
 
 %build
 %perl_vendor_build
@@ -38,6 +41,9 @@ detect if there is a circular reference.
 %perl_vendor_autolib/Data
 
 %changelog
+* Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.15-alt4
+- fixed build
+
 * Thu Aug 30 2012 Vladimir Lettiev <crux@altlinux.ru> 0.15-alt3
 - rebuilt for perl-5.16
 - perl-CPAN-Meta required for build
