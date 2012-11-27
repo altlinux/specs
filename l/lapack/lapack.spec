@@ -1,7 +1,7 @@
 Name: lapack
 %define sover 4
 %define soname lib%name.so.%sover
-Version: 3.4.1
+Version: 3.4.2
 Epoch: 1
 Release: alt1
 
@@ -146,6 +146,7 @@ cmake \
 	-DCMAKE_Fortran_FLAGS:STRING="$FLAGS" \
 	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
 	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+	-DBLAS_goto2_LIBRARY:FILEPATH=%_libdir/libopenblas.so \
 	-DUSEXBLAS:BOOL=ON \
 	-DUSE_XBLAS:BOOL=ON \
 	-DBUILD_SHARED_LIBS:BOOL=ON \
@@ -179,7 +180,11 @@ for f in manpages/man/manl/*.l; do
 done >lapack-man.files
 
 %check
-ctest --force-new-ctest-process
+echo '#!/bin/sh' >lapack_testing
+echo './lapack_testing.py -s -d TESTING' \
+	>>lapack_testing
+chmod +x lapack_testing
+ctest --force-new-ctest-process -VV
 
 %files -n lib%name
 %define _customdocdir %_docdir/lapack-3.1
@@ -196,6 +201,9 @@ ctest --force-new-ctest-process
 %files -n lapack-man -f lapack-man.files
 
 %changelog
+* Tue Nov 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.4.2-alt1
+- Version 3.4.2
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.4.1-alt1
 - Version 3.4.1
 - Built with OpenBLAS instead of GotoBLAS2
