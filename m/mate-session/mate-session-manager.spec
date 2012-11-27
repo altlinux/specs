@@ -6,7 +6,7 @@ Group: Graphical desktop/Other
 %define oldname mate-session-manager
 Name:           mate-session
 Version:        1.5.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -73,17 +73,15 @@ export GDK_USE_XFT=1
 # set default browser to whatever MATE user likes
 #export BROWSER=mate-open
 
+# does not work; see https://bugzilla.altlinux.org/28134
 # tell restored browsers where plugins are
-export MOZ_PLUGIN_PATH="\${MOZ_PLUGIN_PATH:+"\$MOZ_PLUGIN_PATH:"}\${HOME:+"\$HOME/.mozilla/plugins:"}%_libdir/mozilla/plugins:%_libdir/netscape/plugins:%browser_plugins_path"
+# export MOZ_PLUGIN_PATH="\${MOZ_PLUGIN_PATH:+"\$MOZ_PLUGIN_PATH:"}\${HOME:+"\$HOME/.mozilla/plugins:"}%_libdir/mozilla/plugins:%_libdir/netscape/plugins:%browser_plugins_path"
 
 # TODO
 # export HELP_BROWSER=yelp
 
 # use prefixed .menu files
 #export XDG_MENU_PREFIX="mate-"
-
-#### use /usr/share/mate as a part of XDG_DATA_DIRS
-#### export XDG_DATA_DIRS="\${XDG_DATA_DIRS:+"\$XDG_DATA_DIRS:"}%_datadir/mate"
 
 # Since shared-mime-info-0.90-alt3 XDG_DATA_DIRS not exported. We need to define
 # the set of base directories explicitly.
@@ -132,6 +130,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_1
+- no toying with MOZ_PLUGIN_PATH in startmate (closes: 28134)
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 
