@@ -2,15 +2,15 @@
 %define module_version          0.40
 %define module_release          alt2
 
-%define kversion	3.6.7
-%define krelease	alt2
+%define kversion	3.6.8
+%define krelease	alt1
 %define flavour		un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198151.2
+Release: %module_release.198152.1
 
 Summary: IBM ThinkPad SMAPI Driver
 License: GPL
@@ -76,8 +76,8 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %doc README CHANGES
 
 %changelog
-* Thu Nov 22 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.40-alt2.198151.2
-- Build for kernel-image-un-def-3.6.7-alt2.
+* Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.40-alt2.198152.1
+- Build for kernel-image-un-def-3.6.8-alt1.
 
 * Thu Feb 24 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.40-alt2
 - don't pack hdaps.ko
