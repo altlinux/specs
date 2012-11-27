@@ -1,6 +1,6 @@
 Name: repocop-report-prometheus
 Version: 0.31
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -30,6 +30,7 @@ Group: Development/Other
 License: GPL or Artistic
 Requires: repocop > 0.15
 Obsoletes: repocop-report-heroku < 0.4
+Obsoletes: repocop-report-prometeus2 < 0.31
 
 %description -n repocop-report-prometheus2
 Repocop is a repository unit tests platform.
@@ -54,6 +55,9 @@ install -m 755 repocop-report-prometheus* %buildroot/%_bindir/
 %_bindir/repocop-report-prometheus2*
 
 %changelog
+* Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.31-alt2
+- added Obsoletes
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.31-alt1
 - renamed to prometheus (closes: 28131)
 
