@@ -1,14 +1,15 @@
 %define rev 0
 
 Name: openblas
-Version: 0.2.2
-Release: alt1
+Version: 0.2.5
+Release: alt1.git20121127
 Summary: Optimized BLAS library based on GotoBLAS2 1.13 
 License: BSD
 Group: Sciences/Mathematics
-Url: http://www.tacc.utexas.edu/tacc-projects/gotoblas2/
+Url: https://github.com/xianyi/OpenBLAS
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
+# http://github.com/xianyi/OpenBLAS
 Source: %name-%version.tar
 
 #set_gcc_version 4.5
@@ -128,6 +129,9 @@ install -p -m644 *.h %buildroot%_includedir/%name
 %_includedir/*
 
 %changelog
+* Tue Nov 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt1.git20121127
+- Version 0.2.5
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.2-alt1
 - Initial build for Sisyphus
 
