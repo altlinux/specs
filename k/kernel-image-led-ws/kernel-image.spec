@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.52
-Release: alt4
+Version: 3.0.53
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 52
+%define kernel_stable_version 53
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -146,10 +146,8 @@ Source10: Makefile.external
 Patch0001: linux-%kernel_branch.42-fix-Documentation-DocBook.patch
 Patch0002: linux-%kernel_branch.42-fix-Documentation-DocBook-man.patch
 
-Patch0010: linux-%kernel_branch.43-fix-Makefile.patch
-
 Patch0021: linux-%kernel_branch.42-fix-arch-ia64.patch
-Patch0022: linux-%kernel_branch.42-fix-arch-powerpc.patch
+Patch0022: linux-%kernel_branch.51-fix-arch-powerpc.patch
 Patch0023: linux-%kernel_branch.42-fix-arch-powerpc-platforms--52xx.patch
 Patch0024: linux-%kernel_branch.42-fix-arch-powerpc-platforms--chrp.patch
 Patch0025: linux-%kernel_branch.42-fix-arch-powerpc-platforms--pseries.patch
@@ -164,7 +162,7 @@ Patch0033: linux-%kernel_branch.42-fix-arch-x86-cpu--perf-event.patch
 Patch0034: linux-%kernel_branch.47-fix-arch-x86-cpu--rdrand.patch
 Patch0035: linux-%kernel_branch.42-fix-arch-x86-platform-olpc.patch
 
-Patch0040: linux-%kernel_branch.44-fix-block.patch
+Patch0040: linux-%kernel_branch.51-fix-block.patch
 Patch0041: linux-%kernel_branch.42-fix-block--blk-integrity.patch
 Patch0042: linux-%kernel_branch.42-fix-block--blk-throttle.patch
 Patch0043: linux-%kernel_branch.42-fix-block--cfq-iosched.patch
@@ -201,7 +199,7 @@ Patch0102: linux-%kernel_branch.43-fix-drivers-block--cciss.patch
 Patch0103: linux-%kernel_branch.43-fix-drivers-block--dasd_diag_mod.patch
 Patch0104: linux-%kernel_branch.43-fix-drivers-block--dasd_eckd_mod.patch
 Patch0105: linux-%kernel_branch.43-fix-drivers-block--dasd_fba_mod.patch
-Patch0106: linux-%kernel_branch.50-fix-drivers-block--dasd_mod.patch
+Patch0106: linux-%kernel_branch.51-fix-drivers-block--dasd_mod.patch
 Patch0107: linux-%kernel_branch.42-fix-drivers-block--drbd.patch
 Patch0108: linux-%kernel_branch.51-fix-drivers-block--floppy.patch
 Patch0109: linux-%kernel_branch.43-fix-drivers-block--nbd.patch
@@ -332,10 +330,11 @@ Patch0372: linux-%kernel_branch.42-fix-drivers-macintosh--adbhid.patch
 
 Patch0381: linux-%kernel_branch.45-fix-drivers-md--dm-mod.patch
 Patch0382: linux-%kernel_branch.42-fix-drivers-md--dm-multipath.patch
-Patch0383: linux-%kernel_branch.44-fix-drivers-md--md-mod.patch
-Patch0384: linux-%kernel_branch.42-fix-drivers-md--raid1.patch
-Patch0385: linux-%kernel_branch.42-fix-drivers-md--raid10.patch
-Patch0386: linux-%kernel_branch.42-fix-drivers-md--raid456.patch
+Patch0383: linux-%kernel_branch.51-fix-drivers-md--md-mod.patch
+Patch0384: linux-%kernel_branch.51-fix-drivers-md--multipath.patch
+Patch0385: linux-%kernel_branch.51-fix-drivers-md--raid1.patch
+Patch0386: linux-%kernel_branch.51-fix-drivers-md--raid10.patch
+Patch0387: linux-%kernel_branch.51-fix-drivers-md--raid456.patch
 
 Patch0391: linux-%kernel_branch.42-fix-drivers-media-common-tuners--max2165.patch
 Patch0392: linux-%kernel_branch.44-fix-drivers-media-dvb-firewire--firedtv.patch
@@ -516,14 +515,14 @@ Patch0679: linux-%kernel_branch.42-fix-fs-ecryptfs.patch
 Patch0680: linux-%kernel_branch.42-fix-fs-ext3.patch
 Patch0681: linux-%kernel_branch.46-fix-fs-ext4.patch
 Patch0682: linux-%kernel_branch.42-fix-fs-hfs.patch
-Patch0683: linux-%kernel_branch.42-fix-fs-jbd.patch
+Patch0683: linux-%kernel_branch.51-fix-fs-jbd.patch
 Patch0684: linux-%kernel_branch.52-fix-fs-nfs.patch
 Patch0685: linux-%kernel_branch.42-fix-fs-ocfs2.patch
 Patch0686: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
 Patch0687: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
 Patch0688: linux-%kernel_branch.43-fix-fs-proc.patch
 Patch0689: linux-%kernel_branch.42-fix-fs-pstore.patch
-Patch0690: linux-%kernel_branch.42-fix-fs-reiserfs.patch
+Patch0690: linux-%kernel_branch.51-fix-fs-reiserfs.patch
 Patch0691: linux-%kernel_branch.42-fix-fs-sysfs.patch
 
 Patch0700: linux-%kernel_branch.46-fix-include.patch
@@ -545,7 +544,7 @@ Patch0738: linux-%kernel_branch.44-fix-kernel-time.patch
 Patch0740: linux-%kernel_branch.42-fix-lib.patch
 Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
-Patch0750: linux-%kernel_branch.51-fix-mm.patch
+Patch0750: linux-%kernel_branch.53-fix-mm.patch
 Patch0751: linux-%kernel_branch.42-fix-mm--compaction.patch
 Patch0752: linux-%kernel_branch.42-fix-mm--huge_memory.patch
 Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
@@ -1362,9 +1361,6 @@ cd linux-%version
 %patch0001 -p1
 %patch0002 -p1
 
-# fix-Makefile
-%patch0010 -p1
-
 # fix-arch-*
 %patch0021 -p1
 %patch0022 -p1
@@ -1566,12 +1562,14 @@ cd linux-%version
 %patch0371 -p1
 %patch0372 -p1
 
+# fix-drivers-md--*
 %patch0381 -p1
 %patch0382 -p1
 %patch0383 -p1
 %patch0384 -p1
 %patch0385 -p1
 %patch0386 -p1
+%patch0387 -p1
 
 # fix-drivers-media-*
 %patch0391 -p1
@@ -2793,6 +2791,28 @@ done)
 
 
 %changelog
+* Tue Nov 27 2012 Led <led@altlinux.ru> 3.0.53-alt1
+- 3.0.53
+- removed:
+  + fix-Makefile
+- updated:
+  + fix-mm
+
+* Tue Nov 27 2012 Led <led@altlinux.ru> 3.0.52-alt5
+- updated:
+  + fix-arch-powerpc
+  + fix-block
+  + fix-drivers-block--dasd_mod
+  + fix-drivers-md--md-mod
+  + fix-drivers-md--raid1
+  + fix-drivers-md--raid10
+  + fix-drivers-md--raid456
+  + fix-fs--block
+  + fix-fs-jbd
+  + fix-fs-reiserfs
+- added:
+  + fix-drivers-md--multipath
+
 * Sat Nov 24 2012 Led <led@altlinux.ru> 3.0.52-alt4
 - updated:
   + fix-drivers-usb-host--xhci-hcd
