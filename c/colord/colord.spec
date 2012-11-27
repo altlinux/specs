@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: colord
-Version: 0.1.24
+Version: 0.1.25
 Release: alt1
 
 Summary: Color daemon
@@ -14,7 +14,7 @@ Group: Graphics
 
 URL: http://www.freedesktop.org/software/%name/
 Source: http://www.freedesktop.org/software/%name/releases/colord-%version.tar.xz
-Patch1: %name-0.1.24-alt-localstatedir.patch
+Patch1: %name-0.1.25-alt-localstatedir.patch
 
 %define colord_group %name
 %define colord_user %name
@@ -129,9 +129,6 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 %dir %_libdir/colord-plugins
 %_libdir/colord-plugins/libcd_plugin_camera.so
 %_libdir/colord-plugins/libcd_plugin_scanner.so
-%dir %_datadir/color/icc/colord
-%_datadir/color/icc/%name/x11-colors.icc
-%_datadir/color/icc/%name/crayons.icc
 %_man1dir/cd-create-profile.1.*
 %_man1dir/colormgr.*
 %_man1dir/cd-fix-profile.*
@@ -170,6 +167,9 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 
 
 %changelog
+* Tue Nov 27 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.25-alt1
+- 0.1.25
+
 * Tue Oct 30 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.24-alt1
 - 0.1.24
 
