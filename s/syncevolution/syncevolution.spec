@@ -21,7 +21,7 @@
 %set_verify_elf_skiplist %_libdir/libsmltk.so.0.6.0
 
 Name: syncevolution
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 Summary: SyncEvolution synchronizes personal information management (PIM) data like contacts, calenders, tasks and memos
 
@@ -193,6 +193,9 @@ rm -f %buildroot%_libdir/*/*/*.{a,la}
 %_iconsdir/hicolor/48x48/apps/sync.png
 
 %changelog
+* Wed Nov 28 2012 Alexey Shabalin <shaba@altlinux.ru> 1.3.2-alt1
+- 1.3.2
+
 * Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 1.3.0-alt1
 - 1.3.0
 - disable activesync
