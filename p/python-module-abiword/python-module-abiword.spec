@@ -3,7 +3,7 @@
 
 Name: python-module-abiword
 Version: 0.8.0
-Release: alt1.2.1
+Release: alt2
 Summary: Python bindings for libabiword
 License: GPL+
 Group: Development/Python
@@ -18,17 +18,29 @@ Requires: python-module-pygobject
 Requires: python-module-pygtk  
 Requires: python  
 
-BuildPreReq: abiword-devel >= 2.8
-BuildPreReq: gcc-c++  
-BuildPreReq: python-module-pygobject-devel  
-BuildPreReq: python-module-pygtk-devel  
-BuildPreReq: python-devel  
+BuildRequires: abiword-devel >= 2.8
+BuildRequires: gcc-c++  
+BuildRequires: python-module-pygobject-devel  
+BuildRequires: python-module-pygtk-devel  
+BuildRequires: python-devel
+BuildRequires: libenchant-devel
+BuildRequires: fribidi-devel
+BuildRequires: wv-devel
 
 %description
 This package installs Python bindings for libabiword.
 
+%package devel
+Summary: Support files necessary to compile applications using pyabiword.
+Group: Development/Python
+Requires: %name = %{version}-%{release}
+
+%description devel
+Libraries, headers, and support files necessary to compile applications using py
+abiword.
+
 %prep
-%setup -v -n pyabiword-0.8.0
+%setup -v -n pyabiword-%version
 
 %build
 %define __libtoolize true
@@ -42,13 +54,19 @@ This package installs Python bindings for libabiword.
 %install
 %makeinstall_std
 
-
 %files 
-%{python_sitelibdir}/*
-%{_datadir}/pygtk/2.0/defs/*.defs
 %doc AUTHORS COPYING
+%dir %{python_sitelibdir}/abiword
+%{python_sitelibdir}/abiword/*.*
+
+%files devel
+%{_datadir}/pygtk/2.0/defs/pyabiword.defs
+
 
 %changelog
+* Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt2
+- added devel subpackage
+
 * Thu Oct 27 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.0-alt1.2.1
 - Rebuild with Python-2.7
 
