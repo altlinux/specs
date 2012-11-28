@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
 Version: 5.5.6
-Release: alt4
+Release: alt5
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -16,6 +16,9 @@ AutoReq: yes, noshell
 BuildRequires: rpm-build-licenses
 
 Conflicts: etcnet < 0.9.10-alt6
+
+# NetworkManager can use dhcpcd
+Provides: nm-dhcp-client
 
 %description
 dhcpcd is an implementation of the DHCP client specified in RFC2131.
@@ -62,6 +65,9 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Wed Nov 28 2012 Mikhail Efremov <sem@altlinux.org> 1:5.5.6-alt5
+- Provide nm-dhcp-client.
+
 * Fri Aug 31 2012 Mikhail Efremov <sem@altlinux.org> 1:5.5.6-alt4
 - dhcpcd-run-hooks: Print hook's exit code to log.
 - dhcpcd.conf: Disable solicition of IPv6 RA by default.
