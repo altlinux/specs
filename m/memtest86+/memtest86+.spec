@@ -1,6 +1,6 @@
 Name: memtest86+
 Version: 4.20
-Release: alt2
+Release: alt2.1
 
 Summary: Memory test for x86 architecture
 License: GPL
@@ -50,7 +50,12 @@ failures that are detected by Memtest86.
 %setup
 
 %build
-make CC='gcc -fno-stack-protector -U_FORTIFY_SOURCE' memtest.bin
+%ifarch x86_64
+%define stubarch -D__x86_64__ -D__LP64__
+%else
+%define stubarch %nil
+%endif
+make CC='gcc -fno-stack-protector -U_FORTIFY_SOURCE %stubarch' memtest.bin
 
 %install
 install -pDm644 memtest.bin %buildroot/boot/memtest-%version.bin
@@ -70,6 +75,9 @@ ln -s `relative /sbin/installkernel %_sbindir/installmemtest86+` \
 %doc README* FAQ
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.20-alt2.1
+- Fixed build
+
 * Fri Sep 23 2011 Alexey Tourbin <at@altlinux.ru> 4.20-alt2
 - removed set_strip_method macro
 
