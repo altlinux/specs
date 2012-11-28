@@ -4,7 +4,7 @@
 
 Name: avogadro
 Version: 1.0.3
-Release: alt4.1
+Release: alt5
 
 Group: Sciences/Chemistry
 Summary: An advanced molecular editor for chemical purposes
@@ -107,8 +107,14 @@ done
 %_datadir/qt4/mkspecs/features/%name.prf
 
 %changelog
+* Wed Nov 28 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt5
+- rebuilt with new boost
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt4.1
 - Rebuilt with Boost 1.51.0
+
+* Mon Aug 20 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt3.M60P.1
+- built for M60P
 
 * Mon Aug 20 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt4
 - fix desktopfile cetegories
