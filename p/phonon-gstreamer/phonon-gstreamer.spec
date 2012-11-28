@@ -1,7 +1,7 @@
 
 Name: phonon-gstreamer
-Version: 4.6.0
-Release: alt3
+Version: 4.6.2
+Release: alt1
 
 Group: System/Libraries
 Summary: Gstreamer phonon backend
@@ -21,7 +21,7 @@ Patch2: phonon-4.4.3-flac_mimetype.patch
 # optimized out: cmake-modules elfutils fontconfig glib2-devel gstreamer-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libgst-plugins libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-xml libstdc++-devel libxkbfile-devel libxml2-devel pkg-config python-base ruby xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel
 #BuildRequires: automoc cmake gcc-c++ glibc-devel-static gst-plugins-devel libXxf86misc-devel libalsa-devel libqt3-devel libqt4-opengl phonon-devel rpm-build-ruby
 BuildRequires(pre): phonon-devel
-BuildRequires: automoc cmake gcc-c++ glibc-devel gst-plugins-devel libXxf86misc-devel libalsa-devel phonon-devel
+BuildRequires: automoc cmake gcc-c++ glibc-devel gst-plugins-devel libalsa-devel phonon-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -47,6 +47,12 @@ Gstreamer phonon backend
 %_iconsdir/hicolor/*/apps/phonon-gstreamer.*
 
 %changelog
+* Wed Nov 28 2012 Sergey V Turchin <zerg@altlinux.org> 4.6.2-alt1
+- new version
+
+* Thu Apr 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.6.0-alt2.M60P.1
+- build for M60P
+
 * Thu Apr 26 2012 Sergey V Turchin <zerg@altlinux.org> 4.6.0-alt3
 - fix requires
 
