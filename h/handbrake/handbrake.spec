@@ -1,4 +1,4 @@
-%define svn svn5065
+%define svn svn5086
 
 Name: handbrake
 Version: 0.9.9
@@ -109,6 +109,9 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Wed Nov 28 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5086
+- build svn5086
+
 * Fri Nov 16 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5065
 - build svn5065
 - cleanup BuildRequres
