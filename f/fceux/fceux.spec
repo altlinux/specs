@@ -1,6 +1,6 @@
 Name: fceux
 Version: 2.1.4a
-Release: alt3.1
+Release: alt3.2
 
 Summary: FCEUX is a Nintendo Entertainment System (NES), Famicom, and Famicom Disk System (FDS) emulator
 Summary(ru_RU.UTF-8): FCEUX - это эмулятор Nintendo Entertainment System ("Денди"), Famicom и Famicom Disk System (FDS)
@@ -24,6 +24,8 @@ Patch0: %name-%version-alt-fix_install.patch
 # patch from openSUSE Build Service to fix build process
 Patch1: %name-%version-opensuse-overflow.patch
 Patch2: %name-2.1.4a-alt-DSO.patch
+Patch3: %name-2.1.4a-alt-glibc-2.16.patch
+Patch4: %name-2.1.4a-alt-zlib-1.2.7.patch
 
 BuildRequires: gcc-c++ libgtk+2-devel libSDL-devel python-modules-email scons zlib-devel
 
@@ -59,8 +61,11 @@ FCEUX - это развитие эмулятора FCE Ultra. В какое-то
 %patch0
 %patch1
 %patch2 -p2
+%patch3 -p2
+%patch4 -p2
 
 %build
+%add_optflags -fpermissive
 CFLAGS="%optflags" scons
 
 %install
@@ -87,6 +92,9 @@ install -D -m 644 %SOURCE3 %buildroot/%_pixmapsdir/%name-big.png
 %_pixmapsdir/*
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.4a-alt3.2
+- Fixed build
+
 * Tue Jun 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.4a-alt3.1
 - Fixed build
 
