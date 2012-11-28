@@ -1,9 +1,10 @@
 Name: haserl
 Version: 0.9.3
-Release: alt2
+Release: alt2.1
 License: GPL
 Group: Development/Other
 Source: %{name}-%{version}.tar.gz
+Patch: haserl-0.9.3-alt-make-3.82.patch
 Summary: Html And Shell Embedded Runtime Language
 
 %description
@@ -23,6 +24,7 @@ scripts are like a poor-man's version of PHP (http://www.php.net)
 
 %prep
 %setup
+%patch -p2
 
 %build
 %configure
@@ -38,6 +40,9 @@ scripts are like a poor-man's version of PHP (http://www.php.net)
 
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt2.1
+- Fixed build with make 3.82
+
 * Sun Nov 06 2005 Nick S. Grechukh <gns@altlinux.org> 0.9.3-alt2
 - initial build for sisyphus
 
