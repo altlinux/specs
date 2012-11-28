@@ -1,7 +1,7 @@
 %define module Source-Repository
 
 Name: perl-%module
-Version: 0.08
+Version: 0.09
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -14,9 +14,10 @@ Url: http://search.cpan.org/dist/%module
 
 # Automatically added by buildreq on Wed Nov 06 2002
 BuildRequires: perl-devel perl-RPM-Source-Editor perl-RPM perl-DistroMap perl-String-ShellQuote perl-RPM-Source-Convert
-Requires: perl-RPM-Source-Editor > 0.773
+Requires: perl-RPM-Source-Editor > 0.779
 # for ALTLinux Backport; TODO: use separate module?
-Requires: perl-RPM-Source-Convert > 0.40
+Requires: perl-RPM-Source-Convert > 0.47
+Conflicts: perl-RPM-Source-Convert < 0.48
 
 %description
 %summary
@@ -33,9 +34,13 @@ Requires: perl-RPM-Source-Convert > 0.40
 %files
 %doc Changes
 #doc README
+%_bindir/*mass
 %perl_vendor_privlib/Source*
 
 %changelog
+* Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.09-alt1
+- development release
+
 * Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - configurable matcher
 
