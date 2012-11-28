@@ -1,6 +1,6 @@
 Name: netpanzer
 Version: 0.8.2
-Release: alt1.qa2
+Release: alt1.qa3
 Summary: An Online Multiplayer Tactical Warfare Game
 
 Group: Games/Arcade
@@ -44,6 +44,7 @@ sed -i 's/\r//' RELNOTES
 %patch4 -p0
 
 %build
+%add_optflags -fpermissive
 %configure
 jam %{?_smp_mflags}
 
@@ -72,6 +73,9 @@ desktop-file-install --vendor fedora				\
 %_datadir/netpanzer
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.qa3
+- Fixed build with gcc 4.7
+
 * Fri Mar 25 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.2-alt1.qa2
 - Rebuilt with libphysfs 2.0.2
 
