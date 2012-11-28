@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: ananas
 Version: 0.9.5
-Release: alt7.1
+Release: alt7.2
 
 Summary: Runtime and development environment of Finance Applications
 Summary(ru_RU.UTF8): Среда разработки и исполнения прикладных решений автоматизации оперативного, бухгалтерского и других видов учета.
@@ -15,6 +15,7 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 # checkout from CVSROOT=:pserver:anonymous@www.leaderit.ru:/var/cvs , module=%%name
 Source: http://prdownloads.sf.net/ananasproject/%name-%version.tar.bz2
 Patch0: ananas-0.9.5-alt-DSO.patch
+Patch1: ananas-0.9.5-alt-glibc-2.16.patch
 
 Provides: ananas-engine-qt = %version
 Obsoletes: ananas-engine-qt
@@ -159,6 +160,7 @@ Grigory Panov <gr1313 at mail dot ru>
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
 find -type f | xargs sed -i "s|/usr/share/ananas/extensions|%_libdir/ananas/extensions|g"
 find -type f | xargs sed -i "s|QString::QString|QString|g"
 
@@ -260,6 +262,9 @@ mysql -u root -e "create database ananas_inventory_demo character set utf8" > /d
 %_datadir/ananas/inventory/
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt7.2
+- Fixed build with glibc 2.16
+
 * Tue Jun 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt7.1
 - Fixed build
 
