@@ -1,6 +1,6 @@
 Name: postfix
 Version: 2.9.4
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -674,6 +674,9 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Mon Nov 26 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.4-alt3
+- Reimplement 2.5-style postconf -E (still no default values evaluation)
+
 * Mon Nov 19 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.4-alt2
 - Fix ill-applied ignore-system-user patch
 - Add systemd service
