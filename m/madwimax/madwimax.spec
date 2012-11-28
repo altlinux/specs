@@ -1,6 +1,6 @@
 Name: madwimax
 Version: 0.1.1
-Release: alt2.1
+Release: alt2.2
 License: GPL2
 
 Url: http://madwimax.googlecode.com
@@ -55,7 +55,8 @@ isenbaev:Vladislav Isenbaev <isenbaev@gmail.com>
 cp INSTALL INSTALL.TXT
 %autoreconf
 
-%configure
+%configure \
+	--with-udev-dir=%_sysconfdir/udev
 %make_build
 
 %install
@@ -84,6 +85,9 @@ install -m 755 %SOURCE3 %buildroot/lib/udev/%name
 %_man8dir/*
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt2.2
+- Fixed build
+
 * Sun May 22 2011 Hihin Ruslan <ruslandh@altlinux.ru> 0.1.1-alt2.1
 - Build for Sisyphus
 
