@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 6.9
-Release: alt3
+Release: alt4
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -66,6 +66,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Wed Nov 28 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt4
+- nscd and nslcd added to systemd-enabled
+
 * Fri Nov 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt3
 - nscd and nslcd temporary removed from services-on
 
