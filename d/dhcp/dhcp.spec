@@ -6,7 +6,7 @@
 
 Name: dhcp
 Version: 4.2.4.P2
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -77,6 +77,7 @@ Patch0037: 0037-Fix-do-forward-updates-statement.patch
 Patch0038: 0038-Document-ALT-specific-in-the-dhclient-script-manpage.patch
 Patch0039: 0039-Ignore-checksums-on-the-loopback-interface.patch
 Patch0040: 0040-dhcpd-and-dhcrelay-Override-default-user-jail-dir-an.patch
+Patch0041: 0041-examples-dhcpd-dhcpv6.conf-Drop-dhcpv6-lease-file-na.patch
 
 # due to copy_resolv_conf/copy_resolv_lib
 BuildPreReq: chrooted >= 0.3
@@ -100,6 +101,8 @@ Summary: The ISC DHCP client daemon
 Group: System/Servers
 PreReq: %name-common = %epoch:%version-%release
 Requires: %name-libs = %epoch:%version-%release
+# NetworkManager can use dhclient
+Provides: nm-dhcp-client
 
 %package server
 Summary: The ISC DHCP server daemon
@@ -230,6 +233,7 @@ server
 %patch0038 -p2
 %patch0039 -p2
 %patch0040 -p2
+%patch0041 -p2
 
 install -pm644 %_sourcedir/update_dhcp.pl .
 find -type f -print0 |
@@ -279,6 +283,9 @@ mkdir -p %buildroot{%ROOT,/etc/{sysconfig,%name/dhclient.d}}
 # dhcpd
 install -pD -m600 %_sourcedir/dhcpd.conf.sample \
 	%buildroot/etc/%name/dhcpd.conf.sample
+
+install -pD -m600 doc/examples/dhcpd-dhcpv6.conf \
+	%buildroot/etc/%name/dhcpd6.conf.sample
 
 for dhcpd in dhcpd dhcpd6; do
 	install -pD -m755 %_sourcedir/$dhcpd.init \
@@ -503,6 +510,7 @@ fi
 
 %dir /etc/%name
 %doc /etc/%name/dhcpd.conf.sample
+%doc /etc/%name/dhcpd6.conf.sample
 %dir %docdir
 %docdir/update_dhcp.pl
 
@@ -535,6 +543,12 @@ fi
 # }}}
 
 %changelog
+* Wed Nov 28 2012 Mikhail Efremov <sem@altlinux.org> 1:4.2.4.P2-alt4
+- Install dhcpd6.conf.sample.
+- dhcp-client: Provide nm-dhcp-client.
+- dhclient-hooks: Handle classless-static-routes.
+- Drop dhcpv6-lease-file-name from dhcpd6.conf.sample.
+
 * Mon Nov 26 2012 Mikhail Efremov <sem@altlinux.org> 1:4.2.4.P2-alt3
 - Fix dhcrelay permissions.
 - dhcrelay6: Added init script and config.
