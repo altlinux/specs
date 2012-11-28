@@ -1,5 +1,5 @@
 Name: fontconfig
-Version: 2.10.0
+Version: 2.10.2
 Release: alt1
 
 Summary: Font configuration and customization library and utilities
@@ -98,6 +98,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Nov 28 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.10.2-alt1
+- 2.10.2
+
 * Wed Jul 18 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.10.0-alt1
 - 2.10.0
 
