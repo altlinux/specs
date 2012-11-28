@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.28
-Release: alt2
+Release: alt3
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -131,6 +131,10 @@ fi ||:
 
 
 %changelog
+* Wed Nov 28 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt3
+- Use "a wretched-man's crutch" daemonization: start-stop-daemon
+  for SysV-init (closes: 27865).
+
 * Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 5.28-alt2
 - Add favicon support with design/images/product.png
 
