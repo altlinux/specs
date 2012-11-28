@@ -1,6 +1,6 @@
 Name: faces
 Version: 1.7.7
-Release: alt6
+Release: alt6.1
 
 Summary: A list monitor with a visual output
 License: LGPL
@@ -8,7 +8,7 @@ Group: Networking/Mail
 
 Source: ftp://ftp.cs.indiana.edu/pub/%name/%name/%name-%version.tar.bz2
 
-BuildRequires: libgtk+2-devel
+BuildRequires: libgtk+2-devel libICE-devel
 
 %package xface
 Summary: Utilities needed by mailers for handling Faces' X-face images
@@ -63,6 +63,8 @@ libcompface-devel contains the %name program development environment,
 %prep
 %setup
 touch config.rpath
+sed -i 's|@GT_NO@||g' */Makefile.in
+sed -i 's|@GT_YES@|#NO#|g' */Makefile.in
 
 %build
 %autoreconf
@@ -95,6 +97,9 @@ install -pD -m644 faces.desktop %buildroot%_desktopdir/%name.desktop
 %_man3dir/compface.3.*
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.7-alt6.1
+- Fixed build
+
 * Mon May 28 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.7.7-alt6
 - explicitly link faces binary with libX11
 
