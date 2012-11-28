@@ -14,7 +14,7 @@
 
 Name: NetworkManager
 Version: 0.9.6.0
-Release: alt1%git_date
+Release: alt2%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -34,7 +34,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(pre): rpm-build-licenses
 
 # For tests
-BuildPreReq: dbus dhcpcd
+BuildPreReq: dbus dhcpcd dhcp-client
 
 BuildPreReq: intltool libgcrypt-devel libtool
 BuildRequires: glibc-devel-static iproute2 libnl-devel libwireless-devel ppp-devel
@@ -51,7 +51,6 @@ Requires: dbus >= %dbus_version
 Requires: wpa_supplicant >= %wpa_supplicant_version
 Requires: iproute2 openssl
 Requires: ppp = %ppp_version
-Requires: dhcpcd >= %dhcpcd_version
 Requires: nss >= 3.11.7
 Requires: ppp-pppoe
 Requires: dnsmasq
@@ -59,11 +58,14 @@ Requires: openresolv
 Requires: libshell
 Requires: ModemManager >= 0.2
 Requires: NetworkManager-glib = %version-%release
+Requires: nm-dhcp-client
 
 Conflicts: NetworkManager-vpnc < 0.9.2
 Conflicts: NetworkManager-openvpn < 0.9.2
 Conflicts: NetworkManager-pptp < 0.9.2
 Conflicts: NetworkManager-gnome < 0.9.2
+
+Conflicts: dhcpcd < %dhcpcd_version
 
 Obsoletes: nmcli
 
@@ -156,7 +158,7 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
     --disable-static \
     --with-crypto=nss \
     --with-distro=alt \
-    --with-dhclient=no \
+    --with-dhclient=/sbin/dhclient \
     --with-dhcpcd=/sbin/dhcpcd \
     --with-docs=yes \
     --with-resolvconf=/sbin/resolvconf \
@@ -303,6 +305,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Nov 28 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt2
+- Require nm-dhcp-client.
+- Build with both dhcpcd and dhclient support.
+- etcnet-alt: Add test for IPv6 configuration.
+- etcnet-alt: Implement IPv6 support.
+
 * Wed Aug 08 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt1
 - Updated to 0.9.6.0.
 
