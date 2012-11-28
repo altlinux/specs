@@ -1,5 +1,5 @@
 %define ver_maj 1
-%define ver_min 52
+%define ver_min 51
 %define ver_rel 0
 
 %define namesuff %{ver_maj}_%{ver_min}_%ver_rel
@@ -7,7 +7,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name-%version
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -32,9 +32,9 @@
 %define mpidir %_libdir/%mpiimpl
 %endif
 
-Name: boost
+Name: boost1.51.0
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt5
 Epoch: 1
 
 Summary: Boost libraries
@@ -49,6 +49,7 @@ Patch4: boost-1.51.0-alt-explicit-st.patch
 Patch5: boost-1.50.0-alt-bjam-locate-target.patch
 Patch15: boost-1.36.0-alt-test-include-fix.patch
 Patch23: boost-1.45.0-alt-mpi-mt-only.patch
+Patch27: boost-1.51.0-alt-graph-use-traits.patch
 Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
 
 # we use %%_python_version
@@ -1065,6 +1066,7 @@ applications. This package contains python module.
 %patch5 -p2
 %patch15 -p1
 %patch23 -p2
+%patch27 -p2
 %patch28 -p3
 
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
@@ -1518,10 +1520,8 @@ done
 
 
 %changelog
-* Sun Nov 18 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.52.0-alt1
-- new version;
-- removed patch #27, already applied by upstream;
-- fixed packaging for builds without long_double and mpi.
+* Sun Nov 18 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.51.0-alt5
+- compatibility build without development headers.
 
 * Mon Oct 01 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.51.0-alt4
 - support Python 3 in Boost.Python:
