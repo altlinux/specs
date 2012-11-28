@@ -1,6 +1,6 @@
 Name: Transcend
 Version: 0.3
-Release: alt4
+Release: alt4.1
 Summary: Transcend can best be described as retro-style, abstract, 2D shooter
 License: GPL
 Group: Games/Arcade
@@ -24,6 +24,7 @@ Two features set Transcend apart from other games. First, its dynamic graphical 
 %setup -q -n %{name}_%{version}_UnixSource
 
 %build
+mkdir -p Transcend/portaudio/lib
 echo 1 | ./runToBuild
 
 %install
@@ -78,6 +79,9 @@ desktop-file-install --dir=%buildroot%_datadir/applications %name.desktop --vend
 %_datadir/pixmaps/*.png
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt4.1
+- Fixed build
+
 * Tue Apr 05 2011 Fr. Br. George <george@altlinux.ru> 0.3-alt4
 - Forbidden requires eliminated
 
