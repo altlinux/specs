@@ -4,7 +4,7 @@
 
 Name: mod_evasive
 Version: 1.10.1
-Release: alt0.1
+Release: alt0.1.1
 
 Summary: mod_evasive is an evasive maneuvers module for Apache
 
@@ -25,7 +25,7 @@ mod_dosevasive is an evasive maneuvers module for Apache to provide evasive acti
 %setup -q -n %name
 
 %build
-%apache_apxs -Wc,"$RPM_OPT_FLAGS" -c mod_evasive.c -o mod_evasive.so
+%apache_apxs -Wl,"--as-needed $RPM_OPT_FLAGS" -c mod_evasive.c -o mod_evasive.so
 
 %install
 %__mkdir_p %buildroot{%apache_moduledir,%apache_addonconfdir}
@@ -45,5 +45,8 @@ mod_dosevasive is an evasive maneuvers module for Apache to provide evasive acti
 %doc README
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.1-alt0.1.1
+- Fixed build
+
 * Fri Mar 28 2008 Nick S. Grechukh <gns@altlinux.org> 1.10.1-alt0.1
 - initial build for Sisyphus
