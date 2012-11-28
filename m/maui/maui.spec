@@ -1,7 +1,7 @@
 Summary: Maui Scheduler
 Name: maui
 Version: 3.3
-Release: alt1
+Release: alt1.1
 
 License: Maui Scheduler General Public License
 Group: System/Servers
@@ -13,6 +13,8 @@ URL: http://www.supercluster.org/maui/
 Source: %name-%version.tar
 
 Source100: maui.init
+
+Patch: maui-3.3-alt-torque-4.1.2.patch
 
 %define mauihome %_spooldir/%name
 %define mauiuser _maui
@@ -47,6 +49,7 @@ Static libraries and header files required for compiling maui plugins.
 
 %prep
 %setup -q
+%patch -p2
 
 #hasher/gear specific hack
 %__install -d lib
@@ -102,6 +105,9 @@ echo
 %_includedir/*.h
 
 %changelog
+* Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.1
+- Fixed build with torque 4.1.2
+
 * Sat Feb 20 2010 Denis Pynkin <dans@altlinux.ru> 3.3-alt1
 - New version
 
