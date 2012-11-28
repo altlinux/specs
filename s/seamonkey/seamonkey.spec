@@ -12,7 +12,7 @@
 %define sm_develdir               %sm_prefix-devel
 
 Name: seamonkey
-Version: 2.13.2
+Version: 2.14
 Release: alt1
 Serial: 1
 Summary: Web browser and mail reader
@@ -383,6 +383,7 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 )
 
 %files
+%dir %sm_datadir
 %_altdir/%name
 %_bindir/%name
 %_datadir/applications/*.desktop
@@ -401,6 +402,7 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %endif
 
 %files devel
+%dir %sm_idldir
 %sm_idldir
 %sm_includedir
 %sm_develdir
@@ -409,6 +411,10 @@ printf '%_bindir/xbrowser\t%_bindir/%name\t100\n' > %buildroot%_altdir/%name
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Fri Nov 23 2012 Radik Usupov <radik@altlinux.org> 1:2.14-alt1
+- New version seamonkey (2.14)
+- New version enigmail (1.4.6)
+
 * Wed Oct 31 2012 Radik Usupov <radik@altlinux.org> 1:2.13.2-alt1
 - New version seamonkey (2.13.2) (Closes: 27764)
 
