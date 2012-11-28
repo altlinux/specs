@@ -1,7 +1,7 @@
 Summary: A Breakout style X Window System based game.
 Name: xboing
 Version: 2.4
-Release: alt1
+Release: alt2
 License: MIT
 Group: Games/Arcade
 Patch1: 010_initial_patches.diff
@@ -12,11 +12,11 @@ Patch5: speed_fix.diff
 Patch6: xboing.6x_man_section.diff
 Patch7: 030_auto_validate_yn.diff
 Patch8: 040_manpage_errors.diff
+Patch9: xboing.font.diff
 Source: http://www.techrescue.org/%name/%{name}%{version}.tar.gz
 Source1: %name.xpm
 Source2: %name.desktop
-Url: http://www.catt.rmit.edu.au/%name/%name.html
-Packager: Fr. Br. George <george@altlinux.ru>
+Url: http://www.techrescue.org/xboing/index.html
 
 # Automatically added by buildreq on Thu Dec 10 2009
 BuildRequires: gccmakedep imake libXext-devel libXpm-devel xorg-cf-files
@@ -36,6 +36,7 @@ you've broken through all of them.
 %patch6 -p0
 %patch7 -p1
 %patch8 -p1
+%patch9 -p0
 cp %SOURCE1 .
 cp %SOURCE2 .
 
@@ -61,5 +62,8 @@ install -D -m 644 %name.man %buildroot%_man6dir/%name.6
 %config %attr(0664,games,games) %_localstatedir/games/%name.score
 
 %changelog
+* Wed Nov 28 2012 Fr. Br. George <george@altlinux.ru> 2.4-alt2
+- Fix font structure crush (Closes: #27625)
+
 * Sun Dec 16 2007 Fr. Br. George <george@altlinux.ru> 2.4-alt1
 - Initial build from Debian Sid
