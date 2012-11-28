@@ -14,7 +14,7 @@
 
 Name: systemd
 Version: 195
-Release: alt2
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -26,9 +26,6 @@ Source4: prefdm.service
 Source6: altlinux-idetune.service
 Source7: altlinux-update_chrooted.service
 Source8: altlinux-clock-setup.service
-Source11: altlinux-storage-init
-Source12: altlinux-storage-init.service
-Source13: altlinux-wait-storage.service
 Source14: systemd-bash3
 Source15: network.service
 Source16: altlinux-kmsg-loglevel.service
@@ -40,7 +37,6 @@ Source21: 40-ignore-remove.rules
 Source22: scsi_id.config
 Source23: var-lock.mount
 Source24: var-run.mount
-Source25: altlinux-storage-init-late.service
 Source27: altlinux-first_time.service
 Source28: systemd-tmpfiles.filetrigger
 Source29: tmpfile-systemd-startup-nologin.conf
@@ -390,13 +386,6 @@ ln -s ../altlinux-update_chrooted.service %buildroot%_unitdir/sysinit.target.wan
 install -m644 %SOURCE8 %buildroot%_unitdir/altlinux-clock-setup.service
 ln -s ../altlinux-clock-setup.service %buildroot%_unitdir/sysinit.target.wants
 ln -s altlinux-clock-setup.service %buildroot%_unitdir/clock.service
-install -m755 %SOURCE11 %buildroot/lib/systemd/altlinux-storage-init
-install -m644 %SOURCE12 %buildroot%_unitdir/altlinux-storage-init.service
-ln -s ../altlinux-storage-init.service %buildroot%_unitdir/local-fs.target.wants
-install -m644 %SOURCE25 %buildroot%_unitdir/altlinux-storage-init-late.service
-ln -s ../altlinux-storage-init-late.service %buildroot%_unitdir/local-fs.target.wants
-install -m644 %SOURCE13 %buildroot%_unitdir/altlinux-wait-storage.service
-ln -s ../altlinux-wait-storage.service %buildroot%_unitdir/local-fs.target.wants
 install -m644 %SOURCE15 %buildroot%_unitdir/network.service
 ln -s ../network.service %buildroot%_unitdir/multi-user.target.wants
 install -m644 %SOURCE16 %buildroot%_unitdir/altlinux-kmsg-loglevel.service
@@ -864,6 +853,9 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Thu Nov 22 2012 Alexey Shabalin <shaba@altlinux.ru> 195-alt3
+- drop altlinux-storage-init.service,altlinux-wait-storage.service,altlinux-storage-init-late.service
+
 * Thu Nov 22 2012 Alexey Shabalin <shaba@altlinux.ru> 195-alt2
 - drop rtc.conf from modules-load.d
 

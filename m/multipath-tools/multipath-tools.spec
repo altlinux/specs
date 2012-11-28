@@ -1,20 +1,25 @@
-%set_verify_elf_method unresolved=relaxed
+%define _sbindir /sbin
+%define _libdir /%_lib
+%define _libmpathdir %_libdir/multipath
 
 Name: multipath-tools
 Version: 0.4.9
-Release: alt3
+Release: alt4
 
 Summary: Tools to manage multipath devices with device-mapper
 License: GPLv2+
 Group: System/Configuration/Hardware
 
 Url: http://christophe.varoqui.free.fr
-Source: %name-%version.tar.bz2
-# git://git.kernel.org/pub/scm/linux/storage/multipath-tools
+Source: %name-%version.tar
+# http://git.opensvc.com/multipath-tools/.git
 Packager: Konstantin Pavlov <thresh@altlinux.org>
 
-# Automatically added by buildreq on Tue Apr 07 2009
-BuildRequires: libaio-devel libdevmapper-devel libncurses-devel libreadline-devel
+Requires: libmultipath = %version-%release
+Requires: kpartx = %version-%release
+Requires: dmsetup
+
+BuildRequires: libaio-devel libdevmapper-devel libreadline-devel libudev-devel
 
 %description
 This package provides the tools to manage multipath devices by
@@ -23,27 +28,43 @@ The tools are:
 - multipath: lists and configures multipath devices.
 - multipathd: monitors paths; as paths fail and come back, it may
   initiate path group switches.
-- kpartx: maps linear devmaps upon device partitions, which makes
-  multipath maps partitionable.
+
+%package -n libmultipath
+Summary: The %name modules and shared library
+License: GPL+
+Group: System/Libraries
+
+%description -n libmultipath
+The libmultipath provides the path checker
+and prioritizer modules. It also contains the multipath shared library,
+libmultipath.
+
+%package -n kpartx
+Summary: Partition device manager for device-mapper devices
+Group: System/Configuration/Hardware
+
+%description -n kpartx
+kpartx manages partition creation and removal for device-mapper devices.
 
 %prep
 %setup
 
 %build
 # non-SMP build
-make
+make LIB=%_lib
 
 %install
-mkdir -p %buildroot{/sbin,%_man8dir,%_initdir,%_localstatedir/multipath}
-%makeinstall_std
+mkdir -p %buildroot{%_sbindir,%_libdir,%_man8dir,%_initdir,%_unitdir}
+make install \
+	DESTDIR=%buildroot \
+	bindir=%_sbindir \
+	syslibdir=%_libdir \
+	libdir=%_libmpathdir \
+	rcdir=%_initrddir \
+	unitdir=%_unitdir
 
-mkdir -p %buildroot%_initdir
 install -pm755 multipathd/multipathd.init.alt %buildroot%_initdir/multipathd
 cp multipath.conf.annotated %buildroot%_sysconfdir/multipath.conf
-
-mkdir -p %buildroot/lib/udev/rules.d
-mv %buildroot/etc/udev/rules.d/multipath.rules %buildroot/lib/udev/rules.d/40-multipath.rules
-mv %buildroot/etc/udev/rules.d/kpartx.rules %buildroot/lib/udev/rules.d/40-kpartx.rules
 
 %post
 %post_service multipathd
@@ -53,18 +74,58 @@ mv %buildroot/etc/udev/rules.d/kpartx.rules %buildroot/lib/udev/rules.d/40-kpart
 
 %files
 %doc AUTHOR README FAQ TODO ChangeLog multipath.conf.annotated multipath.conf.synthetic
-/sbin/*
-/lib/udev/kpartx_id
-%config /lib/udev/rules.d/*.rules
+%_sbindir/multipath
+%_sbindir/multipathd
+%_sbindir/mpathconf
+%_sbindir/mpathpersist
+/lib/udev/rules.d/62-multipath.rules
 %config(noreplace) %attr(644,root,root) %_sysconfdir/multipath.conf
+%_initdir/multipathd
+%_unitdir/multipathd.service
 %_man5dir/*
 %_man8dir/*
-%_initdir/multipathd
-%_localstatedir/multipath
-/%_lib/multipath
-/%_lib/libmultipath.so.0
+%exclude %_man8dir/kpartx.8.*
+
+%files -n libmultipath
+%_libdir/libmultipath.so.*
+%_libdir/libmpathpersist.so.*
+%dir %_libdir/multipath
+%_libdir/multipath/*
+
+%files -n kpartx
+/sbin/kpartx
+/lib/udev/kpartx_id
+%_man8dir/kpartx.8.*
 
 %changelog
+* Fri Nov 16 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.9-alt4
+- upstream snapshot 2012-10-01
+- update udev rules
+- add systemd unit file
+- split packages libmultipath and kpartx
+- Apply fedora patches:
+  0025-RH-fix-systemd-start-order.patch
+  0024-RH-start-multipathd-service-before-lvm.patch
+  0023-RHBZ-866291-update-documentation.patch
+  0022-RHBZ-864368-disable-libdm-failback.patch
+  0021-RH-fix-oom-adj.patch
+  0020-RH-netapp-config.patch
+  0019-RH-detect-prio.patch
+  0018-RH-remove-config-dups.patch
+  0016-RH-retain_hwhandler.patch
+  0015-RH-selector_change.patch
+  0014-RH-dm_reassign.patch
+  0013-RH-kpartx-msg.patch
+  0012-RH-change-configs.patch
+  0011-RH-use-sync-support.patch
+  0009-RH-dont-remove-map-on-enomem.patch
+  0007-RH-add-hp_tur-checker.patch
+  0006-RH-add-find-multipaths.patch
+  0005-RH-add-mpathconf.patch
+  0004-RH-multipathd-blacklist-all-by-default.patch
+  0002-RH-multipath.rules.patch
+  0001-RH-dont_start_with_no_config.patch
+
 * Tue Feb 15 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4.9-alt3
 - rebuild with new libdevmapper versioning
 
