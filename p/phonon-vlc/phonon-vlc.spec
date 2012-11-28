@@ -1,6 +1,6 @@
 Name: phonon-vlc
-Version: 0.5.0
-Release: alt0.2
+Version: 0.6.1
+Release: alt1
 
 Group: Sound
 Summary: VLC plugin for Phonon, KDE4 Multimedia Framework
@@ -67,6 +67,12 @@ Phonon-VLC is a backend for KDE4 Multimedia Framework
 %_K4srv/phononbackends/vlc.desktop
 
 %changelog
+* Wed Nov 28 2012 Sergey V Turchin <zerg@altlinux.org> 0.6.1-alt1
+- new version
+
+* Sat Feb 25 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.0-alt0.1.M60P.1
+- built for M60P
+
 * Fri Feb 24 2012 Sergey V Turchin <zerg@altlinux.org> 0.5.0-alt0.2
 - update from 0.5 branch
 
