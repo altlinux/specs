@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.7
-Release: alt2
+Release: alt3
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -137,6 +137,10 @@ tar xvf %SOURCE7
 mv -f -- LICENSE LICENSE.orig
 ln -s -- $(relative %_licensedir/Apache-2.0 %_docdir/%name/LICENSE) LICENSE
 
+%ifdef __BTE
+rm -f -- t/apr-ext/finfo.t t/apr/finfo.t
+%endif
+
 %build
 %perl_vendor_build MP_APXS=%apache2_apxs MP_APR_CONFIG=%apache2_apr_config
 
@@ -167,7 +171,7 @@ if [ -e %apache2_mods_enabled/%module_name.load ]; then
     CONF_OK=0
     %apache2_sbindir/apachectl2 configtest && CONF_OK=1 ||:
     if [ "$CONF_OK" = "1" ]; then
-        service %apache2_dname condrestart ||:
+        %post_apache2_rpmhttpdrestartfile
     else
         echo "Some errors detected in Apache2 configuration!"
         echo "To use %real_name check configuration and start %apache2_dname service."
@@ -191,7 +195,7 @@ if [ "$1" = "0" ] ; then # last uninstall
     CONF_OK=0
     %apache2_sbindir/apachectl2 configtest && CONF_OK=1 ||:
     if [ "$CONF_OK" = "1" ]; then
-        service %apache2_dname condrestart ||:
+        %post_apache2_rpmhttpdrestartfile
     else
         echo "Some errors detected in Apache2 configuration!"
         echo "To complete %real_name uninstalling check configuration and restart %apache2_dname service."
@@ -220,7 +224,7 @@ fi
 %perl_vendor_autolib/ModPerl
 
 # mod_perl-1.x
-#%%exclude %perl_vendor_archlib/Apache/SizeLimit.pm
+%exclude %perl_vendor_archlib/Apache/SizeLimit.pm
 
 # Install helpers - do not need them
 %exclude %perl_vendor_archlib/Bundle*
@@ -282,6 +286,10 @@ fi
 %doc docs/*
 
 %changelog
+* Wed Nov 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.7-alt3
+- Excluding Apache/SizeLimit.pm (Closes: #26508)
+- Make use of triggers to restart Apache2 on package install/uninstall
+
 * Mon Nov 05 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.7-alt2
 - Fix build with HTTP::Headers 6.001
 - Restoring proper translation and formatting in spec file
