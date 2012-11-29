@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.53
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -153,14 +153,16 @@ Patch0014: linux-%kernel_branch.42-fix-arch-powerpc-platforms--chrp.patch
 Patch0015: linux-%kernel_branch.42-fix-arch-powerpc-platforms--pseries.patch
 Patch0016: linux-%kernel_branch.43-fix-arch-s390.patch
 Patch0017: linux-%kernel_branch.43-fix-arch-s390--lib.patch
-Patch0018: linux-%kernel_branch.50-fix-arch-x86.patch
-Patch0019: linux-%kernel_branch.42-fix-arch-x86--apic.patch
-Patch0020: linux-%kernel_branch.42-fix-arch-x86--apm.patch
-Patch0021: linux-%kernel_branch.44-fix-arch-x86--mcheck.patch
-Patch0022: linux-%kernel_branch.42-fix-arch-x86--tsc.patch
-Patch0023: linux-%kernel_branch.42-fix-arch-x86-cpu--perf-event.patch
-Patch0024: linux-%kernel_branch.47-fix-arch-x86-cpu--rdrand.patch
-Patch0025: linux-%kernel_branch.42-fix-arch-x86-platform-olpc.patch
+
+Patch0020: linux-%kernel_branch.50-fix-arch-x86.patch
+Patch0021: linux-%kernel_branch.42-fix-arch-x86--apic.patch
+Patch0022: linux-%kernel_branch.42-fix-arch-x86--apm.patch
+Patch0023: linux-%kernel_branch.44-fix-arch-x86--mcheck.patch
+Patch0024: linux-%kernel_branch.51-fix-arch-x86--microcode_amd.patch
+Patch0025: linux-%kernel_branch.42-fix-arch-x86--tsc.patch
+Patch0026: linux-%kernel_branch.42-fix-arch-x86-cpu--perf-event.patch
+Patch0027: linux-%kernel_branch.47-fix-arch-x86-cpu--rdrand.patch
+Patch0028: linux-%kernel_branch.42-fix-arch-x86-platform-olpc.patch
 
 Patch0030: linux-%kernel_branch.51-fix-block.patch
 Patch0031: linux-%kernel_branch.42-fix-block--blk-integrity.patch
@@ -322,7 +324,8 @@ Patch0331: linux-%kernel_branch.42-fix-drivers-input-mouse--synaptics.patch
 Patch0332: linux-%kernel_branch.42-fix-drivers-input-serio--i8042.patch
 
 Patch0341: linux-%kernel_branch.42-fix-drivers-isdn-gigaset--gigaset.patch
-Patch0342: linux-%kernel_branch.42-fix-drivers-isdn-mISDN--mISDN_core.patch
+Patch0342: linux-%kernel_branch.51-fix-drivers-isdn-hardware-mISDN--hfcsusb.patch
+Patch0343: linux-%kernel_branch.42-fix-drivers-isdn-mISDN--mISDN_core.patch
 
 Patch0351: linux-%kernel_branch.42-fix-drivers-leds--leds-lp5521.patch
 
@@ -358,7 +361,7 @@ Patch0425: linux-%kernel_branch.43-fix-drivers-net--bnx2.patch
 Patch0426: linux-%kernel_branch.43-fix-drivers-net--bnx2x.patch
 Patch0427: linux-%kernel_branch.42-fix-drivers-net--bonding.patch
 Patch0428: linux-%kernel_branch.43-fix-drivers-net--claw.patch
-Patch0429: linux-%kernel_branch.43-fix-drivers-net--cnic.patch
+Patch0429: linux-%kernel_branch.51-fix-drivers-net--cnic.patch
 Patch0430: linux-%kernel_branch.43-fix-drivers-net--ctcm.patch
 Patch0431: linux-%kernel_branch.46-fix-drivers-net--cxgb3.patch
 Patch0432: linux-%kernel_branch.42-fix-drivers-net--depca.patch
@@ -379,7 +382,7 @@ Patch0446: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
 Patch0447: linux-%kernel_branch.46-fix-drivers-net--qlge.patch
 Patch0448: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
 Patch0449: linux-%kernel_branch.50-fix-drivers-net--smsguicv.patch
-Patch0450: linux-%kernel_branch.47-fix-drivers-net--tg3.patch
+Patch0450: linux-%kernel_branch.51-fix-drivers-net--tg3.patch
 Patch0451: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
 Patch0452: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
 Patch0453: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
@@ -570,40 +573,52 @@ Patch0774: linux-%kernel_branch.42-fix-net--x25.patch
 Patch0775: linux-%kernel_branch.42-fix-net-8021q--vlan-core.patch
 Patch0776: linux-%kernel_branch.42-fix-net-bridge.patch
 Patch0777: linux-%kernel_branch.42-fix-net-ceph.patch
-Patch0778: linux-%kernel_branch.46-fix-net-core.patch
+Patch0778: linux-%kernel_branch.51-fix-net-core.patch
 Patch0779: linux-%kernel_branch.46-fix-net-ipv4.patch
-Patch0780: linux-%kernel_branch.52-fix-net-ipv6.patch
-Patch0781: linux-%kernel_branch.43-fix-net-ipv6-netfilter--nf_conntrack_ipv6.patch
-Patch0782: linux-%kernel_branch.42-fix-net-ipv6--ip6_tunnel.patch
-Patch0783: linux-%kernel_branch.43-fix-net-iucv--af_iucv.patch
-Patch0784: linux-%kernel_branch.43-fix-net-iucv--iucv.patch
-Patch0785: linux-%kernel_branch.42-fix-net-mac80211.patch
-Patch0786: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ecache.patch
-Patch0787: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ftp.patch
-Patch0788: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_netlink.patch
-Patch0789: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
-Patch0790: linux-%kernel_branch.44-fix-net-rds--rds_rdma.patch
-Patch0791: linux-%kernel_branch.42-fix-net-sctp.patch
-Patch0792: linux-%kernel_branch.43-fix-net-sunrpc.patch
-Patch0793: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
+Patch0780: linux-%kernel_branch.51-fix-net-ipv4-netfilter--iptable_nat.patch
+Patch0781: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat.patch
+Patch0782: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_amanda.patch
+Patch0783: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_ftp.patch
+Patch0784: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_h323.patch
+Patch0785: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_irc.patch
+Patch0786: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_pptp.patch
+Patch0787: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_sip.patch
+Patch0788: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_snmp_basic.patch
+Patch0789: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_tftp.patch
+Patch0790: linux-%kernel_branch.52-fix-net-ipv6.patch
+Patch0791: linux-%kernel_branch.43-fix-net-ipv6-netfilter--nf_conntrack_ipv6.patch
+Patch0792: linux-%kernel_branch.42-fix-net-ipv6--ip6_tunnel.patch
+Patch0793: linux-%kernel_branch.43-fix-net-iucv--af_iucv.patch
+Patch0794: linux-%kernel_branch.43-fix-net-iucv--iucv.patch
+Patch0795: linux-%kernel_branch.42-fix-net-mac80211.patch
+Patch0796: linux-%kernel_branch.51-fix-net-netfilter--nf_conntrack.patch
+Patch0797: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ecache.patch
+Patch0798: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ftp.patch
+Patch0799: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_netlink.patch
+Patch0800: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
+Patch0801: linux-%kernel_branch.44-fix-net-rds--rds_rdma.patch
+Patch0802: linux-%kernel_branch.51-fix-net-sched.patch
+Patch0803: linux-%kernel_branch.42-fix-net-sctp.patch
+Patch0804: linux-%kernel_branch.43-fix-net-sunrpc.patch
+Patch0805: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
 
-Patch0800: linux-%kernel_branch.42-fix-scripts.patch
+Patch0810: linux-%kernel_branch.42-fix-scripts.patch
 
-Patch0811: linux-%kernel_branch.42-fix-security--security.patch
-Patch0812: linux-%kernel_branch.42-fix-security-selinux.patch
+Patch0821: linux-%kernel_branch.42-fix-security--security.patch
+Patch0822: linux-%kernel_branch.42-fix-security-selinux.patch
 
-Patch0821: linux-%kernel_branch.42-fix-sound-core--snd-pcm.patch
-Patch0822: linux-%kernel_branch.44-fix-sound-firewire--snd-firewire-lib.patch
-Patch0823: linux-%kernel_branch.42-fix-sound-oss--pss.patch
-Patch0824: linux-%kernel_branch.51-fix-sound-pci-hda.patch
-Patch0825: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
-Patch0826: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
+Patch0831: linux-%kernel_branch.42-fix-sound-core--snd-pcm.patch
+Patch0832: linux-%kernel_branch.44-fix-sound-firewire--snd-firewire-lib.patch
+Patch0833: linux-%kernel_branch.42-fix-sound-oss--pss.patch
+Patch0834: linux-%kernel_branch.51-fix-sound-pci-hda.patch
+Patch0835: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
+Patch0836: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 
-Patch0831: linux-%kernel_branch.49-fix-tools--perf.patch
+Patch0841: linux-%kernel_branch.49-fix-tools--perf.patch
 
-Patch0841: linux-%kernel_branch.50-fix-virt-kvm.patch
-Patch0842: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
-Patch0843: linux-%kernel_branch.43-fix-virt-kvm--kvm-intel.patch
+Patch0851: linux-%kernel_branch.50-fix-virt-kvm.patch
+Patch0852: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
+Patch0853: linux-%kernel_branch.43-fix-virt-kvm--kvm-intel.patch
 
 
 Patch1001: linux-%kernel_branch.42-feat-block--bfq-iosched.patch
@@ -1374,14 +1389,17 @@ cd linux-%version
 %patch0015 -p1
 %patch0016 -p1
 %patch0017 -p1
-%patch0018 -p1
-%patch0019 -p1
+
+# fix-arch-x86*
 %patch0020 -p1
 %patch0021 -p1
 %patch0022 -p1
 %patch0023 -p1
 %patch0024 -p1
 %patch0025 -p1
+%patch0026 -p1
+%patch0027 -p1
+%patch0028 -p1
 
 %patch0030 -p1
 %patch0031 -p1
@@ -1561,6 +1579,7 @@ cd linux-%version
 
 %patch0341 -p1
 %patch0342 -p1
+%patch0343 -p1
 
 # fix-drivers-leds--*
 %patch0351 -p1
@@ -1839,26 +1858,38 @@ cd linux-%version
 %patch0791 -p1
 %patch0792 -p1
 %patch0793 -p1
-
+%patch0794 -p1
+%patch0795 -p1
+%patch0796 -p1
+%patch0797 -p1
+%patch0798 -p1
+%patch0799 -p1
 %patch0800 -p1
+%patch0801 -p1
+%patch0802 -p1
+%patch0803 -p1
+%patch0804 -p1
+%patch0805 -p1
 
-%patch0811 -p1
-%patch0812 -p1
+%patch0810 -p1
 
-# fix-sound-*
 %patch0821 -p1
 %patch0822 -p1
-%patch0823 -p1
-%patch0824 -p1
-%patch0825 -p1
-%patch0826 -p1
 
+# fix-sound-*
 %patch0831 -p1
+%patch0832 -p1
+%patch0833 -p1
+%patch0834 -p1
+%patch0835 -p1
+%patch0836 -p1
+
+%patch0841 -p1
 
 # fix-virt-kvm*
-%patch0841 -p1
-%patch0842 -p1
-%patch0843 -p1
+%patch0851 -p1
+%patch0852 -p1
+%patch0853 -p1
 
 
 %patch1001 -p1
@@ -2803,6 +2834,27 @@ done)
 
 
 %changelog
+* Thu Nov 29 2012 Led <led@altlinux.ru> 3.0.53-alt3
+- updated:
+  + fix-drivers-net--cnic
+  + fix-drivers-net--tg3
+  + fix-net-core
+- added:
+  + fix-arch-x86--microcode_amd
+  + fix-drivers-isdn-hardware-mISDN--hfcsusb
+  + fix-net-ipv4-netfilter--iptable_nat
+  + fix-net-ipv4-netfilter--nf_nat
+  + fix-net-ipv4-netfilter--nf_nat_amanda
+  + fix-net-ipv4-netfilter--nf_nat_ftp
+  + fix-net-ipv4-netfilter--nf_nat_h323
+  + fix-net-ipv4-netfilter--nf_nat_irc
+  + fix-net-ipv4-netfilter--nf_nat_pptp
+  + fix-net-ipv4-netfilter--nf_nat_sip
+  + fix-net-ipv4-netfilter--nf_nat_snmp_basic
+  + fix-net-ipv4-netfilter--nf_nat_tftp
+  + fix-net-netfilter--nf_conntrack
+  + fix-net-sched
+
 * Wed Nov 28 2012 Led <led@altlinux.ru> 3.0.53-alt2
 - updated:
   + fix-drivers-ata--ahci
