@@ -26,7 +26,7 @@ Name: %truename-docs
 Name: %truename
 %endif
 Version: 11.0.3
-Release: alt2
+Release: alt3
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL
 Group: Sciences/Mathematics
@@ -2447,6 +2447,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt3
+- Rebuilt with Boost 1.52.0
+
 * Mon Oct 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt2
 - Enabled build of converters from/to matlab files
 
