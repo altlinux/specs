@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.53
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -595,12 +595,13 @@ Patch0796: linux-%kernel_branch.51-fix-net-netfilter--nf_conntrack.patch
 Patch0797: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ecache.patch
 Patch0798: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ftp.patch
 Patch0799: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_netlink.patch
-Patch0800: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
-Patch0801: linux-%kernel_branch.44-fix-net-rds--rds_rdma.patch
-Patch0802: linux-%kernel_branch.51-fix-net-sched.patch
-Patch0803: linux-%kernel_branch.42-fix-net-sctp.patch
-Patch0804: linux-%kernel_branch.43-fix-net-sunrpc.patch
-Patch0805: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
+Patch0800: linux-%kernel_branch.51-fix-net-netfilter-ipset.patch
+Patch0801: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
+Patch0802: linux-%kernel_branch.44-fix-net-rds--rds_rdma.patch
+Patch0803: linux-%kernel_branch.51-fix-net-sched.patch
+Patch0804: linux-%kernel_branch.42-fix-net-sctp.patch
+Patch0805: linux-%kernel_branch.43-fix-net-sunrpc.patch
+Patch0806: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
 
 Patch0810: linux-%kernel_branch.42-fix-scripts.patch
 
@@ -2834,6 +2835,12 @@ done)
 
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 3.0.53-alt5
+- updated:
+  + fix-fs-btrfs
+- added:
+  + fix-net-netfilter-ipset
+
 * Thu Nov 29 2012 Led <led@altlinux.ru> 3.0.53-alt4
 - updated:
   + fix-drivers-cio--qdio
