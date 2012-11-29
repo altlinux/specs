@@ -1,7 +1,7 @@
 %define oname meshpy
 Name: python-module-%oname
 Version: 2011.1
-Release: alt2.git20120902
+Release: alt2.git20121113
 Summary: Triangular and Tetrahedral Mesh Generator in Python
 License: MIT
 Group: Development/Python
@@ -76,6 +76,9 @@ cp -fR test %buildroot%python_sitelibdir/%oname/
 %doc doc/html/*
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1-alt2.git20121113
+- New snapshot
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1-alt2.git20120902
 - New snapshot
 
