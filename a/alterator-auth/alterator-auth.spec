@@ -2,8 +2,8 @@
 %define _hooksdir %_sysconfdir/hooks/hostname.d
 
 Name: alterator-auth
-Version: 0.24
-Release: alt4
+Version: 0.25
+Release: alt1
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Nov 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.25-alt1
+- add simple pam_ccreds support (without status and constraints)
+
 * Tue Nov 13 2012 Andrey Cherepanov <cas@altlinux.org> 0.24-alt4
 - Fix check avahi-daemon under systemd
 
