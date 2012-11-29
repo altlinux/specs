@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.53
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -233,7 +233,7 @@ Patch0139: linux-%kernel_branch.46-fix-drivers-char-ipmi--ipmi_si.patch
 Patch0140: linux-%kernel_branch.43-fix-drivers-cio.patch
 Patch0141: linux-%kernel_branch.43-fix-drivers-cio--ccw_device.patch
 Patch0142: linux-%kernel_branch.43-fix-drivers-cio--ccwgroup.patch
-Patch0143: linux-%kernel_branch.43-fix-drivers-cio--qdio.patch
+Patch0143: linux-%kernel_branch.51-fix-drivers-cio--qdio.patch
 
 Patch0150: linux-%kernel_branch.42-fix-drivers-cpufreq.patch
 Patch0151: linux-%kernel_branch.44-fix-drivers-cpufreq--acpi-cpufreq.patch
@@ -244,7 +244,7 @@ Patch0155: linux-%kernel_branch.50-fix-drivers-cpufreq--powernow-k8.patch
 
 Patch0161: linux-%kernel_branch.43-fix-drivers-crypto--ap.patch
 Patch0162: linux-%kernel_branch.42-fix-drivers-crypto--hifn_795x.patch
-Patch0163: linux-%kernel_branch.43-fix-drivers-crypto--s390.patch
+Patch0163: linux-%kernel_branch.51-fix-drivers-crypto--s390.patch
 
 Patch0171: linux-%kernel_branch.42-fix-drivers-dma--dmatest.patch
 Patch0172: linux-%kernel_branch.43-fix-drivers-dma--intel_mid_dma.patch
@@ -377,7 +377,7 @@ Patch0441: linux-%kernel_branch.43-fix-drivers-net--lcs.patch
 Patch0442: linux-%kernel_branch.42-fix-drivers-net--macvtap.patch
 Patch0443: linux-%kernel_branch.42-fix-drivers-net--natsemi.patch
 Patch0444: linux-%kernel_branch.42-fix-drivers-net--ne3210.patch
-Patch0445: linux-%kernel_branch.46-fix-drivers-net--qeth.patch
+Patch0445: linux-%kernel_branch.51-fix-drivers-net--qeth.patch
 Patch0446: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
 Patch0447: linux-%kernel_branch.46-fix-drivers-net--qlge.patch
 Patch0448: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
@@ -406,7 +406,7 @@ Patch0470: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_s
 
 Patch0481: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
-Patch0490: linux-%kernel_branch.42-fix-drivers-pci.patch
+Patch0490: linux-%kernel_branch.51-fix-drivers-pci.patch
 Patch0491: linux-%kernel_branch.42-fix-drivers-pci--dmar.patch
 Patch0492: linux-%kernel_branch.42-fix-drivers-pci--sn.patch
 Patch0493: linux-%kernel_branch.46-fix-drivers-pci-hotplug--acpiphp.patch
@@ -456,7 +456,7 @@ Patch0561: linux-%kernel_branch.49-fix-drivers-scsi--sg.patch
 Patch0562: linux-%kernel_branch.42-fix-drivers-scsi--sim710.patch
 Patch0563: linux-%kernel_branch.42-fix-drivers-scsi--sr_mod.patch
 Patch0564: linux-%kernel_branch.42-fix-drivers-scsi--st.patch
-Patch0565: linux-%kernel_branch.46-fix-drivers-scsi--zfcp.patch
+Patch0565: linux-%kernel_branch.51-fix-drivers-scsi--zfcp.patch
 Patch0566: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb3i.patch
 Patch0567: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb4i.patch
 Patch0568: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--libcxgbi.patch
@@ -481,7 +481,7 @@ Patch0602: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
 Patch0612: linux-%kernel_branch.51-fix-drivers-usb-core.patch
-Patch0613: linux-%kernel_branch.42-fix-drivers-usb-host--ehci-hcd.patch
+Patch0613: linux-%kernel_branch.51-fix-drivers-usb-host--ehci-hcd.patch
 Patch0614: linux-%kernel_branch.51-fix-drivers-usb-host--ohci-hcd.patch
 Patch0615: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
 Patch0616: linux-%kernel_branch.51-fix-drivers-usb-host--xhci-hcd.patch
@@ -2834,6 +2834,15 @@ done)
 
 
 %changelog
+* Thu Nov 29 2012 Led <led@altlinux.ru> 3.0.53-alt4
+- updated:
+  + fix-drivers-cio--qdio
+  + fix-drivers-crypto--s390
+  + fix-drivers-net--qeth
+  + fix-drivers-pci
+  + fix-drivers-scsi--zfcp
+  + fix-drivers-usb-host--ehci-hcd
+
 * Thu Nov 29 2012 Led <led@altlinux.ru> 3.0.53-alt3
 - updated:
   + fix-drivers-net--cnic
