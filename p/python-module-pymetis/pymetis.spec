@@ -1,7 +1,7 @@
 %define oname pymetis
 Name: python-module-%oname
 Version: 2011.1.1
-Release: alt2.git20120417
+Release: alt3.git20120417
 Summary: Python wrapper for the Metis graph partititioning software
 License: MIT
 Group: Development/Python
@@ -37,6 +37,9 @@ number of parts you would like.
 %python_sitelibdir/*
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1.1-alt3.git20120417
+- Rebuilt with Boost 1.52.0
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1.1-alt2.git20120417
 - New snapshot
 
