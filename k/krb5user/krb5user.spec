@@ -1,6 +1,6 @@
 Name: krb5user
 Version: 0.1.2
-Release: alt2.4
+Release: alt2.5
 
 Summary: User helper library for MIT Kerberos
 
@@ -67,6 +67,9 @@ scons install --install-sandbox=%buildroot --libdir=%_libdir
 %python_sitelibdir/*
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.5
+- Rebuilt with Boost 1.52.0
+
 * Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.2-alt2.4
 - Rebuilt with Boost 1.51.0
 
