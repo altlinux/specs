@@ -12,7 +12,7 @@
 
 Name: zarafa
 Version: 7.1.1
-Release: alt3
+Release: alt3.1
 License: AGPLv3
 Group: Networking/Mail
 Summary: Server program for the Zarafa Collaboration Platform
@@ -683,6 +683,9 @@ export LDFLAGS=-lphp-%_php5_version
 # end noarch files
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.1.1-alt3.1
+- Rebuilt with Boost 1.52.0
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 7.1.1-alt3
 - Rebuild with php5-5.3.18.20121017-alt1
 
