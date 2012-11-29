@@ -5,7 +5,7 @@
 %define oname OBOE
 Name: Coin%oname
 Version: 1.0.3
-Release: alt5.svn20100530
+Release: alt6.svn20100530
 Summary: COIN-OR Oracle Based Optimization Engine (OBOE)
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -128,6 +128,9 @@ rm -fR %buildroot%_libdir/tmp
 %doc doc/html doc/*.html doc/userguide
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt6.svn20100530
+- Rebuilt with Boost 1.52.0
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.3-alt5.svn20100530
 - Rebuilt with Boost 1.51.0
 
