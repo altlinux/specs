@@ -1,7 +1,7 @@
 %define oname pyublas
 Name: python-module-%oname
 Version: 2011.1
-Release: alt4.git20120417
+Release: alt5.git20120417
 Summary: Seamless Numpy-UBlas interoperability
 License: BSD
 Group: Development/Python
@@ -82,6 +82,9 @@ cp -fR doc/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1-alt5.git20120417
+- Rebuilt with Boost 1.52.0
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2011.1-alt4.git20120417
 - Rebuilt with Boost 1.51.0
 
