@@ -7,7 +7,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt8
+Release: alt9
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -420,6 +420,13 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Thu Nov 29 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt9
+- Set compatible stylesheet for alterator-browser-qt
+- Set correct background for Mate
+- More contrast colors for gfxboot
+- Fix grub colors
+- Set Plymouth wallpapers with logotypes
+
 * Mon Nov 26 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt8
 - Set favicon for Alterator
 
