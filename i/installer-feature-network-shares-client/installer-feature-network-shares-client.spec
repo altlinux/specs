@@ -1,6 +1,6 @@
 Name: installer-feature-network-shares-client
-Version: 0.8
-Release: alt3
+Version: 0.9
+Release: alt1
 
 %define hookdir %_datadir/install2/postinstall.d
 
@@ -38,6 +38,9 @@ install -pm755 *.sh %buildroot/%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Nov 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9-alt1
+- nscd configuration for pam_ccreds added
+
 * Thu Nov 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt3
 - unneded controls removing fixed
 
