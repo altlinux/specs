@@ -1,6 +1,6 @@
 Name:           pdfcube
 Version:        0.0.5
-Release: 	alt1.svn20120708
+Release: 	alt2.svn20120708
 Summary:        PDF presentation viewer with a spinning cube
 
 
@@ -39,6 +39,9 @@ rm -f m4/l*
 %_bindir/pdfcube
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt2.svn20120708
+- Rebuilt with Boost 1.52.0
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.5-alt1.svn20120708
 - Version 0.0.5
 
