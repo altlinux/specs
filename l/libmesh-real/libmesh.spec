@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.8.0
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt4.svn20120913
+Release: alt5.svn20120913
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -481,6 +481,9 @@ popd
 %endif
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt5.svn20120913
+- Rebuilt with Boost 1.52.0
+
 * Tue Nov 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt4.svn20120913
 - Fixed build
 
