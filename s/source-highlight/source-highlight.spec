@@ -1,11 +1,10 @@
 Name: source-highlight
 Version: 3.1.4
-Release: alt2.4
+Release: alt2.5
 
 Summary: syntax highlighting for source documents
 License: GPL
 Group: Text tools
-Packager: Vladimir V. Kamarzin <vvk@altlinux.org>
 
 Url: http://www.gnu.org/software/src-highlite/
 Source: %name-%version.tar
@@ -86,6 +85,9 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.4-alt2.5
+- Rebuilt with Boost 1.52.0
+
 * Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.4-alt2.4
 - Rebuilt with Boost 1.51.0
 
