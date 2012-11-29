@@ -3,7 +3,7 @@
 
 Name: escript-finley
 Version: 3.3
-Release: alt2
+Release: alt3
 Summary: Fast Finite Elements for Partial Differential Equations
 License: OSLv3.0
 Group: Sciences/Mathematics
@@ -181,6 +181,9 @@ install -p -m644 doc/manpage/man1/* %buildroot%_man1dir
 %doc doc/examples
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt3
+- Rebuilt with Boost 1.52.0
+
 * Tue Sep 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt2
 - Rebuilt with netcdf 4.2
 
