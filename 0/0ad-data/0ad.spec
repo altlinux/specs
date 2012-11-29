@@ -1,7 +1,7 @@
 Name: 0ad-data
 Epoch: 1
 Version: 0.0.11.alpha
-Release: alt1.1
+Release: alt1.2
 BuildArch: noarch
 
 Group: Games/Strategy
@@ -39,6 +39,9 @@ mv binaries/data/* %buildroot/%_datadir/0ad
 %_datadir/0ad
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.0.11.alpha-alt1.2
+- Rebuilt
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.0.11.alpha-alt1.1
 - Rebuilt
 
