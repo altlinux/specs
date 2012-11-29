@@ -2,7 +2,7 @@
 %define _name2 spam_report
 
 Name: claws-mail-plugin-%_name
-Version: 0.3.16
+Version: 0.3.17
 Release: alt1
 
 Summary: This plugin reports spam to various places.
@@ -46,6 +46,9 @@ reporting places, like http://www.signal-spam.fr/ or http://www.spamcop.net/.
 %_libdir/claws-mail/plugins/%_name.so
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 0.3.17-alt1
+- Updated to 0.3.17.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 0.3.16-alt1
 - Updated to 0.3.16.
 

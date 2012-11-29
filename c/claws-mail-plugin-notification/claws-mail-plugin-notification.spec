@@ -6,7 +6,7 @@
 %def_enable hotkeys
 
 Name: claws-mail-plugin-%_name
-Version: 0.30
+Version: 0.31
 Release: alt1
 
 Summary: Various ways to notify the user of new and unread email. 
@@ -84,6 +84,9 @@ cd po; make ru.gmo; cd -
 %exclude %_includedir/claws-mail/plugins/%_name2
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 0.31-alt1
+- Updated to 0.31.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 0.30-alt1
 - Updated to 0.30.
 

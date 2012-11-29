@@ -1,7 +1,7 @@
 %define _name fancy
 
 Name: claws-mail-plugin-%_name
-Version: 0.9.16
+Version: 0.9.17
 Release: alt1
 
 Summary: The Fancy plugin renders html email using the GTK+ port of WebKit library.
@@ -48,6 +48,9 @@ The Fancy plugin renders html email using the GTK+ port of WebKit library.
 %exclude %_libdir/*/*/*.la
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 0.9.17-alt1
+- Updated to 0.9.17.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 0.9.16-alt1
 - Updated to 0.9.16.
 

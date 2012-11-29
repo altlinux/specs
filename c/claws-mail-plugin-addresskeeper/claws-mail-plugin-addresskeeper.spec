@@ -2,7 +2,7 @@
 %define _name2 address_keeper
 
 Name: claws-mail-plugin-%_name
-Version: 1.0.6
+Version: 1.0.7
 Release: alt1
 
 Summary: Keeps all recipient addresses in an addressbook folder.
@@ -50,6 +50,9 @@ supported (Any or several of 'To', 'Cc' or 'Bcc').
 %exclude %_libdir/*/*/*.la
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 1.0.7-alt1
+- Updated to 1.0.7.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 1.0.6-alt1
 - Updated to 1.0.6.
 
