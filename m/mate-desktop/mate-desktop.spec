@@ -5,11 +5,11 @@ Group: System/Libraries
 %define _libexecdir %_prefix/libexec
 Summary:	Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:		mate-desktop
-Version:	1.5.3
-Release:	alt2_5
+Version:	1.5.4
+Release:	alt1_1
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-Source1:        user-dirs-update-mate.desktop
+Source1:	user-dirs-update-mate.desktop
 
 License:	GPLv2+ and LGPLv2+ and MIT
 
@@ -23,7 +23,7 @@ BuildRequires:	desktop-file-utils
 Requires:	lib%{name} = %{version}-%{release}
 Requires:	altlinux-freedesktop-menu-common
 Requires:	pygtk2
-Requires:       xdg-user-dirs-gtk
+Requires:	xdg-user-dirs-gtk
 Source44: import.info
 Patch33: mate-desktop-1.5.0-alt-settings.patch
 
@@ -59,21 +59,22 @@ NOCONFIGURE=1 ./autogen.sh
 
 %build
 
-%configure --disable-libtool-lock				\
+%configure --enable-gnucat					\
 	--disable-scrollkeeper					\
 	--disable-static					\
+	--disable-schemas-compile				\
 	--with-pnp-ids-path="%{_datadir}/hwdatabase/pnp.ids"	\
 	--enable-unique						\
-	--enable-gnucat						\
-	--enable-gtk-doc                                        \
-        --with-omf-dir=%{_datadir}/omf/mate-desktop
+	--enable-gtk-doc					\
+	--with-omf-dir=%{_datadir}/omf/mate-desktop
 
 make %{?_smp_mflags} V=1
 
 
 %install
-make install DESTDIR=%{buildroot} INSTALL='install -p'
-find %{buildroot}  -name '*.la' -exec rm -f {} ';'
+make install DESTDIR=%{buildroot}
+find %{buildroot} -name '*.la' -exec rm -f {} ';'
+find %{buildroot} -name '*.a' -exec rm -f {} ';'
 
 
 desktop-file-install \
@@ -85,7 +86,7 @@ desktop-file-install \
 
 install -D -m 0644 %SOURCE1 %{buildroot}%{_sysconfdir}/xdg/autostart/user-dirs-update-mate.desktop
 
-%find_lang %{name} --with-gnome
+%find_lang %{name}
 
 mkdir -p %buildroot%{_datadir}/mate-about
 
@@ -113,6 +114,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_1
+- new fc release
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt2_5
 - dropped transaction hack
 
