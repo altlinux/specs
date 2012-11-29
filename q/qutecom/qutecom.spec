@@ -1,6 +1,6 @@
 Name: qutecom
 Version: 2.2.1
-Release: alt3.4
+Release: alt3.5
 Summary: SIP softphone
 License: GPLv2+
 Group: Networking/Instant messaging
@@ -104,6 +104,9 @@ pm-utils support for %name
 %_libdir/pm-utils/sleep.d/70QuteCom
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt3.5
+- Rebuilt with Boost 1.52.0
+
 * Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt3.4
 - Rebuilt with Boost 1.51.0
 
