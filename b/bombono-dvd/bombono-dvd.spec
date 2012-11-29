@@ -1,7 +1,7 @@
 Summary: DVD authoring program with nice and clean GUI
 Name: bombono-dvd
 Version: 1.2.1
-Release: alt3.git06454fe
+Release: alt3.git06454fe.1
 License: GPL
 Group: Video
 Url: http://www.bombono.org
@@ -57,6 +57,9 @@ ln -s %_datadir/fonts/ttf/freefont/FreeSans.ttf %buildroot%_datadir/bombono/reso
 %_datadir/mime/packages/*
 
 %changelog
+* Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt3.git06454fe.1
+- Rebuilt with Boost 1.52.0
+
 * Thu Sep 06 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.1-alt3.git06454fe
 - Fix build with boost 1.51.0 (thanks iv@)
 
