@@ -1,10 +1,11 @@
 Name:		libeo
 Version:	1.2.0
-Release:	alt2.1
+Release:	alt2.2
 Summary:	EO, the Evolving Objects library
 License:	LGPLv2.1
 URL:		http://eodev.sourceforge.net
 Source:		EO-%version.zip
+Patch: libeo-1.2.0-alt-glibc-2.16.patch
 Group:		Development/C++
 
 # Automatically added by buildreq on Mon Sep 05 2011
@@ -35,6 +36,7 @@ Python bindings for %sum
 
 %prep
 %setup -q -c
+%patch -p2
 # Hack openMP test to be less consuming
 sed -i 's/)100/)20/g' eo/test/t-openmp.cpp
 sed -i '/#include <eoFunctor.h>/a\
@@ -45,11 +47,12 @@ sed -i '/#include <eoFunctor.h>/a\
 # TODO dynamic build
 
 cd eo
+%add_optflags -fpermissive
 %cmake -DCMAKE_BUILD_TYPE=Release -DENABLE_CMAKE_TESTING=1 \
 	-DENABLE_PYEO=1
 
 cd BUILD
-%make_build
+%make_build VERBOSE=1
 
 %check
 cd eo/BUILD
@@ -87,6 +90,9 @@ mv %buildroot%_prefix/lib/* %buildroot%_libdir/
 #_libexecdir/eo/test
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.2
+- Rebuilt with Boost 1.52.0
+
 * Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.1
 - Rebuilt with Boost 1.51.0
 
