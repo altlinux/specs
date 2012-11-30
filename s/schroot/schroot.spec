@@ -1,6 +1,6 @@
 Name: schroot
 Version: 1.4.23
-Release: alt1.3
+Release: alt1.4
 Summary: Execute commands in a chroot environment
 Group: Development/Tools
 License: GPLv3+
@@ -60,9 +60,9 @@ functionality is available in the next generation tool called schroot.
 
 %build
 ./bootstrap
-%add_optflags -DBOOST_FILESYSTEM_VERSION=3
+%add_optflags -DBOOST_FILESYSTEM_VERSION=3 -fpermissive
 %configure --disable-rpath --enable-static --disable-shared --enable-dchroot --localstatedir=%_var
-%make
+%make V=1
 
 %install
 make install DESTDIR=%buildroot
@@ -124,6 +124,9 @@ rm -f %buildroot%_bindir/schroot-sbuild
 %_mandir/man1/dchroot*
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.23-alt1.4
+- Rebuilt with Boost 1.52.0
+
 * Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.23-alt1.3
 - Rebuilt with Boost 1.51.0
 
