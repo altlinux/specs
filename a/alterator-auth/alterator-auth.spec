@@ -3,7 +3,7 @@
 
 Name: alterator-auth
 Version: 0.25
-Release: alt1
+Release: alt2
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Nov 30 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.25-alt2
+- setting ccreds checkbox state added
+
 * Thu Nov 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.25-alt1
 - add simple pam_ccreds support (without status and constraints)
 
