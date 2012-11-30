@@ -1,7 +1,7 @@
 Name:		flush
 Summary:	GTK-based BitTorrent client
 Version:	0.9.12
-Release:	alt1.3
+Release:	alt1.4
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 License:	GPLv3+
 Group:		Networking/File transfer
@@ -71,6 +71,9 @@ cd ../..
 %_pixmapsdir/*
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.12-alt1.4
+- Rebuilt with updated libtorrent-rasterbar
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.12-alt1.3
 - Rebuilt with Boost 1.52.0
 
