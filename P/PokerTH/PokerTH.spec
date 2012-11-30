@@ -2,7 +2,7 @@
 
 Name: PokerTH
 Version: 0.9.5
-Release: alt1.2
+Release: alt1.3
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -49,6 +49,9 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1.3
+- Rebuilt with Boost 1.52.0
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1.2
 - Rebuilt with Boost 1.51.0
 
