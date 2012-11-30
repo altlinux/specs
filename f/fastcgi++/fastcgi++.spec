@@ -4,7 +4,7 @@
 
 Name: fastcgi++
 Version: 2.0
-Release: alt4.svn.%tag.%stamp.2
+Release: alt4.svn.%tag.%stamp.3
 Summary: A C++ FastCGI Library
 
 Group: System/Libraries
@@ -92,6 +92,9 @@ mv %buildroot%_datadir/%name/doc/html %buildroot%_docdir/%name
 %_libdir/*.so.*
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt4.svn.beta.6852ded9.3
+- Rebuilt with Boost 1.52.0
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt4.svn.beta.6852ded9.2
 - Rebuilt with Boost 1.51.0
 
