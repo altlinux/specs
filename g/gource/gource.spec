@@ -1,6 +1,6 @@
 Name: gource
 Version: 0.38
-Release: alt1
+Release: alt1.1
 
 Summary: OpenGL-based 3D visualisation tool for source control repositories
 License: %gpl3only
@@ -55,5 +55,8 @@ tar xf %_sourcedir/%name-core-%version.tar -C src/
 %_man1dir/*
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.38-alt1.1
+- Rebuilt with Boost 1.52.0
+
 * Fri Sep 21 2012 Ivan Ovcherenko <asdus@altlinux.org> 0.38-alt1
 - Initial build for ALT Linux Sisyphus, v0.38-46243b0+d42063b
