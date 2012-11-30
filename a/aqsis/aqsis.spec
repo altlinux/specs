@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.2
-Release:	alt1_1
+Release:	alt1_1.1
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -219,6 +219,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.2-alt1_1.1
+- Rebuilt with Boost 1.52.0
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_1
 - converted for ALT Linux by srpmconvert tools
 
