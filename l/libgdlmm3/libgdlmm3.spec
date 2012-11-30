@@ -4,17 +4,17 @@
 
 Name: lib%{_name}3
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: C++ bindings for the gdl library
 Group: System/Libraries
 License: LGPLv2+
 Url: http://www.gtkmm.org/
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
-Patch: gdlmm-3.3.2-up-gdl.patch
+Source: %_name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 
-BuildRequires: gcc-c++ mm-common libglibmm-devel libgtkmm3-devel libgdl3-devel >= 3.4.0
+BuildRequires: gcc-c++ mm-common libglibmm-devel libgtkmm3-devel libgdl3-devel >= 3.6.0
 BuildRequires: perl-XML-Parser xsltproc doxygen graphviz
 
 %description
@@ -41,9 +41,9 @@ This package contains the API documentation for %_name.
 
 %prep
 %setup -n %_name-%version
-%patch -p1
 
 %build
+mm-common-prepare
 %autoreconf
 %configure --enable-maintainer-mode
 %make_build
@@ -69,6 +69,9 @@ make check
 %_datadir/devhelp/*
 
 %changelog
+* Sat Dec 01 2012 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt3
+- updated to 64fc4535
+
 * Tue Oct 02 2012 Yuri N. Sedunov <aris@altlinux.org> 3.3.2-alt2
 - rebuilt against libgdl-3.so.5
 
