@@ -3,7 +3,7 @@
 Summary: SELinux policy core utilities
 Name: policycoreutils
 Version: 2.1.13
-Release: alt2
+Release: alt3
 License: GPLv2
 Group: System/Base
 Url: http://userspace.selinuxproject.org
@@ -272,6 +272,10 @@ cp -r mcstrans/share/* %buildroot%_datadir/mcstrans/
 
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 2.1.13-alt3
+- fix restorecond.service (by amike@) (ALT#28073)
+- some fixes for mcstrans.service (thanx amike@)
+
 * Sun Nov 25 2012 Led <led@altlinux.ru> 2.1.13-alt2
 - added restorecond.service for systemd (ALT#28074)
 - added mcstrans.service for systemd (ALT#28073)
