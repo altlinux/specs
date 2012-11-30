@@ -10,7 +10,7 @@ Name: kde4edu
 %define minor 9
 %define bugfix 3
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt1.1
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Group: Graphical desktop/KDE
@@ -1045,6 +1045,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.3-alt1.1
+- Rebuilt with Boost 1.52.0
+
 * Tue Nov 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
