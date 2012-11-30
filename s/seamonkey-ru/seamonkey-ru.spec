@@ -2,7 +2,7 @@
 %define ciddir	%sm_prefix/extensions/%cid
 
 Name:		seamonkey-ru
-Version:	2.14
+Version:	2.14.1
 Release:	alt1
 Summary:	Russian (RU) Language Pack for Seamonkey
 
@@ -14,7 +14,7 @@ Packager:	Radik Usupov <radik@altlinux.org>
 Source0:	ru-%version.xpi
 
 Requires:	hunspell-ru
-Requires:	seamonkey = 2.14
+Requires:	seamonkey = %version
 
 BuildRequires(pre):	rpm-build-seamonkey
 BuildRequires:		unzip
@@ -40,6 +40,9 @@ ln -s %_datadir/myspell/ru_RU.dic %buildroot/%ciddir/dictionaries/ru.dic
 %ciddir
 
 %changelog
+* Sun Dec 09 2012 Radik Usupov <radik@altlinux.org> 2.14.1-alt1
+- New version (2.14.1)
+
 * Wed Nov 28 2012 Radik Usupov <radik@altlinux.org> 2.14-alt1
 - New version (2.14)
 

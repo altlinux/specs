@@ -10,7 +10,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        17.0
+Version:        17.0.1
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -263,6 +263,9 @@ done
 %_sysconfdir/rpm/macros.d/firefox
 
 %changelog
+* Wed Dec 05 2012 Alexey Gladkov <legion@altlinux.ru> 17.0.1-alt1
+- New release (17.0.1).
+
 * Wed Nov 21 2012 Alexey Gladkov <legion@altlinux.ru> 17.0-alt1
 - New release (17.0).
 - Fixed:
