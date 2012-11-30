@@ -3,7 +3,7 @@ BuildRequires: desktop-file-utils
 
 Name:		fatrat
 Version:	1.1.3
-Release:	alt0.2.%git.qa4
+Release:	alt0.2.%git.qa5
 Summary:	FatRat is an open source download/upload manager
 License: 	GPLv2
 Group: 		Networking/File transfer
@@ -12,13 +12,17 @@ Url:		http://fatrat.dolezel.info/
 Source0:	http://www.dolezel.info/download/data/%name/%name-%version.tar.gz
 Patch0:		%name-1.1.3-fix_old_libtorrent-rasterbar.diff
 Patch1: %name-1.1.3-alt-link.diff
+Patch2: %name-1.1.3-alt-glibc-2.16.patch
+Patch3: %name-1.1.3-alt-torrent.patch
+Patch4: %name-1.1.3-alt-boost-1.52.0.patch
 
 Requires:	libqt4-core
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
-BuildRequires: ImageMagick-tools cmake gcc-c++ libcurl-devel libgloox-devel libpion-net-devel libqt4-help libqt4-svg libqt4-webkit libqt4-xmlpatterns libtorrent-rasterbar-devel phonon-devel
+BuildRequires: ImageMagick-tools cmake gcc-c++ libcurl-devel libgloox-devel libpion-net-devel libqt4-help libqt4-svg libqt4-webkit libqt4-xmlpatterns phonon-devel
 
 BuildRequires: /usr/bin/qcollectiongenerator-qt4
+BuildPreReq: libtorrent-rasterbar7-devel
 
 %description
 FatRat is an open source download manager for Linux
@@ -40,14 +44,18 @@ programs which make use of FatRat.
 %setup
 # #%patch0 -p1
 %patch1 -p2
+%patch2 -p2
+%patch3 -p2
+%patch4 -p2
 
 %build
 export PATH=$PATH:%_qt4dir/bin
 doc/generate.sh
+%add_optflags -fpermissive -DBOOST_ASIO_DYN_LINK
 cmake \
 	-DCMAKE_INSTALL_PREFIX=%_prefix \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags -DBOOST_FILESYSTEM_VERSION=2" \
-	-DCMAKE_C_FLAGS:STRING="%optflags -DBOOST_FILESYSTEM_VERSION=2" \
+	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
+	-DCMAKE_C_FLAGS:STRING="%optflags" \
 	-DWITH_SFTP=ON \
 	-DWITH_BITTORRENT=ON \
 	-DWITH_JABBER=ON \
@@ -57,7 +65,7 @@ cmake \
 	-DWITH_DOCUMENTATION=ON
 
 %install
-%make DESTDIR=%buildroot install
+%make DESTDIR=%buildroot install VERBOSE=1
 
 # Icons
 mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
@@ -71,6 +79,7 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %files
 %dir %_datadir/%name
 %_bindir/%name
+%_bindir/%name-nogui
 %_desktopdir/%name.desktop
 %_datadir/%name
 %_man1dir/%{name}*
@@ -84,6 +93,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_includedir/%name
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt0.2.20110222.qa5
+- Rebuilt with Boost 1.52.0
+
 * Mon May 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt0.2.20110222.qa4
 - Fixed build
 
