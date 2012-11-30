@@ -1,6 +1,6 @@
 Name: python-module-pyvfs
-Version: 0.2.7
-Release: alt2
+Version: 0.2.8
+Release: alt1
 Summary: Simple python VFS library
 License: GPLv3+
 Group: Development/Python
@@ -9,7 +9,7 @@ URL: https://github.com/svinota/pyvfs
 BuildArch: noarch
 BuildPreReq: python-devel rpm-build-python
 Source: pyvfs-%version.tar.gz
-Requires: python-module-py9p >= 1.0.5-alt5
+Requires: python-module-py9p >= 1.0.6-alt1
 
 %description
 PyVFS is a simple VFS library written in Python. It consists of
@@ -33,6 +33,10 @@ to represent Python objects as files.
 %{python_sitelibdir}/objectfs*
 
 %changelog
+* Fri Nov 30 2012 Peter V. Saveliev <peet@altlinux.org> 0.2.8-alt1
+- directory listing fix for v9fs
+- version sync with py9p
+
 * Sun Nov  4 2012 Peter V. Saveliev <peet@altlinux.org> 0.2.7-alt2
 - dependencies update
 
