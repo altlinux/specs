@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.13.7.5
-%define rev 165196
+%define rev 169798
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        23.0.1271.64
+Version:        23.0.1271.95
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -435,6 +435,13 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Fri Nov 30 2012 Andrey Cherepanov <cas@altlinux.org> 23.0.1271.95-alt1.r169798
+- New version 23.0.1271.95
+- Security fixes:
+  - High CVE-2012-5138: Incorrect file path handling.
+  - High CVE-2012-5137: Use-after-free in media source handling.
+  - High CVE-2012-5133: Use-after-free in SVG filters.
+
 * Thu Nov 08 2012 Andrey Cherepanov <cas@altlinux.org> 23.0.1271.64-alt1.r165196
 - New version 23.0.1271.64
 - Fixes:
