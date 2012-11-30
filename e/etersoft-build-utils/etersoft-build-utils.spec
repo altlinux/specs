@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.15
+Version: 2.0.16
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -68,6 +68,11 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Fri Nov 30 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.16-alt1
+- introduce prepare_rpmdir, use in for create RPMDIR
+- introduce RPMTMPDIR and create link to it in RPM/tmp (in rpmbb script)
+- dmake, jmake: cd to realpath to get real path in build
+
 * Thu Nov 22 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.15-alt1
 - /etc/rpm/etersoft-build-functions: remove publish-compat loading
 - update srpms (srpm source list)
