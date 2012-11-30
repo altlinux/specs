@@ -1,5 +1,5 @@
 Name: fio
-Version: 2.0.7
+Version: 2.0.10
 Release: alt1
 
 Summary: IO testing tool
@@ -35,6 +35,9 @@ one wants to simulate.
 %_man1dir/*
 
 %changelog
+* Fri Nov 30 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.10-alt1
+- 2.0.10
+
 * Sun Apr 15 2012 Victor Forsiuk <force@altlinux.org> 2.0.7-alt1
 - 2.0.7
 
