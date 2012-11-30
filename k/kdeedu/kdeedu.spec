@@ -18,7 +18,7 @@
 
 Name: kdeedu
 Version: 3.5.13.1
-Release: alt1
+Release: alt1.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - kdeedu
@@ -647,6 +647,9 @@ chmod a-s %buildroot/%_bindir/*
 %_includedir/libkdeedu/
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.13.1-alt1.1
+- Rebuilt with Boost 1.52.0
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt1
 - Release TDE version 3.5.13.1
 
