@@ -1,8 +1,8 @@
-%def_enable debug
+%def_disable debug
 %def_disable static
 %if_disabled debug
 %remove_optflags -O2
-%add_optflags -Os
+%add_optflags -O3
 %endif
 %define abiversion 7
 %define upname libtorrent-rasterbar
@@ -10,7 +10,7 @@
 Name: libtorrent-rasterbar%{abiversion}
 Version: 0.16.1
 Epoch: 2
-Release: alt2.svn7387
+Release: alt3.svn7387
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -129,6 +129,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt3.svn7387
+- Built release type instead of debug
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt2.svn7387
 - Rebuilt with Boost 1.52.0
 
