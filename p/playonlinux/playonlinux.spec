@@ -2,8 +2,8 @@
 
 Summary: Play your Windows games on Linux
 Name: playonlinux
-Version: 3.7.3
-Release: alt1.1
+Version: 4.1.8
+Release: alt1
 License: GPLv3
 Group: Games/Other
 Url: http://www.playonlinux.com
@@ -19,10 +19,10 @@ Requires: gettext
 Requires: unzip
 Requires: cabextract
 Requires: xterm
-Requires: /usr/bin/wine
 Requires: binutils
 
 %add_findreq_skiplist %_datadir/%name/bash/*
+%filter_from_requires \.^/opt.d
 
 ExclusiveArch: %ix86
 
@@ -64,6 +64,10 @@ rm -f %buildroot%_datadir/%name/bin/smile
 %_datadir/desktop-directories/%oname.directory
 
 %changelog
+* Fri Nov 30 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.1.8-alt1
+- 4.1.8
+- drop /usr/bin/wine requirement
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.7.3-alt1.1
 - Rebuild with Python-2.7
 
