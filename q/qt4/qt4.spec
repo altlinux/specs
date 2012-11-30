@@ -28,14 +28,19 @@
 
 %define platform linux-g++
 %define graphicssystem raster
+%ifarch %arm
+%define opengl_type es2
+%else
+%define opengl_type desktop
+%endif
 
 # Versions
 %define rname	qt
 %define major	4
 %define minor	8
-%define bugfix	3
+%define bugfix	4
 %define beta	%nil
-%define rlz alt2
+%define rlz alt1
 %define phonon_ver 4.4.0
 
 Name: %rname%major
@@ -77,7 +82,6 @@ Source104: %rname.64.png
 # upstream
 # security
 Patch51: CVE-2011-3922.diff
-Patch52: 0041-Disable-SSL-compression-by-default.patch
 # KDE-QT
 Patch101: 0180-window-role.diff
 Patch102: 0188-fix-moc-parser-same-name-header.diff
@@ -92,14 +96,14 @@ Patch204: qt-everywhere-opensource-src-4.6.3-glib_eventloop_nullcheck.patch
 Patch205: qt-x11-opensource-src-4.5.1-enable_ft_lcdfilter.patch
 Patch206: qt-everywhere-opensource-src-4.8.3-qdbusconnection_no_debug.patch
 Patch207: qt-everywhere-opensource-src-4.8.1-icu_no_debug.patch
-Patch208: qt-everywhere-opensource-src-4.8.0-QTBUG-14724.patch
+#
 Patch209: qt-everywhere-opensource-src-4.8.0-QTBUG-21900.patch
 Patch210: qt-everywhere-opensource-src-4.8.0-QTBUG-22037.patch
 Patch211: qt-everywhere-opensource-src-4.8.2--assistant-crash.patch
-Patch212: qt-everywhere-opensource-src-4.8.3-qdevice_pri.patch
+#
 Patch213: qt-everywhere-opensource-src-4.8.0-tp-qtreeview-kpackagekit-crash.patch
 Patch214: qt-everywhere-opensource-src-4.8.3-no_Werror.patch
-Patch215: qt-everywhere-opensource-src-4.8.3-QTBUG-27322.patch
+#
 Patch216: qt-everywhere-opensource-src-4.8.3-QTBUG-4862.patch
 # MDV
 # ALT
@@ -149,7 +153,7 @@ BuildRequires: libMySQL-devel libsqlite3-devel
 BuildRequires: bison pkg-config
 BuildRequires: fontconfig-devel libssl-devel libkrb5-devel libdbus-devel
 BuildRequires: libatk-devel libcairo-devel libgdk-pixbuf-devel libgio-devel libpango-devel
-BuildRequires: libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel
+BuildRequires: libGLES-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXcursor-devel libXext-devel
 BuildRequires: libXfixes-devel libXi-devel libXinerama-devel libXrandr-devel libXrender-devel libXv-devel
 BuildRequires: xorg-fixesproto-devel xorg-inputproto-devel xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel
 BuildRequires: xorg-videoproto-devel xorg-xextproto-devel xorg-xproto-devel libXtst-devel
@@ -723,7 +727,6 @@ Install this package if you want to create RPM packages that use %name
 # upstream
 # security
 %patch51 -p0
-%patch52 -p1
 # KDE-QT
 %patch101 -p0
 %patch102 -p0
@@ -738,14 +741,14 @@ Install this package if you want to create RPM packages that use %name
 %patch205 -p1
 %patch206 -p1
 %patch207 -p1
-%patch208 -p1
+#
 %patch209 -p1
 %patch210 -p1
 %patch211 -p1
-%patch212 -p1
+#
 %patch213 -p1
 %patch214 -p1
-%patch215 -p1
+#
 %patch216 -p1
 # MDV
 # ALT
@@ -836,8 +839,9 @@ CNFGR="\
 	-reduce-relocations \
 %endif
 	\
-	-graphicssystem %graphicssystem \
-	-system-zlib -cups -openssl-linked -opengl -webkit -xmlpatterns -scripttools \
+	-graphicssystem %graphicssystem -opengl %opengl_type \
+	-system-zlib -cups -openssl-linked \
+	-webkit -xmlpatterns -scripttools \
 	-multimedia -declarative \
 	-no-nas-sound -no-nis -iconv \
 	%{?_enable_phonon: -phonon}%{!?_enable_phonon: -no-phonon} \
@@ -1253,6 +1257,11 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %qtdir/lib/libQtOpenGL.so.*
 %_libdir/libQtOpenGL.so.*
 %qtdir/plugins/graphicssystems/libqglgraphicssystem.so
+%if "%opengl_type" == "es2" || "%opengl_type" == "es1"
+%qtdir/lib/libQtMeeGoGraphicsSystemHelper.so.*
+%_libdir/libQtMeeGoGraphicsSystemHelper.so.*
+%qtdir/plugins/graphicssystems/libqmeegographicssystem.so
+%endif
 
 %files -n lib%{name}-sql
 %qtdir/lib/libQtSql.so.*
@@ -1528,6 +1537,12 @@ install -m 644 %SOURCE104 %buildroot/%_iconsdir/hicolor/64x64/apps/%name.png
 %endif
 
 %changelog
+* Fri Nov 30 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.4-alt1
+- new version
+
+* Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt1.M60P.1
+- built for M60P
+
 * Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.8.3-alt2
 - update FC patches
 - disable SSL compression by default
