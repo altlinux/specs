@@ -6,7 +6,7 @@
 
 Name: ghc7.6.1
 Version: 7.6.1
-Release: alt1
+Release: alt2
 
 Summary: Glasgow Haskell Compilation system
 License: BSD style w/o adv. clause
@@ -21,7 +21,7 @@ Requires: %name-common
 Requires: gmp-devel
 Requires: llvm
 
-BuildRequires: docbook-dtds docbook-style-xsl ghc7.4.2 libelf-devel libgmp-devel libncurses-devel libedit-devel texlive-latex-base fonts-type1-cm-super-tex time xmltex xorg-cf-files xsltproc
+BuildRequires: docbook-dtds docbook-style-xsl ghc7.6.1 libelf-devel libgmp-devel libncurses-devel libedit-devel texlive-latex-base fonts-type1-cm-super-tex time xmltex xorg-cf-files xsltproc
 BuildRequires: docbook-utils-print
 BuildRequires: rpm-build-haskell
 BuildRequires: libbfd-devel
@@ -155,6 +155,9 @@ sed -i 's!/html/!/!' %buildroot%_libdir/ghc-%version/package.conf.d/*.conf
 %doc html-docs/*
 
 %changelog
+* Fri Nov 30 2012 Denis Smirnov <mithraen@altlinux.ru> 7.6.1-alt2
+- rebuild with ghc 7.6.1
+
 * Sun Oct 07 2012 Denis Smirnov <mithraen@altlinux.ru> 7.6.1-alt1
 - bootstrap build
 
