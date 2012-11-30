@@ -4,10 +4,9 @@
 %define brand altlinux
 %define Brand ALT Linux
 
-
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt9
+Release: alt10
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -21,8 +20,9 @@ BuildRequires: libqt4-devel
 
 BuildRequires: ImageMagick fontconfig bc libGConf-devel
 
-%define status альфа 
 %define status_en alpha
+%define status альфа 
+%define ProductName_ru Альт Линукс 7.0 Кентавр (альфа)
 
 # All existing branding without this branding
 %define variants altlinux-backup-server altlinux-desktop altlinux-gnome-desktop altlinux-kdesktop altlinux-lite altlinux-lxdesktop altlinux-office-desktop altlinux-office-server altlinux-school-server altlinux-sisyphus altlinux-spt altlinux-tablet altlinux-workbench informika-schoolmaster ivk-chainmail lxde-desktop lxde-school-lite Platform6-server-light school-junior school-lite school-master school-server school-teacher school-terminal simply-linux sisyphus-server-light 
@@ -178,8 +178,9 @@ License: Distributable
 Group: Graphical desktop/GNOME
 Requires: gtk2-theme-mist
 Requires: gksu
+Requires: libgio
 Requires: altlinux-freedesktop-menu-gnomish-menu
-PreReq: gnome-panel
+PreReq:   gnome-panel
 Provides: gnome-theme-%brand-%theme = %version-%release
 Provides: metacity-theme-%brand-%theme = %version-%release
 Provides: metacity-theme
@@ -235,7 +236,7 @@ ALT Linux index.html welcome page.
 
 %build
 autoconf
-THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version X86='%x86' ./configure 
+THEME=%theme NAME='%Theme' BRAND_FNAME='%Brand' BRAND='%brand' STATUS_EN=%status_en STATUS=%status VERSION=%version PRODUCT_NAME_RU='%ProductName_ru' X86='%x86' ./configure 
 make
 
 %install
@@ -312,6 +313,7 @@ install -m 644 index.theme '%buildroot/%_datadir/themes/%XdgThemeName/'
 mkdir -p '%buildroot/etc/xdg/menus/'
 install -m 644 gnome-applications.menu '%buildroot/etc/xdg/menus/'
 install -m 644 settings.menu '%buildroot/etc/xdg/menus/'
+install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-2.0/schemas/50_mate-background.gschema.override'
 popd
 
 #slideshow
@@ -404,6 +406,7 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %files gnome-settings
 %_datadir/themes/*
 /etc/xdg/menus/*
+%_datadir/glib-2.0/schemas/50_mate-background.gschema.override
 
 %files slideshow
 /usr/share/install2/slideshow
@@ -420,6 +423,15 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Nov 30 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt10
+- Set default wallpaper in Mate
+- Fix section border in subdialogs
+- Remove obsoleted slideshow and some files
+- Set non-wide grub wallpaper
+- Set correct Russian product name from spec
+- Add links to useful resources
+- Fix grub console background
+
 * Thu Nov 29 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt9
 - Set compatible stylesheet for alterator-browser-qt
 - Set correct background for Mate
