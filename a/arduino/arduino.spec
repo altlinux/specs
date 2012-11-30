@@ -1,38 +1,37 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-BuildRequires: gcc-c++
 Name:		arduino
-Version:	0022
-Release:	alt1_5jpp6
+Epoch:		1
+Version:	1.0.1
+Release:	alt1_1jpp7
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
 URL:		http://www.arduino.cc/
 
 # There are lots of binaries in the "source" tarball.  Remove them with:
-# curl -L http://arduino.googlecode.com/files/arduino-0022-src.tar.gz | tar -xzvf - && rm -r arduino-0022/build/linux/dist/tools/* && find arduino-0022 \( -type d \( -name macosx -o -name windows \) -o -type f \( -iname '*.jar' -or -iname '*.tgz' -or -iname '*.so' \) \) -print0 | xargs -0 rm -rf && tar -cjf arduino-0022.tar.bz2 arduino-0022
+# curl -L http://arduino.googlecode.com/files/arduino-0022-src.tar.gz | tar -xzvf - && rm -r arduino-0022/build/linux/dist/tools/* && find arduino-0022 \( -type d \( -name macosx -o -name windows \) -o -type f \( -iname '*.jar' -or -iname '*.tgz' -or -iname '*.so' \) \) -print0 | xargs -0 rm -rf && tar -cJf arduino-0022.tar.bz2 arduino-0022
 # See also http://code.google.com/p/arduino/issues/detail?id=193
-Source0:	%{name}-%{version}.tar.bz2
+Source0:	%{name}-%{version}.tar.xz
 
 BuildArch:	noarch
 
 # Use unbundled libs:
 Patch0:		arduino-script.patch
-Patch2:		arduino-use-system-avrdude.patch
+Patch7:		arduino-no-avrdude64.patch
 # Requested upstream in http://github.com/arduino/Arduino/pull/5:
 Patch3:		arduino-use-system-rxtx.patch
 
 # Requested upstream in http://github.com/arduino/Arduino/pull/6:
 Patch4:		arduino-icons-etc.patch
 
-# Shouldn't be necessary once
-# https://code.google.com/p/arduino/issues/detail?id=106 has been fixed:
-Patch5:		arduino-boards-txt.patch
-
 Patch6:		arduino-add-to-groups.patch
 
 BuildRequires:	jpackage-utils ant ant-apache-regexp desktop-file-utils ecj jna rxtx git
-Requires:	%{name}-core = %{version}-%{release} %{name}-doc = %{version}-%{release}
+Requires:	%{name}-core = %{epoch}:%{version}-%{release} %{name}-doc = %{epoch}:%{version}-%{release}
 Requires:	fonts-type1-xorg ecj jna rxtx
 Requires:	zenity perl polkit
 Source44: import.info
@@ -86,8 +85,13 @@ find -name '*.jar' -exec rm -f '{}' \;
 %patch6 -p1
 chmod a+rx build/linux/%{name}-add-groups
 %patch0
-%patch2
 %patch3 -p1
+%patch7 -p1
+
+echo -e "\n# By default, don't notify the user of a new upstream version." \
+        "\n# https://bugzilla.redhat.com/show_bug.cgi?id=773519" \
+        "\nupdate.check=false" \
+    >> build/shared/lib/preferences.txt
 
 # "git apply" fails silently if pwd is git-controlled.
 pwd=`pwd`
@@ -95,18 +99,17 @@ cd /
 git apply --directory=$pwd %{PATCH4}
 cd $pwd
 
-%patch5
 build-jar-repository -p -s app/lib/ ecj jna RXTXcomm
 
 
 %build
 cd core/methods
-ant
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 cd ..
-ant
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
 cd ../build
-ant dist < /dev/null
-tar -xf linux/%{name}-%{version}.tgz
+echo %{version} | ant dist
+tar -xf linux/%{name}-%{version}-linux.tgz
 
 
 %install
@@ -132,11 +135,14 @@ cp -a lib/core.jar lib/pde.jar $RPM_BUILD_ROOT/%{_datadir}/%{name}/
 mkdir -p $RPM_BUILD_ROOT/%{_sysconfdir}/%{name}
 mv $RPM_BUILD_ROOT/%{_datadir}/%{name}/hardware/%{name}/boards.txt \
    $RPM_BUILD_ROOT/%{_datadir}/%{name}/hardware/%{name}/programmers.txt \
+   $RPM_BUILD_ROOT/%{_datadir}/%{name}/lib/preferences.txt \
    $RPM_BUILD_ROOT/%{_sysconfdir}/%{name}/
 ln -s %{_sysconfdir}/%{name}/boards.txt \
    $RPM_BUILD_ROOT/%{_datadir}/%{name}/hardware/%{name}/boards.txt
 ln -s %{_sysconfdir}/%{name}/programmers.txt \
    $RPM_BUILD_ROOT/%{_datadir}/%{name}/hardware/%{name}/programmers.txt
+ln -s %{_sysconfdir}/%{name}/preferences.txt \
+   $RPM_BUILD_ROOT/%{_datadir}/%{name}/lib/preferences.txt
 
 mkdir -p $RPM_BUILD_ROOT/%{_mandir}/man1
 cp -p ../linux/%{name}.1 $RPM_BUILD_ROOT/%{_mandir}/man1/
@@ -154,6 +160,15 @@ cp -a ../linux/%{name}-add-groups $RPM_BUILD_ROOT/%{_libexecdir}/
 
 mkdir -p $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions
 cp -a ../linux/cc.arduino.add-groups.policy $RPM_BUILD_ROOT/%{_datadir}/polkit-1/actions
+# unFedorize; ALTize
+if grep 'dialout lock' %buildroot/%_bindir/arduino; then
+   sed -i -e 's,dialout lock,uucp,' %buildroot/%_bindir/arduino
+else
+   echo "ALT-specific group hack is deprecated"
+   exit 2
+fi
+
+
 
 %files
 %{_bindir}/*
@@ -171,6 +186,7 @@ cp -a ../linux/cc.arduino.add-groups.policy $RPM_BUILD_ROOT/%{_datadir}/polkit-1
 %doc license.txt readme.txt todo.txt
 %config(noreplace) %{_sysconfdir}/%{name}/boards.txt
 %config(noreplace) %{_sysconfdir}/%{name}/programmers.txt
+%config(noreplace) %{_sysconfdir}/%{name}/preferences.txt
 %{_datadir}/%{name}/examples/
 %{_datadir}/%{name}/hardware/
 %{_datadir}/%{name}/libraries/
@@ -181,6 +197,9 @@ cp -a ../linux/cc.arduino.add-groups.policy $RPM_BUILD_ROOT/%{_datadir}/polkit-1
 
 
 %changelog
+* Fri Nov 30 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt1_1jpp7
+- new version
+
 * Tue Oct 11 2011 Igor Vlasenko <viy@altlinux.ru> 0022-alt1_5jpp6
 - update to new release by jppimport
 
