@@ -2,10 +2,11 @@
 BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libICE-devel libSM-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libsystemd-login) pkgconfig(x11)
 # END SourceDeps(oneline)
 Group: Toys
+BuildRequires: libsystemd-login-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-screensaver
 Version:        1.5.1
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE Screensaver
 
 License:        GPLv2+ and LGPLv2+
@@ -74,7 +75,10 @@ NOCONFIGURE=1 ./autogen.sh
         --with-xscreensaverdir=%{_datadir}/xscreensaver/config \
         --with-xscreensaverhackdir=%{_libexecdir}/xscreensaver  \
         --enable-locking \
-        --enable-pam
+        --with-passwd-helper=/usr/libexec/mate-screensaver/mate-screensaver-chkpwd-helper  \
+	--disable-pam
+#	--enable-pam
+
 
 make V=1 %{?_smp_mflags}
 gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS %SOURCE45 -lpam
@@ -124,6 +128,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Fri Nov 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_1
+- bugfix release (closes: 28151)
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
 - new version; updated ru translation
 
