@@ -13,8 +13,8 @@
 %def_disable microhttpd
 
 Name: systemd
-Version: 195
-Release: alt3
+Version: 196
+Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -49,6 +49,7 @@ Source42: write_net_rules
 Source43: 75-persistent-net-generator.rules
 Source44: write_cd_rules
 Source45: 75-cd-aliases-generator.rules
+Source46: udev-bash3
 
 Patch1: %name-snapshot.patch
 Patch2: %name-alt-patches.patch
@@ -75,7 +76,6 @@ BuildRequires: kmod-devel >= 5
 BuildRequires: python-devel
 BuildRequires: quota
 BuildRequires: gtk-doc
-BuildRequires: pciids usbids
 BuildRequires: libblkid-devel >= 2.20
 
 %{?_enable_libcryptsetup:BuildRequires: libcryptsetup-devel}
@@ -102,6 +102,7 @@ Requires: sysvinit-utils
 
 Obsoletes: systemd-units < 43-alt1
 Provides: systemd-units = %version-%release
+Provides: syslogd-daemon
 
 %description
 systemd is a system and session manager for Linux, compatible with
@@ -220,6 +221,24 @@ BuildArch: noarch
 %description analyze
 Analyze tool for systemd.
 
+%package -n bash-completion-%name
+Summary: Bash completion for systemd utils
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: systemd = %version-%release
+
+%description -n bash-completion-%name
+Bash completion for %name.
+
+%package -n zsh-completion-%name
+Summary: Zsh completion for systemd utils
+Group: Shells
+BuildArch: noarch
+
+%description -n zsh-completion-%name
+Zsh completion for %name.
+
 %package -n python-module-%name
 Summary: Python Bindings for systemd
 License: LGPLv2+
@@ -235,6 +254,7 @@ Summary: udev - an userspace implementation of devfs
 License: GPLv2+
 PreReq: shadow-utils dmsetup kmod >= 5 util-linux >= 2.20 losetup >= 2.19.1
 PreReq: udev-rules = %version-%release
+PreReq: udev-hwdb = %version-%release
 Requires: libudev1 = %version-%release
 Requires: udev-rule-generator = %version-%release
 Provides: hotplug = 2004_09_23-alt18
@@ -257,7 +277,6 @@ Group: System/Configuration/Hardware
 License: GPLv2+
 Requires: udev = %version-%release
 Requires: libudev1 = %version-%release
-Requires: pciids usbids
 
 %description -n udev-extras
 The udev-extras package contains an additional rules and tools
@@ -277,6 +296,17 @@ which control names and permission of device files in /dev.  Rule
 files which have corresponding symlinks in /lib/udev/initramfs-rules.d
 are also used by the make-initrd package when creating initramfs images
 
+%package -n udev-hwdb
+Summary: Hardware database for udev
+Group: System/Configuration/Hardware
+License: GPLv2+
+Provides: %_sysconfdir/udev/hwdb.d /lib/udev/hwdb.d
+Conflicts: udev < %version-%release
+BuildArch: noarch
+
+%description -n udev-hwdb
+This package contains internal hardware database for udev.
+
 %package -n udev-rule-generator
 Summary: CD/Net rule generator for udev
 Group: System/Configuration/Hardware
@@ -286,6 +316,16 @@ Requires: udev-rules = %version-%release
 
 %description -n udev-rule-generator
 This package contains CD/Net rule generator for udev
+
+%package -n bash-completion-udev
+Summary: Bash completion for udev utils
+Group: Shells
+BuildArch: noarch
+Requires: bash-completion
+Requires: udev = %version-%release
+
+%description -n bash-completion-udev
+Bash completion for udev.
 
 %package -n libudev1
 Summary: Shared library to access udev device information
@@ -364,9 +404,7 @@ intltoolize --force --automake
 	--enable-introspection \
 	--enable-split-usr \
 	--with-rootlibdir=/%_lib \
-	--with-pamlibdir=/%_lib/security \
-	--with-usb-ids-path=/usr/share/misc/usb.ids \
-	--with-pci-ids-path=/usr/share/misc/pci.ids
+	--with-pamlibdir=/%_lib/security
 
 
 %make_build
@@ -471,6 +509,8 @@ mkdir -p %buildroot%_sysconfdir/systemd/ntp-units.d
 # Add completion for bash3
 rm -f %buildroot%_sysconfdir/bash_completion.d/*
 install -m644 %SOURCE14 %buildroot%_sysconfdir/bash_completion.d/systemd
+# Add completion for zsh
+install -D shell-completion/systemd-zsh-completion.zsh %buildroot%_datadir/zsh/Completion/Unix/_systemd
 
 # Make sure the ghost-ing below works
 touch %buildroot%_sysconfdir/systemd/system/runlevel2.target
@@ -570,6 +610,9 @@ install -p -m644 %SOURCE43 %buildroot/lib/udev/rules.d/
 install -p -m755 %SOURCE44 %buildroot/lib/udev/
 install -p -m644 %SOURCE45 %buildroot/lib/udev/rules.d/
 
+# Add completion for bash3
+install -m644 %SOURCE46 %buildroot%_sysconfdir/bash_completion.d/udev
+
 echo ".so man8/systemd-udevd.8" > %buildroot%_man8dir/udevd.8
 
 install -p -m644 %SOURCE31 %buildroot%_sysconfdir/udev/rules.d/
@@ -579,8 +622,10 @@ install -m644 %SOURCE29 %buildroot/lib/tmpfiles.d/systemd-startup-nologin.conf
 install -pD -m755 %SOURCE28 %buildroot%_rpmlibdir/systemd-tmpfiles.filetrigger
 
 %post
-/bin/systemd-machine-id-setup > /dev/null 2>&1 || :
-/bin/systemctl daemon-reexec > /dev/null 2>&1 || :
+/bin/systemd-machine-id-setup >/dev/null 2>&1 || :
+/lib/systemd/systemd-random-seed save >/dev/null 2>&1 || :
+/bin/systemctl daemon-reexec >/dev/null 2>&1 || :
+/bin/journalctl --update-catalog >/dev/null 2>&1 || :
 
 if [ $1 -eq 1 ] ; then
         # Try to read default runlevel from the old inittab if it exists
@@ -626,6 +671,7 @@ fi
 
 %post -n udev
 %post_service udevd
+/sbin/udevadm hwdb --update >/dev/null 2>&1 || :
 
 %preun -n udev
 %preun_service udevd
@@ -636,7 +682,7 @@ fi
 %dir %_sysconfdir/systemd/user
 %dir %_sysconfdir/systemd/ntp-units.d
 
-%_sysconfdir/bash_completion.d/systemd
+
 %_sysconfdir/profile.d/systemd.sh
 /lib/tmpfiles.d/*.conf
 %_sysconfdir/modules-load.d/modules.conf
@@ -758,8 +804,17 @@ fi
 %files analyze
 %_bindir/systemd-analyze
 
+%files -n bash-completion-%name
+%_sysconfdir/bash_completion.d/systemd
+
+%files -n zsh-completion-%name
+%_datadir/zsh/Completion/Unix/_systemd
+
 %files -n python-module-%name
 %python_sitelibdir/%name
+
+%files -n bash-completion-udev
+%_sysconfdir/bash_completion.d/udev
 
 %files -n libudev1
 /%_lib/libudev.so.*
@@ -825,10 +880,13 @@ fi
 /lib/udev/rules.d/95-keymap.rules
 
 %files -n udev-rules
-%dir %_sysconfdir/udev
 %dir %_sysconfdir/udev/rules.d
+%config(noreplace) %_sysconfdir/udev/rules.d/*
+/lib/udev/initramfs-rules.d
+/lib/udev/rules.d
 # rule-generator
 %exclude %_sysconfdir/udev/rules.d/70-persistent-*.rules
+%exclude /lib/udev/rules.d/75-*-generator.rules
 # extras
 %exclude /lib/udev/rules.d/61-accelerometer.rules
 %exclude /lib/udev/rules.d/75-*-description.rules
@@ -841,10 +899,10 @@ fi
 %exclude /lib/udev/rules.d/73-seat-late.rules
 %exclude /lib/udev/rules.d/99-systemd.rules
 
-%config(noreplace) %_sysconfdir/udev/rules.d/*
-/lib/udev/initramfs-rules.d
-%exclude /lib/udev/rules.d/75-*-generator.rules
-/lib/udev/rules.d
+
+%files -n udev-hwdb
+%dir %_sysconfdir/udev/hwdb.d
+/lib/udev/hwdb.d
 
 %files -n udev-rule-generator
 %config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-*.rules
@@ -853,6 +911,13 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Thu Nov 29 2012 Alexey Shabalin <shaba@altlinux.ru> 196-alt1
+- 196
+- move completion to separate noarch packages:
+  bash-completion-systemd, bash-completion-udev, zsh-completion-systemd
+- provide syslogd-daemon because the journal is fine as a syslog implementation
+- add udev-hwdb package
+
 * Thu Nov 22 2012 Alexey Shabalin <shaba@altlinux.ru> 195-alt3
 - drop altlinux-storage-init.service,altlinux-wait-storage.service,altlinux-storage-init-late.service
 
