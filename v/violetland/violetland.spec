@@ -1,6 +1,6 @@
 Name: violetland
 Version: 0.4.3
-Release: alt2
+Release: alt2.1
 Summary: An open source cross-platform game similar to Crimsonland
 Group: Games/Arcade
 License: GPLv3
@@ -116,6 +116,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_gamesdatadir/%name/*
 
 %changelog
+* Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.3-alt2.1
+- Rebuilt with Boost 1.52.0
+
 * Thu Oct 25 2012 Fr. Br. George <george@altlinux.ru> 0.4.3-alt2
 - Fix to build with boot filesystem v3
 
