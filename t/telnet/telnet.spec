@@ -1,11 +1,10 @@
 Name: telnet
 Version: 3.0
-Release: alt7
+Release: alt9
 
 Summary: The client program for the telnet remote login protocol
 License: BSD-style
 Group: Networking/Remote access
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source0: telnet-%version-20011117.tar
 Source1: telnetd.xinetd
@@ -38,11 +37,11 @@ the Internet.  This package provides a telnet daemon, which will
 support remote logins into the host machine.
 
 %prep
-%setup -q
+%setup
 
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
+#patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
@@ -79,6 +78,9 @@ install -pD -m640 %_sourcedir/telnetd.xinetd \
 %doc telnetd.eps
 
 %changelog
+* Fri Nov 30 2012 Dmitry V. Levin <ldv@altlinux.org> 3.0-alt9
+- Disabled telnet-3.0-owl-ipv4-only.patch (closes: #27423).
+
 * Fri Oct 31 2008 Dmitry V. Levin <ldv@altlinux.org> 3.0-alt7
 - Use strlcpy from glibc.
 
