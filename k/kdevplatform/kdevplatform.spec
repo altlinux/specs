@@ -22,8 +22,8 @@
 %define kdevelop_other kdevelop%{pkg_sfx_other}
 
 Name: %kdevplatform
-Version: 1.4.0
-Release: alt3.git
+Version: 1.4.1
+Release: alt1.git
 Serial: 1
 
 Group: Development/Tools
@@ -212,7 +212,8 @@ make apidox
 
 for m in \
 kdevclassbrowser kdevcontextbrowser kdevdocumentswitcher kdevdocumentview \
-kdevexecute kdevfilemanager kdevgenericprojectmanager kdevgrepview kdevkonsole \
+kdevexecute kdevexecutescript kdevfilemanager kdevgenericprojectmanager \
+kdevprojectdashboard kdevvcsprojectintegration kdevgrepview kdevkonsole \
 kdevpatchreview kdevplatform kdevproblemreporter kdevprojectmanagerview \
 kdevquickopen kdevsnippet kdevstandardoutputview kdevexternalscript \
 kdevcodeutils kdevopenwith kdevpastebin kdevreviewboard
@@ -324,6 +325,10 @@ done
 %_K4link/lib*.so
 
 %changelog
+* Fri Nov 30 2012 Alexey Morozov <morozov@altlinux.org> 1:1.4.1-alt1.git
+- a post-1.4.1 git snapshot (1d425f15575279df6b00cf72a068acea5c1fb7fc)
+- translations updated/fixed and synchronized with trunk
+
 * Tue Oct 30 2012 Alexey Morozov <morozov@altlinux.org> 1:1.4.0-alt3.git
 - new post-1.4.0 git snapshot (e67e288f6cda792d07523bb93e6de3a732ade856)
 - translations are sync'ed with upstream and slightly fixed
