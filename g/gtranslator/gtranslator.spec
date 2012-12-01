@@ -4,7 +4,7 @@
 
 Name: gtranslator
 Version: %ver_major.5
-Release: alt1.2
+Release: alt2
 
 Summary: A GNOME po file editor with many bells and whistles.
 License: GPL
@@ -12,7 +12,8 @@ Group: Development/Tools
 URL: http://gtranslator.sourceforge.net
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.91.5-alt-pkgconfig.patch
 
 Requires: libgda4-sqlite
@@ -20,9 +21,9 @@ Requires: libgda4-sqlite
 %define gtk_ver 3.4.0
 %define gtkspell_ver 3.0
 
-BuildRequires: gnome-common gnome-doc-utils gtk-doc intltool libgtk+3-devel >= %gtk_ver
+BuildRequires: gnome-common yelp-tools gtk-doc intltool libgtk+3-devel >= %gtk_ver
 BuildRequires: libgda4-devel libgdl3-devel libgtksourceview3-devel
-BuildRequires: librarian libsoup-devel libpeas-devel
+BuildRequires: libsoup-devel libpeas-devel
 BuildRequires: gsettings-desktop-schemas-devel iso-codes-devel
 BuildRequires: libgdict-devel libgtkspell3-devel >= %gtkspell_ver libjson-glib-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgtk+3-gir-devel libgtksourceview3-gir-devel}
@@ -58,11 +59,11 @@ This package contains documentation needed to develop %name plugins.
 %patch
 
 %build
-gnome-doc-prepare -f
 %autoreconf
 %configure \
 	--disable-schemas-compile \
 	--disable-static \
+	--enable-gtk-doc \
 	--with-gda=4.0
 %make_build
 
@@ -89,6 +90,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sat Dec 01 2012 Yuri N. Sedunov <aris@altlinux.org> 2.91.5-alt2
+- updated to 398ebe3e8
+
 * Tue Oct 02 2012 Yuri N. Sedunov <aris@altlinux.org> 2.91.5-alt1.2
 - rebuilt against libgdl-3.so.5
 
