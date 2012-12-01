@@ -4,7 +4,7 @@
 %define oname boostmpi
 Name: python-module-%oname
 Version: 1.39
-Release: alt6.git20091015
+Release: alt7.git20091015
 Summary: Boost MPI Python wrappers
 License: Boost Software License V1
 Group: Development/Python
@@ -93,6 +93,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 %doc doc/build/html/*
 
 %changelog
+* Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.39-alt7.git20091015
+- Rebuilt with Boost 1.52.0
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.39-alt6.git20091015
 - Rebuilt with Boost 1.51.0
 
