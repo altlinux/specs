@@ -1,6 +1,6 @@
 Name: mongo
 Version: 2.0.6
-Release: alt1
+Release: alt1.1
 Summary: mongo client shell and tools
 License: AGPL 3.0
 Url: http://www.mongodb.org
@@ -9,6 +9,7 @@ Group: Development/Databases
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
 Source: %name-%version-%release.tar
+Patch: mongo-2.0.6-alt-boost-1.52.0.patch
 
 BuildRequires: libjs-devel libreadline-devel boost-devel libpcre-devel gcc-c++ scons libpcrecpp-devel boost-filesystem-devel boost-program_options-devel libpcrecpp-devel libsnappy-devel
 
@@ -43,6 +44,7 @@ to develop mongo client software.
 
 %prep
 %setup
+%patch -p1
 
 %build
 scons --prefix=%buildroot/usr --use-system-all all
@@ -121,6 +123,9 @@ scons -c
 %_libdir/libmongoclient.a
 
 %changelog
+* Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.6-alt1.1
+- Rebuilt with Boost 1.52.0
+
 * Mon Jun 18 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.6-alt1
 - 2.0.6
 
