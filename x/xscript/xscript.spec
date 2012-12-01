@@ -2,7 +2,7 @@
 Summary: XScript is xml-based application server written in C++.
 Name: xscript
 Version: 5.63
-Release: alt24.5
+Release: alt24.6
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -15,6 +15,7 @@ Patch2: %name-file_logger.h.patch
 Patch3: %name-thread_pool.cpp.patch
 Patch4: %name-component.h.patch
 Patch5: %name-5.63-alt-DSO.patch
+Patch6: %name-5.63-alt-boost-1.52.0.patch
 
 # Automatically added by buildreq on Sun Jan 11 2009
 BuildRequires(pre): rpm-macros-webserver-common
@@ -121,15 +122,16 @@ XScript offline processor.
 %patch3 -p0
 %patch4 -p0
 %patch5 -p2
+%patch6 -p2
 
 %build
 # touch config.rpath
-%__subst 's|-lboost_thread|-lboost_thread-mt|g' configure.in
-find . -name "Makefile.am" -exec %__subst 's|-lboost_thread|-lboost_thread-mt|g' {} \;
+subst 's|-lboost_thread|-lboost_thread-mt|g' configure.in
+find . -name "Makefile.am" -exec subst 's|-lboost_thread|-lboost_thread-mt|g' {} \;
 cp %_datadir/gettext/intl/config.rpath config.rpath
 
 ACLOCAL_OPTIONS="-I config" ./autogen.sh
-%add_optflags -DBOOST_FILESYSTEM_VERSION=2
+%add_optflags -fpermissive
 %configure \
 	--sysconfdir=%_sysconfdir/%name \
 	--enable-cppunit \
@@ -211,6 +213,9 @@ install -m755 extra/xscriptcacheclean.sh %buildroot/%_bindir
 %_datadir/%name-proc/*.xsl
 
 %changelog
+* Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.63-alt24.6
+- Rebuilt with Boost 1.52.0
+
 * Tue Jun 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.63-alt24.5
 - Rebuilt
 
