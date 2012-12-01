@@ -29,7 +29,7 @@
 
 Name: wesnoth
 Version: 1.10.2
-Release: alt1
+Release: alt1.1
 Group: Games/Strategy
 Summary: 2D fantasy turn-based strategy
 Summary(ru_RU.UTF-8): двухмерная пошаговая стратегия в стиле фэнтези
@@ -37,6 +37,7 @@ License: %gpl2plus
 Url: http://www.%name.org
 Source0: %name-%version.tar
 Source1: %name.init
+Patch: wesnoth-1.10.2-alt-boost-1.52.0.patch
 
 Requires: %name-data = %version-%release
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
@@ -175,6 +176,7 @@ This package contains python interface to Battle for Wesnoth.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %define _optlevel 3
@@ -211,9 +213,17 @@ export PYTHON_VERSION=%__python_version
 #    %{subst_with fribidi} \
 #    %{subst_with x}
 
-cmake . -DCMAKE_INSTALL_PREFIX=%buildroot%_prefix -DDATAROOTDIR=%_datadir -DBINDIR=%_bindir -DENABLE_TOOLS=ON -DCMAKE_INSTALL_PREFIX=%buildroot
+cmake . \
+	-DCMAKE_INSTALL_PREFIX=%buildroot%_prefix \
+	-DCMAKE_C_FLAGS="%optflags" \
+	-DCMAKE_CXX_FLAGS="%optflags" \
+	-DDATAROOTDIR=%_datadir \
+	-DBINDIR=%_bindir \
+	-DENABLE_TOOLS=ON \
+	-DENABLE_STRICT_COMPILATION=OFF \
+	-DCMAKE_INSTALL_PREFIX=%buildroot
 
-%make_build
+%make_build VERBOSE=1
 for s in 96 72 48 36 32 24 22 16; do
     convert -depth 8 -resize ${s}x$s icons/%name-{icon-Mac,$s}.png
     convert -depth 8 -resize ${s}x$s icons/{map-editor-icon-Mac,%{name}_editor-$s}.png
@@ -282,6 +292,7 @@ for f in %buildroot%_datadir/%name/data/languages/*_*.cfg; do
     l=$(basename "$f")
     echo "%%lang(${l:0:2}) %_datadir/%name/data/languages/$l" >> %name.lang
 done
+sed -i 's|.*translations.*||' %name.lang
 
 rm -rf %buildroot%_datadir/%name/icons
 rm -f %buildroot%_datadir/%name/fonts/DejaVuSans.ttf
@@ -315,7 +326,7 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %_datadir/%name/fonts
 %_datadir/%name/images
 %_datadir/%name/sounds
-%dir %_datadir/%name/translations
+#dir %_datadir/%name/translations
 %dir %_datadir/%name/data
 %_datadir/%name/data/COPYING.txt
 %_datadir/%name/data/ai/
@@ -367,6 +378,9 @@ sed -i 's/wesnoth_editor-icon/wesnoth_editor/' %buildroot%_desktopdir/%{name}_ed
 %endif
 
 %changelog
+* Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.2-alt1.1
+- Rebuilt with Boost 1.52.0
+
 * Thu Apr 19 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.10.2-alt1
 - 1.10.2
 
