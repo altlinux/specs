@@ -10,7 +10,7 @@
 Name: libtorrent-rasterbar%{abiversion}
 Version: 0.16.1
 Epoch: 2
-Release: alt3.svn7387
+Release: alt4.svn7387
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -28,6 +28,7 @@ BuildRequires: boost-filesystem-devel boost-program_options-devel
 BuildRequires: python-devel boost-python-devel
 BuildRequires: libGeoIP-devel
 Obsoletes: libtorrent <= 0.13-alt3.svn.r2433
+Obsoletes: libtorrent-rasterbar0.15
 
 %description
 libTorrent is designed to avoid redundant copying and storing of data
@@ -51,40 +52,43 @@ that other clients and libraries suffer from. libTorrent features:
 * Upload and download throttle.
 * And much more...
 
-%package devel
+%package -n %upname-devel
 Summary: Development libraries and header files for libTorrent
 Group: Development/C++
 Requires: %name = %epoch:%version-%release
-Provides: libtorrent-rasterbar-devel = %epoch:%version-%release
+Provides: libtorrent7-rasterbar-devel = %epoch:%version-%release
+Conflicts: libtorrent7-rasterbar-devel < %epoch:%version-%release
+Obsoletes: libtorrent7-rasterbar-devel < %epoch:%version-%release
 Conflicts: libtorrent-rasterbar-devel < %epoch:%version-%release
+Obsoletes: libtorrent-rasterbar-devel < %epoch:%version-%release
 Conflicts: libtorrent-devel
 
-%description devel
+%description -n %upname-devel
 The libtorrent-devel package contains libraries and header files needed
 to develop applications using libTorrent.
 
 %if_enabled static
-%package devel-static
+%package -n %upname-devel-static
 Summary: Development static libraries for libTorrent
 Group: Development/C++
 Requires: %name = %epoch:%version-%release
-Provides: libtorrent-rasterbar-devel-static = %epoch:%version-%release
-Conflicts: libtorrent-rasterbar-devel-static < %epoch:%version-%release
+Provides: libtorrent-rasterbar7-devel-static = %epoch:%version-%release
+Conflicts: libtorrent-rasterbar7-devel-static < %epoch:%version-%release
 #Conflicts: libtorrent-devel
 
-%description devel-static
+%description -n %upname-devel-static
 The libtorrent-devel package contains static libraries needed
 to develop applications using libTorrent.
 %endif
 
-%package -n python-module-%name
+%package -n python-module-%upname
 Summary: libTorrent python bindings
 Group: Development/Python
 Requires: %name = %epoch:%version-%release
-Provides: python-module-libtorrent-rasterbar = %epoch:%version-%release
-Conflicts: python-module-libtorrent-rasterbar < %epoch:%version-%release
+Provides: python-module7-libtorrent-rasterbar = %epoch:%version-%release
+Conflicts: python-module7-libtorrent-rasterbar < %epoch:%version-%release
 
-%description -n python-module-%name
+%description -n python-module-%upname
 The python-module-libtorrent-rasterbar contains
 python bindings to libTorrent.
 
@@ -114,21 +118,24 @@ rm -f %buildroot%_libdir/*.a
 %doc --no-dereference COPYING
 %_libdir/*.so.*
 
-%files devel
+%files -n %upname-devel
 %_includedir/*
 %_libdir/*.so
 %_libdir/pkgconfig/*
 
 %if_enabled static
-%files devel-static
+%files -n %upname-devel-static
 %_libdir/*.a
 %endif
 
-%files -n python-module-%name
+%files -n python-module-%upname
 %python_sitelibdir/libtorrent.so
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt4.svn7387
+- libtorrent-rasterbar7-devel is libtorrent-rasterbar-devel
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt3.svn7387
 - Built release type instead of debug
 
