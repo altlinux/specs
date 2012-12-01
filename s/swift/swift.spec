@@ -1,12 +1,13 @@
 Name: swift
 Version: 1.0
-Release: alt1.git8c01212
+Release: alt1.git8c01212.1
 Packager: Mike Pluzhnikov <amike@altlinux.ru>
 Summary: Swift, new friendly chat client.
 License: GPLv3, BSD-simplified
 Group: Networking/Instant messaging
 Url: http://swift.im/
 Source: %name-%version.tar
+Patch: swift-1.0-alt-boost-1.52.0.diff
 
 Requires: libqt4, openssl, python-base, python
 BuildRequires(pre): libqt4-devel, libssl-devel, python, python-base
@@ -33,6 +34,7 @@ Swift is trying to plug a hole in the XMPP client landscape, and has these aims.
 
 %prep 
 %setup 
+%patch -p1
 
 %install
 ./scons allow_warnings=1 optimize=1 qt=%_qt4dir SWIFT_INSTALLDIR=%buildroot%_prefix %buildroot%_prefix 
@@ -51,6 +53,9 @@ Swift is trying to plug a hole in the XMPP client landscape, and has these aims.
 %_niconsdir/swift.xpm
 
 %changelog
+* Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.git8c01212.1
+- Rebuilt with Boost 1.52.0
+
 * Mon Apr 30 2012 Mikhail Pluzhnikov <amike@altlinux.ru> 1.0-alt1.git8c01212
 - New version from GIT
 - Rebuilt with Boost 1.49.0
