@@ -1,6 +1,6 @@
 Name:		ditchers
 Version:	1.2
-Release:	alt4
+Release:	alt4.1
 Group:		Games/Arcade
 Summary:	Underground tanks dig tunnels in the soil and destroys opponents
 Source:		%name-%version.tar.gz
@@ -10,6 +10,8 @@ Source3:	cutover.tar.gz
 Source4:	sand.tar.gz
 Patch:		ditchers.1.0.4.1.patch
 Patch1:		ditchers-1.2.tinyxml.patch
+Patch2:   ditchers-1.2-alt-glibc-2.16.patch
+Patch3:   ditchers-1.2-alt-boost-1.52.0.patch
 URL:		http://ditchers.sourceforge.net
 License:	BSD
 
@@ -58,6 +60,8 @@ Data files for %name, %summary
 %setup -n %name
 %patch -p1 -b .orig
 %patch1 -p3
+%patch2 -p2
+%patch3 -p2
 
 for N in */*.desktop; do
   sed -i 's/.png//
@@ -72,7 +76,7 @@ cd %_gamesdatadir/%name
 
 gzip -d  %name.6.gz
 
-sed -i 's|^\(CFLAGS.*\)|\1 -g -DBOOST_FILESYSTEM_VERSION=2|' \
+sed -i 's|^\(CFLAGS.*\)|\1 -g|' \
 	ditcher/Makefile ditchs/Makefile
 
 ( cd ditcher/data/maps
@@ -109,6 +113,9 @@ done
 %_gamesdatadir/%name/*
 
 %changelog
+* Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt4.1
+- Rebuilt with Boost 1.52.0
+
 * Thu May 24 2012 Fr. Br. George <george@altlinux.ru> 1.2-alt4
 - DSO list completion
 
