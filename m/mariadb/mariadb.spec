@@ -5,7 +5,7 @@
 
 Summary: A very fast and reliable SQL database engine
 Name: mariadb
-Version: 5.5.27
+Version: 5.5.28a
 Release: alt1
 Group: Databases
 License: GPLv2 with exceptions
@@ -27,14 +27,14 @@ Patch3: mariadb-5.5-install-test.patch
 Patch4: mysql-expired-certs.patch
 Patch7: mariadb-5.5-versioning.patch
 Patch8: mariadb-5.5-dubious-exports.patch
-Patch12: mysql-openssl-test.patch
+#Patch12: mysql-openssl-test.patch
 
 # mandriva patches
 Patch101: mariadb-5.5-logrotate.patch
 Patch102: mariadb-5.5-initscript.patch
 Patch103: mariadb-5.5-mysql_upgrade-exit-status.patch
 Patch106: mariadb-5.5-hotcopy.patch
-Patch107: mariadb-5.5-mysql_install_db-quiet.patch
+Patch107: mariadb-5.5-mysql_install_db-quiet.alt.patch
 
 
 Requires: %name-server = %version-%release %name-client = %version-%release
@@ -201,12 +201,12 @@ version.
 %patch4 -p1
 %patch7 -p1
 %patch8 -p1
-%patch12 -p1
+#patch12 -p1
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch106 -p1
-%patch107 -p1
+%patch107 -p0
 
 
 mkdir -p ALT
@@ -625,6 +625,9 @@ rm -rf /var/lib/mysql/{dev,var,etc}
 %_libdir/libmysqld.so
 
 %changelog
+* Sun Dec 02 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.28a-alt1
+- New version (fix CVE-2012-5579)
+
 * Tue Oct 02 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 5.5.27-alt1
 - New version
 
