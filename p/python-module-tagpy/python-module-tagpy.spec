@@ -1,14 +1,13 @@
 %define rname tagpy
 Name: python-module-tagpy
 Version: 0.94.8
-Release: alt3.4
+Release: alt4.git20120103
 
 Summary: TagPy is a set of Python bindings for TagLib. 
 License: GPL2+
 Group: Development/Python
 Url: http://mathema.tician.de/software/tagpy
 
-Packager: Alexey Morsov <swi@altlinux.ru>
 Source: %name-%version.tar
 
 Buildrequires: python-devel boost-python-devel libtag-devel gcc-c++
@@ -32,16 +31,15 @@ Just like TagLib, TagPy can:
 #subst 's|boost_python-gcc42-mt|boost_python-mt|g' setup.py
 
 %build
+%add_optflags -fpermissive
 export CC=g++
-./configure \
+./configure.py \
 	--taglib-inc-dir=%_includedir/taglib \
 	--boost-python-libname=boost_python-mt
-%make_build
-#python setup.py build
+%python_build_debug
 
 %install
-python setup.py install --root=%buildroot \
-	--optimize=2 --record=INSTALLED_FILES
+%python_install
 
 
 %files 
@@ -50,6 +48,9 @@ python setup.py install --root=%buildroot \
 
 
 %changelog
+* Sun Dec 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.94.8-alt4.git20120103
+- New snapshot
+
 * Fri Sep 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.94.8-alt3.4
 - Rebuilt with Boost 1.51.0
 
