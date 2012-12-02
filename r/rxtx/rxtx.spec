@@ -1,11 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: gcc-c++
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%define fedora 15
-# required for %%_jnidir macros
-BuildRequires: rpm-build-java
-BuildRequires: gcc-c++
-%define version 2.2
+%define fedora 18
+# %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name rxtx
+%define version 2.2
 #global upver	2.1
 #global uprel	7r2
 #global rel	0.8
@@ -20,7 +22,7 @@ BuildRequires: gcc-c++
 Summary:	Parallel communication for the Java Development Toolkit
 Name:		rxtx
 Version:	%{upver}
-Release:	alt1_0.6.20100211jpp6
+Release:	alt2_0.6.20100211.2jpp7
 License:	LGPLv2+
 Group:		System/Libraries
 URL:		http://rxtx.qbang.org/
@@ -63,7 +65,7 @@ find . -name '*.jar' -exec rm {} \;
 find . -name '*.hqx' -exec rm {} \;
 
 %build
-export JAVA_HOME=%{java_home}
+#export JAVA_HOME=%{java_home}
 %configure
 # parallel make fails with make %%{?_smp_mflags}
 make
@@ -82,6 +84,9 @@ find %{buildroot} -name '*.la' -exec rm {} \;
 %{jni}
 
 %changelog
+* Sun Dec 02 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_0.6.20100211.2jpp7
+- use /var/lock/serial
+
 * Fri Sep 02 2011 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_0.6.20100211jpp6
 - update to new release by jppimport
 
