@@ -3,26 +3,32 @@
 %def_enable perf_plugin
 %def_enable glade
 %def_enable xrender
+%def_enable stats_plugin
 
 Name: cairo-compmgr
-Version: 0.3.0
-Release: alt8.git83e50c
+Version: 0.3.4
+Release: alt1.gitc609e
 Summary: Cairo Composite Manager
 License: GPL
 Group: System/X11
+Url: http://cairo-compmgr.tuxfamily.org
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
+# git://git.tuxfamily.org/gitroot/ccm/cairocompmgr.git
+# or
+# git://github.com/gandalfn/Cairo-Composite-Manager.git
 
 BuildRequires: intltool gtk-doc
 BuildRequires: libXcomposite-devel libXdamage-devel libXext-devel libXi-devel libSM-devel libGL-devel libXrandr-devel
 BuildRequires: libcairo-devel libpixman-devel
 BuildRequires: libgtk+2-devel
-BuildRequires: libvala-devel
+BuildRequires: libvala-devel >= 0.18.0
 %{?_enable_gconf:BuildRequires: libGConf-devel GConf}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_perf_plugin:BuildRequires: libgtop-devel libwnck-devel}
+%{?_enable_stats_plugin:BuildRequires: libgtop-devel}
 %{?_enable_glade:BuildRequires: libgladeui-devel}
 %{?_enable_xrender:BuildRequires: libXrender-devel}
 BuildRequires: desktop-file-utils
@@ -71,12 +77,13 @@ Contains developer documentation for %name.
 # sed -i 's!libvala-0.14!libvala-0.16!' configure.ac
 # sed -i 's!libvala-0.14!libvala-0.16!' vapi/cairo-compmgr.deps
 
-./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 %configure \
 	%{subst_enable gconf } \
 	--disable-schemas-install \
 	--enable-gtk-doc \
 	%{?_enable_perf_plugin:--enable-perf-plugin} \
+	%{?_enable_stats_plugin:--enable-stats-plugin} \
 	%{?_enable_introspection:--enable-gobject-introspection}
 
 %make
@@ -132,6 +139,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Dec 03 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.4-alt1.gitc609e
+- upstream snapshot c609ef4a8f423fb9c631a1f43d71f6044bff7e86
+
 * Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.0-alt8.git83e50c
 - upstream snapshot 83e50c41239a6e25e839a0b5912d5e100b505ad3
 
