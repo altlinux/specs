@@ -2,7 +2,7 @@
 
 Name: avinfo
 Version: 1.0
-Release: alt2.a16
+Release: alt2.a17
 
 Summary: AVInfo is a utility for output information about AVI files
 Summary(ru_RU.KOI8-R): AVInfo - программа для вывода информации об AVI файлах
@@ -14,9 +14,12 @@ Source: %url/avinfo-%realversion.zip
 Patch: avinfo-1.0-gcc3.4.patch
 Patch1:  avinfo-1.0-config.h.patch
 Patch2:  avinfo-1.0-gcc4.patch
+Patch3:  avinfo-1.0-alt-no-yyparse.patch
 
 # Automatically added by buildreq on Mon Feb 28 2005
 BuildRequires: unzip
+
+BuildPreReq: flex
 
 %description
 AVInfo is a utility for displaying AVI header information. It returns the
@@ -38,6 +41,7 @@ avi файлах. Полная, максимально возможная информативность, мощные средства
 %patch -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p2
 find -type f -print0 | xargs -r0 sed -i 's,,,g 
 s,,,g'
 
@@ -51,6 +55,8 @@ done
 
 pushd src
 sed -i 's/-DMAKEFILE_WIN/-DCFG_PATH_STYLE_UNIX/g' Makefile
+#make_build CXX="g++ -fpermissive %optflags"
+%add_optflags -DYYPARSE_PARAM=lexer_ctl
 %make_build CXX="gcc %optflags"
 popd
 
@@ -67,6 +73,9 @@ install -pD -m644 src/avinfo.cfg %buildroot%_sysconfdir/%name/default.conf
 %doc doc/* CHANGELOG
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.a17
+- Fixed build
+
 * Thu May 27 2010 Dmitriy Khanzhin <jinn@altlinux.ru> 1.0-alt2.a16
 - fix build with gcc4
 
