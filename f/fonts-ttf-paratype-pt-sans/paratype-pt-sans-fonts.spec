@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: gcc-c++ perl(English.pm) unzip
 # END SourceDeps(oneline)
 %define oldname paratype-pt-sans-fonts
 %global fontname paratype-pt-sans
@@ -32,8 +32,8 @@ A. A a.'titlea.' language is named after an ethnic group.
 
 
 Name:           fonts-ttf-paratype-pt-sans
-Version:        20100408
-Release:        alt3_4
+Version:        20101909
+Release:        alt1_1
 Summary:        A pan-Cyrillic typeface
 
 Group:          System/Fonts/True type
@@ -98,8 +98,6 @@ done
 
 
 %install
-rm -fr %{buildroot}
-
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
@@ -152,7 +150,11 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
+
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 20101909-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20100408-alt3_4
 - update to new release by fcimport
 
