@@ -1,18 +1,18 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/runtest gcc-c++ libICE-devel libSM-devel libX11-devel unzip
+BuildRequires: gcc-c++ perl(English.pm) unzip
 # END SourceDeps(oneline)
 %define oldname samyak-fonts
-%define	fontname	samyak
+%global	fontname	samyak
 %global fontconf	67-%{fontname}
 
 # Common description
-%define common_desc \
+%global common_desc \
 The Samyak package contains fonts for the display of \
 Scripts Devanagari, Gujarati, Malayalam, Oriya and Tamil
 
 Name:	 fonts-ttf-samyak
 Version:	1.2.2
-Release:	alt3_8
+Release:	alt3_9
 Summary:	Free Indian truetype/opentype fonts
 Group:	System/Fonts/True type
 License:	GPLv3+ with exceptions
@@ -35,8 +35,6 @@ Source44: import.info
 %package common
 Summary:  Common files for samyak-fonts
 Group:	System/Fonts/True type
-Provides: %{fontname}-common-fonts = %{version}-%{release}
-Obsoletes: %{fontname}-common-fonts < 1.2.1-4
 %description common
 %common_desc
 
@@ -45,8 +43,6 @@ Summary: Open Type Fonts for Devanagari script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
-Provides: %{oldname}-devanagari = %{version}-%{release}
-Obsoletes: %{oldname}-devanagari < 1.2.1-3
 %description -n fonts-ttf-samyak-devanagari
 This package contains truetype/opentype font for the display of \
 Scripts Devanagari.
@@ -61,8 +57,6 @@ Summary: Open Type Fonts for Tamil script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
-Provides: %{oldname}-tamil = %{version}-%{release}
-Obsoletes: %{oldname}-tamil < 1.2.1-3
 %description -n fonts-ttf-samyak-tamil
 This package contains truetype/opentype font for the display of \
 Scripts Tamil.
@@ -77,8 +71,6 @@ Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
-Provides: %{oldname}-malayalam = %{version}-%{release}
-Obsoletes: %{oldname}-malayalam < 1.2.1-3
 %description -n fonts-ttf-samyak-malayalam
 This package contains truetype/opentype font for the display of \
 Scripts Malayalam.
@@ -93,8 +85,6 @@ Summary: Open Type Fonts for Gujarati script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
-Provides: %{oldname}-gujarati = %{version}-%{release}
-Obsoletes: %{oldname}-gujarati < 1.2.1-3
 %description -n fonts-ttf-samyak-gujarati
 This package contains truetype/opentype font for the display of \
 Scripts Gujarati.
@@ -109,8 +99,6 @@ Summary: Open Type Fonts for Oriya script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
-Provides: %{oldname}-oriya = %{version}-%{release}
-Obsoletes: %{oldname}-oriya < 1.2.1-3
 %description -n fonts-ttf-samyak-oriya
 This package contains truetype/opentype font for the display of \
 Scripts Oriya.
@@ -202,6 +190,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_9
+- update to new release by fcimport
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt3_8
 - update to new release by fcimport
 
