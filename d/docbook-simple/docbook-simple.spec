@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(English.pm)
+# END SourceDeps(oneline)
 Name: docbook-simple
 Version: 1.1
-Release: alt3_10
+Release: alt3_11
 Group: Text tools
 Summary: Simplified DocBook is a small subset of the DocBook XML DTD
 License: Freely redistributable without restriction
@@ -58,11 +61,11 @@ install -p -m 644 %{SOURCE3} $SGML_CAT_DIR
 ####### FIXME: must copy README.redhat to source directory ########
 #######        for %doc to find it, ${SOURCE1} doesn't work ########
 
-cp -p %{SOURCE1} ./README.fedora
+cp -p %{SOURCE1} ./README
 
 %files
 %doc sdocbook.css
-%doc README.fedora
+%doc README
 %dir %{_datadir}/xml/docbook/simple/
 %{_datadir}/xml/docbook/simple/%{version}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/sgml/docbook-simple.cat
@@ -140,6 +143,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_11
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_10
 - update to new release by fcimport
 
