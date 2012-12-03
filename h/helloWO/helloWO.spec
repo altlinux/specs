@@ -1,6 +1,6 @@
 Name:		helloWO
 Version:	5.4.3
-Release:	alt3
+Release:	alt4
 Summary:	WebObjects starter-application "HelloWOrld"  with complete WebObjects libraries set
 Summary(ru_RU.UTF-8): стартовое WebObjects-приложение "HelloWOrld" с полным набором библиотек WebObjects
 
@@ -36,6 +36,7 @@ WebObjects - набор Java-библиотек для разработки сл
 
 %prep
 %setup
+subst "s,/opt/apple/Local/Library/WebObjects/Logs,%wo_logdir,g" Library/WebObjects/JavaApplications/wotaskd.woa/Contents/Resources/SpawnOfWotaskd.sh
 rm -rf Library/WebObjects/Adaptors
 rm -rf Local/Library/WebObjects/Configuration
 rm -rf Local/Library/WebObjects/Logs
@@ -76,6 +77,11 @@ for f in *.framework; do
   fi
 done
 
+cd %wo_woroot/Library/Frameworks/JavaWOExtensions.framework/Resources/Java
+if [ ! -e JavaWOExtensions.jar ] ; then
+  ln -fns javawoextensions.jar JavaWOExtensions.jar
+fi
+
 %preun
 if [ "$1" = 0 ] ; then
   cd %wo_woroot/Library/Frameworks/
@@ -103,6 +109,10 @@ fi
 %dir %wo_logdir
 
 %changelog
+* Mon Dec 03 2012 Gennady Kushnir <baywind@altlinux.org> 5.4.3-alt4
+- actually updated frameworks from 5.4.2 to 5.4.3
+- updated timezone information
+- symlink JavaWOExtensions.jar
 * Sun Nov 21 2010 Gennady Kushnir <baywind@altlinux.org> 5.4.3-alt3
 - replaced russian words in HelloWOrld.woa with english
 - removed unused system WO applications
