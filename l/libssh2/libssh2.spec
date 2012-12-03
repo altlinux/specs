@@ -1,5 +1,5 @@
 Name: libssh2
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 
 Summary: A library implementing the SSH2 protocol
@@ -9,7 +9,7 @@ Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Url: http://www.libssh2.org/
 # http://downloads.sourceforge.net/%name/%name-%version.tar.gz
 Source: %name-%version.tar
-BuildRequires: openssl-devel zlib-devel
+BuildRequires: openssl-devel zlib-devel man
 
 %description
 libssh2 is a library implementing the SSH2 protocol as defined by
@@ -72,6 +72,9 @@ cp -a docdir/* %buildroot%docdir/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Mon Dec 03 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.3-alt1
+- New version
+
 * Mon Jun 11 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.2-alt1
 - New version
 
