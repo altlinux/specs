@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: perl(English.pm) unzip
+# END SourceDeps(oneline)
 %define pkg docbook-slides
 Summary: DocBook Slides document type and stylesheets
 Name: docbook-slides
 Version: 3.4.0
-Release: alt3_11
+Release: alt3_12
 License: MIT
 Group: Text tools
 URL: http://sourceforge.net/projects/docbook
@@ -58,14 +61,14 @@ SGML_CAT_DIR=$RPM_BUILD_ROOT%{_sysconfdir}/sgml
 mkdir -p $SGML_CAT_DIR
 install -p -m 644 %{SOURCE2} $SGML_CAT_DIR
 
-cp -p %{SOURCE3} ./README.fedora
+cp -p %{SOURCE3} ./README2
 
 %files
 %doc doc
 %doc tests
 %doc README
 %doc NEWS
-%doc README.fedora
+%doc README2
 %dir %{_datadir}/xml/docbook/slides/
 %{_datadir}/xml/docbook/slides/%{version}
 %config(noreplace) %verify(not md5 size mtime) %{_sysconfdir}/sgml/docbook-slides.cat
@@ -139,6 +142,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt3_12
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.4.0-alt3_11
 - update to new release by fcimport
 
