@@ -9,11 +9,12 @@
 %def_without libdb44
 %def_without libdb46
 %def_without libdb47
+%def_without libdb48
 
 # for set libdb default
 %define libdb_name libdb
 %define libdb_v1 4
-%define libdb_v2 7
+%define libdb_v2 %nil
 
 # set %%libdb_switch
 %if_with libdb42
@@ -30,6 +31,9 @@
 %endif
 %if_with libdb47
 %define libdb_switch libdb4.7
+%endif
+%if_with libdb48
+%define libdb_switch libdb4.8
 %endif
 
 # set %%release_libdb
@@ -66,7 +70,7 @@
 %define apudir %name-%version
 
 Name: aprutil%aprver
-Version: 1.3.12
+Version: 1.5.1
 Release: %{branch_release alt1}%{?release_libdb}
 
 Summary: Apache Portable Runtime Utility shared library
@@ -79,11 +83,13 @@ Packager: Boris Savelev <boris@altlinux.org>
 Source: %name-%version.tar
 # ALT patchs and:
 # * FreeSWITCH patchs:
-#   + commit de417e99f0c41421f701f86ee5e4e507868be81f of
+#   + commits de417e99f0c41421f701f86ee5e4e507868be81f
+#     and 512201c21a406a91f17be5163fc087df5a511455 of
 #     git://git.freeswitch.org/freeswitch.git
 # * Debian patchs:
-#   + 014_apu_config_dont_list_indep_libs.dpatch
-#   + 017_thread_pool_fix.dpatch
+#   + apu_config_dont_list_indep_libs.patch
+#   + avoid_ldap_by_defaut.patch
+#   + avoid_db_by-default.patch
 Patch1: %name-%version-alt-all-0.1.patch
 
 BuildRequires(pre): rpm-macros-branch
@@ -300,6 +306,10 @@ find %buildroot%_datadir -type f -print0 |
 %_libdir/apr-util-%aprver/apr_dbd_odbc*.so
 
 %changelog
+* Wed Nov 28 2012 Aleksey Avdeev <solo@altlinux.ru> 1.5.1-alt1
+- New version (1.5.1)
+- Use libdb4-devel by default
+
 * Thu Nov 15 2012 Aleksey Avdeev <solo@altlinux.ru> 1.3.12-alt1
 - New version (1.3.12) (ALT#27746)
 
