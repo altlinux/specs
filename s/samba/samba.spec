@@ -3,7 +3,7 @@
 Summary: Server and Client software to interoperate with Windows machines
 Name: samba
 Version: 3.6.9
-Release: alt1
+Release: alt2
 License: GPLv3+ and LGPLv3+
 Group: System/Servers
 Url: http://www.samba.org/
@@ -389,10 +389,11 @@ ln -sf ../../doc/samba-doc-%version/htmldocs/Samba3-ByExample/
 ln -sf ../../doc/samba-doc-%version/htmldocs/Samba3-Developers-Guide/
 popd
 
-mkdir -p %buildroot/%systemd_unitdir
-install -m644 smb.service %buildroot/%systemd_unitdir/
-install -m644 nmb.service %buildroot/%systemd_unitdir/
-install -m644 winbind.service %buildroot/%systemd_unitdir/
+install -d -m 0755 %buildroot%_unitdir
+for i in nmb smb winbind; do
+	#install -d -m 0644 packaging/systemd/$i.service %buildroot%_unitdir/
+	sed '/^Type=/d;/^PIDFile=/s|=/run/|=/var/run/|' packaging/systemd/$i.service > %buildroot%_unitdir/$i.service
+done
 
 %find_lang pam_winbind
 %find_lang net
@@ -584,6 +585,10 @@ true
 %_pixmapsdir/samba/logo-small.png
 
 %changelog
+* Mon Dec 03 2012 Led <led@altlinux.ru> 3.6.9-alt2
+- removed systemd unit files added in 3.6.5-alt2, using fixed upstream's ones
+  (ALT#28088)
+
 * Tue Oct 30 2012 Led <led@altlinux.ru> 3.6.9-alt1
 - 3.6.9
 
