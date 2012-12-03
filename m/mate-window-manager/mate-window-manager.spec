@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/matedialog libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(pango) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xdamage) pkgconfig(xfixes) pkgconfig(xrender)
+BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/matedialog libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(pango) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xfixes) pkgconfig(xrender)
 # END SourceDeps(oneline)
 Group: Graphical desktop/Other
 BuildRequires: libcanberra-gtk2-devel
@@ -12,7 +12,7 @@ BuildRequires: libcanberra-gtk2-devel
 
 Name:           mate-window-manager
 Version:        1.5.2
-Release:        alt4_7
+Release:        alt4_9
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -38,12 +38,10 @@ BuildRequires: mate-dialogs
 BuildRequires: pkgconfig(sm)
 BuildRequires: pkgconfig(ice)
 BuildRequires: pkgconfig(libstartup-notification-1.0)
+BuildRequires: pkgconfig(xdamage)
 
 Requires:      gsettings-desktop-schemas
 
-Requires:      mate-themes
-# for /usr/share/mate-control-center/keybindings, /usr/share/mate/wm-properties
-Requires:      mate-control-center
 
 Obsoletes: mate-window-manager-libs < 1.4.1-2
 
@@ -145,6 +143,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Thu Nov 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt4_9
+- new fc release
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt4_7
 - dropped libmarco-private subpackage (no more needed, 1.5.0 transaction is complete)
 
