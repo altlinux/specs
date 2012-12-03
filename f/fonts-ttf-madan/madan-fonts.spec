@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: gcc-c++ perl(English.pm) unzip
 # END SourceDeps(oneline)
 %define oldname madan-fonts
 %global fontname madan
@@ -7,20 +7,20 @@ BuildRequires: unzip
 
 Name: fonts-ttf-madan
 Version: 2.000
-Release: alt3_8
+Release: alt3_9
 Summary: Font for Nepali language
 Group: System/Fonts/True type
 License: GPL+
 URL: http://madanpuraskar.org/
-#Note if downloading this URL using wget,move this file to madan.zip
-#Source0: http://madanpuraskar.org/index.php?option=com_docman&task=doc_download&gid=8&Itemid=63
-Source0: madan.zip
-Source1: %{fontconf}
+# Found new following working Source URL. Use wget to download this archive
+Source0: http://download.com.np/uploads/nepali_unicode/madan.zip
+Source1: %{oldname}-fontconfig.conf
 Source2: ttf2sfd.pe
 Source3: sfd2ttf.pe
 BuildArch: noarch
 BuildRequires: fontforge
 BuildRequires: fontpackages-devel
+# This patch will make sure "fc-scan madan.ttf |grep lang:" will show ne
 Patch0: madan-fonts-2.000-bug842965-u0970.patch
 Source44: import.info
 
@@ -35,7 +35,9 @@ for file in madan/license.txt; do
  touch -r $file $file.new && \
  mv $file.new $file
 done
+
 cp -p %{SOURCE2} %{SOURCE3} .
+
 chmod 755 ttf2sfd.pe sfd2ttf.pe
 ./ttf2sfd.pe madan/*.ttf
 rm -rf madan/*ttf
@@ -100,6 +102,9 @@ fi
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_9
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_8
 - update to new release by fcimport
 
