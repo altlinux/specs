@@ -1,12 +1,13 @@
 
 Version: 0.8.3
-Release: alt3.1.1
+Release: alt3.2
 
 %define tname Tartarus
 
 Summary: %tname Core components
 Name: %tname-core
 Source: %tname-%version.tar
+Patch: Tartarus-core-0.8.3-alt-flags.patch
 License: %gpl2plus
 Group: System/Configuration/Other
 Url: http://www.tartarus.ru
@@ -364,6 +365,7 @@ Development files for build C++ %tname projects.
 %define tincludedir %_includedir/%tname
 
 %setup  -q -n %tname-%version
+%patch -p2
 
 %build
 # check version
@@ -514,6 +516,9 @@ fi
 # {{{1 changelog
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.3-alt3.2
+- Fixed build with gcc 4.7
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.8.3-alt3.1.1
 - Rebuild with Python-2.7
 
