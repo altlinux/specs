@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libGL-devel libSDL-devel libX11-devel pkgconfig(avahi-cli
 # END SourceDeps(oneline)
 Name:           sear
 Version:        0.6.4
-Release:        alt4_0.9.g0b70ddb
+Release:        alt4_0.12.g0b70ddb
 Summary:        3D WorldForge client
 
 Group:          Games/Other
@@ -25,6 +25,7 @@ Patch3:         sear-eris-api-change.patch
 Patch4:         sear-missing-includes.patch
 Patch5:         sear-lua-fix.patch
 Patch6:         sear-compileopts.patch
+Patch7:         sear-nopi.patch
 
 BuildRequires:  lib3ds-devel mercator-devel varconf-devel eris-devel sage-devel
 BuildRequires:  cal3d-devel libguichan05-devel libmodelfile-devel libGLU-devel
@@ -50,6 +51,7 @@ in which quests and full games can be built.
 %patch4 -p0 -b .missingincludes
 %patch5 -p0 -b .luafix
 %patch6 -p0 -b .compileopts
+%patch7 -p0 -b .nopi
 chmod a-x COPYING AUTHORS
 chmod a-x */*.h
 chmod a-x */*.cpp
@@ -72,40 +74,6 @@ desktop-file-install  \
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/pixmaps
 mv $RPM_BUILD_ROOT%{_datadir}/icons/worldforge/sear_icon.xpm \
     $RPM_BUILD_ROOT%{_datadir}/pixmaps/
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
@@ -119,6 +87,9 @@ fi
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt4_0.12.g0b70ddb
+- new release
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt4_0.9.g0b70ddb
 - rebuild with libvarconf
 

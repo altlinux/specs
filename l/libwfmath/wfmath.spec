@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(atlascpp-0.6)
+BuildRequires: /usr/bin/zip gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname wfmath
 Name:           libwfmath
-Version:        0.3.12
-Release:        alt2_2
+Version:        1.0.1
+Release:        alt1_1
 Summary:        WorldForge client math libraries
 
 Group:          Development/C++
@@ -14,6 +14,8 @@ URL:            http://worldforge.org/dev/eng/libraries/wfmath
 Source0:        http://downloads.sourceforge.net/sourceforge/worldforge/%{oldname}-%{version}.tar.bz2
 
 BuildRequires:  doxygen
+# Testing needs
+BuildRequires:	atlascpp-devel
 Source44: import.info
 Provides: wfmath = %{version}-%{release}
 
@@ -28,7 +30,7 @@ system compenents to pass geometric information around in a common format.
 %package        devel
 Summary:        Development files for wfmath
 Group:          Development/C++
-Requires:       wfmath = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Provides: wfmath-devel = %{version}-%{release}
 
 
@@ -76,18 +78,21 @@ make %{?_smp_mflags} check
 
 %files
 %doc AUTHORS COPYING README TODO ChangeLog
-%{_libdir}/lib%{oldname}-0.3.so.*
+%{_libdir}/lib%{oldname}-1.0.so.*
 
 
 %files devel
 %doc doc/CLASS_LAYOUT doc/html/
-%{_includedir}/%{oldname}-0.3
-%{_libdir}/lib%{oldname}-0.3.so
+%{_includedir}/%{oldname}-1.0
+%{_libdir}/lib%{oldname}-1.0.so
 %{_libdir}/pkgconfig/*.pc
 %{_mandir}/man3/*.*
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.12-alt2_2
 - update to new release by fcimport
 
