@@ -2,7 +2,7 @@
 
 Name: blobwars
 Version: 1.04
-Release: alt4.qa2
+Release: alt4.qa3
 
 Summary: Mission and Objective based 2D Platform Game
 License: %gpl2plus
@@ -14,6 +14,7 @@ Patch1: %name-1.04-alt-fix-as-needed-linking.patch
 Patch2: %name-1.04-alt-fixes.patch
 Patch3: %name-1.04-fix-gcc4-compile.patch
 Patch4: %name-1.04-fix-fdo-categories.patch
+Patch5: %name-1.04-alt-zlib-1.2.7.patch
 
 BuildRequires: rpm-build-licenses
 
@@ -34,6 +35,7 @@ MIAs as possible.
 %patch2
 %patch3
 %patch4
+%patch5 -p2
 %__subst 's/TTF_RenderText/TTF_RenderUTF8/' src/*
 %__subst 's/vera\.ttf/font.ttf/' src/*
 cp %_ttffontsdir/dejavu/DejaVuSans.ttf data/font.ttf
@@ -64,6 +66,9 @@ popd
 %doc doc/*
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.04-alt4.qa3
+- Fixed build with zlib 1.2.7
+
 * Sun Nov 29 2009 Repocop Q. A. Robot <repocop@altlinux.org> 1.04-alt4.qa2
 - NMU (by repocop): the following fixes applied:
   * pixmap-in-deprecated-location for blobwars
