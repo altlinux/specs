@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++
+BuildRequires: /usr/bin/zip gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname varconf
 Name:           libvarconf
-Version:        0.6.7
-Release:        alt1_4
+Version:        1.0.0
+Release:        alt1_1
 Summary:        Configuration library used by WorldForge clients
 
 Group:          Development/C++
@@ -26,7 +26,7 @@ WorldForge components.
 %package devel
 Summary: Development files for varconf library
 Group:   Development/C++
-Requires: varconf = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 Provides: varconf-devel = %{version}-%{release}
 
 
@@ -67,6 +67,9 @@ cd tests ; ./conftest < conf.cfg
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.7-alt1_4
 - update to new release by fcimport
 

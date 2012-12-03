@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libGL-devel libSDL-devel libX11-devel pkgconfig(avahi-cli
 # END SourceDeps(oneline)
 Name:           sear
 Version:        0.6.4
-Release:        alt3_0.9.g0b70ddb
+Release:        alt4_0.9.g0b70ddb
 Summary:        3D WorldForge client
 
 Group:          Games/Other
@@ -119,6 +119,9 @@ fi
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt4_0.9.g0b70ddb
+- rebuild with libvarconf
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.4-alt3_0.9.g0b70ddb
 - update to new release by fcimport
 
