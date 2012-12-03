@@ -1,13 +1,14 @@
 Name:       contextkit
 Summary:    Contextual information collection framework
 Version:    0.5.27
-Release:    alt1.427.1
+Release:    alt1.427.2
 Group:      System/Libraries
 License:    GPLv2
 URL:        http://maemo.gitorious.org/maemo-af/%{name}
 Source0:    %{name}-%{version}.tar.bz2
 Source100:  contextkit.yaml
 Patch0:     contextkit-gcc45.patch
+Patch1:     contextkit-0.5.27-alt-glibc-2.16.patch
 #Requires(post): /sbin/ldconfig
 #Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(QJson)
@@ -86,6 +87,7 @@ ContextKit libraries.
 
 # contextkit-gcc45.patch
 %patch0 -p1
+%patch1 -p2
 # >> setup
 # << setup
 
@@ -195,6 +197,9 @@ mkdir -m0755 -p %{buildroot}%{_datadir}/%name/subscribers
 # << files tests
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.27-alt1.427.2
+- Fixed build with glibc 2.16
+
 * Sat May 12 2012 Paul Wolneykien <manowar@altlinux.ru> 0.5.27-alt1.427.1
 - Take own of the directories, make missing directories.
 
