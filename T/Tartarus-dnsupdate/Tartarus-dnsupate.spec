@@ -1,5 +1,5 @@
 Version: 0.1.0
-Release: alt0.3.1
+Release: alt0.3.2
 
 Summary: Tartarus DNS client support
 Name: Tartarus-dnsupdate
@@ -11,6 +11,7 @@ Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 Source: %name-%version.tar
 Source1: tdnsupdate.init.%_vendor
 Patch: Tartarus-dnsupate-0.1.0-alt-DSO.patch
+Patch1: Tartarus-dnsupate-0.1.0-alt-flags.patch
 
 Requires: Tartarus-common >= 0.1.0
 
@@ -24,6 +25,7 @@ Tartarus DNS client support
 
 %prep
 %setup -q
+%patch1 -p2
 %patch -p2
 
 %build
@@ -47,6 +49,9 @@ cp %SOURCE1 %buildroot%_initdir/tdnsupdate
 %config(noreplace) %_sysconfdir/Tartarus/clients/*
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt0.3.2
+- Fixed build with gcc 4.7
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.0-alt0.3.1
 - Fixed build
 
