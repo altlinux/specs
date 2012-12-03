@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: gcc-c++ perl(English.pm) unzip
 # END SourceDeps(oneline)
 %define oldname khmeros-fonts
 # %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -20,7 +20,7 @@ They were created by Danh Hong of the Cambodian Open Institute.
 
 Name:           fonts-ttf-khmeros
 Version:        5.0
-Release:        alt3_14
+Release:        alt3_15
 Summary:        Khmer font set created by Danh Hong of the Cambodian Open Institute
 
 Group:          System/Fonts/True type
@@ -58,7 +58,6 @@ This package consists of files used by other %{oldname} packages.
 Summary:        Base KhmerOS font
 Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
-Obsoletes:      khmeros-fonts-base < 5.0-4
 
 %description -n fonts-ttf-khmeros-base
 %common_desc
@@ -76,7 +75,6 @@ Base KhmerOS fonts.
 Summary:        Battambang font
 Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
-Obsoletes:      khmeros-fonts-battambang < 5.0-4
 
 %description -n fonts-ttf-khmeros-battambang
 %common_desc
@@ -92,7 +90,6 @@ Battambang font.
 Summary:        Bokor font
 Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
-Obsoletes:      khmeros-fonts-bokor < 5.0-4
 
 %description -n fonts-ttf-khmeros-bokor
 %common_desc
@@ -108,7 +105,6 @@ Bokor font.
 Summary:        Freehand and fasthand fonts
 Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
-Obsoletes:      khmeros-fonts-handwritten < 5.0-4
 
 %description -n fonts-ttf-khmeros-handwritten
 %common_desc
@@ -125,7 +121,6 @@ Freehand and fasthand - handwritten fonts.
 Summary:        Metal Chrieng font
 Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
-Obsoletes:      khmeros-fonts-metalchrieng < 5.0-4
 
 %description -n fonts-ttf-khmeros-metal-chrieng
 %common_desc
@@ -141,7 +136,6 @@ Metal Chrieng font.
 Summary:        Muol fonts - normal, light and Pali
 Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
-Obsoletes:      khmeros-fonts-muol < 5.0-4
 
 %description -n fonts-ttf-khmeros-muol
 %common_desc
@@ -159,7 +153,6 @@ Muol fonts - normal, light and Pali.
 Summary:        Siemreap font
 Group:          System/Fonts/True type
 Requires:       %{name}-common = %{version}-%{release}
-Obsoletes:      khmeros-fonts-siemreap < 5.0-4
 
 %description -n fonts-ttf-khmeros-siemreap
 %common_desc
@@ -236,6 +229,9 @@ fi
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 5.0-alt3_15
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 5.0-alt3_14
 - update to new release by fcimport
 
