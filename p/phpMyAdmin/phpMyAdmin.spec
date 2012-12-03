@@ -1,12 +1,14 @@
 Name: phpMyAdmin
-Version: 3.3.10
+Version: 3.5.4
 Release: alt1
 Summary: phpMyAdmin - web-based MySQL administration
 License: GPL
 Group: System/Servers
 
 Url: http://www.phpmyadmin.net
-Source0: http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar.bz2
+
+#http://prdownloads.sourceforge.net/phpmyadmin/%name-%version-all-languages.tar.bz2
+Source0: %name-%version.tar
 Source1: config.inc.php
 Source2: %name-README.ALT
 Source3: %name.htaccess
@@ -19,7 +21,6 @@ Provides: phpmyadmin
 Obsoletes: %name-common
 
 BuildArch: noarch
-Packager: Dmitriy Kulik <lnkvisitor@altlinux.org>
 
 Requires: pwgen webserver-common control
 
@@ -104,18 +105,21 @@ manual. Currently phpMyAdmin can:
 Install this package if you need phpMyAdmin for apache 2.0 and php5.
 
 %prep
-%setup -q -n %name-%version-all-languages
+%setup -q
 
 %install
-install -m755 -d %buildroot%webserver_webappsdir/%name/{lang,js{/mooRainbow{/images,},},themes,libraries{/auth,},css}
-install -m644 *.php *.html *.css favicon.ico %buildroot%webserver_webappsdir/%name/
-install -m644 js/*.js %buildroot%webserver_webappsdir/%name/js/
-install -m644 js/mooRainbow/*.* %buildroot%webserver_webappsdir/%name/js/mooRainbow
-install -m644 js/mooRainbow/images/*.* %buildroot%webserver_webappsdir/%name/js/mooRainbow/images
+mkdir -p %buildroot%webserver_webappsdir
+cp -r ../%name-%version %buildroot%webserver_webappsdir/%name
 
-install -m644 lang/*.php %buildroot%webserver_webappsdir/%name/lang/
-cp -a libraries/ %buildroot%webserver_webappsdir/%name/
-cp -a themes %buildroot%webserver_webappsdir/%name/
+#install -m755 -d %buildroot%webserver_webappsdir/%name/{lang,js{/mooRainbow{/images,},},themes,libraries{/auth,},css}
+#install -m644 *.php *.html *.css favicon.ico %buildroot%webserver_webappsdir/%name/
+#install -m644 js/*.js %buildroot%webserver_webappsdir/%name/js/
+#install -m644 js/mooRainbow/*.* %buildroot%webserver_webappsdir/%name/js/mooRainbow
+#install -m644 js/mooRainbow/images/*.* %buildroot%webserver_webappsdir/%name/js/mooRainbow/images
+
+#install -m644 lang/*.php %buildroot%webserver_webappsdir/%name/lang/
+#cp -a libraries/ %buildroot%webserver_webappsdir/%name/
+#cp -a themes %buildroot%webserver_webappsdir/%name/
 
 cp -a %SOURCE3 %buildroot%webserver_webappsdir/%name/.htaccess
 cp %SOURCE2 .
@@ -149,38 +153,28 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 
 %post apache
 %post_control -s restricted %name-apache
-%_initdir/httpd condreload
+#%_initdir/httpd condreload
 
-%postun apache
-%_initdir/httpd condreload
+#%postun apache
+#%_initdir/httpd condreload
 
 %pre apache2
 %pre_control %name-apache2
 
 %post apache2
 %post_control -s restricted %name-apache2
-%_initdir/httpd2 condreload
+#%_initdir/httpd2 condreload
 
-%postun apache2
-%_initdir/httpd2 condreload
+#%postun apache2
+#%_initdir/httpd2 condreload
 
 %files
-%doc scripts contrib documentation-gsoc phpMyAdmin-README.ALT
-%doc Documentation.html docs.css README TODO ChangeLog translators.html Documentation.txt
+%doc phpMyAdmin-README.ALT Documentation.* docs.css README* ChangeLog
 %dir %webserver_webappsdir/%name/
-%webserver_webappsdir/%name/lang/
-%webserver_webappsdir/%name/libraries/
-%webserver_webappsdir/%name/themes/
-%webserver_webappsdir/%name/js/
-%webserver_webappsdir/%name/favicon.ico
+%webserver_webappsdir/%name/*
 %webserver_webappsdir/%name/.htaccess
-%webserver_webappsdir/%name/*.html
-%webserver_webappsdir/%name/*.css
-%webserver_webappsdir/%name/[^c]*.php
-%webserver_webappsdir/%name/c[^o]*.php
-%webserver_webappsdir/%name/config.sample.inc.php
 %attr(640,root,%webserver_group) %config(noreplace) %webserver_webappsdir/%name/config.inc.php
-%exclude %webserver_webappsdir/%name/phpinfo.php
+%exclude %webserver_webappsdir/%name/setup
 
 %files apache
 %apache_addonconfdir/%name.conf
@@ -193,6 +187,33 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Mon Dec 03 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.5.4-alt1
+- 3.3.10 -> 3.5.4
+- Repocop: altlinux-policy-obsolete-httpd2-reload
+- security bug fix
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-3.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-4.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-5.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-6.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-7.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-8.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-9.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-10.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-11.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-12.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-13.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-14.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-15.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-16.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-17.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-18.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-19.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2011-20.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2012-1.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2012-2.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2012-3.php
+  + http://www.phpmyadmin.net/home_page/security/PMASA-2012-4.php
+
 * Tue Mar 22 2011 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.3.10-alt1
 - 3.3.7 -> 3.3.10
 - FIX #24423
