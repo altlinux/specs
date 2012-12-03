@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:		libechonest
 Version: 	2.0.1
-Release:	alt1_1
+Release:	alt1_3
 Summary:	C++ wrapper for the Echo Nest API
 
 Group:		System/Libraries
@@ -28,7 +28,7 @@ life easy when trying to use the APIs provided by The Echo Nest.
 %package	devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	libechonest = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -37,6 +37,10 @@ developing applications that use %{name}.
 
 %prep
 %setup -q
+
+sed -i -e '/add_definitions.*-Werror/d' CMakeLists.txt
+
+
 
 
 %build
@@ -70,6 +74,9 @@ test "$(pkg-config --modversion libechonest)" = "%{version}"
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_3
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt1_1
 - update to new release by fcimport
 
