@@ -1,8 +1,9 @@
 Summary: ALURE is a utility library to help manage common tasks with OpenAL applications
 Name: alure
 Version: 1.1
-Release: alt1
+Release: alt1.1
 Source0: %name-%version.tar
+Patch: alure-1.1-alt-glibc-2.16.patch
 License: MIT
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Group: System/Libraries
@@ -64,6 +65,7 @@ The %name-examples package contains example program for %name
 
 %prep
 %setup -q
+%patch -p0
 
 %build
 %cmake	-DBUILD_STATIC=OFF \
@@ -95,5 +97,8 @@ cp BUILD/alurestream %buildroot/usr/bin/
 %_bindir/*
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt1.1
+- Fixed build with glibc 2.16
+
 * Sun May 15 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.1-alt1
 - Build for ALT
