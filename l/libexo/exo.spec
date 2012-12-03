@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 0.8.0
+Version: 0.10.0
 Release: alt1
 
 Summary: Extension library to XFce
@@ -20,6 +20,7 @@ BuildPreReq: rpm-build-xfce4  xfce4-dev-tools > 4.9 libxfce4util-devel libxfce4u
 BuildPreReq: libICE-devel glib2-devel >= 2.27 libgtk+2-devel
 BuildRequires: gtk-doc intltool perl-URI time
 
+Requires: xfce4-common
 Requires: libgtk+2-common
 
 # There is no longer python bindings for exo.
@@ -78,15 +79,16 @@ make check
 %_bindir/*
 %exclude %_bindir/exo-csource
 %_libdir/*.so.*
-%_libdir/xfce4
-%_datadir/xfce4
-%dir %_sysconfdir/xdg/xfce4
+%_libdir/xfce4/*
+%_datadir/xfce4/*
 %config(noreplace) %_sysconfdir/xdg/xfce4/helpers.rc
 %_man1dir/*
 %exclude %_man1dir/exo-csource.1.*
 %_desktopdir/*
 %_iconsdir/hicolor/*/*/*
 %_pixmapsdir/%_name-*/
+
+%exclude %_datadir/xfce4/helpers/debian-*.desktop
 
 %files devel
 %_bindir/exo-csource
@@ -99,6 +101,11 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Mon Dec 03 2012 Mikhail Efremov <sem@altlinux.org> 0.10.0-alt1
+- Updated to 0.10.0.
+- Don't package Debian-specific helpers.
+- Require xfce4-common.
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
 - Updated to 0.8.0.
 

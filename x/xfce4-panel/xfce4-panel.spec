@@ -2,7 +2,7 @@
 
 Name: xfce4-panel
 Version: 4.10.0
-Release: alt2
+Release: alt3
 
 Summary: Panel for XFce
 Summary(ru_RU.UTF-8): Панель для окружения рабочего стола Xfce
@@ -12,6 +12,7 @@ Url: http://www.xfce.org/
 
 # Upstream: git://git.xfce.org/xfce/xfce4-panel
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
 BuildRequires(pre): rpm-build-licenses
@@ -21,6 +22,7 @@ BuildPreReq: libxfce4ui-devel >= %xfce_ver libexo-devel >= 0.6.0 libgarcon-devel
 BuildRequires: gtk-doc libwnck-devel libICE-devel libXext-devel libSM-devel
 
 Requires: libxfce4panel = %version-%release
+Requires: xfce4-common
 
 Obsoletes: xfce4-showdesktop-plugin, xfce4-windowlist-plugin
 
@@ -62,6 +64,7 @@ This package contains files to develop plugins for XFce panel.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %xfce4reconf
@@ -92,6 +95,7 @@ mkdir -p %buildroot/%_datadir/xfce4/panel-plugins
 %_desktopdir/*.desktop
 %exclude %_libdir/xfce4/panel/plugins/*.la
 # FIXME: Remove these when no longer needed
+%dir %_libexecdir/xfce4/
 %dir %_libexecdir/xfce4/panel-plugins/
 %dir %_libdir/xfce4/panel-plugins
 
@@ -107,6 +111,11 @@ mkdir -p %buildroot/%_datadir/xfce4/panel-plugins
 %doc %_datadir/gtk-doc/html/libxfce4panel-*/
 
 %changelog
+* Mon Dec 03 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt3
+- applicationsmenu plugin: Skip empty GenericName.
+- Require xfce4-common.
+- Own %%_libexecdir/xfce4.
+
 * Tue May 22 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt2
 - Fix BR.
 - Drop %%_datadir/xfce4/panel-plugins directory.

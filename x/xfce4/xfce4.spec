@@ -1,23 +1,31 @@
 Name: xfce4
 Version: 4.10
-Release: alt1
+Release: alt2
 Summary: Set of XFce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
 URL: http://www.xfce.org
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
-BuildArch: noarch
 
 BuildRequires(pre): rpm-build-licenses
 
 %description
 A set of virtual packages for Xfce4 Desktop installation.
 
+%package common
+Summary: Common directories for Xfce4 Desktop Environment.
+Group: Graphical desktop/XFce
+
+%description common
+This package contains common directories for Xfce4 Desktop
+Environment.
+
 %package minimal
 Summary: Minimal installation of XFce4 Desktop
 Summary(ru_RU.UTF8): Минимальная установка XFce4
 Group: Graphical desktop/XFce
+BuildArch: noarch
 Requires: ConsoleKit
 Requires: xfce4-panel
 Requires: xfce4-session
@@ -37,6 +45,7 @@ of XFce4 Desktop.
 %package default
 Summary: Default installation of XFce4 Desktop
 Group: Graphical desktop/XFce
+BuildArch: noarch
 Requires: %name-minimal = %version-%release
 Requires: xfce4-power-manager
 Requires: xfce4-appfinder
@@ -65,6 +74,7 @@ of XFce4 Desktop.
 %package full
 Summary: Default installation of XFce4 Desktop
 Group: Graphical desktop/XFce
+BuildArch: noarch
 Requires: %name-default = %version-%release
 Requires: xfwm4-themes
 Requires: xfce4-session-engines
@@ -72,6 +82,7 @@ Requires: xfce4-dict
 Requires: orage
 Requires: xfce4-screenshooter
 Requires: xarchiver
+Requires: ristretto
 # Panel plugins
 Requires: xfce4-clipman-plugin
 Requires: xfce4-cpufreq-plugin
@@ -109,11 +120,29 @@ Requires: xfce4-sensors-plugin
 %name-full is a virtual package to provide full installation
 of XFce4 Desktop.
 
+%install
+mkdir -p %buildroot/%_datadir/xfce4
+# Can be dropped later
+# (seems like upstream wants get rid of all offline documentation).
+mkdir -p %buildroot/%_datadir/xfce4/doc
+mkdir -p %buildroot/%_libdir/xfce4
+mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
+
+%files common
+%dir %_datadir/xfce4
+%dir %_datadir/xfce4/doc
+%dir %_libdir/xfce4
+%dir %_sysconfdir/xdg/xfce4
+
 %files minimal
 %files default
 %files full
 
 %changelog
+* Mon Dec 03 2012 Mikhail Efremov <sem@altlinux.org> 4.10-alt2
+- Add common subpackage.
+- full: Add ristretto again.
+
 * Tue Apr 17 2012 Mikhail Efremov <sem@altlinux.org> 4.10-alt1
 - Bump version to 4.10.
 - default: Thunar -> thunar.
