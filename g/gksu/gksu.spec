@@ -3,7 +3,7 @@ BuildRequires: desktop-file-utils
 
 Name: gksu
 Version: 2.0.2
-Release: alt4
+Release: alt5
 
 Summary: A Gtk+-based 'su' wrapper
 License: %gpl2plus
@@ -35,6 +35,7 @@ BuildPreReq: gtk-doc >= 1.0
 %{?_enable_nautilus:BuildPreReq: libnautilus-devel gnome-vfs-devel}
 
 BuildRequires: perl-XML-Parser
+Requires: xvt
 
 %description
 GKSu is a stack of libraries and an application that provide a Gtk+
@@ -62,8 +63,6 @@ into the file manager by means of GKSu software.
 %patch5 -p1 
 %patch6 -p1 
 tar xf %SOURCE1
-# Remove deprecated line from .desktop file.
-sed -i '/^Encoding/d' %name.desktop
 
 %build
 export CPPFLAGS="$CPPFLAGS `pkg-config --cflags-only-I gnome-vfs-2.0`"
@@ -74,6 +73,7 @@ export LDFLAGS="$LDFLAGS `pkg-config --libs gnome-vfs-2.0`"
     --enable-gtk-doc
 
 %make_build nautilus_extensiondir=%nautilus_extdir
+make -C po update-po
 
 %install
 %makeinstall_std nautilus_extensiondir=%nautilus_extdir
@@ -103,6 +103,11 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %nautilus_extdir/*.la
 
 %changelog
+* Mon Dec 03 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt5
+- Set correct terminal emulator
+- Requires xvt
+- Apply Russian localization
+
 * Tue Apr 03 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.2-alt4
 - Include only glib.h in sources
 
