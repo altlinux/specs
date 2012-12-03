@@ -1,11 +1,12 @@
 Name: basic256
 Version: 0.9.6
-Release: alt6
+Release: alt6.1
 URL: http://kidbasic.sourceforge.net
 Source: http://ovh.dl.sourceforge.net/sourceforge/kidbasic/%name-%version.tar.gz
 Source1: basic256.desktop
 Source2: basic256_32.png
 Patch0: basic256-0.9.6-alt-fix-say-function.patch
+Patch1: basic256-0.9.6-alt-glibc-2.16.patch
 
 License: GPL
 Group: Development/Other
@@ -26,6 +27,7 @@ and interpreter, a debugger, easy to use graphical and text output, and an edito
 %setup
 cd trunk
 %patch0 -p1
+%patch1 -p3
 
 %build
 cd trunk
@@ -54,6 +56,9 @@ cp -r ./../doc/ru/ %buildroot%_datadir/%name/help/
 %_niconsdir/%name.png
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.6-alt6.1
+- Fixed build with glibc 2.16
+
 * Mon Jan 10 2011 Sergey Irupin <lamp@altlinux.org> 0.9.6-alt6
 - Updated to 0.9.6.58.
 
