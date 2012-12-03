@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer /usr/bin/pygtk-codegen-2.0 pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) python-devel
+BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slicer pkgconfig(cairo) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) python-devel
 # END SourceDeps(oneline)
 Name: sugar-calculator
-Version: 39
+Version: 40
 Release: alt1_1
 Summary: Calculator for Sugar
 Group: Graphical desktop/Sugar
@@ -16,7 +16,6 @@ BuildRequires:  sugar-toolkit
 Requires: sugar
 BuildArch: noarch
 Source44: import.info
-Provides: sugar-calculate-activity = %version
 Obsoletes: sugar-calculate-activity < %version
 Conflicts: sugar-calculate-activity < %version
 
@@ -40,6 +39,9 @@ python ./setup.py install --prefix=$RPM_BUILD_ROOT/%{_prefix}
 %{sugaractivitydir}/Calculate.activity/
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 40-alt1_1
+- new version; import from fc17 updates
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 39-alt1_1
 - new version; import from fc17 release
 

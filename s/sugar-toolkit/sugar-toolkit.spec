@@ -6,31 +6,34 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-genmarshal /usr/bin/glib-gette
 
 Summary: Sugar toolkit
 Name: sugar-toolkit
-Version: 0.96.1
-Release: alt1_1
+Version: 0.96.3
+Release: alt1_2
 URL: http://wiki.laptop.org/go/Sugar
 Source0: http://download.sugarlabs.org/sources/sucrose/glucose/%{name}/%{name}-%{version}.tar.bz2
 Source1: macros.sugar
 License: LGPLv2+
 Group: System/Libraries
 
-BuildRequires: python-module-pygtk-devel
-BuildRequires: gettext
-BuildRequires: gtk2-devel
-BuildRequires: perl-XML-Parser
-BuildRequires: libSM-devel
-BuildRequires: libalsa-devel
-BuildRequires: intltool
+Patch0: presence-RoomConfig1.patch
 
-Requires: python-module-pygnome-desktop
+BuildRequires: libalsa-devel
+BuildRequires: gettext-devel
+BuildRequires: gtk2-devel
+BuildRequires: intltool
+BuildRequires: libSM-devel
+BuildRequires: perl-XML-Parser
+BuildRequires: python-module-pygtk-devel
+
 Requires: dbus-python
-Requires: pygtk2
+Requires: gettext
+Requires: python-module-pygnome-desktop
 Requires: python-module-hippo-canvas
-Requires: sugar-datastore
-Requires: sugar-base
-Requires: sugar-presence-service
+Requires: pygtk2
 Requires: python-module-simplejson
 Requires: python-module-dateutil
+Requires: sugar-base
+Requires: sugar-datastore
+Requires: sugar-presence-service
 Requires: unzip
 Source44: import.info
 
@@ -41,6 +44,7 @@ to interact with system services like presence and the datastore.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %configure
@@ -67,6 +71,9 @@ mv %{buildroot}%{python_sitelibdir_noarch}/* %{buildroot}%{python_sitelibdir}/
 %{python_sitelibdir}/*
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.3-alt1_2
+- new version; import from fc17 updates
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.1-alt1_1
 - new version; import from fc17 release
 
