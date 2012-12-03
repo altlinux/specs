@@ -9,7 +9,7 @@ BuildRequires: libXi-devel
 
 Summary: Sugar toolkit GTK+ 3
 Name: sugar-toolkit-gtk3
-Version: 0.96.1
+Version: 0.96.5
 Release: alt1_1
 URL: http://wiki.laptop.org/go/Sugar
 Source0: http://download.sugarlabs.org/sources/sucrose/glucose/%{name}/%{name}-%{version}.tar.bz2
@@ -17,24 +17,25 @@ Source1: macros.sugar
 License: LGPLv2+
 Group: System/Libraries
 
-BuildRequires: gettext
-BuildRequires: libgtk+3-devel
-BuildRequires: perl-XML-Parser
-BuildRequires: libSM-devel
 BuildRequires: libalsa-devel
-BuildRequires: intltool
+BuildRequires: gettext-devel
+BuildRequires: libgtk+3-devel
 BuildRequires: gobject-introspection-devel
+BuildRequires: intltool
 BuildRequires: librsvg-devel
+BuildRequires: libSM-devel
+BuildRequires: perl-XML-Parser
 BuildRequires: python-devel
 BuildRequires: python-module-pygtk-devel
 BuildRequires: python-module-pygobject-devel
 
 Requires: dbus-python
-Requires: sugar-datastore
+Requires: gettext
+Requires: python-module-pygobject3
 Requires: python-module-simplejson
 Requires: python-module-dateutil
+Requires: sugar-datastore
 Requires: unzip
-Requires: python-module-pygobject3
 Source44: import.info
 
 %description
@@ -88,6 +89,9 @@ mv %{buildroot}%{python_sitelibdir_noarch}/* %{buildroot}%{python_sitelibdir}/
 %{_datadir}/gir-1.0/SugarExt-1.0.gir
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.5-alt1_1
+- new version; import from fc17 updates
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.1-alt1_1
 - new version; import from fc17 release
 

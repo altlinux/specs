@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/icon-slice
 # END SourceDeps(oneline)
 Summary: Artwork for Sugar look-and-feel
 Name: sugar-artwork
-Version: 0.96.2
+Version: 0.96.4
 Release: alt1_1
 URL: http://sugarlabs.org
 Group: Graphical desktop/Sugar
@@ -65,6 +65,9 @@ touch --no-create %{_datadir}/icons/sugar || :
 %{_datadir}/themes/sugar-72/gtk-3.0/assets/*
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.4-alt1_1
+- new version; import from fc17 updates
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.2-alt1_1
 - new version; import from fc17 release
 

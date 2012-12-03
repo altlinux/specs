@@ -6,8 +6,8 @@ BuildRequires: /usr/bin/gconftool-2 /usr/bin/glib-gettextize pkgconfig(gtk+-2.0)
 
 Summary: Constructionist learning platform
 Name: sugar
-Version: 0.96.1
-Release: alt1_2
+Version: 0.96.3
+Release: alt1_1
 URL: http://sugarlabs.org/
 License: GPLv2+
 Group: Graphical desktop/Sugar
@@ -142,6 +142,9 @@ fi
 %{_datadir}/icons/hicolor/scalable/apps/sugar-xo.svg
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.3-alt1_1
+- new version; import from fc17 updates
+
 * Wed Nov 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.96.1-alt1_2
 - new version; import from fc17 release
 
