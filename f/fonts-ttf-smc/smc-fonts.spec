@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ perl(English.pm) unzip
+# END SourceDeps(oneline)
 %define oldname smc-fonts
 %define	fontname	smc
 
@@ -8,7 +11,7 @@ traditional and new Malayalam Script.
 
 Name:		fonts-ttf-smc
 Version:	5.0.1
-Release:	alt1_3
+Release:	alt1_4
 Summary:	Open Type Fonts for Malayalam script
 Group:		System/Fonts/True type
 License:	GPLv3+ with exceptions and GPLv2+ with exceptions and GPLv2+ and  GPLv2 and GPL+
@@ -43,8 +46,6 @@ Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
-Provides: %{fontname}-fonts-dyuthi = %{version}-%{release}
-Obsoletes: %{oldname}-dyuthi < 5.0
 %description -n fonts-ttf-smc-dyuthi
 The Dyuthi font package contains fonts for the display of
 traditional Malayalam Scripts.
@@ -59,8 +60,6 @@ Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv2+ with exceptions
-Provides: %{fontname}-fonts-meera = %{version}-%{release}
-Obsoletes: %{oldname}-meera < 5.0
 %description -n fonts-ttf-smc-meera
 The Meera font package contains fonts for the display of
 traditional Malayalam Scripts.
@@ -77,8 +76,6 @@ Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv2+
-Provides: %{fontname}-fonts-rachana = %{version}-%{release}
-Obsoletes: %{oldname}-rachana < 5.0
 %description -n fonts-ttf-smc-rachana
 The Rachana font package contains fonts for the display of
 traditional Malayalam Scripts.
@@ -95,8 +92,6 @@ Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv2
-Provides: %{fontname}-fonts-raghumalayalam = %{version}-%{release}
-Obsoletes: %{oldname}-raghumalayalam < 5.0
 %description -n fonts-ttf-smc-raghumalayalam
 The SMC Malayalam fonts package contains fonts for the display of
 new Malayalam Scripts.
@@ -111,8 +106,6 @@ Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3 with exceptions
-Provides: %{fontname}-fonts-suruma = %{version}-%{release}
-Obsoletes: %{oldname}-suruma < 5.0
 %description -n fonts-ttf-smc-suruma
 The Suruma font package contains fonts for the display of
 traditional Malayalam Scripts.
@@ -127,8 +120,6 @@ Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPLv3+ with exceptions
-Provides: %{fontname}-fonts-kalyani = %{version}-%{release}
-Obsoletes: %{oldname}-kalyani < 5.0
 %description -n fonts-ttf-smc-kalyani
 The Kalyani font package contains fonts for the display of
 new Malayalam Scripts.
@@ -143,8 +134,6 @@ Summary: Open Type Fonts for Malayalam script
 Group: System/Fonts/True type
 Requires: %{name}-common = %{version}-%{release}
 License: GPL+
-Provides: %{fontname}-fonts-anjalioldlipi = %{version}-%{release}
-Obsoletes: %{oldname}-anjalioldlipi < 5.0
 %description -n fonts-ttf-smc-anjalioldlipi
 The Anjali OldLipi package contains fonts for the display of
 traditional Malayalam Scripts.
@@ -236,10 +225,14 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
+
 %files common
 %doc ChangeLog 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_3
 - update to new release by fcimport
 
