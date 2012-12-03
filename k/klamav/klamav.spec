@@ -1,6 +1,6 @@
 Name: klamav
 Version: 0.46
-Release: alt2.qa2
+Release: alt2.qa3
 
 Summary: KDE frontend for the Clam AntiVirus virus scanner
 Summary(ru_RU.KOI8-R): KDE-оболочка для антивирусного сканера Clam AntiVirus
@@ -26,6 +26,7 @@ Patch3: %name-fixdbpath.patch
 #Patch6: %name-%version-fsync.patch
 #Patch7: klamav-0.41.1-gcc43.patch
 Patch8: klamav-0.46-alt-DSO.patch
+Patch9: klamav-0.46-alt-zlib-1.2.7.patch
 
 # manually removed: ananas  kdenetwork-kopete 
 # Automatically added by buildreq on Wed Nov 12 2008
@@ -50,6 +51,7 @@ KDE frontend for the Clam AntiVirus virus scanner
 #%patch6
 #%patch7 -p1
 %patch8 -p3
+%patch9 -p3
 
 #cp -f %SOURCE1 po/ru.po
 #rm -f po/ru.gmo
@@ -89,6 +91,9 @@ rm -rf %buildroot%_K3datadir/applnk/Utilities/klamav.desktop
 #%_iconsdir/locolor/*/apps/%name.png
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.46-alt2.qa3
+- Fixed build with zlib 1.2.7
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.46-alt2.qa2
 - Fixed build
 
