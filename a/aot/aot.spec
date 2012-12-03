@@ -3,7 +3,7 @@
 %def_disable static
 Name: aot
 Version: 1.80.1
-Release: alt4.aot20090220.1
+Release: alt4.aot20090220.2
 
 Summary: AOT project linguistic tools
 License: LGPL
@@ -13,6 +13,7 @@ Url: http://aot.ru
 Packager: Kirill Maslinsky <kirill@altlinux.org>
 Source: %name-%version.tar
 Patch: aot-1.80.1-alt-DSO.patch
+Patch1: aot-1.80.1-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Sun Apr 08 2007
 BuildRequires: bison flex gcc-c++ libpcrecpp-devel
@@ -145,6 +146,7 @@ This package contains German dictionaries for syntactic analysis used by AOT pro
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
 
 %build
 autoreconf -fisv
@@ -245,6 +247,9 @@ rm -vf %_libdir/*.la
 %_datadir/aot/Dicts/SimpleGrammar/*
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.80.1-alt4.aot20090220.2
+- Fixed build with glibc 2.16
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.80.1-alt4.aot20090220.1
 - Fixed build
 
