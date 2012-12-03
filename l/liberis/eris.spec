@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3) pkgconfig(wfmath-0.3)
+BuildRequires: gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname eris
 Name:           liberis
-Version:        1.3.19
-Release:        alt3_5
+Version:        1.3.21
+Release:        alt1_1
 Summary:        Client-side session layer for Atlas-C++
 
 Group:          Development/C++
@@ -35,7 +35,7 @@ quickly tie game objects to whatever output representation they are using.
 %package devel
 Summary:        Development files for Eris
 Group:          Development/C++
-Requires:       eris = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Provides: eris-devel = %{version}-%{release}
 
 
@@ -84,6 +84,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.21-alt1_1
+- new release
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt3_5
 - update to new release by fcimport
 

@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/zip gcc-c++
+BuildRequires: /usr/bin/zip gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname skstream
 Name:           libskstream
-Version:        0.3.8
-Release:        alt1_4
+Version:        0.3.9
+Release:        alt1_1
 Summary:        C++ I/O library for WorldForge clients/servers
 
 Group:          Development/C++
@@ -27,7 +27,7 @@ connections for both clients and servers.
 %package devel
 Summary:        Development files for skstream
 Group:   Development/C++
-Requires: skstream = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 Provides: skstream-devel = %{version}-%{release}
 
 
@@ -61,9 +61,10 @@ mv $RPM_BUILD_ROOT%{_libdir}/%{oldname}-0.3/include/%{oldname}/*.h $RPM_BUILD_RO
 rm -rf $RPM_BUILD_ROOT%{_libdir}/%{oldname}-%{version}
 
 %check
+# The tests hang on the koji builders so we need to skip them
 # Run tests in debug mode so asserts won't be skipped
-sed -i -e 's/-DNDEBUG/-DDEBUG/' test/Makefile
-make %{?_smp_mflags} check || :
+# sed -i -e 's/-DNDEBUG/-DDEBUG/' test/Makefile
+# make %{?_smp_mflags} check || :
 
 %files
 %doc AUTHORS COPYING README README.FreeSockets TODO ChangeLog
@@ -76,6 +77,9 @@ make %{?_smp_mflags} check || :
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.8-alt1_4
 - update to new release by fcimport
 
