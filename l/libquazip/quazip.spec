@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %define oname quazip
 Name:		lib%oname
 Version:	0.5
-Release:	alt1_1.1
+Release:	alt1_1.2
 Summary:	Qt/C++ wrapper for the minizip library
 License:	GPLv2+ or LGPLv2+
 Group:		System/Libraries
@@ -42,13 +42,15 @@ for developing applications that use %oname.
 # Fixes build and install
 sed -i 's\PREFIX/lib\PREFIX/%_lib\' %oname/%oname.pro
 
-
 %build
 export PATH=%_qt4_bindir:$PATH
-qmake-qt4 PREFIX=%_prefix
+qmake-qt4 \
+	PREFIX=%_prefix \
+	-after QMAKE_CXXFLAGS+="%optflags" \
+	-after QMAKE_CFLAGS+="%optflags"
 #do not build in parallel - there are race conditions in 
 #qmake-generated makefiles
-%make
+%make V=1
 
 doxygen Doxyfile
 for file in doc/html/*; do
@@ -68,6 +70,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1_1.2
+- Rebuilt with optflags
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5-alt1_1.1
 - Built for Sisyphus
 
