@@ -1,6 +1,6 @@
 Name: blahtexml
 Version: 0.6
-Release: alt1
+Release: alt1.1
 
 Summary: TeX / MathML converter
 
@@ -11,6 +11,7 @@ Url: http://gva.noekeon.org/blahtexml/
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://gva.noekeon.org/blahtexml/blahtexml-%version-src.tar
+Patch: blahtexml-0.6-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Mon Feb 08 2010
 BuildRequires: gcc-c++ libxerces-c28-devel
@@ -27,6 +28,7 @@ file into MathML.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %make_build blahtexml-linux
@@ -39,6 +41,9 @@ install -p -D -m0755 blahtexml %buildroot%_bindir/blahtexml
 %_bindir/blahtexml
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt1.1
+- Fixed build with glibc 2.16
+
 * Mon Feb 08 2010 Vitaly Lipatov <lav@altlinux.ru> 0.6-alt1
 - initial build for ALT Linux Sisyphus
 
