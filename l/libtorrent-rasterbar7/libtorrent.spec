@@ -10,7 +10,7 @@
 Name: libtorrent-rasterbar%{abiversion}
 Version: 0.16.1
 Epoch: 2
-Release: alt4.svn7387
+Release: alt5.svn7387
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Libraries
@@ -56,9 +56,9 @@ that other clients and libraries suffer from. libTorrent features:
 Summary: Development libraries and header files for libTorrent
 Group: Development/C++
 Requires: %name = %epoch:%version-%release
-Provides: libtorrent7-rasterbar-devel = %epoch:%version-%release
-Conflicts: libtorrent7-rasterbar-devel < %epoch:%version-%release
-Obsoletes: libtorrent7-rasterbar-devel < %epoch:%version-%release
+Provides: libtorrent-rasterbar7-devel = %epoch:%version-%release
+Conflicts: libtorrent-rasterbar7-devel < %epoch:%version-%release
+Obsoletes: libtorrent-rasterbar7-devel < %epoch:%version-%release
 Conflicts: libtorrent-rasterbar-devel < %epoch:%version-%release
 Obsoletes: libtorrent-rasterbar-devel < %epoch:%version-%release
 Conflicts: libtorrent-devel
@@ -85,8 +85,8 @@ to develop applications using libTorrent.
 Summary: libTorrent python bindings
 Group: Development/Python
 Requires: %name = %epoch:%version-%release
-Provides: python-module7-libtorrent-rasterbar = %epoch:%version-%release
-Conflicts: python-module7-libtorrent-rasterbar < %epoch:%version-%release
+Provides: python-module-libtorrent-rasterbar7 = %epoch:%version-%release
+Conflicts: python-module-libtorrent-rasterbar7 < %epoch:%version-%release
 
 %description -n python-module-%upname
 The python-module-libtorrent-rasterbar contains
@@ -133,6 +133,9 @@ rm -f %buildroot%_libdir/*.a
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt5.svn7387
+- Added necessary provides and conflicts
+
 * Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt4.svn7387
 - libtorrent-rasterbar7-devel is libtorrent-rasterbar-devel
 
