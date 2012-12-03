@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: gcc-c++ perl(English.pm) unzip
 # END SourceDeps(oneline)
 %define oldname saab-fonts
 %global fontname saab
@@ -7,14 +7,18 @@ BuildRequires: unzip
 
 Name:        fonts-otf-saab
 Version:     0.91
-Release:     alt3_7
+Release:     alt3_8
 Summary:     Free Punjabi Unicode OpenType Font
 
 Group:       System/Fonts/True type
+
 License:     GPLv2+ with exceptions
 URL:         http://guca.sourceforge.net/typography/fonts/saab/
 Source0:     http://downloads.sf.net/guca/saab.0.91.zip
-Source1:   %{oldname}-fontconfig.conf
+Source1:     %{oldname}-fontconfig.conf
+#Font file itself does not add exception text, so add it manually
+#from http://guca.sourceforge.net/typography/fonts/saab/
+Source2:     License_font_exception.txt
 BuildArch:   noarch
 BuildRequires: fontpackages-devel
 Source44: import.info
@@ -31,8 +35,9 @@ Developed by Bhupinder Singh
 echo "Nothing to do in Build."
 
 %install
-install -m 0755 -d $RPM_BUILD_ROOT%{_fontdir}
-install -m 0644 -p Saab.otf $RPM_BUILD_ROOT%{_fontdir}
+install -m 0644 -p %{SOURCE2} .
+install -m 0755 -d %{buildroot}%{_fontdir}
+install -m 0644 -p Saab.otf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -80,9 +85,12 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/Saab.otf
-%doc
+%doc License_font_exception.txt
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.91-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.91-alt3_7
 - update to new release by fcimport
 
