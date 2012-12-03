@@ -1,6 +1,6 @@
 Name: xdg-utils
 Version: 1.1.0
-Release: alt6
+Release: alt7
 
 Summary: A set of command line tools that assist applications with a variety of desktop integration tasks
 License: MIT
@@ -11,11 +11,13 @@ Source: %name-%version.tar
 Patch0: added-xdg-su-1.1.0rc1-alt.patch
 Patch1: xdg-open-opera.patch
 Patch2: xdg-su-added-lxde-and-gksu-support.patch
+Patch3: detect-mate.patch
+Patch4: mate-screensaver.patch
 
 BuildArch: noarch
 
 # Automatically added by buildreq on Wed Apr 25 2007
-BuildRequires: xmlto
+BuildRequires: xmlto w3m
 
 AutoReq: no
 Requires: coreutils, file, gawk, grep, procps, sed, sh, which, xprop, xset
@@ -50,11 +52,14 @@ http://portland.freedesktop.org/wiki/TestSuite
 %patch0 -p2
 %patch1 -p1
 %patch2 -p2
+%patch3 -p2
+%patch4 -p2
 
 %build
 %autoreconf
 %configure
 %make_build
+%make_build -C scripts scripts
 
 %install
 %makeinstall_std
@@ -73,6 +78,13 @@ http://portland.freedesktop.org/wiki/TestSuite
 %doc ChangeLog README LICENSE RELEASE_NOTES TODO
 
 %changelog
+* Fri Nov 30 2012 Paul Wolneykien <manowar@altlinux.ru> 1.1.0-alt7
+- Explicitly rebuild the scripts target.
+- Build with w3m: need for proper *.in -> * conversion.
+- Detect and control the mate-screensaver via D-Bus (patch,
+  closes: 28139).
+- Add MATE to the DE detector (patch).
+
 * Tue Sep 11 2012 Mykola Grechukh <gns@altlinux.ru> 1.1.0-alt6
 - use generic for LXDE if beesu not found; fixes problem of -c.
 
