@@ -1,10 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: unzip
+BuildRequires: gcc-c++ perl(English.pm) unzip
 # END SourceDeps(oneline)
 %define oldname nhn-nanum-fonts
 %global fontname nhn-nanum
 %global fontconf 65-0-%{fontname}
 
+%global common_version 3.020
 %global common_desc \
 Nanum fonts are collection of commonly-used Myeongjo and Gothic Korean \
 font families, designed by Sandoll Communication and Fontrix. The \
@@ -13,7 +14,7 @@ publisher is NHN Corporation.
 
 Name:		fonts-ttf-nhn-nanum
 Version:	3.020
-Release:	alt4_6
+Release:	alt4_7
 Summary:	Nanum family of Korean TrueType fonts
 
 Group:		System/Fonts/True type
@@ -50,6 +51,7 @@ This package consists of files used by other %{oldname} packages.
 Group: System/Fonts/True type
 Version:	1.100
 Summary:	Nanum fonts Brush font faces
+Requires:	%{name}-common
 
 %description -n fonts-ttf-nhn-nanum-brush
 %common_desc
@@ -65,6 +67,7 @@ This package consists of the Nanum fonts Brush font faces.
 %package -n fonts-ttf-nhn-nanum-gothic
 Group: System/Fonts/True type
 Summary:	Nanum fonts Gothic font faces
+Requires:	%{name}-common
 
 %description -n fonts-ttf-nhn-nanum-gothic
 %common_desc
@@ -82,6 +85,7 @@ This package consists of the Nanum fonts Gothic font faces.
 %package -n fonts-ttf-nhn-nanum-myeongjo
 Group: System/Fonts/True type
 Summary:	Nanum fonts Myeongjo font faces
+Requires:	%{name}-common
 
 %description -n fonts-ttf-nhn-nanum-myeongjo
 %common_desc
@@ -100,6 +104,7 @@ This package consists of the Nanum fonts Myeongjo font faces.
 Group: System/Fonts/True type
 Version:	1.100
 Summary:	Nanum fonts Pen font faces
+Requires:	%{name}-common
 
 %description -n fonts-ttf-nhn-nanum-pen
 %common_desc
@@ -184,6 +189,9 @@ fi
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 3.020-alt4_7
+- update to new release by fcimport
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 3.020-alt4_6
 - converted for ALT Linux by srpmconvert tools
 
