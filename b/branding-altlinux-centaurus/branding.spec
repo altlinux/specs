@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt10
+Release: alt11
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -50,8 +50,8 @@ Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootloader ";done )
 
-%define grub_normal white/black
-%define grub_high black/white
+%define grub_normal white/blue
+%define grub_high black/light-gray
 
 %description bootloader
 Here you find the graphical boot logo. Suitable for both lilo and syslinux.
@@ -265,6 +265,7 @@ echo "%distribution %version %Theme %status_en (%codename)" >%buildroot%_sysconf
 for n in fedora redhat system; do
 	ln -s altlinux-release %buildroot%_sysconfdir/$n-release
 done
+install -m 0644 components/systemd/os-release %buildroot%_sysconfdir/os-release
 
 #notes
 pushd notes
@@ -423,6 +424,11 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Mon Dec 03 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt11
+- Set Misc Fixed in grub2 console font
+- Add os-release for systemd compatibility
+- Fix small typo in style name for English version of indexhtml
+
 * Fri Nov 30 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt10
 - Set default wallpaper in Mate
 - Fix section border in subdialogs
