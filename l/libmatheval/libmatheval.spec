@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: guile18-devel
+BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires: cmake gcc-c++ guile18-devel libglibmm-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libmatheval
-Version:        1.1.9
+Version:        1.1.10
 Release:        alt1_1
 Summary:        Library for parsing and evaluating symbolic expressions input as text
 
@@ -65,6 +66,9 @@ rm -f $RPM_BUILD_ROOT%{_infodir}/dir
 
 
 %changelog
+* Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.10-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.9-alt1_1
 - update to new release by fcimport
 
