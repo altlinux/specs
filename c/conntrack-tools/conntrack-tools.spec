@@ -1,12 +1,13 @@
 Name:           conntrack-tools
 Version:        0.9.15
-Release: 	alt1
+Release: 	alt1.1
 Summary:        Tool to manipulate netfilter connection tracking table
 
 Group:          System/Kernel and hardware
 License:        GPL
 URL:            http://netfilter.org
 Source0:        http://netfilter.org/projects/conntrack-tools/files/%name-%version.tar
+Patch: conntrack-tools-0.9.15-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Sat Oct 30 2010
 BuildRequires: flex libnetfilter_conntrack-devel
@@ -22,6 +23,7 @@ show an event message (one line) per newly established connection.
 
 %prep
 %setup
+%patch -p0
 
 %build
 %autoreconf -fisv
@@ -38,6 +40,9 @@ make install DESTDIR=%buildroot
 %_man8dir/*
 
 %changelog
+* Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.15-alt1.1
+- Fixed build with glibc 2.16
+
 * Sat Oct 30 2010 Anton Farygin <rider@altlinux.ru> 0.9.15-alt1
 - New version
 
