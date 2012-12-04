@@ -1,6 +1,6 @@
 Name: shogun
 Version: 1.1.0
-Release: alt2
+Release: alt3
 Summary: A Large Scale Machine Learning Toolbox
 Group: Sciences/Mathematics
 License: GPL v3 or later
@@ -292,6 +292,9 @@ rm -fR examples/documented/data examples/undocumented/data \
 %doc testsuite
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt3
+- Fixed build with OpenBLAS 0.2.5
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2
 - Built with OpenBLAS instead of GotoBLAS2
 
