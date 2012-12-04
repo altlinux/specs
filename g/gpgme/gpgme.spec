@@ -1,6 +1,6 @@
 Name: gpgme
-Version: 1.3.1
-Release: alt2
+Version: 1.3.2
+Release: alt1
 
 %define min_gnupg_version 1.9.6
 
@@ -15,7 +15,7 @@ Source: gpgme-%version.tar
 Patch1: gpgme-1.3.0-alt-version-script.patch
 Patch2: gpgme-1.3.0-alt-gpgme-config-assuan.patch
 Patch3: gpgme-1.3.0-alt-tests.patch
-Patch4: gpgme-1.3.1-rh-alt-linkage.patch
+Patch4: gpgme-1.3.2-rh-alt-linkage.patch
 
 Requires: gnupg2-gpg >= %min_gnupg_version
 
@@ -129,6 +129,9 @@ export PATH=$PWD/tmp_bin:$PATH
 %endif
 
 %changelog
+* Tue Dec 04 2012 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
+- new version
+
 * Wed May 23 2012 Dmitry V. Levin <ldv@altlinux.org> 1.3.1-alt2
 - Fixed build with ld --no-copy-dt-needed-entries.
 
