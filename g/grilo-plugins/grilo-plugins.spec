@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: grilo-plugins
-Version: %ver_major.3
+Version: %ver_major.4
 Release: alt1
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -11,6 +11,7 @@ Url: https://live.gnome.org/Grilo
 Source: %name-%version.tar
 
 BuildRequires: gnome-common
+BuildRequires: gtk-doc
 BuildRequires: glib2-devel >= 2.28 libgio-devel
 BuildRequires: libgrilo-devel = %version
 BuildRequires: libxml2-devel
@@ -21,13 +22,12 @@ BuildRequires: libsqlite3-devel
 BuildRequires: libgdata-devel >= 0.7.0
 BuildRequires: libquvi-devel >= 0.4.0
 BuildRequires: libsoup-devel
-BuildRequires: librest-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libgmime-devel
 BuildRequires: tracker-devel
 BuildRequires: libtotem-pl-parser-devel >= 3.4.1
 BuildRequires: libquvi-devel >= 0.2.15
-BuildRequires: libdmapsharing >= 2.9.12
+BuildRequires: libdmapsharing-devel >= 2.9.12
 BuildRequires: libjson-glib-devel
 
 Requires: grilo-tools >= %version
@@ -59,7 +59,8 @@ This package contains plugins to get information from theses sources:
 %build
 NOCONFIGURE=1 ./autogen.sh
 %configure		\
-	--disable-static
+	--disable-static \
+	--disable-scrollkeeper
 
 %make_build
 
@@ -69,12 +70,17 @@ NOCONFIGURE=1 ./autogen.sh
 # Remove files that will not be packaged
 rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 
-%files
+%find_lang --with-gnome %name
+
+%files -f %name.lang
 %doc AUTHORS COPYING NEWS README
 %_libdir/grilo-%ver_major/*.so*
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Tue Dec 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.4-alt1
+- 0.2.4
+
 * Mon Nov 12 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.3-alt1
 - 0.2.3
 
