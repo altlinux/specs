@@ -1,6 +1,6 @@
 Name: cegui
 Version: 0.7.6
-Release: alt1.1
+Release: alt1.2
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Libraries
 License: MIT
@@ -82,6 +82,9 @@ find %buildroot -name '*.la' -exec rm -f {} ';'
 %_datadir/CEGUI/xml_schemas
 
 %changelog
+* Tue Dec 04 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.7.6-alt1.2
+- Rebuild with new libxerces-c
+
 * Sun May 27 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.7.6-alt1.1
 - Rebuild with new ogre
 
