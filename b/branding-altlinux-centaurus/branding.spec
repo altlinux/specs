@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt11
+Release: alt12
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -424,6 +424,11 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Tue Dec 04 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt12
+- Set grayed table borders and header selection in Alterator web-interface
+- Use only existed fonts in grub2
+- Make indexhtml more narrow
+
 * Mon Dec 03 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt11
 - Set Misc Fixed in grub2 console font
 - Add os-release for systemd compatibility
