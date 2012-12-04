@@ -1,7 +1,7 @@
 
 Name:    kmymoney
-Version: 4.6.2
-Release: alt5.2
+Version: 4.6.3
+Release: alt1
 
 Summary: A Personal Finance Manager for KDE4
 Summary(ru_RU.UTF-8): Учёт финансов под KDE4
@@ -12,9 +12,7 @@ URL:     http://kmymoney2.sourceforge.net
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Source0: %name-%version.tar.bz2
-Source1: %name-l10n.tar
 Source2: %name.watch
-Patch1:  %name-4.6-build-fix.patch
 
 AutoReq: yes, noperl
 
@@ -150,8 +148,6 @@ Internationalization and documentation for KMyMoney
 
 %prep
 %setup -q -n %name-%version
-tar xf %SOURCE1
-%patch1 -p2
 
 %build
 %K4build -DCMAKE_SKIP_RPATH=1
@@ -231,6 +227,9 @@ tar xf %SOURCE1
 
 
 %changelog
+* Fri Nov 30 2012 Andrey Cherepanov <cas@altlinux.org> 4.6.3-alt1
+- New version 4.6.3
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.6.2-alt5.2
 - Rebuilt
 

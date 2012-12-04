@@ -1,7 +1,7 @@
 %define origname gwenhywfar
 
 Name:     libgwenhywfar
-Version:  4.3.1
+Version:  4.3.3
 Release:  alt1
 
 Summary:  A multi-platform helper library for other libraries
@@ -111,6 +111,9 @@ ln -s %_datadir/ca-certificates/ca-bundle.crt %buildroot%_datadir/gwenhywfar/ca-
 %_datadir/aclocal/gwenhywfar.m4
 
 %changelog
+* Wed Nov 28 2012 Andrey Cherepanov <cas@altlinux.org> 4.3.3-alt1
+- new version 4.3.3
+
 * Mon Jan 16 2012 Andrey Cherepanov <cas@altlinux.org> 4.3.1-alt1
 - New version 4.3.1
 - Add watch file
