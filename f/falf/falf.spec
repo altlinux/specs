@@ -2,7 +2,7 @@
 
 Name:		falf
 Version:	1.4
-Release:	alt0.4.%svn.1
+Release:	alt0.4.%svn.2
 Summary:	KDE3 media player with tabbed playlists!
 Summary(ru_RU.UTF8): Аудиоплеер для KDE3 со несколькими списками воспроизведения в закладках
 License: 	GPLv2
@@ -12,6 +12,7 @@ Url:		http://falf.sourceforge.net/
 # #Source0:	http://switch.dl.sourceforge.net/sourceforge/falf/%name-%version.tar.bz2
 Source0:	%name-%version-%svn.tar.bz2
 Patch0:		%name-1.4-alt_destdir.diff
+Patch1:   %name-1.4-alt-glibc-2.16.patch
 
 BuildRequires: gcc-c++ kdelibs-devel libXext-devel libqt3-devel libtag-devel libxine-devel libtqt-devel
 
@@ -50,6 +51,7 @@ Highlights:
 %prep
 %setup -q -n %name-%version-svn
 %patch0 -p1
+%patch1 -p2
 
 %build
 export PATH=$PATH:%_qt3dir/bin
@@ -71,6 +73,9 @@ sh ./install.sh
 %_datadir/icons/*/*/apps/%name.png
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt0.4.svn292.2
+- Fixed build with glibc 2.16
+
 * Fri Feb 25 2011 Motsyo Gennadi <drool@altlinux.ru> 1.4-alt0.4.svn292.1
 - fix -DQT_THREAD_SUPPORT
 
