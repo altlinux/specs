@@ -1,6 +1,6 @@
 Name: flam3
 Version: 2.7.18
-Release: alt2
+Release: alt2.1
 
 Summary: Cosmic Recursive Fractal Flames
 License: GPL
@@ -9,6 +9,7 @@ Url: http://flam3.com/
 
 Packager: Alexandra Panyukova <mex3@altlinux.ru>
 Source: %name-%version.tar.gz
+Patch: flam3-2.7.18-alt-libpng15.diff
 
 # Automatically added by buildreq on Wed Apr 11 2007
 BuildRequires: libjpeg-devel libpng-devel libxml2-devel
@@ -42,6 +43,7 @@ Static libraries for %name
 
 %prep
 %setup
+%patch -p1
 
 %build
 %configure
@@ -67,6 +69,9 @@ Static libraries for %name
 %_libdir/lib%name.a
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7.18-alt2.1
+- Fixed built with libpng15
+
 * Thu Jan 28 2010 Alexandra Panyukova <mex3@altlinux.org> 2.7.18-alt2
 - palettes subpackage made noarch (repocop) (Closes: 20867)
 
