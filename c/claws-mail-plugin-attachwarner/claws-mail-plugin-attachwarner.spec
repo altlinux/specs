@@ -1,7 +1,7 @@
 %define _name attachwarner
 
 Name: claws-mail-plugin-%_name
-Version: 0.2.24
+Version: 1.0
 Release: alt1
 
 Summary: Warn when the user is likely to have forgotten to attach a file.
@@ -45,6 +45,9 @@ you mentioned attachment in the email's body.
 %exclude %_libdir/*/*/*.la
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
+- Updated to 1.0.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 0.2.24-alt1
 - Updated to 0.2.24.
 

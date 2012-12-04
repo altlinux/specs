@@ -2,7 +2,7 @@
 %define _name2 gdata_plugin
 
 Name: claws-mail-plugin-%_name
-Version: 0.4
+Version: 0.5
 Release: alt1
 
 Summary: Access to GData (Google services) for Claws Mail
@@ -49,6 +49,9 @@ Google contacts into the address completion.
 %exclude %_libdir/*/*/*.la
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 0.5-alt1
+- Updated to 0.5.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 0.4-alt1
 - Updated to 0.4.
 

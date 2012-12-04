@@ -1,7 +1,7 @@
 %define _name rssyl
 
 Name: claws-mail-plugin-%_name
-Version: 0.33
+Version: 0.34
 Release: alt1
 
 Summary: RSS feed aggregator for Claws Mail
@@ -60,6 +60,9 @@ images and font styles.
 %exclude %_libdir/*/*/*.la
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 0.34-alt1
+- Updated to 0.34.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 0.33-alt1
 - Updated to 0.33.
 

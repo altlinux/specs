@@ -6,8 +6,8 @@
 %def_disable	gtk3
 %def_disable 	debug
 Name:	 	%_newname
-Version: 3.8.1
-Release: alt4
+Version: 3.9.0
+Release: alt1
 
 Summary:	The bleeding edge branch of Sylpheed, a GTK+ based, lightweight, and fast e-mail client	 
 License: 	%gpl3plus
@@ -20,16 +20,9 @@ Patch1:	%name-alt-filters-conv.patch
 Patch6: claws-mail-3.7.6-fix-undo-redo-replace.patch
 Patch7: claws-mail-alt-textviewer.patch
 Patch8: claws-mail-alt-textviewer-pl.patch
-# http://www.thewildbeast.co.uk/claws-mail/bugzilla/show_bug.cgi?id=2697
-Patch9: claws-mail-3.8.1-alt-fix-procmime.patch
 
 # From upstream CVS
-Patch10: claws-mail-3.8.1cvs12.patch
-Patch11: claws-mail-3.8.1cvs26.patch
-Patch12: claws-mail-3.8.1cvs27.patch
-Patch13: claws-mail-3.8.1-alt-fix-overflow.patch
-Patch14: claws-mail-3.8.1cvs67.patch
-Patch15: claws-mail-3.8.1cvs82.patch
+# none
 
 # ALT Specific
 Patch119: claws-mail-alt-masquerade-deps.patch
@@ -229,14 +222,6 @@ echo "Libs: -lenchant -lgnutls" >>%name.pc.in
 %patch6 -p0
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
-
-%patch10 -p0
-%patch11 -p0
-%patch12 -p0
-%patch13 -p0
-%patch14 -p0
-%patch15 -p0
 
 %patch119 -p1
 %patch120 -p2
@@ -352,6 +337,10 @@ EOF
 
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 3.9.0-alt1
+- Drop obsoleted patches.
+- Updated to 3.9.0.
+
 * Thu Oct 11 2012 Mikhail Efremov <sem@altlinux.org> 3.8.1-alt4
 - Use ALT-specific paths for SSL certs.
 - Patches from upstream:

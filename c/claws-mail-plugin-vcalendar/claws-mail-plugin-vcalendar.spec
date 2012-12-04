@@ -1,7 +1,7 @@
 %define _name vcalendar
 
 Name: claws-mail-plugin-%_name
-Version: 2.0.13
+Version: 2.0.14
 Release: alt1
 
 Summary: Plugin handles the vCalendar for Claws Mail
@@ -52,6 +52,9 @@ you sent or received.
 %exclude %_libdir/*/*/*.la
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 2.0.14-alt1
+- Updated to 2.0.14.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 2.0.13-alt1
 - Updated to 2.0.13.
 

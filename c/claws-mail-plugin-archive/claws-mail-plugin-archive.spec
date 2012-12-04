@@ -1,7 +1,7 @@
 %define _name archive
 
 Name: claws-mail-plugin-%_name
-Version: 0.6.12
+Version: 0.6.13
 Release: alt1
 
 Summary: Mail archiving functionality for Claws Mail
@@ -47,6 +47,9 @@ This plugin adds archiving features to Claws Mail.
 %exclude %_includedir/claws-mail/plugins/archive/*.h
 
 %changelog
+* Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 0.6.13-alt1
+- Updated to 0.6.13.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 0.6.12-alt1
 - Updated to 0.6.12.
 
