@@ -1,5 +1,5 @@
 Name: sigil
-Version: 0.4
+Version: 0.6.1
 Release: alt1
 
 Summary: Sigil is a free, open source, multi-platform WYSIWYG ebook editor
@@ -7,14 +7,12 @@ Summary(ru_RU.UTF-8): Сигиль есть свободный, открытый
 License: GPLv3
 Group: Editors
 Url: http://code.google.com/p/sigil/
-Packager: Malo Skryleve <malo@altlinux.org>
 
 Source: %name-%version.tar.bz2
 
-Requires: qt4 >= 4.7 libqt4-xml libqt4-svg libqt4-webkit
-BuildPreReq: cmake >= 2.8.0 libqt4-devel >= 4.7
-BuildRequires: cmake gcc-c++ libqt4-devel libqt4-svg libqt4-webkit libqt4-xmlpatterns
-
+BuildPreReq: rpm-macros-cmake
+BuildRequires: cmake >= 2.8.0 libqt4-devel >= 4.8 gcc-c++ libFlightCrew-devel  zlib-devel libhunspell-devel libpcre-devel
+BuildRequires:  boost-devel boost-filesystem-devel boost-program_options-devel boost-datetime-devel boost-regex-devel boost-thread-devel boost-system-devel
 %description
 Sigil is a free, open source, multi-platform WYSIWYG ebook editor.
 It is designed to edit books in ePub format. The version of the package
@@ -26,25 +24,15 @@ can be found in the ChangeLog.txt file.
 набора может быть обретена в файле ChangeLog.txt.
 
 %prep
-%setup
+%setup -q
 
 %build
-mkdir build
-cd build
-cmake -G "Unix Makefiles" \
-	-DCMAKE_INSTALL_PREFIX=%_prefix \
-%if %_lib == lib64
-        -DLIB_SUFFIX=64 \
-%endif
-	-DCMAKE_BUILD_TYPE=Release %_builddir/%name-%version \
-	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
-	-DCMAKE_BUILD_TYPE="Release" \
-	-DCMAKE_SKIP_RPATH=YES
-
-%make_build VERBOSE=1
+%cmake
+cd BUILD
+%make_build
 
 %install
-pushd build
+pushd BUILD
 %makeinstall_std
 popd
 %find_lang %name
@@ -56,8 +44,13 @@ mv %buildroot%_pixmapsdir/*.png %buildroot%_liconsdir/
 %_bindir/*
 %_desktopdir/*.desktop
 %_liconsdir/*.png
+%dir %_datadir/%name
+%_datadir/%name/*
 
 %changelog
+* Mon Dec 03 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.6.1-alt1
+- new version
+
 * Thu Aug 18 2011 Malo Skryleve <malo@altlinux.org> 0.4-alt1
 - Imported version sigil 0.4
 

@@ -1,5 +1,4 @@
 %define oname xerces-c
-%define tarname %oname-3.0.0
 
 %ifarch alpha ppc64 s390x sparc64 x86_64 ia64
 %define rcopts -b 64
@@ -12,8 +11,8 @@
 %define threads pthreads
 
 Name: libxerces-c
-Version: 3.0.1
-Release: alt1.qa4
+Version: 3.1.1
+Release: alt1
 
 Summary: Xerces-C++ validating XML parser
 
@@ -23,17 +22,11 @@ Group: System/Libraries
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: http://apache.rinet.ru/dist/xerces/c/3/sources/%tarname.tar.bz2
-#Source1: %name.pc
-#Patch0: xerces-c-src_2_6_0-lsattr.patch
-# fix lib linking
-#Patch1: %name.patch
+Source: %oname-%version.tar
 
 # Automatically added by buildreq on Wed Mar 09 2005
 BuildRequires: gcc-c++ libstdc++-devel
 
-#Conflicts: xerces-c
-#Conflicts: libxerces-c28
 Conflicts: %name-utils < %version-%release
 
 %description
@@ -88,6 +81,7 @@ Summary: Documentation for Xerces-C++ validating XML parser
 Provides: xerces-c-doc = %version
 Obsoletes: xerces-c-doc
 Conflicts: libxerces-c28-doc
+BuildArch: noarch
 
 %description doc
 Documentation for Xerces-C++.
@@ -98,7 +92,7 @@ write XML data. A shared library is provided for parsing, generating,
 manipulating, and validating XML documents.
 
 %prep
-%setup -q -n %tarname
+%setup -q -n %oname-%version
 
 %build
 %configure --disable-static --enable-transcoder-iconv
@@ -108,29 +102,15 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %install
 %makeinstall_std
 
-# x86_64 hack, fix it more correctly
-#if [ ! -x %buildroot%_libdir ] ; then
-#    mv %buildroot/usr/lib %buildroot%_libdir
-#fi
-
-#mkdir -p %buildroot%_bindir
-#we don't want obj directory
-#install `find $XERCESCROOT/bin -maxdepth 1 -type f` %buildroot%_bindir
-#mkdir -p %buildroot%_datadir/%name
-#cp -a samples %buildroot%_datadir/%name
-
-rm -f %buildroot%_libdir/%name.a
+#rm -f %buildroot%_libdir/%name.a
 
 %files
-%_libdir/libxerces-c-3.0.so
-#%_libdir/libxerces-depdom.so.*
+%_libdir/*.so
+%exclude %_libdir/%name.so
 
 %files devel
 %_includedir/xercesc/
-%_libdir/libxerces-c.so
-#%_libdir/libxerces-depdom.so
-#%dir %_datadir/%name/
-#%_datadir/%name/samples/
+%_libdir/%name.so
 %_pkgconfigdir/xerces-c.pc
 
 %files doc
@@ -140,6 +120,9 @@ rm -f %buildroot%_libdir/%name.a
 %_bindir/*
 
 %changelog
+* Mon Dec 03 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.1.1-alt1
+- new version (closes #28167)
+
 * Fri Apr 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.1-alt1.qa4
 - Avoid conflict with libxerces-c28
 - Moved utils into utils subpackage
