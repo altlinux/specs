@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt5
+Release: alt6
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -215,16 +215,15 @@ install -d %buildroot/boot/grub
 touch %buildroot/boot/grub/grub.cfg
 ln -s ../boot/grub/grub.cfg %buildroot%_sysconfdir/grub.cfg
 
+# Docs/habits compat symlink
+mkdir -p %buildroot%_sysconfdir/default
+ln -s ../sysconfig/%name %buildroot%_sysconfdir/default/grub
+
 %ifarch %efi
 cd ../%name-efi-%version
 %makeinstall_std
 
 install -pDm644 grub.efi %buildroot%_libdir/efi/grub.efi
-
-# Ghost config file
-mkdir -p %buildroot/boot/efi/EFI/altlinux
-touch %buildroot/boot/efi/EFI/altlinux/grub.cfg
-ln -s ../boot/efi/EFI/altlinux/grub.cfg %buildroot%_sysconfdir/grub-efi.cfg
 
 # Remove headers
 rm -f %buildroot%_libdir/grub-efi/*/*.h
@@ -245,6 +244,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_sysconfdir/grub.d/39_memtest
 %config(noreplace) %_sysconfdir/grub.d/40_custom
 %config(noreplace) %_sysconfdir/sysconfig/%name
+%_sysconfdir/default/grub
 %_sysconfdir/firsttime.d/*
 %_sysconfdir/bash_completion.d/grub
 %_sbindir/grub-bios-setup
@@ -286,12 +286,8 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 
 %ifarch %efi
 %files efi
-%dir /boot/efi/EFI/altlinux
-%ghost /boot/efi/EFI/altlinux/grub.cfg
 %_libdir/efi/grub.efi
 %_libdir/grub/%grubefiarch
-%config(noreplace) %_sysconfdir/grub-efi.cfg
-%ghost %config(noreplace) /boot/efi/EFI/altlinux/grub.cfg
 %endif
 
 # see #27935: grub1 would have /usr/lib/grub -> /boot/grub symlink
@@ -309,6 +305,11 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 # TODO: post efi
 
 %changelog
+* Tue Dec 04 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt6
+- cas@ fixed wrong path in theme patch (closes: #28176)
+- introduced /etc/default/grub "compat" symlink
+- dropped /boot/efi/* due to complete lack of applicability
+
 * Thu Nov 22 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt5
 - maintenance release:
   + fixed filetrigger lapse (thanks crux@, see also #27916)
