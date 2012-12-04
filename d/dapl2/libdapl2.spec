@@ -5,14 +5,14 @@ Name: dapl2
 %define lname lib%name
 %define oldlname libdapl
 Version: 2.0.30
-Release: alt2
+Release: alt2.1
 Summary: A Library for userspace access to RDMA devices using OS Agnostic DAT APIs
 Group: System/Libraries
 License: %gpl2only, %bsdstyle, CPL
 Url: http://www.openfabrics.org/
 # git://git.openfabrics.org/~ardavis/dapl.git
 Source: %name-%version.tar.gz
-Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
+Patch: dapl2-2.0.30-alt-glibc-2.16.patch
 
 BuildRequires(pre): rpm-build-licenses
 BuildRequires: librdmacm-devel
@@ -67,6 +67,7 @@ Useful test suites to validate uDAPL library API's.
 
 %prep
 %setup
+%patch -p1
 
 
 %build
@@ -108,6 +109,9 @@ mv %buildroot%_sysconfdir/dat.conf \
 
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.30-alt2.1
+- Fixed build with glibc 2.16
+
 * Thu Mar 24 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.30-alt2
 - Rebuilt for debuginfo
 - Disabled static package
