@@ -1,6 +1,6 @@
 Name: cegui06
 Version: 0.6.2
-Release: alt6.1
+Release: alt7
 
 Summary: Free library providing windowing and widgets for graphics APIs / engines
 Group: System/Libraries
@@ -8,13 +8,14 @@ License: MIT
 Url: http://www.cegui.org.uk
 Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
 
-Source: http://downloads.sourceforge.net/crayzedsgui/CEGUI-%version.tar.gz
-Source1: http://downloads.sourceforge.net/crayzedsgui/CEGUI-DOCS-%version.tar.gz
-Patch0: cegui-0.6.0-userverso.patch
+Source: http://downloads.sourceforge.net/crayzedsgui/CEGUI-%version.tar
+Source1: http://downloads.sourceforge.net/crayzedsgui/CEGUI-DOCS-%version.tar
 Patch1: cegui-0.6.0-release-as-so-ver.patch
-Patch2: cegui-0.6.1-libdl-alt.patch
-Patch3: CEGUI-pld-new-tinyxml.patch
-Patch4: cegui-0.6.2-alt-gcc4.6.patch
+Patch2: cegui-0.6.0-userverso.patch
+Patch3: cegui-0.6.2-new-DevIL.patch
+Patch4: cegui-0.6.2-new-tinyxml.patch
+Patch5: cegui-0.6.2-gcc46.patch
+Patch6: cegui-0.6.1-libdl-alt.patch
 
 BuildRequires: gcc-c++
 BuildRequires: expat-devel
@@ -42,11 +43,12 @@ Development files for cegui
 
 %prep
 %setup -qb1 -qn CEGUI-%version
-%patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p2
-%patch4 -p2
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 # Permission fixes for debuginfo RPM
 chmod -x include/falagard/*.h
@@ -58,6 +60,14 @@ rm -f documentation/api_reference/keepme
 iconv -f iso8859-1 AUTHORS -t utf8 > AUTHORS.conv && mv -f AUTHORS.conv AUTHORS
 iconv -f iso8859-1 TODO -t utf8 > TODO.conv && mv -f TODO.conv TODO
 iconv -f iso8859-1 README -t utf8 > README.conv && mv -f README.conv README
+
+# Make makefile happy even though we've removed the (unused) included copy of
+# GLEW due to license reasons
+mkdir -p RendererModules/OpenGLGUIRenderer/GLEW/GL
+touch RendererModules/OpenGLGUIRenderer/GLEW/GL/glew.h
+touch RendererModules/OpenGLGUIRenderer/GLEW/GL/glxew.h
+touch RendererModules/OpenGLGUIRenderer/GLEW/GL/wglew.h
+touch RendererModules/OpenGLGUIRenderer/GLEW/GLEW-LICENSE
 
 %build
 %configure \
@@ -108,6 +118,9 @@ done
 %_datadir/CEGUI-0.6
 
 %changelog
+* Tue Dec 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.2-alt7
+- sync patches with f18
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt6.1
 - Fixed build
 
