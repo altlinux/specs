@@ -1,18 +1,17 @@
-%define ver_major 3.7
+%define ver_major 3.8
+%def_disable gnome
 
-Name:    glade3
-Version: %ver_major.0
-Release: alt2.3
+Name: glade3
+Version: %ver_major.3
+Release: alt1
 
-Summary: GTK+ / GNOME widget builder
-Group:   Development/GNOME and GTK+
+Summary: GTK+2/GNOME2 widget builder
+Group: Development/GNOME and GTK+
 License: %gpl2plus, %lgpl2plus
-URL:     http://glade.gnome.org/
-
+Url: http://glade.gnome.org/
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.bz2
-Patch: glade3-3.7.0-alt-DSO.patch
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
 
 # Sonames of libgladeui don't change with each release. Although ABI does
 # not change either, it is better to upgrade libgladeui along with glade3.
@@ -23,12 +22,10 @@ BuildPreReq: rpm-build-licenses rpm-build-gnome
 # From configure.ac
 BuildPreReq: intltool >= 0.35.0
 BuildPreReq: gnome-common
-BuildPreReq: gettext-tools
 BuildPreReq: gtk-doc >= 1.9
-BuildPreReq: libgtk+2-devel >= 2.20.0
-BuildPreReq: glib2-devel
+BuildPreReq: libgtk+2-devel >= 2.24.0
 BuildPreReq: libxml2-devel >= 2.4.0
-BuildPreReq: libbonoboui-devel libgnomeui-devel
+%{?_enable_gnome:BuildRequires: libbonoboui-devel libgnomeui-devel}
 BuildPreReq: python-module-pygtk-devel >= 2.10.0
 BuildPreReq: gnome-doc-utils >= 0.9.0
 
@@ -38,8 +35,8 @@ It allows to create a gtk/gnome interface files
 that can be loaded with libglade.
 
 %package -n libgladeui
-Summary: GTK+ / GNOME 3 widget builder library
-Group:   Development/GNOME and GTK+
+Summary: GTK+2/GNOME2 widget builder library
+Group: Development/GNOME and GTK+
 Obsoletes: libgladeui3.6
 Obsoletes: libgladeui3.7
 
@@ -52,8 +49,8 @@ This is library that can be used for embed builder
 into other application.
 
 %package -n libgladeui-devel
-Summary: GTK+ / GNOME widget builder library
-Group:   Development/GNOME and GTK+
+Summary: GTK+2/GNOME2 widget builder library
+Group: Development/GNOME and GTK+
 Requires: libgladeui = %version-%release
 Obsoletes: libgladeui3.6-devel
 Obsoletes: libgladeui3.7-devel
@@ -66,18 +63,15 @@ that can be loaded with libglade.
 This package contains development files for library.
 
 %prep
-%setup -q
-%patch -p2
+%setup
 
 %build
+%autoreconf
 %configure --disable-dependency-tracking \
 	--disable-scrollkeeper \
-	--enable-gtk-doc
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
-export LD_LIBRARY_PATH=$PWD/gladeui/.libs
+	%{subst_enable gnome}
 
-# SMP-incompatible build
-%make
+%make_build
 
 %install
 %makeinstall_std
@@ -87,14 +81,12 @@ export LD_LIBRARY_PATH=$PWD/gladeui/.libs
 
 cat %name.lang glade.lang > lang
 
-bzip2 -fk9 ChangeLog
-
 %files -f lang
-%doc AUTHORS COPYING ChangeLog.bz2 NEWS README TODO
 %_bindir/*
 %_desktopdir/*
 %_iconsdir/hicolor/*/apps/*.png
 %_iconsdir/hicolor/*/apps/*.svg
+%doc AUTHORS COPYING NEWS README TODO
 
 %files -n libgladeui
 %dir %_libdir/%name
@@ -117,6 +109,10 @@ bzip2 -fk9 ChangeLog
 %exclude %_libdir/glade3/modules/*.la
 
 %changelog
+* Tue Dec 04 2012 Yuri N. Sedunov <aris@altlinux.org> 3.8.3-alt1
+- 3.8.3
+- disabled GNOME2 support
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.0-alt2.3
 - Fixed build
 

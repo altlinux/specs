@@ -1,6 +1,6 @@
 Name: libxfcegui4
 Version: 4.10.0
-Release: alt1
+Release: alt2
 
 Summary: Various Gtk+2 widgets for XFce
 Summary (ru_RU.UTF-8): Набор виджетов GTK 2 для Xfce
@@ -73,6 +73,9 @@ Header files for the %name library.
 %doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Dec 04 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt2
+- Rebuild against libgladeui-1.so.11.
+
 * Sun Apr 29 2012 Mikhail Efremov <sem@altlinux.org> 4.10.0-alt1
 - Updated to 4.10.0.
 
