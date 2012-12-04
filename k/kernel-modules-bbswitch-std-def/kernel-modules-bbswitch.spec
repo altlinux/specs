@@ -3,7 +3,7 @@
 
 %define module_release alt3
 
-%define kversion 3.6.8
+%define kversion 3.6.9
 %define krelease alt1
 %define flavour std-def
 
@@ -14,7 +14,7 @@
 Summary: bbswitch module
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198152.1
+Release: %module_release.198153.1
 License: GPL
 Group: System/Kernel and hardware
 
@@ -81,8 +81,8 @@ make KDIR=%_usrsrc/linux-%kversion-%flavour-%krelease
 %module_dir
 
 %changelog
-* Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4.1-alt3.198152.1
-- Build for kernel-image-std-def-3.6.8-alt1.
+* Tue Dec 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4.1-alt3.198153.1
+- Build for kernel-image-std-def-3.6.9-alt1.
 
 * Tue Jan 31 2012 Anton Protopopov <aspsk@altlinux.org> 0.4.1-alt3
 - Build from template
