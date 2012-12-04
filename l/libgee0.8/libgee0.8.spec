@@ -4,7 +4,7 @@
 %def_disable static
 
 Name: %_name%api_ver
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: a collection library providing GObject-based interfaces
@@ -111,6 +111,9 @@ echo "See changes in the GIT tree" > ChangeLog
 %endif
 
 %changelog
+* Tue Dec 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8.3-alt1
+- 0.8.3
+
 * Tue Nov 20 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8.2-alt1
 - first build libgee0.8 for Sisyphus
 
