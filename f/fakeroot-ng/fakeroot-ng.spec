@@ -1,6 +1,6 @@
 Name: fakeroot-ng
 Version: 0.17
-Release: alt1
+Release: alt1.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -10,6 +10,8 @@ Group: Development/Other
 
 Url: http://sourceforge.net/projects/fakerootng
 Source: http://downloads.sourceforge.net/fakerootng/fakeroot-ng-%version.tar.gz
+Patch: fakeroot-ng-0.17-alt-glibc-2.16.patch
+Patch1: fakeroot-ng-0.17-alt-gcc4.7.patch
 
 # Automatically added by buildreq on Mon Sep 22 2008
 BuildRequires: gcc-c++
@@ -20,6 +22,8 @@ they are running with root permission.
 
 %prep
 %setup
+%patch -p2
+%patch1 -p2
 
 %build
 # Fix check for supported platforms
@@ -36,6 +40,9 @@ they are running with root permission.
 %_man1dir/*
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.17-alt1.1
+- Fixed build with glibc 2.16 and gcc 4.7
+
 * Thu Jul 02 2009 Victor Forsyuk <force@altlinux.org> 0.17-alt1
 - 0.17
 
