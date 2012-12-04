@@ -1,6 +1,6 @@
 Name: fwbuilder
 Version: 5.1.0.3599
-Release: alt1
+Release: alt1.1
 
 Summary: Firewall Builder
 License: GPLv2+
@@ -9,6 +9,7 @@ Group: Security/Networking
 Url: http://www.fwbuilder.org/
 Source0: http://downloads.sourceforge.net/fwbuilder/fwbuilder-%version.tar.gz
 Source1: fwbuilder.desktop
+Patch: fwbuilder-5.1.0.3599-alt-glibc-2.16.patch
 
 Obsoletes: fwbuilder-doc fwbuilder-devel
 # libfwbuilder merged into fwbuilder package
@@ -84,6 +85,7 @@ Policy compiler for HP ProCurve ACL.
 
 %prep
 %setup
+%patch -p2
 
 %build
 libtoolize --force --copy --install
@@ -145,6 +147,9 @@ rm -rf %buildroot%_defaultdocdir
 %_bindir/fwb_procurve_acl
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1.0.3599-alt1.1
+- Fixed build with glibc 2.16
+
 * Fri Mar 30 2012 Victor Forsiuk <force@altlinux.org> 5.1.0.3599-alt1
 - 5.1.0.3599
 
