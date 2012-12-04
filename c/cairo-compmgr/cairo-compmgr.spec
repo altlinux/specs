@@ -7,7 +7,7 @@
 
 Name: cairo-compmgr
 Version: 0.3.4
-Release: alt1.gitc609e
+Release: alt2.gitc609e
 Summary: Cairo Composite Manager
 License: GPL
 Group: System/X11
@@ -139,6 +139,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Dec 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.4-alt2.gitc609e
+- rebuild with glade3-3.8.3-alt1
+
 * Mon Dec 03 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.4-alt1.gitc609e
 - upstream snapshot c609ef4a8f423fb9c631a1f43d71f6044bff7e86
 
