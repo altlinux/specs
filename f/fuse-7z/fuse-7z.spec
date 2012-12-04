@@ -2,7 +2,7 @@
 
 Name: fuse-7z
 Version: 0.1
-Release: alt1
+Release: alt1.1
 
 Summary: A FUSE filesystem that uses the 7-zip library to interacts with all kind of archives
 
@@ -13,6 +13,7 @@ Url: http://gitorious.org/fuse-7z
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: %name-%version.tar
+Patch: fuse-7z-0.1-alt-link.patch
 
 Requires: %{get_dep fuse}
 Requires: p7zip
@@ -32,6 +33,7 @@ Contributions are welcome.
 
 %prep
 %setup
+%patch -p1
 
 %build
 # FIXME: need waf
@@ -55,5 +57,8 @@ install -D wrapper/fuse-7z %buildroot%_bindir/fuse-7z
 %_libexecdir/%name/
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.1
+- Completed linking
+
 * Fri Aug 17 2012 Vitaly Lipatov <lav@altlinux.ru> 0.1-alt1
 - initial build for ALT Linux Sisyphus
