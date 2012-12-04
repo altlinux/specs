@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.53
-Release: alt5
+Version: 3.0.54
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 53
+%define kernel_stable_version 54
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -154,15 +154,14 @@ Patch0015: linux-%kernel_branch.42-fix-arch-powerpc-platforms--pseries.patch
 Patch0016: linux-%kernel_branch.43-fix-arch-s390.patch
 Patch0017: linux-%kernel_branch.43-fix-arch-s390--lib.patch
 
-Patch0020: linux-%kernel_branch.50-fix-arch-x86.patch
+Patch0020: linux-%kernel_branch.54-fix-arch-x86.patch
 Patch0021: linux-%kernel_branch.42-fix-arch-x86--apic.patch
 Patch0022: linux-%kernel_branch.42-fix-arch-x86--apm.patch
-Patch0023: linux-%kernel_branch.44-fix-arch-x86--mcheck.patch
-Patch0024: linux-%kernel_branch.51-fix-arch-x86--microcode_amd.patch
-Patch0025: linux-%kernel_branch.42-fix-arch-x86--tsc.patch
-Patch0026: linux-%kernel_branch.42-fix-arch-x86-cpu--perf-event.patch
-Patch0027: linux-%kernel_branch.47-fix-arch-x86-cpu--rdrand.patch
-Patch0028: linux-%kernel_branch.42-fix-arch-x86-platform-olpc.patch
+Patch0023: linux-%kernel_branch.54-fix-arch-x86--mcheck.patch
+Patch0024: linux-%kernel_branch.42-fix-arch-x86--tsc.patch
+Patch0025: linux-%kernel_branch.42-fix-arch-x86-cpu--perf-event.patch
+Patch0026: linux-%kernel_branch.47-fix-arch-x86-cpu--rdrand.patch
+Patch0027: linux-%kernel_branch.42-fix-arch-x86-platform-olpc.patch
 
 Patch0030: linux-%kernel_branch.51-fix-block.patch
 Patch0031: linux-%kernel_branch.42-fix-block--blk-integrity.patch
@@ -522,7 +521,7 @@ Patch0681: linux-%kernel_branch.42-fix-fs-ecryptfs.patch
 Patch0682: linux-%kernel_branch.42-fix-fs-ext3.patch
 Patch0683: linux-%kernel_branch.46-fix-fs-ext4.patch
 Patch0684: linux-%kernel_branch.42-fix-fs-hfs.patch
-Patch0685: linux-%kernel_branch.51-fix-fs-jbd.patch
+Patch0685: linux-%kernel_branch.54-fix-fs-jbd.patch
 Patch0686: linux-%kernel_branch.52-fix-fs-nfs.patch
 Patch0687: linux-%kernel_branch.42-fix-fs-ocfs2.patch
 Patch0688: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
@@ -1400,7 +1399,6 @@ cd linux-%version
 %patch0025 -p1
 %patch0026 -p1
 %patch0027 -p1
-%patch0028 -p1
 
 %patch0030 -p1
 %patch0031 -p1
@@ -2835,6 +2833,17 @@ done)
 
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 3.0.54-alt1
+- 3.0.54
+- removed:
+  + fix-arch-x86--microcode_amd
+- updated:
+  + fix-arch-x86
+  + fix-arch-x86--mcheck
+  + fix-fs-jbd
+  + feat-mm--uksm
+- uksm disabled bye default
+
 * Fri Nov 30 2012 Led <led@altlinux.ru> 3.0.53-alt5
 - updated:
   + fix-fs-btrfs
