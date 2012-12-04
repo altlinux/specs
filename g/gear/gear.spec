@@ -1,7 +1,7 @@
 # Copyright (C) 2006-2012  Dmitry V. Levin <ldv@altlinux.org>
 
 Name: gear
-Version: 1.7.6
+Version: 1.7.7
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -58,6 +58,10 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Tue Dec 04 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.7-alt1
+- gear-store-tags: handle the last line of .gear/rules when
+  it is not EOL-terminated (closes: #28165).
+
 * Sun Nov 25 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.6-alt1
 - gear-srpmimport: added support of srpms with type RPMLEAD_BINARY.
 
