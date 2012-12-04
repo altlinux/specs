@@ -5,14 +5,14 @@
 %def_disable default_binary
 
 %def_disable static
-%def_disable gtk_doc
+%def_enable gtk_doc
 
 %def_with mysql
 %def_with postgres
 %def_without odbc
 %def_with mdb
 %def_with bdb
-%def_without ldap
+%def_with ldap
 %def_without oracle
 %def_without tds
 %def_without sybase
@@ -20,13 +20,14 @@
 %def_enable system_sqlite
 %def_without interbase
 %def_without jdbc
-%def_enable introspection
+%def_disable crypto
+%def_disable introspection
 
 %define _libexecdir %_prefix/libexec
-%add_findreq_skiplist %_libexecdir/%_name-%abi_ver/gda_trm*/*
+%add_python_req_skip rml2html
 
 Name: %{_name}4
-Version: %ver_major.7
+Version: %ver_major.13
 Release: alt1
 
 Summary: Library for writing gnome database programs
@@ -34,10 +35,9 @@ Group: System/Libraries
 License: LGPL
 Url: http://www.gnome-db.org/
 
-Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.bz2
-Patch: libgda-4.0.4-alt-build.patch
-Patch1: libgda-4.2.3-configure.ac.patch
-Patch2: libgda4-4.0.7-link.patch
+#Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
+Source: %_name-%version.tar
+Patch: libgda4-4.0.7-link.patch
 
 Obsoletes: libgda2 < %version
 Provides: libgda2 = %version-%release
@@ -56,8 +56,8 @@ BuildPreReq: libxslt-devel >= 1.0.9
 BuildPreReq: gtk-doc >= 1.0
 BuildPreReq: libldap-devel >= %ldap_ver libsasl2-devel
 BuildRequires: libjson-glib-devel libunixODBC-devel libssl-devel
-#BuildRequires: libgnome-keyring-devel libunique-devel iso-codes-devel
-BuildRequires: gcc-c++ libncurses-devel libreadline-devel libsoup-devel
+BuildRequires: libgnome-keyring-devel iso-codes-devel
+BuildRequires: gcc-c++ libncurses-devel libreadline-devel libsoup-devel libgcrypt-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel >= 0.6.7}
 
 %if_with postgres
@@ -79,7 +79,7 @@ BuildPreReq: libmdbtools-devel >= %mdbtools_ver
 
 %if_with interbase
 #BuildPreReq: interbase
-BuildPreReq: FirebirdCS 
+BuildPreReq: FirebirdCS
 %endif
 
 %if_with sqlite
@@ -346,11 +346,16 @@ This package contains the static version of %name libraries.
 
 %prep
 %setup -q -n %_name-%version
-%patch -p1
-%patch1 -p1
-%patch2
+%patch
+touch config.rpath
+
+%if_enabled crypto
+sed -e 's/^[[:blank:]]//' libgda/libgda.symbols |grep '^_' > libgda/private.sym
+%define private_sym _gda_server_operation_new_from_string|_split_identifier_string|_gda_vconnection_change_working_obj|_gda_vconnection_set_
+%endif
 
 %build
+gnome-doc-prepare -f
 %autoreconf
 %configure \
 	%{subst_enable static} \
@@ -393,11 +398,16 @@ This package contains the static version of %name libraries.
 %if_with sqlite
 	%{?_enable_system_sqlite:--enable-system-sqlite} \
 %endif
-%{subst_enable introspection}
+	%{subst_enable crypto} \
+	%{subst_enable introspection}
 
 
 # SMP-incompatible build
+%if_enabled crypto
+%make LIBTOOL_EXPORT_OPTIONS='-export-symbols-regex "^(gda_|fnYM49765777344607__gda|%private_sym).*"'
+%else
 %make
+%endif
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -409,12 +419,8 @@ This package contains the static version of %name libraries.
 %_libdir/*.so.*
 %dir %_libdir/%_name-%abi_ver
 %dir %_libdir/%_name-%abi_ver/providers
-#%_libdir/%_name-%abi_ver/providers/libgda-sqlcipher.so
+%{?_enable_crypto:%_libdir/%_name-%abi_ver/providers/libgda-sqlcipher.so}
 %_libdir/%_name-%abi_ver/providers/libgda-web.so
-
-#%dir %_libexecdir/%_name-4.0
-#%_libexecdir/%_name-4.0/gda_trml2html
-#%_libexecdir/%_name-4.0/gda_trml2pdf
 
 %_datadir/%_name-%abi_ver
 %_man1dir/gda-sql*
@@ -438,7 +444,6 @@ This package contains the static version of %name libraries.
 %if_with mdb
 %files mdb
 %_libdir/%_name-%abi_ver/*/*-mdb.so
-%exclude %_libdir/pkgconfig/*mdb*
 %endif
 
 %if_with bdb
@@ -484,12 +489,14 @@ This package contains the static version of %name libraries.
 %_libdir/pkgconfig/libgda-report-%abi_ver.pc
 %_libdir/pkgconfig/libgda-xslt-%abi_ver.pc
 # .pc files for providers
-#%_libdir/pkgconfig/libgda-sqlcipher-%abi_ver.pc
+%{?_enable_crypto:%_libdir/pkgconfig/libgda-sqlcipher-%abi_ver.pc}
 %_libdir/pkgconfig/libgda-web-%abi_ver.pc
+%{?_with_mdb:%_libdir/pkgconfig/*mdb*}
 %{?_with_mysql:%_libdir/pkgconfig/*mysql*}
 %{?_with_postgres:%_libdir/pkgconfig/*postgres*}
 %{?_with_bdb:%_libdir/pkgconfig/*bdb*}
 %{?_with_sqlite:%_libdir/pkgconfig/*sqlite*}
+%{?_with_ldap:%_libdir/pkgconfig/*ldap*}
 %{?_with_jdbc:%_libdir/pkgconfig/libgda-jdbc-%abi_ver.pc}
 
 %files devel-doc
@@ -513,6 +520,10 @@ This package contains the static version of %name libraries.
 %exclude %_sysconfdir/%_name-%abi_ver/sales_test.db
 
 %changelog
+* Tue Oct 09 2012 Yuri N. Sedunov <aris@altlinux.org> 4.2.13-alt1
+- 4.2.13 snapshot (7a3e641)
+- disabled introspection
+
 * Wed Jun 01 2011 Yuri N. Sedunov <aris@altlinux.org> 4.2.7-alt1
 - 4.2.7
 
