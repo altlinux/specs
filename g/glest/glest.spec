@@ -1,6 +1,6 @@
 Name: glest
 Version: 3.1.2
-Release: alt3
+Release: alt3.1
 
 Summary: Glest is a project for making a free 3d real-time customizable strategy game
 Group: Games/Strategy
@@ -16,6 +16,7 @@ Source5: %name.desktop
 
 Patch1: glest-2.0.0-logfile.patch
 Patch2: glest-3.1.2-debian-gcc-4.3-fixes.patch
+Patch3: glest-3.1.2-alt-i586.patch
 
 # Automatically added by buildreq on Sun Mar 14 2010
 BuildRequires: gcc-c++ imake jam libGL-devel libSDL-devel libX11-devel libopenal-devel libvorbis-devel libxerces-c28-devel xorg-cf-files
@@ -33,11 +34,13 @@ tech trees, units, buildings and some maps.
 %setup  -n %name-source-%version
 %patch1 -p2
 %patch2 -p1
+%patch3 -p2
 
 %build
+%add_optflags -fpermissive
 %configure --disable-debug --enable-optimize
 
-jam -j%__nprocs
+jam -dx -j%__nprocs
 
 %install
 # let's create directory structure...
@@ -60,6 +63,9 @@ install -pm 644 %SOURCE5 %buildroot%_desktopdir/%name.desktop
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.2-alt3.1
+- Fixed build with gcc 4.7
+
 * Sun Mar 14 2010 Andrew Clark <andyc@altlinux.org> 3.1.2-alt3
 - spec cleanup
 - buildreq
