@@ -4,7 +4,7 @@
 
 Name: gtranslator
 Version: %ver_major.5
-Release: alt2
+Release: alt3
 
 Summary: A GNOME po file editor with many bells and whistles.
 License: GPL
@@ -16,13 +16,13 @@ Source: %name-%version.tar
 #Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.91.5-alt-pkgconfig.patch
 
-Requires: libgda4-sqlite
+Requires: libgda5-sqlite
 
 %define gtk_ver 3.4.0
 %define gtkspell_ver 3.0
 
 BuildRequires: gnome-common yelp-tools gtk-doc intltool libgtk+3-devel >= %gtk_ver
-BuildRequires: libgda4-devel libgdl3-devel libgtksourceview3-devel
+BuildRequires: libgda5-devel libgdl3-devel libgtksourceview3-devel
 BuildRequires: libsoup-devel libpeas-devel
 BuildRequires: gsettings-desktop-schemas-devel iso-codes-devel
 BuildRequires: libgdict-devel libgtkspell3-devel >= %gtkspell_ver libjson-glib-devel
@@ -63,8 +63,8 @@ This package contains documentation needed to develop %name plugins.
 %configure \
 	--disable-schemas-compile \
 	--disable-static \
-	--enable-gtk-doc \
-	--with-gda=4.0
+	--enable-gtk-doc
+
 %make_build
 
 %install
@@ -90,6 +90,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Mon Dec 03 2012 Yuri N. Sedunov <aris@altlinux.org> 2.91.5-alt3
+- rebuild against libgda5
+
 * Sat Dec 01 2012 Yuri N. Sedunov <aris@altlinux.org> 2.91.5-alt2
 - updated to 398ebe3e8
 
