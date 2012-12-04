@@ -1,5 +1,5 @@
 Name: pinentry
-Version: 0.8.1
+Version: 0.8.2
 Release: alt1
 
 Group: File tools
@@ -163,6 +163,9 @@ done
 %_infodir/*.info*
 
 %changelog
+* Tue Dec 04 2012 Sergey V Turchin <zerg@altlinux.org> 0.8.2-alt1
+- new version
+
 * Mon Jul 04 2011 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
 - new version
 
