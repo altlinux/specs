@@ -1,8 +1,9 @@
 Name:		fdclock
 Version:	20071208
-Release:	alt3
+Release:	alt3.1
 Summary:	Freedesktop logo clock using cairo
 Source:		%name-%version.tar
+Patch: fdclock-20071208-alt-libpng15.patch
 Group:		System/X11
 License:	MIT
 
@@ -14,6 +15,7 @@ BuildRequires: libcairo-devel libpng-devel
 
 %prep
 %setup
+%patch -p0
 
 %build
 export FDCLOCK_LIBS="-lXrender -lcairo -lX11"
@@ -29,6 +31,9 @@ export FDCLOCK_LIBS="-lXrender -lcairo -lX11"
 
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 20071208-alt3.1
+- Fixed build with libpng15
+
 * Thu May 24 2012 Fr. Br. George <george@altlinux.ru> 20071208-alt3
 - DSO list completion
 
