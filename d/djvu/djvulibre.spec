@@ -1,6 +1,6 @@
 Name: djvu
 Version: 3.5.22
-Release: alt1.2
+Release: alt1.3
 
 Summary: DjVu viewers, encoders and utilities
 License: GPLv2+
@@ -10,6 +10,8 @@ Packager: Evgeny Sinelnikov <sin@altlinux.org>
 # http://download.sourceforge.net/djvu/djvulibre-%version.tar.gz
 Source: djvulibre-%version.tar
 Patch: djvu-3.5.22-alt-glibc-2.11.3.patch
+Patch1: djvu-3.5.22-alt-glibc-2.16.patch
+Patch2: djvu-3.5.22-alt-gcc4.7.patch
 
 BuildRequires: browser-plugins-npapi-devel chrpath
 # Automatically added by buildreq on Fri Nov 19 2010
@@ -148,12 +150,15 @@ technology.
 %prep
 %setup -n djvulibre-%version
 %patch -p2
+%patch1 -p2
+%patch2 -p2
 
 %build
 # hack for NPAPI location
 sed -i 's,-rpath ${plugindir},-rpath %browser_plugins_path,' gui/nsdejavu/Makefile.in
 sed -i 's,^plugindir[[:space:]]*=.*,plugindir = %browser_plugins_path,' gui/nsdejavu/Makefile.in
 
+%add_optflags -fpermissive
 %configure %{subst_enable static} --enable-threads
 make OPTS='%optflags' NSDEJAVU_LIBS='-lXext -lX11' #NO SMP
 
@@ -222,6 +227,9 @@ rm -rf %buildroot%_mandir/ja
 %endif #static
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.22-alt1.3
+- Fixed build with glibc 2.16 and gcc 4.7
+
 * Tue Jul 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.5.22-alt1.2
 - Fixed build
 
