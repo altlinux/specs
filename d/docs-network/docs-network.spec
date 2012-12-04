@@ -2,7 +2,7 @@
 
 Name: %packagename
 Version: 0.2
-Release: alt1
+Release: alt1.1
 
 Summary: Network setup
 License: %fdl
@@ -11,6 +11,7 @@ Buildarch: noarch
 Requires: docs-utils
 BuildRequires(pre): rpm-build-docs-experimental >= 0.3
 BuildRequires(pre): rpm-build-licenses >= 0.6
+BuildPreReq: docbook5-style-xsl
 
 Provides: docs-network_setup = %version, docs-network_setup-kirill
 Obsoletes: docs-network_setup < %version, docs-network_setup-kirill
@@ -25,7 +26,7 @@ Network setup.
 
 %build
 %make_build -f \
-/usr/share/xml/docbook/xsl-stylesheets/tools/make/Makefile.DocBook  html \
+/usr/share/sgml/docbook/xsl-ns-stylesheets/tools/make/Makefile.DocBook  html \
 SOURCE_FILES_DBK=doc/network.xml HTML_OR_XHTML=xhtml
 mv doc/network.html doc/index.html
 rm doc/network.xml
@@ -44,6 +45,9 @@ rm doc/network.xml
 %docs_module_files
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.1
+- Fixed build
+
 * Wed Feb 25 2009 Artem Zolochevskiy <azol@altlinux.ru> 0.2-alt1
 - docs-network obsoletes old packages:
   + docs-network_setup
