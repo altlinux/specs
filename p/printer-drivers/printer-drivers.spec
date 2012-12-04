@@ -1,8 +1,6 @@
 Name: printer-drivers
 Version: 3.0
-Release: alt5
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
+Release: alt5.1
 
 Summary: printing subsystem
 License: GPL
@@ -17,7 +15,7 @@ Group: Publishing
 #base
 Requires: cups ghostscript-classic foomatic-db foomatic-db-engine foomatic-filters 
 #big projects
-Requires: foo2zjs hplip-hpijs hplip gutenprint-foomatic
+Requires: foo2zjs hplip-hpijs hplip-hpcups gutenprint-foomatic
 #ijs drivers
 Requires: epsoneplijs
 #cups drivers
@@ -36,7 +34,7 @@ Obsoletes: ghostscript-drivers
 Summary: printing subsystem with X Window support
 Group: Publishing
 Requires: %name-base = %version-%release
-Requires: ghostscript-module-X hplip-gui
+Requires: ghostscript-module-X hplip hplip-gui
 
 %description
 This is a virtual package to get all printing subsystem
@@ -53,6 +51,9 @@ This is a virtual package to get printing subsystem with X11 printing utils
 
 
 %changelog
+* Tue Dec 04 2012 Igor Vlasenko <viy@altlinux.ru> 3.0-alt5.1
+- NMU: corrected hplip dependencies (closes: 28173)
+
 * Thu Sep 17 2009 Stanislav Ievlev <inger@altlinux.org> 3.0-alt5
 - update hplip requires
 - rename require: splix -> printer-driver-splix
