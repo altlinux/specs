@@ -1,5 +1,5 @@
 Name: gpicview
-Version: 0.2.2
+Version: 0.2.3
 Release: alt1
 
 Summary: A simple and fast image viewer with low memory usage
@@ -45,6 +45,9 @@ install -pD -m644 gpicview.png %buildroot%_liconsdir/gpicview.png
 %_desktopdir/*
 
 %changelog
+* Tue Dec 04 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.3-alt1
+- 0.2.3
+
 * Wed Aug 31 2011 Yuri N. Sedunov <aris@altlinux.org> 0.2.2-alt1
 - new version (ALT #26197)
 - removed obsolete gpicview-0.2.1-desktop.patch
