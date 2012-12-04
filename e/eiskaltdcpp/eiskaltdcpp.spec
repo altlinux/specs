@@ -1,6 +1,6 @@
 Name: eiskaltdcpp
 Version: 2.2.7
-Release: alt1
+Release: alt1.1
 Summary: EiskaltDC++ - Direct Connect client
 License: GPLv3
 Group: Networking/File transfer
@@ -9,11 +9,12 @@ Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 
 Source: %name-%version.tar
 #Patch: eiskaltdcpp-2.2.5-alt-DSO.patch
+Patch1: eiskaltdcpp-2.2.7-alt-boost-1.52.0.patch
 
 BuildRequires: cmake gcc-c++ libqt4-devel bzlib-devel libaspell-devel liblua5-devel
 BuildRequires: libgtk+2-devel libglade-devel glib2-devel libpango-devel libnotify-devel 
 BuildRequires: boost-devel boost-signals-devel boost-interprocess-devel
-BuildRequires: phonon-devel libssl-devel libidn-devel
+BuildRequires: phonon-devel libssl-devel libidn-devel libpcrecpp-devel
 BuildRequires: aspell perl-JSON-RPC perl-Term-ShellUI
 
 %add_findreq_skiplist *xmms2_audacious2.ru_RU.UTF-8.php
@@ -89,15 +90,17 @@ command line interface for XML-RPC Daemon
 %prep
 %setup
 #%%patch -p2
+%patch1 -p2
 
 %build
+%add_optflags -fno-strict-aliasing $(pkg-config libpcre --cflags)
 mkdir -p BUILD
 pushd BUILD
 cmake .. \
  -DCMAKE_BUILD_TYPE=Release \
  -DCMAKE_SKIP_RPATH:BOOL=yes \
- -DCMAKE_C_FLAGS:STRING='%optflags' \
- -DCMAKE_CXX_FLAGS:STRING='%optflags' \
+ -DCMAKE_C_FLAGS:STRING="%optflags" \
+ -DCMAKE_CXX_FLAGS:STRING="%optflags" \
  -DCMAKE_INSTALL_PREFIX=%prefix \
  -DLIB_DESTINATION=%_lib \
 %if %_lib == lib64
@@ -105,6 +108,7 @@ cmake .. \
 %endif
  -DUSE_ASPELL=ON \
  -DUSE_QT=ON \
+ -DUSE_QT_QML=ON \
  -DFREE_SPACE_BAR_C=ON \
  -DUSE_MINIUPNP=ON \
  -DLOCAL_MINIUPNP=ON \
@@ -117,9 +121,11 @@ cmake .. \
  -DUSE_QT_SQLITE=ON \
  -DNO_UI_DAEMON=ON \
  -DJSONRPC_DAEMON=ON \
- -DUSE_CLI_JSONRPC=ON
+ -DUSE_CLI_JSONRPC=ON \
+ -DPCRE_INCLUDE_DIR=$(pkg-config libpcre --variable=includedir) \
+ -DPERL_REGEX=ON
 popd
-%make_build -C BUILD
+%make_build -C BUILD VERBOSE=1
 
 %install
 %makeinstall -C BUILD DESTDIR="%buildroot/"
@@ -170,6 +176,10 @@ popd
 %_datadir/%name/cli
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.7-alt1.1
+- Fixed build with Boost 1.52.0
+- Built with Qt Declarative Ui and PCRE support
+
 * Wed Aug 22 2012 Aeliya Grevnyov <gray_graff@altlinux.org> 2.2.7-alt1
 - 2.2.7 release (ALT#27653)
 - daemon and cli use json
