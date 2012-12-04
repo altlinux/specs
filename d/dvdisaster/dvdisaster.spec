@@ -1,6 +1,6 @@
 Name: dvdisaster
 Version: 0.72.3
-Release: alt2
+Release: alt2.1
 
 Summary: Additional error protection for CD/DVD media
 License: GPLv2+
@@ -9,6 +9,7 @@ Group: File tools
 URL: http://www.dvdisaster.com/
 Source: http://dvdisaster.net/downloads/dvdisaster-%version.tar.bz2
 Source1: dvdisaster.desktop
+Patch: dvdisaster-0.72.3-alt-libpng15.patch
 
 # Automatically added by buildreq on Tue Mar 08 2011
 BuildRequires: bzlib-devel libgtk+2-devel libpng-devel
@@ -31,6 +32,7 @@ Help files for %name.
 
 %prep
 %setup
+%patch -p2
 
 subst 's/\@\$/\$/' GNUmakefile.template
 subst 's/-O2/%optflags/' configure
@@ -81,6 +83,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_defaultdocdir/dvdisaster-%version
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.72.3-alt2.1
+- Fixed build with libpng15
+
 * Fri Apr 06 2012 Victor Forsiuk <force@altlinux.org> 0.72.3-alt2
 - Fix glib include compile problem.
 
