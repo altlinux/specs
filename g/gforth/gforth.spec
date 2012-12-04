@@ -1,14 +1,14 @@
 %def_enable largefile
 %def_enable force_reg
 %def_without debug
-%def_with doc
+%def_without doc
 #----------------------------------------------------------------------
 %define subst_enable_to() %{expand:%%{?_enable_%{1}:--enable-%{2}}} %{expand:%%{?_disable_%{1}:--disable-%{2}}}
 
 Name: gforth
 %define Name GNU Forth
 Version: 0.6.2
-Release: alt10.qa1
+Release: alt10.qa2
 License: %gpl2plus
 Group: Development/Other
 Summary: GNU implementation of the ANS Forth language
@@ -19,7 +19,7 @@ Source0: %name-%version.tar
 Source1: %name-16.png
 Source2: %name-32.png
 Source3: %name-48.png
-Patch: %name-%version-%release.patch
+Patch: %name-%version-alt10.qa1.patch
 Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
@@ -56,7 +56,6 @@ ANS Forth. Он хорошо работает с редактором Emacs, предлагает некоторые
 непрямого интерпретатора.
 
 
-%if_with doc
 %package info
 Group: Documentation
 Summary: Documentation for the %Name in Info format
@@ -139,6 +138,7 @@ ANS Forth. Он хорошо работает с редактором Emacs, предлагает некоторые
 Этот пакет содержит документацию для %Name в формате Postscript.
 
 
+%if_with doc
 %package doc-html
 Group: Documentation
 Summary: Documentation for the %Name in HTML format
@@ -300,7 +300,8 @@ The Emacs Lisp sources for bytecode included in emacs-mode-%name.
     %{subst_with debug} \
     %{subst_enable_to force_reg force-reg}
 %make
-%make info TAGS %{?_with_doc:html ps pdf txt}
+%make TAGS
+%make %{?_with_doc:info html ps pdf txt}
 emacs -q --no-site-file -batch -f batch-byte-compile %name.el
 bzip2 --force --best --keep ChangeLog
 
@@ -315,6 +316,11 @@ ln -sf %name.1 %buildroot%_man1dir/%name-fast.1
 ln -sf %name.1 %buildroot%_man1dir/%{name}mi.1
 install -m 0644 AUTHORS BUGS Benchres ChangeLog.* NEWS* README* ToDo %buildroot%docdir/
 %{?_with_doc:install -m 0644 doc/*.{ps,html,txt,pdf} %buildroot%docdir/}
+
+%if_without doc
+install -m 0644 doc/*.ps %buildroot%docdir/
+install -m644 doc/*.info* %buildroot%_infodir/
+%endif
 
 # fixing pathes
 mv %buildroot%_datadir/%name/%version/arch/{,i}386
@@ -373,12 +379,12 @@ __MENU__
 %_infodir/*
 
 
-%if_with doc
 %files doc-ps
 %dir %docdir
 %docdir/*.ps
 
 
+%if_with doc
 %files doc-html
 %dir %docdir
 %docdir/*.html
@@ -404,6 +410,9 @@ __MENU__
 
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.2-alt10.qa2
+- Disabled build docs (broken)
+
 * Fri Nov 13 2009 Repocop Q. A. Robot <repocop@altlinux.org> 0.6.2-alt10.qa1
 - NMU (by repocop): the following fixes applied:
   * obsolete-call-in-post-install-info for gforth-info
