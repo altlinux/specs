@@ -1,6 +1,6 @@
 Name: gimmage
 Version: 0.2.3
-Release: alt4
+Release: alt4.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -12,6 +12,7 @@ Url: http://gimmage.berlios.de/
 Source0: http://download.berlios.de/gimmage/gimmage-%version.tar.gz
 Source1: gimmage.desktop
 Patch1: gimmage-0.2.3-gcc43.patch
+Patch2: gimmage-0.2.3-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Wed Nov 19 2008
 BuildRequires: gcc-c++ libcurl-devel libgtkmm2-devel libmagic-devel
@@ -27,6 +28,7 @@ area in order to have them displayed.
 %prep
 %setup
 %patch1 -p1
+%patch2 -p2
 
 %build
 # Sorry, LAZY fixing for as-needed (one-liner, not patch).
@@ -48,6 +50,9 @@ install -p -m644 %SOURCE1 %buildroot%_desktopdir/
 %_desktopdir/*
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.3-alt4.1
+- Fixed build with glibc 2.16
+
 * Wed Nov 19 2008 Victor Forsyuk <force@altlinux.org> 0.2.3-alt4
 - Fix FTBFS with gcc4.3.
 - Remove obsolete post-scripts.
