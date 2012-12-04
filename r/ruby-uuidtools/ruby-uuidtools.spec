@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: A simple universally unique ID generation library
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://github.com/sporkmonger/uuidtools
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -54,6 +52,9 @@ Documentation files for %name
 %ruby_ri_sitedir/UUIDTools*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 2.1.0-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Apr 26 2010 Alexey I. Froloff <raorn@altlinux.org> 2.1.0-alt1
 - Built for Sisyphus
 

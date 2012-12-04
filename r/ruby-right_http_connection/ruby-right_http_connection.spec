@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 1.2.4
-Release: alt2
+Release: alt2.1
 
 Summary: Robust HTTP/S Ruby library
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://github.com/rightscale/right_http_connection
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -54,6 +52,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Rightscale/HttpConnection
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.2.4-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Thu Dec 09 2010 Alexey I. Froloff <raorn@altlinux.org> 1.2.4-alt2
 - New git snapshot
 

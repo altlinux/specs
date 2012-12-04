@@ -4,14 +4,13 @@
 
 Name: ruby-%plugname
 Version: 0.9.4
-Release: alt2
+Release: alt2.1
 
 Summary: General Rack Authentication Framework
 License: Unspecified
 Group: Development/Ruby
 Url: http://wiki.github.com/hassox/warden/
 
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 Source: %name-%version.tar
 
@@ -50,6 +49,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Warden
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 0.9.4-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Mar 02 2010 Timur Batyrshin <erthad@altlinux.org> 0.9.4-alt2
 - added README.alt
 

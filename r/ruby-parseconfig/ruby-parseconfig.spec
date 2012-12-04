@@ -7,14 +7,13 @@
 
 Name: ruby-%pkgname
 Version: 0.5
-Release: %branch_release alt1
+Release: %branch_release alt1.1
 
 Summary: ParseConfig provides simple parsing of standard *nix style config files.
 Group: Development/Ruby
 License: %gpl3only
 Url: http://rubyforge.org/projects/%pkgname
 
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 
 Source: %pkgname-%version.tar
@@ -59,5 +58,8 @@ Documentation files for %name
 %ruby_ri_sitedir/*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.5-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Thu Feb 25 2010 Aleksey Avdeev <solo@altlinux.ru> 0.5-alt1
 - initial build for ALT Linux Sisyphus

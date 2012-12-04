@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.9.2
-Release: alt2
+Release: alt2.1
 
 Summary: Fast syntax highlighter engine
 Group: Development/Ruby
 License: LGPL
 Url: http://rubyforge.org/projects/coderay/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -19,7 +17,7 @@ Source: %pkgname-%version-trunk.tar
 Patch: %pkgname-%version-%release.patch
 
 # Automatically added by buildreq on Wed Jul 29 2009 (-bi)
-BuildRequires: libdb4-devel rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup ruby-json
+BuildRequires: libdb4-devel rpm-build-ruby ruby-test-unit ruby-tool-rdoc ruby-tool-setup ruby(json)
 
 %description
 CodeRay is a Ruby library for syntax highlighting.
@@ -59,6 +57,9 @@ ruby test/scanners/suite.rb
 %ruby_ri_sitedir/CodeRay*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.9.2-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Nov 29 2010 Alexey I. Froloff <raorn@altlinux.org> 0.9.2-alt2
 - Fix build with Ruby 1.9.2
 

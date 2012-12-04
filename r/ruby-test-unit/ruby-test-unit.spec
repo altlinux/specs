@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 2.2.0
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby unit testing framework
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/test-unit/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -58,6 +56,9 @@ ruby test/run-test.rb
 %ruby_ri_sitedir/Test*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 2.2.0-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Mar 22 2011 Andriy Stepanov <stanv@altlinux.ru> 2.2.0-alt1
 - [2.2.0]
 

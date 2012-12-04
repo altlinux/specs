@@ -3,7 +3,7 @@
 Summary: Simple REST client for Ruby
 Name: ruby-%orig_name
 Version: 1.6.6
-Release: alt1
+Release: alt1.1
 Group: Development/Ruby
 License: MIT
 URL: http://github.com/archiloque/rest-client
@@ -12,7 +12,7 @@ Patch0: %orig_name-%version-%release.patch
 
 BuildArch: noarch
 
-BuildRequires: rpm-build-ruby ruby-test-spec ruby-rake
+BuildRequires: rpm-build-ruby ruby-rake
 BuildRequires: ruby-tool-setup
 
 %description
@@ -39,6 +39,10 @@ mkdir -p %buildroot
 
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 1.6.6-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- cleaned up BuildRequires
+
 * Sat Apr 14 2012 Evgeny Sinelnikov <sin@altlinux.ru> 1.6.6-alt1
 - Initial build for Sisyphus
 

@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 1.18
-Release: alt1
+Release: alt1.1
 
 Summary: Manages a MIME Content-Type database that will return the Content-Type for a given filename
 Group: Development/Ruby
 License: Ruby/Perl/GPLv2+
 Url: https://github.com/halostatue/mime-types/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -56,6 +54,9 @@ rm -f %buildroot%ruby_ri_sitedir/created.rid
 %ruby_ri_sitedir/MIME
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 1.18-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Wed Apr 18 2012 Igor Zubkov <icesik@altlinux.org> 1.18-alt1
 - 1.16 -> 1.18
 - Fix repocop warning

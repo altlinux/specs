@@ -1,13 +1,11 @@
 Name: ruby-odbc
 Version: 0.99992
-Release: alt1
+Release: alt1.1
 
 Summary: ODBC extension for Ruby
 License: GPL
 Group: Development/Ruby
 Url: http://www.ch-werner.de/rubyodbc
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -43,6 +41,9 @@ This is an ODBC binding for Ruby. So far it has been tested with
 %ruby_sitearchdir/*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.99992-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Sep 26 2010 Alexey I. Froloff <raorn@altlinux.org> 0.99992-alt1
 - 0.99992 release.
 

@@ -2,14 +2,12 @@
 
 Name: %pkgname 
 Version: 0.2.2
-Release: alt2
+Release: alt2.1
 
 Summary: Aggregate is a Ruby class for accumulating aggregate statistics and includes histogram support.
 Group: Development/Ruby 
 License: MIT
 Url: https://github.com/josephruscio/aggregate
-
-Packager: Anton Gorlov <stalker at altlinux.org>
 
 BuildArch: noarch
 
@@ -56,6 +54,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Aggregate*
 
 %changelog 
+* Fri Dec 07 2012 Led <led@altlinux.ru> 0.2.2-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Aug 15 2011 Anton Gorlov <stalker@altlinux.ru> 0.2.2-alt2
 - fix wrong url and license
 

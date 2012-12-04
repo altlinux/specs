@@ -2,13 +2,11 @@
 
 Name: ruby-%pkgname
 Version: 1.1.1
-Release: alt2
+Release: alt2.1
 Summary: A generic paginator object for use in any Ruby program
 License: MIT/X Consortium
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/paginator/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %name-%version-%release.patch
@@ -53,6 +51,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Paginator*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.1.1-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Jun 28 2009 Alexey I. Froloff <raorn@altlinux.org> 1.1.1-alt2
 - Rebuilt with Ruby 1.9
 

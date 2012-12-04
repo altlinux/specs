@@ -2,7 +2,7 @@
 
 Name: ruby-%pkgname
 Version: 1.7.4
-Release: alt1
+Release: alt1.1
 Summary: Ruby client for Danga Interactive's memcached
 License: MIT
 Group: Development/Ruby
@@ -17,6 +17,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Tue Jul 08 2008 (-bi)
 BuildRequires: rpm-build-ruby ruby-flexmock ruby-tool-rdoc ruby-tool-setup
+BuildRequires: ruby-test-unit
 
 %description
 memcache-client is a client for Danga Interactive's memcached.
@@ -52,6 +53,10 @@ rm -f lib/continuum_native.rb
 %ruby_ri_sitedir/MemCache*
 
 %changelog
+* Sat Dec 08 2012 Led <led@altlinux.ru> 1.7.4-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- fixed BuildRequires
+
 * Fri Jun 26 2009 Alexey I. Froloff <raorn@altlinux.org> 1.7.4-alt1
 - [1.7.4]
 

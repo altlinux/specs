@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.0.5
-Release: alt6
+Release: alt6.1
 
 Summary: Mongrel Cluster Plugin
 Group: Development/Ruby
@@ -12,8 +12,6 @@ License: MIT/Ruby
 Url: http://rubyforge.org/projects/mongrel/
 
 Requires: %_datadir/gem_plugin
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -80,6 +78,9 @@ EOF
 %attr(1777,root,root) %dir %_logdir/%pkgname
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.0.5-alt6.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Wed Mar 23 2011 Andriy Stepanov <stanv@altlinux.ru> 1.0.5-alt6
 - Rebuild
 

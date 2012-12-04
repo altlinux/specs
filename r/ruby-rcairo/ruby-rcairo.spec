@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.10.0
-Release: alt4
+Release: alt4.1
 
 Summary: ruby bindings for cairo
 Group: Development/Ruby
@@ -13,14 +13,13 @@ Url: http://cairographics.org/rcairo
 Obsoletes: rcairo < 1.7.0
 Provides: rcairo = %version-%release
 
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
-
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
 
+BuildPreReq: rpm-build-ruby
 # Automatically added by buildreq on Thu May 17 2012 (-bi)
 # optimized out: elfutils fontconfig libEGL-devel libGL-devel libX11-devel libruby-devel libwayland-client libwayland-server pkg-config python-base rpm-build-ruby ruby ruby-stdlibs xorg-xproto-devel
-BuildRequires: libcairo-devel ruby-pkg-config
+BuildRequires: libcairo-devel ruby-pkg-config libruby-devel
 
 # buildreq misses a lot this time
 BuildRequires: glib2-devel libpixman-devel xorg-glproto-devel xorg-dri2proto-devel libXau-devel libXdmcp-devel libXext-devel libXdamage-devel libXxf86vm-devel
@@ -62,9 +61,13 @@ export RUBYOPT=-rvendor-specific
 
 %files devel
 %doc samples
-%_includedir/ruby/*/*.h
+%_includedir/*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 1.10.0-alt4.1
+- Rebuilt with ruby-1.9.3-alt1
+- updated BuildRequires
+
 * Thu May 17 2012 Michael Shigorin <mike@altlinux.org> 1.10.0-alt4
 - fixed FTBFS by updating BR:
 

@@ -2,15 +2,13 @@
 
 Name: ruby-%pkgname
 Version: 2.3.11
-Release: alt1
+Release: alt1.1
 Summary: Service layer for easy email delivery and testing
 License: MIT
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/actionmailer/
 
 Requires: ruby-activesupport = %version
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -19,6 +17,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 18 2008 (-bi)
 BuildRequires: rpm-build-ruby ruby-actionpack ruby-mocha ruby-text-format ruby-tmail ruby-tool-rdoc ruby-tool-setup
+BuildRequires: ruby-test-unit
 
 %description
 Makes it trivial to test and deliver emails sent from a single service layer.
@@ -55,6 +54,10 @@ done
 %ruby_ri_sitedir/Action*
 
 %changelog
+* Sun Dec 09 2012 Led <led@altlinux.ru> 2.3.11-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- fixed BuildRequires
+
 * Thu Apr 21 2011 Timur Aitov <timonbl4@altlinux.org> 2.3.11-alt1
 - [2.3.11]
 

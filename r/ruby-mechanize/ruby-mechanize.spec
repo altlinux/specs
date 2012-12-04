@@ -1,6 +1,6 @@
 Name: ruby-mechanize
 Version: 0.9.3
-Release: alt1
+Release: alt1.1
 
 Summary: WWW::Mechanize, a handy web browsing ruby object
 License: GPLv2
@@ -8,8 +8,6 @@ Group: Development/Ruby
 Url: http://rubyforge.org/projects/mechanize/
 
 Source0: mechanize-%version.tgz
-
-Packager: Igor Zubkov <icesik@altlinux.org>
 
 BuildArch: noarch
 
@@ -52,6 +50,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/WWW
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 0.9.3-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Dec 11 2009 Igor Zubkov <icesik@altlinux.org> 0.9.3-alt1
 - build for Sisyphus
 

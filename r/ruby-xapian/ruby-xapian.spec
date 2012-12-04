@@ -2,14 +2,12 @@
 
 Name: ruby-xapian
 Version: 1.2.3
-Release: alt1
+Release: alt1.1
 
 Summary: Xapian search engine interface for Ruby
 License: GPLv2
 Group: Development/Ruby
 Url: http://www.xapian.org/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source0: %oname-%version.tar.gz
 
@@ -48,6 +46,9 @@ install -p -m644 ruby/xapian.rb %buildroot%ruby_sitelibdir/
 # - rework as full xapian-bindings package w/subpackages
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.2.3-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Oct 12 2010 Michael Shigorin <mike@altlinux.org> 1.2.3-alt1
 - 1.2.3
 - minor spec cleanup

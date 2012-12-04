@@ -1,6 +1,6 @@
 Name: ruby-term-ansicolor
 Version: 1.0.4
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby library that colors strings using ANSI escape sequences
 Group: Development/Ruby
@@ -8,8 +8,6 @@ License: GPLv2
 Url: http://term-ansicolor.rubyforge.org
 
 Source0: term-ansicolor-%version.tgz
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -34,6 +32,9 @@ install -p -m644 lib/term/ansicolor/version.rb %buildroot%ruby_sitelibdir/term/a
 %ruby_sitelibdir/term/
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.0.4-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Dec 25 2009 Igor Zubkov <icesik@altlinux.org> 1.0.4-alt1
 - build for Sisyphus
 

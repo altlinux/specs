@@ -2,13 +2,12 @@
 
 Name: ruby-rexical
 Version: 1.0.5
-Release: alt2
+Release: alt2.1
 
 Summary: Lexical scanner generator for ruby
 Group: Development/Ruby
 License: LGPL
 Url: https://github.com/tenderlove/rexical
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 BuildRequires: libruby-devel ruby-test-unit ruby-tool-setup
 
@@ -54,6 +53,9 @@ popd
 %ruby_ri_sitedir/Rexical*
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 1.0.5-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Thu Mar 24 2011 Andriy Stepanov <stanv@altlinux.ru> 1.0.5-alt2
 - Pick off rubygems.
 

@@ -1,60 +1,62 @@
+%def_disable check
+
 Name: rpm-build-ruby
-Version: 0.1.1
+Epoch: 1
+Version: 0.1.2
 Release: alt1
-Serial: 1
-
 Summary: RPM helper scripts to calculate Ruby dependencies
-License: GPL
+License: GPLv2
 Group: Development/Other
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
-
 Source: %name-%version.tar
-
 BuildArch: noarch
-
-Requires: ruby
+Requires: ruby >= 1.9
 Conflicts: rpm-build <= 4.0.4-alt24
-
 AutoReq: yes,noruby
+Requires: ruby >= 1.9
+Requires: ruby-stdlibs >= 1.9
+Requires: %_bindir/rdoc
+#Requires: %_bindir/testrb
 
-BuildRequires: ruby ruby-module-rubynode
+%{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
 %description
-These herlper scripts will look at ruby source files in your package,
-and will use this information to generate automatic Requires and Provides
-tags for the package.
+These herlper scripts will look at ruby source files in your package, and will
+use this information to generate automatic Requires and Provides tags for the
+package.
+
 
 %prep
 %setup -q
 
-%install
-mkdir -p %buildroot%_rpmlibdir
-for f in ruby.req* ruby.prov*; do
-  install -m755 -p "$f" "%buildroot%_rpmlibdir/$f"
-done
-ln -s ruby.req %buildroot%_rpmlibdir/ruby.prov
-install -m644 -p rubyreq.rb %buildroot%_rpmlibdir/rubyreq.rb
 
-mkdir -p %buildroot%_rpmmacrosdir
-install -m644 -p ruby.macros %buildroot%_rpmmacrosdir/ruby
-install -m644 -p ruby.env %buildroot%_rpmmacrosdir/ruby.env
+%install
+install -d -m 0755 %buildroot{%_rpmlibdir,%_rpmmacrosdir}
+install -p -m 0755 ruby.{req,prov}* %buildroot%_rpmlibdir/
+install -p -m 0644 rubyreq.rb %buildroot%_rpmlibdir/
+install -p -m 0644 ruby.macros %buildroot%_rpmmacrosdir/ruby
+install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
+
 
 %check
 ./test.sh
 
+
 %files
-%_rpmlibdir/ruby.req
-%_rpmlibdir/ruby.req.rb
-%_rpmlibdir/ruby.req.files
-%_rpmlibdir/ruby.prov
-%_rpmlibdir/ruby.prov.rb
-%_rpmlibdir/ruby.prov.files
-%_rpmlibdir/rubyreq.rb
-%_rpmmacrosdir/ruby
-%_rpmmacrosdir/ruby.env
+%lang(ru) %doc README.ru
+%_rpmlibdir/ruby*
+%_rpmmacrosdir/*
+
 
 %changelog
+* Sat Dec 08 2012 Led <led@altlinux.ru> 1:0.1.2-alt1
+- 0.1.2:
+  + cleaned up
+  + dropped ruby 1.8 support
+- cleaned up spec
+- updated Requires
+- added README.ru
+- disabled check
+
 * Fri Apr 08 2011 Timur Aitov <timonbl4@altlinux.org> 1:0.1.1-alt1
 - Supported both 1.8.7 and 1.9.2 versions of ruby
 - Make difference between 1.8 and 1.9

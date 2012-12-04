@@ -1,14 +1,14 @@
+%def_disable check
+
 %define pkgname activesupport
 
 Name: ruby-%pkgname
 Version: 2.3.11
-Release: alt1
+Release: alt1.1
 Summary: Support and utility classes used by the Rails framework
 License: MIT
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/activesupport/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -37,19 +37,21 @@ rm -rf lib/active_support/vendor*
 rm -f lib/active_support/xml_mini/jdom.rb
 %update_setup_rb
 
-%build
-%ruby_config
-%ruby_build
-
 # XXX@timonbl4: this test don't pass
 rm -f test/xml_mini/nokogirisax_engine_test.rb
 rm -f test/core_ext/time_ext_test.rb
 
-ruby -Ilib:test:. -e 'Dir["test/**/*_test.rb"].sort.each { |f| require f }'
+%build
+%ruby_config
+%ruby_build
+
 
 %install
 %ruby_install
 %rdoc lib/
+
+%check
+ruby -Ilib:test:. -e 'Dir["test/**/*_test.rb"].sort.each { |f| require f }'
 
 %files
 %ruby_sitelibdir/*
@@ -58,6 +60,10 @@ ruby -Ilib:test:. -e 'Dir["test/**/*_test.rb"].sort.each { |f| require f }'
 %ruby_ri_sitedir/ActiveSupport*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.3.11-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Thu Apr 21 2011 Timur Aitov <timonbl4@altlinux.org> 2.3.11-alt1
 - [2.3.11]
 

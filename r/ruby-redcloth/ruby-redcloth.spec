@@ -2,7 +2,7 @@
 
 Name: ruby-redcloth
 Version: 4.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Textile parser for Ruby
 Group: Development/Ruby
@@ -55,6 +55,9 @@ find . -name '._*' -print0 |
 %ruby_ri_sitedir/RedCloth*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 4.2.2-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Jul 24 2009 Alexey I. Froloff <raorn@altlinux.org> 4.2.2-alt1
 - [4.2.2]
 - Do not package useless rake tasks

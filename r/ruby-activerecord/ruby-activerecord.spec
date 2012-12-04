@@ -1,16 +1,16 @@
+%def_disable check
+
 %define pkgname activerecord
 
 Name: ruby-%pkgname
 Version: 2.3.11
-Release: alt1
+Release: alt1.1
 Summary: Implements the ActiveRecord pattern for ORM.
 License: MIT
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/activerecord/
 
 Requires: ruby-activesupport = %version
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch:  %pkgname-%version-%release.patch
@@ -69,21 +69,24 @@ Documentation files for %pkgname
 rm -rf lib/active_record/vendor
 %update_setup_rb
 
-%build
-%ruby_config
-%ruby_build
-
 # XXX@timonbl4: this tests not pass
 rm -f test/cases/associations/join_model_test.rb
 rm -f test/cases/finder_test.rb
 rm -f test/cases/migration_test.rb
 rm -f test/cases/validations_test.rb
 
-%rake test_sqlite3
+%build
+%ruby_config
+%ruby_build
+
 
 %install
 %ruby_install
 %rdoc lib/
+
+%check
+%rake test_sqlite3
+
 
 %files
 %doc CHANGELOG README
@@ -105,6 +108,10 @@ rm -f test/cases/validations_test.rb
 %ruby_ri_sitedir/ActiveRecord*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.3.11-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Fri Apr 22 2011 Timur Aitov <timonbl4@altlinux.org> 2.3.11-alt1
 - [2.3.11]
 

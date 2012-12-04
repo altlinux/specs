@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.0.0.20100616
-Release: alt2
+Release: alt2.1
 
 Summary: Installs and manages RubyGems, git repositories, and more.
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://github.com/defunkt/rip
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -53,6 +51,9 @@ We're currently in a developer-mode rewrite: rip2.
 %_man5dir/*.gz
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 0.0.0.20100616-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Jun 27 2010 Timur Batyrshin <erthad@altlinux.org> 0.0.0.20100616-alt2
 - removed excess usage of __FILE__
 

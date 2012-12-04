@@ -1,14 +1,12 @@
 Name: ruby-capistrano
 Version: 2.5.10
-Release: alt1
+Release: alt1.1
 
 Summary: Capistrano -- Welcome to easy deployment with Ruby over SSH
 Group: Development/Ruby
 License: MIT
 Url: http://github.com/capistrano/capistrano
 Source0: capistrano.tar.bz2
-
-Packager: Igor Zubkov <icesik@altlinux.org>
 
 BuildArch: noarch
 
@@ -49,6 +47,9 @@ rm -f %buildroot%ruby_sitelibdir/capistrano/recipes/compat.rb
 %ruby_ri_sitedir/Capistrano
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.5.10-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sat Dec 05 2009 Igor Zubkov <icesik@altlinux.org> 2.5.10-alt1
 - build for Sisyphus
 

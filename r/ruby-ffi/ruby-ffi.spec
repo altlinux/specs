@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.6.3
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby foreign function interface
 Group: Development/Ruby
 License: BSD
 Url: http://rubyforge.org/projects/ffi/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -34,6 +32,9 @@ Documentation files for %name
 %patch -p1
 %update_setup_rb
 
+sed -i -r '/^[[:blank:]]*Data_Get_Struct\(/s/^(([[:blank:]]*).*)((field) = layout->fields\[i\])(\).*)$/\2\3;\n\1\4\5/' \
+	ext/ffi_c/StructLayout.c
+
 %build
 %ruby_config
 %ruby_build
@@ -51,6 +52,10 @@ Documentation files for %name
 %ruby_ri_sitedir/FFI*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 0.6.3-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- fixed build
+
 * Fri Aug 13 2010 Kirill A. Shutemov <kas@altlinux.org> 0.6.3-alt1
 - 0.6.3
 - Rebuild with new libffi

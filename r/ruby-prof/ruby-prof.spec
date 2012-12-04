@@ -4,14 +4,12 @@
 
 Name: %pkgname
 Version: 0.9.2
-Release: alt1
+Release: alt1.1
 
 Summary: Fast code profiler for Ruby
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/ruby-prof/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 
@@ -52,6 +50,9 @@ Documentation files for %name
 %ruby_ri_sitedir/RubyProf*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.9.2-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Wed Mar 23 2011 Andriy Stepanov <stanv@altlinux.ru> 0.9.2-alt1
 - [0.9.2]
 

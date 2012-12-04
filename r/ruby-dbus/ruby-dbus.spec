@@ -2,14 +2,12 @@
 
 Name: ruby-dbus
 Version: 0.2.12
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby D-BUS library
 Group: Development/Ruby
 License: LGPLv2.1
 Url: https://trac.luon.net/ruby-dbus/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %name-%version.tgz
 
@@ -51,6 +49,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/DBus*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.2.12-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Mar 14 2010 Igor Zubkov <icesik@altlinux.org> 0.2.12-alt1
 - 0.2.11 -> 0.2.12
 

@@ -2,13 +2,11 @@
 
 Name: %pkgname
 Version: 4.3.1
-Release: alt1
+Release: alt1.1
 Summary: Unicorn: Rack HTTP server for fast clients and Unix
 License: GPL2
 Group: System/Servers
 Url: http://unicorn.bogomips.org/
-
-Packager: Anton Gorlov <stalker at altlinux.org>
 
 Source: %pkgname-%version.tar
 
@@ -53,6 +51,9 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/Unicorn*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 4.3.1-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri May 18 2012 Anton Gorlov <stalker@altlinux.ru> 4.3.1-alt1
 - update to  new version 
 

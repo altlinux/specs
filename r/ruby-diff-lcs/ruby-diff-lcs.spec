@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 1.1.2
-Release: alt2
+Release: alt2.1
 
 Summary: Port of Algorithm::Diff
 Group: Development/Ruby
 License: MIT
 Url: http://rubyforge.org/projects/ruwiki/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -58,6 +56,9 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/Diff*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.1.2-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sat Jun 27 2009 Alexey I. Froloff <raorn@altlinux.org> 1.1.2-alt2
 - Rebuilt with Ruby 1.9
 

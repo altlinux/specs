@@ -1,6 +1,6 @@
 Name: ncurses-ruby
 Version: 1.2.4
-Release: alt2
+Release: alt2.1
 
 Summary: A Ruby module for accessing the ncurses library
 License: LGPLv2.1
@@ -9,8 +9,6 @@ Url: http://ncurses-ruby.berlios.de/
 
 Source0: %name-%version.tar.bz2
 Patch0: ncurses-ruby-alt-STR2CSTR.patch
-
-Packager: Igor Zubkov <icesik@altlinux.org>
 
 # Automatically added by buildreq on Sat Dec 12 2009 (-bi)
 BuildRequires: libncurses-devel libruby-devel
@@ -39,6 +37,9 @@ The panel library (for support of overlapping windows) and the form library
 %ruby_sitearchdir/ncurses_bin.so
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 1.2.4-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Sep 26 2010 Alexey I. Froloff <raorn@altlinux.org> 1.2.4-alt2
 - Rebuilt with Ruby 1.9.2
 

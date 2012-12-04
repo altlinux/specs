@@ -2,7 +2,7 @@
 
 Name: rails-plugin-%plugname
 Version: 2.3.11
-Release: alt1
+Release: alt1.1
 Summary: Most awesome pagination solution for Rails
 License: MIT
 Group: Development/Ruby
@@ -62,6 +62,9 @@ install -p -m644 init.rb %buildroot%_datadir/rails/plugins/%plugname/
 %ruby_ri_sitedir/WillPaginate*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.3.11-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Jun 30 2009 Alexey I. Froloff <raorn@altlinux.org> 2.3.11-alt1
 - [2.3.11]
 

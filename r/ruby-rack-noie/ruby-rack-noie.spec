@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: A Rack middleware to redirect (*cough* kick) IE6 users out of your website
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://github.com/juliocesar/rack-noie
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -56,6 +54,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Rack/NoIE
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 0.1.0-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Wed Mar 24 2010 Timur Batyrshin <erthad@altlinux.org> 0.1.0-alt1
 - Built for Sisyphus
 

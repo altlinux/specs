@@ -1,12 +1,11 @@
 Name: libcaca
 Version: 0.99
-Release: alt13.beta17
+Release: alt13.beta17.1
 
 Summary: Text mode graphics library
 Group: System/Libraries
 License: DWTFYWTPL
 Url: http://sam.zoy.org/projects/libcaca/
-Packager: Gleb F-Malinovskiy <glebfm@altlinux.org>
 
 # http://caca.zoy.org/files/libcaca/%name-%version.beta17.tar.gz
 Source: %name-%version.tar
@@ -138,6 +137,9 @@ mv %buildroot%_datadir/doc/%name-dev %buildroot%_docdir/%name-%version
 %ruby_sitearchdir/caca.*
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 0.99-alt13.beta17.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Sep 25 2012 Dmitry V. Levin <ldv@altlinux.org> 0.99-alt13.beta17
 - Fixed interpackage dependencies.
 - Built with libslang2-devel.

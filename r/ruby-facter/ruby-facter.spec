@@ -4,15 +4,13 @@
 
 Name: ruby-%pkgname
 Version: 1.6.8
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby library for retrieving facts from operating systems
 Group: Development/Ruby
 License: LGPL
 Url: http://reductivelabs.com/projects/facter/
 Requires: coreutils dmidecode net-tools pciutils
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -51,6 +49,9 @@ to include additional mechanisms for retrieving facts.
 %ruby_sitelibdir/*
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 1.6.8-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Apr 27 2012 Sergey Alembekov <rt@altlinux.ru> 1.6.8-alt1
 - [1.6.8]
 

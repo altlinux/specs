@@ -9,15 +9,13 @@
 
 Name: passenger
 Version: 3.0.17
-Release: alt1
+Release: alt1.1
 
 Summary: Easy and robust deployment Ruby on Rails applications on Apache and Nginx webservers
 Summary(ru_RU.UTF-8): Простой и ясный мост между приложениями на Рельсах и серверами Апач и Нгинкс
 Group: System/Servers
 License: other
 Url: http://www.modrails.com/
-
-Packager: Malo Skryleve <malo@altlinux.org>
 
 Source: %module_name-%version.tar
 Source1: %module_name.load
@@ -169,6 +167,9 @@ fi
 %apache2_libexecdir/%real_name.so
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 3.0.17-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Thu Aug 30 2012 Evgeny Sinelnikov <sin@altlinux.ru> 3.0.17-alt1
 - Update to release
 

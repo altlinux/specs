@@ -1,17 +1,17 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_disable check
+
 %define pkgname gettext_rails
 
 Name: ruby-%pkgname
 Version: 2.1.0
-Release: alt2
+Release: alt2.1
 
 Summary: Localization support for Ruby on Rails(>=2.3) by Ruby-GetText-Package
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/gettext/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -47,13 +47,17 @@ pushd test
 unset LC_ALL LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MESSAGES
 export LANG=en_US.UTF-8
 %rake makemo
-%rake test
 popd
 
 %install
 %ruby_install
 
 %find_lang %pkgname
+
+%check
+cd test
+%rake test
+
 
 %files -f %pkgname.lang
 %doc README.rdoc
@@ -65,6 +69,10 @@ popd
 %ruby_sitelibdir/gettext_rails/tools.rb
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.1.0-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Sun Jun 06 2010 Alexey I. Froloff <raorn@altlinux.org> 2.1.0-alt2
 - Run tests in en_US.UTF-8 locale
 

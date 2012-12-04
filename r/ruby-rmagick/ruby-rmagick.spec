@@ -2,14 +2,12 @@
 
 Name: ruby-rmagick
 Version: 2.13.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: ImageMagick for Ruby
 Group: Development/Ruby
 License: MIT
 Url: http://rubyforge.org/projects/rmagick/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %origname-%version.tar
 Patch: %origname-%version-%release.patch
@@ -50,6 +48,9 @@ ImageMagick for Ruby documentation
 %ruby_ri_sitedir/Magick*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 2.13.1-alt1.2
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 2.13.1-alt1.1
 - Rebuild with new libImageMagick
 

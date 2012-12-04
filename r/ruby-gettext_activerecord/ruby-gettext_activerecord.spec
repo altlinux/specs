@@ -1,17 +1,17 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_disable check
+
 %define pkgname gettext_activerecord
 
 Name: ruby-%pkgname
 Version: 2.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Localization support for ActiveRecord by Ruby-GetText-Package
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/gettext/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -42,16 +42,19 @@ Developer modules for %name.
 %ruby_config
 %ruby_build
 %ruby_vendor -rgettext/tools -e GetText.create_mofiles
-pushd test
+cd test
 %ruby_vendor -I../lib -ractive_record -rgettext_activerecord/tools -e 'GetText.create_mofiles(:mo_root => "locale")'
-find . -name 'test_*.rb' -print0 |
-	xargs -r0 -n 1 %ruby_test_unit -I../lib
-popd
 
 %install
 %ruby_install
 
 %find_lang %pkgname
+
+
+%check
+cd test
+find . -name 'test_*.rb' -print0 | xargs -r0 -n 1 %ruby_test_unit -I../lib
+
 
 %files -f %pkgname.lang
 %doc README.rdoc
@@ -65,6 +68,10 @@ popd
 %ruby_sitelibdir/gettext_activerecord/tools.rb
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.1.0-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Sun Apr 11 2010 Alexey I. Froloff <raorn@altlinux.org> 2.1.0-alt1
 - [2.1.0]
 

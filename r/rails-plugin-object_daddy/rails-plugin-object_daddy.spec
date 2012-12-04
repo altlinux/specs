@@ -4,14 +4,12 @@
 
 Name: rails-plugin-object_daddy
 Version: 0.4.2
-Release: alt2
+Release: alt2.1
 
 Summary: Library designed to assist in automating testing of large collections of objects
 License: MIT
 Group: Development/Ruby
 Url: http://github.com/flogic/object_daddy
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -54,6 +52,9 @@ cp -vpr init.rb lib/ %buildroot%_datadir/rails/plugins/%plugname/
 %ruby_ri_sitedir/ObjectDaddy*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 0.4.2-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Apr 25 2010 Alexey I. Froloff <raorn@altlinux.org> 0.4.2-alt2
 - Allow creation of objects with generated attr_protected attributes
 

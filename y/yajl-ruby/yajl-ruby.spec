@@ -4,14 +4,12 @@
 
 Name: %pkgname
 Version: 0.7.5
-Release: alt1
+Release: alt1.1
 
 Summary: YAJL C Bindings for Ruby
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/yajl-ruby/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -53,6 +51,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Yajl*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 0.7.5-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Apr 11 2010 Alexey I. Froloff <raorn@altlinux.org> 0.7.5-alt1
 - Built for Sisyphus
 

@@ -2,15 +2,12 @@
 
 Name: ruby-%pkgname 
 Version: 0.7.0
-Release: alt2
+Release: alt2.1
 
 Summary: real-time stats for preforking Rack servers
 Group: Development/Ruby 
 License: LGPL
 Url: http://raindrops.bogomips.org/
-
-Packager: Anton Gorlov <stalker at altlinux.org>
-
 
 Source: %pkgname-%version.tar.gz
 
@@ -58,6 +55,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Raindrops*
 
 %changelog 
+* Thu Dec 06 2012 Led <led@altlinux.ru> 0.7.0-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Aug 15 2011 Anton Gorlov <stalker@altlinux.ru> 0.7.0-alt2
 - fix wrong url
 

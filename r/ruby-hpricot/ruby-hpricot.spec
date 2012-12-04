@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.8
-Release: alt1
+Release: alt1.1
 
 Summary: A Fast, Enjoyable HTML Parser for Ruby
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://wiki.github.com/why/hpricot
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -35,6 +33,9 @@ Documentation files for %name
 %prep
 %setup -n %pkgname-%version
 %patch -p1
+sed -i -r -e '/ruby_digitmap\[\]/s/^([[:blank:]]*).*$/\1static const char digitmap[] = "0123456789";/' \
+	-e '/=[[:blank:]]*ruby_digitmap\[/s/ruby_(digitmap)/\1/' \
+	ext/fast_xs/fast_xs.c
 %update_setup_rb
 
 %build
@@ -61,6 +62,10 @@ done
 %ruby_ri_sitedir/Hpricot*
 
 %changelog
+* Sun Dec 09 2012 Led <led@altlinux.ru> 0.8-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- fix build with libruby 1.9.x
+
 * Fri Jul 10 2009 Alexey I. Froloff <raorn@altlinux.org> 0.8-alt1
 - 0.8-8-g38c781c
 

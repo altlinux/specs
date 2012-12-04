@@ -1,6 +1,6 @@
 Name: libdmtx
 Version: 0.7.2
-Release: alt2
+Release: alt2.1
 Summary: Library for working with Data Matrix 2D bar-codes
 
 Group: System/Libraries
@@ -101,7 +101,7 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' wrapper/php/libt
 
 sed -i 's@setup.py install@setup.py install --skip-build --root=$(DESTDIR)@' wrapper/python/Makefile
 
-sed -i 's@^\(RUBY[A-Z]*DIR.*\)site@\1vendor@' wrapper/ruby/Makefile
+#sed -i 's@^\(RUBY[A-Z]*DIR.*\)site@\1vendor@' wrapper/ruby/Makefile
 
 for d in php python ruby; do echo "check:" >> wrapper/$d/Makefile; done
 
@@ -151,6 +151,9 @@ popd
 %_datadir/vala/vapi/libdmtx.vapi
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 0.7.2-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Jun 08 2012 Anton Farygin <rider@altlinux.ru> 0.7.2-alt2
 - Rebuild with new libImageMagick
 

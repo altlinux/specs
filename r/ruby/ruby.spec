@@ -1,766 +1,343 @@
-# hey Emacs, its -*- rpm-spec -*-
-# vim: set ft=spec fdm=marker :
+%def_enable shared
+%def_without valgrind
+%def_enable rubygems
+%define ruby_version %nil
+%define libdir %_prefix/lib/%name
+%define includedir %_includedir
+%define ridir %_datadir/ri
+%define vendordir %libdir/vendor_%name
 
-# {{{ Defines
-%define name ruby
-%define base_name ruby
-%define version 1.9.2
-%define release 2
-%define svn r31204
-%define subver %(echo %version |cut -d. -f1,2)
-%define platform %(%_datadir/automake/config.sub %_target_platform | sed -e 's,-%_vendor,,')
-%define rubylibdir_base %_datadir/%base_name
-%define rubylibdir %rubylibdir_base/%subver
-%define archdir_base %_libdir/%base_name
-%define archdir %archdir_base/%subver/%platform
-%define vendordir_base %_datadir/%base_name/vendor_ruby
-%define vendordir %vendordir_base/%subver
-%define vendorarchdir_base %_libdir/%base_name/vendor_ruby
-%define vendorarchdir %vendorarchdir_base/%subver/%platform
-%define rubyhdrdir %_includedir/%base_name/%subver
-%define vendorhdrdir %rubyhdrdir/vendor_ruby
-%define ruby_ri_dir_base %_datadir/ri
-%define ruby_ri_dir %ruby_ri_dir_base/%subver
-
-%def_without emacs
-
-%set_verify_elf_method fhs=normal
-# }}}
-
-# {{{ General
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
-
-Name: %name
-Version: %version
-Release: alt%release.%svn.1
-Summary: Interpreter of object-oriented scripting language Ruby %subver
-License: Dual: GPL and Ruby
-Url: http://www.ruby-lang.org/
+Name: ruby
+%define lname lib%name
+%define branch 1.9
+%define ver_teeny 3
+%define _pl p332
+Version: %branch.%ver_teeny
+Release: alt1
+Summary: An Interpreted Object-Oriented Scripting Language
+License: BSD (revised) or Ruby
 Group: Development/Ruby
+URL: http://www.%name-lang.org/
+Source0: ftp://ftp.%name-lang.org/pub/%name/%branch/%name-%version%{?_pl:-%_pl}.tar
+Source1: update-ri-cache.rb
+Patch: %name-%version-%release.patch
+Requires: %lname = %version-%release
 
-Requires: lib%name = %version-%release
-Conflicts: ruby1.8
+%define obsolete() \
+Provides: %1 = %version-%release \
+Obsoletes: %1
+%define mobsolete() \
+%(for m in %*; do \
+echo "Provides: %name-module-$m = %version-%release"; \
+echo "Obsoletes: %name-module-$m"; \
+done)
 
-Source: %base_name-%version-%release.tar
-Source1: README.ALT-UTF8
+#BuildRequires: gcc-c++ graphviz
+BuildRequires: doxygen groff-base libdb4-devel libffi-devel
+BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
+BuildRequires: tk-devel zlib-devel
+BuildRequires: ruby ruby-stdlibs
+BuildRequires: rpm-build-ruby >= 0.1.2
+%{?_with_valgrind:BuildRequires: valgrind-devel}
 
-Patch1: ruby-1.9.2-alt-check-last-line-not-second.patch
-Patch2: ruby-1.9.2-alt-correct-less-invocation-AND-pager-selection.patch
-Patch3: ruby-1.9.2-alt-disable-rubygems.patch
-Patch4: ruby-1.9.2-alt-do-not-generate-docs.patch
-Patch5: ruby-1.9.2-alt-emacs.patch
-Patch6: ruby-1.9.2-alt-FSH.patch
-Patch7: ruby-1.9.2-alt-group_member_3-is-not-handled-by-fakeroot_1.patch
-Patch8: ruby-1.9.2-alt-increase-timeouts-to-pass-tests-on-arm.patch
-Patch9: ruby-1.9.2-alt-libruby-search-path-in-mkmf-tests.patch
-Patch10: ruby-1.9.2-alt-manpages.patch
-Patch11: ruby-1.9.2-alt-On-x86_64-sin_3-is-using-xmm0-register-for-both-argument-and-return-value.patch
-Patch12: ruby-1.9.2-alt-ri_cache_utility.patch
-Patch13: ruby-1.9.2-alt-RubyNode.patch
-Patch14: ruby-1.9.2-alt-specific.patch
-Patch15: ruby-1.9.2-alt-string.patch
-
-# Automatically added by buildreq on Mon Apr 20 2009 (-bi)
-BuildRequires: groff-base libdb4-devel libffi-devel libgdbm-devel libncursesw-devel libreadline-devel libssl-devel libyaml-devel rpm-build-ruby ruby-stdlibs tk-devel zlib-devel
-BuildRequires: /dev/pts
-
-# XXX@stanv: test in multi-threads environment never finished.
-BuildRequires: schedutils
-# }}}
-
-
-# {{{ Description
 %description
-Ruby is the interpreted scripting language for quick and easy
-object-oriented programming. It has many features to process text
-files and to do system management tasks (as in perl). It is simple,
-straight-forward, and extensible.
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing system
+management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
-Interpreter of object-oriented scripting language Ruby %subver.
-# }}}
+This package contains interpreter of object-oriented scripting language Ruby.
 
-# Subpackages {{{
 
-%define obsolete() Obsoletes: %1\
-Provides: %1 = %version-%release
-
-# {{{ lib%name
-%package -n lib%name
-Summary: Libraries necessary to run the Ruby %subver
+%package -n %lname
+Summary: Ruby shared libraries
 Group: System/Libraries
-# enumerator.c:    rb_provide("enumerator.so");   /* for backward compatibility */
 Provides: ruby(enumerator)
-Provides: %archdir
-Provides: %rubylibdir
-Provides: %vendorarchdir
-Provides: %vendordir
-%obsolete %name-module-rubynode
 
-%description -n lib%name
-Ruby is the interpreted scripting language for quick and easy
-object-oriented programming. It has many features to process text
-files and to do system management tasks (as in perl). It is simple,
-straight-forward, and extensible.
+%description -n %lname
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing system
+management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
-This package includes the libruby, necessary to run Ruby %subver.
-# }}}
+This package contains Ruby shared libraries.
 
-# {{{ lib%name-devel
-%package -n lib%name-devel
-Summary: Header files for compiling extension modules for the Ruby %subver
-Group: Development/Ruby
-Requires: lib%name = %version-%release
-Requires: rpm-build-%name
-Requires: %name-tool-rdoc
-Provides: %rubyhdrdir
-Provides: %vendorhdrdir
 
-Conflicts: lib%name-devel > %version-%release
-Conflicts: lib%name-devel < %version-%release
+%package -n %lname-devel
+Summary: Files for compiling extension modules for Ruby
+Group: Development/C
+%{?_enable_shared:Requires: %lname = %version-%release}
+# FIXME: remove require below
+Requires: rpm-build-%name >= 0.1.2
 
-%description -n lib%name-devel
-Ruby is the interpreted scripting language for quick and easy
-object-oriented programming. It has many features to process text
-files and to do system management tasks (as in perl). It is simple,
-straight-forward, and extensible.
+%description -n %lname-devel
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing system
+management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
-This package contains the header files, necessary to make extension
-library for Ruby %subver.
-# }}}
+This package contains files, necessary to make extension library for Ruby.
 
-# {{{ lib%name-devel-static
-%package -n lib%name-devel-static
-Summary: Statically linked Ruby %subver library
-Group: Development/Ruby
-Requires: lib%name-devel = %version-%release
 
-Conflicts: lib%name-devel-satic > %version-%release
-Conflicts: lib%name-devel-satic < %version-%release
+%package -n %lname-devel-static
+Summary: Files for compiling extension modules for Ruby
+Group: Development/C
+Requires: %lname-devel = %version-%release
 
-%description -n lib%name-devel-static
-Ruby is the interpreted scripting language for quick and easy
-object-oriented programming. It has many features to process text
-files and to do system management tasks (as in perl). It is simple,
-straight-forward, and extensible.
+%description -n %lname-devel-static
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing system
+management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
-This package includes statically linked Ruby %subver library needed for
-embedding Ruby in other applications.
-# }}}
+This package contains static Ruby library needed for embedding Ruby.
 
-# {{{ %name-doc-examples
-%package -n %name-doc-examples
-Summary: This package provides example programs about Ruby %subver
-Group: Development/Ruby
-Requires: lib%name = %version-%release
 
-%description -n %name-doc-examples
-Ruby is the interpreted scripting language for quick and easy
-object-oriented programming. It has many features to process text
-files and to do system management tasks (as in perl). It is simple,
-straight-forward, and extensible.
-# }}}
-
-# {{{ %name-doc-ri
-%package -n %name-doc-ri
-Summary: This package provides ri documentation for Ruby %subver
-Group: Development/Ruby
-BuildArch: noarch
-Requires: lib%name = %version-%release
-Requires: %name-tool-ri
-Provides: %ruby_ri_dir/site
-
-%description -n %name-doc-ri
-This package provides ri documentation for Ruby %subver
-# }}}
-
-# {{{ %name-misc-elisp
-%if_with emacs
-%package -n %name-misc-elisp
-Summary: ruby-mode for Emacsen
-Group: Development/Ruby
-Provides: emacs-ruby-mode
-Requires: emacs-common
-
-%description -n %name-misc-elisp
-This package provides major-mode for editing Ruby scripts and some
-emacs-lisp programs for Ruby programmers.
-%endif
-# }}}
-
-# {{{ %name-tool-irb
-%package -n %name-tool-irb
-Summary: Interactive Ruby (for Ruby %subver)
-Group: Development/Ruby
-BuildArch: noarch
-Requires: %name = %version-%release
-Requires: lib%name = %version-%release
-
-Conflicts: %name-tool-irb > %version-%release
-Conflicts: %name-tool-irb < %version-%release
-
-%description -n %name-tool-irb
-The irb is acronym for Interactive RuBy. It evaluates Ruby expression from
-the terminal.
-
-This package provides the irb which uses Ruby %subver.
-# }}}
-
-# {{{ %name-tool-rdoc
-%package -n %name-tool-rdoc
-Summary: Generate documentation from Ruby source files (for Ruby %subver)
-Group: Development/Ruby
-BuildArch: noarch
-Requires: %name = %version-%release
-Requires: lib%name = %version-%release
-
-Conflicts: %name-tool-rdoc > %version-%release
-Conflicts: %name-tool-rdoc < %version-%release
-
-%description -n %name-tool-rdoc
-RDoc - Documentation from Ruby Source Files:
-
-* Generates structured HTML and XML documentation from Ruby source
-  and C extensions.
-* Automatically extracts class, module, method, and attribute
-  definitions. These can be annotated using inline comments.
-* Analyzes method visibility.
-* Handles aliasing.
-* Uses non-intrusive and implicit markup in the comments. Readers of
-  the original source needn't know that it is marked up at all.
-
-This package provides the RDoc tool which uses Ruby %subver.
-# }}}
-
-# {{{ %name-tool-ri
-%package -n %name-tool-ri
-Summary: Ruby Interactive reference (for Ruby %subver)
-Group: Development/Ruby
-BuildArch: noarch
-Requires: %name = %version-%release
-Requires: %name-tool-rdoc
-Requires: lib%name = %version-%release
-
-Conflicts: %name-tool-ri > %version-%release
-Conflicts: %name-tool-ri < %version-%release
-
-%description -n %name-tool-ri
-ri is a command line tool that displays descriptions of built-in Ruby
-methods, classes, and modules. For methods, it shows you the calling
-sequence and a description. For classes and modules, it shows a
-synopsis along with a list of the methods the class or module
-implements.
-
-This package provides ri command and descriptions about Ruby %subver.
-# }}}
-
-# {{{ %name-stdlibs
 %package -n %name-stdlibs
-Summary: Standard Ruby %subver library
+Summary: Standard Ruby libraries
 Group: Development/Ruby
-Requires: lib%name = %version-%release
-
-Conflicts: %name-stdlibs > %version-%release
-Conflicts: %name-stdlibs < %version-%release
-
-%obsolete %name-module-English
-%obsolete %name-module-bigdecimal
-%obsolete %name-module-cgi
-%obsolete %name-module-curses
-%obsolete %name-module-date-time
-%obsolete %name-module-dbm
-%obsolete %name-module-debug
-%obsolete %name-module-digest
-%obsolete %name-module-dl
-%obsolete %name-module-drb
-%obsolete %name-module-e2mmap
-%obsolete %name-module-erb
-%obsolete %name-module-etc
-%obsolete %name-module-fcntl
-%obsolete %name-module-fileutils
-%obsolete %name-module-gdbm
-%obsolete %name-module-iconv
-%obsolete %name-module-math
-%obsolete %name-module-misc
-%obsolete %name-module-net
-%obsolete %name-module-nkf
-%obsolete %name-module-open3
-%obsolete %name-module-openssl
-%obsolete %name-module-optparse
-%obsolete %name-module-patterns
-%obsolete %name-module-pty
-%obsolete %name-module-readline
-%obsolete %name-module-rexml
-%obsolete %name-module-rss
-%obsolete %name-module-sdbm
-%obsolete %name-module-shell
-%obsolete %name-module-socket
-%obsolete %name-module-stringio
-%obsolete %name-module-strscan
-%obsolete %name-module-syslog
-%obsolete %name-module-thread
-%obsolete %name-module-tracer
-%obsolete %name-module-uri
-%obsolete %name-module-wait
-%obsolete %name-module-webrick
-%obsolete %name-module-xmlrpc
-%obsolete %name-module-yaml
-%obsolete %name-module-zlib
+Requires: %lname = %version-%release
+Provides: %name-libs = %version-%release
+Provides: %name-json = 1.5.4
+##Obsoletes: %name-json
+Provides: %name-minitest = 2.5.1
+##Obsoletes: %name-minitest
+#Provides: %name-module-test-unit = 2.2.0
+#Obsoletes: %name-module-test-unit
+Provides: %name-racc-runtime = 1.4.6
+##Obsoletes: %name-racc-runtime
+Provides: %{name}gems = 1.8.24
+##Obsoletes: %{name}gems
+%mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
+%mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
+%mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
+%mobsolete strscan syslog thread tracer uri wait webrick xmlrpc yaml zlib
 
 %description -n %name-stdlibs
-Ruby is the interpreted scripting language for quick and easy
-object-oriented programming. It has many features to process text
-files and to do system management tasks (as in perl). It is simple,
-straight-forward, and extensible.
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing system
+management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
-This package contains standard Ruby %subver runtime library.
-# }}}
+This package contains standard Ruby runtime libraries.
 
-# {{{ %name-stdlibs-tk
-%package -n %name-stdlibs-tk
-Summary: Ruby/Tk bindings
+
+%package -n %name-tk
+Summary: Standard Ruby libraries
 Group: Development/Ruby
-Requires: lib%name = %version-%release
-%obsolete %name-module-tk
-%obsolete %name-module-tcltk
+Requires: %lname = %version-%release
+Requires: %name-stdlibs = %version-%release
+Provides: %name-libs-tk = %version-%release
+%obsolete %name-stdlibs-tk
 
-%description -n %name-stdlibs-tk
-Ruby is the interpreted scripting language for quick and easy
-object-oriented programming. It has many features to process text
-files and to do system management tasks (as in perl). It is simple,
-straight-forward, and extensible.
+%description -n %name-tk
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing system
+management tasks (as in Perl). It is simple, straight-forward, and extensible.
 
-This package contains Ruby/Tk bindings.
-# }}}
+This package contains standard Ruby Tk bindings libraries.
 
-# }}} Subpackges
 
-# {{{ Prep
+%package -n rdoc
+Summary: Documentation tool for Ruby source code
+Group: Development/Ruby
+BuildArch: noarch
+Requires: %name-stdlibs = %version
+Provides: ri = %version-%release
+Provides: rdoc = %version-%release
+%obsolete %name-tool-ri
+#obsolete %name-tool-rdoc
+
+%description -n rdoc
+RDoc is a documentation tool for Ruby source code.
+
+
+%package tools
+Summary: Ruby tools
+Group: Development/Ruby
+BuildArch: noarch
+Requires: %name-stdlibs = %version
+Provides: gem = 1.8.23
+#Provides: testrb
+Provides: %name-rake = 0.9.2.2
+Provides: rake = 0.9.2.2
+##Obsoletes: %name-rake
+#Provides: %name-test-unit = 2.2.0
+#Obsoletes: %name-test-unit
+Provides: %{name}gems = 1.8.24
+##Obsoletes: %{name}gems
+
+%description tools
+Ruby tools: rake, gem.
+
+
+%package -n irb
+Summary: Interactive Ruby Shell
+Group: Development/Ruby
+BuildArch: noarch
+Requires: %name-stdlibs = %version
+%obsolete %name-tool-irb
+
+%description -n irb
+irb is the REPL(read-eval&print loop) environment for Ruby programs.
+
+
+%package doc-html
+Summary: Ruby HTML documentatin
+Group: Development/Documentation
+BuildArch: noarch
+
+%description doc-html
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing system
+management tasks (as in Perl). It is simple, straight-forward, and extensible.
+
+This package contains Ruby documentation in HTML format.
+
+
+%package doc-ri
+Summary: Ruby ri documentatin
+Group: Development/Documentation
+BuildArch: noarch
+Requires: ri
+
+%description doc-ri
+Ruby is an interpreted scripting language for quick and easy object-oriented
+programming. It has many features for processing text files and performing system
+management tasks (as in Perl). It is simple, straight-forward, and extensible.
+
+This package contains Ruby documentation in ri format.
+
+
 %prep
-%setup -q -n %base_name-%version-%release
+%setup -q %{?_pl:-n %name-%version-%_pl}
+%patch -p1
+sed -i -r '/^#[[:blank:]]*define[[:blank:]]+RUBY_API_VERSION_TEENY[[:blank:]]/s/(RUBY_API_VERSION_TEENY[[:blank:]]+).*$/\1%ver_teeny/' include/%name/version.h
+chmod a-x sample/{optparse,rss}/*
+# Broken 'require'
+rm -f lib/rss/xmlscanner.rb
+#sed -i "/^require[[:blank:]]\+'enumerator'/d" lib/rinda/tuplespace.rb
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-#%%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-
-cp -pfv %_datadir/automake/config.{guess,sub} .
-
-# Threaded tests doesn't play well under heavy load
-rm -f bootstraptest/test_thread.rb
-rm -f test/ruby/test_thread.rb
-rm -f test/rinda/test_rinda.rb
-# rubygems?  we don't need no stinkin' rubygems!
-rm -rf test/rubygems
-# uses system ruby as cgi interpreter
-rm -f test/webrick/test_cgi.rb
-rm -f test/webrick/test_filehandler.rb
-
-# XXX@stanv, next test doesn't passes.
-rm -rf test/test_pty.rb
-#rm -rf test/test_tracer.rb
-rm -rf test/drb/ut_array_drbssl.rb
-rm -rf test/drb/test_drbssl.rb
-#rm -rf test/test_timeout.rb
-rm -rf test/net/http/utils.rb
-rm -rf test/net/http/test_https.rb
+# Remove double '/' in pathes when ruby_version is empty
+[ -n "%ruby_version" || sed -i 's|/\$(ruby_version)||g' tool/mkconfig.rb
 
 
-# }}}
-
-# {{{ Build
 %build
-
-# {{{ Configure
-autoconf
-
-export optflags=' '
+%autoreconf
 %configure \
-	--enable-frame-address \
-	--enable-shared \
-	--disable-rpath \
-	--enable-pthread \
-	--with-rubylibprefix=%rubylibdir_base \
-	--with-rubyarchprefix=%archdir_base \
-	--with-rubyhdrdir=%rubyhdrdir \
-	--with-sitedir=%_prefix/local/share/%base_name/site_ruby \
-	--with-sitearchprefix=%_prefix/local/%_lib/%base_name/site_ruby \
-	--with-sitehdrdir=%_prefix/local/include/%base_name/%subver/site_ruby \
-	--with-vendordir=%vendordir_base \
-	--with-vendorarchprefix=%vendorarchdir_base \
-	--with-vendorhdrdir=%vendorhdrdir \
-	--with-ridir=%ruby_ri_dir_base \
-	--with-ruby-version=minor \
-	\
-	--enable-ipv6 \
-	--with-lookup-order-hack=INET \
-	#
-# }}}
+	%{subst_enable shared} \
+	%{subst_with valgrind} \
+	%{subst_enable rubygems} \
+	--with-rubylibprefix=%libdir \
+	--with-rubyhdrdir=%includedir \
+	--with-ridir=%ridir \
+	--docdir=%_docdir/%name-%version \
+	%{?ruby_version:--with-ruby-version=%ruby_version} \
+	--disable-rpath
+%make_build
 
-# SMP-incompatible
-%make
-%make rdoc
 
-# {{{ ruby-elisp
-%if_with emacs
-for i in misc/*.el ; do
-    emacs -batch --eval "(progn
-            (setq load-path (append (list \".\") load-path))
-            (byte-compile-file \"$i\"))"
-done
-%endif
-# }}}
-# }}}
-
-# {{{ Test
-%check
-export LD_LIBRARY_PATH="%_builddir/%name-%version-%release"
-export PATH="%_builddir/%name-%version-%release:$PATH"
-export LANG=en_US.UTF-8
-
-# XXX@stanv: test never finished in multi-threaded environment.
-taskset 1 %make -k check
-# }}}
-
-# {{{ Install
 %install
-
-cp %{S:1} .
-
-%make_install DESTDIR=%buildroot install do-install-doc
-
-mkdir %buildroot/bin
-ln -s ..%_bindir/%name  %buildroot/bin/%name
-
-mkdir -p %buildroot%vendordir
-mkdir -p %buildroot%vendorarchdir
-mkdir -p %buildroot%vendorhdrdir
-# compat with site*
-ln -sf vendor_ruby %buildroot%rubyhdrdir/site_ruby
-
-mkdir -p %buildroot%ruby_ri_dir/site
-
+%makeinstall_std
 echo "VENDOR_SPECIFIC=true" > %buildroot%vendordir/vendor-specific.rb
+install -p -m 0755 %{S:1} %buildroot%_bindir/update-ri-cache
+ln -s %lname-static.a %buildroot%_libdir/%lname.a
+mv %buildroot%_pkgconfigdir/%name{-%branch,}.pc
+install -d -m 0755 %buildroot%_docdir/%name-%version
+install -p -m 0644 COPYING* LEGAL NEWS README* ToDo %buildroot%_docdir/%name-%version/
 
-# {{{ ruby-elisp
-%if_with emacs
-mkdir -p %buildroot/etc/emacs/site-start.d/
-mkdir -p %buildroot%_emacslispdir/
-install -m 644 ruby.el %buildroot/etc/emacs/site-start.d/
-install -m 644 misc/*.el* %buildroot%_emacslispdir/
-%endif
-# }}}
-
-# {{{ files.req stuff
-mkdir -p %buildroot%_rpmlibdir
-cat <<EOF >%buildroot%_rpmlibdir/%name-files.req.list
-# ruby dirlist for %_rpmlibdir/files.req
-%archdir lib%name
-%rubylibdir lib%name
-%vendorarchdir lib%name
-%vendordir lib%name
-%rubyhdrdir lib%name-devel
-%vendorhdrdir lib%name-devel
-%ruby_ri_dir/site %name-doc-ri
-EOF
-# }}}
-# {{{ RI filetrigger
-install -pm755 bin/update-ri-cache %buildroot/%_bindir/update-ri-cache
-cat <<EOF >>%buildroot%_rpmlibdir/%name-doc-ri.filetrigger
+# RI filetrigger
+install -d -m 0755 %buildroot%_rpmlibdir
+cat > %buildroot%_rpmlibdir/%name-doc-ri.filetrigger <<__EOF__
 #!/bin/sh
 
-LC_ALL=C grep -qs '^%ruby_ri_dir/site/' || exit 0
-exec %_bindir/update-ri-cache %ruby_ri_dir/site
-EOF
+LC_ALL=C grep -qs '^%ridir/site/' || exit 0
+exec %_bindir/update-ri-cache %ridir/site
+__EOF__
 chmod +x %buildroot%_rpmlibdir/%name-doc-ri.filetrigger
-# }}}
-# {{{ Leftovers of indeterminate origin
 
-#Package ruby-stdlibs has an unmet dep:
-# Depends: ruby(xmlscan/scanner)
-# Used by rss/parser.rb:
-#   unless const_defined? :AVAILABLE_PARSER_LIBRARIES
-#     AVAILABLE_PARSER_LIBRARIES = [
-#       ["rss/xmlparser", :XMLParserParser],
-#       ["rss/xmlscanner", :XMLScanParser],
-#       ["rss/rexmlparser", :REXMLParser],
-#     ]
-#   end
-#
-#   AVAILABLE_PARSERS = []
-#
-#   AVAILABLE_PARSER_LIBRARIES.each do |lib, parser|
-#     begin
-#       require lib
-#       AVAILABLE_PARSERS.push(const_get(parser))
-#     rescue LoadError
-#     end
-#   end
-rm -rf %buildroot%rubylibdir/rss/xmlscanner.rb
-# }}}
+%define __ruby %buildroot%_bindir/%name
+%define ruby_libdir %libdir
+%define ruby_arch %_target
+export RUBYLIB=%buildroot%libdir:%buildroot%libdir/%_target
+export LD_LIBRARY_PATH=%buildroot%_libdir
 
-cat <<EOF >%buildroot/.%name.sh
-#!/bin/sh
 
-LD_LIBRARY_PATH="%buildroot%_libdir" \
-exec \
-%buildroot%_bindir/%name \
--I "%buildroot%vendordir:%buildroot%vendorarchdir:%buildroot%rubylibdir:%buildroot%archdir" \
-"\$@"
-EOF
-chmod +x %buildroot/.%name.sh
+%check
+%make_build test
 
-%define __ruby %buildroot/.%name.sh
 
-# This is a hack but we really don't need to bytecompile
-# Python comparison sample in the Ruby manual
-unset RPM_PYTHON
-# }}}
-
-# {{{ Files
-
-# {{{ %name
 %files
-%doc NEWS COPYING LEGAL README README.ALT-UTF8 README.EXT ToDo
-/bin/%name
+%doc %dir %_docdir/%name-%version
+%doc %_docdir/%name-%version/COPYING
+%doc %_docdir/%name-%version/LEGAL
+%doc %_docdir/%name-%version/NEWS
+%doc %_docdir/%name-%version/README
+%doc %_docdir/%name-%version/README.EXT
+%doc %_docdir/%name-%version/ToDo
+%lang(ja) %doc %_docdir/%name-%version/*.ja
 %_bindir/%name
-%_man1dir/%{name}*
-# }}}
+%_man1dir/%name.*
 
-# {{{ lib%name
-%files -n lib%name
-%_libdir/lib%name.so.*
-%_rpmlibdir/%name-files.req.list
-%archdir/enc
-%archdir/rbconfig.rb
-%vendordir/vendor-specific.rb
-%dir %_datadir/%base_name
-%dir %_datadir/%base_name/%subver
-%dir %_datadir/%base_name/vendor_ruby
-%dir %_datadir/%base_name/vendor_ruby/%subver
-%dir %_libdir/%base_name
-%dir %_libdir/%base_name/%subver
-%dir %_libdir/%base_name/%subver/%platform
-%dir %_libdir/%base_name/vendor_ruby
-%dir %_libdir/%base_name/vendor_ruby/%subver
-%dir %_libdir/%base_name/vendor_ruby/%subver/%platform
-# }}}
 
-# {{{ lib%name-devel
-%files -n lib%name-devel
-%_libdir/lib%name.so
-%_includedir/%base_name
-%rubylibdir/mkmf.rb
-# }}}
+%files -n %lname
+%{?_enable_shared:%_libdir/*.so.*}
 
-# {{{ lib%name-devel-static
-%files -n lib%name-devel-static
-%_libdir/lib%name-static.a
-# }}}
 
-# {{{ %name-doc-examples
-#%files -n %name-doc-examples
-#FIXME
-# }}}
+%files -n %lname-devel
+%exclude %_pkgconfigdir/*
+%includedir/*
+%{?_enable_shared:%_libdir/*.so}
 
-# {{{ %name-doc-ri
-%files -n %name-doc-ri
+
+%files -n %lname-devel-static
+%_libdir/*.a
+
+
+%files stdlibs
+%libdir
+%exclude %libdir/%_target/*tk*
+%exclude %libdir/*tk*
+
+
+%files tk
+%libdir/%_target/*tk*.so
+%libdir/*tk*
+
+
+%files -n rdoc
 %_bindir/update-ri-cache
-%dir %_datadir/ri
-%dir %ruby_ri_dir
-%dir %ruby_ri_dir/site
-%dir %ruby_ri_dir/system
-%ruby_ri_dir/system/*
-%_rpmlibdir/%name-doc-ri.filetrigger
-# }}}
-
-# {{{ %name-misc-elisp
-%if_with emacs
-%files -n %name-misc-elisp
-%_emacslispdir/*.el*
-%_sysconfdir/emacs/site-start.d/ruby.el
-%endif
-# }}}
-
-# {{{ %name-tool-irb
-%files -n %name-tool-irb
-%_bindir/irb
-%_man1dir/irb.1*
-%rubylibdir/irb.rb
-%rubylibdir/irb
-%doc doc/irb/
-# }}}
-
-# {{{ %name-tool-rdoc
-%files -n %name-tool-rdoc
-%_bindir/rdoc
-%rubylibdir/rdoc.rb
-%rubylibdir/rdoc
-# Depends on rake
-%exclude %rubylibdir/rdoc/task.rb
-# Test crap
-%exclude %rubylibdir/rdoc/markup/formatter_test_case.rb
-# }}}
-
-# {{{ %name-tool-ri
-%files -n %name-tool-ri
 %_bindir/ri
-%_man1dir/ri.1*
-# }}}
+%_bindir/rdoc
+%_man1dir/ri.*
+%_rpmlibdir/%name-doc-ri.filetrigger
 
-# {{{ %name-stdlibs
-%files -n %name-stdlibs
+
+%files tools
 %_bindir/erb
-%_man1dir/erb.1*
-%rubylibdir/English.rb
-%rubylibdir/abbrev.rb
-%rubylibdir/base64.rb
-%rubylibdir/benchmark.rb
-%rubylibdir/bigdecimal
-%rubylibdir/cgi
-%rubylibdir/cgi.rb
-%rubylibdir/cmath.rb
-%rubylibdir/complex.rb
-%rubylibdir/csv.rb
-%rubylibdir/date
-%rubylibdir/date.rb
-%rubylibdir/debug.rb
-%rubylibdir/delegate.rb
-%rubylibdir/digest
-%rubylibdir/digest.rb
-%rubylibdir/dl
-%rubylibdir/dl.rb
-%rubylibdir/drb
-%rubylibdir/drb.rb
-%rubylibdir/e2mmap.rb
-%rubylibdir/erb.rb
-%rubylibdir/expect.rb
-%rubylibdir/fiddle
-%rubylibdir/fiddle.rb
-%rubylibdir/fileutils.rb
-%rubylibdir/find.rb
-%rubylibdir/forwardable.rb
-%rubylibdir/getoptlong.rb
-%rubylibdir/gserver.rb
-%rubylibdir/ipaddr.rb
-%rubylibdir/kconv.rb
-%rubylibdir/logger.rb
-%rubylibdir/mathn.rb
-%rubylibdir/matrix.rb
-%rubylibdir/monitor.rb
-%rubylibdir/mutex_m.rb
-%rubylibdir/net
-%rubylibdir/observer.rb
-%rubylibdir/open-uri.rb
-%rubylibdir/open3.rb
-%rubylibdir/openssl
-%rubylibdir/openssl.rb
-%rubylibdir/optparse
-%rubylibdir/optparse.rb
-%rubylibdir/ostruct.rb
-%rubylibdir/pathname.rb
-%rubylibdir/pp.rb
-%rubylibdir/prettyprint.rb
-%rubylibdir/prime.rb
-%rubylibdir/profile.rb
-%rubylibdir/profiler.rb
-%rubylibdir/psych
-%rubylibdir/psych.rb
-%rubylibdir/pstore.rb
-%rubylibdir/rational.rb
-%rubylibdir/resolv-replace.rb
-%rubylibdir/resolv.rb
-%rubylibdir/rexml
-%rubylibdir/rinda
-%rubylibdir/ripper
-%rubylibdir/ripper.rb
-%rubylibdir/rss
-%rubylibdir/rss.rb
-%rubylibdir/scanf.rb
-%rubylibdir/securerandom.rb
-%rubylibdir/set.rb
-%rubylibdir/shell
-%rubylibdir/shell.rb
-%rubylibdir/shellwords.rb
-%rubylibdir/singleton.rb
-%rubylibdir/socket.rb
-%rubylibdir/syck
-%rubylibdir/syck.rb
-%rubylibdir/sync.rb
-%rubylibdir/tempfile.rb
-%rubylibdir/thread.rb
-%rubylibdir/thwait.rb
-%rubylibdir/time.rb
-%rubylibdir/timeout.rb
-%rubylibdir/tmpdir.rb
-%rubylibdir/tracer.rb
-%rubylibdir/tsort.rb
-%rubylibdir/un.rb
-%rubylibdir/uri
-%rubylibdir/uri.rb
-%rubylibdir/weakref.rb
-%rubylibdir/webrick
-%rubylibdir/webrick.rb
-%rubylibdir/xmlrpc
-%rubylibdir/yaml
-%rubylibdir/yaml.rb
-%archdir/bigdecimal.so
-%archdir/continuation.so
-%archdir/coverage.so
-%archdir/curses.so
-%archdir/dbm.so
-%archdir/digest
-%archdir/digest.so
-%archdir/dl
-%archdir/dl.so
-%archdir/etc.so
-%archdir/fcntl.so
-%archdir/fiber.so
-%archdir/fiddle.so
-%archdir/gdbm.so
-%archdir/iconv.so
-%archdir/io
-%archdir/mathn
-%archdir/nkf.so
-%archdir/objspace.so
-%archdir/openssl.so
-%archdir/psych.so
-%archdir/pty.so
-%archdir/readline.so
-%archdir/ripper.so
-%archdir/sdbm.so
-%archdir/socket.so
-%archdir/stringio.so
-%archdir/strscan.so
-%archdir/syck.so
-%archdir/syslog.so
-%archdir/zlib.so
-# }}}
+%_bindir/gem
+%_bindir/rake
+#%_bindir/testrb
+%_man1dir/erb.*
+%_man1dir/rake.*
 
-# {{{ %name-stdlibs-tk
-%files -n %name-stdlibs-tk
-%rubylibdir/multi-tk.rb
-%rubylibdir/remote-tk.rb
-%rubylibdir/tcltk.rb
-%rubylibdir/tk*
-%archdir/tcltklib.so
-%archdir/tkutil.so
-# }}}
 
-# }}} Files
+%files -n irb
+%doc doc/irb/irb.rd
+%lang(ja) %doc doc/irb/*.ja
+%_bindir/irb
+%_man1dir/irb.*
 
-# {{{ Changelog
+
+%files doc-html
+%dir %_docdir/%name-%version
+%_docdir/%name-%version/html
+
+
+%files doc-ri
+%dir %ridir
+%ridir/*
+
+
 %changelog
+* Sat Dec 08 2012 Led <led@altlinux.ru> 1.9.3-alt1
+- 1.9.3
+
 * Fri Apr 22 2011 Andriy Stepanov <stanv@altlinux.ru> 1.9.2-alt2.r31204.1
 - Adopt Conflicts.
 
@@ -846,7 +423,7 @@ unset RPM_PYTHON
 - SVN snapshot 20090625 AKA 1.9.1.203
   + CVE-2009-1904: DoS vulnerability in BigDecimal module
 - All ruby-module-*'s merged back to ruby-stdlibs and ruby-stdlibs-tk
-- Shared library moved back from /%_lib to %_libdir
+- Shared library moved back from /%%_lib to %%_libdir
 - Disabled rubygems by default, use ruby option "--enable gems" to enable
 - All packages with RI documentation should depend on ruby-doc-ri
 - Modules excluded from stdlibs (packaged separately):
@@ -924,7 +501,7 @@ unset RPM_PYTHON
 - update to ruby_1_8_6 svn branch (revision 14091)
 - sync with debian 1.8.6.111-2
   + CVE-2007-5162
-- install libruby.so into %_libdir (bug #13951)
+- install libruby.so into %%_libdir (bug #13951)
 - move arch-depended site_ruby to /usr/local/ (raorn@)
 - update macros (bug #13933)
 - add missing deps to ruby-module-rexml
@@ -1157,19 +734,19 @@ unset RPM_PYTHON
 * Sun Jun 29 2003 Alexander Bokovoy <ab@altlinux.ru> 1.8-alt1
 - 1.8 CVS snapshot (2003/06/29)
 - Patches updated, CGI patch excluded (already in upstream)
-- Add %_libdir/%name/vendor_ruby/%subver/%{_target_cpu}-%{_host_os} to the list
+- Add %%_libdir/%%name/vendor_ruby/%%subver/%%{_target_cpu}-%%{_host_os} to the list
   of owned directories for stdlibs-core
 - Enhance dependencies between subpackages:
-    + lib%name is a base package, everything else requires it (through a chain),
+    + lib%%name is a base package, everything else requires it (through a chain),
       it also owns a Ruby subtree directories
-    + %name-stdlibs prerequires lib%name
-    + %name-stdlibc-tk prerequires %name-stdlibs
-    + every third-party Ruby package *should* prerequire lib%name
+    + %%name-stdlibs prerequires lib%%name
+    + %%name-stdlibc-tk prerequires %%name-stdlibs
+    + every third-party Ruby package *should* prerequire lib%%name
       if it is installable into Ruby subtree
 - Clean up spec file:
     + Fix miniruby calls to use non-Perlish variable notation only
 - Removed:
-    + %name-stdlib-core package merged with lib%name
+    + %%name-stdlib-core package merged with lib%%name
 - Major review of packaged documentation:
     + Ruby FAQ is now in A4 PDF
     + Hal Fulton's "Rubyesque API" from EuRuKo03
@@ -1191,9 +768,9 @@ unset RPM_PYTHON
 
 * Tue Nov 19 2002 Alexander Bokovoy <ab@altlinux.ru> 1.7.3-alt7
 - Changed:
-    + Installation splitted between %_datadir and %_libdir
+    + Installation splitted between %%_datadir and %%_libdir
       in order to be more conformant to FHS
-    + Directory structure is stored in %name-stdlibs-core package
+    + Directory structure is stored in %%name-stdlibs-core package
     + vendordir/vendorarchdir added as /usr/{lib,share}/ruby/vendor_ruby
       and site-specific dirs moved to /usr/local
 - Fixed:
@@ -1221,7 +798,7 @@ unset RPM_PYTHON
 * Wed Oct 09 2002 Alexander Bokovoy <ab@altlinux.ru> 1.7.3-alt4
 - New snapshot (2002/10/09)
 - Changed:
-    + Emacs support moved to %name-doc and placed in %_docdir/%name-%version/misc
+    + Emacs support moved to %%name-doc and placed in %%_docdir/%%name-%%version/misc
       unless XEmacs and GNU Emacs maintaining teams decide where and how
       to put third-party program modes. Also, XEmacs already has (an outdated)
       ruby-mode.
@@ -1273,7 +850,7 @@ unset RPM_PYTHON
 * Thu Dec 13 2001 Alexander Bokovoy <ab@altlinux.ru> 1.6.5-alt5
 - Fixed:
     + Regexp UTF-8 handling (backport from 1.7.x)
-    + %_libdir/ruby/site_ruby/%subver added
+    + %%_libdir/ruby/site_ruby/%%subver added
 
 * Wed Dec 05 2001 Alexander Bokovoy <ab@altlinux.ru> 1.6.5-alt4
 - Updated:
@@ -1337,7 +914,7 @@ unset RPM_PYTHON
 - fix missing %%config
 
 * Tue Aug 22 2000 Pixel <pixel@mandrakesoft.com> 1.4.6-3mdk
-- use %_sysconfdir/emacs/site-start.d for the ruby-mode.el
+- use %%_sysconfdir/emacs/site-start.d for the ruby-mode.el
 
 * Fri Aug 18 2000 Pixel <pixel@mandrakesoft.com> 1.4.6-2mdk
 - rebuild (fredlsux)
@@ -1402,7 +979,7 @@ unset RPM_PYTHON
 * Fri Jul 23 1999 Atsushi Yamagata <yamagata@plathome.co.jp>
 - 2nd release
 - Updated to version 1.2.6(15 Jul 1999)
-- striped %prefix/bin/ruby
+- striped %%prefix/bin/ruby
 
 * Mon Jun 28 1999 Atsushi Yamagata <yamagata@plathome.co.jp>
 - Updated to version 1.2.6(21 Jun 1999)
@@ -1424,4 +1001,3 @@ unset RPM_PYTHON
 
 * Fri Nov 13 1998 Toru Hoshina <hoshina@best.com>
 - Version up.
-# }}}

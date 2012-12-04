@@ -2,14 +2,12 @@
 
 Name: ruby-ldap
 Version: 0.9.11
-Release: alt2
+Release: alt2.1
 
 Summary: Ruby LDAP library
 Group: Development/Ruby
 License: BSD
 Url: http://ruby-ldap.sourceforge.net/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 # Automatically added by buildreq on Thu Aug 14 2008 (-bi)
 BuildRequires: libldap-devel libruby-devel libssl-devel libsasl2-devel
@@ -52,6 +50,9 @@ Documentation files for %name
 %ruby_ri_sitedir/LDAP*
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 0.9.11-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Apr 29 2011 Timur Aitov <timonbl4@altlinux.org> 0.9.11-alt2
 - Repair build
 

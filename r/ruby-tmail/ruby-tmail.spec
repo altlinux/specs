@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.2.3.1
-Release: alt3
+Release: alt3.1
 
 Summary: Mail handling library for Ruby
 License: GPL
@@ -12,8 +12,6 @@ Group: Development/Ruby
 URL: http://tmail.rubyforge.org/
 
 BuildArch: noarch
-
-Packager: Sir Raorn <raorn@altlinux.ru>
 
 # Automatically added by buildreq on Tue Jul 08 2008 (-bi)
 BuildRequires: rpm-build-ruby ruby-racc ruby-test-unit ruby-tool-rdoc ruby-tool-setup
@@ -66,6 +64,9 @@ popd
 %ruby_ri_sitedir/TMail*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 1.2.3.1-alt3.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Jan 02 2011 Alexey I. Froloff <raorn@altlinux.org> 1.2.3.1-alt3
 - Fix tests
 

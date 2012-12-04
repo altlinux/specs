@@ -2,14 +2,12 @@
 
 Name: ruby-gettext
 Version: 2.1.0
-Release: alt2.qa1
+Release: alt2.qa1.1
 
 Summary: Native Language Support Library for Ruby
 Group: Development/Ruby
 License: LGPL
 Url: http://rubyforge.org/projects/gettext/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -20,6 +18,7 @@ Provides: %name-erb = %version-%release
 
 # Automatically added by buildreq on Wed May 06 2009 (-bi)
 BuildRequires: rpm-build-ruby ruby-locale ruby-racc-runtime ruby-rake ruby-tool-rdoc ruby-tool-setup
+BuildRequires: ruby-test-unit
 
 Source: %name-package-%version.tar
 Patch: %name-%version-%release.patch
@@ -96,6 +95,10 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %ruby_ri_sitedir/GetText*
 
 %changelog
+* Sun Dec 09 2012 Led <led@altlinux.ru> 2.1.0-alt2.qa1.1
+- Rebuilt with ruby-1.9.3-alt1
+- fixed BuildRequires
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 2.1.0-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:

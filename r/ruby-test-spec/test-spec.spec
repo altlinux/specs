@@ -4,7 +4,7 @@
 
 Name: ruby-%plugname
 Version: 0.10
-Release: alt1
+Release: alt1.1
 
 Summary: an RSpec-inspired interface on top of Test::Unit
 License: Ruby/MIT
@@ -58,6 +58,9 @@ ruby bin/specrb -Ilib:test -w -a
 %ruby_ri_sitedir/Test/Unit/UI/RDox
 
 %changelog
+* Sat Dec 08 2012 Led <led@altlinux.ru> 0.10-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Wed Feb 24 2010 Timur Batyrshin <erthad@altlinux.org> 0.10-alt1
 - Initial build for sisyphus
 

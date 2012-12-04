@@ -1,6 +1,6 @@
 Name: ruby-opengl
 Version: 0.60.1
-Release: alt2
+Release: alt2.1
 Summary: OpenGL Interface for Ruby
 License: MIT
 Group: Development/Ruby
@@ -9,10 +9,9 @@ Source: ruby-opengl-%{version}.tar
 Patch: ruby-opengl-0.60.1-alt-rubygems-sucks.patch
 Patch1: ruby-opengl-alt-STR2CSTR.patch
 
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
-
 # Automatically added by buildreq on Thu Apr 03 2008 (-bi)
 BuildRequires: libGL-devel libX11-devel libfreeglut-devel libruby-devel ruby-mkrf
+BuildRequires: %_bindir/rake
 
 %description
 ruby-opengl consists of Ruby extension modules that are bindings for 
@@ -39,6 +38,10 @@ install -p -m644 lib/*.rb  %buildroot%ruby_sitelibdir
 %doc doc
 
 %changelog
+* Sun Dec 09 2012 Led <led@altlinux.ru> 0.60.1-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+- fixed BuildRequires
+
 * Sun Sep 26 2010 Alexey I. Froloff <raorn@altlinux.org> 0.60.1-alt2
 - Rebuild with Ruby 1.9.2
 

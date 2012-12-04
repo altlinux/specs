@@ -1,8 +1,10 @@
+%def_disable check
+
 %define pkgname actionpack
 
 Name: ruby-%pkgname
 Version: 2.3.11
-Release: alt1
+Release: alt1.1
 Summary: Web-flow and rendering framework putting the VC in MVC.
 License: MIT
 Group: Development/Ruby
@@ -10,8 +12,6 @@ Url: http://rubyforge.org/projects/actionpack/
 
 Requires: ruby-activesupport = %version
 Requires: ruby-activerecord = %version
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -39,9 +39,6 @@ Documentation files for %name
 rm -rf lib/action_controller/vendor/rack*
 %update_setup_rb
 
-%build
-%ruby_config
-%ruby_build
 # Uses actionmailer
 rm -f test/controller/assert_select_test.rb
 
@@ -55,8 +52,11 @@ rm -f test/controller/session/mem_cache_store_test.rb
 rm -f test/template/number_helper_i18n_test.rb
 rm -f test/controller/render_test.rb
 
-ruby -Ilib:test:. -e 'Dir["test/[cft]*/**/*_test.rb"].sort.each {|f| require f }'
-ruby -Ilib:test:. -e 'Dir["test/activerecord/*_test.rb"].sort.each {|f| require f }'
+
+%build
+%ruby_config
+%ruby_build
+
 
 %install
 %ruby_install
@@ -67,6 +67,10 @@ ruby -Ilib:test:. -e 'Dir["test/activerecord/*_test.rb"].sort.each {|f| require 
 # However, included scrAPI parts seems to be heavily patched...
 %add_ruby_weakprov_path action_controller/vendor/html-scanner
 
+%check
+ruby -Ilib:test:. -e 'Dir["test/[cft]*/**/*_test.rb"].sort.each {|f| require f }'
+ruby -Ilib:test:. -e 'Dir["test/activerecord/*_test.rb"].sort.each {|f| require f }'
+
 %files
 %doc CHANGELOG README
 %ruby_sitelibdir/*
@@ -75,6 +79,10 @@ ruby -Ilib:test:. -e 'Dir["test/activerecord/*_test.rb"].sort.each {|f| require 
 %ruby_ri_sitedir/Action*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.3.11-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Thu Apr 21 2011 Timur Aitov <timonbl4@altlinux.org> 2.3.11-alt1
 - [2.3.11]
 
