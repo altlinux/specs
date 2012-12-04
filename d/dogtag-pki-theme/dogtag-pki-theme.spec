@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:             dogtag-pki-theme
 Version:          10.0.0
-Release:          alt1_0.1.a1jpp7
+Release:          alt1_0.1.a1jpp7.1
 Summary:          Certificate System - Dogtag PKI Theme Components
 URL:              http://pki.fedoraproject.org/
 License:          GPLv2
@@ -280,9 +280,22 @@ This package is used by the Dogtag Certificate System.
 
 
 %build
+function runCmake () {
+	%{fedora_cmake} \
+		-DVAR_INSTALL_DIR:PATH=/var \
+		-DBUILD_DOGTAG_PKI_THEME:BOOL=ON \
+		-DJAVA_LIB_INSTALL_DIR=%{_jnidir} \
+		..
+}
 %{__mkdir_p} build
 cd build
-%{fedora_cmake} -DVAR_INSTALL_DIR:PATH=/var -DBUILD_DOGTAG_PKI_THEME:BOOL=ON -DJAVA_LIB_INSTALL_DIR=%{_jnidir} ..
+runCmake ||:
+
+# stage 2 for find CMakeJavaCompiler.cmake:
+CMAKE_VER=$(rpm -q --queryformat="%{VERSION}" cmake)
+cp CMakeFiles/CMakeJavaCompiler.cmake CMakeFiles/$CMAKE_VER/
+runCmake
+
 %{__make} VERBOSE=1 %{?_smp_mflags}
 
 
@@ -349,6 +362,9 @@ chmod 755 %{buildroot}%{_datadir}/pki/tps-ui/cgi-bin/sow/cfg.pl
 
 
 %changelog
+* Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 10.0.0-alt1_0.1.a1jpp7.1
+- new version
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 10.0.0-alt1_0.1.a1jpp7
 - new version
 
