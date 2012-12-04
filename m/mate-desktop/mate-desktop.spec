@@ -5,7 +5,7 @@ Group: System/Libraries
 %define _libexecdir %_prefix/libexec
 Summary:	Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:		mate-desktop
-Version:	1.5.4
+Version:	1.5.5
 Release:	alt1_1
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -114,6 +114,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Tue Dec 04 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt1_1
+- new fc release
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_1
 - new fc release
 

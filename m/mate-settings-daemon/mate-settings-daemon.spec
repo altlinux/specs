@@ -5,8 +5,8 @@ Group: System/Servers
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-settings-daemon
-Version:        1.5.3
-Release:        alt1_5
+Version:        1.5.4
+Release:        alt1_1
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
 URL:            http://mate-desktop.org
@@ -29,14 +29,10 @@ BuildRequires:  pkgconfig(gsettings-desktop-schemas)
 
 Requires: gsettings-desktop-schemas
 Requires: mate-icon-theme
-
-#Fix CVE-2012-5560 and stop generating version specific libdirs
-#https://github.com/mate-desktop/mate-settings-daemon/pull/22
-#Remove archlinux bits from configure.ac
-Patch0: commit_rollup.patch
 Source44: import.info
 Patch33: mate-settings-daemon-keyboard-icon.patch
 Requires: dconf
+
 
 %description
 MATE Desktop settings daemon
@@ -51,16 +47,20 @@ Development files for mate-settings-daemon
 
 %prep
 %setup -q
-%patch0 -p1 -b .commit_rollup.patch
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 
 
 %build
-%configure --disable-static \
-           --enable-polkit \
-           --with-x \
-           --with-nssdb
+%configure \
+    --with-x  \
+    --enable-gstreamer  \
+    --enable-polkit  \
+    --disable-schemas-compile  \
+    --with-gnu-ld  \
+    --with-x  \
+    --with-nssdb  \
+
 make %{?_smp_mflags} V=1
 
 
@@ -95,6 +95,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.a" -exec rm -f {} ';'
 
 
 %changelog
+* Tue Dec 04 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_1
+- new fc release
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_5
 - new fc release
 

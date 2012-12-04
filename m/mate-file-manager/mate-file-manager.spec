@@ -4,13 +4,12 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 %define _libexecdir %_prefix/libexec
 Name:       mate-file-manager
 Summary:    File manager for MATE
-Version:    1.5.1
-Release:    alt1_2
+Version:    1.5.2
+Release:    alt1_1
 License:    GPLv2+ and LGPLv2+
 Group:      Graphical desktop/Other
 URL:        http://mate-desktop.org
 Source0:    http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-#Source0:    https://github.com/mate-desktop/%{name}/archive/%{name}-%{version}.tar.gz
 
 Requires:   gamin
 Requires:   filesystem
@@ -19,7 +18,8 @@ Requires:   gvfs
 Requires:   mate-icon-theme
 Requires:   gsettings-desktop-schemas
 
-BuildRequires:  pkgconfig(mate-desktop-2.0)
+BuildRequires:  mate-desktop-devel
+BuildRequires:  libmate-desktop
 BuildRequires:  pkgconfig(sm)
 BuildRequires:  desktop-file-utils
 BuildRequires:  pkgconfig(libstartup-notification-1.0)
@@ -29,6 +29,7 @@ BuildRequires:  pkgconfig(libselinux)
 BuildRequires:  pkgconfig(gobject-introspection-1.0)
 BuildRequires:  pkgconfig(unique-1.0)
 BuildRequires:  mate-common
+BuildRequires:  mate-doc-utils
 BuildRequires:  pkgconfig(cairo-gobject)
 BuildRequires:  pkgconfig(libxml-2.0)
 BuildRequires:  pkgconfig(dbus-glib-1)
@@ -39,27 +40,10 @@ BuildRequires:  pkgconfig(gsettings-desktop-schemas)
 # the main binary links against libcaja-extension.so
 # don't depend on soname, rather on exact version
 Requires:       %{name}-extensions%{?_isa} = %{version}-%{release}
-
-# Some changes to default config
-Patch0:         caja-config.patch
-
-Patch1:         caja-rtl-fix.patch
-
-Patch2:         caja-gvfs-desktop-key-2.patch
-
-# http://bugzilla.gnome.org/show_bug.cgi?id=519743
-Patch3:         caja-filetype-symlink-fix.patch
-
-Patch5:         no_session_delay.patch
-Patch6:         signal_curtain.patch
-
-# upstreamable, don't reference non-existent doc xml file
-Patch7:         mate-file-manager-1.4.0-docfix.patch
 Source44: import.info
 Patch33: mate-file-manager-1.2.2-alt-fix-linkage.patch
 Patch34: nautilus-2.22.1-umountfstab.patch
 Patch35: mate-file-manager-1.5.0-alt-desktop-labels-po-ru.patch
-
 
 %description
 Caja (mate-file-manager) is the file manager and graphical shell
@@ -90,31 +74,24 @@ for developing caja extensions.
 
 %prep
 %setup -q
-#patch0 -p1 -b .config
-#patch1 -p1 -b .caja-rtl-fix
-#patch2 -p1 -b .gvfs-desktop-key
-#patch3 -p0 -b .symlink
-#patch5 -p1 -b .no_session_delay
-%patch7 -p1 -b .docfix
-
 %patch33 -p1
 %patch35 -p1
 NOCONFIGURE=1 ./autogen.sh
 %patch34 -p1
-
 %build
-
 %configure \
         --disable-static \
         --enable-unique \
-        --enable-introspection \
-        --enable-gtk-doc \
-        --disable-update-mimedb
+        --disable-update-mimedb \
+        --disable-schemas-compile \
+        --with-gnu-ld \
+        --with-x \
+        --with-gtk=2.0
 
 
 # drop unneeded direct library deps with --as-needed
 # libtool doesn't make this easy, so we do it the hard way
-sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool
+#sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool
 
 make %{?_smp_mflags} V=1
 
@@ -166,6 +143,9 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Tue Dec 04 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
+- new fc release
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_2
 - new fc release
 
