@@ -2,7 +2,7 @@
 
 Name: alterator-ldap-users
 Version: 0.8
-Release: alt3
+Release: alt4
 
 Source: %name-%version.tar
 
@@ -42,6 +42,12 @@ alterator module for local and ldap users administration
 %_datadir/alterator/type/*
 
 %changelog
+* Wed Dec 05 2012 Andrey Cherepanov <cas@altlinux.org> 0.8-alt4
+- Show default user photo even no user selected
+- Make interface more compact
+- Fix small typo on Cancel button
+- New default photo picture
+
 * Wed Jul 20 2011 Paul Wolneykien <manowar@altlinux.ru> 0.8-alt3
 - Mark the configuration file is present in the case of localhost
   based ldap/krb5 (closes 25932).
