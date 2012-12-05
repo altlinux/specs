@@ -1,9 +1,10 @@
 Name:		headoverheels
 Summary:	Remake of the classical game of the 80's
 Version:	1.0.1
-Release:	alt1
+Release:	alt1.1
 Source:		http://www.headoverheels2.com/descargas/%name-%version.tar.bz2
 Source1:	%name-icons.tar.bz2
+Patch: headoverheels-1.0.1-alt-cflags.patch
 Url:		http://www.headoverheels2.com/
 Requires:	%name-data = %version
 
@@ -27,6 +28,7 @@ Level files and music for %name
 
 %prep
 %setup -a 1
+%patch -p2
 sed -i  's/^AM_LDFLAGS =/LIBS =/' src/Makefile.am
 
 cat > %name.desktop <<@@@
@@ -41,6 +43,7 @@ Terminal=false
 @@@
 
 %build
+%add_optflags -fpermissive
 %autoreconf
 %configure
 %make_build
@@ -67,6 +70,9 @@ install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 %_datadir/headoverheels/*
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.1
+- Fixed build with gcc 4.7
+
 * Fri Jun 15 2012 Fr. Br. George <george@altlinux.ru> 1.0.1-alt1
 - Initial build from upstream spec
 
