@@ -1,7 +1,7 @@
 Summary: Inotify cron system
 Name: incron
 Version: 0.5.9
-Release: alt1
+Release: alt1.1
 
 Group: System/Base
 License: GPLv2
@@ -10,6 +10,7 @@ Source0: http://inotify.aiken.cz/download/incron/%name-%version.tar
 Source1: incrond.init
 Source2: incrontab.control
 Patch0: %name-%version-%release.patch
+Patch1: incron-0.5.9-alt-glibc-2.16.patch
 
 # Automatically added by buildreq on Sun May 24 2009
 BuildRequires: gcc-c++
@@ -24,6 +25,7 @@ filesystem events rather than time periods.
 %prep
 %setup -q
 %patch0 -p1
+%patch1 -p2
 
 %build
 %make CXXFLAGS="%optflags"
@@ -67,6 +69,9 @@ make install-man MANPATH="%buildroot%_mandir" INSTALL="install -D -p"
 %attr(700,root,root) %dir %_sysconfdir/%name.d
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt1.1
+- Fixed build with glibc 2.16
+
 * Thu Sep 10 2009 Anton Farygin <rider@altlinux.ru> 0.5.9-alt1
 - new version
 
