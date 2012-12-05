@@ -1,6 +1,6 @@
 Name: kvirc
 Version: 4.0.4
-Release: alt2
+Release: alt2.1
 
 Summary: KDE Enhanced Visual IRC Client
 License: GPLv2+
@@ -8,6 +8,7 @@ Group: Networking/IRC
 
 URL: http://www.kvirc.net/
 Source: kvirc-%version.tar.bz2
+Patch: kvirc-4.0.4-alt-gcc4.7.patch
 
 Provides: kvirc4 = %version
 Obsoletes: kvirc4 < %version
@@ -50,8 +51,10 @@ This package contains data files for %name.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
+%add_optflags -fpermissive
 %K4cmake \
 %if_enabled debug
     -DWANT_DEBUG:BOOL=1 \
@@ -109,6 +112,9 @@ This package contains data files for %name.
 %endif
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt2.1
+- Fixed build with gcc 4.7
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 4.0.4-alt2
 - rebuilt for perl-5.16
 
