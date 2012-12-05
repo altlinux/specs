@@ -5,7 +5,7 @@
 
 %define	lname	ffcall
 %define	version	1.10
-%define	release	alt2
+%define	release	alt3
 
 Name: lib%lname
 Version: %version
@@ -113,6 +113,9 @@ This package contains static verions of FFCall libraries
 %endif
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt3
+- Rebuilt for debuginfo
+
 * Thu Oct 28 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10-alt2
 - Rebuilt for soname set-versions
 
