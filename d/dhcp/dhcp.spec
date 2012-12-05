@@ -6,7 +6,7 @@
 
 Name: dhcp
 Version: 4.2.4.P2
-Release: alt4
+Release: alt5
 Epoch: 1
 
 Summary: Dynamic Host Configuration Protocol (DHCP) distribution
@@ -36,6 +36,11 @@ Source20: dhcpd6.chroot.conf
 Source21: dhcpd6.chroot.lib
 Source22: dhcrelay6.init
 Source23: dhcrelay6.sysconfig
+Source24: dhcrelay6
+Source25: dhcpd.service
+Source26: dhcpd6.service
+Source27: dhcrelay.service
+Source28: dhcrelay6.service
 
 Patch0001: 0001-Apply-dst_api-fd-leak-fixes-from-dhcp-3.0.5-alt-warn.patch
 Patch0002: 0002-Apply-dhcp-3.0.5-alt-warnings.patch.patch
@@ -292,7 +297,8 @@ for dhcpd in dhcpd dhcpd6; do
 		%buildroot%_initdir/$dhcpd
 	install -pD -m644 %_sourcedir/$dhcpd.sysconfig \
 		%buildroot/etc/sysconfig/$dhcpd
-
+	install -pD -m644 %_sourcedir/$dhcpd.service \
+		%buildroot/%systemd_unitdir/$dhcpd.service
 	mkdir -p %buildroot%ROOT/$dhcpd/state
 	touch %buildroot%ROOT/$dhcpd/state/$dhcpd.leases
 	# Make use of syslogd-1.4.1-alt11 /etc/syslog.d/ feature.
@@ -311,9 +317,12 @@ for dhcpd in dhcpd dhcpd6; do
 done
 
 # dhcrelay
+install -pD -m750 %SOURCE24 %buildroot%_sbindir/dhcrelay6
 for dhcrelay in dhcrelay dhcrelay6; do
 	install -pD -m755 %_sourcedir/$dhcrelay.init \
 		%buildroot%_initdir/$dhcrelay
+	install -pD -m644 %_sourcedir/$dhcrelay.service \
+		%buildroot/%systemd_unitdir/$dhcrelay.service
 	install -pD -m644 %_sourcedir/$dhcrelay.sysconfig \
 		%buildroot/etc/sysconfig/$dhcrelay
 done
@@ -468,6 +477,8 @@ fi
 %config /etc/chroot.d/dhcpd6.*
 %config %_initdir/dhcpd
 %config %_initdir/dhcpd6
+%systemd_unitdir/dhcpd.service
+%systemd_unitdir/dhcpd6.service
 %config(noreplace) /etc/sysconfig/dhcpd
 %config(noreplace) /etc/sysconfig/dhcpd6
 %attr(750,root,dhcp) %_sbindir/dhcpd
@@ -518,10 +529,13 @@ fi
 
 %files relay
 %config %_initdir/dhcrelay
+%systemd_unitdir/dhcrelay.service
 %config(noreplace) /etc/sysconfig/dhcrelay
 %config %_initdir/dhcrelay6
+%systemd_unitdir/dhcrelay6.service
 %config(noreplace) /etc/sysconfig/dhcrelay6
 %attr(750,root,dhcp) %_sbindir/dhcrelay
+%attr(750,root,dhcp) %_sbindir/dhcrelay6
 %_man8dir/dhcrelay.*
 
 %files omshell
@@ -543,6 +557,10 @@ fi
 # }}}
 
 %changelog
+* Tue Dec 04 2012 Mikhail Efremov <sem@altlinux.org> 1:4.2.4.P2-alt5
+- Add *.service files for systemd (closes: #28041).
+- Add dhcrelay6 wrapper.
+
 * Wed Nov 28 2012 Mikhail Efremov <sem@altlinux.org> 1:4.2.4.P2-alt4
 - Install dhcpd6.conf.sample.
 - dhcp-client: Provide nm-dhcp-client.
