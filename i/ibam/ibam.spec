@@ -1,6 +1,6 @@
 Name: ibam
 Version: 0.5.2
-Release: alt2
+Release: alt2.1
 
 Summary: Intelligent Battery Monitor
 License: GPL
@@ -12,6 +12,7 @@ Patch1: %name-gkrellm-fix-display-order.patch
 Patch2: %name-0.4-alt-linking.patch
 Patch3: ibam-0.5.2-debian-acpi-check.patch
 Patch4: ibam-0.5.2-debian-sysfs-lenovo.patch
+Patch5: ibam-0.5.2-alt-gcc4.7.patch
 Packager: Ilya Mashkin <oddity@altlinux.org>
 
 # Automatically added by buildreq on Thu Mar 01 2012
@@ -40,6 +41,7 @@ This is the GKrellM2 plugin.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p2
 
 %build
 %make_build RPM_OPT_FLAGS="%optflags" ibam krell
@@ -56,6 +58,9 @@ install -pDm644 ibam-krell.so %buildroot%_libdir/gkrellm2/plugins/ibam-krell.so
 %_libdir/gkrellm2/plugins/%name-*
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt2.1
+- Fixed build with gcc 4.7
+
 * Thu Mar 01 2012 Michael Shigorin <mike@altlinux.org> 0.5.2-alt2
 - applied Debian patches (fixes: #25725)
 - minor spec cleanup
