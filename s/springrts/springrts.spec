@@ -2,18 +2,15 @@
 %def_disable debug
 
 Name: springrts
-Version: 0.81.2.1
-Release: alt1.5
+Version: 91.0
+Release: alt1.git20120830
 
 Summary: Real time strategy game engine with many mods
 License: GPL2+ or Artistic
 Group: Games/Strategy 
 Url: http://springrts.com/
 
-Packager: Maxim Ivanov <redbaron@altlinux.org>
-
 BuildRequires(pre): rpm-build-xdg rpm-macros-cmake
-#BuildRequires: boost-program_options-devel cmake gcc-c++ libSDL-devel 
 
 BuildRequires: cmake cmake-modules java-devel /proc libGL-devel libGLU-devel gcc-c++
 BuildRequires: boost-devel boost-program_options-devel boost-asio-devel boost-signals-devel
@@ -23,15 +20,16 @@ BuildRequires: xorg-inputproto-devel xorg-kbproto-devel xorg-xextproto-devel xor
 BuildRequires: xorg-xineramaproto-devel xorg-xproto-devel zlib-devel p7zip libXcursor-devel
 BuildRequires: libdevil-devel libfreeglut-devel libglew-devel libopenal1-devel 
 BuildRequires: libvorbis-devel  python-devel libSDL-devel
-
-#BuildRequires: boost-asio-devel boost-program_options-devel boost-signals-devel ccmake gcc-c++ java-devel  libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libdevil-devel libfreeglut-devel libglew-devel libopenal1-devel libvorbis-devel libxkbfile-devel tzdata xorg-xf86vidmodeproto-devel zip
-
+BuildPreReq: docbook5-style-xsl asciidoc libminizip-devel
+BuildPreReq: libXres-devel libXtst-devel libXau-devel libXcomposite-devel
+BuildPreReq: libXdmcp-devel libXext-devel libXft-devel libXi-devel
+BuildPreReq: libXinerama-devel libxkbfile-devel libXmu-devel libXpm-devel
+BuildPreReq: libXrandr-devel libXScrnSaver-devel libXv-devel
+BuildPreReq: libXxf86misc-devel libXxf86vm-devel
 
 Requires: %name-data = %version-%release
+# git://springrts.git.sourceforge.net/gitroot/springrts/springrts
 Source0: %name-%version.tar
-Patch0: %name-0.81.2.1-alt-glibc.patch
-Patch1: %name-0.81.2.1-alt-gcc4.6.patch
-Patch2: %name-0.81.2.1-alt-DSO.patch
 
 %description
 Spring is an open source RTS (Real time Strategy) engine originally
@@ -60,9 +58,6 @@ springrts dedicated server
 
 %prep
 %setup 
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 %cmake \
@@ -74,13 +69,13 @@ springrts dedicated server
         -DLIBDIR=%_libdir \
         -DBINDIR=%_gamesbindir \
         -DAI_LIBS_DIR=%_libdir/spring \
-        -DAI_DATA_DIR=%_gamesdatadir/spring
-cd BUILD
-%make_build VERBOSE=1
+        -DAI_DATA_DIR=%_gamesdatadir/spring \
+				-DDOCDIR=share/doc/%name-%version \
+				-DDOCBOOK_XSL=%_datadir/sgml/docbook/xsl-ns-stylesheets/manpages/docbook.xsl
+%make_build -C BUILD VERBOSE=1
 
 %install
-cd BUILD
-%make install DESTDIR=%buildroot
+%makeinstall_std -C BUILD VERBOSE=1
 mkdir %buildroot%_gamesdatadir/spring/{mods,maps}
 
 %if_enabled debug
@@ -90,7 +85,12 @@ mkdir %buildroot%_gamesdatadir/spring/{mods,maps}
 
 %files 
 %_gamesbindir/spring
+%_gamesbindir/spring-headless
+%_gamesbindir/spring-multithreaded
 %_libdir/spring
+%doc %_docdir/%name-%version
+%_man6dir/*
+%exclude %_man6dir/spring-dedicated.6*
 
 %files data
 %_gamesdatadir/*
@@ -101,6 +101,7 @@ mkdir %buildroot%_gamesdatadir/spring/{mods,maps}
 %files dedicated
 %_gamesbindir/spring-dedicated
 %_libdir/*.so
+%_man6dir/spring-dedicated.6*
 
 %post data
   [ -f %_gamesdatadir/spring/base/otacontent.sdz ] && \
@@ -116,6 +117,9 @@ mkdir %buildroot%_gamesdatadir/spring/{mods,maps}
   echo " ===================================================================="
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 91.0-alt1.git20120830
+- Version 91.0
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.81.2.1-alt1.5
 - Fixed build
 
