@@ -1,12 +1,13 @@
 Name:		gsmartcontrol
 Summary:	GSmartControl is a graphical user interface for smartctl
 Version:	0.8.6
-Release:	alt2
+Release:	alt2.1
 Group:		Graphical desktop/Other
 License:	GPL
 Packager: 	Mikhail Pokidko <pma@altlinux.org>
 URL:		http://gsmartcontrol.berlios.de/home/index.php/en/Downloads
 Source:		%name-%version.tar.bz2
+Patch: gsmartcontrol-0.8.6-alt-glibc-2.16.patch
 BuildRequires:	libgtkmm2-devel, gcc-c++, libpcre-devel gksu
 Requires:	smartmontools
 
@@ -20,8 +21,10 @@ it.
 
 %prep
 %setup -q
+%patch -p2
 
 %build
+%add_optflags -fpermissive
 %configure --prefix=%prefix
 %make_build
 
@@ -40,6 +43,9 @@ it.
 
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.6-alt2.1
+- Fixed build with glibc 2.16 & gcc 4.7
+
 * Thu May 03 2012 Mikhail Pokidko <pma@altlinux.org> 0.8.6-alt2
 - fixed build with glib 2.31
 
