@@ -1,6 +1,6 @@
 Name: ipcad
 Version: 3.7.3
-Release: alt5
+Release: alt5.1
 Summary: IP accounting daemon
 License: BSD-style
 Group: Monitoring
@@ -10,6 +10,7 @@ Source0: %name-%version.tar.gz
 Source1: %name.init
 Source2: %name.sysconfig
 Source3: %name.conf
+Patch: ipcad-3.7.3-alt-glibc-2.16.patch
 
 BuildRequires: flex hostinfo iptables-devel libpcap-devel
 
@@ -25,6 +26,7 @@ to the standard output or console
 
 %prep
 %setup
+%patch -p2
 
 %build
 %autoreconf
@@ -65,6 +67,9 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/%name.conf
 %preun_service %name
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.7.3-alt5.1
+- Fixed build with glibc 2.16
+
 * Thu Nov 26 2009 Denis Klimov <zver@altlinux.org> 3.7.3-alt5
 - fix build: modify check linux/netlink.h
 
