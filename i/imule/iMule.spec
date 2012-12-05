@@ -1,6 +1,6 @@
 Name: imule
 Version: 1.4.6
-Release: alt4.qa1
+Release: alt4.qa2
 
 Summary: P2P file sharing software which connects through the anonymous I2P network
 License: GPL
@@ -8,6 +8,7 @@ Group: Networking/File transfer
 
 Url: http://echelon.i2p/imule/
 Source: %name-%version.tar
+Patch: imule-1.4.6-alt-glibc-2.16.patch
 
 Conflicts: aMule
 BuildRequires: gcc-c++ zlib-devel libgd2-devel libpng-devel wxGTK-devel flex
@@ -18,8 +19,10 @@ BuildRequires: desktop-file-utils
 
 %prep
 %setup
+%patch -p1
 
 %build
+%add_optflags -fpermissive
 %configure \
         --enable-optimize \
         --disable-debug \
@@ -48,6 +51,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc %_defaultdocdir/%name-%version
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.6-alt4.qa2
+- Fixed build with gcc 4.7 & glibc 2.16
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.4.6-alt4.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
