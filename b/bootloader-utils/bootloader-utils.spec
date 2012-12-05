@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.15
+Version: 0.4.16
 Release: alt1
 
 Summary: Bootloader utilities
@@ -79,6 +79,9 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Wed Dec 05 2012 Dmitry V. Levin <ldv@altlinux.org> 0.4.16-alt1
+- installkernel: run depmod only when installing a kernel.
+
 * Sun Nov 04 2012 Led <led@altlinux.ru> 0.4.15-alt1
 - lilo: don't strip label
 - conflicts lilo < 22.7.3-alt7
