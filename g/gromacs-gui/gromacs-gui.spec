@@ -2,14 +2,13 @@
 
 Name: gromacs-gui
 Version: 0.5.2
-Release: alt5
+Release: alt6
 License: GPL
 Group: Sciences/Chemistry
 Summary: GUI for molecular dynamics package, GROMACS
 Url: http://resal.atspace.com/grogui.htm
 # http://www.kde-apps.org/CONTENT/content-files/47665-grogui052.tar.gz
 Source: grogui%filever-%version.tar.gz
-Packager: Eugeny A. Rostovtsev <real at altlinux.org>
 
 Requires: gromacs-common gromacs-doc
 BuildRequires: libqt4-devel gcc-c++ libqwt-devel
@@ -58,6 +57,9 @@ rm %buildroot%_miconsdir/terminal.png
 %_includedir/*
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt6
+- Fixed build with glibc 2.16
+
 * Fri Mar 18 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.2-alt5
 - Rebuilt for debuginfo
 
