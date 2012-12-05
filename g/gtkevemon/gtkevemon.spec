@@ -1,6 +1,6 @@
 Name: gtkevemon
 Version: 1.8
-Release: alt2.qa1
+Release: alt2.qa2
 Summary: GtkEveMon is a skill monitoring application for EVE Online 
 
 Packager: Alexey Borovskoy <alb@altlinux.ru>
@@ -11,6 +11,7 @@ URL: http://gtkevemon.battleclinic.com
 
 Source: %name-%version.tar
 
+BuildRequires(pre): rpm-macros-make
 BuildPreReq: gcc-c++ libgtk+2-devel libgtkmm2-devel libxml2-devel zlib-devel
 BuildRequires: desktop-file-utils
 
@@ -24,7 +25,8 @@ skill training process without starting EVE Online.
 
 %build
 
-%make_build
+%add_optflags -D_POSIX_THREADS
+%make_build_ext
 
 %install
 
@@ -43,6 +45,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/*
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8-alt2.qa2
+- Fixed build
+
 * Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 1.8-alt2.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
