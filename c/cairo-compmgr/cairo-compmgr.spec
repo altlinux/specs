@@ -7,7 +7,7 @@
 
 Name: cairo-compmgr
 Version: 0.3.4
-Release: alt2.gitc609e
+Release: alt3.gitc609e
 Summary: Cairo Composite Manager
 License: GPL
 Group: System/X11
@@ -139,6 +139,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Dec 05 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.4-alt3.gitc609e
+- add MATE to OnlyShowIn in desktop file
+
 * Tue Dec 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.4-alt2.gitc609e
 - rebuild with glade3-3.8.3-alt1
 
