@@ -42,8 +42,10 @@
 %def_without rb_check
 %def_with javahl_check
 
+%define check_lops 5
+
 %define svn_ver_pre %nil
-%define svn_rel alt2
+%define svn_rel alt1
 
 # for %%libdb_soname_req macros
 %define apr_name libapr1
@@ -68,7 +70,7 @@
 %define modname dav_svn_module
 
 Name: subversion
-Version: 1.6.17
+Version: 1.6.19
 Release: %svn_rel
 
 Summary: A version control system
@@ -91,11 +93,13 @@ Source10: %module_name.start
 
 Source11: sqlite3-amalgamation-3.6.11.c
 
-Patch1: %name-1.5.4-alt-dockbook.patch
-Patch2: %name-1.5.4-alt-perl-DESTROY.patch
-Patch3: %name-1.6.1-alt-custom-libtool.patch
-Patch4: %name-1.6.0-alt-kwallet-build.patch
-Patch5: %name-1.5.4-alt-quote-filenames.patch
+Patch1: %name-%version-alt-autogen-fix.patch
+Patch2: %name-%version-alt-g++4.7-fix.patch
+Patch3: %name-1.5.4-alt-dockbook.patch
+Patch4: %name-1.5.4-alt-perl-DESTROY.patch
+Patch5: %name-1.6.1-alt-custom-libtool.patch
+Patch6: %name-1.6.0-alt-kwallet-build.patch
+Patch7: %name-1.5.4-alt-quote-filenames.patch
 Patch13: %name-1.3.1-alt-configure-swig-ruby.patch
 
 # http://bugs.gentoo.org/show_bug.cgi?id=219959
@@ -398,6 +402,8 @@ install -pD -m644 %SOURCE11 sqlite-amalgamation/sqlite3.c
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
+%patch7 -p1
 
 # TODO: check this patch
 #%patch13 -p1
@@ -414,6 +420,7 @@ cp %SOURCE8 .
 %build
 %add_optflags %optflags_shared
 
+LIBTOOL_M4=%{_datadir}/libtool/aclocal/libtool.m4 ./autogen.sh
 %autoreconf
 %configure \
         %{subst_enable static} --enable-shared \
@@ -440,6 +447,7 @@ cp %SOURCE8 .
 
 %if_with swig_pl
 %make_build libdir=%_libdir/libsvn_swig swig-pl-lib
+%make_build libdir=%_libdir/libsvn_swig autogen-swig-pl
 
 SVN_VER_MAJOR=`awk '/^#define SVN_VER_MAJOR/ {print $3}' subversion/include/svn_version.h`
 SVN_VER_MINOR=`awk '/^#define SVN_VER_MINOR/ {print $3}' subversion/include/svn_version.h`
@@ -485,6 +493,7 @@ sed -i 's:^\(SVN=\).*:\1%_bindir/svn:' contrib/client-side/asvn
 sed -i 's:#!/usr/bin/env python2:#!/usr/bin/env python:' tools/hook-scripts/mailer/mailer.py
 sed -i 's:/usr/bin/env python2$:/usr/bin/env python:' tools/hook-scripts/*.py
 
+%check
 # Running tests
 %if_enabled check
 
@@ -494,12 +503,21 @@ PWD=`pwd`
 LDLP=`find subversion -type d -name .libs|while read dir; do echo "$PWD/$dir"; done|xargs echo|tr ' ' ':'`
 
 # Perform generic tests against bdb and fsfs
+run_make_check(){
+	fs_type=$1
+	for ((i=1; i <= %check_lops ; i++))
+	do
+		LD_LIBRARY_PATH="$LDLP" %make FS_TYPE=$fs_type CLEANUP=true check && return 0 ||:
+	done
+	exit 1
+}
+
 %if_with fsfs_check
-LD_LIBRARY_PATH="$LDLP" %make FS_TYPE=fsfs CLEANUP=true check
+run_make_check fsfs
 %endif
 
 %if_with bdb_check
-LD_LIBRARY_PATH="$LDLP" %make FS_TYPE=bdb CLEANUP=true check
+run_make_check bdb
 %endif
 
 %if %with swig_pl && %with pl_check
@@ -557,14 +575,14 @@ install -pm755 contrib/client-side/svn-push/.libs/svn-push %buildroot%_bindir
 mkdir -p %buildroot%_libdir/libsvn_swig
 
 %if_with swig_py
-%make_install DESTDIR=%buildroot swig_py_libdir=%_libdir/libsvn_swig \
+%make_install DESTDIR=%buildroot libdir=%_libdir/libsvn_swig swig_py_libdir=%_libdir/libsvn_swig \
     swig_pydir=%python_sitelibdir/libsvn swig_pydir_extra=%python_sitelibdir/svn install-swig-py
 rm -f %buildroot%_libdir/libsvn_swig/libsvn_swig_py*.la
 cp -r %_builddir/%buildsubdir/subversion/bindings/swig/python/svn %buildroot%python_sitelibdir
 %endif
 
 %if_with swig_pl
-%make_install DESTDIR=%buildroot PREFIX=%_prefix swig_pl_libdir=%_libdir/libsvn_swig install-swig-pl
+%make_install DESTDIR=%buildroot PREFIX=%_prefix libdir=%_libdir/libsvn_swig swig_pl_libdir=%_libdir/libsvn_swig install-swig-pl
 rm -f %buildroot%_libdir/libsvn_swig/libsvn_swig_pl*.la
 %endif
 
@@ -847,6 +865,9 @@ fi
 /etc/bash_completion.d/*
 
 %changelog
+* Mon Dec 03 2012 Aleksey Avdeev <solo@altlinux.ru> 1.6.19-alt1
+- updated to 1.6.19
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.6.17-alt2
 - rebuilt for perl-5.16
 
