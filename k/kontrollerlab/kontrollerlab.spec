@@ -1,7 +1,7 @@
 Summary:	AVR microcontrollers IDE
 Name:		kontrollerlab
 Version:	0.8.0beta1
-Release:	alt3.qa2
+Release:	alt3.qa3
 License:	GPL
 Group:		Development/Tools
 URL:		http://sourceforge.net/projects/kontrollerlab/
@@ -17,6 +17,7 @@ BuildRequires(pre):	rpm-build-compat
 
 Patch: %name-0.8.0beta1-kshortcut.patch
 Patch1: %name-0.8.0beta1-alt-DSO.patch
+Patch2: %name-0.8.0beta1-alt-glibc-2.16.patch
 
 %description
 The KontrollerLab is an IDE for developing software for Atmel(r) 
@@ -27,6 +28,7 @@ the avrdude upload software.
 %setup
 %patch -p2
 %patch1 -p2
+%patch2 -p2
 sed -i 's|/usr/lib/|%_libdir/|' configure
 
 %build
@@ -46,6 +48,9 @@ sed -i 's|/usr/lib/|%_libdir/|' configure
 %_K3doc/*/*
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0beta1-alt3.qa3
+- Fixed build with glibc 2.16
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0beta1-alt3.qa2
 - Fixed build
 
