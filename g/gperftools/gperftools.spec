@@ -1,6 +1,6 @@
 Name: gperftools
 Version: 2.0
-Release: alt1
+Release: alt1.1
 
 Provides: google-perftools
 
@@ -46,6 +46,7 @@ files for developing applications that use the %name package.
 sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 
 %build
+%add_optflags -fpermissive
 %configure --disable-static
 %make_build
 
@@ -69,6 +70,9 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt1.1
+- Fixed build with gcc 4.7
+
 * Fri Feb 10 2012 Fr. Br. George <george@altlinux.ru> 2.0-alt1
 - Autobuild version bump to 2.0
 - Upstream renamed
