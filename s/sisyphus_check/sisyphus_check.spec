@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.35
+Version: 0.8.36
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,9 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Wed Dec 05 2012 Dmitry V. Levin <ldv@altlinux.org> 0.8.36-alt1
+- 090-check-nvr: added a check for package name validity.
+
 * Wed Sep 12 2012 Dmitry V. Levin <ldv@altlinux.org> 0.8.35-alt1
 - 211-check-firmware: removed "noarch" check (closes: #27709).
 
