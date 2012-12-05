@@ -1,6 +1,6 @@
 Name:		kima
 Version:	0.7.4
-Release:	alt3
+Release:	alt3.1
 Summary:	A KDE3 Kicker Applet
 Source0:	%name-%version.tar.gz
 Url:		http://kima.sourceforge.net/
@@ -9,6 +9,7 @@ License:	GPLv2
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Patch0:		%name-0.7.4-admin-new-autotools.diff
 Patch1:		%name-0.7.4-fix-autoconf-2.64.diff
+Patch2:   %name-0.7.4-alt-glibc-2.16.diff
 
 # Automatically added by buildreq on Fri Oct 22 2010 (-bi)
 BuildRequires: gcc-c++ imake kdelibs-devel libXt-devel libhal-devel libjpeg-devel libqt3-devel xml-utils xorg-cf-files libtqt-devel
@@ -21,6 +22,7 @@ Make sure you have enabled a supported kernel module.
 %setup
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %add_optflags -I%_includedir/tqtinterface
@@ -38,6 +40,9 @@ make -f admin/Makefile.common
 %_K3datadir/apps/kicker/applets/%name.desktop
 
 %changelog
+* Wed Dec  5 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt3.1
+- Fixed build with glibc 2.16
+
 * Fri Mar 04 2011 Timur Aitov <timonbl4@altlinux.org> 0.7.4-alt3
 - move to alternate place
 
