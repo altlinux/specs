@@ -1,6 +1,6 @@
 Name: google-perftools
 Version: 1.9.1
-Release: alt1
+Release: alt1.1
 
 Summary: Performance tools for C++
 Group: Development/Other
@@ -45,6 +45,7 @@ files for developing applications that use the %name package.
 sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 
 %build
+%add_optflags -fpermissive
 %configure --disable-static
 %make_build
 
@@ -67,6 +68,9 @@ sed -i '\@^[ 	]*//@d' src/google/malloc_hook_c.h
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt1.1
+- Fixed build with gcc 4.7
+
 * Thu Jan 12 2012 Fr. Br. George <george@altlinux.ru> 1.9.1-alt1
 - Autobuild version bump to 1.9.1
 
