@@ -1,6 +1,6 @@
 Name: ceph
-Version: 0.54
-Release: alt2
+Version: 0.55
+Release: alt1
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -15,7 +15,7 @@ Patch0: %name-%version-%release.patch
 BuildRequires: boost-devel-headers gcc-c++ libaio-devel libcurl-devel
 BuildRequires: libedit-devel libexpat-devel libfcgi-devel libfuse-devel
 BuildRequires: libgoogle-perftools-devel libgtkmm2-devel libkeyutils-devel
-BuildRequires: libnss-devel libuuid-devel
+BuildRequires: libnss-devel libuuid-devel boost-program_options-devel
 
 BuildRequires(pre): rpm-build-python
 
@@ -251,6 +251,9 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Wed Dec 05 2012 Alexei Takaseev <taf@altlinux.org> 0.55-alt1
+- 0.55
+
 * Wed Nov 28 2012 Alexei Takaseev <taf@altlinux.org> 0.54-alt2
 - Rebuild with boost 1.52.0
 
