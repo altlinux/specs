@@ -2,7 +2,7 @@
 
 Name: krb5
 Version: 1.10.2
-Release: alt2
+Release: alt2.1
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -37,6 +37,7 @@ Patch16: krb5-1.10-alt-avoid-preprocessor-loop.patch
 Patch17: krb5-1.10.2-fedora-keytab-etype.patch
 Patch18: krb5-fedora-trunk-pkinit-anchorsign.patch
 Patch19: krb5-1.10.2-cve-2012-1015.patch
+Patch20: krb5-no-Werror.patch
 
 BuildRequires: /dev/pts /proc
 %{?_with_test:buildrequires: tcsh dejagnu telnet}
@@ -158,6 +159,7 @@ MIT Kerberos.
 %patch17 -p2
 %patch18 -p2
 %patch19 -p2
+%patch20 -p3
 
 cat %SOURCE10 | while read manpage ; do
         mv "$manpage" "$manpage".in
@@ -167,6 +169,7 @@ done
 
 %build
 util/reconf --verbose --force
+%autoreconf
 DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 %add_optflags -I/usr/include/et
 %add_optflags -DKRB5_DNS_LOOKUP
@@ -185,6 +188,8 @@ DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 	--disable-rpath \
 	--with-selinux
 	#
+sed -i 's|\-Werror=uninitialized||g' $(find ./ -name Makefile)
+sed -i 's|\-Werror|-Wall|g' $(find ./ -name Makefile)
 make all %{?_with_test:check}
 
 %install
@@ -373,6 +378,9 @@ install -p -m644 include/krb5/authdata_plugin.h \
 # {{{ changelog
 
 %changelog
+* Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.2-alt2.1
+- Fixed build
+
 * Tue Aug 07 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.10.2-alt2
 - CVE-2012-1015
 
