@@ -1,6 +1,6 @@
 Name: lbzip2
 Version: 2.1
-Release: alt1
+Release: alt1.1
 
 Summary: Parallel bzip2/bunzip2 filter
 License: GPLv3+
@@ -8,6 +8,7 @@ Group: Archiving/Compression
 
 URL: http://lacos.hu/
 Source: https://github.com/downloads/kjn/lbzip2/lbzip2-%version.tar.gz
+Patch: lbzip2-2.1-alt-no-internal-stdio.h.patch
 
 %description
 Lbzip2 is a Pthreads-based parallel bzip2/bunzip2 filter, passable to GNU tar
@@ -20,8 +21,10 @@ block size.
 
 %prep
 %setup
+%patch -p2
 
 %build
+%autoreconf
 %configure
 %make_build
 
@@ -33,6 +36,9 @@ block size.
 %_man1dir/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1-alt1.1
+- Fixed build
+
 * Sun Nov 27 2011 Victor Forsiuk <force@altlinux.org> 2.1-alt1
 - 2.1
 
