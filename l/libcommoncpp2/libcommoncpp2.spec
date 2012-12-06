@@ -2,7 +2,7 @@
 
 Name: libcommoncpp2
 Version: 1.8.1
-Release: alt3
+Release: alt3.1
 
 %define docdir %_docdir/%name-%version
 
@@ -13,6 +13,7 @@ Group: Development/C++
 Url: http://cplusplus.sourceforge.net/
 
 Source: %name-%version-%release.tar
+Patch: libcommoncpp2-1.8.1-alt-no-overflow.patch
 
 BuildRequires: gcc-c++ libstdc++-devel zlib-devel libxml2-devel doxygen
 BuildRequires: info
@@ -52,6 +53,7 @@ Documentation for %name
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -86,6 +88,9 @@ cp -a AUTHORS NEWS README THANKS TODO doc/html %buildroot%docdir
 %_infodir/commoncpp2.*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.1-alt3.1
+- Fixed overflow of destination buffer
+
 * Tue Sep 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.8.1-alt3
 - build fixed
 
