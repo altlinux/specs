@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.16
+Version: 2.0.17
 Release: alt1
 
 Summary: A set of build rpm utilities
@@ -68,6 +68,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Dec 06 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.17-alt1
+- config: add missed GIRARHOST setting
+- fix epm using
+- rpmbs: do fatal if last tag is not on the last commit
+- common: add print_message and use it in fatal and warning. Print only script name, not absolute path
+- rpmbs: use cp instead mv for correct group owner (forced by sgid)
+
 * Fri Nov 30 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.16-alt1
 - introduce prepare_rpmdir, use in for create RPMDIR
 - introduce RPMTMPDIR and create link to it in RPM/tmp (in rpmbb script)
