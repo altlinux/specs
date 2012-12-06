@@ -6,7 +6,7 @@
 
 Name: libsmi
 Version: 0.4.8
-Release: alt2
+Release: alt2.1
 
 Summary: A library to access SMI MIB information
 License: BSD
@@ -21,6 +21,7 @@ Patch1: %name-backports.patch
 Patch2: %name-man.patch
 Patch3: %name-smistrip.patch
 Patch4: %name-fix-parallel-build.patch
+Patch5: %name-0.4.8-alt-yyleng.patch
 
 Requires: snmp-mibs
 BuildRequires: flex gcc-c++ wget
@@ -89,6 +90,7 @@ This package contains the LibSMI tools.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p0
 
 %build
 %autoreconf
@@ -143,6 +145,9 @@ install -p -m 644 %SOURCE1 %buildroot%_sysconfdir/smi.conf
 %_man1dir/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.8-alt2.1
+- Fixed build
+
 * Mon Oct 25 2010 Alexey Shabalin <shaba@altlinux.ru> 0.4.8-alt2
 - some backports
 - security fix: CVE-2010-2891 (ALT #24394)
