@@ -2,7 +2,7 @@
 
 Name: cppunit
 Version: 1.12.1
-Release: alt2
+Release: alt2.svn20120901
 
 Summary: C++ port of the famous JUnit framework for unit testing
 License: LGPL
@@ -10,11 +10,9 @@ Group: Development/C++
 Url: http://sourceforge.net/projects/cppunit
 
 Source: %name-%version.tar
-Patch: %name-%version-%release.patch
-Packager: Alexey I. Froloff <raorn@altlinux.org>
 
 # Automatically added by buildreq on Thu Oct 05 2006
-BuildRequires: doxygen gcc-c++
+BuildRequires: doxygen gcc-c++ graphviz
 
 %description
 CppUnit is the C++ port of the famous JUnit framework for unit
@@ -31,12 +29,24 @@ Provides: %name-gcc2 = %version-%release, %name-gcc3 = %version-%release, %name-
 CppUnit is the C++ port of the famous JUnit framework for unit
 testing.
 
+%package devel-docs
+Summary: Documentation for CppUnit
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name-devel < %version-%release
+
+%description devel-docs
+CppUnit is the C++ port of the famous JUnit framework for unit
+testing.
+
+This package contains development documentation for CppUnit.
+
 %prep
-%setup -q
-%patch -p1
+%setup
 
 %build
-%autoreconf
+#autoreconf
+./autogen.sh
 %configure \
 	--disable-static \
 	--docdir=%_docdir/%name-%version
@@ -55,9 +65,15 @@ testing.
 %_datadir/aclocal/*
 %_man1dir/*
 %_pkgconfigdir/%name.pc
+
+%files devel-docs
 %doc %_docdir/%name-%version/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.1-alt2.svn20120901
+- New snapshot
+- Extracted docs into separate package
+
 * Sat Mar 12 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.1-alt2
 - Rebuilt for debuginfo
 
