@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.1.12
-Release: alt1.1
+Version: 0.2.2
+Release: alt1
 
 Summary: A Python MessagePack (de)serializer
 
@@ -14,7 +14,7 @@ URL: http://pypi.python.org/pypi/msgpack-python/
 
 Source: %name-%version.tar
 
-BuildRequires: python-module-distribute python-module-Cython
+BuildRequires: python-module-distribute python-module-Cython python-module-nose
 
 %description
 MessagePack is a binary-based efficient data interchange format that is
@@ -26,7 +26,7 @@ This is a Python (de)serializer for MessagePack.
 Group: Development/Python3
 Summary: A Python3 MessagePack (de)serializer
 BuildRequires(pre): rpm-build-python3
-BuildRequires: python3-devel python3-module-distribute python3-module-Cython
+BuildRequires: python3-devel python3-module-distribute python3-module-Cython python3-module-nose
 
 %description -n python3-module-%oname
 MessagePack is a binary-based efficient data interchange format that is
@@ -76,6 +76,9 @@ popd
 %endif
 
 %changelog
+* Thu Dec 06 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.2.2-alt1
+- New version
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.12-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
