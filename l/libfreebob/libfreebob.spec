@@ -8,7 +8,7 @@ Version: 1.0.11
 %ifdef svnrel
 Release: alt0.svn.%svnrel
 %else
-Release: alt3
+Release: alt3.1
 %endif
 
 Summary: Free Firewire Audio Drivers
@@ -26,6 +26,8 @@ Source: http://prdonwnloads.sourceforge.net/%name/%name-%version.tar.gz
 Patch: libfreebob-1.0.11-includes.patch
 # https://svn.pardus.org.tr/pardus/2011/devel/hardware/firewire/libfreebob/files/gcc-4.5.patch
 Patch1: libfreebob-1.0.11-gcc-4.5.patch
+
+Patch2: libfreebob-1.0.11-alt-glibc-2.16.patch
 
 BuildRequires: gcc-c++, libraw1394-devel >= 1.2.1, libiec61883-devel >= 1.1.0
 BuildRequires: libavc1394-devel >= 0.5.3, libxml2-devel, libalsa-devel
@@ -55,6 +57,7 @@ Header files for libfreebob library.
 
 %patch -p1
 %patch1 -p1 
+%patch2 -p2
 # Tweak libiec61883 build requirements.
 perl -pi -e 's/1.1.0/1.0.0/' configure
 
@@ -84,6 +87,9 @@ perl -pi -e 's/1.1.0/1.0.0/' configure
 %endif #static
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.11-alt3.1
+- Fixed build with glibc 2.16
+
 * Wed Nov 10 2010 Yuri N. Sedunov <aris@altlinux.org> 1.0.11-alt3
 - rebuild for soname set-versions
 
