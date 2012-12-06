@@ -2,7 +2,7 @@
 
 Name: bfl
 Version: 0.8.0
-Release: alt2
+Release: alt3.svn20110302
 Summary: The Bayesian Filtering Library (BFL)
 
 Group: Sciences/Mathematics
@@ -10,7 +10,7 @@ License: LGPL
 Url: http://www.orocos.org/bfl
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: orocos-%name-%version.tar.bz2
+Source: orocos-%name-%version.tar
 Requires: lib%name = %version-%release
 
 BuildPreReq: cmake gcc-c++ cppunit-devel boost-devel doxygen
@@ -123,6 +123,12 @@ mv doc/html %buildroot%_defaultdocdir/lib%name-devel/
 %_defaultdocdir/lib%name-devel
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt3.svn20110302
+- Fixed build
+
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt2.svn20110302
+- New snapshot
+
 * Tue Aug 30 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt2
 - Rebuilt with libginac 1.6.1
 
