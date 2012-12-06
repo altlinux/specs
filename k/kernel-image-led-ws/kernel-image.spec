@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.54
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -511,7 +511,7 @@ Patch0671: linux-%kernel_branch.51-fix-fs--anon_inodes.patch
 Patch0672: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0673: linux-%kernel_branch.51-fix-fs--block.patch
 Patch0674: linux-%kernel_branch.42-fix-fs--eventpoll.patch
-Patch0675: linux-%kernel_branch.51-fix-fs-autofs4.patch
+Patch0675: linux-%kernel_branch.53-fix-fs-autofs4.patch
 Patch0676: linux-%kernel_branch.51-fix-fs-btrfs.patch
 Patch0677: linux-%kernel_branch.44-fix-fs-cachefiles.patch
 Patch0678: linux-%kernel_branch.42-fix-fs-ceph.patch
@@ -584,7 +584,7 @@ Patch0786: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_pptp.patch
 Patch0787: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_sip.patch
 Patch0788: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_snmp_basic.patch
 Patch0789: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_tftp.patch
-Patch0790: linux-%kernel_branch.52-fix-net-ipv6.patch
+Patch0790: linux-%kernel_branch.53-fix-net-ipv6.patch
 Patch0791: linux-%kernel_branch.43-fix-net-ipv6-netfilter--nf_conntrack_ipv6.patch
 Patch0792: linux-%kernel_branch.42-fix-net-ipv6--ip6_tunnel.patch
 Patch0793: linux-%kernel_branch.43-fix-net-iucv--af_iucv.patch
@@ -654,7 +654,7 @@ Patch1082: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
 
 Patch1091: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
 
-Patch1101: linux-%kernel_branch.42-feat-drivers-video--bootsplash.patch
+Patch1101: linux-%kernel_branch.53-feat-drivers-video--bootsplash.patch
 Patch1102: linux-%kernel_branch.43-feat-drivers-video--xgifb.patch
 
 Patch1111: linux-%kernel_branch.42-feat-fs--secrm.patch
@@ -2833,6 +2833,16 @@ done)
 
 
 %changelog
+* Thu Dec 06 2012 Led <led@altlinux.ru> 3.0.54-alt3
+- updated:
+  + fix-fs-autofs4
+
+* Wed Dec 05 2012 Led <led@altlinux.ru> 3.0.54-alt2
+- updated:
+  + fix-net-ipv6
+  + feat-drivers-video--bootsplash
+  + feat-mm--uksm
+
 * Tue Dec 04 2012 Led <led@altlinux.ru> 3.0.54-alt1
 - 3.0.54
 - removed:
