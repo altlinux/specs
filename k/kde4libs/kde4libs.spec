@@ -5,11 +5,11 @@
 
 %define major 4
 %define minor 9
-%define bugfix 3
+%define bugfix 4
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -315,6 +315,10 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Wed Dec 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
+- new version
+- update udisks2 backend from KDE/4.10 branch
+
 * Thu Nov 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt2
 - update from KDE/4.9 branch
 - update udisks2 backend from KDE/4.10 branch
