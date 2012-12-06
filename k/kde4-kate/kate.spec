@@ -1,7 +1,7 @@
 
 %add_findpackage_path %_kde4_bindir
 
-%ifarch arm
+%ifarch %arm
 %def_disable desktop
 %else
 %def_enable desktop
@@ -10,7 +10,7 @@
 %define rname kate
 %define major 4
 %define minor 9
-%define bugfix 3
+%define bugfix 4
 Name: kde4-kate
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -252,6 +252,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Thu Dec 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
+- new version
+
 * Fri Nov 09 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
