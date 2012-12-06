@@ -1,6 +1,6 @@
 Name: liblensfun
 Version: 0.2.5
-Release: alt3.1
+Release: alt3.2
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -14,6 +14,7 @@ Patch1: lensfun-0.2.5-lensdbadditions.patch
 # Patch from PLD to fix broken vectorization code:
 Patch2: lensfun-0.2.5-vectorization.patch
 Patch3: lensfun-0.2.5-alt-debuginfo.patch
+Patch4: lensfun-0.2.5-alt-libpng15.patch
 
 # Automatically added by buildreq on Mon Aug 16 2010
 BuildRequires: doxygen gcc-c++ glib2-devel libpng-devel python-modules
@@ -34,11 +35,17 @@ Development tools for programs which will use the lensfun library.
 %patch1 -p1
 %patch2 -p0
 %patch3 -p2
+%patch4 -p2
 
 %build
 # Additional LIBS put here to satisfy as-needed linker mode (in lazy way :).
 LIBS="-lglib-2.0 -lpng" \
-./configure -v --prefix=/usr --target=posix
+%add_optflags -fpermissive
+./configure -v \
+	--prefix=/usr \
+	--target=posix \
+	--cflags="%optflags" \
+	--cxxflags="%optflags"
 
 # set GCC.LDFLAGS to avoid stripping
 %make_build all V=1 GCC.LDFLAGS.release=""
@@ -56,6 +63,9 @@ LIBS="-lglib-2.0 -lpng" \
 %_pkgconfigdir/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt3.2
+- Fixed build with libpng15
+
 * Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt3.1
 - Rebuilt for debuginfo
 
