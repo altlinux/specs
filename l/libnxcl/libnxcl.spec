@@ -1,7 +1,7 @@
 %define libname nxcl
 Name: libnxcl
 Version: 0.9
-Release: alt2.1.qa1
+Release: alt2.1.qa2
 
 Epoch: 1
 
@@ -21,6 +21,7 @@ Patch15: restorekeyboard.patch
 Patch16: publicKey.patch
 Patch17: deletelogfiles.patch
 Patch18: ssh_dnserror.patch
+Patch19: libnxcl-0.9-alt-glibc-2.16.patch
 
 Requires: nx
 
@@ -60,6 +61,7 @@ This package provides static libnxcl library
 %patch16 -p1
 %patch17 -p1
 %patch18 -p1
+%patch19 -p2
 
 %build
 %autoreconf
@@ -83,6 +85,9 @@ This package provides static libnxcl library
 %_libdir/*.a
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.9-alt2.1.qa2
+- Fixed build with glibc 2.16
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:0.9-alt2.1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
