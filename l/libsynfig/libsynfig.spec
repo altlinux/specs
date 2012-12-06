@@ -7,7 +7,7 @@
 
 Name: libsynfig
 Version: 0.63.03
-Release: alt1
+Release: alt1.1
 
 Summary: Vector-based 2D animation software package
 
@@ -46,6 +46,7 @@ Header files for Synfig.
 %build
 %__libtoolize  --copy --force
 autoreconf --install --force
+%add_optflags -fpermissive
 %configure
 #%__subst "s|\$(includedir)/synfig|\$(includedir)|g" src/synfig/Makefile
 #%__subst "s|%_includedir/synfig-0.0|\$(pkgincludedir)/synfig-0.0|g" src/synfig/Makefile
@@ -68,6 +69,9 @@ autoreconf --install --force
 %_libdir/lib*.so
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.63.03-alt1.1
+- Fixed build with gcc 4.7
+
 * Thu Jan 12 2012 Yuriy Shirokov <yushi@altlinux.org> 0.63.03-alt1
 - new version 0.63.03
 
