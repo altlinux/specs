@@ -1,7 +1,7 @@
 
 Name: libopensync
 Version: 0.36
-Release: alt1.3
+Release: alt1.4
 
 Summary: Synchronisation framework
 License: %lgpl2plus
@@ -11,9 +11,11 @@ Packager: Mobile Development Team <mobile@packages.altlinux.org>
 
 Source: %name-%version.tar.bz2
 Patch: libopensync-0.36-alt-glib2.patch
+Patch1: libopensync-0.36-alt-python.patch
 
+BuildRequires(pre): rpm-build-licenses
 BuildRequires: gcc-c++ glib2-devel libsqlite3-devel libxml2-devel pkg-config cmake
-BuildRequires: python-devel python-modules-encodings swig zlib-devel rpm-build-licenses
+BuildRequires: python-devel python-modules-encodings swig zlib-devel
 BuildPreReq: check
 
 %description
@@ -58,6 +60,7 @@ Python module for %name.
 %prep
 %setup -q
 %patch -p2
+%patch1 -p2
 
 %build
 #configure --disable-profiling --enable-tools --disable-unit-tests
@@ -97,6 +100,9 @@ make install DESTDIR=%buildroot
 %dir %python_sitelibdir/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.36-alt1.4
+- Fixed build
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.36-alt1.3
 - Fixed build
 
