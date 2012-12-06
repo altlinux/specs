@@ -23,11 +23,11 @@
 
 %define major 4
 %define minor 9
-%define bugfix 3
+%define bugfix 4
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -480,6 +480,34 @@ Requires: %name-common = %version-%release
 %description -n liboxygenstyleconfig4
 KDE 4 library
 
+%package -n libkwinactiveglutils4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkwinactiveglutils4
+KDE 4 library
+
+%package -n libkwinactivenvidiahack4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkwinactivenvidiahack4
+KDE 4 library
+
+%package -n libkwinactiveglesutils4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkwinactiveglesutils4
+KDE 4 library
+
+%package -n libkwinactiveeffects4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libkwinactiveeffects4
+KDE 4 library
+
 
 %prep
 %setup -q -n %rname-%version
@@ -866,8 +894,6 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %endif
 %files -n libksgrd4
 %_K4libdir/libksgrd.so.*
-%files -n libkwineffects4
-%_K4libdir/libkwineffects.so.*
 %files -n libkworkspace4
 %_K4libdir/libkworkspace.so.*
 %if_enabled desktop
@@ -887,8 +913,6 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %files -n libtaskmanager4
 %_K4libdir/libtaskmanager.so.*
 %endif
-%files -n libkwinnvidiahack4
-%_K4libdir/libkwinnvidiahack.so.*
 %files -n libkephal4
 %_K4libdir/libkephal.so.*
 %files -n liblsofui4
@@ -909,12 +933,27 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %endif
 %files -n liboxygenstyle4
 %_K4libdir/liboxygenstyle.so.*
-%files -n libkwinglutils4
-%_K4libdir/libkwinglutils.so.*
-%files -n libkwinglesutils4
-%_K4libdir/libkwinglesutils.so.*
 %files -n liboxygenstyleconfig4
 %_K4libdir/liboxygenstyleconfig.so.*
+%if_enabled desktop
+%files -n libkwinglutils4
+%_K4libdir/libkwinglutils.so.*
+%files -n libkwinnvidiahack4
+%_K4libdir/libkwinnvidiahack.so.*
+%files -n libkwinglesutils4
+%_K4libdir/libkwinglesutils.so.*
+%files -n libkwineffects4
+%_K4libdir/libkwineffects.so.*
+%else
+%files -n libkwinactiveglutils4
+%_K4libdir/libkwinactiveglutils.so.*
+%files -n libkwinactivenvidiahack4
+%_K4libdir/libkwinactivenvidiahack.so.*
+%files -n libkwinactiveglesutils4
+%_K4libdir/libkwinactiveglesutils.so.*
+%files -n libkwinactiveeffects4
+%_K4libdir/libkwinactiveeffects.so.*
+%endif
 
 
 %files devel
@@ -926,6 +965,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Dec 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
+- new version
+
 * Wed Nov 21 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt2
 - don't use compositing for full-screen windows by default
 
