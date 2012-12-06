@@ -2,7 +2,7 @@
 
 Name: libpt
 Version: 2.8.4
-Release: alt2
+Release: alt2.1
 Summary: Portable Tools Libary
 License: MPL
 Group: System/Libraries
@@ -63,6 +63,7 @@ autoconf -f
 cd ..
 
 %build
+%add_optflags -fpermissive
 %configure \
 	--enable-v4l2 \
 	--enable-plugins \
@@ -96,6 +97,9 @@ cd ..
 %_libdir/%oname-%version/devices/videoinput/*_pwplugin.so
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.4-alt2.1
+- Fixed build with gcc 4.7
+
 * Mon Nov 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.8.4-alt2
 - resurrect
 
