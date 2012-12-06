@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gio-querymodules /usr/bin/glib-genmarshal /usr/bin/gtkdocize gcc-c++ libldap-devel pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/gio-querymodules /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize gcc-c++ libldap-devel pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
 Group: System/Base
 %define _libexecdir %_prefix/libexec
@@ -11,7 +11,7 @@ Group: System/Base
 %endif
 Name:	        mate-conf	
 Version:	1.4.0
-Release:	alt3_21
+Release:	alt4_21
 Summary:	MATE Desktop configuration tool
 License:	GPLv2+	
 URL:		http://mate-desktop.org
@@ -129,7 +129,7 @@ sed -i -e 's,%%{_localstatedir}/lib,%%{_var}/lib,g' %{buildroot}%{_rpmmacrosdir}
 
 
 %post
-gio-querymodules-%{__isa_bits} %{_libdir}/gio/modules || :
+gio-querymodules %{_libdir}/gio/modules || :
 if [ $1 -gt 1 ]; then
     if ! fgrep -q mateconf.xml.system %{_sysconfdir}/mateconf/2/path; then
         sed -i -e 's@xml:readwrite:$(HOME)/.mateconf@&\n\n# Location for system-wide settings.\nxml:readonly:/etc/mateconf/mateconf.xml.system@' %{_sysconfdir}/mateconf/2/path
@@ -137,7 +137,7 @@ if [ $1 -gt 1 ]; then
 fi
 
 %postun
-gio-querymodules-%{__isa_bits} %{_libdir}/gio/modules || :
+gio-querymodules %{_libdir}/gio/modules || :
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS README
@@ -179,6 +179,9 @@ gio-querymodules-%{__isa_bits} %{_libdir}/gio/modules || :
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Dec 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt4_21
+- bugfix (closes: 28195)
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_21
 - new fc release
 
