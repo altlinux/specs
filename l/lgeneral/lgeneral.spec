@@ -3,7 +3,7 @@
 Name:         lgeneral
 Summary:      Turn-based strategy inspired by Panzer General 
 Version:      1.2
-Release:      alt5
+Release:      alt5.1
 License:      GPL
 Group:        Games/Strategy
 URL:          http://lgames.sf.net
@@ -16,6 +16,8 @@ Source5:	newcampaign.zip
 Source6:	APP-6A.zip
 Patch0:	      %name.patch
 Patch1:		%name.build.patch
+Patch2: lgeneral-1.2-alt-gettext.patch
+Patch3: lgeneral-1.2-alt-link.patch
 
 Obsoletes: pg-data
 
@@ -30,9 +32,16 @@ Original data files can be downloaed from http://lgames.sourceforge.net/index.ph
 %setup -q -n %name-%version%beta
 %patch0 -p2
 %patch1 -p1
+%patch2 -p2
+%patch3 -p2
+
+touch config.rpath
 
 %build
-%configure
+%autoreconf
+%configure \
+	--disable-rpath \
+	--with-libintl-prefix=%prefix
 
 
 make
@@ -68,6 +77,9 @@ cp %SOURCE2 %buildroot%_datadir/games/%name/NOTES.ALT
 
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2-alt5.1
+- Built with external gettext
+
 * Wed Dec 10 2008 Mikhail Pokidko <pma@altlinux.org> 1.2-alt5
 - fixed build for x86_64
 
