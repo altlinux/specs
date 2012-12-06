@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.2
+Version: %ver_major.4
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -40,7 +40,7 @@ Obsoletes: gscript
 %define fontconfig_ver 2.5.0
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
-%define hb_ver 0.9.4
+%define hb_ver 0.9.9
 
 # We need to prereq these so we can run pango-querymodules in post
 PreReq: glib2 >= %glib_ver
@@ -184,6 +184,12 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Fri Dec 07 2012 Yuri N. Sedunov <aris@altlinux.org> 1.32.4-alt1
+- 1.32.4
+
+* Tue Nov 20 2012 Yuri N. Sedunov <aris@altlinux.org> 1.32.3-alt1
+- 1.32.3
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 1.32.2-alt1
 - 1.32.2
 
