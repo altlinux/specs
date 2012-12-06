@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.7.20
+Version: 1.7.23
 Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
@@ -107,6 +107,16 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Thu Dec 06 2012 Vitaly Lipatov <lav@altlinux.ru> 1.7.23-alt1
+- add _sharedstatedir = /var/lib to compat
+- distr_vendor: sync with distr_info from eepm package
+
+* Mon Jul 23 2012 Vitaly Lipatov <lav@altlinux.ru> 1.7.22-alt1
+- add _target_libdir
+
+* Thu Jul 19 2012 Vitaly Lipatov <lav@altlinux.ru> 1.7.21-alt1
+- distr_vendor: add ROSA support
+
 * Tue Jun 05 2012 Vitaly Lipatov <lav@altlinux.ru> 1.7.20-alt1
 - use x86_64 version instead regular if it exists
 
