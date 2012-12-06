@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.28
-Release: alt3
+Release: alt4
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -131,6 +131,10 @@ fi ||:
 
 
 %changelog
+* Thu Dec 06 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt4
+- Check/generate the SSL certificate before starting the service
+  from systemd (closes: 27987).
+
 * Wed Nov 28 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt3
 - Use "a wretched-man's crutch" daemonization: start-stop-daemon
   for SysV-init (closes: 27865).
