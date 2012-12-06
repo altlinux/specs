@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.16
+Version: 0.4.17
 Release: alt1
 
 Summary: Bootloader utilities
@@ -79,6 +79,10 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Thu Dec 06 2012 Dmitry V. Levin <ldv@altlinux.org> 0.4.17-alt1
+- kernel.filetrigger: added handling of kernel modules,
+  obsoletes %%post_kernel_modules and %%postun_kernel_modules.
+
 * Wed Dec 05 2012 Dmitry V. Levin <ldv@altlinux.org> 0.4.16-alt1
 - installkernel: run depmod only when installing a kernel.
 
