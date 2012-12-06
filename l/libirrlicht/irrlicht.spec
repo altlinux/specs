@@ -3,7 +3,7 @@
 
 Name: libirrlicht
 Version: 1.7.1
-Release: alt2
+Release: alt2.1
 
 Summary: Fast Open-source 3D engine
 License: BSD-style
@@ -14,6 +14,7 @@ Packager: Damir Shayhutdinov <damir@altlinux.ru>
 Source0: %realname-%version.tar.bz2
 Patch0: irrlicht-%version-alt-autotools.patch
 Patch1: irrlicht-%version-alt-use-system-libs.patch
+Patch2: irrlicht-1.7.1-alt-libpng15.patch
 BuildPreReq: libX11-devel libXxf86vm-devel libGLU-devel libpng-devel gcc-c++ zlib-devel
 BuildPreReq: libjpeg-devel pkg-config unzip bzlib-devel
 
@@ -59,6 +60,7 @@ Static libs for building statically linked software that uses %name
 %setup -q -n %realname-%version
 %patch0 -p2
 %patch1 -p1
+%patch2 -p2
 
 %build
 autoreconf -fisv
@@ -88,6 +90,9 @@ autoreconf -fisv
 %endif
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.1-alt2.1
+- Fixed build with libpng15
+
 * Sat Jan 22 2011 Damir Shayhutdinov <damir@altlinux.ru> 1.7.1-alt2
 - Rebuilt with set-provides.
 
