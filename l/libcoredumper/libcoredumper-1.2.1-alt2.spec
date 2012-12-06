@@ -6,13 +6,14 @@ Packager: Repocop Q. A. Robot <repocop@altlinux.org>
 %define bname coredumper
 Name: lib%bname
 Version: 1.2.1
-Release: alt2.2
+Release: alt2.3
 Summary: Library to create core dumps of the running program
 Group: System/Libraries
 License: %bsdstyle
 URL: http://code.google.com/p/google-%bname/
 Source: http://google-%bname.googlecode.com/files/%bname-%version.tar
 Patch: %bname-1.2.1-alt-include.patch
+Patch1: %bname-1.2.1-alt-glibc-kernheaders-3.5.4.patch
 
 # Automatically added by buildreq on Tue Apr 15 2008
 BuildRequires: gcc-c++
@@ -77,6 +78,7 @@ This package includes examples of using %name.
 %prep
 %setup -n %bname-%version
 %patch -p1
+%patch1 -p2
 
 
 %build
@@ -122,6 +124,9 @@ install -m 0644 examples/* %buildroot%_docdir/%name-%version/examples/
 
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.3
+- Fixed build with glibc-kernheaders 3.5.4
+
 * Tue Jul 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.1-alt2.2
 - Rebuilt for set-versions
 
