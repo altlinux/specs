@@ -1,13 +1,14 @@
 Summary: CLAM - C++ Library for Audio and Music
 Name: libclam
 Version: 1.3.0
-Release: alt1.3
+Release: alt1.4
 License: GPL
 Url: http://clam.iua.upf.edu
 Group: System/Libraries
 Packager: Timur Batyrshin <erthad@altlinux.org>
 Source0: %name-%version.tar.bz2
 Patch0: libclam-1.3.0-alt-gcc4.6.patch
+Patch1: libclam-1.3.0-alt-glibc-2.16.patch
 
 
 BuildRequires: doxygen gcc-c++ graphviz id3lib-devel ladspa_sdk libfftw3-devel libmad-devel libsndfile-devel libvorbis-devel libxerces-c28-devel scons texlive-latex-recommended libalsa-devel
@@ -59,6 +60,7 @@ This package contains the framework documentation and some example programs.
 %prep
 %setup 
 %patch -p2
+%patch1 -p2
 
 %build
 install -dm 755 %buildroot%_prefix
@@ -85,7 +87,8 @@ scons 	-j$NPROCS configure \
 	with_portaudio=0 \
 	with_portmidi=0 
 
-scons 	-j$NPROCS
+#scons 	-j$NPROCS
+scons 	-j 1
 
 # and now doxygenate CLAM stuff
 doxygen ./doxygen.cfg
@@ -111,6 +114,9 @@ mv %buildroot%_prefix/libX/* %buildroot%_libdir
 %doc doxygen/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.4
+- Fixed build with glibc 2.16
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.3
 - Enabled jack support
 
