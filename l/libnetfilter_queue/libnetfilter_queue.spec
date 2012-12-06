@@ -1,6 +1,6 @@
 Name: libnetfilter_queue
 Version: 0.0.15
-Release: alt1.3
+Release: alt1.4
 
 Summary: API to packets that have been queued by the kernel packet filter
 Url: http://netfilter.org/projects/libnetfilter_queue/
@@ -8,6 +8,7 @@ Packager: Avramenko Andrew <liks@altlinux.ru>
 License: GPL
 Group: System/Libraries
 Source: %name-%version.tar
+Source1: ip_queue.h
 Patch0: libnetfilter_queue-0.0.15-alt-DSO.patch
 Requires: libnfnetlink
 
@@ -31,6 +32,9 @@ Development part of libnetfilter_queue.
 %setup
 %patch0 -p2
 
+mkdir -p include/linux/netfilter_ipv4
+install -p -m644 %SOURCE1 include/linux/netfilter_ipv4
+
 %build
 %configure --disable-static
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
@@ -51,6 +55,9 @@ make install DESTDIR=%buildroot
 %_libdir/pkgconfig/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.15-alt1.4
+- Fixed build
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.15-alt1.3
 - Fixed build
 
