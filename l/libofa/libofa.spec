@@ -1,6 +1,6 @@
 Name: libofa
 Version: 0.9.3
-Release: alt4
+Release: alt4.1
 Summary: Open Fingerprint Architecture library
 License: APLv1 or GPLv2
 Group: System/Libraries
@@ -11,6 +11,7 @@ Source: http://musicip-libofa.googlecode.com/files/%name-%version.tar.gz
 Patch1: libofa-0.9.3-gcc43.patch
 Patch2: libofa-0.9.3-alt-curl.patch
 Patch3: libofa-0.9.3-fedora-pkgconfig.patch
+Patch4: libofa-0.9.3-alt-glibc-2.16.patch
 
 BuildRequires: gcc-c++ libcurl-devel libexpat-devel libfftw3-devel
 
@@ -44,6 +45,7 @@ This package contains development header files and library for %name.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p2
 
 %build
 %configure --disable-static
@@ -62,6 +64,9 @@ This package contains development header files and library for %name.
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.3-alt4.1
+- Fixed build with glibc 2.16
+
 * Thu Aug 04 2011 Dmitry V. Levin <ldv@altlinux.org> 0.9.3-alt4
 - Fixed build with libcurl-devel >= 7.21.7.
 
