@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-functions
-Version: 1.2
+Version: 1.2.1
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -40,6 +40,12 @@ helpers for etcnet administration
 %_libexecdir/%name/
 
 %changelog
+* Thu Dec 06 2012 Mikhail Efremov <sem@altlinux.org> 1.2.1-alt1
+- Update tests for IPv6 functions.
+- ipv6addr_expand(): Expand each segment of IPv4 address.
+- Improve ipv6addr_terse().
+- Rename ipv6add_terse -> ipv6addr_terse.
+
 * Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.2-alt1
 - added initial IPv6 support (sem@)
 - added read_iface_current_addr* functions
