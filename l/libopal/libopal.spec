@@ -1,6 +1,6 @@
 Name: libopal
 Version: 3.8.4
-Release: alt2
+Release: alt2.1
 Epoch: 1
 Summary: Library for H323 spec
 Url: http://www.opalvoip.org/
@@ -34,6 +34,7 @@ Header files for development with opal.
 subst 's|^#\(LIBS.*\)|\1|' configure*
 
 %build
+%add_optflags -fpermissive
 %configure \
 	--disable-vpb \
 	--disable-static
@@ -53,6 +54,9 @@ subst 's|^#\(LIBS.*\)|\1|' configure*
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.8.4-alt2.1
+- Fixed build with gcc 4.7
+
 * Mon Nov 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1:3.8.4-alt2
 - resurrect
 
