@@ -8,7 +8,7 @@
 %define rname kdebase
 %define major 4
 %define minor 9
-%define bugfix 3
+%define bugfix 4
 Name: kde4base
 Version: %major.%minor.%bugfix
 Release: alt1
@@ -438,7 +438,7 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 %_K4lib/akregatorkonqfeedicon.so
 %_K4lib/autorefresh.so
 %_K4lib/babelfishplugin.so
-#%_K4lib/dirfilterplugin.so
+%_K4lib/dirfilterplugin.so
 %_K4lib/domtreeviewerplugin.so
 %_K4lib/fsviewpart.so
 %_K4lib/khtmlsettingsplugin.so
@@ -609,6 +609,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Thu Dec 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
+- new version
+
 * Fri Nov 09 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
