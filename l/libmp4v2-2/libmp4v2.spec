@@ -1,7 +1,7 @@
 Summary: This library provides functions to read, create, and modify mp4 files
 Name: libmp4v2-2
 Version: 1.9.1
-Release: alt1
+Release: alt1.1
 License: MPLv1.1
 Group: System/Libraries
 Url: http://code.google.com/p/mp4v2/
@@ -53,6 +53,7 @@ This contains the command line example utilities.
 %autoreconf
 %configure --disable-static --disable-debug
 
+mkdir -p doc/articles/txt
 %make_build
 %make txt
 
@@ -75,5 +76,8 @@ This contains the command line example utilities.
 %_man1dir/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.9.1-alt1.1
+- Fixed build
+
 * Mon Jan 17 2011 Alexey Shabalin <shaba@altlinux.ru> 1.9.1-alt1
 - initial build for ALT Linux Sisyphus
