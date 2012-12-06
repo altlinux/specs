@@ -3,11 +3,12 @@
 
 Name:		libv
 Version:	1.90
-Release:	alt9
+Release:	alt9.1
 Summary:	V is a free, multiple platform C++ graphical user interface framework
 License:	LGPL
 Group:		Development/C++
 Source0:	%origname-%version.tar.bz2
+Patch: libv-1.90-alt-make-3.82.patch
 URL:		http://www.objectcentral.com/
 Packager:	Evgeny Sinelnikov <sin@altlinux.ru>
 # Automatically added by buildreq on Thu Oct 25 2007
@@ -32,6 +33,7 @@ Libraries, include files and other resources you can use to develop
 
 %prep
 %setup -q -n home/vgui
+%patch -p3
 
 %build
 perl -pi -e "s|^HOMEV\s*=.*|HOMEV=`pwd`|" Config.mk
@@ -67,6 +69,9 @@ find %buildroot \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -delete
 %_libdir/*.so
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.90-alt9.1
+- Fixed build with make 3.82
+
 * Mon May 02 2011 Evgeny Sinelnikov <sin@altlinux.ru> 1.90-alt9
 - Rebuild with internal libGLw implementation of deprecated symbols
 
