@@ -3,7 +3,7 @@
 
 Name: libgtk+extra2
 Version: 2.1.2
-Release: alt2
+Release: alt2.1
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
@@ -15,6 +15,7 @@ Url: http://gtkextra.sourceforge.net
 
 Source: http://prdownloads.sourceforge.net/gtkextra/%version/%oname-%version.tar
 Patch: gtkitementry.patch
+Patch1: gtk+extra-2.1.2-alt-make-3.82.patch
 
 # Automatically added by buildreq on Wed Apr 21 2010
 BuildRequires: glibc-devel gtk-doc libgtk+2-devel
@@ -32,23 +33,37 @@ Group: Development/C
 Requires: %name = %version-%release
 
 %description devel
-This package contents header files and documentation
+This package contents development files
 for compiling programs that use gtk+extra widgets.
+
+%package devel-docs
+Summary: Documentation for GtkExtra Widget Set
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: %name-devel < %version-%release
+
+%description devel-docs
+This package contents development documentation
+for gtk+extra widgets.
 
 %prep
 %setup -n %oname-%version
-%__subst "s|#include <glib/gunicode.h>||g" gtkextra/gtkcharsel.c
+subst "s|#include <glib/gunicode.h>||g" gtkextra/gtkcharsel.c
 
 %patch -p2
+%patch1 -p2
 #chmod -x ChangeLog
 
 %build
-%configure --disable-static
+%configure \
+	--disable-static \
+	--enable-gtk-doc
 %make_build
 
 %install
 %makeinstall_std
 
+cp -fR docs/tutorial %buildroot%_gtkdocdir/
 
 %files
 %doc AUTHORS README ChangeLog
@@ -58,9 +73,15 @@ for compiling programs that use gtk+extra widgets.
 %_includedir/*
 %_libdir/*.so
 %_pkgconfigdir/*
-%_gtkdocdir/gtkextra/
+
+%files devel-docs
+%_gtkdocdir/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt2.1
+- Fixed build with make 3.82
+- Extracted docs into separate package
+
 * Sun May 06 2012 Vitaly Lipatov <lav@altlinux.ru> 2.1.2-alt2
 - fix build without direct glib/ using
 
