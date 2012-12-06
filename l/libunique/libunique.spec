@@ -3,7 +3,7 @@
 
 Name: lib%s_name
 Version: 1.1.6
-Release: alt7
+Release: alt7.1
 
 Summary: is a library for writing single instance application
 License: LGPL
@@ -14,6 +14,7 @@ Packager: Vladimir Lettiev <crux@altlinux.ru>
 Source: %name-%version.tar
 Patch: libunique-1.1.6-fc-fix-unused-but-set-variable.patch
 Patch1: libunique-1.1.6-fc-fix-disable-deprecated.patch
+Patch2: libunique-1.1.6-alt-no-Werror.patch
 
 BuildPreReq: rpm-build-gnome gnome-common
 BuildRequires: glib2-devel libdbus-devel libdbus-glib-devel libgtk+2-devel gtk-doc
@@ -68,12 +69,13 @@ GObject introspection devel data for the Unique library
 %setup
 %patch -p1 -b .unused-but-set-variable
 %patch1 -p1 -b .disable-deprecated
+%patch2 -p2
 
 %build
 %autoreconf
 %configure --enable-gtk-doc --disable-static \
 	%{?_disable_introspection:--enable-introspection=no}
-%make_build
+%make_build V=1
 
 %install
 %makeinstall_std
@@ -97,6 +99,9 @@ GObject introspection devel data for the Unique library
 %endif
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.6-alt7.1
+- Disabled -Werror flag
+
 * Sat Nov 05 2011 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt7
 - fixed build (fc patches)
 - disabled useless introspection support
