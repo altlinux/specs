@@ -1,6 +1,6 @@
 Name: nagios-plugins-check_raid
 Version: 2.1
-Release: alt2
+Release: alt3
 
 Summary: Nagios(R) plug-in for checking raid status
 License: GPL
@@ -32,6 +32,9 @@ install -m755 check_raid %buildroot%pluginsdir/
 %doc check_raid.cfg
 
 %changelog
+* Thu Dec 06 2012 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt3
+- now the script will not skip the mdstat entries in the middle
+
 * Fri Jun 10 2011 Vitaly Lipatov <lav@altlinux.ru> 2.1-alt2
 - small cleanup, rebuild
 
