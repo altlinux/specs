@@ -1,6 +1,6 @@
 Name: libgksu
 Version: 2.0.12
-Release: alt6.1
+Release: alt6.2
 
 Summary: A 'su' and 'sudo' wrapper library for GTK+/GNOME applications
 License: %lgpl2plus
@@ -12,8 +12,7 @@ Patch1: %name-2.0.12-fix-desktop-file.patch
 Patch2: %name-2.0.12-helperdir.patch
 Patch3: %name-only-glib.h-includes.patch
 Patch4: %name-2.0.12-alt-DSO.patch
-
-Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
+Patch5: %name-2.0.12-alt-make-3.82.patch
 
 Requires(preun,post): GConf
 
@@ -60,6 +59,7 @@ programs that use %name.
 %patch2
 %patch3 -p2
 %patch4 -p2
+%patch5 -p2
 tar xf %SOURCE1
 
 %build
@@ -109,6 +109,9 @@ fi
 %_datadir/gtk-doc/html/%name/*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.12-alt6.2
+- Fixed build with make 3.82
+
 * Wed Jun 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.12-alt6.1
 - Fixed build
 
