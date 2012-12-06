@@ -1,5 +1,5 @@
 Name: gambit
-Version: 4.6.5
+Version: 4.6.6
 Release: alt1
 
 Summary: Gambit-C Scheme programming system
@@ -15,7 +15,7 @@ Packager: Paul Wolneykien <manowar@altlinux.ru>
 Source: %name-%version.tar
 %if_with bootstrap
 Patch0: %name-%version-bootstrap.patch
-%define bootstrap_version 4.6.4
+%define bootstrap_version 4.6.5
 BuildRequires: gambit >= %bootstrap_version
 %endif
 
@@ -159,6 +159,9 @@ cd %name-%version/tests
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 06 2012 Paul Wolneykien <manowar@altlinux.ru> 4.6.6-alt1
+- repocop cronbuild 20121206. At your service.
+
 * Sun Dec 02 2012 Paul Wolneykien <manowar@altlinux.ru> 4.6.5-alt1
 - repocop cronbuild 20121202. At your service.
 
