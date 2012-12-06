@@ -10,7 +10,7 @@
 
 Name: nemo
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: default file manager for Cinnamon
 License: GPLv2+
@@ -155,6 +155,7 @@ done
 %install
 %make_install install DESTDIR=%buildroot
 mkdir -p %buildroot%_libdir/%name-%api_ver/components
+mkdir -p %buildroot%_libdir/%name/extensions-%api_ver
 bzip2 -9fk NEWS
 
 # The license
@@ -185,6 +186,7 @@ ln -sf %_licensedir/LGPL-2 COPYING
 %_man1dir/*
 
 %files -n lib%name
+%dir %_libdir/%name/extensions-%api_ver
 %_libdir/libnemo-extension.so.*
 
 %files -n lib%name-devel
@@ -205,6 +207,9 @@ ln -sf %_licensedir/LGPL-2 COPYING
 
 
 %changelog
+* Thu Dec 6 2012 Vladimir Didenko <cow@altlinux.org> 1.1.2-alt2
+- Added directory for extensions
+
 * Thu Nov 15 2012 Vladimir Didenko <cow@altlinux.org> 1.1.2-alt1
 - update to 1.1.2
 - fixed Open in terminal functionality
