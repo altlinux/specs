@@ -1,6 +1,6 @@
 Name: python-module-zmq
-Version: 2.1.11
-Release: alt1.1
+Version: 2.2.0.1
+Release: alt1
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -62,8 +62,8 @@ PYTHONPATH=%buildroot%python_sitelibdir %__python setup.py test
 %python_sitelibdir/zmq/tests
 
 %changelog
-* Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.1.11-alt1.1
-- Rebuild to remove redundant libpython2.7 dependency
+* Thu Dec 06 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2.0.1-alt1
+- New version
 
 * Sat Jan 21 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.1.11-alt1
 - Build for ALT
