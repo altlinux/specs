@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt6
+Release: alt7
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -26,7 +26,6 @@ Patch0: grub-2.00-gnulib-gets.patch
 Patch1: grub-2.00-os-alt.patch
 Patch2: grub-2.00-sysconfig-path-alt.patch
 Patch3: grub-2.00-altlinux-theme.patch
-Patch4: grub-2.00-evms-crap-alt.patch
 Patch5: grub-2.00-os-alt-xen.patch
 Patch6: grub-1.99-debian-disable_floppies.patch
 Patch7: grub-2.00-grubinstall-evms-sync-alt.patch
@@ -129,7 +128,6 @@ This package provides EFI systems support.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
@@ -305,6 +303,9 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 # TODO: post efi
 
 %changelog
+* Thu Dec 06 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt7
+- dropped patch4 (see also #28181)
+
 * Tue Dec 04 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt6
 - cas@ fixed wrong path in theme patch (closes: #28176)
 - introduced /etc/default/grub "compat" symlink

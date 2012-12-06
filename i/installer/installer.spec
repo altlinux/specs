@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.7.11
+Version: 1.8.0
 Release: alt1
 
 Summary: Installer common parts
@@ -55,6 +55,9 @@ Obsoletes: installer-feature-setup-bootloader-stage2
 
 Requires: xorg-xvfb
 
+# needed for lvm binary, see 11-remount.sh
+Requires: libdevmapper-event
+
 Conflicts: alterator-pkg < 1.2-alt1, alterator-sysconfig < 0.6-alt1, alterator-datetime < 2.0-alt1
 # stage2 and stage3 are mutually exclusive
 Conflicts: %name-common-stage3
@@ -101,6 +104,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Dec 04 2012 Michael Shigorin <mike@altlinux.org> 1.8.0-alt1
+- introduced volume remounting (closes: #28181)
+
 * Fri Nov 30 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.7.11-alt1
 - copy-udev-rules moved to preinstall
 
