@@ -1,6 +1,6 @@
 Name: libowfat
 Version: 0.28
-Release: alt3
+Release: alt3.1
 
 Summary: Reimplementation of libdjb
 
@@ -40,9 +40,9 @@ Install this package if you want do compile applications using the
 %patch1 -p1
 %patch2 -p1
 
-%add_optflags %optflags_shared
-
 %build
+%add_optflags %optflags_shared
+%make havescope.h
 %make_build
 
 %install
@@ -63,6 +63,9 @@ ln -s libowfat.so.0 %buildroot%_libdir/libowfat.so
 %_includedir/%name/
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.28-alt3.1
+- Fixed build
+
 * Wed Nov 18 2009 Ilya Shpigor <elly@altlinux.org> 0.28-alt3
 - remove manuals from the devel package
 
