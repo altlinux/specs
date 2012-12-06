@@ -2,7 +2,7 @@
 
 Name: libzrtpcpp
 Version: 1.4.6
-Release: alt1
+Release: alt1.1
 
 Summary: ZRTP support for GNU RTP/RTCP stack
 
@@ -11,6 +11,7 @@ Group: System/Libraries
 Url: http://www.gnu.org/software/ccrtp/
 
 Source: %name-%version-%release.tar
+Patch: libzrtpcpp-1.4.6-alt-glibc-2.16.patch
 
 BuildRequires: gcc-c++ libccrtp-devel >= 1.7.0 libstdc++-devel libgcrypt-devel
 
@@ -42,6 +43,7 @@ Common C++ devel static files
 
 %prep
 %setup
+%patch -p1
 
 %build
 %configure %{subst_enable static}
@@ -65,6 +67,9 @@ make
 %endif
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.6-alt1.1
+- Fixed build with glibc 2.16
+
 * Wed Nov 10 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.6-alt1
 - 1.4.6 released
 
