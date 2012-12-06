@@ -1,6 +1,6 @@
 Name: libjingle
 Version: 0.3.12
-Release: alt4.2
+Release: alt4.3
 
 Summary: GoogleTalk implementation of Jingle
 Group: System/Libraries
@@ -53,6 +53,7 @@ developing applications that use %name.
 %patch7 -p2
 
 %build
+%add_optflags -D_POSIX_THREADS -fpermissive
 %autoreconf
 %configure --disable-static
 %make_build
@@ -73,6 +74,9 @@ developing applications that use %name.
 %_pkgconfigdir/jinglep2p-0.3.pc
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.12-alt4.3
+- Fixed build with gcc 4.7
+
 * Thu Jul 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.12-alt4.2
 - Fixed build
 
