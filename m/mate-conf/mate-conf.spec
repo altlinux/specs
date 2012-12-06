@@ -3,15 +3,9 @@ BuildRequires: /usr/bin/gio-querymodules /usr/bin/glib-genmarshal /usr/bin/glib-
 # END SourceDeps(oneline)
 Group: System/Base
 %define _libexecdir %_prefix/libexec
-# fedora __isa_bits tmp hack
-%ifarch x86_64
-%define __isa_bits 64
-%else
-%define __isa_bits 32
-%endif
 Name:	        mate-conf	
 Version:	1.4.0
-Release:	alt4_21
+Release:	alt5_21
 Summary:	MATE Desktop configuration tool
 License:	GPLv2+	
 URL:		http://mate-desktop.org
@@ -129,15 +123,11 @@ sed -i -e 's,%%{_localstatedir}/lib,%%{_var}/lib,g' %{buildroot}%{_rpmmacrosdir}
 
 
 %post
-gio-querymodules %{_libdir}/gio/modules || :
 if [ $1 -gt 1 ]; then
     if ! fgrep -q mateconf.xml.system %{_sysconfdir}/mateconf/2/path; then
         sed -i -e 's@xml:readwrite:$(HOME)/.mateconf@&\n\n# Location for system-wide settings.\nxml:readonly:/etc/mateconf/mateconf.xml.system@' %{_sysconfdir}/mateconf/2/path
     fi
 fi
-
-%postun
-gio-querymodules %{_libdir}/gio/modules || :
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS README
@@ -179,6 +169,9 @@ gio-querymodules %{_libdir}/gio/modules || :
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Dec 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt5_21
+- cleanup in post scripts
+
 * Thu Dec 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt4_21
 - bugfix (closes: 28195)
 
