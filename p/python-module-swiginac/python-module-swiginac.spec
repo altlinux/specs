@@ -2,7 +2,7 @@
 
 Name: python-module-%oname
 Version: 1.5.1.1
-Release: alt1.svn20100615.3.1.1
+Release: alt2.svn20100615
 Summary: Extending Python with Symbolic Mathematics
 Group: Development/Python
 License: GPL
@@ -87,6 +87,9 @@ rm -f %buildroot%python_sitelibdir_noarch/Symbolic/*.pyo
 %exclude %_docdir/%oname/ChangeLog
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1.1-alt2.svn20100615
+- Rebuilt with libginac 1.6.2
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.5.1.1-alt1.svn20100615.3.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 

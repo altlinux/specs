@@ -3,7 +3,7 @@
 Name: libginac
 Version: 1.6.2
 Epoch: 1
-Release: alt1.git20111208.qa1
+Release: alt1.git20120921
 
 Summary: C++ class library for symbolic calculations
 
@@ -20,7 +20,7 @@ Source: ginac-%version.tar
 # Automatically added by buildreq on Wed Dec 03 2008
 BuildRequires: doxygen flex gcc-c++ libcln-devel libncurses-devel
 BuildRequires: libreadline-devel texlive-latex-base transfig
-BuildPreReq: autogen
+BuildPreReq: autogen python-modules
 
 %description
 GiNaC is Not a Cocktail.
@@ -63,7 +63,9 @@ for developing GiNaC applications.
 
 %build
 %autoreconf
-%configure --disable-static
+%configure \
+	--disable-static \
+	--disable-rpath
 %make -C ginac function.h function.cpp
 %make_build
 
@@ -90,6 +92,9 @@ for developing GiNaC applications.
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.6.2-alt1.git20120921
+- New snapshot
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 1:1.6.2-alt1.git20111208.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
