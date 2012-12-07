@@ -1,6 +1,6 @@
 Name: merkaartor
 Version: 0.16.1
-Release: alt1
+Release: alt1.1
 Packager: Egor Glukhov <kaman@altlinux.org>
 
 Summary: an OpenStreetMap editor
@@ -9,6 +9,7 @@ Group: Sciences/Geosciences
 Url: http://www.merkaartor.org/
 
 Source: %name-%version.tar
+Patch: merkaartor-0.16.1-alt-glib-2.16.patch
 
 BuildRequires: boost-devel gcc-c++ git-core glibc-devel-static
 BuildRequires: libgdal-devel libqt4-devel
@@ -20,11 +21,19 @@ editing environment for free geographical data.
 
 %prep
 %setup
+%patch -p1
 
 %build
+%add_optflags -fpermissive
 lupdate-qt4 Merkaartor.pro
 lrelease-qt4 Merkaartor.pro
-qmake-qt4 PREFIX=%_prefix NODEBUG=1 TRANSDIR_MERKAARTOR=%_datadir/%name/translations/ Merkaartor.pro
+qmake-qt4 \
+	PREFIX=%_prefix \
+	NODEBUG=1 \
+	TRANSDIR_MERKAARTOR=%_datadir/%name/translations/ \
+	-after QMAKE_CFLAGS+='%optflags' \
+	-after QMAKE_CXXFLAGS+='%optflags' \
+	Merkaartor.pro
 %make_build
 
 %install
@@ -42,6 +51,9 @@ LIB_SUFFIX=64
 %_liconsdir/%name.png
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16.1-alt1.1
+- Fixed build with glibc 2.16 & gcc 4.7
+
 * Wed Aug 11 2010 Egor Glukhov <kaman@altlinux.org> 0.16.1-alt1
 - 0.16.1
 
