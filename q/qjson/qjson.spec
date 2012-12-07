@@ -1,6 +1,6 @@
 Name: qjson
-Version: 0.7.1
-Release: alt2
+Version: 0.8.1
+Release: alt1
 
 Group: System/Libraries
 Summary: Lightweight data-interchange format
@@ -51,17 +51,20 @@ Development files for %name
 
 
 %files -n lib%name
-%doc README
+%doc README*
 %_libdir/lib*.so.*
 
 %files devel
-%doc README
+%doc README*
 %_libdir/lib*.so
 %_includedir/%name
-%_datadir/CMake/Modules/FindQJSON.cmake
-%_pkgconfigdir/*
+%_libdir/cmake/qjson/
+%_pkgconfigdir/*son*.pc
 
 %changelog
+* Fri Dec 07 2012 Sergey V Turchin <zerg@altlinux.org> 0.8.1-alt1
+- new version
+
 * Wed Mar 02 2011 Sergey V Turchin <zerg@altlinux.org> 0.7.1-alt2
 - fix to build
 
