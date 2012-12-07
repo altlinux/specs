@@ -1,8 +1,7 @@
-%def_disable ommongodb
 
 Name: rsyslog
-Version: 6.4.2
-Release: alt2
+Version: 7.2.3
+Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
 License: GPLv3+
@@ -24,14 +23,18 @@ BuildRequires: libdbi-devel
 BuildRequires: libmysqlclient-devel
 BuildRequires: postgresql-devel
 BuildRequires: libkrb5-devel
-BuildRequires: librelp-devel
+BuildRequires: librelp-devel >= 1.0.1
 BuildRequires: libgnutls-devel libgcrypt-devel
 BuildRequires: libnet-snmp-devel
 BuildRequires: libnet-devel
 BuildRequires: libestr-devel >= 0.1.2
 BuildRequires: libee-devel >= 0.4.0
+BuildRequires: libjson-devel
 BuildRequires: liblognorm-devel >= 0.3.1
-%{?_enable_ommongodb:BuildRequires: libmongo-client >= 0.1.4}
+BuildRequires: libmongo-client-devel >= 0.1.4
+BuildRequires: libuuid-devel
+BuildRequires: libcurl-devel
+BuildRequires: libhiredis-devel >= 0.10.1
 
 %define mod_dir /%_lib/%name
 
@@ -51,6 +54,7 @@ while  at the same time being very easy to setup for the novice user.
  o imudp.so    - This is the implementation of the UDP input module.
  o imuxsock.so - This is the implementation of the Unix sockets input module.
  o imklog.so   - The kernel log input module for Linux.
+ o imkmsg.so   - /dev/kmsg Log Input Module
  o immark.so   - This is the implementation of the build-in mark message input
                  module.
  o imfile.so   - This is the input module for reading text file data.
@@ -161,6 +165,63 @@ UDP forwarder, but permits to spoof the sender address.
 
  o omudpspoof.so - This module permits to spoof the sender address.
 
+%package mmaudit
+Summary: Message modification module supporting Linux audit format
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description mmaudit
+The rsyslog-mmaudit package contains a dynamic shared object that will add
+message modification supporting Linux audit format in various settings.
+
+ o mmaudit.so - This module provides message modification supporting Linux audit format.
+
+%package mmjsonparse
+Summary: JSON enhanced logging support
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description mmjsonparse
+The rsyslog-mmaudit package contains a dynamic shared object that will add
+capability to recognize and parse JSON enhanced syslog messages.
+
+ o mmjsonparse.so - This module provides the capability to recognize and parse JSON enhanced
+syslog messages.
+
+%package mmnormalize
+Summary: Log normalization support for rsyslog
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description mmnormalize
+The rsyslog-mmaudit package contains a dynamic shared object that will add
+normalize log messages via liblognorm.
+
+ o mmnormalize.so  - This module provides the capability to normalize log messages via liblognorm.
+
+%package elasticsearch
+Summary: ElasticSearch output module for rsyslog
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description elasticsearch
+The rsyslog-mmaudit package contains a dynamic shared object that will add
+feed logs directly into Elasticsearch.
+
+ o omelasticsearch.so - This module provides the capability for rsyslog to feed logs directly into
+Elasticsearch.
+
+%package hiredis
+Summary: Redis support for rsyslog
+Group: System/Kernel and hardware
+Requires: %name = %version-%release
+
+%description hiredis
+The rsyslog-mmaudit package contains a dynamic shared object that will add
+feed logs directly into Elasticsearch.
+
+ o omhiredis.so - This module provides output to Redis.
+
 %package extra
 Summary: Extra support for rsyslog
 Group: System/Kernel and hardware
@@ -184,12 +245,13 @@ all other functions:
  o mmsnmptrapd.so        - This is a message modification module. It takes messages generated
                            from snmptrapd and modifies them so that the look like they
                            originated from the real originator.
- o mmnormalize.so        - This is a message modification module. It normalizes the input message with
-                           the help of liblognorm. The messages EE event structure is updated.
+ o imdiag.so             - The testing module, which enables to talk to the rsyslog core at runtime
+ o impstats.so           - Input Module to Generate Periodic Statistics of Internal Counters
+ o omstdout.so           - stdout output module (stdout)
 
 %package docs-html
 Summary: HTML documentation for rsyslog
-Group: System/Kernel and hardware
+Group: Documentation
 BuildArch: noarch
 
 %description docs-html
@@ -202,40 +264,52 @@ This package contains the HTML documentation for rsyslog.
 
 %build
 %autoreconf
+# the hiredis-devel package doesn't provide a pkg-config file
+export HIREDIS_CFLAGS=-I/usr/include/hiredis
+export HIREDIS_LIBS=-lhiredis
 %configure \
-	--disable-static \
-	--disable-testbench \
 	--sbindir=/sbin \
 	--libdir=/%_lib \
-	--enable-largefile \
-	--enable-regexp \
-	--enable-zlib \
-	--enable-pthreads \
-	--enable-klog \
-	--enable-inet \
+	--disable-static \
+	--disable-testbench \
+	--enable-elasticsearch \
 	--enable-gnutls \
 	--enable-gssapi-krb5 \
+	--enable-imdiag \
 	--enable-imfile \
+	--enable-impstats \
 	--enable-imptcp \
 	--enable-imttcp \
+	--enable-inet \
+	--enable-klog \
+	--enable-kmsg \
+	--enable-largefile \
 	--enable-libdbi \
 	--enable-mail \
+	--enable-mmaudit \
+	--enable-mmjsonparse \
+	--enable-mmnormalize \
+	--enable-mmsnmptrapd \
 	--enable-mysql \
+	--enable-omhiredis \
+	--enable-ommongodb \
 	--enable-omprog \
+	--enable-omruleset \
+	--enable-omstdout \
 	--enable-omudpspoof \
 	--enable-omuxsock \
-	--enable-omruleset \
-	%{subst_enable ommongodb} \
-	--enable-pmcisconames \
-	--enable-pmaixforwardedfrom \
-	--enable-pmlastmsg \
-	--enable-pmsnare \
 	--enable-pgsql \
+	--enable-pmaixforwardedfrom \
+	--enable-pmcisconames \
+	--enable-pmlastmsg \
+	--enable-pmrfc3164sd \
+	--enable-pmsnare \
+	--enable-regexp \
 	--enable-relp \
 	--enable-snmp \
+	--enable-zlib \
+	--enable-pthreads \
 	--enable-unlimited-select \
-	--enable-mmsnmptrapd \
-	--enable-mmnormalize \
 	--with-systemdsystemunitdir=%systemd_unitdir
 
 %make_build
@@ -287,6 +361,7 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %dir %mod_dir
 %mod_dir/imfile.so
 %mod_dir/imklog.so
+%mod_dir/imkmsg.so
 %mod_dir/immark.so
 %mod_dir/imtcp.so
 %mod_dir/imudp.so
@@ -315,11 +390,9 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_pgsql.conf
 %mod_dir/ompgsql.so
 
-%if_enabled ommongodb
 %files mongo
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_mongo.conf
 %mod_dir/ommongodb.so
-%endif
 
 %files gssapi
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_gssapi.conf
@@ -347,23 +420,53 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %config(noreplace) %attr(640,root,adm) %_sysconfdir/rsyslog.d/*_udpspoof.conf
 %mod_dir/omudpspoof.so
 
+%files mmaudit
+%mod_dir/mmaudit.so
+
+%files mmjsonparse
+%mod_dir/mmjsonparse.so
+
+%files mmnormalize
+%mod_dir/mmnormalize.so
+
+%files elasticsearch
+%mod_dir/omelasticsearch.so
+
+%files hiredis
+%mod_dir/omhiredis.so
+
 %files extra
+%mod_dir/imdiag.so
 %mod_dir/imptcp.so
 %mod_dir/imttcp.so
+%mod_dir/impstats.so
 %mod_dir/omprog.so
 %mod_dir/omtesting.so
+%mod_dir/omstdout.so
 %mod_dir/omuxsock.so
 %mod_dir/pmaixforwardedfrom.so
 %mod_dir/pmcisconames.so
 %mod_dir/pmlastmsg.so
+%mod_dir/pmrfc3164sd.so
 %mod_dir/pmsnare.so
 %mod_dir/mmsnmptrapd.so
-%mod_dir/mmnormalize.so
 
 %files docs-html
 %doc html_docs/*
 
 %changelog
+* Thu Dec 06 2012 Alexey Shabalin <shaba@altlinux.ru> 7.2.3-alt1
+- snapshot v7-stable branch
+- add imkmsg.so plugin to base package
+- add imdiag.so, impstats.so, omstdout.so, pmrfc3164sd.so to extra package
+- add packages:
+  + mongo (ommongodb plugin)
+  + mmaudit
+  + mmjsonparse
+  + elasticsearch
+  + hiredis
+- move mmnormalize.so from extra package to separate mmnormalize package
+
 * Fri Oct 12 2012 Alexey Shabalin <shaba@altlinux.ru> 6.4.2-alt2
 - fix logging chrooted services - add imuxsock module to generated config
 

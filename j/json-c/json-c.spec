@@ -1,13 +1,14 @@
 Name: json-c
-Version: 0.9
-Release: alt2
+Version: 0.10
+Release: alt1
 
 Summary: JSON implementation in C
 License: MIT
 Group: System/Libraries
-Url: http://oss.metaparadigm.com/json-c/
+Url: https://github.com/json-c/json-c/wiki
 
 Source: %name-%version-%release.tar
+# git://github.com/json-c/json-c.git
 
 %description
 JSON-C implements a reference counting object model that allows you to
@@ -45,11 +46,14 @@ This package contains development part of JSON-C
 
 %build
 %autoreconf
-%configure
-%make all check
+%configure --disable-static
+%make
 
 %install
 %makeinstall
+
+%check
+%make check
 
 %files -n libjson
 %_libdir/libjson*.so.*
@@ -60,6 +64,9 @@ This package contains development part of JSON-C
 %_pkgconfigdir/json.pc
 
 %changelog
+* Fri Dec 07 2012 Alexey Shabalin <shaba@altlinux.ru> 0.10-alt1
+- 0.10
+
 * Tue Nov 30 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.9-alt2
 - updated to svn rev.59
 

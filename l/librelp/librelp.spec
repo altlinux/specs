@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: librelp
-Version: 1.0.0
+Version: 1.0.1
 Release: alt1
 
 Summary: The RELP (reliable event logging protocol) core protocol library
@@ -60,6 +60,9 @@ Static libs for building statically linked software that uses %name
 %endif
 
 %changelog
+* Thu Dec 06 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.1-alt1
+- 1.0.1
+
 * Fri Mar 02 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 
