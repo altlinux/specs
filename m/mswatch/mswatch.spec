@@ -1,16 +1,15 @@
 Name: mswatch
 Version: 1.1.1
-Release: alt1
+Release: alt1.1
 
 Summary: Watch mailstores for changes and initiate mailbox syncs
 License: GPLv2+
 Group: Networking/Mail
 Url: http://mswatch.sourceforge.net/
 
-Packager: Andrey Rahmatullin <wrar@altlinux.org>
-
 Source: %name-%version.tar
 Patch0: %name-1.1.1-link-fix.patch
+Patch1: %name-1.1.1-alt-glibc-2.16.patch
 
 BuildPreReq: flex gcc-c++ glib2-devel
 
@@ -31,6 +30,7 @@ is planned.
 %prep
 %setup
 %patch0 -p2
+%patch1 -p2
 %autoreconf
 
 %build
@@ -46,6 +46,9 @@ is planned.
 %doc AUTHORS ChangeLog INTERFACES NEWS README TODO generalized mswatchrc.sample
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.1
+- Fixed build with glibc 2.16
+
 * Sun Jul 04 2010 Andrey Rahmatullin <wrar@altlinux.org> 1.1.1-alt1
 - initial build
 
