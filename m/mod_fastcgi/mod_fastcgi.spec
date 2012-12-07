@@ -4,7 +4,7 @@
 
 Name: mod_fastcgi
 Version: 2.4.6
-Release: alt2
+Release: alt2.1
 
 Packager: Victor Forsyuk <force@altlinux.org>
 
@@ -33,7 +33,7 @@ performance and persistence without the limitations of server specific APIs.
 %setup
 
 %build
-%apache_apxs -Wc,"%optflags" -o mod_fastcgi.so -c *.c 
+CFLAGS="%optflags" %apache_apxs -o mod_fastcgi.so -c *.c 
 
 %install
 mkdir -p %buildroot{%apache_libdir,%apache_modconfdir,%apache_moddocdir,%fastcgi_bindir}
@@ -94,6 +94,9 @@ install -m644 mod_fastcgi.conf %buildroot%apache_modconfdir
 %doc CHANGES docs
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.6-alt2.1
+- Fixed build with gcc 4.7
+
 * Fri May 23 2008 Victor Forsyuk <force@altlinux.org> 2.4.6-alt2
 - Include directives to load installed fastcgi module, fixes #15465.
 
