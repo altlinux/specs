@@ -1,12 +1,13 @@
 Name: ctemplate
 Version: 2.2
-Release: alt1
+Release: alt1.1
 License: BSD
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 Group: System/Libraries
 Summary: HTML template library written in C inspired by perl HTML::Template
 URL: http://code.google.com/p/ctemplate
 Source: http://ctemplate.googlecode.com/files/%name-%version.tar.gz
+Patch: ctemplate-2.2-alt-gcc4.7.patch
 
 BuildRequires: gcc-c++
 
@@ -41,11 +42,12 @@ Use library to build a variable list and pass it to a template.
 
 %prep
 %setup
+%patch -p2
 
 %build
 %autoreconf
 %configure
-%make_build
+%make_build V=1
 
 %install
 %makeinstall_std
@@ -62,6 +64,9 @@ Use library to build a variable list and pass it to a template.
 %_pkgconfigdir/*
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt1.1
+- Fixed headers for build with gcc 4.7
+
 * Tue Nov 13 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2-alt1
 - Update to new version
 
