@@ -2,14 +2,14 @@ Name:		qshare
 Summary:	qShare is a FTP server
 License:	GPLv3
 Group:		Networking/File transfer
-Version:	2.1.4
-Release:	alt1.1
+Version:	2.1.5
+Release:	alt1
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 URL:		http://www.zuzuf.net/qshare/
 
 Source0:	http://www.zuzuf.net/qshare/files/%name-%version-src.tar.bz2
 
-Patch0:		%name-2.1.4-desktop.diff
+Patch0:		%name-2.1.5-desktop.diff
 
 BuildRequires:	/usr/bin/convert cmake gcc-c++ libqt4-devel libavahi-devel
 
@@ -57,8 +57,10 @@ convert -resize 16x16 icons/%name.png %buildroot%_miconsdir/%name.png
 %_liconsdir/%name.png
 %_pixmapsdir/%name.png
 
-
 %changelog
+* Fri Dec 07 2012 Motsyo Gennadi <drool@altlinux.ru> 2.1.5-alt1
+- 2.1.5
+
 * Thu Aug 30 2012 Motsyo Gennadi <drool@altlinux.ru> 2.1.4-alt1.1
 - update Russian & Ukrainian translations
 
