@@ -2,7 +2,7 @@
 
 Name: mingw32-nsis
 Version: 2.45
-Release: alt1
+Release: alt1.1
 Summary: Nullsoft Scriptable Install System
 
 License: zlib and CPL
@@ -17,6 +17,8 @@ Source: http://dl.sourceforge.net/sourceforge/nsis/nsis-%version-src.tar.bz2
 Patch: nsis-2.43-64bit-fixes.patch
 # Use RPM_OPT_FLAGS for the natively-built parts
 Patch1: nsis-2.43-rpm-opt.patch
+
+Patch2: mingw32-nsis-2.45-alt-glibc-2.16.patch
 
 BuildRequires: rpm-build-mingw32
 BuildRequires: gcc-c++ cvs flex
@@ -56,6 +58,7 @@ all plugins.
 
 %patch0 -p1 -b .64bit
 %patch1 -p1 -b .rpmopt
+%patch2 -p2
 
 %build
 scons %sconsopts
@@ -74,6 +77,9 @@ mv %buildroot%_docdir/nsis %buildroot%_docdir/%name-%version
 %_datadir/nsis
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.45-alt1.1
+- Fixed build with glibc 2.16
+
 * Mon Jul 27 2009 Boris Savelev <boris@altlinux.org> 2.45-alt1
 - initial build
 
