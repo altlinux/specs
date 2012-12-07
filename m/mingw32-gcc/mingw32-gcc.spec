@@ -3,7 +3,7 @@
 
 Name: mingw32-gcc
 Version: 4.4.2
-Release: alt3
+Release: alt3.1
 Summary: MinGW Windows cross-compiler (GCC) for C
 
 License: GPLv3+ and GPLv2+ with exceptions
@@ -334,7 +334,6 @@ pushd %buildtarget
 rm -rf %buildroot%_infodir
 rm -f %buildroot%_libdir/libiberty*
 rm -f %buildroot%_man7dir/*
-rm -f %_libdir/gcc/%_mingw32_target/%version/SYSCALLS.c.X
 
 mkdir -p %buildroot/lib
 ln -sf ..%prefix/bin/%_mingw32_target-cpp \
@@ -363,6 +362,9 @@ mv %buildroot%_libdir/gcc/%_mingw32_target/bin/libgomp-1.dll \
 find %buildroot -name '*.la' -delete
 
 popd
+
+%pre
+rm -f %_libdir/gcc/%_mingw32_target/%version/SYSCALLS.c.X
 
 %files
 %_bindir/%_mingw32_target-gcc
@@ -450,6 +452,9 @@ popd
 %_libexecdir/gcc/%_mingw32_target/%version/f951
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.4.2-alt3.1
+- Fixed build
+
 * Sat Aug 04 2012 Vitaly Lipatov <lav@altlinux.ru> 4.4.2-alt3
 - fix build, rebuild with new libgmp
 
