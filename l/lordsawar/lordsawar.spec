@@ -1,6 +1,6 @@
 Name: lordsawar
 Version: 0.2.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Turn-based strategy game in a fantasy setting
 License: GPLv2+
@@ -37,6 +37,7 @@ Data files for lordsawar game.
 %patch2 -p2
 
 %build
+%add_optflags -fpermissive
 %configure
 %make_build
 
@@ -57,6 +58,9 @@ subst 's/.png//' %buildroot%_desktopdir/lordsawar.desktop
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.2
+- Fixed build with gcc 4.7
+
 * Fri Jul 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.0-alt1.1
 - Fixed build
 
