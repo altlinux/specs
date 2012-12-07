@@ -1,6 +1,6 @@
 Name: mytetra
 Version: 1.30.1
-Release: alt1
+Release: alt1.1
 
 Summary: Simple cross-platform manager for data collecting
 Summary(ru_RU.UTF-8): несложный кроссплатформенный менеджер накопления информации
@@ -10,6 +10,7 @@ Url: http://webhamster.ru/site/page/index/articles/projectcode/105
 Packager: Malo Skryleve <malo@altlinux.org>
 
 Source: %name-%version.tar
+Patch: mytetra-1.30.1-alt-glibc-2.16.patch
 
 BuildRequires(pre): rpm-macros-qt4
 # Automatically added by buildreq on Wed Mar 16 2011
@@ -30,6 +31,7 @@ MyTetra — предоставить естественный, интуитив�
 
 %prep
 %setup
+%patch -p2
 
 %build
 sed 's,\(mytetra_binary.path=\).*,\1%_bindir,g' -i %name.pro
@@ -52,6 +54,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_iconsdir/hicolor/scalable/apps/*
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.30.1-alt1.1
+- Fixed build with glibc 2.16
+
 * Thu Nov 17 2011 Malo Skryleve <malo@altlinux.org> 1.30.1-alt1
 - repocop cronbuild 20111117. At your service.
 
