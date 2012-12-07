@@ -1,6 +1,6 @@
 Name:     mod_lisp
 Version:  2.43
-Release:  alt1
+Release:  alt1.1
 
 Summary:  mod_lisp is an Apache module to easily write web applications in Lisp
 Group:    System/Servers
@@ -30,7 +30,7 @@ cp %SOURCE0 .
 
 %build
 cd %_builddir/%name-%version
-%apache_apxs -Wc,"$RPM_OPT_FLAGS" -o mod_lisp.so -c mod_lisp.c
+CFLAGS="%optflags" %apache_apxs -o mod_lisp.so -c mod_lisp.c
 
 %install
 cd %_builddir/%name-%version
@@ -49,5 +49,8 @@ install -m644 %SOURCE1 $RPM_BUILD_ROOT%apache_modconfdir
 %config(noreplace) %apache_modconfdir/*
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.43-alt1.1
+- Fixed build with gcc 4.7
+
 * Sat Nov 17 2007 Alexey Voinov <voins@altlinux.ru> 2.43-alt1
 - initial build for ALT Linux
