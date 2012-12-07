@@ -1,7 +1,7 @@
 Summary: An Apache authentication module using Kerberos.
 Name: mod_auth_kerb
 Version: 5.3
-Release: alt1
+Release: alt1.S1
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -9,6 +9,7 @@ Url: http://modauthkerb.sourceforge.net
 Source: %name-%version.tar.gz
 Source1: auth_krb5.load
 Source2: auth_krb5.conf.sample
+Patch: mod_auth_kerb-5.3-alt-gcc4.7.patch
 
 # Automatically added by buildreq on Mon Sep 29 2008
 BuildRequires: apache-devel apache2-devel libcom_err-devel libkrb5-devel
@@ -40,6 +41,7 @@ Build for apache2.
 
 %prep
 %setup
+%patch -p2
 
 %build
 # apache-1
@@ -78,6 +80,9 @@ install -m 644 %SOURCE2 %_builddir/%name-%version
 %apache2_moduledir/*.so
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt1.S1
+- Fixed build with gcc 4.7
+
 * Mon Sep 29 2008 Boris Savelev <boris@altlinux.org> 5.3-alt1
 - initial build for Sisyphus
 
