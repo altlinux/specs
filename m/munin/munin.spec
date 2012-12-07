@@ -7,10 +7,11 @@
 %define htmldir %webserver_htdocsdir/%name
 
 %add_findreq_skiplist /usr/share/munin/plugins/*
+%add_findreq_skiplist /usr/share/munin/www/cgi/*
 
 Name: munin
 Version: 1.4.5
-Release: alt3
+Release: alt3.1
 
 Summary: resource monitoring tool
 License: GPL
@@ -159,6 +160,9 @@ ln -sf %_sysconfdir/munin/plugins.conf %buildroot%_sysconfdir/munin/plugin-conf.
 %endif
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.5-alt3.1
+- Fixed build
+
 * Mon Feb 14 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 1.4.5-alt3
 - change pseudouser name to "_munin"
 - fix permissions according to ALT security policy
