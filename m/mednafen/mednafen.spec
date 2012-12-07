@@ -1,6 +1,6 @@
 Name: mednafen
 Version: 0.8.13
-Release: alt3
+Release: alt3.1
 
 Summary: Multi-consoles Emulator
 License: GPLv2+
@@ -9,6 +9,7 @@ Url: http://mednafen.sourceforge.net/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 Group: Emulators
 Source0: http://downloads.sourceforge.net/%name/%name-0.8.D.3.tar.bz2
+Patch: mednafen-0.8.13-alt-zlib-1.2.7.patch
 BuildRequires: libcdio-devel libvorbis-devel libSDL_net-devel
 BuildRequires: libsndfile-devel zlib-devel bison gettext
  #gcc gcc-c++
@@ -41,6 +42,7 @@ reasons.
 
 %prep
 %setup -q -n %name
+%patch -p2
 
 find ./src -type f -exec chmod 644 '{}' +
 find ./src -type d -exec chmod 755 '{}' +
@@ -62,6 +64,9 @@ export CC=gcc-4.4 CXX=g++-4.4
 
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.13-alt3.1
+- Fixed build with zlib 1.2.7
+
 * Mon Apr 23 2012 Ilya Mashkin <oddity@altlinux.ru> 0.8.13-alt3
 - version 0.8.D.3
 
