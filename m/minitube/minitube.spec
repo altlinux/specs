@@ -1,12 +1,13 @@
 Name: minitube
 Version: 1.7
-Release: alt1
+Release: alt1.1
 Summary: YouTube desktop client
 License: LGPL
 Group: Video
 Url: http://flavio.tordini.org/minitube
 Packager: Egor Glukhov <kaman@altlinux.org>
 Source0: %name-%version.tar
+Patch: minitube-1.7-alt-glibc-2.16.patch
 
 BuildRequires: gcc-c++ libqt4-devel
 Requires: phonon-backend
@@ -22,9 +23,12 @@ to create a new TV-like experience.
 
 %prep
 %setup
+%patch -p1
 
 %build
-qmake-qt4
+qmake-qt4 \
+	-after QMAKE_CFLAGS+='%optflags' \
+	-after QMAKE_CXXFLAGS+='%optflags'
 %make_build
 
 %install
@@ -39,6 +43,9 @@ rm -rf -- %buildroot%_iconsdir/hicolor/512x512
 %_datadir/%name
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7-alt1.1
+- Fixed build with glibc 2.16
+
 * Mon Feb 20 2012 Mykola Grechukh <gns@altlinux.ru> 1.7-alt1
 - 1.7
 
