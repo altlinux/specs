@@ -34,7 +34,7 @@
 %define bugfix 13.1
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -224,6 +224,7 @@ Patch1077: tde-3.5.13-build-defdir.patch
 Patch1078: kdm-3.5.13-greeter.patch
 Patch1079: kdm-3.5.13-noPAMuse.patch
 Patch1080: kdm-3.5.13-SAK_disable_CtrlAltDel-FullCPUusage_SAK_Std.patch
+Patch1081: kdebase-3.5.13-alt-mediamanager-crash.patch
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 Patch2000: kdebase-3.5.0-man_recode.patch
@@ -608,7 +609,7 @@ Menu resources for the original KDE menu.
 #
 ###%patch1049 -p1
 %patch1051 -p1
-###%patch1052 -p1
+%patch1052 -p1
 %patch1053 -p1
 %patch1054 -p1
 %patch1055 -p1
@@ -636,6 +637,7 @@ Menu resources for the original KDE menu.
 ###%patch1078 -p1
 ###%patch1079 -p1
 %patch1080
+%patch1081
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 ###%patch2000 -p1
@@ -1944,6 +1946,12 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Fri Dec 07 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt4
+- Crash after mediamanger apply for kill block application is fixed.
+- Media baseurl encoding patch is restored.
+- Fuser call is fixed for cyrillic symbols into mount point, actually for CD/DVD disks.
+    For correct fuser work need psmisc version 22.20.
+
 * Fri Nov 09 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt3
 - Some new features enabled: XTEST, XSCREENSAVER, LIBART.
 - Previous copy /etc/X11/kdm removing if not link to original kdm config.
