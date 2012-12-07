@@ -4,7 +4,7 @@
 
 Name: mod_gunzip
 Version: 3
-Release: alt3
+Release: alt3.1
 
 Summary: Apache module: On-the-fly decompression of documents
 Group: System/Servers
@@ -26,13 +26,13 @@ Apache module: On-the-fly decompression of gzip-compressed documents.
 %setup -q
 
 %build
-%apache_apxs -Wc,"$RPM_OPT_FLAGS" -c mod_gunzip.c -o mod_gunzip.so -lz
+CFLAGS="%optflags" %apache_apxs -c mod_gunzip.c -o mod_gunzip.so -lz
 
 %install
-%__mkdir_p %buildroot{%apache_moduledir,%apache_addonconfdir}
+mkdir -p %buildroot{%apache_moduledir,%apache_addonconfdir}
 
-%__install -m755 %name.so %buildroot%apache_moduledir
-%__install -m644 %_sourcedir/%name.conf %buildroot%apache_addonconfdir
+install -m755 %name.so %buildroot%apache_moduledir
+install -m644 %_sourcedir/%name.conf %buildroot%apache_addonconfdir
 
 %post
 /sbin/service httpd condrestart
@@ -46,6 +46,9 @@ Apache module: On-the-fly decompression of gzip-compressed documents.
 %doc README
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3-alt3.1
+- Fixed build with gcc 4.7
+
 * Wed Feb 07 2007 Victor Forsyuk <force@altlinux.org> 3-alt3
 - Requires apache (fix ALT#10381).
 
