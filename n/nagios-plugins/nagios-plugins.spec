@@ -8,7 +8,7 @@
 
 Name: nagios-plugins
 Version: 1.4.15
-Release: alt1
+Release: alt1.1
 
 Summary: Host/service/network monitoring plug-ins for Nagios(R)
 Summary(ru_RU.UTF-8): Модули мониторинга (plug-ins) хостов/сервисов/сети для Nagios(R)
@@ -42,6 +42,7 @@ Patch1: %name-1.4.14-alt-makefile.patch
 #Patch2: %name-1.4.13-alt-configure.patch
 Patch3: %name-1.4.12-alt-pgsql.patch
 Patch4: %name-1.4.13-alt-hasher-hack.patch
+Patch5: nagios-plugins-1.4.15-alt-glibc-2.16.patch
 
 # patches from Fedora
 Patch101: nagios-plugins-0001-Do-not-use-usr-local-for-perl.patch
@@ -186,6 +187,7 @@ are not installed on all systems.
 #patch2 -p1 -b .p2
 %patch3 -p1 -b .p3
 %patch4 -p1 -b .p4
+%patch5 -p2
 
 %patch101 -p1 -b .p101
 %patch102 -p1 -b .p102
@@ -367,6 +369,9 @@ install -pm644 %SOURCE2 %buildroot%_docdir/%name-%version/README.ALT.UTF-8
 %_docdir/%name-extra-%version/*
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.15-alt1.1
+- Fixed build with glibc 2.16
+
 * Mon Jun 04 2012 Vitaly Lipatov <lav@altlinux.ru> 1.4.15-alt1
 - new version 1.4.15 (with rpmrb script)
 - cleanup spec, fix requires (ALT bug #26314)
