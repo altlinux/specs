@@ -1,6 +1,6 @@
 Name: python-module-zmq
 Version: 2.2.0.1
-Release: alt1
+Release: alt2
 Summary: Software library for fast, message-based applications
 
 Group: Development/Python
@@ -9,7 +9,7 @@ Url: http://www.zeromq.org/bindings:python
 # http://github.com/zeromq/pyzmq.git
 Source: %name-%version.tar
 
-BuildRequires: python-devel libzeromq-devel python-module-nose python-modules-json python-module-Cython python-module-numpy
+BuildRequires: gcc4.7-c++ python-devel libzeromq-devel python-module-nose python-modules-json python-module-Cython python-module-numpy
 
 %description
 The 0MQ lightweight messaging kernel is a library which extends the
@@ -36,6 +36,21 @@ multiple transport protocols and more.
 
 This package contains the testsuite for the python bindings.
 
+%package devel
+Summary: Software library for fast, message-based applications
+Group: Development/Python
+Requires: %name = %version-%release
+
+%description devel
+The 0MQ lightweight messaging kernel is a library which extends the
+standard socket interfaces with features traditionally provided by
+specialized messaging middle-ware products. 0MQ sockets provide an
+abstraction of asynchronous message queues, multiple messaging
+patterns, message filtering (subscriptions), seamless access to
+multiple transport protocols and more.
+
+This package contains the headers for the python bindings.
+
 %prep
 %setup
 cp setup.cfg.template setup.cfg
@@ -57,11 +72,18 @@ PYTHONPATH=%buildroot%python_sitelibdir %__python setup.py test
 %python_sitelibdir/*.egg-info
 %python_sitelibdir/zmq
 %exclude %python_sitelibdir/zmq/tests
+%exclude %python_sitelibdir/zmq/*/*.h
+
+%files devel
+%python_sitelibdir/zmq/*/*.h
 
 %files tests
 %python_sitelibdir/zmq/tests
 
 %changelog
+* Fri Dec 07 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2.0.1-alt2
+- Add subpackage devel
+
 * Thu Dec 06 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.2.0.1-alt1
 - New version
 
