@@ -2,8 +2,8 @@
 BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.16
-Release: alt4
+Version: 0.17
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -41,6 +41,9 @@ rm $RPM_BUILD_ROOT%_bindir/autorepo-config.*
 %perl_vendor_privlib/Autorepo*
 
 %changelog
+* Fri Dec 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
+- unmets autorebuild
+
 * Thu Nov 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.16-alt4
 - rm-out-dups hasher tars as well
 
