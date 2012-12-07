@@ -1,6 +1,6 @@
 Name: monotone
 Version: 1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Distributed version control system
 License: GPL
@@ -9,6 +9,7 @@ Group: Development/Tools
 Url: http://monotone.ca
 
 Source: %name-%version.tar
+Patch: monotone-1.0-alt-gcc4.7.patch
 
 BuildRequires: pcre-devel boost-devel libbotan-devel pkg-config libidn-devel liblua5-devel libsqlite3-devel texinfo
 BuildRequires: zlib-devel gcc-c++
@@ -23,6 +24,7 @@ functions to client-side RSA certificates.
 
 %prep
 %setup
+%patch -p1
 
 %build
 %autoreconf
@@ -43,6 +45,9 @@ functions to client-side RSA certificates.
 %doc AUTHORS NEWS README UPGRADE HACKING INSTALL
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.1
+- Fixed build with gcc 4.7
+
 * Thu Mar 31 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 1.0-alt1
 - 1.0 release.
 - Enable ipv6 support.
