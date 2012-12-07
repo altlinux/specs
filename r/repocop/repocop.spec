@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.63
+Version: 0.64
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -46,7 +46,7 @@ repocop-report-html with whe same arguments as repocop-run.
 %package tools
 Group: Development/Other
 Summary: repocop tools for auto repairing repocop packages
-Requires: perl-RPM-Source-Editor > 0.757
+Requires: perl-RPM-Source-Editor > 0.789
 Requires: %name = %version-%release
 
 %description tools
@@ -111,6 +111,9 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 %dir %_datadir/repocop/fixscripts
 
 %changelog
+* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
+- development release
+
 * Thu Oct 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.63-alt1
 - repocop-check and repocop-check-against-repository
 
