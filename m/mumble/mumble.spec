@@ -4,7 +4,7 @@
 
 Name: mumble
 Version: 1.2.2
-Release: alt2
+Release: alt2.1
 
 Summary: Voice chat software primarily intended for use while gaming
 License: BSD
@@ -74,14 +74,16 @@ won't be audible to other players.
 %setup
 
 %build
+%add_optflags -fpermissive
 qmake-qt4 "CONFIG+=no-bundled-speex \
 no-bundled-celt -recursive no-g15 \
-no-embed-qt-translations no-update \
-QMAKE_CFLAGS_RELEASE=%optflags \
-QMAKE_CXXFLAGS_RELEASE=%optflags \
+no-embed-qt-translations no-update" \
+QMAKE_CFLAGS+='%optflags' \
+QMAKE_CXXFLAGS+='%optflags' \
 DEFINES+=PLUGIN_PATH=%_libdir/%name \
-DEFINES+=DEFAULT_SOUNDSYSTEM=PulseAudio" main.pro
-%make_build
+DEFINES+=DEFAULT_SOUNDSYSTEM=PulseAudio main.pro
+# dirty hack; need help
+%make_build || %make_build
 
 %install
 # binaries
@@ -181,6 +183,9 @@ mkdir -p %buildroot%_var/run/mumble-server/
 %_datadir/kde4/services/mumble.protocol
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt2.1
+- Fixed build with gcc 4.7
+
 * Tue Nov 23 2010 Vladimir V. Kamarzin <vvk@altlinux.org> 1.2.2-alt2
 - Rebuild with libssl.so.10 and libcrypto.so.10.
 
