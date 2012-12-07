@@ -1,7 +1,7 @@
 %def_without test
 
 Name: gscan2pdf
-Version: 1.0.6
+Version: 1.1.0
 Release: alt1
 
 Summary: A GUI to ease the process of producing a multipage PDF from a scan
@@ -18,10 +18,14 @@ BuildArch: noarch
 # perl(Gtk2/Ex/PodViewer.pm) at line 3501 (depth 4) inside eval SKIP
 Requires: perl(Gtk2/Ex/PodViewer.pm) xdg-utils unpaper
 
-# Automatically added by buildreq on Wed Feb 16 2011 (-bi)
-BuildRequires: perl-Archive-Tar perl-Config-General perl-Goo-Canvas perl-Gtk2-Ex-Simple-List perl-Gtk2-ImageView perl-Locale-gettext perl-Log-Log4perl perl-PDF-API2 perl-Proc-ProcessTable perl-Readonly perl-Set-IntSpan perl-Test-Pod perl-XML-Simple perl-threads
+# Automatically added by buildreq on Fri Dec 28 2012 (-bi)
+# optimized out: fontconfig libX11-locales libgdk-pixbuf libwayland-client libwayland-server perl-Cairo perl-Compress-Raw-Bzip2 perl-Compress-Raw-Zlib perl-Encode perl-Glib perl-Gtk2 perl-HTML-Parser perl-HTML-Tagset perl-IO-Compress perl-IO-String perl-IO-Zlib perl-Math-Complex perl-Package-Constants perl-Pango perl-Readonly-XS perl-Try-Tiny perl-threads python-base
+BuildRequires: perl-Archive-Tar perl-Config-General perl-Goo-Canvas perl-Gtk2-Ex-Simple-List perl-Gtk2-ImageView perl-Locale-gettext perl-Log-Log4perl perl-Magick perl-PDF-API2 perl-Proc-ProcessTable perl-Readonly perl-Sane perl-Set-IntSpan perl-devel
 
 BuildPreReq: perl-Magick perl-Sane >= 0.05
+
+# needs for backports
+BuildPreReq: perl-Try-Tiny
 
 # ImageMagick
 Requires: %_bindir/convert
@@ -74,9 +78,11 @@ find %buildroot -name .packlist | xargs rm -f
 %_datadir/%name/
 %_pixmapsdir/*
 %perl_vendor_privlib/Gscan2pdf/
-%perl_vendor_privlib/Gscan2pdf.pm
 
 %changelog
+* Fri Dec 07 2012 Vitaly Lipatov <lav@altlinux.ru> 1.1.0-alt1
+- new version 1.1.0 (with rpmrb script)
+
 * Wed Jul 25 2012 Vitaly Lipatov <lav@altlinux.ru> 1.0.6-alt1
 - new version 1.0.6 (with rpmrb script)
 
