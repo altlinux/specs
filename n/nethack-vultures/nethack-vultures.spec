@@ -2,7 +2,7 @@
 
 Name: nethack-vultures
 Version: 2.1.2
-Release: alt2
+Release: alt2.1
 Summary: NetHack - Vulture's Eye and Vulture's Claw
 
 Group: Games/Adventure 
@@ -15,6 +15,7 @@ Patch2: %name-1.10.1-clawguide.patch
 Patch3: %name-2.1.2-tabfullscreen.patch
 Patch4: %name-2.1.2-fixbuild.patch
 Patch5: %name-desktop.patch
+Patch6: vultures-2.1.2-alt-libpng15.patch
 
 Requires: %name-data = %version-%release
 
@@ -46,6 +47,7 @@ Data files for Vulture's Eye and Vulture's Claw games.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p0
+%patch6 -p2
 sed -i -e 's|/usr/games/lib/nethackdir|%vulturesdir/vultureseye|g' \
     nethack/doc/{nethack,recover}.6 nethack/include/config.h
 sed -i -e 's|/var/lib/games/nethack|%_var/games/vultureseye|g' \
@@ -179,6 +181,9 @@ rm -rf %vulturesdir/vulturesclaw/graphics
 %_mandir/man6/vultures*.6*
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.2-alt2.1
+- Fixed build with libpng15
+
 * Fri Sep 02 2011 Igor Vlasenko <viy@altlinux.ru> 2.1.2-alt2
 - added data subpackage
 
