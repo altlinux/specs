@@ -1,6 +1,6 @@
 Name: mixxx
 Version: 1.10.0
-Release: alt1
+Release: alt1.1
 
 Summary: Free digital DJ software
 Summary(ru_RU.UTF-8): Свободная программа для цифрового диджеинга
@@ -10,6 +10,8 @@ Url: http://mixxx.org
 
 Packager: Egor Glukhov <kaman@altlinux.org>
 Source0: %name-%version.tar
+Patch: mixxx-1.10.0-alt-debuginfo.patch
+Patch1: mixxx-1.10.0-alt-glibc-2.16.patch
 
 BuildPreReq: rpm-macros-qt4
 BuildRequires: cvs flex gcc-c++ libflac-devel libid3tag-devel libmad-devel
@@ -38,6 +40,8 @@ This package contains data files for Mixxx.
 
 %prep
 %setup
+%patch -p1
+%patch1 -p1
 
 %build
 scons qtdir=%_qt4dir prefix=%_prefix
@@ -56,6 +60,9 @@ scons prefix=%_prefix install_root=%buildroot%_prefix install
 %_pixmapsdir/%name-icon.png
 
 %changelog
+* Fri Dec 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.0-alt1.1
+- Fixed build with glibc 2.16
+
 * Fri Dec 30 2011 Egor Glukhov <kaman@altlinux.org> 1.10.0-alt1
 - 1.10.0
 
