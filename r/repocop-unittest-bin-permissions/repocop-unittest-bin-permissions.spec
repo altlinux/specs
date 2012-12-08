@@ -1,7 +1,7 @@
 %define testname bin-permissions
 
 Name: repocop-unittest-%testname
-Version: 0.04
+Version: 0.05
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -15,7 +15,7 @@ Requires: repocop-collector-rpm
 Requires: sqlite3
 
 %description
-Repocop intergration test for non-executable files in /usr/bin.
+Repocop integration test for non-executable files in /usr/bin.
 
 %prep
 
@@ -25,7 +25,7 @@ cat > %testname.posttest <<'EOF'
 sqlite3 "$REPOCOP_TEST_DBDIR/rpm.db" <<EOSQL
 .mode tabs
 .output $REPOCOP_TEST_TMPDIR/info
-select pkgid,filename from rpm_files where FILEMODE & 73=0 and (filename like '/usr/bin/%%' OR filename like '/usr/sbin/%%' OR filename like '/bin/%%' OR filename like '/sbin/%%') and filename not like '%%-functions' and pkgid not glob 'libshell-*';
+select pkgid,filename from rpm_files where FILEMODE & 73=0 and (filename like '/usr/bin/%%' OR filename like '/usr/sbin/%%' OR filename like '/bin/%%' OR filename like '/sbin/%%') and filename not like '%%-functions' and filename not like '%%-config' and pkgid not glob 'libshell-*';
 EOSQL
 perl -ne 'chomp;@a=split /\t/;system("repocop-test-info -k $a[0] not executable file $a[1]")' $REPOCOP_TEST_TMPDIR/info
 rm $REPOCOP_TEST_TMPDIR/*
@@ -41,6 +41,9 @@ mkdir -p $RPM_BUILD_ROOT%_datadir/repocop/pkgtests/%testname/
 %_datadir/repocop/pkgtests/%testname
 
 %changelog
+* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- added exception for *-config
+
 * Wed Sep 30 2009 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - posttests migration
 
