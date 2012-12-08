@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.1
-%define rel alt5
+%define rel alt6
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -652,6 +652,9 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Fri Dec 07 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt6
+- Fix drkonqui failure.
+
 * Mon Nov 12 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt5
 - Disable features INOTIFY and GAMIN for prevent KDED hang into:
     konqueror start, krusader::fish, kmail.
