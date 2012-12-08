@@ -1,12 +1,12 @@
 Summary: multitail lets you view one or multiple files like the original tail program.
 Summary(ru_RU.KOI8-R): multitail позволяет просматривать один или несколько файлов
 Name: multitail
-Version: 5.2.9
+Version: 5.2.11
 Release: alt1
 License: GPL
 Group: Monitoring
 Source: %name-%version.tgz
-URL: http://www.vanheusden.com/multitail/download.html
+URL: http://www.vanheusden.com/multitail/
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # Automatically added by buildreq on Fri May 18 2007
@@ -48,6 +48,10 @@ bzip2 -9 $RPM_BUILD_ROOT/%_man1dir/multitail.1
 %doc Changes INSTALL readme.txt license.txt manual.html %name.conf
 
 %changelog
+* Sun Dec 09 2012 Ilya Mashkin <oddity@altlinux.ru> 5.2.11-alt1
+- 5.2.11
+- fix url
+
 * Mon Jan 02 2012 Ilya Mashkin <oddity@altlinux.ru> 5.2.9-alt1
 - 5.2.9
 
