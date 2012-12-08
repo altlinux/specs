@@ -1,7 +1,7 @@
 Name: gnustep-make
-Version: 2.0.6
-Release: alt4.3
-Source: ftp://ftp.gnustep.org/pub/gnustep/core/%name-%version.tar.gz
+Version: 2.6.2
+Release: alt1.svn20121102
+Source: %name-%version.tar
 License: GPL
 Group: Development/Other
 Summary: GNUstep Makefile package
@@ -36,14 +36,15 @@ cross-compiled binaries.
 
 %build
 sed -i 's,@lib@,%_lib,' FilesystemLayouts/fhs-system-alt
-%__autoconf
+%autoreconf
 %configure \
         --enable-flattened \
 	--with-layout=fhs-system-alt
 
 %install
-%__make install \
-        DESTDIR=%buildroot
+sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
+
+%makeinstall_std
 
 #install -d %buildroot/etc/profile.d
 
@@ -88,10 +89,14 @@ sed -i -e 's/i586/x86_64/g' $(find %buildroot%_datadir/GNUstep -type f)
 %_datadir/GNUstep/Makefiles/*.template
 %_datadir/GNUstep/Makefiles/Instance
 %_datadir/GNUstep/Makefiles/Master
+%_datadir/GNUstep/Makefiles/TestFramework
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/install-sh
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Sat Dec 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt1.svn20121102
+- Version 2.6.2
+
 * Mon Jun 07 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.6-alt4.3
 - Fixed arch type for x86_64
 
