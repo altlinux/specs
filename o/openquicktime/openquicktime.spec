@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: libaudiofile-devel libdv-devel libfaad-devel libjpeg-devel liblame-devel libogg-devel libpng-devel libshout-devel libtiff-devel libvorbis-devel zlib-devel
+# END SourceDeps(oneline)
 # $Id: openquicktime.spec 171 2004-03-28 01:43:07Z dag $
 # Authority: dag
 
@@ -6,7 +9,7 @@
 Summary: Portable library for handling Apples QuickTime(tm) format
 Name: openquicktime
 Version: 2.0.0
-Release: alt5.%prerel.1
+Release: alt6.%prerel
 License: LGPL
 Group: Video
 URL: http://www.openquicktime.org/
@@ -22,7 +25,7 @@ Patch2:openquicktime-2.0.0a1-alt-gcc41.patch
 Patch3: openquicktime-2.0.0-a1-dirty-hack.patch
 
 # Automatically added by buildreq on Tue Jul 19 2005
-BuildRequires: xorg-x11-libs esound glibc-devel-static hostinfo libSDL-devel libaudiofile-devel libdv-devel libjpeg-devel liblame-devel libogg-devel libpng-devel libshout-devel libtiff-devel libvorbis-devel zlib-devel
+BuildRequires: esound glibc-devel-static hostinfo libSDL-devel libaudiofile-devel libdv-devel libjpeg-devel liblame-devel libogg-devel libpng-devel libshout-devel libtiff-devel libvorbis-devel zlib-devel
 # TODO: add build with
 # libcurl-devel libfaac-devel libfaad-devel xvid-devel
 
@@ -98,6 +101,9 @@ done
 %{_libdir}/*.so
 
 %changelog
+* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.0-alt6.a1
+- BuildReq cleanup
+
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt5.a1.1
 - Rebuilt with libpng15
 
