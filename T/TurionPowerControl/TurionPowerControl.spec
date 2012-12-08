@@ -2,7 +2,7 @@
 
 Name: TurionPowerControl
 Version: 0.42.2
-Release: alt0.1
+Release: alt0.2
 
 Summary: Utility to tweak AMD processors parameters
 License: BSD like
@@ -27,7 +27,7 @@ cd src
 %make_build
 
 %install
-install -D -m644 src/%name %buildroot%_sbindir/%name
+install -D -m755 src/%name %buildroot%_sbindir/%name
 install -D -m755 %{S:1} %buildroot%_initdir/tpc
 
 %post
@@ -45,6 +45,9 @@ modprobe msr ||:
 %_initdir/tpc
 
 %changelog
+* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.42.2-alt0.2
+- bugfix release
+
 * Mon Feb 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.42.2-alt0.1
 - updated version
 - TODO: config file
