@@ -1,5 +1,5 @@
 Name: rpmbuild-helper
-Version: 0.03
+Version: 0.04
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -7,7 +7,7 @@ Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 Summary: A set of helper utilities that automate routine packaging tasks.
 Group: Development/Tools
 License: GPL or Artistic
-#Url: 
+Url: http://www.altlinux.org/Icon_Paths_Policy
 
 Source: %name-%version.tar
 
@@ -31,7 +31,7 @@ A part of rpmbuild-helper utilities.
 Group: Development/Tools
 Summary: tool for auto creating missing pixmaps in rpm packages
 Requires: %name = %version-%release
-Requires: ImageMagick
+Requires: /usr/bin/convert
 
 %description iconsdir
 A tool for auto creating missing pixmaps in rpm packages.
@@ -48,8 +48,8 @@ cat > ./rpmbuild-helper-iconsdir <<'EOF'
 use File::Basename;
 use strict;
 die '$RPM_BUILD_ROOT is not set!' unless $ENV{'RPM_BUILD_ROOT'};
-`mkdir -p $ENV{'RPM_BUILD_ROOT'}%_miconsdir`;
-`mkdir -p $ENV{'RPM_BUILD_ROOT'}%_niconsdir`;
+#`mkdir -p $ENV{'RPM_BUILD_ROOT'}%_miconsdir`;
+#`mkdir -p $ENV{'RPM_BUILD_ROOT'}%_niconsdir`;
 `mkdir -p $ENV{'RPM_BUILD_ROOT'}%_liconsdir`;
 
 my $outfile;
@@ -62,16 +62,11 @@ sub convert_to {
     }
 }
 
-foreach my $pixmapfile (glob $ENV{'RPM_BUILD_ROOT'}.'%_liconsdir/*.*') {
-	my $filename=basename($pixmapfile);
-	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_niconsdir/'.$filename, 32);
-	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_miconsdir/'.$filename, 16);
-}
 foreach my $pixmapfile (glob $ENV{'RPM_BUILD_ROOT'}.'/usr/share/pixmaps/*.*') {
 	my $filename=basename($pixmapfile);
 	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_liconsdir/'.$filename, 48);
-	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_niconsdir/'.$filename, 32);
-	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_miconsdir/'.$filename, 16);
+#	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_niconsdir/'.$filename, 32);
+#	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_miconsdir/'.$filename, 16);
 }
 EOF
 %install
@@ -93,6 +88,9 @@ install -m 755 rpmbuild-helper rpmbuild-helper-* $RPM_BUILD_ROOT%_bindir/
 %_bindir/rpmbuild-helper-iconsdir
 
 %changelog
+* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
+- updated to rev.3 of Icon Paths Policy
+
 * Thu Nov 06 2008 Igor Vlasenko <viy@altlinux.ru> 0.03-alt1
 - verbose output in rpmbuild-helper-desktop
 - two more fixes for .desktop files
