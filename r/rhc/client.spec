@@ -1,7 +1,7 @@
 Summary:       Multi-tenant cloud management system client tools
 Name:          rhc
-Version:       0.96.2
-Release:       alt2.1
+Version:       1.13.1
+Release:       alt1
 Group:         System/Servers
 License:       ASL 2.0
 URL:           http://openshift.redhat.com
@@ -36,7 +36,7 @@ Documentation files for %name
 %patch -p1
 
 %build
-for f in bin/rhc-*
+for f in bin/rhc
 do
   ruby -c $f
 done
@@ -68,14 +68,14 @@ cp -a lib/* %buildroot%ruby_sitelibdir/
 
 # Copy the bash autocompletion script
 mkdir -p %buildroot%_sysconfdir/bash_completion.d
-cp autocomplete/rhc %buildroot%_sysconfdir/bash_completion.d/rhc
+cp autocomplete/rhc_bash %buildroot%_sysconfdir/bash_completion.d/rhc
 
 %if_with doc
 %rdoc lib/
 %endif
 
 %files
-%doc doc/USAGE.txt LICENSE COPYRIGHT
+%doc LICENSE COPYRIGHT
 %_bindir/rhc*
 %_man1dir/rhc*
 %_man5dir/express*
@@ -89,6 +89,12 @@ cp autocomplete/rhc %buildroot%_sysconfdir/bash_completion.d/rhc
 %endif
 
 %changelog
+* Tue Aug 13 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1.13.1-alt1
+- Update for new release
+
+* Mon Aug 12 2013 Evgeny Sinelnikov <sin@altlinux.ru> 1.4.1-alt1
+- Update to last used release
+
 * Sat Dec 01 2012 Led <led@altlinux.ru> 0.96.2-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 - cleaned up BuildRequires

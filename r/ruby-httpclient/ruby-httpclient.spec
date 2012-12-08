@@ -1,0 +1,58 @@
+%define orig_name httpclient
+
+Summary: HTTP accessing library for Ruby
+Name: ruby-%orig_name
+Version: 2.3.4.1
+Release: alt1
+Group: Development/Ruby
+License: GPLv2 or Ruby License
+URL: https://github.com/nahi/httpclient
+Source0: %name-%version.tar
+Patch0: %name-%version-%release.patch
+
+BuildArch: noarch
+
+BuildRequires: rpm-build-ruby
+BuildRequires: ruby-tool-setup
+BuildRequires: ruby-tool-rdoc
+BuildRequires: ruby-test-unit
+
+%description
+HTTP library gives something like the functionality of libwww-perl (LWP) in Ruby
+
+
+%package doc
+Summary: Documentation for %name
+Group: Documentation
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%description doc
+Documentation for %name
+
+%prep
+%setup -n %name-%version
+%update_setup_rb
+
+%build
+%ruby_config
+%ruby_build
+
+%install
+%ruby_install
+%rdoc lib/
+
+%check
+
+%files
+%doc README.txt
+%_bindir/httpclient
+%ruby_sitelibdir/*
+
+%files doc
+%ruby_ri_sitedir/*
+
+%changelog
+* Mon Aug 12 2013 Evgeny Sinelnikov <sin@altlinux.ru> 2.3.4.1-alt1
+- Initial build for Sisyphus
+
