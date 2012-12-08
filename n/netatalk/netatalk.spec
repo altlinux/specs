@@ -1,8 +1,8 @@
 %define build_static 0
 
 Name: netatalk
-Version: 2.0.5
-Release: alt2
+Version: 2.2.4
+Release: alt1
 
 Summary: AppleTalk networking programs
 License: GPL, BSD
@@ -12,11 +12,11 @@ Url: http://netatalk.sourceforge.net
 Source0: %name-%version.tar
 Source1: atalk.init
 Source2: netatalk.pamd
-Packager: Sergey Kurakin <kurakin@altlinux.org>
 
-BuildRequires: libcups-devel libdb4-devel libpam-devel libwrap-devel zlib-devel
+BuildRequires: libdb4-devel libpam-devel libwrap-devel zlib-devel
 BuildRequires: libgcrypt-devel
 BuildRequires: libssl-devel
+BuildRequires: perl-bignum
 
 %description
 This package enables Linux to talk to Macintosh computers via the
@@ -49,21 +49,26 @@ AppleTalk networking programs
 
 %prep
 %setup -n %name-%version
+
 # rename uniconv -> uniconv_netatalk
 # to prevent filename conflict with uniconvertor
 sed -i "s|uniconv|uniconv_netatalk|" man/man1/uniconv.1.tmpl
 
+#remove lp2pap
+#sed -i "s| lp2pap|#lp2pap|" contrib/shell_utils/Makefile.am
+
 %build
+%autoreconf
 %configure \
 	--with-pam=yes \
-	--enable-redhat \
+	--enable-ddp \
+	--enable-redhat-sysv \
 	--with-shadow \
 	--enable-fhs \
 	--with-cnid-cdb-backend \
 	--with-cnid-dbd-backend \
 	--with-cnid-last-backend \
 	--enable-acl \
-	--enable-cups \
 	--libexecdir=%_bindir \
 %if %build_static
 	--enable-static
@@ -98,14 +103,15 @@ mv %buildroot%_man1dir/uniconv.1 %buildroot%_man1dir/uniconv_netatalk.1
 %dir %_libdir/%name
 %config(noreplace) %_sysconfdir/%name/*
 %config %_initdir/atalk
+%exclude %_initdir/netatalk
 %config %_sysconfdir/pam.d/%name
 %_bindir/*
 %_sbindir/*
 %_mandir/man?/*
 %_libdir/%name/*.so
 %_datadir/%name/
-%doc CONTRIBUTORS COPYING COPYRIGHT README TODO NEWS
-%doc doc/DEVELOPER doc/FAQ doc/README.*
+%doc CONTRIBUTORS COPYING COPYRIGHT NEWS
+%doc doc/DEVELOPER doc/README.*
 %exclude %_libdir/libatalk.a
 %exclude %_libdir/%name/*.la
 
@@ -122,10 +128,14 @@ mv %buildroot%_man1dir/uniconv.1 %buildroot%_man1dir/uniconv_netatalk.1
 %_libdir/%name/*.a
 %endif
 
-# TODO:
-# - consider 2.1.5/2.2
 
 %changelog
+* Sat Dec  8 2012 Sergey Kurakin <kurakin@altlinux.org> 2.2.4-alt1
+- 2.2.4
+- cups support removed
+- legacy AppleTalk support presents, but disabled
+  in default configuration. PAP too
+
 * Sun Apr  3 2011 Sergey Kurakin <kurakin@altlinux.org> 2.0.5-alt2
 - lsb-header added
 - SysVinit header corrected: don't start atalk by default
