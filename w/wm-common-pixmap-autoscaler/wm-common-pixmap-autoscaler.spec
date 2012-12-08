@@ -1,7 +1,7 @@
 Summary: Support for pixmap autoscaling for ancient Window Managers.
 Name: wm-common-pixmap-autoscaler
 Version: 1.0
-Release: alt1
+Release: alt2
 License: GPL2+
 Group: Graphical desktop/Other
 Packager: Igor Vlasenko <viy@altlinux.ru>
@@ -9,8 +9,8 @@ URL: http://wiki.altlinux.org/WMPackagingPolicy
 BuildArch: noarch
 Source0: %name-%version.tar
 
-# /usr/bin/convert
-Requires(pre): ImageMagick
+Requires(pre): /usr/bin/convert
+Requires: /usr/bin/convert
 
 %description
 wm-common-pixmap-autoscaler is a helper tool for ancient Window Managers
@@ -50,5 +50,8 @@ install -d -m755 %buildroot/var/cache/icons/hicolor/{48x48,32x32,16x16}/apps
 /var/cache/icons
 
 %changelog
+* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2
+- Requires: /usr/bin/convert instead of ImageMagic
+
 * Fri Mar 06 2009 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1
 - first version
