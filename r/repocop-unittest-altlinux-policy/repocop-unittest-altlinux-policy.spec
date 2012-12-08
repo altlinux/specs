@@ -1,6 +1,6 @@
 Name: repocop-unittest-altlinux-policy
 Version: 0.29
-Release: alt10
+Release: alt11
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 Url: http://repocop.altlinux.org
@@ -42,6 +42,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt11
+- bugfix release
+
 * Tue Nov 06 2012 Igor Vlasenko <viy@altlinux.ru> 0.29-alt10
 - added requires-ImageMagick.posttest
 
