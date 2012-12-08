@@ -1,6 +1,6 @@
 Name:     xtexcad
 Version:  2.4.1
-Release:  alt4
+Release:  alt5
 Packager: Igor Vlasenko <viy@altlinux.org>
 License:  Other License(s), see package
 Group:    Graphics
@@ -58,8 +58,10 @@ Comment=%{summary}
 Icon=%{name}
 Exec=%{name}
 Terminal=false
-Categories=Graphics;VectorGraphics;X-ALTLinux-TeX;
+Categories=Graphics;2DGraphics;VectorGraphics;X-ALTLinux-TeX;Graphics;
 EOF
+# garbage
+rm -f %buildroot/usr/share/X11/app-defaults
 
 %files
 %doc COPYRIGHT HISTORY MANIFEST README XTeXcad.dvi
@@ -69,6 +71,9 @@ EOF
 %_desktopdir/*
 
 %changelog -n texcad
+* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt5
+- updated desktop file
+
 * Sat Mar 26 2011 Igor Vlasenko <viy@altlinux.ru> 2.4.1-alt4
 - converted debian menu to freedesktop
 
