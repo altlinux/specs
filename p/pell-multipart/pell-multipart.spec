@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 Summary:        Multipart input stream parser
 Name:           pell-multipart
 Version:        1.30
-Release:        alt1_0.rc1.4jpp5
+Release:        alt2_0.rc1.4jpp5
 Epoch:          0
 License:        LGPL
 URL:            http://www.geocities.com/jasonpell/programs.html
@@ -89,7 +89,7 @@ find . -name "*.jar" -exec rm {} \;
 
 %build
 export CLASSPATH=$(build-classpath servlet_2_4_api)
-ant 
+ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5
 
 %install
 
@@ -137,6 +137,9 @@ cp -pr examples/* $RPM_BUILD_ROOT%{_datadir}/%{name}-%{version}
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.30-alt2_0.rc1.4jpp5
+- fixed pom
+
 * Sun Feb 21 2010 Igor Vlasenko <viy@altlinux.ru> 0:1.30-alt1_0.rc1.4jpp5
 - new jpackage release
 
