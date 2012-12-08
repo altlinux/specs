@@ -1,11 +1,12 @@
 Name:		nmapsi4
 Version:	0.2.1
-Release:	alt1.1
+Release:	alt1.2
 Summary:	NmapSI4 is a qt4 interface for nmap scanner
 License:	GPLv2
 Group:		Security/Networking
 Url:		http://nmapsi4.netsons.org/
 Source0:	http://nmapsi4.googlecode.com/files/%name-%version.tar.gz
+Patch: nmapsi4-0.2.1-alt-glibc-2.16.patch
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 
 BuildRequires: cmake gcc-c++ libqt4-devel
@@ -19,13 +20,14 @@ to menagement all option of this power security net scanner!
 
 %prep
 %setup -q
+%patch -p2
 
 %build
 cmake \
 	-DCMAKE_INSTALL_PREFIX=%prefix \
 	-DCMAKE_CXX_FLAGS:STRING="%optflags" \
 	-DCMAKE_C_FLAGS:STRING="%optflags"
-%make_build
+%make_build VERBOSE=1
 
 %install
 %make DESTDIR=%buildroot install
@@ -39,6 +41,9 @@ chmod +x %buildroot%_bindir/*
 %_desktopdir/kde/*.desktop
 
 %changelog
+* Sat Dec 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.2
+- Fixed build with glibc 2.16
+
 * Mon Feb 07 2011 Motsyo Gennadi <drool@altlinux.ru> 0.2.1-alt1.1
 - fix build (rules)
 
