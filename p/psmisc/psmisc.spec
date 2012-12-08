@@ -1,5 +1,5 @@
 Name: psmisc
-Version: 22.13
+Version: 22.20
 Release: alt1
 
 Summary: Utilities for managing processes on your system
@@ -26,7 +26,7 @@ mkdir -p m4
 
 %build
 %autoreconf
-%configure %{subst_enable selinux}
+%configure %{subst_enable selinux} --disable-harden-flags
 %make_build
 
 %install
@@ -48,6 +48,9 @@ popd
 %doc AUTHORS ChangeLog README
 
 %changelog
+* Sat Dec 08 2012 Dmitry V. Levin <ldv@altlinux.org> 22.20-alt1
+- Updated to v22.20 (closes: #28204).
+
 * Tue Apr 05 2011 Dmitry V. Levin <ldv@altlinux.org> 22.13-alt1
 - Updated to v22.13-7-g64e6225.
 - Packaged %_bindir/fuser symlink (closes: #11762).
