@@ -5,8 +5,8 @@
 %def_disable devel_doc
 
 Name: python-module-%{_name}3
-Version: %major.2
-Release: alt1
+Version: %major.3
+Release: alt0.1
 
 Summary: Python bindings for GObject
 
@@ -14,7 +14,8 @@ License: LGPL
 Group: Development/Python
 Url: http://www.pygtk.org/
 
-Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar.xz
+Source: %_name-%version.tar
+#Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar.xz
 
 %setup_python_module pygobject3
 
@@ -25,10 +26,11 @@ Source: http://ftp.gnome.org/pub/GNOME/sources/%_name/%major/%_name-%version.tar
 %define gi_ver 1.34.1.1
 
 BuildPreReq: glib2-devel >= %glib_ver libgio-devel libffi-devel
-BuildRequires: python-devel python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel
+BuildRequires: python-devel python-modules-encodings python-module-pycairo-devel libcairo-gobject-devel gtk-doc
 BuildPreReq: gobject-introspection-devel >= %gi_ver
 # for tests
-# BuildRequires: dbus-tools-gui libgtk+3-gir-devel
+BuildRequires: dbus-tools-gui libgtk+3-gir-devel xvfb-run
+BuildRequires: glibc-i18ndata
 
 %description
 GObject is a object system used by GTK+, GStreamer and other libraries.
@@ -70,13 +72,13 @@ Development documentation for %_name.
 
 %make_build
 
-%check
-#%%make check
-
 %install
 %makeinstall_std
 # hack to avoid verify-elf errors
 export LD_PRELOAD=%_libdir/libpython%__python_version.so
+
+%check
+xvfb-run %make check
 
 %files
 %_libdir/libpyglib-gi-2.0-python.so.*
@@ -97,6 +99,10 @@ export LD_PRELOAD=%_libdir/libpython%__python_version.so
 %endif
 
 %changelog
+* Sat Dec 08 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.3-alt0.1
+- 3.4.3 snapshot (c36e1236)
+- enabled %%check again using xvfb-run
+
 * Mon Nov 12 2012 Yuri N. Sedunov <aris@altlinux.org> 3.4.2-alt1
 - 3.4.2
 
