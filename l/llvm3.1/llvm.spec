@@ -2,7 +2,7 @@
 
 Name: llvm3.1
 Version: 3.1
-Release: alt1
+Release: alt1.1
 Summary: The Low Level Virtual Machine
 Group: Development/C
 License: NCSA
@@ -17,6 +17,8 @@ BuildRequires: chrpath groff python-dev dejagnu gcc-c++ ocamldoc tcl perl-devel 
 %if_enabled doxygen
 BuildRequires: doxygen graphviz
 %endif
+Provides: llvm = %version-release
+Conflicts: llvm < %version-release
 
 %description
 LLVM is a compiler infrastructure designed for compile-time,
@@ -29,6 +31,8 @@ functionality.
 Summary: Libraries and header files for LLVM
 Group: Development/C
 Requires: %name = %version-%release
+Provides: llvm-devel = %version-release
+Conflicts: llvm-devel < %version-release
 
 %description devel
 This package contains library and header files needed to develop new
@@ -47,6 +51,8 @@ Documentation for the LLVM compiler infrastructure.
 Summary: A C language family frontend for LLVM
 License: NCSA
 Group: Development/C
+Provides: clang = %version-release
+Conflicts: clang < %version-release
 
 %description -n clang%version
 clang: noun
@@ -62,6 +68,8 @@ as libraries and designed to be loosely-coupled and extendable.
 Summary: Header files for clang
 Group: Development/C
 Requires: clang%version = %version-%release
+Provides: clang-devel = %version-release
+Conflicts: clang-devel < %version-release
 
 %description -n clang%version-devel
 This package contains header files for the Clang compiler.
@@ -71,6 +79,8 @@ Summary: A source code analysis framework
 License: NCSA
 Group: Development/C
 Requires: clang%version = %version-%release
+Provides: clang-analyzer = %version-release
+Conflicts: clang-analyzer < %version-release
 
 %description -n clang%version-analyzer
 The Clang Static Analyzer consists of both a source code analysis
@@ -83,6 +93,7 @@ Summary: Documentation for Clang
 Group: Documentation
 BuildArch: noarch
 Requires: %name = %version-%release
+Conflicts: clang-doc < %version-release
 
 %description -n clang%version-doc
 Documentation for the Clang compiler front-end.
@@ -92,6 +103,7 @@ Summary: API documentation for LLVM
 Group: Development/C
 BuildArch: noarch
 Requires: %name-docs = %version-%release
+Conflicts: llvm-apidoc < %version-release
 
 %description apidoc
 API documentation for the LLVM compiler infrastructure.
@@ -101,6 +113,7 @@ Summary: API documentation for Clang
 Group: Development/Languages
 BuildArch: noarch
 Requires: clang%version-doc = %version-%release
+Conflicts: clang-apidoc < %version-release
 
 %description -n clang%version-apidoc
 API documentation for the Clang compiler.
@@ -110,6 +123,8 @@ Summary: OCaml binding for LLVM
 Group: Development/Functional
 Requires: %name = %version-%release
 Requires: ocaml-runtime
+Provides: llvm-ocaml = %version-release
+Conflicts: llvm-ocaml < %version-release
 
 %description ocaml
 OCaml binding for LLVM.
@@ -120,6 +135,8 @@ Group: Development/Functional
 Requires: %name-devel = %version-%release
 Requires: %name-ocaml = %version-%release
 Requires: ocaml
+Provides: llvm-ocaml-devel = %version-release
+Conflicts: llvm-ocaml-devel < %version-release
 
 %description ocaml-devel
 The %name-ocaml-devel package contains libraries and signature files
@@ -218,6 +235,13 @@ file %buildroot/%_libdir/llvm/*.so | awk -F: '$2~/ELF/{print $1}' | xargs -r chr
 # they require the build directory to work
 find examples -name 'Makefile' -delete
 
+# need for build cmake projects
+install -d %buildroot%_datadir/CMake/Modules
+install -p -m644 cmake/modules/*.cmake \
+	%buildroot%_datadir/CMake/Modules
+ln -s LLVM-Config.cmake \
+	%buildroot%_datadir/CMake/Modules/LLVMConfig.cmake
+
 %files
 %doc CREDITS.TXT LICENSE.TXT README.txt llvm-testlog.txt
 %_bindir/bugpoint
@@ -237,6 +261,7 @@ find examples -name 'Makefile' -delete
 %_includedir/llvm
 %_includedir/llvm-c
 %_libdir/llvm/*.a
+%_datadir/CMake/Modules
 
 %files -n clang%version
 %doc clang-docs/* clang-testlog.txt
@@ -280,6 +305,10 @@ find examples -name 'Makefile' -delete
 %endif
 
 %changelog
+* Sat Dec 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1-alt1.1
+- Added necessary .cmake-files into %name-devel
+- Set conflicts with previous versions of llvm
+
 * Mon Jul 16 2012 Valery Inozemtsev <shrek@altlinux.ru> 3.1-alt1
 - 3.1
 
