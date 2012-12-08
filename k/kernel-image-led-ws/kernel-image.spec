@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.54
-Release: alt3
+Version: 3.0.55
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 54
+%define kernel_stable_version 55
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -154,7 +154,7 @@ Patch0015: linux-%kernel_branch.42-fix-arch-powerpc-platforms--pseries.patch
 Patch0016: linux-%kernel_branch.43-fix-arch-s390.patch
 Patch0017: linux-%kernel_branch.43-fix-arch-s390--lib.patch
 
-Patch0020: linux-%kernel_branch.54-fix-arch-x86.patch
+Patch0020: linux-%kernel_branch.55-fix-arch-x86.patch
 Patch0021: linux-%kernel_branch.42-fix-arch-x86--apic.patch
 Patch0022: linux-%kernel_branch.42-fix-arch-x86--apm.patch
 Patch0023: linux-%kernel_branch.54-fix-arch-x86--mcheck.patch
@@ -278,7 +278,7 @@ Patch0223: linux-%kernel_branch.42-fix-drivers-firmware--iscsi_ibft.patch
 Patch0231: linux-%kernel_branch.44-fix-drivers-gpu-drm.patch
 Patch0232: linux-%kernel_branch.44-fix-drivers-gpu-drm--drm.patch
 Patch0233: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm_kms_helper.patch
-Patch0234: linux-%kernel_branch.52-fix-drivers-gpu-drm--i915.patch
+Patch0234: linux-%kernel_branch.53-fix-drivers-gpu-drm--i915.patch
 Patch0235: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0236: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
 Patch0237: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
@@ -358,7 +358,7 @@ Patch0423: linux-%kernel_branch.42-fix-drivers-net--at1700.patch
 Patch0424: linux-%kernel_branch.42-fix-drivers-net--bna.patch
 Patch0425: linux-%kernel_branch.43-fix-drivers-net--bnx2.patch
 Patch0426: linux-%kernel_branch.43-fix-drivers-net--bnx2x.patch
-Patch0427: linux-%kernel_branch.42-fix-drivers-net--bonding.patch
+Patch0427: linux-%kernel_branch.53-fix-drivers-net--bonding.patch
 Patch0428: linux-%kernel_branch.43-fix-drivers-net--claw.patch
 Patch0429: linux-%kernel_branch.51-fix-drivers-net--cnic.patch
 Patch0430: linux-%kernel_branch.43-fix-drivers-net--ctcm.patch
@@ -530,6 +530,7 @@ Patch0690: linux-%kernel_branch.43-fix-fs-proc.patch
 Patch0691: linux-%kernel_branch.42-fix-fs-pstore.patch
 Patch0692: linux-%kernel_branch.51-fix-fs-reiserfs.patch
 Patch0693: linux-%kernel_branch.42-fix-fs-sysfs.patch
+Patch0694: linux-%kernel_branch.53-fix-fs-xfs.patch
 
 Patch0700: linux-%kernel_branch.46-fix-include.patch
 
@@ -1796,6 +1797,7 @@ cd linux-%version
 %patch0691 -p1
 %patch0692 -p1
 %patch0693 -p1
+%patch0694 -p1
 
 %patch0700 -p1
 
@@ -2833,6 +2835,15 @@ done)
 
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 3.0.55-alt1
+- 3.0.55
+- updated:
+  + fix-arch-x86
+  + fix-drivers-gpu-drm--i915
+  + fix-drivers-net--bonding
+- added:
+  + fix-fs-xfs
+
 * Thu Dec 06 2012 Led <led@altlinux.ru> 3.0.54-alt3
 - updated:
   + fix-fs-autofs4
