@@ -1,7 +1,7 @@
 Name: codeblocks
-%define revision 8598
+%define revision 8629
 Version: 12.11
-Release: alt0.2
+Release: alt1
 
 Summary: Code::Blocks is open source, cross platform free C++ IDE
 Summary(ru_RU.UTF-8): Code::Blocks это кросс-платформенная свободная среда разработки для C++ с открытым исходным кодом
@@ -241,6 +241,9 @@ install -D %SOURCE5 %buildroot%_sysconfdir/skel/.codeblocks/default.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Dec 09 2012 Denis Kirienko <dk@altlinux.org> 12.11-alt1
+- 12.11 realese (SVN 8629)
+
 * Fri Nov 23 2012 Denis Kirienko <dk@altlinux.org> 12.11-alt0.2
 - 12.11 RC2 (SVN 8598)
 
