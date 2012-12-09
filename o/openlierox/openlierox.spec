@@ -1,7 +1,7 @@
 Name: openlierox
 Version: 0.58
 %define beta rc3
-Release: alt0.%beta.1.1
+Release: alt0.%beta.2
 
 Summary: Addictive realtime multiplayer 2D shoot-em-up
 License: LGPLv2+
@@ -12,6 +12,7 @@ Packager: Victor Forsyuk <force@altlinux.org>
 Source: OpenLieroX_%{version}_%{beta}.src.tar
 Source1: openlierox.desktop
 Patch: openlierox-alt-libzip.patch
+Patch1: OpenLieroX-0.58-alt-gcc4.7.patch
 
 # Automatically added by buildreq on Thu Jul 14 2011 (-bi)
 # optimized out: fontconfig libSDL-devel libX11-devel libstdc++-devel xorg-xproto-devel zlib-devel
@@ -35,6 +36,7 @@ Game data for openlierox.
 %prep
 %setup -n OpenLieroX
 %patch
+%patch1 -p2
 
 %build
 # Remove references to curl/types.h which no longer exists.
@@ -42,6 +44,7 @@ find -type f -print0 |
 	xargs -r0 grep -FZl '<curl/types.h>' |
 	xargs -r0 sed -i '/<curl\/types.h>/d' --
 
+%add_optflags -fpermissive
 CXXFLAGS='%optflags' SYSTEM_DATA_DIR=%_datadir DEBUGINFO=0 ./compile.sh
 
 %install
@@ -67,6 +70,9 @@ install -pDm644 share/OpenLieroX.svg %buildroot%_iconsdir/hicolor/scalable/apps/
 %_datadir/OpenLieroX
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.58-alt0.rc3.2
+- Fixed build with gcc 4.7
+
 * Tue Oct 25 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.58-alt0.rc3.1.1
 - Rebuild with Python-2.7
 
