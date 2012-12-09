@@ -1,6 +1,6 @@
 Name: parted
 Version: 2.4
-Release: alt2
+Release: alt2.1
 Summary: Flexible partitioning tool
 License: GPLv3
 Group: System/Configuration/Hardware
@@ -12,6 +12,7 @@ Requires: lib%name = %version-%release
 Source: http://ftp.gnu.org/gnu/parted/%name-%version.tar.gz
 Patch0: parted-2.3-gpt-labels.patch
 Patch1: parted-2.4-alt-headers-regression.patch
+Patch2: parted-2.4-alt-glibc-2.16.patch
 
 BuildRequires: libblkid-devel libdevmapper-devel libreadline-devel libtinfo-devel libuuid-devel
 
@@ -42,12 +43,14 @@ This package includes the header files
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p2
 
 %build
 %configure \
 	--disable-rpath \
-	--disable-static
-%make_build
+	--disable-static \
+	--disable-Werror
+%make_build V=1
 
 %install
 %make DESTDIR=%buildroot install
@@ -70,6 +73,9 @@ This package includes the header files
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt2.1
+- Fixed build with glibc 2.16
+
 * Thu Jun 23 2011 Valery Inozemtsev <shrek@altlinux.ru> 2.4-alt2
 - fixed headers regression
 
