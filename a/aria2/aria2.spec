@@ -1,5 +1,5 @@
 Name: aria2
-Version: 1.15.2
+Version: 1.16.0
 Release: alt1
 
 Summary: aria2 - a simple utility for downloading files faster.
@@ -52,6 +52,9 @@ mkdir -p %buildroot%_bindir
 %_bindir/%name
 
 %changelog
+* Sun Dec 09 2012 Ilya Mashkin <oddity@altlinux.ru> 1.16.0-alt1
+- 1.16.0
+
 * Tue Oct 02 2012 Ilya Mashkin <oddity@altlinux.ru> 1.15.2-alt1
 - 1.15.2
 
