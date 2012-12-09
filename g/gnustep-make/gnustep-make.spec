@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.2
-Release: alt1.svn20121102
+Release: alt2.svn20121102
 Source: %name-%version.tar
 License: GPL
 Group: Development/Other
@@ -8,7 +8,7 @@ Summary: GNUstep Makefile package
 Packager: Sergey Alembekov <rt@altlinux.ru>
 Url: http://www.gnustep.org/
 
-BuildRequires: gcc-objc libobjc-devel star
+BuildRequires: gcc-objc libgnustep-objc2-devel star
 Requires: gnustep-dirs
 
 %description
@@ -20,6 +20,7 @@ GNUstep filesystem layout
 %package devel
 Summary: Files needed to develop applications with gnustep-make
 Group: Development/Other
+BuildArch: noarch
 Requires: %name = %version-%release
 
 %description devel
@@ -32,10 +33,14 @@ cross-compiled binaries.
 
 
 %prep
-%setup -q
+%setup
+
+%ifarch x86_64
+LIB_SUFF=64
+%endif
+sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
 
 %build
-sed -i 's,@lib@,%_lib,' FilesystemLayouts/fhs-system-alt
 %autoreconf
 %configure \
         --enable-flattened \
@@ -66,8 +71,10 @@ sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 sed -i -e 's/i586/x86_64/g' $(find %buildroot%_datadir/GNUstep -type f)
 %endif
 
+gzip ChangeLog
+
 %files
-%doc ChangeLog
+%doc ChangeLog*
 %_sysconfdir/GNUstep/
 %_bindir/*
 #%attr(755,root,root) %_sysconfdir/profile.d/*
@@ -94,6 +101,12 @@ sed -i -e 's/i586/x86_64/g' $(find %buildroot%_datadir/GNUstep -type f)
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt2.svn20121102
+- Compressed ChangeLog
+- Set devel subpackage as noarch
+- Built with gnustep-objc2-devel instead of libobjc-devel
+- Tuned layout of directories
+
 * Sat Dec 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt1.svn20121102
 - Version 2.6.2
 
