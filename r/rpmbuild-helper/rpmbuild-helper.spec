@@ -1,5 +1,5 @@
 Name: rpmbuild-helper
-Version: 0.05
+Version: 0.06
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -49,13 +49,11 @@ A part of rpmbuild-helper utilities.
 %build
 #perl_vendor_build
 
-cat > ./025-fixup-iconsdir <<'EOF'
+cat > ./025-fixup-iconsdir.brp <<'EOF'
 #!/usr/bin/perl -w
 use File::Basename;
 use strict;
 die '$RPM_BUILD_ROOT is not set!' unless $ENV{'RPM_BUILD_ROOT'};
-#`mkdir -p $ENV{'RPM_BUILD_ROOT'}%_miconsdir`;
-#`mkdir -p $ENV{'RPM_BUILD_ROOT'}%_niconsdir`;
 `mkdir -p $ENV{'RPM_BUILD_ROOT'}%_liconsdir`;
 
 my $outfile;
@@ -63,34 +61,36 @@ my $outfile;
 sub convert_to {
     my ($infile, $outfile, $geometry) =@_;
     unless (-e $outfile) {
-    	print STDERR "rpmbuild-helper-iconsdir: converted ".&basename($infile)." to $geometry\n";
+    	print STDERR "025-fixup-iconsdir: converted ".&basename($infile)." to $geometry\n";
         system ("convert $infile -resize $geometry $outfile") and die $!;
     }
 }
-
+# TODO: check size instead of converting
 foreach my $pixmapfile (glob $ENV{'RPM_BUILD_ROOT'}.'/usr/share/pixmaps/*.*') {
 	my $filename=basename($pixmapfile);
 	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_liconsdir/'.$filename, 48);
-#	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_niconsdir/'.$filename, 32);
-#	&convert_to($pixmapfile, $ENV{'RPM_BUILD_ROOT'}.'%_miconsdir/'.$filename, 16);
 }
 EOF
-%install
-#perl_vendor_install
 
+%install
 mkdir -p $RPM_BUILD_ROOT%_prefix/lib/rpm/brp.d/
-install -m 755 025-fixup-* $RPM_BUILD_ROOT%_prefix/lib/rpm/brp.d/
+install -m 755 *-fixup-*.brp $RPM_BUILD_ROOT%_prefix/lib/rpm/brp.d/
+
+# not ready
+rm -f $RPM_BUILD_ROOT%_prefix/lib/rpm/brp.d/025-fixup-iconsdir.brp
+#%files iconsdir
+#%_prefix/lib/rpm/brp.d/025-fixup-iconsdir.brp
 
 %files desktop
-%_prefix/lib/rpm/brp.d/025-fixup-desktop
+%_prefix/lib/rpm/brp.d/025-fixup-desktop.brp
 
 %files sugar-activity
-%_prefix/lib/rpm/brp.d/025-fixup-sugar-activity
-
-#%files iconsdir
-#%_prefix/lib/rpm/brp.d/025-fixup-iconsdir
+%_prefix/lib/rpm/brp.d/025-fixup-sugar-activity.brp
 
 %changelog
+* Sun Dec 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- bugfix release
+
 * Sun Dec 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - updated for modular rpm-build
 - added 025-fixup-sugar-activity
