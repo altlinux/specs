@@ -1,6 +1,6 @@
 Name: gnustep-base
-Version: 1.14.1
-Release: alt6.2
+Version: 1.24.2
+Release: alt1.svn20121208
 Serial:1
 
 Summary: GNUstep Base library package
@@ -9,20 +9,15 @@ License: LGPL
 Group: Development/Other
 Url: http://www.gnustep.org/
 
-Packager: Sergey Alembekov <rt@altlinux.ru> 
-
 Source: %name-%version.tar
 Source1: %name.init
-Patch: gnustep-base-1.14.1-alt-objc4.6.patch
 
-BuildRequires(pre): alternatives
-%define gccver 4.6
-%set_gcc_version %gccver
-BuildRequires: gnustep-make gnustep-make-devel libgnutls-devel libssl-devel
-BuildRequires: gcc%gccver-objc libobjc%gccver-devel pkgconfig /proc
+BuildRequires: gnustep-make gnustep-make-devel libgnutls-devel
+BuildRequires: libgnustep-objc2-devel pkgconfig gcc-objc libssl-devel
 BuildRequires: libxml2-devel libxslt-devel zlib-devel libffi-devel mount
-BuildPreReq: libffcall-devel libobjc-devel libgmp-devel libbfd-devel
+BuildPreReq: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
 Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
+BuildPreReq: libicu-devel libcommoncpp2-devel /proc
 
 
 %description
@@ -51,34 +46,20 @@ Libraries and includes files for developing programs based on %name.
 
 %prep
 %setup
-%patch -p2
-%define _libexecdir %prefix/libexec
+cp -fR Headers/ObjectiveC2/objc Headers/ObjectiveC2/objc2
+%define _libexecdir %_libdir
 
 %build
 %undefine __libtoolize
 
-# dirty hack for build with ObjC 4.6: start
-%ifarch x86_64
-comp_path=x86_64
-%else
-comp_path=i586
-%endif
-PATHPART=gcc/$comp_path-alt-linux/$(gcc -dumpversion)
-OBJCPATH=%_libdir/$PATHPART/include
-export OBJC_LIB_PATH=%_libdir/$PATHPART
-export PATH=$PATH:%_libexecdir/$PATHPART
-%add_optflags -I$OBJCPATH
+%add_optflags $(pkg-config --cflags libffi) -D__GNUSTEP_RUNTIME__
 export CPPFLAGS="%optflags"
-# dirty hack for build with ObjC 4.6: end
-
 %autoreconf
-%add_optflags $(pkg-config --cflags libffi)
 %configure \
-	--libexecdir=%_prefix/libexec \
+	--libexecdir=%_libdir \
 	--enable-pass-arguments \
 	--with-openssl-include=%_includedir/openssl \
-	--with-openssl-library=/%_lib/ \
-	--with-library-flags="-L$OBJC_LIB_PATH"
+	--with-openssl-library=/%_lib/
 
 %make \
 	messages=yes \
@@ -131,6 +112,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt1.svn20121208
+- Version 1.24.2
+
 * Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.14.1-alt6.2
 - Fixed build (forced with gcc 4.6)
 

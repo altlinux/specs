@@ -1,11 +1,9 @@
-%set_gcc_version 4.6
-
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc4.6-c++ gcc-c++ unzip zlib-devel
+BuildRequires: gcc-c++ unzip zlib-devel
 # END SourceDeps(oneline)
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_21
+Release:        alt2_21.1
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -20,9 +18,11 @@ Patch1:         raidem-0.3.1-zziplib.patch
 Patch2:         raidem-libpng15.patch
 Patch3:         raidem-gcc4.7-stdio.patch
 Patch4:         raidem-new-api.patch
-BuildRequires:  gcc4.6-objc gcc-objc glyph-keeper-allegro-devel libfreetype-devel libadime-devel
+Patch5:         raidem-0.3.1-alt-objc2.patch
+BuildRequires:  gcc-objc glyph-keeper-allegro-devel libfreetype-devel libadime-devel
 BuildRequires:  zziplib-devel libpng-devel AllegroOGG-devel
 BuildRequires:  automake desktop-file-utils gnustep-base-devel
+BuildPreReq: libgnustep-objc2-devel
 Requires:       icon-theme-hicolor
 Source44: import.info
 
@@ -42,16 +42,22 @@ fun.
 %patch2 -z .libpng
 %patch3 -p0 -z .gcc47
 %patch4 -p0 -z .newapi
+%patch5 -p2
+
+for i in $(find ./ -type f); do
+	sed -i 's|objc/|objc2/|g' $i
+done
+
 # remove all included system libs, to avoid using the included system headers.
-mv lib/loadpng .
+mv lib/loadpng lib/alrand ./
 rm -fr lib/*
-mv loadpng lib
+mv alrand loadpng lib/
 aclocal
 autoconf
 
 %build
-export CC=gcc-4.6
-export CXX=g++-4.6
+export CC=gcc
+export CXX=g++
 
 # override _datadir otherwise it expects its datafile directly under /use/share
 %configure --datadir=%{_datadir}/%{name} --disable-id3
@@ -119,6 +125,9 @@ fi
 
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt2_21.1
+- Built with gcc 4.7 & libgnustep-objc2 instead of libobjc
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.1-alt2_21
 - gcc46 build
 

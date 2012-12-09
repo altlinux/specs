@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.2
-Release: alt2.svn20121102
+Release: alt3.svn20121102
 Source: %name-%version.tar
 License: GPL
 Group: Development/Other
@@ -68,7 +68,7 @@ sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 #        -type f ! -name '*.html' ! -name '*.css' ! -name '*.gz' | xargs gzip -9nf 
 
 %ifarch x86_64
-sed -i -e 's/i586/x86_64/g' $(find %buildroot%_datadir/GNUstep -type f)
+sed -i -e 's/i586/x86_64/g' $(find %buildroot -type f)
 %endif
 
 gzip ChangeLog
@@ -101,6 +101,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt3.svn20121102
+- Fixed arch type for all installed files
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt2.svn20121102
 - Compressed ChangeLog
 - Set devel subpackage as noarch

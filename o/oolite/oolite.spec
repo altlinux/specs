@@ -1,6 +1,6 @@
 Name: oolite
 Version: 1.76.1
-Release: alt1
+Release: alt1.1
 
 Summary: A cross-platform, user-modifiable three-dimensional space trading and combat game.
 License: GPL
@@ -14,7 +14,7 @@ Source99:	http://jens.ayton.se/oolite/deps/firefox-4.0.source.js-only.tbz
 
 Patch: %name-%version-%release.patch
 
-BuildRequires: gnustep-base-devel gnustep-make-devel libobjc gcc-objc
+BuildRequires: gnustep-base-devel gnustep-make-devel gcc-objc
 BuildRequires: libSDL-devel libSDL_mixer-devel libSDL_image-devel
 BuildRequires: libpng-devel libgif-devel libtiff-devel
 BuildRequires: libX11-devel libgmp-devel libffcall
@@ -22,7 +22,7 @@ BuildRequires: libespeak-devel
 BuildRequires: libnspr-devel
 BuildRequires: libmozjs-devel
 
-BuildRequires: gcc-c++ zip libstdc++-devel
+BuildRequires: gcc-c++ zip libstdc++-devel libgnustep-objc2-devel
 
 Requires: gnustep-base
 
@@ -37,6 +37,10 @@ the rank of ELITE.
 
 mkdir -p deps/Cross-platform-deps/mozilla
 tar -C deps/Cross-platform-deps/mozilla -xjf %SOURCE99 --strip-components 1
+
+for i in $(find ./ -type f); do
+	sed -i 's|objc/|objc2/|g' $i ||:
+done
 
 %build
 GNUSTEP_SH_EXPORT_ALL_VARIABLES="yes"
@@ -65,6 +69,9 @@ rm -f %buildroot%_libexecdir/GNUstep/System/Applications/oolite.app/Resources/Co
 %doc README.txt Doc/*
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.76.1-alt1.1
+- Rebuilt with libgnustep-objc2 instead of libobjc
+
 * Fri Jun 15 2012 Denis Pynkin <dans@altlinux.org> 1.76.1-alt1
 - New version
 
