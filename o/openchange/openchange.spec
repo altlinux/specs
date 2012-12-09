@@ -5,7 +5,7 @@
 
 Name: openchange
 Version: 1.0
-Release: alt1
+Release: alt1.1
 Group: Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -13,6 +13,7 @@ Url: http://www.openchange.org/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+Patch1: openchange-1.0-alt-flex.patch 
 
 BuildRequires: flex
 BuildRequires: libtalloc-devel
@@ -138,6 +139,7 @@ This package provides the server elements for OpenChange.
 %prep
 %setup -q
 %patch -p1
+%patch1 -p0
 
 %build
 mkdir bin
@@ -233,6 +235,9 @@ rm -f %buildroot%_pkgconfigdir/libmapiserver.pc
 %endif
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.1
+- Fixed build with flex 2.5.37
+
 * Fri Mar 30 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0-alt1
 - 1.0
 - add libmapiadmin, libmapiproxy, libmapistore, libocpf packages
