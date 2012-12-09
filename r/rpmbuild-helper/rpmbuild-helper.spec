@@ -1,5 +1,5 @@
 Name: rpmbuild-helper
-Version: 0.04
+Version: 0.05
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -11,26 +11,32 @@ Url: http://www.altlinux.org/Icon_Paths_Policy
 
 Source: %name-%version.tar
 
-#BuildRequires: perl-RPM-Source-Editor
-#Requires: perl-RPM perl-DBD-SQLite sqlite3
-
 %description
 A set of helper utilities that automate routine packaging tasks.
 
 
 %package desktop
 Group: Development/Tools
-Summary: tool for auto repairing .desktop files in rpm packages
-Requires: %name = %version-%release
+Summary: A tool for auto repairing .desktop files in rpm packages
+Requires: rpm-build > 4.0.4-alt100.56
 
 %description desktop
 A tool for auto repairing .desktop files in rpm packages.
 A part of rpmbuild-helper utilities.
 
+%package sugar-activity
+Group: Development/Tools
+Summary: A tool for auto repairing activity.info files in rpm packaged sugar activities
+Requires: rpm-build > 4.0.4-alt100.56
+
+%description sugar-activity
+A tool for auto repairing activity.info files in rpm packaged sugar activities.
+A part of rpmbuild-helper utilities.
+
 %package iconsdir
 Group: Development/Tools
-Summary: tool for auto creating missing pixmaps in rpm packages
-Requires: %name = %version-%release
+Summary: A tool for auto creating missing pixmaps in rpm packages
+Requires: rpm-build > 4.0.4-alt100.56
 Requires: /usr/bin/convert
 
 %description iconsdir
@@ -43,7 +49,7 @@ A part of rpmbuild-helper utilities.
 %build
 #perl_vendor_build
 
-cat > ./rpmbuild-helper-iconsdir <<'EOF'
+cat > ./025-fixup-iconsdir <<'EOF'
 #!/usr/bin/perl -w
 use File::Basename;
 use strict;
@@ -72,22 +78,23 @@ EOF
 %install
 #perl_vendor_install
 
-mkdir -p $RPM_BUILD_ROOT%_bindir
-install -m 755 rpmbuild-helper rpmbuild-helper-* $RPM_BUILD_ROOT%_bindir/
-
-%files
-%_bindir/rpmbuild-helper
-#%_man1dir/repocop-*
-#%perl_vendor_privlib/T*
-#%perl_vendor_man3dir/*
+mkdir -p $RPM_BUILD_ROOT%_prefix/lib/rpm/brp.d/
+install -m 755 025-fixup-* $RPM_BUILD_ROOT%_prefix/lib/rpm/brp.d/
 
 %files desktop
-%_bindir/rpmbuild-helper-desktop
+%_prefix/lib/rpm/brp.d/025-fixup-desktop
 
-%files iconsdir
-%_bindir/rpmbuild-helper-iconsdir
+%files sugar-activity
+%_prefix/lib/rpm/brp.d/025-fixup-sugar-activity
+
+#%files iconsdir
+#%_prefix/lib/rpm/brp.d/025-fixup-iconsdir
 
 %changelog
+* Sun Dec 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- updated for modular rpm-build
+- added 025-fixup-sugar-activity
+
 * Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - updated to rev.3 of Icon Paths Policy
 
