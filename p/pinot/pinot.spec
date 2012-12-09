@@ -2,7 +2,7 @@
 
 Name: pinot
 Version: 0.98
-Release: alt2
+Release: alt2.1
 
 Summary: Personal search and metasearch tool
 License: GPLv2+
@@ -10,6 +10,7 @@ Group: File tools
 
 Url: http://pinot.berlios.de/
 Source: http://pinot-search.googlecode.com/files/pinot-%version.tar.gz
+Patch: pinot-0.98-alt-link.patch
 
 # Automatically added by buildreq on Sat Nov 26 2011
 BuildRequires: boost-devel-headers desktop-file-utils gcc-c++ libarchive-devel libattr-devel libchm-devel libcurl-devel libdbus-glib-devel libexiv2-devel libgmime-devel libgtkmm2-devel libsqlite3-devel libssl-devel libtag-devel libtextcat-devel libxapian-devel libxml++2-devel
@@ -31,6 +32,7 @@ The included plugin enables Deskbar to search documents indexed by Pinot.
 
 %prep
 %setup
+%patch -p2
 
 subst 's~glib/gunicode.h~glib.h~' IndexSearch/cjkv/CJKVTokenizer.h
 
@@ -73,6 +75,9 @@ subst 's/Settings;X/Settings;DesktopSettings;X/' pinot-prefs.desktop
 %endif
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.98-alt2.1
+- Fixed linking
+
 * Fri Apr 06 2012 Victor Forsiuk <force@altlinux.org> 0.98-alt2
 - Fix glib include compile problem.
 
