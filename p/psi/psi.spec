@@ -1,6 +1,6 @@
 Name: psi
 Version: 0.14
-Release: alt3
+Release: alt3.1
 Group: Networking/Instant messaging
 Summary: Psi Jabber client
 Summary(ru_RU.UTF-8): Jabber клиент Psi
@@ -10,6 +10,7 @@ Source: %name-%version-%release.tar
 Source1: iris.tar
 Source2: libpsi.tar
 Patch0: %name-%version-%release.patch
+Patch1: psi-0.14-alt-glibc-2.16.patch
 
 #BuildRequires: unzip
 Requires: sound_handler ca-certificates
@@ -38,6 +39,7 @@ AIM.  Psi поддерживает такие возможности Jabber, к�
 %prep
 %setup -q -n %name-%version-%release -a1 -a2
 %patch0 -p1
+%patch1 -p0
 mv libpsi src/
 mkdir -p lang/
 
@@ -72,6 +74,9 @@ rm -Rf %buildroot%_datadir/psi/{README,COPYING,certs}
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.14-alt3.1
+- Fixed for build with glibc 2.16
+
 * Thu Dec 24 2009 Anton Farygin <rider@altlinux.ru> 0.14-alt3
 - updated URL in specfile (closes #21487)
 - updated Russian translation (closes #21710)
