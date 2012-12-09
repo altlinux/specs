@@ -4,7 +4,7 @@ BuildRequires: python-devel
 # END SourceDeps(oneline)
 Name:           sugar-analyze
 Version:        8
-Release:        alt1_9
+Release:        alt1_10
 Summary:        Analysing tool for Sugar
 
 Group:          Graphical desktop/Sugar
@@ -16,6 +16,7 @@ BuildArch:      noarch
 BuildRequires:  sugar-toolkit
 Requires:       sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 
 %description
@@ -40,6 +41,9 @@ python ./setup.py build
 
 
 %changelog
+* Sun Dec 09 2012 Igor Vlasenko <viy@altlinux.ru> 8-alt1_10
+- new version; import from fc18
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 8-alt1_9
 - new version; import from fc17 updates
 
