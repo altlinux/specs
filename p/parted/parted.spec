@@ -1,78 +1,83 @@
 Name: parted
 Version: 2.4
-Release: alt2.1
-Summary: Flexible partitioning tool
-License: GPLv3
+Release: alt3
+Summary: The GNU disk partition manipulation program
+License: GPLv3+
 Group: System/Configuration/Hardware
-URL: http://www.gnu.org/software/%name
+URL: http://www.gnu.org/software/parted/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
-
-Requires: lib%name = %version-%release
 
 Source: http://ftp.gnu.org/gnu/parted/%name-%version.tar.gz
 Patch0: parted-2.3-gpt-labels.patch
 Patch1: parted-2.4-alt-headers-regression.patch
-Patch2: parted-2.4-alt-glibc-2.16.patch
+Patch2: parted-2.4-alt-glibc-gets.patch
+
+Requires: lib%name = %version-%release
 
 BuildRequires: libblkid-devel libdevmapper-devel libreadline-devel libtinfo-devel libuuid-devel
 
 %description
-GNU %name is a program that allows you to create, destroy, resize,
-move and copy hard disk partitions. This is useful for creating space
-for new operating systems, reorganising disk usage, and copying data to
-new hard disks
+The GNU Parted program allows you to create, destroy, resize, move,
+and copy hard disk partitions. Parted can be used for creating space
+for new operating systems, reorganizing disk usage, and copying data
+to new hard disks.
 
 %package -n lib%name
-Summary: Shared library for flexible partitioning tool
+Summary: The GNU Parted runtime library
 Group: System/Libraries
 
 %description -n lib%name
-This package includes the shared library needed to run
-lib%name-based software
+This package contains the runtime library required to run
+lib%name-based software.
 
 %package -n lib%name-devel
 Summary: Files required to compile software that uses lib%name
 Group: Development/C
+Requires: lib%name = %version-%release
 Provides: %name-devel = %version-%release
-Obsoletes: %name-devel
+Obsoletes: %name-devel < %version
 
 %description -n lib%name-devel
-This package includes the header files
+This package contains the GNU Parted development files.
 
 %prep
-%setup -q
+%setup
 %patch0 -p1
 %patch1 -p1
-%patch2 -p2
+%patch2 -p1
 
 %build
 %configure \
 	--disable-rpath \
 	--disable-static \
-	--disable-Werror
-%make_build V=1
+	--disable-silent-rules
+%make_build
 
 %install
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
-%find_lang --output=%name.lang %name
+%find_lang %name
 
 %files -f %name.lang
-%doc AUTHORS BUGS NEWS THANKS TODO
 %_sbindir/*
-%_infodir/%name.info*
-%_man8dir/*.8*
+%_man8dir/*
+%_infodir/*.info*
+%doc AUTHORS BUGS NEWS THANKS TODO
 
 %files -n lib%name
 %_libdir/*.so.*
 
 %files -n lib%name-devel
-%doc doc/API doc/FAT
-%_includedir/%name
 %_libdir/*.so
+%_includedir/%name
 %_pkgconfigdir/*.pc
+%doc doc/API doc/FAT
 
 %changelog
+* Sun Dec 09 2012 Dmitry V. Levin <ldv@altlinux.org> 2.4-alt3
+- Fixed interpackage dependencies.
+- Really fixed build.
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4-alt2.1
 - Fixed build with glibc 2.16
 
