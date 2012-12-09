@@ -1,6 +1,6 @@
 Name: ossp
 Version: 1.3.2
-Release: alt7
+Release: alt7.1
 
 Summary: OSS Proxy - emulate OSS device using CUSE
 Group: System/Kernel and hardware
@@ -10,6 +10,7 @@ Url: http://osspd.sourceforge.net/
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
+Patch: ossp-1.3.2-alt-DSO.patch
 
 # Automatically added by buildreq on Sun Apr 10 2011 (-bb)
 # optimized out: elfutils pkg-config
@@ -22,6 +23,7 @@ Requires(pre): fuse >= 2.8.5-alt2
 
 %prep
 %setup
+%patch -p2
 
 %build
 %make CFLAGS="%optflags"
@@ -46,6 +48,9 @@ install -D -m644 osspd.config %buildroot%_sysconfdir/sysconfig/osspd
 %config(noreplace) %_sysconfdir/sysconfig/osspd
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt7.1
+- Completed linking
+
 * Tue May 10 2011 Denis Smirnov <mithraen@altlinux.ru> 1.3.2-alt7
 - cleanup unneeded hacks for run as unpriviledged user, osspd
   backends change uid to user that try access to /dev/dsp
