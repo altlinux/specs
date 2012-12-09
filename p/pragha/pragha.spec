@@ -1,12 +1,12 @@
 Name: pragha
 Version: 1.0.1
-Release: alt1
+Release: alt1.1
 Summary: Pragha is a "Fork" of consonance Music manager
 License: GPLv3
 Group: Sound
 Url: http://pragha.wikispaces.com/
-Packager: Egor Glukhov <kaman@altlinux.org>
 Source0: %name-%version.tar
+Patch: pragha-1.0.1-alt-no-Werror.patch
 
 BuildRequires: gst-plugins-devel libcddb-devel libcdio-devel libclastfm-devel
 BuildRequires: libdbus-glib-devel libexo-devel libglyr-devel
@@ -19,6 +19,7 @@ light, and simultaneously complete without obstructing the daily work.
 
 %prep
 %setup
+%patch -p1
 
 %build
 . autogen.sh
@@ -40,6 +41,9 @@ LDFLAGS="$LDFLAGS -ldbus-glib-1" ; export LDFLAGS
 %_pixmapsdir/%name
 
 %changelog
+* Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.1
+- Disabled -Werror flag
+
 * Fri Apr 20 2012 Egor Glukhov <kaman@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
