@@ -1,8 +1,8 @@
 %define modulename icu
 
 Name: python-module-%modulename
-Version: 1.2
-Release: alt1.1.1
+Version: 1.4
+Release: alt1
 
 %setup_python_module %modulename
 
@@ -17,7 +17,7 @@ Packager: Kirill Maslinsky <kirill@altlinux.org>
 # http://pypi.python.org/packages/source/P/PyICU/%srcname.tar.gz
 Source: %srcname.tar
 
-BuildRequires: gcc-c++ libicu-devel python-dev
+BuildRequires: gcc-c++ libicu-devel python-devel
 
 %description
 PyICU - Python extension wrapping the ICU C++ API.
@@ -37,6 +37,9 @@ PyICU - Python extension wrapping the ICU C++ API.
 %doc README samples/
 
 %changelog
+* Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt1
+- Version 1.4
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
