@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.0.0.0.20100301
-Release: alt1
+Release: alt1.1
 
 Summary: A collection of strategies for Warden
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://github.com/tundraghost/warden_strategies
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -51,6 +49,9 @@ Documentation files for %name
 %ruby_ri_sitedir/WardenStrategies
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 0.0.0.0.20100301-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Mar 01 2010 Timur Batyrshin <erthad@altlinux.org> 0.0.0.0.20100301-alt1
 - Built for Sisyphus
 

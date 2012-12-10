@@ -1,17 +1,16 @@
 Summary:       Multi-tenant cloud management system client tools
 Name:          rhc
 Version:       0.96.2
-Release:       alt2
+Release:       alt2.1
 Group:         System/Servers
 License:       ASL 2.0
 URL:           http://openshift.redhat.com
-Packager:      Evgeny Sinelnikov <sin@altlinux.ru>
 Source0:       rhc-%version.tar
 Patch0:        rhc-%version-%release.patch
 
 BuildArch:     noarch
 
-BuildRequires: rpm-build-ruby ruby-test-spec ruby-rake
+BuildRequires: rpm-build-ruby
 Requires:      git ruby-parseconfig ruby-json
 
 Obsoletes:     ruby-rhc-rest
@@ -90,6 +89,10 @@ cp autocomplete/rhc %buildroot%_sysconfdir/bash_completion.d/rhc
 %endif
 
 %changelog
+* Sat Dec 01 2012 Led <led@altlinux.ru> 0.96.2-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+- cleaned up BuildRequires
+
 * Wed Aug 01 2012 Evgeny Sinelnikov <sin@altlinux.ru> 0.96.2-alt2
 - Fix obsoletes of ruby-rhc-rest
 

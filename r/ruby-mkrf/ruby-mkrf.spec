@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.2.3
-Release: alt2
+Release: alt2.1
 
 Summary: making C extensions for Ruby a bit easier
 Group: Development/Ruby
 License: MIT
 Url: http://rubyforge.org/projects/mkrf/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -20,6 +18,7 @@ Patch: %name-%version-%release.patch
 
 # Automatically added by buildreq on Thu Apr 03 2008 (-bi)
 BuildRequires: rpm-build-ruby ruby-rake ruby-tool-rdoc ruby-tool-setup zlib-devel
+BuildRequires: ruby-test-unit
 
 %description
 mkrf is a library for generating Rakefiles. It is primarily for
@@ -56,6 +55,10 @@ Documentation files for %name
 %ruby_ri_sitedir/Mkrf*
 
 %changelog
+* Sat Dec 08 2012 Led <led@altlinux.ru> 0.2.3-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+- fixed BuildRequires
+
 * Sun Jun 28 2009 Alexey I. Froloff <raorn@altlinux.org> 0.2.3-alt2
 - Rebuilt with Ruby 1.9
 

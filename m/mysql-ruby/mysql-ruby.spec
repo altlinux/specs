@@ -4,14 +4,12 @@
 
 Name: %pkgname
 Version: 2.8.2
-Release: alt2
+Release: alt2.1
 
 Summary: MySQL Ruby Connector
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/mysql-ruby/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -47,6 +45,9 @@ This is MySQL Ruby Connector (libmysqlclient wrapper).
 %ruby_sitearchdir/*
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 2.8.2-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Wed Dec 15 2010 Vitaly Kuznetsov <vitty@altlinux.ru> 2.8.2-alt2
 - Rebuild with libmysqlclient.so.16
 

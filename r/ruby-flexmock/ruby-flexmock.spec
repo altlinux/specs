@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.9.0
-Release: alt1
+Release: alt1.1
 
 Summary: Simple mock object library for Ruby unit testing
 Group: Development/Ruby
@@ -54,6 +54,9 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/FlexMock*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 0.9.0-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Mar 22 2011 Andriy Stepanov <stanv@altlinux.ru> 0.9.0-alt1
 - [0.9.0]
 

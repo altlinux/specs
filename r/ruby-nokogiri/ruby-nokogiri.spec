@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 1.5.5
-Release: alt1
+Release: alt1.1
 
 Summary: HTML, XML, SAX, and Reader parser
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/nokogiri/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch2: ruby-nokogiri-1.4.4.2-alt-Fix_encoding_issues.patch
@@ -69,6 +67,9 @@ rex --independent -o lib/nokogiri/css/generated_tokenizer.rb lib/nokogiri/css/to
 %ruby_ri_sitedir/Nokogiri*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 1.5.5-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Wed Mar 24 2012 Andriy Stepanov <stanv@altlinux.ru> 1.5.5-alt1
 - New version
 

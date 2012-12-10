@@ -4,14 +4,12 @@
 
 Name: %pkgname
 Version: 2.0.6
-Release: alt1
+Release: alt1.1
 
 Summary: Pure ruby library which provides basic APIs for localization
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/locale/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -68,9 +66,11 @@ done
 %ruby_ri_sitedir/Locale*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 2.0.6-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Mar 22 2011 Andriy Stepanov <stanv@altlinux.ru> 2.0.6-alt1
 - [2.0.6]
-
 
 * Sun Apr 18 2010 Alexey I. Froloff <raorn@altlinux.org> 2.0.5-alt1
 - [2.0.5]

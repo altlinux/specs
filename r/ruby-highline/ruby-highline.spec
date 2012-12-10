@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 1.5.1
-Release: alt2
+Release: alt2.1
 
 Summary: HighLine is a high-level command-line IO library
 Group: Development/Ruby
 License: GPLv2 or Ruby
 Url: http://highline.rubyforge.org/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -53,6 +51,9 @@ Documentation files for %name.
 %ruby_ri_sitedir/HighLine
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 1.5.1-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Jan 04 2010 Igor Zubkov <icesik@altlinux.org> 1.5.1-alt2
 - fix Url
 - fix License

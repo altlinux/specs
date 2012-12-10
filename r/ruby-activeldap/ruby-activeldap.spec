@@ -2,15 +2,13 @@
 
 Name: ruby-activeldap
 Version: 1.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: ruby library for object-oriented LDAP interction
 Group: Development/Ruby
 License: GPL
 
 Url: http://rubyforge.org/projects/ruby-activeldap/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -85,6 +83,9 @@ cp -dpR rails/* rails_generators/ %buildroot%_datadir/rails/plugins/activeldap
 %ruby_ri_sitedir/ActiveLdap
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.2.2-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Thu Jul 15 2010 Alexey I. Froloff <raorn@altlinux.org> 1.2.2-alt1
 - [1.2.2]
 

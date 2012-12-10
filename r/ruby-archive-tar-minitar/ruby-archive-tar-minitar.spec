@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.5.2
-Release: alt1
+Release: alt1.1
 
 Summary: Library and command-line utility to deal with POSIX tar(1) archive files
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/ruwiki/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -60,6 +58,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Archive/Tar/PosixHeader
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.5.2-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Aug 03 2009 Alexey I. Froloff <raorn@altlinux.org> 0.5.2-alt1
 - Built for Sisyphus
 

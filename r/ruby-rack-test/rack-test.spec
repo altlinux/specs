@@ -4,14 +4,13 @@
 
 Name: ruby-%plugname
 Version: 0.5.3
-Release: alt1
+Release: alt1.1
 
 Summary: a small, simple testing API for Rack apps
 License: MIT
 Group: Development/Ruby
 Url: http://gitrdoc.com/brynary/rack-test/tree/master
 
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 BuildArch: noarch
 Source: %name-%version.tar
 
@@ -54,6 +53,9 @@ mkdir -p %buildroot%_datadir/rails/plugins/%plugname
 %ruby_ri_sitedir/Rack/Test
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 0.5.3-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Thu Feb 18 2010 Timur Batyrshin <erthad@altlinux.org> 0.5.3-alt1
 - Initial build for sisyphus
 

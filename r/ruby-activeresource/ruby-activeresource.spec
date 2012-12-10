@@ -2,15 +2,13 @@
 
 Name: ruby-%pkgname
 Version: 2.3.11
-Release: alt1
+Release: alt1.1
 Summary: Think Active Record for web resources
 License: Ruby
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/activeresource/
 
 Requires: ruby-activesupport = %version
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -19,6 +17,7 @@ BuildArch: noarch
 
 # Automatically added by buildreq on Tue Nov 18 2008 (-bi)
 BuildRequires: rpm-build-ruby ruby-activesupport ruby-builder ruby-mocha ruby-tool-rdoc ruby-tool-setup
+BuildRequires: ruby-test-unit
 
 %description
 Wraps web resources in model classes that can be manipulated
@@ -53,6 +52,10 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/ActiveResource*
 
 %changelog
+* Sun Dec 09 2012 Led <led@altlinux.ru> 2.3.11-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- fixed BuildRequires
+
 * Fri Apr 22 2011 Timur Aitov <timonbl4@altlinux.org> 2.3.11-alt1
 - [2.3.11]
 

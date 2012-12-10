@@ -1,17 +1,17 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_disable check
+
 %define pkgname locale_rails
 
 Name: ruby-%pkgname
 Version: 2.0.5
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby-Locale for Ruby on Rails
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/locale/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -36,18 +36,24 @@ cp %_datadir/rails/environments/boot.rb test/config/boot.rb
 %build
 %ruby_config
 %ruby_build
-pushd test
-%rake -I../lib test
-popd
 
 %install
 %ruby_install
+
+%check
+pushd test
+%rake -I../lib test
+popd
 
 %files
 %doc README.rdoc
 %ruby_sitelibdir/*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.0.5-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Sun Apr 18 2010 Alexey I. Froloff <raorn@altlinux.org> 2.0.5-alt1
 - [2.0.5]
 

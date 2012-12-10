@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 1.1.5
-Release: alt6
+Release: alt6.1
 
 Summary: Simple Fast Mostly Ruby Web Server
 Group: Development/Ruby
 License: MIT
 Url: http://rubyforge.org/projects/mongrel/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -62,6 +60,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Mongrel*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.1.5-alt6.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Nov 29 2010 Alexey I. Froloff <raorn@altlinux.org> 1.1.5-alt6
 - Fix build with Ruby 1.9.2
 

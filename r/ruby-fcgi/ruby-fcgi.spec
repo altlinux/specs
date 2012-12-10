@@ -1,13 +1,11 @@
 Name: ruby-fcgi
 Version: 0.8.8
-Release: alt1
+Release: alt1.1
 
 Summary: FastCGI for ruby
 Group: Development/Ruby
 License: Ruby
 Url: http://rubyforge.org/projects/fcgi/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 # Automatically added by buildreq on Wed Apr 02 2008 (-bi)
 BuildRequires: libfcgi-devel libruby-devel ruby-tool-setup
@@ -41,6 +39,9 @@ http://www.moonwolf.com/ruby/archive/. But now, he is MIA.
 %doc README README.signals
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.8.8-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Thu Jul 15 2010 Alexey I. Froloff <raorn@altlinux.org> 0.8.8-alt1
 - [0.8.8]
 

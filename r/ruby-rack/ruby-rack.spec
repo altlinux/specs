@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 1.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Modular Ruby webserver interface
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/rack/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -82,6 +80,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Rack*
 
 %changelog
+* Sat Dec 01 2012 Led <led@altlinux.ru> 1.2.2-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Wed Mar 23 2011 Andriy Stepanov <stanv@altlinux.ru> 1.2.2-alt1
 - [1.2.2]
 

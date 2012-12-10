@@ -1,10 +1,12 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_disable check
+
 %define pkgname i18n
 
 Name: ruby-%pkgname
 Version: 0.3.7
-Release: alt2
+Release: alt2.1
 
 Summary: I18n and localization solution for Ruby
 Group: Development/Ruby
@@ -18,8 +20,8 @@ BuildArch: noarch
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
 
-# Automatically added by buildreq on Mon Nov 10 2008 (-bi)
-BuildRequires: rpm-build-ruby ruby-activerecord ruby-activerecord-sqlite3-adapter ruby-activesupport ruby-mocha ruby-tool-rdoc ruby-tool-setup tzdata
+BuildRequires: rpm-build-ruby ruby-tool-rdoc ruby-tool-setup tzdata
+%{!?_disable_check:BuildRequires: ruby-activerecord ruby-activerecord-sqlite3-adapter ruby-activesupport ruby-mocha}
 
 %description
 I18n and localization solution for Ruby.
@@ -34,16 +36,18 @@ Documentation files for %name
 %prep
 %setup -n %pkgname-%version
 %patch -p1
-%update_setup_rb
 
 %build
+%update_setup_rb
 %ruby_config
 %ruby_build
-%ruby_vendor test/all.rb
 
 %install
 %ruby_install
 %rdoc lib/
+
+%check
+%ruby_vendor test/all.rb
 
 %files
 %doc README.textile
@@ -53,6 +57,10 @@ Documentation files for %name
 %ruby_ri_sitedir/I18n*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.3.7-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Sat May 29 2010 Alexey I. Froloff <raorn@altlinux.org> 0.3.7-alt2
 - Mask ActiveRecord dependency
 

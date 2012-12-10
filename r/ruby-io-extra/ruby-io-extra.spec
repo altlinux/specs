@@ -2,15 +2,12 @@
 
 Name: ruby-%pkgname 
 Version: 1.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Adds IO.fdwalk, IO.closefrom and IO.directio
 Group: Development/Ruby
 License: Ruby
 Url: http://rubyforge.org/projects/shards
-
-Packager: Anton Gorlov <stalker at altlinux.org>
-
 
 Source: %pkgname-%version.tar
 
@@ -51,6 +48,9 @@ Documentation files for %name
 %ruby_ri_sitedir/IO*
 
 %changelog 
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.2.2-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Thu Aug 11 2011 Anton Gorlov <stalker@altlinux.ru> 1.2.2-alt1
 - initial build for ALTLinux 
 

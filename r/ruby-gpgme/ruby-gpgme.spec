@@ -4,14 +4,12 @@
 
 Name: %pkgname
 Version: 1.0.6
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby interface to GnuPG Made Easy
 Group: Development/Ruby
 License: LGPLv2.1+
 Url: http://rubyforge.org/projects/ruby-gpgme/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -51,6 +49,9 @@ Documentation files for %name
 %ruby_ri_sitedir/GPGME*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.0.6-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Jun 28 2009 Alexey I. Froloff <raorn@altlinux.org> 1.0.6-alt1
 - [1.0.6]
 - License changed to LGPLv2.1+

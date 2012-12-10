@@ -1,40 +1,37 @@
 %define pkgname ruby-posix_mq
 
-Name: %pkgname 
+Name: %pkgname
 Version: 1.0.0
-Release: alt2
+Release: alt2.1
 
 Summary: POSIX Message Queues for Ruby.
-Group: Development/Ruby 
+Group: Development/Ruby
 License: LGPL
 Url: http://bogomips.org/ruby_posix_mq/
 
-Packager: Anton Gorlov <stalker at altlinux.org>
-
 Source: %pkgname-%version.tar
-
 
 # Automatically added by buildreq on Thu Aug 11 2011
 # optimized out: ruby ruby-stdlibs ruby-tool-rdoc
 BuildRequires: libruby-devel ruby-test-unit ruby-tool-setup
 
-%description 
+%description
 POSIX message queues allow local processes to exchange data in the form
 of messages. This API is distinct from that provided by System V
 message queues, but provides similar functionality.
 
-%package doc 
-Summary: Documentation files for %name 
+%package doc
+Summary: Documentation files for %name
 Group: Documentation
 
-%description doc 
+%description doc
 Documentation files for %name
 
 %prep
-%setup -q -n %pkgname-%version 
+%setup -q -n %pkgname-%version
 %update_setup_rb
 
-%build 
+%build
 %ruby_config
 %ruby_build
 #for t in test/test_*.rb; do
@@ -43,21 +40,24 @@ Documentation files for %name
 
 
 
-%install 
-%ruby_install 
+%install
+%ruby_install
 %rdoc lib/
 
-%files 
+%files
 %doc README
 %_bindir/*
 %ruby_sitearchdir/*
 %ruby_sitelibdir/*
 
-%files doc 
+%files doc
 %doc LICENSE
 %ruby_ri_sitedir/POSIX_MQ*
 
-%changelog 
+%changelog
+* Thu Dec 06 2012 Led <led@altlinux.ru> 1.0.0-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Aug 15 2011 Anton Gorlov <stalker@altlinux.ru> 1.0.0-alt2
 - fix wrong url
 

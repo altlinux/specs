@@ -1,17 +1,17 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_disable check
+
 %define pkgname net-sftp
 
 Name: ruby-%pkgname
 Version: 2.0.3
-Release: alt2
+Release: alt2.1
 
 Summary: A pure Ruby implementation of the SFTP client protocol
 Group: Development/Ruby
 License: MIT
 Url: http://rubyforge.org/projects/net-ssh/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -40,11 +40,13 @@ Documentation files for %name
 %build
 %ruby_config
 %ruby_build
-%ruby_test_unit -Ilib:test test/test_all.rb
 
 %install
 %ruby_install
 %rdoc lib/
+
+%check
+%ruby_test_unit -Ilib:test test/test_all.rb
 
 %files
 %doc CHANGELOG.rdoc README.rdoc
@@ -55,6 +57,10 @@ Documentation files for %name
 %ruby_ri_sitedir/Net/SFTP
 
 %changelog
+* Thu Dec 06 2012 Led <led@altlinux.ru> 2.0.3-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Sat Dec 12 2009 Alexey I. Froloff <raorn@altlinux.org> 2.0.3-alt2
 - Fixed file conflict in doc subpackage with net-ssh and net-scp docs
 - Enabled tests

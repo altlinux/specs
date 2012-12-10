@@ -2,13 +2,11 @@
 
 Name: ruby-%pkgname
 Version: 1.0.0
-Release: alt3
+Release: alt3.1
 Summary: Text::Format formats fixed-width text nicely.
 License: Ruby
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/text-format/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %name-%version-%release.patch
@@ -53,6 +51,9 @@ rm -f pre-setup.rb
 %ruby_ri_sitedir/Text*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 1.0.0-alt3.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sat Jun 27 2009 Alexey I. Froloff <raorn@altlinux.org> 1.0.0-alt3
 - Rebuilt with Ruby 1.9
 

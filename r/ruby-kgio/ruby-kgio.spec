@@ -2,15 +2,12 @@
 
 Name: ruby-%pkgname 
 Version: 2.7.2 
-Release: alt1
+Release: alt1.1
 
 Summary: kinder, gentler I/O for Ruby
 Group: Development/Ruby 
 License: LGPL
 Url: http://bogomips.org/kgio/
-
-Packager: Anton Gorlov <stalker at altlinux.org>
-
 
 Source: %pkgname-%version.tar.gz
 
@@ -58,6 +55,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Kgio*
 
 %changelog 
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.7.2-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Jan 10 2012 Anton Gorlov <stalker@altlinux.ru> 2.7.2-alt1
 - new version
 

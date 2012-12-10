@@ -4,14 +4,12 @@
 
 Name: %pkgname
 Version: 1.1.0
-Release: alt1
+Release: alt1.1
 
 Summary: Pure Ruby LDAP library
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://github.com/roryo/ruby-net-ldap/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -56,6 +54,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Net/BER
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 1.1.0-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Sep 13 2010 Timur Batyrshin <erthad@altlinux.org> 1.1.0-alt1
 - Built for Sisyphus
 

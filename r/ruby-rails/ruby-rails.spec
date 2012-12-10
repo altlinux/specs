@@ -1,14 +1,14 @@
+%def_disable check
+
 %define pkgname rails
 
 Name: ruby-%pkgname
 Version: 2.3.11
-Release: alt1
+Release: alt1.1
 Summary: Web-application framework with template engine, control-flow layer, and ORM.
 License: MIT
 Group: Development/Ruby
 Url: http://www.rubyonrails.org
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: railties-%version.tar
 Patch: railties-%version-%release.patch
@@ -69,13 +69,14 @@ This package contains railties module.
 find . -type f -print0 |
 	xargs -r0 sed -i 's,/usr/local/bin/ruby,%_bindir/ruby,' --
 
-%build
 # Uses rubygems
 rm -f test/gem_dependency_test.rb
 # Not compatible with test-unit 2.x
 rm -f test/backtrace_cleaner_test.rb
-find test -type f -name '*_test.rb' -print0 |
-	xargs -r0 -n1 ruby -Ilib:test
+
+
+%build
+
 
 %install
 mkdir -p %buildroot{%_bindir,%_datadir/%pkgname/plugins,%ruby_sitelibdir}
@@ -88,6 +89,11 @@ cat <<EOF > %buildroot%ruby_sitelibdir/railties_path.rb
 RAILTIES_PATH = "%_datadir/%pkgname"
 EOF
 #rdoc lib/
+
+
+%check
+find test -type f -name '*_test.rb' -print0 | xargs -r0 -n1 ruby -Ilib:test
+
 
 %files
 %_bindir/*
@@ -110,6 +116,10 @@ EOF
 %exclude %ruby_sitelibdir/rails_generator*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.3.11-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Fri Apr 22 2011 Timur Aitov <timonbl4@altlinux.org> 2.3.11-alt1
 - [2.3.11]
 

@@ -2,13 +2,11 @@
 
 Name: ruby-%pkgname
 Version: 1.0.12
-Release: alt1
+Release: alt1.1
 Summary: A very simple API for XML processing
 License: Ruby license
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/xml-simple/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %name-%version-%release.patch
@@ -51,6 +49,9 @@ Documentation files for %name
 %ruby_ri_sitedir/XmlSimple*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 1.0.12-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sat Jun 27 2009 Alexey I. Froloff <raorn@altlinux.org> 1.0.12-alt1
 - [1.0.12]
 

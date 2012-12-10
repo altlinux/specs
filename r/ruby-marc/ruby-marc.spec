@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.2.2
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby library for processing Machine Readable Cataloging (MARC) bibliographic data
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/marc/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -56,6 +54,9 @@ done
 %ruby_ri_sitedir/MARC*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.2.2-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun May 10 2009 Alexey I. Froloff <raorn@altlinux.org> 0.2.2-alt1
 - Built for Sisyphus
 

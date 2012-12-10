@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 0.5
-Release: alt2
+Release: alt2.1
 
 Summary: XMPP/Jabber library for Ruby
 License: GPLv2/Ruby
@@ -14,7 +14,6 @@ Group: Development/Ruby
 Url: http://home.gna.org/xmpp4r/
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Obsoletes: xmpp4r
 BuildArch: noarch
@@ -94,6 +93,9 @@ done
 %ruby_ri_sitedir/Jabber*
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 0.5-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sat Jun 11 2011 Michael Shigorin <mike@altlinux.org> 0.5-alt2
 - fixed build by dropping failing tests
 - spec tags rearranged a bit (see ALT Packaging HOWTO)

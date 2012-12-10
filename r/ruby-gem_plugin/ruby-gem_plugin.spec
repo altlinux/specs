@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.2.3
-Release: alt2
+Release: alt2.1
 
 Summary: Gem Based Plugin System
 Group: Development/Ruby
 License: MIT
 Url: http://rubyforge.org/projects/mongrel/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -65,6 +63,9 @@ cp -dpR resources %buildroot%_datadir/%pkgname/gem_plugin/
 %ruby_ri_sitedir/GemPlugin*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.2.3-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri May 15 2009 Alexey I. Froloff <raorn@altlinux.org> 0.2.3-alt2
 - Rebuilt with Ruby 1.9
 

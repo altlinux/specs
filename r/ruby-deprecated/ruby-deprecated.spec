@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 2.0.1
-Release: alt2
+Release: alt2.1
 
 Summary: Easy way to handle deprecating and conditionally running deprecated code
 Group: Development/Ruby
 License: BSD
 Url: http://rubyforge.org/projects/deprecated/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -53,6 +51,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Deprecated*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 2.0.1-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Jun 26 2009 Alexey I. Froloff <raorn@altlinux.org> 2.0.1-alt2
 - Rebuilt with Ruby 1.9
 

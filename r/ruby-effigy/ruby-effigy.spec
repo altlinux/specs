@@ -4,14 +4,12 @@
 
 Name: ruby-%plugname
 Version: 0.3.1
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby views without a templating language
 License: MIT
 Group: Development/Ruby
 Url: http://github.com/jferris/effigy
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -65,5 +63,8 @@ install -p -m644 rails/init.rb %buildroot%_datadir/rails/plugins/%plugname/
 %ruby_ri_sitedir/Effigy*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.3.1-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Mar 16 2010 Timur Batyrshin <erthad@altlinux.org> 0.3.1-alt1
 - Built for Sisyphus

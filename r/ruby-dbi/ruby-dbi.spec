@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 0.4.1
-Release: alt1
+Release: alt1.1
 
 Summary: Vendor independent interface for accessing databases, similar to Perl's DBI
 Group: Development/Ruby
 License: BSD
 Url: http://rubyforge.org/projects/ruby-dbi/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -88,6 +86,9 @@ rm -f lib/dbi/trace.rb
 %ruby_ri_sitedir/DBI*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 0.4.1-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Jun 26 2009 Alexey I. Froloff <raorn@altlinux.org> 0.4.1-alt1
 - [0.4.1]
 - Dropped old sqlite backend

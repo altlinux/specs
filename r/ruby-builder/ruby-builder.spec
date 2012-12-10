@@ -1,14 +1,14 @@
+%def_disable check
+
 %define pkgname builder
 
 Name: ruby-%pkgname
 Version: 3.0.0
-Release: alt1
+Release: alt1.1
 Summary: Provide a simple way to create XML markup and data structures
 License: MIT/X Consortium
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/builder/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch1: ruby-builder-3.0.0-alt-use-require_relative.patch
@@ -39,11 +39,13 @@ Documentation files for %name
 %ruby_build
 # EPIC FAIL
 rm -f test/testblankslate.rb
-%ruby_test_unit -Ilib test/test*.rb
 
 %install
 %ruby_install
 %rdoc lib/
+
+%check
+%ruby_test_unit -Ilib test/test*.rb
 
 %files
 %doc CHANGES README
@@ -53,6 +55,10 @@ rm -f test/testblankslate.rb
 %ruby_ri_sitedir/Builder*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 3.0.0-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Tue Mar 22 2011 Andriy Stepanov <stanv@altlinux.ru> 3.0.0-alt1
 - [3.0.0]
 

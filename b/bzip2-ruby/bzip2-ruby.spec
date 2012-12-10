@@ -4,14 +4,12 @@
 
 Name: %pkgname
 Version: 0.2.6
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby C bindings to libbzip2
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/bzip2-ruby/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -40,6 +38,9 @@ Ruby C bindings to libbzip2.
 %ruby_sitearchdir/*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 0.2.6-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sun Apr 11 2010 Alexey I. Froloff <raorn@altlinux.org> 0.2.6-alt1
 - Built for Sisyphus
 

@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.4.6
-Release: alt2
+Release: alt2.1
 # It has to be newer than old ruby-module-racc-runtime 1.8 to workaround apt bug
 Serial: 1
 
@@ -12,8 +12,6 @@ Summary: Ruby LALR(1) parser generator
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/racc/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -78,6 +76,9 @@ Documentation files for %name
 %ruby_ri_sitedir/Racc*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 1:1.4.6-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Mar 22 2011 Andriy Stepanov <stanv@altlinux.ru> 1:1.4.6-alt2
 - Rebuild with new ruby.
 

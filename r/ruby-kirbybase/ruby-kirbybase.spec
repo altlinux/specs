@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 2.6
-Release: alt2
+Release: alt2.1
 
 Summary: Small, plain-text, dbms written in Ruby
 Group: Development/Ruby
@@ -55,6 +55,9 @@ Documentation files for %name
 %ruby_ri_sitedir/KirbyBase*
 
 %changelog
+* Wed Dec 05 2012 Led <led@altlinux.ru> 2.6-alt2.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Mon Nov 29 2010 Alexey I. Froloff <raorn@altlinux.org> 2.6-alt2
 - Fix build with Ruby 1.9.2
 

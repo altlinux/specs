@@ -2,14 +2,12 @@
 
 Name: puppet
 Version: 2.7.5
-Release: alt1.1
+Release: alt1.2
 
 Summary: System administration - Automated
 Group: System/Servers
 License: MIT
 Url: http://reductivelabs.com/projects/puppet/
-
-Packager: Sergey Alembekov <rt@altlinux.ru>
 
 BuildArch: noarch
 
@@ -153,6 +151,9 @@ install -p -m644 conf/altlinux/logrotate %buildroot%_sysconfdir/logrotate.d/pupp
 %attr(1770,root,_puppet) %dir %_var/run/puppet
 
 %changelog
+* Fri Nov 30 2012 Led <led@altlinux.ru> 2.7.5-alt1.2
+- Rebuilt with ruby-1.9.3-alt1
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.7.5-alt1.1
 - Rebuild with Python-2.7
 

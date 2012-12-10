@@ -1,17 +1,17 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_disable check
+
 %define pkgname net-ssh
 
 Name: ruby-%pkgname
 Version: 2.0.15
-Release: alt1
+Release: alt1.1
 
 Summary: Pure-Ruby implementation of the SSH2 client protocol
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/net-ssh/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -41,11 +41,13 @@ Documentation files for %name
 %build
 %ruby_config
 %ruby_build
-%ruby_test_unit -Ilib:test test/test_all.rb
 
 %install
 %ruby_install
 %rdoc lib/
+
+%check
+%ruby_test_unit -Ilib:test test/test_all.rb
 
 %files
 %doc README.rdoc THANKS.rdoc
@@ -56,6 +58,10 @@ Documentation files for %name
 %ruby_ri_sitedir/Net/SSH
 
 %changelog
+* Thu Dec 06 2012 Led <led@altlinux.ru> 2.0.15-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Thu Nov 19 2009 Alexey I. Froloff <raorn@altlinux.org> 2.0.15-alt1
 - [2.0.15]
 

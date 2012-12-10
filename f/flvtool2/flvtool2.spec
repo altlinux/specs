@@ -1,6 +1,6 @@
 Name: flvtool2
 Version: 1.0.6
-Release: alt3.2
+Release: alt3.3
 
 Summary: FLVTool2 is a manipulation tool for Macromedia Flash Video files (FLV)
 Summary(ru_RU.UTF8): FLVTool2 утилита для манипуляций с Macromedia Flash Video files (FLV)
@@ -46,6 +46,9 @@ find  -name '._*' -print0 |xargs -r0 rm -rf --
 
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 1.0.6-alt3.3
+- Rebuilt with ruby-1.9.3-alt1
+
 * Tue Sep 15 2009 Alexey Morsov <swi@altlinux.ru> 1.0.6-alt3.2
 - rebuild with 1.9 (patch from raorn)
 

@@ -1,17 +1,17 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
+%def_disable check
+
 %define pkgname pkg-config
 
 Name: ruby-%pkgname
 Version: 1.0.7
-Release: alt3
+Release: alt3.1
 
 Summary: pkg-config implementation by Ruby
 Group: Development/Ruby
 License: LGPLv2+
 Url: https://github.com/rcairo/pkg-config
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 BuildArch: noarch
 
@@ -32,16 +32,21 @@ A pkg-config implementation by Ruby.
 %build
 %ruby_config
 %ruby_build
-%ruby_test_unit -Ilib:test test
 
 %install
 %ruby_install
+
+%check
+%ruby_test_unit -Ilib:test test
 
 %files
 %doc NEWS README.rdoc
 %ruby_sitelibdir/*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 1.0.7-alt3.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Thu Nov 10 2011 Timur Aitov <timonbl4@altlinux.org> 1.0.7-alt3
 - Repair build
 

@@ -1,14 +1,13 @@
+%def_disable check
 %define pkgname tzinfo
 
 Name: ruby-%pkgname
 Version: 0.3.25
-Release: alt1
+Release: alt1.1
 Summary: Daylight-savings aware timezone support for Ruby
 License: MIT
 Group: Development/Ruby
 Url: http://rubyforge.org/projects/tzinfo/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 Source: %pkgname-%version.tar
 Patch: %pkgname-%version-%release.patch
@@ -40,7 +39,6 @@ Documentation files for %pkgname
 %build
 %ruby_config
 %ruby_build
-%ruby_test_unit -Ilib:test test/tc_*.rb
 
 %install
 %ruby_install
@@ -48,6 +46,9 @@ Documentation files for %pkgname
 
 %add_findprov_skiplist %ruby_sitelibdir/tzinfo/definitions/*
 %add_findprov_skiplist %ruby_sitelibdir/tzinfo/indexes/*
+
+%check
+%ruby_test_unit -Ilib:test test/tc_*.rb
 
 %files
 %doc CHANGES README
@@ -57,6 +58,10 @@ Documentation files for %pkgname
 %ruby_ri_sitedir/TZInfo*
 
 %changelog
+* Thu Dec 06 2012 Led <led@altlinux.ru> 0.3.25-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+- disabled check
+
 * Mon Mar 21 2011 Andriy Stepanov <stanv@altlinux.ru> 0.3.25-alt1
 - [0.3.25]
 

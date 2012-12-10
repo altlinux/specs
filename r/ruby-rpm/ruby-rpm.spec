@@ -2,14 +2,12 @@
 
 Name: ruby-rpm
 Version: 1.2.3
-Release: alt9
+Release: alt9.1
 
 Summary: Ruby/RPM is an interface to access RPM database for Ruby
 Group: Development/Ruby
 License: GPL
 Url: http://rubyforge.org/projects/ruby-rpm/
-
-Packager: Ruby Maintainers Team <ruby@packages.altlinux.org>
 
 # Automatically added by buildreq on Mon Apr 14 2008 (-bi)
 BuildRequires: librpm-devel libruby-devel ruby-test-unit ruby-tool-setup
@@ -39,6 +37,9 @@ Ruby/RPM is an interface to access RPM database for Ruby.
 %ruby_sitelibdir/*
 
 %changelog
+* Fri Dec 07 2012 Led <led@altlinux.ru> 1.2.3-alt9.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Fri Dec 02 2011 Dmitry V. Levin <ldv@altlinux.org> 1.2.3-alt9
 - Dropped RPMTRANS_FLAG_DIRSTASH and RPMTRANS_FLAG_REPACKAGE to fix
   build with rpm >= 4.0.4-alt100.36.

@@ -4,14 +4,12 @@
 
 Name: ruby-%pkgname
 Version: 1.1.9
-Release: alt1
+Release: alt1.1
 
 Summary: Ruby client for the Stomp messaging protocol
 Group: Development/Ruby
 License: MIT/Ruby
 Url: http://rubyforge.org/projects/stomp/
-
-Packager: Sergey Alembekov <rt@altlinux.ru>
 
 BuildArch: noarch
 
@@ -40,6 +38,9 @@ FILL ME.
 %ruby_sitelibdir/*
 
 %changelog
+* Tue Dec 04 2012 Led <led@altlinux.ru> 1.1.9-alt1.1
+- Rebuilt with ruby-1.9.3-alt1
+
 * Wed Sep 28 2011 Sergey Alembekov <rt@altlinux.ru> 1.1.9-alt1
 - Built for Sisyphus
 
