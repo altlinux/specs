@@ -1,6 +1,6 @@
 Name: accel-ppp
-Version: 1.7.2
-Release: alt4
+Version: 1.7.3
+Release: alt1
 Summary: High performance PPTP/L2TP/PPPoE server
 Group: System/Servers
 
@@ -89,6 +89,9 @@ echo "0" > %buildroot%_runtimedir/accel-ppp/seq
 %preun_service %name
 
 %changelog
+* Tue Dec 11 2012 Alexei Takaseev <taf@altlinux.org> 1.7.3-alt1
+- 1.7.3
+
 * Sat Nov 03 2012 Alexei Takaseev <taf@altlinux.org> 1.7.2-alt4
 - ppp: force to send dns
 
