@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.1
+Version: 1.8.2
 Release: alt1
 
 Summary: Installer common parts
@@ -99,11 +99,16 @@ This package contains common installer stage3 files and dependencies.
 %_sbindir/*
 %_datadir/install2
 %exclude %_datadir/install2/preinstall.d/30-setup-network.sh
+%exclude %_datadir/install2/preinstall.d/11-remount.sh
 
 %files common-stage3
 %_datadir/install2/preinstall.d/30-setup-network.sh
+%_datadir/install2/preinstall.d/11-remount.sh
 
 %changelog
+* Mon Dec 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.2-alt1
+- 11-remount script moved to stage3
+
 * Fri Dec 07 2012 Michael Shigorin <mike@altlinux.org> 1.8.1-alt1
 - 11-remount fixes (see #28181)
 
