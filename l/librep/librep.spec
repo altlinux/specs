@@ -4,7 +4,7 @@
 
 Name: librep
 Version: 0.92.3
-Release: alt1.git20120706
+Release: alt2.git20120908
 
 Summary: An embeddable LISP environment
 License: GPL
@@ -103,6 +103,9 @@ EOF
 %_man1dir/repdoc.1*
 
 %changelog
+* Mon Dec 10 2012 Dmitry Derjavin <dd@altlinux.org> 0.92.3-alt2.git20120908
+- Fixed version info.
+
 * Fri Aug 24 2012 Dmitry Derjavin <dd@altlinux.org> 0.92.3-alt1.git20120706
 - Merge with upstream git to fix NEWS bugs.
 

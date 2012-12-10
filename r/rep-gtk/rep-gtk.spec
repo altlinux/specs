@@ -4,7 +4,7 @@
 
 Name: rep-gtk
 Version: 0.90.9
-Release: alt1.git20120705
+Release: alt2.git20120901
 
 Summary: GTK+ binding for librep Lisp environment
 Group: Development/Lisp
@@ -59,6 +59,10 @@ cp -pfv %_datadir/automake/config.{guess,sub} .
 %_pkgconfigdir/rep-gtk.pc
 
 %changelog
+* Mon Dec 10 2012 Dmitry Derjavin <dd@altlinux.org> 0.90.9-alt2.git20120901
+- Merge with upstream git;
+- rebuild with new librep.
+
 * Fri Aug 24 2012 Dmitry Derjavin <dd@altlinux.org> 0.90.9-alt1.git20120705
 - Merge with upstream git.
 
