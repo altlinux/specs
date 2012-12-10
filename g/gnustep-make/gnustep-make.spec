@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.2
-Release: alt4.svn20121102
+Release: alt5.svn20121102
 Source: %name-%version.tar
 License: GPL
 Group: Development/Other
@@ -70,10 +70,6 @@ sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 
 %ifarch x86_64
 sed -i -e 's/i586/x86_64/g' $(find %buildroot -type f)
-%else
-%ifnarch %ix86
-sed -i -e 's/i586/x86_64/g' $(find %buildroot -type f)
-%endif
 %endif
 
 gzip ChangeLog
@@ -106,6 +102,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt5.svn20121102
+- Fixed for build clients for x86_64
+
 * Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt4.svn20121102
 - Set libexecdir to %_libdir
 
