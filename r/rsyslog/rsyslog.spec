@@ -1,6 +1,6 @@
 
 Name: rsyslog
-Version: 7.2.3
+Version: 7.2.4
 Release: alt1
 
 Summary: Enhanced system logging and kernel message trapping daemon
@@ -455,6 +455,9 @@ ln -s ../rsyslog.service %buildroot%systemd_unitdir/syslog.target.wants/rsyslog.
 %doc html_docs/*
 
 %changelog
+* Mon Dec 10 2012 Alexey Shabalin <shaba@altlinux.ru> 7.2.4-alt1
+- 7.2.4
+
 * Thu Dec 06 2012 Alexey Shabalin <shaba@altlinux.ru> 7.2.3-alt1
 - snapshot v7-stable branch
 - add imkmsg.so plugin to base package
