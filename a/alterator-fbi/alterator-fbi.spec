@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.28
-Release: alt4
+Release: alt5
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -131,6 +131,12 @@ fi ||:
 
 
 %changelog
+* Mon Dec 10 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt5
+- Add the 'PIDFile' option to the service unit.
+- Remove the 'Also=ahttpd.socket' option.
+- Fix the service unit file syntax and the SSL generator command
+  (closes: 27987).
+
 * Thu Dec 06 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt4
 - Check/generate the SSL certificate before starting the service
   from systemd (closes: 27987).
