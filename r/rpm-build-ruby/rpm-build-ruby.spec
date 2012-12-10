@@ -3,7 +3,7 @@
 Name: rpm-build-ruby
 Epoch: 1
 Version: 0.1.2
-Release: alt1
+Release: alt2
 Summary: RPM helper scripts to calculate Ruby dependencies
 License: GPLv2
 Group: Development/Other
@@ -15,7 +15,8 @@ AutoReq: yes,noruby
 Requires: ruby >= 1.9
 Requires: ruby-stdlibs >= 1.9
 Requires: %_bindir/rdoc
-#Requires: %_bindir/testrb
+Requires: %_bindir/testrb
+Requires: %_bindir/rake
 
 %{!?_disable_check:BuildRequires: ruby >= 1.9 ruby-stdlibs >= 1.9}
 
@@ -48,6 +49,9 @@ install -p -m 0644 ruby.env %buildroot%_rpmmacrosdir/
 
 
 %changelog
+* Sun Dec 09 2012 Led <led@altlinux.ru> 1:0.1.2-alt2
+- added requires of %%_bindir/testrb and %%_bindir/rake
+
 * Sat Dec 08 2012 Led <led@altlinux.ru> 1:0.1.2-alt1
 - 0.1.2:
   + cleaned up

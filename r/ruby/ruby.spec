@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 3
 %define _pl p332
 Version: %branch.%ver_teeny
-Release: alt1
+Release: alt2
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -32,7 +32,6 @@ echo "Provides: %name-module-$m = %version-%release"; \
 echo "Obsoletes: %name-module-$m"; \
 done)
 
-#BuildRequires: gcc-c++ graphviz
 BuildRequires: doxygen groff-base libdb4-devel libffi-devel
 BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
 BuildRequires: tk-devel zlib-devel
@@ -95,15 +94,14 @@ Group: Development/Ruby
 Requires: %lname = %version-%release
 Provides: %name-libs = %version-%release
 Provides: %name-json = 1.5.4
-##Obsoletes: %name-json
+Obsoletes: %name-json
 Provides: %name-minitest = 2.5.1
-##Obsoletes: %name-minitest
+Obsoletes: %name-minitest
 #Provides: %name-module-test-unit = 2.2.0
 #Obsoletes: %name-module-test-unit
 Provides: %name-racc-runtime = 1.4.6
-##Obsoletes: %name-racc-runtime
+#Obsoletes: %name-racc-runtime
 Provides: %{name}gems = 1.8.24
-##Obsoletes: %{name}gems
 %mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
 %mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
@@ -141,7 +139,7 @@ Requires: %name-stdlibs = %version
 Provides: ri = %version-%release
 Provides: rdoc = %version-%release
 %obsolete %name-tool-ri
-#obsolete %name-tool-rdoc
+%obsolete %name-tool-rdoc
 
 %description -n rdoc
 RDoc is a documentation tool for Ruby source code.
@@ -156,11 +154,11 @@ Provides: gem = 1.8.23
 #Provides: testrb
 Provides: %name-rake = 0.9.2.2
 Provides: rake = 0.9.2.2
-##Obsoletes: %name-rake
+Obsoletes: %name-rake
 #Provides: %name-test-unit = 2.2.0
 #Obsoletes: %name-test-unit
 Provides: %{name}gems = 1.8.24
-##Obsoletes: %{name}gems
+Obsoletes: %{name}gems
 
 %description tools
 Ruby tools: rake, gem.
@@ -335,6 +333,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Mon Dec 10 2012 Led <led@altlinux.ru> 1.9.3-alt2
+- added more Provides/Obsoletes
+
 * Sat Dec 08 2012 Led <led@altlinux.ru> 1.9.3-alt1
 - 1.9.3
 
