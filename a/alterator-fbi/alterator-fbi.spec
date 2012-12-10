@@ -2,7 +2,7 @@
 
 Name: alterator-fbi
 Version: 5.28
-Release: alt5
+Release: alt6
 
 Packager: Dmitriy Kruglikov <dkr@altlinux.org>
 
@@ -131,6 +131,10 @@ fi ||:
 
 
 %changelog
+* Mon Dec 10 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt6
+- Remove the 'PIDFile' option from the service unit file
+  (closes: 27987).
+
 * Mon Dec 10 2012 Paul Wolneykien <manowar@altlinux.ru> 5.28-alt5
 - Add the 'PIDFile' option to the service unit.
 - Remove the 'Also=ahttpd.socket' option.
