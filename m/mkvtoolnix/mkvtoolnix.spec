@@ -14,7 +14,7 @@
 %undefine _configure_gettext
 
 Name: mkvtoolnix
-Version: 5.7.0
+Version: 5.9.0
 Release: alt1
 
 Summary: Tools to create, alter and inspect Matroska files
@@ -163,6 +163,9 @@ find %buildroot%_datadir -name 'mkvmergeGUI.*' -exec rename mkvmergeGUI %gname "
 %endif
 
 %changelog
+* Mon Dec 10 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.9.0-alt1
+- 5.9.0 released
+
 * Tue Sep 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.7.0-alt1
 - 5.7.0 released
 
