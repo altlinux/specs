@@ -1,0 +1,51 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(AutoLoader.pm) perl(Class/Accessor/Fast.pm) perl(Module/Build.pm) perl(overload.pm) perl-devel perl-podlators
+# END SourceDeps(oneline)
+%define upstream_name    Devel-Backtrace
+%define upstream_version 0.12
+
+Name:       perl-%{upstream_name}
+Version:    %{upstream_version}
+Release:    alt1_1
+
+Summary:    Object-oriented backtrace
+License:    GPL+ or Artistic
+Group:      Development/Perl
+Url:        http://search.cpan.org/dist/%{upstream_name}
+Source0:    http://www.cpan.org/modules/by-module/Devel/%{upstream_name}-%{upstream_version}.tar.gz
+
+BuildRequires: perl(Class/Accessor.pm)
+BuildRequires: perl(String/Escape.pm)
+BuildRequires: perl(Test/More.pm)
+BuildRequires: perl(Module/Build/Compat.pm)
+BuildArch: noarch
+Source44: import.info
+
+
+%description
+This class is a nice way to access all the information caller provides on a
+given level.  It is used by L<Devel::Backtrace>, which generates an array of
+all trace points.
+
+%prep
+%setup -q -n %{upstream_name}-%{upstream_version}
+
+%build
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
+%make
+
+%check
+make test
+
+%install
+%makeinstall_std
+
+%files
+%doc Changes META.yml LICENSE README
+%perl_vendor_privlib/*
+
+%changelog
+* Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru>  0.12-alt1_1
+- mageia import by cas@ requiest
+
