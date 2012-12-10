@@ -1,6 +1,6 @@
 Name: alterator-firsttime
 Version: 0.4
-Release: alt2
+Release: alt3
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -31,7 +31,7 @@ first time system setup
 %make_build
 
 %install
-%makeinstall
+%makeinstall unitdir=%buildroot%_unitdir
 
 install -Dpm644 ahttpd-firsttime.conf %buildroot%_sysconfdir/ahttpd/ahttpd-firsttime.conf
 install -Dpm755 ahttpd-firsttime.init %buildroot/%_initrddir/ahttpd-firsttime
@@ -49,8 +49,14 @@ install -Dpm755 ahttpd-firsttime.init %buildroot/%_initrddir/ahttpd-firsttime
 %_datadir/alterator/interfaces/guile/workflow/*
 %_alterator_backend3dir/*
 %_libexecdir/alterator/hooks/firsttime.d
+%_unitdir/%name.service
+%exclude %_unitdir/%name.socket
 
 %changelog
+* Mon Dec 10 2012 Paul Wolneykien <manowar@altlinux.ru> 0.4-alt3
+- Add the systemd unit files (closes: 28024).
+- Exclude the soket unit to prevent conflict with ahttpd.
+
 * Mon Nov 02 2009 Stanislav Ievlev <inger@altlinux.org> 0.4-alt2
 - use ui-corner-all class
 
