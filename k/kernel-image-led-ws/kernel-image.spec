@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.55
+Version: 3.0.56
 Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 55
+%define kernel_stable_version 56
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -2835,6 +2835,10 @@ done)
 
 
 %changelog
+* Mon Dec 10 2012 Led <led@altlinux.ru> 3.0.56-alt1
+- 3.0.56
+- really uksm disabled by default
+
 * Fri Dec 07 2012 Led <led@altlinux.ru> 3.0.55-alt1
 - 3.0.55
 - updated:
@@ -2863,7 +2867,7 @@ done)
   + fix-arch-x86--mcheck
   + fix-fs-jbd
   + feat-mm--uksm
-- uksm disabled bye default
+- uksm disabled by default
 
 * Fri Nov 30 2012 Led <led@altlinux.ru> 3.0.53-alt5
 - updated:
