@@ -4,7 +4,7 @@
 
 Name: hivex
 Version: 1.3.6
-Release: alt1
+Release: alt2
 Summary: Read and write Windows Registry binary hive files
 
 Group: Development/Other
@@ -172,7 +172,6 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %doc README LICENSE
 %_bindir/hivexget
 %_bindir/hivexml
-%_bindir/hivexregedit
 %_bindir/hivexsh
 %_libdir/libhivex.so.*
 %_man1dir/hivexget.1*
@@ -212,6 +211,7 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %files -n perl-%name
+%_bindir/hivexregedit
 %perl_vendor_archlib/*
 
 %files -n python-module-%name
@@ -225,6 +225,9 @@ rm -f %buildroot%python_sitelibdir/libhivexmod.la
 %endif
 
 %changelog
+* Mon Dec 10 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.3.6-alt2
+- Move %_bindir/hivexregedit to perl-%name (ALT#28210)
+
 * Tue Sep 04 2012 Alexey Shabalin <shaba@altlinux.ru> 1.3.6-alt1
 - 1.3.6
 
