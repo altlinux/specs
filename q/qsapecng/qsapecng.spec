@@ -2,7 +2,7 @@
 
 Name: qsapecng
 Version: 1.2.2
-Release: alt1
+Release: alt1.1
 Summary: QSapecNG is a Qt-based program for symbolic analysis of linear analog circuits
 License: GPLv3
 Group: Development/C++
@@ -28,6 +28,7 @@ solve and analyze analog circuits as well as manage them.
 %setup -n %origname-%version-source
 
 %build
+%add_optflags -fpermissive
 %cmake_insource
 %make_build VERBOSE=1
 
@@ -41,6 +42,9 @@ solve and analyze analog circuits as well as manage them.
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.1
+- Fixed build with gcc 4.7
+
 * Mon May 09 2011 Evgeny Sinelnikov <sin@altlinux.ru> 1.2.2-alt1
 - Initial release for Sisyphus
 
