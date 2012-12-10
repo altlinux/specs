@@ -3,13 +3,14 @@
 Summary: GUI for Filesystem Archiver for Linux
 Name: qt4-fsarchiver
 Version: 0.6.12
-Release: alt1
+Release: alt1.1
 Url: http://www.fsarchiver.org
 Packager: Hihin Ruslan <ruslandh@altlinux.ru>
 
 Source: %name.tar
 Source1: %name-pam
 Source2: %name-security
+Patch: qt4-fsarchiver-0.6.12-alt-glibc-2.16.patch
 
 License: GPLv2+
 Group: Archiving/Backup
@@ -71,6 +72,7 @@ FSArchiver  - системный инструментарий, позволяя�
 
 %prep
 %setup -n %name
+%patch -p2
 
 echo QMAKE_CXXFLAGS_RELEASE = %optflags >>  qt4-fsarchiver.pro
 echo QMAKE_CFLAGS_RELEASE = %optflags >>  qt4-fsarchiver.pro
@@ -120,6 +122,9 @@ install -pD -m640 %SOURCE2 %buildroot%_sysconfdir/security/console.apps/%name
 %_datadir/qt4/translations/*%{name}*.qm
 
 %changelog
+* Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.12-alt1.1
+- Fixed build with glibc 2.16
+
 * Wed Jun 29 2011 Hihin Ruslan <ruslandh@altlinux.ru> 0.6.12-alt1
 - Initial build for ALT Linux
 
