@@ -1,7 +1,7 @@
 Name: gnustep-base
 Version: 1.24.2
-Release: alt1.svn20121208
-Serial:1
+Release: alt2.svn20121208
+Epoch: 1
 
 Summary: GNUstep Base library package
 
@@ -11,6 +11,8 @@ Url: http://www.gnustep.org/
 
 Source: %name-%version.tar
 Source1: %name.init
+
+Requires: lib%name = %epoch:%version-%release
 
 BuildRequires: gnustep-make gnustep-make-devel libgnutls-devel
 BuildRequires: libgnustep-objc2-devel pkgconfig gcc-objc libssl-devel
@@ -30,16 +32,20 @@ scanners, tasks, files, networking, threading, remote object messaging
 support (distributed objects), event loops, loadable bundles, attributed
 unicode strings, xml, mime, user defaults. This package includes development
 headers too.
-Summary: Dynamic libraries from %name
-Group: System/Libraries
 
-%description
-Dynamic libraries from %name.
+%package -n lib%name
+Summary: Shared libraries of %name
+Group: System/Libraries
+Conflicts: %name < %epoch:%version-%release
+
+%description -n lib%name
+Shared libraries of %name.
 
 %package devel
 Summary: Header files and static libraries from %name
 Group: Development/Other
-Requires: gnustep-base >= %version
+Requires: %name = %epoch:%version-%release
+Requires: lib%name = %epoch:%version-%release
 
 %description devel
 Libraries and includes files for developing programs based on %name.
@@ -83,6 +89,10 @@ find $RPM_BUILD_ROOT \( -name '*.swp' -o -name '#*#' -o -name '*~' \) -print -de
 # failsafe cleanup if the file is declared as %%doc
 find . \( -name '*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
+for i in ChangeLog*; do
+	gzip $i
+done
+
 %post
 grep -q '^gdomap' /etc/services \
 || (echo "gdomap 538/tcp # GNUstep distributed objects" >> /etc/services \
@@ -98,11 +108,13 @@ rm -f /etc/services.orig
 %_initdir/gdomap
 %doc ANNOUNCE COPYING COPYING.LIB ChangeLog*
 %doc NEWS README
-%_libdir/libgnustep-base.so.*
 %_bindir/*
-%_libexecdir/GNUstep/*
+%_libdir/GNUstep/*
 %_man1dir/*
 %_man8dir/*
+
+%files -n lib%name
+%_libdir/libgnustep-base.so.*
 
 %files devel
 %_datadir/GNUstep/Makefiles/Additional/base.make
@@ -112,6 +124,10 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt2.svn20121208
+- Compressed ChangeLogs
+- Moved shared libraries into separate package
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt1.svn20121208
 - Version 1.24.2
 
