@@ -1,6 +1,6 @@
 Name: ebtables
 Version: 2.0.10
-Release: alt1
+Release: alt2
 
 Summary: A filtering tool for a bridging firewall
 License: GPL
@@ -29,19 +29,10 @@ make CFLAGS="%optflags" LIBDIR=/%_lib/ebtables
     BINDIR=/sbin MANDIR=%_mandir
 mv %buildroot/%_lib/ebtables/libebtc.so %buildroot/%_lib/libebtc.so.0.0.0
 
-%post
-%post_service ebtables
-
-%preun
-%preun_service ebtables
-
 %files
 %doc ChangeLog THANKS
 
 %config %_sysconfdir/ethertypes
-%config(noreplace) %_sysconfdir/sysconfig/ebtables
-
-%_initdir/ebtables
 
 /%_lib/libebtc.so.*
 /%_lib/ebtables
@@ -51,6 +42,9 @@ mv %buildroot/%_lib/ebtables/libebtc.so %buildroot/%_lib/libebtc.so.0.0.0
 %_man8dir/*
 
 %changelog
+* Tue Dec 11 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.10-alt2
+- 2.0.10-4 released
+
 * Fri Aug 19 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.10-alt1
 - 2.0.10-2 released
 
