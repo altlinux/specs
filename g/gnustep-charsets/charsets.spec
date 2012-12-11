@@ -1,6 +1,6 @@
 Name: gnustep-charsets
 Version: r29248
-Release: alt1.svn20100109
+Release: alt2.svn20100109
 Summary: Utilities for use with NSCharacterSet bitmap files
 License: LGPLv2+
 Group: Development/Tools
@@ -12,6 +12,7 @@ Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libgnustep-ucsdata-devel
+BuildPreReq: /proc
 
 %description
 mkcharsets: Creates the standard set of bitmap files for NSCharacterSet
@@ -38,7 +39,8 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2'
  
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -48,6 +50,9 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 %_bindir/*
 
 %changelog
+* Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt2.svn20100109
+- Rebuilt with /proc support
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt1.svn20100109
 - Initial build for Sisyphus
 
