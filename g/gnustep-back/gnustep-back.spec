@@ -2,7 +2,7 @@
 
 Name: gnustep-back    
 Version: 0.23.0
-Release: alt1.svn20121126
+Release: alt2.svn20121126
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Development/Objective-C
@@ -14,7 +14,7 @@ BuildPreReq: libXmu-devel libICE-devel libXft-devel libGL-devel
 BuildPreReq: libcairo-devel libart_lgpl-devel gcc-objc libglitz-devel
 BuildPreReq: gnustep-make-devel gnustep-gui-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libXcursor-devel libXfixes-devel
-BuildRequires: texinfo
+BuildRequires: texinfo /proc
 
 %description 
 This is a back-end for the GNUstep GUI library which allows you to use
@@ -43,7 +43,8 @@ sed -i 's|i586|x86_64|g' $(find ./ -type f)
 	messages=yes \
 	debug=yes \
 	strip=no \
-	shared=yes
+	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2'
 
 %make_build -C Documentation \
 	messages=yes \
@@ -70,6 +71,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt2.svn20121126
+- Built with /proc support
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt1.svn20121126
 - Initial build for Sisyphus
 
