@@ -1,16 +1,16 @@
 Name: bind
 Version: 9.9.2
-Release: alt2
+Release: alt3
 
 Summary: ISC BIND - DNS server
 License: BSD-style
 Group: System/Servers
 Url: http://www.isc.org/products/BIND/
 
-%define vsuffix %nil
-%define srcname %name-%version%vsuffix
+%define vsuffix -P1
+# NOTE: vsuffix removed from Source0
 # ftp://ftp.isc.org/isc/bind9/%version%vsuffix/bind-%version%vsuffix.tar.gz
-Source0: %srcname.tar
+Source0: %name-%version.tar
 Source2: rfc1912.txt
 Source3: bind.README.bind-devel
 Source4: bind.README.ALT
@@ -33,6 +33,8 @@ Source41: bind.localhost
 Source42: bind.localdomain
 Source43: bind.127.in-addr.arpa
 Source44: bind.empty
+
+Source50: bind.service
 
 # NB: there must be at least one patch :)
 Patch0001: 0001-bind-9.8.3-owl-warnings.patch
@@ -132,50 +134,55 @@ The Berkeley Internet Name Domain (BIND) implements an Internet domain
 name server.  BIND is the most widely-used name server software on the
 Internet, and is supported by the Internet Software Consortium (ISC).
 
-This package provides the server and related configuration files.
+This package provides the %version%vsuffix server and related
+configuration files.
 
 %description utils
-This package contains various utilities related to DNS that are
-derived from the BIND source tree, including dig, host, nslookup
-and nsupdate.
+This package contains various utilities related to DNS that are derived
+from the BIND %version%vsuffix source tree, including dig, host,
+nslookup and nsupdate.
 
 %description -n libbind
-This package contains shared libraries used by BIND's daemons
-and clients.
+This package contains shared libraries used by BIND's %version%vsuffix
+daemons and clients.
 
 %description devel
 This package contains development libraries, header files, and API man
-pages for libdns, libisc, libisccc, libisccfg and liblwres.  These are
-only needed if you want to compile packages that need more nameserver
-API than the resolver code provided by glibc.
+pages for libdns, libisc, libisccc, libisccfg and liblwres. These are
+only needed if you want to compile packages that need more BIND
+%version%vsuffix nameserver API than the resolver code provided by
+glibc.
 
 %description devel-static
 This package contains development static libraries, header files, and
 API man pages for libdns, libisc, libisccc, libisccfg and liblwres.
 These are only needed if you want to compile statically linked packages
-that need more nameserver API than the resolver code provided by glibc.
+that need more BIND %version%vsuffix nameserver API than the resolver
+code provided by glibc.
 
 %description -n libisc-export
-This package contains shared libraries used by third-party projects
-that require standard ISC libaries without using nameserver API.
+This package contains shared libraries used by third-party projects that
+require standard ISC BIND %version%vsuffix libaries without using
+nameserver API.
 
 %description -n libisc-export-devel
 This package contains develompent environment for third-party projects
-that require standard ISC libaries without using nameserver API.
+that require standard ISC BIND %version%vsuffix libaries without using
+nameserver API.
 
 %description doc
-This package provides various documents that are useful for maintaining a
-working BIND installation.
+This package provides various documents that are useful for maintaining
+a working BIND %version%vsuffix installation.
 
 %description -n lwresd
 This package contains lwresd, the daemon providing name lookup services
-to clients that use the BIND 9 lightweight resolver library.  It is
-essentially a stripped-down, caching-only name server that answers
-queries using the BIND 9 lightweight resolver protocol rather than
-the DNS protocol.
+to clients that use the BIND %version%vsuffix lightweight resolver
+library. It is essentially a stripped-down, caching-only name server
+that answers queries using the BIND 9 lightweight resolver protocol
+rather than the DNS protocol.
 
 %prep
-%setup -n %srcname
+%setup
 
 # NB: there must be at least one patch :)
 %patch0001 -p2
@@ -198,7 +205,7 @@ mkdir addon
 install -pm644 %_sourcedir/{bind,lwresd}.init addon/
 install -pm644 %_sourcedir/bind.{named,options,rndc,local,rfc1912,rfc1918}.conf \
 	addon/
-install -pm644 %_sourcedir/bind.{localhost,localdomain,127.in-addr.arpa,empty,sysconfig} \
+install -pm644 %_sourcedir/bind.{localhost,localdomain,127.in-addr.arpa,empty,sysconfig,service} \
 	addon/
 install -pm644 %_sourcedir/rndc.{conf,key} addon/
 
@@ -254,6 +261,9 @@ install -pm755 contrib/queryperf/queryperf %buildroot%_sbindir/
 # Install startup scripts.
 install -pD -m755 addon/bind.init %buildroot%_initdir/bind
 install -pD -m755 addon/lwresd.init %buildroot%_initdir/lwresd
+
+# Install systemd service
+install -pD -m644 addon/bind.service %buildroot%_unitdir/bind.service
 
 # Install configurations files
 install -pm600 addon/rndc.conf %buildroot%_sysconfdir/
@@ -378,6 +388,7 @@ fi
 %config %_initdir/bind
 %config %_sysconfdir/sysconfig/bind
 %config(noreplace) %_sysconfdir/rndc.conf
+%_unitdir/bind.service
 
 %_man5dir/*
 %_man8dir/*
@@ -432,6 +443,10 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Tue Dec 11 2012 Fr. Br. George <george@altlinux.ru> 9.9.2-alt3
+- Update to 9.9.2-P1 (CVE-2012-5688 and bugfixes)
+- Add systemd service file (from FC)
+
 * Wed Nov 07 2012 Fr. Br. George <george@altlinux.ru> 9.9.2-alt2
 - Fix pidfile recreation try on reload
 - Replace index IDs in patches to dummy ones
