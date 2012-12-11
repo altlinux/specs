@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
 Release: alt1
 epoch:1 
-%define kernel_base_version	3.6
-%define kernel_sublevel	.8
+%define kernel_base_version	3.7
+%define kernel_sublevel	.0
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -329,7 +329,7 @@ echo "Building Kernel $KernelVer"
 cp -vf config-%_target_cpu .config
 
 %make_build oldconfig
-%make_build include/linux/version.h
+#%make_build include/linux/version.h
 %make_build bzImage
 %make_build modules
 
@@ -569,16 +569,21 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %files -n kernel-modules-v4l-%flavour
 %modules_dir/kernel/drivers/media/
 %modules_dir/kernel/drivers/staging/media/lirc/
-%exclude %modules_dir/kernel/drivers/media/dvb/ngene/
-%exclude %modules_dir/kernel/drivers/media/video/cx23885/
 
 %files -n kernel-modules-staging-%flavour
 %modules_dir/kernel/drivers/staging/
-%modules_dir/kernel/drivers/media/dvb/ngene/
-%modules_dir/kernel/drivers/media/video/cx23885/
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.0-alt1
+- 3.7 release
+
+* Tue Dec 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.0-alt0.8
+- 3.7-rc8
+
+* Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.0-alt0.7
+- 3.7-rc7
+
 * Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.8-alt1
 - 3.6.8
 

@@ -5,7 +5,10 @@
 
 %define module_name	nvidia
 %define module_version	310.19
-%define module_release	alt1
+%define module_release	alt2
+%define kversion	3.7.0
+%define krelease	alt1
+%define flavour		un-def
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
 %if "%xorg_ver" == ""
@@ -18,19 +21,31 @@
 %endif
 %define legacy1_src %(echo %legacy1 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.13
+%if "%kversion" <= "3.7"
 %define legacy2 96.43.23
+%else
+%define legacy2 %nil
+%endif
 %else
 %define legacy2 %nil
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.14
+%if "%kversion" <= "3.7"
 %define legacy3 173.14.36
+%else
+%define legacy3 %nil
+%endif
 %else
 %define legacy3 %nil
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.14
+%if "%kversion" <= "3.7"
 %define legacy4 304.64
+%else
+%define legacy4 %nil
+%endif
 %else
 %define legacy4 %nil
 %endif
@@ -39,9 +54,6 @@
 
 %define upstream_module_name	NVIDIA_kernel
 
-%define kversion	3.6.8
-%define krelease	alt1
-%define flavour		un-def
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/nVidia
 %define module_local_dir /lib/modules/nvidia
@@ -55,7 +67,7 @@
 Summary:	nVidia video card drivers
 Name:		kernel-modules-%module_name-%flavour
 Version:	%module_version
-Release:	%module_release.198152.1
+Release:	%module_release.198400.1
 License:	Proprietary
 Group:		System/Kernel and hardware
 URL:		http://www.nvidia.com
@@ -86,7 +98,7 @@ BuildRequires: kernel-source-%module_name-%legacy3_src
 BuildRequires: kernel-source-%module_name-%legacy4_src
 %endif
 
-Patch0: nvidia-kernel-3.6.patch
+Patch: nvidia-3.7.patch
 
 Provides:  	kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -131,6 +143,7 @@ do
     %__ln_s Makefile.kbuild Makefile
     popd
 done
+%patch -p1
 
 %build
 for ver in %mod_ver_list
@@ -140,7 +153,8 @@ do
     %make_build -C %_usrsrc/linux-%kversion-%flavour modules \
 	SUBDIRS=$PWD TEMP_DIR=$PWD/ \
 	ARCH=%base_arch \
-	SYSSRC=%_usrsrc/linux-%kversion-%flavour
+	SYSSRC=%_usrsrc/linux-%kversion-%flavour \
+	INCLUDES=-I%_usrsrc/linux-%kversion-%flavour-%krelease/include/uapi
     popd
 done
 
@@ -206,8 +220,11 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 310.19-alt1.198152.1
-- Build for kernel-image-un-def-3.6.8-alt1.
+* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 310.19-alt2.198400.1
+- Build for kernel-image-un-def-3.7.0-alt1.
+
+* Wed Dec 05 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 310.19-alt2
+- build with kernel 3.7 fixed
 
 * Mon Nov 19 2012 Sergey V Turchin <zerg at altlinux dot org> 310.19-alt1
 - new release (310.19)

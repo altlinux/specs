@@ -1,8 +1,8 @@
 %define module_name	fglrx
 %define module_version	8.98
-%define module_release	alt4
+%define module_release	alt5
 
-%define kversion       3.6.8
+%define kversion       3.7.0
 %define krelease       alt1
 %define flavour                un-def
 
@@ -12,7 +12,7 @@
 Summary:	AMD/ATI Proprietary Linux Display Driver
 Name:		kernel-modules-%module_name-%flavour
 Version:	1.0.%module_version
-Release:	%module_release.198152.1
+Release:	%module_release.198400.1
 License:	Proprietary
 Group:		System/Kernel and hardware
 
@@ -53,6 +53,7 @@ Patch11: fglrx-3.4.6-old_rsp.patch
 %if "%kversion" >= "3.5"
 Patch12: fglrx-3.5.2-build.patch
 %endif
+Patch13: fglrx-3.7.patch
 
 %description
 Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite
@@ -94,6 +95,10 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %patch12 -p1
 %endif
 
+%if "%kversion" >= "3.7
+%patch13 -p0
+%endif
+
 sed -i 's|COMPAT_ALLOC_USER_SPACE|arch_compat_alloc_user_space|' kcl_ioctl.c
 
 %build
@@ -117,8 +122,11 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.8.98-alt4.198152.1
-- Build for kernel-image-un-def-3.6.8-alt1.
+* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.8.98-alt5.198400.1
+- Build for kernel-image-un-def-3.7.0-alt1.
+
+* Wed Dec 05 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.8.98-alt5
+- Fixed build for kernel 3.7+
 
 * Sat Aug 18 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.98-alt4
 - Fixed build for kernel 3.5.2+
