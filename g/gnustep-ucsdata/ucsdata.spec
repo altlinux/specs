@@ -1,6 +1,6 @@
 Name: gnustep-ucsdata
 Version: r31318
-Release: alt1.svn20100910
+Release: alt2.svn20100910
 Summary: The GNUstep Unicode Character Set Data Library
 License: LGPLv2+
 Group: Development/Tools
@@ -12,7 +12,7 @@ Source: %name-%version.tar
 Source1: ftp://ftp.unicode.org/Public/UNIDATA/UnicodeData.txt
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
-BuildPreReq: libgnustep-objc2-devel
+BuildPreReq: libgnustep-objc2-devel /proc
 
 %description
 The GNUstep Unicode Character Set Data Library is a small library which
@@ -53,6 +53,7 @@ This package contains development files of gnustep-ucsdata.
 	debug=yes \
 	strip=no \
 	shared=yes \
+	AUXILIARY_CPPFLAGS='-O2' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc'
  
 %install
@@ -73,6 +74,9 @@ install -p -m644 %SOURCE1 %buildroot%_libdir/GNUstep/Libraries/Unicode/
 %_libdir/*.so
 
 %changelog
+* Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt2.svn20100910
+- Built with /proc support
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt1.svn20100910
 - Initial build for Sisyphus
 
