@@ -1,11 +1,10 @@
-%define perl_bootstrap 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Find-Rule-Perl
 Version:        1.13
-Release:        alt2_1
+Release:        alt3_1
 Summary:        Common rules for searching for Perl things
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -65,6 +64,9 @@ cd ..
 %{perl_vendor_privlib}/File
 
 %changelog
+* Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.13-alt3_1
+- no bootstrap
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.13-alt2_1
 - moved to Sisyphus (bootstrap)
 
