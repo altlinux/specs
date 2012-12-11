@@ -1,8 +1,8 @@
 %define module_name             tp_smapi
-%define module_version          0.40
-%define module_release          alt2
+%define module_version          0.41
+%define module_release          alt1
 
-%define kversion	3.6.9
+%define kversion	3.6.10
 %define krelease	alt1
 %define flavour		std-def
 
@@ -10,7 +10,7 @@
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198153.1
+Release: %module_release.198154.1
 
 Summary: IBM ThinkPad SMAPI Driver
 License: GPL
@@ -19,7 +19,6 @@ URL: http://tpctl.sourceforge.net
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
-Patch: tp_smapi-0.40-patch_for_2.6.37.patch 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
@@ -50,9 +49,6 @@ These are modules for your ALT Linux system.
 rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %setup -D -T -n kernel-source-%module_name-%module_version
-%if "%kversion" >= "2.6.37"
-%patch -p1 
-%endif
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -76,8 +72,11 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %doc README CHANGES
 
 %changelog
-* Tue Dec 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.40-alt2.198153.1
-- Build for kernel-image-std-def-3.6.9-alt1.
+* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.41-alt1.198154.1
+- Build for kernel-image-std-def-3.6.10-alt1.
+
+* Wed Dec 05 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.41-alt1
+- 0.41
 
 * Thu Feb 24 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.40-alt2
 - don't pack hdaps.ko
