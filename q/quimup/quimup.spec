@@ -1,7 +1,7 @@
 %define Name Quimup
 Name: quimup
 Version: 0.3.5
-Release: alt1.1
+Release: alt1.2
 Summary: A client for the music player daemon (MPD)
 License: %gpl2plus
 Group: Sound
@@ -9,6 +9,7 @@ Group: Sound
 URL: http://www.coonsden.com/
 Source: %Name%{version}src.tar
 Patch: quimup-0.3.5-alt-gcc4.6.patch
+Patch1: quimup-0.3.5-alt-glibc-2.16.patch
 Packager: Led <led@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
@@ -26,6 +27,7 @@ from the system tray.
 %prep
 %setup -n %Name%{version}src
 %patch -p0
+%patch1 -p0
 
 
 %build
@@ -71,6 +73,9 @@ done
 
 
 %changelog
+* Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.2
+- Fixed build with glibc 2.16
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.1
 - Fixed build
 
