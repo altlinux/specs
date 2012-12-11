@@ -2,7 +2,7 @@
 
 Name: gnustep-gui
 Version: 0.23.0
-Release: alt1.svn20121209
+Release: alt2.svn20121209
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -18,7 +18,7 @@ BuildPreReq: libpng-devel libcups-devel libaspell-devel
 BuildPreReq: libungif-devel libaudiofile-devel libportaudio2-devel
 BuildPreReq: libX11-devel libicu-devel imake libImageMagick-devel
 BuildPreReq: ImageMagick-tools libsndfile-devel libao-devel
-BuildPreReq: flite-devel libicns-devel
+BuildPreReq: flite-devel libicns-devel /proc
 BuildPreReq: texinfo texi2html texlive-latex-base
 
 Requires: lib%name = %version-%release
@@ -138,6 +138,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt2.svn20121209
+- Built with /proc support
+
 * Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt1.svn20121209
 - Initial build for Sisyphus
 
