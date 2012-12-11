@@ -1,5 +1,5 @@
 Name:         rekonq
-Version:      1.2
+Version:      1.3
 Release:      alt1
 
 Group:        Networking/WWW
@@ -17,7 +17,7 @@ Source:      %name-%version.tar
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel libqt4-devel zlib-devel qoauth-devel libqca2-devel
 BuildRequires: libalternatives-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel
-BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel
+BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86vm-devel
 BuildRequires: libxkbfile-devel desktop-file-utils
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano libsoprano-devel
 
@@ -61,6 +61,9 @@ desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-hand
 %_K4cfg/%name.kcfg
 
 %changelog
+* Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 1.3-alt1
+- new version
+
 * Mon Oct 08 2012 Sergey V Turchin <zerg@altlinux.org> 1.2-alt1
 - new version
 
