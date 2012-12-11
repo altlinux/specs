@@ -2,14 +2,12 @@
 
 Name: ragel
 Version: 6.6
-Release: alt1
+Release: alt1.1
 
 Summary: Ragel State Machine Compiler
 Group: Development/Other
 License: GPLv2
 Url: http://www.complang.org/ragel/
-
-Packager: Sir Raorn <raorn@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
@@ -39,6 +37,8 @@ Vim syntax for Ragel.
 %patch -p1
 
 %build
+%add_optflags -fpermissive
+export CPPFLAGS="%optflags"
 %configure
 %make_build
 %make_build -C doc
@@ -67,6 +67,9 @@ EOF
 %vim_ftdetect_dir/ragel.vim
 
 %changelog
+* Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.6-alt1.1
+- Fixed build with gcc 4.7
+
 * Thu Apr 15 2010 Alexey I. Froloff <raorn@altlinux.org> 6.6-alt1
 - [6.6]
 
