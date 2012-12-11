@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.2
-Release: alt7.svn20121102
+Release: alt8.svn20121102
 Source: %name-%version.tar
 License: GPL
 Group: Development/Other
@@ -68,13 +68,7 @@ sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 #find %buildroot%_datadir/GNUstep/Makefiles/Instance/Documentation \
 #        -type f ! -name '*.html' ! -name '*.css' ! -name '*.gz' | xargs gzip -9nf 
 
-%ifarch x86_64
-sed -i -e 's/i586/x86_64/g' $(find %buildroot -type f)
-%else
-%ifnarch %ix86
-sed -i -e 's/i586/x86_64/g' $(find %buildroot -type f)
-%endif
-%endif
+sed -i 's|[0-9a-z_]*-alt-linux-gcc|gcc|g' $(find %buildroot -type f)
 
 gzip ChangeLog
 
@@ -106,6 +100,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt8.svn20121102
+- Replaced *-alt-linux-gcc by gcc (thnx ldv@)
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt7.svn20121102
 - Set CONFIG_SYSTEM_LIBS as variable for add libraries during linking
 
