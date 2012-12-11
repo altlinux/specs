@@ -8,12 +8,13 @@
 %def_disable haskell
 %def_disable php
 %def_disable erlang
+%def_disable lua
 %def_disable static
 
 Summary: Tools for accessing and modifying virtual machine disk images
 Name: libguestfs
-Version: 1.19.38
-Release: alt2
+Version: 1.19.66
+Release: alt1
 License: LGPLv2+
 Group: System/Libraries
 Url: http://libguestfs.org/
@@ -38,6 +39,7 @@ BuildRequires: cpio gperf perl-podlators perl-devel genisoimage xml-utils db4-ut
 BuildRequires: qemu-kvm qemu-system
 BuildRequires: libncurses-devel libreadline-devel
 BuildRequires: libpcre-devel libmagic-devel libvirt-devel libxml2-devel libconfig-devel hivex-devel
+BuildRequires: libacl-devel libcap-devel
 BuildRequires: netpbm
 %if_enabled fuse
 BuildRequires: libfuse-devel
@@ -275,6 +277,7 @@ mkdir -p daemon/m4
 	%{subst_enable haskell} \
 	%{subst_enable php} \
 	%{subst_enable erlang} \
+	%{subst_enable lua} \
 	%{subst_enable static} \
 	--with-extra="ALTLinux,release=%version-%release" \
 	--with-qemu="qemu-kvm qemu-system-%_build_arch qemu" \
@@ -326,6 +329,7 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 
 %files -n guestfsd
 %_sbindir/guestfsd
+%_man8dir/guestfsd.*
 
 %files devel
 %doc AUTHORS BUGS HACKING TODO README ROADMAP
@@ -492,6 +496,9 @@ rm -rf %buildroot%_mandir/ja/man{1,3}/
 %_sysconfdir/bash_completion.d/guestfish-bash-completion.sh
 
 %changelog
+* Tue Dec 11 2012 Alexey Shabalin <shaba@altlinux.ru> 1.19.66-alt1
+- 1.19.66
+
 * Thu Sep 06 2012 Vladimir Lettiev <crux@altlinux.ru> 1.19.38-alt2
 - rebuilt for perl-5.16
 
