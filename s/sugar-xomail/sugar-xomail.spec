@@ -1,12 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: gcc-c++ pkgconfig(gtk+-2.0) pkgconfig(x11) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 %define date 20090128
 
 Name:           sugar-xomail
 Version:        0
-Release:        alt1_0.6.20090128
+Release:        alt1_0.7.20090128
 Summary:        Xomail for Sugar
 
 Group:          Graphical desktop/Sugar
@@ -20,6 +19,7 @@ BuildRequires:  sugar-toolkit
 
 Requires:       sugar
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 
 %description
@@ -44,6 +44,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 
 
 %changelog
+* Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.7.20090128
+- new version; import from fc18
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.6.20090128
 - new version; import from fc17 updates
 
