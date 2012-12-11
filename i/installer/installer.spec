@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.3
+Version: 1.8.4
 Release: alt1
 
 Summary: Installer common parts
@@ -19,7 +19,7 @@ Group: System/Configuration/Other
 Provides: %name-stage2 = %version-%release
 Obsoletes: %name-stage2 < %version-%release
 # installer-preinstall.desktop
-Requires: alterator-preinstall
+Requires: alterator-preinstall >= 0.7-alt1
 # scripts/install2
 Requires: alterator-wizardface alterator-backend-x11 >= 0.21-alt2 xinit xinitrc xorg-x11-server xorg-x11-drv-video
 # scripts/postinstall
@@ -104,6 +104,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Dec 11 2012 Michael Shigorin <mike@altlinux.org> 1.8.4-alt1
+- 11-remount script moved to become install2-remount-functions
+  (to be included in alterator-preinstall and used just in time)
+
 * Mon Dec 10 2012 Michael Shigorin <mike@altlinux.org> 1.8.3-alt1
 - 11-remount script moved back to stage2 (no use of prepkg.d too)
 

@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-preinstall
-Version: 0.6
-Release: alt5
+Version: 0.7
+Release: alt1
 
 Summary: Alterator preinstall hooks runner module
 License: GPL
@@ -14,6 +14,7 @@ Source:%name-%version.tar
 Requires: alterator >= 4.17-alt1
 Requires: alterator-l10n >= 2.1-alt4
 Conflicts: alterator-lookout < 1.6-alt6
+Conflicts: installer-common-stage2 < 1.8.4-alt1
 
 BuildPreReq: alterator >= 4.7-alt6
 
@@ -34,6 +35,10 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Dec 11 2012 Michael Shigorin <mike@altlinux.org> 0.7-alt1
+- employ install2-remount-functions to avoid stray processes
+  blocking $destdir remounting
+
 * Wed May 30 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt5
 - direct start alteratord even if it seems that systemd is here
 
