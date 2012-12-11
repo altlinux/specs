@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-preinstall
-Version: 0.7
+Version: 0.7.1
 Release: alt1
 
 Summary: Alterator preinstall hooks runner module
@@ -35,6 +35,9 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Tue Dec 11 2012 Michael Shigorin <mike@altlinux.org> 0.7.1-alt1
+- notify for remount failure
+
 * Tue Dec 11 2012 Michael Shigorin <mike@altlinux.org> 0.7-alt1
 - employ install2-remount-functions to avoid stray processes
   blocking $destdir remounting
