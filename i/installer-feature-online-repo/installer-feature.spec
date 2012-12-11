@@ -1,14 +1,14 @@
-Name: installer-feature-online-repo
-Version: 0.12
+Name:    installer-feature-online-repo
+Version: 0.13
 Release: alt1
 
 Summary: Make online repositories available
 License: GPL
-Group: System/Configuration/Other
-Url: http://www.altlinux.org/Installer/beans
+Group:   System/Configuration/Other
+Url:     http://www.altlinux.org/Installer/beans
 BuildArch: noarch
 Packager: Andrey Cherepanov <cas@altlinux.org>
-Source: %name-%version.tar
+Source:  %name-%version.tar
 
 %description
 Make online repositories available
@@ -27,6 +27,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Dec 11 2012 Andrey Cherepanov <cas@altlinux.org> 0.13-alt1
+- Increase level from 80 to 99 because cdrom source is added at 90 level
+- Do not show sources at script execution
+
 * Sat Jun 02 2012 Sergey V Turchin <zerg@altlinux.org> 0.12-alt1
 - turn off cdrom repository and mountpoint when turn on online repo
 
