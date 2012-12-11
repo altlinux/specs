@@ -1,12 +1,11 @@
 %define _name gssdp
-%define api_ver 1.0
 
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
 
 Name: lib%_name
-Version: 0.12.2.1
+Version: 0.13.2
 Release: alt1
 
 Summary: Resource discovery and announcement over SSDP
@@ -16,9 +15,8 @@ Url: http://www.gupnp.org/
 
 Source: http://www.gupnp.org/sources/%_name/%_name-%version.tar.xz
 
-BuildRequires: gtk-doc libsoup-devel >= 2.4 glib2-devel >= 2.18
-BuildRequires: libgtk+2-devel libxml2-devel libGConf-devel NetworkManager-devel
-BuildRequires: vala-tools rpm-build-vala
+BuildRequires: gtk-doc libsoup-devel >= 2.26.1 glib2-devel >= 2.22 libgio-devel >= 2.22
+BuildRequires: vala-tools rpm-build-vala libvala-devel
 %{?_enable_introspection:BuildPreReq: gobject-introspection-devel}
 
 %description
@@ -69,9 +67,10 @@ GObject introspection devel data for the GSSDP library
 
 %build
 %autoreconf
-%configure --disable-static \
-%{?_enable_gtk_doc:--enable-gtk-doc} \
-%{subst_enable introspection}
+%configure  --disable-static \
+	    --without-gtk \
+	    %{?_enable_gtk_doc:--enable-gtk-doc} \
+	    %{subst_enable introspection}
 
 %make_build
 
@@ -83,29 +82,30 @@ GObject introspection devel data for the GSSDP library
 %doc AUTHORS README NEWS ChangeLog
 
 %files devel
-# do not package tools
-%exclude %_bindir/gssdp-device-sniffer
-#%%dir %_datadir/gssdp
-%exclude %_datadir/gssdp/gssdp-device-sniffer.ui
 %_includedir/*
 %_libdir/*.so
-%_libdir/pkgconfig/*
-%_vapidir/%_name-%api_ver.deps
-%_vapidir/%_name-%api_ver.vapi
+%_pkgconfigdir/*.pc
+%_vapidir/*.deps
+%_vapidir/*.vapi
 
 %files devel-doc
 %_datadir/gtk-doc/html/*
 
 %if_enabled introspection
 %files gir
-%_typelibdir/GSSDP-%api_ver.typelib
+%_typelibdir/*.typelib
 
 %files gir-devel
-%_girdir/GSSDP-%api_ver.gir
+%_girdir/*.gir
 %endif
 
 
 %changelog
+* Tue Dec 11 2012 Alexey Shabalin <shaba@altlinux.ru> 0.13.2-alt1
+- 0.13.2
+- update BR:
+- add --without-gtk to configure
+
 * Thu Sep 06 2012 Yuri N. Sedunov <aris@altlinux.org> 0.12.2.1-alt1
 - 0.12.2.1
 
