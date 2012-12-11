@@ -1,10 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: gcc-c++ pkgconfig(gtk+-2.0) pkgconfig(x11) python-devel
+BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-view-slides
 Version:        8
-Release:        alt1_7
+Release:        alt1_8
 Summary:        Image serie viewer for Sugar
 
 Group:          Graphical desktop/Sugar
@@ -19,6 +18,7 @@ BuildRequires:  gettext
 Requires:       sugar
 Requires:       python-module-pygame
 Source44: import.info
+BuildRequires: rpmbuild-helper-sugar-activity
 
 
 %description
@@ -53,6 +53,9 @@ chmod +x xopower.py
 
 
 %changelog
+* Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 8-alt1_8
+- new version; import from fc18
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 8-alt1_7
 - new version; import from fc17 updates
 
