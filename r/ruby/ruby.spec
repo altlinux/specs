@@ -1,7 +1,7 @@
 %def_enable shared
 %def_without valgrind
 %def_enable rubygems
-%define ruby_version %nil
+#define ruby_version %nil
 %define libdir %_prefix/lib/%name
 %define includedir %_includedir
 %define ridir %_datadir/ri
@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 3
 %define _pl p332
 Version: %branch.%ver_teeny
-Release: alt2
+Release: alt3
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -101,7 +101,7 @@ Obsoletes: %name-minitest
 #Obsoletes: %name-module-test-unit
 Provides: %name-racc-runtime = 1.4.6
 #Obsoletes: %name-racc-runtime
-Provides: %{name}gems = 1.8.24
+Provides: %{name}gems = 1.8.23
 %mobsolete English bigdecimal cgi curses date-time dbm debug digest dl drb e2mmap
 %mobsolete erb etc fcntl fileutils gdbm iconv math misc net nkf open3 openssl
 %mobsolete optparse patterns pty readline rexml rss sdbm shell socket stringio
@@ -210,9 +210,15 @@ chmod a-x sample/{optparse,rss}/*
 # Broken 'require'
 rm -f lib/rss/xmlscanner.rb
 #sed -i "/^require[[:blank:]]\+'enumerator'/d" lib/rinda/tuplespace.rb
-
-# Remove double '/' in pathes when ruby_version is empty
-[ -n "%ruby_version" || sed -i 's|/\$(ruby_version)||g' tool/mkconfig.rb
+# Remove unneeded shebang
+sed -i '/^#!/d' lib/minitest/spec.rb
+# More strict shebang
+sed -i '1s|^#!/usr/bin/env ruby|#!%_bindir/%name|' {lib/{abbrev,set},ext/tk/lib/tkextlib/pkg_checker}.rb
+# Remove $ruby_version from libs path
+sed -i 's|/\$(ruby_version)||g;s|\(/%name/\)#{version}/|\1|g' tool/mkconfig.rb
+sed -i 's|/\${ruby_version}||' template/%name.pc.in
+sed -i -r "s/File.join[[:blank:]]+(RbConfig::CONFIG\['ridir'\]),[[:blank:]]*version/\1/" lib/rdoc/ri/paths.rb
+sed -i -r "/ridatadir[[:blank:]]*=/s/[[:blank:]]+CONFIG\['ruby_version'\],//" tool/rbinstall.rb
 
 
 %build
@@ -255,6 +261,8 @@ chmod +x %buildroot%_rpmlibdir/%name-doc-ri.filetrigger
 export RUBYLIB=%buildroot%libdir:%buildroot%libdir/%_target
 export LD_LIBRARY_PATH=%buildroot%_libdir
 
+%add_findreq_skiplist %libdir/gems/*/gems/*/bin/*
+
 
 %check
 %make_build test
@@ -278,7 +286,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %files -n %lname-devel
-%exclude %_pkgconfigdir/*
+%_pkgconfigdir/*
 %includedir/*
 %{?_enable_shared:%_libdir/*.so}
 
@@ -310,7 +318,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/erb
 %_bindir/gem
 %_bindir/rake
-#%_bindir/testrb
+%exclude %_bindir/testrb
 %_man1dir/erb.*
 %_man1dir/rake.*
 
@@ -333,6 +341,11 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Tue Dec 11 2012 Led <led@altlinux.ru> 1.9.3-alt3
+- %%name-stdlibs: fixed Provides
+- fixed requires
+- built with default ruby_version
+
 * Mon Dec 10 2012 Led <led@altlinux.ru> 1.9.3-alt2
 - added more Provides/Obsoletes
 
