@@ -1,14 +1,16 @@
 Name: python-module-dbus
-Version: 1.0.0
-Release: alt1
+Version: 1.1.1
+Release: alt2
 
 Summary: Python bindings for D-BUS library
 License: AFL/GPL
 Group: Development/Python
 Url: http://www.freedesktop.org/wiki/Software/DBusBindings
 
-Source: http://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
-Patch: dbus-python-1.0.0-alt-link.patch
+Source: dbus-python-%version.tar
+#Source: http://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
+Patch: dbus-python-1.1.1-1-alt-link.patch
+Patch2: dbus-python-1.1.1-alt-usc4-impaired-python-hack2-around.patch
 
 %setup_python_module dbus
 
@@ -17,7 +19,12 @@ Provides: dbus-python = %version-%release
 Provides: %name-data = %version-%release
 Obsoletes: %name-data < %version-%release
 
-BuildRequires: libdbus-glib-devel python-devel
+BuildRequires: libdbus-devel >= 1.6 libdbus-glib-devel
+# python with ucs4 support
+BuildRequires: python-dev 
+#>= 2.7.3-alt5
+# for check
+BuildRequires: /proc dbus-tools dbus-tools-gui python-module-pygobject3 glibc-i18ndata
 
 %description
 D-Bus python bindings for use with python programs.
@@ -35,6 +42,7 @@ Development package.
 %prep
 %setup -q -n dbus-python-%version
 %patch -p1
+%patch2 -p1
 
 %build
 # Install python code into arch-specific dir for PyQt4 (ALT#23134)
@@ -47,13 +55,16 @@ export am_cv_python_pythondir=%python_sitelibdir
 %install
 %make DESTDIR=%buildroot install
 
+%check
+%make check
+
 %files
 %python_sitelibdir/*.so
 %python_sitelibdir/dbus/
 %doc AUTHORS COPYING NEWS
 
 %files devel
-%doc doc/*.txt TODO
+%doc doc/*.txt
 %_includedir/dbus-1.0/dbus/dbus-python.h
 %_pkgconfigdir/dbus-python.pc
 
@@ -61,6 +72,14 @@ export am_cv_python_pythondir=%python_sitelibdir
 %exclude %_docdir/dbus-python
 
 %changelog
+* Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2
+- fix for our usc4-impaired python 2.7 build as patch2
+  thanks to vsu@ and ldv@. (closes: #28202)
+
+* Sat Dec 08 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- after 1.1.1 snapshot (c57c4d28)
+- %%check section
+
 * Tue Apr 03 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt1
 - 1.0.0
 
