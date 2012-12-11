@@ -1,11 +1,12 @@
 Name: installer
-Version: 1.8.4
+Version: 1.8.5
 Release: alt1
 
 Summary: Installer common parts
 License: GPLv2+
 Group: System/Configuration/Other
 
+Url: http://www.altlinux.org/Installer
 Source: %name-%version.tar
 
 BuildRequires: glibc-devel-static
@@ -104,6 +105,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Dec 11 2012 Michael Shigorin <mike@altlinux.org> 1.8.5-alt1
+- 10-fstab script merged into install2-remount-functions either
+- added an Url:
+
 * Tue Dec 11 2012 Michael Shigorin <mike@altlinux.org> 1.8.4-alt1
 - 11-remount script moved to become install2-remount-functions
   (to be included in alterator-preinstall and used just in time)
