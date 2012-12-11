@@ -1,6 +1,6 @@
 Name: asterisk10
 Summary: Open source PBX
-Version: 10.10.0
+Version: 10.11.0
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -1202,6 +1202,9 @@ mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk
 %_altdir/conf2ael-%version
 
 %changelog
+* Tue Dec 11 2012 Denis Smirnov <mithraen@altlinux.ru> 10.11.0-alt1
+- 10.11.0
+
 * Sun Nov 11 2012 Denis Smirnov <mithraen@altlinux.ru> 10.10.0-alt1
 - 10.10.0
 
