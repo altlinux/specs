@@ -1,11 +1,10 @@
-%define perl_bootstrap 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl-base perl-devel perl-podlators perl-File-Find-Rule-Perl
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(Perl/MinimumVersion/Reason.pm) perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Perl-MinimumVersion
 Version:        1.28
-Release:        alt2_8
+Release:        alt3_8
 Summary:        Find a minimum required version of perl for Perl code
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -65,6 +64,9 @@ make test
 %{_mandir}/man1/*
 
 %changelog
+* Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.28-alt3_8
+- no bootstrap
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.28-alt2_8
 - moved to Sisyphus (bootstrap)
 
