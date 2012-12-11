@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.2
-Release: alt6.svn20121102
+Release: alt7.svn20121102
 Source: %name-%version.tar
 License: GPL
 Group: Development/Other
@@ -106,6 +106,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt7.svn20121102
+- Set CONFIG_SYSTEM_LIBS as variable for add libraries during linking
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt6.svn20121102
 - More tuning
 
