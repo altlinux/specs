@@ -1,6 +1,6 @@
 Name: balsa
 Version: 2.4.90
-Release: alt1.git.18.g76680d4
+Release: alt2.git.18.g76680d4
 
 Summary: Balsa Mail Client
 Summary(ru_RU.UTF-8): Графический почтовый клиент Balsa
@@ -114,6 +114,9 @@ xz ChangeLog ||:
 %_iconsdir/hicolor/48x48/mimetypes/*
 
 %changelog
+* Tue Dec 11 2012 Alexey Shabalin <shaba@altlinux.ru> 2.4.90-alt2.git.18.g76680d4
+- rebuild with gmime-2.6
+
 * Fri Apr 20 2012 Ildar Mulyukov <ildar@altlinux.ru> 2.4.90-alt1.git.18.g76680d4
 - new version
 
