@@ -4,7 +4,7 @@
 Summary: The PHP5 scripting language
 Name:	 %php5_name
 Version: %php5_version
-Release: %php5_release
+Release: %php5_release.1
 License: PHP
 Group:	 Development/Other
 
@@ -17,7 +17,6 @@ Source5: php.rpm.macros.standalone
 Patch1: php-version.patch
 Patch2: php-cli-build.patch
 Patch3: php-shared-1.patch
-Patch4: php-remove-sendmail.patch
 Patch5: php-4.0.0-init.patch
 Patch6: php-test-pcntl.patch
 Patch9: php-5.3.3-sapi-scandir.patch
@@ -130,7 +129,6 @@ in use by other PHP5-related packages.
 %patch1 -p2
 %patch2 -p2
 %patch3 -p1
-%patch4 -p1
 %patch5 -p1
 %patch6 -p1
 %patch9 -p1 -b .scandir
@@ -328,6 +326,9 @@ chrpath -d %buildroot%_bindir/phpinfo-%_php5_version
 %doc tests run-tests.php 
 
 %changelog
+* Tue Dec 11 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1.1
+- fixed sendmail path (closes: #28169)
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 5.3.18.20121017-alt1
 - new version
 
