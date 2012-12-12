@@ -2,7 +2,7 @@
 
 Name: gnustep-back    
 Version: 0.23.0
-Release: alt2.svn20121126
+Release: alt3.svn20121126
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Development/Objective-C
@@ -34,7 +34,7 @@ windowing environments). This package includes development headers too.
 	--enable-graphics=cairo \
 	--with-tiff-library \
 	--with-x \
-	-with-installation-domain=SYSTEM
+	--with-installation-domain=SYSTEM
 
 %ifarch x86_64
 sed -i 's|i586|x86_64|g' $(find ./ -type f)
@@ -71,6 +71,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt3.svn20121126
+- Rebuilt with fixed gnustep-make
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt2.svn20121126
 - Built with /proc support
 
