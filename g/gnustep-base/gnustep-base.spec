@@ -1,6 +1,6 @@
 Name: gnustep-base
 Version: 1.24.2
-Release: alt2.svn20121208
+Release: alt3.svn20121208
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -60,6 +60,7 @@ cp -fR Headers/ObjectiveC2/objc Headers/ObjectiveC2/objc2
 
 %add_optflags $(pkg-config --cflags libffi) -D__GNUSTEP_RUNTIME__
 export CPPFLAGS="%optflags"
+export CC=gcc
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -124,6 +125,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt3.svn20121208
+- Rebuilt with fixed gnustep-make
+
 * Mon Dec 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt2.svn20121208
 - Compressed ChangeLogs
 - Moved shared libraries into separate package
