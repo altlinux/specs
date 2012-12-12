@@ -2,7 +2,7 @@
 
 Name: gnustep-gui
 Version: 0.23.0
-Release: alt2.svn20121209
+Release: alt3.svn20121209
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -138,6 +138,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt3.svn20121209
+- Rebuilt with fixed gnustep-make
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt2.svn20121209
 - Built with /proc support
 
