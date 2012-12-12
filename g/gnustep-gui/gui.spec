@@ -2,7 +2,7 @@
 
 Name: gnustep-gui
 Version: 0.23.0
-Release: alt3.svn20121209
+Release: alt4.svn20121209
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -51,6 +51,7 @@ Summary: Header files for the gnustep-gui package
 Group: Development/Objective-C
 Requires: gnustep-base-devel
 Requires: lib%name = %version-%release
+Requires: %name = %version-%release
 
 %description devel
 The GNUstep GUI library is a library of graphical user interface classes
@@ -138,6 +139,9 @@ rm -fR %buildroot%_infodir
 %_docdir/GNUstep
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt4.svn20121209
+- Added requirement %name-devel on %name
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt3.svn20121209
 - Rebuilt with fixed gnustep-make
 
