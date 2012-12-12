@@ -1,7 +1,7 @@
 %define _name gupnp-dlna
 
 Name: libgupnp-dlna
-Version: 0.6.6
+Version: 0.7.0
 Release: alt1
 Summary: A collection of helpers for building UPnP AV applications
 
@@ -11,10 +11,12 @@ Url: http://www.gupnp.org/
 Source: http://ftp.gnome.org/pub/GNOME/sources/gupnp-dlna/0.6/%name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: glib2-devel libgio-devel
-BuildRequires: gstreamer-devel >= 0.10.29.2
-BuildRequires: gst-plugins-devel >= 0.10.32
-BuildRequires: gobject-introspection-devel gstreamer-gir-devel gst-plugins-gir-devel
+BuildRequires: glib2-devel >= 2.32 libgio-devel
+BuildRequires: pkgconfig(gstreamer-1.0) >= 1.0
+BuildRequires: pkgconfig(gstreamer-pbutils-1.0) >= 1.0
+BuildRequires: gobject-introspection-devel libgstreamer1.0-gir-devel gst-plugins1.0-gir-devel
+BuildRequires: vala-tools rpm-build-vala libvala-devel
+BuildRequires: vapi(gupnp-1.0) vapi(libxml-2.0) vapi(gstreamer-pbutils-1.0) vapi(gstreamer-1.0) vapi(gstreamer-base-1.0) vapi(gstreamer-video-1.0)
 BuildRequires: libxml2-devel >= 2.5.0
 BuildRequires: gtk-doc
 
@@ -66,7 +68,7 @@ Contains developer documentation for %_name.
 %patch -p1
 
 %build
-./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static --enable-gtk-doc
 %make_build
 
@@ -78,12 +80,14 @@ Contains developer documentation for %_name.
 %doc AUTHORS COPYING README TODO
 %_bindir/*
 %_libdir/lib*.so.*
-%_datadir/%_name
+%_datadir/%{_name}*
 
 %files devel
 %_libdir/lib*.so
 %_pkgconfigdir/*.pc
 %_includedir/*
+%_vapidir/*.deps
+%_vapidir/*.vapi
 
 %files gir
 %_typelibdir/*.typelib
@@ -95,6 +99,9 @@ Contains developer documentation for %_name.
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Dec 12 2012 Alexey Shabalin <shaba@altlinux.ru> 0.7.0-alt1
+- 0.7.0
+
 * Fri Apr 06 2012 Alexey Shabalin <shaba@altlinux.ru> 0.6.6-alt1
 - 0.6.6
 
