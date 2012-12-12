@@ -1,6 +1,6 @@
 Name: gnustep-charsets
 Version: r29248
-Release: alt2.svn20100109
+Release: alt3.svn20100109
 Summary: Utilities for use with NSCharacterSet bitmap files
 License: LGPLv2+
 Group: Development/Tools
@@ -50,6 +50,9 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 %_bindir/*
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt3.svn20100109
+- Rebuilt with fixed gnustep-make
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt2.svn20100109
 - Rebuilt with /proc support
 

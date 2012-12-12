@@ -1,6 +1,6 @@
 Name: gnustep-xcode
 Version: 0.1
-Release: alt2.svn20121015
+Release: alt3.svn20121015
 Summary: The XCLib framework is used to parse and process xcodeproj files
 License: GPL
 Group: Development/Objective-C
@@ -67,6 +67,9 @@ This package contains development files of XCLib framework.
 %_libdir/*.so
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt3.svn20121015
+- Rebuilt with fixed gnustep-make
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt2.svn20121015
 - Built with /proc support
 

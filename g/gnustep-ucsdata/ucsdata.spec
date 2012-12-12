@@ -1,6 +1,6 @@
 Name: gnustep-ucsdata
 Version: r31318
-Release: alt2.svn20100910
+Release: alt3.svn20100910
 Summary: The GNUstep Unicode Character Set Data Library
 License: LGPLv2+
 Group: Development/Tools
@@ -74,6 +74,9 @@ install -p -m644 %SOURCE1 %buildroot%_libdir/GNUstep/Libraries/Unicode/
 %_libdir/*.so
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt3.svn20100910
+- Rebuilt with fixed gnustep-make
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r31318-alt2.svn20100910
 - Built with /proc support
 
