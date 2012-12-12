@@ -1,11 +1,10 @@
 Name: gnustep-make
 Version: 2.6.2
-Release: alt10.svn20121102
-Source: %name-%version.tar
-License: GPL
+Release: alt11.svn20121102
+Source: %name-%version-%release.tar
+License: GPLv3+
 Group: Development/Other
 Summary: GNUstep Makefile package
-Packager: Sergey Alembekov <rt@altlinux.ru>
 Url: http://www.gnustep.org/
 
 BuildRequires: gcc-objc libgnustep-objc2-devel star
@@ -13,9 +12,9 @@ Requires: gnustep-dirs
 
 %description
 This package contains the basic scripts, makefiles and directory
-layout needed to run and compile any GNUstep software.  This package
-was configured using flattened mode using the system
-GNUstep filesystem layout
+layout needed to run and compile any GNUstep software.
+This package was configured using flattened mode using the system
+GNUstep filesystem layout.
 
 %package devel
 Summary: Files needed to develop applications with gnustep-make
@@ -33,7 +32,7 @@ cross-compiled binaries.
 
 
 %prep
-%setup
+%setup -n %name-%version-%release
 
 %ifarch x86_64
 LIB_SUFF=64
@@ -41,6 +40,7 @@ LIB_SUFF=64
 sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
 
 %build
+export CC=gcc CXX=g++ CPP='gcc -E'
 %autoreconf
 %configure \
 	--libexecdir=%_libdir \
@@ -49,8 +49,12 @@ sed -i "s|@64@|$LIB_SUFF|g" FilesystemLayouts/fhs-system-alt
 
 %install
 sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
-
 %makeinstall_std
+
+if grep -Fle %_target_cpu $(find %buildroot -type f -not -name config.guess -not -name config.sub); then
+       echo >&2 %buildroot is dirty
+       exit 1
+fi
 
 #install -d %buildroot/etc/profile.d
 
@@ -67,14 +71,6 @@ sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
 
 #find %buildroot%_datadir/GNUstep/Makefiles/Instance/Documentation \
 #        -type f ! -name '*.html' ! -name '*.css' ! -name '*.gz' | xargs gzip -9nf 
-
-%ifarch x86_64
-sed -i 's|i586|x86_64|g' $(find %buildroot -type f)
-sed -i 's|i686|x86_64|g' $(find %buildroot -type f)
-%endif
-sed -i 's|[0-9a-z_]*-alt-linux-gcc|gcc|g' $(find %buildroot -type f)
-sed -i 's|\-march=[0-9a-z_]*||g' $(find %buildroot -type f)
-sed -i 's|\-mtune=[0-9a-z_]*||g' $(find %buildroot -type f)
 
 gzip ChangeLog
 
@@ -106,6 +102,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt11.svn20121102
+- Applied patch from ldv@ with fix for x86_64
+
 * Tue Dec 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt10.svn20121102
 - Removed -march & -mtune flags
 
