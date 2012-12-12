@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 3
 %define _pl p332
 Version: %branch.%ver_teeny
-Release: alt3
+Release: alt4
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -36,7 +36,7 @@ BuildRequires: doxygen groff-base libdb4-devel libffi-devel
 BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
 BuildRequires: tk-devel zlib-devel
 BuildRequires: ruby ruby-stdlibs
-BuildRequires: rpm-build-ruby >= 0.1.2
+BuildRequires: rpm-build-ruby >= 1:0.1.2
 %{?_with_valgrind:BuildRequires: valgrind-devel}
 
 %description
@@ -179,6 +179,8 @@ irb is the REPL(read-eval&print loop) environment for Ruby programs.
 Summary: Ruby HTML documentatin
 Group: Development/Documentation
 BuildArch: noarch
+AutoReq: no
+AutoProv: no
 
 %description doc-html
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -192,6 +194,8 @@ This package contains Ruby documentation in HTML format.
 Summary: Ruby ri documentatin
 Group: Development/Documentation
 BuildArch: noarch
+AutoReq: no
+AutoProv: no
 Requires: ri
 
 %description doc-ri
@@ -219,6 +223,7 @@ sed -i 's|/\$(ruby_version)||g;s|\(/%name/\)#{version}/|\1|g' tool/mkconfig.rb
 sed -i 's|/\${ruby_version}||' template/%name.pc.in
 sed -i -r "s/File.join[[:blank:]]+(RbConfig::CONFIG\['ridir'\]),[[:blank:]]*version/\1/" lib/rdoc/ri/paths.rb
 sed -i -r "/ridatadir[[:blank:]]*=/s/[[:blank:]]+CONFIG\['ruby_version'\],//" tool/rbinstall.rb
+sed -i 's|[[:blank:]]*"/"RUBY_LIB_VERSION$||' version.c
 
 
 %build
@@ -341,6 +346,10 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Wed Dec 12 2012 Led <led@altlinux.ru> 1.9.3-alt4
+- fixed ruby libpath
+- fixed BuildRequires
+
 * Tue Dec 11 2012 Led <led@altlinux.ru> 1.9.3-alt3
 - %%name-stdlibs: fixed Provides
 - fixed requires
