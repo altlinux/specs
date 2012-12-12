@@ -3,7 +3,7 @@ BuildRequires(pre): rpm-macros-fedora-compat
 # END SourceDeps(oneline)
 Name:           sugar-infoslicer
 Version:        15
-Release:        alt1_3
+Release:        alt2_3
 Summary:        Downloader for articles from Wikipedia
 
 Group:          Graphical desktop/Sugar
@@ -19,7 +19,7 @@ BuildRequires:  sugar-toolkit
 
 Requires:       sugar
 Source44: import.info
-BuildRequires: rpmbuild-helper-sugar-activity
+Requires: python-module-BeautifulSoup
 
 
 %description
@@ -48,6 +48,9 @@ python ./setup.py install --prefix=%{buildroot}/%{_prefix}
 
 
 %changelog
+* Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 15-alt2_3
+- bugfix (added python-BeautifulSoup dep)
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 15-alt1_3
 - new version; import from fc18
 
