@@ -1,6 +1,6 @@
 Name:           etoys
 Version:        5.0.2408
-Release:        alt1_2
+Release:        alt2_2
 Summary:        A media-rich model, game, and simulation construction kit and authoring tool
 
 Group:          Games/Educational
@@ -24,6 +24,8 @@ Requires:       shared-mime-info
 
 %define localebug 1
 Source44: import.info
+Provides: sugar-etoys-activity = 116
+Obsoletes: sugar-etoys-activity < 116
 
 %description
 Squeak Etoys was inspired by LOGO, PARC-Smalltalk, Hypercard, and starLOGO. It 
@@ -121,6 +123,9 @@ mkdir -p %buildroot%_datadir/%name/fonts
 %{_datadir}/sugar/activities/*
 
 %changelog
+* Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 5.0.2408-alt2_2
+- added obsoletes on sugar-etoys-activity
+
 * Thu Nov 29 2012 Igor Vlasenko <viy@altlinux.ru> 5.0.2408-alt1_2
 - use F19 import base
 
