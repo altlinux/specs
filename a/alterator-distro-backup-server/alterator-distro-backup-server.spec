@@ -1,5 +1,5 @@
 Name: alterator-distro-backup-server
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Source:%name-%version.tar
@@ -56,6 +56,10 @@ cp -a logs %buildroot%_sysconfdir/alterator/
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Dec 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt1
+- use 'insert' statement instead of 'grant' due to grant not working
+  in --skip-grant-tables mode
+
 * Wed May 23 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt1
 - use MySQL-server-control for password setting
 
