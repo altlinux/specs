@@ -1,6 +1,6 @@
 Name: readahead
 Version: 1.5.6
-Release: alt1
+Release: alt1.1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -37,6 +37,7 @@ boot process.
 %build
 ./autogen.sh
 %configure --sbindir=/sbin
+sed -i 's|^dnl|#|' scripts/Makefile
 %make_build
 # To convert list from arch independent to arch specific format.
 # Commented for now as default lists does not need this rebuild.
@@ -71,6 +72,9 @@ install -d %buildroot/var/lib/readahead
 /sbin/*
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.6-alt1.1
+- Fixed build
+
 * Tue Oct 12 2010 Victor Forsiuk <force@altlinux.org> 1.5.6-alt1
 - 1.5.6
 - Fix init-scripts, they expect executable in wrong directory (closes: #24275).
