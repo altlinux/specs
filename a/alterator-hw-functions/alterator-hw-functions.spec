@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-hw-functions
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
@@ -24,6 +24,9 @@ install -Dpm644 %SOURCE1 %buildroot%_bindir/%name
 %_bindir/*
 
 %changelog
+* Wed Dec 12 2012 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
+- Sort netdev_list() output (closes: #28119).
+
 * Thu Nov 22 2012 Mikhail Efremov <sem@altlinux.org> 0.7.1-alt1
 - Mark netdev_read_ip as deprecated.
 - netdev_is_wireless: Try to use iw.
