@@ -1,6 +1,6 @@
 Name: scim-hangul
 Version: 0.3.2
-Release: alt1
+Release: alt1.1
 
 License: GPLv3
 Url: http://www.scim-im.org/
@@ -9,6 +9,7 @@ Packager: Ilya Mashkin <oddity@altlinux.ru>
 BuildRequires: scim-devel >= 1.2.0 libhangul-devel gcc-c++
 Source0: http://downloads.sourceforge.net/scim/%name-%version.tar.gz
 Patch0: scim-hangul-0.3.2.gcc43.patch
+Patch1: scim-hangul-0.3.2-alt-glibc-2.16.patch
 
 Summary: Hangul Input Method Engine for SCIM
 Group: System/Libraries
@@ -20,6 +21,7 @@ Scim-hangul is a SCIM IMEngine module for Korean (Hangul) input support.
 %prep
 %setup -q -n %name-%version
 %patch0 -p1 -b .gcc43
+%patch1 -p2
 
 %build
 %configure --disable-static
@@ -40,6 +42,9 @@ rm $RPM_BUILD_ROOT%_libdir/scim-1.0/*/{IMEngine,SetupUI}/hangul*.la
 %_datadir/scim/hangul
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.1
+- Fixed build with glibc 2.16
+
 * Sun Jan 02 2011 Ilya Mashkin <oddity@altlinux.ru> 0.3.2-alt1
 - Build for ALT Linux
 
