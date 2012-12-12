@@ -1,6 +1,6 @@
 Name: PDFKit
 Version: 0.9.2
-Release: alt1
+Release: alt2
 Summary: A Framework for accessing and rendering PDF content
 License: GPLv2 only
 Group: File tools
@@ -61,6 +61,15 @@ export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+pushd %buildroot%_libdir
+for i in *.so*; do
+	rm -f $i
+	mv GNUstep/Frameworks/PDFKit.framework/Versions/Current/$i ./
+	ln -s %_libdir/$i \
+		GNUstep/Frameworks/PDFKit.framework/Versions/Current/
+done
+popd
+
 %files
 %doc Documentation/*
 %_libdir/GNUstep
@@ -73,6 +82,9 @@ export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 %_libdir/*.so
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt2
+- Moved shared libraries into %_libdir
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1
 - Initial build for Sisyphus
 
