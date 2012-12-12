@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Catalyst/Helper.pm) perl(Class/Accessor.pm) perl(Class/MOP/Object.pm) perl(Config.pm) perl(Devel/InnerPackage.pm) perl(Encode.pm) perl(Errno.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IO/Socket.pm) perl(IPC/Open3.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Pluggable/Object.pm) perl(Moose/Meta/Class.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/MethodAttributes.pm) perl(MooseX/Role/Parameterized.pm) perl(MooseX/Types/Moose.pm) perl(Path/Class/Dir.pm) perl(Path/Class/File.pm) perl(Plack/Loader.pm) perl(Plack/Middleware/Conditional.pm) perl(Plack/Middleware/IIS6ScriptNameFix.pm) perl(Plack/Middleware/IIS7KeepAliveFix.pm) perl(Plack/Middleware/LighttpdScriptNameFix.pm) perl(Plack/Test.pm) perl(Pod/Usage.pm) perl(Term/Size/Any.pm) perl(Tree/Simple/Visitor/FindByUID.pm) perl(URI/QueryParam.pm) perl(URI/http.pm) perl(URI/https.pm) perl(attributes.pm) perl(mro.pm) perl(overload.pm) perl-devel perl-pod perl-podlators perldoc
+BuildRequires: perl(Catalyst/Helper.pm) perl(Class/Accessor.pm) perl(Class/MOP/Object.pm) perl(Config.pm) perl(Devel/InnerPackage.pm) perl(Encode.pm) perl(Errno.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(File/Spec/Unix.pm) perl(FindBin.pm) perl(IO/File.pm) perl(IO/Handle.pm) perl(IO/Socket.pm) perl(IPC/Open3.pm) perl(LWP/Simple.pm) perl(List/Util.pm) perl(Module/Pluggable/Object.pm) perl(Moose/Meta/Class.pm) perl(Moose/Role.pm) perl(Moose/Util.pm) perl(Moose/Util/TypeConstraints.pm) perl(MooseX/MethodAttributes.pm) perl(MooseX/Role/Parameterized.pm) perl(Path/Class/Dir.pm) perl(Path/Class/File.pm) perl(Plack/Loader.pm) perl(Plack/Middleware/Conditional.pm) perl(Plack/Middleware/IIS6ScriptNameFix.pm) perl(Plack/Middleware/IIS7KeepAliveFix.pm) perl(Plack/Middleware/LighttpdScriptNameFix.pm) perl(Plack/Test.pm) perl(Pod/Usage.pm) perl(Term/Size/Any.pm) perl(Tree/Simple/Visitor/FindByUID.pm) perl(URI/QueryParam.pm) perl(URI/http.pm) perl(URI/https.pm) perl(attributes.pm) perl(overload.pm) perl-base perl-devel perl-pod perl-podlators perldoc
 # END SourceDeps(oneline)
 Name:           perl-Catalyst-Runtime
 Summary:        Catalyst Framework Runtime
-Version:        5.90018
+Version:        5.90019
 Release:        alt1_1
 License:        GPL+ or Artistic
 Group:          Development/Perl
-Source0:        http://search.cpan.org/CPAN/authors/id/J/JJ/JJNAPIORK/Catalyst-Runtime-%{version}.tar.gz
+Source0:        http://search.cpan.org/CPAN/authors/id/B/BO/BOBTFISH/Catalyst-Runtime-%{version}.tar.gz
 URL:            http://search.cpan.org/dist/Catalyst-Runtime/
 BuildArch:      noarch
 
@@ -40,9 +40,6 @@ BuildRequires:  perl(MooseX/Emulate/Class/Accessor/Fast.pm)
 BuildRequires:  perl(MooseX/Getopt.pm)
 BuildRequires:  perl(MooseX/MethodAttributes/Inheritable.pm)
 BuildRequires:  perl(MooseX/Role/WithOverloading.pm)
-BuildRequires:  perl(MooseX/Types.pm)
-BuildRequires:  perl(MooseX/Types/Common/Numeric.pm)
-BuildRequires:  perl(MooseX/Types/LoadableClass.pm)
 BuildRequires:  perl(MRO/Compat.pm)
 BuildRequires:  perl(namespace/autoclean.pm)
 BuildRequires:  perl(namespace/clean.pm)
@@ -97,8 +94,6 @@ Requires:       perl(MooseX/Emulate/Class/Accessor/Fast.pm) >= 0.009.030
 Requires:       perl(MooseX/Getopt.pm) >= 0.30
 Requires:       perl(MooseX/MethodAttributes/Inheritable.pm) >= 0.24
 Requires:       perl(MooseX/Role/WithOverloading.pm) >= 0.09
-Requires:       perl(MooseX/Types.pm)
-Requires:       perl(MooseX/Types/LoadableClass.pm) >= 0.003
 Requires:       perl(namespace/autoclean.pm) >= 0.09
 Requires:       perl(namespace/clean.pm) >= 0.23
 Requires:       perl(Path/Class.pm) >= 0.09
@@ -130,8 +125,8 @@ Requires:       %{name} = %{version}-%{release}
 
 %description    scripts
 
-The %{name}-scripts package contains scripts distributed with
-%{name} but generally used for developing Catalyst applications.
+The %%{name}-scripts package contains scripts distributed with
+%%{name} but generally used for developing Catalyst applications.
 
 
 %prep
@@ -183,6 +178,9 @@ make clean
 %{_mandir}/man1/*
 
 %changelog
+* Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 5.90019-alt1_1
+- update to new release by fcimport
+
 * Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 5.90018-alt1_1
 - fixed build by version update
 
