@@ -1,5 +1,5 @@
 Name: installer-feature-centaurus-profiles
-Version: 0.5
+Version: 0.6
 Release: alt1
 
 Summary: Setups package groups from selected vm-profile
@@ -24,6 +24,10 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Wed Dec 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt1
+- use centaurus-mate instead of centaurus-gnome
+- remove kernel setup
+
 * Fri Feb 11 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.5-alt1
 - kernel setup added: el-smp for server, std-def for desktop
   and both for custom
