@@ -1,6 +1,6 @@
 Name: scim-fcitx
 Version: 3.1.1
-Release: alt1
+Release: alt1.1
 Summary: FCITX Input Method Engine for SCIM
 
 Group: System/Libraries
@@ -13,6 +13,7 @@ BuildRequires: scim-devel gcc-c++
 Requires: scim
 
 Patch0: scim-fcitx-3.1.1-gcc43.patch
+Patch1: scim-fcitx-3.1.1-alt-glibc-2.16.patch
 
 %description
 scim-fcitx is a port of the fcitx Chinese input method for the SCIM input
@@ -28,6 +29,7 @@ This package contains input table tools from fcitx.
 %prep
 %setup -q -n fcitx
 %patch0 -p1 -b .1-gcc43
+%patch1 -p2
 
 %build
 %configure --disable-static
@@ -49,6 +51,9 @@ rm $RPM_BUILD_ROOT/%_libdir/scim-1.0/*/IMEngine/fcitx.la
 %_bindir/*
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.1-alt1.1
+- Fixed build with glibc 2.16
+
 * Tue Dec 21 2010 Ilya Mashkin <oddity@altlinux.ru> 3.1.1-alt1
 - Build for ALT Linux
 
