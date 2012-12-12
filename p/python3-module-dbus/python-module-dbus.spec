@@ -1,19 +1,23 @@
 Name: python3-module-dbus
-Version: 1.0.0
-Release: alt2
+Version: 1.1.1
+Release: alt3
 
 Summary: Python 3 bindings for D-BUS library
 License: AFL/GPL
 Group: Development/Python3
 Url: http://www.freedesktop.org/wiki/Software/DBusBindings
 
-Source: http://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
-Patch: dbus-python-1.0.0-alt-link.patch
+Source: dbus-python-%version.tar
+#Source: http://dbus.freedesktop.org/releases/dbus-python/dbus-python-%version.tar.gz
+Patch: dbus-python-1.1.1-1-alt-link.patch
+Patch2: dbus-python-1.1.1-alt-usc4-impaired-python-hack2-around.patch
 
 Requires: dbus
 
 BuildRequires(pre): rpm-build-python3
-BuildRequires: libdbus-glib-devel python3-devel
+BuildRequires: libdbus-glib-devel python3-devel python-tools-2to3
+BuildRequires: libdbus-devel >= 1.6 libdbus-glib-devel
+BuildRequires: /proc dbus-tools dbus-tools-gui python-module-pygobject3 glibc-i18ndata
 
 %description
 D-Bus python bindings for use with python programs.
@@ -31,6 +35,7 @@ Development package.
 %prep
 %setup -q -n dbus-python-%version
 %patch -p1
+%patch2 -p1
 
 %build
 # Install python code into arch-specific dir for PyQt4 (ALT#23134)
@@ -40,16 +45,19 @@ export PYTHON_LIBS="$(python3-config --libs)"
 
 %autoreconf
 %configure
-sed -i \
-	's|^\(_dbus_bindings_la_LIBADD\).*|\1 =|' \
-	_dbus_bindings/Makefile
-sed -i \
-	's|^\(_dbus_glib_bindings_la_LIBADD\).*|\1 =|' \
-	_dbus_glib_bindings/Makefile
+#sed -i \
+#	's|^\(_dbus_bindings_la_LIBADD\).*|\1 =|' \
+#	_dbus_bindings/Makefile
+#sed -i \
+#  's|^\(_dbus_glib_bindings_la_LIBADD\).*|\1 =|' \
+#  _dbus_glib_bindings/Makefile
 %make_build
 
 %install
 %makeinstall_std
+
+#check
+#make check
 
 %files
 %python3_sitelibdir/*.so
@@ -57,7 +65,7 @@ sed -i \
 %doc AUTHORS COPYING NEWS
 
 %files devel
-%doc doc/*.txt TODO
+%doc doc/*.txt
 %_includedir/dbus-1.0/dbus/dbus-python.h
 %_pkgconfigdir/dbus-python.pc
 
@@ -65,6 +73,17 @@ sed -i \
 %exclude %_docdir/dbus-python
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt3
+- Built for Python 3
+
+* Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.1-alt2
+- fix for our usc4-impaired python 2.7 build as patch2
+  thanks to vsu@ and ldv@. (closes: #28202)
+
+* Sat Dec 08 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.1-alt1
+- after 1.1.1 snapshot (c57c4d28)
+- %%check section
+
 * Sun May 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2
 - Built for Python 3
 
