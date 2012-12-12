@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(FindBin.pm) perl(sigtrap.pm)
+BuildRequires: gcc-c++ libglibmm-devel perl(FindBin.pm) perl(sigtrap.pm)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name: libhugetlbfs
-Version: 2.13
-Release: alt1_2
+Version: 2.15
+Release: alt1_1
 Summary: A library which provides easy access to huge pages of memory
 
 Group: System/Libraries
 License: LGPLv2+
 URL: http://libhugetlbfs.sourceforge.net/
 Source0: http://downloads.sourceforge.net/libhugetlbfs/%{name}-%{version}.tar.gz
-Patch0: libhugetlbfs-2.13-s390x-build.patch
+#Patch0: libhugetlbfs-2.13-s390x-build.patch
 BuildRequires: glibc-devel
 BuildRequires: glibc-devel-static
 Conflicts: kernel < 2.6.16
@@ -30,14 +30,14 @@ modifications to load BSS or BSS, data, and text segments into large pages.
 %package devel
 Summary:	Header files for libhugetlbfs
 Group:		Development/C
-Requires:	libhugetlbfs = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 %description devel
 Contains header files for building with libhugetlbfs.
 
 %package utils
 Summary:	Userspace utilities for configuring the hugepage environment
 Group:		File tools
-Requires:	libhugetlbfs = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 %description utils
 This packages contains a number of utilities that will help administrate the
 use of huge pages on your system.  hugeedit modifies binaries to set default
@@ -47,7 +47,7 @@ pool size control. pagesize lists page sizes available on the machine.
 
 %prep
 %setup -q -n %{name}-%{version}
-%patch0 -p1 -b .s390x-build
+#%patch0 -p1 -b .s390x-build
 
 %build
 # Parallel builds are not reliable
@@ -77,9 +77,15 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %{_mandir}/man3/getpagesizes.3.*
 %{_mandir}/man3/free_huge_pages.3.*
 %{_mandir}/man3/get_huge_pages.3.*
+%{_mandir}/man3/gethugepagesize.3.*
 %{_mandir}/man3/gethugepagesizes.3.*
 %{_mandir}/man3/free_hugepage_region.3.*
 %{_mandir}/man3/get_hugepage_region.3.*
+%{_mandir}/man3/hugetlbfs_find_path.3.*
+%{_mandir}/man3/hugetlbfs_find_path_for_size.3.*
+%{_mandir}/man3/hugetlbfs_test_path.3.*
+%{_mandir}/man3/hugetlbfs_unlinked_fd.3.*
+%{_mandir}/man3/hugetlbfs_unlinked_fd_for_size.3.*
 
 %files utils
 %{_bindir}/hugeedit
@@ -94,10 +100,14 @@ rm -fr $RPM_BUILD_ROOT/%{_sbindir}/
 %{_mandir}/man8/hugectl.8.*
 %{_mandir}/man8/hugeadm.8.*
 %{_mandir}/man1/pagesize.1.*
+%{_mandir}/man1/ld.hugetlbfs.1.*
 %exclude %{_mandir}/man8/cpupcstat.8.gz
 %exclude /usr/lib/perl5/TLBC
 
 %changelog
+* Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 2.15-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_2
 - update to new release by fcimport
 
