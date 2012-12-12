@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.6.1
-Release: alt2.svn20121115
+Release: alt3.svn20121115
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -97,6 +97,9 @@ mv %buildroot%_includedir/objc %buildroot%_includedir/objc2
 %_libdir/*.so
 
 %changelog
+* Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt3.svn20121115
+- Rebuilt with fixed gnustep-make
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt2.svn20121115
 - Applied patch only for i586
 
