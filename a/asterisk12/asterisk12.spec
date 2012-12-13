@@ -1,11 +1,11 @@
-%define svn_revision 377476
+%define svn_revision 378005
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
 Release: alt0.%svn_revision
 License: GPL
 Group: System/Servers
-BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
+BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel libuuid-devel
 BuildRequires: libtiff-devel
 BuildRequires: libiksemel-devel
 BuildRequires: libradiusclient-ng-devel
@@ -64,7 +64,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 377476
+%define svn_revision 378005
 %add_verify_elf_skiplist %_libdir/libasteriskssl*
 %def_with debug
 %def_enable debug
@@ -1221,6 +1221,9 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl.so.1
 
 %changelog
+* Fri Dec 14 2012 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.378005
+- update from svn revision 378005
+
 * Sun Dec 09 2012 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.377476
 - update from svn revision 377476
 
