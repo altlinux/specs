@@ -7,11 +7,11 @@
 
 %define rname kdebase
 %define major 4
-%define minor 9
-%define bugfix 4
+%define minor 10
+%define bugfix 0
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -609,6 +609,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Thu Dec 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
 

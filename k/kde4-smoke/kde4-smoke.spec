@@ -2,8 +2,8 @@
 
 %define rname smokekde
 Name: kde4-smoke
-Version: 4.9.1
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: Development/KDE and QT
 Summary: Bindings for KDE libraries
@@ -14,6 +14,7 @@ License: LGPLv2+
 
 Source: %rname-%version.tar
 Source1: FindOkular.cmake
+Source2: FindAkonadi.cmake
 Patch1: smokekde-4.7.1-alt-find-okular.patch
 
 BuildRequires: cmake gcc-c++ phonon-devel smokegen-devel smokeqt-devel kde4base-workspace-devel
@@ -313,6 +314,7 @@ Qt generic bindings library.
 %patch1 -p1
 mkdir -p cmake/modules/
 cp -ar %SOURCE1 cmake/modules/
+cp -ar %SOURCE2 cmake/modules/
 
 
 %build
@@ -377,6 +379,12 @@ NPROCS=1 %K4make
 
 
 %changelog
+* Fri Dec 14 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
+* Fri Dec 14 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt2
+- rebuilt with new okular
+
 * Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 

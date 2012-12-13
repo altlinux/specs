@@ -2,8 +2,8 @@
 
 %define rname gwenview
 Name: kde4-gwenview
-Version: 4.9.3
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: Graphics
 Summary: KDE support for digital cameras
@@ -14,13 +14,12 @@ Provides: kde4graphics-gwenview = %version-%release
 Obsoletes: kde4graphics-gwenview < %version-%release
 
 Source: %rname-%version.tar
-Patch1: gwenview-4.9.1-alt-fix-compile.patch
 
 # Automatically added by buildreq on Mon Sep 12 2011 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base ruby shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: gcc-c++ glib2-devel kde4base-devel libexiv2-devel libjpeg-devel libkipi4-devel libqt3-devel rpm-build-ruby soprano zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4base-devel libexiv2-devel libjpeg-devel libkipi4-devel zlib-devel kde-common-devel
-BuildRequires: kde4-nepomuk-core-devel
+BuildRequires: kde4-nepomuk-core-devel kde4-kactivities-devel liblcms2-devel
 BuildRequires: soprano soprano-backend-redland
 
 %description
@@ -41,7 +40,6 @@ KDE 4 core library.
 
 %prep
 %setup -qn %rname-%version
-%patch1 -p1
 
 %build
 %K4build
@@ -75,6 +73,9 @@ KDE 4 core library.
 
 
 %changelog
+* Wed Dec 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Mon Nov 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 

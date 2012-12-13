@@ -2,8 +2,8 @@
 
 %define rname kgamma
 Name: kde4-kgamma
-Version: 4.9.3
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: Color profiling
@@ -56,6 +56,9 @@ Development files for %name
 
 
 %changelog
+* Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Mon Nov 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 

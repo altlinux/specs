@@ -15,11 +15,11 @@
 
 %define rname kdepim
 %define major 4
-%define minor 9
-%define bugfix 4
+%define minor 10
+%define bugfix 0
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -72,7 +72,7 @@ Patch104: kdepim-4.7.2-alt-migration.patch
 BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel prison-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel dblatex
-BuildRequires: kde4-pim-runtime-devel >= %version
+BuildRequires: kde4-nepomuk-widgets-devel kde4-pim-runtime-devel >= %version kde4-nepomuk-core-devel
 #BuildRequires: libindicate-qt-devel
 
 %if_enabled kitchensync
@@ -1024,6 +1024,13 @@ Requires: %name-common = %version-%release
 %description -n libtemplateparser4
 %name library
 
+%package -n libpimcommon4
+Summary: %name library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libpimcommon4
+%name library
+
 %package devel
 Summary: Devel stuff for %name
 Group: Development/KDE and QT
@@ -1064,6 +1071,7 @@ based on kdepim.
 %_K4bindir/kabc2mutt
 %_K4bindir/kabcclient
 %_K4bindir/konsolekalendar
+%_K4bindir/pimsettingexporter
 %_K4libdir/strigi/*
 %_K4xdg_apps/konsolekalendar.desktop
 #%_K4apps/konsolekalendar/
@@ -1084,6 +1092,7 @@ based on kdepim.
 %dir %_K4lib/imports/org
 %_K4lib/imports/org/kde
 %_K4apps/mobileui/
+%_K4apps/pimsettingexporter/
 
 %files kaddressbook-mobile
 %_K4bindir/kaddressbook-mobile
@@ -1346,9 +1355,6 @@ based on kdepim.
 #
 %_K4bindir/importwizard
 %_K4xdg_apps/importwizard.desktop
-#
-%_K4bindir/backupmail
-%_K4apps/backupmail/
 
 %files kmail-common
 %_K4lib/messageviewer_bodypartformatter_application_mstnef.so
@@ -1566,6 +1572,8 @@ based on kdepim.
 %_K4libdir/libmailcommon.so.*
 %files -n libtemplateparser4
 %_K4libdir/libtemplateparser.so.*
+%files -n libpimcommon4
+%_K4libdir/libpimcommon.so.*
 
 %files devel
 %_K4link/*.so
@@ -1577,6 +1585,9 @@ based on kdepim.
 
 
 %changelog
+* Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Thu Dec 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
 
