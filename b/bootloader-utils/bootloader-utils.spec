@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.17
+Version: 0.4.18
 Release: alt1
 
 Summary: Bootloader utilities
@@ -79,6 +79,9 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Thu Dec 13 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.18-alt1
+- lilo: fix regression introdused by 0.4.15-alt1
+
 * Thu Dec 06 2012 Dmitry V. Levin <ldv@altlinux.org> 0.4.17-alt1
 - kernel.filetrigger: added handling of kernel modules,
   obsoletes %%post_kernel_modules and %%postun_kernel_modules.
