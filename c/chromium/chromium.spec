@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.13.7.5
-%define rev 169798
+%define rev 171054
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        23.0.1271.95
+Version:        23.0.1271.97
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -435,6 +435,20 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Dec 12 2012 Andrey Cherepanov <cas@altlinux.org> 23.0.1271.97-alt1.r171054
+- New version 23.0.1271.97
+- Security fixes:
+  - High CVE-2012-5139: Use-after-free with visibility events.
+  - High CVE-2012-5140: Use-after-free in URL loader.
+  - Medium CVE-2012-5141: Limit Chromoting client plug-in instantiation.
+  - Critical CVE-2012-5142: Crash in history navigation.
+  - Medium CVE-2012-5143: Integer overflow in PPAPI image buffers.
+  - High CVE-2012-5144: Stack corruption in AAC decoding.
+- Fixes:
+  - Some texts in a Website Settings popup are trimmed
+  - <input> selection renders white text on white bg in apps
+  - some plugins stopped working
+
 * Fri Nov 30 2012 Andrey Cherepanov <cas@altlinux.org> 23.0.1271.95-alt1.r169798
 - New version 23.0.1271.95
 - Security fixes:
