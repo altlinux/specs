@@ -1,5 +1,5 @@
 Name: python-module-kivy
-Version: 1.4.1
+Version: 1.5.1
 Release: alt1
 Summary: Open source library for rapid development of applications
 License: LGPLv3
@@ -10,6 +10,7 @@ Group: Development/Python
 %setup_python_module kivy
 %add_python_req_skip AppKit
 %add_python_req_skip freenect
+%add_python_req_skip jnius
 
 # Automatically added by buildreq on Mon Jan 16 2012
 # optimized out: python-base python-devel python-module-BeautifulSoup python-module-Pygments python-module-SQLAlchemy python-module-distribute python-module-docutils python-module-genshi python-module-html5lib python-module-jinja2 python-module-jinja2-tests python-module-lxml python-module-protobuf python-module-simplejson python-module-whoosh python-modules python-modules-compiler python-modules-ctypes python-modules-email python-modules-encodings python-modules-logging python-modules-multiprocessing python-modules-unittest
@@ -34,13 +35,11 @@ sed -i '/glGetIntegerv(GL_VIEWPORT/s/[&]self/self/' kivy/graphics/fbo.pyx
 
 %build
 %python_build
-(
-cd doc
-export PYTHONPATH=`ls -d ../build/lib*`
-python autobuild.py
-export PYTHONPATH=$PYTHONPATH:../kivy/tools/highlight/pygments
-make html
-)
+cd doc &&
+export PYTHONPATH=`ls -d ../build/lib*` &&
+python autobuild.py &&
+export PYTHONPATH=$PYTHONPATH:../kivy/tools/highlight/pygments &&
+make html &&
 
 %install
 %python_install
@@ -53,6 +52,10 @@ make html
 %_datadir/kivy-examples
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 1.5.1-alt1
+- Autobuild version bump to 1.5.1
+- Remove android-specific jnius dependency
+
 * Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 1.4.1-alt1
 - Autobuild version bump to 1.4.1
 
