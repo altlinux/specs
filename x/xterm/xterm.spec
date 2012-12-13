@@ -25,7 +25,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 286
+Version: 287
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -73,12 +73,11 @@ the facilities to notify programs running in the window whenever it
 is resized.
 
 %package experimental
-Group:	Terminals
+Group: Terminals
 Summary: experimental version of xterm
 %description experimental
 XTerm build with some experimental/unsafe features:
 %xterm_expflags
-
 
 %prep
 %setup
@@ -169,6 +168,9 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 287-alt1
+- Autobuild version bump to 287
+
 * Mon Nov 12 2012 Fr. Br. George <george@altlinux.ru> 286-alt1
 - Autobuild version bump to 286
 - Patch fix
