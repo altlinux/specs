@@ -2,7 +2,7 @@
 
 Name: gnustep-projectcenter
 Version: 0.6.1
-Release: alt1.git20121122
+Release: alt2.git20121122
 Summary: GNUstep IDE, a part of the GNUstep project and is copyrighted by the FSF
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -37,6 +37,7 @@ This package contains shared libraries of GNUstep Project Center.
 %package -n lib%name-devel
 Summary: Development files of GNUstep Project Center
 Group: Development/Objective-C
+Provides: %name-devel = %version-%release
 Requires: %name = %version-%release
 Requires: lib%name = %version-%release
 
@@ -100,6 +101,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2.git20121122
+- Added synonym: lib%name-devel -> %name-devel
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1.git20121122
 - Initial build for Sisyphus
 
