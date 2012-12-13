@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.8
-Release: alt5
+Release: alt6
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -16,7 +16,6 @@ Url: http://www.etalabs.net/%name
 Source: %url/releases/%name-%version.tar
 Patch: %name-%version-%release.patch
 ExclusiveOS: Linux
-ExclusiveArch: %ix86 %x86_64 %arm
 %define musl_dir %_libdir/%name
 %define soname libc-%name.so.1
 %define libname libc-%name-%version.so
@@ -115,6 +114,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Thu Dec 13 2012 Led <led@altlinux.ru> 0.9.8-alt6
+- updated from upstream's SCM
+
 * Sat Dec 08 2012 Led <led@altlinux.ru> 0.9.8-alt5
 - updated from upstream's SCM
 
