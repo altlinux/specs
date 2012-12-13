@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 1.6.7
-Release: alt3
+Release: alt4
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -239,6 +239,9 @@ _WM_
 %doc NEWS README
 
 %changelog
+* Thu Dec 13 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.7-alt4
+- rebuilt to update arepo dependencies after polkit-0.108
+
 * Wed Nov 21 2012 Vladimir Didenko <cow@altlinux.org> 1.6.7-alt3
 - switched to cinnamon-freedesktop-menu (closes: #28004)
 - moved arch independent data to cinnamon-data subpackage
