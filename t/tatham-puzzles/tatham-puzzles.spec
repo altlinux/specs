@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 9694
+Version: 9712
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -103,6 +103,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 9712-alt1
+- Autobuild version bump to 9712
+
 * Wed Nov 14 2012 Fr. Br. George <george@altlinux.ru> 9694-alt1
 - Autobuild version bump to 9694
 - New puzzle: Undead
