@@ -1,6 +1,6 @@
 Name: polkit
-Version: 0.105
-Release: alt1
+Version: 0.108
+Release: alt2
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
 Group: System/Libraries
@@ -12,9 +12,11 @@ PreReq: dbus
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
+# from fedora
+Patch1: %name-0.108-fix-libmozjs185-soname.patch
 
 BuildRequires: gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
-BuildRequires: libsystemd-login-devel
+BuildRequires: libmozjs-devel libsystemd-login-devel systemd-devel
 
 %description
 PolicyKit is a toolkit for defining and handling authorizations.
@@ -64,13 +66,15 @@ GObject introspection devel data for the Polkit-1.0 library
 %prep
 %setup -q
 %patch -p1
+%patch1 -p1
 
 touch ChangeLog
+subst 's|^\(PKG_CHECK_MODULES(GLIB.*\)])|\1 gmodule-2.0])|' configure.ac
 
 %build
 %autoreconf
 %configure \
-	--libexecdir=%_prefix/libexec/%name-1 \
+	--libexecdir=%_prefix/libexec \
 	--localstatedir=%_var \
 	--enable-gtk-doc \
 	--disable-static
@@ -81,25 +85,31 @@ touch ChangeLog
 
 %find_lang %name-1
 
+%pre
+%_sbindir/groupadd -r -f polkitd 2>/dev/null ||:
+%_sbindir/useradd -r -n -g polkitd -d / \
+	-s /dev/null -c "User for polkitd" polkitd 2>/dev/null ||:
+
+
 %files -f %name-1.lang
-%_sysconfdir/%name-1
+%dir %_sysconfdir/%name-1
+%attr(0700,polkitd,root) %dir %_sysconfdir/%name-1/rules.d
+%_sysconfdir/%name-1/rules.d/50-default.rules
 %_sysconfdir/dbus-1/system.d/org.freedesktop.PolicyKit1.conf
 %_sysconfdir/pam.d/polkit-1
 %_bindir/pk[act]*
 %attr(4511,root,root) %_bindir/pkexec
-%dir %_libdir/%name-1
-%dir %_libdir/%name-1/extensions
-%_libdir/%name-1/extensions/*.so
 %dir %_prefix/libexec/%name-1
 %_prefix/libexec/%name-1/polkitd
 %attr(4511,root,root) %_prefix/libexec/polkit-1/polkit-agent-helper-1
 %dir %_datadir/%name-1
 %dir %_datadir/%name-1/actions
+%attr(0700,polkitd,root) %dir %_datadir/%name-1/rules.d
 %_datadir/%name-1/actions/org.freedesktop.policykit.policy
 %_datadir/dbus-1/system-services/org.freedesktop.PolicyKit1.service
+%systemd_unitdir/polkit.service
 %_man1dir/*.1*
 %_man8dir/*.8*
-%attr(0700,root,root) %_var/lib/polkit-1
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -117,6 +127,19 @@ touch ChangeLog
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Dec 12 2012 Yuri N. Sedunov <aris@altlinux.org> 0.108-alt2
+- attempt to open the correct libmozjs185 library, otherwise polkit
+  auth rules will not work unless js-devel is installed (fc patch)
+- create polkitd user/group in %%pre
+- fixed permissions for rules.d directories as recommended
+- packaged lost polkit.service
+
+* Wed Dec 12 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.108-alt1
+- 0.108
+
+* Sun Sep 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.107-alt1
+- 0.107
+
 * Sat May 12 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.105-alt1
 - 0.105
 
