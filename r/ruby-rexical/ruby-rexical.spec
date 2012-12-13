@@ -2,14 +2,14 @@
 
 Name: ruby-rexical
 Version: 1.0.5
-Release: alt2.1
+Release: alt3
 
 Summary: Lexical scanner generator for ruby
 Group: Development/Ruby
 License: LGPL
 Url: https://github.com/tenderlove/rexical
 BuildArch: noarch
-BuildRequires: libruby-devel ruby-test-unit ruby-tool-setup
+BuildRequires: rpm-build-ruby ruby-test-unit ruby-tool-setup
 
 Source: %name-%version.tar
 Patch1: ruby-rexical-1.0.5-alt-pick-of-rubygems.patch
@@ -28,6 +28,8 @@ Documentation files for %name
 %prep
 %setup -n %name-%version
 %patch1 -p1
+# Rename for avoid file conflict with (R)?ex (rex package)
+sed 's/ rex / rexical /g' README.* DOCUMENTATION.*.rdoc sample/{sample?,xhtmlparser}.rex
 %update_setup_rb
 
 %build
@@ -41,10 +43,11 @@ popd
 
 %install
 %ruby_install
+mv %buildroot%_bindir/rex{,ical}
 %rdoc lib/
 
 %files
-%_bindir/rex
+%_bindir/*
 %ruby_sitelibdir/*
 %doc README.rdoc DOCUMENTATION.en.rdoc
 
@@ -53,6 +56,11 @@ popd
 %ruby_ri_sitedir/Rexical*
 
 %changelog
+* Thu Dec 13 2012 Led <led@altlinux.ru> 1.0.5-alt3
+- rename %%_bindir/rex -> %%_bindir/rexical for avoid file conflict
+  with (R)?ex (rex package)
+- fixed BuildRequires
+
 * Fri Nov 30 2012 Led <led@altlinux.ru> 1.0.5-alt2.1
 - Rebuilt with ruby-1.9.3-alt1
 
