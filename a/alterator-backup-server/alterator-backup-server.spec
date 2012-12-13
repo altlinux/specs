@@ -1,5 +1,5 @@
 Name: alterator-backup-server
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: Backup server management for plain distros
@@ -39,6 +39,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %altdir/desktop-directories/*
 
 %changelog
+* Thu Dec 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
+- set short hostname as default storage address
+
 * Thu Feb 10 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
 - hide local-backup
 
