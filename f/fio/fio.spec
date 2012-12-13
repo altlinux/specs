@@ -1,5 +1,5 @@
 Name: fio
-Version: 2.0.10
+Version: 2.0.11
 Release: alt1
 
 Summary: IO testing tool
@@ -7,7 +7,7 @@ License: GPLv2
 Group: System/Kernel and hardware
 
 Url: http://git.kernel.dk/?p=fio.git;a=summary
-Source0: http://brick.kernel.dk/snaps/fio-%version.tar.bz2
+Source0: %name-%version.tar
 
 # Automatically added by buildreq on Sun Jun 12 2011
 BuildRequires: libaio-devel
@@ -35,6 +35,9 @@ one wants to simulate.
 %_man1dir/*
 
 %changelog
+* Thu Dec 13 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.11-alt1
+- 2.0.11
+
 * Fri Nov 30 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.10-alt1
 - 2.0.10
 
