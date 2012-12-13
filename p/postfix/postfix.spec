@@ -1,6 +1,6 @@
 Name: postfix
-Version: 2.9.4
-Release: alt3
+Version: 2.9.5
+Release: alt1
 Epoch: 1
 
 Summary: Postfix Mail Transport Agent
@@ -674,6 +674,10 @@ ln -snf %name/aliases %_sysconfdir/aliases
 %endif #with tls
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.5-alt1
+- Autobuild version bump to 2.9.5
+- Bugfix release
+
 * Mon Nov 26 2012 Fr. Br. George <george@altlinux.ru> 1:2.9.4-alt3
 - Reimplement 2.5-style postconf -E (still no default values evaluation)
 
