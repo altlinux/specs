@@ -1,6 +1,6 @@
 
 Name: instead
-Version: 1.8.0
+Version: 1.8.1
 Release: alt1
 Group: Games/Adventure
 License: GPLv2
@@ -82,6 +82,9 @@ mkdir -p %buildroot%_localstatedir/%name/games
 %_desktopdir/%name.desktop
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 1.8.1-alt1
+- Autobuild version bump to 1.8.1
+
 * Mon Oct 22 2012 Fr. Br. George <george@altlinux.ru> 1.8.0-alt1
 - Autobuild version bump to 1.8.0
 
