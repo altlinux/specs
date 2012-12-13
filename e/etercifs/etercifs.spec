@@ -35,17 +35,16 @@
 %define src_3_3_version 1.76
 %define src_3_4_version 1.78
 %define src_3_5_version 1.78
-
-# TODO: move to rpm-build-altlinux-compat
-%define _sysconfigdir %_sysconfdir/sysconfig
+%define src_3_6_version 1.78
+%define src_3_7_version 2.0
 
 Name: etercifs
-Version: 5.4.3
-Release: alt1
+Version: 5.4.5
+Release: alt2
 
 Summary: Advanced Common Internet File System for Linux with Etersoft extension
 
-Packager: Evgeny Sinelnikov <sin@altlinux.ru>
+Packager: Pavel Shilovsky <piastry@altlinux.org>
 
 License: GPLv2
 Group: System/Kernel and hardware
@@ -85,6 +84,8 @@ Source42: %src_package_name-3.2-%src_3_2_version.tar.bz2
 Source43: %src_package_name-3.3-%src_3_3_version.tar.bz2
 Source44: %src_package_name-3.4-%src_3_4_version.tar.bz2
 Source45: %src_package_name-3.5-%src_3_5_version.tar.bz2
+Source46: %src_package_name-3.6-%src_3_6_version.tar.bz2
+Source47: %src_package_name-3.7-%src_3_7_version.tar.bz2
 Source60: %src_package_name-centos60-%src_centos60_version.tar.bz2
 
 Conflicts: linux-cifs
@@ -111,6 +112,8 @@ Provides: %src_package_name-3.2 = %version-%release
 Provides: %src_package_name-3.3 = %version-%release
 Provides: %src_package_name-3.4 = %version-%release
 Provides: %src_package_name-3.5 = %version-%release
+Provides: %src_package_name-3.6 = %version-%release
+Provides: %src_package_name-3.7 = %version-%release
 
 Obsoletes: %src_package_name-2.6.24
 Obsoletes: %src_package_name-2.6.25
@@ -119,40 +122,42 @@ Obsoletes: %src_package_name-2.6.27
 Obsoletes: %src_package_name-2.6.28
 Obsoletes: %src_package_name-2.6.29
 
+BuildRequires: rpm-build-intro
+
 Requires: gcc make
 
 # We definitely needs mount.cifs command
-Requires: samba-client
+Requires: cifs-utils
 
 %description
 This package contains Etersoft modified CIFS kernel module,
 supports WINE@Etersoft sharing access support.
 
 The CIFS VFS is a virtual file system for Linux to allow access to
-servers and storage appliances compliant with the SNIA CIFS Specification
-version 1.0 or later.
+servers and storage appliances compliant with the SNIA CIFS
+Specification version 1.0 or later.
 Popular servers such as Samba, Windows 2000, Windows XP and many others
 support CIFS by default.
 The CIFS VFS provides some support for older servers based on the more
-primitive SMB (Server Message Block) protocol (you also can use the Linux
-file system smbfs as an alternative for accessing these).
+primitive SMB (Server Message Block) protocol (you also can use the
+Linux file system smbfs as an alternative for accessing these).
 CIFS VFS is designed to take advantage of advanced network file system
 features such as locking, Unicode (advanced internationalization),
-hardlinks, dfs (hierarchical, replicated name space), distributed caching
-and uses native TCP names (rather than RFC1001, Netbios names).
+hardlinks, dfs (hierarchical, replicated name space), distributed
+caching and uses native TCP names (rather than RFC1001, Netbios names).
 
-Unlike some other network file systems all key network function including
-authentication is provided in kernel (and changes to mount and/or a mount
-helper file are not required in order to enable the CIFS VFS). With the
-addition of upcoming improvements to the mount helper (mount.cifs) the
-CIFS VFS will be able to take advantage of the new CIFS URL specification
-though.
+Unlike some other network file systems all key network function
+including authentication is provided in kernel (and changes to mount
+and/or a mount helper file are not required in order to enable the CIFS
+VFS). With the addition of upcoming improvements to the mount helper
+(mount.cifs) the CIFS VFS will be able to take advantage of the new CIFS
+URL specification though.
 
 %prep
 %setup
 
 %install
-mkdir -p %buildroot%_sysconfigdir
+mkdir -p %buildroot%_sysconfigdir/
 cat <<EOF >%buildroot%_sysconfigdir/%name.conf
 # etercifs configuration file
 
@@ -194,8 +199,7 @@ EOF
 
 mkdir -p %buildroot%_initdir/
 install -m755 %name %buildroot%_initdir/
-install -m755 %name.outformat %buildroot%_initdir/
-
+install -m755 %name.outformat %buildroot%_datadir/%name
 
 %define etercifs_src %_datadir/%name/sources
 
@@ -237,6 +241,8 @@ cp %SOURCE42 %buildroot/%etercifs_src/
 cp %SOURCE43 %buildroot/%etercifs_src/
 cp %SOURCE44 %buildroot/%etercifs_src/
 cp %SOURCE45 %buildroot/%etercifs_src/
+cp %SOURCE46 %buildroot/%etercifs_src/
+cp %SOURCE47 %buildroot/%etercifs_src/
 
 # CentOS 6.x
 cp %SOURCE60 %buildroot/%etercifs_src/
@@ -295,6 +301,10 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.4-%src_3_4_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.4-%version.tar.bz2
 ln -s ../../../../%etercifs_src/%src_package_name-3.5-%src_3_5_version.tar.bz2 \
     %buildroot%_usrsrc/kernel/sources/%src_package_name-3.5-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.6-%src_3_6_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.6-%version.tar.bz2
+ln -s ../../../../%etercifs_src/%src_package_name-3.7-%src_3_7_version.tar.bz2 \
+    %buildroot%_usrsrc/kernel/sources/%src_package_name-3.7-%version.tar.bz2
 
 # Special case for Fedora 15 v2.6.4x.* kernels
 ln -s ../../../../%etercifs_src/%src_package_name-3.0-%src_3_0_version.tar.bz2 \
@@ -314,15 +324,35 @@ ln -s ../../../../%etercifs_src/%src_package_name-3.3-%src_3_3_version.tar.bz2 \
 
 %files
 %doc README.ETER AUTHORS CHANGES README TODO
+%_bindir/etermount
+%_initrddir/%name
 %config %_sysconfigdir/%name.conf
 %config %_sysconfdir/modprobe.d/etersoft.conf
 %_datadir/%name/
-%_initdir/%name
-%_initdir/%name.outformat
-%_bindir/etermount
 %_usrsrc/kernel/sources/%src_package_name-*-%version.tar.bz2
 
 %changelog
+* Thu Dec 13 2012 Pavel Shilovsky <piastry@altlinux.org> 5.4.5-alt2
+- Add condstop support to etercifs init script
+
+* Wed Dec 12 2012 Pavel Shilovsky <piastry@altlinux.org> 5.4.5-alt1
+- Update 3.7 sources from stable (v3.7)
+- Update 3.6 sources from stable (v3.6.10)
+- Update 3.4 sources from stable (v3.4.23)
+- Update 3.2 sources from stable (v3.2.35)
+- Fix build on Open SUSE 12.1
+
+* Wed Oct 31 2012 Pavel Shilovsky <piastry@altlinux.org> 5.4.4-alt1
+- Add sources for 3.7 (v3.7-rc2)
+- Add sources for 3.6 (v3.6.4)
+- Update 3.5 sources from stable (v3.5.7)
+- Update 3.4 sources from stable (v3.4.16)
+- Update 3.2 sources from stable (v3.2.32)
+- Update 2.6.34 sources from stable (v2.6.34.13)
+
+* Thu Aug 16 2012 Vitaly Lipatov <lav@altlinux.ru> 5.4.3-alt2
+- cleanup spec, fix requires to /sbin/mount.cifs
+
 * Mon Aug 13 2012 Pavel Shilovsky <piastry@altlinux.org> 5.4.3-alt1
 - Add sources for 3.5 (v3.5.1)
 - Add sources for 3.4 (v3.4.8)
