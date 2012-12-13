@@ -6,7 +6,7 @@
 
 Name: %lo_name
 Version: %lo_ver
-Release: alt1
+Release: alt1.1
 Summary: LibreOffice Productivity Suite
 License: LGPL
 Group: Office
@@ -60,6 +60,9 @@ BuildRequires: libldap-devel libdb4-devel libdb4_cxx-devel libpoppler-devel libs
 BuildRequires: libhunspell-devel libhyphen-devel libwpg2-devel libgio-devel libunixODBC-devel gvfs-devel libGLU-devel
 BuildRequires: perl-Switch junit4 boost-program_options-devel cppunit-devel libwps-devel libXaw-devel libXau-devel
 BuildRequires: libXrandr-devel libXext-devel zenity libpoppler-cpp-devel libmpc-devel librsvg-devel libpq-devel
+
+
+BuildRequires: liblpsolve-devel
 
 %description
 LibreOffice is a productivity suite that is compatible with other major office suites
@@ -155,8 +158,12 @@ tar -xjf %SOURCE500
 tar -xjf %SOURCE501
 
 %build
-aclocal
-autoconf
+sed -i 's/MDDS_CPPFLAGS="-std=c++0x"/MDDS_CPPFLAGS=""/
+s/CXXFLAGS -std=c++0x/CXXFLAGS/
+' configure.in
+#aclocal
+#autoconf
+%autoreconf
 %configure \
 	--with-vendor="ALT Linux Team" \
 	--disable-gnome-vfs \
@@ -204,8 +211,10 @@ autoconf
 	--with-external-hyph-dir=%_datadir/hyphen \
 	--with-external-thes-dir=%_datadir/mythes \
 	--with-lang="en-US %with_lang" \
-	--with-external-tar=%_builddir/%name-%version/ext_sources
-#	--with-max-jobs="${NPROCS-%__nprocs}"
+	--with-external-tar=%_builddir/%name-%version/ext_sources \
+	--with-system-lpsolve \
+	--with-num-cpus=1 \
+	--with-max-jobs=7
 
 source Env.*.sh
 ln -sf /bin/true autogen.sh
@@ -314,6 +323,9 @@ unset RPM_PYTHON
 %files langpack-es -f %name.es.files
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 3.5.7.1-alt1.1
+- Rebuild with GCC 4.7
+
 * Fri Sep 21 2012 Valery Inozemtsev <shrek@altlinux.ru> 3.5.7.1-alt1
 - 3.5.7 RC1
 
