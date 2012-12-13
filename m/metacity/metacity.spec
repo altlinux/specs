@@ -6,7 +6,7 @@
 
 Name: metacity
 Version: %ver_major.13
-Release: alt1
+Release: alt2
 
 Summary: Metacity window manager
 License: %gpl2plus
@@ -40,7 +40,6 @@ Patch28: Stop-confusing-GDK-s-grab-tracking.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=622517
 Patch29: Allow-breaking-out-from-maximization-during-mouse.patch
 
-
 %define theme_prefix theme
 %define old_theme_prefix themes
 
@@ -51,6 +50,9 @@ Patch29: Allow-breaking-out-from-maximization-during-mouse.patch
 %define startup_notification_ver 0.7
 %define xcomposite_ver 0.2
 %define gsds_ver 3.3.0
+
+Obsoletes: %name-gnome
+Provides: %name-gnome = %version-%release
 
 Requires: %name-theme = %version-%release
 Requires: lib%name = %version-%release
@@ -103,18 +105,6 @@ Requires: lib%name-devel = %version-%release
 
 %description -n lib%name-devel-static
 This package contains the lib%name static library.
-
-%package gnome
-Summary: GNOME-specific parts of Metacity
-Group: Graphical desktop/GNOME
-Provides: gnome-wm
-BuildArch: noarch
-Requires: %name = %version-%release
-Requires: gnome-filesystem gnome-control-center
-
-%description gnome
-This package contains everything necessary to use Metacity in GNOME desktop
-environment.
 
 %package %{theme_prefix}s-default
 Summary: Metacity default themes
@@ -256,6 +246,10 @@ theme.
 %_bindir/*
 %_datadir/%name
 %_desktopdir/*
+%_datadir/gnome/wm-properties/*.desktop
+%_datadir/gnome-control-center/keybindings/50-metacity*.xml
+%_datadir/glib-2.0/schemas/org.gnome.metacity.gschema.xml
+%_datadir/GConf/gsettings/metacity-schemas.convert
 %_man1dir/*
 %doc README AUTHORS NEWS
 
@@ -272,12 +266,6 @@ theme.
 %files -n lib%name-devel-static
 %_libdir/*.a
 %endif
-
-%files gnome
-%_datadir/gnome/wm-properties/*.desktop
-%_datadir/gnome-control-center/keybindings/50-metacity*.xml
-%_datadir/glib-2.0/schemas/org.gnome.metacity.gschema.xml
-%_datadir/GConf/gsettings/metacity-schemas.convert
 
 %files %{theme_prefix}s-default
 
@@ -303,6 +291,9 @@ theme.
 %_datadir/themes/Simple/*
 
 %changelog
+* Thu Dec 13 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.13-alt2
+- no more metacity-gnome subpackage (ALT #28215)
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.13-alt1
 - 2.34.13
 
