@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt13
+Release: alt14
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -50,7 +50,7 @@ Provides: design-bootloader-system-%theme design-bootloader-livecd-%theme design
 Obsoletes: design-bootloader-system-%theme design-bootloader-livecd-%theme design-bootloader-livecd-%theme design-bootloader-%theme branding-alt-%theme-bootloader
 Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-bootloader ";done )
 
-%define grub_normal white/blue
+%define grub_normal white/light-blue
 %define grub_high black/light-gray
 
 %description bootloader
@@ -169,6 +169,21 @@ Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "brandi
 
 %description fvwm-settings
 FVWM2 settings for %Brand %version %Theme
+
+%package mate-settings
+
+BuildArch: noarch
+Summary: MATE settings for %Brand %version %Theme
+License: Distributable
+Group:   Graphical desktop/GNOME
+Requires: gksu
+Requires: dconf
+Provides: metacity-theme-%brand-%theme = %version-%release
+Provides: metacity-theme
+Conflicts: %(for n in %variants ; do [ "$n" = %brand-%theme ] || echo -n "branding-$n-gnome-settings ";done )
+
+%description mate-settings
+MATE settings for %Brand %version %Theme
 
 %package gnome-settings
 
@@ -301,6 +316,11 @@ popd
 mkdir -p %buildroot/etc/skel
 install -m 644 fvwm-settings/.fvwm2rc %buildroot/etc/skel/
 
+#mate-settings
+pushd mate-settings
+install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-2.0/schemas/50_mate-background.gschema.override'
+popd
+
 #gnome-settings
 %define XdgThemeName %Brand %Theme
 pushd gnome-settings
@@ -314,7 +334,6 @@ install -m 644 index.theme '%buildroot/%_datadir/themes/%XdgThemeName/'
 mkdir -p '%buildroot/etc/xdg/menus/'
 install -m 644 gnome-applications.menu '%buildroot/etc/xdg/menus/'
 install -m 644 settings.menu '%buildroot/etc/xdg/menus/'
-install -m 644 -D 50_mate-background.gschema.override '%buildroot%_datadir/glib-2.0/schemas/50_mate-background.gschema.override'
 popd
 
 #slideshow
@@ -404,10 +423,14 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %files fvwm-settings
 %_sysconfdir/skel/.fvwm2rc
 
-%files gnome-settings
+%files mate-settings
 %_datadir/themes/*
 /etc/xdg/menus/*
 %_datadir/glib-2.0/schemas/50_mate-background.gschema.override
+
+%files gnome-settings
+%_datadir/themes/*
+/etc/xdg/menus/*
 
 %files slideshow
 /usr/share/install2/slideshow
@@ -424,6 +447,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Wed Dec 12 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt14
+- Create mate-settings subpackage
+- Set light-blue background for GRUB console
+
 * Wed Dec 05 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt13
 - Small fixes in Alterator stylesheet
 
