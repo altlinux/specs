@@ -1,5 +1,5 @@
 Name: kernel-build-tools
-Version: 0.99.5
+Version: 0.100
 Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
@@ -53,6 +53,9 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Tue Dec 11 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.100-alt1
+- Added %%setup_kernel_module.
+
 * Fri Dec 07 2012 Dmitry V. Levin <ldv@altlinux.org> 0.99.5-alt1
 - kernel-macros:
   deprecated %%post_kernel_modules and %%postun_kernel_modules.
