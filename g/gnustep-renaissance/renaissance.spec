@@ -1,6 +1,6 @@
 Name: gnustep-renaissance
 Version: 0.9.0
-Release: alt1.git20121208
+Release: alt2.git20121208
 Summary: The GNUstep development framework
 License: LGPLv2.1+
 Group: Development/Tools
@@ -37,6 +37,7 @@ This package contains shared libraries of Renaissance.
 %package -n lib%name-devel
 Summary: Development files of the GNUstep development framework
 Group: Development/Objective-C
+Provides: %name-devel = %version-%release
 Requires: lib%name = %version-%release
 Requires: %name = %version-%release
 
@@ -101,6 +102,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt2.git20121208
+- Added synonym: lib%name-devel -> %name-devel
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt1.git20121208
 - Initial build for Sisyphus
 
