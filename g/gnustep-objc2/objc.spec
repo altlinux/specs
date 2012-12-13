@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.6.1
-Release: alt3.svn20121115
+Release: alt4.svn20121115
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -41,6 +41,7 @@ This package contains shared libraries of GNUstep Objective-C Runtime.
 %package -n lib%name-devel
 Summary: Development files of GNUstep Objective-C Runtime
 Group: Development/Objective-C
+Provides: %name-devel = %version-%release
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
@@ -97,6 +98,9 @@ mv %buildroot%_includedir/objc %buildroot%_includedir/objc2
 %_libdir/*.so
 
 %changelog
+* Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt4.svn20121115
+- Added synonym: lib%name-devel -> %name-devel
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt3.svn20121115
 - Rebuilt with fixed gnustep-make
 
