@@ -1,6 +1,6 @@
 Name: pentobi
-Version: 4.3
-Release: alt1.1
+Version: 5.0
+Release: alt1
 License: GPLv3
 Summary: A computer program that plays the board game Blokus
 Source: %name-%version.tar.gz
@@ -50,6 +50,9 @@ mv %buildroot/usr/etc/gconf %buildroot%_sysconfdir/
 %_man6dir/*
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 5.0-alt1
+- Autobuild version bump to 5.0
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.3-alt1.1
 - Rebuilt with Boost 1.52.0
 
