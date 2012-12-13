@@ -4,7 +4,7 @@
 %define rname plasma-mobile
 Name: kde4-plasma-mobile
 Version: 0.4
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE mobile environment
@@ -32,6 +32,14 @@ Group: System/Libraries
 #Requires: %name-common = %version-%release
 %description -n libactiveapp4
 %name library
+
+%package devel
+Summary: Devel stuff for %name
+Group: Development/KDE and QT
+Requires: kde4libs-devel
+#Requires: %name-common = %version-%release
+%description devel
+Devel stuff for %name
 
 
 %prep
@@ -70,7 +78,14 @@ find ./ -type f -name CMakeLists.txt | \
 %_kde4_iconsdir/hicolor/*/*/*.*
 %_K4iconsdir/oxygen/*/*/*.*
 %_K4wall/*
-%_K4apps/*
+%_K4apps/active-webbrowser/
+%_K4apps/desktoptheme/*
+%_K4apps/plasma/packages/*
+%_K4apps/plasma/plasmoids/*
+%_K4apps/plasma/resourcedelegates/
+%_K4apps/plasma/services/*
+%_K4apps/plasma-widgetstrip/
+%_K4apps/solid/actions/*
 #%_K4start/*
 %_K4srv/*
 %_K4srvtyp/*
@@ -78,8 +93,16 @@ find ./ -type f -name CMakeLists.txt | \
 %_K4dbus_sys_services/org.kde.active.clockconfig.service
 %_datadir/polkit-1/actions/org.kde.active.clockconfig.policy
 
+%files devel
+%_K4apps/cmake
+%_K4includedir/*.h
+%_K4link/lib*.so
+
 
 %changelog
+* Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 0.4-alt2
+- add devel subpackage
+
 * Tue Oct 16 2012 Sergey V Turchin <zerg@altlinux.org> 0.4-alt1
 - new version
 
