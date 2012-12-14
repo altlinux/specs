@@ -1,6 +1,6 @@
 Name: mc
 Version: 4.8.6
-Release: alt6
+Release: alt7
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -42,7 +42,7 @@ Patch104: mc-4.8.6-alt-extfs-udar.patch
 Patch105: mc-4.8.6-alt-extfs-rpm.patch
 
 #
-Patch106: mc-4.8.6-alt-video.sh.patch
+Patch106: mc-4.8.6-alt-xdg-open-quickdisable.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -186,9 +186,18 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Fri Dec 14 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt7
+- merged with git://github.com/MidnightCommander/mc.git
+  (CVE-2012-4463)
+- changed the metod of disabling xdg-open
+   you can use MC_XDG_OPEN="/bin/false" for disable xdg-open in
+   scripts in lib/mc/ext.d/*
+  removed mc-4.8.6-alt-video.sh.patch
+  added mc-4.8.6-alt-xdg-open-quickdisable.patch
+
 * Tue Nov 20 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt6
 - added mc-4.8.6-alt-video.sh.patch
-  (you can use $MCVIDEOPLAYER="legacy" for disable xdg-open usage)
+  (you can use MCVIDEOPLAYER="legacy" for disable xdg-open usage)
 
 * Sun Nov 11 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt5
 - merged with git://github.com/MidnightCommander/mc.git
