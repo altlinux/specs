@@ -1,5 +1,5 @@
 Name: twiggy
-Version: 0.1010
+Version: 0.1021
 Release: alt1
 Summary: Twiggy - AnyEvent HTTP server for PSGI (like Thin)
 
@@ -31,5 +31,8 @@ BuildRequires: perl-Test-TCP perl-devel perl-Plack perl-Try-Tiny perl-Test-Requi
 %doc Changes README 
 
 %changelog
+* Fri Dec 14 2012 Vladimir Lettiev <crux@altlinux.ru> 0.1021-alt1
+- 0.1010 -> 0.1021
+
 * Sat Jul 30 2011 Vladimir Lettiev <crux@altlinux.ru> 0.1010-alt1
 - initial build
