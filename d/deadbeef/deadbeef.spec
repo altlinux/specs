@@ -2,7 +2,7 @@
 %define rev	47f64084
 Name:		deadbeef
 Version:	0.5.6
-Release:	alt1.%rev
+Release:	alt2.%rev
 Summary:	DeaDBeeF is an audio player
 Url:		http://deadbeef.sourceforge.net/
 Source0:	http://kent.dl.sourceforge.net/project/deadbeef/%name-%version.tar
@@ -15,6 +15,7 @@ Patch3:		deadbeef-0.5.1-alt-libav-using.patch
 Patch4:		deadbeef-0.5.1-fr-fix-build.patch
 Patch5:		deadbeef-0.5.1-using-tt.patch
 Patch6:		deadbeef-0.5.4-alt-categories-desktop-file.patch
+Patch7:		deadbeef-0.5.6-alt-gdk-threads.patch
 
 # Automatically added by buildreq on Sun Oct 28 2012 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnu-config libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXmu-devel libXt-devel libatk-devel libavcodec-devel libavutil-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgtk+2-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libpangox-compat libpangox-compat-devel libpng-devel libsndfile-devel libstdc++-devel libwayland-client libwayland-server perl-XML-Parser pkg-config python-base xorg-xproto-devel zlib-devel
@@ -443,6 +444,7 @@ Scans disk for music files and manages them as database.
 #patch4 -p2
 #patch5 -p2
 %patch6 -p2
+%patch7 -p2
 
 
 sed -i '/m4/ d' Makefile.am
@@ -605,6 +607,9 @@ rm -rf %buildroot/%_libdir/%name/*.la
 %files -n %name-incomplete
 
 %changelog
+* Fri Dec 14 2012 Vladimir Didenko <cow@altlinux.org> 0.5.6-alt2.47f64084
+- remove waste gdk_threads_enter(Closes: 27966)
+
 * Sun Oct 28 2012 Andrew Clark <andyc@altlinux.org> 0.5.6-alt1.47f64084
 - new version
 
