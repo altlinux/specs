@@ -1,7 +1,7 @@
 # Copyright (C) 2006-2012  Dmitry V. Levin <ldv@altlinux.org>
 
 Name: gear
-Version: 1.7.7
+Version: 2.0.0
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -58,6 +58,14 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Fri Dec 14 2012 Dmitry V. Levin <ldv@altlinux.org> 2.0.0-alt1
+- gear-sh-functions (expand_rpm_macros): changed macros expansion
+  algorithm to expand those macros that are known and leave unknown
+  macros unexpanded.
+- Implemented .gear/rules specsubst directive that controls
+  instantiation of spec file templates with parameters
+  defined by tag objects (closes: #20912).
+
 * Tue Dec 04 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.7-alt1
 - gear-store-tags: handle the last line of .gear/rules when
   it is not EOL-terminated (closes: #28165).
