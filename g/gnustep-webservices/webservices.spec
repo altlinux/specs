@@ -1,6 +1,6 @@
 Name: gnustep-webservices
 Version: 0.5.9
-Release: alt1.git20121208
+Release: alt2.git20121208
 Summary: WebServices framework for GNUstep
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -83,6 +83,9 @@ cp -fR Examples %buildroot%_docdir/GNUstep/WebServices/
 %_docdir/GNUstep
 
 %changelog
+* Fri Dec 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt2.git20121208
+- Rubilt with updaded glibc
+
 * Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt1.git20121208
 - Initial build for Sisyphus
 
