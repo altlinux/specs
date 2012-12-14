@@ -9,11 +9,11 @@
 
 %define rname kate
 %define major 4
-%define minor 9
-%define bugfix 4
+%define minor 10
+%define bugfix 0
 Name: kde4-kate
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Editors
 Summary: Advanced text editor
@@ -33,6 +33,8 @@ Patch1: kate-4.8.2-alt-fix-compile.patch
 #BuildRequires: gcc-c++ glib2-devel kde4libs-devel libqt3-devel rpm-build-ruby zlib-devel-static
 BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++ glib2-devel zlib-devel kde-common-devel desktop-file-utils
+BuildRequires: qjson-devel kde4-kactivities-devel
+BuildRequires: python-module-PyQt4-devel python-devel
 
 %description
 A fast and advanced text editor with nice plugins
@@ -103,7 +105,6 @@ applications for %rname.
 %build
 %K4build
 
-
 %install
 %K4install
 
@@ -153,41 +154,33 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4apps/ktexteditor_*/
 %_K4apps/katepart
 %_K4conf/katemoderc
-%_K4conf/katepartpluginsrc
-%_K4conf/ktexteditor_codesnippets_core.knsrc
 %_K4srv/katepart.desktop
 %_K4srv/ktexteditor_*.desktop
 %_K4iconsdir/hicolor/*/apps/ktexteditorautobrace.*
 %_K4iconsdir/oxygen/*/actions/debug.*
-%_K4iconsdir/oxygen/*/actions/repoadd.*
-%_K4iconsdir/oxygen/*/actions/repomanage.*
-%_K4iconsdir/oxygen/*/actions/snippetadd.*
-%_K4iconsdir/oxygen/*/actions/snippetedit.*
 
 %files
 %if_enabled desktop
-%_K4conf/katefiletemplates.knsrc
 %_K4lib/katefiletemplates.so
 %_K4srv/katefiletemplates.desktop
 %endif
 %_K4bindir/kate
-%_K4bindir/ktesnippets_editor
 %_K4xdg_apps/kate.desktop
-%_K4xdg_apps/ktesnippets_editor.desktop
 %_K4apps/kate/
 %_K4apps/katexmltools
 %_K4conf_update/kate-2.4.upd
 %_K4conf/katerc
+%_K4conf/kateschemarc
+%_K4conf/katesyntaxhighlightingrc
 %_K4libdir/libkdeinit4_kate.so
+%_K4lib/kateprojectplugin.so
+%_K4lib/katesnippetsplugin.so
 %_K4lib/katetabifyplugin.so
 %_K4lib/katexmltoolsplugin.so
-#%_K4lib/kateexternaltoolsplugin.so
 %_K4lib/katefilebrowserplugin.so
-#%_K4lib/katefindinfilesplugin.so
 %_K4lib/katekonsoleplugin.so
 %_K4lib/katemailfilesplugin.so
 %_K4lib/kateopenheaderplugin.so
-%_K4lib/katequickdocumentswitcherplugin.so
 %_K4lib/katesymbolviewerplugin.so
 %_K4lib/katetabbarextensionplugin.so
 %_K4lib/katetextfilterplugin.so
@@ -197,18 +190,16 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4lib/katectagsplugin.so
 %_K4lib/kate_kttsd.so
 %_K4lib/katexmlcheckplugin.so
-%_K4lib/katesnippets_tngplugin.so
 %_K4lib/katefiletreeplugin.so
 %_K4lib/kategdbplugin.so
 %_K4lib/katesqlplugin.so
 %_K4lib/katesearchplugin.so
-#%_K4srv/kateexternaltoolsplugin.desktop
+%_K4srv/kateprojectplugin.desktop
+%_K4srv/katesnippetsplugin.desktop
 %_K4srv/katefilebrowserplugin.desktop
-#%_K4srv/katefindinfilesplugin.desktop
 %_K4srv/katekonsoleplugin.desktop
 %_K4srv/katemailfilesplugin.desktop
 %_K4srv/kateopenheader.desktop
-%_K4srv/katequickdocumentswitcher.desktop
 %_K4srv/katesymbolviewer.desktop
 %_K4srv/katetabbarextension.desktop
 %_K4srv/katetextfilter.desktop
@@ -218,7 +209,6 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4srv/plasma-applet-katesession.desktop
 %_K4srv/kate_kttsd.desktop
 %_K4srv/katexmlcheck.desktop
-%_K4srv/katesnippets_tngplugin.desktop
 %_K4srv/katetabifyplugin.desktop
 %_K4srv/katexmltools.desktop
 %_K4srv/katefiletreeplugin.desktop
@@ -229,7 +219,6 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 #%_K4doc/*/kate-plugins
 %_K4doc/*/kate
 %_K4iconsdir/hicolor/*/apps/kate.*
-%_K4xdg_mime/ktesnippets.xml
 
 %files -n kde4-kwrite
 %_K4bindir/kwrite
@@ -242,16 +231,16 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4libdir/libkateinterfaces.so.*
 %files -n libkatepartinterfaces4
 %_K4libdir/libkatepartinterfaces.so.*
-%files -n libktexteditor4_codesnippets_core
-%_K4libdir/libktexteditor_codesnippets_core.so.*
 
 %files devel
 %_K4includedir/kate/
-%_K4includedir/ktexteditor_codesnippets_core/
 %_K4includedir/kate_*.h
 %_K4link/lib*.so
 
 %changelog
+* Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Thu Dec 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
 

@@ -3,11 +3,11 @@
 
 %define rname konsole
 %define major 4
-%define minor 9
-%define bugfix 4
+%define minor 10
+%define bugfix 0
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Terminals
 Summary: Terminal emulator for KDE
@@ -22,7 +22,7 @@ Conflicts: kdebase-wm <= 3.5.12-alt2
 
 Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdebase-4.8.0-alt-konsole-allow-sgid.patch
-Patch2: kdebase-4.9.1-alt-konsole-profiles.patch
+Patch2: kdebase-4.10.0-alt-konsole-profiles.patch
 Patch3: kdebase-4.9.1-alt-no-transparency.patch
 # Dmitry Prokoptsev
 Patch1000: BR59256fixed.diff
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Thu Dec 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
 

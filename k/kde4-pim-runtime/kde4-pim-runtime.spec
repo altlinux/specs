@@ -3,11 +3,11 @@
 
 %define rname kdepim-runtime
 %define major 4
-%define minor 9
-%define bugfix 4
+%define minor 10
+%define bugfix 0
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi resources
@@ -41,7 +41,7 @@ Patch109: kdepim-4.8.1-alt-def-nepomuk.patch
 BuildRequires(pre): kde4libs-devel libassuan-devel
 BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libgpgme-devel
 BuildRequires: soprano soprano-backend-redland xsltproc grantlee-devel libsasl2-devel dblatex
-BuildRequires: libkgapi4-devel qjson-devel
+BuildRequires: libkgapi4-devel qjson-devel kde4-nepomuk-core-devel
 
 BuildRequires: kde4libs-devel >= %version
 BuildRequires: kde4pimlibs-devel >= %version
@@ -168,6 +168,7 @@ based on kdepim.
 %_K4bindir/kjotsmigrator
 %_K4bindir/kmail-migrator
 %_K4bindir/kres-migrator
+%_K4bindir/nepomukpimindexerutility
 %_K4lib/accountwizard_plugin.so
 %_K4lib/kcal_akonadi.so
 %_K4lib/kio_akonadi.so
@@ -184,6 +185,7 @@ based on kdepim.
 %_K4apps/akonadi/plugins/serializer/akonadi_serializer_*.desktop
 %_K4apps/akonadi/accountwizard/
 %_K4apps/akonadi_*/
+%_K4apps/nepomukpimindexerutility/
 %_K4conf/kmail-migratorrc
 %_K4conf/kres-migratorrc
 %_K4conf/accountwizard.knsrc
@@ -211,8 +213,6 @@ based on kdepim.
 %_K4libdir/libakonadi-filestore.so.*
 %files -n libkmindexreader4
 %_K4libdir/libkmindexreader.so.*
-%files -n libkdepim4-runtime-dms-copy
-%_K4libdir/libkdepim-runtime-dms-copy.so
 
 %files devel
 %_K4link/*.so
@@ -222,6 +222,9 @@ based on kdepim.
 
 
 %changelog
+* Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Thu Dec 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
 

@@ -4,12 +4,12 @@
 %add_findreq_skiplist %_K4apps/cmake/modules*.py
 
 %define major 4
-%define minor 9
-%define bugfix 4
+%define minor 10
+%define bugfix 0
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -61,8 +61,7 @@ Patch101: kdelibs-4.3.90-install_all_css.patch
 Patch102: kdelibs-4.5.80-parallel_devel.patch
 Patch103: kdelibs-4.7.0-knewstuff_gpg2.patch
 Patch104: kdelibs-4.5.80-no_rpath.patch
-Patch105: kdelibs-udisks2-backend.patch
-Patch106: kdelibs-4.7.4-SOLID_UPNP.patch
+Patch105: kdelibs-4.7.4-SOLID_UPNP.patch
 # Debian
 Patch201: 14_hardcode_ptm_device.diff
 Patch202: 30_kfileshare_kdesu_fileshareset.diff
@@ -98,7 +97,7 @@ Patch1023: kdelibs-4.7.4-plasma-tooltip-delay.patch
 Patch1024: kdelibs-4.6.3-alt-samba-sharing.patch
 Patch1025: kdelibs-4.7.1-alt-find-hupnp.patch
 Patch1026: kdelibs-4.7.1-alt-find-pulseaudio.patch
-Patch1027: revert-5960ae9846c333ef381a817af9d63776c4ddc201.patch
+Patch1027: kdelibs-4.10.0-alt-no-hal.patch
 Patch1028: kdelibs-4.8.1-alt-kdesu-export-user-var.patch
 Patch1029: kdelibs-4.8.1-alt-fix-build.patch
 Patch1030: kdelibs-4.9.1-alt-platform-profile.patch
@@ -148,14 +147,12 @@ applications for KDE 4.
 
 %prep
 %setup -q -n %rname-%version
-cp -ar altlinux/udisks2 solid/solid/backends/
 
 %patch101 -p1
 %patch102 -p1
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
-%patch106 -p1
 #
 %patch201 -p1
 %patch202 -p1
@@ -190,7 +187,7 @@ cp -ar altlinux/udisks2 solid/solid/backends/
 %patch1024 -p1
 %patch1025 -p1
 %patch1026 -p1
-#%patch1027 -p1
+%patch1027 -p1
 %patch1028 -p1
 %patch1029 -p1
 %patch1030 -p1
@@ -221,6 +218,7 @@ export XDG_DATA_DIRS=%_K4datadir:%_datadir
 %endif
     -DPCRE_INCLUDE_DIR=%_includedir/pcre \
     -DWITH_FAM:BOOL=OFF \
+    -DWITH_SOLID_UDISKS2=ON \
     -DKDE_DISTRIBUTION_TEXT="%distribution %_target_cpu" \
     -DKDE4_AUTH_BACKEND_NAME=PolkitQt-1 \
     -DKDE_DEFAULT_HOME:STRING=".kde4"
@@ -315,6 +313,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Fri Dec 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Wed Dec 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
 - update udisks2 backend from KDE/4.10 branch

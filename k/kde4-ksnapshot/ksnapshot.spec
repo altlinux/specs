@@ -2,8 +2,8 @@
 
 %define rname ksnapshot
 Name: kde4-ksnapshot
-Version: 4.9.1
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: Graphics
 Summary: KDE screenshots maker
@@ -67,6 +67,9 @@ KDE 4 core library.
 %_K4dbus_interfaces/org.kde.ksnapshot.xml
 
 %changelog
+* Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 

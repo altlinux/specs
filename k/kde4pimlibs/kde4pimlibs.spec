@@ -6,8 +6,8 @@
 
 %define rname kdepimlibs
 Name: kde4pimlibs
-Version: 4.9.4
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: System/Libraries
 Summary: K Desktop Environment 4 - PIM Libraries
@@ -23,9 +23,9 @@ Patch11: kdepimlibs-4.4.92-alt-no-report-akonadi-old-log.patch
 Patch12: kdepimlibs-4.4.2-alt-nepomuk-only-warn.patch
 
 BuildRequires(pre): akonadi-devel kde4libs-devel
-BuildRequires: boost-devel bzlib-devel gcc-c++ shared-mime-info xsltproc
+BuildRequires: boost-devel bzlib-devel gcc-c++ shared-mime-info xsltproc libxslt-devel
 BuildRequires: libgpg-error-devel libgpgme-devel libassuan-devel libpth-devel
-BuildRequires: libldap-devel libstrigi-devel prison-devel
+BuildRequires: libldap-devel libstrigi-devel prison-devel qjson-devel
 BuildRequires: libgpgme-devel libsasl2-devel libical-devel >= %ical_req
 BuildRequires: libsoprano-devel soprano-backend-redland soprano shared-desktop-ontologies-devel
 BuildRequires: akonadi-devel >= %akonadi_req
@@ -62,6 +62,7 @@ Header files for developing applications using %name.
 
 
 %files
+%_kde4_bindir/akonadi*
 %_K4datadir/apps/akonadi-kde/
 %_K4libdir/lib*.so.*
 #%_K4libdir/libkdeinit4_*.so
@@ -76,6 +77,7 @@ Header files for developing applications using %name.
 %_K4apps/libkholidays
 %_K4apps/akonadi
 %_K4xdg_mime/kdepimlibs-mime.xml
+%_K4xdg_mime/x-vnd.akonadi.socialfeeditem.xml
 %doc %_K4doc/en/*
 
 %files devel
@@ -89,6 +91,9 @@ Header files for developing applications using %name.
 
 
 %changelog
+* Fri Dec 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beat version
+
 * Wed Dec 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
 

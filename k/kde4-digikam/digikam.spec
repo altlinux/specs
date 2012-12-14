@@ -4,8 +4,8 @@
 %define label digiKam
 Name: kde4-%rname
 %define lname lib%name
-Version: 2.9.0
-Release: alt3
+Version: 3.0.0
+Release: alt0.1
 
 Summary: digiKam is an advanced digital photo management application for linux
 License: %gpl2plus
@@ -20,8 +20,8 @@ BuildRequires(pre): rpm-build-licenses kde-common-devel
 BuildPreReq: libpng-devel
 
 # Automatically added by buildreq on Wed Sep 01 2010
-BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libgphoto2-devel libjasper-devel libjpeg-devel liblcms-devel liblensfun-devel liblqr-devel libxkbfile-devel soprano libtiff-devel
-BuildRequires: libpgf-devel libclapack-devel libusb-compat-devel
+BuildRequires: doxygen gcc-c++ graphviz kde4graphics-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libgphoto2-devel libjasper-devel libjpeg-devel liblensfun-devel liblqr-devel libxkbfile-devel soprano libtiff-devel
+BuildRequires: libpgf-devel libclapack-devel libusb-compat-devel liblcms2-devel
 
 %if_enabled marble
 BuildRequires: kde4edu-devel
@@ -165,7 +165,6 @@ rm -rf %buildroot%_man1dir
 %files -n %lname
 %_K4libdir/lib%{rname}*.so*
 %_K4lib/kio_%{rname}*.so
-%_K4lib/%{rname}nepomukservice.so
 
 %if_enabled marble
 %files marble
@@ -175,24 +174,11 @@ rm -rf %buildroot%_man1dir
 %files data
 %doc AUTHORS ChangeLog DESIGN HACKING NEWS README TODO
 %_K4xdg_apps/*.desktop
-%dir %_K4apps/%rname
-%_K4apps/%rname/%{rname}imagewindowui.rc
-%_K4apps/%rname/%{rname}ui.rc
-%_K4apps/%rname/queuemgrwindowui.rc
-%_K4apps/%rname/about
-%_K4apps/%rname/cameraui.rc
-%_K4apps/%rname/data
-%_K4apps/%rname/icons
-%_K4apps/%rname/lighttablewindowui.rc
-%_K4apps/%rname/tips
-%_K4apps/%rname/utils
-%_K4apps/%rname/digikam.notifyrc
-%_K4apps/%rname/database
-%_K4apps/%rname/lensfun
+%_K4apps/%rname
+%exclude %_K4apps/%rname/%{rname}imageplugin_*_ui.rc
 %_K4apps/showfoto
 %_K4apps/solid/actions/%{rname}-opencamera.desktop
 %_K4srv/%{rname}*.protocol
-%_K4srv/digikamnepomukservice.desktop
 %_K4iconsdir/hicolor/*/apps/%rname.*
 %_K4iconsdir/hicolor/*/apps/showfoto.*
 %_K4conf_update/*
@@ -209,6 +195,9 @@ rm -rf %buildroot%_man1dir
 %_K4link/*.so
 
 %changelog
+* Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.1
+- 3.0.0-beta3
+
 * Fri Oct 12 2012 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt3
 - fix to build with gphoto
 

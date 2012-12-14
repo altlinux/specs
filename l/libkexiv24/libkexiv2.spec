@@ -2,8 +2,8 @@
 
 %define rname libkexiv2
 Name: libkexiv24
-Version: 4.9.1
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: System/Libraries
 Summary: Wrapper around Exiv2 library
@@ -55,6 +55,9 @@ Development files for %name
 
 
 %changelog
+* Wed Dec 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 

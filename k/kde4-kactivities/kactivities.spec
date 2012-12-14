@@ -1,17 +1,20 @@
 %define _kde_alternate_placement 1
-%define sover 6
+%define sover_kactivities 6
+%define sover_models 1
 
 %define rname kactivities
 Name: kde4-kactivities
-Version: 4.9.3
-Release: alt1
+%define major 4
+%define minor 10
+%define bugfix 0
+Version: %major.%minor.%bugfix
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: KDE activity manager
 Url: http://kde.org/
 License: LGPLv2+
 
-Requires: libkactivities%sover
 Conflicts: kde4base-runtime-core <= 4.7.4-alt1
 
 Source: %rname-%version.tar
@@ -23,16 +26,31 @@ Patch2: alt-ontologies-dir.patch
 #BuildRequires: gcc-c++ glib2-devel kde4libs-devel libqt3-devel python-module-distribute rpm-build-ruby soprano zlib-devel-static
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel kde-common-devel
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
+BuildRequires: kde4-nepomuk-core-devel
 
 %description
 KDE activity manager
 
+%package common
+Summary: Common package for %name
+Group: System/Configuration/Other
+BuildArch: noarch
+Requires: kde-common >= %major.%minor
+%description common
+Common package for %name
 
-%package -n libkactivities%sover
+%package -n libkactivities%sover_kactivities
 Group: System/Libraries
 Summary: %name library
-#Conflicts: kde4libs <= 4.7.4-alt1
-%description -n libkactivities%sover
+Requires: %name-common = %version-%release
+%description -n libkactivities%sover_kactivities
+%name library
+
+%package -n libkactivities-models%sover_models
+Group: System/Libraries
+Summary: %name library
+Requires: %name-common = %version-%release
+%description -n libkactivities-models%sover_models
 %name library
 
 %package devel
@@ -58,33 +76,43 @@ sed -i 's|^\(INCLUDE.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %K4install
 
 
+%files common
 %files
 %_kde4_bindir/kactivitymanagerd
-%_K4lib/activitymanager_plugin_*.so
-%_K4lib/activitymanager_uihandler_declarative.so
-%_K4lib/activitymanager_uihandler_kdialog.so
-%_K4lib/kactivitymanagerd_fileitem_linking_plugin.so
+%_K4lib/*activitymanager*.so
 %_K4lib/kio_activities.so
+%_K4lib/kcm_activities.so
+%_K4lib/imports/org/kde/activities/models/
 %_K4srv/activitymanager-plugin-*.desktop
 %_K4srv/kactivitymanagerd.desktop
 %_K4apps/plasma/packages/org.kde.ActivityManager.UiHandler/
+%_K4apps/activitymanager/
 #%_K4srv/kded/activitymanager.desktop
 %_K4srv/activities.protocol
 %_K4srv/kactivitymanagerd_fileitem_linking_plugin.desktop
+%_K4srv/kcm_activities.desktop
 %_K4srvtyp/activitymanager-plugin.desktop
 %_datadir/ontology/kde/*
 
-%files -n libkactivities%sover
-%_K4libdir/libkactivities.so.%sover
-%_K4libdir/libkactivities.so.%sover.*
+%files -n libkactivities%sover_kactivities
+%_K4libdir/libkactivities.so.%sover_kactivities
+%_K4libdir/libkactivities.so.%sover_kactivities.*
+
+%files -n libkactivities-models%sover_models
+%_K4libdir/libkactivities-models.so.%sover_models
+%_K4libdir/libkactivities-models.so.%sover_models.*
 
 %files devel
 %_libdir/cmake/KActivities/
+%_libdir/cmake/KActivities-Models/
 %_libdir/pkgconfig/*
 %_K4includedir/*
 %_K4link/*.so
 
 %changelog
+* Mon Dec 10 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beat version
+
 * Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 

@@ -22,12 +22,12 @@
 
 
 %define major 4
-%define minor 9
-%define bugfix 4
+%define minor 10
+%define bugfix 0
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -48,13 +48,14 @@ Source2: pam-kde4-np
 Source3: pam-kde4-kscreensaver
 
 # upstream
-Patch1: kde-workspace-4.8.0-systemd-shutdown.patch
 # RH
 Patch21: kde-workspace-4.8.80-battery-plasmoid-showremainingtime.patch
-Patch22: kdebase-workspace-4.5.0-plasma-konsole.patch
+Patch22: kde-workspace-4.9.90-plasma_konsole.patch
 Patch23: kde-workspace-4.7.80-no_HAL.patch
 Patch24: kdebase-workspace-4.5.90-no_HAL2.patch
 Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
+Patch26: kde-workspace-4.9.90-kscreenlocker_rename.patch
+Patch27: kde-workspace-4.9.3-systemd-displaymanager.patch
 # SuSE
 # MDK
 # upstream
@@ -63,7 +64,7 @@ Patch700: kde-workspace-kwin-reenable-xrender-effects.diff
 Patch850: kubuntu_11_fix_root_only_kcms.diff
 Patch851: kubuntu_19_always_show_kickoff_subtext.diff
 # ALT
-Patch1000: kdebase-workspace-4.8.0-alt-startkde.patch
+Patch1000: kdebase-workspace-4.10.0-alt-startkde.patch
 Patch1001: kdebase-workspace-4.6.0-alt-kdm-confdir.patch
 Patch1002: kdebase-workspace-4.6.3-alt-kdm-cmd-poweroff.patch
 Patch1003: kdebase-workspace-4.8.0-alt-kdm-defaults.patch
@@ -104,7 +105,7 @@ Patch1037: kdebase-workspace-4.6.4-alt-hide-printer-config.patch
 Patch1038: kdebase-workspace-4.8.5-alt-session-exclude.patch
 Patch1039: kdebase-workspace-4.8.4-alt-digitalclock-compactdate.patch
 Patch1040: kdebase-workspace-4.7.4-alt-kxkb-indicator-uppercase.patch
-Patch1041: kdebase-workspace-4.9.1-alt-def-gllegacy.patch
+Patch1041: kdebase-workspace-4.10.0-alt-def-gllegacy.patch
 Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
 Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
 Patch1044: kdebase-workspace-4.8.5-alt-workspaceoptions.patch
@@ -117,6 +118,7 @@ BuildRequires: libConsoleKit-devel
 BuildRequires: google-gadgets-devel
 %endif
 BuildRequires: bzlib-devel gcc-c++ libXft-devel libGLES-devel
+BuildRequires: libxcb-devel libxcbutil-image-devel libxcb-render-util-devel
 BuildRequires: libbluez-devel libkrb5-devel libpam-devel libaudit-devel
 BuildRequires: libqimageblitz-devel libraw1394-devel libsensors3-devel libgps-devel
 BuildRequires: libstrigi-devel libusb-compat-devel xml-utils
@@ -531,15 +533,15 @@ if(POLKITQT-1_FOUND)
 endif(POLKITQT-1_FOUND)
 __EOF__
 
-%if_enabled systemd
-%patch1 -p1
-%endif
-#
 %patch21 -p1
 %patch22 -p1
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
+%patch26 -p1
+%if_enabled systemd
+%patch27 -p0
+%endif
 #
 %patch700 -p1
 #
@@ -783,7 +785,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4exec/fontinst
 %_K4exec/fontinst_x11
 %_K4exec/fontinst_helper
-%_K4exec/kscreenlocker
+%_K4exec/kscreenlocker_greet
 %_K4exec/kwin_rules_dialog
 #%_K4exec/test_kcm_xinerama
 %endif
@@ -799,6 +801,7 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4libdir/libkdeinit4_*.so
 %_K4conf_bin/*
 %_K4lib/*.so*
+%_K4lib/imports/org/kde/kwin/
 %if_enabled desktop
 %exclude %_K4lib/kcm_kdm.so*
 %endif
@@ -965,6 +968,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Dec 10 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Thu Dec 06 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
 

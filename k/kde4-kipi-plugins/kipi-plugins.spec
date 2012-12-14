@@ -1,4 +1,4 @@
-%define libsover 2
+%define libsover 3
 %define libkipiplugins libkipiplugins%libsover
 %define kde4graphics_ver %{get_version kde4graphics-devel}
 
@@ -11,8 +11,8 @@
 %define rname kipi-plugins
 Name: kde4-%rname
 %define beta %nil
-Version: 2.9.0
-Release: alt2
+Version: 3.0.0
+Release: alt0.1
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -39,6 +39,7 @@ BuildRequires(pre): kde4libs-devel kde4graphics-devel
 BuildRequires: gcc-c++ kde4pimlibs-devel libgomp-devel libkgeomap-devel qjson-devel libqca2-devel
 BuildRequires: libgio-devel libgpod-devel libgtk+2-devel
 BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
+BuildRequires: qoauth-devel qjson-devel herqq-devel qtsoap-devel
 BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel
 
 %description
@@ -80,6 +81,10 @@ KDE 4 library.
 %patch1 -p1
 mv %rname-po-%version po
 mv %rname-doc-%version doc
+cat >> doc/CMakeLists.txt <<__EOF__
+MACRO_OPTIONAL_ADD_SUBDIRECTORY(digikam/digikam)
+MACRO_OPTIONAL_ADD_SUBDIRECTORY(digikam/showfoto)
+__EOF__
 install -m 0644 %SOURCE10 cmake/modules
 install -m 0644 %SOURCE11 cmake/modules
 
@@ -163,6 +168,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.1
+- 3.0.0-beta3
+
 * Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt2
 - rebuild with new kde
 

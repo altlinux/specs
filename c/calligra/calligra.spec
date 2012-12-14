@@ -11,7 +11,7 @@
 %def_disable GTL
 
 Name: calligra
-Version: 2.5.3
+Version: 2.5.4
 Release: alt1
 Serial: 0
 
@@ -40,8 +40,6 @@ Requires: %name-okular-odp = %serial:%version-%release
 
 Source: http://download.kde.org/stable/calligra-%version/calligra-%version.tar
 Source1: FindOkular.cmake
-# FC
-Patch1: calligra-2.4.91-tables_to_sheets.patch
 
 # Automatically added by buildreq on Fri Nov 02 2012 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static ilmbase-devel kde4libs kde4libs-devel kde4pimlibs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libgst-plugins libjpeg-devel libpng-devel libpoppler-devel libpoppler4-qt4 libpq-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libtiff-devel libxkbfile-devel openssh-common phonon-devel pkg-config python-base rpm-build-gir ruby shared-desktop-ontologies-devel shared-mime-info soprano-backend-redland soprano-backend-virtuoso xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -608,7 +606,6 @@ Requires: %name-common = %serial:%version-%release
 
 %prep
 %setup
-%patch1 -p1
 cp -ar %SOURCE1 cmake/modules/
 
 %build
@@ -616,6 +613,7 @@ cp -ar %SOURCE1 cmake/modules/
   -DEIGEN2_INCLUDE_DIR:PATH=%_includedir/eigen2 \
   -DBUILD_koabstraction:BOOL=OFF \
   -DBUILD_cstester:BOOL=OFF \
+  -DKDE4_BUILD_TESTS:BOOL=OFF \
   -DIHAVEPATCHEDQT:BOOL=ON
 %K4make
 
@@ -744,6 +742,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4apps/braindump/
 %_K4srvtyp/braindump_extensions.desktop
 %_K4lib/stateshape.so
+%_K4conf/braindumprc
 %_K4apps/stateshape/
 %_K4srv/stateshape.desktop
 
@@ -781,6 +780,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/kspreadsolver.so
 %_K4lib/spreadsheetshape-deferred.so
 %_K4apps/sheets/
+%_K4apps/tables/
 
 %_K4conf/sheetsrc
 %_K4cfg/sheets.kcfg
@@ -1109,6 +1109,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libwordsprivate.so.%sover_common.*
 
 %changelog
+* Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 0:2.5.4-alt1
+- new version
+
 * Fri Nov 02 2012 Sergey V Turchin <zerg@altlinux.org> 0:2.5.3-alt1
 - new version
 

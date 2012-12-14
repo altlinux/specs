@@ -1,7 +1,7 @@
 
 Name: akonadi
-Version: 1.8.1
-Release: alt2
+Version: 1.8.80
+Release: alt1
 
 Group: Databases
 Summary: An extensible cross-desktop storage service for PIM
@@ -136,7 +136,8 @@ export CMAKE_LIBRARY_PATH=%_libdir
     -DBIN_INSTALL_DIR2=%_kde4_bindir \
     -DCONFIG_INSTALL_DIR=%_sysconfdir \
     -DINCLUDE_INSTALL_DIR=%_includedir \
-    -DMYSQLD_EXECUTABLE:FILEPATH=%_sbindir/mysqld
+    -DMYSQLD_EXECUTABLE:FILEPATH=%_sbindir/mysqld \
+    -DINSTALL_QSQLITE_IN_QT_PREFIX=ON
 #    -DAKONADI_BUILD_QSQLITE:BOOL=TRUE \
 #    -DINSTALL_QSQLITE_IN_QT_PREFIX:BOOL=TRUE \
 #    -DAUTOMOC4_EXECUTABLE:FILEPATH=%_libdir/kde4bin/kde4automoc
@@ -190,6 +191,9 @@ install -m 0755 %SOURCE10 %buildroot/%_bindir/akonadi_mysql_install_db
 %_libdir/pkgconfig/*
 
 %changelog
+* Fri Dec 07 2012 Sergey V Turchin <zerg@altlinux.org> 1.8.80-alt1
+- new beta version
+
 * Wed Nov 28 2012 Sergey V Turchin <zerg@altlinux.org> 1.8.1-alt2
 - rebuilt with new boost
 

@@ -3,10 +3,10 @@
 %define rname nepomuk-core
 Name: kde4-nepomuk-core
 %define major  4
-%define minor  9
-%define bugfix 4
+%define minor  10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -19,7 +19,7 @@ Requires: %name-common >= %version-%release
 Source: %rname-%version.tar
 # ALT
 Patch1: kdebase-runtime-4.8.0-alt-def-nepomuk.patch
-Patch2: kdebase-runtime-4.8.0-alt-nepomuk-backup-on.patch
+Patch2: nepomuk-core-4.10.0-alt-nepomuk-backup-on.patch
 Patch3: nepomuk-core-4.9.1-alt-ontology-dir.patch
 
 # Automatically added by buildreq on Wed Sep 26 2012 (-bi)
@@ -28,6 +28,9 @@ Patch3: nepomuk-core-4.9.1-alt-ontology-dir.patch
 BuildRequires: gcc-c++ glib2-devel kde4libs-devel
 #BuildRequires: doxygen graphviz
 BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
+BuildRequires: libtag-devel libpoppler-qt4-devel libexiv2-devel
+BuildRequires: libavcodec-devel libavformat-devel libavdevice-devel libavutil-devel
+BuildRequires: libswscale-devel libpostproc-devel
 BuildRequires: kde-common-devel
 
 %description
@@ -60,7 +63,7 @@ Requires: %name-common >= %version-%release
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
-Conflicts: kde4libs-devel <= 4.7.4-alt1
+Requires: kde4libs-devel
 Requires: %name-common >= %version-%release
 %description devel
 Development files for %name
@@ -69,7 +72,7 @@ Development files for %name
 %prep
 %setup -qn %rname-%version
 %patch1 -p2
-%patch2 -p2
+%patch2 -p1
 %patch3 -p1
 
 sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLists.txt
@@ -82,44 +85,24 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %install
 %K4install
 
-
 %files
-%_kde4_bindir/nepomuk-simpleresource-rcgen
-%_kde4_bindir/nepomukbackup
-%_kde4_bindir/nepomukindexer
-%_kde4_bindir/nepomukserver
-%_kde4_bindir/nepomukservicestub
+%_kde4_bindir/nepomuk*
 %_K4libdir/libkdeinit4_nepomukserver.so
 %_K4libdir/libnepomukcommon.so
-%_K4lib/nepomukbackupsync.so
-%_K4lib/nepomukfileindexer.so
-%_K4lib/nepomukfilewatch.so
-%_K4lib/nepomukqueryservice.so
-%_K4lib/nepomukstorage.so
-%_kde4_xdg_apps/nepomukbackup.desktop
+%_K4lib/nepomuk*.so
+%_kde4_xdg_apps/nepomuk*.desktop
 %_K4apps/fileindexerservice/nepomukfileindexer.notifyrc
 %_K4apps/nepomukfilewatch/nepomukfilewatch.notifyrc
 %_K4apps/nepomukstorage/nepomukstorage.notifyrc
 %_K4start/nepomukserver.desktop
-%_K4srv/nepomukactivitiesservice.desktop
-%_K4srv/nepomukbackupsync.desktop
-%_K4srv/nepomukfileindexer.desktop
-%_K4srv/nepomukfilewatch.desktop
-%_K4srv/nepomukontologyloader.desktop
-%_K4srv/nepomukqueryservice.desktop
-%_K4srv/nepomukremovablestorageservice.desktop
-%_K4srv/nepomukstorage.desktop
-%_K4srv/nepomukstrigiservice.desktop
-%_K4srvtyp/nepomukservice.desktop
+%_K4srv/nepomuk*.desktop
+%_K4srvtyp/nepomuk*.desktop
 
 %files common
 %_datadir/ontology/kde/*
 
 %files -n libnepomukcore4
 %_K4libdir/libnepomukcore.so.*
-
-%files -n libnepomuksync4
-%_K4libdir/libnepomuksync.so.*
 
 %files devel
 %_K4dbus_interfaces/org.kde.*
@@ -129,6 +112,9 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4link/*.so
 
 %changelog
+* Mon Dec 10 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Wed Dec 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
 
