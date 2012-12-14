@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-bind
-Version: 0.8
-Release: alt3
+Version: 0.9
+Release: alt1
 
 Source:%name-%version.tar
 
@@ -14,8 +14,9 @@ License: GPL
 Group: System/Configuration/Other
 Requires: bind bind-utils
 Requires: alterator-net-common >= 0.6-alt1
-Requires: alterator-dhcp >= 0.5-alt4 alterator >= 4.8-alt1
+Requires: alterator-dhcp >= 0.5-alt4 alterator >= 4.24-alt1
 Requires: alterator-l10n >= 2.8-alt2
+Requires: alterator-net-functions >= 1.3.0
 
 Conflicts: alterator-fbi < 5.25-alt2
 
@@ -47,6 +48,10 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Fri Dec 14 2012 Mikhail Efremov <sem@altlinux.org> 0.9-alt1
+- Don't use deprecated function.
+- Added initial IPv6 support.
+
 * Thu Nov 08 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt3
 - set ns address in static zone
 - select 'master' ip address and use it in all zones 
