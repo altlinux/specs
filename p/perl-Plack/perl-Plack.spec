@@ -1,5 +1,5 @@
 Name: perl-Plack
-Version: 1.0004
+Version: 1.0014
 Release: alt1
 
 Summary: Plack - Perl Superglue for Web frameworks and Web Servers (PSGI toolkit)
@@ -9,7 +9,7 @@ Group: Development/Perl
 Url: %CPAN Plack
 Source: %name-%version.tar
 
-BuildRequires: perl-unicore perl-devel perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-File-ShareDir perl-parent perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI perl-libapreq apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose perl-Net-FastCGI perl-Module-Refresh perl-Module-Install perl-podlators perl-Module-Install-ReadmeFromPod perl-Module-Install-Repository
+BuildRequires: perl-unicore perl-devel perl-Hash-MultiValue perl-Devel-StackTrace-AsHTML perl-Try-Tiny perl-libwww perl-Devel-StackTrace perl-Test-TCP perl-HTTP-Body perl-Test-Requires perl-URI perl-Filesys-Notify-Simple perl-File-ShareDir perl-parent perl-CGI-Emulate-PSGI perl-CGI-Compile perl-FCGI-Client perl-CGI perl-libapreq apache2-mod_perl perl-FCGI perl-HTTP-Server-Simple-PSGI perl-Moose perl-Net-FastCGI perl-Module-Refresh perl-Module-Install perl-podlators perl-Module-Install-ReadmeFromPod perl-Module-Install-Repository perl-Stream-Buffered
 BuildArch: noarch
 
 %description
@@ -81,6 +81,10 @@ sed -i "/author_tests/d" Makefile.PL
 %perl_vendor_privlib/Plack/Handler/FCGI.pm
 
 %changelog
+* Fri Dec 14 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0014-alt1
+- 1.0004 -> 1.0014
+- updated build deps
+
 * Sun Sep 30 2012 Vladimir Lettiev <crux@altlinux.ru> 1.0004-alt1
 - 0.9989 -> 1.0004
 
