@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 3
 %define _pl p332
 Version: %branch.%ver_teeny
-Release: alt5
+Release: alt6
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -302,12 +302,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %files stdlibs
 %libdir
-%exclude %libdir/%_target/*tk*
+%exclude %libdir/*/*tk*.so
 %exclude %libdir/*tk*
 
 
 %files tk
-%libdir/%_target/*tk*.so
+%libdir/*/*tk*.so
 %libdir/*tk*
 
 
@@ -346,6 +346,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sat Dec 15 2012 Led <led@altlinux.ru> 1.9.3-alt6
+- %%files: fixed %%ruby_arch (for arches with the suffix "-eabi")
+
 * Thu Dec 13 2012 Led <led@altlinux.ru> 1.9.3-alt5
 - %%install: fixed %%ruby_arch (for arches with the suffix "-eabi")
 
