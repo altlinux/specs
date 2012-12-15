@@ -1,6 +1,6 @@
 Name: module-init-tools
 Version: 3.16
-Release: alt10
+Release: alt11
 
 Summary: Kernel module management utilities
 License: GPL
@@ -59,30 +59,30 @@ module-init-tools.
 %patch3 -p1
 %patch4 -p1
 
-bzip2 -k ChangeLog
-
 # remove pregenerated man pages - they will be recreated from SGML source
 rm -f *.[58]
 
 %build
+%define _optlevel s
+%add_optflags -fno-asynchronous-unwind-tables
 %autoreconf
-
-subst 's|getc_unlocked|getc|g' *.c
-%configure --bindir=/bin --sbindir=/sbin \
+%configure \
 	CC="klcc -shared" \
 	CPPFLAGS="-DCONFIG_NO_BACKWARDS_COMPAT -DKLIBC"
 %make_build modprobe
-subst 's|getc|getc_unlocked|g' *.c
-mv build/modprobe modprobe.mkinitrd
 
 %install
-mkdir -p %buildroot/lib/mkinitrd/%name/sbin
-install -p modprobe.mkinitrd %buildroot/lib/mkinitrd/%name/sbin/modprobe
+install -pD -m 0755 {build,%buildroot/lib/mkinitrd/%name/sbin}/modprobe
 
 %files initramfs
 /lib/mkinitrd/%name
 
 %changelog
+* Sat Dec 15 2012 Led <led@altlinux.ru> 3.16-alt11
+- rebuild with klibc-2.0.2-alt2
+- cleaned up spec
+- added optflags for smaller size
+
 * Fri Nov 23 2012 Led <led@altlinux.ru> 3.16-alt10
 - rebuild with klibc-2.0.2-alt1
 
