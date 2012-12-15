@@ -1,5 +1,5 @@
 Name: expedite
-Version: 1.7.2
+Version: 1.7.3
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -15,9 +15,9 @@ Url: http://www.enlightenment.org/
 Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
 BuildRequires: gcc-c++
-BuildRequires: libevas-devel >= 1.7.0
-BuildRequires: libeina-devel >= 1.7.0
-BuildRequires: libeet-devel >= 1.7.0
+BuildRequires: libevas-devel >= 1.7.3
+BuildRequires: libeina-devel >= 1.7.3
+BuildRequires: libeet-devel >= 1.7.3
 BuildRequires: libX11-devel
 
 %description
@@ -45,6 +45,9 @@ usage cases.
 %doc AUTHORS COPYING* README
 
 %changelog
+* Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
+- 1.7.3
+
 * Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.7.2
 

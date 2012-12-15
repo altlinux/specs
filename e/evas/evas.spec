@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: evas
-Version: 1.7.2
+Version: 1.7.3
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -23,7 +23,7 @@ Patch: evas-1.7.1-alt-build.patch
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
 BuildPreReq: libedb-devel >= 1.0.5.007-alt1.20070731
-BuildPreReq: libeet-devel >= 1.7.0 libeina-devel >= 1.7.0
+BuildPreReq: libeet-devel >= 1.7.3 libeina-devel >= 1.7.3
 BuildRequires: fontconfig-devel libX11-devel libXrender-devel libXext-devel libICE-devel libGL-devel
 BuildRequires: libungif-devel libpng-devel libjpeg-devel librsvg-devel
 BuildRequires: libtiff-devel libcairo-devel libSDL-devel doxygen
@@ -162,6 +162,9 @@ cp -R doc %buildroot%customdocdir
 %exclude %_datadir/evas/examples/evas-buffer-simple.c
 
 %changelog
+* Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.3-alt1
+- 1.7.3
+
 * Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.2-alt1
 - 1.7.2
 
