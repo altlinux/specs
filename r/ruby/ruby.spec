@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 3
 %define _pl p332
 Version: %branch.%ver_teeny
-Release: alt4
+Release: alt5
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -262,8 +262,8 @@ chmod +x %buildroot%_rpmlibdir/%name-doc-ri.filetrigger
 
 %define __ruby %buildroot%_bindir/%name
 %define ruby_libdir %libdir
-%define ruby_arch %_target
-export RUBYLIB=%buildroot%libdir:%buildroot%libdir/%_target
+%define ruby_arch %_target%([ -z "%_gnueabi" ] || echo "-eabi")
+export RUBYLIB=%buildroot%libdir:%buildroot%libdir/%ruby_arch
 export LD_LIBRARY_PATH=%buildroot%_libdir
 
 %add_findreq_skiplist %libdir/gems/*/gems/*/bin/*
@@ -346,6 +346,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Thu Dec 13 2012 Led <led@altlinux.ru> 1.9.3-alt5
+- %%install: fixed %%ruby_arch (for arches with the suffix "-eabi")
+
 * Wed Dec 12 2012 Led <led@altlinux.ru> 1.9.3-alt4
 - fixed ruby libpath
 - fixed BuildRequires
