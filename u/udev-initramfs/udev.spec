@@ -1,6 +1,6 @@
 Name: udev-initramfs
 Version: 150
-Release: alt14
+Release: alt15
 Summary: udev built with klibc for use in initramfs
 License: GPLv2+
 Group: System/Configuration/Hardware
@@ -28,6 +28,12 @@ used by the mkinitrd package when creating initramfs images
 %prep
 %setup
 %patch -p1
+
+cat > klcc.sh <<__EOF__
+#!/bin/sh
+exec klcc -shared "\$@"
+__EOF__
+chmod 755 klcc.sh
 
 cat > udev/udev.c <<__EOF__
 #include <string.h>
@@ -97,7 +103,7 @@ __EOF__
 %add_optflags -fno-asynchronous-unwind-tables
 %autoreconf
 %configure \
-	CC="klcc -shared" \
+	CC="$PWD/klcc.sh" \
 	--sbindir=/lib/mkinitrd/udev/sbin \
 	--libexecdir=/lib/mkinitrd/udev/lib/udev \
 	--without-selinux \
@@ -127,6 +133,9 @@ done
 
 
 %changelog
+* Sat Dec 15 2012 Led <led@altlinux.ru> 150-alt15
+- fixed build with shared klibc
+
 * Mon Nov 26 2012 Led <led@altlinux.ru> 150-alt14
 - removed edd_id extra
 

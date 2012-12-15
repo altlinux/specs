@@ -1,6 +1,6 @@
 Name: klibc
 Version: 2.0.2
-Release: alt1
+Release: alt2
 Summary: A minimal libc subset for use with initramfs
 License: BSD/GPL
 Group: System/Libraries
@@ -78,11 +78,21 @@ install -p -m 0755 %{S:1} ./%name-find-provides
 install -p -m 0755 %{S:2} ./%name-find-requires
 
 # Assume that adjust_kernel_headers --first has been run.
-install -d -m 0755 linux/include
-ln -s "$(readlink -ev /usr/include/linux/../..)"/include/* linux/include/
+install -d -m 0755 linux
+ln -s "$(readlink -ev /usr/include/linux/../..)"/include linux/
 
-# Enable EABI support in config
-echo 'CONFIG_AEABI=y' >> defconfig
+cat > defconfig <<__EOF__
+CONFIG_KLIBC=y
+# CONFIG_KLIBC_ERRLIST is not set
+# CONFIG_KLIBC_ZLIB is not set
+# CONFIG_KLIB_ZIP is not set
+# CONFIG_KINIT_LOAD_INITRD is not set
+# i386 option
+CONFIG_REGPARM=y
+# ARM options
+CONFIG_AEABI=y
+# CONFIG_KLIBC_THUMB is not set
+__EOF__
 
 
 %build
@@ -175,6 +185,15 @@ strip -g %buildroot%klibcdir/lib/libc.so
 
 
 %changelog
+* Sat Dec 15 2012 Led <led@altlinux.ru> 2.0.2-alt2
+- kinit: make initrd support optional
+- cleaned up spec
+- updated defconfig
+- disabled:
+  + CONFIG_KLIBC_ERRLIST
+  + CONFIG_KLIBC_ZLIB
+  + CONFIG_KINIT_LOAD_INITRD
+
 * Fri Nov 23 2012 Led <led@altlinux.ru> 2.0.2-alt1
 - 2.0.2
 
