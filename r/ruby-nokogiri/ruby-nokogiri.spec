@@ -4,7 +4,7 @@
 
 Name: ruby-%pkgname
 Version: 1.5.5
-Release: alt1.1
+Release: alt2
 
 Summary: HTML, XML, SAX, and Reader parser
 Group: Development/Ruby
@@ -19,7 +19,7 @@ Patch3: ruby-nokogiri-1.4.4.2-alt-rubygems.patch
 BuildRequires: libruby-devel libxslt-devel ruby-racc-runtime ruby-test-unit ruby-tool-setup
 BuildRequires: ruby-minitest
 BuildRequires: ruby-racc
-BuildRequires: ruby-rexical
+BuildRequires: %_bindir/rexical
 BuildRequires: libxml-ruby
 
 %description
@@ -47,7 +47,7 @@ Documentation files for %name
 
 # XXX@stanv: next lines are taken from Rakefile:
 racc -l -o lib/nokogiri/css/generated_parser.rb lib/nokogiri/css/parser.y
-rex --independent -o lib/nokogiri/css/generated_tokenizer.rb lib/nokogiri/css/tokenizer.rex
+rexical --independent -o lib/nokogiri/css/generated_tokenizer.rb lib/nokogiri/css/tokenizer.rex
 
 ###ruby_test_unit -I. -Ilib:ext:test test
 %ruby_vendor -Ilib:ext:test setup.rb test
@@ -60,13 +60,20 @@ rex --independent -o lib/nokogiri/css/generated_tokenizer.rb lib/nokogiri/css/to
 %files
 %doc README.rdoc
 %_bindir/*
-%ruby_sitelibdir/*
+%ruby_sitelibdir/%pkgname
+%ruby_sitelibdir/xsd
+%ruby_sitelibdir/*.jar
+%ruby_sitelibdir/*.rb
 %ruby_sitearchdir/*
 
 %files doc
 %ruby_ri_sitedir/Nokogiri*
 
 %changelog
+* Sat Dec 15 2012 Led <led@altlinux.ru> 1.5.5-alt2
+- fixed for renamed %_bindir/rex -> %_bindir/rexical
+- %%files: fixed "File listed twice"
+
 * Fri Dec 07 2012 Led <led@altlinux.ru> 1.5.5-alt1.1
 - Rebuilt with ruby-1.9.3-alt1
 
