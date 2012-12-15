@@ -2,7 +2,7 @@
 
 Name: gnustep-sqlclient
 Version: 1.6.0
-Release: alt1.git20121129
+Release: alt2.git20121129
 Summary: Provide a simple interface to SQL databases for GNUstep applications
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -125,6 +125,9 @@ buildIt $libSQLClient
 %_docdir/GNUstep
 
 %changelog
+* Fri Dec 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2.git20121129
+- Rebuild with updated gnustep-mak
+
 * Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.git20121129
 - Initial build for Sisyphus
 
