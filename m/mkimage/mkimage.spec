@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.3
+Version: 0.2.5
 Release: alt1
 
 Summary: Simple image creator
@@ -34,6 +34,13 @@ files (called `templates').
 %doc examples doc/README.ru
 
 %changelog
+* Sat Dec 15 2012 Michael Shigorin <mike@altlinux.org> 0.2.5-alt1
+- Initial EFI bootloader support (including example4).
+
+* Thu Dec 13 2012 Michael Shigorin <mike@altlinux.org> 0.2.4-alt1
+- mki-pack-boot: made mki-build-propagator call conditional
+- example3: added propagator explicitly (m-i-p no longer pulls it in)
+
 * Sun Jul 22 2012 Alexey Gladkov <legion@altlinux.ru> 0.2.3-alt1
 - mki-count-cpu: Get the number of processors in different ways (ALT#27136).
 - mki-pack-squash: do not need no recovery info.
