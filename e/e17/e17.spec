@@ -1,5 +1,5 @@
 %define _name enlightenment
-%define cvs_date alpha6
+%define cvs_date lucky
 #%%undefine cvs_date
 %define snapshot 2012-10-12
 %define rel alt1
@@ -38,9 +38,9 @@ Requires: edbus
 Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name >= 0.55
 
-BuildPreReq: libeet-devel >= 1.7.0
-BuildPreReq: libecore-devel >= 1.7.0
-BuildPreReq: libeio-devel >= 1.7.0
+BuildPreReq: libeet-devel >= 1.7.3
+BuildPreReq: libecore-devel >= 1.7.3
+BuildPreReq: libeio-devel >= 1.7.3
 BuildRequires: libpam-devel libX11-devel libevas-devel libecore-devel
 BuildRequires: edje libedje-devel libeet-devel libeet-utils libembryo-devel libefreet-devel
 BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
@@ -134,6 +134,9 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.lucky
+- 0.17.0 beta (lucky)
+
 * Wed Nov 28 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.alpha6
 - 0.17.0 alpha6
 

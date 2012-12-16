@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: eeze
-Version: 1.7.2
+Version: 1.7.3
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -18,7 +18,7 @@ Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 Requires: lib%name = %version-%release
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
-BuildRequires: libudev-devel libeina-devel >= 1.2.0 libecore-devel >= 1.2.0
+BuildRequires: libudev-devel libeina-devel >= 1.7.3 libecore-devel >= 1.7.3
 
 %description
 Eeze is a library for manipulating devices through udev with a simple
@@ -95,6 +95,9 @@ This package contains static library required for development statically linked
 %endif
 
 %changelog
+* Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
+- 1.7.3
+
 * Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.7.2
 

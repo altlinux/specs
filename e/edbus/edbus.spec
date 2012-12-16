@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: edbus
-Version: 1.7.2
+Version: 1.7.3
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -20,8 +20,8 @@ Requires: lib%name = %version-%release
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
-BuildRequires: libdbus-devel  libevas-devel >= 1.7.0
-BuildRequires: libecore-devel >= 1.7.0 libeina-devel >= 1.7.0
+BuildRequires: libdbus-devel  libevas-devel >= 1.7.3
+BuildRequires: libecore-devel >= 1.7.3 libeina-devel >= 1.7.3
 
 %description
 This is the start of some basic convenience wrappers around dbus to ease
@@ -95,6 +95,9 @@ This package contains static library required for development statically linked
 %endif
 
 %changelog
+* Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
+- 1.7.3
+
 * Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.2-alt1
 - 1.7.2
 
