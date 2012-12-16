@@ -1,6 +1,6 @@
 Name: findutils
 Version: 4.5.10
-Release: alt4
+Release: alt5
 
 Summary: The GNU versions of find utilities (find and xargs)
 License: GPLv3+
@@ -109,6 +109,9 @@ install -pm755 static/find/find %buildroot%_bindir/find.static
 %_bindir/find.static
 
 %changelog
+* Sat Dec 15 2012 Dmitry V. Levin <ldv@altlinux.org> 4.5.10-alt5
+- Updated to v4.5.10-109-gbf5f83a.
+
 * Sun Nov 18 2012 Dmitry V. Levin <ldv@altlinux.org> 4.5.10-alt4
 - Fixed build with fresh gnulib.
 - Updated to v4.5.10-106-g7cef053.
