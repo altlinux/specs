@@ -12,7 +12,7 @@
 
 Name: calligra
 Version: 2.5.4
-Release: alt1
+Release: alt2
 Serial: 0
 
 Group: Office
@@ -149,8 +149,8 @@ animation and more.
 %package flow
 Group: Office
 Summary: A diagramming and flowcharting application
-Provides: koffice-kivio = %koffice_ver
-Obsoletes: koffice-kivio < %koffice_ver
+#Provides: koffice-kivio = %koffice_ver
+#Obsoletes: koffice-kivio < %koffice_ver
 Requires: %name-core = %serial:%version-%release
 %description flow
 Flow is an easy to use diagramming and flowcharting application with
@@ -1109,6 +1109,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libwordsprivate.so.%sover_common.*
 
 %changelog
+* Sun Dec 16 2012 Sergey V Turchin <zerg@altlinux.org> 0:2.5.4-alt2
+- don't obsolete kivio by flow
+
 * Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 0:2.5.4-alt1
 - new version
 
