@@ -1,6 +1,6 @@
 Name: bison
-Version: 2.6.4
-Release: alt2
+Version: 2.7
+Release: alt1
 
 Summary: A GNU general-purpose parser generator
 License: GPLv3+
@@ -88,6 +88,10 @@ touch src/scan-????.l
 %files -f %name-runtime.lang runtime
 
 %changelog
+* Sun Dec 16 2012 Dmitry V. Levin <ldv@altlinux.org> 2.7-alt1
+- Updated to bison 2.7.
+- Updated translations from translationproject.org.
+
 * Mon Oct 29 2012 Dmitry V. Levin <ldv@altlinux.org> 2.6.4-alt2
 - Built with gnulib v0.0-7677-g4027785.
 
