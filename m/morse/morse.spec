@@ -1,12 +1,12 @@
 Name: morse
 Summary: Morse Classic morse trainer program
-Version: 2.4
+Version: 2.5
 Release: alt1
 License: BSD
 Group: Communications
 Url: http://catb.org/~esr/morse/
 Source0: %name-%version.tar.gz
-Patch: morse2.4-nosound.patch
+Patch: morse2.5-nosound.patch
 
 %define Backends X11 OSS Linux PA ALSA
 
@@ -28,8 +28,8 @@ Morse-code beeps.
 
 %prep
 %setup
-sed -i '/\$(X11LIBS)/s/\(\$(X11LIBS) \)\(.*\)/\2 \1/g' morse.d/Makefile
-%patch
+#sed -i '/\$(X11LIBS)/s/\(\$(X11LIBS) \)\(.*\)/\2 \1/g' morse.d/Makefile
+%patch -p1
 
 %build
 rm -f morse.1
@@ -47,7 +47,7 @@ install %name.1 %buildroot%_man1dir/
 mkdir -p %buildroot/%_altdir
 N=10
 for B in %Backends; do
-echo "%_bindir/%name	%_bindir/%{name}$B	$N" > %buildroot/%_altdir/%{name}$B
+echo "%_bindir/%name	%_bindir/%name$B	$N" > %buildroot/%_altdir/%name$B
 N=$((N+10))
 done
 
@@ -60,6 +60,9 @@ done
 %_altdir/%{name}*
 
 %changelog
+* Sun Dec 16 2012 Fr. Br. George <george@altlinux.ru> 2.5-alt1
+- Autobuild version bump to 2.5
+
 * Tue Jun 28 2011 Fr. Br. George <george@altlinux.ru> 2.4-alt1
 - Autobuild version bump to 2.4
 - Various backends provided
