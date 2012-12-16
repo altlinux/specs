@@ -5,7 +5,7 @@
 
 Name:    apache2-mod_perl
 Version: 2.0.7
-Release: alt3
+Release: alt4
 
 Summary: An embedded Perl interpreter for the Apache2 Web server
 Summary(ru_RU.UTF-8): Встроенный интерпретатор Perl для веб-сервера Apache2
@@ -28,6 +28,7 @@ Source7: docs-2.0.tar
 Patch0: mod_perl-2.0.2-multilib.patch
 Patch1: mod_perl-2.0.5-lfs.patch
 Patch2: mod_perl-2.0.7-alt-HTTP_Headers_version_fix.patch
+Patch3: mod_perl-2.0.7-alt-disable_prctl_set_name.patch
 
 Provides: mod_perl = %version
 
@@ -127,6 +128,7 @@ module.
 %patch0 -p1
 %patch1 -p1
 %patch2
+%patch3
 
 # Complete installation with separate projects
 tar xvf %SOURCE4
@@ -286,6 +288,9 @@ fi
 %doc docs/*
 
 %changelog
+* Sun Dec 16 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.7-alt4
+- Disable changing the proctitle (Closes: #26892, #27924)
+
 * Wed Nov 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.0.7-alt3
 - Excluding Apache/SizeLimit.pm (Closes: #26508)
 - Make use of triggers to restart Apache2 on package install/uninstall
