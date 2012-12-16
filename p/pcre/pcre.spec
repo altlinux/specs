@@ -1,6 +1,6 @@
 Name: pcre
-Version: 8.31
-Release: alt2
+Version: 8.32
+Release: alt1
 
 Summary: Perl-compatible regular expression library
 License: BSD-style
@@ -69,6 +69,7 @@ Requires: lib%{name}cpp = %version-%release, lib%name-devel = %version-%release
 Summary: A program for testing Perl-compatible regular expressions
 Group: Development/Other
 Requires: %libname = %version-%release
+Requires: libpcre16 = %version-%release
 
 %description
 The PCRE library is a set of functions that implement regular expression
@@ -197,8 +198,7 @@ regular expressions.
 %prep
 %setup
 %patch -p1
-rm aclocal.m4
-mkdir m4
+rm aclocal.m4 m4/{libtool,lt*}.m4
 
 %build
 %autoreconf
@@ -293,6 +293,9 @@ rm %buildroot%_libdir/*.la
 %_man1dir/pcretest.*
 
 %changelog
+* Sun Dec 16 2012 Dmitry V. Levin <ldv@altlinux.org> 8.32-alt1
+- Updated to 8.32.
+
 * Mon Sep 24 2012 Dmitry V. Levin <ldv@altlinux.org> 8.31-alt2
 - libpcre3: reintroduced obsolete pcre_info() API for compatiblity.
 
