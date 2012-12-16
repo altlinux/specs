@@ -1,5 +1,5 @@
 Name: wxMaxima
-Version: 12.04.0
+Version: 12.09.0
 Release: alt1
 
 Summary: GUI for the computer algebra system Maxima
@@ -68,6 +68,9 @@ install -D -m644 %SOURCE4 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Sun Dec 16 2012 Ilya Mashkin <oddity@altlinux.ru> 12.09.0-alt1
+- 12.09.0
+
 * Sat Jun 02 2012 Ilya Mashkin <oddity@altlinux.ru> 12.04.0-alt1
 - 12.04.0
 
