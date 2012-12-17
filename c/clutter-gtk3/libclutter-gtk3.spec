@@ -4,7 +4,7 @@
 %def_enable introspection
 
 Name: %{_name}3
-Version: %ver_major.0
+Version: %ver_major.2
 Release: alt1
 
 Summary: Library integrating clutter with GTK+3
@@ -102,6 +102,9 @@ touch AUTHORS
 %endif
 
 %changelog
+* Mon Dec 17 2012 Yuri N. Sedunov <aris@altlinux.org> 1.4.2-alt1
+- 1.4.2
+
 * Thu Oct 18 2012 Yuri N. Sedunov <aris@altlinux.org> 1.4.0-alt1
 - 1.4.0
 
