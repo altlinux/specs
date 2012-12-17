@@ -2,8 +2,8 @@
 
 %define rname libkdeedu
 Name: libkdeedu4
-Version: 4.9.1
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: System/Libraries
 Summary: Base KDEEDU library
@@ -77,6 +77,9 @@ Development files for %name
 
 
 %changelog
+* Mon Dec 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
