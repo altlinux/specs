@@ -1,15 +1,13 @@
 %define _libname	enet
 
 Name: libenet
-Version: 1.3.5
-Release: alt1.1
+Version: 1.3.6
+Release: alt1
 Summary: Thin, simple and robust network layer on top of UDP
 Group: System/Libraries
 License: MIT
 Url: http://enet.bespin.org/
 Source0: http://enet.bespin.org/download/%_libname-%version.tar.gz
-Source1: libenet.pc.in
-Patch: enet-1.3.5-opensuse-pkgconfig.patch
 
 %description
 ENet is a relatively thin, simple and robust network communication
@@ -40,8 +38,6 @@ Static library for enet
 
 %prep
 %setup -n %_libname-%version
-%patch -p2
-install -p -m644 %SOURCE1 .
 
 %build
 export CFLAGS="$RPM_OPT_FLAGS -fPIC"
@@ -52,7 +48,6 @@ gcc -shared -Wl,-soname,%name.so.1 *.o -o %name.so.1
 %install
 %makeinstall_std
 install -pDm644 %name.so.1 %buildroot%_libdir/%name.so.1
-ln -s %name.so.1 %buildroot%_libdir/%name.so
 
 install -d %buildroot%_pkgconfigdir
 install -m644 *.pc %buildroot%_pkgconfigdir
@@ -65,12 +60,16 @@ install -m644 *.pc %buildroot%_pkgconfigdir
 %_libdir/%name.a
 
 %files devel
-%doc tutorial.txt design.txt
+%doc docs/html
 %_includedir/%_libname
 %_libdir/%name.so
 %_pkgconfigdir/*
 
 %changelog
+* Mon Dec 17 2012 Fr. Br. George <george@altlinux.ru> 1.3.6-alt1
+- Autobuild version bump to 1.3.6
+- Fix autobuild bug (Closes: 27415)
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.5-alt1.1
 - Added pkg-config file (ALT #28141)
 
