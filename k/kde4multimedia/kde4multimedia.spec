@@ -4,10 +4,10 @@
 %define rname kdemultimedia
 Name: kde4multimedia
 %define major 4
-%define minor 9
-%define bugfix 3
+%define minor 10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Multimedia
@@ -196,7 +196,7 @@ install -m 0644 %SOURCE105 cmake/modules/
 #%doc README
 
 %files core
-%_K4conf_update/*
+#%_K4conf_update/*
 %_K4iconsdir/oxygen/*/*/*.*
 %_K4iconsdir/hicolor/*/*/*.*
 
@@ -269,6 +269,9 @@ install -m 0644 %SOURCE105 cmake/modules/
 %_K4dbus_interfaces/*.xml
 
 %changelog
+* Mon Dec 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Mon Nov 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
