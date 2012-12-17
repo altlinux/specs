@@ -5,8 +5,8 @@
 %def_disable debug
 
 Name: dovecot
-Version: 2.1.10
-Release: alt3
+Version: 2.1.12
+Release: alt1
 Summary: Dovecot secure IMAP/POP3 server
 License: MIT
 Group: System/Servers
@@ -187,6 +187,10 @@ useradd -r -n -g dovenull -c 'Dovecot untrusted login processes' \
 %_libdir/dovecot/dovecot-config
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 2.1.12-alt1
+- Autobuild version bump to 2.1.12
+- Bugfix (2.1.11) abd bugfix fix 92.1.120 releases
+
 * Tue Nov 13 2012 Fr. Br. George <george@altlinux.ru> 2.1.10-alt3
 - Add systemd first run service
 
