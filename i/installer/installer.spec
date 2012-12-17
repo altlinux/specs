@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.8
+Version: 1.8.9
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Mon Dec 17 2012 Michael Shigorin <mike@altlinux.org> 1.8.9-alt1
+- remount: luksOpen part (timonbl4@) (closes: #28200)
+
 * Thu Dec 13 2012 Michael Shigorin <mike@altlinux.org> 1.8.8-alt1
 - remount: "duplicate" turn_evms_off call
 
