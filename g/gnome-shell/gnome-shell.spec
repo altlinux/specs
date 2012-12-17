@@ -6,7 +6,7 @@
 
 Name: gnome-shell
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -14,7 +14,8 @@ License: GPLv2+
 Url: http://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.5.92-alt-gir.patch
 # use gnome3-applications.menu
 Patch2: %name-3.5.91-avoid-alt-menus.patch
@@ -139,9 +140,6 @@ NOCONFIGURE=1 ./autogen.sh
 #    --with-ca-certificates=%_datadir/ca-certificates/ca-bundle.crt
 %make
 
-%check
-%make check
-
 %install
 %make DESTDIR=%buildroot \
 	mozillalibdir=%browser_plugins_path install
@@ -149,6 +147,10 @@ NOCONFIGURE=1 ./autogen.sh
 rm -f %buildroot%_libdir/%name/*.la
 
 %find_lang %name
+
+%check
+%make check
+
 
 %files
 %_bindir/*
@@ -181,6 +183,10 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2
+- after 3.6.2 snapshot (2fd4e286)
+- %%check section
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 

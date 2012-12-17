@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -34,7 +34,7 @@ URL: ftp://ftp.gnome.org/
 Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %name-%version.tar.xz
+Source: %name-%version.tar
 Source1: gdm_xdmcp.control
 Source2: gdm.wms-method
 
@@ -98,7 +98,8 @@ BuildPreReq: libnss-devel >= 3.11.1
 BuildRequires:  gcc-c++ libdmx-devel
 BuildRequires: librsvg-devel perl-XML-Parser docbook-dtds xsltproc zenity
 BuildRequires: gobject-introspection-devel
-#BuildRequires: libhal-devel
+# for check
+BuildRequires: /proc dbus-tools-gui xvfb-run
 
 %description
 Gdm (the GNOME Display Manager) is a highly configurable
@@ -244,7 +245,7 @@ cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
 mkdir -p %buildroot%_sysconfdir/X11/sessions
 mkdir -p %buildroot%_sysconfdir/X11/wms-methods.d
 
-%make DESTDIR=%buildroot install
+%makeinstall_std
 
 # create empty default dconf database updated from dconf posttrans filetrigger
 touch %buildroot/%_sysconfdir/dconf/db/gdm
@@ -260,6 +261,9 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 
 %find_lang %name
 %find_lang --output=%name-help.lang --without-mo --with-gnome %name
+
+%check
+xvfb-run %make check
 
 %pre
 %pre_control gdm_xdmcp
@@ -366,6 +370,10 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 %endif
 
 %changelog
+* Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2
+- after 3.6.2 snapshot (b60452d12)
+- %%check section
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
