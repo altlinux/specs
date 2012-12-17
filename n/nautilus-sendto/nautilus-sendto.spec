@@ -5,7 +5,7 @@
 %def_without gajim
 
 Name: nautilus-sendto
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
@@ -186,6 +186,9 @@ find %buildroot%_libdir -name \*.la -delete
 %endif
 
 %changelog
+* Mon Dec 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Tue Sep 25 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 
