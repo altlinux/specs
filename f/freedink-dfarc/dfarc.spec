@@ -1,5 +1,5 @@
 Name: freedink-dfarc
-Version: 3.6
+Version: 3.10
 Release: alt1
 Summary: Frontend and .dmod installer for GNU FreeDink
 
@@ -17,7 +17,7 @@ DFArc2 makes it easy to play and manage the Dink Smallwood game and
 it's numerous Dink Modules (or D-Mods).
 
 %prep
-%setup -q -n dfarc-%version
+%setup -n dfarc-%version
 sed -i 's/BZ2_compressBlock/BZ2_bzDecompress/' configure.ac
 
 %build
@@ -33,7 +33,7 @@ install -D share/%name.desktop %buildroot%_desktopdir/%name.desktop
 install -D share/freedink-mime.xml %buildroot%_xdgmimedir/packages/freedink-mime.xml
 
 %files -f dfarc.lang
-%doc AUTHORS COPYING NEWS README THANKS TODO TRANSLATIONS.txt ChangeLog
+%doc AUTHORS COPYING NEWS README THANKS TODO TRANSLATIONS.txt ChangeLog doc
 %_bindir/*
 %_niconsdir/*
 %_xdgmimedir/packages/*
@@ -42,6 +42,9 @@ install -D share/freedink-mime.xml %buildroot%_xdgmimedir/packages/freedink-mime
 %_mandir/man1/*
 
 %changelog
+* Mon Dec 17 2012 Fr. Br. George <george@altlinux.ru> 3.10-alt1
+- Autobuild version bump to 3.10
+
 * Mon May 24 2010 Fr. Br. George <george@altlinux.ru> 3.6-alt1
 - Version up
 
