@@ -1,5 +1,5 @@
 %define rname	adblock_plus
-%define version 2.0.3
+%define version 2.2.1
 %define release alt1
 %define cid 	\{d10d0bf8-f5b5-c8b4-a8b2-2b9879e08c5d\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -15,7 +15,7 @@ License:	GPL
 Group:		Networking/WWW
 URL:		http://adblockplus.mozdev.org/
 
-Source0:	http://releases.mozilla.org/pub/mozilla.org/extensions/adblock_plus/%{rname}-%{version}-sm+tb+fn+fx.xpi
+Source0:	http://releases.mozilla.org/pub/mozilla.org/extensions/adblock_plus/%{rname}-%{version}-sm+tb+an+fx.xpi
 
 BuildArch:	noarch
 
@@ -44,6 +44,9 @@ fi
 %ciddir
 
 %changelog
+* Mon Dec 17 2012 Andrey Cherepanov <cas@altlinux.org> 2.2.1-alt1
+- New version 2.2.1
+
 * Tue Jan 24 2012 Andrey Cherepanov <cas@altlinux.org> 2.0.3-alt1
 - Version 2.0.3
 
