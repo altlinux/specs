@@ -1,14 +1,11 @@
 Name: jot
-# wget -qO- 'http://www.freebsd.org/cgi/cvsweb.cgi/~checkout~/src/usr.bin/jot/jot.c' | sed -n '\@src/usr.bin/jot/jot.c,v @s@.*,v \([0-9.]*\).*@\1@p'
-Version: 1.42
+Version: 1.43
 Release: alt1
-# svn checkout svn://svn.freebsd.org/base/head/usr.bin/jot
-Source: %name-%version.tar
+Source: jot-1.43.tar
 Patch: %name-urandom.patch
-URL: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/%name
-Packager: Fr. Br. George <george@altlinux.ru>
+Url: http://www.freebsd.org/cgi/cvsweb.cgi/src/usr.bin/jot
 Summary: jot is a simple tool that prints random or sequential data
-Summary (ru_RU.KOI8-R): Выводит данные по возрастанию, убыванию по одному элементу на строку
+Summary (ru_RU.UTF-8): п▓я▀п╡п╬п╢п╦я┌ п╢п╟п╫п╫я▀п╣ п©п╬ п╡п╬п╥я─п╟я│я┌п╟п╫п╦я▌, я┐п╠я▀п╡п╟п╫п╦я▌ п©п╬ п╬п╢п╫п╬п╪я┐ я█п╩п╣п╪п╣п╫я┌я┐ п╫п╟ я│я┌я─п╬п╨я┐
 License: BSD
 Group: Text tools
 
@@ -16,10 +13,10 @@ Group: Text tools
 Jot prints numbers, in arithmetic sequence or according to some simple
 random generators.
 
-%description -l ru_RU.KOI8-R
-Athena jot (или просто jot) выводит данные, обычно числа, по возрастанию, убыванию, произвольные или повторяющиеся, по одному элементу на строку.
-
-Эта крошечная программа, написанная на С, очень полезна в сценариях.
+%description -l ru_RU.UTF-8
+Athena jot (п╦п╩п╦ п©я─п╬я│я┌п╬ jot) п╡я▀п╡п╬п╢п╦я┌ п╢п╟п╫п╫я▀п╣, п╬п╠я▀я┤п╫п╬ я┤п╦я│п╩п╟, п©п╬
+п╡п╬п╥я─п╟я│я┌п╟п╫п╦я▌, я┐п╠я▀п╡п╟п╫п╦я▌, п©я─п╬п╦п╥п╡п╬п╩я▄п╫я▀п╣ п╦п╩п╦ п©п╬п╡я┌п╬я─я▐я▌я┴п╦п╣я│я▐, п©п╬ п╬п╢п╫п╬п╪я┐
+я█п╩п╣п╪п╣п╫я┌я┐ п╫п╟ я│я┌я─п╬п╨я┐.
 
 %prep
 %setup
@@ -33,12 +30,18 @@ mkdir -p %buildroot%_bindir %buildroot%_man1dir
 install -s -m755 %name %buildroot%_bindir/
 install %name.1 %buildroot%_man1dir/
 
-
 %files
 %_bindir/%name
 %_man1dir/%name.*
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 1.43-alt1
+- Autobuild version bump to 1.43 (no code changed, just version up)
+- Recode spec from koi8-r to utf8
+
+* Wed Jul 27 2011 Fr. Br. George <george@altlinux.ru> 1.42-alt2
+- Using autobuild scheme
+
 * Tue May 10 2011 Fr. Br. George <george@altlinux.ru> 1.42-alt1
 - Version up
 
