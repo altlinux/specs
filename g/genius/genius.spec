@@ -2,8 +2,8 @@
 %define _libexecdir %_prefix/libexec
 
 Name: genius
-Version: %ver_major.15
-Release: alt2
+Version: %ver_major.16
+Release: alt1
 
 Summary: Genius Calculator
 License: LGPLv3+
@@ -19,7 +19,7 @@ Requires: scrollkeeper
 
 BuildPreReq: libgio-devel >= %glib_ver libgtk+2-devel >= %gtk_ver
 BuildRequires: libgtksourceview-devel >= 2.0.2 libvte-devel
-BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel
+BuildRequires: libreadline-devel libncurses-devel libgmp-devel libmpfr-devel >= 2.3.0
 BuildRequires: gnome-common gnome-doc-utils librarian intltool xsltproc bison flex
 # for non-UTF korean trnslation
 BuildRequires: perl-Encode-KR
@@ -87,6 +87,8 @@ popd
 %exclude %_datadir/mime-info/genius.mime
 
 %changelog
+* Tue Dec 18 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.16-alt1
+- 1.0.16
 
 * Mon Oct 29 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.15-alt2
 - fixed %%install
