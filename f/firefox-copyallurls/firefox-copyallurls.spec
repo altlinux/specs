@@ -1,7 +1,7 @@
 # SPEC file for SessionSaver extension
 
 %define rname	copyallurls
-%define version 0.9.7
+%define version 0.9.8
 %define release alt1
 %define cid 	\{960BE052-4847-422b-9AD6-8631D3D0A607\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -42,6 +42,7 @@ stx - структурированный текст)  в буфер обмена
 
 %prep
 %setup -c
+subst 's/<em:maxVersion>12\.0\./<em:maxVersion>17.0./' install.rdf
 
 %install
 mkdir -p -- %buildroot/%ciddir
@@ -57,6 +58,10 @@ fi
 %ciddir
 
 %changelog
+* Mon Dec 17 2012 Andrey Cherepanov <cas@altlinux.org> 0.9.8-alt1
+- New version 0.9.8
+- Adapt for Firefox 17.0
+
 * Sun Feb 05 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.7-alt1
 - New version
 
