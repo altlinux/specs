@@ -1,5 +1,5 @@
 Name: devscripts
-Version: 2.12.5
+Version: 2.12.6
 Release: alt1
 Source: %{name}_%version.tar.gz
 # XXX We have awfully old po4a
@@ -107,6 +107,9 @@ touch %buildroot%_sysconfdir/cvsdeb.conf
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 2.12.6-alt1
+- Autobuild version bump to 2.12.6
+
 * Thu Nov 15 2012 Fr. Br. George <george@altlinux.ru> 2.12.5-alt1
 - Autobuild version bump to 2.12.5
 - Hack in old po4a config file
