@@ -1,6 +1,6 @@
 Name: ncurses
-Version: 5.7
-Release: alt6
+Version: 5.9
+Release: alt1
 
 %define rootdatadir /lib
 
@@ -660,6 +660,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Mon Dec 17 2012 Fr. Br. George <george@altlinux.ru> 5.9-alt1
+- Version up to 5.9-20121215
+
 * Thu Feb 10 2011 Dmitry V. Levin <ldv@altlinux.org> 5.7-alt6
 - Rebuilt for debuginfo.
 
