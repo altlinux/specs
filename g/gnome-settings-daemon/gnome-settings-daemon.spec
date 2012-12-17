@@ -9,7 +9,7 @@
 
 Name: gnome-settings-daemon
 Version: %ver_major.3
-Release: alt1
+Release: alt2.1
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -17,11 +17,13 @@ Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Url: http://gnome.org
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
 
 Patch: %name-3.5.5-alt-link.patch
 Patch1: %name-3.3.90.1-alt-link.patch
+# https://bugzilla.gnome.org/show_bug.cgi?id=685676
+Patch2: gnome-settings-daemon-3.6.3-xi-raw-events.patch
 
 # From configure.ac
 %define glib2_ver 2.29.14
@@ -89,6 +91,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %setup -q
 %patch -p1 -b .link
 %patch1
+%patch2 -p1
 
 %build
 %autoreconf
@@ -129,6 +132,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/liborientation.so
 %_libdir/%name-%api_ver/libpower.so
 %_libdir/%name-%api_ver/libprint-notifications.so
+%_libdir/%name-%api_ver/libscreensaver-proxy.so
 %_libdir/%name-%api_ver/libsmartcard.so
 %_libdir/%name-%api_ver/libsound.so
 %_libdir/%name-%api_ver/libgsdwacom.so
@@ -139,6 +143,7 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libdir/%name-%api_ver/orientation.gnome-settings-plugin
 %_libdir/%name-%api_ver/power.gnome-settings-plugin
 %_libdir/%name-%api_ver/print-notifications.gnome-settings-plugin
+%_libdir/%name-%api_ver/screensaver-proxy.gnome-settings-plugin
 %_libdir/%name-%api_ver/smartcard.gnome-settings-plugin
 %_libdir/%name-%api_ver/sound.gnome-settings-plugin
 %_libdir/%name-%api_ver/wacom.gnome-settings-plugin
@@ -183,12 +188,17 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-test-orientation
 %_libexecdir/gsd-test-power
 %_libexecdir/gsd-test-print-notifications
+%_libexecdir/gsd-test-screensaver-proxy
 %_libexecdir/gsd-test-smartcard
 %_libexecdir/gsd-test-sound
 %_libexecdir/gsd-test-wacom
 %_libexecdir/gsd-test-xsettings
 
 %changelog
+* Mon Dec 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt2.1
+- updated to 87b1afab07
+- gnome-settings-daemon-3.6.3-xi-raw-events.patch (see BGO bug #685676)
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 

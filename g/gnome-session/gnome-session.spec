@@ -4,7 +4,7 @@
 
 Name: gnome-session
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -12,10 +12,11 @@ Group: Graphical desktop/GNOME
 URL: ftp://ftp.gnome.org
 Packager: GNOME Maintainers Team <gnome@packages.altlinux.org>
 
-Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-#Source: %name-%version.tar
-Source1: gnome-nautilus.png
-Source2: gnome.svg
+#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+Source: %name-%version.tar
+Source1: gnome.svg
+Source2: polkit-gnome-authentication-agent.desktop
+
 Patch: %name-2.91.6-alt-autosave_session.patch
 
 # fedora patches:
@@ -136,10 +137,13 @@ exec %_bindir/startgnome --session gnome-fallback
 __EOF__
 %endif
 
-install -pD -m644 %SOURCE1 %buildroot%_datadir/pixmaps/gnome-nautilus.png
-install -pD -m644 %SOURCE2 %buildroot%_iconsdir/gnome.svg
+install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
+install -pD -m644 %SOURCE1 %buildroot%_datadir/gnome/autostart/gnome-authentication-agent.desktop
 
 %find_lang --with-gnome --output=%name.lang %name-3.0
+
+%check
+%make check
 
 %files -f %name.lang
 %_bindir/*
@@ -152,7 +156,7 @@ install -pD -m644 %SOURCE2 %buildroot%_iconsdir/gnome.svg
 %dir %_datadir/%name/sessions
 %_datadir/%name/sessions/gnome.session
 %_datadir/%name/sessions/gnome-fallback.session
-%_pixmapsdir/*
+%_datadir/gnome/autostart/gnome-authentication-agent.desktop
 %_iconsdir/gnome.svg
 %_iconsdir/hicolor/*/apps/session-properties.*
 %config %_sysconfdir/X11/wmsession.d/*Gnome*
@@ -164,6 +168,10 @@ install -pD -m644 %SOURCE2 %buildroot%_iconsdir/gnome.svg
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2
+- updated to 15c3af7
+- run polkit-gnome-authentication-agent-1 if session is gnome-fallback
+
 * Tue Nov 13 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
