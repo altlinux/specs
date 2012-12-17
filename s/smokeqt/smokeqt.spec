@@ -1,8 +1,8 @@
 %add_findpackage_path %_kde4_bindir
 
 Name: smokeqt
-Version: 4.9.1
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: Development/KDE and QT
 Summary: Bindings for Qt libraries
@@ -310,6 +310,7 @@ Qt generic bindings library.
 %_libdir/libsmoke*.so
 %_includedir/smoke/*
 %_datadir/smokegen/*
+%_datadir/smoke/*
 
 %files -n libsmokephonon4
 %_libdir/libsmokephonon.so.*
@@ -354,6 +355,9 @@ Qt generic bindings library.
 
 
 %changelog
+* Mon Dec 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
