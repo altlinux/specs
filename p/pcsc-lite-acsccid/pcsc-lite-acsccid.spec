@@ -1,12 +1,13 @@
 Name:           pcsc-lite-acsccid
 BuildRequires:  libusb-compat-devel libpcsclite-devel flex
-Version:        1.0.3
-Release:        alt2
+Version:        1.0.4
+Release:        alt1
 Group:          System/Servers
 License:        LGPLv2.1+
 Url:            http://acsccid.sourceforge.net/
 Summary:        PCSC Driver for ACS CCID Based Smart Card Readers
 Source:         %name-%version.tar
+Patch0:         %name-%version-alt-fix.patch
 
 Provides: pcsc-acsccid = %version-%release
 Obsoletes: pcsc-acsccid < %version-%release
@@ -20,6 +21,7 @@ pcsc-lite package.
 
 %prep
 %setup
+%patch0 -p2
 
 %build
 %configure --enable-composite-as-multislot
@@ -38,6 +40,9 @@ sed 's:GROUP="pcscd":GROUP="scard":' <src/92_pcscd_acsccid.rules >%buildroot/lib
 %_libdir/pcsc/drivers/*
 
 %changelog
+* Mon Dec 17 2012 Ivan Ovcherenko <asdus@altlinux.org> 1.0.4-alt1
+- Updated to 1.0.4
+
 * Tue Sep 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.3-alt2
 - added 072f:90cc USB ID 
 
