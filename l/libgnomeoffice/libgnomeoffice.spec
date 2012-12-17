@@ -4,7 +4,7 @@
 
 Name: libgnomeoffice
 Version: 0.8.17
-Release: alt3
+Release: alt4
 
 Summary: Library for writing gnome office programs
 Group: Graphical desktop/GNOME
@@ -14,7 +14,7 @@ Url: http://projects.gnome.org/gnumeric/
 Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.tar.xz
 # not included in the tarball
 Source1: go-conf-gsettings.c
-Patch: libgnomeoffice-0.8.17-alt3-build.patch
+Patch: libgnomeoffice-0.8.17-alt4-build.patch
 
 Obsoletes: libgnomeoffice%abiversion
 Provides: libgnomeoffice%abiversion = %version-%release
@@ -84,6 +84,9 @@ cp %SOURCE1 %_name/app/
 %_datadir/gtk-doc/html/%_name-%abiversion/
 
 %changelog
+* Mon Dec 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8.17-alt4
+- fixed build for pcretest -C output format in pcre-8.32
+
 * Wed Nov 21 2012 Yuri N. Sedunov <aris@altlinux.org> 0.8.17-alt3
 - fixed for UTF-8 support checking in pcre
 
