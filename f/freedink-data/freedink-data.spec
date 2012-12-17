@@ -1,12 +1,12 @@
 Name: freedink-data
-Version: 1.08.20100103
+Version: 1.08.20121209
 Release: alt1
 Summary: Adventure and role-playing game (game data)
 
 Group: Games/Adventure
 License: zlib and CC-BY-SA and (GPLv3+ or Free Art or CC-BY-SA) and OAL and Public Domain and CC-BY and GPLv2+
 Url: http://www.freedink.org/
-Source: ftp://ftp.gnu.org/gnu/freedink/%name-%version.tar.gz
+Source: %name-%version.tar.gz
 #Source0:	http://www.freedink.org/releases/%name-%version.tar.gz
 BuildArch: noarch
 Packager: Fr. Br. George <george@altlinux.ru>
@@ -21,7 +21,7 @@ This package contains architecture-independent data for the original
 game, along with free sound and music replacements.
 
 %prep
-%setup -q
+%setup
 # Strip DOS EOL from documentation
 # https://fedoraproject.org/wiki/PackageMaintainers/Common_Rpmlint_Issues#wrong-file-end-of-line-encoding
 sed -i 's/\r//' README.txt README-REPLACEMENTS.txt
@@ -35,6 +35,9 @@ make install PREFIX=%prefix DESTDIR=$RPM_BUILD_ROOT
 %_datadir/dink/
 
 %changelog
+* Mon Dec 17 2012 Fr. Br. George <george@altlinux.ru> 1.08.20121209-alt1
+- Autobuild version bump to 1.08.20121209
+
 * Mon May 24 2010 Fr. Br. George <george@altlinux.ru> 1.08.20100103-alt1
 - Version up
 
