@@ -5,13 +5,13 @@ BuildRequires(pre): rpm-build-firefox
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	2.4.4.1
-Release:	alt2
+Version:	5.4
+Release:	alt1
 Summary:	Dark theme for Firefox
 
 License:	Free
 Group:		Networking/WWW
-URL:		https://addons.mozilla.org/RU/firefox/addon/bloomind-ft-deepdark-2/
+URL:		https://addons.mozilla.org/RU/firefox/addon/ft-deepdark/
 
 Source0:	%rname-%version.tar
 
@@ -33,6 +33,9 @@ cp -fR * %buildroot/%ciddir
 %ciddir
 
 %changelog
+* Mon Dec 17 2012 Andrey Cherepanov <cas@altlinux.org> 5.4-alt1
+- New version 5.4
+
 * Wed Jan 18 2012 Alexey Gladkov <legion@altlinux.ru> 2.4.4.1-alt2
 - Rebuilt with firefox-9.0.1
 
