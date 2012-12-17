@@ -2,8 +2,8 @@
 
 %define rname libkcddb
 Name: libkcddb4
-Version: 4.9.1
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: System/Libraries
 Summary: KDE CDDB library
@@ -45,7 +45,7 @@ install -m 0644 %SOURCE1 cmake/modules/
 %doc TODO
 %_K4libdir/libkcddb.so.*
 %_K4lib/kcm_cddb.so
-%_K4conf_update/kcmcddb-emailsettings.upd
+#%_K4conf_update/kcmcddb-emailsettings.upd
 %_K4cfg/libkcddb.kcfg
 %_K4srv/libkcddb.desktop
 %doc %_K4doc/en/kcontrol/cddbretrieval/
@@ -57,6 +57,9 @@ install -m 0644 %SOURCE1 cmake/modules/
 %_K4includedir/libkcddb/
 
 %changelog
+* Mon Dec 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
