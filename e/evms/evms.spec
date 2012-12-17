@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt27
+Release: alt28
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -165,6 +165,9 @@ EOF
 %endif
 
 %changelog
+* Mon Dec 17 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt28
+- luks plugin: remove cipher/password option
+
 * Fri Nov 23 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt27
 - md plugin: fix check kernel version
 - gpt plugin: add EFI_SYSTEM_PARTITION to type list
