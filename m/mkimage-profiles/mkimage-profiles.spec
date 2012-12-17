@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -16,7 +16,7 @@ BuildRequires: /proc
 
 Requires: rsync git-core
 Requires: time schedutils sfdisk
-Requires: mkimage >= 0.2.0
+Requires: mkimage >= 0.2.5
 
 # Recommends: graphviz qemu-img
 
@@ -78,6 +78,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Dec 17 2012 Michael Shigorin <mike@altlinux.org> 0.9.2-alt1
+- enhanced uefi support
+
 * Mon Dec 03 2012 Michael Shigorin <mike@altlinux.org> 0.9.1-alt1
 - initial kde4 support
 
