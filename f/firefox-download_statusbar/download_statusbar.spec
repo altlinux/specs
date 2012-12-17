@@ -2,7 +2,7 @@
 
 %define rname	download_statusbar
 %define version 0.9.10
-%define release alt1
+%define release alt2
 %define cid	\{D4DD63FA-01E4-46a7-B6B1-EDAB7D6AD389\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -41,6 +41,7 @@ window getting in the way of your web browsing.
 # RPM call unzip with -Lq keys, effectivly kills all mixed-case filenames in archive
 rm -rf -- ./*
 unzip -q %SOURCE0
+subst 's/maxVersion>10.0a1/maxVersion>17.0.*/' install.rdf
 
 %install
 mkdir -p -- %buildroot/%ciddir
@@ -55,6 +56,9 @@ fi
 %ciddir
 
 %changelog
+* Mon Dec 17 2012 Andrey Cherepanov <cas@altlinux.org> 0.9.10-alt2
+- Adapt for Firefox 17.0
+
 * Sun Feb 05 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.9.10-alt1
 - New version (0.9.10)
 
