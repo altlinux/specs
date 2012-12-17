@@ -6,8 +6,8 @@
 %def_with pgsql
 
 Name: zabbix
-Version: 2.0.3
-Release: alt3
+Version: 2.0.4
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -45,8 +45,7 @@ BuildArch: noarch
 %package server-common
 Summary: %name network monitor (server common stuff)
 Group: Monitoring
-Requires: %_sysconfdir/%name
-Requires: %_logdir/%name
+Requires: %name-common = %serial:%version-%release
 
 %package server-mysql
 Summary: %name network monitor (server, compiled with MySQL support)
@@ -67,8 +66,7 @@ Obsoletes: %name-pgsql < 1:1.1.7-alt1
 %package agent
 Summary: %name agent
 Group: Monitoring
-Requires: %_sysconfdir/%name
-Requires: %_logdir/%name
+Requires: %name-common = %serial:%version-%release
 
 %package agent-sudo
 Summary: sudo entry for %name agent
@@ -79,8 +77,7 @@ Requires: %name-agent
 %package proxy
 Summary: %name proxy
 Group: Monitoring
-Requires: %_sysconfdir/%name
-Requires: %_logdir/%name
+Requires: %name-common = %serial:%version-%release
 Requires: %_sbindir/fping
 
 %package phpfrontend-engine
@@ -268,7 +265,8 @@ find conf -type f -print0 | xargs -0 sed -i \
 	-e "s,PidFile=/tmp,PidFile=%_var/run/zabbix,g" \
 	-e "s,LogFile=/tmp,LogFile=%_logdir/zabbix,g" \
 	-e "s,/home/zabbix/lock,%_var/lock/subsys/zabbix,g" \
-	-e "s,/tmp/mysql.sock,%_localstatedir/mysql/mysql.sock,g" --
+	-e "s,/tmp/mysql.sock,%_localstatedir/mysql/mysql.sock,g" \
+	-e "s,Include=/usr/local/etc/zabbix_agentd.conf.d/,Include=%_sysconfdir/%name/zabbix_agentd.conf.d/,g" --
 
 %install
 
@@ -297,7 +295,7 @@ install -m0755 src/%{name}_server/%{name}_pgsql %buildroot%_sbindir
 # conf files
 install -m0640 conf/%{name}_{server,agentd,proxy}.conf %buildroot%_sysconfdir/%name
 #install -m0640 misc/conf/%{name}_agentd/userparameter_{examples,mysql}.conf %buildroot%_sysconfdir/%name
-install -Dpm 644 sources/%name-tmpfiles.conf %buildroot%_sysconfdir/tmpfiles.d/%name.conf
+install -Dpm 644 sources/%name-tmpfiles.conf %buildroot/lib/tmpfiles.d/%name.conf
 
 # frontends
 cp -r frontends %buildroot%webserver_webappsdir/%name/
@@ -388,7 +386,7 @@ fi
 %files common
 %dir %attr(1775,root,%zabbix_group) %_logdir/%name
 %dir %_sysconfdir/%name
-%_sysconfdir/tmpfiles.d/*
+/lib/tmpfiles.d/*
 
 %files server-common
 %_bindir/%{name}_get
@@ -437,7 +435,6 @@ fi
 
 %files phpfrontend-engine
 %webserver_webappsdir/%name
-%exclude %webserver_webappsdir/%name/frontends/php/conf/COPYING
 
 %files phpfrontend-php5
 %files phpfrontend-apache
@@ -454,6 +451,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Mon Dec 17 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.4-alt1
+- 2.0.4 release
+
 * Sat Nov 24 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.3-alt3
 - Fix name unit files
 
