@@ -1,20 +1,20 @@
 %define module_name	acpi_call
 %define module_version	0.1
 
-%define module_release	alt2
+%define module_release alt3
 
-%define kversion  	3.6.10	
-%define krelease	alt1
 %define flavour		std-def
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-std-def
 
-%define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
 
 Summary: acpi_call module
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198154.1
+Release: %module_release.%kcode.%kbuildrelease
 License: GPL
 Group: System/Kernel and hardware
 
@@ -25,16 +25,14 @@ Url: https://github.com/mkottman/acpi_call
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: perl
 BuildRequires: rpm >= 4.0.2-75
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
-ExclusiveArch: %ix86 x86_64
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+ExclusiveArch: %karch
 
 Requires: %module_name
 
@@ -51,23 +49,20 @@ tar xf %kernel_src/%module_name-%module_version.tar.*
 make KDIR=%_usrsrc/linux-%kversion-%flavour-%krelease
 
 %install
-%__mkdir_p %buildroot/%module_dir
-%__install -pD -m644 %module_name.ko \
+mkdir -p %buildroot/%module_dir
+install -pD -m644 %module_name.ko \
     %buildroot%module_dir/
-
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
 
 %files
 %defattr(644,root,root,755)
 %module_dir
 
 %changelog
-* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.1-alt2.198154.1
-- Build for kernel-image-std-def-3.6.10-alt1.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1-alt3
+- new template
 
 * Wed May 11 2011 Anton Protopopov <aspsk@altlinux.org> 0.1-alt2
 - Use kernelarch macro for %%buildarch

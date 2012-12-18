@@ -1,25 +1,25 @@
 %define module_name	virtualbox
 %define module_version	4.2.4
 
-%define module_release	alt1
+%define module_release alt2
 
 %define drv_module_name	vboxdrv
 %define pci_module_name	vboxpci
 %define net_module_name	vboxnetflt
 %define net_module_adaptor_name	vboxnetadp
 
-%define kversion	3.6.10
-%define krelease	alt1
 %define flavour		std-def
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-std-def
 
-%define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
 
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198154.1
+Release: %module_release.%kcode.%kbuildrelease
 License: GPL
 Group: System/Kernel and hardware
 
@@ -31,7 +31,7 @@ BuildRequires(pre): rpm-build-kernel
 BuildPreReq: gcc-c++
 BuildRequires: perl
 BuildRequires: rpm >= 4.0.2-75
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%drv_module_name = %module_version
 BuildRequires: kernel-source-%pci_module_name = %module_version
 BuildRequires: kernel-source-%net_module_name = %module_version
@@ -41,10 +41,8 @@ Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%r
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
-ExclusiveArch: %ix86 x86_64
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+ExclusiveArch: %karch
 
 Requires: %module_name-common
 
@@ -57,10 +55,10 @@ or in your /etc/modules.conf file.
 
 %prep
 %setup -T -c -n kernel-source-%module_name-%module_version
-%__tar jxvf %kernel_src/kernel-source-%drv_module_name-%module_version.tar.bz2
-%__tar jxvf %kernel_src/kernel-source-%pci_module_name-%module_version.tar.bz2
-%__tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
-%__tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%drv_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%pci_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%net_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%net_module_adaptor_name-%module_version.tar.bz2
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
@@ -80,29 +78,26 @@ cp kernel-source-%drv_module_name-%module_version/Module.symvers \
     KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
 
 %install
-%__mkdir_p %buildroot/%module_dir
-%__install -pD -m644 kernel-source-%drv_module_name-%module_version/vboxdrv.ko \
+mkdir -p %buildroot/%module_dir
+install -pD -m644 kernel-source-%drv_module_name-%module_version/vboxdrv.ko \
     %buildroot%module_dir/
-%__install -pD -m644 kernel-source-%pci_module_name-%module_version/vboxpci.ko \
+install -pD -m644 kernel-source-%pci_module_name-%module_version/vboxpci.ko \
     %buildroot%module_dir/
-%__install -pD -m644 kernel-source-%net_module_name-%module_version/vboxnetflt.ko \
+install -pD -m644 kernel-source-%net_module_name-%module_version/vboxnetflt.ko \
     %buildroot%module_dir/
-%__install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnetadp.ko \
+install -pD -m644 kernel-source-%net_module_adaptor_name-%module_version/vboxnetadp.ko \
     %buildroot%module_dir/
-
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
 
 %files
 %defattr(644,root,root,755)
 %module_dir
 
 %changelog
-* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.2.4-alt1.198154.1
-- Build for kernel-image-std-def-3.6.10-alt1.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.4-alt2
+- new template
 
 * Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.2.4-alt1
 - 4.2.4

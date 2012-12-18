@@ -1,10 +1,12 @@
 %define module_name	bcmwl
 %define module_version	5.100.82.112
-%define module_release	alt3
+%define module_release alt4
 
-%define kversion	3.6.10
-%define krelease	alt1
 %define flavour		std-def
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-std-def
+
+%setup_kernel_module %flavour
 
 %define norm_version	%kversion
 
@@ -13,7 +15,7 @@
 Summary: Modules for Broadcom-based WiFi .11a/b/g adapters
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198154.1
+Release: %module_release.%kcode.%kbuildrelease
 License: Proprietary
 Group: System/Kernel and hardware
 
@@ -26,16 +28,14 @@ Patch2: bcmwl-build-kernel3.4.patch
 BuildRequires: perl sharutils
 BuildRequires(pre): rpm-build-kernel
 BuildRequires: kernel-source-%module_name = %module_version
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 
-Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
-ExclusiveArch: %ix86 x86_64
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+ExclusiveArch: %karch
 
 %description
 These packages contain Broadcom's IEEE 802.11a/b/g/n hybrid Linux device
@@ -65,7 +65,7 @@ make -C %_usrsrc/linux-%kversion-%flavour SUBDIRS=`pwd` modules
 mkdir -p $RPM_BUILD_ROOT%module_dir/
 
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
-make -C %_usrsrc/linux-%kversion-%flavour INSTALL_MOD_PATH=%buildroot INSTALL_MOD_DIR=net SUBDIRS=`pwd`  modules_install 
+make -C %_usrsrc/linux-%kversion-%flavour INSTALL_MOD_PATH=%buildroot INSTALL_MOD_DIR=net SUBDIRS=`pwd`  modules_install
 
 # blacklist several modules (see ALT bugs #26265, #26250)
 mkdir -p %buildroot/%_sysconfdir/modprobe.d
@@ -75,19 +75,16 @@ blacklist ssb
 blacklist b43
 __EOF__
 
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
-
 %files
 %module_dir
 %config(noreplace) %_sysconfdir/modprobe.d/blacklist-bcm.conf
 
 %changelog
-* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 5.100.82.112-alt3.198154.1
-- Build for kernel-image-std-def-3.6.10-alt1.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 5.100.82.112-alt4
+- new template
 
 * Mon Jun 11 2012 Anton Protopopov <aspsk@altlinux.org> 5.100.82.112-alt3
 - fix to build with kernel 3.4
@@ -120,11 +117,11 @@ __EOF__
 - 5.10.91.9.3
 
 * Tue May 26 2009 Michail Yakushin <silicium@altlinux.ru> 5.10.91.9-alt1
-- 5.10.91.9 
+- 5.10.91.9
 
 * Tue Apr 21 2009 Michail Yakushin <silicium@altlinux.ru> 5.10.79.10-alt2
-- Fix module position (closes: 19603) 
+- Fix module position (closes: 19603)
 
 * Wed Mar 25 2009 Michail Yakushin <silicium@altlinux.ru> 5.10.79.10-alt1
-- initial build 
+- initial build
 
