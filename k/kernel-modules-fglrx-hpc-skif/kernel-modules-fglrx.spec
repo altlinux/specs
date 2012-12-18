@@ -1,6 +1,6 @@
 %define module_name	fglrx
-%define module_version	8.98
-%define module_release	alt4
+%define module_version	9.00.2
+%define module_release	alt1
 
 %define kversion       2.6.32
 %define krelease       alt25
@@ -42,17 +42,21 @@ Patch3: FGLRX-2.6.36-10-10.diff
 Patch4: http://www.cosmicencounter.net/mirror/patch/sema_init.patch
 Patch5: http://aur.archlinux.org/packages/catalyst-generator/catalyst-generator/makefile_compat.patch
 
-Patch7: fglrx-2.6.38.patch
+#Patch7: fglrx-2.6.38.patch
 
 %if "%kversion" >= "3.4"
+%if "%kversion" < "3.6.0"
 Patch9: fglrx-3.4.2-build.patch
 %endif
-Patch10: fglrx-3.4.6-build.patch
-Patch11: fglrx-3.4.6-old_rsp.patch
+%endif
 
 %if "%kversion" >= "3.5"
+%if "%kversion" < "3.6.0"
 Patch12: fglrx-3.5.2-build.patch
 %endif
+%endif
+
+Patch13: arch-fglrx-3.7.patch
 
 %description
 Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite
@@ -82,17 +86,12 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %endif
 
 %if "%kversion" >= "3.4"
-%if "%kversion" < "3.4.6"
 %patch9 -p1
-%else
-%patch10 -p0
-%patch11 -p6
-%endif
 %endif
 
-%if "%kversion" >= "3.5"
-%patch12 -p1
-%endif
+%patch13 -p6
+
+#fglrx-3.4.6-build.patch
 
 sed -i 's|COMPAT_ALLOC_USER_SPACE|arch_compat_alloc_user_space|' kcl_ioctl.c
 
@@ -117,8 +116,11 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Tue Nov 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.8.98-alt4.132640.25
+* Tue Dec 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9.00.2-alt1.132640.25
 - Build for kernel-image-hpc-skif-2.6.32-alt25.
+
+* Tue Dec 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9.00.2-alt1
+- Rebuilt with updated kernel-image
 
 * Sat Aug 18 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.98-alt4
 - Fixed build for kernel 3.5.2+
@@ -541,4 +543,5 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 
 * Thu Jun 05 2003 Peter Novodvorsky <nidd@altlinux.com> 1.0.2.9.12-alt1
 - initial version.
+
 
