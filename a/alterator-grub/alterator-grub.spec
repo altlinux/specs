@@ -2,7 +2,7 @@
 
 Name: alterator-grub
 Version: 0.9
-Release: alt1
+Release: alt2
 
 Summary: alterator module to setup grub bootloader
 License: GPL
@@ -15,12 +15,16 @@ Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.9-alt10
 Requires: alterator-sh-functions >= 0.6-alt1
 Requires: alterator-hw-functions >= 0.4-alt1
-Requires: grub2 >= 2.00-alt7
+Requires: grub2-pc >= 2.00-alt7
 Conflicts: guile-evms < 0.4-alt13
 
 BuildPreReq: alterator >= 4.7-alt5
 BuildRequires: grub2 >= 2.00-alt7
 BuildRequires: libdevmapper-devel
+
+%ifarch x86_64
+Requires: grub2-efi
+%endif
 
 %description
 alterator module to setup grub bootloader
@@ -43,6 +47,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Tue Dec 18 2012 Michael Shigorin <mike@altlinux.org> 0.9-alt2
+- added arch-specific grub2-efi dependency
+
 * Thu Dec 06 2012 Michael Shigorin <mike@altlinux.org> 0.9-alt1
 - dropped EVMS specific hacks (see also #28181)
 
