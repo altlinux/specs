@@ -1,12 +1,12 @@
 %define module_name	virtualbox-addition
 %define module_version	4.2.4
-%define module_release	alt1
+%define module_release alt2
 
-%define kversion	3.7.0
-%define krelease	alt1
 %define flavour		un-def
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-un-def
 
-%define base_arch %(echo %_target_cpu | sed 's/i.86/i386/;s/athlon/i386/')
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/misc
 
@@ -17,7 +17,7 @@
 Summary: VirtualBox modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198400.1
+Release: %module_release.%kcode.%kbuildrelease
 License: GPL
 Group: System/Kernel and hardware
 
@@ -29,7 +29,7 @@ BuildRequires(pre): rpm-build-kernel
 BuildPreReq: gcc-c++
 BuildRequires: perl
 BuildRequires: rpm >= 4.0.2-75
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%guest_module_name = %module_version
 BuildRequires: kernel-source-%vfs_module_name = %module_version
 BuildRequires: kernel-source-%video_module_name = %module_version
@@ -48,10 +48,8 @@ Provides: kernel-modules-%vfs_module_name-%kversion-%flavour-%krelease = %versio
 Provides: kernel-modules-%vfs_module_name-%flavour = %version-%release
 Obsoletes: kernel-modules-%vfs_module_name-%flavour
 
-PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
-ExclusiveArch: %ix86 x86_64
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+ExclusiveArch: %karch
 
 # %%if "%flavour" == "ovz-el"
 # #Patch1: ovz-el-fix-build.patch
@@ -63,9 +61,9 @@ that are needed for additonal guests support for VirtualBox.
 
 %prep
 %setup -T -c -n kernel-source-%module_name-%module_version
-%__tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
-%__tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
-%__tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%guest_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%vfs_module_name-%module_version.tar.bz2
+tar jxvf %kernel_src/kernel-source-%video_module_name-%module_version.tar.bz2
 
 # %%if "%flavour" == "ovz-el"
 # %%patch1 -p1
@@ -83,27 +81,24 @@ cp kernel-source-%guest_module_name-%module_version/Module.symvers \
     KERN_DIR=%_usrsrc/linux-%kversion-%flavour/
 
 %install
-%__mkdir_p %buildroot/%module_dir
-%__install -pD -m644 kernel-source-%guest_module_name-%module_version/vboxguest.ko \
+mkdir -p %buildroot/%module_dir
+install -pD -m644 kernel-source-%guest_module_name-%module_version/vboxguest.ko \
     %buildroot%module_dir/
-%__install -pD -m644 kernel-source-%vfs_module_name-%module_version/vboxsf.ko \
+install -pD -m644 kernel-source-%vfs_module_name-%module_version/vboxsf.ko \
     %buildroot%module_dir/
-%__install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko \
+install -pD -m644 kernel-source-%video_module_name-%module_version/vboxvideo.ko \
     %buildroot%module_dir/
-
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
 
 %files
 %defattr(644,root,root,755)
 %module_dir
 
 %changelog
-* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.2.4-alt1.198400.1
-- Build for kernel-image-un-def-3.7.0-alt1.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.2.4-alt2
+- new template
 
 * Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.2.4-alt1
 - 4.2.4

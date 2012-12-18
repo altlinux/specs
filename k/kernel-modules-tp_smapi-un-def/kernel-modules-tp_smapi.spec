@@ -1,37 +1,37 @@
 %define module_name             tp_smapi
 %define module_version          0.41
-%define module_release          alt1
+%define module_release alt2
 
-%define kversion	3.7.0
-%define krelease	alt1
 %define flavour		un-def
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-un-def
+
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198400.1
+Release: %module_release.%kcode.%kbuildrelease
 
 Summary: IBM ThinkPad SMAPI Driver
 License: GPL
 Group: System/Kernel and hardware
-URL: http://tpctl.sourceforge.net
+Url: http://tpctl.sourceforge.net
 
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name-%module_version
 
-Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
-ExclusiveArch: %ix86 x86_64
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+ExclusiveArch: %karch
 
 %description
 ThinkPad laptops include a proprietary interface called SMAPI BIOS
@@ -57,14 +57,8 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 	HDAPS=1
 
 %install
-%__install -d %buildroot/%module_dir
-%__cp -a {thinkpad_ec,tp_smapi,hdaps}.ko %buildroot/%module_dir/
-
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
+install -d %buildroot/%module_dir
+cp -a {thinkpad_ec,tp_smapi,hdaps}.ko %buildroot/%module_dir/
 
 %files
 %module_dir
@@ -72,8 +66,11 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %doc README CHANGES
 
 %changelog
-* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.41-alt1.198400.1
-- Build for kernel-image-un-def-3.7.0-alt1.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.41-alt2
+- new template
 
 * Wed Dec 05 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.41-alt1
 - 0.41
