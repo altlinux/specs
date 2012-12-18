@@ -1,22 +1,24 @@
 %define module_name     vhba
 %define module_version  20120422
-%define module_release  alt1
+%define module_release alt2
 
-%define kversion        3.6.10
-%define krelease        alt1
 %define flavour         std-def
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-std-def
+
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/extra
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.198154.1
+Release: %module_release.%kcode.%kbuildrelease
 
 Summary: VHBA virtual host bus adapter module
 License: GPLv2
 Group: System/Kernel and hardware
 
-URL: http://cdemu.sourceforge.net/
+Url: http://cdemu.sourceforge.net/
 Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 Source2: vhba.init
@@ -25,18 +27,16 @@ ExclusiveOS: Linux
 BuildRequires(pre): rpm-build-kernel
 
 BuildRequires: module-init-tools
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
- 
-Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
+
+Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 Requires: vhba-udev-rules
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %karch
 
 %description
 VHBA kernel module, a virtual SCSI host bus adapter used by CDEmu daemon from
@@ -54,27 +54,26 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %install
 install -d %buildroot/%module_dir
 cp -a %module_name.ko %buildroot/%module_dir/
-install -Dp -m0755 %SOURCE2 %buildroot%_initrddir/%module_name
+install -Dp -m0755 %SOURCE2 %buildroot%_initdir/%module_name
 
 %preun
 %preun_service %module_name
 /sbin/service %module_name condstop ||:
 
 %post
-%post_kernel_modules %kversion-%flavour-%krelease
 %post_service %module_name
 /sbin/service %module_name condrestart ||:
-  
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
 
 %files
 %module_dir
-%attr(0755,root,root) %_initrddir/%module_name
+%attr(0755,root,root) %_initdir/%module_name
 
 %changelog
-* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20120422-alt1.198154.1
-- Build for kernel-image-std-def-3.6.10-alt1.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 20120422-alt2
+- new template
 
 * Wed Apr 25 2012 Nazarov Denis <nenderus@altlinux.org> 20120422-alt1
 - Version 20120422
