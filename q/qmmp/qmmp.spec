@@ -1,5 +1,5 @@
 %define branch 0.7
-%define svn svn2957
+%define svn svn3077
 
 Version: %branch.0
 Epoch: 1
@@ -746,6 +746,15 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Tue Dec 18 2012 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3077
+- 0.7.0 svn3077 version
+
+* Sat Dec 15 2012 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3067.1
+- fix buildrequires
+
+* Sat Dec 15 2012 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3067
+- 0.7.0 svn3067 version
+
 * Sun Oct 14 2012 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn2957
 - 0.7.0 svn2957 version
 
