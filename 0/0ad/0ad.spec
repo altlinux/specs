@@ -1,13 +1,13 @@
 Name: 0ad
 Epoch: 1
-Version: 0.0.11.alpha
-Release: alt1.2
+Version: 0.0.12.alpha
+Release: alt1
 
 Group: Games/Strategy
 Summary: Free, open-source realtime strategy game of ancient warfare
 License: Various (all distributable)
 Url: http://www.wildfiregames.com/0ad/
-Requires: %name-data = %epoch:%version-%release
+Requires: %name-data = %epoch:%version
 Source: %name-%version.tar
 
 BuildRequires: gcc-c++ python zip cmake
@@ -73,6 +73,10 @@ install -Dm 0755 build/resources/0ad.sh %buildroot%_bindir/0ad
 %dir %_libdir/%name
 
 %changelog
+* Tue Dec 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.12.alpha-alt1
+- 0.0.12
+- don't relay on -date release
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.0.11.alpha-alt1.2
 - Rebuilt with Boost 1.52.0
 
