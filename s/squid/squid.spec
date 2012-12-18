@@ -1,23 +1,14 @@
 %def_disable poll
 %def_enable epoll
 
-# epoll is enabled by default, so disable it if plain poll is enabled
-%if_enabled poll
-%force_disable epoll
-%endif
-
 Name: squid
 Version: 3.1.22
-Release: alt2
-
+Release: alt3
 Summary: The Squid proxy caching server
-Summary(ru_RU.KOI8-R): Кэширующий прокси-сервер Squid
-License: GPL-2
+License: GPLv2
 Group: System/Servers
-
 Url: http://www.squid-cache.org/
-
-Source: %name-%version.tar
+Source0: %name-%version.tar
 Source2: %name.init
 Source3: %name.logrotate
 Source4: wbinfo_group.sh
@@ -25,19 +16,25 @@ Source5: %name.sysconfig
 Source6: %name.pam
 Source7: %name.service
 Patch: %name-%version-%release.patch
+Obsoletes: %name-novm %name-pinger
+PreReq: net-snmp-mibs
+Provides: %name-common = %version-%release
+Obsoletes: %name-common
+Provides: %name-server = %version-%release
+Obsoletes: %name-server
 
-Obsoletes: %name-novm
+# epoll is enabled by default, so disable it if plain poll is enabled
+%{?_enable_poll:%force_disable epoll}
 
 BuildConflicts: bind-devel
 BuildPreReq: rpm-build >= 4.0.4-alt10
-
-# Automatically added by buildreq on Mon May 18 2009
-BuildRequires: cppunit-devel gcc-c++ libdb4-devel libldap-devel libpam-devel libssl-devel libkrb5-devel libcap-devel libltdl-devel perl-Pod-Parser libsasl2-devel
-
+BuildRequires: doxygen  graphviz fonts-ttf-freefont
+#BuildRequires: fonts-otf-drehatlas-widelands fonts-ttf-msimonson-anonymouspro
+BuildRequires: gcc-c++ libcap-devel libdb4-devel libldap-devel libltdl-devel
+BuildRequires: libpam-devel libsasl2-devel libssl-devel perl-Pod-Parser
+BuildRequires: w3c-libwww-devel cppunit-devel
 # Used by smb_auth.pl,pop3.pl and squid_db_auth, required on find-requires stage:
 BuildRequires: perl-Authen-Smb perl-libnet perl-DBI
-
-Requires: %name-common = %version-%release, %name-server = %version-%release, %name-helpers = %version-%release, %name-helpers-perl = %version-%release, %name-cachemgr = %version-%release
 
 %description
 Squid is a high-performance proxy caching server for Web clients,
@@ -46,132 +43,58 @@ caching software, Squid handles all requests in a single,
 non-blocking, I/O-driven process. Squid keeps meta data and especially
 hot objects cached in RAM, caches DNS lookups, supports non-blocking
 DNS lookups, and implements negative caching of failed requests.
-Install squid if you need a proxy caching server.
-
-%description -l ru_RU.KOI8-R
-Squid --- высокопроизводительный кэширующий прокси-сервер для web-клиентов
-с поддержкой протоколов FTP, gopher и HTTP. В отличие от традиционного кэширующего
-ПО Squid обрабатывает все запросы в едином неблокирующем процессе. Squid хранит
-метаданные и особенно часто запрашиваемые объекты в ОЗУ, кэширует DNS-запросы,
-поддерживает неблокирующие DNS-запросы и реализует негативное кэширование
-неудачных запросов.
-Установите squid, если вам необходим кэширующий прокси-сервер.
 
 
-
-%package conf-default
-Summary: default %name config
-Group: System/Servers
-Requires: %name-common
-Provides: %name-conf = %version-%release, %_sysconfdir/%name/%name.conf
-%{expand:%%global o_list %(for n in host2cat; do echo -n "%name-conf-$n "; done)}
-%{?o_list:Conflicts: %o_list}
+%package doc
+Summary: Squid documantation
+Group: Documentation
+Conflicts: %name < 3.1.22-alt3
 BuildArch: noarch
 
-%description conf-default
-This package contains default %name config
+%description doc
+Squid is a high-performance proxy caching server for Web clients,
+supporting FTP, gopher, and HTTP data objects. Unlike traditional
+caching software, Squid handles all requests in a single,
+non-blocking, I/O-driven process. Squid keeps meta data and especially
+hot objects cached in RAM, caches DNS lookups, supports non-blocking
+DNS lookups, and implements negative caching of failed requests.
+Install squid if you need a proxy caching server.
 
-
-
-%package server
-Summary: main Squid server and its necessary files
-Summary(ru_RU.KOI8-R): главный сервер Squid и необходимые ему файлы
-Group: System/Servers
-PreReq: net-snmp-mibs
-Requires: %name-common, %name-conf, %_sysconfdir/%name/%name.conf
-Conflicts: %name <= 2.5.STABLE9-alt3
-Obsoletes: %name-pinger
-
-%description server
-This package contains Squid main server and its necessary files
-as well as pinger, unlinkd and diskd.
-Install squid package to get all Squid parts.
-
-%description -l ru_RU.KOI8-R server
-Этот пакет содержит главный сервер Squid и необходимые для его работы файлы,
-а также pinger, unlinkd и diskd.
-Установите пакет squid, чтобы получить все компоненты Squid.
-
+This package contains documentation for Squid.
 
 
 %package cachemgr
 Summary: Squid CGI cache manager
-Summary(ru_RU.KOI8-R): CGI-диспетчер для Squid
 Group: Networking/WWW
-Requires: %name-common
+Requires: %name >= 3.1
 Conflicts: %name <= 2.5.STABLE9-alt3
 
 %description cachemgr
-This package contains Squid cache manager. It is a standalone CGI application which
-can be used to manage Squid processes remotely over HTTP.
-Install squid package to get all Squid parts.
-
-%description -l ru_RU.KOI8-R cachemgr
-Этот пакет содержит диспетчер для Squid. Это самостоятельное приложение CGI, которое
-может быть использовано для управления процессами Squid удалённо через HTTP.
-Установите пакет squid, чтобы получить все компоненты Squid.
-
-
-
-%package common
-Summary: Squid common files
-Summary(ru_RU.KOI8-R): общие файлы для Squid
-Group: System/Servers
-PreReq: shadow-groups
-Conflicts: %name <= 2.5.STABLE9-alt3
-BuildArch: noarch
-
-%description common
-This package contains common Squid files.
-Install squid package to get all Squid parts.
-
-%description -l ru_RU.KOI8-R common
-Этот пакет содержит файлы, необходимые для squid-server и squid-cachemgr.
-Установите пакет squid, чтобы получить все компоненты Squid.
+This package contains Squid cache manager. It is a standalone CGI application
+which can be used to manage Squid processes remotely over HTTP.
 
 
 %package helpers
 Summary: Squid helpers
-Summary(ru_RU.KOI8-R): вспомогательные программы для squid-server
 Group: System/Servers
-Requires: %name-common
+Requires: %name >= 3.1
 Conflicts: %name <= 2.5.STABLE9-alt3
+Provides: %name-helpers-perl = %version-%release
+Obsoletes: %name-helpers-perl
 
 %description helpers
 This package contains Squid helpers for different kinds of authentication.
-Install squid package to get all Squid parts.
 
-%description -l ru_RU.KOI8-R helpers
-Этот пакет содержит вспомогательные программы для squid-server, поддерживающие
-различные виды аутентификации.
-Установите пакет squid, чтобы получить все компоненты Squid.
-
-%package helpers-perl
-Summary: Squid Perl helpers
-Summary(ru_RU.KOI8-R): вспомогательные Perl-программы для squid-server
-Group: System/Servers
-Requires: %name-common
-Conflicts: %name <= 2.5.STABLE9-alt3
-BuildArch: noarch
-
-%description helpers-perl
-This package contains Perl Squid helpers for different kinds of authentication.
-Install squid package to get all Squid parts.
-
-%description -l ru_RU.KOI8-R helpers-perl
-Этот пакет содержит вспомогательные Perl-программы для squid-server, поддерживающие
-различные виды аутентификации.
-Установите пакет squid, чтобы получить все компоненты Squid.
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -p1
 
-#find . -type f -name '*.pl' -print0 | \
-#	xargs -r0 sed -ie 's,/usr/local/bin/perl,/usr/bin/perl,g'
+sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
+
 
 %build
-%autoreconf
+./bootstrap.sh
 %configure \
 	--bindir=%_sbindir \
 	--libexecdir=%_libexecdir/%name \
@@ -215,156 +138,131 @@ Install squid package to get all Squid parts.
 	--with-default-user="%name"
 
 %make_build
+sed -r 's/dyn/html/g;s/CALL(|ER_GRAPH)/#/' squid3.dox | doxygen -
+
 
 %install
 %makeinstall_std
 
-install -pD -m755 %SOURCE2 %buildroot%_initdir/%name
-install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
+install -pD -m 0755 %SOURCE2 %buildroot%_initddir/%name
+install -pD -m 0644 %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
 
-mkdir -p %buildroot%_logdir/%name
-mkdir -p %buildroot%_spooldir/%name
+install -d -m 0755 %buildroot{%_logdir,%_spooldir}/%name
 
-install -p -m644 helpers/basic_auth/PAM/pam_auth.8 %buildroot%_man8dir
-install -p -m644 helpers/external_acl/ldap_group/squid_ldap_group.8 %buildroot%_man8dir
-install -p -m644 helpers/basic_auth/LDAP/squid_ldap_auth.8 %buildroot%_man8dir
-install -p -m644 helpers/external_acl/unix_group/squid_unix_group.8 %buildroot%_man8dir
-install -p -m644 doc/squid.8 %buildroot%_man8dir
-install -p -m644 doc/cachemgr.cgi.8 %buildroot%_man8dir
+install -p -m 0644 {doc,helpers/{basic_auth/{LDAP,PAM},external_acl/{ldap,unix}_group}}/*.8 %buildroot%_man8dir/
 
-install -pD -m644 helpers/basic_auth/SMB/COPYING-2.0 helpers/doc/SMB.COPYING-2.0
-install -pD -m644 helpers/basic_auth/SMB/README helpers/doc/SMB.README
-install -pD -m644 helpers/basic_auth/SMB/smb_auth.sh helpers/doc/smb_auth.sh
-install -pD -m644 helpers/basic_auth/SMB/ChangeLog helpers/doc/SMB.ChangeLog
-install -pD -m644 helpers/basic_auth/LDAP/README helpers/doc/LDAP.README
-install -pD -m644 helpers/basic_auth/MSNT/COPYING-2.0 helpers/doc/MSNT.COPYING-2.0
-install -pD -m644 helpers/basic_auth/MSNT/README.html helpers/doc/MSNT.README.html
-install -pD -m644 helpers/basic_auth/MSNT/msntauth.conf.default helpers/doc/msntauth.conf.default
-install -pD -m644 helpers/basic_auth/SASL/README helpers/doc/SASL.README
-install -pD -m644 helpers/basic_auth/SASL/squid_sasl_auth helpers/doc/squid_sasl_auth
-install -pD -m644 helpers/basic_auth/SASL/squid_sasl_auth.conf helpers/doc/squid_sasl_auth.conf
-install -pD -m644 helpers/basic_auth/SMB/README helpers/doc/SASL.README
-install -pD -m644 helpers/basic_auth/multi-domain-NTLM/README.txt helpers/doc/NTLM.README.txt
-install -pD -m644 helpers/external_acl/ip_user/README helpers/doc/ip_user.README
-install -pD -m644 helpers/external_acl/ip_user/example-deny_all_but.conf helpers/doc/ip_user.example-deny_all_but.conf
-install -pD -m644 helpers/external_acl/ip_user/example.conf helpers/doc/ip_user.example.conf
-install -pD -m644 helpers/external_acl/unix_group/README helpers/doc/unix_group.README
-install -pD -m644 helpers/external_acl/unix_group/README helpers/doc/unix_group.README
-install -pD -m644 helpers/ntlm_auth/no_check/README.no_check_ntlm_auth helpers/doc/README.no_check_ntlm_auth
-
-install -p -m755 %SOURCE4 %buildroot%_libexecdir/%name/
-mkdir -p %buildroot%_datadir/snmp/mibs
+install -p -m 0755 %SOURCE4 %buildroot%_libexecdir/%name/
+install -d -m 0755 %buildroot%_datadir/snmp/mibs
 mv %buildroot%_datadir/%name/mib.txt %buildroot%_datadir/snmp/mibs/SQUID-MIB.txt
 
-install -D -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
-install -D -m644 %SOURCE6 %buildroot%_sysconfdir/pam.d/%name
-install -D -m644 %SOURCE7 %buildroot%systemd_unitdir/%name.service
+install -pD -m 0644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
+install -pD -m 0644 %SOURCE6 %buildroot%_sysconfdir/pam.d/%name
+install -pD -m 0644 %SOURCE7 %buildroot%_unitdir/%name.service
+
+install -d -m 0755 %buildroot%_docdir/%name-%version/{helpers,html/Programming-Guide,scripts}
+install -p -m 0644 doc/Programming-Guide/html/*{css,html,png} %buildroot%_docdir/%name-%version/html/Programming-Guide/
+install -p -m 0644 doc/release-notes/*.html %buildroot%_docdir/%name-%version/html/
+install -p -m 0644 COPYRIGHT README ChangeLog QUICKSTART SPONSORS doc/debug-sections.txt %buildroot%_docdir/%name-%version/
+install -p -m 0644 scripts/*.pl %buildroot%_docdir/%name-%version/scripts/
+install -p -m 0644 helpers/basic_auth/LDAP/README %buildroot%_docdir/%name-%version/helpers/README.LDAP
+install -p -m 0644 helpers/basic_auth/SMB/README %buildroot%_docdir/%name-%version/helpers/README.SMB
+for i in SMB MSNT; do
+	install -p -m 0644 helpers/basic_auth/$i/COPYING-2.0 %buildroot%_docdir/%name-%version/helpers/$i.COPYING-2.0
+done
+for i in LDAP SASL SMB; do
+	install -p -m 0644 helpers/basic_auth/$i/README %buildroot%_docdir/%name-%version/helpers/README.$i
+done
+for i in ip_user unix_group; do
+	install -p -m 0644 helpers/external_acl/$i/README %buildroot%_docdir/%name-%version/helpers/README.$i
+done
+install -p -m 0644 helpers/basic_auth/SMB/ChangeLog %buildroot%_docdir/%name-%version/helpers/ChangeLog.$i
+install -p -m 0644 helpers/basic_auth/MSNT/README.html %buildroot%_docdir/%name-%version/helpers/README.MSNT.html
+install -p -m 0644 helpers/basic_auth/multi-domain-NTLM/README.txt %buildroot%_docdir/%name-%version/helpers/README.NTLM
+install -p -m 0644 helpers/basic_auth/{MSNT/msntauth.conf.default,SMB/smb_auth.sh,SASL/squid_sasl_auth*} \
+	helpers/{external_acl/ip_user/*.conf,ntlm_auth/no_check/README.no_check_ntlm_auth} \
+	%buildroot%_docdir/%name-%version/helpers/
+
 
 %check
 %make_build check
 
-%pre common
+
+%post
+%post_service %name
+
+
+%preun
+%preun_service %name
+
+
+%pre
+chown %name:%name %_logdir/%name/*.log >/dev/null 2>&1 ||:
+chmod 660 %_logdir/%name/*.log >/dev/null 2>&1 ||:
+
 %_sbindir/groupadd -r -f %name
 %_sbindir/useradd -r -n -g %name -d %_spooldir/%name -s /dev/null %name >/dev/null 2>&1 ||:
 # fixing #6321, step 1/2
 %_bindir/gpasswd -a squid shadow
 
-%pre server
-chown %name:%name %_logdir/%name/*.log >/dev/null 2>&1 ||:
-chmod 660 %_logdir/%name/*.log >/dev/null 2>&1 ||:
 
-%post server
-%post_service %name
-
-%preun server
-%preun_service %name
-
-%triggerpostun server -- squid < 2.4.STABLE4-alt1
+%triggerpostun -- squid < 2.4.STABLE4-alt1
 [ $2 -gt 0 ] || exit 0
 chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
+
 %files
-%doc COPYRIGHT README ChangeLog QUICKSTART doc/release-notes/*.html SPONSORS
-%doc doc/debug-sections.txt
-
-%files conf-default
-%config(noreplace) %_sysconfdir/%name/%name.conf
-
-%files server
-%config(noreplace) %_sysconfdir/%name/%name.conf.default
-%config(noreplace) %_sysconfdir/%name/%name.conf.documented
-%config(noreplace) %_sysconfdir/%name/mime.conf
-%config(noreplace) %_sysconfdir/%name/mime.conf.default
-%config(noreplace) %_sysconfdir/%name/errorpage.css
-%config(noreplace) %_sysconfdir/%name/errorpage.css.default
-%config(noreplace) %_sysconfdir/sysconfig/%name
-%_initdir/%name
+%doc %dir %_docdir/%name-%version
+%doc %_docdir/%name-%version/COPYRIGHT
+%attr(750,root,%name) %dir %_sysconfdir/%name
+%attr(750,root,%name) %dir %_libexecdir/%name
+%config(noreplace) %_sysconfdir/%name/*
+%config(noreplace) %_sysconfdir/sysconfig/*
+%_initddir/*
 %systemd_unitdir/%name.service
 %config %_sysconfdir/logrotate.d/%name
 %dir %_datadir/%name
-%_datadir/%name/errors
-%_datadir/%name/icons
-%_datadir/snmp/mibs/SQUID-MIB.txt
-%_sbindir/%name
-%_sbindir/squidclient
+%_datadir/%name/*
+%_datadir/snmp/mibs
+%_sbindir/*
 %_man8dir/squid.*
-%_man1dir/squidclient.*
+%_man1dir/*
 %attr(4710,root,%name) %_libexecdir/%name/pinger
 %_libexecdir/%name/unlinkd
 %_libexecdir/%name/diskd
 %attr(3770,root,%name) %dir %_logdir/%name
 %attr(2770,root,%name) %dir %_spooldir/%name
+%exclude %_sysconfdir/%name/msntauth.conf*
+%exclude %_sysconfdir/%name/cachemgr.conf*
+
+
+%files doc
+%doc %dir %_docdir/%name-%version
+%doc %_docdir/%name-%version/ChangeLog
+%doc %_docdir/%name-%version/QUICKSTART
+%doc %_docdir/%name-%version/README
+%doc %_docdir/%name-%version/SPONSORS
+%doc %_docdir/%name-%version/debug-sections.txt
+%doc %_docdir/%name-%version/html
+%doc %_docdir/%name-%version/helpers
+
 
 %files helpers
-%doc helpers/doc/*
+%doc %dir %_docdir/%name-%version
+%doc %_docdir/%name-%version/scripts
 %config(noreplace) %_sysconfdir/%name/msntauth.conf
 %config(noreplace) %_sysconfdir/%name/msntauth.conf.default
-%_libexecdir/%name/digest_pw_auth
-%_libexecdir/%name/fakeauth_auth
-%_libexecdir/%name/getpwname_auth
-%_libexecdir/%name/ip_user_check
-%_libexecdir/%name/msnt_auth
-%_libexecdir/%name/ncsa_auth
-%_libexecdir/%name/ntlm_smb_lm_auth
+%_libexecdir/%name/*
 %attr(640,root,auth) %config(noreplace) %_sysconfdir/pam.d/%name
 # fixing #6321, step 2/2
 %attr(2711,root,auth) %_libexecdir/%name/pam_auth
-%_libexecdir/%name/sasl_auth
-%_libexecdir/%name/smb_auth
-%_libexecdir/%name/smb_auth.sh
-%_libexecdir/%name/squid_ldap_auth
-%_libexecdir/%name/squid_ldap_group
-%_libexecdir/%name/squid_unix_group
-%_libexecdir/%name/digest_ldap_auth
-%_libexecdir/%name/squid_session
-%_libexecdir/%name/digest_edir_auth
-%_libexecdir/%name/squid_kerb_auth
-#%_libexecdir/%name/wb_auth
-#%_libexecdir/%name/wb_group
-#%_libexecdir/%name/wb_ntlmauth
-%_libexecdir/%name/wbinfo_group.sh
-%_libexecdir/%name/yp_auth
-%_libexecdir/%name/squid_radius_auth
-%_libexecdir/%name/negotiate_kerb_auth
-%_libexecdir/%name/negotiate_kerb_auth_test
-%_libexecdir/%name/squid_kerb_auth_test
+%_man8dir/*
+%exclude %_libexecdir/%name/pinger
+%exclude %_libexecdir/%name/unlinkd
+%exclude %_libexecdir/%name/diskd
+%exclude %_libexecdir/%name/cachemgr.cgi
+%exclude %_man8dir/squid.*
+%exclude %_man8dir/cachemgr.cgi.*
 
-%_man8dir/pam_auth.*
-%_man8dir/ncsa_auth.*
-%_man8dir/squid_ldap_auth.*
-%_man8dir/squid_ldap_group.*
-%_man8dir/squid_unix_group.*
-%_man8dir/squid_session.*
-%_man8dir/squid_radius_auth.*
-
-%files helpers-perl
-%doc scripts/*.pl
-%_libexecdir/%name/no_check.pl
-%_libexecdir/%name/smb_auth.pl
-%_libexecdir/%name/wbinfo_group.pl
-%_libexecdir/%name/pop3.pl
-%_libexecdir/%name/squid_db_auth
-%_man8dir/squid_db_auth.*
 
 %files cachemgr
 %config(noreplace) %_sysconfdir/%name/cachemgr.conf
@@ -372,12 +270,18 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %_libexecdir/%name/cachemgr.cgi
 %_man8dir/cachemgr.cgi.*
 
-%files common
-%attr(750,root,%name) %dir %_sysconfdir/%name
-%attr(750,root,%name) %dir %_libexecdir/%name
-
 
 %changelog
+* Tue Dec 18 2012 Led <led@altlinux.ru> 3.1.22-alt3
+- cleaned up spec
+- updated BuildRequires
+- fixed detect '-fhuge-objects' flag
+- added subpackage %%name-doc
+- removed subpackages
+  + %%name-common
+  + %%name-server (merged to %%name)
+  + %%name-helpers-perl (merged to %%name-helpers)
+
 * Tue Dec 18 2012 Led <led@altlinux.ru> 3.1.22-alt2
 - fixed build with --enable-strict-error-checking
 - enabled strict-error-checking
