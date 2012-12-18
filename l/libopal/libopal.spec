@@ -1,19 +1,20 @@
 Name: libopal
-Version: 3.8.4
-Release: alt2.1
+Version: 3.10.9
+Release: alt1
 Epoch: 1
 Summary: Library for H323 spec
 Url: http://www.opalvoip.org/
 License: MPL
 Group: System/Libraries
-Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 Obsoletes: libopenh323
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: gcc-c++ libgsm-devel libspeex-devel libtheora-devel libavcodec-devel libx264-devel libpt-devel
+BuildRequires: gcc-c++ libgsm-devel libspeex-devel libtheora-devel libavcodec-devel libx264-devel
+BuildRequires: libssl-devel
+BuildRequires: libpt-devel >= 2.10.1
 
 %description
 Open Phone Abstraction Library (aka OpenH323 v2)
@@ -31,13 +32,13 @@ Header files for development with opal.
 %setup -q
 %patch -p1
 
-subst 's|^#\(LIBS.*\)|\1|' configure*
-
 %build
-%add_optflags -fpermissive
 %configure \
+	--disable-static \
+	--enable-plugins \
 	--disable-vpb \
-	--disable-static
+	--disable-silk
+
 %make
 
 %install
@@ -54,6 +55,9 @@ subst 's|^#\(LIBS.*\)|\1|' configure*
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Dec 18 2012 Alexey Shabalin <shaba@altlinux.ru> 1:3.10.9-alt1
+- 3.10.9
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.8.4-alt2.1
 - Fixed build with gcc 4.7
 
