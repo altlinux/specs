@@ -20,8 +20,8 @@
 
 Summary: Web browser engine
 Name: libwebkitgtk3
-Version: 1.10.1
-Release: alt2
+Version: 1.10.2
+Release: alt1
 License: %bsd %lgpl2plus
 Group: System/Libraries
 Url: http://www.webkitgtk.org/
@@ -301,6 +301,10 @@ mkdir -p DerivedSources/InjectedBundle
 %endif
 
 %changelog
+* Mon Dec 17 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.2-alt1
+- 1.10.2
+- fixed CVE-2012-5112, CVE-2012-5133
+
 * Wed Nov 14 2012 Alexey Shabalin <shaba@altlinux.ru> 1.10.1-alt2
 - rebuild with libicu-5.1
 
