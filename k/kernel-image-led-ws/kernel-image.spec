@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.56
-Release: alt2
+Version: 3.0.57
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 56
+%define kernel_stable_version 57
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -496,18 +496,17 @@ Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
 Patch0612: linux-%kernel_branch.51-fix-drivers-usb-core.patch
 Patch0613: linux-%kernel_branch.51-fix-drivers-usb-host--ehci-hcd.patch
-Patch0614: linux-%kernel_branch.51-fix-drivers-usb-host--ohci-hcd.patch
-Patch0615: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
-Patch0616: linux-%kernel_branch.51-fix-drivers-usb-host--xhci-hcd.patch
-Patch0617: linux-%kernel_branch.42-fix-drivers-usb-misc--usbtest.patch
-Patch0618: linux-%kernel_branch.42-fix-drivers-usb-mon.patch
-Patch0619: linux-%kernel_branch.42-fix-drivers-usb-serial--ftdi_sio.patch
-Patch0620: linux-%kernel_branch.42-fix-drivers-usb-serial--ipw.patch
-Patch0621: linux-%kernel_branch.42-fix-drivers-usb-serial--pl2303.patch
-Patch0622: linux-%kernel_branch.42-fix-drivers-usb-serial--usbserial.patch
-Patch0623: linux-%kernel_branch.42-fix-drivers-usb-storage--ums-realtek.patch
-Patch0624: linux-%kernel_branch.42-fix-drivers-usb-usbip--usbip-host.patch
-Patch0625: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
+Patch0614: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
+Patch0615: linux-%kernel_branch.51-fix-drivers-usb-host--xhci-hcd.patch
+Patch0616: linux-%kernel_branch.42-fix-drivers-usb-misc--usbtest.patch
+Patch0617: linux-%kernel_branch.42-fix-drivers-usb-mon.patch
+Patch0618: linux-%kernel_branch.42-fix-drivers-usb-serial--ftdi_sio.patch
+Patch0619: linux-%kernel_branch.42-fix-drivers-usb-serial--ipw.patch
+Patch0620: linux-%kernel_branch.42-fix-drivers-usb-serial--pl2303.patch
+Patch0621: linux-%kernel_branch.42-fix-drivers-usb-serial--usbserial.patch
+Patch0622: linux-%kernel_branch.42-fix-drivers-usb-storage--ums-realtek.patch
+Patch0623: linux-%kernel_branch.42-fix-drivers-usb-usbip--usbip-host.patch
+Patch0624: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
 
 Patch0631: linux-%kernel_branch.42-fix-drivers-video--intelfb.patch
 Patch0632: linux-%kernel_branch.43-fix-drivers-video--xgifb.patch
@@ -1803,7 +1802,6 @@ cd linux-%version
 %patch0622 -p1
 %patch0623 -p1
 %patch0624 -p1
-%patch0625 -p1
 
 # fix-drivers-video-*
 %patch0631 -p1
@@ -2896,6 +2894,14 @@ done)
 
 
 %changelog
+* Tue Dec 18 2012 Led <led@altlinux.ru> 3.0.57-alt1
+- 3.0.57
+- removed:
+  + fix-drivers-usb-host--ohci-hcd
+- updated:
+  + feat-fs-aufs
+  + feat-kernel--sched-cfs-boost
+
 * Thu Dec 13 2012 Led <led@altlinux.ru> 3.0.56-alt2
 - updated:
   + fix-drivers-md--md-mod
