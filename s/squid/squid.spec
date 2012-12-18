@@ -7,8 +7,8 @@
 %endif
 
 Name: squid
-Version: 3.1.20
-Release: alt1
+Version: 3.1.22
+Release: alt2
 
 Summary: The Squid proxy caching server
 Summary(ru_RU.KOI8-R): Кэширующий прокси-сервер Squid
@@ -16,15 +16,15 @@ License: GPL-2
 Group: System/Servers
 
 Url: http://www.squid-cache.org/
-Packager: Squid Development Team <squid@packages.altlinux.org>
 
-Source: %url/Versions/v2/%name-%version.tar
+Source: %name-%version.tar
 Source2: %name.init
 Source3: %name.logrotate
 Source4: wbinfo_group.sh
 Source5: %name.sysconfig
 Source6: %name.pam
 Source7: %name.service
+Patch: %name-%version-%release.patch
 
 Obsoletes: %name-novm
 
@@ -36,12 +36,6 @@ BuildRequires: cppunit-devel gcc-c++ libdb4-devel libldap-devel libpam-devel lib
 
 # Used by smb_auth.pl,pop3.pl and squid_db_auth, required on find-requires stage:
 BuildRequires: perl-Authen-Smb perl-libnet perl-DBI
-
-Patch1: squid-3.1.7-kerb_auth-link-alt.patch
-Patch2: squid-3.1.7-install-pinger-alt.patch
-Patch3: squid-3.1.0.9-location.patch
-Patch4: squid-3.1.7-default-logrotate-alt.patch
-Patch5: squid-3.1.13-default-paths-in-var-alt.patch
 
 Requires: %name-common = %version-%release, %name-server = %version-%release, %name-helpers = %version-%release, %name-helpers-perl = %version-%release, %name-cachemgr = %version-%release
 
@@ -171,23 +165,20 @@ Install squid package to get all Squid parts.
 
 %prep
 %setup -q
+%patch0 -p1
 
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p2
-%patch5 -p1
-
-find . -type f -name '*.pl' -print0 | \
-	xargs -r0 sed -ie 's,/usr/local/bin/perl,/usr/bin/perl,g'
+#find . -type f -name '*.pl' -print0 | \
+#	xargs -r0 sed -ie 's,/usr/local/bin/perl,/usr/bin/perl,g'
 
 %build
+%autoreconf
 %configure \
 	--bindir=%_sbindir \
 	--libexecdir=%_libexecdir/%name \
 	--localstatedir=%_var \
 	--sysconfdir=%_sysconfdir/%name \
 	--datadir=%_datadir/%name \
+	--enable-strict-error-checking \
 	%{subst_enable poll} \
 	%{subst_enable epoll} \
 	--enable-snmp \
@@ -224,11 +215,9 @@ find . -type f -name '*.pl' -print0 | \
 	--with-default-user="%name"
 
 %make_build
-%make_build check
 
 %install
-%make_build install DESTDIR=%buildroot
-%make_build install-pinger DESTDIR=%buildroot
+%makeinstall_std
 
 install -pD -m755 %SOURCE2 %buildroot%_initdir/%name
 install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/logrotate.d/%name
@@ -271,6 +260,9 @@ install -D -m644 %SOURCE5 %buildroot%_sysconfdir/sysconfig/%name
 install -D -m644 %SOURCE6 %buildroot%_sysconfdir/pam.d/%name
 install -D -m644 %SOURCE7 %buildroot%systemd_unitdir/%name.service
 
+%check
+%make_build check
+
 %pre common
 %_sbindir/groupadd -r -f %name
 %_sbindir/useradd -r -n -g %name -d %_spooldir/%name -s /dev/null %name >/dev/null 2>&1 ||:
@@ -292,7 +284,7 @@ chmod 660 %_logdir/%name/*.log >/dev/null 2>&1 ||:
 chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 %files
-%doc COPYRIGHT README ChangeLog QUICKSTART RELEASENOTES.html SPONSORS
+%doc COPYRIGHT README ChangeLog QUICKSTART doc/release-notes/*.html SPONSORS
 %doc doc/debug-sections.txt
 
 %files conf-default
@@ -386,6 +378,15 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Tue Dec 18 2012 Led <led@altlinux.ru> 3.1.22-alt2
+- fixed build with --enable-strict-error-checking
+- enabled strict-error-checking
+
+* Tue Dec 18 2012 Led <led@altlinux.ru> 3.1.22-alt1
+- 3.1.22
+- moved tests to %%check section
+- disabled strict-error-checking
+
 * Thu Jul 05 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.1.20-alt1
 - 3.1.20
 
