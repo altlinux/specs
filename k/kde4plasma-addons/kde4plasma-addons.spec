@@ -5,10 +5,10 @@
 %define rname kdeplasma-addons
 Name: kde4plasma-addons
 %define major 4
-%define minor 9
-%define bugfix 3
+%define minor 10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4
@@ -79,6 +79,7 @@ Requires: plasma-dataengine-konqprofiles = %version-%release
 Requires: plasma-dataengine-konsoleprofiles = %version-%release
 Requires: plasma-runner-audioplayercontrol = %version-%release
 Requires: plasma-runner-browserhistory = %version-%release
+Requires: plasma-runner-dictionary = %version-%release
 Requires: plasma-runner-contacts = %version-%release
 Requires: plasma-runner-converter = %version-%release
 Requires: plasma-runner-events = %version-%release
@@ -97,6 +98,7 @@ Requires: plasma-wallpaper-pattern = %version-%release
 Requires: plasma-wallpaper-virus = %version-%release
 Requires: plasma-wallpaper-weather = %version-%release
 Requires: plasma-wallpaper-potd = %version-%release
+Requires: plasma-qmlwallpapers = %version-%release
 
 # Automatically added by buildreq on Mon Sep 15 2008 (-bi)
 #BuildRequires: gcc-c++ kde4base-workspace-core kde4base-workspace-devel kde4network-kopete kde4pim-kmail kde4pimlibs-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libldap-devel libxkbfile-devel nvidia_glx_173.14.12 python-modules-xml rpm-build-ruby shared-mime-info xorg-xf86vidmodeproto-devel
@@ -172,6 +174,14 @@ Group: Graphical desktop/KDE
 Requires: %name-common = %version-%release
 %description -n plasma-applet-notes
 Plasma notes applets.
+
+%package -n plasma-qmlwallpapers
+Summary: QML wallpapers
+Group: Graphical desktop/KDE
+Requires: %name-common = %version-%release
+Provides: plasma-wallpaper = %version-%release
+%description -n plasma-qmlwallpapers
+QML wallpapers.
 
 %package -n plasma-wallpaper-mandelbrot
 Summary: Mandelbrot wallpaper
@@ -752,6 +762,13 @@ Requires: %name-common = %version-%release
 %description -n plasma-runner-kopete
 Plasma runner kopete
 
+%package -n plasma-runner-dictionary
+Summary: Plasma runner dictionary
+Group: Graphical desktop/KDE
+Requires: %name-common = %version-%release
+%description -n plasma-runner-dictionary
+Plasma runner dictionary
+
 %package -n plasma-applet-webslice
 Summary:  Applet that show a part of a webpage
 Group:    Graphical desktop/KDE
@@ -819,7 +836,8 @@ based on %name
 
 
 %build
-%K4cmake
+%K4cmake \
+    -DKDE4_BUILD_TESTS:BOOL=OFF
 # -DKEXIV2_LIBRARIES:PATH=%_K4link/libkexiv2.so
 %K4make
 
@@ -839,6 +857,11 @@ based on %name
 %_K4apps/kdeplasma-addons/mediabuttonsrc
 %_K4srv/plasma-applet-icontasks.desktop
 
+%files -n plasma-qmlwallpapers
+%_K4lib/plasma_wallpaper_qml.so
+%_K4apps/plasma/wallpapers/
+%_K4srv/plasma-wallpaper-qml.desktop
+
 %files -n plasma-wallpaper-potd
 %_K4lib/plasma_wallpaper_potd.so
 %_K4srv/plasma-wallpaper-potd.desktop
@@ -854,6 +877,12 @@ based on %name
 %files -n plasma-containment-groupingpanel
 %_K4lib/plasma_containment_groupingpanel.so
 %_K4srv/plasma-containment-groupingpanel.desktop
+
+%files -n plasma-runner-dictionary
+%_K4lib/krunner_dictionary.so
+%_K4lib/kcm_krunner_dictionary.so
+%_K4srv/plasma-runner-dictionary.desktop
+%_K4srv/plasma-runner-dictionary_config.desktop
 
 %files -n plasma-runner-events
 %_K4lib/plasma_runner_events.so
@@ -965,6 +994,7 @@ based on %name
 %_K4srv/plasma-dataengine-ocs.desktop
 
 %files -n plasma-applet-weather
+%_K4apps/plasma/packages/org.kde.weather/
 %_K4lib/plasma_applet_weather.so
 %_K4srv/plasma-applet-weather.desktop
 %_K4apps/desktoptheme/default/weather/wind-arrows.svgz
@@ -1020,14 +1050,7 @@ based on %name
 %files -n plasma-applet-comic
 %_K4lib/plasma_applet_comic.so
 %_K4lib/plasma_packagestructure_comic.so
-#%_K4apps/plasma-comic
-#%_K4srv/xkcdprovider.desktop
-#%_K4srv/userfriendlyprovider.desktop
-#%_K4srv/snoopyprovider.desktop
-#%_K4srv/dilbertprovider.desktop
-#%_K4srv/garfieldprovider.desktop
-#%_K4srv/osnewsprovider.desktop
-#%_K4srv/phdprovider.desktop
+%_K4apps/plasma/packages/org.kde.comic/
 %_K4srv/plasma-packagestructure-comic.desktop
 %_K4srvtyp/plasma_comicprovider.desktop
 %_K4conf/comic.knsrc
@@ -1114,6 +1137,7 @@ based on %name
 %_K4srv/plasma-applet-timer.desktop
 
 %files -n plasma-applet-weatherstation
+%_K4apps/plasma/packages/org.kde.lcdweather/
 %_K4apps/desktoptheme/default/weatherstation/
 %_K4lib/plasma_applet_weatherstation.so
 %_K4srv/plasma-applet-weatherstation.desktop
@@ -1163,7 +1187,7 @@ based on %name
 %_K4srv/plasma-applet-showdashboard.desktop
 
 %files -n plasma-applet-calculator
-%_K4lib/plasma_applet_calculator.so
+%_K4apps/plasma/plasmoids/calculator/
 %_K4srv/plasma-applet-calculator.desktop
 
 %files -n plasma-applet-fifteenpuzzle
@@ -1258,6 +1282,9 @@ based on %name
 %_K4link/*.so
 
 %changelog
+* Tue Dec 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Tue Nov 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 

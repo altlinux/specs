@@ -1,6 +1,6 @@
 Name: libkgeomap
 Version: 2.0.0
-Release: alt3
+Release: alt4
 
 Summary: Libkgeomap is a wrapper around different world-map components
 License: GPL2
@@ -36,7 +36,7 @@ Devel files for %name
 %K4install
 
 %files
-%_K4bindir/*
+#%_K4bindir/*
 %_K4libdir/%name.so*
 %_K4apps/%name
 
@@ -48,6 +48,9 @@ Devel files for %name
 
 
 %changelog
+* Tue Dec 18 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt4
+- update from digikam-3.0.0-beta3
+
 * Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 2.0.0-alt3
 - rebuilt with KDE-4.9
 

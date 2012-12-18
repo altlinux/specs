@@ -2,8 +2,8 @@
 
 %define rname analitza
 Name: kde4-analitza
-Version: 4.9.3
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: System/Libraries
 Summary: Mathematical features
@@ -43,6 +43,13 @@ Requires: %name-common = %version-%release
 %description -n libanalitzagui4
 KDE 4 library
 
+%package -n libanalitzaplot4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n libanalitzaplot4
+KDE 4 library
+
 %package -n kde4-calgebra
 Summary: Console MathML-based graph calculator
 Url: http://edu.kde.org/kalgebra
@@ -73,26 +80,30 @@ Development files for %name
 
 %files
 %files common
+%_K4apps/libanalitza/
 
 %files -n kde4-calgebra
 %_K4bindir/calgebra
 
 %files -n libanalitza4
 %_K4libdir/libanalitza.so.*
-
 %files -n libanalitzagui4
 %_K4libdir/libanalitzagui.so.*
+%files -n libanalitzaplot4
+%_K4libdir/libanalitzaplot.so.*
 
 %files devel
 %doc TODO
 %_K4libdir/cmake/analitza/
-%_K4includedir/analitza/
-%_K4includedir/analitzagui/
+%_K4includedir/analitza*/
 %_K4link/lib*.so
 #%_pkgconfigdir/analitza.pc
 
 
 %changelog
+* Mon Dec 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Tue Nov 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 

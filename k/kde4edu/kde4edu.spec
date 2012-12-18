@@ -7,10 +7,10 @@
 %define rname kdeedu
 Name: kde4edu
 %define major 4
-%define minor 9
-%define bugfix 3
+%define minor 10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1.1
+Release: alt0.1
 Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Group: Graphical desktop/KDE
@@ -51,7 +51,7 @@ Requires: %name-rocs = %version-%release
 Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar
 Patch1: kdeedu-4.8.0-alt-marble-install.patch
 Patch2: kdeedu-4.3.90-alt-kturtle-default-language.patch
-Patch3: kdeedu-4.8.0-alt-fix-compile.patch
+Patch3: kdeedu-4.10.0-alt-fix-compile.patch
 
 # Automatically added by buildreq on Thu Oct 16 2008 (-bi)
 #BuildRequires: boost-python-devel eigen facile gcc-c++ getfemxx indilib-devel kde4base-runtime-devel kde4base-workspace-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel libopenbabel-devel libpth-devel libqalculate-devel libreadline-devel libusb-devel libxkbfile-devel libxslt-devel nvidia_glx_177.80 openbabel python-modules-encodings rpm-build-ruby subversion xorg-xf86vidmodeproto-devel xsltproc
@@ -59,9 +59,10 @@ BuildRequires(pre): kde4base-workspace-devel
 BuildRequires: python-modules-encodings python-devel boost-devel boost-python-devel eigen2 facile gcc-c++ libindi-devel
 BuildRequires: libbfd-devel libcfitsio-devel libcln-devel libgmp-devel libgsl-devel libjpeg-devel libncurses-devel libnova-devel
 BuildRequires: libpth-devel libqalculate-devel libreadline-devel libusb-devel
-BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel
+BuildRequires: ocaml xplanet attica-devel libspectre-devel libgps-devel qt4-mobility-devel
 BuildRequires: libxslt-devel xsltproc libopenbabel-devel >= 2.2 openbabel avogadro-devel libglew-devel
-BuildRequires: libkdeedu4-devel kde4-analitza-devel
+BuildRequires: libkdeedu4-devel kde4-analitza-devel pkgconfig(chemical-mime-data)
+BuildRequires: libshape-devel
 BuildRequires: kde4base-workspace-devel >= %version
 BuildRequires: kde4base-runtime-devel >= %version
 
@@ -89,6 +90,7 @@ BuildRequires: kde4base-runtime-devel >= %version
 Summary: %name common package
 Group: System/Configuration/Other
 BuildArch: noarch
+Requires: kde-common >= %major.%minor
 %ifdef _kde_alternate_placement
 %else
 #Provides: kdeedu-common = %version-%release
@@ -177,7 +179,7 @@ Summary: Shows the periodic system of the elements
 Url: http://edu.kde.org/kalzium
 Group: Education
 Requires: %name-common = %version-%release
-Requires: avogadro
+Requires: avogadro chemical-mime-data
 %ifdef _kde_alternate_placement
 %else
 #Provides: kdeedu-kalzium = %version-%release
@@ -532,11 +534,18 @@ Requires: %name-common = %version-%release
 %description -n libcantor4_config
 KDE 4 library
 
-%package -n librocslib4
+%package -n librocscore4
 Summary: KDE 4 library
 Group: System/Libraries
 Requires: %name-common = %version-%release
-%description -n librocslib4
+%description -n librocscore4
+KDE 4 library
+
+%package -n librocsvisualeditor4
+Summary: KDE 4 library
+Group: System/Libraries
+Requires: %name-common = %version-%release
+%description -n librocsvisualeditor4
 KDE 4 library
 
 %package -n libkhangmanengine4
@@ -585,6 +594,8 @@ Files needed to build applications based on %name.
 %patch2 -p1
 %patch3 -p1
 
+echo "cmake_minimum_required(VERSION 2.8)" > CMakeLists.txt
+
 ls -d1 lib* | \
 while read d
 do
@@ -611,6 +622,7 @@ done
 export CFLAGS="${optflags} -DOCAMLIB=%_libdir/ocaml"
 export CPPFLAGS="${optflags} -DOCAMLIB=%_libdir/ocaml "
 %K4cmake \
+    -DKDE4_BUILD_TESTS:BOOL=OFF \
     -DNOVA_INCLUDE_DIR=%_includedir/libnova \
     -DNOVA_LIBRARIES="-lnova" \
     -DINDI_INCLUDE_DIR=%_includedir/libindi \
@@ -633,6 +645,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %else
 %_K4iconsdir/hicolor/*/mimetypes/application-x-k*.*
 %endif
+%_K4xdg_mime/geo.xml
 
 %files -n libcompoundviewer4
 %_K4libdir/libcompoundviewer.so.*
@@ -705,12 +718,15 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4xdg_apps/kalgebra.desktop
 %_K4xdg_apps/kalgebramobile.desktop
 %endif
+%_K4lib/imports/org/kde/analitza/
+%_K4apps/plasma/plasmoids/org.kde.graphsplasmoid/
 %_K4iconsdir/hicolor/*/apps/kalgebra.*
 #%_K4apps/kalgebra
 %_K4apps/kalgebramobile/
 %_K4apps/katepart/syntax/kalgebra.xml
 #%_K4srv/kalgebraplasmoid.desktop
 %_K4srv/kalgebra*.desktop
+%_K4srv/graphsplasmoid.desktop
 #%_K4srvtyp/kalgebra*.desktop
 %_K4lib/plasma_applet_kalgebra.so
 %_K4doc/*/kalgebra
@@ -718,10 +734,10 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %files kalzium
 %ifdef _kde_alternate_placement
 %_kde4_bindir/kalzium
-%_kde4_xdg_apps/kalzium.desktop
+%_kde4_xdg_apps/kalzium*.desktop
 %else
 %_K4bindir/kalzium
-%_K4xdg_apps/kalzium.desktop
+%_K4xdg_apps/kalzium*.desktop
 %endif
 %_K4iconsdir/hicolor/*/apps/kalzium.*
 %_K4lib/plasma_engine_kalzium.so
@@ -898,6 +914,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_kde4_xdg_apps/ktouch.desktop
 %else
 %_K4bindir/ktouch
+%_K4lib/imports/org/kde/ktouch/
 %_K4xdg_apps/ktouch.desktop
 %endif
 %_K4iconsdir/hicolor/*/apps/ktouch.*
@@ -982,13 +999,13 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_kde4_bindir/tilecreator
 %_kde4_bindir/routing-instructions
 %_kde4_bindir/marble-touch
-%_kde4_xdg_apps/marble.desktop
+%_kde4_xdg_apps/marble*.desktop
 %else
 %_K4bindir/marble
 %_K4bindir/tilecreator
 %_K4bindir/routing-instructions
 %_K4bindir/marble-touch
-%_K4xdg_apps/marble.desktop
+%_K4xdg_apps/marble*.desktop
 %endif
 %dir %_qt4dir/imports/org/
 %dir %_qt4dir/imports/org/kde
@@ -1002,7 +1019,7 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4apps/marble
 #%_K4apps/marble_part
 %_K4cfg/marble.kcfg
-%_K4srv/marble_part.desktop
+%_K4srv/marble_part*.desktop
 %_K4srv/plasma-applet-kworldclock.desktop
 %_K4srv/plasma-runner-marble.desktop
 %_K4doc/*/marble
@@ -1025,8 +1042,10 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4srvtyp/Rocs*Plugin.desktop
 %_K4doc/*/rocs
 
-%files -n librocslib4
-%_K4libdir/librocslib.so.*
+%files -n librocscore4
+%_K4libdir/librocscore.so.*
+%files -n librocsvisualeditor4
+%_K4libdir/librocsvisualeditor.so.*
 %files -n libkanagramengine4
 %_K4libdir/libkanagramengine.so.*
 %files -n libkhangmanengine4
@@ -1045,6 +1064,9 @@ mkdir -p %buildroot/%_K4apps/step/objinfo/l10n
 %_K4dbus_interfaces/*
 
 %changelog
+* Mon Dec 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.3-alt1.1
 - Rebuilt with Boost 1.52.0
 
