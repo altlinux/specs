@@ -1,5 +1,5 @@
-%define		branch 0.6
-%define		svn svn2810
+%define		branch 0.7
+%define		svn svn3077
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -11,10 +11,10 @@ License:	GPLv2
 Group:		Sound
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Url:		http://qmmp.ylsoftware.com/plugins_en.php
-Source0:	%name-%version-svn.tar.bz2
+Source0:	%name-%branch-%svn.tar.bz2
 
 
-BuildRequires:	cmake >= 2.4.8 gcc-c++ libmpg123-devel libqmmp-devel >= 0.6.0 libtag-devel >= 1.6 yasm
+BuildRequires:	cmake >= 2.4.8 gcc-c++ libmpg123-devel libqmmp-devel >= %branch libtag-devel >= 1.6 yasm
 
 %description
 Plugin pack is a set of extra plugins for Qmmp.
@@ -89,7 +89,7 @@ Qmmp Simple Ui - простой пользовательский интерфе�
 Qmmp Simple Ui - простий інтерфейс користувача з використанням стандартних елементів для Qmmp.
 
 %prep
-%setup -q -n %name-%version-svn
+%setup -q -n %name-svn
 
 %build
 # # with CMake
@@ -121,5 +121,8 @@ qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %name
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Tue Dec 18 2012 Motsyo Gennadi <drool@altlinux.ru> 0.7.0-alt1.svn3077
+- build svn3077
+
 * Mon Jul 16 2012 Motsyo Gennadi <drool@altlinux.ru> 0.6.0-alt1.svn2810
 - initial build for ALT Linux
