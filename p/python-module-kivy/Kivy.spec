@@ -1,6 +1,6 @@
 Name: python-module-kivy
 Version: 1.5.1
-Release: alt1
+Release: alt2
 Summary: Open source library for rapid development of applications
 License: LGPLv3
 Url: http://kivy.org
@@ -23,6 +23,7 @@ that make use of innovative user interfaces, such as multi-touch apps.
 %package examples
 Group: Development/Python
 Summary: Example files for Kyvy, %summary
+BuildArch: noarch
 
 %description examples
 Example files for Kyvy, %summary
@@ -34,6 +35,7 @@ rm -rf kivy/tools/packaging/osx
 sed -i '/glGetIntegerv(GL_VIEWPORT/s/[&]self/self/' kivy/graphics/fbo.pyx
 
 %build
+%add_optflags -fno-strict-aliasing
 %python_build
 cd doc &&
 export PYTHONPATH=`ls -d ../build/lib*` &&
@@ -52,6 +54,9 @@ make html &&
 %_datadir/kivy-examples
 
 %changelog
+* Tue Dec 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.1-alt2
+- Set examples as noarch package
+
 * Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 1.5.1-alt1
 - Autobuild version bump to 1.5.1
 - Remove android-specific jnius dependency
