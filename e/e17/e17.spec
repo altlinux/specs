@@ -1,5 +1,5 @@
 %define _name enlightenment
-%define cvs_date lucky
+%define cvs_date omega
 #%%undefine cvs_date
 %define snapshot 2012-10-12
 %define rel alt1
@@ -134,6 +134,9 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Tue Dec 18 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.omega
+- - 0.17.0 beta (omega)
+
 * Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.lucky
 - 0.17.0 beta (lucky)
 
