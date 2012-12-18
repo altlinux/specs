@@ -2,7 +2,7 @@
 
 Name: qt-creator
 Version: 2.6.0
-Release: alt1
+Release: alt2
 Summary: Lightweight and cross-platform IDE for Qt
 
 Group: Development/Tools
@@ -68,8 +68,8 @@ mkdir -p %buildroot%_datadir/qtcreator/translations
 cp share/qtcreator/translations/*.qm %buildroot%_datadir/qtcreator/translations
 
 for i in 16 24 32 48 64 128 256 512; do
-    install -pD -m644 src/plugins/coreplugin/images/logo/${i}/qtcreator.png \
-                      %buildroot%_iconsdir/hicolor/${i}x${i}/apps/qtcreator.png
+    install -pD -m644 src/plugins/coreplugin/images/logo/${i}/QtProject-qtcreator.png \
+                      %buildroot%_iconsdir/hicolor/${i}x${i}/apps/QtProject-qtcreator.png
 #    mkdir -p %buildroot%_iconsdir/hicolor/${i}x${i}/apps
 #    ln -s %_pixmapsdir/qtcreator_logo_${i}.png \
 #          %buildroot%_iconsdir/hicolor/${i}x${i}/apps/%name.png
@@ -80,7 +80,7 @@ done
 %doc README LICENSE.LGPL LGPL_EXCEPTION.TXT
 %_bindir/*
 %_libdir/qtcreator
-%_iconsdir/hicolor/*/apps/qtcreator.png
+%_iconsdir/hicolor/*/apps/QtProject-qtcreator.png
 %_desktopdir/qtcreator.desktop
 
 %files doc
@@ -93,6 +93,9 @@ done
 %exclude %_datadir/qtcreator/doc
 
 %changelog
+* Tue Dec 18 2012 Anatoly Lyutin <vostok@altlinux.org> 2.6.0-alt2
+- true 2.6.0 (closes #28152)
+
 * Mon Nov 26 2012 Anatoly Lyutin <vostok@altlinux.org> 2.6.0-alt1
 - new version (closes #27938)
 
