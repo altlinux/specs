@@ -3,7 +3,7 @@
 %define rname smokekde
 Name: kde4-smoke
 Version: 4.10.0
-Release: alt0.1
+Release: alt0.2
 
 Group: Development/KDE and QT
 Summary: Bindings for KDE libraries
@@ -379,6 +379,9 @@ NPROCS=1 %K4make
 
 
 %changelog
+* Tue Dec 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- rebuilt
+
 * Fri Dec 14 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
