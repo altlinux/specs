@@ -1,14 +1,14 @@
 Name: 0ad-data
 Epoch: 1
-Version: 0.0.11.alpha
-Release: alt1.2
+Version: 0.0.12.alpha
+Release: alt1
 BuildArch: noarch
 
 Group: Games/Strategy
 Summary: Data for 0ad: free, open-source realtime strategy game of ancient warfare
 License: Various (all distributable)
 Url: http://www.wildfiregames.com/0ad/
-Requires: 0ad = %epoch:%version-%release
+Requires: 0ad = %epoch:%version
 Source: %name-%version.tar
 
 %description
@@ -39,6 +39,10 @@ mv binaries/data/* %buildroot/%_datadir/0ad
 %_datadir/0ad
 
 %changelog
+* Tue Dec 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:0.0.12.alpha-alt1
+- 0.0.12
+- don't relay on bin package release
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.0.11.alpha-alt1.2
 - Rebuilt
 
