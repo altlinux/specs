@@ -1,6 +1,6 @@
 Name: perl-Text-Xslate
 Version: 1.6001
-Release: alt1
+Release: alt2
 
 Summary: Text::Xslate - Scalable template engine for Perl5
 License: Perl
@@ -11,7 +11,7 @@ Url: %CPAN Text-Xslate
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: perl-devel perl-Mouse perl-MouseX-Getopt perl-Test-Requires perl-Data-MessagePack perl-Any-Moose perl-parent perl-Module-Install-XSUtil perl-Module-Install-TestTarget perl-unicore perl-autodie perl-CGI perl-Encode-JP perl-podlators perl-HTTP-Message perl-IPC-Run perl-File-Which perl-Data-Section-Simple perl-URI-Find perl-HTML-FillInForm-Lite perl-JavaScript-Value-Escape perl-Plack perl-HTML-Shakan perl-Data-Localize perl-Locale-Maketext perl-Locale-Maketext-Lexicon perl-File-Copy-Recursive
+BuildRequires: perl-Any-Moose perl-Data-MessagePack perl-Devel-StackTrace perl-Encode-JP perl-File-Copy-Recursive perl-Module-Install-TestTarget perl-Module-Install-XSUtil perl-Mouse perl-Template perl-Test-Requires perl-autodie perl-unicore
 
 %description
 Xslate is a template engine for Perl5 with the following features:
@@ -40,6 +40,9 @@ Xslate is a template engine for Perl5 with the following features:
 %doc Changes README HACKING
 
 %changelog
+* Tue Dec 18 2012 Vladimir Lettiev <crux@altlinux.ru> 1.6001-alt2
+- Optimized build requires
+
 * Tue Dec 18 2012 Vladimir Lettiev <crux@altlinux.ru> 1.6001-alt1
 - 1.5018 -> 1.6001
 
