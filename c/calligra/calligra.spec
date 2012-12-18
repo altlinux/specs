@@ -12,7 +12,7 @@
 
 Name: calligra
 Version: 2.5.4
-Release: alt2
+Release: alt3
 Serial: 0
 
 Group: Office
@@ -1109,6 +1109,12 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/libwordsprivate.so.%sover_common.*
 
 %changelog
+* Tue Dec 18 2012 Sergey V Turchin <zerg@altlinux.org> 0:2.5.4-alt3
+- rebuilt with new marble
+
+* Sun Dec 16 2012 Sergey V Turchin <zerg@altlinux.org> 0:2.5.4-alt1.M60P.1
+- built for M60P
+
 * Sun Dec 16 2012 Sergey V Turchin <zerg@altlinux.org> 0:2.5.4-alt2
 - don't obsolete kivio by flow
 
