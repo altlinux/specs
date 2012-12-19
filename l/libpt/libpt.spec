@@ -1,8 +1,8 @@
 %define oname ptlib
 
 Name: libpt
-Version: 2.8.4
-Release: alt2.1
+Version: 2.10.9
+Release: alt1
 Summary: Portable Tools Libary
 License: MPL
 Group: System/Libraries
@@ -14,8 +14,9 @@ Obsoletes: libpw
 Source: %oname-%version.tar
 Patch: %oname-%version-%release.patch
 
-BuildRequires: flex gcc-c++ libSDL-devel libalsa-devel libavc1394-devel libdv-devel libexpat-devel
-BuildRequires: libldap-devel libpulseaudio-devel libraw1394-devel libv4l-devel
+BuildRequires: flex gcc-c++ libSDL-devel libalsa-devel libexpat-devel
+BuildRequires: libldap-devel libpulseaudio-devel libv4l-devel
+BuildRequires: libssl-devel libsasl2-devel
 
 %description
 PTLib (Portable Tools Library) is a moderately large class library that has it's
@@ -63,8 +64,8 @@ autoconf -f
 cd ..
 
 %build
-%add_optflags -fpermissive
 %configure \
+	--disable-static \
 	--enable-v4l2 \
 	--enable-plugins \
 	--enable-alsa \
@@ -97,6 +98,9 @@ cd ..
 %_libdir/%oname-%version/devices/videoinput/*_pwplugin.so
 
 %changelog
+* Tue Dec 18 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10.9-alt1
+- 2.10.9
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.4-alt2.1
 - Fixed build with gcc 4.7
 
