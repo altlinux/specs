@@ -2,7 +2,7 @@
 
 %define rname	gmail_manager
 %define version 0.6.4.5
-%define release alt1
+%define release alt2
 %define cid 	\{582195F5-92E7-40a0-A127-DB71295901D7\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -44,6 +44,7 @@ mail snippets.
 %prep
 %setup -c
 subst 's#"notifications-sounds-file" type="Char" value=""#"notifications-sounds-file" type="Char" value="%_datadir/sounds/gmail_manager-new-mail.wav"#' components/gmParser.js
+subst 's/maxVersion>12\.\*/maxVersion>17.0.*/g' install.rdf
 
 %install
 mkdir -p --  %buildroot/%ciddir
@@ -63,6 +64,9 @@ fi
 %_datadir/sounds/*.wav
 
 %changelog
+* Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 0.6.4.5-alt2
+- Adapt for Firefox 17.0
+
 * Thu Jan 05 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.6.4.5-alt1
 - New version
 
