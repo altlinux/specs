@@ -3,7 +3,7 @@
 
 Name: squid
 Version: 3.1.22
-Release: alt3
+Release: alt4
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -272,6 +272,10 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Wed Dec 19 2012 Led <led@altlinux.ru> 3.1.22-alt4
+- fixed init script for use parameters from %%_sysconfdie/sysconfig/squid
+- doc: fix man pages generation
+
 * Tue Dec 18 2012 Led <led@altlinux.ru> 3.1.22-alt3
 - cleaned up spec
 - updated BuildRequires
