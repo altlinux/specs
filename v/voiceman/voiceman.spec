@@ -1,16 +1,16 @@
 Name: voiceman
-Version: 1.5.0.1
+Version: 1.5.0.2
 Release: alt1
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: %gpl3plus
-URL: http://www.marigostra.ru/voiceman/
+URL: http://www.marigostra.ru/projects/voiceman/
 
 Summary: Universal server for processing speech output
 Group: Sound
 
 Source: %name-%version.tar.gz
-Source1: %name
+Source1: %name.rc
 Source2: %name.conf
 
 BuildRequires: rpm-build-licenses gcc-c++ libao-devel
@@ -103,6 +103,9 @@ done
 %_libdir/libvmclient.a
 
 %changelog
+* Wed Dec 19 2012 Michael Pozhidaev <msp@altlinux.ru> 1.5.0.2-alt1
+- New version
+
 * Tue May 17 2011 Michael Pozhidaev <msp@altlinux.ru> 1.5.0.1-alt1
 - New version
 
