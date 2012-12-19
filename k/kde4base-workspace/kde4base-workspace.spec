@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -54,8 +54,7 @@ Patch22: kde-workspace-4.9.90-plasma_konsole.patch
 Patch23: kde-workspace-4.7.80-no_HAL.patch
 Patch24: kdebase-workspace-4.5.90-no_HAL2.patch
 Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
-Patch26: kde-workspace-4.9.90-kscreenlocker_rename.patch
-Patch27: kde-workspace-4.9.3-systemd-displaymanager.patch
+Patch26: kde-workspace-4.9.3-systemd-displaymanager.patch
 # SuSE
 # MDK
 # upstream
@@ -67,7 +66,7 @@ Patch851: kubuntu_19_always_show_kickoff_subtext.diff
 Patch1000: kdebase-workspace-4.10.0-alt-startkde.patch
 Patch1001: kdebase-workspace-4.6.0-alt-kdm-confdir.patch
 Patch1002: kdebase-workspace-4.6.3-alt-kdm-cmd-poweroff.patch
-Patch1003: kdebase-workspace-4.8.0-alt-kdm-defaults.patch
+Patch1003: kdebase-workspace-4.10.0-alt-kdm-defaults.patch
 Patch1004: kdebase-workspace-4.6.5-alt-kdm-wmsession.patch
 Patch1005: kdebase-workspace-4.4.92-alt-kdm-dont-show-nologin-users.patch
 Patch1006: kmenuedit-4.8.0-alt-menueditor.patch
@@ -125,10 +124,10 @@ BuildRequires: libstrigi-devel libusb-compat-devel xml-utils
 BuildRequires: libalternatives-devel libqedje-devel libeet-devel libqzion-devel
 BuildRequires: polkit-qt-1-devel libpolkit-devel libdbusmenu-qt-devel
 BuildRequires: soprano soprano-backend-redland libsoprano-devel
-BuildRequires: libqalculate-devel libjpeg-devel prison-devel
+BuildRequires: libqalculate-devel libjpeg-devel prison-devel qjson-devel
 BuildRequires: kde4pimlibs-devel akonadi-devel libraw1394-devel libpci-devel
 BuildRequires: python-module-PyQt4 python-module-sip python-devel
-BuildRequires: kde4-kactivities-devel
+BuildRequires: kde4-kactivities-devel kde4-nepomuk-core-devel
 BuildRequires: python-module-sip python-devel
 #BuildRequires: libdbus-devel
 #BuildRequires: glib2-devel
@@ -236,9 +235,9 @@ Group: System/Libraries
 BuildArch: noarch
 #Requires: %name-common = %version-%release
 Requires: libsolidcontrolifaces4 libsolidcontrol4 libweather4_ion
-Requires: libkdecorations4 libksgrd4 libkwineffects4 libkworkspace4
+Requires: libkdecorations4 libksgrd4 libkworkspace4
 Requires: libplasmaclock4 libprocessui4
-Requires: libkwinnvidiahack4 libkephal4 liblsofui4
+Requires: libkephal4 liblsofui4
 Requires: libplasma4_applet-system-monitor libplasma4-geolocation-interface
 Requires: libprocesscore4
 %if_enabled desktop
@@ -514,8 +513,8 @@ KDE 4 library
 %prep
 %setup -q -n %rname-%version
 # move default ksplash theme to use another by default
-sed -i 's|Default|Horos|g' ksplash/ksplashx/themes/horos/CMakeLists.txt
-sed -i 's|Default|Horos|g' ksplash/ksplashx/themes/horos/Theme.rc
+sed -i 's|Default|Air|g' ksplash/ksplashx/themes/air/CMakeLists.txt
+sed -i 's|Default|Air|g' ksplash/ksplashx/themes/air/Theme.rc
 %if_disabled google
 rm -rf plasma/generic/scriptengines/google_gadgets
 %endif
@@ -538,9 +537,8 @@ __EOF__
 %patch23 -p1
 %patch24 -p1
 %patch25 -p1
-%patch26 -p1
 %if_enabled systemd
-%patch27 -p0
+%patch26 -p0
 %endif
 #
 %patch700 -p1
@@ -785,10 +783,10 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4exec/fontinst
 %_K4exec/fontinst_x11
 %_K4exec/fontinst_helper
-%_K4exec/kscreenlocker_greet
 %_K4exec/kwin_rules_dialog
 #%_K4exec/test_kcm_xinerama
 %endif
+%_K4exec/kscreenlocker_greet
 %_K4exec/ksysguardprocesslist_helper
 %_K4exec/kwin_killer_helper
 %_K4exec/kwin_opengl_test
@@ -801,8 +799,8 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4libdir/libkdeinit4_*.so
 %_K4conf_bin/*
 %_K4lib/*.so*
-%_K4lib/imports/org/kde/kwin/
 %if_enabled desktop
+%_K4lib/imports/org/kde/kwin/
 %exclude %_K4lib/kcm_kdm.so*
 %endif
 %_K4lib/plugins/styles/*.so
@@ -968,6 +966,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Mon Dec 10 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 

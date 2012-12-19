@@ -10,7 +10,7 @@
 %define bugfix 0
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Runtime
@@ -231,6 +231,9 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Mon Dec 10 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
