@@ -9,11 +9,11 @@
 
 %define rname kdeartwork
 %define major 4
-%define minor 9
-%define bugfix 1
+%define minor 10
+%define bugfix 0
 Name: kde4artwork
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Summary: K Desktop Environment - Artwork
 Group: Graphical desktop/KDE
@@ -333,10 +333,6 @@ done
 
 %files
 %files common
-%dir %_K4apps/aurorae
-%dir %_K4apps/aurorae/themes
-%_K4apps/aurorae/themes/Air-Oxygen
-%_K4apps/aurorae/themes/Oxygen
 %doc README
 
 %if_enabled emoticons
@@ -424,6 +420,9 @@ done
 %endif
 
 %changelog
+* Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Thu Oct 04 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
