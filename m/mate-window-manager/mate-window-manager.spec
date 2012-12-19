@@ -1,7 +1,7 @@
+Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/matedialog libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(pango) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xfixes) pkgconfig(xrender)
 # END SourceDeps(oneline)
-Group: Graphical desktop/Other
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
 %{echo 
@@ -12,7 +12,7 @@ BuildRequires: libcanberra-gtk2-devel
 
 Name:           mate-window-manager
 Version:        1.5.2
-Release:        alt4_9
+Release:        alt4_10
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -143,6 +143,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Wed Dec 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt4_10
+- new fc release
+
 * Thu Nov 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt4_9
 - new fc release
 
