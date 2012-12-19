@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 1.6.7
-Release: alt4
+Release: alt5
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -239,6 +239,10 @@ _WM_
 %doc NEWS README
 
 %changelog
+* Wed Dec 19 2012 Vladimir Didenko <cow@altlinux.org> 1.6.7-alt5
+- Disabled text shadow for panel applets
+- Explicitly set width for panel status button
+
 * Thu Dec 13 2012 Yuri N. Sedunov <aris@altlinux.org> 1.6.7-alt4
 - rebuilt to update arepo dependencies after polkit-0.108
 
