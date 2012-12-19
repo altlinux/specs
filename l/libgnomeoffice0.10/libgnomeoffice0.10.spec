@@ -1,4 +1,4 @@
-%define ver_major 0.9
+%define ver_major 0.10
 %define api_ver 0.10
 %define _name goffice
 
@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: libgnomeoffice%api_ver
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: Library for writing gnome office programs
@@ -23,7 +23,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%_name/%ver_major/%_name-%version.
 %define gsf_ver 1.14.9
 %define gtk_ver 3.0.0
 %define cairo_ver 1.10.0
-%define lasem_ver 0.3.4
+%define lasem_ver 0.4.1
 
 BuildPreReq: libgio-devel >= %glib_ver
 BuildPreReq: libgsf-devel >= %gsf_ver
@@ -132,6 +132,9 @@ GObject introspection devel data for the Goffice library.
 
 
 %changelog
+* Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.10.0-alt1
+- 0.10.0
+
 * Sat Nov 17 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9.90-alt1
 - 0.9.90 (0.10 API)
 

@@ -10,7 +10,7 @@
 %endif
 
 Name: gnome-chemistry-utils
-Version: %ver_major.98
+Version: %ver_major.99
 Release: alt1
 
 Summary: A set of chemical utilities
@@ -123,6 +123,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.99-alt1
+- 0.13.99
+
 * Sun Nov 18 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.98-alt1
 - 0.13.98
 

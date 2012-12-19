@@ -1,5 +1,8 @@
+%define ver_major 0.4
+%define api_ver 0.4
+
 Name: lasem
-Version: 0.3.4
+Version: %ver_major.1
 Release: alt1
 
 Summary: C/Gobject based SVG/Mathml renderer and editor - tools
@@ -7,16 +10,12 @@ License: GPL
 Group: Graphics
 
 Url: https://live.gnome.org/Lasem
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 
-# Cloned from git://git.gnome.org/lasem as subtree lasem
-#
-# To update sources from upstream git:
-#
-#   $ git remote add upstream git://git.gnome.org/lasem
-#   $ git pull -s subtree -X subtree=lasem upstream LASEM_0_3_4
-Source: %name-%version.tar
+BuildRequires: libgio-devel libxml2-devel libcairo-devel libcairo-gobject-devel libgdk-pixbuf-devel libpango-devel
+BuildRequires: libgdk-pixbuf-gir-devel libpango-gir-devel
+BuildRequires: intltool flex gtk-doc
 
-BuildRequires: glib2-devel libgio-devel libgtk+2-devel libxml2-devel libpango-devel libcairo-devel autogen intltool flex libgtk+2-gir-devel gtk-doc
 PreReq: lib%name = %version-%release
 
 %description
@@ -28,6 +27,8 @@ SVG, PDF, PS, EPS...
 %package -n lib%name
 Summary: C/Gobject based SVG/Mathml renderer and editor - library
 Group: System/Libraries
+# cmr10, cmmi10, cmex10 and cmsy10 fonts (see README)
+Requires: fonts-ttf-latex-xft
 
 %description -n lib%name
 %summary
@@ -41,7 +42,7 @@ PreReq: lib%name = %version-%release
 %summary
 
 %package -n lib%name-gir
-Summary: GObject introspection data for the lasem library
+Summary: GObject introspection data for the Lasem library
 Group: System/Libraries
 Requires: lib%name = %version-%release
 
@@ -49,44 +50,71 @@ Requires: lib%name = %version-%release
 %summary
 
 %package -n lib%name-gir-devel
-Summary: GObject introspection devel data for the lasem library
-Group: System/Libraries
+Summary: GObject introspection devel data for the Lasem library
+Group: Development/Other
 Requires: lib%name-gir = %version-%release
 
 %description -n lib%name-gir-devel
 %summary
 
+%package -n lib%name-devel-doc
+Summary: Development documentation for Lasem library
+Group: Development/Documentation
+BuildArch: noarch
+Conflicts: lib%name-devel < %version
+
+%description -n lib%name-devel-doc
+%summary
+
+This package provides documentation needed for developing Lasem
+applications.
+
+
 %prep
 %setup
 
 %build
-NOCONOFIGURE=true ./autogen.sh
-%configure --disable-static
+%autoreconf
+%configure --disable-static \
+	--enable-gtk-doc
+
 %make_build
 
 %install
 %makeinstall_std
-%find_lang %name-0.4
+%find_lang %name-%api_ver
+
+%check
+%make check
 
 %files
-%_bindir/lasem-render-0.4
-%doc README COPYING ChangeLog AUTHORS NEWS
+%_bindir/lasem-render-%api_ver
+%doc README ChangeLog AUTHORS NEWS
 
-%files -n lib%name -f %name-0.4.lang
-%_libdir/lib%name-0.4.so.*
+%files -n lib%name -f %name-%api_ver.lang
+%_libdir/lib%name-%api_ver.so.*
 
 %files -n lib%name-devel
-%_includedir/%name-0.4
-%_libdir/pkgconfig/%name-0.4.pc
-%_libdir/lib%name-0.4.so
+%_includedir/%name-%api_ver
+%_libdir/pkgconfig/%name-%api_ver.pc
+%_libdir/lib%name-%api_ver.so
 
 %files -n lib%name-gir
-%_libdir/girepository-1.0/Lasem-0.4.typelib
+%_typelibdir/Lasem-%api_ver.typelib
 
 %files -n lib%name-gir-devel
-%_datadir/gir-1.0/Lasem-0.4.gir
+%_girdir/Lasem-%api_ver.gir
+
+%files -n lib%name-devel-doc
+%_datadir/gtk-doc/html/%name-%api_ver/
 
 %changelog
+* Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.4.1-alt1
+- 0.4.1
+- updated buildreqs
+- added fonts-ttf-latex-xft to dependencies (see README)
+- new -devel-doc subpackage
+
 * Sat Nov 17 2012 Vladimir Lettiev <crux@altlinux.ru> 0.3.4-alt1
 - New version 0.3.4 (Closes: #27993)
 - Dropped patch

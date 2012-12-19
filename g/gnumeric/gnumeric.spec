@@ -1,4 +1,4 @@
-%define ver_major 1.11
+%define ver_major 1.12
 %define api_ver 1.12
 %define goffice_api_ver 0.10
 %define _unpackaged_files_terminate_build 1
@@ -8,7 +8,7 @@
 %def_disable introspection
 
 Name: gnumeric
-Version: %ver_major.90
+Version: %ver_major.0
 Release: alt1
 
 Summary: A full-featured spreadsheet for GNOME
@@ -31,7 +31,7 @@ Provides: python%__python_version(Gnumeric)
 %define gsf_ver 1.14.23
 %define gda_ver 4.0
 %define desktop_file_utils_ver 0.10
-%define goffice_ver 0.9.90
+%define goffice_ver 0.10.0
 
 PreReq: scrollkeeper >= %scrollkeeper_ver
 Requires(post,postun): desktop-file-utils >= %desktop_file_utils_ver
@@ -160,6 +160,9 @@ gnome-doc-prepare --copy --force
 %_pkgconfigdir/*
 
 %changelog
+* Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 1.12.0-alt1
+- 1.12.0
+
 * Sat Nov 17 2012 Yuri N. Sedunov <aris@altlinux.org> 1.11.90-alt1
 - 1.11.90
 
