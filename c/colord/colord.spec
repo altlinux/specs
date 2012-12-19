@@ -5,7 +5,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: colord
-Version: 0.1.25
+Version: 0.1.26
 Release: alt1
 
 Summary: Color daemon
@@ -117,18 +117,23 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 %_bindir/*
 %config %_sysconfdir/%name.conf
 %_libexecdir/%name
+%_libexecdir/colord-session
 %_sysconfdir/dbus-1/system.d/org.freedesktop.ColorManager.conf
 %_datadir/dbus-1/interfaces/org.freedesktop.ColorManager*.xml
 %_datadir/dbus-1/system-services/org.freedesktop.ColorManager.service
+%_datadir/dbus-1/interfaces/org.freedesktop.ColorHelper.xml
+%_datadir/dbus-1/services/org.freedesktop.ColorHelper.service
 %_datadir/polkit-1/actions/org.freedesktop.color.policy
 /lib/udev/rules.d/*.rules
 %dir %_libdir/colord-sensors
 %_libdir/colord-sensors/libcolord_sensor_dummy.so
 %_libdir/colord-sensors/libcolord_sensor_huey.so
 %_libdir/colord-sensors/libcolord_sensor_colorhug.so
+%_libdir/colord-sensors/libcolord_sensor_argyll.so
 %dir %_libdir/colord-plugins
 %_libdir/colord-plugins/libcd_plugin_camera.so
 %_libdir/colord-plugins/libcd_plugin_scanner.so
+%_datadir/%name/
 %_man1dir/cd-create-profile.1.*
 %_man1dir/colormgr.*
 %_man1dir/cd-fix-profile.*
@@ -167,6 +172,9 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 
 
 %changelog
+* Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.26-alt1
+- 0.1.26
+
 * Tue Nov 27 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.25-alt1
 - 0.1.25
 
