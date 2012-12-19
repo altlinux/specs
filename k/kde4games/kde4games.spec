@@ -5,10 +5,10 @@
 %define rname kdegames
 Name: kde4games
 %define major 4
-%define minor 9
-%define bugfix 3
+%define minor 10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: KDE - Games
@@ -155,7 +155,7 @@ Core files for %name
 %package palapeli
 Summary: Jigsaw puzzle game
 Group: Graphical desktop/KDE
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description palapeli
 Palapeli is a jigsaw puzzle game. Unlike other games in that genre, you
 are not limited to aligning pieces on imaginary grids. The pieces are
@@ -165,14 +165,14 @@ you do is saved on your disk immediately.
 %package granatier
 Summary: KDE Bomberman game
 Group: Graphical desktop/KDE
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description granatier
 KDE Bomberman game.
 
 %package kigo
 Summary: Go board game for KDE
 Group: Graphical desktop/KDE
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 Requires: gnugo
 %description kigo
 Go board game for KDE.
@@ -180,21 +180,21 @@ Go board game for KDE.
 %package kapman
 Summary: A Pac-Man clone
 Group: Graphical desktop/KDE
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kapman
 Kapman is a Pac-Man clone
 
 %package bomber
 Summary: bomber
 Group: Graphical desktop/KDE
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description bomber
 Bomberman like game
 
 %package killbots
 Summary: KDE port of the classic BSD console game robots
 Group: Graphical desktop/KDE
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description killbots
 Killbots is a KDE port of the classic BSD console game robots.
 
@@ -202,7 +202,7 @@ Killbots is a KDE port of the classic BSD console game robots.
 Summary: KGoldrunner, a game of action and puzzle solving
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kgoldrunner
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kgoldrunner
 KGoldrunner, a game of action and puzzle solving.
 Run through the maze, dodge your enemies, collect
@@ -212,7 +212,7 @@ all the gold and climb up to the next level.
 Summary: Build complex atoms with a minimal amount of moves
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=katomic
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description katomic
 katomic: build complex atoms with a minimal amount of moves
 
@@ -220,7 +220,7 @@ katomic: build complex atoms with a minimal amount of moves
 Summary: Find atoms in a grid by shooting electrons
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kblackbox
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kblackbox
 kblackbox: find atoms in a grid by shooting electrons
 
@@ -228,7 +228,7 @@ kblackbox: find atoms in a grid by shooting electrons
 Summary: KTuberling: "potato editor" game
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=ktuberling
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description ktuberling
 KTuberling is a "potato editor" game intended for small
 children and adults who remain young at heart. The game
@@ -239,7 +239,7 @@ faces you can.
 Summary: Claim areas and don't get disturbed
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kbounce
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kbounce
 kbounce: claim areas and don't get disturbed
 
@@ -247,7 +247,7 @@ kbounce: claim areas and don't get disturbed
 Summary: Two player game with shooting spaceships flying around a sun
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kspaceduel
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kspaceduel
 kspaceduel: two player game with shooting spaceships flying around a sun
 
@@ -255,7 +255,7 @@ kspaceduel: two player game with shooting spaceships flying around a sun
 Summary: Old reversi board game, also known as othello
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kreversi
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kreversi
 kreversi: the old reversi board game, also known as othello
 
@@ -263,7 +263,7 @@ kreversi: the old reversi board game, also known as othello
 Summary: A golf game
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kolf
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kolf
 Kolf is a miniature golf game with 2d top-down view. Courses are dynamic,
 and up to 10 people can play at once in competition. Kolf comes equipped
@@ -273,7 +273,7 @@ with a variety of playgrounds and tutorial courses.
 Summary: Conquer the planets of your enemy
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=konquest
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description konquest
 konquest: conquer the planets of your enemy
 
@@ -281,7 +281,7 @@ konquest: conquer the planets of your enemy
 Summary: Adaptation of the Clickomania game
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=ksame
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 Provides: kde4games-ksame = %version-%release
 Obsoletes: kde4games-ksame < %version-%release
 %description klickety
@@ -291,7 +291,7 @@ Adaptation of the Clickomania game
 Summary: A tile laying patience
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kmahjongg
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kmahjongg
 Kmahjongg: a tile laying patience
 
@@ -299,7 +299,7 @@ Kmahjongg: a tile laying patience
 Summary: A tile laying patience
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kajongg
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kajongg
 Kajongg: a tile laying patience
 
@@ -307,7 +307,7 @@ Kajongg: a tile laying patience
 Summary: Battleship game with built-in game server
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=knavalbattle
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 Provides: kde4games-kbattleship = %version-%release
 Obsoletes: kde4games-kbattleship < %version-%release
 %description knavalbattle
@@ -317,7 +317,7 @@ knavalbattle: battleship game with built-in game server
 Summary: Kiriki: Close of Yahtzee
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kiriki
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kiriki
 Kiriki is a dice game, written for KDE 4.
 It is a clone of Gnome Tali (gtali) that is a clone of Yahtzee!
@@ -326,7 +326,7 @@ It is a clone of Gnome Tali (gtali) that is a clone of Yahtzee!
 Summary: KSudoku - Play, create and solve sudoku grids
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=ksudoku
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 Provides: ksudoku = %version-%release
 Obsoletes: ksudoku < %version-%release
 %description ksudoku
@@ -350,7 +350,7 @@ you).
 Summary: Bovo: classic pen and paper game
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=bovo
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description bovo
 Bovo is a KDE 4 game, modeled upon a classic pen and paper game,
 where you try to connect five in a row prior to your opponent.
@@ -359,7 +359,7 @@ where you try to connect five in a row prior to your opponent.
 Summary: kjumpingcube: a tactical game for number-crunchers
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kjumpingcube
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kjumpingcube
 KJumpingCube is a tactical one or two-player game. The playing field
 consists of squares that contains points which can be increased. By
@@ -369,7 +369,7 @@ this you can gain more fields and finally win the board over.
 Summary: Place 5 equal pieces together, but wait, there are 3 new ones
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=klines
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description klines
 klines: place 5 equal pieces together, but wait, there are 3 new ones
 
@@ -377,7 +377,7 @@ klines: place 5 equal pieces together, but wait, there are 3 new ones
 Summary: The classical mine sweeper
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kmines
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kmines
 kmines: the classical mine sweeper
 
@@ -385,7 +385,7 @@ kmines: the classical mine sweeper
 Summary: Turn the board pieces to get all computers connected
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=knetwalk
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description knetwalk
 Turn the board pieces to get all computers connected.
 
@@ -393,7 +393,7 @@ Turn the board pieces to get all computers connected.
 Summary: Several patience card games
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kpat
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kpat
 kpat: several patience card games
 
@@ -401,7 +401,7 @@ kpat: several patience card games
 Summary: Patience game where you take away all pieces
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kshisen
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kshisen
 Kshisen: patience game where you take away all pieces
 
@@ -409,7 +409,7 @@ Kshisen: patience game where you take away all pieces
 Summary: KSquares: an implementation of the popular paper based game squares
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=ksquares
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description ksquares
 KSquares is an implementation of the popular paper based game squares.
 You must draw lines to complete squares, the player with the most s
@@ -419,7 +419,7 @@ quares wins.
 Summary: Place 4 pieces in a row
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kfourinline
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kfourinline
 kfourinline: place 4 pieces in a row
 
@@ -427,7 +427,7 @@ kfourinline: place 4 pieces in a row
 Summary: Lieutnant skat
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=lskat
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description lskat
 lskat: lieutnant skat
 
@@ -435,7 +435,7 @@ lskat: lieutnant skat
 Summary: Three-in-a-row game
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kdiamond
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kdiamond
 KDiamond is a three-in-a-row game (much like Bejeweled) for the KDE 4 desktop.
 
@@ -443,21 +443,21 @@ KDiamond is a three-in-a-row game (much like Bejeweled) for the KDE 4 desktop.
 Summary: A simple ball dodging game
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kollision
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kollision
 A simple ball dodging game
 
 %package kubrick
 Summary: Game based on Rubik's Cube
 Group: Graphical desktop/KDE
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kubrick
 Kubrick, a game based on Rubik's Cube
 
 %package kblocks
 Summary: Single player falling blocks puzzle game
 Group: Graphical desktop/KDE
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kblocks
 Single player falling blocks puzzle game
 
@@ -465,7 +465,7 @@ Single player falling blocks puzzle game
 Summary: kbreakout
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=kbreakout
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description kbreakout
 Single player falling blocks puzzle game
 
@@ -473,7 +473,7 @@ Single player falling blocks puzzle game
 Summary: Single player falling blocks puzzle game
 Group: Graphical desktop/KDE
 Url: http://games.kde.org/game.php?game=ksirk
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 %description ksirk
 KsirK is a computerized version of a well known strategy board game.
 KsirK is a multi-player network-playable game with an AI. The goal
@@ -533,7 +533,7 @@ KDE 4 library.
 Summary: Simple Tron clone
 Group: Graphical desktop/KDE
 URL: http://games.kde.org/game.php?game=ksnakeduel
-Requires: kde4games-core = %version-%release
+Requires: %name-core = %version-%release
 Provides: kde4games-kdesnake = %version-%release
 Obsoletes: kde4games-kdesnake < %version-%release
 Provides: kde4games-ktron = %version-%release
@@ -1181,6 +1181,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Tue Nov 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
