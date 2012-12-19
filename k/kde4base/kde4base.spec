@@ -11,7 +11,7 @@
 %define bugfix 0
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -51,7 +51,7 @@ BuildRequires: bzlib-devel gcc-c++ libjpeg-devel libpcre-devel libtidy-devel
 BuildRequires: libqimageblitz-devel soprano soprano-backend-redland libsoprano-devel libstrigi-devel
 BuildRequires: libungif-devel xml-utils glib2-devel
 BuildRequires: kde4libs-devel >= %version
-BuildRequires: kde4pimlibs-devel
+BuildRequires: kde4pimlibs-devel kde4-nepomuk-core-devel
 BuildRequires: kde4base-workspace-devel >= %version
 BuildRequires: desktop-file-utils
 
@@ -609,6 +609,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- fix to build with nepomuk
+
 * Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
