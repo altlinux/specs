@@ -1,8 +1,8 @@
 # SPEC file for Simple Calc extension
 
 %define rname	quicknote
-%define version 0.6.0.10
-%define release alt3
+%define version 0.7.2
+%define release alt1
 %define cid 	\{C0CB8BA3-6C1B-47e8-A6AB-1FAB889562D9\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -15,13 +15,12 @@ Summary(ru_RU.UTF-8): расширение QuickNote для Firefox
 
 License:	%mpl 1.1 / %gpl2plus
 Group:		Networking/WWW
-URL:		http://quicknote.mozdev.org
-#URL:		https://addons.mozilla.org/en-US/firefox/addon/quicknote/
+URL:		https://addons.mozilla.org/ru/firefox/addon/quicknote/
 BuildArch:	noarch
 
 Packager:       Nikolay A. Fetisov <naf@altlinux.ru>
 
-Source0:	%{rname}-%version-fx+tb.xpi
+Source0:	%{rname}-%version-sm+tb+fx.xpi
 
 BuildRequires(pre): rpm-build-firefox rpm-build-licenses
 BuildRequires:  unzip
@@ -51,6 +50,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 0.7.2-alt1
+- New version 0.7.2
+
 * Thu Oct 20 2011 Nikolay A. Fetisov <naf@altlinux.ru> 0.6.0.10-alt3
 - Rebuild with Firefox 7.0
 
