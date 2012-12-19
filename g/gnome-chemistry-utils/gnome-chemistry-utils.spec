@@ -1,4 +1,4 @@
-%define ver_major 0.13
+%define ver_major 0.14
 %define api_ver 0.14
 %define _libexecdir %_prefix/libexec
 %def_enable mozilla
@@ -10,7 +10,7 @@
 %endif
 
 Name: gnome-chemistry-utils
-Version: %ver_major.99
+Version: %ver_major.0
 Release: alt1
 
 Summary: A set of chemical utilities
@@ -123,6 +123,9 @@ spreadsheet program.
 %endif
 
 %changelog
+* Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.14.0-alt1
+- 0.14.0
+
 * Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.13.99-alt1
 - 0.13.99
 
