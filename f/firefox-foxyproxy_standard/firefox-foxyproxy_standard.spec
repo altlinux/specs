@@ -1,7 +1,7 @@
 # SPEC file for FoxyProxy Firefox extension
 
 %define rname	foxyproxy_standard
-%define version	3.4
+%define version	4.1
 %define release alt1
 %define cid 	foxyproxy@eric.h.jung
 %define ciddir	%firefox_noarch_extensionsdir/%cid
@@ -62,5 +62,8 @@ fi
 
 
 %changelog
+* Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 4.1-alt1
+- New version 4.1
+
 * Fri Jan 06 2012 Nikolay A. Fetisov <naf@altlinux.ru> 3.4-alt1
 - Initial build for ALT Linux Sisyphus
