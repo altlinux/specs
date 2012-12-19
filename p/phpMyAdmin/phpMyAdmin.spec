@@ -1,6 +1,6 @@
 Name: phpMyAdmin
 Version: 3.5.4
-Release: alt1
+Release: alt2
 Summary: phpMyAdmin - web-based MySQL administration
 License: GPL
 Group: System/Servers
@@ -50,6 +50,7 @@ Summary: phpMyAdmin - web-based MySQL administration (for apache 1.3 and php5)
 Group: System/Servers
 Requires: %name = %version-%release
 Requires: apache-mod_php5
+Requires: apache-base
 Requires: php5-mysql
 Requires: php5-mcrypt
 Requires: php5-mbstring
@@ -80,6 +81,7 @@ Summary: phpMyAdmin - web-based MySQL administration (for apache 2.0 and php5)
 Group: System/Servers
 Requires: %name = %version-%release
 Requires: apache2-mod_php5 >= 5.2.0
+Requires: apache2-base
 Requires: php5-mysql
 Requires: php5-mcrypt
 Requires: php5-mbstring
@@ -187,6 +189,9 @@ replace *SECRET* `pwgen -0s1` -- %webserver_webappsdir/%name/config.inc.php
 %attr(755,root,root) %_controldir/%name-apache2
 
 %changelog
+* Wed Dec 19 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.5.4-alt2
+- Require apache2-base, apache-base package (ALT #28238)
+
 * Mon Dec 03 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 3.5.4-alt1
 - 3.3.10 -> 3.5.4
 - Repocop: altlinux-policy-obsolete-httpd2-reload
