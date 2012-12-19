@@ -3,10 +3,10 @@
 %define rname libkdegames
 Name: libkdegames4
 %define major 4
-%define minor 9
-%define bugfix 3
+%define minor 10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: System/Libraries
 Summary: Library for the kdegames
@@ -92,6 +92,9 @@ Development files for %name
 
 
 %changelog
+* Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Tue Nov 13 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
