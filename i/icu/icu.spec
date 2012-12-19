@@ -1,6 +1,6 @@
 Name: icu
-Version: 5.1
-Release: alt2
+Version: 5.1.1
+Release: alt1
 Epoch: 1
 Summary: International Components for Unicode
 Group: System/Libraries
@@ -8,7 +8,7 @@ License: X License
 URL: http://www.icu-project.org/
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: http://download.icu-project.org/files/icu4c/5.1/icu4c-50_1-src.tgz
+Source: http://download.icu-project.org/files/icu4c/5.1.1/icu4c-50_1_1-src.tgz
 # https://bugs.gentoo.org/show_bug.cgi?id=439892
 Patch: libicu-5.1-up-disable_c++11_test.patch
 
@@ -102,6 +102,9 @@ rm -f %buildroot%_bindir/icuinfo
 %_datadir/icu/samples
 
 %changelog
+* Wed Dec 19 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:5.1.1-alt1
+- 5.1.1
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 1:5.1-alt2
 - disabled C++ 2011 test (https://bugs.gentoo.org/show_bug.cgi?id=439892)
 
