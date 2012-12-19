@@ -5,7 +5,7 @@
 
 %define module_name	nvidia
 %define module_version	310.19
-%define module_release alt3
+%define module_release alt4
 %define flavour		un-def
 BuildRequires(pre): rpm-build-kernel
 BuildRequires(pre): kernel-headers-modules-un-def
@@ -43,11 +43,7 @@ BuildRequires(pre): kernel-headers-modules-un-def
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.14
-%if "%kversion" <= "3.7"
 %define legacy4 304.64
-%else
-%define legacy4 %nil
-%endif
 %else
 %define legacy4 %nil
 %endif
@@ -94,7 +90,8 @@ BuildRequires: kernel-source-%module_name-%legacy3_src
 BuildRequires: kernel-source-%module_name-%legacy4_src
 %endif
 
-Patch: nvidia-3.7.patch
+Patch1: nvidia-304.64-kernel-3.7.patch
+Patch2: nvidia-310.19-kernel-3.7.patch
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
@@ -136,7 +133,10 @@ do
     ln -s Makefile.kbuild Makefile
     popd
 done
-%patch -p1
+%if "%kversion" >= "3.7"
+%patch1 -p1
+%patch2 -p1
+%endif
 
 %build
 for ver in %mod_ver_list
@@ -212,6 +212,9 @@ fi
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Dec 19 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 310.19-alt4
+- add nvidia-304.64-kernel-3.7.patch
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 310.19-alt3
 - new template
