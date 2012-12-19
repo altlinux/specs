@@ -3,7 +3,7 @@
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	5.7.2
+Version:	6.1.1
 Release:	alt1
 Summary:	Extension to view and save MHT files with Mozilla Firefox
 
@@ -39,6 +39,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 6.1.1-alt1
+- New version 6.1.1
+
 * Fri Nov 25 2011 Sergey Kurakin <kurakin@altlinux.org> 5.7.2-alt1
 - 5.7.2: native compatiblility with Firefox 9
 
