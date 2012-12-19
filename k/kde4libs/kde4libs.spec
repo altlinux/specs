@@ -9,7 +9,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -313,6 +313,10 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- udpate from 4.10 branch
+- fix to load udev and udisks solid backends
+
 * Fri Dec 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
