@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: %{_name}2
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Disk Management Service (Second Edition)
@@ -14,7 +14,8 @@ License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+Source: %_name-%version.tar
+#Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
 Requires: lib%name = %version-%release
@@ -31,7 +32,7 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libatasmart-devel >= %libatasmart_ver
 BuildRequires: libudev-devel libgudev-devel >= %udev_ver
-BuildRequires: libacl-devel systemd-devel
+BuildRequires: libacl-devel systemd-devel libsystemd-login-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 
 Requires: /lib/udev/rules.d /usr/sbin/cryptsetup mdadm
@@ -150,6 +151,9 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %endif
 
 %changelog
+* Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
+- after 2.0.1 snapshot (d2a937d3)
+
 * Wed Oct 03 2012 Yuri N. Sedunov <aris@altlinux.org> 2.0.0-alt1
 - 2.0.0 release
 
