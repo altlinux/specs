@@ -1,6 +1,6 @@
 Name: polkit
 Version: 0.108
-Release: alt2
+Release: alt3
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
 Group: System/Libraries
@@ -14,6 +14,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 # from fedora
 Patch1: %name-0.108-fix-libmozjs185-soname.patch
+
+Requires: libmozjs
 
 BuildRequires: gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
 BuildRequires: libmozjs-devel libsystemd-login-devel systemd-devel
@@ -127,6 +129,9 @@ subst 's|^\(PKG_CHECK_MODULES(GLIB.*\)])|\1 gmodule-2.0])|' configure.ac
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.108-alt3
+- added libmozjs to reqs
+
 * Wed Dec 12 2012 Yuri N. Sedunov <aris@altlinux.org> 0.108-alt2
 - attempt to open the correct libmozjs185 library, otherwise polkit
   auth rules will not work unless js-devel is installed (fc patch)
