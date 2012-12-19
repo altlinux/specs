@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt47
+Release: alt48
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -107,6 +107,9 @@ make check
 %lang(es) %_datadir/locale/es/LC_MESSAGES/*.mo
 
 %changelog
+* Wed Dec 19 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.9-alt48
+- Translation for ccreds in a-auth added
+
 * Wed Nov 14 2012 Andrey Cherepanov <cas@altlinux.org> 2.9-alt47
 - Add note to use domain with Windows 7/8
 
