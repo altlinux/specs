@@ -1,5 +1,5 @@
 Name:	 media-player-info
-Version: 16
+Version: 17
 Release: alt1
 
 License: BSD
@@ -37,6 +37,9 @@ ini-like files), together with udev rules to identify these devices.
 /lib/udev/rules.d/*
 
 %changelog
+* Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 17-alt1
+- new version
+
 * Thu Jun 07 2012 Sergey V Turchin <zerg@altlinux.org> 16-alt1
 - new version (ATL#27330)
 
