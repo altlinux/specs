@@ -1,6 +1,6 @@
 Name: livecd-install
 Version: 0.6
-Release: alt8
+Release: alt9
 
 Summary: Permanently install Live system
 License: GPLv2
@@ -15,7 +15,7 @@ Packager: Andriy Stepanov <stanv@altlinux.ru>
 BuildArch: noarch
 Requires: alterator-wizardface
 Requires: alterator-livecd >= 0.5-alt1
-Requires: alterator-vm alterator-grub alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1
+Requires: alterator-vm alterator-grub alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1 alterator-datetime
 Requires: livecd-evms
 Requires: make-initrd-plymouth 
 Requires: consolehelper
@@ -50,6 +50,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Wed Dec 19 2012 Michael Shigorin <mike@altlinux.org> 0.6-alt9
+- added alterator-datetime to Requires: (as it's in steps)
+
 * Wed Jun 27 2012 Mikhail Efremov <sem@altlinux.org> 0.6-alt8
 - preinstall hooks: Add rm-issue.
 
