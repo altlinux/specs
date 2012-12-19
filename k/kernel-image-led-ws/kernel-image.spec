@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -523,7 +523,7 @@ Patch0661: linux-%kernel_branch.42-fix-firmware--vicam.patch
 Patch0670: linux-%kernel_branch.53-fix-fs.patch
 Patch0671: linux-%kernel_branch.51-fix-fs--anon_inodes.patch
 Patch0672: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
-Patch0673: linux-%kernel_branch.51-fix-fs--block.patch
+Patch0673: linux-%kernel_branch.53-fix-fs--block.patch
 Patch0674: linux-%kernel_branch.42-fix-fs--eventpoll.patch
 Patch0675: linux-%kernel_branch.53-fix-fs-autofs4.patch
 Patch0676: linux-%kernel_branch.51-fix-fs-btrfs.patch
@@ -570,12 +570,12 @@ Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
 Patch0750: linux-%kernel_branch.53-fix-mm.patch
 Patch0751: linux-%kernel_branch.42-fix-mm--compaction.patch
-Patch0752: linux-%kernel_branch.42-fix-mm--huge_memory.patch
+Patch0752: linux-%kernel_branch.53-fix-mm--huge_memory.patch
 Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
 Patch0754: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0755: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0756: linux-%kernel_branch.51-fix-mm--memory_hotplug.patch
-Patch0757: linux-%kernel_branch.46-fix-mm--mmu.patch
+Patch0757: linux-%kernel_branch.53-fix-mm--mmu.patch
 Patch0758: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
 Patch0759: linux-%kernel_branch.46-fix-mm--numa.patch
 Patch0760: linux-%kernel_branch.42-fix-mm--slab.patch
@@ -2894,6 +2894,12 @@ done)
 
 
 %changelog
+* Wed Dec 19 2012 Led <led@altlinux.ru> 3.0.57-alt2
+- updated:
+  + fix-fs--block
+  + fix-mm--huge_memory
+  + fix-mm--mmu
+
 * Tue Dec 18 2012 Led <led@altlinux.ru> 3.0.57-alt1
 - 3.0.57
 - removed:
