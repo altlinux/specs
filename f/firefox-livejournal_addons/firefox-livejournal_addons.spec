@@ -5,7 +5,7 @@
 Summary:	LiveJournal extensions for Firefox
 Name:		%firefox_name-%rname
 Version:	9.5
-Release:	alt2
+Release:	alt3
 Source0:	http://vmb.ucoz.com/%rname-%version-fx.xpi
 License:	MPL v1.1
 Group:		Networking/WWW
@@ -20,6 +20,7 @@ LJ addons
 
 %prep
 %setup -c
+subst 's/maxVersion>8.0/maxVersion>17.0.*/g' install.rdf
 
 %install
 mkdir -p %buildroot/%ciddir
@@ -34,6 +35,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 9.5-alt3
+- Adapt for Firefox 17.0
+
 * Thu Jan 19 2012 Alexey Gladkov <legion@altlinux.ru> 9.5-alt2
 - Rebuilt with firefox-9.0.1
 
