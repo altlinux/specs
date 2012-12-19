@@ -7,10 +7,10 @@
 %define rname kdesdk
 Name: kde4sdk
 %define major 4
-%define minor 9
-%define bugfix 1
+%define minor 10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Software Development Kit
@@ -337,6 +337,7 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 %files okteta
 %_K4bindir/okteta
+%_K4bindir/struct2osd.sh
 %_K4lib/libkbytearrayedit.so
 %_K4lib/oktetapart.so
 %_K4xdg_apps/okteta.desktop
@@ -428,7 +429,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4bindir/cvsrevertlast
 %_K4bindir/cvsversion
 %_K4bindir/cxxmetric
-#%_K4bindir/extractqml
 %_K4bindir/extend_dmalloc
 %_K4bindir/extractattr
 %_K4bindir/extractrc
@@ -443,7 +443,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4bindir/kdekillall
 %_K4bindir/kdelnk2desktop.py
 %_K4bindir/kdemangen.pl
-#%_K4bindir/kdesrc-build
 %_K4bindir/krazy-licensecheck
 %_K4bindir/makeobj
 %_K4bindir/noncvslist
@@ -454,7 +453,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4bindir/pruneemptydirs
 %_K4bindir/qtdoc
 %_K4bindir/svnclean
-#%_K4bindir/svn2dist
 %_K4bindir/svnbackport
 %_K4bindir/svnchangesince
 %_K4bindir/svnforwardport
@@ -466,8 +464,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4bindir/svnversions
 %_K4bindir/wcgrep
 %_K4bindir/zonetab2pot.py
-#%_K4xdg_apps/kdesrc-build.desktop
-#%_K4doc/*/kdesrc-build
 %ifndef _kde_alternate_placement
 #%_man1dir/adddebug.*
 #%_man1dir/cheatmake.*
@@ -525,10 +521,6 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 %_K4xdg_apps/cervisia.desktop
 %_K4apps/cervisia/
 %_K4apps/cervisiapart/
-%_K4conf_update/cervisia-change_repos_list.pl
-%_K4conf_update/cervisia-normalize_cvsroot.pl
-%_K4conf_update/cervisia.upd
-%_K4conf_update/change_colors.pl
 %_K4cfg/cervisiapart.kcfg
 %_K4iconsdir/*/*/apps/cervisia.*
 %_datadir/dbus-1/interfaces/org.kde.cervisia.cvsjob.xml
@@ -607,6 +599,9 @@ mv %buildroot/%_K4bindir/svn-clean %buildroot/%_K4bindir/svnclean
 
 
 %changelog
+* Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Thu Oct 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt2
 - build with antlr (ALT#27427); thanks viy@alt
 
