@@ -2,12 +2,11 @@
 %def_without applet
 %def_disable static
 %def_enable doc
-%define dbreleasedate 20100212svn
 %define ddcreleasedate 20101010
 
 Name: ddccontrol
 Version: 0.4.2
-Release: alt14.git%ddcreleasedate
+Release: alt15.git%ddcreleasedate
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -17,13 +16,9 @@ Group: System/Configuration/Hardware
 
 URL: http://ddccontrol.sourceforge.net/
 Source0: http://dl.sf.net/ddccontrol/ddccontrol-%version.tar
-Source1: http://dl.sf.net/ddccontrol/ddccontrol-db-%dbreleasedate.tar
 Patch1: ddccontrol-0.3-fixasneeded.patch
 Patch2: ddccontrol-0.4.2-desktop-alt11.patch
 Patch3: ddccontrol-0.4.2-alt-buffer-overflow.patch
-
-# dell3011 https://bugzilla.altlinux.org/show_bug.cgi?id=27551
-Patch4: ddccontrol-0.4.2-dell3011.patch
 Patch5: ddccontrol-0.4.2-russian.patch
 
 # Automatically added by buildreq on Thu Oct 21 2010
@@ -35,7 +30,7 @@ BuildRequires: libgnome-panel-devel libgtk+3-devel
 BuildRequires: xsltproc docbook-style-xsl tidy
 %endif
 
-
+Requires: ddccontrol-db
 Requires: lib%{name} = %version-%release
 # gddccontrol .destkop
 %if_with beesu
@@ -87,23 +82,14 @@ Requires: %name = %version-%release
 GNOME applet for ddccontrol.
 
 %prep
-%setup -a 1
+%setup
 #patch1 -p1
 %patch2 -p1
 %patch3 -p1
 
-%patch4 -p1
 %patch5 -p1
 
 %build
-pushd ddccontrol-db
-# explicitly instruct gettextize to be non-interactive:
-subst 's/gettextize/gettextize --quiet/' autogen.sh
-touch config.rpath
-./autogen.sh
-%configure
-popd
-
 #autoreconf
 touch config.rpath
 ./autogen.sh
@@ -113,9 +99,6 @@ echo "#define HAVE_BUGGY_I2C_DEV 1" >>src/config.h
 %make_build
 
 %install
-pushd ddccontrol-db
-%makeinstall_std
-popd
 %makeinstall_std
 
 rm -rf %buildroot%_datadir/doc/%name
@@ -125,13 +108,11 @@ sed -i -e s,xdg-su,beesu, %buildroot/%_desktopdir/*.desktop
 %endif
 
 %find_lang %name
-%find_lang --append --output=%name.lang %name-db
 
 %files -f %name.lang
 %doc AUTHORS NEWS doc/html
 %_bindir/ddccontrol
 %_bindir/ddcpci
-%_datadir/ddccontrol-db
 %_man1dir/%{name}*
 
 %files -n gddccontrol
@@ -158,6 +139,9 @@ sed -i -e s,xdg-su,beesu, %buildroot/%_desktopdir/*.desktop
 %endif
 
 %changelog
+* Wed Dec 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt15.git20101010
+- ddccontrol-db is moved to separate package for independent update
+
 * Wed Jul 18 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt14.git20101010
 - added support for dell u3011 thanks to slava@ (closes: 27551)
 
