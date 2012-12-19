@@ -2,11 +2,11 @@
 %def_without applet
 %def_disable static
 %def_enable doc
-%define ddcreleasedate 20101010
+%define ddcreleasedate 20120904gitc3af663d
 
 Name: ddccontrol
 Version: 0.4.2
-Release: alt15.git%ddcreleasedate
+Release: alt16.%ddcreleasedate
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -15,11 +15,12 @@ License: GPLv2+
 Group: System/Configuration/Hardware
 
 URL: http://ddccontrol.sourceforge.net/
-Source0: http://dl.sf.net/ddccontrol/ddccontrol-%version.tar
+Source0: http://dl.sf.net/ddccontrol/ddccontrol-%version-%ddcreleasedate.tar
 Patch1: ddccontrol-0.3-fixasneeded.patch
 Patch2: ddccontrol-0.4.2-desktop-alt11.patch
 Patch3: ddccontrol-0.4.2-alt-buffer-overflow.patch
 Patch5: ddccontrol-0.4.2-russian.patch
+Patch6: ddccontrol-autopoint.patch
 
 # Automatically added by buildreq on Thu Oct 21 2010
 BuildRequires: intltool libICE-devel libpci-devel libxml2-devel libgtk+2-devel
@@ -86,8 +87,8 @@ GNOME applet for ddccontrol.
 #patch1 -p1
 %patch2 -p1
 %patch3 -p1
-
 %patch5 -p1
+%patch6 -p1 -b .autopoint                                                       
 
 %build
 #autoreconf
@@ -139,6 +140,9 @@ sed -i -e s,xdg-su,beesu, %buildroot/%_desktopdir/*.desktop
 %endif
 
 %changelog
+* Wed Dec 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt16.20120904gitc3af663d
+- updated from git
+
 * Wed Dec 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.2-alt15.git20101010
 - ddccontrol-db is moved to separate package for independent update
 
