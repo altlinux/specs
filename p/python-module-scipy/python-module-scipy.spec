@@ -11,7 +11,7 @@ BuildRequires(pre): rpm-build-python
 
 Name: python-module-%oname
 Version: 0.12.0
-Release: alt1.git20121009
+Release: alt2.git20121009
 
 Summary: SciPy is the library of scientific codes
 
@@ -144,6 +144,7 @@ This package contains pickles for SciPy.
 %package doc-html
 Summary: Documentation for SciPy in HTML
 Group: Development/Documentation
+BuildArch: noarch
 
 %description doc-html
 SciPy is the library of scientific codes built on top of NumPy.
@@ -453,6 +454,9 @@ done
 %endif
 
 %changelog
+* Wed Dec 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt2.git20121009
+- Set doc-html as noarch
+
 * Fri Oct 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.0-alt1.git20121009
 - Version 0.12.0
 
