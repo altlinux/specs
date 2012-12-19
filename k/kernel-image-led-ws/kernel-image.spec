@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -650,70 +650,70 @@ Patch1021: linux-%kernel_branch-feat-drivers-gpu-drm--cirrus.patch
 Patch1022: linux-%kernel_branch.43-feat-drivers-gpu-drm--gma500.patch
 Patch1023: linux-%kernel_branch.43-feat-drivers-gpu-drm--psb_gfx.patch
 
-Patch1030: linux-%kernel_branch.56-feat-drivers-hid--hid-speedlink.patch
+Patch1031: linux-%kernel_branch.56-feat-drivers-hid--hid-speedlink.patch
 
-Patch1031: linux-%kernel_branch.42-feat-drivers-hwmon--ipmisensors.patch
+Patch1041: linux-%kernel_branch.42-feat-drivers-hwmon--ipmisensors.patch
 
-Patch1041: linux-%kernel_branch-feat-drivers-input-lirc.patch
-Patch1042: linux-%kernel_branch.42-feat-drivers-input-touchscreen--elousb.patch
+Patch1051: linux-%kernel_branch-feat-drivers-input-lirc.patch
+Patch1052: linux-%kernel_branch.42-feat-drivers-input-touchscreen--elousb.patch
 
-Patch1051: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
+Patch1061: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
 
-Patch1061: linux-%kernel_branch.56-feat-drivers-misc--fsa9480.patch
-Patch1062: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
-Patch1063: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
-Patch1064: linux-%kernel_branch.42-feat-drivers-misc--zcache.patch
+Patch1071: linux-%kernel_branch.56-feat-drivers-misc--fsa9480.patch
+Patch1072: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
+Patch1073: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
+Patch1074: linux-%kernel_branch.42-feat-drivers-misc--zcache.patch
 
-Patch1071: linux-%kernel_branch.43-feat-drivers-net-wireless-brcm80211.patch
-Patch1072: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8187se.patch
-Patch1073: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8192e.patch
-Patch1074: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8192u.patch
-Patch1075: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8712.patch
-Patch1076: linux-%kernel_branch.56-feat-drivers-net-wireless-rtlwifi--rtl8192de.patch
+Patch1081: linux-%kernel_branch.43-feat-drivers-net-wireless-brcm80211.patch
+Patch1082: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8187se.patch
+Patch1083: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8192e.patch
+Patch1084: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8192u.patch
+Patch1085: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8712.patch
+Patch1086: linux-%kernel_branch.56-feat-drivers-net-wireless-rtlwifi--rtl8192de.patch
 
-Patch1081: linux-%kernel_branch.56-feat-drivers-platform--samsung-q10.patch
-Patch1082: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
-Patch1083: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
+Patch1091: linux-%kernel_branch.56-feat-drivers-platform--samsung-q10.patch
+Patch1092: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
+Patch1093: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
 
-Patch1091: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
+Patch1101: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
 
-Patch1101: linux-%kernel_branch.53-feat-drivers-video--bootsplash.patch
-Patch1102: linux-%kernel_branch.43-feat-drivers-video--xgifb.patch
+Patch1111: linux-%kernel_branch.53-feat-drivers-video--bootsplash.patch
+Patch1112: linux-%kernel_branch.43-feat-drivers-video--xgifb.patch
 
-Patch1111: linux-%kernel_branch.42-feat-fs--secrm.patch
-Patch1112: linux-%kernel_branch-feat-fs-aufs.patch
-Patch1113: linux-%kernel_branch.42-feat-fs-binfmt_elf--fatelf.patch
-Patch1114: linux-%kernel_branch.43-feat-fs-dazukofs.patch
-Patch1115: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
-Patch1116: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
-Patch1117: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
-Patch1118: linux-%kernel_branch.43-feat-fs-f2fs.patch
-Patch1119: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
-Patch1120: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
-Patch1121: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1122: linux-%kernel_branch.44-feat-fs-overlayfs.patch
-Patch1123: linux-%kernel_branch.53-feat-fs-reiser4.patch
-Patch1124: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1125: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1126: linux-%kernel_branch.42-feat-fs-unionfs.patch
-Patch1127: linux-%kernel_branch.44-feat-fs--lnfs.patch
+Patch1121: linux-%kernel_branch.42-feat-fs--secrm.patch
+Patch1122: linux-%kernel_branch-feat-fs-aufs.patch
+Patch1123: linux-%kernel_branch.42-feat-fs-binfmt_elf--fatelf.patch
+Patch1124: linux-%kernel_branch.43-feat-fs-dazukofs.patch
+Patch1125: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
+Patch1126: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
+Patch1127: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
+Patch1128: linux-%kernel_branch.43-feat-fs-f2fs.patch
+Patch1129: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
+Patch1130: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
+Patch1131: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
+Patch1132: linux-%kernel_branch.44-feat-fs-overlayfs.patch
+Patch1133: linux-%kernel_branch.53-feat-fs-reiser4.patch
+Patch1134: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1135: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1136: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1137: linux-%kernel_branch.44-feat-fs--lnfs.patch
 
-Patch1131: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
-Patch1132: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
-Patch1133: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
+Patch1141: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
+Patch1142: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
+Patch1143: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
 
-Patch1141: linux-%kernel_branch.42-feat-lib--llist.patch
+Patch1151: linux-%kernel_branch.42-feat-lib--llist.patch
 
-Patch1151: linux-%kernel_branch.42-feat-mm--slqb.patch
-Patch1152: linux-%kernel_branch.43-feat-mm--uksm.patch
+Patch1161: linux-%kernel_branch.42-feat-mm--slqb.patch
+Patch1162: linux-%kernel_branch.43-feat-mm--uksm.patch
 
-Patch1161: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+Patch1171: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
 
-Patch1171: linux-%kernel_branch-feat-security--yama.patch
+Patch1181: linux-%kernel_branch-feat-security--yama.patch
 
-Patch1181: linux-%kernel_branch.44-feat-sound-firewire--snd-dice.patch
-Patch1182: linux-%kernel_branch.44-feat-sound-firewire--snd-fireworks.patch
-Patch1183: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
+Patch1191: linux-%kernel_branch.44-feat-sound-firewire--snd-dice.patch
+Patch1192: linux-%kernel_branch.44-feat-sound-firewire--snd-fireworks.patch
+Patch1193: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %x86_64 %ix86
@@ -1919,6 +1919,7 @@ cd linux-%version
 %patch0803 -p1
 %patch0804 -p1
 %patch0805 -p1
+%patch0806 -p1
 
 %patch0810 -p1
 
@@ -1954,79 +1955,80 @@ cd linux-%version
 %patch1023 -p1
 
 # feat-drivers-hid--*
-%patch1030 -p1
-
-# feat-drivers-hwmon--*
 %patch1031 -p1
 
+# feat-drivers-hwmon--*
 %patch1041 -p1
-%patch1042 -p1
 
 %patch1051 -p1
+%patch1052 -p1
+
+%patch1061 -p1
 
 # feat-drivers-misc--*
-%patch1061 -p1
-%patch1062 -p1
-%patch1063 -p1
-%patch1064 -p1
-
-# feat-drivers-net-wireless-*
 %patch1071 -p1
 %patch1072 -p1
 %patch1073 -p1
 %patch1074 -p1
-%patch1075 -p1
-%patch1076 -p1
 
-# feat-drivers-platform--*
+# feat-drivers-net-wireless-*
 %patch1081 -p1
 %patch1082 -p1
+%patch1083 -p1
+%patch1084 -p1
+%patch1085 -p1
+%patch1086 -p1
+
+# feat-drivers-platform--*
+%patch1091 -p1
+%patch1092 -p1
+%patch1093 -p1
 
 # feat-drivers-usb-*
-%patch1091 -p1
+%patch1101 -p1
 
 # feat-drivers-video--*
-%patch1101 -p1
-%patch1102 -p1
-
-# feat-fs-*
 %patch1111 -p1
 %patch1112 -p1
-%patch1113 -p1
-%patch1114 -p1
-%patch1115 -p1
-%patch1116 -p1
-%patch1117 -p1
-%patch1118 -p1
-%patch1119 -p1
-%patch1120 -p1
+
+# feat-fs-*
 %patch1121 -p1
 %patch1122 -p1
 %patch1123 -p1
 %patch1124 -p1
 %patch1125 -p1
 %patch1126 -p1
-%{?_with_lnfs:%patch1127 -p1}
-
+%patch1127 -p1
+%patch1128 -p1
+%patch1129 -p1
+%patch1130 -p1
 %patch1131 -p1
 %patch1132 -p1
 %patch1133 -p1
+%patch1134 -p1
+%patch1135 -p1
+%patch1136 -p1
+%{?_with_lnfs:%patch1137 -p1}
 
 %patch1141 -p1
+%patch1142 -p1
+%patch1143 -p1
+
+%patch1151 -p1
 
 # feat-mm--*
-%patch1151 -p1
-%patch1152 -p1
-
 %patch1161 -p1
+%patch1162 -p1
 
-# feat-security--*
 %patch1171 -p1
 
-# feat-sound-*
+# feat-security--*
 %patch1181 -p1
-%patch1182 -p1
-%patch1183 -p1
+
+# feat-sound-*
+%patch1191 -p1
+%patch1192 -p1
+%patch1193 -p1
 
 # get rid of unwanted files resulting from patch fuzz
 #find . -name "*.orig" -delete -or -name "*~" -delete
@@ -2894,6 +2896,11 @@ done)
 
 
 %changelog
+* Wed Dec 19 2012 Led <led@altlinux.ru> 3.0.57-alt3
+- added missed:
+  + fix-net-xfrm--xfrm_policy
+  + feat-drivers-platform--tp_smapi
+
 * Wed Dec 19 2012 Led <led@altlinux.ru> 3.0.57-alt2
 - updated:
   + fix-fs--block
