@@ -4,7 +4,7 @@ BuildRequires: libGL-devel libICE-devel libX11-devel pkgconfig(dbus-1) pkgconfig
 # END SourceDeps(oneline)
 Name: e16
 Version: 1.0.11
-Release: alt2
+Release: alt3
 #Serial: 1
 
 Summary: The Enlightenment DR16 window manager
@@ -21,7 +21,6 @@ Source3: %name.wmsession
 Source5: %name-menu.method
 Source6: %name.xpm
 Source7: %name-32.xpm
-Source8: winter.tar
 
 Obsoletes: enlightenment < 1:0.16.9
 Provides: enlightenment = 1:0.16.9
@@ -48,7 +47,6 @@ This package will install the Enlightenment window manager.
 
 %prep
 %setup -q -n %name-%version
-%setup -q -T -D -c -n %name-%version -a 8
 
 #perl -pi -e 's,/\$\(datadir\),%_datadir,g' po/Makefile.in.in
 #perl -pi -e 's,\${prefix}/\${DATADIRNAME}/locale,%_datadir/locale,g' configure
@@ -118,6 +116,9 @@ install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05E16
 %_datadir/doc/%name
 
 %changelog
+* Thu Dec 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt3
+- dropped external winter theme (now included in upstream)
+
 * Thu Dec 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt2
 - startE16
 
