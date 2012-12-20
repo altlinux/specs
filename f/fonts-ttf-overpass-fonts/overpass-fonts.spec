@@ -5,12 +5,13 @@ Group: System/Fonts/True type
 
 Name:		fonts-ttf-overpass-fonts
 Version:	1.01
-Release:	alt1_2
+Release:	alt1_3
 Summary:	Typeface based on the U.S. interstate highway road signage type system
-License:	OFL
+License:	OFL or ASL 2.0 
 URL:		https://fedorahosted.org/overpass-fonts/
 Source0:	https://fedorahosted.org/releases/o/v/overpass-fonts/Overpass-Fonts-%{version}.tar.gz
 Source1:	%{oldname}-fontconfig.conf
+Source2:	http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 Source44: import.info
@@ -21,6 +22,7 @@ type system; it is sans-serif and suitable for both body and titling text.
 
 %prep
 %setup -q -c
+cp %{SOURCE2} .
 
 %build
 # Nothing to do here.
@@ -76,9 +78,12 @@ fi
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
-%doc Overpass-OFL.txt
+%doc Overpass-OFL.txt LICENSE-2.0.txt
 
 %changelog
+* Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_3
+- update to new release by fcimport
+
 * Mon Nov 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.01-alt1_2
 - fc import
 
