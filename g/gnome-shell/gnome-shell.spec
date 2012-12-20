@@ -6,7 +6,7 @@
 
 Name: gnome-shell
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -91,6 +91,7 @@ BuildRequires: libgudev-devel libgudev-gir-devel
 BuildRequires: gsettings-desktop-schemas-devel >= 0.1.7
 BuildRequires: NetworkManager-glib-devel >= 0.8.995 NetworkManager-glib-gir-devel
 BuildRequires: libsoup-gir-devel ca-certificates
+BuildRequires: gnome-control-center-devel
 # for browser plugin
 BuildRequires: browser-plugins-npapi-devel
 %{?_with_systemd:BuildRequires: systemd-devel libsystemd-login-devel libsystemd-daemon-devel}
@@ -174,6 +175,8 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/dbus-1/services/org.gnome.Shell.HotplugSniffer.service
 %_datadir/dbus-1/interfaces/org.gnome.ShellSearchProvider.xml
 %_datadir/GConf/gsettings/gnome-shell-overrides.convert
+%_datadir/gnome-control-center/keybindings/50-gnome-shell-screenshot.xml
+%_datadir/gnome-control-center/keybindings/50-gnome-shell-system.xml
 %config %_datadir/glib-2.0/schemas/org.gnome.shell.gschema.xml
 %_man1dir/*
 %doc README NEWS
@@ -183,6 +186,10 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Thu Dec 20 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt3
+- added missed gnome-control-center-devel to buildreqs and packaged
+  keybindings files
+
 * Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2
 - after 3.6.2 snapshot (2fd4e286)
 - %%check section
