@@ -1,5 +1,5 @@
 Name: installer-distro-altlinux-generic
-Version: 6.0
+Version: 7.0.1
 Release: alt1
 
 Summary: Installer configuration (generic)
@@ -46,9 +46,10 @@ Provides: installer-altlinux-generic-stage3 = %name-%version
 #Requires: installer-stage3
 # modules
 # FIXME: grub/lilo
-Requires: alterator-grub
+#Requires: alterator-grub
 Requires: alterator-users
 Requires: alterator-root
+Requires: alterator-luks
 Requires: alterator-net-eth dhcpcd
 Requires: alterator-net-general
 #Requires: installer-feature-nfs-server-stage3
@@ -72,11 +73,20 @@ cp -a * %buildroot%install2dir/
 %files stage2
 %install2dir/alterator-menu
 %install2dir/installer-steps
-%install2dir/*.d/*
 
 %files stage3
 
 %changelog
+* Thu Dec 20 2012 Michael Shigorin <mike@altlinux.org> 7.0.1-alt1
+- added luks step (autoskips if no LUKS containers are created)
+
+* Thu Dec 20 2012 Michael Shigorin <mike@altlinux.org> 7.0-alt1
+- dropped postinstall script superceded by m-p's use/cleanup/installer
+
+* Fri Jul 22 2011 Michael Shigorin <mike@altlinux.org> 6.0-alt2
+- don't require alterator-grub (prepare for grub/lilo support
+  in mkimage-profiles.git)
+
 * Sat Jul 16 2011 Michael Shigorin <mike@altlinux.org> 6.0-alt1
 - initial release based on installer-distro-server-light 6.0-alt3
 - dropped unconditional X11 stuff removal just before the finish
