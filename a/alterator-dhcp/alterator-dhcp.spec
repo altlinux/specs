@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-dhcp
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Summary: alterator module for dhcp conf file editing
@@ -48,6 +48,13 @@ DHCP configuration alterator module
 %_libexecdir/alterator/hooks/dhcp.d
 
 %changelog
+* Thu Dec 20 2012 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
+- ipv6: Don't enable dhcpd6 is radvd is not installed.
+- ipv6: Show error if radvd is not installed.
+- ipv6: Start/stop radvd simultaneously with dhcpd6.
+- alterator-dhcp-reset: Generate radvd.conf in case of IPv6
+  configuration.
+
 * Wed Dec 19 2012 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt1
 - ipv6: Use hostname as host identifier in the dhcpd6.conf.
 - ipv6: Fix 'static' page.
