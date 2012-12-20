@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -664,12 +664,14 @@ Patch1072: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
 Patch1073: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
 Patch1074: linux-%kernel_branch.42-feat-drivers-misc--zcache.patch
 
-Patch1081: linux-%kernel_branch.43-feat-drivers-net-wireless-brcm80211.patch
-Patch1082: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8187se.patch
-Patch1083: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8192e.patch
-Patch1084: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8192u.patch
-Patch1085: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8712.patch
-Patch1086: linux-%kernel_branch.56-feat-drivers-net-wireless-rtlwifi--rtl8192de.patch
+Patch1081: linux-%kernel_branch.57-feat-drivers-net-wireless--vt6655.patch
+Patch1082: linux-%kernel_branch.57-feat-drivers-net-wireless--vt6656.patch
+Patch1083: linux-%kernel_branch.43-feat-drivers-net-wireless-brcm80211.patch
+Patch1084: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8187se.patch
+Patch1085: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8192e.patch
+Patch1086: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8192u.patch
+Patch1087: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8712.patch
+Patch1088: linux-%kernel_branch.56-feat-drivers-net-wireless-rtlwifi--rtl8192de.patch
 
 Patch1091: linux-%kernel_branch.56-feat-drivers-platform--samsung-q10.patch
 Patch1092: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
@@ -1978,6 +1980,8 @@ cd linux-%version
 %patch1084 -p1
 %patch1085 -p1
 %patch1086 -p1
+%patch1087 -p1
+%patch1088 -p1
 
 # feat-drivers-platform--*
 %patch1091 -p1
@@ -2444,10 +2448,10 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 %if 0
 %post
 [ -x /usr/lib/rpm/boot_kernel.filetrigger ] || /sbin/installkernel %kversion-%flavour-%krelease
+%endif
 
 %preun
-[ -x /usr/lib/rpm/boot_kernel.filetrigger ] || /sbin/installkernel --remove %kversion-%flavour-%krelease
-%endif
+/sbin/installkernel --remove %kversion-%flavour-%krelease
 
 
 %kernel_modules_package_post scsi
@@ -2896,6 +2900,12 @@ done)
 
 
 %changelog
+* Thu Dec 20 2012 Led <led@altlinux.ru> 3.0.57-alt4
+- added:
+  + feat-drivers-net-wireless--vt6655
+  + feat-drivers-net-wireless--vt6656
+- revert kernel-image preun script
+
 * Wed Dec 19 2012 Led <led@altlinux.ru> 3.0.57-alt3
 - added missed:
   + fix-net-xfrm--xfrm_policy
