@@ -6,7 +6,7 @@ Name: kde4-nepomuk-core
 %define minor  10
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -112,6 +112,9 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4link/*.so
 
 %changelog
+* Thu Dec 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Mon Dec 10 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
