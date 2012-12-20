@@ -1,12 +1,11 @@
 Name: kernel-build-tools
 Version: 0.100
-Release: alt1
+Release: alt2
 
 Summary: Utilities to build kernel packages for ALT Linux
 License: GPL
 Group: Development/Kernel
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
-BuildArch: noarch
 
 Source: %name-%version.tar
 
@@ -21,8 +20,11 @@ BuildRequires: asciidoc help2man python-modules-encodings
 %package -n rpm-build-kernel
 Summary: RPM macros to build kernel packages
 Group: Development/Kernel
-
 PreReq: rpm >= 4.0.4-alt1
+
+%ifarch %ix86
+Provides: kernel-headers-modules-std-pae
+%endif
 
 %description
 Utilities to facilitate creation of kernel and additional module packages
@@ -53,6 +55,9 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Thu Dec 20 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.100-alt2
+- Added workaround for std-pae.
+
 * Tue Dec 11 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.100-alt1
 - Added %%setup_kernel_module.
 
