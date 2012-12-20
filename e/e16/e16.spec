@@ -4,7 +4,7 @@ BuildRequires: libGL-devel libICE-devel libX11-devel pkgconfig(dbus-1) pkgconfig
 # END SourceDeps(oneline)
 Name: e16
 Version: 1.0.11
-Release: alt1
+Release: alt2
 #Serial: 1
 
 Summary: The Enlightenment DR16 window manager
@@ -70,21 +70,21 @@ CFLAGS="$CFLAGS -I%_includedir/gnome-1.0" LOCALEDIR=%_datadir/locale %configure 
 %make_install install DESTDIR=%buildroot 
 
 # Menu method (deprecated!) hack scripts/e_gen_menu instead!
-#%__install -pD -m755 %SOURCE5 %buildroot%_sysconfdir/menu-methods/%name
+#install -pD -m755 %SOURCE5 %buildroot%_sysconfdir/menu-methods/%name
 
 # Install icons
-%__install -pD -m644 %SOURCE6 %buildroot%_miconsdir/%name.xpm
-%__install -pD -m644 %SOURCE7 %buildroot%_niconsdir/%name.xpm
-%__install -pD -m644 %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.xpm
+install -pD -m644 %SOURCE6 %buildroot%_miconsdir/%name.xpm
+install -pD -m644 %SOURCE7 %buildroot%_niconsdir/%name.xpm
+install -pD -m644 %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.xpm
 
-%__install -d %buildroot%_menudir
+install -d %buildroot%_menudir
 cat << EOF > %buildroot%_menudir/%name
 ?package(%name): needs=wm section=Session/Windowmanagers icon=%name.xpm title=E-16 command=%_bindir/%name
 EOF
 
 # wmsession.d
-%__install -p -m755 %SOURCE2 %buildroot%_bindir/startE16
-%__install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05E16
+install -p -m755 %SOURCE2 %buildroot%_bindir/startE16
+install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05E16
 
 %find_lang e16
 
@@ -118,6 +118,9 @@ EOF
 %_datadir/doc/%name
 
 %changelog
+* Thu Dec 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt2
+- startE16
+
 * Thu Dec 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1
 - new version (closes: 28244)
 
