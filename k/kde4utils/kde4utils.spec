@@ -6,10 +6,10 @@
 %define rname kdeutils
 Name: kde4utils
 %define major 4
-%define minor 9
-%define bugfix 3
+%define minor 10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -21,7 +21,6 @@ Requires: %name-filelight = %version-%release
 Requires: %name-kremotecontrol = %version-%release
 Requires: %name-kcalc = %version-%release
 Requires: %name-kcharselect = %version-%release
-#Requires: %name-kdessh = %version-%release
 Requires: %name-kdf = %version-%release
 Requires: %name-kfloppy = %version-%release
 Requires: %name-kgpg = %version-%release
@@ -33,7 +32,7 @@ Requires: %name-kwallet = %version-%release
 Requires: %name-superkaramba = %version-%release
 Requires: %name-ark = %version-%release
 Requires: %name-sweeper = %version-%release
-Requires: %name-print = %version-%release
+Requires: kde4-print-manager
 
 Source00: ark-%version.tar
 Source01: filelight-%version.tar
@@ -45,10 +44,8 @@ Source06: kgpg-%version.tar
 Source07: kremotecontrol-%version.tar
 Source08: ktimer-%version.tar
 Source09: kwallet-%version.tar
-Source10: printer-applet-%version.tar
-Source11: superkaramba-%version.tar
-Source12: sweeper-%version.tar
-Patch1: kdeutils-4.1.3-alt-find-cupshelpers.patch
+Source10: superkaramba-%version.tar
+Source11: sweeper-%version.tar
 Patch2: kdeutils-4.2.2-alt-autostart.patch
 Patch3: kdeutils-4.2.2-alt-ark-zip-filenames.patch
 Patch4: kdeutils-4.3.0-alt-ark-kerfuffle-open.patch
@@ -61,8 +58,7 @@ Patch7: kdeutils-4.7.1-alt-fix-compile.patch
 BuildRequires(pre): kde4base-workspace-devel kde4pimlibs-devel
 BuildRequires: kde4base-devel
 BuildRequires: gcc-c++ libnet-snmp-devel libgmp-devel bzlib-devel libldap-devel
-BuildRequires: libqimageblitz-devel python-devel libzip-devel libarchive-devel
-BuildRequires: python-module-cups python-module-cupshelpers python-module-kde4
+BuildRequires: libqimageblitz-devel libzip-devel libarchive-devel
 BuildRequires: libenca-devel liblirc-devel libqca2-devel liblzma-devel qjson-devel
 %ifarch %ix86
 #BuildRequires: libtpctl-devel
@@ -232,23 +228,6 @@ Requires: %name-common = %version-%release
 %description sweeper
 System Cleaner for KDE
 
-%package print
-Summary: Applet to view current print jobs and configure new printers
-Group: Graphical desktop/KDE
-URL: http://utils.kde.org/projects/printer-applet
-Requires: %name-common = %version-%release
-Requires: python-module-kde4 >= %major.%minor
-#Requires: python-cups
-#Requires: python-qt4
-#Requires: python-dbus
-#Requires: hal-cups-utils
-
-%description print
-Printer Applet is a system tray utility that shows current print jobs,
-shows printer warnings and errors and shows when printers that have
-been plugged in for the first time are being auto-configured by
-hal-cups-utils.
-
 %package -n libkremotecontrol4
 Summary: KDE 4 library
 Group: System/Libraries
@@ -267,7 +246,7 @@ based on %name.
 
 
 %prep
-%setup -q -cT -n %rname-%version -a0 -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11 -a12
+%setup -q -cT -n %rname-%version -a0 -a1 -a2 -a3 -a4 -a5 -a6 -a7 -a8 -a9 -a10 -a11
 ls -d1 * | \
 while read d
 do
@@ -275,7 +254,6 @@ do
     newdirname=`echo "$d"| sed 's|-%version$||'`
     [ "$d" == "$newdirname" ] || mv $d $newdirname
 done
-#%patch1 -p1
 %patch2 -p1
 #%patch3 -p1
 %patch4 -p1
@@ -364,7 +342,7 @@ done
 %_K4bindir/kcalc
 %_K4libdir/libkdeinit4_kcalc.so
 %_K4apps/kcalc/
-%_K4apps/kconf_update/kcalcrc.upd
+%_K4conf_update/kcalcrc.upd
 %_K4xdg_apps/kcalc.desktop
 %_K4cfg/kcalc.kcfg
 #%_K4iconsdir/hicolor/*/apps/kcalc.*
@@ -373,7 +351,6 @@ done
 %files kcharselect
 %_K4bindir/kcharselect
 %_K4apps/kcharselect/
-%_K4apps/kconf_update/kcharselect.upd
 %_K4xdg_apps/KCharSelect.desktop
 #%_K4iconsdir/hicolor/*/apps/kcharselect.*
 %_K4doc/*/kcharselect
@@ -495,12 +472,6 @@ done
 #%_K4iconsdir/hicolor/*/apps/sweeper.*
 %_K4doc/*/sweeper
 
-%files print
-%_K4bindir/printer-applet
-%_K4apps/printer-applet/
-%_K4start/printer-applet.desktop
-%_K4doc/*/printer-applet
-
 %files -n libkremotecontrol4
 %_K4libdir/liblibkremotecontrol.so.*
 
@@ -510,6 +481,9 @@ done
 
 
 %changelog
+* Thu Dec 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Wed Nov 14 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
