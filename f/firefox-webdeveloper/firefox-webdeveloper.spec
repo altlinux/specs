@@ -3,8 +3,8 @@
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	1.1.9
-Release:	alt3
+Version:	1.2.2
+Release:	alt1
 Summary:	The Web Developer extension for Mozilla Firefox
 
 License:	GPLv3
@@ -17,17 +17,22 @@ BuildArch:	noarch
 BuildRequires:	rpm-build-firefox unzip
 Serial:		1
 
+Packager: Sergey Kurakin <kurakin@altlinux.org>
+
 %description 
-The Web Developer extension for Mozilla Firefox and Mozilla
-adds a menu and a toolbar to the browser with various
-web developer tools.
+The Web Developer extension for Mozilla Firefox and Mozilla 
+adds a menu and a toolbar to the browser with various web developer tools.
 
 %prep
 %setup -c
 
 %install
-mkdir -p %buildroot/%ciddir
-cp -r * %buildroot/%ciddir
+%__mkdir_p %buildroot/%ciddir
+%__cp -r * %buildroot/%ciddir
+
+#sed -r -i \
+#    -e 's,<em:maxVersion>3\.5\.\*</em:maxVersion>,<em:maxVersion>3.6.*</em:maxVersion>,g' \
+#    %%buildroot/%%ciddir/install.rdf
 
 %postun
 if [ "$1" = 0 ]; then
@@ -38,16 +43,8 @@ fi
 %ciddir
 
 %changelog
-* Fri Oct 21 2011 Sergey Kurakin <kurakin@altlinux.org> 1:1.1.9-alt3
-- Update maxVersion.
-
-* Thu Aug 04 2011 Alexey Gladkov <legion@altlinux.ru> 1:1.1.9-alt2
-- Update maxVersion according to AMO.
-
-* Tue Apr  5 2011 Sergey Kurakin <kurakin@altlinux.org> 1:1.1.9-alt1
-- 1.1.9
-  + native support for Firefox 4
-  + bugfixes
+* Thu Dec 20 2012 Andrey Cherepanov <cas@altlinux.org> 1:1.2.2-alt1
+- New version 1.2.2
 
 * Thu Jan 28 2010 Alexey Gladkov <legion@altlinux.ru> 1:1.1.8-alt2
 - Rebuilt with firefox-3.6.
