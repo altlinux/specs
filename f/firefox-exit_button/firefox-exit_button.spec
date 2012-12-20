@@ -3,8 +3,8 @@
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
 Name:		firefox-exit_button
-Version:	0.4.1
-Release:	alt6
+Version:	0.4.3
+Release:	alt1
 
 Summary:	Toolbar button to exit Firefox.
 
@@ -13,7 +13,7 @@ Group:		Networking/WWW
 URL:		http://www.linnhe.net/firefox/extensions.html
 
 Packager:	Sergey Shilov <hsv@altlinux.ru>
-Source0:	%rname-%version-fx.xpi
+Source0:	exitbutton_ff.xpi
 
 
 BuildArch:	noarch
@@ -31,14 +31,17 @@ Exit Button Firefox plugin - adds a correspond button to Firefox toolbar.
 %install
 %__mkdir_p %buildroot/%ciddir
 %__cp -r * %buildroot/%ciddir
-sed -r -i \
-    -e 's,<em:maxVersion>3\.0b5pre</em:maxVersion>,<em:maxVersion>7\.\*</em:maxVersion>,g' \
-    %buildroot/%ciddir/install.rdf
+#sed -r -i \
+#    -e 's,<em:maxVersion>3\.0b5pre</em:maxVersion>,<em:maxVersion>7\.\*</em:maxVersion>,g' \
+#    %%buildroot/%%ciddir/install.rdf
 
 %files
 %ciddir
 
 %changelog
+* Tue Dec 18 2012 Andrey Cherepanov <cas@altlinux.org> 0.4.3-alt1
+- New version 0.4.3 compatible with Firefox 17.0
+
 * Tue Oct 18 2011 Sergey Shilov <hsv@altlinux.org> 0.4.1-alt6
 - Rebuild for Firefox 7.0
 

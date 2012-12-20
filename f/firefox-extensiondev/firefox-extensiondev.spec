@@ -1,6 +1,6 @@
 %define rname	extensiondev
 %define version 0.3.0.20060726
-%define release alt1.2
+%define release alt2
 %define cid 	\{75739dec-72db-4020-aa9a-6afa6744759b\}
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -32,6 +32,7 @@ building XPI packages are all made easier by this extension.
 
 %prep
 %setup -c
+subst 's/maxVersion>3\./maxVersion>17.0./g' install.rdf
 
 %install
 mkdir -p %buildroot/%ciddir
@@ -46,6 +47,9 @@ fi
 %ciddir
 
 %changelog
+* Tue Dec 18 2012 Andrey Cherepanov <cas@altlinux.org> 0.3.0.20060726-alt2
+- Adapt for Firefox and Thunderbird 17.0
+
 * Sun Nov 26 2006 L.A. Kostis <lakostis@altlinux.ru> 0.3.0.20060726-alt1.2
 - Rebuild for fx 2.0.
 - remove obsoleted macros.
