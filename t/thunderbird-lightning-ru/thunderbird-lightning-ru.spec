@@ -4,7 +4,7 @@
 
 Name:		thunderbird-%rname
 Version:	1.0
-Release:	alt2
+Release:	alt3
 Serial: 1
 Summary:	Russian (RU) Language Pack for Lightning
 Packager:	Radik Usupov <radik@altlinux.org>
@@ -19,6 +19,7 @@ Source0:	lightning-ru-%version.xpi
 
 BuildRequires(pre):	rpm-build-thunderbird 
 BuildRequires:		unzip
+Requires:   thunderbird-lightning
 
 %description
 The Mozilla Lightning in Russian.
@@ -26,14 +27,17 @@ The Mozilla Lightning in Russian.
 %install
 %__mkdir_p %buildroot/%ciddir
 unzip -qq -d %buildroot/%ciddir %SOURCE0
-subst 's/8\.\*\.\*/12.*/' %buildroot/%ciddir/install.rdf
+subst 's/8\.\*\.\*/17.0.*/' %buildroot/%ciddir/install.rdf
 
 %files
 %ciddir
 
 %changelog
+* Thu Dec 20 2012 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt3
+- Update for thunderbird-lightning-17.0
+
 * Thu Jun 21 2012 Andrey Cherepanov <cas@altlinux.org> 1:1.0-alt2
-- Apapt for new version of Thunderbird
+- Adapt for new version of Thunderbird
 
 * Mon Feb 20 2012 Radik Usupov <radik@altlinux.org> 1:1.0-alt1
 - New version (1.0)
