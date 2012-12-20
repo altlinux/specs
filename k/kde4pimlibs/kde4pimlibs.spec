@@ -7,7 +7,7 @@
 %define rname kdepimlibs
 Name: kde4pimlibs
 Version: 4.10.0
-Release: alt0.1
+Release: alt0.2
 
 Group: System/Libraries
 Summary: K Desktop Environment 4 - PIM Libraries
@@ -28,7 +28,7 @@ BuildRequires: libgpg-error-devel libgpgme-devel libassuan-devel libpth-devel
 BuildRequires: libldap-devel libstrigi-devel prison-devel qjson-devel
 BuildRequires: libgpgme-devel libsasl2-devel libical-devel >= %ical_req
 BuildRequires: libsoprano-devel soprano-backend-redland soprano shared-desktop-ontologies-devel
-BuildRequires: akonadi-devel >= %akonadi_req
+BuildRequires: akonadi-devel >= %akonadi_req kde4-nepomuk-core-devel
 BuildRequires: kde4libs-devel >= %version
 
 %description
@@ -91,8 +91,11 @@ Header files for developing applications using %name.
 
 
 %changelog
+* Thu Dec 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Fri Dec 07 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
-- new beat version
+- new beta version
 
 * Wed Dec 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.4-alt1
 - new version
