@@ -4,7 +4,7 @@ Summary: special steps for LiveCD installers
 
 Name: alterator-livecd
 Version: 0.7.4
-Release: alt1
+Release: alt2
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -43,6 +43,9 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Dec 20 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7.4-alt2
+- fix install from systemd
+
 * Thu May 24 2012 Mikhail Efremov <sem@altlinux.org> 0.7.4-alt1
 - Mount /run to the newly installed system.
 
