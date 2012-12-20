@@ -1,6 +1,6 @@
 Name: kernel-build-tools
 Version: 0.100
-Release: alt2
+Release: alt3
 
 Summary: Utilities to build kernel packages for ALT Linux
 License: GPL
@@ -22,7 +22,7 @@ Summary: RPM macros to build kernel packages
 Group: Development/Kernel
 PreReq: rpm >= 4.0.4-alt1
 
-%ifarch %ix86
+%ifnarch %ix86
 Provides: kernel-headers-modules-std-pae
 %endif
 
@@ -55,6 +55,9 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Thu Dec 20 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.100-alt3
+- Fixed last change.
+
 * Thu Dec 20 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.100-alt2
 - Added workaround for std-pae.
 
