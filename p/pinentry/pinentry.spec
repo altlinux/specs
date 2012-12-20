@@ -1,6 +1,6 @@
 Name: pinentry
 Version: 0.8.2
-Release: alt1
+Release: alt2
 
 Group: File tools
 Summary: Simple PIN or passphrase entry dialog
@@ -30,7 +30,7 @@ BuildRequires: libcap-devel
 %endif
 
 # Automatically added by buildreq on Sun Feb 07 2010
-BuildRequires: gcc-c++ libassuan0-devel libgtk+2-devel libncurses-devel
+BuildRequires: gcc-c++ libassuan0-devel libgtk+2-devel libncursesw-devel
 
 %description
 This is simple PIN or passphrase entry dialog which
@@ -163,6 +163,9 @@ done
 %_infodir/*.info*
 
 %changelog
+* Thu Dec 20 2012 Alexander Plehanov <tonik@altlinux.org> 0.8.2-alt2
+- fix text encoding
+
 * Tue Dec 04 2012 Sergey V Turchin <zerg@altlinux.org> 0.8.2-alt1
 - new version
 
