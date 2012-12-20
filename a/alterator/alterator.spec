@@ -1,6 +1,6 @@
 Name: alterator
 Version: 4.24
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux configurator engine
 License: GPLv2+
@@ -140,6 +140,9 @@ EOF
 %_rpmmacrosdir/*
 
 %changelog
+* Thu Dec 20 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 4.24-alt2
+- change alteratord socket name in alteratord.socket
+
 * Thu Nov 22 2012 Mikhail Efremov <sem@altlinux.org> 4.24-alt1
 - Added ip-address and ip-address-list types.
 - Added tests for ipv6-* types.
