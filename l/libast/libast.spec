@@ -2,6 +2,7 @@
 BuildRequires: libXext-devel libfreetype-devel
 # END SourceDeps(oneline)
 BuildRequires: zlib-devel
+%add_optflags %optflags_shared
 # Arches on which the multilib {sysdefs,types}.h hack is needed:
 # (Update libast-wrapper.h when adding archs)
 
@@ -11,7 +12,7 @@ BuildRequires: zlib-devel
 Summary:        Library of Assorted Spiffy Things
 Name:           libast
 Version:        0.7.1
-Release:        alt3_0.12.20080502cvs
+Release:        alt4_0.12.20080502cvs
 Group:          System/Libraries
 License:        BSD
 URL:            http://www.eterm.org/
@@ -41,8 +42,8 @@ Requires: %{name} = %{version}-%{release}
 
 %description devel
 This package contains the header files, static libraries and development
-documentation for %{name}. If you like to develop programs using %{name},
-you will need to install %{name}-devel.
+documentation for %%{name}. If you like to develop programs using %%{name},
+you will need to install %%{name}-devel.
 
 %prep
 %setup -q -n %{name}-%{cvs}
@@ -67,6 +68,11 @@ done
 %{__sed} -i -e '/^LDFLAGS=/d' %{buildroot}%{_bindir}/%{name}-config
 touch -r ChangeLog %{buildroot}%{_bindir}/%{name}-config
 %endif
+# alt #28250
+%ifarch %{ix86}
+mv %buildroot%_includedir/libast/sysdefs-%{_arch}.h %buildroot%_includedir/libast/sysdefs-i386.h
+%endif
+
 
 %files
 %doc ChangeLog DESIGN README LICENSE
@@ -82,6 +88,9 @@ touch -r ChangeLog %{buildroot}%{_bindir}/%{name}-config
 %exclude %{_libdir}/*.a
 
 %changelog
+* Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt4_0.12.20080502cvs
+- bugfix (closes: #28250)
+
 * Fri Sep 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt3_0.12.20080502cvs
 - fixed build
 
