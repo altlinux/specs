@@ -1,15 +1,13 @@
 %add_findpackage_path %_kde4_bindir
 
-%def_enable print
-#add_findreq_skiplist %_K4apps/system-config-printer-kde/system-config-printer-kde.py
 
 %define rname kdeadmin
 Name: kde4admin
 %define major 4
-%define minor 9
-%define bugfix 1
+%define minor 10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Administrative Tools
@@ -19,22 +17,18 @@ Packager: Sergey V Turchin <zerg at altlinux dot org>
 
 Requires: %name-kcron = %version-%release
 Requires: %name-ksystemlog = %version-%release
-%if_enabled print
-Requires: %name-print = %version-%release
-%endif
+Requires: kde4-print-manager
 
 #Source: ftp://ftp.kde.org/pub/kde/stable/%version/src/%rname-%version.tar.bz2
 Source: %rname-%version.tar
 # ALT
-Patch11: kdeadmin-4.1.96-alt-printer-pysyspath.patch
-Patch12: kdeadmin-4.3.2-alt-printer-testpage.patch
-Patch13: kdeadmin-4.6.0-alt-def-ksystemlog.patch
+Patch11: kdeadmin-4.6.0-alt-def-ksystemlog.patch
 
+# Automatically added by buildreq on Thu Dec 20 2012 (-bi)
+# optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libpng-devel libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-svg libqt4-test libqt4-xml libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel openssh-common phonon-devel pkg-config python-base ruby ruby-stdlibs xml-common xml-utils xorg-kbproto-devel xorg-xproto-devel zlib-devel
+#BuildRequires: cvs gcc-c++ git-core glib2-devel kde4libs-devel libicu libqt3-devel mercurial python-module-distribute rpm-build-ruby subversion valgrind xorg-xf86miscproto-devel zlib-devel-static
 BuildRequires(pre): kde4pimlibs-devel
-BuildRequires: gcc-c++
-BuildRequires: rpm-build-python python-devel python-module-cups python-module-cupshelpers python-module-kde4
-#BuildRequires: lilo
-BuildRequires: kde4base-runtime-devel >= %version kde4pimlibs-devel >= %version
+BuildRequires: gcc-c++ kde4base-runtime-devel >= %version kde4pimlibs-devel >= %version
 
 %description
 The kdeadmin package contains packages that usually only a system
@@ -104,8 +98,6 @@ URL: http://utils.kde.org/projects/printer-applet
 Requires: %name-common = %version-%release
 Requires: kde4base-runtime printer-testpages
 Requires: python-module-kde4 >= %version
-#Requires: %py_dependencies PyKDE4 PyQt4 config cups cupshelpers dbus urllib
-#Requires: %py_dependencies httplib locale os re tempfile time traceback
 %description print
 Utility to configure new printers.
 
@@ -113,11 +105,6 @@ Utility to configure new printers.
 %setup -q -n %rname-%version
 #
 %patch11 -p1
-%patch12 -p1
-%patch13 -p1
-
-echo "X-KDE-RootOnly=true" >> system-config-printer-kde/system-config-printer-kde.desktop
-echo "X-KDE-SubstituteUID=true" >> system-config-printer-kde/system-config-printer-kde.desktop
 
 %build
 NO_BUILD+=" -DBUILD_kuser=FALSE"
@@ -129,17 +116,7 @@ NO_BUILD+=" -DBUILD_kpackage=FALSE"
 
 %install
 %K4install
-cp -ar altlinux/system-config-printer/* %buildroot/%_K4apps/system-config-printer-kde
-#ln -s `relative %buildroot/%_K4apps/system-config-printer-kde/system-config-printer-kde.py %buildroot/%_K4bindir/system-config-printer-kde` %buildroot/%_K4bindir/system-config-printer-kde
 
-mkdir -p %buildroot/%_K4xdg_apps/
-install -m 0644 %buildroot/%_K4srv/system-config-printer-kde.desktop %buildroot/%_K4xdg_apps/system-config-printer-kde.desktop
-sed -i 's|^Type=.*$|Type=Application|' %buildroot/%_K4xdg_apps/system-config-printer-kde.desktop
-sed -i 's|^Categories=.*$|Categories=Qt;KDE;System;Printing;HardwareSettings;|' %buildroot/%_K4xdg_apps/system-config-printer-kde.desktop
-sed -i 's|^X-KDE-System-Settings-Parent-Category.*||' %buildroot/%_K4xdg_apps/system-config-printer-kde.desktop
-sed -i 's|^X-KDE-ServiceTypes=.*||' %buildroot/%_K4xdg_apps/system-config-printer-kde.desktop
-sed -i 's|^X-KDE-ParentApp=.*||' %buildroot/%_K4xdg_apps/system-config-printer-kde.desktop
-sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/system-config-printer-kde.desktop
 
 
 %files
@@ -162,16 +139,11 @@ sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/system-config-printer-kde
 %_K4xdg_apps/ksystemlog.desktop
 %_K4doc/*/ksystemlog
 
-%if_enabled print
-%files print
-#%_K4bindir/system-config-printer-kde
-%_K4apps/system-config-printer-kde/
-%_K4srv/system-config-printer-kde.desktop
-%_K4xdg_apps/system-config-printer-kde.desktop
-%_K4doc/*/system-config-printer-kde
-%endif
 
 %changelog
+* Thu Dec 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
