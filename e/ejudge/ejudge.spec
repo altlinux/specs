@@ -9,7 +9,7 @@
 
 
 Name: ejudge
-Version: 2.3.25
+Version: 2.3.26
 Release: alt1
 
 
@@ -21,7 +21,7 @@ Group: System/Servers
 Url: http://www.ejudge.ru
 Packager: Denis Kirienko <dk@altlinux.ru>
 
-Source0: %name-svn7190.tar
+Source0: %name-svn7262.tar
 Source1: %name.rc
 Source2: %name.logrotate
 Source3: ejudge-install.sh
@@ -135,6 +135,9 @@ install -d %buildroot%lang_config_dir
 %doc ejudge-*.pdf
 
 %changelog
+* Thu Dec 20 2012 Denis Kirienko <dk@altlinux.org> 2.3.26-alt1
+- Version 2.3.26 (SVN 7262)
+
 * Sat Nov 24 2012 Denis Kirienko <dk@altlinux.org> 2.3.25-alt1
 - Version 2.3.25 (SVN 7190)
 
