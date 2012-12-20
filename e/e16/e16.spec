@@ -1,28 +1,33 @@
-Name: enlightenment
-Version: 0.16.8.9
-Release: alt2.1
-%define prefix %_x11dir
-Serial: 1
 
-Summary: The Enlightenment window manager
+# BEGIN SourceDeps(oneline):
+BuildRequires: libGL-devel libICE-devel libX11-devel pkgconfig(dbus-1) pkgconfig(ecore-x) pkgconfig(libpulse) pkgconfig(xi)
+# END SourceDeps(oneline)
+Name: e16
+Version: 1.0.11
+Release: alt1
+#Serial: 1
+
+Summary: The Enlightenment DR16 window manager
 License: GPL
 Group: Graphical desktop/Enlightenment
 Url: http://www.enlightenment.org/
-Packager: Pavlov Konstantin <thresh@altlinux.ru>
 
-Source: %name-%version.2.tar.gz
+Source: %name-%version.tar.gz
 Source1: Enlightenment.xpm
 Source2: start%name
+# Menu method (deprecated!) hack scripts/e_gen_menu instead!
 Source3: %name.wmsession
 
 Source5: %name-menu.method
 Source6: %name.xpm
 Source7: %name-32.xpm
 Source8: winter.tar
-Patch: enlightenment-0.16.8.9-alt-DSO.patch
+
+Obsoletes: enlightenment < 1:0.16.9
+Provides: enlightenment = 1:0.16.9
 
 # Automatically added by buildreq on Tue Dec 14 2004
-BuildRequires: esound-devel freetype2-devel imlib2-devel libaudiofile-devel zlib-devel
+BuildRequires: libesd-devel libfreetype-devel imlib2-devel libaudiofile-devel zlib-devel
 BuildRequires: libSM-devel libpango-devel libXft-devel libGLU-devel
 BuildRequires: libXext-devel libXinerama-devel libXxf86vm-devel
 BuildRequires: libXScrnSaver-devel libXrandr-devel libXcomposite-devel
@@ -42,44 +47,30 @@ last detail.
 This package will install the Enlightenment window manager.
 
 %prep
-%setup -q -n %name-%version.2
-%patch -p2
-%setup -q -T -D -c -n %name-%version.2 -a 8
+%setup -q -n %name-%version
+%setup -q -T -D -c -n %name-%version -a 8
 
-perl -pi -e 's,/\$\(datadir\),%_datadir,g' po/Makefile.in.in
-perl -pi -e 's,\${prefix}/\${DATADIRNAME}/locale,%_datadir/locale,g' configure
+#perl -pi -e 's,/\$\(datadir\),%_datadir,g' po/Makefile.in.in
+#perl -pi -e 's,\${prefix}/\${DATADIRNAME}/locale,%_datadir/locale,g' configure
 
 %build
 CFLAGS="$CFLAGS -I%_includedir/gnome-1.0" LOCALEDIR=%_datadir/locale %configure \
-	--prefix=%_x11dir \
-	--bindir=\${prefix}/bin \
-	--mandir=\${prefix}/man \
-	--datadir=\${prefix}/share \
-	--libexecdir=\${prefix}/lib/X11 \
 	--sysconfdir=%_sysconfdir/X11/%name \
 	--enable-fsstd \
 	--enable-sound \
 	--enable-upgrade \
 	--enable-pango \
 	--enable-glx \
-	--with-esd-prefix=%_prefix \
-	--with-imlib-prefix=%_prefix \
 	--enable-zoom \
 	--enable-xrandr
 
 %make_build
 
 %install
-# configure script has a bug, localedir uses the prefix value instead
-# of $prefix so it is needed to redefine it here with the build root value
-%make_install install DESTDIR=%buildroot localedir=%_datadir/locale
+%make_install install DESTDIR=%buildroot 
 
-# Menu
-mkdir -p %buildroot%_sysconfdir/X11/%name/menus
-perl -lwne '/^__E_CFG_VERSION 0$/ and print("$_\n\n", qw@BEGIN_NEW_FILE_MENU("ALTLINUX_MENU", "ROOT", "/etc/X11/%name/menus/altlinux.menu")@, "\nEND_MENU") or /^ADD_MENU_SUBMENU_TEXT_ITEM.*APPS_SUBMENU/ and print("$_\n", qw@ADD_MENU_SUBMENU_TEXT_ITEM("Applications",        "ALTLINUX_MENU")@) or print;' config/menus.cfg > %buildroot/%prefix/share/e16/config/menus.cfg
-
-# Menu method
-%__install -pD -m755 %SOURCE5 %buildroot%_sysconfdir/menu-methods/%name
+# Menu method (deprecated!) hack scripts/e_gen_menu instead!
+#%__install -pD -m755 %SOURCE5 %buildroot%_sysconfdir/menu-methods/%name
 
 # Install icons
 %__install -pD -m644 %SOURCE6 %buildroot%_miconsdir/%name.xpm
@@ -88,14 +79,12 @@ perl -lwne '/^__E_CFG_VERSION 0$/ and print("$_\n\n", qw@BEGIN_NEW_FILE_MENU("AL
 
 %__install -d %buildroot%_menudir
 cat << EOF > %buildroot%_menudir/%name
-?package(%name): needs=wm section=Session/Windowmanagers icon=%name.xpm title=Enlightenment command=%_x11bindir/%name
+?package(%name): needs=wm section=Session/Windowmanagers icon=%name.xpm title=E-16 command=%_bindir/%name
 EOF
 
 # wmsession.d
-%__install -p -m755 %SOURCE2 %buildroot%_x11bindir/
-%__install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05Enlightenment
-
-%__rm %buildroot%_x11bindir/starte16
+%__install -p -m755 %SOURCE2 %buildroot%_bindir/startE16
+%__install -pD -m644 %SOURCE3 %buildroot%_sysconfdir/X11/wmsession.d/05E16
 
 %find_lang e16
 
@@ -108,20 +97,30 @@ EOF
 %add_findprov_skiplist %_datadir/%name/config/*.pl
 %add_findprov_skiplist %_datadir/%name/themes/*
 
+# kde, gnome deps
+%add_findreq_skiplist %_bindir/starte16
+%add_findreq_skiplist %_datadir/e16/misc/*
+
 %files -f e16.lang
-%doc AUTHORS COMPLIANCE ChangeLog README
-%config(noreplace) %_sysconfdir/menu-methods/*
-%dir %_sysconfdir/X11/enlightenment
-%config(noreplace) %_sysconfdir/X11/enlightenment/menus
+%doc AUTHORS COMPLIANCE ChangeLog
+# for old menu-method
+#%config(noreplace) %_sysconfdir/menu-methods/*
+#%dir %_sysconfdir/X11/%name
+#%config(noreplace) %_sysconfdir/X11/%name/menus
 %config %_sysconfdir/X11/wmsession.d/*
 %_menudir/*
 %_iconsdir/*/*/*/*.xpm
 %_bindir/*
-%_libdir/*.so
+%_libdir/%name/*.so
 %_datadir/e16
 %_datadir/xsessions/*
+%_man1dir/*
+%_datadir/doc/%name
 
 %changelog
+* Thu Dec 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.11-alt1
+- new version (closes: 28244)
+
 * Wed Jul 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.16.8.9-alt2.1
 - Fixed build
 
