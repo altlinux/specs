@@ -1,9 +1,11 @@
 %def_disable poll
 %def_enable epoll
+%def_enable ecap
+%def_enable esi
 
 Name: squid
 Version: 3.1.22
-Release: alt5
+Release: alt6
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -34,6 +36,8 @@ BuildRequires: doxygen  graphviz fonts-ttf-freefont
 BuildRequires: gcc-c++ libcap-devel libdb4-devel libldap-devel libltdl-devel
 BuildRequires: libpam-devel libsasl2-devel libssl-devel perl-Pod-Parser
 BuildRequires: w3c-libwww-devel cppunit-devel
+%{?_enable_ecap:BuildRequires: libecap-devel = 0.0.3}
+%{?_enable_esi:BuildRequires: libxml2-devel libexpat-devel}
 # Used by smb_auth.pl,pop3.pl and squid_db_auth, required on find-requires stage:
 BuildRequires: perl-Authen-Smb perl-libnet perl-DBI
 
@@ -97,14 +101,32 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 %build
 ./bootstrap.sh
 %configure \
+	CPPFLAGS="$(pkg-config --cflags-only-I libxml-2.0)" \
 	--bindir=%_sbindir \
 	--libexecdir=%_libexecdir/%name \
 	--localstatedir=%_var \
 	--sysconfdir=%_sysconfdir/%name \
 	--datadir=%_datadir/%name \
 	--enable-strict-error-checking \
+	--with-dl \
+	--with-openssl \
+	--with-libcap \
+%if_enabled debug
+	--with-valgrind-debug \
+	--disable-optimizations --enable-debug-cbdata --enable-stacktraces --enable-cpu-profiling \
+%else
+	--without-valgrind-debug \
+	--enable-optimizations --enable-inline --disable-debug-cbdata --disable-stacktraces --disable-cpu-profiling \
+%endif
 	%{subst_enable poll} \
 	%{subst_enable epoll} \
+	%{subst_enable esi} \
+	%{subst_enable ecap} \
+	--enable-ipv6 \
+	--enable-unlinkd \
+	--enable-cachemgr-hostname=localhost \
+	--enable-follow-x-forwarded-for \
+	--enable-default-hostsfile=%_sysconfdir/hosts \
 	--enable-snmp \
 	--enable-removal-policies="lru heap" \
 	--enable-delay-pools \
@@ -130,10 +152,12 @@ sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
 	--enable-negotiate-auth-helpers="squid_kerb_auth" \
 	--enable-external-acl-helpers="ip_user ldap_group unix_group session wbinfo_group" \
 	--enable-storeio="aufs diskd ufs" \
-	--enable-disk-io="AIO Blocking DiskDaemon DiskThreads" \
+	--enable-disk-io \
 	--enable-default-err-language="English" \
 	--enable-icap-client \
+	--disable-ipfw-transparent --disable-ipf-transparent --disable-pf-transparent \
 	--enable-linux-netfilter \
+	--enable-linux-tproxy \
 	--with-large-files \
 	--with-filedescriptors=16384 \
 	--with-default-user="%name"
@@ -273,6 +297,11 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Thu Dec 20 2012 Led <led@altlinux.ru> 3.1.22-alt6
+- enabled:
+  + ecap
+  + esi
+
 * Thu Dec 20 2012 Led <led@altlinux.ru> 3.1.22-alt5
 - Conflicts %%name-conf-host2cat (ALT#28242)
 
