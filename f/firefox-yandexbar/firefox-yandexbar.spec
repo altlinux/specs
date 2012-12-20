@@ -1,6 +1,6 @@
 %define rname	yandexbar
 %define version 6.5
-%define release alt1
+%define release alt2
 %define cid 	yasearch@yandex.ru
 %define ciddir	%firefox_noarch_extensionsdir/%cid
 
@@ -52,6 +52,7 @@ to easily use Yandex services.
 %install
 %__mkdir_p %buildroot/%ciddir
 unzip -qq -d %buildroot/%ciddir %SOURCE0
+subst 's/maxVersion>11\.\*/maxVersion>17.0.*/g' %buildroot/%ciddir/install.rdf
 
 %postun
 if [ "$1" = 0 ]; then
@@ -62,6 +63,10 @@ fi
 %ciddir
 
 %changelog
+* Thu Dec 20 2012 Andrey Cherepanov <cas@altlinux.org> 6.5-alt2
+- Adapt for Firefox 17.0
+- Do not build new unstable Yandex Elements (ALT #28124)
+
 * Wed Feb 08 2012 Ilya Mashkin <oddity@altlinux.ru> 6.5-alt1
 - 6.5
 
