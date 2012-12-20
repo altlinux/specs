@@ -4,10 +4,10 @@
 %define rname kdeaccessibility
 Name: kde4accessibility
 %define major 4
-%define minor 9
-%define bugfix 1
+%define minor 10
+%define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt0.1
 
 
 Group: Graphical desktop/KDE
@@ -207,6 +207,9 @@ done
 #%_K4link/*.so
 
 %changelog
+* Thu Dec 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- new beta version
+
 * Fri Oct 05 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.1-alt1
 - new version
 
