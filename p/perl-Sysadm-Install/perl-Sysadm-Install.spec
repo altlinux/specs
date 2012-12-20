@@ -4,11 +4,11 @@ BuildRequires: perl(File/Spec/Functions.pm) perl(Log/Log4perl/Util.pm) perl-deve
 # END SourceDeps(oneline)
 Summary:	Typical installation tasks for system administrators
 Name:		perl-Sysadm-Install
-Version:	0.40
-Release:	alt2_1
+Version:	0.41
+Release:	alt1_1
 License:	GPL+ or Artistic
 Group:		Development/Perl
-Url:		http://search.cpan.org/dist/Sysadm-Install/
+URL:		http://search.cpan.org/dist/Sysadm-Install/
 Source0:	http://search.cpan.org/CPAN/authors/id/M/MS/MSCHILLI/Sysadm-Install-%{version}.tar.gz
 BuildArch:	noarch
 BuildRequires:	perl(Archive/Tar.pm)
@@ -76,6 +76,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Sysadm/
 
 %changelog
+* Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.41-alt1_1
+- update to new release by fcimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.40-alt2_1
 - moved to Sisyphus
 
