@@ -11,12 +11,12 @@ portability across platforms.
 
 
 Name:           fonts-ttf-google-croscore
-Version:        1.21.0
-Release:        alt1_4
+Version:        1.23.0
+Release:        alt1_1
 Summary:        The width-compatible fonts for improved on-screen readability
 
 Group:          Graphical desktop/Other
-License:        OFL
+License:        ASL 2.0
 #URL:            
 Source0:        http://gsdview.appspot.com/chromeos-localmirror/distfiles/croscorefonts-%{version}.tar.gz
 Source1:        62-%{fontname}-arimo-fontconfig.conf
@@ -26,6 +26,10 @@ Source4:        30-0-%{fontname}-arimo-fontconfig.conf
 Source5:        30-0-%{fontname}-cousine-fontconfig.conf
 Source6:        30-0-%{fontname}-tinos-fontconfig.conf
 Source7:        62-%{fontname}-symbolneu-fontconfig.conf
+
+# Upstream has not provided license text in this 1.23.0 release
+# Add ASL2.0 license text in LICENSE-2.0.txt file
+Source8:        LICENSE-2.0.txt
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
@@ -40,7 +44,7 @@ Group: Graphical desktop/Other
 Summary:        Common files of %{oldname}
 
 %description common
-This package consists of files used by other %{oldname} packages.
+This package consists of files used by other %%{oldname} packages.
 
 # Repeat for every font family
 %package -n fonts-ttf-google-croscore-arimo
@@ -113,6 +117,7 @@ Symbol Neu is a metrically compatible font to Symbol.
 
 %prep
 %setup -q -n croscorefonts-%{version}
+cp -p %{SOURCE8} .
 
 %build
 
@@ -184,10 +189,13 @@ fi
 
 
 %files common
-%doc LICENSE
+%doc LICENSE-2.0.txt
 
 
 %changelog
+* Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.21.0-alt1_4
 - update to new release by fcimport
 
