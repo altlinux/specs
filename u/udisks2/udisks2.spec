@@ -7,7 +7,7 @@
 
 Name: %{_name}2
 Version: 2.0.1
-Release: alt1
+Release: alt2
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
@@ -17,6 +17,8 @@ Url: http://www.freedesktop.org/wiki/Software/%_name
 Source: %_name-%version.tar
 #Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
+
+Obsoletes: %_name
 
 Requires: lib%name = %version-%release
 
@@ -151,6 +153,9 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %endif
 
 %changelog
+* Thu Dec 20 2012 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt2
+- a time to obsolete old udisks
+
 * Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt1
 - after 2.0.1 snapshot (d2a937d3)
 
