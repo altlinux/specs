@@ -7,7 +7,7 @@ BuildRequires(pre): rpm-build-thunderbird
 
 Name: %tbird_name-%mname
 Version: 4.0.4
-Release: alt1
+Release: alt2
 Summary: Dark-colored minimalistic theme for Thunderbird
 License: MPL or GPLv3
 Group: Networking/Mail
@@ -24,6 +24,7 @@ and maximum screen real estate.
 
 %prep
 %setup
+subst 's/maxVersion>14\.\*/maxVersion>17.0.*/g' install.rdf
 
 %install
 install -d %buildroot%mciddir
@@ -33,6 +34,9 @@ cp -fR * %buildroot%mciddir/
 %mciddir
 
 %changelog
+* Thu Dec 20 2012 Andrey Cherepanov <cas@altlinux.org> 4.0.4-alt2
+- Adapt for Thunderbird 17.0
+
 * Fri Aug 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.4-alt1
 - Version 4.0.4
 
