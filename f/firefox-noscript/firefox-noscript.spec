@@ -3,7 +3,7 @@
 
 Summary:	NoScript extension for Firefox
 Name:		firefox-noscript
-Version:	2.2.6
+Version:	2.6.4.1
 Release:	alt1
 Source0:	noscript-%version.xpi
 License:	GPL
@@ -39,6 +39,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 2.6.4.1-alt1
+- New version 2.6.4.1
+
 * Wed Jan 18 2012 Alexey Gladkov <legion@altlinux.ru> 2.2.6-alt1
 - New version (2.2.6).
 

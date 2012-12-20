@@ -3,13 +3,13 @@
 %define ciddir 	%firefox_noarch_extensionsdir/%cid
 
 Name:		%firefox_name-%rname
-Version:	1.4.9
+Version:	1.5.5
 Release:	alt1
 Summary:	Firefox extension, which helps you to save Web pages and manage the collection
 
 License:	MPL 1.1/GPL 2.0 or later/LGPL 2.1 or later
 Group:		Networking/WWW
-URL:		http://sessionmanager.mozdev.org/
+URL:		https://addons.mozilla.org/ru/firefox/addon/scrapbook/
 #URL:		http://amb.vis.ne.jp/mozilla/scrapbook/
 
 Source0:	scrapbook-%version-fx.xpi.zip
@@ -49,6 +49,9 @@ fi
 %ciddir
 
 %changelog
+* Wed Dec 19 2012 Andrey Cherepanov <cas@altlinux.org> 1.5.5-alt1
+- New version 1.5.5
+
 * Sun Feb 05 2012 Nikolay A. Fetisov <naf@altlinux.ru> 1.4.9-alt1
 - Version 1.4.9
 
