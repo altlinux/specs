@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.14.2
-Release: alt1
+Release: alt2
 Summary: Python bindings generator for C++ class libraries
 License: PSF
 Group: Development/Python
@@ -125,6 +125,9 @@ sed -i 's|%_bindir/sip|%_bindir/sip3|' \
 %endif
 
 %changelog
+* Thu Dec 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.14.2-alt2
+- Release up
+
 * Thu Dec 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.14.2-alt1
 - Version 4.14.2
 
