@@ -2,17 +2,19 @@
 
 Name: alterator-preinstall
 Version: 0.7.1
-Release: alt1
+Release: alt2
 
 Summary: Alterator preinstall hooks runner module
 License: GPL
 Group: System/Configuration/Other
 BuildArch: noarch
 
-Source:%name-%version.tar
+Url: http://www.altlinux.org/Alterator
+Source: %name-%version.tar
 
 Requires: alterator >= 4.17-alt1
 Requires: alterator-l10n >= 2.1-alt4
+Requires: installer-scripts-remount-stage2
 Conflicts: alterator-lookout < 1.6-alt6
 Conflicts: installer-common-stage2 < 1.8.4-alt1
 
@@ -35,6 +37,11 @@ This is an alterator preinstall hooks runner module.
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Dec 21 2012 Michael Shigorin <mike@altlinux.org> 0.7.1-alt2
+- require installer-scripts-remount-stage2 for remount script
+  (moved from installer-common-stage2)
+- added an Url:
+
 * Tue Dec 11 2012 Michael Shigorin <mike@altlinux.org> 0.7.1-alt1
 - notify for remount failure
 

@@ -1,32 +1,33 @@
 %define _altdata_dir %_datadir/alterator
 
-Summary: special steps for LiveCD installers
-
 Name: alterator-livecd
-Version: 0.7.5
+Version: 0.7.6
 Release: alt1
+
+Summary: special steps for LiveCD installers
+License: GPL
+Group: System/Configuration/Other
+
+Url: http://www.altlinux.org/Alterator
+Source:%name-%version.tar
 
 Requires: squashfsprogs
 Requires: libshell
 Requires: alterator-l10n >= 2.5-alt1
 Requires: alterator-browser-qt >= 2.17.0
 Requires: alterator-lookout => 2.4-alt1
+Requires: installer-scripts-remount-stage2
 BuildRequires: rpm-macros-alterator
 
-BuildArch: noarch
-
-Source:%name-%version.tar
-
-License: GPL
-Group: System/Configuration/Other
-
 BuildPreReq: alterator >= 4.10-alt6
+
+BuildArch: noarch
 
 %description
 special steps for LiveCD installers
 
 %prep
-%setup -q
+%setup
 
 %install
 %makeinstall
@@ -41,6 +42,11 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Dec 21 2012 Michael Shigorin <mike@altlinux.org> 0.7.6-alt1
+- require installer-scripts-remount-stage2 for remount script
+- minor spec cleanup
+- added an Url:
+
 * Fri Dec 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7.5-alt1
 - don't stop old alteratod to prevent systemd from killing new one
 

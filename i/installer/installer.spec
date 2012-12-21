@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.10
+Version: 1.8.11
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Fri Dec 21 2012 Michael Shigorin <mike@altlinux.org> 1.8.11-alt1
+- remount: split off as install2-remount-functions-stage2 package
+
 * Thu Dec 20 2012 Michael Shigorin <mike@altlinux.org> 1.8.10-alt1
 - steps: added luks.desktop
 
