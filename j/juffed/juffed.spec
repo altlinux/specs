@@ -1,6 +1,6 @@
 Name:		juffed
 Version:	0.8.1
-Release:	alt5.qa1
+Release:	alt5.qa2
 License:	GPL
 Packager:	Andrey Cherepanov <cas@altlinux.org>
 Group:		Editors
@@ -31,7 +31,7 @@ See http://code.google.com/p/juffed-plugins/wiki/JuffEd_Plugins_Tutorial for det
 
 %build
 cmake . -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=release -DCMAKE_CXX_FLAGS:STRING='%optflags'
-make
+make VERBOSE=1
 
 %install
 make DESTDIR=%buildroot install
@@ -54,6 +54,9 @@ mkdir -p %buildroot/%_libdir/%name/plugins
 %_includedir/%name
 
 %changelog
+* Fri Dec 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt5.qa2
+- Rebuilt with new qscintilla2
+
 * Fri Sep 21 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.8.1-alt5.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
