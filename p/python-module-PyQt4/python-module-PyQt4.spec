@@ -1,9 +1,9 @@
 %define oname PyQt4
 
-%def_with python3
+%def_without python3
 
 Name: python-module-%oname
-Version: 4.9.4
+Version: 4.9.6
 Release: alt1
 Summary: Python bindings for Qt.
 License: GPL
@@ -12,8 +12,14 @@ Group: Development/Python
 %setup_python_module %oname
 
 Source0: PyQt-x11-gpl.tar
+Source1: qurlquery.sip
+Source2: qfiledevice.sip
+Source3: qscreen.sip
+Source4: qdnslookup.sip
+Source5: qsslcertificateextension.sip
+Source6: qwebkitglobal.sip
+Source7: qpycore_qmetaobjectbuilder.h
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
-%py_package_requires sip >= 4.8.2
 Packager: Python Development Team <python@packages.altlinux.org>
 
 BuildPreReq: %py_package_dependencies sip-devel >= 4.8.1
@@ -21,15 +27,17 @@ BuildPreReq: %py_package_dependencies dbus-devel
 
 %add_python_req_skip Compiler
 
-BuildRequires: gcc-c++ libqt4-devel
+BuildRequires: gcc-c++ libqt4-devel lout
 BuildPreReq: python-module-qscintilla2-qt4-devel libqscintilla2-qt4-devel
-BuildRequires: python-module-sip-devel
+BuildRequires: python-module-sip-devel python-devel
 BuildPreReq: python-module-dbus-devel
+
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-sip-devel
 BuildPreReq: python3-module-dbus-devel
 BuildPreReq: python3-module-qscintilla2-qt4-devel
+BuildPreReq: python3-module-sip-devel
 %endif
 
 %description
@@ -86,7 +94,6 @@ Requires: %name
 
 %description doc
 This package contains PyQt4 docs
-
 %prep
 %setup -n PyQt-x11-gpl
 subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
@@ -100,6 +107,14 @@ QMAKE_CXXFLAGS += %optflags %optflags_shared
 E_O_F
 done
 
+#QScintilla-gpl/Python/sip
+install -d %buildroot/usr/share/sip/PyQt4/Qsci
+install -p -m644 %SOURCE1 %SOURCE2 sip/
+install -p -m644 %SOURCE3 %SOURCE4 sip/
+install -p -m644 %SOURCE5 %SOURCE6 sip/
+install -p -m644 sip/QtWebKit/QtWebKitmod.sip sip/
+install -p -m644 %SOURCE7 qpy/QtCore/
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -111,32 +126,19 @@ export QT4DIR=%_qt4dir
 
 echo 'yes' | python configure.py \
 	--debug \
-	--verbose \
 	-q %_qt4dir/bin/qmake \
 	-d %python_sitelibdir \
 	-p %_qt4dir/plugins \
-	-a --confirm-license \
-	--qsci-api \
 	--enable=designer-plugin \
 	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
 for i in $(find ./ -name Makefile); do
 	sed -i 's|-Wl,-rpath,|-I|g' $i
 done
-%make_build
-
-%if_with python3
-pushd ../python3
-echo 'yes' | python3 configure.py \
+%make_build \
 	--debug \
-	--verbose \
 	-q %_qt4dir/bin/qmake \
 	-d %python3_sitelibdir \
-	-p %_qt4dir/plugins \
-	-a --confirm-license \
-	--qsci-api \
-	--no-designer-plugin \
-	--sipdir=%_datadir/sip3/%oname \
-	--qsci-api-destdir=%_datadir/qt4/qsci3 \
+	-p %_qt4dir/plugins
 	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
 for i in $(find ./ -name Makefile); do
 	sed -i 's|lpython3\.2|lpython3.2mu|g' $i
@@ -145,8 +147,6 @@ for i in $(find ./ -name Makefile); do
 	sed -i 's|-Wl,-rpath,|-I|g' $i
 done
 %make_build
-popd
-%endif
 
 %install
 %if_with python3
@@ -164,6 +164,9 @@ rm -fR %buildroot%python3_sitelibdir/%oname/uic/port_v2
 %makeinstall_std INSTALL_ROOT=%buildroot
 rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 
+##wait ##
+install -d %buildroot/usr/share/sip/PyQt4/Qsci \
+	PyQt-x11-gpl/sip/QtGui
 #bzip2 ChangeLog
 
 %files
@@ -201,6 +204,9 @@ rm -rf %buildroot%python_sitelibdir/%oname/uic/port_v3
 %endif
 
 %changelog
+* Fri Dec 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.6-alt1
+- Version 4.9.6
+
 * Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.4-alt1
 - Version 4.9.4
 
