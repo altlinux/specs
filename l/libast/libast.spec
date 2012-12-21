@@ -12,7 +12,7 @@ BuildRequires: zlib-devel
 Summary:        Library of Assorted Spiffy Things
 Name:           libast
 Version:        0.7.1
-Release:        alt4_0.12.20080502cvs
+Release:        alt5_0.12.20080502cvs
 Group:          System/Libraries
 License:        BSD
 URL:            http://www.eterm.org/
@@ -71,6 +71,7 @@ touch -r ChangeLog %{buildroot}%{_bindir}/%{name}-config
 # alt #28250
 %ifarch %{ix86}
 mv %buildroot%_includedir/libast/sysdefs-%{_arch}.h %buildroot%_includedir/libast/sysdefs-i386.h
+mv %buildroot%_includedir/libast/types-%{_arch}.h %buildroot%_includedir/libast/types-i386.h
 %endif
 
 
@@ -88,6 +89,9 @@ mv %buildroot%_includedir/libast/sysdefs-%{_arch}.h %buildroot%_includedir/libas
 %exclude %{_libdir}/*.a
 
 %changelog
+* Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt5_0.12.20080502cvs
+- fixed types.h
+
 * Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.1-alt4_0.12.20080502cvs
 - bugfix (closes: #28250)
 
