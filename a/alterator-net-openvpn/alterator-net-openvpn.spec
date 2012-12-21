@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-net-openvpn
-Version: 0.8.7
+Version: 0.8.9
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -17,7 +17,6 @@ Requires: alterator-l10n >= 2.7-alt12
 Requires: openvpn >= 2.1
 Requires: etcnet
 Requires: openresolv
-Requires: bind-utils
 
 BuildPreReq: alterator >= 4.7-alt3
 
@@ -43,6 +42,14 @@ Alterator module for openvpn connections configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Dec 21 2012 Mikhail Efremov <sem@altlinux.org> 0.8.9-alt1
+- Added initial GOST support.
+- Disable LZO by default.
+- Use 'dev-type' instead of 'dev'.
+- Use its own CA certificate for each connection (closes: #28203).
+- Set resolve timeout to 15s.
+- Use 'resolve' as well as 'dig' (closes: #27560).
+
 * Mon Jan 17 2011 Mikhail Efremov <sem@altlinux.org> 0.8.7-alt1
 - desktop file: add uk translation (by Roman Savochenko).
 
