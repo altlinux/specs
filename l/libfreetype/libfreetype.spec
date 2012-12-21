@@ -1,6 +1,6 @@
 Name: libfreetype
-Version: 2.4.10
-Release: alt2
+Version: 2.4.11
+Release: alt1
 
 Summary: A free and portable font rendering engine
 License: FTL or GPLv2+
@@ -11,6 +11,8 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source0: http://download.savannah.gnu.org/releases/freetype/freetype-%version.tar.bz2
 Source2: http://download.savannah.gnu.org/releases/freetype/freetype-doc-%version.tar.bz2
 Source1: http://download.savannah.gnu.org/releases/freetype/ft2demos-%version.tar.bz2
+
+Patch5: freetype-2.4.10-osh.patch
 
 Patch1: freetype-2.4.10-alt-compat-version-script.patch
 Patch2: freetype-2.4.10-alt-freetype-config.patch
@@ -81,6 +83,8 @@ This package contains collection of FreeType demonstration programs.
 %setup -n freetype-%version -a1 -b2
 ln -s ft2demos-%version ft2demos
 
+%patch5 -p1
+
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
@@ -109,10 +113,10 @@ for f in ft2demos-%version/bin/ft*; do
 	builds/unix/libtool --mode=install install -m755 $f %buildroot%_bindir/
 done
 
-wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' |cpp -P)
+wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' | cpp -P | sed '/^$/d')
 [ "$wordsize" -ge 32 ]
 mv %buildroot%_includedir/freetype2/freetype/config/ftconfig{,-$wordsize}.h
-cat >%buildroot%_includedir/freetype2/freetype/config/ftconfig.h <<'EOF'
+cat >%buildroot%_includedir/freetype2/freetype/config/ftconfig.h << EOF
 #ifndef __FTCONFIG_H__MULTILIB
 #define __FTCONFIG_H__MULTILIB
 
@@ -163,6 +167,9 @@ mv %buildroot%develdocdir/{FTL.TXT,LICENSE.TXT,CHANGES.bz2} %buildroot%docdir/
 %_bindir/ft*
 
 %changelog
+* Fri Dec 21 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.4.11-alt1
+- 2.4.11
+
 * Mon Oct 08 2012 Dmitry V. Levin <ldv@altlinux.org> 2.4.10-alt2
 - Fixed freetype-config script to use pkg-config (closes: #27761).
 - Fixed multilib issues.
