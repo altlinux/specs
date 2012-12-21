@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 3.0.0
-Release: alt0.1
+Release: alt0.2
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -25,6 +25,7 @@ Source1: %rname-po-%version.tar
 Source2: %rname-doc-%version.tar
 Source10: FindOpenCV.cmake
 Source11: FindKSane.cmake
+Source12: FindKipi.cmake
 Patch1: kipi-plugins-2.6.0-arm-cast-to-qreal.patch
 
 Requires: %name-core = %version-%release
@@ -87,6 +88,7 @@ MACRO_OPTIONAL_ADD_SUBDIRECTORY(digikam/showfoto)
 __EOF__
 install -m 0644 %SOURCE10 cmake/modules
 install -m 0644 %SOURCE11 cmake/modules
+install -m 0644 %SOURCE12 cmake/modules
 
 if ! grep -qe '^add_subdirectory([[:space:]]*po[[:space:]]*)' CMakeLists.txt
 then
@@ -168,6 +170,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Fri Dec 21 2012 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.2
+- fix desktop files X-KIPI-BinaryVersion
+
 * Thu Dec 13 2012 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.1
 - 3.0.0-beta3
 
