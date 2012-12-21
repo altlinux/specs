@@ -1,17 +1,19 @@
 %define module_name	omnibook
 %define module_version  20090714
-%define module_release	alt4
+%define module_release alt5
 
-%define kversion	3.5.7
-%define krelease	alt1
 %define flavour		std-pae
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-std-pae
+
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Summary: Kernel module for some Toshiba and HP laptops
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197895.1
+Release: %module_release.%kcode.%kbuildrelease
 License: GPL
 Group: System/Kernel and hardware
 
@@ -26,19 +28,17 @@ Patch3: omnibook-3.1.1-build.patch
 %endif
 
 ExclusiveOS: Linux
-URL: http://omnibook.sourceforge.net/
+Url: http://omnibook.sourceforge.net/
 BuildRequires(pre): rpm-build-kernel
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 
-Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
-ExclusiveArch: %ix86
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+ExclusiveArch: %karch
 
 %description
 This package is intended to provide Linux kernel support for HP OmniBook,
@@ -67,20 +67,17 @@ install -p -m644 doc/{BUGS,CREDITS,ChangeLog,README} \
 	%buildroot%_docdir/%name-%version-%release
 cp -pr misc %buildroot%_docdir/%name-%version-%release
 
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
-
 %files
 %defattr(644,root,root,755)
 %module_dir
 %doc %_docdir/%name-%version-%release
 
 %changelog
-* Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 20090714-alt4.197895.1
-- Build for kernel-image-std-pae-3.5.7-alt1.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 20090714-alt5
+- new template
 
 * Tue Nov 15 2011 Anton Protopopov <aspsk@altlinux.org> 20090714-alt4
 - Fix build with 3.1.1

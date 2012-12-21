@@ -1,39 +1,38 @@
 %define module_name	fglrx
-%define module_version	8.98
-%define module_release	alt4
+%define module_version	9.00.2
+%define module_release alt1
 
-%define kversion       3.5.7
-%define krelease       alt1
 %define flavour                std-pae
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-std-pae
+
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
+Summary: AMD/ATI Proprietary Linux Display Driver
+Name: kernel-modules-%module_name-%flavour
+Version: 1.0.%module_version
+Release: %module_release.%kcode.%kbuildrelease
+License: Proprietary
+Group: System/Kernel and hardware
 
-Summary:	AMD/ATI Proprietary Linux Display Driver
-Name:		kernel-modules-%module_name-%flavour
-Version:	1.0.%module_version
-Release:	%module_release.197895.1
-License:	Proprietary
-Group:		System/Kernel and hardware
+Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 
-Packager:       Kernel Maintainer Team <kernel@packages.altlinux.org>
-
-ExclusiveOS:	Linux
-URL:		http://ati.amd.com/support/drivers/linux/linux-radeonhdd.html
+ExclusiveOS: Linux
+Url: http://ati.amd.com/support/drivers/linux/linux-radeonhdd.html
 BuildRequires(pre): rpm-build-kernel
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-headers-%flavour = %kversion-%krelease
 BuildRequires: kernel-source-%module_name-%module_version
 
-Provides:  kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
+Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-Prereq:		coreutils
-Prereq:         kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 
-ExclusiveArch:  %ix86
+ExclusiveArch: %karch
 
 Patch1: kernel-source-fglrx-8.37.3.openvz.patch
 # https://bugs.launchpad.net/ubuntu/+source/linux-restricted-modules-2.6.24/+bug/239967
@@ -53,6 +52,7 @@ Patch11: fglrx-3.4.6-old_rsp.patch
 %if "%kversion" >= "3.5"
 Patch12: fglrx-3.5.2-build.patch
 %endif
+Patch13: fglrx-3.7.patch
 
 %description
 Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite
@@ -85,20 +85,24 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %if "%kversion" < "3.4.6"
 %patch9 -p1
 %else
-%patch10 -p0
-%patch11 -p6
+#%%patch10 -p0
+#%%patch11 -p6
 %endif
 %endif
 
 %if "%kversion" >= "3.5"
-%patch12 -p1
+#%%patch12 -p1
+%endif
+
+%if "%kversion" >= "3.7"
+%patch13 -p0
 %endif
 
 sed -i 's|COMPAT_ALLOC_USER_SPACE|arch_compat_alloc_user_space|' kcl_ioctl.c
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
-%__ln_s ./2.6.x/Makefile ./Makefile
+ln -s ./2.6.x/Makefile ./Makefile
 %make_build TEMP_DIR=$PWD/ -C %_usrsrc/linux-%kversion-%flavour modules V=1 \
 	SUBDIRS=$PWD GCC_VER_MAJ=`echo "$GCC_VERSION" | sed 's/^\([0-9]\+\).*/\1/'`
 
@@ -106,19 +110,20 @@ sed -i 's|COMPAT_ALLOC_USER_SPACE|arch_compat_alloc_user_space|' kcl_ioctl.c
 mkdir -p $RPM_BUILD_ROOT/%module_dir
 install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
-
 %files
 %defattr(644,root,root,755)
 %module_dir
 
 %changelog
-* Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.98-alt4.197895.1
-- Build for kernel-image-std-pae-3.5.7-alt1.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.9.00.2-alt1
+- 9.00.2
+- new template
+
+* Wed Dec 05 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.8.98-alt5
+- Fixed build for kernel 3.7+
 
 * Sat Aug 18 2012 Anton Protopopov <aspsk@altlinux.org> 1.0.8.98-alt4
 - Fixed build for kernel 3.5.2+
@@ -226,13 +231,13 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 - 8.60.2
 
 * Mon Apr 06 2009 Michail Yakushin <silicium@altlinux.ru> 1.0.8.59.3-alt1
-- 8.59.3 
+- 8.59.3
 
 * Mon Apr 06 2009 Anton Protopopov <aspsk@altlinux.org> 1.0.8.58.2-alt3
 - "Merge" with silicium@
 
 * Wed Mar 04 2009 Michail Yakushin <silicium@altlinux.ru> 1.0.8.58.2-alt1
-- Version 8.58.2 
+- Version 8.58.2
 
 * Mon Mar 02 2009 Anton Protopopov <aspsk@altlinux.org> 1.0.8.58.2-alt2
 - Remove dead patch
@@ -241,7 +246,7 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 - Version 8.58.2
 
 * Tue Oct 28 2008 Michail Yakushin <silicium@altlinux.ru> 1.0.8.53.2-alt2
-- add 2.6.27 support 
+- add 2.6.27 support
 
 * Sat Sep 20 2008 L.A. Kostis <lakostis@altlinux.ru> 1.0.8.53.2-alt1
 - Version 8.53.2.
@@ -274,7 +279,6 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 * Thu Apr 17 2008 L.A. Kostis <lakostis@altlinux.org> 1.0.8.47.6-alt1
 - Version 8.47.6.
 
-
 * Fri Mar 07 2008 L.A. Kostis <lakostis@altlinux.org> 1.0.8.47.1-alt1
 - Version 8.47.1.
 
@@ -291,7 +295,7 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 - Version 8.43.3.
 
 * Tue Nov 20 2007 L.A. Kostis <lakostis@altlinux.org> 1.0.8.42.3-alt2
-- Add patches from Sabayon Linux (mostly for 2.6.23+): 
+- Add patches from Sabayon Linux (mostly for 2.6.23+):
   + ati-drivers-2.6.23.patch: fix compile with recent (2.6.23+) kernel
   + ati-drivers-8.40.4-warnings.patch: drop "unused" components of the mm API
 
@@ -387,7 +391,7 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 - Version 8.20.8.
 - Added patches:
   + 05_fglrx-8.20.8-alt-spinlock.patch: update to new spinlock API.
-  
+
 * Sun Nov 27 2005 LAKostis <lakostis at altlinux.ru> 1.0.8.19.10-alt1
 - Version 8.19.10.
 
@@ -533,7 +537,7 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 - rebuilt with 2.4.21rel-alt5
 
 * Tue Jul 08 2003 Peter Novodvorsky <nidd@altlinux.com> 1.0.2.9.12-alt3
-- added -include /usr/include/linux-%{kversion}-%{flavour}/include/linux/modversions.h
+- added -include /usr/include/linux-%kversion-%flavour/include/linux/modversions.h
   now it actually WORKS!
 
 * Sat Jun 21 2003 Peter Novodvorsky <nidd@altlinux.com> 1.0.2.9.12-alt2

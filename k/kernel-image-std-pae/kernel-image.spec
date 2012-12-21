@@ -1,8 +1,8 @@
 Name:    kernel-image-std-pae
 Release: alt1
 Epoch:   1
-%define kernel_base_version	3.5
-%define kernel_sublevel	.7
+%define kernel_base_version	3.6
+%define kernel_sublevel	.11
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -116,7 +116,7 @@ Most XEN virtualization system versions can not boot lzma-compressed
 kernel images. This is an optional package with uncompressed linux
 kernel image for this special case. If you do not know what is it XEN
 it seems that you do not need this package.
- 
+
 
 %package -n kernel-modules-oss-%flavour
 Summary: OSS sound driver modules (obsolete)
@@ -348,6 +348,7 @@ find . -name "*.orig" -delete -or -name "*~" -delete
 
 %build
 export ARCH=%base_arch
+export NPROCS=%nprocs
 KernelVer=%kversion-%flavour-%krelease
 
 echo "Building Kernel $KernelVer"
@@ -496,54 +497,6 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 	-maxdepth 1 -type f -not -name '*.html' -delete
 %endif # if_enabled docs
 
-%post -n kernel-modules-oss-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-oss-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-ide-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-ide-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-drm-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-drm-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-drm-nouveau-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-drm-nouveau-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-drm-radeon-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-drm-radeon-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-kvm-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-kvm-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-v4l-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-v4l-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-staging-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-staging-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
 %post -n kernel-headers-%flavour
 %post_kernel_headers %kversion-%flavour-%krelease
 
@@ -627,6 +580,10 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Thu Dec 20 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.11-alt1
+- 3.6.11 (closes: 28138)
+- Build using std-def config with config diff from 3.5.7.
+
 * Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.7-alt1
 - Update to 3.5.7
 
