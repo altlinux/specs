@@ -3,10 +3,8 @@
 Summary: special steps for LiveCD installers
 
 Name: alterator-livecd
-Version: 0.7.4
-Release: alt2
-
-Packager: Stanislav Ievlev <inger@altlinux.org>
+Version: 0.7.5
+Release: alt1
 
 Requires: squashfsprogs
 Requires: libshell
@@ -43,6 +41,9 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Dec 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7.5-alt1
+- don't stop old alteratod to prevent systemd from killing new one
+
 * Thu Dec 20 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7.4-alt2
 - fix install from systemd
 
