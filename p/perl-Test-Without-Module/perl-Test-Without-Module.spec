@@ -4,7 +4,7 @@ BuildRequires: perl(Symbol.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Without-Module
 Version:        0.17
-Release:        alt2_9
+Release:        alt2_11
 Summary:        Test fallback behavior in absence of modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -36,7 +36,6 @@ sed -i -e 's/\r//' README Changes
 make %{?_smp_mflags}
 
 %install
-
 make pure_install DESTDIR=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
@@ -47,10 +46,13 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 make test
 
 %files
-%doc Changes MANIFEST.skip README
+%doc Changes README
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2_11
+- update to new release by fcimport
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2_9
 - sisyphus release
 
