@@ -1,5 +1,5 @@
 Name: livecd-setlocale
-Version: 0.1.1
+Version: 0.2.0
 Release: alt1
 
 Summary: Automatically set locale from /proc/cmdline
@@ -21,11 +21,16 @@ Service to automatically set locale from /proc/cmdline
 %install
 mkdir -p %buildroot%_initdir/
 install -pDm755 {livecd-setlocale,%buildroot%_initdir}/livecd-setlocale
+install -pDm644 {livecd-setlocale,%buildroot%_unitdir}/livecd-setlocale.service
 
 %files 
 %_initdir/livecd-setlocale
+%_unitdir/livecd-setlocale.service
 
 %changelog
+* Fri Dec 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2.0-alt1
+- service file added
+
 * Wed Apr 18 2012 Michael Shigorin <mike@altlinux.org> 0.1.1-alt1
 - don't require indexhtml-common (but use it if available)
 - added ru_UA special handling
