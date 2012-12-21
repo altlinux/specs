@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-openvpn-server
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
@@ -42,6 +42,13 @@ Alterator module for openvpn server configuration
 %_alterator_backend3dir/*
 
 %changelog
+* Fri Dec 21 2012 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
+- Use 'dev-type' instead of 'dev'.
+- Don't use deprecated functions.
+- Added initial GOST support.
+- drop unused code.
+- Disable LZO by default.
+
 * Mon Oct 25 2010 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
 - Validate CA certificate.
 - add "Use a TCP connection" checkbox.
