@@ -1,6 +1,6 @@
 Name: cabal2rpm
 Version: 0.20.08
-Release: alt9
+Release: alt10
 License: GPL2+
 Group: Development/Haskell
 Source: %name-%version.tar
@@ -29,6 +29,11 @@ install -D -m755 cabal2gear %buildroot%_bindir/cabal2gear
 %_bindir/cabal2gear
 
 %changelog
+* Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.20.08-alt10
+- autocreate watch file
+- simplify spec-file
+- fix Url tag
+
 * Sun Jul 01 2012 Denis Smirnov <mithraen@altlinux.ru> 0.20.08-alt9
 - fix spec creation for packages with executables
 
