@@ -5,7 +5,7 @@
 
 Name: squid
 Version: 3.1.22
-Release: alt6
+Release: alt7
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -24,6 +24,8 @@ Provides: %name-common = %version-%release
 Obsoletes: %name-common
 Provides: %name-server = %version-%release
 Obsoletes: %name-server
+Provides: %name-cachemgr = %version-%release
+Obsoletes: %name-cachemgr
 Conflicts: %name-conf-host2cat
 
 # epoll is enabled by default, so disable it if plain poll is enabled
@@ -66,17 +68,6 @@ DNS lookups, and implements negative caching of failed requests.
 Install squid if you need a proxy caching server.
 
 This package contains documentation for Squid.
-
-
-%package cachemgr
-Summary: Squid CGI cache manager
-Group: Networking/WWW
-Requires: %name >= 3.1
-Conflicts: %name <= 2.5.STABLE9-alt3
-
-%description cachemgr
-This package contains Squid cache manager. It is a standalone CGI application
-which can be used to manage Squid processes remotely over HTTP.
 
 
 %package helpers
@@ -257,7 +248,6 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %attr(3770,root,%name) %dir %_logdir/%name
 %attr(2770,root,%name) %dir %_spooldir/%name
 %exclude %_sysconfdir/%name/msntauth.conf*
-%exclude %_sysconfdir/%name/cachemgr.conf*
 
 
 %files doc
@@ -289,14 +279,11 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 %exclude %_man8dir/cachemgr.cgi.*
 
 
-%files cachemgr
-%config(noreplace) %_sysconfdir/%name/cachemgr.conf
-%config(noreplace) %_sysconfdir/%name/cachemgr.conf.default
-%_libexecdir/%name/cachemgr.cgi
-%_man8dir/cachemgr.cgi.*
-
-
 %changelog
+* Fri Dec 21 2012 Led <led@altlinux.ru> 3.1.22-alt7
+- removed %%name-cachemgr subpackages (merged to %%name)
+- cleaned up init script
+
 * Thu Dec 20 2012 Led <led@altlinux.ru> 3.1.22-alt6
 - enabled:
   + ecap
