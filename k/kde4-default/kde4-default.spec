@@ -1,6 +1,6 @@
 Name:    kde4-default
 Version: 4.10
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -44,6 +44,7 @@ Requires: rekonq
 Requires: konversation
 Requires: kde4-smb4k
 Requires: choqok
+Requires: kde4-telepathy
 Requires: kde4-kopete-antispam
 Requires: kde4-ktorrent
 Requires: bluedevil
@@ -71,5 +72,8 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Fri Dec 21 2012 Sergey V Turchin <zerg@altlinux.org> 4.10-alt2
+- add kde4-telepathy
+
 * Thu Dec 20 2012 Sergey V Turchin <zerg@altlinux.org> 4.10-alt1
 - initial build
