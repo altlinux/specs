@@ -1,16 +1,18 @@
 %define module_name	rt3070
-%define module_release	alt3
+%define module_release alt4
 %define module_version	2.5.0.2
 
-%define kversion	3.5.7
-%define krelease	alt1
 %define flavour		std-pae
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-std-pae
+
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.197895.1
+Release: %module_release.%kcode.%kbuildrelease
 
 Summary: Kernel module for Ralink rt3070 chipset
 
@@ -23,16 +25,15 @@ Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
 ExclusiveOS: Linux
 
 BuildRequires(pre): rpm-build-kernel
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name = %module_version
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
-ExclusiveArch: %ix86
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
+ExclusiveArch: %karch
 
 Patch1: fix-build-with-modern-kernels.patch
 
@@ -50,23 +51,20 @@ tar -jxf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %build
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
-%__make CC=gcc-$GCC_VERSION LINUX_SRC=%_usrsrc/linux-%kversion-%flavour
+make CC=gcc-$GCC_VERSION LINUX_SRC=%_usrsrc/linux-%kversion-%flavour
 
 %install
 install -m644 -D os/linux/%{module_name}sta.ko %buildroot/%module_dir/%{module_name}sta.ko
-
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
 
 %files
 %module_dir
 
 %changelog
-* Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 2.5.0.2-alt3.197895.1
-- Build for kernel-image-std-pae-3.5.7-alt1.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.5.0.2-alt4
+- new template
 
 * Mon Feb 06 2012 Anton Protopopov <aspsk@altlinux.org> 2.5.0.2-alt3
 - Fix build with 3+ kernels
