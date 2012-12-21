@@ -3,17 +3,18 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname tibetan-machine-uni-fonts
 %define	fontname	tibetan-machine-uni
+%define zipname		TibetanMachineUnicodeFont
 
 Name:		fonts-ttf-tibetan-machine-uni
 Version:	1.901
-Release:	alt3_9
+Release:	alt3_10
 Summary:	Tibetan Machine Uni font for Tibetan, Dzongkha and Ladakhi
 
 Group:		System/Fonts/True type
 # .ttf file now states GPLv3+ with fonts exceptions
 License:	GPLv3+ with exceptions
 URL:		http://www.thlib.org/tools/#wiki=/access/wiki/site/26a34146-33a6-48ce-001e-f16ce7908a6a/tibetan%%20machine%%20uni.html
-Source0:	https://collab.itc.virginia.edu/access/content/group/26a34146-33a6-48ce-001e-f16ce7908a6a/Tibetan%%20fonts/Tibetan%%20Unicode%%20Fonts/TibetanMachineUnicodeFont.zip
+Source0:	https://collab.itc.virginia.edu/access/content/group/26a34146-33a6-48ce-001e-f16ce7908a6a/Tibetan%%20fonts/Tibetan%%20Unicode%%20Fonts/%{zipname}.zip
 
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
@@ -26,18 +27,16 @@ project. The font supports Tibetan, Dzongkha and Ladakhi in dbu-can script
 with full support for the Sanskrit combinations found in chos skad text.
 
 %prep
-%setup -q -c
+%setup -q -n %{zipname}
 
 %build
 # Empty build section
 
 %install
-rm -fr %{buildroot}
 
 install -m 0755 -d %{buildroot}%{_fontdir}
 install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
-dos2unix -o gpl.txt
 dos2unix -o ReadMe.txt
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
@@ -79,6 +78,9 @@ fi
 %doc gpl.txt ReadMe.txt
 
 %changelog
+* Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.901-alt3_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.901-alt3_9
 - update to new release by fcimport
 
