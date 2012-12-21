@@ -1,9 +1,9 @@
-%define gnome_plugins compiz-annotate compiz-blur compiz-clone compiz-commands compiz-core compiz-cube compiz-dbus compiz-decoration compiz-fade compiz-fs compiz-gconf compiz-glib compiz-gnomecompat compiz-ini compiz-inotify compiz-minimize compiz-move compiz-obs compiz-place compiz-png compiz-regex compiz-resize compiz-rotate compiz-scale compiz-screenshot compiz-svg compiz-switcher compiz-video compiz-water compiz-wobbly compiz-zoom gwd
-%define default_plugins animation,core,dbus,decoration,expo,glib,gnomecompat,imgjpeg,move,place,png,regex,resize,scale,session,svg,switcher,text,wall,wobbly,workarounds
+%define mate_plugins compiz-annotate compiz-blur compiz-clone compiz-commands compiz-core compiz-cube compiz-dbus compiz-decoration compiz-fade compiz-fs compiz-mateconf compiz-glib compiz-matecompat compiz-ini compiz-inotify compiz-minimize compiz-move compiz-obs compiz-place compiz-png compiz-regex compiz-resize compiz-rotate compiz-scale compiz-screenshot compiz-svg compiz-switcher compiz-video compiz-water compiz-wobbly compiz-zoom gwd
+%define default_plugins animation,core,dbus,decoration,expo,glib,matecompat,imgjpeg,move,place,png,regex,resize,scale,session,svg,switcher,text,wall,wobbly,workarounds
 
 Name: compiz
 Version: 0.8.8
-Release: alt7.1
+Release: alt8
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -16,24 +16,26 @@ Provides: COMPIZ_CORE_ABIVERSION = 20091102
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires(Pre): libGConf-devel
-BuildRequires: GConf gcc-c++ intltool gnome-control-center-devel libGLU-devel libXcomposite-devel
-BuildRequires: libdbus-glib-devel libgnome-desktop-devel libmetacity-devel librsvg-devel
-BuildRequires: libwnck-devel libxslt-devel xorg-xextproto-devel kde4libs-devel kde4base-workspace-devel
+BuildRequires: gcc-c++ intltool libGLU-devel libXcomposite-devel
+BuildRequires: libdbus-glib-devel libmetacity-devel librsvg-devel
+BuildRequires: libwnck-devel xsltproc libxslt-devel xorg-xextproto-devel kde4libs-devel kde4base-workspace-devel
 BuildRequires: kdebase-devel libdbus-tqt-devel libtqt-devel libpng-devel
+
+BuildRequires: libfuse-devel
+BuildRequires: mate-conf-devel mate-window-manager-devel mate-control-center-devel mate-desktop-devel
 
 %description
 Compiz is an OpenGL compositing manager that use GLX_EXT_texture_from_pixmap
 for binding redirected top-level windows to texture objects. It has a flexible
 plug-in system and it is designed to run well on most graphics hardware.
 
-%package gnome
-Summary: Gnome Window Manager
-Group: Graphical desktop/GNOME
+%package mate
+Summary: Mate Window Manager
+Group: Graphical desktop/Other
 Requires: %name = %version-%release %name-gtk = %version-%release simple-ccsm
 
-%description gnome
-Compiz Window Manager for Gnome
+%description mate
+Compiz Window Manager for Mate
 
 %package gtk
 Summary: Gtk Compiz window decorator
@@ -87,10 +89,10 @@ RPM macros for sawfish-related packages
 	--with-default-plugins="%default_plugins" \
 	--enable-librsvg \
 	--enable-gtk \
-	--disable-gnome \
-	--enable-metacity \
-	--disable-gconf \
-	--disable-gnome-keybindings \
+	--enable-mate \
+	--enable-marco \
+	--enable-mateconf \
+	--enable-mate-keybindings \
 	--enable-kde \
 	--enable-kde4 \
 	--disable-static
@@ -109,43 +111,43 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 
 %find_lang %name
 
-#post gnome
-#gconf2_install %gnome_plugins
+%post mate
+%mateconf_schema_upgrade %mate_plugins
 
-#preun gnome
-#if [ $1 = 0 ]; then
-#gconf2_uninstall %gnome_plugins
-#fi
+%preun mate
+if [ $1 = 0 ]; then
+%mateconf_schema_remove %mate_plugins
+fi
 
 %files -f %name.lang
 %doc AUTHORS COPYING COPYING.GPL COPYING.MIT README TODO NEWS
 %_bindir/%name
 %dir %_libdir/%name
 %_libdir/*.so.*
-#exclude %_libdir/%name/libgconf.so
-%exclude %_libdir/%name/libgnomecompat.so
+%exclude %_libdir/%name/libmateconf.so
+%exclude %_libdir/%name/libmatecompat.so
 %exclude %_libdir/%name/libglib.so
 %exclude %_libdir/%name/libkconfig.so
 %_libdir/%name/lib*.so
 %_datadir/%name
 %exclude %_datadir/%name/kc*
-%exclude %_datadir/%name/gconf.xml
-%exclude %_datadir/%name/gnomecompat.xml
+%exclude %_datadir/%name/mateconf.xml
+%exclude %_datadir/%name/matecompat.xml
 %exclude %_datadir/%name/glib.xml
 
-#files gnome
-#_sysconfdir/gconf/schemas/*.schemas
-#exclude %_sysconfdir/gconf/schemas/*kconfig.schemas
-#_libdir/%name/libgconf.so
-#_libdir/%name/libgnomecompat.so
-#_libdir/%name/libglib.so
-#_libdir/window-manager-settings/*.so
-#_desktopdir/%name.desktop
-#_datadir/%name/gconf.xml
-#_datadir/%name/gnomecompat.xml
-#_datadir/%name/glib.xml
-#_datadir/gnome-control-center/keybindings/*.xml
-#_datadir/gnome/wm-properties/%name-wm.desktop
+%files mate
+%_sysconfdir/mateconf/schemas/*.schemas
+%exclude %_sysconfdir/mateconf/schemas/*kconfig.schemas
+%_libdir/%name/libmateconf.so
+%_libdir/%name/libmatecompat.so
+%_libdir/%name/libglib.so
+%_libdir/window-manager-settings/*.so
+%_desktopdir/%name.desktop
+%_datadir/%name/mateconf.xml
+%_datadir/%name/matecompat.xml
+%_datadir/%name/glib.xml
+%_datadir/mate-control-center/keybindings/*.xml
+%_datadir/mate/wm-properties/%name-wm.desktop
 
 %files gtk
 %_bindir/gtk-window-decorator
@@ -168,6 +170,10 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Thu Dec 06 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt8
+- build for mate
+- fix build with kde4.10
+
 * Wed Oct 24 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt7.1
 - package libkconfig.so in kde subpackage
 

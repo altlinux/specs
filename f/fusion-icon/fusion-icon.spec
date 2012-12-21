@@ -1,6 +1,6 @@
 Name: fusion-icon
 Version: 0.1.0
-Release: alt5
+Release: alt6
 
 Summary: Compiz Fusion panel applet
 License: %gpl2plus
@@ -71,6 +71,9 @@ This package provides the qt UI for fusion-icon.
 %python_sitelibdir/FusionIcon/interface_qt4/
 
 %changelog
+* Fri Dec 21 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.0-alt6
+- apply patch for mate and marco
+
 * Sat Apr 14 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.1.0-alt5
 - restore compiz in Sisyphus
 
