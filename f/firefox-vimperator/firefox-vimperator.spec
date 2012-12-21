@@ -6,7 +6,7 @@
 %define mciddir 	%tbird_noarch_extensionsdir/%mcid
 %define ver 3.6
 %define mver 1.2
-%define ft_release alt1.hg20121005
+%define ft_release alt2.hg20121005
 %define workdir %firefox_name-%vname-%ver
 %define mworkdir %tbird_name-%mname-%mver
 
@@ -68,6 +68,8 @@ help window back.
 %prep
 %setup
 tar -xjf %SOURCE1
+subst 's/maxVersion>15\.0/maxVersion>17.0.*/g' vimperator/install.rdf
+subst 's/maxVersion>12\.0a1/maxVersion>17.0.*/g' muttator/install.rdf
 
 %build
 ln -s asciidoc.py asciidoc/asciidoc
@@ -112,6 +114,9 @@ install -m644 %mname/contrib/vim/ftdetect/%mname.vim\
 %vim_ftdetect_dir/%mname.vim
 
 %changelog
+* Fri Dec 21 2012 Andrey Cherepanov <cas@altlinux.org> 3.6-alt2.hg20121005
+- Adapt for Firefox 17.0 and Thunderbird 17.0
+
 * Tue Oct 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6-alt1.hg20121005
 - New snapshot
 
