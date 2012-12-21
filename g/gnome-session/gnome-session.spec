@@ -4,7 +4,7 @@
 
 Name: gnome-session
 Version: %ver_major.2
-Release: alt2
+Release: alt2.1
 
 Summary: The gnome session programs for the GNOME GUI desktop environment
 License: GPLv2+
@@ -138,7 +138,7 @@ __EOF__
 %endif
 
 install -pD -m644 %SOURCE1 %buildroot%_iconsdir/gnome.svg
-install -pD -m644 %SOURCE1 %buildroot%_datadir/gnome/autostart/gnome-authentication-agent.desktop
+install -pD -m644 %SOURCE2 %buildroot%_datadir/gnome/autostart/gnome-authentication-agent.desktop
 
 %find_lang --with-gnome --output=%name.lang %name-3.0
 
@@ -168,6 +168,9 @@ install -pD -m644 %SOURCE1 %buildroot%_datadir/gnome/autostart/gnome-authenticat
 %exclude %_datadir/xsessions/gnome.desktop
 
 %changelog
+* Fri Dec 21 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2.1
+- fixed install for gnome-authentication-agent.desktop
+
 * Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2
 - updated to 15c3af7
 - run polkit-gnome-authentication-agent-1 if session is gnome-fallback
