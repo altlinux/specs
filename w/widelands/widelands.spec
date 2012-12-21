@@ -1,8 +1,7 @@
-%set_gcc_version 4.6
 Serial: 1
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: gcc4.6-c++ python-devel
+BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 %global buildno 17
 %global buildid build%{buildno}
@@ -10,7 +9,7 @@ BuildRequires: gcc4.6-c++ python-devel
 
 Name:           widelands
 Version:        0
-Release:        alt5_0.33.build17
+Release:        alt5_0.34.build17
 Summary:        Open source realtime-strategy game
 
 Group:          Games/Strategy
@@ -141,6 +140,9 @@ EOF
 
 
 %changelog
+* Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 1:0-alt5_0.34.build17
+- update to new release by fcimport
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1:0-alt5_0.33.build17
 - gcc46 build
 
