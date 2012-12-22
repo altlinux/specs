@@ -1,6 +1,6 @@
 Name:    kde4-default
 Version: 4.10
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -54,6 +54,11 @@ Requires: kde4-kid3
 Requires: kde4-krusader
 Requires: kde4-synaptiks
 Requires: kde4-soundkonverter
+Requires: kde4-digikam kde4-digikam-image-plugins kde4-digikam-utils kde4-digikam-i18n
+Requires: kde4-kipi-plugins
+Requires: kdenlive
+Requires: skanlite
+
 
 Requires: calligra
 Requires: calligra-l10n-kk
@@ -72,6 +77,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Sat Dec 22 2012 Sergey V Turchin <zerg@altlinux.org> 4.10-alt3
+- update requires
+
 * Fri Dec 21 2012 Sergey V Turchin <zerg@altlinux.org> 4.10-alt2
 - add kde4-telepathy
 
