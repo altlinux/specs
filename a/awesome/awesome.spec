@@ -1,5 +1,5 @@
 Name: awesome
-Version: 3.4.13
+Version: 3.5
 Release: alt2
 Group: Graphical desktop/Other
 License: GPL2+
@@ -13,12 +13,19 @@ Patch0:%name-%version-alt.patch
 
 Summary: A window manager initialy based on a dwm code rewriting
 
-BuildRequires: ImageMagick-tools asciidoc cmake gcc-c++ gperf imlib2-devel libdbus-devel libev-devel liblua5-devel libncurses-devel libpango-devel libreadline-devel xmlto libxdg-basedir-devel libstartup-notification-devel
+BuildRequires: ImageMagick-tools asciidoc cmake gcc-c++ gperf
+BuildRequires: imlib2-devel libdbus-devel libev-devel liblua5-devel
+BuildRequires: libncurses-devel libpango-devel libreadline-devel xmlto
+BuildRequires: libxdg-basedir-devel libstartup-notification-devel
+BuildRequires: libXdmcp-devel libXcursor-devel libgdk-pixbuf-devel lgi
+BuildRequires: lua libpango-gir
 
-BuildPreReq: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8 libxcbutil-icccm-devel >= 0.3.8 libxcbutil-image-devel >= 0.3.8
+BuildPreReq: libxcbutil-devel >= 0.3.8 libxcbutil-keysyms-devel >= 0.3.8
+BuildPreReq: libxcbutil-icccm-devel >= 0.3.8 libxcbutil-image-devel >= 0.3.8
 
 Requires: libstartup-notification >= 0.10-alt1
 Requires: design-graphics
+Requires: lgi >= 0.6.1
 
 %description
 awesome is a window manager initialy based on a dwm code rewriting. It's
@@ -81,6 +88,15 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Sat Dec 22 2012 Terechkov Evgenii <evg@altlinux.org> 3.5-alt2
+- 3.5 (Last Christmas)
+
+* Tue Dec 18 2012 Terechkov Evgenii <evg@altlinux.org> 3.5-alt1.rc2
+- 3.5-rc2 (I'll Kill Her)
+
+* Tue Dec  4 2012 Terechkov Evgenii <evg@altlinux.org> 3.5-alt1.rc1
+- 3.5-rc1 (Dirty Magic)
+
 * Wed Oct  3 2012 Terechkov Evgenii <evg@altlinux.org> 3.4.13-alt2
 - Set default background according to WM Policy 1.1
 
