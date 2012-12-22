@@ -1,14 +1,14 @@
 %def_disable static
 
 Name: eeze
-Version: 1.7.3
+Version: 1.7.4
 %ifdef beta
 Release: alt1.%beta
 %else
 Release: alt1
 %endif
 
-Summary: Enlightenment hardware manipulating library
+Summary: Enlightenment hardware manipulating package
 License: BSD-like
 Group: System/Libraries
 Url: http://www.enlightenment.org/
@@ -19,12 +19,16 @@ Requires: lib%name = %version-%release
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 BuildRequires: libudev-devel libeina-devel >= 1.7.3 libecore-devel >= 1.7.3
+BuildRequires: libmount-devel libeet-devel
 
 %description
 Eeze is a library for manipulating devices through udev with a simple
 and fast api. It interfaces directly with libudev, avoiding such
 middleman daemons as udisks/upower or hal, to immediately gather device
 information the instant it becomes known to the system.
+
+This package provides eeze_disk_ls, eeze_mount, eeze_scanner and
+eeze_umount utilities.
 
 %package -n lib%name
 Summary: Enlightenment hardware manipulating library
@@ -73,12 +77,19 @@ This package contains static library required for development statically linked
 %endif
 
 %build
+%autoreconf
 %configure \
 	%{subst_enable static}
 %make_build
 
 %install
 %make_install DESTDIR=%buildroot install
+
+%files
+%_bindir/eeze_disk_ls
+%_bindir/eeze_mount
+%_bindir/eeze_scanner
+%_bindir/eeze_umount
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -95,6 +106,9 @@ This package contains static library required for development statically linked
 %endif
 
 %changelog
+* Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
+- 1.7.4
+
 * Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
 - 1.7.3
 

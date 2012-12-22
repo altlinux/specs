@@ -1,8 +1,8 @@
 %define _name enlightenment
-%define cvs_date omega
-#%%undefine cvs_date
+%define cvs_date zero
+%undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt1
+%define rel alt2
 
 %def_disable static
 
@@ -23,7 +23,7 @@ License: BSD
 Group: Graphical desktop/Enlightenment
 URL: http://www.enlightenment.org/
 
-Source: http://download.enlightenment.org/releases/%_name-%version-%cvs_date.tar.bz2
+Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
 
 Source1: E-17.xpm
 Source2: start%name
@@ -33,19 +33,21 @@ Source7: %name-32.xpm
 Source8: %_name.desktop
 Source9: %_name-wm.desktop
 
-Requires: edbus
+Provides: e17-default
+
+Requires: edbus eeze pm-utils
 # for menu
 Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name >= 0.55
 
-BuildPreReq: libeet-devel >= 1.7.3
-BuildPreReq: libecore-devel >= 1.7.3
-BuildPreReq: libeio-devel >= 1.7.3
+BuildPreReq: libeet-devel >= 1.7.4
+BuildPreReq: libecore-devel >= 1.7.4
+BuildPreReq: libeio-devel >= 1.7.4
 BuildRequires: libpam-devel libX11-devel libevas-devel libecore-devel
 BuildRequires: edje libedje-devel libeet-devel libeet-utils libembryo-devel libefreet-devel
 BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
-BuildRequires: libalsa-devel libeina-devel libeeze-devel libudev-devel
-BuildRequires: libxcbutil-keysyms-devel
+BuildRequires: libalsa-devel libeina-devel eeze libeeze-devel libemotion-devel libelementary-devel
+BuildRequires: libudev-devel libxcbutil-keysyms-devel pm-utils
 
 %description
 Enlightenment is a window manager.
@@ -54,7 +56,7 @@ E-17 is a non-stable Enlightenment version from CVS.
 %package devel
 Summary: Development headers for Enlightenment.
 Group: Development/C
-Requires: %name = %version-%release
+Requires: %name = %serial:%version-%release
 
 %description devel
 Development headers for Enlightenment.
@@ -64,7 +66,7 @@ Summary: GNOME-specific parts of Enlightenment
 Group: Graphical desktop/GNOME
 BuildArch: noarch
 Provides: gnome-wm
-Requires: %name = %version-%release
+Requires: %name = %serial:%version-%release
 Requires: gnome-session >= 2.24
 
 %description gnome
@@ -86,7 +88,10 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1`"
 	--with-profile=FAST_PC \
 	--enable-files \
 	%{subst_enable static} \
-	--enable-shared
+	--enable-shared \
+	--enable-mount-eeze \
+	--disable-mount-hal
+
 %make_build
 
 %install
@@ -134,6 +139,10 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt2
+- 0.17.0 final release (zero)
+- provides e17-default
+
 * Tue Dec 18 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt1.omega
 - - 0.17.0 beta (omega)
 
