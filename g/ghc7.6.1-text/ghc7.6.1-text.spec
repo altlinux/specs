@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 0.11.2.3
-Release: alt1
+Release: alt2
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -75,5 +75,8 @@ string literal is declared.
 %files -f %name-files.all
 
 %changelog
+* Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.11.2.3-alt2
+- rebuild
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.11.2.3-alt1
 - Spec created by cabal2rpm 0.20_08
