@@ -5,7 +5,7 @@
 
 Name:	 	php5-%php5_extension
 Version:	%vmajor.%vminor
-Release:	alt4
+Release:	alt5
 
 Summary:	php5 module to produce HTML from HTML Template files.
 Group:		System/Servers
@@ -18,7 +18,7 @@ Source1:	php-%php5_extension.ini
 Source2:	php-%php5_extension-params.sh
 
 BuildRequires(pre): rpm-build-php5
-BuildRequires:	php5-devel = %php5_version-%php5_release
+BuildRequires:	php5-devel = %php5_version
 BuildRequires:	libhtmltmplpro-devel >= %vmajor
 # for make test
 BuildRequires:  php5-suhosin
@@ -65,6 +65,9 @@ install -D -m 644 %SOURCE2 %buildroot/%php5_extconf/%php5_extension/params
 %php5_extension_preun
 
 %changelog
+* Sat Dec 22 2012 Igor Vlasenko <viy@altlinux.ru> 0.95.1-alt5
+- rebuild for php5-5.3.18.20121017-alt1.1
+
 * Wed Nov 14 2012 Anton Farygin <rider@altlinux.ru> 0.95.1-alt4
 - rebuild for php5-5.3.18.20121017-alt1
 
