@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 1.0.1.2
-Release: alt1
+Release: alt2
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -41,5 +41,8 @@ This package contains a combinator library for constructing HTML documents.
 %files -f %name-files.all
 
 %changelog
+* Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0.1.2-alt2
+- rebuild
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0.1.2-alt1
 - Spec created by cabal2rpm 0.20_08
