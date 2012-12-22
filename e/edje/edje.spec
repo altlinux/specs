@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: edje
-Version: 1.7.3
+Version: 1.7.4
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -24,11 +24,12 @@ Patch: edje-1.1.0-alt-buffer-overflow.patch
 Requires: shared-mime-info
 Requires: lib%name = %version-%release
 
-BuildRequires: libeina-devel >= 1.7.3
-BuildPreReq: libecore-devel >= 1.7.3
-BuildPreReq: libembryo-devel >= 1.7.3
-BuildPreReq: libevas-devel >= 1.7.3
-BuildPreReq: libeet-devel >= 1.7.3
+BuildRequires: libeina-devel >= 1.7.4
+BuildPreReq: libecore-devel >= 1.7.4
+BuildPreReq: libembryo-devel >= 1.7.4
+BuildPreReq: libevas-devel >= 1.7.4
+BuildPreReq: libeet-devel >= 1.7.4
+BuildPreReq: libeio-devel >= 1.7.4
 BuildRequires: liblua5-devel libsndfile-devel
 
 %description
@@ -121,6 +122,9 @@ This package contains static libraries
 
 
 %changelog
+* Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
+- 1.7.4
+
 * Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
 - 1.7.3
 

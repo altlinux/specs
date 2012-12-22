@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: efreet
-Version: 1.7.3
+Version: 1.7.4
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -75,6 +75,9 @@ Efreet development files
 %_includedir/efreet-1
 
 %changelog
+* Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
+- 1.7.4
+
 * Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
 - 1.7.3
 

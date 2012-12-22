@@ -1,5 +1,5 @@
 Name: evas_generic_loaders
-Version: 1.7.3
+Version: 1.7.4
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -50,6 +50,9 @@ loader.
 %doc AUTHORS COPYING README
 
 %changelog
+* Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
+- 1.7.4
+
 * Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.3-alt1
 - 1.7.3
 
