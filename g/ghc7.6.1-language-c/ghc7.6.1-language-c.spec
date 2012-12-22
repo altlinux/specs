@@ -7,8 +7,9 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %hsc_namever-%f_pkg_name
-Version: 0.4.7
-Release: alt1
+Serial: 1
+Version: 0.3.2.1
+Release: alt2
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -43,6 +44,9 @@ C99 and a large set of GNU extensions.
 %files -f %name-files.all
 
 %changelog
+* Fri Feb 08 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:0.3.2.1-alt2
+- Downgraded version back to 0.3.2.1 (to fix FTBFS of c2hs).
+
 * Thu Nov 26 2015 Ivan Zakharyaschev <imz@altlinux.org> 0.4.7-alt1
 - updated with the help of cabal2gear.
 
