@@ -1,6 +1,6 @@
 Name: rpm-build-haskell
 Version: 1
-Release: alt21
+Release: alt23
 BuildArch: noarch
 
 Summary: RPM helpers to rebuild Haskell packages
@@ -39,6 +39,12 @@ install -D -m 755 hs_gen_filelist.sh %buildroot%_libexecdir/%name/hs_gen_filelis
 %_libexecdir/%name/hs_gen_filelist.sh
 
 %changelog
+* Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 1-alt23
+- fix building haskell packages with binaries and without libraries
+
+* Fri Dec 21 2012 Denis Smirnov <mithraen@altlinux.ru> 1-alt22
+- auto add conf-file when packaging libraries
+
 * Sun Jul 01 2012 Denis Smirnov <mithraen@altlinux.ru> 1-alt21
 - fix filelist for packaging
 
