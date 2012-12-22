@@ -7,7 +7,7 @@
 
 Name: xmonad-contrib
 Version: 0.10
-Release: alt3
+Release: alt4
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -19,7 +19,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-haskell
 
-BuildRequires: ghc7.4.2-random libXext-devel libXinerama-devel xmonad
+BuildRequires: ghc7.6.1-random libXext-devel libXinerama-devel xmonad
 
 %description
 Third party tiling algorithms, configurations and scripts to xmonad, a
@@ -48,9 +48,11 @@ own extensions.
 %hs_gen_filelist
 
 %files -f %name-files.all
-%hs_pkgconfdir/%f_pkg_name-%version.conf
 
 %changelog
+* Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt4
+- rebuild with ghc 7.6.1
+
 * Sun Jul 01 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt3
 - cleanup
 
