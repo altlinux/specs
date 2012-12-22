@@ -1,6 +1,6 @@
 Name: wine-vanilla
-Version: 1.5.13
-Release: alt2
+Version: 1.5.20
+Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
 
@@ -40,7 +40,7 @@ BuildRequires: libjpeg-devel liblcms-devel libpng-devel libtiff-devel
 BuildRequires: libgphoto2-devel libsane-devel libcups-devel
 BuildRequires: libalsa-devel jackit-devel libgsm-devel libmpg123-devel
 BuildRequires: libopenal-devel libGLU-devel
-BuildRequires: libusb-devel libieee1284-devel libhal-devel
+BuildRequires: libusb-devel libieee1284-devel
 BuildRequires: libv4l-devel gstreamer-devel gst-plugins-devel
 
 BuildRequires: libICE-devel libSM-devel
@@ -65,7 +65,7 @@ Requires: glibc-pthread glibc-nss
 #ExclusiveArch:  %{ix86}
 Requires: webclient
 
-Requires: wine-gecko = 1.7
+Requires: wine-gecko = 1.8
 
 BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
@@ -342,6 +342,10 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Sat Dec 22 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.20-alt1
+- new version 1.5.20, requires wine-gecko 1.8
+- remove libhal-devel buildreq
+
 * Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.13-alt2
 - restore missed-in-merge changes
 

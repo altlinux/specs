@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.5.13
+Version: 1.5.20
 Release: alt1
 Epoch: 1
 
@@ -107,7 +107,7 @@ Requires: fonts-ttf-core
 %endif
 
 # We need predownloaded Gecko engine
-Requires: wine-gecko = 1.7
+Requires: wine-gecko = 1.8
 
 Requires: lib%name = %epoch:%version-%release
 Provides: %name-utils
@@ -436,6 +436,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Sat Dec 22 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.20-alt1
+- new build 1.5.20 (use wine-gecko 1.8)
+
 * Mon Sep 17 2012 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.13-alt1
 - new build 1.5.12
 - remove libesd-devel requires

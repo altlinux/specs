@@ -1,7 +1,7 @@
 %define winemonodir %_datadir/wine/mono
 
 Name: wine-mono
-Version: 0.0.4
+Version: 0.0.8
 Release: alt1
 
 Summary: Windows build of Mono to run .NET applications via Wine
@@ -32,6 +32,9 @@ install -m 644 %SOURCE0 %buildroot%winemonodir
 %winemonodir/%name-%version.msi
 
 %changelog
+* Sat Dec 22 2012 Vitaly Lipatov <lav@altlinux.ru> 0.0.8-alt1
+- update to 0.0.8
+
 * Sat Jul 14 2012 Vitaly Lipatov <lav@altlinux.ru> 0.0.4-alt1
 - initial build for ALT Linux Sisyphus (0.0.4 use since wine 1.5.6)
 
