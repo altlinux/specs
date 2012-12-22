@@ -1,7 +1,7 @@
 %define origname tora
 Name: tora
 Version: 2.1.4
-Release: alt1.svn4398.1
+Release: alt1.svn4502
 Summary: TOra is an open-source multi-platform database management GUI
 License: GPL
 Group: Databases
@@ -61,6 +61,9 @@ done
 %_desktopdir/*
 
 %changelog
+* Sat Dec 22 2012 Andrew Clark <andyc@altlinux.ru> 2.1.4-alt1.svn4502
+- version update to 2.1.4-alt1.svn4502
+
 * Fri Dec 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.4-alt1.svn4398.1
 - Rebuilt with new qscintilla2
 
