@@ -1,6 +1,6 @@
 Name:           egoboo
 Version:        2.7.5
-Release:        alt2_11
+Release:        alt3_11
 Summary:        A top down graphical (3D) RPG in the spirit of Nethack
 Group:          Games/Other
 License:        GPLv3
@@ -10,7 +10,8 @@ Source1:        %{name}.desktop
 Source2:        KNOWN-BUGS.txt
 Patch0:         %{name}-2.7.5-unix.patch
 Patch1:         %{name}-2.4.3-opengl-wrapper.patch
-BuildRequires:  libSDL_mixer-devel libSDL_ttf-devel libSDL_image-devel libenet-devel
+BuildRequires:  libSDL_mixer-devel libSDL_ttf-devel libSDL_image-devel 
+#libenet-devel
 BuildRequires:  desktop-file-utils
 Requires:       %{name}-data = %{version} opengl-games-utils
 Source44: import.info
@@ -34,13 +35,13 @@ iconv -f ISO-8859-1 -t UTF8 game/change.log > ChangeLog
 
 %build
 # We override ENET_OBJ and LDFLAGS to use the system enet
-make -C game -f Makefile.unix ENET_OBJ= \
-  CFLAGS="$RPM_OPT_FLAGS `sdl-config --cflags` -DENET11" \
-  LDFLAGS="`sdl-config --libs` -lSDL_ttf -lSDL_mixer -lSDL_image -lGL -lGLU -lenet -lm"
+make -C game -f Makefile.unix \
+  CFLAGS="$RPM_OPT_FLAGS `sdl-config --cflags` -I.." \
+  LDFLAGS="`sdl-config --libs` -lSDL_ttf -lSDL_mixer -lSDL_image -lGL -lGLU -lm"
 
 
 %install
-make -C game -f Makefile.unix ENET_OBJ= PREFIX=$RPM_BUILD_ROOT%{_prefix} \
+make -C game -f Makefile.unix PREFIX=$RPM_BUILD_ROOT%{_prefix} \
   install
 
 # below is the desktop file and icon stuff.
@@ -93,6 +94,9 @@ fi
 
 
 %changelog
+* Sat Dec 22 2012 Igor Vlasenko <viy@altlinux.ru> 2.7.5-alt3_11
+- build with private enet
+
 * Fri Mar 02 2012 Igor Vlasenko <viy@altlinux.ru> 2.7.5-alt2_11
 - rebuild with fixed sourcedep analyser (#27020)
 
