@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 2.3.2.0
-Release: alt2
+Release: alt3
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -31,6 +31,7 @@ Low-level networking interface
 %patch -p1
 
 %build
+cp /usr/share/gnu-config/* .
 %hs_configure2
 %hs_build
 
@@ -41,6 +42,10 @@ Low-level networking interface
 %files -f %name-files.all
 
 %changelog
+* Sat Feb 09 2019 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.3.2.0-alt3
+- Applied upstream patch to fix build with gcc >= 5.
+- Updated gnu-config scripts (to fix build on ppc64le).
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 2.3.2.0-alt2
 - rebuild
 

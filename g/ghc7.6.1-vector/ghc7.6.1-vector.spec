@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 0.10.0.1
-Release: alt2
+Release: alt3
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -79,6 +79,9 @@ Changes in version 0.10
 %files -f %name-files.all
 
 %changelog
+* Fri Feb 22 2019 Grigory Ustinov <grenka@altlinux.org> 0.10.0.1-alt3
+- Rebuild for aarch64.
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10.0.1-alt2
 - rebuild
 
