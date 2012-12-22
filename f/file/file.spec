@@ -1,6 +1,6 @@
 Name: file
 Version: 4.26
-Release: alt8
+Release: alt9
 
 Summary: A utility for determining file types
 License: BSD-style
@@ -123,6 +123,9 @@ make -k check
 %python_sitelibdir/*
 
 %changelog
+* Sat Dec 22 2012 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt9
+- Commented out weak doom packfile magic (closes: #28261).
+
 * Tue Nov 29 2011 Dmitry V. Levin <ldv@altlinux.org> 4.26-alt8
 - Updated python magic.
 
