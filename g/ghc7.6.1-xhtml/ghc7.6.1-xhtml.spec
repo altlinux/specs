@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 3000.2.1
-Release: alt1
+Release: alt2
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -42,5 +42,8 @@ Strict, Transitional and Frameset variants.
 %files -f %name-files.all
 
 %changelog
+* Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 3000.2.1-alt2
+- rebuild
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 3000.2.1-alt1
 - Spec created by cabal2rpm 0.20_08
