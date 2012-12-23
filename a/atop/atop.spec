@@ -1,26 +1,23 @@
 Name: atop
-Version: 1.27
+Version: 2.0.2
 Release: alt1
 Summary: AT Computing's System & Process Monitor
-License: %gpl2plus
+License: GPLv2+
 Group: Monitoring
-URL: http://www.atcomputing.nl/Tools/%name
-Source: http://www.atconsultancy.nl/%name/packages/%name-%version.tar
+URL: http://www.%{name}tool.nl
+Source: %url/download/atop-2.0.2.tar
 Patch: %name-%version-%release.patch
-Packager: Led <led@altlinux.ru>
 
-BuildRequires(pre): rpm-build-licenses
 BuildRequires: libncurses-devel zlib-devel
 
 %description
-%name is an interactive monitor to view the load on a Linux-system. It
-shows the occupation of the most critical hardware-resources (from a
-performance point of view) on system-level, i.e. cpu, memory, disk and
-network. It also shows which processes are responsible for the
-indicated load (again cpu-, memory-, disk- and network-load on
-process-level).
-The program can also be used to log system- and process-level
-information in raw format for long-term analysis.
+%name is an interactive monitor to view the load on a Linux-system. It shows the
+occupation of the most critical hardware-resources (from a performance point of
+view) on system-level, i.e. cpu, memory, disk and network. It also shows which
+processes are responsible for the indicated load (again cpu-, memory-, disk- and
+network-load on process-level).
+The program can also be used to log system- and process-level information in raw
+format for long-term analysis.
 
 
 %prep
@@ -29,14 +26,13 @@ information in raw format for long-term analysis.
 
 
 %build
-%define _optlevel 2
 %make_build CFLAGS="%optflags"
 gzip -c9 ChangeLog > ChangeLog.gz
 
 
 %install
-%make_install DESTDIR=%buildroot install
-touch %buildroot%_sysconfdir/%{name}rc
+%makeinstall_std INIPATH=%_initddir
+:> %buildroot%_sysconfdir/%{name}rc
 
 
 %post
@@ -62,6 +58,11 @@ touch %buildroot%_sysconfdir/%{name}rc
 
 
 %changelog
+* Sun Dec 23 2012 Led <led@altlinux.ru> 2.0.2-alt1
+- 2.0.2
+- updated URL
+- cleaned up BuildRequires
+
 * Sat Sep 01 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.27-alt1
 - 1.27-3
 
