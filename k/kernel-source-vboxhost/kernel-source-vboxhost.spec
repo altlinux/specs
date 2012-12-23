@@ -3,7 +3,7 @@
 %{!?x86_64:%define x86_64 x86_64}
 
 Name: kernel-source-%module_name
-Version: 4.1.22
+Version: 4.1.24
 Release: alt1
 Summary: Linux VirtualBox host modules sources
 License: GPLv2
@@ -35,6 +35,9 @@ tar --transform='s,^\.,/%module_name-%version,' -cJf %kernel_srcdir/%module_name
 
 
 %changelog
+* Sun Dec 23 2012 Led <led@altlinux.ru> 4.1.24-alt1
+- 4.1.24
+
 * Wed Nov 14 2012 Led <led@altlinux.ru> 4.1.22-alt1
 - 4.1.22
 
