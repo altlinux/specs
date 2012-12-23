@@ -1,6 +1,6 @@
 Name: fetchmail
 Version: 6.3.23
-Release: alt1
+Release: alt2
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -41,6 +41,7 @@ Summary: SySV init script for demonize %name for sucking emails
 Group: System/Servers
 PreReq: %name = %version-%release
 PreReq: shadow-utils, chkconfig
+BuildArch: noarch
 
 %package contrib
 Summary: Various contributed software designed to work with %name
@@ -184,6 +185,9 @@ usermod -d %rtdir %name ||:
 %files -f %name.lang locales
 
 %changelog
+* Sun Dec 23 2012 Michael Shigorin <mike@altlinux.org> 6.3.23-alt2
+- fetchmail-daemon made noarch
+
 * Sun Dec 23 2012 Michael Shigorin <mike@altlinux.org> 6.3.23-alt1
 - 6.3.23
 
