@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt11
+Release: %branch_release alt12
 
 License: %asl
 Group: System/Servers
@@ -62,21 +62,27 @@ Source13: apache2-alt-alternatives-0.3.0.tar
 Source14: README.ALT.ru_RU.UTF8
 Source15: tmpfiles.conf
 Source16: httpd.env.conf
+Source17: htcacheclean.conf
+Source18: htcacheclean-daemon-start.sh
+Source19: htcacheclean.cron.daily
 
 Source35: httpd2.init.Sisyphus
 Source36: htcacheclean.init
 Source37: httpd.service
+Source38: htcacheclean.service
 
 # scripts for control
 Source40: cgi-bin_test-cgi.sh
 Source41: cgi-bin_printenv.sh
 
 # RPM FileTrigger
-Source50: 00-apache2-base.filetrigger
-Source51: zz-apache2-base.filetrigger
+Source50: 00-apache2-common.filetrigger
+Source51: zz80-apache2-base.filetrigger
 Source52: 90-apache2-base-a2chkconfig.filetrigger
 Source53: 90-apache2-base-httpd.filetrigger
 Source54: 90-apache2-htcacheclean.filetrigger
+Source55: zz90-apache2-htcacheclean.filetrigger
+Source56: zzzz-apache2-common.filetrigger
 
 # scripts for condstopstart-web
 Source60: server-condstop.sh
@@ -87,7 +93,7 @@ Source63: server-condstart-rpm.sh
 # + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-%version-alt-all-0.5.patch
+Patch1: apache2-%version-alt-all-0.6.patch
 
 BuildRequires(pre): rpm-macros-branch
 BuildRequires(pre): rpm-macros-apache2 >= 3.8
@@ -95,6 +101,7 @@ BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
 BuildPreReq: %_datadir/rpm-build-rpm-eval/rpm-eval.sh
 BuildPreReq: rpm-macros-webserver-cgi-bin-control
+BuildPreReq: rpm >= 4.0.4-alt100.48
 BuildPreReq: rpm-build-licenses
 
 Requires: %name-base = %version-%release
@@ -168,6 +175,7 @@ Conflicts: apache-common < 1.3.41rusPL30.23-alt4.2
 Conflicts: apache < 1.3.41rusPL30.23-alt4.2
 Conflicts: apache-mod_perl < 1.3.41rusPL30.23-alt4.2
 %endif
+Conflicts: apache2-htcacheclean <= 2.2.22-alt11
 
 Obsoletes: %name-init
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
@@ -177,6 +185,7 @@ Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
 Requires: %apache2_sbindir/%apache2_dname
 Requires: %condstopstart_webdir
 Requires: %condstopstart_webrundir
+Requires: %name-common > 2.2.22-alt11
 
 %description base
 Apache is a powerful, full-featured, efficient and freely-available
@@ -220,7 +229,8 @@ Summary: Files common for %name installations
 Summary(ru_RU.UTF-8): Общие файлы для инсталляции %name
 Summary(uk_UA.UTF-8): Спільні файли для інсталяції %name
 Group: System/Servers
-Conflicts: %name < 2.2.4-alt17
+Conflicts: apache2 < 2.2.4-alt17
+Conflicts: apache2-base <= 2.2.22-alt11
 PreReq: webserver-common
 Requires: libaprutil1 >= %n_aprutil_devel_ver
 Requires: perl-DBM perl-Digest-SHA1 zlib
@@ -637,7 +647,8 @@ This package contains the module mod_disk_cache
 Summary: Clean up the disk cache for Apache
 Group: System/Servers
 Requires: %apache2_htcacheclean_cachepath
-Requires: apache2-base >= 2.2.19-alt1.1
+Requires: %name-common > 2.2.22-alt11
+Requires: %name-base > 2.2.22-alt11
 
 %description htcacheclean
 Htcacheclean is used to keep the size of mod_disk_cache's storage within
@@ -1027,16 +1038,27 @@ install -d %buildroot%_docdir/%apache2_name-docs-%version/
 touch %buildroot%_docdir/%apache2_name-docs-%version/manual
 ln -snf $(relative %buildroot%_docdir/%apache2_name-docs-%version/manual %buildroot%apache2_manualdir) %buildroot%apache2_manualdir
 
+# install the daemon start script
+install -pD -m755 %SOURCE18 \
+	%buildroot%apache2_sbindir/%apache2_htcacheclean_dname-daemon-start
+
 # install the init scripts
 install -pD -m755 %SOURCE35 \
-        %buildroot%_initdir/%apache2_dname
+	%buildroot%_initdir/%apache2_dname
 install -pD -m755 %SOURCE36 \
-        %buildroot%_initdir/%apache2_htcacheclean_dname
-install -pD %SOURCE37 \
-        %buildroot%_unitdir/%apache2_dname.service
+	%buildroot%_initdir/%apache2_htcacheclean_dname
+install -pD -m644 %SOURCE37 \
+	%buildroot%_unitdir/%apache2_dname.service
+install -pD -m644 %SOURCE38 \
+	%buildroot%_unitdir/%apache2_htcacheclean_dname.service
 
 # install sysconfig settings file
 install -pD -m 600 %SOURCE16 %buildroot%apache2_envconf
+install -pD -m 644 %SOURCE17 %buildroot%_sysconfdir/sysconfig/%apache2_htcacheclean_dname
+
+# install the cron script
+install -pD -m 755 %SOURCE19 \
+	%buildroot%_sysconfdir/cron.daily/%apache2_htcacheclean_dname
 
 # Generate logrotate file
 mkdir -p %buildroot%_sysconfdir/logrotate.d
@@ -1080,11 +1102,13 @@ install -d %buildroot%_datadir/%name/cgi-bin/
 mv %buildroot%apache2_cgibindir/* %buildroot%_datadir/%name/cgi-bin/
 
 # Install RPM FileTrigger
-install -pD %SOURCE50 %buildroot%_rpmlibdir/00-apache2-base.filetrigger
-install -pD %SOURCE51 %buildroot%_rpmlibdir/zz-apache2-base.filetrigger
-install -pD %SOURCE52 %buildroot%_rpmlibdir/90-apache2-base-a2chkconfig.filetrigger
-install -pD %SOURCE53 %buildroot%_rpmlibdir/90-apache2-base-httpd.filetrigger
-install -pD %SOURCE54 %buildroot%_rpmlibdir/90-apache2-htcacheclean.filetrigger
+install -pD %SOURCE50 %buildroot%_rpmlibdir/00-%apache2_name-common.filetrigger
+install -pD %SOURCE51 %buildroot%_rpmlibdir/zz80-%apache2_name-base.filetrigger
+install -pD %SOURCE52 %buildroot%_rpmlibdir/90-%apache2_name-base-a2chkconfig.filetrigger
+install -pD %SOURCE53 %buildroot%_rpmlibdir/90-%apache2_name-base-httpd.filetrigger
+install -pD %SOURCE54 %buildroot%_rpmlibdir/90-%apache2_name-htcacheclean.filetrigger
+install -pD %SOURCE55 %buildroot%_rpmlibdir/zz90-%apache2_name-htcacheclean.filetrigger
+install -pD %SOURCE56 %buildroot%_rpmlibdir/zzzz-%apache2_name-common.filetrigger
 
 # Install scripts for condstopstart-web
 install -pD %SOURCE60 %buildroot%condstopstart_webdir/%apache2_dname-condstop
@@ -1097,11 +1121,11 @@ install -pD -m 644 %SOURCE15 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 
 # Substitute the real paths in configs
 find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
-		%buildroot%_unitdir \
+		%buildroot%_unitdir %buildroot%apache2_sbindir/%apache2_htcacheclean_dname-daemon-start \
 		-type f -print0 \
 	| xargs -r0i %_datadir/rpm-build-rpm-eval/rpm-eval.sh "{}"
 find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
-		%buildroot%_unitdir \
+		%buildroot%_unitdir %buildroot%apache2_sbindir/%apache2_htcacheclean_dname-daemon-start \
 		-type f -print0 \
 	| xargs -r0 sed -i -f SetMacros.sed
 
@@ -1231,11 +1255,17 @@ exit 0
 %triggerun_apache2_rpmhttpdstartfile
 exit 0
 
-%triggerpostun common -- apache2-manual < 2.2.4-alt12
+%triggerpostun common -- apache2-manual < 2.2.4-alt12, apache2-common < 2.2.22-alt12
 if [ -e %_docdir/apache2-manual-2.2.4/manual ] && \
 		[ -L %_docdir/apache2-manual-2.2.4/manual ]; then
 	echo "Delete old symlink %_docdir/apache2-manual-2.2.4/manual"
 	rm -f %_docdir/%apache2_name-%version/manual 2>/dev/null ||:
+fi
+if [ -d %apache2_runtimedir ]; then
+	echo "Set owner root:%apache2_group for %apache2_runtimedir"
+	chown root:%apache2_group %apache2_runtimedir
+	echo "Set 2775 attr for %apache2_runtimedir"
+	chmod 2775 %apache2_runtimedir
 fi
 exit 0
 
@@ -1253,6 +1283,7 @@ if LANG=C %_bindir/id %apache2_user 2>/dev/null | \
 fi
 exit 0
 
+%post httpd-worker
 %if "%alternatives_filetrigger" != "yes"
 %post httpd-worker
 %register_alternatives %name-httpd-worker
@@ -1412,8 +1443,7 @@ exit 0
 %dir %apache2_libdir/
 %dir %apache2_moduledir/
 %attr(0750,root,%apache2_group) %dir %apache2_logfiledir/
-
-%dir %apache2_runtimedir/
+%attr(0750,root,%apache2_group) %dir %apache2_runtimedir/
 
 %config(noreplace) %apache2_confdir_inc/*.conf
 %config(noreplace) %apache2_confdir/magic
@@ -1441,6 +1471,8 @@ exit 0
 %exclude %apache2_moduledir/mod_*ldap.so
 %exclude %apache2_moduledir/mod_suexec.so
 %exclude %apache2_moduledir/mod_disk_cache.so
+
+%_rpmlibdir/*-%apache2_name-common.filetrigger
 
 %files httpd-worker
 %apache2_sbindir/%apache2_dname.worker
@@ -1525,8 +1557,8 @@ exit 0
 
 %apache2_sbindir/httxt2dbm*
 
-%_rpmlibdir/*-apache2-base.filetrigger
-%_rpmlibdir/*-apache2-base-*.filetrigger
+%_rpmlibdir/*-%apache2_name-base.filetrigger
+%_rpmlibdir/*-%apache2_name-base-*.filetrigger
 
 %condstopstart_webdir/%apache2_dname-cond*
 
@@ -1636,9 +1668,12 @@ exit 0
 %files htcacheclean
 %apache2_sbindir/htcacheclean*
 %apache2_mandir/man8/htcacheclean*
+%attr(0644,root,root) %config(noreplace) %_sysconfdir/sysconfig/%apache2_htcacheclean_dname
+%_unitdir/%apache2_htcacheclean_dname.service
 %config %_initdir/%apache2_htcacheclean_dname
+%config %_sysconfdir/cron.daily/%apache2_htcacheclean_dname
 
-%_rpmlibdir/*-apache2-htcacheclean.filetrigger
+%_rpmlibdir/*-%apache2_name-htcacheclean.filetrigger
 
 %files ab
 %apache2_bindir/ab*
@@ -1694,6 +1729,20 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Sun Dec 23 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt12
+- Fix start for systemd: Use TimeoutStartSec=10s (Closes: #27925)
+- Add to %%name-htcacheclean subpackage:
+  + %%_sysconfdir/sysconfig/%%apache2_htcacheclean_dname
+  + systemd unit file for %%apache2_htcacheclean_dname (Closes: #28025)
+  + cron daily script for runing %%apache2_htcacheclean_dname
+- Update attr ang owner for %%apache2_runtimedir/
+- Unuse vars (in %%_sysconfdir/sysconfig/%%apache2_htcacheclean_dname):
+  + CACHEPATH (use HTCACHECLEAN_PATH)
+  + INTERVAL (use HTCACHECLEAN_DAEMON_INTERVAL)
+  + LIMIT (use HTCACHECLEAN_SIZE)
+  + LOCKFILE
+  + OPTIONS (use HTCACHECLEAN_OPTIONS)
+
 * Sat Oct 20 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt11
 - %%apache2_apachectl and %%_initdir/%%apache2_dname use variables
   (WAITSTOP, WAITGRACEFULSTOP, USLEEPSTART and LOOPSSTART), if they are
