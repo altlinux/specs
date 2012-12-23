@@ -7,7 +7,7 @@
 
 Name: xmonad
 Version: 0.10
-Release: alt3
+Release: alt4
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -20,7 +20,11 @@ Patch: %name-%version-%release.patch
 
 Summary: A tiling window manager
 
-BuildRequires: ghc7.4.2-mtl ghc7.4.2-utf8-string ghc7.4.2-x11 libXext-devel libXinerama-devel
+# Automatically added by buildreq on Sun Dec 23 2012
+# optimized out: ghc7.6.1 ghc7.6.1-common ghc7.6.1-syb ghc7.6.1-transformers libX11-devel libgmp-devel pkg-config
+BuildRequires: ghc7.6.1-alex ghc7.6.1-c2hs ghc7.6.1-cpphs ghc7.6.1-doc ghc7.6.1-extensible-exceptions ghc7.6.1-happy ghc7.6.1-hscolour ghc7.6.1-mtl ghc7.6.1-utf8-string ghc7.6.1-x11 libXext-devel libXinerama-devel
+
+BuildRequires: ghc7.6.1-mtl ghc7.6.1-utf8-string ghc7.6.1-x11 libXext-devel libXinerama-devel
 
 %description
 xmonad is a tiling window manager for X. Windows are arranged automatically
@@ -52,16 +56,16 @@ install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/X11/wmsession.d/01xmonad
 
 install -m0644 -D %SOURCE3 %buildroot%_iconsdir/%name.xpm
 
-%files -f %name-files.nonprof
+%files -f %name-files.all
 %_bindir/xmonad
-%hs_pkgconfdir/%f_pkg_name-%version.conf
-%_docdir/%name-%version
 %_man1dir/xmonad.1.*
 %_sysconfdir/X11/wmsession.d/01xmonad
 %_iconsdir/xmonad.xpm
-%_docdir/%name-%version
 
 %changelog
+* Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt4
+- rebuild with ghc 7.6.1
+
 * Sun Jul 01 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt3
 - rebuild with ghc 7.4.2
 
