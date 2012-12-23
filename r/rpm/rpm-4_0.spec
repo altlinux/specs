@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.57
+Release: alt100.58
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -516,6 +516,14 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Mon Dec 24 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.58
+- rpmrc.in: changed to use -mtune=generic for all x86 flavours.
+- pkgconfig.req.files: changed to ignore file type and treat
+  all non-symlinks the same way.
+- Added %%getenv builtin macro.
+- Added %%_tmpdir builtin macro,
+  changed default %%_tmppath value to %%_tmpdir (closes: #25117).
+
 * Tue Oct 09 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.57
 - Build selinux support in dynamically linked objects only.
 - %%configure: export -m* part of %%optflags as ASFLAGS (for assembler)
