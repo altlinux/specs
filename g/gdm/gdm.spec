@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.2
-Release: alt2
+Release: alt3
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -46,6 +46,8 @@ Source13: gdm-launch-environment.pam
 #Source11: gdm-smartcard.pam
 #Source12: gdm-fingerprint.pam
 
+# revert this http://git.gnome.org/browse/gdm/commit/?h=gnome-3-6&id=affb42aff901f407502e4d2c0eb65b4f30a1275d
+Patch: gdm-3.6.2-up-affb42af.patch
 Patch2: gdm-3.2.1.1-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch9: gdm-3.2.2-alt-link.patch
@@ -204,6 +206,7 @@ Install this package for use with GNOME desktop.
 
 %prep
 %setup -q
+%patch -p1 -R
 %patch2 -p1
 %patch7 -p1
 %patch9 -p1 -b .link
@@ -261,6 +264,10 @@ install -pDm755 %SOURCE1 %buildroot%_controldir/gdm_xdmcp
 
 %find_lang %name
 %find_lang --output=%name-help.lang --without-mo --with-gnome %name
+
+# tests
+#mkdir -p %_libexecdir/%name/tests
+#find ./ -executable -type f -name "*test*" -print0| xargs -r0 install -pD -m 755 -t %_libexecdir/%name/tests/ --
 
 %check
 xvfb-run %make check
@@ -370,6 +377,9 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sun Dec 23 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt3
+- reverted http://git.gnome.org/browse/gdm/commit/?h=gnome-3-6&id=affb42aff901f407502e4d2c0eb65b4f30a1275d (ALT #28231)
+
 * Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2
 - after 3.6.2 snapshot (b60452d12)
 - %%check section
