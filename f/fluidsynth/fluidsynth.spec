@@ -7,8 +7,8 @@
 %def_disable SSE
 
 Name: fluidsynth
-Version: 1.1.5
-%define release alt2
+Version: 1.1.6
+%define release alt1
 
 %ifdef cvs_date
 Release: %{release}cvs%cvs_date
@@ -228,6 +228,9 @@ NOCONFIGURE=1 ./autogen.sh
 %endif
 
 %changelog
+* Mon Dec 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.6-alt1
+- 1.1.6
+
 * Mon Jan 16 2012 Yuri N. Sedunov <aris@altlinux.org> 1.1.5-alt2
 - used %%autoreconf to fix RPATH problem
 
