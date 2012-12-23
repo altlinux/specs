@@ -1,6 +1,6 @@
 Name: fetchmail
-Version: 6.3.22
-Release: alt2
+Version: 6.3.23
+Release: alt1
 
 Summary: Full-featured POP/IMAP/ETRN mail retrieval daemon
 Group: Networking/Mail
@@ -184,6 +184,9 @@ usermod -d %rtdir %name ||:
 %files -f %name.lang locales
 
 %changelog
+* Sun Dec 23 2012 Michael Shigorin <mike@altlinux.org> 6.3.23-alt1
+- 6.3.23
+
 * Sat Sep 08 2012 Michael Shigorin <mike@altlinux.org> 6.3.22-alt2
 - merge gears repo
 
