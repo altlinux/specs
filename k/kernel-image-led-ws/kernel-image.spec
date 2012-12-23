@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -115,9 +115,10 @@ Release: alt4
 
 %define allocator SLQB
 
-%Extra_modules vboxhost 4.1.22
+%Extra_modules vboxhost 4.1.24
 #Extra_modules vboxguest 4.1.22
 %Extra_modules fglrx 8.97.100.3
+%Extra_modules netatop 0.1.1
 
 %define strip_mod_opts --strip-unneeded -R .comment
 
@@ -590,7 +591,7 @@ Patch0774: linux-%kernel_branch.42-fix-net--x25.patch
 Patch0775: linux-%kernel_branch.42-fix-net-8021q--vlan-core.patch
 Patch0776: linux-%kernel_branch.42-fix-net-bridge.patch
 Patch0777: linux-%kernel_branch.42-fix-net-ceph.patch
-Patch0778: linux-%kernel_branch.51-fix-net-core.patch
+Patch0778: linux-%kernel_branch.53-fix-net-core.patch
 Patch0779: linux-%kernel_branch.46-fix-net-ipv4.patch
 Patch0780: linux-%kernel_branch.51-fix-net-ipv4-netfilter--iptable_nat.patch
 Patch0781: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat.patch
@@ -2900,6 +2901,13 @@ done)
 
 
 %changelog
+* Sun Dec 23 2012 Led <led@altlinux.ru> 3.0.57-alt5
+- updated:
+  + fix-net-core
+- vboxhost 4.1.24
+- added external modules:
+  + netatop
+
 * Thu Dec 20 2012 Led <led@altlinux.ru> 3.0.57-alt4
 - added:
   + feat-drivers-net-wireless--vt6655
