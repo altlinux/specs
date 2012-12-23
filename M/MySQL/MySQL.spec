@@ -1,6 +1,6 @@
 Name: MySQL
-Version: 5.5.28
-Release: alt6
+Version: 5.5.29
+Release: alt1
 
 %def_without debug
 %def_disable static
@@ -47,6 +47,7 @@ Patch102: mysql-strmov.patch
 Patch103: mysql-stack-guard.patch
 Patch104: mysql-va-list.patch
 Patch105: mysql-string-overflow.patch
+Patch106: mysql-dh1024.patch
 
 # Automatically added by buildreq on Wed Mar 16 2011 (-bi)
 BuildRequires: chrooted gcc-c++ libncursesw-devel libreadline-devel libssl-devel perl-DBI zlib-devel
@@ -280,6 +281,7 @@ This package contains MySQL benchmark scripts and data.
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
+%patch106 -p1
 
 # Replace that horror.
 sed 's,@datadir@,%_datadir,g' <%SOURCE15 >scripts/mysql_install_db.sh
@@ -626,6 +628,13 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Sun Dec 23 2012 Michael Shigorin <mike@altlinux.org> 5.5.29-alt1
+- 5.5.29
+- added is_prefix, scramble symbols to libmysqlclient18
+  for better compatibility with the one from mariadb
+  (also needed by DBD::mysql and hydra, correspondingly)
+- increased DH key length from 512 to 1024 bits (thanks, fedora)
+
 * Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 5.5.28-alt6
 - applied several more fedora patches
 
