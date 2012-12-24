@@ -1,6 +1,6 @@
 Name: awesome
 Version: 3.5
-Release: alt2
+Release: alt3
 Group: Graphical desktop/Other
 License: GPL2+
 
@@ -26,6 +26,7 @@ BuildPreReq: libxcbutil-icccm-devel >= 0.3.8 libxcbutil-image-devel >= 0.3.8
 Requires: libstartup-notification >= 0.10-alt1
 Requires: design-graphics
 Requires: lgi >= 0.6.1
+Requires: libpango-gir
 
 %description
 awesome is a window manager initialy based on a dwm code rewriting. It's
@@ -88,6 +89,9 @@ install -D -m 755 %SOURCE2 %buildroot%_sysconfdir/menu-methods/%name
 %doc AUTHORS LICENSE README BUGS PATCHES STYLE
 
 %changelog
+* Mon Dec 24 2012 Terechkov Evgenii <evg@altlinux.org> 3.5-alt3
+- Oops. Adding missing requires
+
 * Sat Dec 22 2012 Terechkov Evgenii <evg@altlinux.org> 3.5-alt2
 - 3.5 (Last Christmas)
 
