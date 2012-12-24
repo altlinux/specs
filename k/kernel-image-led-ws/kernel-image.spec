@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -458,7 +458,7 @@ Patch0548: linux-%kernel_branch.42-fix-drivers-scsi--lpfc.patch
 Patch0549: linux-%kernel_branch.42-fix-drivers-scsi--mpt2sas.patch
 Patch0550: linux-%kernel_branch.42-fix-drivers-scsi--mvsas.patch
 Patch0551: linux-%kernel_branch.42-fix-drivers-scsi--pm8001.patch
-Patch0552: linux-%kernel_branch.42-fix-drivers-scsi--qla2xxx.patch
+Patch0552: linux-%kernel_branch.53-fix-drivers-scsi--qla2xxx.patch
 Patch0553: linux-%kernel_branch.43-fix-drivers-scsi--qla4xxx.patch
 Patch0554: linux-%kernel_branch.44-fix-drivers-scsi--scsi_mod.patch
 Patch0555: linux-%kernel_branch.42-fix-drivers-scsi--scsi_transport_fc.patch
@@ -527,7 +527,7 @@ Patch0672: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0673: linux-%kernel_branch.53-fix-fs--block.patch
 Patch0674: linux-%kernel_branch.42-fix-fs--eventpoll.patch
 Patch0675: linux-%kernel_branch.53-fix-fs-autofs4.patch
-Patch0676: linux-%kernel_branch.51-fix-fs-btrfs.patch
+Patch0676: linux-%kernel_branch.53-fix-fs-btrfs.patch
 Patch0677: linux-%kernel_branch.44-fix-fs-cachefiles.patch
 Patch0678: linux-%kernel_branch.42-fix-fs-ceph.patch
 Patch0679: linux-%kernel_branch.42-fix-fs-cifs.patch
@@ -2901,6 +2901,11 @@ done)
 
 
 %changelog
+* Mon Dec 24 2012 Led <led@altlinux.ru> 3.0.57-alt6
+- updated:
+  + fix-drivers-scsi--qla2xxx
+  + fix-fs-btrfs
+
 * Sun Dec 23 2012 Led <led@altlinux.ru> 3.0.57-alt5
 - updated:
   + fix-net-core
