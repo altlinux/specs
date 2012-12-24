@@ -2,7 +2,7 @@
 Name: rpm-macros-%module
 Summary: Fedora compatibility set of macro
 Version: 0.08
-Release: alt4
+Release: alt5
 License: GPL
 Group: System/Base
 BuildArch: noarch
@@ -28,6 +28,9 @@ done
 %_rpmmacrosdir/*
 
 %changelog
+* Mon Dec 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt5
+- added GNAT_arches
+
 * Thu Dec 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt4
 - added _cups_serverbin
 
