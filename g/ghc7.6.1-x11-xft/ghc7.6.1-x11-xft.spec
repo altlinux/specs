@@ -8,7 +8,7 @@
 
 Name: %hsc_namever-%f_pkg_name
 Version: 0.3.1
-Release: alt1
+Release: alt2
 License: LGPL
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -41,5 +41,8 @@ Bindings to the Xft, X Free Type interface library, and some Xrender parts
 %files -f %name-files.all
 
 %changelog
+* Tue Dec 25 2012 Denis Smirnov <mithraen@altlinux.ru> 0.3.1-alt2
+- rebuild
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.3.1-alt1
 - Spec created by cabal2rpm 0.20_08
