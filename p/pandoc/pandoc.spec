@@ -1,4 +1,4 @@
-%define ghc_version 7.4.2
+%define ghc_version 7.6.1
 %define hsc_name ghc
 %define hsc_version %ghc_version
 %define hsc_namever %hsc_name
@@ -7,8 +7,8 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: pandoc
-Version: 1.9.4.2
-Release: alt3
+Version: 1.9.4.5
+Release: alt1
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -18,8 +18,9 @@ Url: http://hackage.haskell.org/package/%name
 Source: http://hackage.haskell.org/packages/archive/%name/%version/%name-%version.tar.gz
 Source100: pandoc.watch
 
-BuildRequires: ghc%ghc_version-base64-bytestring ghc%ghc_version-citeproc-hs ghc%ghc_version-highlighting-kate ghc%ghc_version-http ghc%ghc_version-random ghc%ghc_version-tagsoup ghc%ghc_version-temporary ghc%ghc_version-texmath ghc%ghc_version-zip-archive zlib-devel
-BuildRequires(pre): rpm-build-haskell
+# Automatically added by buildreq on Mon Dec 24 2012
+# optimized out: ghc7.6.1 ghc7.6.1-blaze-builder ghc7.6.1-blaze-html ghc7.6.1-blaze-markup ghc7.6.1-common ghc7.6.1-digest ghc7.6.1-extensible-exceptions ghc7.6.1-hexpat ghc7.6.1-hs-bibutils ghc7.6.1-http ghc7.6.1-json ghc7.6.1-list ghc7.6.1-mtl ghc7.6.1-network ghc7.6.1-pandoc-types ghc7.6.1-parsec ghc7.6.1-regex-base ghc7.6.1-regex-pcre-builtin ghc7.6.1-syb ghc7.6.1-text ghc7.6.1-transformers ghc7.6.1-utf8-string ghc7.6.1-xml ghc7.6.1-zlib libgmp-devel pkg-config
+BuildRequires: ghc7.6.1-alex ghc7.6.1-base64-bytestring ghc7.6.1-c2hs ghc7.6.1-citeproc-hs ghc7.6.1-cpphs ghc7.6.1-happy ghc7.6.1-highlighting-kate ghc7.6.1-hscolour ghc7.6.1-random ghc7.6.1-tagsoup ghc7.6.1-temporary ghc7.6.1-texmath ghc7.6.1-zip-archive zlib-devel
 
 %description
 Pandoc is a Haskell library for converting from one markup format to
@@ -49,6 +50,9 @@ runghc Setup copy --destdir=%buildroot
 %attr(644,root,root) %_man5dir/*
 
 %changelog
+* Mon Dec 24 2012 Denis Smirnov <mithraen@altlinux.ru> 1.9.4.5-alt1
+- 1.9.4.5
+
 * Sun Sep 23 2012 Denis Smirnov <mithraen@altlinux.ru> 1.9.4.2-alt3
 - add watch-file for gear-cronbuild
 
