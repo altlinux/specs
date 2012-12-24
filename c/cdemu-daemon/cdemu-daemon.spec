@@ -1,5 +1,5 @@
 Name: cdemu-daemon
-Version: 1.5.0
+Version: 2.0.0
 Release: alt1
 
 Summary: CDEmu daemon
@@ -11,8 +11,8 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source0: %name-%version.tar.bz2 
 
+BuildRequires: cmake
 BuildRequires: libao-devel >= 0.8.0
-BuildRequires: libgio-devel >= 2.28
 BuildRequires: libmirage-devel >= 1.5.0
 
 %description
@@ -33,28 +33,34 @@ to control it.
 %setup -q
 
 %build
-%configure
-%make_build
+%__mkdir_p %_target_platform
+pushd %_target_platform
+
+cmake .. \
+         -DCMAKE_INSTALL_PREFIX=%prefix \
+         -DCMAKE_C_FLAGS:STRING='%optflags'
+         
+popd
+
+%make_build -C %_target_platform
 
 %install
-%make DESTDIR=%buildroot install
+%make -C %_target_platform DESTDIR=%buildroot install
 
 %files
 %defattr(-,root,root,-)
 %doc AUTHORS ChangeLog COPYING NEWS README
-%_bindir/cdemud
-%_libexecdir/%name-*
+%_bindir/%name
+%prefix/libexec/%name-*
 %_mandir/man8/*
 %dir %_datadir/dbus-1
 %dir %_datadir/dbus-1/services
 %_datadir/dbus-1/services/*.service
-%dir %_datadir/dbus-1/system-services
-%_datadir/dbus-1/system-services/*.service
-%dir %_sysconfdir/dbus-1
-%dir %_sysconfdir/dbus-1/system.d
-%_sysconfdir/dbus-1/system.d/cdemud-dbus.conf
 
 %changelog
+* Tue Dec 25 2012 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
+- Version 2.0.0
+
 * Wed Jan 25 2012 Nazarov Denis <nenderus@altlinux.org> 1.5.0-alt1
 - Version 1.5.0
 
