@@ -124,7 +124,7 @@
 
 Name: qemu
 Version: 1.2.0
-Release: alt2
+Release: alt3
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -149,7 +149,7 @@ Patch0: qemu-alt.patch
 BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
-BuildRequires: ipxe-roms-qemu vgabios seabios
+BuildRequires: ipxe-roms-qemu vgabios seabios libfdt-devel
 %{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel }
 %{?_enable_curses:BuildRequires: libncurses-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
@@ -352,7 +352,7 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--disable-xen \
 	--disable-brlapi \
 	--enable-curl \
-	--disable-fdt \
+	--enable-fdt \
 	--enable-kvm \
 	--enable-nptl \
 	%{subst_enable smartcard} \
@@ -516,6 +516,9 @@ fi
 %docdir/LICENSE
 
 %changelog
+* Mon Dec 24 2012 Ivan Ovcherenko <asdus@altlinux.org> 1.2.0-alt3
+- Rebuild with Flattened Device Tree support.
+
 * Fri Nov 02 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.0-alt2
 - Introduced -aux subpackage, updated interpackage dependencies.
 
