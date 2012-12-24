@@ -5,7 +5,7 @@
 %define Name 4tH
 Name: 4th
 %define lname lib%name
-Version: 3.61.5
+Version: 3.62.0
 Release: alt1
 Summary: Basic framework for creating application specific scripting languages
 Summary(uk_UA.CP1251): Базова оболонка для створення специфічних для програм мов сценаріїв
@@ -272,6 +272,9 @@ install -m 0644 %SOURCE1 sources/Makefile.ALT
 %add_optflags -fno-asynchronous-unwind-tables
 %endif
 %add_optflags %{?_enable_shared:%optflags_shared} -fsigned-char -DUNIX -DDIR4TH='\"%_datadir/%name/\"'
+%if "%__cc" == "gcc"
+%add_optflags -DUSEGCCGOTO
+%endif
 %make_build -C sources -f Makefile.ALT \
 	BINARIES=%_bindir LIBRARIES=%_libdir INCLUDES=%_includedir \
 	%{?_enable_shared:SHARED=1} %{?_enable_static:STATIC=1} \
@@ -365,6 +368,9 @@ __MENU__
 
 
 %changelog
+* Mon Dec 24 2012 Led <led@altlinux.ru> 3.62.0-alt1
+- 3.62.0
+
 * Tue Oct 23 2012 Led <led@altlinux.ru> 3.61.5-alt1
 - 3.61.5
 - added Makefile.ALT
