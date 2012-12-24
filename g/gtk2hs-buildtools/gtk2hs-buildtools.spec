@@ -6,7 +6,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %f_pkg_name
-Version: 0.12.3.1
+Version: 0.12.4
 Release: alt1
 License: GPL-2
 
@@ -19,9 +19,9 @@ Summary: Tools to build the Gtk2Hs suite of User Interface libraries
 
 BuildRequires(pre): rpm-build-haskell
 
-# Automatically added by buildreq on Sun Jul 01 2012 (-bb)
-# optimized out: elfutils ghc7.4.2 ghc7.4.2-common libgmp-devel pkg-config python-base
-BuildRequires: ghc7.4.2-alex ghc7.4.2-c2hs ghc7.4.2-cpphs ghc7.4.2-happy ghc7.4.2-hscolour ghc7.4.2-random
+# Automatically added by buildreq on Mon Dec 24 2012 (-bb)
+# optimized out: elfutils ghc7.6.1 ghc7.6.1-common libgmp-devel pkg-config python-base
+BuildRequires: ghc7.6.1-alex ghc7.6.1-c2hs ghc7.6.1-cpphs ghc7.6.1-happy ghc7.6.1-hscolour ghc7.6.1-random
 
 %description
 This package provides a set of helper programs necessary to build the
@@ -45,6 +45,9 @@ runghc Setup copy --destdir=%buildroot
 %_datadir/%name-%version
 
 %changelog
+* Mon Dec 24 2012 Denis Smirnov <mithraen@altlinux.ru> 0.12.4-alt1
+- 0.12.4
+
 * Sun Jul 01 2012 Denis Smirnov <mithraen@altlinux.ru> 0.12.3.1-alt1
 - 0.12.3.1
 
