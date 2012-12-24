@@ -1,7 +1,7 @@
 %define Name 4tH
 %define bname 4th
 Name: %bname-doc-pdf
-Version: 3.61.5
+Version: 3.62.0
 Release: alt1
 Summary: %Name manual in PDF format
 Summary(uk_UA.CP1251): Посібник для %Name у форматі PDF
@@ -57,6 +57,9 @@ install -D -m 0644 %SOURCE0 %buildroot%_docdir/%bname-%version/manual.pdf
 
 
 %changelog
+* Mon Dec 24 2012 Led <led@altlinux.ru> 3.62.0-alt1
+- 3.62.0
+
 * Tue Oct 23 2012 Led <led@altlinux.ru> 3.61.5-alt1
 - 3.61.5
 
