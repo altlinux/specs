@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-vm
-Version: 0.4.1
-Release: alt21
+Version: 0.4.2
+Release: alt1
 
 Summary: Alterator module for volume management
 License: GPL
@@ -42,6 +42,10 @@ install -pD -m0644 profile.scm %buildroot%_cachedir/alterator/vm-profile.scm
 %_cachedir/alterator/vm-profile.scm
 
 %changelog
+* Mon Dec 24 2012 Timur Aitov <timonbl4@altlinux.org> 0.4.2-alt1
+- use GPT when '/sys/firmware/efi/' exists (closes: 28161)
+- create efi GPT partition in automatic mode (closes: 28162)
+
 * Fri Nov 23 2012 Timur Aitov <timonbl4@altlinux.org> 0.4.1-alt21
 - adapt for 'evms 2.5.5-alt27'
 
