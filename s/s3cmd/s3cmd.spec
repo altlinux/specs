@@ -1,6 +1,6 @@
 Name: s3cmd
 Version: 1.1.0
-Release: alt1.beta3
+Release: alt2.beta3
 License: GPL
 
 Group: Networking/Other
@@ -35,6 +35,12 @@ directory tree synchronization.
 %exclude %_docdir/packages/
 
 %changelog
+* Mon Dec 24 2012 Yuriy Kashirin <uka@altlinux.ru> 1.1.0-alt2.beta3
+- Updated from upstream git (9c57a3ba2163915deb2cc63cefa885a66ac377ab)
+  + Compute speed and elapsed time for Multipart uploads
+  + fixes a crash with:
+    s3cmd put /xyz/big-file s3://bucket/ > /dev/null
+
 * Sun Mar 11 2012 Yuriy Kashirin <uka@altlinux.ru> 1.1.0-alt1.beta3
 - New version
 - Updated gear repository from upstream git
