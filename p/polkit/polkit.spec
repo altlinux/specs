@@ -1,6 +1,6 @@
 Name: polkit
-Version: 0.108
-Release: alt3
+Version: 0.109
+Release: alt1
 Summary: PolicyKit Authorization Framework
 License: LGPLv2+
 Group: System/Libraries
@@ -12,13 +12,14 @@ PreReq: dbus
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-# from fedora
-Patch1: %name-0.108-fix-libmozjs185-soname.patch
+Patch1: %name-0.109-alt-helper_path.patch
 
 Requires: libmozjs
 
 BuildRequires: gobject-introspection-devel gtk-doc intltool libexpat-devel libpam-devel
 BuildRequires: libmozjs-devel libsystemd-login-devel systemd-devel
+# for check
+BuildRequires: /proc dbus-tools-gui
 
 %description
 PolicyKit is a toolkit for defining and handling authorizations.
@@ -71,7 +72,6 @@ GObject introspection devel data for the Polkit-1.0 library
 %patch1 -p1
 
 touch ChangeLog
-subst 's|^\(PKG_CHECK_MODULES(GLIB.*\)])|\1 gmodule-2.0])|' configure.ac
 
 %build
 %autoreconf
@@ -86,6 +86,10 @@ subst 's|^\(PKG_CHECK_MODULES(GLIB.*\)])|\1 gmodule-2.0])|' configure.ac
 %make DESTDIR=%buildroot install
 
 %find_lang %name-1
+
+%check
+# required system bus
+#%%make check
 
 %pre
 %_sbindir/groupadd -r -f polkitd 2>/dev/null ||:
@@ -129,6 +133,11 @@ subst 's|^\(PKG_CHECK_MODULES(GLIB.*\)])|\1 gmodule-2.0])|' configure.ac
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Mon Dec 24 2012 Yuri N. Sedunov <aris@altlinux.org> 0.109-alt1
+- pre 0.110 (d6acecdd)
+- removed upstreamed patches
+- fixed helper path (ALT #28272)
+
 * Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.108-alt3
 - added libmozjs to reqs
 
