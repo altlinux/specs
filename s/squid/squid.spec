@@ -5,12 +5,14 @@
 
 Name: squid
 Version: 3.1.22
-Release: alt9
+%define langpack_ver 20121005
+Release: alt10
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
 Url: http://www.squid-cache.org/
 Source0: %name-%version.tar
+Source1: %name-langpack-%langpack_ver.tar
 Source2: %name.init
 Source3: %name.logrotate
 Source4: wbinfo_group.sh
@@ -83,7 +85,7 @@ This package contains Squid helpers for different kinds of authentication.
 
 
 %prep
-%setup -q
+%setup -q %{?langpack_ver:-a 1}
 %patch -p1
 
 sed -i -r '1s|^(#!/usr/)local(/bin/perl)|\1\2|' {contrib,scripts}/*.pl
@@ -280,6 +282,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Tue Dec 25 2012 Led <led@altlinux.ru> 3.1.22-alt10
+- added langpack (ALT#28266)
+
 * Sat Dec 22 2012 Led <led@altlinux.ru> 3.1.22-alt9
 - squid.init: clean ups
 - spec: fix pre script
