@@ -3,7 +3,7 @@ Version: 1.7.4
 %ifdef beta
 Release: alt1.%beta
 %else
-Release: alt1
+Release: alt2
 %endif
 
 Summary: A set of loaders for Evas
@@ -19,6 +19,7 @@ BuildRequires: libevas-devel >= 1.7.3
 BuildRequires: libpoppler-devel
 BuildRequires: libraw-devel-static
 BuildRequires: libspectre-devel
+BuildRequires: librsvg-devel
 BuildRequires: gst-plugins-devel
 BuildRequires: zlib-devel
 
@@ -50,6 +51,9 @@ loader.
 %doc AUTHORS COPYING README
 
 %changelog
+* Tue Dec 25 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt2
+- built SVG loader
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
 - 1.7.4
 
