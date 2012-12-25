@@ -7,7 +7,7 @@
 %def_disable 	debug
 Name:	 	%_newname
 Version: 3.9.0
-Release: alt1
+Release: alt2
 
 Summary:	The bleeding edge branch of Sylpheed, a GTK+ based, lightweight, and fast e-mail client	 
 License: 	%gpl3plus
@@ -22,7 +22,8 @@ Patch7: claws-mail-alt-textviewer.patch
 Patch8: claws-mail-alt-textviewer-pl.patch
 
 # From upstream CVS
-# none
+Patch10: claws-mail-3.9.0cvs6.patch
+#
 
 # ALT Specific
 Patch119: claws-mail-alt-masquerade-deps.patch
@@ -223,6 +224,8 @@ echo "Libs: -lenchant -lgnutls" >>%name.pc.in
 %patch7 -p1
 %patch8 -p1
 
+%patch10 -p0
+
 %patch119 -p1
 %patch120 -p2
 
@@ -337,6 +340,11 @@ EOF
 
 
 %changelog
+* Tue Dec 25 2012 Mikhail Efremov <sem@altlinux.org> 3.9.0-alt2
+- Fix 'paths for SSL certs' patch.
+- Patch from upstream:
+    + Fix marking mails for deletion.
+
 * Thu Nov 29 2012 Mikhail Efremov <sem@altlinux.org> 3.9.0-alt1
 - Drop obsoleted patches.
 - Updated to 3.9.0.
