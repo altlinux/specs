@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -560,11 +560,10 @@ Patch0731: linux-%kernel_branch.42-fix-kernel--cgroup.patch
 Patch0732: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
 Patch0733: linux-%kernel_branch.49-fix-kernel--events.patch
 Patch0734: linux-%kernel_branch.42-fix-kernel--freezer.patch
-Patch0735: linux-%kernel_branch.56-fix-kernel--module.patch
-Patch0736: linux-%kernel_branch.51-fix-kernel--smp.patch
-Patch0737: linux-%kernel_branch.42-fix-kernel--watchdog.patch
-Patch0738: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
-Patch0739: linux-%kernel_branch.44-fix-kernel-time.patch
+Patch0735: linux-%kernel_branch.51-fix-kernel--smp.patch
+Patch0736: linux-%kernel_branch.42-fix-kernel--watchdog.patch
+Patch0737: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
+Patch0738: linux-%kernel_branch.44-fix-kernel-time.patch
 
 Patch0740: linux-%kernel_branch.42-fix-lib.patch
 Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
@@ -1864,7 +1863,6 @@ cd linux-%version
 %patch0736 -p1
 %patch0737 -p1
 %patch0738 -p1
-%patch0739 -p1
 
 # fix-lib*
 %patch0740 -p1
@@ -2901,6 +2899,10 @@ done)
 
 
 %changelog
+* Tue Dec 25 2012 Led <led@altlinux.ru> 3.0.57-alt7
+- removed:
+  + fix-kernel--module
+
 * Mon Dec 24 2012 Led <led@altlinux.ru> 3.0.57-alt6
 - updated:
   + fix-drivers-scsi--qla2xxx
