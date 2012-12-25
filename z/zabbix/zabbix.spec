@@ -5,9 +5,13 @@
 
 %def_with pgsql
 
+%ifndef _unitdir
+%define _unitdir %systemd_unitdir
+%endif
+
 Name: zabbix
 Version: 2.0.4
-Release: alt1
+Release: alt2
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -45,12 +49,12 @@ BuildArch: noarch
 %package server-common
 Summary: %name network monitor (server common stuff)
 Group: Monitoring
-Requires: %name-common = %serial:%version-%release
+Requires: %name-common >= 1:2.0.4-alt1
 
 %package server-mysql
 Summary: %name network monitor (server, compiled with MySQL support)
 Group: Monitoring
-Requires: %name-server-common = %serial:%version-%release
+Requires: %name-server-common >= 1:2.0.4-alt1
 Requires: %_sbindir/fping
 Obsoletes: %name-mysql < 1:1.1.7-alt1
 
@@ -58,7 +62,7 @@ Obsoletes: %name-mysql < 1:1.1.7-alt1
 %package server-pgsql
 Summary: %name network monitor (server, compiled with PostgreSQL support)
 Group: Monitoring
-Requires: %name-server-common = %serial:%version-%release
+Requires: %name-server-common >= 1:2.0.4-alt1
 Requires: %_sbindir/fping
 Obsoletes: %name-pgsql < 1:1.1.7-alt1
 %endif
@@ -66,7 +70,7 @@ Obsoletes: %name-pgsql < 1:1.1.7-alt1
 %package agent
 Summary: %name agent
 Group: Monitoring
-Requires: %name-common = %serial:%version-%release
+Requires: %name-common >= 1:2.0.4-alt1
 
 %package agent-sudo
 Summary: sudo entry for %name agent
@@ -77,7 +81,7 @@ Requires: %name-agent
 %package proxy
 Summary: %name proxy
 Group: Monitoring
-Requires: %name-common = %serial:%version-%release
+Requires: %name-common >= 1:2.0.4-alt1
 Requires: %_sbindir/fping
 
 %package phpfrontend-engine
@@ -451,6 +455,10 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Tue Dec 25 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.4-alt2
+- Add define %%_unitdir macro for compatible with P6/T6 branches
+- Change requires on -commons's pkg to "soft"
+
 * Mon Dec 17 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.4-alt1
 - 2.0.4 release
 
