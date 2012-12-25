@@ -7,7 +7,7 @@
 
 Name: xmonad-contrib
 Version: 0.10
-Release: alt4
+Release: alt5
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -50,6 +50,9 @@ own extensions.
 %files -f %name-files.all
 
 %changelog
+* Tue Dec 25 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt5
+- rebuild
+
 * Sat Dec 22 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt4
 - rebuild with ghc 7.6.1
 
