@@ -1,8 +1,8 @@
 %define status rc2
 
 Name: supertuxkart
-Version: 0.7
-Release: alt2.2
+Version: 0.8
+Release: alt1
 
 License: GPL
 Url: http://supertuxkart.sourceforge.net
@@ -10,14 +10,16 @@ Summary: SuperTuxKart is a kart racing game
 Group: Games/Arcade
 Packager: Alex Karpov <karpov@altlinux.ru>
 
-Source: %name-%version-src.tar.bz2
+Source: %name-%version-src.tar
 
 
 ## Automatically added by buildreq on Wed Jul 01 2009
 #BuildRequires: gcc-c++ libGL-devel libSDL-devel libfreeglut-devel libopenal-devel libvorbis-devel plib-devel subversion
 
-# Automatically added by buildreq on Fri Dec 03 2010
-BuildRequires: gcc-c++ libGLU-devel libenet-devel libfribidi-devel libirrlicht-devel libopenal-devel libvorbis-devel subversion
+# Automatically added by buildreq on Tue Dec 25 2012
+# optimized out: cmake cmake-modules libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libogg-devel libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel
+BuildRequires: cmake cmake-modules libGL-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXi-devel libXrender-devel libXt-devel libogg-devel libstdc++-devel xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xf86vidmodeproto-devel xorg-xproto-devel ctest gcc-c++ libXxf86misc-devel libXxf86vm-devel libcurl-devel libfribidi-devel libopenal-devel libvorbis-devel libxkbfile-devel ruby ruby-stdlibs
+#ccmake ctest gcc-c++ glibc-devel-static libGLU-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXft-devel libXinerama-devel libXmu-devel libXpm-devel libXrandr-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libcurl-devel libfribidi-devel libopenal-devel libvorbis-devel libxkbfile-devel ruby ruby-stdlibs
 
 %description
 SuperTuxCart is a kart racing game
@@ -26,11 +28,17 @@ SuperTuxCart is a kart racing game
 %setup -qn %name-%version
 
 %build
-%configure LIBS=-lGLU
-%make_build
+cd lib/irrlicht/source/Irrlicht
+NDEBUG=1 make
+cd ../../../../
+mkdir cmake_build
+cd cmake_build
+cmake -DCMAKE_INSTALL_PREFIX=/usr ..
+make
 
 %install
-%makeinstall
+cd cmake_build
+%makeinstall DESTDIR=%buildroot
 
 # The package contains a CVS/.svn/.git/.hg/.bzr/_MTN directory of revision control system.
 # It was most likely included by accident since CVS/.svn/.hg/... etc. directories 
@@ -43,12 +51,16 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %files
 #doc README TODO ChangeLog
 %_bindir/*
-%_docdir/%name
 %_desktopdir/%name.desktop
-%_gamesdatadir/%name
+%_datadir/%name
 %_pixmapsdir/*
 
 %changelog
+* Mon Dec 24 2012 Alex Karpov <karpov@altlinux.ru> 0.8-alt1
+- at last - new version
+    + libirrlicht dependency removed (there's included one)
+    + build requirements revisited
+
 * Thu Apr 05 2012 Alex Karpov <karpov@altlinux.ru> 0.7-alt2.2
 - rebuild with new blender
 
