@@ -1,6 +1,6 @@
 Name: libpri
 Summary: PRI library
-Version: 1.4.13
+Version: 1.4.14
 Release: alt1
 License: %gpl2only
 Group: System/Servers
@@ -62,6 +62,9 @@ find -type f -name '.depend' -print0 \
 %_libdir/libpri.a
 
 %changelog
+* Tue Dec 25 2012 Denis Smirnov <mithraen@altlinux.ru> 20080502:1.4.14-alt1
+- 1.4.14
+
 * Thu Oct 11 2012 Denis Smirnov <mithraen@altlinux.ru> 20080502:1.4.13-alt1
 - 1.4.13
 
