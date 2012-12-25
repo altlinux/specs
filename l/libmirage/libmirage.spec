@@ -1,6 +1,6 @@
 Name: libmirage
 Version: 2.0.0
-Release: alt1
+Release: alt2
 
 Summary: A CD-ROM image access library
 License: GPLv2+
@@ -43,8 +43,8 @@ This package contains files needed to develop with libMirage.
 pushd %_target_platform
 
 cmake .. \
-         -DCMAKE_INSTALL_PREFIX=%prefix \
-         -DCMAKE_C_FLAGS:STRING='%optflags' \
+         -DCMAKE_INSTALL_PREFIX:PATH="%prefix" \
+         -DCMAKE_C_FLAGS:STRING="%optflags"
          
 popd
 
@@ -56,8 +56,9 @@ find %buildroot%_libdir -name *.la -or -name \*.a | xargs rm -f
 
 %files
 %_defattr
-%doc AUTHORS ChangeLog COPYING NEWS README
+%doc AUTHORS ChangeLog COPYING NEWS INSTALL README
 %_libdir/libmirage.so.*
+%dir %_libdir/libmirage-2.0
 %_libdir/libmirage-2.0/*.so
 %_datadir/mime/packages/*.xml
 
@@ -65,12 +66,17 @@ find %buildroot%_libdir -name *.la -or -name \*.a | xargs rm -f
 %_defattr
 %_libdir/libmirage.so
 %_libdir/girepository-1.0/*
-%_libdir/pkgconfig/*
-%_includedir/*
+%_pkgconfigdir/%name.pc
+%_includedir/%name/*.h
 %_datadir/gir-1.0/*
-%doc %_datadir/gtk-doc/html/*
+%dir %_datadir/gtk-doc
+%dir %_datadir/gtk-doc/html
+%doc %_datadir/gtk-doc/html/%name
 
 %changelog
+* Tue Dec 25 2012 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt2
+- Fix post-install unowned files
+
 * Tue Dec 25 2012 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
 - Version 2.0.0
 
