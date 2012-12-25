@@ -1,0 +1,82 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-macros-fedora-compat
+# END SourceDeps(oneline)
+%define oldname fedora-gnat-project-common
+Name:           rpm-build-gnat
+Version:        3.5
+Release:        alt1_3
+Summary:        Files shared by Ada libraries
+Summary(sv):    Gemensamma filer för adabibliotek
+
+Group:          System/Libraries
+License:        Copyright only
+URL:            https://fedorahosted.org/released/fedora-gnat-project-common
+Source1:        https://fedorahosted.org/released/fedora-gnat-project-common/download/fedora-gnat-project-common-%{version}.tar.gz
+BuildArch:      noarch
+
+Requires:       setup
+# workaround for https://bugzilla.redhat.com/show_bug.cgi?id=613407:
+Requires:       libgnat-devel-static
+# macros.gnat requires __global_ldflags:
+# Distribute this package only for architectures where libgnat-static is
+# available:
+ExclusiveArch:  noarch %{GNAT_arches}
+Source44: import.info
+Patch33: macros.gnat.in.patch
+Provides: fedora-gnat-project-common = %version
+Requires: rpm-macros-gnat = %{version}-%{release}
+# ("noarch" is included so that the build works.)
+
+%description
+The fedora-gnat-project-common package contains files that are used by the GNAT
+project files of multiple Ada libraries, and also GNAT-specific RPM macros.
+
+%description -l sv
+Paketet fedora-gnat-project-common innehåller filer som används av
+GNAT-projektfilerna för flera adabibliotek, samt GNAT-specifika RPM-makron.
+
+%global _GNAT_project_dir /usr/share/gpr
+# _GNAT_project_dir is defined here and copied from here to macros.gnat so that
+# this package won't build-require itself.
+
+
+
+%package -n rpm-macros-gnat
+Summary: Set of RPM macros for packaging GNAT applications
+Group: Development/Other
+BuildArch: noarch
+
+%description -n rpm-macros-gnat
+Set of RPM macros for packaging GNAT applications for ALT Linux.
+Install this package if you want to create RPM packages that use GNAT.
+
+%prep
+%setup -n %{oldname}-%{version} -q -T -b 1
+%patch33 -p0
+
+
+%build
+exec_prefix=%{_exec_prefix} bindir=%{_bindir} libexecdir=%{_libexecdir} includedir=%{_includedir} GNAT_project_dir=%{_GNAT_project_dir} ./configure
+
+
+%install
+mkdir --parents %{buildroot}%{_GNAT_project_dir} %{buildroot}%{_sysconfdir}/profile.d %{buildroot}%_rpmmacrosdir/
+cp -p directories.gpr %{buildroot}%{_GNAT_project_dir}/
+cp -p gnat-project.sh gnat-project.csh %{buildroot}%{_sysconfdir}/profile.d/
+cp -p macros.gnat %{buildroot}%_rpmmacrosdir/gnat
+
+
+%files
+%doc LICENSE
+%{_GNAT_project_dir}
+%config(noreplace) %{_sysconfdir}/profile.d/*
+
+%files -n rpm-macros-gnat
+%_rpmmacrosdir/*
+
+
+
+%changelog
+* Tue Dec 25 2012 Igor Vlasenko <viy@altlinux.ru> 3.5-alt1_3
+- initial fc import
+
