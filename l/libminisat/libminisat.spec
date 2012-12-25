@@ -1,7 +1,7 @@
 
 Name: libminisat
 Version: 2.2.0
-Release: alt1
+Release: alt2
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: BSD style
@@ -57,6 +57,9 @@ make DESTDIR=%buildroot install
 %_libdir/%name.a
 
 %changelog
+* Sat Dec 22 2012 Michael Pozhidaev <msp@altlinux.ru> 2.2.0-alt2
+- Variable value assumption support added
+
 * Sun Oct 28 2012 Michael Pozhidaev <msp@altlinux.ru> 2.2.0-alt1
 - Initial package
 
