@@ -1,5 +1,5 @@
 Name: libmirage
-Version: 1.5.0
+Version: 2.0.0
 Release: alt1
 
 Summary: A CD-ROM image access library
@@ -11,7 +11,7 @@ Packager: Nazarov Denis <nenderus@altlinux.org>
 
 Source0: %name-%version.tar.bz2
 
-BuildRequires: glib2-devel glibc-devel-static gtk-doc libsndfile-devel mt-st python-module-distribute zlib-devel
+BuildRequires: bzlib-devel cmake glib-networking gobject-introspection-devel gtk-doc glibc-core libGConf liblzma-devel libsndfile-devel time zlib-devel
 
 %description
 This is libMirage library, a CD-ROM image access library, and part of the 
@@ -39,28 +39,41 @@ This package contains files needed to develop with libMirage.
 %setup -q
 
 %build
-%configure --enable-gtk-doc
-%make_build
+%__mkdir_p %_target_platform
+pushd %_target_platform
+
+cmake .. \
+         -DCMAKE_INSTALL_PREFIX=%prefix \
+         -DCMAKE_C_FLAGS:STRING='%optflags' \
+         
+popd
+
+%make_build -C %_target_platform
 
 %install
-%make install DESTDIR=%buildroot
+%make -C %_target_platform DESTDIR=%buildroot install
 find %buildroot%_libdir -name *.la -or -name \*.a | xargs rm -f
 
 %files
 %_defattr
 %doc AUTHORS ChangeLog COPYING NEWS README
 %_libdir/libmirage.so.*
-%_libdir/libmirage-1.5/*.so
+%_libdir/libmirage-2.0/*.so
 %_datadir/mime/packages/*.xml
 
 %files devel
 %_defattr
 %_libdir/libmirage.so
-%_includedir/*
+%_libdir/girepository-1.0/*
 %_libdir/pkgconfig/*
+%_includedir/*
+%_datadir/gir-1.0/*
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Dec 25 2012 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
+- Version 2.0.0
+
 * Tue Jan 24 2012 Nazarov Denis <nenderus@altlinux.org> 1.5.0-alt1
 - Version 1.5.0
 
