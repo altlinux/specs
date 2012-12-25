@@ -1,5 +1,5 @@
 Name: cdemu-client
-Version: 1.5.0
+Version: 2.0.0
 Release: alt1
 
 Summary: A simple command-line client to control CDEmu daemon
@@ -13,9 +13,9 @@ BuildArch: noarch
 Source0: %name-%version.tar.bz2
 Source1: %name.conf
 
-BuildRequires: intltool python-module-distribute rpm-build-gir
+BuildRequires: cmake intltool python-module-distribute rpm-build-gir
 
-Requires: cdemu-daemon >= 1.5.0
+Requires: cdemu-daemon >= 2.0.0
 
 %description
 This is cdemu-client, a simple command-line client for controlling CDEmu daemon.
@@ -30,11 +30,18 @@ retrieving/setting devices' debug masks.
 %setup -q
 
 %build
-%configure
-%make_build
+%__mkdir_p %_target_platform
+pushd %_target_platform
+
+cmake .. \
+         -DCMAKE_INSTALL_PREFIX=%prefix
+         
+popd
+
+%make_build -C %_target_platform
 
 %install
-%make DESTDIR=%buildroot install
+%make -C %_target_platform DESTDIR=%buildroot install
 install -Dp -m0644 %SOURCE1 %buildroot%_sysconfdir/%name.conf
 %find_lang %name
 
@@ -46,9 +53,12 @@ install -Dp -m0644 %SOURCE1 %buildroot%_sysconfdir/%name.conf
 %_mandir/man1/*
 %_sysconfdir/%name.conf
 %dir %_sysconfdir/bash_completion.d
-%_sysconfdir/bash_completion.d/cdemu-bashcomp
+%_sysconfdir/bash_completion.d/%name
 
 %changelog
+* Tue Dec 25 2012 Nazarov Denis <nenderus@altlinux.org> 2.0.0-alt1
+- Version 2.0.0
+
 * Wed Jan 25 2012 Nazarov Denis <nenderus@altlinux.org> 1.5.0-alt1
 - Version 1.5.0
 
