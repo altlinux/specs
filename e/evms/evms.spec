@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt28
+Release: alt29
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -165,6 +165,9 @@ EOF
 %endif
 
 %changelog
+* Tue Dec 25 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt29
+- dos plugin: round logical disk by 4K sector
+
 * Mon Dec 17 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt28
 - luks plugin: remove cipher/password option
 
