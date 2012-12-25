@@ -6,7 +6,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: xmobar
-Version: 0.15
+Version: 0.16
 Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -17,9 +17,9 @@ Summary: A Minimalistic Text Based Status Bar
 
 Patch: %name-%version-%release.patch
 
-# Automatically added by buildreq on Sun Mar 25 2012 (-bb)
-# optimized out: elfutils fontconfig ghc7.4.2 ghc7.4.2-alsa-core ghc7.4.2-common ghc7.4.2-mtl ghc7.4.2-syb ghc7.4.2-text ghc7.4.2-timezone-series ghc7.4.2-transformers ghc7.4.2-utf8-string ghc7.4.2-x11 libX11-devel libXrender-devel libgmp-devel pkg-config python-base xorg-kbproto-devel xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel
-BuildRequires: ghc7.4.2-alex ghc7.4.2-alsa-mixer ghc7.4.2-c2hs ghc7.4.2-cpphs ghc7.4.2-happy ghc7.4.2-hinotify ghc7.4.2-hscolour ghc7.4.2-parsec ghc7.4.2-stm ghc7.4.2-timezone-olson ghc7.4.2-x11-xft libXext-devel libXft-devel libXinerama-devel libXrandr-devel libalsa-devel libwireless-devel
+# Automatically added by buildreq on Tue Dec 25 2012 (-bb)
+# optimized out: elfutils fontconfig fontconfig-devel ghc7.6.1 ghc7.6.1-alsa-core ghc7.6.1-cereal ghc7.6.1-common ghc7.6.1-extensible-exceptions ghc7.6.1-libxml-sax ghc7.6.1-mtl ghc7.6.1-network ghc7.6.1-parsec ghc7.6.1-primitive ghc7.6.1-random ghc7.6.1-text ghc7.6.1-timezone-series ghc7.6.1-transformers ghc7.6.1-utf8-string ghc7.6.1-vector ghc7.6.1-x11 ghc7.6.1-xml-types libX11-devel libXrandr-devel libXrender-devel libfreetype-devel libgmp-devel pkg-config python-base xorg-kbproto-devel xorg-renderproto-devel xorg-xproto-devel
+BuildRequires: ghc7.6.1-alex ghc7.6.1-alsa-mixer ghc7.6.1-c2hs ghc7.6.1-cpphs ghc7.6.1-dbus ghc7.6.1-happy ghc7.6.1-hinotify ghc7.6.1-hscolour ghc7.6.1-libmpd ghc7.6.1-stm ghc7.6.1-timezone-olson ghc7.6.1-x11-xft libXext-devel libXft-devel libXinerama-devel libalsa-devel libwireless-devel libxml2-devel
 
 %description
 Xmobar is a minimalistic text based status bar.
@@ -32,7 +32,7 @@ color management, output templates, and extensibility through plugins.
 %patch -p1
 
 %build
-%hs_configure2 -f "with_xft with_utf8 with_inotify with_datezone with_iwlib with_alsa"
+%hs_configure2 -f "with_xft with_utf8 with_inotify with_datezone with_iwlib with_alsa with_dbus all_extensions"
 %hs_build
 
 %install
@@ -43,6 +43,9 @@ runghc Setup copy --destdir=%buildroot
 %doc news.md readme.md
 
 %changelog
+* Mon Dec 24 2012 Denis Smirnov <mithraen@altlinux.ru> 0.16-alt1
+- 0.16
+
 * Mon Jul 23 2012 Denis Smirnov <mithraen@altlinux.ru> 0.15-alt1
 - 0.15
 
