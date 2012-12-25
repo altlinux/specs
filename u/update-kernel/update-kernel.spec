@@ -1,6 +1,6 @@
 Name: update-kernel
-Version: 0.9.4
-Release: alt2
+Version: 0.9.5
+Release: alt1
 
 Summary: Update kernel and modules
 License: GPL
@@ -37,6 +37,9 @@ install -pm755 remove-old-kernels %buildroot%_sbindir/
 %_sbindir/*
 
 %changelog
+* Tue Dec 25 2012 Terechkov Evgenii <evg@altlinux.org> 0.9.5-alt1
+- Add --download-only (--dry-run/-n) support (ALT#25300)
+
 * Thu Dec 16 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.9.4-alt2
 - don't try to install unexistent modules
 
