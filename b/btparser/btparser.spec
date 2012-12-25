@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/python-config cmake gcc-c++
+BuildRequires(pre): rpm-build-python
+BuildRequires: /usr/bin/python-config
 # END SourceDeps(oneline)
 %{!?python_sitearch: %global python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
 
 Name: btparser
-Version: 0.23
+Version: 0.24
 Release: alt1_1
 Summary: Parser and analyzer for backtraces produced by GDB
 Group: Development/C
@@ -53,7 +53,7 @@ Group: Development/C
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
-Development libraries and headers for %{name}.
+Development libraries and headers for %%{name}.
 
 %package -n python-module-btparser
 Summary: Python bindings for %{name}
@@ -61,7 +61,7 @@ Group: Development/C
 Requires: %{name}%{?_isa} = %{version}-%{release}
 
 %description -n python-module-btparser
-Python bindings for %{name}.
+Python bindings for %%{name}.
 
 %prep
 %setup -q
@@ -82,7 +82,7 @@ make check
 %files
 %doc README NEWS COPYING TODO ChangeLog
 %{_bindir}/btparser
-%{_mandir}/man1/%{name}.1.*
+%{_mandir}/man1/%{name}.1*
 %{_libdir}/lib*.so.*
 
 %files devel
@@ -95,6 +95,9 @@ make check
 %{python_sitelibdir}/%{name}/*
 
 %changelog
+* Wed Dec 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.24-alt1_1
+- update to new release by fcimport
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 0.23-alt1_1
 - update to new release by fcimport
 
