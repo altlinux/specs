@@ -1,5 +1,11 @@
 %define oname cogl
+
+%ifarch %arm
+%def_enable gles2
+%else
 %def_disable gles2
+%endif
+
 %def_disable wayland_egl
 %def_disable wayland_server
 %def_disable kms_egl_platform
@@ -7,7 +13,7 @@
 
 Name: libcogl
 Version: 1.12.0
-Release: alt1
+Release: alt2
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
@@ -15,7 +21,7 @@ License: LGPLv2+
 Url: http://www.clutter-project.org/
 
 Source: %name-%version.tar
-# Patch: %name-%version-%release.patch
+Patch: %name-%version-%release.patch
 
 Conflicts: libclutter < 1.8.0
 
@@ -89,6 +95,7 @@ Contains developer documentation for %oname.
 
 %prep
 %setup -q
+%patch -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -127,6 +134,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Dec 26 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt2
+- enable gles2 support for arm (by sbolshakov@)
+
 * Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt1
 - 1.12.0
 
