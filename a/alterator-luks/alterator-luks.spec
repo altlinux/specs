@@ -1,5 +1,5 @@
 Name: alterator-luks
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -34,5 +34,8 @@ alterator module for for change LUKS passphrase
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Dec 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
+- don't ask for password if no lusk devices found
+
 * Wed Dec 19 2012 Timur Aitov <timonbl4@altlinux.org> 0.1-alt1
 - initial build
