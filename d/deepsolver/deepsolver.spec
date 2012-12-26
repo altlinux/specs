@@ -1,18 +1,22 @@
 
 Name: deepsolver
-Version: 0.1.1
+Version: 0.2.5
 Release: alt1
 
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 License: GPL v2+
-URL: http://deepsolver.org
+URL: http://deepsolver.org/
 
 Summary: The package manager
 Group: System/Configuration/Packaging
 
 Source: %name-%version.tar.gz
+Source2: ds.conf
+Source3: msp.repo
+Source4: altlinux-release.provide
 
 BuildRequires: gcc-c++ librpm-devel libcurl-devel zlib-devel
+BuildRequires: libminisat-devel >= 2.2.0-alt2
 
 %package -n lib%name
 Summary: The dynamically linked library with Deepsolver functions
@@ -84,8 +88,24 @@ make DESTDIR=%buildroot install
 
 %__rm -f %buildroot%_libdir/lib%name.la
 
+%__install -d -m 755 %buildroot%_sysconfdir/%name
+%__install -d -m 755 %buildroot%_sysconfdir/%name/conf.d
+%__install -pD -m 644 %SOURCE2 %buildroot%_sysconfdir/%name/
+%__install -pD -m 644 %SOURCE3 %buildroot%_sysconfdir/%name/conf.d/
+%__install -pD -m 644 %SOURCE4 %buildroot%_sysconfdir/%name/conf.d/
+%__subst s/i586/%_arch/ %buildroot%_sysconfdir/%name/conf.d/msp.repo
+
+
+%__install -d -m 755 %buildroot%_localstatedir/%name
+
 %files
 %doc AUTHORS COPYING NEWS README ChangeLog doc/ru/user-manual/user-manual.pdf
+%_bindir/ds-conf
+%_bindir/ds-install
+%_bindir/ds-remove
+%_bindir/ds-update
+%config(noreplace) %_sysconfdir/%name
+%_localstatedir/%name
 
 %files -n lib%name
 %_libdir/lib%name-*.so*
@@ -102,6 +122,9 @@ make DESTDIR=%buildroot install
 %_bindir/ds-provides
 
 %changelog
+* Wed Dec 26 2012 Michael Pozhidaev <msp@altlinux.ru> 0.2.5-alt1
+- New version
+
 * Tue Oct 16 2012 Michael Pozhidaev <msp@altlinux.ru> 0.1.1-alt1
 - New version (ds-patch utility now has --add-list and --del-list command line options)
 
