@@ -1,16 +1,16 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize pkgconfig(freetype2)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(freetype2)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:		libeasyfc
-Version:	0.9
+Version:	0.10
 Release:	alt1_1
 Summary:	Easy configuration generator interface for fontconfig
 
 Group:		System/Libraries
 License:	LGPLv3+
-URL:		http://github.com/tagoh/libeasyfc
-Source0:	https://github.com/downloads/tagoh/libeasyfc/libeasyfc-%{version}.tar.bz2
+URL:		http://tagoh.bitbucket.org/libeasyfc/
+Source0:	https://bitbucket.org/tagoh/libeasyfc/downloads/%{name}-%{version}.tar.bz2
 
 BuildRequires:	glib2-devel gobject-introspection-devel libxml2-devel fontconfig-devel >= 2.9.91
 BuildRequires:	gettext
@@ -24,7 +24,7 @@ fontconfig configuration on demand.
 %package	gobject
 Summary:	GObject interface for libeasyfc
 Group:		System/Libraries
-Requires:	libeasyfc = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description	gobject
 libeasyfc aims to provide an easy interface to generate
@@ -35,7 +35,7 @@ This package contains an interface for GObject.
 %package	devel
 Summary:	Development files for libeasyfc
 Group:		Development/C
-Requires:	libeasyfc = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description	devel
 libeasyfc aims to provide an easy interface to generate
@@ -47,7 +47,8 @@ applications with libeasyfc.
 %package	gobject-devel
 Summary:	Development files for libeasyfc-gobject
 Group:		Development/C
-Requires:	libeasyfc-gobject = %{version}-%{release}
+Requires:	%{name}-gobject%{?_isa} = %{version}-%{release}
+Requires:	%{name}-devel%{?_isa} = %{version}-%{release}
 
 %description	gobject-devel
 libeasyfc aims to provide an easy interface to generate
@@ -66,7 +67,7 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="/usr/bin/install -p"
 
 rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 
@@ -92,6 +93,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.la
 %{_datadir}/gir-*/Easyfc-*.gir
 
 %changelog
+* Wed Dec 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9-alt1_1
 - update to new release by fcimport
 
