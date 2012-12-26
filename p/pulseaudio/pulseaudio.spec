@@ -1,5 +1,5 @@
 Name: pulseaudio
-Version: 2.1
+Version: 3.0
 Release: alt1
 
 Summary: PulseAudio is a networked sound server
@@ -11,13 +11,14 @@ Source: %name-%version-%release.tar
 
 BuildRequires: gcc-c++
 BuildRequires: doxygen intltool jackit-devel libalsa-devel libasyncns-devel
-BuildRequires: libatomic_ops-devel-static libavahi-devel libbluez-devel
+BuildRequires: libavahi-devel libbluez-devel
 BuildRequires: libcap-devel libdbus-devel libgdbm-devel libudev-devel
 BuildRequires: liblirc-devel libltdl7-devel libsamplerate-devel
 BuildRequires: libsndfile-devel libspeex-devel libssl-devel libwrap-devel
 BuildRequires: libSM-devel libX11-devel libXtst-devel libxcbutil-devel
 BuildRequires: libjson-devel libgtk+2-devel libGConf-devel
-BuildRequires: libfftw3-devel liborc-devel orc xmltoman
+BuildRequires: libfftw3-devel libsbc-devel liborc-devel orc xmltoman
+BuildRequires: libsystemd-daemon-devel libsystemd-login-devel
 
 Requires: %name-utils = %version-%release
 Requires: %name-daemon = %version-%release
@@ -208,6 +209,7 @@ touch config.rpath
 %build
 %autoreconf
 %configure \
+    --enable-neon-opt=no \
     --localstatedir=/var \
     --with-access-group=audio \
     --enable-per-user-esound-socket \
@@ -227,7 +229,7 @@ find %buildroot%_libdir -name \*.la -delete
 
 %find_lang %name
 
-%define pulselibdir %_libdir/pulse-2.0
+%define pulselibdir %_libdir/pulse-3.0
 %define pulsemoduledir %pulselibdir/modules
 
 %pre system
@@ -256,15 +258,13 @@ find %buildroot%_libdir -name \*.la -delete
 
 %_datadir/pulseaudio
 
-%_libdir/libpulsecore-2.0.so
+%_libdir/libpulsecore-3.0.so
 
 %dir %pulselibdir
 %dir %pulsemoduledir
 
 %pulsemoduledir/*.so
 
-%exclude %pulsemoduledir/libbluetooth-ipc.so
-%exclude %pulsemoduledir/libbluetooth-sbc.so
 %exclude %pulsemoduledir/libbluetooth-util.so
 %exclude %pulsemoduledir/module-bluetooth-device.so
 %exclude %pulsemoduledir/module-bluetooth-discover.so
@@ -321,8 +321,6 @@ find %buildroot%_libdir -name \*.la -delete
 %dir %pulselibdir
 %dir %pulsemoduledir
 %_libexecdir/pulse/proximity-helper
-%pulsemoduledir/libbluetooth-ipc.so
-%pulsemoduledir/libbluetooth-sbc.so
 %pulsemoduledir/libbluetooth-util.so
 %pulsemoduledir/module-bluetooth-device.so
 %pulsemoduledir/module-bluetooth-discover.so
@@ -351,7 +349,7 @@ find %buildroot%_libdir -name \*.la -delete
 %_libdir/libpulse-mainloop-glib.so.*
 
 %dir %_libdir/pulseaudio
-%_libdir/pulseaudio/libpulsecommon-2.0.so
+%_libdir/pulseaudio/libpulsecommon-3.0.so
 %_man5dir/pulse-client.conf.5*
 
 %files -n lib%name-devel
@@ -360,12 +358,15 @@ find %buildroot%_libdir -name \*.la -delete
 %_includedir/pulse
 %_pkgconfigdir/*.pc
 %_datadir/vala/vapi/*
-%exclude %_libdir/libpulsecore-2.0.so
+%exclude %_libdir/libpulsecore-3.0.so
 
 %files -n lib%name-devel-doc
 %doc doxygen/html
 
 %changelog
+* Wed Dec 26 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 3.0-alt1
+- 3.0 released
+
 * Fri Jul 20 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.1-alt1
 - 2.1 released
 
