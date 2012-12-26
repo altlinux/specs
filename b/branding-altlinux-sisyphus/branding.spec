@@ -6,8 +6,8 @@
 
 
 Name: branding-%brand-%theme
-Version: 20110706
-Release: alt3
+Version: 20121226
+Release: alt1
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu
@@ -440,6 +440,9 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Wed Dec 26 2012 Michael Shigorin <mike@altlinux.org> 20121226-alt1
+- fixed background image position
+
 * Thu Aug 02 2012 Michael Shigorin <mike@altlinux.org> 20110706-alt3
 - *dropped* R: altlinux-menus (closes: #27585)
 
@@ -469,7 +472,7 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 - gnome-settngs added (mex@)
 
 * Wed May 13 2009 Alexandra Panyukova <mex3@altlinux.ru> 5.0.0-alt16
-- %setup fixed from boyarsh@
+- %%setup fixed from boyarsh@
 - remove package name from .gear-rules from boyarsh@
 
 * Fri Apr 24 2009 Alexandra Panyukova <mex3@altlinux.ru> 5.0.0-alt15
