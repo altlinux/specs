@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-livecd
-Version: 0.7.6
+Version: 0.7.7
 Release: alt1
 
 Summary: special steps for LiveCD installers
@@ -42,6 +42,9 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Dec 27 2012 Michael Shigorin <mike@altlinux.org> 0.7.7-alt1
+- drop notify sleep factor by a decimal order
+
 * Fri Dec 21 2012 Michael Shigorin <mike@altlinux.org> 0.7.6-alt1
 - require installer-scripts-remount-stage2 for remount script
 - minor spec cleanup
