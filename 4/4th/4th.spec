@@ -6,7 +6,7 @@
 Name: 4th
 %define lname lib%name
 Version: 3.62.0
-Release: alt1
+Release: alt2
 Summary: Basic framework for creating application specific scripting languages
 Summary(uk_UA.CP1251): Базова оболонка для створення специфічних для програм мов сценаріїв
 Summary(ru_RU.CP1251): Базовая оболочка для создания специфических для программ языков сценариев
@@ -368,6 +368,9 @@ __MENU__
 
 
 %changelog
+* Wed Dec 26 2012 Led <led@altlinux.ru> 3.62.0-alt2
+- Makefile.ALT: updated lib version
+
 * Mon Dec 24 2012 Led <led@altlinux.ru> 3.62.0-alt1
 - 3.62.0
 
