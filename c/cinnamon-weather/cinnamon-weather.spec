@@ -3,7 +3,7 @@
 Summary: Weather applet for Cinnamon  
 Name: cinnamon-weather
 Version: 1.7.1
-Release: alt1
+Release: alt2
 License: GPLv3+
 Group: Graphical desktop/GNOME
 BuildArch: noarch
@@ -11,6 +11,8 @@ URL: http://cinnamon-spices.linuxmint.com/applets/view/17
 Packager: Vladimir Didenko <cow@altlinux.org>
 
 Source: %name-%version.tar
+
+Patch1: cinnamon-weather-1.7.1-alt-locale-dir.patch
 
 Requires: cinnamon
 
@@ -23,6 +25,7 @@ A Cinnamon applet based on the Gnome Shell weather extension.
 install -m755 -pd %buildroot
 tar xf %SOURCE0 --strip-components 1 -C %buildroot
 pushd %buildroot/
+patch -p2 <%PATCH1
 %define bin_dir %buildroot/usr/bin
 install -m755 -pd %bin_dir
 cp cinnamon-weather-settings %bin_dir
@@ -64,6 +67,9 @@ popd
 %_datadir/glib-2.0/schemas/*.xml
 
 %changelog
+* Wed Dec 26 2012 Vladimir Didenko <cow@altlinux.org> 1.7.1-alt2
+- Fixed locale dir location
+
 * Wed Dec 26 2012 Vladimir Didenko <cow@altlinux.org> 1.7.1-alt1
 - Initial build
 
