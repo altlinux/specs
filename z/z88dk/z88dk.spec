@@ -1,14 +1,14 @@
+Group: Development/Tools
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(File/Slurp.pm) perl(List/AllUtils.pm) perl(Modern/Perl.pm) perl(Test/Differences.pm)
 # END SourceDeps(oneline)
-Group: Development/Tools
 Name: z88dk
-Version: 1.10
+Version: 1.10.1
 Release: alt1_1
 Summary: A Z80 cross compiler
 License: Artistic clarified
 URL: http://www.z88dk.org/
-Source: http://downloads.sourceforge.net/z88dk/z88dk-src-%{version}.tgz
+Source: http://downloads.sourceforge.net/z88dk/z88dk-%{version}.tgz
 Patch0: z88dk-1.10-makefile-usr-share.patch
 Patch1: z88dk-1.10-64bit.patch
 Source44: import.info
@@ -74,6 +74,9 @@ cp -p netman/man3z/* %{buildroot}%{_mandir}/man3z
 %{_mandir}/man3z/
 
 %changelog
+* Wed Dec 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.10.1-alt1_1
+- update to new release by fcimport
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 1.10-alt1_1
 - update to new release by fcimport
 
