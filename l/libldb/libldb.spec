@@ -1,5 +1,5 @@
 Name: libldb
-Version: 1.1.13
+Version: 1.1.14
 Release: alt1
 Summary: A schema-less, ldap like, API and database
 License: LGPLv3+
@@ -101,6 +101,9 @@ rm -f %buildroot/%_man3dir/_*
 %_pkgconfigdir/pyldb-util.pc
 
 %changelog
+* Tue Dec 04 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.14-alt1
+- 1.1.14
+
 * Wed Oct 17 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.13-alt1
 - 1.1.13
 

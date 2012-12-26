@@ -1,5 +1,5 @@
 Name: libtalloc
-Version: 2.0.7
+Version: 2.0.8
 Release: alt1
 
 Summary: The talloc library
@@ -44,13 +44,18 @@ Header files needed to develop programs that link against the Talloc library.
 %setup -q -n talloc-%version
 
 %build
-./configure --prefix=%_usr --libdir=%_libdir --disable-rpath
+%undefine _configure_gettext
+%configure	--disable-rpath \
+		--disable-rpath-install \
+		--bundled-libraries=NONE \
+		--builtin-libraries=replace \
+		--disable-silent-rules
 %make_build
 
 %install
 %makeinstall_std
 
-rm -f %buildroot%_libdir/libtalloc.a
+rm -f %buildroot%_libdir/*.a
 rm -f %buildroot%_datadir/swig/*/talloc.i
 
 %files
@@ -59,7 +64,7 @@ rm -f %buildroot%_datadir/swig/*/talloc.i
 %files devel
 %_includedir/talloc.h
 %_libdir/libtalloc.so
-%_libdir/pkgconfig/talloc.pc
+%_pkgconfigdir/talloc.pc
 %_mandir/man3/talloc.3.*
 
 %files -n libpytalloc
@@ -68,11 +73,14 @@ rm -f %buildroot%_datadir/swig/*/talloc.i
 
 %files -n libpytalloc-devel
 %_includedir/pytalloc.h
-%_libdir/pkgconfig/pytalloc-util.pc
+%_pkgconfigdir/pytalloc-util.pc
 %_libdir/libpytalloc-util.so
 
 
 %changelog
+* Fri Dec 21 2012 Alexey Shabalin <shaba@altlinux.ru> 2.0.8-alt1
+- 2.0.8
+
 * Thu Jan 26 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0.7-alt1
 - 2.0.7
 
