@@ -1,6 +1,6 @@
 Name: icu
 Version: 5.1.1
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: International Components for Unicode
 Group: System/Libraries
@@ -11,6 +11,7 @@ Packager: Valery Inozemtsev <shrek@altlinux.ru>
 Source: http://download.icu-project.org/files/icu4c/5.1.1/icu4c-50_1_1-src.tgz
 # https://bugs.gentoo.org/show_bug.cgi?id=439892
 Patch: libicu-5.1-up-disable_c++11_test.patch
+Patch1: icu-5.1.1-alt-fix.patch
 
 BuildRequires: doxygen gcc-c++ libstdc++-devel
 
@@ -61,6 +62,7 @@ support. This package contains sample code for ICU
 %prep
 %setup -q -n icu
 %patch -p1
+%patch1 -p2
 
 %build
 cd source
@@ -102,6 +104,9 @@ rm -f %buildroot%_bindir/icuinfo
 %_datadir/icu/samples
 
 %changelog
+* Thu Dec 27 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:5.1.1-alt2
+- fixed ABI breakage in previous release
+
 * Wed Dec 19 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:5.1.1-alt1
 - 5.1.1
 
