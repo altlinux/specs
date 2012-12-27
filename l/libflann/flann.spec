@@ -2,6 +2,7 @@
 BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %define oldname flann
 %define fedora 18
 %if 0%{?rhel} < 6 && ! 0%{?fedora}
@@ -10,7 +11,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           libflann
 Version:        1.8.1
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 Group:          Development/C
@@ -35,6 +36,7 @@ BuildRequires:  python26
 BuildRequires:  python26-devel
 %endif
 Source44: import.info
+Provides: flann = %{version}-%{release}
 
 
 %description
@@ -47,6 +49,7 @@ choosing the best algorithm and optimum parameters depending on the data sets.
 Summary: Development headers and libraries for flann
 Group: Development/C
 Requires: %{name} = %{version}-%{release}
+Provides: flann-devel = %{version}-%{release}
 # flann/flann_mpi.hpp requires boost/mpi.hpp, which is a convenience header
 # inside of the boost-devel package
 
@@ -56,6 +59,7 @@ Development headers and libraries for flann.
 %package static
 Summary: Static libraries for flann
 Group: Development/C
+Provides: flann-static = %{version}-%{release}
 
 %description static
 Static libraries for flann.
@@ -121,6 +125,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Thu Dec 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2_1
+- added flann provides
+
 * Thu Dec 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt1_1
 - sisyphus release
 
