@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt7
+Release: alt8
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -118,7 +118,7 @@ Release: alt7
 %Extra_modules vboxhost 4.1.24
 #Extra_modules vboxguest 4.1.22
 %Extra_modules fglrx 8.97.100.3
-%Extra_modules netatop 0.1.1
+#Extra_modules netatop 0.1.1
 
 %define strip_mod_opts --strip-unneeded -R .comment
 
@@ -382,7 +382,7 @@ Patch0441: linux-%kernel_branch.43-fix-drivers-net--lcs.patch
 Patch0442: linux-%kernel_branch.42-fix-drivers-net--macvtap.patch
 Patch0443: linux-%kernel_branch.42-fix-drivers-net--natsemi.patch
 Patch0444: linux-%kernel_branch.42-fix-drivers-net--ne3210.patch
-Patch0445: linux-%kernel_branch.51-fix-drivers-net--qeth.patch
+Patch0445: linux-%kernel_branch.53-fix-drivers-net--netiucv.patch
 Patch0446: linux-%kernel_branch.42-fix-drivers-net--qlcnic.patch
 Patch0447: linux-%kernel_branch.46-fix-drivers-net--qlge.patch
 Patch0448: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
@@ -396,26 +396,27 @@ Patch0455: linux-%kernel_branch.42-fix-drivers-net-mlx4--mlx4_core.patch
 Patch0456: linux-%kernel_branch.46-fix-drivers-net-mlx4--mlx4_en.patch
 Patch0457: linux-%kernel_branch.42-fix-drivers-net-netxen.patch
 Patch0458: linux-%kernel_branch.42-fix-drivers-net-pcmcia--nmclan_cs.patch
-Patch0459: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
-Patch0460: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
-Patch0461: linux-%kernel_branch.46-fix-drivers-net-usb--asix.patch
-Patch0462: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
-Patch0463: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
-Patch0464: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
-Patch0465: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
-Patch0466: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
-Patch0467: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
-Patch0468: linux-%kernel_branch.43-fix-drivers-net-wireless-brcm80211--brcmfmac.patch
-Patch0469: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
-Patch0470: linux-%kernel_branch.56-fix-drivers-net-wireless-mwifiex--mwifiex.patch
-Patch0471: linux-%kernel_branch.56-fix-drivers-net-wireless-mwifiex--mwifiex_sdio.patch
-Patch0472: linux-%kernel_branch.53-fix-drivers-net-wireless-rt2x00.patch
-Patch0473: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
-Patch0474: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi.patch
-Patch0475: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192ce.patch
-Patch0476: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192cu.patch
-Patch0477: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192se.patch
-Patch0478: linux-%kernel_branch.56-fix-drivers-net-wireless-wl12xx--wl12xx.patch
+Patch0459: linux-%kernel_branch.53-fix-drivers-net-qeth.patch
+Patch0460: linux-%kernel_branch.42-fix-drivers-net-tulip.patch
+Patch0461: linux-%kernel_branch.42-fix-drivers-net-tulip--de4x5.patch
+Patch0462: linux-%kernel_branch.46-fix-drivers-net-usb--asix.patch
+Patch0463: linux-%kernel_branch.42-fix-drivers-net-usb--cdc_ether.patch
+Patch0464: linux-%kernel_branch.42-fix-drivers-net-usb--ipheth.patch
+Patch0465: linux-%kernel_branch.42-fix-drivers-net-usb--kalmia.patch
+Patch0466: linux-%kernel_branch.42-fix-drivers-net-usb--lg-vl600.patch
+Patch0467: linux-%kernel_branch.42-fix-drivers-net-usb--smsc75xx.patch
+Patch0468: linux-%kernel_branch.42-fix-drivers-net-usb--usbnet.patch
+Patch0469: linux-%kernel_branch.43-fix-drivers-net-wireless-brcm80211--brcmfmac.patch
+Patch0470: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
+Patch0471: linux-%kernel_branch.56-fix-drivers-net-wireless-mwifiex--mwifiex.patch
+Patch0472: linux-%kernel_branch.56-fix-drivers-net-wireless-mwifiex--mwifiex_sdio.patch
+Patch0473: linux-%kernel_branch.53-fix-drivers-net-wireless-rt2x00.patch
+Patch0474: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
+Patch0475: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi.patch
+Patch0476: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192ce.patch
+Patch0477: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192cu.patch
+Patch0478: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192se.patch
+Patch0479: linux-%kernel_branch.56-fix-drivers-net-wireless-wl12xx--wl12xx.patch
 
 Patch0481: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
@@ -539,7 +540,7 @@ Patch0684: linux-%kernel_branch.56-fix-fs-fat.patch
 Patch0685: linux-%kernel_branch.42-fix-fs-hfs.patch
 Patch0686: linux-%kernel_branch.54-fix-fs-jbd.patch
 Patch0687: linux-%kernel_branch.53-fix-fs-nfs.patch
-Patch0688: linux-%kernel_branch.42-fix-fs-ocfs2.patch
+Patch0688: linux-%kernel_branch.53-fix-fs-ocfs2.patch
 Patch0689: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
 Patch0690: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
 Patch0691: linux-%kernel_branch.56-fix-fs-squashfs.patch
@@ -709,7 +710,8 @@ Patch1151: linux-%kernel_branch.42-feat-lib--llist.patch
 Patch1161: linux-%kernel_branch.42-feat-mm--slqb.patch
 Patch1162: linux-%kernel_branch.43-feat-mm--uksm.patch
 
-Patch1171: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+Patch1171: linux-%kernel_branch-feat-net--netatop.patch
+Patch1172: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
 
 Patch1181: linux-%kernel_branch-feat-security--yama.patch
 
@@ -1707,6 +1709,7 @@ cd linux-%version
 %patch0476 -p1
 %patch0477 -p1
 %patch0478 -p1
+%patch0479 -p1
 
 # fix-drivers-parport--*
 %patch0481 -p1
@@ -2024,6 +2027,7 @@ cd linux-%version
 %patch1162 -p1
 
 %patch1171 -p1
+%patch1172 -p1
 
 # feat-security--*
 %patch1181 -p1
@@ -2899,6 +2903,18 @@ done)
 
 
 %changelog
+* Thu Dec 27 2012 Led <led@altlinux.ru> 3.0.57-alt8
+- removed external modules:
+  + netatop
+- removed:
+  + fix-drivers-net--qeth
+- updated:
+  + fix-fs-ocfs2
+- added:
+  + fix-drivers-net--netiucv
+  + fix-drivers-net-qeth
+  + feat-net--netatop
+
 * Tue Dec 25 2012 Led <led@altlinux.ru> 3.0.57-alt7
 - removed:
   + fix-kernel--module
