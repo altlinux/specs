@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.8.12
-Release: alt1
+Release: alt2
 
 Summary: Installer common parts
 License: GPLv2+
@@ -105,6 +105,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Thu Dec 27 2012 Andrey Cherepanov <cas@altlinux.org> 1.8.12-alt2
+- Fix retrieve alteratord.log
+- Add wizard.log and remount.log (this fixes password cleanup)
+
 * Thu Dec 27 2012 Timur Aitov <timonbl4@altlinux.org> 1.8.12-alt1
 - 50-initrd.sh: always add luks in initrd
 
