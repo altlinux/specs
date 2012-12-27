@@ -1,7 +1,7 @@
 %define _name exo
 
 Name: lib%_name
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: Extension library to XFce
@@ -13,6 +13,7 @@ Packager: XFCE Team <xfce@packages.altlinux.org>
 
 # Upstream: git://git.xfce.org/xfce/exo
 Source: %_name-%version.tar
+Patch: %_name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -56,6 +57,7 @@ This package contains documentation files required for packaging
 
 %prep
 %setup -n %_name-%version
+%patch -p1
 
 %build
 %xfce4reconf
@@ -101,6 +103,10 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Thu Dec 27 2012 Mikhail Efremov <sem@altlinux.org> 0.10.2-alt1
+- Temporally revert commits for xfce4-terminal.
+- Updated to 0.10.2.
+
 * Mon Dec 10 2012 Mikhail Efremov <sem@altlinux.org> 0.10.1-alt1
 - Updated to 0.10.1.
 
