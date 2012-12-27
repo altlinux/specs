@@ -1,7 +1,7 @@
 Name: dhcpcd
 Epoch: 1
-Version: 5.5.6
-Release: alt5
+Version: 5.6.6
+Release: alt1
 
 Summary: DHCP Client
 License: %bsdstyle
@@ -65,6 +65,11 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Thu Dec 27 2012 Mikhail Efremov <sem@altlinux.org> 1:5.6.6-alt1
+- Patch from upstream:
+    + Preserve the space in static routes on the command line.
+- Updated to 5.6.6.
+
 * Wed Nov 28 2012 Mikhail Efremov <sem@altlinux.org> 1:5.5.6-alt5
 - Provide nm-dhcp-client.
 
