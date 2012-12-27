@@ -18,7 +18,7 @@
 
 Name: libgtk+2
 Version: %ver_major.14
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+), a library for creating GUIs
 License: %lgpl2plus
@@ -206,6 +206,8 @@ those GUIs.
 
 This package contains development documentation for GAIL.
 
+%define fulllibpath %_libdir/gtk-%api_ver/%binary_ver
+
 %prep
 %setup -q -n %_name-%version
 install -p -m644 %_sourcedir/%name-gdk.map gdk/compat.map
@@ -272,8 +274,15 @@ cp -a examples/ %buildroot/%_docdir/%name-devel-%version/
 # rpm posttrans filetriggers
 install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk-icon-cache.filetrigger
 
-%post
-%_bindir/gtk-query-immodules-%api_ver > %_sysconfdir/gtk-%api_ver/gtk.immodules
+# rpm posttrans filetrigger to update immodules cache
+cat <<EOF > filetrigger
+#!/bin/sh -e
+
+dir=%fulllibpath/immodules
+grep -qs '^'\$dir'' && %_bindir/gtk-query-immodules-%api_ver > %_sysconfdir/gtk-%api_ver/gtk.immodules ||:
+EOF
+
+install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 
 %files
 %doc AUTHORS NEWS.bz2 README
@@ -281,7 +290,6 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk-icon-cache.filetrigger
 %_libdir/libgtk-x11-%api_ver.so.*
 %dir %_libdir/gtk-%api_ver
 %dir %_libdir/gtk-%api_ver/modules
-%define fulllibpath %_libdir/gtk-%api_ver/%binary_ver
 %dir %fulllibpath
 %dir %fulllibpath/engines
 %fulllibpath/engines/libpixmap.so
@@ -300,6 +308,7 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk-icon-cache.filetrigger
 %ghost %_sysconfdir/gtk-%api_ver/gtk.immodules
 %_bindir/gtk-query-immodules-%api_ver
 %_man1dir/gtk-query-immodules*
+%_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 
 %files locales -f gtk20.lang
 
@@ -366,6 +375,9 @@ install -pD -m755 {%_sourcedir,%buildroot%_rpmlibdir}/gtk-icon-cache.filetrigger
 %_datadir/gir-1.0/*
 
 %changelog
+* Thu Dec 27 2012 Yuri N. Sedunov <aris@altlinux.org> 2.24.14-alt2
+- added rpm posttrans filetrigger to update im-modules cache (ALT #28278)
+
 * Thu Dec 06 2012 Yuri N. Sedunov <aris@altlinux.org> 2.24.14-alt1
 - 2.24.14
 

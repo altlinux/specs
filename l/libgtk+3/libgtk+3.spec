@@ -13,7 +13,7 @@
 
 Name: libgtk+3
 Version: %ver_major.2
-Release: alt1
+Release: alt2
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -233,6 +233,17 @@ __CSH__
 install -pD -m755 %name.sh %buildroot%_sysconfdir/profile.d/%name.sh
 install -pD -m755 %name.csh %buildroot%_sysconfdir/profile.d/%name.csh
 
+# posttransfiletrigger to update immodules cache
+cat <<EOF > filetrigger
+#!/bin/sh -e
+
+dir=%fulllibpath/immodules
+grep -qs '^'\$dir'' && %_bindir/gtk-query-immodules-%api_ver --update-cache ||:
+EOF
+
+install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
+
+
 # The license
 ln -sf %_licensedir/LGPL-2 COPYING
 
@@ -283,6 +294,7 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %_man1dir/gtk-launch.*
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.FileChooser.gschema.xml
 %config %_datadir/glib-2.0/schemas/org.gtk.Settings.ColorChooser.gschema.xml
+%_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 %doc --no-dereference COPYING
 %doc AUTHORS NEWS.bz2 README
 
@@ -353,6 +365,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Thu Dec 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2
+- added rpm posttrans filetrigger to update im-modules cache (ALT #28279)
+
 * Sun Nov 11 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
