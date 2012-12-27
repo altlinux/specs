@@ -7,7 +7,7 @@
 
 Name: cairo-compmgr
 Version: 0.3.4
-Release: alt3.gitc609e
+Release: alt4.gitc609e
 Summary: Cairo Composite Manager
 License: GPL
 Group: System/X11
@@ -101,6 +101,8 @@ rm -f %buildroot%_libdir/*/*/*.la
 
 %define schemas ccm-automate ccm-decoration ccm-display ccm-fade ccm-freeze ccm-magnifier ccm-menu-animation ccm-mosaic ccm-opacity ccm-perf ccm-screen ccm-shadow ccm-snapshot ccm-vala-window-plugin ccm-window-animation
 
+%find_lang %name
+
 %post
 %gconf2_install %schemas
 
@@ -109,7 +111,7 @@ if [ $1 = 0 ]; then
     %gconf2_uninstall %schemas
 fi
 
-%files
+%files -f %name.lang
 %_bindir/*
 %_man1dir/*
 %_libdir/libcairo_compmgr.so.*
@@ -139,6 +141,9 @@ fi
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Dec 27 2012 Andrey Cherepanov <cas@altlinux.org> 0.3.4-alt4.gitc609e
+- Add Russian localization (ALT #28205)
+
 * Wed Dec 05 2012 Alexey Shabalin <shaba@altlinux.ru> 0.3.4-alt3.gitc609e
 - add MATE to OnlyShowIn in desktop file
 
