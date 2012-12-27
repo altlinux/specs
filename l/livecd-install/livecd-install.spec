@@ -1,6 +1,6 @@
 Name: livecd-install
 Version: 0.6
-Release: alt9
+Release: alt11
 
 Summary: Permanently install Live system
 License: GPLv2
@@ -10,6 +10,7 @@ Source: %name-%version.tar
 Source1: %name.pam
 Source2: %name.apps
 
+Url: http://www.altlinux.org/Alterator
 Packager: Andriy Stepanov <stanv@altlinux.ru>
 
 BuildArch: noarch
@@ -19,6 +20,7 @@ Requires: alterator-vm alterator-grub alterator-users >= 10.2-alt1 alterator-roo
 Requires: livecd-evms
 Requires: make-initrd-plymouth 
 Requires: consolehelper
+# not Requires: alterator-luks >= 0.2-alt1 since it's optional
 
 Requires(post): chkconfig
 Requires(preun): chkconfig
@@ -27,14 +29,14 @@ Requires(preun): chkconfig
 %summary
 
 %prep
-%setup -q
+%setup
 
 %install
 %makeinstall
-%__install -D -p -m 0644 %{S:1} %buildroot%_sysconfdir/pam.d/%name
-%__install -D -p -m 0644 %{S:2} %buildroot%_sysconfdir/security/console.apps/%name
-%__install -d -m 0755 %buildroot%_bindir
-%__ln_s %_libexecdir/consolehelper/helper %buildroot%_bindir/%name
+install -D -p -m 0644 %{S:1} %buildroot%_sysconfdir/pam.d/%name
+install -D -p -m 0644 %{S:2} %buildroot%_sysconfdir/security/console.apps/%name
+install -d -m 0755 %buildroot%_bindir
+ln -s %_libexecdir/consolehelper/helper %buildroot%_bindir/%name
 mkdir -p %buildroot%_x11sysconfdir/profile.d
 install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 
@@ -50,6 +52,14 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Thu Dec 27 2012 Michael Shigorin <mike@altlinux.org> 0.6-alt11
+- added luks.desktop as well
+
+* Wed Dec 26 2012 Michael Shigorin <mike@altlinux.org> 0.6-alt10
+- added luks to steps (but not to deps)
+- minor spec cleanup
+- added an Url:
+
 * Wed Dec 19 2012 Michael Shigorin <mike@altlinux.org> 0.6-alt9
 - added alterator-datetime to Requires: (as it's in steps)
 
