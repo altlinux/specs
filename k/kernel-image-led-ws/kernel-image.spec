@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt8
+Release: alt9
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2903,6 +2903,10 @@ done)
 
 
 %changelog
+* Thu Dec 27 2012 Led <led@altlinux.ru> 3.0.57-alt9
+- updated:
+  + fix-fs-btrfs
+
 * Thu Dec 27 2012 Led <led@altlinux.ru> 3.0.57-alt8
 - removed external modules:
   + netatop
