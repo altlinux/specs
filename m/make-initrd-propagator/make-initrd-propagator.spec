@@ -1,6 +1,6 @@
 Name: make-initrd-propagator
 Version: 0.13
-Release: alt1
+Release: alt2
 
 Summary: Put propagator into make-initrd generated image
 License: GPL
@@ -36,6 +36,9 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Fri Dec 28 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.13-alt2
+- creating aufs slice on hybrid rw media temporary disabled
+
 * Fri Nov 09 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.13-alt1
 - mount.nfs added
 
