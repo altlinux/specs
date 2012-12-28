@@ -1,7 +1,7 @@
 Summary: Tool to manage your infrastructure
 Name: salt
-Version: 0.10.5
-Release: alt1
+Version: 0.11.1
+Release: alt2
 Url: http://saltstack.org
 Source0: %name-%version.tar
 License: apache-2.0
@@ -67,20 +67,18 @@ install -p -m 0644 pkg/salt-syndic.service %buildroot%_unitdir/
 install -p -m 0644 pkg/salt-minion.service %buildroot%_unitdir/
 
 mkdir -p %buildroot%_sysconfdir/salt/
-install -p -m 0640 conf/minion.template %buildroot%_sysconfdir/salt/minion
-install -p -m 0640 conf/minion.template %buildroot%_sysconfdir/salt/minion.template
-install -p -m 0640 conf/master.template %buildroot%_sysconfdir/salt/master
-install -p -m 0640 conf/master.template %buildroot%_sysconfdir/salt/master.template
+install -p -m 0640 conf/minion %buildroot%_sysconfdir/salt/minion
+install -p -m 0640 conf/master %buildroot%_sysconfdir/salt/master
 
 mkdir -p %buildroot%_sysconfdir/sysconfig
 echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-master
 echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-syndic
 echo "ARG=''" >  %buildroot%_sysconfdir/sysconfig/salt-minion
 
-install -D -m 0644 pkg/salt_bash_completion %buildroot%_sysconfdir/bash_completion.d/salt
+install -D -m 0644 pkg/salt.bash %buildroot%_sysconfdir/bash_completion.d/salt
 
-install -D -m 0644 pkg/master.logrotate %buildroot%_sysconfdir/logrotate.d/salt-master
-install -D -m 0644 pkg/minion.logrotate %buildroot%_sysconfdir/logrotate.d/salt-minion
+install -D -m 0644 pkg/altlinux/master.logrotate %buildroot%_sysconfdir/logrotate.d/salt-master
+install -D -m 0644 pkg/altlinux/minion.logrotate %buildroot%_sysconfdir/logrotate.d/salt-minion
 
 #check
 
@@ -106,7 +104,6 @@ install -D -m 0644 pkg/minion.logrotate %buildroot%_sysconfdir/logrotate.d/salt-
 
 %files master
 %config(noreplace) %_sysconfdir/salt/master
-%config %_sysconfdir/salt/master.template
 %config %_sysconfdir/bash_completion.d/*
 %config(noreplace) %_sysconfdir/logrotate.d/salt-master
 
@@ -136,7 +133,6 @@ install -D -m 0644 pkg/minion.logrotate %buildroot%_sysconfdir/logrotate.d/salt-
 
 %files minion
 %config(noreplace) %_sysconfdir/salt/minion
-%config %_sysconfdir/salt/minion.template
 %config(noreplace) %_sysconfdir/logrotate.d/salt-minion
 
 %config(noreplace) %_sysconfdir/sysconfig/salt-minion
@@ -151,5 +147,8 @@ install -D -m 0644 pkg/minion.logrotate %buildroot%_sysconfdir/logrotate.d/salt-
 %_man1dir/salt-minion.1.*
 
 %changelog
+* Mon Dec 24 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.11.1-alt2
+- New version
+
 * Thu Dec 06 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.10.5-alt1
 - Build for ALT
