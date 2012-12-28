@@ -1,8 +1,8 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel
+BuildRequires: perl(RPM/Header.pm) perl(Source/Repository/Mass/ALTLinuxBackport.pm) perl-devel perl-ALTLinux-ACL
 # END SourceDeps(oneline)
 Name: autorepo-scripts
-Version: 0.17
+Version: 0.18
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,13 +34,20 @@ cp autorepo-* $RPM_BUILD_ROOT%_bindir
 rm $RPM_BUILD_ROOT%_bindir/*.spec
 rm $RPM_BUILD_ROOT%_bindir/autorepo-config.*
 
+mkdir -p %buildroot%_datadir/%name/templates/
+install -m 755 *.template %buildroot%_datadir/%name/templates/
+
 %files
 %doc autorepo-config.*
 %doc DEPLOY.txt
 %_bindir/*
 %perl_vendor_privlib/Autorepo*
+%_datadir/%name/templates
 
 %changelog
+* Fri Dec 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.18-alt1
+- autorepo-mail-mainrepo-older
+
 * Fri Dec 07 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt1
 - unmets autorebuild
 
