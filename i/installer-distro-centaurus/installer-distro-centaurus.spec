@@ -1,7 +1,7 @@
 %define distro centaurus
 Name: installer-distro-%distro
 Version: 6.9
-Release: alt5
+Release: alt6
 
 Summary: Installer files for Centaurus distro 
 License: GPL
@@ -44,9 +44,7 @@ Requires: alterator-net-general
 Requires: installer-feature-nfs-server-stage3
 Requires: installer-feature-powerbutton-stage3
 Requires: alterator-grub
-%ifarch x86_64
-Requires: grub2-efi
-%endif
+Requires: alterator-luks
 
 %description stage3
 Centaurus Installer stage3.
@@ -69,6 +67,9 @@ cp -a * %buildroot%install2dir/
 %files stage3
 
 %changelog
+* Fri Dec 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt6
+- alterator-luks added
+
 * Tue Dec 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 6.9-alt5
 - grub2-efi on x86_64 added
 
