@@ -4,7 +4,7 @@
 Name: asterisk-core-sounds-en-gsm
 Summary: sounds for Asterisk
 Version: 1.4.22
-Release: alt3
+Release: alt4
 License: GPL
 Group: System/Servers
 BuildArch: noarch
@@ -49,6 +49,9 @@ find -type f \
 %files -f sounds.list
 
 %changelog
+* Fri Dec 28 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4.22-alt4
+- add watch-file and cronbuild support
+
 * Sat Sep 24 2011 Denis Smirnov <mithraen@altlinux.ru> 1.4.22-alt3
 - add Obsoletes to old sounds packages
 
