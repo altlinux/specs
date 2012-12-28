@@ -1,6 +1,6 @@
 Name: bind
 Version: 9.9.2
-Release: alt3
+Release: alt4
 
 Summary: ISC BIND - DNS server
 License: BSD-style
@@ -443,6 +443,9 @@ fi
 %exclude %docdir/COPYRIGHT
 
 %changelog
+* Fri Dec 28 2012 Fr. Br. George <george@altlinux.ru> 9.9.2-alt4
+- Service file fixup
+
 * Tue Dec 11 2012 Fr. Br. George <george@altlinux.ru> 9.9.2-alt3
 - Update to 9.9.2-P1 (CVE-2012-5688 and bugfixes)
 - Add systemd service file (from FC)
