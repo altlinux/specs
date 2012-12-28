@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt15
+Release: alt16
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -447,6 +447,9 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Dec 28 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt16
+- Set correct URL to indexhtml
+
 * Fri Dec 28 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt15
 - Really set Unicode black circle for password character
 - Remove white artifacts around QLineEdit on blue wallpaper
