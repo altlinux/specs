@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.9.6
-Release: alt1
+Release: alt2
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -12,13 +12,6 @@ Group: Development/Python
 %setup_python_module %oname
 
 Source0: PyQt-x11-gpl.tar
-Source1: qurlquery.sip
-Source2: qfiledevice.sip
-Source3: qscreen.sip
-Source4: qdnslookup.sip
-Source5: qsslcertificateextension.sip
-Source6: qwebkitglobal.sip
-Source7: qpycore_qmetaobjectbuilder.h
 URL: http://www.riverbankcomputing.co.uk/software/pyqt
 Packager: Python Development Team <python@packages.altlinux.org>
 
@@ -94,6 +87,7 @@ Requires: %name
 
 %description doc
 This package contains PyQt4 docs
+
 %prep
 %setup -n PyQt-x11-gpl
 subst 's|/lib/libpython|/%_lib/libpython|g' configure.py
@@ -107,14 +101,6 @@ QMAKE_CXXFLAGS += %optflags %optflags_shared
 E_O_F
 done
 
-#QScintilla-gpl/Python/sip
-install -d %buildroot/usr/share/sip/PyQt4/Qsci
-install -p -m644 %SOURCE1 %SOURCE2 sip/
-install -p -m644 %SOURCE3 %SOURCE4 sip/
-install -p -m644 %SOURCE5 %SOURCE6 sip/
-install -p -m644 sip/QtWebKit/QtWebKitmod.sip sip/
-install -p -m644 %SOURCE7 qpy/QtCore/
-
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -126,19 +112,32 @@ export QT4DIR=%_qt4dir
 
 echo 'yes' | python configure.py \
 	--debug \
+	--verbose \
 	-q %_qt4dir/bin/qmake \
 	-d %python_sitelibdir \
 	-p %_qt4dir/plugins \
+	-a --confirm-license \
+	--qsci-api \
 	--enable=designer-plugin \
 	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
 for i in $(find ./ -name Makefile); do
 	sed -i 's|-Wl,-rpath,|-I|g' $i
 done
-%make_build \
+%make_build
+
+%if_with python3
+pushd ../python3
+echo 'yes' | python3 configure.py \
 	--debug \
+	--verbose \
 	-q %_qt4dir/bin/qmake \
 	-d %python3_sitelibdir \
-	-p %_qt4dir/plugins
+	-p %_qt4dir/plugins \
+	-a --confirm-license \
+	--qsci-api \
+	--no-designer-plugin \
+	--sipdir=%_datadir/sip3/%oname \
+	--qsci-api-destdir=%_datadir/qt4/qsci3 \
 	CFLAGS+="%optflags" CXXFLAGS+="%optflags"
 for i in $(find ./ -name Makefile); do
 	sed -i 's|lpython3\.2|lpython3.2mu|g' $i
@@ -147,6 +146,8 @@ for i in $(find ./ -name Makefile); do
 	sed -i 's|-Wl,-rpath,|-I|g' $i
 done
 %make_build
+popd
+%endif
 
 %install
 %if_with python3
@@ -204,6 +205,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Fri Dec 28 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.6-alt2
+- Added missing source files
+
 * Fri Dec 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.6-alt1
 - Version 4.9.6
 
