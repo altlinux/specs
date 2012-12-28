@@ -4,11 +4,11 @@ BuildRequires: /usr/bin/doxygen gcc-c++ libICE-devel libSM-devel
 %define major     0
 %define raw_name  fakekey
 %define libname   lib%{raw_name}0
-%define develname %{raw_name}-devel
+%define develname lib%{raw_name}-devel
 
 Name:           libfakekey
 Version:        0.1
-Release:        alt3_3.5.2
+Release:        alt4_3.5.2
 Summary:        Converting characters to X key-presses
 
 Group:          System/Libraries
@@ -18,7 +18,7 @@ Source0:        http://matchbox-project.org/sources/libfakekey/0.1/%{name}-%{ver
 BuildRequires:  libXtst-devel
 BuildRequires:  libX11-devel
 Source44: import.info
-Patch: libfakekey-0.1-alt-link-fix.patch
+Patch33: libfakekey-0.1-alt-link-fix.patch
 
 %description
 libfakekey is a simple library for converting UTF-8 characters into
@@ -36,15 +36,16 @@ libfakekey is a simple library for converting UTF-8 characters into
 Summary:        Development files for %{name}
 Group:          Development/C
 Requires:       %libname
+Provides: fakekey-devel = %version-%release
 
 %description    -n %develname
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+The %%{name}-devel package contains libraries and header files for
+developing applications that use %%{name}.
 
 
 %prep
 %setup -q
-%patch -p1
+%patch33 -p1
 
 %build
 %configure --disable-static
@@ -69,6 +70,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libfakekey.la
 
 
 %changelog
+* Thu Dec 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_3.5.2
+- added fakekey-devel provides
+
 * Thu Nov 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt3_3.5.2
 - resurrected as mageia import
 
