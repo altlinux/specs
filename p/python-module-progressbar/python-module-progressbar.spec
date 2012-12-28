@@ -1,25 +1,24 @@
 %define modulename progressbar
 
 Name: python-module-progressbar
-Version: 2.2
-Release: alt1.1
+Version: 2.3
+Release: alt1
 
 Summary: Text progressbar library for python
 
 Group: Development/Python
 License: LGPLv2+
-Url: http://pypi.python.org/pypi/%modulename/
+Url: http://code.google.com/p/python-progressbar
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 BuildArch: noarch
 
-Source: http://pypi.python.org/packages/source/t/%modulename/%modulename-%version.tar
+Source: %modulename-%version.tar
 
 %setup_python_module %modulename
 
-# Automatically added by buildreq on Thu Mar 11 2010
-BuildRequires: python-devel
+BuildRequires: python-module-distribute
 
 %description
 This library provides a text mode progress bar. This is typically used to
@@ -37,14 +36,15 @@ automatically supports features like auto-resizing when available.
 
 %install
 %python_install
-chmod 0755 %buildroot%python_sitelibdir/progressbar.py
 
 %files
-%doc README
-%python_sitelibdir/%modulename.*
-%python_sitelibdir/%modulename-%version-*.egg-info
+%doc README.txt LICENSE.txt
+%python_sitelibdir/%{modulename}*
 
 %changelog
+* Fri Dec 28 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.3-alt1
+- New version
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.2-alt1.1
 - Rebuild with Python-2.7
 
