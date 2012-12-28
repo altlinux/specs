@@ -2,7 +2,7 @@
 
 Name: lib%_name
 Version: 0.10.2
-Release: alt1
+Release: alt2
 
 Summary: Extension library to XFce
 Summary (ru_RU.UTF-8): Библиотека расширений Xfce
@@ -103,6 +103,9 @@ make check
 %_datadir/gtk-doc/html/%{_name}*
 
 %changelog
+* Fri Dec 28 2012 Mikhail Efremov <sem@altlinux.org> 0.10.2-alt2
+- Bring back changes for xfce4-terminal.
+
 * Thu Dec 27 2012 Mikhail Efremov <sem@altlinux.org> 0.10.2-alt1
 - Temporally revert commits for xfce4-terminal.
 - Updated to 0.10.2.
