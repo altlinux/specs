@@ -4,7 +4,7 @@
 Name: asterisk-extra-sounds-fr-siren7
 Summary: sounds for Asterisk
 Version: 1.4.11
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Servers
 BuildArch: noarch
@@ -47,6 +47,9 @@ find -type f \
 %files -f sounds.list
 
 %changelog
+* Fri Dec 28 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4.11-alt3
+- add watch-file and cronbuild support
+
 * Sun Jul 24 2011 Denis Smirnov <mithraen@altlinux.ru> 1.4.11-alt2
 - add requires to asterisk-sounds-fr-base
 
