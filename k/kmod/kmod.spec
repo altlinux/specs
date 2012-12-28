@@ -1,6 +1,6 @@
 #v9-20-g36ddee6
 Name:		kmod
-Version:	10
+Version:	12
 Release:	alt1
 Summary:	Linux kernel module management utilities
 
@@ -117,6 +117,9 @@ ln -s kmod %buildroot/bin/lsmod
 %_libdir/libkmod.so
 
 %changelog
+* Fri Dec 28 2012 Alexey Gladkov <legion@altlinux.ru> 12-alt1
+- Version (12).
+
 * Sun Sep 16 2012 Alexey Gladkov <legion@altlinux.ru> 10-alt1
 - Version (10).
 
