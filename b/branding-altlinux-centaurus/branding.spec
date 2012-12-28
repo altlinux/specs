@@ -6,7 +6,7 @@
 
 Name: branding-%brand-%theme
 Version: 6.9.0 
-Release: alt14
+Release: alt15
 
 BuildRequires: cpio fonts-ttf-dejavu fonts-ttf-droid
 BuildRequires: design-bootloader-source >= 5.0-alt2
@@ -447,6 +447,10 @@ cat '/%_datadir/themes/%XdgThemeName/panel-default-setup.entries' > \
 %_desktopdir/indexhtml.desktop
 
 %changelog
+* Fri Dec 28 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt15
+- Really set Unicode black circle for password character
+- Remove white artifacts around QLineEdit on blue wallpaper
+
 * Wed Dec 12 2012 Andrey Cherepanov <cas@altlinux.org> 6.9.0-alt14
 - Create mate-settings subpackage
 - Set light-blue background for GRUB console
