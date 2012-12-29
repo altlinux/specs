@@ -1,5 +1,5 @@
 Name: kernel-image-un-def
-Release: alt2
+Release: alt2.1
 epoch:1 
 %define kernel_base_version	3.7
 %define kernel_sublevel	.1
@@ -575,6 +575,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Sat Dec 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.1-alt2.1
+- really do as written below
+
 * Fri Dec 28 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.1-alt2
 - make sha256 module on i586
 
