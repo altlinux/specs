@@ -1,7 +1,7 @@
 %define oname fuse
 Name: spectrum-fuse
-Version: 0.8.0.1
-Release: alt1.qa2
+Version: 1.0.0.1a
+Release: alt1
 
 Summary: The Free Unix Spectrum Emulator
 
@@ -11,17 +11,17 @@ Url: http://fuse-emulator.sourceforge.net/
 
 Packager: ZX Spectrum Development Team <spectrum@packages.altlinux.org>
 
-Source: http://dl.sf.net/fuse-emulator/%oname-%version.tar.bz2
+Source: http://dl.sf.net/fuse-emulator/%oname-%version.tar
 Source1: %name.png
 Source2: %name.desktop
+Source3: README.z88sdk
 
 Patch: %name-gcc4.patch
-Patch1: %oname-missing.patch
-Patch2: %oname-update.patch
-Patch3: %oname-keyboard.patch
+Patch4: fuse-emulator-zlib.patch
 
 Obsoletes: %oname = 0:0.6.1-alt1
 Provides: %oname = 0:0.6.1-alt1.dummy
+Provides: fuse-emulator = %version
 
 # Automatically added by buildreq on Sun Jul 29 2007
 BuildRequires: flex gcc-c++ glibc-devel imake lib765-devel libdsk-devel libgcrypt-devel libgtk+2-devel libICE-devel libjsw-devel libspectrum-devel libxml2-devel xorg-cf-files
@@ -35,14 +35,12 @@ and sound.
 
 %prep
 %setup -q -n %oname-%version
-%patch
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
+#patch
+%patch4 -p1
 
 %build
 %configure --disable-ui-joystick --enable-joystick --with-gtk
-%__make clean
+#make clean
 %make_build
 
 %install
@@ -50,8 +48,10 @@ and sound.
 mv %buildroot%_bindir/%oname %buildroot%_bindir/%name
 install -D -m 0644 %SOURCE1 %buildroot%_iconsdir/hicolor/64x64/apps/%name.png
 install -D -m 0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
+install -pm0644 %{SOURCE3} .
 
 %files
+%doc README.z88sdk
 %doc README AUTHORS COPYING ChangeLog THANKS
 %_bindir/%name
 %_man1dir/*
@@ -61,6 +61,10 @@ install -D -m 0644 %SOURCE2 %buildroot%_desktopdir/%name.desktop
 
 
 %changelog
+* Sat Dec 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0.1a-alt1
+- new version
+- added fuse-emulator-zlib.patch and README.z88sdk from Fedora
+
 * Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0.1-alt1.qa2
 - Rebuilt with libpng15
 
