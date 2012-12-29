@@ -1,36 +1,58 @@
-%define samba4_version 4.0.0
-%define pre_release alpha18
 %define _localstatedir /var
 
-# Most of these subpackages are disabled because they are not
-# needed by OpenChange, and to avoid file conflicts with Samba3.
-%def_disable samba4
-%def_disable client
-%def_disable common
-%def_disable python
-%def_disable winbind
+# internal libs
+%def_without talloc
+%def_without tevent
+%def_without tdb
+%def_without ldb
+%def_with ntdb
+
+# buuild as separate package
+%def_with libsmbclient
+%def_with libwbclient
+%def_without pam_smbpass
+
+%def_with mitkrb5
+%def_without dc
+%def_with clustering_support
+%def_without testsuite
+
+%if_with testsuite
+# The testsuite only works with a full build right now.
+%def_without mitkrb5
+%def_with dc
+%endif
 
 Name: samba4
-Version: %samba4_version
-Release: alt1.%pre_release
+Version: 4.0.0
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
 Url: http://www.samba.org/
-Packager: Alexey Shabalin <shaba@altlinux.ru>
 
 Source: %name-%version.tar
 
 # Red Hat specific replacement-files
-Source1: %name.log
-Source4: %name.sysconfig
-Source5: %name.init
+Source1: samba.log
+Source2: samba.xinetd
+Source3: swat.desktop
+Source4: samba.sysconfig
+Source5: smb.init
+Source6: samba.pamd
+Source8: winbind.init
+Source9: smb.conf.default
+Source10: nmb.init
+Source11: pam_winbind.conf
+Source12: samba.conf.tmp
 
-Patch01: samba-4.0.0alpha16.buildfix.patch
+Source200: README.dc
+Source201: README.downgrade
 
-%if_enabled common
+Patch: %name-%version-%release.patch
+
+Conflicts: samba < %version
 Requires(pre): %name-common = %version-%release
-%endif
 
 BuildRequires: libe2fs-devel
 BuildRequires: libacl-devel
@@ -44,40 +66,135 @@ BuildRequires: libpopt-devel
 BuildRequires: python-devel
 BuildRequires: libreadline-devel
 BuildRequires: libldap-devel
-BuildRequires: libxslt xsltproc
-BuildRequires: docbook-style-xsl
 BuildRequires: libpopt-devel
 BuildRequires: zlib-devel
 
-BuildRequires: libtalloc-devel libtdb-devel libtevent-devel libldb-devel
-BuildRequires: libpytalloc-devel python-module-tdb python-module-tevent python-module-pyldb-devel
+BuildRequires: libiniparser-devel
+BuildRequires: libkrb5-devel libssl-devel libcups-devel
+BuildRequires: gawk libgtk+2-devel libcap-devel libuuid-devel
+BuildRequires: inkscape libxslt xsltproc netpbm dblatex html2text docbook-style-xsl
+%{?_without_talloc:BuildRequires: libtalloc-devel >= 2.0.8 libpytalloc-devel}
+%{?_without_tevent:BuildRequires: libtevent-devel >= 0.9.17 python-module-tevent}
+%{?_without_tdb:BuildRequires: libtdb-devel >= 1.2.11  python-module-tdb}
+%{?_without_tdb:BuildRequires: libldb-devel >= 1.1.14 python-module-pyldb-devel}
+%{?_with_clustering_support:BuildRequires: ctdb-devel}
+%{?_with_testsuite:BuildRequires: ldb-tools}
 
 BuildRequires: perl-Perl4-CoreLibs
 
 %description
-Samba 4 is the ambitious next version of the Samba suite that is being
-developed in parallel to the stable 3.0 series. The main emphasis in
-this branch is support for the Active Directory logon protocols used
-by Windows 2000 and above.
+Samba is the standard Windows interoperability suite of programs for Linux and Unix.
 
 %package client
 Summary: Samba client programs
 Group: Networking/Other
 Requires: %name-common = %version-%release
 Requires: %name-libs = %version-%release
+Conflicts: samba-client < %version
+Provides: samba-client = %version-%release
 
 %description client
 The %name-client package provides some SMB/CIFS clients to complement
 the built-in SMB/CIFS filesystem in Linux. These clients allow access
 of SMB/CIFS shares and printing to SMB/CIFS printers.
 
+%package common
+Summary: Files used by both Samba servers and clients
+Group: System/Servers
+Requires: %name-libs = %version-%release
+Conflicts: samba-common < %version
+Provides: samba-common = %version-%release
+
+%description common
+%name-common provides files necessary for both the server and client
+packages of Samba.
+
+%package dc
+Summary: Samba AD Domain Controller
+Group: System/Servers
+Requires: %name-dc-libs = %version-%release
+
+%description dc
+The %name-dc package provides AD Domain Controller functionality
+
+%package dc-libs
+Summary: Samba AD Domain Controller Libraries
+Group: System/Libraries
+Requires: %name-common = %version-%release
+Requires: %name-libs = %version-%release
+
+%description dc-libs
+The %name-dc-libs package contains the libraries needed by the DC to
+link against the SMB, RPC and other protocols.
+
 %package libs
 Summary: Samba libraries
 Group: System/Libraries
+%if_with libwbclient
+Requires: libwbclient4 = %version-%release
+%endif
 
 %description libs
 The %name-libs package contains the libraries needed by programs that
 link against the SMB, RPC and other protocols provided by the Samba suite.
+
+%package -n libsmbclient4
+Summary: The SMB client library
+Group: System/Libraries
+Conflicts: libsmbclient < %version
+Provides: libsmbclient = %version-%release
+
+%description -n libsmbclient4
+The libsmbclient contains the SMB client library from the Samba suite.
+
+%package -n libsmbclient4-devel
+Summary: Developer tools for the SMB client library
+Group: Development/C
+Requires: libsmbclient4 = %version-%release
+Conflicts: libsmbclient-devel < %version
+Provides: libsmbclient-devel = %version-%release
+
+%description -n libsmbclient4-devel
+The libsmbclient-devel package contains the header files and libraries needed to
+develop programs that link against the SMB client library in the Samba suite.
+
+%package -n libwbclient4
+Summary: The winbind client library
+Group: System/Libraries
+Conflicts: libwbclient < %version
+Conflicts: samba-winbind-clients < %version
+Provides: libwbclient = %version-%release
+
+%description -n libwbclient4
+The libwbclient package contains the winbind client library from the Samba suite.
+
+%package -n libwbclient4-devel
+Summary: Developer tools for the winbind library
+Group: Development/C
+Requires: libwbclient4 = %version-%release
+Conflicts: libwbclient-devel < %version
+Provides: libwbclient-devel = %version-%release
+
+%description -n libwbclient4-devel
+The libwbclient-devel package provides developer tools for the wbclient library.
+
+%package -n libnetapi4
+Summary: Samba netapi library
+Group: System/Libraries
+Conflicts: libnetapi < %version
+Provides: libnetapi = %version-%release
+
+%description -n libnetapi4
+Samba netapi library
+
+%package -n libnetapi4-devel
+Summary: Samba netapi development files
+Group: Development/Other
+Conflicts: libnetapi-devel < %version
+Provides: libnetapi-devel = %version-%release
+
+%description -n libnetapi4-devel
+Samba netapi development files
 
 %package -n python-module-%name
 Summary: Samba Python libraries
@@ -109,297 +226,269 @@ Group: Development/Tools
 The %name-pidl package contains the Perl IDL compiler used by Samba
 and Wireshark to parse IDL and similar protocols
 
-%package common
-Summary: Files used by both Samba servers and clients
-Group: System/Servers
+%package test
+Summary: Testing tools for Samba servers and clients
+Group: Development/Tools
+Requires: %name = %version-%release
+Requires: %name-common = %version-%release
+Requires: %name-dc = %version-%release
 Requires: %name-libs = %version-%release
+Requires: %name-winbind = %version-%release
 
-%description common
-%name-common provides files necessary for both the server and client
+%description test
+samba4-test provides testing tools for both the server and client
+packages of Samba.
+
+%package test-devel
+Summary: Testing devel files for Samba servers and clients
+Group: Development/C
+Requires: %name-test-devel = %version-%release
+
+%description test-devel
+samba-test-devel provides testing devel files for both the server and client
 packages of Samba.
 
 %package winbind
 Summary: Samba winbind
 Group: System/Servers
-Requires: %name = %version-%release
+Requires: %name-common = %version-%release
+Requires: %name-libs = %version-%release
+Conflicts: samba-winbind < %version
+Provides: samba-winbind = %version-%release
 
 %description winbind
-The samba-winbind package provides the winbind NSS library, and some
+The %name-winbind package provides the winbind NSS library, and some
 client tools.  Winbind enables Linux to be a full member in Windows
 domains and to use Windows user and group accounts on Linux.
 
+%package winbind-clients
+Summary: Samba winbind clients
+Group: System/Servers
+Requires: %name-winbind = %version-%release
+%if_with libwbclient
+Requires: libwbclient4 = %version-%release
+%endif
+Conflicts: samba-winbind-clients < %version
+Provides: samba-winbind-clients = %version-%release
+
+%description winbind-clients
+The samba-winbind-clients package provides the NSS library and a PAM
+module necessary to communicate to the Winbind Daemon
+
+%package winbind-devel
+Summary: Developer tools for the winbind library
+Group: Development/Other
+Requires: %name-winbind = %version-%release
+
+%description winbind-devel
+The samba-winbind package provides developer tools for the wbclient library.
+
+%package swat
+Summary: The Samba SMB server Web configuration program
+Group: Security/Networking
+Requires: %name = %version-%release
+#Requires: %name-doc = %version-%release
+Requires: xinetd
+Conflicts: samba-swat < %version
+Provides: samba-swat = %version-%release
+
+%description swat
+The samba-swat package includes the new SWAT (Samba Web Administration
+Tool), for remotely managing Samba's smb.conf file using your favorite
+Web browser.
+
+%package doc
+Summary: Documentation for the Samba suite
+Group: Documentation
+Requires: %name-common = %version-%release
+BuildArch: noarch
+Conflicts: samba-doc < %version
+Provides: samba-doc = %version-%release
+
+%description doc
+The samba-doc package includes all the non-manpage documentation for the
+Samba suite.
+
 %prep
 %setup -q
-# %patch01 -p1 -b .buildfix
+%patch -p1
 
 %build
+
+%define _talloc_lib ,talloc,pytalloc,pytalloc-util
+%if_without talloc
+%define _talloc_lib ,!talloc,!pytalloc,!pytalloc-util
+%endif
+
+%define _tevent_lib ,tevent,pytevent
+%if_without tevent
+%define _tevent_lib ,!tevent,!pytevent
+%endif
+
+%define _tdb_lib ,tdb,pytdb
+%if_without tdb
+%define _tdb_lib ,!tdb,!pytdb
+%endif
+
+%define _ldb_lib ,ldb,pyldb
+%if_without ldb
+%define _ldb_lib ,!ldb,!pyldb
+%endif
+
+%define _samba4_libraries heimdal,!zlib,!popt%{_talloc_lib}%{_tevent_lib}%{_tdb_lib}%{_ldb_lib}
+
+%define _samba4_idmap_modules idmap_ad,idmap_rid,idmap_adex,idmap_hash,idmap_tdb2
+%define _samba4_pdb_modules pdb_tdbsam,pdb_ldap,pdb_ads,pdb_smbpasswd,pdb_wbc_sam,pdb_samba4
+%define _samba4_auth_modules auth_unix,auth_wbc,auth_server,auth_netlogond,auth_script,auth_samba4
+# auth_domain needs to be static
+%define _samba4_modules %_samba4_idmap_modules,%_samba4_pdb_modules,%_samba4_auth_modules
+
+%define _libsmbclient %nil
+%if_without libsmbclient
+%define _libsmbclient smbclient,smbsharemodes,
+%endif
+
+%define _libwbclient %nil
+%if_without libwbclient
+%define _libwbclient wbclient,
+%endif
+
+%define _samba4_private_libraries %{_libsmbclient}%{_libwbclient}
+
+
 %undefine _configure_gettext
+%add_optflags -I/usr/include/krb5
 %configure \
 	--enable-fhs \
-	--disable-tdb2 \
-	--with-lockdir=/var/lib/%name \
 	--with-piddir=/var/run \
-	--with-privatedir=/var/lib/%name/private \
-	--with-sockets-dir=/var/run \
-	--with-configdir=%_sysconfdir/%name \
+	--with-sockets-dir=/var/run/samba \
+	--with-modulesdir=%_libdir/samba \
+	--with-pammodulesdir=%_lib/security \
+	--with-lockdir=/var/lib/samba \
+	--with-privatedir=/var/lib/samba/private \
 	--disable-gnutls \
 	--disable-rpath-install \
-	--builtin-libraries=ccan,wbclient \
-	--bundled-libraries=heimdal,!talloc,!tdb,!tevent,!ldb,!zlib
+	--with-shared-modules=%_samba4_modules \
+	--builtin-libraries=ccan \
+	--bundled-libraries=%_samba4_libraries \
+	--with-pam \
+	--with-ads \
+	--private-libraries=%_samba4_private_libraries \
+%if_with mitkrb5
+	--with-system-mitkrb5 \
+%endif
+%if_without dc
+	--without-ad-dc \
+%endif
+%if_with clustering_support
+	--with-cluster-support \
+	--enable-old-ctdb \
+%endif
+%if_without pam_smbpass
+	--without-pam_smbpass \
+%endif
+%if_with testsuite
+	--enable-selftest \
+%endif
+	--disable-ntdb
 
+%make_build
 
 # Build PIDL for installation into vendor directories before
 # 'make proto' gets to it.
 (cd pidl && perl Makefile.PL INSTALLDIRS=vendor )
 
-# Builds using PIDL the IDL and many other things.
-#make proto
-#make everything
-make
-
 %install
+%make install DESTDIR=%buildroot PERL_INSTALL_ROOT=%buildroot
 
-# Don't call 'make install' as we want to call out to the PIDL
-# install manually.
-make install DESTDIR=%buildroot
+mkdir -p %buildroot/sbin
+mkdir -p %buildroot/usr/{sbin,bin}
+mkdir -p %buildroot/%_lib/security
+mkdir -p %buildroot/var/lib/samba
+mkdir -p %buildroot/var/lib/samba/{private,winbindd_privileged,scripts,sysvol}
+mkdir -p %buildroot/var/log/samba/old
+mkdir -p %buildroot/var/spool/samba
+mkdir -p %buildroot%_datadir/swat/using_samba
+mkdir -p %buildroot/var/run/{samba,winbindd}
+mkdir -p %buildroot%_libdir/samba
+mkdir -p %buildroot%_pkgconfigdir
+mkdir -p %buildroot%_initdir
+mkdir -p %buildroot%_unitdir
+mkdir -p %buildroot%_sysconfdir/{pam.d,logrotate.d,security,sysconfig,xinetd.d}
 
-# Undo the PIDL install, we want to try again with the right options.
-rm -rf %buildroot%_libdir/perl5
-rm -rf %buildroot%_datadir/perl5
 
-# Install PIDL.
-( cd pidl && make install PERL_INSTALL_ROOT=%buildroot )
+# Install other stuff
+install -m644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/samba
+install -m644 %SOURCE9 %buildroot%_sysconfdir/samba/smb.conf
+install -m644 %SOURCE11 %buildroot%_sysconfdir/security
+install -m644 %SOURCE6 %buildroot%_sysconfdir/pam.d/samba
+echo 127.0.0.1 localhost > %buildroot%_sysconfdir/samba/lmhosts
+mkdir -p %buildroot%_sysconfdir/openldap/schema
+install -m644 examples/LDAP/samba.schema %buildroot%_sysconfdir/openldap/schema/samba.schema
+install -m644 %SOURCE2 %buildroot%_sysconfdir/xinetd.d/swat
+install -m755 packaging/printing/smbprint %buildroot%_bindir/smbprint
+
+mkdir -p %buildroot/lib/tmpfiles.d/
+install -m644 %SOURCE12 %buildroot/lib/tmpfiles.d/samba.conf
+
+install -m644 packaging/systemd/samba.sysconfig %buildroot%_sysconfdir/sysconfig/samba
+install -m644 packaging/RHEL/setup/smbusers %buildroot%_sysconfdir/samba/smbusers
+
+install -m755 %SOURCE10 %buildroot%_initrddir/nmb
+install -m755 %SOURCE5 %buildroot%_initrddir/smb
+install -m755 %SOURCE8 %buildroot%_initrddir/winbind
+
+install -d -m 755 %buildroot%_defaultdocdir/%name
+install -m 644 %SOURCE201 %buildroot%_defaultdocdir/%name/README.downgrade
+
+%if_without dc
+install -m 644 %SOURCE200 %buildroot%_defaultdocdir/%name/README.dc
+install -m 644 %SOURCE200 %buildroot%_defaultdocdir/%name/README.dc-libs
+%endif
+
+for i in nmb smb winbind ; do
+    cat packaging/systemd/$i.service | sed -e 's@Type=forking@Type=forking\nEnvironment=KRB5CCNAME=/run/samba/krb5cc_samba@g' >tmp$i.service
+    install -m 0644 tmp$i.service %buildroot%_unitdir/$i.service
+done
+
+# NetworkManager online/offline script
+install -d -m 0755 %buildroot%_sysconfdir/NetworkManager/dispatcher.d/
+install -m 0755 packaging/NetworkManager/30-winbind-systemd \
+            %buildroot%_sysconfdir/NetworkManager/dispatcher.d/30-winbind
+
 
 # Clean out crap left behind by the PIDL install.
 find %buildroot -type f -name .packlist -exec rm -f {} \;
-find %buildroot -depth -type d -exec rmdir {} 2>/dev/null \;
+rm -f %buildroot%perl_vendorlib/wscript_build
+rm -rf %buildroot%perl_vendorlib/Parse/Yapp
 
+# winbind
+mv %buildroot%_libdir/libnss_winbind.so.2 %buildroot/%_lib/libnss_winbind.so.2
+ln -sf /%_lib/libnss_winbind.so.2  %buildroot%_libdir/libnss_winbind.so
+mv  %buildroot%_libdir/libnss_wins.so.2 %buildroot/%_lib/libnss_wins.so.2
+ln -sf /%_lib/libnss_wins.so.2  %buildroot%_libdir/libnss_wins.so
 
-%if_enabled samba4
-mkdir -p %buildroot%_initdir
-mkdir -p %buildroot%_sysconfdir/logrotate.d
-mkdir -p %buildroot%_sysconfdir/sysconfig
-%endif
-
-mkdir -p %buildroot/var/run/winbindd
-mkdir -p %buildroot/var/run/ntp_signd
-mkdir -p %buildroot/var/lib/%name/winbindd_privileged
-mkdir -p %buildroot/var/log/%name/
-mkdir -p %buildroot/var/log/%name/old
-
-mkdir -p %buildroot/var/lib/%name
-mkdir -p %buildroot/var/lib/%name/private
-mkdir -p %buildroot/var/lib/%name/sysvol
-
-mkdir -p %buildroot%_sysconfdir/%name
-
-%if_enabled samba4
-# Install other stuff.
-install -m755 %SOURCE5 %buildroot%_initdir/%name
-install -m644 %SOURCE1 %buildroot%_sysconfdir/logrotate.d/%name
-install -m644 %SOURCE4 %buildroot%_sysconfdir/sysconfig/%name
-%endif
-
-%if_disabled winbind
-rm -f %buildroot%_bindir/ntlm_auth
-rm -f %buildroot%_bindir/wbinfo
-rm -f %buildroot%_libdir/libnss_winbind.so.2
-rm -f %buildroot%_libdir/pam_winbind.so
-#rm -f %buildroot%_libdir/libwbclient.so
-#rm -f %buildroot%_libdir/libwbclient.so.*
-rm -f %buildroot%_libdir/winbind_krb5_locator.so
-rm -f %buildroot%_mandir/man1/ntlm_auth.*
-rm -f %buildroot%_includedir/samba-4.0/wbclient.h
-%endif
-rm -f %buildroot%_libdir/libdcerpc-atsvc.so*
-
-# libs {
-mkdir -p %buildroot%_libdir %buildroot%_includedir
-
-# }
-
-# Clean out some stuff we don't want in package.
-# rm %buildroot%_bindir/mount.cifs
-# rm %buildroot%_bindir/umount.cifs
-
-#rm %buildroot%_bindir/epdump
-rm -f %buildroot%_bindir/gentest
-rm -f %buildroot%_mandir/man1/gentest.*
-rm -f %buildroot%_bindir/getntacl
-rm -f %buildroot%_bindir/locktest
-rm -f %buildroot%_mandir/man1/locktest.*
-rm -f %buildroot%_bindir/masktest
-rm -f %buildroot%_mandir/man1/masktest.*
-rm -f %buildroot%_bindir/ndrdump
-rm -f %buildroot%_mandir/man1/ndrdump.*
-rm -f %buildroot%_bindir/nsstest
-rm -f %buildroot%_bindir/setnttoken
-rm -f %buildroot%_bindir/smbtorture
-rm -f %buildroot%_mandir/man1/smbtorture.*
-#depending on the environemnt this file might or might not be generated
-rm -f %buildroot%_bindir/tdbtorture
-
-# Avoids a file conflict with perl-Parse-Yapp.
-rm -rf %buildroot%perl_vendor_privlib/Parse/Yapp
-
-# Remove files for disabled subpackages.
-%if_disabled samba4
-#rm %buildroot%_bindir/mymachinepw
-rm -f %buildroot%_sbindir/provision
-rm -f %buildroot%_sbindir/samba
-rm -f %buildroot%_sbindir/upgradeprovision
-rm -f %buildroot%_sbindir/samba_dnsupdate
-rm -f %buildroot%_sbindir/samba_spnupdate
-rm -f %buildroot%_bindir/samba-tool
-rm -f %buildroot%_libdir/mit_samba.so
-rm -f %buildroot%_mandir/man8/samba.*
-rm -rf %buildroot%_datadir/samba/setup
-rm -rf %buildroot%_datadir/samba/swat
-%endif
-
-%if_enabled client
-# Fix *mount.cifs
-mkdir -p %buildroot/sbin
-mv %buildroot%_bindir/*mount.cifs %buildroot/sbin/
-ln -s ../../sbin/mount.cifs %buildroot%_bindir/cifsmount
-ln -s ../../sbin/umount.cifs %buildroot%_bindir/cifsumount
-%endif
-
-%if_disabled client
-rm -f %buildroot%_bindir/nmblookup
-rm -f %buildroot%_bindir/smbclient
-rm -f %buildroot%_bindir/cifsdd
-rm -f %buildroot%_mandir/man1/nmblookup.*
-%endif
-%if_disabled common
-rm -f %buildroot%_bindir/regdiff
-rm -f %buildroot%_bindir/regpatch
-rm -f %buildroot%_bindir/regshell
-rm -f %buildroot%_bindir/regtree
-rm -f %buildroot%_bindir/testparm
-rm -f %buildroot%_mandir/man1/regdiff.*
-rm -f %buildroot%_mandir/man1/regpatch.*
-rm -f %buildroot%_mandir/man1/regshell.*
-rm -f %buildroot%_mandir/man1/regtree.*
-%endif
-
-# the samba4 build process rebuilds libraries internally,
-# but we want to use the standalone build for now.
-#rm -f %buildroot%_libdir/libldb.so*
-#rm -f %buildroot%_bindir/ad2oLschema
-#rm -f %buildroot%_bindir/ldbadd
-#rm -f %buildroot%_bindir/ldbdel
-#rm -f %buildroot%_bindir/ldbedit
-#rm -f %buildroot%_bindir/ldbmodify
-#rm -f %buildroot%_bindir/ldbrename
-#rm -f %buildroot%_bindir/ldbsearch
-rm -f %buildroot%_bindir/oLschema2ldif
-#rm -f %buildroot%_bindir/tdbbackup
-#rm -f %buildroot%_bindir/tdbdump
-#rm -f %buildroot%_bindir/tdbtool
-
-rm -f %buildroot%_libdir/lib*.a
-
-%if_disabled python
-rm -r %buildroot%python_sitelibdir/*
-rm -fr %buildroot%python_libdir/lib
-%endif
-
-# These may be created in non mock systems, but we do not want to package them
-# for now
-#rm -f %buildroot%_man1dir/ad2oLschema.1
-rm -f %buildroot%_man1dir/oLschema2ldif.1
-#rm -f %buildroot%_datadir/swig/*/talloc.i
-
-rm -f %buildroot%_libdir/pam_smbpass.so
-
-# Remove Files conflicting with regular samba 3.x packages
-rm -f %buildroot%_libdir/samba/auth/script.so
-rm -f %buildroot%_libdir/samba/vfs/acl_tdb.so
-rm -f %buildroot%_libdir/samba/vfs/acl_xattr.so
-rm -f %buildroot%_libdir/samba/vfs/aio_fork.so
-rm -f %buildroot%_libdir/samba/vfs/audit.so
-rm -f %buildroot%_libdir/samba/vfs/cap.so
-rm -f %buildroot%_libdir/samba/vfs/catia.so
-rm -f %buildroot%_libdir/samba/vfs/crossrename.so
-rm -f %buildroot%_libdir/samba/vfs/default_quota.so
-rm -f %buildroot%_libdir/samba/vfs/dirsort.so
-rm -f %buildroot%_libdir/samba/vfs/expand_msdfs.so
-rm -f %buildroot%_libdir/samba/vfs/extd_audit.so
-rm -f %buildroot%_libdir/samba/vfs/fake_perms.so
-rm -f %buildroot%_libdir/samba/vfs/fileid.so
-rm -f %buildroot%_libdir/samba/vfs/full_audit.so
-rm -f %buildroot%_libdir/samba/vfs/linux_xfs_sgid.so
-rm -f %buildroot%_libdir/samba/vfs/netatalk.so
-rm -f %buildroot%_libdir/samba/vfs/preopen.so
-rm -f %buildroot%_libdir/samba/vfs/readahead.so
-rm -f %buildroot%_libdir/samba/vfs/readonly.so
-rm -f %buildroot%_libdir/samba/vfs/recycle.so
-rm -f %buildroot%_libdir/samba/vfs/scannedonly.so
-rm -f %buildroot%_libdir/samba/vfs/shadow_copy.so
-rm -f %buildroot%_libdir/samba/vfs/shadow_copy2.so
-rm -f %buildroot%_libdir/samba/vfs/smb_traffic_analyzer.so
-rm -f %buildroot%_libdir/samba/vfs/streams_depot.so
-rm -f %buildroot%_libdir/samba/vfs/streams_xattr.so
-rm -f %buildroot%_libdir/samba/vfs/syncops.so
-rm -f %buildroot%_libdir/samba/vfs/time_audit.so
-rm -f %buildroot%_libdir/samba/vfs/xattr_tdb.so
-rm -f %buildroot%_libdir/libsmbclient.so*
-rm -f %buildroot%_libdir/libnss_wins.so.2
-rm -f %buildroot%_sbindir/nmbd
-rm -f %buildroot%_sbindir/smbd
-rm -f %buildroot%_sbindir/swat
-rm -f %buildroot%_sbindir/winbindd
-rm -f %buildroot%_bindir/dbwrap_tool
-rm -f %buildroot%_bindir/dbwrap_torture
-rm -f %buildroot%_bindir/debug2html
-rm -f %buildroot%_bindir/eventlogadm
-rm -f %buildroot%_bindir/locktest2
-rm -f %buildroot%_bindir/locktest3
-rm -f %buildroot%_bindir/log2pcap
-rm -f %buildroot%_bindir/masktest3
-rm -f %buildroot%_bindir/msgtest
-rm -f %buildroot%_bindir/net
-rm -f %buildroot%_bindir/nmblookup3
-rm -f %buildroot%_bindir/ntlm_auth3
-rm -f %buildroot%_bindir/pdbedit
-rm -f %buildroot%_bindir/pdbtest
-rm -f %buildroot%_bindir/profiles
-rm -f %buildroot%_bindir/pthreadpooltest
-rm -f %buildroot%_bindir/rpc_open_tcp
-rm -f %buildroot%_bindir/rpcclient
-rm -f %buildroot%_bindir/sharesec
-rm -f %buildroot%_bindir/smbcacls
-rm -f %buildroot%_bindir/smbclient3
-rm -f %buildroot%_bindir/smbconftort
-rm -f %buildroot%_bindir/smbcontrol
-rm -f %buildroot%_bindir/smbcquotas
-rm -f %buildroot%_bindir/smbfilter
-rm -f %buildroot%_bindir/smbget
-rm -f %buildroot%_bindir/smbiconv
-rm -f %buildroot%_bindir/smbpasswd
-rm -f %buildroot%_bindir/smbspool
-rm -f %buildroot%_bindir/smbstatus
-rm -f %buildroot%_bindir/smbta-util
-rm -f %buildroot%_bindir/smbtorture3
-rm -f %buildroot%_bindir/smbtree
-rm -f %buildroot%_bindir/split_tokens
-rm -f %buildroot%_bindir/test_lp_load
-rm -f %buildroot%_bindir/timelimit
-rm -f %buildroot%_bindir/versiontest
-rm -f %buildroot%_bindir/vfstest
-rm -f %buildroot%_bindir/vlp
-rm -f %buildroot%_bindir/wbinfo3
-
-# This makes the right links, as rpmlint requires that
-# the ldconfig-created links be recorded in the RPM.
-#   /sbin/ldconfig -N -n %buildroot%_libdir
+mkdir -p  %buildroot%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
+mv %buildroot%_libdir/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
 
 # Fix up permission on perl install.
 %_fixperms %buildroot%perl_vendor_privlib
 
-# Fix up permissions in source tree, for debuginfo.
-find source4/heimdal -type f | xargs chmod -x
+%find_lang pam_winbind
+%find_lang net
+
+%if_with testsuite
+%check
+TDB_NO_FSYNC=1 %make_build test
+%endif
+
+%post
+%post_service smb
+%post_service nmb
+
+%preun
+%preun_service smb
+%preun_service nmb
 
 %pre winbind
 %_sbindir/groupadd -g 88 wbpriv >/dev/null 2>&1 || :
@@ -410,175 +499,485 @@ find source4/heimdal -type f | xargs chmod -x
 %preun winbind
 %preun_service winbind
 
-%post
-%if_enabled samba4
-%post_service samba4
-%endif
-
-%preun
-%if_enabled samba4
-%preun_service samba4
-%endif
-
 %files
 %doc COPYING
-%if_enabled samba4
-%_sbindir/provision
+%_bindir/smbstatus
+%_bindir/eventlogadm
+%_sbindir/nmbd
+%_sbindir/smbd
+%_libdir/samba/auth
+%_libdir/samba/vfs
+%config(noreplace) %_sysconfdir/samba/smbusers
+%attr(755,root,root) %_initdir/smb
+%attr(755,root,root) %_initdir/nmb
+%_unitdir/nmb.service
+%_unitdir/smb.service
+%attr(1777,root,root) %dir /var/spool/samba
+%dir %_sysconfdir/openldap/schema
+%_sysconfdir/openldap/schema/samba.schema
+%_man1dir/smbstatus.1*
+%_man8dir/eventlogadm.8*
+%_man8dir/smbd.8*
+%_man8dir/nmbd.8*
+%_man8dir/vfs_*.8*
+
+%files client
+%_bindir/cifsdd
+%_bindir/dbwrap_tool
+%_bindir/nmblookup
+%_bindir/nmblookup4
+%_bindir/oLschema2ldif
+%_bindir/regdiff
+%_bindir/regpatch
+%_bindir/regshell
+%_bindir/regtree
+%_bindir/rpcclient
+%_bindir/sharesec
+%_bindir/smbcacls
+%_bindir/smbclient
+%_bindir/smbclient4
+%_bindir/smbcquotas
+%_bindir/smbget
+#%_bindir/smbiconv
+%_bindir/smbpasswd
+%_bindir/smbprint
+%_bindir/smbspool
+%_bindir/smbta-util
+%_bindir/smbtree
+%_libdir/samba/libldb-cmdline.so
+%_man1dir/nmblookup.1.gz
+%_man1dir/oLschema2ldif.1.gz
+%_man1dir/regdiff.1.gz
+%_man1dir/regpatch.1.gz
+%_man1dir/regshell.1.gz
+%_man1dir/regtree.1.gz
+%exclude %_man1dir/findsmb.1*
+%_man1dir/log2pcap.1*
+%_man1dir/nmblookup4.1*
+%_man1dir/rpcclient.1*
+%_man1dir/sharesec.1*
+%_man1dir/smbcacls.1*
+%_man1dir/smbclient.1*
+%_man1dir/smbcquotas.1*
+%_man1dir/smbget.1*
+%_man5dir/smbgetrc.5*
+%exclude %_man1dir/smbtar.1*
+%_man1dir/smbtree.1*
+%_man8dir/smbpasswd.8*
+%_man8dir/smbspool.8*
+%_man8dir/smbta-util.8*
+
+## we don't build it for now
+#%%if_with ntdb
+#%_bindir/ntdbbackup
+#%_bindir/ntdbdump
+#%_bindir/ntdbrestore
+#%_bindir/ntdbtool
+#%%endif
+%if_with tdb
+%_bindir/tdbbackup
+%_bindir/tdbdump
+%_bindir/tdbrestore
+%_bindir/tdbtool
+%_man8dir/tdbbackup.8.gz
+%_man8dir/tdbdump.8.gz
+%_man8dir/tdbrestore.8.gz
+%_man8dir/tdbtool.8.gz
+%endif
+
+%if_with ldb
+%_bindir/ldbadd
+%_bindir/ldbdel
+%_bindir/ldbedit
+%_bindir/ldbmodify
+%_bindir/ldbrename
+%_bindir/ldbsearch
+%_man1dir/ldbadd.1.gz
+%_man1dir/ldbdel.1.gz
+%_man1dir/ldbedit.1.gz
+%_man1dir/ldbmodify.1.gz
+%_man1dir/ldbrename.1.gz
+%_man1dir/ldbsearch.1.gz
+%endif
+
+%files common -f net.lang
+/lib/tmpfiles.d/samba.conf
+%_bindir/net
+%_bindir/pdbedit
+%_bindir/profiles
+%_bindir/smbcontrol
+%_bindir/testparm
+%_datadir/samba/codepages
+%config(noreplace) %_sysconfdir/logrotate.d/samba
+%attr(0700,root,root) %dir /var/log/samba
+%attr(0700,root,root) %dir /var/log/samba/old
+%dir /var/run/samba
+%dir /var/run/winbindd
+%attr(700,root,root) %dir /var/lib/samba/private
+%attr(755,root,root) %dir %_sysconfdir/samba
+%config(noreplace) %_sysconfdir/samba/smb.conf
+%config(noreplace) %_sysconfdir/samba/lmhosts
+%config(noreplace) %_sysconfdir/sysconfig/samba
+%_man1dir/profiles.1*
+%_man1dir/smbcontrol.1*
+%_man1dir/testparm.1*
+%_man5dir/lmhosts.5*
+%_man5dir/smb.conf.5*
+%_man5dir/smbpasswd.5*
+%_man7dir/samba.7*
+%_man8dir/net.8*
+%_man8dir/pdbedit.8*
+
+# common libraries
+%_libdir/samba/libpopt_samba3.so
+%_libdir/samba/pdb
+
+%files dc
+%_libdir/samba/ldb
+%_libdir/samba/libdfs_server_ad.so
+%_libdir/samba/libdsdb-module.so
+
+%if_with dc
+%_bindir/samba-tool
 %_sbindir/samba
-%_sbindir/upgradeprovision
+%_sbindir/samba_kcc
 %_sbindir/samba_dnsupdate
 %_sbindir/samba_spnupdate
-%_bindir/samba-tool
+%_sbindir/samba_upgradedns
+%_sbindir/upgradeprovision
 %_libdir/mit_samba.so
-#%_mandir/man8/samba.*
-%dir /var/lib/%name/sysvol
-%config(noreplace) %_sysconfdir/logrotate.d/%name
-%config(noreplace) %_sysconfdir/sysconfig/%name
-%attr(0755,root,root) %_initdir/%name
-%attr(0700,root,root) %dir /var/log/%name
-%attr(0700,root,root) %dir /var/log/%name/old
+%_libdir/samba/bind9/dlz_bind9.so
+%_libdir/samba/libheimntlm-samba4.so.1
+%_libdir/samba/libheimntlm-samba4.so.1.0.1
+%_libdir/samba/libkdc-samba4.so.2
+%_libdir/samba/libkdc-samba4.so.2.0.0
+%_libdir/samba/libpac.so
+%_libdir/samba/gensec
+%dir /var/lib/samba/sysvol
+%_datadir/samba/setup
+%_man8dir/samba.8.gz
+%_man8dir/samba-tool.8.gz
+%else
+%doc %_defaultdocdir/%name/README.dc
+%exclude %_man8dir/samba.8*
+%exclude %_man8dir/samba-tool.8*
 %endif
 
-%files libs
-%doc PFIF.txt
-%dir %_datadir/samba
-%dir %_datadir/samba/codepages
-%_datadir/samba/codepages/*.dat
-
-#%_libdir/libdcerpc-atsvc.so.*
-%_libdir/libdcerpc-samr.so.*
+%files dc-libs
+%if_with dc
+%_libdir/samba/libprocess_model.so
+%_libdir/samba/libservice.so
+%_libdir/samba/process_model
+%_libdir/samba/service
 %_libdir/libdcerpc-server.so.*
-%_libdir/libdcerpc.so.*
-%_libdir/libgensec.so.*
-%_libdir/libndr-krb5pac.so.*
-%_libdir/libndr.so.*
-%_libdir/libndr-standard.so.*
-%_libdir/libsamba-policy.so.*
-%_libdir/libregistry.so.*
-%_libdir/libsamba-hostconfig.so.*
-%_libdir/libsamba-util.so.*
-%_libdir/libsamdb.so.*
-%_libdir/libtorture.so.*
-%_libdir/libsmbconf.so.*
-%_libdir/libdcerpc-binding.so.*
-%_libdir/libndr-nbt.so.*
-%_libdir/libsamba-credentials.so.*
-%_libdir/libsmbclient-raw.so.*
-%_libdir/libtevent-util.so.*
-
-# internal ldb modules
-%_libdir/samba/ldb/*.so
-
-# samba internal libraries
-%_libdir/samba/gensec/*.so
-%_libdir/samba/*.so.*
-%_libdir/samba/*.so
-%_libdir/samba/process_model/*.so
-%_libdir/samba/service/*.so
-
-#%_libdir/libtorture.so.*
-#Only needed if Samba's build produces plugins
-#%_libdir/samba
-#%dir %_sysconfdir/%name
-#Need to mark this as being owned by Samba, but it is normally created
-#by the provision script, which runs best if there is no existing
-#smb.conf
-#%config(noreplace) %_sysconfdir/%name/smb.conf
-
-%if_enabled winbind
-%files winbind
-%_bindir/ntlm_auth
-%_bindir/wbinfo
-%_libdir/libwbclient.so.0
-%_libdir/libnss_winbind.so.2
-%_libdir/libnss-winbind.inst.so.2
-%_libdir/winbind_krb5_locator.so
-%_libdir/pam_winbind.so
-%dir /var/run/winbindd
-%attr(750,root,wbpriv) %dir /var/lib/%name/winbindd_privileged
-%_mandir/man1/ntlm_auth.*
-%endif
-
-%if_enabled python
-%files -n python-module-%name
-%python_sitelibdir/*
+%_libdir/samba/libntvfs.so
+%_libdir/samba/libposix_eadb.so
+%else
+%doc %_defaultdocdir/%name/README.dc-libs
 %endif
 
 %files devel
 %_includedir/samba-4.0
-%_libdir/libdcerpc.so
+
+%exclude %_includedir/samba-4.0/netapi.h
+%exclude %_includedir/samba-4.0/torture.h
+%if_with libsmbclient
+%exclude %_includedir/samba-4.0/libsmbclient.h
+%exclude %_includedir/samba-4.0/smb_share_modes.h
+%endif
+%if_with libwbclient
+%exclude %_includedir/samba-4.0/wbclient.h
+%endif
+
+%_libdir/libdcerpc-atsvc.so
+%_libdir/libdcerpc-binding.so
 %_libdir/libdcerpc-samr.so
-%_libdir/libndr.so
-%_libdir/libndr-standard.so
-%_libdir/libsamba-hostconfig.so
-%_libdir/libsamba-util.so
-#%_libdir/libdcerpc-atsvc.so
-%_libdir/libdcerpc-server.so
+%_libdir/libdcerpc.so
 %_libdir/libgensec.so
 %_libdir/libndr-krb5pac.so
-%_libdir/libsamba-policy.so
-%_libdir/libregistry.so
-%_libdir/libsamdb.so
-%_libdir/libtorture.so
-%_libdir/libsmbconf.so
-%_libdir/libdcerpc-binding.so
 %_libdir/libndr-nbt.so
+%_libdir/libndr-standard.so
+%_libdir/libndr.so
+%_libdir/libregistry.so
 %_libdir/libsamba-credentials.so
+%_libdir/libsamba-hostconfig.so
+%_libdir/libsamba-policy.so
+%_libdir/libsamba-util.so
+%_libdir/libsamdb.so
 %_libdir/libsmbclient-raw.so
+%_libdir/libsmbconf.so
 %_libdir/libtevent-util.so
+%_libdir/libpdb.so
+%_libdir/libsmbldap.so
 
 %_pkgconfigdir/dcerpc.pc
-%_pkgconfigdir/dcerpc_samr.pc
-%_pkgconfigdir/ndr.pc
-%_pkgconfigdir/ndr_standard.pc
-%_pkgconfigdir/samba-hostconfig.pc
-%_pkgconfigdir/samba-util.pc
 %_pkgconfigdir/dcerpc_atsvc.pc
-%_pkgconfigdir/dcerpc_server.pc
+%_pkgconfigdir/dcerpc_samr.pc
 %_pkgconfigdir/gensec.pc
+%_pkgconfigdir/ndr.pc
 %_pkgconfigdir/ndr_krb5pac.pc
-%_pkgconfigdir/samba-policy.pc
-%_pkgconfigdir/registry.pc
-%_pkgconfigdir/samdb.pc
-%_pkgconfigdir/torture.pc
 %_pkgconfigdir/ndr_nbt.pc
+%_pkgconfigdir/ndr_standard.pc
+%_pkgconfigdir/registry.pc
 %_pkgconfigdir/samba-credentials.pc
+%_pkgconfigdir/samba-hostconfig.pc
+%_pkgconfigdir/samba-policy.pc
+%_pkgconfigdir/samba-util.pc
+%_pkgconfigdir/samdb.pc
 %_pkgconfigdir/smbclient-raw.pc
+
+%if_with dc
+%_libdir/libdcerpc-server.so
+%_pkgconfigdir/dcerpc_server.pc
+%endif
+
+%files libs
+%_libdir/libdcerpc-atsvc.so.*
+%_libdir/libdcerpc-binding.so.*
+%_libdir/libdcerpc-samr.so.*
+%_libdir/libdcerpc.so.*
+%_libdir/libgensec.so.*
+%_libdir/libndr-krb5pac.so.*
+%_libdir/libndr-nbt.so.*
+%_libdir/libndr-standard.so.*
+%_libdir/libndr.so.*
+%_libdir/libregistry.so.*
+%_libdir/libsamba-credentials.so.*
+%_libdir/libsamba-hostconfig.so.*
+%_libdir/libsamba-policy.so.*
+%_libdir/libsamba-util.so.*
+%_libdir/libsamdb.so.*
+%_libdir/libsmbclient-raw.so.*
+%_libdir/libsmbconf.so.*
+%_libdir/libtevent-util.so.*
+%_libdir/libpdb.so.*
+%_libdir/libsmbldap.so.*
+
+# libraries needed by the public libraries
+%_libdir/samba/libCHARSET3.so
+%_libdir/samba/libMESSAGING.so
+%_libdir/samba/libLIBWBCLIENT_OLD.so
+%_libdir/samba/libaddns.so
+%_libdir/samba/libads.so
+%_libdir/samba/libasn1util.so
+%_libdir/samba/libauth.so
+%_libdir/samba/libauth4.so
+%_libdir/samba/libauth_sam_reply.so
+%_libdir/samba/libauth_unix_token.so
+%_libdir/samba/libauthkrb5.so
+%_libdir/samba/libcli-ldap-common.so
+%_libdir/samba/libcli-ldap.so
+%_libdir/samba/libcli-nbt.so
+%_libdir/samba/libcli_cldap.so
+%_libdir/samba/libcli_smb_common.so
+%_libdir/samba/libcli_spoolss.so
+%_libdir/samba/libcliauth.so
+#%{_libdir}/samba/libclidns.so
+%_libdir/samba/libcluster.so
+%_libdir/samba/libcmdline-credentials.so
+%_libdir/samba/libdbwrap.so
+%_libdir/samba/libdcerpc-samba.so
+%_libdir/samba/libdcerpc-samba4.so
+%_libdir/samba/liberrors.so
+%_libdir/samba/libevents.so
+%_libdir/samba/libflag_mapping.so
+%_libdir/samba/libgpo.so
+%_libdir/samba/libgse.so
+%_libdir/samba/libinterfaces.so
+%_libdir/samba/libkrb5samba.so
+%_libdir/samba/libldbsamba.so
+%_libdir/samba/liblibcli_lsa3.so
+%_libdir/samba/liblibcli_netlogon3.so
+%_libdir/samba/liblibsmb.so
+%_libdir/samba/libsmb_transport.so
+%_libdir/samba/libmsrpc3.so
+%_libdir/samba/libndr-samba.so
+%_libdir/samba/libndr-samba4.so
+%_libdir/samba/libnet_keytab.so
+%_libdir/samba/libnetif.so
+%_libdir/samba/libnpa_tstream.so
+%_libdir/samba/libprinting_migrate.so
+%_libdir/samba/libreplace.so
+%_libdir/samba/libsamba-modules.so
+%_libdir/samba/libsamba-net.so
+%_libdir/samba/libsamba-security.so
+%_libdir/samba/libsamba-sockets.so
+%_libdir/samba/libsamba_python.so
+%_libdir/samba/libsamdb-common.so
+%_libdir/samba/libsecrets3.so
+%_libdir/samba/libserver-role.so
+%_libdir/samba/libshares.so
+%_libdir/samba/libsamba3-util.so
+%_libdir/samba/libsmbd_base.so
+%_libdir/samba/libsmbd_conn.so
+%_libdir/samba/libsmbd_shim.so
+%_libdir/samba/libsmbldaphelper.so
+%_libdir/samba/libsmbpasswdparser.so
+%_libdir/samba/libsmbregistry.so
+%_libdir/samba/libtdb-wrap.so
+%_libdir/samba/libtdb_compat.so
+%_libdir/samba/libtrusts_util.so
+%_libdir/samba/libutil_cmdline.so
+#%_libdir/samba/libutil_ntdb.so
+%_libdir/samba/libutil_reg.so
+%_libdir/samba/libutil_setid.so
+%_libdir/samba/libutil_tdb.so
+%_libdir/samba/libxattr_tdb.so
+
+
+%if_with dc
+%_libdir/samba/libdb-glue.so
+%_libdir/samba/libHDB_SAMBA4.so
+%_libdir/samba/libasn1-samba4.so.*
+%_libdir/samba/libgssapi-samba4.so.*
+%_libdir/samba/libhcrypto-samba4.so.*
+%_libdir/samba/libhdb-samba4.so.*
+%_libdir/samba/libheimbase-samba4.so.*
+%_libdir/samba/libhx509-samba4.so.*
+%_libdir/samba/libkrb5-samba4.so.*
+%_libdir/samba/libroken-samba4.so.*
+%_libdir/samba/libwind-samba4.so.*
+%endif
+
+%if_with ldb
+%_libdir/samba/libldb.so.*
+%_libdir/samba/libpyldb-util.so.*
+%endif
+%if_with talloc
+%_libdir/samba/libtalloc.so.*
+%_libdir/samba/libpytalloc-util.so.*
+%endif
+%if_with tevent
+%_libdir/samba/libtevent.so.*
+%endif
+%if_with tdb
+%_libdir/samba/libtdb.so.*
+%endif
+## we don't build it for now
+#%%if_with ntdb
+#%_libdir/samba/libntdb.so.*
+#%%endif
+%if_without libsmbclient
+%_libdir/samba/libsmbclient.so.*
+%_libdir/samba/libsmbsharemodes.so.*
+%endif
+%if_without libwbclient
+%_libdir/samba/libwbclient.so.*
+%_libdir/samba/libwinbind-client.so
+%endif
+
+%if_with libsmbclient
+%files -n libsmbclient4
+%_libdir/libsmbclient.so.*
+%_libdir/libsmbsharemodes.so.*
+
+%files -n libsmbclient4-devel
+%_includedir/samba-4.0/libsmbclient.h
+%_includedir/samba-4.0/smb_share_modes.h
+%_libdir/libsmbclient.so
+%_libdir/libsmbsharemodes.so
+%_pkgconfigdir/smbclient.pc
+%_pkgconfigdir/smbsharemodes.pc
+%_man7dir/libsmbclient.7*
+%endif
+
+%if_with libwbclient
+%files -n libwbclient4
+%_libdir/libwbclient.so.*
+%_libdir/samba/libwinbind-client.so
+
+%files -n libwbclient4-devel
+%_includedir/samba-4.0/wbclient.h
+%_libdir/libwbclient.so
+%_pkgconfigdir/wbclient.pc
+%endif
+
+%files -n libnetapi4
+%_libdir/libnetapi.so.*
+
+%files -n libnetapi4-devel
+%_libdir/libnetapi.so
+%_includedir/samba-4.0/netapi.h
+%_pkgconfigdir/netapi.pc
 
 %files pidl
 %attr(755,root,root) %_bindir/pidl
 %perl_vendor_privlib/*
 
-%if_enabled client
-%files client
-/sbin/mount.cifs
-/sbin/umount.cifs
+%files -n python-module-%name
+%python_sitelibdir/*
 
-%_bindir/nmblookup
-%_bindir/smbclient
-%_bindir/cifsdd
-%_mandir/man1/nmblookup.*
+%files swat
+%config(noreplace) %_sysconfdir/xinetd.d/swat
+%config(noreplace) %_sysconfdir/pam.d/samba
+%_datadir/samba/swat
+%_sbindir/swat
+%_man8dir/swat.8*
+#%attr(755,root,root) %_libdir/samba/*.msg
+
+%files test
+%_bindir/gentest
+%_bindir/locktest
+%_bindir/masktest
+%_bindir/ndrdump
+%_bindir/smbtorture
+%_libdir/libtorture.so.*
+%_libdir/samba/libsubunit.so
+%if_with dc
+%_libdir/samba/libdlz_bind9_for_torture.so
+%endif
+%_man1dir/gentest.1*
+%_man1dir/locktest.1*
+%_man1dir/masktest.1*
+%_man1dir/ndrdump.1*
+%_man1dir/smbtorture.1*
+%_man1dir/vfstest.1*
+
+%if_with testsuite
+# files to ignore in testsuite mode
+%_libdir/samba/libnss_wrapper.so
+%_libdir/samba/libsocket_wrapper.so
+%_libdir/samba/libuid_wrapper.so
 %endif
 
-%if_enabled common
-%files common
-%_bindir/testparm
-%_bindir/regdiff
-%_bindir/regpatch
-%_bindir/regshell
-%_bindir/regtree
-%_mandir/man1/regdiff.*
-%_mandir/man1/regpatch.*
-%_mandir/man1/regshell.*
-%_mandir/man1/regtree.*
+%files test-devel
+%_includedir/samba-4.0/torture.h
+%_libdir/libtorture.so
+%_pkgconfigdir/torture.pc
 
-%dir /var/lib/%name
-%attr(700,root,root) %dir /var/lib/%name/private
-# We don't want to put a smb.conf in by default, provision should create it
-#%config(noreplace) %_sysconfdir/%name/smb.conf
-%endif
+%files winbind -f pam_winbind.lang
+%_libdir/samba/idmap
+%_libdir/samba/nss_info
+%_libdir/samba/libnss_info.so
+%_libdir/samba/libidmap.so
+%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
+%_sbindir/winbindd
+%attr(750,root,wbpriv) %dir /var/lib/samba/winbindd_privileged
+%_unitdir/winbind.service
+%attr(755,root,root) %_initrddir/winbind
+%_sysconfdir/NetworkManager/dispatcher.d/30-winbind
+%_man7dir/winbind_krb5_locator.7*
+%_man8dir/winbindd.8*
+%_man8dir/idmap_*.8*
+
+%files winbind-clients
+%_bindir/ntlm_auth
+%_bindir/wbinfo
+%_libdir/libnss_winbind.so
+/%_lib/libnss_winbind.so.*
+%_libdir/libnss_wins.so
+/%_lib/libnss_wins.so.*
+/%_lib/security/pam_winbind.so
+%config(noreplace) %_sysconfdir/security/pam_winbind.conf
+%_man1dir/ntlm_auth.1.*
+%_man1dir/wbinfo.1*
+%_man5dir/pam_winbind.conf.5*
+%_man8dir/pam_winbind.8*
 
 %changelog
+* Fri Dec 21 2012 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt2
+- 4.0.0 release
+
 * Wed Mar 28 2012 Alexey Shabalin <shaba@altlinux.ru> 4.0.0-alt1.alpha18
 - alpha18
 
