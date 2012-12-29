@@ -1,8 +1,8 @@
 %define binname zyGrib
 
 Name: zygrib
-Version: 5.1.3
-Release: alt2
+Version: 6.1.0
+Release: alt1
 
 Summary: Visualisation of meteo data from files in GRIB Format 1
 
@@ -13,15 +13,11 @@ Source0: %binname-%version.tgz
 Source1: %binname.png
 Source2: %binname.desktop
 
-Patch1: zyGrib-5.1.1-qwt.patch
-Patch2: zyGrib-5.1.1-remove-system-libs.patch
-Patch3: zyGrib-0001-fix-for-new-Proj.patch
-
 Requires: fonts-ttf-liberation
 Requires: %name-data = %{version}-%{release}
 
 # Automatically added by buildreq on Sat Nov 05 2011
-BuildRequires: bzlib-devel gcc-c++ libproj-devel libqt4-devel libqwt6-devel
+BuildRequires: bzlib-devel gcc-c++ libproj-devel libqt4-devel libqwt6-devel libnova-devel
 
 BuildRequires: rpm-build-licenses
 
@@ -49,21 +45,8 @@ home page: http://www.geonames.org/
 
 %setup -q -n %binname-%version
 
-#patch1 -p1
-
-# remove system-wide libraries
-%patch2 -p1
-rm -rf src/bzip2
-rm -rf src/zlib-*
-rm -rf src/proj-*
-
-%patch3 -p2
-
 # remove system-wide fonts
 rm -rf data/fonts
-
-# remove precompiled binary
-rm -f src/sha1/testsha1
 
 %build
 
@@ -117,6 +100,9 @@ fi
 %_datadir/%binname
 
 %changelog
+* Sun Dec 30 2012 Sergey Y. Afonin <asy@altlinux.ru> 6.1.0-alt1
+- New version
+
 * Mon May 07 2012 Sergey Y. Afonin <asy@altlinux.ru> 5.1.3-alt2
 - fixed build with libproj 4.8.0 (thanks slazav@altlinux)
 
