@@ -3,8 +3,8 @@
 
 Name: asterisk-extra-sounds-en-siren7
 Summary: sounds for Asterisk
-Version: 1.4.11
-Release: alt3
+Version: 1.4.12
+Release: alt1
 License: GPL
 Group: System/Servers
 BuildArch: noarch
@@ -47,6 +47,9 @@ find -type f \
 %files -f sounds.list
 
 %changelog
+* Sat Dec 29 2012 Cronbuild Service <cronbuild@altlinux.org> 1.4.12-alt1
+- new version 1.4.12
+
 * Fri Dec 28 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4.11-alt3
 - add watch-file and cronbuild support
 
