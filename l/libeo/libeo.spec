@@ -1,12 +1,12 @@
-Name:		libeo
-Version:	1.2.0
-Release:	alt2.2
-Summary:	EO, the Evolving Objects library
-License:	LGPLv2.1
-URL:		http://eodev.sourceforge.net
-Source:		EO-%version.zip
+Name: libeo
+Version: 1.3.1
+Release: alt1
+Summary: EO, the Evolving Objects library
+License: LGPLv2.1
+Url: http://eodev.sourceforge.net
+Source: EO-%version.zip
 Patch: libeo-1.2.0-alt-glibc-2.16.patch
-Group:		Development/C++
+Group: Development/C++
 
 # Automatically added by buildreq on Mon Sep 05 2011
 # optimized out: cmake cmake-modules libstdc++-devel openssh-common python-base python-devel
@@ -23,14 +23,14 @@ classes.
 %define sum EO, the Evolving Objects library
 
 %package devel
-Group:		Development/C++
-Summary:	Development environment for %sum
+Group: Development/C++
+Summary: Development environment for %sum
 %description devel
 Development environment for %sum
 
 %package -n python-module-PyEO
-Group:		Development/Python
-Summary:	Python bindings for %sum
+Group: Development/Python
+Summary: Python bindings for %sum
 %description -n python-module-PyEO
 Python bindings for %sum
 
@@ -60,13 +60,13 @@ make test
 
 %install
 cd eo/BUILD
-cmake -DENABLE_PYEO=1 -DLIB_DESTINATION=%_lib -DLIB_SUFFIX=64 -DCMAKE_INSTALL_PREFIX=%buildroot%_prefix -P cmake_install.cmake
+cmake -DENABLE_PYEO=1 -DLIB_DESTINATION=%_lib -DLIB_SUFFIX=64 -DCMAKE_INSTALL_PREFIX=%buildroot%prefix -P cmake_install.cmake
 mkdir -p %buildroot%_libexecdir/eo
 install -D lib/libPyEO.so %buildroot%python_sitelibdir/PyEO.so
 mv %buildroot%_datadir/eo/[^d]* %buildroot%_libexecdir/eo/
 # TODO when building shared, do not move debuginfo
 %ifarch x86_64
-mv %buildroot%_prefix/lib/* %buildroot%_libdir/
+mv %buildroot%prefix/lib/* %buildroot%_libdir/
 %endif
 
 %files
@@ -90,6 +90,9 @@ mv %buildroot%_prefix/lib/* %buildroot%_libdir/
 #_libexecdir/eo/test
 
 %changelog
+* Tue Dec 30 2012 Fr. Br. George <george@altlinux.ru> 1.3.1-alt1
+- Autobuild version bump to 1.3.1
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.0-alt2.2
 - Rebuilt with Boost 1.52.0
 
