@@ -1,6 +1,6 @@
 Name: udev-alsa
 Version: 0.3
-Release: alt1.1
+Release: alt1.2
 Summary: The system sound initialization
 License: GPL
 Group: System/Base
@@ -53,6 +53,10 @@ done
 %ghost %_localstatedir/alsa/controlC*
 
 %changelog
+* Sun Dec 30 2012 L.A. Kostis <lakostis@altlinux.ru> 0.3-alt1.2
+- NMU:
+  + sync with alsactl from 1.0.26.
+
 * Mon Jul 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1.1
 - Fixed build
 
