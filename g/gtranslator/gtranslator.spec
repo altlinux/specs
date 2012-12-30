@@ -3,8 +3,8 @@
 %def_enable introspection
 
 Name: gtranslator
-Version: %ver_major.5
-Release: alt3
+Version: %ver_major.6
+Release: alt4
 
 Summary: A GNOME po file editor with many bells and whistles.
 License: GPL
@@ -12,8 +12,8 @@ Group: Development/Tools
 URL: http://gtranslator.sourceforge.net
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
-Source: %name-%version.tar
-#Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch: %name-2.91.5-alt-pkgconfig.patch
 
 Requires: libgda5-sqlite
@@ -90,6 +90,9 @@ find %buildroot%_libdir/%name -name \*.la -delete
 %_datadir/gtk-doc/html/%name/
 
 %changelog
+* Sun Dec 30 2012 Yuri N. Sedunov <aris@altlinux.org> 2.91.6-alt4
+- 2.91.6
+
 * Mon Dec 03 2012 Yuri N. Sedunov <aris@altlinux.org> 2.91.5-alt3
 - rebuild against libgda5
 
