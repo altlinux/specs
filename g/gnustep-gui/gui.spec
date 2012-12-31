@@ -1,15 +1,17 @@
+%set_verify_elf_method unresolved=strict
+
 # based on Fedora's package
 
 Name: gnustep-gui
 Version: 0.23.0
-Release: alt4.svn20121209
+Release: alt5.git20121226
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://svn.gna.org/svn/gnustep/libs/gui/trunk/
+# https://github.com/gnustep/gnustep-gui.git
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
@@ -99,18 +101,29 @@ done
 	messages=yes \
 	debug=yes \
 	strip=no \
+	shared=yes ||:
+touch Tools/GSspell.service/Resources/Info-gnustep.plist
+%make_build \
+	messages=yes \
+	debug=yes \
+	strip=no \
 	shared=yes
  
+# too long now
+%if 0
 %make_build -C Documentation \
 	messages=yes \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+%endif
 
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
+%if 0
 %makeinstall_std -C Documentation \
      GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
      GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+%endif
 
 for i in ChangeLog*; do
 	gzip $i
@@ -123,7 +136,9 @@ rm -fR %buildroot%_infodir
 %doc ANNOUNCE BUGS ChangeLog* COPYING NEWS README
 %_bindir/*
 %_libdir/GNUstep
+%if 0
 %_man1dir/*
+%endif
 
 %files -n lib%name
 %doc COPYING.LIB
@@ -134,11 +149,16 @@ rm -fR %buildroot%_infodir
 %_libdir/*.so
 %_datadir/GNUstep
 
+%if 0
 %files doc
 #_infodir/*
 %_docdir/GNUstep
+%endif
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt5.git20121226
+- New snapshot
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt4.svn20121209
 - Added requirement %name-devel on %name
 

@@ -2,7 +2,7 @@
 
 Name: gnustep-sqlclient
 Version: 1.6.0
-Release: alt2.git20121129
+Release: alt3.git20121129
 Summary: Provide a simple interface to SQL databases for GNUstep applications
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -97,7 +97,7 @@ buildIt() {
 		strip=no \
 		shared=yes \
 		AUXILIARY_CPPFLAGS='-O2' \
-		CONFIG_SYSTEM_LIBS="$1 -lPerformance -lgnustep-base -lobjc"
+		CONFIG_SYSTEM_LIBS="$1 -lPerformance -lgnustep-base -lobjc2"
 }
 
 buildIt
@@ -125,6 +125,9 @@ buildIt $libSQLClient
 %_docdir/GNUstep
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt3.git20121129
+- Rebuilt with libobjc2 instead of libobjc
+
 * Fri Dec 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2.git20121129
 - Rebuild with updated gnustep-mak
 

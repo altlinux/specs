@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ unzip zlib-devel
 # END SourceDeps(oneline)
 Name:           raidem
 Version:        0.3.1
-Release:        alt2_21.1
+Release:        alt2_21.2
 Summary:        2d top-down shoot'em up
 Group:          Games/Other
 License:        zlib
@@ -125,6 +125,9 @@ fi
 
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt2_21.2
+- Rebuilt with libobjc2 instead of libibjc
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.1-alt2_21.1
 - Built with gcc 4.7 & libgnustep-objc2 instead of libobjc
 

@@ -1,6 +1,6 @@
 Name: oolite
 Version: 1.76.1
-Release: alt1.1
+Release: alt1.2
 
 Summary: A cross-platform, user-modifiable three-dimensional space trading and combat game.
 License: GPL
@@ -69,6 +69,9 @@ rm -f %buildroot%_libexecdir/GNUstep/System/Applications/oolite.app/Resources/Co
 %doc README.txt Doc/*
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.76.1-alt1.2
+- Rebuilt with libobjc2 instead of libobjc
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.76.1-alt1.1
 - Rebuilt with libgnustep-objc2 instead of libobjc
 

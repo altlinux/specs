@@ -1,6 +1,6 @@
 Name: gnustep-renaissance
 Version: 0.9.0
-Release: alt2.git20121208
+Release: alt3.git20121208
 Summary: The GNUstep development framework
 License: LGPLv2.1+
 Group: Development/Tools
@@ -72,7 +72,7 @@ This package contains documentation for Renaissance.
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='%optflags -DGNUSTEP' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc' \
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2' \
 
 %make_build -C Documentation \
 	messages=yes \
@@ -102,6 +102,9 @@ gzip ChangeLog
 %_docdir/GNUstep
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt3.git20121208
+- Rebuilt with libobjc2 instead of libobjc
+
 * Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.0-alt2.git20121208
 - Added synonym: lib%name-devel -> %name-devel
 

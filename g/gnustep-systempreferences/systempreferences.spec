@@ -1,6 +1,6 @@
 Name: gnustep-systempreferences
 Version: 1.1.0
-Release: alt1.git20120323
+Release: alt2.git20120323
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -55,7 +55,7 @@ This package contains development files of %name.
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-O2' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -82,6 +82,9 @@ popd
 %_libdir/*.so
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2.git20120323
+- Rebuilt with libobjc2 instead of libobjc
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1.git20120323
 - Initial build for Sisyphus
 

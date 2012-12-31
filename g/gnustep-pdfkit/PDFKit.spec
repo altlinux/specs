@@ -1,6 +1,6 @@
-Name: PDFKit
+Name: gnustep-pdfkit
 Version: 0.9.2
-Release: alt2
+Release: alt3
 Summary: A Framework for accessing and rendering PDF content
 License: GPLv2 only
 Group: File tools
@@ -28,6 +28,7 @@ This package contains shared libraries of PDFKit.
 %package -n lib%name-devel
 Summary: Development files of PDFKit
 Group: Development/Objective-C
+Provides: %name-devel = %version-%release
 Requires: %name = %version-%release
 Requires: lib%name = %version-%release
 
@@ -54,7 +55,7 @@ export GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 	debug=yes \
 	strip=no \
 	shared=yes \
-	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc'
+	CONFIG_SYSTEM_LIBS='-lgnustep-gui -lgnustep-base -lobjc2'
  
 %install
 %makeinstall_std \
@@ -70,9 +71,29 @@ for i in *.so*; do
 done
 popd
 
+rm -f \
+	%buildroot%_libdir/GNUstep/Frameworks/PDFKit.framework/Versions/0/libPDFKit.so \
+	%buildroot%_libdir/GNUstep/Frameworks/PDFKit.framework/Versions/0/PDFKit \
+	%buildroot%_libdir/GNUstep/Frameworks/PDFKit.framework/libPDFKit.so \
+	%buildroot%_libdir/GNUstep/Frameworks/PDFKit.framework/PDFKit
+pushd %buildroot%_libdir
+for i in libPDFKit.so.*.*; do
+	ln -s %_libdir/$i \
+		%buildroot%_libdir/GNUstep/Frameworks/PDFKit.framework/Versions/0/libPDFKit.so
+	ln -s %_libdir/$i \
+		%buildroot%_libdir/GNUstep/Frameworks/PDFKit.framework/Versions/0/PDFKit
+	ln -s %_libdir/$i \
+		%buildroot%_libdir/GNUstep/Frameworks/PDFKit.framework/libPDFKit.so
+	ln -s %_libdir/$i \
+		%buildroot%_libdir/GNUstep/Frameworks/PDFKit.framework/PDFKit
+done
+popd
+
 %files
 %doc Documentation/*
 %_libdir/GNUstep
+%exclude %_libdir/GNUstep/Frameworks/PDFKit.framework/Versions/0/Headers
+%exclude %_libdir/GNUstep/Frameworks/PDFKit.framework/Headers
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -80,8 +101,13 @@ popd
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/GNUstep/Frameworks/PDFKit.framework/Versions/0/Headers
+%_libdir/GNUstep/Frameworks/PDFKit.framework/Headers
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt3
+- Don't required devel packages for runtime packages
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt2
 - Moved shared libraries into %_libdir
 

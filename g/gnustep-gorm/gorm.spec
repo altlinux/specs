@@ -2,7 +2,7 @@
 
 Name: gnustep-gorm
 Version: 1.2.18
-Release: alt1.git20120726
+Release: alt2.git20120726
 Summary: The GNUstep Interface Builder
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -72,7 +72,7 @@ buildIt() {
 		strip=no \
 		shared=yes \
 		AUXILIARY_CPPFLAGS='-O2' \
-		CONFIG_SYSTEM_LIBS="-lgnustep-gui -lgnustep-base -lobjc -lm $1 $2 $3"
+		CONFIG_SYSTEM_LIBS="-lgnustep-gui -lgnustep-base -lobjc2 -lm $1 $2 $3"
 }
 
 libGorm=$PWD/GormLib/obj/libGorm.so
@@ -126,6 +126,9 @@ gzip ChangeLog
 %_infodir/*
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.18-alt2.git20120726
+- Rebuilt with libobjc2 instead of libobjc
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.18-alt1.git20120726
 - Initial build for Sisyphus
 

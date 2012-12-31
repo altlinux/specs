@@ -1,6 +1,8 @@
+%set_verify_elf_method unresolved=strict
+
 Name: gnustep-easydiff
 Version: 0.4.1
-Release: alt1.git20121210
+Release: alt2.git20121210
 Summary: GNUstep's implementation of the OPENSTEP FileMerge application
 License: GPLv2+ and GPLv3
 Group: File tools
@@ -39,6 +41,9 @@ different SCMSs and is useful in resolving merge conflicts.
 %_libdir/GNUstep
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt2.git20121210
+- Rebuilt with libobjc2 instead of libobjc
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt1.git20121210
 - Initial build for Sisyphus
 

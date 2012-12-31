@@ -2,7 +2,7 @@
 
 Name: gnustep-projectcenter
 Version: 0.6.1
-Release: alt2.git20121122
+Release: alt3.git20121122
 Summary: GNUstep IDE, a part of the GNUstep project and is copyrighted by the FSF
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -80,18 +80,25 @@ libProjectCenter=$PWD/Framework/ProjectCenter.framework/libProjectCenter.so
 	GNUSTEP_SYSTEM_ROOT=%buildroot
 
 pushd %buildroot%_libdir
+rm -f GNUstep/Frameworks/ProjectCenter.framework/Versions/0.6.0/ProjectCenter
 for i in *.so*; do
 	rm -f $i
-	mv GNUstep/Frameworks/ProjectCenter.framework/Versions/Current/$i ./
-	ln -s %_libdir/$i \
-		GNUstep/Frameworks/ProjectCenter.framework/Versions/Current/
+	mv GNUstep/Frameworks/ProjectCenter.framework/Versions/0.6.0/$i ./
+	for j in *.so.*.*; do
+		ln -s %_libdir/$j \
+			GNUstep/Frameworks/ProjectCenter.framework/Versions/0.6.0/$i
+	done
 done
+ln -s %_libdir/$j \
+	GNUstep/Frameworks/ProjectCenter.framework/Versions/0.6.0/ProjectCenter
 popd
 
 %files
 %doc ChangeLog Documentation/*
 %_bindir/*
 %_libdir/GNUstep
+%exclude %_libdir/GNUstep/Frameworks/ProjectCenter.framework/Versions/0.6.0/Headers
+%exclude %_libdir/GNUstep/Frameworks/ProjectCenter.framework//Headers
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -99,8 +106,14 @@ popd
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/GNUstep/Frameworks/ProjectCenter.framework/Versions/0.6.0/Headers
+%_libdir/GNUstep/Frameworks/ProjectCenter.framework//Headers
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt3.git20121122
+- Rebuilt with libobjc2 instead of libobjc
+- Don't require development packages for runtime packages
+
 * Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt2.git20121122
 - Added synonym: lib%name-devel -> %name-devel
 

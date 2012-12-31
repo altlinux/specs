@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.1
-Release: alt1.git20121017
+Release: alt2.git20121017
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -11,9 +11,9 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel /proc
-BuildPreReq: libgnustep-objc2-devel libPDFKit-devel inotify-tools-devel
+BuildPreReq: libgnustep-objc2-devel libgnustep-pdfkit-devel
 BuildPreReq: gnustep-systempreferences-devel libsqlite3-devel unzip
-BuildPreReq: gnustep-gui-devel gnustep-gui
+BuildPreReq: gnustep-gui-devel gnustep-gui inotify-tools-devel
 
 Requires: lib%name = %version-%release
 
@@ -36,6 +36,7 @@ This package contains shared libraries of GWorkspace.
 %package -n lib%name-devel
 Summary: Development files of GWorkspace
 Group: Development/Objective-C
+Provides: %name-devel = %version-%release
 Requires: %name = %version-%release
 Requires: lib%name = %version-%release
 
@@ -78,7 +79,7 @@ export CC=gcc
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-O2' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lgnustep-gui -lobjc -lm'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base -lgnustep-gui -lobjc2 -lm'
  
 libFSNode="$PWD/FSNode/FSNode.framework/libFSNode.so"
 pushd Inspector
@@ -89,7 +90,7 @@ pushd Inspector
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-O2' \
-	CONFIG_SYSTEM_LIBS="$libFSNode -lgnustep-base -lgnustep-gui -lobjc"
+	CONFIG_SYSTEM_LIBS="$libFSNode -lgnustep-base -lgnustep-gui -lobjc2"
 popd
 
 %install
@@ -102,7 +103,13 @@ for j in MDKit Operation Inspector FSNode; do
 	for i in lib$j.so*; do
 		rm -f $i
 		mv GNUstep/Frameworks/$j.framework/Versions/?/$i ./
-	ln -s %_libdir/$i GNUstep/Frameworks/$j.framework/Versions/?/
+		for k in lib$j.so.*.*; do
+			for l in 0 1; do
+				ln -s %_libdir/$k GNUstep/Frameworks/$j.framework/Versions/$l/$i ||:
+				rm GNUstep/Frameworks/$j.framework/Versions/$l/$j ||:
+				ln -s %_libdir/$k GNUstep/Frameworks/$j.framework/Versions/$l/$j ||:
+			done
+		done
 	done
 done
 popd
@@ -111,6 +118,8 @@ popd
 %doc ChangeLog README TODO
 %_bindir/*
 %_libdir/GNUstep
+%exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/?/Headers
+%exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -118,11 +127,17 @@ popd
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/GNUstep/Frameworks/*.framework/Versions/?/Headers
+%_libdir/GNUstep/Frameworks/*.framework/Headers
 
 %files doc
 %doc Documentation/*
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt2.git20121017
+- Rebuilt with libobjc2 instead of libobjc
+- Don't require development packages for runtime packages
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt1.git20121017
 - Initial build for Sisyphus
 

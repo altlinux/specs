@@ -1,12 +1,15 @@
+%set_verify_elf_method unresolved=strict
+
 #based on Fedora's spec
 
 Name: gnustep-back    
 Version: 0.23.0
-Release: alt3.svn20121126
+Release: alt4.git20121126
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Development/Objective-C
 URL: http://www.gnustep.org
+# https://github.com/gnustep/gnustep-back.git
 Source: %name-%version.tar
 
 BuildPreReq: libfreetype-devel libX11-devel libXt-devel libXext-devel
@@ -71,6 +74,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt4.git20121126
+- Rebuilt with libobjc2 instead of libobjc
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt3.svn20121126
 - Rebuilt with fixed gnustep-make
 
