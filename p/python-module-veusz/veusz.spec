@@ -1,7 +1,7 @@
 %define oname veusz
 Name: python-module-%oname
 Version: 1.14
-Release: alt2.1
+Release: alt3
 Summary: A Scientific Plotting Package
 License: GPLv2+
 Group: Development/Python
@@ -52,6 +52,22 @@ examined from within the application.
 
 This package contains examples for Veusz.
 
+%package -n %oname
+Summary: A Scientific Plotting Package
+Group: Graphics
+Conflicts: %name < %version-%release
+Requires: %name = %version-%release
+
+%description -n %oname
+Veusz is a GUI scientific plotting and graphing package. It is designed
+to produce publication-ready Postscript or PDF output. SVG, EMF and
+bitmap export formats are also supported. The program runs under
+Unix/Linux, Windows or Mac OS X, and binaries are provided. Data can be
+read from text, CSV or FITS files, and data can be manipulated or
+examined from within the application.
+
+This package contains main scripts for Veusz.
+
 %prep
 %setup
 
@@ -66,9 +82,6 @@ install -d %buildroot%_man1dir
 install -m644 Documents/*.1 %buildroot%_man1dir
 
 %files
-%doc AUTHORS ChangeLog COPYING README
-%_bindir/*
-%_man1dir/*
 %python_sitelibdir/*
 %exclude %python_sitelibdir/*/examples
 
@@ -78,7 +91,15 @@ install -m644 Documents/*.1 %buildroot%_man1dir
 %files examples
 %python_sitelibdir/*/examples
 
+%files -n %oname
+%doc AUTHORS ChangeLog COPYING README
+%_bindir/*
+%_man1dir/*
+
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14-alt3
+- Extracted %oname package (ALT #28282)
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.14-alt2.1
 - Rebuild to remove redundant libpython2.7 dependency
 
