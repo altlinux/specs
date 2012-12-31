@@ -1,6 +1,8 @@
+%set_verify_elf_method unresolved=strict
+
 Name: gnustep-corebase
 Version: 0.2
-Release: alt1.git20121206
+Release: alt1.git20121221
 Summary: Open implementation of CoreFoundation
 License: LGPLv2+, GPLv3+
 Group: Graphical desktop/GNUstep
@@ -91,6 +93,9 @@ done
 %_libdir/*.so
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20121221
+- New snapshot
+
 * Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2-alt1.git20121206
 - Initial build for Sisyphus
 

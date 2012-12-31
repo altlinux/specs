@@ -1,6 +1,6 @@
 Name: gnustep-make
 Version: 2.6.2
-Release: alt11.svn20121102
+Release: alt12.git20121102
 Source: %name-%version-%release.tar
 License: GPLv3+
 Group: Development/Other
@@ -45,7 +45,8 @@ export CC=gcc CXX=g++ CPP='gcc -E'
 %configure \
 	--libexecdir=%_libdir \
 	--enable-flattened \
-	--with-layout=fhs-system-alt
+	--with-layout=fhs-system-alt \
+	--with-objc-lib-flag=-lobjc2
 
 %install
 sed -i 's|/usr/sbin/lsattr|lsattr|g' config.guess
@@ -102,6 +103,9 @@ gzip ChangeLog
 %attr(755,root,root) %_datadir/GNUstep/Makefiles/mkinstalldirs
 
 %changelog
+* Sun Dec 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt12.git20121102
+- Rebuilt with linking with libobjc2 instead of libobjc
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt11.svn20121102
 - Applied patch from ldv@ with fix for x86_64
 

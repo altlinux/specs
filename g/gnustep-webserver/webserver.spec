@@ -2,7 +2,7 @@
 
 Name: gnustep-webserver
 Version: 1.4.8
-Release: alt1.git20121031
+Release: alt2.git20121031
 Summary: Embedded webserver library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -57,7 +57,7 @@ library.
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
 
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -74,6 +74,9 @@ library.
 %_docdir/GNUstep
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.8-alt2.git20121031
+- Rebuilt with libobjc2 instead of libobjc
+
 * Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.8-alt1.git20121031
 - Initial build for Sisyphus
 

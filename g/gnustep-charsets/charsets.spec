@@ -1,13 +1,15 @@
+%set_verify_elf_method unresolved=strict
+
 Name: gnustep-charsets
 Version: r29248
-Release: alt3.svn20100109
+Release: alt4.git20100109
 Summary: Utilities for use with NSCharacterSet bitmap files
 License: LGPLv2+
 Group: Development/Tools
 Url: http://www.gnustep.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://svn.gna.org/svn/gnustep/tools/charsets/trunk/
+# https://github.com/gnustep/gnustep-charsets.git
 Source: %name-%version.tar
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
@@ -50,6 +52,9 @@ data2header: Takes the bitmaps produced by mkcharsets and generates a
 %_bindir/*
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt4.git20100109
+- Rebuilt with libobjc2 instead of libobjc
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r29248-alt3.svn20100109
 - Rebuilt with fixed gnustep-make
 

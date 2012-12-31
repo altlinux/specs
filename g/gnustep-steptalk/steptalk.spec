@@ -2,7 +2,7 @@
 
 Name: gnustep-steptalk
 Version: 0.10.0
-Release: alt1.git20121202
+Release: alt2.git20121202
 Summary: Scripting framework for creating scriptable servers or applications
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -70,7 +70,7 @@ buildIt() {
 		strip=no \
 		shared=yes \
 		AUXILIARY_CPPFLAGS='-O2' \
-		CONFIG_SYSTEM_LIBS="-lgnustep-base -lobjc -lm $1"
+		CONFIG_SYSTEM_LIBS="-lgnustep-base -lobjc2 -lm $1"
 }
 
 buildIt
@@ -84,14 +84,20 @@ pushd %buildroot%_libdir
 for i in *.so*; do
 	rm -f $i
 	mv GNUstep/Frameworks/StepTalk.framework/Versions/0/$i ./
-	ln -s %_libdir/$i GNUstep/Frameworks/StepTalk.framework/Versions/0/
+	for j in *.so.*.*; do
+		ln -s %_libdir/$j GNUstep/Frameworks/StepTalk.framework/Versions/0/$i
+	done
 done
+rm -f GNUstep/Frameworks/StepTalk.framework/Versions/0/StepTalk
+ln -s %_libdir/$j GNUstep/Frameworks/StepTalk.framework/Versions/0/StepTalk
 popd
 
 %files
 %doc ChangeLog NEWS README TODO WISH
 %_bindir/*
 %_libdir/GNUstep
+%exclude %_libdir/GNUstep/Frameworks/StepTalk.framework/Versions/0/Headers
+%exclude %_libdir/GNUstep/Frameworks/StepTalk.framework//Headers
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -99,11 +105,17 @@ popd
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/GNUstep/Frameworks/StepTalk.framework/Versions/0/Headers
+%_libdir/GNUstep/Frameworks/StepTalk.framework//Headers
 
 %files doc
 %doc Documentation/*
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt2.git20121202
+- Rebuilt with libobjc2 instead of libobjc
+- Don't require development packages for runtime packages
+
 * Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.10.0-alt1.git20121202
 - Initial build for Sisyphus
 

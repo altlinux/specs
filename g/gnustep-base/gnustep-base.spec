@@ -1,6 +1,8 @@
+%set_verify_elf_method unresolved=strict
+
 Name: gnustep-base
 Version: 1.24.2
-Release: alt3.svn20121208
+Release: alt4.git20121227
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -9,6 +11,7 @@ License: LGPL
 Group: Development/Other
 Url: http://www.gnustep.org/
 
+# https://github.com/gnustep/gnustep-base.git
 Source: %name-%version.tar
 Source1: %name.init
 
@@ -20,7 +23,7 @@ BuildRequires: libxml2-devel libxslt-devel zlib-devel libffi-devel mount
 BuildPreReq: libffcall-devel libgmp-devel libbfd-devel libgcrypt-devel
 Requires: gnustep-make >= 2.0.6-alt4 glibc-locales glibc-gconv-modules
 BuildPreReq: libicu-devel libcommoncpp2-devel /proc
-
+BuildPreReq: texinfo texi2html texlive-latex-base
 
 %description
 The GNUstep Base Library is a powerful fast library of general-purpose,
@@ -52,7 +55,7 @@ Libraries and includes files for developing programs based on %name.
 
 %prep
 %setup
-cp -fR Headers/ObjectiveC2/objc Headers/ObjectiveC2/objc2
+#cp -fR Headers/ObjectiveC2/objc Headers/ObjectiveC2/objc2
 %define _libexecdir %_libdir
 
 %build
@@ -73,12 +76,27 @@ export CC=gcc
 	debug=yes \
 	strip=no \
 	shared=yes \
+	CONFIG_SYSTEM_LIBS='-lobjc2 -lffi -licui18n -lxslt -lxml2 -lgnutls -lz'
+
+# very long now
+%if 0
+export LD_LIBRARY_PATH=$PWD/Source/obj
+%make_build -C Documentation \
+	messages=yes \
+	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+%endif
 
 %install
 %make install \
 	INSTALL_ROOT_DIR=%buildroot \
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	DESTDIR=%buildroot
+
+%if 0
+%makeinstall_std -C Documentation \
+     GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
+     GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
+%endif
 
 install -d %buildroot%_initdir
 sed -e "s!@TOOLSARCHDIR@!%prefix/System/Tools!" %SOURCE1 > %buildroot%_initdir/gdomap
@@ -125,6 +143,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Sun Dec 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt4.git20121227
+- New snapshot
+
 * Wed Dec 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt3.svn20121208
 - Rebuilt with fixed gnustep-make
 

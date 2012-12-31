@@ -1,6 +1,6 @@
 Name: gnustep-performance
 Version: 0.3.2
-Release: alt1.git20120111
+Release: alt2.git20120111
 Summary: The GNUstep Performance library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -58,7 +58,7 @@ sed -i 's|objc/|objc2|g' $(find ./ -type f)
 	strip=no \
 	shared=yes \
 	AUXILIARY_CPPFLAGS='-O2 -DGNUSTEP' \
-	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc'
+	CONFIG_SYSTEM_LIBS='-lgnustep-base -lobjc2'
  
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
@@ -75,6 +75,9 @@ sed -i 's|objc/|objc2|g' $(find ./ -type f)
 %_docdir/GNUstep
 
 %changelog
+* Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt2.git20120111
+- Rebuilt with libobjc2 instead of libobjc
+
 * Thu Dec 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.git20120111
 - Initial build for Sisyphus
 
