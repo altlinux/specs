@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 0.9.2
+Version: 0.9.3
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -78,6 +78,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Dec 31 2012 Michael Shigorin <mike@altlinux.org> 0.9.3-alt1
+- regular images
+
 * Mon Dec 17 2012 Michael Shigorin <mike@altlinux.org> 0.9.2-alt1
 - enhanced uefi support
 
