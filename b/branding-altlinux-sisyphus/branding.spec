@@ -6,7 +6,7 @@
 
 
 Name: branding-%brand-%theme
-Version: 20121226
+Version: 20121231
 Release: alt1
 BuildArch: noarch
 
@@ -440,6 +440,10 @@ cat /etc/sysconfig/xinitrc.xfce >> /etc/sysconfig/xinitrc
 
 
 %changelog
+* Mon Dec 31 2012 Michael Shigorin <mike@altlinux.org> 20121231-alt1
+- fixed module link text colour in acc
+- tweaked acc background color (was too white)
+
 * Wed Dec 26 2012 Michael Shigorin <mike@altlinux.org> 20121226-alt1
 - fixed background image position
 
