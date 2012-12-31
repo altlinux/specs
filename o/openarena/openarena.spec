@@ -1,6 +1,6 @@
 Name: openarena
 Version: 0.8.8
-Release: alt1
+Release: alt2
 
 Summary: Open source first person shooter
 Group: Games/Arcade
@@ -10,11 +10,9 @@ URL: http://openarena.ws/
 Packager: Igor Zubkov <icesik@altlinux.org>
 
 Source0: openarena-0.8.8.zip
-#Source0: http://download.tuxfamily.org/openarena/rel/081/oa081.zip
-#Source1: http://download.tuxfamily.org/openarena/rel/085/oa085p.zip
-Source2: %name.sh
-Source3: %name.png
-Source4: %name.desktop
+Source1: %name.sh
+Source2: %name.png
+Source3: %name.desktop
 
 AutoReq: yes, noshell
 
@@ -42,20 +40,23 @@ mkdir -p %buildroot%_datadir/pixmaps
 mkdir -p %buildroot%_bindir/
 
 cp -pr baseoa missionpack %buildroot%_datadir/%name
-install -p -m755 %SOURCE2 %buildroot%_bindir/%name
+install -p -m755 %SOURCE1 %buildroot%_bindir/%name
 ln -s %name %buildroot%_bindir/%{name}_ded
-cp -p %SOURCE3 %buildroot%_datadir/pixmaps
+cp -p %SOURCE2 %buildroot%_datadir/pixmaps
 
-install -pD -m644 %SOURCE4 %buildroot%_datadir/applications/%name.desktop
+install -pD -m644 %SOURCE3 %buildroot%_datadir/applications/%name.desktop
 
 %files
 %doc CHANGES CREDITS LINUXNOTES README WENEED readme_085.txt readme_088.txt
-%_bindir/%{name}*
+%_bindir/*
 %_datadir/%name
 %_datadir/applications/%name.desktop
 %_datadir/pixmaps/%name.png
 
 %changelog
+* Mon Dec 31 2012 Igor Zubkov <icesik@altlinux.org> 0.8.8-alt2
+- Fix path for quake3 binary
+
 * Tue Nov 27 2012 Igor Zubkov <icesik@altlinux.org> 0.8.8-alt1
 - 0.8.5 -> 0.8.8
 
