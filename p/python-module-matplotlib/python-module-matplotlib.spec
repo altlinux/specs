@@ -9,7 +9,7 @@
 
 Name: python-module-%oname
 Version: %major.0
-Release: alt1.git20121010
+Release: alt2.git20121010
 
 Summary: Matlab(TM) style python plotting package
 
@@ -45,7 +45,7 @@ BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel libnumpy-py3-devel python-tools-2to3
 BuildPreReq: python3-module-scipy-devel python3-module-markupsafe
 BuildPreReq: python3-module-pytz python3-module-dateutil
-BuildPreReq: python3-module-PyQt4-devel python3-module-PySide
+BuildPreReq:  python3-module-PySide
 BuildPreReq: python3-module-pycairo python3-module-pygobject3-devel
 %endif
 
@@ -596,6 +596,9 @@ rm -fR %_docdir/%name/pdf
 %endif
 
 %changelog
+* Tue Jan 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt2.git20121010
+- Rebuilt with python3-module-PyQt4-devel
+
 * Sat Oct 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1.git20121010
 - Version 1.3.0
 
