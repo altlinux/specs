@@ -1,6 +1,6 @@
 Name: python-module-pyvorbis
 Version: 1.4
-Release: alt1.1.1
+Release: alt2
 
 Summary: A Python module for the the Ogg/Vorbis library
 Group: Development/Python
@@ -12,6 +12,7 @@ Packager: Python Development Team <python@packages.altlinux.org>
 %setup_python_module pyvorbis
 
 Source: %url/download/%modulename-%version.tar.bz2
+Patch: pyvorbisfile.diff
 
 %define libvorbis_ver 1.0
 %define pyogg_ver 1.3
@@ -34,6 +35,7 @@ BuildRequires: libogg-devel libvorbis-devel python-devel python-module-pyogg-dev
 %package devel
 Summary: %name headers and example programs
 Group: Development/Python
+BuildArch: noarch
 Requires: %name = %version-%release
 Provides: pyvorbis-devel = %version
 Obsoletes: pyvorbis-devel
@@ -50,6 +52,7 @@ programs.
 
 %prep
 %setup -q -n %modulename-%version
+%patch -p1
 
 %build
 export CFLAGS="%optflags"
@@ -73,6 +76,9 @@ chmod -x test/*
 %doc test/*
 
 %changelog
+* Tue Jan 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4-alt2
+- Added patches for fix crushes: http://bugs.debian.org/696640
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 1.4-alt1.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
