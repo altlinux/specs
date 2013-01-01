@@ -4,7 +4,7 @@
 Name: asterisk-core-sounds-es-ulaw
 Summary: sounds for Asterisk
 Version: 1.4.21
-Release: alt4
+Release: alt5
 License: GPL
 Group: System/Servers
 BuildArch: noarch
@@ -49,6 +49,9 @@ find -type f \
 %files -f sounds.list
 
 %changelog
+* Tue Jan 01 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.21-alt5
+- fix cronbuild support
+
 * Fri Dec 28 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4.21-alt4
 - add watch-file and cronbuild support
 
