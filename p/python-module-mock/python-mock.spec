@@ -1,6 +1,6 @@
 Name: python-module-mock
-Version: 0.7.2
-Release: alt2
+Version: 0.8.0
+Release: alt1
 Summary: A Python mock object library
 
 Group: Development/Python
@@ -35,6 +35,9 @@ return values and set needed attributes in the normal way.
 %python_sitelibdir/*
 
 %changelog
+* Wed Jan 02 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1
+- 0.8.0
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.7.2-alt2
 - Rebuild with Python-2.7
 
