@@ -2,8 +2,8 @@
 BuildRequires: /usr/bin/runtest libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           environment-modules
-Version:        3.2.9c
-Release:        alt1_5
+Version:        3.2.10
+Release:        alt1_1
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -14,9 +14,6 @@ Source1:        modules.sh
 Source2:        createmodule.sh
 Source3:        createmodule.py
 Patch0:         environment-modules-3.2.7-bindir.patch
-# Patch to fix segfault in module unload due to Tcl RegExp handling
-# https://bugzilla.redhat.com/show_bug.cgi?id=834580
-Patch1:         environment-modules-regex.patch
 
 BuildRequires:  tcl-devel tclx libX11-devel
 BuildRequires:  dejagnu
@@ -51,9 +48,8 @@ have access to the module alias.
 
 
 %prep
-%setup -q -n modules-3.2.9
+%setup -q -n modules-%{version}
 %patch0 -p1 -b .bindir
-%patch1 -p1 -b .regex
 
 
 %build
@@ -76,7 +72,7 @@ ln -s %{_datadir}/Modules/init/csh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/modul
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 
 
-#check
+%check
 #make test
 
 
@@ -91,11 +87,14 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 %{_datadir}/Modules/init/*
 %config(noreplace) %{_datadir}/Modules/init/.modulespath
 %{_datadir}/Modules/modulefiles
-%{_mandir}/man1/module.1.*
-%{_mandir}/man4/modulefile.4.*
+%{_mandir}/man1/module.1*
+%{_mandir}/man4/modulefile.4*
 
 
 %changelog
+* Wed Jan 02 2013 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_1
+- update to new release by fcimport
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 3.2.9c-alt1_5
 - update to new release by fcimport
 
