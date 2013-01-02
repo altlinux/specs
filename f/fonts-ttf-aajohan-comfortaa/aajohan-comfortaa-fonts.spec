@@ -6,8 +6,8 @@ BuildRequires: unzip
 %global fontconf 61-%{fontname}.conf
 
 Name:           fonts-ttf-aajohan-comfortaa
-Version:        2.002
-Release:        alt2_6
+Version:        2.003
+Release:        alt1_1
 Summary:        Modern style true type font
 
 Group:          System/Fonts/True type
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Wed Jan 02 2013 Igor Vlasenko <viy@altlinux.ru> 2.003-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.002-alt2_6
 - update to new release by fcimport
 
