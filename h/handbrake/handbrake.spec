@@ -1,4 +1,4 @@
-%define svn svn5086
+%define svn svn5127
 
 Name: handbrake
 Version: 0.9.9
@@ -11,7 +11,7 @@ Source0: %name-%svn.tar.bz2
 Source101: http://download.handbrake.fr/handbrake/contrib/a52dec-0.7.4.tar.gz
 Source102: http://download.handbrake.fr/handbrake/contrib/faac-1.28.tar.gz
 Source103: http://download.handbrake.fr/handbrake/contrib/faad2-2.7.tar.gz
-Source104: http://download.handbrake.fr/handbrake/contrib/libav-v0.8-2551-gc83f44d.tar.bz2
+Source104: http://download.handbrake.fr/handbrake/contrib/libav-v9_beta3.tar.bz2
 Source105: http://download.handbrake.fr/handbrake/contrib/fontconfig-2.8.0.tar.gz
 Source106: http://download.handbrake.fr/handbrake/contrib/freetype-2.4.7.tar.bz2
 Source107: http://download.handbrake.fr/handbrake/contrib/lame-3.98.tar.gz
@@ -109,6 +109,9 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Wed Jan 02 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5127
+- build svn5127
+
 * Wed Nov 28 2012 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5086
 - build svn5086
 
