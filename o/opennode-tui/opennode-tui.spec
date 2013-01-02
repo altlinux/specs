@@ -1,7 +1,7 @@
 Summary: OpenNode Textual User Interface RPM
 Name: opennode-tui
 Version: 2.0.1
-Release: alt2.git.c37bc03e
+Release: alt3.git.cec422f06
 License: Apache License v2
 Group: System/Configuration/Other
 Url: http://github.com/opennode/opennode-tui
@@ -15,6 +15,13 @@ Requires: libvirt-client libvirt-daemon screen
 
 %description
 This package contains the OpenNode Textual User Interface for the OpenNode cloud toolkit.
+
+%package -n python-module-opennode
+Summary: Common modules for opennode
+Group: Development/Python
+
+%description -n python-module-opennode
+Common modules for opennode
 
 %prep
 %setup
@@ -54,13 +61,24 @@ cp opennode-tui.sh %buildroot%_sysconfdir/profile.d/
 
 %_bindir/*
 
-%python_sitelibdir_noarch/opennode*
+%python_sitelibdir_noarch/opennode/*
+%python_sitelibdir_noarch/opennode_tui*
 #python_sitelibdir/salt/modules/onode
 %_localstatedir/storage
 %dir %_sysconfdir/opennode
 %dir %_spooldir/opennode
 
+%exclude %python_sitelibdir_noarch/opennode/*.*
+
+%files -n python-module-opennode
+%dir %python_sitelibdir_noarch/opennode
+%python_sitelibdir_noarch/opennode/*.*
+
 %changelog
+* Wed Jan 02 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.1-alt3.git.cec422f06
+- Add subpackage python-module-opennode
+- Update from git
+
 * Fri Dec 28 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 2.0.1-alt2.git.c37bc03e
 - Bugfix version from git
 
