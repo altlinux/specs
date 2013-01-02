@@ -1,6 +1,7 @@
+%add_findreq_skiplist %_datadir/sgml/docbook/xsl-ns-stylesheets-*/slides/slidy/help/help.html.*
 Name: docbook5-style-xsl
-Version: 1.77.1
-Release: alt1_2.1
+Version: 1.78.0
+Release: alt1_1
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -17,7 +18,6 @@ Requires: xml-common >= 0.6.3-8
 Requires(post): libxml2 >= 2.4.8
 Requires(postun): libxml2 >= 2.4.8
 Conflicts: passivetex < 1.21
-
 
 BuildArch: noarch
 Source0: http://downloads.sourceforge.net/docbook/docbook-xsl-ns-%{version}.tar.bz2
@@ -43,6 +43,8 @@ DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version
 cp -a [[:lower:]]* $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/
 cp -a VERSION $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/
+# Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 1.77.1-alt1_2.1
+# - Provide VERSION.xsl, which included from source
 ln -s VERSION $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/VERSION.xsl
 ln -s xsl-ns-stylesheets-%{version} \
  $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets
@@ -84,6 +86,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Wed Jan 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.78.0-alt1_1
+- update to new release by fcimport
+
 * Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 1.77.1-alt1_2.1
 - Provide VERSION.xsl, which included from source
 
