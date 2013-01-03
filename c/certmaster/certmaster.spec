@@ -1,7 +1,7 @@
 Summary: Remote certificate distribution framework
 Name: certmaster
 Version: 0.28
-Release: alt1
+Release: alt2
 Source0: %name-%version.tar
 License: GPLv2+
 Group: System/Configuration/Other
@@ -13,6 +13,16 @@ BuildRequires: python-module-setuptools perl-podlators
 
 %description
 certmaster is a easy mechanism for distributing SSL certificates
+
+%package sync
+Summary: certmaster-sync -- synchronize client certificates with Func
+Group: Development/C
+Requires: %name = %version-%release
+
+%description sync
+certmaster-sync synchronizes client certificates amongst certmaster
+clients via Func.  It is assumed that the hosts who have requested
+certificates are reachable via Func for synchronization operations.
 
 %prep
 %setup -q
@@ -67,12 +77,23 @@ install -pD -m 755 init-scripts/certmaster.alt  %buildroot%_initrddir/certmaster
 %dir /var/lib/certmaster/triggers/remove/
 %dir /var/lib/certmaster/triggers/remove/pre
 %dir /var/lib/certmaster/triggers/remove/post
-/var/lib/certmaster/triggers/sign/post/certmaster-sync
-/var/lib/certmaster/triggers/remove/post/certmaster-sync
 %doc AUTHORS README LICENSE
 %_mandir/man1/*
 
+%exclude %_bindir/certmaster-sync
+%exclude %_mandir/man1/certmaster-sync.*
+
+%files sync
+%_bindir/certmaster-sync
+%_mandir/man1/certmaster-sync.*
+/var/lib/certmaster/triggers/sign/post/certmaster-sync
+/var/lib/certmaster/triggers/remove/post/certmaster-sync
+
+
 %changelog
+* Thu Jan 03 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 0.28-alt2
+- Add subpackage certmaster-sync
+
 * Mon Nov 12 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.28-alt1
 - New version
 
