@@ -1,6 +1,6 @@
-%define version 3.8.0
+%define version 4.0.3
 #define subver c1
-%define release alt2
+%define release alt1
 %define oname zope.interface
 %setup_python_module %oname
 
@@ -121,6 +121,9 @@ rm -fR %buildroot%python3_sitelibdir/zope/__init__.py*
 %endif
 
 %changelog
+* Thu Jan 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.3-alt1
+- Version 4.0.3
+
 * Thu Apr 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.8.0-alt2
 - Added module for Python 3
 
