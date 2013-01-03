@@ -1,7 +1,7 @@
 %define oname zope.proxy
 Name: python-module-%oname
-Version: 3.6.1
-Release: alt2.1.1
+Version: 4.1.1
+Release: alt1
 Summary: Generic Transparent Proxies
 License: ZPL
 Group: Development/Python
@@ -53,6 +53,9 @@ This package contains tests for Generic Transparent Proxies.
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Thu Jan 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.1.1-alt1
+- Version 4.1.1
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.6.1-alt2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
