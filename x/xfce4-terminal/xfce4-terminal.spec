@@ -1,5 +1,5 @@
 Name: xfce4-terminal
-Version: 0.6.0
+Version: 0.6.1
 Release: alt1
 
 Summary: Terminal emulator application for Xfce
@@ -65,6 +65,11 @@ sed -i '1i .\\" -*- mode: troff; coding: utf8 -*-' %buildroot%_mandir/*/man1/%na
 %_desktopdir/*
 
 %changelog
+* Fri Jan 04 2013 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt1
+- Docs fix from upstream git.
+- Updated translations from upstream git.
+- Updated to 0.6.1.
+
 * Fri Dec 28 2012 Mikhail Efremov <sem@altlinux.org> 0.6.0-alt1
 - Drop misc-tab-position patch.
 - Rename to xfce4-terminal.
