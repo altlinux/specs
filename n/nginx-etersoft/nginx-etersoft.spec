@@ -1,5 +1,5 @@
 Name: nginx-etersoft
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: Additional Nginx templates and functions
@@ -38,6 +38,9 @@ install -m644 httpconf-available.d/* %buildroot%_sysconfdir/nginx/httpconf-avail
 mkdir -p %buildroot%_sysconfdir/nginx/examples/
 install -m644 examples/* %buildroot%_sysconfdir/nginx/examples/
 
+mkdir -p %buildroot%_datadir/%name/images/
+install -m644 share/images/* %buildroot%_datadir/%name/images/
+
 %files
 %dir %_sysconfdir/nginx/include/
 %config(noreplace) %_sysconfdir/nginx/include/*
@@ -45,8 +48,14 @@ install -m644 examples/* %buildroot%_sysconfdir/nginx/examples/
 %dir %_sysconfdir/nginx/httpconf-enabled.d/
 %config(noreplace) %_sysconfdir/nginx/httpconf-available.d/*
 %_sysconfdir/nginx/examples/
+%_datadir/%name/
 
 %changelog
+* Fri Jan 04 2013 Vitaly Lipatov <lav@altlinux.ru> 0.2.2-alt1
+- add static-stub and images for it
+- add no_cache example
+- create_nginx_from_apache: do not update config if not changed
+
 * Sat Nov 24 2012 Vitaly Lipatov <lav@altlinux.ru> 0.2.1-alt1
 - add nodelay to limit_req
 - add initial stop-injection.conf
