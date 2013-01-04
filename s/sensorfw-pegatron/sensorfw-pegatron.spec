@@ -1,7 +1,7 @@
 Name:       sensorfw-pegatron
 Summary:    Sensor framework integration for Pegatron Lucid tablets
 Version:    0.4
-Release:    alt1.67.3
+Release:    alt1.67.4
 Group:      System/Configuration/Other
 License:    GPLv2
 URL:        http://www.intel.com
@@ -9,6 +9,7 @@ Source0:    %{name}-%{version}.tar.bz2
 Source100:  sensorfw-pegatron.yaml
 Source101:  pegatron-lucid.sysconfig
 Patch0:     pegaorient-isvalid.patch
+Patch1:     fix-missing-unistd.h.patch
 BuildRequires:  libqt4-devel
 BuildRequires:  sensorfw-devel
 BuildRequires:  gcc-c++
@@ -26,6 +27,7 @@ ambient light sensor.
 %prep
 %setup -q -n %{name}-%{version}
 %patch0 -p2
+%patch1
 
 # >> setup
 # << setup
@@ -67,6 +69,9 @@ install -D -m0644 %{SOURCE101} %buildroot%_sysconfdir/sensorfw/pegatron-lucid.sy
 
 
 %changelog
+* Fri Jan 04 2013 Paul Wolneykien <manowar@altlinux.ru> 0.4-alt1.67.4
+- Fix the missing unistd.h include.
+
 * Sat May 12 2012 Paul Wolneykien <manowar@altlinux.ru> 0.4-alt1.67.3
 - Turn on and start the acpid daemon if the platform is detected.
 - Remove the symlynk.
