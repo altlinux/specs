@@ -1,6 +1,6 @@
 Name: squidmill
 Version: 2.2
-Release: alt2
+Release: alt3
 
 Source: %name-%version.tar
 
@@ -41,6 +41,9 @@ data are included.
 %_sysconfdir/sysconfig/squidmill
 
 %changelog
+* Fri Jan 04 2013 Paul Wolneykien <manowar@altlinux.ru> 2.2-alt3
+- Rebuild with Gambit v4.6.6.
+
 * Thu Nov 29 2012 Paul Wolneykien <manowar@altlinux.ru> 2.2-alt2
 - Add the systemd unit file and configuration (environment)
   file (closes: 28087).
