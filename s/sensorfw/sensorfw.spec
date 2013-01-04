@@ -2,7 +2,7 @@ Name:       sensorfw
 Summary:    Sensor Framework
 Version:    0.7.2
 Group:      System/Kernel and hardware
-Release:    alt1.83.2.1
+Release:    alt1.83.3
 License:    LGPLv2+
 URL:        http://gitorious.org/sensorfw
 Source0:    %{name}-%{version}.tar.gz
@@ -24,7 +24,9 @@ Patch4:     sensorfw-0.7.1-oemtablet-als.patch
 Patch5:     sensorfw-0.7.1-oemtablet-gyroscope.patch
 Patch6:     sensorfw-0.7.1-alsadaptor-ascii-rangefile.patch
 Patch7:     fix-initctl.patch
-Patch8:     sensorfw-0.7.2-alt-DSO.patch
+Patch8:     fix-missing-unistd.h.patch
+Patch9:     fix-method-call.patch
+Patch10:    fix-project-libs.patch
 #Requires:   qt
 #Requires:   GConf-dbus
 Requires:   %{name}-configs
@@ -40,6 +42,7 @@ BuildRequires:  pkgconfig(contextprovider-1.0)
 BuildRequires:  doxygen
 BuildRequires:  graphviz
 BuildRequires:  gcc-c++
+BuildRequires:  gdb
 Obsoletes:   sensorframework
 
 
@@ -126,9 +129,12 @@ Sensorfw configuration files.
 %patch6 -p1
 # fix-initctl.patch
 %patch7 -p2
-# sensorfw-0.7.2-alt-DSO.patch
-%patch8 -p2
-
+# fix-missing-unistd.h.patch
+%patch8 -p1
+# fix-method-call.patch
+%patch9 -p1
+# fix-project-libs.patch
+%patch10
 # >> setup
 # << setup
 find . -type f -name \*.pr\? | while read f; do sed -i 's|/usr/lib|%_libdir|' $f; done
@@ -256,6 +262,10 @@ SYSCONFDIR="%buildroot%_sysconfdir" %{SOURCE9}
 # << files configs
 
 %changelog
+* Fri Jan 04 2013 Paul Wolneykien <manowar@altlinux.ru> 0.7.2-alt1.83.3
+- Fix the build: add missing unistd.h and some libs, fix the broken
+  local method call.
+
 * Mon Jul 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.2-alt1.83.2.1
 - Fixed build
 
@@ -268,6 +278,7 @@ SYSCONFDIR="%buildroot%_sysconfdir" %{SOURCE9}
 
 * Tue Apr 17 2012 Paul Wolneykien <manowar@altlinux.ru> 0.7.2-alt1.83
 - Adjust the spec for ALT Linux.
+
 * Thu Jun 16 2011 Markus Lehtonen <markus.lehtonen@intel.com> - 0.7.2
 - Version bump to 0.7.2 (BMC#12866)
 - Remove the hackish sensord-rx_51.modules file
