@@ -1,5 +1,5 @@
 Name: repocop-report-distrodb
-Version: 0.12
+Version: 0.13
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -39,6 +39,10 @@ ln -s repocop-report-distrodb %buildroot/%_bindir/repocop-report-distromap-db
 #%_man1dir/repocop-report-prometeus-*
 
 %changelog
+* Fri Jan 04 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- bugfix in path
+- new python format
+
 * Sat Dec 15 2012 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - python db
 - renamed to repocop-report-distrodb
