@@ -12,8 +12,8 @@
 %def_disable wayland
 
 Name: libgtk+3
-Version: %ver_major.2
-Release: alt2
+Version: %ver_major.3
+Release: alt1
 
 Summary: The GIMP ToolKit (GTK+)
 Group: System/Libraries
@@ -62,6 +62,9 @@ BuildRequires: libXrender-devel libXt-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libpango-gir-devel libatk-gir-devel >= %atk_ver libgdk-pixbuf-gir-devel}
 %{?_enable_colord:BuildRequires: libcolord-devel >= %colord_ver}
 %{?_enable_wayland:BuildRequires: libwayland-client-devel libEGL-devel libwayland-egl-devel libxkbcommon-devel}
+
+# for check
+BuildRequires: /proc dbus-tools-gui xvfb-run icon-theme-hicolor
 
 %description
 GTK+ is a multi-platform toolkit for creating graphical user interfaces.
@@ -243,7 +246,6 @@ EOF
 
 install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gtk-%api_ver-immodules-cache.filetrigger
 
-
 # The license
 ln -sf %_licensedir/LGPL-2 COPYING
 
@@ -258,8 +260,9 @@ mkdir %buildroot%_libdir/gtk-%api_ver/modules
 mkdir -p %buildroot/%_docdir/%name-devel-%version/examples
 cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/examples/
 
-%post
-%_bindir/gtk-query-immodules-%api_ver --update-cache
+%check
+# org.gtk.Settings.FileChooser schemas must be installed
+#xvfb-run %make check
 
 %files -f gtk30.lang
 %_bindir/gtk-query-immodules-%api_ver
@@ -365,6 +368,9 @@ cp examples/*.c examples/Makefile* %buildroot/%_docdir/%name-devel-%version/exam
 %exclude %fulllibpath/*/*.la
 
 %changelog
+* Fri Jan 04 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
 * Thu Dec 27 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt2
 - added rpm posttrans filetrigger to update im-modules cache (ALT #28279)
 
