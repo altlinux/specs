@@ -1,7 +1,7 @@
 
 Name: krb5
 Version: 1.11
-Release: alt1
+Release: alt2
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -30,6 +30,9 @@ BuildRequires: /dev/pts /proc
 BuildRequires: flex libcom_err-devel libkeyutils-devel libldap-devel
 BuildRequires: libncurses-devel libss-devel libssl-devel libtinfo-devel
 BuildRequires: tcl-devel libverto-devel libselinux-devel
+
+# for tests
+BuildRequires: libverto-libev python-modules gcc-c++
 
 %description
 Kerberos V5 is a trusted-third-party network authentication system,
@@ -129,7 +132,6 @@ MIT Kerberos.
 %prep
 %setup
 
-
 %patch1 -p2
 %patch2 -p1
 %patch3 -p1
@@ -172,6 +174,11 @@ pushd src
 
 make all
 popd
+
+%check
+# NOTE(iv@): this test hangs for too long, look at this later
+echo > src/tests/t_iprop.py
+make -C src check
 
 %install
 
@@ -339,6 +346,9 @@ touch %buildroot%_sysconfdir/krb5.keytab
 # {{{ changelog
 
 %changelog
+* Fri Jan 04 2013 Ivan A. Melnikov <iv@altlinux.org> 1.11-alt2
+- added %%check section.
+
 * Fri Jan 04 2013 Ivan A. Melnikov <iv@altlinux.org> 1.11-alt1
 - 1.11;
 - dropped obsolete patches;
