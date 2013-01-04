@@ -1,6 +1,6 @@
 Name: kexec-tools
-Version: 2.0.3
-Release: alt1
+Version: 2.0.4
+Release: alt0.1
 
 Summary: Load one kernel from another
 License: GPL
@@ -45,7 +45,10 @@ install -pm0644 -D kexec/kexec.8 %buildroot%_man8dir/kexec.8
 %doc AUTHORS COPYING TODO News
 /sbin/kdump
 /sbin/kexec
+/sbin/vmcore-dmesg
 %_man8dir/kexec.8*
+%_man8dir/kdump.8*
+%_man8dir/vmcore-dmesg.8*
 
 %if 0
 %files -n kexec-static
@@ -53,6 +56,9 @@ install -pm0644 -D kexec/kexec.8 %buildroot%_man8dir/kexec.8
 %endif
 
 %changelog
+* Fri Jan 04 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.4-alt0.1
+- 2.0.4-rc1
+
 * Thu Apr 26 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0.3-alt1
 - 2.0.3
 
