@@ -1,8 +1,7 @@
-%def_without test
 
 Name: krb5
-Version: 1.10.2
-Release: alt2.1
+Version: 1.11
+Release: alt1
 
 %define _docdir %_defaultdocdir/%name-%version
 
@@ -12,36 +11,25 @@ Group: System/Libraries
 Url: http://web.mit.edu/kerberos/www/
 
 Source0: %name-%version.tar
-Source1: %name-doc.tar
 Source2: %name-alt.tar
 
-Source10: krb5-fedora-1.10-manpaths.txt
-
 Patch1: krb5-1.10.1-alt-export-krb5int_get_fq_local_hostname.patch
-
 Patch2: krb5-1.3.1-fedora-dns.patch
 Patch3: krb5-1.7-fedora-ktany.patch
 Patch4: krb5-1.8-fedora-api.patch
-Patch5: krb5-1.9-fedora-dirsrv-accountlock.patch
+Patch5: krb5-1.11-fedora-dirsrv-accountlock.patch
 Patch6: krb5-1.10-fedora-doublelog.patch
-Patch7: krb5-1.10-fedora-gcc47.patch
 Patch8: krb5-1.10-fedora-kpasswd_tcp.patch
 Patch9: krb5-1.10-fedora-kprop-mktemp.patch
-Patch10: krb5-1.10.2-fedora-manpaths.patch
-Patch11: krb5-1.10.2-fedora-selinux-label.patch
+Patch11: krb5-1.11-fedora-selinux-label.patch
 Patch12: krb5-fedora-kvno-230379.patch
-Patch13: krb5-fedora-trunk-7046.patch
-Patch14: krb5-fedora-trunk-7047.patch
-Patch15: krb5-fedora-trunk-7048.patch
-Patch16: krb5-1.10-alt-avoid-preprocessor-loop.patch
-Patch17: krb5-1.10.2-fedora-keytab-etype.patch
-Patch18: krb5-fedora-trunk-pkinit-anchorsign.patch
-Patch19: krb5-1.10.2-cve-2012-1015.patch
-Patch20: krb5-no-Werror.patch
+Patch21: krb5-1.10.3-fedora-timeout_over.patch
+
 
 BuildRequires: /dev/pts /proc
-%{?_with_test:buildrequires: tcsh dejagnu telnet}
-BuildRequires: flex libcom_err-devel libkeyutils-devel libldap-devel libncurses-devel libss-devel libssl-devel libtinfo-devel tcl-devel libverto-devel libselinux-devel
+BuildRequires: flex libcom_err-devel libkeyutils-devel libldap-devel
+BuildRequires: libncurses-devel libss-devel libssl-devel libtinfo-devel
+BuildRequires: tcl-devel libverto-devel libselinux-devel
 
 %description
 Kerberos V5 is a trusted-third-party network authentication system,
@@ -140,39 +128,32 @@ MIT Kerberos.
 
 %prep
 %setup
-%patch1 -p3
-%patch2 -p2
-%patch3 -p2
-%patch4 -p2
-%patch5 -p2
-%patch6 -p2
-%patch7 -p1
-%patch8 -p2
-%patch9 -p2
-%patch10 -p2
-%patch11 -p2
-%patch12 -p2
-%patch13 -p2
-%patch14 -p2
-%patch15 -p2
-%patch16 -p3
-%patch17 -p2
-%patch18 -p2
-%patch19 -p2
-%patch20 -p3
 
-cat %SOURCE10 | while read manpage ; do
-        mv "$manpage" "$manpage".in
-done
 
-%autoreconf
+%patch1 -p2
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch8 -p1
+%patch9 -p1
+%patch11 -p1
+%patch12 -p1
+%patch21 -p1
+
+pushd src
+util/reconf --verbose --force
+popd
 
 %build
-util/reconf --verbose --force
-%autoreconf
+
+
 DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 %add_optflags -I/usr/include/et
 %add_optflags -DKRB5_DNS_LOOKUP
+
+pushd src
 %configure \
 	--enable-shared --disable-static \
 	--localstatedir=%_localstatedir/kerberos \
@@ -188,12 +169,22 @@ DEFINES="-D_FILE_OFFSET_BITS=64" ; export DEFINES
 	--disable-rpath \
 	--with-selinux
 	#
-sed -i 's|\-Werror=uninitialized||g' $(find ./ -name Makefile)
-sed -i 's|\-Werror|-Wall|g' $(find ./ -name Makefile)
-make all %{?_with_test:check}
+
+make all
+popd
 
 %install
-make install DESTDIR=%buildroot INSTALL_SETUID='%__install -m0755'
+
+make -C src install \
+    DESTDIR=%buildroot \
+    INSTALL_SETUID='install -m0755' \
+    EXAMPLEDIR=%_docdir/examples
+
+# Server init scripts, sample client config file and sample KDC config files.
+tar xf %SOURCE2 -C %buildroot
+
+# Fix preporcessor loop
+sed -i 's,<krb5/krb5.h>,<krb5/krb5/krb5.h>,' %buildroot%_includedir/krb5/krb5.h
 
 # Relocate *some* shared libraries
 mkdir -p %buildroot/%_lib
@@ -203,46 +194,20 @@ for lib in libgssapi_krb5 libk5crypto libkrb5 libkrb5support; do
 done
 
 # Fix binaries clashes
-for i in uuclient; do
-  mv -f %buildroot%_bindir/$i %buildroot%_bindir/%name-$i
-done
-
-for i in uuserver; do
-  mv -f %buildroot%_sbindir/$i %buildroot%_sbindir/%name-$i
-done
-
-# Fix manpages clashes
-for i in uuclient ; do
-  if [ -f %buildroot%_man1dir/$i.1 ] ; then
-    mv %buildroot%_man1dir/$i.1 %buildroot%_man1dir/%name-$i.1
-  fi
-done
-
-# Server init scripts, sample client config file and sample KDC config files.
-tar xf %SOURCE2 -C %buildroot
+mv -f %buildroot%_bindir/uuclient %buildroot%_bindir/%name-uuclient
+mv -f %buildroot%_sbindir/uuserver %buildroot%_sbindir/%name-uuserver
 
 # Install docs
-rm -rf %buildroot%_docdir
-mkdir -p %buildroot%_infodir %buildroot%_docdir
-tar xf %SOURCE1 -C %buildroot%_docdir
-cp -p plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} %buildroot%_docdir
-mv %buildroot%_docdir/krb5-{admin,install,user}.info %buildroot%_infodir
-gzip %buildroot%_docdir/*.ps
+mkdir -p %buildroot%_docdir/pdf
+cp doc/pdf/*.pdf %buildroot%_docdir/pdf/
+cp -R doc/html/ %buildroot/%_docdir/
+rm -rf %buildroot/%_docdir/html/_sources/
+cp -p src/plugins/kdb/ldap/libkdb_ldap/kerberos.{ldif,schema} %buildroot%_docdir/
 
 # cleanups
-rm -rf %buildroot%_datadir/gnats %buildroot%_datadir/examples
-rm -rf %buildroot%_includedir/krb5/kerberosIV
-rm -f %buildroot%_man1dir/tmac.doc*
+rm -rf %buildroot%_datadir/gnats
+rm -rf %buildroot%_mandir/cat*
 touch %buildroot%_sysconfdir/krb5.keytab
-
-install -p -m644 include/k5-int.h include/osconf.h include/autoconf.h \
-	include/k5-platform.h include/k5-thread.h include/k5-trace.h \
-	include/k5-label.h include/port-sockets.h include/socket-utils.h \
-	include/k5-err.h include/k5-buf.h include/k5-int-pkinit.h \
-	include/k5-gmt_mktime.h include/k5-plugin.h \
-	%buildroot%_includedir/krb5
-install -p -m644 include/krb5/authdata_plugin.h \
-	%buildroot%_includedir/krb5/krb5
 
 %find_lang mit-krb5
 
@@ -289,16 +254,16 @@ install -p -m644 include/krb5/authdata_plugin.h \
 %_bindir/sclient
 %_bindir/krb5-config
 %_bindir/sim_client
+%_bindir/%name-uuclient
+%_sbindir/%name-uuserver
 %_sbindir/gss-server
 %exclude %_sbindir/krb5-send-pr
 %_sbindir/sim_server
 %_sbindir/sserver
 %_man1dir/sclient.1*
-%_man1dir/krb5-config.1*
-%_man1dir/krb5-send-pr.1*
+# %%_man1dir/krb5-config.1*
+%exclude %_man1dir/krb5-send-pr.1*
 %_man8dir/sserver.8*
-%_sbindir/%name-uuserver
-%_bindir/%name-uuclient
 
 %files kdc
 %dir %_localstatedir/kerberos
@@ -326,9 +291,7 @@ install -p -m644 include/krb5/authdata_plugin.h \
 %_sbindir/kpropd
 %_sbindir/krb5kdc
 
-%_infodir/%name-admin.info*
-%_infodir/%name-install.info*
-
+%_man5dir/kadm5.acl.5*
 %_man5dir/kdc.conf.5*
 %_man8dir/kadmin.local.8*
 %_man8dir/kadmind.8*
@@ -357,10 +320,8 @@ install -p -m644 include/krb5/authdata_plugin.h \
 %_bindir/kvno
 %_bindir/kswitch
 
-%_infodir/%name-user.info*
-
 %_man1dir/kdestroy.1*
-%_man1dir/kerberos.1*
+# %_man1dir/kerberos.1*
 %_man1dir/kinit.1*
 %_man1dir/klist.1*
 %_man1dir/kpasswd.1*
@@ -373,11 +334,22 @@ install -p -m644 include/krb5/authdata_plugin.h \
 %_man5dir/k5identity.5*
 
 %files doc
-%_docdir
+%doc %_docdir
 
 # {{{ changelog
 
 %changelog
+* Fri Jan 04 2013 Ivan A. Melnikov <iv@altlinux.org> 1.11-alt1
+- 1.11;
+- dropped obsolete patches;
+- updated fedora patches;
+- add patch 21 from fedora;
+- update gear rules to better match upstream distribution;
+- change way we deal with preprocessor loop in krb5/krb5.h (instead
+  of patch that caused build problems we do it with sed in %%install);
+- dropped internal headers packaging;
+- minor packaging improvements.
+
 * Wed Dec 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.10.2-alt2.1
 - Fixed build
 
