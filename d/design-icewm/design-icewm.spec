@@ -1,7 +1,7 @@
 %define theme gertplastik
 Name: design-icewm
 Version: 1.0
-Release: alt6
+Release: alt7
 Summary: Default theme for IceWM
 Group: Graphical desktop/Icewm
 License: GPL
@@ -33,6 +33,10 @@ popd
 %_x11x11dir/icewm/themes/*
 
 %changelog
+* Sat Jan 05 2013 Dmitriy Khanzhin <jinn@altlinux.org> 1.0-alt7
+- updated some .xpm's for fix breaks themes with xorg 1.12.3.902 and later
+  (bfo#54168)
+
 * Sun Mar 20 2011 Dmitriy Khanzhin <jinn@altlinux.ru> 1.0-alt6
 - removed circular dependencies
 - fixed Url
