@@ -3,7 +3,7 @@
 
 Name: icewm
 Version: 1.3.7
-Release: alt8
+Release: alt9
 Epoch: 2
 
 Summary: X11 Window Manager
@@ -210,6 +210,9 @@ rm -rf %buildroot/%_x11x11dir/%name/themes/*
 %_pixmapsdir/*
 
 %changelog
+* Sun Nov 11 2012 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.7-alt9
+- now may be seen GenericName points of .desktop files (ALT #27946)
+
 * Wed Oct 03 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 2:1.3.7-alt8
 - fixed build with gcc4.7
 - set right path to default background
