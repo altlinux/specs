@@ -1,5 +1,5 @@
 Name: elementary
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -16,7 +16,9 @@ Requires: lib%name = %version-%release
 BuildRequires: libecore-devel libeina-devel libeet-devel libedje-devel
 BuildRequires: libevas-devel edje embryo_cc libeet-utils libeio-devel
 BuildRequires: libethumb-devel libedbus-devel libefreet-devel libemotion-devel
-BuildRequires: libSDL-devel doxygen
+BuildRequires: libSDL-devel
+BuildRequires: /proc dbus-tools-gui doxygen /usr/bin/convert
+
 
 %description
 Elementary is a widget set based on the Enlightenment Foundation
@@ -60,6 +62,7 @@ developing applications that use Elementary libraries.
 %autoreconf
 %configure --disable-static
 %make_build
+%make doc
 
 %install
 %makeinstall_std
@@ -94,6 +97,9 @@ developing applications that use Elementary libraries.
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
 - 1.7.4
 

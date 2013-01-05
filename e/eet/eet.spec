@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: eet
-Version: 1.7.4
+Version: 1.7.5
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -19,6 +19,7 @@ Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 BuildRequires: libeina-devel >= 1.7.3 libjpeg-devel libgnutls-devel libgcrypt-devel zlib-devel
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 %{?_enable_tests:BuildRequires: libcheck-devel}
+BuildRequires: doxygen
 
 %description
 Eet is a tiny library designed to write an arbitary set of chunks of data
@@ -91,6 +92,7 @@ Utils for operate with Eet data
 	%{subst_enable tests}
 
 %make_build
+%make doc
 
 # tmpnam used
 %check
@@ -116,6 +118,9 @@ Utils for operate with Eet data
 %_bindir/*
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
 - 1.7.4
 

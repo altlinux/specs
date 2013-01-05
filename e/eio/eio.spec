@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: eio
-Version: 1.7.4
+Version: 1.7.5
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -20,6 +20,7 @@ BuildRequires: libeina-devel >= 1.7.3
 BuildRequires: libecore-devel >= 1.7.3
 BuildRequires: libeet-devel >= 1.7.3
 %{?_enable_static:BuildPreReq: glibc-devel-static}
+BuildRequires: doxygen
 
 %description
 EIO is a library that intended to provide non blocking IO by using
@@ -61,6 +62,7 @@ documentation for Eio.
 	%{subst_enable static}
 
 %make_build
+%make doc
 
 %check
 %make check
@@ -78,6 +80,9 @@ documentation for Eio.
 %_libdir/pkgconfig/*
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
 - 1.7.4
 

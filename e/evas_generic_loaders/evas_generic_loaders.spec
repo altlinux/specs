@@ -1,9 +1,9 @@
 Name: evas_generic_loaders
-Version: 1.7.4
+Version: 1.7.5
 %ifdef beta
 Release: alt1.%beta
 %else
-Release: alt2
+Release: alt1
 %endif
 
 Summary: A set of loaders for Evas
@@ -51,6 +51,9 @@ loader.
 %doc AUTHORS COPYING README
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Tue Dec 25 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt2
 - built SVG loader
 

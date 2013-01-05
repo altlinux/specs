@@ -2,7 +2,7 @@
 %def_disable epdf
 
 Name: ethumb
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Ethumb - Thumbnail generation library
@@ -16,6 +16,7 @@ Requires: lib%name = %version-%release
 
 BuildRequires: doxygen edje libedbus-devel libedje-devel libeet-devel libemotion-devel libexif-devel
 %{?_enable_epdf:BuildRequires: libepdf-devel}
+BuildRequires: doxygen
 
 %description
 Ethumb is a EFL thumbnail generation library that
@@ -50,6 +51,7 @@ developing applications that use %name.
 %autoreconf
 %configure --disable-static
 %make_build
+%make doc
 
 %install
 %makeinstall_std
@@ -76,6 +78,9 @@ developing applications that use %name.
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
 - 1.7.4
 

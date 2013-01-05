@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: embryo
-Version: 1.7.4
+Version: 1.7.5
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -15,8 +15,9 @@ URL: http://www.enlightenment.org/
 
 Source: http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
-BuildRequires: libeina-devel >= 1.7.3
+BuildRequires: libeina-devel >= 1.7.5
 %{?_enable_static:BuildPreReq: glibc-devel-static}
+BuildRequires: doxygen
 
 %description
 Embryo is primarily a shared library that gives you an API to load and control
@@ -126,6 +127,7 @@ This package contains static libraries
 %{?!_enable_static:export lt_cv_prog_cc_static_works=no}
 %configure %{subst_enable static}
 %make_build
+%make doc
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -149,6 +151,9 @@ This package contains static libraries
 %endif
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
 - 1.7.4
 
