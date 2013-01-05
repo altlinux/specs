@@ -2,12 +2,13 @@
 # $Id: cmus.spec,v 1.34 2006/08/20 13:58:03 eugene Exp $
 
 %define name cmus
-%define version 2.4.2
-%define release alt1
+%define version 2.5.0
+%define release alt3
+%define debug 0
 
 Name: %name
 Version: %version
-Release: %release.1
+Release: %release
 Summary: CMus - C* Music Player
 License: GPL
 Group: Sound
@@ -24,7 +25,7 @@ Source2: cmus.desktop
 # Temporary disable build with ncursesw - removed. Now cmus use ncurses if
 # ncursesw not available
 # Patch1: %name-with_ncurses.patch
-Patch2: %name-alt-libav-0.8.patch
+Patch2: cmus.git-5feece0be8491287625b105af35d0091cbb05aa6.patch
 
 # User interface
 BuildRequires(build): libtinfo-devel
@@ -47,6 +48,7 @@ BuildRequires(build): libavcodec-devel
 BuildRequires(build): libavformat-devel
 BuildRequires(build): libavutil-devel
 BuildRequires(build): libwavpack-devel
+BuildRequires(build): libcdio-devel
 
 # Automatically added by buildreq on Sat Jul 28 2007
 BuildRequires: libstdc++-devel
@@ -69,6 +71,7 @@ Features
     o AAC (.aac, audio/aac, audio/aacp)
     o FFMPEG (.wma files, could extend to support more)
     o WavPack (.wv)
+    o CDIO
   * Output
     o ALSA
     o OSS
@@ -110,6 +113,7 @@ CMus - маленький и быстрый музыкальный проигр�
     o AAC (.aac, audio/aac, audio/aacp)
     o FFMPEG (.wma, возможность поддержки многих форматов)
     o WavPack (.wv)
+    o CDIO
   * Выход:
     o ALSA
     o OSS
@@ -287,6 +291,17 @@ CMus is a small and fast music player using the ncurses library.
 This package contains plugin for FFMPEG support (.wma files, could extend
 to support more).
 
+%package in-cdio
+Summary: CDIO plugin for CMus
+Group: Sound
+
+Requires: %name = %version-%release
+
+%description in-cdio
+CMus is a small and fast music player using the ncurses library.
+
+This package contains plugin for CDIO support.
+
 %description -l ru_RU.UTF-8 in-aac
 CMus - маленький и быстрый музыкальный проигрыватель, использующий
 библиотеку ncurses.
@@ -350,13 +365,15 @@ CMus - маленький и быстрый музыкальный проигр�
 %setup -q
 # %patch0 -p1
 # %patch1 -p1
-%patch2 -p0
-
+%patch2 -p1
 
 %build
 CFLAGS="${CFLAGS:--pipe -Wall -O2 -g}" ; export CFLAGS
 CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
 ./configure \
+%if %debug
+        DEBUG=2 \
+%endif
         prefix=%prefix \
         CONFIG_FLAC=y \
         CONFIG_MAD=y \
@@ -372,7 +389,8 @@ CXXFLAGS="${CXXFLAGS:--pipe -Wall -O2 -g}" ; export CXXFLAGS
         CONFIG_ALSA=y \
         CONFIG_ARTS=n \
         CONFIG_AO=y \
-        CONFIG_OSS=y
+        CONFIG_OSS=y \
+        CONFIG_CDIO=y
 %make_build
 # make man
 # make html
@@ -408,10 +426,10 @@ mv cmus-status-display examples
 %_desktopdir/%name.desktop
 %_datadir/%name
 %exclude %_datadir/doc/%name
-%doc AUTHORS README examples contrib TODO
+%doc AUTHORS README examples contrib
 %_man1dir/cmus.1.*
 %_man1dir/cmus-remote.1.*
-
+%_man7dir/cmus-tutorial.7.*
 
 %files in-flac
 %_libexecdir/%name/ip/flac.so
@@ -448,6 +466,9 @@ mv cmus-status-display examples
 %files in-ffmpeg
 %_libexecdir/%name/ip/ffmpeg.so
 
+%files in-cdio
+%_libexecdir/%name/ip/cdio.so
+
 
 %files out-alsa
 %_libexecdir/%name/op/alsa.so
@@ -462,6 +483,17 @@ mv cmus-status-display examples
 
 
 %changelog
+* Sat Jan  5 2013 Terechkov Evgenii <evg@altlinux.org> 2.5.0-alt3
+- Make DEBUG conditional
+
+* Wed Jan  2 2013 Terechkov Evgenii <evg@altlinux.org> 2.5.0-alt2
+- Patch2 replaced
+- DEBUG=2 to dump crash info to ~/cmus-debug.txt
+
+* Wed Jan  2 2013 Terechkov Evgenii <evg@altlinux.org> 2.5.0-alt1
+- 2.5.0
+- cmus-in-cdio
+
 * Tue Feb 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1.1
 - Fixed built with libav 0.8
 
