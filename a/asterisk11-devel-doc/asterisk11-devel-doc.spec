@@ -3,7 +3,7 @@
 Name: asterisk11-devel-doc
 Summary: Asterisk API documentation
 Version: 11
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Servers
 Url: http://www.asterisk.org/
@@ -34,6 +34,9 @@ tar xfj %_usrsrc/asterisk11.tar.bz2
 %doc doc
 
 %changelog
+* Sat Jan 05 2013 Denis Smirnov <mithraen@altlinux.ru> 11-alt3
+- Asterisk update
+
 * Fri Nov 09 2012 Denis Smirnov <mithraen@altlinux.ru> 11-alt2
 - Asterisk update
 
