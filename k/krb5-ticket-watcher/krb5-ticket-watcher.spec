@@ -1,7 +1,7 @@
 BuildRequires: desktop-file-utils
 Name: krb5-ticket-watcher
 Version: 1.0.3
-Release: alt1
+Release: alt1.1
 Summary: A Tray Applet for Watching, Renewing, and Reinitializing Kerberos Tickets
 Url: http://sourceforge.net/projects/krb5ticketwatch
 License: %gpl2plus
@@ -12,11 +12,10 @@ Packager: Andriy Stepanov <stanv@altlinux.ru>
 Source: %name-%version.tar
 Patch1: 0001-made-default-realm-the-first-one-in-list.patch
 Patch2: krb5-ticket-watcher-1.0-alt-date-fix.patch
-Patch3: krb5-ticket-watcher-1.0.2-alt-krb5-1.10.2.patch
+Patch3: krb5-ticket-watcher-1.0.3-alt-fix-includes.patch
 
 BuildRequires: kde-common-devel rpm-build-licenses libkrb5-devel libkeyutils-devel
-# Automatically added by buildreq on Thu Mar 19 2009
-BuildRequires: cmake gcc-c++ libcom_err-devel libqt3-devel libqt4-devel
+BuildRequires: cmake gcc-c++ libcom_err-devel libqt4-devel
 
 %description
 A tray applet for watching, renewing, and reinitializing Kerberos
@@ -43,9 +42,13 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_pixmapsdir/krb5-ticket-watcher.png
 %_desktopdir/krb5-ticket-watcher.desktop
 %{_datadir}/locale/*/*/*.mo
-%doc COPYING Changes News TODO 
+%doc COPYING Changes News TODO
 
 %changelog
+* Sat Jan 05 2013 Ivan A. Melnikov <iv@altlinux.org> 1.0.3-alt1.1
+- Fixed build with new krb5;
+- Minor packaging improvements.
+
 * Thu Sep 27 2012 Andriy Stepanov <stanv@altlinux.ru> 1.0.3-alt1
 - New version
 
