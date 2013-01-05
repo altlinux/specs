@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: ecore
-Version: 1.7.4
+Version: 1.7.5
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -97,6 +97,7 @@ This package contains Ecore static libraries.
 %{?!_enable_static:export lt_cv_prog_cc_static_works=no}
 %configure %{subst_enable static}
 %make_build
+%make doc
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -122,6 +123,9 @@ This package contains Ecore static libraries.
 %endif
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.4-alt1
 - 1.7.4
 

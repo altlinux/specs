@@ -3,7 +3,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: evas
-Version: 1.7.4
+Version: 1.7.5
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -24,10 +24,11 @@ Patch: evas-1.7.1-alt-build.patch
 
 BuildPreReq: libedb-devel >= 1.0.5.007-alt1.20070731
 BuildPreReq: libeet-devel >= 1.7.3 libeina-devel >= 1.7.3
-BuildRequires: fontconfig-devel libX11-devel libXrender-devel libXext-devel libICE-devel libGL-devel
-BuildRequires: libungif-devel libpng-devel libjpeg-devel librsvg-devel
-BuildRequires: libtiff-devel libcairo-devel libSDL-devel doxygen
+BuildRequires: fontconfig-devel libharfbuzz-devel libX11-devel libXrender-devel libXext-devel libICE-devel libGL-devel
+BuildRequires: libungif-devel libpng-devel libjpeg-devel
+BuildRequires: libtiff-devel libcairo-devel libSDL-devel
 %{?_enable_pixman:BuildRequires: libpixman-devel}
+BuildRequires: doxygen
 
 %description
 Evas is a clean display canvas API for several target display systems that
@@ -127,6 +128,7 @@ documentation
 	#--enable-gl-xlib \
 
 %make_build
+%make doc
 
 %install
 %makeinstall
@@ -162,6 +164,9 @@ cp -R doc %buildroot%customdocdir
 %exclude %_datadir/evas/examples/evas-buffer-simple.c
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1:1.7.4-alt1
 - 1.7.4
 

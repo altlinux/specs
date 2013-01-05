@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: edje
-Version: 1.7.4
+Version: 1.7.5
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -31,6 +31,7 @@ BuildPreReq: libevas-devel >= 1.7.4
 BuildPreReq: libeet-devel >= 1.7.4
 BuildPreReq: libeio-devel >= 1.7.4
 BuildRequires: liblua5-devel libsndfile-devel
+BuildRequires: doxygen
 
 %description
 Edje purpose is to be a sequel to "Ebits" which to date has serviced the
@@ -94,6 +95,7 @@ This package contains static libraries
 %{?!_enable_static:export lt_cv_prog_cc_static_works=no}
 %configure %{subst_enable static}
 %make_build
+%make doc
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -122,6 +124,9 @@ This package contains static libraries
 
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
 - 1.7.4
 

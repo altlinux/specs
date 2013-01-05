@@ -1,7 +1,7 @@
 %def_disable static
 
 Name: efreet
-Version: 1.7.4
+Version: 1.7.5
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -15,7 +15,8 @@ Url: http://www.enlightenment.org/pages/efreet.html
 
 Source:  http://download.enlightenment.org/releases/%name-%version.tar.bz2
 
-BuildRequires: libecore-devel >= 1.7.3 libeina-devel >= 1.7.3 libeet-devel >= 1.7.3
+BuildRequires: libecore-devel >= 1.7.5 libeina-devel >= 1.7.5 libeet-devel >= 1.7.5
+BuildRequires: doxygen
 
 %package -n lib%name
 Group: System/Libraries
@@ -54,6 +55,7 @@ Efreet development files
 %autoreconf
 %configure %{subst_enable static}
 %make_build
+%make doc
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -75,6 +77,9 @@ Efreet development files
 %_includedir/efreet-1
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
 - 1.7.4
 

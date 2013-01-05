@@ -1,7 +1,7 @@
 %def_disable xine
 
 Name: emotion
-Version: 1.7.4
+Version: 1.7.5
 Release: alt1
 
 Summary: Widget set based on the Enlightenment Foundation Libraries
@@ -17,6 +17,7 @@ BuildRequires: libeet-devel >= 1.7.3 libeeze-devel libeio-devel
 BuildRequires: libvlc-devel gst-plugins-devel
 %{?_enable_xine:BuildRequires: libxine-devel}
 BuildRequires: chrpath
+BuildRequires: doxygen
 
 %description
 Emotion is a library to easily integrate media playback into EFL
@@ -51,6 +52,7 @@ developing applications that use Emotion library.
 	%{subst_enable xine}
 
 %make_build
+%make doc
 
 %install
 %makeinstall_std
@@ -76,6 +78,9 @@ developing applications that use Emotion library.
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
+- 1.7.5
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1.7.4-alt1
 - 1.7.4
 
