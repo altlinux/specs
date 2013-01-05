@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt11
+Release: alt12
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -2196,7 +2196,7 @@ config_enable \
 %endif
 	%{?_enable_debug_section_mismatch:DEBUG_SECTION_MISMATCH} \
 	%{?_enable_modversions:MODVERSIONS} \
-	%{?_enable_x32:X86_EXTENDED_PLATFORM} \
+	%{?_enable_x32:X86_X32_ABI} \
 	%{?_enable_x86_extended_platform:X86_EXTENDED_PLATFORM} \
 	%{?_enable_ext4_for_ext23:EXT4_USE_FOR_EXT23} \
 	%{?_enable_mca:MCA} \
@@ -2910,6 +2910,9 @@ done)
 
 
 %changelog
+* Sat Jan 05 2013 Led <led@altlinux.ru> 3.0.57-alt12
+- really enabled X86_X32_ABI
+
 * Thu Jan 03 2013 Led <led@altlinux.ru> 3.0.57-alt11
 - updated:
   + fix-mm
