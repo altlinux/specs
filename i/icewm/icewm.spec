@@ -3,7 +3,7 @@
 
 Name: icewm
 Version: 1.3.7
-Release: alt9
+Release: alt10
 Epoch: 2
 
 Summary: X11 Window Manager
@@ -37,6 +37,7 @@ Patch7:  %name-deb-tray_hotfixes.patch
 Patch8:  %name-alt-taskbar.patch
 Patch9:  %name-alt-ubuntu-fix-deprecated.patch
 Patch10: %name-gcc47.patch
+Patch11: %name-sf.net-tracker.patch
 
 PreReq: %name-light = %epoch:%version-%release
 
@@ -82,6 +83,7 @@ Recommends: iftop, mutt
 %patch8  -p2
 %patch9  -p2
 %patch10 -p2
+%patch11 -p2
 
 %add_optflags %optflags_nocpp
 
@@ -210,6 +212,11 @@ rm -rf %buildroot/%_x11x11dir/%name/themes/*
 %_pixmapsdir/*
 
 %changelog
+* Sun Jan 06 2013 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.7-alt10
+- applied patches from sf.net icewm tracker:
+  + #3393827 "fix reading window icon property"
+  + #3549397 "fix for disappearing or non-updating tray icons"
+
 * Sun Nov 11 2012 Dmitriy Khanzhin <jinn@altlinux.org> 2:1.3.7-alt9
 - now may be seen GenericName points of .desktop files (ALT #27946)
 
