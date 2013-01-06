@@ -1,6 +1,6 @@
 Name: gnustep-systempreferences
 Version: 1.1.0
-Release: alt2.git20120323
+Release: alt3.git20120323
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -63,16 +63,24 @@ This package contains development files of %name.
 pushd %buildroot%_libdir
 for i in *.so*; do
 	rm -f $i
-	mv GNUstep/Frameworks/PreferencePanes.framework/Versions/Current/$i ./
-	ln -s %_libdir/$i \
-		GNUstep/Frameworks/PreferencePanes.framework/Versions/Current/
+	mv GNUstep/Frameworks/PreferencePanes.framework/Versions/1/$i ./
+	for j in *.so.*.*; do
+		ln -s %_libdir/$j \
+			GNUstep/Frameworks/PreferencePanes.framework/Versions/1/$i
+	done
 done
+rm -f \
+	GNUstep/Frameworks/PreferencePanes.framework/Versions/1/PreferencePanes
+ln -s %_libdir/$j \
+	GNUstep/Frameworks/PreferencePanes.framework/Versions/1/PreferencePanes
 popd
 
 %files
 %doc ChangeLog README TODO
 %_bindir/*
 %_libdir/GNUstep
+%exclude %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Versions/1/Headers
+%exclude %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -80,8 +88,13 @@ popd
 %files -n lib%name-devel
 %_includedir/*
 %_libdir/*.so
+%_libdir/GNUstep/Frameworks/PreferencePanes.framework/Versions/1/Headers
+%_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %changelog
+* Sun Jan 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt3.git20120323
+- Don't require devel packages for runtime packages
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt2.git20120323
 - Rebuilt with libobjc2 instead of libobjc
 
