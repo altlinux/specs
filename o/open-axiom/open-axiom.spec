@@ -3,7 +3,7 @@
 
 Name: open-%oname
 Version: 1.5.0
-Release: alt1.svn20120826
+Release: alt1.svn20121011
 
 Summary: OpenAxiom Computer Algebra System
 License: BSD-style
@@ -110,6 +110,9 @@ install -D -m644 %SOURCE6 %buildroot%_desktopdir/%name.desktop
 %_docdir/%name
 
 %changelog
+* Sun Jan 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.svn20121011
+- New snapshot
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.svn20120826
 - New snapshot
 
