@@ -1,6 +1,6 @@
 Name: apt-scripts
-Version: 0.1.1
-Release: alt3
+Version: 0.1.2
+Release: alt1
 
 Summary: Lua scripts for APT
 License: GPL
@@ -18,6 +18,9 @@ apt-cache list-extras
 apt-cache list-nodeps
 	This script will list all installed packages which are
 	not required by any other installed package.
+apt-cache list-unreleased
+	This script will list all installed packages which have
+	version newer than in repository.
 
 %prep
 %setup -q
@@ -29,8 +32,10 @@ for f in *.conf; do install -pD -m644 $f %buildroot/etc/apt/apt.conf.d/$f; done
 cat *.conf >.apt.conf
 apt-cache -c .apt.conf -o Dir::Bin::scripts=%buildroot/usr/share/apt/scripts list-extras
 apt-cache -c .apt.conf -o Dir::Bin::scripts=%buildroot/usr/share/apt/scripts list-nodeps
+apt-cache -c .apt.conf -o Dir::Bin::scripts=%buildroot/usr/share/apt/scripts list-unreleased
 apt-cache -c .apt.conf script ./list-extras.lua
 apt-cache -c .apt.conf script ./list-nodeps.lua
+apt-cache -c .apt.conf script ./list-unreleased.lua
 
 mkdir -p %buildroot/etc/buildreqs/files/ignore.d
 ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreqs/files/ignore.d/%name
@@ -41,6 +46,9 @@ ls *.conf |sed 's:^:^/etc/apt/apt.conf.d/:;s:[.]:[.]:g' >%buildroot/etc/buildreq
 %config /etc/buildreqs/files/ignore.d/%name
 
 %changelog 
+* Wed Jan  2 2013 Terechkov Evgenii <evg@altlinux.org> 0.1.2-alt1
+- list-unreleased
+ 
 * Sat Mar 01 2008 Alexey Tourbin <at@altlinux.ru> 0.1.1-alt3
 - rebuild for new dependencies
 
