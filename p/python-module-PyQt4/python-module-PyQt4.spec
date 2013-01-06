@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 4.9.6
-Release: alt2
+Release: alt3
 Summary: Python bindings for Qt.
 License: GPL
 Group: Development/Python
@@ -205,6 +205,9 @@ install -d %buildroot/usr/share/sip/PyQt4/Qsci \
 %endif
 
 %changelog
+* Sun Jan 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9.6-alt3
+- Fixed for arm (thnx sbolshakov@)
+
 * Fri Dec 28 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 4.9.6-alt2
 - Added missing source files
 
