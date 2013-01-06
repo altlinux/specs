@@ -1,6 +1,6 @@
 Name: cinnamon
 Version: 1.6.7
-Release: alt5
+Release: alt6
 
 Summary: Window management and application launching for GNOME
 License: GPLv2+
@@ -239,6 +239,9 @@ _WM_
 %doc NEWS README
 
 %changelog
+* Sat Dec 29 2012 Vladimir Didenko <cow@altlinux.org> 1.6.7-alt6
+- Fix notification applet
+
 * Wed Dec 19 2012 Vladimir Didenko <cow@altlinux.org> 1.6.7-alt5
 - Disabled text shadow for panel applets
 - Explicitly set width for panel status button
