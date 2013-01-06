@@ -1,5 +1,5 @@
 Name: git
-Version: 1.7.12.4
+Version: 1.8.0.3
 Release: alt1
 
 Summary: Git core and tools
@@ -247,10 +247,11 @@ This package contains Emacs modes for Git.
 
 %prep
 %setup -n %name-%version-%release
-%define params V=1 CFLAGS="%optflags" NO_GETTEXT=1 BLK_SHA1=1 ASCIIDOC8=1 ASCIIDOC_NO_ROFF=1 ETC_GITCONFIG=/etc/gitconfig prefix=%_prefix libdir=%_libdir mandir=%_mandir htmldir=%pkgdocdir %{?_disable_curl:NO_CURL=1} %{?_disable_expat:NO_EXPAT=1} %{?_without_python:NO_PYTHON=1 PYMODULES= SCRIPT_PYTHON=}
+%define params V=1 CFLAGS="%optflags" NO_GETTEXT=1 BLK_SHA1=1 ETC_GITCONFIG=/etc/gitconfig prefix=%_prefix libdir=%_libdir mandir=%_mandir htmldir=%pkgdocdir %{?_disable_curl:NO_CURL=1} %{?_disable_expat:NO_EXPAT=1} %{?_without_python:NO_PYTHON=1 PYMODULES= SCRIPT_PYTHON=}
 
 %build
 touch git-gui/credits
+%make_build %params -C Documentation doc.dep
 %make_build %params all %{!?_without_doc:man html}
 pushd perl
 rm Makefile
@@ -465,6 +466,10 @@ popd
 %endif #emacs
 
 %changelog
+* Sun Jan 06 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.0.3-alt1
+- Updated to maint v1.8.0.3.
+- git-am: fixed "hg" patch format support (closes: #28248).
+
 * Thu Oct 18 2012 Dmitry V. Levin <ldv@altlinux.org> 1.7.12.4-alt1
 - Updated to maint v1.7.12.4.
 
