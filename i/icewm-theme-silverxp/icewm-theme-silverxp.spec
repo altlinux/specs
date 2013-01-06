@@ -1,6 +1,6 @@
 Name: icewm-theme-silverxp
 Version: 1.2.17
-Release: alt4
+Release: alt5
 
 License: GPL
 Group: Graphical desktop/Icewm
@@ -41,6 +41,10 @@ find %buildroot%_x11x11dir/icewm/themes -type d -print0 |
 %_x11x11dir/icewm/themes/SilverXP
 
 %changelog
+* Mon Jan 07 2013 Dmitriy Khanzhin <jinn@altlinux.org> 1.2.17-alt5
+- updated some .xpm's for fix breaks themes with xorg 1.12.3.902 and later
+  (bfo#54168)
+
 * Sun Mar 20 2011 Dmitriy Khanzhin <jinn@altlinux.ru> 1.2.17-alt4
 - now depends of design-icewm
 

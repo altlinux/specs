@@ -1,6 +1,6 @@
 Name: icewm-theme-darkt
 Version: 0.1.0
-Release: alt1
+Release: alt2
 
 License: GPL
 Group: Graphical desktop/Icewm
@@ -39,5 +39,9 @@ Currently there are two themes: DarkT and DarkT II.
 %_x11x11dir/icewm/themes/*
 
 %changelog
+* Sun Jan 06 2013 Dmitriy Khanzhin <jinn@altlinux.org> 0.1.0-alt2
+- updated some .xpm's for fix breaks themes with xorg 1.12.3.902 and later
+  (bfo#54168)
+
 * Sun Mar 20 2011 Dmitriy Khanzhin <jinn@altlinux.ru> 0.1.0-alt1
 - initial build for ALTLinux
