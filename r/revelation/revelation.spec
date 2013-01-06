@@ -2,18 +2,18 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: revelation
-Version: %ver_major.13
-Release: alt1.qa1
+Version: %ver_major.14
+Release: alt1
 
 Summary: Keyring management program for the GNOME Desktop
 License: %gpl2plus
 Group: Graphical desktop/GNOME
-Url: http://oss.codepoet.no/%name
+Url: http://revelation.olasagasti.info/
+#Url: http://oss.codepoet.no/%name
 
 #Source: %name.tar
-Source: ftp://oss.codepoet.no/%name/%name-%version.tar.xz
+Source: ftp://oss.codepoet.no/%name/%name-%version.tar.bz2
 Patch: %name-0.4.12-alt1-configure.patch
-Patch1: %name-0.4.13-alt-ru.po.patch
 
 %define GConf_ver 2.10.0
 PreReq: GConf >= %GConf_ver
@@ -36,7 +36,6 @@ This a keyring management program for the GNOME Desktop.
 %prep
 %setup -n %name-%version
 %patch -p1
-%patch1
 
 %build
 %autoreconf
@@ -51,6 +50,7 @@ This a keyring management program for the GNOME Desktop.
 %makeinstall_std
 
 %find_lang --with-gnome %name
+
 desktop-file-install --dir %buildroot%_desktopdir \
 	--remove-category=Utility \
 	--add-category=Settings \
@@ -87,6 +87,9 @@ fi
 %config %gconf_schemasdir/%name.schemas
 
 %changelog
+* Mon Jan 07 2013 Yuri N. Sedunov <aris@altlinux.org> 0.4.14-alt1
+- 0.14.4
+
 * Mon Aug 27 2012 Repocop Q. A. Robot <repocop@altlinux.org> 0.4.13-alt1.qa1
 - NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
 - applied repocop fixes:
