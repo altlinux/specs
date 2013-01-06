@@ -15,7 +15,7 @@
 %define bname fglrx
 Name: %{bname}_glx%legacy
 Version: 8.97.100.3
-Release: alt3
+Release: alt4
 Summary: ATI/AMD Proprietary Linux Display Driver
 Group: System/Kernel and hardware
 URL: http://ati.amd.com
@@ -34,6 +34,7 @@ Source13: %{bname}_create.xinf
 Source14: xinf2fdi
 Patch10: fglrx-8.95.1-kernel.patch
 Patch11: fglrx-8.96.1-kernel.patch
+Patch12: fglrx-8.97.100.3-X86_X32_ABI.patch
 Requires: xorg-server < 1.13 libdrm >= 2.4.5-alt2
 Requires: hwdatabase
 Requires: libGL libXrandr libXi libXcursor libXinerama
@@ -98,6 +99,7 @@ pushd common/lib/modules/%bname/build_mod
 ln -sf ../../../../../%archdir/lib/modules/%bname/build_mod/* ./
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 mv 2.6.x/Makefile Makefile
 rmdir 2.6.x
 rm -f *.orig
@@ -197,6 +199,9 @@ sh %SOURCE14 -x %buildroot%_datadir/hwdatabase/videoaliases/%bname.xinf \
 
 
 %changelog
+* Sun Jan 06 2013 Led <led@altlinux.ru> 8.97.100.3-alt4
+- support build with kernel < 3.4 with X86_X32_ABI
+
 * Thu Nov 15 2012 Led <led@altlinux.ru> 8.97.100.3-alt3
 - repack kernel-source-fglrx-*
 - added patches for fglrx.ko
