@@ -1,6 +1,6 @@
 Name: gnustep-systempreferences
 Version: 1.1.0
-Release: alt3.git20120323
+Release: alt4.git20120323
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -73,6 +73,10 @@ rm -f \
 	GNUstep/Frameworks/PreferencePanes.framework/Versions/1/PreferencePanes
 ln -s %_libdir/$j \
 	GNUstep/Frameworks/PreferencePanes.framework/Versions/1/PreferencePanes
+rm -f \
+	GNUstep/Frameworks/PreferencePanes.framework/Headers
+ln -s Versions/1/Headers \
+	GNUstep/Frameworks/PreferencePanes.framework/Headers
 popd
 
 %files
@@ -92,6 +96,9 @@ popd
 %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %changelog
+* Mon Jan 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt4.git20120323
+- Fixed symlink for Headers
+
 * Sun Jan 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt3.git20120323
 - Don't require devel packages for runtime packages
 

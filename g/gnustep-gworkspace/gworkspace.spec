@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.1
-Release: alt2.git20121017
+Release: alt3.git20121017
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -73,12 +73,13 @@ export CC=gcc
 	--with-inotify \
 	--with-installation-domain=SYSTEM
 
+%define incs -I%_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 %make_build \
 	messages=yes \
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 %incs' \
 	CONFIG_SYSTEM_LIBS='-lgnustep-base -lgnustep-gui -lobjc2 -lm'
  
 libFSNode="$PWD/FSNode/FSNode.framework/libFSNode.so"
@@ -89,7 +90,7 @@ pushd Inspector
 	debug=yes \
 	strip=no \
 	shared=yes \
-	AUXILIARY_CPPFLAGS='-O2' \
+	AUXILIARY_CPPFLAGS='-O2 %incs' \
 	CONFIG_SYSTEM_LIBS="$libFSNode -lgnustep-base -lgnustep-gui -lobjc2"
 popd
 
@@ -134,6 +135,9 @@ popd
 %doc Documentation/*
 
 %changelog
+* Mon Jan 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt3.git20121017
+- Fixed build
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt2.git20121017
 - Rebuilt with libobjc2 instead of libobjc
 - Don't require development packages for runtime packages
