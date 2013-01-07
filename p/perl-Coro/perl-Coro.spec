@@ -1,7 +1,7 @@
 # Spec file for Perl module Coro
 
 Name: perl-Coro
-Version: 6.10
+Version: 6.23
 Release: alt1
 
 Summary: cooperative multitasking Perl module
@@ -50,6 +50,9 @@ cp -p Coro/libcoro/LICENSE LICENSE.libcoro
 %perl_vendor_autolib/Coro
 
 %changelog
+* Mon Jan 07 2013 Nikolay A. Fetisov <naf@altlinux.ru> 6.23-alt1
+- New version
+
 * Thu Oct 18 2012 Nikolay A. Fetisov <naf@altlinux.ru> 6.10-alt1
 - New version
 
