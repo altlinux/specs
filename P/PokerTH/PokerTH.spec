@@ -1,8 +1,8 @@
 # vim: set ft=spec: -*- rpm-spec -*-
 
 Name: PokerTH
-Version: 0.9.5
-Release: alt1.3
+Version: 1.0
+Release: alt1
 
 Summary: Texas Hold'em poker game
 Group: Games/Cards
@@ -17,7 +17,7 @@ Patch: %name-%version-%release.patch
 # Automatically added by buildreq on Tue May 26 2009
 BuildRequires: boost-asio-devel boost-filesystem-devel boost-program_options-devel boost-interprocess-devel gcc-c++ libSDL-devel libSDL_mixer-devel libcurl-devel libdb4-devel libgnutls-openssl-devel libgsasl-devel libqt4-devel
 
-BuildPreReq: libgcrypt-devel zlib-devel libsqlite3-devel phonon-devel tinyxml-devel libircclient-devel
+BuildPreReq: libgcrypt-devel zlib-devel libsqlite3-devel phonon-devel tinyxml-devel libircclient-devel libprotobuf-devel
 
 %description
 PokerTH is a poker game written in C++/QT4. You can play the popular
@@ -49,6 +49,9 @@ install -pm755 pokerth bin/pokerth_server %buildroot%_bindir
 %_pixmapsdir/pokerth.png
 
 %changelog
+* Mon Jan 07 2013 Mikhail Efremov <sem@altlinux.org> 1.0-alt1
+- [1.0]
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt1.3
 - Rebuilt with Boost 1.52.0
 
