@@ -1,11 +1,12 @@
 Name: dnsflood
-Version: 1.10
+Version: 1.20
 Release: alt1
 Summary: DNS Flood Detector was developed to detect abusive usage levels on high traffic nameservers
 License: %gpl2plus
 Group: Monitoring
 URL: http://www.adotout.com/dnsflood.html
 Source: http://www.adotout.com/%name-%version.tgz
+Patch0: dont-strip-alt.patch
 Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 BuildRequires(pre): rpm-build-licenses
@@ -16,7 +17,8 @@ DNS Flood Detector was developed to detect abusive usage levels on high traffic 
 to enable quick response in halting the use of one's nameserver to facilitate spam
 
 %prep
-%setup -n dns_flood_detector
+%setup -n dns_flood_detector_1.2
+%patch0 -p1
 
 %build
 ./configure.pl Linux
@@ -43,5 +45,9 @@ install -pD -m755 dns_flood_detector %buildroot%_sbindir/dns_flood_detector
 
 
 %changelog
+* Tue Jan  8 2013 Terechkov Evgenii <evg@altlinux.org> 1.20-alt1
+- 1.20
+- Apply patch to generate debuginfo
+
 * Fri Dec 23 2011 Slava Dubrovskiy <dubrsl@altlinux.org> 1.10-alt1
 - built for ALT Linux
