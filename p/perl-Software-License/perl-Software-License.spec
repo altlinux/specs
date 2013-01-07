@@ -1,7 +1,7 @@
 ## SPEC file for Perl module Software::License
 
 Name: perl-Software-License
-Version: 0.103004
+Version: 0.103005
 Release: alt1
 
 Summary: Perl module that provide templated software licenses
@@ -40,6 +40,9 @@ Perl module Software::License provides templated software licenses.
 %perl_vendor_privlib/Software/License*
 
 %changelog
+* Mon Jan 07 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.103005-alt1
+- New version
+
 * Sat Jan 28 2012 Nikolay A. Fetisov <naf@altlinux.ru> 0.103004-alt1
 - Initial build for ALT Linux Sisyphus
 
