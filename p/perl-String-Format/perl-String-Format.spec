@@ -1,11 +1,8 @@
 ## SPEC file for Perl module String-Format
 
-%define version    1.16
-%define release    alt1
-
 Name: perl-String-Format
-Version: %version
-Release: alt1.1
+Version: 1.17
+Release: alt1
 
 Summary: Perl module for sprintf-like string formatting
 
@@ -43,6 +40,9 @@ capabilities with arbitrary format definitions.
 %perl_vendor_privlib/String/Format*
 
 %changelog
+* Mon Jan 07 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.17-alt1
+- New version
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 1.16-alt1.1
 - repair after perl 5.12 upgrade using girar-nmu
 
