@@ -1,6 +1,6 @@
 Name: gnome-hearts
 Version: 0.3
-Release: alt1
+Release: alt2
 Summary: Hearts for GNOME
 License: GPL
 Group: Games/Cards
@@ -10,7 +10,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 Source: %name-%version.tar
 
 BuildPreReq: glib2-devel intltool libgnomeui-devel libgtk+2-devel
-BuildPreReq: libglade-devel scrollkeeper python-devel
+BuildPreReq: libglade-devel python-devel
 
 %py_provides player_api
 
@@ -24,7 +24,8 @@ computer opponents to satisfy widely diverging playing styles.
 
 %build
 %autoreconf
-%configure
+%configure \
+	--disable-scrollkeeper
 
 for i in $(egrep -R 'python.*\.a' ./ |awk -F : '{print $1}')
 do
@@ -51,6 +52,9 @@ ln -s %_pixmapsdir/%name.png %buildroot%_liconsdir/
 %_liconsdir/*
 
 %changelog
+* Tue Jan 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt2
+- Built without scrollkeeper
+
 * Sun Jan 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3-alt1
 - Initial build for Sisyphus
 
