@@ -9,7 +9,7 @@
 %def_enable gtk_doc
 
 Name: %_name-ugly%api_ver
-Version: %ver_major.3
+Version: %ver_major.5
 Release: alt1
 
 Summary: A set of encumbered GStreamer plugins
@@ -17,8 +17,8 @@ Group: System/Libraries
 License: LGPL
 URL: http://gstreamer.freedesktop.org/
 
-Requires: gstreamer%api_ver >= 1.0.0
-Requires: lib%_name%api_ver >= 1.0.0
+Requires: gstreamer%api_ver >= 1.0.5
+Requires: lib%_name%api_ver >= 1.0.5
 
 Provides: %_name%api_ver-lame = %version-%release
 Provides: %_name%api_ver-mad = %version-%release
@@ -77,6 +77,9 @@ collection.
 %_gtk_docdir/%_name-ugly-plugins-%api_ver/*
 
 %changelog
+* Tue Jan 08 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.5-alt1
+- 1.0.5
+
 * Sat Nov 24 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
 - 1.0.3
 
