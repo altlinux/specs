@@ -1,5 +1,5 @@
-Version: 2.0
-Release: alt1.1
+Version: 2.4.2
+Release: alt1
 Name: mercurial
 %setup_python_module %name
 
@@ -130,6 +130,9 @@ install -m 644 contrib/mergetools.hgrc %buildroot/%_sysconfdir/%name/hgrc.d/merg
 %python_sitelibdir/hgext/*
 
 %changelog
+* Tue Jan 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.2-alt1
+- Version 2.4.2 (ALT #27599)
+
 * Mon Apr 16 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.0-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
