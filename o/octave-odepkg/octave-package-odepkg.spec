@@ -1,15 +1,15 @@
-Serial: 1
-%define octave_pkg_version 1.1.1
-%define octave_pkg_name bim
-%define octave_descr_name bim
+%def_with _octave_arch
+%define octave_pkg_version 0.8.2
+%define octave_pkg_name odepkg
+%define octave_descr_name OdePkg
 Name: octave-%octave_pkg_name
-Version: 1.1.1
+Version: 0.8.2
 Release: alt1
-Summary: PDE Solver using a Finite Element/Finite Volume approach
+Summary: OdePkg
 
 Group: Sciences/Mathematics
-License: GPLv2+
-Url: http://octave.sourceforge.net/
+License: GPL version 2 or later
+URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
@@ -19,9 +19,9 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
-Provides: octave(bim) = %version
-# Depends: octave (>= 3.6.0), fpl, msh
-Requires: octave >= 3.6.0 octave(fpl) octave(msh)
+Provides: octave(odepkg) = %version
+# Depends: octave (>= 3.2.0)
+Requires: octave >= 3.2.0
 
 
 %description
@@ -29,7 +29,7 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-Package for solving Diffusion Advection Reaction (DAR) Partial Differential Equations
+A package for solving ordinary differential equations and more.
 
 %prep
 %setup -n %octave_pkg_name-%version
@@ -49,9 +49,6 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
-* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.1-alt1
+* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 0.8.2-alt1
 - updated by octave-package-builder
-
-* Thu Nov 17 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
-- initial import by octave-package-builder
 

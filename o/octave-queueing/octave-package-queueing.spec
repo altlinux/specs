@@ -1,15 +1,14 @@
-Serial: 1
-%define octave_pkg_version 1.1.1
-%define octave_pkg_name bim
-%define octave_descr_name bim
+%define octave_pkg_version 1.2.0
+%define octave_pkg_name queueing
+%define octave_descr_name queueing
 Name: octave-%octave_pkg_name
-Version: 1.1.1
+Version: 1.2.0
 Release: alt1
-Summary: PDE Solver using a Finite Element/Finite Volume approach
+Summary: Octave package for Queueing Networks and Markov chains analysis
 
 Group: Sciences/Mathematics
-License: GPLv2+
-Url: http://octave.sourceforge.net/
+License: GPLv3+
+URL: http://www.moreno.marzolla.name/software/queueing/
 
 Source0: %octave_pkg_name-%version.tar.gz
 
@@ -19,9 +18,9 @@ BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libn
 %else
 BuildArch: noarch
 %endif
-Provides: octave(bim) = %version
-# Depends: octave (>= 3.6.0), fpl, msh
-Requires: octave >= 3.6.0 octave(fpl) octave(msh)
+Provides: octave(queueing) = %version
+# Depends: octave (>= 3.2.3)
+Requires: octave >= 3.2.3
 
 
 %description
@@ -29,10 +28,10 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-Package for solving Diffusion Advection Reaction (DAR) Partial Differential Equations
+The queueing package provides functions for queueing
 
 %prep
-%setup -n %octave_pkg_name-%version
+%setup -n %octave_pkg_name
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -49,9 +48,6 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
-* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.1-alt1
+* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1.2.0-alt1
 - updated by octave-package-builder
-
-* Thu Nov 17 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.2-alt1
-- initial import by octave-package-builder
 

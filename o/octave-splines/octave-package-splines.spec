@@ -1,26 +1,27 @@
-%define octave_pkg_version 1.0.7
+Serial: 1
+%define octave_pkg_version 1.1.2
 %define octave_pkg_name splines
 %define octave_descr_name splines
 Name: octave-%octave_pkg_name
-Version: 1.0.7
+Version: 1.1.2
 Release: alt1
 Summary: Splines.
 
 Group: Sciences/Mathematics
-License: GPL v2 or later, and Public Domain
+License: GPLv3+, public domain
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
 %else
 BuildArch: noarch
 %endif
-# Depends: octave (>= 2.9.7)
-Requires: octave >= 2.9.7
-Provides: octave(splines) = 1.0.7
+Provides: octave(splines) = %version
+# Depends: octave (>= 3.6.0)
+Requires: octave >= 3.6.0
 
 
 %description
@@ -31,7 +32,7 @@ Extension Description:
 Additional Cubic spline functions.
 
 %prep
-%setup -n %octave_pkg_name-%version
+%setup -n %octave_pkg_name
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -48,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.2-alt1
+- updated by octave-package-builder
+
 * Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.7-alt1
 - initial import by octave-package-builder
 

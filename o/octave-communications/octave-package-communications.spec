@@ -1,27 +1,28 @@
+Serial: 1
 %def_with _octave_arch
-%define octave_pkg_version 1.1.0
+%define octave_pkg_version 1.1.1
 %define octave_pkg_name communications
 %define octave_descr_name Communications
 Name: octave-%octave_pkg_name
-Version: 1.1.0
+Version: 1.1.1
 Release: alt1
 Summary: Communications.
 
 Group: Sciences/Mathematics
-License: GPL version 2 or later
+License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
 %else
 BuildArch: noarch
 %endif
-# Depends: octave (>= 3.4), signal (>= 1.0.0), image
-Requires: octave >= 3.4 octave(signal) >= 1.0.0 octave(image)
-Provides: octave(communications) = 1.1.0
+Provides: octave(communications) = %version
+# Depends: octave (>= 3.4), signal (>= 1.1.3)
+Requires: octave >= 3.4 octave(signal) >= 1.1.3
 
 
 %description
@@ -49,6 +50,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.1.1-alt1
+- updated by octave-package-builder
+
 * Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt1
 - initial import by octave-package-builder
 
