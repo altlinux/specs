@@ -1,6 +1,6 @@
 Name: mc
-Version: 4.8.6
-Release: alt7
+Version: 4.8.7
+Release: alt1
 
 License: %gpl3plus
 Summary: An user-friendly file manager and visual shell
@@ -40,9 +40,6 @@ Patch104: mc-4.8.6-alt-extfs-udar.patch
 
 # http://www.midnight-commander.org/ticket/2812
 Patch105: mc-4.8.6-alt-extfs-rpm.patch
-
-#
-Patch106: mc-4.8.6-alt-xdg-open-quickdisable.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -99,7 +96,6 @@ needed for working all components (some vfs for example)
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
-%patch106 -p1
 
 cat <<EOF > version.h
 #ifndef MC_CURRENT_VERSION
@@ -186,6 +182,10 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
 %files full
 
 %changelog
+* Tue Jan 08 2013 Sergey Y. Afonin <asy@altlinux.ru> 4.8.7-alt1
+- 4.8.7
+- removed xdg-open-quickdisable.patch (moved to upstream)
+
 * Fri Dec 14 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.8.6-alt7
 - merged with git://github.com/MidnightCommander/mc.git
   (CVE-2012-4463)
@@ -220,7 +220,7 @@ install -pD -m644 %SOURCE5 %buildroot%_niconsdir/%name.png
   http://www.midnight-commander.org/ticket/2897 (Milestone: 4.8.7)
   - mc-4.7.5-alt-filetypes.patch
   - mc-4.7.0-debian-mc.ext-use-arj.patch
-- removed mc-4.7.5.3-alt-extfs-udar.patch
+- removed mc-4.7.5.3-alt-extf*s-udar.patch
   http://www.midnight-commander.org/ticket/34
 
 * Sat Jan 07 2012 Sergey Y. Afonin <asy@altlinux.ru> 4.7.5.6-alt1
