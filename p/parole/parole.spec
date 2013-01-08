@@ -1,12 +1,13 @@
 Name: parole
-Version: 0.2.0.6
-Release: alt3
+Version: 0.4.0
+Release: alt1
 
 Summary: Media player for the Xfce desktop
 License: %gpl2plus
 Group: Video
 
 URL: http://goodies.xfce.org/projects/applications/parole
+# git://git.xfce.org/apps/parole
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 Packager: XFCE Team <xfce@packages.altlinux.org>
@@ -14,7 +15,7 @@ Packager: XFCE Team <xfce@packages.altlinux.org>
 BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
-BuildPreReq: libxfcegui4-devel libxfce4util-devel libexo-devel
+BuildPreReq: libxfce4ui-devel libxfce4util-devel libexo-devel libxfconf-devel
 BuildRequires: libgtk+2-devel libnotify-devel gst-plugins-devel libtag-devel
 BuildRequires: libdbus-glib-devel libdbus-devel
 BuildRequires: intltool gtk-doc
@@ -38,6 +39,7 @@ for developing plugins for %name.
 %prep
 %setup
 %patch -p1
+mkdir m4
 
 %build
 %xfce4reconf
@@ -68,6 +70,9 @@ for developing plugins for %name.
 %doc %_datadir/gtk-doc/html/*
 
 %changelog
+* Tue Jan 08 2013 Mikhail Efremov <sem@altlinux.org> 0.4.0-alt1
+- Updated to 0.4.0.
+
 * Mon May 21 2012 Mikhail Efremov <sem@altlinux.org> 0.2.0.6-alt3
 - Fix DSO linking.
 - Updated translations from upstream git.
