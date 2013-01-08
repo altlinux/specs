@@ -1,11 +1,13 @@
 %def_enable reverse
 %def_enable introspection
 %def_enable vala
+%def_enable print_profiles
 
 %define _libexecdir %_prefix/libexec
+%define _icccolordir %_datadir/color/icc
 
 Name: colord
-Version: 0.1.26
+Version: 0.1.27
 Release: alt1
 
 Summary: Color daemon
@@ -22,7 +24,6 @@ Patch1: %name-0.1.25-alt-localstatedir.patch
 %define lcms_ver 2.2
 
 Requires: lib%name = %version-%release
-Requires: shared-color-profiles
 
 BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: docbook-utils gtk-doc intltool libdbus-devel libgudev-devel libudev-devel
@@ -30,6 +31,7 @@ BuildRequires: liblcms2-devel >= %lcms_ver libpolkit-devel >= 0.103
 BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel libsystemd-login-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
+%{?_enable_print_profiles:BuildRequires: argyllcms}
 
 %description
 colord is a low level system activated daemon that maps color devices to color
@@ -82,6 +84,15 @@ Requires: lib%name = %version-%release
 %description -n lib%name-vala
 This package provides Vala language bindings for %name library
 
+%package extra-profiles
+Summary: Color profiles for color management that are less commonly used
+Group: Graphics
+Requires: %name = %version-%release
+BuildArch: noarch
+
+%description extra-profiles
+More color profiles for color management that are less commonly used.
+This may be useful for CMYK soft-proofing or for extra device support.
 
 %prep
 %setup
@@ -93,7 +104,8 @@ This package provides Vala language bindings for %name library
 	--disable-rpath \
 	%{subst_enable reverse} \
 	%{subst_enable vala} \
-	--with-daemon-user=%colord_user
+	--with-daemon-user=%colord_user \
+	%{?_enable_print_profiles:--enable-print-profiles}
 
 %make_build
 
@@ -143,11 +155,60 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 %dir %_localstatedir/color/icc
 %ghost %_localstatedir/%name/*.db
 %systemd_unitdir/*.service
-
 %_sysconfdir/bash_completion.d/colormgr-completion.bash
 
 %exclude %_libdir/%name-sensors/*.la
 %exclude %_libdir/colord-plugins/*.la
+
+# common colorspaces from shared-color-profiles
+%dir %_icccolordir/colord
+%_icccolordir/colord/AdobeRGB1998.icc
+%_icccolordir/colord/AppleRGB.icc
+%_icccolordir/colord/CIE-RGB.icc
+%_icccolordir/colord/ColorMatchRGB.icc
+%_icccolordir/colord/NTSC-RGB.icc
+%_icccolordir/colord/PAL-RGB.icc
+%_icccolordir/colord/ProPhotoRGB.icc
+%_icccolordir/colord/SMPTE-C-RGB.icc
+%_icccolordir/colord/sRGB.icc
+
+# so we can display at least something in the default dropdown
+%if_enabled print_profiles
+%_icccolordir/colord/FOGRA39L_coated.icc
+%endif
+
+# monitor test profiles
+%_icccolordir/colord/bluish.icc
+%_icccolordir/colord/SwappedRedAndGreen.icc
+%_icccolordir/colord/gamma*.icc
+
+# named color profiles
+%_icccolordir/colord/x11-colors.icc
+
+%files extra-profiles
+%if_enabled print_profiles
+%_icccolordir/colord/FOGRA27L_coated.icc
+%_icccolordir/colord/FOGRA28L_webcoated.icc
+%_icccolordir/colord/FOGRA29L_uncoated.icc
+%_icccolordir/colord/FOGRA30L_uncoated_yellowish.icc
+%_icccolordir/colord/FOGRA40L_SC_paper.icc
+%_icccolordir/colord/GRACoL*.icc
+%_icccolordir/colord/ISOnewspaper26.icc
+%_icccolordir/colord/SNAP*.icc
+%_icccolordir/colord/SWOP*.icc
+%endif
+
+# other colorspaces not often used
+%_icccolordir/colord/BestRGB.icc
+%_icccolordir/colord/BetaRGB.icc
+%_icccolordir/colord/BruceRGB.icc
+%_icccolordir/colord/DonRGB4.icc
+%_icccolordir/colord/ECI-RGBv2.icc
+%_icccolordir/colord/EktaSpacePS5.icc
+%_icccolordir/colord/WideGamutRGB.icc
+
+# other named color profiles not generally useful
+%_icccolordir/colord/crayons.icc
 
 %files -n lib%name
 %_libdir/libcolord.so.*
@@ -172,6 +233,11 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 
 
 %changelog
+* Tue Jan 08 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.27-alt1
+- 0.1.27
+- no more required shared-color-profiles
+- new -extra-profiles subpackage
+
 * Wed Dec 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.26-alt1
 - 0.1.26
 
