@@ -1,10 +1,7 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/runtest /usr/bin/ttmkfdir /usr/bin/vptovf gcc-c++ libICE-devel libSM-devel libX11-devel unzip
-# END SourceDeps(oneline)
 %define oldname vlgothic-fonts
 # %oldname or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name vlgothic-fonts
-%define version 20121109
+%define version 20121230
 %global	priority	65-1
 %global	ppriority	65-0
 %global	fontname	vlgothic
@@ -17,14 +14,14 @@ Most of the glyphs are taken from the M+ and Sazanami Gothic fonts,\
 but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
-Version:	20121109
-Release:	alt1_2
+Version:	20121230
+Release:	alt1_1
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
 Group:		System/Fonts/True type
 URL:		http://dicey.org/vlgothic
-Source0:	http://osdn.dl.sourceforge.jp/vlgothic/57344/%{archivename}.tar.bz2
+Source0:	http://osdn.dl.sourceforge.jp/vlgothic/57732/%{archivename}.tar.bz2
 Source1:	%{oldname}-fontconfig-pgothic.conf
 Source2:	%{oldname}-fontconfig-gothic.conf
 BuildArch:	noarch
@@ -46,7 +43,7 @@ Group:		System/Fonts/True type
 %description	common
 %common_desc
 
-This package consists of files used by other %{oldname} packages.
+This package consists of files used by other %%{oldname} packages.
 
 %package -n fonts-ttf-vlgothic-p
 Summary:	Proportional Japanese TrueType font
@@ -134,6 +131,9 @@ fi
 
 
 %changelog
+* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 20121230-alt1_1
+- update to new release by fcimport
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 20121109-alt1_2
 - update to new release by fcimport
 
