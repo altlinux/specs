@@ -3,7 +3,7 @@ BuildRequires: libexpat-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libisds
-Version:        0.6.2
+Version:        0.7
 Release:        alt1_1
 Summary:        Library for accessing the Czech Data Boxes
 Group:          System/Libraries
@@ -17,6 +17,8 @@ BuildRequires:  libgpgme-devel
 BuildRequires:  expat-devel >= 2.0.0
 # Run-time:
 BuildRequires:  gnupg2
+# Tests:
+BuildRequires:  libgnutls-devel >= 2.12.0
 Requires:       gnupg2
 Source44: import.info
 
@@ -31,8 +33,8 @@ Group:          Development/C
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+The %%{name}-devel package contains libraries and header files for
+developing applications that use %%{name}.
 
 %prep
 %setup -q
@@ -65,6 +67,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_1
+- update to new release by fcimport
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.2-alt1_1
 - update to new release by fcimport
 
