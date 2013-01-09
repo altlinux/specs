@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Convert/NLS_DATE_FORMAT.pm) perl(DBI.pm) perl(Date/Manip.pm) perl(DateTime/Event/ICal.pm) perl(DateTime/Infinite.pm) perl(DateTime/LeapSecond.pm) perl(DateTime/Span.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(List/MoreUtils.pm) perl(Math/BigInt.pm) perl(Module/Build.pm) perl(Module/Pluggable.pm) perl(Params/Validate.pm) perl(Test/MockTime.pm) perl(Test/NoWarnings.pm) perl-devel perl-podlators
+BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(ExtUtils/MakeMaker.pm) perl(Fcntl.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Pg
-Version:        0.16007
-Release:        alt2_4
+Version:        0.16008
+Release:        alt1_1
 Summary:        Parse and format PostgreSQL dates and times
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -68,6 +68,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.16008-alt1_1
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.16007-alt2_4
 - moved to Sisyphus (Tapper dep)
 
