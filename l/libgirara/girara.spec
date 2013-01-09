@@ -2,7 +2,7 @@
 %define gtk_ver 2
 
 Name: lib%_name
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: GTK-based minimalistic user interface library
@@ -57,6 +57,9 @@ export CFLAGS="%optflags"
 %exclude %_libdir/*.a
 
 %changelog
+* Wed Jan 09 2013 Mikhail Efremov <sem@altlinux.org> 0.1.4-alt1
+- Updated to 0.1.4.
+
 * Wed Jun 13 2012 Mikhail Efremov <sem@altlinux.org> 0.1.3-alt1
 - Updated to 0.1.3.
 

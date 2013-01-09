@@ -1,7 +1,7 @@
 %define gtk_ver 2
 
 Name: zathura
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: A lightweight document viewer
@@ -58,6 +58,9 @@ mkdir -p %buildroot%_libdir/zathura
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Wed Jan 09 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Updated to 0.2.1.
+
 * Wed Jun 13 2012 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Enable strict aliasing rules.
 - Updated to 0.2.0.
