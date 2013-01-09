@@ -4,8 +4,8 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     0
-%define postgresql_subminor  6
-%define postgresql_altrel    2
+%define postgresql_subminor  11
+%define postgresql_altrel    1
 %define libpq_major          5
 %define libpq_minor          3
 %define libecpg_major        6
@@ -29,20 +29,7 @@ URL: http://www.postgresql.org/
 
 Packager: PostgreSQL Maintainers Team <pgsql@packages.altlinux.org>
 
-Source0: %prog_name.tar
-Source1: %prog_name.init.in
-Source2: %prog_name.chroot.lib.in
-Source3: %prog_name.chroot.conf.in
-Source4: %prog_name.chroot.all
-Source5: %prog_name.chroot.bin.in
-Source6: %name.README.ALT-ru_RU.UTF-8
-
-Source8: pg-migration-scripts-7.2.tar
-Source12: %prog_name-dump.1
-
-Source40: upgrade_tips_7.3
-Source41: ftp.postgresql.org:/pub/binary/v7.2/RPMS/README.rpm-dist
-Source42: http://www.rbt.ca/postgresql/upgrade/upgrade.pl
+Source0: %name-%version.tar
 
 Patch1: 0001-9.0-Fix-searching-for-autoconf.patch
 Patch2: 0002-Fix-search-for-setproctitle.patch
@@ -52,15 +39,15 @@ Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch7: 0007-ALT-chroot-patch-for-9.0.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 
-Requires: %libpq_name = %version-%release
+Requires: libpq%libpq_major >= %version-%release
 
 Provides: %prog_name = %version-%release
 Conflicts: %prog_name < %version-%release
 Conflicts: %prog_name > %version-%release
-Conflicts: %{prog_name}8.0
-Conflicts: %{prog_name}8.1
 Conflicts: %{prog_name}8.2
 Conflicts: %{prog_name}8.3
+Conflicts: %{prog_name}8.4
+Conflicts: %{prog_name}9.1
 
 # Automatically added by buildreq on Thu Oct 20 2011 (-bi)
 BuildRequires: OpenSP chrooted docbook-style-dsssl docbook-style-dsssl-utils docbook-style-xsl flex libldap-devel libossp-uuid-devel libpam-devel libreadline-devel libssl-devel libxslt-devel openjade perl-DBI perl-devel python-devel setproctitle-devel tcl-devel xsltproc zlib-devel
@@ -260,7 +247,7 @@ developers to use when writing Python code for accessing a PostgreSQL
 database.
 
 %prep
-%setup -c
+%setup
 
 %patch1 -p2
 %patch2 -p2
@@ -312,14 +299,21 @@ ln -s /usr/include/pgsql %buildroot%_libdir/%PGSQL/pgxs/src/include
 
 %make_build -C doc install DESTDIR=%buildroot docdir=%docdir
 
-install -m 755 %SOURCE42 %buildroot%_datadir/%PGSQL/upgrade.pl
+##### ALT-stuff
+pushd altlinux
 
 # The initscripts....
-install -p -m755 -D %SOURCE1 %buildroot%_initdir/%prog_name
-install -p -m750 -D %SOURCE2 %buildroot%_sysconfdir/chroot.d/%prog_name.lib
-install -p -m750 -D %SOURCE3 %buildroot%_sysconfdir/chroot.d/%prog_name.conf
-install -p -m750 -D %SOURCE4 %buildroot%_sysconfdir/chroot.d/%prog_name.all
-install -p -m750 -D %SOURCE5 %buildroot%_sysconfdir/chroot.d/%prog_name.bin
+install -p -m755 -D %prog_name.init.in %buildroot%_initdir/%prog_name
+install -p -m750 -D %prog_name.chroot.lib.in %buildroot%_sysconfdir/chroot.d/%prog_name.lib
+install -p -m750 -D %prog_name.chroot.conf.in %buildroot%_sysconfdir/chroot.d/%prog_name.conf
+install -p -m750 -D %prog_name.chroot.all %buildroot%_sysconfdir/chroot.d/%prog_name.all
+install -p -m750 -D %prog_name.chroot.bin.in %buildroot%_sysconfdir/chroot.d/%prog_name.bin
+
+# README.ALT
+install -p -m 644 -D postgresql9.0.README.ALT-ru_RU.UTF-8 %buildroot%docdir/README.ALT-ru_RU.UTF-8
+
+popd
+##### end ALT-stuff
 
 # Fix initscript versions
 
@@ -340,9 +334,6 @@ install -d -m700 %buildroot%_localstatedir/%PGSQL/data
 # backups of data go here...
 install -d -m700 %buildroot%_localstatedir/%PGSQL/backups
 
-# Upgrade scripts.
-tar xf %SOURCE8 -C %buildroot
-
 # Fix a dangling symlink
 mkdir -p %buildroot%_includedir/%PGSQL/port
 cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
@@ -356,13 +347,13 @@ mkdir -p -m700 %buildroot%_sysconfdir/syslog.d
 ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%prog_name
 
 mv %buildroot%_localstatedir/%PGSQL %buildroot%ROOT/%_localstatedir/%PGSQL
-ln -s $(relative %ROOT%_localstatedir/%PGSQL %_localstatedir/) %buildroot%_localstatedir/%PGSQL
+install -dm700 %buildroot%_localstatedir/%PGSQL
 
 pushd contrib
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL docdir=%docdir
 popd
 
-cp -a COPYRIGHT README README.git %SOURCE40 %SOURCE41 \
+cp -a COPYRIGHT README README.git \
     doc/{KNOWN_BUGS,MISSING_FEATURES,TODO,bug.template} \
     src/tutorial %buildroot%docdir/
 
@@ -396,9 +387,6 @@ echo "libpq-devel-static" > "%buildroot%_sysconfdir/buildreqs/packages/substitut
 echo "libecpg-devel" > "%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%libecpg_name-devel"
 echo "libecpg-devel-static" > "%buildroot%_sysconfdir/buildreqs/packages/substitute.d/%libecpg_name-devel-static"
 chmod 644 %buildroot%_sysconfdir/buildreqs/packages/substitute.d/*
-
-# README.ALT
-install -p -m 644 -D %SOURCE6 %buildroot%docdir/README.ALT-ru_RU.UTF-8
 
 %pre
 # Need to make backups of some executables if an upgrade
@@ -512,8 +500,6 @@ fi
 %docdir/README
 %docdir/README.git
 %docdir/bug.template
-%docdir/README.rpm-dist
-%docdir/upgrade_tips_7.3
 
 %files docs
 %dir %docdir
@@ -613,7 +599,6 @@ fi
 %_libdir/%PGSQL/libpqwalreceiver.so
 %_libdir/pgsql/pg_upgrade_support.so
 %dir %_datadir/%PGSQL
-%dir %_datadir/%PGSQL/backup
 %dir %_datadir/%PGSQL/timezone
 %_datadir/%PGSQL/timezone/*
 %dir %_datadir/%PGSQL/timezonesets
@@ -624,9 +609,7 @@ fi
 %_datadir/%PGSQL/postgres.description
 %_datadir/%PGSQL/postgres.shdescription
 %_datadir/%PGSQL/*.sample
-%_datadir/%PGSQL/backup/pg_dumpall_new
 %_datadir/%PGSQL/conversion_create.sql
-%_datadir/%PGSQL/upgrade.pl
 %_datadir/%PGSQL/information_schema.sql
 %_datadir/%PGSQL/sql_features.txt
 %_datadir/%PGSQL/system_views.sql
@@ -705,6 +688,14 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Jan 09 2013 Alexei Takaseev <taf@altlinux.org> 9.0.11-alt1
+- 9.0.11.
+
+* Sat Dec 29 2012 Alexei Takaseev <taf@altlinux.org> 9.0.9-alt1
+- 9.0.9.
+- Move sources to upstream hierarchy on git
+- Fix spec and rules for new hierarchy
+
 * Tue Sep 04 2012 Vladimir Lettiev <crux@altlinux.ru> 9.0.6-alt2
 - rebuilt for perl-5.16
 
