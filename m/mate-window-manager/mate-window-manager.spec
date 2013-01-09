@@ -1,6 +1,6 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/matedialog libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(pango) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xfixes) pkgconfig(xrender)
+BuildRequires: libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(pango) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xfixes) pkgconfig(xrender)
 # END SourceDeps(oneline)
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
@@ -12,7 +12,7 @@ BuildRequires: libcanberra-gtk2-devel
 
 Name:           mate-window-manager
 Version:        1.5.2
-Release:        alt4_10
+Release:        alt5_10
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -58,6 +58,7 @@ Patch35: Dont-focus-ancestor-window-on-a-different-workspac.patch
 Patch36: metacity-2.28-empty-keybindings.patch
 # https://bugzilla.gnome.org/show_bug.cgi?id=604319
 Patch37: metacity-2.28-xioerror-unknown-display.patch
+Requires: libmarco-private = %{version}-%{release}
 
 %description
 MATE Desktop window manager
@@ -65,10 +66,18 @@ MATE Desktop window manager
 %package devel
 Group: Development/C
 Summary: Development files for mate-window-manager
-Requires: %{name}%{?_isa} = %{version}-%{release}
+Requires: libmarco-private = %{version}-%{release}
 
 %description devel
 Development files for mate-window-manager
+
+%package -n libmarco-private
+Group: System/Libraries
+Summary: mate-window-manager internal library
+
+%description -n libmarco-private
+Internal library for MATE Window Manager.
+
 
 
 %prep
@@ -131,6 +140,12 @@ desktop-file-install                                \
 %{_libdir}/libmarco-private.so.0*
 %{_mandir}/man1/marco.1.*
 %{_mandir}/man1/marco-message.1.*
+# moved to lib
+%exclude %{_libdir}/libmarco-private.so.*
+
+%files -n libmarco-private
+%{_libdir}/libmarco-private.so.*
+
 
 %files devel
 %{_bindir}/marco-theme-viewer
@@ -143,6 +158,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt5_10
+- added libmarco-private (closes: 28322)
+
 * Wed Dec 19 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt4_10
 - new fc release
 
