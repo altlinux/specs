@@ -2,7 +2,7 @@ Name: asterisk11-full
 Summary: Asterisk 11 -- full package
 BuildArch: noarch
 Version: 1.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 
@@ -20,7 +20,7 @@ Requires: asterisk11-complete
 #Requires: asterisk11-chan_ss7
 #Requires: asterisk11-app_konference
 #Requires: asterisk11-addons
-#Requires: asterisk11-chan_datacard
+Requires: asterisk11-chan_dongle
 
 # appliance-hw-dahdi
 #Requires: appliance-hw-dahdi
@@ -31,5 +31,8 @@ Requires: asterisk11-complete
 %files
 
 %changelog
+* Wed Jan 09 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt2
+- add chan_dongle
+
 * Wed Nov 07 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt1
 - first build for Sisyphus
