@@ -1,11 +1,10 @@
 Name: gcc-common
-Version: 1.4.15
+Version: 1.4.16
 Release: alt1
 
 Summary: Common directories, symlinks and selection utility for the GNU Compiler Collection
 License: GPL
 Group: Development/C
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
 Source0: select-gcc.in
 Source1: gccbug.in
@@ -30,17 +29,20 @@ PreReq: alternatives >= 0:0.4
 Summary: Common symlinks for the GNU C++ Compiler
 License: GPL
 Group: Development/C++
+BuildArch: noarch
 PreReq: %name = %version-%release
 
 %package -n gcc-go-common
 Summary: Common symlinks for the Go Compiler
 License: GPL
 Group: Development/Other
+BuildArch: noarch
 PreReq: %name = %version-%release
 
 %package -n gcc-fortran-common
 Summary: Common symlinks for the GNU Fortran Compiler
 License: GPL
+BuildArch: noarch
 Group: Development/Other
 PreReq: %name = %version-%release
 Provides: gcc-g77-common = %version-%release
@@ -54,6 +56,7 @@ Conflicts: gcc3.4-g77 < 0:3.4.5-alt3
 Summary: Common symlinks for the GNU Treelang Compiler
 License: GPL
 Group: Development/Other
+BuildArch: noarch
 PreReq: %name = %version-%release
 Conflicts: gcc3.3-treelang < 0:3.3.4-alt5
 Conflicts: gcc3.4-treelang < 0:3.4.5-alt3
@@ -62,6 +65,7 @@ Conflicts: gcc3.4-treelang < 0:3.4.5-alt3
 Summary: Common symlinks for the GNU Java Compiler
 License: GPL
 Group: Development/Java
+BuildArch: noarch
 PreReq: %name = %version-%release
 Requires: fastjar
 Conflicts: gcc3.4-java < 0:3.4.5-alt3
@@ -109,7 +113,7 @@ gcc %optflags -Werror -D_GNU_SOURCE '-DBINDIR="%_bindir"' \
 sed -i 's|@TARGET@|%_target_platform|g' select-gcc gccbug
 
 %install
-mkdir -p %buildroot{/lib,%_libdir/gcc{,-lib}/%_target_platform,%_libexecdir/gcc/%_target_platform,%_libdir/security,%_bindir,%_sbindir,%_includedir/c++}
+mkdir -p %buildroot{/lib,%_libdir/gcc{,-lib}/%_target_platform,%_libexecdir/gcc/%_target_platform,%_libdir/security,%_bindir,%_sbindir,%_includedir/c++,%_datadir/java/gcj-endorsed}
 install -p -m755 select-gcc %buildroot%_sbindir/
 install -p -m755 gcc_wrapper %buildroot%_bindir/
 install -p -m755 gccbug %buildroot%_bindir/%_target_platform-gccbug
@@ -195,10 +199,15 @@ EOF
 %_bindir/jv-scan
 
 %files -n libgcj-common
+%_datadir/java/
 %_libdir/logging.properties
 %_libdir/security
 
 %changelog
+* Wed Jan 09 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.16-alt1
+- libgcj-common: added /usr/share/java/ and /usr/share/java/gcj-endorsed/.
+- Packaged gcc-{c++,fortran,go,java,treelang}-common as noarch subpackages.
+
 * Tue Aug 21 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 1.4.15-alt1
 - go compiler support added
 
