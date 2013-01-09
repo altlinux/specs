@@ -13,7 +13,7 @@
 %def_enable gst_1
 
 Name: empathy
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: Instant Messaging Client for GNOME
@@ -195,6 +195,9 @@ rm -f data/%name.desktop
 
 
 %changelog
+* Wed Jan 09 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
 * Wed Nov 14 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
 - 3.6.2
 
