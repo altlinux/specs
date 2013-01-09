@@ -1,5 +1,5 @@
 Name:         rekonq
-Version:      1.3
+Version:      2.0
 Release:      alt1
 
 Group:        Networking/WWW
@@ -46,14 +46,14 @@ __EOF__
 desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-handler/http --add-mime-type=x-scheme-handler/https --add-mime-type=x-scheme-handler/ftp %buildroot/%_K4xdg_apps/rekonq.desktop
 
 %K4find_lang --with-kde %name
-%K4find_lang --with-kde --append --output=%name.lang kwebapp
+#%K4find_lang --with-kde --append --output=%name.lang kwebapp
 
 
 %files -f %name.lang
 %doc AUTHORS ChangeLog TODO
 %config %_sysconfdir/alternatives/packages.d/%name
 %_K4bindir/%name
-%_K4bindir/kwebapp
+#%_K4bindir/kwebapp
 %_K4libdir/libkdeinit4_rekonq.so
 %_K4xdg_apps/%name.desktop
 %_K4apps/%name/
@@ -61,6 +61,9 @@ desktop-file-install --dir %buildroot/%_K4xdg_apps --add-mime-type=x-scheme-hand
 %_K4cfg/%name.kcfg
 
 %changelog
+* Wed Jan 09 2013 Sergey V Turchin <zerg@altlinux.org> 2.0-alt1
+- new version
+
 * Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 1.3-alt1
 - new version
 
