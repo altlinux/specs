@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.8.36
+Version: 0.9.8.37
 Release: alt1
 
 Summary: The system startup scripts
@@ -74,7 +74,7 @@ for i in `seq 2 5`; do
 done
 
 mkdir -p %buildroot/var/{log,run}
-touch %buildroot/var/{log/wtmp,run/utmp}
+touch %buildroot{/etc/firsttime.flag,/var/{log/wtmp,run/utmp}}
 touch %buildroot%_sysconfdir/sysconfig/{clock,i18n,system}
 chmod -R +x %buildroot%_sysconfdir/rc.d
 mkdir -p %buildroot%_sysconfdir/sysconfig/harddisk
@@ -88,6 +88,7 @@ if [ $1 -eq 1 ]; then
 	/sbin/chkconfig --add netfs
 	/sbin/chkconfig --add random
 	/sbin/chkconfig --add rawdevices
+	touch /etc/firsttime.flag
 fi
 
 for f in /var/{log/wtmp,run/utmp}; do
@@ -158,10 +159,14 @@ done
 %config %_sysconfdir/rc.d/rc.powerfail
 %ghost %attr(664,root,utmp) /var/log/wtmp
 %ghost %attr(664,root,utmp) /var/run/utmp
+%ghost %config(missingok) /etc/firsttime.flag
 %dir %_sysconfdir/firsttime.d
 %dir %_localstatedir/rsbac
 
 %changelog
+* Wed Jan 09 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.8.37-alt1
+- Fixed /etc/firsttime.d support (closes: #28308).
+
 * Thu Nov 01 2012 Timur Aitov <timonbl4@altlinux.org> 0.9.8.36-alt1
 - rc.sysinit: activate encrypted block devices.
 - init.d/halt: turn off encrypted block devices.
