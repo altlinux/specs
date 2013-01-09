@@ -1,6 +1,6 @@
 #define status beta
 Name: rosegarden
-Version: 12.04
+Version: 12.12.25
 Release: alt1
 
 Summary: MIDI and audio seqencer and musical notation editor
@@ -53,6 +53,9 @@ or home recording environments.
 %_datadir/mime/packages/*
 
 %changelog
+* Wed Jan 09 2013 Alex Karpov <karpov@altlinux.ru> 12.12.25-alt1
+- new version
+
 * Thu May 17 2012 Alex Karpov <karpov@altlinux.ru> 12.04-alt1
 - new version
 
