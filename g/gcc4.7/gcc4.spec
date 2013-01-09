@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.7.2
-Release: alt5
+Release: alt6
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -685,7 +685,6 @@ Group: System/Libraries
 Provides: libgcj = %version
 Obsoletes: libgcj libgcj3.0 libgcj3.1 libgcj3.2
 Requires: zip >= 2.1
-Requires: libgcj-common
 Requires: libgcc1 %REQ %version-%release
 Requires: libgcj_bc1 %REQ %version-%release
 Requires: libgcj%gcc_branch-jar = %version-%release
@@ -732,6 +731,7 @@ package to compile your Java programs using the GCC Java compiler (gcj).
 Summary: libgcj jar files
 Group: Development/Java
 BuildArch: noarch
+Requires: libgcj-common >= 1.4.16
 Provides: libgcj-jar = %version-%release
 
 %description -n libgcj%gcc_branch-jar
@@ -1406,8 +1406,7 @@ sed -i 's/lib: /&%%{static:%%eJava programs cannot be linked statically}/' \
 	%buildroot%_libdir/libgcj.spec
 mv %buildroot%_libdir/libgcj.spec %buildroot%gcc_target_libdir/
 
-mkdir -p %buildroot%_libdir/gcj%psuffix/classmap.db.d \
-	%buildroot%_datadir/java/gcj%gcc_branch-endorsed
+mkdir -p %buildroot%_libdir/gcj%psuffix/classmap.db.d
 
 # libgcj-src files
 make DESTDIR=%buildroot -C %buildtarget/%_target_platform/libjava install-src.zip
@@ -1858,12 +1857,9 @@ EOF
 %gcc_target_libdir/include/gcj
 
 %files -n libgcj%gcc_branch-jar
-%dir %_datadir/java
 %_datadir/java/*.jar
-%_datadir/java/gcj%gcc_branch-endorsed
 
 %files -n libgcj%gcc_branch-src
-%dir %_datadir/java
 %_datadir/java/*.zip
 
 %files java
@@ -1995,6 +1991,10 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Wed Jan 09 2013 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt6
+- libgcj: fixed GCJ_ENDORSED_DIRS (by Igor Vlasenko; closes: #28319).
+- libgcj-jar: dropped %_datadir/java/gcj%gcc_branch-endorsed/.
+
 * Fri Nov 16 2012 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt5
 - Synced with fedora gcc-4.7.2-8.
 
