@@ -1,16 +1,21 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto /usr/bin/xsltproc libICE-devel libSM-devel libXau-devel libXext-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
-# END SourceDeps(oneline)
 Group: Graphical desktop/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: libICE-devel libSM-devel libXau-devel libXext-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
 Name:           mate-session
 Version:        1.5.0
-Release:        alt2_1
+Release:        alt2_2
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{oldname}-%{version}.tar.xz
+Requires:       gsettings-desktop-schemas
+
+# PATCH-FIX-UPSTREAM mate-session-manager-1.5.0-fix_schema.patch - taken from upstream
+# Fix a broken schema that makes session manager segfault and break suspend/hibernation
+Patch0:         mate-session-manager-1.5.0-fix_schema.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  pkgconfig(gtk+-2.0)
@@ -23,8 +28,7 @@ BuildRequires:  mate-icon-theme
 BuildRequires:  icon-naming-utils
 BuildRequires:  pkgconfig(polkit-agent-1)
 BuildRequires:  pkgconfig(gsettings-desktop-schemas)
-
-Requires:       gsettings-desktop-schemas
+BuildRequires:  pkgconfig(pangox)
 Source44: import.info
 Provides: mate-session-manager = %version-%release
 Provides: mate-session-xsession = %version-%release
@@ -32,14 +36,17 @@ Patch33: mate-session-manager-cflags.patch
 Source45: MATE64.png
 
 %description
-MATE Desktop session manager
+This package contains a session that can be started from a display
+manager such as MDM. It will load all necessary applications for a
+full-featured user session.
 
 %prep
-%setup -q -n %{oldname}-%{version}
-NOCONFIGURE=1 ./autogen.sh
+%setup -n %{oldname}-%{version} -q
+%patch0 -p1
 %patch33 -p1
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static \
            --enable-ipv6 \
            --with-gtk=2.0 \
@@ -52,15 +59,12 @@ make %{?_smp_mflags} V=1
 %install
 make install DESTDIR=%{buildroot}
 
-
 desktop-file-install                               \
         --remove-category="MATE"                   \
         --add-category="X-Mate"                    \
         --delete-original                          \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}%{_datadir}/applications/mate-session-properties.desktop
-
-
 %find_lang %{oldname}
 
 cat <<__START_MATE__ >startmate
@@ -107,7 +111,6 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 
-
 %files -f %{oldname}.lang
 %doc AUTHORS COPYING README
 %{_mandir}/man1/*
@@ -130,6 +133,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_2
+- new fc release
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_1
 - no toying with MOZ_PLUGIN_PATH in startmate (closes: 28134)
 

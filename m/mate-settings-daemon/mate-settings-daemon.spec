@@ -1,41 +1,43 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database gcc-c++ gobject-introspection-devel libICE-devel libSM-devel libX11-devel libXrender-devel libgtk+2-gir-devel libselinux-devel pkgconfig(dbus-1) pkgconfig(exempi-2.0) pkgconfig(fontconfig) pkgconfig(gail) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-plugins-base-0.10) pkgconfig(gthread-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libexif) pkgconfig(libmatekbdui) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(libstartup-notification-1.0) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(polkit-gobject-1) pkgconfig(unique-1.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr) xorg-xproto-devel
-# END SourceDeps(oneline)
 Group: System/Servers
+# BEGIN SourceDeps(oneline):
+BuildRequires: gcc-c++ libICE-devel libSM-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libmatekbdui) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(polkit-gobject-1)
+# END SourceDeps(oneline)
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-settings-daemon
 Version:        1.5.4
-Release:        alt1_1
+Release:        alt1_2
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Requires:       gsettings-desktop-schemas
+Requires:       mate-icon-theme
 
-BuildRequires:  pkgconfig(clutter-gst-1.0)
 BuildRequires:  icon-naming-utils
 BuildRequires:  mate-common
-BuildRequires:  pkgconfig(mate-desktop-2.0)
+BuildRequires:  pkgconfig(clutter-gst-1.0)
 BuildRequires:  pkgconfig(dbus-glib-1)
 BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(sm)
+BuildRequires:  pkgconfig(gsettings-desktop-schemas)
+BuildRequires:  pkgconfig(gstreamer-0.10)
+BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
 BuildRequires:  pkgconfig(libmatekbd)
 BuildRequires:  pkgconfig(libmatenotify)
 BuildRequires:  pkgconfig(libxklavier)
+BuildRequires:  pkgconfig(mate-desktop-2.0)
 BuildRequires:  pkgconfig(nss)
 BuildRequires:  pkgconfig(polkit-agent-1)
 BuildRequires:  pkgconfig(polkit-gtk-mate-1)
-BuildRequires:  pkgconfig(gsettings-desktop-schemas)
-
-Requires: gsettings-desktop-schemas
-Requires: mate-icon-theme
+BuildRequires:  pkgconfig(sm)
 Source44: import.info
 Patch33: mate-settings-daemon-keyboard-icon.patch
 Requires: dconf
 
-
 %description
-MATE Desktop settings daemon
+This package contains the daemon which is responsible for setting the
+various parameters of a MATE session and the applications that run
+under it.
 
 %package devel
 Group: Development/C
@@ -43,7 +45,9 @@ Summary:        Development files for mate-settings-daemon
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description devel
-Development files for mate-settings-daemon
+This package contains the daemon which is responsible for setting the
+various parameters of a MATE session and the applications that run
+under it.
 
 %prep
 %setup -q
@@ -52,26 +56,22 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %build
-%configure \
-    --with-x  \
-    --enable-gstreamer  \
-    --enable-polkit  \
-    --disable-schemas-compile  \
-    --with-gnu-ld  \
-    --with-x  \
-    --with-nssdb  \
-
+%configure                             \
+   --disable-pulse                     \
+   --disable-static                    \
+   --disable-schemas-compile           \
+   --enable-polkit                     \
+   --enable-gstreamer                  \
+   --with-x                            \
+   --with-gnu-ld                       \
+   --with-nssdb
 make %{?_smp_mflags} V=1
 
 
 %install
 make install DESTDIR=%{buildroot}
-
 find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
-find ${RPM_BUILD_ROOT} -type f -name "*.a" -exec rm -f {} ';'
-
 %find_lang %{name}
-
 
 
 %files -f %{name}.lang
@@ -95,6 +95,9 @@ find ${RPM_BUILD_ROOT} -type f -name "*.a" -exec rm -f {} ';'
 
 
 %changelog
+* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_2
+- new fc release
+
 * Tue Dec 04 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_1
 - new fc release
 
