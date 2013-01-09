@@ -1,8 +1,8 @@
 %def_with python3
 
 Name: python-module-pymongo
-Version: 2.2
-Release: alt1
+Version: 2.3
+Release: alt2
 
 %setup_python_module pymongo
 %setup_python_module gridfs
@@ -24,7 +24,7 @@ BuildRequires: python3-module-distribute
 
 Requires: python-module-bson = %version-%release
 
-Source: %name-%version.tar
+Source: pymongo-%version.tar
 
 %description
 PyMongo is a Python distribution containing tools for working with
@@ -78,7 +78,7 @@ embedding of objects and arrays within other objects and arrays.
 %endif
 
 %prep
-%setup
+%setup -n pymongo-%version
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -122,6 +122,12 @@ popd
 %endif
 
 %changelog
+* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 2.3-alt2
+- 2.3
+
+* Sun Jan 06 2013 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_5
+- fc import
+
 * Wed May 02 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 2.2-alt1
 - 2.2
 - Build with Python3 support
