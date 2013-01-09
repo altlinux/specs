@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt12
+Release: alt13
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -46,7 +46,7 @@ Release: alt12
 %def_enable docs
 %def_enable htmldocs
 %def_enable man
-%def_enable x32
+%def_disable x32
 %def_disable debugfs
 %def_disable numa
 %def_enable acpi
@@ -106,6 +106,7 @@ Release: alt12
 %def_disable nfs_swap
 %def_enable fatelf
 %def_with lnfs
+%def_without x32
 %def_enable lnfs
 %def_without perf
 %def_enable oprofile
@@ -577,7 +578,7 @@ Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
 Patch0754: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0755: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0756: linux-%kernel_branch.51-fix-mm--memory_hotplug.patch
-Patch0757: linux-%kernel_branch.53-fix-mm--mmu.patch
+Patch0757: linux-%kernel_branch.57-fix-mm--mmu.patch
 Patch0758: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
 Patch0759: linux-%kernel_branch.46-fix-mm--numa.patch
 Patch0760: linux-%kernel_branch.42-fix-mm--slab.patch
@@ -641,7 +642,7 @@ Patch0852: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
 Patch0853: linux-%kernel_branch.43-fix-virt-kvm--kvm-intel.patch
 
 
-Patch1001: linux-%kernel_branch.55-feat-arch-x86--x32.patch
+%{?_with_x32:Patch1001: linux-%kernel_branch.55-feat-arch-x86--x32.patch}
 
 Patch1011: linux-%kernel_branch.42-feat-block--bfq-iosched.patch
 Patch1012: linux-%kernel_branch.42-feat-block--bsg-lib.patch
@@ -1950,7 +1951,7 @@ cd linux-%version
 
 
 # feat-arch-*
-%patch1001 -p1
+#patch1001 -p1
 
 %patch1011 -p1
 %patch1012 -p1
@@ -2910,6 +2911,12 @@ done)
 
 
 %changelog
+* Tue Jan 08 2013 Led <led@altlinux.ru> 3.0.57-alt13
+- updated:
+  + fix-mm--mmu
+- without x32
+- disabled x32
+
 * Sat Jan 05 2013 Led <led@altlinux.ru> 3.0.57-alt12
 - really enabled X86_X32_ABI
 
