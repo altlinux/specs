@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt13
+Release: alt14
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -326,9 +326,10 @@ Patch0324: linux-%kernel_branch.42-fix-drivers-infiniband-hw-mthca.patch
 Patch0325: linux-%kernel_branch.43-fix-drivers-infiniband-ulp-iser.patch
 
 Patch0331: linux-%kernel_branch.56-fix-drivers-input-mouse--bcm5974.patch
-Patch0332: linux-%kernel_branch.42-fix-drivers-input-mouse--synaptics.patch
-Patch0333: linux-%kernel_branch.42-fix-drivers-input-serio--i8042.patch
-Patch0334: linux-%kernel_branch.56-fix-drivers-input-tablet--wacom_wac.patch
+Patch0332: linux-%kernel_branch.57-fix-drivers-input-mouse--elantech.patch
+Patch0333: linux-%kernel_branch.42-fix-drivers-input-mouse--synaptics.patch
+Patch0334: linux-%kernel_branch.42-fix-drivers-input-serio--i8042.patch
+Patch0335: linux-%kernel_branch.56-fix-drivers-input-tablet--wacom_wac.patch
 
 Patch0341: linux-%kernel_branch.42-fix-drivers-isdn-gigaset--gigaset.patch
 Patch0342: linux-%kernel_branch.51-fix-drivers-isdn-hardware-mISDN--hfcsusb.patch
@@ -349,6 +350,7 @@ Patch0377: linux-%kernel_branch.51-fix-drivers-md--raid456.patch
 
 Patch0381: linux-%kernel_branch.42-fix-drivers-media-common-tuners--max2165.patch
 Patch0382: linux-%kernel_branch.44-fix-drivers-media-dvb-firewire--firedtv.patch
+Patch0383: linux-%kernel_branch.57-fix-drivers-media-video-gspca--pac7302.patch
 
 Patch0391: linux-%kernel_branch.42-fix-drivers-message-fusion.patch
 
@@ -1618,6 +1620,7 @@ cd linux-%version
 %patch0332 -p1
 %patch0333 -p1
 %patch0334 -p1
+%patch0335 -p1
 
 %patch0341 -p1
 %patch0342 -p1
@@ -1642,6 +1645,7 @@ cd linux-%version
 # fix-drivers-media-*
 %patch0381 -p1
 %patch0382 -p1
+%patch0383 -p1
 
 %patch0391 -p1
 
@@ -2911,6 +2915,11 @@ done)
 
 
 %changelog
+* Wed Jan 09 2013 Led <led@altlinux.ru> 3.0.57-alt14
+- added:
+  + fix-drivers-input-mouse--elantech
+  + fix-drivers-media-video-gspca--pac7302
+
 * Tue Jan 08 2013 Led <led@altlinux.ru> 3.0.57-alt13
 - updated:
   + fix-mm--mmu
