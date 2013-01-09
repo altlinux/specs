@@ -30,7 +30,7 @@ BuildRequires: /usr/bin/pygtk-codegen-2.0 libgtk+2-devel pkgconfig(gtksourceview
 
 Name: 		python-module-mate-desktop
 Version: 	1.4.0
-Release: 	alt2_1.1
+Release: 	alt3_1
 License: 	GPLv2+
 Group: 		Development/Other
 Summary: 	The sources for additional PyMATE Python extension modules
@@ -334,6 +334,9 @@ rm -rf $RPM_BUILD_ROOT/%{_libdir}/python*/site-packages/gtk-2.0/bugbuddy.*
 %{python_sitelibdir}/gtk-2.0/mediaprofiles.la
 
 %changelog
+* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_1
+- rebuild with libmarco
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_1.1
 - rebuild with mate-desktop
 
