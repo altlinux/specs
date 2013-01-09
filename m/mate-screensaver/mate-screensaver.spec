@@ -1,56 +1,70 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/xmlto libICE-devel libSM-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libsystemd-login) pkgconfig(x11)
-# END SourceDeps(oneline)
 Group: Toys
+# BEGIN SourceDeps(oneline):
+BuildRequires: libICE-devel libSM-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0)
+# END SourceDeps(oneline)
 BuildRequires: libsystemd-login-devel
 %define _libexecdir %_prefix/libexec
+%define fedora 18
 Name:           mate-screensaver
 Version:        1.5.1
-Release:        alt2_1
+Release:        alt2_2
 Summary:        MATE Screensaver
-
 License:        GPLv2+ and LGPLv2+
 URL:            http://pub.mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Requires:       altlinux-freedesktop-menu-common
+Requires:       mate-keyring-pam
+Requires:       mate-backgrounds
+Requires:       mate-power-manager
 
-BuildRequires: gtk2-devel
-BuildRequires: libmateui-devel
-BuildRequires: libdbus-glib-devel
-BuildRequires: libxml2-devel
-BuildRequires: mate-menus-devel
-BuildRequires: mate-desktop-devel
-BuildRequires: libexif-devel
-BuildRequires: pam-devel
-BuildRequires: libXScrnSaver-devel
-BuildRequires: libXinerama-devel
-BuildRequires: libXmu-devel
-BuildRequires: libmatekbd-devel
-BuildRequires: libmatenotify-devel
-BuildRequires: libGL-devel
-BuildRequires: xorg-x11-proto-devel
-BuildRequires: gettext
-BuildRequires: nss-devel
-BuildRequires: mate-common
-BuildRequires: libXxf86misc-devel
-BuildRequires: libXxf86vm-devel
-BuildRequires: libXtst-devel
-BuildRequires: desktop-file-utils
-BuildRequires: mate-common
-BuildRequires: pkgconfig(libsystemd-daemon)
+# PATCH-FIX-UPSTREAM mate-screensaver-1.5.1-only_allow_one_instance.patch - nmo.marques@gmail.com
+# only allow one instance per user; fixes dual password prompt after hibernate/suspend, upstreamed
+Patch0:        %{name}-1.5.1-only_allow_one_instance.patch
 
-Requires: altlinux-freedesktop-menu-common
-Requires: mate-keyring-pam
-Requires: mate-backgrounds
+BuildRequires:  gtk2-devel
+BuildRequires:  libmateui-devel
+BuildRequires:  libdbus-glib-devel
+BuildRequires:  libxml2-devel
+BuildRequires:  mate-menus-devel
+BuildRequires:  mate-desktop-devel
+BuildRequires:  libexif-devel
+BuildRequires:  pam-devel
+BuildRequires:  libXScrnSaver-devel
+BuildRequires:  libXinerama-devel
+BuildRequires:  libXmu-devel
+BuildRequires:  libmatekbd-devel
+BuildRequires:  libmatenotify-devel
+BuildRequires:  libGL-devel
+BuildRequires:  xorg-x11-proto-devel
+BuildRequires:  gettext
+BuildRequires:  nss-devel
+BuildRequires:  mate-common
+BuildRequires:  libXxf86misc-devel
+BuildRequires:  libXxf86vm-devel
+BuildRequires:  libXtst-devel
+BuildRequires:  desktop-file-utils
+BuildRequires:  mate-common
+BuildRequires:  pkgconfig(ice)
+BuildRequires:  pkgconfig(sm)
+BuildRequires:  pkgconfig(x11)
+BuildRequires:  pkgconfig(xext)
+
+%if 0%{?fedora} >= 18
+BuildRequires:  pkgconfig(libsystemd-login)
+BuildRequires:  pkgconfig(libsystemd-daemon)
+%else
+BuildRequires:  libConsoleKit-devel
+%endif
 Source44: import.info
 Patch33: gnome-screensaver-2.28.0-alt-pam.patch
 Patch34: mate-screensaver-2.28.0-user_activity.patch
 Patch35: mate-screensaver-1.5.1-alt-ru-po-mate-logo-isnt-foot.patch
 Source45: unix2_chkpwd.c
-      
 
 %description
 mate-screensaver is a screen saver and locker that aims to have
 simple, sane, secure defaults and be well integrated with the desktop.
+
 
 %package devel
 Group: Toys
@@ -63,22 +77,29 @@ Development files for mate-screensaver
 
 %prep
 %setup -q
-NOCONFIGURE=1 ./autogen.sh
+%patch0 -p1
 %patch33 -p1
 %patch34 -p1
 %patch35 -p0
 
 
 %build
-%configure \
-        --disable-static \
-        --with-xscreensaverdir=%{_datadir}/xscreensaver/config \
-        --with-xscreensaverhackdir=%{_libexecdir}/xscreensaver  \
-        --enable-locking \
-        --with-passwd-helper=/usr/libexec/mate-screensaver/mate-screensaver-chkpwd-helper  \
+NOCONFIGURE=1 ./autogen.sh
+%configure                                                             \
+   --disable-static                                                    \
+   --with-xscreensaverdir=%{_datadir}/xscreensaver/config              \
+   --with-xscreensaverhackdir=%{_libexecdir}/xscreensaver              \
+   --enable-locking                                                    \
+%if 0%{?fedora} >= 18
+   --with-systemd                                                      \
+   --without-console-kit                                               \
+%else
+   --with-console-kit                                                  \
+   --with-systemd=no                                                   \
+%endif
+   --with-passwd-helper=/usr/libexec/mate-screensaver/mate-screensaver-chkpwd-helper  \
 	--disable-pam
 #	--enable-pam
-
 
 make V=1 %{?_smp_mflags}
 gcc -o %name-chkpwd-helper $RPM_OPT_FLAGS %SOURCE45 -lpam
@@ -128,6 +149,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_2
+- new fc release
+
 * Fri Nov 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_1
 - bugfix release (closes: 28151)
 
