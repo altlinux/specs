@@ -12,8 +12,8 @@
 
 
 Name: libcogl
-Version: 1.12.0
-Release: alt2
+Version: 1.12.2
+Release: alt1
 Summary: A library for using 3D graphics hardware to draw pretty pictures
 
 Group: System/Libraries
@@ -134,6 +134,9 @@ NOCONFIGURE=1 ./autogen.sh
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Jan 09 2013 Alexey Shabalin <shaba@altlinux.ru> 1.12.2-alt1
+- 1.12.2
+
 * Wed Dec 26 2012 Alexey Shabalin <shaba@altlinux.ru> 1.12.0-alt2
 - enable gles2 support for arm (by sbolshakov@)
 
