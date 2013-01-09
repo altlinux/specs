@@ -1,6 +1,6 @@
 Name: rpm-build-gir
 Version: 0.7.1
-Release: alt6
+Release: alt7
 
 Summary: RPM helper macros and dependency utils to build GObject Introspection packages
 License: GPL
@@ -23,7 +23,7 @@ mkdir -p %buildroot{%_rpmlibdir,%_rpmmacrosdir}
 install -pD -m644 rpm-build-gir.macros %buildroot%_rpmmacrosdir/gobject-introspection
 install -p -m755 typelib.env %buildroot%_rpmmacrosdir/typelib.env
 
-for f in gir.req* gir.prov* typelib.req* typelib.prov* gir-js.req* gir-python.req*; do
+for f in gir.req* gir.prov* typelib.req* typelib.prov* gir-js.req* gir-python.req* rpm-build-gir.functions; do
   install -m755 -p "$f" "%buildroot%_rpmlibdir/$f"
 done
 
@@ -34,10 +34,17 @@ ln -s gir.prov.files %buildroot%_rpmlibdir/gir.req.files
 %files
 %_rpmmacrosdir/gobject-introspection
 %_rpmmacrosdir/typelib.env
+%_rpmlibdir/%name.functions
 %_rpmlibdir/gir*
 %_rpmlibdir/typelib*
 
 %changelog
+* Wed Jan 09 2013 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt7
+- rpm-build-gir.macros: added %%add_typelib_req_skiplist macros
+- typelib.env: exported RPM_TYPELIB_REQ_SKIPLIST variable
+- rpm-build-gir.functions: implemented TypeLibReq_Skip()
+- modified {gir-python,typelib}.req using TypeLibReq_Skip()
+
 * Tue Jun 12 2012 Yuri N. Sedunov <aris@altlinux.org> 0.7.1-alt6
 - rpm-build-gir.macros: added %%{set,add}_typelibdir macros
 - exported RPM_TYPELIBDIR variable (new typelib.env file)
