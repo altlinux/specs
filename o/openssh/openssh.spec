@@ -1,6 +1,6 @@
 Name: openssh
 Version: 5.9p1
-Release: alt3
+Release: alt4
 
 Summary: OpenSSH free Secure Shell (SSH) implementation
 License: BSD-style
@@ -346,6 +346,10 @@ printf 'op\nsgr0\n' | tput -S 2>/dev/null ||:
 %attr(751,root,root) %dir %_libexecdir
 
 %changelog
+* Wed Jan 09 2013 Dmitry V. Levin <ldv@altlinux.org> 5.9p1-alt4
+- %name-server-control:
+  added sftp-server extra arguments support (closes: #28306).
+
 * Thu Nov 08 2012 Dmitry V. Levin <ldv@altlinux.org> 5.9p1-alt3
 - sshd: updated systemd support: merged ssh-keygen.service into
   sshd.service, dropped sshd@.service and sshd.socket.
