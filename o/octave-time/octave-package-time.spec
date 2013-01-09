@@ -1,26 +1,27 @@
-%define octave_pkg_version 1.0.9
+Serial: 1
+%define octave_pkg_version 2.0.0
 %define octave_pkg_name time
 %define octave_descr_name time
 Name: octave-%octave_pkg_name
-Version: 1.0.9
+Version: 2.0.0
 Release: alt1
 Summary: Time and Dates
 
 Group: Sciences/Mathematics
-License: GPL version 2 or later
+License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
 %else
 BuildArch: noarch
 %endif
 Provides: octave(time) = %version
-# Depends: octave (>= 3.0.1)
-Requires: octave >= 3.0.1
+# Depends: financial (>= 0.4.0)
+Requires: octave(financial) >= 0.4.0
 
 
 %description
@@ -28,10 +29,10 @@ Octave-Forge - Extra packages for GNU Octave.
 This package contains the %octave_descr_name GNU Octave extension.
 
 Extension Description:
-Additional date manipulation tools.
+Additional date manipulation tools. This a dummy package
 
 %prep
-%setup -n %octave_pkg_name-%version
+%setup -n %octave_pkg_name
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -48,6 +49,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:2.0.0-alt1
+- updated by octave-package-builder
+
 * Mon Nov 28 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.9-alt1
 - initial import by octave-package-builder
 

@@ -1,30 +1,34 @@
+Serial: 1
 %def_with _octave_arch
-%define octave_pkg_version 1.0.1
+%define octave_pkg_version 1.0.2
 %define octave_pkg_name fits
 %define octave_descr_name FITS
 Name: octave-%octave_pkg_name
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 Summary: Reading and writing FITS (Flexible Image Transport System) files.
 
 Group: Sciences/Mathematics
-License: GPL version 2 or later
+License: GPLv3+
 URL: http://octave.sf.net
 
 Source0: %octave_pkg_name-%version.tar.gz
 
 BuildRequires: octave-devel
 %if_with _octave_arch
-BuildRequires: gcc-c++ libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
+BuildRequires: gcc-c++ gcc-g77 libfftw3-devel libhdf5-devel liblapack-devel libncurses-devel libreadline-devel octave-devel
 %else
 BuildArch: noarch
 %endif
+Provides: octave(fits) = %version
 
 # SystemRequirements: libcfitsio
 BuildRequires: libcfitsio-devel
-# Depends: octave (>= 3.4.0)
-Requires: octave >= 3.4.0
-Provides: octave(fits) = 1.0.1
+
+# octave module BuildRequires: libcfitsio-dev
+BuildRequires: libcfitsio-devel
+# Depends: octave (>= 3.0.0)
+Requires: octave >= 3.0.0
 
 
 %description
@@ -35,7 +39,7 @@ Extension Description:
 The Octave-FITS package provides functions for
 
 %prep
-%setup -n %octave_pkg_name
+%setup -n %octave_pkg_name-%version
 
 %build
 octave -q -H --no-site-file --eval "pkg build -nodeps . %SOURCE0"
@@ -52,6 +56,9 @@ octave -q -H --no-site-file --eval "pkg prefix %buildroot%_datadir/octave/packag
 %endif
 
 %changelog
+* Tue Jan 08 2013 Paul Wolneykien <manowar@altlinux.ru> 1:1.0.2-alt1
+- updated by octave-package-builder
+
 * Fri Nov 18 2011 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1
 - initial import by octave-package-builder
 
