@@ -1,6 +1,6 @@
 Name: shim-signed
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Summary: UEFI RestrictedBoot shim signed by Microsoft
 License: BSD
@@ -12,7 +12,9 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: rpm-macros-uefi
 
-# not noarch due to %%_libdir
+ExclusiveArch: x86_64
+
+# not noarch due to %%_libdir anyways
 
 %description
 This package contains shim and MokManager binaries
@@ -34,6 +36,9 @@ install -p *.efi %buildroot%_efi_bindir/
 %_efi_bindir/*.efi
 
 %changelog
+* Thu Jan 10 2013 Michael Shigorin <mike@altlinux.org> 0.2-alt2
+- only makes sense for x86_64
+
 * Thu Jan 10 2013 Michael Shigorin <mike@altlinux.org> 0.2-alt1
 - initial release
 
