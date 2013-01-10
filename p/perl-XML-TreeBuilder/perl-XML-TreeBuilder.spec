@@ -1,49 +1,53 @@
-%define dist XML-TreeBuilder
-Name: perl-%dist
-Version: 3.09
-Release: alt3.1
-
-Summary: XML::TreeBuilder - Parser that builds a tree of XML::Element objects
-License: %perl_license
-Group: Development/Perl
-Packager: Artem Zolochevskiy <azol@altlinux.ru>
-
-URL: %CPAN %dist
-Source: %dist-%version.tar
-# Patch from Fedora package: perl-XML-TreeBuilder-3.09-11.fc9.src.rpm
-Patch: XML-TreeBuilder-NoExpand.patch
-
-BuildArch: noarch
-
-BuildRequires(pre): rpm-build-licenses
-
-# Automatically added by buildreq on Tue Oct 07 2008
-BuildRequires: perl-HTML-Tree perl-XML-Parser perl-devel
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-perl
+BuildRequires: perl(Module/Build.pm) perl(Test.pm) perl-devel perl-podlators
+# END SourceDeps(oneline)
+Summary:	Parser that builds a tree of XML::Element objects
+Name:		perl-XML-TreeBuilder
+Version:	4.0
+Release:	alt1_8
+License:	GPL+ or Artistic
+Group:		Development/Perl
+URL:		http://search.cpan.org/dist/XML-TreeBuilder/
+Source:		http://www.cpan.org/modules/by-authors/id/J/JF/JFEARN/XML-TreeBuilder-%{version}.tar.gz
+BuildArch:	noarch
+BuildRequires:	perl
+BuildRequires:	perl(ExtUtils/MakeMaker.pm)
+BuildRequires:  perl(Test/More.pm)
+BuildRequires:	perl(HTML/Element.pm)
+BuildRequires:	perl(HTML/Tagset.pm)
+BuildRequires:	perl(XML/Parser.pm)
+Requires:	perl(HTML/Element.pm) >= 4.1 perl(HTML/Tagset.pm) perl(XML/Parser.pm)
+Source44: import.info
 
 %description
-This module uses XML::Parser to make XML document trees constructed of
-XML::Element objects (and XML::Element is a subclass of HTML::Element
-adapted for XML).  XML::TreeBuilder is meant particularly for people
-who are used to the HTML::TreeBuilder / HTML::Element interface to
-document trees, and who don't want to learn some other document
-interface like XML::Twig or XML::DOM.
+perl-XML-TreeBuilder is a Perl module that implements a parser
+that builds a tree of XML::Element objects.
 
 %prep
-%setup -n %dist-%version
-%patch -p1
+%setup -q -n XML-TreeBuilder-%{version}
 
 %build
-%perl_vendor_build
+%{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS="vendor"
+%{__make} %{?_smp_mflags}
+
+%check
+%{__make} test
 
 %install
-%perl_vendor_install
+%{__make} pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT create_packlist=0
+
+### Clean up buildroot
+find $RPM_BUILD_ROOT -name .packlist -exec %{__rm} {} \;
 
 %files
-%doc	Changes README
-%dir	%perl_vendor_privlib/XML
-	%perl_vendor_privlib/XML/*
+%doc Changes README
+%{perl_vendor_privlib}/XML/
 
 %changelog
+* Thu Jan 10 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_8
+- initial fc import
+
 * Mon Nov 22 2010 Igor Vlasenko <viy@altlinux.ru> 3.09-alt3.1
 - repair after perl 5.12 upgrade using girar-nmu
 
