@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt0.2
+Release: alt0.3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -513,8 +513,8 @@ KDE 4 library
 %prep
 %setup -q -n %rname-%version
 # move default ksplash theme to use another by default
-sed -i 's|Default|Air|g' ksplash/ksplashx/themes/air/CMakeLists.txt
-sed -i 's|Default|Air|g' ksplash/ksplashx/themes/air/Theme.rc
+#sed -i 's|Default|Air|g' ksplash/ksplashx/themes/air/CMakeLists.txt
+#sed -i 's|Default|Air|g' ksplash/ksplashx/themes/air/Theme.rc
 %if_disabled google
 rm -rf plasma/generic/scriptengines/google_gadgets
 %endif
@@ -966,6 +966,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jan 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
+- update from 4.10 branch
+
 * Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 
