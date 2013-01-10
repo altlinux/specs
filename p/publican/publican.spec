@@ -2,7 +2,8 @@
 BuildRequires(pre): rpm-build-perl
 BuildRequires: perl(DBI.pm) perl(IO/String.pm) perl(List/Util.pm) perl(Pod/Usage.pm) perl(Time/localtime.pm) perl(Unicode/Collate.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
-BuildRequires: docbook-dtds docbook-style-xsl docbook-style-xsl docbook-style-dsssl
+Requires: docbook-dtds docbook-style-xsl
+BuildRequires: docbook-dtds docbook-style-xsl
 
 # Track font name changes
 %define RHEL6 %([[ %{?dist}x == .el6[a-z]* ]] && echo 1 || echo 0)
@@ -20,7 +21,7 @@ BuildRequires: docbook-dtds docbook-style-xsl docbook-style-xsl docbook-style-ds
 
 Name:           publican
 Version:        2.8
-Release:        alt1_4
+Release:        alt2_4
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -201,6 +202,9 @@ done
 %doc fdl.txt
 
 %changelog
+* Thu Jan 10 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt2_4
+- added Req: docbook-dtds
+
 * Thu Jan 10 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_4
 - initial fc import
 
