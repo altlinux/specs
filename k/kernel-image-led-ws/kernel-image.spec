@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt14
+Release: alt17
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -271,9 +271,11 @@ Patch0195: linux-%kernel_branch.43-fix-drivers-edac--x38_edac.patch
 
 Patch0201: linux-%kernel_branch.42-fix-drivers-eisa--pci_eisa.patch
 
-Patch0211: linux-%kernel_branch.44-fix-drivers-firewire--firewire-core.patch
-Patch0212: linux-%kernel_branch.44-fix-drivers-firewire--firewire-net.patch
-Patch0213: linux-%kernel_branch.44-fix-drivers-firewire--firewire-ohci.patch
+Patch0211: linux-%kernel_branch.47-fix-drivers-firewire--firewire-core.patch
+Patch0212: linux-%kernel_branch.47-fix-drivers-firewire--firewire-net.patch
+Patch0213: linux-%kernel_branch.47-fix-drivers-firewire--firewire-ohci.patch
+Patch0214: linux-%kernel_branch.47-fix-drivers-firewire--firewire-sbp2.patch
+Patch0215: linux-%kernel_branch.47-fix-drivers-firewire--nosy.patch
 
 Patch0221: linux-%kernel_branch.42-fix-drivers-firmware--edd.patch
 Patch0222: linux-%kernel_branch.51-fix-drivers-firmware--efivars.patch
@@ -560,7 +562,7 @@ Patch0711: linux-%kernel_branch.42-fix-init--calibrate.patch
 
 Patch0721: linux-%kernel_branch.42-fix-ipc--mqueue.patch
 
-Patch0730: linux-%kernel_branch.44-fix-kernel.patch
+Patch0730: linux-%kernel_branch.57-fix-kernel.patch
 Patch0731: linux-%kernel_branch.42-fix-kernel--cgroup.patch
 Patch0732: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
 Patch0733: linux-%kernel_branch.49-fix-kernel--events.patch
@@ -631,13 +633,16 @@ Patch0821: linux-%kernel_branch.42-fix-security--security.patch
 Patch0822: linux-%kernel_branch.42-fix-security-selinux.patch
 
 Patch0831: linux-%kernel_branch.42-fix-sound-core--snd-pcm.patch
-Patch0832: linux-%kernel_branch.44-fix-sound-firewire--snd-firewire-lib.patch
-Patch0833: linux-%kernel_branch.42-fix-sound-oss--pss.patch
-Patch0834: linux-%kernel_branch.51-fix-sound-pci-hda.patch
-Patch0835: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
-Patch0836: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
+Patch0832: linux-%kernel_branch.47-fix-sound-firewire--snd-firewire-lib.patch
+Patch0833: linux-%kernel_branch.47-fix-sound-firewire--snd-firewire-speakers.patch
+Patch0834: linux-%kernel_branch.47-fix-sound-firewire--snd-isight.patch
+Patch0835: linux-%kernel_branch.42-fix-sound-oss--pss.patch
+Patch0836: linux-%kernel_branch.51-fix-sound-pci-hda.patch
+Patch0837: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
+Patch0838: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 
 Patch0841: linux-%kernel_branch.49-fix-tools--perf.patch
+Patch0842: linux-%kernel_branch.47-fix-tools-firewire--nosy-dump.patch
 
 Patch0851: linux-%kernel_branch.50-fix-virt-kvm.patch
 Patch0852: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
@@ -718,12 +723,14 @@ Patch1172: linux-%kernel_branch.43-feat-mm--uksm.patch
 
 Patch1181: linux-%kernel_branch-feat-net--netatop.patch
 Patch1182: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+Patch1183: linux-%kernel_branch.57-feat-net-netfilter--nf_conntrack_slp.patch
 
 Patch1191: linux-%kernel_branch-feat-security--yama.patch
 
-Patch1201: linux-%kernel_branch.44-feat-sound-firewire--snd-dice.patch
+Patch1201: linux-%kernel_branch.47-feat-sound-firewire--snd-dice.patch
 Patch1202: linux-%kernel_branch.44-feat-sound-firewire--snd-fireworks.patch
-Patch1203: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
+Patch1203: linux-%kernel_branch.47-feat-sound-firewire--snd-scs1x.patch
+Patch1204: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %x86_64 %ix86
@@ -859,9 +866,9 @@ Requires: startup >= 0.9.8.24.1
 Provides: kernel = %kversion
 Provides: kernel-modules-md-%flavour = %version-%release
 
-PreReq: coreutils
-PreReq: module-init-tools >= 3.1
-PreReq: mkinitrd >= 1:2.9.9-alt1
+Requires: coreutils
+Requires: module-init-tools >= 3.1
+Requires: mkinitrd >= 1:2.9.9-alt1
 AutoProv: no, %kernel_prov
 AutoReq: no, %kernel_req
 
@@ -883,10 +890,12 @@ Group: System/Kernel and hardware \
 Provides: kernel-modules-%{1}-%kversion-%flavour-%krelease = %kversion-%release \
 Conflicts: kernel-modules-%{1}-%kversion-%flavour-%krelease < %kversion-%release \
 Conflicts: kernel-modules-%{1}-%kversion-%flavour-%krelease > %kversion-%release \
-Requires(postun): %name = %kversion-%release \
+Requires: %name = %kversion-%release \
+Requires: coreutils \
+Requires: module-init-tools >= 3.1 \
 AutoProv: no, %kernel_prov \
 AutoReq: no, %kernel_req \
-PreReq: coreutils module-init-tools >= 3.1 %name = %kversion-%release
+%nil
 
 %define kernel_doc_package_std_body() \
 Group: Documentation \
@@ -1173,6 +1182,8 @@ These are DRM modules for your Linux system.
 %package -n kernel-modules-media-%flavour
 Summary: Linux media driver modules
 %kernel_modules_package_std_body media
+# Needed for webcams, disabled due wired sisyphus_check
+#Requires: kernel-modules-sound-ext-%flavour = %kversion-%release
 
 %description -n kernel-modules-media-%flavour
 V4L kernel modules support for video capture and overlay devices,
@@ -1558,6 +1569,8 @@ cd linux-%version
 %patch0211 -p1
 %patch0212 -p1
 %patch0213 -p1
+%patch0214 -p1
+%patch0215 -p1
 
 # fix-drivers-firmware--*
 %patch0221 -p1
@@ -1945,8 +1958,12 @@ cd linux-%version
 %patch0834 -p1
 %patch0835 -p1
 %patch0836 -p1
+%patch0837 -p1
+%patch0838 -p1
 
+# fix-tools-*
 %patch0841 -p1
+%patch0842 -p1
 
 # fix-virt-kvm*
 %patch0851 -p1
@@ -2037,8 +2054,10 @@ cd linux-%version
 %patch1171 -p1
 %patch1172 -p1
 
+# feat-net-*
 %patch1181 -p1
 %patch1182 -p1
+%patch1183 -p1
 
 # feat-security--*
 %patch1191 -p1
@@ -2047,6 +2066,7 @@ cd linux-%version
 %patch1201 -p1
 %patch1202 -p1
 %patch1203 -p1
+%patch1204 -p1
 
 # get rid of unwanted files resulting from patch fuzz
 #find . -name "*.orig" -delete -or -name "*~" -delete
@@ -2915,6 +2935,33 @@ done)
 
 
 %changelog
+* Thu Jan 10 2013 Led <led@altlinux.ru> 3.0.57-alt17
+- updated:
+  + fix-kernel
+
+* Thu Jan 10 2013 Led <led@altlinux.ru> 3.0.57-alt16
+- added:
+  + feat-net-netfilter--nf_conntrack_slp
+- updated requires for kernel-image-* package
+- updated requires for kernel-modules-* subpackages
+
+* Wed Jan 09 2013 Led <led@altlinux.ru> 3.0.57-alt15
+- updated:
+  + fix-drivers-firewire--firewire-core
+  + fix-drivers-firewire--firewire-net
+  + fix-drivers-firewire--firewire-ohci
+  + fix-include
+  + fix-sound-firewire--snd-firewire-lib
+  + feat-sound-firewire--snd-dice
+- added:
+  + fix-drivers-firewire--firewire-sbp2
+  + fix-drivers-firewire--nosy
+  + fix-sound-firewire--snd-firewire-speakers
+  + fix-sound-firewire--snd-isight
+  + fix-tools-firewire--nosy-dump
+  + feat-sound-firewire--snd-scs1x
+- kernel-modules-media-* requires kernel-modules-sound-ext-* (for webcams)
+
 * Wed Jan 09 2013 Led <led@altlinux.ru> 3.0.57-alt14
 - added:
   + fix-drivers-input-mouse--elantech
