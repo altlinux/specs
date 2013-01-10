@@ -2,7 +2,7 @@
 
 Summary: Qt wrapper API to different RDF storage solutions
 Name: soprano
-Version: 2.8.0
+Version: 2.9.0
 Release: alt1
 
 Group: Text tools
@@ -21,7 +21,7 @@ Patch5: soprano-2.7.6-alt-use-aio.patch
 
 BuildRequires(pre): libqt4-devel >= 4.4
 BuildRequires: cmake doxygen gcc-c++ glibc-devel graphviz
-BuildRequires: libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXtst-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
+BuildRequires: libXScrnSaver-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXtst-devel libXxf86vm-devel libxkbfile-devel
 BuildRequires: libclucene-core-devel libiodbc-devel libredland-devel phonon-devel
 BuildRequires: cmake gcc-c++ doxygen graphviz libredland-devel libiodbc-devel
 BuildRequires: raptor2-devel rasqal-devel kde-common-devel
@@ -140,6 +140,12 @@ Development files for the lib%name
 %_datadir/dbus-1/interfaces/*
 
 %changelog
+* Thu Jan 10 2013 Sergey V Turchin <zerg@altlinux.org> 2.9.0-alt1
+- new version
+
+* Thu Aug 02 2012 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt0.M60P.1
+- built for M60P
+
 * Tue Jul 03 2012 Sergey V Turchin <zerg@altlinux.org> 2.8.0-alt1
 - new version
 
