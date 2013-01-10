@@ -3,7 +3,7 @@
 
 Name: asterisk-extra-sounds-fr-ulaw
 Summary: sounds for Asterisk
-Version: 1.4.12
+Version: 1.4.13
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -47,6 +47,9 @@ find -type f \
 %files -f sounds.list
 
 %changelog
+* Thu Jan 10 2013 Cronbuild Service <cronbuild@altlinux.org> 1.4.13-alt1
+- new version 1.4.13
+
 * Sat Dec 29 2012 Cronbuild Service <cronbuild@altlinux.org> 1.4.12-alt1
 - new version 1.4.12
 
