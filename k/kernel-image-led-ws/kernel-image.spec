@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt17
+Release: alt18
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -171,8 +171,6 @@ Patch0030: linux-%kernel_branch.51-fix-block.patch
 Patch0031: linux-%kernel_branch.42-fix-block--blk-integrity.patch
 Patch0032: linux-%kernel_branch.42-fix-block--blk-throttle.patch
 Patch0033: linux-%kernel_branch.42-fix-block--cfq-iosched.patch
-
-Patch0041: linux-%kernel_branch.43-fix-crypto--ghash-clmulni-intel.patch
 
 Patch0050: linux-%kernel_branch.42-fix-drivers--connector.patch
 
@@ -1456,10 +1454,11 @@ cd linux-%version
 %patch0033 -p1
 
 #fix-crypto--*
-%patch0041 -p1
 
+# fix-drivers--*
 %patch0050 -p1
 
+# fix-drivers-acpi*
 %patch0060 -p1
 %patch0061 -p1
 %patch0062 -p1
@@ -2238,6 +2237,10 @@ config_enable \
 config_disable SENSORS_K8TEMP
 %endif
 
+%ifarch i386 i486
+config_enable CRYPTO_TWOFISH=m CRYPTO_SALSA20=m
+%endif
+
 %if_enabled debug
 config_enable \
 	KALLSYMS_ALL \
@@ -2935,6 +2938,16 @@ done)
 
 
 %changelog
+* Thu Jan 10 2013 Led <led@altlinux.ru> 3.0.57-alt18
+- removed:
+  + fix-crypto--ghash-clmulni-intel
+- updated:
+  + fix-arch-x86--mcheck
+- disabled
+  - DEBUG_NX_TEST
+  - CRYPTO_TWOFISH
+  - CRYPTO_SALSA20
+
 * Thu Jan 10 2013 Led <led@altlinux.ru> 3.0.57-alt17
 - updated:
   + fix-kernel
