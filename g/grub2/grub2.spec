@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt7
+Release: alt8
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -38,6 +38,7 @@ Packager: Michael Shigorin <mike@altlinux.org>
 BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-modules ruby autogen
 BuildRequires: liblzma-devel help2man zlib-devel
 BuildRequires: libdevmapper-devel
+BuildRequires: rpm-macros-uefi
 
 Exclusivearch: %ix86 x86_64
 
@@ -50,6 +51,9 @@ Requires: gettext
 %if ! 0%{?efi}
 %define efi %ix86 x86_64 ia64
 %endif
+
+# actually ifarch x86_64
+BuildRequires: sbsigntools alt-uefi-keys-private
 
 %ifarch %ix86
 %global grubefiarch i386-efi
@@ -92,6 +96,13 @@ Requires: %name-common = %version-%release
 Requires: efibootmgr
 %endif
 
+%ifarch x86_64
+%package efi-signed
+Summary: GRand Unified Bootloader (signed UEFI variant)
+Group: System/Kernel and hardware
+Requires: %name-efi = %version-%release
+%endif
+
 %define desc_generic \
 GNU GRUB is a multiboot boot loader. It was derived from GRUB. It is an \
 attempt to produce a boot loader for IBM PC-compatible machines that \
@@ -120,6 +131,15 @@ This package provides PC BIOS support.
 %desc_generic
 
 This package provides EFI systems support.
+
+%ifarch x86_64
+%description efi-signed
+%desc_generic
+
+This package provides means to cope with UEFI SecureBoot
+(better described as Restricted Boot) firmware when one
+can't disable it easily, doesn't want to, or needs not to.
+%endif
 
 %prep
 #setup
@@ -221,7 +241,13 @@ ln -s ../sysconfig/%name %buildroot%_sysconfdir/default/grub
 cd ../%name-efi-%version
 %makeinstall_std
 
-install -pDm644 grub.efi %buildroot%_libdir/efi/grub.efi
+install -pDm644 grub.efi %buildroot%_efi_bindir/grub.efi
+cd -
+
+%ifarch x86_64
+# autocreates signed.manifest
+%_efi_sign %buildroot%_efi_bindir/grub.efi
+%endif
 
 # Remove headers
 rm -f %buildroot%_libdir/grub-efi/*/*.h
@@ -284,8 +310,12 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 
 %ifarch %efi
 %files efi
-%_libdir/efi/grub.efi
+%_efi_bindir/grub.efi
 %_libdir/grub/%grubefiarch
+
+%ifarch x86_64
+%files -f signed.manifest efi-signed
+%endif
 %endif
 
 # see #27935: grub1 would have /usr/lib/grub -> /boot/grub symlink
@@ -300,9 +330,13 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 	echo "** WARNING: and try \`grub-install /dev/sdX' manually"
 } >&2
 
-# TODO: post efi
+# TODO: post efi{,-signed}
 
 %changelog
+* Thu Jan 10 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt8
+- introduced efi-signed subpackage (x86_64 only)
+- use rpm-macros-uefi
+
 * Thu Dec 06 2012 Michael Shigorin <mike@altlinux.org> 2.00-alt7
 - dropped patch4 (see also #28181)
 
