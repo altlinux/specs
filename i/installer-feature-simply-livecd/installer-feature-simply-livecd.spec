@@ -1,6 +1,6 @@
 Name: installer-feature-simply-livecd
-Version: 0.7.6
-Release: alt4
+Version: 0.7.7
+Release: alt1
 
 Summary: LiveCD install hooks for Simply Linux.
 License: GPL
@@ -11,7 +11,7 @@ Source: %name-%version.tar
 
 Requires: alterator-livecd >= 0.5
 Conflicts: installer-common-stage2
-Conflicts: livecd-install < 0.6-alt2
+Conflicts: livecd-install < 0.7-alt1
 Provides: installer-features-simply-livecd
 Obsoletes: installer-features-simply-livecd < 0.3
 
@@ -21,8 +21,6 @@ Requires: libshell
 Requires: livecd-installer-features
 
 # Installer fearures for Simply Linux.
-Requires: installer-feature-autohostname-stage2
-Requires: installer-feature-setup-network-stage3
 Requires: installer-feature-samba-usershares-stage2
 Requires: installer-feature-desktop-other-fs-stage2
 Requires: installer-feature-sudo-enable-by-default-stage2
@@ -55,6 +53,10 @@ install -pm755 livecd-postinstall.d/* %buildroot%post_hookdir/
 %post_hookdir/*
 
 %changelog
+* Thu Jan 10 2013 Mikhail Efremov <sem@altlinux.org> 0.7.7-alt1
+- Drop obsoleted installer features.
+- Drop disable-whatis hook.
+
 * Fri Dec 23 2011 Mikhail Efremov <sem@altlinux.org> 0.7.6-alt4
 - Add disable-whatis hook.
 - Drop updatedb.sh.

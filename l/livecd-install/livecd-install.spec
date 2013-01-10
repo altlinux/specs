@@ -1,6 +1,6 @@
 Name: livecd-install
-Version: 0.6
-Release: alt11
+Version: 0.7
+Release: alt1
 
 Summary: Permanently install Live system
 License: GPLv2
@@ -52,6 +52,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Thu Jan 10 2013 Mikhail Efremov <sem@altlinux.org> 0.7-alt1
+- Added setup-network and autohostnameh preinstall hooks.
+
 * Thu Dec 27 2012 Michael Shigorin <mike@altlinux.org> 0.6-alt11
 - added luks.desktop as well
 

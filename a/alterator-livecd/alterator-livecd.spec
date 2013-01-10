@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-livecd
-Version: 0.7.7
+Version: 0.8.0
 Release: alt1
 
 Summary: special steps for LiveCD installers
@@ -42,6 +42,9 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Jan 10 2013 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
+- Don't use unsquashfs, just copy files (closes: #27786).
+
 * Thu Dec 27 2012 Michael Shigorin <mike@altlinux.org> 0.7.7-alt1
 - drop notify sleep factor by a decimal order
 
