@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     1
-%define postgresql_subminor  6
+%define postgresql_subminor  7
 %define postgresql_altrel    1
 %define libpq_major          5
 %define libpq_minor          4
@@ -39,7 +39,7 @@ Patch6: 0006-Workaround-for-will-always-overflow-destination-buff.patch
 Patch7: 0001-Apply-chroot-patch.patch
 Patch8: 0001-Add-postgresql-startup-method-through-service-1-to-i.patch
 
-Requires: %libpq_name = %version-%release
+Requires: libpq%libpq_major >= %version-%release
 
 Provides: %prog_name = %version-%release
 Conflicts: %prog_name < %version-%release
@@ -695,6 +695,12 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Sat Dec 29 2012 Alexei Takaseev <taf@altlinux.org> 9.1.7-alt1
+- 9.1.7
+- Removed unnecessary require to be able to older versions of the
+  utilities on the new libraries.Removed unnecessary dependency to
+  be able to older versions of the utilities on the new libraries.
+
 * Wed Sep 26 2012 Alexei Takaseev <taf@altlinux.org> 9.1.6-alt1
 - 9.1.6
 
