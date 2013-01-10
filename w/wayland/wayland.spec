@@ -2,7 +2,7 @@
 %def_enable scanner
 
 Name: wayland
-Version: 1.0.0
+Version: 1.0.3
 Release: alt1
 
 Summary: Wayland protocol libraries
@@ -15,6 +15,7 @@ Source: wayland-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: doxygen libexpat-devel libffi-devel xsltproc docbook-style-xsl
+#BuildRequires: publican
 
 %description
 Wayland is a project to define a protocol for a compositor to talk to
@@ -72,6 +73,7 @@ This package provides development files for Wayland server library.
 Summary: Wayland cursor helper library
 Group: System/Libraries
 License: MIT
+Requires: lib%name-client = %version-%release
 
 %description -n lib%name-cursor
 Wayland cursor helper shared library.
@@ -81,7 +83,7 @@ Summary: Wayland cursor helper library
 Group: System/Libraries
 License: MIT
 Requires: lib%name-cursor = %version-%release
-Requires: %name-devel = %version-%release
+Requires: lib%name-client-devel = %version-%release
 
 %description -n lib%name-cursor-devel
 This package provides development files for Wayland cursor helper library.
@@ -98,12 +100,13 @@ This package provides development files for Wayland cursor helper library.
 %make_build
 
 %install
-%make DESTDIR=%buildroot install
-mkdir -p %buildroot%_docdir/%name-devel/
-mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-devel/
+%makeinstall_std
+#mkdir -p %buildroot%_docdir/%name-devel/
+#mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-devel/
+
 
 %files devel
-%doc %_docdir/%name-devel
+#%doc %_docdir/%name-devel
 %_bindir/%name-scanner
 %_includedir/%name-util.h
 %_includedir/%name-version.h
@@ -135,6 +138,11 @@ mv %buildroot%_docdir/%name/* %buildroot%_docdir/%name-devel/
 %_pkgconfigdir/%name-cursor.pc
 
 %changelog
+* Thu Jan 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.3-alt1
+- 1.0.3
+- fixed interpackage dependencies
+- TODO: build documentation using publican
+
 * Tue Oct 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.0.0-alt1
 - 1.0.0
 
