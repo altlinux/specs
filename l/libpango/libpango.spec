@@ -6,7 +6,7 @@
 %def_enable introspection
 
 Name: lib%_name
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Summary: System for layout and rendering of internationalized text
@@ -28,6 +28,8 @@ Patch: pango-1.32.2-alt-compat-version-script.patch
 # check.defs always true
 Patch3: pango-1.30.0-alt-check_defs.patch
 
+Patch10: pango-1.32.6-g_type_init.patch
+
 Provides: %_name = %version
 Obsoletes: %_name < %version
 Obsoletes: gscript
@@ -37,10 +39,10 @@ Obsoletes: gscript
 %define cairo_ver 1.7.6
 %define gtk_doc_ver 1.0
 %define xft_ver 2.0.0
-%define fontconfig_ver 2.5.0
+%define fontconfig_ver 2.10.91
 %define freetype_ver 2.1.4
 %define gi_ver 0.9.5
-%define hb_ver 0.9.9
+%define hb_ver 0.9.11
 
 # We need to prereq these so we can run pango-querymodules in post
 PreReq: glib2 >= %glib_ver
@@ -115,6 +117,7 @@ GObject introspection devel data for the Pango library
 %patch -p1
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %patch3
+%patch10
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -184,6 +187,9 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Thu Jan 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.32.6-alt1
+- 1.32.6
+
 * Tue Dec 18 2012 Yuri N. Sedunov <aris@altlinux.org> 1.32.5-alt1
 - 1.32.5
 

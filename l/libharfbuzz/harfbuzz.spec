@@ -1,7 +1,7 @@
 %define _name harfbuzz
 
 Name: lib%_name
-Version: 0.9.9
+Version: 0.9.11
 Release: alt1
 
 Summary: HarfBuzz is an OpenType text shaping engine
@@ -49,7 +49,7 @@ The %name-utils package provides utilities from %name package.
 %makeinstall_std
 
 %check
-#%make check
+%make check
 
 %files
 %_libdir/*.so.*
@@ -67,6 +67,9 @@ The %name-utils package provides utilities from %name package.
 
 
 %changelog
+* Thu Jan 10 2013 Yuri N. Sedunov <aris@altlinux.org> 0.9.11-alt1
+- 0.9.11
+
 * Fri Dec 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.9.9-alt1
 - 0.9.9
 
