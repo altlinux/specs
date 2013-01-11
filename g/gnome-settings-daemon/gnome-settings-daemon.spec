@@ -4,12 +4,14 @@
 %def_enable smartcard
 %def_enable systemd
 %def_enable ibus
+# tests require, as minimum, running colord
+%def_disable check
 
 %define _libexecdir %_prefix/libexec
 
 Name: gnome-settings-daemon
-Version: %ver_major.3
-Release: alt2.1
+Version: %ver_major.4
+Release: alt1
 
 Summary: A program that manages general GNOME settings
 License: GPLv2+
@@ -17,8 +19,8 @@ Group: Graphical desktop/GNOME
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
 Url: http://gnome.org
-#Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
-Source: %name-%version.tar
+Source: %gnome_ftp/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
 
 Patch: %name-3.5.5-alt-link.patch
 Patch1: %name-3.3.90.1-alt-link.patch
@@ -63,6 +65,8 @@ BuildRequires: libXrandr-devel xorg-inputproto-devel libICE-devel libSM-devel
 BuildRequires: libupower-devel >= %upower_ver
 BuildRequires: libcolord-devel >= %colord_ver liblcms2-devel
 BuildRequires: libwacom-devel >= %wacom_ver xorg-drv-wacom-devel libXtst-devel
+# for check
+%{?_enable_check:BuildRequires: /proc xvfb-run gnome-color-manager}
 
 %description
 GNOME Settings Daemon is a program that organizes access to general GNOME
@@ -107,6 +111,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %install
 %make_install DESTDIR=%buildroot install
 %find_lang --with-gnome %name
+
+%check
+%{?_enable_check:xvfb-run %make check}
 
 %files -f %name.lang
 %dir %_libdir/%name-%api_ver
@@ -195,6 +202,9 @@ The %name-tests package provides programms for testing GSD plugins.
 %_libexecdir/gsd-test-xsettings
 
 %changelog
+* Fri Jan 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.4-alt1
+- 3.6.4
+
 * Mon Dec 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt2.1
 - updated to 87b1afab07
 - gnome-settings-daemon-3.6.3-xi-raw-events.patch (see BGO bug #685676)

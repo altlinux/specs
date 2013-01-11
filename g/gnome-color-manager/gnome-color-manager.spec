@@ -1,8 +1,10 @@
 %define ver_major 3.6
 %def_disable clutter
+# tests require colord running and g-c-m installed
+%def_disable check
 
 Name: gnome-color-manager
-Version: %ver_major.0
+Version: %ver_major.1
 Release: alt1
 
 Summary: Color profile manager for the GNOME desktop
@@ -24,7 +26,7 @@ BuildPreReq: rpm-build-licenses
 %define gtk_ver 3.0
 %define vte_ver 0.27.2
 %define notify_ver 0.7.3
-%define colord_ver 0.1.20
+%define colord_ver 0.1.24
 %define lcms_ver 2.2
 
 BuildRequires: gcc-c++ intltool gtk-doc yelp-tools itstool
@@ -38,6 +40,7 @@ BuildPreReq: libcolord-gtk-devel >= %colord_ver
 BuildRequires: libgnome-desktop3-devel libexif-devel libexiv2-devel libcanberra-gtk3-devel
 BuildRequires: libtiff-devel liblcms2-devel >= %lcms_ver libXrandr-devel
 %{?_enable_clutter:BuildRequires: libclutter-devel >= %clutter_ver libclutter-gtk3-devel libmash-devel}
+%{?_enable_check:BuildRequires: /proc xvfb-run}
 
 %description
 gnome-color-manager is a session program that makes it easy to manage,
@@ -87,6 +90,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 
 %find_lang --with-gnome %name
 
+%check
+%{?_enable_check:xvfb-run %make check}
+
 %files -f %name.lang
 %_bindir/gcm-calibrate
 %_bindir/gcm-import
@@ -105,6 +111,9 @@ ln -sf %_licensedir/GPL-2 COPYING
 %doc README NEWS AUTHORS
 
 %changelog
+* Fri Jan 11 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.1-alt1
+- 3.6.1
+
 * Wed Sep 26 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt1
 - 3.6.0
 - clutter support temporarily disabled (no more mx/mash for new clutter)
