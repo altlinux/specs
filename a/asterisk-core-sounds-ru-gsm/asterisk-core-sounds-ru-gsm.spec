@@ -3,7 +3,7 @@
 
 Name: asterisk-core-sounds-ru-gsm
 Summary: sounds for Asterisk
-Version: 1.4.22
+Version: 1.4.23
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -49,6 +49,9 @@ find -type f \
 %files -f sounds.list
 
 %changelog
+* Fri Jan 11 2013 Cronbuild Service <cronbuild@altlinux.org> 1.4.23-alt1
+- new version 1.4.23
+
 * Wed Jan 02 2013 Cronbuild Service <cronbuild@altlinux.org> 1.4.22-alt1
 - new version 1.4.22
 
