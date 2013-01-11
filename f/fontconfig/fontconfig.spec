@@ -1,5 +1,5 @@
 Name: fontconfig
-Version: 2.10.2
+Version: 2.10.91
 Release: alt1
 
 Summary: Font configuration and customization library and utilities
@@ -13,7 +13,7 @@ Patch: %name-%version-%release.patch
 
 Provides: lib%name = %version
 Obsoletes: lib%name < %version
-BuildRequires: docbook-utils elinks libexpat-devel libfreetype-devel
+BuildRequires: docbook-utils elinks gperf libexpat-devel libfreetype-devel
 
 %description
 Fontconfig is designed to locate fonts within the system and
@@ -98,6 +98,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Fri Jan 11 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.10.91-alt1
+- 2.11 RC1
+
 * Wed Nov 28 2012 Valery Inozemtsev <shrek@altlinux.ru> 2.10.2-alt1
 - 2.10.2
 
