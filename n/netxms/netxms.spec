@@ -1,5 +1,5 @@
 Name: netxms
-Version: 1.2.2
+Version: 1.2.5
 Release: alt1
 
 Summary: Open source network monitoring system
@@ -139,6 +139,9 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/libnxsl.so
 %_libdir/libnxsl.so.1
 %_libdir/libnxsl.so.1.0.0
+%_libdir/libnxsms_dummy.so
+%_libdir/libnxsms_dummy.so.1
+%_libdir/libnxsms_dummy.so.1.0.0
 %_libdir/libnxsms_generic.so
 %_libdir/libnxsms_generic.so.1
 %_libdir/libnxsms_generic.so.1.0.0
@@ -157,11 +160,7 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %dir %_libdir/%name
 %dir %_libdir/%name/dbdrv
 %dir %_libdir/%name/ndd
-%_libdir/%name/ndd/baystack.ndd
-%_libdir/%name/ndd/cat2900xl.ndd
-%_libdir/%name/ndd/catalyst.ndd
-%_libdir/%name/ndd/ers8000.ndd
-%_libdir/%name/ndd/netscreen.ndd
+%_libdir/%name/ndd/*.ndd
 %dir %_datadir/%name
 %_datadir/%name/mibs
 %dir %_datadir/%name/sql
@@ -189,13 +188,13 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/libnsm_logwatch.so
 %_libdir/libnsm_ping.so
 %_libdir/libnsm_portcheck.so
-%_libdir/libnsm_odbcquery.so
+#%_libdir/libnsm_odbcquery.so
 %_libdir/libnsm_sms.so
 %_libdir/libnsm_ups.so
 %_libdir/%name/ecs.nsm
 %_libdir/%name/linux.nsm
 %_libdir/%name/logwatch.nsm
-%_libdir/%name/odbcquery.nsm
+#%_libdir/%name/odbcquery.nsm
 %_libdir/%name/ping.nsm
 %_libdir/%name/portcheck.nsm
 %_libdir/%name/sms.nsm
@@ -223,6 +222,12 @@ mkdir -p %buildroot/%_localstatedir/%name/agent
 %_libdir/%name/dbdrv/odbc.ddr
 
 %changelog
+* Fri Jan 11 2013 Eugene Prokopiev <enp@altlinux.ru> 1.2.5-alt1
+- new version
+
+* Wed Dec 05 2012 Eugene Prokopiev <enp@altlinux.ru> 1.2.4-alt1
+- new version
+
 * Fri Jul 27 2012 Eugene Prokopiev <enp@altlinux.ru> 1.2.2-alt1
 - new version
 
