@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt12
+Release: %branch_release alt13
 
 License: %asl
 Group: System/Servers
@@ -72,8 +72,10 @@ Source37: httpd.service
 Source38: htcacheclean.service
 
 # scripts for control
-Source40: cgi-bin_test-cgi.sh
-Source41: cgi-bin_printenv.sh
+Source40: cgi-bin_test-cgi.control.sh
+Source41: cgi-bin_printenv.control.sh
+Source42: htcacheclean-run.control.sh
+Source43: htcacheclean-mode.control.sh
 
 # RPM FileTrigger
 Source50: 00-apache2-common.filetrigger
@@ -643,12 +645,21 @@ Conflicts: apache2-common < 2.2.19-alt1.1
 %description mod_disk_cache
 This package contains the module mod_disk_cache
 
+%package htcacheclean-control
+Summary: Control rules for htcacheclean
+Group: System/Servers
+
+%description htcacheclean-control
+This package contains control rules for the htcacheclean.
+See control(8) for details.
+
 %package htcacheclean
 Summary: Clean up the disk cache for Apache
 Group: System/Servers
 Requires: %apache2_htcacheclean_cachepath
 Requires: %name-common > 2.2.22-alt11
 Requires: %name-base > 2.2.22-alt11
+Requires: %name-htcacheclean-control
 
 %description htcacheclean
 Htcacheclean is used to keep the size of mod_disk_cache's storage within
@@ -1094,6 +1105,8 @@ mkdir -p %buildroot%apache2_compat_iconssmalldir/
 # Install scripts for control
 install -pD %SOURCE40 %buildroot%_controldir/cgi-bin_test-cgi
 install -pD %SOURCE41 %buildroot%_controldir/cgi-bin_printenv
+install -pD %SOURCE42 %buildroot%_controldir/htcacheclean-run
+install -pD %SOURCE43 %buildroot%_controldir/htcacheclean-mode
 
 # Create datadirs
 install -d %buildroot%_datadir/%name/cgi-bin/
@@ -1365,6 +1378,10 @@ ${FQDN}
 root@${FQDN}
 EOF
 fi
+%pre htcacheclean
+%pre_control htcacheclean-run
+%pre_control htcacheclean-mode
+exit 0
 
 %preun htcacheclean
 if [ $1 -eq 0 ]; then
@@ -1373,6 +1390,8 @@ fi
 exit 0
 
 %post htcacheclean
+%post_control -s auto htcacheclean-run
+%post_control -s daemon htcacheclean-mode
 if [ $1 -eq 1 ]; then
 	%post_service %apache2_htcacheclean_dname
 fi
@@ -1665,6 +1684,9 @@ exit 0
 %ghost %apache2_mods_enabled/disk_cache.*
 %attr(2770,root,%apache2_group) %dir %apache2_htcacheclean_cachepath/
 
+%files htcacheclean-control
+%_controldir/htcacheclean-*
+
 %files htcacheclean
 %apache2_sbindir/htcacheclean*
 %apache2_mandir/man8/htcacheclean*
@@ -1729,6 +1751,9 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Fri Jan 11 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt13
+- Add to %%name-htcacheclean-control subpackage
+
 * Sun Dec 23 2012 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt12
 - Fix start for systemd: Use TimeoutStartSec=10s (Closes: #27925)
 - Add to %%name-htcacheclean subpackage:
