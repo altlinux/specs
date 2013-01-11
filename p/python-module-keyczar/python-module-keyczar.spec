@@ -1,8 +1,8 @@
 %define module_name keyczar
 
 Name: python-module-%module_name
-Version: 0.6b
-Release: alt1.1
+Version: 0.71c
+Release: alt2
 
 Summary: Toolkit for safe and simple cryptography
 
@@ -38,6 +38,12 @@ symmetric and asymmetric keys.
 %python_sitelibdir/python_keyczar*
 
 %changelog
+* Fri Jan 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.71c-alt2
+- Sisyphus release
+
+* Sat Jan 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.71c-alt1_1
+- fc import
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6b-alt1.1
 - Rebuild with Python-2.7
 
