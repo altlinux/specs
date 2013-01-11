@@ -6,8 +6,8 @@
 %define sover %somver.0
 
 Name: phaml
-Version: 1.11.0
-Release: alt2
+Version: 1.12.0
+Release: alt1
 Summary: The Parallel Hierarchical Adaptive MultiLevel Project
 License: Public domain
 Group: Sciences/Mathematics
@@ -103,7 +103,7 @@ This package contains documentation for PHAML.
 
 %build
 source %_bindir/petsc-real.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib:%pdir/lib -L%mpidir/lib -L%pdir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%pdir/lib -L%mpidir/lib -L%pdir/lib"
 
 ./mkmkfile.sh
 mkdir -p lib modules
@@ -111,7 +111,7 @@ mkdir -p lib modules
 
 %install
 source %mpidir/bin/mpivars.sh
-export OMPI_LDFLAGS="-Wl,--as-needed,-R,%mpidir/lib:%pdir/lib -L%mpidir/lib -L%pdir/lib"
+export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib:%pdir/lib -L%mpidir/lib -L%pdir/lib"
 
 install -d %buildroot%_includedir/%name
 install -d %buildroot%_libdir
@@ -149,6 +149,9 @@ cp -fR examples %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Fri Jan 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.0-alt1
+- Version 1.12.0
+
 * Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.11.0-alt2
 - Rebuilt with gcc 4.7
 
