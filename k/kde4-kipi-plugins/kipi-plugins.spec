@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 3.0.0
-Release: alt0.2
+Release: alt0.3
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -38,9 +38,10 @@ Conflicts: kipi-plugins <= 3:0.1.6-alt5
 #BuildRequires: gcc-c++ kde4graphics-devel kde4pimlibs-devel libGL-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libexpat-devel libgio-devel libgpod-devel libgtk+2-common-devel libnss-fallback libopencv-devel libqt3-devel libsane-devel libxkbfile-devel libxslt-devel nvidia_glx_180.44 subversion xorg-xf86vidmodeproto-devel xsltproc
 BuildRequires(pre): kde4libs-devel kde4graphics-devel
 BuildRequires: gcc-c++ kde4pimlibs-devel libgomp-devel libkgeomap-devel qjson-devel libqca2-devel
-BuildRequires: libgio-devel libgpod-devel libgtk+2-devel
+BuildRequires: libgio-devel libgpod-devel libgtk+2-devel boost-devel
 BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
 BuildRequires: qoauth-devel qjson-devel herqq-devel qtsoap-devel
+BuildRequires: qt-gstreamer-devel libImageMagick-devel
 BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel
 
 %description
@@ -82,10 +83,6 @@ KDE 4 library.
 %patch1 -p1
 mv %rname-po-%version po
 mv %rname-doc-%version doc
-cat >> doc/CMakeLists.txt <<__EOF__
-MACRO_OPTIONAL_ADD_SUBDIRECTORY(digikam/digikam)
-MACRO_OPTIONAL_ADD_SUBDIRECTORY(digikam/showfoto)
-__EOF__
 install -m 0644 %SOURCE10 cmake/modules
 install -m 0644 %SOURCE11 cmake/modules
 install -m 0644 %SOURCE12 cmake/modules
@@ -170,6 +167,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Fri Jan 11 2013 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.3
+- 3.0.0-rc
+
 * Fri Dec 21 2012 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.2
 - fix desktop files X-KIPI-BinaryVersion
 
