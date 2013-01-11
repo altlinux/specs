@@ -1,7 +1,7 @@
 %define module DistroMap
 
 Name: perl-%module
-Version: 0.15
+Version: 0.16
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,6 +34,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distromap*
 
 %changelog
+* Fri Jan 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
+- support for versioned distrodb
+
 * Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1
 - added flags/binary/exclude
 
