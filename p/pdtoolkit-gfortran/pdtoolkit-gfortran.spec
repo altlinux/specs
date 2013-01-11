@@ -3,7 +3,7 @@
 
 Name: pdtoolkit-gfortran
 Version: 4.0.2
-Release: alt2
+Release: alt3
 Summary: Modified gfortran parser for use in PDToolkit
 License: GPLv2+
 Group: Development/Tools
@@ -25,6 +25,10 @@ install -d BUILD
 pushd BUILD
 
 ln -s ../configure .
+%ifarch %ix86
+%remove_optflags -mtune=generic
+%add_optflags -mtune=i686
+%endif
 %configure \
 	--enable-cmath \
 	--enable-languages="c,f95" \
@@ -54,6 +58,9 @@ install -m755 BUILD/gcc/{cc1,f951,gfortran} \
 %_libdir/pdtoolkit/bin/gfortran
 
 %changelog
+* Fri Jan 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt3
+- Fixed build for %%ix86
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.2-alt2
 - Fixed build with new glibc
 
