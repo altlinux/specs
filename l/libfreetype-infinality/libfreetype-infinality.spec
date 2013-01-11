@@ -1,10 +1,10 @@
 %define freetypemajorversion 6
 
 Name: libfreetype-infinality
-Version: 2.4.10
-Release: alt3
+Version: 2.4.11
+Release: alt1
 
-Summary: A free and portable font rendering engine
+Summary: A free and portable font rendering engine with patches from http://www.infinality.net
 License: FTL or GPLv2+
 Group: System/Libraries
 Url: http://www.freetype.org/
@@ -24,9 +24,8 @@ Patch11: freetype-2.4.10-rh-enable-subpixel-rendering.patch
 Patch12: freetype-2.4.10-rh-enable-valid.patch
 
 #Infinality patches
-Patch91: freetype-add-subpixel-hinting-infinality-20120616-01.patch
-Patch92: freetype-enable-subpixel-hinting-infinality-20120615-01.patch
-Patch93: freetype-entire-infinality-patchset-20120615-01.patch
+Patch91: freetype-enable-subpixel-hinting-infinality-20120615-01.patch
+Patch92: freetype-entire-infinality-patchset-20130104-01.patch
 
 Provides: freetype2-infinality = %version
 Obsoletes: freetype2-infinality < %version
@@ -58,7 +57,6 @@ overrides the system library using ld.so.conf.d.
 
 %patch91 -p1
 %patch92 -p1
-%patch93 -p1
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -72,10 +70,10 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
 %install
 %makeinstall_std
 
-wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' |cpp -P)
+wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' | cpp -P | sed '/^$/d')
 [ "$wordsize" -ge 32 ]
 mv %buildroot%_includedir/freetype2/freetype/config/ftconfig{,-$wordsize}.h
-cat >%buildroot%_includedir/freetype2/freetype/config/ftconfig.h <<'EOF'
+cat >%buildroot%_includedir/freetype2/freetype/config/ftconfig.h <<EOF
 #ifndef __FTCONFIG_H__MULTILIB
 #define __FTCONFIG_H__MULTILIB
 
@@ -108,7 +106,6 @@ cp %SOURCE91 %buildroot%docdir
 cp %SOURCE92 %buildroot%docdir
 cp %PATCH91 %buildroot%docdir
 cp %PATCH92 %buildroot%docdir
-cp %PATCH93 %buildroot%docdir
 cp %ld_preload_script %buildroot%docdir
 
 # Move library to avoid conflict with official FreeType package
@@ -132,6 +129,9 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %config %{_sysconfdir}/profile.d/infinality-settings.sh
 
 %changelog
+* Wed Jan 9 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.11-alt1
+- 2.4.11
+
 * Fri Dec 21 2012 Vladimir Didenko <cow@altlinux.ru> 2.4.10-alt3
 - Deleted devel packages
 
