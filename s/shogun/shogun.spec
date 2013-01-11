@@ -1,6 +1,6 @@
 Name: shogun
-Version: 1.1.0
-Release: alt3
+Version: 2.0.0
+Release: alt1
 Summary: A Large Scale Machine Learning Toolbox
 Group: Sciences/Mathematics
 License: GPL v3 or later
@@ -221,6 +221,7 @@ export ARCH=x86_64
 %endif
 
 pushd src
+%add_optflags -fpermissive
 ./configure \
 	--prefix=%prefix \
 	--libdir=%_libdir \
@@ -239,7 +240,9 @@ pushd src
 	--enable-json \
 	--enable-xml \
 	--enable-snappy \
-	--interfaces=cmdline_static,python_modular,python_static,elwms_static
+	--interfaces=cmdline_static,python_modular,python_static,elwms_static \
+	--cflags=-fpermissive \
+	--cxxflags=-fpermissive
 %make_build
 popd
 
@@ -260,7 +263,7 @@ ln -s %_libdir/%name/elwms.so %buildroot%python_sitelibdir/elwms.so
 #cp -fR data/* %buildroot%_datadir/%name/
 
 rm -fR examples/documented/data examples/undocumented/data \
-	testsuite/data testsuite/tests
+	tests/integration/data tests/integration/tests
 
 %files
 %doc src/AUTHORS src/CONTRIBUTIONS src/COPYRIGHT src/ChangeLog
@@ -289,9 +292,12 @@ rm -fR examples/documented/data examples/undocumented/data \
 %doc examples
 
 %files tests
-%doc testsuite
+%doc tests
 
 %changelog
+* Fri Jan 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
+- Version 2.0.0 (ALT #28174)
+
 * Tue Dec 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt3
 - Fixed build with OpenBLAS 0.2.5
 
