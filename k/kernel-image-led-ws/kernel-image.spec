@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.57
-Release: alt19
+Release: alt20
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -570,7 +570,7 @@ Patch0736: linux-%kernel_branch.42-fix-kernel--watchdog.patch
 Patch0737: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
 Patch0738: linux-%kernel_branch.44-fix-kernel-time.patch
 
-Patch0740: linux-%kernel_branch.42-fix-lib.patch
+Patch0740: linux-%kernel_branch.57-fix-lib.patch
 Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
 Patch0750: linux-%kernel_branch.57-fix-mm.patch
@@ -2946,6 +2946,10 @@ done)
 
 
 %changelog
+* Fri Jan 11 2013 Led <led@altlinux.ru> 3.0.57-alt20
+- updated:
+  + fix-lib
+
 * Thu Jan 10 2013 Led <led@altlinux.ru> 3.0.57-alt19
 - added:
   + feat-crypto--blowfish-x86_64
