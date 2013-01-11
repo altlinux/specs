@@ -12,7 +12,7 @@
 %def_enable apache_ru_compat
 
 Name: rpm-macros-%macrosname
-Version: 3.9
+Version: 3.10
 Release: %branch_release alt1
 
 Summary: RPM macros to Apache2 Web server
@@ -81,6 +81,9 @@ find %buildroot%rpm_masrosdir/ -type f -print0 \
 %rpm_masrosdir/%name-compat
 
 %changelog
+* Fri Jan 11 2013 Aleksey Avdeev <solo@altlinux.ru> 3.10-alt1
+- Add new macros %%post_apache2_rpmrenamevarinconfig
+
 * Thu Oct 11 2012 Aleksey Avdeev <solo@altlinux.ru> 3.9-alt1
 - Add new macros:
   + %%apache2_create_rpmfiletriggerdir
@@ -93,7 +96,7 @@ find %buildroot%rpm_masrosdir/ -type f -print0 \
   use /sbin/service
 
 * Tue Aug 14 2012 Aleksey Avdeev <solo@altlinux.ru> 3.8-alt1
-- Remove repocop-unittest-data-%%name subpacage (Closes: #26076)
+- Remove repocop-unittest-data-%%name subpackage (Closes: #26076)
 - Add new macros:
   + %%apache2_apachectl_name
   + %%apache2_apachectl
@@ -164,7 +167,7 @@ find %buildroot%rpm_masrosdir/ -type f -print0 \
 - Fix Requires/Conflicts
 
 * Tue Aug 05 2008 Aleksey Avdeev <solo@altlinux.ru> 0.3-alt1
-- Create repocop-unittest-data-%%name subpacage for repocop tests
+- Create repocop-unittest-data-%%name subpackage for repocop tests
 - Add new macros:
   + %%apache2_manualaddonsdir
   + %%apache2_compat_manualaddonsdir
