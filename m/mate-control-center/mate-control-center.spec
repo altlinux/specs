@@ -1,45 +1,54 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/perl5 /usr/bin/pkg-config /usr/bin/update-mime-database gcc-c++ gobject-introspection-devel libICE-devel libSM-devel libX11-devel libXrender-devel libXxf86misc-devel libgtk+2-gir-devel libselinux-devel pkgconfig(dbus-1) pkgconfig(exempi-2.0) pkgconfig(fontconfig) pkgconfig(gail) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gstreamer-0.10) pkgconfig(gstreamer-plugins-base-0.10) pkgconfig(gthread-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(libebook-1.2) pkgconfig(libexif) pkgconfig(libmatekbdui) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(libstartup-notification-1.0) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(polkit-gobject-1) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) pkgconfig(xrandr) xorg-kbproto-devel xorg-xproto-devel
-# END SourceDeps(oneline)
+Serial: 1
 Group: Graphical desktop/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libSM-devel libX11-devel libXxf86misc-devel pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libmatekbdui) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
+%define fedora 18
 Name:           mate-control-center
-Version:        1.5.1
+%define _name   libslab
+Version:        1.5.2
 Release:        alt1_1
 Summary:        MATE Desktop control-center
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
+Requires:       gsettings-desktop-schemas
 
-BuildRequires: pkgconfig(gtk+-2.0)
 BuildRequires: desktop-file-utils
 BuildRequires: icon-naming-utils
 BuildRequires: mate-common
-BuildRequires: pkgconfig(MateCORBA-2.0)
+BuildRequires: pkgconfig(dbus-glib-1)
+BuildRequires: pkgconfig(dconf)
+BuildRequires: pkgconfig(ice)
+BuildRequires: pkgconfig(libcanberra)
+BuildRequires: pkgconfig(libmate-menu)
+BuildRequires: pkgconfig(libmatekbd)
+BuildRequires: pkgconfig(libmatenotify)
+BuildRequires: pkgconfig(libmarco-private)
+BuildRequires: pkgconfig(librsvg-2.0)
+BuildRequires: pkgconfig(libxklavier)
+BuildRequires: pkgconfig(gtk+-2.0)
+BuildRequires: pkgconfig(gsettings-desktop-schemas)
 BuildRequires: pkgconfig(mate-settings-daemon)
 BuildRequires: pkgconfig(mate-desktop-2.0)
 BuildRequires: pkgconfig(mate-doc-utils)
-BuildRequires: pkgconfig(libmate-menu)
-BuildRequires: pkgconfig(dbus-glib-1)
-BuildRequires: pkgconfig(libmatekbd)
-BuildRequires: pkgconfig(libmatenotify)
-BuildRequires: pkgconfig(libxklavier)
 BuildRequires: pkgconfig(nss)
-BuildRequires: pkgconfig(dconf)
 BuildRequires: pkgconfig(polkit-agent-1)
+BuildRequires: pkgconfig(sm)
 BuildRequires: pkgconfig(unique-1.0)
-BuildRequires: pkgconfig(libmarco-private)
-BuildRequires: pkgconfig(librsvg-2.0)
-BuildRequires: pkgconfig(ice)
-BuildRequires: pkgconfig(xscrnsaver)
 BuildRequires: pkgconfig(xext)
+BuildRequires: pkgconfig(xscrnsaver)
 BuildRequires: pkgconfig(xxf86misc)
 BuildRequires: pkgconfig(xkbfile)
-BuildRequires: pkgconfig(libcanberra)
-BuildRequires: pkgconfig(sm)
-BuildRequires: pkgconfig(gsettings-desktop-schemas)
 
-Requires:       gsettings-desktop-schemas
+# sample code block for handling distributions which cant provide
+# pkgconfig() capabilities - according to Dan: %%{?fedora} < 17
+%if 0%{?fedora} < 17
+# BuildRequires: foobar-devel
+%else
+# BuildRequires: pkgconfig(foobar)
+%endif
 Source44: import.info
 Patch33: gnome-control-center-2.22.1-alt-background-location.patch
 Patch34: gnome-control-center-2.28.0-passwd.patch
@@ -47,22 +56,43 @@ Patch34: gnome-control-center-2.28.0-passwd.patch
 %description
 MATE Desktop Control Center
 
+
+%package -n %{_name}
+Group: Graphical desktop/Other
+License:        LGPLv2+
+Summary:        MATE Desktop libslab port
+
+%description -n %{_name}
+This package provides libslab which is used in MATE control panel and in
+gnome-main-menu.
+
+
 %package devel
 Group: Development/C
 Summary:        Development files for mate-settings-daemon
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{?serial:%serial:}%{version}-%{release}
+Requires: libslab-devel
 
 %description devel
 Development files for mate-control-center
 
+%package -n libslab-devel
+Group: Development/C
+Summary:        Development files for libslab-devel
+Requires: libslab = %{?serial:%serial:}%{version}-%{release}
+
+%description -n libslab-devel
+Development files for libslab-devel
+
+
 %prep
 %setup -q
-NOCONFIGURE=1 ./autogen.sh
 %patch33 -p1
 %patch34 -p1
 
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure --disable-static          \
            --disable-schemas-compile \
            --disable-update-mimedb   \
@@ -92,7 +122,7 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
-%{_sysconfdir}/xdg/menus/matecc.menu
+%config %{_sysconfdir}/xdg/menus/matecc.menu
 %{_bindir}/mate-*
 %{_libdir}/libmate-window-settings.so.*
 %{_libdir}/window-manager-settings/
@@ -110,6 +140,9 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_datadir}/omf/mate-control-center/
 %{_datadir}/polkit-1/actions/org.mate.randr.policy
 
+%files -n %{_name}
+%{_libdir}/libslab.so.*
+
 %files devel
 %{_includedir}/mate-window-settings-2.0/
 %{_libdir}/pkgconfig/mate-window-settings-2.0.pc
@@ -117,7 +150,16 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_datadir}/pkgconfig/mate-default-applications.pc
 %{_datadir}/pkgconfig/mate-keybindings.pc
 
+%files -n libslab-devel
+# libslab
+%{_includedir}/libslab/
+%{_libdir}/libslab.so
+%{_libdir}/pkgconfig/libslab.pc
+
 %changelog
+* Fri Jan 11 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.5.2-alt1_1
+- new fc release
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
 - new fc release
 
