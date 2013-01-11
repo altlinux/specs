@@ -19,7 +19,7 @@
 %define bugfix 0
 Name: kde4pim
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -1065,6 +1065,7 @@ based on kdepim.
 %files environment-workstation
 %files environment-mobile
 %files common
+%dir %_K4apps/libkleopatra/
 %_datadir/ontology/kde/*
 
 %files core
@@ -1299,11 +1300,11 @@ based on kdepim.
 %_K4bindir/ktimetracker
 %_K4lib/ktimetrackerpart.so
 %_K4lib/kcm_ktimetracker.so
-%_K4lib/kontact_ktimetrackerplugin.so
+#%_K4lib/kontact_ktimetrackerplugin.so
 %_K4xdg_apps/ktimetracker.desktop
 %_K4apps/ktimetracker
-%_K4apps/kontact/ksettingsdialog/ktimetracker.setdlg
-%_K4apps/kontact/ktimetrackerui.rc
+#%_K4apps/kontact/ksettingsdialog/ktimetracker.setdlg
+#%_K4apps/kontact/ktimetrackerui.rc
 %_K4srv/ktimetracker_config_*.desktop
 %_K4srv/ktimetrackerpart.desktop
 %_K4doc/en/ktimetracker/
@@ -1331,7 +1332,7 @@ based on kdepim.
 %_K4conf_update/kmail*
 %_K4conf_update/upgrade-signature.pl
 %_K4conf_update/upgrade-transport.pl
-%_K4apps/kmail/
+#%_K4apps/kmail/
 %_K4apps/kmail2/
 %_K4apps/kontact/ksettingsdialog/kmail.setdlg
 %_K4cfg/customtemplates_kfg.kcfg
@@ -1585,6 +1586,9 @@ based on kdepim.
 
 
 %changelog
+* Fri Jan 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
