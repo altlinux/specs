@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.59
+Release: alt100.60
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -340,6 +340,19 @@ popd
 sh -n %buildroot%_rpmlibdir/functions
 sh -n %buildroot%_rpmlibdir/find-package
 
+%if "%_lib" == "lib"
+if [ -s /lib/libc.so.6 -a -s /lib/libz.so.1 -a -n "$(getconf LFS_CFLAGS)" ]; then
+	readelf --wide --symbols /lib/libc.so.6 /lib/libz.so.1 |
+		sed -n 's/^[[:space:]]*[0-9]\+:[[:space:]]\+[0-9a-f]\+[[:space:]]\+[0-9]\+[[:space:]]\+FUNC[[:space:]]\+[^[:space:]]\+[[:space:]]\+DEFAULT[[:space:]]\+[0-9]\+[[:space:]]\+\([^@[:space:]]\+\)@\?.*/\1/p' |
+		sort -u
+fi > all-funcs
+sed -n 's/^\(.\+\)64$/\1/p' all-funcs |
+	sort -u |
+	comm -12 - all-funcs |
+	LC_ALL=C sort -u \
+	> %buildroot%_rpmlibdir/verify-elf-non-lfs-funcs.list
+%endif
+
 %pre
 [ ! -L %_rpmlibdir/noarch-alt-%_target_os ] || rm -f %_rpmlibdir/noarch-alt-%_target_os ||:
 
@@ -491,6 +504,9 @@ fi
 # set-version helpers
 %rpmattr %_rpmlibdir/mkset
 %rpmattr %_rpmlibdir/setcmp
+%if "%_lib" == "lib"
+%rpmdatattr %_rpmlibdir/verify-elf-non-lfs-funcs.list
+%endif
 
 %_mandir/man?/gendiff.*
 %_man8dir/rpmbuild.*
@@ -516,6 +532,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Fri Jan 11 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.60
+- verify-elf: implemented LFS check (closes: #28290).
+
 * Mon Dec 24 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.59
 - set.c: fixed sentinel allocation (by Alexey Tourbin).
 
