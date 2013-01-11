@@ -2,7 +2,7 @@
 
 Name: perl-%module
 Version: 0.16
-Release: alt1
+Release: alt2
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -34,6 +34,9 @@ BuildRequires: perl-devel perl(Pod/Usage.pm)
 %_bindir/distromap*
 
 %changelog
+* Fri Jan 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt2
+- bugfix release
+
 * Fri Jan 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.16-alt1
 - support for versioned distrodb
 
