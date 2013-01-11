@@ -3,7 +3,7 @@
 %define rname libkvkontakte
 Name: libkvkontakte
 Version: 1.0.0
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: vk.com access library
@@ -52,6 +52,12 @@ Development files for %name
 
 
 %changelog
+* Fri Jan 11 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt4
+- digikam-3.0.0-rc
+
+* Wed Jul 11 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt2.M60P.1
+- built for M60P
+
 * Wed Jul 11 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.0-alt3
 - digikam 2.7.0
 
