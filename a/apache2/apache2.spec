@@ -38,7 +38,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt13
+Release: %branch_release alt14
 
 License: %asl
 Group: System/Servers
@@ -98,7 +98,7 @@ Source63: server-condstart-rpm.sh
 Patch1: apache2-%version-alt-all-0.6.patch
 
 BuildRequires(pre): rpm-macros-branch
-BuildRequires(pre): rpm-macros-apache2 >= 3.8
+BuildRequires(pre): rpm-macros-apache2 >= 3.10
 BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
 BuildPreReq: %_datadir/rpm-build-rpm-eval/rpm-eval.sh
@@ -1378,6 +1378,7 @@ ${FQDN}
 root@${FQDN}
 EOF
 fi
+
 %pre htcacheclean
 %pre_control htcacheclean-run
 %pre_control htcacheclean-mode
@@ -1390,6 +1391,10 @@ fi
 exit 0
 
 %post htcacheclean
+%post_apache2_rpmrenamevarinconfig %_sysconfdir/sysconfig/%apache2_htcacheclean_dname CACHEPATH HTCACHECLEAN_PATH
+%post_apache2_rpmrenamevarinconfig %_sysconfdir/sysconfig/%apache2_htcacheclean_dname INTERVAL HTCACHECLEAN_DAEMON_INTERVAL
+%post_apache2_rpmrenamevarinconfig %_sysconfdir/sysconfig/%apache2_htcacheclean_dname LIMIT HTCACHECLEAN_SIZE
+%post_apache2_rpmrenamevarinconfig %_sysconfdir/sysconfig/%apache2_htcacheclean_dname OPTIONS HTCACHECLEAN_OPTIONS
 %post_control -s auto htcacheclean-run
 %post_control -s daemon htcacheclean-mode
 if [ $1 -eq 1 ]; then
@@ -1751,6 +1756,13 @@ exit 0
 %ghost %apache2_sites_enabled/default_https-compat.conf
 
 %changelog
+* Fri Jan 11 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt14
+- Added auto adjust the variable names in your %%_sysconfdir/sysconfig/%%apache2_htcacheclean_dname:
+  + CACHEPATH in HTCACHECLEAN_PATH
+  + INTERVAL in HTCACHECLEAN_DAEMON_INTERVAL
+  + LIMIT in HTCACHECLEAN_SIZE
+  + OPTIONS in HTCACHECLEAN_OPTIONS
+
 * Fri Jan 11 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt13
 - Add to %%name-htcacheclean-control subpackage
 
