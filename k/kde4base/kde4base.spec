@@ -11,7 +11,7 @@
 %define bugfix 0
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt0.2
+Release: alt0.3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -324,6 +324,7 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps \
 # add desktop categories
 desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-PersonalSettings %buildroot%_K4xdg_apps/kdepasswd.desktop
 
+
 %files
 %files common
 %_K4tmpl/*.desktop
@@ -386,8 +387,6 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 %_K4xdg_apps/kfmclient_war.desktop
 %_K4xdg_apps/konqbrowser.desktop
 %_K4xdg_apps/konquerorsu.desktop
-%_K4conf_update/kfmclient_3_2.upd
-%_K4conf_update/kfmclient_3_2_update.sh
 %_K4apps/kcmcss/
 %_K4apps/kcontrol/pics/onlyone.png
 %_K4apps/kcontrol/pics/overlapping.png
@@ -425,8 +424,6 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 %_K4lib/kded_favicons.so*
 %_K4lib/konq_sound.so*
 %_K4apps/kbookmark/directory_bookmarkbar.desktop
-%_K4conf_update/favicons.upd
-%_K4conf_update/move_favicons.sh
 %dir %_K4apps/konqueror/
 %dir %_K4apps/konqueror/pics/
 %_K4apps/konqueror/pics/arrow_*.*
@@ -609,6 +606,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Fri Jan 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
+- update from 4.10 branch
+
 * Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - fix to build with nepomuk
 
