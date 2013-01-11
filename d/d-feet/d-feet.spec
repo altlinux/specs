@@ -1,7 +1,7 @@
-%define ver_major 0.1
+%define ver_major 0.3
 
 Name: d-feet
-Version: %ver_major.15
+Version: %ver_major.2
 Release: alt1
 
 Summary: A powerful D-Bus Debugger
@@ -13,7 +13,7 @@ Source: ftp://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.ta
 
 BuildArch: noarch
 
-BuildRequires: python-module-pygtk-devel
+BuildRequires: python-module-pygobject3-devel python-module-setuptools
 
 %description
 D-Feet is an easy to use D-Bus debugger.
@@ -38,9 +38,13 @@ objects.
 %_datadir/dfeet/
 %_datadir/applications/dfeet.desktop
 %_iconsdir/hicolor/*x*/apps/*.png
+%_iconsdir/hicolor/*/apps/*.svg
 %doc AUTHORS README NEWS
 
 %changelog
+* Fri Jan 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
+- 0.3.2
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.15-alt1
 - 0.1.15
 
