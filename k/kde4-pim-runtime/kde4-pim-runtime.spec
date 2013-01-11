@@ -7,7 +7,7 @@
 %define bugfix 0
 Name: kde4-pim-runtime
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 Group: Graphical desktop/KDE
 Summary: KDE Akonadi resources
@@ -34,7 +34,7 @@ Patch105: kdepim-4.7.3-alt-migrate-pop3-passwords.patch
 Patch106: kdepim-4.7.3-alt-ignore-empty-accounts.patch
 Patch107: kdepim-4.9.1-alt-maildir-checks.patch
 Patch108: kdepim-4.7.4-alt-mixedmaildir-show-error.patch
-Patch109: kdepim-4.8.1-alt-def-nepomuk.patch
+Patch109: kdepim-4.10.0-alt-def-nepomuk.patch
 
 # Automatically added by buildreq on Tue Feb 09 2010
 #BuildRequires: akonadi-devel gcc-c++ glib2-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libassuan-devel libgpgme-devel libindicate-qt-devel libxkbfile-devel soprano soprano-backend-redland xorg-xf86vidmodeproto-devel xsltproc
@@ -222,6 +222,9 @@ based on kdepim.
 
 
 %changelog
+* Fri Jan 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
