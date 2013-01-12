@@ -1,5 +1,5 @@
 Name: httping
-Version: 1.5.2
+Version: 1.5.7
 Release: alt1
 
 Summary: Ping alike tool for http requests
@@ -35,6 +35,9 @@ install -d %buildroot{%_bindir/,%_man1dir/}
 %_man1dir/*
 
 %changelog
+* Sat Jan 12 2013 Michael Shigorin <mike@altlinux.org> 1.5.7-alt1
+- 1.5.7
+
 * Sat Aug 13 2011 Victor Forsiuk <force@altlinux.org> 1.5.2-alt1
 - 1.5.2
 
