@@ -4,8 +4,8 @@
 #%%define branch_switch Mxx
 
 %define packagversion 1.9.19
-%define packagedate 20121220
-%define packagemoodleversion 2007101592.03
+%define packagedate 20130114
+%define packagemoodleversion 2007101592.04
 %define moodlebranch %nil
 %define moodlepackagename %moodle_name%moodlebranch
 
@@ -433,6 +433,10 @@ exit 0
 %moodle_questionformatdir/hotpot/
 
 %changelog
+* Sat Jan 12 2013 Cronbuild Service <cronbuild@altlinux.org> 1.9.19.20130114-alt1
+- repocop cronbuild 20130112. At your service.
+- 1.9.19+ (Build: 20130114)
+
 * Fri Dec 21 2012 Cronbuild Service <cronbuild@altlinux.org> 1.9.19.20121220-alt1
 - repocop cronbuild 20121221. At your service.
 - 1.9.19+ (Build: 20121220)
