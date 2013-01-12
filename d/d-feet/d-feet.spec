@@ -1,7 +1,7 @@
 %define ver_major 0.3
 
 Name: d-feet
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: A powerful D-Bus Debugger
@@ -42,6 +42,9 @@ objects.
 %doc AUTHORS README NEWS
 
 %changelog
+* Sat Jan 12 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.3-alt1
+- 0.3.3
+
 * Fri Jan 11 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1
 - 0.3.2
 
