@@ -2,7 +2,7 @@
 
 Name: gnustep-webservices
 Version: 0.5.9
-Release: alt3.git20121208
+Release: alt3.git20130103
 Summary: WebServices framework for GNUstep
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -85,6 +85,9 @@ cp -fR Examples %buildroot%_docdir/GNUstep/WebServices/
 %_docdir/GNUstep
 
 %changelog
+* Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt3.git20130103
+- New snapshot
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.9-alt3.git20121208
 - Rebuilt with libobjc2 instead of libobjc
 
