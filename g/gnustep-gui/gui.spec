@@ -4,7 +4,7 @@
 
 Name: gnustep-gui
 Version: 0.23.0
-Release: alt5.git20121226
+Release: alt5.git20121231
 Summary: The GNUstep GUI library
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -156,6 +156,9 @@ rm -fR %buildroot%_infodir
 %endif
 
 %changelog
+* Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt5.git20121231
+- New snapshot
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt5.git20121226
 - New snapshot
 
