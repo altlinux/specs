@@ -1,5 +1,5 @@
 Name: bird
-Version: 1.3.8
+Version: 1.3.9
 Release: alt1
 Summary: BIRD Internet Routing Daemon
 
@@ -102,6 +102,9 @@ install %SOURCE1 %buildroot%_initdir/%name
 %_sbindir/%{name}c6
 
 %changelog
+* Sun Jan 13 2013 Vladimir Lettiev <crux@altlinux.ru> 1.3.9-alt1
+- New version 1.3.9
+
 * Thu Oct 04 2012 Vladimir Lettiev <crux@altlinux.ru> 1.3.8-alt1
 - New version 1.3.8
 
