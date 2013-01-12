@@ -2,7 +2,7 @@
 
 Name: gnustep-base
 Version: 1.24.2
-Release: alt4.git20121227
+Release: alt4.git20130112
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -57,6 +57,10 @@ Libraries and includes files for developing programs based on %name.
 %setup
 #cp -fR Headers/ObjectiveC2/objc Headers/ObjectiveC2/objc2
 %define _libexecdir %_libdir
+
+for i in $(find ./ -type f); do
+	sed -i 's|objc/|objc2/|g' $i
+done
 
 %build
 %undefine __libtoolize
@@ -143,6 +147,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt4.git20130112
+- New snapshot
+
 * Sun Dec 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt4.git20121227
 - New snapshot
 
