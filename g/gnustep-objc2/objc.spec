@@ -5,7 +5,7 @@
 
 Name: gnustep-%oname
 Version: 1.6.1
-Release: alt5.svn20130112
+Release: alt6.svn20130112
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -162,6 +162,9 @@ install -p -m644 class.h visibility.h method_list.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt6.svn20130112
+- Avoid use Method_t
+
 * Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt5.svn20130112
 - New snapshot
 
