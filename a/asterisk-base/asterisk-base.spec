@@ -1,6 +1,6 @@
 Name: asterisk-base
 Summary: User and groups for asterisk-related packages
-Version: 0.62
+Version: 0.63
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -115,7 +115,8 @@ popd
 mkdir -p %buildroot/usr/lib/asterisk/agi-bin
 mkdir -p %buildroot/var/spool/asterisk/dictate
 mkdir -p %buildroot/var/spool/asterisk/monitor
-mkdir -p %buildroot/var/spool/asterisk/outgoing
+mkdir -p %buildroot/var/spool/asterisk/outgoing/tmp
+mkdir -p %buildroot/var/spool/asterisk/outgoing_done
 mkdir -p %buildroot/var/spool/asterisk/system
 mkdir -p %buildroot/var/spool/asterisk/tmp
 mkdir -p %buildroot/var/log/asterisk
@@ -162,6 +163,8 @@ echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dah
 %dir %attr(3770,_asterisk,pbxadmin) /var/spool/asterisk/dictate
 %dir %attr(3770,_asterisk,pbxadmin) /var/spool/asterisk/monitor
 %dir %attr(3770,_asterisk,pbxadmin) /var/spool/asterisk/outgoing
+%dir %attr(3770,_asterisk,pbxadmin) /var/spool/asterisk/outgoing/tmp
+%dir %attr(3770,_asterisk,pbxadmin) /var/spool/asterisk/outgoing_done
 %dir %attr(3770,_asterisk,pbxadmin) /var/spool/asterisk/system
 %dir %attr(3770,_asterisk,pbxadmin) /var/spool/asterisk/tmp
 %dir %attr(3770,_asterisk,pbxadmin) /var/log/asterisk
@@ -207,6 +210,10 @@ echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dah
 %_sysconfdir/modprobe.d/dahdi.conf
 
 %changelog
+* Sat Jan 12 2013 Denis Smirnov <mithraen@altlinux.ru> 0.63-alt1
+- update asterisk.conf
+- add spool/outgoing_done and outgoing/tmp
+
 * Thu Aug 30 2012 Denis Smirnov <mithraen@altlinux.ru> 0.62-alt1
 - remove default h323.conf
 
