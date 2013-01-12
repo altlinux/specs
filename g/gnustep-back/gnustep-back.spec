@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.23.0
-Release: alt4.git20121126
+Release: alt4.git20130105
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Development/Objective-C
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 
 BuildPreReq: libfreetype-devel libX11-devel libXt-devel libXext-devel
 BuildPreReq: libXmu-devel libICE-devel libXft-devel libGL-devel
-BuildPreReq: libcairo-devel libart_lgpl-devel gcc-objc libglitz-devel
+BuildPreReq: libart_lgpl-devel gcc-objc libglitz-devel
 BuildPreReq: gnustep-make-devel gnustep-gui-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libXcursor-devel libXfixes-devel
 BuildRequires: texinfo /proc
@@ -34,7 +34,7 @@ windowing environments). This package includes development headers too.
 	--libexecdir=%_libdir \
 	--enable-glitz \
 	--enable-server=x11 \
-	--enable-graphics=cairo \
+	--enable-graphics=xlib \
 	--with-tiff-library \
 	--with-x \
 	--with-installation-domain=SYSTEM
@@ -74,6 +74,10 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt4.git20130105
+- New snapshot
+- Built with xlib instead of cairo
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt4.git20121126
 - Rebuilt with libobjc2 instead of libobjc
 
