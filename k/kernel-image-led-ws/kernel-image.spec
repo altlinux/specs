@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.57
-Release: alt21
+Version: 3.0.58
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 57
+%define kernel_stable_version 58
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -425,7 +425,7 @@ Patch0479: linux-%kernel_branch.56-fix-drivers-net-wireless-wl12xx--wl12xx.patch
 
 Patch0481: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
-Patch0490: linux-%kernel_branch.51-fix-drivers-pci.patch
+Patch0490: linux-%kernel_branch.58-fix-drivers-pci.patch
 Patch0491: linux-%kernel_branch.42-fix-drivers-pci--dmar.patch
 Patch0492: linux-%kernel_branch.42-fix-drivers-pci--sn.patch
 Patch0493: linux-%kernel_branch.46-fix-drivers-pci-hotplug--acpiphp.patch
@@ -502,7 +502,7 @@ Patch0602: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
 Patch0612: linux-%kernel_branch.51-fix-drivers-usb-core.patch
-Patch0613: linux-%kernel_branch.51-fix-drivers-usb-host--ehci-hcd.patch
+Patch0613: linux-%kernel_branch.58-fix-drivers-usb-host--ehci-hcd.patch
 Patch0614: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
 Patch0615: linux-%kernel_branch.51-fix-drivers-usb-host--xhci-hcd.patch
 Patch0616: linux-%kernel_branch.42-fix-drivers-usb-misc--usbtest.patch
@@ -533,7 +533,7 @@ Patch0672: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0673: linux-%kernel_branch.53-fix-fs--block.patch
 Patch0674: linux-%kernel_branch.42-fix-fs--eventpoll.patch
 Patch0675: linux-%kernel_branch.53-fix-fs-autofs4.patch
-Patch0676: linux-%kernel_branch.53-fix-fs-btrfs.patch
+Patch0676: linux-%kernel_branch.57-fix-fs-btrfs.patch
 Patch0677: linux-%kernel_branch.44-fix-fs-cachefiles.patch
 Patch0678: linux-%kernel_branch.42-fix-fs-ceph.patch
 Patch0679: linux-%kernel_branch.42-fix-fs-cifs.patch
@@ -581,7 +581,7 @@ Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
 Patch0754: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0755: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0756: linux-%kernel_branch.51-fix-mm--memory_hotplug.patch
-Patch0757: linux-%kernel_branch.57-fix-mm--mmu.patch
+Patch0757: linux-%kernel_branch.58-fix-mm--mmu.patch
 Patch0758: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
 Patch0759: linux-%kernel_branch.46-fix-mm--numa.patch
 Patch0760: linux-%kernel_branch.42-fix-mm--slab.patch
@@ -2968,6 +2968,17 @@ done)
 
 
 %changelog
+* Sat Jan 12 2013 Led <led@altlinux.ru> 3.0.58-alt2
+- disabled PM_DEVFREQ
+
+* Sat Jan 12 2013 Led <led@altlinux.ru> 3.0.58-alt1
+- 3.0.58
+- updated:
+  + fix-drivers-pci
+  + fix-drivers-usb-host--ehci-hcd
+  + fix-fs-btrfs
+  + fix-mm--mmu
+
 * Fri Jan 11 2013 Led <led@altlinux.ru> 3.0.57-alt21
 - added:
   + fix-drivers-base-power--opp
