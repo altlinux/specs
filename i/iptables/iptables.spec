@@ -1,5 +1,5 @@
 Name: iptables
-Version: 1.4.16.2
+Version: 1.4.17
 Release: alt1
 
 Summary: Tools for managing Linux kernel packet filtering capabilities
@@ -155,6 +155,8 @@ install -pDm600 iptables_modules %buildroot%_sysconfdir/sysconfig/iptables_modul
 cp -p %buildroot%_sysconfdir/sysconfig/ip{,6}tables_modules
 sed -i s/iptables/ip6tables/g %buildroot%_sysconfdir/sysconfig/ip6tables_modules
 
+find %buildroot -name 'lib*.la' -delete
+
 %set_verify_elf_method strict
 
 %post
@@ -214,6 +216,9 @@ fi
 %endif
 
 %changelog
+* Fri Jan 11 2013 Dmitry V. Levin <ldv@altlinux.org> 1.4.17-alt1
+- Updated to stable v1.4.17-4-gff33855.
+
 * Wed Oct 10 2012 Dmitry V. Levin <ldv@altlinux.org> 1.4.16.2-alt1
 - Updated to 1.4.16.2.
 
