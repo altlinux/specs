@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 3
 %define _pl p362
 Version: %branch.%ver_teeny
-Release: alt8
+Release: alt9
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -346,6 +346,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sat Jan 12 2013 Led <led@altlinux.ru> 1.9.3-alt9
+- p367 upstream patchlevel
+
 * Tue Dec 25 2012 Led <led@altlinux.ru> 1.9.3-alt8
 - p362 upstream patchlevel
 
