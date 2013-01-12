@@ -1,6 +1,6 @@
 Name: stardict
 Version: 3.0.3
-Release: alt2
+Release: alt3
 
 Summary: StarDict dictionary
 License: GPLv3+
@@ -22,6 +22,7 @@ Patch4: stardict-3.0.3-alt-linkage.patch
 Patch5: stardict-3.0.3-alt-desktop.patch
 Patch6: stardict-3.0.3-alt-tabfile.patch
 Patch7: stardict-3.0.3-alt-zlib.patch
+Patch8: stardict-3.0.3-alt-buffer.patch
 
 Provides: %name-common = %version
 Obsoletes: %name-common < %version
@@ -101,10 +102,12 @@ sed -i '/AM_GCONF_SOURCE_2/d' dict/configure.ac
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 install -pm644 %_sourcedir/docklet_*.png dict/src/pixmaps/
 
 %build
 %autoreconf
+export CPPFLAGS="$(getconf LFS_CFLAGS)"
 %configure \
  --enable-spell \
  --enable-gucharmap \
@@ -178,6 +181,9 @@ hardlink -cv %buildroot%_datadir
 %endif
 
 %changelog
+* Sat Jan 12 2013 Dmitry V. Levin <ldv@altlinux.org> 3.0.3-alt3
+- Enabled LFS support.
+
 * Tue Sep 11 2012 Dmitry V. Levin <ldv@altlinux.org> 3.0.3-alt2
 - Disabled build and packaging of dictdotcn netdict plugin.
 - Fixed build with zlib >= 1.2.5.2.
