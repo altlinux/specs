@@ -1,6 +1,6 @@
 Name: clementine
 Version: 1.1.1
-Release: alt1
+Release: alt2
 Summary: A music player and library organiser
 
 Group: Sound
@@ -17,6 +17,8 @@ BuildRequires(pre): rpm-build-licenses
 BuildRequires: boost-devel-headers cmake gcc-c++ gstreamer-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdmcp-devel libXft-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libgio-devel libglew-devel libgpod-devel libimobiledevice-devel liblastfm-devel libmtp-devel libqt4-opengl libqt4-sql libqt4-webkit libqt4-xmlpatterns libtag-devel libxkbfile-devel python-module-sip qt4-designer subversion
 
 BuildRequires: kde-common-devel libqt4-sql-sqlite gst-plugins-gio libqca2-devel protobuf-compiler
+# Enable Google Drive support
+BuildRequires: libgoogle-sparsehash
 BuildPreReq: libfftw3-devel libavcodec-devel libavformat-devel libpcre-devel
 BuildPreReq: libprotobuf-devel qjson-devel gst-plugins-devel libcdio-devel
 %description
@@ -46,6 +48,9 @@ advantage of Qt4.
 %_datadir/kde4/services
 
 %changelog
+* Sat Jan 12 2013 Vladimir Didenko <cow@altlinux.org> 1.1.1-alt2
+- Enable Google Drive support
+
 * Fri Dec 28 2012 Vladimir Didenko <cow@altlinux.org> 1.1.1-alt1
 - Version 1.1.1
 
