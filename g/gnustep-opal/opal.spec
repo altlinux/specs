@@ -2,7 +2,7 @@
 
 Name: gnustep-opal
 Version: r35426
-Release: alt1.git20120819
+Release: alt2.git20120819
 Summary: Vector drawing library with an API similar to Quartz 2D
 License: LGPLv2.1+
 Group: Graphical desktop/GNUstep
@@ -45,6 +45,7 @@ Summary: Development files of GNUstep's Opal
 Group: Development/Objective-C
 Provides: %name-devel = %version-%release
 Requires: lib%name = %version-%release
+Conflicts: libopal-devel
 
 %description -n lib%name-devel
 Opal is a vector drawing library with an API similar to
@@ -83,6 +84,9 @@ This package contains development files of Opal.
 %_libdir/*.so
 
 %changelog
+* Sun Jan 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r35426-alt2.git20120819
+- Added explicit conflicts with libopal-devel
+
 * Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> r35426-alt1.git20120819
 - Initial build for Sisyphus
 
