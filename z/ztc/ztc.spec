@@ -1,8 +1,8 @@
 %define zabbix_group zabbix
 
 Name: ztc
-Version: 10.11.1
-Release: alt1.1
+Version: 12.02.1
+Release: alt1
 
 Summary: a collection of templates for zabbix monitoring system
 License: GPLv3
@@ -12,6 +12,7 @@ Url: http://trac.greenmice.info/ztc
 BuildArch: noarch
 
 Source: %name-%version.tar
+Patch0: %name-%version-alt.patch
 
 BuildRequires: python-devel
 
@@ -150,6 +151,7 @@ Requires: zabbix-agent-sudo
 
 %prep
 %setup
+%patch0 -p1
 
 %build
 %python_build
@@ -169,6 +171,8 @@ Requires: zabbix-agent-sudo
 %python_sitelibdir/%name/nginx
 %python_sitelibdir/%name/apache
 %python_sitelibdir/%name/hw
+%python_sitelibdir/%name/net
+%python_sitelibdir/%name/lib
 %python_sitelibdir/*.egg-info
 
 %files -n python-module-%name-mysql
@@ -192,6 +196,7 @@ Requires: zabbix-agent-sudo
 
 %files postgresql
 %_bindir/pgsql*
+%_bindir/pg_*
 %config(noreplace) %_sysconfdir/zabbix/zabbix_agentd.conf.d/pgsql.conf
 %config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/ztc/pgsql.conf
 
@@ -209,7 +214,13 @@ Requires: zabbix-agent-sudo
 %_bindir/vfs*
 %_bindir/vm*
 %_bindir/ntp*
+%_bindir/net_*
 %config(noreplace) %_sysconfdir/zabbix/zabbix_agentd.conf.d/linux.conf
+%config(noreplace) %_sysconfdir/zabbix/zabbix_agentd.conf.d/common.conf
+%config(noreplace) %_sysconfdir/zabbix/zabbix_agentd.conf.d/nfs.conf
+%config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/ztc/net.conf
+%config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/ztc/nfs.conf
+%config(noreplace) %attr(0640,root,%zabbix_group) %_sysconfdir/ztc/ntp.conf
 
 %files hw
 %_bindir/hw*
@@ -221,6 +232,9 @@ Requires: zabbix-agent-sudo
 %config(noreplace) %_sysconfdir/zabbix/zabbix_agentd.conf.d/ovz.conf
 
 %changelog
+* Sun Jan 13 2013 Terechkov Evgenii <evg@altlinux.org> 12.02.1-alt1
+- 12.02.1 (ALT#26522, ALT#28251, ALT#25194)
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 10.11.1-alt1.1
 - Rebuild with Python-2.7
 
