@@ -2,7 +2,7 @@
 %def_disable gstreamer
 
 Name: tumbler
-Version: 0.1.26
+Version: 0.1.27
 Release: alt1
 Summary: A thumbnail D-Bus service
 License: %gpl2plus, %lgpl2plus
@@ -19,7 +19,7 @@ BuildRequires(pre): rpm-build-licenses
 
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildRequires: gtk-doc intltool libdbus-glib-devel libfreetype-devel libgio-devel libgtk+2-devel libjpeg-devel libpng-devel
-BuildRequires: libpoppler-glib-devel libgsf-devel libopenraw-gnome-devel
+BuildRequires: libpoppler-glib-devel libgsf-devel libopenraw-gnome-devel libcurl-devel
 %{?_enable_ffmpeg:BuildRequires: libffmpegthumbnailer-devel}
 %{?_enable_gstreamer:BuildRequires: gstreamer1.0-devel}
 
@@ -65,11 +65,13 @@ Development files and headers for %name
 
 %files -f %name.lang
 %doc AUTHORS NEWS TODO
+%_sysconfdir/xdg/%name
 %_prefix/libexec/%name-1
 %_libdir/%name-1
 %_datadir/dbus-1/services/*.service
 
 %exclude %_libdir/%name-1/plugins/*.la
+%exclude %_libdir/%name-1/plugins/cache/*.la
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -80,6 +82,10 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Jan 13 2013 Mikhail Efremov <sem@altlinux.org> 0.1.27-alt1
+- Updated to 0.1.27.
+- Don't package tumbler-xdg-cache.la.
+
 * Tue Dec 11 2012 Mikhail Efremov <sem@altlinux.org> 0.1.26-alt1
 - Fix URL.
 - FIx License.
