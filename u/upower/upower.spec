@@ -2,7 +2,7 @@
 %define systemdsystemunitdir /lib/systemd/system
 
 Name: upower
-Version: 0.9.17
+Version: 0.9.19
 Release: alt1
 Summary: Power Management Service
 License: GPLv2+
@@ -18,7 +18,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires: gtk-doc intltool libdbus-glib-devel libgio-devel libgudev-devel
 BuildRequires: libpolkit1-devel libudev-devel libusb-devel gobject-introspection-devel
-BuildRequires: libimobiledevice-devel systemd-devel
+BuildRequires: libimobiledevice-devel systemd-devel libsystemd-daemon-devel
 
 %description
 UPower provides a daemon, API and command line tools for
@@ -74,6 +74,7 @@ rm -f acinclude.m4
 %autoreconf
 %configure \
 	--enable-gtk-doc \
+	--enable-systemd \
 	--with-systemdsystemunitdir=%systemdsystemunitdir \
 	--libexecdir=%_libexecdir \
 	--localstatedir=%_var \
@@ -92,6 +93,7 @@ rm -f acinclude.m4
 %_sysconfdir/dbus-1/system.d/*.conf
 %systemdsystemunitdir/*
 /lib/udev/rules.d/*.rules
+/lib/systemd/system-sleep/notify-upower.sh
 %_bindir/*
 %_libexecdir
 %_datadir/dbus-1/system-services/*.service
@@ -116,6 +118,9 @@ rm -f acinclude.m4
 %_datadir/gir-1.0/*.gir
 
 %changelog
+* Mon Jan 14 2013 Valery Inozemtsev <shrek@altlinux.ru> 0.9.19-alt1
+- 0.9.19
+
 * Tue Jun 26 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.9.17-alt1
 - 0.9.17
 
