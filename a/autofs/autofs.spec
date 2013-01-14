@@ -1,5 +1,5 @@
 Name: autofs
-Version: 5.0.6
+Version: 5.0.7
 Release: alt1
 
 Summary: A tool for automatically mounting and unmounting filesystems
@@ -13,7 +13,8 @@ Requires(post): %post_service
 Requires(preun): %preun_service
 
 BuildRequires: bison flex
-BuildRequires: libkrb5-devel libldap-devel libsasl2-devel libssl-devel libxml2-devel
+BuildRequires: libtirpc-devel libkrb5-devel libldap-devel libsasl2-devel
+BuildRequires: libssl-devel libxml2-devel
 
 %package ldap
 Summary: A tool for automatically mounting and unmounting filesystems
@@ -47,7 +48,11 @@ This package adds LDAP support to the %name package
 %build
 %autoreconf
 export ac_cv_path_MODPROBE=/sbin/modprobe
-%configure --disable-mount-locking --enable-ignore-busy --enable-forced-shutdown
+export ac_cv_path_MOUNT=/bin/mount
+export ac_cv_path_UMOUNT=/bin/umount
+export ac_cv_path_MOUNT_NFS=/sbin/mount.nfs
+%configure --with-libtirpc --with-systemd --disable-mount-locking \
+	--enable-ignore-busy --enable-forced-shutdown
 %make_build DONTSTRIP=1
 
 %install
@@ -83,6 +88,8 @@ fi
 %docdir/samples/auto.net
 %docdir/samples/auto.smb
 
+%systemd_unitdir/autofs.service
+
 %config(noreplace) %_initdir/autofs
 %config(noreplace) %_sysconfdir/auto.master
 %config(noreplace) %_sysconfdir/auto.tab
@@ -109,6 +116,9 @@ fi
 %_libdir/%name/lookup_ldap.so
 
 %changelog
+* Mon Jan 14 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0.7-alt1
+- 5.0.7 released
+
 * Thu Jun 30 2011 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0.6-alt1
 - 5.0.6 released
 
@@ -116,7 +126,7 @@ fi
 - add explicit build-dep to sasl2
 
 * Mon Aug 30 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0.5-alt2
-- do not expect /sbin/modprobe exists during build 
+- do not expect /sbin/modprobe exists during build
 
 * Sat Sep 19 2009 Sergey Bolshakov <sbolshakov@altlinux.ru> 5.0.5-alt1
 - 5.0.5 released
