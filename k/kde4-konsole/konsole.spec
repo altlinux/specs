@@ -7,7 +7,7 @@
 %define bugfix 0
 Name: kde4-konsole
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 Group: Terminals
 Summary: Terminal emulator for KDE
@@ -85,6 +85,9 @@ __EOF__
 
 
 %changelog
+* Mon Jan 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Tue Dec 11 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
