@@ -1,8 +1,8 @@
 Name: kernel-image-un-def
-Release: alt2.1
+Release: alt1
 epoch:1 
 %define kernel_base_version	3.7
-%define kernel_sublevel	.1
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -20,7 +20,7 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define nprocs 12
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	4.5
+%define kgcc_version	4.7
 
 # Enable/disable SGML docs formatting
 %def_enable docs
@@ -46,7 +46,14 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
 
+Patch1: nonpreemptive-kernel.patch
+Patch2: pae-kernel.patch
+
+%if %sub_flavour == "pae"
+ExclusiveArch: i586
+%else
 ExclusiveArch: i586 x86_64
+%endif
 
 ExclusiveOS: Linux
 
@@ -306,6 +313,14 @@ rm -rf kernel-source-%kernel_base_version
 tar -jxf %kernel_src/kernel-source-%kernel_base_version.tar.bz2
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
+
+%if %base_flavour == "std"
+%patch1 -p1
+%endif
+
+%if %sub_flavour == "pae"
+%patch2 -p1
+%endif
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
@@ -575,6 +590,11 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Jan 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.2-alt1
+- std-def, std-pae and un-def from one tree via specsubst
+- 3.7.2
+- gcc 4.7
+
 * Sat Dec 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.1-alt2.1
 - really do as written below
 
