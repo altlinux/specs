@@ -1,5 +1,5 @@
 Name: git
-Version: 1.8.0.3
+Version: 1.8.1.1
 Release: alt1
 
 Summary: Git core and tools
@@ -48,7 +48,7 @@ BuildRequires: hardlink, libssl-devel, perl-devel, perl(Error.pm), zlib-devel >=
 %{!?_without_doc:BuildRequires: asciidoc > 0:6.0.3, xmlto}
 %{?!_without_emacs:BuildRequires: emacs-devel emacs-nox}
 %{?!_without_gitweb:BuildRequires: perl(charnames.pm) perl(CGI.pm) perl(Encode.pm)}
-%{?!_without_check:%{?!_disable_check:BuildRequires: cvsps perl(Term/ANSIColor.pm) perl(DBD/SQLite.pm) perl(Encode/JP.pm) unzip}}
+%{?!_without_check:%{?!_disable_check:BuildRequires: cvsps gnupg perl(HTTP/Date.pm) perl(Term/ANSIColor.pm) perl(DBD/SQLite.pm) perl(Encode/JP.pm) unzip}}
 
 %description
 Git is a fast, scalable, distributed revision control system with an
@@ -142,7 +142,6 @@ This package contains Git tools for sending email.
 %package svn
 Summary: Git tools for importing Subversion repositories
 Group: Development/Other
-BuildArch: noarch
 Requires: %name-core = %version-%release, perl-Git = %version-%release, subversion
 
 %description svn
@@ -315,7 +314,7 @@ rm -r %buildroot%_datadir/git-core/contrib/emacs
 # Remove unpackaged files.
 %{?_without_arch:rm %buildroot%gitexecdir/git-archimport}
 %{?_without_email:rm %buildroot%gitexecdir/git-*email*}
-%{?_without_svn:rm %buildroot%gitexecdir/git-svn*}
+%{?_without_svn:rm %buildroot%gitexecdir/git-*svn*}
 
 # Relocate hooks, convert template hooks to symlinks.
 pushd %buildroot%_datadir/git-core/templates/hooks
@@ -466,6 +465,9 @@ popd
 %endif #emacs
 
 %changelog
+* Mon Jan 14 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.1.1-alt1
+- Updated to maint v1.8.1.1.
+
 * Sun Jan 06 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.0.3-alt1
 - Updated to maint v1.8.0.3.
 - git-am: fixed "hg" patch format support (closes: #28248).
