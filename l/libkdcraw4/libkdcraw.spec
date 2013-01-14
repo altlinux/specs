@@ -4,7 +4,7 @@
 %define rname libkdcraw
 Name: libkdcraw4
 Version: 4.10.0
-Release: alt0.1
+Release: alt0.2
 
 Group: System/Libraries
 Summary: Decoding RAW pictures
@@ -65,6 +65,9 @@ Development files for %name
 
 
 %changelog
+* Mon Jan 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Wed Dec 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
