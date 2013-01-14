@@ -1,8 +1,8 @@
-Name:    kernel-image-std-pae
-Release: alt1
-Epoch:   1
-%define kernel_base_version	3.6
-%define kernel_sublevel	.11
+Name: kernel-image-std-pae
+Release: alt1.2
+epoch:1 
+%define kernel_base_version	3.7
+%define kernel_sublevel	.2
 %define kernel_extra_version	%nil
 Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 # Numeric extra version scheme developed by Alexander Bokovoy:
@@ -17,12 +17,17 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define base_flavour	%( s='%flavour'; printf %%s "${s%%%%-*}" )
 %define sub_flavour	%( s='%flavour'; printf %%s "${s#*-}" )
 
+%define nprocs 12
 # Build options
 # You can change compiler version by editing this line:
-%define kgcc_version	4.5
+%define kgcc_version	4.7
 
 # Enable/disable SGML docs formatting
+%if "%sub_flavour" == "def"
+%def_enable docs
+%else
 %def_disable docs
+%endif
 
 #Remove oss
 %def_disable oss
@@ -34,7 +39,6 @@ Version: %kernel_base_version%kernel_sublevel%kernel_extra_version
 %define kheaders_dir	%_prefix/include/linux-%kversion-%flavour
 %define kbuild_dir	%_prefix/src/linux-%kversion-%flavour-%krelease
 %define old_kbuild_dir	%_prefix/src/linux-%kversion-%flavour
-%define nprocs 16
 
 %brp_strip_none /boot/*
 
@@ -46,7 +50,14 @@ Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
 Patch0: %name-%version-%release.patch
 
+Patch1: nonpreemptive-kernel.patch
+Patch2: pae-kernel.patch
+
+%if "%sub_flavour" == "pae"
 ExclusiveArch: i586
+%else
+ExclusiveArch: i586 x86_64
+%endif
 
 ExclusiveOS: Linux
 
@@ -58,12 +69,11 @@ BuildRequires: kernel-source-%kernel_base_version = %kernel_extra_version_numeri
 BuildRequires: module-init-tools >= 3.16
 BuildRequires: lzma-utils
 Provides: kernel-modules-eeepc-%flavour = %version-%release
-Provides: kernel-modules-ipset-%flavour = %version-%release
 Provides: kernel-modules-drbd83-%flavour = %version-%release
-Provides: kernel-modules-alsa-%flavour = %version-%release
-Provides: kernel-modules-alsa-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-alsa-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-alsa-%kversion-%flavour-%krelease > %version-%release
+Provides: kernel-modules-igb-%flavour = %version-%release
+Provides: kernel-modules-ipset-%flavour = %version-%release
+Provides:  kernel-modules-alsa = %version-%release
+
 
 %if_enabled docs
 BuildRequires: xmlto transfig ghostscript
@@ -77,10 +87,10 @@ BuildRequires: ccache
 BuildRequires: ccache
 %endif
 
-Requires: bootloader-utils >= 0.4.14-alt1
-Requires: module-init-tools >= 3.16-alt2
-Requires: make-initrd >= 0.6.1-alt1.1
-Requires: startup >= 0.9.8.30-alt1
+Requires: bootloader-utils >= 0.4.13-alt1
+Requires: module-init-tools >= 3.1
+Requires: mkinitrd >= 1:2.9.9-alt1
+Requires: startup >= 0.8.3-alt1
 
 Provides: kernel = %kversion
 
@@ -96,14 +106,10 @@ Most hardware drivers for this kernel are built as modules.  Some of
 these drivers are built separately from the kernel; they are available
 in separate packages (kernel-modules-*-%flavour).
 
-The "std" variant of kernel packages is a generic 2.6.x kernel which
-should support wide range of hardware, but does not contain patches
-which are useful only for some special applications (and may have
-undesirable side effects in other cases).  This is the default 2.6.x
-kernel variant for ALT Linux distributions.
-
-This kernel build for PAE systems. If you have more then 3Gb of memory,
-hen use this kernel.
+The "un" variant of kernel packages is a low latency desktop oriented
+2.6.x kernel which should support wide range of hardware,
+but it is not 'official' ALT Linux kernel and you can use it for you
+own risk.
 
 %package -n kernel-image-domU-%flavour
 Summary: Uncompressed linux kernel for XEN domU boot 
@@ -118,50 +124,6 @@ kernel image for this special case. If you do not know what is it XEN
 it seems that you do not need this package.
 
 
-%package -n kernel-modules-oss-%flavour
-Summary: OSS sound driver modules (obsolete)
-Group: System/Kernel and hardware
-Provides:  kernel-modules-oss-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-oss-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-oss-%kversion-%flavour-%krelease > %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
-
-%description -n kernel-modules-oss-%flavour
-This package contains OSS sound driver modules for the Linux kernel
-package %name-%version-%release.
-
-These drivers are declared obsolete by the kernel maintainers; ALSA
-drivers should be used instead.  However, the older OSS drivers may be
-still useful for some hardware, if the corresponding ALSA drivers do
-not work well.
-
-Install this package only if you really need it.
-
-%package -n kernel-modules-ide-%flavour
-Summary: IDE  driver modules (obsolete by PATA)
-Group: System/Kernel and hardware
-Provides:  kernel-modules-ide-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease > %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
-
-%description -n kernel-modules-ide-%flavour
-This package contains  IDE driver modules for the Linux kernel
-package %name-%version-%release.
-
-These drivers are declared obsolete by the kernel maintainers; PATA
-drivers should be used instead.  However, the older IDE drivers may be
-still useful for some hardware, if the corresponding PATA drivers do
-not work well.
-
-Install this package only if you really need it.
-
 %package -n kernel-modules-drm-%flavour
 Summary: The Direct Rendering Infrastructure modules
 Group: System/Kernel and hardware
@@ -170,8 +132,8 @@ Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-drm-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
 
 %description -n kernel-modules-drm-%flavour
 The Direct Rendering Infrastructure, also known as the DRI, is a framework
@@ -191,29 +153,8 @@ Conflicts: kernel-modules-drm-nouveau-%kversion-%flavour-%krelease > %version-%r
 Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
-
-%package -n kernel-modules-drm-radeon-%flavour
-Summary: The Direct Rendering Infrastructure modules for ATI cards
-Group: System/Kernel and hardware
-Provides:  kernel-modules-drm-radeon-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-drm-radeon-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-drm-radeon-%kversion-%flavour-%krelease > %version-%release
-Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
-Prereq: coreutils
-Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
-
-%description -n kernel-modules-drm-radeon-%flavour
-The Direct Rendering Infrastructure, also known as the DRI, is a framework
-for allowing direct access to graphics hardware in a safe and efficient
-manner.  It includes changes to the X server, to several client libraries,
-and to the kernel.  The first major use for the DRI is to create fast
-OpenGL implementations.
-
-These are modules for your ALT Linux system
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
 
 %description -n kernel-modules-drm-nouveau-%flavour
 The Direct Rendering Infrastructure, also known as the DRI, is a framework
@@ -224,6 +165,48 @@ OpenGL implementations.
 
 These are modules for your ALT Linux system
 
+%package -n kernel-modules-drm-radeon-%flavour
+Summary: The Direct Rendering Infrastructure modules for ATI cards
+Group: System/Kernel and hardware
+Provides:  kernel-modules-drm-radeon-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-drm-radeon-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-drm-radeon-%kversion-%flavour-%krelease > %version-%release
+Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
+Prereq: coreutils
+Prereq: module-init-tools >= 3.1
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
+
+%description -n kernel-modules-drm-radeon-%flavour
+The Direct Rendering Infrastructure, also known as the DRI, is a framework
+for allowing direct access to graphics hardware in a safe and efficient
+manner.  It includes changes to the X server, to several client libraries,
+and to the kernel.  The first major use for the DRI is to create fast
+OpenGL implementations.
+
+These are modules for your ALT Linux system
+
+%package -n kernel-modules-ide-%flavour
+Summary: IDE  driver modules (obsolete by PATA)
+Group: System/Kernel and hardware
+Provides:  kernel-modules-ide-%kversion-%flavour-%krelease = %version-%release
+Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease < %version-%release
+Conflicts: kernel-modules-ide-%kversion-%flavour-%krelease > %version-%release
+Prereq: coreutils
+Prereq: module-init-tools >= 3.1
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
+
+%description -n kernel-modules-ide-%flavour
+This package contains  IDE driver modules for the Linux kernel
+package %name-%version-%release.
+
+These drivers are declared obsolete by the kernel maintainers; PATA
+drivers should be used instead.  However, the older IDE drivers may be
+still useful for some hardware, if the corresponding PATA drivers do
+not work well.
+
+Install this package only if you really need it.
 
 %package -n kernel-modules-kvm-%flavour
 Summary: Linux KVM (Kernel Virtual Machine) modules
@@ -233,8 +216,8 @@ Conflicts: kernel-modules-kvm-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-kvm-%kversion-%flavour-%krelease > %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
 
 %description -n kernel-modules-kvm-%flavour
 Linux kernel module for Kernel Virtual Machine virtualization
@@ -253,8 +236,8 @@ Provides:  kernel-modules-lirc-%kversion-%flavour-%krelease = %version-%release
 Provides:  kernel-modules-lirc-%flavour = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
 
 %description -n kernel-modules-v4l-%flavour
 Video for linux drivers
@@ -269,8 +252,8 @@ Requires: kernel-modules-drm-%kversion-%flavour-%krelease = %version-%release
 Requires: kernel-modules-v4l-%kversion-%flavour-%krelease = %version-%release
 Prereq: coreutils
 Prereq: module-init-tools >= 3.1
-Prereq: %name = %version-%release
-Requires(postun): %name = %version-%release
+Prereq: %name = %epoch:%version-%release
+Requires(postun): %name = %epoch:%version-%release
 
 %description -n kernel-modules-staging-%flavour
 Drivers and filesystems that are not ready to be merged into the main
@@ -317,12 +300,11 @@ directory.
 %package -n kernel-doc-%base_flavour
 Summary: Linux kernel %kversion-%base_flavour documentation
 Group: System/Kernel and hardware
-BuildArch: noarch
 
 %description -n kernel-doc-%base_flavour
 This package contains documentation files for ALT Linux kernel packages:
- * kernel-image-%base_flavour-def-%kversion-%krelease
- * kernel-image-%base_flavour-pae-%kversion-%krelease
+ * kernel-image-%base_flavour-up-%kversion-%krelease
+ * kernel-image-%base_flavour-smp-%kversion-%krelease
 
 The documentation files contained in this package may be different
 from the similar files in upstream kernel distributions, because some
@@ -335,6 +317,14 @@ rm -rf kernel-source-%kernel_base_version
 tar -jxf %kernel_src/kernel-source-%kernel_base_version.tar.bz2
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
+
+%if "%base_flavour" == "std"
+%patch1 -p1
+%endif
+
+%if "%sub_flavour" == "pae"
+%patch2 -p1
+%endif
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
@@ -358,7 +348,7 @@ echo "Building Kernel $KernelVer"
 cp -vf config-%_target_cpu .config
 
 %make_build oldconfig
-%make_build include/linux/version.h
+#%make_build include/linux/version.h
 %make_build bzImage
 %make_build modules
 
@@ -381,12 +371,11 @@ install -Dp -m644 .config %buildroot/boot/config-$KernelVer
 
 make modules_install INSTALL_MOD_PATH=%buildroot INSTALL_FW_PATH=%buildroot/lib/firmware/$KernelVer
 
-
 mkdir -p %buildroot%kbuild_dir/arch/x86
 install -d %buildroot%kbuild_dir
 cp -a include %buildroot%kbuild_dir/include
 cp -a arch/x86/include %buildroot%kbuild_dir/arch/x86
-ln -s ../arch/x86/include/asm %buildroot%kbuild_dir/include/asm
+
 
 # drivers-headers install
 install -d %buildroot%kbuild_dir/drivers/scsi
@@ -426,6 +415,7 @@ KbuildFiles="
 	scripts/mod/modpost
 	scripts/mkmakefile
 	scripts/mkversion
+	scripts/link-vmlinux.sh
 	scripts/mod/mk_elfconfig
 	scripts/kconfig/conf
 	scripts/mkcompile_h
@@ -448,18 +438,13 @@ KbuildFiles="
 	scripts/checkincludes.pl
 	scripts/checkconfig.pl
 	scripts/bin2c
-	scripts/recordmcount.pl
 	scripts/gcc-version.sh
 	scripts/gcc-goto.sh
-%ifarch i586
-	scripts/gcc-x86_32-has-stack-protector.sh
-%else
-%ifarch x86_64
+	scripts/recordmcount.pl
 	scripts/gcc-x86_64-has-stack-protector.sh
-%endif
-%endif
 	scripts/module-common.lds
 	scripts/depmod.sh
+
 
 	.config
 	.kernelrelease
@@ -481,13 +466,16 @@ ln -s "$(relative %kbuild_dir %old_kbuild_dir)" %buildroot%old_kbuild_dir
 
 # Provide kernel headers for userspace
 make headers_install INSTALL_HDR_PATH=%buildroot%kheaders_dir
-find %buildroot%kheaders_dir -name '.*.cmd' -o -name '.install' | xargs rm -f
 
 #provide symlink to autoconf.h for back compat
 pushd %buildroot%old_kbuild_dir/include/linux
 ln -s ../generated/autoconf.h
 ln -s ../generated/utsrelease.h
 popd
+
+# remove *.bin files
+rm -f %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
+touch %buildroot%modules_dir/modules.{alias,dep,symbols,builtin}.bin
 
 # install documentation
 %if_enabled docs
@@ -496,6 +484,49 @@ cp -a Documentation/* %buildroot%_docdir/kernel-doc-%base_flavour-%version/
 find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 	-maxdepth 1 -type f -not -name '*.html' -delete
 %endif # if_enabled docs
+
+
+%post -n kernel-modules-drm-%flavour
+%post_kernel_modules %kversion-%flavour-%krelease
+
+%postun -n kernel-modules-drm-%flavour
+%postun_kernel_modules %kversion-%flavour-%krelease
+
+%post -n kernel-modules-drm-nouveau-%flavour
+%post_kernel_modules %kversion-%flavour-%krelease
+
+%postun -n kernel-modules-drm-nouveau-%flavour
+%postun_kernel_modules %kversion-%flavour-%krelease
+
+%post -n kernel-modules-drm-radeon-%flavour
+%post_kernel_modules %kversion-%flavour-%krelease
+
+%postun -n kernel-modules-drm-radeon-%flavour
+%postun_kernel_modules %kversion-%flavour-%krelease
+
+%post -n kernel-modules-ide-%flavour
+%post_kernel_modules %kversion-%flavour-%krelease
+
+%postun -n kernel-modules-ide-%flavour
+%postun_kernel_modules %kversion-%flavour-%krelease
+
+%post -n kernel-modules-kvm-%flavour
+%post_kernel_modules %kversion-%flavour-%krelease
+
+%postun -n kernel-modules-kvm-%flavour
+%postun_kernel_modules %kversion-%flavour-%krelease
+
+%post -n kernel-modules-v4l-%flavour
+%post_kernel_modules %kversion-%flavour-%krelease
+
+%postun -n kernel-modules-v4l-%flavour
+%postun_kernel_modules %kversion-%flavour-%krelease
+
+%post -n kernel-modules-staging-%flavour
+%post_kernel_modules %kversion-%flavour-%krelease
+
+%postun -n kernel-modules-staging-%flavour
+%postun_kernel_modules %kversion-%flavour-%krelease
 
 %post -n kernel-headers-%flavour
 %post_kernel_headers %kversion-%flavour-%krelease
@@ -512,32 +543,16 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/media/
 %exclude %modules_dir/kernel/drivers/staging/
 %exclude %modules_dir/kernel/drivers/gpu/drm
-%exclude %modules_dir/kernel/arch/x86/kvm
 %exclude %modules_dir/kernel/drivers/ide/
-%if_enabled oss
-%exclude %modules_dir/kernel/sound/oss
-%endif
+%exclude %modules_dir/kernel/arch/x86/kvm
 /lib/firmware/*
-
-%exclude %modules_dir/modules.alias.bin
-%exclude %modules_dir/modules.dep.bin
-%exclude %modules_dir/modules.symbols.bin
-%exclude %modules_dir/modules.builtin.bin
 %ghost %modules_dir/modules.alias.bin
 %ghost %modules_dir/modules.dep.bin
 %ghost %modules_dir/modules.symbols.bin
 %ghost %modules_dir/modules.builtin.bin
 
-%if_enabled oss
-%files -n kernel-modules-oss-%flavour
-%modules_dir/kernel/sound/oss
-%endif #oss
-
 %files -n kernel-image-domU-%flavour
 /boot/vmlinux-%kversion-%flavour-%krelease
-
-%files -n kernel-modules-ide-%flavour
-%modules_dir/kernel/drivers/ide/
 
 %files -n kernel-headers-%flavour
 %kheaders_dir
@@ -564,176 +579,245 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %files -n kernel-modules-drm-radeon-%flavour
 %modules_dir/kernel/drivers/gpu/drm/radeon
 
+%files -n kernel-modules-ide-%flavour
+%modules_dir/kernel/drivers/ide/
+
 %files -n kernel-modules-kvm-%flavour
 %modules_dir/kernel/arch/x86/kvm
 
 %files -n kernel-modules-v4l-%flavour
 %modules_dir/kernel/drivers/media/
 %modules_dir/kernel/drivers/staging/media/lirc/
-%exclude %modules_dir/kernel/drivers/media/dvb/ngene/
-%exclude %modules_dir/kernel/drivers/media/video/cx23885/
 
 %files -n kernel-modules-staging-%flavour
 %modules_dir/kernel/drivers/staging/
-%modules_dir/kernel/drivers/media/dvb/ngene/
-%modules_dir/kernel/drivers/media/video/cx23885/
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Mon Jan 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.2-alt1.2
+- conditional docs building
+
+* Mon Jan 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.2-alt1.1
+- changelog entries for std-def and std-pae added (hackaround)
+
+* Mon Jan 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.2-alt1
+- std-def, std-pae and un-def from one tree via specsubst
+- 3.7.2
+- gcc 4.7
+
+* Sat Dec 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.1-alt2.1
+- really do as written below
+
+* Fri Dec 28 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.1-alt2
+- make sha256 module on i586
+
 * Thu Dec 20 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 1:3.6.11-alt1
 - 3.6.11 (closes: 28138)
 - Build using std-def config with config diff from 3.5.7.
 
-* Sat Oct 13 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.7-alt1
-- Update to 3.5.7
+* Tue Dec 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.1-alt1
+- 3.7.1
 
-* Sun Oct 07 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.6-alt1
-- Update to 3.5.6
-- Enable gma600, gma3600 (ALT 27812)
+* Tue Dec 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.11-alt1
+- 3.6.11
 
-* Thu Oct 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.5-alt2
-- kernel preemption enabled
-- nproc set to 16
+* Tue Dec 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.0-alt1
+- 3.7 release
 
-* Tue Oct 02 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.5-alt1
-- Update to 3.5.5
+* Tue Dec 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.0-alt0.8
+- 3.7-rc8
 
-* Sat Sep 15 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.4-alt1
-- Update to 3.5.4
+* Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.0-alt0.7
+- 3.7-rc7
 
-* Mon Aug 27 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.3-alt1
-- Update to 3.5.3
+* Tue Nov 27 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.8-alt1
+- 3.6.8
 
-* Sun Aug 19 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.2-alt2
-- Fix stupid bug which led to kernel panic on boot
+* Wed Nov 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.7-alt2
+- 32 bpp framebuffer on kvm's cirrus disabled back
+- link-vmlinux.sh packaged (closes: #28016)
 
-* Fri Aug 17 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.5.2-alt1
-- Update to 3.5.2
-- Add -b option to modprobe
+* Mon Nov 19 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.7-alt1
+- 3.6.7
 
-* Fri Aug 10 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.4.8-alt1
-- Update to 3.4.8
-- Enable CONFIG_CAN_CALC_BITTIMING (ALT 27569)
-- k-h-m: add symlink include/asm -> ../arch/x86/include/asm (ALT 27619)
-- Enable CONFIG_FANOTIFY{,_ACCESS_PERMISSIONS} (ALT 27550)
-- Disable CONFIG_MTD_NAND_VERIFY_WRITE (ALT 27520)
+* Thu Nov 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.6-alt2
+- some cirrus-related patches applied, 32 bpp mode enabled
 
-* Sun Jul 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.4.7-alt1
-- Update to 3.4.7
+* Tue Nov 06 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.6-alt1
+- 3.6.6
+
+* Thu Nov 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.5-alt1
+- 3.6.5
+- FB_EFI enabled
+
+* Mon Oct 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.4-alt2
+- 3.6.4
+
+* Thu Oct 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.3-alt2
+- fixed possible ex4 corruption (https://lkml.org/lkml/2012/10/23/690)
+- ldv@ patchs to mountinfo added
+- CONFIG_DEBUG_PREEMPT disabled
+
+* Mon Oct 22 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.3-alt1
+- 3.6.3
+- Borislav Petkovs test fix fo boot crash on nvidia ide
+
+* Sat Oct 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.2-alt1
+- 3.6.2
+
+* Thu Oct 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.1-alt2.1
+- POWER_AVS disabled
+
+* Mon Oct 08 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.1-alt2
+- 3.6.1
+
+* Thu Oct 04 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.0-alt2
+- wrong default hostname on x86_64 fixed
+- drm-vgem driver added
+- some config changes from std-def
+
+* Mon Oct 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.6.0-alt1
+- 3.6
+
+* Sat Sep 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.4-alt1
+- 3.5.4
+
+* Sun Aug 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.3-alt1
+- 3.5.3
+- kmod: pass -b option to /sbin/modprobe (by ldv@)
+
+* Wed Aug 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.2-alt1
+- 3.5.2
+- Applyed: fs: push rcu_barrier() from deactivate_locked_super()
+
+* Fri Aug 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.1-alt1
+- 3.5.1
+
+* Thu Aug 02 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.0-alt2
+- rebuild with right kernel-source
+
+* Thu Jul 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.5.0-alt1
+- 3.5
 
 * Fri Jul 20 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.4.6-alt1
-- Update to 3.4.6
+- 3.4.6
 
-* Sun Jun 24 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.4.4-alt1
-- Update to 3.4.4
+* Tue Jul 17 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.4.5-alt1
+- 3.4.5
 
-* Mon Jun 18 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.4.3-alt1
-- Update to 3.4.3
-- fs: push rcu_barrier() from deactivate_locked_super() to filesystems
-- zsmalloc: license and init/exit functions [by jrnieder@] (ALT 27450)
+* Mon Jun 25 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.4.4-alt1
+- 3.4.4
 
-* Sun Jun 10 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.4.2-alt1
-- Update to 3.4.2
+* Mon Jun 18 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.4.3-alt1
+- 3.4.3
 
-* Tue Jun 05 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.3.8-alt1
-- Update to 3.3.8
-- Disable RCU_FAST_NO_HZ (ALT 27405)
+* Fri Jun 15 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.4.2-alt1
+- 3.4.2
 
-* Tue May 22 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.3.7-alt1
-- Update to 3.3.7
+* Thu May 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.4.0-alt1
+- 3.4
 
-* Mon May 14 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.3.6-alt1
-- Update to 3.3.6
+* Tue May 22 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.3.7-alt1
+- 3.3.7
 
-* Tue May 08 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.3.5-alt1
-- Update to 3.3.5
-- Enable PM_ADVANCED_DEBUG
+* Mon May 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.3.6-alt1
+- 3.3.6
 
-* Wed May 02 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.3.4-alt1
-- Update to 3.3.4
+* Thu May 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.3.5-alt1
+- 3.3.5
 
-* Mon Apr 09 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.3.1-alt1
-- Update to 3.3.1
+* Wed May 02 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.3.4-alt1
+- 3.3.4
 
-* Tue Apr 03 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.14-alt1
-- Update to 3.2.14
+* Mon Apr 23 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.3.3-alt1
+- 3.3.3
 
-* Tue Mar 27 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.13-alt1
-- Update to 3.2.13
+* Mon Apr 16 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.3.2-alt1
+- 3.3.2
 
-* Tue Mar 20 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.12-alt1
-- Update to 3.2.12
+* Fri Apr 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.3.1-alt2
+- kgcc set to 4.5
+- AUDIT_LOGINUID_IMMUTABLE disabled
 
-* Tue Mar 13 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.10-alt1
-- Update to 3.2.10
+* Tue Apr 03 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.3.1-alt1
+- 3.3.1
 
-* Mon Mar 05 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.9-alt1.1
-- Enable USB_NET_AX8817X
+* Tue Mar 20 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.3.0-alt1
+- 3.3
 
-* Thu Mar 01 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.9-alt1
-- Update to 3.2.9
+* Tue Mar 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.10-alt1
+- 3.2.10
 
-* Tue Feb 28 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.8-alt1
-- Update to 3.2.8
+* Mon Mar 05 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.9-alt2
+- HID_MULTITOUCH enabled for i586
 
-* Tue Feb 21 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.7-alt1
-- Update to 3.2.7
+* Thu Mar 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.9-alt1
+- 3.2.9
 
-* Tue Feb 14 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.6-alt1
-- Update to 3.2.6
+* Wed Feb 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.8-alt1
+- 3.2.8
 
-* Tue Feb 07 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.5-alt1
-- Update to 3.2.5
+* Tue Feb 21 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.7-alt1
+- 3.2.7
 
-* Mon Feb 06 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.4-alt1
-- Update to 3.2.4
+* Tue Feb 14 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.6-alt1
+- 3.2.6
 
-* Thu Jan 26 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.2-alt1
-- Update to 3.2.2
+* Tue Feb 07 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.5-alt1
+- 3.2.5
 
-* Fri Jan 20 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.1-alt2
-- proc: clean up and fix /proc/<pid>/mem handling (CVE-2012-0056)
+* Mon Feb 06 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.4-alt1
+- 3.2.4
 
-* Fri Jan 13 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.1-alt1
-- Update to 3.2.1
+* Thu Jan 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.2-alt1
+- 3.2.2
 
-* Thu Jan 12 2012 Anton Protopopov <aspsk@altlinux.org> 1:3.2.0-alt1
-- Update to 3.2.0
+* Thu Jan 19 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.1-alt2
+- CVE-2012-0056 fixed
 
-* Thu Dec 22 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.1.6-alt1
-- Update to 3.1.6
+* Fri Jan 13 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.1-alt1
+- 3.2.1
 
-* Mon Dec 12 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.1.5-alt1
-- Update to 3.1.5
+* Wed Jan 11 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.2.0-alt1
+- 3.2
 
-* Fri Dec 02 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.1.4-alt2
-- mm: Ensure that pfn_valid is called once per pageblock when
-      reserving pageblocks (ALT 26385)
+* Tue Jan 10 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.1.8-alt1
+- 3.1.8
 
-* Wed Nov 30 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.1.4-alt1
-- Update to 3.1.4
+* Mon Dec 26 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.1.6-alt1
+- 3.1.6
 
-* Mon Nov 28 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.1.3-alt1
-- Update to 3.1.3
+* Mon Dec 12 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.1.5-alt1
+- 3.1.5
 
-* Tue Nov 22 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.1.2-alt1
-- Update to 3.1.2
+* Wed Nov 30 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.1.4-alt1
+- 3.1.4
 
-* Mon Nov 14 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.1.1-alt1
-- Update to 3.1.1
-- Backport some input/elantech stuff from mainline kernel
+* Mon Nov 28 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.1.3-alt1
+- 3.1.3
 
-* Tue Nov 01 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.1.0-alt1
-- Update to 3.1.0
+* Wed Nov 23 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.1.2-alt1
+- 3.1.2
 
-* Wed Oct 26 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.0.8-alt1
+* Sat Nov 12 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.1.1-alt1
+- 3.1.1
+
+* Thu Oct 27 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.1.0-alt1
+- 3.1
+
+* Wed Oct 26 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.8-alt1
 - 3.0.8
+- *bin files are %%ghost now (aspsk@)
+- feat-pegatron (silicium@)
 
-* Tue Oct 18 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.0.7-alt1
+* Wed Oct 19 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.7-alt1
 - 3.0.7
-- feat platform-pegatron
+- dependence on module-init-tools updated
 
-* Tue Oct 04 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.0.6-alt1
+* Fri Oct 07 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.6-alt2
+- NULL dereference in nouveau fixed (cherry-pick from 3.1-rc4)
+
+* Tue Oct 04 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.6-alt1
 - 3.0.6
 
 * Tue Aug 30 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.4-alt1
@@ -742,154 +826,183 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 * Fri Aug 19 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.3-alt1
 - 3.0.3
 
-* Tue Aug 16 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.2-alt1
-- 3.0.2
-
 * Fri Aug 05 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.1-alt1
 - 3.0.1
-- version calculation changed
+- modules provides fixed
 
-* Thu Jul 28 2011 Anton Protopopov <aspsk@altlinux.org> 1:3.0.0-alt1
-- Update to 3.0.0
-- Update aufs to latest
-- Enable ipset in kernel
+* Wed Jul 27 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.0-alt2
+- dependence on bootloader-utils 0.4.13 added
 
-* Mon Jul 18 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.39-alt3.1
-- Pack alsa into kernel-image
-- Move two modules with deps on staging into staging
-- Staging depends on v4l and drm
-- Disable USB_GADGET
+* Fri Jul 22 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.0.0-alt1
+- 3.0.0
 
-* Sun Jul 10 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.39-alt3
-- Update to 2.6.39.3
-- Enable several bluetooth devices (ALT 25888)
+* Mon Jul 11 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.39-alt3
+- 2.6.39.3
 
-* Thu Jul 07 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.39-alt2.1
-- fix build of cirrus.ko
-- kernel-modules-v4l: provide kernel-modules-lirc
-- return dahdi to modules.build
-- drm/nouveau: fix assumption that semaphore dmaobj
-  is valid in x-chan sync (ALT 25827)
+* Fri Jun 17 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.39-alt2
+- 2.6.39.2
+- xz squashfs compression enabled on i586
+- usb gadget disabled
 
-* Fri Jun 24 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.39-alt2
-- Update to 2.6.39.2
+* Wed Jun 01 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.39-alt1
+- 2.6.39.1
 
-* Tue Jun 07 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.39-alt1
-- Update to 2.6.39.1
-- Update ipt_NETFLOW to 1.7.1 (ALT 25697)
-- Build asix.ko as a separate module with src from vendor (ALT 25709)
-- Build u200.ko as a separate module (ALT 24265)
-- Update aufs to the latest one
-- Don't build broken subfs, fglrx, dahdi, lirc
+* Mon May 30 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.39-alt0.2
+- cirrus kms enabled
+- possible fix for scsi workqueue
 
-* Fri Jun 03 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.38-alt8.1
-- Update to 2.6.38.8
+* Tue May 24 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.39-alt0.1
+- 2.6.39
 
-* Thu May 26 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.38-alt7.2
-- drm/nv50: use "nv86" tlb flush method on everything except 0x50/0xac
+* Sun May 22 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.38-alt7
+- 2.6.38.7
+- cirrus kms limited to 1024x768
 
-* Mon May 23 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.38-alt7.1
-- Update to 2.6.38.7
-- drivers/gpu/drm/cirrus/cirrus_vga.c: remove 1280x1024 mode
+* Tue May 10 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.38-alt6
+- 2.6.38.6
+- KMS on kvm emulated cirrus fixed
 
-* Tue May 10 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.38-alt4
-- Update to 2.6.38.6
-- drm: Add a driver for kvm emulated Cirrus
+* Fri May 06 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.38-alt5.1
+- KMS for kvm emulated cirrus
 
-* Fri Apr 15 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.38-alt3
-- Update to 2.6.38.3
-- some cleanup in kernel-headers
+* Tue May 03 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.38-alt5
+- 2.6.38.5
+- epoch added to modules requires
 
-* Wed Apr 06 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.38-alt2
-- Synchronise configs (ALT 25386)
-- Build ipt_NETFLOW.ko (ALT 25312)
-- Build kernel-doc-std as noarch
-- Maintain devtmpfs and automount it
+* Fri Apr 22 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.38-alt4
+- 2.6.38.4
 
-* Fri Mar 25 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.38-alt1
-- Update to 2.6.38.2
-- Add rtl8168 and lsadrv to modules.build
-- Update aufs2.1 to latest
-- Build with MPENTIUMII enabled (ALT 24984)
-- Enable KMS for radeon for x86_64 (ALT 24930)
+* Fri Apr 15 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.38-alt3
+- 2.6.38.3
 
-* Fri Mar 18 2011 Anton Protopopov <aspsk@altlinux.org> 1:2.6.37-alt1
-- Switch to 2.6.37.4
-- Setup cfq as default io scheduler (ALT 24861)
-- add files alt-fix, alt-feat to list merged fix-* and feat-* branches
-  These are now:
-  * fix-core--init
-  * fix-drivers-usb--storage
-  * fix-drivers-rtc
-  * fix-core--mactel
-  * fix-platform-macbookair
-  * feat-fs-aufs
-  * feat-drivers-wimax-u200
-- aufs2.1
+* Wed Mar 30 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.38-alt2
+- 2.6.38.2
 
-* Wed Dec 29 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.35-alt9.1
-- update aufs2
+* Fri Mar 25 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.38-alt1
+- 2.6.38.1
 
-* Fri Nov 26 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.35-alt9
+* Tue Mar 15 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.37-alt4
+- 2.6.37.4
+- scripts/gcc-goto.sh packed into headers-modules
+
+* Mon Mar 14 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.37-alt3
+- 2.6.37.3
+
+* Sun Feb 27 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.37-alt2
+- 2.6.37.2
+- in-kernel HDAPS enabled (#25127)
+- igb and drbd provides fixed
+
+* Thu Feb 17 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.37-alt1
+- new version (2.6.37.1)
+
+* Wed Feb 02 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.36-alt3.2
+- r8712u added
+- nvidia backlight added
+
+* Tue Jan 25 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.36-alt3.1
+- fix boot on i586
+
+* Tue Jan 11 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.36-alt3
+- 2.6.36.3
+
+* Fri Dec 17 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.36-alt2
+- 2.6.36.2
+
+* Tue Nov 23 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt9
 - 2.6.35.9
-- fix CVE-2010-4249
-- update AUFS
-- migrate postscripts to filetrigger
+- default io sched set to deadline
 
-* Mon Nov 01 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.35-alt8
+* Fri Oct 29 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt8
 - 2.6.35.8
-- compiled-in cfq scheduler
-- add nvidia backlight support
-- add mac book air 3,1 support
 
-* Thu Oct 14 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.35-alt7
+* Tue Oct 12 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt7.1
+- CVE-2010-2962 fixed
+- netflow added (closes #24244)
+
+* Tue Oct 05 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt7
 - 2.6.35.7
-- Add  xen domU kernel
-- move drm radeon to separated package
-- turn off CONFIG_X86_PPRO_FENCE
-- move DRBD support to this package
+- aufs2 really included (closes #24137)
 
-* Fri Sep 17 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.32-alt21.1
-- fix CVE-2010-3301
+* Mon Sep 27 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt6
+- 2.6.35.6
+- aufs2 included
+- CONFIG_DEVTMPFS enabled
+- legacy BSD ptys turned off
+
+* Tue Sep 21 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt5
+- 2.6.35.5
+
+* Thu Sep 16 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt4.2
+- CVE-2010-3301
 - mountpoint for cgroup in /sys
 
-* Fri Aug 27 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.32-alt21
-- 2.6.32.21
+* Tue Sep 14 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt4.1
+- obsoleted RAMZSWAP changed to ZRAM from 2.6.36
 
-* Mon Aug 23 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt20
+* Thu Sep 02 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt4
+- 2.6.35.4
+
+* Thu Aug 26 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.35-alt3
+- 2.6.35.3: run, rabbit, run!
+
+* Sat Aug 21 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt20
 - 2.6.32.20
-- nouveau drm moved to subpackage
+- should fix local root
 
-* Tue Jul 06 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.32-alt16
+* Thu Aug 05 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt17
+- 2.6.32.17
+
+* Tue Jul 06 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt16
 - 2.6.32.16
+- Resume on intel should be fixed:
+  see https://bugzilla.kernel.org/show_bug.cgi?id=13811
 
-* Fri Jul 02 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.32-alt15.1
-- Add support for New Marvell Sky2 (Closes: #23672)
-
-* Tue Jun 22 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.32-alt15
+* Tue Jun 01 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt15
 - 2.6.32.15
-- turn off latencytop support
-- turn off framepointers
-- add some drivers
 
-* Mon Apr 05 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.32-alt11
-- 2.6.32.11 
+* Thu May 27 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt14
+- 2.6.32.14
 
-* Thu Mar 25 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.32-alt10
-- 2.6.32.10 
+* Thu May 13 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt13
+- 2.6.32.13
 
-* Mon Mar 01 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt9
+* Mon Apr 26 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt12
+- 2.6.32.12
+
+* Fri Apr 02 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt11
+- 2.6.32.11
+
+* Mon Mar 15 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt10
+- 2.6.32.10
+- drm-next merged
+
+* Tue Feb 23 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt9
 - 2.6.32.9
-- set N in altN to last kernal version number
-- NETFLOW targert enabled
-- KMS on intel by default
+- NETFLOW activated
 
-* Mon Jan 25 2010 Michail Yakushin <silicium@altlinux.ru> 1:2.6.32-alt1
-- Build std-def based on un-def 
+* Tue Feb 16 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt8.1
+- kms enabled by default
+- radeon and nouveau drm separated to subpackages
+- netfilter: add NETFLOW target
+
+* Tue Feb 09 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt8
+- 2.6.32.8
+- ide separated to subpackage
+- additional -domU package with uncompressed vmlinux
+- CONFIG_CGROUP_MEM_RES_CTLR enabled
+
+* Thu Jan 28 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt7
 - 2.6.32.7
-- on x86_64 turn on paravirt guest support
-- move IDE modules to separated subpackage(use PATA instead).
-- turn off OSS support and oss emulation 
+- OSS disabled
+- preemption enabled
+
+* Mon Jan 25 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt6
+- 2.6.32.6
+- move aufs to module
+- merge feat-gpu-drm-intel-kms-overlay from shrek@
+- staging modules are separated to subpackage
+- paravirtualization enabled
 
 * Thu Jan 21 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:2.6.32-alt5
 - aufs updated
