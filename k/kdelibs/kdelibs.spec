@@ -22,7 +22,7 @@
 %define major 3
 %define minor 5
 %define bugfix 13.1
-%define rel alt7
+%define rel alt8
 Name: kdelibs
 Version: %major.%minor.%bugfix
 Release: %rel
@@ -169,7 +169,7 @@ Patch5041: kdelibs-3.5.12-alt-add-translations.patch
 Patch5042: kdelibs-3.5.12-alt-menu-prefix-kde3.patch
 Patch5043: tde-3.5.13-build-defdir.patch
 Patch5044: tdelibs-3.5.13-work-defdir.patch
-Patch5045: tde-3.5.13-trayIconScaleDis-JobViewerStick.patch
+Patch5045: tde-3.5.13-trayIconScaleDis.patch
 Patch5046: tde-3.5.13-SpellDialogSavePersonal.patch
 Patch5047: tdelibs-3.5.13-CUPS_IPP-memoryleak.patch
 
@@ -654,6 +654,9 @@ done
 #%doc %_K3doc/en/%name-*-apidocs
 
 %changelog
+* Mon Jan 14 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt8
+- Update to current 3.5.13-sru branch.
+
 * Fri Dec 21 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt7
 - Fix memory leak into CUPS IPP processing function IppRequest::addStringList_p().
 - KJobViewer crash from system tray on exit is fixed.
