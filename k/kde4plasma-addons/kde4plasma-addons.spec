@@ -8,7 +8,7 @@ Name: kde4plasma-addons
 %define minor 10
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 Group: Graphical desktop/KDE
 Summary: kdeplasma is a compilation of plasma items ( runners, applets, plasmoids ) for kde4
@@ -103,8 +103,8 @@ Requires: plasma-qmlwallpapers = %version-%release
 # Automatically added by buildreq on Mon Sep 15 2008 (-bi)
 #BuildRequires: gcc-c++ kde4base-workspace-core kde4base-workspace-devel kde4network-kopete kde4pim-kmail kde4pimlibs-devel libXScrnSaver-devel libXcomposite-devel libXft-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libldap-devel libxkbfile-devel nvidia_glx_173.14.12 python-modules-xml rpm-build-ruby shared-mime-info xorg-xf86vidmodeproto-devel
 BuildRequires(pre): kde4base-workspace-devel kde4pimlibs-devel
-BuildRequires: gcc-c++ libldap-devel scim-devel attica-devel libqca2-devel
-BuildRequires: soprano soprano-backend-redland libsoprano-devel libqalculate-devel
+BuildRequires: gcc-c++ libldap-devel scim-devel attica-devel libqca2-devel libqalculate-devel
+BuildRequires: soprano soprano-backend-redland libsoprano-devel kde4-nepomuk-core-devel
 BuildRequires: python-modules-xml shared-mime-info
 BuildRequires: python-devel eigen2 libdbusmenu-qt-devel qoauth-devel qjson-devel
 BuildRequires: kde4network-devel kde4pim-devel kde4graphics-devel kde4edu-devel
@@ -1282,6 +1282,9 @@ based on %name
 %_K4link/*.so
 
 %changelog
+* Tue Jan 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Tue Dec 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
