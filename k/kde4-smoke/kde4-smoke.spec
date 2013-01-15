@@ -3,7 +3,7 @@
 %define rname smokekde
 Name: kde4-smoke
 Version: 4.10.0
-Release: alt0.2
+Release: alt0.3
 
 Group: Development/KDE and QT
 Summary: Bindings for KDE libraries
@@ -20,7 +20,7 @@ Patch1: smokekde-4.7.1-alt-find-okular.patch
 BuildRequires: cmake gcc-c++ phonon-devel smokegen-devel smokeqt-devel kde4base-workspace-devel
 BuildRequires: kde4pimlibs-devel kde4-kate-devel akonadi-devel libqimageblitz-devel attica-devel
 BuildRequires: libsoprano-devel soprano soprano-backend-redland
-BuildRequires: libqscintilla2-qt4-devel shared-desktop-ontologies-devel
+BuildRequires: libqscintilla2-qt4-devel shared-desktop-ontologies-devel kde4-nepomuk-core-devel
 BuildRequires: kde-common-devel kde4-okular-devel
 #BuildRequires: kde4sdk-devel
 
@@ -379,6 +379,9 @@ NPROCS=1 %K4make
 
 
 %changelog
+* Tue Jan 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
+- fix build requires
+
 * Tue Dec 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - rebuilt
 
