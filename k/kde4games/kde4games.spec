@@ -8,7 +8,7 @@ Name: kde4games
 %define minor 10
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt0.1
+Release: alt0.2
 
 Group: Graphical desktop/KDE
 Summary: KDE - Games
@@ -1181,6 +1181,9 @@ done
 %_K4includedir/*
 
 %changelog
+* Tue Jan 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Wed Dec 19 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
