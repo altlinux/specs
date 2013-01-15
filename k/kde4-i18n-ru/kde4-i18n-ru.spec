@@ -3,8 +3,8 @@
 %define lngg Russian
 
 Name: kde4-i18n-%lng
-Version: 4.9.3
-Release: alt1
+Version: 4.10.0
+Release: alt0.1
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE
@@ -89,8 +89,12 @@ fi
 %lang(%lng) %_K4apps/katepart/syntax/logohighlightstyle.%lng.xml
 #%lang(%lng) %_K4apps/kturtle/data/logokeywords.%lng.xml
 #%lang(%lng) %_K4apps/kturtle/examples/%lng/
+%lang(%lng) %_K4apps/autocorrect/%{lng}_*.xml
 
 %changelog
+* Tue Jan 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
+- 4.9.97
+
 * Wed Nov 14 2012 Sergey V Turchin <zerg@altlinux.org> 4.9.3-alt1
 - new version
 
