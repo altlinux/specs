@@ -3,7 +3,7 @@
 %define rname pykde4
 Name: kde4-python
 Version: 4.10.0
-Release: alt0.1
+Release: alt0.2
 
 Group: Development/KDE and QT
 Summary: Python bindings for KDE4
@@ -19,7 +19,7 @@ Patch100: pykde4-4.8.0-alt-mobile.patch
 # Automatically added by buildreq on Thu Sep 15 2011 (-bi)
 # optimized out: automoc cmake cmake-modules elfutils fontconfig fontconfig-devel glibc-devel-static kde4libs kde4libs-devel kde4pimlibs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libpng-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-script libqt4-sql libqt4-svg libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libxkbfile-devel phonon-devel pkg-config python-base python-devel python-module-PyQt4 python-module-sip python-modules rpm-build-gir ruby shared-desktop-ontologies-devel soprano-backend-redland soprano-backend-virtuoso xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
 #BuildRequires: boost-devel-headers gcc-c++ glib2-devel kde4pimlibs-devel libqt3-devel python-module-PyQt4-devel python-module-sip-devel rpm-build-ruby soprano zlib-devel-static
-BuildRequires(pre): kde4libs-devel python-module-PyQt4-devel >= 4.8.2 python-module-sip-devel >= 4.12 rpm-build-python
+BuildRequires(pre): kde4libs-devel python-module-sip-devel >= 4.12 python-module-PyQt4-devel >= 4.9.5 rpm-build-python
 BuildRequires: boost-devel gcc-c++ glib2-devel kde4pimlibs-devel libqt4-devel zlib-devel
 BuildRequires: libsoprano-devel soprano soprano-backend-redland
 BuildRequires: python-devel
@@ -49,8 +49,8 @@ Python bindings for KDE4
 
 %prep
 %setup -n %rname-%version
-%ifarch %arm
 %patch10 -p1
+%ifarch %arm
 %patch100 -p1
 %endif
 
@@ -70,13 +70,16 @@ Python bindings for KDE4
 %_K4lib/kpythonpluginfactory.so
 
 %files devel
-%_bindir/pykdeuic4
+%_bindir/pykdeuic4*
 %python_sitelibdir/PyQt4/uic/pykdeuic4.py*
 #%_docdir/pykde4/examples/
 %_datadir/sip/PyKDE4/
 
 
 %changelog
+* Tue Jan 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- update from 4.10 branch
+
 * Tue Dec 18 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 
