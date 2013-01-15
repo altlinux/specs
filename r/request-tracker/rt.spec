@@ -21,8 +21,8 @@
 
 Summary: Request Tracker (RT) is an enterprise-grade issue tracking system
 Name: %fullrtname
-Version: 3.8.10
-Release: alt1
+Version: 3.8.15
+Release: alt3
 Group: Networking/WWW
 License: GPL
 Url: http://www.bestpractical.com/rt/
@@ -79,7 +79,7 @@ BuildRequires(pre): rpm-build-fonts rpm-build-webserver-common
 BuildRequires: gnupg perl-Apache-Session perl-CPAN perl-CSS-Squish perl-Calendar-Simple perl-DBD-mysql perl-DBIx-SearchBuilder perl-Data-ICal perl-DateTime-TimeZone perl-Email-Address perl-FCGI perl-File-ShareDir perl-GnuPG-Interface perl-GraphViz perl-HTML-Format perl-HTML-RewriteAttributes perl-HTML-Scrubber perl-HTTP-Server-Simple-Mason perl-IPC-Run-SafeHandles perl-Locale-Maketext-Fuzzy perl-Locale-Maketext-Lexicon perl-Log-Agent perl-Log-Dispatch perl-MIME-Types perl-MIME-tools perl-Mail-SpamAssassin perl-Module-Versions-Report perl-Net-Server perl-PerlIO-eol perl-Regexp-Common perl-Term-ReadKey perl-Test-HTTP-Server-Simple perl-Test-WWW-Mechanize perl-Text-Quoted perl-Text-Template perl-Text-WikiFormat perl-Text-Wrapper perl-Time-modules perl-Tree-Simple perl-UNIVERSAL-require perl-XML-RSS perl-XML-Simple perl-capitalization sendmail-common
 BuildRequires: perl-FCGI-ProcManager fonts-ttf-droid
 # build fix by hiddenman
-BuildRequires: perl-Mouse perl-GD perl-GD-Graph perl-GD-Text
+BuildRequires: perl-Mouse perl-GD perl-GD-Graph perl-GD-Text perl-Devel-GlobalDestruction perl-IPC-Run perl-CGI-Emulate-PSGI perl-Plack perl-Convert-Color perl-HTML-Quoted perl-Regexp-IPv6 perl-IPC-Run perl-HTML-Mason-PSGIHandler perl-CGI-PSGI perl-Regexp-Common-net-CIDR perl-IPC-Run3 perl-JSON perl-Text-Password-Pronounceable perl-Starlet perl-Parallel-Prefork
 
 %description
 Request Tracker (RT) is an enterprise-grade issue tracking system. It allows
@@ -367,6 +367,9 @@ echo ""
 %files sqlite
 
 %changelog
+* Tue Jan 15 2013 Andrew Kornilov <hiddenman@altlinux.ru> 3.8.15-alt3
+- Version 3.8.15. Lots of security fixes since 3.8.10
+
 * Tue Apr 19 2011 Vladimir V. Kamarzin <vvk@altlinux.org> 3.8.10-alt1
 - 3.8.10. Security fixes:
   + CVE-2011-1689
