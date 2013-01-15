@@ -5,7 +5,7 @@
 
 Name: openchange
 Version: 1.0
-Release: alt1.1
+Release: alt2
 Group: Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -13,7 +13,6 @@ Url: http://www.openchange.org/
 
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: openchange-1.0-alt-flex.patch 
 
 BuildRequires: flex
 BuildRequires: libtalloc-devel
@@ -98,9 +97,11 @@ Summary: Developer tools for OpenChange libraries
 Group: Development/C
 Requires: libmapi = %version-%release
 Requires: libmapiadmin = %version-%release
+Requires: libocpf = %version-%release
+%if_enabled server
 Requires: libmapiproxy = %version-%release
 Requires: libmapistore = %version-%release
-Requires: libocpf = %version-%release
+%endif
 
 %description devel
 This package provides the development tools and headers for
@@ -112,8 +113,10 @@ Summary: User tools for OpenChange libraries
 Group: Networking/Mail
 Requires: libmapi = %version-%release
 Requires: libmapiadmin = %version-%release
-Requires: libmapistore = %version-%release
 Requires: libocpf = %version-%release
+%if_enabled server
+Requires: libmapistore = %version-%release
+%endif
 
 %description client
 This package provides the user tools for OpenChange, providing access to
@@ -139,7 +142,6 @@ This package provides the server elements for OpenChange.
 %prep
 %setup -q
 %patch -p1
-%patch1 -p0
 
 %build
 mkdir bin
@@ -185,6 +187,7 @@ rm -f %buildroot%_libdir/libmapiserver.so*
 #rm -f %buildroot%_libdir/libmapistore.so*
 #rm -f %buildroot%_libdir/mapistore_backends/mapistore_sqlite3.so
 rm -f %buildroot%_pkgconfigdir/libmapiserver.pc
+rm -f %buildroot%_bindir/check_fasttransfer
 %endif
 
 %files -n libmapi
@@ -193,13 +196,6 @@ rm -f %buildroot%_pkgconfigdir/libmapiserver.pc
 
 %files -n libmapiadmin
 %_libdir/libmapiadmin.so.*
-
-%files -n libmapiproxy
-%_libdir/libmapiproxy.so.*
-%_libdir/samba/dcerpc_mapiproxy
-
-%files -n libmapistore
-%_libdir/libmapistore.so.*
 
 %files -n libocpf
 %_libdir/libocpf.so.*
@@ -225,6 +221,13 @@ rm -f %buildroot%_pkgconfigdir/libmapiserver.pc
 %endif
 
 %if_enabled server
+%files -n libmapiproxy
+%_libdir/libmapiproxy.so.*
+%_libdir/samba/dcerpc_mapiproxy
+
+%files -n libmapistore
+%_libdir/libmapistore.so.*
+
 %files server
 %_libdir/libmapiserver.so.*
 %_libdir/mapistore_backends/mapistore_fsocpf.so
@@ -235,6 +238,11 @@ rm -f %buildroot%_pkgconfigdir/libmapiserver.pc
 %endif
 
 %changelog
+* Tue Jan 15 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0-alt2
+- fix http://tracker.openchange.org/issues/397
+- fix http://tracker.openchange.org/issues/398
+- fix https://bugzilla.gnome.org/show_bug.cgi?id=682449
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.1
 - Fixed build with flex 2.5.37
 
