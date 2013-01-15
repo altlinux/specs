@@ -1,4 +1,7 @@
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global with_gcj %{!?_without_gcj:1}%{?_without_gcj:0}
@@ -7,8 +10,17 @@ BuildRequires: jpackage-compat
 Summary:          A Free Java-PDF library
 Name:             itext
 Version:          2.1.7
-Release:          alt2_14jpp7
-License:          (LGPLv2+ or MPLv1.1) and ASL 2.0 and BSD and LGPLv2+
+Release:          alt2_15jpp7
+#src/toolbox/com/lowagie/toolbox/Versions.java is MPLv1.1 or MIT
+#src/toolbox/com/lowagie/toolbox/plugins/XML2Bookmarks.java is MPLv1.1 or LGPLv2+
+#src/rups/com/lowagie/rups/Rups.java is LGPLv2+
+#src/rups/com/lowagie/rups/view/icons/ are under CC-BY
+#src/core/com/lowagie/text/xml/XmlDomWriter.java is under ASL 2.0
+#src/core/com/lowagie/text/pdf/LZWDecoder.java is under BSD
+#src/core/com/lowagie/text/pdf/fonts/cmaps/CodespaceRange.java is under BSD
+#src/core/com/lowagie/text/pdf/fonts are under APAFML
+#src/core/com/lowagie/text/pdf/codec/TIFFConstants.java is under libtiff
+License:          (LGPLv2+ or MPLv1.1) and ASL 2.0 and BSD and LGPLv2+ and (MPLv1.1 or MIT) and CC-BY and APAFML and libtiff
 URL:              http://www.lowagie.com/iText/
 Group:            Development/Java
 Source0:          http://downloads.sourceforge.net/itext/iText-src-%{version}.tar.gz
@@ -52,7 +64,7 @@ Patch4:           itext-manifest.patch
 Patch5:           itext-remove-unmappable.patch
 
 BuildRequires:    ant
-BuildRequires:    bouncycastle >= 1.46-4
+BuildRequires:    bouncycastle-tsp >= 1.46-4
 BuildRequires:    desktop-file-utils
 BuildRequires:    dom4j
 BuildRequires:    ImageMagick
@@ -67,7 +79,7 @@ Requires:         java-1.5.0-gcj
 BuildArch:        noarch
 %endif
 Provides:         %{alternate_name} == %{version}-%{release}
-Requires:         itext-core = %{version}-%{release}
+Requires:         %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Source44: import.info
 
 %description
@@ -83,7 +95,7 @@ exactly how your servlet's output will look.
 Summary:          The core iText Java-PDF library
 Group:            Development/Java
 BuildArch:        noarch
-Requires:         bouncycastle >= 1.46-4
+Requires:         bouncycastle-tsp >= 1.46-4
 Requires:         jpackage-utils
 Requires(post):   jpackage-utils
 Requires(postun): jpackage-utils
@@ -100,7 +112,7 @@ Summary:        Library to output Rich Text Files
 Group:          Development/Java
 BuildArch:      noarch
 License:        MPLv1.1 or LGPLv2+
-Requires:       itext-core = %{version}-%{release}
+Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 
 %description rtf
 The RTF package is an extension of the iText library and allows iText to output
@@ -113,7 +125,7 @@ Summary:        Reading/Updating PDF Syntax
 Group:          Development/Java
 BuildArch:      noarch
 License:        LGPLv2+ and CC-BY
-Requires:       itext-core = %{version}-%{release}
+Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       dom4j
 Requires:       pdf-renderer
 
@@ -128,7 +140,7 @@ Summary:        Some %{alternate_name} tools
 Group:          Development/Java
 BuildArch:      noarch
 License:        MPLv1.1 or MIT
-Requires:       itext-core = %{version}-%{release}
+Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 
 
 %description toolbox
@@ -143,11 +155,11 @@ iText tools.
 Summary:        Javadoc for %{alternate_name}
 Group:          Development/Java
 BuildArch:      noarch
-Requires:       itext-core = %{version}-%{release}
+Requires:       %{name}-core = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils
 
 %description javadoc
-API documentation for the %{alternate_name} package.
+API documentation for the %%{alternate_name} package.
 
 
 %prep
@@ -193,7 +205,7 @@ sed -i 's|maxmemory="128m"|maxmemory="512m"|' src/ant/site.xml
 %build
 export CLASSPATH=$(build-classpath bcprov bcmail bctsp pdf-renderer dom4j)
 pushd src
- ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Ditext.jdk.core=1.5 \
+ ant -Ditext.jdk.core=1.5 \
      -Ditext.jdk.rups=1.5 \
      -Ditext.jdk.toolbox=1.5 \
      jar jar.rups jar.rtf jar.toolbox javadoc
@@ -292,6 +304,9 @@ cp -pr JPP-itext.pom $RPM_BUILD_ROOT%{_mavenpomdir}
 # -----------------------------------------------------------------------------
 
 %changelog
+* Tue Jan 15 2013 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_15jpp7
+- fixed build
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.1.7-alt2_14jpp7
 - update to new release by jppimport
 
