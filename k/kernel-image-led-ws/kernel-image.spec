@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.58
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -342,7 +342,7 @@ Patch0361: linux-%kernel_branch.42-fix-drivers-macintosh--adb.patch
 Patch0362: linux-%kernel_branch.42-fix-drivers-macintosh--adbhid.patch
 
 Patch0371: linux-%kernel_branch.45-fix-drivers-md--dm-mod.patch
-Patch0372: linux-%kernel_branch.42-fix-drivers-md--dm-multipath.patch
+Patch0372: linux-%kernel_branch.57-fix-drivers-md--dm-multipath.patch
 Patch0373: linux-%kernel_branch.53-fix-drivers-md--md-mod.patch
 Patch0374: linux-%kernel_branch.51-fix-drivers-md--multipath.patch
 Patch0375: linux-%kernel_branch.51-fix-drivers-md--raid1.patch
@@ -2968,6 +2968,10 @@ done)
 
 
 %changelog
+* Tue Jan 15 2013 Led <led@altlinux.ru> 3.0.58-alt3
+- updated:
+  + fix-drivers-md--dm-multipath
+
 * Sat Jan 12 2013 Led <led@altlinux.ru> 3.0.58-alt2
 - disabled PM_DEVFREQ
 
