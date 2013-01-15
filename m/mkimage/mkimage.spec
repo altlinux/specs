@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.5
+Version: 0.2.6
 Release: alt1
 
 Summary: Simple image creator
@@ -34,6 +34,12 @@ files (called `templates').
 %doc examples doc/README.ru
 
 %changelog
+* Tue Jan 15 2013 Alexey Gladkov <legion@altlinux.ru> 0.2.6-alt1
+mki-print-uris: Guarantee newline at the end.
+mki-pack-isoboot: make xorriso *read* the config (thx Michael Shigorin).
+mki-pack-isoboot: introduced ISOHYBRID variable (thx Michael Shigorin).
+mki-copy-efiboot: rewrite, extend and cleanup (thx Michael Shigorin).
+
 * Sat Dec 15 2012 Michael Shigorin <mike@altlinux.org> 0.2.5-alt1
 - Initial EFI bootloader support (including example4).
 
