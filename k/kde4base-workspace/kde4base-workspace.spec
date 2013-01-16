@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt0.3
+Release: alt0.4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -73,7 +73,7 @@ Patch1006: kmenuedit-4.8.0-alt-menueditor.patch
 Patch1007: kdebase-workspace-4.8.0-alt-def-kxkb.patch
 Patch1008: kdebase-workspace-4.4.92-alt-kdm-defaults-language.patch
 Patch1009: kdebase-workspace-4.4.3-alt-kickoff-cleanup.patch
-Patch1010: kdebase-workspace-4.5.0-alt-fix-compile.patch
+Patch1010: kdebase-workspace-4.10.0-alt-fix-compile.patch
 Patch1011: kdebase-workspace-4.8.0-alt-def-apps-menu.patch
 Patch1012: kdebase-workspace-4.2.2-alt-kdm-greet.patch
 Patch1013: kdebase-workspace-4.7.3-alt-devicenotifier-remote-shares.patch
@@ -600,6 +600,7 @@ grep -q X-KDE-SubstituteUID kdm/kcm/kdm.desktop \
 %build
 #    -DKDE4_ENABLE_FINAL:BOOL=ON \
 %K4cmake \
+    -DKDE4_BUILD_TESTS:BOOL=OFF \
     -DKDE4_ENABLE_FPIE:BOOL=ON \
     -DWITH_NetworkManager=ON \
     -DKDE4_COMMON_PAM_SERVICE=kde4 \
@@ -966,6 +967,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Wed Jan 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.4
+- update from 4.10 branch
+
 * Thu Jan 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
 - update from 4.10 branch
 
