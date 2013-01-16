@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 3.0.0
-Release: alt0.3
+Release: alt0.4
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -28,6 +28,9 @@ Source11: FindKSane.cmake
 Source12: FindKipi.cmake
 Patch1: kipi-plugins-2.6.0-arm-cast-to-qreal.patch
 
+# VideoSlideshow plugin
+Requires: /usr/bin/convert
+
 Requires: %name-core = %version-%release
 %if_enabled expoblending
 Requires: %name-expoblending = %version-%release
@@ -41,7 +44,7 @@ BuildRequires: gcc-c++ kde4pimlibs-devel libgomp-devel libkgeomap-devel qjson-de
 BuildRequires: libgio-devel libgpod-devel libgtk+2-devel boost-devel
 BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
 BuildRequires: qoauth-devel qjson-devel herqq-devel qtsoap-devel
-BuildRequires: qt-gstreamer-devel libImageMagick-devel
+BuildRequires: qt-gstreamer-devel libImageMagick-devel ImageMagick-tools
 BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel
 
 %description
@@ -167,6 +170,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Wed Jan 16 2013 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.4
+- fix to build VideoSlideshow plugin
+
 * Fri Jan 11 2013 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.3
 - 3.0.0-rc
 
