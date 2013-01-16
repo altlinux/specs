@@ -1,5 +1,5 @@
 %define branch 0.7
-%define svn svn3077
+%define svn svn3168
 
 Version: %branch.0
 Epoch: 1
@@ -521,6 +521,14 @@ Requires: qmmp = %version-%release
 %description -n %name-streambrowser
 This Qmmp plugin allows to add stream from IceCast stream directory
 
+%package -n %name-trackchange
+Summary: Qmmp Track Change Plugin
+Group: Sound
+Requires: qmmp = %version-%release
+
+%description -n %name-trackchange
+This plugin executes external command when current track is changed
+
 %package -n lib%name-devel
 Summary: Qmmp header files
 Group: Development/C++
@@ -545,7 +553,7 @@ Requires: qmmp-eff-bs2b qmmp-vis-projectm qmmp-fileops qmmp-converter
 Requires: qmmp-out-jack qmmp-out-oss qmmp-out-null qmmp-http qmmp-mms
 Requires: qmmp-kdenotify qmmp-eff-ladspa qmmp-covermanager
 Requires: qmmp-eff-crossfade qmmp-udisks qmmp-in-gme qmmp-eff-extrastereo
-Requires: qmmp-streambrowser
+Requires: qmmp-streambrowser qmmp-trackchange
 
 %description -n %name-full
 Virtual package for full installation Qmmp (exclude %name-devel).
@@ -587,7 +595,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %dir %_libdir/%name/Output
 %dir %_libdir/%name/Engines
 %dir %_libdir/%name/Transports
-%dir %_libdir/%name/PlaylistFormats
+%dir %_libdir/%name/PlayListFormats
 %dir %_libdir/%name/CommandLineOptions
 %dir %_libdir/%name/FileDialogs
 %dir %_libdir/%name/Effect
@@ -599,7 +607,7 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %_libdir/%name/Input/libvorbis*
 %_libdir/%name/Ui/libskinned*
 %_libdir/%name/Output/libalsa*
-%_libdir/%name/PlaylistFormats/*.so
+%_libdir/%name/PlayListFormats/*.so
 %_libdir/%name/CommandLineOptions/*.so
 %_libdir/%name/FileDialogs/*.so
 %_datadir/%name/
@@ -732,6 +740,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-streambrowser
 %_libdir/%name/General/libstreambrowser*
 
+%files -n %name-trackchange
+%_libdir/%name/General/libtrackchange*
+
 %files -n lib%name-devel
 %dir %_includedir/%name
 %dir %_includedir/%{name}ui
@@ -746,6 +757,12 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Tue Jan 15 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3168
+- 0.7.0 svn3168 version
+
+* Thu Jan 03 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3126
+- 0.7.0 svn3126 version
+
 * Tue Dec 18 2012 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3077
 - 0.7.0 svn3077 version
 
