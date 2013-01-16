@@ -1,6 +1,6 @@
 Name: timeline
-Version: 0.18.0
-Release: alt2
+Version: 0.19.0
+Release: alt1
 Group: Office
 Summary: Displaying and navigating events on a timeline
 License: GPLv3
@@ -104,6 +104,10 @@ done
 %python_sitelibdir_noarch/%modulename
 
 %changelog
+* Wed Jan 16 2013 Fr. Br. George <george@altlinux.ru> 0.19.0-alt1
+- Autobuild version bump to 0.19.0
+- Fix patch
+
 * Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 0.18.0-alt2
 - Add library dependence
 
