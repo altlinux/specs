@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 9712
+Version: 9737
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -103,6 +103,9 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Wed Jan 16 2013 Fr. Br. George <george@altlinux.ru> 9737-alt1
+- Autobuild version bump to 9737
+
 * Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 9712-alt1
 - Autobuild version bump to 9712
 
