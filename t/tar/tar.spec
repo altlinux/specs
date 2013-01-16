@@ -1,19 +1,20 @@
 Name: tar
-Version: 1.23
-Release: alt5
+Version: 1.26.90
+Release: alt1
 
 Summary: A GNU file archiving program
 License: GPLv3+
 Group: Archiving/Backup
 Url: http://www.gnu.org/software/tar/
-Packager: Dmitry V. Levin <ldv@altlinux.org>
 
-# ftp://ftp.gnu.org/gnu/tar/tar-%version.tar.bz2
-Source: tar-%version.tar
-Source1: tar.1
-Patch: tar-%version-%release.patch
+%define srcname %name-%version-%release
+# git://git.altlinux.org/gears/t/tar.git
+Source: %srcname.tar
 
-Summary(ru_RU.UTF-8): Утилита проекта GNU для архивации файлов
+%def_enable selinux
+BuildRequires: libacl-devel libattr-devel
+%{?_enable_selinux:BuildRequires: libselinux-devel}
+BuildRequires: gnulib >= 0.0.7696.fd9f1ac, paxutils >= 0.0.1.111.0b3d84a
 
 %description
 The GNU tar program saves many files together into one archive and
@@ -24,24 +25,30 @@ automatic archive compression/decompression, the ability to perform
 remote archives and the ability to perform incremental and full backups.
 
 %prep
-%setup -q
-%patch -p1
-bzip2 -9fk ChangeLog
+%setup -n %srcname
+
+# Build scripts expect to find package version in this file.
+echo -n %version-%release > .tarball-version
+
+# Generate LINGUAS file.
+ls po | sed -n 's/^\([^.]\+\)\.po$/\1/p' > po/LINGUAS
 
 %build
+./bootstrap --force --skip-po --gnulib-srcdir=%_datadir/gnulib \
+	--paxutils-srcdir=%_datadir/paxutils
 export tar_cv_path_RSH=no
 %configure --bindir=/bin --with-rmt=/sbin/rmt --disable-silent-rules
-sed -i '/HAVE_CLOCK_GETTIME/d' config.h
-%make_build LIB_CLOCK_GETTIME=
+%make_build -C po update-po
+%make_build AM_MAKEINFOFLAGS=--no-split
 
 %check
-%make_build -k check LIB_CLOCK_GETTIME=
+%make_build -k check
 
 %install
 mkdir -p %buildroot{%_bindir,%_man1dir}
-%makeinstall bindir=%buildroot/bin LIB_CLOCK_GETTIME=
+%makeinstall_std bindir=/bin
 ln -s ../../bin/tar %buildroot%_bindir/gtar
-install -pm644 %_sourcedir/tar.1 %buildroot%_man1dir/
+install -pm644 doc/tar.1 %buildroot%_man1dir/
 %find_lang %name
 
 %files -f %name.lang
@@ -49,9 +56,13 @@ install -pm644 %_sourcedir/tar.1 %buildroot%_man1dir/
 %_bindir/gtar
 %_mandir/man?/*
 %_infodir/tar.info*
-%doc AUTHORS ChangeLog.bz2 NEWS README THANKS TODO
+%doc AUTHORS NEWS README THANKS TODO
 
 %changelog
+* Tue Jan 15 2013 Dmitry V. Levin <ldv@altlinux.org> 1.26.90-alt1
+- Updated to git://git.sv.gnu.org/tar release_1_26-55-gcd7bdd4.
+- Enabled xattr, acl and selinux support.
+
 * Tue Jul 06 2010 Dmitry V. Levin <ldv@altlinux.org> 1.23-alt5
 - Updated to git://git.sv.gnu.org/tar release_1_23-18-g9c194c9.
 - Backported workaround for ovz kernel bug #970 from coreutils.
