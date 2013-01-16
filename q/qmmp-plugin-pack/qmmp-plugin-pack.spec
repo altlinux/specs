@@ -1,5 +1,5 @@
 %define		branch 0.7
-%define		svn svn3077
+%define		svn svn3169
 
 Version:	%branch.0
 Name:		qmmp-plugin-pack
@@ -121,6 +121,9 @@ qmake "QMAKE_CFLAGS+=%optflags" "QMAKE_CXXFLAGS+=%optflags" LIB_DIR=/%_lib %name
 %_libdir/qmmp/Ui/libqsui.so
 
 %changelog
+* Wed Jan 16 2013 Motsyo Gennadi <drool@altlinux.ru> 0.7.0-alt1.svn3169
+- build svn3169
+
 * Tue Dec 18 2012 Motsyo Gennadi <drool@altlinux.ru> 0.7.0-alt1.svn3077
 - build svn3077
 
