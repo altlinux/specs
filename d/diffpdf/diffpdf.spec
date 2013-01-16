@@ -1,5 +1,5 @@
 Name: diffpdf
-Version: 2.1.1
+Version: 2.1.2
 Release: alt1
 License: GPLv2
 Summary: Visually compare two PDF files
@@ -40,7 +40,6 @@ lrelease-qt4 diffpdf.pro
 qmake-qt4
 %make
 
-
 %install
 install -D %name %buildroot%_bindir/%name
 install -D %name.1 %buildroot%_man1dir/%name.1
@@ -51,6 +50,9 @@ install -D %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/*
 
 %changelog
+* Wed Jan 16 2013 Fr. Br. George <george@altlinux.ru> 2.1.2-alt1
+- Autobuild version bump to 2.1.2
+
 * Mon Jun 18 2012 Fr. Br. George <george@altlinux.ru> 2.1.1-alt1
 - Autobuild version bump to 2.1.1
 
