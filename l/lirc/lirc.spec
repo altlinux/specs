@@ -4,7 +4,7 @@
 
 Name: lirc
 Version: 0.9.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: The Linux Infrared Remote Control package
 License: GPL
@@ -55,6 +55,18 @@ Requires: lib%name-devel = %version-%release
 %description -n liblirc-devel-static
 Static library for LIRC
 
+%package        remotes
+Summary:        LIRC remote definitions
+Group:          System/Base
+
+%description    remotes
+LIRC is a package that allows you to decode and send infra-red and
+other signals of many (but not all) commonly used remote controls.
+Included applications include daemons which decode the received
+signals as well as user space applications which allow controlling a
+computer with a remote control.  This package contains a collection
+of remote control configuration files.
+
 %prep
 %setup -q -n %name-%version%add_rel
 %patch1 -p1
@@ -62,6 +74,12 @@ Static library for LIRC
 %patch3 -p1
 %patch6 -p2
 %patch7 -p2
+
+for f in remotes/chronos/lircd.conf.chronos \
+    remotes/creative/lircd.conf.livedrive remotes/atiusb/lircd.conf.atiusb \
+    NEWS ChangeLog AUTHORS contrib/lircrc ; do
+    iconv -f iso-8859-1 -t utf-8 $f > $f.utf8 ; mv $f.utf8 $f
+done
 
 %build
 %add_optflags -I%_includedir/libftdi
@@ -102,6 +120,9 @@ cp config.h $t/
 cp -a drivers/{*.h,Makefile.kernel} $t/drivers/
 cp %SOURCE2 $t/drivers/scripts/
 
+# Put remote definitions in place
+cp -ar remotes $RPM_BUILD_ROOT%{_datadir}/lirc-remotes
+
 %pre
 /usr/sbin/groupadd -r -f %name &> /dev/null ||:
 
@@ -137,7 +158,14 @@ cp %SOURCE2 $t/drivers/scripts/
 %_libdir/liblirc_client.a
 %endif #static
 
+%files remotes
+%dir %_datadir/lirc-remotes
+%_datadir/lirc-remotes/*
+
 %changelog
+* Wed Jan 16 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.0-alt1.2
+- NMU: lirc database of remotes packaged as lirc-remotes subpackage
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.9.0-alt1.1
 - Rebuild with Python-2.7
 
