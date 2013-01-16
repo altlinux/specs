@@ -1,6 +1,6 @@
 Name: parcellite
 Version: 1.0.2
-Release: alt0.rc5.1
+Release: alt0.rc7
 Summary: Lightweight GTK+ Clipboard Manager
 License: GPLv3
 Group: Graphical desktop/GNOME
@@ -23,7 +23,6 @@ print for those who like simplicity.
 
 %build
 %autoreconf
-chmod +x configure
 %configure
 %make_build
 
@@ -39,6 +38,12 @@ chmod +x configure
 %_man1dir/%name.1*
 
 %changelog
+* Wed Jan 16 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt0.rc7
+- 1.0.2 RC7
+
+* Tue Jan 15 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.0.2-alt0.rc6
+- 1.0.2 RC6
+
 * Sun Jul 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt0.rc5.1
 - Fixed build
 
