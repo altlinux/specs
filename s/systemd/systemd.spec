@@ -11,9 +11,11 @@
 %def_disable gcrypt
 %def_disable qrencode
 %def_disable microhttpd
+%def_enable myhostname
+%def_enable bootchart
 
 Name: systemd
-Version: 196
+Version: 197
 Release: alt1
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
@@ -86,7 +88,7 @@ BuildRequires: libgcrypt-devel
 Requires: dbus >= %dbus_ver
 Requires: udev = %version-%release
 Requires: libudev1 = %version-%release
-Requires: libnss-myhostname
+Requires: libnss-myhostname = %version-%release
 Requires: filesystem >= 2.3.10-alt1
 Requires: agetty
 # Requires: selinux-policy >= 3.8.5
@@ -188,6 +190,31 @@ Requires: libsystemd-id128-devel = %version-%release
 The libsystemd-journal library provides an interface for the systemd journal service.
 
 This package contains the development files.
+
+%package -n libnss-myhostname
+Group: System/Libraries
+Summary: glibc plugin for local system host name resolution
+Requires(pre): chrooted >= 0.3.5-alt1 chrooted-resolv sed
+Requires(postun): chrooted >= 0.3.5-alt1 sed
+
+
+%description -n libnss-myhostname
+nss-myhostname is a plugin for the GNU Name Service Switch (NSS)
+functionality of the GNU C Library (glibc) providing host name
+resolution for the locally configured system hostname as returned by
+gethostname(2). Various software relies on an always resolvable local
+host name. When using dynamic hostnames this is usually achieved by
+patching /etc/hosts at the same time as changing the host name. This
+however is not ideal since it requires a writable /etc file system and
+is fragile because the file might be edited by the administrator at
+the same time. nss-myhostname simply returns all locally configure
+public IP addresses, or -- if none are configured -- the IPv4 address
+127.0.0.2 (wich is on the local loopback) and the IPv6 address ::1
+(which is the local host) for whatever system hostname is configured
+locally. Patching /etc/hosts is thus no longer necessary.
+
+It is necessary to change "hosts" in /etc/nsswitch.conf to
+hosts: files myhostname
 
 %package devel
 Group: Development/C
@@ -384,13 +411,25 @@ GObject introspection devel data for the GUdev library
 %patch2 -p1
 
 %build
+export QUOTAON="/sbin/quotaon"
+export QUOTACHECK="/sbin/quotacheck"
+export SETCAP="/sbin/setcap"
+export KILL="/bin/kill"
+export CHKCONFIG="/sbin/chkconfig"
+
 gtkdocize --docdir docs/
 intltoolize --force --automake
 %autoreconf
 %configure  \
 	--disable-static \
 	--with-rootprefix="" \
-	--with-distro=altlinux \
+	--with-rootlibdir=/%_lib \
+	--with-pamlibdir=/%_lib/security \
+	--enable-split-usr \
+	--with-sysvinit-path=/etc/rc.d/init.d \
+	--with-rc-local-script-path-start=/etc/rc.d/rc.local \
+	--with-kbd-loadkeys=/bin/loadkeys \
+	--with-kbd-setfont=/bin/setfont \
 	%{subst_enable libcryptsetup} \
 	%{subst_enable logind} \
 	%{subst_enable vconsole} \
@@ -401,11 +440,9 @@ intltoolize --force --automake
 	%{subst_enable gcrypt} \
 	%{subst_enable qrencode} \
 	%{subst_enable microhttpd} \
-	--enable-introspection \
-	--enable-split-usr \
-	--with-rootlibdir=/%_lib \
-	--with-pamlibdir=/%_lib/security
-
+	%{subst_enable myhostname} \
+	%{subst_enable bootchart} \
+	--enable-introspection
 
 %make_build
 
@@ -539,16 +576,15 @@ touch %buildroot%_sysconfdir/machine-info
 #popd
 #}
 
-# ALTlinux specific changes
-sed -i -e 's|^d /run/lock/lockdev 0775 root lock -$|d /run/lock/serial 0775 root uucp -|' \
-	%buildroot/lib/tmpfiles.d/legacy.conf
-
 # Set up the pager to make it generally more useful
 mkdir -p %buildroot%_sysconfdir/profile.d
 cat > %buildroot%_sysconfdir/profile.d/systemd.sh << EOF
 export SYSTEMD_PAGER="/usr/bin/less -FR"
 EOF
 chmod 755 %buildroot%_sysconfdir/profile.d/systemd.sh
+
+# move libnss_myhostname to /lib
+mv %buildroot%_libdir/libnss_myhostname.so.2 %buildroot/%_lib/libnss_myhostname.so.2
 
 #######
 # UDEV
@@ -605,8 +641,8 @@ touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-cd.rules
 
 # udev rule generator
 install -p -m644 %SOURCE41 %buildroot/lib/udev/
-install -p -m755 %SOURCE42 %buildroot/lib/udev/
-install -p -m644 %SOURCE43 %buildroot/lib/udev/rules.d/
+#install -p -m755 %SOURCE42 %buildroot/lib/udev/
+#install -p -m644 %SOURCE43 %buildroot/lib/udev/rules.d/
 install -p -m755 %SOURCE44 %buildroot/lib/udev/
 install -p -m644 %SOURCE45 %buildroot/lib/udev/rules.d/
 
@@ -663,6 +699,22 @@ if [ $1 -eq 0 ] ; then
 
         /bin/rm -f /etc/systemd/system/default.target > /dev/null 2>&1 || :
 fi
+
+%post -n libnss-myhostname
+if [ "$1" = "1" ]; then
+    grep -q '^hosts:[[:blank:]].\+myhostname' \
+    /etc/nsswitch.conf || \
+    sed -i.rpmorig 's/^\(hosts:.\+\)$/\1 myhostname/' /etc/nsswitch.conf
+fi
+update_chrooted all
+
+%postun -n libnss-myhostname
+if [ "$1" = "0" ]; then
+    grep -q '^hosts:[[:blank:]].\+myhostname' \
+        /etc/nsswitch.conf && \
+    sed -i 's/ myhostname//' /etc/nsswitch.conf
+fi
+update_chrooted all
 
 %pre -n udev
 %_sbindir/groupadd -r -f video 2>/dev/null
@@ -732,6 +784,9 @@ fi
 %exclude %_man8dir/poweroff.*
 %exclude %_man8dir/telinit.*
 %exclude %_man8dir/runlevel.*
+%if_enabled myhostname
+%exclude %_man8dir/nss-myhostname.*
+%endif
 %_datadir/systemd
 %_datadir/dbus-1/services/*.service
 %_datadir/dbus-1/system-services/*.service
@@ -755,6 +810,12 @@ fi
 
 %files -n libsystemd-journal
 /%_lib/libsystemd-journal.so.*
+
+%if_enabled myhostname
+%files -n libnss-myhostname
+/%_lib/libnss_myhostname.so.2
+%_man8dir/nss-myhostname.*
+%endif
 
 %files devel
 %doc LICENSE.LGPL2.1 LICENSE.MIT
@@ -911,6 +972,14 @@ fi
 /lib/udev/write_*_rules
 
 %changelog
+* Wed Jan 16 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt1
+- 197
+- drop 75-persistent-net-generator.rules and write_net_rules
+- revert support ALTLinux configuration files for console,locale,hostname
+- build libnss-myhostname as separate package
+- enable build bootchart
+- fixed /etc/firsttime.d support
+
 * Thu Nov 29 2012 Alexey Shabalin <shaba@altlinux.ru> 196-alt1
 - 196
 - move completion to separate noarch packages:
