@@ -9,7 +9,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt0.4
+Release: alt0.5
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -115,7 +115,7 @@ BuildRequires: bzlib-devel cmake libalsa-devel
 BuildRequires: herqq-devel
 BuildRequires: libXScrnSaver-devel grantlee-devel
 BuildRequires: libaspell-devel aspell
-#BuildRequires: libenchant-devel
+BuildRequires: libenchant-devel
 BuildRequires: libavahi-devel libjasper-devel libjpeg-devel
 BuildRequires: libgif-devel libxslt-devel liblzma-devel docbook-style-xsl docbook-dtds
 BuildRequires: openexr-devel libkrb5-devel shared-desktop-ontologies-devel
@@ -313,6 +313,11 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Wed Jan 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.5
+- update from 4.10 branch
+  (INSTALL_PYTHON_FILES_IN_PYTHON_PREFIX(FALSE) cmake define added)
+- built enchant spell checking backend
+
 * Wed Jan 09 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.4
 - udpate from 4.10 branch
 
