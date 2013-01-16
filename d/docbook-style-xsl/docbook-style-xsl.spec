@@ -1,7 +1,7 @@
 ## %%define snapshot 20080311
 
 Name: docbook-style-xsl
-Version: 1.77.1
+Version: 1.78.0
 Release: alt1
 Group: Publishing
 
@@ -109,6 +109,10 @@ make install BINDIR=$DESTDIR%{_bindir} DESTDIR=$DESTDIR%xmlbase/docbook/xsl-styl
 cp -a VERSION.xsl $DESTDIR%xmlbase/docbook/xsl-stylesheets-%{version}/VERSION.xsl
 ln -s xsl-stylesheets-%{version} \
 	$DESTDIR%xmlbase/docbook/xsl-stylesheets
+# compat symlink
+mkdir -p %buildroot/%_datadir/sgml/docbook
+ln -s ../../xml/docbook/xsl-stylesheets-%{version} \
+        %buildroot/%_datadir/sgml/docbook/xsl-stylesheets
 
 # Don't ship the extensions (bug #177256).
 rm -rf $DESTDIR%xmlbase/docbook/xsl-stylesheets/extensions/*
@@ -121,6 +125,8 @@ install -p -m644 catalog.xml \
 %doc AUTHORS BUGS COPYING NEWS* README RELEASE-NOTES.* TODO
 %xmlbase/docbook/xsl-stylesheets-%version
 %xmlbase/docbook/xsl-stylesheets
+# compat symlink
+%_datadir/sgml/docbook/xsl-stylesheets
 
 %files doc
 %doc doc/*
@@ -148,6 +154,10 @@ if [ ! -d "%xmlbase/docbook/xsl-stylesheets-%version" ]; then
 fi
 
 %changelog
+* Wed Jan 16 2013 Igor Vlasenko <viy@altlinux.ru> 1.78.0-alt1
+- 1.78.0
+- added sgml compat symlink
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.77.1-alt1
 - 1.77.1 (closes: 27743)
 - sync'ed fedora patches
