@@ -25,7 +25,7 @@
   --enable-toolbar
 
 Name: xterm
-Version: 287
+Version: 288
 Release: alt1
 
 Summary: A standard terminal emulator for the X Window System
@@ -168,6 +168,10 @@ EOF
 %attr(2711,root,utempter) %_bindir/XTerm
 
 %changelog
+* Wed Jan 16 2013 Fr. Br. George <george@altlinux.ru> 288-alt1
+- Autobuild version bump to 288
+- Patches fixed
+
 * Thu Dec 13 2012 Fr. Br. George <george@altlinux.ru> 287-alt1
 - Autobuild version bump to 287
 
