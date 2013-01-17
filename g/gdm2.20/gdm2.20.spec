@@ -15,7 +15,7 @@
 
 Name: gdm2.20
 Version: %ver_major.8
-Release: alt8
+Release: alt9
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -25,6 +25,7 @@ Url: ftp://ftp.gnome.org/
 Source0: ftp://ftp.gnome.org/pub/gnome/sources/%base_name/%ver_major/%base_name-%version.tar
 Source1: gnomedesktop.png
 Source3: gdm_xdmcp.control
+Source4: gdm-termok-command
 
 # ALT patches
 Patch1: %base_name-2.20.8-alt-config.patch
@@ -34,6 +35,7 @@ Patch4: %base_name-2.20.0-alt-grep.patch
 Patch5: %base_name-2.20.8-alt-change-path-to-gdmsetup.patch
 Patch6: %base_name-2.20.8-alt-pam.patch
 Patch7: %base_name-2.20.8-alt-fix-dso-linking.patch
+Patch8: %base_name-2.20.8-alt-termok.patch
 
 # RH patches
 Patch19: %base_name-2.19.3-move-default-message.patch
@@ -90,6 +92,7 @@ This package contains user documentation for Gdm.
 %patch5 -p2
 %patch6 -p1
 %patch7 -p1
+%patch8 -p2
 
 %patch19 -p1
 %patch20 -p1
@@ -135,6 +138,9 @@ subst 's,/usr/lib/gdm,%_libexecdir,g' \
 # control gdm/xdmcp
 install -pDm755 %SOURCE3 %buildroot%_controldir/gdm_xdmcp
 
+# install gdm-termok-command
+install -pDm755 %SOURCE4 %buildroot%_sbindir/gdm-termok-command
+
 %find_lang %base_name
 %find_lang --output=%base_name-help.lang --without-mo --with-gnome %base_name
 
@@ -174,6 +180,10 @@ install -pDm755 %SOURCE3 %buildroot%_controldir/gdm_xdmcp
 %exclude %_libdir/gtk-2.0/modules/lib*.la
 
 %changelog
+* Thu Jan 17 2013 Mikhail Efremov <sem@altlinux.org> 2.20.8-alt9
+- Use gdm-termok-command for poweroff and reboot (closes: #28178).
+- Added gdm-termok-command script.
+
 * Tue May 22 2012 Mikhail Efremov <sem@altlinux.org> 2.20.8-alt8
 - Fix DSO linking.
 - Drop HAL support.
