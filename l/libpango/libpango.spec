@@ -7,7 +7,7 @@
 
 Name: lib%_name
 Version: %ver_major.6
-Release: alt1
+Release: alt2
 
 Summary: System for layout and rendering of internationalized text
 License: %lgpl2plus
@@ -29,6 +29,8 @@ Patch: pango-1.32.2-alt-compat-version-script.patch
 Patch3: pango-1.30.0-alt-check_defs.patch
 
 Patch10: pango-1.32.6-g_type_init.patch
+# ALT #28355
+Patch11: pango-1.32.6-2dc0c3dbb1c389c3a3ba12a5c5c85f21dca46e84.commit
 
 Provides: %_name = %version
 Obsoletes: %_name < %version
@@ -118,6 +120,7 @@ GObject introspection devel data for the Pango library
 install -p -m644 %_sourcedir/pango{,ft2,cairo}-compat.{map,lds} pango/
 %patch3
 %patch10
+%patch11 -p1 -R
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -187,6 +190,9 @@ mkdir -p %buildroot%_sysconfdir/%_name
 %exclude %_libdir/%_name/%module_ver/modules/*.la
 
 %changelog
+* Thu Jan 17 2013 Yuri N. Sedunov <aris@altlinux.org> 1.32.6-alt2
+- aen@: reverted http://git.gnome.org/browse/pango/commit/?id=2dc0c3dbb1c389c3a3ba12a5c5c85f21dca46e84 (ALT #28355)
+
 * Thu Jan 10 2013 Yuri N. Sedunov <aris@altlinux.org> 1.32.6-alt1
 - 1.32.6
 
