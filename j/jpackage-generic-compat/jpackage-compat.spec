@@ -1,5 +1,5 @@
 Name: jpackage-generic-compat
-Version: 0.20
+Version: 0.21
 Release: alt1
 
 Summary: ALT to JPackage build compatibility adaptor.
@@ -11,7 +11,7 @@ BuildArch: noarch
 BuildPreReq: rpm-build-java /proc
 
 Requires: docbook-style-xsl
-%add_findreq_skiplist /usr/share/sgml/docbook/xsl-stylesheets
+#add_findreq_skiplist /usr/share/sgml/docbook/xsl-stylesheets
 
 # sun java requires it
 Requires: /proc
@@ -99,19 +99,22 @@ Provides JPackage build environment with java-1.7.0.
 %install
 install -d $RPM_BUILD_ROOT%_javadir
 
-install -d $RPM_BUILD_ROOT/usr/share/sgml/docbook/
-ln -s /usr/share/xml/docbook/xsl-stylesheets $RPM_BUILD_ROOT/usr/share/sgml/docbook/xsl-stylesheets
+#install -d $RPM_BUILD_ROOT/usr/share/sgml/docbook/
+#ln -s /usr/share/xml/docbook/xsl-stylesheets $RPM_BUILD_ROOT/usr/share/sgml/docbook/xsl-stylesheets
 
-#%post
+#post
 
 %files
-/usr/share/sgml/docbook/xsl-stylesheets
+#/usr/share/sgml/docbook/xsl-stylesheets
 
 %files -n jpackage-1.5.0-compat
 %files -n jpackage-1.6.0-compat
 %files -n jpackage-1.7-compat
 
 %changelog
+* Thu Jan 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1
+- moved compat symlink into docbook-style-xsl
+
 * Thu Oct 04 2012 Igor Vlasenko <viy@altlinux.ru> 0.20-alt1
 - dropped jpackage-*-core
 
