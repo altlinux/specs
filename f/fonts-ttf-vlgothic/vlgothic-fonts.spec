@@ -15,7 +15,7 @@ but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
 Version:	20121230
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
@@ -27,30 +27,22 @@ Source2:	%{oldname}-fontconfig-gothic.conf
 BuildArch:	noarch
 BuildRequires:	fontpackages-devel
 
-Requires:	%{name}-common = %{version}-%{release}
-Obsoletes:	VLGothic-fonts < 20090204-1
-Provides:	VLGothic-fonts = %{version}-%{release}
+Obsoletes:	%{oldname}-common < 20121230-2
+Provides:	%{oldname}-common = %{version}-%{release}
 Source44: import.info
 %description
 %common_desc
 
 This package provides the monospace VLGothic font.
 
-%package	common
-Summary:	Common files for VLGothic Japanese TrueType fonts
-Group:		System/Fonts/True type
-
-%description	common
-%common_desc
-
-This package consists of files used by other %%{oldname} packages.
 
 %package -n fonts-ttf-vlgothic-p
 Summary:	Proportional Japanese TrueType font
 Group:		System/Fonts/True type
-Requires:	%{name}-common = %{version}-%{release}
 Obsoletes:	VLGothic-fonts-proportional < 20090204-1
 Provides:	VLGothic-fonts-proportional = %{version}-%{release}
+Obsoletes:	%{oldname}-common < 20121230-2
+Provides:	%{oldname}-common = %{version}-%{release}
 
 %description -n fonts-ttf-vlgothic-p
 %common_desc
@@ -115,22 +107,23 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 
-%files common
-%doc README* LICENSE*
-%dir %{_fontbasedir}/*/%{_fontstem}
-
 %files
 %{_fontconfig_templatedir}/%{fontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/VL-Gothic-Regular.ttf
+%doc README* LICENSE*
 
 %files -n fonts-ttf-vlgothic-p
 %{_fontconfig_templatedir}/%{pfontconf}.conf
 %config(noreplace) %{_fontconfig_confdir}/%{pfontconf}.conf
 %{_fontbasedir}/*/%{_fontstem}/VL-PGothic-Regular.ttf
+%doc README* LICENSE*
 
 
 %changelog
+* Thu Jan 17 2013 Igor Vlasenko <viy@altlinux.ru> 20121230-alt1_2
+- update to new release by fcimport
+
 * Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 20121230-alt1_1
 - update to new release by fcimport
 
