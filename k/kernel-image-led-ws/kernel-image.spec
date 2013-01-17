@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.58
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -46,6 +46,7 @@ Release: alt4
 %def_enable docs
 %def_enable htmldocs
 %def_enable man
+%def_disable compat
 %def_disable x32
 %def_disable debugfs
 %def_disable numa
@@ -2204,6 +2205,7 @@ config_disable \
 config_disable \
 	%{?_disable_smp:SMP} \
 	%{?_disable_modversions:MODVERSIONS} \
+	%{?_disable_compat:SYSCTL_SYSCALL ACPI_PROC_EVENT COMPAT_VDSO I2C_COMPAT} \
 	%{?_disable_numa:NUMA} \
 	%{?_disable_video:FB DISPLAY_SUPPORT VIDEO_OUTPUT_CONTROL BACKLIGHT_LCD_SUPPORT} \
 	%{?_disable_drm:DRM} \
@@ -2985,6 +2987,9 @@ done)
 
 
 %changelog
+* Thu Jan 17 2013 Led <led@altlinux.ru> 3.0.58-alt5
+- disabled compat (turn off some COMPAT options in .config)
+
 * Thu Jan 17 2013 Led <led@altlinux.ru> 3.0.58-alt4
 - added:
   + fix-drivers-crypto--padlock
