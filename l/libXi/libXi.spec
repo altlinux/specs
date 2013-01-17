@@ -1,5 +1,5 @@
 Name: libXi
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 Summary: X Input Extension Library
 License: MIT/X11
@@ -49,6 +49,9 @@ develop programs which make use of %name
 %_man3dir/*
 
 %changelog
+* Thu Jan 17 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.6.2-alt1
+- 1.6.2
+
 * Thu May 03 2012 Valery Inozemtsev <shrek@altlinux.ru> 1.6.1-alt1
 - 1.6.1
 
