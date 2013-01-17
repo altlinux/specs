@@ -1,16 +1,14 @@
 Name: abi-compliance-checker
-Version: 1.21.9
+Version: 1.98.6
 Release: alt1
 
 Summary: ABI compliance checker
 
 Group: Development/Other
 License: GPLv2+
-Url: http://ispras.linux-foundation.org/index.php/ABI_compliance_checker
-
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://linuxtesting.org/downloads/%name-%version.tar
+Url: http://ispras.linuxbase.org/index.php/ABI_compliance_checker
+# TODO: upstream seems to change source tarball publication policy
+Source: %name-%version.tar.gz
 Requires: gcc binutils
 
 BuildArch: noarch
@@ -33,13 +31,18 @@ versions on different linux distributions.
 
 %install
 install -d %buildroot%_bindir
-install -m0755 abi-compliance-checker.pl %buildroot%_bindir/abi-compliance-checker
+##install -m0755 abi-compliance-checker.pl %buildroot%_bindir/abi-compliance-checker
+perl Makefile.pl -install --prefix=%_prefix --destdir=%buildroot
 
 %files
-%doc LICENSE.txt *.html
+%doc doc README INSTALL
 %_bindir/abi-compliance-checker
+%_datadir/%name
 
 %changelog
+* Fri Jan 11 2013 Fr. Br. George <george@altlinux.ru> 1.98.6-alt1
+- Autobuild version bump to 1.98.6
+
 * Wed Nov 17 2010 Vitaly Lipatov <lav@altlinux.ru> 1.21.9-alt1
 - new version 1.21.9 (with rpmrb script)
 
