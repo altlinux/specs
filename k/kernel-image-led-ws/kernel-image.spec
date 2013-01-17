@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.58
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -246,7 +246,8 @@ Patch0155: linux-%kernel_branch.50-fix-drivers-cpufreq--powernow-k8.patch
 
 Patch0161: linux-%kernel_branch.43-fix-drivers-crypto--ap.patch
 Patch0162: linux-%kernel_branch.42-fix-drivers-crypto--hifn_795x.patch
-Patch0163: linux-%kernel_branch.51-fix-drivers-crypto--s390.patch
+Patch0163: linux-%kernel_branch.58-fix-drivers-crypto--padlock.patch
+Patch0164: linux-%kernel_branch.51-fix-drivers-crypto--s390.patch
 
 Patch0171: linux-%kernel_branch.42-fix-drivers-dma--dmatest.patch
 Patch0172: linux-%kernel_branch.43-fix-drivers-dma--intel_mid_dma.patch
@@ -958,6 +959,17 @@ This package contains IPMI core and support driver modules for the Linux kernel
 package %name-%version-%release.
 
 
+%if_enabled edac
+%package -n kernel-modules-edac-%flavour
+Summary: EDAC (Error Detection And Correction) driver modules
+%kernel_modules_package_std_body ipmi
+
+%description -n kernel-modules-edac-%flavour
+This package contains EDAC (Error Detection And Correction) driver modules for
+the Linux kernel package %name-%version-%release.
+%endif
+
+
 %if_enabled video
 %package -n kernel-modules-video-%flavour
 Summary: Video graphics driver modules
@@ -1548,10 +1560,11 @@ cd linux-%version
 %patch0154 -p1
 %patch0155 -p1
 
-# fix-drivers-creypto--*
+# fix-drivers-crypto--*
 %patch0161 -p1
 %patch0162 -p1
 %patch0163 -p1
+%patch0164 -p1
 
 # fix-drivers-dma--*
 %patch0171 -p1
@@ -2488,6 +2501,7 @@ gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/devi
 mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
 gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
 gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
+%{?_enable_edac:gen_rpmmodfile edac %buildroot%modules_dir/kernel/drivers/edac}
 %{?_enable_atm:gen_rpmmodfile atm %buildroot%modules_dir/kernel/{drivers{,/usb},net}/atm}
 %{?_enable_drm:gen_rpmmodfile drm %buildroot%modules_dir/kernel/drivers/gpu/drm}
 %{?_enable_fddi:gen_rpmmodfile fddi %buildroot%modules_dir/kernel/{drivers/net/{defxx.ko,skfp},net/802/fddi.ko}}
@@ -2527,6 +2541,8 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 %kernel_modules_package_post infiniband
 
 %kernel_modules_package_post ipmi
+
+%{?_enable_edac:%kernel_modules_package_post edac}
 
 %{?_enable_video:%kernel_modules_package_post video}
 
@@ -2699,6 +2715,7 @@ done)
 
 %kernel_modules_package_files ipmi
 
+%{?_enable_edac:%kernel_modules_package_files edac}
 
 %{?_enable_video:%kernel_modules_package_files video}
 
@@ -2968,6 +2985,12 @@ done)
 
 
 %changelog
+* Thu Jan 17 2013 Led <led@altlinux.ru> 3.0.58-alt4
+- added:
+  + fix-drivers-crypto--padlock
+  + feat-fs--lnfs
+- move EDAC modules to separate subpackage kernel-modules-edac-*
+
 * Tue Jan 15 2013 Led <led@altlinux.ru> 3.0.58-alt3
 - updated:
   + fix-drivers-md--dm-multipath
