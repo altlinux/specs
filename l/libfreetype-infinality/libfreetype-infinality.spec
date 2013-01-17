@@ -2,7 +2,7 @@
 
 Name: libfreetype-infinality
 Version: 2.4.11
-Release: alt1
+Release: alt3
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
 License: FTL or GPLv2+
@@ -93,11 +93,11 @@ EOF
 %define docdir %_docdir/%name-%version
 mkdir -p %buildroot%docdir
 
-%define ld_preload_script_name %{name}-%{_arch}.sh
+%define ld_preload_script_name infinality-ld-preload.sh
 %define ld_preload_script %buildroot%{_sysconfdir}/profile.d/%ld_preload_script_name
 
 mkdir -p %buildroot%{_sysconfdir}/profile.d/
-/bin/echo "PRELOAD=1; if [ -f /etc/sysconfig/fonts ]; then . /etc/sysconfig/fonts; fi; A1=\`arch\`; A2=%{_arch}; if [ \"\${A1:0:1}\" = \"\${A2:0:1}\" -a ! \"\$PRELOAD\" = \"0\" ]; then ADDED=\`/bin/echo \$LD_PRELOAD | grep \"%{_libdir}/libfreetype.so.6\" | wc -l\`; if [ \"\$ADDED\" = \"0\" ]; then export LD_PRELOAD=%{_libdir}/%{name}/libfreetype.so.%{freetypemajorversion}:\$LD_PRELOAD ; fi; fi" > %ld_preload_script
+/bin/echo "export LD_PRELOAD=/usr/'\$LIB'/%{name}/libfreetype.so.%{freetypemajorversion}:\$LD_PRELOAD" > %ld_preload_script
 chmod 755 %ld_preload_script
 
 install -pD -m755 %SOURCE91 %buildroot%_sysconfdir/profile.d/
@@ -124,11 +124,17 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 
 %files
 %docdir
-%_libdir/%name/*.so.*
+%_libdir/%name/
 %{_sysconfdir}/profile.d/%ld_preload_script_name
 %config %{_sysconfdir}/profile.d/infinality-settings.sh
 
 %changelog
+* Thu Jan 17 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.11-alt3
+- Include %_libdir/%name/ directory
+
+* Thu Jan 17 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.11-alt2
+- Fixed ld preload script to properly work on biarch systems
+
 * Wed Jan 9 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.11-alt1
 - 2.4.11
 
