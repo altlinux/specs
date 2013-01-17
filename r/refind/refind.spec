@@ -1,5 +1,5 @@
 Name: refind
-Version: 0.6.4
+Version: 0.6.5
 Release: alt1
 
 Summary: EFI boot manager software
@@ -7,8 +7,7 @@ License: GPLv3
 Group: System/Base
 
 Url: http://www.rodsbooks.com/refind/
-Source0: refind-src-%version.zip
-Source1: os_altlinux.icns
+Source: refind-src-%version.zip
 Packager: Michael Shigorin <mike@altlinux.org>
 
 BuildRequires: gnu-efi unzip
@@ -69,7 +68,6 @@ cp -a drivers_%_efi_arch/*.efi %buildroot%refind_lib/drivers_%_efi_arch/
 %endif
 
 cp -a icons/ %buildroot%refind_data/
-cp -a %SOURCE1 %buildroot%refind_data/icons/
 
 %files
 %doc docs/*
@@ -85,6 +83,10 @@ cp -a %SOURCE1 %buildroot%refind_data/icons/
 # - macros get expanded too early for shell loops
 
 %changelog
+* Thu Jan 17 2013 Michael Shigorin <mike@altlinux.org> 0.6.5-alt1
+- 0.6.5
+- dropped os_altlinux icon (merged upstream)
+
 * Sat Jan 12 2013 Michael Shigorin <mike@altlinux.org> 0.6.4-alt1
 - initial build for ALT Linux Sisyphus
 - stripped upstream installation helpers (too smart for a package)
