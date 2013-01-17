@@ -11,8 +11,8 @@
 %endif
 
 Name: quake3
-Version: 1.34
-Release: alt12.svn%revision
+Version: 1.36
+Release: alt1.svn%revision
 
 Summary: Quake 3: Arena by ID Software
 License: GPL
@@ -184,6 +184,9 @@ echo "In order to actually play the game, you'll need pak-files from original ga
 %dir %attr(1770,root,%_group) %_home
 
 %changelog
+* Thu Jan 17 2013 Igor Zubkov <icesik@altlinux.org> 1.36-alt1.svn2349
+- Bump version
+
 * Sun Nov 25 2012 Igor Zubkov <icesik@altlinux.org> 1.34-alt12.svn2349
 - Remove quake3-alt-bug14027.patch
 - Move %%_libdir/games/quake3/ -> %%_libdir/quake3/
