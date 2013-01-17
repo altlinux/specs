@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.19
+Version: 2.0.20
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Jan 17 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.20-alt1
+- rpmbph: make use p6 for branch name by default instead M60P
+- add cert6 support
+- build: fix rpmbb -r on gear repo with multispec
+- rpmbph: add bash->dash translation
+- rpmcs: add browser_plugins_path support
+
 * Sat Jan 05 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.19-alt1
 - rpmlog: add error if add_changelog failed
 - rpmcs: fix iconsdir, add mozilla extensions
