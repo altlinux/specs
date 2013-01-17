@@ -7,7 +7,7 @@ BuildRequires: python-devel
 
 Name:      fonts-ttf-gnu-freefont
 Version:   20120503
-Release:   alt1_3
+Release:   alt1_4
 Summary:   Free UCS Outline Fonts
 Group:     System/Fonts/True type
 # Standard font exception
@@ -46,7 +46,7 @@ Obsoletes: gnu-free-fonts-compat < 20120503
 %description common
 %common_desc
 
-This package consists of files used by other %{oldname} packages.
+This package consists of files used by other %%{oldname} packages.
 
 
 %package -n fonts-ttf-gnu-freefont-mono
@@ -83,7 +83,7 @@ This package contains the GNU FreeFont serif font.
 
 
 %prep
-%setup -qn freefont-%{version}
+%setup -n %{oldname}-%{version} -qn freefont-%{version}
 
 
 %build
@@ -166,6 +166,9 @@ fi
 %doc AUTHORS ChangeLog CREDITS COPYING README
 
 %changelog
+* Thu Jan 17 2013 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_4
+- update to new release by fcimport
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 20120503-alt1_3
 - update to new release by fcimport
 
