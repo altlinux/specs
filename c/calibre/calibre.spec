@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 Name: calibre
 Version: 0.8.55
-Release: alt1.1
+Release: alt1.2
 Summary: A e-book library management application
 Summary(ru_RU.UTF8): Программа для работы с личной электронной библиотекой
 License: GPL
@@ -65,6 +65,9 @@ mv %buildroot{/usr,}/etc
 %exclude %_datadir/%name/fonts/liberation/
 
 %changelog
+* Thu Jan 17 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.55-alt1.2
+- rebuild with new sip
+
 * Thu Oct 11 2012 Sergey V Turchin <zerg@altlinux.org> 0.8.55-alt1.1
 - disable xbar support
 
