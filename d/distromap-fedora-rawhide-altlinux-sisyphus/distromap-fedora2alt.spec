@@ -1,7 +1,7 @@
 %define module fedora-rawhide-altlinux-sisyphus
 
 Name: distromap-%module
-Version: 0.25
+Version: 0.26
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -40,6 +40,9 @@ done
 /usr/share/distromap/*
 
 %changelog
+* Thu Jan 17 2013 Igor Vlasenko <viy@altlinux.ru> 0.26-alt1
+- db updates
+
 * Mon Dec 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.25-alt1
 - db updates
 
