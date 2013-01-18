@@ -1,7 +1,7 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 1.1.2
-Release: alt1.2012.09.10
+Release: alt1.2013.01.11
 License: ISC
 Group: Networking/Other
 Source: %name-%version.tar
@@ -10,6 +10,7 @@ Source2: setregdomain
 Source3: setregdomain.1
 # Add udev rule to call setregdomain on wireless device add
 Patch0: regulatory-rules-setregdomain.patch
+Patch1: %name-%version-alt.patch
 Url: http://www.linuxwireless.org/en/developers/Regulatory/CRDA
 Packager: Evgenii Terechkov <evg@altlinux.org>
 
@@ -53,7 +54,7 @@ cp README README.wireless-regdb
 cp LICENSE LICENSE.wireless-regdb
 make install DESTDIR=%buildroot PREFIX='' MANDIR=%_mandir
 install -D -pm 0755 %SOURCE2 %buildroot/sbin
-install -D -pm 0644 %SOURCE3 %buildroot%_mandir/man1/setregdomain.1
+install -D -pm 0644 %SOURCE3 %buildroot%_man1dir/setregdomain.1
 
 %files
 /sbin/%name
@@ -62,13 +63,16 @@ install -D -pm 0644 %SOURCE3 %buildroot%_mandir/man1/setregdomain.1
 /lib/udev/rules.d/85-regulatory.rules
 # location of database is hardcoded to /lib/%name
 /lib/%name
-%_mandir/man1/setregdomain.1*
-%_mandir/man5/regulatory.bin.5*
-%_mandir/man8/crda.8*
-%_mandir/man8/regdbdump.8*
+%_man1dir/setregdomain.1*
+%_man5dir/regulatory.bin.5*
+%_man8dir/crda.8*
+%_man8dir/regdbdump.8*
 %doc %name-%version/LICENSE.crda %name-%version/README.crda
 %doc wireless-regdb/README.wireless-regdb wireless-regdb/LICENSE.wireless-regdb
 
 %changelog
+* Fri Jan 18 2013 Terechkov Evgenii <evg@altlinux.org> 1.1.2-alt1.2013.01.11
+- wireless-regdb tag master-2013-01-11
+
 * Tue Sep 11 2012 Terechkov Evgenii <evg@altlinux.org> 1.1.2-alt1.2012.09.10
 - Initial build for ALT Linux Sisyphus
