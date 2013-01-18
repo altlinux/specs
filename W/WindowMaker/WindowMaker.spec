@@ -1,5 +1,5 @@
 # be ready to change gnustepdir to /usr/lib/GNUstep
-%define gnustepdir %_prefix/libexec/GNUstep
+%define gnustepdir %_libdir/GNUstep
 %define wmdatadir /usr/share/WindowMaker
 
 %define WINGs_SOVER 2
@@ -12,7 +12,7 @@
 
 Name: WindowMaker
 Version: 0.95.4
-Release: alt1
+Release: alt3
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -301,6 +301,12 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Fri Jan 18 2013 Andrey Bergman <vkni@altlinux.org> 0.95.4-alt3
+- Relocated GNUstep directory.
+
+* Fri Jan 18 2013 Andrey Bergman <vkni@altlinux.org> 0.95.4-alt2
+- Relocated GNUstep directory.
+
 * Fri Jan 18 2013 Andrey Bergman <vkni@altlinux.org> 0.95.4-alt1
 - Update to a new version.
 
