@@ -1,6 +1,6 @@
 Name: xorg-drv-nv
 Version: 2.1.20
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: NVIDIA video driver
 License: MIT/X11
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 nv  is  an  Xorg  driver for NVIDIA video cards.  The driver
@@ -42,6 +43,9 @@ ports TrueColor in the higher depths.
 %_man4dir/*.4*
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:2.1.20-alt2
+- requires XORG_ABI_VIDEODRV = 13.1
+
 * Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:2.1.20-alt1
 - 2.1.20
 

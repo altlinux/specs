@@ -1,6 +1,6 @@
 Name: xorg-drv-openchrome
-Version: 0.2.999
-Release: alt2
+Version: 0.3.1
+Release: alt1
 Epoch: 1
 Summary: VIA openchrome graphics driver
 License: MIT/X11
@@ -14,8 +14,8 @@ Patch: %name-%version-%release.patch
 Requires: XORG_ABI_VIDEODRV = %get_xorg_abi_videodrv
 
 BuildRequires(Pre): xorg-sdk xorg-util-macros
-BuildRequires: libX11-devel libXext-devel libXvMC-devel xorg-fontsproto-devel
-BuildRequires: xorg-randrproto-devel xorg-renderproto-devel libdrm-devel
+BuildRequires: libudev-devel libX11-devel libXext-devel libXvMC-devel xorg-fontsproto-devel xorg-glproto-devel xorg-randrproto-devel
+BuildRequires: libGL-devel xorg-renderproto-devel libdrm-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 openchrome  is an Xorg driver for VIA chipsets that have  an integrated
@@ -44,10 +44,8 @@ is available at dri.sourceforge.net.
 %autoreconf
 %configure \
 	--with-xorg-module-dir=%_x11modulesdir \
-	--disable-dri \
 	--disable-static
 
-echo "#undef XF86DRI" >> config.h
 %make_build
 
 %install
@@ -56,9 +54,13 @@ echo "#undef XF86DRI" >> config.h
 %files
 %doc NEWS README
 %_x11modulesdir/drivers/*.so
+%_libdir/libchromeXvMC*.so.*
 %_man4dir/*
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.3.1-alt1
+- 0.3.1
+
 * Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.2.999-alt2
 - requires XORG_ABI_VIDEODRV = 12.1
 
