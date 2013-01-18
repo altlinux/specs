@@ -1,5 +1,5 @@
 Name: installer-feature-centaurus-profiles
-Version: 0.6
+Version: 0.7
 Release: alt1
 
 Summary: Setups package groups from selected vm-profile
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Fri Jan 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt1
+- add sysvinit in server cases
+
 * Wed Dec 12 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.6-alt1
 - use centaurus-mate instead of centaurus-gnome
 - remove kernel setup
