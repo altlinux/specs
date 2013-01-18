@@ -1,54 +1,112 @@
 Name: procps
-Version: 3.2.8
+Version: 3.3.6
 Release: alt1
 
-Summary: Utilities for monitoring your system and processes on your system
+Summary: System and process monitoring utilities
 License: GPLv2+, LGPLv2+
 Group: Monitoring
-# http://procps.sourceforge.net/
-Url: http://git.altlinux.org/people/ldv/packages/?p=procps.git
-Packager: Dmitry V. Levin <ldv@altlinux.org>
+URL: https://sourceforge.net/projects/procps-ng/
 
-# http://procps.sourceforge.net/procps-%version.tar.gz
-Source: procps-%version.tar
-# http://procps.sourceforge.net/faq.html
-Source1: FAQ
+# git://git.altlinux.org/gears/p/procps.git
+Source: %name-%version-%release.tar
 
-Patch: procps-%version-%release.patch
+# it is actually procps-ng
+Provides: procps-ng = %version-%release
+
+%ifarch x86_64
+# hack around arepo, remove this as soon as possible
+Provides: i586-procps = %version-%release
+%endif
+
+Requires: lib%name = %version-%release
 
 # Due to kill(1) relocation to coreutils.
 Requires: coreutils >= 0:5.2.1-alt2
 
 BuildRequires: libncursesw-devel
-
-%def_enable selinux
-%{?_enable_selinux:BuildRequires: libselinux-devel}
+%{?!_without_check:%{?!_disable_check:BuildRequires: dejagnu}}
 
 %description
 This package contains a set of system utilities which provide system
-information.  procps includes: free, pgrep, pkill, pmap, ps, pwdx, skill,
-slabtop, snice, sysctl, tload, top, uptime, vmstat, w, watch.
+information.  procps includes: free, pgrep, pkill, pmap, ps, pwdx,
+skill, slabtop, snice, sysctl, tload, top, uptime, vmstat, w, watch.
+
+%package -n lib%name
+Summary: %name shared library
+License: LGPLv2+
+Group: System/Libraries
+
+%package -n lib%name-devel
+Summary: Development files for building %name-aware applications
+License: LGPLv2+
+Group: Development/C
+Requires: lib%name = %version-%release
+
+%description -n lib%name
+This package contains lib%name runtime library.
+
+%description -n lib%name-devel
+This package contains development files for building %name-aware
+applications.
 
 %prep
-%setup
-install -pm644 %_sourcedir/FAQ .
-%patch -p1
+%setup -n %name-%version-%release
+
+# build scripts expect to find package version in this file
+echo -n %version-%release > .tarball-version
 
 %build
-%make_build CFLAGS='%optflags' %{?_enable_selinux:USE_SELINUX=1}
+./autogen.sh
+%configure \
+	--exec-prefix=/ \
+	--bindir=/bin \
+	--sbindir=/sbin \
+	--enable-watch8bit \
+	--enable-oomem \
+	--disable-static \
+	--disable-kill \
+	--enable-skill \
+	#
+%make_build
 
 %install
-make install DESTDIR=%buildroot lib64=%_lib
+%makeinstall_std
+rm -r %buildroot%_docdir/procps-ng
+
+# reduce redundancy
+ln -snf pgrep %buildroot%_bindir/pkill
+ln -snf skill %buildroot%_bindir/snice
+
+# relocate shared libraries from %_libdir/ to /%_lib/
+for f in %buildroot%_libdir/*.so; do
+	t=$(readlink -v "$f")
+	ln -snf ../../%_lib/"$t" "$f"
+done
+mkdir -p %buildroot/%_lib
+mv %buildroot%_libdir/*.so.* %buildroot/%_lib/
+
+%check
+%make_build -k check
 
 %files
-/%_lib/*
 /bin/*
 /sbin/*
 %_bindir/*
 %_mandir/man?/*
-%doc AUTHORS BUGS FAQ NEWS TODO
+%doc AUTHORS Documentation/BUGS Documentation/FAQ NEWS README top/README.top Documentation/TODO
+
+%files -n lib%name
+/%_lib/*
+
+%files -n lib%name-devel
+%_libdir/*.so
+%_includedir/*
+%_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 16 2013 Dmitry V. Levin <ldv@altlinux.org> 3.3.6-alt1
+- Updated to procps-ng 3.3.6 (closes: #18136, #27296).
+
 * Fri Sep 24 2010 Dmitry V. Levin <ldv@altlinux.org> 3.2.8-alt1
 - Updated to 3.2.8.
 - Updated patches from Debian procps-3.2.8-9, Fedora procps-3.2.8-10
