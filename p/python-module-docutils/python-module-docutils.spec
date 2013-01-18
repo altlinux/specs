@@ -2,8 +2,8 @@
 %def_with python3
 
 Summary: Docutils -- Python Documentation Utilities
-Version: 0.9
-Release: alt3
+Version: 0.11
+Release: alt1.svn20130117
 %setup_python_module %oname
 Name: %packagename
 Source0: %modulename-%version.tar.gz
@@ -62,9 +62,6 @@ cp -a . ../python3
 pushd ../python3
 for i in $(find ./ -name '*.py'); do
 	2to3 -w $i
-done
-for i in %oname/parsers/code_analyzer.py tools/dev/profile_docutils.py
-do
 	sed -i 's|%_bindir/python|%_bindir/python3|' $i
 done
 for i in $(find ./ -name '*.py'); do
@@ -89,12 +86,16 @@ popd
 install -d %buildroot%_datadir/%modulename
 cp -rp tools %buildroot%_datadir/%modulename
 
+install -p -m644 docutils/utils/roman.py \
+	%buildroot%python_sitelibdir
+
 export LC_ALL=en_US.UTF-8
 
 %check
 export LC_ALL=en_US.UTF-8
 python test/alltests.py
-%if_with python3
+#if_with python3
+%if 0
 pushd ../python3
 python3 %buildroot%python3_sitelibdir/test/alltests.py
 popd
@@ -103,24 +104,28 @@ popd
 %files -f INSTALLED_FILES
 %doc docs *.txt
 %_datadir/%modulename
+%python_sitelibdir/roman.py*
 %if_with python3
 %exclude %_bindir/py3_*
 
 %files -n python3-module-%oname
 %_bindir/py3_*
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/test
+#exclude %python3_sitelibdir/test
 %exclude %python3_sitelibdir/%modulename/examples.py*
-%exclude %python3_sitelibdir/tools/editors/emacs/tests
-%exclude %python3_sitelibdir/tools/test
+#exclude %python3_sitelibdir/tools/editors/emacs/tests
+#exclude %python3_sitelibdir/tools/test
 
 %files -n python3-module-%oname-tests
 %python3_sitelibdir/%modulename/examples.py*
-%python3_sitelibdir/tools/editors/emacs/tests
-%python3_sitelibdir/tools/test
+#python3_sitelibdir/tools/editors/emacs/tests
+#python3_sitelibdir/tools/test
 %endif
 
 %changelog
+* Fri Jan 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11-alt1.svn20130117
+- Version 0.11
+
 * Wed Apr 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt3
 - Extracted tests into separate package
 
