@@ -1,5 +1,5 @@
 Name:    kde4-virtual
-Version: 4.7
+Version: 4.10
 Release: alt1
 
 %define smr KDE4 (virtual package)
@@ -30,6 +30,7 @@ Source1: kde-virtual.sh
 Summary: %smr
 License: GPL
 Group: Graphical desktop/KDE
+Provides: kde4-default
 Requires: %kde4_kde
 %description -n kde4
 %dsk
@@ -84,6 +85,9 @@ This package installs development tools for KDE 4.x.
 %files -n kde4-devel
 
 %changelog
+* Fri Jan 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt1
+- provide kde4-default
+
 * Wed Sep 14 2011 Sergey V Turchin <zerg@altlinux.org> 4.7-alt1
 - fix requires
 
