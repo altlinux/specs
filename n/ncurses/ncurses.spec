@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 5.9
-Release: alt1
+Release: alt2
 
 %define rootdatadir /lib
 
@@ -582,12 +582,14 @@ done
 %_bindir/toe
 %_bindir/tput
 %_bindir/tset
+%_bindir/tabs
 %_man7dir/*
 %_man1dir/clear.*
 %_man1dir/reset.*
 %_man1dir/toe.*
 %_man1dir/tput.*
 %_man1dir/tset.*
+%_man1dir/tabs.*
 
 %files -n termutils-devel
 %_bindir/*info*
@@ -607,6 +609,7 @@ done
 %_bindir/%{name}5-config
 %_libdir/lib*[musl].so
 %_includedir/*
+%_man1dir/*-config*
 %exclude %_includedir/term*.h
 %exclude %_includedir/%name/term*.h
 %exclude %_includedir/%name/ncurses_dll.h
@@ -660,6 +663,11 @@ done
 %endif # with_utf8
 
 %changelog
+* Fri Jan 18 2013 Fr. Br. George <george@altlinux.ru> 5.9-alt2
+- Version up to 5.9-20130112
+- Extend baseterms list with 256-color versions of terminals (Closes: #25245)
+- Update screen.ti from screen-4.0.3 (Closes: #28313)
+
 * Mon Dec 17 2012 Fr. Br. George <george@altlinux.ru> 5.9-alt1
 - Version up to 5.9-20121215
 
