@@ -1,5 +1,5 @@
 Name: xorg-drv-joystick
-Version: 1.6.1
+Version: 1.6.2
 Release: alt1
 Epoch: 1
 Summary: joystick input driver
@@ -15,6 +15,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk xorg-util-macros
 BuildRequires: libmtdev-devel libXi-devel xorg-kbproto-devel xorg-randrproto-devel xorg-xproto-devel
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 joystick is an Xorg input driver
@@ -40,6 +41,9 @@ joystick is an Xorg input driver
 %_man4dir/*.4*
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.2-alt1
+- 1.6.2
+
 * Sun Mar 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.1-alt1
 - 1.6.1
 

@@ -1,4 +1,4 @@
-%define mesaversion 8.0
+%define mesaversion 9.0
 %define xorgversion 7.7.0
 
 %define _libexecdir /usr/libexec
@@ -18,8 +18,8 @@
 %endif
 
 Name: xorg-server
-Version: 1.12.4
-Release: alt2
+Version: 1.13.1.901
+Release: alt1
 Epoch: 2
 License: MIT/X11
 Summary: Xserver - X Window System display server
@@ -28,9 +28,9 @@ Url: http://xorg.freedesktop.org
 Packager: Valery Inozemtsev <shrek@altlinux.ru>
 
 # grep ABI_ hw/xfree86/common/xf86Module.h
-Provides: XORG_ABI_VIDEODRV = 12.1
-Provides: XORG_ABI_XINPUT = 16.0
-Provides: XORG_ABI_EXTENSION = 6.0
+Provides: XORG_ABI_VIDEODRV = 13.1
+Provides: XORG_ABI_XINPUT = 18.0
+Provides: XORG_ABI_EXTENSION = 7.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
 PreReq: xorg-server-control >= 1.3-alt1 %name-common = %version-%release libGL >= %mesaversion xorg-dri-swrast >= %mesaversion
 Requires: xset iceauth xdpyinfo glxinfo xdriinfo xorg-drv-fbdev xorg-drv-vesa xorg-drv-evdev
@@ -38,7 +38,7 @@ Requires: xset iceauth xdpyinfo glxinfo xdriinfo xorg-drv-fbdev xorg-drv-vesa xo
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
-BuildRequires: flex libGL-devel libXau-devel libXaw-devel libXdmcp-devel libXext-devel libXfixes-devel libXfont-devel libXmu-devel
+BuildRequires: doxygen flex libGL-devel libXau-devel libXaw-devel libXdmcp-devel libXext-devel libXfixes-devel libXfont-devel libXmu-devel
 BuildRequires: libXi-devel libXpm-devel libXrender-devel libXres-devel libXtst-devel libXv-devel libdmx-devel libudev-devel libSM-devel
 BuildRequires: libpciaccess-devel libpixman-devel libssl-devel libxkbfile-devel xorg-bigreqsproto-devel xorg-compositeproto-devel
 BuildRequires: xorg-damageproto-devel xorg-dri2proto-devel xorg-randrproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
@@ -212,9 +212,6 @@ touch %buildroot%_sysconfdir/X11/xorg.conf
 mv %buildroot%_modulesdir/extensions/libglx.so %buildroot%_libdir/X11/libglx.so
 ln -sf ../../..%_libdir/X11/libglx.so %buildroot%_sysconfdir/X11/%_lib/libglx.so
 ln -sf ../../../../..%_sysconfdir/X11/%_lib/libglx.so %buildroot%_modulesdir/extensions/libglx.so
-mv %buildroot%_modulesdir/extensions/libdri.so %buildroot%_libdir/X11/libdri.so
-ln -sf ../../..%_libdir/X11/libdri.so %buildroot%_sysconfdir/X11/%_lib/libdri.so
-ln -sf ../../../../..%_sysconfdir/X11/%_lib/libdri.so %buildroot%_modulesdir/extensions/libdri.so
 
 install -pD -m644 xserver.pamd %buildroot%_sysconfdir/pam.d/xserver
 mkdir -p %buildroot%_sysconfdir/security/console.apps
@@ -231,15 +228,12 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %post_control xorg-server
 [ -r %_sysconfdir/X11/%_lib/libglx.so ] || \
 	ln -sf ../../..%_libdir/X11/libglx.so %_sysconfdir/X11/%_lib/libglx.so
-[ -r %_sysconfdir/X11/%_lib/libdri.so ] || \
-	ln -sf ../../..%_libdir/X11/libdri.so %_sysconfdir/X11/%_lib/libdri.so
 
 %files
 %config(noreplace) %_sysconfdir/pam.d/xserver
 %config(missingok noreplace) %_sysconfdir/security/console.apps/xserver
 %dir %_sysconfdir/X11/%_lib
 %ghost %_sysconfdir/X11/%_lib/libglx.so
-%ghost %_sysconfdir/X11/%_lib/libdri.so
 %ghost %_sysconfdir/X11/xorg.conf
 %_bindir/X
 %attr(0700,root,root) %_bindir/Xorg
@@ -249,12 +243,7 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %dir %_modulesdir/drivers
 %dir %_modulesdir/input
 %dir %_modulesdir/extensions
-%_modulesdir/extensions/libdbe.so
-%_modulesdir/extensions/libextmod.so
 %_modulesdir/extensions/libglx.so
-%_modulesdir/extensions/libdri.so
-%_modulesdir/extensions/libdri2.so
-%_modulesdir/extensions/librecord.so
 %_modulesdir/*.so
 %dir %_libexecdir/X11
 %_libexecdir/X11/drv.d
@@ -309,6 +298,10 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.13.1.901-alt1
+- 1.13.2 RC1
+- switch libEGL & libGLESv2 (closes: #27875)
+
 * Wed Oct 03 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:1.12.4-alt2
 - added modesetting driver to fallback list (closes: #27773)
 

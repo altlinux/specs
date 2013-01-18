@@ -1,6 +1,6 @@
 Name: xorg-drv-s3virge
 Version: 1.10.6
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: S3 ViRGE video driver
 License: MIT/X11
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 s3virge  is  an  Xorg  driver for S3 based video cards.  The
@@ -45,6 +46,9 @@ on other chipsets are untested.
 %_man4dir/*
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.10.6-alt2
+- requires XORG_ABI_VIDEODRV = 13.1
+
 * Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.10.6-alt1
 - 1.10.6
 

@@ -1,6 +1,6 @@
 Name: xorg-drv-sis
 Version: 0.10.7
-Release: alt1
+Release: alt2
 Epoch: 1
 Summary: SiS and XGI video driver
 License: MIT/X11
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: xorg-xf86dgaproto-devel
+BuildRequires: xorg-xf86dgaproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 sis is an Xorg driver for SiS (Silicon Integrated  Systems)
@@ -43,6 +43,9 @@ are supported as well.
 %_man4dir/*
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.10.7-alt2
+- requires XORG_ABI_VIDEODRV = 13.1
+
 * Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.10.7-alt1
 - 0.10.7
 

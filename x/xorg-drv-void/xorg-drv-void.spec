@@ -1,6 +1,6 @@
 Name: xorg-drv-void
 Version: 1.4.0
-Release: alt2
+Release: alt3
 Epoch: 1
 Summary: null input driver
 License: MIT/X11
@@ -14,6 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 void is an dummy/null Xorg input driver.  It doesn't connect
@@ -43,6 +44,9 @@ server to operate without a core pointer and/or core keyboard.
 %_man4dir/*
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.4.0-alt3
+- requires XORG_ABI_XINPUT = 13.1
+
 * Sun Mar 25 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:1.4.0-alt2
 - requires XORG_ABI_XINPUT = 12.0
 

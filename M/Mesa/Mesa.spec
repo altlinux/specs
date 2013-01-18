@@ -4,7 +4,7 @@
 
 Name: Mesa
 Version: 9.0.1
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -221,17 +221,37 @@ subst 's|^\(SRC_DIRS = \)\(.*\)mesa.*glx\(.*\)|\1\2glx mesa gtest\3|' src/Makefi
 mkdir -p %buildroot%_bindir
 install -m755 progs/glx{info,gears} %buildroot%_bindir/
 
-# moved libGL
 mkdir -p %buildroot%_sysconfdir/X11/%_lib
+# moved libGL
 mv %buildroot%_libdir/libGL.so.1.2.0 %buildroot%_libdir/X11/libGL.so.1.2
 ln -sf ../../..%_libdir/X11/libGL.so.1.2 %buildroot%_sysconfdir/X11/%_lib/libGL.so.1
 ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %buildroot%_libdir/
 ln -sf X11/libGL.so.1.2 %buildroot%_libdir/libGL.so
+# moved libEGL
+mv %buildroot%_libdir/libEGL.so.1.0.0 %buildroot%_libdir/X11/libEGL.so.1.0.0
+ln -sf ../../..%_libdir/X11/libEGL.so.1.0.0 %buildroot%_sysconfdir/X11/%_lib/libEGL.so.1
+ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %buildroot%_libdir/
+ln -sf X11/libEGL.so.1.0.0 %buildroot%_libdir/libEGL.so
+# moved libGLESv2
+mv %buildroot%_libdir/libGLESv2.so.2.0.0 %buildroot%_libdir/X11/libGLESv2.so.2.0.0
+ln -sf ../../..%_libdir/X11/libGLESv2.so.2.0.0 %buildroot%_sysconfdir/X11/%_lib/libGLESv2.so.2
+ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %buildroot%_libdir/
+ln -sf X11/libGLESv2.so.2.0.0 %buildroot%_libdir/libGLESv2.so
 
 %post -n libGL
 [ -r %_sysconfdir/X11/%_lib/libGL.so.1 ] || \
 	ln -sf ../../..%_libdir/X11/libGL.so.1.2 %_sysconfdir/X11/%_lib/libGL.so.1
 ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
+
+%post -n libEGL
+[ -r %_sysconfdir/X11/%_lib/libEGL.so.1 ] || \
+	ln -sf ../../..%_libdir/X11/libEGL.so.1.0.0 %_sysconfdir/X11/%_lib/libEGL.so.1
+ln -sf ../..%_sysconfdir/X11/%_lib/libEGL.so.1 %_libdir/
+
+%post -n libGLES
+[ -r %_sysconfdir/X11/%_lib/libGLESv2.so.2 ] || \
+	ln -sf ../../..%_libdir/X11/libGLESv2.so.2.0.0 %_sysconfdir/X11/%_lib/libGLESv2.so.2
+ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %files -n libGL
 %doc docs/relnotes-%version.html docs/versions.html docs/news.html
@@ -263,7 +283,10 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 
 %if_enabled egl
 %files -n libEGL
+%dir %_sysconfdir/X11/%_lib
+%ghost %_sysconfdir/X11/%_lib/libEGL.so.1
 %_libdir/libEGL.so.*
+%_libdir/X11/libEGL.so.1.*
 
 %files -n libEGL-devel
 %_includedir/EGL
@@ -274,7 +297,10 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 
 %if_enabled gles2
 %files -n libGLES
+%dir %_sysconfdir/X11/%_lib
+%ghost %_sysconfdir/X11/%_lib/libGLESv2.so.2
 %_libdir/libGLESv2.so.*
+%_libdir/X11/libGLESv2.so.2.*
 
 %files -n libGLES-devel
 %_includedir/GLES2
@@ -321,6 +347,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGL.so.1 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0.1-alt2
+- switch libEGL & libGLES (closes: #27875)
+
 * Sat Nov 17 2012 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0.1-alt1
 - 9.0.1
 

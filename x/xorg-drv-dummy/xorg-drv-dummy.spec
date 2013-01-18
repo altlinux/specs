@@ -1,6 +1,6 @@
 Name: xorg-drv-dummy
 Version: 0.3.6
-Release: alt1
+Release: alt2
 Summary: dummy video driver
 License: MIT/X11
 Group: System/X11
@@ -17,6 +17,7 @@ Patch: %name-%version-%release.patch
 BuildRequires(Pre): xorg-sdk
 BuildRequires: xorg-fontsproto-devel xorg-randrproto-devel xorg-renderproto-devel
 BuildRequires: xorg-videoproto-devel xorg-xf86dgaproto-devel xorg-xproto-devel
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 dummy is an Xorg driver for dummy video cards.
@@ -40,6 +41,9 @@ dummy is an Xorg driver for dummy video cards.
 %_x11modulesdir/drivers/*.so
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 0.3.6-alt2
+- requires XORG_ABI_VIDEODRV = 13.1
+
 * Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 0.3.6-alt1
 - 0.3.6
 

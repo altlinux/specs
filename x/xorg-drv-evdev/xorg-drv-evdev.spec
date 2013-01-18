@@ -2,7 +2,7 @@
 
 Name: xorg-drv-evdev
 Version: 2.7.3
-Release: alt1
+Release: alt2
 Epoch: 2
 Summary: Generic Linux input driver
 License: MIT/X11
@@ -18,8 +18,8 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: libmtdev-devel libxkbfile-devel libudev-devel xorg-xextproto-devel
-BuildRequires: xorg-inputproto-devel xorg-randrproto-devel xorg-xproto-devel
+BuildRequires: libmtdev-devel libxkbfile-devel libudev-devel xorg-xextproto-devel xorg-resourceproto-devel
+BuildRequires: xorg-scrnsaverproto-devel xorg-inputproto-devel xorg-randrproto-devel xorg-xproto-devel
 
 %description
 evdev  is  an  Xorg  input  driver for Linux generic event devices.
@@ -63,6 +63,9 @@ install -pD -m644 99-x11-keyboard.rules %buildroot%_sysconfdir/udev/rules.d/99-x
 %_pkgconfigdir/*.pc
 
 %changelog
+* Sun Sep 16 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:2.7.3-alt2
+- requires XORG_ABI_XINPUT = 18.0
+
 * Mon Aug 13 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:2.7.3-alt1
 - 2.7.3
 

@@ -1,5 +1,5 @@
 Name: xorg-drv-wacom
-Version: 0.17.0
+Version: 0.19.0
 Release: alt1
 Epoch: 1
 Summary: Wacom input driver
@@ -16,6 +16,7 @@ Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
 BuildRequires: doxygen libX11-devel libXi-devel libXinerama-devel libXext-devel libXrandr-devel libudev-devel
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 wacom is an X input driver for Wacom devices
@@ -54,6 +55,9 @@ Wacom input driver development package
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.19.0-alt1
+- 0.19.0
+
 * Tue Oct 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.17.0-alt1
 - 0.17.0
 

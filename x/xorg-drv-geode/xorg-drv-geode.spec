@@ -1,6 +1,6 @@
 Name: xorg-drv-geode
-Version: 2.11.13
-Release: alt2
+Version: 2.11.14
+Release: alt1
 Epoch: 2
 Summary: AMD Geode GX and LX Xorg graphics Driver
 License: MIT/X11
@@ -16,6 +16,7 @@ Patch: %name-%version-%release.patch
 ExclusiveArch: %ix86
 BuildRequires(Pre): xorg-sdk
 BuildRequires: xorg-xf86dgaproto-devel xorg-util-macros
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 geode  is  an  Xorg driver for Advanced Micro Devicess GEODE processor
@@ -44,6 +45,9 @@ framebuffer depths: 8, 16 and 24.
 %_x11modulesdir/drivers/*.so
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:2.11.14-alt1
+- 2.11.14
+
 * Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:2.11.13-alt2
 - requires XORG_ABI_VIDEODRV = 12.1
 

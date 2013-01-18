@@ -1,6 +1,6 @@
 Name: xorg-drv-qxl
-Version: 0.0.17
-Release: alt2
+Version: 0.1.0
+Release: alt1
 Epoch: 1
 Summary: QEMU QXL paravirt video
 License: GPL
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires(Pre): xorg-sdk
-BuildRequires: spice-protocol xorg-xf86dgaproto-devel
+BuildRequires: spice-protocol xorg-xf86dgaproto-devel xorg-resourceproto-devel xorg-scrnsaverproto-devel
 
 %description
 Driver for QEMU QXL paravirt video
@@ -37,6 +37,9 @@ Driver for QEMU QXL paravirt video
 %_x11modulesdir/drivers/*.so
 
 %changelog
+* Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:0.1.0-alt1
+- 0.1.0
+
 * Mon Aug 27 2012 Valery Inozemtsev <shrek@altlinux.ru> 1:0.0.17-alt2
 - requires XORG_ABI_VIDEODRV = 12.1
 
