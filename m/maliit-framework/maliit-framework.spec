@@ -1,7 +1,7 @@
 
 %define xinputconfdir %_sysconfdir/X11/xinit/xinput.d
 %define libver 1.0
-%define pluginver 0.80
+%define pluginver 0.94
 %define libsover 0
 
 #add_findprov_lib_path %_qt4dir/plugins/inputmethods
@@ -9,7 +9,7 @@
 #add_findprov_lib_path %_libdir/maliit/plugins-%libver/factories
 
 Name: maliit-framework
-Version: 0.92.5.1
+Version: 0.94.0
 Release: alt1
 
 Group: System/Libraries
@@ -139,6 +139,7 @@ qmake-qt4 -r \
     LIBDIR=%_libdir \
     INCLUDEDIR=%_includedir \
     MALIIT_ENABLE_MULTITOUCH=false \
+    CONFIG+=notests \
     CONFIG+=enable-dbus-activation \
     CONFIG+=disable-gtk-cache-update
 #    CONFIG+=enable-qdbus \
@@ -157,16 +158,16 @@ mkdir -p %buildroot/%xinputconfdir
 install -pm 644 -D %SOURCE1 %buildroot/%xinputconfdir/
 
 # workaround against tests linking check
-for l in \
-    %buildroot/%_qt4dir/plugins/inputmethods/lib*.so \
-    %buildroot/%_libdir/maliit-framework-tests/plugins/lib*.so \
-    %buildroot/%_libdir/maliit/plugins-%libver/factories/lib*.so
-do
-    libname=`basename $l`
-    ln -s \
-	`relative $l %buildroot/%_libdir/$libname` \
-	%buildroot/%_libdir/$libname
-done
+#    %buildroot/%_qt4dir/plugins/inputmethods/lib*.so \
+#    %buildroot/%_libdir/maliit-framework-tests/plugins/lib*.so \
+#for l in \
+#    %buildroot/%_libdir/maliit/plugins*/factories/lib*.so
+#do
+#    libname=`basename $l`
+#    ln -s \
+#	`relative $l %buildroot/%_libdir/$libname` \
+#	%buildroot/%_libdir/$libname
+#done
 
 # install docs
 mv %buildroot/%_defaultdocdir/maliit-framework %buildroot/%_defaultdocdir/maliit-framework-%version
@@ -183,66 +184,63 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %doc %_defaultdocdir/maliit-framework-%version/LICENSE.LGPL
 %doc %_defaultdocdir/maliit-framework-%version/NEWS
 %dir %_libdir/maliit/
-%dir %_libdir/maliit/plugins-%libver/
-%dir %_libdir/maliit/plugins-%libver/factories
+%dir %_libdir/maliit/plugins*/
+%dir %_libdir/maliit/plugins*/factories
 %_bindir/maliit-server
-%_libdir/maliit/plugins-%libver/factories/libmaliit-plugins-quick-factory-%pluginver.so
+%_libdir/maliit/plugins*/factories/libmaliit-plugins-quick-factory*.so
 %config %xinputconfdir/*
 %_datadir/dbus-1/services/org.maliit.server.service
 
 %files devel
 %dir %_includedir/maliit/
-%dir %_includedir/maliit/framework-%pluginver/
-%dir %_includedir/maliit/framework-%pluginver/maliit/
-%_includedir/maliit/connection-%pluginver/
-%_includedir/maliit/framework-%pluginver/maliit/*.h
-%_includedir/maliit/plugins-%libver/
-%_includedir/maliit/plugins-quick-%pluginver/
-%_includedir/maliit/server-%pluginver/
-%_libdir/libmaliit-connection-%pluginver.so
-%_libdir/libmaliit-plugins-%libver.so
-%_libdir/libmaliit-plugins-quick-%pluginver.so
-%_libdir/pkgconfig/maliit-connection-%pluginver.pc
-%_libdir/pkgconfig/maliit-framework-%pluginver.pc
-%_libdir/pkgconfig/maliit-plugins-%libver.pc
-%_libdir/pkgconfig/maliit-plugins-quick-%pluginver.pc
-%_libdir/pkgconfig/maliit-server-%pluginver.pc
+%dir %_includedir/maliit/framework/
+%dir %_includedir/maliit/framework/maliit/
+%_includedir/maliit/connection/
+%_includedir/maliit/framework/maliit/*.h
+%_includedir/maliit/plugins/
+%_includedir/maliit/plugins-quick/
+%_includedir/maliit/server/
+%_libdir/libmaliit-connection.so
+%_libdir/libmaliit-plugins.so
+%_libdir/libmaliit-plugins-quick.so
+#%_libdir/libmaliit-plugins-quick-factory.so
+%_libdir/pkgconfig/maliit-connection.pc
+%_libdir/pkgconfig/maliit-framework.pc
+%_libdir/pkgconfig/maliit-plugins.pc
+%_libdir/pkgconfig/maliit-plugins-quick.pc
+%_libdir/pkgconfig/maliit-server.pc
 %_datadir/qt4/mkspecs/features/maliit-*.prf
 
 %files -n libmaliit%libver-%libsover
-%_libdir/libmaliit-%libver.so.*
-%_libdir/libmaliit-connection-%pluginver.so.*
-%_libdir/libmaliit-plugins-%libver.so.*
-%_libdir/libmaliit-plugins-quick-%pluginver.so.*
-%_libdir/libmaliit-settings-%libver.so.*
+%_libdir/libmaliit.so.*
+%_libdir/libmaliit-connection.so.*
+%_libdir/libmaliit-plugins.so.*
+%_libdir/libmaliit-plugins-quick.so.*
+%_libdir/libmaliit-settings.so.*
 
 %files -n libmaliit-devel
-%_libdir/libmaliit-%libver.so
-%_libdir/libmaliit-settings-%libver.so
-%dir %_includedir/maliit/
-%dir %_includedir/maliit/maliit-%libver
-%_includedir/maliit/maliit-%libver/maliit/
-%_libdir/pkgconfig/maliit-%libver.pc
-%_libdir/pkgconfig/maliit-settings-%libver.pc
+%_libdir/libmaliit.so
+%_libdir/libmaliit-settings.so
+%_includedir/maliit/maliit/
+%_libdir/pkgconfig/maliit.pc
+%_libdir/pkgconfig/maliit-settings.pc
 
 %files -n libmaliit-glib%libver-%libsover
-%_libdir/libmaliit-glib-%libver.so.*
+%_libdir/libmaliit-glib.so.*
 
 %files -n libmaliit-glib-devel
 %_typelibdir/Maliit-*.typelib
 %_girdir/Maliit-*.gir
-%_libdir/libmaliit-glib-%libver.so
-%dir %_includedir/maliit/
-%dir %_includedir/maliit/maliit-%libver
-%_includedir/maliit/maliit-%libver/maliit-glib/
-%_libdir/pkgconfig/maliit-glib-%libver.pc
+%_libdir/libmaliit-glib.so
+%_includedir/maliit/maliit-glib/
+%_libdir/pkgconfig/maliit-glib.pc
 
 %files doc
 %doc %_defaultdocdir/maliit-framework-%version/html
 
-%files sdk
-%_bindir/maliit-sdk
-%_defaultdocdir/maliit-framework-%version/maliit-sdk
+#%files sdk
+#%_bindir/maliit-sdk
+#%_defaultdocdir/maliit-framework-%version/maliit-sdk
 
 #%files tests
 #%_libdir/maliit-framework-tests/
@@ -260,5 +258,8 @@ install -m 0644 README LICENSE.LGPL NEWS %buildroot/%_defaultdocdir/maliit-frame
 %_libdir/gtk-3.0/3.0.0/immodules/libim-maliit.so*
 
 %changelog
+* Thu Jan 17 2013 Sergey V Turchin <zerg@altlinux.org> 0.94.0-alt1
+- new version
+
 * Fri Oct 19 2012 Sergey V Turchin <zerg@altlinux.org> 0.92.5.1-alt1
 - initial build
