@@ -2,7 +2,7 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt4
+%define rel alt5
 
 %def_disable static
 
@@ -35,16 +35,23 @@ Source9: %_name-wm.desktop
 
 # Some missing source files from the SVN tree
 Source10: %_name.missing-%version.tar
+# from Suse
+Source11: e17-alt-sysactions.conf
 
 Patch0: fix-systray-height.patch
 Patch1: add-systray-mobile.patch
 Patch2: add-systray-standard.patch
 Patch3: illume-keyboard-bigfont.patch
+Patch4: e17-0.17.0-alt-g-s-d_path.patch
+# from Suse
+Patch5: e17-0.17.0-alt-e_sys_nosuid.patch
 
 Provides: e17-default
-
-Requires: edbus eeze pm-utils
+# default terminal
+Requires: terminology
+Requires: dbus-tools-gui edbus eeze pm-utils evas_generic_loaders
 # for menu
+Requires: gnome-icon-theme
 Requires: wm-common-freedesktop
 Requires: altlinux-freedesktop-menu-%_name >= 0.55
 
@@ -56,6 +63,7 @@ BuildRequires: edje libedje-devel libeet-devel libeet-utils libembryo-devel libe
 BuildRequires: libXext-devel embryo_cc libdbus-devel libedbus-devel
 BuildRequires: libalsa-devel libeina-devel eeze libeeze-devel libemotion-devel libelementary-devel
 BuildRequires: libudev-devel libxcbutil-keysyms-devel pm-utils
+BuildRequires: doxygen
 
 %description
 Enlightenment is a window manager.
@@ -92,6 +100,8 @@ to use Enlightenment as windowmanager in GNOME 2 session
 %patch1 -p2
 %patch2 -p2
 %patch3 -p2
+%patch4 -p1 -b .gsd
+#%%patch5 -p1 -b .nosuid
 
 %build
 %autoreconf
@@ -105,7 +115,7 @@ export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3"
 	--disable-mount-hal
 
 %make_build
-
+%make doc
 %install
 %make_install DESTDIR=%buildroot install
 
@@ -126,11 +136,26 @@ install -pD -m 644 %SOURCE8 %buildroot%_datadir/applications/enlightenment.deskt
 # be gnome-wm
 install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenment-wm.desktop
 
+# PAM-config
+mkdir -p %buildroot%_sysconfdir/pam.d
+cat > %buildroot%_sysconfdir/pam.d/enlightenment << _PAM_
+#%PAM-1.0
+
+auth		include		system-auth
+account		required	pam_deny.so
+password	required	pam_deny.so
+session		required	pam_deny.so
+_PAM_
+
+# replace original sysaction.conf
+#cp %SOURCE11 %buildroot%_sysconfdir/enlightenment/sysactions.conf
+
 %find_lang enlightenment
 
 %files -f enlightenment.lang
 %config %_sysconfdir/X11/wmsession.d/*
 %config %_sysconfdir/enlightenment/sysactions.conf
+%config(noreplace) %_sysconfdir/pam.d/enlightenment
 %dir %_libdir/enlightenment/
 %_libdir/enlightenment/*
 %_niconsdir/*.xpm
@@ -151,6 +176,15 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Fri Jan 18 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt5
+- required evas_generic_loaders (especially for .svg)
+- required gnome-icon-theme for menus (ALT #28311)
+- required terminology as a default terminal
+- fixed path to gnome-settings-daemon
+- prepared pam-config for screenlock
+- prepared (not applied) e17-0.17.0-alt-e_sys_nosuid.patch
+- prepared (not applied) a draft of custom sysactions.conf
+
 * Fri Jan 18 2013 Paul Wolneykien <manowar@altlinux.ru> 1:0.17.0-alt4
 - Make the keylabels bigger, 14 pt (patch).
 - Add missing SVN files as the separate tar source.
