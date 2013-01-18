@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.58
-Release: alt5
+Version: 3.0.59
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 58
+%define kernel_stable_version 59
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -273,7 +273,7 @@ Patch0195: linux-%kernel_branch.43-fix-drivers-edac--x38_edac.patch
 Patch0201: linux-%kernel_branch.42-fix-drivers-eisa--pci_eisa.patch
 
 Patch0211: linux-%kernel_branch.47-fix-drivers-firewire--firewire-core.patch
-Patch0212: linux-%kernel_branch.47-fix-drivers-firewire--firewire-net.patch
+Patch0212: linux-%kernel_branch.59-fix-drivers-firewire--firewire-net.patch
 Patch0213: linux-%kernel_branch.47-fix-drivers-firewire--firewire-ohci.patch
 Patch0214: linux-%kernel_branch.47-fix-drivers-firewire--firewire-sbp2.patch
 Patch0215: linux-%kernel_branch.47-fix-drivers-firewire--nosy.patch
@@ -503,7 +503,7 @@ Patch0602: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 
 Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
-Patch0612: linux-%kernel_branch.51-fix-drivers-usb-core.patch
+Patch0612: linux-%kernel_branch.59-fix-drivers-usb-core.patch
 Patch0613: linux-%kernel_branch.58-fix-drivers-usb-host--ehci-hcd.patch
 Patch0614: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
 Patch0615: linux-%kernel_branch.51-fix-drivers-usb-host--xhci-hcd.patch
@@ -578,12 +578,12 @@ Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
 Patch0750: linux-%kernel_branch.57-fix-mm.patch
 Patch0751: linux-%kernel_branch.42-fix-mm--compaction.patch
-Patch0752: linux-%kernel_branch.53-fix-mm--huge_memory.patch
+Patch0752: linux-%kernel_branch.59-fix-mm--huge_memory.patch
 Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
 Patch0754: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0755: linux-%kernel_branch.42-fix-mm--memory-failure.patch
 Patch0756: linux-%kernel_branch.51-fix-mm--memory_hotplug.patch
-Patch0757: linux-%kernel_branch.58-fix-mm--mmu.patch
+Patch0757: linux-%kernel_branch.59-fix-mm--mmu.patch
 Patch0758: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
 Patch0759: linux-%kernel_branch.46-fix-mm--numa.patch
 Patch0760: linux-%kernel_branch.42-fix-mm--slab.patch
@@ -598,7 +598,7 @@ Patch0774: linux-%kernel_branch.42-fix-net--x25.patch
 Patch0775: linux-%kernel_branch.42-fix-net-8021q--vlan-core.patch
 Patch0776: linux-%kernel_branch.42-fix-net-bridge.patch
 Patch0777: linux-%kernel_branch.42-fix-net-ceph.patch
-Patch0778: linux-%kernel_branch.53-fix-net-core.patch
+Patch0778: linux-%kernel_branch.59-fix-net-core.patch
 Patch0779: linux-%kernel_branch.46-fix-net-ipv4.patch
 Patch0780: linux-%kernel_branch.51-fix-net-ipv4-netfilter--iptable_nat.patch
 Patch0781: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat.patch
@@ -2987,6 +2987,15 @@ done)
 
 
 %changelog
+* Fri Jan 18 2013 Led <led@altlinux.ru> 3.0.59-alt1
+- 3.0.59
+- updated:
+  + fix-drivers-firewire--firewire-net
+  + fix-drivers-usb-core
+  + fix-mm--huge_memory
+  + fix-mm--mmu
+  + fix-net-core
+
 * Thu Jan 17 2013 Led <led@altlinux.ru> 3.0.58-alt5
 - disabled compat (turn off some COMPAT options in .config)
 
