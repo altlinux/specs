@@ -1,5 +1,5 @@
 Name: iw
-Version: 3.6
+Version: 3.8
 Release: alt1
 
 Summary: nl80211 based CLI configuration utility for wireless devices
@@ -37,6 +37,9 @@ required.
 %doc README COPYING
 
 %changelog
+* Fri Jan 18 2013 Terechkov Evgenii <evg@altlinux.org> 3.8-alt1
+- 3.8
+
 * Mon Sep 10 2012 Terechkov Evgenii <evg@altlinux.org> 3.6-alt1
 - 3.6
 
