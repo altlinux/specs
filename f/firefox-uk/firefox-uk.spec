@@ -7,7 +7,7 @@
 %define ciddir %firefox_noarch_extensionsdir/%cid
 
 Name: firefox-uk
-Version: 17.0
+Version: 18.0
 Release: alt1
 
 Summary: %LName (%CCode) Language Pack for Firefox
@@ -43,6 +43,9 @@ done
 %ciddir
 
 %changelog
+* Fri Jan 18 2013 Alexey Gladkov <legion@altlinux.ru> 18.0-alt1
+- New version (18.0).
+
 * Sun Nov 25 2012 Alexey Gladkov <legion@altlinux.ru> 17.0-alt1
 - New version (17.0).
 

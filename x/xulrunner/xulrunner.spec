@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	17.0.1
+Version:	18.0
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -30,16 +30,18 @@ Source4:	xpi-mimeinfo.xml
 Patch0:		xulrunner-no-version.patch
 Patch2:		xulrunner-noarch-extensions.patch
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=304121
+Patch10:	rhbz-304121.patch
+
 Patch100:	mozilla-192-path.patch
 #Patch101:	mozilla-pkgconfig.patch
 Patch104:	mozilla-nongnome-proxies.patch
-Patch105:	mozilla-libjpeg-turbo.patch
 
 Requires:	%name-libs = %version-%release
 
 Requires:	hunspell-en
-Requires:	libnspr       >= 4.9.2-alt1
-Requires:	libnss        >= 3.13.6-alt1
+Requires:	libnspr       >= 4.9.4-alt1
+Requires:	libnss        >= 3.14.1-alt1
 
 Obsoletes:	xulrunner-192
 Obsoletes:	xulrunner-2.0
@@ -79,9 +81,9 @@ BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 
 # Mozilla requires
-BuildRequires: libnspr-devel       >= 4.9.2-alt1
-BuildRequires: libnss-devel        >= 3.13.6-alt1
-BuildRequires: libnss-devel-static >= 3.13.6-alt1
+BuildRequires: libnspr-devel       >= 4.9.4-alt1
+BuildRequires: libnss-devel        >= 3.14.1-alt1
+BuildRequires: libnss-devel-static >= 3.14.1-alt1
 
 BuildRequires: autoconf_2.13
 %set_autoconf_version 2.13
@@ -139,12 +141,14 @@ cd %_builddir/%name-%version/mozilla
 tar -xf %SOURCE1
 
 %patch0 -p1
+#patch1 -p1
 %patch2 -p1
+
+%patch10 -p2
 
 %patch100 -p1
 #patch101 -p1
 %patch104 -p1
-%patch105 -p1
 
 #echo 5.0.1 > config/milestone.txt
 
@@ -175,24 +179,11 @@ echo "ac_add_options --disable-polyic" >> .mozconfig
 echo "ac_add_options --disable-tracejit" >> .mozconfig
 %endif
 
-
 %build
 %add_optflags %optflags_shared
 cd %_builddir/%name-%version/mozilla
 
 export MOZ_BUILD_APP=xulrunner
-
-# -fpermissive is needed to build with gcc 4.6+ which has become stricter
-#
-# Mozilla builds with -Wall with exception of a few warnings which show up
-# everywhere in the code; so, don't override that.
-#
-# Disable C++ exceptions since Mozilla code is not exception-safe
-#
-MOZ_OPT_FLAGS=$(echo "%optflags -fpermissive" | \
-                      sed -e 's/-Wall//' -e 's/-fexceptions/-fno-exceptions/g')
-export CFLAGS="$MOZ_OPT_FLAGS"
-export CXXFLAGS="$MOZ_OPT_FLAGS"
 
 export PREFIX='%_prefix'
 export LIBDIR='%_libdir'
@@ -210,6 +201,7 @@ MOZ_JAVAXPCOM=
 MOZ_NATIVE_NSPR=1
 MOZ_SERVICES_SYNC=1
 MOZ_EXTENSIONS_DEFAULT=" gio"
+MOZ_ENABLE_WARNINGS_AS_ERRORS=
 EOF
 
 %__autoconf
@@ -362,6 +354,31 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Thu Jan 10 2013 Alexey Gladkov <legion@altlinux.ru> 18.0-alt1
+- New release (18.0).
+- Fixed:
+  + MFSA 2013-20 Mis-issued TURKTRUST certificates
+  + MFSA 2013-19 Use-after-free in Javascript Proxy objects
+  + MFSA 2013-18 Use-after-free in Vibrate
+  + MFSA 2013-17 Use-after-free in ListenerManager
+  + MFSA 2013-16 Use-after-free in serializeToStream
+  + MFSA 2013-15 Privilege escalation through plugin objects
+  + MFSA 2013-14 Chrome Object Wrapper (COW) bypass through changing prototype
+  + MFSA 2013-13 Memory corruption in XBL with XML bindings containing SVG
+  + MFSA 2013-12 Buffer overflow in Javascript string concatenation
+  + MFSA 2013-11 Address space layout leaked in XBL objects
+  + MFSA 2013-10 Event manipulation in plugin handler to bypass same-origin policy
+  + MFSA 2013-09 Compartment mismatch with quickstubs returned values
+  + MFSA 2013-08 AutoWrapperChanger fails to keep objects alive during garbage collection
+  + MFSA 2013-07 Crash due to handling of SSL on threads
+  + MFSA 2013-06 Touch events are shared across iframes
+  + MFSA 2013-05 Use-after-free when displaying table with many columns and column groups
+  + MFSA 2013-04 URL spoofing in addressbar during page loads
+  + MFSA 2013-03 Buffer Overflow in Canvas
+  + MFSA 2013-02 Use-after-free and buffer overflow issues found using Address Sanitizer
+  + MFSA 2013-01 Miscellaneous memory safety hazards (rv:18.0/ rv:10.0.12 / rv:17.0.2)
+  + MFSA 2012-98 Firefox installer DLL hijacking
+
 * Fri Nov 30 2012 Alexey Gladkov <legion@altlinux.ru> 17.0.1-alt1
 - New release (17.0.1).
 
