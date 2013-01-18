@@ -11,7 +11,7 @@
 %define frame_border   navy
 
 Name: WindowMaker
-Version: 0.95.3
+Version: 0.95.4
 Release: alt1
 Packager: %packager
 
@@ -301,6 +301,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Fri Jan 18 2013 Andrey Bergman <vkni@altlinux.org> 0.95.4-alt1
+- Update to a new version.
+
 * Thu May 17 2012 Andrey Bergman <vkni@altlinux.org> 0.95.3-alt1
 - Update to a new version.
 
