@@ -1,6 +1,6 @@
 Name: i3
-Version: 4.3
-Release: alt1
+Version: 4.4
+Release: alt3
 
 Summary: I3 window manager
 License: BSD-like
@@ -10,12 +10,11 @@ URL: http://i3wm.org/
 Source: %name-%version.tar
 Source1: alt.i3.config
 Source2: i3-logo.png
-Patch: %name-alt-desktop.patch
 
 Packager: %packager
 
 # Automatically added by buildreq on Sat Sep 29 2012
-BuildRequires: flex libXcursor-devel libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libyajl-devel
+BuildRequires: flex libXcursor-devel libev-devel libpango-devel libpcre-devel libstartup-notification-devel libxcbutil-devel libxcbutil-icccm-devel libxcbutil-keysyms-devel libyajl-devel perl-Pod-Parser
 
 %package devel
 Summary: Development file for IPC interface of i3 window manager
@@ -51,7 +50,6 @@ that can interact with i3 window manager via it's IPC.
 
 %prep
 %setup -n %name-%version
-%patch0 -p1
 
 %build
 %make
@@ -118,6 +116,15 @@ install -pm644 -D %SOURCE1 %buildroot%docdir/
 %_includedir/*
 
 %changelog
+* Fri Jan 18 2013 Andrey Bergman <vkni@altlinux.org> 4.4-alt3
+- Added perl-Pod-Parser buildreq.
+
+* Sat Dec 22 2012 Andrey Bergman <vkni@altlinux.org> 4.4-alt2
+- Removed patch for .desktop file.
+
+* Sat Dec 22 2012 Andrey Bergman <vkni@altlinux.org> 4.4-alt1
+- Version update
+
 * Sat Sep 29 2012 Andrey Bergman <vkni@altlinux.org> 4.3-alt1
 - Version update
 
