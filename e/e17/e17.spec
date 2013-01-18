@@ -2,7 +2,7 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt2
+%define rel alt4
 
 %def_disable static
 
@@ -32,6 +32,14 @@ Source6: %name.xpm
 Source7: %name-32.xpm
 Source8: %_name.desktop
 Source9: %_name-wm.desktop
+
+# Some missing source files from the SVN tree
+Source10: %_name.missing-%version.tar
+
+Patch0: fix-systray-height.patch
+Patch1: add-systray-mobile.patch
+Patch2: add-systray-standard.patch
+Patch3: illume-keyboard-bigfont.patch
 
 Provides: e17-default
 
@@ -76,14 +84,18 @@ to use Enlightenment as windowmanager in GNOME 2 session
 
 %prep
 %ifdef cvs_date
-%setup -q -n %_name-%version-%cvs_date
+%setup -q -n %_name-%version-%cvs_date -a10
 %else
-%setup -q -n %_name-%version
+%setup -q -n %_name-%version -a10
 %endif
+%patch0 -p2
+%patch1 -p2
+%patch2 -p2
+%patch3 -p2
 
 %build
 %autoreconf
-export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1`"
+export CFLAGS="$CFLAGS `pkg-config --cflags dbus-1` -g -ggdb3"
 %configure \
 	--with-profile=FAST_PC \
 	--enable-files \
@@ -139,6 +151,16 @@ install -pD -m 644 %SOURCE9 %buildroot%_datadir/gnome/wm-properties/enlightenmen
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Fri Jan 18 2013 Paul Wolneykien <manowar@altlinux.ru> 1:0.17.0-alt4
+- Make the keylabels bigger, 14 pt (patch).
+- Add missing SVN files as the separate tar source.
+- Patch the default configuration placing systray gadget on the
+  panel/shelf by default.
+
+* Wed Jan 16 2013 Paul Wolneykien <manowar@altlinux.ru> 1:0.17.0-alt3
+- Do not assume systray must be on a shelf (patch).
+- Build with additional debugging flags (-g -ggdb3).
+
 * Sat Dec 22 2012 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt2
 - 0.17.0 final release (zero)
 - provides e17-default
