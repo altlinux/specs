@@ -11,7 +11,7 @@
 %define bugfix 0
 Name: kde4-settings-%theme
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt6
 
 Group: Graphical desktop/KDE
 Summary: %Theme - specific KDE settings
@@ -88,6 +88,9 @@ install -m 0755 profile.d/startkde %buildroot/%thisconfdir/
 %config %thisconfdir
 
 %changelog
+* Fri Jan 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt6
+- don't use gconf
+
 * Tue Nov 20 2012 Sergey V Turchin <zerg@altlinux.org> 0.3.0-alt5
 - don't package arch-dependent files
 
