@@ -1,11 +1,25 @@
+# qutIM version
 %define qversion 0.3.1.0
-%define jversion 1.1.0
-%define qrelease alt3
+
+# Aduim chat version
+%define aversion 1.0.0
+
+# Adium webview version
+%define wversion 0.1.0
+
+# Simple contact list version
+%define sversion 0.1.0
+
+# Jreen version
+%define jversion 1.1.1
+
+# Vreen version
+%define vversion 0.9.5
 
 Name: qutim
-Epoch: 5
+Epoch: 6
 Version: %qversion
-Release: %qrelease
+Release: alt1.git20130117
 
 Summary: qutIM Instant Messenger
 Summary(ru_RU.UTF-8): Клиент сервисов мгновенных сообщений qutIM
@@ -15,34 +29,30 @@ Group: Networking/Instant messaging
 URL: http://www.qutim.org/
 Packager: Nazarov Denis <nenderus@altlinux.org>
 
-Source0: http://qutim.org/dwnl/34/%name-0.3.1.tar.bz2
-Patch0: %name-%qversion-alt-fix-linking.patch
-Patch1: %name-%qversion-alt-tmp-telepathy.patch
+Source0: %name-%qversion.tar.bz2
+Patch0: %name-%qversion-alt.patch
 
-Requires: lib%name = %qversion-%qrelease
+Requires: lib%name = %qversion-%release
+Requires: lib%name-adiumchat = %aversion-%release
+Requires: lib%name-simplecontactlist = %sversion-%release
 Requires: libqt4-svg
 
-BuildPreReq: aspell
-BuildPreReq: kde-common-devel
-BuildPreReq: libqt4-devel >= 4.7.1
-
+BuildRequires: aspell
 BuildRequires: attica-devel
-BuildRequires: cmake >= 2.8.1
+BuildRequires: chrpath
 BuildRequires: doxygen
 BuildRequires: gcc-c++
 BuildRequires: glibc-devel-static
 BuildRequires: kde4libs-devel
 BuildRequires: libSDL_mixer-devel
-BuildRequires: libXft-devel
 BuildRequires: libaspell-devel
 BuildRequires: libhunspell-devel
-BuildRequires: liblzma-devel
 BuildRequires: libotr-devel
 BuildRequires: libpurple-devel >= 2.6.0
 BuildRequires: libqca2-devel
 BuildRequires: libqt4-sql-mysql
 BuildRequires: libtelepathy-qt4-devel >= 0.3.0
-BuildRequires: phonon-devel
+BuildRequires: python-module-distribute
 
 %description
 qutIM - free open-source multiprotocol (ICQ, Jabber, Mail.Ru, IRC, VKontakte) instant messenger for Windows, Linux, MacOS X, OS/2, Symbian, Haiku, Solaris, Maemo/MeeGo and *BSD systems
@@ -62,16 +72,56 @@ Shared library for qutIM
 %package -n lib%name-devel
 Summary: Development files for %name
 Group: Development/C++
-Requires: lib%name = %qversion-%qrelease
+Requires: lib%name = %qversion-%release
 
 %description -n lib%name-devel
+Development files for %name
+
+# qutIM  adium chat library
+%package -n lib%name-adiumchat
+Summary: Shared library for qutIM
+Group: System/Libraries
+Version: %aversion
+Requires: lib%name = %qversion-%release
+
+%description -n lib%name-adiumchat
+Shared library for qutIM
+
+# qutIM adium chat library development files
+%package -n lib%name-adiumchat-devel
+Summary: Development files for %name
+Group: Development/C++
+Version: %aversion
+Requires: lib%name-adiumchat = %aversion-%release
+
+%description -n lib%name-adiumchat-devel
+Development files for %name
+
+# qutIM  simple contact list library
+%package -n lib%name-simplecontactlist
+Summary: Shared library for qutIM
+Group: System/Libraries
+Version: %sversion
+Requires: lib%name = %qversion-%release
+
+%description -n lib%name-simplecontactlist
+Shared library for qutIM
+
+# qutIM simple contact list development files
+%package -n lib%name-simplecontactlist-devel
+Summary: Development files for %name
+Group: Development/C++
+Version: %sversion
+Requires: lib%name-simplecontactlist = %sversion-%release
+
+%description -n lib%name-simplecontactlist-devel
 Development files for %name
 
 # Astral protocol
 %package -n %name-protocol-astral
 Summary: Astral protocol for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-protocol-astral
 Astral protocol support for qutIM
@@ -80,7 +130,7 @@ Astral protocol support for qutIM
 %package -n %name-protocol-irc
 Summary: IRC protocol for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-protocol-irc
 IRC protocol support for qutIM
@@ -89,8 +139,8 @@ IRC protocol support for qutIM
 %package -n %name-protocol-jabber
 Summary: Jabber protocol for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
-Requires: libjreen >= %jversion-%qrelease
+Requires: %name = %qversion-%release
+Requires: libjreen >= %jversion-%release
 
 %description -n %name-protocol-jabber
 Jabber protocol for qutIM
@@ -109,7 +159,7 @@ Jreen is extensible Qt-based asynchronious Jabber library
 Summary: Jreen is extensible Qt-based asynchronious Jabber library
 Group: Development/C++
 Version: %jversion
-Requires: libjreen = %jversion-%qrelease
+Requires: libjreen = %jversion-%release
 
 %description -n libjreen-devel
 Jreen is extensible Qt-based asynchronious Jabber library
@@ -118,7 +168,7 @@ Jreen is extensible Qt-based asynchronious Jabber library
 %package -n %name-protocol-mrim
 Summary: Mail.Ru protocol for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-protocol-mrim
 Mail.Ru protocol support for qutIM
@@ -127,7 +177,7 @@ Mail.Ru protocol support for qutIM
 %package -n %name-protocol-oscar
 Summary: OSCAR protocol for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 Requires: qca2-ossl
 
 %description -n %name-protocol-oscar
@@ -137,26 +187,46 @@ OSCAR protocol support for qutIM
 %package -n %name-protocol-quetzal
 Summary: Quetzal protocol for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-protocol-quetzal
 Quetzal protocol support for qutIM
 
-# VKontakte.Ru protocol
+# VKontakte protocol
 %package -n %name-protocol-vkontakte
 Summary: VKontakte.Ru protocol for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
+Requires: libvreen >= %vversion-%release
 
 %description -n %name-protocol-vkontakte
 VKontakte.Ru protocol support for qutIM
+
+# Vreen library (for vkontakte protocol)
+%package -n libvreen
+Summary: Shared library for vkontakte protocol for qutIM
+Group: System/Libraries
+Version: %vversion
+
+%description -n libvreen
+Shared library for vkontakte protocol for qutIM
+
+# Vreen development files
+%package -n libvreen-devel
+Summary: Shared library for vkontakte protocol for qutIM
+Group: Development/C++
+Version: %vversion
+Requires: libvreen = %vversion-%release
+
+%description -n libvreen-devel
+Shared library for vkontakte protocol for qutIM
 
 # Adium webview plugin
 %package -n %name-plugin-adiumwebview
 Summary: Adium webview plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
-Requires: lib%name-adiumwebview = %qversion-%qrelease
+Requires: %name = %qversion-%release
+Requires: lib%name-adiumwebview >= %wversion-%release
 
 %description -n %name-plugin-adiumwebview
 Aescrypto plugin support for qutIM
@@ -165,6 +235,7 @@ Aescrypto plugin support for qutIM
 %package -n lib%name-adiumwebview
 Summary: qutIM Adium webview shared library
 Group: System/Libraries
+Version: %wversion
 
 %description -n lib%name-adiumwebview
 qutIM Adium webview shared library
@@ -173,7 +244,8 @@ qutIM Adium webview shared library
 %package -n lib%name-adiumwebview-devel
 Summary: Development files for qutIM Adium webview
 Group: Development/C++
-Requires: lib%name-adiumwebview = %qversion-%qrelease
+Version: %wversion
+Requires: lib%name-adiumwebview = %wversion-%release
 
 %description -n lib%name-adiumwebview-devel
 Development files for qutIM Adium webview
@@ -182,25 +254,16 @@ Development files for qutIM Adium webview
 %package -n %name-plugin-aescrypto
 Summary: Aescrypto plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-aescrypto
 Aescrypto plugin support for qutIM
-
-# Antiboss plugin
-%package -n %name-plugin-antiboss
-Summary: Antiboss plugin for %name
-Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
-
-%description -n %name-plugin-antiboss
-Antiboss plugin support for qutIM
 
 # Antispam plugin
 %package -n %name-plugin-antispam
 Summary: Antispam plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-antispam
 Antispam plugin support for qutIM
@@ -209,16 +272,25 @@ Antispam plugin support for qutIM
 %package -n %name-plugin-aspeller
 Summary: Aspeller plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-aspeller
 Aspeller plugin support for qutIM
+
+# Auto reply plugin
+%package -n %name-plugin-autoreply
+Summary: Auto reply plugin for %name
+Group: Networking/Instant messaging
+Requires: %name = %qversion-%release
+
+%description -n %name-plugin-autoreply
+Auto reply plugin support for qutIM
 
 # Bearer manager plugin
 %package -n %name-plugin-bearermanager
 Summary: Bearer manager plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-bearermanager
 Bearer manager plugin support for qutIM
@@ -227,7 +299,7 @@ Bearer manager plugin support for qutIM
 %package -n %name-plugin-birthdayreminder
 Summary: Birthday reminder plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-birthdayreminder
 Birthday reminder plugin support for qutIM
@@ -236,7 +308,7 @@ Birthday reminder plugin support for qutIM
 %package -n %name-plugin-blogimprover
 Summary: Blog improver plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-blogimprover
 Blog improver plugin support for qutIM
@@ -245,7 +317,7 @@ Blog improver plugin support for qutIM
 %package -n %name-plugin-clconf
 Summary: ClConf plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-clconf
 ClConf plugin support for qutIM
@@ -254,7 +326,7 @@ ClConf plugin support for qutIM
 %package -n %name-plugin-dbusapi
 Summary: DBus API plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-dbusapi
 DBus API plugin support for qutIM
@@ -263,7 +335,7 @@ DBus API plugin support for qutIM
 %package -n %name-plugin-dbusnotifications
 Summary: DBus Notifications plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-dbusnotifications
 DBus Notifications plugin support for qutIM
@@ -272,7 +344,7 @@ DBus Notifications plugin support for qutIM
 %package -n %name-plugin-emoedit
 Summary: Emoedit plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-emoedit
 Emoedit plugin support for qutIM
@@ -281,16 +353,25 @@ Emoedit plugin support for qutIM
 %package -n %name-plugin-floaties
 Summary: Floaties plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-floaties
 Floaties plugin support for qutIM
+
+# Formula plugin
+%package -n %name-plugin-formula
+Summary: Formula plugin for %name
+Group: Networking/Instant messaging
+Requires: %name = %qversion-%release
+
+%description -n %name-plugin-formula
+Formula plugin support for qutIM
 
 # Highlighter plugin
 %package -n %name-plugin-highlighter
 Summary: Highlighter plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-highlighter
 Highlighter plugin support for qutIM
@@ -299,7 +380,7 @@ Highlighter plugin support for qutIM
 %package -n %name-plugin-histman
 Summary: Histman plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-histman
 Histman plugin support for qutIM
@@ -308,7 +389,7 @@ Histman plugin support for qutIM
 %package -n %name-plugin-hunspeller
 Summary: Hunspeller plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-hunspeller
 Hunspeller plugin support for qutIM
@@ -317,7 +398,7 @@ Hunspeller plugin support for qutIM
 %package -n %name-plugin-kdeintegration
 Summary: KDE Integration plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-kdeintegration
 KDE Integration plugin support for qutIM
@@ -326,7 +407,7 @@ KDE Integration plugin support for qutIM
 %package -n %name-plugin-kineticpopups
 Summary: Kinetic Popups plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-kineticpopups
 Kinetic Popups plugin support for qutIM
@@ -335,7 +416,7 @@ Kinetic Popups plugin support for qutIM
 %package -n %name-plugin-linuxintegration
 Summary: Linux integration plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-linuxintegration
 Linux integration plugin support for qutIM
@@ -344,7 +425,7 @@ Linux integration plugin support for qutIM
 %package -n %name-plugin-logger
 Summary: Logger plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-logger
 Logger plugin support for qutIM
@@ -353,7 +434,7 @@ Logger plugin support for qutIM
 %package -n %name-plugin-massmessaging
 Summary: Mass Messaging plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-massmessaging
 Mass Messaging plugin support for qutIM
@@ -362,7 +443,7 @@ Mass Messaging plugin support for qutIM
 %package -n %name-plugin-multimediabackend
 Summary: Multimedia Backend plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-multimediabackend
 Multimedia Backend plugin support for qutIM
@@ -371,7 +452,7 @@ Multimedia Backend plugin support for qutIM
 %package -n %name-plugin-nowplaying
 Summary: Now Playing plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-nowplaying
 Now Playing plugin support for qutIM
@@ -380,25 +461,25 @@ Now Playing plugin support for qutIM
 %package -n %name-plugin-offtherecord
 Summary: Off-the-Record plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-offtherecord
 Off-the-Record plugin support for qutIM
 
-# Old Delegate plugin
-%package -n %name-plugin-olddelegate
-Summary: Old Delegate plugin for %name
+# Old contact delegate plugin
+%package -n %name-plugin-oldcontactdelegate
+Summary: Old contact delegate plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
-%description -n %name-plugin-olddelegate
-Old Delegate plugin support for qutIM
+%description -n %name-plugin-oldcontactdelegate
+Old contact delegate plugin support for qutIM
 
 # Phonon Sound plugin
 %package -n %name-plugin-phononsound
 Summary: Phonon Sound plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-phononsound
 Phonon Sound plugin support for qutIM
@@ -407,52 +488,16 @@ Phonon Sound plugin support for qutIM
 %package -n %name-plugin-plugman
 Summary: Plugman plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
-Requires: libquasar = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-plugman
 Plugman plugin support for qutIM
-
-# Quasar library (for plugman plugin)
-%package -n libquasar
-Summary: Shared library (for %name plugman plugin)
-Group: System/Libraries
-
-%description -n libquasar
-Shared library (for %name plugman plugin)
-
-# Quasar development files
-%package -n libquasar-devel
-Summary: Development files for quasar
-Group: Development/C++
-Requires: libquasar = %qversion-%qrelease
-
-%description -n libquasar-devel
-Development files for quasar  (for %name plugman plugin)
-
-# QML Chat plugin
-%package -n %name-plugin-qmlchat
-Summary: QML Chat plugin for %name
-Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
-
-%description -n %name-plugin-qmlchat
-QML Chat plugin support for qutIM
-
-# QRC Icons plugin
-%package -n %name-plugin-qrcicons
-Summary: QRC Icons plugin for %name
-Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
-
-%description -n %name-plugin-qrcicons
-QRC Icons plugin support for qutIM
 
 # Script API plugin
 %package -n %name-plugin-scriptapi
 Summary: Script API plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-scriptapi
 Script API plugin support for qutIM
@@ -461,7 +506,7 @@ Script API plugin support for qutIM
 %package -n %name-plugin-sdlsound
 Summary: SDL Sound plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-sdlsound
 SDL Sound plugin support for qutIM
@@ -470,7 +515,7 @@ SDL Sound plugin support for qutIM
 %package -n %name-plugin-unreadmessageskeeper
 Summary: Unread Messages Keeper plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-unreadmessageskeeper
 Unread Messages Keeper plugin support for qutIM
@@ -479,7 +524,7 @@ Unread Messages Keeper plugin support for qutIM
 %package -n %name-plugin-updater
 Summary: Updater plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-updater
 Updater plugin support for qutIM
@@ -488,7 +533,7 @@ Updater plugin support for qutIM
 %package -n %name-plugin-urlpreview
 Summary: URL Preview plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-urlpreview
 URL Preview plugin support for qutIM
@@ -497,7 +542,7 @@ URL Preview plugin support for qutIM
 %package -n %name-plugin-weather
 Summary: Weather plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-weather
 Weather plugin support for qutIM
@@ -506,7 +551,7 @@ Weather plugin support for qutIM
 %package -n %name-plugin-yandexnarod
 Summary: Yandex.Narod.Ru plugin for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 
 %description -n %name-plugin-yandexnarod
 Yandex.Narod.Ru plugin support for qutIM
@@ -515,7 +560,7 @@ Yandex.Narod.Ru plugin support for qutIM
 %package -n %name-lang-ar
 Summary: Arabic language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-ar
@@ -525,7 +570,7 @@ Arabic language for qutIM
 %package -n %name-lang-be
 Summary: Belarusian language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-be
@@ -535,7 +580,7 @@ Belarusian language for qutIM
 %package -n %name-lang-bg
 Summary: Bulgarian language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-bg
@@ -545,7 +590,7 @@ Bulgarian language for qutIM
 %package -n %name-lang-cn
 Summary: Chinese (Simplified) language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-cn
@@ -555,17 +600,27 @@ Chinese (Simplified) language for qutIM
 %package -n %name-lang-cz
 Summary: Czech language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-cz
 Czech language for qutIM
 
+# French language for qutIM
+%package -n %name-lang-fr
+Summary: French language for %name
+Group: Networking/Instant messaging
+Requires: %name = %qversion-%release
+BuildArch: noarch
+
+%description -n %name-lang-fr
+French language for qutIM
+
 # German language for qutIM
 %package -n %name-lang-de
 Summary: German language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-de
@@ -575,7 +630,7 @@ German language for qutIM
 %package -n %name-lang-en
 Summary: English (United Kingdom) language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-en
@@ -585,7 +640,7 @@ English (United Kingdom) language for qutIM
 %package -n %name-lang-ru
 Summary: Russian language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-ru
@@ -595,17 +650,27 @@ Russian language for qutIM
 %package -n %name-lang-sk
 Summary: Slovak language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-sk
 Slovak language for qutIM
 
+# Spanish language for qutIM
+%package -n %name-lang-es
+Summary: Spanish language for %name
+Group: Networking/Instant messaging
+Requires: %name = %qversion-%release
+BuildArch: noarch
+
+%description -n %name-lang-es
+Spanish language for qutIM
+
 # Ukrainian language for qutIM
 %package -n %name-lang-uk
 Summary: Ukrainian language for %name
 Group: Networking/Instant messaging
-Requires: %name = %qversion-%qrelease
+Requires: %name = %qversion-%release
 BuildArch: noarch
 
 %description -n %name-lang-uk
@@ -621,18 +686,37 @@ BuildArch: noarch
 Documentation for qutIM
 
 %prep
-%setup -n %name-0.3.1
+%setup -n %name
 %patch0 -p1
-%patch1 -p1
-sed -i 's|TelepathyQt4/|TelepathyQt/|' protocols/astral/src/*.{cpp,h}
 
 %build
-export PATH=%_qt4dir/bin:$PATH
-%Kbuild \
-	-DQUTIM_ADDITIONAL_ART_PATH=../artwork
+%define lib_suffix %nil
+%ifarch x86_64
+%define lib_suffix 64
+%endif
+
+mkdir -p %_target_platform
+pushd %_target_platform
+
+export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
+
+cmake .. \
+	-DCMAKE_INSTALL_PREFIX:PATH=%prefix \
+	-DCMAKE_C_FLAGS:STRING='%optflags' \
+	-DCMAKE_CXX_FLAGS:STRING='%optflags' \
+	-DLIB_SUFFIX:STRING='%lib_suffix' \
+	-DPHONON_INCLUDE_DIR:PATH=%_includedir/kde4
+popd
+
+%make_build -C %_target_platform
 
 %install
-%Kinstall
+%make -C %_target_platform DESTDIR=%buildroot install
+
+for i in %buildroot%_libdir/%name/plugins/*.so %buildroot%_libdir/lib%name.so.* %buildroot%_libdir/libjreen.so.* %buildroot%_libdir/libquasar.so.* %buildroot%_libdir/lib%name-adiumchat.so.* %buildroot%_libdir/lib%name-adiumwebview.so.* %buildroot%_libdir/lib%name-simplecontactlist.so.* %buildroot%_libdir/libvreen.so.* %buildroot%_bindir/%name
+do
+	chrpath -d $i ||:
+done
 
 %files
 %_bindir/%name
@@ -645,7 +729,9 @@ export PATH=%_qt4dir/bin:$PATH
 %_libdir/%name/plugins/libauthdialog.so
 %_libdir/%name/plugins/libchatnotificationsbackend.so
 %_libdir/%name/plugins/libchatspellchecker.so
+%_libdir/%name/plugins/libcomparators.so
 %_libdir/%name/plugins/libcontactinfo.so
+%_libdir/%name/plugins/libcontactmodel.so
 %_libdir/%name/plugins/libdataformsbackend.so
 %_libdir/%name/plugins/libemoticonssettings.so
 %_libdir/%name/plugins/libfiletransfersettings.so
@@ -653,7 +739,7 @@ export PATH=%_qt4dir/bin:$PATH
 %_libdir/%name/plugins/libidledetector.so
 %_libdir/%name/plugins/libidlestatuschanger.so
 %_libdir/%name/plugins/libjoinchatdialog.so
-%_libdir/%name/plugins/libjoingroupchatdlg.so                                                                                                                                           
+%_libdir/%name/plugins/libjoingroupchatdlg.so
 %_libdir/%name/plugins/libjsonconfig.so
 %_libdir/%name/plugins/libjsonhistory.so
 %_libdir/%name/plugins/libkineticscroller.so
@@ -670,12 +756,10 @@ export PATH=%_qt4dir/bin:$PATH
 %_libdir/%name/plugins/libnotificationssettings.so
 %_libdir/%name/plugins/liboldsoundtheme.so
 %_libdir/%name/plugins/libpassword.so
-%_libdir/%name/plugins/libplaincontactsmodel.so
 %_libdir/%name/plugins/libplistconfig.so
 %_libdir/%name/plugins/libproxysettings.so
 %_libdir/%name/plugins/libqticons.so
 %_libdir/%name/plugins/libsearchdialog.so
-%_libdir/%name/plugins/libseparatedcontactsmodel.so
 %_libdir/%name/plugins/libservicechooser.so
 %_libdir/%name/plugins/libsessionhelper.so
 %_libdir/%name/plugins/libshortcutsettings.so
@@ -692,13 +776,12 @@ export PATH=%_qt4dir/bin:$PATH
 %_libdir/%name/plugins/libtextchat.so
 %_libdir/%name/plugins/libtorycontactlistwidget.so
 %_libdir/%name/plugins/libtrayicon.so
-%_libdir/%name/plugins/libtreecontactsmodel.so
 %_libdir/%name/plugins/libxsettingsdialog.so
 %_desktopdir/%name.desktop
 %dir %_datadir/apps
 %dir %_datadir/apps/%name
+%_datadir/apps/%name/config
 %_datadir/apps/%name/icons
-%_datadir/apps/%name/sounds
 %_datadir/apps/%name/webkitstyle
 %_miconsdir/%name.png
 %dir %_iconsdir/hicolor/22x22
@@ -726,17 +809,8 @@ export PATH=%_qt4dir/bin:$PATH
 %_iconsdir/hicolor/scalable/apps/%name.svg
 %dir %_iconsdir/hicolor/scalable/status
 %_iconsdir/hicolor/scalable/status/*.svg
-%dir %_iconsdir/ubuntu-mono-dark
-%dir %_iconsdir/ubuntu-mono-dark/scalable
-%dir %_iconsdir/ubuntu-mono-dark/scalable/status
-%_iconsdir/ubuntu-mono-dark/scalable/status/*.svg
-%dir %_iconsdir/ubuntu-mono-light
-%dir %_iconsdir/ubuntu-mono-light/scalable
-%dir %_iconsdir/ubuntu-mono-light/scalable/status
-%_iconsdir/ubuntu-mono-light/scalable/status/*.svg
 %_pixmapsdir/%name.xpm
 %dir %_datadir/%name
-%_datadir/%name/config
 %_datadir/%name/doc
 %dir %_datadir/apps/%name/languages
 
@@ -747,13 +821,25 @@ export PATH=%_qt4dir/bin:$PATH
 %_libdir/lib%name.so
 %dir %_includedir/%name
 %_includedir/%name/*.h
-%dir %_includedir/%name/adiumchat
-%_includedir/%name/adiumchat/*.h
-%dir %_includedir/%name/simplecontactlist
-%_includedir/%name/simplecontactlist/*.h
 %dir %_datadir/cmake
 %dir %_datadir/cmake/Modules
 %_datadir/cmake/Modules/*.cmake
+
+%files -n lib%name-adiumchat
+%_libdir/lib%name-adiumchat.so.*
+
+%files -n lib%name-adiumchat-devel
+%_libdir/lib%name-adiumchat.so
+%dir %_includedir/%name/adiumchat
+%_includedir/%name/adiumchat/*.h
+
+%files -n lib%name-simplecontactlist
+%_libdir/lib%name-simplecontactlist.so.*
+
+%files -n lib%name-simplecontactlist-devel
+%_libdir/lib%name-simplecontactlist.so
+%dir %_includedir/%name/simplecontactlist
+%_includedir/%name/simplecontactlist/*.h
 
 %files -n %name-protocol-astral
 %_libdir/%name/plugins/libastral.so
@@ -772,6 +858,8 @@ export PATH=%_qt4dir/bin:$PATH
 %_pkgconfigdir/libjreen.pc
 %dir %_includedir/jreen
 %_includedir/jreen/*.h
+%dir %_includedir/jreen/experimental
+%_includedir/jreen/experimental/*.h
 
 %files -n %name-protocol-mrim
 %_libdir/%name/plugins/libmrim.so
@@ -786,14 +874,17 @@ export PATH=%_qt4dir/bin:$PATH
 
 %files -n %name-protocol-vkontakte
 %_libdir/%name/plugins/libvkontakte.so
-%_libdir/%name/plugins/libvphotoalbum.so
 %_datadir/apps/%name/vphotoalbum
-%_libdir/%name/plugins/libvkontaktewall.so
+
+%files -n libvreen
+%_libdir/libvreen.so.*
+
+%files -n libvreen-devel
+%_libdir/libvreen.so
 
 %files -n %name-plugin-adiumwebview
 %_libdir/%name/plugins/libadiumwebview.so
 %dir %_datadir/apps/%name/data
-%dir %_datadir/apps/%name/data/webview
 %_datadir/apps/%name/data/webview
 
 %files -n lib%name-adiumwebview
@@ -801,18 +892,20 @@ export PATH=%_qt4dir/bin:$PATH
 
 %files -n lib%name-adiumwebview-devel
 %_libdir/lib%name-adiumwebview.so
+%dir %_includedir/%name/adiumwebview
+%_includedir/%name/adiumwebview/*.h
 
 %files -n %name-plugin-aescrypto
 %_libdir/%name/plugins/libaescrypto.so
-
-%files -n %name-plugin-antiboss
-%_libdir/%name/plugins/libantiboss.so
 
 %files -n %name-plugin-antispam
 %_libdir/%name/plugins/libantispam.so
 
 %files -n %name-plugin-aspeller
 %_libdir/%name/plugins/libaspeller.so
+
+%files -n %name-plugin-autoreply
+%_libdir/%name/plugins/libautoreply.so
 
 %files -n %name-plugin-bearermanager
 %_libdir/%name/plugins/libbearermanager.so
@@ -838,6 +931,9 @@ export PATH=%_qt4dir/bin:$PATH
 %files -n %name-plugin-floaties
 %_libdir/%name/plugins/libfloaties.so
 
+%files -n %name-plugin-formula
+%_libdir/%name/plugins/libformula.so
+
 %files -n %name-plugin-highlighter
 %_libdir/%name/plugins/libhighlighter.so
 
@@ -849,10 +945,10 @@ export PATH=%_qt4dir/bin:$PATH
 
 %files -n %name-plugin-kdeintegration
 %_libdir/%name/plugins/libkdeintegration.so
-%dir %_K4apps/desktoptheme
-%dir %_K4apps/desktoptheme/default
-%dir %_K4apps/desktoptheme/default/icons
-%_K4apps/desktoptheme/default/icons/%name.svg
+%dir %_datadir/apps/desktoptheme
+%dir %_datadir/apps/desktoptheme/default
+%dir %_datadir/apps/desktoptheme/default/icons
+%_datadir/apps/desktoptheme/default/icons/%name.svg
 
 %files -n %name-plugin-kineticpopups
 %_libdir/%name/plugins/libkineticpopups.so
@@ -876,7 +972,7 @@ export PATH=%_qt4dir/bin:$PATH
 %files -n %name-plugin-offtherecord
 %_libdir/%name/plugins/libofftherecord.so
 
-%files -n %name-plugin-olddelegate
+%files -n %name-plugin-oldcontactdelegate
 %_libdir/%name/plugins/liboldcontactdelegate.so
 
 %files -n %name-plugin-phononsound
@@ -884,22 +980,8 @@ export PATH=%_qt4dir/bin:$PATH
 
 %files -n %name-plugin-plugman
 %_libdir/%name/plugins/libplugman.so
-
-%files -n libquasar
-%_libdir/libquasar.so.*
-
-%files -n libquasar-devel
-%_libdir/libquasar.so
-%_pkgconfigdir/libquasar.pc
-%dir %_includedir/quasar
-%_includedir/quasar/*.h
-
-%files -n %name-plugin-qmlchat
-%_libdir/%name/plugins/libqmlchat.so
-%_datadir/apps/%name/qmlchat
-
-%files -n %name-plugin-qrcicons
-%_libdir/%name/plugins/libqrcicons.so
+%dir %_datadir/apps/%name/plugman
+%_datadir/apps/%name/plugman
 
 %files -n %name-plugin-scriptapi
 %_libdir/%name/plugins/libscriptapi.so
@@ -944,6 +1026,10 @@ export PATH=%_qt4dir/bin:$PATH
 %dir %_datadir/apps/%name/languages/cs
 %_datadir/apps/%name/languages/cs/*.qm
 
+%files -n %name-lang-fr
+%dir %_datadir/apps/%name/languages/fr
+%_datadir/apps/%name/languages/fr/*.qm
+
 %files -n %name-lang-de
 %dir %_datadir/apps/%name/languages/de
 %_datadir/apps/%name/languages/de/*.qm
@@ -960,6 +1046,10 @@ export PATH=%_qt4dir/bin:$PATH
 %dir %_datadir/apps/%name/languages/sk
 %_datadir/apps/%name/languages/sk/*.qm
 
+%files -n %name-lang-es
+%dir %_datadir/apps/%name/languages/es
+%_datadir/apps/%name/languages/es/*.qm
+
 %files -n %name-lang-uk
 %dir %_datadir/apps/%name/languages/uk
 %_datadir/apps/%name/languages/uk/*.qm
@@ -968,6 +1058,9 @@ export PATH=%_qt4dir/bin:$PATH
 %doc AUTHORS COPYING README.* ChangeLog
 
 %changelog
+* Fri Jan 18 2013 Nazarov Denis <nenderus@altlinux.org> 6:0.3.1.0-alt1.git20130117
+- Version 0.3.1.0 from git on 17.01.2013
+
 * Wed Aug 08 2012 Nazarov Denis <nenderus@altlinux.org> 5:0.3.1.0-alt3
 - Remove release from subpackages (ALT #27622)
 
