@@ -6,8 +6,8 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: xmonad
-Version: 0.10
-Release: alt5
+Version: 0.11
+Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -50,7 +50,12 @@ tiled on several screens.
 mv %buildroot%_datadir/%name-%version/man/xmonad.hs %buildroot%_docdir/%name-%version/
 install -m 644 -D man/xmonad.1 %buildroot%_man1dir/xmonad.1
 
+rm -f buildroot%_datadir/%name-%version/man/xmonad.1
+
 %hs_gen_filelist
+
+grep -v "%_datadir/%name-%version/man/xmonad.1" %name-files.all > %name-files.all.new
+mv -f %name-files.all.new %name-files.all
 
 install -m0644 -D %SOURCE2 %buildroot%_sysconfdir/X11/wmsession.d/01xmonad
 
@@ -63,6 +68,9 @@ install -m0644 -D %SOURCE3 %buildroot%_iconsdir/%name.xpm
 %_iconsdir/xmonad.xpm
 
 %changelog
+* Fri Jan 18 2013 Denis Smirnov <mithraen@altlinux.ru> 0.11-alt1
+- 0.11
+
 * Tue Dec 25 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt5
 - rebuild
 
