@@ -2,7 +2,7 @@
 
 Name: gnustep-base
 Version: 1.24.2
-Release: alt4.git20130112
+Release: alt5.git20130112
 Epoch: 1
 
 Summary: GNUstep Base library package
@@ -147,6 +147,9 @@ rm -f /etc/services.orig
 %_includedir/gnustep
  
 %changelog
+* Fri Jan 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt5.git20130112
+- Fixed for autoreconf
+
 * Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.24.2-alt4.git20130112
 - New snapshot
 
