@@ -1,6 +1,6 @@
 Name: tintin++
-Version: 2.00.8
-Release: alt2
+Version: 2.00.9
+Release: alt1
 Summary: Console MUD client
 License: GPLv2
 Group: Games/Other
@@ -61,6 +61,9 @@ install -pm644 TODO %buildroot%docdir/
 %docdir/*
 
 %changelog
+* Fri Jan 18 2013 Andrey Bergman <vkni@altlinux.org> 2.00.9-alt1
+- Update to a new version.
+
 * Mon Sep 10 2012 Andrey Bergman <vkni@altlinux.org> 2.00.8-alt2
 - Corrected spec error (removed unnecessary directories from doc)
 
