@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.59
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -120,7 +120,7 @@ Release: alt1
 
 %Extra_modules vboxhost 4.1.24
 #Extra_modules vboxguest 4.1.22
-%Extra_modules fglrx 8.97.100.3
+#Extra_modules fglrx 8.97.100.3
 #Extra_modules netatop 0.1.1
 
 %define strip_mod_opts --strip-unneeded -R .comment
@@ -360,8 +360,7 @@ Patch0391: linux-%kernel_branch.42-fix-drivers-message-fusion.patch
 Patch0401: linux-%kernel_branch.50-fix-drivers-misc--hpilo.patch
 Patch0402: linux-%kernel_branch.42-fix-drivers-misc--rts_pstor.patch
 Patch0403: linux-%kernel_branch.42-fix-drivers-misc--vmw_balloon.patch
-Patch0404: linux-%kernel_branch.42-fix-drivers-misc--zcache.patch
-Patch0405: linux-%kernel_branch.42-fix-drivers-misc-lis3lv02d--lis3lv02d.patch
+Patch0404: linux-%kernel_branch.42-fix-drivers-misc-lis3lv02d--lis3lv02d.patch
 
 Patch0411: linux-%kernel_branch.42-fix-drivers-mmc-card--mmc_block.patch
 
@@ -535,7 +534,7 @@ Patch0672: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0673: linux-%kernel_branch.53-fix-fs--block.patch
 Patch0674: linux-%kernel_branch.42-fix-fs--eventpoll.patch
 Patch0675: linux-%kernel_branch.53-fix-fs-autofs4.patch
-Patch0676: linux-%kernel_branch.57-fix-fs-btrfs.patch
+Patch0676: linux-%kernel_branch.58-fix-fs-btrfs.patch
 Patch0677: linux-%kernel_branch.44-fix-fs-cachefiles.patch
 Patch0678: linux-%kernel_branch.42-fix-fs-ceph.patch
 Patch0679: linux-%kernel_branch.42-fix-fs-cifs.patch
@@ -589,6 +588,7 @@ Patch0759: linux-%kernel_branch.46-fix-mm--numa.patch
 Patch0760: linux-%kernel_branch.42-fix-mm--slab.patch
 Patch0761: linux-%kernel_branch.42-fix-mm--slub.patch
 Patch0762: linux-%kernel_branch.49-fix-mm--swap.patch
+Patch0763: linux-%kernel_branch.42-fix-mm--zcache.patch
 
 Patch0770: linux-%kernel_branch.51-fix-net.patch
 Patch0771: linux-%kernel_branch.42-fix-net--batman-adv.patch
@@ -683,7 +683,6 @@ Patch1101: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
 Patch1111: linux-%kernel_branch.56-feat-drivers-misc--fsa9480.patch
 Patch1112: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
 Patch1113: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
-Patch1114: linux-%kernel_branch.42-feat-drivers-misc--zcache.patch
 
 Patch1121: linux-%kernel_branch.57-feat-drivers-scsi--mvumi.patch
 
@@ -732,6 +731,7 @@ Patch1201: linux-%kernel_branch.42-feat-lib--llist.patch
 
 Patch1211: linux-%kernel_branch.42-feat-mm--slqb.patch
 Patch1212: linux-%kernel_branch.43-feat-mm--uksm.patch
+Patch1213: linux-%kernel_branch.58-feat-mm--zcache.patch
 
 Patch1221: linux-%kernel_branch-feat-net--netatop.patch
 Patch1222: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
@@ -1693,7 +1693,6 @@ cd linux-%version
 %patch0402 -p1
 %patch0403 -p1
 %patch0404 -p1
-%patch0405 -p1
 
 %patch0411 -p1
 
@@ -1932,6 +1931,7 @@ cd linux-%version
 %patch0760 -p1
 %patch0761 -p1
 %patch0762 -p1
+%patch0763 -p1
 
 # fix-net*
 %patch0770 -p1
@@ -2040,7 +2040,6 @@ cd linux-%version
 %patch1111 -p1
 %patch1112 -p1
 %patch1113 -p1
-%patch1114 -p1
 
 # feat-drivers-scsi--*
 %patch1121 -p1
@@ -2096,6 +2095,7 @@ cd linux-%version
 # feat-mm--*
 %patch1211 -p1
 %patch1212 -p1
+%patch1213 -p1
 
 # feat-net-*
 %patch1221 -p1
@@ -2987,6 +2987,21 @@ done)
 
 
 %changelog
+* Sat Jan 19 2013 Led <led@altlinux.ru> 3.0.59-alt3
+- removed external modules:
+  + fglrx
+
+* Fri Jan 18 2013 Led <led@altlinux.ru> 3.0.59-alt2
+- removed:
+  + fix-drivers-misc--zcache
+  + feat-drivers-misc--zcache
+- updated:
+  + fix-fs-btrfs
+- added:
+  + fix-mm--zcache
+  + feat-mm--zcache
+- disable CRYPTO_FIPS
+
 * Fri Jan 18 2013 Led <led@altlinux.ru> 3.0.59-alt1
 - 3.0.59
 - updated:
@@ -3000,9 +3015,10 @@ done)
 - disabled compat (turn off some COMPAT options in .config)
 
 * Thu Jan 17 2013 Led <led@altlinux.ru> 3.0.58-alt4
+- updated:
+  + feat-fs--lnfs
 - added:
   + fix-drivers-crypto--padlock
-  + feat-fs--lnfs
 - move EDAC modules to separate subpackage kernel-modules-edac-*
 
 * Tue Jan 15 2013 Led <led@altlinux.ru> 3.0.58-alt3
