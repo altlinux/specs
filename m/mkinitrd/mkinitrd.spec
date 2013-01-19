@@ -1,5 +1,5 @@
 Name: mkinitrd
-Version: 3.0.15
+Version: 3.0.16
 Release: alt1
 Epoch: 1
 Summary: Creates an initial ramdisk image for preloading modules
@@ -70,6 +70,11 @@ install -p -m 0644 scripts/* %buildroot/lib/mkinitrd/initramfs-base/scripts/
 
 
 %changelog
+* Sat Jan 19 2013 Led <led@altlinux.ru> 1:3.0.16-alt1
+- 3.0.16:
+  + mkinitrd: remove bashism
+  + implement rootsubdir option
+
 * Sun Dec 02 2012 Led <led@altlinux.ru> 1:3.0.15-alt1
 - 3.0.15:
   + scripts/ip: use ipconfig-generated script in /run/ (ALT#28159)
