@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.59
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -596,7 +596,7 @@ Patch0772: linux-%kernel_branch.42-fix-net--dcb.patch
 Patch0773: linux-%kernel_branch.42-fix-net--wimax.patch
 Patch0774: linux-%kernel_branch.42-fix-net--x25.patch
 Patch0775: linux-%kernel_branch.42-fix-net-8021q--vlan-core.patch
-Patch0776: linux-%kernel_branch.42-fix-net-bridge.patch
+Patch0776: linux-%kernel_branch.58-fix-net-bridge--bridge.patch
 Patch0777: linux-%kernel_branch.42-fix-net-ceph.patch
 Patch0778: linux-%kernel_branch.59-fix-net-core.patch
 Patch0779: linux-%kernel_branch.46-fix-net-ipv4.patch
@@ -2987,6 +2987,14 @@ done)
 
 
 %changelog
+* Sat Jan 19 2013 Led <led@altlinux.ru> 3.0.59-alt4
+- removed:
+  + fix-net-bridge
+- updated:
+  + feat-fs-aufs
+- added:
+  + fix-net-bridge--bridge
+
 * Sat Jan 19 2013 Led <led@altlinux.ru> 3.0.59-alt3
 - removed external modules:
   + fglrx
