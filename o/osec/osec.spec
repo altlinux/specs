@@ -1,6 +1,6 @@
 Name: osec
-Version: 1.2.4
-Release: alt3
+Version: 1.2.5
+Release: alt1
 
 Summary: Lightweight file permission checker
 License: GPL3
@@ -20,7 +20,7 @@ Obsoletes: mtree-sec
 %define osec_user osec
 
 # Automatically added by buildreq on Sat Apr 21 2007 (-bi)
-BuildRequires: help2man libcdb-devel libcap-devel perl-RPM
+BuildRequires: flex bison help2man libcdb-devel libcap-devel libattr-devel perl-RPM
 
 %package cronjob
 Summary: General cron framework for osec
@@ -106,6 +106,14 @@ rm -f %osec_statedir/osec.db.*
 %attr(770,root,%osec_group) %osec_statedir
 
 %changelog
+* Fri Jan 18 2013 Alexey Gladkov <legion@altlinux.ru> 1.2.5-alt1
+- New version (1.2.5);
+- Add ability to ignore check of checksum and symlink;
+- Add extended attributes support;
+- report: Split xattrs in two parts: selinux and other attributies;
+- osec.cron: Add number of added, deleted and changed files;
+- Reduced the number of memory allocations.
+
 * Mon Jul 23 2012 Alexey Gladkov <legion@altlinux.ru> 1.2.4-alt3
 - Move cronjob from cron.daily to cron.d.
 
