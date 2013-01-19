@@ -5,8 +5,8 @@
 %endif
 
 Name: dmd
-Version: 2.060
-Release: alt4
+Version: 2.061
+Release: alt1
 Summary: The D Programming Language
 Group: Development/Other
 License: GPL
@@ -14,6 +14,11 @@ Url: http://dlang.org/
 
 Source: %name-%version.tar
 BuildRequires: gcc-c++
+
+Provides: libdruntime = %version libdruntime-devel = %version
+Provides: libphobos = %version libphobos-devel = %version
+Conflicts: ldc
+
 
 %description
 The D programming language is an object-oriented, imperative, multi-paradigm 
@@ -23,25 +28,21 @@ by that language, it is not a variant of C++. D has redesigned some C++ features
 and has been influenced by concepts used in other programming languages, such as 
 Java, Python, Ruby, C#, and Eiffel.
 
-%package -n libphobos
-Summary: Phobos Runtime Library
-Group: Development/Other
-Requires: %name = %version
-
-%description -n libphobos
-Phobos is the standard runtime library that comes with the D language compiler.
-
 %prep
 %setup -q
+
+
 
 %build
 cd dmd/src
 %make_build -f posix.mak MODEL=%MODEL
 
 cd ../../druntime
+sed -i 's|-m$(MODEL) -O|-m$(MODEL) -fPIC -O|g' posix.mak
 %make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL DRUNTIME_BASE=druntime
 
 cd ../phobos
+sed -i 's|DFLAGS += -O -release|DFLAGS += -fPIC -O -release|g' posix.mak
 %make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL ROOT=out
 
 cd ../tools
@@ -88,13 +89,20 @@ cp -r dmd/docs/man/man1 %buildroot%_mandir/
 %_includedir/d/core
 %_includedir/d/*.di
 %_libdir/libdruntime.a
-
-%files -n libphobos
 %_includedir/d/std
 %_includedir/d/etc
 %_libdir/libphobos*
 
 %changelog
+* Sat Jan 19 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.061-alt1
+- New version (Closes: #28302)
+- Fix includes (Closes: #28394)
+
+* Sat Dec 22 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt5
+- Added provides
+- Rebuild with -fPIC
+- Phobos in dmd
+
 * Wed Oct 31 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt4
 - Added Url in spec
 - Added missed headers
