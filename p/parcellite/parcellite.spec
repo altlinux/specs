@@ -1,6 +1,6 @@
 Name: parcellite
-Version: 1.1.2
-Release: alt1
+Version: 1.1.4
+Release: alt0.rc2
 Summary: Lightweight GTK+ Clipboard Manager
 License: GPLv3
 Group: Graphical desktop/GNOME
@@ -38,6 +38,9 @@ print for those who like simplicity.
 %_man1dir/%name.1*
 
 %changelog
+* Sun Jan 20 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.1.4-alt0.rc2
+- 1.1.4 RC2
+
 * Thu Jan 17 2013 Valery Inozemtsev <shrek@altlinux.ru> 1.1.2-alt1
 - 1.1.2
 
