@@ -1,5 +1,5 @@
 Name: irqbalance
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Summary: Evenly distribute interrupt load across CPUs
@@ -50,6 +50,9 @@ install -pDm644 misc/%name.service %buildroot/%systemd_unitdir/%name.service
 %systemd_unitdir/%name.service
 
 %changelog
+* Sun Jan 20 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.5-alt1
+- new version
+
 * Wed Sep 05 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.4-alt1
 - new version
 
