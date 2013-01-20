@@ -8,7 +8,7 @@
 
 Name: lxde-common
 Version: 0.5.5
-Release: alt16
+Release: alt17
 BuildArch: noarch
 
 Summary: Basic infrastructure for LXDE.
@@ -63,7 +63,7 @@ sed -i 's,pcmanfm --desktop,pcmanfm --daemon-mode --desktop,' autostart
 %install
 %makeinstall_std
 
-install -m644 -D %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/20LXDE
+install -m644 -D %SOURCE1 %buildroot%_x11sysconfdir/wmsession.d/09LXDE
 
 pushd %buildroot%_datadir
 
@@ -112,6 +112,9 @@ fi
 #_iconsdir/nuoveXT2
 
 %changelog
+* Sun Jan 20 2013 Michael Shigorin <mike@altlinux.org> 0.5.5-alt17
+- changed wmsession priority from 20 to 09 (closes: #28393)
+
 * Tue May 22 2012 Radik Usupov <radik@altlinux.org> 0.5.5-alt16
 - Updated lxde-icon-theme
 
