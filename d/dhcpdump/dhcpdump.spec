@@ -3,7 +3,7 @@
 Name: dhcpdump
 
 Version: 1.8
-Release: alt2
+Release: alt3
 
 Summary: DHCP packet dumper
 
@@ -17,6 +17,7 @@ Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 
 Source0: %name-%version.tar
 Patch0:  %name-1.8-debian.patch
+Patch1:  %name-1.8-alt-fix_usage_msg.patch
 
 AutoReqProv: yes
 BuildRequires(pre): rpm-build-licenses
@@ -31,6 +32,7 @@ packets to analyze DHCP server responses.
 %prep
 %setup
 %patch0 -p1
+%patch1 -p0
 
 %build
 %make_build
@@ -46,6 +48,9 @@ install -m 0755 -- %name.8 %buildroot%_man8dir/
 %_man8dir/*
 
 %changelog
+* Sun Jan 20 2013 Nikolay A. Fetisov <naf@altlinux.ru> 1.8-alt3
+- fix usage message (Closes: #22651)
+
 * Sun Nov 28 2010 Nikolay A. Fetisov <naf@altlinux.ru> 1.8-alt2
 - fix build with perl 5.12
 
