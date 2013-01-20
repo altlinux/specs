@@ -1,5 +1,7 @@
+%define api_ver 1.0
+
 Name: libgusb
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 Summary: GLib wrapper around libusb1
@@ -9,6 +11,7 @@ Url: https://gitorious.org/gusb/
 Source: http://people.freedesktop.org/~hughsient/releases/%name-%version.tar.xz
 
 BuildRequires: libgio-devel >= 2.16.1 libgudev-devel libusb-devel
+BuildRequires: gobject-introspection-devel libgudev-gir-devel vala-tools
 
 %description
 GUsb is a GObject wrapper for libusb that makes it easy to do
@@ -22,6 +25,24 @@ Requires: %name = %version-%release
 
 %description devel
 GLib headers and libraries for the GUsb library.
+
+%package gir
+Summary: GObject introspection data for GUsb
+Group: System/Libraries
+Requires: %name = %version-%release
+
+%description gir
+GObject introspection data for the GUsb library.
+
+%package gir-devel
+Summary: GObject introspection devel data for GUsb
+Group: Development/Other
+BuildArch: noarch
+Requires: %name-devel = %version-%release
+Requires: %name-gir = %version-%release
+
+%description gir-devel
+GObject introspection devel data for the GUsb library.
 
 %package devel-doc
 Summary: Development documentation for GUsb
@@ -40,12 +61,17 @@ applications that use GUsb library.
 %build
 %configure \
         --disable-static \
-        --disable-dependency-tracking
+        --disable-dependency-tracking \
+        --enable-tests
 
 %make_build
 
 %install
 %make DESTDIR=%buildroot install
+
+%check
+# failed to init libusb in hasher
+#%%make check
 
 %files
 %_libdir/libgusb.so.*
@@ -55,11 +81,23 @@ applications that use GUsb library.
 %_includedir/gusb-1/
 %_libdir/libgusb.so
 %_libdir/pkgconfig/gusb.pc
+%_vapidir/gusb.vapi
+
+%files gir
+%_typelibdir/GUsb-%api_ver.typelib
+
+%files gir-devel
+%_girdir/GUsb-%api_ver.gir
 
 %files devel-doc
 %_datadir/gtk-doc/html/gusb/
 
 %changelog
+* Sun Jan 20 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.4-alt1
+- 0.1.4
+- new -gir{,-devel} subpackages
+- added Vala bindings to -devel subpackage
+
 * Thu Jan 19 2012 Yuri N. Sedunov <aris@altlinux.org> 0.1.3-alt1
 - adapted for Sisyphus
 
