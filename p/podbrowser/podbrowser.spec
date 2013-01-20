@@ -1,30 +1,29 @@
 ## SPEC file for PodBrowser
 
-%define version    0.12
-%define release    alt3
-
 Name: podbrowser
-Version: %version
-Release: %release
+Version: 0.12
+Release: alt4
 
 Summary: a GTK+ documentation browser for Perl
 Summary(ru_RU.UTF-8): графическая GTK+ утилита просмотра документации Perl
 
 License: %perl_license
 Group: Development/Perl
-URL: http://jodrell.net/projects/podbrowser
+URL: http://code.google.com/p/podbrowser/
+#URL: http://jodrell.net/projects/podbrowser
 
 Packager: Nikolay A. Fetisov <naf@altlinux.ru>
 BuildArch: noarch
 
-Source: http://jodrell.net/files/podbrowser/%name-%version.tar.gz
+Source:  %name-%version.tar
 Source1: %name-16.png
 Source2: %name-32.png
 
 Patch0: %name-0.10-alt-desktop_file_l10n.patch
 Patch1: %name-0.10-alt-Gtk2_init.patch
 Patch2: %name-0.12-alt-opener.patch
-Patch3: %name-0.12-alt-podviewr_list.patch
+Patch3: %name-0.12-alt-podviewer_list.patch
+Patch4: %name-0.12-debian-missing_icon.patch
 
 AutoReqProv: perl, yes
 BuildRequires(pre): rpm-build-licenses perl-devel 
@@ -36,15 +35,15 @@ Requires: gnome-icon-theme
 
 
 %description
-PodBrowser is a documentation browser for Perl. You can view, 
-search and print documentation  for Perl's builtin functions, 
-its "perldoc" pages,  pragmatic modules  and the default  and 
+PodBrowser is a documentation browser for Perl. You can view,
+search and print documentation  for Perl's builtin functions,
+its "perldoc" pages,  pragmatic modules  and the default  and
 user-installed modules.
 
 %description -l ru_RU.UTF-8
-PodBrowser  -  графическая утилита просмотра  документации Perl. 
+PodBrowser  -  графическая утилита просмотра  документации Perl.
 Она позволяем просматривать, искать и распечатывать документацию
-по встроенным функциям Perl, руководствам "perldoc", а также 
+по встроенным функциям Perl, руководствам "perldoc", а также
 всем установленным в системе модулям.
 
 %prep
@@ -53,6 +52,7 @@ PodBrowser  -  графическая утилита просмотра  док�
 %patch1
 %patch2
 %patch3
+%patch4 -p1
 
 mv -f COPYING COPYING.orig
 ln -s -- $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
@@ -79,6 +79,9 @@ install -D -m0644 -- %SOURCE2 %buildroot%_niconsdir/%name.png
 
 
 %changelog
+* Sun Jan 20 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.12-alt4
+- Provide alternatives for missed icons (Closes: #23335, #25744)
+
 * Fri Dec 12 2008 Nikolay A. Fetisov <naf@altlinux.ru> 0.12-alt3
 - Remove obsolete %%update_menus calls
 - Fix .desktop file to meet standards
