@@ -1,9 +1,9 @@
 %define _libexecdir %_prefix/libexec
-%def_disable epdf
+%def_enable epdf
 
 Name: ethumb
 Version: 1.7.5
-Release: alt1
+Release: alt2
 
 Summary: Ethumb - Thumbnail generation library
 Group: Graphical desktop/Enlightenment
@@ -78,6 +78,9 @@ developing applications that use %name.
 %_pkgconfigdir/%{name}*.pc
 
 %changelog
+* Sun Jan 20 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt2
+- epdf support
+
 * Sat Jan 05 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.5-alt1
 - 1.7.5
 
