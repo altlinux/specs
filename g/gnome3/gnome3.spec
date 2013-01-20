@@ -1,8 +1,8 @@
 %define ver_major 3.6
 
 Name: gnome3
-Version: %ver_major.0
-Release: alt2
+Version: %ver_major.2
+Release: alt1
 
 Summary: GNOME 3 Desktop installers
 License: %gpl3plus
@@ -64,6 +64,8 @@ Requires: gnome-session >= %session_ver
 Requires: gnome-panel >= %ver_major
 Requires: gnome-control-center >= %ver_major
 Requires: gnome-shell >= %ver_major
+# default font
+Requires: fonts-otf-abattis-cantarell
 # Window manager
 # Requires: gnome-wm (see altbug #15947)
 Requires: metacity-gnome >= %metacity_ver
@@ -357,6 +359,9 @@ itself).
 #%files a11y
 
 %changelog
+* Sun Jan 20 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt1
+- a time to add fonts-otf-abattis-cantarell
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.0-alt2
 - restored gnome-games, epiphany-extensions
 - added libgtk2-engine-adwaita to -default
