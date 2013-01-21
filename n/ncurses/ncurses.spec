@@ -1,6 +1,6 @@
 Name: ncurses
 Version: 5.9
-Release: alt2
+Release: alt3
 
 %define rootdatadir /lib
 
@@ -40,6 +40,7 @@ Summary: Descriptions of common terminal types
 Group: System/Base
 Conflicts: %name < %version-%release
 Conflicts: screen < 3.9.11-alt1
+BuildArch: noarch
 
 %package -n terminfo-extra
 Summary: Additional terminal type definitions
@@ -663,6 +664,9 @@ done
 %endif # with_utf8
 
 %changelog
+* Mon Jan 21 2013 Fr. Br. George <george@altlinux.ru> 5.9-alt3
+Make terminfo noarch
+
 * Fri Jan 18 2013 Fr. Br. George <george@altlinux.ru> 5.9-alt2
 - Version up to 5.9-20130112
 - Extend baseterms list with 256-color versions of terminals (Closes: #25245)
