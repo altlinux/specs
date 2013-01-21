@@ -7,14 +7,14 @@ BuildRequires: jpackage-compat
 %global		_newname Vuze
 
 Name:		azureus
-Version:	4.8.0.0
+Version:	4.8.1.2
 Release:	alt1_1jpp7
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 License:	GPLv2+
 URL:		http://azureus.sourceforge.net
 
-Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4800_source.zip
+Source0:	http://downloads.sourceforge.net/azureus/%{_newname}_4812_source.zip
 
 Source1:	azureus.script
 Source2:	Azureus.desktop
@@ -47,6 +47,8 @@ Patch57:	azureus-4.0.0.4-stupid-invalid-characters.diff
 
 Patch58:	azureus-4.2.0.4-java5.patch
 
+Patch59:	azureus-4.8.1.2-fix-compile.patch
+
 
 BuildRequires:	ant jpackage-utils >= 1.5 xml-commons-apis
 BuildRequires:	apache-commons-cli log4j
@@ -59,12 +61,15 @@ Requires:	 bouncycastle >= 1.33-3
 BuildRequires:	 desktop-file-utils
 Requires(post):	 desktop-file-utils
 Requires(postun):	desktop-file-utils
+
+Provides:		Vuze
+
 BuildArch:	noarch
 Source44: import.info
 
 
 %description 
-Azureus (now %{_newname}) implements the BitTorrent protocol using java
+Azureus (now %%{_newname}) implements the BitTorrent protocol using java
 and comes bundled with many invaluable features for both beginners and
 advanced users.
 
@@ -122,6 +127,8 @@ rm org/gudy/azureus2/ui/swt/win32/Win32UIEnhancer.java
 %patch57  -p1 -b stupid-invalid-characters
 
 %patch58 -p1 -b .java5
+
+%patch59 -p1 -b .fix-compile
 
 #hacks to org.eclipse.swt.widgets.Tree2 don't compile.
 rm -fR org/eclipse
@@ -199,7 +206,6 @@ install -m 644 org/gudy/azureus2/ui/icons/a64.png $RPM_BUILD_ROOT%{_datadir}/ico
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 desktop-file-install --vendor fedora					\
 		     --dir ${RPM_BUILD_ROOT}%{_datadir}/applications	\
-		     --add-category X-Fedora				\
 	%{SOURCE2}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/application-registry
@@ -227,6 +233,9 @@ touch %{_datadir}/icons/hicolor
 %{_datadir}/azureus
 
 %changelog
+* Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.8.1.2-alt1_1jpp7
+- update to new release by jppimport
+
 * Fri Nov 30 2012 Igor Vlasenko <viy@altlinux.ru> 4.8.0.0-alt1_1jpp7
 - update to new release by jppimport
 
