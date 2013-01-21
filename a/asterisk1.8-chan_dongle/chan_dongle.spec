@@ -1,10 +1,10 @@
-%define ast_version 1.8.19.1
+%define ast_version 1.8.20.0
 %define modules_dir %_libdir/asterisk/%ast_version/modules
 
 Name: asterisk1.8-chan_dongle
 Summary: Channel driver for Asterisk to use Huawei 3G modem series.
 Version: 1.1
-Release: alt5
+Release: alt6
 License: GPL
 Group: System/Libraries
 
@@ -39,6 +39,9 @@ mkdir -p %buildroot%_docdir/%name
 %doc LICENSE.txt README.txt TODO.txt INSTALL BUGS etc
 
 %changelog
+* Mon Jan 21 2013 Denis Smirnov <mithraen@altlinux.ru> 1.1-alt6
+- Asterisk update
+
 * Sat Jan 05 2013 Denis Smirnov <mithraen@altlinux.ru> 1.1-alt5
 - Asterisk update
 
