@@ -8,7 +8,7 @@
 
 %define rname amarok
 Name: kde4-%rname
-Version: 2.6.0
+Version: 2.7.0
 Release: alt1
 #define beta 20090812
 
@@ -23,7 +23,7 @@ Conflicts: amarok <= 1.4.10-alt10
 
 Source0: ftp://ftp.kde.org/pub/kde/stable/amarok/%version/src/%rname-%version%{?beta:.%beta}.tar
 Source1: mysql.tar
-Patch1: amarok-2.3.2-alt-mysql.patch
+Patch1: amarok-2.7.0-alt-mysql.patch
 # RH
 Patch50: amarok-2.4.3-qtscript_not_required.patch
 
@@ -34,10 +34,11 @@ BuildRequires(pre): kde4libs-devel kde4base-runtime-devel libMySQL-devel
 BuildRequires: dbus-tools-gui doxygen gcc-c++ glibc-devel groff-ps
 BuildRequires: libtag-devel >= 1.6 libtag-extras-devel >= 1.0
 BuildRequires: libcurl-devel libgcrypt-devel libgio-devel libgpod-devel libgtk+2-common-devel liblastfm-devel
-BuildRequires: libloudmouth-devel libmtp-devel libncursesw-devel libqca2-devel libxml2-devel
+BuildRequires: libloudmouth-devel libmtp-devel libncursesw-devel libssl-devel libqca2-devel libxml2-devel
 BuildRequires: qtscriptbindings rpm-build-ruby libofa-devel libgdk-pixbuf-devel glib2-devel
 BuildRequires: libtunepimp-devel libusb-devel libvisual0.4-devel libSDL-devel
 BuildRequires: qjson-devel libavformat-devel libavcodec-devel libmygpo-qt-devel
+BuildRequires: soprano soprano-backend-redland libsoprano-devel kde4-nepomuk-core-devel
 BuildRequires: /proc
 
 
@@ -139,13 +140,17 @@ CFLAGS="%optflags %optflags_shared" CXXFLAGS="%optflags %optflags_shared" LDFLAG
 popd
 fi
 %endif
+#MYSQL_LIBRARIES=`%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/bin/mysql_config --libs`
+#MYSQL_EMBEDDED_CFLAGS=`%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/bin/mysql_config --cflags`
+#MYSQL_EMBEDDED_LIBRARIES=`%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/bin/mysql_config --libmysqld-libs`
+#    -DMYSQL_EMBEDDED_LIBRARIES:FILEPATH=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/lib/mysql/libmysqld.a \
+#    -DMYSQL_LIBRARIES:FILEPATH=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/lib/mysql/libmysqlclient.a
+#    -DMYSQL_FOUND:BOOL=TRUE \
+#    -DMYSQL_EMBEDDED_FOUND:BOOL=TRUE \
 %K4cmake \
-    -DLIBVISUAL_FOUND:BOOL=TRUE \
-    -DMYSQL_FOUND:BOOL=TRUE \
-    -DMYSQL_EMBEDDED_FOUND:BOOL=TRUE \
+    -DMYSQLCONFIG_EXECUTABLE=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/bin/mysql_config \
     -DMYSQL_INCLUDE_DIR:PATH=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/%_includedir/mysql \
-    -DMYSQL_EMBEDDED_LIBRARIES:FILEPATH=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/lib/mysql/libmysqld.a \
-    -DMYSQL_LIBRARIES:FILEPATH=%_builddir/%rname-%version%{?beta:.%beta}/mysql-installed/exclude/lib/mysql/libmysqlclient.a
+    -DKDE4_BUILD_TESTS:BOOL=OFF
 %K4make
 
 %install
@@ -180,6 +185,7 @@ fi
 %_kde4_bindir/amarokcollectionscanner
 %_kde4_bindir/amarokmp3tunesharmonydaemon
 %_kde4_bindir/amarokpkg
+%_kde4_bindir/amzdownloader
 %_kde4_xdg_apps/amarok.desktop
 %_kde4_xdg_apps/amarok_containers.desktop
 %_kde4_iconsdir/hicolor/*/apps/amarok.*
@@ -189,6 +195,7 @@ fi
 %_K4bindir/amarokcollectionscanner
 %_K4bindir/amarokmp3tunesharmonydaemon
 %_K4bindir/amarokpkg
+%_K4bindir/amzdownloader
 %_K4xdg_apps/amarok.desktop
 %_K4xdg_apps/amarok_containers.desktop
 %_K4iconsdir/hicolor/*/apps/amarok.*
@@ -201,9 +208,8 @@ fi
 %_K4libdir/libamarokocsclient.so.*
 %_K4libdir/libamarok-sqlcollection.so.*
 %_K4libdir/libamarok-transcoding.so.*
-#%_K4libdir/libamarokqtjson.so.*
 %_K4libdir/libampache_account_login.so
-#%_K4libdir/strigi/*.so
+%_K4libdir/libamarok_service_lastfm_shared.so
 #
 %_K4lib/amarok_collection-*.so
 %_K4lib/amarok_containment_vertical.so
@@ -240,36 +246,24 @@ fi
 %_K4cfg/amarok*
 %_K4conf/amarok*
 #
-%_K4lib/amarok_collection-mysqlecollection.so
-%_K4srv/amarok_collection-mysqlecollection.desktop
-#
-%_K4lib/amarok_collection-mysqlservercollection.so
-%_K4srv/amarok_collection-mysqlservercollection.desktop
-#
-%_K4lib/amarok_collection-audiocdcollection.so
-%_K4srv/amarok_collection-audiocdcollection.desktop
-#
-%_K4lib/amarok_collection-umscollection.so
-%_K4srv/amarok_collection-umscollection.desktop
-#
-%_K4lib/amarok_collection-daapcollection.so
-%_K4srv/amarok_collection-daapcollection.desktop
-#
-%_K4lib/amarok_collection-ipodcollection.so
-%_K4srv/amarok_collection-ipodcollection.desktop
-#
-%_K4lib/amarok_collection-mtpcollection.so
-%_K4srv/amarok_collection-mtpcollection.desktop
-#
-%_K4lib/amarok_device_massstorage.so
-%_K4srv/amarok_device_massstorage.desktop
-%_K4lib/amarok_device_nfs.so
-%_K4srv/amarok_device_nfs.desktop
-%_K4lib/amarok_device_smb.so
-%_K4srv/amarok_device_smb.desktop
+#%_K4lib/amarok_device_massstorage.so
+#%_K4srv/amarok_device_massstorage.desktop
+#%_K4lib/amarok_device_nfs.so
+#%_K4srv/amarok_device_nfs.desktop
+#%_K4lib/amarok_device_smb.so
+#%_K4srv/amarok_device_smb.desktop
 
 
 %changelog
+* Mon Jan 21 2013 Sergey V Turchin <zerg@altlinux.org> 2.7.0-alt1
+- new version
+
+* Sat Dec 22 2012 Sergey V Turchin <zerg@altlinux.org> 2.6.0-alt0.M60P.2
+- rebuilt with new libmtp
+
+* Tue Aug 21 2012 Sergey V Turchin <zerg@altlinux.org> 2.6.0-alt0.M60P.1
+- built for M60P
+
 * Mon Aug 20 2012 Sergey V Turchin <zerg@altlinux.org> 2.6.0-alt1
 - new version
 
