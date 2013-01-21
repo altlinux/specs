@@ -51,7 +51,7 @@
 
 Name: virtualbox
 Version: 4.2.4
-Release: alt1
+Release: alt1.1
 
 Summary: VM VirtualBox OSE - Virtual Machine for x86 hardware
 License: GPL
@@ -97,6 +97,7 @@ BuildRequires: libcap-devel libcurl-devel
 BuildRequires: libXmu-devel libGLU-devel
 BuildRequires: libXdamage-devel libXcomposite-devel
 BuildRequires: xorg-xf86driproto-devel xorg-glproto-devel
+BuildRequires: xorg-resourceproto-devel xorg-scrnsaverproto-devel
 BuildRequires: xorg-sdk
 BuildPreReq: yasm kBuild >= 0.1.999
 %if_with webservice
@@ -593,6 +594,9 @@ mountpoint -q /dev || {
 %vboxdir/sdk
 
 %changelog
+* Sun Jan 20 2013 Michael Shigorin <mike@altlinux.org> 4.2.4-alt1.1
+- NMU: rebuilt against xorg-1.13
+
 * Thu Nov 22 2012 Evgeny Sinelnikov <sin@altlinux.ru> 4.2.4-alt1
 - Update to last stable release 4.2
 - Remove vboxmouse_drv due it not needed at all for X.Org Server 1.7 and later
