@@ -1,5 +1,5 @@
 Name: xinitrc
-Version: 2.4.37
+Version: 2.4.38
 Release: alt1
 
 Summary: The default startup scripts for the X Window System
@@ -73,6 +73,9 @@ fi
 %config(noreplace) %_sysconfdir/X11/xdm/*
 
 %changelog
+* Mon Jan 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.4.38-alt1
+- prefdm: added E17/entrance support (closes: #28399).
+
 * Mon Sep 24 2012 Dmitry V. Levin <ldv@altlinux.org> 2.4.37-alt1
 - prefdm: added MATE support (closes: #27611).
 
