@@ -1,5 +1,5 @@
 Name: mkimage-profiles
-Version: 0.9.4
+Version: 0.9.5
 Release: alt1
 
 Summary: ALT Linux based distribution metaprofile
@@ -78,6 +78,9 @@ cp -a * %buildroot%mpdir
 %doc %docs/*
 
 %changelog
+* Mon Jan 21 2013 Michael Shigorin <mike@altlinux.org> 0.9.5-alt1
+- homeros
+
 * Mon Jan 14 2013 Michael Shigorin <mike@altlinux.org> 0.9.4-alt1
 - restricted boot
 
