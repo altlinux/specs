@@ -1,7 +1,7 @@
 # Copyright (C) 2006-2012  Dmitry V. Levin <ldv@altlinux.org>
 
 Name: gear
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Get Every Archive from git package Repository
@@ -58,6 +58,9 @@ ln -s gear-store-tags.1 %buildroot%_man1dir/gear-update-tag.1
 %doc QUICKSTART* ABOUT*
 
 %changelog
+* Mon Jan 21 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.2-alt1
+- Fixed typo in specsubst support.
+
 * Tue Jan 08 2013 Dmitry V. Levin <ldv@altlinux.org> 2.0.1-alt1
 - test suite: updated for git >= 1.8.0.
 
