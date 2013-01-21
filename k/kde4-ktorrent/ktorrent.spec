@@ -5,8 +5,8 @@
 %add_findreq_skiplist %_K4apps/%rname/scripts/*.py
 
 Name: kde4-%rname
-Version: 4.3.0
-Release: alt2
+Version: 4.3.1
+Release: alt1
 
 Group:     Networking/File transfer
 Summary:   KDE client for BitTorrent network 
@@ -17,8 +17,6 @@ Conflicts: ktorrent <= 2.2.8-alt2
 Requires: kde4-kross-python
 
 Source:   http://ktorrent.org/downloads/%version/%rname-%version.tar.gz
-# upstream
-Patch1: 26403c5499c4b03c46e291967a7d59f4effc4a23.patch
 
 # Automatically added by buildreq on Tue Jun 01 2010 (-bi)
 #BuildRequires: gcc-c++ glib2-devel glibc-devel-static kde4base-workspace-devel kde4pimlibs-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXdamage-devel libXdmcp-devel libXpm-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libktorrent-devel libqt3-devel libtag-devel libxkbfile-devel qt4-assistant qt4-designer rpm-build-ruby
@@ -31,12 +29,10 @@ ktorrent - KDE BitTorrent client. It comes with many useful plugins.
 
 %prep
 %setup -q -n %rname-%version
-%patch1 -p1
-
 
 %build
-%K4build
-#    -DENABLE_DHT_SUPPORT=false
+%K4build \
+ -DKDE4_BUILD_TESTS:BOOL=OFF
 
 
 %install
@@ -60,6 +56,12 @@ ktorrent - KDE BitTorrent client. It comes with many useful plugins.
 
 
 %changelog
+* Mon Jan 21 2013 Sergey V Turchin <zerg@altlinux.org> 4.3.1-alt1
+- new version
+
+* Mon Dec 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.3.0-alt1.M60P.1
+- built for M60P
+
 * Mon Dec 17 2012 Sergey V Turchin <zerg@altlinux.org> 4.3.0-alt2
 - upstream fix check missing files for unmounted storage
 
