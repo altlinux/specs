@@ -4,14 +4,14 @@
 %def_enable odbc
 %def_enable sdl
 
-Name: gambas
-Version: 2.23.1
-Release: alt1.1
+Name:    gambas
+Version: 2.24.0
+Release: alt1
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
 Summary: Free and complete development environment based on a basic interpreter with object extensions
-Group: Development/Other
+Group:   Development/Other
 License: GPL
 Url: http://gambas.sourceforge.net
 
@@ -42,7 +42,6 @@ Source0: %name-%version-%release.tar
 Source1: %name.desktop
 
 Patch1: gambas-2.14-alt-unresolved.patch
-Patch2: gambas-2.22.0-firebird-permissive-fix.patch
 
 %description
 Gambas is a free development environment based on a Basic interpreter
@@ -444,7 +443,6 @@ Gambas.
 %setup
 sed -i 's,lib/gambas,%_lib/gambas,' main/gbc/gbi.c main/gbx/gbx_project.c
 %patch1 -p1
-%patch2 -p1
 cp %SOURCE1 gambas.desktop
 
 ./reconf-all
@@ -488,6 +486,7 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %_bindir/gbr2
 %_bindir/gbx2
 %_bindir/gbs2*
+%_bindir/gbw2
 
 %dir %_libdir/gambas2
 %dir %_datadir/gambas2
@@ -512,6 +511,8 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 # wtf there for ?
 %_libdir/gambas2/gb.draw.so*
 %_libdir/gambas2/gb.draw.la
+
+%_libdir/gambas2/gb.so*
 
 %files devel
 %_bindir/gba2
@@ -804,6 +805,11 @@ install -pD -m644 gambas.desktop %buildroot%_desktopdir/gambas2.desktop
 %_datadir/gambas2/info/gb.xml.xslt.list
 
 %changelog
+* Mon Jan 21 2013 Andrey Cherepanov <cas@altlinux.org> 2.24.0-alt1
+- New version 2.24.0
+- Drop patch that is applied
+- Add gbw2 binary and gb.so* library
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.23.1-alt1.1
 - Rebuilt with libpng15
 
