@@ -1,6 +1,6 @@
 Name: sed
-Version: 4.2.1
-Release: alt4
+Version: 4.2.2
+Release: alt1
 Epoch: 1
 
 Summary: A GNU stream text editor
@@ -19,7 +19,7 @@ Patch: %srcname.patch
 
 %def_enable selinux
 
-BuildRequires: gnulib >= 0.0.7557.ee60576
+BuildRequires: gnulib >= 0.0.7696.fd9f1ac
 
 # for acl copying support.
 BuildRequires: libacl-devel
@@ -37,7 +37,7 @@ specified in a script file or from the command line.
 %setup -n %srcname -a1 -a2
 %patch -p1
 
-# Build scripts expect to find coreutils version in this file.
+# Build scripts expect to find package version in this file.
 echo -n %version-%release > .tarball-version
 
 # Fix "gettext infrastructure mismatch" error.
@@ -48,7 +48,7 @@ ls po/*.po 2>/dev/null |
 	sed 's|.*/||; s|\.po$||' > po/LINGUAS
 
 # Use bootstrap from gnulib
-install -pm755 %_datadir/gnulib/build-aux/bootstrap autoboot
+install -pm755 %_datadir/gnulib/build-aux/bootstrap .
 
 # Compress docs for packaging.
 bzip2 -9 doc/*.txt
@@ -59,8 +59,8 @@ bzip2 -9k NEWS
 ./subst/subst -p 's,@DOCDIR@,%_docdir/%name-%version,' \
 	doc/sed-in.texi doc/sed.x
 
-./autoboot --force --skip-po --gnulib-srcdir=%_datadir/gnulib
-%configure --bindir=/bin --without-included-regex %{subst_enable selinux}
+./bootstrap --force --skip-po --gnulib-srcdir=%_datadir/gnulib
+%configure --bindir=/bin --without-included-regex
 %make_build -C po update-po
 %make_build
 
@@ -82,6 +82,11 @@ bzip2 -9k NEWS
 %doc BUGS NEWS.bz2 README THANKS doc/*.txt.bz2
 
 %changelog
+* Tue Jan 22 2013 Dmitry V. Levin <ldv@altlinux.org> 1:4.2.2-alt1
+- Updated sed to 4.2.2-4-g2c99bda.
+- Updated translations from translationproject.org.
+- Built with gnulib v0.0-7696-gfd9f1ac.
+
 * Fri Aug 03 2012 Dmitry V. Levin <ldv@altlinux.org> 1:4.2.1-alt4
 - Updated sed to 4.2.1-57-gfc99910.
 - Updated translations from translationproject.org.
