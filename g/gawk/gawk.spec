@@ -1,5 +1,5 @@
 Name: gawk
-Version: 4.0.1
+Version: 4.0.2
 Release: alt1
 
 %def_with doc
@@ -102,6 +102,7 @@ install -pm644 AUTHORS ChangeLog FUTURES LIMITATIONS NEWS POSIX.STD README \
 %_datadir/awk
 %_infodir/*.info*
 %_mandir/man?/*
+%exclude %_man1dir/dgawk.*
 
 %dir %docdir
 %docdir/[A-Z]*
@@ -121,6 +122,9 @@ install -pm644 AUTHORS ChangeLog FUTURES LIMITATIONS NEWS POSIX.STD README \
 %endif
 
 %changelog
+* Mon Jan 21 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.2-alt1
+- Updated to gawk-4.0.1-80-gcb565f1.
+
 * Sun Sep 23 2012 Dmitry V. Levin <ldv@altlinux.org> 4.0.1-alt1
 - Updated to gawk-4.0.1-39-g439d946 (closes: #27715).
 
