@@ -1,5 +1,5 @@
 Name: gtkwave
-Version: 3.3.41
+Version: 3.3.42
 Release: alt1
 Summary: %name
 License: GPL
@@ -10,6 +10,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Url: http://gtkwave.sourceforge.net/
 
 Source: %name-%version.tar
+Source100: %name.watch
 
 # Automatically added by buildreq on Wed Apr 04 2012 (-bb)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel libX11-devel libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libpango-devel libwayland-client libwayland-server pkg-config python-base rpm-build-tcl shared-mime-info tcl tcl-devel xorg-xproto-devel zlib-devel
@@ -42,6 +43,9 @@ BuildRequires: bzlib-devel desktop-file-utils flex gperf libgtk+2-devel liblzma-
 %_datadir/mime/packages/*.xml
 
 %changelog
+* Mon Jan 21 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3.42-alt1
+- new version 3.3.42
+
 * Thu Nov 08 2012 Denis Smirnov <mithraen@altlinux.ru> 3.3.41-alt1
 - 3.3.41
 
