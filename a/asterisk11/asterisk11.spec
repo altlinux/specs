@@ -1,10 +1,10 @@
 Name: asterisk11
 Summary: Open source PBX
-Version: 11.1.2
+Version: 11.2.0
 Release: alt1
 License: GPL
 Group: System/Servers
-BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir rpm-build-ruby texlive-base-bin wget zlib-devel
+BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir texlive-base-bin wget zlib-devel
 BuildRequires: libtiff-devel
 BuildRequires: libiksemel-devel
 BuildRequires: libradiusclient-ng-devel
@@ -87,7 +87,7 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %set_autoconf_version 2.60
 %define modules_dir	%_libdir/asterisk/%version/modules
 %define agi_dir     /usr/lib/asterisk/agi-bin
-%define svndate		20080319
+%define svndate		20130121
 %define spandsp		0.0.5-alt3.pre4
 %define astmodule() \
 %attr(0440,root,_asterisk) %modules_dir/%1.so
@@ -106,6 +106,7 @@ Requires: pbx-streamplayer
 Requires: pbx-stereorize
 Source: %name-%version.tar
 Source2: %name-altlinux.tar
+Patch: %name-%version.patch
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 %package -n aelparse11
@@ -609,6 +610,7 @@ equipment using relatively inexpensive hardware.
 %prep
 %setup -c -T
 %setup -a2 -D
+%patch -p1
 tar cjf ../%name.tar.bz2 .
 sed -i "s!ASTMODDIR[[:space:]]*=.*!ASTMODDIR=%modules_dir!" makeopts.in
 sed -i "s!MODULES_DIR=.*!MODULES_DIR=%modules_dir!" Makefile
@@ -1227,6 +1229,9 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl.so.1
 
 %changelog
+* Mon Jan 21 2013 Denis Smirnov <mithraen@altlinux.ru> 11.2.0-alt1
+- new version 11.2.0
+
 * Sat Jan 05 2013 Denis Smirnov <mithraen@altlinux.ru> 11.1.2-alt1
 - 11.1.2
 
