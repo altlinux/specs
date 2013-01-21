@@ -1,7 +1,7 @@
 %define destname gear-uupdate
 Name: %destname
 Version: 0.08
-Release: alt1
+Release: alt2
 
 Summary: Helper utility to be called by uscan for gear repository update
 Source: %name-%version.tar
@@ -38,6 +38,9 @@ install -m 644 gear-*.1 %buildroot%_man1dir/
 %_man1dir/*
 
 %changelog
+* Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt2
+- git merge --no-edit default behavior
+
 * Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1
 - bugfix release
 
