@@ -1,6 +1,6 @@
 Name: testdisk
 Version: 6.13
-Release: alt1.2
+Release: alt1.3
 
 Summary: Tool to check and undelete partition
 License: GPLv2+
@@ -84,6 +84,9 @@ This package contains testdisk & photorec documentation.
 %doc doc/*
 
 %changelog
+* Tue Jan 22 2013 Michael Shigorin <mike@altlinux.org> 6.13-alt1.3
+- rebuilt with libntfs-3g.so.84
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.13-alt1.2
 - Rebuilt with libewf 20120813
 
