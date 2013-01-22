@@ -1,5 +1,5 @@
 %define module_name	fglrx
-%define module_version	9.00.2
+%define module_version	9.012
 %define module_release alt1
 
 %define flavour                std-pae
@@ -117,6 +117,9 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Tue Jan 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.9.012-alt1
+- 9.012
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.0.9.00.2-alt1
 - 9.00.2
