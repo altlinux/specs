@@ -2,7 +2,7 @@
 
 Name: terminology
 Version: %ver_major.0
-Release: alt0.1
+Release: alt0.2
 
 Summary: EFL terminal emulator
 License: BSD
@@ -13,7 +13,9 @@ Url: http://www.enlightenment.org/p.php?p=about/terminology
 Source: http://download.enlightenment.org/releases/%name-%version.tar.xz
 Patch: %name-0.2-sl-theme.patch
 Patch1: %name-0.2-up.patch
+Patch2: %name-0.2-alt-default_font.patch
 
+Requires: fonts-bitmap-terminus
 Provides: xvt
 
 BuildRequires: intltool
@@ -29,6 +31,7 @@ considering it's young age, it does a lot.
 %setup -q
 %patch -p1
 %patch1 -p1
+%patch2 -b .def_font
 
 %build
 %autoreconf
@@ -50,12 +53,16 @@ EOF
 %files -f %name.lang
 %_bindir/*
 %_datadir/applications/*
-%_datadir/%name
+%_datadir/%name/
+#%%exclude %_datadir/%name/fonts
 %_altdir/%name
 %_iconsdir/%name.png
 %doc AUTHORS ChangeLog COPYING README
 
 %changelog
+* Wed Jan 23 2013 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.2
+- used Terminus 18 as default font
+
 * Sat Dec 15 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.0-alt0.1
 - first preview build for Sisyphus
 
