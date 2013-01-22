@@ -1,6 +1,6 @@
 Name:      pptp-client
 Version:   1.7.2
-Release:   alt2
+Release:   alt3
 
 Summary:   Point-to-Point Tunneling Protocol (PPTP) Client
 License:   GPL
@@ -49,7 +49,7 @@ by employers and some cable and ADSL service providers.
 
 %install
 %make_install DESTDIR="%buildroot" install
-%__install -d -m 750 %buildroot%_localstatedir/run/pptp
+%__install -d -m 750 %buildroot%_var/run/pptp
 
 %files
 %doc AUTHORS COPYING DEVELOPERS INSTALL NEWS README TODO USING
@@ -58,10 +58,13 @@ by employers and some cable and ADSL service providers.
 %attr(555,root,root) %_sbindir/pptpsetup
 %_mandir/man8/pptp.8*
 %_mandir/man8/pptpsetup.8.*
-%dir %attr(750,root,root) %_localstatedir/run/pptp/
+%dir %attr(750,root,root) %_var/run/pptp/
 %config(noreplace) /etc/ppp/options.pptp
 
 %changelog
+* Tue Jan 22 2013 Evgeny V Shishkov <shev@altlinux.org> 1.7.2-alt3
+- fix #28363
+
 * Tue Nov 16 2010 Evgeny V. Shishkov <shev@altlinux.org> 1.7.2-alt2
 - add perl-Pod-Parser in BuildRequires.
 
