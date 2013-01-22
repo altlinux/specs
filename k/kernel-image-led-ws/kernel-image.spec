@@ -3,7 +3,7 @@
 %define set_with() %{expand:%%force_with %{1}} %{expand:%%undefine _without_%{1}}
 %define set_without() %{expand:%%force_without %{1}} %{expand:%%undefine _with_%{1}}
 
-%define intel_64 nocona core2 corei7
+%define intel_64 nocona core2 penryn corei7 nehalem
 %define intel_32 pentium pentiumpro pentium_mmx pentium2 pentium3 pentium_m pentium4 prescott atom
 %define amd_32 5x86 k5 k6 k6_2 k6_3 geode k7 athlon athlon_xp
 %define amd_64 opteron k8 k9 k10 barcelona phenom
@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.59
-Release: alt4
+Version: 3.0.60
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 59
+%define kernel_stable_version 60
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -461,7 +461,7 @@ Patch0544: linux-%kernel_branch.43-fix-drivers-scsi--iscsi_tcp.patch
 Patch0545: linux-%kernel_branch.42-fix-drivers-scsi--libfc.patch
 Patch0546: linux-%kernel_branch.43-fix-drivers-scsi--libiscsi.patch
 Patch0547: linux-%kernel_branch.42-fix-drivers-scsi--libsas.patch
-Patch0548: linux-%kernel_branch.42-fix-drivers-scsi--lpfc.patch
+Patch0548: linux-%kernel_branch.58-fix-drivers-scsi--lpfc.patch
 Patch0549: linux-%kernel_branch.42-fix-drivers-scsi--mpt2sas.patch
 Patch0550: linux-%kernel_branch.42-fix-drivers-scsi--mvsas.patch
 Patch0551: linux-%kernel_branch.42-fix-drivers-scsi--pm8001.patch
@@ -502,7 +502,7 @@ Patch0602: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 
 Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
-Patch0612: linux-%kernel_branch.59-fix-drivers-usb-core.patch
+Patch0612: linux-%kernel_branch.60-fix-drivers-usb-core.patch
 Patch0613: linux-%kernel_branch.58-fix-drivers-usb-host--ehci-hcd.patch
 Patch0614: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
 Patch0615: linux-%kernel_branch.51-fix-drivers-usb-host--xhci-hcd.patch
@@ -587,7 +587,7 @@ Patch0758: linux-%kernel_branch.42-fix-mm--mmu_notofier.patch
 Patch0759: linux-%kernel_branch.46-fix-mm--numa.patch
 Patch0760: linux-%kernel_branch.42-fix-mm--slab.patch
 Patch0761: linux-%kernel_branch.42-fix-mm--slub.patch
-Patch0762: linux-%kernel_branch.49-fix-mm--swap.patch
+Patch0762: linux-%kernel_branch.58-fix-mm--swap.patch
 Patch0763: linux-%kernel_branch.42-fix-mm--zcache.patch
 
 Patch0770: linux-%kernel_branch.51-fix-net.patch
@@ -705,44 +705,46 @@ Patch1152: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
 Patch1161: linux-%kernel_branch.53-feat-drivers-video--bootsplash.patch
 Patch1162: linux-%kernel_branch.43-feat-drivers-video--xgifb.patch
 
-Patch1171: linux-%kernel_branch.42-feat-fs--secrm.patch
-Patch1172: linux-%kernel_branch-feat-fs-aufs.patch
-Patch1173: linux-%kernel_branch.42-feat-fs-binfmt_elf--fatelf.patch
-Patch1174: linux-%kernel_branch.43-feat-fs-dazukofs.patch
-Patch1175: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
-Patch1176: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
-Patch1177: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
-Patch1178: linux-%kernel_branch.43-feat-fs-f2fs.patch
-Patch1179: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
-Patch1180: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
-Patch1181: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1182: linux-%kernel_branch.44-feat-fs-overlayfs.patch
-Patch1183: linux-%kernel_branch.53-feat-fs-reiser4.patch
-Patch1184: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1185: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1186: linux-%kernel_branch.42-feat-fs-unionfs.patch
-Patch1187: linux-%kernel_branch.44-feat-fs--lnfs.patch
+Patch1171: linux-%kernel_branch-feat-firmware-rtl_nic.patch
 
-Patch1191: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
-Patch1192: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
-Patch1193: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
+Patch1181: linux-%kernel_branch.42-feat-fs--secrm.patch
+Patch1182: linux-%kernel_branch-feat-fs-aufs.patch
+Patch1183: linux-%kernel_branch.42-feat-fs-binfmt_elf--fatelf.patch
+Patch1184: linux-%kernel_branch.43-feat-fs-dazukofs.patch
+Patch1185: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
+Patch1186: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
+Patch1187: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
+Patch1188: linux-%kernel_branch.43-feat-fs-f2fs.patch
+Patch1189: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
+Patch1190: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
+Patch1191: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
+Patch1192: linux-%kernel_branch.44-feat-fs-overlayfs.patch
+Patch1193: linux-%kernel_branch.53-feat-fs-reiser4.patch
+Patch1194: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1195: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1196: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1197: linux-%kernel_branch.44-feat-fs--lnfs.patch
 
-Patch1201: linux-%kernel_branch.42-feat-lib--llist.patch
+Patch1201: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
+Patch1202: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
+Patch1203: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
 
-Patch1211: linux-%kernel_branch.42-feat-mm--slqb.patch
-Patch1212: linux-%kernel_branch.43-feat-mm--uksm.patch
-Patch1213: linux-%kernel_branch.58-feat-mm--zcache.patch
+Patch1211: linux-%kernel_branch.42-feat-lib--llist.patch
 
-Patch1221: linux-%kernel_branch-feat-net--netatop.patch
-Patch1222: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
-Patch1223: linux-%kernel_branch.57-feat-net-netfilter--nf_conntrack_slp.patch
+Patch1221: linux-%kernel_branch.42-feat-mm--slqb.patch
+Patch1222: linux-%kernel_branch.43-feat-mm--uksm.patch
+Patch1223: linux-%kernel_branch.58-feat-mm--zcache.patch
 
-Patch1231: linux-%kernel_branch-feat-security--yama.patch
+Patch1231: linux-%kernel_branch-feat-net--netatop.patch
+Patch1232: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+Patch1233: linux-%kernel_branch.57-feat-net-netfilter--nf_conntrack_slp.patch
 
-Patch1241: linux-%kernel_branch.47-feat-sound-firewire--snd-dice.patch
-Patch1242: linux-%kernel_branch.44-feat-sound-firewire--snd-fireworks.patch
-Patch1243: linux-%kernel_branch.47-feat-sound-firewire--snd-scs1x.patch
-Patch1244: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
+Patch1241: linux-%kernel_branch-feat-security--yama.patch
+
+Patch1251: linux-%kernel_branch.47-feat-sound-firewire--snd-dice.patch
+Patch1252: linux-%kernel_branch.44-feat-sound-firewire--snd-fireworks.patch
+Patch1253: linux-%kernel_branch.47-feat-sound-firewire--snd-scs1x.patch
+Patch1254: linux-%kernel_branch.42-feat-sound-ppc--snd-mpc52xx-ac97.patch
 
 ExclusiveOS: Linux
 ExclusiveArch: %x86_64 %ix86
@@ -818,6 +820,9 @@ ExclusiveArch: %x86_64 %ix86
 %ifarch core2
 %define kernel_cpu	CORE2
 %endif
+%ifarch corei7 nehalem
+%define kernel_cpu	COREI7
+%endif
 %endif
 
 %ifarch %ix86
@@ -849,8 +854,14 @@ ExclusiveArch: %x86_64 %ix86
 %ifarch k10_32
 %define kernel_cpu	K10
 %endif
-%ifarch core2_32 atom
+%ifarch core2_32
 %define kernel_cpu	CORE2
+%endif
+%ifarch atom
+%define kernel_cpu	ATOM
+%endif
+%ifarch corei7_32 nehalem_32
+%define kernel_cpu	COREI7
 %endif
 %endif
 
@@ -2067,49 +2078,52 @@ cd linux-%version
 %patch1161 -p1
 %patch1162 -p1
 
-# feat-fs-*
+# feat-firmware-*
 %patch1171 -p1
-%patch1172 -p1
-%patch1173 -p1
-%patch1174 -p1
-%patch1175 -p1
-%patch1176 -p1
-%patch1177 -p1
-%patch1178 -p1
-%patch1179 -p1
-%patch1180 -p1
+
+# feat-fs-*
 %patch1181 -p1
 %patch1182 -p1
 %patch1183 -p1
 %patch1184 -p1
 %patch1185 -p1
 %patch1186 -p1
-%{?_with_lnfs:%patch1187 -p1}
-
+%patch1187 -p1
+%patch1188 -p1
+%patch1189 -p1
+%patch1190 -p1
 %patch1191 -p1
 %patch1192 -p1
 %patch1193 -p1
+%patch1194 -p1
+%patch1195 -p1
+%patch1196 -p1
+%{?_with_lnfs:%patch1197 -p1}
 
 %patch1201 -p1
+%patch1202 -p1
+%patch1203 -p1
+
+%patch1211 -p1
 
 # feat-mm--*
-%patch1211 -p1
-%patch1212 -p1
-%patch1213 -p1
-
-# feat-net-*
 %patch1221 -p1
 %patch1222 -p1
 %patch1223 -p1
 
-# feat-security--*
+# feat-net-*
 %patch1231 -p1
+%patch1232 -p1
+%patch1233 -p1
+
+# feat-security--*
+%patch1241 -p1
 
 # feat-sound-*
-%patch1241 -p1
-%patch1242 -p1
-%patch1243 -p1
-%patch1244 -p1
+%patch1251 -p1
+%patch1252 -p1
+%patch1253 -p1
+%patch1254 -p1
 
 # get rid of unwanted files resulting from patch fuzz
 #find . -name "*.orig" -delete -or -name "*~" -delete
@@ -2281,7 +2295,9 @@ config_enable \
 %ifarch k10
 config_disable SENSORS_K8TEMP
 %endif
-
+%ifarch corei7 nehalem
+config_disable CRYPTO_CRC32C
+%endif
 %ifarch i386 i486
 config_enable CRYPTO_TWOFISH=m CRYPTO_SALSA20=m
 %endif
@@ -2899,6 +2915,7 @@ done)
 %firmware_dir/mts_*
 %{?_enable_pcmcia:%firmware_dir/ositech}
 %firmware_dir/qlogic
+%firmware_dir/rtl_nic
 %firmware_dir/sun
 %firmware_dir/tehuti
 %firmware_dir/ti_*
@@ -2987,6 +3004,15 @@ done)
 
 
 %changelog
+* Tue Jan 22 2013 Led <led@altlinux.ru> 3.0.60-alt1
+- 3.0.60
+- updated:
+  + fix-arch-x86
+  + fix-drivers-scsi--lpfc
+  + fix-drivers-usb-core
+- added:
+  + feat-firmware-rtl_nic
+
 * Sat Jan 19 2013 Led <led@altlinux.ru> 3.0.59-alt4
 - removed:
   + fix-net-bridge
