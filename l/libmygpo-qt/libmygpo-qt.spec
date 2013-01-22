@@ -1,6 +1,6 @@
 
 Name: libmygpo-qt
-Version: 1.0.5
+Version: 1.0.6
 Release: alt1
 %define sover 1
 %define libname %name%sover
@@ -74,5 +74,11 @@ libsuffix="64"
 
 
 %changelog
+* Tue Jan 22 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.6-alt1
+- new version
+
+* Wed Dec 21 2011 Sergey V Turchin <zerg@altlinux.org> 1.0.5-alt0.M60P.1
+- built for M60P
+
 * Wed Dec 21 2011 Sergey V Turchin <zerg@altlinux.org> 1.0.5-alt1
 - initial build
