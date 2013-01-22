@@ -2,7 +2,6 @@
 %def_disable static
 %def_disable gtk_doc
 %def_enable introspection
-%def_enable gtk
 %def_disable orbit
 %def_enable gsettings
 
@@ -12,11 +11,13 @@
 %define oldname GConf2
 
 Name: GConf
-Version: %ver_major.5
+Version: %ver_major.6
 Release: alt1
 
 Provides: %oldname = %version
 Obsoletes: %oldname < %version
+# since 3.2.6
+Obsoletes: %name-sanity-check
 
 Summary: Gnome Config System
 Summary(ru_RU.KOI8-R): Система конфигурации Gnome
@@ -48,6 +49,9 @@ Patch1: %name-2.24.0-alt-symver.patch
 # added or removed (gnome bug # 333353)
 Patch2: GConf-2.18.0.1-reload.patch
 
+# lfs support
+Patch3: GConf-3.2.6-alt-lfs.patch
+
 %define ORBit_ver 2.12.1
 %define glib_ver 2.25.12
 %define libxml2_ver 2.6.17
@@ -69,7 +73,6 @@ BuildPreReq: gettext-tools
 BuildPreReq: glib2-devel >= %glib_ver
 BuildPreReq: libgio-devel >= %gio_ver
 BuildPreReq: libxml2-devel >= %libxml2_ver
-BuildPreReq: libgtk+3-devel
 BuildPreReq: libldap-devel
 BuildPreReq: libdbus-devel libdbus-glib-devel libpolkit1-devel polkit
 
@@ -99,7 +102,6 @@ Group: Development/C
 Provides: lib%oldname-devel = %version
 Obsoletes: lib%oldname-devel < %version
 Requires: lib%name = %version-%release
-Requires: %name-sanity-check = %version-%release
 
 %description -n lib%name-devel
 GConf development package. Contains files needed for doing
@@ -117,14 +119,6 @@ BuildArch: noarch
 GConf is the GNOME Configuration database system.
 
 This package contains development documentation for GConf.
-
-%package sanity-check
-Summary: Graphical GConf utility
-Group: System/Configuration/Other
-Requires: %name = %version-%release
-
-%description sanity-check
-This package contains graphical GConf utility which require GTK+.
 
 %package -n lib%name-devel-static
 Summary: Gnome Config System development package
@@ -158,6 +152,7 @@ GObject introspection devel data for the GConf library
 install -p -m644 %_sourcedir/libgconf.{map,lds} gconf/
 %patch1 -p1
 %patch2 -p1 -b .reload
+%patch3 -p1
 
 # disable localization for gconfd
 %__subst 's,\(setlocale (.* \"\),\1C,' gconf/gconfd.c
@@ -169,8 +164,7 @@ install -p -m644 %_sourcedir/libgconf.{map,lds} gconf/
 	%{subst_enable static} \
 	%{subst_enable introspection} \
 	%{subst_enable orbit} \
-	%{?_enable_gsettings:--enable-gsettings-backend} \
-	%{subst_enable gtk}
+	%{?_enable_gsettings:--enable-gsettings-backend}
 
 # SMP-incompatible build
 %make
@@ -278,9 +272,6 @@ install -pD -m644 gconftool-2.man %buildroot%_man1dir/gconftool-2.1
 
 %exclude %_libdir/gio/modules/libgsettingsgconfbackend.la
 
-%files sanity-check
-%_libexecdir/gconf-sanity-check-2
-
 %files -n lib%name-devel
 %_libdir/*.so
 %_includedir/*
@@ -309,6 +300,11 @@ install -pD -m644 gconftool-2.man %buildroot%_man1dir/gconftool-2.1
 %endif
 
 %changelog
+* Tue Jan 22 2013 Yuri N. Sedunov <aris@altlinux.org> 3.2.6-alt1
+- 3.2.6
+- no more -sanity-check subpackage
+- LFS support (-alt-lfs.patch)
+
 * Sun Mar 11 2012 Yuri N. Sedunov <aris@altlinux.org> 3.2.5-alt1
 - 3.2.5
 
