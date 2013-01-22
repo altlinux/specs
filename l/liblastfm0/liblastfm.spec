@@ -1,10 +1,11 @@
-%define sover 1
-%define liblastfm liblastfm%sover
-%define liblastfm_fingerprint liblastfm_fingerprint%sover
-%define liblastfm_common liblastfm-common%sover
-Name: liblastfm
-Version: 1.0.3
-Release: alt1
+%define sover 0
+%define liblastfm liblastfm
+%define liblastfm_fingerprint liblastfm-fingerprint
+%define liblastfm_common liblastfm-common
+%define liblastfm_devel liblastfm%{sover}-devel
+Name: liblastfm%sover
+Version: 0.3.3
+Release: alt3
 
 Group: System/Libraries
 Summary: Liblastfm is a collection of libraries to help you integrate Last.fm services
@@ -13,12 +14,10 @@ License: GPLv3
 Requires: %name-common = %version-%release
 
 Source: %name-%version.tar
+Patch2: liblastfm-0.3.3-alt-fix-configure.patch
 
-# Automatically added by buildreq on Tue Jan 22 2013 (-bi)
-# optimized out: cmake-modules elfutils libqt4-core libqt4-dbus libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-sql-sqlite libqt4-svg libqt4-test libqt4-xml libstdc++-devel pkg-config python-base ruby ruby-stdlibs
-#BuildRequires: cmake gcc-c++ libfftw3-devel libqt3-devel libqt4-sql-interbase libqt4-sql-mysql libqt4-sql-odbc libqt4-sql-postgresql libqt4-sql-sqlite2 libsamplerate-devel phonon-devel rpm-build-ruby
-BuildRequires: cmake gcc-c++ libfftw3-devel libqt4-devel libsamplerate-devel phonon-devel
-BuildRequires: kde-common-devel
+# Automatically added by buildreq on Tue Sep 08 2009 (-bi)
+BuildRequires: gcc-c++ libfftw3-devel libqt4-devel libsamplerate-devel ruby ruby-stdlibs libcurl-devel
 
 %description
 Liblastfm is a collection of libraries to help you integrate Last.fm services
@@ -47,22 +46,37 @@ Liblastfm is a collection of libraries to help you integrate Last.fm services
 into your rich desktop software. It is officially supported software developed
 by Last.fm staff.
 
-%package devel
+%package -n %liblastfm_devel
 Group: Development/C++
 Summary: %name development files
 Requires: %liblastfm_common = %version-%release
-%description devel
+Conflicts: liblastfm-devel
+%description -n %liblastfm_devel
 Install this package if you want do compile applications using the %name library.
 
 
 %prep
 %setup -q
+%patch2 -p1
+
+find -type f -name \*.pro | \
+while read f
+do
+    echo -e "\nQMAKE_CXXFLAGS += %optflags" >> $f
+    sed -i 's|^[[:space:]]*target\.path[[:space:]]*=[[:space:]]*/lib.*|target.path = %_libdir|' $f
+done
 
 %build
-%Kbuild
+ruby configure \
+    --release \
+    --prefix=%prefix
+%make_build
 
 %install
-%Kinstall
+%make install DESTDIR=%buildroot INSTALL_ROOT=%buildroot -C src
+%make install DESTDIR=%buildroot INSTALL_ROOT=%buildroot -C src/fingerprint
+mkdir %buildroot/%_includedir
+cp -ar _include/* %buildroot/%_includedir/
 
 
 %files -n %liblastfm_common
@@ -75,14 +89,14 @@ Install this package if you want do compile applications using the %name library
 %_libdir/liblastfm_fingerprint.so.%sover
 %_libdir/liblastfm_fingerprint.so.%sover.*
 
-%files devel
+%files -n %liblastfm_devel
 %doc README*
 %_libdir/*.so
 %_includedir/*
 
 %changelog
-* Tue Jan 22 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.3-alt1
-- new version
+* Tue Jan 22 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.3-alt3
+- rename to liblastfm0
 
 * Thu Oct 21 2010 Sergey V Turchin <zerg@altlinux.org> 0.3.3-alt2
 - fix liblastfm_fingerprint package name
