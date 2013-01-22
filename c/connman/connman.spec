@@ -1,6 +1,9 @@
+
+%define _localstatedir %_var
+
 Name: connman
 Version: 1.10
-Release: alt1
+Release: alt2
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -96,6 +99,9 @@ install -pm0755 -D %SOURCE1 %buildroot%_initdir/connmand
 
 
 %changelog
+* Tue Jan 22 2013 Paul Wolneykien <manowar@altlinux.ru> 1.10-alt2
+- Fix the storagedir location.
+
 * Fri Jan 18 2013 Paul Wolneykien <manowar@altlinux.ru> 1.10-alt1
 - Build with additional features/plugins.
 - New version 1.10.
