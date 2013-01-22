@@ -14,7 +14,7 @@
 
 Name: glib2
 Version: %ver_major.3
-Release: alt1
+Release: alt2
 
 Summary: A library of handy utility functions
 License: %lgpl2plus
@@ -36,6 +36,8 @@ Source6: gio-compat.lds
 
 Source10: glib2.sh
 Source11: glib2.csh
+
+Patch: glib-2.34.3-alt-gtester.patch
 
 %def_with locales
 %if_with locales
@@ -181,6 +183,7 @@ This package contains documentation for GIO.
 
 %prep
 %setup -q -n glib-%version
+%patch
 
 %if_with sys_pcre
 rm glib/pcre/*.[ch]
@@ -367,6 +370,9 @@ install -pD -m 755 filetrigger %buildroot%_rpmlibdir/gsettings.filetrigger
 
 
 %changelog
+* Sat Jan 12 2013 Yuri N. Sedunov <aris@altlinux.org> 2.34.3-alt2
+- fixed gtester (ldv@)
+
 * Tue Nov 27 2012 Yuri N. Sedunov <aris@altlinux.org> 2.34.3-alt1
 - 2.34.3
 
