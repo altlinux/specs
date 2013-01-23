@@ -1,7 +1,7 @@
 Name: libfm
 Summary: core part of pcmanfm
 Version: 1.1.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: File tools
 Url: http://pcmanfm.sourceforge.net/
@@ -10,7 +10,7 @@ Source: %name-%version.tar.gz
 
 BuildPreReq: rpm-build-xdg
 BuildRequires: intltool libmenu-cache-devel gtk-doc
-BuildRequires: libdbus-glib-devel udisks-devel
+BuildRequires: libdbus-glib-devel libudisks2-devel
 BuildRequires: libgtk+2-devel >= 2.18.0
 BuildRequires: glib2-devel >= 2.27.1
 BuildRequires: vala >= 0.13.0
@@ -79,6 +79,9 @@ rm -f %buildroot%_pkgconfigdir/libfm-gtk3.pc
 %_libdir/*.a
 
 %changelog
+* Wed Jan 23 2013 Mykola Grechukh <gns@altlinux.ru> 1.1.0-alt2
+- updated udisks2 buildreq
+
 * Tue Nov 06 2012 Radik Usupov <radik@altlinux.org> 1.1.0-alt1
 - new version (1.1.0)
 
