@@ -13,7 +13,7 @@
 %define nv_version 173
 %define nv_release 14
 %define nv_minor 36
-%define pkg_rel alt64
+%define pkg_rel alt65
 %define set_gl_nvidia_ver 0.6.5
 %def_enable kernelsource
 
@@ -76,6 +76,8 @@ Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x8
 Source1: set_gl_nvidia-%set_gl_nvidia_ver.tar.bz2
 Source2: nvidia.xinf
 Source100: nvidia_create_xinf
+
+Patch1: nvidia-173.14.36-3.7.patch
 
 BuildRequires: kernel-build-tools libsysfs-devel
 ExclusiveArch: %ix86 x86_64
@@ -211,6 +213,7 @@ popd
 
 pushd usr/src/nv/
 rm -rf precompiled
+%patch1 -p0
 popd
 
 
@@ -446,6 +449,9 @@ fi
 %endif
 
 %changelog
+* Wed Jan 23 2013 Sergey V Turchin <zerg@altlinux.org> 173.14.36-alt65
+- fix to compile kernel module with kernel-3.7
+
 * Tue Oct 02 2012 Sergey V Turchin <zerg@altlinux.org> 173.14.36-alt64
 - new release 173.14.36
 
