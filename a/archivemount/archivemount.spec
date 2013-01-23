@@ -1,6 +1,6 @@
 Name:          archivemount
 Version:       0.6.1
-Release:       alt2_9
+Release:       alt2_10
 Summary:       FUSE based filesystem for mounting compressed archives
 
 Group:         System/Libraries
@@ -39,6 +39,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_bindir}/archivemount
 
 %changelog
+* Wed Jan 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt2_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt2_9
 - update to new release by fcimport
 
