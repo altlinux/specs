@@ -1,6 +1,6 @@
 Name:      pptp-client
 Version:   1.7.2
-Release:   alt3
+Release:   alt4
 
 Summary:   Point-to-Point Tunneling Protocol (PPTP) Client
 License:   GPL
@@ -13,6 +13,7 @@ Obsoletes: pptp-client <= 1.2.0 pptp-client-fe <= 1.2.0 pptp-client-fe-Tk <= 1.2
 Packager:  Evgeny V. Shishkov <shev@altlinux.org>
 
 Source0:   pptp-%version.tar.gz
+Source1:   pptp.tmpfiles
 Patch0:    pptp-1.7.2-compat.patch
 Patch1:    pptp-1.7.2-declaration.patch
 Patch2:    pptp-1.7.2-ip-path.patch
@@ -49,7 +50,8 @@ by employers and some cable and ADSL service providers.
 
 %install
 %make_install DESTDIR="%buildroot" install
-%__install -d -m 750 %buildroot%_var/run/pptp
+install -d -m 750 %buildroot%_var/run/pptp
+install -Dpm 644 %SOURCE1 %buildroot/lib/tmpfiles.d/%name.conf
 
 %files
 %doc AUTHORS COPYING DEVELOPERS INSTALL NEWS README TODO USING
@@ -62,6 +64,9 @@ by employers and some cable and ADSL service providers.
 %config(noreplace) /etc/ppp/options.pptp
 
 %changelog
+* Wed Jan 23 2013 Evgeny V Shishkov <shev@altlinux.org> 1.7.2-alt4
+- add config for systemd-tmpfiles (#28363)
+
 * Tue Jan 22 2013 Evgeny V Shishkov <shev@altlinux.org> 1.7.2-alt3
 - fix #28363
 
