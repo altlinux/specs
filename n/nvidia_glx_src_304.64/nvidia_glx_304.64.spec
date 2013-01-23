@@ -15,7 +15,7 @@
 %define nv_version 304
 %define nv_release 64
 %define nv_minor %nil
-%define pkg_rel alt107
+%define pkg_rel alt108
 %def_disable common
 %def_enable kernelsource
 
@@ -81,6 +81,8 @@ Source202: ftp://download.nvidia.com/XFree86/Linux-x86_64/%tbver/NVIDIA-Linux-x8
 
 Source2: nvidia.xinf
 Source100: nvidia_create_xinf
+
+Patch1: nvidia-304.64-3.7.patch
 
 BuildRequires: kernel-build-tools rpm-macros-alternatives
 ExclusiveArch: %ix86 x86_64
@@ -188,6 +190,7 @@ cd %tbname-%tbver%dirsuffix
 
 pushd kernel/
 rm -rf precompiled
+%patch1 -p0
 popd
 
 
@@ -361,6 +364,9 @@ fi
 %endif
 
 %changelog
+* Wed Jan 23 2013 Sergey V Turchin <zerg@altlinux.org> 304.64-alt108
+- fix to compile kernel module with kernel-3.7
+
 * Wed Nov 07 2012 Sergey V Turchin <zerg@altlinux.org> 304.64-alt107
 - new version
 
