@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(IO/Handle.pm)
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.0
-Release:          alt1_6
+Release:          alt1_7
 Summary:          ZFS ported to Linux FUSE
 Group:            System/Base
 License:          CDDL
@@ -32,7 +32,7 @@ This project is a port of ZFS to the FUSE framework for the Linux
 operating system.
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 
 %patch0 -p0
 
@@ -104,15 +104,18 @@ fi
 %{_unitdir}/%{oldname}.service
 %{_sysconfdir}/cron.weekly/98-%{oldname}-scrub
 %config(noreplace) %{_sysconfdir}/sysconfig/%{oldname}
-%{_sysconfdir}/%{oldname}/zfs_pool_alert
-%{_mandir}/man8/zfs-fuse.8.*
-%{_mandir}/man8/zdb.8.*
-%{_mandir}/man8/zfs.8.*
-%{_mandir}/man8/zpool.8.*
-%{_mandir}/man8/zstreamdump.8.*
+%{_sysconfdir}/%{oldname}/
+%{_mandir}/man8/zfs-fuse.8*
+%{_mandir}/man8/zdb.8*
+%{_mandir}/man8/zfs.8*
+%{_mandir}/man8/zpool.8*
+%{_mandir}/man8/zstreamdump.8*
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Wed Jan 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_6
 - update to new release by fcimport
 
