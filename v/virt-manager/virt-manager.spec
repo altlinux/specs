@@ -9,8 +9,8 @@
 %def_without tui
 
 Name: virt-manager
-Version: 0.9.3
-Release: alt1
+Version: 0.9.4
+Release: alt1.git0ca8c
 Summary: Virtual Machine Manager
 
 Group: System/Configuration/Other
@@ -26,7 +26,7 @@ Source: %name-%version.tar
 
 Requires: python-module-pygnome-gconf python-module-pygnome-gnome-keyring
 Requires: python-module-vte python-module-spice-gtk python-module-gtkvnc
-Requires: python-module-virtinst >= 0.600.2
+Requires: python-module-virtinst >= 0.600.3
 PreReq: GConf2
 
 # Automatically added by buildreq on Thu Jul 02 2009
@@ -44,7 +44,9 @@ Uses libvirt as the backend management API.
 %setup
 
 %build
-./autogen.sh
+%autoreconf
+intltoolize --force --copy --automake
+
 %configure \
 	%{subst_with tui} \
 	--with-qemu-user=%qemu_user \
@@ -82,6 +84,9 @@ fi
 %doc AUTHORS ChangeLog NEWS README
 
 %changelog
+* Wed Jan 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.9.4-alt1.git0ca8c
+- upstream git snapshot 0ca8cf6d4316d1b3f55226c3782a3ac92eb34967
+
 * Tue Jul 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.9.3-alt1
 - 0.9.3
 

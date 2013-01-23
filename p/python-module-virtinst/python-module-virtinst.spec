@@ -1,5 +1,5 @@
-Version: 0.600.2
-Release: alt0.1
+Version: 0.600.3
+Release: alt1.git592be03
 %setup_python_module virtinst
 Name: python-module-virtinst
 Packager: Anton Protopopov <aspsk@altlinux.ru>
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 Patch: %name-%version-%release.patch
 
 BuildRequires: python-devel
+BuildRequires: /usr/bin/pod2man
 
 %description
 virtinst is a module that helps build and install libvirt based virtual
@@ -43,6 +44,9 @@ and install new VMs) and virt-clone (clone an existing virtual machine).
 %_man5dir/*
 
 %changelog
+* Wed Jan 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.600.3-alt1.git592be03
+- upstream git snapshot 592be03453042bc9fefdce38a526e32b1441c92e
+
 * Tue Jul 17 2012 Alexey Shabalin <shaba@altlinux.ru> 0.600.2-alt0.1
 - pre 0.600.2
 
