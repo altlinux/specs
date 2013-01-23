@@ -3,7 +3,7 @@
 %define oname subvertpy
 Name: python-module-%oname
 Version: 0.9.0
-Release: alt1
+Release: alt2
 
 %setup_python_module subvertpy
 
@@ -14,7 +14,7 @@ Group: Development/Python
 Url: http://www.samba.org/~jelmer/subvertpy/
 Packager: Anatoly Kitaikin <cetus@altlinux.org>
 
-Source: %oname-%version.tar.gz
+Source: %name-%version.tar
 #Prefix: #_prefix
 
 BuildRequires(pre): rpm-build-licenses
@@ -55,7 +55,8 @@ Walk through each revision of a local Subversion repository and export it
 in a stream that git-fast-import can consume.
 
 %prep
-%setup -n %oname-%version
+%setup
+# -n %name-%version
 
 %build
 %python_build
@@ -64,7 +65,6 @@ in a stream that git-fast-import can consume.
 %python_install
 install -dm0755 %buildroot%_man1dir
 install -m0644 man/* %buildroot%_man1dir
-
 
 %files
 %python_sitelibdir/%oname/
@@ -79,6 +79,9 @@ install -m0644 man/* %buildroot%_man1dir
 %_man1dir/*
 
 %changelog
+* Wed Jan 23 2013 Anatoly Kitaikin <cetus@altlinux.org> 0.9.0-alt2
+- Import of original git repository, rebuild
+
 * Sun Oct 07 2012 Anatoly Kitaikin <cetus@altlinux.org> 0.9.0-alt1
 - 0.9.0 release
 
