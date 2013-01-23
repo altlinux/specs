@@ -2,8 +2,8 @@
 
 #BuildRequires: 
 Name: autorepo-altnode-repocop
-Version: 0.06
-Release: alt2
+Version: 0.07
+Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
 
@@ -34,6 +34,9 @@ cp repocop-* $RPM_BUILD_ROOT%_bindir
 %_bindir/*
 
 %changelog
+* Wed Jan 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.07-alt1
+- enabled build logs again
+
 * Tue Nov 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.06-alt2
 - dropped optional dependency on repocop-unittest-build-logs
 
