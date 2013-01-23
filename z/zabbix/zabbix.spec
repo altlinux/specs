@@ -11,7 +11,7 @@
 
 Name: zabbix
 Version: 2.0.4
-Release: alt2
+Release: alt3
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -455,6 +455,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Wed Jan 23 2013 Alexei Takaseev <taf@altlinux.org> 1:2.0.4-alt3
+- CVE-2013-1364
+
 * Tue Dec 25 2012 Alexei Takaseev <taf@altlinux.org> 1:2.0.4-alt2
 - Add define %%_unitdir macro for compatible with P6/T6 branches
 - Change requires on -commons's pkg to "soft"
