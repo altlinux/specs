@@ -3,8 +3,8 @@
 %def_enable wayland_egl
 
 Name: Mesa
-Version: 9.0.1
-Release: alt2
+Version: 9.0.2
+Release: alt1
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -237,6 +237,8 @@ mv %buildroot%_libdir/libGLESv2.so.2.0.0 %buildroot%_libdir/X11/libGLESv2.so.2.0
 ln -sf ../../..%_libdir/X11/libGLESv2.so.2.0.0 %buildroot%_sysconfdir/X11/%_lib/libGLESv2.so.2
 ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %buildroot%_libdir/
 ln -sf X11/libGLESv2.so.2.0.0 %buildroot%_libdir/libGLESv2.so
+#
+/sbin/ldconfig -Nn %buildroot%_libdir/X11/
 
 %post -n libGL
 [ -r %_sysconfdir/X11/%_lib/libGL.so.1 ] || \
@@ -262,7 +264,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_libdir/libglapi.so.*
 %_libdir/libdricore*.so.*
 %dir %_libdir/X11
-%_libdir/X11/libGL.so.1.*
+%_libdir/X11/libGL.so.*
 %dir %_libdir/X11/modules
 %dir %_libdir/X11/modules/dri
 
@@ -286,7 +288,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %dir %_sysconfdir/X11/%_lib
 %ghost %_sysconfdir/X11/%_lib/libEGL.so.1
 %_libdir/libEGL.so.*
-%_libdir/X11/libEGL.so.1.*
+%_libdir/X11/libEGL.so.*
 
 %files -n libEGL-devel
 %_includedir/EGL
@@ -300,7 +302,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %dir %_sysconfdir/X11/%_lib
 %ghost %_sysconfdir/X11/%_lib/libGLESv2.so.2
 %_libdir/libGLESv2.so.*
-%_libdir/X11/libGLESv2.so.2.*
+%_libdir/X11/libGLESv2.so.*
 
 %files -n libGLES-devel
 %_includedir/GLES2
@@ -347,6 +349,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Wed Jan 23 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0.2-alt1
+- 9.0.2
+
 * Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0.1-alt2
 - switch libEGL & libGLES (closes: #27875)
 
