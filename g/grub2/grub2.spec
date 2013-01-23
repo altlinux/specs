@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt8
+Release: alt9
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -32,6 +32,7 @@ Patch7: grub-2.00-grubinstall-evms-sync-alt.patch
 Patch8: grub-1.99-efibootmgr-req.patch
 Patch9: grub2-fix-locale-en.mo.gz-not-found-error-message.patch
 Patch10: grub-2.00-r4586-one-by-off.patch
+Patch11: grub-2.00-install-uefi-signed.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -89,16 +90,17 @@ Provides: grub2 = %version-%release
 Obsoletes: grub2 < %version-%release
 
 %package efi
-Summary: GRand Unified Bootloader (EFI variant)
+Summary: GRand Unified Bootloader (signed EFI variant)
 Group: System/Kernel and hardware
 Requires: %name-common = %version-%release
-%ifarch ia64 x86_64
+%ifarch x86_64
 Requires: efibootmgr
+Provides: %name-efi-signed = %version-%release
 %endif
 
 %ifarch x86_64
-%package efi-signed
-Summary: GRand Unified Bootloader (signed UEFI variant)
+%package efi-unsigned
+Summary: GRand Unified Bootloader (non-signed UEFI variant)
 Group: System/Kernel and hardware
 Requires: %name-efi = %version-%release
 %endif
@@ -132,13 +134,18 @@ This package provides PC BIOS support.
 
 This package provides EFI systems support.
 
+Please note that the default binary is signed; this shouldn't
+intervene in any way but rather provides means to cope with
+UEFI SecureBoot (better described as Restricted Boot) firmware
+when one can't disable it easily, doesn't want to, or needs not to.
+
 %ifarch x86_64
-%description efi-signed
+%description efi-unsigned
 %desc_generic
 
-This package provides means to cope with UEFI SecureBoot
-(better described as Restricted Boot) firmware when one
-can't disable it easily, doesn't want to, or needs not to.
+This package provides EFI systems support.
+
+Please note that this binary is *not* signed, just in case.
 %endif
 
 %prep
@@ -154,6 +161,7 @@ can't disable it easily, doesn't want to, or needs not to.
 %patch8 -p1
 %patch9 -p1
 %patch10 -p0
+%patch11 -p1
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version/%version-%release/" configure.ac
 
@@ -244,9 +252,13 @@ cd ../%name-efi-%version
 install -pDm644 grub.efi %buildroot%_efi_bindir/grub.efi
 cd -
 
+# NB: UEFI GRUB2 image is signed by default to avoid install hassle;
+# non-signed PE is put alongside for those who like it that way
 %ifarch x86_64
+cp -a %buildroot%_efi_bindir/grub{,-unsigned}.efi
 # autocreates signed.manifest
 %_efi_sign %buildroot%_efi_bindir/grub.efi
+cp -a %buildroot%_efi_bindir/grub{-signed,}.efi
 %endif
 
 # Remove headers
@@ -309,12 +321,17 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %_rpmlibdir/%name.filetrigger
 
 %ifarch %efi
+%ifarch x86_64
+%files -f signed.manifest efi
+%else
 %files efi
+%endif
 %_efi_bindir/grub.efi
 %_libdir/grub/%grubefiarch
 
 %ifarch x86_64
-%files -f signed.manifest efi-signed
+%files efi-unsigned
+%_efi_bindir/grub-unsigned.efi
 %endif
 %endif
 
@@ -323,16 +340,28 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 [ -L %_libdir/grub ] && rm -f %_libdir/grub ||:
 
 %post pc
-%_sbindir/grub-autoupdate || {
+grub-autoupdate || {
 	echo "** WARNING: grub-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
 	echo "** WARNING: please run it by hand, record the output offline,"
 	echo "** WARNING: make sure you have bootable rescue CD/flash media handy"
 	echo "** WARNING: and try \`grub-install /dev/sdX' manually"
 } >&2
 
-# TODO: post efi{,-signed}
+%post efi
+grub-efi-autoupdate || {
+	echo "** WARNING: grub-efi-autoupdate failed, NEXT BOOT WILL LIKELY FAIL NOW"
+	echo "** WARNING: please run it by hand, record the output offline,"
+	echo "** WARNING: make sure you have e.g. rEFInd bootable media handy"
+} >&2
 
 %changelog
+* Wed Jan 23 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt9
+- efi subpackage is signed by default on x86_64
+- introduced efi-unsigned subpackage with a clean copy
+- initial grub-2.00-install-uefi-signed.patch based on
+  ubuntu_install_signed.patch from 2.00-11ubuntu1 package
+- initial efi postinstall update script
+
 * Thu Jan 10 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt8
 - introduced efi-signed subpackage (x86_64 only)
 - use rpm-macros-uefi
