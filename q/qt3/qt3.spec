@@ -24,10 +24,10 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt1
+%define rlz alt2
 Name: %rname%major
 Version: %major.%minor.%bugfix
-Release: %rlz.2
+Release: %rlz
 %define qsa_ver %qsa_major.%qsa_minor.%qsa_bugfix
 
 %define qtdir	%_libdir/%rname%major
@@ -126,8 +126,6 @@ Patch105: qt-3.3.0-alt-shared_libs.patch
 Patch106: qt-3.3.1-alt-iso_c_extension.patch
 Patch107: qt-x11-free-3.3.6-alt-maccyrillic.patch
 Patch108: qt-3.3.8d-alt-arm-no-packed-pointers.patch
-# http://git.overlays.gentoo.org/gitweb/?p=proj/kde-sunset.git;a=commitdiff;h=8ac83bdb7f1ff6563756fc11007b39e685f0e6b1
-Patch109: qt3-3.3.8d-gentoo-libpng15.patch
 
 # Sergey A. Sukiyazov <sukiyazov@mail.ru>
 Patch9000: 9000-qt-x11-free-3.3.3-menubar.patch
@@ -487,7 +485,6 @@ Install this package if you want to create RPM packages that use %name.
 %patch106 -p1
 %patch107 -p1
 %patch108 -p1
-%patch109 -p2
 
 # Corwin
 %patch9000 -p1
@@ -1293,6 +1290,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Wed Jan 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.3.8d-alt2
+- Update to last Trinity 3.3.8d, branch origin/v3.5.13-sru
+
 * Tue Oct 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.8d-alt1.2
 - Fixed (thnx, Gentoo!) crash with libpng15 (ALT #27817)
 
