@@ -1,5 +1,5 @@
 Name: ntfs-3g
-Version: 2012.1.15
+Version: 2013.1.13
 Release: alt1
 Epoch: 2
 Summary: third generation Linux NTFS driver
@@ -97,6 +97,9 @@ mv %buildroot%_libdir/lib*.so.* %buildroot/%_lib/
 %_pkgconfigdir/*.pc
 
 %changelog
+* Tue Jan 15 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:2013.1.13-alt1
+- 2013.1.13
+
 * Mon Jan 23 2012 Valery Inozemtsev <shrek@altlinux.ru> 2:2012.1.15-alt1
 - 2012.1.15
 
