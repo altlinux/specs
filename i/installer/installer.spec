@@ -1,5 +1,5 @@
 Name: installer
-Version: 1.8.13
+Version: 1.8.14
 Release: alt1
 
 Summary: Installer common parts
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Jan 23 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.14-alt1
+- add luks to initrd only if / on luks, otherwise create crypttab
+
 * Sat Dec 29 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.13-alt1
 - add luks to initrd only if threre are luks partitions
 
