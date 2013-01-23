@@ -1,5 +1,5 @@
 Name: audacity
-Version: 2.0.2
+Version: 2.0.3
 Release: alt1
 
 Summary: Cross-platform audio editor
@@ -11,7 +11,7 @@ Url: http://audacity.sourceforge.net/
 Packager: Alex Karpov <karpov@altlinux.ru>
 
 # cvs -z3 -d:pserver:anonymous@cvs.sourceforge.net:/cvsroot/audacity co -r audacity-1_3_0-branch audacity
-Source0: %name-fullsrc-%version.tar
+Source0: %name-minisrc-%version.tar
 Source2: %name-48x48.xpm
 Source3: %name-32x32.xpm
 Source4: %name-16x16.xpm
@@ -19,7 +19,12 @@ Source6: %name-%version-help-en.tar
 
 Patch0: %name-installmo.patch
 
-BuildRequires: gcc-c++ libalsa-devel libavformat-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel mt-st
+
+#BuildRequires: gcc-c++ libalsa-devel libavformat-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel mt-st
+
+# Automatically added by buildreq on Mon Feb 25 2013
+# optimized out: cmake cmake-modules fontconfig fontconfig-devel glib2-devel glibc-devel-static gnu-config libatk-devel libavcodec-devel libavutil-devel libcairo-devel libflac-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libogg-devel libopencore-amrnb0 libopencore-amrwb0 libpango-devel libstdc++-devel libsystemd-daemon libwayland-client libwayland-server pkg-config zlib-devel
+BuildRequires: ccmake ctest gcc-c++ libalsa-devel libavformat-devel libexpat-devel libflac++-devel libgtk+2-devel libid3tag-devel libjack-devel libmad-devel libportaudio2-devel libsndfile-devel libsoundtouch-devel libstdc++-devel-static libtwolame-devel libvamp-devel libvorbis-devel libwxGTK-devel ruby ruby-stdlibs
 
 BuildRequires: libportaudio2-devel
 BuildRequires: desktop-file-utils shared-mime-info
@@ -40,9 +45,6 @@ plug-in effects to any part of a sound.
 %build
 rm -f src/.depend
 rm -f src/.gchdepend
-cd lib-src/libmad
-autoreconf -fisv
-cd ../..
 %configure --disable-dynamic-loading
 #--enable-unicode=yes --with-portmixer=no
 %make
@@ -58,8 +60,8 @@ tar -xf %SOURCE6 -C %buildroot%_datadir/%name/help/
 %find_lang %name
 
 %files -f %name.lang
-%doc *.txt 
-%exclude %_docdir/%name
+%doc *.txt
+#exclude %_docdir/%name-%version
 %_bindir/*
 %_mandir/man?/*
 %_iconsdir/*.xpm
@@ -70,6 +72,10 @@ tar -xf %SOURCE6 -C %buildroot%_datadir/%name/help/
 %_datadir/mime/packages/%name.xml
 
 %changelog
+* Wed Jan 23 2013 Alex Karpov <karpov@altlinux.ru> 2.0.3-alt1
+- new version
+    + no more fullsrc package.
+
 * Sun Sep 02 2012 Alex Karpov <karpov@altlinux.ru> 2.0.2-alt1
 - new version
 
