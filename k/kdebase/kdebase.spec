@@ -34,7 +34,7 @@
 %define bugfix 13.1
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt5
+Release: alt5.1
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -225,6 +225,7 @@ Patch1078: kdm-3.5.13-greeter.patch
 Patch1079: kdm-3.5.13-noPAMuse.patch
 Patch1080: kdm-3.5.13-SAK_disable_CtrlAltDel-FullCPUusage_SAK_Std.patch
 Patch1081: kdebase-3.5.13-alt-mediamanager-crash.patch
+Patch1082: tdebase-3.5.13-work-defdir.patch
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 Patch2000: kdebase-3.5.0-man_recode.patch
@@ -638,6 +639,7 @@ Menu resources for the original KDE menu.
 ###%patch1079 -p1
 %patch1080
 %patch1081
+%patch1082 -p1
 
 # Sergey A. Sukiyazov <corwin@micom.don.ru>
 ###%patch2000 -p1
@@ -1946,9 +1948,11 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Wed Jan 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt5.1
+- Revert home dir ~/.trinity to ~/.kde path added.
+
 * Mon Jan 14 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt5
 - /etc/X11/kdm link to original place change to relative.
-- Remove wrong KJobViewer crash fixing patch.
 - Update to current 3.5.13-sru branch.
 
 * Fri Dec 07 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt4
