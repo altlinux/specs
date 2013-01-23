@@ -2,7 +2,7 @@
 
 Summary: Server and Client software to interoperate with Windows machines
 Name: samba
-Version: 3.6.10
+Version: 3.6.11
 Release: alt1
 License: GPLv3+ and LGPLv3+
 Group: System/Servers
@@ -34,6 +34,7 @@ Patch104: samba-3.0.0rc3-nmbd-netbiosname.patch
 Patch107: samba-3.2.0pre1-grouppwd.patch
 Patch200: samba-3.2.5-inotify.patch
 
+Requires: samba-winbind-clients = %version-%release
 Requires(pre): samba-common = %version-%release
 
 BuildRequires: libpam0-devel, libreadline-devel, libncurses-devel, libacl-devel, libkrb5-devel, libldap-devel, libssl-devel, libcups-devel, ctdb-devel
@@ -56,6 +57,7 @@ need the NetBEUI (Microsoft Raw NetBIOS frame) protocol.
 Summary: Samba client programs
 Group: Networking/Other
 Requires: samba-common = %version-%release
+Requires: samba-winbind-clients = %version-%release
 Provides: samba-client-cups = %version-%release
 Obsoletes: samba-client-cups < %version-%release
 
@@ -67,6 +69,7 @@ of SMB/CIFS shares and printing to SMB/CIFS printers.
 %package common
 Summary: Files used by both Samba servers and clients
 Group: System/Servers
+Requires: samba-winbind-clients = %version-%release
 Provides: samba-utils = %version-%release
 Requires: libtalloc >= 2.0.1
 
@@ -77,6 +80,7 @@ packages of Samba.
 %package -n libnetapi
 Summary: Samba netapi library
 Group: System/Libraries
+Requires: samba-winbind-clients = %version-%release
 
 %description -n libnetapi
 Samba netapi library
@@ -118,6 +122,7 @@ The samba-winbind package provides developer tools for the wbclient library.
 %package swat
 Summary: The Samba SMB server Web configuration program
 Group: Security/Networking
+Requires: samba-winbind-clients = %version-%release
 Requires: samba = %version-%release
 Requires: samba-doc = %version-%release
 Requires: xinetd
@@ -141,6 +146,7 @@ Samba suite.
 Summary: Domainjoin GUI
 Group: Networking/Other
 Requires: samba-common = %version-%release
+Requires: libnetapi = %version-%release
 
 %description domainjoin-gui
 The samba-domainjoin-gui package includes a domainjoin gtk application.
@@ -148,6 +154,7 @@ The samba-domainjoin-gui package includes a domainjoin gtk application.
 %package -n libsmbclient
 Summary: The SMB client library
 Group: Development/C
+Requires: samba-winbind-clients = %version-%release
 
 %description -n libsmbclient
 The libsmbclient contains the SMB client library from the Samba suite.
@@ -585,6 +592,13 @@ true
 %_pixmapsdir/samba/logo-small.png
 
 %changelog
+* Wed Jan 23 2013 Led <led@altlinux.ru> 3.6.11-alt1
+- 3.6.11
+- added sctict requires of samba-winbind-clients and libnetapi
+
+* Thu Jan 03 2013 Led <led@altlinux.ru> 3.6.10-alt2
+- upstream fixes (9471, 9196)
+
 * Tue Dec 11 2012 Led <led@altlinux.ru> 3.6.10-alt1
 - 3.6.10
 
