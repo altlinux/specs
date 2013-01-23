@@ -34,7 +34,7 @@
 %define bugfix 13.1
 Name: kdebase
 Version: %major.%minor.%bugfix
-Release: alt4
+Release: alt5
 %define reqver %major.%minor
 
 Summary: Trinity Desktop Environment - Core files
@@ -242,7 +242,7 @@ Patch2101: kdebase-3.5.10-alt-nonhal_backend_options_fix.patch
 BuildRequires(pre): kdelibs kdelibs-devel cmake libqt3-devel libcups
 BuildRequires: libgtk+2-devel
 #BuildRequires: kdelibs-devel-cxx = %__gcc_version_base
-BuildRequires: bzlib-devel doxygen eject fontconfig-devel freetype2-devel
+BuildRequires: binutils-devel bzlib-devel doxygen eject fontconfig-devel freetype2-devel
 #BuildRequires: gcc-c++ kdelibs-apidocs kdelibs-devel
 BuildRequires: gcc-c++ kdelibs-devel bdftopcf
 BuildRequires: libart_lgpl-devel libjpeg-devel openexr-devel
@@ -862,7 +862,7 @@ ln -s %_K3bindir/kdm_greet %buildroot/%_K3exec/kdm_greet
 ln -s %_K3bindir/krootimage %buildroot/%_K3exec/krootimage
 
 cp -f kdm/syscfg/* %buildroot/%_K3conf/kdm
-ln -s %_K3conf/kdm %buildroot/%x11confdir/kdm
+ln -s `relative %_K3conf/kdm %x11confdir/kdm` %buildroot/%x11confdir/kdm
 
 #__mkdir_p %buildroot/%x11confdir/kdm
 #cp kdm/syscfg/* %buildroot/%x11confdir/kdm
@@ -1946,6 +1946,11 @@ test ! -L %x11confdir/kdm && rm -rf %x11confdir/kdm ||:
 
 
 %changelog
+* Mon Jan 14 2013 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt5
+- /etc/X11/kdm link to original place change to relative.
+- Remove wrong KJobViewer crash fixing patch.
+- Update to current 3.5.13-sru branch.
+
 * Fri Dec 07 2012 Roman Savochenko <rom_as@altlinux.ru> 3.5.13.1-alt4
 - Crash after mediamanger apply for kill block application is fixed.
 - Media baseurl encoding patch is restored.
