@@ -2,7 +2,7 @@
 
 Name: libfreetype-infinality
 Version: 2.4.11
-Release: alt3
+Release: alt4
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
 License: FTL or GPLv2+
@@ -10,8 +10,7 @@ Group: System/Libraries
 Url: http://www.freetype.org/
 Packager: Vladimir Didenko <cow@altlinux.ru>
 
-Source0: freetype-%version.tar
-Source1: freetype-doc-%version.tar
+Source0: %name-%version.tar
 
 Source91: infinality-settings.sh
 Source92: README.infinality
@@ -46,7 +45,7 @@ This version is compiled with the Infinality patches. It transparently
 overrides the system library using ld.so.conf.d.
 
 %prep
-%setup -n freetype-%version -a1 
+%setup -n %name-%version 
 
 %patch1 -p1
 %patch2 -p1
@@ -60,7 +59,9 @@ overrides the system library using ld.so.conf.d.
 
 %build
 %add_optflags -fno-strict-aliasing
-%configure %{subst_enable static}
+%define libdir %{_libdir}/%name
+%configure %{subst_enable static} \
+    --libdir=%libdir
 
 # get rid of RPATH
 sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
@@ -69,29 +70,6 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
 
 %install
 %makeinstall_std
-
-wordsize=$(echo -e '#include <bits/wordsize.h>\n__WORDSIZE' | cpp -P | sed '/^$/d')
-[ "$wordsize" -ge 32 ]
-mv %buildroot%_includedir/freetype2/freetype/config/ftconfig{,-$wordsize}.h
-cat >%buildroot%_includedir/freetype2/freetype/config/ftconfig.h <<EOF
-#ifndef __FTCONFIG_H__MULTILIB
-#define __FTCONFIG_H__MULTILIB
-
-#include <bits/wordsize.h>
-
-#if __WORDSIZE == 32
-# include <freetype/config/ftconfig-32.h>
-#elif __WORDSIZE == 64
-# include <freetype/config/ftconfig-64.h>
-#else
-# error "unexpected value for __WORDSIZE macro"
-#endif
-
-#endif
-EOF
-
-%define docdir %_docdir/%name-%version
-mkdir -p %buildroot%docdir
 
 %define ld_preload_script_name infinality-ld-preload.sh
 %define ld_preload_script %buildroot%{_sysconfdir}/profile.d/%ld_preload_script_name
@@ -102,22 +80,23 @@ chmod 755 %ld_preload_script
 
 install -pD -m755 %SOURCE91 %buildroot%_sysconfdir/profile.d/
 
+%define docdir %{_docdir}/%name-%version
+mkdir -p %buildroot%docdir
+cp -a docs/{FTL.TXT,LICENSE.TXT,CHANGES} %buildroot%docdir/
+pushd %buildroot%docdir
+    bzip2 -9 CHANGES 
+popd
 cp %SOURCE91 %buildroot%docdir
 cp %SOURCE92 %buildroot%docdir
 cp %PATCH91 %buildroot%docdir
 cp %PATCH92 %buildroot%docdir
-cp %ld_preload_script %buildroot%docdir
-
-# Move library to avoid conflict with official FreeType package
-mkdir %buildroot%{_libdir}/%{name}
-mv -f %buildroot%{_libdir}/libfreetype.so.* \
-      %buildroot%{_libdir}/%{name}
 
 #remove devel data. Infinality package is not oriented on any development
 rm -f %buildroot%_bindir/*-config
-rm -f %buildroot%_libdir/*.so
+rm -f %buildroot%libdir/*.so
+rm -f %buildroot%libdir/*.la
 rm -fr %buildroot%_includedir/
-rm -f %buildroot%_pkgconfigdir/*.pc
+rm -fr %buildroot%libdir/pkgconfig/
 rm -f %buildroot%_datadir/aclocal/*.m4
 
 %set_verify_elf_method strict
@@ -129,6 +108,11 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %config %{_sysconfdir}/profile.d/infinality-settings.sh
 
 %changelog
+* Thu Jan 24 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.11-alt4
+- Fixed conflict with official debuginfo package
+- Added missed doc files
+- spec cleanup
+
 * Thu Jan 17 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.11-alt3
 - Include %_libdir/%name/ directory
 
