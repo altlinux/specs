@@ -3,7 +3,7 @@
 
 Name: alterator-auth
 Version: 0.25
-Release: alt2
+Release: alt3
 
 BuildArch: noarch
 
@@ -48,6 +48,9 @@ install -Dpm755 hooks/auth %buildroot/%_hooksdir/90-auth
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Jan 24 2013 Andrey Cherepanov <cas@altlinux.org> 0.25-alt3
+- Fix system-auth write with nss-ldapd
+
 * Fri Nov 30 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.25-alt2
 - setting ccreds checkbox state added
 
