@@ -19,7 +19,7 @@
 Name: qutim
 Epoch: 6
 Version: %qversion
-Release: alt1.git20130117
+Release: alt2.git20130117
 
 Summary: qutIM Instant Messenger
 Summary(ru_RU.UTF-8): Клиент сервисов мгновенных сообщений qutIM
@@ -140,7 +140,7 @@ IRC protocol support for qutIM
 Summary: Jabber protocol for %name
 Group: Networking/Instant messaging
 Requires: %name = %qversion-%release
-Requires: libjreen >= %jversion-%release
+Requires: libjreen = %jversion-%release
 
 %description -n %name-protocol-jabber
 Jabber protocol for qutIM
@@ -197,7 +197,7 @@ Quetzal protocol support for qutIM
 Summary: VKontakte.Ru protocol for %name
 Group: Networking/Instant messaging
 Requires: %name = %qversion-%release
-Requires: libvreen >= %vversion-%release
+Requires: libvreen = %vversion-%release
 
 %description -n %name-protocol-vkontakte
 VKontakte.Ru protocol support for qutIM
@@ -226,7 +226,7 @@ Shared library for vkontakte protocol for qutIM
 Summary: Adium webview plugin for %name
 Group: Networking/Instant messaging
 Requires: %name = %qversion-%release
-Requires: lib%name-adiumwebview >= %wversion-%release
+Requires: lib%name-adiumwebview = %wversion-%release
 
 %description -n %name-plugin-adiumwebview
 Aescrypto plugin support for qutIM
@@ -236,6 +236,7 @@ Aescrypto plugin support for qutIM
 Summary: qutIM Adium webview shared library
 Group: System/Libraries
 Version: %wversion
+Requires: lib%name = %qversion-%release
 
 %description -n lib%name-adiumwebview
 qutIM Adium webview shared library
@@ -830,6 +831,7 @@ done
 
 %files -n lib%name-adiumchat-devel
 %_libdir/lib%name-adiumchat.so
+%dir %_includedir/%name
 %dir %_includedir/%name/adiumchat
 %_includedir/%name/adiumchat/*.h
 
@@ -838,6 +840,7 @@ done
 
 %files -n lib%name-simplecontactlist-devel
 %_libdir/lib%name-simplecontactlist.so
+%dir %_includedir/%name
 %dir %_includedir/%name/simplecontactlist
 %_includedir/%name/simplecontactlist/*.h
 
@@ -1058,6 +1061,9 @@ done
 %doc AUTHORS COPYING README.* ChangeLog
 
 %changelog
+* Thu Jan 24 2013 Nazarov Denis <nenderus@altlinux.org> 6:0.3.1.0-alt2.git20130117
+- Fix non-strict dependencies (ALT #28449)
+
 * Fri Jan 18 2013 Nazarov Denis <nenderus@altlinux.org> 6:0.3.1.0-alt1.git20130117
 - Version 0.3.1.0 from git on 17.01.2013
 
