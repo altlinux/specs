@@ -3,7 +3,7 @@
 
 Name: tumbler
 Version: 0.1.27
-Release: alt1
+Release: alt2
 Summary: A thumbnail D-Bus service
 License: %gpl2plus, %lgpl2plus
 Group: Graphical desktop/XFce
@@ -42,6 +42,7 @@ thumbnails for various URI schemes and MIME types
 Summary: Development files for %name
 Group: Development/C
 License: %lgpl2plus
+Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 Development files and headers for %name
@@ -82,6 +83,11 @@ Development files and headers for %name
 %_pkgconfigdir/*.pc
 
 %changelog
+* Thu Jan 24 2013 Mikhail Efremov <sem@altlinux.org> 0.1.27-alt2
+- libtumbler-devel: Added strict dependency on libtumbler
+    (closes: #28456).
+- Updated from upstream git (translations and minor build fixes).
+
 * Sun Jan 13 2013 Mikhail Efremov <sem@altlinux.org> 0.1.27-alt1
 - Updated to 0.1.27.
 - Don't package tumbler-xdg-cache.la.
