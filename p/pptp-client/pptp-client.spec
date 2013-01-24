@@ -1,6 +1,6 @@
 Name:      pptp-client
 Version:   1.7.2
-Release:   alt4
+Release:   alt4.1
 
 Summary:   Point-to-Point Tunneling Protocol (PPTP) Client
 License:   GPL
@@ -62,8 +62,12 @@ install -Dpm 644 %SOURCE1 %buildroot/lib/tmpfiles.d/%name.conf
 %_mandir/man8/pptpsetup.8.*
 %dir %attr(750,root,root) %_var/run/pptp/
 %config(noreplace) /etc/ppp/options.pptp
+%attr(644,root,root)  /lib/tmpfiles.d/%name.conf
 
 %changelog
+* Thu Jan 24 2013 Evgeny V Shishkov <shev@altlinux.org> 1.7.2-alt4.1
+- readd config for systemd-tmpfiles (forgot to add :) ).
+
 * Wed Jan 23 2013 Evgeny V Shishkov <shev@altlinux.org> 1.7.2-alt4
 - add config for systemd-tmpfiles (#28363)
 
