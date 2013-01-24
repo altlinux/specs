@@ -1,6 +1,6 @@
 Name: pam_userpass
 Version: 1.0.2
-Release: alt5
+Release: alt6
 
 Summary: Pluggable authentication module for USER/PASS-style protocols
 License: LGPLv2+
@@ -21,12 +21,12 @@ BuildRequires: rpm-build >= 0:4.0.4-alt55
 Summary: Pluggable authentication module for USER/PASS-style protocols
 Group: System/Base
 Provides: %name = %version-%release
-Obsoletes: %name
+Obsoletes: %name < %version-%release
 
 %package devel
 Summary: Library and header files for developing pam_userpass-aware applications
 Group: Development/C
-Requires: %name = %version-%release, libpam-devel
+Requires: %pam_name = %version-%release, libpam-devel
 
 %package devel-static
 Summary: Development static pam_userpass library
@@ -109,6 +109,9 @@ install -p -m644 conf/example_userpass \
 %_libdir/*.a
 
 %changelog
+* Thu Jan 24 2013 Dmitry V. Levin <ldv@altlinux.org> 1.0.2-alt6
+- Fixed interpackage dependencies.
+
 * Wed Mar 02 2011 Dmitry V. Levin <ldv@altlinux.org> 1.0.2-alt5
 - Rebuilt for debuginfo.
 
