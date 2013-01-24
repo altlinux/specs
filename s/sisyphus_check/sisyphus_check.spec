@@ -1,5 +1,5 @@
 Name: sisyphus_check
-Version: 0.8.36
+Version: 0.8.37
 Release: alt1
 
 Summary: package checker for Sisyphus
@@ -32,6 +32,11 @@ cp -a -- sisyphus_check.d %buildroot%_sysconfdir/%name/check.d
 %_bindir/*
 
 %changelog
+* Thu Jan 24 2013 Dmitry V. Levin <ldv@altlinux.org> 0.8.37-alt1
+- 211-check-firmware: added exception for firmware-tools and
+  firmware-tools-* (closes: #28284).
+- fhs: added exception for msp430* packages (closes: #28286).
+
 * Wed Dec 05 2012 Dmitry V. Levin <ldv@altlinux.org> 0.8.36-alt1
 - 090-check-nvr: added a check for package name validity.
 
