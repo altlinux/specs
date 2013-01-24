@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.60
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -233,7 +233,7 @@ Patch0137: linux-%kernel_branch.42-fix-drivers-char-hw_random--virtio-rng.patch
 Patch0138: linux-%kernel_branch.46-fix-drivers-char-ipmi--ipmi_msghandler.patch
 Patch0139: linux-%kernel_branch.46-fix-drivers-char-ipmi--ipmi_si.patch
 
-Patch0140: linux-%kernel_branch.43-fix-drivers-cio.patch
+Patch0140: linux-%kernel_branch.58-fix-drivers-cio.patch
 Patch0141: linux-%kernel_branch.43-fix-drivers-cio--ccw_device.patch
 Patch0142: linux-%kernel_branch.43-fix-drivers-cio--ccwgroup.patch
 Patch0143: linux-%kernel_branch.51-fix-drivers-cio--qdio.patch
@@ -370,7 +370,7 @@ Patch0423: linux-%kernel_branch.42-fix-drivers-net--at1700.patch
 Patch0424: linux-%kernel_branch.42-fix-drivers-net--bna.patch
 Patch0425: linux-%kernel_branch.43-fix-drivers-net--bnx2.patch
 Patch0426: linux-%kernel_branch.43-fix-drivers-net--bnx2x.patch
-Patch0427: linux-%kernel_branch.53-fix-drivers-net--bonding.patch
+Patch0427: linux-%kernel_branch.58-fix-drivers-net--bonding.patch
 Patch0428: linux-%kernel_branch.43-fix-drivers-net--claw.patch
 Patch0429: linux-%kernel_branch.51-fix-drivers-net--cnic.patch
 Patch0430: linux-%kernel_branch.43-fix-drivers-net--ctcm.patch
@@ -497,8 +497,9 @@ Patch0580: linux-%kernel_branch.43-fix-drivers-target.patch
 
 Patch0591: linux-%kernel_branch.42-fix-drivers-telephony--ixj.patch
 
-Patch0601: linux-%kernel_branch.42-fix-drivers-tty-serial--8250.patch
-Patch0602: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
+Patch0601: linux-%kernel_branch.58-fix-drivers-tty--pty.patch
+Patch0602: linux-%kernel_branch.42-fix-drivers-tty-serial--8250.patch
+Patch0603: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 
 Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
@@ -569,8 +570,9 @@ Patch0733: linux-%kernel_branch.49-fix-kernel--events.patch
 Patch0734: linux-%kernel_branch.42-fix-kernel--freezer.patch
 Patch0735: linux-%kernel_branch.51-fix-kernel--smp.patch
 Patch0736: linux-%kernel_branch.42-fix-kernel--watchdog.patch
-Patch0737: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
-Patch0738: linux-%kernel_branch.44-fix-kernel-time.patch
+Patch0737: linux-%kernel_branch.58-fix-kernel-irq.patch
+Patch0738: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
+Patch0739: linux-%kernel_branch.44-fix-kernel-time.patch
 
 Patch0740: linux-%kernel_branch.57-fix-lib.patch
 Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
@@ -626,7 +628,7 @@ Patch0802: linux-%kernel_branch.44-fix-net-rds--rds_rdma.patch
 Patch0803: linux-%kernel_branch.51-fix-net-sched.patch
 Patch0804: linux-%kernel_branch.42-fix-net-sctp.patch
 Patch0805: linux-%kernel_branch.43-fix-net-sunrpc.patch
-Patch0806: linux-%kernel_branch.42-fix-net-xfrm--xfrm_policy.patch
+Patch0806: linux-%kernel_branch.58-fix-net-xfrm--xfrm_policy.patch
 
 Patch0810: linux-%kernel_branch.42-fix-scripts.patch
 
@@ -736,8 +738,9 @@ Patch1222: linux-%kernel_branch.43-feat-mm--uksm.patch
 Patch1223: linux-%kernel_branch.58-feat-mm--zcache.patch
 
 Patch1231: linux-%kernel_branch-feat-net--netatop.patch
-Patch1232: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
-Patch1233: linux-%kernel_branch.57-feat-net-netfilter--nf_conntrack_slp.patch
+Patch1232: linux-%kernel_branch.58-feat-net-ipv4-netfilter--ipt_NETFLOW.patch
+Patch1233: linux-%kernel_branch.42-feat-net-ipv4-netfilter--ipt_ipv4options.patch
+Patch1234: linux-%kernel_branch.57-feat-net-netfilter--nf_conntrack_slp.patch
 
 Patch1241: linux-%kernel_branch-feat-security--yama.patch
 
@@ -1845,8 +1848,10 @@ cd linux-%version
 
 %patch0591 -p1
 
+# fix-drivers-tty-*
 %patch0601 -p1
 %patch0602 -p1
+%patch0603 -p1
 
 # fix-drivers-usb*
 %patch0610 -p1
@@ -1923,6 +1928,7 @@ cd linux-%version
 %patch0736 -p1
 %patch0737 -p1
 %patch0738 -p1
+%patch0739 -p1
 
 # fix-lib*
 %patch0740 -p1
@@ -2115,6 +2121,7 @@ cd linux-%version
 %patch1231 -p1
 %patch1232 -p1
 %patch1233 -p1
+%patch1234 -p1
 
 # feat-security--*
 %patch1241 -p1
@@ -2387,7 +2394,7 @@ make -f Makefile.external DESTDIR=%buildroot \
 %{?_enable_oprofile:install -m 0644 vmlinux %buildroot%modules_dir/}
 
 install -d -m 0755 %buildroot%kbuild_dir
-cp -a include %buildroot%kbuild_dir/
+cp -aL include %buildroot%kbuild_dir/
 find %buildroot%kbuild_dir/include/config -type f -empty -delete
 find %buildroot%kbuild_dir/include/config -type d -empty -delete
 for d in arch/%kernel_arch/include; do
@@ -2691,6 +2698,7 @@ done)
 %exclude %modules_dir/kernel/fs/ocfs2
 %exclude %modules_dir/kernel/fs/omfs
 %exclude %modules_dir/kernel/fs/qnx4
+%exclude %modules_dir/kernel/fs/subfs
 %exclude %modules_dir/kernel/fs/sysv
 %if_enabled mtd
 %exclude %modules_dir/kernel/fs/jffs2
@@ -2780,6 +2788,7 @@ done)
 %modules_dir/kernel/fs/ocfs2
 %modules_dir/kernel/fs/omfs
 %modules_dir/kernel/fs/qnx4
+%modules_dir/kernel/fs/subfs
 %modules_dir/kernel/fs/sysv
 %if_enabled mtd
 %modules_dir/kernel/fs/jffs2
@@ -3004,6 +3013,17 @@ done)
 
 
 %changelog
+* Thu Jan 24 2013 Led <led@altlinux.ru> 3.0.60-alt2
+- updated:
+  + fix-drivers-cio
+  + fix-drivers-net--bonding
+  + fix-net-xfrm--xfrm_policy
+- added:
+  + fix-drivers-tty--pty
+  + fix-kernel-irq
+  + feat-net-ipv4-netfilter--ipt_NETFLOW
+- moved subfs to kernel-modules-fs-extra-* subpackage
+
 * Tue Jan 22 2013 Led <led@altlinux.ru> 3.0.60-alt1
 - 3.0.60
 - updated:
