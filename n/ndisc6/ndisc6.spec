@@ -1,6 +1,6 @@
 Name: ndisc6
 Version: 1.0.2
-Release: alt1.git20121003
+Release: alt2.git20121003
 
 Summary: IPv6 diagnostic tools
 License: %gpl2plus
@@ -10,6 +10,7 @@ URL: http://www.remlab.net/ndisc6/
 Source: %name-%version.tar
 Source1: rdnssd.init
 Source2: rdnssd.tmpfiles
+Source3: rdnssd.service
 Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
@@ -52,6 +53,7 @@ CFLAGS="%optflags -fno-strict-aliasing" \
 touch %buildroot/%_runtimedir/rdnssd/resolv.conf
 install -Dm0755 %SOURCE1 %buildroot%_initdir/rdnssd
 install -Dm0644 %SOURCE2 %buildroot%_sysconfdir/tmpfiles.d/rdnssd.conf
+install -Dm0644 %SOURCE3 %buildroot%systemd_unitdir/rdnssd.service
 
 %pre -n rdnssd
 groupadd -r -f rdnssd
@@ -75,6 +77,7 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %files -n rdnssd
 %_initdir/rdnssd
 %_sysconfdir/tmpfiles.d/rdnssd.conf
+%systemd_unitdir/rdnssd.service
 %_sysconfdir/rdnssd
 %_sbindir/rdnssd
 %_man8dir/rdnssd.8.*
@@ -82,6 +85,10 @@ useradd -r -g rdnssd -d %_runtimedir/rdnssd -s /dev/null -N rdnssd >/dev/null 2>
 %ghost %_runtimedir/rdnssd/resolv.conf
 
 %changelog
+* Thu Jan 24 2013 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt2.git20121003
+- Added rdnssd.service for systemd.
+- Fix owner of /var/run/rdnssd directory (closes: #28430).
+
 * Fri Oct 12 2012 Mikhail Efremov <sem@altlinux.org> 1.0.2-alt1.git20121003
 - Updated from upstream git.
 
