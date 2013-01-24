@@ -1,6 +1,6 @@
 Name: biblatex-biber
-Version: 0.9.7
-Release: alt1
+Version: 1.5
+Release: alt1.1
 
 Summary: A BibTeX replacement for users of biblatex
 
@@ -20,6 +20,8 @@ BuildRequires: perl-Regexp-Common perl-Text-BibTeX perl-Parse-RecDescent
 BuildRequires: perl-Module-Build perl-Readonly perl-Data-Compare perl-File-Slurp perl-IPC-Run3 perl-Unicode-Collate perl-XML-LibXSLT perl-Config-AutoConf perl-ExtUtils-LibBuilder perl-File-Find-Rule perl-Date-Simple perl-File-Slurp-Unicode 
 # added for 0.9.7
 BuildRequires: perl-Capture-Tiny perl-File-Which
+# added for 1.5
+BuildRequires: perl-Data-Diver perl-Business-ISBN perl-Business-ISSN perl-Mozilla-CA perl-LWP-Protocol-https perl-Business-ISMN
 
 Requires: perl-unicore perl-File-Find-Rule
 
@@ -62,6 +64,12 @@ rm -fv t/remote-files.t
 %_man1dir/*
 
 %changelog
+* Thu Jan 24 2013 Kirill Maslinsky <kirill@altlinux.org> 1.5-alt1.1
+- add Business::ISMN to BuildRequires
+
+* Wed Jan 23 2013 Kirill Maslinsky <kirill@altlinux.org> 1.5-alt1
+- 1.5 (for use with biblatex 2.5)
+
 * Mon Dec 05 2011 Kirill Maslinsky <kirill@altlinux.org> 0.9.7-alt1
 - 0.9.7 (for use with biblatex 1.7)
 

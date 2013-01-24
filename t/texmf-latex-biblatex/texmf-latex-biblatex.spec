@@ -1,7 +1,7 @@
 %define srcName biblatex
 
 Name: texmf-latex-%srcName
-Version: 1.7
+Version: 2.5
 Release: alt1
 Summary: complete reimplementation of LaTeX's bibliographic facilities
 License: LPPL (LaTeX Project Public License)
@@ -49,6 +49,9 @@ cp -a doc/* %buildroot/%_texmfdoc/latex/%srcName
 %doc README RELEASE 
 
 %changelog
+* Thu Jan 24 2013 Kirill Maslinsky <kirill@altlinux.org> 2.5-alt1
+- 2.5 (for use with biblatex-biber 1.5)
+
 * Mon Dec 05 2011 Kirill Maslinsky <kirill@altlinux.org> 1.7-alt1
 - 1.7
 - NB: support for Russian language

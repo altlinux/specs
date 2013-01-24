@@ -9,7 +9,7 @@
 %define _aucstatedir %_localstatedir/%ModeName
 
 Name: emacs-mode-%ModeName
-Version: 11.86
+Version: 11.87
 Release: alt1
 
 Summary: Enhanced LaTeX mode for GNU Emacs
@@ -25,10 +25,9 @@ Source1: auctex.el
 
 Source10: %name-11.10-info.ALT
 
-Patch1: %ModeName-11.53-printerlist.patch
+Patch1: %ModeName-11.87-printerlist.patch
 Patch2: %ModeName-9.9p-customize.patch
 Patch3: %ModeName-rumakeindex.patch
-Patch4: %ModeName-11.86-biber.patch
 
 # Due to patches 1 and 2, the administrator of a system won't have to set
 # any site-specific variables for AUC TeX.
@@ -111,7 +110,6 @@ You need to install %name-el only if you intend to modify any of the
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
 
 %build
 %configure --with-emacs=%emacsbin --with-tex-input-dirs=/usr/share/texmf/tex 
@@ -163,6 +161,11 @@ install -m 644 %SOURCE1 %buildroot/etc/emacs/site-start.d/auctex.el
 %_texmfmain/tex/latex/preview/preview.sty
 
 %changelog
+* Thu Jan 24 2013 Kirill Maslinsky <kirill@altlinux.org> 11.87-alt1
+- 11.87
+- drop auctex-11.86-biber.patch, biber support is now upstream
+- adapt printerlist patch
+
 * Wed Nov 02 2011 Kirill Maslinsky <kirill@altlinux.org> 11.86-alt1
 - 11.86
 - drop auctex-11.85-use-system-pdf-viewer.patch
