@@ -2,7 +2,7 @@
 %def_without hashertarbuild
 
 Name: perl-%module
-Version: 0.796
+Version: 0.797
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -77,6 +77,9 @@ install -Dm644 stdheaders.txt %buildroot%_datadir/srpmtools/data/stdheaders.txt
 %_man1dir/hashertarbuild*
 
 %changelog
+* Thu Jan 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.797-alt1
+- bugfix release
+
 * Fri Jan 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.796-alt1
 - use distrodb format 5
 
