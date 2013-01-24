@@ -1,6 +1,6 @@
 Name: ceph
 Version: 0.56.1
-Release: alt1
+Release: alt2
 Summary: User space components of the Ceph file system
 Group: System/Base
 
@@ -19,6 +19,8 @@ BuildRequires: libnss-devel libuuid-devel boost-program_options-devel
 
 BuildRequires(pre): rpm-build-python
 
+Requires: librados2 = %version-%release
+Requires: librbd1 = %version-%release
 %description
 Ceph is a distributed network file system designed to provide excellent
 performance, reliability, and scalability.
@@ -35,6 +37,9 @@ Summary: Ceph headers
 Group: Development/C
 License: LGPLv2
 Requires: %name = %version-%release
+Requires: libcephfs1 = %version-%release
+Requires: librados2 = %version-%release
+Requires: librbd1 = %version-%release
 %description devel
 This package contains libraries and headers needed to develop programs
 that use Ceph.
@@ -42,6 +47,7 @@ that use Ceph.
 %package radosgw
 Summary: Rados REST gateway
 Group: System/Libraries
+Requires: librados2 = %version-%release
 %description radosgw
 radosgw is an S3 HTTP REST gateway for the RADOS object store. It is
 implemented as a FastCGI module using libfcgi, and can be used in
@@ -52,7 +58,7 @@ Summary: OCF-compliant resource agents for Ceph daemons
 Group: System/Configuration/Other
 License: LGPLv2
 BuildArch: noarch
-Requires: %name = %version
+Requires: %name = %version-%release
 %description resource-agents
 Resource agents for monitoring and managing Ceph daemons
 under Open Cluster Framework (OCF) compliant resource
@@ -72,6 +78,7 @@ store using a simple file-like interface.
 Summary: RADOS block device client library
 Group: System/Libraries
 License: LGPLv2
+Requires: librados2 = %version-%release
 %description -n librbd1
 RBD is a block device striped across multiple distributed objects in
 RADOS, a reliable, autonomic distributed object storage cluster
@@ -228,12 +235,6 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 /usr/sbin/rcceph-radosgw
 /var/log/radosgw
 
-%post radosgw
-%post_service ceph-radosgw
-
-%preun radosgw
-%preun_service ceph-radosgw
-
 %files resource-agents
 %defattr(0755,root,root,-)
 /usr/lib/ocf/resource.d/%name/
@@ -251,6 +252,10 @@ mkdir -p %buildroot%_sysconfdir/ceph/
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Jan 24 2013 Alexei Takaseev <taf@altlinux.org> 0.56.1-alt2
+- added strict requires
+- fix "condrestart" warning
+
 * Wed Jan 09 2013 Alexei Takaseev <taf@altlinux.org> 0.56.1-alt1
 - 0.56.1
 
