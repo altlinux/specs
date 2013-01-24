@@ -4,11 +4,9 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	310.19
-%define module_release alt3
+%define module_version	310.32
+%define module_release	alt1
 %define flavour		std-def
-BuildRequires(pre): rpm-build-kernel
-BuildRequires(pre): kernel-headers-modules-std-def
 
 %setup_kernel_module %flavour
 %define module_srcver	%(echo %module_version | tr -d .)
@@ -23,31 +21,19 @@ BuildRequires(pre): kernel-headers-modules-std-def
 %endif
 %define legacy1_src %(echo %legacy1 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.13
-%if "%kversion" <= "3.7"
 %define legacy2 96.43.23
-%else
-%define legacy2 %nil
-%endif
 %else
 %define legacy2 %nil
 %endif
 %define legacy2_src %(echo %legacy2 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.14
-%if "%kversion" <= "3.7"
 %define legacy3 173.14.36
-%else
-%define legacy3 %nil
-%endif
 %else
 %define legacy3 %nil
 %endif
 %define legacy3_src %(echo %legacy3 | tr -d .)
 %nvIF_ver_lt %xorg_ver 1.14
-%if "%kversion" <= "3.7"
 %define legacy4 304.64
-%else
-%define legacy4 %nil
-%endif
 %else
 %define legacy4 %nil
 %endif
@@ -65,19 +51,20 @@ BuildRequires(pre): kernel-headers-modules-std-def
 %define module_ext .o
 %endif
 
-Summary: nVidia video card drivers
-Name: kernel-modules-%module_name-%flavour
-Version: %module_version
-Release: %module_release.%kcode.%kbuildrelease
-License: Proprietary
-Group: System/Kernel and hardware
-Url: http://www.nvidia.com
+Summary:	nVidia video card drivers
+Name:		kernel-modules-%module_name-%flavour
+Version:	%module_version
+Release:	%module_release.%kcode.%kbuildrelease
+License:	Proprietary
+Group:		System/Kernel and hardware
+URL:		http://www.nvidia.com
 
-Packager: Kernel Maintainer Team <kernel@packages.altlinux.org>
+Packager:       Kernel Maintainer Team <kernel@packages.altlinux.org>
 
 ExclusiveArch: %karch
 
 BuildRequires(pre): rpm-build-kernel xorg-x11-server
+BuildRequires(pre): kernel-headers-modules-std-def
 BuildRequires: rpm-utils
 BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
 BuildRequires: kernel-source-%module_name-%module_srcver
@@ -94,34 +81,33 @@ BuildRequires: kernel-source-%module_name-%legacy3_src
 BuildRequires: kernel-source-%module_name-%legacy4_src
 %endif
 
-Patch: nvidia-3.7.patch
-
-Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
-Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
+Provides:  	kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
+Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
+Conflicts: 	kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
 Conflicts: modutils < 2.4.27-alt4
 
 PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 #Requires:       NVIDIA_GLX = %version
-Requires: nvidia_glx_%version
+Requires:       nvidia_glx_%version
 %if "%legacy1" != "%nil"
-Requires: nvidia_glx_%legacy1
+Requires:       nvidia_glx_%legacy1
 %endif
 %if "%legacy2" != "%nil"
-Requires: nvidia_glx_%legacy2
+Requires:       nvidia_glx_%legacy2
 %endif
 %if "%legacy3" != "%nil"
-Requires: nvidia_glx_%legacy3
+Requires:       nvidia_glx_%legacy3
 %endif
 %if "%legacy4" != "%nil"
-Requires: nvidia_glx_%legacy4
+Requires:       nvidia_glx_%legacy4
 %endif
-Provides: NVIDIA_kernel = %version
+Provides:       NVIDIA_kernel = %version
 
 %description
 nVidia video card drivers that provide 3d and 2d graphics support for XFree86
 Xserver.
+
 
 %prep
 %setup -cT
@@ -136,7 +122,7 @@ do
     ln -s Makefile.kbuild Makefile
     popd
 done
-%patch -p1
+
 
 %build
 for ver in %mod_ver_list
@@ -146,8 +132,7 @@ do
     %make_build -C %_usrsrc/linux-%kversion-%flavour modules \
 	SUBDIRS=$PWD TEMP_DIR=$PWD/ \
 	ARCH=%base_arch \
-	SYSSRC=%_usrsrc/linux-%kversion-%flavour \
-	INCLUDES=-I%_usrsrc/linux-%kversion-%flavour-%krelease/include/uapi
+	SYSSRC=%_usrsrc/linux-%kversion-%flavour
     popd
 done
 
@@ -169,6 +154,7 @@ echo -n "%version" >%buildroot/%nvidia_workdir/%kversion-%flavour-%krelease
 ln -s %nvidia_workdir/%kversion-%flavour-%krelease %buildroot/%module_version_dir/%module_name
 ln -s %module_local_dir/%kversion-%flavour-%krelease-%version %buildroot/%module_dir/%module_name%module_ext
 
+
 %post
 # switch nvidia driver and libraries
 if [ -z "$DURING_INSTALL" ]; then
@@ -178,10 +164,6 @@ if [ -z "$DURING_INSTALL" ]; then
 	    $X11PRESETDRV ||:
 	else
 	    echo "Warning! x11presetdrv program not found!" >&2
-	fi
-	X11SETUPDRV=`which x11setupdrv 2>/dev/null`
-	if [ -n "$X11SETUPDRV" ]; then
-	    $X11SETUPDRV ||:
 	fi
     fi
 fi
@@ -194,10 +176,6 @@ if [ -z "$DURING_INSTALL" ]; then
 	    $X11PRESETDRV ||:
 	else
 	    echo "Warning! x11presetdrv program not found!" >&2
-	fi
-	X11SETUPDRV=`which x11setupdrv 2>/dev/null`
-	if [ -n "$X11SETUPDRV" ]; then
-	    $X11SETUPDRV ||:
 	fi
     fi
 fi
@@ -213,11 +191,12 @@ fi
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
 
-* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 310.19-alt3
-- new template
+* Wed Jan 23 2013 Sergey V Turchin <zerg at altlinux dot org> 310.32-alt1
+- new release (310.32)
 
-* Wed Dec 05 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 310.19-alt2
-- build with kernel 3.7 fixed
+* Fri Dec 07 2012 Sergey V Turchin <zerg at altlinux dot org> 310.19-alt2
+- remove *_kernel_modules macroses using
+- remove x11setupdrv using
 
 * Mon Nov 19 2012 Sergey V Turchin <zerg at altlinux dot org> 310.19-alt1
 - new release (310.19)
@@ -235,9 +214,6 @@ fi
 
 * Tue Oct 02 2012 Sergey V Turchin <zerg at altlinux dot org> 304.51-alt1
 - new release (304.51)
-
-* Mon Oct 01 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 304.43-alt2
-- build on 3.6 kernel fixed
 
 * Wed Aug 29 2012 Sergey V Turchin <zerg at altlinux dot org> 304.43-alt1
 - new release (304.43)
@@ -291,9 +267,6 @@ fi
 
 * Wed Jun 15 2011 Sergey V Turchin <zerg at altlinux dot org> 275.09.07-alt1
 - new release (275.09.07)
-
-* Sat May 28 2011 Anton Protopopov <aspsk@altlinux.org> 270.41.19-alt2
-- Use @kernelarch@
 
 * Mon May 23 2011 Sergey V Turchin <zerg at altlinux dot org> 270.41.19-alt1
 - new release (270.41.19)
@@ -581,7 +554,7 @@ fi
 - rebuild for 2.6.3 (increment release without changes)
 
 * Mon Feb 16 2004 Anton Farygin <rider@altlinux.ru> 1.0.5328-alt3
-- added build scripts for kernel 2.6
+- added build scripts for kernel 2.6 
 
 * Thu Jan 15 2004 Sergey Vlasov <vsu@altlinux.ru> 1.0.5328-alt2
 - Added patch to work around problems with AGP support (part of the Linux-2.6
@@ -651,4 +624,5 @@ fi
 
 * Sun Mar 23 2003 Peter Novodvorsky <nidd@altlinux.com> 1.0.4349-alt1
 - Initial release
+
 
