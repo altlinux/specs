@@ -3,7 +3,7 @@
 
 Name: repocop-unittest-lintian-noncollectors
 Version: 0.16.%lintianver
-Release: alt4
+Release: alt5
 BuildArch: noarch
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
@@ -57,6 +57,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Thu Jan 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.1.23.48-alt5
+- bugfix release
+
 * Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.16.1.23.48-alt4
 - bugfix release
 
