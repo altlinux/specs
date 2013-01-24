@@ -9,7 +9,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.7.2
-Release: alt6
+Release: alt7
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -272,6 +272,7 @@ This package contains GCC profiling support library.
 %package -n libitm1
 Summary: The GNU Transactional Memory library
 Group: System/Libraries
+Requires: libgcc1 %REQ %version-%release
 
 %description -n libitm1
 This package contains the GNU Transactional Memory library
@@ -596,6 +597,7 @@ This package provides Objective-C++ support for the GCC.
 %package -n libgfortran3
 Summary: GNU Fortran runtime library
 Group: System/Libraries
+Requires: libgcc1 %REQ %version-%release
 %ifarch %ix86 x86_64 ia64
 Requires: libquadmath0 %REQ %version-%release
 %endif
@@ -1991,6 +1993,9 @@ EOF
 %endif # _cross_platform
 
 %changelog
+* Thu Jan 24 2013 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt7
+- libgfortran3, libitm1: added a strict requirement on libgcc1.
+
 * Wed Jan 09 2013 Dmitry V. Levin <ldv@altlinux.org> 4.7.2-alt6
 - libgcj: fixed GCJ_ENDORSED_DIRS (by Igor Vlasenko; closes: #28319).
 - libgcj-jar: dropped %_datadir/java/gcj%gcc_branch-endorsed/.
