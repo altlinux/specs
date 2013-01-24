@@ -1,6 +1,6 @@
 %define dist Text-BibTeX
 Name: perl-%dist
-Version: 0.65
+Version: 0.66
 Release: alt1
 
 Summary: Interface to read and parse BibTeX files
@@ -43,6 +43,9 @@ install -p -m644 blib/bindoc/*.1 %buildroot%_man1dir/
 %perl_vendor_archlib/Text
 
 %changelog
+* Thu Jan 24 2013 Kirill Maslinsky <kirill@altlinux.org> 0.66-alt1
+- 0.65 -> 0.66
+
 * Wed Oct 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
 - automated CPAN update
 - added gcc47 patch
