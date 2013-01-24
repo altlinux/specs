@@ -1,6 +1,6 @@
 Name: python-module-slip
-Version: 0.2.9
-Release: alt1.1
+Version: 0.2.24
+Release: alt1
 Summary: Miscellaneous convenience, extension and workaround code for Python
 
 Group: Development/Python
@@ -23,6 +23,7 @@ This package provides the "slip" and the "slip.util" modules.
 %package dbus
 Summary: Convenience functions for dbus services
 Group: Development/Python
+Requires: %name = %version-%release
 
 %description dbus
 The Simple Library for Python packages contain miscellaneous code for
@@ -58,6 +59,7 @@ lets gtk labels be automatically re-wrapped upon resizing.
 %dir %python_sitelibdir/slip/
 %python_sitelibdir/slip/__init__.py*
 %python_sitelibdir/slip/util
+%python_sitelibdir/slip/_wrappers
 %python_sitelibdir/slip-%version-py%__python_version.egg-info
 
 %files dbus
@@ -70,6 +72,10 @@ lets gtk labels be automatically re-wrapped upon resizing.
 %python_sitelibdir/slip.gtk-%version-py%__python_version.egg-info
 
 %changelog
+* Wed Jan 23 2013 Mikhail Efremov <sem@altlinux.org> 0.2.24-alt1
+- Add strict dependency on python-module-slip in dbus subpackage.
+- Updated to 0.2.24 (closes: #27678).
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.2.9-alt1.1
 - Rebuild with Python-2.7
 
