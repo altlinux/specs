@@ -3,7 +3,7 @@
 Summary: Server and Client software to interoperate with Windows machines
 Name: samba
 Version: 3.6.11
-Release: alt1
+Release: alt2
 License: GPLv3+ and LGPLv3+
 Group: System/Servers
 Url: http://www.samba.org/
@@ -88,9 +88,10 @@ Samba netapi library
 %package -n libnetapi-devel
 Summary: Samba netapi development files
 Group: Development/Other
+Requires: libnetapi = %version-%release
 
 %description -n libnetapi-devel
-Samba netapi development files
+Samba netapi development files.
 
 %package winbind
 Summary: Samba winbind
@@ -592,9 +593,12 @@ true
 %_pixmapsdir/samba/logo-small.png
 
 %changelog
+* Thu Jan 24 2013 Led <led@altlinux.ru> 3.6.11-alt2
+- added strict requires of libnetapi for libnetapi-devel
+
 * Wed Jan 23 2013 Led <led@altlinux.ru> 3.6.11-alt1
 - 3.6.11
-- added sctict requires of samba-winbind-clients and libnetapi
+- added strict requires of samba-winbind-clients and libnetapi
 
 * Thu Jan 03 2013 Led <led@altlinux.ru> 3.6.10-alt2
 - upstream fixes (9471, 9196)
