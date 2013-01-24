@@ -1,6 +1,6 @@
 Name: kernel-build-tools
-Version: 0.100
-Release: alt4
+Version: 0.101
+Release: alt1
 
 Summary: Utilities to build kernel packages for ALT Linux
 License: GPL
@@ -55,6 +55,9 @@ install -Dpm644 kernel-macros \
 %_rpmmacrosdir/kernel
 
 %changelog
+* Thu Jan 24 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.101-alt1
+- Added km-create-tag script
+
 * Fri Jan 18 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.100-alt4
 - %%base_arch macro extended to arm
 
