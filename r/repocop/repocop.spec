@@ -1,5 +1,5 @@
 Name: repocop
-Version: 0.64
+Version: 0.65
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -111,6 +111,9 @@ install -m755 common/* $RPM_BUILD_ROOT%_datadir/repocop/common/
 %dir %_datadir/repocop/fixscripts
 
 %changelog
+* Thu Jan 24 2013 Igor Vlasenko <viy@altlinux.ru> 0.65-alt1
+- development release
+
 * Sat Dec 08 2012 Igor Vlasenko <viy@altlinux.ru> 0.64-alt1
 - development release
 
