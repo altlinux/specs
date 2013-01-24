@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.60
+Release: alt100.61
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,14 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Thu Jan 24 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.61
+- fixup-desktop: fixed regexp.
+- build: added %%_allowed_nonstrict_interdeps macro to control how
+  interdep check errors are treated; the macro is a list of space
+  separated pairs of allowed non-strict deps, elements in pairs are
+  separated by commas.  By default, the macro is not defined so
+  the list is empty and therefore non-strict deps are not allowed.
+
 * Fri Jan 11 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.60
 - verify-elf: implemented LFS check (closes: #28290).
 
