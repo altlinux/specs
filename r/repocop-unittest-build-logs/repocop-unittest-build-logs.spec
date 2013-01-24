@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Repocop/ExternalTest.pm)
 %define testname build-logs
 
 Name: repocop-unittest-%testname
-Version: 0.04
+Version: 0.05
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -13,7 +13,7 @@ Summary: %testname unit tests for repocop test platform
 Group: Development/Other
 License: GPL or Artistic
 Url: http://repocop.altlinux.org
-Requires: repocop >= 0.40
+Requires: repocop >= 0.65
 
 Source0: %name-%version.tar
 
@@ -43,6 +43,9 @@ done
 %_datadir/repocop/fixscripts/*
 
 %changelog
+* Wed Jan 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
+- added beehive-log-non-strict dependency test
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.04-alt1
 - support for serial in patchgenerator
 
