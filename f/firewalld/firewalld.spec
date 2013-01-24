@@ -1,5 +1,5 @@
 Name: firewalld
-Version: 0.2.5
+Version: 0.2.12
 Release: alt1
 
 Summary: A firewall daemon with D-BUS interface providing a dynamic firewall
@@ -46,7 +46,8 @@ ls po/*.po | sed -e 's/.po//' | sed -e 's/po\///' > po/LINGUAS
 %build
 %autoreconf
 %configure \
-	--enable-systemd
+	--enable-systemd \
+	--with-systemd-unitdir=%systemd_unitdir
 %make
 
 %install
@@ -63,6 +64,7 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 %files -f %name.lang
 %_sbindir/*
 %_bindir/firewall-cmd
+%_bindir/firewall-offline-cmd
 %attr(0750,root,root) %config(noreplace) %_sysconfdir/firewalld
 %attr(0640,root,root) %config(noreplace) %_sysconfdir/firewalld/firewalld.conf
 %config(noreplace) %_sysconfdir/sysconfig/firewalld
@@ -77,11 +79,25 @@ install -pDm755 %SOURCE1 %buildroot%_initdir/%name
 
 %files -n firewall-applet
 %_bindir/firewall-applet
-%_desktopdir/firewall-applet.desktop
-%_iconsdir/hicolor/*/apps/firewall-applet*.*
+%_desktopdir/firewall-*.desktop
+%_iconsdir/hicolor/*/apps/firewall-*.*
 %_datadir/glib-2.0/schemas/org.fedoraproject.FirewallApplet.gschema.xml
+%_bindir/firewall-config
+%_datadir/firewalld/
 
 %changelog
+* Thu Jan 24 2013 Mikhail Efremov <sem@altlinux.org> 0.2.12-alt1
+- Patch from upstream git:
+  + default zone in firewalld.conf was set to public with every
+    restart
+- Updated to 0.2.12.
+
+* Fri Dec 14 2012 Mikhail Efremov <sem@altlinux.org> 0.2.11-alt1
+- Updated to 0.2.11.
+
+* Wed Aug 29 2012 Mikhail Efremov <sem@altlinux.org> 0.2.7-alt1
+- Updated to 0.2.7.
+
 * Mon Jun 04 2012 Mikhail Efremov <sem@altlinux.org> 0.2.5-alt1
 - Updated to 0.2.5.
 
