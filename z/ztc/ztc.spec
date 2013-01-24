@@ -2,7 +2,7 @@
 
 Name: ztc
 Version: 12.02.1
-Release: alt1
+Release: alt2
 
 Summary: a collection of templates for zabbix monitoring system
 License: GPLv3
@@ -44,6 +44,7 @@ Group: Monitoring
 %package -n python-module-%name-mysql
 Summary: ZTC python module (mysql part)
 Group: Monitoring
+Requires: python-module-%name = %version-%release
 
 %description -n python-module-%name-mysql
 %summary
@@ -51,6 +52,7 @@ Group: Monitoring
 %package -n python-module-%name-pgsql
 Summary: ZTC python module (postgresql part)
 Group: Monitoring
+Requires: python-module-%name = %version-%release
 
 %description -n python-module-%name-pgsql
 %summary
@@ -58,6 +60,7 @@ Group: Monitoring
 %package common
 Summary: ZTC common part
 Group: Monitoring
+Requires: python-module-%name = %version-%release
 
 %description common
 %summary
@@ -65,7 +68,7 @@ Group: Monitoring
 %package apache2
 Summary: ZTC UserParameters for monitoring apache2
 Group: Monitoring
-Requires: %name-common
+Requires: %name-common = %version-%release
 Requires: zabbix-agent >= 1:1.6.7-alt0.svn.8427.M40.1
 Provides: zabbix-userparameters-apache2 = %version-%release
 Obsoletes: zabbix-userparameters-apache2 =< %version-%release
@@ -76,7 +79,7 @@ Obsoletes: zabbix-userparameters-apache2 =< %version-%release
 %package nginx
 Summary: ZTC UserParameters for monitoring nginx
 Group: Monitoring
-Requires: %name-common
+Requires: %name-common = %version-%release
 Requires: zabbix-agent >= 1:1.6.7-alt0.svn.8427.M40.1
 Provides: zabbix-userparameters-nginx = %version-%release
 Obsoletes: zabbix-userparameters-nginx =< %version-%release
@@ -87,7 +90,7 @@ Obsoletes: zabbix-userparameters-nginx =< %version-%release
 %package postgresql
 Summary: ZTC UserParameters for monitoring postgresql
 Group: Monitoring
-Requires: %name-common
+Requires: %name-common = %version-%release
 Requires: zabbix-agent >= 1:1.6.7-alt0.svn.8427.M40.1
 # we need pg_buffercache and pg_freespacemap
 #Requires: postgresql-contrib #TODO: provide postgresql-contrib in all major versions
@@ -101,7 +104,7 @@ Obsoletes: zabbix-userparameters-postgresql =< %version-%release
 %package slony
 Summary: ZTC UserParameters for monitoring slony
 Group: Monitoring
-Requires: %name-common
+Requires: %name-common = %version-%release
 Requires: zabbix-agent >= 1:1.6.7-alt0.svn.8427.M40.1
 Provides: zabbix-userparameters-slony = %version-%release
 Obsoletes: zabbix-userparameters-slony =< %version-%release
@@ -112,7 +115,7 @@ Obsoletes: zabbix-userparameters-slony =< %version-%release
 %package linux
 Summary: ZTC UserParameters for monitoring linux machine
 Group: Monitoring
-Requires: %name-common
+Requires: %name-common = %version-%release
 Requires: zabbix-agent >= 1:1.6.7-alt0.svn.8427.M40.1
 Provides: zabbix-userparameters-linux = %version-%release
 Obsoletes: zabbix-userparameters-linux =< %version-%release
@@ -123,7 +126,7 @@ Obsoletes: zabbix-userparameters-linux =< %version-%release
 %package mysql
 Summary: ZTC UserParameters for monitoring MySQL
 Group: Monitoring
-Requires: %name-common
+Requires: %name-common = %version-%release
 Requires: zabbix-agent >= 1:1.6.7-alt0.svn.8427.M40.1
 Requires: python-module-ztc-mysql
 
@@ -133,7 +136,7 @@ Requires: python-module-ztc-mysql
 %package hw
 Summary: ZTC UserParameters for monitoring hardware devices
 Group: Monitoring
-Requires: %name-common
+Requires: %name-common = %version-%release
 Requires: zabbix-agent >= 1:1.6.7-alt0.svn.8427.M40.1
 
 %description hw
@@ -142,7 +145,7 @@ Requires: zabbix-agent >= 1:1.6.7-alt0.svn.8427.M40.1
 %package ovz
 Summary: ZTC UserParameters for monitoring openvz CTs
 Group: Monitoring
-Requires: %name-common
+Requires: %name-common = %version-%release
 Requires: zabbix-agent >= 1:1.6.7-alt0.svn.8427.M40.1
 Requires: zabbix-agent-sudo
 
@@ -232,6 +235,9 @@ Requires: zabbix-agent-sudo
 %config(noreplace) %_sysconfdir/zabbix/zabbix_agentd.conf.d/ovz.conf
 
 %changelog
+* Thu Jan 24 2013 Terechkov Evgenii <evg@altlinux.org> 12.02.1-alt2
+- Strict dependencies to python-module-ztc (ALT#28457)
+
 * Sun Jan 13 2013 Terechkov Evgenii <evg@altlinux.org> 12.02.1-alt1
 - 12.02.1 (ALT#26522, ALT#28251, ALT#25194)
 
