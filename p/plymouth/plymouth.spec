@@ -13,7 +13,7 @@
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
 Version: 0.8.8
-Release: alt1.git.b1140c
+Release: alt2.git.b1140c
 License: GPLv2+
 Group: System/Base
 
@@ -42,6 +42,7 @@ Group: System/Base
 Provides: %name-system-plugin = %version-%release
 Requires: plymouth(system-theme)
 Requires: %name = %version-%release
+BuildArch: noarch
 
 %description system-theme
 This metapackage tracks the current distribution default theme.
@@ -136,6 +137,7 @@ Group: System/Base
 Requires: %name-plugin-fade-throbber = %version-%release
 Requires(post): %name-scripts = %version-%release
 Provides: plymouth(system-theme) = %version-%release
+BuildArch: noarch
 
 %description theme-fade-in
 This package contains the "Fade-In" boot splash theme for
@@ -160,6 +162,7 @@ Summary: Plymouth "Spinfinity" theme
 Group: System/Base
 Requires: %name-plugin-throbgress = %version-%release
 Requires(post): %name-scripts = %version-%release
+BuildArch: noarch
 
 %description theme-spinfinity
 This package contains the "Spinfinity" boot splash theme for
@@ -183,6 +186,7 @@ Group: System/Base
 Requires: %name-plugin-space-flares = %version-%release
 Requires(post): %name-scripts = %version-%release
 Requires: plymouth-system-theme
+BuildArch: noarch
 
 %description theme-solar
 This package contains the "Solar" boot splash theme for
@@ -206,6 +210,7 @@ Summary: Plymouth "Charge" plugin
 Group: System/Base
 Requires: %name-plugin-two-step = %version-%release
 Requires(post): %name-scripts = %version-%release
+BuildArch: noarch
 
 %description theme-charge
 This package contains the "charge" boot splash theme for
@@ -217,6 +222,7 @@ Summary: Plymouth "Glow" plugin
 Group: System/Base
 Requires: %name-plugin-two-step = %version-%release
 Requires(post): %name-scripts = %version-%release
+BuildArch: noarch
 
 %description theme-glow
 This package contains the "Glow" boot splash theme for Plymouth.
@@ -238,6 +244,7 @@ Summary: Plymouth "Script" plugin
 Group: System/Base
 Requires: %name-plugin-script = %version-%release
 Requires(post): %name-scripts = %version-%release
+BuildArch: noarch
 
 %description theme-script
 This package contains the "script" boot splash theme for
@@ -249,6 +256,7 @@ Summary: Plymouth "Spinner" theme
 Group: System/Base
 Requires: %name-plugin-two-step = %version-%release
 Requires(post): %name-scripts = %version-%release
+BuildArch: noarch
 
 %description theme-spinner
 This package contains the "spinner" boot splash theme for
@@ -476,6 +484,9 @@ fi \
 %files system-theme
 
 %changelog
+* Fri Jan 25 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.8-alt2.git.b1140c
+- build themes as noarch
+
 * Wed Jan 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.8-alt1.git.b1140c
 - upstream git snapshot b1140c1936adfd074d2a4db886cb26129e14f3a7
 
