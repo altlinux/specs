@@ -2,7 +2,7 @@
 
 Name: alterator-snort
 Version: 0.2.3
-Release: alt2
+Release: alt3
 License: %gpl2plus
 Group: System/Configuration/Other
 Summary: Alterator module for snort administration
@@ -10,7 +10,7 @@ Packager: Mikhail Efremov <sem@altlinux.org>
 Source: %name-%version.tar
 
 Requires: alterator >= 4.10-alt8 alterator-sh-functions >= 0.6-alt5 libshell >= 0.0.1-alt4
-Requires: snort-mysql snort-rules
+Requires: barnyard2-mysql snort-rules
 Requires: MySQL-server MySQL-client
 Requires: oinkmaster wget
 Requires: alterator-l10n >= 2.8-alt4
@@ -42,6 +42,9 @@ touch %buildroot/%_sysconfdir/cron.d/%name
 %ghost %_sysconfdir/cron.d/%name
 
 %changelog
+* Fri Jan 25 2013 Timur Aitov <timonbl4@altlinux.org> 0.2.3-alt3
+- Add barnyard2-mysql requires (instead snort-mysql)
+
 * Thu Dec 23 2010 Mikhail Efremov <sem@altlinux.org> 0.2.3-alt2
 - Add wget requires (for oinkmaster).
 

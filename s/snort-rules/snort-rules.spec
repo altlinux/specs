@@ -1,14 +1,16 @@
 Name:     snort-rules
-Version:  2.8.5
-Release:  alt2
+Version:  2.9.3.1
+Release:  alt1
 
 Summary:  Rules for Snort, popular network intrusion detection system
 License:  GPL
 Group:    Security/Networking
 Url:      http://www.snort.org
-Source0:  %url/pub-bin/downloads.cgi/Download/vrt_pr/snortrules-pr-2.4.tar.gz
-Source1:  Community-Rules-2.8.tar.gz
+
+Source0:  %name-%version-rules.tar
+Source1:  %name-%version-docs.tar
 Source2:  snort-mergesidmaps
+Source3:  Community-Rules-2.8.tar
 
 BuildArch: noarch
 Requires: snort-base
@@ -51,26 +53,20 @@ Tons of detailed textual listings describing all network intrusions known by Sno
 поставки свободной версии Snort - системы обнаружения сетевых вторжений.
 
 %prep
-%setup -q -c
-cd rules
-mv sid sid.1st
-cd ..
-%setup -q -D -T -a 1
-cd rules
-#__mv sid sid.2nd
-cd ..
+%setup -q -a1 -a3
 
 %build  #..nothing to do
 
 %install
-mkdir -p %buildroot{%myrulesdir,%_bindir}
-install -pm 644 rules/*.rules rules/cgi-bin.list %buildroot%myrulesdir
+mkdir -p %buildroot{%myconfdir,%myrulesdir,%_bindir}
+install -pm 644 rules/*.rules %buildroot%myrulesdir
 install -p %SOURCE2 %buildroot%_bindir
+mv rules/*sid-msg.map etc/
 
 echo "Generate maps..."
 d=$PWD
-cd %buildroot%myrulesdir
-%SOURCE2 $d/rules/*sid-msg.map
+cd %buildroot%myconfdir
+%SOURCE2 $d/etc/*sid-msg.map
 cd -
 echo "...done!"
 
@@ -80,12 +76,16 @@ echo "...done!"
 %files
 %_bindir/snort-*
 %config(noreplace) %myrulesdir
+%config(noreplace) %myconfdir/sid-msg.map
 %doc rules/VRT-License.txt
 
 %files doc
 %doc doc/signatures/* docs/*
 
 %changelog
+* Mon Jan 14 2013 Timur Aitov <timonbl4@altlinux.org> 2.9.3.1-alt1
+- new version
+
 * Mon Oct 26 2009 Mikhail Efremov <sem@altlinux.org> 2.8.5-alt2
 - use config(noreplace) for rules.
 
