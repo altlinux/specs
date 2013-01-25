@@ -1,7 +1,7 @@
 Name: yate
 Summary: Yet Another Telephony Engine
 Version: 3.3.2
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers doxygen gcc-c++ kdoc libalsa-devel libcoredumper-devel libgsm-devel liblksctp-devel libmysqlclient-devel libopenh323_1.19-devel libpw1.11-devel libqt4-network libspandsp6-devel libspeex-devel postgresql-devel libqt4-devel
@@ -35,6 +35,7 @@ Metapackage for Yate
 Summary: ALSA sound driver for Yate
 Group: System/Servers
 Provides: %name-audiodevice
+Requires: %name = %version-%release
 
 %description alsa
 Advanced Linux Sound Architecture audio driver for Yate. This is the
@@ -55,15 +56,26 @@ client.
 Summary: Development package for Yate
 Group: Development/Other
 Requires: %name = %version-%release
+Requires: %name-qt4 = %version-%release
 
 %description devel
 The yate-devel package includes the libraries and header files for
 Yate that can be used to build and install new modules.
 
 
+%package devel-doc
+Summary: Development package for Yate
+Group: Development/Other
+Requires: %name = %version-%release
+
+%description devel-doc
+The yate-devel-doc package includes documentation for yate API
+
+
 %package faxchan
 Summary: Fax support for Yate
 Group: System/Servers
+Requires: %name = %version-%release
 
 %description faxchan
 Fax support for Yate
@@ -71,6 +83,7 @@ Fax support for Yate
 %package gsm
 Summary: GSM audio codec for Yate
 Group: System/Servers
+Requires: %name = %version-%release
 
 %description gsm
 European GSM 06.10 audio codec for Yate. This is a low CPU usage codec
@@ -80,6 +93,7 @@ that provides moderate compression and good voice quality.
 %package h323
 Summary: H.323 protocol driver for Yate
 Group: System/Servers
+Requires: %name = %version-%release
 
 %description h323
 Yate driver for the ITU-T H.323 VoIP protocol based on the OpenH323
@@ -89,6 +103,7 @@ library.
 %package isdn
 Summary: ISDN PRI card and protocol drivers for Yate
 Group: System/Servers
+Requires: %name = %version-%release
 
 %description isdn
 Yate drivers for ISDN PRI cards supported by the Zaptel or Wanpipe
@@ -99,6 +114,7 @@ kernel interfaces.
 Summary: Linux Kernel based SCTP support for Yate
 Group: System/Servers
 Provides: %name-sctp
+Requires: %name = %version-%release
 
 %description lksctp
 This package provides SCTP sockets support for Yate based on the Linux
@@ -110,6 +126,7 @@ interfaces.
 Summary: MySQL database driver for Yate
 Group: System/Servers
 Provides: %name-database
+Requires: %name = %version-%release
 
 %description mysql
 This package allows Yate to connect to a MySQL database server. All
@@ -121,6 +138,7 @@ Summary: OpenSSL based encryption support for Yate
 Group: System/Servers
 Provides: %name-ssl
 Provides: %name-crypto
+Requires: %name = %version-%release
 
 %description openssl
 This package provides SSL/TLS encrypted communication support for Yate
@@ -131,6 +149,7 @@ as well as cryptographic routines used for other purposes.
 Summary: PostgreSQL database driver for Yate
 Group: System/Servers
 Provides: %name-database
+Requires: %name = %version-%release
 
 %description pgsql
 This package allows Yate to connect to a PostgreSQL database server.
@@ -143,6 +162,7 @@ Summary: Qt-4 client package for Yate
 Group: System/Servers
 Provides: %name-client
 Requires: %name-client-common = %version-%release
+Requires: %name = %version-%release
 
 %description qt4
 The yate-qt4 package includes the files needed to use Yate as a VoIP
@@ -152,6 +172,7 @@ client with a Qt version 4 graphical interface.
 %package scripts
 Summary: External scripting package for Yate
 Group: System/Servers
+Requires: %name = %version-%release
 
 %description scripts
 The yate-scripts package includes libraries for using external scripts
@@ -161,6 +182,7 @@ with Yate.
 %package speex
 Summary: Speex audio codec for Yate
 Group: System/Servers
+Requires: %name = %version-%release
 
 %description speex
 Speex audio codec for Yate. Speex is based on CELP  and is designed to
@@ -171,6 +193,7 @@ compress voice at bitrates ranging from 2 to 44 kbps.
 Summary: Zlib compression support for Yate
 Group: System/Servers
 Provides: %name-compression
+Requires: %name = %version-%release
 
 %description zlib
 This package provides Zlib data compression for Yate.
@@ -354,6 +377,10 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %_mandir/*/yate-config.*
 %_pkgconfigdir/yate.pc
 
+%files devel-doc
+%doc %_docdir/yate-%version/*.html
+%doc %_docdir/yate-%version/api/*
+
 %files faxchan
 %_libdir/yate/faxchan.yate
 
@@ -365,8 +392,10 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %config(noreplace) %_sysconfdir/yate/h323chan.conf
 
 %files isdn
+%config(noreplace) %_sysconfdir/yate/wpcard.conf
 %_libdir/yate/server/zapcard.yate
 %config(noreplace) %_sysconfdir/yate/zapcard.conf
+%config(noreplace) %_sysconfdir/yate/tdmcard.conf
 
 %files lksctp
 %_libdir/yate/server/lksctp.yate
@@ -403,6 +432,10 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %config(noreplace) %_sysconfdir/yate/zlibcompress.conf
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3.2-alt2
+- fix subpackage requires
+- move devel docs to devel-doc subpackage
+
 * Fri Jul 08 2011 Denis Smirnov <mithraen@altlinux.ru> 3.3.2-alt1
 - first build for Sisyphus
 
