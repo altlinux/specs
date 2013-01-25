@@ -18,7 +18,7 @@
 %endif
 
 Name: xorg-server
-Version: 1.13.1.901
+Version: 1.13.2
 Release: alt1
 Epoch: 2
 License: MIT/X11
@@ -32,7 +32,7 @@ Provides: XORG_ABI_VIDEODRV = 13.1
 Provides: XORG_ABI_XINPUT = 18.0
 Provides: XORG_ABI_EXTENSION = 7.0
 Provides: xorg-x11-server = %epoch:%version-%release xorg-extensions-glx = %epoch:%version-%release
-PreReq: xorg-server-control >= 1.3-alt1 %name-common = %version-%release libGL >= %mesaversion xorg-dri-swrast >= %mesaversion
+PreReq: xorg-server-control >= 1.3-alt1 %name-common = %epoch:%version-%release libGL >= %mesaversion xorg-dri-swrast >= %mesaversion
 Requires: xset iceauth xdpyinfo glxinfo xdriinfo xorg-drv-fbdev xorg-drv-vesa xorg-drv-evdev
 
 Source: %name-%version.tar
@@ -65,7 +65,7 @@ Obsoletes: libXiconfig
 %package -n xorg-drv-multimedia
 Summary: Multimedia drivers
 Group: System/X11
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 Provides: %_sysconfdir/X11/app-defaults
 
 %description -n xorg-drv-multimedia
@@ -74,7 +74,7 @@ Multimedia drivers for X server
 %package -n xorg-xvfb
 Summary: A virtual framebuffer X Windows System server for X.Org
 Group: System/X11
-Requires: %name-common = %version-%release xorg-dri-swrast >= %mesaversion
+Requires: %name-common = %epoch:%version-%release xorg-dri-swrast >= %mesaversion
 Provides: xorg-x11-xvfb = %epoch:%version-%release
 
 %description -n xorg-xvfb
@@ -97,7 +97,7 @@ install Xvfb for that purpose.
 %package -n xorg-xnest
 Summary: A nested X.Org server
 Group: System/X11
-Requires: %name-common = %version-%release xorg-dri-swrast >= %mesaversion
+Requires: %name-common = %epoch:%version-%release xorg-dri-swrast >= %mesaversion
 Provides: xorg-x11-xnest = %epoch:%version-%release
 
 %description -n xorg-xnest
@@ -114,7 +114,7 @@ testing purposes).
 %package -n xorg-xephyr
 Summary: A kdrive-based X server
 Group: System/X11
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 
 %description -n xorg-xephyr
 Xephyr is a kdrive based X Server which targets a window on
@@ -129,7 +129,7 @@ It also has a visual debugging mode for observing screen updates.
 %package -n xorg-xdmx
 Summary: Multi-head X server
 Group: System/X11
-Requires: %name = %version-%release
+Requires: %name = %epoch:%version-%release
 
 %description -n xorg-xdmx
 Xdmx  is  a proxy X server that uses one or more other X servers as its
@@ -298,6 +298,9 @@ install -pD -m644 xorg-sdk.rpmmacros %buildroot%_rpmmacrosdir/xorg-sdk
 %_rpmmacrosdir/xorg-sdk
 
 %changelog
+* Fri Jan 25 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.13.2-alt1
+- 1.13.2
+
 * Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 2:1.13.1.901-alt1
 - 1.13.2 RC1
 - switch libEGL & libGLESv2 (closes: #27875)
