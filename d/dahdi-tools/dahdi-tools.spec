@@ -1,7 +1,7 @@
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
 Version: 2.6.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Kernel and hardware
 BuildRequires: dahdi-linux-headers gcc-c++ libncurses-devel libnewt-devel libpcap-devel libusb-compat-devel module-init-tools perl-Pod-Parser ppp-devel rpm-build-ruby wget
@@ -12,6 +12,8 @@ Obsoletes: zaptel
 Obsoletes: zaptel-test
 Requires(pre): asterisk-user
 Url: http://downloads.asterisk.org/pub/telephony/dahdi-tools/
+Requires: libtonezone2 = %version-%release
+Requires: perl-Dahdi = %version-%release
 Patch1: dahdi.perl.patch
 Patch2: dahdi.perl.fix.patch
 Patch3: dahdi.build.patch
@@ -22,11 +24,12 @@ Summary: DAHDI support virtual package
 Group: System/Kernel and hardware
 Requires(pre): asterisk-user
 Requires: dahdi-udev
-Requires: dahdi-tools
-Requires: dahdi_diag
-Requires: dahdi_tool
-Requires: perl-Dahdi
-Requires: gendahdiconf
+Requires: dahdi-xpp = %version-%release
+Requires: dahdi-tools = %version-%release
+Requires: dahdi_diag = %version-%release
+Requires: dahdi_tool = %version-%release
+Requires: perl-Dahdi = %version-%release
+Requires: gendahdiconf = %version-%release
 
 %description -n dahdi
 DAHDI support virtual package
@@ -35,16 +38,15 @@ DAHDI support virtual package
 Summary: Virtual package that requires all DAHDI-related packages
 Group: System/Kernel and hardware
 Obsoletes: zaptel-full
-Requires: dahdi
-Requires: dahdi_diag
-Requires: dahdi-full
-Requires: dahdi_tool
-Requires: dahdi-tools
-Requires: gendahdiconf
-Requires: perl-Dahdi
-Requires: ppp-dahdi
+Requires: dahdi = %version-%release
+Requires: dahdi_diag = %version-%release
+Requires: dahdi_tool = %version-%release
+Requires: dahdi-tools = %version-%release
+Requires: gendahdiconf = %version-%release
+Requires: perl-Dahdi = %version-%release
+Requires: ppp-dahdi = %version-%release
+Requires: dahdi-xpp = %version-%release
 Requires: dahdi-udev
-Requires: dahdi-xpp
 
 %description -n dahdi-full
 Virtual package that requires all DAHDI-related packages
@@ -52,6 +54,8 @@ Virtual package that requires all DAHDI-related packages
 %package -n dahdi-xpp
 Summary: utilites for xorcom hardware
 Group: System/Kernel and hardware
+Requires: dahdi = %version-%release
+Requires: perl-Dahdi = %version-%release
 
 %description -n dahdi-xpp
 utilites for xorcom hardware
@@ -76,6 +80,7 @@ Summary: DAHDI autoconfiguration
 Group: System/Kernel and hardware
 Obsoletes: genzaptelconf
 Requires(pre): asterisk-user
+Requires: perl-Dahdi = %version-%release
 
 %description -n gendahdiconf
 DAHDI autoconfiguration
@@ -250,6 +255,9 @@ echo 'options wct4xxp t1e1override=0xff' >  %buildroot%_initdir/modprobe.d/dahdi
 %_libdir/pppd/*/*.so
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 2.6.1-alt2
+- fix requires (add version in subpackage requires)
+
 * Thu Oct 18 2012 Denis Smirnov <mithraen@altlinux.ru> 2.6.1-alt1
 - 2.6.1
 - fix build
