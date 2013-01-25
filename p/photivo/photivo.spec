@@ -4,7 +4,7 @@
 
 Name: photivo
 Version: 0
-Release: alt6.%{rev}
+Release: alt7.%{rev}
 
 Summary: Photivo photo processor
 Group: Graphics
@@ -70,6 +70,10 @@ This package provides Photivo plugin for Gimp.
 %setup -q -n %name
 %patch -p1
 
+# quick hack for new liblensfun-0.2.6
+find -type f -print0| xargs -r0 subst 's@#include <lensfun.h>@#include <lensfun/lensfun.h>@
+	s@#include "lensfun.h"@#include <lensfun/lensfun.h>@' --
+
 %build
 qmake-qt4 PREFIX=%_prefix
 %make_build
@@ -104,6 +108,9 @@ find %buildroot%_datadir/%name -type f -print0|xargs -r0 chmod 644 --
 %gimpplugindir/ptGimp
 
 %changelog
+* Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 0-alt7.50b234e492b
+- rebuilt against libexiv2.so.12
+
 * Wed Nov 21 2012 Yuri N. Sedunov <aris@altlinux.org> 0-alt6.50b234e492b
 - built current snapshot
 

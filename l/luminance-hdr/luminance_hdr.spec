@@ -1,7 +1,7 @@
 %define _name luminance
 Name: %_name-hdr
 Version: 2.3.0
-Release: alt1
+Release: alt2
 
 Summary: A graphical tool for creating and processing HDR images
 Group: Graphics
@@ -45,6 +45,9 @@ pushd BUILD
 %doc AUTHORS Changelog README TODO BUGS
 
 %changelog
+* Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt2
+- rebuilt against libexiv2.so.12
+
 * Thu Jul 26 2012 Yuri N. Sedunov <aris@altlinux.org> 2.3.0-alt1
 - 2.3.0
 

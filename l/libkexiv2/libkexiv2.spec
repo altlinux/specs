@@ -10,7 +10,7 @@
 
 Name: libkexiv2
 Version: 0.1.9
-Release: alt6
+Release: alt7
 Group: System/Libraries
 Summary: KDE Exiv2 Interface
 License: GPLv2
@@ -114,6 +114,9 @@ bzip2 --best --keep --force ChangeLog
 
 
 %changelog
+* Sun Jan 27 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.9-alt7
+- rebuilt against libexiv2.so.12
+
 * Thu Nov 03 2011 Sergey V Turchin <zerg@altlinux.org> 0.1.9-alt6
 - fix compile with new exiv2
 

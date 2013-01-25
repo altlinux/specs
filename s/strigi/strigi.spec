@@ -1,7 +1,7 @@
 
 Name: strigi
 Version: 0.7.7
-Release: alt5
+Release: alt7
 
 Summary: The fastest and smallest desktop searching program
 License: LGPL2+
@@ -9,6 +9,7 @@ Group: File tools
 Url: http://strigi.sourceforge.net/
 
 Requires: /usr/bin/pdftotext
+Requires: lib%name = %EVR
 
 Source0: %name-%version.tar.bz2
 Source1: %name.watch
@@ -44,7 +45,6 @@ desktop searching program.
 %package -n lib%name
 Summary: %name shared library
 Group: System/Libraries
-
 %description -n lib%name
 Strigi is a daemon which uses a very fast and efficient crawler that can
 index data on your harddrive. Indexing operations are performed without
@@ -57,8 +57,7 @@ This package contains %name shared library.
 %package -n lib%name-devel
 Summary: %name development library and headers
 Group: Development/C++
-Requires: lib%name = %version
-
+Requires: lib%name = %EVR
 %description -n lib%name-devel
 Strigi is a daemon which uses a very fast and efficient crawler that can
 index data on your harddrive. Indexing operations are performed without
@@ -132,6 +131,15 @@ install -m0644 %SOURCE3 %buildroot/%_desktopdir/
 
 
 %changelog
+* Fri Jan 25 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt7
+- fix requires
+
+* Thu Jan 24 2013 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt6
+- rebuilt whith new exiv2
+
+* Fri Oct 12 2012 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt4.M60P.1
+- built for M60P
+
 * Wed Oct 10 2012 Sergey V Turchin <zerg@altlinux.org> 0.7.7-alt5
 - don't show strigi-client in KDE settings menu section
 

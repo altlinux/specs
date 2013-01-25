@@ -1,6 +1,6 @@
 Name: dbblast
 Version: 0.1.8
-Release: alt8
+Release: alt9
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -46,6 +46,9 @@ cp helpdocs/* %buildroot/usr/share/dbblast
 %_datadir/*
 
 %changelog
+* Fri Jan 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt9
+- rebuilt against libexiv2.so.12
+
 * Wed Nov 02 2011 Yuri N. Sedunov <aris@altlinux.org> 0.1.8-alt8
 - rebuilt against libexiv2.so.11
 

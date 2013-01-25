@@ -1,6 +1,6 @@
 Name: geeqie
-Version: 1.0
-Release: alt5
+Version: 1.1
+Release: alt1
 
 Summary: Graphics file browser utility
 License: GPLv2+
@@ -11,8 +11,8 @@ Packager: Victor Forsiuk <force@altlinux.org>
 Url: http://geeqie.sourceforge.net/
 Source: http://download.sourceforge.net/geeqie/geeqie-%version.tar.gz
 
+Patch: %name-1.1-alt-lfs.patch
 Patch1: geeqie-1.0-libdir-fix.patch
-Patch2: geeqie-1.0-largefile.patch
 
 # Automatically added by buildreq on Sat Jul 28 2012 (-bb)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gnome-doc-utils-xslt libatk-devel libcairo-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgpg-error libpango-devel libstdc++-devel libwayland-client libwayland-server perl-XML-Parser pkg-config python-base shared-mime-info xml-common xml-utils xsltproc
@@ -26,8 +26,8 @@ ExifTool.
 
 %prep
 %setup
+%patch -p1
 %patch1 -p1
-%patch2 -p1
 
 %build
 %autoreconf
@@ -51,6 +51,10 @@ install -pD -m644 geeqie.png %buildroot%_liconsdir/geeqie.png
 %_man1dir/*
 
 %changelog
+* Fri Jan 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1-alt1
+- 1.1
+- removed obsolete patches, more fixes for lfs
+
 * Sat Jul 28 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0-alt5
 - rebuild
 

@@ -2,7 +2,7 @@
 
 Name: ufraw
 Version: 0.18
-Release: alt3.1
+Release: alt4
 
 Summary: UFRaw is a graphical utility for opening and converting RAW files from digital photo cameras
 License: GPLv2+
@@ -19,6 +19,7 @@ BuildPreReq: liblcms-devel >= 1.14
 BuildPreReq: liblensfun-devel >= 0.2.3
 # Automatically added by buildreq on Thu Mar 24 2011
 BuildRequires: bzlib-devel gcc-c++ libexiv2-devel libgimp-devel libgomp-devel libgtkimageview-devel libjpeg-devel liblcms-devel liblensfun-devel libpng-devel libtiff-devel perl-podlators zlib-devel
+BuildRequires: libcfitsio-devel
 
 # helps to expel broken 0.2.3-alt3 build...
 Requires: liblensfun >= 0.2.3-alt4
@@ -44,7 +45,7 @@ GIMP plugin for opening and converting RAW files from digital photo cameras
 %patch2 -p1
 
 %build
-%configure --with-lensfun --enable-contrast --enable-openmp --enable-hotpixels
+%configure --enable-contrast --enable-openmp
 %make_build
 
 %install
@@ -69,6 +70,11 @@ install -pD -m644 icons/ufraw.png %buildroot%_liconsdir/ufraw.png
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Fri Jan 25 2013 Yuri N. Sedunov <aris@altlinux.org> 0.18-alt4
+- rebuilt against libexiv2.so.12
+- removed obsolete options for configure
+- updated buildreqs (FITS support enabled)
+
 * Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.18-alt3.1
 - Rebuilt with libpng15
 

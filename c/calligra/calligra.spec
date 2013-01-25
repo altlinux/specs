@@ -2,8 +2,6 @@
 %add_findreq_skiplist %_K4apps/*/scripts/*/*.py
 %add_findreq_skiplist %_K4apps/*/scripts/*/*.rb
 
-%define sover_common 10
-%define sover_kowv2 9
 # obsileted koffice version
 %define koffice_ver 4:2.3.70
 %def_disable map_shape
@@ -11,9 +9,10 @@
 %def_disable GTL
 
 Name: calligra
-Version: 2.5.4
-Release: alt3
-Serial: 0
+Version: 2.5.5
+Release: alt2
+Epoch: 0
+%define libname lib%name
 
 Group: Office
 Summary: An integrated office suite
@@ -23,20 +22,20 @@ License: GPLv2+ / LGPLv2+
 Provides: koffice = %koffice_ver
 Obsoletes: koffice < %koffice_ver
 
-Requires: %name-braindump = %serial:%version-%release
+Requires: %name-braindump = %EVR
 %if_enabled map_shape
-Requires: %name-map-shape = %serial:%version-%release
+Requires: %name-map-shape = %EVR
 %endif
-Requires: %name-reports-map-element = %serial:%version-%release
-Requires: %name-words = %serial:%version-%release
-Requires: %name-sheets = %serial:%version-%release
-Requires: %name-stage = %serial:%version-%release
-Requires: %name-flow = %serial:%version-%release
-Requires: %name-karbon = %serial:%version-%release
-Requires: %name-krita = %serial:%version-%release
-Requires: %name-kexi = %serial:%version-%release
-Requires: %name-plan = %serial:%version-%release
-Requires: %name-okular-odp = %serial:%version-%release
+Requires: %name-reports-map-element = %EVR
+Requires: %name-words = %EVR
+Requires: %name-sheets = %EVR
+Requires: %name-stage = %EVR
+Requires: %name-flow = %EVR
+Requires: %name-karbon = %EVR
+Requires: %name-krita = %EVR
+Requires: %name-kexi = %EVR
+Requires: %name-plan = %EVR
+Requires: %name-okular-odp = %EVR
 
 Source: http://download.kde.org/stable/calligra-%version/calligra-%version.tar
 Source1: FindOkular.cmake
@@ -49,7 +48,7 @@ BuildRequires: kde4-okular-devel kde4edu-devel kde4pimlibs-devel libkdcraw4-deve
 BuildRequires: libexiv2-devel libfftw3-devel libfreetds-devel libglew-devel libgsl-devel libicu-devel
 BuildRequires: liblcms2-devel libmysqlclient-devel libopenjpeg-devel libpoppler-qt4-devel
 BuildRequires: libqca2-devel libsqlite3-devel sqlite3 libxbase-devel openexr-devel postgresql-devel
-BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano
+BuildRequires: soprano-backend-redland soprano-backend-virtuoso soprano kde4-nepomuk-core-devel
 %if_enabled GTL
 BuildRequires: pkgconfig(GTLCore) >= 0.9.16
 BuildRequires: pkgconfig(QtGTL)
@@ -75,7 +74,7 @@ Provides:  koffice-kchart = %koffice_ver
 Obsoletes: koffice-kchart < %koffice_ver
 Provides:  koffice-kformula = %koffice_ver
 Obsoletes: koffice-kformula < %koffice_ver
-Requires: %name-common = %serial:%version-%release
+Requires: %libname = %EVR
 Requires: fonts-ttf-latex-xft
 Requires: kde4base-runtime-core
 %description core
@@ -85,6 +84,7 @@ Requires: kde4base-runtime-core
 Group: Development/KDE and QT
 Summary: Header files and libraries needed for %name development
 Requires: kde4libs-devel
+Requires: %libname = %EVR
 Conflicts: libflake-devel
 %description devel
 Header files and libraries needed for %name development
@@ -92,14 +92,16 @@ Header files and libraries needed for %name development
 %package braindump
 Group: Office
 Summary: Notes and idea gathering
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 %description braindump
 %summary.
 
 %package map-shape
 Group: System/Libraries
 Summary: Map shape for Calligra applications
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 Requires: kde4edu-marble
 %description map-shape
 %summary.
@@ -107,7 +109,8 @@ Requires: kde4edu-marble
 %package reports-map-element
 Group: System/Libraries
 Summary: Map element for Calligra Reports
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 Requires: kde4edu-marble
 %description reports-map-element
 %summary.
@@ -117,7 +120,8 @@ Group: Office
 Summary: An intuitive word processor application with desktop publishing features
 Provides: koffice-kword = %koffice_ver
 Obsoletes: koffice-kword < %koffice_ver
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 %description words
 KWord is an intuitive word processor and desktop publisher application.
 With it, you can create informative and attractive documents with
@@ -128,8 +132,9 @@ Group: Office
 Summary: A fully-featured spreadsheet application
 Provides: koffice-kspread = %koffice_ver
 Obsoletes: koffice-kspread < %koffice_ver
-Provides: calligra-tables = %version-%release
-Requires: %name-core = %serial:%version-%release
+Provides: %name-tables = %EVR
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 %description sheets
 Tables is a fully-featured calculation and spreadsheet tool.  Use it to
 quickly create and calculate various business-related spreadsheets, such
@@ -140,7 +145,9 @@ Group: Office
 Summary: A full-featured presentation program
 Provides: koffice-kpresenter = %koffice_ver
 Obsoletes: koffice-kpresenter < %koffice_ver
-Requires: %name-core = %serial:%version-%release
+Requires: %name-okular-odp = %EVR
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 %description stage
 Stage is a powerful and easy to use presentation application. You
 can dazzle your audience with stunning slides containing images, videos,
@@ -151,7 +158,8 @@ Group: Office
 Summary: A diagramming and flowcharting application
 #Provides: koffice-kivio = %koffice_ver
 #Obsoletes: koffice-kivio < %koffice_ver
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 %description flow
 Flow is an easy to use diagramming and flowcharting application with
 tight integration to the other KOffice applications. It enables you to
@@ -162,7 +170,8 @@ Group: Graphics
 Summary: A vector drawing application
 Provides: koffice-karbon = %koffice_ver
 Obsoletes: koffice-karbon < %koffice_ver
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 Requires: pstoedit
 %description karbon
 Karbon is a vector drawing application with an user interface that is
@@ -179,7 +188,8 @@ Group: Graphics
 Summary: A creative sketching and painting application
 Provides: koffice-krita = %koffice_ver
 Obsoletes: koffice-krita < %koffice_ver
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 Requires: kde4-kross-python
 %description krita
 Krita is a creative sketching and painting application based on KOffice
@@ -199,7 +209,8 @@ Group: Databases
 Summary: An integrated environment for managing data
 Provides: koffice-kexi = %koffice_ver
 Obsoletes: koffice-kexi < %koffice_ver
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 Requires: kde4edu-marble
 %description kexi
 Kexi is an integrated data management application.  It can be used for
@@ -215,7 +226,8 @@ Group: Office
 Summary: A powerful formula editor
 Provides: koffice-kformula = %koffice_ver
 Obsoletes: koffice-kformula < %koffice_ver
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 #Requires: fonts-ttf-latex-xft fonts-ttf-dejavu-lgc
 %description kformula
 %summary.
@@ -225,7 +237,8 @@ Group: Office
 Summary: A project planner
 Provides: koffice-kplato = %koffice_ver
 Obsoletes: koffice-kplato < %koffice_ver
-Requires: %name-core = %serial:%version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 %description plan
 Plan is a project management application. It is intended for managing
 moderately large projects with multiple resources.
@@ -235,374 +248,19 @@ Group: Graphics
 Summary: OpenDocument presenter support for okular
 Provides: koffice-okular-odp = %koffice_ver
 Obsoletes: koffice-okular-odp < %koffice_ver
-Requires: %name-stage = %version-%release
+Requires: %name-core = %EVR
+Requires: %libname = %EVR
 Requires: kde4-okular
 %description okular-odp
 %summary.
 
-%package -n libbraindumpcore%sover_common
-Summary: %name core library
+%package -n %libname
+Summary: %name libraries
 Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libbraindumpcore%sover_common
-%name core library
+Requires: %name-common = %EVR
+%description -n %libname
+%name libraries
 
-%package -n libcalligrasheetscommon%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libcalligrasheetscommon%sover_common
-%name core library
-
-%package -n libcalligrasheetsodf%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libcalligrasheetsodf%sover_common
-%name core library
-
-%package -n libcalligrastageprivate%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libcalligrastageprivate%sover_common
-%name core library
-
-%package -n libchartshapelib%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libchartshapelib%sover_common
-%name core library
-
-%package -n libflake%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libflake%sover_common
-%name core library
-
-%package -n libflowprivate%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libflowprivate%sover_common
-%name core library
-
-%package -n libkarboncommon%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkarboncommon%sover_common
-%name core library
-
-%package -n libkarbonui%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkarbonui%sover_common
-%name core library
-
-%package -n libkdchart%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkdchart%sover_common
-%name core library
-
-%package -n libkexicore%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkexicore%sover_common
-%name core library
-
-%package -n libkexidatatable%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkexidatatable%sover_common
-%name core library
-
-%package -n libkexidataviewcommon%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkexidataviewcommon%sover_common
-%name core library
-
-%package -n libkexidb%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkexidb%sover_common
-%name core library
-
-%package -n libkexiextendedwidgets%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkexiextendedwidgets%sover_common
-%name core library
-
-%package -n libkexiformutils%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkexiformutils%sover_common
-%name core library
-
-%package -n libkexiguiutils%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkexiguiutils%sover_common
-%name core library
-
-%package -n libkeximain%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkeximain%sover_common
-%name core library
-
-%package -n libkeximigrate%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkeximigrate%sover_common
-%name core library
-
-%package -n libkexirelationsview%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkexirelationsview%sover_common
-%name core library
-
-%package -n libkexiutils%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkexiutils%sover_common
-%name core library
-
-%package -n libkformdesigner%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkformdesigner%sover_common
-%name core library
-
-%package -n libkformulalib%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkformulalib%sover_common
-%name core library
-
-%package -n libkochart%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkochart%sover_common
-%name core library
-
-%package -n libkokross%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkokross%sover_common
-%name core library
-
-%package -n libkomain%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkomain%sover_common
-%name core library
-
-%package -n libkoodf%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkoodf%sover_common
-%name core library
-
-%package -n libkopageapp%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkopageapp%sover_common
-%name core library
-
-%package -n libkoplugin%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkoplugin%sover_common
-%name core library
-
-%package -n libkoproperty%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkoproperty%sover_common
-%name core library
-
-%package -n libkoreport%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkoreport%sover_common
-%name core library
-
-%package -n libkotext%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkotext%sover_common
-%name core library
-
-%package -n libkowidgets%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkowidgets%sover_common
-%name core library
-
-%package -n libkowv2%sover_kowv2
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkowv2%sover_kowv2
-%name core library
-
-%package -n libkplatokernel%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkplatokernel%sover_common
-%name core library
-
-%package -n libkplatomodels%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkplatomodels%sover_common
-%name core library
-
-%package -n libkplatoui%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkplatoui%sover_common
-%name core library
-
-%package -n libkritaimage%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkritaimage%sover_common
-%name core library
-
-%package -n libkritalibbrush%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkritalibbrush%sover_common
-%name core library
-
-%package -n libkritalibpaintop%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkritalibpaintop%sover_common
-%name core library
-
-%package -n libkritaui%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkritaui%sover_common
-%name core library
-
-%package -n libkundo2%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libkundo2%sover_common
-%name core library
-
-%package -n liblibwmf%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n liblibwmf%sover_common
-%name core library
-
-%package -n libmsooxml%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libmsooxml%sover_common
-%name core library
-
-%package -n libpigmentcms%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libpigmentcms%sover_common
-%name core library
-
-%package -n libplanprivate%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libplanprivate%sover_common
-%name core library
-
-%package -n libplanworkapp%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libplanworkapp%sover_common
-%name core library
-
-%package -n libplanworkfactory%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libplanworkfactory%sover_common
-%name core library
-
-%package -n librcps_plan%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n librcps_plan%sover_common
-%name core library
-
-%package -n librtfreader%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n librtfreader%sover_common
-%name core library
-
-%package -n libtextlayout%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libtextlayout%sover_common
-%name core library
-
-%package -n libwordsprivate%sover_common
-Summary: %name core library
-Group: System/Libraries
-Requires: %name-common = %serial:%version-%release
-%description -n libwordsprivate%sover_common
-%name core library
 
 %prep
 %setup
@@ -951,164 +609,17 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/libokularGenerator_odp.desktop
 %_K4srv/okularOdp.desktop
 
-%files -n libbraindumpcore%sover_common
-%_K4libdir/libbraindumpcore.so.%sover_common
-%_K4libdir/libbraindumpcore.so.%sover_common.*
-%files -n libcalligrasheetscommon%sover_common
-%_K4libdir/libcalligrasheetscommon.so.%sover_common
-%_K4libdir/libcalligrasheetscommon.so.%sover_common.*
-%files -n libcalligrasheetsodf%sover_common
-%_K4libdir/libcalligrasheetsodf.so.%sover_common
-%_K4libdir/libcalligrasheetsodf.so.%sover_common.*
-%files -n libcalligrastageprivate%sover_common
-%_K4libdir/libcalligrastageprivate.so.%sover_common
-%_K4libdir/libcalligrastageprivate.so.%sover_common.*
-%files -n libchartshapelib%sover_common
-%_K4libdir/libchartshapelib.so.%sover_common
-%_K4libdir/libchartshapelib.so.%sover_common.*
-%files -n libflake%sover_common
-%_K4libdir/libflake.so.%sover_common
-%_K4libdir/libflake.so.%sover_common.*
-%files -n libflowprivate%sover_common
-%_K4libdir/libflowprivate.so.%sover_common
-%_K4libdir/libflowprivate.so.%sover_common.*
-%files -n libkarboncommon%sover_common
-%_K4libdir/libkarboncommon.so.%sover_common
-%_K4libdir/libkarboncommon.so.%sover_common.*
-%files -n libkarbonui%sover_common
-%_K4libdir/libkarbonui.so.%sover_common
-%_K4libdir/libkarbonui.so.%sover_common.*
-%files -n libkdchart%sover_common
-%_K4libdir/libkdchart.so.%sover_common
-%_K4libdir/libkdchart.so.%sover_common.*
-%files -n libkexicore%sover_common
-%_K4libdir/libkexicore.so.%sover_common
-%_K4libdir/libkexicore.so.%sover_common.*
-%files -n libkexidatatable%sover_common
-%_K4libdir/libkexidatatable.so.%sover_common
-%_K4libdir/libkexidatatable.so.%sover_common.*
-%files -n libkexidataviewcommon%sover_common
-%_K4libdir/libkexidataviewcommon.so.%sover_common
-%_K4libdir/libkexidataviewcommon.so.%sover_common.*
-%files -n libkexidb%sover_common
-%_K4libdir/libkexidb.so.%sover_common
-%_K4libdir/libkexidb.so.%sover_common.*
-%files -n libkexiextendedwidgets%sover_common
-%_K4libdir/libkexiextendedwidgets.so.%sover_common
-%_K4libdir/libkexiextendedwidgets.so.%sover_common.*
-%files -n libkexiformutils%sover_common
-%_K4libdir/libkexiformutils.so.%sover_common
-%_K4libdir/libkexiformutils.so.%sover_common.*
-%files -n libkexiguiutils%sover_common
-%_K4libdir/libkexiguiutils.so.%sover_common
-%_K4libdir/libkexiguiutils.so.%sover_common.*
-%files -n libkeximain%sover_common
-%_K4libdir/libkeximain.so.%sover_common
-%_K4libdir/libkeximain.so.%sover_common.*
-%files -n libkeximigrate%sover_common
-%_K4libdir/libkeximigrate.so.%sover_common
-%_K4libdir/libkeximigrate.so.%sover_common.*
-%files -n libkexirelationsview%sover_common
-%_K4libdir/libkexirelationsview.so.%sover_common
-%_K4libdir/libkexirelationsview.so.%sover_common.*
-%files -n libkexiutils%sover_common
-%_K4libdir/libkexiutils.so.%sover_common
-%_K4libdir/libkexiutils.so.%sover_common.*
-%files -n libkformdesigner%sover_common
-%_K4libdir/libkformdesigner.so.%sover_common
-%_K4libdir/libkformdesigner.so.%sover_common.*
-%files -n libkformulalib%sover_common
-%_K4libdir/libkformulalib.so.%sover_common
-%_K4libdir/libkformulalib.so.%sover_common.*
-%files -n libkochart%sover_common
-%_K4libdir/libkochart.so.%sover_common
-%_K4libdir/libkochart.so.%sover_common.*
-%files -n libkokross%sover_common
-%_K4libdir/libkokross.so.%sover_common
-%_K4libdir/libkokross.so.%sover_common.*
-%files -n libkomain%sover_common
-%_K4libdir/libkomain.so.%sover_common
-%_K4libdir/libkomain.so.%sover_common.*
-%files -n libkoodf%sover_common
-%_K4libdir/libkoodf.so.%sover_common
-%_K4libdir/libkoodf.so.%sover_common.*
-%files -n libkopageapp%sover_common
-%_K4libdir/libkopageapp.so.%sover_common
-%_K4libdir/libkopageapp.so.%sover_common.*
-%files -n libkoplugin%sover_common
-%_K4libdir/libkoplugin.so.%sover_common
-%_K4libdir/libkoplugin.so.%sover_common.*
-%files -n libkoproperty%sover_common
-%_K4libdir/libkoproperty.so.%sover_common
-%_K4libdir/libkoproperty.so.%sover_common.*
-%files -n libkoreport%sover_common
-%_K4libdir/libkoreport.so.%sover_common
-%_K4libdir/libkoreport.so.%sover_common.*
-%files -n libkotext%sover_common
-%_K4libdir/libkotext.so.%sover_common
-%_K4libdir/libkotext.so.%sover_common.*
-%files -n libkowidgets%sover_common
-%_K4libdir/libkowidgets.so.%sover_common
-%_K4libdir/libkowidgets.so.%sover_common.*
-%files -n libkowv2%sover_kowv2
-%_K4libdir/libkowv2.so.%sover_kowv2
-%_K4libdir/libkowv2.so.%sover_kowv2.*
-%files -n libkplatokernel%sover_common
-%_K4libdir/libkplatokernel.so.%sover_common
-%_K4libdir/libkplatokernel.so.%sover_common.*
-%files -n libkplatomodels%sover_common
-%_K4libdir/libkplatomodels.so.%sover_common
-%_K4libdir/libkplatomodels.so.%sover_common.*
-%files -n libkplatoui%sover_common
-%_K4libdir/libkplatoui.so.%sover_common
-%_K4libdir/libkplatoui.so.%sover_common.*
-%files -n libkritaimage%sover_common
-%_K4libdir/libkritaimage.so.%sover_common
-%_K4libdir/libkritaimage.so.%sover_common.*
-%files -n libkritalibbrush%sover_common
-%_K4libdir/libkritalibbrush.so.%sover_common
-%_K4libdir/libkritalibbrush.so.%sover_common.*
-%files -n libkritalibpaintop%sover_common
-%_K4libdir/libkritalibpaintop.so.%sover_common
-%_K4libdir/libkritalibpaintop.so.%sover_common.*
-%files -n libkritaui%sover_common
-%_K4libdir/libkritaui.so.%sover_common
-%_K4libdir/libkritaui.so.%sover_common.*
-%files -n libkundo2%sover_common
-%_K4libdir/libkundo2.so.%sover_common
-%_K4libdir/libkundo2.so.%sover_common.*
-%files -n liblibwmf%sover_common
-%_K4libdir/liblibwmf.so.%sover_common
-%_K4libdir/liblibwmf.so.%sover_common.*
-%files -n libmsooxml%sover_common
-%_K4libdir/libmsooxml.so.%sover_common
-%_K4libdir/libmsooxml.so.%sover_common.*
-%files -n libpigmentcms%sover_common
-%_K4libdir/libpigmentcms.so.%sover_common
-%_K4libdir/libpigmentcms.so.%sover_common.*
-%files -n libplanprivate%sover_common
-%_K4libdir/libplanprivate.so.%sover_common
-%_K4libdir/libplanprivate.so.%sover_common.*
-%files -n libplanworkapp%sover_common
-%_K4libdir/libplanworkapp.so.%sover_common
-%_K4libdir/libplanworkapp.so.%sover_common.*
-%files -n libplanworkfactory%sover_common
-%_K4libdir/libplanworkfactory.so.%sover_common
-%_K4libdir/libplanworkfactory.so.%sover_common.*
-%files -n librcps_plan%sover_common
-%_K4libdir/librcps_plan.so.%sover_common
-%_K4libdir/librcps_plan.so.%sover_common.*
-%files -n librtfreader%sover_common
-%_K4libdir/libRtfReader.so.%sover_common
-%_K4libdir/libRtfReader.so.%sover_common.*
-%files -n libtextlayout%sover_common
-%_K4libdir/libtextlayout.so.%sover_common
-%_K4libdir/libtextlayout.so.%sover_common.*
-%files -n libwordsprivate%sover_common
-%_K4libdir/libwordsprivate.so.%sover_common
-%_K4libdir/libwordsprivate.so.%sover_common.*
+%files -n %libname
+%_K4libdir/lib*.so.*
 
 %changelog
+* Sun Jan 27 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.5.5-alt2
+- don't split libs
+- fix requires
+
+* Thu Jan 24 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.5.5-alt1
+- new version
+
 * Tue Dec 18 2012 Sergey V Turchin <zerg@altlinux.org> 0:2.5.4-alt3
 - rebuilt with new marble
 

@@ -1,5 +1,5 @@
 Name: libgexiv2
-Version: 0.4.1
+Version: 0.5.0
 Release: alt1
 Summary: GObject-based Exiv2 wrapper
 
@@ -18,7 +18,7 @@ basic features of Exiv2 available to GNOME applications.
 
 %package devel
 Group: Development/C
-Requires: %name = %version
+Requires: %name = %version-%release
 Summary: GObject-based Exiv2 wrapper - development files
 %description devel
 %summary
@@ -44,6 +44,9 @@ Summary: GObject-based Exiv2 wrapper - development files
 %_datadir/vala/vapi/gexiv2.vapi
 
 %changelog
+* Fri Jan 25 2013 Vladimir Lettiev <crux@altlinux.ru> 0.5.0-alt1
+- New version 0.5.0
+
 * Mon Apr 09 2012 Vladimir Lettiev <crux@altlinux.ru> 0.4.1-alt1
 - New version 0.4.1
 

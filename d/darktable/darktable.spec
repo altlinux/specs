@@ -1,6 +1,6 @@
 Name: darktable
-Version: 1.0.4
-Release: alt1.1
+Version: 1.1.2
+Release: alt1
 
 Summary: Darktable is a virtual lighttable and darkroom for photographer
 License: GPLv3
@@ -8,13 +8,19 @@ Group: Graphics
 
 Url: http://darktable.sourceforge.net/
 Source: http://downloads.sourceforge.net/darktable/darktable-%version.tar.gz
+Patch: %name-1.1.2-alt-lfs.patch
 
 # For gconf_schemasdir definition:
 BuildPreReq: rpm-build-gnome
 
-# Automatically added by buildreq on Thu Mar 15 2012
-# optimized out: cmake-modules fontconfig glib2-devel ilmbase-devel libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXau-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXrender-devel libatk-devel libcairo-devel libcurl-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgnome-keyring libgpg-error libpango-devel libstdc++-devel libwayland-client libwayland-server libxml2-devel perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
-BuildRequires: cmake gcc-c++ libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-glib-devel libexiv2-devel libflickcurl-devel libgnome-keyring-devel libgomp-devel libgphoto2-devel libgtk+2-devel libjpeg-devel liblcms2-devel liblensfun-devel libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release openexr-devel perl-Pod-Parser
+BuildRequires: cmake gcc-c++ libSDL-devel libXScrnSaver-devel libXcomposite-devel libXcursor-devel
+BuildRequires: libXdamage-devel libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel
+BuildRequires: libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel 
+BuildRequires: libdbus-glib-devel libexiv2-devel libflickcurl-devel libgnome-keyring-devel
+BuildRequires: libgomp-devel libgphoto2-devel libgtk+2-devel libjpeg-devel liblcms2-devel liblensfun-devel
+BuildRequires: libpng-devel librsvg-devel libsqlite3-devel libtiff-devel libxkbfile-devel lsb-release openexr-devel perl-Pod-Parser
+BuildRequires: libjson-glib-devel libsoup-devel xsltproc
+BuildRequires: libcolord-gtk-devel
 
 %description
 darktable is a virtual light table and darkroom for photographers. It manages
@@ -23,6 +29,7 @@ light table. It also enables you to develop raw images and enhance them.
 
 %prep
 %setup
+%patch -p1
 
 %build
 subst 's/-Werror//' src/CMakeLists.txt
@@ -59,6 +66,9 @@ install -pD -m644 data/pixmaps/48x48/darktable.png %buildroot%_liconsdir/darktab
 %exclude /usr/share/doc/darktable/
 
 %changelog
+* Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.2-alt1
+- 1.1.2
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.4-alt1.1
 - Rebuilt with libpng15
 

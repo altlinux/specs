@@ -10,14 +10,15 @@
 %define bugfix 0
 Name: kde4base-runtime
 Version: %major.%minor.%bugfix
-Release: alt0.3
+Release: alt0.5
+%define libname lib%name
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Runtime
 License: GPLv2
 Url: http://www.kde.org/
 
-Requires: %name-core = %version-%release
+Requires: %name-core = %EVR
 
 Source0: ftp://ftp.kde.org/pub/kde/stable/%version/src/kdebase-runtime-%version.tar
 Source10: search-yandex.desktop
@@ -59,7 +60,7 @@ Requires: kde-common >= %major.%minor
 %package core
 Summary: Core files for %name
 Group: Graphical desktop/KDE
-Requires: %name-common = %version-%release
+Requires: %libname = %EVR
 Requires: kde4-icon-theme-oxygen
 Requires: phonon-backend >= 4.3.0
 Requires: shared-desktop-ontologies
@@ -70,24 +71,18 @@ Requires: eject
 %description core
 Core files for  %name
 
-%package -n libkwalletbackend4
+%package -n %libname
 Summary: KDE 4 library
 Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n libkwalletbackend4
-KDE 4 library.
-
-%package -n libmolletnetwork4
-Summary: KDE 4 library
-Group: System/Libraries
-Requires: %name-common = %version-%release
-%description -n libmolletnetwork4
+Requires: %name-common = %EVR
+%description -n %libname
 KDE 4 library.
 
 %package devel
 Summary: Headers files for %name
 Group: Development/KDE and QT
 Requires: kde4libs-devel kde4-nepomuk-core-devel
+Requires: %libname = %EVR
 %description devel
 Headers files needed to build applications based on kdegames applications.
 
@@ -95,7 +90,7 @@ Headers files needed to build applications based on kdegames applications.
 Summary: menu resources for the original KDE menu
 Group: Graphical desktop/KDE
 BuildArch: noarch
-
+Requires: %name-common = %EVR
 %description -n kde4-menu-resources
 Menu resources for the original KDE menu.
 
@@ -219,10 +214,8 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %files -n kde4-menu-resources
 %_kde4_xdg_dirs/*.directory
 
-%files -n libkwalletbackend4
-%_K4libdir/libkwalletbackend.so.*
-%files -n libmolletnetwork4
-%_K4libdir/libmolletnetwork.so.*
+%files -n %libname
+%_K4libdir/lib*.so.*
 
 %files devel
 %_K4link/*.so
@@ -231,6 +224,12 @@ ln -sf `relative %_kde4_bindir/kde4 %_K4bindir/kde4` %buildroot/%_K4bindir/kde4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Jan 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.5
+- don't split libs
+
+* Thu Jan 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.4
+- rebuilt whith new exiv2
+
 * Thu Jan 10 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
 - update from 4.10 branch
 

@@ -1,6 +1,6 @@
 Name: shotwell
 Version: 0.13.1
-Release: alt1
+Release: alt2
 Summary: digital photo organizer designed for the GNOME desktop environment
 
 Group: Graphics
@@ -47,6 +47,9 @@ mode, and export them to share with others.
 %doc AUTHORS COPYING NEWS README THANKS
 
 %changelog
+* Fri Jan 25 2013 Vladimir Lettiev <crux@altlinux.ru> 0.13.1-alt2
+- rebuilt with libgexiv2 0.5.0
+
 * Tue Oct 09 2012 Vladimir Lettiev <crux@altlinux.ru> 0.13.1-alt1
 - 0.13.1
 

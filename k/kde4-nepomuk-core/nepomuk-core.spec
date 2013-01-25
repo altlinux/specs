@@ -6,7 +6,7 @@ Name: kde4-nepomuk-core
 %define minor  10
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt0.5
+Release: alt0.7
 %define sover %major
 
 Group: Graphical desktop/KDE
@@ -14,7 +14,8 @@ Summary: Nepomuk Server and core services
 Url: http://kde.org/
 License: LGPLv2+
 
-Requires: %name-common >= %version-%release
+Requires: %name-common = %EVR
+Requires: libnepomukcore4 = %EVR
 
 Source: %rname-%version.tar
 # ALT
@@ -53,18 +54,12 @@ Requires: %name-common >= %version-%release
 %description -n libnepomukcore4
 %name library
 
-%package -n libnepomuksync4
-Group: System/Libraries
-Summary: %name library
-Requires: %name-common >= %version-%release
-%description -n libnepomuksync4
-%name library
-
 %package devel
 Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: kde4libs-devel
 Requires: %name-common >= %version-%release
+Requires: libnepomukcore4 = %EVR
 %description devel
 Development files for %name
 
@@ -112,6 +107,12 @@ sed -i 's|^\(include.*KDE4Defaults.*\)|\1\ninclude(SopranoAddOntology)|' CMakeLi
 %_K4link/*.so
 
 %changelog
+* Fri Jan 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.7
+- fix requires
+
+* Thu Jan 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.6
+- rebuilt whith new exiv2
+
 * Wed Jan 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.5
 - update from 4.10 branch
 
