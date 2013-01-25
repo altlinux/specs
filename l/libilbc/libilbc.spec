@@ -4,7 +4,7 @@
 Summary: Internet Low Bitrate Codec (iLBC) library
 Name: libilbc
 Version: 0.6
-Release: alt6
+Release: alt7
 License: Freeware
 Group: System/Libraries
 Url: http://www.ilbcfreeware.org/
@@ -27,7 +27,7 @@ occurs in connection with lost or delayed IP packets.
 %package -n %name-devel
 Summary: Library and header files for the iLBC library
 Group: Development/C
-Requires: %name = %version
+Requires: %name = %version-%release
 
 %description -n	%name-devel
 iLBC (internet Low Bitrate Codec) is a FREE speech codec suitable
@@ -43,7 +43,7 @@ This package contains the library and header files.
 %package devel-static
 Summary: Static library and header files for the iLBC library
 Group: Development/C
-Requires: %name-devel = %version
+Requires: %name-devel = %version-%release
 
 %description devel-static
 iLBC (internet Low Bitrate Codec) is a FREE speech codec suitable
@@ -117,6 +117,9 @@ install -m0644 *.h %buildroot%_includedir/ilbc/
 %_libdir/*.a
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 0.6-alt7
+- fix libilbc-devel: non-strict dependency on libilbc
+
 * Wed May 25 2011 Denis Smirnov <mithraen@altlinux.ru> 0.6-alt6
 - rebuild
 
