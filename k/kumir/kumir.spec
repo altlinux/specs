@@ -1,6 +1,6 @@
 Name: kumir
-Version: 1.8.0
-Release: alt7
+Version: 1.9.0
+Release: alt1
 
 Summary: Kumir is a simple programming language and IDE for teaching programming
 Summary(ru_RU.UTF-8): Кумир это простой язык программирования и среда разработки, применяемый при обучении
@@ -13,14 +13,14 @@ Packager: Denis Kirienko <dk@altlinux.ru>
 BuildPreReq: libqt4-devel gcc-c++ python-modules
 Requires: libqt4-core
 
-Source: kumir-1.8.0.2780.tar.bz2
+Source: kumir-1.9.0.tar
 Source1: %name-alt-icons.tar.bz2
 Source2: test.vod
 
 Patch0: %name-1.7.1-desktop.patch
 Patch1: %name-1.7.90-x-kumir-program.desktop.patch
 Patch2: %name-1.7.1-x-kumir-program.xml.patch
-Patch3: %name-1.8.0-build.patch
+Patch3: %name-1.9.0-build.patch
 
 %description
 Implementation of Kumir programming language, designed by academician
@@ -125,6 +125,9 @@ ln -s ../..%_libdir/kumir/pluginstarter kumpluginstarter
 %_datadir/mimelnk/application/x-kumir-program.desktop
 
 %changelog
+* Fri Jan 25 2013 Denis Kirienko <dk@altlinux.org> 1.9.0-alt1
+- Version 1.9.0
+
 * Tue Oct 02 2012 Denis Kirienko <dk@altlinux.org> 1.8.0-alt7
 - Build fix
 
