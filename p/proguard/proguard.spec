@@ -1,7 +1,7 @@
 Name: proguard
 Summary: Java class file shrinker, optimizer, obfuscator, and preverifier
 Version: 4.8
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/Java
 BuildArch: noarch
@@ -9,6 +9,7 @@ BuildRequires: ant checkstyle4 tzdata log4j slf4j
 BuildRequires: /proc
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Source: %name-%version.tar
+Url: http://proguard.sourceforge.net/
 
 %description
 Java class file shrinker, optimizer, obfuscator, and preverifier
@@ -37,6 +38,9 @@ done
 %_bindir/retrace
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 4.8-alt2
+- add Url tag
+
 * Fri Oct 12 2012 Denis Smirnov <mithraen@altlinux.ru> 4.8-alt1
 - 4.8
 
