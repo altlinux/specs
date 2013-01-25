@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 0.7.9
+Version: 0.8.0
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -160,6 +160,15 @@ Mdadm module for %name
 %_datadir/%name/features/mdadm
 
 %changelog
+* Fri Jan 25 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.0-alt1
+- Add possibility of do not set root=, if the booting on the same
+  system as creation of initrd.
+- Prevent luks activating on disassembled
+  RAID components (thx Anton V. Boyarshinov).
+- Add multi-mount implementation.
+- Add keyboard feature.
+- Add no_luks boot parameter.
+
 * Fri Jul 20 2012 Alexey Gladkov <legion@altlinux.ru> 0.7.9-alt1
 - Add qemu feature.
 - Add support for udev >= 185.
