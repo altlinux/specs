@@ -1,7 +1,7 @@
 Name: libss7
 Summary: SS7 library for Asterisk
 Version: 1.0.2
-Release: alt5
+Release: alt6
 License: GPL
 Group: System/Libraries
 
@@ -21,7 +21,7 @@ SS7 library
 Summary: development files for libss6
 License: GPL
 Group: Development/C
-Requires: libss7
+Requires: libss7 = %version-%release
 
 %description devel
 Headers for SS7 library
@@ -52,6 +52,9 @@ find -type f -name '.depend' -print0 \
 %exclude %_libdir/libss7.a
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt6
+- fix libss7-devel: non-strict dependency on libss7
+
 * Mon Jun 18 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt5
 - fix build
 
