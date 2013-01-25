@@ -1,7 +1,7 @@
 Name: freehdl
 Summary: VHDL simulator
 Version: 0.0.8
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/Other
 BuildRequires: flex gcc-c++
@@ -9,7 +9,8 @@ BuildRequires: flex gcc-c++
 %set_verify_elf_method unresolved=relaxed
 Url: http://www.freehdl.seul.org/
 Packager: Denis Smirnov <mithraen@altlinux.ru>
-Requires: lib%name-devel
+Requires: lib%name-devel = %version-%release
+Requires: lib%name = %version-%release
 Source: %name-%version.tar
 
 %package -n libfreehdl
@@ -22,7 +23,7 @@ VHDL simulator
 %package -n libfreehdl-devel
 Summary: VHDL simulator
 Group: Development/Other
-Requires: lib%name
+Requires: lib%name = %version-%release
 
 %description -n libfreehdl-devel
 VHDL simulator
@@ -30,7 +31,7 @@ VHDL simulator
 %package -n libfreehdl-devel-static
 Summary: VHDL simulator
 Group: Development/Other
-Requires: lib%name-devel
+Requires: lib%name-devel = %version-%release
 
 %description -n libfreehdl-devel-static
 VHDL simulator
@@ -113,6 +114,9 @@ sed -i 's!FREEHDL/lib!%_libdir!g' v2cc/gvhdl.in
 %_libdir/libfreehdl-vaul.a
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 0.0.8-alt2
+- fix subpackage requires
+
 * Mon Oct 15 2012 Denis Smirnov <mithraen@altlinux.ru> 0.0.8-alt1
 - 0.0.8
 
