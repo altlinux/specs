@@ -1,6 +1,6 @@
 Name: libgsm
 Version: 1.0.13
-Release: alt5
+Release: alt6
 
 Summary: GSM audio encoding/decoding library
 License: Free/Copyright Technische Universitaet Berlin
@@ -30,7 +30,7 @@ installation libgsm) for compress/decompress files using GSM format.
 %package devel
 Summary: Header files and development documentation for libgsm
 Group: Development/C
-Requires: %name = %version
+Requires: %name = %version-%release
 
 %description devel
 Header files and development documentation for libgsm.
@@ -38,7 +38,7 @@ Header files and development documentation for libgsm.
 %package devel-static
 Summary: GSM Audio Encoding/decoding static library
 Group: Development/C
-Requires: %name-devel = %version
+Requires: %name-devel = %version-%release
 
 %description devel-static
 GSM Audio Encoding/decoding static library.
@@ -77,6 +77,9 @@ echo .so toast.1 >%buildroot%_man1dir/untoast.1
 %_libdir/%name.a
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.13-alt6
+- fix requires in subpackages
+
 * Mon Aug 08 2011 Denis Smirnov <mithraen@altlinux.ru> 1.0.13-alt5
 - rebuild
 
