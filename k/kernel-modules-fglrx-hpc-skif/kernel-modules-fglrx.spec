@@ -1,5 +1,5 @@
 %define module_name	fglrx
-%define module_version	9.00.2
+%define module_version	9.012
 %define module_release	alt1
 
 %define kversion       2.6.32
@@ -116,8 +116,11 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %module_dir
 
 %changelog
-* Tue Dec 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9.00.2-alt1.132640.25
+* Fri Jan 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9.012-alt1.132640.25
 - Build for kernel-image-hpc-skif-2.6.32-alt25.
+
+* Fri Jan 25 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9.012-alt1
+- Version 9.012
 
 * Tue Dec 18 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.9.00.2-alt1
 - Rebuilt with updated kernel-image
