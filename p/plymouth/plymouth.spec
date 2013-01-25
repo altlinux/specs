@@ -1,3 +1,5 @@
+%define _allowed_nonstrict_interdeps plymouth-system-theme,plymouth-theme-fade-in
+
 %define plymouthdaemon_execdir /sbin
 %define plymouthclient_execdir /bin
 %define plymouth_libdir /%_lib
@@ -10,8 +12,8 @@
 
 Summary: Graphical Boot Animation and Logger
 Name: plymouth
-Version: 0.8.7
-Release: alt1
+Version: 0.8.8
+Release: alt1.git.b1140c
 License: GPLv2+
 Group: System/Base
 
@@ -302,7 +304,6 @@ find %buildroot -name '*.la' -exec rm -f {} \;
 
 mkdir -p %buildroot%_localstatedir/lib/plymouth
 cp boot-duration %buildroot%_datadir/plymouth/default-boot-duration
-touch %buildroot%_localstatedir/lib/plymouth/{boot,shutdown}-duration
 cp shutdown-duration %buildroot%_datadir/plymouth/default-shutdown-duration
 cp install-duration %buildroot%_datadir/plymouth/default-install-duration
 touch %buildroot%_localstatedir/lib/plymouth/{boot,shutdown}-duration
@@ -396,6 +397,7 @@ fi \
 %_localstatedir/spool/plymouth
 %_mandir/man?/*
 %ghost %_localstatedir/lib/plymouth/boot-duration
+%ghost %_localstatedir/lib/plymouth/shutdown-duration
 %_unitdir/*
 
 %files devel
@@ -474,6 +476,9 @@ fi \
 %files system-theme
 
 %changelog
+* Wed Jan 23 2013 Alexey Shabalin <shaba@altlinux.ru> 0.8.8-alt1.git.b1140c
+- upstream git snapshot b1140c1936adfd074d2a4db886cb26129e14f3a7
+
 * Thu Sep 27 2012 Alexey Shabalin <shaba@altlinux.ru> 0.8.7-alt1
 - 0.8.7
 - disable libdrm_intel, libdrm_radeon too
