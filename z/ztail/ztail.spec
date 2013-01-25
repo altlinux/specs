@@ -7,11 +7,11 @@
 
 Name: ztail
 Version: 1.0.2
-Release: alt2
+Release: alt3
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
-URL: ???
+URL: http://hackage.haskell.org/package/ztail
 Source: %name-%version.tar
 Summary: Multi-file, colored, filtered log tailer.
 
@@ -40,6 +40,9 @@ runghc Setup copy --destdir=%buildroot
 %_bindir/ztail
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt3
+- fix Url tag
+
 * Tue Dec 25 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0.2-alt2
 - rebuild with ghc 7.6.1
 
