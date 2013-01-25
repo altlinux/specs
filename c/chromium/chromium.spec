@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
-%define v8_ver 3.13.7.5
-%define rev 171054
+%define v8_ver 3.15.11.10
+%define rev 177594
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        23.0.1271.97
+Version:        24.0.1312.56
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -78,6 +78,8 @@ Patch90:	gcc4.7.patch
 Patch91:	arm.patch
 
 # Patches from upstream
+# Fix build with PulseAudio 2.3 (see http://code.google.com/p/chromium/issues/detail?id=157876)
+Patch95:	chromium-pulse-audio-fix.patch
 
 %add_findreq_skiplist %_libdir/%name/xdg-settings
 %add_findreq_skiplist %_libdir/%name/xdg-mime
@@ -222,13 +224,15 @@ to Gnome's Keyring.
 %patch80 -p1
 %patch81 -p1
 %patch82 -p1
-%patch84 -p1
+#%%patch84 -p1
 %patch85 -p1
 %patch86 -p1
 %patch87 -p1
 %patch88 -p1
 %patch90 -p1
 %patch91 -p1
+
+%patch95 -p2
 
 # Replace anywhere v8 to system package
 subst 's,v8/tools/gyp/v8.gyp,build/linux/system.gyp,' `find . -type f -a -name *.gyp*`
@@ -435,6 +439,41 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Wed Jan 23 2013 Andrey Cherepanov <cas@altlinux.org> 24.0.1312.56-alt1.r177594
+- New version 24.0.1312.56
+- Security fixes:
+  - High CVE-2013-0839: Use-after-free in canvas font handling.
+  - Medium CVE-2013-0840: Missing URL validation when opening new windows.
+  - High CVE-2013-0841: Unchecked array index in content blocking.
+  - Medium CVE-2013-0842: Problems with NULL characters embedded in paths.
+
+* Mon Jan 14 2013 Andrey Cherepanov <cas@altlinux.org> 24.0.1312.52-alt1.r175374
+- New version 24.0.1312.52
+- Security fixes:
+  - High CVE-2012-5145: Use-after-free in SVG layout.
+  - High CVE-2012-5146: Same origin policy bypass with malformed URL.
+  - High CVE-2012-5147: Use-after-free in DOM handling.
+  - Medium CVE-2012-5148: Missing filename sanitization in hyphenation support.
+  - High CVE-2012-5149: Integer overflow in audio IPC handling.
+  - High CVE-2012-5150: Use-after-free when seeking video.
+  - High CVE-2012-5151: Integer overflow in PDF JavaScript.
+  - Medium CVE-2012-5152: Out-of-bounds read when seeking video.
+  - High CVE-2012-5156: Use-after-free in PDF fields.
+  - Medium CVE-2012-5157: Out-of-bounds reads in PDF image handling.
+  - High CVE-2013-0828: Bad cast in PDF root handling.
+  - High CVE-2013-0829: Corruption of database metadata leading to incorrect file access.
+  - Low CVE-2013-0831: Possible path traversal from extension process.
+  - Medium CVE-2013-0832: Use-after-free with printing.
+  - Medium CVE-2013-0833: Out-of-bounds read with printing.
+  - Medium CVE-2013-0834: Out-of-bounds read with glyph handling.
+  - Low CVE-2013-0835: Browser crash with geolocation.
+  - Medium CVE-2013-0837: Crash in extension tab handling.
+  - Low CVE-2013-0838: Tighten permissions on shared memory segments.
+- Fixes:
+  - Add new option CHROMIUM_ULIMIT in /etc/chromium/default for increase
+    for example maximum number of open file descriptors ("-n 1024"
+    is recommended for many opened tabs) if needed.
+
 * Wed Dec 12 2012 Andrey Cherepanov <cas@altlinux.org> 23.0.1271.97-alt1.r171054
 - New version 23.0.1271.97
 - Security fixes:

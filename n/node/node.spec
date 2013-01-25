@@ -1,7 +1,7 @@
 %define node_name      node
-%define node_version  0.8.14
-%define node_release   alt1
-%define npmver 1.1.65
+%define node_version  0.8.18
+%define node_release   alt1.1
+%define npmver 1.2.2
 
 Name: %node_name
 Version: %node_version
@@ -48,13 +48,14 @@ Requires:	%node_name = %node_version gcc-c++ gyp
 Node.js header and build tools
 
 %package -n npm
-Version: %npmver
-Group: Development/Tools
-Summary: A package manager for node
-License: MIT License
-Requires: node
-BuildArch: noarch
-Requires: %node_name-devel = %node_version
+Version: 	%npmver
+Group:		Development/Tools
+Summary:	A package manager for node
+License:	MIT License
+Requires:	node
+BuildArch:	noarch
+Requires:	%node_name-devel = %node_version-%node_release
+Requires:	%node_name = %node_version-%node_release
 
 %description -n npm
 npm is a package manager for node. You can use it to install and publish your
@@ -72,7 +73,7 @@ node programs. It manages dependencies and does other cool stuff.
     --openssl-includes=%_includedir \
     --openssl-use-sys
 
-%make_build
+%make_build CXXFLAGS="%{optflags}" CFLAGS="%{optflags}"
 %make doc
 %make jslint
 
@@ -113,6 +114,15 @@ subst 's,@node_release@,%node_release,'     %buildroot%_rpmmacrosdir/%node_name
 %_rpmmacrosdir/%node_name
 
 %changelog
+* Fri Jan 25 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.8.18-alt1.1
+- Fix spec
+  + non-strict dependency on node
+  + added %optflags on build
+
+* Sun Jan 20 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.8.18-alt1
+- 0.8.18
+- npm 1.2.2
+
 * Sat Oct 27 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.8.14-alt1
 - v0.8.14
 - npm v1.1.65
