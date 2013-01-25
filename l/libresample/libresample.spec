@@ -1,6 +1,6 @@
 Name: libresample
 Version: 0.1.3
-Release: alt4
+Release: alt5
 Summary: real-time resampling library
 Group: Development/C
 License: LGPL
@@ -17,6 +17,8 @@ BuildRequires: libsamplerate-devel libsndfile-devel
 %package devel
 Summary: %summary
 Group: %group
+
+Requires: %name = %version-%release
 
 %description devel
 %summary
@@ -47,6 +49,9 @@ the LGPL resample-1.7 library by Julius Smith as a basis.
 %_libdir/libresample.so
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.3-alt5
+- fix libresample-devel: non-strict dependency on libresample
+
 * Wed May 25 2011 Denis Smirnov <mithraen@altlinux.ru> 0.1.3-alt4
 - rebuild
 
