@@ -2,7 +2,7 @@ Name: appliance-devel-rpm-build
 Summary: Virtual package that require all rpm-build-* packages
 BuildArch: noarch
 Version: 4.0.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/Other
 
@@ -33,7 +33,6 @@ Requires: rpm-build-python-tools
 Requires: rpm-build-rpm-eval
 Requires: rpm-build-ruby
 Requires: rpm-build-sawfish
-Requires: rpm-build-seamonkey
 Requires: rpm-build-sunbird
 Requires: rpm-build-texmf
 Requires: rpm-build-thunderbird
@@ -49,6 +48,9 @@ Requires: rpm-build-xscreensaver
 %files
 
 %changelog
+* Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt2
+- remove requires to rpm-build-seamonkey
+
 * Sun May 06 2012 Denis Smirnov <mithraen@altlinux.ru> 4.0.1-alt1
 - initial build for ALT Linux Sisyphus
 
