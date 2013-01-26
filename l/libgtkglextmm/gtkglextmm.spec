@@ -11,7 +11,7 @@ BuildRequires: chrpath
 Summary: C++ wrapper for GtkGlExt
 Name: libgtkglextmm
 Version: 1.2.0
-Release: alt1_15
+Release: alt2_15
 License: LGPLv2+
 Group: System/Libraries
 URL: http://gtkglext.sourceforge.net
@@ -33,7 +33,7 @@ gtkglextmm is a C++ wrapper for GtkGlExt, an OpenGL extension to GTK+.
 Summary: Development tools for gtkglextmm
 Group: Development/C
 
-Requires: %{name} = %{version}
+Requires: %{name} = %{?serial:%serial:}%{version}-%{release}
 Provides: gtkglextmm-devel = %{version}-%{release}
 
 %description devel
@@ -72,6 +72,9 @@ done
 %doc %{_datadir}/doc/%{oldname}-%{gtkglextmm_major}/html/
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt2_15
+- applied repocop patches
+
 * Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.0-alt1_15
 - initial fc import
 
