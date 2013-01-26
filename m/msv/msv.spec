@@ -3,7 +3,7 @@ BuildRequires: jpackage-compat
 Name:          msv
 Epoch:         1
 Version:       2009.1
-Release:       alt1_12jpp7
+Release:       alt2_12jpp7
 Summary:       Multi-Schema Validator
 Group:         Development/Java
 License:       BSD
@@ -75,7 +75,7 @@ Requires:      isorelax
 Requires:      relaxngDatatype
 Requires:      xalan-j2
 Requires:      xerces-j2
-Requires:      msv-msv
+Requires:      msv-msv = %{?epoch:%epoch:}%{version}-%{release}
 Requires:      msv-xsdlib
 
 %description   relames
@@ -88,7 +88,7 @@ Requires:      jpackage-utils
 Requires:      isorelax
 Requires:      relaxngDatatype
 Requires:      xerces-j2
-Requires:      msv-msv
+Requires:      msv-msv = %{?epoch:%epoch:}%{version}-%{release}
 Requires:      msv-xsdlib
 
 %description   rngconv
@@ -101,7 +101,7 @@ Requires:      jpackage-utils
 Requires:      isorelax
 Requires:      relaxngDatatype
 Requires:      xerces-j2
-Requires:      msv-msv
+Requires:      msv-msv = %{?epoch:%epoch:}%{version}-%{release}
 Requires:      msv-xsdlib
 
 %description    xmlgen
@@ -333,6 +333,9 @@ ln -s msv-core.jar %buildroot%_javadir/msv.jar
 %{_datadir}/%{name}-%{version}
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1:2009.1-alt2_12jpp7
+- applied repocop patches
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 1:2009.1-alt1_12jpp7
 - new version
 
