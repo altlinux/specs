@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/doxygen /usr/bin/pkg-config /usr/bin/valgrind
 %add_optflags %optflags_shared
 Name:           libfishsound
 Version:        1.0.0
-Release:        alt2_5.1
+Release:        alt3_5.1
 Summary:        Simple programming interface for Xiph.Org codecs
 
 Group:          System/Libraries
@@ -42,6 +42,7 @@ Summary:        Documentation for %{name}
 Group:          Documentation
 # note: intentionally not noarch; contains a target-specific Makefile
 Requires:       libfishsound = %{version}-%{release}
+BuildArch: noarch
 
 %description    doc
 The %{name}-doc package contains the documentation for %{name}.
@@ -107,6 +108,9 @@ mv src/examples .
 
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_5.1
+- applied repocop patches
+
 * Sun Sep 09 2012 Fr. Br. George <george@altlinux.ru> 1.0.0-alt2_5.1
 - Rebuild with liboggz 1.1.1
 
