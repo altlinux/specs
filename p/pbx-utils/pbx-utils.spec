@@ -1,10 +1,10 @@
 Name: pbx-utils
 Summary: Useful utilites for Asterisk and CallWeaver
-Version: 0.0.12
-Release: alt5
+Version: 0.0.13
+Release: alt1
 License: GPL
 Group: System/Servers
-BuildRequires: asterisk1.6.2-devel libmhash-devel libnewt-devel libpopt-devel
+BuildRequires: asterisk1.6.2-devel libdb1-devel libmhash-devel libnewt-devel libpopt-devel libsqlite3-devel libtonezone-dahdi-devel
 BuildPreReq: dahdi-linux-headers libtonezone-dahdi-devel
 %define ast_ver %{get_version asterisk1.6.2-devel}
 Url: http://sisyphus.ru/ru/srpm/Sisyphus/pbx-utils
@@ -27,6 +27,13 @@ Group: %group
 
 %description -n pbx-astcanary
 Mute daemon for Asterisk
+
+%package -n pbx-astdb
+Summary: Utilites for convert bdb<->sqlite3 astdb format
+Group: %group
+
+%description -n pbx-astdb
+Utilites for convert bdb<->sqlite3 astdb format
 
 %package -n pbx-astman
 Summary: Text mode manager for Asterisk
@@ -96,8 +103,14 @@ serviced, even if Asterisk is not currently using the source.
 %package all
 Summary: This virtual package requires all pbx-utils subpackages
 Group: System/Servers
-Requires: pbx-astman pbx-muted pbx-rawplayer pbx-smsq pbx-stereorize pbx-streamplayer zones2indications
-Requires: pbx-astcanary
+Requires: pbx-astman = %version-%release
+Requires: pbx-muted = %version-%release
+Requires: pbx-rawplayer = %version-%release
+Requires: pbx-smsq = %version-%release
+Requires: pbx-stereorize = %version-%release
+Requires: pbx-streamplayer = %version-%release
+Requires: zones2indications = %version-%release
+Requires: pbx-astcanary = %version-%release
 
 %description all
 This virtual package requires all pbx-utils subpackages
@@ -129,6 +142,10 @@ export CFLAGS=-I/usr/include/asterisk-%ast_ver
 %files -n pbx-astcanary
 %attr(0755,root,root) %_sbindir/astcanary
 
+%files -n pbx-astdb
+%attr(0755,root,root) %_sbindir/astdb2bdb
+%attr(0755,root,root) %_sbindir/astdb2sqlite3
+
 %files -n pbx-astman
 %attr(0755,root,root) %_sbindir/astman
 
@@ -154,6 +171,10 @@ export CFLAGS=-I/usr/include/asterisk-%ast_ver
 %attr(0755,root,root) %_sbindir/zones2indications
 
 %changelog
+* Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 0.0.13-alt1
+- add astdb2bdb and astdb2sqlite3 utilites
+- update other utilites
+
 * Wed Nov 17 2010 Denis Smirnov <mithraen@altlinux.ru> 0.0.12-alt5
 - add requires from pbx-agi-samples to asterisk-base
 
