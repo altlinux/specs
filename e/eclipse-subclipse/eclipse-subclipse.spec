@@ -13,7 +13,7 @@ BuildRequires: unzip
 
 Name:           eclipse-subclipse
 Version:        1.6.18
-Release:        alt2_1jpp6
+Release:        alt3_1jpp6
 Summary:        Subversion Eclipse plugin
 
 Group:          Development/Java
@@ -48,7 +48,7 @@ IDE.
 %package graph
 Summary:        Subversion Revision Graph
 Group:          Development/Java
-Requires:               %{name} = %{version}
+Requires:               %{name} = %{?serial:%serial:}%{version}-%{release}
 Requires:               eclipse-gef
 
 %description graph
@@ -116,6 +116,9 @@ ln -s %{_javadir}/svn-javahl.jar $installBase/subclipse-clientadapter-javahl/ecl
 
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.18-alt3_1jpp6
+- applied repocop patches
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.6.18-alt2_1jpp6
 - fixed build
 
