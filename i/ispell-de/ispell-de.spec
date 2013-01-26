@@ -6,14 +6,14 @@ Summary: German and Swiss dictionaries for ispell
 Name: ispell-%{languagecode}
 Epoch:1
 Version: 20090107
-Release: alt1
+Release: alt2
 
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 Url: http://j3e.de/ispell/igerman98/
 Source:	http://j3e.de/ispell/igerman98/dict/%name-%version.tar
 License: GPL2
-Group: System/Internationalization
+Group: Text tools
 
 # Can't be noarch due to the byte order
 #BuildArch: noarch
@@ -76,6 +76,9 @@ fi
 %_libdir/ispell/*
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1:20090107-alt2
+- applied repocop patches
+
 * Sun Apr 12 2009 Igor Vlasenko <viy@altlinux.ru> 1:20090107-alt1
 - new version; built as a separate package now
 
