@@ -8,7 +8,7 @@ BuildRequires: perl(IO/Socket.pm) perl(Time/HiRes.pm)
 
 Name:           cave9
 Version:        0.4
-Release:        alt2_4
+Release:        alt3_4
 Summary:        3d game of cave exploration
 
 Group:          Games/Other
@@ -19,7 +19,7 @@ Source1:        http://cave9.googlecode.com/files/cave9_data-4.tgz
 Source2:        cave9.desktop
 
 BuildRequires:  libSDL_image-devel libSDL_net-devel libSDL_ttf-devel libGL-devel desktop-file-utils fontpackages-devel
-Requires:       fonts-ttf-cave9-mutante
+Requires:       fonts-ttf-cave9-mutante = %{?serial:%serial:}%{version}-%{release}
 Source44: import.info
 Patch33: cave9-0.4-alt-as-needed.patch
 
@@ -119,6 +119,9 @@ fi
 %{_datadir}/applications/cave9.desktop
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_4
+- applied repocop patches
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt2_4
 - update to new release by fcimport
 
