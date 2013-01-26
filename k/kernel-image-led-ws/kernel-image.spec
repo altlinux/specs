@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.60
-Release: alt2
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -299,7 +299,7 @@ Patch0252: linux-%kernel_branch.56-fix-drivers-hid--hid-microsoft.patch
 Patch0253: linux-%kernel_branch.56-fix-drivers-hid--hid-uclogic.patch
 Patch0254: linux-%kernel_branch.42-fix-drivers-hid--usbhid.patch
 
-Patch0260: linux-%kernel_branch.49-fix-drivers-hv.patch
+Patch0260: linux-%kernel_branch.58-fix-drivers-hv.patch
 
 Patch0271: linux-%kernel_branch.43-fix-drivers-hwmon--abituguru.patch
 Patch0272: linux-%kernel_branch.43-fix-drivers-hwmon--applesmc.patch
@@ -378,7 +378,7 @@ Patch0431: linux-%kernel_branch.46-fix-drivers-net--cxgb3.patch
 Patch0432: linux-%kernel_branch.42-fix-drivers-net--depca.patch
 Patch0433: linux-%kernel_branch.42-fix-drivers-net--dl2k.patch
 Patch0434: linux-%kernel_branch.42-fix-drivers-net--e1000.patch
-Patch0435: linux-%kernel_branch.53-fix-drivers-net--e1000e.patch
+Patch0435: linux-%kernel_branch.58-fix-drivers-net--e1000e.patch
 Patch0436: linux-%kernel_branch.42-fix-drivers-net--ehea.patch
 Patch0437: linux-%kernel_branch.42-fix-drivers-net--hp100.patch
 Patch0438: linux-%kernel_branch.42-fix-drivers-net--ibmveth.patch
@@ -577,8 +577,8 @@ Patch0739: linux-%kernel_branch.44-fix-kernel-time.patch
 Patch0740: linux-%kernel_branch.57-fix-lib.patch
 Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
-Patch0750: linux-%kernel_branch.57-fix-mm.patch
-Patch0751: linux-%kernel_branch.42-fix-mm--compaction.patch
+Patch0750: linux-%kernel_branch.58-fix-mm.patch
+Patch0751: linux-%kernel_branch.58-fix-mm--compaction.patch
 Patch0752: linux-%kernel_branch.59-fix-mm--huge_memory.patch
 Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
 Patch0754: linux-%kernel_branch.44-fix-mm--memcontrol.patch
@@ -647,7 +647,7 @@ Patch0838: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 Patch0841: linux-%kernel_branch.49-fix-tools--perf.patch
 Patch0842: linux-%kernel_branch.47-fix-tools-firewire--nosy-dump.patch
 
-Patch0851: linux-%kernel_branch.50-fix-virt-kvm.patch
+Patch0851: linux-%kernel_branch.58-fix-virt-kvm.patch
 Patch0852: linux-%kernel_branch.43-fix-virt-kvm--kvm-amd.patch
 Patch0853: linux-%kernel_branch.43-fix-virt-kvm--kvm-intel.patch
 
@@ -1346,26 +1346,10 @@ This package contains performance analysis tools for Linux
 %endif
 
 
-%package -n kernel-headers-asm-%flavour-%kernel_branch
-Summary: Header files (asm part) for the Linux kernel
-Group: Development/Kernel
-Requires: kernel-headers-%flavour-%kernel_branch = %version-%release
-Provides: kernel-headers-asm = %version
-%{?base_flavour:Provides: kernel-headers-asm-%base_flavour = %version}
-Provides: kernel-headers-asm-%flavour = %version-%release
-Provides: %kheaders_dir/include/asm
-AutoProv: no
-
-%description -n kernel-headers-asm-%flavour-%kernel_branch
-This package contains arch depended part (asm) of Linux kernel headers.
-
-
 %package -n kernel-headers-%flavour-%kernel_branch
 Summary: Header files for the Linux kernel
 Group: Development/Kernel
-BuildArch: noarch
 Requires: kernel-headers-common >= 1.1.5
-Requires: kernel-headers-asm-%flavour-%kernel_branch = %version-%release
 Provides: kernel-headers = %version
 %{?base_flavour:Provides: kernel-headers-%base_flavour = %version}
 Provides: kernel-headers-%flavour = %version-%release
@@ -2884,7 +2868,6 @@ done)
 
 %files -n kernel-headers-%flavour-%kernel_branch
 %kheaders_dir
-%exclude %kheaders_dir/include/asm
 
 
 %{?_enable_ide:%kernel_modules_package_files ide}
@@ -2975,10 +2958,6 @@ done)
 %endif
 
 
-%files -n kernel-headers-asm-%flavour-%kernel_branch
-%kheaders_dir/include/asm
-
-
 %files -n kernel-headers-modules-%flavour-%kernel_branch
 %kbuild_dir
 %old_kbuild_dir
@@ -3013,6 +2992,24 @@ done)
 
 
 %changelog
+* Sat Jan 26 2013 Led <led@altlinux.ru> 3.0.60-alt5
+- updated:
+  + fix-drivers-net--e1000e
+- merged kernel-headers-asm-* to kernel-headers-* subpackage
+- set kernel-headers-* as no noarch
+
+* Fri Jan 25 2013 Led <led@altlinux.ru> 3.0.60-alt4
+- updated:
+  + fix-mm
+  + fix-mm--compaction
+  + fix-mm--zcache
+  + fix-virt-kvm
+
+* Fri Jan 25 2013 Led <led@altlinux.ru> 3.0.60-alt3
+- updated:
+  + fix-drivers-hv
+  + fix-fs-btrfs
+
 * Thu Jan 24 2013 Led <led@altlinux.ru> 3.0.60-alt2
 - updated:
   + fix-drivers-cio
