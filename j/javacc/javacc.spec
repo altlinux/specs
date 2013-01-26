@@ -32,7 +32,7 @@ BuildRequires: jpackage-compat
 
 Name:           javacc
 Version:        5.0
-Release:        alt3_7jpp7
+Release:        alt4_7jpp7
 Epoch:          0
 Summary:        A parser/scanner generator for java
 License:        BSD
@@ -62,7 +62,7 @@ a tool called JJTree included with JavaCC), actions, debugging, etc.
 %package manual
 Summary:        Manual for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch: noarch
 
 %description manual
@@ -71,7 +71,7 @@ Manual for %{name}.
 %package demo
 Summary:        Examples for %{name}
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description demo
 Examples for %{name}.
@@ -126,6 +126,9 @@ ln -s javacc.sh %buildroot%_bindir/%name
 %doc examples
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt4_7jpp7
+- applied repocop patches
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:5.0-alt3_7jpp7
 - new fc release
 
