@@ -3,12 +3,12 @@
 %define lang_ver 20040515
 Name: aspell-de
 Version: %aspell_ver
-Release: alt2
+Release: alt3
 
 Packager: Igor Vlasenko <viy@altlinux.org>
 Summary: GNU Aspell Word List Package  for German.
 License: GPL
-Group: System/Internationalization
+Group: Text tools
 
 Url: http://aspell.net/
 
@@ -27,7 +27,7 @@ This is the Aspell word list for German.
 %setup -q -n aspell-lang
 tar -j -p -xf %SOURCE2
 
-%__cat >create_list <<EOF
+cat >create_list <<EOF
  #!/bin/sh
 export LANG=C; cat wordlist.txt | sort -u | word-list-compress c > de.cwl 
 ./proc
@@ -49,6 +49,9 @@ chmod 700 create_list
 %_datadir/*
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.60-alt3
+- applied repocop patches
+
 * Thu Aug 06 2009 Igor Vlasenko <viy@altlinux.ru> 0.60-alt2
 - rebuild
 
