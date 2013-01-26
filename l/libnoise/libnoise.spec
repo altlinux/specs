@@ -5,7 +5,7 @@ BuildRequires: unzip
 %add_optflags %optflags_shared
 Name:           libnoise
 Version:        1.0.0
-Release:        alt3_6
+Release:        alt4_6
 Summary:        A general-purpose library that generates three-dimensional coherent noise
 
 Group:          System/Libraries
@@ -43,6 +43,7 @@ developing applications that use %{name}.
 Summary:        Documentation for %{name}
 Group:          Development/C
 Requires:       %{name} = %{version}-%{release}
+BuildArch: noarch
 
 
 %description    doc
@@ -120,6 +121,9 @@ ln -sf libnoise.so.0.3 $RPM_BUILD_ROOT/%{_libdir}/libnoise.so.0
 
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt4_6
+- applied repocop patches
+
 * Wed Jun 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt3_6
 - fixed build
 
