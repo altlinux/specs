@@ -2,11 +2,11 @@ Summary: Belarusian dictionary for of ispell
 
 Name: ispell-be
 Version: 0.2
-Release: alt1
+Release: alt2
 
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
-Group: System/Internationalization
+Group: Text tools
 Source: http://www.mova.org/bellinux/ispell-be-0.2.tar.gz
 URL: http://mova.linux.by/
 License: GPL
@@ -38,6 +38,9 @@ cp -avf belarusian.hash $RPM_BUILD_ROOT%_libdir/ispell/belarusian.hash
 %_libdir/ispell/*
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2
+- applied repocop patches
+
 * Mon Apr 14 2008 Igor Vlasenko <viy@altlinux.ru> 0.2-alt1
 - new version
 
