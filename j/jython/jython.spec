@@ -18,7 +18,7 @@ BuildRequires: jpackage-compat
 
 Name:                      jython
 Version:                   2.2.1
-Release:                   alt5_10jpp7
+Release:                   alt6_10jpp7
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -89,7 +89,7 @@ Usage documentation for %{name}.
 
 %package demo
 Summary:           Demo for %{name}
-Requires:          jython = %{version}-%{release}
+Requires:          jython = %{?epoch:%epoch:}%{version}-%{release}
 Group:             Development/Java
 AutoReq: yes, nopython
 #AutoProv: yes, nopython
@@ -300,6 +300,9 @@ fi || :
 %doc %{_datadir}/%{name}/Demo
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt6_10jpp7
+- applied repocop patches
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt5_10jpp7
 - update to new release by jppimport
 
