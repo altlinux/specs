@@ -12,7 +12,7 @@ portability across platforms.
 
 Name:           fonts-ttf-google-croscore
 Version:        1.23.0
-Release:        alt1_1
+Release:        alt2_1
 Summary:        The width-compatible fonts for improved on-screen readability
 
 Group:          Graphical desktop/Other
@@ -40,7 +40,7 @@ Source44: import.info
 
 
 %package common
-Group: Graphical desktop/Other
+Group: System/Fonts/True type
 Summary:        Common files of %{oldname}
 
 %description common
@@ -48,7 +48,7 @@ This package consists of files used by other %%{oldname} packages.
 
 # Repeat for every font family
 %package -n fonts-ttf-google-croscore-arimo
-Group: Graphical desktop/Other
+Group: System/Fonts/True type
 Summary:       The croscore Arimo family fonts 
 Requires:       %{name}-common = %{version}-%{release}
 
@@ -66,7 +66,7 @@ address document portability across platforms.
 %{_fontbasedir}/*/%{_fontstem}/Arimo*.ttf
 
 %package -n fonts-ttf-google-croscore-cousine
-Group: Graphical desktop/Other
+Group: System/Fonts/True type
 Summary:       The croscore Cousine family fonts
 Requires:       %{name}-common = %{version}-%{release}
 
@@ -84,7 +84,7 @@ address document portability across platforms.
 %{_fontbasedir}/*/%{_fontstem}/Cousine*.ttf
 
 %package -n fonts-ttf-google-croscore-tinos
-Group: Graphical desktop/Other
+Group: System/Fonts/True type
 Summary:       The croscore Tinos family fonts
 Requires:       %{name}-common = %{version}-%{release}
 
@@ -102,7 +102,7 @@ address document portability across platforms.
 %{_fontbasedir}/*/%{_fontstem}/Tinos*.ttf
 
 %package -n fonts-ttf-google-croscore-symbolneu
-Group: Graphical desktop/Other
+Group: System/Fonts/True type
 Summary:       The croscore Symbol Neu family fonts
 Requires:       %{name}-common = %{version}-%{release}
 
@@ -193,6 +193,9 @@ fi
 
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt2_1
+- applied repocop patches
+
 * Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.23.0-alt1_1
 - update to new release by fcimport
 
