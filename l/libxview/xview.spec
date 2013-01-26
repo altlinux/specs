@@ -5,7 +5,7 @@
 
 Name: lib%origname
 Version: 3.2p1.4
-Release: alt7.qa1
+Release: alt8.qa1
 
 Summary: XView libraries for X11
 License: Distributable
@@ -55,7 +55,7 @@ a good candidate for old hardware.
 %package devel
 Summary: Header files for XView development
 Group: Development/C
-Requires: %name = %version
+Requires: %name = %{?serial:%serial:}%{version}-%{release}
 
 %description devel
 All the files needed to develop applications that, using the XView
@@ -98,15 +98,15 @@ sed -e 's/MSG_UTIL = xgettext msgfmt/#MSG_UTIL = xgettext msgfmt/' \
 subst s,__linux__,__old_linux__,g lib/libxview/file_chooser/file_list.c
 
 %build
-%__rm -f make
+rm -f make
 # Create the makefile
 export IMAKEINCLUDE="-I"`pwd`"/config -I%_datadir/X11/config"
 cd config
 imake -DUseInstalled 
 cd ..
 xmkmf -a
-%__make \
-	CC=%__cc \
+make \
+	CC=gcc \
 	CCOPTIONS="%optflags"
 
 #export OPENWINHOME="/usr"
@@ -117,17 +117,17 @@ xmkmf -a
 #bash Build-LinuxXView.bash olvwm
 
 %install
-%__install -d %buildroot{%_libdir,%_man7dir,%_includedir}
+install -d %buildroot{%_libdir,%_man7dir,%_includedir}
 
 for name in olgx xview; do
-	%__cp lib/lib$name/lib$name.a %buildroot%_libdir
-	%__cp -d lib/lib$name/lib$name.so.* %buildroot%_libdir
+	cp lib/lib$name/lib$name.a %buildroot%_libdir
+	cp -d lib/lib$name/lib$name.so.* %buildroot%_libdir
 done
 
-%__install xview.man %buildroot%_mandir/man7/xview.7
+install xview.man %buildroot%_mandir/man7/xview.7
 
 for dir in olgx olgx_private xview xview_private pixrect; do
-	%__cp -aL build/include/$dir %buildroot%_includedir
+	cp -aL build/include/$dir %buildroot%_includedir
 done
 
 ln -sf libolgx.so.3.2.4 %buildroot%_libdir/libolgx.so.3
@@ -161,6 +161,9 @@ ln -sf libxview.so.3.2.4 %buildroot%_libdir/libxview.so
 %endif
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt8.qa1
+- applied repocop patches
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 3.2p1.4-alt7.qa1
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@
