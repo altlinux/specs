@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.62
+Release: alt100.63
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,15 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Sat Jan 26 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.63
+- build:
+  - Fixed Epoch handling for deps whose senses are identical.
+  - Enhanced interdep to add strict interpackage requirements
+    and missing Epochs automatically when appropriate.
+  - Lowered "non-strict dependency" and "dependency needs Epoch"
+    errors back to warnings bacause of the change listed above.
+  - Removed no longer needed %%_allowed_nonstrict_interdeps support.
+
 * Fri Jan 25 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.62
 - platform.in: added %%EVR macro for use in inter-package dependencies.
 - build: upgraded "dependency needs Epoch" warning to error.
