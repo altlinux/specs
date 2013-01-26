@@ -3,10 +3,10 @@
 %global fontconf   67-%{fontname}.conf 
 Name:		fonts-ttf-nafees-pakistani-web-naskh
 Version:	2.0
-Release:	alt1_4
+Release:	alt2_4
 Summary:	Nafees pakistani web naskh font for writing Urdu 
 
-Group:		Graphical desktop/Other
+Group:		System/Fonts/True type
 License:	Bitstream Vera
 URL:		http://www.crulp.org/index.htm
 Source0:	http://www.crulp.org/Downloads/NafeesPakistaniWebNaskh(BTK2.0).ttf
@@ -89,6 +89,9 @@ fi
 
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt2_4
+- applied repocop patches
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_4
 - update to new release by fcimport
 
