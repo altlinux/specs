@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/glib-gettextize pkgconfig(glib-2.0) pkgconfig(gobject-2.
 
 Name:          fvkbd
 Version:       0.2.2
-Release:       alt2_6
+Release:       alt3_6
 Summary:       Free Virtual Keyboard
 
 Group:         System/Libraries
@@ -70,6 +70,9 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/fvkbd-gtk.desktop
 find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 %find_lang %{name}
+desktop-file-install --dir %buildroot%_desktopdir \
+	--add-category=Accessibility \
+	%buildroot%_desktopdir/fvkbd-gtk.desktop
 
 %files -f %{name}.lang
 %doc COPYING AUTHORS
@@ -85,6 +88,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/libfvkbd-gtk-0.2.so
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt3_6
+- applied repocop patches
+
 * Fri Dec 28 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_6
 - restored in Sisyphus as fc import
 
