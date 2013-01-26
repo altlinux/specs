@@ -1,6 +1,6 @@
 Name: gnotime
 Version: 2.3.0
-Release: alt7.20111130
+Release: alt8.20121130
 Summary: Tracks and reports time spent
 
 Group: Office
@@ -14,7 +14,7 @@ Packager: Sergey Kurakin <kurakin@altlinux.org>
 
 BuildPreReq: rpm-build-xdg
 
-BuildRequires: ImageMagick-tools gcc-c++ guile18-devel intltool libXScrnSaver-devel libdbus-glib-devel libglade-devel libgnomeui-devel libgtkhtml3-devel libqof-devel librarian libxml2-devel
+BuildRequires: ImageMagick-tools gcc-c++ libguile20-devel intltool libXScrnSaver-devel libdbus-glib-devel libglade-devel libgnomeui-devel libgtkhtml3-devel libqof-devel librarian libxml2-devel
 
 %description
 The Gnome Time Tracker is a to-do list/diary/journal tool that can track
@@ -82,6 +82,9 @@ fi
 %_xdgmenusdir/applications-merged/%name.menu
 
 %changelog
+* Sat Jan 26 2013 Sergey Kurakin <kurakin@altlinux.org> 2.3.0-alt8.20121130
+- git snapshot 20121130: many fixes
+
 * Thu May 31 2012 Sergey Kurakin <kurakin@altlinux.org> 2.3.0-alt7.20111130
 - git snapshot 20111130: build fixed
 
