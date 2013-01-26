@@ -14,7 +14,7 @@ publisher is NHN Corporation.
 
 Name:		fonts-ttf-nhn-nanum
 Version:	3.020
-Release:	alt4_7
+Release:	alt5_7
 Summary:	Nanum family of Korean TrueType fonts
 
 Group:		System/Fonts/True type
@@ -39,7 +39,7 @@ Source44: import.info
 
 %package common
 Summary:   Common files of %{oldname}
-Group:	   Graphical desktop/Other
+Group:	   System/Fonts/True type
 
 %description common
 %common_desc
@@ -189,6 +189,9 @@ fi
 
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 3.020-alt5_7
+- applied repocop patches
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 3.020-alt4_7
 - update to new release by fcimport
 
