@@ -86,7 +86,7 @@ Summary:        Geronimo J2EE server J2EE specifications
 URL:            http://geronimo.apache.org/
 Name:           geronimo-specs
 Version:        1.2
-Release:        alt9_16jpp6
+Release:        alt10_16jpp6
 Epoch:          0
 License:        ASL 2.0
 Group:          Development/Java
@@ -193,41 +193,41 @@ Requires(postun): jpackage-utils
 Requires:       jpackage-utils
 # The main package has links to all specs, so it requires all subpackages
 # except j2ee-schema (not linked) and javadocs
-Requires:       geronimo-commonj-1.1-apis = %{version}-%{release}
-Requires:       geronimo-jaf-1.0.2-api = %{version}-%{release}
-Requires:       geronimo-jaf-1.1-api = %{version}-%{release}
-Requires:       geronimo-annotation-1.0-api = %{version}-%{release}
-Requires:       geronimo-corba-1.0-apis = %{version}-%{release}
-Requires:       geronimo-corba-2.3-apis = %{version}-%{release}
-Requires:       geronimo-corba-3.0-apis = %{version}-%{release}
-Requires:       geronimo-ejb-2.1-api = %{version}-%{release}
-Requires:       geronimo-ejb-3.0-api = %{version}-%{release}
-Requires:       geronimo-el-1.0-api = %{version}-%{release}
-Requires:       geronimo-interceptor-3.0-api = %{version}-%{release}
-Requires:       geronimo-j2ee-1.4-apis = %{version}-%{release}
-Requires:       geronimo-j2ee-connector-1.5-api = %{version}-%{release}
-Requires:       geronimo-j2ee-deployment-1.1-api = %{version}-%{release}
-Requires:       geronimo-javaee-deployment-1.1-api = %{version}-%{release}
-Requires:       geronimo-jacc-1.0-api = %{version}-%{release}
-Requires:       geronimo-jacc-1.1-api = %{version}-%{release}
-Requires:       geronimo-j2ee-management-1.0-api = %{version}-%{release}
-Requires:       geronimo-j2ee-management-1.1-api = %{version}-%{release}
-Requires:       geronimo-javamail-1.3.1-api = %{version}-%{release}
-Requires:       geronimo-javamail-1.4-api = %{version}-%{release}
-Requires:       geronimo-jaxr-1.0-api = %{version}-%{release}
-Requires:       geronimo-jaxrpc-1.1-api = %{version}-%{release}
-Requires:       geronimo-jms-1.1-api = %{version}-%{release}
-Requires:       geronimo-jpa-3.0-api = %{version}-%{release}
-Requires:       geronimo-jsp-2.0-api = %{version}-%{release}
-Requires:       geronimo-jsp-2.1-api = %{version}-%{release}
-Requires:       geronimo-jta-1.0.1B-api = %{version}-%{release}
-Requires:       geronimo-jta-1.1-api = %{version}-%{release}
-Requires:       geronimo-qname-1.1-api = %{version}-%{release}
-Requires:       geronimo-saaj-1.1-api = %{version}-%{release}
-Requires:       geronimo-servlet-2.4-api = %{version}-%{release}
-Requires:       geronimo-servlet-2.5-api = %{version}-%{release}
-Requires:       geronimo-stax-1.0-api = %{version}-%{release}
-Requires:       geronimo-ws-metadata-2.0-api = %{version}-%{release}
+Requires:       geronimo-commonj-1.1-apis = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jaf-1.0.2-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jaf-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-annotation-1.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-corba-1.0-apis = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-corba-2.3-apis = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-corba-3.0-apis = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-ejb-2.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-ejb-3.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-el-1.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-interceptor-3.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-j2ee-1.4-apis = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-j2ee-connector-1.5-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-j2ee-deployment-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-javaee-deployment-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jacc-1.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jacc-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-j2ee-management-1.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-j2ee-management-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-javamail-1.3.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-javamail-1.4-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jaxr-1.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jaxrpc-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jms-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jpa-3.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jsp-2.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jsp-2.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jta-1.0.1B-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-jta-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-qname-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-saaj-1.1-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-servlet-2.4-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-servlet-2.5-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-stax-1.0-api = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       geronimo-ws-metadata-2.0-api = %{?epoch:%epoch:}%{version}-%{release}
 BuildArch:      noarch
 Source44: import.info
 Patch33: geronimo-specs-1.2-pom_xml-alt-kill-parent.patch
@@ -2957,6 +2957,9 @@ ln -s %{_sysconfdir}/alternatives/jta %{_javadir}/jta.jar
 %{_mavendepmapfragdir}/geronimo-ws-metadata-2.0-api
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt10_16jpp6
+- applied repocop patches
+
 * Mon Aug 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt9_16jpp6
 - split off geronimo-parent-poms
 
