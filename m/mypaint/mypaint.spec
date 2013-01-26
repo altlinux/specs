@@ -1,20 +1,23 @@
 Name: mypaint
-Version: 1.0.0
-Release: alt2
+Version: 1.1.0
+Release: alt1
 
 Summary: A simple paint program
 Group: Graphics
 License: GPLv2+
-Url: http://mypaint.intilinux.com/
+Url: http://mypaint.info/
 
 Source: http://download.gna.org/%name/%name-%version.tar.bz2
-Source1: mypaint.desktop
 
 Requires: %name-data = %version-%release
 # python.req bug?
 Requires: python-module-protobuf python-modules-json
+# A cause to modify rpm-build-gir -- both Gtk+{2,3} gir-packages provide typelib(Gtk)
+Requires: libgtk+2-gir
 
-BuildRequires: gcc-c++ glib2-devel python-devel libnumpy-devel scons swig protobuf-compiler libpng-devel
+BuildRequires: gcc-c++ glib2-devel python-devel libnumpy-devel scons swig protobuf-compiler
+BuildRequires: libpng-devel libjson-devel python-modules-json liblcms2-devel libgtk+2-devel
+BuildRequires: python-module-pygobject-devel gobject-introspection-devel
 
 %description
 Mypaint is a fast and easy/simple painter program. It comes with a large
@@ -35,18 +38,34 @@ brushes and with not-quite-natural painting.
 
 This package contains the data files needed for the program.
 
+%package -n lib%name-devel-static
+Summary: Static mypaint brush library
+Group: Development/C
+
+%description -n lib%name-devel-static
+Mypaint is a fast and easy/simple painter program. It comes with a large
+brush collection including charcoal and ink to emulate real media, but the
+highly configurable brush engine allows you to experiment with your own
+brushes and with not-quite-natural painting.
+
+This package provides files needed for development applications statically linked
+with mypaint brush library.
+
 %add_python_lib_path %_datadir/%name
 
 %prep
 %setup -q
-subst 's@lib\/mypaint@%_lib\/mypaint@' SConstruct mypaint.py
+# fix libdir
+subst 's|lib\/mypaint|%_lib\/mypaint|' SConstruct SConscript mypaint.py
+subst 's|prefix\/lib|prefix\/%_lib|' brushlib/SConscript
+# fix pkgconfig-file by preventing substitution
+subst 's|@LIBDIR@|%_libdir|' brushlib/pkgconfig.pc.in
 
 %build
 scons
 
 %install
 scons prefix=%buildroot%_prefix install
-install -pD -m 644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 %find_lang %name
 
 %files -f %name.lang
@@ -59,7 +78,17 @@ install -pD -m 644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 %_iconsdir/hicolor/*/*/*
 %doc README changelog
 
+%if 0
+%files -n lib%name-devel-static
+%_libdir/lib%name.a
+%_includedir/lib%name/
+%_pkgconfigdir/lib%name.pc
+%endif
+
 %changelog
+* Fri Jan 25 2013 Yuri N. Sedunov <aris@altlinux.org> 1.1.0-alt1
+- 1.1.0
+
 * Sun Apr 15 2012 Yuri N. Sedunov <aris@altlinux.org> 1.0.0-alt2
 - rebuilt to remove libpython2.7 dependency
 
