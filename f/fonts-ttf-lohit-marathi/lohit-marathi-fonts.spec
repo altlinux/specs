@@ -8,10 +8,10 @@ BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-de
 
 Name:           fonts-ttf-lohit-marathi
 Version:        2.5.2
-Release:        alt1_1
+Release:        alt2_1
 Summary:        Free Marathi font
 
-Group:          Graphical desktop/Other
+Group:          System/Fonts/True type
 License:        OFL
 URL:            https://fedorahosted.org/lohit/
 Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
@@ -86,6 +86,9 @@ fi
 %doc ChangeLog OFL.txt COPYRIGHT AUTHORS README ChangeLog.old
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt2_1
+- applied repocop patches
+
 * Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_1
 - update to new release by fcimport
 
