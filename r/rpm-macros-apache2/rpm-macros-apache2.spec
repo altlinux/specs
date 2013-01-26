@@ -12,7 +12,7 @@
 %def_enable apache_ru_compat
 
 Name: rpm-macros-%macrosname
-Version: 3.10
+Version: 3.11
 Release: %branch_release alt1
 
 Summary: RPM macros to Apache2 Web server
@@ -81,6 +81,20 @@ find %buildroot%rpm_masrosdir/ -type f -print0 \
 %rpm_masrosdir/%name-compat
 
 %changelog
+* Sat Jan 26 2013 Aleksey Avdeev <solo@altlinux.ru> 3.11-alt1
+- Fix macros %%apache2_libssl_soname
+- Add new macros:
+  + %%apache2_ssldir
+  + %%apache2_sslcertsdir
+  + %%apache2_sslkeysdir
+  + %%apache2_sslcertname
+  + %%apache2_sslcertext
+  + %%apache2_sslcertificatefile
+  + %%apache2_sslcertificatekeyfile
+  + %%apache2_sslrootcertfilename
+  + %%apache2_sslcertsh
+  + %%apache2_sslcertshfunctions
+
 * Fri Jan 11 2013 Aleksey Avdeev <solo@altlinux.ru> 3.10-alt1
 - Add new macros %%post_apache2_rpmrenamevarinconfig
 
