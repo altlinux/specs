@@ -1,7 +1,7 @@
 %define origname libopenh323
 Name: libopenh323_1.19
 Version: 1.19.0.1
-Release: alt8
+Release: alt9
 
 Summary: OpenH323 Library
 
@@ -41,7 +41,7 @@ communications over packet based networks.
 Summary: OpenH323 development files
 Summary(ru_RU.KOI8-R):	Файлы для разработки с OpenH323
 Group: Development/C
-Requires: %name = %version
+Requires: %name = %version-%release
 Requires: libldap-devel
 Requires: libSDL_sound-devel
 Requires: libexpat-devel
@@ -77,12 +77,14 @@ chmod a+r *.txt *.htm
 cd %buildroot/%_libdir
 ln -s libh323*.so libopenh323.so
 
+rm -f %buildroot%_libdir/libopenh323.@SHAREDLIBEXT@ ||:
+
 %files
 %doc *.txt mpl-1.0.htm
 %_libdir/lib*.so.*
 %_libdir/pwlib
 # for buggy make
-%_libdir/*.so
+#%_libdir/*.so
 
 %files devel
 %_libdir/*.so
@@ -90,6 +92,10 @@ ln -s libh323*.so libopenh323.so
 %_datadir/openh323
 
 %changelog
+* Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 1.19.0.1-alt9
+- fix non-strict dependency
+- small fixes
+
 * Fri Jul 08 2011 Denis Smirnov <mithraen@altlinux.ru> 1.19.0.1-alt8
 - add %_libdir/libopenh323.so
 
