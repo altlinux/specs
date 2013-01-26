@@ -4,10 +4,10 @@
 
 Name:           fonts-ttf-lohit-nepali
 Version:        2.5.1.1
-Release:        alt1_2
+Release:        alt2_2
 Summary:        Free Nepali font
 
-Group:          Graphical desktop/Other
+Group:          System/Fonts/True type
 License:        OFL
 URL:            https://fedorahosted.org/lohit/
 Source0:        https://fedorahosted.org/releases/l/o/lohit/%{fontname}-%{version}.tar.gz
@@ -83,6 +83,9 @@ fi
 %doc ChangeLog OFL.txt COPYRIGHT AUTHORS README ChangeLog.old
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.1.1-alt2_2
+- applied repocop patches
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1.1-alt1_2
 - update to new release by fcimport
 
