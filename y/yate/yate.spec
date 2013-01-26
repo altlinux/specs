@@ -1,7 +1,7 @@
 Name: yate
 Summary: Yet Another Telephony Engine
 Version: 3.3.2
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers doxygen gcc-c++ kdoc libalsa-devel libcoredumper-devel libgsm-devel liblksctp-devel libmysqlclient-devel libopenh323_1.19-devel libpw1.11-devel libqt4-network libspandsp6-devel libspeex-devel postgresql-devel libqt4-devel
@@ -369,8 +369,6 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %config(noreplace) %_sysconfdir/yate/providers.conf
 
 %files devel
-%doc %_docdir/yate-%version/*.html
-%doc %_docdir/yate-%version/api/*
 %_includedir/*
 %_libdir/lib*.so
 %_bindir/yate-config
@@ -432,6 +430,9 @@ install -D -m755 -p %SOURCE2 %buildroot%_initdir/yate
 %config(noreplace) %_sysconfdir/yate/zlibcompress.conf
 
 %changelog
+* Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3.2-alt3
+- remove devel doc from devel subpackage
+
 * Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 3.3.2-alt2
 - fix subpackage requires
 - move devel docs to devel-doc subpackage
