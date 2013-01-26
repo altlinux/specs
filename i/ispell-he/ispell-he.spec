@@ -1,8 +1,8 @@
 Summary: Hebrew dictionary for of ispell
 Name: ispell-he
 Version: 0.1
-Release: alt5
-Group: System/Internationalization
+Release: alt6
+Group: Text tools
 Source: ftp://ftp.ivrix.org/pub/ivrix/src/cmdline/spell/ispell-he-0.1.tar.bz2
 Copyright: distributable
 Requires: ispell
@@ -32,6 +32,9 @@ cp -avf hebrew.hash $RPM_BUILD_ROOT%_libdir/ispell
 %_libdir/ispell/*
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt6
+- applied repocop patches
+
 * Mon May 12 2008 Igor Vlasenko <viy@altlinux.ru> 0.1-alt5
 - fixed to be arch
 
