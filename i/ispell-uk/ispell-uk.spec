@@ -2,10 +2,10 @@ Summary: ukrainian dictionary for ispell
 
 Name: ispell-uk
 Version: 1.2
-Release: alt1
+Release: alt2
 
 License: GPL and LGPL
-Group: System/Internationalization
+Group: Text tools
 %define sourcename spell-uk-%{version}
 Source: %{sourcename}.tgz
 Url: http://ispell-uk.sourceforge.net/ispell-uk/
@@ -27,7 +27,7 @@ The dictionary is in koi8-u encoding.
 
 %package -n ispell-uk-cp1251
 Summary: ukrainian dictionary for ispell in cp1251 encoding
-Group: System/Internationalization
+Group: Text tools
 Requires: ispell >= 3.2.06
 
 %description -n ispell-uk-cp1251
@@ -50,7 +50,7 @@ mv dist/i%{sourcename}/ukrainian.hash $RPM_BUILD_ROOT%_libdir/ispell/ukrainian.h
 
 # cp1251
 make clean
-%__subst s,KOI8-U,CP1251, encodings.inc
+sed -i s,KOI8-U,CP1251, encodings.inc
 %make ispell
 mv dist/i%{sourcename}/ukrainian.aff $RPM_BUILD_ROOT%_libdir/ispell/ukrainianw.aff
 mv dist/i%{sourcename}/ukrainian.hash $RPM_BUILD_ROOT%_libdir/ispell/ukrainianw.hash
@@ -65,6 +65,9 @@ mv dist/i%{sourcename}/ukrainian.hash $RPM_BUILD_ROOT%_libdir/ispell/ukrainianw.
 %_libdir/ispell/ukrainianw.hash
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.2-alt2
+- applied repocop patches
+
 * Thu Jan 18 2007 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1
 - new version:
 - added subpackage with dictionary in cp1251
