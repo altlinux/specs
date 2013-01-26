@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           aspectj
 Version:        1.6.12
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Epoch:          0
 Summary:        AspectJ aspect-oriented language extension to Java
 License:        EPL
@@ -117,7 +117,7 @@ programming (AOP) in java.
 %package eclipse-plugins
 Summary:        Eclipse Plugins for %{name}
 Group:          Development/Java
-Requires:       %{name} = 0:%{version}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       eclipse-platform
 
 %description eclipse-plugins
@@ -409,6 +409,9 @@ touch $RPM_BUILD_ROOT/etc/java/aspectj.conf
 
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.6.12-alt4_1jpp6
+- applied repocop patches
+
 * Thu Oct 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.6.12-alt3_1jpp6
 - merged aspectjweaver back
 
