@@ -1,7 +1,7 @@
 Name: asterisk11
 Summary: Open source PBX
 Version: 11.2.0
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Servers
 BuildRequires: dahdi-linux-headers flex gcc-c++ graphviz libSDL_image-devel libalsa-devel libavcodec-devel libbluez-devel libcap-devel libcurl-devel libfreetds-devel libgsm-devel libgtk+2-devel libical-devel libiksemel-devel libilbc-devel libjack-devel libkeyutils-devel libltdl7-devel liblua5-devel libmISDN-devel libmysqlclient-devel libncurses-devel libneon-devel libnet-snmp-devel libnewt-devel libopenr2-devel libpopt-devel libportaudio2-devel libpri-devel libpw1.11-devel libradiusclient-ng-devel libresample-devel libsasl2-devel libspandsp6-devel libspeex-devel libsqlite-devel libsqlite3-devel libsrtp libss7-devel libtonezone-dahdi-devel libunixODBC-devel libusb-compat-devel libvorbis-devel libvpb-devel libxml2-devel ncompress openssl postgresql-devel rpm-build-gir texlive-base-bin wget zlib-devel
@@ -53,6 +53,7 @@ BuildPreReq: dahdi-linux-headers
 BuildPreReq: libpri-devel
 BuildRequires: libmISDN-devel
 BuildPreReq: libspeex-devel
+BuildRequires: libcorosync-devel
 BuildRequires: libcurl-devel
 BuildPreReq: libspandsp6-devel
 BuildRequires: libexpat-devel
@@ -63,7 +64,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%add_verify_elf_skiplist %_libdir/libasteriskssl*
+%add_verify_elf_skiplist %_libdir/libasteriskssl11.so.1
 %def_with debug
 %def_enable debug
 %def_without		hoard
@@ -87,7 +88,6 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %set_autoconf_version 2.60
 %define modules_dir	%_libdir/asterisk/%version/modules
 %define agi_dir     /usr/lib/asterisk/agi-bin
-%define svndate		20130121
 %define spandsp		0.0.5-alt3.pre4
 %define astmodule() \
 %attr(0440,root,_asterisk) %modules_dir/%1.so
@@ -319,6 +319,7 @@ Requires: %name-ael = %version-%release
 Requires: %name-fax = %version-%release
 Requires: %name-app_voicemail = %version-%release
 Requires: %name-calendar = %version-%release
+Requires: %name-corosync = %version-%release
 Requires: %name-cdr_radius = %version-%release
 Requires: %name-chan_iax2 = %version-%release
 Requires: %name-jabber = %version-%release
@@ -370,6 +371,14 @@ Requires: pbx-utils-all
 
 %description complete
 This virtual package requires all Asterisk subpackages
+
+%package corosync
+Summary: Device state and MWI clustering
+Group: %group
+Requires: %name = %version-%release
+
+%description corosync
+Device state and MWI clustering
 
 %package crypto
 Summary: OpenSSL support for Asterisk (crypto)
@@ -687,7 +696,7 @@ mkdir -p %buildroot/var/lib/asterisk/documentation/
 ln -s ../../../../usr/share/asterisk/documentation/11 %buildroot/var/lib/asterisk/documentation
 mv %buildroot/var/lib/asterisk/documentation/*.xml %buildroot/usr/share/asterisk/documentation/11/
 mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk/documentation/11/
-ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
+ln -sf libasteriskssl11.so.1 %buildroot%_libdir/libasteriskssl11.so
 
 %preun
 %preun_service asterisk
@@ -888,7 +897,6 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %dir %_libdir/asterisk
 %dir %_libdir/asterisk/%version
 %dir %modules_dir
-%_sbindir/astdb2sqlite3
 %_sbindir/asterisk-%version
 %_sbindir/rasterisk-%version
 %_man8dir/asterisk-%version.8.*
@@ -942,7 +950,11 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %astmodule res_format_attr_h264
 %astmodule res_http_websocket
 %astsample acl
+%exclude %astsample app_skel
+%exclude %astsample config_test
 %exclude %_docdir/%name-%version/Makefile
+%exclude %_sbindir/astdb2bdb
+%exclude %_sbindir/astdb2sqlite3
 
 %files -n aelparse11
 %_sbindir/aelparse-%version
@@ -1009,6 +1021,7 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %files chan_h323
 %astmodule chan_ooh323
 %astsample ooh323
+%exclude %astsample h323
 
 %files chan_iax2
 %astmodule chan_iax2
@@ -1053,6 +1066,10 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 
 %files complete
 
+%files corosync
+%astmodule res_corosync
+%astsample res_corosync
+
 %files crypto
 %_sbindir/astgenkey
 
@@ -1064,7 +1081,7 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 
 %files devel
 %_includedir/asterisk-%version
-%_libdir/libasteriskssl.so
+%_libdir/libasteriskssl11.so
 
 %files docs
 %_docdir/%name-%version/Asterisk-Admin-Guide.pdf
@@ -1226,9 +1243,14 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_altdir/conf2ael-%version
 
 %files -n libasteriskssl11
-%_libdir/libasteriskssl.so.1
+%_libdir/libasteriskssl11.so.1
 
 %changelog
+* Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 11.2.0-alt2
+- move astdb2sqlite3 to pbx-utils-astdb package
+- rename libasteriskssl.so -> libasteriskssl11.so
+- build with res_corosync module
+
 * Mon Jan 21 2013 Denis Smirnov <mithraen@altlinux.ru> 11.2.0-alt1
 - new version 11.2.0
 
