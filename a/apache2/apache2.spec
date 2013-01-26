@@ -27,6 +27,9 @@
 %define alternatives_macros_name rpm-macros-%alternatives_name
 %endif
 
+# For fix non-strict dependency
+%define _allowed_nonstrict_interdeps %name,%name-cgi-bin %name,%name-html %name,%name-icons %name-base,%name-common %name-base,%name-httpd-prefork %name-base,%name-httpd-worker %name-base,%name-httpd-event %name-base,%name-httpd-itk %name-base,%name-httpd-peruser %name-configs-A1PROXIED,%name-common %name-configs-A1PROXIED,%name-base %name-manual,%name-base %name-manual,%name-base %name-compat,%name-base %name-httpd-prefork,%name-common %name-httpd-worker,%name-common %name-httpd-event,%name-common %name-httpd-itk,%name-common %name-httpd-peruser,%name-common %name-manual,%name-common %name-mod_ssl,%name-common %name-mod_ldap,%name-common %name-mod_disk_cache,%name-common %name-suexec,%name-common %name-compat,%name-common %name-mod_ssl-compat,%name-common %name-cgi-bin-test-cgi,%name-datadirs %name-cgi-bin-printenv,%name-datadirs %name-htcacheclean,%name-mod_disk_cache
+
 %define apache_configs_branch 2
 %define apache_configs_dirs_name %apache2_name-configs-dirs%apache_configs_branch
 %define apache_configs_dirs_version %apache_configs_branch.2.0
@@ -38,7 +41,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt14
+Release: %branch_release alt15
 
 License: %asl
 Group: System/Servers
@@ -56,7 +59,7 @@ Source5: README-itk.html
 Source6: README-peruser.html
 
 #Source10: apache2.favour
-Source11: apache2-alt-configs-2.1.tar
+Source11: apache2-alt-configs-3.0.tar
 Source12: README.ALT.ru_RU.KOI8-R
 Source13: apache2-alt-alternatives-0.3.0.tar
 Source14: README.ALT.ru_RU.UTF8
@@ -91,14 +94,18 @@ Source60: server-condstop.sh
 Source62: server-condstart.sh
 Source63: server-condstart-rpm.sh
 
+# scripts for SSL cert
+Source70: apache2-cert-sh-functions.sh
+Source71: apache2-cert-sh.sh
+
 # ALT patchs and:
 # + http://mpm-itk.sesse.net/apache2.2-mpm-itk-2.2.17-01/*.patch
 # + http://www.telana.com/files/httpd-2.2.3-peruser-0.3.0.patch
 # + http://www.peruser.org/trac/projects/peruser/attachment/wiki/PeruserAttachments/httpd-2.2.3-peruser-0.3.0-dc3.patch
-Patch1: apache2-%version-alt-all-0.6.patch
+Patch1: apache2-%version-alt-all-0.7.patch
 
 BuildRequires(pre): rpm-macros-branch
-BuildRequires(pre): rpm-macros-apache2 >= 3.10
+BuildRequires(pre): rpm-macros-apache2 >= 3.11
 BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
 BuildPreReq: %_datadir/rpm-build-rpm-eval/rpm-eval.sh
@@ -607,9 +614,8 @@ Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
 
-Provides: %apache2_confdir/ssl.crl
-Provides: %apache2_confdir/ssl.crt
-Provides: %apache2_confdir/ssl.key
+Conflicts: apache2-mod_ssl-compat <= 2.2.22-alt14
+
 Provides: %apache2_proxycachedir/mod_ssl
 
 %description mod_ssl
@@ -648,6 +654,7 @@ This package contains the module mod_disk_cache
 %package htcacheclean-control
 Summary: Control rules for htcacheclean
 Group: System/Servers
+BuildArch: noarch
 
 %description htcacheclean-control
 This package contains control rules for the htcacheclean.
@@ -741,7 +748,7 @@ Summary(ru_RU.UTF-8): Установка DocumentRoot в %apache2_serverdatadir 
 Group: System/Servers
 BuildArch: noarch
 Requires: %name-compat
-Requires: %name-mod_ssl
+Requires: %name-mod_ssl > 2.2.22-alt14
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
 
@@ -876,6 +883,15 @@ install -m 644 %SOURCE14 ./
 echo '
 s|@@Port@@|80|g
 s|@@SSLPort@@|443|g
+s|@@SSLCertificateFile@@|%apache2_sslcertificatefile|g
+s|@@SSLCertificateFile-dsa@@|%apache2_sslcertsdir/%apache2_sslcertname-dsa.%apache2_sslcertext|g
+s|@@SSLCertificateKeyFile@@|%apache2_sslcertificatekeyfile|g
+s|@@SSLCertificateKeyFile-dsa@@|%apache2_sslkeysdir/%apache2_sslcertname-dsa.key|g
+s|@@SSLCertificateChainFile@@|%apache2_sslcertsdir/ca-root.pem|g
+s|@@SSLCACertificatePath@@|%apache2_sslcertsdir|g
+s|@@SSLCACertificateFile@@|%apache2_sslcertsdir/ca-root.pem|g
+s|@@SSLCARevocationPath@@|%apache2_sslcertsdir|g
+s|@@SSLCARevocationFile@@|%apache2_sslcertsdir/ca-bundle.crl|g
 s|@vhosts_dir@|%apache2_vhostdir|g
 s|@htcacheclean_cachepath@|%apache2_htcacheclean_cachepath|g
 s|@SERVER@|%apache2_dname|g
@@ -884,6 +900,8 @@ s|@RPMTRIGGERDIR@|%apache2_rpmfiletriggerdir|g
 s|@RPMTRIGGERSTARTFILE@|%apache2_rpmhttpdstartfile|g
 s|@RUNDIR@|%condstopstart_webrundir|g
 s|%%apache2_branch|%apache2_branch|g
+s|%%apache2_sslcertshfunctions|%apache2_sslcertshfunctions|g
+s|%%apache2_sslcertsh|%apache2_sslcertsh|g
 ' >> SetMacros.sed
 
 # Classify ab and logresolve as section 1 commands, as they are in /usr/bin
@@ -1027,7 +1045,11 @@ for d in mods ports sites extra; do
 		(cd ../$d-enabled/ && xargs -r0 touch) 
 	popd
 done
-touch sites-enabled/000-default.conf
+pushd sites-available/
+find -maxdepth 1 \( -name 'default*.conf' -o -name 'default*.load' \) -type f -print0 | \
+	sed -zr 's@^(.*/)?default@\1000-default@' | \
+	(cd ../sites-enabled/ && xargs -r0 touch) 
+popd
 popd
 
 #------------------------------------------------------------------------------------
@@ -1132,13 +1154,19 @@ install -pD %SOURCE63 %buildroot%condstopstart_webdir/%apache2_dname-condstart-r
 # Install config for tempfiles
 install -pD -m 644 %SOURCE15 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 
+# Install scripts for SSL cert
+install -pD -m 644 %SOURCE70 %buildroot%apache2_sslcertshfunctions
+install -pD -m 755 %SOURCE71 %buildroot%apache2_sslcertsh
+
 # Substitute the real paths in configs
 find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
 		%buildroot%_unitdir %buildroot%apache2_sbindir/%apache2_htcacheclean_dname-daemon-start \
+		%buildroot%{apache2_sslcertsh}* \
 		-type f -print0 \
 	| xargs -r0i %_datadir/rpm-build-rpm-eval/rpm-eval.sh "{}"
 find %buildroot%_sysconfdir original %buildroot%_rpmlibdir %buildroot%condstopstart_webdir %buildroot%apache2_sbindir/apachectl* \
 		%buildroot%_unitdir %buildroot%apache2_sbindir/%apache2_htcacheclean_dname-daemon-start \
+		%buildroot%{apache2_sslcertsh}* \
 		-type f -print0 \
 	| xargs -r0 sed -i -f SetMacros.sed
 
@@ -1177,9 +1205,6 @@ cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
 %apache2_runtimedir/	%name-common
 %_datadir/%name/	%name-datadirs
 %_datadir/%name/cgi-bin/	%name-datadirs
-%apache2_confdir/ssl.crl/	%name-mod_ssl
-%apache2_confdir/ssl.crt/	%name-mod_ssl
-%apache2_confdir/ssl.key/	%name-mod_ssl
 %apache2_proxycachedir/mod_ssl/	%name-mod_ssl
 %apache2_htcacheclean_cachepath/	%name-mod_disk_cache
 %apache2_includedir/	%name-devel
@@ -1296,7 +1321,6 @@ if LANG=C %_bindir/id %apache2_user 2>/dev/null | \
 fi
 exit 0
 
-%post httpd-worker
 %if "%alternatives_filetrigger" != "yes"
 %post httpd-worker
 %register_alternatives %name-httpd-worker
@@ -1354,30 +1378,26 @@ if [ $1 -eq 2 ] && \
 fi
 exit 0
 
-%post mod_ssl
-#%_sbindir/ldconfig ### is this needed?
-umask 077
-
-if [ ! -f %apache2_confdir/ssl.key/server.key ] ; then
-%_bindir/openssl genrsa -rand /proc/apm:/proc/cpuinfo:/proc/dma:/proc/filesystems:/proc/interrupts:/proc/ioports:/proc/pci:/proc/rtc:/proc/uptime 1024 > %apache2_confdir/ssl.key/server.key 2> /dev/null
+%triggerun mod_ssl -- %name-mod_ssl <= 2.2.22-alt14, %name-mod_ssl-compat <= 2.2.22-alt14
+if [ -e %apache2_confdir/ssl.crt/server.crt ] && \
+		[ -e %apache2_confdir/ssl.key/server.key ]; then
+	for conffile in %apache2_sites_available/default_https.conf %apache2_sites_available/default_https-compat.conf
+	do
+		if [ -e "$conffile" ] && \
+				grep -qs -m1 '^[[:space:]]*SSLCertificateFile[[:space:]]\+"%apache2_sslcertificatefile"[[:space:]]*$' "$conffile" && \
+				grep -qs -m1 '^[[:space:]]*SSLCertificateKeyFile[[:space:]]\+"%apache2_sslcertificatekeyfile"[[:space:]]*$' "$conffile" && \
+				! egrep -qs -m1 '^[[:space:]]*(SSLCertificateChainFile|SSLCA(Certificate|Revocation)(Path|File))[[:space:]]' "$conffile" ; then
+			echo "Warning: the file $conffile saved settings:"
+			echo '    SSLCertificateFile "%apache2_confdir/ssl.crt/server.crt"'
+			echo '    SSLCertificateKeyFile "%apache2_confdir/ssl.key/server.key"'
+			sed -ri '
+s@^([[:space:]]*)(SSLCertificateFile[[:space:]]+"%apache2_sslcertificatefile"[[:space:]]*)$@\1# New certificate file\n\1#\2\n\1# Old certificate file\n\1SSLCertificateFile "%apache2_confdir/ssl.crt/server.crt"@
+s@^([[:space:]]*)(SSLCertificateKeyFile[[:space:]]+"%apache2_sslcertificatekeyfile"[[:space:]]*)$@\1# New certificate key file\n\1#\2\n\1# Old certificate key file\n\1SSLCertificateKeyFile "%apache2_confdir/ssl.key/server.key"@
+' "$conffile"
+		fi
+	done
 fi
-
-FQDN=`hostname`
-if [ "x${FQDN}" = "x" ]; then
-   FQDN=localhost.localdomain
-fi
-
-if [ ! -f %apache2_confdir/ssl.crt/server.crt ] ; then
-cat << EOF | %_bindir/openssl req -new -key %apache2_confdir/ssl.key/server.key -x509 -days 365 -out %apache2_confdir/ssl.crt/server.crt 2>/dev/null
---
-SomeState
-SomeCity
-SomeOrganization
-SomeOrganizationalUnit
-${FQDN}
-root@${FQDN}
-EOF
-fi
+exit 0
 
 %pre htcacheclean
 %pre_control htcacheclean-run
@@ -1547,9 +1567,12 @@ exit 0
 %exclude %apache2_sites_available/default-compat.conf
 %exclude %apache2_sites_available/default_https-compat.conf
 %exclude %apache2_sites_enabled/default_https.conf
+%exclude %apache2_sites_enabled/000-default_https.conf
 %exclude %apache2_sites_enabled/vhosts-A1PROXIED.conf
 %exclude %apache2_sites_enabled/default-compat.conf
+%exclude %apache2_sites_enabled/000-default-compat.conf
 %exclude %apache2_sites_enabled/default_https-compat.conf
+%exclude %apache2_sites_enabled/000-default_https-compat.conf
 %exclude %apache2_sites_start/020-A1PROXIED.conf
 %exclude %apache2_sites_start/*-default-compat.conf
 %config(noreplace) %apache2_extra_available/*.conf
@@ -1562,6 +1585,7 @@ exit 0
 %exclude %apache2_extra_start/*-manual*.conf
 %exclude %apache2_extra_start/*-default-compat.conf
 %dir %apache2_addonconfdir/
+%attr(0755,root,root) %apache2_sslcertsh
 %config %_initdir/%apache2_dname
 %apache2_sbindir/apachectl*
 %attr(0600,root,root) %config(noreplace) %apache2_envconf
@@ -1570,6 +1594,7 @@ exit 0
 %attr(0644,root,root) %config(noreplace) %_sysconfdir/logrotate.d/%apache2_name
 
 %apache2_bindir/ht*
+%exclude %apache2_sslcertshfunctions
 %exclude %apache2_bindir/htpasswd*
 %apache2_bindir/logresolve*
 %apache2_sbindir/rotatelogs*
@@ -1659,6 +1684,7 @@ exit 0
 %apache2_iconsdir/small/*.png
 
 %files mod_ssl
+%attr(0644,root,root) %apache2_sslcertshfunctions
 %apache2_moduledir/mod_ssl.so
 %attr(0600,root,root) %config(noreplace) %apache2_mods_available/ssl.load
 %attr(0600,root,root) %config(noreplace) %apache2_mods_available/ssl.conf
@@ -1668,9 +1694,7 @@ exit 0
 %attr(0600,root,root) %config(noreplace) %apache2_sites_available/default_https.conf
 %ghost %apache2_ports_enabled/https.conf
 %ghost %apache2_sites_enabled/default_https.conf
-%attr(0700,root,root) %dir %apache2_confdir/ssl.crl/
-%attr(0700,root,root) %dir %apache2_confdir/ssl.crt/
-%attr(0700,root,root) %dir %apache2_confdir/ssl.key/
+%ghost %apache2_sites_enabled/000-default_https.conf
 %ghost %apache2_confdir/ssl.crt/server.crt
 %ghost %apache2_confdir/ssl.key/server.key
 %attr(2770,root,%apache2_group) %dir %apache2_proxycachedir/mod_ssl/
@@ -1742,6 +1766,7 @@ exit 0
 %files compat
 %config(noreplace) %apache2_sites_available/default-compat.conf
 %ghost %apache2_sites_enabled/default-compat.conf
+%ghost %apache2_sites_enabled/000-default-compat.conf
 %config(noreplace) %apache2_sites_start/*-default-compat.conf
 %config(noreplace) %apache2_extra_available/httpd-*-compat.conf
 %ghost %apache2_extra_enabled/httpd-*-compat.conf
@@ -1754,8 +1779,17 @@ exit 0
 %files mod_ssl-compat
 %config(noreplace) %apache2_sites_available/default_https-compat.conf
 %ghost %apache2_sites_enabled/default_https-compat.conf
+%ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Sat Jan 26 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt15
+- Subpackages %%name-mod_ssl{-compat,} converted to use the default
+  certificate with a name %%apache2_sslcertname, located in the system
+  certificate store
+- SSL certificate is the default created when you run the daemon if it
+  is not previously created
+- Add %%ghost for %%apache2_sites_enabled/000-default*.conf
+
 * Fri Jan 11 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt14
 - Added auto adjust the variable names in your %%_sysconfdir/sysconfig/%%apache2_htcacheclean_dname:
   + CACHEPATH in HTCACHECLEAN_PATH
