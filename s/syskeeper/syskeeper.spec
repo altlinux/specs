@@ -1,7 +1,7 @@
 Name: syskeeper
 Summary: %name
 Version: 0.8
-Release: alt1
+Release: alt2
 License: GPL
 Group: System/Base
 BuildArch: noarch
@@ -23,6 +23,7 @@ Automaticaly backup some system info when booting
 Summary: Base files for syskeeper
 Group: System/Base
 Requires: crontabs
+Requires: syskeeper = %version-%release
 
 %description base
 Base files for syskeeper
@@ -54,6 +55,7 @@ Autobackup storage information
 Summary: Autobackup storage information
 Group: System/Base
 Requires: %name-disks = %version-%release
+Requires: syskeeper-base-git = %version-%release
 
 %description disks-git
 Autobackup storage information
@@ -86,6 +88,7 @@ Autobackup installed packages list
 Summary: Autobackup installed packages list
 Group: System/Base
 Requires: %name-rpm = %version-%release
+Requires: syskeeper-base-git = %version-%release
 
 %description rpm-git
 Autobackup installed packages list
@@ -106,6 +109,8 @@ Autobackup system information
 Summary: Autobackup system information
 Group: System/Base
 Requires: %name-disks = %version-%release
+Requires: syskeeper-base-git = %version-%release
+Requires: syskeeper-system = %version-%release
 
 %description system-git
 Autobackup system information
@@ -184,6 +189,9 @@ mkdir -p %buildroot/var/log/kernelbootlog
 %files ve
 
 %changelog
+* Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 0.8-alt2
+- fix non-strict dependency
+
 * Tue Jul 03 2012 Denis Smirnov <mithraen@altlinux.ru> 0.8-alt1
 - update backup_disk
 
