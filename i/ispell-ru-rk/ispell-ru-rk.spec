@@ -4,12 +4,12 @@
 
 Name:		ispell-ru-rk
 Version:	1.1
-Release:	alt6
+Release:	alt7
 
 Summary:	Russian dictionary for ispell -- KOI8-R encoding
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell -- кодировка KOI8-R
 License:	GPL
-Group:		System/Internationalization
+Group:		Text tools
 
 # Note: ispell and aspell hash files are architecture-dependent.
 # Do not put BuildArch: noarch here.
@@ -35,7 +35,7 @@ BuildConflicts:	aspell-ispell
 %package cp1251
 Summary:	Russian dictionary for ispell -- CP1251 encoding
 Summary(ru_RU.UTF-8): Словарь русского языка для ispell -- кодировка CP1251
-Group:		System/Internationalization
+Group:		Text tools
 PreReq:		alternatives >= 0.0.6
 Requires:	ispell >= %ispell_version
 Provides:	ispell-dictionary, ispell-ru-cp1251 = %version
@@ -45,7 +45,7 @@ Obsoletes:	irussian, ispell-rus, ispell-russian, rispell, ispell-ru-cp1251
 %package -n aspell-ru-rk
 Summary:	Russian dictionary for GNU Aspell
 Summary(ru_RU.UTF-8): Словарь русского языка для GNU Aspell
-Group:		System/Internationalization
+Group:		Text tools
 PreReq:		alternatives >= 0.0.6
 Requires:	aspell >= %aspell_version
 Provides:	aspell-dictionary, aspell-ru = %version
@@ -186,6 +186,9 @@ EOF
 %_datadir/aspell/*
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt7
+- applied repocop patches
+
 * Fri Aug 26 2011 Igor Vlasenko <viy@altlinux.ru> 1.1-alt6
 - converted alternatives to modern tab format (closes: #25739)
 - bugfix for alternatives (/usr/lib instead of libdir)
