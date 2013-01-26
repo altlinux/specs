@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           maven-jxr
 Version:        2.3
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Epoch:          0
 Summary:        Source cross referencing tool
 License:        ASL 2.0
@@ -90,7 +90,7 @@ API documentation for %{name}.
 %package -n maven-plugin-jxr
 Summary:        Maven plugin for JXR
 Group:          Development/Java
-Requires:       %{name} = %{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description -n maven-plugin-jxr
 Maven plugin for JXR.
@@ -155,6 +155,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadir}/maven-plugin-jxr*.jar
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt2_3jpp7
+- applied repocop patches
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.3-alt1_3jpp7
 - new fc release
 
