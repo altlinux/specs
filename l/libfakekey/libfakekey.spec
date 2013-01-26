@@ -8,7 +8,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++ libICE-devel libSM-devel
 
 Name:           libfakekey
 Version:        0.1
-Release:        alt4_3.5.2
+Release:        alt5_3.5.2
 Summary:        Converting characters to X key-presses
 
 Group:          System/Libraries
@@ -35,7 +35,7 @@ libfakekey is a simple library for converting UTF-8 characters into
 %package        -n %develname
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       %libname
+Requires:       %libname = %{?serial:%serial:}%{version}-%{release}
 Provides: fakekey-devel = %version-%release
 
 %description    -n %develname
@@ -70,6 +70,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/libfakekey.la
 
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt5_3.5.2
+- applied repocop patches
+
 * Thu Dec 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt4_3.5.2
 - added fakekey-devel provides
 
