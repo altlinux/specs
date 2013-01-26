@@ -1,10 +1,11 @@
 Name: iksemel
 Version: 1.4
-Release: alt3
+Release: alt4
 
 Summary: iksemel Jabber Library
 Group: Development/C
 License: LGPL
+Url: http://code.google.com/p/iksemel/
 
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 
@@ -23,7 +24,7 @@ Summary: %summary
 %package -n lib%name-devel
 Group: %group
 Summary: %summary
-Requires: lib%name = %version
+Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
 %summary
@@ -62,6 +63,10 @@ rmdir %buildroot%_infodir
 %exclude %_libdir/libiksemel.a
 
 %changelog
+* Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4-alt4
+- add Url tag
+- fix non-strict dependency
+
 * Sun Jan 15 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4-alt3
 - fix rpath bug (thanks to ldv@)
 
