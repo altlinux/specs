@@ -8,7 +8,7 @@ BuildRequires: gcc-c++ libncurses-devel libreadline-devel
 
 Name:           afpfs-ng
 Version:        0.8.1
-Release:        alt2_10.3
+Release:        alt3_10.3
 Summary:        Apple Filing Protocol client
 
 Group:          System/Base
@@ -43,7 +43,7 @@ The command line client for AFP is in fuse-afp package
 %package devel
 Summary:        Development files for afpfs-ng
 Group:          Development/C
-Requires:       afpfs-ng = %{version}
+Requires:       afpfs-ng = %{?serial:%serial:}%{version}-%{release}
 
 %description devel
 Library for dynamic linking and header files of afpfs-ng.
@@ -100,6 +100,9 @@ cp -p include/* $RPM_BUILD_ROOT%{_includedir}/afpfs-ng
 
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt3_10.3
+- applied repocop patches
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.1-alt2_10.3
 - update to new release by fcimport
 
