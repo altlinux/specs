@@ -4,8 +4,8 @@
 Name:		aspell-uk
 Summary:	Aspell spelling dictionary for Ukrainian
 Version:	1.6.5
-Release:	alt2
-Group:		System/Internationalization
+Release:	alt3
+Group:		Text tools
 URL:		http://ispell-uk.sourceforge.net/
 Source:		%{sourcename}.tgz
 License:	GPL and LGPL
@@ -48,6 +48,9 @@ mv $RPM_BUILD_ROOT%{_libdir}/aspell/*.dat $RPM_BUILD_ROOT%{_datadir}/aspell/
 %{_libdir}/aspell*/koi8-u-nl*
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.5-alt3
+- applied repocop patches
+
 * Fri May 11 2012 Roman Savochenko <rom_as@altlinux.ru> 1.6.5-alt2
 - Restore "mv /usr/lib/aspell/*.dat /usr/share/aspell"
 
