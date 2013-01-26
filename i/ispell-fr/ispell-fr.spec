@@ -8,14 +8,14 @@ Summary(fr): Dictionnaire français pour ispell
 Name: ispell-%{languagecode} 
 Epoch:1
 Version: 1.0
-Release: alt1
+Release: alt2
 
 Packager: Igor Vlasenko <viy@altlinux.ru>
 
 Url: http://www.unil.ch/ling/cp/frgut.html
 Source:	http://www.unil.ch/ling/cp/Francais-GUTenberg-v%{src_ver}.tar.bz2
 License: GPL
-Group: System/Internationalization
+Group: Text tools
 
 # Can't be noarch due to the byte order
 #BuildArch: noarch
@@ -73,6 +73,9 @@ rm -f %languagelocal.ispell.stat %languagelocal.ispell.cnt %languagelocal.ispell
 %_libdir/ispell/*
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt2
+- applied repocop patches
+
 * Fri Mar 07 2008 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1
 - epoch :1 due to rename ipl15mdk -> alt1
 
