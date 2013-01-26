@@ -18,7 +18,7 @@ Name:           libUnihan
 %define         libUnihan_ver_major 0
 %define         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt3_8
+Release:        alt4_8
 Group:          System/Libraries
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
@@ -53,6 +53,7 @@ Group:      Documentation
 License:        LGPLv2+
 BuildRequires:  doxygen
 Requires:       libUnihan = %{version}-%{release}
+BuildArch: noarch
 
 %description doc
 The libUnihan C API documents in Doxygen style.
@@ -90,6 +91,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %doc doc/html
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_8
+- applied repocop patches
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt3_8
 - update to new release by fcimport
 
