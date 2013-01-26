@@ -6,7 +6,7 @@ BuildRequires: python-devel
 Summary: Drizzle Client & Protocol Library
 Name: libdrizzle
 Version: 0.8
-Release: alt2_9
+Release: alt3_9
 # All code is BSD, except libdrizzle/sha1.{c,h} which are Public Domain
 License: BSD and Public Domain
 Group: System/Libraries
@@ -36,6 +36,7 @@ Development files for the Drizzle Client & Protocol Library
 Group: Documentation 
 Summary: Drizzle Client & Protocol Library Documentation
 Requires: libdrizzle = %{version}-%{release}
+BuildArch: noarch
 
 %description doc 
 Documentation files for the Drizzle Client & Protocol Library
@@ -70,6 +71,9 @@ rm -f %{buildroot}/%{_libdir}/libdrizzle.la
 %doc docs/api docs/dev
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.8-alt3_9
+- applied repocop patches
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8-alt2_9
 - update to new release by fcimport
 
