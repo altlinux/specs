@@ -11,7 +11,7 @@ BuildRequires: rpm-build-java-osgi
 
 Name:      eclipse-emf
 Version:   2.8.0
-Release:   alt1_16jpp7
+Release:   alt2_16jpp7
 Summary:   Eclipse Modeling Framework (EMF) Eclipse plugin
 Group:     System/Libraries
 License:   EPL
@@ -48,7 +48,7 @@ BuildRequires:    eclipse-pde >= 1:4.2.0
 BuildRequires:    dos2unix
 Requires:         jpackage-utils
 Requires:         eclipse-platform >= 1:4.2.0
-Requires:         %{name}-core
+Requires:         %{name}-core = %{?serial:%serial:}%{version}-%{release}
 
 # the standalone package was deprecated and removed in EMF 2.3 (see eclipse.org bug #191837)
 Obsoletes:        %{name}-standalone < 2.4
@@ -270,6 +270,9 @@ rm -rf %{buildroot}%{eclipse_dropin}/emf-sdk/eclipse/plugins/org.eclipse.emf.eco
 %{eclipse_dropin}/emf-examples
 
 %changelog
+* Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt2_16jpp7
+- applied repocop patches
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 2.8.0-alt1_16jpp7
 - new version
 
