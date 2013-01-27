@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.1.3
-Release: alt3
+Release: alt4
 Epoch: 1
 
 Summary: Tool for producing documentation for Python projects
@@ -221,7 +221,7 @@ popd
 # docs
 
 %make_build -C doc html
-%make_build -C doc man
+#make_build -C doc man
 
 %install
 %if_with python3
@@ -256,13 +256,13 @@ done
 
 install -d %buildroot%_docdir/%name
 #install -d %buildroot%_docdir/%name/pdf
-install -d %buildroot%_man1dir
+#install -d %buildroot%_man1dir
 
 cp -fR doc/_build/html %buildroot%_docdir/%name/
 #install -p -m644 doc/_build/latex/*.pdf %buildroot%_docdir/%name/pdf
 install -p -m644 AUTHORS CHANGES EXAMPLES LICENSE README TODO \
 	%buildroot%_docdir/%name
-install -p -m644 doc/_build/man/*.1 %buildroot%_man1dir
+#install -p -m644 doc/_build/man/*.1 %buildroot%_man1dir
 
 # macros
 
@@ -319,7 +319,7 @@ popd
 %exclude %python_sitelibdir/%oname/pickle
 %exclude %python_sitelibdir/%oname/doctrees
 %python_sitelibdir/*.egg-info
-%_man1dir/*
+#_man1dir/*
 
 %files devel
 
@@ -360,6 +360,9 @@ popd
 %endif
 
 %changelog
+* Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.3-alt4
+- Disabled generating of man pages (broken)
+
 * Mon Sep 10 2012 Dmitry V. Levin <ldv@altlinux.org> 1:1.1.3-alt3
 - Fixed rpm-macros-sphinx* interpackage requirements.
 
