@@ -4,20 +4,25 @@
 
 Name: gnustep-back    
 Version: 0.23.0
-Release: alt4.git20130105
+Release: alt5.git20130105
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
-Group: Development/Objective-C
+Group: Graphical desktop/GNUstep
 URL: http://www.gnustep.org
 # https://github.com/gnustep/gnustep-back.git
 Source: %name-%version.tar
+Source1: Courier.FontInfo.plist
+Source2: Times.FontInfo.plist
 
 BuildPreReq: libfreetype-devel libX11-devel libXt-devel libXext-devel
 BuildPreReq: libXmu-devel libICE-devel libXft-devel libGL-devel
 BuildPreReq: libart_lgpl-devel gcc-objc libglitz-devel
 BuildPreReq: gnustep-make-devel gnustep-gui-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel libXcursor-devel libXfixes-devel
+BuildPreReq: fonts-type1-urw
 BuildRequires: texinfo /proc
+
+Requires: fonts-type1-urw
 
 %description 
 This is a back-end for the GNUstep GUI library which allows you to use
@@ -64,6 +69,34 @@ sed -i 's|i586|x86_64|g' $(find ./ -type f)
 rm -rf \
 	%buildroot%_libdir/GNUstep/Documentation/Developer/Back/ReleaseNotes
 
+pushd %buildroot%_libdir/GNUstep/Fonts/Helvetica.nfont
+for i in $(ls *.?f?); do
+	rm -f $i
+	ln -s %_datadir/fonts/type1/urw/$i ./
+done
+popd
+
+install -d %buildroot%_libdir/GNUstep/Fonts/Courier.nfont
+pushd %buildroot%_libdir/GNUstep/Fonts/Courier.nfont
+install -p -m644 %SOURCE1 ./FontInfo.plist
+for i in n022003l n022023l n022004l n022024l; do
+	ln -s %_datadir/fonts/type1/urw/$i.afm ./
+	ln -s %_datadir/fonts/type1/urw/$i.pfb ./
+	ln -s %_datadir/fonts/type1/urw/$i.pfm ./
+done
+popd
+
+install -d %buildroot%_libdir/GNUstep/Fonts/Times.nfont
+pushd %buildroot%_libdir/GNUstep/Fonts/Times.nfont
+install -p -m644 %SOURCE2 ./FontInfo.plist
+for i in n021003l n021023l n021004l n021024l; do
+
+	ln -s %_datadir/fonts/type1/urw/$i.afm ./
+	ln -s %_datadir/fonts/type1/urw/$i.pfb ./
+	ln -s %_datadir/fonts/type1/urw/$i.pfm ./
+done
+popd
+
 gzip ChangeLog
 
 %files
@@ -74,6 +107,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt5.git20130105
+- Use fonts-type1-urw for cyrillic text (thnx aen@)
+
 * Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt4.git20130105
 - New snapshot
 - Built with xlib instead of cairo
