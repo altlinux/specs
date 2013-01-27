@@ -2,7 +2,7 @@
 
 Name: gnustep-easydiff
 Version: 0.4.1
-Release: alt2.git20121210
+Release: alt3.git20121210
 Summary: GNUstep's implementation of the OPENSTEP FileMerge application
 License: GPLv2+ and GPLv3
 Group: File tools
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gnustep/gnustep-easydiff.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
@@ -35,12 +36,18 @@ different SCMSs and is useful in resolving merge conflicts.
 %install
 %makeinstall_std GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc AUTHORS ChangeLog
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %changelog
+* Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt3.git20121210
+- Added menu file (thnx kostyalamer@)
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.1-alt2.git20121210
 - Rebuilt with libobjc2 instead of libobjc
 
