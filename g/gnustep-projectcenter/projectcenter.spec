@@ -2,7 +2,7 @@
 
 Name: gnustep-projectcenter
 Version: 0.6.1
-Release: alt3.git20121122
+Release: alt4.git20121122
 Summary: GNUstep IDE, a part of the GNUstep project and is copyrighted by the FSF
 License: GPLv2+ and GPLv3
 Group: Development/Tools
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gnustep/gnustep-projectcenter.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
@@ -93,12 +94,15 @@ ln -s %_libdir/$j \
 	GNUstep/Frameworks/ProjectCenter.framework/Versions/0.6.0/ProjectCenter
 popd
 
+install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog Documentation/*
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/ProjectCenter.framework/Versions/0.6.0/Headers
 %exclude %_libdir/GNUstep/Frameworks/ProjectCenter.framework//Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -110,6 +114,9 @@ popd
 %_libdir/GNUstep/Frameworks/ProjectCenter.framework//Headers
 
 %changelog
+* Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt4.git20121122
+- Added menu file (thnx kostyalamer@)
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt3.git20121122
 - Rebuilt with libobjc2 instead of libobjc
 - Don't require development packages for runtime packages
