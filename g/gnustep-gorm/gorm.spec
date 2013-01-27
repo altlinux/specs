@@ -2,7 +2,7 @@
 
 Name: gnustep-gorm
 Version: 1.2.18
-Release: alt2.git20120726
+Release: alt3.git20130127
 Summary: The GNUstep Interface Builder
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -11,6 +11,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gnustep/gnustep-gorm.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
@@ -107,12 +108,15 @@ buildIt $libGormPrefs $libGormCore $libGorm
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM \
 	GNUSTEP_MAKEFILES=%_datadir/GNUstep/Makefiles
 
+install -p -D -m644 %SOURCE1 %buildroot%_menudir/%name
+
 gzip ChangeLog
 
 %files
 %doc ANNOUNCE ChangeLog* NEWS NOTICE README TODO
 %_bindir/*
 %_libdir/GNUstep
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -126,6 +130,10 @@ gzip ChangeLog
 %_infodir/*
 
 %changelog
+* Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.18-alt3.git20130127
+- New snapshot
+- Added menu file (thnx kostyalamer@)
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.18-alt2.git20120726
 - Rebuilt with libobjc2 instead of libobjc
 
