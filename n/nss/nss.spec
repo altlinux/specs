@@ -1,6 +1,6 @@
 Summary:        Netscape Network Security Services(NSS)
 Name:           nss
-Version:        3.13.6
+Version:        3.14.1
 Release:       	alt1
 License:        MPL/GPL/LGPL
 Group:          System/Libraries
@@ -25,36 +25,9 @@ Patch5:		nss-fix-objdir.patch
 # Fedora patches
 Patch10:	nss-enable-pem.patch
 
-# https://bugzilla.mozilla.org/show_bug.cgi?id=562116
-Patch11:	Bug-562116-drbg.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=695011
-Patch12:	Bug-695011-PEM-logging.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=772628
-# https://bugzilla.mozilla.org/show_bug.cgi?id=745224
-Patch13:	Bug-772628-nss_Init-leaks-memory.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=784672
-# https://bugzilla.mozilla.org/show_bug.cgi?id=734492
-Patch14:	Bug-784672-protect-against-calls-before-nss_init.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=800674
-# https://bugzilla.mozilla.org/show_bug.cgi?id=734484
-Patch15:	Bug-800674-Unable-to-contact-LDAP-Server-during-winsync.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=801975
-# https://bugzilla.mozilla.org/show_bug.cgi?id=679814
-# https://bugzilla.mozilla.org/show_bug.cgi?id=698049
-# https://bugzilla.mozilla.org/show_bug.cgi?id=475578
-Patch16:	Bug-801975-Restore-use-of-NSS_NoDB_Init-or-alternate.patch
-
-# https://bugzilla.redhat.com/show_bug.cgi?id=642433
-Patch17:	Bug-642433-pem.patch
-
 BuildRequires:	chrpath zlib-devel libsqlite3-devel
-BuildRequires:	libnspr-devel >= 4.9.2-alt1
-Requires:	libnspr       >= 4.9.2-alt1
+BuildRequires:	libnspr-devel >= 4.9.4-alt1
+Requires:	libnspr       >= 4.9.4-alt1
 
 %description
 Network Security Services (NSS) is a set of libraries designed
@@ -135,13 +108,6 @@ Netscape Network Security Services Utilities
 %patch5 -p0
 
 %patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-
 
 %build
 export BUILD_OPT=1 
@@ -167,7 +133,6 @@ cat %SOURCE3 >> mozilla/security/nss/lib/ckfw/builtins/certdata.txt
 make -C mozilla/security/coreconf
 make -C mozilla/security/coreconf platform 2>/dev/null |grep '^Linux' >destdir
 make -C mozilla/security/dbm
-make -C mozilla/security/nss/lib/ckfw/builtins generate
 make -C mozilla/security/nss
 
 %install
@@ -275,6 +240,9 @@ install -p -m644 %SOURCE6 %buildroot/%_sysconfdir/pki/nssdb/pkcs11.txt
 %_libdir/*.a
 
 %changelog
+* Fri Jan 11 2013 Alexey Gladkov <legion@altlinux.ru> 3.14.1-alt1
+- New version (3.14.1).
+
 * Tue Aug 28 2012 Alexey Gladkov <legion@altlinux.ru> 3.13.6-alt1
 - New version (3.13.6).
 

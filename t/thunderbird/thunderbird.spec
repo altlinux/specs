@@ -3,7 +3,7 @@
 
 Summary:	Thunderbird is Mozilla's e-mail client
 Name:		thunderbird
-Version:	17.0
+Version:	17.0.2
 Release:	alt1
 License:	MPL/GPL
 Group:		Networking/Mail
@@ -122,7 +122,7 @@ Summary: An integrated calendar for Thunderbird
 Group: Office
 Url: http://www.mozilla.org/projects/calendar/lightning/
 
-Provides: %name-lightning = 1.8b1
+Provides: %name-lightning = 1.9b1
 Requires: %name = %version-%release
 
 %description lightning
@@ -136,7 +136,7 @@ Group: Office
 Url: http://www.mozilla.org/projects/calendar/lightning/
 
 Requires: %name = %version-%release
-Requires: thunderbird-lightning
+Requires: thunderbird-lightning = %version-%release
 
 Provides: gdata-provider = %version-%release
 
@@ -370,7 +370,8 @@ rm -rf -- \
 	%buildroot/%tbird_prefix/README.txt \
 	#
 
-ver=%version
+#ver=%version
+ver=18.0
 sed -i \
 	-e "s,^\\(MaxVersion\\)=.*,\\1=${ver%%.*}.*,g" \
 	%buildroot/%tbird_prefix/application.ini
@@ -455,7 +456,7 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %files 
 %_bindir/*
 %tbird_prefix
-%tbird_arch_extensionsdir
+#tbird_arch_extensionsdir
 %tbird_noarch_extensionsdir
 %mozilla_arch_extdir/%tbird_cid
 %mozilla_noarch_extdir/%tbird_cid
@@ -502,6 +503,29 @@ rm -f -- %buildroot/%lightning_ciddir/application.ini
 %_sysconfdir/rpm/macros.d/%name
 
 %changelog
+* Thu Jan 17 2013 Alexey Gladkov <legion@altlinux.ru> 17.0.2-alt1
+- New version (17.0.2).
+- Fixed:
+  + MFSA 2013-20 Mis-issued TURKTRUST certificates
+  + MFSA 2013-19 Use-after-free in Javascript Proxy objects
+  + MFSA 2013-18 Use-after-free in Vibrate
+  + MFSA 2013-17 Use-after-free in ListenerManager
+  + MFSA 2013-16 Use-after-free in serializeToStream
+  + MFSA 2013-15 Privilege escalation through plugin objects
+  + MFSA 2013-14 Chrome Object Wrapper (COW) bypass through changing prototype
+  + MFSA 2013-13 Memory corruption in XBL with XML bindings containing SVG
+  + MFSA 2013-12 Buffer overflow in Javascript string concatenation
+  + MFSA 2013-11 Address space layout leaked in XBL objects
+  + MFSA 2013-10 Event manipulation in plugin handler to bypass same-origin policy
+  + MFSA 2013-09 Compartment mismatch with quickstubs returned values
+  + MFSA 2013-08 AutoWrapperChanger fails to keep objects alive during garbage collection
+  + MFSA 2013-07 Crash due to handling of SSL on threads
+  + MFSA 2013-05 Use-after-free when displaying table with many columns and column groups
+  + MFSA 2013-04 URL spoofing in addressbar during page loads
+  + MFSA 2013-03 Buffer Overflow in Canvas
+  + MFSA 2013-02 Use-after-free and buffer overflow issues found using Address Sanitizer
+  + MFSA 2013-01 Miscellaneous memory safety hazards (rv:18.0/ rv:10.0.12 / rv:17.0.2)
+
 * Fri Nov 23 2012 Alexey Gladkov <legion@altlinux.ru> 17.0-alt1
 - New version (17.0).
 - Fixed:

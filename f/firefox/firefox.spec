@@ -10,7 +10,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        17.0.1
+Version:        18.0
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -263,6 +263,31 @@ done
 %_sysconfdir/rpm/macros.d/firefox
 
 %changelog
+* Thu Jan 17 2013 Alexey Gladkov <legion@altlinux.ru> 18.0-alt1
+- New release (18.0).
+- Fixed:
+  + MFSA 2013-20 Mis-issued TURKTRUST certificates
+  + MFSA 2013-19 Use-after-free in Javascript Proxy objects
+  + MFSA 2013-18 Use-after-free in Vibrate
+  + MFSA 2013-17 Use-after-free in ListenerManager
+  + MFSA 2013-16 Use-after-free in serializeToStream
+  + MFSA 2013-15 Privilege escalation through plugin objects
+  + MFSA 2013-14 Chrome Object Wrapper (COW) bypass through changing prototype
+  + MFSA 2013-13 Memory corruption in XBL with XML bindings containing SVG
+  + MFSA 2013-12 Buffer overflow in Javascript string concatenation
+  + MFSA 2013-11 Address space layout leaked in XBL objects
+  + MFSA 2013-10 Event manipulation in plugin handler to bypass same-origin policy
+  + MFSA 2013-09 Compartment mismatch with quickstubs returned values
+  + MFSA 2013-08 AutoWrapperChanger fails to keep objects alive during garbage collection
+  + MFSA 2013-07 Crash due to handling of SSL on threads
+  + MFSA 2013-06 Touch events are shared across iframes
+  + MFSA 2013-05 Use-after-free when displaying table with many columns and column groups
+  + MFSA 2013-04 URL spoofing in addressbar during page loads
+  + MFSA 2013-03 Buffer Overflow in Canvas
+  + MFSA 2013-02 Use-after-free and buffer overflow issues found using Address Sanitizer
+  + MFSA 2013-01 Miscellaneous memory safety hazards (rv:18.0/ rv:10.0.12 / rv:17.0.2)
+  + MFSA 2012-98 Firefox installer DLL hijacking
+
 * Wed Dec 05 2012 Alexey Gladkov <legion@altlinux.ru> 17.0.1-alt1
 - New release (17.0.1).
 
