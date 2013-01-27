@@ -4,7 +4,7 @@
 
 %define bname busybox
 Name: %bname-hasher
-Version: 1.20.2
+Version: 1.21.0
 Release: alt1
 Summary: %bname's static utils for hasher
 License: GPLv2
@@ -14,7 +14,7 @@ AutoReq: no
 
 BuildRequires: %bname-source = %version
 # for cpio
-BuildRequires: %bname-source >= %version-alt2
+BuildRequires: %bname-source >= %version-alt1
 %if "%__cc" == "musl-gcc"
 BuildRequires: musl-devel
 %else
@@ -33,7 +33,7 @@ This package contains %bname's static utils for hasher:
 %prep
 %setup -cT -n %name-%version
 tar -x --strip-components 1 -f %_usrsrc/%bname-%version.tar*
-echo "CFLAGS_ash.o += -fno-lto" >> shell/Kbuild.src
+#echo "CFLAGS_ash.o += -fno-lto" >> shell/Kbuild.src
 
 
 %build
@@ -115,5 +115,8 @@ install -pD -m 0755 %bname %buildroot%_libexecdir/hasher/%bname
 
 
 %changelog
+* Sun Jan 27 2013 Led <led@altlinux.ru> 1.21.0-alt1
+- 1.21.0
+
 * Sat Nov 17 2012 Led <led@altlinux.ru> 1.20.2-alt1
 - initial build
