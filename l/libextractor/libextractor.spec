@@ -1,6 +1,9 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/zzuf glib2-devel libogg-devel zlib-devel
+# END SourceDeps(oneline)
 Name: libextractor
-Version: 0.5.23
-Release: alt3.qa3
+Version: 0.6.3
+Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
 
@@ -10,7 +13,7 @@ Url: http://gnunet.org/%name/
 
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
-Source: %url/download/%name-%version.tar.bz2
+Source: %url/download/%name-%version.tar
 Patch: %name-0.4.0-alt-ole2_makefile.patch
 Patch1: %name-0.5.15.patch
 
@@ -82,6 +85,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_man3dir/*
 
 %changelog
+* Sun Jan 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1
+- Friendly NMU: new version
+
 * Sat Feb 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.23-alt3.qa3
 - Removed bad RPATH
 

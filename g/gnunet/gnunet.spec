@@ -1,7 +1,10 @@
-%define oname GNUnet
+# BEGIN SourceDeps(oneline):
+BuildRequires: libICE-devel libSM-devel libglpk-devel libltdl7-devel libmicrohttpd-devel libmysqlclient-devel libpq5.4-devel python-devel
+# END SourceDeps(oneline)
+%define oname gnunet
 Name: gnunet
-Version: 0.8.1
-Release: alt3.1
+Version: 0.9.1
+Release: alt1
 
 Summary: Peer-to-peer framework
 
@@ -9,13 +12,11 @@ License: GPL
 Group: Communications
 Url: http://gnunet.org/
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: http://gnunet.org/download/%oname-%version.tar
-Patch: %name-disable-ltdl-detect.patch
-Patch1: %name-fix-pointer.patch
-Patch2: %{name}d-service.patch
-Patch3: %name-0.8.1-alt-DSO.patch
+Source: http://gnunet.org/download/%name-%version.tar
+# (TODO: add pseudouser)
+Source1: %{name}d.init.altlinux
+# LSB init example
+Source2: gnunetd.init.lsb
 
 # manually removed: libqt3-devel libqt4-devel  xorg-cf-files
 # Automatically added by buildreq on Mon Feb 01 2010
@@ -53,11 +54,7 @@ This package contains the headers that programmers will need to develop
 applications which will use %name.
 
 %prep
-%setup -n %oname-%version
-%patch -p2
-%patch1 -p2
-%patch2 -p2
-%patch3 -p2
+%setup -n %name-%version
 
 %build
 %autoreconf
@@ -67,62 +64,108 @@ applications which will use %name.
 %install
 %makeinstall_std
 %find_lang %oname
-install -D -m0755 gnunetd.service %buildroot%_initdir/gnunetd
+install -D -m0755 %{SOURCE1} %buildroot%_initdir/gnunetd
 
-%files -f GNUnet.lang
+# unpackaged files found
+rm -f %buildroot/usr/share/doc/gnunet/COPYING
+
+%files -f %{oname}.lang
 %doc AUTHORS ChangeLog NEWS README
 %doc %_man1dir/gnunet*.1*
-%doc %_man5dir/gnunet*.5*
-%_bindir/gnunet-auto-share
-%_bindir/gnunet-chat
+%_bindir/gnunet-arm
+%_bindir/gnunet-core-list-connections
+%_bindir/gnunet-daemon-exit
+%_bindir/gnunet-daemon-hostlist
+%_bindir/gnunet-daemon-topology
+%_bindir/gnunet-daemon-vpn
+%_bindir/gnunet-dht-get
+%_bindir/gnunet-dht-put
 %_bindir/gnunet-directory
 %_bindir/gnunet-download
-%_bindir/gnunet-insert
-%_bindir/gnunet-peer-info
+%_bindir/gnunet-fs
+%_bindir/gnunet-helper-hijack-dns
+%_bindir/gnunet-helper-nat-client
+%_bindir/gnunet-helper-nat-server
+%_bindir/gnunet-helper-transport-wlan
+%_bindir/gnunet-helper-vpn
+%_bindir/gnunet-nat-server
+%_bindir/gnunet-peerinfo
 %_bindir/gnunet-pseudonym
+%_bindir/gnunet-publish
+%_bindir/gnunet-resolver
 %_bindir/gnunet-search
-%_bindir/gnunet-stats
-%_bindir/gnunet-tbench
-%_bindir/gnunet-tracekit
-%_bindir/gnunet-transport-check
+%_bindir/gnunet-service-arm
+%_bindir/gnunet-service-ats
+%_bindir/gnunet-service-core
+%_bindir/gnunet-service-datastore
+%_bindir/gnunet-service-dht
+%_bindir/gnunet-service-dns
+%_bindir/gnunet-service-fs
+%_bindir/gnunet-service-mesh
+%_bindir/gnunet-service-nse
+%_bindir/gnunet-service-peerinfo
+%_bindir/gnunet-service-resolver
+%_bindir/gnunet-service-statistics
+%_bindir/gnunet-service-template
+%_bindir/gnunet-service-transport
+%_bindir/gnunet-statistics
+%_bindir/gnunet-template
+%_bindir/gnunet-testing
+%_bindir/gnunet-transport
+%_bindir/gnunet-transport-certificate-creation
 %_bindir/gnunet-unindex
-%_bindir/gnunet-update
-%_bindir/gnunet-vpn
-%_bindir/gnunet-setup
-%_bindir/gnunetd
-%_datadir/GNUnet/
+%_bindir/mockup-service
+%_datadir/gnunet/
 %_initdir/gnunetd
 
 %files -n lib%name
-%_libdir/GNUnet/
-%_libdir/libgnunetcollection.so.*
+%_libdir/gnunet/
+%_libdir/libgnunetarm.so.*
+%_libdir/libgnunetats.so.*
+%_libdir/libgnunetblock.so.*
 %_libdir/libgnunetcore.so.*
-%_libdir/libgnunetchatapi.so.*
-%_libdir/libgnunetdvdhtapi.so.*
-%_libdir/libgnunetecrscore.so.*
-%_libdir/libgnunetmysql.so.*
-%_libdir/libgnunetremoteapi.so.*
-%_libdir/libgnunettracekitapi.so.*
-%_libdir/libgnunetecrs.so.*
+%_libdir/libgnunetdatacache.so.*
+%_libdir/libgnunetdatastore.so.*
+%_libdir/libgnunetdht.so.*
+%_libdir/libgnunetfragmentation.so.*
 %_libdir/libgnunetfs.so.*
-%_libdir/libgnunetfsui.so.*
-%_libdir/libgnunetgetoptionapi.so.*
-%_libdir/libgnunetidentityapi.so.*
-%_libdir/libgnunetip.so.*
-%_libdir/libgnunetrpcutil.so.*
-%_libdir/libgnunetsetup.so.*
-%_libdir/libgnunettestingapi.so.*
-%_libdir/libgnunettrafficapi.so.*
-%_libdir/libgnunetnamespace.so.*
-%_libdir/libgnunetstatsapi.so.*
-%_libdir/libgnuneturitrack.so.*
+%_libdir/libgnunethello.so.*
+%_libdir/libgnunetmesh.so.*
+%_libdir/libgnunetnat.so.*
+%_libdir/libgnunetnse.so.*
+%_libdir/libgnunetpeerinfo.so.*
+%_libdir/libgnunetstatistics.so.*
+%_libdir/libgnunettesting.so.*
+%_libdir/libgnunettransport.so.*
+%_libdir/libgnunettransporttesting.so.*
 %_libdir/libgnunetutil.so.*
 
 %files -n lib%name-devel
-%_includedir/GNUnet/
+%_includedir/gnunet/
 %_libdir/*.so
+%_pkgconfigdir/gnunetarm.pc
+%_pkgconfigdir/gnunetblock.pc
+%_pkgconfigdir/gnunetcore.pc
+%_pkgconfigdir/gnunetdatacache.pc
+%_pkgconfigdir/gnunetdatastore.pc
+%_pkgconfigdir/gnunetdht.pc
+%_pkgconfigdir/gnunetdhtlog.pc
+%_pkgconfigdir/gnunetdv.pc
+%_pkgconfigdir/gnunetfragmentation.pc
+%_pkgconfigdir/gnunetfs.pc
+%_pkgconfigdir/gnunethello.pc
+%_pkgconfigdir/gnunetnat.pc
+%_pkgconfigdir/gnunetnse.pc
+%_pkgconfigdir/gnunetpeerinfo.pc
+%_pkgconfigdir/gnunetstatistics.pc
+%_pkgconfigdir/gnunettesting.pc
+%_pkgconfigdir/gnunettransport.pc
+%_pkgconfigdir/gnunetutil.pc
 
 %changelog
+* Sun Jan 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.1-alt1
+- Friendly NMU: update to 0.9.1
+
 * Wed Jul 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.1-alt3.1
 - Fixed build
 
