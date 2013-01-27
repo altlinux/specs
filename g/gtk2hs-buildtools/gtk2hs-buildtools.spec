@@ -7,7 +7,7 @@
 
 Name: %f_pkg_name
 Version: 0.12.4
-Release: alt1
+Release: alt2
 License: GPL-2
 
 Group: Development/Haskell
@@ -39,12 +39,15 @@ Haskell. These tools are not needed to actually run Gtk2Hs programs.
 %hs_build
 
 %install
-runghc Setup copy --destdir=%buildroot
-%files
-%_bindir/*
-%_datadir/%name-%version
+%hs_install
+%hs_gen_filelist
+
+%files -f %name-files.all
 
 %changelog
+* Sun Jan 27 2013 Denis Smirnov <mithraen@altlinux.ru> 0.12.4-alt2
+- cleanup
+
 * Mon Dec 24 2012 Denis Smirnov <mithraen@altlinux.ru> 0.12.4-alt1
 - 0.12.4
 
