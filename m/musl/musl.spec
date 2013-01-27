@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.8
-Release: alt20
+Release: alt21
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -114,6 +114,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Sun Jan 27 2013 Led <led@altlinux.ru> 0.9.8-alt21
+- fix tm_to_time logic for number of days in november
+
 * Sat Jan 26 2013 Led <led@altlinux.ru> 0.9.8-alt20
 - updated from upstream's SCM
 
