@@ -1,6 +1,6 @@
 Name: gnustep-systempreferences
 Version: 1.1.0
-Release: alt4.git20120323
+Release: alt5.git20120323
 Summary: Implementation of the PreferencePanes framework (NSPreferencePane)
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -9,6 +9,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gnustep/gnustep-systempreferences.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel
 BuildPreReq: libgnustep-objc2-devel gnustep-gui-devel /proc
@@ -79,12 +80,15 @@ ln -s Versions/1/Headers \
 	GNUstep/Frameworks/PreferencePanes.framework/Headers
 popd
 
+install -Dp -m 644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README TODO
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Versions/1/Headers
 %exclude %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -96,6 +100,9 @@ popd
 %_libdir/GNUstep/Frameworks/PreferencePanes.framework/Headers
 
 %changelog
+* Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt5.git20120323
+- Added menu file (thnx kostyalamer@)
+
 * Mon Jan 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt4.git20120323
 - Fixed symlink for Headers
 
