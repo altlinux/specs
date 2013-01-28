@@ -1,5 +1,5 @@
 Name: git
-Version: 1.8.1.1
+Version: 1.8.1.2
 Release: alt1
 
 Summary: Git core and tools
@@ -465,6 +465,9 @@ popd
 %endif #emacs
 
 %changelog
+* Mon Jan 28 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.1.2-alt1
+- Updated to maint v1.8.1.2.
+
 * Mon Jan 14 2013 Dmitry V. Levin <ldv@altlinux.org> 1.8.1.1-alt1
 - Updated to maint v1.8.1.1.
 
