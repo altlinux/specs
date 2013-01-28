@@ -8,13 +8,11 @@
 Summary: The Geospatial Data Abstraction Library (GDAL)
 Name: gdal
 Version: 1.8.0
-Release: alt2.1
+Release: alt3
 Group: Sciences/Geosciences
 
 License: MIT
 URL: http://www.gdal.org/
-
-Packager: Egor Vyscrebentsov <evyscr@altlinux.org>
 
 Source: %name-%version.tar
 
@@ -76,6 +74,7 @@ Summary: The Python bindings for the GDAL library
 Group: Development/Python
 Requires: %libname = %version
 Requires: %name
+Provides: python-module-osgeo = %version
 
 %description -n python-module-gdal
 Python module for %name.
@@ -136,13 +135,15 @@ Perl modules for GDAL/OGR.
 	--with-threads
 #	--with-grass=%_libdir/grass62 \
 
-%make LD_RUN_PATH=
+%make_build LD_RUN_PATH= lib-target
+%make_build LD_RUN_PATH=
 make docs
 make -B man
 
 %install
 mkdir -p %buildroot%python_sitelibdir
 %makeinstall_std PYTHONPATH=$PYTHONPATH:%buildroot%python_sitelibdir INSTALLDIRS=vendor
+cp -a %buildroot%python_sitelibdir/GDAL*/osgeo %buildroot%python_sitelibdir/
 make DESTDIR=%buildroot install-docs
 make DESTDIR=%buildroot install-man
 install -p -m644 NEWS %buildroot%_docdir/%name
@@ -180,7 +181,8 @@ done
 %_libdir/*.so.*
 
 %files -n python-module-%name
-%python_sitelibdir/GDAL*
+%python_sitelibdir/osgeo
+%exclude %python_sitelibdir/[^o]*
 
 %files -n perl-Geo-GDAL
 %perl_vendor_archlib/Geo
@@ -189,6 +191,9 @@ done
 %exclude %perl_vendor_archlib/Geo/GDAL/*.dox
 
 %changelog
+* Sun Jan 27 2013 Fr. Br. George <george@altlinux.ru> 1.8.0-alt3
+- Move python module out of .egg directory (Closes: #26462)
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.0-alt2.1
 - Rebuilt with libpng15
 
