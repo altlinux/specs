@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.65
+Release: alt100.66
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Mon Jan 28 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.66
+- build: avoid adding duplicate debuginfo requirements.
+
 * Mon Jan 28 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.65
 - build: fixed old bugs in deps comparator related to release tags.
 
