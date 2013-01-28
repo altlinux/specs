@@ -3,8 +3,8 @@
 %def_disable static
 
 Name: pcsc-lite
-Version: 1.8.5
-Release: alt2
+Version: 1.8.8
+Release: alt1
 
 Summary: PC/SC Lite smart card framework and applications
 License: %bsd
@@ -68,7 +68,7 @@ Static libraries for libpcsclite
 
 %prep
 %setup
-subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.in
+subst 's|AC_PREREQ(\[2.69\])|AC_PREREQ(\[2.68\])|' configure.ac
 
 %build
 %autoreconf
@@ -140,6 +140,9 @@ install -pDm644 %SOURCE3 %buildroot/lib/tmpfiles.d/pcsc-lite.conf
 %endif
 
 %changelog
+* Mon Jan 28 2013 Alexey Shabalin <shaba@altlinux.ru> 1.8.8-alt1
+- 1.8.8
+
 * Wed Aug 15 2012 Michael Shigorin <mike@altlinux.org> 1.8.5-alt2
 - added systemd support (shaba@)
 - moved libpcsclite.so to libpcsclite subpackage, thx ab@ (#25275)
