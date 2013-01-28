@@ -26,8 +26,8 @@
 
 # name-version-release
 %define rname licq
-%define ver 1.7.0
-%define rlz alt1.1
+%define ver 1.7.1
+%define rlz alt1
 
 Name: %rname
 Version: %ver
@@ -679,6 +679,9 @@ popd
 
 ########################################################
 %changelog
+* Mon Jan 28 2013 Sergey V Turchin <zerg@altlinux.org> 1.7.1-alt1
+- new version
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.1
 - Rebuilt with Boost 1.52.0
 
