@@ -1,5 +1,5 @@
 Name: repocop-unittest-rpm-filesystem
-Version: 0.12
+Version: 0.13
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -36,6 +36,9 @@ done
 #%_datadir/repocop/fixscripts/*
 
 %changelog
+* Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt1
+- dropped *-debuginfo conflicts (they mirror their main packages)
+
 * Mon Jul 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.12-alt1
 - introduced distrotests
 
