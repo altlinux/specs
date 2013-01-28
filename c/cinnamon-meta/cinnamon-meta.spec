@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -37,7 +37,8 @@ Cinnamon desktop.
 Summary: A default Cinnamon desktop meta package
 Group: Graphical desktop/GNOME
 
-Requires: cinnamon-minimal
+Requires: cinnamon-minimal = %version-%release
+Provides: cinnamon-full = %version-%release
 # Sound support
 Requires: pulseaudio-daemon alsa-plugins-pulse
 # Default file manager
@@ -60,11 +61,11 @@ Requires: libgtk2-engine-adwaita
 This package provides the various bits and pieces
 for a default Cinnamon desktop.
 
-%package -n cinnamon-full
-Summary: Meta package for Cinnamon desktop and default applications
+%package -n cinnamon-regular
+Summary: Meta package for Cinnamon desktop and set of default applications
 Group: Graphical desktop/GNOME
 
-Requires: cinnamon-default
+Requires: cinnamon-default = %version-%release
 
 # Color manager
 Requires: gnome-color-manager
@@ -95,13 +96,12 @@ Requires: gnome-utils
 Requires: gconf-editor >= 3.0
 Requires: dconf-editor >= 0.10
 Requires: gnome-control-center
-# Required to set keyboard layout to Alt+Shift, Ctrl+Shift etc.
-Requires: gnome-tweak-tool >= 3.6
+Requires: gcalctool
 
 # Default music player
 Requires: rhythmbox
 # Default video player
-Requires: gnome-mplayer
+Requires: totem gst-libav
 # Default image viewer
 Requires: gthumb
 # Default CD/DVD burning interface
@@ -110,7 +110,7 @@ Requires: brasero
 Requires: gnome-power-manager 
 Requires: NetworkManager-gnome >= 0.8.995
 
-%description -n cinnamon-full
+%description -n cinnamon-regular
 This package provides Cinnamon desktop and set
 of default applications.
 
@@ -118,9 +118,16 @@ of default applications.
 
 %files -n cinnamon-minimal
 %files -n cinnamon-default
-%files -n cinnamon-full
+%files -n cinnamon-regular
 
 %changelog
+* Tue Jan 28 2013 Vladimir Didenko <cow@altlinux.org> 1.6.0-alt3
+- deleted gnome-tweak-tool due dependency to gnome-shell
+- added gcalctool
+- renamed full package to regular - see 
+  http://www.altlinux.org/Desktop_Environment_Policy
+- replaced gnome-mplayer by totem
+
 * Wed Nov 21 2012 Vladimir Didenko <cow@altlinux.org> 1.6.0-alt2
 - dropped dependency to gnome menu
 
