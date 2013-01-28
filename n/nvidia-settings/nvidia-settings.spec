@@ -1,5 +1,5 @@
 Name: nvidia-settings
-Version: 310.19
+Version: 310.32
 Release: alt1
 
 Group: System/Configuration/Hardware
@@ -98,6 +98,12 @@ install -m 0644 src/libXNVCtrl/*.h %buildroot/%_includedir/NVCtrl/
 %_libdir/*.a
 
 %changelog
+* Mon Jan 28 2013 Sergey V Turchin <zerg@altlinux.org> 310.32-alt1
+- new version
+
+* Thu Nov 22 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt0.M60P.1
+- built for M60P
+
 * Mon Nov 19 2012 Sergey V Turchin <zerg@altlinux.org> 310.19-alt1
 - new version
 
