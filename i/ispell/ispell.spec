@@ -1,7 +1,7 @@
 %def_disable german
 Name: ispell
 Version: 3.2.06
-Release: alt13
+Release: alt14
 Epoch: 1
 
 Summary: The GNU interactive spelling checker program
@@ -60,7 +60,7 @@ install the dictionary files from the ispell-* package for your language.
 
 %package en
 Summary: English dictionary for ispell
-Group: System/Internationalization
+Group: Text tools
 # the binary format changed with ispell 3.2.06
 Requires: ispell >= 1:3.2.06
 BuildPreReq: words >= 2
@@ -189,6 +189,9 @@ EOF
 %endif
 
 %changelog
+* Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.2.06-alt14
+- group should be Text tools
+
 * Thu Mar 18 2010 Igor Vlasenko <viy@altlinux.ru> 1:3.2.06-alt13
 - split ispell and spell alternatives
 
