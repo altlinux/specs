@@ -5,7 +5,7 @@
 %define liblastfm_devel liblastfm%{sover}-devel
 Name: liblastfm%sover
 Version: 0.3.3
-Release: alt3
+Release: alt4
 
 Group: System/Libraries
 Summary: Liblastfm is a collection of libraries to help you integrate Last.fm services
@@ -95,6 +95,9 @@ cp -ar _include/* %buildroot/%_includedir/
 %_includedir/*
 
 %changelog
+* Mon Jan 28 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.3-alt4
+- rebuilt witn new rpm
+
 * Tue Jan 22 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.3-alt3
 - rename to liblastfm0
 
