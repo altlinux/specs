@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.60
-Release: alt5
+Version: 3.0.61
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 60
+%define kernel_stable_version 61
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -472,7 +472,7 @@ Patch0555: linux-%kernel_branch.42-fix-drivers-scsi--scsi_transport_fc.patch
 Patch0556: linux-%kernel_branch.43-fix-drivers-scsi--scsi_transport_iscsi.patch
 Patch0557: linux-%kernel_branch.42-fix-drivers-scsi--scsi_transport_sas.patch
 Patch0558: linux-%kernel_branch.42-fix-drivers-scsi--scsi_transport_spi.patch
-Patch0559: linux-%kernel_branch.42-fix-drivers-scsi--sd_mod.patch
+Patch0559: linux-%kernel_branch.61-fix-drivers-scsi--sd_mod.patch
 Patch0560: linux-%kernel_branch.42-fix-drivers-scsi--ses.patch
 Patch0561: linux-%kernel_branch.49-fix-drivers-scsi--sg.patch
 Patch0562: linux-%kernel_branch.42-fix-drivers-scsi--sim710.patch
@@ -2992,6 +2992,19 @@ done)
 
 
 %changelog
+* Mon Jan 28 2013 Led <led@altlinux.ru> 3.0.61-alt1
+- 3.0.61
+- updated:
+  + fix-drivers-cpufreq--p4-clockmod
+  + fix-drivers-edac--e752x_edac
+  + fix-drivers-edac--i3000_edac
+  + fix-drivers-edac--i5000_edac
+  + fix-drivers-edac--i5400_edac
+  + fix-drivers-edac--i7300_edac
+  + fix-drivers-edac--i82975x_edac
+  + fix-drivers-edac--x38_edac
+  + fix-drivers-scsi--sd_mod
+
 * Sat Jan 26 2013 Led <led@altlinux.ru> 3.0.60-alt5
 - updated:
   + fix-drivers-net--e1000e
