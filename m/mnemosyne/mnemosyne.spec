@@ -1,12 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-python
 # END SourceDeps(oneline)
+%global patchver a
+
 Name:		mnemosyne
 Summary:	Flash-card learning tool
 Version:	2.2
-Release:	alt1_1
+Release:	alt1_2.%{patchver}
 URL:		http://www.mnemosyne-proj.org/
-Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}.tar.gz
+Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}%{patchver}.tar.gz
 Patch0:		mnemosyne-desktop.patch
 License:	AGPLv3
 Group:		Games/Other
@@ -17,7 +19,7 @@ BuildRequires:	python-module-setuptools
 BuildArch:	noarch
 Requires:	icon-theme-hicolor
 Requires:	python-module-PyQt4
-Requires:	python-module-matplotlib
+Requires:	python-module-matplotlib python-module-matplotlib-fltk python-module-matplotlib-gtk3 python-module-matplotlib-qt python-module-matplotlib-qt4 python-module-matplotlib-sphinxext
 Requires:	python-module-cherrypy
 Source44: import.info
 
@@ -30,7 +32,7 @@ Optional dependencies:
 * latex: enables entering formulas using latex syntax.
 
 %prep
-%setup -q -n Mnemosyne-%{version}
+%setup -q -n Mnemosyne-%{version}%{patchver}
 %patch0 -p1 -b .d
 
 %build
@@ -57,12 +59,15 @@ popd
 %{_bindir}/%{name}
 %{_bindir}/mnemosyne-webserver
 %{python_sitelibdir_noarch}/mnemosyne
-%{python_sitelibdir_noarch}/Mnemosyne-%{version}-*.egg-info
+%{python_sitelibdir_noarch}/Mnemosyne-%{version}%{patchver}-*.egg-info
 %{python_sitelibdir_noarch}/openSM2sync
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2.a
+- update to new release by fcimport
+
 * Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_1
 - update to new release by fcimport
 
