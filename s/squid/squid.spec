@@ -4,9 +4,9 @@
 %def_enable esi
 
 Name: squid
-Version: 3.1.22
+Version: 3.1.23
 %define langpack_ver 20121005
-Release: alt10
+Release: alt1
 Summary: The Squid proxy caching server
 License: GPLv2
 Group: System/Servers
@@ -282,6 +282,9 @@ chown -R %name:%name %_spooldir/%name >/dev/null 2>&1 ||:
 
 
 %changelog
+* Mon Jan 28 2013 Led <led@altlinux.ru> 3.1.23-alt1
+- 3.1.23 (CVE-2012-5643)
+
 * Tue Dec 25 2012 Led <led@altlinux.ru> 3.1.22-alt10
 - added langpack (ALT#28266)
 
