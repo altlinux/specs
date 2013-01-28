@@ -1,24 +1,65 @@
 %define gimpplugindir %(gimptool-2.0 --gimpplugindir)
 
 Name: gmic
-Version: 1.5.0.8
-Release: alt1.1
+Version: 1.5.3.0
+Release: alt1
 
-Summary: G'MIC is an interpreter of image processing macros
-License: CeCILL
+Summary: GREYC's Magic Image Converter
+License: CeCILL v.2.0
 Group: Graphics
-
 Url: http://gmic.sourceforge.net/
+
+
 Source: http://downloads.sourceforge.net/gmic/gmic_%version.tar.gz
 Patch1: gmic-1.4.8.1-bashcompletion.patch
+Patch2: gmic-1.5.3.0-alt-makefile.patch
 
-# Automatically added by buildreq on Wed Mar 09 2011
-BuildRequires: gcc-c++ imake libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel libavformat-devel libfftw3-devel libgimp-devel libjpeg-devel libopencv-devel libpng-devel libswscale-devel libtiff-devel openexr-devel xorg-cf-files
+Requires: lib%name = %version-%release
+
+BuildRequires: gcc-c++ imake libGraphicsMagick-c++-devel libImageMagick-devel libXext-devel libXrandr-devel
+BuildRequires: libavformat-devel libfftw3-devel libgimp-devel libjpeg-devel libopencv-devel libpng-devel
+BuildRequires: libswscale-devel libtiff-devel openexr-devel xorg-cf-files zlib-devel
+# for zart
+BuildRequires: libqt4-devel
 
 %description
 G'MIC (GREYC's Magic Image Converter) is an interpreter of image processing
 macros whose goal is to convert, manipulate and visualize generic 1D/2D/3D
 multi-spectral image datasets.
+
+%package -n lib%name
+Summary: GREYC's Magic Image Converter Library
+Group: System/Libraries
+
+%description -n lib%name
+G'MIC (GREYC's Magic Image Converter) is an interpreter of image processing
+macros whose goal is to convert, manipulate and visualize generic 1D/2D/3D
+multi-spectral image datasets.
+
+This package provides shared G'MIC library.
+
+%package -n lib%name-devel
+Summary: GREYC's Magic Image Converter Library (development package)
+Group: Development/C++
+Requires: lib%name = %version-%release
+
+%description -n lib%name-devel
+G'MIC (GREYC's Magic Image Converter) is an interpreter of image processing
+macros whose goal is to convert, manipulate and visualize generic 1D/2D/3D
+multi-spectral image datasets.
+
+This package provides development files for GREYC's Magic Image Converter Library.
+
+%package zart
+Summary: GREYC's image processing language demo
+Group: Graphics
+Requires: lib%name = %version-%release
+
+%description zart
+ZArt is a computer program whose purpose is to demonstrate the possibilities of
+the G'MIC image processing language by offering the choice of several
+manipulations on a video stream acquired from a webcam. In other words, ZArt is
+a GUI for G'MIC real-time manipulations on the output of a webcam.
 
 %package -n gimp-plugin-gmic
 Summary: Image denoising and interpolation plugin for GIMP
@@ -33,35 +74,45 @@ multi-spectral image datasets.
 %prep
 %setup -n gmic-%version
 %patch1 -p1
+%patch2
+subst 's|\$(USR)/lib/|$(USR)/%_lib/|' src/Makefile
 
 %build
-# Fix check: InitializeMagick found in GraphicsMagick lib, not GraphicsMagick++
-subst 's/-lGraphicsMagick++/-lGraphicsMagick/g' configure
-subst 's/-lMagick++/-lMagickCore/g' configure
-
-subst 's/-Dcimg_use_magick/-Dcimg_use_magick `GraphicsMagick++-config --cppflags`/' src/Makefile
-
-# Fixes for opencv2:
-subst 's/-lcv/-lopencv_imgproc/g; s/-lhighgui/-lopencv_highgui/g' configure src/Makefile
-
-subst 's/strip /#strip /' src/Makefile
-
-%configure
+pushd src
 %make_build
+popd
 
 %install
+pushd src
 %makeinstall_std
+popd
 
-%files
+%find_lang --with-man %name
+
+%files -f %name.lang
 %config /etc/bash_completion.d/*
-%_bindir/*
-%_man1dir/*
-%lang(fr) %_mandir/fr/man1/*
+%_bindir/%name
+%doc README COPYING
+
+%files -n lib%name
+%_libdir/lib%name.so.*
+
+%files -n lib%name-devel
+%_includedir/gmic.h
+%_libdir/lib%name.so
+
+%files zart
+%_bindir/zart
+%_datadir/zart/
+%doc zart/README
 
 %files -n gimp-plugin-gmic
 %gimpplugindir/plug-ins/*
 
 %changelog
+* Mon Jan 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.5.3.0-alt1
+- 1.5.3.0 (ALT #28117)
+
 * Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0.8-alt1.1
 - Rebuilt with libopencv2.4
 
