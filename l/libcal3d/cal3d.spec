@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define oldname cal3d
 Name:           libcal3d
 Version:        0.11.0
-Release:        alt1_13
+Release:        alt2_13
 Summary:        Skeletal based 3-D character animation library
 
 License:        LGPLv2+
@@ -33,7 +33,7 @@ in a platform-/graphic API-independent way.
 %package devel
 Summary:        Header files, libraries and development documentation for Cal3D
 Group:          Development/C++
-Requires:       cal3d = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Provides: cal3d-devel = %{version}-%{release}
 
 %description devel
@@ -43,7 +43,7 @@ for Cal3D.
 %package doc
 Summary:        Documentation files for Cal3D
 Group:          Documentation
-Requires:       cal3d = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 Provides: cal3d-doc = %{version}-%{release}
 
 %description doc
@@ -51,7 +51,7 @@ This package contains modeling documentation and a users guide for Cal3D.
 
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 %patch0 -p0 -b .gcc43
 
 
@@ -77,7 +77,7 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 %files
 %doc AUTHORS ChangeLog COPYING README TODO
 %{_bindir}/cal3d_converter
-%{_mandir}/man1/cal3d_converter.1.*
+%{_mandir}/man1/cal3d_converter.1*
 %{_libdir}/*.so.*
 
 %files devel
@@ -92,6 +92,9 @@ rm -f $RPM_BUILD_ROOT%{_libdir}/*.a
 
 
 %changelog
+* Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 0.11.0-alt2_13
+- rebuild to fix requires
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.11.0-alt1_13
 - update to new release by fcimport
 
