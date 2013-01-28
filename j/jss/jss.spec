@@ -7,7 +7,7 @@ BuildRequires: jpackage-compat
 %define fedora 18
 Name:           jss
 Version:        4.2.6
-Release:        alt4_25jpp7
+Release:        alt4_28jpp7
 Summary:        Java Security Services (JSS)
 
 Group:          System/Libraries
@@ -17,10 +17,10 @@ URL:            http://www.mozilla.org/projects/security/pki/jss/
 # following commands to generate the tarball:
 # cvs -d :pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot export -r JSS_4_2_6_RTM -d jss-4.2.6 -N mozilla/security/coreconf mozilla/security/jss
 # tar -czvf jss-4.2.6.tar.gz jss-4.2.6
-Source0:        %{name}-%{version}.tar.gz
-Source1:        MPL-1.1.txt
-Source2:        gpl.txt
-Source3:        lgpl.txt
+Source0:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/%{name}-%{version}.tar.gz
+Source1:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/MPL-1.1.txt
+Source2:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/gpl.txt
+Source3:        http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}-%{release}/lgpl.txt
 
 BuildRequires:  nss-devel >= 3.12.3.99
 BuildRequires:  libnspr-devel >= 4.6.99
@@ -131,11 +131,14 @@ sed -i -e 's;LINUX2_1;LINUX3_1;' mozilla/security/coreconf/Linux3.1.mk
 
 cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.2.mk 
 sed -i -e 's;LINUX3_1;LINUX3_2;' mozilla/security/coreconf/Linux3.2.mk
+
+cp -p mozilla/security/coreconf/Linux3.2.mk mozilla/security/coreconf/Linux3.6.mk
+sed -i -e 's;LINUX3_1;LINUX3_6;' mozilla/security/coreconf/Linux3.6.mk
 %endif
 
 
 # 3.0(t6), 3.5(SIS) kernels support
-for i in 0 3 4 5 6; do
+for i in 0 3 4 5 6 7 8; do
 cp -p mozilla/security/coreconf/Linux3.1.mk mozilla/security/coreconf/Linux3.$i.mk
 sed -i -e 's;LINUX3_1;LINUX3_'$i';' mozilla/security/coreconf/Linux3.$i.mk
 done
@@ -195,6 +198,9 @@ ln -s %_libdir/java/jss4.jar %buildroot%_javadir/jss4.jar
 
 
 %changelog
+* Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt4_28jpp7
+- fixed build
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.6-alt4_25jpp7
 - added jss4 compat symlink
 
