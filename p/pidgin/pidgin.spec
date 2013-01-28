@@ -33,7 +33,7 @@
 
 Name: pidgin
 Version: 2.10.6
-Release: alt2
+Release: alt3
 
 Summary: A GTK+ based multiprotocol instant messaging client
 License: GPL
@@ -76,9 +76,9 @@ BuildPreReq: libXext-devel libX11-devel
 %{?_enable_dot:BuildPreReq: graphviz}
 %{?_enable_doxygen:BuildPreReq: doxygen}
 %{?_enable_idn:BuildPreReq: libidn-devel}
-%{?_enable_farstream:BuildPreReq: farstream-devel}
-%{?_enable_vv:BuildPreReq: gst-plugins-devel}
-%{?_enable_gstreamer:BuildPreReq: gstreamer-devel}
+%{?_enable_farstream:BuildPreReq: libfarstream0.2-devel}
+%{?_enable_vv:BuildPreReq: gst-plugins1.0-devel}
+%{?_enable_gstreamer:BuildPreReq: gstreamer1.0-devel}
 %{?_enable_sm:BuildPreReq: libSM-devel}
 %{?_enable_screensaver:BuildPreReq: libXScrnSaver-devel xorg-scrnsaverproto-devel}
 BuildPreReq: libsqlite3-devel >= 3.3
@@ -446,6 +446,9 @@ fi
 %endif
 
 %changelog
+* Mon Jan 28 2013 Alexey Shabalin <shaba@altlinux.ru> 2.10.6-alt3
+- port to GStreamer 1.0 and Farstream 0.2
+
 * Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 2.10.6-alt2
 - disable gevolution plugin
 
