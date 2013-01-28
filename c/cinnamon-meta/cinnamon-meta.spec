@@ -2,7 +2,7 @@
 
 Name: cinnamon-meta
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: Cinnamon desktop meta package
 License: %gpl2plus
@@ -56,6 +56,8 @@ Requires: gnome-icon-theme-symbolic >= %ver_major
 Requires: gnome-themes-standard >= %ver_major
 Requires: libgtk3-engine-adwaita
 Requires: libgtk2-engine-adwaita
+# default font
+Requires: fonts-otf-abattis-cantarell
 
 %description -n cinnamon-default
 This package provides the various bits and pieces
@@ -121,6 +123,9 @@ of default applications.
 %files -n cinnamon-regular
 
 %changelog
+* Tue Jan 28 2013 Vladimir Didenko <cow@altlinux.org> 1.6.0-alt4
+- added dependency to Cantarell font
+
 * Tue Jan 28 2013 Vladimir Didenko <cow@altlinux.org> 1.6.0-alt3
 - deleted gnome-tweak-tool due dependency to gnome-shell
 - added gcalctool
