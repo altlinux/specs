@@ -1,6 +1,6 @@
 Name: alterator-l10n
 Version: 2.9
-Release: alt51
+Release: alt52
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
@@ -107,6 +107,9 @@ make check
 %lang(es) %_datadir/locale/es/LC_MESSAGES/*.mo
 
 %changelog
+* Mon Jan 28 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt52
+- Add missed message for Russion translation of alterator-rd
+
 * Thu Jan 24 2013 Andrey Cherepanov <cas@altlinux.org> 2.9-alt51
 - Add one message for Russion translation of alterator-rd
 
