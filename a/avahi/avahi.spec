@@ -13,12 +13,13 @@
 
 Name: avahi
 Version: 0.6.31
-Release: alt3
+Release: alt4
 
 Summary: Local network service discovery
 License: LGPL
 Group: System/Servers
 Url: http://www.avahi.org/
+Packager: Sergey Bolshakov <sbolshakov@altlinux.ru>
 
 Source: %name-%version-%release.tar
 
@@ -50,17 +51,13 @@ and is very convenient.
 %package autoipd
 Summary: Assigning link-local IP addresses service
 Group: System/Servers
-Requires(pre): shadow-utils
 Conflicts: lib%name > %version-%release
 Conflicts: lib%name < %version-%release
 
 %package daemon
 Summary: Local network service discovery
 Group: System/Servers
-Requires(pre): shadow-utils
 Requires: chrooted-resolv dbus lib%name = %version-%release
-Requires(post): %post_service dbus-tools
-Requires(preun): %preun_service
 
 %package dnsconfd
 Summary: DNS configuration aquiring service
@@ -119,7 +116,7 @@ Requires: lib%name = %version-%release
 Summary: Libraries and header files for avahi Qt3 development
 Group: Development/KDE and QT
 Requires: lib%name-devel = %version-%release
-Requires: lib%name-qt3 = %version
+Requires: lib%name-qt3 = %version-%release
 Requires: libqt3-devel
 
 %package -n lib%name-tqt
@@ -131,7 +128,7 @@ Requires: lib%name = %version-%release
 Summary: Libraries and header files for avahi Trinity Qt development
 Group: Development/KDE and QT
 Requires: lib%name-devel = %version-%release
-Requires: lib%name-tqt = %version
+Requires: lib%name-tqt = %version-%release
 Requires: libtqt-devel
 
 %package -n lib%name-qt4
@@ -143,7 +140,7 @@ Requires: lib%name = %version-%release
 Summary: Libraries and header files for avahi Qt4 development
 Group: Development/KDE and QT
 Requires: lib%name-devel = %version-%release
-Requires: lib%name-qt4 = %version
+Requires: lib%name-qt4 = %version-%release
 Requires: libqt4-devel
 
 %package -n lib%name-ui
@@ -215,8 +212,9 @@ Group: Development/Python
 %package bookmarks
 Summary: Web service showing mDNS/DNS-SD announced HTTP services using the Avahi
 Group: Networking/WWW
+Requires: python-module-%name = %version-%release
 # still needed. that sucks
-%py_requires avahi gobject dbus twisted twisted.internet
+%py_requires gobject dbus twisted twisted.internet
 # p-m-t-w doesn't provide twisted.web. that sucks too
 Requires: python-module-twisted-web
 BuildArch: noarch
@@ -230,7 +228,8 @@ Requires: lib%name = %version-%release
 Summary: UI tools for mDNS discovery
 Group: Graphical desktop/Other
 Requires: %name-daemon = %version-%release
-%py_requires avahi gtk gobject dbus
+Requires: python-module-%name = %version-%release
+%py_requires gtk gobject dbus
 
 # {{{ descriptions
 
@@ -666,6 +665,9 @@ fi
 %endif		    
 
 %changelog
+* Mon Jan 28 2013 Dmitry V. Levin <ldv@altlinux.org> 0.6.31-alt4
+- Fixed interpackage dependencies (closes: #28439).
+
 * Mon May 21 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.31-alt3
 - Avoid avahi reloading if messagebus is not running.
 
