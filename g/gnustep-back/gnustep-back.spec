@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.23.0
-Release: alt5.git20130105
+Release: alt6.git20130105
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -22,7 +22,7 @@ BuildPreReq: libgnustep-objc2-devel libXcursor-devel libXfixes-devel
 BuildPreReq: fonts-type1-urw
 BuildRequires: texinfo /proc
 
-Requires: fonts-type1-urw
+Requires: fonts-type1-urw gnustep-base gnustep-gui
 
 %description 
 This is a back-end for the GNUstep GUI library which allows you to use
@@ -97,16 +97,26 @@ for i in n021003l n021023l n021004l n021024l; do
 done
 popd
 
+install -d %buildroot%_sysconfdir/profile.d
+echo "export GNUSTEP_STRING_ENCODING=UTF-8" \
+	> %buildroot%_sysconfdir/profile.d/%name.sh
+chmod +x %buildroot%_sysconfdir/profile.d/%name.sh
+
 gzip ChangeLog
 
 %files
 %doc ANNOUNCE ChangeLog* COPYING* NEWS README
 %doc %_docdir/GNUstep
+%_sysconfdir/profile.d/*
 %_bindir/*
 %_libdir/GNUstep
 %_man1dir/*
 
 %changelog
+* Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt6.git20130105
+- Set UTF-8 encoding (thnx aen@)
+- Added requirements on gnustep-base, gnustep-gui
+
 * Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt5.git20130105
 - Use fonts-type1-urw for cyrillic text (thnx aen@)
 
