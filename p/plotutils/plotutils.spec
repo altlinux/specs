@@ -6,7 +6,7 @@
 
 Name: plotutils
 Version: 2.5.1
-Release: alt3.qa3
+Release: alt3.qa4
 
 Summary: GNU Plotutils -- plotting utilities
 
@@ -23,7 +23,7 @@ Patch2: %name-2.5.1-alt-autoreconf.patch
 Patch3: %name-2.5.1-alt-libpng15.patch
 
 # Automatically added by buildreq on Tue Dec 02 2008
-BuildRequires: flex gcc-c++ imake libXaw-devel libXext-devel libpng-devel rpm-build-java rpm-build-mono rpm-build-seamonkey xorg-cf-files xorg-sdk
+BuildRequires: flex gcc-c++ imake libXaw-devel libXext-devel libpng-devel rpm-build-java rpm-build-mono xorg-cf-files xorg-sdk
 
 BuildPreReq: rpm-build-fonts gcc-fortran
 
@@ -171,6 +171,9 @@ gzip -9nf *.pcf || :
 %_includedir/xmi.h
 
 %changelog
+* Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt3.qa4
+- Fixed build
+
 * Fri Sep 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5.1-alt3.qa3
 - Rebuilt with libpng15
 
