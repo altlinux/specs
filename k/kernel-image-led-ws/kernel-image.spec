@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.61
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -116,7 +116,7 @@ Release: alt1
 
 %def_disable debug_section_mismatch
 
-%define allocator SLQB
+%define allocator SLAB
 
 %Extra_modules vboxhost 4.1.24
 #Extra_modules vboxguest 4.1.22
@@ -427,7 +427,7 @@ Patch0479: linux-%kernel_branch.56-fix-drivers-net-wireless-wl12xx--wl12xx.patch
 Patch0481: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
 Patch0490: linux-%kernel_branch.58-fix-drivers-pci.patch
-Patch0491: linux-%kernel_branch.42-fix-drivers-pci--dmar.patch
+Patch0491: linux-%kernel_branch.61-fix-drivers-pci--dmar.patch
 Patch0492: linux-%kernel_branch.42-fix-drivers-pci--sn.patch
 Patch0493: linux-%kernel_branch.46-fix-drivers-pci-hotplug--acpiphp.patch
 Patch0494: linux-%kernel_branch.42-fix-drivers-pci-hotplug--pci_hotplug.patch
@@ -2992,6 +2992,9 @@ done)
 
 
 %changelog
+* Tue Jan 29 2013 Led <led@altlinux.ru> 3.0.61-alt2
+- build with SLAB allocator
+
 * Mon Jan 28 2013 Led <led@altlinux.ru> 3.0.61-alt1
 - 3.0.61
 - updated:
@@ -2999,6 +3002,7 @@ done)
   + fix-drivers-edac--e752x_edac
   + fix-drivers-edac--i3000_edac
   + fix-drivers-edac--i5000_edac
+  + fix-drivers-edac--i5100_edac
   + fix-drivers-edac--i5400_edac
   + fix-drivers-edac--i7300_edac
   + fix-drivers-edac--i82975x_edac
