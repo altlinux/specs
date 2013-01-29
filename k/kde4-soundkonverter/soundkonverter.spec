@@ -5,14 +5,15 @@
 %define rname soundKonverter
 %define tname soundkonverter
 Name: kde4-soundkonverter
-Version: 1.6.2
+Version: 1.6.4
 Release: alt1
 
 Summary: A frontend to various audio converters
 License: GPLv2
 Group: Sound
 
-Url: http://www.kde-apps.org/content/show.php/content=29024
+Url: http://gitorious.org/soundkonverter/soundkonverter
+#Url: http://kde-apps.org/content/show.php/soundKonverter?content=29024
 Source: %tname-%version.tar
 Source1: ru.po
 Patch1: alt-fix-linking.patch
@@ -74,6 +75,12 @@ done
 %_K4srvtyp/%{tname}_*.desktop
 
 %changelog
+* Tue Jan 29 2013 Sergey V Turchin <zerg@altlinux.org> 1.6.4-alt1
+- new version
+
+* Fri Jul 20 2012 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt0.M60P.1
+- built for M60P
+
 * Thu Jul 12 2012 Sergey V Turchin <zerg@altlinux.org> 1.6.2-alt1
 - new version
 
