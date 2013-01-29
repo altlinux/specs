@@ -1,6 +1,6 @@
 Name: exiv2
-Version: 0.22
-Release: alt1.1
+Version: 0.23
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -10,6 +10,8 @@ Group: Graphics
 
 Url: http://www.exiv2.org
 Source: %url/exiv2-%version.tar.gz
+
+Requires: libexiv2 = %version-%release
 
 # Automatically added by buildreq on Mon Jul 20 2009
 BuildRequires: gcc-c++ libexpat-devel zlib-devel
@@ -38,6 +40,8 @@ exiv2 library.
 
 %prep
 %setup
+pushd config
+make -f config.make
 
 %build
 %configure
@@ -62,6 +66,11 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %_pkgconfigdir/*
 
 %changelog
+* Sun May 13 2012 Yuri N. Sedunov <aris@altlinux.org> 0.23-alt1
+- 0.23
+- fixed interpackage dependencies
+- enabled LFS support
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.22-alt1.1
 - Removed bad RPATH
 

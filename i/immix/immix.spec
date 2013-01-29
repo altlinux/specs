@@ -2,7 +2,7 @@
 
 Name: immix
 Version: 1.3
-Release: alt8
+Release: alt9
 
 Summary: Aligns and merges a set of similar images
 License: GPLv3+
@@ -44,6 +44,9 @@ install -pD -m644 packaging/immix.desktop %buildroot%_desktopdir/immix.desktop
 %_desktopdir/immix.desktop
 
 %changelog
+* Sun Jan 27 2013 Yuri N. Sedunov <aris@altlinux.org> 1.3-alt9
+- rebuilt against libexiv2.so.12
+
 * Tue Nov 01 2011 Michael Shigorin <mike@altlinux.org> 1.3-alt8
 - Rebuild with libexiv2.so.11.
 

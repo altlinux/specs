@@ -1,6 +1,6 @@
 Name: python-module-pyexiv2
 Version: 0.3.2
-Release: alt1.5
+Release: alt1.6
 
 Summary: A python binding to exiv2, the C++ library for manipulation of EXIF and IPTC image metadata
 License: GPLv2+
@@ -44,6 +44,9 @@ scons install DESTDIR=%buildroot CXXFLAGS="%optflags"
 %doc doc/*
 
 %changelog
+* Sun Jan 27 2013 Yuri N. Sedunov <aris@altlinux.org> 0.3.2-alt1.6
+- rebuilt against libexiv2.so.12
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.5
 - Rebuilt with Boost 1.52.0
 

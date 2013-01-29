@@ -3,13 +3,14 @@
 %define rname gwenview
 Name: kde4-gwenview
 Version: 4.10.0
-Release: alt0.2
+Release: alt0.4
 
 Group: Graphics
 Summary: KDE support for digital cameras
 Url: http://projects.kde.org/projects/kdegraphics/gwenview
 License: GPLv2+
 
+Requires: libgwenview4 = %EVR
 Provides: kde4graphics-gwenview = %version-%release
 Obsoletes: kde4graphics-gwenview < %version-%release
 
@@ -35,6 +36,7 @@ Development files for %name
 %package -n libgwenview4
 Summary: KDE 4 core library
 Group: System/Libraries
+Requires: libgwenview4 = %EVR
 %description -n libgwenview4
 KDE 4 core library.
 
@@ -73,6 +75,12 @@ KDE 4 core library.
 
 
 %changelog
+* Fri Jan 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.4
+- fix requires
+
+* Thu Jan 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
+- rebuilt whith new exiv2
+
 * Mon Jan 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 

@@ -1,8 +1,8 @@
 %def_disable deskbar
 
 Name: pinot
-Version: 0.98
-Release: alt2.1
+Version: 1.03
+Release: alt1
 
 Summary: Personal search and metasearch tool
 License: GPLv2+
@@ -29,6 +29,16 @@ Requires: deskbar-applet
 
 %description deskbar
 The included plugin enables Deskbar to search documents indexed by Pinot.
+
+
+%package devel
+Summary: Pinot development package
+Group: Development/C++
+Requires: %name = %version-%release
+
+%description devel
+This package provides headers needed to develop Pinot plugins.
+
 
 %prep
 %setup
@@ -74,7 +84,14 @@ subst 's/Settings;X/Settings;DesktopSettings;X/' pinot-prefs.desktop
 %_libexecdir/deskbar-applet/modules-2.20-compatible/pinot-*
 %endif
 
+%files devel
+%_includedir/%name/
+
 %changelog
+* Thu Jan 24 2013 Yuri N. Sedunov <aris@altlinux.org> 1.03-alt1
+- 1.03
+- new -devel subpackage
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.98-alt2.1
 - Fixed linking
 

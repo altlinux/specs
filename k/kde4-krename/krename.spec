@@ -2,14 +2,15 @@
 
 Summary: A powerfull batch renamer for KDE4
 Name: kde4-%origname
-Version: 4.0.7
-Release: alt1.1
+Version: 4.0.9
+Release: alt1
 License: GPL
 Url: http://www.krename.net
 Group: File tools
 Packager: Aeliya Grevnyov <gray_graff@altlinux.org>
 
 Source: %origname.tar.bz2
+Patch: %origname-4.0.9-alt-build.patch
 
 BuildRequires(pre): kde-common-devel
 BuildRequires: gcc-c++ kde4libs-devel libtag-devel libexiv2-devel
@@ -26,6 +27,7 @@ It can also change access and modification dates, permissions, and file ownershi
 
 %prep
 %setup -q -n %origname
+%patch -p1
 
 %build
 %K4build
@@ -44,6 +46,13 @@ It can also change access and modification dates, permissions, and file ownershi
 %_K4srv/*
 
 %changelog
+* Sun Jan 27 2013 Yuri N. Sedunov <aris@altlinux.org> 4.0.9-alt1
+- 4.0.9
+- fixed build
+
+* Sun Jan 27 2013 Yuri N. Sedunov <aris@altlinux.org> 4.0.7-alt1.2
+- rebuilt against libexiv2.so.12
+
 * Thu Nov 03 2011 Michael Shigorin <mike@altlinux.org> 4.0.7-alt1.1
 - NMU: rebuilt with libexiv2.so.11
 

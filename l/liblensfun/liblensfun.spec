@@ -1,6 +1,6 @@
 Name: liblensfun
-Version: 0.2.5
-Release: alt3.2
+Version: 0.2.6
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -11,13 +11,11 @@ Group: Graphics
 Url: http://lensfun.berlios.de/
 Source: http://download.berlios.de/lensfun/lensfun-%version.tar.bz2
 Patch1: lensfun-0.2.5-lensdbadditions.patch
-# Patch from PLD to fix broken vectorization code:
-Patch2: lensfun-0.2.5-vectorization.patch
 Patch3: lensfun-0.2.5-alt-debuginfo.patch
-Patch4: lensfun-0.2.5-alt-libpng15.patch
+Patch4: lensfun-0.2.6-fc-cmake_LIB_SUFFIX.patch
+Patch5: lensfun-0.2.6-fc-cmake_pkgconfig.patch
 
-# Automatically added by buildreq on Mon Aug 16 2010
-BuildRequires: doxygen gcc-c++ glib2-devel libpng-devel python-modules
+BuildRequires: cmake doxygen gcc-c++ glib2-devel libpng-devel python-modules
 
 %description
 A library to rectifying the defects introduced by your photographic equipment.
@@ -33,25 +31,18 @@ Development tools for programs which will use the lensfun library.
 %prep
 %setup -n lensfun-%version
 %patch1 -p1
-%patch2 -p0
 %patch3 -p2
-%patch4 -p2
+%patch4 -p1
+%patch5 -p1
 
 %build
-# Additional LIBS put here to satisfy as-needed linker mode (in lazy way :).
-LIBS="-lglib-2.0 -lpng" \
-%add_optflags -fpermissive
-./configure -v \
-	--prefix=/usr \
-	--target=posix \
-	--cflags="%optflags" \
-	--cxxflags="%optflags"
-
-# set GCC.LDFLAGS to avoid stripping
-%make_build all V=1 GCC.LDFLAGS.release=""
+%cmake -DBUILD_TESTS:BOOL=OFF
+pushd BUILD
+%make_build
 
 %install
-%make INSTALL_PREFIX=%buildroot install-lensfun install-lensdb install-lensfun-pc
+pushd BUILD
+%makeinstall_std
 
 %files
 %_libdir/*.so.*
@@ -63,6 +54,10 @@ LIBS="-lglib-2.0 -lpng" \
 %_pkgconfigdir/*
 
 %changelog
+* Fri Dec 07 2012 Yuri N. Sedunov <aris@altlinux.org> 0.2.6-alt1
+- 0.2.6 (ALT #28197)
+- removed obsolete (fixed by upstream) patches
+
 * Thu Dec 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.5-alt3.2
 - Fixed build with libpng15
 

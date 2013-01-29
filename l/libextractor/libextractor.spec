@@ -1,8 +1,5 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/zzuf glib2-devel libogg-devel zlib-devel
-# END SourceDeps(oneline)
 Name: libextractor
-Version: 0.6.3
+Version: 1.0.1
 Release: alt1
 
 Summary: libextractor is a simple library for keyword extraction
@@ -11,14 +8,17 @@ Group: System/Libraries
 License: GPLv2+
 Url: http://gnunet.org/%name/
 
-Packager: Vitaly Lipatov <lav@altlinux.ru>
-
-Source: %url/download/%name-%version.tar
+Source: %url/download/%name-%version.tar.gz
 Patch: %name-0.4.0-alt-ole2_makefile.patch
 Patch1: %name-0.5.15.patch
 
-# Automatically added by buildreq on Tue Jun 08 2010
-BuildRequires: bzlib-devel gcc-c++ libexiv2-devel libflac-devel libgsf-devel libgtk+2-devel libltdl7-devel libmpeg2-devel libqt4-devel librpm-devel libvorbis-devel
+BuildRequires: gcc-c++ zlib-devel bzlib-devel glib2-devel libexiv2-devel libflac-devel
+BuildRequires: libgsf-devel libltdl7-devel libgtk+3-devel
+BuildRequires: libmpeg2-devel libtiff-devel libmp4v2-devel libqt4-devel librpm-devel libvorbis-devel libflac-devel
+BuildRequires: iso-codes-devel libgif-devel libarchive-devel libtidy-devel
+# requires libjpeg-8 API (jpeg_mem_src()) -- plugin disabled
+BuildRequires: libjpeg-devel
+BuildRequires: gst-plugins1.0-devel libavutil-devel libswscale-devel
 
 %description
 libextractor is a simple library for keyword extraction.
@@ -48,15 +48,12 @@ This package contains the files needed to build packages that depend on %name.
 
 %prep
 %setup
-#patch1
-#subst 's,\$(oledir),,g' src/plugins/Makefile*
 
 %build
-#autoreconf
+%autoreconf
 %configure --disable-static
 
 # SMP-incompatible build
-sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' libtool
 %make
 
 %install
@@ -67,9 +64,15 @@ rm -f %buildroot%_libdir/%name/*.la
 
 %find_lang %name
 
+%check
+export LD_LIBRARY_PATH=%buildroot%_libdir
+export LIBEXTRACTOR_PREFIX=%buildroot%_libdir/%name
+# some tests failed in hasher -- need to investigate
+#%make check
+
 %files -f %name.lang
 %_libdir/*.so.*
-%dir %_libdir/%name/
+%dir %_libdir/%name
 %_libdir/%name/*.so
 %doc AUTHORS README NEWS TODO
 
@@ -85,6 +88,11 @@ rm -f %buildroot%_libdir/%name/*.la
 %_man3dir/*
 
 %changelog
+* Mon Jan 28 2013 Yuri N. Sedunov <aris@altlinux.org> 1.0.1-alt1
+- 1.0.1
+- removed old hack&tricks, packager tag
+- updated buildreqs
+
 * Sun Jan 27 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.3-alt1
 - Friendly NMU: new version
 

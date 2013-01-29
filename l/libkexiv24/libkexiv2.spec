@@ -3,7 +3,7 @@
 %define rname libkexiv2
 Name: libkexiv24
 Version: 4.10.0
-Release: alt0.1
+Release: alt0.3
 
 Group: System/Libraries
 Summary: Wrapper around Exiv2 library
@@ -28,6 +28,7 @@ metadata as EXIF/IPTC and XMP.
 Summary: Development files for %name
 Group: Development/KDE and QT
 Conflicts: libkexiv2-devel
+Requires: %name = %EVR
 %description devel
 Development files for %name
 
@@ -55,6 +56,12 @@ Development files for %name
 
 
 %changelog
+* Fri Jan 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
+- fix requires
+
+* Thu Jan 24 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
+- rebuilt whith new exiv2
+
 * Wed Dec 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - new beta version
 

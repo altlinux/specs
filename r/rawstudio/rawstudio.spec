@@ -1,6 +1,6 @@
 Name: rawstudio
 Version: 2.0
-Release: alt4.1
+Release: alt5
 
 Summary: Rawstudio is an open source raw-image converter written in GTK+
 License: GPLv2+
@@ -11,8 +11,8 @@ Source: http://rawstudio.org/files/release/rawstudio-%version.tar.gz
 
 Patch1: rawstudio-2.0-glibthreads.patch
 Patch2: rawstudio-2.0-alt-libpng15.patch
+Patch3: rawstudio-2.0-alt-lfs.patch
 
-BuildRequires: chrpath
 # Automatically added by buildreq on Wed Apr 13 2011
 BuildRequires: gcc-c++ libGConf libGConf-devel libdbus-devel libexiv2-devel libfftw3-devel libflickcurl-devel libgphoto2-devel libgtk+2-devel libjpeg-devel liblcms-devel liblensfun-devel libpng-devel libsqlite3-devel libssl-devel libtiff-devel
 
@@ -23,11 +23,13 @@ Rawstudio can read and convert RAW-images from most digital cameras.
 %setup
 %patch1 -p1
 %patch2 -p2
+%patch3
 
 # Relocates plugins directory:
 subst 's@PACKAGE_DATA_DIR@"%_libdir"@' librawstudio/rs-plugin-manager.c
 
 %build
+%autoreconf
 %add_optflags -fpermissive
 %configure --disable-static
 %make_build
@@ -42,8 +44,6 @@ install -Dpm644 pixmaps/rawstudio.png %buildroot%_iconsdir/rawstudio.png
 rm -f %buildroot%_datadir/rawstudio/plugins/*.{a,la}
 mkdir -p %buildroot%_libdir/rawstudio/plugins
 mv %buildroot%_datadir/rawstudio/plugins %buildroot%_libdir/rawstudio/
-
-chrpath --delete %buildroot%_bindir/rawstudio
 
 %find_lang %name
 
@@ -61,6 +61,11 @@ chrpath --delete %buildroot%_bindir/rawstudio
 %exclude %_pkgconfigdir
 
 %changelog
+* Fri Jan 25 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0-alt5
+- rebuilt against libexiv2.so.12
+- enabled lfs support
+- don't use chrpath to fix RPATH problem
+
 * Mon Oct 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0-alt4.1
 - Rebuilt with libpng15
 
