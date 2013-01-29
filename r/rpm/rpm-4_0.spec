@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.67
+Release: alt100.68
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,6 +532,9 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Tue Jan 29 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.68
+- rpmbuild: fixed potential use after free introduced in 4.0.4-alt31.
+
 * Tue Jan 29 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.67
 - rpmbuild: enhanced interdep to ignore packages that are not going
   to be written.
