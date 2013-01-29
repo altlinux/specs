@@ -1,7 +1,7 @@
 %define subscribers_dir /lib/resolvconf
 
 Name: openresolv
-Version: 3.4.2
+Version: 3.5.4
 Release: alt2
 
 Summary: A framework for managing DNS information 
@@ -11,6 +11,7 @@ Group: System/Configuration/Networking
 URL: http://roy.marples.name/projects/%name
 Source: %name-%version.tar
 Source1: test
+Source2: resolvconf-restartcmd
 Patch0: %name-%version-%release.patch
 Packager: Mikhail Efremov <sem@altlinux.org>
 BuildArch: noarch
@@ -76,14 +77,19 @@ cp %SOURCE1 .
 
 %build
 ./test
-%configure --sbindir=/sbin --libexecdir=/lib \
+sed -i 's;/sbin/service;/sbin/resolvconf-restartcmd;' dnsmasq.in
+%configure --sbindir=/sbin --libexecdir=/lib/resolvconf \
            --localstatedir=%_var \
+           --rundir=%_var/run \
            --os=linux \
-           --restartcmd='/sbin/service \1 condreload'
+           --restartcmd='/sbin/resolvconf-restartcmd \1 condreload'
+#           --restartcmd='/sbin/service \1 condreload'
 %make
 
 %install
 %makeinstall_std
+
+install -Dm0755 %SOURCE2 %buildroot/sbin/resolvconf-restartcmd
 
 %files
 /sbin/*
@@ -110,6 +116,16 @@ cp %SOURCE1 .
 %endif
 
 %changelog
+* Tue Jan 29 2013 Mikhail Efremov <sem@altlinux.org> 3.5.4-alt2
+- Fix rundir.
+
+* Tue Jan 29 2013 Mikhail Efremov <sem@altlinux.org> 3.5.4-alt1
+- Added resolvconf-restartcmd script.
+- Updated tests.
+- Fix resolvconf.conf(5) man page.
+- Fix 'metric changed' logic.
+- Updated to 3.5.4.
+
 * Tue May 22 2012 Mikhail Efremov <sem@altlinux.org> 3.4.2-alt2
 - Skip backup files in hooks directories.
 
