@@ -3,7 +3,7 @@
 
 Name: rpm
 Version: 4.0.4
-Release: alt100.66
+Release: alt100.67
 
 %define ifdef() %if %{expand:%%{?%{1}:1}%%{!?%{1}:0}}
 %define get_dep() %(rpm -q --qf '%%{NAME} >= %%|SERIAL?{%%{SERIAL}:}|%%{VERSION}-%%{RELEASE}' %1 2>/dev/null || echo '%1 >= unknown')
@@ -532,19 +532,23 @@ fi
 %_bindir/rpm2cpio.static
 
 %changelog
+* Tue Jan 29 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.67
+- rpmbuild: enhanced interdep to ignore packages that are not going
+  to be written.
+
 * Mon Jan 28 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.66
-- build: avoid adding duplicate debuginfo requirements.
+- rpmbuild: avoid adding duplicate debuginfo requirements.
 
 * Mon Jan 28 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.65
-- build: fixed old bugs in deps comparator related to release tags.
+- rpmbuild: fixed old bugs in deps comparator related to release tags.
 
 * Sun Jan 27 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.64
-- build: enhanced interdep algorithm further so that manual requirements
-  containing "<" or ">" operators are now left intact, while all
-  generated requirements on subpackages are now made strict.
+- rpmbuild: enhanced interdep algorithm further so that manual
+  requirements containing "<" or ">" operators are now left intact,
+  while all generated requirements on subpackages are now made strict.
 
 * Sat Jan 26 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.63
-- build:
+- rpmbuild:
   - Fixed Epoch handling for deps whose senses are identical.
   - Enhanced interdep to add strict interpackage requirements
     and missing Epochs automatically when appropriate.
@@ -554,11 +558,11 @@ fi
 
 * Fri Jan 25 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.62
 - platform.in: added %%EVR macro for use in inter-package dependencies.
-- build: upgraded "dependency needs Epoch" warning to error.
+- rpmbuild: upgraded "dependency needs Epoch" warning to error.
 
 * Thu Jan 24 2013 Dmitry V. Levin <ldv@altlinux.org> 4.0.4-alt100.61
 - fixup-desktop: fixed regexp.
-- build: added %%_allowed_nonstrict_interdeps macro to control how
+- rpmbuild: added %%_allowed_nonstrict_interdeps macro to control how
   interdep check errors are treated; the macro is a list of space
   separated pairs of allowed non-strict deps, elements in pairs are
   separated by commas.  By default, the macro is not defined so
