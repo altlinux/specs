@@ -4,7 +4,7 @@
 
 Name:		scsitarget-utils
 Version:	1.0.30
-Release:	alt1
+Release:	alt2
 Summary:	The SCSI target daemon and utility programs
 
 Group:		System/Configuration/Hardware
@@ -108,5 +108,8 @@ fi
 %attr(0600,root,root) %config(noreplace) %{_sysconfdir}/tgt/conf.d/sample.conf
 
 %changelog
+* Tue Jan 29 2013 Pavel Shilovsky <piastry@altlinux.org> 1.0.30-alt2
+- Fix build with new docbook-style-xsl
+
 * Wed Oct 03 2012 Pavel Shilovsky <piastry@altlinux.org> 1.0.30-alt1
 - Initial release for Sisyphus
