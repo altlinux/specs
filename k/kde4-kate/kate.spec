@@ -13,7 +13,7 @@
 %define bugfix 0
 Name: kde4-kate
 Version: %major.%minor.%bugfix
-Release: alt0.2
+Release: alt0.3
 
 Group: Editors
 Summary: Advanced text editor
@@ -238,6 +238,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Tue Jan 29 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
+- update from 4.10 branch
+
 * Mon Jan 14 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 
