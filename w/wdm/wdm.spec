@@ -2,17 +2,17 @@
 
 Name: wdm
 Version: 1.28
-Release: alt12.1
+Release: alt12.2
 
 Summary: WINGs Display Manager
 License: GPL
 Group: Graphical desktop/Window Maker
 Url: http://voins.program.ru/wdm
-Packager: Alexey Voinov <voins@altlinux.ru>
 
 Source0: %name-%version-%release.tar.bz2
 Source1: %wdm_config.tar.bz2
 Source2: wdm-alt-logo.png
+Patch: wdm-config.patch
 
 Requires: %_bindir/xvt
 
@@ -31,6 +31,7 @@ wdm can shutdown (reboot or halt) the system.
 
 %prep
 %setup -q -a 1 -n %name-%version-%release
+%patch -p1
 
 
 %build
@@ -51,7 +52,7 @@ export SHELL_BASH=/bin/bash
 	--with-nlsdir=%_datadir/locale \
 	--with-gfxdir=%_datadir/pixmaps/wdm \
 	--with-fakehome=%_localstatedir/wdm
-make
+%make
 
 %install
 %makeinstall_std
@@ -113,6 +114,10 @@ EOF
 %doc AUTHORS ChangeLog INSTALL NEWS README README.pam TODO
 
 %changelog
+* Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.28-alt12.2
+- Set requestPort to 0
+- Set Russian as default language (thnx kostyalamer@)
+
 * Wed Jun 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.28-alt12.1
 - Fixed build
 
