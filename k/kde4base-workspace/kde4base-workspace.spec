@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt0.4
+Release: alt0.5
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -967,6 +967,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Tue Jan 29 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.5
+- update from 4.10 branch
+
 * Wed Jan 16 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.4
 - update from 4.10 branch
 
