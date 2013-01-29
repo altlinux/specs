@@ -1,4 +1,4 @@
-%define svn_revision 380158
+%define svn_revision 380430
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -64,7 +64,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 380158
+%define svn_revision 380430
 %add_verify_elf_skiplist %_libdir/libasteriskssl*
 %def_with debug
 %def_enable debug
@@ -1221,6 +1221,9 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl.so.1
 
 %changelog
+* Tue Jan 29 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.380430
+- update from svn revision 380430
+
 * Sat Jan 26 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.380158
 - update from svn revision 380158
 
