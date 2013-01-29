@@ -16,7 +16,7 @@
 
 Name: systemd
 Version: 197
-Release: alt1
+Release: alt2
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -130,6 +130,7 @@ This package contains the development files.
 %package -n libsystemd-login
 Group: System/Libraries
 Summary: Systemd Login Utility Library
+Requires: libsystemd-daemon = %version-%release
 
 %description -n libsystemd-login
 The libsystemd-login library provides an interface for the
@@ -138,6 +139,7 @@ systemd-logind service which is used to track user sessions and seats.
 %package -n libsystemd-id128
 Group: System/Libraries
 Summary: Systemd 128 Bit ID Utility Library
+Requires: libsystemd-daemon = %version-%release
 
 %description -n libsystemd-id128
 The libsystemd-id128 library provides utility functions for generating 128 bit IDs.
@@ -145,6 +147,7 @@ The libsystemd-id128 library provides utility functions for generating 128 bit I
 %package -n libsystemd-journal
 Group: System/Libraries
 Summary: Systemd Journal Utility Library
+Requires: libsystemd-daemon = %version-%release
 
 %description -n libsystemd-journal
 The libsystemd-journal library provides an interface for the systemd journal service.
@@ -359,6 +362,7 @@ Summary: Shared library to access udev device information
 Group: System/Libraries
 License: LGPLv2.1+
 Conflicts: libudev < 181-alt5
+Requires: libsystemd-daemon = %version-%release
 
 %description -n libudev1
 This package provides shared library to access udev device information
@@ -972,6 +976,10 @@ update_chrooted all
 /lib/udev/write_*_rules
 
 %changelog
+* Tue Jan 29 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt2
+- add --action=add to udevadm trigger in udevd.init
+- add strict inter-package dependencies
+
 * Wed Jan 16 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt1
 - 197
 - drop 75-persistent-net-generator.rules and write_net_rules
