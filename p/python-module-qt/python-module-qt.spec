@@ -1,6 +1,6 @@
 Name: python-module-qt
 Version: 3.18.2
-Release: alt1.29855a84d8b6.2.1.1
+Release: alt1.29855a84d8b6.3
 %setup_python_module qt
 Summary: Python bindings for Qt
 License: GPLv2
@@ -10,6 +10,7 @@ Packager: Python Development Team <python@packages.altlinux.org>
 
 # http://www.riverbankcomputing.co.uk/static/Downloads/PyQt3/PyQt-x11-gpl-%version.tar.gz
 Source: PyQt-x11-gpl-%version.tar
+Patch: python-module-qt-3.18.2-alt-python-module-sip-4.14.2.patch
 
 #Requires: libqscintilla >= 1.4
 %py_package_requires sip >= 4.4
@@ -55,8 +56,10 @@ This package contains PyQt examples
 
 %prep
 %setup -n PyQt-x11-gpl-%version
+%patch -p2
 
 %build
+%add_optflags -DANY=void
 export QTDIR=%_qt3dir
 export CFLAGS="%optflags"
 export CXXFLAGS="%optflags"
@@ -81,6 +84,9 @@ export QTDIR=%_qt3dir
 %doc examples3
 
 %changelog
+* Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.18.2-alt1.29855a84d8b6.3
+- Fixed build with python-module-sip 4.14.2
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 3.18.2-alt1.29855a84d8b6.2.1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
