@@ -1,5 +1,5 @@
 Name: installer-scripts-remount-stage2
-Version: 0.1
+Version: 0.2
 Release: alt1
 
 Summary: Shared installer scripts: remount
@@ -34,5 +34,9 @@ install -pDm755 scripts/install2-remount-functions \
 %_sbindir/*
 
 %changelog
+* Tue Jan 29 2013 Michael Shigorin <mike@altlinux.org> 0.2-alt1
+- tweaked populate_fstab() to support livecd-install case properly
+  (fixes duplicated filesystem lines in target /etc/fstab)
+
 * Fri Dec 21 2012 Michael Shigorin <mike@altlinux.org> 0.1-alt1
 - split off installer-1.8.10-alt1 to use with livecd-install too
