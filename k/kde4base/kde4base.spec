@@ -11,7 +11,7 @@
 %define bugfix 0
 Name: kde4base
 Version: %major.%minor.%bugfix
-Release: alt0.3
+Release: alt0.4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment 4 - Core Files
@@ -606,6 +606,9 @@ desktop-file-install --mode=0755 --dir %buildroot%_K4xdg_apps --add-category=X-P
 
 
 %changelog
+* Tue Jan 29 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.4
+- update from 4.10 branch
+
 * Fri Jan 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
 - update from 4.10 branch
 
