@@ -1,7 +1,7 @@
 %define ver_major 0.2
 
 Name: grilo-plugins
-Version: %ver_major.4
+Version: %ver_major.5
 Release: alt1
 Summary: Plugins for the Grilo framework
 Group: Sound
@@ -13,7 +13,7 @@ Source: %name-%version.tar
 BuildRequires: gnome-common
 BuildRequires: gtk-doc
 BuildRequires: glib2-devel >= 2.28 libgio-devel
-BuildRequires: libgrilo-devel = %version
+BuildRequires: libgrilo-devel
 BuildRequires: libxml2-devel
 BuildRequires: libgupnp-devel >= 0.13
 BuildRequires: libgupnp-av-devel >= 0.5
@@ -30,7 +30,7 @@ BuildRequires: libquvi-devel >= 0.2.15
 BuildRequires: libdmapsharing-devel >= 2.9.12
 BuildRequires: libjson-glib-devel
 
-Requires: grilo-tools >= %version
+Requires: grilo-tools
 Requires: tracker
 
 %description
@@ -78,6 +78,9 @@ rm -f %buildroot%_libdir/grilo-%ver_major/*.la
 %_libdir/grilo-%ver_major/*.xml
 
 %changelog
+* Tue Jan 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.2.5-alt1
+- 0.2.5
+
 * Tue Dec 04 2012 Alexey Shabalin <shaba@altlinux.ru> 0.2.4-alt1
 - 0.2.4
 
