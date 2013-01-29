@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.61
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -161,7 +161,7 @@ Patch0017: linux-%kernel_branch.43-fix-arch-s390--lib.patch
 Patch0020: linux-%kernel_branch.55-fix-arch-x86.patch
 Patch0021: linux-%kernel_branch.42-fix-arch-x86--apic.patch
 Patch0022: linux-%kernel_branch.42-fix-arch-x86--apm.patch
-Patch0023: linux-%kernel_branch.54-fix-arch-x86--mcheck.patch
+Patch0023: linux-%kernel_branch.61-fix-arch-x86--mcheck.patch
 Patch0024: linux-%kernel_branch.42-fix-arch-x86--tsc.patch
 Patch0025: linux-%kernel_branch.56-fix-arch-x86-boot.patch
 Patch0026: linux-%kernel_branch.42-fix-arch-x86-cpu--perf-event.patch
@@ -175,7 +175,7 @@ Patch0033: linux-%kernel_branch.42-fix-block--cfq-iosched.patch
 
 Patch0050: linux-%kernel_branch.42-fix-drivers--connector.patch
 
-Patch0060: linux-%kernel_branch.47-fix-drivers-acpi.patch
+Patch0060: linux-%kernel_branch.61-fix-drivers-acpi.patch
 Patch0061: linux-%kernel_branch.42-fix-drivers-acpi--battery.patch
 Patch0062: linux-%kernel_branch.42-fix-drivers-acpi--processor.patch
 Patch0063: linux-%kernel_branch.42-fix-drivers-acpi--thermal.patch
@@ -254,21 +254,22 @@ Patch0171: linux-%kernel_branch.42-fix-drivers-dma--dmatest.patch
 Patch0172: linux-%kernel_branch.43-fix-drivers-dma--intel_mid_dma.patch
 Patch0173: linux-%kernel_branch.44-fix-drivers-dma-ioat.patch
 
-Patch0181: linux-%kernel_branch.43-fix-drivers-edac--e752x_edac.patch
-Patch0182: linux-%kernel_branch.43-fix-drivers-edac--e7xxx_edac.patch
-Patch0183: linux-%kernel_branch.42-fix-drivers-edac--edac_mce_amd.patch
-Patch0184: linux-%kernel_branch.43-fix-drivers-edac--i3000_edac.patch
-Patch0185: linux-%kernel_branch.43-fix-drivers-edac--i3200_edac.patch
-Patch0186: linux-%kernel_branch.43-fix-drivers-edac--i5000_edac.patch
-Patch0187: linux-%kernel_branch.43-fix-drivers-edac--i5100_edac.patch
-Patch0188: linux-%kernel_branch.43-fix-drivers-edac--i5400_edac.patch
-Patch0189: linux-%kernel_branch.43-fix-drivers-edac--i7300_edac.patch
-Patch0190: linux-%kernel_branch.43-fix-drivers-edac--i7core_edac.patch
-Patch0191: linux-%kernel_branch.43-fix-drivers-edac--i82443bxgx_edac.patch
-Patch0192: linux-%kernel_branch.43-fix-drivers-edac--i82860_edac.patch
-Patch0193: linux-%kernel_branch.43-fix-drivers-edac--i82875p_edac.patch
-Patch0194: linux-%kernel_branch.43-fix-drivers-edac--i82975x_edac.patch
-Patch0195: linux-%kernel_branch.43-fix-drivers-edac--x38_edac.patch
+Patch0181: linux-%kernel_branch.61-fix-drivers-edac--amd64_edac_mod.patch
+Patch0182: linux-%kernel_branch.43-fix-drivers-edac--e752x_edac.patch
+Patch0183: linux-%kernel_branch.43-fix-drivers-edac--e7xxx_edac.patch
+Patch0184: linux-%kernel_branch.61-fix-drivers-edac--edac_mce_amd.patch
+Patch0185: linux-%kernel_branch.43-fix-drivers-edac--i3000_edac.patch
+Patch0186: linux-%kernel_branch.43-fix-drivers-edac--i3200_edac.patch
+Patch0187: linux-%kernel_branch.43-fix-drivers-edac--i5000_edac.patch
+Patch0188: linux-%kernel_branch.61-fix-drivers-edac--i5100_edac.patch
+Patch0189: linux-%kernel_branch.43-fix-drivers-edac--i5400_edac.patch
+Patch0190: linux-%kernel_branch.43-fix-drivers-edac--i7300_edac.patch
+Patch0191: linux-%kernel_branch.61-fix-drivers-edac--i7core_edac.patch
+Patch0192: linux-%kernel_branch.43-fix-drivers-edac--i82443bxgx_edac.patch
+Patch0193: linux-%kernel_branch.43-fix-drivers-edac--i82860_edac.patch
+Patch0194: linux-%kernel_branch.43-fix-drivers-edac--i82875p_edac.patch
+Patch0195: linux-%kernel_branch.43-fix-drivers-edac--i82975x_edac.patch
+Patch0196: linux-%kernel_branch.43-fix-drivers-edac--x38_edac.patch
 
 Patch0201: linux-%kernel_branch.42-fix-drivers-eisa--pci_eisa.patch
 
@@ -364,6 +365,7 @@ Patch0404: linux-%kernel_branch.42-fix-drivers-misc-lis3lv02d--lis3lv02d.patch
 
 Patch0411: linux-%kernel_branch.42-fix-drivers-mmc-card--mmc_block.patch
 
+Patch0420: linux-%kernel_branch.61-fix-drivers-net.patch
 Patch0421: linux-%kernel_branch.42-fix-drivers-net--3c509.patch
 Patch0422: linux-%kernel_branch.42-fix-drivers-net--3c59x.patch
 Patch0423: linux-%kernel_branch.42-fix-drivers-net--at1700.patch
@@ -529,7 +531,7 @@ Patch0652: linux-%kernel_branch.51-fix-drivers-watchdog--iTCO_wdt.patch
 
 Patch0661: linux-%kernel_branch.42-fix-firmware--vicam.patch
 
-Patch0670: linux-%kernel_branch.53-fix-fs.patch
+Patch0670: linux-%kernel_branch.61-fix-fs.patch
 Patch0671: linux-%kernel_branch.51-fix-fs--anon_inodes.patch
 Patch0672: linux-%kernel_branch.42-fix-fs--bio-integrity.patch
 Patch0673: linux-%kernel_branch.53-fix-fs--block.patch
@@ -624,7 +626,7 @@ Patch0798: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ftp.patch
 Patch0799: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_netlink.patch
 Patch0800: linux-%kernel_branch.51-fix-net-netfilter-ipset.patch
 Patch0801: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
-Patch0802: linux-%kernel_branch.44-fix-net-rds--rds_rdma.patch
+Patch0802: linux-%kernel_branch.61-fix-net-rds--rds_rdma.patch
 Patch0803: linux-%kernel_branch.51-fix-net-sched.patch
 Patch0804: linux-%kernel_branch.42-fix-net-sctp.patch
 Patch0805: linux-%kernel_branch.43-fix-net-sunrpc.patch
@@ -721,7 +723,7 @@ Patch1189: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
 Patch1190: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
 Patch1191: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
 Patch1192: linux-%kernel_branch.44-feat-fs-overlayfs.patch
-Patch1193: linux-%kernel_branch.53-feat-fs-reiser4.patch
+Patch1193: linux-%kernel_branch.61-feat-fs-reiser4.patch
 Patch1194: linux-%kernel_branch-feat-fs-subfs.patch
 Patch1195: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
 Patch1196: linux-%kernel_branch.42-feat-fs-unionfs.patch
@@ -1586,6 +1588,7 @@ cd linux-%version
 %patch0193 -p1
 %patch0194 -p1
 %patch0195 -p1
+%patch0196 -p1
 
 %patch0201 -p1
 
@@ -1694,7 +1697,8 @@ cd linux-%version
 
 %patch0411 -p1
 
-# fix-drivers-net-*
+# fix-drivers-net*
+%patch0420 -p1
 %patch0421 -p1
 %patch0422 -p1
 %patch0423 -p1
@@ -2992,6 +2996,19 @@ done)
 
 
 %changelog
+* Tue Jan 29 2013 Led <led@altlinux.ru> 3.0.61-alt3
+- updated:
+  + fix-arch-x86--mcheck
+  + fix-drivers-acpi
+  + fix-drivers-edac--edac_mce_amd
+  + fix-drivers-edac--i5100_edac
+  + fix-drivers-edac--i7core_edac
+  + fix-fs
+  + fix-net-rds--rds_rdma
+- added:
+  + fix-drivers-edac--amd64_edac_mod
+  + fix-drivers-net
+
 * Tue Jan 29 2013 Led <led@altlinux.ru> 3.0.61-alt2
 - build with SLAB allocator
 
