@@ -10,7 +10,7 @@
 %define _libexecdir %_prefix/libexec
 
 Name: libproxy
-Version: 0.4.10
+Version: 0.4.11
 Release: alt1
 Summary: A library handling all the details of proxy configuration
 
@@ -242,6 +242,9 @@ popd
 %_datadir/cmake/Modules/Findlibproxy.cmake
 
 %changelog
+* Tue Jan 29 2013 Alexey Shabalin <shaba@altlinux.ru> 0.4.11-alt1
+- 0.4.11
+
 * Fri Oct 26 2012 Alexey Shabalin <shaba@altlinux.ru> 0.4.10-alt1
 - 0.4.10
 
