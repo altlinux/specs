@@ -1,6 +1,6 @@
 Name: asterisk-base
 Summary: User and groups for asterisk-related packages
-Version: 0.63
+Version: 0.64
 Release: alt1
 License: GPL
 Group: System/Servers
@@ -123,7 +123,6 @@ mkdir -p %buildroot/var/log/asterisk
 mkdir -p %buildroot/var/log/asterisk/cdr-csv
 mkdir -p %buildroot/var/log/asterisk/cdr-custom
 mkdir -p %buildroot/var/spool/asterisk
-mkdir -p %buildroot/var/run/asterisk
 mkdir -p %buildroot/usr/share/asterisk/firmware
 mkdir -p %buildroot/usr/share/asterisk/images
 mkdir -p %buildroot/usr/share/asterisk/keys
@@ -171,7 +170,6 @@ echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dah
 %dir %attr(3770,_asterisk,pbxadmin) /var/log/asterisk/cdr-csv
 %dir %attr(3770,_asterisk,pbxadmin) /var/log/asterisk/cdr-custom
 %dir %attr(3770,_asterisk,pbxadmin) /var/spool/asterisk
-%dir %attr(3770,_asterisk,pbxadmin) /var/run/asterisk
 %dir %attr(0750,_asterisk,pbxadmin) %_datadir/asterisk/firmware
 %dir %attr(0750,_asterisk,pbxadmin) %_datadir/asterisk/images
 %dir %attr(0750,_asterisk,pbxadmin) %_datadir/asterisk/keys
@@ -210,6 +208,9 @@ echo "options wct4xxp t1e1override=0xff" > %buildroot%_sysconfdir/modprobe.d/dah
 %_sysconfdir/modprobe.d/dahdi.conf
 
 %changelog
+* Wed Jan 30 2013 Denis Smirnov <mithraen@altlinux.ru> 0.64-alt1
+- remove /var/run/asterisk dir
+
 * Sat Jan 12 2013 Denis Smirnov <mithraen@altlinux.ru> 0.63-alt1
 - update asterisk.conf
 - add spool/outgoing_done and outgoing/tmp
