@@ -16,7 +16,7 @@
 Summary:	general multi-lingual speech synthesis system
 Name:		festival
 Version:	%{fst_version}
-Release:	alt2
+Release:	alt3
 Group:		Sound
 Packager:	Igor Vlasenko <viy@altlinux.ru>
 # the emacs file is GPL+, there is one TCL licensed source file
@@ -339,7 +339,7 @@ Group: Development/C
 Requires: %name = %fst_version-%release
 Provides: festival-devel = %fst_version-%release
 Obsoletes: festival-devel < 1.96-alt3
-#Requires: libestools1.2-devel (>= 1:1.2.3-9)
+#Requires: libestools%estsuffix-devel  = %est_version-%release
 
 %description -n libfestival-devel
 This package contains the library and headers that can be used to
@@ -485,11 +485,11 @@ cd $RPM_BUILD_DIR/speech_tools
 %patch139 -p2
 
 # prep Edinburgh Speech Tools
-%__subst s/'# INCLUDE_MODULES += ESD_AUDIO'/'INCLUDE_MODULES += ESD_AUDIO'/ \
+sed -i s/'# INCLUDE_MODULES += ESD_AUDIO'/'INCLUDE_MODULES += ESD_AUDIO'/ \
        config/config.in
-%__subst -p 's,/usr/local\>,/usr,g' config/systems/default.mak
+sed -i 's,/usr/local\>,/usr,g' config/systems/default.mak
 %if_with est_dynamic_build
-%__subst s/'#SHARED='/'SHARED='/ config/config.in
+sed -i s/'#SHARED='/'SHARED='/ config/config.in
 %endif
 
 # linking against libraries to avoid unresolved symbols
@@ -509,7 +509,7 @@ cd $RPM_BUILD_DIR/speech_tools
 # new g++ 4.3 have no -fno-shared-data option
 #make MAKE_SHARED_LIB="g++ -shared -fno-shared-data -o XXX -Wl,--as-needed -Wl,-soname -Wl,YYY"
 ## TODO! as a patch...
-%__subst s,-fno-shared-data,,g config/compilers/gcc_defaults.mak
+sed -i s,-fno-shared-data,,g config/compilers/gcc_defaults.mak
 ./configure
 make MAKE_SHARED_LIB="g++ -shared -o XXX -Wl,--as-needed -Wl,-soname -Wl,YYY"
 
@@ -617,7 +617,7 @@ chmod +x $RPM_BUILD_ROOT%_libdir/speech_tools/config/system.sh
 
 # we already instantiated templates in libsetools.
 # it prevents festival from trying to instantiate it from speech_tools source
-%__subst 's/^TEMPLATE_SPECIFIC = -DINSTANTIATE_TEMPLATES/TEMPLATE_SPECIFIC =/' \
+sed -i 's/^TEMPLATE_SPECIFIC = -DINSTANTIATE_TEMPLATES/TEMPLATE_SPECIFIC =/' \
 $RPM_BUILD_ROOT%_libdir/speech_tools/config/compilers/gcc_defaults.mak
 
 # Compatibility with past packages
@@ -826,6 +826,9 @@ grep '^%festival_user:' /etc/passwd >/dev/null || \
 
 
 %changelog
+* Thu Jan 31 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.95-alt3
+- rebuild to get rid of non-strict dependencies
+
 * Tue Oct 16 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.95-alt2
 - fixed build with gcc4.7
 - merged pulse patch from fedora rel 21 (not enabled by default)
