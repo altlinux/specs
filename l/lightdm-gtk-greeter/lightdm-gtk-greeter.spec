@@ -2,7 +2,7 @@
 %define _localstatedir %_var
 
 Name: lightdm-gtk-greeter
-Version: 1.1.4
+Version: 1.5.0
 Release: alt1
 Summary: LightDM GTK+ Greeter
 Group: Graphical desktop/Other
@@ -10,9 +10,12 @@ License: GPLv3+
 Url: https://launchpad.net/lightdm-gtk-greeter
 #To get source code use the command "bzr branch lp:lightdm-gtk-greeter"
 Source: %name-%version.tar
-# Patch1: %name-%version-%release.patch
+Patch1: %name-%version-%release.patch
 
 Requires: lightdm
+Requires: gnome-icon-theme
+Requires: /usr/share/design/current
+
 Provides: lightdm-greeter
 
 BuildRequires: gcc-c++ intltool gnome-common gobject-introspection-devel
@@ -26,7 +29,7 @@ This package provides a GTK+-based LightDM greeter engine.
 
 %prep
 %setup
-# %patch1 -p1
+%patch1 -p1
 
 %build
 %autoreconf
@@ -55,6 +58,14 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %config(noreplace) %_sysconfdir/lightdm/lightdm-gtk-greeter.conf
 
 %changelog
+* Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+- enable show-language-selector
+- define logo, background, icon-theme-name
+
+* Mon Oct 15 2012 Alexey Shabalin <shaba@altlinux.ru> 1.3.1-alt1
+- 1.3.1
+
 * Wed Mar 07 2012 Alexey Shabalin <shaba@altlinux.ru> 1.1.4-alt1
 - 1.1.4
 - initial package

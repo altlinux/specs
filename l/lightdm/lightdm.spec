@@ -5,8 +5,8 @@
 %def_enable qt
 
 Name: lightdm
-Version: 1.2.2
-Release: alt1.1
+Version: 1.4.0
+Release: alt1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -17,7 +17,10 @@ Source: %name-%version.tar
 Source2: %name.pam
 Source3: %name-autologin.pam
 Source4: %name.wms
-Source5: %name-greeter-session.sh
+##Source5: %name-greeter-session.sh
+Source6: %name-tmpfiles.conf
+Source7: %name-greeter.pam
+Source8: %name.rules
 
 Patch1: %name-%version-%release.patch
 
@@ -29,7 +32,7 @@ BuildRequires: gcc-c++ intltool gnome-common
 BuildRequires: glib2-devel libgio-devel >= 2.26
 BuildRequires: libxcb-devel libXdmcp-devel
 BuildRequires: libdbus-glib-devel
-BuildRequires: gtk-doc
+BuildRequires: gtk-doc yelp-tools itstool
 BuildRequires: libpam-devel
 %{?_enable_gobject:BuildRequires: libxklavier-devel libX11-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
@@ -149,12 +152,16 @@ mkdir -p %buildroot%_localstatedir/lib/ldm
 # install pam config
 install -p -m 644 %SOURCE2 %buildroot%_sysconfdir/pam.d/%name
 install -p -m 644 %SOURCE3 %buildroot%_sysconfdir/pam.d/%name-autologin
+#install -p -m 644 %SOURCE7 %buildroot%_sysconfdir/pam.d/%name-greeter
 
 # install external hook for update_wms
 install -m755 %SOURCE4 %buildroot%_sysconfdir/X11/wms-methods.d/%name
 
 # install script to launch dbus
-install -m755 %SOURCE5 %buildroot%_libexecdir/%name/%name-greeter-session
+##install -m755 %%SOURCE5 %buildroot%_libexecdir/%name/%name-greeter-session
+
+install -Dpm 644 %SOURCE6 %buildroot%_prefix/lib/tmpfiles.d/lightdm.conf
+install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/lightdm.rules
 
 %find_lang %name
 
@@ -168,11 +175,8 @@ install -m755 %SOURCE5 %buildroot%_libexecdir/%name/%name-greeter-session
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/sessions
 %_sysconfdir/X11/wms-methods.d/lightdm
-%config(noreplace) %_sysconfdir/%name/%name.conf
-%config(noreplace) %_sysconfdir/%name/keys.conf
-%config(noreplace) %_sysconfdir/%name/users.conf
-%config(noreplace) %_sysconfdir/pam.d/%name
-%config(noreplace) %_sysconfdir/pam.d/%name-autologin
+%config(noreplace) %_sysconfdir/%name/*.conf
+%config(noreplace) %_sysconfdir/pam.d/%{name}*
 %_sbindir/%name
 %_man1dir/%name.*
 %_bindir/dm-tool
@@ -180,7 +184,9 @@ install -m755 %SOURCE5 %buildroot%_libexecdir/%name/%name-greeter-session
 %attr(775,root,_ldm) %dir %_localstatedir/log/%name
 %attr(775,_ldm,_ldm) %dir %_localstatedir/cache/%name
 %attr(750,_ldm,_ldm) %dir %_localstatedir/lib/ldm
-%ghost %attr(751,_ldm,_ldm) %dir %_localstatedir/run/%name
+%attr(775,_ldm,_ldm) %dir %_localstatedir/run/%name
+%_prefix/lib/tmpfiles.d/lightdm.conf
+%_datadir/polkit-1/rules.d/lightdm.rules
 
 %if_enabled gobject
 %files -n liblightdm-gobject
@@ -210,6 +216,9 @@ install -m755 %SOURCE5 %buildroot%_libexecdir/%name/%name-greeter-session
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Thu Jul 05 2012 Michael Shigorin <mike@altlinux.org> 1.2.2-alt1.1
 - NMU: lightdm-greeter-session expects dbus-launch (closes: #27438)
 
