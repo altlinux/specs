@@ -1,7 +1,7 @@
 %define oname envisage
 Name:           python-module-%oname
 Version:        4.2.1
-Release:        alt1.git20120928
+Release:        alt1.git20130108
 Summary:        Extensible Application Framework
 
 Group:          Development/Python
@@ -105,6 +105,9 @@ cp -fR pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20130108
+- New snapshot
+
 * Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20120928
 - Version 4.2.1
 
