@@ -1,6 +1,6 @@
 Name: gnustep-performance
 Version: 0.3.2
-Release: alt2.git20120111
+Release: alt2.git20130118
 Summary: The GNUstep Performance library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -75,6 +75,9 @@ sed -i 's|objc/|objc2|g' $(find ./ -type f)
 %_docdir/GNUstep
 
 %changelog
+* Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt2.git20130118
+- New snapshot
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt2.git20120111
 - Rebuilt with libobjc2 instead of libobjc
 
