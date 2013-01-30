@@ -1,5 +1,5 @@
 Name: vzctl
-Version: 3.3
+Version: 4.1.2
 Release: alt1
 
 Summary: OpenVZ Virtual Environments control utility
@@ -13,12 +13,12 @@ Source: %name-%version.tar
 Patch: %name-%version-alt.patch
 
 # these reqs are for vz helper scripts
-Requires: vzquota >= 2.7.0-4 ploop >= 1.1
+Requires: vzquota ploop >= 1.4
 Requires: network-config-subsystem
 # vzmigrate
 Requires: rsync
 
-BuildRequires: setproctitle-devel ploop libploop-devel libxml2-devel
+BuildRequires: setproctitle-devel ploop libploop-devel libxml2-devel libcgroup-devel
 
 %define _pkgconfdir /etc/vz
 %add_findreq_skiplist %_pkgconfdir/dists/scripts/*
@@ -42,7 +42,7 @@ OpenVZ Virtual Environments.
 %build
 %autoreconf
 %add_optflags -fno-strict-aliasing
-%configure --enable-bashcomp --enable-logrotate --disable-silent-rules
+%configure --enable-bashcomp --enable-logrotate --disable-silent-rules vzdir=/var/lib/vz
 %make_build
 
 %install
@@ -106,6 +106,7 @@ exit 0
 %config(noreplace) %_pkgconfdir/vz.conf
 %config(noreplace) %_pkgconfdir/download.conf
 %config(noreplace) %_pkgconfdir/osrelease.conf
+%config(noreplace) %_pkgconfdir/oom-groups.conf
 %ghost %config(noreplace) /etc/sysconfig/vzeventd
 %config %_pkgconfdir/conf
 %config %_pkgconfdir/dists
@@ -118,6 +119,9 @@ exit 0
 /var/lib/vz
 
 %changelog
+* Tue Jan 29 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 4.1.2-alt1
+- Updated to vzctl-4.1.2
+
 * Fri Jun 15 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 3.3-alt1
 - Updated to vzctl-3.3
 
