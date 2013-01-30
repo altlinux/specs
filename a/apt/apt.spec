@@ -1,6 +1,6 @@
 Name: apt
 Version: 0.5.15lorg2
-Release: alt41
+Release: alt42
 
 Summary: Debian's Advanced Packaging Tool with RPM support
 Summary(ru_RU.UTF-8): Debian APT - Усовершенствованное средство управления пакетами с поддержкой RPM
@@ -72,6 +72,7 @@ Patch61: apt-0.5.15lorg2-alt-apt-shell-quit_by_eof.patch
 Patch62: apt-0.5.15lorg2-alt-rpmdbopen.patch
 
 Patch99: apt-%version-%release.patch
+Patch100: apt-0.5.15lorg2-alt-lfs.patch
 
 # Normally not applied, but useful.
 Patch101: apt-0.5.4cnc9-alt-getsrc-debug.patch
@@ -220,7 +221,7 @@ This package contains method 'rsync' for APT.
 # }}}
 
 %prep
-%setup -q
+%setup
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
@@ -276,6 +277,7 @@ This package contains method 'rsync' for APT.
 %patch61 -p1
 %patch62 -p1
 %patch99 -p1
+%patch100 -p1
 
 find -type f -name \*.orig -delete
 
@@ -332,6 +334,16 @@ rm %buildroot%_libdir/*.la
 
 bzip2 -9fk ChangeLog-rpm.old
 
+find %buildroot%_includedir -type f -name '*.h' |while read f; do
+	cat >>"$f" <<EOF
+
+#include <stdint.h>
+#if __WORDSIZE == 32 && !defined(__USE_FILE_OFFSET64)
+# error "<${f#%buildroot%_includedir/}> cannot be used without -D_FILE_OFFSET_BITS==64"
+#endif
+EOF
+done
+
 %find_lang %name
 
 unset RPM_PYTHON
@@ -374,6 +386,9 @@ unset RPM_PYTHON
 # Probably %%doc with README.rsync?
 
 %changelog
+* Thu Jan 10 2013 Dmitry V. Levin <ldv@altlinux.org> 0.5.15lorg2-alt42
+- Fixed and enabled LFS support (closes: #28214).
+
 * Thu May 24 2012 Dmitry V. Levin <ldv@altlinux.org> 0.5.15lorg2-alt41
 - apt-get, apt-shell: when a package could not be found, print the
   unmangled package request string (by Igor Vlasenko; closes: #27364).

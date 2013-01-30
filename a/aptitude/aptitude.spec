@@ -2,7 +2,7 @@
 
 Name: aptitude
 Version: 0.4.5
-Release: alt5.qa3
+Release: alt6
 
 Summary: Terminal-based apt frontend
 Group: System/Configuration/Packaging
@@ -10,15 +10,11 @@ License: GPL
 Url: http://people.debian.org/~dburrows/aptitude
 Packager: Sir Raorn <raorn@altlinux.ru>
 
-# git://git.altlinux.org/people/raorn/packages/%name.git
+# git://git.altlinux.org/gears/a/aptitude.git
 Source: %name-%version.tar
 Patch: %name-%version-%release.patch
-Patch1: %name-0.4.5-alt-gc4.6.patch
-Patch2: %name-0.4.5-alt-glibc-2.16.patch
 
-Requires: libapt
-
-BuildRequires(pre): libapt-devel >= 0.5.15cnc5-alt1
+BuildRequires: libapt-devel >= 0.5.15lorg2-alt42
 
 # Automatically added by buildreq on Sat Oct 07 2006
 BuildRequires: cppunit-devel docbook-dtds docbook-style-xsl gcc-c++ html2text libapt-devel libncursesw-devel libsigc++2.0-devel xsltproc
@@ -48,10 +44,10 @@ aptitude is a terminal-based apt frontend.  This package contains
 the English version of the aptitude user's manual in HTML format.
 
 %prep
-%setup -q
+%setup
 %patch -p1
-%patch1 -p1
-%patch2 -p1
+find -type f -name '*.cc' -print0 |
+	xargs -r0 sed -i '1,1 s/^/#include "config.h"\n/' --
 
 %build
 %add_optflags -fno-strict-aliasing
@@ -69,7 +65,7 @@ touch ChangeLog
 
 %install
 mkdir -p %buildroot%_localstatedir/%name
-%make_install DESTDIR=%buildroot install
+%makeinstall_std
 rm -rf %buildroot%_mandir
 
 %make_install DESTDIR=%buildroot -C doc/en install-man
@@ -89,6 +85,9 @@ rm -f %buildroot%_datadir/%name/function_*
 %doc doc/en/output-html/*
 
 %changelog
+* Wed Jan 30 2013 Dmitry V. Levin <ldv@altlinux.org> 0.4.5-alt6
+- Fixed and enabled LFS support (see #28214).
+
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt5.qa3
 - Fixed build with glibc 2.16
 
