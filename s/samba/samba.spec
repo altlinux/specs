@@ -2,8 +2,8 @@
 
 Summary: Server and Client software to interoperate with Windows machines
 Name: samba
-Version: 3.6.11
-Release: alt2
+Version: 3.6.12
+Release: alt1
 License: GPLv3+ and LGPLv3+
 Group: System/Servers
 Url: http://www.samba.org/
@@ -593,6 +593,11 @@ true
 %_pixmapsdir/samba/logo-small.png
 
 %changelog
+* Wed Jan 30 2013 Led <led@altlinux.ru> 3.6.12-alt1
+- 3.6.12:
+  + CVE-2013-0213
+  + CVE-2013-0214
+
 * Thu Jan 24 2013 Led <led@altlinux.ru> 3.6.11-alt2
 - added strict requires of libnetapi for libnetapi-devel
 
