@@ -1,6 +1,6 @@
 Name: supertux2
 Version: 0.3.4
-Release: alt1
+Release: alt2
 
 Summary: SuperTux is a classic 2D jump'n run sidescroller game in a Super Mario style
 
@@ -11,7 +11,7 @@ URL: http://supertux.lethargik.org/
 Packager: Igor Zubkov <icesik@altlinux.org>
 
 #Source0: supertux-%version.tar.bz2
-Source0: supertux.tar.bz2
+Source0: supertux.tar.xz
 
 Source1: supertux-16x16.png
 Source2: supertux-32x32.png
@@ -48,7 +48,7 @@ SuperTux is a jump'n run like game, with strong inspiration from the
 Super Mario Bros games for Nintendo.
 
 Run and jump through multiple worlds, fighting off enemies by jumping
-on them or bumping them from below.  Grabbing power-ups and other stuff
+on them or bumping them from below. Grabbing power-ups and other stuff
 on the way.
 
 This is package contains data files for supertux2.
@@ -97,8 +97,13 @@ rm -rf %buildroot/%_docdir/supertux2/
 %files data
 %dir %_datadir/supertux2
 %_datadir/supertux2/*
+%exclude %_datadir/supertux2/sounds/normalize.sh
 
 %changelog
+* Wed Jan 30 2013 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt2
+- git snapshot from 60478aa53db0d2874acc495037ff4f94b2efc3ae
+- %%exclude %%_datadir/supertux2/sounds/normalize.sh
+
 * Mon Oct 01 2012 Igor Zubkov <icesik@altlinux.org> 0.3.4-alt1
 - git snapshot from c7cab5080d6aef977159766cbd8cbdc6b68b38eb
 - relocate data from /usr/share/games/ to /usr/share/
