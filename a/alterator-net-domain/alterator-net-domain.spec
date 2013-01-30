@@ -2,7 +2,7 @@
 
 Name: alterator-net-domain
 Version: 0.4
-Release: alt17
+Release: alt18
 Source:%name-%version.tar
 
 Summary: alterator module to edit system network domain
@@ -10,9 +10,8 @@ License: GPL
 Group: System/Configuration/Other
 Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.0-alt2
-Requires: samba
-Requires: ldap-user-tools >= 0.8.1
 
+Conflicts: ldap-user-tools < 0.8.1
 Conflicts: alterator-lookout < 1.6-alt6
 Conflicts: alterator-fbi < 5.9-alt2
 
@@ -37,10 +36,13 @@ alterator module to edit system network domain
 %_altdata_dir/ui/*/
 %_alterator_backend3dir/*
 %dir %_libexecdir/alterator/hooks/net-domain.d
-/etc/hooks/hostname.d/*
 
 
 %changelog
+* Wed Jan 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt18
+- delete dependence on samba, this package should not depend on it
+  95-smb hook moved to alt-domain-server package
+
 * Thu Nov 08 2012 Andrey Cherepanov <cas@altlinux.org> 0.4-alt17
 - Fix netlogon section creation
 
