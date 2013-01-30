@@ -9,7 +9,7 @@ Name: kde4utils
 %define minor 10
 %define bugfix 0
 Version: %major.%minor.%bugfix
-Release: alt0.2
+Release: alt0.3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment
@@ -481,6 +481,9 @@ done
 
 
 %changelog
+* Wed Jan 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
+- update from 4.10 branch
+
 * Tue Jan 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 
