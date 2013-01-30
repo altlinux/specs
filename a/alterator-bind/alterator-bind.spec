@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-bind
-Version: 0.9.1
+Version: 0.9.2
 Release: alt1
 
 Source:%name-%version.tar
@@ -48,6 +48,10 @@ alterator module to create and manage dynamic dns
 %_libexecdir/alterator/hooks/dhcp.d/*
 
 %changelog
+* Wed Jan 30 2013 Mikhail Efremov <sem@altlinux.org> 0.9.2-alt1
+- dhcp-hook-net-domain: Always use DHCPv4.
+- Fix forward zones.
+
 * Wed Dec 19 2012 Mikhail Efremov <sem@altlinux.org> 0.9.1-alt1
 - dhcp-print-config: Add IPv6 support.
 - ipv6: Fix dhcp functions/hooks usage.
