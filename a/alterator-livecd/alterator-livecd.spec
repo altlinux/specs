@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-livecd
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: special steps for LiveCD installers
@@ -42,6 +42,10 @@ special steps for LiveCD installers
 %_alterator_backend3dir/*
 
 %changelog
+* Wed Jan 30 2013 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Fix (un)mounting live root in the installed system directory,.
+- livecd-install: Set dotglob shell option.
+
 * Thu Jan 10 2013 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
 - Don't use unsquashfs, just copy files (closes: #27786).
 
