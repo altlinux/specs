@@ -3,8 +3,8 @@
 %def_without python3
 
 Name: python-module-%oname
-Version: 0.2.1
-Release: alt1.git20121008
+Version: 0.6.7
+Release: alt1.git20130129
 Epoch: 1
 Summary: Enaml is not a Markup Language
 License: BSD
@@ -14,6 +14,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/enthought/enaml.git
 Source: %name-%version.tar
+BuildArch: noarch
 
 BuildPreReq: python-devel python-module-distribute python-module-ply
 BuildPreReq: python-module-sphinx-devel python-module-ETSDevTools
@@ -165,6 +166,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname
 %endif
 
 %changelog
+* Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.6.7-alt1.git20130129
+- Version 0.6.7
+
 * Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.2.1-alt1.git20121008
 - Version 0.2.1
 
