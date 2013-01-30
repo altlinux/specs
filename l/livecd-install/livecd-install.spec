@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.7
+Version: 0.7.1
 Release: alt1
 
 Summary: Permanently install Live system
@@ -17,6 +17,7 @@ BuildArch: noarch
 Requires: alterator-wizardface
 Requires: alterator-livecd >= 0.5-alt1
 Requires: alterator-vm alterator-grub alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1 alterator-datetime
+Requires: installer-scripts-remount-stage2 >= 0.3-alt1
 Requires: livecd-evms
 Requires: make-initrd-plymouth 
 Requires: consolehelper
@@ -52,6 +53,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Wed Jan 30 2013 Michael Shigorin <mike@altlinux.org> 0.7.1-alt1
+- destination /etc/fstab is being cared for by i-s-remount
+
 * Thu Jan 10 2013 Mikhail Efremov <sem@altlinux.org> 0.7-alt1
 - Added setup-network and autohostnameh preinstall hooks.
 
