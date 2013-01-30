@@ -1,7 +1,7 @@
 %define oname encore
 Name: python-module-%oname
 Version: 0.2.1
-Release: alt1.git20120822
+Release: alt1.git20130115
 Summary: A Collection of core-level utility modules for Enthought projects
 License: BSD
 Group: Development/Python
@@ -74,6 +74,9 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/%oname/pickle
 
 %changelog
+* Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20130115
+- New snapshot
+
 * Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.2.1-alt1.git20120822
 - Version 0.2.1
 
