@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
-Version: 0.9.1
-Release: alt3.git20121017
+Version: 0.9.2
+Release: alt1.git20130127
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -135,6 +135,9 @@ popd
 %doc Documentation/*
 
 %changelog
+* Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1.git20130127
+- Version 0.9.2
+
 * Mon Jan 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.1-alt3.git20121017
 - Fixed build
 
