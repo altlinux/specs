@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.9
-Release: alt2
+Version: 0.9.2
+Release: alt1
 
 Summary: alterator module to setup grub bootloader
 License: GPL
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 Requires: alterator >= 4.7-alt5
 Requires: alterator-l10n >= 2.9-alt10
 Requires: alterator-sh-functions >= 0.6-alt1
-Requires: alterator-hw-functions >= 0.4-alt1
+Requires: alterator-hw-functions >= 0.7.3-alt1
 Requires: grub2-pc >= 2.00-alt7
 Conflicts: guile-evms < 0.4-alt13
 
@@ -47,6 +47,12 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Wed Jan 30 2013 Michael Shigorin <mike@altlinux.org> 0.9.2-alt1
+- filter out boot device
+
+* Tue Jan 29 2013 Michael Shigorin <mike@altlinux.org> 0.9.1-alt1
+- add BIOS boot targets even in EFI case
+
 * Tue Dec 18 2012 Michael Shigorin <mike@altlinux.org> 0.9-alt2
 - added arch-specific grub2-efi dependency
 
