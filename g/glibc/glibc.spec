@@ -1,6 +1,6 @@
 Name: glibc
 Version: 2.16
-Release: alt4
+Release: alt5
 Epoch: 6
 
 Summary: The GNU libc libraries
@@ -645,6 +645,9 @@ fi
 %_datadir/i18n
 
 %changelog
+* Wed Jan 30 2013 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt5
+- Updated to 2.16 branch with backports from master.
+
 * Sun Sep 30 2012 Dmitry V. Levin <ldv@altlinux.org> 6:2.16-alt4
 - Updated to 2.16 branch with backports from master and fedora.
 
