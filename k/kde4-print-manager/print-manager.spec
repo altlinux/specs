@@ -3,7 +3,7 @@
 %define rname print-manager
 Name: kde4-print-manager
 Version: 4.10.0
-Release: alt0.2
+Release: alt0.3
 
 Group: System/Configuration/Printing
 Summary: Printer management for KDE
@@ -87,6 +87,9 @@ ln %buildroot%_K4apps/plasma-desktop/init/01-altlinux-print-manager.js %buildroo
 %_K4dbus_services/org.kde.*Print*.service
 
 %changelog
+* Wed Jan 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
+- update from 4.10 branch
+
 * Tue Jan 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.2
 - update from 4.10 branch
 
