@@ -1,8 +1,8 @@
 %set_verify_elf_method unresolved=strict
 
 Name: gnustep-webserver
-Version: 1.4.8
-Release: alt2.git20121031
+Version: 1.5.0
+Release: alt1.git20130126
 Summary: Embedded webserver library
 License: LGPLv3+
 Group: Graphical desktop/GNUstep
@@ -74,6 +74,9 @@ library.
 %_docdir/GNUstep
 
 %changelog
+* Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt1.git20130126
+- Version 1.5.0
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.8-alt2.git20121031
 - Rebuilt with libobjc2 instead of libobjc
 
