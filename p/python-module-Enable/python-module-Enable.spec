@@ -1,7 +1,7 @@
 %define oname Enable
 Name: python-module-%oname
 Version: 4.2.1
-Release: alt1.git20120920
+Release: alt1.git20130108
 Summary: Drawing and interaction packages
 
 Group: Development/Python
@@ -118,6 +118,9 @@ cp -fR pickle %buildroot%python_sitelibdir/enable/
 %doc docs/kiva docs/*.txt examples html
 
 %changelog
+* Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20130108
+- New snapshot
+
 * Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.2.1-alt1.git20120920
 - Version 4.2.1
 
