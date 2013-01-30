@@ -4,8 +4,8 @@
 %define oname objc2
 
 Name: gnustep-%oname
-Version: 1.6.1
-Release: alt6.svn20130112
+Version: 1.7.0
+Release: alt1.git20130130
 Summary: GNUstep Objective-C Runtime
 License: BSD
 Group: Development/Objective-C
@@ -114,6 +114,7 @@ cmake \
 	-DLIBOBJC_NAME:STRING=objc2 \
 	-DLLVM_ON_UNIX:BOOL=ON \
 	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+	-DTESTS:BOOL=OFF \
 	.
 
 %make_build_ext \
@@ -162,6 +163,9 @@ install -p -m644 class.h visibility.h method_list.h \
 %_libdir/libGNUObjCRuntime.so
 
 %changelog
+* Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.7.0-alt1.git20130130
+- Version 1.7.0
+
 * Sat Jan 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt6.svn20130112
 - Avoid use Method_t
 
