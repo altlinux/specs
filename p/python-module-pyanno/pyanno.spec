@@ -1,7 +1,7 @@
 %define oname pyanno
 Name: python-module-%oname
-Version: 2.0.1
-Release: alt1.git20120109
+Version: 2.0.2
+Release: alt1.git20121203
 Summary: Package for curating data annotation efforts
 License: BSD
 Group: Development/Python
@@ -121,6 +121,9 @@ cp -fR ../pyanno-docs/pickle %buildroot%python_sitelibdir/%oname
 %doc ../pyanno-docs/html data
 
 %changelog
+* Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.2-alt1.git20121203
+- Version 2.0.2
+
 * Thu Jan 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.1-alt1.git20120109
 - Version 2.0.1
 
