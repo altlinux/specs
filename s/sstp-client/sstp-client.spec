@@ -1,7 +1,7 @@
 %define ppp_version 2.4.5
 
 Name: sstp-client
-Version: 1.0.8
+Version: 1.0.9
 Release: alt1
 Summary: Secure Socket Tunneling Protocol (SSTP) Client
 Group: System/Servers
@@ -86,6 +86,9 @@ install -Dpm 644 %SOURCE2 %buildroot%_sysconfdir/tmpfiles.d/%name.conf
 %_pkgconfigdir/*.pc
 
 %changelog
+* Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.9-alt1
+- 1.0.9
+
 * Thu Oct 25 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.8-alt1
 - 1.0.8
 - add libsstp package
