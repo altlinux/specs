@@ -1,6 +1,6 @@
 %define dist POE-Component-IRC
 Name: perl-%dist
-Version: 6.80
+Version: 6.81
 Release: alt1
 
 Summary: A fully event-driven IRC client dist
@@ -35,6 +35,9 @@ IRC client session and send and receive IRC events through it.
 %perl_vendor_privlib/POE
 
 %changelog
+* Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 6.81-alt1
+- 6.81
+
 * Fri Sep 28 2012 Alexey Shabalin <shaba@altlinux.ru> 6.80-alt1
 - 6.75 -> 6.80
 - update BR:
