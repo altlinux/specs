@@ -1,16 +1,21 @@
-Group: Other
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
+Group: Other
+%add_optflags %optflags_shared
+%global snapshot 1
+
 Name:           libpinyin
 Version:        0.8.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Library to deal with pinyin
 
 License:        GPLv2+
 URL:            https://github.com/libpinyin/libpinyin
 Source0:        https://github.com/downloads/libpinyin/libpinyin/%{name}-%{version}.tar.gz
+%if %snapshot
 Patch0:         libpinyin-0.8.x-head.patch
+%endif
 
 BuildRequires:  libdb4.8-devel glib2-devel
 Requires:       %{name}-data = %{version}-%{release}
@@ -52,9 +57,11 @@ The %%{name}-tools package contains tools.
 
 %prep
 %setup -q
-%patch0 -p1 -b .head
-%patch33 -p1
 
+%if %snapshot
+%patch0 -p1 -b .head
+%endif
+%patch33 -p1
 
 %build
 %configure --disable-static
@@ -91,6 +98,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_mandir}/man1/*.1.*
 
 %changelog
+* Wed Jan 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_3
+- update to new release by fcimport
+
 * Tue Jan 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.0-alt1_2
 - initial fc import
 
