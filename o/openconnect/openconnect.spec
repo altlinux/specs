@@ -1,6 +1,6 @@
 
 Name: openconnect
-Version: 4.06
+Version: 4.07
 Release: alt1
 Summary: Open client for Cisco AnyConnect VPN
 
@@ -69,6 +69,9 @@ make DESTDIR=%buildroot install
 %_pkgconfigdir/*
 
 %changelog
+* Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 4.07-alt1
+- 4.07
+
 * Mon Aug 06 2012 Alexey Shabalin <shaba@altlinux.ru> 4.06-alt1
 - 4.06
 
