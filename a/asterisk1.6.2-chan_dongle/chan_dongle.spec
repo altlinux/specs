@@ -4,9 +4,10 @@
 Name: asterisk1.6.2-chan_dongle
 Summary: Channel driver for Asterisk to use Huawei 3G modem series.
 Version: 1.1
-Release: alt5
+Release: alt6
 License: GPL
 Group: System/Libraries
+Url: http://code.google.com/p/asterisk-chan-dongle/
 
 Source: %name-%version.tar
 
@@ -39,6 +40,9 @@ mkdir -p %buildroot%_docdir/%name
 %doc LICENSE.txt README.txt TODO.txt INSTALL BUGS etc
 
 %changelog
+* Wed Jan 30 2013 Denis Smirnov <mithraen@altlinux.ru> 1.1-alt6
+- add Url tag
+
 * Sun Aug 26 2012 Denis Smirnov <mithraen@altlinux.ru> 1.1-alt5
 - Asterisk update
 
