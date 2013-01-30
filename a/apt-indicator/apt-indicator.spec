@@ -1,6 +1,6 @@
 Name: apt-indicator
 Version: 0.2.8
-Release: alt1
+Release: alt2
 
 Summary: Applet for indication that newer packages are available
 License: GPL
@@ -69,6 +69,9 @@ install -m644 pixmaps/* %buildroot/%_datadir/%name/pixmaps
 
 
 %changelog
+* Mon Jan 14 2013 Sergey V Turchin <zerg at altlinux dot org> 0.2.8-alt2
+- built with _FILE_OFFSET_BITS=64
+
 * Tue Oct 09 2012 Sergey V Turchin <zerg at altlinux dot org> 0.2.8-alt1
 - fix to build with gcc 4.7
 

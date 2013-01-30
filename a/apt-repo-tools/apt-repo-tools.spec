@@ -1,9 +1,9 @@
 Name: apt-repo-tools
-Version: 0.6.0.16
+Version: 0.6.0.17
 Release: alt1
 
 Summary: Utilities to create APT repositories
-License: GPL
+License: GPLv2+
 Group: Development/Other
 
 Source: %name-%version.tar
@@ -40,6 +40,9 @@ mkdir -p %buildroot/var/cache/apt/gen{pkg,src}list
 %dir /var/cache/apt/gensrclist
 
 %changelog
+* Fri Jan 11 2013 Dmitry V. Levin <ldv@altlinux.org> 0.6.0.17-alt1
+- Enabled LFS support.
+
 * Tue Apr 03 2012 Dmitry V. Levin <ldv@altlinux.org> 0.6.0.16-alt1
 - gen{pkg,src}list: redirected all error messages to cerr,
   made package read errors fatal.

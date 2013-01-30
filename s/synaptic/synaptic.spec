@@ -9,7 +9,7 @@
 
 Name: synaptic
 Version: 0.58
-Release: alt12
+Release: alt13
 
 Summary: Graphical front-end for APT
 Summary(ru_RU.UTF-8): Графическая оболочка для APT
@@ -25,16 +25,13 @@ Source3: package-supported.png
 Source4: %name.conf
 Source5: %name-uk.po
 
-Patch6: synaptic-0.57.2-gcc43-fix.patch
-Patch7: synaptic-0.58-alt-build-fix.patch
-Patch8: synaptic-0.58-rgiconlegend-supported.patch
-Patch9: synaptic-0.58-rsources-extraspaces.patch
-Patch10: synaptic-0.58-rsources-vendorparts.patch
+Patch1: synaptic-0.58-alt-fixes.patch
+Patch2: synaptic-0.58-alt-build-fix.patch
+Patch3: synaptic-0.58-rgiconlegend-supported.patch
+Patch4: synaptic-0.58-rsources-extraspaces.patch
+Patch5: synaptic-0.58-rsources-vendorparts.patch
 
-Requires: rpm, libapt
-
-BuildRequires(pre): libapt-devel
-BuildPreReq: libapt-devel >= 0.5.5cnc5
+BuildPreReq: libapt-devel >= 0.5.15lorg2-alt42
 %if_enabled autotools
 BuildPreReq: intltool
 %endif
@@ -68,11 +65,11 @@ Synaptic - это графическая оболочка для APT (Advanced P
 %prep
 %setup
 
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
+%patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
 
 %if_with ru_po
 # installing own translation
@@ -127,6 +124,9 @@ install -p -m644 %SOURCE4 %buildroot%_sysconfdir/apt/apt.conf.d/%name.conf
 %exclude %_datadir/pixmaps/%name.png
 
 %changelog
+* Wed Jan 30 2013 Dmitry V. Levin <ldv@altlinux.org> 0.58-alt13
+- Fixed and enabled LFS support (see #28214).
+
 * Tue Oct 30 2012 Lenar Shakirov <snejok@altlinux.ru> 0.58-alt12
 - Fix build with new toolchain
 
