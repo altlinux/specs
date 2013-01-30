@@ -3,7 +3,7 @@
 %define rname gwenview
 Name: kde4-gwenview
 Version: 4.10.0
-Release: alt0.4
+Release: alt0.5
 
 Group: Graphics
 Summary: KDE support for digital cameras
@@ -75,6 +75,9 @@ KDE 4 core library.
 
 
 %changelog
+* Wed Jan 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.5
+- update from 4.10 branch
+
 * Fri Jan 25 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.4
 - fix requires
 
