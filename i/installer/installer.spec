@@ -1,6 +1,6 @@
 Name: installer
 Version: 1.8.14
-Release: alt1
+Release: alt2
 
 Summary: Installer common parts
 License: GPLv2+
@@ -105,6 +105,9 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Wed Jan 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.14-alt2
+- 08-crypttab fixed
+
 * Wed Jan 23 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.14-alt1
 - add luks to initrd only if / on luks, otherwise create crypttab
 
