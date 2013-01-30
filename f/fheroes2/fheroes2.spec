@@ -1,4 +1,4 @@
-%define rev svn2951
+%define rev svn2967
 Name: fheroes2
 Version: 20120301
 Release: alt1.%rev
@@ -16,7 +16,7 @@ Source5: %name.cfg
 
 # Automatically added by buildreq on Wed Oct 03 2012
 # optimized out: libSDL-devel libstdc++-devel zlib-devel
-BuildRequires: gcc-c++ libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfreetype-devel libpng-devel
+BuildRequires: gcc-c++ libogg-devel libSDL_image-devel libSDL_mixer-devel libSDL_net-devel libSDL_ttf-devel libfreetype-devel libpng-devel
 
 %description
 Free implementation of Heroes of the Might and Magic II engine.
@@ -55,6 +55,12 @@ install -pm 644 {AUTHORS,changelog.txt,COPYING,LICENSE,README} %buildroot%_docdi
 
 
 %changelog
+* Sat Jan 26 2013 Andrew Clark <andyc@altlinux.ru> 20120301-alt1.svn2967
+- version update 20120301-alt1.svn2967
+
+* Tue Dec 18 2012 Andrew Clark <andyc@altlinux.ru> 20120301-alt1.svn2964
+- version update 20120301-alt1.svn2964
+
 * Thu Nov 1 2012 Andrew Clark <andyc@altlinux.ru> 20120301-alt1.svn2951
 - version update 20120301-alt1.svn2951
 
