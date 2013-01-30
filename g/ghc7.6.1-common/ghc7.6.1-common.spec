@@ -1,6 +1,6 @@
 Name: ghc7.6.1-common
 Version: 7.6.1
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 Summary: Glasgow Haskell Compilation system
@@ -17,6 +17,7 @@ Conflicts: ghc7.4.1-common
 Conflicts: ghc7.4.2-common
 
 Source: %name-%version.tar
+Requires: rpm-macros-%{name} = %{version}-%{release}
 
 %description
 Haskell is a standard lazy functional programming language; the
@@ -35,15 +36,28 @@ specifications, documentation, compilers, interpreters, references,
 contact information, links to research groups) are available from the
 Haskell home page at <http://www.haskell.org/>.
 
+
+%package -n rpm-macros-%{name}
+Summary: Set of RPM macros for packaging %name-based applications
+Group: Development/Other
+# uncomment if macroses are platform-neutral
+BuildArch: noarch
+# helps old apt to resolve file conflict at dist-upgrade (thanks to Stanislav Ievlev)
+Conflicts: ghc7.6.1-common <= 7.6.1-alt1
+
+%description -n rpm-macros-%{name}
+Set of RPM macros for packaging %name-based applications for ALT Linux.
+Install this package if you want to create RPM packages that use %name.
+
 %prep
 %setup
 %build
 %install
 # install and fix up the macros file
-%define rpmmacrosdir %_sysconfdir/rpm/macros.d
+%define rpmmacrosdir %_rpmmacrosdir
 mkdir -p %buildroot%rpmmacrosdir
 install ghc.macros %buildroot%rpmmacrosdir/ghc
-%__subst 's/@GHC_VERSION@/%version/' %buildroot%rpmmacrosdir/ghc
+sed -i 's/@GHC_VERSION@/%version/' %buildroot%rpmmacrosdir/ghc
 
 mkdir -p %buildroot%_bindir
 
@@ -57,7 +71,15 @@ done
 %files
 %rpmmacrosdir/ghc
 %_bindir/*
+%exclude %_rpmmacrosdir/*
+
+%files -n rpm-macros-%{name}
+%_rpmmacrosdir/*
+
 
 %changelog
+* Thu Jan 31 2013 Denis Smirnov <mithraen@altlinux.ru> 7.6.1-alt2
+- repocop fix for altlinux-policy-rpm-macros-packaging
+
 * Fri Nov 30 2012 Denis Smirnov <mithraen@altlinux.ru> 7.6.1-alt1
 - first build for Sisyphus
