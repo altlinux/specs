@@ -2,7 +2,7 @@
 %define gtk3_prefix gtk3-theme
 
 Name: %gtk3_prefix-%real_name
-Version: 1.1.1
+Version: 1.1.2
 Release: alt1
 Serial: 1
 
@@ -48,6 +48,9 @@ This is GTK3 port of default KDE4 Oxygen style.
 %_datadir/themes/%real_name
 
 %changelog
+* Thu Jan 31 2013 Sergey V Turchin <zerg@altlinux.org> 1:1.1.2-alt1
+- new version
+
 * Mon Oct 08 2012 Sergey V Turchin <zerg@altlinux.org> 1:1.1.1-alt1
 - new version
 
