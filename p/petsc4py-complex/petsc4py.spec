@@ -16,7 +16,7 @@
 Name: %oname-%scalar_type
 Version: 3.3
 %define exampledir %_docdir/%oname-%version/examples
-Release: alt1.hg20120726
+Release: alt1.hg20121217
 Summary: PETSc for Python (%scalar_type scalars)
 License: Public
 Group: Sciences/Mathematics
@@ -212,6 +212,9 @@ done
 %endif
 
 %changelog
+* Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.hg20121217
+- New snapshot
+
 * Mon Aug 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.hg20120726
 - Version 3.3
 
@@ -310,3 +313,4 @@ done
 
 * Tue Jul 14 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1
 - Initial build for Sisyphus
+
