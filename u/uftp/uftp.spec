@@ -1,5 +1,5 @@
 Name: uftp
-Version: 2.6.3
+Version: 3.7.1
 Release: alt1
 
 Summary: A multicast FTP
@@ -11,6 +11,9 @@ Group: Networking/File transfer
 Url: http://www.tcnj.edu/~bush/uftp.html
 
 Source: http://www.tcnj.edu/~bush/downloads/%name-%version.tar
+
+# Automatically added by buildreq on Thu Jan 31 2013
+BuildRequires: libssl-devel
 
 %description
 UFTP is a multicast file transfer program, utilizing a protocol based on
@@ -42,31 +45,32 @@ remote printing plants.
 
 %prep
 %setup
+%__subst "s|)/bin|)/usr/bin|g" makefile
 
 %build
-%make_build -f makefile.linux CFLAGS="%optflags"
+%make_build CFLAGS="%optflags"
 
 %install
-mkdir -p %buildroot%_bindir
-install -d %buildroot%_bindir
-install -m 755 uftp %buildroot%_bindir/uftp
-install -d %buildroot%_sbindir
-install -m 755 uftpd %buildroot%_sbindir/uftpd
-install -d %buildroot%_man1dir
-install -m 644 uftp.1 %buildroot%_man1dir/uftp.1
-install -m 644 uftpd.1 %buildroot%_man1dir/uftpd.1
+%makeinstall_std
 
 %files
 %_bindir/uftp
+%_bindir/uftp_keymgt
 %_man1dir/uftp.1*
+%_man1dir/uftp_keymgt.1*
 %doc Changes.txt ReadMe.txt
 
 %files server
 %_sbindir/uftpd
+%_sbindir/uftpproxyd
 %_man1dir/uftpd.1*
-%doc Changes.txt ReadMe.txt
+%_man1dir/uftpproxyd.1*
+%doc ReadMe.txt
 
 %changelog
+* Thu Jan 31 2013 Vitaly Lipatov <lav@altlinux.ru> 3.7.1-alt1
+- new version 3.7.1 (with rpmrb script)
+
 * Thu Jan 31 2013 Vitaly Lipatov <lav@altlinux.ru> 2.6.3-alt1
 - initial build for ALT Linux Sisyphus
 
