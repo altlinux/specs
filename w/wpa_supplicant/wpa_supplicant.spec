@@ -1,11 +1,11 @@
 %def_disable privsep
 
 Name: wpa_supplicant
-Version: 0.7.3
-Release: alt4
+Version: 2.0
+Release: alt1
 
 Summary: wpa_supplicant is an implementation of the WPA Supplicant component
-License: GPL/BSD
+License: BSD
 Group: Security/Networking
 Url: http://hostap.epitest.fi/
 
@@ -55,9 +55,6 @@ make -C %name/doc/docbook man
 
 %install
 install -pm0644 -D %name/%name.conf %buildroot%_sysconfdir/wpa_supplicant.conf
-install -pm0644 -D %name/%name.sysconfig %buildroot%_sysconfdir/sysconfig/wpa_supplicant
-install -pm0755 -D %name/%name.init %buildroot%_initdir/%name
-
 install -pm0755 -D %name/wpa_supplicant %buildroot%_sbindir/wpa_supplicant
 install -pm0755 %name/wpa_cli %buildroot%_sbindir
 install -pm0755 -D %name/wpa_gui-qt4/wpa_gui %buildroot%_bindir/wpa_gui
@@ -65,6 +62,9 @@ install -pm0755 -D %name/wpa_gui-qt4/wpa_gui %buildroot%_bindir/wpa_gui
 %if_enabled privsep
 install -pm0755 %name/wpa_priv %buildroot%_sbindir
 %endif
+
+mkdir -p %buildroot%systemd_unitdir
+install -pm0644 %name/systemd/*.service %buildroot%systemd_unitdir
 
 install -pm0755 -D %name/wpa_passphrase %buildroot%_bindir/wpa_passphrase
 install -pm0644 -D %name/dbus/dbus-wpa_supplicant.conf %buildroot%_sysconfdir/dbus-1/system.d/dbus-%name.conf
@@ -80,19 +80,17 @@ mkdir -p %buildroot%_iconsdir
 install -pm0644 -D %name/wpa_gui-qt4/wpa_gui.desktop %buildroot%_desktopdir/wpa_gui.desktop
 tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 
-%post
-%post_service %name
-
-%preun
-%preun_service %name
-
 %files
-%doc %name/README %name/README-WPS %name/ChangeLog %name/examples
+%doc %name/README %name/README-HS20 %name/README-P2P %name/README-WPS
+%doc %name/ChangeLog %name/examples
 
-%_initdir/%name
 %config(noreplace) %attr(0600,root,root) %_sysconfdir/wpa_supplicant.conf
-%config(noreplace) %_sysconfdir/sysconfig/wpa_supplicant
 %config %_sysconfdir/dbus-1/system.d/dbus-%name.conf
+
+%systemd_unitdir/wpa_supplicant.service
+%systemd_unitdir/wpa_supplicant@.service
+%systemd_unitdir/wpa_supplicant-nl80211@.service
+%systemd_unitdir/wpa_supplicant-wired@.service
 
 %_datadir/dbus-1/system-services/fi.epitest.hostap.WPASupplicant.service
 %_datadir/dbus-1/system-services/fi.w1.wpa_supplicant1.service
@@ -122,6 +120,9 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 %_iconsdir/hicolor/*/*/*.png
 
 %changelog
+* Thu Jan 31 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt1
+- 2.0 released
+
 * Tue Oct 02 2012 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.3-alt4
 - fixed build witn gcc-4.7
 
@@ -171,7 +172,7 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 - rebuild with D-Bus support
 
 * Tue Apr 15 2008 Anton Farygin <rider@altlinux.ru> 0.5.10-alt2
-- added kernel-source-madwifi build requires 
+- added kernel-source-madwifi build requires
 
 * Mon Apr 14 2008 Anton Farygin <rider@altlinux.ru> 0.5.10-alt1
 - new version
@@ -239,7 +240,7 @@ tar c -C %name/wpa_gui-qt4/icons hicolor |tar x -C %buildroot%_iconsdir
 - change RPM group to "Security/Networking"
 
 * Fri Apr 22 2005 Alexei Takaseev <taf@altlinux.ru> 0.3.8-alt2
-- Add support: 
+- Add support:
 	* CTRL_IFACE
 	* XSUPPLICANT_IFACE
 	* PKCS12
