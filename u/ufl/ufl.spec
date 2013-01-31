@@ -1,6 +1,6 @@
 Name:           ufl
 Version:        1.1.dev
-Release:        alt1.bzr20121012
+Release:        alt1.bzr20130129
 Summary:        Unified Form Language
 Group:          Development/Tools
 License:        LGPL v3+
@@ -59,6 +59,9 @@ install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.dev-alt1.bzr20130129
+- New snapshot
+
 * Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.dev-alt1.bzr20121012
 - New snapshot
 
