@@ -1,6 +1,6 @@
 Name: bontmia
 Version: 0.14
-Release: alt4
+Release: alt5
 
 Summary: bontmia (Backup Over Network To Multiple Incremental Archives)
 License: GPL
@@ -38,6 +38,9 @@ install bontmia %buildroot/%_sbindir/
 %doc README COPYING bontmia.html
 
 %changelog
+* Thu Jan 31 2013 Denis Smirnov <mithraen@altlinux.ru> 0.14-alt5
+- fix unsafe /tmp usage
+
 * Mon Jan 28 2013 Denis Smirnov <mithraen@altlinux.ru> 0.14-alt4
 - build from git
 - use flock for locking
