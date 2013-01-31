@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.61
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -505,10 +505,10 @@ Patch0603: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 
 Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
-Patch0612: linux-%kernel_branch.60-fix-drivers-usb-core.patch
+Patch0612: linux-%kernel_branch.61-fix-drivers-usb-core.patch
 Patch0613: linux-%kernel_branch.58-fix-drivers-usb-host--ehci-hcd.patch
 Patch0614: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
-Patch0615: linux-%kernel_branch.51-fix-drivers-usb-host--xhci-hcd.patch
+Patch0615: linux-%kernel_branch.61-fix-drivers-usb-host--xhci-hcd.patch
 Patch0616: linux-%kernel_branch.42-fix-drivers-usb-misc--usbtest.patch
 Patch0617: linux-%kernel_branch.42-fix-drivers-usb-mon.patch
 Patch0618: linux-%kernel_branch.42-fix-drivers-usb-serial--ftdi_sio.patch
@@ -642,7 +642,7 @@ Patch0832: linux-%kernel_branch.47-fix-sound-firewire--snd-firewire-lib.patch
 Patch0833: linux-%kernel_branch.47-fix-sound-firewire--snd-firewire-speakers.patch
 Patch0834: linux-%kernel_branch.47-fix-sound-firewire--snd-isight.patch
 Patch0835: linux-%kernel_branch.42-fix-sound-oss--pss.patch
-Patch0836: linux-%kernel_branch.51-fix-sound-pci-hda.patch
+Patch0836: linux-%kernel_branch.61-fix-sound-pci-hda.patch
 Patch0837: linux-%kernel_branch.42-fix-sound-pci-rme9652--snd-hdspm.patch
 Patch0838: linux-%kernel_branch.42-fix-sound-usb-misc--snd-ua101.patch
 
@@ -2996,6 +2996,12 @@ done)
 
 
 %changelog
+* Thu Jan 31 2013 Led <led@altlinux.ru> 3.0.61-alt4
+- updated:
+  + fix-drivers-usb-core
+  + fix-drivers-usb-host--xhci-hcd
+  + fix-sound-pci-hda
+
 * Tue Jan 29 2013 Led <led@altlinux.ru> 3.0.61-alt3
 - updated:
   + fix-arch-x86--mcheck
