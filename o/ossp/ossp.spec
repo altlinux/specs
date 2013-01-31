@@ -1,6 +1,6 @@
 Name: ossp
 Version: 1.3.2
-Release: alt7.1
+Release: alt8
 
 Summary: OSS Proxy - emulate OSS device using CUSE
 Group: System/Kernel and hardware
@@ -11,6 +11,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Source: %name-%version.tar
 Patch: ossp-1.3.2-alt-DSO.patch
+Source1: osspd.service
 
 # Automatically added by buildreq on Sun Apr 10 2011 (-bb)
 # optimized out: elfutils pkg-config
@@ -32,6 +33,7 @@ Requires(pre): fuse >= 2.8.5-alt2
 install -D -m755 osspd.init %buildroot%_initdir/osspd
 install -D -m644 modprobe %buildroot%_sysconfdir/modprobe.d/osspd.conf
 install -D -m644 osspd.config %buildroot%_sysconfdir/sysconfig/osspd
+install -D -m644 %SOURCE1 %buildroot%_unitdir/osspd.service
 
 %preun
 %preun_service osspd
@@ -46,8 +48,12 @@ install -D -m644 osspd.config %buildroot%_sysconfdir/sysconfig/osspd
 %_initdir/osspd
 %_sysconfdir/modprobe.d/osspd.conf
 %config(noreplace) %_sysconfdir/sysconfig/osspd
+%_unitdir/osspd.service
 
 %changelog
+* Thu Jan 31 2013 Denis Smirnov <mithraen@altlinux.ru> 1.3.2-alt8
+- add systemd service file
+
 * Sun Dec 09 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt7.1
 - Completed linking
 
