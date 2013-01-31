@@ -4,7 +4,7 @@ BuildRequires: perl(Test/Repocop/ExternalTest.pm)
 %define testname build-logs
 
 Name: repocop-unittest-%testname
-Version: 0.05
+Version: 0.06
 Release: alt1
 BuildArch: noarch
 Packager: Igor Yu. Vlasenko <viy@altlinux.org>
@@ -34,15 +34,26 @@ install -m 755 \
    $RPM_BUILD_ROOT%_bindir/
 
 for i in *.pl; do
-    install -pD -m 644 $i %buildroot%_datadir/repocop/fixscripts/$i
+    install -pD -m 755 $i %buildroot%_datadir/repocop/fixscripts/$i
+done
+
+for log_arch in i586 x86_64; do
+    mkdir -p %buildroot%_datadir/repocop/srccollectors/repocop-process-build-logs-$log_arch/
+    ln -s ../../common/purge-keydir \
+    %buildroot%_datadir/repocop/srccollectors/repocop-process-build-logs-$log_arch/purge
 done
 
 %files
 #doc README ChangeLog
 %_bindir/repocop-*
 %_datadir/repocop/fixscripts/*
+%_datadir/repocop/srccollectors/*
 
 %changelog
+* Fri Feb 01 2013 Igor Vlasenko <viy@altlinux.ru> 0.06-alt1
+- dropped beehive-log-non-strict-dependency patch generator
+- TODO: drop collector
+
 * Wed Jan 23 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt1
 - added beehive-log-non-strict dependency test
 
