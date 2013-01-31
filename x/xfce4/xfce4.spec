@@ -1,6 +1,6 @@
 Name: xfce4
 Version: 4.10
-Release: alt2
+Release: alt3
 Summary: Set of XFce4 Desktop installers.
 License: %gpl2plus
 Group: Graphical desktop/XFce
@@ -54,7 +54,7 @@ Requires: xfce4-notifyd
 Requires: xfce4-mixer
 Requires: xfce4-volumed
 Requires: xfce4-taskmanager
-Requires: Terminal
+Requires: xfce4-terminal
 Requires: tumbler
 Requires: thunar
 Requires: thunar-volman-plugin
@@ -120,6 +120,19 @@ Requires: xfce4-sensors-plugin
 %name-full is a virtual package to provide full installation
 of XFce4 Desktop.
 
+%package regular
+Summary: Virtual package for use in the regular-xfce distro
+Group: Graphical desktop/XFce
+BuildArch: noarch
+Requires: %name-full = %version-%release
+Requires: gnome-icon-theme
+Requires: firefox
+Requires: firefox-ru
+Requires: firefox-uk
+
+%description regular
+%summary
+
 %install
 mkdir -p %buildroot/%_datadir/xfce4
 # Can be dropped later
@@ -137,8 +150,13 @@ mkdir -p %buildroot/%_sysconfdir/xdg/xfce4
 %files minimal
 %files default
 %files full
+%files regular
 
 %changelog
+* Thu Jan 31 2013 Mikhail Efremov <sem@altlinux.org> 4.10-alt3
+- Added 'regular' subpackage.
+- default: Terminal -> xfce4-terminal.
+
 * Mon Dec 03 2012 Mikhail Efremov <sem@altlinux.org> 4.10-alt2
 - Add common subpackage.
 - full: Add ristretto again.
