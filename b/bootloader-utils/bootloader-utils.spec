@@ -1,5 +1,5 @@
 Name: bootloader-utils
-Version: 0.4.18
+Version: 0.4.19
 Release: alt1
 
 Summary: Bootloader utilities
@@ -79,6 +79,9 @@ mv $f.install $f
 %_rpmlibdir/*.filetrigger
 
 %changelog
+* Thu Jan 31 2013 Michael Shigorin <mike@altlinux.org> 0.4.19-alt1
+- installkernel: don't install memtest* in EFI mode (won't boot)
+
 * Thu Dec 13 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.4.18-alt1
 - lilo: fix regression introdused by 0.4.15-alt1
 
