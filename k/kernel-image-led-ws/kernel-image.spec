@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.61
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -503,7 +503,7 @@ Patch0601: linux-%kernel_branch.58-fix-drivers-tty--pty.patch
 Patch0602: linux-%kernel_branch.42-fix-drivers-tty-serial--8250.patch
 Patch0603: linux-%kernel_branch.42-fix-drivers-tty-serial--8250_pci.patch
 
-Patch0610: linux-%kernel_branch.46-fix-drivers-usb.patch
+Patch0610: linux-%kernel_branch.61-fix-drivers-usb.patch
 Patch0611: linux-%kernel_branch.42-fix-drivers-usb-atm--ueagle-atm.patch
 Patch0612: linux-%kernel_branch.61-fix-drivers-usb-core.patch
 Patch0613: linux-%kernel_branch.58-fix-drivers-usb-host--ehci-hcd.patch
@@ -2996,6 +2996,12 @@ done)
 
 
 %changelog
+* Thu Jan 31 2013 Led <led@altlinux.ru> 3.0.61-alt5
+- updated:
+  + fix-drivers-usb
+  + fix-drivers-usb-host--xhci-hcd
+  + fix-mm--zcache
+
 * Thu Jan 31 2013 Led <led@altlinux.ru> 3.0.61-alt4
 - updated:
   + fix-drivers-usb-core
