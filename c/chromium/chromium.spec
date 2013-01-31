@@ -1,6 +1,6 @@
 %set_verify_elf_method textrel=relaxed
 %define v8_ver 3.15.11.10
-%define rev 177594
+%define rev 178923
 
 %def_disable debug
 %def_disable nacl
@@ -12,7 +12,7 @@
 %endif
 
 Name:           chromium
-Version:        24.0.1312.56
+Version:        24.0.1312.57
 Release:        alt1.r%rev
 
 Summary:        An open source web browser developed by Google
@@ -20,7 +20,7 @@ License:        BSD-3-Clause and LGPL-2.1+
 Group:          Networking/WWW
 Url:            http://code.google.com/p/chromium/
 
-Source0:        %name.%version.svn%rev.tar.gz
+Source0:        %name.%version.tar.gz
 Source30:       master_preferences
 Source31:       default_bookmarks.html
 Source99:       chrome-wrapper
@@ -439,6 +439,10 @@ printf '%_bindir/%name\t%_libdir/%name/%name-gnome\t15\n' > %buildroot%_altdir/%
 %_altdir/%name-gnome
 
 %changelog
+* Thu Jan 31 2013 Andrey Cherepanov <cas@altlinux.org> 24.0.1312.57-alt1.r178923
+- New version 24.0.1312.57
+- Remove revision number from tarball name
+
 * Wed Jan 23 2013 Andrey Cherepanov <cas@altlinux.org> 24.0.1312.56-alt1.r177594
 - New version 24.0.1312.56
 - Security fixes:
