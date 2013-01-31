@@ -1,7 +1,7 @@
 %define req_ver_mlt 0.7.8
 
 Name: kdenlive
-Version: 0.9.2
+Version: 0.9.4
 Release: alt1
 
 Summary: KDE Non Linear Video Editor
@@ -63,6 +63,9 @@ mv altlinux/po .
 %_K4xdg_mime/*
 
 %changelog
+* Thu Jan 31 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.4-alt1
+- new version
+
 * Wed May 30 2012 Sergey V Turchin <zerg@altlinux.org> 0.9.2-alt1
 - new version
 
