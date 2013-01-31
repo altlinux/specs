@@ -6,7 +6,7 @@
 
 Name: lightdm
 Version: 1.4.0
-Release: alt1
+Release: alt2
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -24,8 +24,8 @@ Source8: %name.rules
 
 Patch1: %name-%version-%release.patch
 
-# Requires: %name-greeter
-Requires: accountsservice
+Requires: %name-greeter
+# Requires: accountsservice
 Requires: dbus-tools-gui
 
 BuildRequires: gcc-c++ intltool gnome-common
@@ -216,6 +216,10 @@ install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/lightdm.rules
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Thu Jan 31 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt2
+- don't requires accountservices
+- requires any greeter
+
 * Wed Jan 30 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
 - 1.4.0
 

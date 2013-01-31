@@ -4,7 +4,7 @@
 
 Name: accountsservice
 Version: 0.6.30
-Release: alt1
+Release: alt2
 Summary: D-Bus interfaces for querying and manipulating user account information
 
 Group: System/Base
@@ -13,6 +13,7 @@ Url: http://www.fedoraproject.org/wiki/Features/UserAccountDialog
 #VCS: git://anongit.freedesktop.org/accountsservice
 
 Source: %name-%version.tar
+Source2: %name.conf
 Patch1: %name-%version-%release.patch
 
 BuildRequires: intltool gtk-doc
@@ -80,6 +81,7 @@ GObject introspection devel data for the accountsservice library
 
 %install
 %make DESTDIR=%buildroot install
+install -m644 -p -D %SOURCE2 %buildroot%_sysconfdir/%name.conf
 
 %find_lang accounts-service
 
@@ -95,6 +97,9 @@ GObject introspection devel data for the accountsservice library
 %dir %_localstatedir/lib/AccountsService/users
 %dir %_localstatedir/lib/AccountsService/icons
 %_unitdir/accounts-daemon.service
+%dir %_libdir/%name
+%_libdir/%name/%name.conf
+%config(noreplace) %_sysconfdir/%name.conf
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -112,6 +117,10 @@ GObject introspection devel data for the accountsservice library
 %_girdir/*.gir
 
 %changelog
+* Thu Jan 31 2013 Alexey Shabalin <shaba@altlinux.ru> 0.6.30-alt2
+- merge with github.com/mmonaco/accountsservice/exclude-v3 for
+  add config with excluded users
+
 * Mon Jan 28 2013 Alexey Shabalin <shaba@altlinux.ru> 0.6.30-alt1
 - 0.6.30
 
