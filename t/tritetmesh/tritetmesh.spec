@@ -3,7 +3,7 @@
 
 Name: tritetmesh
 Version: 0.0.1
-Release: alt3.bzr20100630
+Release: alt4.bzr20100630
 Summary: TriTetMesh provides an intuitive interface to Triangle and Tetgen
 Group: Development/Tools
 License: GPL v3
@@ -231,6 +231,9 @@ rm -fR %buildroot%prefix%prefix
 %_libdir/%name/
 
 %changelog
+* Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt4.bzr20100630
+- Rebuilt with Dolfin 1.1.0
+
 * Sat Jul 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt3.bzr20100630
 - Rebuilt with OpenMPI 1.6
 
