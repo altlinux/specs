@@ -2,18 +2,23 @@
 # Authority: dries
 %define pk_name fann
 
-Name: libfann
-Version: 2.0.0
+Name:    libfann
+Version: 2.2.0
 Release: alt1
 Summary: Fast artificial neural network library
 License: LGPL
-Group: System/Libraries 
-URL: http://fann.sourceforge.net/
+Group:   System/Libraries 
+URL:     http://fann.sourceforge.net/
 
 Packager: Andrey Cherepanov <cas@altlinux.org>
 
-Source: http://dl.sf.net/fann/%pk_name-%version.tar.bz2
-BuildRequires: gcc, make, gcc-c++
+Source:  http://dl.sf.net/fann/%pk_name-%version.tar.bz2
+
+Patch1:  portable-handling-for-va_list.patch
+Patch2:  fann-2.2.0-pkgconfig.patch
+Patch3:  libfann-link-with-libm.patch
+
+BuildRequires: cmake gcc-c++
 
 %description
 Fann is a fast artificial neural network library. More information and
@@ -21,14 +26,18 @@ a lot of documentation is available at http://fann.sourceforge.net/
 
 %prep
 %setup -n %pk_name-%version
+%patch1 -p2
+%patch2 -p1
+%patch3 -p2
 
 %build
-export LIBS='-lm'
-%configure
+%cmake -DPKGCONFIG_INSTALL_DIR=/%_lib/pkgconfig
+cd BUILD
 %make
 
 %install
-%makeinstall
+cd BUILD
+%makeinstall_std
 rm -f %buildroot/%_libdir/lib*fann.a
 
 %package devel
@@ -40,24 +49,18 @@ Requires: libfann = %version-%release
 Development headers of FANN (Fast artificial neural network library)
 
 %files
-%doc AUTHORS COPYING INSTALL NEWS README README TODO
-%_libdir/libfloatfann.so.*
-%_libdir/libdoublefann.so.*
-%_libdir/libfixedfann.so.*
-%_libdir/libfann.so.*
-%_libdir/pkgconfig/fann.pc
+%doc README.txt
+%_libdir/lib*.so.*
+%_pkgconfigdir/fann.pc
 
 %files devel
-%_libdir/libfloatfann.so
-%_libdir/libdoublefann.so
-%_libdir/libfixedfann.so
-%_libdir/libfann.so
-%_includedir/compat_time.h
-%_includedir/doublefann.h
-%_includedir/fann*.h
-%_includedir/fixedfann.h
-%_includedir/floatfann.h
+%_libdir/lib*.so
+%_includedir/*.h
 
 %changelog
+* Wed Jan 23 2013 Andrey Cherepanov <cas@altlinux.org> 2.2.0-alt1
+- New version 2.2.0
+- Clean spec file
+
 * Wed May 05 2010 Andrey Cherepanov <cas@altlinux.org> 2.0.0-alt1
 - Initial build to Sisyphus.
