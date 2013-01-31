@@ -1,6 +1,6 @@
 Name: viper
-Version: 1.0.0
-Release: alt2.bzr20120417
+Version: 1.0.1
+Release: alt1.bzr20130107
 Summary: A simple mesh plotter and run--time visualization module
 License: LGPL v3+
 Group: Graphics
@@ -64,6 +64,9 @@ This package contains Python module of Viper.
 %python_sitelibdir/*
 
 %changelog
+* Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt1.bzr20130107
+- Version 1.0.1
+
 * Mon Aug 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.0-alt2.bzr20120417
 - Rebuilt with updated Dolfin
 
