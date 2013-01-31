@@ -24,8 +24,8 @@
 %define topsover %topsomver.0.0
 
 Name: %oname-%scalar_type
-Version: 3.3_p2
-Release: alt4
+Version: 3.3_p5
+Release: alt1
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -788,6 +788,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p5-alt1
+- Version 3.3-p5
+
 * Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p2-alt4
 - Forced setting path to library
 
@@ -962,4 +965,3 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 
 * Wed Jun 24 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.0_p6-alt1
 - Initial build for Sisyphus
-
