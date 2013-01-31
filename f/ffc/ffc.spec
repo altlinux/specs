@@ -1,6 +1,6 @@
 Name:           ffc
-Version:        1.0.0
-Release:        alt1.bzr20120910
+Version:        1.1.0
+Release:        alt1.bzr20130129
 Epoch: 1
 Summary:        Compiler for finite element variational forms
 Group:          Development/Tools
@@ -90,6 +90,9 @@ install -p -m644 %SOURCE1 %buildroot%_docdir/%name
 %python_sitelibdir_noarch/*
 
 %changelog
+* Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.1.0-alt1.bzr20130129
+- Version 1.1.0
+
 * Mon Oct 15 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.0.0-alt1.bzr20120910
 - New snapshot
 
