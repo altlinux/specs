@@ -1,6 +1,6 @@
 Name: grub2
 Version: 2.00
-Release: alt9
+Release: alt11
 
 Summary: GRand Unified Bootloader
 License: GPL
@@ -22,6 +22,8 @@ Source7: firsttime
 Source8: update-grub
 Source9: update-grub.8
 
+Source10: grub-efi-autoupdate
+
 Patch0: grub-2.00-gnulib-gets.patch
 Patch1: grub-2.00-os-alt.patch
 Patch2: grub-2.00-sysconfig-path-alt.patch
@@ -33,6 +35,7 @@ Patch8: grub-1.99-efibootmgr-req.patch
 Patch9: grub2-fix-locale-en.mo.gz-not-found-error-message.patch
 Patch10: grub-2.00-r4586-one-by-off.patch
 Patch11: grub-2.00-install-uefi-signed.patch
+Patch12: grub2-stfu.patch
 
 Packager: Michael Shigorin <mike@altlinux.org>
 
@@ -40,6 +43,22 @@ BuildRequires: flex fonts-bitmap-misc fonts-ttf-dejavu libfreetype-devel python-
 BuildRequires: liblzma-devel help2man zlib-devel
 BuildRequires: libdevmapper-devel
 BuildRequires: rpm-macros-uefi
+
+# fonts: choose one
+
+## dejavu
+#BuildRequires: fonts-ttf-dejavu
+#define font /usr/share/fonts/ttf/dejavu/DejaVuSansMono.ttf
+
+## terminus
+#BuildRequires: fonts-bitmap-terminus
+#define font /usr/share/fonts/bitmap/terminus/ter-x16n.pcf.gz
+
+## univga
+BuildRequires: fonts-bitmap-univga
+%define font /usr/share/fonts/bitmap/univga/u_vga16_9.pcf.gz
+
+## see also fonts-bitmap-ucs-miscfixed; efont-unicode doesn't fit
 
 Exclusivearch: %ix86 x86_64
 
@@ -162,6 +181,7 @@ Please note that this binary is *not* signed, just in case.
 %patch9 -p1
 %patch10 -p0
 %patch11 -p1
+%patch12 -p1
 
 sed -i "/^AC_INIT(\[GRUB\]/ s/%version/%version-%release/" configure.ac
 
@@ -223,8 +243,9 @@ mkdir -p %buildroot/boot/grub/fonts
 install -pD -m755 %SOURCE8 %buildroot%_sbindir/
 install -pD -m644 %SOURCE9 %buildroot%_man8dir/update-grub.8
 
+# TODO: drop the obsolete one (unifont.pf2)
 %buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/unifont.pf2 %_datadir/fonts/bitmap/misc/8x13.pcf.gz
-%buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/fonts/unicode.pf2 %_datadir/fonts/ttf/dejavu/DejaVuSansMono.ttf
+%buildroot%_bindir/grub-mkfont -o %buildroot/boot/grub/fonts/unicode.pf2 %font
 
 mkdir -p %buildroot/boot/grub/themes
 
@@ -232,9 +253,10 @@ install -pDm755 %SOURCE3 %buildroot%_sysconfdir/grub.d/
 sed -i 's,^libdir=,libdir=%_libdir,g' %buildroot%_sysconfdir/grub.d/39_memtest
 sed -i 's,@LOCALEDIR@,%_datadir/locale,g' %buildroot%_sysconfdir/grub.d/*
 
-install -pDm755 %SOURCE4 %buildroot%_rpmlibdir/grub2.filetrigger
-install -pDm755 %SOURCE6 %buildroot%_sbindir/grub-autoupdate
-install -pDm755 %SOURCE7 %buildroot%_sysconfdir/firsttime.d/grub-mkconfig
+install -pDm755 %SOURCE4  %buildroot%_rpmlibdir/grub2.filetrigger
+install -pDm755 %SOURCE6  %buildroot%_sbindir/grub-autoupdate
+install -pDm755 %SOURCE7  %buildroot%_sysconfdir/firsttime.d/grub-mkconfig
+install -pDm755 %SOURCE10 %buildroot%_sbindir/grub-efi-autoupdate
 
 # Ghost config file
 install -d %buildroot/boot/grub
@@ -328,6 +350,7 @@ rm -f %buildroot%_libdir/grub-efi/*/*.h
 %endif
 %_efi_bindir/grub.efi
 %_libdir/grub/%grubefiarch
+%_sbindir/grub-efi-autoupdate
 
 %ifarch x86_64
 %files efi-unsigned
@@ -355,6 +378,17 @@ grub-efi-autoupdate || {
 } >&2
 
 %changelog
+* Thu Jan 31 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt11
+- make grub less bold with its noisy opinions (closes: #25778)
+- cas@: updated 05_altlinux_theme (closes: #28218)
+- skip memtest in EFI mode
+- changed default font from dejavu sans mono to univga
+
+* Thu Jan 31 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt10
+- whoops, actually added grub-efi-autoupdate script (closes: #28485)
+- tweaked both grub-autoupdate and posttrans filetrigger
+  to be almost quiet in EFI case
+
 * Wed Jan 23 2013 Michael Shigorin <mike@altlinux.org> 2.00-alt9
 - efi subpackage is signed by default on x86_64
 - introduced efi-unsigned subpackage with a clean copy
