@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 3
 %define _pl p374
 Version: %branch.%ver_teeny
-Release: alt10
+Release: alt11
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -131,18 +131,19 @@ management tasks (as in Perl). It is simple, straight-forward, and extensible.
 This package contains standard Ruby Tk bindings libraries.
 
 
-%package -n rdoc
-Summary: Documentation tool for Ruby source code
+%package -n ri
+Summary: Tool for display descriptions of built-in Ruby methods, classes, and modules
 Group: Development/Ruby
 BuildArch: noarch
 Requires: %name-stdlibs = %version
-Provides: ri = %version-%release
-Provides: rdoc = %version-%release
 %obsolete %name-tool-ri
-%obsolete %name-tool-rdoc
+Conflicts: rdoc <= 1.9.3-alt10
 
-%description -n rdoc
-RDoc is a documentation tool for Ruby source code.
+%description -n ri
+ri is a command line tool that displays descriptions of built-in Ruby methods,
+classes, and modules. For methods, it shows  you  the  calling sequence  and
+a description. For classes and modules, it shows a synopsis along with a list
+of the methods the class or module implements.
 
 
 %package tools
@@ -155,13 +156,16 @@ Provides: gem = 1.8.23
 Provides: %name-rake = 0.9.2.2
 Provides: rake = 0.9.2.2
 Obsoletes: %name-rake
+Provides: rdoc = %version-%release
+Obsoletes: rdoc < %version-%release
+%obsolete %name-tool-rdoc
 #Provides: %name-test-unit = 2.2.0
 #Obsoletes: %name-test-unit
 Provides: %{name}gems = 1.8.24
 Obsoletes: %{name}gems
 
 %description tools
-Ruby tools: rake, gem.
+Ruby tools: rake, rdoc, gem.
 
 
 %package -n irb
@@ -196,7 +200,7 @@ Group: Development/Documentation
 BuildArch: noarch
 AutoReq: no
 AutoProv: no
-Requires: ri
+Requires: ri = %version-%release
 
 %description doc-ri
 Ruby is an interpreted scripting language for quick and easy object-oriented
@@ -311,10 +315,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %libdir/*tk*
 
 
-%files -n rdoc
+%files -n ri
 %_bindir/update-ri-cache
 %_bindir/ri
-%_bindir/rdoc
 %_man1dir/ri.*
 %_rpmlibdir/%name-doc-ri.filetrigger
 
@@ -323,6 +326,7 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 %_bindir/erb
 %_bindir/gem
 %_bindir/rake
+%_bindir/rdoc
 %exclude %_bindir/testrb
 %_man1dir/erb.*
 %_man1dir/rake.*
@@ -346,6 +350,12 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Feb 01 2013 Led <led@altlinux.ru> 1.9.3-alt11
+- moved ri to separate subpackage
+- moved rdoc to ruby-tools subpackage
+- removed rdoc subpackage
+- added strict requires of ri for ruby-doc-ri (ALT#28451)
+
 * Tue Jan 15 2013 Led <led@altlinux.ru> 1.9.3-alt10
 - p374 upstream patchlevel
 
