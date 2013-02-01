@@ -5,7 +5,7 @@
 
 %define rname smb4k
 Name: kde4-%rname
-Version: 1.0.4
+Version: 1.0.5
 Release: alt1
 
 Group: Networking/Other
@@ -13,7 +13,7 @@ Summary: A KDE SMB/CIFS share browser
 License: GPLv2+
 Url: http://smb4k.sourceforge.net/
 
-Requires: samba-client
+Requires: samba-client cifs-utils
 Requires: %libsmb4kcore = %version-%release
 
 Source: %rname-%version.tar
@@ -80,6 +80,9 @@ Developemnt files for %name
 
 
 %changelog
+* Fri Feb 01 2013 Sergey V Turchin <zerg@altlinux.org> 1.0.5-alt1
+- new version
+
 * Wed Oct 03 2012 Sergey V Turchin <zerg@altlinux.org> 1.0.4-alt1
 - new version
 
