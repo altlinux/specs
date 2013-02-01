@@ -1,5 +1,5 @@
 Name: xorg-drv-synaptics
-Version: 1.6.2.901
+Version: 1.6.3
 Release: alt1
 Epoch: 1
 Summary: Synaptics touchpad input driver
@@ -59,6 +59,9 @@ Synaptics touchpad input driver development package
 %_pkgconfigdir/*.pc
 
 %changelog
+* Fri Feb 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.3-alt1
+- 1.6.3
+
 * Fri Jan 18 2013 Valery Inozemtsev <shrek@altlinux.ru> 1:1.6.2.901-alt1
 - 1.6.3 RC1
 
