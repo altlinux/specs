@@ -7,7 +7,7 @@
 
 Name: kde-common-devel
 Version: 4.10.0
-Release: alt2
+Release: alt3
 
 Group: Development/KDE and QT
 Summary: Development utils for KDE
@@ -58,6 +58,9 @@ install -D -m 0755 find-lang %buildroot/%_bindir/kde-devel-find-lang
 %_rpmmacrosdir/%name
 
 %changelog
+* Fri Feb 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt3
+- fix to install python files in python prefix
+
 * Wed Dec 12 2012 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt2
 - update languages list
 
