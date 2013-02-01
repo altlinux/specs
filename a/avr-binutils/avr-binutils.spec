@@ -6,7 +6,7 @@
 
 Summary: A GNU collection of binary utilities.
 Name: %cross_arch-binutils
-Version: 2.21
+Version: 2.23.51.0.8
 Release: alt1
 Serial: 1
 Copyright: GPL
@@ -14,6 +14,7 @@ Group: Development/Other
 URL: ftp://ftp.kernel.org/pub/linux/devel/binutils/
 Source: binutils-%version.tar.bz2
 Patch0: patch-coff-avr-2.20.51.0.9.patch
+Patch1: 30-binutils-2.20.1-avr-size.patch
 #Patch0: binutils-%version-info_fix.diff
 
 %define libavrdir %_libdir/%cross_arch
@@ -37,6 +38,7 @@ This package is for cross-development of AVR programs.
 
 %prep
 %setup -n binutils-%version -q
+%patch1
 #%patch0 -p1
 #%patch0 -p1 -b .avrinfo
 
@@ -87,6 +89,8 @@ done
 
 %__ln_s %_libdir/%cross_arch %buildroot%_prefix/%cross_arch
 
+%__rm -f %buildroot/usr/lib64/lib64/libiberty.a
+
 %files
 %doc README
 %includeavrdir
@@ -97,6 +101,10 @@ done
 %_man1dir/*
 
 %changelog
+* Fri Feb 01 2013 Grigory Milev <week@altlinux.ru> 1:2.23.51.0.8-alt1
+- new version released
+- 30-binutils-2.20.1-avr-size.patch from fedore added
+
 * Thu Jan 13 2011 Grigory Milev <week@altlinux.ru> 1:2.21-alt1
 - new version released
 - updated from fc src.rpm
