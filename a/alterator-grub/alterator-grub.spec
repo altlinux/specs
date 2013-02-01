@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-grub
-Version: 0.9.3
+Version: 0.9.4
 Release: alt1
 
 Summary: alterator module to setup grub bootloader
@@ -47,6 +47,9 @@ alterator module to setup grub bootloader
 %_bindir/*
 
 %changelog
+* Fri Feb 01 2013 Michael Shigorin <mike@altlinux.org> 0.9.4-alt1
+- fix adding BIOS boot targets in EFI mode
+
 * Thu Jan 31 2013 Michael Shigorin <mike@altlinux.org> 0.9.3-alt1
 - make temporary file in proper location (thanks sem@
 
