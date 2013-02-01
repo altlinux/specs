@@ -1,5 +1,5 @@
 Name: alt-domain-server 
-Version: 0.2
+Version: 0.3
 Release: alt1
 
 Summary: All needed for alt-domain server
@@ -11,7 +11,7 @@ Requires: bind alterator-bind
 Requires: openldap-servers krb5-kdc krb5-kadmin krb5-kinit ldap-user-tools
 Requires: dhcp-server alterator-dhcp
 Requires: alterator-net-domain alterator-ldap-users ldap-user-tools
-Requires: samba4
+Requires: /usr/sbin/smbd
 Requires: alterator-kdc alterator-ldap-groups alterator-net-eth
 
 Provides: installer-feature-setup-openldap
@@ -34,6 +34,9 @@ cp preinstall.d/* %buildroot/usr/share/install2/preinstall.d/
 /usr/share/install2/preinstall.d/*
 
 %changelog
+* Fri Feb 01 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
+- version independent samba dependence
+
 * Thu Jan 31 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
 - i-f-setup-openldap moved here
 
