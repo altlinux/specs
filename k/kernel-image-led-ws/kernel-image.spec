@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.61
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -725,9 +725,8 @@ Patch1191: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
 Patch1192: linux-%kernel_branch.44-feat-fs-overlayfs.patch
 Patch1193: linux-%kernel_branch.61-feat-fs-reiser4.patch
 Patch1194: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1195: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1196: linux-%kernel_branch.42-feat-fs-unionfs.patch
-Patch1197: linux-%kernel_branch.44-feat-fs--lnfs.patch
+Patch1195: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1196: linux-%kernel_branch.44-feat-fs--lnfs.patch
 
 Patch1201: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
 Patch1202: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
@@ -2091,8 +2090,7 @@ cd linux-%version
 %patch1193 -p1
 %patch1194 -p1
 %patch1195 -p1
-%patch1196 -p1
-%{?_with_lnfs:%patch1197 -p1}
+%{?_with_lnfs:%patch1196 -p1}
 
 %patch1201 -p1
 %patch1202 -p1
@@ -2996,6 +2994,12 @@ done)
 
 
 %changelog
+* Fri Feb 01 2013 Led <led@altlinux.ru> 3.0.61-alt6
+- removed:
+  + feat-fs-squashfs--write
+- updated:
+  + fix-drivers-usb-core
+
 * Thu Jan 31 2013 Led <led@altlinux.ru> 3.0.61-alt5
 - updated:
   + fix-drivers-usb
