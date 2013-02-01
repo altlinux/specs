@@ -1,4 +1,4 @@
-%define svn_revision 380430
+%define svn_revision 380430.1
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -54,6 +54,7 @@ BuildPreReq: dahdi-linux-headers
 BuildPreReq: libpri-devel
 BuildRequires: libmISDN-devel
 BuildPreReq: libspeex-devel
+BuildRequires: libcorosync-devel
 BuildRequires: libcurl-devel
 BuildPreReq: libspandsp6-devel
 BuildRequires: libexpat-devel
@@ -64,8 +65,8 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 380430
-%add_verify_elf_skiplist %_libdir/libasteriskssl*
+%define svn_revision 380430.1
+%add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
 %def_without		hoard
@@ -373,6 +374,14 @@ Requires: pbx-utils-all
 %description complete
 This virtual package requires all Asterisk subpackages
 
+%package corosync
+Summary: Device state and MWI clustering
+Group: %group
+Requires: %name = %version-%release
+
+%description corosync
+Device state and MWI clustering
+
 %package crypto
 Summary: OpenSSL support for Asterisk (crypto)
 Group: %group
@@ -592,11 +601,11 @@ Requires: asterisk12-common
 extensions.conf -> ael2 converter
 
 
-%package -n libasteriskssl
+%package -n libasteriskssl12
 Summary: Asterisk SSL functions
 Group: %group
 
-%description -n libasteriskssl
+%description -n libasteriskssl12
 Asterisk SSL functions
 
 %description
@@ -940,6 +949,10 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %astmodule res_http_websocket
 %astsample acl
 %exclude %_docdir/%name-%version/Makefile
+%exclude %astsample app_skel
+%exclude %astsample config_test
+%exclude %_sbindir/astdb2bdb
+%exclude %_sbindir/astdb2sqlite3
 
 %files -n aelparse12
 %_sbindir/aelparse-%version
@@ -1050,6 +1063,10 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 
 %files complete
 
+%files corosync
+%astmodule res_corosync
+%astsample res_corosync
+
 %files crypto
 %_sbindir/astgenkey
 
@@ -1061,7 +1078,7 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 
 %files devel
 %_includedir/asterisk-%version
-%_libdir/libasteriskssl.so
+%_libdir/libasteriskssl12.so
 
 %files docs
 %dir %_docdir/%name-%version
@@ -1217,10 +1234,15 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_sbindir/conf2ael-%version
 %_altdir/conf2ael-%version
 
-%files -n libasteriskssl
-%_libdir/libasteriskssl.so.1
+%files -n libasteriskssl12
+%_libdir/libasteriskssl12.so.1
 
 %changelog
+* Fri Feb 01 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.380430.1
+- move astdb2sqlite3 to pbx-utils-astdb package
+- rename libasteriskssl.so -> libasteriskssl11.so
+- build with res_corosync module
+
 * Tue Jan 29 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.380430
 - update from svn revision 380430
 
