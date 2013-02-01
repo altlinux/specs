@@ -1,5 +1,5 @@
 Name: warzone2100
-Version: 2.3.9
+Version: 3.1.0
 Release: alt1
 
 Summary: Warzone 2100 Resurrection Project (RTS 3D game)
@@ -7,11 +7,15 @@ License: GPLv2+ and CC-BY-SA
 Group: Games/Strategy
 
 Url: http://wz2100.net/
-Source: http://dfn.dl.sourceforge.net/sourceforge/warzone2100/warzone2100-%version.tar.gz
-Source1: http://www.deviantart.com/download/92153956/Warzone_2100_Tango_Icon_by_Unit66.zip
+#Source: http://dfn.dl.sourceforge.net/sourceforge/warzone2100/warzone2100-%version.tar.gz
+Source: %name-%version.tar
+#Source1: http://www.deviantart.com/download/92153956/Warzone_2100_Tango_Icon_by_Unit66.zip
+Source1: Warzone_2100_Tango_Icon_by_Unit66.tar
 
-# Automatically added by buildreq on Tue Jun 30 2009 (-bi)
-BuildRequires: flex gcc-c++ libGL-devel libSDL-devel libSDL_net-devel libX11-devel libopenal-devel libpng-devel libpopt-devel libtheora-devel libvorbis-devel libphysfs-devel quesoglc-devel subversion unzip zip
+BuildRequires: /proc
+BuildRequires: libqt4-devel elfutils fontconfig fontconfig-devel gnu-config libGL-devel libGLU-devel libX11-devel libXrandr-devel libXrender-devel libfreetype-devel libogg-devel libpng-devel libqt4-core libqt4-devel libqt4-network libqt4-script libstdc++-devel pkg-config python-base texlive-latex-base xorg-randrproto-devel xorg-renderproto-devel xorg-xproto-devel zlib-devel
+BuildRequires: asciidoc-a2x flex gcc-c++ git-core imake libSDL-devel libfribidi-devel libglew-devel libopenal-devel libphysfs-devel libtheora-devel libvorbis-devel subversion unzip xorg-cf-files zip
+
 # 'zip -T' called in build process needs unzip to work...
 
 Requires: %name-gamedata = %version
@@ -59,11 +63,16 @@ install -pD -m644 warzone2100_16x16.png %buildroot%_miconsdir/warzone2100.png
 %exclude %_iconsdir/warzone2100.png
 %_pixmapsdir/*
 %_desktopdir/*
+%_man6dir/*
 
 %files gamedata
 %_datadir/warzone2100
 
 %changelog
+* Wed Jan 30 2013 Denis Smirnov <mithraen@altlinux.ru> 3.1.0-alt1
+- 3.1.0
+- build from git
+
 * Sun Nov 27 2011 Victor Forsiuk <force@altlinux.org> 2.3.9-alt1
 - 2.3.9
 
