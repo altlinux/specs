@@ -5,20 +5,22 @@
 %define sover %somver.0.0
 
 Name: adios
-Version: 1.4.0
+Version: 1.4.1
 Release: alt1
 Summary: The Adaptable IO System (ADIOS)
 License: BSD
 Group: Sciences/Mathematics
-Url: http://www.nccs.gov/user-support/center-projects/adios/
+Url: http://www.olcf.ornl.gov/center-projects/adios/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://users.nccs.gov/~pnorbert/adios-1.4.0.tar.gz
-Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.4.0.pdf
+Source: http://users.nccs.gov/~pnorbert/adios-1.4.1.tar.gz
+Source1: http://users.nccs.gov/~pnorbert/ADIOS-UsersManual-1.4.1.pdf
 Source2: https://users.nccs.gov/~lot/skel/skel-doc.pdf
-Source3: http://users.nccs.gov/~pnorbert/ADIOS-DevManual-1.4.0.pdf
+Source3: http://users.nccs.gov/~pnorbert/ADIOS-DevManual-1.4.1.pdf
+Source4: http://users.nccs.gov/~pnorbert/ADIOS-vizschema.pdf
 
 %add_verify_elf_skiplist %_libdir/%name/examples/C/*
+%add_python_req_skip skel_dwarf
 
 BuildPreReq: libmxml-devel %mpiimpl-devel libhdf5-mpi-devel
 BuildPreReq: libnetcdf-mpi-devel libmpe2-devel libmxml-devel
@@ -114,7 +116,7 @@ This package contains documentation for ADIOS.
 
 %prep
 %setup
-install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 .
+install -p -m644 %SOURCE1 %SOURCE2 %SOURCE3 %SOURCE4 .
 
 %build
 mpi-selector --set %mpiimpl
@@ -136,7 +138,7 @@ export MPIDIR=%mpidir
 	--with-nc4par-incdir=%mpidir/include/netcdf-3
 #	--disable-fortran \
 #make_build
-%make
+%make USE_PARALLEL_COMPILER=1
 
 %install
 source %mpidir/bin/mpivars.sh
@@ -165,7 +167,8 @@ for i in $LIBS; do
 	LIB=$(echo $i|sed 's|\(.*\)\.a|\1|')
 	ar x ../$i
 	mpicc -shared * -Wl,-soname,$LIB.so.%somver -o ../$LIB.so.%sover \
-		-Wl,-rpath,%mpidir/lib -lnetcdf -lhdf5 -lmxml -lpthread $ADDLIB
+		-Wl,-rpath,%mpidir/lib -lnetcdf -lhdf5 -lmxml -lpthread -lgfortran \
+		$ADDLIB
 	ln -s $LIB.so.%sover ../$LIB.so.%somver
 	ln -s $LIB.so.%somver ../$LIB.so
 	rm -f *
@@ -202,6 +205,9 @@ rmdir %buildroot%_libdir/tmp
 %doc *.pdf
 
 %changelog
+* Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.1-alt1
+- Version 1.4.1
+
 * Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.0-alt1
 - Version 1.4.0
 
