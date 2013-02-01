@@ -1,7 +1,7 @@
 Name: adolc
 Summary: A Package for Automatic Differentiation of Algorithms Written in C/C++
-Version: 2.2.1
-Release: alt3.svn20111024
+Version: 2.4.0
+Release: alt1.svn20130129
 Group: Sciences/Mathematics
 License: CPL
 URL: https://projects.coin-or.org/ADOL-C
@@ -157,6 +157,9 @@ cp -fR ADOL-C/examples/* %buildroot%_libdir/%name-examples/
 %_libdir/%name-examples
 
 %changelog
+* Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1.svn20130129
+- Version 2.4.0
+
 * Sun Jun 24 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.1-alt3.svn20111024
 - Avoid using of chrpath
 
