@@ -6,23 +6,19 @@
 
 Summary: GNU Compiler for AVR (C language only).
 Name: %cross_arch-gcc
-Version: 4.5.1
-Release: alt3.1
+Version: 4.7.2
+Release: alt2
 
 Copyright: GPL
 Group: Development/Other
 URL: http://gcc.gnu.org
 
-Source0: gcc-core-%version.tar.bz2
-Source1: gcc-g++-%version.tar.bz2
-Patch0: avr-gcc-4.5.0-new_devices.patch
-Patch1: avr-gcc-4.5.1-register-fix.patch
-Patch2: gcc-atmega2560-usart23.patch
+Source0: gcc-%version.tar.bz2
 
 # Automatically added by buildreq on Thu Oct 24 2002
 BuildRequires: avr-binutils flex
 
-BuildRequires: avr-binutils >= 2.20-alt1
+BuildRequires: avr-binutils >= 2.23.51.0.8-alt1
 BuildRequires: zlib-devel libmpc-devel libmpfr-devel libgmp-devel
 Requires: avr-binutils >= 2.20-alt1
 
@@ -50,14 +46,8 @@ on the mega128 devices.
 
 %prep
 %setup -q -n gcc-%version
-%setup -q -T -D -b 1 -n gcc-%version
-%patch0 -p0
-%patch1 -p1
-%patch2 -p1
 contrib/gcc_update --touch
-
 #cd %_builddir/gcc-%version/gcc
-
 
 %build
 echo "" > gcc/cp/g++.1
@@ -124,6 +114,7 @@ echo timestamp > gcc/cstamp-h
 rename cpp.1 %cross_arch-cpp.1 %buildroot%_man1dir/*
 rename gcov.1 %cross_arch-gcov.1 %buildroot%_man1dir/*
 %__rm -f %buildroot%_man1dir/%cross_arch-g++*
+%__rm %buildroot/usr/libexec/gcc/avr/4.7.2/liblto_plugin.la
 
 #%__mv %buildroot%_libdir/bin/* %buildroot%_bindir/
 %__ln_s -f %cross_arch-gcc.1.bz2 %buildroot%_man1dir/%cross_arch-g++.1.bz2
@@ -140,20 +131,25 @@ rename avr-avr avr %buildroot%_man1dir/*
 %doc gcc/README* gcc/*ChangeLog*
 %dir %libavrexecdir
 %dir %libavrexecdir/%version
+%dir %libavrexecdir/%version/plugin
 %dir %libavrexecdir/%version/install-tools
 
 %_bindir/*-cpp
 %_bindir/*-gcc*
 %_bindir/*-gcov
 %libavrdir/%version/avr*
+%libavrdir/%version/tiny-stack*
 %libavrdir/%version/include*
 %libavrdir/%version/libgcc.a
 %libavrdir/%version/libgcov.a
 %libavrdir/%version/specs
 %libavrdir/%version/install-tools*
+%libavrexecdir/%version/*.so*
+%libavrexecdir/%version/lto1
 %libavrexecdir/%version/cc1
 %libavrexecdir/%version/collect2
 %libavrexecdir/%version/lto-wrapper
+%libavrexecdir/%version/plugin/gengtype
 %libavrexecdir/%version/install-tools/*
 %_man1dir/avr-gcc.1*
 %_man1dir/avr-cpp.1*
@@ -166,6 +162,12 @@ rename avr-avr avr %buildroot%_man1dir/*
 %_man1dir/avr-g++.1*
 
 %changelog
+* Fri Feb 01 2013 Grigory Milev <week@altlinux.ru> 4.7.2-alt2
+- rebuild with new binutils + new avr cpu's
+
+* Fri Feb 01 2013 Grigory Milev <week@altlinux.ru> 4.7.2-alt1
+- new version
+
 * Thu Aug 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.5.1-alt3.1
 - Rebuilt with gmp 5.0.5
 

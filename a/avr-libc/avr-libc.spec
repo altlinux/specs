@@ -5,7 +5,7 @@
 
 Summary: AVR libc
 Name: avr-libc
-Version: 1.7.1
+Version: 1.8.0
 Release: alt2
 Serial: 1
 License: GPL, LGPL, BSD, Public Domain
@@ -13,19 +13,27 @@ Group: Development/Other
 URL: http://savannah.gnu.org/projects/avr-libc
 
 Source0: http://savannah.gnu.org/download/avr-libc/avr-libc-%version.tar.bz2
-Patch0: 1.7.0.fix.patch
+Patch0: 1.8.0.fix.patch
 
-# Automatically added by buildreq on Sun Nov 29 2009
-BuildRequires: azenis-fonts-ttf cm-super-fonts-pfb doxygen
-Buildrequires: netpbm tetex-core transfig ghostscript-classic
+# Automatically added by buildreq on Fri Feb 01 2013
+# optimized out: avr-binutils avr-gcc fontconfig fonts-ttf-gnu-freefont-mono fonts-ttf-gnu-freefont-sans fonts-ttf-gnu-freefont-serif fonts-type1-urw ghostscript-classic ghostscript-common netpbm ruby texlive-extra-utils
+BuildRequires: azenis-fonts-ttf cups-filters doxygen ruby-stdlibs transfig
+BuildRequires: fonts-otf-oldstandard fonts-otf-stix fonts-ttf-armenian fonts-ttf-baekmuk-batang fonts-ttf-baekmuk-dotum
+BuildRequires: fonts-ttf-baekmuk-gulim fonts-ttf-baekmuk-hline fonts-ttf-bengali fonts-ttf-chinese-big5
+BuildRequires: fonts-ttf-chinese-gb2312 fonts-ttf-church fonts-ttf-dejavu fonts-ttf-dejavu-lgc fonts-ttf-devanagari
+BuildRequires: fonts-ttf-freefont fonts-ttf-georgian fonts-ttf-gost fonts-ttf-gw fonts-ttf-java-1.6.0-sun fonts-ttf-junicode
+BuildRequires: fonts-ttf-kannada fonts-ttf-latex-xft fonts-ttf-liberation fonts-ttf-malayalam fonts-ttf-ms fonts-ttf-oldstandard
+BuildRequires: fonts-ttf-reduce fonts-ttf-sazanami-gothic fonts-ttf-sazanami-mincho fonts-ttf-sil-gentium fonts-ttf-syriac
+BuildRequires: fonts-ttf-tamil fonts-ttf-tempora fonts-ttf-urdu fonts-ttf-vera fonts-ttf-xorg fonts-ttf-znamen
+BuildRequires: fonts-type1-cm-super-pfb fonts-type1-dmtr40in fonts-type1-phonetic fonts-type1-xorg
 
-BuildRequires: avr-binutils >= 2.20
-BuildRequires: avr-gcc >= 4.5.1-alt3
-BuildRequires: avr-gcc-c++ >= 4.5.1-alt3
+BuildRequires: avr-binutils >= 2.23.51.0.8-alt1
+BuildRequires: avr-gcc >= 4.7.2-alt2
+BuildRequires: avr-gcc-c++ >= 4.7.2-alt2
 
-Requires: avr-binutils >= 2.20
-Requires: avr-gcc >= 4.5.1-alt3
-Requires: avr-gcc-c++ >= 4.5.1-alt3
+Requires: avr-binutils >= 2.23.51.0.8-alt1
+Requires: avr-gcc >= 4.7.2-alt2
+Requires: avr-gcc-c++ >= 4.7.2-alt2
 
 %define libavrdir %_libdir/%cross_arch
 %define includeavrdir %_includedir/%cross_arch
@@ -36,6 +44,8 @@ Avr-libc is a C library for developing applications for Atmel AVR microcontrolle
 %package doc
 Summary: Documentation for avr-libc
 Group: Development/Other
+BuildArch: noarch
+
 %description doc
 Documentation for avr-libc in html, postscript and pdf formats.
 
@@ -56,10 +66,10 @@ Documentation for avr-libc in html, postscript and pdf formats.
 	--enable-doc --disable-versioned-doc --disable-pdf-doc
 #	--exec-prefix=%libavrdir \
 
-%__make
+%make_build
 
 %install
-%__make \
+%make_build \
 	prefix=%buildroot%_prefix \
 	exec_prefix=%buildroot%_libdir \
 	mandir=%buildroot%_mandir \
@@ -83,6 +93,12 @@ Documentation for avr-libc in html, postscript and pdf formats.
 %_datadir/doc/avr-libc/*
 
 %changelog
+* Fri Feb 01 2013 Grigory Milev <week@altlinux.ru> 1:1.8.0-alt2
+- rebuild with new avr-binutils and avr-gcc
+
+* Fri Feb 01 2013 Grigory Milev <week@altlinux.ru> 1:1.8.0-alt1
+- new version released
+
 * Thu Mar 17 2011 Grigory Milev <week@altlinux.ru> 1:1.7.1-alt2
 - rebuilded with avr-gcc-4.5.1-alt3
 
