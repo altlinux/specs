@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt0.5
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -55,6 +55,7 @@ Patch23: kde-workspace-4.7.80-no_HAL.patch
 Patch24: kdebase-workspace-4.5.90-no_HAL2.patch
 Patch25: kde-workspace-4.9.1-solid_krunner_disable.patch
 Patch26: kde-workspace-4.9.3-systemd-displaymanager.patch
+Patch27: kde-workspace-4.9.98-powerdevil_systemd_login1.patch
 # SuSE
 # MDK
 # upstream
@@ -539,6 +540,7 @@ __EOF__
 %patch25 -p1
 %if_enabled systemd
 %patch26 -p0
+%patch27 -p1
 %endif
 #
 %patch700 -p1
@@ -967,6 +969,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Jan 31 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
+- update from 4.10 branch
+
 * Tue Jan 29 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.5
 - update from 4.10 branch
 
