@@ -4,14 +4,13 @@
 %define rname lightdm-kde
 Name: lightdm-kde-greeter
 Version: 0.3.1
-Release: alt1
+Release: alt2
 
 Group: Graphical desktop/Other
 Summary: LightDM KDE4 Greeter
 Url: http://www.kde.org/
 License: GPLv3+
 
-Requires: lightdm
 Provides: lightdm-greeter
 
 Source: %rname-%version.tar
@@ -60,6 +59,9 @@ printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters
 %_datadir/polkit-1/actions/org.kde.kcontrol.kcmlightdm.policy
 
 %changelog
+* Fri Feb 01 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt2
+- fix requires
+
 * Thu Jan 31 2013 Sergey V Turchin <zerg@altlinux.org> 0.3.1-alt1
 - new version
 
