@@ -2,7 +2,7 @@
 %define _unpackaged_files_terminate_build 1
 
 Name: cppcheck
-Version: 1.55
+Version: 1.58
 Release: alt1
 
 Summary: A tool for static C/C++ code analysis
@@ -10,10 +10,8 @@ Summary: A tool for static C/C++ code analysis
 License: GPLv3
 Group: Development/Tools
 Url: http://sourceforge.net/projects/cppcheck/
-Packager: Slava Semushin <php-coder@altlinux.ru>
 
 Source: http://downloads.sourceforge.net/cppcheck/cppcheck-%version.tar.bz2
-Patch0: cppcheck-makefile-docbook_xsl.patch
 
 BuildRequires: gcc-c++ docbook-style-xsl xsltproc libpcre-devel
 
@@ -24,7 +22,6 @@ allocation-deallocation, buffer overrun, and many more. The goal is
 
 %prep
 %setup
-%patch0 -p2
 
 %build
 %make_build --silent --no-print-directory \
@@ -52,6 +49,9 @@ install -pD -m 644 %name.1 %buildroot%_man1dir/%name.1
 %_man1dir/%name.1.*
 
 %changelog
+* Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.58-alt1
+- Version 1.58
+
 * Tue Jul 17 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.55-alt1
 - Version 1.55
 
