@@ -1,5 +1,5 @@
 Name: 		skrooge
-Version: 	0.9.1
+Version: 	1.4.0
 Release: 	alt1
 License: 	%gpl2plus
 Summary: 	Personal finances manager for KDE4
@@ -18,6 +18,10 @@ BuildRequires: libqca2-devel
 BuildRequires: kde4sdk-scripts
 BuildRequires: libqt4-sql-sqlite >= 4.7.0
 BuildRequires: libsqlite-devel
+BuildRequires: grantlee-devel
+BuildRequires: kde4pimlibs-devel
+BuildRequires: kde4-nepomuk-core-devel
+BuildRequires: xsltproc
 
 %description
 Skrooge is a personal finances manager for KDE4, aiming at being simple
@@ -38,6 +42,7 @@ and intuitive.
 %_K4bindir/*
 %_K4apps/*
 %_K4cfg/*
+%_K4conf/*.knsrc
 %_K4srv/*
 %_K4srvtyp/*
 %_K4libdir/libskg*
@@ -46,8 +51,19 @@ and intuitive.
 %_iconsdir/hicolor/*/*/*
 %_K4xdg_mime/*
 %_K4xdg_apps/*
+%_K4doc/pt_BR/%name/*
+%_datadir/akonadi/agents/skroogeakonadiresource.desktop
+%_K4plug/grantlee/0.3/grantlee_skgfilters.so
+%_K4link/*.so
 
 %changelog
+* Tue Jan 22 2013 Andrey Cherepanov <cas@altlinux.org> 1.4.0-alt1
+- New version 1.4.0
+
+* Wed Jan 18 2012 Andrey Cherepanov <cas@altlinux.org> 1.2.0-alt1
+- New version 1.2.0
+- Add watch file
+
 * Fri Sep 23 2011 Andrey Cherepanov <cas@altlinux.org> 0.9.1-alt1
 - New version 0.9.1
 
