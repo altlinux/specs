@@ -1,6 +1,6 @@
 Name: algencan
-Version: 2.3.7
-Release: alt3
+Version: 2.4.0
+Release: alt1
 Summary: Solving extremely large problems with moderate computer time
 License: GPL v2 or later
 Group: Sciences/Mathematics
@@ -94,6 +94,7 @@ This package contains development headers for ALGENCAN.
 sed -i 's|2\.5|%_python_version|g' \
 	Makefile sources/interfaces/py/Makefile
 %endif
+sed -i 's|2\.6|%_python_version|g' Makefile
 
 %build
 %make PROBNAME=toyprob
@@ -147,6 +148,9 @@ done
 %files -n R-%name -f INSTALL_R
 
 %changelog
+* Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0-alt1
+- Version 2.4.0
+
 * Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.3.7-alt3
 - Built with OpenBLAS instead of GotoBLAS2
 
