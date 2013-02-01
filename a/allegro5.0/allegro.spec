@@ -3,7 +3,7 @@
 
 %define major 5
 %define minor 0
-%define bugfix 5
+%define bugfix 8
 %define sover 5.0
 Name: %oname%sover
 Version: %major.%minor.%bugfix
@@ -101,6 +101,9 @@ gzip CHANGES*
 %_pkgconfigdir/*
 
 %changelog
+* Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.8-alt2
+- Version 5.0.8
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0.5-alt2
 - Rebuilt with libpng15
 
