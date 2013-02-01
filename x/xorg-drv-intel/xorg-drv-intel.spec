@@ -1,5 +1,5 @@
 Name: xorg-drv-intel
-Version: 2.20.19
+Version: 2.21.0
 Release: alt1
 Epoch: 7
 Summary: Intel integrated graphics chipsets
@@ -52,6 +52,9 @@ and 24 for the 830M and later
 %_man4dir/i*.4*
 
 %changelog
+* Fri Feb 01 2013 Valery Inozemtsev <shrek@altlinux.ru> 7:2.21.0-alt1
+- 2.21.0
+
 * Sun Jan 20 2013 Valery Inozemtsev <shrek@altlinux.ru> 7:2.20.19-alt1
 - 2.20.19
 
