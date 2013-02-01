@@ -1,7 +1,7 @@
 %define dist libwww-perl
 Name: perl-libwww
 Version: 6.04
-Release: alt1
+Release: alt2
 
 Summary: WWW client/server library for Perl (aka LWP)
 License: GPL or Artistic
@@ -24,8 +24,9 @@ Obsoletes: %name-perl < %version
 # disable HTML::Format dependencies in lwp-request
 %filter_from_requires /^perl.HTML.Format/d
 
-# Automatically added by buildreq on Mon Feb 20 2012
-BuildRequires: perl-Encode-Locale perl-File-Listing perl-HTTP-Cookies perl-HTTP-Daemon perl-HTTP-Negotiate perl-Net-HTTP perl-WWW-RobotRules perl-devel perl-podlators
+# Automatically added by buildreq on Thu Jan 31 2013
+# optimized out: perl-Encode perl-HTTP-Date perl-HTTP-Message perl-LWP-MediaTypes perl-Pod-Escapes perl-Pod-Simple perl-URI perl-libnet perl-podlators
+BuildRequires: perl-Encode-Locale perl-File-Listing perl-HTML-Parser perl-HTTP-Cookies perl-HTTP-Daemon perl-HTTP-Negotiate perl-Net-HTTP perl-WWW-RobotRules perl-devel perl-podlators
 
 %description
 The libwww-perl collection is a set of Perl modules which provides a
@@ -70,6 +71,9 @@ ln -snf lwp-request.1 %buildroot%_man1dir/POST.1
 %doc	%perl_vendor_privlib/lwp*.pod
 
 %changelog
+* Thu Jan 31 2013 Nikolay A. Fetisov <naf@altlinux.ru> 6.04-alt2
+- fix build - updating BuildRequires
+
 * Mon Feb 20 2012 Alexey Tourbin <at@altlinux.ru> 6.04-alt1
 - 6.03 -> 6.04
 
