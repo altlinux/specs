@@ -1,10 +1,11 @@
 Name: lksctp-tools
 Summary: Linux Kernel SCTP tools
-Version: 1.0.11
-Release: alt2
+Version: 1.0.13
+Release: alt1
 License: GPL2
 Group: System/Kernel and hardware
-BuildRequires: glibc-devel-static rpm-build-ruby
+BuildRequires: glibc-devel-static
+Url: http://lksctp.sourceforge.net/
 Source: %name-%version.tar
 
 %package -n liblksctp
@@ -56,6 +57,7 @@ mkdir -p %buildroot
 %files -n liblksctp-devel
 %_libdir/*.so
 %_libdir/lksctp-tools/*.so
+%_libdir/lksctp-tools/*.la
 %_man7dir/*
 %_includedir/netinet/sctp.h
 %_datadir/lksctp-tools
@@ -65,6 +67,9 @@ mkdir -p %buildroot
 %_libdir/lksctp-tools/*.a
 
 %changelog
+* Fri Feb 01 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.13-alt1
+- new version 1.0.13
+
 * Mon Jan 09 2012 Denis Smirnov <mithraen@altlinux.ru> 1.0.11-alt2
 - fix build
 
