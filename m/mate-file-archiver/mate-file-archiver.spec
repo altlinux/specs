@@ -1,30 +1,31 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums pkgconfig(gio-unix-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-3.0)
-# END SourceDeps(oneline)
 Group: Archiving/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums libgio-devel pkgconfig(gio-unix-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname mate-file-archiver
 Name:           mate-file-archiver
 Version:        1.5.1
-Release:        alt1_3
+Release:        alt1_4
 Summary:        MATE Desktop file archiver
-
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
-
 BuildRequires:  mate-common
 BuildRequires:  desktop-file-utils
-BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(libcaja-extension)
-BuildRequires:  pkgconfig(mate-doc-utils)
-BuildRequires:  pkgconfig(mate-desktop-2.0)
-BuildRequires:  pkgconfig(gsettings-desktop-schemas)
-BuildRequires:  pkgconfig(sm)
+BuildRequires:  glib2-devel
+BuildRequires:  gtk2-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-doc-utils
+BuildRequires:  mate-file-manager-devel
+BuildRequires:  mate-desktop-devel
+BuildRequires:  gsettings-desktop-schemas-devel
+BuildRequires:  libSM-devel
+BuildRequires:  rarian-compat
+BuildRequires:  librarian-devel
 
-Requires:   gsettings-desktop-schemas
+Provides: engrampa
 Patch33: file-roller-2.28.2-alt-7z.patch
 Source44: import.info
 
@@ -33,19 +34,8 @@ Mate File Archiver is an application for creating and viewing archives files,
 such as tar or zip files.
 
 
-%package -n mate-file-manager-archiver
-Group: Archiving/Other
-Summary: File Roller extension for mate-file-manager
-Requires: %{name}%{?_isa} = %{version}-%{release}
-
-%description -n mate-file-manager-archiver
-This package contains the Mate File archiver extension for Mate file manger.
-It adds an item to the mate-file-manager contexst menu that lets you compress files
-or directories.
-
-
 %prep
-%setup -q -n %{name}-%{version}
+%setup -n %{name}-%{version} -q
 NOCONFIGURE=1 ./autogen.sh
 %patch33 -p0
 
@@ -57,50 +47,42 @@ NOCONFIGURE=1 ./autogen.sh
    --with-gtk=2.0          \
    --enable-caja-actions
 
-make V=1 %{?_smp_mflags}
+make %{?_smp_mflags} V=1
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=%{buildroot}
 
-desktop-file-install --delete-original          \
-  --remove-category=MATE                        \
-  --add-category=X-Mate                         \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  $RPM_BUILD_ROOT%{_datadir}/applications/engrampa.desktop
+desktop-file-install                                \
+    --remove-category="MATE"                        \
+    --add-category="X-Mate"                         \
+    --delete-original                               \
+    --dir %{buildroot}%{_datadir}/applications      \
+%{buildroot}%{_datadir}/applications/engrampa.desktop
 
-find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
+find %{buildroot} -name "*.la" -exec rm -f {} ';'
 
-
-%find_lang engrampa --with-gnome
-
-%post
-/bin/touch --no-create %{_datadir}/icons/mate &>/dev/null || :
-
-
-%postun
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/mate &>/dev/null
-fi
+%find_lang engrampa
 
 %files -f engrampa.lang
 %doc README COPYING NEWS AUTHORS
 %{_bindir}/engrampa
-%{_libexecdir}/engrampa/
-%{_datadir}/engrampa/
-%{_datadir}/mate/help/engrampa/
+%{_libexecdir}/engrampa
+%{_datadir}/engrampa
+%{_datadir}/mate/help/engrampa
 %{_datadir}/applications/engrampa.desktop
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 %{_datadir}/MateConf/gsettings/engrampa.convert
 %{_datadir}/glib-2.0/schemas/org.mate.engrampa.gschema.xml
-
-%files -n mate-file-manager-archiver
 %{_libdir}/caja/extensions-2.0/libcaja-engrampa.so
-
+%{_datadir}/omf/engrampa
 
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_4
+- new fc release
+
 * Fri Nov 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_3
 - rebase to fc
 

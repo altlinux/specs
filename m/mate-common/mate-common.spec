@@ -1,16 +1,13 @@
 Group: Development/Tools
 %define _libexecdir %_prefix/libexec
-Name:	mate-common
-Summary:	mate common build files
-Version:	1.5.0
-Release:	alt1_1
-
+Name:           mate-common
+Summary:        mate common build files
+Version:        1.5.1
+Release:        alt1_1
 License:	GPLv3+
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.5/mate-common-%{version}.tar.xz
-
 BuildArch: noarch
-
 BuildRequires:	automake autoconf
 Requires: automake autoconf gettext intltool libtool gtk-doc
 Source44: import.info
@@ -36,10 +33,13 @@ make install DESTDIR=%{buildroot}
 %files
 %{_bindir}/mate-*
 %{_datadir}/aclocal/mate-*.m4
-%{_datadir}/mate-common/
-%{_mandir}/man1/mate-*
+%{_datadir}/mate-common
+%{_mandir}/man1/*
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new fc release
+
 * Thu Nov 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 

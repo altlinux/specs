@@ -1,11 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/perl pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(libmatenotify) pkgconfig(x11)
-# END SourceDeps(oneline)
 Group: File tools
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/perl pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(x11)
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-dialogs
 Version:        1.5.0
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Displays dialog boxes from shell scripts
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -16,6 +16,7 @@ BuildRequires:  pkgconfig(gtk+-2.0)
 BuildRequires:  mate-common
 BuildRequires:  mate-doc-utils
 BuildRequires:  rarian-compat
+BuildRequires:	libmatenotify-devel
 Source44: import.info
 
 %description
@@ -50,6 +51,9 @@ make install DESTDIR=%{buildroot}
 %exclude %_bindir/gdialog
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_2
+- new fc release
+
 * Sat Nov 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_1
 - dropped gdialog compat script (conflicts with real gdialog)
 

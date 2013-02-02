@@ -1,11 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtkdocize /usr/bin/xmlto libICE-devel libSM-devel pkgconfig(dbus-1) pkgconfig(dbus-glib-1) pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-3.0)
-# END SourceDeps(oneline)
 Group: System/Libraries
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-gettextize libICE-devel libSM-devel libgio-devel pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-3.0)
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           libmatekbd
 Version:        1.5.0
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
 URL:            http://mate-desktop.org
@@ -75,6 +75,9 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 %{_libdir}/libmatekbd.so
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
+- new fc release
+
 * Tue Nov 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 
