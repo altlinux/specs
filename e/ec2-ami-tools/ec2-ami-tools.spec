@@ -1,12 +1,15 @@
 BuildArch: noarch
 Name: ec2-ami-tools
-Version: 1.4.0.7
+Version: 1.4.0.9
 Release: alt1
 License: Amazon Software License
 Group: Networking/Other
 Summary: Tools for creating, bundling and uploading AMIs
 
+Url: http://aws.amazon.com/developertools/368
+
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 
 Requires: rsync
 Requires: ruby
@@ -15,8 +18,9 @@ Requires: ruby
 Tools for creating, bundling and uploading AMIs.
 %prep
 %setup
+%patch -p1
 %build
-./fix-bin
+sh ./fix-bin
 %install
 mkdir -p %buildroot/usr/share/ruby/1.9
 cp -a lib/ec2 %buildroot/usr/share/ruby/1.9/ec2
@@ -41,5 +45,8 @@ cp -a etc %buildroot/etc
 %doc license.txt notice.txt
 
 %changelog
+* Sat Feb 02 2013 Denis Smirnov <mithraen@altlinux.ru> 1.4.0.9-alt1
+- 1.4.0.9
+
 * Fri Apr 06 2012 Denis Smirnov <mithraen@altlinux.ru> 1.4.0.7-alt1
 - 1.4.0.7
