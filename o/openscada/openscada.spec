@@ -4,7 +4,7 @@ Summary(ru_RU.UTF8): Открытая SCADA система.
 Summary(uk_UA.UTF8): Відкрита SCADA система.
 Summary(de_DE.UTF8): Open SCADA-System.
 Name: openscada
-Version: 0.8.0.4
+Version: 0.8.0.5
 Release: alt1
 Source: openscada-%version.tar
 License: GPLv2
@@ -107,6 +107,9 @@ Summary: Open SCADA system core.
 Summary(ru_RU.UTF8): Ядро открытой SCADA системы.
 Summary(uk_UA.UTF8): Ядро відкритої SCADA системи.
 Summary(de_DE.UTF8): Open SCADA-System Kern.
+%if %_vendor == "alt"
+AutoReq: noshell
+%endif
 Group: Graphics
 %description core
 Open SCADA system core. For access use account "root" and password "openscada".
@@ -228,6 +231,9 @@ Summary: Model "AGLKS" data bases and config (Demo: EN,RU,UK).
 Summary(ru_RU.UTF8): БД и конфигурация модели "АГЛКС" (Демо: EN,RU,UK).
 Summary(uk_UA.UTF8): БД та конфігурація моделі "АГЛКС" (Демо: EN,RU,UK).
 Summary(de_DE.UTF8): Datenbanken und Konfigurationsdateien Modell "AGLKS" (Demo: EN,RU,UK).
+%if %_vendor == "alt"
+AutoReq: noshell
+%endif
 Group: Graphics
 Requires: %name-LibDB.Main %name-LibDB.VCA
 Requires: %name-DAQ.BlockCalc %name-Archive.FSArch %name-DAQ.JavaLikeCalc %name-DAQ.LogicLev %name-DAQ.ModBus %name-DAQ.System
@@ -260,6 +266,9 @@ Summary: Model "Boiler" data bases and config (EN,RU,UK).
 Summary(ru_RU.UTF8): БД и конфигурация модели "Котёл" (EN,RU,UK).
 Summary(uk_UA.UTF8): БД та конфігурація моделі "Котел" (EN,RU,UK).
 Summary(de_DE.UTF8): Datenbanken und Konfigurationsdateien Modell "Kessel" (EN,RU,UK).
+%if %_vendor == "alt"
+AutoReq: noshell
+%endif
 Group: Graphics
 Requires: %name-LibDB.Main %name-LibDB.VCA
 Requires: %name-DAQ.BlockCalc %name-Archive.FSArch %name-DAQ.JavaLikeCalc %name-DAQ.LogicLev %name-DAQ.System
@@ -1455,6 +1464,9 @@ sed -i 's|/usr/lib|%_libdir|' %buildroot/%_sysconfdir/oscada*.xml
 
 
 %changelog
+* Sat Feb 02 2013 Roman Savochenko <rom_as@altlinux.ru> 0.8.0.5-alt1
+- 0.8.0.5 update to production release.
+
 * Tue Nov 13 2012 Roman Savochenko <rom_as@altlinux.ru> 0.8.0.4-alt1
 - 0.8.0.4 update to production release.
 
