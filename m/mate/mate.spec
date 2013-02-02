@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt1.1
+Release: alt2
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -126,7 +126,7 @@ Requires: gvfs-backends
 Requires: fuse-gvfs
 #Requires: mate-disk-utility
 ## Display manager
-Requires: mate-display-manager
+#Requires: mate-display-manager
 ## Default web-browser (firefox)
 Requires: firefox
 ## Default mailer
@@ -194,7 +194,7 @@ Requires: mate-file-manager-sendto
 Requires: mate-file-manager-open-terminal
 Requires: mate-file-manager-image-converter
 Requires: mate-netspeed
-Requires: python-caja
+Requires: python-module-caja
 
 Provides: mate-desktop-environment = %version
 
@@ -363,6 +363,9 @@ itself).
 #%files a11y
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2
+- dropped mate-display-manager
+
 * Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt1.1
 - Build for Sisyphus
 
