@@ -3,7 +3,7 @@
 Name: astmanproxy
 Summary: Asterisk manager proxy
 Version: 1.22
-Release: alt5.pre.%svndate.1
+Release: alt5.pre.%svndate.2
 License: GPL
 Group: System/Servers
 Epoch: %svndate
@@ -53,7 +53,6 @@ mkdir -p %buildroot/var/run/astmanproxy
 
 %files
 %_initdir/%name
-%attr(0770,_asterisk,_asterisk) %dir /var/run/astmanproxy
 %dir %_libdir/%name
 %dir %_libdir/%name/modules
 %attr(0660,_asterisk,pbxadmin) %config(noreplace) %_sysconfdir/asterisk/astmanproxy.conf
@@ -67,6 +66,9 @@ mkdir -p %buildroot/var/run/astmanproxy
 %doc doc/README.*
 
 %changelog
+* Sat Feb 02 2013 Denis Smirnov <mithraen@altlinux.ru> 20061015:1.22-alt5.pre.20061015.2
+- remove /var/run/astmanproxy from package
+
 * Tue Dec 21 2010 Denis Smirnov <mithraen@altlinux.ru> 20061015:1.22-alt5.pre.20061015.1
 - remove password samples from config
 
