@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.61
-Release: alt6
+Release: alt7
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -300,7 +300,7 @@ Patch0252: linux-%kernel_branch.56-fix-drivers-hid--hid-microsoft.patch
 Patch0253: linux-%kernel_branch.56-fix-drivers-hid--hid-uclogic.patch
 Patch0254: linux-%kernel_branch.42-fix-drivers-hid--usbhid.patch
 
-Patch0260: linux-%kernel_branch.58-fix-drivers-hv.patch
+Patch0260: linux-%kernel_branch.61-fix-drivers-hv.patch
 
 Patch0271: linux-%kernel_branch.43-fix-drivers-hwmon--abituguru.patch
 Patch0272: linux-%kernel_branch.43-fix-drivers-hwmon--applesmc.patch
@@ -724,9 +724,10 @@ Patch1190: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
 Patch1191: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
 Patch1192: linux-%kernel_branch.44-feat-fs-overlayfs.patch
 Patch1193: linux-%kernel_branch.61-feat-fs-reiser4.patch
-Patch1194: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1195: linux-%kernel_branch.42-feat-fs-unionfs.patch
-Patch1196: linux-%kernel_branch.44-feat-fs--lnfs.patch
+Patch1194: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1195: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1196: linux-%kernel_branch.42-feat-fs-unionfs.patch
+Patch1197: linux-%kernel_branch.44-feat-fs--lnfs.patch
 
 Patch1201: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
 Patch1202: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
@@ -2090,7 +2091,8 @@ cd linux-%version
 %patch1193 -p1
 %patch1194 -p1
 %patch1195 -p1
-%{?_with_lnfs:%patch1196 -p1}
+%patch1196 -p1
+%{?_with_lnfs:%patch1197 -p1}
 
 %patch1201 -p1
 %patch1202 -p1
@@ -2994,6 +2996,12 @@ done)
 
 
 %changelog
+* Sat Feb 02 2013 Led <led@altlinux.ru> 3.0.61-alt7
+- updated:
+  + fix-drivers-hv
+- added:
+  + feat-fs-squashfs--write
+
 * Fri Feb 01 2013 Led <led@altlinux.ru> 3.0.61-alt6
 - removed:
   + feat-fs-squashfs--write
