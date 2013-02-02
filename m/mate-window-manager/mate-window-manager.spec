@@ -1,49 +1,33 @@
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: libICE-devel libSM-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(pango) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xfixes) pkgconfig(xrender)
+BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/glib-gettextize /usr/bin/matedialog libICE-devel libX11-devel libXext-devel libXinerama-devel libXrandr-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libgtop-2.0) pkgconfig(pango) pkgconfig(xcomposite) pkgconfig(xcursor) pkgconfig(xfixes) pkgconfig(xrender)
 # END SourceDeps(oneline)
 BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
-%{echo 
-%filter_from_requires /^libmarco-private.so/d;
-
-}
-
-
 Name:           mate-window-manager
-Version:        1.5.2
-Release:        alt5_10
+Version:        1.5.3
+Release:        alt1_2
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-# https://bugzilla.gnome.org/show_bug.cgi?id=622517
-Patch0:         Allow-breaking-out-from-maximization-during-mouse.patch
-# https://bugs.launchpad.net/ubuntu/+source/metacity/+bug/583847
-Patch1:         initialise_all_workspace_names.patch
 
-# upstream patch
-# https://github.com/mate-desktop/mate-window-manager/commit/6404a98fb79e7bb4c3e9c5ca9919e12c946679d7
-Patch2:         0001-fix-startup-rendering-effect-with-composite-enabled.patch
+#Upstream patch to fix update of GSettings enum preferences 
+#patch0: fix_gsettings_update.patch
 
 BuildRequires: desktop-file-utils
-BuildRequires: pkgconfig(gtk+-2.0)
-BuildRequires: pkgconfig(libcanberra)
-BuildRequires: pkgconfig(libsoup-2.4)
+BuildRequires: gsettings-desktop-schemas-devel
+BuildRequires: gtk2-devel
+BuildRequires: libcanberra-devel
+BuildRequires: libSM-devel
+BuildRequires: libsoup-devel
+BuildRequires: libXdamage-devel
 BuildRequires: mate-common
-BuildRequires: pkgconfig(mate-doc-utils)
-BuildRequires: pkgconfig(gsettings-desktop-schemas)
-BuildRequires: pkgconfig(MateCORBA-2.0)
 BuildRequires: mate-dialogs
-BuildRequires: pkgconfig(sm)
-BuildRequires: pkgconfig(ice)
-BuildRequires: pkgconfig(libstartup-notification-1.0)
-BuildRequires: pkgconfig(xdamage)
-
-Requires:      gsettings-desktop-schemas
-
-
-Obsoletes: mate-window-manager-libs < 1.4.1-2
+BuildRequires: mate-doc-utils
+BuildRequires: rarian-compat
+BuildRequires: librarian-devel
+BuildRequires: libstartup-notification-devel
 
 # http://bugzilla.redhat.com/873342
 Provides: firstboot(windowmanager) = mate-window-manager
@@ -79,12 +63,8 @@ Summary: mate-window-manager internal library
 Internal library for MATE Window Manager.
 
 
-
 %prep
 %setup -q
-%patch0 -p1
-#patch1 -p1
-%patch2 -p1
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
@@ -92,13 +72,12 @@ Internal library for MATE Window Manager.
 %patch37 -p1
 NOCONFIGURE=1 ./autogen.sh
 
-
 %build
-%configure --disable-static	\
-	--disable-scrollkeeper	\
-	--with-gnu-ld		\
-	--with-gtk=2.0		\
-	--with-x
+%configure --disable-static         \
+           --disable-scrollkeeper   \
+           --with-gnu-ld            \
+           --with-gtk=2.0           \
+           --with-x
 
 make %{?_smp_mflags} V=1
 
@@ -110,14 +89,15 @@ find %{buildroot} -name '*.la' -exec rm -vf {} ';'
 
 desktop-file-install                                \
         --remove-category="MATE"                    \
+        --add-category="X-Mate"                     \
         --delete-original                           \
         --dir=%{buildroot}%{_datadir}/applications  \
 %{buildroot}%{_datadir}/applications/marco.desktop
 
-%find_lang %{name} --all-name
+%find_lang marco
 
 
-%files -f %{name}.lang
+%files -f marco.lang
 %doc AUTHORS COPYING README
 %{_bindir}/marco
 %{_bindir}/marco-message
@@ -137,9 +117,9 @@ desktop-file-install                                \
 %{_datadir}/mate/help/creating-marco-themes/C/creating-marco-themes.xml
 %{_datadir}/mate/wm-properties/
 %{_datadir}/glib-2.0/schemas/org.mate.marco.gschema.xml
+%{_datadir}/MateConf/gsettings/marco.convert
 %{_libdir}/libmarco-private.so.0*
-%{_mandir}/man1/marco.1.*
-%{_mandir}/man1/marco-message.1.*
+%{_mandir}/man1/*
 # moved to lib
 %exclude %{_libdir}/libmarco-private.so.*
 
@@ -150,7 +130,7 @@ desktop-file-install                                \
 %files devel
 %{_bindir}/marco-theme-viewer
 %{_bindir}/marco-window-demo
-%{_includedir}/marco-1/
+%{_includedir}/marco-1
 %{_libdir}/libmarco-private.so
 %{_libdir}/pkgconfig/libmarco-private.pc
 %{_mandir}/man1/marco-theme-viewer.1.*
@@ -158,6 +138,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_2
+- new fc release
+
 * Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt5_10
 - added libmarco-private (closes: 28322)
 
