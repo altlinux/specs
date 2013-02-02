@@ -6,14 +6,17 @@
 
 Name: dmd
 Version: 2.061
-Release: alt1
+Release: alt2
 Summary: The D Programming Language
 Group: Development/Other
 License: GPL
 Url: http://dlang.org/
 
 Source: %name-%version.tar
-BuildRequires: gcc-c++
+Patch0: dmd-lphobos2-alt.patch
+Patch1: druntime-shared-alt.patch
+Patch2: phobos-shared-alt.patch
+BuildRequires: gcc-c++ curl-devel
 
 Provides: libdruntime = %version libdruntime-devel = %version
 Provides: libphobos = %version libphobos-devel = %version
@@ -30,6 +33,9 @@ Java, Python, Ruby, C#, and Eiffel.
 
 %prep
 %setup -q
+#%patch0
+#%patch1
+#%patch2
 
 
 
@@ -37,17 +43,21 @@ Java, Python, Ruby, C#, and Eiffel.
 cd dmd/src
 %make_build -f posix.mak MODEL=%MODEL
 
+export CFLAGS=-fPIC
+export CXXFLAGS=-fPIC
 cd ../../druntime
-sed -i 's|-m$(MODEL) -O|-m$(MODEL) -fPIC -O|g' posix.mak
-%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL DRUNTIME_BASE=druntime
+#sed -i 's|-m$(MODEL) -O|-m$(MODEL) -fPIC -O|g' posix.mak
+%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL DRUNTIME_BASE=druntime PIC=1
+#gcc lib/libdruntime.o obj/64/errno_c.o obj/64/complex.o -shared -o lib/libdruntime.so -m64 -lpthread -lm -lrt
 
 cd ../phobos
-sed -i 's|DFLAGS += -O -release|DFLAGS += -fPIC -O -release|g' posix.mak
-%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL ROOT=out
+#sed -i 's|DFLAGS += -O -release|DFLAGS += -fPIC -O -release|g' posix.mak
+%make_build -f posix.mak DMD=../dmd/src/dmd MODEL=%MODEL ROOT=out PIC=1
+
 
 cd ../tools
-../dmd/src/dmd -c -O -w -d -m%MODEL -property -release -I../druntime/import -I../phobos rdmd.d
-gcc rdmd.o -o rdmd -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
+../dmd/src/dmd -c -O -w -d -fPIC -m%MODEL -property -release -I../druntime/import -I../phobos rdmd.d
+gcc rdmd.o -o rdmd -m%MODEL -L../druntime/lib -L../phobos/out -ldruntime -lphobos2 -lpthread -lm -lrt
 #../dmd/src/dmd -c -O -w -d -m%MODEL -property -release -I../druntime/import -I../phobos catdoc.d
 #gcc catdoc.o -o catdoc -m%MODEL -L../phobos/out -lphobos2 -lpthread -lm -lrt
 
@@ -69,7 +79,6 @@ cp druntime/lib/libdruntime.a %buildroot%_libdir/
 
 #phobos
 cp phobos/out/libphobos2.a %buildroot%_libdir/
-ln -s libphobos2.a %buildroot%_libdir/libphobos.a
 cp -r phobos/std %buildroot%_includedir/d/
 
 cp phobos/etc/c/*.d %buildroot%_includedir/d/etc/c/
@@ -94,13 +103,15 @@ cp -r dmd/docs/man/man1 %buildroot%_mandir/
 %_libdir/libphobos*
 
 %changelog
+* Sat Feb 02 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.061-alt2
+- Rebuild with -fPIC
+
 * Sat Jan 19 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.061-alt1
 - New version (Closes: #28302)
 - Fix includes (Closes: #28394)
 
 * Sat Dec 22 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt5
 - Added provides
-- Rebuild with -fPIC
 - Phobos in dmd
 
 * Wed Oct 31 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.060-alt4
