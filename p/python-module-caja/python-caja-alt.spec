@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/xsltproc
 %define _libexecdir %_prefix/libexec
 %define oldname python-caja
 Name:           python-module-caja
-Version:        1.4.0
-Release:        alt1_1.1
+Version:        1.5.0
+Release:        alt1_0
 Summary:        Python bindings for Caja
 
 Group:          Development/C
@@ -62,7 +62,6 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %files
 %doc README AUTHORS COPYING NEWS
 %{_libdir}/caja/extensions-2.0/libcaja-python.so
-%{_libdir}/caja-python/caja.so
 %dir %{_datadir}/%{oldname}/extensions
 
 %files -n python-module-caja-devel
@@ -71,6 +70,9 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %{_datadir}/doc/*
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
+- new version
+
 * Fri Oct 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt1_1.1
 - Build for Sisyphus
 
