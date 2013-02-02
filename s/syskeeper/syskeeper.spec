@@ -1,7 +1,7 @@
 Name: syskeeper
 Summary: %name
-Version: 0.8
-Release: alt2
+Version: 0.9
+Release: alt1
 License: GPL
 Group: System/Base
 BuildArch: noarch
@@ -10,14 +10,6 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 Requires(pre): etckeeper
 Requires: %name-base = %version-%release
 Source: %name-%version.tar
-
-%package -n kernelbootlog
-Summary: Automaticaly backup some system info when booting
-Group: System/Base
-BuildArch: noarch
-
-%description -n kernelbootlog
-Automaticaly backup some system info when booting
 
 %package base
 Summary: Base files for syskeeper
@@ -71,7 +63,6 @@ Group: System/Base
 Requires: %name-ve = %version-%release
 Requires: %name-disks-git = %version-%release
 Requires: %name-system-git = %version-%release
-Requires: kernelbootlog
 
 %description hn
 Autobackup system info (use it for HN)
@@ -138,23 +129,11 @@ Autobackup system info (use it for VE)
 %install
 %makeinstall_std
 mkdir -p %buildroot%_initdir/
-install -p kernelbootlog %buildroot%_initdir/kernelbootlog
-mkdir -p %buildroot/var/log/kernelbootlog
-
-%preun -n kernelbootlog
-%preun_service kernelbootlog
-
-%post -n kernelbootlog
-%post_service kernelbootlog
 
 %files
 %_sysconfdir/apt/apt.conf.d/syskeeper.conf
 %_sbindir/syskeeper
 %_sysconfdir/firsttime.d/%name
-
-%files -n kernelbootlog
-%_initdir/kernelbootlog
-/var/log/kernelbootlog
 
 %files base
 %dir %_datadir/syskeeper
@@ -189,6 +168,9 @@ mkdir -p %buildroot/var/log/kernelbootlog
 %files ve
 
 %changelog
+* Sat Feb 02 2013 Denis Smirnov <mithraen@altlinux.ru> 0.9-alt1
+- remove kernelbootlog subpackage
+
 * Sat Jan 26 2013 Denis Smirnov <mithraen@altlinux.ru> 0.8-alt2
 - fix non-strict dependency
 
