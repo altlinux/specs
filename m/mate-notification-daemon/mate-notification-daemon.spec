@@ -1,29 +1,26 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(x11)
-# END SourceDeps(oneline)
 Group: System/Libraries
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-gettextize libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-2.0) pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(libcanberra-gtk) pkgconfig(x11)
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           mate-notification-daemon
-Version:        1.5.0
+Version:        1.5.1
 Release:        alt1_1
 Summary:        Notification daemon for MATE Desktop
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
+BuildRequires:  libdbus-glib-devel
 BuildRequires:  desktop-file-utils
-BuildRequires:  pkgconfig(dbus-glib-1)
-BuildRequires:  pkgconfig(mate-desktop-2.0)
-BuildRequires:  pkgconfig(MateCORBA-2.0)
-BuildRequires:  pkgconfig(libcanberra)
-BuildRequires:  pkgconfig(libmatenotify)
-BuildRequires:  pkgconfig(gsettings-desktop-schemas)
-BuildRequires:  pkgconfig(libmatewnck)
-BuildRequires:  mate-common
-BuildRequires:  pkgconfig(mate-doc-utils)
+BuildRequires:  gsettings-desktop-schemas-devel
 BuildRequires:  icon-naming-utils
-
-Requires:   gsettings-desktop-schemas
+BuildRequires:  libcanberra-devel
+BuildRequires:  libmatenotify-devel
+BuildRequires:  libmatewnck-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-desktop-devel
+BuildRequires:  mate-doc-utils
 Source44: import.info
 
 %description
@@ -31,18 +28,19 @@ Notification daemon for MATE Desktop
 
 %prep
 %setup -q
-NOCONFIGURE=1 ./autogen.sh
 
 %build
-%configure --disable-static
- 
+NOCONFIGURE=1 ./autogen.sh
+%configure --disable-schemas-compile   \
+           --with-gtk=2.0              \
+           --with-gnu-ld               
+
 make %{?_smp_mflags} V=1
 
 %install
-make LIBTOOL="/usr/bin/libtool" DESTDIR=%{buildroot} install
-
-find %{buildroot} -name '*.la' -exec rm -rf {} ';'
-find %{buildroot} -name '*.a' -exec rm -rf {} ';'
+#Keeping this just in case, not needed anymore
+#LIBTOOL="/usr/bin/libtool" 
+make install DESTDIR=%{buildroot}
 
 desktop-file-install                               \
         --remove-category="MATE"                   \
@@ -53,9 +51,6 @@ desktop-file-install                               \
 
 %find_lang %{name}
 
-%post
-/bin/touch --no-create %{_datadir}/icons/mate &> /dev/null || :
-
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %{_bindir}/mate-notification-properties
@@ -65,10 +60,14 @@ desktop-file-install                               \
 %{_libexecdir}/mate-notification-daemon
 %{_datadir}/icons/hicolor/*/apps/mate-notification-properties.*
 %{_datadir}/glib-2.0/schemas/org.mate.NotificationDaemon.gschema.xml
-%{_libdir}/mate-notification-daemon/
+%{_datadir}/MateConf/gsettings/mate-notification-daemon.convert
+%{_libdir}/mate-notification-daemon
 
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new fc release
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 

@@ -1,11 +1,11 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libSM-devel libexif-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(shared-mime-info) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-xproto-devel zlib-devel
-# END SourceDeps(oneline)
 Group: Graphical desktop/Other
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/dbus-binding-tool /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize libICE-devel libSM-devel libexif-devel libgio-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-unix-print-2.0) pkgconfig(shared-mime-info) pkgconfig(x11) python-devel python-module-pygobject-devel xorg-xproto-devel zlib-devel
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:          mate-image-viewer
 Version:       1.5.0
-Release:       alt1_2
+Release:       alt1_3
 Summary:       Eye of MATE image viewer
 
 License:       GPLv2+ and LGPLv2+ 
@@ -115,6 +115,9 @@ done
 %{_includedir}/eom-2.20/
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
+- new fc release
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
 - added mate-desktop-1.5.0-alt-settings.patch - font settings
 
