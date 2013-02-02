@@ -1,7 +1,7 @@
 Name: dahdi-tools
 Summary: DAHDI tools for Digium hardware and Asterisk
 Version: 2.6.1
-Release: alt2
+Release: alt3
 License: GPL
 Group: System/Kernel and hardware
 BuildRequires: dahdi-linux-headers gcc-c++ libncurses-devel libnewt-devel libpcap-devel libusb-compat-devel module-init-tools perl-Pod-Parser ppp-devel rpm-build-ruby wget
@@ -151,8 +151,6 @@ install -m755 -D dahdi.init %buildroot%_initdir//dahdi
 install -m664 -D init.conf.sample %buildroot%_sysconfdir/dahdi/init.conf
 install -m644 -D xpp/genconf_parameters %buildroot%_sysconfdir/dahdi/genconf_parameters
 install -m755 dahdi_pcap %buildroot%_sbindir/dahdi_pcap
-mkdir -p %buildroot%_initdir/modprobe.d
-echo 'options wct4xxp t1e1override=0xff' >  %buildroot%_initdir/modprobe.d/dahdi
 
 %preun -n dahdi
 %preun_service dahdi
@@ -161,7 +159,6 @@ echo 'options wct4xxp t1e1override=0xff' >  %buildroot%_initdir/modprobe.d/dahdi
 %post_service dahdi
 
 %files
-%config(noreplace) %_initdir/modprobe.d/dahdi
 %dir %attr(0770,_asterisk,pbxadmin) %_sysconfdir/dahdi
 %attr(0664,root,pbxadmin) %config(noreplace) %_sysconfdir/dahdi/system.conf
 %astattr %_sbindir/fxotune
@@ -255,6 +252,9 @@ echo 'options wct4xxp t1e1override=0xff' >  %buildroot%_initdir/modprobe.d/dahdi
 %_libdir/pppd/*/*.so
 
 %changelog
+* Sat Feb 02 2013 Denis Smirnov <mithraen@altlinux.ru> 2.6.1-alt3
+- remove unused config with options for wct4xxp
+
 * Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 2.6.1-alt2
 - fix requires (add version in subpackage requires)
 
