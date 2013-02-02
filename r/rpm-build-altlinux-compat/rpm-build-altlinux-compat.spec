@@ -2,7 +2,7 @@
 
 Name: rpm-build-altlinux-compat
 Version: 1.7.24
-Release: alt1
+Release: alt2
 
 Summary: ALT Linux compatibility and extensions in rpm build
 
@@ -19,7 +19,8 @@ BuildArchitectures: noarch
 # Tune additional rpm macros file placement
 %if %_vendor == "alt"
 %define macrofilename macros
-%ifndef _rpmmacrosdir
+#ifndef _rpmmacrosdir
+%if %{expand:%%{?_rpmmacrosdir:0}%%{!?_rpmmacrosdir:1}}
 %define _rpmmacrosdir %_sysconfdir/rpm/macros.d
 %endif
 BuildPreReq: altlinux-release
@@ -107,6 +108,9 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Sat Feb 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.24-alt2
+- do not use ifndef in spec
+
 * Thu Dec 06 2012 Vitaly Lipatov <lav@altlinux.ru> 1.7.24-alt1
 - add _sharedstatedir to all old ALT Linux distro (p6 and early) in -compat
 
