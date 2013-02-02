@@ -1,36 +1,27 @@
+Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-builder-convert /usr/bin/mateconftool-2 libICE-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(vte-2.90) pkgconfig(x11)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-builder-convert libICE-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(vte-2.90) pkgconfig(x11)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-BuildRequires(pre): rpm-macros-mate-conf
-Summary: Terminal emulator for MATE
-Name: mate-terminal
-Version: 1.4.0
-Release: alt3_4
-License: GPLv3+
-Group: Graphical desktop/Other
-URL: http://mate-desktop.org
-Source0: http://pub.mate-desktop.org/releases/1.4/%{name}-%{version}.tar.xz
+Summary:        Terminal emulator for MATE
+Name:           mate-terminal
+Version:        1.5.0
+Release:        alt1_1
+License:        GPLv3+
+URL:            http://mate-desktop.org
+Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
-
-# mateconftool-2
-Requires(pre):   mate-conf
-Requires(post):  mate-conf
-Requires(preun): mate-conf
-
+BuildRequires: libdconf-devel
+BuildRequires: desktop-file-utils
 BuildRequires: glib2-devel
 BuildRequires: gtk2-devel
-BuildRequires: mate-conf-devel
-BuildRequires: libglade2-devel
-BuildRequires: libmateui-devel
-BuildRequires: libvte-devel
-BuildRequires: desktop-file-utils
-BuildRequires: rarian-compat
+BuildRequires: libSM-devel
 BuildRequires: mate-doc-utils
 BuildRequires: mate-common
-BuildRequires: libSM-devel
-
-Requires: libmate
+BuildRequires: rarian-compat
+BuildRequires: librarian-devel
+BuildRequires: libvte-devel
+BuildRequires: gsettings-desktop-schemas-devel
 Source44: import.info
 Provides: xvt
 
@@ -44,56 +35,45 @@ clickable URLs.
 NOCONFIGURE=1 ./autogen.sh
 
 %build
-%configure --with-gtk=2.0 \
-           --disable-scrollkeeper \
-           --disable-schemas-install
+%configure --disable-static                \
+           --with-gtk=2.0                  \
+           --disable-scrollkeeper          \
+           --disable-schemas-compile       \
+           --with-gnu-ld                   
 
-make %{?_smp_mflags}
+make %{?_smp_mflags} V=1
 
 
 %install
-export MATECONF_DISABLE_MAKEFILE_SCHEMA_INSTALL=1
-make install DESTDIR=$RPM_BUILD_ROOT
-unset MATECONF_DISABLE_MAKEFILE_SCHEMA_INSTALL
+make DESTDIR=%{buildroot} install
+%find_lang %{name}
 
-sed -i -e "s/Icon=mate-terminal.png/Icon=mate-terminal/" \
-  $RPM_BUILD_ROOT%{_datadir}/applications/mate-terminal.desktop
-
-desktop-file-install --vendor "" --delete-original \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications    \
-  --remove-category=MATE                           \
-  --add-category=X-Mate                            \
-  --add-category=System                            \
-  $RPM_BUILD_ROOT%{_datadir}/applications/mate-terminal.desktop
-
-%find_lang mate-terminal
+desktop-file-install							\
+	--remove-category="MATE"					\
+	--add-category="X-Mate"						\
+	--delete-original						\
+	--dir=%{buildroot}%{_datadir}/applications			\
+%{buildroot}%{_datadir}/applications/mate-terminal.desktop
 # alternatives
 mkdir -p %buildroot%_altdir
 cat >%buildroot%_altdir/%name <<EOF
 %_bindir/xvt    %_bindir/%name  48
 EOF
 
-%post
-%mateconf_schema_upgrade mate-terminal
-
-%pre
-%mateconf_schema_prepare mate-terminal
-
-%preun
-%mateconf_schema_remove mate-terminal
-
-
-%files -f mate-terminal.lang
+%files -f %{name}.lang
 %doc AUTHORS COPYING NEWS README
 %{_bindir}/mate-terminal
-%{_datadir}/mate-terminal/
-%{_datadir}/mate/help/mate-terminal/
-%{_datadir}/omf/mate-terminal/
+%{_datadir}/mate-terminal
+%{_datadir}/mate/help/mate-terminal
+%{_datadir}/omf/mate-terminal
 %{_datadir}/applications/mate-terminal.desktop
-%{_sysconfdir}/mateconf/schemas/mate-terminal.schemas
+%{_datadir}/glib-2.0/schemas/org.mate.terminal.gschema.xml
 %_altdir/%name
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
+- new fc release
+
 * Tue Dec 04 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3_4
 - added xvt provides (closes: 28160)
 
