@@ -1,9 +1,9 @@
 Name: hostapd
-Version: 0.7.3
-Release: alt2
+Version: 2.0
+Release: alt1
 
 Summary: User space daemon for extended IEEE 802.11 management
-License: GPL
+License: BSD
 Group: System/Kernel and hardware
 Url: http://hostap.epitest.fi/
 
@@ -12,8 +12,7 @@ Source1: src-%version-%release.tar
 Source2: hostapd.sysconfig
 Source3: hostapd.init
 
-BuildRequires: libssl-devel libnl-devel
-BuildRequires: kernel-build-tools >= 0.7
+BuildRequires: libssl-devel libnl3-devel
 
 Obsoletes: hostap-tools
 
@@ -27,6 +26,7 @@ Authenticators, RADIUS client, EAP server, and RADIUS authentication server.
 
 %build
 cp %name/defconfig %name/.config
+CFLAGS='%optflags' \
 make -C %name
 
 %install
@@ -49,7 +49,7 @@ mkdir -p %buildroot%_var/run/%name
 %preun_service %name
 
 %files
-%doc %name/ChangeLog %name/README %name/eap_testing.txt
+%doc %name/ChangeLog %name/README %name/README-WPS %name/eap_testing.txt
 
 %dir %_sysconfdir/%name
 %config(noreplace) %_sysconfdir/%name/%name.conf
@@ -69,6 +69,9 @@ mkdir -p %buildroot%_var/run/%name
 %_var/run/%name
 
 %changelog
+* Thu Jan 31 2013 Sergey Bolshakov <sbolshakov@altlinux.ru> 2.0-alt1
+- 2.0 released
+
 * Sat Oct 02 2010 Sergey Bolshakov <sbolshakov@altlinux.ru> 0.7.3-alt2
 - rebuilt with recent libcrypto
 
