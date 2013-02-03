@@ -7,14 +7,14 @@
 
 Name: %oname-%scalar_type
 Version: 7.3
-Release: alt3.pre.svn20121027
+Release: alt3.pre.svn20130201
 Summary: A Finite Element Differential Equations Analysis Library (%scalar_type scalars)
 License: QPL v1.0
 Group: Sciences/Mathematics
 Url: http://www.dealii.org/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# http://www.dealii.org/svn/dealii/trunk
+# https://svn.dealii.org/trunk/
 Source: %name-%version.tar
 
 BuildPreReq: python-module-petsc-config zlib-devel
@@ -217,6 +217,9 @@ chmod +r %buildroot$PETSC_DIR/lib/*.so*
 %endif
 
 %changelog
+* Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt3.pre.svn20130201
+- New snapshot
+
 * Sun Oct 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.3-alt3.pre.svn20121027
 - New snapshot
 
