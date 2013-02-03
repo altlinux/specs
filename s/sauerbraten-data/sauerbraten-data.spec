@@ -1,7 +1,7 @@
-%define rev svn4252
+%define rev svn4781
 %define packname sauerbraten
 Name: sauerbraten-data
-Version: 20100721
+Version: 20130126
 Release: alt1.%rev
 Summary: Sauerbraten is a free multiplayer/singleplayer FPS
 
@@ -30,6 +30,9 @@ mv %_builddir/%name/packages %buildroot/%_gamesdatadir/%packname/
 %_gamesdatadir/%packname
 
 %changelog
+* Sun Feb 3 2013 Andrew Clark <andyc@altlinux.org> 20130126-alt1.svn4781
+- version update to 20130126-alt1.svn4781
+
 * Thu Oct 4 2012 Andrew Clark <andyc@altlinux.org> 20100721-alt1.svn4252
 - version update to 20100721-alt1.svn4252
 
