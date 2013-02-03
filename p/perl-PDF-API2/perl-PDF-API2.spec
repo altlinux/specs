@@ -1,7 +1,7 @@
 # SPEC file for Perl module PDF::API2
 
 Name: perl-PDF-API2
-Version: 2.019
+Version: 2.020
 Release: alt1
 
 Summary: Perl module for creation and modification PDF files
@@ -70,7 +70,7 @@ ln -s -- $(relative %_licensedir/LGPL %_docdir/%name/LICENSE) LICENSE
 %perl_vendor_install
 
 %files
-%doc README CONTACT PATENTS HACKING
+%doc README CONTACT PATENTS
 %doc examples*
 %doc contrib*
 %doc --no-dereference LICENSE
@@ -79,6 +79,9 @@ ln -s -- $(relative %_licensedir/LGPL %_docdir/%name/LICENSE) LICENSE
 %exclude /.perl.req
 
 %changelog
+* Sun Feb 03 2013 Nikolay A. Fetisov <naf@altlinux.ru> 2.020-alt1
+- New version
+
 * Fri Oct 19 2012 Nikolay A. Fetisov <naf@altlinux.ru> 2.019-alt1
 - New version
 - Fix defaul fonts search path (Closes: 24393)
