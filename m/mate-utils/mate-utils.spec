@@ -1,39 +1,35 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize /usr/bin/mateconftool-2 /usr/bin/scrollkeeper-config gcc-c++ libICE-devel libSM-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(gthread-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libmatepanelapplet-2.0) pkgconfig(xext) zlib-devel
-# END SourceDeps(oneline)
 Group: File tools
+# BEGIN SourceDeps(oneline):
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-mkenums /usr/bin/gtkdocize /usr/bin/scrollkeeper-config gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libgtop-2.0) pkgconfig(x11) pkgconfig(xext) zlib-devel
+# END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-BuildRequires(pre): rpm-macros-mate-conf
 Name:           mate-utils
-Version:        1.4.0
-Release:        alt1_4
+Version:        1.5.0
+Release:        alt1_0
 Summary:        MATE utility programs
 
 License:        GPLv2+ and LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.4/%{name}-%{version}.tar.xz
 
-BuildRequires:  pkgconfig(mate-doc-utils)
-BuildRequires:  pkgconfig(glib-2.0)
-BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(mate-desktop-2.0)
-#BuildRequires:  pkgconfig(libmatepanelapplet-4.0)
-BuildRequires:  pkgconfig(libmatepanelapplet-2.0)
-BuildRequires:  pkgconfig(libcanberra)
-BuildRequires:  pkgconfig(xmu)
-BuildRequires:  pkgconfig(x11)
-BuildRequires:  pkgconfig(libgtop-2.0)
-BuildRequires:  pkgconfig(e2p)
-BuildRequires:  pkgconfig(mateconf-2.0)
-BuildRequires:  popt-devel
-BuildRequires:  consolehelper
-BuildRequires:  rarian-compat
-BuildRequires:  mate-common
 BuildRequires:  desktop-file-utils
+BuildRequires:  hardlink
+BuildRequires:  mate-common
+#BuildRequires:  pkgconfig(e2p)
+#BuildRequires:  pkgconfig(glib-2.0)
+#BuildRequires:  pkgconfig(gtk+-2.0)
+#BuildRequires:  pkgconfig(libcanberra)
+#BuildRequires:  pkgconfig(libgtop-2.0)
+BuildRequires:  pkgconfig(libmatepanelapplet-4.0)
+#BuildRequires:  pkgconfig(mateconf-2.0)
+#BuildRequires:  pkgconfig(mate-desktop-2.0)
+BuildRequires:  pkgconfig(mate-doc-utils)
+#BuildRequires:  pkgconfig(x11)
+#BuildRequires:  pkgconfig(xmu)
+BuildRequires:  popt-devel
+BuildRequires:  rarian-compat
+BuildRequires:  consolehelper
  
-Requires(post):  mate-conf
-Requires(preun): mate-conf
-Requires(pre):   mate-conf
 Source44: import.info
 
 %description
@@ -52,12 +48,6 @@ Requires:  %{name}%{?_isa} = %{version}-%{release}
 The mate-utils-devel package contains header files and other resources
 needed to develop programs using the libraries contained in mate-utils.
 
-%package libs
-Summary: mate-utils libraries
-Group: Development/C
-
-%description libs
-This package contains libraries provided by mate-utils (such as libmatedict)
 
 %package -n mate-system-log
 Summary: A log file viewer for the MATE desktop
@@ -71,14 +61,15 @@ view various system log files.
 
 %prep
 %setup -q
-#sed -i -e 's@libmatepanelapplet-2.0@libmatepanelapplet-4.0@g' configure.ac
+sed -i -e 's@libmatepanelapplet-2.0@libmatepanelapplet-4.0@g' configure.ac
 NOCONFIGURE=1 ./autogen.sh
 
 %build
 %configure \
         --disable-static \
         --disable-scrollkeeper \
-        --disable-schemas-install \
+
+#--disable-schemas-install \
 #        --enable-gdict-applet=no
 
 sed -i -e 's/ -shared / -Wl,-O1,--as-needed\0 /g' libtool
@@ -112,8 +103,7 @@ mkdir -p  $RPM_BUILD_ROOT%{_sbindir}
 mv $RPM_BUILD_ROOT%{_bindir}/mate-system-log $RPM_BUILD_ROOT%{_sbindir}
 ln -s %{_bindir}/consolehelper $RPM_BUILD_ROOT%{_bindir}/mate-system-log
 
-rm -rf $RPM_BUILD_ROOT%{_libdir}/*.a
-rm -rf $RPM_BUILD_ROOT%{_libdir}/*.la
+rm -fv $RPM_BUILD_ROOT%{_libdir}/*.la
 
 desktop-file-install --vendor "" --delete-original       \
   --remove-category=MATE                           \
@@ -122,21 +112,7 @@ desktop-file-install --vendor "" --delete-original       \
   $RPM_BUILD_ROOT%{_datadir}/applications/*
 
 # save space by linking identical images in translated docs
-for n in mate-dictionary mate-disk-usage-analyzer mate-search-tool mate-system-log; do
-  helpdir=$RPM_BUILD_ROOT%{_datadir}/mate/help/$n
-  for f in $helpdir/C/figures/*.png; do
-    for d in $helpdir/*; do
-      if [ -d "$d" -a "$d" != "$helpdir/C" ]; then
-        g="$d/figures/$b"
-        if [ -f "$g" ]; then
-          if cmp -s $f $g; then
-            rm "$g"; ln -s "../../C/figures/$b" "$g"
-          fi
-        fi
-      fi
-    done
-  done
-done
+hardlink -c -v $RPM_BUILD_ROOT%{_datadir}/mate/help
 
 %find_lang %{name} --with-gnome
 %find_lang mate-disk-usage-analyzer --with-gnome
@@ -148,43 +124,24 @@ cat mate-disk-usage-analyzer.lang >> %{name}.lang
 cat mate-dictionary.lang >> %{name}.lang
 cat mate-search-tool.lang >> %{name}.lang
 
-%post
-/bin/touch --no-create %{_datadir}/icons/mate &>/dev/null || :
-
-%mateconf_schema_upgrade mate-dictionary mate-screenshot mate-search-tool baobab
-
-%pre
-%mateconf_schema_prepare mate-dictionary mate-screenshot mate-search-tool baobab
-
-%preun
-%mateconf_schema_remove mate-dictionary mate-screenshot mate-search-tool baobab
-
-%postun
-if [ $1 -eq 0 ] ; then
-    /bin/touch --no-create %{_datadir}/icons/mate &>/dev/null
-fi
-
-%post -n mate-system-log
-%mateconf_schema_upgrade mate-system-log
-
-%pre -n mate-system-log
-%mateconf_schema_prepare mate-system-log
-
-%preun -n mate-system-log
-%mateconf_schema_remove mate-system-log
-
-
-
 %files -f %{name}.lang
 %doc COPYING NEWS README
 %doc mate-dictionary/AUTHORS
 %doc mate-dictionary/README
 %doc baobab/AUTHORS
 %doc baobab/README
-%{_sysconfdir}/mateconf/schemas/mate-dictionary.schemas
-%{_sysconfdir}/mateconf/schemas/mate-screenshot.schemas
-%{_sysconfdir}/mateconf/schemas/mate-search-tool.schemas
-%{_sysconfdir}/mateconf/schemas/baobab.schemas
+#%{_sysconfdir}/mateconf/schemas/mate-dictionary.schemas
+#%{_sysconfdir}/mateconf/schemas/mate-screenshot.schemas
+#%{_sysconfdir}/mateconf/schemas/mate-search-tool.schemas
+#%{_sysconfdir}/mateconf/schemas/baobab.schemas
+%{_datadir}/MateConf/gsettings/mate-dictionary.convert
+%{_datadir}/MateConf/gsettings/mate-disk-usage-analyzer.convert
+%{_datadir}/MateConf/gsettings/mate-screenshot.convert
+%{_datadir}/MateConf/gsettings/mate-search-tool.convert
+%{_datadir}/glib-2.0/schemas/org.mate.dictionary.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.mate.disk-usage-analyzer.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.mate.screenshot.gschema.xml
+%{_datadir}/glib-2.0/schemas/org.mate.search-tool.gschema.xml
 %{_bindir}/mate-dictionary
 %{_bindir}/mate-panel-screenshot
 %{_bindir}/mate-screenshot
@@ -200,8 +157,11 @@ fi
 %{_datadir}/mate-disk-usage-analyzer/
 %{_datadir}/pixmaps/mate-search-tool/
 %{_libexecdir}/mate-dictionary-applet
-%{_datadir}/mate-2.0/ui/MATE_DictionaryApplet.xml
-%{_libdir}/matecomponent/servers/MATE_DictionaryApplet.server
+#{_datadir}/mate-2.0/ui/MATE_DictionaryApplet.xml
+%{_libdir}/libmatedict.so.*
+#%{_libdir}/matecomponent/servers/MATE_DictionaryApplet.server
+%{_datadir}/dbus-1/services/org.mate.panel.applet.DictionaryAppletFactory.service
+%{_datadir}/mate-panel/applets/org.mate.DictionaryApplet.mate-panel-applet
 %{_mandir}/man1/mate-dictionary.1*
 %{_mandir}/man1/mate-search-tool.1*
 %{_mandir}/man1/mate-screenshot.1*
@@ -211,20 +171,19 @@ fi
 %{_datadir}/mate/help/mate-disk-usage-analyzer/
 %{_datadir}/mate/help/mate-search-tool/
 
-
 %files devel
 %{_libdir}/libmatedict.so
 %{_libdir}/pkgconfig/mate-dict.pc
 %{_includedir}/mate-dict/
 
-%files libs
-%{_libdir}/libmatedict.so.*
 
 %files -n mate-system-log -f mate-system-log.lang
 %doc COPYING
 %{_bindir}/mate-system-log
 %{_sbindir}/mate-system-log
-%{_sysconfdir}/mateconf/schemas/mate-system-log.schemas
+#%{_sysconfdir}/mateconf/schemas/mate-system-log.schemas
+%{_datadir}/MateConf/gsettings/mate-system-log.convert
+%{_datadir}/glib-2.0/schemas/org.mate.system-log.gschema.xml
 %{_sysconfdir}/security/console.apps/mate-system-log
 %{_sysconfdir}/pam.d/mate-system-log
 %{_datadir}/mate-utils/
@@ -235,6 +194,12 @@ fi
 
 
 %changelog
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
+- new version
+
+* Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_6
+- new fc release
+
 * Fri Nov 30 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_4
 - rebase to fc
 

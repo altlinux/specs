@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -189,7 +189,7 @@ Requires: mate-bluetooth
 #Requires: mate-tweak-tool >= %ver_major
 
 # misc
-Requires: mate-file-manager-sound-converter
+#Requires: mate-file-manager-sound-converter
 Requires: mate-file-manager-sendto
 Requires: mate-file-manager-open-terminal
 Requires: mate-file-manager-image-converter
@@ -363,6 +363,9 @@ itself).
 #%files a11y
 
 %changelog
+* Sun Feb 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3
+- dropped caja-sound-converter
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2
 - dropped mate-display-manager
 
