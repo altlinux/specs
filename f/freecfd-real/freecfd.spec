@@ -6,7 +6,7 @@
 
 Name: %oname-%scalar_type
 Version: 1.0.1
-Release: alt10
+Release: alt11
 Summary: Computational fluid dynamics (CFD) code (%scalar_type scalars)
 
 Group: Sciences/Mathematics
@@ -141,6 +141,9 @@ find . -name '._*' -size 1 -print0 | xargs -0 grep -lZ 'Mac OS X' -- | xargs -0 
 %endif
 
 %changelog
+* Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt11
+- Rebuilt with updated CGNS
+
 * Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.1-alt10
 - Forced build with gcc 4.6
 

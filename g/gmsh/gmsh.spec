@@ -6,7 +6,7 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
 Version: 2.6.2
-Release: alt4.svn20120814
+Release: alt4.svn20130201
 Group: Graphics
 License: GPL v2
 URL: http://www.geuz.org/gmsh/
@@ -100,7 +100,8 @@ export LD_LIBRARY_PATH=%_libdir/oski
 
 %makeinstall_std
 
-for i in %buildroot%_bindir/* %buildroot%_libdir/*.so; do
+#for i in %buildroot%_bindir/* %buildroot%_libdir/*.so; do
+for i in %buildroot%_bindir/*; do
 	chrpath -r %mpidir/lib:%petsc_dir/lib $i
 done
 
@@ -121,7 +122,7 @@ rm -fR %buildroot%_includedir
 %_bindir/*
 %_man1dir/*
 %_infodir/*
-%_libdir/*.so
+#_libdir/*.so
 
 %files demos
 %dir %_docdir/%name
@@ -129,6 +130,9 @@ rm -fR %buildroot%_includedir
 %_docdir/%name/tutorial
 
 %changelog
+* Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt4.svn20130201
+- New snapshot
+
 * Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt4.svn20120814
 - Rebuilt with gcc 4.7
 
