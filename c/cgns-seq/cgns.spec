@@ -21,7 +21,7 @@ Practice.
 
 Name: %oname-%seqmpi
 Version: 3.2
-Release: alt1.svn20120829
+Release: alt1.svn20121213
 Summary: CFD General Notation System (%desc version)
 
 Group: Sciences/Mathematics
@@ -213,6 +213,9 @@ find . -type d \( -name 'CVS' -o -name '.svn' -o -name '.git' -o -name '.hg' -o 
 %endif
 
 %changelog
+* Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt1.svn20121213
+- New snapshot
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2-alt1.svn20120829
 - Version 3.2
 
