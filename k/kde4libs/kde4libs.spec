@@ -9,7 +9,7 @@
 %define rname kdelibs
 Name: kde4libs
 Version: %major.%minor.%bugfix
-Release: alt1
+Release: alt2
 
 %define conflictver %major.%minor-alt0.0.1
 %define conflictver_kdevelop 3.4.1-alt0.0.1
@@ -313,6 +313,9 @@ ln -sf `relative %buildroot/%_kde4_bindir/kde4-config %buildroot/%_K4bindir/kde4
 %_K4includedir/*
 
 %changelog
+* Mon Feb 04 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt2
+- update from 4.10 branch
+
 * Thu Jan 31 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
 - update from 4.10 branch
 
