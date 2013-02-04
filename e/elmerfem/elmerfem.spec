@@ -4,7 +4,7 @@
 %define somver 0
 %define sover %somver.0.0
 
-%define svn svn5812
+%define svn svn6034
 
 Name: elmerfem
 Version: 7.0
@@ -351,6 +351,9 @@ rm -f %_datadir/fonts/ttf/freefont/Free*.ttf
 %_niconsdir/document-save-as.png
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt2.svn6034
+- New snapshot
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.0-alt2.svn5812
 - Fixed build
 
