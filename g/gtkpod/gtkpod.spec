@@ -1,6 +1,6 @@
 Name: gtkpod
 Version: 2.1.2
-Release: alt2
+Release: alt3
 Summary: A GUI for Apple's iPod using GTK2
 License: GPL
 Group: Sound
@@ -100,6 +100,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %exclude %_libdir/%name/*.la
 
 %changelog
+* Mon Feb 04 2013 Alexey Shabalin <shaba@altlinux.ru> 2.1.2-alt3
+- upstream snapshot 3732944d096943125e4a51f753644a00726acc68
+
 * Tue Oct 02 2012 Alexey Shabalin <shaba@altlinux.ru> 2.1.2-alt2
 - upstream snapshot
 
