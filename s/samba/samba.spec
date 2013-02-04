@@ -3,7 +3,7 @@
 Summary: Server and Client software to interoperate with Windows machines
 Name: samba
 Version: 3.6.12
-Release: alt1
+Release: alt2
 License: GPLv3+ and LGPLv3+
 Group: System/Servers
 Url: http://www.samba.org/
@@ -107,6 +107,7 @@ Windows user and group accounts on Linux.
 %package winbind-clients
 Summary: Samba winbind clients
 Group: System/Servers
+Requires: libwbclient = %version-%release
 
 %description winbind-clients
 The samba-winbind-clients package provides the NSS library and a PAM
@@ -154,8 +155,7 @@ The samba-domainjoin-gui package includes a domainjoin gtk application.
 
 %package -n libsmbclient
 Summary: The SMB client library
-Group: Development/C
-Requires: samba-winbind-clients = %version-%release
+Group: System/Libraries
 
 %description -n libsmbclient
 The libsmbclient contains the SMB client library from the Samba suite.
@@ -168,6 +168,22 @@ Requires: libsmbclient = %version-%release
 %description -n libsmbclient-devel
 The libsmbclient-devel package contains the header files and libraries needed to
 develop programs that link against the SMB client library in the Samba suite.
+
+%package -n libwbclient
+Summary: The winbind client library
+Group: System/Libraries
+
+%description -n libwbclient
+The libwbclient package contains the winbind client library from the Samba suite.
+
+%package -n libwbclient-devel
+Summary: Developer tools for the winbind library
+Group: Development/C
+Requires: libwbclient = %version-%release
+
+%description -n libwbclient-devel
+The libwbclient-devel package provides developer tools for the wbclient library.
+
 
 %prep
 # TAG: change for non-pre
@@ -253,6 +269,7 @@ CFLAGS="$RPM_OPT_FLAGS -D_GNU_SOURCE -DLDAP_DEPRECATED" %configure \
 popd
 
 pushd docs-xml
+export XML_CATALOG_FILES="file:///etc/xml/catalog file://$(pwd)/build/catalog.xml"
 %autoreconf
 %configure
 %make_build smbdotconf/parameters.all.xml
@@ -562,19 +579,13 @@ true
 %_libdir/libnss_wins.so
 /%_lib/libnss_wins.so.2
 /%_lib/security/pam_winbind.so
-%attr(755,root,root) %_libdir/libwbclient.so.*
-
-%files winbind-devel
-%_includedir/wbclient.h
-%_libdir/libwbclient.so
-%_pkgconfigdir/wbclient.pc
 
 %files doc
 %doc docs-xml/output/htmldocs
 
 %files -n libsmbclient
-%attr(755,root,root) %_libdir/libsmbclient.so.*
-%attr(755,root,root) %_libdir/libsmbsharemodes.so.*
+%_libdir/libsmbclient.so.*
+%_libdir/libsmbsharemodes.so.*
 
 %files -n libsmbclient-devel
 %_includedir/libsmbclient.h
@@ -585,6 +596,14 @@ true
 %_pkgconfigdir/smbsharemodes.pc
 %_man7dir/libsmbclient.7*
 
+%files -n libwbclient
+%_libdir/libwbclient.so.*
+
+%files -n libwbclient-devel
+%_includedir/wbclient.h
+%_libdir/libwbclient.so
+%_pkgconfigdir/wbclient.pc
+
 %files domainjoin-gui
 %_sbindir/netdomjoin-gui
 %dir %_pixmapsdir/samba
@@ -593,6 +612,9 @@ true
 %_pixmapsdir/samba/logo-small.png
 
 %changelog
+* Thu Jan 31 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.12-alt2
+- move libwbclient to separate package
+
 * Wed Jan 30 2013 Led <led@altlinux.ru> 3.6.12-alt1
 - 3.6.12:
   + CVE-2013-0213

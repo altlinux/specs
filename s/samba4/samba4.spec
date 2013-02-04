@@ -7,9 +7,10 @@
 %def_without ldb
 %def_with ntdb
 
-# buuild as separate package
-%def_with libsmbclient
-%def_with libwbclient
+# build as separate package
+%def_without libsmbclient
+%def_without libwbclient
+%def_without libnetapi
 %def_without pam_smbpass
 
 %def_with mitkrb5
@@ -24,8 +25,8 @@
 %endif
 
 Name: samba4
-Version: 4.0.1
-Release: alt1
+Version: 4.0.2
+Release: alt2
 Group: System/Servers
 Summary: The Samba4 CIFS and AD client and server suite
 License: GPLv3+ and LGPLv3+
@@ -106,7 +107,9 @@ of SMB/CIFS shares and printing to SMB/CIFS printers.
 Summary: Files used by both Samba servers and clients
 Group: System/Servers
 Requires: %name-libs = %version-%release
+%if_with libnetapi
 Requires: libnetapi4 = %version-%release
+%endif
 Conflicts: samba-common < %version
 Provides: samba-common = %version-%release
 
@@ -135,9 +138,20 @@ link against the SMB, RPC and other protocols.
 %package libs
 Summary: Samba libraries
 Group: System/Libraries
+%if_with libnetapi
 Requires: libnetapi4 = %version-%release
+%else
+Obsoletes: libnetapi4 < %version-%release
+%endif
 %if_with libwbclient
 Requires: libwbclient4 = %version-%release
+%else
+Obsoletes: libwbclient4 < %version-%release
+%endif
+%if_with libsmbclient
+Requires: libsmbclient4 = %version-%release
+%else
+Obsoletes: libsmbclient4 < %version-%release
 %endif
 
 %description libs
@@ -363,7 +377,12 @@ Samba suite.
 %define _libwbclient wbclient,
 %endif
 
-%define _samba4_private_libraries %{_libsmbclient}%{_libwbclient}
+%define _libnetapi %nil
+%if_without libnetapi
+%define _libnetapi netapi,
+%endif
+
+%define _samba4_private_libraries %{_libsmbclient}%{_libwbclient}%{_libnetapi}
 
 
 %undefine _configure_gettext
@@ -480,6 +499,8 @@ ln -sf /%_lib/libnss_wins.so.2  %buildroot%_libdir/libnss_wins.so
 
 mkdir -p  %buildroot%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
 mv %buildroot%_libdir/winbind_krb5_locator.so %buildroot%_libdir/krb5/plugins/libkrb5/winbind_krb5_locator.so
+
+ln -sf ldap.so  %buildroot%_libdir/samba/pdb/ldapsam.so
 
 # Fix up permission on perl install.
 %_fixperms %buildroot%perl_vendor_privlib
@@ -875,6 +896,9 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/samba/libwbclient.so.*
 %_libdir/samba/libwinbind-client.so
 %endif
+%if_without libnetapi
+%_libdir/samba/libnetapi.so.*
+%endif
 
 %if_with libsmbclient
 %files -n libsmbclient4
@@ -902,6 +926,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_pkgconfigdir/wbclient.pc
 %endif
 
+%if_with libnetapi
 %files -n libnetapi4
 %_libdir/libnetapi.so.*
 
@@ -909,6 +934,7 @@ TDB_NO_FSYNC=1 %make_build test
 %_libdir/libnetapi.so
 %_includedir/samba-4.0/netapi.h
 %_pkgconfigdir/netapi.pc
+%endif
 
 %files pidl
 %attr(755,root,root) %_bindir/pidl
@@ -985,6 +1011,20 @@ TDB_NO_FSYNC=1 %make_build test
 %_man8dir/pam_winbind.8*
 
 %changelog
+* Mon Feb 04 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.2-alt2
+- obsoletes libnetapi4,libwbclient4,libsmbclient4 by samba4-libs if build without them
+
+* Mon Feb 04 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.2-alt1
+- 4.0.2
+- fixed gensec: Allow login without a PAC by default (samba bug #9581)
+
+* Fri Feb 01 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.1-alt3
+- build without libnetapi
+- add symlink ldapsam.so to ldap.so
+
+* Thu Jan 31 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.1-alt2
+- build without libsmbclient and libwbclient
+
 * Mon Jan 28 2013 Alexey Shabalin <shaba@altlinux.ru> 4.0.1-alt1
 - 4.0.1
 
