@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.61
-Release: alt7
+Version: 3.0.62
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 61
+%define kernel_stable_version 62
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -551,13 +551,14 @@ Patch0686: linux-%kernel_branch.54-fix-fs-jbd.patch
 Patch0687: linux-%kernel_branch.53-fix-fs-nfs.patch
 Patch0688: linux-%kernel_branch.53-fix-fs-ocfs2.patch
 Patch0689: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
-Patch0690: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
-Patch0691: linux-%kernel_branch.56-fix-fs-squashfs.patch
-Patch0692: linux-%kernel_branch.43-fix-fs-proc.patch
-Patch0693: linux-%kernel_branch.42-fix-fs-pstore.patch
-Patch0694: linux-%kernel_branch.51-fix-fs-reiserfs.patch
-Patch0695: linux-%kernel_branch.42-fix-fs-sysfs.patch
-Patch0696: linux-%kernel_branch.53-fix-fs-xfs.patch
+Patch0690: linux-%kernel_branch.61-fix-fs-ramfs.patch
+Patch0691: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
+Patch0692: linux-%kernel_branch.56-fix-fs-squashfs.patch
+Patch0693: linux-%kernel_branch.43-fix-fs-proc.patch
+Patch0694: linux-%kernel_branch.42-fix-fs-pstore.patch
+Patch0695: linux-%kernel_branch.51-fix-fs-reiserfs.patch
+Patch0696: linux-%kernel_branch.42-fix-fs-sysfs.patch
+Patch0697: linux-%kernel_branch.53-fix-fs-xfs.patch
 
 Patch0700: linux-%kernel_branch.53-fix-include.patch
 
@@ -711,23 +712,24 @@ Patch1162: linux-%kernel_branch.43-feat-drivers-video--xgifb.patch
 
 Patch1171: linux-%kernel_branch-feat-firmware-rtl_nic.patch
 
-Patch1181: linux-%kernel_branch.42-feat-fs--secrm.patch
-Patch1182: linux-%kernel_branch-feat-fs-aufs.patch
-Patch1183: linux-%kernel_branch.42-feat-fs-binfmt_elf--fatelf.patch
-Patch1184: linux-%kernel_branch.43-feat-fs-dazukofs.patch
-Patch1185: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
-Patch1186: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
-Patch1187: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
-Patch1188: linux-%kernel_branch.43-feat-fs-f2fs.patch
-Patch1189: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
-Patch1190: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
-Patch1191: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
-Patch1192: linux-%kernel_branch.44-feat-fs-overlayfs.patch
-Patch1193: linux-%kernel_branch.61-feat-fs-reiser4.patch
-Patch1194: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
-Patch1195: linux-%kernel_branch-feat-fs-subfs.patch
-Patch1196: linux-%kernel_branch.42-feat-fs-unionfs.patch
-Patch1197: linux-%kernel_branch.44-feat-fs--lnfs.patch
+Patch1181: linux-%kernel_branch.44-feat-fs--lnfs.patch
+Patch1182: linux-%kernel_branch.42-feat-fs--secrm.patch
+Patch1183: linux-%kernel_branch-feat-fs-aufs.patch
+Patch1184: linux-%kernel_branch.42-feat-fs-binfmt_elf--fatelf.patch
+Patch1185: linux-%kernel_branch.43-feat-fs-dazukofs.patch
+Patch1186: linux-%kernel_branch.42-feat-fs-ext2--secrm.patch
+Patch1187: linux-%kernel_branch.42-feat-fs-ext3--secrm.patch
+Patch1188: linux-%kernel_branch.42-feat-fs-ext4--secrm.patch
+Patch1189: linux-%kernel_branch.43-feat-fs-f2fs.patch
+Patch1190: linux-%kernel_branch.42-feat-fs-fat--secrm.patch
+Patch1191: linux-%kernel_branch.42-feat-fs-jbd--secrm.patch
+Patch1192: linux-%kernel_branch.42-feat-fs-jbd2--secrm.patch
+Patch1193: linux-%kernel_branch.44-feat-fs-overlayfs.patch
+Patch1194: linux-%kernel_branch.61-feat-fs-reiser4.patch
+Patch1195: linux-%kernel_branch.42-feat-fs-squashfs--write.patch
+Patch1196: linux-%kernel_branch-feat-fs-subfs.patch
+Patch1197: linux-%kernel_branch.61-feat-fs-tmpfs--root.patch
+Patch1198: linux-%kernel_branch.42-feat-fs-unionfs.patch
 
 Patch1201: linux-%kernel_branch.42-feat-kernel--cpe_migrate.patch
 Patch1202: linux-%kernel_branch.42-feat-kernel--sched-cfs-boost.patch
@@ -1899,6 +1901,7 @@ cd linux-%version
 %patch0694 -p1
 %patch0695 -p1
 %patch0696 -p1
+%patch0697 -p1
 
 %patch0700 -p1
 
@@ -2076,7 +2079,7 @@ cd linux-%version
 %patch1171 -p1
 
 # feat-fs-*
-%patch1181 -p1
+%{?_with_lnfs:%patch1181 -p1}
 %patch1182 -p1
 %patch1183 -p1
 %patch1184 -p1
@@ -2092,7 +2095,8 @@ cd linux-%version
 %patch1194 -p1
 %patch1195 -p1
 %patch1196 -p1
-%{?_with_lnfs:%patch1197 -p1}
+%patch1197 -p1
+%patch1198 -p1
 
 %patch1201 -p1
 %patch1202 -p1
@@ -2996,6 +3000,16 @@ done)
 
 
 %changelog
+* Mon Feb 04 2013 Led <led@altlinux.ru> 3.0.62-alt1
+- 3.0.62
+
+* Sat Feb 02 2013 Led <led@altlinux.ru> 3.0.61-alt8
+- updated:
+  + feat-fs-squashfs--write
+- added:
+  + fix-fs-ramfs--root
+  + feat-fs-tmpfs--root
+
 * Sat Feb 02 2013 Led <led@altlinux.ru> 3.0.61-alt7
 - updated:
   + fix-drivers-hv
