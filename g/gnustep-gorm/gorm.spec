@@ -2,7 +2,7 @@
 
 Name: gnustep-gorm
 Version: 1.2.18
-Release: alt3.git20130127
+Release: alt3.git20130130
 Summary: The GNUstep Interface Builder
 License: GPLv3+
 Group: Graphical desktop/GNUstep
@@ -130,6 +130,9 @@ gzip ChangeLog
 %_infodir/*
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.18-alt3.git20130130
+- New snapshot
+
 * Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.18-alt3.git20130127
 - New snapshot
 - Added menu file (thnx kostyalamer@)
