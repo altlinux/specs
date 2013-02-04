@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 %define _libexecdir %_prefix/libexec
 Name:           mate-utils
 Version:        1.5.0
-Release:        alt1_0
+Release:        alt2_0
 Summary:        MATE utility programs
 
 License:        GPLv2+ and LGPLv2+
@@ -29,6 +29,8 @@ BuildRequires:  pkgconfig(mate-doc-utils)
 BuildRequires:  popt-devel
 BuildRequires:  rarian-compat
 BuildRequires:  consolehelper
+
+Obsoletes: mate-utils-libs < 1.5.0
  
 Source44: import.info
 
@@ -48,6 +50,16 @@ Requires:  %{name}%{?_isa} = %{version}-%{release}
 The mate-utils-devel package contains header files and other resources
 needed to develop programs using the libraries contained in mate-utils.
 
+
+%package libs
+Summary: mate-utils libraries
+Group: Development/C
+
+%description libs
+This package contains libraries provided by mate-utils (such as libmatedict)
+
+%files libs
+%{_libdir}/libmatedict.so.*
 
 %package -n mate-system-log
 Summary: A log file viewer for the MATE desktop
@@ -130,10 +142,6 @@ cat mate-search-tool.lang >> %{name}.lang
 %doc mate-dictionary/README
 %doc baobab/AUTHORS
 %doc baobab/README
-#%{_sysconfdir}/mateconf/schemas/mate-dictionary.schemas
-#%{_sysconfdir}/mateconf/schemas/mate-screenshot.schemas
-#%{_sysconfdir}/mateconf/schemas/mate-search-tool.schemas
-#%{_sysconfdir}/mateconf/schemas/baobab.schemas
 %{_datadir}/MateConf/gsettings/mate-dictionary.convert
 %{_datadir}/MateConf/gsettings/mate-disk-usage-analyzer.convert
 %{_datadir}/MateConf/gsettings/mate-screenshot.convert
@@ -157,9 +165,7 @@ cat mate-search-tool.lang >> %{name}.lang
 %{_datadir}/mate-disk-usage-analyzer/
 %{_datadir}/pixmaps/mate-search-tool/
 %{_libexecdir}/mate-dictionary-applet
-#{_datadir}/mate-2.0/ui/MATE_DictionaryApplet.xml
-%{_libdir}/libmatedict.so.*
-#%{_libdir}/matecomponent/servers/MATE_DictionaryApplet.server
+#%{_libdir}/libmatedict.so.*
 %{_datadir}/dbus-1/services/org.mate.panel.applet.DictionaryAppletFactory.service
 %{_datadir}/mate-panel/applets/org.mate.DictionaryApplet.mate-panel-applet
 %{_mandir}/man1/mate-dictionary.1*
@@ -181,7 +187,6 @@ cat mate-search-tool.lang >> %{name}.lang
 %doc COPYING
 %{_bindir}/mate-system-log
 %{_sbindir}/mate-system-log
-#%{_sysconfdir}/mateconf/schemas/mate-system-log.schemas
 %{_datadir}/MateConf/gsettings/mate-system-log.convert
 %{_datadir}/glib-2.0/schemas/org.mate.system-log.gschema.xml
 %{_sysconfdir}/security/console.apps/mate-system-log
@@ -194,6 +199,9 @@ cat mate-search-tool.lang >> %{name}.lang
 
 
 %changelog
+* Mon Feb 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
+- restored libs subpackage
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
 - new version
 
