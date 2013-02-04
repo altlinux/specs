@@ -1,17 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/pkg-config pkgconfig(gio-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/pkg-config pkgconfig(gio-2.0) pkgconfig(gtk+-2.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname caja-image-converter
 Name:           mate-file-manager-image-converter
-Version:        1.4.0
-Release:        alt1_1.1
+Version:        1.5.0
+Release:        alt1_0
 Summary:        Caja extension to mass resize images
 
 Group:          Graphical desktop/Other
 License:        GPLv2+
-URL:			http://pub.mate-desktop.org
-Source0:        http://pub.mate-desktop.org/releases/1.4/%{name}-%{version}.tar.xz
+URL:		http://pub.mate-desktop.org
+Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
 BuildRequires:  libglade2-devel >= 2.4.0
 BuildRequires:	glib2-devel >= 2.15.0
@@ -20,7 +20,7 @@ BuildRequires:	gettext
 BuildRequires:	perl(XML/Parser.pm)
 BuildRequires:  mate-common
 BuildRequires:  intltool
-Requires:		ImageMagick
+Requires:	/usr/bin/convert
  
 
 %description
@@ -31,9 +31,9 @@ on "Resize" finally resizes the image(s) using ImageMagick's convert tool.
 
 %prep
 %setup -q -n %{name}-%{version}
-NOCONFIGURE=1 ./autogen.sh
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure \
 	--disable-static
 
@@ -53,6 +53,9 @@ find $RPM_BUILD_ROOT -name \*.la -exec rm {} \;
 
 
 %changelog
+* Sun Feb 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
+- new version
+
 * Wed Oct 24 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt1_1.1
 - Build for Sisyphus
 
