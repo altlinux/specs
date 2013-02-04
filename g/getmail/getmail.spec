@@ -1,5 +1,5 @@
 Name: getmail
-Version: 4.34.0
+Version: 4.37.0
 Release: alt1
 
 Summary: POP3 mail retriever with reliable Maildir delivery
@@ -63,6 +63,9 @@ python %_libdir/python%_python_version/compileall.py \
 %doc %_man1dir/*
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.37.0-alt1
+- Version 4.37.0
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.34.0-alt1
 - Version 4.34.0
 
