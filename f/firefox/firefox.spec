@@ -10,7 +10,7 @@ Summary:              The Mozilla Firefox project is a redesign of Mozilla's bro
 Summary(ru_RU.UTF-8): Интернет-браузер Mozilla Firefox
 
 Name:           firefox
-Version:        18.0.1
+Version:        18.0.2
 Release:        alt1
 License:        MPL/GPL/LGPL
 Group:          Networking/WWW
@@ -61,7 +61,7 @@ BuildRequires: python-modules-logging
 BuildRequires: python-modules-sqlite3
 
 # Mozilla requires
-BuildRequires: xulrunner-devel     >= 16.0.1-alt1
+BuildRequires: xulrunner-devel     >= 18.0.2-alt1
 BuildRequires: libnspr-devel       >= 4.9.2-alt1
 BuildRequires: libnss-devel        >= 3.13.6-alt1
 BuildRequires: libnss-devel-static >= 3.13.6-alt1
@@ -263,6 +263,9 @@ done
 %_sysconfdir/rpm/macros.d/firefox
 
 %changelog
+* Sun Feb 10 2013 Alexey Gladkov <legion@altlinux.ru> 18.0.2-alt1
+- New release (18.0.2).
+
 * Mon Jan 28 2013 Alexey Gladkov <legion@altlinux.ru> 18.0.1-alt1
 - New release (18.0.1).
 

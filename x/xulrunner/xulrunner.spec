@@ -13,7 +13,7 @@
 
 Summary:	XUL Runner
 Name:		xulrunner
-Version:	18.0.1
+Version:	18.0.2
 Release:	alt1
 
 License:	MPL/GPL/LGPL
@@ -354,6 +354,9 @@ ln -sf $(relative "%xulr_prefix/libmozalloc.so" "%xulr_develdir/sdk/lib/libmozal
 %_datadir/rpm-build-mozilla/mozilla-sh-functions
 
 %changelog
+* Mon Feb 04 2013 Alexey Gladkov <legion@altlinux.ru> 18.0.2-alt1
+- New release (18.0.2).
+
 * Sun Jan 27 2013 Alexey Gladkov <legion@altlinux.ru> 18.0.1-alt1
 - New release (18.0.1).
 
