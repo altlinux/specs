@@ -2,24 +2,22 @@
 %define ldir %_libdir/%oname
 
 Name: free-cad
-Version: 0.13.5443
-Release: alt5.svn20120331
+Version: 0.12.2237
+Release: alt1.git20130123
+Epoch: 1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
 Group: Graphics
 Url: http://free-cad.sourceforge.net/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# from .git/config :
-#[svn-remote "svn"]
-#  url = https://free-cad.svn.sourceforge.net/svnroot/free-cad/trunk
-#  fetch = :refs/remotes/git-svn
+# git://free-cad.git.sourceforge.net/gitroot/free-cad/free-cad
 Source: %name-%version.tar
 Source1: CMakeCache.txt
 
-Requires: lib%name = %version-%release
+Requires: lib%name = %EVR
 
-BuildPreReq: libGConf-devel libavformat53 libavcodec53
+BuildPreReq: libGConf-devel
 BuildPreReq: python-devel cmake swig gcc-fortran libf2c-ng-devel chrpath
 BuildPreReq: boost-devel libqt4-devel libcoin3d-devel libSoQt-devel zlib-devel
 BuildPreReq: libopencv2-devel libxerces-c-devel gcc-c++ boost-filesystem-devel
@@ -32,6 +30,8 @@ BuildPreReq: python-module-pivy libnumpy-devel libqt4-assistant-devel
 %py_requires pivy
 %py_provides Fem FreeCAD FreeCADGui Mesh Part MeshPart Drawing ImportGui
 %py_provides PartGui Sketcher TestSketcherApp Robot RobotGui SketcherGui
+%py_provides ImageGui
+%add_python_req_skip pyopencl
 
 %description
 FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
@@ -46,7 +46,7 @@ easy to provide additional functionality without modifying the core system.
 %package thumbnailer
 Summary: Thumbnailer utility for FreeCAD
 Group: Graphics
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description thumbnailer
 FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
@@ -63,7 +63,7 @@ This package contains thumbnailer utility for FreeCAD.
 %package qt4-designer-plugin
 Summary: FreeCAD plugin for Qt4
 Group: Development/KDE and QT
-Requires: %name = %version-%release
+Requires: %name = %EVR
 Requires: qt4-designer
 
 %description qt4-designer-plugin
@@ -98,7 +98,7 @@ This package contains documentation for FreeCAD.
 %package -n lib%name
 Summary: Shared libraries of FreeCAD
 Group: System/Libraries
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description -n lib%name
 FreeCAD will be a general purpose 3D CAD modeler. FreeCAD is aimed directly at
@@ -115,8 +115,7 @@ This package contains shared libraries FreeCAD.
 %package -n lib%name-devel
 Summary: Development files of FreeCAD
 Group: Development/C++
-Requires: lib%name = %version-%release
-Requires: libstdc++4.5-devel
+Requires: lib%name = %EVR
 Requires: libopencascade-devel
 
 %description -n lib%name-devel
@@ -288,6 +287,9 @@ fi
 %_libexecdir/qt4/plugins/designer/*
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.12.2237-alt1.git20130123
+- Version 0.12.2237 (from git)
+
 * Tue Dec 04 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.13.5443-alt5.svn20120331
 - Rebuild with new libxerces-c
 
