@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           4ti2
 Version:        1.3.2
-Release:        alt3_12
+Release:        alt3_12.1
 Summary:        A software package for problems on linear spaces
 
 Group:          System/Libraries
@@ -81,6 +81,9 @@ make check
 %{_libdir}/%{name}/bin/zsolve
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt3_12.1
+- Rebuilt with glpk 4.48
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt3_12
 - update to new release by fcimport
 

@@ -1,6 +1,6 @@
 Name: shogun
 Version: 2.0.0
-Release: alt1
+Release: alt2
 Summary: A Large Scale Machine Learning Toolbox
 Group: Sciences/Mathematics
 License: GPL v3 or later
@@ -295,6 +295,9 @@ rm -fR examples/documented/data examples/undocumented/data \
 %doc tests
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt2
+- Rebuilt with glpk 4.48
+
 * Fri Jan 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.0-alt1
 - Version 2.0.0 (ALT #28174)
 

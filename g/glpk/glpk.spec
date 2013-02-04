@@ -1,6 +1,6 @@
 Name: glpk
-Version: 4.47
-Release: alt2
+Version: 4.48
+Release: alt1
 
 Summary: GNU Linear Programming Kit
 License: GPL
@@ -123,6 +123,9 @@ ln -s glpk/glpk.h %buildroot%_includedir
 %_docdir/%name
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.48-alt1
+- Version 4.48
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.47-alt2
 - Rebuilt with gmp 5.0.5
 

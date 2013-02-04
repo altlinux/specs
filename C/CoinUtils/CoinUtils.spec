@@ -3,7 +3,7 @@
 
 Name: CoinUtils
 Version: 2.8.7
-Release: alt1.svn20120901
+Release: alt2.svn20120901
 Summary: Open-source collection of classes and functions for COIN-OR project
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -125,6 +125,9 @@ rm -fR %buildroot%_datadir/coin/doc \
 %doc %name/doxydoc/doxydoc/html/*
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.7-alt2.svn20120901
+- Rebuilt with glpk 4.48
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.7-alt1.svn20120901
 - Version 2.8.7
 
