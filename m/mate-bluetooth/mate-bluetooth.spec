@@ -1,22 +1,21 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/update-desktop-database /usr/bin/xmllint libgtk+2-gir-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gmodule-export-2.0) pkgconfig(gtk+-2.0) pkgconfig(x11) pkgconfig(xi)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-update-icon-cache /usr/bin/gtkdocize /usr/bin/update-desktop-database /usr/bin/xmllint libgio-devel libgtk+2-gir-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gmodule-export-2.0) pkgconfig(gtk+-2.0) pkgconfig(x11) pkgconfig(xi)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:		mate-bluetooth
-Version:	1.4.0
-Release:	alt1_1.1
+Version:	1.5.0
+Release:	alt1_0
 Summary:	Bluetooth graphical utilities
 
 Group:		Communications
 License:	GPLv2+
 URL:		http://pub.mate-desktop.org
-Source0:	http://pub.mate-desktop.org/releases/1.4/%{name}-%{version}.tar.xz
+Source0:	http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 Source1:	61-mate-bluetooth-rfkill.rules
 
 Patch0:		mate-bluetooth_fix_mate-bluetooth-applet_desktop-file.patch
-Patch1:		mate-bluetooth_fix_mate-bluetooth-properties_desktop-file.patch
 
-BuildRequires:	mate-conf-devel
+#BuildRequires:	mate-conf-devel
 BuildRequires:	gtk2-devel
 BuildRequires:	libunique-devel
 BuildRequires:	libdbus-glib-devel
@@ -73,7 +72,6 @@ for writing applications that require a Bluetooth device selection widget.
 %prep
 %setup -q
 %patch0 -p1 -b .mate-bluetooth_fix_mate-bluetooth-applet_desktop-file
-%patch1 -p1 -b .mate-bluetooth_fix_mate-bluetooth-properties_desktop-file
 
 NOCONFIGURE=1 ./autogen.sh
 
@@ -136,47 +134,6 @@ for f in $helpdir/C/figures/*.png; do
   done
 done
 
-%pre
-if [ "$1" -gt 1 ]; then
-	export MATEGCONF_CONFIG_SOURCE=`mateconftool-2 --get-default-source`
-	if [ -f %{_sysconfdir}/mateconf/schemas/mate-obex-server.schemas ] ; then
-		mateconftool-2 --makefile-uninstall-rule \
-		%{_sysconfdir}/gconf/matechemas/mate-obex-server.schemas >/dev/null || :
-	fi
-	if [ -f %{_sysconfdir}/mateconf/schemas/bluetooth-manager.schemas ] ; then
-		mateconftool-2 --makefile-uninstall-rule 				\
-		%{_sysconfdir}/mateconf/schemas/bluetooth-manager.schemas		\
-		>& /dev/null || :
-	fi
-fi
-
-%preun
-if [ "$1" -eq 0 ]; then
-	export MATEGCONF_CONFIG_SOURCE=`gconftool-2 --get-default-source`
-	if [ -f %{_sysconfdir}/mateconf/schemas/mate-obex-server.schemas ] ; then
-		gconftool-2 --makefile-uninstall-rule \
-		%{_sysconfdir}/mateconf/schemas/mate-obex-server.schemas > /dev/null || :
-	fi
-	if [ -f %{_sysconfdir}/mateconf/schemas/bluetooth-manager.schemas ] ; then
-		mateconftool-2 --makefile-uninstall-rule 				\
-		%{_sysconfdir}/mateconf/schemas/bluetooth-manager.schemas		\
-		>& /dev/null || :
-	fi
-fi
-
-%postun
-if [ $1 -eq 0 ] ; then
-	touch --no-create %{_datadir}/icons/mate &>/dev/null
-fi
-
-%post libs
-touch --no-create %{_datadir}/icons/mate &>/dev/null || :
-
-%postun libs
-if [ $1 -eq 0 ] ; then
-	touch --no-create %{_datadir}/icons/mate &>/dev/null
-fi
-
 %files
 %doc README NEWS COPYING
 %{_sysconfdir}/xdg/autostart/mate-bluetooth-applet.desktop
@@ -210,6 +167,9 @@ fi
 %{_datadir}/gtk-doc/html/mate-bluetooth/
 
 %changelog
+* Sun Feb 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
+- mate 1.5
+
 * Fri Oct 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.4.0-alt1_1.1
 - Build for Sisyphus
 
