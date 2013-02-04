@@ -5,8 +5,8 @@
 %def_enable qt
 
 Name: lightdm
-Version: 1.4.0
-Release: alt2
+Version: 1.5.0
+Release: alt1
 Summary: Lightweight Display Manager
 Group: Graphical desktop/Other
 License: GPLv3+
@@ -34,6 +34,7 @@ BuildRequires: libxcb-devel libXdmcp-devel
 BuildRequires: libdbus-glib-devel
 BuildRequires: gtk-doc yelp-tools itstool
 BuildRequires: libpam-devel
+BuildRequires: libgcrypt-devel
 %{?_enable_gobject:BuildRequires: libxklavier-devel libX11-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 %{?_enable_qt:BuildRequires: libqt4-devel}
@@ -48,6 +49,7 @@ several toolkits, including HTML/CSS/Javascript.
 %package -n liblightdm-gobject
 Group: System/Libraries
 Summary: LightDM GObject Greeter Library
+License: LGPLv2+
 
 %description -n liblightdm-gobject
 A library for LightDM greeters based on GObject which interfaces with LightDM
@@ -56,6 +58,7 @@ and provides common greeter functionality.
 %package -n liblightdm-qt
 Group: System/Libraries
 Summary: LightDM Qt Greeter Library
+License: LGPLv2+
 
 %description -n liblightdm-qt
 A library for LightDM greeters based on Qt which interfaces with LightDM and
@@ -170,7 +173,7 @@ install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/lightdm.rules
 %_sbindir/useradd -M -r -d %_localstatedir/lib/ldm -s /bin/false -c "LightDM daemon" -g _ldm _ldm >/dev/null 2>&1 || :
 
 %files -f %name.lang
-%doc AUTHORS COPYING NEWS README
+%doc NEWS
 %config %_sysconfdir/dbus-1/system.d/org.freedesktop.DisplayManager.conf
 %dir %_sysconfdir/%name
 %dir %_sysconfdir/%name/sessions
@@ -216,6 +219,10 @@ install -m644 -p -D %SOURCE8 %buildroot%_datadir/polkit-1/rules.d/lightdm.rules
 %_datadir/gtk-doc/html/*
 
 %changelog
+* Mon Feb 04 2013 Alexey Shabalin <shaba@altlinux.ru> 1.5.0-alt1
+- 1.5.0
+- make greeter and user sessions inherit the system default locale (patch from opensuse)
+
 * Thu Jan 31 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt2
 - don't requires accountservices
 - requires any greeter
