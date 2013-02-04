@@ -1,5 +1,5 @@
 Name: alterator-luks
-Version: 0.2
+Version: 0.2.1
 Release: alt1
 
 Source:%name-%version.tar
@@ -16,6 +16,8 @@ BuildRequires: alterator
 Requires: alterator
 Requires: alterator-l10n
 
+Conflicts: livecd-install < 0.7.2-alt1
+
 %description
 alterator module for for change LUKS passphrase
 
@@ -30,10 +32,15 @@ alterator module for for change LUKS passphrase
 
 %files
 %_datadir/alterator/applications/*
-%_datadir/alterator/ui/*/
+%_datadir/alterator/ui/*
+%_datadir/alterator/steps/*/
 %_alterator_backend3dir/*
 
 %changelog
+* Mon Feb 04 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Added 'luks' step for installer.
+- code style (by Timur Aitov).
+
 * Wed Dec 26 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt1
 - don't ask for password if no lusk devices found
 

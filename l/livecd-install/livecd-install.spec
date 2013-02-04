@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.7.1
+Version: 0.7.2
 Release: alt1
 
 Summary: Permanently install Live system
@@ -53,6 +53,9 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Mon Feb 04 2013 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
+- Drop steps/luks.desktop.
+
 * Wed Jan 30 2013 Michael Shigorin <mike@altlinux.org> 0.7.1-alt1
 - destination /etc/fstab is being cared for by i-s-remount
 
