@@ -4,7 +4,7 @@
 
 Name: gnustep-back    
 Version: 0.23.0
-Release: alt6.git20130105
+Release: alt6.git20130201
 Summary: The GNUstep back-end library
 License: LGPLv3+ and GPLv3+
 Group: Graphical desktop/GNUstep
@@ -113,6 +113,9 @@ gzip ChangeLog
 %_man1dir/*
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt6.git20130201
+- New snapshot
+
 * Tue Jan 29 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.23.0-alt6.git20130105
 - Set UTF-8 encoding (thnx aen@)
 - Added requirements on gnustep-base, gnustep-gui
