@@ -3,7 +3,7 @@
 
 Name: connman
 Version: 1.11
-Release: alt1
+Release: alt2
 
 Summary: ConnMan is a daemon for managing internet connections.
 License: %gpl2only
@@ -12,6 +12,7 @@ Url: http://connman.net/
 #Packager: Serg A. Kotlyarov <shadowsbrother@gmail.com>
 Source: %name.tar
 Source1: connmand.init
+Patch0: add-options-file.patch
 
 BuildRequires: rpm-build-licenses gcc-c++ glib2-devel iptables-devel libdbus-devel wpa_supplicant
 BuildRequires: gtk-doc libgnutls-devel libreadline-devel
@@ -51,6 +52,7 @@ This package contains include files required for development %name-based softwar
 
 %prep
 %setup -n %name
+%patch0 -p2
 
 %build
 %autoreconf
@@ -69,9 +71,14 @@ This package contains include files required for development %name-based softwar
 --enable-pptp
 %make_build
 
+# Compose the configuration file
+src/connmand --help | sed -e 's/^.*$/# &/' >src/connmand.conf
+echo 'CONNMAND_OPTS="-r"' >>src/connmand.conf
+
 %install
 %makeinstall dbusconfdir=%buildroot%_sysconfdir/dbus-1/system.d systemdunitdir=%buildroot%_unitdir
 install -pm0755 -D %SOURCE1 %buildroot%_initdir/connmand
+install -m0600 -D src/connmand.conf %buildroot%_sysconfdir/sysconfig/connman
 
 %files
 %_sbindir/*
@@ -86,6 +93,7 @@ install -pm0755 -D %SOURCE1 %buildroot%_initdir/connmand
 %_libdir/%name/scripts/*.so.*
 %_libdir/%name/scripts/*-script
 %_datadir/polkit-1/actions/*
+%config(noreplace) %_sysconfdir/sysconfig/connman
 
 %files -n %name-docs
 %doc AUTHORS README TODO README ChangeLog doc/*.txt
@@ -99,6 +107,10 @@ install -pm0755 -D %SOURCE1 %buildroot%_initdir/connmand
 
 
 %changelog
+* Mon Feb 04 2013 Paul Wolneykien <manowar@altlinux.ru> 1.11-alt2
+- Disable DNS proxy by default.
+- Make use of /etc/sysconfig/connman.
+
 * Sat Feb 02 2013 Cronbuild Service <cronbuild@altlinux.org> 1.11-alt1
 - repocop cronbuild 20130202. At your service.
 
