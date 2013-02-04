@@ -1,6 +1,6 @@
 Name: octave
 Version: 3.6.3
-Release: alt1
+Release: alt1.1
 
 %define docdir %_defaultdocdir/%name-%version
 
@@ -151,6 +151,9 @@ install -pm0755 -D %SOURCE1 %buildroot%_rpmlibdir/%name.filetrigger
 %docdir/liboctave
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.6.3-alt1.1
+- Rebuilt with glpk 4.48
+
 * Mon Sep 10 2012 Paul Wolneykien <manowar@altlinux.ru> 3.6.3-alt1
 - Remote the fltk patch (already applied).
 - Fix/update the pcre.h patch.

@@ -4,7 +4,7 @@ BuildRequires: /usr/bin/git /usr/bin/svnversion glib2-devel libICE-devel libSM-d
 %define oname gnunet
 Name: gnunet
 Version: 0.9.5
-Release: alt1
+Release: alt2
 
 Summary: Peer-to-peer framework
 
@@ -180,6 +180,9 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_pkgconfigdir/gnunetvpn.pc
 
 %changelog
+* Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt2
+- Rebuilt with glpk 4.48
+
 * Wed Jan 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.5-alt1
 - Friendly NMU: update to 0.9.5
 
