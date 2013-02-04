@@ -34,7 +34,7 @@
 
 Name: boost
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt1
+Release: alt2
 Epoch: 1
 
 Summary: Boost libraries
@@ -50,6 +50,7 @@ Patch5: boost-1.50.0-alt-bjam-locate-target.patch
 Patch15: boost-1.36.0-alt-test-include-fix.patch
 Patch23: boost-1.45.0-alt-mpi-mt-only.patch
 Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
+Patch30: boost-1.52.0-boost_locale_utf.patch
 
 # we use %%_python_version
 BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
@@ -1066,6 +1067,7 @@ applications. This package contains python module.
 %patch15 -p1
 %patch23 -p2
 %patch28 -p3
+%patch30 -p0
 
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
@@ -1518,6 +1520,9 @@ done
 
 
 %changelog
+* Mon Feb 04 2013 Ivan A. Melnikov <iv@altlinux.org> 1:1.52.0-alt2
+- fix Boost.Locale UTF issue (CVE-2013-0252).
+
 * Sun Nov 18 2012 Ivan A. Melnikov <iv@altlinux.org> 1:1.52.0-alt1
 - new version;
 - removed patch #27, already applied by upstream;
