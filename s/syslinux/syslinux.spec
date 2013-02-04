@@ -1,6 +1,6 @@
 Name: syslinux
 Version: 4.04
-Release: alt5
+Release: alt6
 Serial: 2
 
 Summary: Simple kernel loader which boots from a FAT filesystem
@@ -20,8 +20,8 @@ Patch3: syslinux-4.04-isohybrid-hex-option-parsing.diff
 Patch4: syslinux-4.04-mboot_bootif.diff
 Patch5: syslinux-4.04-md5pass.diff
 Patch6: syslinux-4.04-noinitrd.diff
-# ALT
-Patch100: syslinux-4.04-alt-ext2fs-header.patch
+Patch7: syslinux-4.04-gcc47.diff
+Patch8: syslinux-4.04-libext2fs.diff
 # upstream
 Patch200: syslinux-4.04-isohybrid-0.12.patch
 
@@ -31,8 +31,6 @@ BuildRequires: nasm perl-Crypt-PasswdMD5 perl-Digest-SHA1 libe2fs-devel
 #linux-libc-headers
 BuildRequires: libuuid-devel
 
-# NB: 4.06 compiles with 4.7 just fine, 4.04's gfxboot miscompiles
-%set_gcc_version 4.6
 
 %description
 Syslinux is a simple kernel loader. It normally loads the kernel (and an 
@@ -71,16 +69,14 @@ Read main packages description
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch100 -p1
+%patch7 -p0
+%patch8 -p0
 %patch200 -p2
 install -m 0644 %SOURCE2 .
-# argh.
-sed -i -e 's,^HOST_CC.*$,HOST_CC := gcc-%_gcc_version,' \
-       -e 's,^CC.*$,CC := gcc-%_gcc_version,' gpxe/src/Makefile
 
 %build
 export CFLAGS="%optflags -fno-stack-protector"
-export CC="gcc-%_gcc_version"
+export CC="gcc"
 export HOST_CC="$CC"
 %make_build spotless
 %make_build
@@ -126,6 +122,9 @@ install -m 0755 %SOURCE1 %buildroot/%_bindir
 /boot/extlinux
 
 %changelog
+* Mon Feb 04 2013 Sergey V Turchin <zerg@altlinux.org> 2:4.04-alt6
+- add patch from SuSE to fix build with gcc-4.7
+
 * Thu Nov 15 2012 Michael Shigorin <mike@altlinux.org> 2:4.04-alt5
 - built with gcc 4.6 (gfxboot hangs when built with 4.7)
 
