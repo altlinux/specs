@@ -3,8 +3,8 @@
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-nepali
-Version:        2.5.1.1
-Release:        alt2_2
+Version:        2.5.3
+Release:        alt1_1
 Summary:        Free Nepali font
 
 Group:          System/Fonts/True type
@@ -83,6 +83,9 @@ fi
 %doc ChangeLog OFL.txt COPYRIGHT AUTHORS README ChangeLog.old
 
 %changelog
+* Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
+- update to new release by fcimport
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.1.1-alt2_2
 - applied repocop patches
 
