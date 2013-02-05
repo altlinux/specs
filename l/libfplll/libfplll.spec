@@ -3,8 +3,8 @@ BuildRequires: gcc-c++ libgmp-devel
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 Name:           libfplll
-Version:        4.0.1
-Release:        alt1_2
+Version:        4.0.2
+Release:        alt1_1
 Summary:        LLL-reduces euclidean lattices
 Group:          System/Libraries
 License:        LGPLv2+
@@ -17,7 +17,7 @@ Patch0:         %{name}-fplllv31.patch
 Source44: import.info
 
 %description
-fpLLL-3.0 contains several algorithms on lattices that rely on
+fplll contains several algorithms on lattices that rely on
 floating-point computations. This includes implementations of the
 floating-point LLL reduction algorithm, offering different
 speed/guarantees ratios. It contains a 'wrapper' choosing the
@@ -35,8 +35,8 @@ Group:          Development/C
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
-The %{name}-devel package contains libraries and header files for
-developing applications that use %{name}.
+The %%{name}-devel package contains libraries and header files for
+developing applications that use %%{name}.
 
 
 %package        tools
@@ -45,8 +45,8 @@ Group:          Engineering
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    tools
-The %{name}-tools package contains command-line tools that expose
-the functionality of %{name}.
+The %%{name}-tools package contains command-line tools that expose
+the functionality of %%{name}.
 
 
 %prep
@@ -90,6 +90,9 @@ make check
 
 
 %changelog
+* Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 4.0.2-alt1_1
+- update to new release by fcimport
+
 * Mon Oct 22 2012 Igor Vlasenko <viy@altlinux.ru> 4.0.1-alt1_2
 - update to new release by fcimport
 
