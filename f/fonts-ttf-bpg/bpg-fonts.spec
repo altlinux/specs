@@ -12,7 +12,7 @@ BuildRequires: unzip
 Name:		fonts-ttf-bpg
 Summary: 	Georgian Unicode fonts
 Version:	%{common_ver}
-Release:	alt4_1
+Release:	alt4_2
 # Font exception
 # See: http://groups.google.com/group/bpg-fonts/web/gpl-gnu-license
 # No version of the GPL is specified.
@@ -59,6 +59,9 @@ Source28:	%{oldname}-nateli-condenced-fontconfig.conf
 Source29:	%{oldname}-ucnobi-fontconfig.conf
 Source30:	%{oldname}-dedaena-block-fontconfig.conf
 Source31:	%{oldname}-dejavu-sans-fontconfig.conf
+# Docs
+Source100:	README
+Source101:	http://www.gnu.org/licenses/gpl-3.0.txt
 
 URL:		http://groups.google.com/group/bpg-fonts
 BuildRequires:	fontpackages-devel
@@ -120,7 +123,7 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 
 This package contains the Classic font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-classic-fonts
+%files -n bpg-classic-fonts
 %{_fontconfig_templatedir}/%{fontconf}-classic.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-classic.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Classic_*.otf"
@@ -168,7 +171,7 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 
 This package contains the DedaEna Block font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-dedaena-block-fonts
+%files -n bpg-dedaena-block-fonts
 %{_fontconfig_templatedir}/%{fontconf}-dedaena-block.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-dedaena-block.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_DedEena_Block*.ttf"
@@ -186,7 +189,7 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 This package contains an improved version of DejaVu Sans with BPG Georgian 
 changes.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-dejavu-sans-fonts
+%files -n bpg-dejavu-sans-fonts
 %{_fontconfig_templatedir}/%{fontconf}-bpg-dejavu-sans.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-bpg-dejavu-sans.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_DejaVu_Sans_*.ttf"
@@ -236,7 +239,7 @@ License:	Bitstream Vera
 
 This package contains the Excelsior Caps font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-excelsior-caps-fonts
+%files -n bpg-excelsior-caps-fonts
 %{_fontconfig_templatedir}/%{fontconf}-excelsior-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-excelsior-caps.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Excelsior_Caps*.ttf"
@@ -253,7 +256,7 @@ License:	Bitstream Vera
 
 This package contains the Excelsior Condenced font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-excelsior-condenced-fonts
+%files -n bpg-excelsior-condenced-fonts
 %{_fontconfig_templatedir}/%{fontconf}-excelsior-condenced.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-excelsior-condenced.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Excelsior_Condenced*.ttf"
@@ -284,7 +287,7 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 
 This package contains the Gorda font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-gorda-fonts
+%files -n bpg-gorda-fonts
 %{_fontconfig_templatedir}/%{fontconf}-gorda.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-gorda.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Gorda*.ttf"
@@ -323,7 +326,7 @@ Asomtavruli and Mkhedruli. Majio spent 7 years in Georgia studying Georgian
 language, scripture and grammar. Font "BPG Irubaqidze" is a modernized 
 replica of this casted type. 
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-irubaqidze-fonts
+%files -n bpg-irubaqidze-fonts
 %{_fontconfig_templatedir}/%{fontconf}-irubaqidze.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-irubaqidze.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Irubaqidze*.otf"
@@ -343,7 +346,7 @@ used to print "The Knight in the Panther's Skin" by Shota Rustaveli, then
 "New Testament" and "The Bible" were printed using updated types prepared 
 in Tbilisi by Hungarian Master Michael Stefan Hungaro-Valakhian.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-mikhail-stephan-fonts
+%files -n bpg-mikhail-stephan-fonts
 %{_fontconfig_templatedir}/%{fontconf}-mikhail-stephan.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mikhail-stephan.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Mikhail_Stephan*.otf"
@@ -359,7 +362,7 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 
 This package contains the Mrgvlovani font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-mrgvlovani-fonts
+%files -n bpg-mrgvlovani-fonts
 %{_fontconfig_templatedir}/%{fontconf}-mrgvlovani.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mrgvlovani.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Mrgvlovani_GPL*.ttf"
@@ -375,7 +378,7 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 
 This package contains the Mrgvlovani Caps font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-mrgvlovani-caps-fonts
+%files -n bpg-mrgvlovani-caps-fonts
 %{_fontconfig_templatedir}/%{fontconf}-mrgvlovani-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-mrgvlovani-caps.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Mrgvlovani_Caps_*.ttf"
@@ -391,7 +394,7 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 
 This package contains the Nateli font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-nateli-fonts
+%files -n bpg-nateli-fonts
 %{_fontconfig_templatedir}/%{fontconf}-nateli.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nateli.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nateli_GPL*.ttf"
@@ -407,7 +410,7 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 
 This package contains the Nateli Caps font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-nateli-caps-fonts
+%files -n bpg-nateli-caps-fonts
 %{_fontconfig_templatedir}/%{fontconf}-nateli-caps.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nateli-caps.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nateli_Caps*.ttf"
@@ -423,7 +426,7 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 
 This package contains the Nateli Condenced font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-nateli-condenced-fonts
+%files -n bpg-nateli-condenced-fonts
 %{_fontconfig_templatedir}/%{fontconf}-nateli-condenced.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-nateli-condenced.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Nateli_Condenced*.ttf"
@@ -569,17 +572,15 @@ Requires:	%{name}-common = %{common_ver}-%{release}
 
 This package contains the Ucnobi font family.
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-ucnobi-fonts
+%files -n bpg-ucnobi-fonts
 %{_fontconfig_templatedir}/%{fontconf}-ucnobi.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-ucnobi.conf
 %{_fontbasedir}/*/%{_fontstem}/"BPG_Ucnobi*.otf"
 
 %prep
 %setup -q -c -n %{oldname}
-%{__unzip} -qqo "%{SOURCE0}"
-# %{__unzip} -qqo "%{SOURCE16}"
-# correct end-of-line encoding
-# sed -i 's/\r//' "Docs/BPG_GPL&GNU_Fonts.txt"
+mkdir -p Docs/
+cp %{SOURCE100} %{SOURCE101} Docs/
 
 %build
 
@@ -666,10 +667,13 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %files common
-# %doc Docs/*
+%doc Docs/*
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 1:20120413-alt4_2
+- update to new release by fcimport
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 1:20120413-alt4_1
 - new version
 
