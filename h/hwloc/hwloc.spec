@@ -1,5 +1,5 @@
 Name: hwloc
-Version: 1.5
+Version: 1.6.1
 Release: alt1
 Summary: Portable Hardware Locality (hwloc)
 License: BSD
@@ -117,6 +117,9 @@ This package contains documentation for hwloc.
 %doc doc/doxygen-doc/html
 
 %changelog
+* Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.1-alt1
+- Version 1.6.1
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
 - Version 1.5
 
