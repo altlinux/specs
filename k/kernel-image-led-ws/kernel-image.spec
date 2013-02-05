@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.62
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -186,13 +186,14 @@ Patch0067: linux-%kernel_branch.42-fix-drivers-acpi-apei--erst-dbg.patch
 Patch0068: linux-%kernel_branch.42-fix-drivers-acpi-apei--ghes.patch
 
 Patch0071: linux-%kernel_branch.51-fix-drivers-ata--ahci.patch
-Patch0072: linux-%kernel_branch.51-fix-drivers-ata--ata_piix.patch
-Patch0073: linux-%kernel_branch.42-fix-drivers-ata--libata.patch
-Patch0074: linux-%kernel_branch.43-fix-drivers-ata--pata_amd.patch
-Patch0075: linux-%kernel_branch.43-fix-drivers-ata--pata_mpiix.patch
-Patch0076: linux-%kernel_branch.43-fix-drivers-ata--pata_oldpiix.patch
-Patch0077: linux-%kernel_branch.43-fix-drivers-ata--pata_sch.patch
-Patch0078: linux-%kernel_branch.42-fix-drivers-ata--sata_sil.patch
+Patch0072: linux-%kernel_branch.62-fix-drivers-ata--ata_generic.patch
+Patch0073: linux-%kernel_branch.51-fix-drivers-ata--ata_piix.patch
+Patch0074: linux-%kernel_branch.42-fix-drivers-ata--libata.patch
+Patch0075: linux-%kernel_branch.43-fix-drivers-ata--pata_amd.patch
+Patch0076: linux-%kernel_branch.43-fix-drivers-ata--pata_mpiix.patch
+Patch0077: linux-%kernel_branch.43-fix-drivers-ata--pata_oldpiix.patch
+Patch0078: linux-%kernel_branch.43-fix-drivers-ata--pata_sch.patch
+Patch0079: linux-%kernel_branch.42-fix-drivers-ata--sata_sil.patch
 
 Patch0080: linux-%kernel_branch.43-fix-drivers-base.patch
 Patch0081: linux-%kernel_branch.42-fix-drivers-base--memory.patch
@@ -551,14 +552,15 @@ Patch0686: linux-%kernel_branch.54-fix-fs-jbd.patch
 Patch0687: linux-%kernel_branch.53-fix-fs-nfs.patch
 Patch0688: linux-%kernel_branch.53-fix-fs-ocfs2.patch
 Patch0689: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
-Patch0690: linux-%kernel_branch.61-fix-fs-ramfs.patch
-Patch0691: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
-Patch0692: linux-%kernel_branch.56-fix-fs-squashfs.patch
-Patch0693: linux-%kernel_branch.43-fix-fs-proc.patch
-Patch0694: linux-%kernel_branch.42-fix-fs-pstore.patch
-Patch0695: linux-%kernel_branch.51-fix-fs-reiserfs.patch
-Patch0696: linux-%kernel_branch.42-fix-fs-sysfs.patch
-Patch0697: linux-%kernel_branch.53-fix-fs-xfs.patch
+Patch0690: linux-%kernel_branch.43-fix-fs-proc.patch
+Patch0691: linux-%kernel_branch.42-fix-fs-pstore.patch
+Patch0692: linux-%kernel_branch.62-fix-fs-quota.patch
+Patch0693: linux-%kernel_branch.61-fix-fs-ramfs.patch
+Patch0694: linux-%kernel_branch.51-fix-fs-reiserfs.patch
+Patch0695: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
+Patch0696: linux-%kernel_branch.56-fix-fs-squashfs.patch
+Patch0697: linux-%kernel_branch.42-fix-fs-sysfs.patch
+Patch0698: linux-%kernel_branch.53-fix-fs-xfs.patch
 
 Patch0700: linux-%kernel_branch.53-fix-include.patch
 
@@ -1505,6 +1507,7 @@ cd linux-%version
 %patch0076 -p1
 %patch0077 -p1
 %patch0078 -p1
+%patch0079 -p1
 
 # fix-drivers-base*
 %patch0080 -p1
@@ -1902,6 +1905,7 @@ cd linux-%version
 %patch0695 -p1
 %patch0696 -p1
 %patch0697 -p1
+%patch0698 -p1
 
 %patch0700 -p1
 
@@ -3000,6 +3004,11 @@ done)
 
 
 %changelog
+* Tue Feb 05 2013 Led <led@altlinux.ru> 3.0.62-alt4
+- added:
+  + fix-drivers-ata--ata_generic
+  + fix-fs-quota
+
 * Tue Feb 05 2013 Led <led@altlinux.ru> 3.0.62-alt3
 - updated:
   + feat-fs-aufs
@@ -3018,7 +3027,7 @@ done)
 - updated:
   + feat-fs-squashfs--write
 - added:
-  + fix-fs-ramfs--root
+  + fix-fs-ramfs
   + feat-fs-tmpfs--root
 
 * Sat Feb 02 2013 Led <led@altlinux.ru> 3.0.61-alt7
