@@ -30,7 +30,7 @@
 %define sover 2.4
 Name: lib%bname%sover
 Version: 2.4.9
-%define trunk 20120917
+%define trunk 20130204
 Release: alt3.git%trunk
 Summary:  Intel(R) Open Source Computer Vision Library
 License: Distributable
@@ -293,6 +293,9 @@ sed -i \
 %_datadir/*/samples
 
 %changelog
+* Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt3.git20130204
+- New snapshot
+
 * Thu Sep 27 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.9-alt3.git20120917
 - Built python%_python_version(%bname)
 
