@@ -2,7 +2,7 @@
 
 Name: libfreetype-infinality
 Version: 2.4.11
-Release: alt4
+Release: alt5
 
 Summary: A free and portable font rendering engine with patches from http://www.infinality.net
 License: FTL or GPLv2+
@@ -71,13 +71,15 @@ sed -ri 's/^(hardcode_libdir_flag_spec|runpath_var)=.*/\1=/' builds/unix/libtool
 %install
 %makeinstall_std
 
-%define ld_preload_script_name infinality-ld-preload.sh
-%define ld_preload_script %buildroot%{_sysconfdir}/profile.d/%ld_preload_script_name
+%define ld_so_conf_name %name-%_arch.conf
+%define ld_so_conf %buildroot%{_sysconfdir}/ld.so.conf.d/%ld_so_conf_name
+
+mkdir -p %buildroot%{_sysconfdir}/ld.so.conf.d/
+/bin/echo "/usr/%{_lib}/%{name}/" > %ld_so_conf
+
+chmod 644 %ld_so_conf
 
 mkdir -p %buildroot%{_sysconfdir}/profile.d/
-/bin/echo "export LD_PRELOAD=/usr/'\$LIB'/%{name}/libfreetype.so.%{freetypemajorversion}:\$LD_PRELOAD" > %ld_preload_script
-chmod 755 %ld_preload_script
-
 install -pD -m755 %SOURCE91 %buildroot%_sysconfdir/profile.d/
 
 %define docdir %{_docdir}/%name-%version
@@ -104,10 +106,13 @@ rm -f %buildroot%_datadir/aclocal/*.m4
 %files
 %docdir
 %_libdir/%name/
-%{_sysconfdir}/profile.d/%ld_preload_script_name
+%config %{_sysconfdir}/ld.so.conf.d/%ld_so_conf_name
 %config %{_sysconfdir}/profile.d/infinality-settings.sh
 
 %changelog
+* Thu Feb 5 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.11-alt5
+- Use ld.so.conf.d instead LD_PRELOAD
+
 * Thu Jan 24 2013 Vladimir Didenko <cow@altlinux.ru> 2.4.11-alt4
 - Fixed conflict with official debuginfo package
 - Added missed doc files
