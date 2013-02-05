@@ -1,5 +1,5 @@
 Name: liblinear
-Version: 1.91
+Version: 1.93
 Release: alt1
 Summary: A Library for Large Linear Classification
 License: BSD
@@ -89,6 +89,9 @@ install -p -m644 python/*.py %buildroot%python_sitelibdir_noarch
 %python_sitelibdir_noarch/*
 
 %changelog
+* Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.93-alt1
+- Version 1.93
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.91-alt1
 - Initial build for Sisyphus
 
