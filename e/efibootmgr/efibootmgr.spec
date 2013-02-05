@@ -1,5 +1,5 @@
 Name: efibootmgr
-Version: 0.5.4
+Version: 0.6.0
 Release: alt1
 
 Summary: EFI Boot Manager
@@ -11,10 +11,11 @@ URL: http://linux.dell.com/efibootmgr/
 ExclusiveArch: i386 i586 i686 x86_64 ia64
 
 Source0: http://linux.dell.com/efibootmgr/permalink/%name-%version.tar.gz
+Source1: http://linux.dell.com/efibootmgr/permalink/%name-%version.tar.gz.sign
 
 Packager: Igor Zubkov <icesik@altlinux.org>
 
-# Automatically added by buildreq on Fri Apr 11 2008
+# Automatically added by buildreq on Tue Feb 05 2013
 BuildRequires: libpci-devel zlib-devel
 
 %description
@@ -35,11 +36,14 @@ install -p -m755 src/%name/%name %buildroot%_sbindir/
 install -p -m644 src/man/man8/%name.8 %buildroot%_man8dir/
 
 %files
-%doc AUTHORS README INSTALL doc/ChangeLog doc/TODO
+%doc AUTHORS README doc/ChangeLog doc/TODO
 %_sbindir/%name
 %_man8dir/%name.*
 
 %changelog
+* Tue Feb 05 2013 Igor Zubkov <icesik@altlinux.org> 0.6.0-alt1
+- 0.5.4 -> 0.6.0
+
 * Fri Apr 11 2008 Igor Zubkov <icesik@altlinux.org> 0.5.4-alt1
 - build for Sisyphus
 
