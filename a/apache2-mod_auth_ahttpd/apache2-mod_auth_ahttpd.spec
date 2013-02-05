@@ -1,6 +1,6 @@
 Name: apache2-mod_auth_ahttpd
 Version: 1.0.0
-Release: alt3
+Release: alt4
 
 Summary: Alterator-FBI authentication module for Apache 2 HTTP Server
 License: Apache (BSD-like)
@@ -13,7 +13,7 @@ Source1: auth_ahttpd.load
 
 Requires: apache2
 
-BuildRequires: apache2-devel apache2-suexec man libcurl-devel libssl-devel libjson-devel libsqlite3-devel
+BuildRequires: apache2-devel man libcurl-devel libssl-devel libjson-devel libsqlite3-devel
 
 %description
 Alterator-FBI authentication module for Apache 2 HTTP Server. It uses
@@ -45,6 +45,9 @@ fi
 %_libdir/apache2/modules/*
 
 %changelog
+* Tue Feb 05 2013 Paul Wolneykien <manowar@altlinux.ru> 1.0.0-alt4
+- Fix: do not require apache2-suexec.
+
 * Mon Sep 24 2012 Paul Wolneykien <manowar@altlinux.ru> 1.0.0-alt3
 - Handle 404 response from the ahttpd server.
 - Track the session IDs of protected sites (using an sqlite3 DB).
