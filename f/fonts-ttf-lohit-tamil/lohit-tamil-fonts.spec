@@ -3,8 +3,8 @@
 %global fontconf 65-0-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-tamil
-Version:        2.5.1
-Release:        alt1_3
+Version:        2.5.3
+Release:        alt1_1
 Summary:        Free Tamil font
 
 Group:          System/Fonts/True type
@@ -15,7 +15,6 @@ BuildArch:      noarch
 BuildRequires: fontforge >= 20080429
 BuildRequires:  fontpackages-devel
 Obsoletes: lohit-fonts-common < %{version}-%{release}
-Patch1:	bug-829143.patch
 Source44: import.info
 
 %description
@@ -24,7 +23,6 @@ This package provides a free Tamil truetype/opentype font.
 
 %prep
 %setup -q -n %{fontname}-%{version}
-%patch1 -p1 -b .1-resolved-ra-ri-rii-problem
 mv 66-lohit-tamil.conf 65-0-lohit-tamil.conf
 
 
@@ -89,6 +87,9 @@ fi
 
 
 %changelog
+* Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.1-alt1_3
 - update to new release by fcimport
 
