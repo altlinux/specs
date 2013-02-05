@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.62
-Release: alt1
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -286,7 +286,7 @@ Patch0223: linux-%kernel_branch.42-fix-drivers-firmware--iscsi_ibft.patch
 Patch0231: linux-%kernel_branch.44-fix-drivers-gpu-drm.patch
 Patch0232: linux-%kernel_branch.44-fix-drivers-gpu-drm--drm.patch
 Patch0233: linux-%kernel_branch.42-fix-drivers-gpu-drm--drm_kms_helper.patch
-Patch0234: linux-%kernel_branch.53-fix-drivers-gpu-drm--i915.patch
+Patch0234: linux-%kernel_branch.61-fix-drivers-gpu-drm--i915.patch
 Patch0235: linux-%kernel_branch.42-fix-drivers-gpu-drm--mga.patch
 Patch0236: linux-%kernel_branch.43-fix-drivers-gpu-drm--nouveau.patch
 Patch0237: linux-%kernel_branch.43-fix-drivers-gpu-drm--psb_gfx.patch
@@ -3000,6 +3000,17 @@ done)
 
 
 %changelog
+* Tue Feb 05 2013 Led <led@altlinux.ru> 3.0.62-alt3
+- updated:
+  + feat-fs-aufs
+- cleaned up led-ws-3.0-config-i386
+
+* Tue Feb 05 2013 Led <led@altlinux.ru> 3.0.62-alt2
+- updated:
+  + fix-drivers-gpu-drm--i915
+  + feat-drivers-net-wireless-brcm80211
+- updated configs
+
 * Mon Feb 04 2013 Led <led@altlinux.ru> 3.0.62-alt1
 - 3.0.62
 
