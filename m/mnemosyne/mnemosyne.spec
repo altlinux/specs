@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-build-python
 Name:		mnemosyne
 Summary:	Flash-card learning tool
 Version:	2.2
-Release:	alt1_2.%{patchver}
+Release:	alt1_3.%{patchver}
 URL:		http://www.mnemosyne-proj.org/
 Source0:	http://downloads.sourceforge.net/sourceforge/mnemosyne-proj/Mnemosyne-%{version}%{patchver}.tar.gz
 Patch0:		mnemosyne-desktop.patch
@@ -19,7 +19,7 @@ BuildRequires:	python-module-setuptools
 BuildArch:	noarch
 Requires:	icon-theme-hicolor
 Requires:	python-module-PyQt4
-Requires:	python-module-matplotlib python-module-matplotlib-fltk python-module-matplotlib-gtk3 python-module-matplotlib-qt python-module-matplotlib-qt4 python-module-matplotlib-sphinxext
+Requires:	python-module-matplotlib-qt4
 Requires:	python-module-cherrypy
 Source44: import.info
 
@@ -65,6 +65,9 @@ popd
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 
 %changelog
+* Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_3.a
+- fc update
+
 * Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt1_2.a
 - update to new release by fcimport
 
