@@ -6,13 +6,11 @@
 
 %define macrosname apache2
 
-%define rpm_masrosdir %_sysconfdir/rpm/macros.d
-
 # do we need to co-exist with apache-ru ?
 %def_enable apache_ru_compat
 
 Name: rpm-macros-%macrosname
-Version: 3.11
+Version: 3.12
 Release: %branch_release alt1
 
 Summary: RPM macros to Apache2 Web server
@@ -29,6 +27,7 @@ Source2: %macrosname-compat.rpm-macros
 
 BuildRequires(pre): rpm-macros-branch
 BuildPreReq: rpm-build-licenses
+BuildPreReq: rpm >= 4.0.4-alt96.13
 BuildPreReq: rpm-macros-webserver-common >= 1.3
 
 Conflicts: rpm-macros-webserver-common < 1.4
@@ -64,23 +63,31 @@ according to the ALT Linux Web Packaging Policy.
 
 
 %install
-install -pD -m644 %SOURCE1 %buildroot%rpm_masrosdir/%name
-install -pD -m644 %SOURCE2 %buildroot%rpm_masrosdir/%name-compat
+install -pD -m644 %SOURCE1 %buildroot%_rpmmacrosdir/%macrosname
+install -pD -m644 %SOURCE2 %buildroot%_rpmmacrosdir/%macrosname-compat
 
 %if_disabled apache_ru_compat
-find %buildroot%rpm_masrosdir/ -type f -print0 \
+find %buildroot%_rpmmacrosdir/ -type f -print0 \
 	| xargs -r0 sed -ri "
 /^[[:space:]]*%%apache2_branch[[:space:]]/s/^([[:space:]]*%%apache2_branch[[:space:]]+)[^[:space:]].*$/\1%%nil/
 "
 %endif
 
 %files
-%rpm_masrosdir/%name
+%_rpmmacrosdir/%macrosname
 
 %files compat
-%rpm_masrosdir/%name-compat
+%_rpmmacrosdir/%macrosname-compat
 
 %changelog
+* Tue Feb 05 2013 Aleksey Avdeev <solo@altlinux.ru> 3.12-alt1
+- Add new macros:
+  + %%apache2_docdir_prefix
+  + %%apache2_libapr_name
+  + %%apache2_libapr_evr
+  + %%apache2_libaprutil_name
+  + %%apache2_libaprutil_evr
+
 * Sat Jan 26 2013 Aleksey Avdeev <solo@altlinux.ru> 3.11-alt1
 - Fix macros %%apache2_libssl_soname
 - Add new macros:
