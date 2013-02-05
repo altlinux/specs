@@ -1,6 +1,6 @@
 Name: powdertoy
 Version: 81.3
-Release: alt1
+Release: alt2
 Summary: Classic 'falling sand' physics sandbox game
 Group: Games/Educational
 License: GPL
@@ -34,6 +34,8 @@ sed -i 's/old_version = 1/old_version = 0/g' src/main.c
 mv Makefile Makefile.upstream
 
 sed -i 's/lua5.1/lua/g' Makefile.upstream
+sed -i 's/-march=native//g' Makefile.upstream
+
 cat > Makefile <<@@@
 include Makefile.upstream
 SRCS := \$(wildcard \$(SOURCES))
@@ -41,7 +43,7 @@ OBJS := \$(SRCS:.c=.o)
 BUS=32
 OPT64=\$(MFLAGS_SSE3)
 OPT32=-m32
-CFLAGS+=\$(OFLAGS) -DINTERNAL -DLIN\$(BUS) \$(OPT\$(BUS))
+CFLAGS+= %optflags \$(OFLAGS) -DINTERNAL -DLIN\$(BUS) \$(OPT\$(BUS))
 
 %name:	\$(OBJS)
 	\$(CC) \$(OBJS) \$(LFLAGS) -o\$@
@@ -68,7 +70,7 @@ Comment=%summary
 
 %install
 # TODO MIME
-install -Ds %name %buildroot%_gamesbindir/%name
+install -D %name %buildroot%_gamesbindir/%name
 install -D %name.desktop %buildroot%_desktopdir/%name.desktop
 install -D src/Resources/Icon-16.png %buildroot%_miconsdir/%name.png
 install -D src/Resources/Icon-32.png %buildroot%_niconsdir/%name.png
@@ -80,6 +82,10 @@ install -D src/Resources/Icon-32.png %buildroot%_niconsdir/%name.png
 %_iconsdir/hicolor/*/apps/*
 
 %changelog
+* Tue Feb 05 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 81.3-alt2
+- drop native optimization
+- do not strip main binary before debuginfo
+
 * Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 81.3-alt1
 - Autobuild version bump to 81.3
 
