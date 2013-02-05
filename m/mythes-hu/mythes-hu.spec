@@ -5,8 +5,8 @@ Name: mythes-hu
 Summary: Hungarian thesaurus
 %define upstreamid 20101019
 Version: 0.%{upstreamid}
-Release: alt1_5
-Source: http://extensions.services.openoffice.org/e-files/1283/8/dict-hu.oxt
+Release: alt1_6
+Source: http://extensions.services.openoffice.org/e-files/1283/9/dict-hu.oxt
 Group: Text tools
 URL: http://extensions.services.openoffice.org/project/hu_dicts
 #bundled but unused spell-checking stuff is under GPLv2+ or LGPLv2+ or MPLv1.1
@@ -34,6 +34,9 @@ cp -p th_hu_HU_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.20101019-alt1_6
+- update to new release by fcimport
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.20101019-alt1_5
 - update to new release by fcimport
 
