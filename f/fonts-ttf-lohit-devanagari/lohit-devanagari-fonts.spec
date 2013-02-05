@@ -1,13 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
-# END SourceDeps(oneline)
 %define oldname lohit-devanagari-fonts
 %global fontname lohit-devanagari
 %global fontconf 66-%{fontname}.conf
 
 Name:           fonts-ttf-lohit-devanagari
-Version:        2.5.2
+Version:        2.5.3
 Release:        alt1_1
 Summary:        Free Devanagari Script Font
 Group:          System/Fonts/True type
@@ -86,6 +82,9 @@ fi
 
 
 %changelog
+* Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.3-alt1_1
+- update to new release by fcimport
+
 * Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1_1
 - update to new release by fcimport
 
