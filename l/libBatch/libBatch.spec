@@ -1,6 +1,6 @@
 Name: libBatch
-Version: 1.5.0
-Release: alt2.git20120606
+Version: 1.6.0
+Release: alt2.git20130114
 Summary: Generic batch management library
 License: LGPLv2.1
 Group: System/Libraries
@@ -85,6 +85,9 @@ cmake \
 %_docdir/Batch
 
 %changelog
+* Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt2.git20130114
+- Version 1.6.0
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.0-alt2.git20120606
 - Fixed build with new glibc
 
