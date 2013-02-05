@@ -4,7 +4,7 @@
 %define mpidir %_libdir/openmpi
 
 Name: libfftw3-mpi
-Version: 3.3.2
+Version: 3.3.3
 Release: alt1
 Epoch: 1
 
@@ -130,6 +130,9 @@ sed -i 's|^\(includedir\).*|\1=%_includedir/fftw3-mpi|' \
 %doc doc/html doc/*.pdf
 
 %changelog
+* Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.3.3-alt1
+- Version 3.3.3
+
 * Thu Sep 13 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.3.2-alt1
 - Version 3.3.2
 
