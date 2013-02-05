@@ -1,5 +1,5 @@
 Name: mcabber
-Version: 0.10.1
+Version: 0.10.2
 Release: alt1
 
 Summary: console Jabber client
@@ -55,6 +55,9 @@ cp macros/missing/libotr.m4 macros
 %_pkgconfigdir/%name.pc
 
 %changelog
+* Tue Feb 05 2013 Denis Smirnov <mithraen@altlinux.ru> 0.10.2-alt1
+- 0.10.2
+
 * Tue Oct 04 2011 Denis Smirnov <mithraen@altlinux.ru> 0.10.1-alt1
 - 10.0.1
 
