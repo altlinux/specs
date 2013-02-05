@@ -1,6 +1,6 @@
 Name: clicfs
 Version: 1.4.6
-Release: alt1
+Release: alt2
 Summary: Compressed Loop Image Container
 License: GPLv2
 Group: System/Kernel and hardware
@@ -57,5 +57,8 @@ This package contains utils for create, extract and check Clic FS.
 
 
 %changelog
+* Tue Feb 05 2013 Led <led@altlinux.ru> 1.4.6-alt2
+- fixed format strings for output
+
 * Tue Feb 05 2013 Led <led@altlinux.ru> 1.4.6-alt1
 - initial build
