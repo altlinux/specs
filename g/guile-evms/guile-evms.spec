@@ -1,6 +1,6 @@
 Name: guile-evms
 Version: 0.4
-Release: alt13
+Release: alt14
 
 Summary: Guile bindings for EVMS
 License: GPL
@@ -28,6 +28,9 @@ make install DESTDIR=%buildroot
 %_datadir/guile/site/evms.scm
 
 %changelog
+* Tue Feb 05 2013 Michael Shigorin <mike@altlinux.org> 0.4-alt14
+- don't suggest to mkfs /boot/efi (see also #28163)
+
 * Wed Nov 21 2012 Michael Shigorin <mike@altlinux.org> 0.4-alt13
 - initial EFI support draft (closes: #27979)
 
