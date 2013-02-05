@@ -2,8 +2,8 @@
 %define major 1.3
 
 Name: %{oname}13
-Version: %major.0.r9678
-Release: alt2
+Version: %major.0.r9812
+Release: alt1
 
 Summary: Multiplatform C++ GUI Fast Light ToolKit
 License: LGPL
@@ -120,6 +120,9 @@ mv %buildroot%prefix/man/* %buildroot%_mandir/
 %exclude %_docdir/fltk-%version/README
 
 %changelog
+* Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0.r9812-alt1
+- New snapshot
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0.r9678-alt2
 - Rebuilt with libpng15
 
