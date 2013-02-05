@@ -1,6 +1,6 @@
 
 Name:           bleachbit
-Version:        0.9.3
+Version:        0.9.5
 Release:        alt1
 
 Summary:        Remove unnecessary files, free space, and maintain privacy
@@ -48,6 +48,9 @@ rm -f %buildroot%_datadir/%name/Windows.py*
 %_pixmapsdir/%name.png
 
 %changelog
+* Tue Feb 05 2013 Andrey Cherepanov <cas@altlinux.org> 0.9.5-alt1
+- New version 0.9.5
+
 * Fri Sep 07 2012 Andrey Cherepanov <cas@altlinux.org> 0.9.3-alt1
 - Initial build in Sisyphus (ALT #23106)
 
