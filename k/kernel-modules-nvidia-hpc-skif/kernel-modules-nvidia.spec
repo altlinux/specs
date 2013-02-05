@@ -4,7 +4,7 @@
 %define nvIF_ver_lteq() %if "%(rpmvercmp '%2' '%1')" >= "0"
 
 %define module_name	nvidia
-%define module_version	310.19
+%define module_version	310.32
 %define module_release	alt1
 %define module_srcver	%(echo %module_version | tr -d .)
 %define xorg_ver %{get_version xorg-server}
@@ -172,13 +172,8 @@ if [ -z "$DURING_INSTALL" ]; then
 	else
 	    echo "Warning! x11presetdrv program not found!" >&2
 	fi
-	X11SETUPDRV=`which x11setupdrv 2>/dev/null`
-	if [ -n "$X11SETUPDRV" ]; then
-	    $X11SETUPDRV ||:
-	fi
     fi
 fi
-%post_kernel_modules %kversion-%flavour-%krelease
 
 %postun
 if [ -z "$DURING_INSTALL" ]; then
@@ -189,13 +184,8 @@ if [ -z "$DURING_INSTALL" ]; then
 	else
 	    echo "Warning! x11presetdrv program not found!" >&2
 	fi
-	X11SETUPDRV=`which x11setupdrv 2>/dev/null`
-	if [ -n "$X11SETUPDRV" ]; then
-	    $X11SETUPDRV ||:
-	fi
     fi
 fi
-%post_kernel_modules %kversion-%flavour-%krelease
 
 %files
 %defattr(644,root,root,755)
@@ -205,8 +195,15 @@ fi
 %config(noreplace) %nvidia_workdir/%kversion-%flavour-%krelease
 
 %changelog
-* Tue Nov 20 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 310.19-alt1.132640.25
+* Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 310.32-alt1.132640.25
 - Build for kernel-image-hpc-skif-2.6.32-alt25.
+
+* Tue Feb 05 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 310.32-alt1
+- new release (310.32)
+
+* Fri Dec 07 2012 Sergey V Turchin <zerg at altlinux dot org> 310.19-alt2
+- remove *_kernel_modules macroses using
+- remove x11setupdrv using
 
 * Mon Nov 19 2012 Sergey V Turchin <zerg at altlinux dot org> 310.19-alt1
 - new release (310.19)
