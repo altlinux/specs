@@ -1,5 +1,5 @@
 Name: refind
-Version: 0.6.6
+Version: 0.6.7
 Release: alt1
 
 Summary: EFI boot manager software
@@ -83,6 +83,9 @@ cp -a icons/ %buildroot%refind_data/
 # - macros get expanded too early for shell loops
 
 %changelog
+* Tue Feb 05 2013 Michael Shigorin <mike@altlinux.org> 0.6.7-alt1
+- 0.6.7
+
 * Wed Jan 30 2013 Michael Shigorin <mike@altlinux.org> 0.6.6-alt1
 - 0.6.6
 
