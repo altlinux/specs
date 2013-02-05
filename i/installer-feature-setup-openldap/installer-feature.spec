@@ -1,6 +1,6 @@
 Name: installer-feature-setup-openldap
-Version: 0.2
-Release: alt3
+Version: 0.3
+Release: alt1
 
 Summary: Tunes openldap to be ready to alterator-openldap out of the box
 License: GPL
@@ -25,6 +25,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Jan 31 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.3-alt1
+- check both for samba and samba4
+
 * Mon Mar 14 2011 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.2-alt3
 - add samba scheme only if availible
 
