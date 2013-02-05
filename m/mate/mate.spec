@@ -1,8 +1,8 @@
-%define ver_major 1.4
+%define ver_major 1.5
 
 Name: mate
 Version: %ver_major.0
-Release: alt3
+Release: alt1
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -91,7 +91,7 @@ Requires: mate-file-archiver
 # Look & Feel
 ## Default themes
 Requires: mate-icon-theme >= %ver_major
-Requires: mate-icon-theme-faenza >= %ver_major
+#Requires: mate-icon-theme-faenza >= %ver_major
 Requires: mate-themes >= %ver_major
 #Requires: libgtk3-engine-adwaita
 Requires: libgtk2-engine-adwaita
@@ -363,6 +363,10 @@ itself).
 #%files a11y
 
 %changelog
+* Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1
+- dropped mate-icon-theme-faenza
+- bumped to 1.5
+
 * Sun Feb 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt3
 - dropped caja-sound-converter
 
