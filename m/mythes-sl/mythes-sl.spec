@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name: mythes-sl
 Summary: Slovenian thesaurus
-%define upstreamid 20120912
+%define upstreamid 20130130
 Version: 0.%{upstreamid}
 Release: alt1_1
 Source: http://193.2.66.133:85/download/thes_sl_SI_v2.zip
@@ -39,6 +39,9 @@ cp -p th_sl_SI_v2.* $RPM_BUILD_ROOT/%{_datadir}/mythes
 %{_datadir}/mythes/*
 
 %changelog
+* Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.20130130-alt1_1
+- update to new release by fcimport
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.20120912-alt1_1
 - update to new release by fcimport
 
