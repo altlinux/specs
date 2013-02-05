@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.10
-Release: alt4
+Release: alt5
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -19,6 +19,8 @@ Requires: fonts-ttf-droid
 Requires: soprano-backend-redland
 Requires: soprano-backend-virtuoso
 Requires: soprano
+
+Requires: kde4-colord
 
 Requires: kde4base-workspace-core kde4base-workspace-cursors kde4base-workspace-wallpapers
 Requires: kde4accessibility
@@ -77,6 +79,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Tue Feb 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt5
+- add kde4-colord
+
 * Fri Jan 18 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt4
 - rename from kde4-default
 
