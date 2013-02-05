@@ -1,5 +1,5 @@
 Name: installer-feature-centaurus-profiles
-Version: 0.7
+Version: 0.8
 Release: alt1
 
 Summary: Setups package groups from selected vm-profile
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Tue Feb 05 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt1
+- sysvinit and systemd groups added
+
 * Fri Jan 18 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.7-alt1
 - add sysvinit in server cases
 
