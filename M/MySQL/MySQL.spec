@@ -1,5 +1,5 @@
 Name: MySQL
-Version: 5.5.29
+Version: 5.5.30
 Release: alt1
 
 %def_without debug
@@ -628,6 +628,9 @@ fi
 %_datadir/sql-bench
 
 %changelog
+* Tue Feb 05 2013 Michael Shigorin <mike@altlinux.org> 5.5.30-alt1
+- 5.5.30
+
 * Sun Dec 23 2012 Michael Shigorin <mike@altlinux.org> 5.5.29-alt1
 - 5.5.29
 - added is_prefix, scramble symbols to libmysqlclient18
