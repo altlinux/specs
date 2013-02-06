@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ libexpat-devel perl(English.pm) zlib-devel
 BuildRequires: boost-python-devel
 Name:           vegastrike
 Version:        0.5.1
-Release:        alt3_4.r1.2
+Release:        alt3_6.r1
 Summary:        3D OpenGL spaceflight simulator
 Group:          Games/Other
 License:        GPLv2+
@@ -27,14 +27,14 @@ Patch9:         vegastrike-0.5.0-glext.patch
 Patch12:        vegastrike-0.5.1-boost146.patch
 Patch14:        vegastrike-0.5.1-gcc47.patch
 Patch15:        vegastrike-0.5.1-music.patch
-Patch16:        vegastrike-0.5.1-alt-SharedPool.patch
 BuildRequires:  libGLU-devel libfreeglut-devel libXi-devel libXmu-devel gtk2-devel
 BuildRequires:  libjpeg-devel libpng-devel boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel expat-devel python-devel
 BuildRequires:  libSDL_mixer-devel libopenal-devel libalut-devel
 BuildRequires:  libvorbis-devel libogre-devel cegui-devel desktop-file-utils
-Requires:       vegastrike-data = %{version} icon-theme-hicolor xdg-utils
+Requires:       %{name}-data = %{version} icon-theme-hicolor xdg-utils
 Requires:       opengl-games-utils
 Source44: import.info
+Patch33: vegastrike-0.5.1-alt-SharedPool.patch
 
 %description
 Vega Strike is a GPL 3D OpenGL Action RPG space sim that allows a player to
@@ -57,19 +57,19 @@ Yet danger lurks in the space beyond.
 %patch12 -p0
 %patch14 -p1
 %patch15 -p3
-%patch16 -p2
 iconv -f ISO-8859-1 -t UTF-8 README > README.tmp
 touch -r README README.tmp
 mv README.tmp README
 sed -i 's/-lboost_python-st/-lboost_python/g' Makefile.in
 # we want to use the system version of expat.h
 rm objconv/mesher/expat.h
+%patch33 -p2
 
 
 %build
 export LDFLAGS="$LDFLAGS -Wl,--no-as-needed"
 %configure --with-data-dir=%{_datadir}/%{name} --with-boost=system \
-  --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES %optflags" --disable-ffmpeg \
+  --enable-release --enable-flags="-DBOOST_PYTHON_NO_PY_SIGNATURES $RPM_OPT_FLAGS" --disable-ffmpeg \
   --enable-stencil-buffer
 make %{?_smp_mflags} CXXLD="g++ -Wl,--no-as-needed"
 
@@ -108,6 +108,9 @@ desktop-file-install             \
 
 
 %changelog
+* Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.1-alt3_6.r1
+- update to new release by fcimport
+
 * Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.5.1-alt3_4.r1.2
 - Rebuilt with Boost 1.52.0
 
