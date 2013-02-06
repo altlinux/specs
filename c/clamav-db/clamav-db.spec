@@ -3,7 +3,7 @@
 %define sys_db		/var/lib/clamav-db
 
 Name: clamav-db
-Version: 20121120
+Version: 20130206
 Release: alt1
 
 Summary: Antivirus database for ClamAV
@@ -54,6 +54,9 @@ done
 %attr(664,mail,root) %config(noreplace) /%dir/safebrowsing.cvd
 
 %changelog
+* Wed Feb 06 2013 Andrey Cherepanov <cas@altlinux.org> 20130206-alt1
+- Update database
+
 * Tue Nov 20 2012 Andrey Cherepanov <cas@altlinux.org> 20121120-alt1
 - Update database (20.11.2012)
 
