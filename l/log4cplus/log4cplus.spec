@@ -1,6 +1,6 @@
 Name: log4cplus
-Version: 1.1.0
-Release: alt1
+Version: 1.1.1
+Release: alt1.rc3
 Summary: Logging library to C++
 License: Apache License
 Group: Development/C++
@@ -90,6 +90,9 @@ install -m644 docs/man/man3/* %buildroot%_man3dir
 %_man3dir/*
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.1-alt1.rc3
+- Version 1.1.1-rc3
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.0-alt1
 - Initial build for Sisyphus
 

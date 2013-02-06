@@ -3,7 +3,7 @@ BuildRequires: desktop-file-utils
 
 Name:		fatrat
 Version:	1.1.3
-Release:	alt0.2.%git.qa5
+Release:	alt0.2.%git.qa6
 Summary:	FatRat is an open source download/upload manager
 License: 	GPLv2
 Group: 		Networking/File transfer
@@ -93,6 +93,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_includedir/%name
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt0.2.20110222.qa6
+- Rebuilt with log4cplus 1.1.1-rc3
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1.3-alt0.2.20110222.qa5
 - Rebuilt with Boost 1.52.0
 
