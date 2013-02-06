@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: ngsolve
-Version: 5.0
-Release: alt1.svn20120821
+Version: 5.1
+Release: alt1.svn20130203
 Summary: NGSolve Finite Element Library
 License: GPL or LGPL
 Group: Sciences/Mathematics
@@ -39,6 +39,7 @@ This package contains shared libraries of NGSolve.
 Summary: Development files of NGSolve
 Group: Development/C++
 Requires: lib%name = %version-%release
+BuildArch: noarch
 
 %description -n lib%name-devel
 NGSolve is a general purpose Finite Element Library on top of Netgen.
@@ -137,13 +138,10 @@ popd
 %_bindir/ngsolve.tcl
 
 %files -n lib%name
-%_libdir/libngsolve.so.*
 %_libdir/*.so
-%exclude %_libdir/libngsolve.so
 
 %files -n lib%name-devel
 %_includedir/*
-%_libdir/libngsolve.so
 
 %files demos
 %doc programming_demos/*
@@ -155,6 +153,9 @@ popd
 %doc %_datadir/%name
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt1.svn20130203
+- Version 5.1
+
 * Wed Aug 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.svn20120821
 - Version 5.0
 
