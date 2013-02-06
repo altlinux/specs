@@ -1,13 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/runtest gcc-c++ libICE-devel libSM-devel libX11-devel unzip
-# END SourceDeps(oneline)
 %define oldname paktype-naskh-basic-fonts
 %global fontname paktype-naskh-basic
 %global fontconf 67-paktype-naskh-basic
 
 Name:	fonts-ttf-paktype-naskh-basic
 Version:     4.0
-Release:     alt1_1
+Release:     alt1_2
 Summary:     Fonts for Arabic, Farsi, Urdu and Sindhi from PakType
 Group:		System/Fonts/True type
 License:     GPLv2 with exceptions
@@ -23,7 +20,7 @@ The paktype-naskh-basic-fonts package contains fonts for the display of \
 Arabic, Farsi, Urdu and Sindhi from PakType by Lateef Sagar.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 rm -rf Code
 # get rid of the white space (' ')
 mv PakType\ Naskh\ Basic.ttf PakTypeNaskhBasic.ttf
@@ -93,6 +90,9 @@ fi
 %doc PakType_Naskh_Basic_License.txt PakTypeNaskhBasicFeatures.pdf
 
 %changelog
+* Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
+- update to new release by fcimport
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_1
 - update to new release by fcimport
 
