@@ -1,5 +1,5 @@
 Name: kernel-image-std-def
-Release: alt1
+Release: alt1.1
 epoch:1 
 %define kernel_base_version	3.7
 %define kernel_sublevel	.6
@@ -594,6 +594,9 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %exclude %modules_dir/kernel/drivers/staging/media/lirc/
 
 %changelog
+* Wed Feb 06 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.6-alt1.1
+- no OSS and some other config changes (closes: #28358) (closes: #28359)
+
 * Mon Feb 04 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1:3.7.6-alt1
 - 3.7.6
 
