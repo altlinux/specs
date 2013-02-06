@@ -1,13 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/runtest gcc-c++ libICE-devel libSM-devel libX11-devel unzip
-# END SourceDeps(oneline)
 %define oldname paktype-tehreer-fonts
 %global fontname paktype-tehreer
 %global fontconf 67-paktype
 
 Name:	fonts-ttf-paktype-tehreer
 Version:     4.0
-Release:     alt1_2
+Release:     alt1_3
 Summary:     Fonts for Arabic from PakType
 Group:		System/Fonts/True type
 License:     GPLv2 with exceptions
@@ -24,7 +21,7 @@ The paktype-tehreer-fonts package contains fonts for the display of \
 Arabic from the PakType by Lateef Sagar.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 rm -rf Code
 # get rid of the white space (' ')
 mv PakType\ Tehreer.ttf PakType_Tehreer.ttf
@@ -93,6 +90,9 @@ fi
 %doc PakType_Tehreer_License.txt PakType_Tehreer_Features.pdf
 
 %changelog
+* Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_3
+- update to new release by fcimport
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
 - update to new release by fcimport
 
