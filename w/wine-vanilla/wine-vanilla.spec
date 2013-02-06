@@ -1,5 +1,5 @@
 Name: wine-vanilla
-Version: 1.5.20
+Version: 1.5.23
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -65,7 +65,7 @@ Requires: glibc-pthread glibc-nss
 #ExclusiveArch:  %{ix86}
 Requires: webclient
 
-Requires: wine-gecko = 1.8
+Requires: wine-gecko = 1.9
 
 BuildRequires: desktop-file-utils
 # Use it instead proprietary MS Core Fonts
@@ -342,6 +342,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Wed Feb 06 2013 Vitaly Lipatov <lav@altlinux.ru> 1.5.23-alt1
+- new version 1.5.23, requires wine-gecko 1.9
+
 * Sat Dec 22 2012 Vitaly Lipatov <lav@altlinux.ru> 1.5.20-alt1
 - new version 1.5.20, requires wine-gecko 1.8
 - remove libhal-devel buildreq

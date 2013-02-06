@@ -1,12 +1,12 @@
 %define geckodir %_datadir/wine/gecko
-%ifarch x86_64
-%define curarch x86_64
-%else
+#ifarch x86_64
+#define curarch x86_64
+#else
 %define curarch x86
-%endif
+#endif
 
 Name: wine-gecko
-Version: 1.8
+Version: 1.9
 Release: alt1
 
 Summary: Custom version of Mozilla's Gecko Layout Engine for Wine
@@ -18,9 +18,10 @@ Url: http://wiki.winehq.org/Gecko
 Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source0: http://prdownloads.sourceforge.net/wine/wine_gecko-%version-x86.msi
-Source1: http://prdownloads.sourceforge.net/wine/wine_gecko-%version-x86_64.msi
+#Source1: http://prdownloads.sourceforge.net/wine/wine_gecko-%version-x86_64.msi
 
-ExclusiveArch: %{ix86} x86_64
+BuildArch: noarch
+#ExclusiveArch: %{ix86} x86_64
 
 %description
 Wine implements its own version of Internet Explorer. The implementation
@@ -31,11 +32,11 @@ Wine looks for this file first in /usr/share/wine/gecko/
 
 %install
 mkdir -p %buildroot%geckodir/
-%ifarch x86_64
-install -m 644 %SOURCE1 %buildroot%geckodir
-%else
+#ifarch x86_64
+#install -m 644 %SOURCE1 %buildroot%geckodir
+#else
 install -m 644 %SOURCE0 %buildroot%geckodir
-%endif
+#endif
 
 %files
 %dir %_datadir/wine/
@@ -43,6 +44,10 @@ install -m 644 %SOURCE0 %buildroot%geckodir
 %geckodir/wine_gecko-%version-%curarch.msi
 
 %changelog
+* Wed Feb 06 2013 Vitaly Lipatov <lav@altlinux.ru> 1.9-alt1
+- new version (1.9) with rpmgs script
+- set noarch and pack only wine_gecko-*-x86
+
 * Sat Dec 22 2012 Vitaly Lipatov <lav@altlinux.ru> 1.8-alt1
 - update wine_gecko to 1.8 (use with wine 1.5.15 or later)
 
