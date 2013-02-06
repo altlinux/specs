@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           4ti2
 Version:        1.3.2
-Release:        alt3_12.1
+Release:        alt3_13
 Summary:        A software package for problems on linear spaces
 
 Group:          System/Libraries
@@ -23,7 +23,7 @@ A software package for algebraic, geometric and combinatorial
 problems on linear spaces.
 
 This package uses Environment Modules, to load the binaries onto
-your PATH you will need to run module load %{name}-%{_arch}
+your PATH you will need to run module load %%{name}-%{_arch}
 
 %prep
 %setup -q
@@ -81,6 +81,9 @@ make check
 %{_libdir}/%{name}/bin/zsolve
 
 %changelog
+* Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2-alt3_13
+- update to new release by fcimport
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.2-alt3_12.1
 - Rebuilt with glpk 4.48
 
