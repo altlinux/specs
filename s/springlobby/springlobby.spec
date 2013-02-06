@@ -6,7 +6,7 @@ BuildRequires: boost-devel boost-filesystem-devel
 %define fedora 18
 Name:			springlobby
 Version:		0.147
-Release:		alt1_1.2
+Release:		alt1_2
 Summary:		A lobby client for the spring RTS game engine
 
 Group:			Games/Other
@@ -18,7 +18,7 @@ Patch0:			springlobby-gtkfix.patch
 
 
 BuildRequires:	ctest cmake
-BuildRequires:	wxGTK-devel libtorrent-rasterbar7-devel
+BuildRequires:	wxGTK-devel libtorrent-rasterbar-devel
 BuildRequires:	libSDL-devel SDL_sound-devel libSDL_mixer-devel
 BuildRequires:	desktop-file-utils gettext
 BuildRequires:	libopenal-devel libcurl-devel
@@ -84,6 +84,9 @@ desktop-file-install	\
 
 
 %changelog
+* Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.147-alt1_2
+- update to new release by fcimport
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.147-alt1_1.2
 - Rebuilt with updated libtorrent-rasterbar
 
