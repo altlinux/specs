@@ -9,7 +9,7 @@
 %define oname oofem
 Name: oofem-%scalar_type
 Version: 2.2
-Release: alt5.svn20120918
+Release: alt5.svn20121029
 Summary: Object Oriented Finite Element Code
 License: %gpl2plus
 Group: Sciences/Mathematics
@@ -445,6 +445,9 @@ done
 %endif
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt5.svn20121029
+- New snapshot
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2-alt5.svn20120918
 - New snapshot
 
