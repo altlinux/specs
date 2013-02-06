@@ -4,16 +4,16 @@
 %remove_optflags -O2
 %add_optflags -O3
 %endif
-%define abiversion 7
+%define abiversion 8
 %define upname libtorrent-rasterbar
 
 Name: libtorrent-rasterbar%{abiversion}
-Version: 0.16.1
+Version: 1.0.0
 Epoch: 2
-Release: alt6.svn7387
+Release: alt1.svn7980
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
-Group: System/Legacy libraries
+Group: System/Libraries
 License: GPL
 Url: http://www.rasterbar.com/products/libtorrent
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
@@ -95,6 +95,9 @@ python bindings to libTorrent.
 %prep
 %setup
 
+mkdir -p build-aux
+touch build-aux/config.rpath
+
 mv -f COPYING COPYING.orig
 ln -s $(relative %_licensedir/GPL-2 %_docdir/%name/COPYING) COPYING
 
@@ -103,7 +106,7 @@ export LDFLAGS="$LDFLAGS -L/%_lib -lrt"
 %autoreconf
 %configure %{subst_enable static} %{subst_enable debug} --with-boost-libdir=%_libdir \
 	--enable-python-binding
-%make_build
+%make_build V=1
 
 %install
 %makeinstall_std
@@ -118,23 +121,23 @@ rm -f %buildroot%_libdir/*.a
 %doc --no-dereference COPYING
 %_libdir/*.so.*
 
-#files -n %upname-devel
-#_includedir/*
-#_libdir/*.so
-#_libdir/pkgconfig/*
+%files -n %upname-devel
+%_includedir/*
+%_libdir/*.so
+%_libdir/pkgconfig/*
 
-#if_enabled static
-#files -n %upname-devel-static
-#_libdir/*.a
-#endif
+%if_enabled static
+%files -n %upname-devel-static
+%_libdir/*.a
+%endif
 
-#files -n python-module-%upname
-#python_sitelibdir/libtorrent.so
-#python_sitelibdir/*.egg-info
+%files -n python-module-%upname
+%python_sitelibdir/libtorrent.so
+%python_sitelibdir/*.egg-info
 
 %changelog
-* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt6.svn7387
-- Moved this version into System/Legacy libraries
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:1.0.0-alt1.svn7980
+- Version 1.0.0
 
 * Mon Dec 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt5.svn7387
 - Added necessary provides and conflicts
