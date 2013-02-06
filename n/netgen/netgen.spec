@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: netgen
-Version: 5.0
-Release: alt1.svn20120820
+Version: 5.1
+Release: alt1.svn20130203
 Summary: Automatic 3d tetrahedral mesh generator
 License: LGPL
 Group: Graphics
@@ -117,7 +117,8 @@ source %mpidir/bin/mpivars.sh
 export MPIDIR=%mpidir
 
 sed -i 's|@MPIDIR@|%mpidir|g' configure.ac
-PARS="-DPARALLEL -DOMPI_IGNORE_CXX_SEEK -DMETIS -DHAVE_IOMANIP -I%mpidir/include"
+PARS="-DPARALLEL -DOMPI_IGNORE_CXX_SEEK -DMETIS -DHAVE_IOMANIP"
+PARS="$PARS -DGLX_GLXEXT_PROTOTYPES -I%mpidir/include"
 %add_optflags $PARS -DJPEGLIB -DFFMPEG -DHAVE_IOSTREAM -DHAVE_LIMITS
 
 %autoreconf
@@ -182,6 +183,9 @@ done
 %doc demoapp
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt1.svn20130203
+- Version 5.1
+
 * Tue Aug 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.0-alt1.svn20120820
 - Version 5.0
 
