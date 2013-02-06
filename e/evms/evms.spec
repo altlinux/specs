@@ -7,7 +7,7 @@
 
 Name: evms
 Version: 2.5.5
-Release: alt29
+Release: alt30
 
 Summary: Enterprise Volume Management System utilities
 License: GPL
@@ -165,6 +165,9 @@ EOF
 %endif
 
 %changelog
+* Wed Feb 06 2013 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt30
+- fix discover NTFS on non dos partitions (closes: 28510)
+ 
 * Tue Dec 25 2012 Timur Aitov <timonbl4@altlinux.org> 2.5.5-alt29
 - dos plugin: round logical disk by 4K sector
 
