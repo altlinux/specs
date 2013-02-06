@@ -1,5 +1,5 @@
 Name: nfft
-Version: 3.2.1
+Version: 3.2.2
 Release: alt1
 Summary: Nonequispaced FFT, generalisations, inversion, and applications
 License: GPLv2+
@@ -119,6 +119,9 @@ mv %buildroot%_bindir/reconstruct_data_gridding \
 %doc %_docdir/%name
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.2-alt1
+- Version 3.2.2
+
 * Wed Sep 19 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.2.1-alt1
 - Version 3.2.1
 
