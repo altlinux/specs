@@ -1,14 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel unzip
-# END SourceDeps(oneline)
 %define oldname paktype-naqsh-fonts
 %global fontname paktype-naqsh
 %global fontconf 67-paktype
 
 Name:	fonts-ttf-paktype-naqsh
 Version:     4.0
-Release:     alt1_2
+Release:     alt1_3
 Summary:     Fonts for Arabic from PakType
 
 Group:	System/Fonts/True type
@@ -27,7 +23,7 @@ The paktype-naqsh-fonts package contains fonts for the display of \
 Arabic from the PakType by Lateef Sagar.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 rm -rf Code
 # get rid of the white space (' ')
 mv PakType\ Naqsh.ttf PakType_Naqsh.ttf
@@ -96,6 +92,9 @@ fi
 %doc PakType_Naqsh_License.txt PakType_Naqsh_Features.pdf 
 
 %changelog
+* Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_3
+- update to new release by fcimport
+
 * Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
 - update to new release by fcimport
 
