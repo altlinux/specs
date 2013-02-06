@@ -2,7 +2,7 @@
 
 Name:		lib%srcname
 Version:	4.0.13
-Release:	alt1
+Release:	alt1.1
 Summary:	Pion Network Library (pion-net) is a C++ development library for implementing lightweight HTTP interfaces.
 License: 	Boost Software License v1.0
 Group: 		System/Libraries
@@ -152,6 +152,9 @@ popd
 # TODO: yajl support (need 2.0.5 minimum)
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.13-alt1.1
+- Rebuilt with log4cplus 1.1.1-rc3
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.0.13-alt1
 - Version 4.0.13
 
