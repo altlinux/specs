@@ -1,9 +1,9 @@
-%define ver_major 2.34
+%define ver_major 2.36
 %define xml_ver 2.6
 %define _name libxml++
 
 Name: %{_name}2
-Version: %ver_major.2
+Version: %ver_major.0
 Release: alt1
 
 Summary: C++ wrapper for the libxml2 XML parser library
@@ -12,7 +12,6 @@ License: LGPLv2+
 Url: http://libxmlplusplus.sourceforge.net/
 
 Source: %_name-%version.tar
-Packager: Yuri N. Sedunov <aris@altlinux.org>
 
 BuildRequires: libxml2-devel >= 2.6.1
 BuildRequires: doxygen gcc-c++ libglibmm-devel
@@ -69,6 +68,9 @@ sed -i 's|\(doctooldir\)\ glibmm\-2\.4|\1 mm-common-util|' configure
 %_docdir/%_name-%xml_ver/*
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.36.0-alt1
+- Version 2.36.0
+
 * Thu Jan 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.34.2-alt1
 - Version 2.34.2
 
