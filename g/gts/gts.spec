@@ -1,6 +1,6 @@
 Name: gts
 Version: 0.7.6
-Release: alt2.drc20120912
+Release: alt2.drc20130205
 Summary: GNU Triangulated Surface Library
 License: LGPL v2
 Group: Development/Tools
@@ -107,6 +107,9 @@ install -m644 examples/*.c %buildroot%_docdir/%name/examples
 %_man1dir/*
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt2.drc20130205
+- New snapshot
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.6-alt2.drc20120912
 - New snapshot from darcs repository
 
