@@ -1,5 +1,5 @@
 Name: startup
-Version: 0.9.8.37
+Version: 0.9.8.38
 Release: alt1
 
 Summary: The system startup scripts
@@ -164,6 +164,9 @@ done
 %dir %_localstatedir/rsbac
 
 %changelog
+* Wed Feb 06 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.8.38-alt1
+- rc.sysinit: hide plymouth when appropriate (closes: #28515).
+
 * Wed Jan 09 2013 Dmitry V. Levin <ldv@altlinux.org> 0.9.8.37-alt1
 - Fixed /etc/firsttime.d support (closes: #28308).
 
