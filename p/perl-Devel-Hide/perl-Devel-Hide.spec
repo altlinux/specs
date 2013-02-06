@@ -3,16 +3,13 @@ BuildRequires(pre): rpm-build-perl
 BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Devel-Hide
-Version:        0.0008
-Release:        alt2_13
+Version:        0.0009
+Release:        alt1_1
 Summary:        Forces the unavailability of specified Perl modules (for testing)
 License:        GPL+ or Artistic
 Group:          Development/Perl
 URL:            http://search.cpan.org/dist/Devel-Hide/
 Source0:        http://www.cpan.org/authors/id/F/FE/FERREIRA/Devel-Hide-%{version}.tar.gz
-# 'defined(@array)' is deprecated - avoid warnings
-# see https://rt.cpan.org/Public/Bug/Display.html?id=74225
-Patch0:         rt74225.patch
 BuildArch:      noarch
 BuildRequires:  perl(ExtUtils/MakeMaker.pm)
 BuildRequires:  perl(Test/More.pm)
@@ -27,18 +24,15 @@ installed or not).
 
 %prep
 %setup -q -n Devel-Hide-%{version}
-%patch0 -p1
 
 %build
 %{__perl} Makefile.PL INSTALLMAN1DIR=%_man1dir INSTALLDIRS=vendor
 make %{?_smp_mflags}
 
 %install
-
 make pure_install PERL_INSTALL_ROOT=$RPM_BUILD_ROOT
 
 find $RPM_BUILD_ROOT -type f -name .packlist -exec rm -f {} \;
-find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 
 
 %check
@@ -49,6 +43,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.0009-alt1_1
+- update to new release by fcimport
+
 * Tue Jul 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.0008-alt2_13
 - update to new release by fcimport
 
