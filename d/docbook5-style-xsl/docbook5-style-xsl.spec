@@ -1,7 +1,7 @@
 %add_findreq_skiplist %_datadir/sgml/docbook/xsl-ns-stylesheets-*/slides/slidy/help/help.html.*
 Name: docbook5-style-xsl
 Version: 1.78.0
-Release: alt1_1
+Release: alt1_2
 Group: Text tools
 
 Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
@@ -9,7 +9,7 @@ Summary: Norman Walsh's XSL stylesheets for DocBook 5.X
 # Package is licensed as MIT/X (http://wiki.docbook.org/topic/DocBookLicense),
 # some .js files under ./slides/browser/ are licensed MPLv1.1
 License: MIT and MPLv1.1
-URL: http://wiki.docbook.org/topic/DocBookXslStylesheets
+URL: http://wiki.docbook.org/DocBookXslStylesheets
 
 Provides: docbook-xsl-ns = %{version}
 # xml-common was using /usr/share/xml until 0.6.3-8.
@@ -42,10 +42,9 @@ chmod +x epub/bin/dbtoepub
 DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version
 cp -a [[:lower:]]* $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/
-cp -a VERSION $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/
-# Wed Oct 24 2012 Fr. Br. George <george@altlinux.ru> 1.77.1-alt1_2.1
-# - Provide VERSION.xsl, which included from source
-ln -s VERSION $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/VERSION.xsl
+cp -a VERSION $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/VERSION.xsl
+ln -s VERSION.xsl \
+$DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets-%version/VERSION
 ln -s xsl-ns-stylesheets-%{version} \
  $DESTDIR%{_datadir}/sgml/docbook/xsl-ns-stylesheets
 
@@ -86,6 +85,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.78.0-alt1_2
+- fc update
+
 * Wed Jan 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.78.0-alt1_1
 - update to new release by fcimport
 
