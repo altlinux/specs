@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.7.2
+Version: 0.7.3
 Release: alt1
 
 Summary: Permanently install Live system
@@ -21,7 +21,10 @@ Requires: installer-scripts-remount-stage2 >= 0.3-alt1
 Requires: livecd-evms
 Requires: make-initrd-plymouth 
 Requires: consolehelper
-# not Requires: alterator-luks >= 0.2-alt1 since it's optional
+
+# Alterator-vm always allow to create an encrypted partition.
+# So always install alterator-luks.
+Requires: alterator-luks >= 0.2.1-alt1
 
 Requires(post): chkconfig
 Requires(preun): chkconfig
@@ -53,6 +56,10 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Wed Feb 06 2013 Mikhail Efremov <sem@altlinux.org> 0.7.3-alt1
+- Added alterator-luks to requires.
+- Added disable-privatetmp initinstall hook.
+
 * Mon Feb 04 2013 Mikhail Efremov <sem@altlinux.org> 0.7.2-alt1
 - Drop steps/luks.desktop.
 
