@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/runtest libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           environment-modules
 Version:        3.2.10
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Provides dynamic modification of a user's environment
 
 Group:          System/Base
@@ -14,6 +14,14 @@ Source1:        modules.sh
 Source2:        createmodule.sh
 Source3:        createmodule.py
 Patch0:         environment-modules-3.2.7-bindir.patch
+# Comment out stray module use in modules file when not using versioning
+# https://bugzilla.redhat.com/show_bug.cgi?id=895555
+Patch1:         environment-modules-versioning.patch
+# Fix module clear command
+# https://bugzilla.redhat.com/show_bug.cgi?id=895551
+Patch2:         environment-modules-clear.patch
+# Patch from modules list to add completion to avail command
+Patch3:         environment-modules-avail.patch
 
 BuildRequires:  tcl-devel tclx libX11-devel
 BuildRequires:  dejagnu
@@ -50,6 +58,9 @@ have access to the module alias.
 %prep
 %setup -q -n modules-%{version}
 %patch0 -p1 -b .bindir
+%patch1 -p1 -b .versioning
+%patch2 -p1 -b .clear
+%patch3 -p1 -b .avail
 
 
 %build
@@ -72,10 +83,6 @@ ln -s %{_datadir}/Modules/init/csh $RPM_BUILD_ROOT%{_sysconfdir}/profile.d/modul
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 
 
-%check
-#make test
-
-
 %files
 %doc LICENSE.GPL README TODO
 %{_sysconfdir}/modulefiles
@@ -92,6 +99,9 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/modulefiles
 
 
 %changelog
+* Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_2
+- fc update
+
 * Wed Jan 02 2013 Igor Vlasenko <viy@altlinux.ru> 3.2.10-alt1_1
 - update to new release by fcimport
 
