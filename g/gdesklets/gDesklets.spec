@@ -1,24 +1,27 @@
 %define _name gDesklets
 %define menu_group Applications/Monitoring/%_name
 
-Name: gdesklets
-Version: 0.36.1
-Release: alt1.2.qa2.1
+Name:    gdesklets
+Version: 0.36.3
+Release: alt1
 
 Summary: gDesklets - an advanced architecture for desktop applets
 License: GPL
-Group: Graphical desktop/GNOME
-Url: http://%name.gnomedesktop.org
-Source0: http://www.gdesklets.org/releases/gDesklets-%version.tar.bz2
+Group:   Graphical desktop/GNOME
+Url:     http://%name.de
+Packager: Andrey Cherepanov <cas@altlinux.org>
+
+
+Source0: http://gdesklets.de/files/gdesklets-%{version}.tar.bz2
 Source1: %name-16.png
 Source2: %name-32.png
+Source3: %name.watch
 
-Patch1: gdesklets-0.36-alt-desktopfile.patch
-Patch2: gdesklets-0.36-alt-desktopfilein.patch
+Patch1:  %name-alt-desktopfile.patch
+Patch2:  %name-transition.patch
+Patch3:  %name-vfs.patch
 
 %define gdesklets_dir %_libdir/%name
-#%define gdesklets_displays_dir %gdesklets_dir/Displays
-#%define gdesklets_themes_dir %gdesklets_dir/Themes
 
 %add_python_lib_path gdesklets_dir
 # provided by libdesklets/system/_glibtopmodule.so
@@ -34,7 +37,6 @@ Requires: python%__python_version(gnomecanvas)
 Requires: python%__python_version(gconf)
 Requires: python%__python_version(ORBit)
 
-
 # Typical environment for GNOME program
 #Requires(post): GConf2
 Requires(post,postun): scrollkeeper
@@ -48,12 +50,13 @@ BuildPreReq: python-module-pygnome
 BuildRequires: GConf2 ORBit2-devel fontconfig-devel freetype2-devel gcc-c++ glib2-devel gnome-vfs2-devel libGConf2-devel 
 BuildRequires: libart_lgpl-devel libatk-devel libbonobo2-devel libbonoboui-devel libcairo-devel libg2c-devel libglitz-devel libgnome-devel 
 BuildRequires: libgnome-keyring-devel libgnomecanvas-devel libgnomeui-devel libgtk+2-devel libgtop2-devel libpango-devel libpng-devel libpopt-devel 
-BuildRequires: librsvg-devel libxml2-devel  perl-XML-Parser pkg-config python-base python-dev python-module-pygnome-devel 
+BuildRequires: librsvg-devel libxml2-devel menu-devel perl-XML-Parser pkg-config python-base python-dev python-module-pygnome-devel 
 BuildRequires: python-module-pygtk-devel python-module-pyorbit-devel python-modules-compiler python-modules-encodings 
 BuildRequires: zlib-devel 
+BuildRequires: intltool >= 0.35.0 
 
 %description
-gDesklets provides an advanced architecture for desktop applets -- tiny
+gDesklets provides an advanced architecture for desktop applets - tiny
 displays sitting on your desktop in a symbiotic relationship of eye
 candy and usefulness.
 
@@ -68,19 +71,18 @@ candy and usefulness.
 
 %prep
 %setup -q -n gDesklets-%version
-%patch1
-%patch2
-# fix schemas install
-sed -i "s|.*DATABASE.*||g" configure.in
+%patch1 -p2
+%patch2 -p1
+%patch3 -p0
+
 # install *.mo files in proper location
-#sed -i 's,\(installdir = \)${coredir},\1$(datadir),' locale/Makefile*
+#%%__subst 's,\(installdir = \)${coredir},\1$(datadir),' locale/Makefile*
 # fix path to locale directory
-#sed -i 's@\(Translator(NAME.lower(), \).*$@\1"/usr/share/locale")@' main/__init__.py
+#%%__subst 's@\(Translator(NAME.lower(), \).*$@\1"/usr/share/locale")@' main/__init__.py
 
 %build
-#autoreconf -fisv
-%configure
-##--disable-schemas-install
+%configure \
+	--disable-schemas-install
 %make_build
 
 %install
@@ -89,7 +91,7 @@ sed -i "s|.*DATABASE.*||g" configure.in
 %make_install DESTDIR=%buildroot install
 #unset GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL
 mkdir -p %buildroot%_liconsdir/ %buildroot%_niconsdir/ %buildroot%_miconsdir/
-cp  %buildroot%_datadir/pixmaps/%name.png %buildroot%_liconsdir/
+cp  %buildroot%_libdir/%name/data/%name.png %buildroot%_liconsdir/
 install -m 0644 %SOURCE1 %buildroot%_miconsdir/%name.png
 install -m 0644 %SOURCE2 %buildroot%_niconsdir/%name.png
 
@@ -103,6 +105,7 @@ if [$1 = 0]; then
 fi
 
 %files -f %name.lang
+%doc README AUTHORS NEWS ChangeLog
 %_bindir/*
 %_datadir/applications/*
 #%_datadir/application-registry/*
@@ -113,23 +116,22 @@ fi
 %_liconsdir/*
 %_niconsdir/*
 %_miconsdir/*
-%_datadir/pixmaps/*
 %_man1dir/*
 ##%config %_sysconfdir/gconf/schemas/*
-%doc README AUTHORS NEWS ChangeLog
+%_sysconfdir/xdg/autostart/*.desktop
 
 #%files devel
 #%_pkgconfigdir/*
 
 %changelog
-* Mon Nov 14 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.36.1-alt1.2.qa2.1
-- Rebuild with Python-2.7
+* Wed Jan 18 2012 Andrey Cherepanov <cas@altlinux.org> 0.36.3-alt1
+- New version 0.36.3
+- Add watch file
+- Apply patches from Fedora
+- Pack autostart file
 
-* Tue May 24 2011 Repocop Q. A. Robot <repocop@altlinux.org> 0.36.1-alt1.2.qa2
-- NMU (by repocop). See http://www.altlinux.org/Tools/Repocop
-- applied repocop fixes:
-  * altlinux-policy-obsolete-buildreq for gdesklets
-  * postclean-03-private-rpm-macros for the spec file
+* Wed Jan 18 2012 Andrey Cherepanov <cas@altlinux.org> 0.36.1-alt1.2.qa1.1
+- new version 0.36.3
 
 * Thu May 05 2011 Andrey Cherepanov <cas@altlinux.org> 0.36.1-alt1.2.qa1
 - Fix librsvg-devel requirement
