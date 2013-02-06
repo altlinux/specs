@@ -8,10 +8,12 @@ BuildRequires: OpenSP
 
 Name: libuser
 Version: 0.58
-Release: alt1_1
+Release: alt1_2
 Group: System/Base
 License: LGPLv2+
 URL: https://fedorahosted.org/libuser/
+# Upstream commit 51e9d56ed656c3aeceb39b7de5a1db7d976d4e51
+Patch0: libuser-force-secure-getenv.patch
 Source: https://fedorahosted.org/releases/l/i/libuser/libuser-%{version}.tar.xz
 BuildRequires: glib2-devel linuxdoc-tools pam-devel popt-devel python-devel
 BuildRequires: libsasl2-devel libselinux-devel openldap-devel
@@ -19,6 +21,8 @@ BuildRequires: libsasl2-devel libselinux-devel openldap-devel
 BuildRequires: nscd
 # For %%check
 BuildRequires: openldap-clients openldap-servers openssl
+# For regenerating autoconf/automake files
+BuildRequires: gtk-doc libtool gettext-devel automake autoconf
 Summary: A user and group account administration library
 Source44: import.info
 Patch33: libuser-0.57.2-alt-modularized_ldap.patch
@@ -53,9 +57,18 @@ administering user and group accounts.
 
 %prep
 %setup -q
+%patch0 -p1 -b .force_secure_getenv
 %patch33 -p0
 
 %build
+# Copied from upstream autogen.sh
+gtkdocize --docdir docs/reference
+libtoolize --force
+autopoint
+aclocal -I m4
+autoconf -Wall
+autoheader -Wall
+automake -Wall --add-missing
 %configure --with-selinux --with-ldap --with-html-dir=%{_datadir}/gtk-doc/html
 make
 
@@ -100,6 +113,9 @@ python -c "import libuser"
 %{_datadir}/gtk-doc/html/*
 
 %changelog
+* Wed Feb 06 2013 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1_2
+- update to new release by fcimport
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 0.58-alt1_1
 - update to new release by fcimport
 
