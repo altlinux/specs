@@ -1,5 +1,7 @@
 
 %add_findpackage_path %_kde4_bindir
+%add_findreq_skiplist %_K4apps/kate/plugins/pate/kate/__init__.py
+
 
 %ifarch %arm
 %def_disable desktop
@@ -13,7 +15,7 @@
 %define bugfix 0
 Name: kde4-kate
 Version: %major.%minor.%bugfix
-Release: alt0.3
+Release: alt1
 
 Group: Editors
 Summary: Advanced text editor
@@ -34,7 +36,7 @@ Patch1: kate-4.8.2-alt-fix-compile.patch
 BuildRequires(pre): kde4libs-devel
 BuildRequires: gcc-c++ glib2-devel zlib-devel kde-common-devel desktop-file-utils
 BuildRequires: qjson-devel kde4-kactivities-devel
-BuildRequires: python-module-PyQt4-devel python-devel
+BuildRequires: python-module-PyQt4-devel python-devel python-module-sip python-module-sip-devel python-module-kde4 kde4-python-devel
 
 %description
 A fast and advanced text editor with nice plugins
@@ -219,6 +221,10 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 #%_K4doc/*/kate-plugins
 %_K4doc/*/kate
 %_K4iconsdir/hicolor/*/apps/kate.*
+# pate plugin
+%_K4lib/pateplugin.so
+%python_sitelibdir/PyKate4/
+%_K4srv/pate.desktop
 
 %files -n kde4-kwrite
 %_K4bindir/kwrite
@@ -238,6 +244,9 @@ kde4_add_text_mimes %buildroot%_K4xdg_apps/kwrite.desktop
 %_K4link/lib*.so
 
 %changelog
+* Tue Feb 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
+- build python plugin
+
 * Tue Jan 29 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
 - update from 4.10 branch
 
