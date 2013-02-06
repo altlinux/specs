@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.62
-Release: alt4
+Release: alt5
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -67,6 +67,7 @@ Release: alt4
 %def_enable fusion
 %def_enable drm
 %def_enable ipv6
+%def_disable apei
 %def_enable edac
 %def_enable ide
 %def_enable pata
@@ -541,7 +542,7 @@ Patch0675: linux-%kernel_branch.53-fix-fs-autofs4.patch
 Patch0676: linux-%kernel_branch.58-fix-fs-btrfs.patch
 Patch0677: linux-%kernel_branch.44-fix-fs-cachefiles.patch
 Patch0678: linux-%kernel_branch.42-fix-fs-ceph.patch
-Patch0679: linux-%kernel_branch.42-fix-fs-cifs.patch
+Patch0679: linux-%kernel_branch.62-fix-fs-cifs.patch
 Patch0680: linux-%kernel_branch.42-fix-fs-dlm.patch
 Patch0681: linux-%kernel_branch.42-fix-fs-ecryptfs.patch
 Patch0682: linux-%kernel_branch.42-fix-fs-ext3.patch
@@ -2227,6 +2228,7 @@ config_disable \
 	%{?_disable_video:FB DISPLAY_SUPPORT VIDEO_OUTPUT_CONTROL BACKLIGHT_LCD_SUPPORT} \
 	%{?_disable_drm:DRM} \
 	%{?_disable_ipv6:IPV6} \
+	%{?_disable_apei:ACPI_APEI} \
 	%{?_disable_edac:EDAC} \
 	%{?_disable_can:CAN} \
 	%{?_disable_fusion:FUSION} \
@@ -3004,6 +3006,13 @@ done)
 
 
 %changelog
+* Wed Feb 06 2013 Led <led@altlinux.ru> 3.0.62-alt5
+- updated:
+  + fix-fs-cifs
+- disabled apei (ACPI_APEI)
+- RTC_DRV_CMOS=y
+- updated configs
+
 * Tue Feb 05 2013 Led <led@altlinux.ru> 3.0.62-alt4
 - added:
   + fix-drivers-ata--ata_generic
