@@ -16,7 +16,7 @@
 
 Name: systemd
 Version: 197
-Release: alt2
+Release: alt3
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -44,6 +44,9 @@ Source28: systemd-tmpfiles.filetrigger
 Source29: tmpfile-systemd-startup-nologin.conf
 Source30: systemd-vconsole-setup@.service
 Source31: 60-raw.rules
+# ALTLinux's default preset policy
+Source32: 90-default.preset
+Source33: 90-display-manager.preset
 
 # udev rule generator
 Source41: rule_generator.functions
@@ -573,6 +576,12 @@ touch %buildroot%_sysconfdir/os-release
 touch %buildroot%_sysconfdir/machine-id
 touch %buildroot%_sysconfdir/machine-info
 
+# Install ALTLinux default preset policy
+mkdir -p %buildroot/lib/systemd/system-preset
+mkdir -p %buildroot/lib/systemd/user-preset
+install -m 0644 %SOURCE32 %buildroot/lib/systemd/system-preset/
+install -m 0644 %SOURCE33 %buildroot/lib/systemd/system-preset/
+
 # The following services are currently installed by initscripts
 #pushd %buildroot%_unitdir/graphical.target.wants && {
 #	rm -f display-manager.service
@@ -642,6 +651,7 @@ mkdir -p %buildroot/lib/mkinitrd/udev/%firmwaredir/updates
 # Create ghost files
 touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-net.rules
 touch %buildroot%_sysconfdir/udev/rules.d/70-persistent-cd.rules
+touch %buildroot%_sysconfdir/udev/hwdb.bin
 
 # udev rule generator
 install -p -m644 %SOURCE41 %buildroot/lib/udev/
@@ -908,6 +918,7 @@ update_chrooted all
 %doc README TODO NEWS LICENSE.GPL2
 %dir %_sysconfdir/udev
 %config(noreplace) %_sysconfdir/udev/*.conf
+%ghost %config(noreplace) %_sysconfdir/udev/hwdb.bin
 %config %_sysconfdir/scsi_id.config
 %_initdir/udev*
 %_unitdir/*udev*
@@ -939,7 +950,6 @@ update_chrooted all
 /lib/udev/v4l_id
 /lib/udev/collect
 /lib/udev/rules.d/61-accelerometer.rules
-/lib/udev/rules.d/75-*-description.rules
 /lib/udev/rules.d/78-sound-card.rules
 /lib/udev/rules.d/95-keyboard-force-release.rules
 /lib/udev/rules.d/95-keymap.rules
@@ -954,7 +964,6 @@ update_chrooted all
 %exclude /lib/udev/rules.d/75-*-generator.rules
 # extras
 %exclude /lib/udev/rules.d/61-accelerometer.rules
-%exclude /lib/udev/rules.d/75-*-description.rules
 %exclude /lib/udev/rules.d/78-sound-card.rules
 %exclude /lib/udev/rules.d/95-keyboard-force-release.rules
 %exclude /lib/udev/rules.d/95-keymap.rules
@@ -976,6 +985,10 @@ update_chrooted all
 /lib/udev/write_*_rules
 
 %changelog
+* Wed Feb 06 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt3
+- move 75-net-description.rules and 75-tty-description.rules from udev-extras to udev-rules
+- add default preset policy
+
 * Tue Jan 29 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt2
 - add --action=add to udevadm trigger in udevd.init
 - add strict inter-package dependencies
