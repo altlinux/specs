@@ -1,6 +1,6 @@
 Name: ode
 Version: 0.12
-Release: alt2.svn20120225
+Release: alt2.svn20130203
 Summary: The Open Dynamics Engine (ODE)
 License: LGPL v2.1
 Group: Graphics
@@ -91,7 +91,6 @@ This package contains demos of ODE.
 %setup
 
 touch libccd/NEWS libccd/AUTHORS libccd/ChangeLog
-mkdir ou
 
 %build
 #./autogen.sh
@@ -102,6 +101,7 @@ mkdir ou
 	--disable-static \
 	--enable-double-precision \
 	--disable-asserts \
+	--disable-threading-intf \
 	--disable-ou \
 	--with-drawstuff=X11 \
 	--with-x \
@@ -152,6 +152,9 @@ install -p -m644 %SOURCE1 %SOURCE2 \
 %_libdir/%name/
 
 %changelog
+* Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt2.svn20130203
+- New snapshot
+
 * Mon May 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12-alt2.svn20120225
 - Fixed build
 
