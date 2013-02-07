@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt2
+Release: alt3
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -109,6 +109,7 @@ Patch1041: kdebase-workspace-4.10.0-alt-def-gllegacy.patch
 Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
 Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
 Patch1044: kdebase-workspace-4.8.5-alt-workspaceoptions.patch
+Patch1045: kdebase-workspace-4.10.0-alt-def-plasma-desktop-immutability.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -593,6 +594,7 @@ __EOF__
 %patch1042 -p1
 %patch1043 -p1
 %patch1044 -p1
+%patch1045 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -969,6 +971,10 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Thu Feb 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt3
+- always lock plasma-desktop widgets on KDE startup
+- update from 4.10 branch
+
 * Fri Feb 01 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt2
 - update from 4.10 branch
 - update default panel layout
