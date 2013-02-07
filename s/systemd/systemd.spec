@@ -16,7 +16,7 @@
 
 Name: systemd
 Version: 197
-Release: alt3
+Release: alt4
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -45,8 +45,7 @@ Source29: tmpfile-systemd-startup-nologin.conf
 Source30: systemd-vconsole-setup@.service
 Source31: 60-raw.rules
 # ALTLinux's default preset policy
-Source32: 90-default.preset
-Source33: 90-display-manager.preset
+Source32: 99-default.preset
 
 # udev rule generator
 Source41: rule_generator.functions
@@ -289,7 +288,6 @@ PreReq: shadow-utils dmsetup kmod >= 5 util-linux >= 2.20 losetup >= 2.19.1
 PreReq: udev-rules = %version-%release
 PreReq: udev-hwdb = %version-%release
 Requires: libudev1 = %version-%release
-Requires: udev-rule-generator = %version-%release
 Provides: hotplug = 2004_09_23-alt18
 Obsoletes: hotplug
 Conflicts: systemd < %version-%release
@@ -340,15 +338,27 @@ BuildArch: noarch
 %description -n udev-hwdb
 This package contains internal hardware database for udev.
 
-%package -n udev-rule-generator
-Summary: CD/Net rule generator for udev
+%package -n udev-rule-generator-cdrom
+Summary: CD rule generator for udev
 Group: System/Configuration/Hardware
 License: GPLv2+
 BuildArch: noarch
-Requires: udev-rules = %version-%release
+PreReq: udev-rules = %version-%release
+Provides: udev-rule-generator = %version-%release
+Obsoletes: udev-rule-generator < %version-%release
 
-%description -n udev-rule-generator
-This package contains CD/Net rule generator for udev
+%description -n udev-rule-generator-cdrom
+This package contains CD rule generator for udev
+
+%package -n udev-rule-generator-net
+Summary: Net rule generator for udev
+Group: System/Configuration/Hardware
+License: GPLv2+
+BuildArch: noarch
+PreReq: udev-rules = %version-%release
+
+%description -n udev-rule-generator-net
+This package contains Net rule generator for udev
 
 %package -n bash-completion-udev
 Summary: Bash completion for udev utils
@@ -578,9 +588,12 @@ touch %buildroot%_sysconfdir/machine-info
 
 # Install ALTLinux default preset policy
 mkdir -p %buildroot/lib/systemd/system-preset
+mkdir -p %buildroot%_sysconfdir/systemd/system-preset
 mkdir -p %buildroot/lib/systemd/user-preset
+mkdir -p %buildroot%_sysconfdir/systemd/user-preset
+mkdir -p %buildroot/usr/lib/systemd/user-preset
 install -m 0644 %SOURCE32 %buildroot/lib/systemd/system-preset/
-install -m 0644 %SOURCE33 %buildroot/lib/systemd/system-preset/
+
 
 # The following services are currently installed by initscripts
 #pushd %buildroot%_unitdir/graphical.target.wants && {
@@ -655,8 +668,8 @@ touch %buildroot%_sysconfdir/udev/hwdb.bin
 
 # udev rule generator
 install -p -m644 %SOURCE41 %buildroot/lib/udev/
-#install -p -m755 %SOURCE42 %buildroot/lib/udev/
-#install -p -m644 %SOURCE43 %buildroot/lib/udev/rules.d/
+install -p -m755 %SOURCE42 %buildroot/lib/udev/
+install -p -m644 %SOURCE43 %buildroot/lib/udev/rules.d/
 install -p -m755 %SOURCE44 %buildroot/lib/udev/
 install -p -m644 %SOURCE45 %buildroot/lib/udev/rules.d/
 
@@ -960,6 +973,8 @@ update_chrooted all
 /lib/udev/initramfs-rules.d
 /lib/udev/rules.d
 # rule-generator
+/lib/udev/rule_generator.functions
+
 %exclude %_sysconfdir/udev/rules.d/70-persistent-*.rules
 %exclude /lib/udev/rules.d/75-*-generator.rules
 # extras
@@ -973,18 +988,27 @@ update_chrooted all
 %exclude /lib/udev/rules.d/73-seat-late.rules
 %exclude /lib/udev/rules.d/99-systemd.rules
 
-
 %files -n udev-hwdb
 %dir %_sysconfdir/udev/hwdb.d
 /lib/udev/hwdb.d
 
-%files -n udev-rule-generator
-%config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-*.rules
-/lib/udev/rules.d/75-*-generator.rules
-/lib/udev/rule_generator.functions
-/lib/udev/write_*_rules
+%files -n udev-rule-generator-cdrom
+%config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-cd.rules
+/lib/udev/rules.d/75-cd-aliases-generator.rules
+/lib/udev/write_cd_rules
+
+%files -n udev-rule-generator-net
+%config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-net.rules
+/lib/udev/rules.d/75-persistent-net-generator.rules
+/lib/udev/write_net_rules
 
 %changelog
+* Thu Feb 07 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt4
+- revert persistent net generator
+- split package udev-rule-generator to udev-rule-generator-cdrom and udev-rule-generator-net
+- add more preset dirs
+- only enforce ALTLinux's disable-by-default policy
+
 * Wed Feb 06 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt3
 - move 75-net-description.rules and 75-tty-description.rules from udev-extras to udev-rules
 - add default preset policy
