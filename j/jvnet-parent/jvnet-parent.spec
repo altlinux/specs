@@ -1,19 +1,23 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jvnet-parent
 Version:        3
-Release:        alt1_4jpp7
+Release:        alt1_6jpp7
 Summary:        Java.net parent POM file
 
 Group:          Development/Java
 License:        ASL 2.0
 URL:            http://www.java.net
 Source0:        http://repo1.maven.org/maven2/net/java/%{name}/%{version}/%{name}-%{version}.pom
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven1
 BuildRequires:  maven-enforcer-plugin
 
 Requires:       jpackage-utils
@@ -24,7 +28,8 @@ Java.net parent POM file used by most Java.net subprojects such as
 Glassfish
 
 %prep
-cp %{SOURCE0} pom.xml
+cp -p %{SOURCE0} pom.xml
+cp -p %{SOURCE1} LICENSE
 # we provide correct version of maven, no need to enforce and pull in dependencies
 %pom_remove_plugin org.apache.maven.plugins:maven-enforcer-plugin
 
@@ -41,10 +46,14 @@ install -pm 644 pom.xml \
 
 
 %files
+%doc LICENSE
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 3-alt1_6jpp7
+- fc update
+
 * Thu Aug 23 2012 Igor Vlasenko <viy@altlinux.ru> 3-alt1_4jpp7
 - new release
 
