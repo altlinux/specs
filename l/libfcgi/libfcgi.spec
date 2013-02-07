@@ -2,7 +2,7 @@ Packager: Denis Smirnov <mithraen@altlinux.ru>
 
 Name: libfcgi
 Version: 2.4.0
-Release: alt7
+Release: alt8
 
 Summary: FastCGI library
 License: BSD-like
@@ -53,10 +53,14 @@ make
 
 %files
 %_libdir/*.so.*
+%exclude %_bindir/cgi-fcgi
 
 %doc LICENSE.TERMS README
 
 %changelog
+* Thu Feb 07 2013 Denis Smirnov <mithraen@altlinux.ru> 2.4.0-alt8
+- exclude %_bindir/cgi-fcgi
+
 * Fri Feb 01 2013 Denis Smirnov <mithraen@altlinux.ru> 2.4.0-alt7
 - exclude static libs
 
