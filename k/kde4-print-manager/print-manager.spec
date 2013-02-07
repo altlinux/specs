@@ -3,7 +3,7 @@
 %define rname print-manager
 Name: kde4-print-manager
 Version: 4.10.0
-Release: alt0.3
+Release: alt1
 
 Group: System/Configuration/Printing
 Summary: Printer management for KDE
@@ -61,6 +61,15 @@ install -m644 -p -D %SOURCE1 %buildroot%_K4apps/plasma-desktop/init/01-altlinux-
 mkdir %buildroot%_K4apps/plasma-desktop/updates
 ln %buildroot%_K4apps/plasma-desktop/init/01-altlinux-print-manager.js %buildroot%_K4apps/plasma-desktop/updates/01-altlinux-print-manager.js
 
+mkdir -p %buildroot/%_K4xdg_apps/
+install -m 0644 %buildroot/%_K4srv/kcm_printer_manager.desktop %buildroot/%_K4xdg_apps/kcm_printer_manager.desktop
+sed -i 's|^Type=.*$|Type=Application|' %buildroot/%_K4xdg_apps/kcm_printer_manager.desktop
+sed -i 's|^Categories=.*$|Categories=Qt;KDE;System;Settings;HardwareSettings;Printing;|' %buildroot/%_K4xdg_apps/kcm_printer_manager.desktop
+sed -i 's|^X-KDE-System-Settings-Parent-Category.*||' %buildroot/%_K4xdg_apps/kcm_printer_manager.desktop
+sed -i 's|^X-KDE-ServiceTypes=.*||' %buildroot/%_K4xdg_apps/kcm_printer_manager.desktop
+sed -i 's|^X-KDE-ParentApp=.*||' %buildroot/%_K4xdg_apps/kcm_printer_manager.desktop
+sed -i 's|^X-KDE-Library=.*||' %buildroot/%_K4xdg_apps/kcm_printer_manager.desktop
+
 %files common
 %doc README
 
@@ -76,6 +85,7 @@ ln %buildroot%_K4apps/plasma-desktop/init/01-altlinux-print-manager.js %buildroo
 %_K4lib/kded_printmanager.so
 %_K4lib/plasma_engine_printers.so
 %_K4lib/plasma_engine_printjobs.so
+%_K4xdg_apps/kcm_printer_manager.desktop
 %_K4apps/plasma/plasmoids/printmanager/
 %_K4apps/plasma/services/org.kde.printers.operations
 %_K4apps/plasma/services/org.kde.printjobs.operations
@@ -87,6 +97,10 @@ ln %buildroot%_K4apps/plasma-desktop/init/01-altlinux-print-manager.js %buildroo
 %_K4dbus_services/org.kde.*Print*.service
 
 %changelog
+* Thu Feb 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
+- create menu entry
+- update from 4.10 branch
+
 * Wed Jan 30 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.3
 - update from 4.10 branch
 
