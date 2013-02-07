@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jpanoramamaker
 Version:        5.4
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Summary:        Tool for stitching photos to panorama in linear curved space
 BuildArch:      noarch
 
@@ -33,7 +36,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 
 
@@ -53,6 +56,8 @@ ant
 #ant run-test-with-main
 
 
+cat jpanoramamaker | sed s/jpanoramamaker-5/jpanoramamaker-5.4/g  | sed  "s/run \"\$1\" \"\$2\" \"\$3\" \"\$4\" \"\$5\" \"\$6\" \"\$7\" \"\$8\" \"\$9\"/run \$@/g"> jpanoramamakerSED
+
 %install
 
 #desktop
@@ -63,7 +68,7 @@ cp -p ./jpanoramamaker.png  $RPM_BUILD_ROOT%{_datadir}/pixmaps/jpanoramamaker.pn
 
 #launcher
 mkdir -p $RPM_BUILD_ROOT%{_bindir}/
-cp -p ./jpanoramamaker $RPM_BUILD_ROOT%{_bindir}/jpanoramamaker
+cp -p ./jpanoramamakerSED $RPM_BUILD_ROOT%{_bindir}/jpanoramamaker
 #end launcher
 
 
@@ -98,6 +103,9 @@ ln -s %{_javadocdir}/%{name} $RPM_BUILD_ROOT%{_javadocdir}/%{name}-%{version}
 
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_3jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 5.4-alt1_2jpp7
 - new version
 
