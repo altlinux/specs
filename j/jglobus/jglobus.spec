@@ -1,9 +1,12 @@
 Group: Development/Java
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		jglobus
 Version:	2.0.4
-Release:	alt1_5jpp7
+Release:	alt1_9.20121013git597e3acjpp7
 Summary:	Globus Java client libraries
 
 #		Everything is Apache 2.0 except for one file that is MIT:
@@ -14,20 +17,17 @@ URL:		http://www.globus.org/toolkit/%{name}/
 #		git clone http://github.com/%{name}/JGlobus
 #		cd JGlobus
 #		echo '*.jar export-ignore' > .gitattributes
-#		git archive --prefix %{name}-%{version}/ --worktree-attributes \
-#		    JGlobus-%{version} | gzip > ../%{name}-%{version}.tar.gz
-Source0:	%{name}-%{version}.tar.gz
-#		Let maven find the Fedora supplied versions of dependencies
-Patch0:		%{name}-deps.patch
-#		Remove a junk character in a comment that upsets javadoc
-Patch1:		%{name}-junk.patch
-#		Adapting to tomcay 7
-Patch2:		%{name}-tomcat7.patch
+#		git archive --prefix %{name}-%{version}-git597e3ac/ \
+#		    --worktree-attributes \
+#		    597e3ac | gzip > ../%{name}-%{version}-git597e3ac.tar.gz
+Source0:	%{name}-%{version}-git597e3ac.tar.gz
+#		Adapting to tomcat 7
+Patch0:		%{name}-tomcat7.patch
 
 BuildArch:	noarch
 
 BuildRequires:	jpackage-utils
-BuildRequires:	maven
+BuildRequires:	maven1
 BuildRequires:	maven-compiler-plugin
 BuildRequires:	maven-install-plugin
 BuildRequires:	maven-jar-plugin
@@ -41,12 +41,11 @@ BuildRequires:	apache-commons-lang
 BuildRequires:	apache-commons-logging
 BuildRequires:	bouncycastle
 BuildRequires:	log4j
-BuildRequires:	springframework
 BuildRequires:	tomcat-lib >= 7.0.28
 Source44: import.info
 
 %description
-%{name} is a collection of Java client libraries for Globus Toolkit security,
+%%{name} is a collection of Java client libraries for Globus Toolkit security,
 GRAM and GridFTP.
 
 %package parent
@@ -69,7 +68,6 @@ Requires:	apache-commons-lang
 Requires:	apache-commons-logging
 Requires:	bouncycastle
 Requires:	log4j
-Requires:	springframework
 
 %description ssl-proxies
 Globus Java library with SSL and proxy certificate support
@@ -114,7 +112,6 @@ Requires:	%{name}-jsse = %{version}-%{release}
 Requires:	%{name}-gss = %{version}-%{release}
 Requires:	apache-commons-logging
 Requires:	bouncycastle
-Requires:	springframework
 
 %description gram
 Globus Java library with GRAM support
@@ -129,7 +126,6 @@ Requires:	%{name}-jsse = %{version}-%{release}
 Requires:	%{name}-gss = %{version}-%{release}
 Requires:	apache-commons-logging
 Requires:	bouncycastle
-Requires:	springframework
 
 %description gridftp
 Globus Java library with GridFTP support
@@ -147,6 +143,26 @@ Requires:	tomcat-lib >= 7
 %description ssl-proxies-tomcat
 Globus Java library with SSL and proxy certificate support for Tomcat
 
+%package io
+Group: Development/Java
+Summary:	Globus Java - IO
+License:	ASL 2.0
+Requires:	jpackage-utils
+Requires:	%{name}-ssl-proxies = %{version}-%{release}
+Requires:	%{name}-jsse = %{version}-%{release}
+Requires:	%{name}-gss = %{version}-%{release}
+Requires:	%{name}-gram = %{version}-%{release}
+Requires:	%{name}-gridftp = %{version}-%{release}
+Requires:	apache-commons-codec
+Requires:	apache-commons-io
+Requires:	apache-commons-lang
+Requires:	apache-commons-logging
+Requires:	bouncycastle
+Requires:	log4j
+
+%description io
+Globus Java library with IO utilities
+
 %package javadoc
 Group: Development/Java
 Summary:	Javadocs for %{name}
@@ -155,13 +171,11 @@ Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-git597e3ac
 %patch0 -p1
-%patch1 -p1
-%patch2 -p1
 
 %build
 # Many tests requires network connections and a valid proxy certificate
@@ -169,38 +183,42 @@ mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 \
 	     -Dmaven.test.skip=true install javadoc:aggregate
 
 %install
-mkdir -p $RPM_BUILD_ROOT%{_javadir}/%{name}
+mkdir -p %{buildroot}%{_javadir}/%{name}
 install -p -m 644 ssl-proxies/target/ssl-proxies-*.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}/ssl-proxies.jar
+    %{buildroot}%{_javadir}/%{name}/ssl-proxies.jar
 install -p -m 644 jsse/target/jsse-*.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}/jsse.jar
+    %{buildroot}%{_javadir}/%{name}/jsse.jar
 install -p -m 644 gss/target/gss-*.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}/gss.jar
+    %{buildroot}%{_javadir}/%{name}/gss.jar
 install -p -m 644 gram/target/gram-*.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}/gram.jar
+    %{buildroot}%{_javadir}/%{name}/gram.jar
 install -p -m 644 gridftp/target/gridftp-*.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}/gridftp.jar    
+    %{buildroot}%{_javadir}/%{name}/gridftp.jar    
 install -p -m 644 ssl-proxies-tomcat/target/ssl-proxies-tomcat-*.jar \
-    $RPM_BUILD_ROOT%{_javadir}/%{name}/ssl-proxies-tomcat.jar
+    %{buildroot}%{_javadir}/%{name}/ssl-proxies-tomcat.jar
+install -p -m 644 io/target/io-*.jar \
+    %{buildroot}%{_javadir}/%{name}/io.jar    
 
-mkdir -p $RPM_BUILD_ROOT%{_javadocdir}
-cp -pr target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+mkdir -p %{buildroot}%{_javadocdir}
+cp -pr target/site/apidocs %{buildroot}%{_javadocdir}/%{name}
 
-mkdir -p $RPM_BUILD_ROOT%{_mavenpomdir}
+mkdir -p %{buildroot}%{_mavenpomdir}
 install -p -m 644 pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-parent.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-parent.pom
 install -p -m 644 ssl-proxies/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-ssl-proxies.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-ssl-proxies.pom
 install -p -m 644 jsse/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-jsse.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-jsse.pom
 install -p -m 644 gss/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-gss.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-gss.pom
 install -p -m 644 gram/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-gram.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-gram.pom
 install -p -m 644 gridftp/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-gridftp.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-gridftp.pom
 install -p -m 644 ssl-proxies-tomcat/pom.xml \
-    $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.%{name}-ssl-proxies-tomcat.pom
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-ssl-proxies-tomcat.pom
+install -p -m 644 io/pom.xml \
+    %{buildroot}%{_mavenpomdir}/JPP.%{name}-io.pom
 
 %add_maven_depmap -f parent JPP.%{name}-parent.pom
 %add_maven_depmap -f ssl-proxies JPP.%{name}-ssl-proxies.pom %{name}/ssl-proxies.jar
@@ -209,6 +227,7 @@ install -p -m 644 ssl-proxies-tomcat/pom.xml \
 %add_maven_depmap -f gram JPP.%{name}-gram.pom %{name}/gram.jar
 %add_maven_depmap -f gridftp JPP.%{name}-gridftp.pom %{name}/gridftp.jar
 %add_maven_depmap -f ssl-proxies-tomcat JPP.%{name}-ssl-proxies-tomcat.pom %{name}/ssl-proxies-tomcat.jar
+%add_maven_depmap -f io JPP.%{name}-io.pom %{name}/io.jar
 
 %files parent
 %{_mavenpomdir}/JPP.%{name}-parent.pom
@@ -245,10 +264,18 @@ install -p -m 644 ssl-proxies-tomcat/pom.xml \
 %{_mavenpomdir}/JPP.%{name}-ssl-proxies-tomcat.pom
 %{_mavendepmapfragdir}/%{name}-ssl-proxies-tomcat
 
+%files io
+%{_javadir}/%{name}/io.jar
+%{_mavenpomdir}/JPP.%{name}-io.pom
+%{_mavendepmapfragdir}/%{name}-io
+
 %files javadoc
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt1_9.20121013git597e3acjpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.4-alt1_5jpp7
 - new version
 
