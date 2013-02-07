@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -8,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-transaction-1.1-api
 Version:          1.0.1
-Release:          alt1_1jpp7
+Release:          alt1_2jpp7
 Summary:          Transaction 1.1 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -20,7 +23,7 @@ Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildRequires:    jboss-specs-parent
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven1
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -30,7 +33,7 @@ BuildRequires:    maven-checkstyle-plugin
 BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-dependency-plugin
 BuildRequires:    maven-ear-plugin
-BuildRequires:    maven-eclipse-plugin
+BuildRequires:    maven-clean-plugin
 BuildRequires:    maven-ejb-plugin
 
 Requires:         jpackage-utils
@@ -47,7 +50,7 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q -n jboss-transaction-1.1-api
@@ -83,6 +86,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_2jpp7
+- fc update
+
 * Thu Sep 06 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_1jpp7
 - new version
 
