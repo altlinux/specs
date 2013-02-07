@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -6,7 +7,7 @@ BuildRequires: jpackage-compat
 
 Name:          flyingsaucer
 Version:       8
-Release:       alt1_3jpp7
+Release:       alt1_4jpp7
 Summary:       XML/XHTML and CSS 2.1 renderer in pure Java
 Group:         Development/Java
 License:       LGPLv2+
@@ -24,12 +25,12 @@ BuildRequires: jpackage-utils
 
 BuildRequires: ant
 # main
-BuildRequires: itext
+BuildRequires: itext-core
 BuildRequires: xml-commons-apis
 # optional for svg demo
 BuildRequires: svgsalamander
 
-Requires:      itext
+Requires:      itext-core
 Requires:      xml-commons-apis
 
 Requires:      jpackage-utils
@@ -48,7 +49,7 @@ Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains javadoc for %%{name}.
 
 %package demos
 Group:         Development/Java
@@ -56,15 +57,15 @@ Summary:       Demostrations and samples for %{name}
 Requires:      %{name} = %{version}-%{release}
 
 %description demos
-This package contains demostrations and samples for %{name}.
+This package contains demostrations and samples for %%{name}.
 
 %prep
 %setup -q -c
 
-find -name '*.class' -exec rm -f '{}' \;
-find -name '*.dll' -exec rm -f '{}' \;
-find -name '*.exe' -exec rm -f '{}' \;
-find -name '*.jar' -exec rm -f '{}' \;
+find -name '*.class' -delete
+find -name '*.dll' -delete
+find -name '*.exe' -delete
+find -name '*.jar' -delete
 
 # file non free licensed under CC-2.5
 rm -rf demos/browser/xhtml/recipebook-xml.css
@@ -101,6 +102,11 @@ sed -i 's/Class-Path: joshy-common.jar ss_css2.jar core-renderer.jar xalan.jar//
 # lib/dev/Pack200Task.jar !
 # lib/dev/jdic_win_30092005/jdic_30092005.jar !
 
+sed -i 's|<property name="compiler.source" value="1.4"/>|<property name="compiler.source" value="1.5"/>|' \
+  etc/build/properties.xml
+sed -i 's|<property name="compiler.target" value="1.4"/>|<property name="compiler.target" value="1.5"/>|' \
+  etc/build/properties.xml
+  
 %build
 
 # test skipped requires X11 DISPLAY variable set
@@ -151,6 +157,9 @@ cp -pr doc/full/api/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE*
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 8-alt1_4jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 8-alt1_3jpp7
 - new version
 
