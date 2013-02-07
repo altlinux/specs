@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.20
+Version: 2.0.21
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,15 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Feb 07 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.21-alt1
+- gremote: add -u for add user repo
+- rpmbph: check only ^Group
+- rpmbph: move remove_bashism to the spec module, fix it and add test
+- update helps
+- gamend: reset author and date for the updated commit
+- rpmrb: allow use with version only, cleanup
+- spec: add_changelog_helper returns 0 now if EDITOR is not set
+
 * Thu Jan 17 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.20-alt1
 - rpmbph: make use p6 for branch name by default instead M60P
 - add cert6 support
