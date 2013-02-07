@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 
@@ -5,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             keytool-maven-plugin
 Version:          1.0
-Release:          alt1_6jpp7
+Release:          alt1_7jpp7
 Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
 License:          MIT and ASL 2.0
 Group:            Development/Java
@@ -14,14 +17,15 @@ URL:              http://mojo.codehaus.org/%{name}/
 # svn export http://svn.codehaus.org/mojo/tags/keytool-maven-plugin-1.0/ keytool-maven-plugin-1.0
 # tar caf keytool-maven-plugin-1.0.tar.xz keytool-maven-plugin-1.0
 Source0:          %{name}-%{version}.tar.xz
+Source1:          LICENSE-ASL
 
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven1
 
 Requires:         jpackage-utils
-Requires:         maven
+Requires:         maven1
 Requires:         plexus-utils
 Requires:         apache-commons-lang
 
@@ -41,10 +45,14 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q
+
+# fixing licenses
+mv LICENSE.txt LICENSE-MIT
+cp %{SOURCE1} LICENSE-ASL
 
 %build
 mvn-rpmbuild install javadoc:aggregate
@@ -57,23 +65,26 @@ install -p -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.
 # pom
 install -d -m 755 %{buildroot}%{_mavenpomdir}
 install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
-%add_to_maven_depmap %{group_id} %{name} %{version} JPP %{name}
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 # javadoc
 install -d -m 755 %{buildroot}%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %files
-%doc LICENSE.txt
+%doc LICENSE-MIT LICENSE-ASL
 %{_javadir}/%{name}.jar
 %{_mavenpomdir}/JPP-%{name}.pom
 %{_mavendepmapfragdir}/%{name}
 
 %files javadoc
-%doc LICENSE.txt
+%doc LICENSE-MIT LICENSE-ASL
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7jpp7
+- fc update
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_6jpp7
 - new fc release
 
