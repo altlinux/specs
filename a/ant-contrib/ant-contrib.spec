@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global beta_number b3
@@ -6,14 +9,18 @@ BuildRequires: jpackage-compat
 Summary:        Collection of tasks for Ant
 Name:           ant-contrib
 Version:        1.0
-Release:        alt5_0.17.b3jpp7
-License:        ASL 2.0
+Release:        alt5_0.20.b3jpp7
+License:        ASL 2.0 and ASL 1.1
 URL:            http://ant-contrib.sourceforge.net/
 Group:          Development/Java
 Source0:        https://downloads.sourceforge.net/project/ant-contrib/ant-contrib/1.0b3/ant-contrib-1.0b3-src.tar.bz2
 Source1:        http://mirrors.ibiblio.org/pub/mirrors/maven2/%{name}/%{name}/1.0b3/%{name}-1.0b3.pom
+# ASL 2.0 Licence text
+# Upstream bug at https://sourceforge.net/tracker/?func=detail&aid=3590371&group_id=36177&atid=416920
+Source2:        http://www.apache.org/licenses/LICENSE-2.0.txt
 Patch0:         local-ivy.patch
-Patch2:         ant-contrib-antservertest.patch
+Patch2:         %{name}-antservertest.patch
+Patch3:         %{name}-pom.patch
 BuildRequires:  jpackage-utils >= 1.5
 BuildRequires:  junit >= 3.8.0
 BuildRequires:  ant-junit >= 1.6.2
@@ -34,15 +41,21 @@ for Apache Ant.
 %package        javadoc
 Summary:        Javadoc for %{name}
 Group:          Development/Java
+Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-Api documentation for %{name}.
+Api documentation for %%{name}.
 
 %prep
 %setup -q  -n %{name}
 %patch0 -b .sav
 %patch2
+
+cp %{SOURCE1} %{name}-1.0b3.pom
+%patch3 -p1
+
+cp %{SOURCE2} LICENSE-2.0.txt
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
@@ -52,7 +65,7 @@ sed -i "s|xercesImpl|xerces-j2|g" ivy.xml
 rm -fr src/java/net/sf/antcontrib/net/URLImportTask.java
 
 %build
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  dist
+ant dist
 
 %install
 # jars
@@ -66,7 +79,7 @@ mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/ant.d
 echo "ant/ant-contrib" > $RPM_BUILD_ROOT%{_sysconfdir}/ant.d/ant-contrib
 
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
-install -pm 644 %{SOURCE1} $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.ant-%{name}.pom
+install -pm 644 %{name}-1.0b3.pom $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP.ant-%{name}.pom
 
 %add_maven_depmap JPP.ant-%{name}.pom ant/%{name}.jar
 # jpp compat symlink
@@ -77,14 +90,18 @@ ln -s ant/ant-contrib.jar %buildroot%_javadir/ant-contrib.jar
 %{_javadir}/ant/*.jar
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
-%doc target/docs/LICENSE.txt
+%doc target/docs/LICENSE.txt LICENSE-2.0.txt
 %doc target/docs/manual/tasks/*
 %_javadir/ant-contrib.jar
 
 %files javadoc
+%doc target/docs/LICENSE.txt LICENSE-2.0.txt
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.20.b3jpp7
+- fc update
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.17.b3jpp7
 - fc release
 
