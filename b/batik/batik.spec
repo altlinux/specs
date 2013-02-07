@@ -1,5 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 AutoReq: yes,noosgi
@@ -8,7 +9,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           batik
 Version:        1.8
-Release:        alt1_0.4.svn1230816jpp7
+Release:        alt1_0.5.svn1230816jpp7
 Summary:        Scalable Vector Graphics for Java
 License:        ASL 2.0 and W3C
 URL:            http://xml.apache.org/batik/
@@ -92,7 +93,7 @@ purposes, such as viewing, generation or manipulation.
 %package        squiggle
 Summary:        Batik SVG browser
 Group:          Graphics
-Requires:       batik = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils >= 1.5 xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-squiggle = 0:%version-%release
@@ -110,7 +111,7 @@ in the content and select text items in the image and much more.
 %package        svgpp
 Summary:        Batik SVG pretty printer
 Group:          Graphics
-Requires:       batik = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils >= 1.5 xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-svgpp = 0:%version-%release
@@ -129,7 +130,7 @@ also be used to modify the DOCTYPE declaration on SVG files.
 %package        ttf2svg
 Summary:        Batik SVG font converter
 Group:          Graphics
-Requires:       batik = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils >= 1.5
 #19119
 Provides: xmlgraphics-batik-ttf2svg = 0:%version-%release
@@ -149,7 +150,7 @@ rendered exactly the same on all systems.
 %package        rasterizer
 Summary:        Batik SVG rasterizer
 Group:          Graphics
-Requires:       batik = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils >= 1.5 xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-rasterizer = 0:%version-%release
@@ -170,7 +171,7 @@ to be added easily.
 %package        slideshow
 Summary:        Batik SVG slideshow
 Group:          Graphics
-Requires:       batik = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Requires:       jpackage-utils >= 1.5 xerces-j2 >= 2.3
 #19119
 Provides: xmlgraphics-batik-slideshow = 0:%version-%release
@@ -191,15 +192,15 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-Javadoc for %{name}.
+Javadoc for %%{name}.
 
 %package        demo
 Summary:        Demo for %{name}
 Group:          Development/Java
-Requires:       batik = %{?epoch:%epoch:}%{version}-%{release}
+Requires:       %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description    demo
-Demonstrations and samples for %{name}.
+Demonstrations and samples for %%{name}.
 
 
 %prep
@@ -233,7 +234,7 @@ export ANT_OPTS="-Xmx512m"
 # due to javadoc x86_64 out of memory
 subst 's,maxmemory="128m",maxmemory="512m",' build.xml
 export CLASSPATH=$(build-classpath xml-commons-apis xml-commons-apis-ext js rhino xalan-j2 xalan-j2-serializer xerces-j2)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  all-jar jars\
+ant all-jar jars\
         -Ddebug=on \
         -Dsun-codecs.present=false \
         -Dsun-codecs.disabled=true \
@@ -246,7 +247,7 @@ ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  all-jar jars\
 for j in $(find batik-%{version} -name *.jar); do
  export CLASSPATH=$CLASSPATH:${j}
 done
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  javadoc
+ant javadoc
 
 
 %install
@@ -477,6 +478,9 @@ popd
 
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_0.5.svn1230816jpp7
+- fc update
+
 * Thu Aug 30 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.8-alt1_0.4.svn1230816jpp7
 - new version
 
