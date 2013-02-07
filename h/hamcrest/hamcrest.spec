@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
@@ -63,7 +66,7 @@ BuildRequires: jpackage-1.6.0-compat
 
 Name:           hamcrest
 Version:        1.1
-Release:        alt2_19jpp7
+Release:        alt2_21jpp7
 Epoch:          0
 Summary:        Library of matchers for building test expressions
 License:        BSD
@@ -119,19 +122,19 @@ Summary:        Javadoc for %{name}
 BuildArch:      noarch
 
 %description javadoc
-Javadoc for %{name}.
+Javadoc for %%{name}.
 
 %package demo
 Group:          Development/Java
 Summary:        Demos for %{name}
-Requires:       hamcrest = %{epoch}:%{version}-%{release}
+Requires:       %{name} = %{epoch}:%{version}-%{release}
 Requires:       junit
 %if %with tests
 Requires:       testng
 %endif
 
 %description demo
-Demonstrations and samples for %{name}.
+Demonstrations and samples for %%{name}.
 
 %prep
 %setup -q
@@ -273,6 +276,9 @@ cp -pr %{name}-examples $RPM_BUILD_ROOT%{_datadir}/%{name}/
 %{_datadir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_21jpp7
+- fc update
+
 * Fri Aug 31 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1-alt2_19jpp7
 - java6 build for jmock2
 
