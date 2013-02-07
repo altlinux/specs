@@ -2,7 +2,7 @@
 
 Name: gcc%gcc_branch
 Version: 4.4.6
-Release: alt2
+Release: alt3
 
 Summary: GNU Compiler Collection
 # libgcc, libgfortran, libmudflap, libgomp, libstdc++ and crtstuff have
@@ -17,8 +17,8 @@ Url: http://gcc.gnu.org/
 %endif
 
 %define priority 446
-%define snapshot 20110824
-%define svnrev 178042
+%define snapshot 20120305
+%define svnrev 184929
 %define srcver %version-%snapshot
 %define srcfilename gcc-%srcver
 %define srcdirname gcc-%srcver
@@ -1610,6 +1610,9 @@ EOF
 %endif #with_pdf
 
 %changelog
+* Thu Feb 07 2013 Dmitry V. Levin <ldv@altlinux.org> 4.4.6-alt3
+- Synced with RH 4.4.6-4.
+
 * Tue Aug 28 2012 Dmitry V. Levin <ldv@altlinux.org> 4.4.6-alt2
 - Backported upstream change to fix build with glibc-2.16.
 - Define _FORTIFY_SOURCE only for optimization level 2 or higher.
