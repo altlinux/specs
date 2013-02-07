@@ -1,7 +1,7 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-users
-Version: 10.5
+Version: 10.6
 Release: alt1
 
 Source:%name-%version.tar
@@ -40,6 +40,9 @@ alterator module for system users administration
 %_alterator_backend3dir/*
 
 %changelog
+* Thu Feb 07 2013 Michael Shigorin <mike@altlinux.org> 10.6-alt1
+- "video" added to default groups (e.g. UVC devices use it)
+
 * Wed Nov 25 2009 Stanislav Ievlev <inger@altlinux.org> 10.5-alt1
 - use alterator_export_proc
 - fix field cleanup (update for current behaviour of form-update-value-list())
