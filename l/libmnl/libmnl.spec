@@ -1,5 +1,5 @@
 Name:           libmnl
-Version:        1.0.2
+Version:        1.0.3
 Release:        alt1
 Summary:        Minimalistic Netlink library
 Group:          System/Libraries
@@ -24,7 +24,7 @@ The %name-devel package contains libraries and header files for
 developing applications that use %name.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -45,6 +45,9 @@ developing applications that use %name.
 %_libdir/pkgconfig/*.pc
 
 %changelog
+* Thu Feb 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.3-alt1
+- New version
+
 * Fri Feb 03 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.0.2-alt1
 - New version
 
