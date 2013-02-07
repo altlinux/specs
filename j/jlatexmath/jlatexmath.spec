@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jlatexmath
 Version:        1.0.0
-Release:        alt1_1jpp7
+Release:        alt1_2jpp7
 Summary:        Java API to display mathematical formulas written in LaTeX
 
 Group:          Development/Java
@@ -43,7 +44,7 @@ Requires:       fop
 
 
 %description fop
-This package contains the FOP plug-in for %{name}.
+This package contains the FOP plug-in for %%{name}.
 
 %package javadoc
 Summary:        API Documentation for %{name}
@@ -53,7 +54,7 @@ Requires:       %{name} = %{version}-%{release}
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q
@@ -93,6 +94,9 @@ cp -rp doc/ $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_2jpp7
+- fc update
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.0-alt1_1jpp7
 - new version
 
