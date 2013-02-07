@@ -1,4 +1,7 @@
 Epoch: 1
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -11,14 +14,14 @@ BuildRequires: jpackage-compat
 
 Name:          apache-commons-jci
 Version:       1.0
-Release:       alt1_4jpp7
+Release:       alt1_5jpp7
 Summary:       Commons Java Compiler Interface
 Group:         Development/Java
 License:       ASL 2.0
 URL:           http://commons.apache.org/jci/
 Source0:       ftp://ftp.gbnet.net/pub/apache/dist/commons/%{base_name}/source/%{short_name}-%{namedversion}-src.tar.gz
-# force ecj 3.4.x use
-Source1:       apache-commons-jci-1.0-depmap
+# force ecj 4.x use
+Source1:       %{name}-%{namedversion}-depmap
 # fix parent relative path
 # fix groovy gId and aId
 # add org.codehaus.janino commons-compiler
@@ -34,9 +37,11 @@ Patch3:        %{name}-%{namedversion}-examples-pom.patch
 
 Patch4:        %{name}-%{namedversion}-janino26.patch
 
+Patch5:        %{name}-%{namedversion}-ecj4.patch
+
 BuildRequires: jpackage-utils
 
-BuildRequires: maven
+BuildRequires: maven1
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -93,7 +98,7 @@ Commons JCI core interfaces and implementations.
 Group:         Development/Java
 Summary:       Commons Java Compiler Interface - FAM
 Requires:      apache-commons-logging
-Requires:      apache-commons-jci = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description fam
 Commons JCI FileAlterationMonitor (FAM) to
@@ -107,7 +112,7 @@ Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains javadoc for %%{name}.
 
 # compilers
 
@@ -115,7 +120,7 @@ This package contains javadoc for %{name}.
 Group:         Development/Java
 Summary:       Commons Java Compiler Interface - eclipse
 Requires:      ecj >= 3.4.2-13
-Requires:      apache-commons-jci = %{?epoch:%epoch:}%{version}-%{release}
+Requires:      %{name} = %{?epoch:%epoch:}%{version}-%{release}
 
 %description eclipse
 Commons JCI compiler implementation for the eclipse compiler.
@@ -157,12 +162,14 @@ find . -name "*.jar" -delete
 %patch2 -p0
 %patch3 -p0
 %patch4 -p1
+%patch5 -p0
 
-# TODO
 # require old version of jdependency
-sed -i "s|<module>compilers/javac</module>|<!--module>compilers/javac</module-->|" pom.xml
+%pom_disable_module compilers/javac
+%pom_disable_module examples
 
-sed -i "s|<module>examples</module>|<!--module>examples</module-->|" pom.xml
+sed -i "s|<maven.compile.source>1.4<|<maven.compile.source>1.5<|" pom.xml
+sed -i "s|<maven.compile.target>1.4<|<maven.compile.target>1.5<|" pom.xml
 
 %build
 
@@ -170,7 +177,7 @@ sed -i "s|<module>examples</module>|<!--module>examples</module-->|" pom.xml
 mvn-rpmbuild \
   -Dmaven.test.failure.ignore=true \
   -Dmaven.local.depmap.file="%{SOURCE1}" \
-  install javadoc:aggregate
+  package javadoc:aggregate
 
 %install
 
@@ -186,7 +193,6 @@ for m in core \
     %add_maven_depmap -f ${m} JPP.%{short_name}-%{short_name}-${m}.pom %{short_name}/%{short_name}-${m}.jar
 done
 
-# TODO
 #  javac
 for mc in eclipse \
   janino \
@@ -240,6 +246,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_mavendepmapfragdir}/%{name}-rhino
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_5jpp7
+- fc update
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_4jpp7
 - fc release
 
