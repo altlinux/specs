@@ -1,5 +1,5 @@
 Name: installer-feature-setup-plymouth
-Version: 0.3.3
+Version: 0.4
 Release: alt1
 
 Summary: Set up plymouth
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Feb 07 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.4-alt1
+- don't setup plymouth if LUKS exists
+
 * Wed Jun 13 2012 Michael Shigorin <mike@altlinux.org> 0.3.3-alt1
 - add "quiet" option too
 
