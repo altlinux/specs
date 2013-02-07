@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.0
+Version: 2.0.1
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 BuildArchitectures: noarch
 
 Requires: eepm >= 1.0
-Requires: etersoft-build-utils >= 2.0.14
+Requires: etersoft-build-utils >= 2.0.21
 Requires: alien >= 8.86-alt3
 
 %description
@@ -44,6 +44,21 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Thu Feb 07 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
+- convert: drop non lib requires only for wine on Ubuntu
+- update lists: add Ubuntu 12.10, Debian 7, Fedora 18
+- run force build when try build again
+- convert: add freebsd support
+- add build support for p7 and cert6
+- move assert_var to etersoft-build-utils 2.0.18
+- improve run_in_chroot, add initial remote build
+- message: introduce exit_now and use it in fatal, warning, error
+- intro /etc/remote for remote systems configuration, add to run_in_chroot remote support
+- build/rpm: rewrite with run_in_chroot using, run script via pipe
+- run_in_chroot: add --user USER support
+- install: use epm install --auto
+- check_reqs: use rpmreqs from repo if possible
+
 * Fri Aug 17 2012 Vitaly Lipatov <lav@altlinux.ru> 2.0.0-alt1
 - release 2.0
 - fast add epm support to run-script.sh
