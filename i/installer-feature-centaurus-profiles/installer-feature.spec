@@ -1,6 +1,6 @@
 Name: installer-feature-centaurus-profiles
 Version: 0.8
-Release: alt1
+Release: alt2
 
 Summary: Setups package groups from selected vm-profile
 License: GPL
@@ -24,6 +24,9 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Feb 07 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt2
+- check domain-server on server 
+
 * Tue Feb 05 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.8-alt1
 - sysvinit and systemd groups added
 
