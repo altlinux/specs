@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2007, JPackage Project
@@ -34,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-mail-sender
 Version:        1.0
-Release:        alt4_0.a2.21.1jpp7
+Release:        alt4_0.a2.22jpp7
 Epoch:          0
 Summary:        Plexus Mail Sender
 License:        MIT and ASL 1.1
@@ -53,7 +56,7 @@ Source2:        %{name}-jpp-depmap.xml
 Patch0:         %{name}-clarifylicense.patch
 
 BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  maven1
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -62,7 +65,6 @@ BuildRequires:  maven-resources-plugin
 BuildRequires:  maven-site-plugin
 BuildRequires:  maven-surefire-plugin
 BuildRequires:  maven-doxia-sitetools
-BuildRequires:  dumbster
 BuildRequires:  saxon
 BuildRequires:  saxon-scripts
 
@@ -88,7 +90,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+Javadoc for %%{name}.
 
 %prep
 %setup -q -n %{name}-%{version}-a2
@@ -98,6 +100,7 @@ mv release-pom.xml pom.xml
 
 pushd plexus-mail-senders
 mv release-pom.xml pom.xml
+%pom_xpath_remove "modules/module [text()='plexus-mail-sender-test']"
 for mod in javamail simple test;do
     pushd %{name}-$mod
     mv release-pom.xml pom.xml
@@ -121,7 +124,7 @@ mvn-rpmbuild \
 install -d -m 755 $RPM_BUILD_ROOT%{_javadir}/plexus
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 pushd plexus-mail-senders
-for mod in javamail simple test;do
+for mod in javamail simple;do
     pushd %{name}-$mod
     install -pm 644 target/%{name}-$mod-%{namedversion}*.jar \
             $RPM_BUILD_ROOT%{_javadir}/plexus/mail-sender-$mod.jar
@@ -154,6 +157,9 @@ cp -pr target/site/apidocs/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.a2.22jpp7
+- fc update
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.a2.21.1jpp7
 - new fc release
 
