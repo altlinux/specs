@@ -1,9 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-%global checkout 20120110cvs
+%global checkout 20130104cvs
 Name:           rachota
 Version:        2.3
-Release:        alt1_4.20120110cvsjpp7
+Release:        alt1_5.20130104cvsjpp7
 Summary:        Straightforward timetracking
 
 Group:          Development/Java
@@ -43,7 +46,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q -n %{name}
@@ -82,6 +85,9 @@ touch $RPM_BUILD_ROOT/etc/java/rachota.conf
 
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_5.20130104cvsjpp7
+- fc update
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 2.3-alt1_4.20120110cvsjpp7
 - new version
 
