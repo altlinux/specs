@@ -1,9 +1,12 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             jline2
 Version:          2.5
-Release:          alt1_6jpp7
+Release:          alt1_7jpp7
 Summary:          JLine is a Java library for handling console input
 Group:            Development/Java
 License:          BSD and ASL 2.0
@@ -18,7 +21,7 @@ Patch1:           %{name}-%{version}-protected-void-back.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven1
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-surefire-plugin
@@ -46,11 +49,11 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q -n jline-%{version}
-%patch0 -p1
+%patch0
 %patch1 -p1
 
 %build
@@ -82,6 +85,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE.txt
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_7jpp7
+- fc update
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.5-alt1_6jpp7
 - new fc release
 
