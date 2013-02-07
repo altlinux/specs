@@ -4,7 +4,7 @@
 
 Name: kde4-i18n-%lng
 Version: 4.10.0
-Release: alt0.1
+Release: alt1
 
 Group: Graphical desktop/KDE
 Summary: %lngg language support for KDE
@@ -92,6 +92,9 @@ fi
 %lang(%lng) %_K4apps/autocorrect/%{lng}_*.xml
 
 %changelog
+* Thu Feb 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt1
+- new version
+
 * Tue Jan 15 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt0.1
 - 4.9.97
 
