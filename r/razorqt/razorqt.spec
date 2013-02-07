@@ -1,8 +1,8 @@
 %def_without pulse
 
 Name: razorqt
-Version: 0.5.1
-Release: alt2
+Version: 0.5.2
+Release: alt1
 
 Summary: Razor-qt is a toolbox-like desktop environment based on Qt
 License: GPLv2
@@ -255,6 +255,17 @@ The session manager handles the Razor-qt components initialization
 and startup, it is an essential part of Razor-qt
 as a Desktop Environment.
 
+%package -n lightdm-razorqt-greeter
+Summary: Razor-qt lightdm greeter
+Group: Graphical desktop/Other
+Requires: lightdm
+
+%description -n lightdm-razorqt-greeter
+A LightDM greeter that uses the Razor-qt and Qt libraries,
+it was written for Razor-qt but it can be used standalone as well.
+
+This package is part of Razor-qt.
+
 %prep
 %setup
 
@@ -360,9 +371,11 @@ install -pDm644 08razorqt %buildroot%_sysconfdir/X11/wmsession.d/08razorqt
 %_bindir/razor-config-notificationd
 %_desktopdir/razor-config-notificationd.desktop
 %_xdgconfigdir/autostart/razor-notifications.desktop
+%_datadir/razor/razor-config-notificationd/
 
 %files openssh-askpass
 %_bindir/razor-openssh-askpass
+%_datadir/razor/razor-openssh-askpass/
 
 %files panel
 %_bindir/razor-panel
@@ -374,6 +387,7 @@ install -pDm644 08razorqt %buildroot%_sysconfdir/X11/wmsession.d/08razorqt
 %files polkit-agent
 %_bindir/razor-policykit-agent
 %_xdgconfigdir/autostart/razor-policykit-agent.desktop
+%_datadir/razor/razor-policykit-agent/
 
 %files power
 %_bindir/razor-power
@@ -409,10 +423,17 @@ install -pDm644 08razorqt %buildroot%_sysconfdir/X11/wmsession.d/08razorqt
 %exclude %_xdgconfigdir/autostart/razor-autosuspend.desktop
 %exclude %_xdgconfigdir/autostart/razor-runner.desktop
 
-# TODO:
-# - lightdm greeter
+%files -n lightdm-razorqt-greeter
+%_bindir/razor-lightdm-greeter
+%_datadir/xgreeters/lightdm-razor-greeter.desktop
+%_datadir/razor/razor-lightdm-greeter/
 
 %changelog
+* Thu Feb 07 2013 Michael Shigorin <mike@altlinux.org> 0.5.2-alt1
+- 0.5.2
+- added lightdm greeter subpackage (thx zerg@ for reminder)
+- added new subpackage translations
+
 * Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 0.5.1-alt2
 - moved razor-xdg-tools from %name-data to lib%name
   (-data should be noarch so archdep paths are unsuitable)
