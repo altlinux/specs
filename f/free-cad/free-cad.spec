@@ -3,7 +3,7 @@
 
 Name: free-cad
 Version: 0.12.2237
-Release: alt1.git20130123
+Release: alt2.git20130123
 Epoch: 1
 Summary: OpenSource 3D CAD modeller
 License: GPL / LGPL
@@ -287,6 +287,9 @@ fi
 %_libexecdir/qt4/plugins/designer/*
 
 %changelog
+* Thu Feb 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.12.2237-alt2.git20130123
+- Rebuilt with OpenCASCADE 6.5.4
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:0.12.2237-alt1.git20130123
 - Version 0.12.2237 (from git)
 

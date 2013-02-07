@@ -1,6 +1,6 @@
 Name: opencascade
-Version: 6.5.3
-Release: alt2
+Version: 6.5.4
+Release: alt1
 Summary: Development platform for 3D modeling and numerical simulation
 License: BSD-like
 Group: Development/Tools
@@ -168,6 +168,9 @@ chmod +x %buildroot%_bindir/custom.sh
 %_datadir/%name/src
 
 %changelog
+* Thu Feb 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.4-alt1
+- Version 6.5.4
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 6.5.3-alt2
 - Fixed build with gcc 4.7
 

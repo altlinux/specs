@@ -6,7 +6,7 @@
 Name: gmsh
 Summary: Automatic 3D finite element grid generator
 Version: 2.6.2
-Release: alt4.svn20130201
+Release: alt5.svn20130201
 Group: Graphics
 License: GPL v2
 URL: http://www.geuz.org/gmsh/
@@ -130,6 +130,9 @@ rm -fR %buildroot%_includedir
 %_docdir/%name/tutorial
 
 %changelog
+* Thu Feb 07 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt5.svn20130201
+- Rebuilt with OpenCASCADE 6.5.4
+
 * Fri Feb 01 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.2-alt4.svn20130201
 - New snapshot
 
