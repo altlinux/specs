@@ -9,8 +9,8 @@
 %def_disable GTL
 
 Name: calligra
-Version: 2.5.5
-Release: alt2
+Version: 2.6.0
+Release: alt1
 Epoch: 0
 %define libname lib%name
 
@@ -39,6 +39,7 @@ Requires: %name-okular-odp = %EVR
 
 Source: http://download.kde.org/stable/calligra-%version/calligra-%version.tar
 Source1: FindOkular.cmake
+Patch1: calligra-2.6.0-alt-build-active.patch
 
 # Automatically added by buildreq on Fri Nov 02 2012 (-bi)
 # optimized out: automoc cmake cmake-modules docbook-dtds docbook-style-xsl elfutils fontconfig fontconfig-devel glibc-devel-static ilmbase-devel kde4libs kde4libs-devel kde4pimlibs libGL-devel libGLU-devel libICE-devel libSM-devel libX11-devel libXScrnSaver-devel libXau-devel libXcomposite-devel libXcursor-devel libXdamage-devel libXdmcp-devel libXext-devel libXfixes-devel libXft-devel libXi-devel libXinerama-devel libXpm-devel libXrandr-devel libXrender-devel libXt-devel libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libdbus-devel libdbusmenu-qt2 libfreetype-devel libgpg-error libgst-plugins libjpeg-devel libpng-devel libpoppler-devel libpoppler4-qt4 libpq-devel libqt4-core libqt4-dbus libqt4-declarative libqt4-devel libqt4-gui libqt4-network libqt4-opengl libqt4-qt3support libqt4-script libqt4-sql libqt4-svg libqt4-test libqt4-uitools libqt4-webkit libqt4-xml libqt4-xmlpatterns libsoprano-devel libssl-devel libstdc++-devel libtiff-devel libxkbfile-devel openssh-common phonon-devel pkg-config python-base rpm-build-gir ruby shared-desktop-ontologies-devel shared-mime-info soprano-backend-redland soprano-backend-virtuoso xml-common xml-utils xorg-kbproto-devel xorg-xf86miscproto-devel xorg-xproto-devel zlib-devel
@@ -264,6 +265,7 @@ Requires: %name-common = %EVR
 
 %prep
 %setup
+%patch1 -p1
 cp -ar %SOURCE1 cmake/modules/
 
 %build
@@ -318,7 +320,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/thesaurustool.so
 %_K4lib/artistictextshape.so
 %_K4lib/chartshape.so
-%_K4lib/commentshape.so
+#%_K4lib/commentshape.so
 %_K4lib/musicshape.so
 %_K4lib/pictureshape.so
 %_K4lib/pluginshape.so
@@ -327,9 +329,12 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/vectorshape.so
 %_K4lib/videoshape.so
 %_K4lib/webshape.so
+%_K4lib/calligraimagethumbnail.so
+%_K4lib/threedshape.so
 %_K4apps/calligra/
 %_K4apps/koproperty/
 %_K4xdg_mime/msooxml-all.xml
+%_K4xdg_mime/calligra_svm.xml
 %_K4iconsdir/hicolor/*/*/*
 %_K4iconsdir/oxygen/*/*/*
 %_K4xdg_apps/calligra.desktop
@@ -338,7 +343,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/calligradockers.desktop
 %_K4srv/calligrastageeventactions.desktop
 %_K4srv/calligrastagetoolanimation.desktop
-%_K4srv/calligrathumbnail.desktop
+#%_K4srv/calligrathumbnail.desktop
 %_K4srv/changecase.desktop
 %_K4srv/defaulttools.desktop
 %_K4srv/kodocinfopropspage.desktop
@@ -349,6 +354,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/spellcheck.desktop
 %_K4srv/textvariables.desktop
 %_K4srv/thesaurustool.desktop
+%_K4srv/calligra_odg_thumbnail.desktop
+%_K4srv/threedshape.desktop
+%_K4srvtyp/calligradb_driver.desktop
 %_K4srvtyp/calligra_application.desktop
 %_K4srvtyp/calligra_deferred_plugin.desktop
 %_K4srvtyp/calligradocker.desktop
@@ -365,7 +373,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/artistictextshape.desktop
 %_K4srv/chartshape.desktop
 %_K4srv/kchartpart.desktop
-%_K4srv/commentshape.desktop
+#%_K4srv/commentshape.desktop
 %_K4srv/formulashape.desktop
 %_K4srv/kformulapart.desktop
 %_K4srv/kexirelationdesignshape.desktop
@@ -400,7 +408,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4apps/braindump/
 %_K4srvtyp/braindump_extensions.desktop
 %_K4lib/stateshape.so
-%_K4conf/braindumprc
+#%_K4conf/braindumprc
 %_K4apps/stateshape/
 %_K4srv/stateshape.desktop
 
@@ -433,16 +441,20 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4lib/opencalcimport.*
 %_K4lib/qproimport.*
 %_K4lib/xlsximport.*
-%_K4lib/krossmodulekspread.so
+%_K4lib/krossmodulesheets.so
+%_K4lib/sheetssolver.so
+#%_K4lib/krossmodulekspread.so
 %_K4lib/kspread_plugin_tool_calendar.so
-%_K4lib/kspreadsolver.so
+#%_K4lib/kspreadsolver.so
 %_K4lib/spreadsheetshape-deferred.so
 %_K4apps/sheets/
-%_K4apps/tables/
+%_K4srv/krossmodulesheets.desktop
+%_K4srv/sheets_*_thumbnail.desktop
+%_K4srv/ServiceMenus/sheets_print.desktop
 
 %_K4conf/sheetsrc
 %_K4cfg/sheets.kcfg
-%_K4srv/krossmodulekspread.desktop
+#%_K4srv/krossmodulekspread.desktop
 %_K4srv/kspread_plugin_tool_calendar.desktop
 %_K4srv/kspread*module.desktop
 %_K4srv/kspread_*_export.desktop
@@ -454,7 +466,7 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4tmpl/.source/SpreadSheet.*
 %_K4xdg_apps/sheets.desktop
 %_K4doc/en/sheets/
-%_K4srv/ServiceMenus/kspread_konqi.desktop
+#%_K4srv/ServiceMenus/kspread_konqi.desktop
 
 %files stage
 %doc stage/AUTHORS stage/CHANGES
@@ -479,7 +491,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4xdg_apps/*stage.desktop
 %_K4srv/Filterkpr2odf.desktop
 %_K4srv/stagepart.desktop
-%_K4srv/ServiceMenus/kpresenter_konqi.desktop
+%_K4srv/stage_*_thumbnail.desktop
+#%_K4srv/ServiceMenus/kpresenter_konqi.desktop
+%_K4srv/ServiceMenus/stage_print.desktop
 
 %files karbon
 %_K4bindir/karbon
@@ -495,7 +509,8 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4tmpl/.source/Illustration.*
 %_K4xdg_apps/*karbon.desktop
 #_K4doc/en/karbon/
-%_K4srv/ServiceMenus/karbon_konqi.desktop
+#%_K4srv/ServiceMenus/karbon_konqi.desktop
+%_K4srv/ServiceMenus/karbon_print.desktop
 
 %files krita
 %doc krita/AUTHORS krita/ChangeLog krita/README
@@ -512,7 +527,8 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4apps/kritaplugins/
 %_K4apps/color-schemes/Krita*.colors
 %_datadir/color/icc/krita/
-%_K4srv/ServiceMenus/krita_konqi.desktop
+#%_K4srv/ServiceMenus/krita_konqi.desktop
+%_K4srv/ServiceMenus/krita_print.desktop
 
 %files kexi
 %doc kexi/CHANGES kexi/README
@@ -555,7 +571,8 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4srv/flow*.desktop
 %_K4xdg_apps/flow.desktop
 %_K4conf/flowrc
-%_K4srv/ServiceMenus/flow_konqi.desktop
+#%_K4srv/ServiceMenus/flow_konqi.desktop
+%_K4srv/ServiceMenus/flow_print.desktop
 %_K4srvtyp/flow_dock.desktop
 
 %files plan
@@ -592,16 +609,29 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4tmpl/TextDocument.*
 %_K4tmpl/.source/TextDocument.*
 %_K4xdg_apps/words.desktop
-%_K4srv/ServiceMenus/words_konqi.desktop
+#%_K4srv/ServiceMenus/words_konqi.desktop
 %_K4srv/wordspart.desktop
 %_K4lib/applixwordimport.*
 %_K4lib/asciiimport.so
 %_K4lib/docximport.*
-%_K4lib/htmlodf_export.*
+#%_K4lib/htmlodf_export.*
 %_K4lib/mswordodf_import.*
 %_K4lib/rtfimport.*
-%_K4srv/html-odf_export.desktop
+%_K4lib/exportepub2.so
+%_K4lib/exporthtml.so
+#%_K4srv/html-odf_export.desktop
 %_K4srv/words_*_import.desktop
+%_K4srv/words_*_thumbnail.desktop
+%_K4srv/words_*_export.desktop
+%_K4srv/ServiceMenus/words_print.desktop
+# author
+%_K4bindir/calligraauthor
+%_K4libdir/libkdeinit4_calligraauthor.so
+%_K4lib/authorpart.so
+%_K4xdg_apps/author.desktop
+%_K4apps/author/
+%_K4conf/authorrc
+%_K4srv/authorpart.desktop
 
 %files okular-odp
 %_K4lib/okularGenerator_odp.so
@@ -613,6 +643,9 @@ cp -ar %SOURCE1 cmake/modules/
 %_K4libdir/lib*.so.*
 
 %changelog
+* Thu Feb 07 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.6.0-alt1
+- new version
+
 * Sun Jan 27 2013 Sergey V Turchin <zerg@altlinux.org> 0:2.5.5-alt2
 - don't split libs
 - fix requires
