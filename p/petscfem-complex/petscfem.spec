@@ -10,7 +10,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.53.1
-Release: alt8.beta
+Release: alt9.beta
 Summary: A General Purpose, Parallel, Multi-Physics FEM Program (%scalar_type scalars)
 License: GPL v2+
 Group: Sciences/Mathematics
@@ -151,6 +151,9 @@ done
 %endif
 
 %changelog
+* Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt9.beta
+- New snapshot
+
 * Wed Oct 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt8.beta
 - Rebuilt with gc 4.7
 
@@ -195,4 +198,3 @@ done
 
 * Fri Dec 17 2010 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.53.1-alt1.beta
 - Initial build for Sisyphus
-
