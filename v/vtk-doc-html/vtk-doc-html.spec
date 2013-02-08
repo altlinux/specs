@@ -1,5 +1,5 @@
 Name: vtk-doc-html
-Version: 5.10.0
+Version: 5.10.1
 Release: alt1
 Summary: Full HTML documentation for The Visualization Toolkit (VTK)
 License: MIT
@@ -28,6 +28,9 @@ tar -xf %SOURCE0
 %_docdir/*
 
 %changelog
+* Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.1-alt1
+- Version 5.10.1
+
 * Sat Jun 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt1
 - Version 5.10.0
 
