@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.9
-Release: alt2
+Release: alt3
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -114,6 +114,9 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Fri Feb 08 2013 Led <led@altlinux.ru> 0.9.9-alt3
+- updated from upstream's SCM
+
 * Mon Feb 04 2013 Led <led@altlinux.ru> 0.9.9-alt2
 - added ether_aton(), ether_aton_r(), ether_ntoa(), ether_ntoa_r()
 - added dummy ether_hostton() stub
