@@ -11,9 +11,9 @@ Name: ruby
 %define lname lib%name
 %define branch 1.9
 %define ver_teeny 3
-%define _pl p374
+%define _pl p385
 Version: %branch.%ver_teeny
-Release: alt11
+Release: alt12
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -350,6 +350,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Fri Feb 08 2013 Led <led@altlinux.ru> 1.9.3-alt12
+- p385 upstream patchlevel
+
 * Fri Feb 01 2013 Led <led@altlinux.ru> 1.9.3-alt11
 - moved ri to separate subpackage
 - moved rdoc to ruby-tools subpackage
