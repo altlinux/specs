@@ -1,7 +1,7 @@
 Name: mithraen-spt-utils
 Summary: Simple utilites that simplify distro building to me
 Version: 0.1
-Release: alt1
+Release: alt2
 License: GPL
 Group: Development/Other
 
@@ -32,6 +32,9 @@ install -m755 hscripts/* %buildroot%_datadir/%name/
 %_bindir/*
 %_datadir/%name/*
 %changelog
+* Fri Feb 08 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1-alt2
+- use /bin/bash for scripts with bashisms
+
 * Sat Aug 29 2009 Denis Smirnov <mithraen@altlinux.ru> 0.1-alt1
 - first build for Sisyphus
 
