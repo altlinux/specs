@@ -3,7 +3,7 @@
 Summary: Server and Client software to interoperate with Windows machines
 Name: samba
 Version: 3.6.12
-Release: alt2
+Release: alt3
 License: GPLv3+ and LGPLv3+
 Group: System/Servers
 Url: http://www.samba.org/
@@ -172,6 +172,7 @@ develop programs that link against the SMB client library in the Samba suite.
 %package -n libwbclient
 Summary: The winbind client library
 Group: System/Libraries
+Conflicts: samba-winbind-clients <= 3.6.12-alt1
 
 %description -n libwbclient
 The libwbclient package contains the winbind client library from the Samba suite.
@@ -612,6 +613,9 @@ true
 %_pixmapsdir/samba/logo-small.png
 
 %changelog
+* Fri Feb 08 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.12-alt3
+- add conflict old samba-winbind-clients to libwbclient (ALT#28523)
+
 * Thu Jan 31 2013 Alexey Shabalin <shaba@altlinux.ru> 3.6.12-alt2
 - move libwbclient to separate package
 
