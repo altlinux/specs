@@ -2,7 +2,7 @@
 %define lngg Ukrainian
 
 Name: calligra-l10n-%lng
-Version: 2.5.5
+Version: 2.6.0
 Release: alt1
 %define beta %nil
 
@@ -50,9 +50,12 @@ done
 %files
 %lang(%lng) %_K4i18n/%lng/LC_MESSAGES/*.mo
 %lang(%lng) %_K4doc/%lng
-%lang(%lng) %_K4apps/calligra/autocorrect/%{lng}*.xml
+#%lang(%lng) %_K4apps/calligra/autocorrect/%{lng}*.xml
 
 %changelog
+* Fri Feb 08 2013 Sergey V Turchin <zerg@altlinux.org> 2.6.0-alt1
+- new version
+
 * Mon Feb 04 2013 Sergey V Turchin <zerg@altlinux.org> 2.5.5-alt1
 - new version
 
