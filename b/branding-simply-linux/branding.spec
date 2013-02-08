@@ -1,12 +1,12 @@
 %define theme slinux
 %define Name Simply Linux
-%define codename Flounder
-%define status %nil
+%define codename UNKNOWN
+%define status alpha
 %define variants altlinux-office-desktop altlinux-office-server altlinux-desktop sisyphus-server-light
 %define brand simply
 
 Name: branding-simply-linux
-Version: 6.990.0
+Version: 6.991.0
 Release: alt1
 BuildArch: noarch
 
@@ -410,6 +410,11 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Fri Feb 08 2013 Mikhail Efremov <sem@altlinux.org> 6.991.0-alt1
+- xfce-settings: Drop obsoleted autostart *.desktop files.
+- Don't disable tracker by default.
+- Set status 'alpha' and codename 'UNKNOWN'.
+
 * Fri Jun 22 2012 Mikhail Efremov <sem@altlinux.org> 6.990.0-alt1
 - menu: Updated for Xfce 4.10.
 - Update backgrounds location for Xfce 4.10.
