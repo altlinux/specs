@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: pfft
-Version: 1.0.5
-Release: alt2.alpha
+Version: 1.0.6
+Release: alt1.alpha
 Summary: Parallel FFT based on FFTW
 License: GPLv3+
 Group: Sciences/Mathematics
@@ -50,6 +50,7 @@ export MPIDIR=%mpidir
 
 ./bootstrap.sh
 %add_optflags -I%mpidir/include -I%_includedir/fftw3-mpi
+export CPPFLAGS="%optflags"
 %configure \
 	--enable-static=no \
 	--with-gfortran-wrappers \
@@ -72,6 +73,9 @@ export MPIDIR=%mpidir
 %_libdir/*.so
 
 %changelog
+* Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.6-alt1.alpha
+- Version 1.0.6-alpha
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.5-alt2.alpha
 - Rebuilt with OpenMPI 1.6
 
