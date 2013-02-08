@@ -3,8 +3,8 @@ BuildRequires(pre): rpm-build-python
 %define dirs DerApproximator FuncDesigner OpenOpt SpaceFuncs
 
 Name: OOSuite
-Version: 0.39
-Release: alt1.svn20120816
+Version: 0.43
+Release: alt1.svn20130131
 Summary: OpenOpt Suite
 License: BSD
 Group: Sciences/Mathematics
@@ -45,7 +45,6 @@ This package contains python wrapper of toms587.
 %package -n python-module-openopt
 Summary: Python module of Numerical optimization framework
 Group: Development/Python
-BuildArch: noarch
 %setup_python_module openopt
 Requires: libglpk >= 4.38
 Requires: python-module-scipy >= 0.8.0
@@ -68,7 +67,6 @@ This package contains python module of OpenOpt.
 %package -n python-module-openopt-tests
 Summary: Tests for Python module of Numerical optimization framework
 Group: Development/Python
-BuildArch: noarch
 Requires: python-module-openopt = %version-%release
 
 %description -n python-module-openopt-tests
@@ -85,7 +83,6 @@ This package contains tests for python module of OpenOpt.
 %package -n python-module-openopt-examples
 Summary: Examples for Python module of Numerical optimization framework
 Group: Development/Python
-BuildArch: noarch
 Requires: python-module-openopt = %version-%release
 
 %description -n python-module-openopt-examples
@@ -221,6 +218,8 @@ mv %buildroot%python_sitelibdir_noarch/SpaceFuncs* \
 	%buildroot%python_sitelibdir/
 mv %buildroot%python_sitelibdir_noarch/kernel* \
 	%buildroot%python_sitelibdir/
+mv %buildroot%python_sitelibdir_noarch/openopt* \
+	%buildroot%python_sitelibdir/
 %endif
 cp -fR FuncDesigner/FuncDesigner/examples \
 	FuncDesigner/FuncDesigner/tests \
@@ -241,15 +240,15 @@ touch %buildroot%python_sitelibdir/SpaceFuncs/examples/__init__.py
 %files -n python-module-openopt
 %doc OpenOpt/COPYING.txt OpenOpt/README.txt
 %doc OpenOpt/openopt/doc/*
-%python_sitelibdir_noarch/openopt*
-%exclude %python_sitelibdir_noarch/openopt/tests
-%exclude %python_sitelibdir_noarch/openopt/examples
+%python_sitelibdir/openopt*
+%exclude %python_sitelibdir/openopt/tests
+%exclude %python_sitelibdir/openopt/examples
 
 %files -n python-module-openopt-tests
-%python_sitelibdir_noarch/openopt/tests
+%python_sitelibdir/openopt/tests
 
 %files -n python-module-openopt-examples
-%python_sitelibdir_noarch/openopt/examples
+%python_sitelibdir/openopt/examples
 
 %files -n python-module-DerApproximator
 %doc DerApproximator/COPYING.txt
@@ -279,6 +278,9 @@ touch %buildroot%python_sitelibdir/SpaceFuncs/examples/__init__.py
 %python_sitelibdir/SpaceFuncs/examples
 
 %changelog
+* Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt1.svn20130131
+- Version 0.43
+
 * Thu Aug 16 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.39-alt1.svn20120816
 - Version 0.39
 
