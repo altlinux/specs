@@ -4,7 +4,7 @@
 %define sover 0
 
 Name: pnetcdf
-Version: 1.3.0
+Version: 1.3.1
 Release: alt1
 Summary: Parallel netCDF: A High Performance API for NetCDF File Access
 License: Open source
@@ -125,6 +125,9 @@ LIB_SUFFIX=64
 %doc doc/*.pdf doc/*.txt examples
 
 %changelog
+* Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.1-alt1
+- Version 1.3.1
+
 * Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.3.0-alt1
 - Initial build for Sisyphus
 
