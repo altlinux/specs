@@ -27,7 +27,7 @@
 %define rname kdebase-workspace
 Name: kde4base-workspace
 Version: %major.%minor.%bugfix
-Release: alt3
+Release: alt4
 
 Group: Graphical desktop/KDE
 Summary: K Desktop Environment - Workspace
@@ -110,6 +110,7 @@ Patch1042: kdebase-workspace-4.8.5-alt-netbook-def-menu-groups.patch
 Patch1043: kdebase-workspace-4.8.5-alt-def-plasma-netbook.patch
 Patch1044: kdebase-workspace-4.8.5-alt-workspaceoptions.patch
 Patch1045: kdebase-workspace-4.10.0-alt-def-plasma-desktop-immutability.patch
+Patch1046: kdebase-workspace-4.10.0-alt-pager-refresh-layout.patch
 
 BuildRequires(pre): kde4libs-devel rpm-build-python
 BuildRequires(pre): NetworkManager-devel
@@ -159,7 +160,7 @@ Group: Development/KDE and QT
 Summary: Development files for %name
 Requires: %name-common = %version-%release
 #Requires: %name = %version-%release
-Requires: kde4libs-devel libqimageblitz-devel kde4-kactivities-devel
+Requires: kde4libs-devel libqimageblitz-devel kde4-kactivities-devel kde4base-runtime-devel
 %description devel
 Development files for %name
 
@@ -230,25 +231,6 @@ BuildArch: noarch
 Requires: %name-common = %version-%release
 %description wallpapers
 Default desktop wallpapers for KDE
-
-%package libs
-Summary: Runtime libraries for %name
-Group: System/Libraries
-BuildArch: noarch
-#Requires: %name-common = %version-%release
-Requires: libsolidcontrolifaces4 libsolidcontrol4 libweather4_ion
-Requires: libkdecorations4 libksgrd4 libkworkspace4
-Requires: libplasmaclock4 libprocessui4
-Requires: libkephal4 liblsofui4
-Requires: libplasma4_applet-system-monitor libplasma4-geolocation-interface
-Requires: libprocesscore4
-%if_enabled desktop
-Requires: libkscreensaver4 libkhotkeysprivate4 libkfontinst4 libkfontinstui4
-Requires: libtaskmanager4
-%endif
-
-%description libs
-Runtime libraries for %name
 
 %package -n libpolkitkdeprivate4
 Summary: KDE 4 library
@@ -595,6 +577,7 @@ __EOF__
 %patch1043 -p1
 %patch1044 -p1
 %patch1045 -p1
+%patch1046 -p1
 
 grep -q X-KDE-RootOnly kdm/kcm/kdm.desktop \
     || echo "X-KDE-RootOnly=true" >>kdm/kcm/kdm.desktop
@@ -879,7 +862,6 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 #%endif
 %endif
 
-%files libs
 %files -n libpowerdevilconfigcommonprivate4
 %_K4libdir/libpowerdevilconfigcommonprivate.so.*
 %files -n libpowerdevilcore4
@@ -971,6 +953,9 @@ chmod 0755 %buildroot/%_sysconfdir/firsttime.d/kdm4
 %_K4dbus_interfaces/*
 
 %changelog
+* Fri Feb 08 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt4
+- fix desktop pager layout
+
 * Thu Feb 07 2013 Sergey V Turchin <zerg@altlinux.org> 4.10.0-alt3
 - always lock plasma-desktop widgets on KDE startup
 - update from 4.10 branch
