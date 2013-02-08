@@ -8,7 +8,7 @@
 
 Name: pandoc
 Version: 1.9.4.5
-Release: alt1
+Release: alt2
 Summary: Markup conversion tool for markdown
 
 Group: Publishing
@@ -34,22 +34,21 @@ Slidy HTML slide shows.
 %setup -q
 
 %build
-rm -f man/man1/pandoc.1
-runghc Setup configure --bindir=%_bindir --libdir=%_libdir --datadir=%_datadir --docdir=%_docdir
-runghc Setup build
+%hs_configure2
+%hs_build
 
 %install
-runghc Setup copy --destdir=%buildroot
+%hs_install
+%hs_gen_filelist
 
-%files
-%doc BUGS COPYING COPYRIGHT README
-%attr(755,root,root) %_bindir/%name
-%_datadir/%name-%version
-%_libdir/%name-%version
-%attr(644,root,root) %_man1dir/*
-%attr(644,root,root) %_man5dir/*
+%files -f %name-files.all
+%_man1dir/*
+%_man5dir/*
 
 %changelog
+* Fri Feb 08 2013 Denis Smirnov <mithraen@altlinux.ru> 1.9.4.5-alt2
+- cleanup spec
+
 * Mon Dec 24 2012 Denis Smirnov <mithraen@altlinux.ru> 1.9.4.5-alt1
 - 1.9.4.5
 
