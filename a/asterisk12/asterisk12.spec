@@ -1,4 +1,4 @@
-%define svn_revision 381060
+%define svn_revision 381060.1
 Name: asterisk12
 Summary: Open source PBX
 Version: 12
@@ -65,7 +65,7 @@ BuildPreReq: libunixODBC-devel libltdl-devel
 BuildPreReq: liblua5-devel
 BuildPreReq: postgresql-devel libpq-devel
 BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
-%define svn_revision 381060
+%define svn_revision 381060.1
 %add_verify_elf_skiplist %_libdir/libasteriskssl12.so.1
 %def_with debug
 %def_enable debug
@@ -99,7 +99,6 @@ BuildPreReq: librpm-devel libnet-snmp-devel libwrap-devel perl-devel
 %_docdir/%name-%version/samples/%1.conf
 %nil
 Url: http://www.asterisk.org/
-Requires: libasteriskssl
 Requires: asterisk-files-all
 Requires: asterisk-initscript
 Requires(pre): asterisk-initscript
@@ -693,7 +692,7 @@ mkdir -p %buildroot/var/lib/asterisk/documentation/
 ln -s ../../../../usr/share/asterisk/documentation/12 %buildroot/var/lib/asterisk/documentation
 mv %buildroot/var/lib/asterisk/documentation/*.xml %buildroot/usr/share/asterisk/documentation/12/
 mv %buildroot/var/lib/asterisk/documentation/*.dtd %buildroot/usr/share/asterisk/documentation/12/
-ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
+ln -sf libasteriskssl12.so.1 %buildroot%_libdir/libasteriskssl12.so
 
 %preun
 %preun_service asterisk
@@ -821,6 +820,10 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %astmodule app_userevent
 %astmodule app_verbose
 %astmodule app_waitforring
+%astmodule res_sorcery_config
+%astmodule res_sorcery_memory
+%astsample sorcery
+%astsample test_sorcery
 %astmodule cdr_csv
 %astmodule cdr_custom
 %astmodule cdr_manager
@@ -951,6 +954,10 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %exclude %_docdir/%name-%version/Makefile
 %exclude %astsample app_skel
 %exclude %astsample config_test
+%exclude %_man8dir/astgenkey.*
+%exclude %_man8dir/autosupport.*
+%exclude %_man8dir/safe_asterisk.*
+%_docdir/%name-%version/CODING-GUIDELINES
 %exclude %_sbindir/astdb2bdb
 %exclude %_sbindir/astdb2sqlite3
 
@@ -1019,6 +1026,7 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %files chan_h323
 %astmodule chan_ooh323
 %astsample ooh323
+%exclude %astsample h323
 
 %files chan_iax2
 %astmodule chan_iax2
@@ -1151,6 +1159,7 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %astsample gtalk
 %astsample xmpp
 %astsample motif
+%exclude %astsample jingle
 
 %if_with jack
 %files jack
@@ -1238,6 +1247,10 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 %_libdir/libasteriskssl12.so.1
 
 %changelog
+* Fri Feb 08 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.381060.1
+- fix libasteriskssl
+- add res_sourcery_*
+
 * Thu Feb 07 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.381060
 - update from svn revision 381060
 
@@ -1246,7 +1259,7 @@ ln -sf libasteriskssl.so.1 %buildroot%_libdir/libasteriskssl.so
 
 * Fri Feb 01 2013 Denis Smirnov <mithraen@altlinux.ru> 12-alt0.380430.1
 - move astdb2sqlite3 to pbx-utils-astdb package
-- rename libasteriskssl.so -> libasteriskssl11.so
+- rename libasteriskssl.so -> libasteriskssl12.so
 - build with res_corosync module
 
 * Tue Jan 29 2013 Cronbuild Service <cronbuild@altlinux.org> 12-alt0.380430
