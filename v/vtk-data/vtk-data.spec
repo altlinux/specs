@@ -1,6 +1,6 @@
 %define ver 5.10
 Name: vtk-data
-Version: %ver.0
+Version: %ver.1
 Release: alt1
 Summary: Data files for examples of The Visualization Toolkit (VTK)
 License: MIT
@@ -30,6 +30,9 @@ tar -xf %SOURCE0
 %_datadir/vtk-%ver
 
 %changelog
+* Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.1-alt1
+- Version 5.10.1
+
 * Sat Jun 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.0-alt1
 - Version 5.10.0
 
