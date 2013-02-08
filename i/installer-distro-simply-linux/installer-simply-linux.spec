@@ -1,5 +1,5 @@
 Name: installer-distro-simply-linux
-Version: 6.990
+Version: 6.991
 Release: alt1
 
 Summary: Installer common files
@@ -34,6 +34,7 @@ Requires: alterator-license
 Requires: alterator-datetime openntpd
 Requires: alterator-vm
 Requires: alterator-pkg
+Requires: alterator-luks
 Requires: x-cursor-theme-jimmac
 #features
 Requires: installer-feature-local-clock
@@ -112,6 +113,9 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Thu Feb 07 2013 Mikhail Efremov <sem@altlinux.org> 6.991-alt1
+- Added alterator-luks.
+
 * Fri Jun 29 2012 Mikhail Efremov <sem@altlinux.org> 6.990-alt1
 - Use systemctl if systemd is present.
 - Enable NetworkManger service.
