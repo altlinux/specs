@@ -6,17 +6,18 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %f_pkg_name
-Version: 0.1.2
-Release: alt10
+Version: 0.1.3.1
+Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
 URL: http://www.haskell.org/haskellwiki/Xmonad-utils 
 Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 Summary: A small collection of X utilities
-# Automatically added by buildreq on Mon Mar 19 2012 (-bb)
-# optimized out: elfutils ghc7.4.2 ghc7.4.2-common ghc7.4.2-syb libX11-devel libgmp-devel pkg-config
-BuildRequires: ghc7.4.2-random ghc7.4.2-x11 libXext-devel libXinerama-devel
+# Automatically added by buildreq on Fri Feb 08 2013 (-bb)
+# optimized out: elfutils ghc7.6.1 ghc7.6.1-common libX11-devel libXrandr-devel libgmp-devel pkg-config python-base rpm-build-haskell
+BuildRequires: ghc7.6.1-alex ghc7.6.1-c2hs ghc7.6.1-cpphs ghc7.6.1-happy ghc7.6.1-hscolour ghc7.6.1-random ghc7.6.1-x11 libXext-devel libXinerama-devel
 
 %description
 A small collection of X utilities useful when running XMonad. It includes:
@@ -32,18 +33,25 @@ window;
 
 %prep
 %setup
+%patch -p1
 
 %build
 %hs_configure2
 %hs_build
 
 %install
-runghc Setup copy --destdir=%buildroot
+%hs_install
+%hs_gen_filelist
 
-%files
-%_bindir/*
+%files -f %name-files.all
 
 %changelog
+* Fri Feb 08 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.3.1-alt1
+- 0.1.3.1
+
+* Fri Feb 08 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.2-alt11
+- fix build with ghc 7.6.1 (patch by Ivan A. Melnikov)
+
 * Mon Jul 23 2012 Denis Smirnov <mithraen@altlinux.ru> 0.1.2-alt10
 - rebuild with ghc 7.4.2
 
