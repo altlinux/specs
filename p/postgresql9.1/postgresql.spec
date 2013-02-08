@@ -4,7 +4,7 @@
 %define prog_name            postgresql
 %define postgresql_major     9
 %define postgresql_minor     1
-%define postgresql_subminor  7
+%define postgresql_subminor  8
 %define postgresql_altrel    1
 %define libpq_major          5
 %define libpq_minor          4
@@ -695,6 +695,9 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Fri Feb 08 2013 Alexei Takaseev <taf@altlinux.org> 9.1.8-alt1
+- 9.1.8
+
 * Sat Dec 29 2012 Alexei Takaseev <taf@altlinux.org> 9.1.7-alt1
 - 9.1.7
 - Removed unnecessary require to be able to older versions of the
