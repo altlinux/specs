@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.7.3
+Version: 0.8.0
 Release: alt1
 
 Summary: Permanently install Live system
@@ -19,12 +19,13 @@ Requires: alterator-livecd >= 0.5-alt1
 Requires: alterator-vm alterator-grub alterator-users >= 10.2-alt1 alterator-root >= 0.9-alt1 alterator-datetime
 Requires: installer-scripts-remount-stage2 >= 0.3-alt1
 Requires: livecd-evms
-Requires: make-initrd-plymouth 
+Requires: make-initrd-plymouth
 Requires: consolehelper
 
 # Alterator-vm always allow to create an encrypted partition.
 # So always install alterator-luks.
 Requires: alterator-luks >= 0.2.1-alt1
+Requires: make-initrd-luks
 
 Requires(post): chkconfig
 Requires(preun): chkconfig
@@ -56,6 +57,11 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Fri Feb 08 2013 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
+- Replace bootsplash hook with setup-plymouth hooks.
+- Added make-initrd-luks to requires.
+- Added crypttab preinstall hook.
+
 * Wed Feb 06 2013 Mikhail Efremov <sem@altlinux.org> 0.7.3-alt1
 - Added alterator-luks to requires.
 - Added disable-privatetmp initinstall hook.
