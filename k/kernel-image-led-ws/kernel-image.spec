@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.62
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -481,7 +481,7 @@ Patch0560: linux-%kernel_branch.42-fix-drivers-scsi--ses.patch
 Patch0561: linux-%kernel_branch.49-fix-drivers-scsi--sg.patch
 Patch0562: linux-%kernel_branch.42-fix-drivers-scsi--sim710.patch
 Patch0563: linux-%kernel_branch.42-fix-drivers-scsi--sr_mod.patch
-Patch0564: linux-%kernel_branch.42-fix-drivers-scsi--st.patch
+Patch0564: linux-%kernel_branch.62-fix-drivers-scsi--st.patch
 Patch0565: linux-%kernel_branch.51-fix-drivers-scsi--zfcp.patch
 Patch0566: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb3i.patch
 Patch0567: linux-%kernel_branch.43-fix-drivers-scsi-cxgbi--cxgb4i.patch
@@ -581,7 +581,8 @@ Patch0738: linux-%kernel_branch.42-fix-kernel-power--hibernate.patch
 Patch0739: linux-%kernel_branch.44-fix-kernel-time.patch
 
 Patch0740: linux-%kernel_branch.57-fix-lib.patch
-Patch0741: linux-%kernel_branch.42-fix-lib--genalloc.patch
+Patch0741: linux-%kernel_branch.62-fix-lib--btree.patch
+Patch0742: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
 Patch0750: linux-%kernel_branch.58-fix-mm.patch
 Patch0751: linux-%kernel_branch.58-fix-mm--compaction.patch
@@ -1929,6 +1930,7 @@ cd linux-%version
 # fix-lib*
 %patch0740 -p1
 %patch0741 -p1
+%patch0742 -p1
 
 # fix-mm*
 %patch0750 -p1
@@ -3006,6 +3008,14 @@ done)
 
 
 %changelog
+* Thu Feb 07 2013 Led <led@altlinux.ru> 3.0.62-alt6
+- updated:
+  + fix-drivers-scsi--st
+- added:
+  + fix-lib--btree
+- updated configs
+- BTREE=m
+
 * Wed Feb 06 2013 Led <led@altlinux.ru> 3.0.62-alt5
 - updated:
   + fix-fs-cifs
