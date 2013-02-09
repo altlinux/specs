@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global project_version 1.0-beta-2
 
 Name:           plexus-active-collections
 Version:        1.0
-Release:        alt1_0.8.beta2jpp7
+Release:        alt1_0.9.beta2jpp7
 Summary:        Plexus Container-Backed Active Collections
 
 Group:          Development/Java
@@ -13,6 +16,7 @@ URL:            http://plexus.codehaus.org/
 #svn export http://svn.codehaus.org/plexus/tags/plexus-active-collections-1.0-beta-2/
 #tar zcf plexus-active-collections-1.0-beta-2.tar.gz plexus-active-collections-1.0-beta-2/
 Source0:        plexus-active-collections-1.0-beta-2.tar.gz
+Source1:        http://apache.org/licenses/LICENSE-2.0.txt
 
 Patch0:         %{name}-migration-to-component-metadata.patch
 
@@ -20,7 +24,7 @@ BuildArch: noarch
 
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  ant
-BuildRequires:  maven
+BuildRequires:  maven1
 BuildRequires:  maven-assembly-plugin
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
@@ -36,12 +40,12 @@ BuildRequires:  maven-plugin-testing-harness
 BuildRequires:  maven-doxia
 BuildRequires:  maven-doxia-sitetools
 BuildRequires:  plexus-containers-component-metadata
+BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-component-api
-BuildRequires:  plexus-container-default
 BuildRequires:  junit
 
 Requires:          plexus-component-api
-Requires:          plexus-container-default
+Requires:          plexus-containers-container-default
 Requires:          plexus-utils
 Requires:          junit
 Requires:          jpackage-utils
@@ -58,12 +62,13 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+API documentation for %%{name}.
 
 
 %prep
 %setup -q -n %{name}-%{project_version}
 %patch0 -p1
+cp %{SOURCE1} .
 
 %build
 mvn-rpmbuild \
@@ -86,14 +91,19 @@ install -d -m 0755 %{buildroot}%{_javadocdir}/plexus/%{name}
 cp -pr target/site/api*/* %{buildroot}%{_javadocdir}/plexus/%{name}/
 
 %files
+%doc LICENSE-2.0.txt
 %{_javadir}/plexus/*
 %{_mavenpomdir}/*
 %{_mavendepmapfragdir}/*
 
 %files javadoc
+%doc LICENSE-2.0.txt
 %{_javadocdir}/plexus/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.9.beta2jpp7
+- fc update
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_0.8.beta2jpp7
 - new fc release
 
