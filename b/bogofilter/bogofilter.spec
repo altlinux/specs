@@ -1,6 +1,6 @@
 Name: bogofilter
-Version: 1.2.2
-Release: alt1.2
+Version: 1.2.3
+Release: alt1
 
 Summary: Fast anti-spam filtering by Bayesian statistical analysis
 Summary(ru_RU.CP1251): Быстрая фильтрация спама на основе статистической формулы Байеса
@@ -132,6 +132,9 @@ install -m644 doc/README.db \
 %_libdir/%name/contrib
 
 %changelog
+* Sat Feb 09 2013 Ilya Mashkin <oddity@altlinux.ru> 1.2.3-alt1
+- 1.2.3
+
 * Thu Feb 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.2.2-alt1.2
 - Removed bad RPATH
 
