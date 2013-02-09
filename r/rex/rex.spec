@@ -1,7 +1,7 @@
 # SPEC file for rex package
 
 Name:    rex
-Version: 0.38.0
+Version: 0.39.0
 Release: alt1
 
 Summary: (R)?ex - Remote Execution Framework
@@ -56,6 +56,9 @@ and software deployment.
 
 
 %changelog
+* Sat Feb 09 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.39.0-alt1
+- New version
+
 * Sun Feb 03 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.38.0-alt1
 - New version
 
