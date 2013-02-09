@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global spname		ldapsp
@@ -6,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:		ldapjdk
 Version:	4.18
-Release:	alt1_11jpp7
+Release:	alt1_12jpp7
 Epoch:		1
 Summary: 	The Mozilla LDAP Java SDK
 License:	MPLv1.1 or GPLv2+ or LGPLv2+
@@ -15,10 +18,10 @@ URL:		http://www.mozilla.org/directory/javasdk.html
 # mkdir ldapjdk-4.18 ; 
 # cvs -d:pserver:anonymous@cvs-mirror.mozilla.org:/cvsroot Export -r LDAPJavaSDK_418 DirectorySDKSourceJava
 # tar -zcf ldapjdk-4.18,tar.gz ldapjdk-4.18
-Source:		%{name}-%{version}.tar.gz
+Source:		http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.tar.gz
 # originally taken from http://mirrors.ibiblio.org/pub/mirrors/maven2/ldapsdk/ldapsdk/4.1/ldapsdk-4.1.pom
 # changed: gId, aId and version
-Source1:	%{name}-%{version}.pom
+Source1:	http://pki.fedoraproject.org/pki/sources/%{name}/%{name}-%{version}.pom
 Patch0: 	%{name}-jarnamefix.patch
 Patch1:         matching-rule-parsing-640750.patch
 
@@ -47,7 +50,7 @@ Obsoletes:      openjmx-javadoc
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}
+Javadoc for %%{name}
 
 %prep
 %setup -q
@@ -65,7 +68,7 @@ pwd
 ( cd  mozilla/directory/java-sdk/ldapjdk/lib && build-jar-repository -s -p . jss4 jsse jaas jndi )
 cd mozilla/directory/java-sdk
 if [ ! -e "$JAVA_HOME" ] ; then export JAVA_HOME="%{_jvmdir}/java" ; fi
-sh -x ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 dist
+sh -x ant dist
 
 %install
 
@@ -100,10 +103,14 @@ ln -s ldapjdk.jar %buildroot%_javadir/ldapsdk.jar
 %_javadir/ldapsdk.jar
 
 %files javadoc
+%defattr(-,root,root,)
 %dir %{_javadocdir}/%{name}
 %{_javadocdir}/%{name}/*
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:4.18-alt1_12jpp7
+- fc update
+
 * Sun Sep 09 2012 Igor Vlasenko <viy@altlinux.ru> 1:4.18-alt1_11jpp7
 - fc release
 
