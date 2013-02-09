@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -32,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           jzlib
 Version:        1.1.0
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Epoch:          0
 Summary:        Re-implementation of zlib in pure Java
 
@@ -42,8 +45,8 @@ URL:            http://www.jcraft.com/jzlib/
 Source0:        http://www.jcraft.com/jzlib/jzlib-%{version}.tar.gz
 
 BuildArch:      noarch
-BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  jpackage-utils
+BuildRequires:  maven1
 BuildRequires:  maven-resources-plugin
 Requires:       jpackage-utils
 Source44: import.info
@@ -62,7 +65,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-%{summary}.
+%%{summary}.
 
 %package        demo
 Summary:        Examples for %{name}
@@ -70,7 +73,7 @@ Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description    demo
-%{summary}.
+%%{summary}.
 
 
 %prep
@@ -93,18 +96,28 @@ cp -pr target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/%{name}
 cp -pr example/* $RPM_BUILD_ROOT%{_datadir}/%{name}
 
+# pom
+install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
+install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
+
 %files
-%{_javadir}/*.jar
+%{_javadir}/%{name}.jar
+%{_mavenpomdir}/JPP-%{name}.pom
+%{_mavendepmapfragdir}/%{name}
 %doc LICENSE.txt
 
 %files javadoc
-%doc %{_javadocdir}/%{name}
+%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %files demo
 %doc %{_datadir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_3jpp7
+- fc update
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_2jpp7
 - new release
 
