@@ -1,17 +1,18 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           antlrworks
 Version:        1.4.3
-Release:        alt1_6jpp7
+Release:        alt1_8jpp7
 Summary:        Grammar development environment for ANTLR v3 grammars
 
 Group:          Development/Java
 License:        BSD
-URL:            http://www.antlr.org/works
-Source0:        http://www.antlr.org/download/%{name}-%{version}-src.zip
+URL:            http://www.antlr3.org/works
+Source0:        http://www.antlr3.org/download/%{name}-%{version}-src.zip
 Source1:        antlrworks.desktop
 # Disable embedding of dependency jars files into antlrworks jar file
 Patch0:         %{name}-1.4-build.patch
@@ -22,18 +23,22 @@ Patch1:         %{name}-1.4-browsers.patch
 Patch2:         %{name}-1.4-jgoodies-forms_1.4.2.patch
 # Fix compilation with OpenJDK 7
 Patch3:         %{name}-1.4.3-jdk7.patch
+# Fix compilation with JGoodies Forms >= 1.6.0
+Patch4:         %{name}-1.4.3-jgoodies-forms_1.6.0.patch
 
 BuildRequires:  ant
+BuildRequires:  antlr-tool
 BuildRequires:  antlr3-tool >= 3.3
 BuildRequires:  desktop-file-utils
-BuildRequires:  jgoodies-forms
+BuildRequires:  jgoodies-forms >= 1.6.0
 BuildRequires:  stringtemplate
+Requires:       antlr-tool
 Requires:       antlr3-tool >= 3.3
 Requires:       graphviz
 # Owns /usr/share/icons/hicolor
 Requires:       icon-theme-hicolor
 # Antlrworks requires javac
-Requires:       jgoodies-forms
+Requires:       jgoodies-forms >= 1.6.0
 BuildArch:      noarch
 Source44: import.info
 
@@ -57,6 +62,7 @@ encountered by grammar developers.
 %patch1 -p1 -b .browsers
 %patch2 -p0 -b .jgoodies-forms_1.4.2
 %patch3 -p1 -b .jdk7
+%patch4 -p0 -b .jgoodies-forms_1.6.0
 
 find -name '*.class' -o -name '*.jar' -exec rm '{}' \;
 
@@ -95,6 +101,9 @@ touch $RPM_BUILD_ROOT/etc/java/antlrworks.conf
 
 
 %changelog
+* Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_8jpp7
+- jgoodies fix
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.4.3-alt1_6jpp7
 - new version
 

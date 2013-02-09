@@ -33,7 +33,7 @@ BuildRequires: jpackage-compat
 
 Name:           substance
 Version:        5.3
-Release:        alt3_1jpp6
+Release:        alt4_1jpp6
 Summary:        Substance Look and Feel
 License:        BSD
 Group:          Development/Java
@@ -96,6 +96,10 @@ ln -sf %{_javadir}/fest-reflect.jar   lib/test/fest-reflect-1.1.jar
 ln -sf %{_javadir}/fest-swing.jar     lib/test/fest-swing-1.2a3.jar
 ln -sf %{_javadir}/fest-util.jar      lib/test/fest-util-1.1.jar
 
+# add jgoodies-common.jar
+ln -sf %{_javadir}/jgoodies-common.jar lib/jgoodies-common.jar
+sed -i -e '/pathelement location=".*forms-1.2.0.jar"/i<pathelement location="${substance.lib.dir}/jgoodies-common.jar" />\n' build.xml
+
 %build
 export LANG=en_US.ISO8859-1
 export OPT_JAR_LIST="ant/ant-nodeps"
@@ -143,6 +147,9 @@ ln -s %{name}-%{version} \
 %doc www/*
 
 %changelog
+* Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 5.3-alt4_1jpp6
+- fixed build with new jgoodies - added jgoodies-common to classpath
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 5.3-alt3_1jpp6
 - fixed build with fc fest-*
 
