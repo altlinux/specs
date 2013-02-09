@@ -1,26 +1,14 @@
+%define _sbindir /sbin
+
 Name: reiserfsprogs
-Version: 3.6.21
+Version: 3.6.22
 Release: alt1
-
 Summary: The utilities to create Reiserfs volume
-License: GPL
+License: GPLv2 with "Anti-Plagiarism" modification
 Group: System/Kernel and hardware
-
-Url: ftp://ftp.kernel.org/pub/linux/utils/fs/reiserfs/
-Source: %url/%name-%version.tar.bz2
-Patch0: reiserfsprogs-3.6.2-make-the-force-option-works-in-resize_reiserfs.patch
-Patch1: 02-mkreiserfs-quiet.diff
-Patch2: broken-inline.diff
-Patch3: reiserfs-large-block-warning.diff 
-Patch4: reiserfsprogs-fsck-mapid.diff
-Patch5: reiserfsprogs-external-journal-changes.diff
-Patch6: reiserfsprogs-remove-stupid-fsck_sleep.diff
-Patch7: reiserfsprogs-progress.diff
-Patch8: reiserfsprogs-reorder-libs.diff
-Patch9: reiserfsprogs-mkfs-use-o_excl.diff
-Patch10: reiserfsprogs-3.6.19-alt-debian-headers.patch
-Packager: Michael Shigorin <mike@altlinux.org>
-
+Url: http://git.kernel.org/?p=linux/kernel/git/jeffm/%name.git;a=summary
+Source: %name-%version.tar
+Patch: %name-%version-%release.patch
 Obsoletes: reiserfs-utils
 Conflicts: progsreiserfs
 Provides: reiserfs-utils = %version-%release
@@ -29,57 +17,43 @@ Provides: reiserfs-utils = %version-%release
 BuildRequires: libuuid-devel
 
 %description
-Reiserfs is a file system using a plug-in based object oriented
-variant on classical balanced tree algorithms. The results when
-compared to the ext2fs conventional block allocation based file system
-running under the same operating system and employing the same
-buffering code suggest that these algorithms are overall more
-efficient, and are becoming more so every passing month.  Loosely
-speaking, every month we find another performance cranny that needs
-work, and we fix it, and every month we find some way of improving our
-overall general usage performance. The improvement in small file space
-and time performance suggests that we may now revisit a common OS
-design assumption that one should aggregate small objects using layers
-above the file system layer. Being more effective at small files DOES
-NOT make us less effective for other files, this is a general purpose
-FS, and our overall traditional FS usage performance is high enough to
-establish that. Reiserfs has a commitment to opening up the FS design
-to contributions, and we are now now adding plug-ins so that you can
-create your own types of directories and files.
+Reiserfs is a file system using a plug-in based object oriented variant
+on classical balanced tree algorithms.
+This package contains utilities for create, resize, check, repair, tune, debug
+Reiserfs.
+
 
 %prep
 %setup
-%patch0 -p0
-#patch1 -p1
-%patch2
-#patch3 -p1
-#patch4 -p1
-#patch5 -p1
-#patch6 -p1
-#patch7 -p1
-#patch8 -p1
-#patch9 -p1
-#patch10 -p1
+%patch -p1
+
 
 %build
-%configure
-%make OPTFLAGS="%optflags"
+%autoreconf
+%configure --enable-largefile
+%make_build V=1
+
 
 %install
-mkdir -p %buildroot%_man8dir/
-%makeinstall
-mv %buildroot/%_sbindir %buildroot/sbin
-ln -s mkreiserfs %buildroot/sbin/mkfs.reiserfs
-ln -s reiserfsck %buildroot/sbin/fsck.reiserfs
+%makeinstall_std
 ln -s mkreiserfs.8 %buildroot%_man8dir/mkfs.reiserfs.8
 ln -s reiserfsck.8 %buildroot%_man8dir/fsck.reiserfs.8
 
+
 %files
-%doc README ChangeLog COPYING
-/sbin/*
-%_mandir/*/*
+%doc README COPYING
+%_sbindir/*
+%_man8dir/*
+
 
 %changelog
+* Sat Feb 09 2013 Led <led@altlinux.ru> 3.6.22-alt1
+- 3.6.22
+- fixed URL
+- fixed License
+- cleaned up and fixed description
+- cleaned up spec
+
 * Tue Aug 31 2010 Michael Shigorin <mike@altlinux.org> 3.6.21-alt1
 - 3.6.21 (thanks led@ for every hint on this one)
 - applied cooker patch to fix linking against libblkid
