@@ -3,8 +3,8 @@ BuildRequires: /usr/bin/git /usr/bin/svnversion glib2-devel libICE-devel libSM-d
 # END SourceDeps(oneline)
 %define oname gnunet
 Name: gnunet
-Version: 0.9.5
-Release: alt2
+Version: 0.9.5a
+Release: alt1
 
 Summary: Peer-to-peer framework
 
@@ -79,7 +79,6 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_bindir/gnunet-config
 %_bindir/gnunet-core
 %_bindir/gnunet-directory
-%_bindir/gnunet-dns2gns
 %_bindir/gnunet-download
 %_bindir/gnunet-download-manager.scm
 %_bindir/gnunet-ecc
@@ -127,13 +126,13 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_libdir/libgnunethello.so.*
 %_libdir/libgnunetlockmanager.so.*
 %_libdir/libgnunetmesh.so.*
-%_libdir/libgnunetmeshblock.so.*
 %_libdir/libgnunetmysql.so.*
 %_libdir/libgnunetnamestore.so.*
 %_libdir/libgnunetnat.so.*
 %_libdir/libgnunetnse.so.*
 %_libdir/libgnunetpeerinfo.so.*
 %_libdir/libgnunetregex.so.*
+%_libdir/libgnunetregexblock.so.*
 %_libdir/libgnunetstatistics.so.*
 %_libdir/libgnunetstream.so.*
 %_libdir/libgnunettestbed.so.*
@@ -180,6 +179,9 @@ rm -f %buildroot/usr/share/doc/gnunet/COPYING
 %_pkgconfigdir/gnunetvpn.pc
 
 %changelog
+* Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.5a-alt1
+- Friendly NMU: update to 0.9.5a
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.5-alt2
 - Rebuilt with glpk 4.48
 
