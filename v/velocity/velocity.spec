@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -32,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           velocity
 Version:        1.7
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Epoch:          1
 Summary:        Java-based template engine
 License:        ASL 2.0
@@ -102,7 +105,7 @@ Group:          Development/Java
 BuildArch: noarch
 
 %description    manual
-Documentation for %{name}.
+Documentation for %%{name}.
 
 %package        javadoc
 Summary:        Javadoc for %{name}
@@ -111,7 +114,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-Javadoc for %{name}.
+Javadoc for %%{name}.
 
 %package        demo
 Summary:        Demo for %{name}
@@ -119,7 +122,7 @@ Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description    demo
-Demonstrations and samples for %{name}.
+Demonstrations and samples for %%{name}.
 
 # -----------------------------------------------------------------------------
 
@@ -201,18 +204,21 @@ install -pD -T -m 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_mavenpomdir}/JPP-%{name}.pom
 
 %files manual
-%doc LICENSE
+%doc LICENSE NOTICE
 %doc docs/*
 
 %files javadoc
-%doc LICENSE
+%doc LICENSE NOTICE
 %{_javadocdir}/%{name}
 
 %files demo
-%doc LICENSE
+%doc LICENSE NOTICE
 %{_datadir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt1_6jpp7
+- fc update
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 1:1.7-alt1_5jpp7
 - new version
 
