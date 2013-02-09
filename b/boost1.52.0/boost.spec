@@ -1,5 +1,5 @@
 %define ver_maj 1
-%define ver_min 53
+%define ver_min 52
 %define ver_rel 0
 
 %define namesuff %{ver_maj}_%{ver_min}_%ver_rel
@@ -7,7 +7,7 @@
 %define boost_include %_includedir/%name
 %define boost_doc %_docdir/%name-%version
 
-%def_with devel
+%def_without devel
 %if_with devel
 %def_with jam
 %def_with devel_static
@@ -32,9 +32,9 @@
 %define mpidir %_libdir/%mpiimpl
 %endif
 
-Name: boost
+Name: boost%ver_maj.%ver_min.%ver_rel
 Version: %ver_maj.%ver_min.%ver_rel
-Release: alt2
+Release: alt3
 Epoch: 1
 
 Summary: Boost libraries
@@ -50,7 +50,7 @@ Patch5: boost-1.50.0-alt-bjam-locate-target.patch
 Patch15: boost-1.36.0-alt-test-include-fix.patch
 Patch23: boost-1.45.0-alt-mpi-mt-only.patch
 Patch28: boost-1.50.0-fedora-polygon-fix-gcc47.patch
-Patch29: boost-1.53.0-alt-qt4-moc-fix.patch
+Patch30: boost-1.52.0-boost_locale_utf.patch
 
 # we use %%_python_version
 BuildRequires(pre): rpm-build-python >= 0.34.4-alt4
@@ -117,7 +117,6 @@ Summary: Boost libraries
 Group: Development/C++
 
 PreReq: %name-devel-headers = %epoch:%version-%release
-Requires: libboost_atomic%version = %epoch:%version-%release
 Requires: libboost_chrono%version = %epoch:%version-%release
 Requires: libboost_date_time%version = %epoch:%version-%release
 Requires: libboost_graph%version = %epoch:%version-%release
@@ -130,8 +129,6 @@ Requires: libboost_test%version = %epoch:%version-%release
 Requires: libboost_timer%version = %epoch:%version-%release
 Requires: libboost_thread%version = %epoch:%version-%release
 
-Provides: boost-atomic-devel = %epoch:%version-%release
-Obsoletes: boost-atomic-devel < %epoch:%version-%release
 Provides: boost-chrono-devel = %epoch:%version-%release
 Obsoletes: boost-chrono-devel < %epoch:%version-%release
 Provides: boost-datetime-devel = %epoch:%version-%release
@@ -182,7 +179,6 @@ Requires: %name-devel = %epoch:%version-%release
 Requires: %name-asio-devel = %epoch:%version-%release
 Requires: %name-chrono-devel = %epoch:%version-%release
 Requires: %name-context-devel = %epoch:%version-%release
-Requires: %name-coroutine-devel = %epoch:%version-%release
 Requires: %name-filesystem-devel = %epoch:%version-%release
 Requires: %name-flyweight-devel = %epoch:%version-%release
 Requires: %name-geometry-devel = %epoch:%version-%release
@@ -192,13 +188,11 @@ Requires: %name-graph-parallel-devel = %epoch:%version-%release
 Requires: %name-interprocess-devel = %epoch:%version-%release
 Requires: %name-intrusive-devel = %epoch:%version-%release
 Requires: %name-locale-devel = %epoch:%version-%release
-Requires: %name-lockfree-devel = %epoch:%version-%release
 Requires: %name-math-devel = %epoch:%version-%release
 %if_with mpi
 Requires: %name-mpi-devel = %epoch:%version-%release
 %endif
 Requires: %name-msm-devel = %epoch:%version-%release
-Requires: %name-multiprecision-devel = %epoch:%version-%release
 Requires: %name-polygon-devel = %epoch:%version-%release
 Requires: %name-program_options-devel = %epoch:%version-%release
 Requires: %name-python-devel = %epoch:%version-%release
@@ -256,29 +250,6 @@ flags, and the instruction pointer, a fcontext_t instance represents a
 specific point in the application's execution path. This is useful for
 building higher-level abstractions, like coroutines, cooperative threads
 (userland threads) or an aquivalent to C# keyword yield in C++.
-
-
-%package coroutine-devel
-Summary: The Boost Coroutine Lirary development files
-Group: Development/C++
-BuildArch: noarch
-AutoReq: yes, nocpp
-
-PreReq: %name-devel = %epoch:%version-%release
-Requires: %name-context-devel = %epoch:%version-%release
-
-%description coroutine-devel
-Boost.Coroutine provides templates for generalized subroutines which
-allow multiple entry points for suspending and resuming execution at
-certain locations. It preserves the local state of execution and allows
-re-entering subroutines more than once (useful if state must be kept
-across function calls).
-
-In contrast to threads, which are pre-emptive, coroutine switches are
-cooperative (programmer controls when a switch will happen). The kernel
-is not involved in the coroutine switches.
-
-The implementation uses Boost.Context for context switching.
 
 
 %package filesystem-devel
@@ -372,18 +343,6 @@ facilities in a C++ way. It gives powerful tools for development
 of cross platform localized software - the software that talks
 to user in its language.
 
-%package lockfree-devel
-Summary: The Boost Lockfree Lirary development files
-Group: Development/C++
-BuildArch: noarch
-AutoReq: yes, nocpp
-
-PreReq: %name-devel = %epoch:%version-%release
-
-%description lockfree-devel
-Boost.Lockfree library provides lockfree data structures, like
-lockfree queue and stack.
-
 
 %package interprocess-devel
 Summary: The Boost Interprocess Lirary development files
@@ -468,24 +427,6 @@ Ths Boost Meta State Machine (MSM) is a library allowing you to easily
 and quickly define state machines of very high performance.
 
 It is header-only library. This package contains the headers.
-
-
-%package multiprecision-devel
-Summary: The Boost Multiprecision Lirary development files
-Group: Development/C++
-BuildArch: noarch
-AutoReq: yes, nocpp
-
-PreReq: %name-devel = %epoch:%version-%release
-
-%description multiprecision-devel
-The Multiprecision Library provides integer, rational and floating-point
-types in C++ that have more range and precision than C++'s ordinary
-built-in types. It consists of a generic interface to the mathematics of
-large numbers as well as a selection of big number back ends provided
-off-the-rack in including interfaces to GMP, MPFR, MPIR, TomMath as well
-as its own collection of Boost-licensed, header-only back ends for
-integers, rationals and floats.
 
 
 %package polygon-devel
@@ -669,7 +610,6 @@ Summary: Boost libraries
 Group: Development/C++
 
 PreReq: %name-devel = %epoch:%version-%release
-Requires: %name-atomic-devel = %epoch:%version-%release
 Requires: %name-chrono-devel = %epoch:%version-%release
 Requires: %name-context-devel = %epoch:%version-%release
 Requires: %name-filesystem-devel = %epoch:%version-%release
@@ -721,23 +661,6 @@ standards.
 
 This package contains static libraries.
 %endif #with devel-static
-
-
-%package -n libboost_atomic%version
-Summary: Boost.Atomic Library
-Group: Development/C++
-
-%if_with strict_deps
-Requires: libboost_system%version = %epoch:%version-%release
-%endif
-
-%description -n libboost_atomic%version
-Boost.Atomic is a library that provides atomic data types and operations
-on these data types, as well as memory ordering constraints required for
-coordinating multiple threads through atomic variables. It implements
-the interface as defined by the C++11 standard, but makes this feature
-available for platforms lacking system/compiler support for this
-particular C++11 feature.
 
 
 %package -n libboost_chrono%version
@@ -1144,7 +1067,7 @@ applications. This package contains python module.
 %patch15 -p1
 %patch23 -p2
 %patch28 -p3
-%patch29 -p2
+%patch30 -p0
 
 find ./ -type f -perm /111 -exec chmod a-x '{}' ';'
 
@@ -1325,21 +1248,18 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 %_includedir/%name
 %exclude %_includedir/%name/asio*
 %exclude %_includedir/%name/context
-%exclude %_includedir/%name/coroutine
 %exclude %_includedir/%name/filesystem*
 %exclude %_includedir/%name/flyweight*
 %exclude %_includedir/%name/geometry*
 %exclude %_includedir/%name/interprocess*
 %exclude %_includedir/%name/intrusive
 %exclude %_includedir/%name/locale*
-%exclude %_includedir/%name/lockfree
 %if_with mpi
 %exclude %_includedir/%name/mpi
 %exclude %_includedir/%name/graph/parallel/
 %exclude %_includedir/%name/graph/distributed/
 %endif
 %exclude %_includedir/%name/msm
-%exclude %_includedir/%name/multiprecision
 %exclude %_includedir/%name/polygon
 %exclude %_includedir/%name/program_options*
 %exclude %_includedir/%name/python*
@@ -1374,9 +1294,6 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 %_includedir/%name/context
 %_libdir/*_context*.so
 
-%files coroutine-devel
-%_includedir/%name/coroutine
-
 %files filesystem-devel
 %_includedir/%name/filesystem*
 %_libdir/*_filesystem*.so
@@ -1404,9 +1321,6 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 %_includedir/%name/locale*
 %_libdir/*_locale*.so
 
-%files lockfree-devel
-%_includedir/%name/lockfree
-
 %files math-devel
 #includes go to boost-devel package
 #%_includedir/%name/math*
@@ -1420,9 +1334,6 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 
 %files msm-devel
 %_includedir/%name/msm
-
-%files multiprecision-devel
-%_includedir/%name/multiprecision
 
 %files polygon-devel
 %_includedir/%name/polygon
@@ -1470,9 +1381,6 @@ export LD_PRELOAD=${LD_PRELOAD:+$LD_PRELOAD:}%_libdir/libpython%{_python3_versio
 %files devel-static
 %_libdir/*.a
 %endif
-
-%files -n libboost_atomic%version
-%_libdir/*_atomic*.so.*
 
 %files -n libboost_chrono%version
 %_libdir/*_chrono*.so.*
@@ -1612,14 +1520,8 @@ done
 
 
 %changelog
-* Sat Feb 09 2013 Ivan A. Melnikov <iv@altlinux.org> 1:1.53.0-alt2
-- add patch 29 to make qt4 moc work even when some boost headers
-  included.
-
-* Wed Feb 06 2013 Ivan A. Melnikov <iv@altlinux.org> 1:1.53.0-alt1
-- new version;
-- subpackages for Boost.Atomic, Boost.Coroutine, Boost.Lockfree and
-  Boost.Multiprecision.
+* Sat Feb 09 2013 Ivan A. Melnikov <iv@altlinux.org> 1:1.52.0-alt3
+- compatibility build without development headers.
 
 * Mon Feb 04 2013 Ivan A. Melnikov <iv@altlinux.org> 1:1.52.0-alt2
 - fix Boost.Locale UTF issue (CVE-2013-0252).
