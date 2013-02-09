@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-velocity
 Version:        1.1.8
-Release:        alt1_10jpp7
+Release:        alt1_11jpp7
 Epoch:          0
 Summary:        Plexus Velocity Component
 License:        ASL 2.0
@@ -47,11 +47,12 @@ URL:            http://plexus.codehaus.org/
 # svn export http://svn.codehaus.org/plexus/plexus-components/tags/plexus-velocity-1.1.8/
 # tar czf plexus-velocity-1.1.8-src.tar.gz plexus-velocity-1.1.8/
 Source0:        plexus-velocity-%{version}-src.tar.gz
+Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  maven
+BuildRequires:  maven1
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -87,10 +88,11 @@ Group:          Development/Java
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+Javadoc for %%{name}.
 
 %prep
 %setup -q -n plexus-velocity-%{version}
+cp -p %{SOURCE1} LICENSE
 for j in $(find . -name "*.jar"); do
         mv $j $j.no
 done
@@ -116,14 +118,19 @@ install -d -m 755 %{buildroot}/%{_javadocdir}/%{name}
 cp -pr target/site/apidocs/* %{buildroot}/%{_javadocdir}/%{name}
 
 %files
+%doc LICENSE
 %{_javadir}/%{parent}/*
 %{_mavendepmapfragdir}/*
 %{_mavenpomdir}/*
 
 %files javadoc
+%doc LICENSE
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt1_11jpp7
+- fc update
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt1_10jpp7
 - new fc release
 
