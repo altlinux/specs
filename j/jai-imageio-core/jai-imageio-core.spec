@@ -1,10 +1,13 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global cvs_ver 20100217
 
 Name:		jai-imageio-core
 Version:	1.2
-Release:	alt1_0.10.20100217cvsjpp7
+Release:	alt1_0.11.20100217cvsjpp7
 Summary:	Core Java Advanced Imaging Image I/O Tools API
 
 Group:		System/Libraries
@@ -47,13 +50,12 @@ minus JPEG 2000, JAI Image I/O operations, and the C-based codecLib.
 %package javadoc
 Summary:	Javadocs for %{name}
 Group:		Development/Java
-Requires:	%{name} = %{version}-%{release}
 Requires:	jpackage-utils
 BuildArch: noarch
 
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 
 %prep
@@ -98,10 +100,14 @@ cp -av build/linux-i586/javadocs/docs-jcp/* $RPM_BUILD_ROOT%{_javadocdir}/%{name
 %{_javadir}/*.jar
 
 %files javadoc
+%doc LICENSE.txt COPYRIGHT.txt README-fedora-epel.txt
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.11.20100217cvsjpp7
+- fc update
+
 * Wed Aug 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.2-alt1_0.10.20100217cvsjpp7
 - new release
 
