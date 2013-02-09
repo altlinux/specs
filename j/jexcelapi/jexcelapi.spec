@@ -1,11 +1,14 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global oname jxl
 
 Name:           jexcelapi
 Version:        2.6.12
-Release:        alt3_4jpp7
+Release:        alt3_5jpp7
 Summary:        A Java API to read, write and modify Excel spreadsheets
 License:        LGPLv3
 Group:          Development/Java
@@ -19,7 +22,6 @@ Requires:       jpackage-utils
 BuildRequires:  jpackage-utils >= 0:1.7.3
 BuildRequires:  ant
 BuildRequires:  jflex
-BuildRequires:  jlex
 BuildRequires:  findutils
 BuildRequires:  sed
 BuildRequires:  log4j
@@ -53,7 +55,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-API documentation for %{name}.
+API documentation for %%{name}.
 
 %prep
 %setup -n %{name} -q
@@ -75,7 +77,7 @@ loggerClasspath=$(build-classpath log4j)
 EOBP
 
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
-export CLASSPATH=$(build-classpath jlex jflex)
+export CLASSPATH=$(build-classpath jflex)
 
 mkdir out
 ant jxlall
@@ -110,6 +112,9 @@ cp -r docs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt3_5jpp7
+- fc update
+
 * Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 0:2.6.12-alt3_4jpp7
 - fc version
 
