@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             snakeyaml
 Version:          1.9
-Release:          alt1_2jpp7
+Release:          alt1_3jpp7
 Summary:          YAML parser and emitter for the Java programming language
 License:          ASL 2.0
 Group:            Development/Java
@@ -16,27 +17,19 @@ Group:            Development/Java
 URL:              http://code.google.com/p/%{name}
 # http://snakeyaml.googlecode.com/files/SnakeYAML-all-1.9.zip
 Source0:          http://%{name}.googlecode.com/files/SnakeYAML-all-%{version}.zip
-Source1:          %{name}.depmap
 
 Patch0:           %{name}-spring-removal-workaround.patch
-Patch1:           %{name}-gdata+base64coder+cobertura-addition.patch
 
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven
+BuildRequires:    maven1
 BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    joda-time
 BuildRequires:    gnu-getopt
-BuildRequires:    gdata-java
-BuildRequires:    base64coder
 
-Requires:         gdata-java
-Requires:         base64coder
 Requires:         jpackage-utils
-Requires(post):   jpackage-utils
-Requires(postun): jpackage-utils
 Source44: import.info
 
 %description
@@ -57,13 +50,13 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q -n %{name}
 
 %patch0 -p1
-%patch1 -p1
+%pom_add_dep org.codehaus.mojo:cobertura-maven-plugin:any:test
 
 # remove bundled stuff
 rm -rf target
@@ -74,9 +67,7 @@ rm -rf src/main/java/biz
 sed -i 's/\r//g' LICENSE.txt
 
 %build
-# gdata-java has no maven support -> depmap file needed
-# http://code.google.com/p/gdata-java-client/issues/detail?id=328
-mvn-rpmbuild -Dmaven.local.depmap.file="%{SOURCE1}" install
+mvn-rpmbuild install
 
 %install
 # jars
@@ -103,6 +94,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_3jpp7
+- fc update
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_2jpp7
 - new fc release
 
