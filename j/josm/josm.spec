@@ -6,12 +6,12 @@ BuildRequires: jpackage-compat
 #
 # spec file for package josm
 
-%global svn_revision 5485
+%global svn_revision 5608
 
 
 Name:           josm
 Version:        0
-Release:        alt1_0.33.5485svnjpp7
+Release:        alt1_0.38.5608svnjpp7
 Summary:        An editor for  OpenStreetMap (OSM)
 Group:          Networking/WWW
 License:        GPLv2+
@@ -41,12 +41,16 @@ BuildRequires:  signpost-core >= 1.2.1.1
 BuildRequires:  metadata-extractor >= 2.3.1
 BuildRequires:  svgsalamander
 BuildRequires:  apache-commons-codec
+BuildRequires:  gnu-getopt
+BuildRequires:  gdata-java
 Requires:       jpackage-utils
 Requires:       icon-theme-hicolor
 Requires:       metadata-extractor >= 2.3.1
 Requires:       ant
 Requires:       signpost-core >= 1.2.1.1
 Requires:       svgsalamander
+Requires:       gnu-getopt
+Requires:       gdata-java
 Source44: import.info
 
 %description
@@ -68,7 +72,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q
@@ -82,13 +86,17 @@ find . -name '*.class' -exec rm -f '{}' \;
 rm -rf ./src/oauth
 # removing metadata-extractor and svgSalamander sources files and include metadata-extractor and svgSalamander dependencies
 rm -rf ./src/com
-
+# removing gnu-getopt from sources and include it as dependencie
+rm -rf ./src/gnu
 
 ln -s $(build-classpath metadata-extractor) lib/metadata-extractor.jar
 ln -s $(build-classpath signpost-core) lib/signpost-core.jar
 ln -s $(build-classpath svgsalamander) lib/svgsalamander.jar
 ln -s $(build-classpath javacc) tools/javacc.jar
 ln -s $(build-classpath commons-codec) lib/apache-commons-codec.jar
+ln -s $(build-classpath ant) lib/ant.jar
+ln -s $(build-classpath gnu-getopt) lib/gnu-getopt.jar
+ln -s $(build-classpath gdata/gdata-core) lib/gdata-core.jar
 
 iconv -f iso8859-15 -t utf-8 CONTRIBUTION > CONTRIBUTION.conv && mv -f CONTRIBUTION.conv CONTRIBUTION
 
@@ -119,7 +127,7 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ %SOURCE2
 
 %files
 %doc README LICENSE CONTRIBUTION gpl-2.0.txt gpl-3.0.txt 
-%{_mandir}/man1/%{name}.1.*
+%{_mandir}/man1/%{name}.1*
 %{_javadir}/%{name}.jar
 %{_bindir}/%{name}
 %{_datadir}/applications/%{name}.desktop
@@ -132,6 +140,9 @@ desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ %SOURCE2
 
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.38.5608svnjpp7
+- fc update
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 0-alt1_0.33.5485svnjpp7
 - new fc release
 
