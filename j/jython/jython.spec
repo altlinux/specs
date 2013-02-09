@@ -1,5 +1,6 @@
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: python-devel
 # END SourceDeps(oneline)
 #BuildRequires(pre): j2se-jdbc = 1.4.2
@@ -18,7 +19,7 @@ BuildRequires: jpackage-compat
 
 Name:                      jython
 Version:                   2.2.1
-Release:                   alt6_10jpp7
+Release:                   alt6_11jpp7
 Summary:                   Jython is an implementation of Python written in pure Java.
 License:                   ASL 1.1 and BSD and CNRI and JPython and Python
 URL:                       http://www.jython.org/
@@ -41,7 +42,6 @@ Requires:                  servlet
 Requires:                  libreadline-java >= 0.8.0-16
 Requires:                  mysql-connector-java
 BuildRequires:             ant
-BuildRequires:             ht2html
 BuildRequires:             libreadline-java >= 0.8.0-16
 BuildRequires:             mysql-connector-java
 BuildRequires:             jakarta-oro
@@ -77,7 +77,7 @@ Group:             Development/Java
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+API documentation for %%{name}.
 
 %package manual
 Summary:           Manual for %{name}
@@ -85,17 +85,17 @@ Group:             Development/Java
 BuildArch: noarch
 
 %description manual
-Usage documentation for %{name}.
+Usage documentation for %%{name}.
 
 %package demo
 Summary:           Demo for %{name}
-Requires:          jython = %{?epoch:%epoch:}%{version}-%{release}
+Requires:          %{name} = %{?epoch:%epoch:}%{version}-%{release}
 Group:             Development/Java
 AutoReq: yes, nopython
 #AutoProv: yes, nopython
 
 %description demo
-Demonstrations and samples for %{name}.
+Demonstrations and samples for %%{name}.
 
 %prep
 %setup -q -n %{name}-svn-%{svn_tag}
@@ -112,7 +112,7 @@ rm -rf org/apache
 
 perl -p -i -e 's|execon|apply|g' build.xml
 
-ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 \
+ant \
   -Dpython.home=%{_bindir} \
   -Dht2html.dir=%{_datadir}/ht2html \
   -Dpython.lib=./CPythonLib \
@@ -132,7 +132,7 @@ popd
 
 # Create Maven POM's
 pushd maven
-  ant  -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 -Dproject.version=%{version} install
+  ant -Dproject.version=%{version} install
 popd
 
 %install
@@ -300,6 +300,9 @@ fi || :
 %doc %{_datadir}/%{name}/Demo
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt6_11jpp7
+- fc update
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0:2.2.1-alt6_10jpp7
 - applied repocop patches
 
