@@ -1,8 +1,8 @@
 %define modname lettuce
 
 Name: python-module-%modname
-Version: 0.2.11
-Release: alt1
+Version: 0.2.14
+Release: alt2
 Summary: Behaviour Driven Development for Python
 Group: Development/Python
 License: GPLv3+
@@ -49,10 +49,17 @@ nosetests -s tests/functional
 %files
 %doc COPYING README.md
 %python_sitelibdir/%modname/
+%exclude %python_sitelibdir/%modname/django/tests
 %python_sitelibdir/*.egg-info
 %_bindir/lettuce
 
 %changelog
+* Sat Feb 09 2013 Ivan A. Melnikov <iv@altlinux.org> 0.2.14-alt2
+- Exclude test for integration with django from package.
+
+* Sat Feb 09 2013 Ivan A. Melnikov <iv@altlinux.org> 0.2.14-alt1
+- New version.
+
 * Sun Jan 06 2013 Ivan A. Melnikov <iv@altlinux.org> 0.2.11-alt1
 - New version;
 - Correct description.
