@@ -1,4 +1,6 @@
-BuildRequires:  maven-enforcer-plugin
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global artifactId javax.servlet.jsp-api
@@ -7,20 +9,22 @@ BuildRequires: jpackage-compat
 
 Name:       glassfish-jsp-api
 Version:    2.2.1
-Release:    alt1_2jpp7
+Release:    alt1_4jpp7
 Summary:    Glassfish J2EE JSP API specification
 
 Group:      Development/Java
-License:    CDDL and GPLv2 with exceptions
-URL:        http://glassfish.org
+License:    (CDDL or GPLv2 with exceptions) and ASL 2.0
+URL:        http://java.net/jira/browse/JSP
 Source0:    %{artifactId}-%{version}.tar.xz
 # no source releases, but this will generate tarball for you from an
 # SVN tag
 Source1:    generate_tarball.sh
+Source2:    http://www.apache.org/licenses/LICENSE-2.0.txt
+Source3:    http://hub.opensolaris.org/bin/download/Main/licensing/cddllicense.txt
 
 BuildArch:  noarch
 
-BuildRequires:  maven
+BuildRequires:  maven1
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-compiler-plugin
@@ -47,11 +51,15 @@ Requires:       jpackage-utils >= 0:1.7.5
 BuildArch:      noarch
 
 %description javadoc
-%{summary}.
+%%{summary}.
 
 %prep
 %setup -q -n %{artifactId}-%{version}
+cp -p %{SOURCE2} LICENSE
+cp -p %{SOURCE3} cddllicense.txt
 
+# Submited upstream: http://java.net/jira/browse/JSP-31
+sed -i "/<bundle.symbolicName>/s/-api//" pom.xml
 
 %build
 mvn-rpmbuild install javadoc:javadoc
@@ -74,15 +82,20 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %add_maven_depmap
 
 %files
+%doc LICENSE cddllicense.txt
 %{_javadir}/%{name}.jar
 %{_mavendepmapfragdir}/%{name}
 %{_mavenpomdir}/JPP-%{name}.pom
 
 %files javadoc
+%doc LICENSE cddllicense.txt
 %{_javadocdir}/%{name}
 
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_4jpp7
+- fc update
+
 * Wed Aug 15 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_2jpp7
 - full version
 
