@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
+BuildRequires(pre): rpm-build-java rpm-macros-fedora-compat
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: eclipse-equinox-osgi felix-osgi-foundation xpp3-minimal maven-antrun-plugin eclipse-jdt
@@ -56,7 +56,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty
 Version:        8.1.5
-Release:        alt1_5jpp7
+Release:        alt1_6jpp7
 Summary:        Java Webserver and Servlet Container
 
 Group:          Networking/WWW
@@ -79,7 +79,7 @@ BuildRequires:  glassfish-jsp-api
 BuildRequires:  jakarta-taglibs-standard
 BuildRequires:  jpackage-utils
 BuildRequires:  jvnet-parent
-BuildRequires:  maven
+BuildRequires:  maven1
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-war-plugin
@@ -150,7 +150,7 @@ Source44: import.info
 Source45: jetty.init
 
 %description
-%global desc \
+%%global desc \
 Jetty is a 100%% Java HTTP Server and Servlet Container. This means that you\
 do not need to configure and run a separate web server (like Apache) in order\
 to use Java, servlets and JSPs to generate dynamic content. Jetty is a fully\
@@ -160,8 +160,8 @@ application run in the same process, without interconnection overheads\
 and complications. Furthermore, as a pure java component, Jetty can be simply\
 included in your application for demonstration, distribution or deployment.\
 Jetty is available on all Java supported platforms.
-%{desc}
-%global extdesc %{desc}\
+%%{desc}
+%%global extdesc %%{desc}\
 \
 This package contains
 
@@ -172,7 +172,7 @@ Requires:       jpackage-utils
 Requires:       jetty-parent
 
 %description    project
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        ajp
 Group: Networking/WWW
@@ -185,7 +185,7 @@ Requires:       jetty-server = %{version}-%{release}
 Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 %description    ajp
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        annotations
 Group: Networking/WWW
@@ -202,7 +202,7 @@ Requires:       objectweb-asm
 Requires:       geronimo-annotation
 Requires:       tomcat-lib
 %description    annotations
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        client
 Group: Networking/WWW
@@ -214,7 +214,7 @@ Requires:       jetty-io = %{version}-%{release}
 Requires:       jetty-util = %{version}-%{release}
 
 %description    client
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        continuation
 Group: Networking/WWW
@@ -224,7 +224,7 @@ Requires:       jetty-project = %{version}-%{release}
 Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 %description    continuation
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        deploy
 Group: Networking/WWW
@@ -238,7 +238,7 @@ Requires:       jetty-webapp = %{version}-%{release}
 Requires:       jetty-xml = %{version}-%{release}
 
 %description    deploy
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        http
 Group: Networking/WWW
@@ -249,7 +249,7 @@ Requires:       jetty-io = %{version}-%{release}
 Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 %description    http
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        http-spi
 Group: Networking/WWW
@@ -261,7 +261,7 @@ Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 
 %description    http-spi
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        io
 Group: Networking/WWW
@@ -271,7 +271,7 @@ Requires:       jetty-project = %{version}-%{release}
 Requires:       jetty-util = %{version}-%{release}
 
 %description    io
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        jaspi
 Group: Networking/WWW
@@ -285,7 +285,7 @@ Requires:       geronimo-jaspic-spec
 Requires:       tomcat-servlet-3.0-api
 
 %description    jaspi
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        jmx
 Group: Networking/WWW
@@ -295,7 +295,7 @@ Requires:       jetty-project = %{version}-%{release}
 Requires:       jetty-util = %{version}-%{release}
 
 %description    jmx
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        jndi
 Group: Networking/WWW
@@ -308,7 +308,7 @@ Requires:       jetty-webapp = %{version}-%{release}
 Requires:       %{_javadir}/javamail/mail.jar
 
 %description    jndi
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        monitor
 Group: Networking/WWW
@@ -321,7 +321,7 @@ Requires:       jetty-util = %{version}-%{release}
 Requires:       jetty-xml = %{version}-%{release}
 
 %description    monitor
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        nested
 Group: Networking/WWW
@@ -335,7 +335,7 @@ Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 
 %description    nested
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        overlay-deployer
 Group: Networking/WWW
@@ -354,7 +354,7 @@ Requires:       geronimo-jta
 Requires:       tomcat-servlet-3.0-api
 
 %description    overlay-deployer
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        plus
 Group: Networking/WWW
@@ -371,7 +371,7 @@ Requires:       jetty-xml = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 
 %description    plus
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        policy
 Group: Networking/WWW
@@ -381,7 +381,7 @@ Requires:       jetty-project = %{version}-%{release}
 Requires:       jetty-util = %{version}-%{release}
 
 %description    policy
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        rewrite
 Group: Networking/WWW
@@ -396,7 +396,7 @@ Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 
 %description    rewrite
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        security
 Group: Networking/WWW
@@ -409,7 +409,7 @@ Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 
 %description    security
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        server
 Group: Networking/WWW
@@ -424,7 +424,7 @@ Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 
 %description    server
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        servlet
 Group: Networking/WWW
@@ -441,7 +441,7 @@ Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 
 %description    servlet
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        servlets
 Group: Networking/WWW
@@ -458,7 +458,7 @@ Requires:       jetty-webapp = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 
 %description    servlets
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        util
 Group: Networking/WWW
@@ -471,7 +471,7 @@ Requires:       tomcat-servlet-3.0-api
 Requires:       slf4j
 
 %description    util
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        webapp
 Group: Networking/WWW
@@ -492,7 +492,7 @@ Requires:       jakarta-taglibs-standard
 Requires:       tomcat-servlet-3.0-api
 
 %description    webapp
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        websocket
 Group: Networking/WWW
@@ -506,7 +506,7 @@ Requires:       jetty-util = %{version}-%{release}
 Requires:       tomcat-servlet-3.0-api
 
 %description    websocket
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        xml
 Group: Networking/WWW
@@ -516,7 +516,7 @@ Requires:       jetty-project = %{version}-%{release}
 Requires:       jetty-util = %{version}-%{release}
 
 %description    xml
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %if 0%{?rhel} <= 0
 %package        nosql
@@ -530,7 +530,7 @@ Requires:       mongo-java-driver >= 2.6.5-4
 Requires:       tomcat-servlet-3.0-api
 
 %description    nosql
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 
 %package        osgi
 Group: Networking/WWW
@@ -555,7 +555,7 @@ Requires:       tomcat-jsp-2.2-api
 Requires:       tomcat-lib
 
 %description    osgi
-%{extdesc} %{summary}.
+%%{extdesc} %%{summary}.
 %endif
 
 %package        javadoc
@@ -567,7 +567,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description    javadoc
-%{summary}.
+%%{summary}.
 
 %prep
 %setup -q -n %{jettyname}-%{version}.%{addver}
@@ -867,10 +867,6 @@ getent passwd %username &>/dev/null || useradd  -r  -g %username \
 
 %postun
 %systemd_postun_with_restart jetty.service
-# Remove the user even during upgrade, it will be added later in %%post.
-# This is required to force incorrect UID to be replaced with the new one.
-# userdel  %username &>/dev/null || :
-# groupdel %username &>/dev/null || :
 
 
 %files
@@ -1042,6 +1038,9 @@ getent passwd %username &>/dev/null || useradd  -r  -g %username \
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 8.1.5-alt1_6jpp7
+- fc update
+
 * Fri Sep 21 2012 Igor Vlasenko <viy@altlinux.ru> 8.1.5-alt1_5jpp7
 - new version (closes: #27671)
 
