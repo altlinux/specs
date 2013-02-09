@@ -1,24 +1,33 @@
-
 Name: jgoodies-looks
-Version: 2.1.4
-Release: alt3
+Version: 2.5.2
+Release: alt1
 
 License: BSD style
 Group: Development/Java
 Summary: JGoodies Looks is a library that makes your Swing applications and applets look better
 
-Requires: jgoodies-forms
-BuildRequires: rpm-build-java ant unzip jgoodies-forms
-BuildRequires: java-devel-default
-BuildArch: noarch
-
 Url: http://www.jgoodies.com/downloads/libraries.html
 Packager: Michael Pozhidaev <msp@altlinux.ru>
 
-Source: looks-2_1_4.zip
+Source: looks-%version.zip
 
-Patch0: looks-2.1.4-alt-build.diff
-Patch1: looks-2.1.4-alt-javadoc.diff
+Patch0: %{name}-2.5.2-build.patch
+
+BuildRequires: rpm-build-java ant unzip
+BuildRequires: java-devel-default
+
+# Fontconfig and DejaVu fonts needed for tests
+BuildRequires:  fonts-ttf-dejavu
+BuildRequires:  fontconfig
+BuildRequires:  jgoodies-common >= 1.4.0
+BuildRequires:  maven
+BuildRequires:  maven-clean-plugin
+BuildRequires:  maven-dependency-plugin
+BuildRequires:  maven-surefire-provider-junit4
+Requires:       jgoodies-common >= 1.4.0
+
+
+BuildArch: noarch
 
 %description
 JGoodies Looks is a library that makes your Swing applications and applets look better. The package
@@ -35,39 +44,58 @@ Auto-generated API documentation for the %name.jar.
 
 %prep
 %setup -q -n looks-%version
-%patch0 -p1
-%patch1 -p1
-rm -rf ./docs/api
-rm -rf lib/forms-1.0.7.jar
-ln -s /usr/share/java/jgoodies-forms.jar ./lib/forms.jar
+%patch0 -p1 -b .build
+
+# Unzip source and test files from provided JARs
+mkdir -p src/main/java/ src/test/java/
+pushd src/main/java/
+jar -xf ../../../%{name}-%{version}-sources.jar
+popd
+pushd src/test/java/
+jar -xf ../../../%{name}-%{version}-tests.jar
+popd
+
+# Move the resources into a "resources" directory so they end up packaged
+# properly
+mkdir -p src/main/resources/com/jgoodies/looks/plastic/
+mv src/main/java/com/jgoodies/looks/plastic/icons/ src/main/resources/com/jgoodies/looks/plastic/
+mkdir -p src/main/resources/com/jgoodies/looks/common
+mv src/main/java/com/jgoodies/looks/common/*.png src/main/resources/com/jgoodies/looks/common/
+
+# Delete prebuild JARs
+find -name "*.jar" -exec rm {} \;
+
+# Fix wrong end-of-line encoding
+for file in LICENSE.txt RELEASE-NOTES.txt; do
+  sed -i.orig "s/\r//" $file && \
+  touch -r $file.orig $file && \
+  rm $file.orig
+done
 
 %build
-mkdir extracting
-mv ./looks-2.1.4.jar ./extracting
-cd ./extracting
-unzip ./looks-2.1.4.jar
-cd ..
-mkdir -p './conf/service descriptors'
-mv './/extracting/META-INF/services/javax.swing.LookAndFeel' './conf/service descriptors/all.txt'
-ant javadoc
-ant jar
+mvn-rpmbuild install javadoc:aggregate 
 
 %install
-mkdir -p %buildroot/%_javadir
-install -m 644 ./build/looks.jar %buildroot/%_javadir/%name-%version.jar
-ln -s %_javadir/%name-%version.jar %buildroot/%_javadir/%name.jar
+install -Dpm 0644 target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/%{name}.jar
+install -Dpm 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
+install -dm 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
+cp -a target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
-mkdir -p %buildroot/%_javadocdir/%name
-cp -r ./build/docs/api/* %buildroot/%_javadocdir/%name
+%add_maven_depmap JPP-%{name}.pom %{name}.jar
 
 %files
-%_javadir/*
-%doc docs/* LICENSE.txt README.html RELEASE-NOTES.txt
+%doc LICENSE.txt README.html RELEASE-NOTES.txt
+%{_javadir}/%{name}.jar
+%{_mavendepmapfragdir}/%{name}
+%{_mavenpomdir}/JPP-%{name}.pom
 
 %files javadoc
-%_javadocdir/*
+%{_javadocdir}/%{name}/
 
 %changelog
+* Sat Feb 09 2013 Igor Vlasenko <viy@altlinux.ru> 2.5.2-alt1
+- update to 2.5.2
+
 * Wed Sep 23 2009 Michael Pozhidaev <msp@altlinux.ru> 2.1.4-alt3
 - jpackage-utils build req replaced by rpm-build-java (closes: #21517)
 
