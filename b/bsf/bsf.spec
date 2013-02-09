@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -32,20 +35,19 @@ BuildRequires: jpackage-compat
 
 Name:           bsf
 Version:        2.4.0
-Release:        alt3_13jpp7
+Release:        alt3_15jpp7
 Epoch:          1
 Summary:        Bean Scripting Framework
 License:        ASL 2.0
 URL:            http://commons.apache.org/bsf/
 Group:          Development/Java
-Source0:        http://apache.osuosl.org/jakarta/%{name}/source/%{name}-src-%{version}.tar.gz
+Source0:        http://apache.mirror.anlx.net//commons/%{name}/source/%{name}-src-%{version}.tar.gz
 Source1:        %{name}-pom.xml
 Patch0:         build-file.patch
 Patch1:	        build.properties.patch
 BuildRequires:  jpackage-utils >= 1.6
 BuildRequires:  ant
 BuildRequires:  xalan-j2
-BuildRequires:  jython
 BuildRequires:  rhino
 BuildRequires:  apache-commons-logging
 Requires:       xalan-j2
@@ -88,7 +90,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+Javadoc for %%{name}.
 
 %prep
 %setup -q
@@ -101,10 +103,10 @@ find . -name "*.jar" -exec %{__rm} -f {} \;
 
 %build
 [ -z "$JAVA_HOME" ] && export JAVA_HOME=%{_jvmdir}/java
-export CLASSPATH=$(build-classpath apache-commons-logging jython xalan-j2 rhino)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  jar
+export CLASSPATH=$(build-classpath apache-commons-logging xalan-j2 rhino)
+ant jar
 %{__rm} -rf bsf/src/org/apache/bsf/engines/java
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  javadocs
+ant javadocs
 
 %install
 # jar
@@ -133,6 +135,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_15jpp7
+- fc update
+
 * Fri Sep 14 2012 Igor Vlasenko <viy@altlinux.ru> 1:2.4.0-alt3_13jpp7
 - fc version
 
