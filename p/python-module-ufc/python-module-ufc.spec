@@ -2,7 +2,7 @@
 
 Name:           python-module-%origname
 Version:        2.1.0
-Release:        alt1.bzr20130129
+Release:        alt2.bzr20130129
 Summary:        Unified Form-assembly Code
 Group:          Development/Python
 License:        Public domain
@@ -129,6 +129,9 @@ install -p -m644 doc/manual/ufc-user-manual.pdf %buildroot%_docdir/%origname
 %python_sitelibdir_noarch/ufc_utils
 
 %changelog
+* Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt2.bzr20130129
+- Rebuilt with SWIG 2.0.8
+
 * Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.1.0-alt1.bzr20130129
 - Version 2.1.0
 
