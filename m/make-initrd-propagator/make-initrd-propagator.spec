@@ -1,5 +1,5 @@
 Name: make-initrd-propagator
-Version: 0.14
+Version: 0.15
 Release: alt1
 
 Summary: Put propagator into make-initrd generated image
@@ -37,6 +37,10 @@ mkdir -p %buildroot%_datadir/make-initrd/features/propagator/data/image
 %_datadir/make-initrd/features/propagator
 
 %changelog
+* Sun Feb 10 2013 Michael Shigorin <mike@altlinux.org> 0.15-alt1
+- add name-slot-rules conditionally (see also #28484)
+- fix a typo
+
 * Thu Jan 31 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 0.14-alt1
 - add name-slot-rules
 
