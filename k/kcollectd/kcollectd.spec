@@ -1,6 +1,6 @@
 Name: kcollectd
 Version: 0.9
-Release: alt1.5
+Release: alt2
 
 Summary: collectd graphing frontend for KDE
 License: %gpl3plus
@@ -65,6 +65,9 @@ ln -s -- $(relative %_kde4_bindir/%name %_bindir/%name) %buildroot%_bindir/%name
 %_K4xdg_mime/%name.*
 
 %changelog
+* Sun Feb 10 2013 Nikolay A. Fetisov <naf@altlinux.ru> 0.9-alt2
+- Rebuilt with Boost 1.53.0
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9-alt1.5
 - Rebuilt with Boost 1.52.0
 
