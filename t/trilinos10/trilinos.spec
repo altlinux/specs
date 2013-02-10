@@ -26,7 +26,7 @@ Name: %truename-docs
 Name: %truename
 %endif
 Version: 11.0.3
-Release: alt4
+Release: alt5
 Summary: Solution of large-scale, complex multi-physics problems
 License: LGPL
 Group: Sciences/Mathematics
@@ -2593,6 +2593,9 @@ popd
 %endif
 
 %changelog
+* Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt5
+- Rebuilt with Boost 1.53.0
+
 * Sun Jan 27 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 11.0.3-alt4
 - Fixed non-strict inter-package dependencies (ALT #28442)
 
