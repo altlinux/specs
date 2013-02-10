@@ -10,7 +10,7 @@
 Name: libtorrent-rasterbar%{abiversion}
 Version: 0.16.1
 Epoch: 2
-Release: alt6.svn7387
+Release: alt7.svn7387
 
 Summary: libTorrent is a BitTorrent library written in C++ for *nix
 Group: System/Legacy libraries
@@ -133,6 +133,9 @@ rm -f %buildroot%_libdir/*.a
 #python_sitelibdir/*.egg-info
 
 %changelog
+* Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt7.svn7387
+- Rebuilt with Boost 1.53.0
+
 * Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2:0.16.1-alt6.svn7387
 - Moved this version into System/Legacy libraries
 
