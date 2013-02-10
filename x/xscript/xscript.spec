@@ -2,7 +2,7 @@
 Summary: XScript is xml-based application server written in C++.
 Name: xscript
 Version: 5.63
-Release: alt24.6
+Release: alt24.7
 License: GPL
 Group: System/Servers
 Packager: Boris Savelev <boris@altlinux.org>
@@ -213,6 +213,9 @@ install -m755 extra/xscriptcacheclean.sh %buildroot/%_bindir
 %_datadir/%name-proc/*.xsl
 
 %changelog
+* Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.63-alt24.7
+- Rebuilt with Boost 1.53.0
+
 * Sat Dec 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.63-alt24.6
 - Rebuilt with Boost 1.52.0
 
