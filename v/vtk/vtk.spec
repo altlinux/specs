@@ -4,7 +4,7 @@
 %define ver 5.10
 Name: vtk
 Version: %ver.1
-Release: alt1
+Release: alt2
 Summary: The Visualization Toolkit, an Object-Oriented Approach to 3D Graphics
 License: BSD-like
 Group: Development/Tools
@@ -503,6 +503,9 @@ rm -f %_libdir/%name
 %python_sitelibdir/*/test
 
 %changelog
+* Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.1-alt2
+- Rebuilt with Boost 1.53.0
+
 * Fri Feb 08 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.10.1-alt1
 - Version 5.10.1
 
