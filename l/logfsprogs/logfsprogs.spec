@@ -1,8 +1,9 @@
+%define _sbindir /sbin
 %define fsname logfs
 %define Name LogFS
 Name: %{fsname}progs
 Version: 1.1
-Release: alt0.1
+Release: alt0.2
 Summary: Utilities for the %Name filesystem
 License: GPLv2
 Group: System/Kernel and hardware
@@ -29,15 +30,18 @@ export CFLAGS="%optflags"
 
 
 %install
-%makeinstall_std BINDIR=/sbin
+%makeinstall_std BINDIR=%_sbindir
 ln -s {mk,%buildroot/sbin/mkfs.}%fsname
 
 
 %files
-/sbin/*
+%_sbindir/*
 
 
 %changelog
+* Sun Feb 10 2013 Led <led@altlinux.ru> 1.1-alt0.2
+- updated from upstream's SCM
+
 * Thu Sep 13 2012 Led <led@altlinux.ru> 1.1-alt0.1
 - updated from upstream SCM
 - cleaned up spec
