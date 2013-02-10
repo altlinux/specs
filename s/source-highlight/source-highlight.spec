@@ -1,6 +1,6 @@
 Name: source-highlight
 Version: 3.1.4
-Release: alt2.5
+Release: alt2.6
 
 Summary: syntax highlighting for source documents
 License: GPL
@@ -85,6 +85,9 @@ BuildArch: noarch
 %_sysconfdir/bash_completion.d/*
 
 %changelog
+* Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.4-alt2.6
+- Rebuilt with Boost 1.53.0
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.1.4-alt2.5
 - Rebuilt with Boost 1.52.0
 
