@@ -13,7 +13,7 @@ Name: ruby
 %define ver_teeny 3
 %define _pl p385
 Version: %branch.%ver_teeny
-Release: alt12
+Release: alt13
 Summary: An Interpreted Object-Oriented Scripting Language
 License: BSD (revised) or Ruby
 Group: Development/Ruby
@@ -34,7 +34,7 @@ done)
 
 BuildRequires: doxygen groff-base libdb4-devel libffi-devel
 BuildRequires: libgdbm-devel libncursesw-devel libreadline-devel libssl-devel
-BuildRequires: tk-devel zlib-devel
+BuildRequires: tk-devel zlib-devel libyaml-devel
 BuildRequires: ruby ruby-stdlibs
 BuildRequires: rpm-build-ruby >= 1:0.1.2
 %{?_with_valgrind:BuildRequires: valgrind-devel}
@@ -350,6 +350,9 @@ export LD_LIBRARY_PATH=%buildroot%_libdir
 
 
 %changelog
+* Sun Feb 10 2013 Led <led@altlinux.ru> 1.9.3-alt13
+- fixed BuildRequires (ALT#28533)
+
 * Fri Feb 08 2013 Led <led@altlinux.ru> 1.9.3-alt12
 - p385 upstream patchlevel
 
