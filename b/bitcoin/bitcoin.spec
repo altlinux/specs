@@ -1,6 +1,6 @@
 Name: bitcoin
 Version: 0.6.0
-Release: alt1.3
+Release: alt1.4
 
 Summary: peer-to-peer network based anonymous digital currency
 License: MIT
@@ -51,6 +51,9 @@ install -pDm0755 src/%{name}d %buildroot%_bindir/%{name}d
 %doc doc/*
 
 %changelog
+* Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.4
+- Rebuilt with Boost 1.53.0
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.0-alt1.3
 - Rebuilt with Boost 1.52.0
 
