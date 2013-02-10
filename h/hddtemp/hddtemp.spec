@@ -3,7 +3,7 @@
 
 Name: hddtemp
 Version: 0.3
-Release: alt11.beta%beta
+Release: alt12.beta%beta
 Epoch: 20110629
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -21,6 +21,7 @@ Source4: hddtemp.sysconfig
 Source5: hddtemp.db-alt
 
 Patch1: hddtemp-0.3beta15-guessedvalue.patch
+Patch2: hddtemp-0.3beta15-compile.patch
 
 %description
 hddtemp is a tool that gives you the temperature of your IDE,
@@ -29,6 +30,7 @@ SATA or SCSI hard drive by reading S.M.A.R.T. information.
 %prep
 %setup -n %name-%fullver
 %patch1 -p1
+%patch2 -p2
 
 %build
 %autoreconf
@@ -70,6 +72,9 @@ cat %SOURCE5 >> %buildroot%_datadir/misc/hddtemp.db
 # - find someone to do privsep/chroot on hddtemp?
 
 %changelog
+* Sun Feb 10 2013 Sergey Kurakin <kurakin@altlinux.org> 20110629:0.3-alt12.beta15
+- i586 build fixed
+
 * Thu Aug 02 2012 Michael Shigorin <mike@altlinux.org> 20110629:0.3-alt11.beta15
 - added several WD/Hitachi drives (closes: #27586, #27587, #27588)
 
