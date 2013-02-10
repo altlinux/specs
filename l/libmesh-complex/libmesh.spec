@@ -8,7 +8,7 @@ Name: %oname-%scalar_type
 Version: 0.8.0
 %define blibdir %_builddir/%name-%version/lib/%_arch-alt-linux-gnu_opt
 %define clibdir %_builddir/%name-%version/contrib/lib/%_arch-alt-linux-gnu_opt
-Release: alt6.svn20120913
+Release: alt7.svn20120913
 Summary: Numerical simulation of partial differential equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -482,6 +482,9 @@ popd
 %endif
 
 %changelog
+* Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt7.svn20120913
+- Rebuilt with Boost 1.53.0
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.0-alt6.svn20120913
 - Rebuilt with glpk 4.48
 
@@ -603,3 +606,4 @@ popd
 
 * Thu Aug 27 2009 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.3_rc1-alt1
 - Initial build for Sisyphus
+
