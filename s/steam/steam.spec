@@ -1,0 +1,57 @@
+Name: steam
+Version: 1.0.0.25
+Release: alt1
+
+Summary: Installer for the Beta of the Steam software distribution service
+License: Proprietary
+Group: Games/Other
+
+URL: http://www.steampowered.com/
+Packager: Nazarov Denis <nenderus@altlinux.org>
+Vendor: Valve Corporation
+
+ExclusiveArch: %ix86
+
+Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
+Patch0: %name-%version-alt.patch
+
+Requires: libGL
+Requires: glibc >= 2.15
+
+BuildRequires: python-module-distribute
+BuildRequires: xterm
+BuildRequires: zenity
+
+%description
+Steam is a software distribution service with an online store, automated
+installation, automatic updates, achievements, SteamCloud synchronized
+savegame and screenshot functionality, and many social features.
+
+%prep
+%setup -n %name-%version
+%patch0 -p1
+
+%install
+%make DESTDIR=%buildroot install
+
+if [ -f %buildroot%_sysconfdir/apt/sources.list.d/steam.list ]; then
+	%__rm %buildroot%_sysconfdir/apt/sources.list.d/steam.list
+fi
+
+%files
+%_bindir/*
+%_libdir/%name/*
+%_desktopdir/*
+%_docdir/*
+%_miconsdir/*
+%_iconsdir/hicolor/24x24/apps/*
+%_niconsdir/*
+%_liconsdir/*
+%_iconsdir/hicolor/256x256/apps/*
+%_man6dir/*
+%_pixmapsdir/*
+
+%changelog 
+* Sun Feb 10 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.25-alt1
+- Initial build for ALT Linux
+
