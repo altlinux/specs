@@ -1,5 +1,5 @@
 Name: unbound
-Version: 1.4.18
+Version: 1.4.19
 Release: alt1
 License: BSD
 Url: http://unbound.net/
@@ -107,7 +107,10 @@ subst 's|# auto-trust-anchor-file:|auto-trust-anchor-file:|g' doc/example.conf
 %make DESTDIR=%buildroot install
 install -d 0700 %buildroot%_localstatedir/%name
 install -d 0755 %buildroot%_initdir
+install -d 0755 %buildroot%_sysconfdir/cron.monthly
 install -m 0755 %name.init %buildroot%_initdir/unbound
+install -p -m 0755 unbound-monthly.cron  %buildroot%_sysconfdir/cron.monthly/unbound-anchor
+install -p -m 0644 icannbundle.pem %buildroot%_localstatedir/%name/icannbundle.pem
 # add symbolic link from /etc/unbound.conf -> /var/unbound/unbound.conf
 ln -s %_localstatedir/unbound/unbound.conf %buildroot%_sysconfdir/unbound.conf
 
@@ -131,16 +134,17 @@ rm %buildroot%python_sitelibdir/*.la
 %files
 %doc doc/README doc/CREDITS doc/LICENSE doc/FEATURES
 %_initdir/%name
-%attr(1775,root,_%name) %dir %_localstatedir/%name
 %config(noreplace) %_localstatedir/%name/unbound.conf
-%config(noreplace) %_sysconfdir/unbound.conf
+%_sysconfdir/unbound.conf
 %_sbindir/*
 %_man1dir/*
 %_man5dir/*
 %_man8dir/*
 
+%exclude %_sbindir/unbound-anchor
 %exclude %_sbindir/unbound-control
 %exclude %_man8dir/unbound-control*
+%exclude %_man8dir/unbound-anchor*
 
 %files control
 %_sbindir/unbound-control
@@ -148,7 +152,12 @@ rm %buildroot%python_sitelibdir/*.la
 
 
 %files -n lib%name
+%attr(1775,root,_%name) %dir %_localstatedir/%name
+%config(noreplace) %_sysconfdir/cron.monthly/unbound-anchor
+%config(noreplace) %_localstatedir/%name/icannbundle.pem
 %_libdir/libunbound*so*
+%_sbindir/unbound-anchor
+%_man8dir/unbound-anchor*
 %_man3dir/*
 
 %files -n lib%name-devel-static
@@ -165,6 +174,12 @@ rm %buildroot%python_sitelibdir/*.la
 %endif
 
 %changelog
+* Sat Feb 09 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.19-alt1
+- 1.4.19
+- Move %_sbindir/unbound-anchor to lib%name subpackage
+- Add %_sysconfdir/cron.monthly/unbound-anchor
+- Add %_localstatedir/%name/icannbundle.pem
+
 * Wed Sep 12 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 1.4.18-alt1
 - 1.4.18
 
