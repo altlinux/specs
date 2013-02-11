@@ -1,6 +1,6 @@
 Name:         glob2
 Version:      0.9.4.4
-Release:      alt1.qa4
+Release:      alt1.qa5
 Summary:      Globulation 2 is a Real-Time Strategy (RTS) game which reduces micro-management by automatically assigning tasks to units
 License:      GPL
 Group:        Games/Strategy 
@@ -78,6 +78,9 @@ desktop-file-install                   \
 %_datadir/%{name} 
 
 %changelog
+* Mon Feb 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4.4-alt1.qa5
+- Rebuilt with Boost 1.53.0
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.4.4-alt1.qa4
 - Rebuilt with Boost 1.52.0
 
