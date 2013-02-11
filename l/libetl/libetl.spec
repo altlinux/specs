@@ -1,6 +1,6 @@
 %define oname ETL
 Name: libetl
-Version: 0.04.14
+Version: 0.04.15
 Release: alt1
 
 Summary: Voria Extended Class and Template Library
@@ -46,6 +46,9 @@ designed to complement and supplement the C++ STL.
 %_pkgconfigdir/ETL.pc
 
 %changelog
+* Mon Feb 11 2013 Andrey Cherepanov <cas@altlinux.org> 0.04.15-alt1
+- New version 0.04.15
+
 * Sat Jun 18 2011 Yuriy Shirokov <yushi@altlinux.org> 0.04.14-alt1
 - new version 0.04.14
 
