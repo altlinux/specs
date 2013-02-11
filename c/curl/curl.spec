@@ -1,6 +1,6 @@
 Name: curl
 Version: 7.29.0
-Release: alt1
+Release: alt2
 
 Summary: Gets a file from a FTP, GOPHER or HTTP server
 Summary(ru_RU.UTF-8): Утилиты и библиотеки для передачи файлов
@@ -141,6 +141,9 @@ applications that utilize lib%name.
 %_libdir/*.a
 
 %changelog
+* Mon Feb 11 2013 Anton Farygin <rider@altlinux.ru> 7.29.0-alt2
+- Fix NULL pointer reference when closing an unused multi handle (closes: #28534)
+
 * Wed Feb 06 2013 Anton Farygin <rider@altlinux.ru> 7.29.0-alt1
 - new version
 
