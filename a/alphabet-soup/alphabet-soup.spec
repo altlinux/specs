@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           alphabet-soup
 Version:        1.1
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Guide your worm through the soup to spell words
 Group:          Games/Other
 License:        Crystal Stacker
@@ -22,31 +22,25 @@ Guide your worm through the soup to spell words and earn points. Play the way
 you like with several game mode selections. Words are chosen from one of three
 included dictionaries, or import your own.
 
-
 %prep
 %setup -q -c
 %patch0 -p1 -z .unix
 %patch1 -p1
 sed -i 's/\r//' readme.txt
 
-
 %build
 make %{?_smp_mflags} -f Makefile.unix PREFIX=%{_prefix} \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char -Wno-deprecated-declarations"
-
 
 %install
 make -f Makefile.unix install PREFIX=$RPM_BUILD_ROOT%{_prefix}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -p -m 644 %{SOURCE2} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
-
 
 %files
 %doc readme.txt license-change.txt
@@ -55,8 +49,10 @@ install -p -m 644 %{SOURCE2} \
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
-
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_11
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_10
 - update to new release by fcimport
 
