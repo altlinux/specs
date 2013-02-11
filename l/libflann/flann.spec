@@ -11,7 +11,7 @@ BuildRequires: gcc-c++ unzip
 
 Name:           libflann
 Version:        1.8.1
-Release:        alt2_1
+Release:        alt2_3
 Summary:        Fast Library for Approximate Nearest Neighbors
 
 Group:          Development/C
@@ -68,7 +68,7 @@ Static libraries for flann.
 Summary: Python bindings for flann
 Group: Development/Python
 Requires: %{name} = %{version}-%{release}
-Requires: python-module-numpy
+Requires: python-module-numpy python-module-numpy-addons python-module-numpy-testing
 
 %description -n python-module-libflann
 Python bindings for flann
@@ -125,6 +125,9 @@ rm -rf %{buildroot}%{_datadir}/doc/flann
 %{python_sitelibdir}/flann-%{version}*.egg-info
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2_3
+- update to new release by fcimport
+
 * Thu Dec 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.8.1-alt2_1
 - added flann provides
 
