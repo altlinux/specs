@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 BuildRequires: boost-program_options-devel
 Name:		bastet
 Version:	0.43
-Release:	alt4_17.1
+Release:	alt4_19
 Summary:	An evil falling bricks game
 
 Group:		Games/Other
@@ -75,6 +75,9 @@ mkdir -p %{buildroot}%{_mandir}/man6/
 
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.43-alt4_19
+- update to new release by fcimport
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.43-alt4_17.1
 - Rebuilt with Boost 1.52.0
 
