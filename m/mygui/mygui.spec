@@ -1,6 +1,6 @@
 Name: mygui
 Version: 3.0.3
-Release: alt3.2
+Release: alt3.3
 Summary: MyGUI is a graphical user interface library developed especialy for using with Ogre (http://www.ogre3d.org)
 License: LGPLv2+
 Group: System/Libraries
@@ -192,6 +192,9 @@ mv -f %buildroot/usr/lib %buildroot%_libdir
 %exclude %_libdir/libPlugin_StrangeButton.so
 
 %changelog
+* Mon Feb 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt3.3
+- Rebuilt with Boost 1.53.0
+
 * Thu Nov 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.3-alt3.2
 - Rebuilt with Boost 1.52.0
 
