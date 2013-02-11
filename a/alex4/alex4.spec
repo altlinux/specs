@@ -3,12 +3,12 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           alex4
 Version:        1.0
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Alex the Allegator 4 - Platform game
 Group:          Games/Other
 License:        GPL+
 URL:            http://allegator.sourceforge.net/
-Source0:        http://dl.sf.net/sourceforge/allegator/alex4src_data.zip
+Source0:        http://downloads.sf.net/allegator/Alex4/source%%20and%%20data/alex4src_data.zip
 Source1:        alex4.desktop
 Source2:        alex4.png
 Patch0:         alex4-unix.patch
@@ -51,8 +51,7 @@ popd
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 install -p -m 644 %{SOURCE2} \
@@ -68,6 +67,9 @@ install -p -m 644 %{SOURCE2} \
 
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_14
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_13
 - update to new release by fcimport
 
