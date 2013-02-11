@@ -3,17 +3,12 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name: agistudio
 Version: 1.2.4
-Release: alt2_7
+Release: alt2_8
 Summary: AGI integrated development environment
 License: GPLv2+
 Group: Games/Other
 Source0: http://downloads.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 Source1: %{name}.desktop
-#Patch0: agistudio-1.2.3-logdecode-stdlib.patch
-#Patch1: agistudio-1.2.3-main-stdlib.patch
-#Patch2: agistudio-1.2.3-picedit-stdlib.patch
-#Patch3: agistudio-1.2.3-roomgen-stringh.patch
-#Patch4: agistudio-1.2.3-util-stringh.patch
 URL: http://agistudio.sourceforge.net/
 
 BuildRequires: qt3-devel desktop-file-utils
@@ -29,11 +24,6 @@ is a program which allows you to view, create and edit AGI games.
 %prep
 
 %setup -q
-#%patch0 -p0
-#%patch1 -p0
-#%patch2 -p0
-#%patch3 -p0
-#%patch4 -p0
 
 %build
 cd src
@@ -47,7 +37,6 @@ install -m 755 src/agistudio %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_datadir}/agistudio/template
 mkdir -p %{buildroot}%{_datadir}/agistudio/help
 install -p -m 0644 help/* %{buildroot}%{_datadir}/agistudio/help
-#install -p -Dm 0644 template/* %{buildroot}%{_datadir}/%{name}/template 
 cp -pr template/* %{buildroot}%{_datadir}/%{name}/template 
 
 # icon
@@ -67,6 +56,9 @@ desktop-file-install  \
 %{_datadir}/icons/hicolor/32x32/apps/agistudio.xpm
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt2_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.4-alt2_7
 - update to new release by fcimport
 
