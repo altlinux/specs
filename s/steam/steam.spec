@@ -1,6 +1,6 @@
 Name: steam
 Version: 1.0.0.25
-Release: alt1
+Release: alt2
 
 Summary: Installer for the Beta of the Steam software distribution service
 License: Proprietary
@@ -40,6 +40,7 @@ fi
 
 %files
 %_bindir/*
+%dir %_libdir/%name
 %_libdir/%name/*
 %_desktopdir/*
 %_docdir/*
@@ -52,6 +53,9 @@ fi
 %_pixmapsdir/*
 
 %changelog 
+* Mon Feb 11 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.25-alt2
+- Fix end of line in desktop file
+
 * Sun Feb 10 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.25-alt1
 - Initial build for ALT Linux
 
