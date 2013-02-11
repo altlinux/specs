@@ -16,7 +16,7 @@
 
 Name: systemd
 Version: 197
-Release: alt4
+Release: alt5
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -672,6 +672,7 @@ install -p -m755 %SOURCE42 %buildroot/lib/udev/
 install -p -m644 %SOURCE43 %buildroot/lib/udev/rules.d/
 install -p -m755 %SOURCE44 %buildroot/lib/udev/
 install -p -m644 %SOURCE45 %buildroot/lib/udev/rules.d/
+ln -s /dev/null %buildroot%_sysconfdir/udev/rules.d/80-net-name-slot.rules
 
 # Add completion for bash3
 install -m644 %SOURCE46 %buildroot%_sysconfdir/bash_completion.d/udev
@@ -976,6 +977,7 @@ update_chrooted all
 /lib/udev/rule_generator.functions
 
 %exclude %_sysconfdir/udev/rules.d/70-persistent-*.rules
+%exclude %_sysconfdir/udev/rules.d/80-net-name-slot.rules
 %exclude /lib/udev/rules.d/75-*-generator.rules
 # extras
 %exclude /lib/udev/rules.d/61-accelerometer.rules
@@ -999,10 +1001,14 @@ update_chrooted all
 
 %files -n udev-rule-generator-net
 %config(noreplace,missingok) %verify(not md5 size mtime) %ghost %_sysconfdir/udev/rules.d/70-persistent-net.rules
+%_sysconfdir/udev/rules.d/80-net-name-slot.rules
 /lib/udev/rules.d/75-persistent-net-generator.rules
 /lib/udev/write_net_rules
 
 %changelog
+* Mon Feb 11 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt5
+- mask 80-net-name-slot.rules in udev-rule-generator-net
+
 * Thu Feb 07 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt4
 - revert persistent net generator
 - split package udev-rule-generator to udev-rule-generator-cdrom and udev-rule-generator-net
