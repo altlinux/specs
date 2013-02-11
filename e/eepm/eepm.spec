@@ -1,5 +1,5 @@
 Name: eepm
-Version: 1.1.7
+Version: 1.1.8
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -39,8 +39,8 @@ See detailed description here: http://wiki.etersoft.ru/EPM
 %install
 # install to datadir and so on
 %makeinstall version=%version-%release
-./pack_in_onefile.sh
-install -m 0755 *packed.sh %buildroot/%_datadir/%name/
+install -m 0755 packed/epm.sh %buildroot/%_datadir/%name/epm-packed.sh
+install -m 0755 packed/serv.sh %buildroot/%_datadir/%name/serv-packed.sh
 
 mkdir -p %buildroot%_sysconfdir/bash_completion.d/
 install -m 0644 bash_completion/serv %buildroot%_sysconfdir/bash_completion.d/serv
@@ -56,6 +56,12 @@ install -m 0644 bash_completion/serv %buildroot%_sysconfdir/bash_completion.d/se
 %_sysconfdir/bash_completion.d/serv
 
 %changelog
+* Mon Feb 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt1
+- add epm programs command (lists installed programs, detected by desktop files)
+- add initial support for short output (just package name, without version-release)
+- add short commands epmqi epmcl
+- small fixes
+
 * Tue Feb 05 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.7-alt1
 - epm-install: user --force-confold for dpkg/apt on Debian/Ubunti in auto mode
 - epm-autoremove: use apt-get autoremove
