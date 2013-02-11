@@ -3,7 +3,7 @@ BuildRequires: libICE-devel libSDL-devel libSM-devel libX11-devel
 # END SourceDeps(oneline)
 Name:           biloba
 Version:        0.9.3
-Release:        alt2_3
+Release:        alt2_4
 Summary:        A tactical board game
 
 Group:          Games/Other
@@ -41,7 +41,7 @@ cp -p biloba_icon.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/biloba
 convert -scale 32x32 biloba_icon.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/biloba.png
 convert -scale 16x16 biloba_icon.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps/biloba.png
 
-desktop-file-install                     \
+desktop-file-install                    \
   --dir=$RPM_BUILD_ROOT%{_datadir}/applications         \
   %{SOURCE1}
 
@@ -53,6 +53,9 @@ desktop-file-install                     \
 %{_datadir}/applications/%{name}.desktop
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.3-alt2_3
 - update to new release by fcimport
 
