@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 
 Name:           xu4
 Version:        1.1
-Release:        alt2_0.18.20120106svn2999.1
+Release:        alt2_0.19.%{svndate}svn%{svnrev}
 Summary:        Ultima IV recreated
 Group:          Games/Other
 License:        GPLv2+
@@ -59,7 +59,7 @@ pushd src
 %{makeinstall}
 find %{buildroot}/%{_libdir}/u4 -name '*.xml' -o -name '*.dtd'|xargs chmod -x
 popd
-cp mid/*.it %{buildroot}/%{_libdir}/u4/music
+cp -p mid/*.it %{buildroot}/%{_libdir}/u4/music
 
 # mv u4 to u4.bin and install our autodl wrapper script
 mv %{buildroot}/%{_bindir}/u4 %{buildroot}/%{_bindir}/u4.bin
@@ -67,7 +67,7 @@ install -p -m 755 %{SOURCE1} %{buildroot}/%{_bindir}/u4
 install -p -m 644 %{SOURCE2} %{buildroot}/%{_libdir}/u4
 
 # below is the desktop file and icon stuff.
-desktop-file-install             \
+desktop-file-install         \
   --dir %{buildroot}/%{_datadir}/applications \
   --delete-original                             \
   %{buildroot}/%{_datadir}/applications/u4.desktop
@@ -75,40 +75,6 @@ desktop-file-install             \
 mkdir -p %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps
 mv %{buildroot}/%{_datadir}/pixmaps/u4.png \
   %{buildroot}/%{_datadir}/icons/hicolor/64x64/apps
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
@@ -122,6 +88,9 @@ fi
 
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_0.19.20120106svn2999
+- update to new release by fcimport
+
 * Thu Oct 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2_0.18.20120106svn2999.1
 - Rebuilt with libpng15
 
