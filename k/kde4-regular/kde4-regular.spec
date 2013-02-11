@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.10
-Release: alt5
+Release: alt6
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -21,6 +21,7 @@ Requires: soprano-backend-virtuoso
 Requires: soprano
 
 Requires: kde4-colord
+Requires: appmenu-qt4
 
 Requires: kde4base-workspace-core kde4base-workspace-cursors kde4base-workspace-wallpapers
 Requires: kde4accessibility
@@ -79,6 +80,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Mon Feb 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt6
+- add appmenu-qt4
+
 * Tue Feb 05 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt5
 - add kde4-colord
 
