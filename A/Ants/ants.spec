@@ -5,8 +5,8 @@ BuildRequires: liballegro-devel
 %define oldname ants
 Name:           Ants
 Version:        1.4
-Release:        alt2_11
-Summary:        Guide your ants safely home before they drop of the cliff
+Release:        alt2_12
+Summary:        Guide the insects safely home before they drop of the cliff
 Group:          Games/Other
 License:        Public Domain
 URL:            http://www.allegro.cc/depot/Ants
@@ -36,20 +36,17 @@ Requires:       Ants = %{version}-%{release}
 
 %description    level-editor
 This package contains a level editor for ants, notice that you must run this
-at root, or change the owner of the files under %{_datadir}/%{oldname}, as the
-level editor edits the files directly under %{_datadir}/%{oldname} .
-
+at root, or change the owner of the files under %%{_datadir}/%{oldname}, as the
+level editor edits the files directly under %%{_datadir}/%{oldname} .
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 %patch0 -p1 -z .fix
 sed -i 's/\r//g' ants.txt
 cp %{SOURCE4} .
 
-
 %build
 make %{?_smp_mflags} EXTRACFLAGS="$RPM_OPT_FLAGS"
-
 
 %install
 #no make install target, DIY
@@ -60,16 +57,11 @@ cp -a %{oldname}.dat levels1 levels2 $RPM_BUILD_ROOT%{_datadir}/%{oldname}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE2}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE2}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 install -p -m 644 %{SOURCE3} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps/
-
 
 %files
 %doc Changelog ants.txt license-info
@@ -78,13 +70,14 @@ install -p -m 644 %{SOURCE3} \
 %{_datadir}/applications/%{oldname}.desktop
 %{_datadir}/icons/hicolor/32x32/apps/%{oldname}.png
 
-
 %files level-editor
 %{_bindir}/%{oldname}_le
 %{_datadir}/applications/%{oldname}-level-editor.desktop
 
-
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_12
+- update to new release by fcimport
+
 * Sun Jul 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_11
 - new release
 
