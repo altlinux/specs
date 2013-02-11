@@ -1,152 +1,82 @@
-Name: flexdock
-Version: 0.5.1
-Release: alt4
-Summary: Docking framework for Java Swing GUI apps
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+BuildRequires: /proc
+BuildRequires: jpackage-compat
+Name:		    flexdock
+Version:	    1.2.2
+Release:	    alt1_2jpp7
+Summary:	    Docking framework for Java Swing GUI apps
 
-Group: Development/Java
+Group:		    Development/Java
 
 #Licence is MIT on their website
-License: MIT
-Url: https://flexdock.dev.java.net/
+License:	    MIT 
+URL:		    http://forge.scilab.org/index.php/p/flexdock/
 
-Packager: Vitaly Kuznetsov <vitty@altlinux.ru>
+Source0:	    http://forge.scilab.org/index.php/p/flexdock/downloads/get/%{name}-%{version}.tar.gz
 
-Source: %name-%version-clean.tar.gz
-
-# Original Source# Contains code that we cannot ship.
-# Download the upstream tarball and invoke this script while in the
-# tarball's directory
-Source1: %name-generate-tarball.sh
-
-# This patch is fedora specific -- System.loadLibrary fix to help locate JNI components
-Patch: flexdock-jni.patch
 #Removes the java media framework from the demos to satisfy reqs
-Patch1: flexdock-nojmf.patch
+Patch1:		    flexdock-0001-nojmf.patch
 #Modifies the build process  -- fedora specific
-Patch2: flexdock-build.patch
-#Fixes the skinlf search paths in the skinlf.jar (1 of 2)
-Patch3: flexdock-skinlfTitlebarui-path.patch
-#Fixes the skinlf search paths in the skinlf.jar (2 of 2)
-Patch4: flexdock-skinlfPainter-path.patch
+Patch2:		    flexdock-0002-fedora-build.patch
 
-BuildRequires(pre): rpm-build-java
-BuildRequires: ant
-BuildRequires: ant-apache-regexp
-BuildRequires: ant-commons-logging
-BuildRequires: java-devel
-BuildRequires: jgoodies-looks
-BuildRequires: jpackage-utils
-BuildRequires: libX11-devel
-BuildRequires: skinlf
+BuildRequires:	ant
+BuildRequires:	jpackage-utils
+BuildRequires:	jgoodies-common
+BuildRequires:	jgoodies-looks
+BuildRequires:	skinlf
+
+Requires:	    jpackage-utils
+Requires:	    jgoodies-common
+Requires:	    jgoodies-looks
+Requires:	    skinlf
+
+BuildArch:      noarch
+Source44: import.info
 
 %description
 FlexDock is a Java docking framework for use in cross-platform
 Swing applications.
 
 %prep
-%setup -qc
+%setup -q
 
-#Modify the jni dir that is hardcoded in the patch
-cp -pf %PATCH0 %PATCH0.tmp
-sed -i 's!@@libdir_name@@!%_libdir/%name/!' %PATCH0
-#Apply patches
-%patch0
-%patch1
-%patch2
-%patch3
-%patch4
-
-#restore patch0
-mv %PATCH0.tmp %PATCH0
+%patch1 -p1
+%patch2 -p1
 
 #Override the build file's default hard-coded paths
-echo "sdk.home=%_jvmdir/java" > workingcopy.properties
-
-#remove *dll
-find ./ -name \*.dll -exec rm  {} \;
-#remove .so files
-find ./ -name \*.so -exec rm {} \;
+echo "sdk.home=%{java_home}" > workingcopy.properties
 
 #JAR "dependency" handling
-#==========
-#delete and symlink any jar files we know about
+find ./ -name \*.jar -exec rm {} \;
+build-jar-repository -s -p lib skinlf jgoodies-looks jgoodies-common
 
-#rm commands commented out, as we delete these
-#at repackage time
-
-# Apache commons Logging component
-# http://commons.apache.org/logging/
-#rm -f lib/commons-logging-1.1.jar
-
-#remove jmf, as it is only used in a demo,
-#which is unused after patching
-#rm -rf lib/jmf
-
-#" Looks" project
-# https://looks.dev.java.net/
-#rm -f lib/looks-2.1.1.jar
-
-#skinlf "Skin look and Feel" project
-# https://skinlf.dev.java.net/
-#rm -f lib/skinlf.jar
-
-build-jar-repository -s -p lib commons-logging skinlf jgoodies-looks.jar
-
-pushd lib
-ln -s jgoodies-looks.jar looks-2.2.1.jar
-ln -s commons-logging.jar commons-logging-1.1.jar
-popd
-
-JAR_files=""
-for j in $(find -name \*.jar); do
-if [ ! -L $j ] ; then
-	JAR_files="$JAR_files $j"
-	fi
-done
-
-if [ ! -z "$JAR_files" ] ; then
-	echo "These JAR files should be deleted and symlinked to system JAR files: $JAR_files"
-	exit 1
-fi
-#=========
+#Remove the jmf-using demo files
+rm src/java/demo/org/flexdock/demos/raw/jmf/MediaPanel.java
+rm src/java/demo/org/flexdock/demos/raw/jmf/JMFDemo.java
 
 #Endline convert Doc files
-for i in "README-RELEASE LICENSE.txt README release-notes.txt" ;
+for i in "LICENSE.txt README release-notes.txt" ;
 do
-	sed -i 's/\r//' $i
+	%{__sed} -i 's/\r//' $i
 done
 
 %build
-export CLASSPATH=$(build-classpath jgoodies-looks skinlf)
-ant -v -Dbuild.sysclasspath=first build.with.native jar
-ant -v -Dbuild.sysclasspath=first compile.native
+ant jar
 
 %install
-
-
-#Create dirs needed.
-mkdir -p %buildroot/%_libdir/%name
-mkdir -p %buildroot/%_javadir
-
-#flexdock has funny arch flags, such as "libRubberBand-linux-x86.so" on i386
-SOFILE=`find ./ -name libRubberBand*so`
-
-install -pm755 $SOFILE %buildroot/%_libdir/%name/libRubberBand-0.so
-#install jar file into lib dir as it is a JNI requiring jar
-install -pm644 build/%name-%version.jar %buildroot/%_javadir/%name-%version.jar
-
-pushd .
-cd %buildroot/%_javadir
-ln -s %name-%version.jar %name.jar
-popd
-
+mkdir -p %{buildroot}%{_javadir}
+install -pm644 build/%{name}-%{version}.jar %{buildroot}%{_javadir}/%{name}.jar
 
 %files
-%doc LICENSE.txt README README-RELEASE release-notes.txt
-%_libdir/%name
-%_javadir/*
+%doc LICENSE.txt README release-notes.txt
+%{_javadir}/*
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2jpp7
+- new version
+
 * Wed Aug 03 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 0.5.1-alt4
 - resurrect
 
