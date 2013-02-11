@@ -3,7 +3,7 @@ BuildRequires: gcc-c++ libICE-devel libSM-devel libesd-devel
 # END SourceDeps(oneline)
 Name:           xarchon
 Version:        0.50
-Release:        alt2_13
+Release:        alt2_14
 Summary:        Arcade board game
 Group:          Games/Other
 License:        GPL+
@@ -40,11 +40,11 @@ convert data/icon.xpm %{name}.png
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --vendor fedora            \
+desktop-file-install      \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
@@ -56,12 +56,15 @@ install -p -m 644 %{name}.png \
 %doc AUTHORS ChangeLog COPYING README
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%{_datadir}/applications/fedora-%{name}.desktop
+%{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
-%{_mandir}/man6/%{name}.6.*
+%{_mandir}/man6/%{name}.6*
 
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_14
+- update to new release by fcimport
+
 * Tue Oct 23 2012 Igor Vlasenko <viy@altlinux.ru> 0.50-alt2_13
 - new fc release and picked up real@'s patch
 
