@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           alienblaster
 Version:        1.1.0
-Release:        alt2_10
+Release:        alt2_11
 Summary:        Action-loaded 2D arcade shooter game
 Group:          Games/Other
 License:        GPLv2+
@@ -25,7 +25,6 @@ Alien Blaster is an action-loaded 2D arcade shooter game. Your mission in the
 game is simple: stop the invasion of the aliens by blasting them. 
 Simultaneous two-player mode is available.
 
-
 %prep
 %setup -q -n %{name}
 %patch0 -p1 -z .64bit
@@ -34,10 +33,8 @@ Simultaneous two-player mode is available.
 # link with --as-needed
 sed -i -e 's,$(GAME_LIBS) -o $(GAME_NAME) $(OBJECT_FILES),-o $(GAME_NAME) $(OBJECT_FILES) $(GAME_LIBS),' src/Makefile
 
-
 %build
 make %{?_smp_mflags} OPTIMIZATION="$RPM_OPT_FLAGS"
-
 
 %install
 # no make install, DIY
@@ -49,9 +46,7 @@ cp -a images sound cfg $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE2}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE2}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/16x16/apps
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/32x32/apps
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
@@ -62,7 +57,6 @@ install -p -m 644 %{SOURCE4} \
 install -p -m 644 %{SOURCE5} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
-
 %files
 %doc LICENSE CHANGELOG AUTHORS
 %{_bindir}/%{name}*
@@ -72,6 +66,9 @@ install -p -m 644 %{SOURCE5} \
 
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_11
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_10
 - update to new release by fcimport
 
