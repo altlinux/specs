@@ -1,6 +1,6 @@
 Name: osec
 Version: 1.2.5
-Release: alt2
+Release: alt3
 
 Summary: Lightweight file permission checker
 License: GPL3
@@ -106,6 +106,9 @@ rm -f %osec_statedir/osec.db.*
 %attr(770,root,%osec_group) %osec_statedir
 
 %changelog
+* Tue Feb 12 2013 Alexey Gladkov <legion@altlinux.ru> 1.2.5-alt3
+- Fix incorrect use of xattr_nonexistent().
+
 * Tue Jan 22 2013 Alexey Gladkov <legion@altlinux.ru> 1.2.5-alt2
 - Do not check extended attributes when converting database.
 
