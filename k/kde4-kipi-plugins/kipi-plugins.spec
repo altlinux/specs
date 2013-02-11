@@ -12,7 +12,7 @@
 Name: kde4-%rname
 %define beta %nil
 Version: 3.0.0
-Release: alt0.4
+Release: alt1
 
 Group: Graphics
 Summary: KDE image Interface Plugins
@@ -45,7 +45,7 @@ BuildRequires: libgio-devel libgpod-devel libgtk+2-devel boost-devel
 BuildRequires: libopencv-devel libsane-devel libxslt-devel xsltproc libexpat-devel libxml2-devel libjpeg-devel
 BuildRequires: qoauth-devel qjson-devel herqq-devel qtsoap-devel
 BuildRequires: qt-gstreamer-devel libImageMagick-devel ImageMagick-tools
-BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel
+BuildRequires: libkvkontakte-devel libmediawiki-devel libtiff-devel flex
 
 %description
 The library of the KDE Image Plugin Interface used by digiKam and Gwenview
@@ -170,6 +170,9 @@ done
 %_K4libdir/libkipiplugins.so.%libsover.*
 
 %changelog
+* Mon Feb 11 2013 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt1
+- 3.0.0 release
+
 * Wed Jan 16 2013 Sergey V Turchin <zerg@altlinux.org> 3.0.0-alt0.4
 - fix to build VideoSlideshow plugin
 
