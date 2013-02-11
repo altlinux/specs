@@ -1,6 +1,6 @@
 Name:           angrydd
 Version:        1.0.1
-Release:        alt5_9
+Release:        alt5_10
 Summary:        Falling blocks game
 
 Group:          Games/Other
@@ -12,7 +12,7 @@ Source3:        %{name}.desktop
 BuildArch:      noarch
 
 BuildRequires:  desktop-file-utils
-Requires:       pygame icon-theme-hicolor gtk2
+Requires:       python-module-pygame icon-theme-hicolor gtk2
 Source44: import.info
 
 %description
@@ -44,7 +44,7 @@ make install DESTDIR=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps
 cp -p %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/
 
-desktop-file-install                     \
+desktop-file-install                    \
   --dir=$RPM_BUILD_ROOT%{_datadir}/applications           \
   %{SOURCE3}
 
@@ -58,6 +58,9 @@ desktop-file-install                     \
 
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt5_9
 - update to new release by fcimport
 
