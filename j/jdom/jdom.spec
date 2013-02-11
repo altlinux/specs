@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 AutoReq: yes,noosgi
 BuildRequires: rpm-build-java-osgi
 BuildRequires: /proc
@@ -34,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           jdom
 Version:        1.1.3
-Release:        alt1_2jpp7
+Release:        alt1_3jpp7
 Epoch:          0
 Summary:        Java alternative to DOM and SAX
 License:        ASL 1.1
@@ -44,13 +47,18 @@ Source0:        http://jdom.org/dist/binary/archive/jdom-%{version}.tar.gz
 Source1:        http://repo1.maven.org/maven2/org/jdom/jdom/%{version}/jdom-%{version}.pom
 Patch0:         %{name}-crosslink.patch
 Patch1:         %{name}-1.1-OSGiManifest.patch
-Requires:       xalan-j2 >= 0:2.2.0
+
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  xalan-j2 >= 0:2.2.0
-BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  java-javadoc
-BuildArch:      noarch
+BuildRequires:  jaxen
+BuildRequires:  jpackage-utils >= 0:1.6
+BuildRequires:  xalan-j2 >= 0:2.2.0
+
+Requires:       jaxen
 Requires:       jpackage-utils
+Requires:       xalan-j2 >= 0:2.2.0
+
+BuildArch:      noarch
 Source44: import.info
 
 %description
@@ -68,7 +76,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+Javadoc for %%{name}.
 
 %package demo
 Summary:        Demos for %{name}
@@ -76,7 +84,7 @@ Group:          Development/Java
 Requires:       %{name} = %{epoch}:%{version}-%{release}
 
 %description demo
-Demonstrations and samples for %{name}.
+Demonstrations and samples for %%{name}.
 
 
 %prep
@@ -88,8 +96,8 @@ find . -name "*.jar" -exec rm -f {} \;
 find . -name "*.class" -exec rm -f {} \;
 
 %build
-export CLASSPATH=$(build-classpath xalan-j2)
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  -Dj2se.apidoc=%{_javadocdir}/java package javadoc-link
+export CLASSPATH=$(build-classpath xalan-j2 jaxen)
+ant -Dj2se.apidoc=%{_javadocdir}/java package javadoc-link
 
 %install
 # jars
@@ -124,6 +132,9 @@ cp %{SOURCE1} $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-jdom.pom
 %doc LICENSE.txt
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_3jpp7
+- fc update
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.1.3-alt1_2jpp7
 - new version
 
