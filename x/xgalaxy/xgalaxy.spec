@@ -3,7 +3,7 @@ BuildRequires: libICE-devel libSM-devel libX11-devel libXext-devel perl(find.pl)
 # END SourceDeps(oneline)
 Name:           xgalaxy
 Version:        2.0.34
-Release:        alt2_17
+Release:        alt2_18
 Summary:        Arcade game: shoot down the space ships attacking the planet
 Group:          Games/Other
 License:        GPL+
@@ -66,7 +66,7 @@ convert images/player3.xpm %{name}.png
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 # move the sound-server binary out of %{_datadir}
 mv $RPM_BUILD_ROOT%{_datadir}/%{name}/xgal.sndsrv.alsa \
   $RPM_BUILD_ROOT%{_bindir}
@@ -76,53 +76,19 @@ ln -s ../../bin/xgal.sndsrv.alsa \
 chmod -x $RPM_BUILD_ROOT%{_datadir}/%{name}/*/*
 # make install doesn't install the manpage
 mkdir -p $RPM_BUILD_ROOT%{_mandir}/man6
-install -m 644 xgal.6x $RPM_BUILD_ROOT%{_mandir}/man6/%{name}.6
+install -p -m 644 xgal.6x $RPM_BUILD_ROOT%{_mandir}/man6/%{name}.6
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install         \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
-desktop-file-install             \
+desktop-file-install        \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE2}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/22x22/apps
 install -p -m 644 %{name}.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/22x22/apps
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
@@ -130,12 +96,15 @@ fi
 %{_bindir}/%{name}*
 %{_bindir}/xgal.sndsrv.alsa
 %{_datadir}/%{name}
-%{_mandir}/man6/%{name}.6.*
+%{_mandir}/man6/%{name}.6*
 %{_datadir}/applications/%{name}*.desktop
 %{_datadir}/icons/hicolor/22x22/apps/%{name}.png
 
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_18
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.34-alt2_17
 - update to new release by fcimport
 
