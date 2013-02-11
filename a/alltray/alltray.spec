@@ -3,13 +3,13 @@ BuildRequires: libX11-devel pkgconfig(gdk-2.0) pkgconfig(gdk-pixbuf-xlib-2.0) pk
 # END SourceDeps(oneline)
 Name:           alltray
 Version:        0.71b
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Dock any application in the tray
 
 Group:          Accessibility
 License:        GPLv2+
-URL:            http://alltray.sourceforge.net/
-Source0:        http://dl.sourceforge.net/alltray/%{name}-%{version}.tar.gz
+URL:            http://alltray.trausch.us/
+Source0:        https://launchpad.net/alltray/old-maintenance/%{version}/+download/%{name}-%{version}.tar.gz
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  gtk2-devel
@@ -32,17 +32,15 @@ export CFLAGS="-fPIC $RPM_OPT_FLAGS"
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 find $RPM_BUILD_ROOT -name \*.la -exec rm {} \;
 rm $RPM_BUILD_ROOT%{_libdir}/*.so
-desktop-file-install  \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   --add-category Application \
   --add-category Utility \
   --add-category GTK \
   --delete-original \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
-
 
 %files
 %doc AUTHORS ChangeLog COPYING README
@@ -53,6 +51,9 @@ desktop-file-install  \
 %{_datadir}/pixmaps/%{name}.png
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.71b-alt2_4
 - update to new release by fcimport
 
