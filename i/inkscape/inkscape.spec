@@ -1,7 +1,7 @@
 %define pre %nil
 Name: inkscape
-Version: 0.48.2
-Release: alt4.1
+Version: 0.48.4
+Release: alt1
 
 Summary: A Vector Drawing Application
 
@@ -13,21 +13,10 @@ Packager: Vitaly Lipatov <lav@altlinux.ru>
 
 Source: http://prdownloads.sf.net/%name/%name-%version%pre.tar
 
-Source1: %name-%version.ru.po
+#Source1: %name-%version.ru.po
 Source2: tutorial-%version.tar
 
 Patch: %name.patch
-# https://bugs.launchpad.net/inkscape/+bug/487038
-Patch5: inkscape-0.47-poppler-GfxColorSpace.patch
-Patch6: inkscape-0.48.0-spell.patch
-Patch7: inkscape-0.48.0-poppler-0.16.patch
-Patch8: inkscape-0.48.2-alt-glib2-2.32.0.patch
-
-# from Fedora
-Patch10: inkscape-0.48.2-gcc47.patch
-Patch12: inkscape-0.48.2-poppler_020.patch
-
-Patch13: inkscape-0.48.2-alt-libpng15.patch
 
 # Typical environment for GTK program
 Requires(post,postun): desktop-file-utils
@@ -73,17 +62,9 @@ inkview is standalone viewer for Inkscape files (SVG)
 
 %prep
 %setup -n %name-%version%pre
-#patch5
-%patch6 -p1
-#patch7 -p0
-%patch8 -p2
+%patch
 
-%patch10 -p0
-%patch12 -p1
-
-%patch13 -p2
-
-cat %SOURCE1 >po/ru.po
+#cat %%SOURCE1 >po/ru.po
 
 %build
 %add_optflags -fpermissive
@@ -108,6 +89,11 @@ tar xvf %SOURCE2 -C %buildroot%_datadir/inkscape/tutorials/
 
 # remove unneeded man
 rm -rf %buildroot%_mandir/fr/
+rm -rf %buildroot%_mandir/el/
+rm -rf %buildroot%_mandir/ja/
+rm -rf %buildroot%_mandir/sk/
+rm -rf %buildroot%_mandir/zh_TW/
+
 %find_lang %name
 
 #%check
@@ -128,6 +114,10 @@ rm -rf %buildroot%_mandir/fr/
 %_man1dir/inkview*
 
 %changelog
+* Mon Feb 11 2013 Vitaly Lipatov <lav@altlinux.ru> 0.48.4-alt1
+- new version 0.48.4 (with rpmrb script) (ALT bug #28530)
+- drop all patches
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.48.2-alt4.1
 - Rebuilt with libpng15
 
