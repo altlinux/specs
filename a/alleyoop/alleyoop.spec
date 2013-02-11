@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/gvim /usr/bin/ldd /usr/bin/valgrind /usr/bin/xemacs glib2-devel pkgconfig(gconf-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0)
+BuildRequires: /usr/bin/emacs /usr/bin/emacsclient /usr/bin/gconftool-2 /usr/bin/glib-gettextize /usr/bin/gvim /usr/bin/ldd /usr/bin/valgrind /usr/bin/xemacs glib2-devel pkgconfig(gconf-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libglade-2.0)
 # END SourceDeps(oneline)
 Name:       alleyoop
 Version:    0.9.7
-Release:    alt2_7
+Release:    alt2_8
 License:    GPLv2+
 Group:      Development/Tools
 Summary:    Graphical front-end to the Valgrind memory checker for x86
@@ -44,12 +44,10 @@ make %{?_smp_mflags}
 
 %install
 export GCONF_DISABLE_MAKEFILE_SCHEMA_INSTALL="1"
-make install DESTDIR=${RPM_BUILD_ROOT}
+%makeinstall_std
 %find_lang %{name}
 
-desktop-file-install --vendor fedora                            \
-        --dir ${RPM_BUILD_ROOT}%{_datadir}/applications         \
-        %{SOURCE1}
+desktop-file-install --dir ${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE1}
 
 %post
 export GCONF_CONFIG_SOURCE="$(gconftool-2 --get-default-source)"
@@ -57,7 +55,6 @@ gconftool-2 --makefile-install-rule %{_sysconfdir}/gconf/schemas/%{name}.schemas
 
 %postun
 gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schemas &>/dev/null
-
 
 %files -f %{name}.lang
 %doc COPYING README NEWS AUTHORS ChangeLog
@@ -67,6 +64,9 @@ gconftool-2 --makefile-uninstall-rule %{_sysconfdir}/gconf/schemas/%{name}.schem
 
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt2_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.9.7-alt2_7
 - update to new release by fcimport
 
