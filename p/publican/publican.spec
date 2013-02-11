@@ -14,14 +14,11 @@ BuildRequires: docbook-dtds docbook-style-xsl
 %define OTHER 0
 %endif
 
-# required for desktop file install
-%define my_vendor %(test %{OTHER} == 1 && echo "fedora" || echo "redhat")
-
 %define TESTS 0
 
 Name:           publican
 Version:        2.8
-Release:        alt3_4
+Release:        alt3_5
 Summary:        Common files and scripts for publishing with DocBook XML
 # For a breakdown of the licensing, refer to LICENSE
 License:        (GPLv2+ or Artistic) and CC0
@@ -170,7 +167,7 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 sed -i -e 's|@@FILE@@|%{_docdir}/%{name}-doc-%{version}/en-US/index.html|' %{name}.desktop
 sed -i -e 's|@@ICON@@|%{_docdir}/%{name}-doc-%{version}/en-US/images/icon.svg|' %{name}.desktop
 
-desktop-file-install --vendor="%{my_vendor}" --dir=$RPM_BUILD_ROOT%{_datadir}/applications %{name}.desktop
+desktop-file-install --dir=$RPM_BUILD_ROOT%{_datadir}/applications %{name}.desktop
 
 for file in po/*.po; do
     lang=`echo "$file" | sed -e 's/po\/\(.*\)\.po/\1/'`;
@@ -198,10 +195,13 @@ done
 
 %files doc
 %doc Users_Guide/publish/desktop/*
-%{_datadir}/applications/%{my_vendor}-%{name}.desktop
+%{_datadir}/applications/%{name}.desktop
 %doc fdl.txt
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt3_5
+- update to new release by fcimport
+
 * Thu Jan 10 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt3_4
 - added Req: on perl-Makefile-Parser
 
