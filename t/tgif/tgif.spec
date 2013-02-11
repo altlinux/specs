@@ -2,9 +2,10 @@
 BuildRequires: gcc-c++ libICE-devel libSM-devel libX11-devel libXext-devel libXt-devel
 # END SourceDeps(oneline)
 Summary(ru_RU.KOI8-R): Tgif - пакет 2-мерной графики
+%define fedora 18
 Name:		tgif
 Version:	4.2.5
-Release:	alt2_3
+Release:	alt2_4
 Summary:	2-D drawing tool
 Group:		Graphics
 
@@ -132,7 +133,9 @@ popd
 desktop-file-install \
 	--remove-category 'Application' \
 	--remove-category 'X-Fedora' \
+%if 0%{?fedora} < 19
 	--vendor 'fedora' \
+%endif
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications/ \
 	po/ja/tgif.desktop
 
@@ -161,9 +164,12 @@ desktop-file-install \
 %{_datadir}/X11/ja/app-defaults/Tgif
 
 %{_datadir}/icons/hicolor/*/apps/%{name}icon.png
-%{_datadir}/applications/*-%{name}.desktop
+%{_datadir}/applications/*%{name}.desktop
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.2.5-alt2_3
 - update to new release by fcimport
 
