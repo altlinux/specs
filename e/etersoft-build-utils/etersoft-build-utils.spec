@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.21
+Version: 2.0.22
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -68,6 +68,13 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Tue Feb 12 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.22-alt1
+- update pkgrepls
+- rpmbph, repl: fix for add 32bit requires for x86_64 Fedora/Ubuntu
+- spec: eval_spec: skip ExclusiveArch, use spec without changelog part
+- rpmgp: print out girar host
+- rpmbph: forbids run in old style branch (M60P)
+
 * Thu Feb 07 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.21-alt1
 - gremote: add -u for add user repo
 - rpmbph: check only ^Group
