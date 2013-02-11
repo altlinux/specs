@@ -1,7 +1,7 @@
 Summary: A clock for the X Window System
 Name: xdaliclock
 Version: 2.25
-Release: alt2_7
+Release: alt2_8
 Group: Graphics
 License: BSD
 URL: http://www.jwz.org/xdaliclock/
@@ -40,7 +40,7 @@ install -p -m 0644 xdaliclock.man \
 install -p -m 0644 XDaliClock.ad \
 	$RPM_BUILD_ROOT%{_datadir}/X11/app-defaults/XDaliClock
 
-desktop-file-install --vendor fedora \
+desktop-file-install  \
 	--dir $RPM_BUILD_ROOT%{_datadir}/applications \
 	--add-category "X-Fedora" \
 	--add-category "Graphics" \
@@ -54,6 +54,9 @@ desktop-file-install --vendor fedora \
 %{_datadir}/applications/*
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 2.25-alt2_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.25-alt2_7
 - update to new release by fcimport
 
