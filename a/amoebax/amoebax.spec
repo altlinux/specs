@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/doxygen gcc-c++
 # END SourceDeps(oneline)
 Name:           amoebax
 Version:        0.2.0
-Release:        alt5_10
+Release:        alt5_11
 Summary:        Action-Puzzle Game
 Group:          Games/Other
 License:        GPLv2+ and Free Art
@@ -32,42 +32,39 @@ mode will let you have a good time with your friends. There is also catchy
 music, funny sound effects, and beautiful screens that sure appeal to everyone
 in the family.
 
-
 %prep
 %setup -q
 %patch0 -p1
-
 
 %build
 %configure
 make %{?_smp_mflags}
 
-
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 rm $RPM_BUILD_ROOT%{_datadir}/doc/%{name}/manual.pdf
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install  --delete-original \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps
 mv $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}.svg \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/scalable/apps
 
-
 %files
 %doc AUTHORS COPYING* NEWS README* THANKS TODO doc/manual.pdf
 %{_bindir}/%{name}
 %{_datadir}/%{name}
-%{_mandir}/man6/%{name}.6.*
+%{_mandir}/man6/%{name}.6*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/scalable/apps/%{name}.svg
 
-
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_11
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt5_10
 - update to new release by fcimport
 
