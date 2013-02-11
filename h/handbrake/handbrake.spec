@@ -1,4 +1,4 @@
-%define svn svn5127
+%define svn svn5245
 
 Name: handbrake
 Version: 0.9.9
@@ -11,7 +11,7 @@ Source0: %name-%svn.tar.bz2
 Source101: http://download.handbrake.fr/handbrake/contrib/a52dec-0.7.4.tar.gz
 Source102: http://download.handbrake.fr/handbrake/contrib/faac-1.28.tar.gz
 Source103: http://download.handbrake.fr/handbrake/contrib/faad2-2.7.tar.gz
-Source104: http://download.handbrake.fr/handbrake/contrib/libav-v9_beta3.tar.bz2
+Source104: http://download.handbrake.fr/handbrake/contrib/libav-v9.1.tar.bz2
 Source105: http://download.handbrake.fr/handbrake/contrib/fontconfig-2.8.0.tar.gz
 Source106: http://download.handbrake.fr/handbrake/contrib/freetype-2.4.7.tar.bz2
 Source107: http://download.handbrake.fr/handbrake/contrib/lame-3.98.tar.gz
@@ -24,7 +24,8 @@ Source113: http://download.handbrake.fr/handbrake/contrib/libxml2-2.7.7.tar.gz
 Source114: http://download.handbrake.fr/handbrake/contrib/m4-1.4.16.tar.bz2
 Source115: http://download.handbrake.fr/handbrake/contrib/mp4v2-trunk-r355.tar.bz2
 Source116: http://download.handbrake.fr/handbrake/contrib/mpeg2dec-0.5.1.tar.gz
-Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2216-198a7ea.tar.gz
+Source117: http://download.handbrake.fr/handbrake/contrib/x264-r2245-bc13772.tar.gz
+Source118: http://download.handbrake.fr/handbrake/contrib/yasm-1.2.0.tar.gz
 
 Source151: handbrake-ffmpeg_fix_missing_return_in_nonvoid_function.patch
 Source152: handbrake-svn5042-fix_libbluray_implicit_declaration_of_function_strdup.patch
@@ -35,7 +36,7 @@ License: GPLv2
 
 # Automatically added by buildreq on Sun Nov 04 2012 (-bi)
 # optimized out: elfutils fontconfig fontconfig-devel glib2-devel gstreamer-devel gtk-update-icon-cache libX11-devel libatk-devel libcairo-devel libdbus-devel libdbus-glib libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libgst-plugins libgtk+2-devel libncurses-devel libogg-devel libpango-devel libsoup-devel libstdc++-devel libtinfo-devel libxml2-devel perl-XML-Parser pkg-config python-base python-modules python-modules-compiler python-modules-encodings shared-mime-info xorg-xproto-devel
-BuildRequires: bzlib-devel gcc-c++ gst-plugins-devel intltool libalsa-devel libass-devel libdbus-glib-devel libfribidi-devel libgudev-devel libnotify-devel libsamplerate-devel libtheora-devel libvorbis-devel libwebkitgtk2-devel subversion wget yasm zlib-devel
+BuildRequires: bzlib-devel gcc-c++ gst-plugins-devel intltool libalsa-devel libass-devel libdbus-glib-devel libfribidi-devel libgudev-devel libnotify-devel libsamplerate-devel libtheora-devel libvorbis-devel libwebkitgtk2-devel subversion wget zlib-devel
 
 %description
 HandBrake is an open-source, GPL-licensed, multiplatform, multithreaded video
@@ -71,7 +72,7 @@ This package contains a GTK+ graphical user interface for Handbrake.
 for f in \
 %{S:101} %{S:102} %{S:103} %{S:104} %{S:105} %{S:106} \
 %{S:107} %{S:108} %{S:109} %{S:110} %{S:111} %{S:112} \
-%{S:113} %{S:114} %{S:115} %{S:116} %{S:117} \
+%{S:113} %{S:114} %{S:115} %{S:116} %{S:117} %{S:118} \
 ; do
      %__ln_s "$f" download/
 done
@@ -109,6 +110,9 @@ popd #build
 %_datadir/icons/*/*/apps/hb-icon.png
 
 %changelog
+* Mon Feb 11 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5245
+- build svn5245
+
 * Wed Jan 02 2013 Motsyo Gennadi <drool@altlinux.ru> 0.9.9-alt1.svn5127
 - build svn5127
 
