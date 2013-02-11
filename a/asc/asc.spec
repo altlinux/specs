@@ -1,6 +1,6 @@
 Name: asc
 Version: 2.4.0.0
-Release: alt1.7
+Release: alt1.8
 Group: Games/Strategy
 License: GNU GPL
 Source: asc-%{version}.tar.bz2
@@ -34,6 +34,9 @@ ASC aims at providing a free clone of Bluebyte's Battle Isle(tm) series
 %doc AUTHORS COPYING ChangeLog README TODO doc
 
 %changelog
+* Mon Feb 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0.0-alt1.8
+- Rebuilt with Boost 1.53.0
+
 * Wed Nov 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.4.0.0-alt1.7
 - Fixed build with gcc 4.7
 
