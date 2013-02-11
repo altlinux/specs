@@ -3,9 +3,10 @@
 %def_disable static
 %def_enable hal
 %def_disable libhal
+%define _libexecdir /usr/libexec
 
 Name: libgphoto2
-Version: 2.5.0
+Version: 2.5.1.1
 Release: alt1
 
 Group: System/Libraries
@@ -84,6 +85,7 @@ against %name library.
 sed -i '/driverdir/d' libgphoto2_port/libgphoto2_port.pc.in
 %autoreconf
 export udevscriptdir=/lib/udev
+export utilsdir=%_libexecdir/%name
 %configure \
     %{subst_enable static} \
     --with-drivers=all \
@@ -129,10 +131,10 @@ do /bin/cp -pr $f ${f}.port ; done
 
 %post
 # create udev rules
-%_libdir/%name/print-camera-list --verbose udev-rules version 175 owner root mode 0660 group camera > /lib/udev/rules.d/40-%name.rules
+%_libexecdir/%name/print-camera-list --verbose udev-rules version 175 owner root mode 0660 group camera > /lib/udev/rules.d/40-%name.rules
 %if_enabled hal
 # create .fdi file
-%_libdir/%name/print-camera-list hal-fdi > %_datadir/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
+%_libexecdir/%name/print-camera-list hal-fdi > %_datadir/hal/fdi/information/20thirdparty/10-camera-libgphoto2.fdi
 %endif
 
 %triggerpostun -- %name <= 2.4.0
@@ -148,6 +150,8 @@ do /bin/cp -pr $f ${f}.port ; done
 %_libdir/%name/*/*.so
 %dir %_libdir/%{name}_port
 %dir %_libdir/%{name}_port/*
+%dir %_libexecdir/%name
+%_libexecdir/%name/print-camera-list
 %_libdir/%{name}_port/*/*.so
 %_datadir/%name
 %ghost /lib/udev/rules.d/*
@@ -175,6 +179,10 @@ do /bin/cp -pr $f ${f}.port ; done
 %endif
 
 %changelog
+* Mon Feb 11 2013 Dmitriy Khanzhin <jinn@altlinux.org> 2.5.1.1-alt1
+- 2.5.1.1
+- print-camera-list moved to /usr/libexec
+
 * Tue Jul 10 2012 Dmitriy Khanzhin <jinn@altlinux.ru> 2.5.0-alt1
 - 2.5.0
 - dropped increase_max_entries patch
