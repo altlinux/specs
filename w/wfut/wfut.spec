@@ -1,6 +1,6 @@
 Name:           wfut
 Version:        1.1.0
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Software updater tool for WorldForge applications
 
 Group:          Development/C
@@ -33,14 +33,14 @@ make %{?_smp_mflags}
 
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+make install DESTDIR=$RPM_BUILD_ROOT INSTALL="install -p"
 
 # The start script checks for a native binary, and if not found, will
 # try to use java + jar file instead.  But we are only building the
 # native binary, so don't bother with this check.
 mv $RPM_BUILD_ROOT%{_bindir}/wfut-bin $RPM_BUILD_ROOT%{_bindir}/wfut
 
-desktop-file-install                             \
+desktop-file-install                            \
         --dir $RPM_BUILD_ROOT%{_datadir}/applications         \
         %{SOURCE1}
 
@@ -55,6 +55,9 @@ install -p %{SOURCE2} $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/
 
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_13
+- update to new release by fcimport
+
 * Mon Jan 28 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt2_12
 - update to new release by fcimport
 
