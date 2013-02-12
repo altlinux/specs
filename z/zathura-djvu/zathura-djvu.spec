@@ -1,5 +1,5 @@
 Name: zathura-djvu
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: DjVU support for zathura
@@ -39,6 +39,9 @@ export CFLAGS="%optflags"
 %_libdir/zathura/*.so
 
 %changelog
+* Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt1
+- Updated to 0.2.2.
+
 * Wed Jan 09 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
 - Updated to 0.2.1.
 

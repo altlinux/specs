@@ -1,5 +1,5 @@
 Name: zathura-pdf-poppler
-Version: 0.2.1
+Version: 0.2.2
 Release: alt1
 
 Summary: PDF support for zathura (poppler)
@@ -14,7 +14,7 @@ Source: %name-%version.tar
 BuildRequires(pre): rpm-build-licenses
 
 BuildRequires: libgirara-devel zathura-devel
-BuildRequires: intltool libpoppler-glib-devel
+BuildRequires: intltool libpoppler-glib-devel libcairo-devel
 
 Requires: zathura >= 0.1.2
 
@@ -39,6 +39,9 @@ export CFLAGS="%optflags"
 %_libdir/zathura/*.so
 
 %changelog
+* Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 0.2.2-alt1
+- Updated to 0.2.2.
+
 * Wed Jan 09 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
 - Updated to 0.2.1.
 
