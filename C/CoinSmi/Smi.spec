@@ -4,7 +4,7 @@
 %define oname Smi
 Name: Coin%oname
 Version: 0.92.1
-Release: alt4.svn20120402
+Release: alt4.svn20130129
 Summary: COIN-OR Stochastic Modeling Interface
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -115,6 +115,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/examples %oname/flopcpp_examples
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92.1-alt4.svn20130129
+- New snapshot
+
 * Tue Oct 02 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.92.1-alt4.svn20120402
 - Fixed build with gcc 4.7
 
