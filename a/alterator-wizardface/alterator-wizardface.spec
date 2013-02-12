@@ -5,7 +5,7 @@
 
 Name: alterator-wizardface
 Version: 2.0
-Release: alt2
+Release: alt3
 
 Packager: Stanislav Ievlev <inger@altlinux.org>
 
@@ -93,6 +93,9 @@ EOF
 %_bindir/*
 
 %changelog
+* Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 2.0-alt3
+- Fix removal passwords from wizard.log.
+
 * Wed Mar 17 2010 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.0-alt2
 - small fix in postinstall.d/01-wizard-log.sh from @sbolshakov
 

@@ -1,6 +1,6 @@
 Name: installer
-Version: 1.8.14
-Release: alt2
+Version: 1.8.15
+Release: alt1
 
 Summary: Installer common parts
 License: GPLv2+
@@ -105,6 +105,10 @@ This package contains common installer stage3 files and dependencies.
 %_datadir/install2/preinstall.d/30-setup-network.sh
 
 %changelog
+* Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 1.8.15-alt1
+- cp-installer-logs: Don't copy wizard.log.
+- cp-installer-logs: Fix removal passwords from install logs.
+
 * Wed Jan 30 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.8.14-alt2
 - 08-crypttab fixed
 
