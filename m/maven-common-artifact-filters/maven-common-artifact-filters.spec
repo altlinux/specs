@@ -1,24 +1,24 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
-
 Name:          maven-common-artifact-filters
 Version:       1.4
-Release:       alt1_2jpp7
+Release:       alt1_3jpp7
 Summary:       Maven Common Artifact Filters
 Group:         Development/Java
 License:       ASL 2.0
 Url:           http://maven.apache.org/shared/
-Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/maven-common-artifact-filters/1.4/maven-common-artifact-filters-1.4-source-release.zip
-Patch0:        maven-common-artifact-filters-1.4-pom.patch
+Source0:       http://repo1.maven.org/maven2/org/apache/maven/shared/%{name}/%{version}/%{name}-%{version}-source-release.zip
+Patch0:        %{name}-%{version}-pom.patch
 BuildRequires: jpackage-utils
 
 BuildRequires: easymock
-BuildRequires: junit4
+BuildRequires: junit
 
-BuildRequires: maven
+BuildRequires: maven1
 
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -34,8 +34,12 @@ BuildRequires: maven-test-tools
 BuildRequires: plexus-containers-container-default
 BuildRequires: plexus-utils
 
-Requires:      junit4
-Requires:      maven
+# test deps
+BuildRequires: aopalliance
+BuildRequires: cglib
+
+Requires:      junit
+Requires:      maven1
 Requires:      maven-shared
 Requires:      maven-test-tools
 Requires:      plexus-containers-container-default
@@ -59,18 +63,31 @@ Requires:      jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains javadoc for %%{name}.
 
 %prep
-%setup -q -n maven-common-artifact-filters-%{version}
+%setup -q
 # replace maven-project with maven-core and maven-compat 3.0.3
 %patch0 -p0
 
 rm -rf DEPENDENCIES
 
+%pom_xpath_inject "pom:project/pom:dependencies" "
+  <dependency>
+    <groupId>aopalliance</groupId>
+    <artifactId>aopalliance</artifactId>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
+    <groupId>net.sf.cglib</groupId>
+    <artifactId>cglib</artifactId>
+    <scope>test</scope>
+  </dependency>"
+
+
 %build
 
-mvn-rpmbuild install javadoc:aggregate
+mvn-rpmbuild -Dproject.build.sourceEncoding=UTF-8 install javadoc:aggregate
 
 %install
 
@@ -95,9 +112,12 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 %files javadoc
 %{_javadocdir}/%{name}
-%doc LICENSE
+%doc LICENSE NOTICE
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_3jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_2jpp7
 - new version
 
