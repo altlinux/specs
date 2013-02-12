@@ -1,5 +1,5 @@
 Name: livecd-install
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Permanently install Live system
@@ -57,6 +57,10 @@ install -m 0755 zdg-user-dirs-install.sh %buildroot%_x11sysconfdir/profile.d/
 %_x11sysconfdir/profile.d/*
 
 %changelog
+* Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 0.8.1-alt1
+- Added cp-installer-logs postinstall hook (closes: #28537).
+- remove-livecd-pkgs: Remove alterator-luks.
+
 * Fri Feb 08 2013 Mikhail Efremov <sem@altlinux.org> 0.8.0-alt1
 - Replace bootsplash hook with setup-plymouth hooks.
 - Added make-initrd-luks to requires.
