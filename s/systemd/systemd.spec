@@ -16,7 +16,7 @@
 
 Name: systemd
 Version: 197
-Release: alt5
+Release: alt6
 Summary: A System and Session Manager
 Url: http://www.freedesktop.org/wiki/Software/systemd
 Group: System/Configuration/Boot and Init
@@ -1006,6 +1006,9 @@ update_chrooted all
 /lib/udev/write_net_rules
 
 %changelog
+* Tue Feb 12 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt6
+- revert --action=add in systemd-udev-trigger.service
+
 * Mon Feb 11 2013 Alexey Shabalin <shaba@altlinux.ru> 197-alt5
 - mask 80-net-name-slot.rules in udev-rule-generator-net
 
