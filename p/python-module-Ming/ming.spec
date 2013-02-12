@@ -1,7 +1,7 @@
 %define oname Ming
 Name: python-module-%oname
 Version: 0.3.2
-Release: alt1.dev.20120912
+Release: alt1.dev.20121219
 Summary: Bringing order to Mongo since 2009
 License: MIT
 Group: Development/Python
@@ -46,6 +46,9 @@ This package contains tests for Ming.
 %python_sitelibdir/*/tests
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.dev.20121219
+- Version 0.3.2dev-20121219
+
 * Wed Sep 26 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.dev.20120912
 - Initial build for Sisyphus
 
