@@ -39,7 +39,7 @@
 
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt16
+Release: %branch_release alt17
 
 License: %asl
 Group: System/Servers
@@ -219,6 +219,7 @@ Conflicts: apache2-htcacheclean <= 2.2.22-alt11
 Obsoletes: %name-init
 Obsoletes: %name-common <= 2.2.22-alt15
 PreReq: webserver-common
+Requires: %name-mods > 2.2.22-alt15
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
 Requires: %apache2_sbindir/%apache2_dname
@@ -1800,6 +1801,9 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Tue Feb 12 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt17
+- Fix %%name-base: Add Requires %%name-mods
+
 * Wed Feb 06 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt16
 - Remove subpackage %%name-common (create virtual package for %%name-base)
 - Create subpackage %%name-mods
