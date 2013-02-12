@@ -1,9 +1,9 @@
-%define		softver 12.12
-%define		buildver 1707
+%define		softver 12.14
+%define		buildver 1738
 
 Name:		opera
 Version:	%softver.%buildver
-Release:	alt1
+Release:	alt2
 Packager:	Motsyo Gennadi <drool@altlinux.ru>
 Summary:	A fast and secure web browser and Internet suite
 Group:		Networking/WWW
@@ -31,7 +31,7 @@ BuildArch:	x86_64
 # rem for M51
 BuildRequires: libgtk+3
 
-BuildRequires: kde4libs libXt libgst-plugins libgtk+2
+BuildRequires: kde4libs libXt libgst-plugins libgtk+2 libcurl
 
 %description
 Opera is a small, fast, customizable, powerful and user-friendly web
@@ -99,6 +99,7 @@ rm -rf %buildroot%_libdir/%name/pluginwrapper/operapluginwrapper-ia32-linux
 %_docdir/opera
 %_bindir/*
 %_libdir/%name
+%exclude %_libdir/opera/opera_autoupdatechecker
 %exclude %_libdir/opera/lib%{name}*.so
 %_desktopdir/*.desktop
 %_iconsdir/*/*/*/*
@@ -118,6 +119,18 @@ rm -rf %buildroot%_libdir/%name/pluginwrapper/operapluginwrapper-ia32-linux
 %_libdir/opera/lib%{name}kde4.so
 
 %changelog
+* Tue Feb 12 2013 Motsyo Gennadi <drool@altlinux.ru> 12.14.1738-alt2
+- exclude opera_autoupdatechecker (ugly requires)
+
+* Thu Feb 07 2013 Motsyo Gennadi <drool@altlinux.ru> 12.14.1738-alt1
+- 12.14 released
+
+* Tue Feb 05 2013 Motsyo Gennadi <drool@altlinux.ru> 12.13.1734-alt2
+- fix build
+
+* Tue Feb 05 2013 Motsyo Gennadi <drool@altlinux.ru> 12.13.1734-alt1
+- 12.13 released
+
 * Wed Dec 19 2012 Motsyo Gennadi <drool@altlinux.ru> 12.12.1707-alt1
 - 12.12 released
 
