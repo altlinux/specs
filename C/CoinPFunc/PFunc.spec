@@ -4,7 +4,7 @@
 %define oname PFunc
 Name: Coin%oname
 Version: 1.0.2
-Release: alt1.svn20110825
+Release: alt1.svn20121025
 Summary: Generic task-parallel library for C/C++
 License:  Eclipse Public License 1.0
 Group: Sciences/Mathematics
@@ -164,6 +164,9 @@ rmdir %buildroot%_libdir/tmp
 %doc examples
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.svn20121025
+- New snapshot
+
 * Mon Oct 03 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0.2-alt1.svn20110825
 - Version 1.0.2
 
