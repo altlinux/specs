@@ -6,7 +6,7 @@
 %define sover %somver.0
 
 Name: phaml
-Version: 1.12.0
+Version: 1.12.1
 Release: alt1
 Summary: The Parallel Hierarchical Adaptive MultiLevel Project
 License: Public domain
@@ -149,6 +149,9 @@ cp -fR examples %buildroot%_libexecdir/%name/
 %_libexecdir/%name
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.1-alt1
+- Version 1.12.1
+
 * Fri Jan 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.12.0-alt1
 - Version 1.12.0
 
