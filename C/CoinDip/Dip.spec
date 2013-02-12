@@ -4,7 +4,7 @@
 %define oname Dip
 Name: Coin%oname
 Version: 0.83.2
-Release: alt1.svn20111121
+Release: alt1.svn20130130
 Summary: COIN-OR Decomposition for Integer Programming
 License: Eclipse Public License v1.0
 Group: Sciences/Mathematics
@@ -190,6 +190,9 @@ done
 %doc %oname/examples/*
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.83.2-alt1.svn20130130
+- New snapshot
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.83.2-alt1.svn20111121
 - Version 0.83.2
 
