@@ -2,16 +2,16 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: silo
-Version: 4.8
-Release: alt8
+Version: 4.9
+Release: alt1
 Summary: A library for reading and writing a wide variety of scientific data
 License: BSD
 Group: Development/Tools
 Url: http://wci.llnl.gov/codes/silo/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: https://wci.llnl.gov/codes/silo/silo-4.8/silo-4.8-bsd.tar.gz
-Source1: https://wci.llnl.gov/codes/silo/silo-4.8/silo-4.8-bsd-smalltest.tar.gz
+Source: https://wci.llnl.gov/codes/silo/silo-4.9/silo-4.9-bsd.tar.gz
+Source1: https://wci.llnl.gov/codes/silo/silo-4.9/silo-4.9-bsd-smalltest.tar.gz
 
 Requires: lib%name = %version-%release
 
@@ -67,6 +67,7 @@ This package contains shared libraries of Silo.
 %package -n lib%name-devel
 Summary: Development files of Silo
 Group: Development/C++
+BuildArch: noarch
 Requires: lib%name = %version-%release
 
 %description -n lib%name-devel
@@ -154,7 +155,9 @@ source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
 export PYTHONVER=%_python_version
-%add_optflags -DH5Z_class_t_vers=2
+export PATH=$PATH:%_qt4dir/bin
+%autoreconf
+%add_optflags -DH5Z_class_t_vers=2 $(pkg-config QtGui --cflags)
 
 function buildIt() {
 	%configure $1 \
@@ -189,11 +192,10 @@ touch %buildroot%python_sitelibdir/%name/__init__.py
 %_bindir/*
 
 %files -n lib%name
-%_libdir/*.so.*
+%_libdir/*.so
 %_libdir/*.settings
 
 %files -n lib%name-devel
-%_libdir/*.so
 %_includedir/*
 
 %files docs
@@ -203,6 +205,9 @@ touch %buildroot%python_sitelibdir/%name/__init__.py
 %python_sitelibdir/%name
 
 %changelog
+* Mon Feb 11 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.9-alt1
+- Version 4.9
+
 * Mon Jun 25 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.8-alt8
 - Rebuilt with OpenMPI 1.6
 
