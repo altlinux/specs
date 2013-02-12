@@ -5,8 +5,6 @@
 
 %define apache_version 2.2.22
 
-%define n_aprutil_devel_ver 1.3.7-alt2.1
-
 %define mmn 20051115
 
 # do we use native apr/apu ?
@@ -27,9 +25,6 @@
 %define alternatives_macros_name rpm-macros-%alternatives_name
 %endif
 
-# For fix non-strict dependency
-%define _allowed_nonstrict_interdeps %name,%name-cgi-bin %name,%name-html %name,%name-icons %name-base,%name-common %name-base,%name-httpd-prefork %name-base,%name-httpd-worker %name-base,%name-httpd-event %name-base,%name-httpd-itk %name-base,%name-httpd-peruser %name-configs-A1PROXIED,%name-common %name-configs-A1PROXIED,%name-base %name-manual,%name-base %name-manual,%name-base %name-compat,%name-base %name-httpd-prefork,%name-common %name-httpd-worker,%name-common %name-httpd-event,%name-common %name-httpd-itk,%name-common %name-httpd-peruser,%name-common %name-manual,%name-common %name-mod_ssl,%name-common %name-mod_ldap,%name-common %name-mod_disk_cache,%name-common %name-suexec,%name-common %name-compat,%name-common %name-mod_ssl-compat,%name-common %name-cgi-bin-test-cgi,%name-datadirs %name-cgi-bin-printenv,%name-datadirs %name-htcacheclean,%name-mod_disk_cache
-
 %define apache_configs_branch 2
 %define apache_configs_dirs_name %apache2_name-configs-dirs%apache_configs_branch
 %define apache_configs_dirs_version %apache_configs_branch.2.0
@@ -39,9 +34,12 @@
 %define apache_config_tool_name %apache2_name-config-tools
 %define apache_config_tool_version %apache_config_tool_branch.1.2
 
+%define docdir %apache2_docdir_prefix-%version
+%define macrosname %name-build
+
 Name:    %apache2_name
 Version: %apache_version
-Release: %branch_release alt15
+Release: %branch_release alt16
 
 License: %asl
 Group: System/Servers
@@ -105,23 +103,26 @@ Source71: apache2-cert-sh.sh
 Patch1: apache2-%version-alt-all-0.7.patch
 
 BuildRequires(pre): rpm-macros-branch
-BuildRequires(pre): rpm-macros-apache2 >= 3.11
+BuildRequires(pre): rpm-macros-apache2 >= 3.12
 BuildRequires(pre): libssl-devel
 BuildRequires(pre): rpm-macros-condstopstart
+BuildRequires(pre): libaprutil1-devel >= 1.3.7-alt2.1
 BuildPreReq: %_datadir/rpm-build-rpm-eval/rpm-eval.sh
 BuildPreReq: rpm-macros-webserver-cgi-bin-control
-BuildPreReq: rpm >= 4.0.4-alt100.48
+BuildPreReq: rpm >= 4.0.4-alt100.62
 BuildPreReq: rpm-build-licenses
+# For use -z sed option
+BuildPreReq: sed >= 1:4.2.2-alt1
 
-Requires: %name-base = %version-%release
-Requires: %name-ab
-Requires: %name-htpasswd
+Requires: %name-base = %EVR
+Requires: %apache2_bindir/ab2
+Requires: %apache2_bindir/htpasswd2
 Requires: webserver-cgi-bin
 Requires: webserver-html
 Requires: webserver-icons
 
 # Modules by default
-Requires: %name-mod_disk_cache
+Requires: %name-mod_disk_cache > 2.2.22-alt15
 
 BuildPreReq: webserver-common
 
@@ -135,11 +136,10 @@ BuildPreReq: %alternatives_name
 %endif
 BuildPreReq: %n_pkgconfig
 %if_enabled static
-BuildPreReq: libaprutil1-devel-static >= %n_aprutil_devel_ver
-BuildPreReq: %apache2_libssl_name-devel-static
+BuildPreReq: %apache2_libaprutil_name-devel-static
+BuildPreReq: libssl-devel-static
 BuildPreReq: libsasl2-devel-static
 %endif
-BuildPreReq: libaprutil1-devel >= %n_aprutil_devel_ver
 BuildPreReq: libgdbm-devel
 BuildPreReq: libexpat-devel
 BuildPreReq: libpcre-devel
@@ -168,13 +168,43 @@ Group: System/Servers
 
 Provides: webserver
 Provides: httpd
+Provides: %name-common = %EVR
 Provides: %apache_configs_name = %apache_configs_version
+Provides: %apache_configs_dirs_name = %apache_configs_dirs_version
+Provides: %apache_config_tool_name = %apache_config_tool_version
 
 Provides: %apache2_addonconfdir
 Provides: %apache2_serverdatadir
 Provides: %apache2_errordir
 Provides: %apache2_errordir/include
 Provides: %apache2_localstatedir/lib/dav
+Provides: %apache2_proxycachedir
+Provides: %apache2_spooldir
+Provides: %apache2_spooldir/tmp
+Provides: %apache2_spooldir/sessions
+Provides: %apache2_spooldir/uploads
+Provides: %apache2_basedir
+Provides: %apache2_moduledir
+Provides: %apache2_modulelink
+Provides: %apache2_confdir
+Provides: %apache2_confdir_inc
+Provides: %apache2_extra_available
+Provides: %apache2_extra_enabled
+Provides: %apache2_extra_start
+Provides: %apache2_mods_available
+Provides: %apache2_mods_enabled
+Provides: %apache2_mods_start
+Provides: %apache2_ports_available
+Provides: %apache2_ports_enabled
+Provides: %apache2_ports_start
+Provides: %apache2_sites_available
+Provides: %apache2_sites_enabled
+Provides: %apache2_sites_start
+Provides: %apache2_libdir
+Provides: %apache2_logfiledir
+Provides: %apache2_runtimedir
+Provides: %apache2_lockdir
+Provides: %docdir
 
 %if "%apache2_branch" == ""
 Conflicts: apache-common apache apache-mod_perl
@@ -187,14 +217,13 @@ Conflicts: apache-mod_perl < 1.3.41rusPL30.23-alt4.2
 Conflicts: apache2-htcacheclean <= 2.2.22-alt11
 
 Obsoletes: %name-init
+Obsoletes: %name-common <= 2.2.22-alt15
+PreReq: webserver-common
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
-Requires: %name-mmn = %mmn
-Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
 Requires: %apache2_sbindir/%apache2_dname
 Requires: %condstopstart_webdir
 Requires: %condstopstart_webrundir
-Requires: %name-common > 2.2.22-alt11
 
 %description base
 Apache is a powerful, full-featured, efficient and freely-available
@@ -215,11 +244,12 @@ Summary: The most widely used Web server on the Internet (full)
 Summary(ru_RU.UTF-8): Самый популярный веб-сервер Internet (full)
 Summary(uk_UA.UTF-8): Найбільш популярний веб-сервер Internet (full)
 Group: System/Servers
+BuildArch: noarch
 
-Requires: %name = %version-%release
-Requires: %name-cgi-bin
-Requires: %name-html
-Requires: %name-icons
+Requires: %name = %EVR
+Requires: %name-cgi-bin >= 2.2.9-alt12
+Requires: %name-html >= 2.2.12-alt1
+Requires: %name-icons >= 2.2.9-alt10
 
 %description full
 Apache is a powerful, full-featured, efficient and freely-available
@@ -233,58 +263,23 @@ Apache - мощный, функциональный, высокопроизво�
 
 Данный пакет требует наличия %name-cgi-bin, %name-html и %name-icons.
 
-%package common
-Summary: Files common for %name installations
-Summary(ru_RU.UTF-8): Общие файлы для инсталляции %name
-Summary(uk_UA.UTF-8): Спільні файли для інсталяції %name
+%package mods
+Summary: Modules for %name installations
+Summary(ru_RU.UTF-8): Модули для инсталляции %name
 Group: System/Servers
 Conflicts: apache2 < 2.2.4-alt17
-Conflicts: apache2-base <= 2.2.22-alt11
-PreReq: webserver-common
-Requires: libaprutil1 >= %n_aprutil_devel_ver
-Requires: perl-DBM perl-Digest-SHA1 zlib
-Provides: %name-mmn = %mmn
-Provides: %name-%apache2_libssl_name = %apache2_libssl_soname
-Provides: %apache_configs_dirs_name = %apache_configs_dirs_version
-Provides: %apache_config_tool_name = %apache_config_tool_version
+Conflicts: apache2-base <= 2.2.22-alt15
+PreReq: %name-base > 2.2.22-alt15
+Requires: %name-mmn = %mmn
+Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
+Requires: %apache2_libapr_name >= %apache2_libapr_evr
+Requires: %apache2_moduledir
 
-Provides: %apache2_proxycachedir
-Provides: %apache2_spooldir
-Provides: %apache2_spooldir/tmp
-Provides: %apache2_spooldir/sessions
-Provides: %apache2_spooldir/uploads
-Provides: %apache2_basedir
-Provides: %apache2_confdir
-Provides: %apache2_confdir_inc
-Provides: %apache2_extra_available
-Provides: %apache2_extra_enabled
-Provides: %apache2_extra_start
-Provides: %apache2_mods_available
-Provides: %apache2_mods_enabled
-Provides: %apache2_mods_start
-Provides: %apache2_ports_available
-Provides: %apache2_ports_enabled
-Provides: %apache2_ports_start
-Provides: %apache2_sites_available
-Provides: %apache2_sites_enabled
-Provides: %apache2_sites_start
-Provides: %apache2_libdir
-Provides: %apache2_moduledir
-Provides: %apache2_logfiledir
-Provides: %apache2_runtimedir
-Provides: %apache2_lockdir
+%description mods
+This package contains modules for %name.
 
-%description common
-This package contains files required for both %name package
-installations. Install this if you want to install Apache.
-
-%description -l ru_RU.UTF-8 common
-В этом пакете находятся файлы, необходимые для %name.
-Установите, если собираетесь устанавливать Apache.
-
-%description -l uk_UA.UTF-8 common
-Цей пакунок містить файли, які необхідні для %name.
-Встановіть його, якщо збираєтесь використовувати Apache.
+%description -l ru_RU.UTF-8 mods
+В этом пакете находятся модули для %name.
 
 %package configs-A1PROXIED
 Summary: This is a hack to run proxified Apache2 in case Apache1 is running
@@ -293,7 +288,7 @@ Group: System/Servers
 BuildArch: noarch
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
-Requires: %_initdir/%apache2_dname
+Requires: %name-base > 2.2.22-alt15
 
 %description configs-A1PROXIED
 This is a hack to run proxified Apache2 in case Apache1 is running.
@@ -305,14 +300,13 @@ This is a hack to run proxified Apache2 in case Apache1 is running.
 Summary: High speed threaded model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Высокоскоростная нитевая модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-common
+PreReq: %name-base > 2.2.22-alt15
 %if "%alternatives_min_ver" != ""
 PreReq: %alternatives_name >= %alternatives_min_ver
 %endif
-Requires: %name-mmn = %mmn
-Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
+Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
-Provides: %name-httpd = %version-%release
+Provides: %name-httpd = %EVR
 
 %description httpd-worker
 The worker MPM provides a threaded implementation for Apache HTTPD 2.1. It is
@@ -325,15 +319,14 @@ has a smaller memory footprint than the prefork MPM.
 Summary: Traditional model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Традиционная модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-common
+PreReq: %name-base > 2.2.22-alt15
 %if "%alternatives_min_ver" != ""
 PreReq: %alternatives_name >= %alternatives_min_ver
 %endif
-Requires: %name-mmn = %mmn
-Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
+Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
-Provides: %name-httpd = %version-%release
-Provides: %name-httpd-prefork-like
+Provides: %name-httpd = %EVR
+Provides: %name-httpd-prefork-like = %EVR
 
 %description httpd-prefork
 This Multi-Processing Module (MPM) implements a non-threaded,
@@ -349,19 +342,18 @@ It is not as fast, but is considered to be more stable.
 Summary: Event driven model for Apache HTTPD 2.1
 Summary(ru_RU.UTF-8): Событийная модель для Apache HTTPD 2.1
 Group: System/Servers
-PreReq: %name-common
+PreReq: %name-base > 2.2.22-alt15
 %if "%alternatives_min_ver" != ""
 PreReq: %alternatives_name >= %alternatives_min_ver
 %endif
-Requires: %name-mmn = %mmn
-Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
+Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
-Provides: %name-httpd = %version-%release
+Provides: %name-httpd = %EVR
 
 %description httpd-event
-The event Multi-Processing Module (MPM) is designed to allow more 
-requests to be served simultaneously by passing off some processing 
-work to supporting threads, freeing up the main threads to work on 
+The event Multi-Processing Module (MPM) is designed to allow more
+requests to be served simultaneously by passing off some processing
+work to supporting threads, freeing up the main threads to work on
 new requests.
 
 This MPM is especially suitable for sites that see extensive KeepAlive traffic
@@ -369,15 +361,14 @@ This MPM is especially suitable for sites that see extensive KeepAlive traffic
 %package httpd-itk
 Summary: Experimental Multi-Processing Module for the Apache 2 (itk-mpm)
 Group: System/Servers
-PreReq: %name-common
+PreReq: %name-base > 2.2.22-alt15
 %if "%alternatives_min_ver" != ""
 PreReq: %alternatives_name >= %alternatives_min_ver
 %endif
-Requires: %name-mmn = %mmn
-Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
+Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
-Provides: %name-httpd = %version-%release
-Provides: %name-httpd-prefork-like
+Provides: %name-httpd = %EVR
+Provides: %name-httpd-prefork-like = %EVR
 
 %description httpd-itk
 The ITK Multi-Processing Module (MPM) works in about the same way as
@@ -389,15 +380,14 @@ worrying that they will be able to read each others' files.
 %package httpd-peruser
 Summary: Experimental Multi-Processing Module for the Apache 2 (peruser-mpm)
 Group: System/Servers
-PreReq: %name-common
+PreReq: %name-base > 2.2.22-alt15
 %if "%alternatives_min_ver" != ""
 PreReq: %alternatives_name >= %alternatives_min_ver
 %endif
-Requires: %name-mmn = %mmn
-Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
+Provides: %name-mmn = %mmn
 Provides: %apache2_sbindir/%apache2_dname
-Provides: %name-httpd = %version-%release
-Provides: %name-httpd-prefork-like
+Provides: %name-httpd = %EVR
+Provides: %name-httpd-prefork-like = %EVR
 
 %description httpd-peruser
 Peruser is an Apache 2 module based on metuxmpm, a working implementation of
@@ -412,7 +402,7 @@ Summary: RPM helper to rebuild Web servers and apps packages
 Summary(ru_RU.UTF-8): Набор утилит для автоматической Web серверов и приложений
 Group: Development/Other
 
-Requires: rpm-macros-apache2 >= 3.1
+Requires: rpm-macros-apache2 >= %get_SVR rpm-macros-apache2
 
 %description -n rpm-build-%name
 These helper provide possibility to rebuild Web servers and applications
@@ -427,14 +417,16 @@ Summary: Module development tools for the Apache web server
 Summary(ru_RU.UTF-8): Средства разработки модулей для веб-сервера Apache
 Group: Development/C
 Obsoletes: secureweb-devel
-PreReq: %name-base = %version-%release
+PreReq: %name-base = %EVR
+Requires: %name-httpd = %EVR
 
 Provides: %apache2_includedir
 Provides: %apache2_installbuilddir
 
 Obsoletes: %apache2_name-libapr %apache2_name-libapr-devel %apache2_name-libapr-devel %apache2_name-libaprutil %apache2_name-libaprutil-devel %apache2_name-libaprutil-devel
-Requires: libaprutil1-devel >= %n_aprutil_devel_ver
-Requires: rpm-build-%name = %version-%release
+Requires: %apache2_libaprutil_name-devel >= %apache2_libaprutil_evr
+Requires: %apache2_libapr_name-devel >= %apache2_libapr_evr
+Requires: rpm-build-%name = %EVR
 
 %description devel
 The apache-devel package contains the source code for the Apache
@@ -458,6 +450,9 @@ Summary(ru_RU.UTF-8): Документация по Apache
 Group: Books/Other
 AutoReq: no
 BuildArch: noarch
+Requires: %docdir
+
+Provides: %docdir/manual
 
 %description docs
 This package contains the Apache server documentation in HTML format.
@@ -469,11 +464,10 @@ This package contains the Apache server documentation in HTML format.
 Summary: Apache Manual for www
 Summary(ru_RU.UTF-8): Документация по Apache для www
 Group: Books/Other
-Requires: %name-docs
+PreReq: %name-base > 2.2.22-alt15
+Requires: %docdir/manual
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
-Requires: %_initdir/%apache2_dname
-PreReq: %name-common
 AutoReq: no
 BuildArch: noarch
 
@@ -535,7 +529,7 @@ This package contains the Apache server test-cgi scripts.
 
 %package cgi-bin-printenv
 Summary: cgi-bin/printenv for Apache
-Summary(ru_RU.UTF-8): cgi-bin/printenv для Apache
+Summary(ru_RU.UTF-8): cgi-bin/printenv для Apac`he
 Group: System/Servers
 BuildArch: noarch
 PreReq: webserver-common
@@ -559,8 +553,8 @@ Summary(ru_RU.UTF-8): cgi-bin для Apache
 Group: System/Servers
 BuildArch: noarch
 Provides: webserver-cgi-bin
-Requires: %name-cgi-bin-test-cgi
-Requires: %name-cgi-bin-printenv
+Requires: %name-cgi-bin-test-cgi >= 2.2.9-alt12
+Requires: %name-cgi-bin-printenv >= 2.2.9-alt12
 Conflicts: apache-common < 1.3.41rusPL30.23-alt4.2
 Conflicts: apache-cgi-bin
 
@@ -606,13 +600,12 @@ This package contains the Apache server icons dir.
 Group: System/Servers
 Summary: SSL/TLS module for the Apache HTTP server
 Serial: 1
-BuildPreReq: %apache2_libssl_name-devel
-PreReq: openssl
-PreReq: %name-common
+PreReq: %name-base > 2.2.22-alt15
 Requires: %name-mmn = %mmn
-Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
+Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
+Requires: %apache2_libapr_name >= %apache2_libapr_evr
 
 Conflicts: apache2-mod_ssl-compat <= 2.2.22-alt14
 
@@ -626,10 +619,11 @@ Security (TLS) protocols.
 %package mod_ldap
 Group: System/Servers
 Summary: Modules LDAP support for the Apache HTTP server
-PreReq: %name-common
+PreReq: %name-base > 2.2.22-alt15
 Requires: %name-mmn = %mmn
-Requires: libaprutil1-ldap >= %n_aprutil_devel_ver
-Provides: %name-mod_authnz_ldap = %version-%release
+Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
+Requires: %apache2_libapr_name >= %apache2_libapr_evr
+Provides: %name-mod_authnz_ldap = %EVR
 
 %description mod_ldap
 This package contains the modules:
@@ -641,9 +635,11 @@ mod_authnz_ldap -- Allows an LDAP directory to be used to store the database
 %package mod_disk_cache
 Group: System/Servers
 Summary: Module supported content cache storage for the Apache HTTP server
-PreReq: %name-common
+PreReq: %name-base > 2.2.22-alt15
 Requires: %name-mmn = %mmn
-Requires: %name-htcacheclean
+Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
+Requires: %apache2_libapr_name >= %apache2_libapr_evr
+Requires: %apache2_sbindir/%apache2_htcacheclean_dname
 Provides: %apache2_htcacheclean_cachepath
 
 Conflicts: apache2-common < 2.2.19-alt1.1
@@ -664,9 +660,9 @@ See control(8) for details.
 Summary: Clean up the disk cache for Apache
 Group: System/Servers
 Requires: %apache2_htcacheclean_cachepath
-Requires: %name-common > 2.2.22-alt11
-Requires: %name-base > 2.2.22-alt11
-Requires: %name-htcacheclean-control
+Requires: %name-base > 2.2.22-alt15
+Requires: %_controldir/htcacheclean-run
+Requires: %_controldir/htcacheclean-mode
 
 %description htcacheclean
 Htcacheclean is used to keep the size of mod_disk_cache's storage within
@@ -700,9 +696,10 @@ Summary: Suexec binary for Apache
 Summary(ru_RU.UTF-8): Программа suexec для Apache
 Summary(uk_UA.UTF-8): Програма suexec для Apache
 Group: System/Servers
-PreReq: %name-common
+PreReq: %name-base > 2.2.22-alt15
 Requires: %name-mmn = %mmn
-Requires: %name-%apache2_libssl_name = %apache2_libssl_soname
+Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
+Requires: %apache2_libapr_name >= %apache2_libapr_evr
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
 
@@ -727,9 +724,9 @@ Summary: Set DocumentRoot in %apache2_serverdatadir
 Summary(ru_RU.UTF-8): Установка DocumentRoot в %apache2_serverdatadir
 Group: System/Servers
 BuildArch: noarch
+Requires: %name-base > 2.2.22-alt15
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= 0.1.2
-Requires: %_initdir/%apache2_dname
 
 Provides: %apache2_compat_htdocsdir
 Provides: %apache2_compat_cgibindir
@@ -747,7 +744,7 @@ Summary: Set DocumentRoot in %apache2_serverdatadir (for https)
 Summary(ru_RU.UTF-8): Установка DocumentRoot в %apache2_serverdatadir (для https)
 Group: System/Servers
 BuildArch: noarch
-Requires: %name-compat
+Requires: %name-compat > 2.2.22-alt15
 Requires: %name-mod_ssl > 2.2.22-alt14
 Requires: %apache_configs_dirs_name >= %apache_configs_branch
 Requires: %apache_config_tool_name >= %apache_config_tool_branch
@@ -760,7 +757,6 @@ Set DocumentRoot in %apache2_serverdatadir (for https) to support the old config
 
 
 %add_findprov_lib_path %apache2_libdir
-%define docdir %_docdir/%name-base-%version
 
 %prep
 # We dont need to expand builddir yet
@@ -1042,13 +1038,13 @@ s/^\([[:space:]]*ServerAdmin\)[[:space:]]\+you/\1 %apache2_webmaster/
 for d in mods ports sites extra; do
 	pushd $d-available/
 	find -maxdepth 1 \( -name '*.conf' -o -name '*.load' \) -type f -print0 | \
-		(cd ../$d-enabled/ && xargs -r0 touch) 
+		(cd ../$d-enabled/ && xargs -r0 touch)
 	popd
 done
 pushd sites-available/
 find -maxdepth 1 \( -name 'default*.conf' -o -name 'default*.load' \) -type f -print0 | \
 	sed -zr 's@^(.*/)?default@\1000-default@' | \
-	(cd ../sites-enabled/ && xargs -r0 touch) 
+	(cd ../sites-enabled/ && xargs -r0 touch)
 popd
 popd
 
@@ -1058,18 +1054,19 @@ popd
 
 # Move .../conf/original to %%docdir/original
 install -d %buildroot%docdir/
-mv %buildroot%apache2_confdir/original original
-touch %buildroot%docdir/original
+mv %buildroot%apache2_confdir/original %buildroot%docdir/original
 ln -snf $(relative %buildroot%docdir/original %buildroot%apache2_confdir/original) %buildroot%apache2_confdir/original
 
 # docroot
 #rm -r %buildroot%apache2_manualdir/style
 ##rm %buildroot%apache2_manualdir/*/*.xml
 # Move %%apache2_manualdir to %%docdir/manual
-mv %buildroot%apache2_manualdir manual
-install -d %buildroot%_docdir/%apache2_name-docs-%version/
-touch %buildroot%_docdir/%apache2_name-docs-%version/manual
-ln -snf $(relative %buildroot%_docdir/%apache2_name-docs-%version/manual %buildroot%apache2_manualdir) %buildroot%apache2_manualdir
+mv %buildroot%apache2_manualdir %buildroot%docdir/manual
+ln -snf $(relative %buildroot%docdir/manual %buildroot%apache2_manualdir) %buildroot%apache2_manualdir
+
+# install docs to %%docdir/
+cp -r ABOUT_APACHE README CHANGES LICENSE README.ALT* README-itk.* README-peruser.* %buildroot%docdir/
+cp server/mpm/experimental/itk/CHANGES %buildroot%docdir/CHANGES-itk
 
 # install the daemon start script
 install -pD -m755 %SOURCE18 \
@@ -1137,13 +1134,13 @@ install -d %buildroot%_datadir/%name/cgi-bin/
 mv %buildroot%apache2_cgibindir/* %buildroot%_datadir/%name/cgi-bin/
 
 # Install RPM FileTrigger
-install -pD %SOURCE50 %buildroot%_rpmlibdir/00-%apache2_name-common.filetrigger
+install -pD %SOURCE50 %buildroot%_rpmlibdir/00-%apache2_name.filetrigger
 install -pD %SOURCE51 %buildroot%_rpmlibdir/zz80-%apache2_name-base.filetrigger
 install -pD %SOURCE52 %buildroot%_rpmlibdir/90-%apache2_name-base-a2chkconfig.filetrigger
 install -pD %SOURCE53 %buildroot%_rpmlibdir/90-%apache2_name-base-httpd.filetrigger
 install -pD %SOURCE54 %buildroot%_rpmlibdir/90-%apache2_name-htcacheclean.filetrigger
 install -pD %SOURCE55 %buildroot%_rpmlibdir/zz90-%apache2_name-htcacheclean.filetrigger
-install -pD %SOURCE56 %buildroot%_rpmlibdir/zzzz-%apache2_name-common.filetrigger
+install -pD %SOURCE56 %buildroot%_rpmlibdir/zzzz-%apache2_name.filetrigger
 
 # Install scripts for condstopstart-web
 install -pD %SOURCE60 %buildroot%condstopstart_webdir/%apache2_dname-condstop
@@ -1178,31 +1175,32 @@ cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
 %apache2_errordir/	%name-base
 %apache2_errordir/include/	%name-base
 %apache2_localstatedir/lib/dav	%name-base
-%apache2_proxycachedir/	%name-common
-%apache2_spooldir/	%name-common
-%apache2_spooldir/tmp/	%name-common
-%apache2_spooldir/sessions/	%name-common
-%apache2_spooldir/uploads/	%name-common
-%apache2_lockdir/	%name-common
-%apache2_basedir/	%name-common
-%apache2_confdir/	%name-common
-%apache2_confdir_inc/	%name-common
-%apache2_extra_available/	%name-common
-%apache2_extra_enabled/	%name-common
-%apache2_extra_start/	%name-common
-%apache2_mods_available/	%name-common
-%apache2_mods_enabled/	%name-common
-%apache2_mods_start/	%name-common
-%apache2_ports_available/	%name-common
-%apache2_ports_enabled/	%name-common
-%apache2_ports_start/	%name-common
-%apache2_sites_available/	%name-common
-%apache2_sites_enabled/	%name-common
-%apache2_sites_start/	%name-common
-%apache2_libdir/	%name-common
-%apache2_moduledir/	%name-common
-%apache2_logfiledir/	%name-common
-%apache2_runtimedir/	%name-common
+%apache2_proxycachedir/	%name-base
+%apache2_spooldir/	%name-base
+%apache2_spooldir/tmp/	%name-base
+%apache2_spooldir/sessions/	%name-base
+%apache2_spooldir/uploads/	%name-base
+%apache2_lockdir/	%name-base
+%apache2_basedir/	%name-base
+%apache2_confdir/	%name-base
+%apache2_confdir_inc/	%name-base
+%apache2_extra_available/	%name-base
+%apache2_extra_enabled/	%name-base
+%apache2_extra_start/	%name-base
+%apache2_mods_available/	%name-base
+%apache2_mods_enabled/	%name-base
+%apache2_mods_start/	%name-base
+%apache2_ports_available/	%name-base
+%apache2_ports_enabled/	%name-base
+%apache2_ports_start/	%name-base
+%apache2_sites_available/	%name-base
+%apache2_sites_enabled/	%name-base
+%apache2_sites_start/	%name-base
+%apache2_libdir/	%name-base
+%apache2_moduledir/	%name-base
+%apache2_modulelink/	%name-base
+%apache2_logfiledir/	%name-base
+%apache2_runtimedir/	%name-base
 %_datadir/%name/	%name-datadirs
 %_datadir/%name/cgi-bin/	%name-datadirs
 %apache2_proxycachedir/mod_ssl/	%name-mod_ssl
@@ -1215,10 +1213,27 @@ cat <<\EOF >%buildroot%_rpmlibdir/%name-files.req.list
 %apache2_compat_iconssmalldir/	%name-compat
 EOF
 
+mkdir -p %buildroot%_rpmmacrosdir
+cat <<\EOF >%buildroot%_rpmmacrosdir/%macrosname
+# Macros for build %name-mod_*
+%%%{name}_mmn	%mmn
+EOF
+
 #============ S C R I P T S ==================================================
 #
 #
 %pre base
+# Create user and groups
+%_sbindir/groupadd -r -f %apache2_group 2>/dev/null ||:
+%_sbindir/groupadd -r -f %apache2_webmaster 2>/dev/null ||:
+%_sbindir/useradd -g %apache2_group -c 'Apache2 WWW server' -d %apache2_datadir -s '/dev/null' \
+	-G %webserver_group -r %apache2_user 2>/dev/null || :
+if LANG=C %_bindir/id %apache2_user 2>/dev/null | \
+		grep -qv "groups=[^[:space:]]*(%webserver_group)"; then
+	echo 'Warning: User %apache2_user was not included in the group %webserver_group!'
+	%_bindir/gpasswd -a %apache2_user %webserver_group
+	echo '     Added user %apache2_user to group %webserver_group.'
+fi
 if [ $1 -eq 2 ]; then
 	if [ -e %apache2_conf ] && \
 			! (grep -qs -m1 '^[[:space:]]*[Ii][Nn][Cc][Ll][Uu][Dd][Ee][[:space:]]\+conf/ports-enabled' %apache2_conf && \
@@ -1293,31 +1308,17 @@ exit 0
 %triggerun_apache2_rpmhttpdstartfile
 exit 0
 
-%triggerpostun common -- apache2-manual < 2.2.4-alt12, apache2-common < 2.2.22-alt12
+%triggerpostun base -- apache2-manual < 2.2.4-alt12, apache2-common < 2.2.22-alt12
 if [ -e %_docdir/apache2-manual-2.2.4/manual ] && \
 		[ -L %_docdir/apache2-manual-2.2.4/manual ]; then
 	echo "Delete old symlink %_docdir/apache2-manual-2.2.4/manual"
-	rm -f %_docdir/%apache2_name-%version/manual 2>/dev/null ||:
+	rm -f %_docdir/apache2-manual-2.2.4/manual 2>/dev/null ||:
 fi
 if [ -d %apache2_runtimedir ]; then
 	echo "Set owner root:%apache2_group for %apache2_runtimedir"
 	chown root:%apache2_group %apache2_runtimedir
 	echo "Set 2775 attr for %apache2_runtimedir"
 	chmod 2775 %apache2_runtimedir
-fi
-exit 0
-
-%pre common
-# Create user and groups
-%_sbindir/groupadd -r -f %apache2_group 2>/dev/null ||:
-%_sbindir/groupadd -r -f %apache2_webmaster 2>/dev/null ||:
-%_sbindir/useradd -g %apache2_group -c 'Apache2 WWW server' -d %apache2_datadir -s '/dev/null' \
-	-G %webserver_group -r %apache2_user 2>/dev/null || :
-if LANG=C %_bindir/id %apache2_user 2>/dev/null | \
-		grep -qv "groups=[^[:space:]]*(%webserver_group)"; then
-	echo 'Warning: User %apache2_user was not included in the group %webserver_group!'
-	%_bindir/gpasswd -a %apache2_user %webserver_group
-	echo '     Added user %apache2_user to group %webserver_group.'
 fi
 exit 0
 
@@ -1452,7 +1453,72 @@ exit 0
 %triggerpostun cgi-bin-printenv -- apache-common < 1.3.37rusPL30.23-alt1.1, apache-cgi-bin < 1.3.41rusPL30.23-alt4.7.3, apache2-cgi-bin < 2.2.9-alt10, apache2-cgi-bin-printenv
 %triggerpostun_webserver_cgi_bin_control -s symlink_root_noexec cgi-bin_printenv
 
-%files common
+%files mods
+%config(noreplace) %apache2_mods_available/*.load
+%config(noreplace) %apache2_mods_available/*.conf
+%ghost %apache2_mods_enabled/*.load
+%ghost %apache2_mods_enabled/*.conf
+%exclude %apache2_mods_available/ssl.load
+%exclude %apache2_mods_available/ssl.conf
+%exclude %apache2_mods_available/*ldap.load
+%exclude %apache2_mods_available/suexec.load
+%exclude %apache2_mods_available/disk_cache.*
+%exclude %apache2_mods_enabled/ssl.load
+%exclude %apache2_mods_enabled/ssl.conf
+%exclude %apache2_mods_enabled/*ldap.load
+%exclude %apache2_mods_enabled/suexec.load
+%exclude %apache2_mods_enabled/disk_cache.*
+
+%doc %docdir/original/mods-available/*.load
+%doc %docdir/original/mods-available/*.conf
+%exclude %docdir/original/mods-available/ssl.load
+%exclude %docdir/original/mods-available/ssl.conf
+%exclude %docdir/original/mods-available/*ldap.load
+%exclude %docdir/original/mods-available/suexec.load
+%exclude %docdir/original/mods-available/disk_cache.*
+
+# everything but mod_ssl.so:
+%apache2_moduledir/mod_*.so
+%exclude %apache2_moduledir/mod_ssl.so
+%exclude %apache2_moduledir/mod_*ldap.so
+%exclude %apache2_moduledir/mod_suexec.so
+%exclude %apache2_moduledir/mod_disk_cache.so
+
+%files httpd-worker
+%apache2_sbindir/%apache2_dname.worker
+%_altdir/%name-httpd-worker
+
+%files httpd-prefork
+%apache2_sbindir/%apache2_dname.prefork
+%_altdir/%name-httpd-prefork
+
+%files httpd-event
+%apache2_sbindir/%apache2_dname.event
+%_altdir/%name-httpd-event
+
+%files httpd-itk
+%doc %docdir/README-itk.*
+%doc %docdir/CHANGES-itk
+%apache2_sbindir/%apache2_dname.itk
+%_altdir/%name-httpd-itk
+
+%files httpd-peruser
+%doc %docdir/README-peruser.*
+%apache2_sbindir/%apache2_dname.peruser
+%_altdir/%name-httpd-peruser
+
+%files
+
+%files base
+%doc %dir %docdir/
+%doc %docdir/original
+%exclude %docdir/original/mods-available/*
+%doc %docdir/ABOUT_APACHE
+%doc %docdir/README*
+%exclude %docdir/README-peruser.*
+%exclude %docdir/README-itk.*
+%doc %docdir/CHANGES
+
 %config %_sysconfdir/tmpfiles.d/*
 
 %attr(2770,root,%apache2_group) %dir %apache2_proxycachedir/
@@ -1461,6 +1527,10 @@ exit 0
 %attr(2770,root,%apache2_group) %dir %apache2_spooldir/sessions/
 %attr(2770,root,%apache2_group) %dir %apache2_spooldir/uploads/
 %attr(2770,root,%apache2_group) %dir %apache2_lockdir
+%attr(0750,root,%apache2_group) %dir %apache2_logfiledir/
+%attr(0750,root,%apache2_group) %dir %apache2_runtimedir/
+%dir %apache2_libdir/
+%dir %apache2_moduledir/
 
 %dir %apache2_basedir/
 %apache2_loglink
@@ -1484,69 +1554,10 @@ exit 0
 %dir %apache2_sites_enabled/
 %dir %apache2_sites_start/
 
-%dir %apache2_libdir/
-%dir %apache2_moduledir/
-%attr(0750,root,%apache2_group) %dir %apache2_logfiledir/
-%attr(0750,root,%apache2_group) %dir %apache2_runtimedir/
-
-%config(noreplace) %apache2_confdir_inc/*.conf
+%apache2_confdir/original
 %config(noreplace) %apache2_confdir/magic
 %config(noreplace) %apache2_confdir/mime.types
-%config(noreplace) %apache2_mods_available/*.load
-%config(noreplace) %apache2_mods_available/*.conf
-%ghost %apache2_mods_enabled/*.load
-%ghost %apache2_mods_enabled/*.conf
-%exclude %apache2_mods_available/ssl.load
-%exclude %apache2_mods_available/ssl.conf
-%exclude %apache2_mods_available/*ldap.load
-%exclude %apache2_mods_available/suexec.load
-%exclude %apache2_mods_available/disk_cache.*
-%exclude %apache2_mods_enabled/ssl.load
-%exclude %apache2_mods_enabled/ssl.conf
-%exclude %apache2_mods_enabled/*ldap.load
-%exclude %apache2_mods_enabled/suexec.load
-%exclude %apache2_mods_enabled/disk_cache.*
-%apache2_sbindir/a2*
-%apache2_mandir/man8/a2*
-
-# everything but mod_ssl.so:
-%apache2_moduledir/mod_*.so
-%exclude %apache2_moduledir/mod_ssl.so
-%exclude %apache2_moduledir/mod_*ldap.so
-%exclude %apache2_moduledir/mod_suexec.so
-%exclude %apache2_moduledir/mod_disk_cache.so
-
-%_rpmlibdir/*-%apache2_name-common.filetrigger
-
-%files httpd-worker
-%apache2_sbindir/%apache2_dname.worker
-%_altdir/%name-httpd-worker
-
-%files httpd-prefork
-%apache2_sbindir/%apache2_dname.prefork
-%_altdir/%name-httpd-prefork
-
-%files httpd-event
-%apache2_sbindir/%apache2_dname.event
-%_altdir/%name-httpd-event
-
-%files httpd-itk
-%doc README-itk.html server/mpm/experimental/itk/CHANGES
-%apache2_sbindir/%apache2_dname.itk
-%_altdir/%name-httpd-itk
-
-%files httpd-peruser
-%doc README-peruser.html
-%apache2_sbindir/%apache2_dname.peruser
-%_altdir/%name-httpd-peruser
-
-%files
-
-%files base
-%doc ABOUT_APACHE README CHANGES LICENSE README.ALT*
-%doc original
-
-%apache2_confdir/original
+%config(noreplace) %apache2_confdir_inc/*.conf
 
 %config(noreplace) %apache2_conf
 %config(noreplace) %apache2_mods_start/*.conf
@@ -1587,6 +1598,7 @@ exit 0
 %dir %apache2_addonconfdir/
 %attr(0755,root,root) %apache2_sslcertsh
 %config %_initdir/%apache2_dname
+%apache2_sbindir/a2*
 %apache2_sbindir/apachectl*
 %attr(0600,root,root) %config(noreplace) %apache2_envconf
 %_unitdir/%apache2_dname.service
@@ -1606,6 +1618,7 @@ exit 0
 
 %apache2_sbindir/httxt2dbm*
 
+%_rpmlibdir/*-%apache2_name.filetrigger
 %_rpmlibdir/*-%apache2_name-base.filetrigger
 %_rpmlibdir/*-%apache2_name-base-*.filetrigger
 
@@ -1627,7 +1640,6 @@ exit 0
 %exclude %apache2_mandir/man1/htpasswd*
 
 %apache2_mandir/man8/*
-%exclude %apache2_mandir/man8/a2*
 %exclude %apache2_mandir/man8/htcacheclean*
 %exclude %apache2_mandir/man8/suexec*
 
@@ -1642,7 +1654,7 @@ exit 0
 %config(noreplace) %apache2_sites_start/020-A1PROXIED.conf
 
 %files docs
-%doc manual
+%docdir/manual
 
 %files manual
 %apache2_manualdir
@@ -1701,17 +1713,21 @@ exit 0
 %attr(0600,%apache2_user,%apache2_group) %ghost %apache2_proxycachedir/mod_ssl/scache.dir
 %attr(0600,%apache2_user,%apache2_group) %ghost %apache2_proxycachedir/mod_ssl/scache.pag
 %attr(0600,%apache2_user,%apache2_group) %ghost %apache2_proxycachedir/mod_ssl/scache.sem
+%doc %docdir/original/mods-available/ssl.load
+%doc %docdir/original/mods-available/ssl.conf
 
 %files mod_ldap
 %apache2_moduledir/mod_*ldap.so
 %attr(0600,root,root) %config(noreplace) %apache2_mods_available/*ldap.load
 %ghost %apache2_mods_enabled/*ldap.load
+%doc %docdir/original/mods-available/*ldap.load
 
 %files mod_disk_cache
 %apache2_moduledir/mod_disk_cache.so
 %config(noreplace) %apache2_mods_available/disk_cache.*
 %ghost %apache2_mods_enabled/disk_cache.*
 %attr(2770,root,%apache2_group) %dir %apache2_htcacheclean_cachepath/
+%doc %docdir/original/mods-available/disk_cache.*
 
 %files htcacheclean-control
 %_controldir/htcacheclean-*
@@ -1736,6 +1752,7 @@ exit 0
 
 %files -n rpm-build-%name
 %_rpmlibdir/%name-files.req.list
+%_rpmmacrosdir/%macrosname
 
 %files devel
 %apache2_basedir/build
@@ -1762,6 +1779,7 @@ exit 0
 %apache2_moduledir/mod_suexec.so
 %attr(4510,root,%apache2_group) %apache2_sbindir/suexec*
 %apache2_mandir/man8/suexec*
+%doc %docdir/original/mods-available/suexec.load
 
 %files compat
 %config(noreplace) %apache2_sites_available/default-compat.conf
@@ -1782,6 +1800,14 @@ exit 0
 %ghost %apache2_sites_enabled/000-default_https-compat.conf
 
 %changelog
+* Wed Feb 06 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt16
+- Remove subpackage %%name-common (create virtual package for %%name-base)
+- Create subpackage %%name-mods
+- Remove %%name-%%apache2_libssl_name provides
+- Use docdir %%apache2_docdir_prefix-%%version
+- Add setting %%EVR for all provides: %%name-httpd-prefork-like
+- Add new macros %%apache2_mmn to rpm-build-%%name subpackage
+
 * Sat Jan 26 2013 Aleksey Avdeev <solo@altlinux.ru> 2.2.22-alt15
 - Subpackages %%name-mod_ssl{-compat,} converted to use the default
   certificate with a name %%apache2_sslcertname, located in the system
@@ -2310,7 +2336,7 @@ exit 0
 
 * Sun Apr 01 2007 Aleksey Avdeev <solo@altlinux.ru> 2.2.4-alt16
 - Disable httpd2 service startup by default (#11280):
-  that might lead to undesired consequences in case of 
+  that might lead to undesired consequences in case of
   "accidentally" installed packages and/or forgetting
   about them while configuring services; see also [ru]:
   http://lists.altlinux.org/pipermail/devel/2006-December/039909.html

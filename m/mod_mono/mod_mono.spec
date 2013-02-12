@@ -1,15 +1,9 @@
-# use custom apache_moduledir because we are using apache and apache2 devel at one time
-%define apache_moduledir %_libdir/apache
-# use custom apache2_moduledir because rpm-macros is buggy
-%define apache2_moduledir %_libdir/apache2/modules
 %define soname 0.0.0
 %define _monodir /usr/lib/mono
-%define apache_group apache
-%define apache2_group apache2
 
 Name: mod_mono
 Version: 1.9
-Release: alt1
+Release: alt1.1
 
 Summary: A module to deploy an ASP.NET application on Apache2 with Mono
 License: GPL
@@ -25,12 +19,13 @@ Source2: monodemo.apache.conf
 Source3: mono.conf
 Source4: mono.load
 Source5: monodemo.apache2.conf
-Source6: 100-monodemo.conf
+Source6: monodemo.mods.start
+Source7: mono.start
 
 Patch0: %name-%version-%release.patch
 
-# Automatically added by buildreq on Wed Dec 19 2007
-BuildRequires: apache-devel apache2-devel apache2-httpd-worker
+BuildRequires(pre): apache2-devel > 2.2.22-alt15
+BuildRequires: apache-devel
 
 %description
 This package provides mod_mono, a package that allows Apache to
@@ -41,8 +36,8 @@ is installed along with XSP.
 %package -n apache-%name
 Summary: A module to deploy an ASP.NET application on Apache1 with Mono
 Group: System/Servers
-Requires: apache
-Conflicts: apache2-%name
+Requires: apache-base
+Conflicts: %apache2_name-%name
 
 %description -n apache-%name
 This package provides mod_mono, a package that allows Apache to
@@ -58,24 +53,27 @@ Requires: apache-%name, xsp-samples
 %description -n apache-monodemo
 %summary
 
-%package -n apache2-%name
+%package -n %apache2_name-%name
 Summary: A module to deploy an ASP.NET application on Apache2 with Mono
 Group: System/Servers
-Requires: apache2
+Requires: %apache2_name-base > 2.2.22-alt15
+Requires: %apache2_name-mmn = %apache2_mmn
+Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
 Conflicts: apache-%name
 
-%description -n apache2-%name
+%description -n %apache2_name-%name
 This package provides mod_mono, a package that allows Apache to
 serve ASP.NET pages by proxying the requests to a slightly
 modified version of our XSP server, called mod-mono-server, that
 is installed along with XSP.
 
-%package -n apache2-monodemo
-Summary: apache2-related mono demonstration application configs
+%package -n %apache2_name-monodemo
+Summary: %apache2_name-related mono demonstration application configs
 Group: System/Servers
-Requires: apache2-%name, xsp-samples
+Requires: %apache2_name-%name > 1.9-alt1
+Requires: xsp-samples
 
-%description -n apache2-monodemo
+%description -n %apache2_name-monodemo
 %summary
 
 %package doc
@@ -104,7 +102,7 @@ cp src/.libs/mod_mono.so.%soname mod_mono.so.%soname-1.3
 
 # 2. Build module for apache2.
 %configure \
-	--with-apxs=%_sbindir/apxs2 \
+	--with-apxs=%apache2_apxs \
 	--with-apr-config=%_bindir/apr-1-config \
 	--with-mono-default-config-dir=%_sysconfdir/mono/mod-mono-applications \
 	--disable-static \
@@ -133,17 +131,23 @@ ln -s %name.so.%soname %name.so
 popd
 
 # apache1 configs
-install -pDm0644 %SOURCE1 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/%name.conf
-install -pDm0644 %SOURCE2 %buildroot%_sysconfdir/httpd/conf/addon-modules.d/monodemo.conf
+install -pDm0644 %SOURCE1 %buildroot%apache_modconfdir/%name.conf
+install -pDm0644 %SOURCE2 %buildroot%apache_modconfdir/monodemo.conf
 
 # apache2 configs
-install -pDm0644 %SOURCE3 %buildroot%_sysconfdir/httpd2/conf/mods-available/mono.conf
-install -pDm0644 %SOURCE4 %buildroot%_sysconfdir/httpd2/conf/mods-available/mono.load
-install -pDm0644 %SOURCE5 %buildroot%_sysconfdir/httpd2/conf/addon.d/A.monodemo.conf
-install -pDm0644 %SOURCE6 %buildroot%_sysconfdir/httpd2/conf/mods-start.d/100-monodemo.conf
+install -pDm0644 %SOURCE3 %buildroot%apache2_mods_available/mono.conf
+install -pDm0644 %SOURCE4 %buildroot%apache2_mods_available/mono.load
+install -pDm0644 %SOURCE5 %buildroot%apache2_addonconfdir/A.monodemo.conf
+install -pDm0644 %SOURCE6 %buildroot%apache2_mods_start/110-monodemo.conf
+install -pDm0644 %SOURCE7 %buildroot%apache2_mods_start/100-mono.conf
 
 # manpage
 install -pDm0644 man/mod_mono.8 %buildroot%_man8dir/%name.8
+
+# for %%ghost
+mkdir -p %buildroot%apache2_mods_enabled/
+touch %buildroot%apache2_mods_enabled/mono.conf
+touch %buildroot%apache2_mods_enabled/mono.load
 
 %post -n apache-%name
 %_initdir/httpd condrestart
@@ -151,47 +155,37 @@ install -pDm0644 man/mod_mono.8 %buildroot%_man8dir/%name.8
 %postun -n apache-%name
 %_initdir/httpd condrestart
 
-%post -n apache2-%name
-a2enmod mono >/dev/null
-
-%preun -n apache2-%name
-if [ $1 -eq 0 ]; then
-        a2dismod mono
-	%_initdir/httpd2 condreload
-fi
-
-%post -n apache2-monodemo
-a2chkconfig
-%_initdir/httpd2 reload
-
-%postun -n apache2-monodemo
-a2chkconfig
-%_initdir/httpd2 reload
-
 %files -n apache-%name
-%config(noreplace) %_sysconfdir/httpd/conf/addon-modules.d/%name.conf
+%config(noreplace) %apache_modconfdir/%name.conf
 %apache_moduledir/%name.so*
 %dir %attr(1770,root,%apache_group) %_localstatedir/%name
 %dir %attr(1770,root,%apache_group) %_var/run/%name
 
-%files -n apache2-%name
-%config(noreplace) %_sysconfdir/httpd2/conf/mods-available/mono.*
+%files -n %apache2_name-%name
+%config(noreplace) %apache2_mods_available/mono.*
+%config(noreplace) %apache2_mods_start/100-mono.conf
+%ghost %apache2_mods_enabled/mono.*
 %apache2_moduledir/%name.so*
 %dir %attr(1770,root,%apache2_group) %_localstatedir/%name
 %dir %attr(1770,root,%apache2_group) %_var/run/%name
 
 %files -n apache-monodemo
-%config(noreplace) %_sysconfdir/httpd/conf/addon-modules.d/monodemo.conf
+%config(noreplace) %apache_modconfdir/monodemo.conf
 
-%files -n apache2-monodemo
-%config(noreplace) %_sysconfdir/httpd2/conf/addon.d/A.monodemo.conf
-%config(noreplace) %_sysconfdir/httpd2/conf/mods-start.d/100-monodemo.conf
+%files -n %apache2_name-monodemo
+%config(noreplace) %apache2_addonconfdir/A.monodemo.conf
+%config(noreplace) %apache2_mods_start/110-monodemo.conf
 
 %files doc
 %_man8dir/%name.*
 %doc README NEWS ChangeLog AUTHORS
 
 %changelog
+* Sat Feb 09 2013 Aleksey Avdeev <solo@altlinux.ru> 1.9-alt1.1
+- Rebuild with apache2-2.2.22-alt16 (fix unmets)
+- Add %%apache2_mods_start/100-mono.conf file for auto loading module
+- Add %%ghost for %%apache2_mods_enabled/*.{load,conf}
+
 * Wed Apr 23 2008 Vladimir V Kamarzin <vvk@altlinux.ru> 1.9-alt1
 - 1.9
 - Apply upstream patch for fix mod_mono compilation for apache 1.3

@@ -1,6 +1,6 @@
-Name: apache2-mod_auth_ahttpd
+Name: %apache2_name-mod_auth_ahttpd
 Version: 1.0.0
-Release: alt4
+Release: alt4.1
 
 Summary: Alterator-FBI authentication module for Apache 2 HTTP Server
 License: Apache (BSD-like)
@@ -10,10 +10,15 @@ Url: http://git.altlinux.org/people/manowar/packages/mod_auth_ahttpd.git
 
 Source0: mod_auth_ahttpd-%version.tar
 Source1: auth_ahttpd.load
+Source2: auth_ahttpd.start
 
-Requires: apache2
+Requires: %apache2_name-base > 2.2.22-alt15
+Requires: %apache2_name-mmn = %apache2_mmn
+Requires: %apache2_libaprutil_name >= %apache2_libaprutil_evr
+Requires: %apache2_libapr_name >= %apache2_libapr_evr
 
-BuildRequires: apache2-devel man libcurl-devel libssl-devel libjson-devel libsqlite3-devel
+BuildRequires(pre): apache2-devel > 2.2.22-alt15
+BuildRequires: libcurl-devel libssl-devel libjson-devel libsqlite3-devel
 
 %description
 Alterator-FBI authentication module for Apache 2 HTTP Server. It uses
@@ -24,27 +29,30 @@ new ahttpd feature /ahttpd-cache/session/<session-id> to validate the
 %setup -n mod_auth_ahttpd-%version
 
 %build
-%_sbindir/apxs2 -lssl -lcurl -ljson -lsqlite3 -c -Wc,-std=gnu99 mod_auth_ahttpd.c
+%apache2_apxs -lssl -lcurl -ljson -lsqlite3 -c -Wc,-std=gnu99 mod_auth_ahttpd.c
 
 %install
-install -pDm0644 .libs/mod_auth_ahttpd.so %buildroot%_libdir/apache2/modules/mod_auth_ahttpd.so
-install -pDm0644 %SOURCE1 %buildroot%_sysconfdir/httpd2/conf/mods-available/auth_ahttpd.load
+install -pDm0644 .libs/mod_auth_ahttpd.so %buildroot%apache2_moduledir/mod_auth_ahttpd.so
+install -pDm0644 %SOURCE1 %buildroot%apache2_mods_available/auth_ahttpd.load
+install -pDm0644 %SOURCE2 %buildroot%apache2_mods_start/100-auth_ahttpd.conf
 
-%post
-a2enmod auth_ahttpd >/dev/null
-%_initdir/httpd2 condreload
-
-%preun
-if [ $1 -eq 0 ]; then
-	a2dismod auth_ahttpd
-	%_initdir/httpd2 condreload
-fi
+# for %%ghost
+mkdir -p %buildroot%apache2_mods_enabled/
+touch %buildroot%apache2_mods_enabled/auth_ahttpd.load
 
 %files
-%config(noreplace) %_sysconfdir/httpd2/conf/mods-available/auth_ahttpd.load
-%_libdir/apache2/modules/*
+%config(noreplace) %apache2_mods_available/auth_ahttpd.load
+%config(noreplace) %apache2_mods_start/100-auth_ahttpd.conf
+%ghost %apache2_mods_enabled/*.load
+%apache2_moduledir/*
 
 %changelog
+* Fri Feb 08 2013 Aleksey Avdeev <solo@altlinux.ru> 1.0.0-alt4.1
+- Rebuild with apache2-2.2.22-alt16 (fix unmets).
+- Add %%apache2_mods_start/100-auth_ahttpd.conf file for auto loading
+  module.
+- Add %%ghost for %%apache2_mods_enabled/*.load.
+
 * Tue Feb 05 2013 Paul Wolneykien <manowar@altlinux.ru> 1.0.0-alt4
 - Fix: do not require apache2-suexec.
 
