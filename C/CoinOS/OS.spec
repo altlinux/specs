@@ -4,7 +4,7 @@
 %define oname OS
 Name: Coin%oname
 Version: 2.6.0
-Release: alt1.svn20120901
+Release: alt1.svn20130205
 Summary: COIN-OR Optimization Services (OS)
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -147,6 +147,9 @@ done
 %doc %oname/applications
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1.svn20130205
+- New snapshot
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.6.0-alt1.svn20120901
 - Version 2.6.0
 
