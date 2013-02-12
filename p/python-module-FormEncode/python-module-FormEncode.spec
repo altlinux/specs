@@ -1,8 +1,8 @@
 %define modulename FormEncode
 
 Name: python-module-%modulename
-Version: 1.2.4
-Release: alt1.git20120914
+Version: 1.3.0
+Release: alt1.git20130201
 Epoch: 1
 
 %setup_python_module %modulename
@@ -75,6 +75,9 @@ popd
 %python_sitelibdir/*/pickle
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.0-alt1.git20130201
+- Version 1.3.0
+
 * Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.2.4-alt1.git20120914
 - New snapshot
 
