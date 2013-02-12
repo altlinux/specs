@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.62
-Release: alt6
+Version: 3.0.63
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 62
+%define kernel_stable_version 63
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -550,18 +550,19 @@ Patch0683: linux-%kernel_branch.46-fix-fs-ext4.patch
 Patch0684: linux-%kernel_branch.56-fix-fs-fat.patch
 Patch0685: linux-%kernel_branch.42-fix-fs-hfs.patch
 Patch0686: linux-%kernel_branch.54-fix-fs-jbd.patch
-Patch0687: linux-%kernel_branch.53-fix-fs-nfs.patch
-Patch0688: linux-%kernel_branch.53-fix-fs-ocfs2.patch
-Patch0689: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
-Patch0690: linux-%kernel_branch.43-fix-fs-proc.patch
-Patch0691: linux-%kernel_branch.42-fix-fs-pstore.patch
-Patch0692: linux-%kernel_branch.62-fix-fs-quota.patch
-Patch0693: linux-%kernel_branch.61-fix-fs-ramfs.patch
-Patch0694: linux-%kernel_branch.51-fix-fs-reiserfs.patch
-Patch0695: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
-Patch0696: linux-%kernel_branch.56-fix-fs-squashfs.patch
-Patch0697: linux-%kernel_branch.42-fix-fs-sysfs.patch
-Patch0698: linux-%kernel_branch.53-fix-fs-xfs.patch
+Patch0687: linux-%kernel_branch.62-fix-fs-logfs.patch
+Patch0688: linux-%kernel_branch.53-fix-fs-nfs.patch
+Patch0689: linux-%kernel_branch.53-fix-fs-ocfs2.patch
+Patch0690: linux-%kernel_branch.43-fix-fs-partition--ibm.patch
+Patch0691: linux-%kernel_branch.43-fix-fs-proc.patch
+Patch0692: linux-%kernel_branch.42-fix-fs-pstore.patch
+Patch0693: linux-%kernel_branch.62-fix-fs-quota.patch
+Patch0694: linux-%kernel_branch.61-fix-fs-ramfs.patch
+Patch0695: linux-%kernel_branch.51-fix-fs-reiserfs.patch
+Patch0696: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
+Patch0697: linux-%kernel_branch.56-fix-fs-squashfs.patch
+Patch0698: linux-%kernel_branch.42-fix-fs-sysfs.patch
+Patch0699: linux-%kernel_branch.53-fix-fs-xfs.patch
 
 Patch0700: linux-%kernel_branch.53-fix-include.patch
 
@@ -584,9 +585,9 @@ Patch0740: linux-%kernel_branch.57-fix-lib.patch
 Patch0741: linux-%kernel_branch.62-fix-lib--btree.patch
 Patch0742: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
-Patch0750: linux-%kernel_branch.58-fix-mm.patch
+Patch0750: linux-%kernel_branch.62-fix-mm.patch
 Patch0751: linux-%kernel_branch.58-fix-mm--compaction.patch
-Patch0752: linux-%kernel_branch.59-fix-mm--huge_memory.patch
+Patch0752: linux-%kernel_branch.62-fix-mm--huge_memory.patch
 Patch0753: linux-%kernel_branch.43-fix-mm--hugetlb.patch
 Patch0754: linux-%kernel_branch.44-fix-mm--memcontrol.patch
 Patch0755: linux-%kernel_branch.42-fix-mm--memory-failure.patch
@@ -1908,6 +1909,7 @@ cd linux-%version
 %patch0696 -p1
 %patch0697 -p1
 %patch0698 -p1
+%patch0699 -p1
 
 %patch0700 -p1
 
@@ -3008,6 +3010,17 @@ done)
 
 
 %changelog
+* Tue Feb 12 2013 Led <led@altlinux.ru> 3.0.63-alt1
+- 3.0.63
+
+* Mon Feb 11 2013 Led <led@altlinux.ru> 3.0.62-alt7
+- updated:
+  + fix-fs
+  + fix-mm
+  + fix-mm--huge_memory
+- added:
+  + fix-fs-logfs
+
 * Thu Feb 07 2013 Led <led@altlinux.ru> 3.0.62-alt6
 - updated:
   + fix-drivers-scsi--st
