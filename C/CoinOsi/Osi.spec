@@ -3,8 +3,8 @@
 
 %define oname Osi
 Name: Coin%oname
-Version: 0.105.5
-Release: alt3.svn20120901
+Version: 0.105.7
+Release: alt1.svn20130205
 Summary: Coin Open Solver Interface
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -169,6 +169,9 @@ done
 #_bindir/*
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.105.7-alt1.svn20130205
+- Version 0.105.7
+
 * Wed Feb 06 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.105.5-alt3.svn20120901
 - Fixed headers for work with glpk 4.48
 
