@@ -7,7 +7,7 @@
 
 Name: branding-simply-linux
 Version: 6.991.0
-Release: alt1
+Release: alt2
 BuildArch: noarch
 
 BuildRequires: cpio gfxboot >= 4 fonts-ttf-dejavu fonts-ttf-droid
@@ -410,6 +410,10 @@ subst "s/Theme=.*/Theme=%theme/" /etc/plymouth/plymouthd.conf
 /usr/share/desktop-directories/altlinux-wine.directory
 
 %changelog
+* Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 6.991.0-alt2
+- Added gnome-authentication-agent autostart desktop-file.
+- release-notes: Fix align (thx cas@).
+
 * Fri Feb 08 2013 Mikhail Efremov <sem@altlinux.org> 6.991.0-alt1
 - xfce-settings: Drop obsoleted autostart *.desktop files.
 - Don't disable tracker by default.
