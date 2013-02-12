@@ -3,8 +3,9 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.0rel
-Release: alt2
+Epoch: 1
+Version: 3.0.3
+Release: alt1
 Summary: Encapsulation of date/time values
 License: ZPLv2.1
 Group: Development/Python
@@ -39,7 +40,7 @@ using Python's built-in datetime module.
 %package -n python3-module-%oname-tests
 Summary: Tests for DateTime (Python 3)
 Group: Development/Python3
-Requires: python3-module-%oname = %version-%release
+Requires: python3-module-%oname = %EVR
 
 %description -n python3-module-%oname-tests
 This package provides a DateTime data type, as known from Zope 2. Unless
@@ -52,7 +53,7 @@ This package contains tests for DateTime.
 %package tests
 Summary: Tests for DateTime
 Group: Development/Python
-Requires: %name = %version-%release
+Requires: %name = %EVR
 
 %description tests
 This package provides a DateTime data type, as known from Zope 2. Unless
@@ -106,6 +107,9 @@ popd
 %endif
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:3.0.3-alt1
+- Version 3.0.3
+
 * Tue May 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0rel-alt2
 - Added module for Python 3
 
