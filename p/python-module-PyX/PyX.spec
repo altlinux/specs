@@ -1,7 +1,7 @@
 %define oname PyX
 Name: python-module-%oname
-Version: 0.11.1
-Release: alt2
+Version: 0.12.1
+Release: alt1
 Summary: Python graphics package
 License: GPLv2+
 Group: Development/Python
@@ -56,6 +56,7 @@ ln -s ../objects.inv manual
 %python_build_debug build_ext -i
 
 %make -C manual html
+%make -C faq
 
 #mkdir -p pdf
 #mv manual/_build/latex/*.pdf pdf/
@@ -68,7 +69,7 @@ ln -s ../objects.inv manual
 %python_sitelibdir/*
 
 %files docs
-%doc faq/*.pdf
+%doc faq/_build/latex/*.pdf
 %doc manual/_build/html
 #doc pdf
 
@@ -76,6 +77,9 @@ ln -s ../objects.inv manual
 %doc examples
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.12.1-alt1
+- Version 0.12.1
+
 * Thu Dec 15 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.1-alt2
 - Fixed build
 
