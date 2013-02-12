@@ -24,7 +24,7 @@
 %define qsa_major 1
 %define qsa_minor 1
 %define qsa_bugfix 5
-%define rlz alt2
+%define rlz alt3
 Name: %rname%major
 Version: %major.%minor.%bugfix
 Release: %rlz
@@ -1290,6 +1290,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 %_rpmmacrosdir/*
 
 %changelog
+* Tue Feb 12 2013 Sergey V Turchin <zerg@altlinux.org> 3.3.8d-alt3
+- rebuilt (ALT #28444)
+
 * Wed Jan 23 2013 Roman Savochenko <rom_as@altlinux.ru> 3.3.8d-alt2
 - Update to last Trinity 3.3.8d, branch origin/v3.5.13-sru
 
@@ -1298,6 +1301,9 @@ install -m 644 %SOURCE103 %buildroot/%_iconsdir/hicolor/48x48/apps/%rname.png
 
 * Fri Oct 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.8d-alt1.1
 - Rebuilt with libpng15
+
+* Tue Jan 24 2012 Sergey V Turchin <zerg@altlinux.org> 3.3.8d-alt0.M60P.1
+- built for M60P
 
 * Wed Nov 16 2011 Sergey V Turchin <zerg@altlinux.org> 3.3.8d-alt1
 - using Trinity 3.3.8d
