@@ -7,7 +7,7 @@
 %define classic_ver 0.5.7
 Name: ccaffeine
 Version: %sover
-Release: alt6.svn20100330
+Release: alt7.svn20100330
 Summary: CCA framework compliant with the CCA specification
 License: LGPL
 Group: Sciences/Mathematics
@@ -271,6 +271,9 @@ done
 
 popd
 
+sed -i 's|/usr/sbin/lsattr|lsattr|g' \
+	$(egrep -R lsattr %buildroot |awk -F : '{print $1}')
+
 %files
 %doc *.html *.txt Changelog.* README* TODO*
 %_bindir/*
@@ -321,6 +324,9 @@ popd
 #_includedir/python%_python_version/llnl_babel_ccafe*
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8-alt7.svn20100330
+- Fixed build with Boost 1.53.0 (thnx iv@)
+
 * Wed Jul 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.8.8-alt6.svn20100330
 - Rebuilt with OpenMPI 1.6
 
