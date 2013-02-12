@@ -1,6 +1,6 @@
-BuildRequires: bouncycastle-tsp
 Epoch: 0
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subproj}
 Version:        1.2
-Release:        alt1_4jpp7
+Release:        alt1_5jpp7
 Summary:        Doxia content generation framework
 License:        ASL 2.0
 Group:          Development/Java
@@ -57,7 +57,7 @@ Patch2:         0003-Migration-to-component-metadata.patch
 
 BuildRequires:  itext
 BuildRequires:  jpackage-utils
-BuildRequires:  maven
+BuildRequires:  maven1
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -76,7 +76,6 @@ BuildRequires:  apache-commons-logging
 BuildRequires:  apache-commons-validator
 BuildRequires:  junit
 BuildRequires:  jakarta-oro
-BuildRequires:  plexus-container-default
 BuildRequires:  plexus-containers-container-default
 BuildRequires:  plexus-containers-component-javadoc
 BuildRequires:  plexus-containers-component-metadata
@@ -94,7 +93,6 @@ Requires:       apache-commons-validator
 Requires:       junit
 Requires:       maven-doxia
 Requires:       jakarta-oro
-Requires:       plexus-container-default
 Requires:       plexus-containers-container-default
 Requires:       plexus-i18n
 Requires:       plexus-utils
@@ -121,7 +119,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+API documentation for %%{name}.
 
 %prep
 %setup -q -n doxia-%{subproj}-%{version}
@@ -184,6 +182,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_5jpp7
+- fc update
+
 * Fri Aug 24 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_4jpp7
 - new release
 
