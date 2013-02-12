@@ -1,6 +1,6 @@
 %define oname FormAlchemy
 Name: python-module-%oname
-Version: 1.4.2
+Version: 1.4.3
 Release: alt1
 Summary: Greatly speeds development with SQLAlchemy mapped classes in a HTML forms environment
 License: MIT
@@ -62,6 +62,9 @@ This package contains tests for FormAlchemy.
 %python_sitelibdir/*/tests
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1
+- Version 1.4.3
+
 * Thu Dec 08 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.2-alt1
 - Version 1.4.2
 
