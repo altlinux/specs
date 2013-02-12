@@ -3,8 +3,8 @@
 
 %define oname Clp
 Name: Coin%oname
-Version: 1.14.7
-Release: alt2.svn20120830
+Version: 1.14.8
+Release: alt1.svn20130202
 Summary: COIN-OR Linear Programming Solver
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -133,6 +133,8 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 install -d %buildroot%_bindir
 #install -m755 %oname/examples/driver %buildroot%_bindir/%oname-driver
 
+install -p -m644 Clp/src/AbcCommon.hpp %buildroot%_includedir/coin/
+
 #for i in %oname-driver clp; do
 #	chrpath -r %mpidir/lib %buildroot%_bindir/$i
 #done
@@ -162,6 +164,9 @@ rm -fR %buildroot%_docdir/coin \
 #_bindir/*driver
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14.8-alt1.svn20130202
+- Version 1.14.8
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.14.7-alt2.svn20120830
 - Rebuilt with glpk 4.48
 
