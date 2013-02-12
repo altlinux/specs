@@ -2,14 +2,14 @@
 %define cvs_date zero
 %undefine cvs_date
 %define snapshot 2012-10-12
-%define rel alt5
+%define rel alt1
 
 %def_disable static
 
 # TODO: pam CoreFoundation
 
 Name: e17
-Version: 0.17.0
+Version: 0.17.1
 
 %ifdef cvs_date
 Release: %rel.%cvs_date
@@ -45,6 +45,7 @@ Patch3: illume-keyboard-bigfont.patch
 Patch4: e17-0.17.0-alt-g-s-d_path.patch
 # from Suse
 Patch5: e17-0.17.0-alt-e_sys_nosuid.patch
+Patch6: auto-ptrace-disable.patch
 
 Provides: e17-default
 # default terminal
@@ -102,6 +103,7 @@ to use Enlightenment as windowmanager in GNOME 2 session
 %patch3 -p2
 %patch4 -p1 -b .gsd
 #%%patch5 -p1 -b .nosuid
+%patch6 -p2
 
 %build
 %autoreconf
@@ -176,6 +178,13 @@ _PAM_
 %_datadir/gnome/wm-properties/*.desktop
 
 %changelog
+* Mon Feb 04 2013 Paul Wolneykien <manowar@altlinux.ru> 1:0.17.1-alt1
+- Fresh up to v0.17.1.
+
+* Fri Feb 01 2013 Paul Wolneykien <manowar@altlinux.ru> 1:0.17.0-alt6
+- Disable tracing automatically if enlightenment has suid/sgid
+  bit set.
+
 * Fri Jan 18 2013 Yuri N. Sedunov <aris@altlinux.org> 1:0.17.0-alt5
 - required evas_generic_loaders (especially for .svg)
 - required gnome-icon-theme for menus (ALT #28311)
