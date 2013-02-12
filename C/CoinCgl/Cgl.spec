@@ -3,8 +3,8 @@
 
 %define oname Cgl
 Name: Coin%oname
-Version: 0.57.3
-Release: alt2.svn20120618
+Version: 0.57.4
+Release: alt1.svn20130130
 Summary: COIN-OR Cut Generation Library
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -112,6 +112,9 @@ export OMPI_LDFLAGS="-Wl,--as-needed,-rpath,%mpidir/lib -L%mpidir/lib"
 
 %makeinstall_std TOPDIR=$PWD
 
+install -p -m644 Cgl/src/CglZeroHalf/Cgl012cut.hpp \
+	%buildroot%_includedir/coin/
+
 #install -d %buildroot%_bindir
 #install -m755 %oname/examples/cgl1 %buildroot%_bindir
 #chrpath -r %mpidir/lib %buildroot%_bindir/cgl1
@@ -136,6 +139,9 @@ rm -fR %buildroot%_docdir/coin \
 #_bindir/*
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.57.4-alt1.svn20130130
+- Version 0.57.4
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.57.3-alt2.svn20120618
 - New snapshot
 
