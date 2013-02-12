@@ -1,6 +1,6 @@
 %define oname AccessControl
 Name: python-module-%oname
-Version: 3.0.4
+Version: 3.0.6
 Release: alt1
 Summary: Security framework for Zope2
 License: ZPLv2.1
@@ -49,6 +49,9 @@ This package contains tests for Security framework for Zope2.
 %python_sitelibdir/*/tests
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.6-alt1
+- Version 3.0.6
+
 * Fri Sep 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.0.4-alt1
 - Version 3.0.4
 
