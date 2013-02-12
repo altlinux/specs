@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: CoinUtils
-Version: 2.8.7
-Release: alt2.svn20120901
+Version: 2.8.8
+Release: alt1.svn20130203
 Summary: Open-source collection of classes and functions for COIN-OR project
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -88,7 +88,7 @@ mpi-selector --set %mpiimpl
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
-%autoreconf
+#autoreconf
 %add_optflags -I%mpidir/include
 %configure \
 	--with-coin-instdir=%prefix \
@@ -125,6 +125,9 @@ rm -fR %buildroot%_datadir/coin/doc \
 %doc %name/doxydoc/doxydoc/html/*
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.8-alt1.svn20130203
+- Version 2.8.8
+
 * Mon Feb 04 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.7-alt2.svn20120901
 - Rebuilt with glpk 4.48
 
