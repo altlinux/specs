@@ -1,5 +1,5 @@
 Name: zathura-ps
-Version: 0.2.0
+Version: 0.2.1
 Release: alt1
 
 Summary: PostScript support for zathura
@@ -7,7 +7,7 @@ License: %bsdstyle
 Group: Office
 
 URL: http://pwmt.org/projects/zathura/plugins/%name
-# git.alt:packages/zathura-ps.git
+# git://pwmt.org/zathura-ps.git
 Source: %name-%version.tar
 #Patch: %name-%version-%release.patch
 
@@ -39,6 +39,9 @@ export CFLAGS="%optflags"
 %_libdir/zathura/*.so
 
 %changelog
+* Tue Feb 12 2013 Mikhail Efremov <sem@altlinux.org> 0.2.1-alt1
+- Updated to 0.2.1.
+
 * Fri Jun 15 2012 Mikhail Efremov <sem@altlinux.org> 0.2.0-alt1
 - Updated to 0.2.0.
 
