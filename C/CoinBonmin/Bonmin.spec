@@ -3,8 +3,8 @@
 
 %define oname Bonmin
 Name: Coin%oname
-Version: 1.6
-Release: alt3.svn20120901
+Version: 1.6.0
+Release: alt1.svn20121203
 Summary: Basic Open-source Nonlinear Mixed INteger programming
 License: CPL v1.0
 Group: Sciences/Mathematics
@@ -122,6 +122,9 @@ rm -fR %buildroot%_docdir/coin
 %doc %oname/doc/*.pdf %oname/examples doxydoc/Doc/html
 
 %changelog
+* Tue Feb 12 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.0-alt1.svn20121203
+- New snapshot
+
 * Wed Sep 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6-alt3.svn20120901
 - Rebuilt with Couenne
 
