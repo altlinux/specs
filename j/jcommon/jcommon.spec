@@ -1,14 +1,18 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 %def_with repolib
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: jcommon
-Version: 1.0.17
-Release: alt1_4jpp7
+Version: 1.0.18
+Release: alt1_1jpp7
 Summary: JFree Java utility classes
 License: LGPLv2+
 Group: System/Libraries
 Source: http://downloads.sourceforge.net/jfreechart/%%{name}-%%{version}.tar.gz
+Source2: bnd.properties
 URL: http://www.jfree.org/jcommon
 BuildRequires: ant jpackage-utils
 # Required for converting jars to OSGi bundles
@@ -29,7 +33,7 @@ Requires: jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-Javadoc for %{name}.
+Javadoc for %%{name}.
 
 
 %description javadoc -l fr
@@ -50,10 +54,11 @@ find . -name "*.jar" -exec rm -f {} \;
 
 %build
 pushd ant
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5  compile compile-xml javadoc
+ant compile compile-xml javadoc
 popd
 # Convert to OSGi bundle
-java -jar $(build-classpath aqute-bnd) wrap %{name}-%{version}.jar
+java -Djcommon.bundle.version="%{version}" \
+     -jar $(build-classpath aqute-bnd) wrap -output %{name}-%{version}.bar -properties %{SOURCE2} %{name}-%{version}.jar
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
@@ -81,6 +86,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0.18-alt1_1jpp7
+- fc update
+
 * Thu Sep 13 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.0.17-alt1_4jpp7
 - new version
 
