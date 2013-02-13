@@ -5,7 +5,7 @@
 %define postgresql_major     9
 %define postgresql_minor     0
 %define postgresql_subminor  12
-%define postgresql_altrel    1
+%define postgresql_altrel    2
 %define libpq_major          5
 %define libpq_minor          3
 %define libecpg_major        6
@@ -340,14 +340,14 @@ cp src/include/port/linux.h %buildroot%_includedir/%PGSQL/port/
 ln -s port/linux.h %buildroot%_includedir/%PGSQL/os.h
 
 # Chrooted environment
-mkdir -p %buildroot%ROOT/{bin,dev,%_lib,tmp,%_sysconfdir/%PGSQL,%_localstatedir,%_libdir/%PGSQL,%_libdir/locale}
+mkdir -p %buildroot%ROOT/{bin,dev,%_lib,tmp,%_sysconfdir/%PGSQL,%_localstatedir,%_libdir/%PGSQL,/usr/lib/locale}
 
 mksock %buildroot%ROOT/dev/log
 mkdir -p -m700 %buildroot%_sysconfdir/syslog.d
 ln -s %ROOT/dev/log %buildroot%_sysconfdir/syslog.d/%prog_name
 
 mv %buildroot%_localstatedir/%PGSQL %buildroot%ROOT/%_localstatedir/%PGSQL
-install -dm700 %buildroot%_localstatedir/%PGSQL
+ln -s $(relative %ROOT%_localstatedir/%PGSQL %_localstatedir/) %buildroot%_localstatedir/%PGSQL
 
 pushd contrib
 %make_build install DESTDIR=%buildroot pkglibdir=%_libdir/%PGSQL docdir=%docdir
@@ -628,9 +628,10 @@ fi
 %attr(1777,root,root) %dir %ROOT/tmp
 %attr(751,root,root)  %dir %ROOT/usr
 %attr(751,root,root)  %dir %ROOT/var
+%attr(751,root,root)  %dir %ROOT/usr/lib/
+%attr(751,root,root)  %dir %ROOT/usr/lib/locale
 %attr(751,root,root)  %dir %ROOT%_libdir
 %attr(751,root,root)  %dir %ROOT%_libdir/%PGSQL
-%attr(751,root,root)  %dir %ROOT%_libdir/locale
 %attr(751,root,root)  %dir %ROOT%_localstatedir
 %attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL
 %attr(700,postgres,postgres)  %dir %ROOT%_localstatedir/%PGSQL/backups
@@ -688,6 +689,11 @@ fi
 %_libdir/%PGSQL/plpython2.so
 
 %changelog
+* Wed Feb 13 2013 Alexei Takaseev <taf@altlinux.org> 9.0.12-alt2
+- Remove /tmp/.s.PGSQL.* after shutdown server
+- Small fix spec (locate localedir into chroot)
+- fix chroot symlink
+
 * Fri Feb 08 2013 Alexei Takaseev <taf@altlinux.org> 9.0.12-alt1
 - 9.0.12.
 
