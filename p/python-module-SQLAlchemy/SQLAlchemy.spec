@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.7.8
+Version: 0.7.10
 Release: alt1
 
 Summary: Python SQL toolkit and Object Relational Mapper
@@ -122,6 +122,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.10-alt1
+- Version 0.7.10
+
 * Sat Sep 22 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.8-alt1
 - Version 0.7.8
 
