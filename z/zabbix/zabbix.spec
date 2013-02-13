@@ -10,8 +10,8 @@
 %endif
 
 Name: zabbix
-Version: 2.0.4
-Release: alt3
+Version: 2.0.5
+Release: alt1
 
 Packager: Alexei Takaseev <taf@altlinux.ru>
 
@@ -455,6 +455,9 @@ fi
 %doc misc/snmptrap/* migrate.sh
 
 %changelog
+* Wed Feb 13 2013 Alexei Takaseev <taf@altlinux.org> 1:2.0.5-alt1
+- 2.0.5 release
+
 * Wed Jan 23 2013 Alexei Takaseev <taf@altlinux.org> 1:2.0.4-alt3
 - CVE-2013-1364
 
