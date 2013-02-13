@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 3.3.3
+Version: 3.4.0
 Release: alt1
 Summary: Better living through Python with decorators
 License: BSD
@@ -99,6 +99,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.4.0-alt1
+- Version 3.4.0
+
 * Sat May 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3.3-alt1
 - Version 3.3.3
 - Added module for Python 3
