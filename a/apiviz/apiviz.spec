@@ -1,22 +1,24 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
 %define name apiviz
-%define version 1.3.1
+%define version 1.3.2
 %global namedreltag .GA
 %global namedversion %{version}%{?namedreltag}
 
 Name:             apiviz
-Version:          1.3.1
-Release:          alt1_8jpp7
+Version:          1.3.2
+Release:          alt1_2jpp7
 Summary:          APIviz is a JavaDoc doclet to generate class and package diagrams
 Group:            Development/Java
 License:          LGPLv2+
 URL:              http://code.google.com/p/apiviz/
-Source0:          http://%{name}.googlecode.com/files/%{name}-%{namedversion}-dist.tar.gz
-Patch0:           %{name}-%{namedversion}-pom.patch
-Patch1:           %{name}-%{namedversion}-jdk7.patch
+Source0:          http://apiviz.googlecode.com/files/apiviz-%{namedversion}-dist.tar.gz
+Patch0:           apiviz-pom.patch
 
 BuildArch:        noarch
 
@@ -31,6 +33,7 @@ BuildRequires:    maven-jar-plugin
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-release-plugin
 BuildRequires:    maven-resources-plugin
+BuildRequires:    maven-enforcer-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    maven-plugin-jxr
@@ -56,12 +59,11 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
-%setup -q -n %{name}-%{namedversion}
+%setup -q -n apiviz-%{namedversion}
 %patch0 -p1
-%patch1 -p1
 
 find -name '*.class' -exec rm -f '{}' \;
 find -name '*.jar' -exec rm -f '{}' \;
@@ -95,6 +97,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %doc LICENSE.txt
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.3.2-alt1_2jpp7
+- fc update
+
 * Tue Oct 02 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.3.1-alt1_8jpp7
 - new fc release
 
