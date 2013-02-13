@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 1.0
-Release: alt1.b1.git20120424
+Release: alt2.git20120608
 Summary: Cython bindings for the Cassowary Constraint Solving Toolkit
 License: LGPLv2.1+
 Group: Development/Python
@@ -81,6 +81,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt2.git20120608
+- Version 1.0
+
 * Thu May 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.0-alt1.b1.git20120424
 - Version 1.0b1
 - Added module for Python 3
