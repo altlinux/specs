@@ -3,8 +3,8 @@
 
 %define oname Scientific
 Name: python-module-%oname
-Version: 2.9.1
-Release: alt3
+Version: 2.9.2
+Release: alt1
 Summary: Collection of Python modules for scientific computing
 License: CeCILL
 Group: Sciences/Mathematics
@@ -161,6 +161,9 @@ popd
 %python_sitelibdir/*/Examples
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.2-alt1
+- Version 2.9.2
+
 * Fri Sep 14 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.1-alt3
 - Rebuilt with libnetcdf 4.2.1.1
 
