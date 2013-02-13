@@ -1,4 +1,7 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # Copyright (c) 2000-2005, JPackage Project
@@ -36,11 +39,11 @@ BuildRequires: jpackage-compat
 %global gcj_support %{?_with_gcj_support:1}%{!?_with_gcj_support:%{?_without_gcj_support:0}%{!?_without_gcj_support:%{?_gcj_support:%{_gcj_support}}%{!?_gcj_support:0}}}
 
 %global section		devel
-%global upstreamver	9.1-902
+%global upstreamver	9.2-1002
 
 Summary:	JDBC driver for PostgreSQL
 Name:		postgresql-jdbc
-Version:	9.1.902
+Version:	9.2.1002
 Release:	alt1_1jpp7
 # ASL 2.0 applies only to postgresql-jdbc.pom file, the rest is BSD
 License:	BSD and ASL 2.0
@@ -68,10 +71,8 @@ Requires(postun): java-gcj-compat >= 1.0.31
 %endif
 Requires(post):	jpackage-utils
 Requires(postun): jpackage-utils
-
-
-Obsoletes: rh-postgresql-jdbc
 Source44: import.info
+
 
 %description
 PostgreSQL is an advanced Object-Relational database management
@@ -136,6 +137,9 @@ install -m 644 JPP-postgresql-jdbc.pom $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-postgr
 %{_mavenpomdir}/JPP-%{name}.pom
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:9.2.1002-alt1_1jpp7
+- fc update
+
 * Mon Aug 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:9.1.902-alt1_1jpp7
 - new version
 
