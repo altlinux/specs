@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname.core
-Version: 2.8.4
-Release: alt1.git20120501
+Version: 2.11
+Release: alt1.git20130114
 Summary: Chameleon Template Compiler
 License: BSD
 Group: Development/Python
@@ -133,6 +133,9 @@ cp -fR _build/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.11-alt1.git20130114
+- Version 2.11
+
 * Mon May 07 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.4-alt1.git20120501
 - Version 2.8.4
 
