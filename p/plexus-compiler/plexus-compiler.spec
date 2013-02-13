@@ -1,3 +1,6 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: ecj3
 BuildRequires: /proc
 BuildRequires: jpackage-compat
@@ -32,20 +35,18 @@ BuildRequires: jpackage-compat
 #
 
 %global parent  plexus
-%global dirhash 113d7de
-%global githash g233d1ab
+%global dirhash 56a0f9b
 
 Name:       plexus-compiler
-Version:    1.9.1
-Release:    alt1_3jpp7
+Version:    1.9.2
+Release:    alt1_1jpp7
 Epoch:      0
 Summary:    Compiler call initiators for Plexus
 License:    MIT
 Group:      Development/Java
 URL:        http://plexus.codehaus.org/
 
-# wget  https://github.com/sonatype/plexus-compiler/tarball/plexus-compiler-1.8.3
-Source0:    sonatype-plexus-compiler-plexus-compiler-1.9.1-0-%{githash}.tar.gz
+Source0:    https://github.com/sonatype/%{name}/tarball/%{name}-%{version}#/%{name}-%{version}.tar.gz
 
 Patch0:     plexus-compiler-ignoreOptionalProblems.patch
 
@@ -70,7 +71,7 @@ Source44: import.info
 %description
 Plexus Compiler adds support for using various compilers from a
 unified api. Support for javac is available in main package. For
-additional compilers see %{name}-extras package.
+additional compilers see %%{name}-extras package.
 
 %package extras
 Summary:        Extra compiler support for %{name}
@@ -89,7 +90,7 @@ Requires:       jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-API documentation for %{name}.
+API documentation for %%{name}.
 
 %prep
 %setup -q -n sonatype-plexus-compiler-%{dirhash}
@@ -180,6 +181,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.9.2-alt1_1jpp7
+- fc update
+
 * Tue Sep 18 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.9.1-alt1_3jpp7
 - new version
 
