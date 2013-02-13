@@ -1,7 +1,7 @@
 %define oname deliverance
 Name: python-module-%oname
-Version: 0.6
-Release: alt2
+Version: 0.6.1
+Release: alt1
 Summary: Deliverance transforms HTML to theme pages
 License: MIT
 Group: Development/Python
@@ -56,6 +56,9 @@ find $RPM_BUILD_ROOT \( -name 'Thumbs.db' -o -name 'Thumbs.db.gz' \) -print -del
 %python_sitelibdir/*/*/*/*/*/*/test
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
+- Version 0.6.1
+
 * Sun Dec 11 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6-alt2
 - Extracted test into separate package
 
