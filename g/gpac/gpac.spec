@@ -1,6 +1,6 @@
 Name: gpac
-Version: 0.4.5
-Release: alt1.svn3744.2.1
+Version: 0.5.0
+Release: alt1
 
 Summary: GPAC is a multimedia framework covering MPEG-4, VRML/X3D and SVG.
 License: LGPL
@@ -13,10 +13,7 @@ Source: %name-%version.tar
 Requires: lib%name = %version-%release
 
 BuildRequires: libalsa-devel libjack-devel libpulseaudio-devel
-BuildRequires: libdirectfb-devel libxvid-devel
-BuildRequires: libavcodec-devel libavformat-devel libavutil-devel 
-BuildRequires: libpostproc-devel libswscale-devel libavdevice-devel
-BuildRequires: libavfilter-devel
+BuildRequires: libdirectfb-devel libxvid-devel libavcodec-devel
 BuildRequires: subversion libfreetype-devel 
 BuildRequires: libXv-devel libXext-devel libSDL-devel libGL-devel libGLU-devel 
 BuildRequires: libssl-devel gcc-c++ 
@@ -85,7 +82,7 @@ like AVI, MPG, TS, but mostly on ISO media files (e.g. MP4, 3GP), e.g.:
 %setup -q
 
 %build
-%configure --enable-pic
+%configure --enable-pic --libdir=`echo %_libdir|sed -e 's/\/usr\///'`
 %make_build
 
 %install
@@ -108,6 +105,9 @@ like AVI, MPG, TS, but mostly on ISO media files (e.g. MP4, 3GP), e.g.:
 
 
 %changelog
+* Wed Feb 13 2013 Michael A. Kangin <prividen@altlinux.org> 0.5.0-alt1
+- 0.5.0
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.5-alt1.svn3744.2.1
 - Rebuilt with libpng15
 
