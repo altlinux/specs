@@ -1,13 +1,16 @@
-BuildRequires: maven-antrun-plugin
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
+BuildRequires: maven-antrun-plugin
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %global base_name math
 %global short_name commons-%{base_name}3
 
 Name:             apache-commons-math
-Version:          3.0
-Release:          alt2_2jpp7
+Version:          3.1.1
+Release:          alt1_1jpp7
 Summary:          Java library of lightweight mathematics and statistics components
 
 Group:            Development/Java
@@ -21,7 +24,6 @@ BuildRequires:    maven-surefire-provider-junit4
 Requires:         jpackage-utils
 BuildArch:        noarch
 Source44: import.info
-Patch33:	commons-math3-3.0-alt-pom.patch
 
 %description
 Commons Math is a library of lightweight, self-contained mathematics and
@@ -36,16 +38,15 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 
 %prep
 %setup -q -n %{short_name}-%{version}-src
 
-%patch33 -p1
 
 %build
-mvn-rpmbuild -Dproject.build.sourceEncoding=ISO8859-1 install javadoc:javadoc
+mvn-rpmbuild install javadoc:aggregate
 
 
 %install
@@ -59,8 +60,6 @@ install -pm 0644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 install -dm 0755 $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 cp -pr target/site/api*/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
-# jpp compat symlink
-ln -s %name.jar %buildroot%_javadir/commons-math.jar
 
 %files
 %doc LICENSE.txt NOTICE.txt RELEASE-NOTES.txt
@@ -75,6 +74,9 @@ ln -s %name.jar %buildroot%_javadir/commons-math.jar
 
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:3.1.1-alt1_1jpp7
+- fc update
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 0:3.0-alt2_2jpp7
 - added jpp compat symlink
 
