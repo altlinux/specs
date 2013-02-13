@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.2
-Release: alt3
+Release: alt4
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -52,6 +52,7 @@ Patch2: gdm-3.2.1.1-alt-Xsession.patch
 Patch7: gdm-3.1.92-alt-Init.patch
 Patch9: gdm-3.2.2-alt-link.patch
 Patch10: gdm-3.2.1.1-alt-invalid_user_shell.patch
+Patch11: gdm-3.6.2-alt-runtimedir-perms.patch
 
 # from configure.ac
 %define dbus_glib_ver 0.74
@@ -211,6 +212,7 @@ Install this package for use with GNOME desktop.
 %patch7 -p1
 %patch9 -p1 -b .link
 %patch10 -p1 -b .shells
+%patch11 -p1 -b .runtimedir
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
@@ -377,6 +379,10 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Wed Feb 13 2013 Michael Shigorin <mike@altlinux.org> 3.6.2-alt4
+- NMU: fixed /var/run/gdm permissions which were blocking
+  proper pam_xauth execution; thanks ldv@ (closes: #28549)
+
 * Sun Dec 23 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt3
 - reverted http://git.gnome.org/browse/gdm/commit/?h=gnome-3-6&id=affb42aff901f407502e4d2c0eb65b4f30a1275d (ALT #28231)
 
