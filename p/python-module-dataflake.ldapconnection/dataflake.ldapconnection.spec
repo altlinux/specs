@@ -1,7 +1,7 @@
 %define oname dataflake.ldapconnection
 Name: python-module-%oname
-Version: 1.2
-Release: alt1.1
+Version: 1.5
+Release: alt1
 Summary: LDAP connection library
 License: ZPLv2.1
 Group: Development/Python
@@ -60,6 +60,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/tests
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5-alt1
+- Version 1.5
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 1.2-alt1.1
 - Rebuild with Python-2.7
 
