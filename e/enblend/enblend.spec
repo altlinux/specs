@@ -1,7 +1,7 @@
 Summary: A tool for combine images (make a panoramas) using a multiresolution spline
 Name: enblend
 Version: 4.0
-Release: alt3
+Release: alt4
 License: VIGRA License
 Group: Graphics
 URL: http://enblend.sourceforge.net/
@@ -53,6 +53,9 @@ autoreconf -fisv
 
 
 %changelog
+* Wed Feb 13 2013 Sergei Epiphanov <serpiph@altlinux.ru> 4.0-alt4
+- Rebuild with new libboost version
+
 * Tue Dec 04 2012 Sergei Epiphanov <serpiph@altlinux.ru> 4.0-alt3
 - Rebuild with new libboost version
 
