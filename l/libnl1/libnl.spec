@@ -1,37 +1,32 @@
-Name: libnl
+%define _name libnl
+
+Name: libnl1
 Version: 1.1
-Release: alt2.qa2
+Release: alt3
 
 Summary: library for applications dealing with netlink sockets
 License: LGPL
-Group: System/Libraries
+Group: System/Legacy libraries
 Url: http://www.suug.ch/~tgr/libnl/
 Packager: Alex V. Myltsev <avm@altlinux.ru>
 
-Source: %name-%version.tar
-Source1: %name.ver
+Source: %_name-%version.tar
+Source1: %_name.ver
 
-Patch1: %name-1.1-alt-version-script.patch
+Patch1: %_name-1.1-alt-version-script.patch
+
+Provides: libnl = %version-%release
+Obsoletes: libnl < %version-%release
 
 %description
 libnl is a library for applications dealing with netlink sockets. The library
 provides an interface for raw netlink messaging and various netlink family
 specific interfaces.
 
-%package devel
-Summary: header files for libnl, a netlink sockets library
-Group: System/Libraries
-Requires: %name = %version
-
-%description devel
-libnl is a library for applications dealing with netlink sockets.
-
-This package contains header files for libnl.
-
 %prep
-%setup
+%setup -n %_name-%version
 %patch1 -p2
-cp %SOURCE1 lib/%name.ver
+cp %SOURCE1 lib/%_name.ver
 
 %build
 %configure
@@ -42,13 +37,15 @@ cp %SOURCE1 lib/%name.ver
 
 %files
 %_libdir/libnl.so.*
-
-%files devel
-%_libdir/libnl.so
-%_includedir/netlink
-%_pkgconfigdir/%name-1.pc
+%exclude %_libdir/libnl.so
+%exclude %_includedir/netlink
+%exclude %_pkgconfigdir/%_name-1.pc
 
 %changelog
+* Wed Feb 13 2013 Mikhail Efremov <sem@altlinux.org> 1.1-alt3
+- Renamed libnl -> libnl1 and drop libnl-devel subpackage.
+- Package as legacy library.
+
 * Mon Mar 21 2011 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.1-alt2.qa2
 - Rebuilt for debuginfo
 
