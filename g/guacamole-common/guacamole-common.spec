@@ -1,8 +1,12 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+BuildRequires: maven
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 %define fedora 18
 Name:             guacamole-common
-Version:          0.6.1
+Version:          0.7.0
 Release:          alt1_2jpp7
 Summary:          The core Java library used by the Guacamole web application
 License:          MPLv1.1 or GPLv2+ or LGPLv2+
@@ -13,23 +17,11 @@ BuildArch:        noarch
 
 # Generic Buildrequires:
 # https://fedoraproject.org/wiki/Packaging:Java#maven_3
-BuildRequires:    jpackage-utils
-BuildRequires:    maven-compiler-plugin
-BuildRequires:    maven-install-plugin
-BuildRequires:    maven-jar-plugin
-BuildRequires:    maven-javadoc-plugin
-BuildRequires:    maven-release-plugin
-BuildRequires:    maven-resources-plugin
-BuildRequires:    maven-surefire-plugin
-Requires:         jpackage-utils
 
 # Specific ones:
-BuildRequires:    maven-dependency-plugin
 Requires:         slf4j >= 1.6.1
 %if 0%{?fedora} || 0%{?rhel} > 6
-BuildRequires:    servlet3
 %else
-BuildRequires:    servlet25
 %endif
 Source44: import.info
 
@@ -40,19 +32,18 @@ server acts as a tunnel and proxy, allowing access to multiple desktops through
 a web browser. No plugins are needed: the client requires nothing more than a
 web browser supporting HTML5 and AJAX.
 
-%{name} is the core Java library used by the Guacamole web application.
-%{name} provides abstract means of connecting to guacd, interfacing
+%%{name} is the core Java library used by the Guacamole web application.
+%%{name} provides abstract means of connecting to guacd, interfacing
 with the JavaScript client and tunnel provided by guacamole-common-js, and
 reading configuration from a standard location (guacamole.properties).
 
 %package javadoc
 Summary:          API documentation for %{name}
 Group:            Development/Java
-Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -65,7 +56,7 @@ mkdir -p $RPM_BUILD_ROOT%{_javadir}/guacamole
 cp -p target/%{name}-%{version}.jar $RPM_BUILD_ROOT%{_javadir}/guacamole/%{name}.jar
 
 mkdir -p $RPM_BUILD_ROOT%{_javadocdir}/%{name}
-cp -rp target/site/apidocs $RPM_BUILD_ROOT%{_javadocdir}/%{name}
+cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 
 install -d -m 755 $RPM_BUILD_ROOT%{_mavenpomdir}
 install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.guacamole-%{name}.pom
@@ -85,6 +76,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP.guacamole-%{name}.pom
 
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_2jpp7
+- fc update
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0.6.1-alt1_2jpp7
 - new release
 
