@@ -1,6 +1,6 @@
 
 Name: poppler-data
-Version: 0.4.5
+Version: 0.4.6
 Release: alt1
 
 Group: Publishing
@@ -39,6 +39,9 @@ and licensed much more strictly, and thus distributed separately.
 %_datadir/poppler
 
 %changelog
+* Wed Feb 13 2013 Sergey V Turchin <zerg@altlinux.org> 0.4.6-alt1
+- new version
+
 * Mon Sep 12 2011 Sergey V Turchin <zerg@altlinux.org> 0.4.5-alt1
 - new version
 
