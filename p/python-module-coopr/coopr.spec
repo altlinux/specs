@@ -1,7 +1,7 @@
 %define oname coopr
 Name: python-module-%oname
 Version: 3.3
-Release: alt1.svn20120905
+Release: alt1.svn20130213
 Summary: COmmon Optimization Python Repository 
 License: BSD
 Group: Development/Python
@@ -458,6 +458,7 @@ Optimization Services project.
 Summary: Generalized Disjunctive Programming (GDP) extensions to the Pyomo environment
 Group: Development/Python
 Requires: %name = %version-%release
+Requires: %name-pyomo = %version-%release
 
 %description gdp
 Coopr is a collection of Python optimization-related packages. Coopr
@@ -470,6 +471,25 @@ for optimization solvers can be added without editing any Coopr
 software.
 
 This Python package provides Generalized Disjunctive Programming (GDP)
+extensions to the Pyomo environment.
+
+%package dae
+Summary: Differential-Algebraic Equation (DAE) extensions to the Pyomo environment
+Group: Development/Python
+Requires: %name = %version-%release
+Requires: %name-pyomo = %version-%release
+
+%description dae
+Coopr is a collection of Python optimization-related packages. Coopr
+supports a diverse set of optimization capabilities that can be used to
+formulate and analyze optimization applications. In particular, it
+include Pyomo, a Python-based modeling tool that can model abstract
+linear and integer programs. Coopr strongly leverages a Python component
+architecture to support extensibility in a modular manner, and plug-ins
+for optimization solvers can be added without editing any Coopr
+software.
+
+This Python package provides Differential-Algebraic Equation (DAE)
 extensions to the Pyomo environment.
 
 %package tests
@@ -562,11 +582,11 @@ rm -f \
 mv %buildroot%_bindir/OSSolverService \
 	%buildroot%_bindir/OSSolverService.%oname
 
-install -d %buildroot%_docdir/%oname
-pushd %oname.doc/trunk/GettingStarted/current
-%make
-cp -fR *.html *.pdf *.txt examples %buildroot%_docdir/%oname/
-popd
+#install -d %buildroot%_docdir/%oname
+#pushd %oname.doc/trunk/GettingStarted/current
+#make
+#cp -fR *.html *.pdf *.txt examples %buildroot%_docdir/%oname/
+#popd
 
 %files
 %doc *.txt
@@ -579,8 +599,8 @@ popd
 %python_sitelibdir/%oname/__init__.py*
 %python_sitelibdir/%oname/%oname
 
-%files -n %oname-docs
-%_docdir/%oname
+#files -n %oname-docs
+#_docdir/%oname
 
 %files core
 %doc %oname.core/trunk/*.txt %oname.core/trunk/doc/examples
@@ -747,6 +767,15 @@ popd
 %exclude %python_sitelibdir/%oname/gdp/tests
 %exclude %python_sitelibdir/*.pth
 
+%files dae
+%doc %oname.dae/trunk/*.txt
+%doc %oname.dae/trunk/doc/*.txt
+%doc %oname.dae/trunk/examples
+%python_sitelibdir/%oname.dae*
+%python_sitelibdir/%oname/dae
+%exclude %python_sitelibdir/%oname/dae/tests
+%_bindir/rundph
+
 %files tests
 %_bindir/test*
 %python_sitelibdir/%oname/colin/tests
@@ -766,8 +795,12 @@ popd
 %python_sitelibdir/%oname/core/tests
 %python_sitelibdir/%oname/extras/test*
 %python_sitelibdir/%oname/openopt/test*
+%python_sitelibdir/%oname/dae/test*
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.svn20130213
+- New snapshot
+
 * Thu Sep 06 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.svn20120905
 - Version 3.3
 
