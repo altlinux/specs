@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.10.91
-Release: alt1
+Release: alt2
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -60,9 +60,9 @@ done
 %post
 [ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/%name
 
-%triggerin -- %name < 2.8.0-alt7
+%triggerin -- %name < 2.10.91-alt2
 find %_datadir/fonts -depth -type f -name fonts.cache-1 -delete
-find %_var/cache/%name -depth -type f -name \*.cache-\[12\] -delete
+find %_var/cache/%name -depth -type f -name \*.cache-\[123\] -delete
 
 %triggerpostun -- %name < 2.10.0-alt1
 find -L %_sysconfdir/fonts/conf.d -type l -delete
@@ -98,6 +98,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Feb 13 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.10.91-alt2
+- updated to master git.72b0480
+
 * Fri Jan 11 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.10.91-alt1
 - 2.11 RC1
 
