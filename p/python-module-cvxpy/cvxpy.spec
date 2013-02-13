@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.0.1
-Release: alt2.svn20111127
+Version: 0.1
+Release: alt1.svn20130211
 Summary: Python package for modeling optimization problems
 License: GPLv3
 Group: Development/Python
@@ -74,6 +74,9 @@ popd
 %endif
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1-alt1.svn20130211
+- Version 0.1
+
 * Wed May 23 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.1-alt2.svn20111127
 - Added module for Python 3
 
