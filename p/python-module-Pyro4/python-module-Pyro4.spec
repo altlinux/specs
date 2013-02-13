@@ -3,7 +3,7 @@
 %def_with python3
 
 Name:           python-module-%oname
-Version:        4.14
+Version:        4.17
 Release:        alt1
 Summary:        Python Remote Objects
 Group:          Development/Python
@@ -190,6 +190,9 @@ cp -fR build/sphinx/pickle %buildroot%python_sitelibdir/%oname/
 %endif
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.17-alt1
+- Version 4.17
+
 * Tue May 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 4.14-alt1
 - Version 4.14
 - Added module for Python 3
