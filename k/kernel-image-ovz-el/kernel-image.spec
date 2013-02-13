@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt79
+Release: alt80
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -525,64 +525,6 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 #rm -rf %buildroot%kbuild_dir/drivers/media
 #rm -fr %buildroot%kbuild_dir/include/linux/video{_decoder,dev,dev2}.h
 
-%post -n kernel-modules-oss-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-oss-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-ide-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-ide-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-drm-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-drm-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-drm-nouveau-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-drm-nouveau-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-modules-drm-radeon-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-drm-radeon-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%if_enabled kvm
-%post -n kernel-modules-kvm-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-kvm-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-%endif
-
-%if_enabled v4l
-%post -n kernel-modules-v4l-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-v4l-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-%endif
-
-%post -n kernel-modules-alsa-%flavour
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun -n kernel-modules-alsa-%flavour
-%postun_kernel_modules %kversion-%flavour-%krelease
-
-%post -n kernel-headers-%flavour
-%post_kernel_headers %kversion-%flavour-%krelease
-
-%postun -n kernel-headers-%flavour
-%postun_kernel_headers %kversion-%flavour-%krelease
-
 %files
 /boot/vmlinuz-%kversion-%flavour-%krelease
 /boot/System.map-%kversion-%flavour-%krelease
@@ -662,6 +604,34 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Fri Feb 08 2013 Led <led@altlinux.ru> 2.6.32-alt80
+- Update to 042stab072.10
+- removed obsoleted %%post[un]_kernel_modules macros
+- kbuild: generate modules.builtin (ALT#28491)
+- disabled:
+  + OCFS2 (broken by OpenVZ)
+  + FUNCTION_TRACER
+  + FRAME_POINTER
+  + DEBUG_FORCE_WEAK_PER_CPU
+  + DEBUG_DEVRES
+- enabled:
+  + CIFS_ACL
+  + PRAMCACHE
+  + DRM_I2C_CH7006
+  + MMC_RICOH_MMC
+  + SND_CMIPCI
+  + SMS_SIANO_MDTV
+  + USB_PWC
+  + HP_WATCHDOG
+  + WL12XX
+  + DM_RAID
+  + BLK_DEV_NBD
+  + NETPRIO_CGROUP
+  + IP_SET
+  + USB_NET_AX8817X
+  + E1000E
+- RTC_DRV_CMOS=y
+
 * Sat Oct 27 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.32-alt79
 - Update to 042stab063.2
 
