@@ -3,7 +3,7 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.11.4
+Version: 0.16
 Release: alt1
 Summary: Flexible static resources for web applications
 License: BSD
@@ -15,6 +15,7 @@ Source: %name-%version.tar
 BuildArch: noarch
 
 BuildPreReq: python-devel python-module-distribute
+BuildPreReq: python-module-sphinx-devel
 %if_with python3
 BuildRequires(pre): rpm-build-python3
 BuildRequires: python3-devel python3-module-distribute
@@ -61,6 +62,28 @@ http://fanstatic.org
 
 This package contains tests for fanstatic.
 
+%package docs
+Summary: Documentation for fanstatic
+Group: Development/Documentation
+
+%description docs
+Fanstatic is a smart static resource publisher for Python. For more
+information on what it's about and how to use it, see:
+http://fanstatic.org
+
+This package contains documentation for fanstatic.
+
+%package pickles
+Summary: Pickles for fanstatic
+Group: Development/Python
+
+%description pickles
+Fanstatic is a smart static resource publisher for Python. For more
+information on what it's about and how to use it, see:
+http://fanstatic.org
+
+This package contains pickles for fanstatic.
+
 %prep
 %setup
 %if_with python3
@@ -68,7 +91,12 @@ rm -rf ../python3
 cp -a . ../python3
 %endif
 
+%prepare_sphinx .
+ln -s ../objects.inv doc/
+
 %build
+export LC_ALL=en_US.UTF-8
+
 %python_build
 %if_with python3
 pushd ../python3
@@ -80,6 +108,8 @@ popd
 %endif
 
 %install
+export LC_ALL=en_US.UTF-8
+
 %python_install
 %if_with python3
 pushd ../python3
@@ -87,25 +117,42 @@ pushd ../python3
 popd
 %endif
 
+export PYTHONPATH=%buildroot%python_sitelibdir
+%make -C doc html
+%make -C doc pickle
+
+cp -fR doc/_build/pickle %buildroot%python_sitelibdir/fanstatic/
+
 %files
 %doc *.txt
 %python_sitelibdir/*
-%exclude %python_sitelibdir/*/test*
+#exclude %python_sitelibdir/*/test*
+%exclude %python_sitelibdir/*/pickle
 
-%files tests
-%python_sitelibdir/*/test*
+#files tests
+#python_sitelibdir/*/test*
+
+%files docs
+%doc doc/_build/html/*
+
+%files pickles
+%python_sitelibdir/*/pickle
 
 %if_with python3
 %files -n python3-module-%oname
 %doc *.txt
 %python3_sitelibdir/*
-%exclude %python3_sitelibdir/*/test*
+#exclude %python3_sitelibdir/*/test*
 
-%files -n python3-module-%oname-tests
-%python3_sitelibdir/*/test*
+#files -n python3-module-%oname-tests
+#python3_sitelibdir/*/test*
 %endif
 
 %changelog
+* Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.16-alt1
+- Version 0.16
+- Added docs and pickles
+
 * Sun Jun 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.11.4-alt1
 - Version 0.11.4
 - Added module for Python 3
