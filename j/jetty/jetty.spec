@@ -56,7 +56,7 @@ BuildRequires: jpackage-compat
 
 Name:           jetty
 Version:        8.1.5
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Summary:        Java Webserver and Servlet Container
 
 Group:          Networking/WWW
@@ -79,7 +79,7 @@ BuildRequires:  glassfish-jsp-api
 BuildRequires:  jakarta-taglibs-standard
 BuildRequires:  jpackage-utils
 BuildRequires:  jvnet-parent
-BuildRequires:  maven1
+BuildRequires:  maven
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-enforcer-plugin
 BuildRequires:  maven-war-plugin
@@ -1038,6 +1038,9 @@ getent passwd %username &>/dev/null || useradd  -r  -g %username \
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 8.1.5-alt2_6jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 8.1.5-alt1_6jpp7
 - fc update
 
