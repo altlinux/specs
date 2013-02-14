@@ -1,11 +1,11 @@
 Name: xkbutils
-Version: 1.0.3
-Release: alt2
+Version: 1.0.4
+Release: alt1
 Summary: XKB utilities: xkbbell, xkbvleds, and xkbwatch
 Group: System/X11
 Url: http://xorg.freedesktop.org
 Source: %name-%version.tar.bz2
-Patch: xkbutils-1.0.3-alt-xkbvleds.patch
+Patch: xkbutils-1.0.4-alt-xkbvleds.patch
 
 License: MIT
 
@@ -18,7 +18,7 @@ BuildRequires: xorg-util-macros
 Xkbutils accumulates some XKB utilities such as xkbbell, xkbvleds, and xkbwatch.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 %patch -p1
 
 %build
@@ -37,6 +37,10 @@ Xkbutils accumulates some XKB utilities such as xkbbell, xkbvleds, and xkbwatch.
 %_man1dir/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+- Fix patch
+
 * Mon Nov 19 2012 Fr. Br. George <george@altlinux.ru> 1.0.3-alt2
 - Fix xkbvleds manpage and invalid option detection
 
