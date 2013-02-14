@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.63
-Release: alt5
+Release: alt6
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -578,7 +578,7 @@ Patch0745: linux-%kernel_branch.51-fix-fs-reiserfs.patch
 Patch0746: linux-%kernel_branch.43-fix-fs-s390_hypfs.patch
 Patch0747: linux-%kernel_branch.56-fix-fs-squashfs.patch
 Patch0748: linux-%kernel_branch.42-fix-fs-sysfs.patch
-Patch0749: linux-%kernel_branch.53-fix-fs-xfs.patch
+Patch0749: linux-%kernel_branch.63-fix-fs-xfs.patch
 
 Patch0750: linux-%kernel_branch.53-fix-include.patch
 
@@ -3072,6 +3072,10 @@ done)
 
 
 %changelog
+* Thu Feb 14 2013 Led <led@altlinux.ru> 3.0.63-alt6
+- updated:
+  + fix-fs-xfs
+
 * Thu Feb 14 2013 Led <led@altlinux.ru> 3.0.63-alt5
 - fixed file list generation
 
