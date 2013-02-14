@@ -1,6 +1,6 @@
 Name: viewres
-Version: 1.0.3
-Release: alt1.1
+Version: 1.0.4
+Release: alt1
 Summary: graphical class browser for Xt
 Group: System/X11
 Url: http://xorg.freedesktop.org
@@ -19,7 +19,7 @@ The viewres program displays a tree showing the widget class hierarchy
 of the Athena Widget Set.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 
 %build
 %autoreconf
@@ -36,6 +36,9 @@ of the Athena Widget Set.
 %_mandir/man1/viewres.*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Tue Apr 12 2011 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1.1
 - Recalculate buildreq
 
