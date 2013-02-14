@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:             snakeyaml
 Version:          1.9
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          YAML parser and emitter for the Java programming language
 License:          ASL 2.0
 Group:            Development/Java
@@ -23,7 +23,7 @@ Patch0:           %{name}-spring-removal-workaround.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven1
+BuildRequires:    maven
 BuildRequires:    maven-plugin-cobertura
 BuildRequires:    maven-surefire-provider-junit4
 BuildRequires:    joda-time
@@ -94,6 +94,9 @@ cp -pr target/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt2_3jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_3jpp7
 - fc update
 
