@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-jaxrpc-1.1-api
 Version:          1.0.1
-Release:          alt2_1jpp7
+Release:          alt3_1jpp7
 Summary:          Java API for XML-Based RPC (JAX-RPC) 1.1
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -24,7 +24,7 @@ Source0:          %{name}-%{namedversion}.tar.xz
 BuildRequires:    jboss-servlet-3.0-api
 BuildRequires:    jboss-specs-parent
 BuildRequires:    jpackage-utils
-BuildRequires:    maven1
+BuildRequires:    maven
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -88,6 +88,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt3_1jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_1jpp7
 - fc update
 
