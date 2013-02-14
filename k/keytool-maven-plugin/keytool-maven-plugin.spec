@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:             keytool-maven-plugin
 Version:          1.0
-Release:          alt1_7jpp7
+Release:          alt2_7jpp7
 Summary:          A plugin that wraps the keytool program and allows to manipulate keystores
 License:          MIT and ASL 2.0
 Group:            Development/Java
@@ -22,10 +22,10 @@ Source1:          LICENSE-ASL
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven1
+BuildRequires:    maven
 
 Requires:         jpackage-utils
-Requires:         maven1
+Requires:         maven
 Requires:         plexus-utils
 Requires:         apache-commons-lang
 
@@ -82,6 +82,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_7jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt1_7jpp7
 - fc update
 
