@@ -1,3 +1,4 @@
+BuildRequires: weld-parent
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # %name or %version is ahead of its definition. Predefining for rpm 4.0 compatibility.
@@ -8,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name: resteasy
 Version: 2.3.2
-Release: alt2_9jpp7
+Release: alt3_9jpp7
 Summary: Framework for RESTful Web services and Java applications
 Group: Development/Java
 License: ASL 2.0 and CDDL
@@ -274,6 +275,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc License.html
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt3_9jpp7
+- fixed build with new cdc - added BR: weld-parent
+
 * Thu Sep 20 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.2-alt2_9jpp7
 - fixed build
 
