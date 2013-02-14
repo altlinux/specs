@@ -4,16 +4,17 @@ BuildRequires(pre): rpm-build-python
 %define gistpath %python_sitelibdir/%oname/g
 
 Name: python-module-%oname
-Version: 1.5.28
+Version: 2.2.0
 %define cflags %optflags %optflags_shared -I%_builddir/%name-%version/src/gist
-Release: alt7
+Release: alt1.git20121210
 Summary: Scientific graphics (plotting) library
 License: Free for non-commercial using
 Group: Development/Python
 Url: http://hifweb.lbl.gov/public/software/gist/
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-Source: http://hifweb.lbl.gov/public/software/gist/pygist-1.5.28.tar.gz
+# http://portal.nersc.gov/project/warp/git/pygist.git
+Source: pygist-%version.tar.gz
 Source1: http://hifweb.lbl.gov/public/software/gist/pygist.pdf
 Source2: sigfpe.h
 
@@ -65,6 +66,7 @@ sed -i 's|@GISTPATH@|%gistpath|g' \
 	src/Makefile.gist \
 	src/gist/gread.c \
 	setup.py
+sed -i 's|@BUILDROOT@|%buildroot|' setup.py
 
 #cp src/play/unix/config.h src/play/unix/gist_config.h
 install -m644 %SOURCE2 src/gist
@@ -93,6 +95,8 @@ pushd src
 %makeinstall_std
 popd
 
+install -p -m644 gist/shapetest.py %buildroot%python_sitelibdir/
+
 install -d %buildroot%gistpath
 mv %buildroot%prefix/g/* %buildroot%gistpath/
 
@@ -108,13 +112,16 @@ mv %buildroot%_includedir/config.h \
 %_bindir/%oname
 %_includedir/*
 
-%files tests
-%python_sitelibdir/%oname/*test*
+#files tests
+#python_sitelibdir/%oname/*test*
 
 %files doc
 %_docdir/%name
 
 %changelog
+* Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.2.0-alt1.git20121210
+- Version 2.2.0
+
 * Sun Aug 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.5.28-alt7
 - Built with OpenBLAS instead of GotoBLAS2
 
