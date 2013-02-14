@@ -38,7 +38,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-velocity
 Version:        1.1.8
-Release:        alt1_11jpp7
+Release:        alt2_11jpp7
 Epoch:          0
 Summary:        Plexus Velocity Component
 License:        ASL 2.0
@@ -52,7 +52,7 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 BuildRequires:  jpackage-utils >= 0:1.7.2
 BuildRequires:  ant >= 0:1.6
-BuildRequires:  maven1
+BuildRequires:  maven
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -128,6 +128,9 @@ cp -pr target/site/apidocs/* %{buildroot}/%{_javadocdir}/%{name}
 %doc %{_javadocdir}/*
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt2_11jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.8-alt1_11jpp7
 - fc update
 
