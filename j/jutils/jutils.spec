@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jutils
 Version:        1.0.1
-Release:        alt1_3.20110719svnjpp7
+Release:        alt2_3.20110719svnjpp7
 Summary:        Common utilities for the Java Gaming Interface
 
 Group:          Development/Java
@@ -19,7 +19,7 @@ Source0:        %{name}-%{version}.tar.xz
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven1
+BuildRequires:  maven
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-javadoc-plugin
 BuildRequires:  maven-compiler-plugin
@@ -27,7 +27,7 @@ BuildRequires:  maven-surefire-maven-plugin
 BuildRequires:  maven-surefire-provider-junit
 
 Requires:       jpackage-utils
-Requires:       maven1
+Requires:       maven
 Source44: import.info
 
 %description
@@ -80,6 +80,9 @@ install -pm 644 pom.xml  $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_3.20110719svnjpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3.20110719svnjpp7
 - initial build
 
