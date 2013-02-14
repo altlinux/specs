@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.6.24
-Release: alt2
+Version: 0.6.34
+Release: alt1
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: ZPL
 Group: Development/Python
@@ -86,6 +86,9 @@ This package contains tests for Distribute.
 
 %prep
 %setup
+
+find ./ -name '* *' -delete -print
+
 %if_with python3
 rm -rf ../python3
 cp -a . ../python3
@@ -149,6 +152,7 @@ ln -s easy_install-%__python3_version %buildroot%_bindir/easy_install3
 %_bindir/easy_install3
 %_bindir/easy_install-%__python3_version
 %python3_sitelibdir/setuptools
+%python3_sitelibdir/_markerlib
 %python3_sitelibdir/*.py
 %python3_sitelibdir/*.pth
 %python3_sitelibdir/*.egg-info
@@ -161,6 +165,9 @@ ln -s easy_install-%__python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.34-alt1
+- Version 0.6.34
+
 * Wed Feb 08 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.6.24-alt2
 - Build with python3 support
 
