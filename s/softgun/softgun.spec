@@ -1,11 +1,11 @@
 Name: softgun
 License: GPL
 Group: Emulators
-Version: 0.21
+Version: 0.22
 Release: alt1
 Summary: ARM Board Emulator
 Source: %name-%version.tgz
-Patch: softgun-0.21-alt-DSO.patch
+Patch: softgun-0.22-alt-DSO.patch
 
 # Automatically added by buildreq on Sun Jul 29 2012
 BuildRequires: libalsa-devel zlib-devel
@@ -32,6 +32,10 @@ make install bindir=%buildroot%_bindir libdir=%buildroot%_libdir/%name
 %_libdir/%name
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 0.22-alt1
+- Autobuild version bump to 0.22
+- Fix patch
+
 * Wed Nov 14 2012 Fr. Br. George <george@altlinux.ru> 0.21-alt1
 - Autobuild version bump to 0.21
 - Add DSO patch
