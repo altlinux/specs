@@ -37,7 +37,7 @@ BuildRequires: jpackage-compat
 
 Name:           plexus-mail-sender
 Version:        1.0
-Release:        alt4_0.a2.22jpp7
+Release:        alt5_0.a2.22jpp7
 Epoch:          0
 Summary:        Plexus Mail Sender
 License:        MIT and ASL 1.1
@@ -56,7 +56,7 @@ Source2:        %{name}-jpp-depmap.xml
 Patch0:         %{name}-clarifylicense.patch
 
 BuildRequires:  jpackage-utils >= 0:1.6
-BuildRequires:  maven1
+BuildRequires:  maven
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -157,6 +157,9 @@ cp -pr target/site/apidocs/* \
 %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt5_0.a2.22jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.0-alt4_0.a2.22jpp7
 - fc update
 
