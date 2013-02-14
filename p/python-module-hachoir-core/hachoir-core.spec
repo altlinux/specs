@@ -5,7 +5,7 @@
 
 Name: python-module-%oname
 Version: 1.3.3
-Release: alt2.hg20120301
+Release: alt2.hg20120819
 Epoch: 1
 
 Summary: Core of Hachoir framework: parse and edit binary files
@@ -436,6 +436,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.3-alt2.hg20120819
+- New snapshot
+
 * Fri Jun 08 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1:1.3.3-alt2.hg20120301
 - New snapshot
 
