@@ -35,7 +35,7 @@ BuildRequires: jpackage-compat
 
 Name:           jzlib
 Version:        1.1.0
-Release:        alt1_3jpp7
+Release:        alt2_3jpp7
 Epoch:          0
 Summary:        Re-implementation of zlib in pure Java
 
@@ -46,7 +46,7 @@ Source0:        http://www.jcraft.com/jzlib/jzlib-%{version}.tar.gz
 
 BuildArch:      noarch
 BuildRequires:  jpackage-utils
-BuildRequires:  maven1
+BuildRequires:  maven
 BuildRequires:  maven-resources-plugin
 Requires:       jpackage-utils
 Source44: import.info
@@ -115,6 +115,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %doc %{_datadir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt2_3jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.1.0-alt1_3jpp7
 - fc update
 
