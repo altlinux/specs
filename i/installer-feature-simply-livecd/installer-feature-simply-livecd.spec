@@ -1,6 +1,6 @@
 Name: installer-feature-simply-livecd
 Version: 0.7.7
-Release: alt1
+Release: alt2
 
 Summary: LiveCD install hooks for Simply Linux.
 License: GPL
@@ -28,7 +28,6 @@ Requires: installer-feature-nfs-client-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-cpufreq-stage3
-Requires: installer-feature-hdd-pm-disable-stage3
 
 %description
 LiveCD install hooks for Simply Linux.
@@ -53,6 +52,9 @@ install -pm755 livecd-postinstall.d/* %buildroot%post_hookdir/
 %post_hookdir/*
 
 %changelog
+* Thu Feb 14 2013 Mikhail Efremov <sem@altlinux.org> 0.7.7-alt2
+- Drop installer-feature-hdd-pm-disable-stage3.
+
 * Thu Jan 10 2013 Mikhail Efremov <sem@altlinux.org> 0.7.7-alt1
 - Drop obsoleted installer features.
 - Drop disable-whatis hook.
