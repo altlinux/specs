@@ -4,7 +4,7 @@
 
 Name: Mesa
 Version: 9.0.2
-Release: alt1
+Release: alt2
 Epoch: 4
 License: MIT
 Summary: OpenGL compatible 3D graphics library
@@ -259,7 +259,6 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %doc docs/relnotes-%version.html docs/versions.html docs/news.html
 %dir %_sysconfdir/X11/%_lib
 %ghost %_sysconfdir/X11/%_lib/libGL.so.1
-%config(noreplace) %_sysconfdir/drirc
 %_libdir/libGL.so.*
 %_libdir/libglapi.so.*
 %_libdir/libdricore*.so.*
@@ -332,6 +331,7 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 
 %ifarch ppc %ix86 x86_64
 %files -n xorg-dri-intel
+%config(noreplace) %_sysconfdir/drirc
 %_libdir/X11/modules/dri/i???_dri.so
 
 %files -n xorg-dri-nouveau
@@ -349,6 +349,9 @@ ln -sf ../..%_sysconfdir/X11/%_lib/libGLESv2.so.2 %_libdir/
 %_bindir/glxgears
 
 %changelog
+* Thu Feb 14 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0.2-alt2
+- updated to 9.0 git.dddc5df
+
 * Wed Jan 23 2013 Valery Inozemtsev <shrek@altlinux.ru> 4:9.0.2-alt1
 - 9.0.2
 
