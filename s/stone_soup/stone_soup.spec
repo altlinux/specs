@@ -1,7 +1,8 @@
 Name: stone_soup
-Version: 0.11.0
+Version: 0.11.2
 Release: alt1
-Summary: Roguelike with tiled and ascii interfaces
+%define Sum Roguelike with tiled and ascii interfaces
+Summary: %Sum
 License: GPLv2
 Group: Games/Adventure
 Source: %name-%version-nodeps.tar.xz
@@ -23,25 +24,25 @@ with dangerous and unfriendly monsters in a quest to rescue the
 mystifyingly fabulous Orb of Zot.
 
 %package data
-Summary: Data files for %name, %summary
+Summary: Data files for %name, %Sum
 Group: Games/Adventure
 BuildArch: noarch
 %description data
-Data files for %name, %summary
+Data files for %name, %Sum
 
 %package tiles
-Summary: Tiles for %name, %summary
+Summary: Tiles for %name, %Sum
 Group: Games/Adventure
 BuildArch: noarch
 %description tiles
-Tiles for %name, %summary
+Tiles for %name, %Sum
 
 %package ncurses
-Summary: Console version of %name, %summary
+Summary: Console version of %name, %Sum
 Group: Games/Adventure
 Requires: %name-data = %version
 %description ncurses
-Console version of %name, %summary
+Console version of %name, %Sum
 
 %prep
 %setup
@@ -105,6 +106,9 @@ install ../crawl %buildroot/%_bindir/crawl
 %_bindir/crawl
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 0.11.2-alt1
+- Autobuild version bump to 0.11.2
+
 * Tue Oct 23 2012 Fr. Br. George <george@altlinux.ru> 0.11.0-alt1
 - Autobuild version bump to 0.11.0
 
