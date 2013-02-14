@@ -1,5 +1,5 @@
 %define branch 0.7
-%define svn svn3240
+%define svn svn3255
 
 Version: %branch.0
 Epoch: 1
@@ -757,6 +757,9 @@ mkdir -p %buildroot/{%_miconsdir,%_niconsdir,%_liconsdir}
 %files -n %name-full
 
 %changelog
+* Thu Feb 14 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3255
+- 0.7.0 svn3255 version
+
 * Tue Feb 12 2013 Motsyo Gennadi <drool@altlinux.ru> 1:0.7.0-alt2.svn3240
 - 0.7.0 svn3240 version
 
