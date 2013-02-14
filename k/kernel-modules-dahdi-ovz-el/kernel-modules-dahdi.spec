@@ -2,21 +2,23 @@
 
 %define module_name	dahdi
 %define module_version	2.6.1
-%define module_release	alt1
+%define module_release alt2
 
-%define kversion	2.6.32
-%define krelease	alt79
 %define flavour	ovz-el
+BuildRequires(pre): rpm-build-kernel
+BuildRequires(pre): kernel-headers-modules-ovz-el
+
+%setup_kernel_module %flavour
 
 %define module_dir /lib/modules/%kversion-%flavour-%krelease/%module_name
 
-%define kernel_headers_dir %_prefix/src/linux-%kversion-%flavour-%krelease
+%define kernel_headers_dir %prefix/src/linux-%kversion-%flavour-%krelease
 %define module_headers_dir %kernel_headers_dir/drivers/%module_name
 
 Summary: %module_name modules
 Name: kernel-modules-%module_name-%flavour
 Version: %module_version
-Release: %module_release.132640.79
+Release: %module_release.%kcode.%kbuildrelease
 License: GPL
 Group: System/Kernel and hardware
 
@@ -30,16 +32,14 @@ Url: http://www.asterisk.org/index.php?menu=download
 # Automatically added by buildreq on Sun Nov 07 2004
 BuildRequires: kernel-source-%module_name
 BuildRequires(pre): rpm-build-kernel
-BuildRequires: kernel-headers-modules-%flavour = %kversion-%krelease
-ExclusiveArch:  %ix86 x86_64
+BuildRequires: kernel-headers-modules-%flavour = %kepoch%kversion-%krelease
+ExclusiveArch: %karch
 
 Provides: kernel-modules-%module_name-%kversion-%flavour-%krelease = %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease < %version-%release
 Conflicts: kernel-modules-%module_name-%kversion-%flavour-%krelease > %version-%release
 
-PreReq: coreutils
-PreReq: kernel-image-%flavour = %kversion-%krelease
-Requires(postun): kernel-image-%flavour = %kversion-%krelease
+PreReq: kernel-image-%flavour = %kepoch%kversion-%krelease
 
 %if "%kversion" == "2.6.37"
 Patch1: kernel-2.6.37-build-fixes.patch
@@ -92,10 +92,10 @@ subst 's!PRIMARY=.*!PRIMARY=ztdummy!' Makefile
 #make tones.h tor2fw.h radfw.h
 make \
 	KVERS=%kversion \
-	KSRC=%_usrsrc/linux-%kversion-%flavour 
+	KSRC=%_usrsrc/linux-%kversion-%flavour
 
 #make -C %_usrsrc/linux-%kversion-%flavour SUBDIRS=`realpath .` modules \
-popd	
+popd
 %install
 . %_usrsrc/linux-%kversion-%flavour/gcc_version.inc
 pushd dahdi
@@ -104,7 +104,7 @@ make \
 	KSRC=%_usrsrc/linux-%kversion-%flavour \
 	DESTDIR=%buildroot \
 	install-modules
-    
+
 #make -C %_usrsrc/linux-%kversion-%flavour \
 #    SUBDIRS=`realpath .`/kernel \
 #    DESTDIR=%buildroot \
@@ -134,11 +134,6 @@ sed -e 's|%_builddir/||' < Module.symvers \
 	> %buildroot%module_headers_dir/Module.symvers
 popd
 
-%post
-%post_kernel_modules %kversion-%flavour-%krelease
-
-%postun
-%postun_kernel_modules %kversion-%flavour-%krelease
 %files
 %defattr(644,root,root,755)
 %dir %module_dir
@@ -180,8 +175,11 @@ popd
 %kernel_headers_dir/kernel-modules-%module_name.symvers
 
 %changelog
-* Sat Oct 27 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1.132640.79
-- Build for kernel-image-ovz-el-2.6.32-alt79.
+* %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
+- Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.1-alt2
+- new template
 
 * Sun Sep 02 2012 Anton Protopopov <aspsk@altlinux.org> 2.6.1-alt1
 - 2.6.1
