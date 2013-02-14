@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             hawtjni
 Version:          1.5
-Release:          alt1_5jpp7
+Release:          alt2_5jpp7
 Summary:          Code generator that produces the JNI code
 Group:            Development/Java
 License:          ASL 2.0 and EPL and BSD
@@ -23,13 +23,13 @@ Patch3:           0004-Remove-eclipse-plugin.patch
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven1
+BuildRequires:    maven
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-idea-plugin
 BuildRequires:    maven-plugin-plugin
 BuildRequires:    maven-surefire-report-plugin
 BuildRequires:    maven-project-info-reports-plugin
-BuildRequires:    maven1-plugin-jxr
+BuildRequires:    maven-plugin-jxr
 BuildRequires:    maven-javadoc-plugin
 BuildRequires:    maven-surefire-plugin
 BuildRequires:    maven-clean-plugin
@@ -64,7 +64,7 @@ This package contains the API documentation for %%{name}.
 %package -n maven-%{name}-plugin
 Summary:          Use HawtJNI from a maven plugin
 Group:            Development/Java
-Requires:         maven1
+Requires:         maven
 Requires:         plexus-utils
 Requires:         plexus-interpolation
 Requires:         maven-archiver
@@ -126,6 +126,9 @@ install -pm 644 maven-%{name}-plugin/pom.xml $RPM_BUILD_ROOT%{_mavenpomdir}/JPP-
 %{_javadir}/maven-%{name}-plugin.jar
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt2_5jpp7
+- fixed maven1 dependency
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.5-alt1_5jpp7
 - fc update
 
