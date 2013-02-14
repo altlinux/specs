@@ -1,11 +1,11 @@
-%define nm_version 0.9.6.0
+%define nm_version 0.9.7.997
 #define git_date .git20120315
 %define git_date %nil
 %define gtkver 3
 
 Name: NetworkManager-gnome
-Version: 0.9.6.2
-Release: alt2%git_date
+Version: 0.9.7.997
+Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
 Summary: GNOME applications for use with NetworkManager
@@ -22,9 +22,12 @@ BuildRequires: libGConf-devel libgnome-keyring-devel libwireless-devel
 BuildRequires: libnotify-devel
 BuildRequires: NetworkManager-devel >= %nm_version
 BuildRequires: NetworkManager-glib-devel >= %nm_version
+BuildRequires: NetworkManager-glib-gir-devel >= %nm_version
 BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iso-codes-devel
 BuildRequires: gnome-common
+BuildRequires: libgudev-devel
+BuildRequires: gobject-introspection-devel libgtk+%gtkver-gir-devel
 
 Requires: NetworkManager >= %nm_version
 Requires: libnm-gtk = %version-%release
@@ -58,6 +61,26 @@ Requires: libgtk+%gtkver-devel
 This package contains private header and pkg-config files to be used
 only by nm-applet and the GNOME control center.
 
+%package -n libnm-gtk-gir
+License: %gpl2plus
+Group: System/Libraries
+Summary: GObject introspection data for the libnm-gtk
+Requires: libnm-gtk = %version-%release
+
+%description -n libnm-gtk-gir
+GObject introspection data for the libnm-gtk.
+
+%package -n libnm-gtk-gir-devel
+License: %gpl2plus
+Group: System/Libraries
+Summary: GObject introspection devel data for the libnm-gtk
+BuildArch: noarch
+Requires: libnm-gtk-gir = %version-%release
+Requires: libnm-gtk-devel = %version-%release
+
+%description -n libnm-gtk-gir-devel
+GObject introspection devel data for the libnm-gtk.
+
 %prep
 %setup -n nm-applet-%version
 %patch -p1
@@ -69,7 +92,7 @@ only by nm-applet and the GNOME control center.
     --libexecdir=%_libexecdir/NetworkManager \
 	--localstatedir=%_var \
     --with-gtkver=%gtkver \
-    --enable-more-warnings=no
+    --enable-more-warnings=error
 
 %make_build
 
@@ -114,7 +137,17 @@ fi
 %_libdir/*.so
 %_pkgconfigdir/libnm-gtk.pc
 
+%files -n libnm-gtk-gir
+%_libdir/girepository-1.0/NMGtk-1.0.typelib
+
+%files -n libnm-gtk-gir-devel
+%_datadir/gir-1.0/NMGtk-1.0.gir
+
 %changelog
+* Thu Feb 14 2013 Mikhail Efremov <sem@altlinux.org> 0.9.7.997-alt1
+- Treat warrnings as errors.
+- Updated to 0.9.7.997 (0.9.8-beta2).
+
 * Tue Sep 25 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.2-alt2
 - Temporary don't treat warrnings as errors again.
 - Rebuild against libgnome-bluetooth.so.11.

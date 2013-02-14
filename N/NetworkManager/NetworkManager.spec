@@ -13,8 +13,8 @@
 %def_enable introspection
 
 Name: NetworkManager
-Version: 0.9.6.0
-Release: alt2%git_date
+Version: 0.9.7.997
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary: Network Link Manager and User Applications
@@ -45,7 +45,7 @@ BuildRequires: libgnome-bluetooth-devel
 BuildRequires: iptables libsoup-devel
 %{?_enable_wimax:BuildRequires: libiWmxSdk-devel}
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel libgudev-gir-devel}
-%{?_enable_systemd:BuildRequires: libsystemd-login-devel}
+%{?_enable_systemd:BuildRequires: systemd-devel libsystemd-login-devel}
 
 Requires: dbus >= %dbus_version
 Requires: wpa_supplicant >= %wpa_supplicant_version
@@ -153,27 +153,33 @@ sed -i 's;^SUBDIRS=\. tests;#SUBDIRS=. tests;' libnm-glib/Makefile.am
 
 %autoreconf
 %configure \
-    --libexecdir=%_libexecdir/NetworkManager \
-    --localstatedir=%_var \
-    --disable-static \
-    --with-crypto=nss \
-    --with-distro=alt \
-    --with-dhclient=/sbin/dhclient \
-    --with-dhcpcd=/sbin/dhcpcd \
-    --with-docs=yes \
-    --with-resolvconf=/sbin/resolvconf \
-    --enable-concheck \
-    --with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
-    %{subst_enable wimax} \
-    --with-tests=yes \
-    %{?_enable_systemd:--with-systemdsystemunitdir=/lib/systemd/system} \
+	--libexecdir=%_libexecdir/NetworkManager \
+	--localstatedir=%_var \
+	--disable-static \
+	--with-crypto=nss \
+	--with-dhclient=/sbin/dhclient \
+	--with-dhcpcd=/sbin/dhcpcd \
+	--enable-doc=yes \
+	--with-resolvconf=/sbin/resolvconf \
+	--enable-concheck \
+	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
+	%{subst_enable wimax} \
+	--enable-tests=yes \
+	%{?_enable_systemd:--with-systemdsystemunitdir=/lib/systemd/system} \
 %if_enabled systemd
 	--with-session-tracking=systemd \
+	--with-suspend-resume=systemd \
 %else
 	--with-session-tracking=ck \
+	--with-suspend-resume=upower \
 %endif
-    --enable-introspection=auto \
-    --enable-more-warnings=error
+	--enable-etcnet-alt \
+	--disable-ifcfg-rh \
+	--disable-ifcfg-suse \
+	--disable-ifupdown \
+	--disable-ifnet \
+	--enable-introspection=auto \
+	--enable-more-warnings=error
 
 %make_build
 
@@ -197,6 +203,9 @@ install -m 0755 %SOURCE5 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
 install -m 0755 %SOURCE7 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
 install -m 0755 %SOURCE8 %buildroot%_sysconfdir/NetworkManager/dispatcher.d
 install -Dm0644 %SOURCE6 %buildroot%_sysconfdir/sysconfig/%name
+
+# Install initscript
+install -Dm0755 initscript/Alt/NetworkManager %buildroot%_initdir/NetworkManager
 
 %check
 make check
@@ -259,6 +268,8 @@ fi
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
 
+%exclude %_mandir/manx/nm-settings.xml
+
 %files devel
 %doc %_datadir/gtk-doc/html/%name
 %dir %_includedir/%name
@@ -305,6 +316,13 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Wed Feb 13 2013 Mikhail Efremov <sem@altlinux.org> 0.9.7.997-alt1
+- Updated ALT support.
+- etcnet-alt: Remove trailing whitespace from NM_CONTROLLED value.
+- Remove ALT backend.
+- Drop support of reading WPA_DRIVER from etcnet.
+- Updated to 0.9.7.997 (0.9.8-beta2).
+
 * Wed Nov 28 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt2
 - Require nm-dhcp-client.
 - Build with both dhcpcd and dhclient support.
