@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             mimepull
 Version:          1.8
-Release:          alt1_3jpp7
+Release:          alt2_3jpp7
 Summary:          Streaming API to access attachments from a MIME message
 Group:            Development/Java
 License:          CDDL and GPLv2 with exceptions
@@ -18,7 +18,7 @@ Source0:          mimepull-%{version}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven1
+BuildRequires:    maven
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -82,6 +82,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.8-alt2_3jpp7
+- fixed maven1 dependency
+
 * Tue Jan 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.8-alt1_3jpp7
 - initial build
 
