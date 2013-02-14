@@ -1,5 +1,5 @@
 Name: xstdcmap
-Version: 1.0.2
+Version: 1.0.3
 Release: alt1
 
 Summary: X standard colormap utility
@@ -37,6 +37,9 @@ sible, colormaps are created with read-only allocations.
 %_man1dir/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
+- Autobuild version bump to 1.0.3
+
 * Tue May 03 2011 Fr. Br. George <george@altlinux.ru> 1.0.2-alt1
 - Autobuild version bump to 1.0.2
 
