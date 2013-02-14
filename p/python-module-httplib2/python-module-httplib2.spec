@@ -5,7 +5,7 @@
 
 Summary: A comprehensive HTTP client library in Python
 Name: %packagename
-Version: 0.7.4
+Version: 0.7.7
 Release: alt1
 Source0: %origname-%version.tar.gz
 License: MIT
@@ -71,6 +71,9 @@ popd
 
 
 %changelog
+* Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.7-alt1
+- Version 0.7.7
+
 * Mon Jun 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.7.4-alt1
 - Version 0.7.4
 
