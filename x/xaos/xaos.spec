@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/gsl-config /usr/bin/msgmerge /usr/bin/nasm libICE-devel libSM-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0)
+BuildRequires: /usr/bin/gsl-config /usr/bin/msgmerge /usr/bin/nasm libICE-devel libSM-devel pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) 
 # END SourceDeps(oneline)
 
 Name: xaos
 Version: 3.5
-Release: alt2
+Release: alt3
 Summary: A real-time fractal zoomer
 Serial: 1
 
@@ -26,7 +26,7 @@ Obsoletes: XaoS, %name-aalib
 
 BuildRequires: aalib-devel imake libICE-devel libXxf86dga-devel zlib-devel  gettext
 BuildRequires: libXxf86vm-devel libgpm-devel libXext-devel libX11-devel libXt-devel libgsl-devel
-BuildRequires: libncurses-devel libpng-devel libslang-devel nasm xorg-cf-files libgtk+2-devel
+BuildRequires: libncurses-devel libpng12-devel libslang-devel nasm xorg-cf-files libgtk+2-devel libXext-devel
 BuildRequires:	texlive-base-bin
 
 
@@ -41,6 +41,7 @@ This package holds the binary that runs with X11.
 %patch0 -p1 -b .proto
 # disable stripping binaries when installing
 sed -i 's| -s | |' Makefile.in
+sed -i 's,\$x_includes/X11/extensions/XShm.h,/usr/include/X11/extensions/XShm.h,' configure.in configure
 
 %build
 %ifarch %ix86 x86_64
@@ -50,11 +51,12 @@ sed -i 's| -s | |' Makefile.in
    --with-x11-driver \
     --with-gsl=yes \
     --with-sffe=yes \
-    --with-png=yes \
     --with-gtk-driver=yes \
     --with-aa-driver=yes \
     --with-pthread=yes \
     %{long_double}
+# due to the buggy configure it has the opposite effect
+#    --with-png=yes \
 %make
 
 %install
@@ -121,6 +123,9 @@ cp %SOURCE1 %buildroot%_liconsdir/%name.png
 %_liconsdir/%name.png
 
 %changelog
+* Mon Feb 04 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.5-alt3
+- bugfix release
+
 * Wed Jan 23 2013 Igor Vlasenko <viy@altlinux.ru> 1:3.5-alt2
 - resurrected from orphaned
 
