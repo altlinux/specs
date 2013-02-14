@@ -1,6 +1,6 @@
 Name: installer-distro-simply-linux
 Version: 6.991
-Release: alt1
+Release: alt2
 
 Summary: Installer common files
 Summary(ru_RU.UTF-8): Общие пакеты для установки дистрибутива "Simply linux"
@@ -72,14 +72,13 @@ Requires: alterator-grub
 Requires: alterator-users
 Requires: alterator-root
 Requires: alterator-net-eth dhcpcd
-Requires: alterator-net-general
+Requires: alterator-luks
 #Requires: alterator-x11
 Requires: installer-feature-nfs-client-stage3
 Requires: installer-feature-setup-network-stage3
 Requires: installer-feature-online-repo
 Requires: installer-feature-bell-off-stage3
 Requires: installer-feature-cpufreq-stage3
-Requires: installer-feature-hdd-pm-disable-stage3
 
 Provides: installer-lite-stage3
 Provides: installer-simply-linux-stage3
@@ -113,6 +112,12 @@ Installer stage3
 %_datadir/alterator/ui/simply-linux
 
 %changelog
+* Thu Feb 14 2013 Mikhail Efremov <sem@altlinux.org> 6.991-alt2
+- Drop installer-feature-hdd-pm-disable-stage3.
+- remove-installer-desktop-pkgs: Remove alterator-luks.
+- stage3: Added alterator-luks.
+- stage3: Drop alterator-net-general.
+
 * Thu Feb 07 2013 Mikhail Efremov <sem@altlinux.org> 6.991-alt1
 - Added alterator-luks.
 
