@@ -2,8 +2,8 @@ Name: pushover
 Url: http://pushover.sourceforge.net/
 License: GPL
 Group: Games/Puzzles
-Version: 0.0.3
-Release: alt1.1
+Version: 0.0.4
+Release: alt1
 Summary: Puzzle with ant pushing dominoes to fall
 Source: %name-%version.tar.gz
 Source1: %name.png
@@ -60,7 +60,7 @@ install -m 644 %SOURCE1 %buildroot%_datadir/pixmaps
 %find_lang %name
 
 %files -f %name.lang
-%doc readme.txt AUTHORS
+%doc README NEWS AUTHORS
 %_bindir/%name
 %_datadir/%name/
 %exclude %_datadir/%name/themes/*
@@ -71,6 +71,10 @@ install -m 644 %SOURCE1 %buildroot%_datadir/pixmaps
 %_datadir/%name/themes/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 0.0.4-alt1
+- Autobuild version bump to 0.0.4
+- Fix build
+
 * Wed Oct 03 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.0.3-alt1.1
 - Rebuilt with libpng15
 
