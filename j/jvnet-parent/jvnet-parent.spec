@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           jvnet-parent
 Version:        3
-Release:        alt1_6jpp7
+Release:        alt2_6jpp7
 Summary:        Java.net parent POM file
 
 Group:          Development/Java
@@ -17,7 +17,7 @@ Source1:        http://www.apache.org/licenses/LICENSE-2.0.txt
 BuildArch:      noarch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  maven1
+BuildRequires:  maven
 BuildRequires:  maven-enforcer-plugin
 
 Requires:       jpackage-utils
@@ -51,6 +51,9 @@ install -pm 644 pom.xml \
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 3-alt2_6jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 3-alt1_6jpp7
 - fc update
 
