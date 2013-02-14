@@ -6,7 +6,7 @@ BuildRequires: jpackage-compat
 Name:		arduino
 Epoch:		1
 Version:	1.0.1
-Release:	alt2_1jpp7
+Release:	alt2_3jpp7
 Summary:	An IDE for Arduino-compatible electronics prototyping platforms
 Group:		Development/Java
 License:	GPLv2+ and LGPLv2+ and CC-BY-SA
@@ -29,6 +29,10 @@ Patch3:		arduino-use-system-rxtx.patch
 Patch4:		arduino-icons-etc.patch
 
 Patch6:		arduino-add-to-groups.patch
+
+# define __AVR_LIBC_DEPRECATED_ENABLE__ (bug 891556)
+# temporary; this has been fixed in newer upstreams
+Patch8:     arduino-bug891556.patch
 
 BuildRequires:	jpackage-utils ant ant-apache-regexp desktop-file-utils ecj jna rxtx git
 Requires:	%{name}-core = %{epoch}:%{version}-%{release} %{name}-doc = %{epoch}:%{version}-%{release}
@@ -87,6 +91,7 @@ chmod a+rx build/linux/%{name}-add-groups
 %patch0
 %patch3 -p1
 %patch7 -p1
+%patch8 -p1
 
 echo -e "\n# By default, don't notify the user of a new upstream version." \
         "\n# https://bugzilla.redhat.com/show_bug.cgi?id=773519" \
@@ -104,9 +109,9 @@ build-jar-repository -p -s app/lib/ ecj jna RXTXcomm
 
 %build
 cd core/methods
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 cd ..
-ant -Dant.build.javac.source=1.5 -Dant.build.javac.target=1.5 
+ant
 cd ../build
 echo %{version} | ant dist
 tar -xf linux/%{name}-%{version}-linux.tgz
@@ -168,23 +173,18 @@ else
    exit 2
 fi
 
-# It is the file in the package whose name matches the format emacs or vim uses 
-# for backup and autosave files. It may have been installed by  accident.
-find $RPM_BUILD_ROOT \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
-# failsafe cleanup if the file is declared as %%doc
-find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
-
 
 
 %files
 %{_bindir}/*
 %{_datadir}/%{name}/*.jar
-%{_datadir}/%{name}/lib/
+%{_datadir}/%{name}/lib/*
+%exclude %{_datadir}/%{name}/lib/version.txt
 %{_datadir}/applications/*
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
 %{_datadir}/polkit-1/actions/cc.arduino.add-groups.policy
 %{_libexecdir}/%{name}-add-groups
-%{_mandir}/man1/%{name}.1.*
+%{_mandir}/man1/%{name}.1*
 %{_datadir}/%{name}/reference
 
 
@@ -196,6 +196,8 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 %{_datadir}/%{name}/examples/
 %{_datadir}/%{name}/hardware/
 %{_datadir}/%{name}/libraries/
+%dir %{_datadir}/%{name}/lib
+%{_datadir}/%{name}/lib/version.txt
 
 
 %files -n %{name}-doc
@@ -203,6 +205,9 @@ find . \( -name '.*.swp' -o -name '#*#' -o -name '*~' \) -print -delete
 
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_3jpp7
+- update to new release by jppimport
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0.1-alt2_1jpp7
 - applied repocop patches
 
