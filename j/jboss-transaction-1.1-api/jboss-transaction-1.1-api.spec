@@ -11,7 +11,7 @@ BuildRequires: jpackage-compat
 
 Name:             jboss-transaction-1.1-api
 Version:          1.0.1
-Release:          alt1_2jpp7
+Release:          alt2_2jpp7
 Summary:          Transaction 1.1 API
 Group:            Development/Java
 License:          CDDL or GPLv2 with exceptions
@@ -23,7 +23,7 @@ Source0:          %{name}-%{namedversion}.tar.xz
 
 BuildRequires:    jboss-specs-parent
 BuildRequires:    jpackage-utils
-BuildRequires:    maven1
+BuildRequires:    maven
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -86,6 +86,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc LICENSE.txt
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt2_2jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_2jpp7
 - fc update
 
