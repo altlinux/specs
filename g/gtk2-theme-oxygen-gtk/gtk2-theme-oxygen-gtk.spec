@@ -2,7 +2,7 @@
 %define gtk2_prefix gtk2-theme
 
 Name: %gtk2_prefix-%real_name
-Version: 1.3.2
+Version: 1.3.2.1
 Release: alt1
 
 Group: Graphical desktop/GNOME
@@ -22,7 +22,7 @@ BuildRequires: cmake gcc-c++ libgtk+2-devel libdbus-glib-devel
 BuildRequires: kde-common-devel
 BuildRequires: libXScrnSaver-devel libXcomposite-devel libXcursor-devel libXdamage-devel
 BuildRequires: libXdmcp-devel libXinerama-devel libXpm-devel libXrandr-devel libXt-devel
-BuildRequires: libXtst-devel libXv-devel libXxf86misc-devel libXxf86vm-devel libxkbfile-devel
+BuildRequires: libXtst-devel libXv-devel libXxf86vm-devel libxkbfile-devel
 
 %description
 This is GTK2 port of default KDE4 Oxygen style.
@@ -47,6 +47,9 @@ This is GTK2 port of default KDE4 Oxygen style.
 %_datadir/themes/%real_name
 
 %changelog
+* Thu Feb 14 2013 Sergey V Turchin <zerg@altlinux.org> 1.3.2.1-alt1
+- new version
+
 * Thu Jan 31 2013 Sergey V Turchin <zerg@altlinux.org> 1.3.2-alt1
 - new version
 
