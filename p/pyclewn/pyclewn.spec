@@ -1,11 +1,10 @@
 Name: pyclewn
-Version: 1.9
+Version: 1.10
 Release: alt1
 License: GPLv2
 Summary: Using vim as a front end to a debugger (supports gdb and pdb)
 Group: Development/Debuggers
 BuildPreReq: rpm-build-vim
-BuildArch: noarch
 Source: %name-%version.py2.tar.gz
 
 # Automatically added by buildreq on Wed May 02 2012
@@ -53,9 +52,13 @@ export EDITOR=/usr/bin/vim
 %_bindir/*
 
 %files -n %packagename
-%python_sitelibdir_noarch/*
+%python_sitelibdir/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.10-alt1
+- Autobuild version bump to 1.10
+- Package is binary now
+
 * Fri Jun 08 2012 Fr. Br. George <george@altlinux.ru> 1.9-alt1
 - Autobuild version bump to 1.9
 
