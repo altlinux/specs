@@ -1,6 +1,6 @@
 Name: showfont
-Version: 1.0.3
-Release: alt1.1
+Version: 1.0.4
+Release: alt1
 Summary: Font dumper for X font server
 Group: System/X11
 Url: http://cgit.freedesktop.org/xorg/app/showfont
@@ -19,7 +19,7 @@ The information shown includes font information, font properties, character
 metrics, and character bitmaps.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 
 %build
 %autoreconf
@@ -35,6 +35,9 @@ metrics, and character bitmaps.
 %_man1dir/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Tue Apr 12 2011 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1.1
 - Recalculate buildreq
 
