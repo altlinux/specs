@@ -1,6 +1,6 @@
 Name: bombardier
 Version:  0.8.2.2
-Release:  alt2_13
+Release:  alt2_14
 Summary: The GNU Bombing utility
 
 Group: Games/Other
@@ -41,7 +41,7 @@ install -pD -m 755 bombardier %{buildroot}%{_bindir}/bombardier
 install -pD -m 644 bombardier.6 %{buildroot}%{_mandir}/man6/bombardier.6
 
 mkdir -p %{buildroot}%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install            \
   --dir %{buildroot}%{_datadir}/applications \
   %{SOURCE1}
 
@@ -54,10 +54,13 @@ install -p -m 644 %{SOURCE2} \
 %doc README DEDICATION COPYING VERSION
 %{_datadir}/applications/bombardier.desktop
 %{_datadir}/icons/hicolor/32x32/apps/bombardier-logo.png
-%{_mandir}/man6/bombardier.6.*
+%{_mandir}/man6/bombardier.6*
 
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.8.2.2-alt2_14
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.8.2.2-alt2_13
 - update to new release by fcimport
 
