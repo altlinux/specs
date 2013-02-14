@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           plee-the-bear
 Version:        0.6.0
-Release:        alt4_10
+Release:        alt4_11
 Summary:        2D platform game
 Group:          Games/Other
 # Code and artwork respectively
@@ -21,13 +21,13 @@ Patch3:		plee-the-bear-boost-1.50-patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libclaw-devel >= 1.7.0
-BuildRequires:  boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
 BuildRequires:  wxGTK-devel
 BuildRequires:  libSDL_mixer-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  libpng-devel
 BuildRequires:  gettext
-BuildRequires:  ctest cmake
+BuildRequires: ctest cmake
 # There has to be a saner way to remove rpath via cmake...
 BuildRequires:	chrpath
 Source44: import.info
@@ -98,6 +98,9 @@ done
 
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt4_11
+- update to new release by fcimport
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0.6.0-alt4_10
 - update to new release by fcimport
 
