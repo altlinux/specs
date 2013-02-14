@@ -40,7 +40,7 @@ BuildRequires: jpackage-compat
 
 Name:           %{parent}-%{subproj}
 Version:        1.2
-Release:        alt1_5jpp7
+Release:        alt2_5jpp7
 Summary:        Doxia content generation framework
 License:        ASL 2.0
 Group:          Development/Java
@@ -57,7 +57,7 @@ Patch2:         0003-Migration-to-component-metadata.patch
 
 BuildRequires:  itext
 BuildRequires:  jpackage-utils
-BuildRequires:  maven1
+BuildRequires:  maven
 BuildRequires:  maven-compiler-plugin
 BuildRequires:  maven-install-plugin
 BuildRequires:  maven-jar-plugin
@@ -182,6 +182,9 @@ rm -rf $(readlink -f %{_javadocdir}/%{name}) %{_javadocdir}/%{name} || :
 %doc %{_javadocdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt2_5jpp7
+- fixed maven1 dependency
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.2-alt1_5jpp7
 - fc update
 
