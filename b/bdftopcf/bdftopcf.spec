@@ -1,5 +1,5 @@
 Name: bdftopcf
-Version: 1.0.3
+Version: 1.0.4
 Release: alt1
 
 Summary: convert X font from Bitmap Distribution Format to Portable Compiled Format
@@ -37,6 +37,9 @@ on other machines.
 %_man1dir/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.4-alt1
+- Autobuild version bump to 1.0.4
+
 * Tue May 03 2011 Fr. Br. George <george@altlinux.ru> 1.0.3-alt1
 - Autobuild version bump to 1.0.3
 
