@@ -1,5 +1,5 @@
 Name: tatham-puzzles
-Version: 9737
+Version: 9751
 Release: alt1
 License: MIT
 Group: Games/Puzzles
@@ -12,7 +12,7 @@ Source3: %name.sh
 Source4: CHANGELOG.txt
 
 Summary: A collection of small one-player puzzle games
-Summary(ru_RU.KOI8-R): Коллекция небольших логических головоломок
+Summary(ru_RU.UTF-8): п п╬п╩п╩п╣п╨я├п╦я▐ п╫п╣п╠п╬п╩я▄я┬п╦я┘ п╩п╬пЁп╦я┤п╣я│п╨п╦я┘ пЁп╬п╩п╬п╡п╬п╩п╬п╪п╬п╨
 
 # Automatically added by buildreq on Sun Oct 11 2009
 BuildRequires: ImageMagick-tools fonts-type1-urw libgtk+2-devel xvfb-run xauth halibut
@@ -21,19 +21,19 @@ BuildRequires: ImageMagick-tools fonts-type1-urw libgtk+2-devel xvfb-run xauth h
 A collection of little puzzle games you can pop up in a window and play for two or three minutes while you take a break from whatever else you were doing.
 Their names: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Twiddle, Undead, Unequal, Unruly, Untangle. Rules, descriptions and tips can be found in documentation.
 
-%description -l ru_RU.KOI8-R
-Коллекция из небольших логических головоломок класса "открой в окошке, потыкай пять минут -- отдохни"; сложность можно настроить.
-Названия головоломок: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Twiddle, Undead, Unequal, Unruly, Untangle. Описания, правила и подсказки -- в докуметации.
+%description -l ru_RU.UTF-8
+п п╬п╩п╩п╣п╨я├п╦я▐ п╦п╥ п╫п╣п╠п╬п╩я▄я┬п╦я┘ п╩п╬пЁп╦я┤п╣я│п╨п╦я┘ пЁп╬п╩п╬п╡п╬п╩п╬п╪п╬п╨ п╨п╩п╟я│я│п╟ "п╬я┌п╨я─п╬п╧ п╡ п╬п╨п╬я┬п╨п╣, п©п╬я┌я▀п╨п╟п╧ п©я▐я┌я▄ п╪п╦п╫я┐я┌ -- п╬я┌п╢п╬я┘п╫п╦"; я│п╩п╬п╤п╫п╬я│я┌я▄ п╪п╬п╤п╫п╬ п╫п╟я│я┌я─п╬п╦я┌я▄.
+п²п╟п╥п╡п╟п╫п╦я▐ пЁп╬п╩п╬п╡п╬п╩п╬п╪п╬п╨: Black Box, Bridges, Cube, Dominosa, Fifteen, Filling, Flip, Galaxies, Guess, Inertia, Keen, Light Up, Loopy, Magnets, Map, Mines, Net, Netslide, Pattern, Pearl, Pegs, Range, Rectangles, Same Game, Signpost, Singles, Sixteen, Slant, Solo, Tents, Towers, Twiddle, Undead, Unequal, Unruly, Untangle. п·п©п╦я│п╟п╫п╦я▐, п©я─п╟п╡п╦п╩п╟ п╦ п©п╬п╢я│п╨п╟п╥п╨п╦ -- п╡ п╢п╬п╨я┐п╪п╣я┌п╟я├п╦п╦.
 %package -n %name-solvers
 Summary: Stand-alone solvers for some of the %name puzzles
-Summary(ru_RU.KOI8-R): Набор "решалок" к некоторым головоломкам из %name
+Summary(ru_RU.UTF-8): п²п╟п╠п╬я─ "я─п╣я┬п╟п╩п╬п╨" п╨ п╫п╣п╨п╬я┌п╬я─я▀п╪ пЁп╬п╩п╬п╡п╬п╩п╬п╪п╨п╟п╪ п╦п╥ %name
 Group: Games/Puzzles
 
 %description -n %name-solvers
 Stand-alone solvers for some of the %name puzzles.
 
-%description -l ru_RU.KOI8-R -n %name-solvers
-Набор "решалок" к некоторым головоломкам из %name.
+%description -l ru_RU.UTF-8 -n %name-solvers
+п²п╟п╠п╬я─ "я─п╣я┬п╟п╩п╬п╨" п╨ п╫п╣п╨п╬я┌п╬я─я▀п╪ пЁп╬п╩п╬п╡п╬п╩п╬п╪п╨п╟п╪ п╦п╥ %name.
 %prep
 %setup -n puzzles-r%version
 ./mkfiles.pl
@@ -103,6 +103,10 @@ install *.info* %buildroot%_infodir/
 %_infodir/*%{name}*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 9751-alt1
+- Autobuild version bump to 9751
+- Convert russian descriptions to UTF
+
 * Wed Jan 16 2013 Fr. Br. George <george@altlinux.ru> 9737-alt1
 - Autobuild version bump to 9737
 
