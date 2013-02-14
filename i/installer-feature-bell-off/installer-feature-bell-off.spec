@@ -1,5 +1,5 @@
 Name: installer-feature-bell-off
-Version: 0.1
+Version: 0.1.1
 Release: alt1
 
 Summary: Installer bell off hook
@@ -32,5 +32,8 @@ install -pm755 *.sh %buildroot%hookdir/
 %hookdir/*
 
 %changelog
+* Thu Feb 14 2013 Mikhail Efremov <sem@altlinux.org> 0.1.1-alt1
+- Avoid install2-init-functions dependence.
+
 * Thu Sep 08 2011 Mikhail Efremov <sem@altlinux.org> 0.1-alt1
 - Initial build
