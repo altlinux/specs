@@ -3,14 +3,14 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           beneath-a-steel-sky-cd
 Version:        0.0372
-Release:        alt4_7
+Release:        alt4_8
 Summary:        Beneath a Steel Sky - Adventure Game - CD version
 Group:          Games/Other
 # For further discussion on distribution rights see:
 # http://www.redhat.com/archives/fedora-extras-list/2006-November/msg00030.html
 License:        Freely redistributable without restriction
-URL:            http://www.revolution.co.uk/_display.php?id=16
-Source0:        http://dl.sf.net/sourceforge/scummvm/bass-cd-1.2.zip
+URL:            https://en.wikipedia.org/wiki/Beneath_a_Steel_Sky
+Source0:        http://sourceforge.net/projects/scummvm/files/extras/Beneath%%20a%%20Steel%%20Sky/bass-cd-1.2.zip
 Source1:        %{name}.desktop
 BuildRequires:  desktop-file-utils
 BuildArch:      noarch
@@ -30,32 +30,28 @@ This package contains the CD version, which contains additional / longer
 cutscenes and voice acting, but also is much larger: 70 MB where as the also
 available floppy version (package name beneath-a-steel-sky) is only 8 MB.
 
-
 %prep
 %setup -q -n bass-cd-1.2
 
-
 %build
 # Nothing to build data only
-
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -p -m 644 sky.* $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
-
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 
 %files
 %doc readme.txt
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 
-
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.0372-alt4_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.0372-alt4_7
 - update to new release by fcimport
 
