@@ -1,6 +1,6 @@
 Name: kernel-headers-common
 Version: 1.2.3
-Release: alt1
+Release: alt1.1
 
 Summary: Common header files for the Linux kernel
 License: GPL
@@ -112,6 +112,9 @@ done
 %ghost /var/run/kernel/*
 
 %changelog
+* Thu Feb 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.2.3-alt1.1
+- Rebuilt for newer %%arm macro.
+
 * Sat May 12 2012 Dmitry V. Levin <ldv@altlinux.org> 1.2.3-alt1
 - Added kheaders.service.
 
