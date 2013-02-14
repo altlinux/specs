@@ -1,13 +1,13 @@
-%filter_from_requires /.opt-share.etc.profile.ant/d
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-java
 # END SourceDeps(oneline)
+%filter_from_requires /.opt-share.etc.profile.ant/d
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 # baserelease defines which build revision of this version we're building.
 # The magical name baserelease is matched by the rpmdev-bumpspec tool, which
 # you should use.
-%global baserelease 6
+%global baserelease 7
 
 %global pkg_name gluegen
 %global pkg_version 2.0
@@ -23,7 +23,7 @@ BuildRequires: jpackage-compat
 
 Name:           gluegen2
 Version:        %{pkg_version}
-Release:        alt1_6jpp7
+Release:        alt1_7jpp7
 Summary:        Java/JNI glue code generator to call out to ANSI C
 
 Group:          Development/Java
@@ -37,12 +37,12 @@ Patch2:         %{name}-0002-use-fedora-jni.patch
 Patch3:         %{name}-0003-disable-executable-tmp-tests.patch
 
 BuildRequires:  jpackage-utils
-BuildRequires:  p7zip-standalone p7zip
+BuildRequires: p7zip-standalone p7zip
 BuildRequires:  ant-antlr
 BuildRequires:  ant-contrib
-BuildRequires:  ant-junit
+BuildRequires:  ant-junit4
 BuildRequires:  cpptasks
-BuildRequires:  maven1
+BuildRequires:  maven
 
 Requires:       jpackage-utils
 Source44: import.info
@@ -145,10 +145,10 @@ ant -Djavacdebug=true \
     -Djavacdebuglevel=lines,vars,source \
     -Dc.compiler.debug=true \
     \
-    -Dantlr.jar=$(build-classpath antlr.jar) \
-    -Djunit.jar=$(build-classpath junit4.jar) \
-    -Dant.jar=$(build-classpath ant.jar) \
-    -Dant-junit.jar=/usr/share/java/ant/ant-junit4.jar \
+    -Dantlr.jar=%{_javadir}/antlr.jar \
+    -Djunit.jar=%{_javadir}/junit4.jar \
+    -Dant.jar=%{_javadir}/ant.jar \
+    -Dant-junit.jar=%{_javadir}/ant/ant-junit4.jar \
     \
     -Djavadoc.link=%{_javadocdir}/java \
     \
@@ -162,9 +162,9 @@ mkdir -p %{buildroot}%{_javadir}/%{name} \
     %{buildroot}%{_jnidir}
 
 install build/gluegen.jar %{buildroot}%{_javadir}/%{name}.jar
-install build/gluegen-rt.jar %{buildroot}%{_libdir}/%{name}/%{name}-rt.jar
+install build/gluegen-rt.jar %{buildroot}%{_jnidir}/%{name}-rt.jar
+ln -s ../../..%{_jnidir}/%{name}-rt.jar %{buildroot}%{_libdir}/%{name}/
 install build/obj/libgluegen-rt.so %{buildroot}%{_libdir}/%{name}/lib%{name}-rt.so
-ln -s ../../%{_lib}/%{name}/%{name}-rt.jar %{buildroot}%{_jnidir}/
 
 # Provide JPP pom
 mkdir -p %{buildroot}%{_mavenpomdir}
@@ -196,13 +196,13 @@ _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/nativ
     -Djavacdebuglevel=lines,vars,source \
     -Dcommon.gluegen.build.done=true \
     \
-    -Dantlr.jar=$(build-classpath antlr.jar) \
-    -Djunit.jar=$(build-classpath junit.jar) \
-    -Dant.jar=$(build-classpath ant.jar) \
-    -Dant-junit.jar=/usr/share/java/ant/ant-junit.jar \
+    -Dantlr.jar=%{_javadir}/antlr.jar \
+    -Djunit.jar=%{_javadir}/junit.jar \
+    -Dant.jar=%{_javadir}/ant.jar \
+    -Dant-junit.jar=%{_javadir}/ant/ant-junit.jar \
     -Dgluegen.jar=%{buildroot}%{_javadir}/%{name}.jar \
     -Dgluegen-rt.jar=%{buildroot}%{_libdir}/%{name}/%{name}-rt.jar \
-    -Dswt.jar=%{_jnidir}/swt.jar \
+    -Dswt.jar=%{_libdir}/eclipse/swt.jar \
     \
     junit.run
 
@@ -228,6 +228,9 @@ _JAVA_OPTIONS="-Djogamp.debug=true -Djava.library.path=../build/test/build/nativ
 %{_docdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_7jpp7
+- new release
+
 * Tue Jan 15 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt1_6jpp7
 - initial build
 
