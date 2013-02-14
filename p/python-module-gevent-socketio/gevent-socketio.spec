@@ -3,8 +3,8 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.5
-Release: alt1.beta.git20120514
+Version: 0.3.6
+Release: alt1.git20130201
 Summary: SocketIO server based on the Gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python
@@ -109,11 +109,14 @@ cp -fR docs/build/pickle %buildroot%python_sitelibdir/socketio/
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS LICENSE CHANGELOG TODO *.rst
+%doc AUTHORS LICENSE CHANGELOG *.rst
 %python3_sitelibdir/*
 %endif
 
 %changelog
+* Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.git20130201
+- Version 0.3.6
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.5-alt1.beta.git20120514
 - Version 0.3.5-beta
 - Added module for Python 3
