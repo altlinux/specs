@@ -3,15 +3,15 @@
 %def_with python3
 
 Name: python-module-%oname
-Version: 0.3.2
-Release: alt1.hg20111215
+Version: 0.4.0
+Release: alt1.git20121205
 Summary: Lightweight in-process concurrent programming
 License: MIT
 Group: Development/Python
 Url: http://pypi.python.org/pypi/greenlet
 Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
-# hg clone http://bitbucket.org/ambroff/greenlet
+# https://github.com/python-greenlet/greenlet.git
 Source: %oname-%version.tar.gz
 
 BuildRequires(pre): rpm-build-python
@@ -105,7 +105,7 @@ popd
 %endif
 
 %files
-%doc AUTHORS LICENSE NEWS README doc/greenlet.txt
+%doc AUTHORS LICENSE NEWS README* doc/greenlet.txt
 %python_sitelibdir/*
 %_includedir/python%_python_version/greenlet
 
@@ -114,12 +114,15 @@ popd
 
 %if_with python3
 %files -n python3-module-%oname
-%doc AUTHORS LICENSE NEWS README doc/greenlet.txt
+%doc AUTHORS LICENSE NEWS README* doc/greenlet.txt
 %python3_sitelibdir/*
 %_includedir/python%{_python3_version}mu/greenlet
 %endif
 
 %changelog
+* Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.4.0-alt1.git20121205
+- Version 0.4.0
+
 * Mon Jun 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt1.hg20111215
 - Version 0.3.2
 - Added module for Python 3
