@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20121109
+Version: 20130314
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ make \
 %_sbindir/propagator
 
 %changelog
+* Thu Feb 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130314-alt1
+- rewrite net devices probing
+
 * Fri Nov 09 2012 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20121109-alt1
 - use /sbun/mount.nfs instead of /bin/nfsmount
 
