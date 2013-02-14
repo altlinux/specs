@@ -3,7 +3,7 @@ BuildRequires: gcc-c++
 # END SourceDeps(oneline)
 Name:           qascade
 Version:        0.1
-Release:        alt2_15
+Release:        alt2_16
 Summary:        Classic puzzle game
 
 Group:          Games/Other
@@ -28,7 +28,7 @@ game that came with the Psion Revo PDA.
 
 
 %build
-[ -n "$QTDIR" ] || . %{_sysconfdir}/profile.d/qt.sh
+[ -n "$QTDIR" ] || . /etc/profile.d/qt3dir.sh; export PATH=%_libdir/qt3/bin:$PATH
 qmake-qt3 INSTALL_ROOT=$RPM_BUILD_ROOT qascade.pro
 perl -pi -e 's|^(C(XX)?FLAGS\s*=.*)$|$1 \$(RPM_OPT_FLAGS)|g' Makefile
 make %{?_smp_mflags}
@@ -38,7 +38,6 @@ make %{?_smp_mflags}
 [ -n "$QTDIR" ] || . %{_sysconfdir}/profile.d/qt.sh
 %makeinstall
 desktop-file-install \
-  --vendor fedora \
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   --mode 644 \
   %{SOURCE1}
@@ -46,51 +45,20 @@ install -D -p -m 644 %{name}.hscr \
   $RPM_BUILD_ROOT%{_var}/lib/games/%{name}.hscr
 install -D -p -m 644 blue.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps/qascade.png
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
 %doc *.htm
 %attr(2711,root,games) %{_bindir}/%{name}
-%{_datadir}/applications/*%{name}.desktop
+%{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/24x24/apps/qascade.png
 %attr(0664,games,games) %config(noreplace) %{_var}/lib/games/%{name}*
 
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_16
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_15
 - update to new release by fcimport
 
