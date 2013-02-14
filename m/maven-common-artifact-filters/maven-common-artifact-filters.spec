@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          maven-common-artifact-filters
 Version:       1.4
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Maven Common Artifact Filters
 Group:         Development/Java
 License:       ASL 2.0
@@ -18,7 +18,7 @@ BuildRequires: jpackage-utils
 BuildRequires: easymock
 BuildRequires: junit
 
-BuildRequires: maven1
+BuildRequires: maven
 
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -39,7 +39,7 @@ BuildRequires: aopalliance
 BuildRequires: cglib
 
 Requires:      junit
-Requires:      maven1
+Requires:      maven
 Requires:      maven-shared
 Requires:      maven-test-tools
 Requires:      plexus-containers-container-default
@@ -115,6 +115,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc LICENSE NOTICE
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.4-alt2_3jpp7
+- fixed maven1 dependency
+
 * Mon Feb 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.4-alt1_3jpp7
 - fc update
 
