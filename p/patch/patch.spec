@@ -1,6 +1,6 @@
 Name: patch
 Version: 2.7.1
-Release: alt1
+Release: alt2
 
 Summary: The GNU patch command, for modifying/upgrading files
 License: GPLv3+
@@ -10,7 +10,7 @@ Url: http://www.gnu.org/software/patch/
 # git://git.altlinux.org/gears/p/patch.git
 Source: %name-%version-%release.tar
 
-BuildRequires: gnulib >= 0.0.7591.898f143
+BuildRequires: gnulib >= 0.0.7696.fd9f1ac
 
 # for extended attribute copying support
 BuildRequires: libattr-devel
@@ -43,6 +43,9 @@ echo -n %version > .tarball-version
 %doc AUTHORS NEWS README
 
 %changelog
+* Thu Feb 14 2013 Dmitry V. Levin <ldv@altlinux.org> 2.7.1-alt2
+- Updated to v2.7.1-3-g082baa3 (closes: #28556).
+
 * Sun Sep 30 2012 Dmitry V. Levin <ldv@altlinux.org> 2.7.1-alt1
 - Updated to v2.7.1-1-g47191c2.
 
