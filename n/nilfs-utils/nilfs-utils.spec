@@ -1,71 +1,129 @@
-Name: nilfs-utils
-Version: 2.0.23a
-Release: alt1
+%def_enable shared
+%def_enable static
+%def_with selinux
+%def_enable libmount
+%define libdir /%_lib
 
+%define bname nilfs
+%define lname lib%bname
+Name: %bname-utils
+Version: 2.1.4
+Release: alt1
 Summary: Utilities for managing NILFS v2 filesystems
 License: GPLv2+
 Group: System/Kernel and hardware
+Url: http://www.%bname.org
+Source: http://www.%bname.org/download/%name-%version.tar
+Patch: %name-%version-%release.patch
+Provides: %{bname}2-utils = %version-%release
+%{!?_disable_shared:Requires: %lname = %version-%release}
 
-Url: http://www.nilfs.org
-Source: http://www.nilfs.org/download/%name-%version.tar
-Packager: Michael Shigorin <mike@altlinux.org>
-
-BuildRequires: libuuid-devel
-Provides: nilfs2-utils = %version
-
-%define libname libnilfs
-%define _libdir /%_lib
+BuildRequires: libuuid-devel %{?_enable_libmount:libmount-devel} %{?_with_selinux:libselinux-devel}
 
 %description
-Utilities to work with NILFS v2 filesystems
+Utilities to work with NILFS v2 filesystems.
 
-%package -n %libname
-Summary: NILFS2 library
+
+%if_enabled shared
+%package -n %lname
+Summary: NILFS v2 libraries
 Group: System/Libraries
+License: LGPLv2
 
-%description -n %libname
-This package contains shared code for %name and other
-utilities dealing with NILFS2 filesystems.
+%description -n %lname
+This package contains shared code for %name and other utilities dealing
+with NILFS v2 filesystems.
+%endif
 
-%package -n %libname-devel
-Summary: NILFS2 filesystem-specific headers
+
+%package -n %lname-devel
+Summary: NILFS v2 filesystem-specific headers
 Group: Development/C
-Requires: %libname = %version-%release
+Requires: %lname%{?_disable_shared:-devel-static} = %version-%release
+License: LGPLv2
 
-%description -n %libname-devel
-This package contains the header files needed to develop
-NILFS filesystem-specific programs.
+%description -n %lname-devel
+This package contains the header files needed to develop NILFS v2
+filesystem-specific programs.
 
-You should install it if you want to develop NILFS
-filesystem-specific programs. If you install this,
-you'll also want to install %name.
+
+%if_enabled static
+%package -n %lname-devel-static
+Summary: NILFS v2 static libraries
+Group: Development/C
+Requires: %lname-devel = %version-%release
+License: LGPLv2+
+
+%description -n %lname-devel-static
+This package contains NILFS v2 static libraries.
+%endif
+
 
 %prep
-%setup
+%setup -q
+%patch -p1
+
 
 %build
 %autoreconf
-%configure --libdir %_libdir --disable-static
+%configure \
+	--libdir=%libdir \
+	--enable-largefile \
+	%{subst_enable static} \
+	%{subst_with selinux} \
+	--with-gnu-ld
 %make_build
+gzip -9c ChangeLog > ChangeLog.gz
+
 
 %install
 %makeinstall_std
+%if "%libdir" != "%_libdir"
+install -d -m 0755 %buildroot%_libdir
+%if_enabled shared
+for f in %buildroot%libdir/*.so; do
+	ln -sf %libdir/$(readlink $f) %buildroot%_libdir/$(basename $f)
+	rm -f $f
+done
+%endif
+%{?_enable_static:mv %buildroot%libdir/*.a %buildroot%_libdir/}
+%endif
+
 
 %files
-%doc COPYING ChangeLog
-%config(noreplace) %_sysconfdir/nilfs_cleanerd.conf
+%doc AUTHORS ChangeLog.*
+%config(noreplace) %_sysconfdir/%{bname}_cleanerd.conf
 /sbin/*
 %_bindir/*
-%_mandir/*/*
+%_man1dir/*
+%_man5dir/*
+%_man8dir/*
 
-%files -n %libname
-%_libdir/*.so.*
 
-%files -n %libname-devel
-%_libdir/*.so
-%_includedir/*.h
+%if_enabled shared
+%files -n %lname
+%libdir/*.so.*
+%endif
+
+
+%files -n %lname-devel
+%{?_enable_shared:%_libdir/*.so}
+%_includedir/*
+
+
+%if_enabled static
+%files -n %lname-devel-static
+%_libdir/*.a
+%endif
+
 
 %changelog
+* Thu Feb 14 2013 Led <led@altlinux.ru> 2.1.4-alt1
+- 2.1.4
+- fixed License for libraries
+- enabled static libraries
+- moved devel libraries to default %%_libdir
+
 * Thu Jun 23 2011 Michael Shigorin <mike@altlinux.org> 2.0.23a-alt1
 - retrofitted upstream commit to fix m4/ nanoissue
   (thx Ryusuke Konishi)
