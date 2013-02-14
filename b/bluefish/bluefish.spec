@@ -1,5 +1,5 @@
 Name: bluefish
-Version: 2.2.3
+Version: 2.2.4
 Release: alt1
 
 Summary: A GTK2 web development application for experienced users
@@ -39,6 +39,7 @@ These are common files.
 %setup
 #for N in src/plugin_*/po; do ln -s /usr/share/intltool/Makefile.in.in $N/;done
 #for N in src/plugin_*/po; do test -r $N/Makefile.in.in && echo $N || ln -s /usr/share/intltool/Makefile.in.in $N/;done
+find data -type f -name \*.py -exec sed -i 's/\r//' {} \;
 
 %build
 #autoreconf
@@ -73,6 +74,10 @@ cat %{name}_plugin_*.lang >> %name.lang
 %_datadir/xml/%name/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 2:2.2.4-alt1
+- Autobuild version bump to 2.2.4
+- Fix DOS LFs
+
 * Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 2:2.2.3-alt1
 - Autobuild version bump to 2.2.3
 
