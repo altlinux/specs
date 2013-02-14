@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.3.6
-Release: alt1.hg20120423
+Release: alt1.hg20120723
 Summary: Websocket handler for the gevent pywsgi server, a Python network library
 License: BSD
 Group: Development/Python
@@ -78,6 +78,9 @@ popd
 %endif
 
 %changelog
+* Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.hg20120723
+- New snapshot
+
 * Tue Jun 05 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.6-alt1.hg20120423
 - Version 0.3.6
 - Added module for Python 3
