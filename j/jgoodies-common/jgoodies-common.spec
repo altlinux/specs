@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:           jgoodies-common
 Version:        1.4.0
-Release:        alt1_1jpp7
+Release:        alt2_1jpp7
 Summary:        Common library shared by JGoodies libraries and applications
 
 Group:          Development/Java
@@ -20,7 +20,7 @@ Source0:        http://www.jgoodies.com/download/libraries/%{shortname}/%{name}-
 BuildRequires:  fonts-ttf-dejavu
 BuildRequires:  fontconfig
 BuildRequires:  jpackage-utils
-BuildRequires:  maven1
+BuildRequires:  maven
 BuildRequires:  maven-clean-plugin
 BuildRequires:  maven-dependency-plugin
 BuildRequires:  maven-surefire-provider-junit4
@@ -93,6 +93,9 @@ cp -a target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}/
 
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt2_1jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.4.0-alt1_1jpp7
 - initial build
 
