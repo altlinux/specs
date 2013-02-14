@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             glassfish-saaj
 Version:          1.3.19
-Release:          alt1_1jpp7
+Release:          alt2_1jpp7
 Summary:          JSR-67 implementation
 Group:            Development/Java
 License:          CDDL and GPLv2 with exceptions
@@ -20,7 +20,7 @@ Source0:          glassfish-saaj-%{version}.tar.xz
 BuildArch:        noarch
 
 BuildRequires:    jpackage-utils
-BuildRequires:    maven1
+BuildRequires:    maven
 BuildRequires:    maven-compiler-plugin
 BuildRequires:    maven-install-plugin
 BuildRequires:    maven-jar-plugin
@@ -82,6 +82,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %doc license.html
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt2_1jpp7
+- fixed maven1 dependency
+
 * Tue Jan 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.19-alt1_1jpp7
 - initial build
 
