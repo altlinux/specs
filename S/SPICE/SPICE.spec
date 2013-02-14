@@ -1,6 +1,6 @@
 Name: SPICE
 Version: 0.12.0
-Release: alt1
+Release: alt2
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -12,7 +12,7 @@ Source3: spice-protocol.tar
 Patch1: fix-alt.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=613529
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 armh
 
 BuildRequires: cegui06-devel gcc-c++ 
 BuildRequires: libXfixes-devel libXrandr-devel libXext-devel libX11-devel libXinerama-devel
@@ -102,6 +102,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Thu Feb 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12.0-alt2
+- Build for armh too
+
 * Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 0.12.0-alt1
 - 0.12.0
 
