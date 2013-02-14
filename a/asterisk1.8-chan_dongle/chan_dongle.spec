@@ -4,7 +4,7 @@
 Name: asterisk1.8-chan_dongle
 Summary: Channel driver for Asterisk to use Huawei 3G modem series.
 Version: 1.1
-Release: alt8
+Release: alt9
 License: GPL
 Group: System/Libraries
 Url: http://code.google.com/p/asterisk-chan-dongle/
@@ -40,6 +40,9 @@ mkdir -p %buildroot%_docdir/%name
 %doc LICENSE.txt README.txt TODO.txt INSTALL BUGS etc
 
 %changelog
+* Thu Feb 14 2013 Denis Smirnov <mithraen@altlinux.ru> 1.1-alt9
+- update to r14
+
 * Wed Jan 30 2013 Denis Smirnov <mithraen@altlinux.ru> 1.1-alt8
 - add Url tag
 
