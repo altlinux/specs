@@ -6,7 +6,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          hawtbuf
 Version:       1.9
-Release:       alt1_2jpp7
+Release:       alt2_2jpp7
 Summary:       A rich byte buffer library
 Group:         Development/Java
 License:       ASL 2.0
@@ -23,7 +23,7 @@ BuildRequires: apache-commons-logging
 BuildRequires: junit
 BuildRequires: log4j
 
-BuildRequires: maven1
+BuildRequires: maven
 BuildRequires: javacc-maven-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -63,7 +63,7 @@ HawtBuf Proto: A protobuf library.
 Group:         Development/Java
 Summary:       A protobuf compiler as a maven plugin
 Requires:      %{name}-proto = %{version}-%{release}
-Requires:      maven1
+Requires:      maven
 
 %description protoc
 HawtBuf Protoc: A protobuf compiler as a maven plugin.
@@ -131,6 +131,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %doc license.txt notice.md
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt2_2jpp7
+- fixed maven1 dependency
+
 * Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_2jpp7
 - initial build
 
