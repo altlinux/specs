@@ -14,7 +14,7 @@ BuildRequires: jpackage-compat
 
 Name:          apache-commons-jci
 Version:       1.0
-Release:       alt1_5jpp7
+Release:       alt2_5jpp7
 Summary:       Commons Java Compiler Interface
 Group:         Development/Java
 License:       ASL 2.0
@@ -41,7 +41,7 @@ Patch5:        %{name}-%{namedversion}-ecj4.patch
 
 BuildRequires: jpackage-utils
 
-BuildRequires: maven1
+BuildRequires: maven
 BuildRequires: maven-antrun-plugin
 BuildRequires: maven-compiler-plugin
 BuildRequires: maven-install-plugin
@@ -246,6 +246,9 @@ cp -pr target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 %{_mavendepmapfragdir}/%{name}-rhino
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt2_5jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.0-alt1_5jpp7
 - fc update
 
