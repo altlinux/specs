@@ -1,6 +1,6 @@
 Name: openbox
 Version: 3.5.0
-Release: alt1.1
+Release: alt1.2
 
 Summary: Openbox is a standards compliant, fast, light-weight, extensible window manager
 Summary(ru_RU.UTF-8): Openbox это следующий стандартам, быстрый, лёгкий, расширяемый оконный менеджер
@@ -212,6 +212,9 @@ install -pD -m 644 %SOURCE13 %buildroot%_sysconfdir/xdg/openbox/
 %endif
 
 %changelog
+* Thu Feb 14 2013 Mykola Grechukh <gns@altlinux.ru> 3.5.0-alt1.2
+- s/O/o/, closes #28524
+
 * Sat Oct 22 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 3.5.0-alt1.1
 - Rebuild with Python-2.7
 
