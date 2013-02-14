@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          fasterxml-oss-parent
 Version:       4
-Release:       alt1_1jpp7
+Release:       alt2_1jpp7
 Summary:       FasterXML parent pom
 Group:         Development/Java
 License:       ASL 2.0
@@ -20,7 +20,7 @@ Patch0:        fasterxml-oss-parent-3-pom.patch
 
 BuildRequires: jpackage-utils
 
-BuildRequires: maven1
+BuildRequires: maven
 BuildRequires: maven-enforcer-plugin
 BuildRequires: maven-plugin-bundle
 BuildRequires: maven-site-plugin
@@ -64,6 +64,9 @@ mvn-rpmbuild verify
 %doc LICENSE NOTICE README.creole
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 4-alt2_1jpp7
+- fixed maven1 dependency
+
 * Mon Dec 24 2012 Igor Vlasenko <viy@altlinux.ru> 4-alt1_1jpp7
 - use /var/lock/serial
 
