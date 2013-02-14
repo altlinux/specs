@@ -1,24 +1,17 @@
 Summary:   An intrusion detection system
 Name:      snort
-Version:   2.8.6.1
-Release: alt3
+Version:   2.9.3.1
+Release: alt2
 License: %gpl2only
 Group:     Security/Networking
 Url:       http://www.snort.org
 Packager: Ilya Mashkin <oddity@altlinux.ru>
 
 # You can omit building some target packages via 'rpmbuild --without xxx'
-%def_with    mysql
-%def_with    postgresql
-%def_with    odbc
 %def_without prelude
 %def_with    inline
-%def_without libpq3
 # You can omit this feature via 'rpmbuild --disable flexresp'
 %def_enable flexresp
-
-%define dbhints_dir  %_datadir/%name-dbhints
-%define dbhints_path %dbhints_dir/%name-dbhints.sql
 
 Source0:   %name-%version.tar
 Source5:   snortdb-extra.bz2
@@ -40,45 +33,19 @@ BuildRequires: rpm-build-licenses
 
 # Automatically added by buildreq on Fri Jan 14 2005, explicit versions added manually
 BuildRequires: libnet1-devel >= 1.0.2a, libpcap-devel >= 0.4, libpcre-devel
-BuildRequires: zlib-devel
+BuildRequires: zlib-devel libdnet-devel libdaq-devel flex
 
 Conflicts: snort-rules < 2.8
-
-%if_with postgresql
-BuildRequires: postgresql-devel
-%if_with libpq3
-BuildRequires: libpq3-devel
-%else
-BuildRequires: libpq-devel
-%endif
-%endif
 
 %if_with prelude
 Requires:  libprelude
 %endif
-%if_with mysql
-BuildRequires: libMySQL-devel
-%endif
 %if_with prelude
 BuildRequires: libprelude-devel
-%endif
-%if_with odbc
-BuildRequires: libunixODBC-devel
 %endif
 %if_with inline
 BuildRequires: iptables-devel
 %endif
-
-%if_with mysql
-%if_with postgresql
-%if_with odbc
-%if_with inline
-%def_with bloat
-%endif
-%endif
-%endif
-%endif
-%def_without bloat
 
 Summary(ru_RU.KOI8-R): Автоматический анализатор/блокировщик сетевых пакетов
 
@@ -152,95 +119,6 @@ Snort, скомпилированный с поддержкой flexresp. Flexible Responses означает
 Snort, скомп╕льований з п╕дтримкою flexresp.
 Вимага╓ б╕бл╕отеку libnet.
 
-%package mysql
-Summary: Snort with MySQL support
-Summary(ru_RU.KOI8-R): Snort с отправкой статистики в базу MySQL
-Group: Security/Networking
-Requires: %name = %version
-%description mysql
-Snort compiled with mysql support.
-%description -l ru_RU.KOI8-R mysql
-Snort, скомпилированный с поддержкой MySQL в качестве хранилища статистики.
-%description -l uk_UA.KOI8-U mysql
-Snort, скомп╕льований з п╕дтримкою MySQL.
-
-%package mysql+flexresp
-Summary: Snort with MySQL support and Flexible Response
-Summary(ru_RU.KOI8-R): Snort с отправкой статистики в базу MySQL и автоблокировкой
-Group: Security/Networking
-Requires: %name = %version
-Requires: libnet1
-%description mysql+flexresp
-Snort compiled with mysql support and flexresp support.
-Requires snort libnet rpm.
-%description -l ru_RU.KOI8-R mysql+flexresp
-Snort, скомпилированный с поддержкой MySQL в качестве хранилища статистики
-и flexresp - автоматическим блокированием соединений на основании правил.
-Требует библиотеку libnet.
-%description -l uk_UA.KOI8-U mysql+flexresp
-Snort, скомп╕льований з п╕дтримкою MySQL та flexresp.
-Вимага╓ б╕бл╕отеку libnet.
-
-%package postgresql
-Summary: Snort with PostgreSQL support
-Summary(ru_RU.KOI8-R): Snort с отправкой статистики в базу PostgreSQL
-Group: Security/Networking
-Requires: %name = %version
-%description postgresql
-Snort compiled with postgresql support. 
-%description -l ru_RU.KOI8-R postgresql
-Snort, скомпилированный с поддержкой PostgreSQL в качестве хранилища статистики.
-%description -l uk_UA.KOI8-U postgresql
-Snort, скомп╕льований з п╕дтримкою PostgreSQL.
-
-%package postgresql+flexresp
-Summary: Snort with PostgreSQL support and Flexible Response
-Summary(ru_RU.KOI8-R): Snort с отправкой статистики в базу PostgreSQL и автоблокировкой
-Group: Security/Networking
-Requires: %name = %version
-Requires: libnet1
-%description postgresql+flexresp
-Snort compiled with postgresql support and flexresp support.
-Requires snort libnet rpm.
-%description -l ru_RU.KOI8-R postgresql+flexresp
-Snort, скомпилированный с поддержкой PostgreSQL в качестве хранилища статистики
-и flexresp - автоматическим блокированием соединений на основании правил.
-Требует библиотеку libnet.
-%description -l uk_UA.KOI8-U postgresql+flexresp
-Snort, скомп╕льований з п╕дтримкою PostgreSQL та flexresp.
-Вимага╓ б╕бл╕отеку libnet.
-
-%package odbc
-Summary: Snort with unixODBC support
-Summary(ru_RU.KOI8-R): Snort с отправкой статистики в ODBC-базу
-Group: Security/Networking
-Requires: %name = %version
-Requires: libunixODBC
-%description odbc
-Snort compiled with unixODBC support. 
-%description -l ru_RU.KOI8-R odbc
-Snort, скомпилированный с поддержкой unixODBC в качестве хранилища статистики.
-%description -l uk_UA.KOI8-U odbc
-Snort, скомп╕льований з п╕дтримкою unixODBC.
-
-%package odbc+flexresp
-Summary: Snort with unixODBC support and Flexible Response
-Summary(ru_RU.KOI8-R): Snort с отправкой статистики в ODBC-базу и автоблокировкой
-Group: Security/Networking
-Requires: %name = %version
-Requires: libnet1
-Requires: libunixODBC
-%description odbc+flexresp
-Snort compiled with unixODBC support and flexresp support.
-Requires snort libnet rpm.
-%description -l ru_RU.KOI8-R odbc+flexresp
-Snort, скомпилированный с поддержкой ODBC-СУБД в качестве хранилища статистики
-и flexresp - автоматическим блокированием соединений на основании правил.
-Требует библиотеку libnet.
-%description -l uk_UA.KOI8-U odbc+flexresp
-Snort, скомп╕льований з п╕дтримкою unixODBC та flexresp.
-Вимага╓ б╕бл╕отеку libnet.
-
 %package inline
 Summary: Snort with IPTables support
 Summary(ru_RU.KOI8-R): Snort с чтением трафика через IPTables вместо PCAP
@@ -276,28 +154,6 @@ Snort, использующий для просмотра трафика функции пакетного фильтра IPTables
 %description -l uk_UA.KOI8-U inline+flexresp
 Snort, скомп╕льований з п╕дтримкою IPTables та flexresp.
 
-%package bloat
-Summary: Snort with MySQL, PostgreSQL, ODBC, SNMP, ClamAV, IPTables supports and FlexResp
-Group: Security/Networking
-Requires: %name = %version
-Requires: libnet1
-%description bloat
-Snort compiled with mysql, postgresql, odbc, iptables supports and flexresp support.
-%description -l ru_RU.KOI8-R bloat
-Snort, скомпилированный с поддержкой всех возможных функций:
-- отправка статистики в базу MySQL, PostgreSQL или ODBC,
-- отправка уведомлений на центральную сетевую консоль управления по протоколу SNMP,
-- проверка трафика антивирусом ClamAV,
-- управление пакетным фильтром IPTables,
-- автоматическая блокировака опасных соединений через flexresp
-  (требует библиотеку libnet).
-Хотя сам пакет незначительно отличается по размеру от базового, он требует большого
-количества вспомогательных библиотек, поэтому устанавливать его без необходимости
-не следует. Вместо этого попробуйте установить пакеты snort с отдельными функциями,
-которые вам действительно нужны.
-%description -l uk_UA.KOI8-U bloat
-Snort, скомп╕льований з п╕дтримкою MySQL, PostgreSQL, ODBC, SNMP, ClamAV, IPTables та flexresp.
-
 %package doc
 Summary: Various documentation from Snort IDS distribution.
 Summary(ru_RU.KOI8-R): Документация по анализатору сетевого трафика Snort
@@ -309,25 +165,6 @@ describing all network intrusions known by Snort.
 %description doc -l ru_RU.KOI8-R
 Руководство пользователя, FAQ, а также детальная документация
 по сигнатурам всех сетевых атак, которые распознаёт Snort.
-
-%package dbhints
-Summary: Script for creation human readable descriptions in SQL/ODBC database
-Summary(ru_RU.KOI8-R): Сценарий создания описаний в SQL/ODBC-базе со статистикой Snort'a
-Group: Security/Networking
-BuildArch: noarch
-%description dbhints
-This package contain script that generates three tables in any SQL92 compliant
-database providing information useful when analyzing network data.
-These tables are intended to supplement the base tables required
-for database support in snort in order to make data more human readable.
-%description dbhints -l ru_RU.KOI8-R
-В этом пакете находится сценарий на языке SQL92, создающий несколько
-информационных таблиц в БД 'snort'. Данные таблицы хранят информативные описания
-сетевых протоколов, флагов и служб, полезные для построения различных отчётов.
-
-Примечание: сценарий требуется устанавливать и запускать не на том компьютере,
-на котором инсталлирован Snort, а на том, на котором работает СУБД с базой данных,
-содержащей поступающую от Snort'a статистику.
 
 %prep
 %setup -q
@@ -361,7 +198,7 @@ function prepconf() {
 	--prefix=%_prefix \
 	--sysconfdir=%_sysconfdir/%name \
 	--enable-linux-smp-stats \
-	--with-oracle=no \
+	--disable-static-daq \
     --enable-dynamicplugin \
 	%{subst_with prelude} \
 	"$@"
@@ -377,18 +214,11 @@ function prepconf() {
     popd
 }
 
-prepconf   xxx                    plain               --with-mysql=no  --with-postgresql=no  --with-odbc=no  --enable-inline=no
-prepconf %{subst_with mysql}      mysql               --with-mysql=yes --with-postgresql=no  --with-odbc=no  --enable-inline=no
-prepconf %{subst_with postgresql} postgresql          --with-mysql=no  --with-postgresql=yes --with-odbc=no  --enable-inline=no
-prepconf %{subst_with odbc}       odbc                --with-mysql=no  --with-postgresql=no  --with-odbc=yes --enable-inline=no
-prepconf %{subst_with inline}     inline              --with-mysql=no  --with-postgresql=no  --with-odbc=no  --enable-inline=yes
+prepconf   xxx                    plain               --enable-inline=no
+prepconf %{subst_with inline}     inline              --enable-inline=yes
 %if_enabled flexresp
-prepconf   xxx                    plain+flexresp      --with-mysql=no  --with-postgresql=no  --with-odbc=no   --enable-inline=no  --enable-flexresp
-prepconf %{subst_with mysql}      mysql+flexresp      --with-mysql=yes --with-postgresql=no  --with-odbc=no   --enable-inline=no  --enable-flexresp
-prepconf %{subst_with postgresql} postgresql+flexresp --with-mysql=no  --with-postgresql=yes --with-odbc=no   --enable-inline=no  --enable-flexresp
-prepconf %{subst_with odbc}       odbc+flexresp       --with-mysql=no  --with-postgresql=no  --with-odbc=yes  --enable-inline=no  --enable-flexresp
-prepconf %{subst_with inline}     inline+flexresp     --with-mysql=no  --with-postgresql=no  --with-odbc=no   --enable-inline=yes --enable-flexresp
-prepconf %{subst_with bloat}      bloat               --with-mysql=yes --with-postgresql=yes --with-odbc=yes  --enable-inline=yes --enable-flexresp
+prepconf   xxx                    plain+flexresp      --enable-inline=no  --enable-flexresp3
+prepconf %{subst_with inline}     inline+flexresp     --enable-inline=yes --enable-flexresp3
 %endif
 
 %install
@@ -408,8 +238,9 @@ function myinstall() {
 
 mkdir -p %buildroot%_libdir/%name/dynamicengine
 mkdir -p %buildroot%_libdir/%name/dynamicpreprocessor/
+mkdir -p %buildroot%_libdir/%name/dynamicrules
 pushd building
-for c in %name-{plain,mysql,postgresql,odbc,inline}; do
+for c in %name-{plain,inline}; do
     myinstall "$c"
     myinstall "$c+flexresp"
 done
@@ -434,14 +265,18 @@ sed -i 's;^var RULE_PATH \.\./rules;var RULE_PATH \%_sysconfdir/%name/rules;i' %
 sed -i 's;^var PREPROC_RULE_PATH \.\./preproc_rules;var PREPROC_RULE_PATH \%_sysconfdir/%name/preproc_rules;i' \
         %buildroot/%_sysconfdir/%name/%name.conf
 sed -i 's;/usr/local/lib/snort_;%_libdir/%name/;' %buildroot/%_sysconfdir/%name/%name.conf
+sed -i 's;^# config daq_dir: <dir>;config daq_dir: %_libdir/daq/;' %buildroot/%_sysconfdir/%name/%name.conf
+sed -i 's;^var WHITE_LIST_PATH \.\./rules;var WHITE_LIST_PATH \%_sysconfdir/%name/rules;i' %buildroot/%_sysconfdir/%name/%name.conf
+sed -i 's;^var BLACK_LIST_PATH \.\./rules;var BLACK_LIST_PATH \%_sysconfdir/%name/rules;i' %buildroot/%_sysconfdir/%name/%name.conf
 
 m4 -DSNORT_CONFDIRPATH=%_sysconfdir/%name %SOURCE10 > %buildroot/%_sysconfdir/sysconfig/%name
 m4 -DSNORT_LOGPATH=%_logdir/%name %SOURCE30 > %buildroot/%_sysconfdir/logrotate.d/%name
 m4 -DSNORT_CONFPATH=%_sysconfdir/%name/%name.conf -DSNORT_BINPATH=%_sbindir/%name %SOURCE20 > README-ALT.ru
 m4 -DSNORT_CONFPATH=%_sysconfdir/%name/%name.conf -DSNORT_BINPATH=%_sbindir/%name %SOURCE21 > README-ALT.uk
 
-mkdir -p %buildroot%dbhints_dir
-bzcat %SOURCE5 > %buildroot%dbhints_path
+mkdir -p %buildroot/%_sysconfdir/%name/rules/
+touch %buildroot/%_sysconfdir/%name/rules/white_list.rules
+touch %buildroot/%_sysconfdir/%name/rules/black_list.rules
 
 %pre
 %_sbindir/groupadd -rf %name
@@ -464,7 +299,6 @@ echo
 %files
 %doc doc/AUTHORS doc/BUGS doc/CREDITS doc/NEWS doc/PROBLEMS doc/README* doc/TODO doc/USAGE doc/WISHLIST
 %doc README-ALT.ru README-ALT.uk
-%doc schemas/create_*
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %config(noreplace) %_initdir/snortd
 %config(noreplace) %_sysconfdir/logrotate.d/%name
@@ -475,24 +309,6 @@ echo
 %_man8dir/%name.*
 %_altdir/%name-plain
 %_libdir/%name
-
-%if_with mysql
-%files mysql
-%_sbindir/%name-mysql
-%_altdir/%name-mysql
-%endif
-
-%if_with postgresql
-%files postgresql
-%_sbindir/%name-postgresql
-%_altdir/%name-postgresql
-%endif
-
-%if_with odbc
-%files odbc
-%_sbindir/%name-odbc
-%_altdir/%name-odbc
-%endif
 
 %if_with inline
 %files inline
@@ -506,45 +322,24 @@ echo
 %_sbindir/%name-plain+flexresp
 %_altdir/%name-plain+flexresp
 
-%if_with mysql
-%files mysql+flexresp
-%_sbindir/%name-mysql+flexresp
-%_altdir/%name-mysql+flexresp
-%endif
-
-%if_with postgresql
-%files postgresql+flexresp
-%_sbindir/%name-postgresql+flexresp
-%_altdir/%name-postgresql+flexresp
-%endif
-
-%if_with odbc
-%files odbc+flexresp
-%_sbindir/%name-odbc+flexresp
-%_altdir/%name-odbc+flexresp
-%endif
-
 %if_with inline
 %files inline+flexresp
 %_sbindir/%name-inline+flexresp
 %_altdir/%name-inline+flexresp
 %endif
 
-%if_with bloat
-%files bloat
-%_sbindir/%name-bloat
-%_altdir/%name-bloat
-%endif
-
 %endif  # flexresp
 
 %files doc
-%doc doc/faq.* doc/snort_manual.* doc/snort_schema_v106.pdf
-
-%files dbhints
-%dbhints_dir
+%doc doc/faq.* doc/snort_manual.*
 
 %changelog
+* Mon Jan 28 2013 Timur Aitov <timonbl4@altlinux.org> 2.9.3.1-alt2
+- fix snort.conf
+
+* Wed Jan 09 2013 Timur Aitov <timonbl4@altlinux.org> 2.9.3.1-alt1
+- 2.9.3.1
+
 * Tue Oct 05 2010 Mikhail Efremov <sem@altlinux.org> 2.8.6.1-alt3
 - Really rebuild with libmysqlclient.so.16
 
