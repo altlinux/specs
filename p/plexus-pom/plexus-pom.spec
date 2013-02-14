@@ -5,7 +5,7 @@ BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:          plexus-pom
 Version:       3.0.1
-Release:       alt1_3jpp7
+Release:       alt2_3jpp7
 Summary:       Root Plexus Projects pom
 Group:         Development/Java
 License:       ASL 2.0
@@ -27,12 +27,12 @@ Patch1:        plexus-pom-3.0.1-no-site-plugin.patch
 BuildRequires: jpackage-utils >= 0:1.7.5
 BuildRequires: spice-parent
 
-BuildRequires: maven1
+BuildRequires: maven
 BuildRequires: maven-install-plugin
 BuildRequires: modello
 BuildRequires: plexus-containers-component-metadata
 
-Requires:      maven1
+Requires:      maven
 Requires:      spice-parent
 
 Requires:      jpackage-utils >= 0:1.7.5
@@ -65,6 +65,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.plexus-plexus.pom
 %{_mavendepmapfragdir}/%{name}
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_3jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt1_3jpp7
 - fc update
 
