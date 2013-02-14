@@ -4,7 +4,7 @@
 
 Name: python-module-%oname
 Version: 0.6.34
-Release: alt1
+Release: alt2
 Summary: Easily download, build, install, upgrade, and uninstall Python packages
 License: ZPL
 Group: Development/Python
@@ -87,7 +87,10 @@ This package contains tests for Distribute.
 %prep
 %setup
 
-find ./ -name '* *' -delete -print
+mv "setuptools/script template.py" \
+	setuptools/script_template.py
+mv "setuptools/script template (dev).py" \
+	"setuptools/script_template_(dev).py"
 
 %if_with python3
 rm -rf ../python3
@@ -165,6 +168,9 @@ ln -s easy_install-%__python3_version %buildroot%_bindir/easy_install3
 %endif
 
 %changelog
+* Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.34-alt2
+- Renamed "script template*.py" -> script_template*.py (thnx ldv@)
+
 * Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.34-alt1
 - Version 0.6.34
 
