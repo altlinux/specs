@@ -8,7 +8,7 @@ BuildRequires: jpackage-compat
 
 Name:		azureus
 Version:	4.8.1.2
-Release:	alt1_1jpp7
+Release:	alt1_2jpp7
 Summary:	A BitTorrent Client
 Group:		Networking/WWW
 License:	GPLv2+
@@ -49,7 +49,6 @@ Patch58:	azureus-4.2.0.4-java5.patch
 
 Patch59:	azureus-4.8.1.2-fix-compile.patch
 
-
 BuildRequires:	ant jpackage-utils >= 1.5 xml-commons-apis
 BuildRequires:	apache-commons-cli log4j
 BuildRequires:	bouncycastle >= 1.33-3
@@ -62,7 +61,7 @@ BuildRequires:	 desktop-file-utils
 Requires(post):	 desktop-file-utils
 Requires(postun):	desktop-file-utils
 
-Provides:		Vuze
+Provides:	vuze = %{version}-%{release}
 
 BuildArch:	noarch
 Source44: import.info
@@ -180,7 +179,6 @@ ant jar
 #popd
 
 %install
-
 install -dm 755 $RPM_BUILD_ROOT%{_datadir}/azureus/plugins
 install -pm 644 dist/Azureus2.jar $RPM_BUILD_ROOT%{_datadir}/azureus/Azureus2.jar
 # TODO: fix launcher to be multilib-safe
@@ -204,16 +202,13 @@ install -m 644 org/gudy/azureus2/ui/icons/a32.png $RPM_BUILD_ROOT%{_datadir}/ico
 install -m 644 org/gudy/azureus2/ui/icons/a64.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/64x64/apps/azureus.png
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install --vendor fedora					\
-		     --dir ${RPM_BUILD_ROOT}%{_datadir}/applications	\
-	%{SOURCE2}
+desktop-file-install --dir ${RPM_BUILD_ROOT}%{_datadir}/applications %{SOURCE2}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/application-registry
 install -m644 %{SOURCE3} $RPM_BUILD_ROOT%{_datadir}/application-registry
 # alt adaptation
 sed -i s,JAVA_HOME=/usr/lib/jvm/java-openjdk,JAVA_HOME=/usr/lib/jvm/java,g %buildroot%_bindir/%name
 sed -i 's,uname -i,uname -m,' %buildroot%_bindir/%name
-
 
 %post
 touch %{_datadir}/icons/hicolor
@@ -233,6 +228,9 @@ touch %{_datadir}/icons/hicolor
 %{_datadir}/azureus
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 4.8.1.2-alt1_2jpp7
+- update to new release by jppimport
+
 * Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.8.1.2-alt1_1jpp7
 - update to new release by jppimport
 
