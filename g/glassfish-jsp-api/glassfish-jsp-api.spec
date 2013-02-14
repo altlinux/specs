@@ -9,7 +9,7 @@ BuildRequires: jpackage-compat
 
 Name:       glassfish-jsp-api
 Version:    2.2.1
-Release:    alt1_4jpp7
+Release:    alt2_4jpp7
 Summary:    Glassfish J2EE JSP API specification
 
 Group:      Development/Java
@@ -24,7 +24,7 @@ Source3:    http://hub.opensolaris.org/bin/download/Main/licensing/cddllicense.t
 
 BuildArch:  noarch
 
-BuildRequires:  maven1
+BuildRequires:  maven
 BuildRequires:  maven-plugin-bundle
 BuildRequires:  maven-jar-plugin
 BuildRequires:  maven-compiler-plugin
@@ -93,6 +93,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 
 
 %changelog
+* Thu Feb 14 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt2_4jpp7
+- fixed maven1 dependency
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.1-alt1_4jpp7
 - fc update
 
