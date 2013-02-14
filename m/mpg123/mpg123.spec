@@ -1,12 +1,12 @@
 Name: mpg123
 Version: 1.13.4
-Release: alt1
+Release: alt2
 
 Summary: MPEG audio player
 Group: Sound
 License: distributable
 
-ExclusiveArch: %ix86 x86_64
+ExclusiveArch: %ix86 x86_64 %arm
 
 %ifarch %ix86
 %define wcpu i386
@@ -83,6 +83,9 @@ mkdir -p %buildroot%_defaultdocdir/%name-%version/
 
 
 %changelog
+* Thu Feb 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 1.13.4-alt2
+- build for arm too
+
 * Wed Dec 21 2011 Alexey Morsov <swi@altlinux.ru> 1.13.4-alt1
 - new version
 
