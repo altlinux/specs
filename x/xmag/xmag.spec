@@ -1,6 +1,6 @@
 Name: xmag
-Version: 1.0.4
-Release: alt2
+Version: 1.0.5
+Release: alt1
 
 Summary: magnify parts of the screen
 License: MIT/X11
@@ -29,7 +29,7 @@ enlargement window exits the program. information is displayed depending
 on which options are selected.
 
 %prep
-%setup -q
+%setup
 sed -i 's/(XMAG_LIBS) -lm$/(XMAG_LIBS) -lm -lXmu/' Makefile.am
 
 %build
@@ -47,6 +47,9 @@ sed -i 's/(XMAG_LIBS) -lm$/(XMAG_LIBS) -lm -lXmu/' Makefile.am
 %_sysconfdir/X11/app-defaults/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Mon May 28 2012 Fr. Br. George <george@altlinux.ru> 1.0.4-alt2
 - DSO list completion
 
