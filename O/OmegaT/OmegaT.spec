@@ -1,4 +1,5 @@
 # BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
 BuildRequires: unzip
 # END SourceDeps(oneline)
 BuildRequires: /proc
@@ -6,10 +7,10 @@ BuildRequires: jpackage-compat
 Name:		OmegaT
 %define namer	omegat
 Summary:	Computer Aid Translation tool
-Version:	2.3.0_03
+Version:	2.3.0_06
 #%define versionr	2.2.3_04_Beta
 %define versionr	%{version}
-Release:	alt1_3jpp7
+Release:	alt1_6jpp7
 #Release:	0.2.04_Beta%{?dist}
 Source0:	http://downloads.sourceforge.net/omegat/%{name}_%{versionr}_Source.zip
 Source2:	OmegaT-lib-mnemonics-build.xml
@@ -17,23 +18,24 @@ Source3:	OmegaT-build.xml
 Source4:	OmegaT.sh
 Url:		http://www.omegat.org/
 Group:		Text tools
+
 BuildRequires:	ant jpackage-utils
 BuildRequires:	desktop-file-utils dos2unix
 BuildRequires:	htmlparser vldocking >= 2.1.4
 BuildRequires:	jna
 BuildRequires:	ws-jaxme
 BuildRequires:	swing-layout
+BuildRequires:	hunspell <= 1.4.0
 
 Requires:	jpackage-utils
 Requires:	vldocking >= 2.1.4
 Requires:	htmlparser
-Requires:	hunspell
+Requires:	hunspell <= 1.4.0
 Requires:	jna
 Requires:	swing-layout
 Requires:	ws-jaxme
 
 License:	GPLv2+
-BuildArch:	noarch
 # http://svn.debian.org/wsvn/pkg-java/trunk04-get-rid-of-MRJAdapter.patch
 Patch1:		OmegaT-04-get-rid-of-MRJAdapter.patch
 Patch2:		OmegaT-help-path.patch
@@ -42,7 +44,6 @@ Patch3:		OmegaT-05-remove-jmyspell-alternative.patch
 # based on http://svn.debian.org/wsvn/pkg-java/trunk/omegat/debian/patches/06-use-external-hunspell.patch
 Patch4:		OmegaT-06-use-external-hunspell.patch
 Patch5:		OmegaT-07-use-openjdk-swingworker.patch
-Patch6:		OmegaT-fix-encoding-java7.patch 
 Source44: import.info
 
 %description
@@ -74,8 +75,11 @@ OmegaT has the following features:
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%ifarch x86_64 # get rids the hardlink to hunspell 
+sed -i -e "s|/usr/lib/libhunspell|/usr/lib64/libhunspell|g" src/org/omegat/util/OConsts.java
+%endif
+
 %patch5 -p1
-%patch6 -p0
 
 # not needed outside Netbeans
 rm nbproject/org-netbeans-modules-java-j2seproject-copylibstask.jar
@@ -114,7 +118,7 @@ rm -rf lib/swing-worker-1.2.jar
 
 %build
 
-#limpieza:
+# cleaning:
 sed -i '/class-path/I d' manifest-template.mf
 
 pushd lib-mnemonics
@@ -126,9 +130,6 @@ cp %{SOURCE3} build.xml
 ant dist
 
 %install 
-rm -Rf $RPM_BUILD_ROOT
-
-#install our jar file
 #make some install dirs
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
@@ -172,6 +173,9 @@ desktop-file-install  --vendor "fedora" --dir=%{buildroot}%{_datadir}/applicatio
 
 # fixing end of line making rpmlint happy
 dos2unix -k -f release/*.txt
+# hack to mark a package as an arch
+mkdir -p %{buildroot}%{_jnidir}/
+ln -s %_javadir/OmegaT.jar %{buildroot}%{_jnidir}/OmegaT.jar
 
 %files
 %dir %{_datadir}/%{namer}
@@ -181,9 +185,13 @@ dos2unix -k -f release/*.txt
 %{_datadir}/applications/fedora-%{namer}.desktop
 
 %doc ./release/changes.txt release/doc-license.txt release/license.txt release/readme*.txt release/join.html
+%_jnidir/*
 
 
 %changelog
+* Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 2.3.0_06-alt1_6jpp7
+- fixed maven1 dependency
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 2.3.0_03-alt1_3jpp7
 - new version
 
