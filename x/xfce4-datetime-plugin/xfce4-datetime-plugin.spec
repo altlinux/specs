@@ -1,6 +1,6 @@
 Name: xfce4-datetime-plugin
-Version: 0.6.1
-Release: alt4
+Version: 0.6.2
+Release: alt1
 
 Summary: Datetime plugin for the XFce panel
 License: %gpl2plus
@@ -9,15 +9,7 @@ Url: http://goodies.xfce.org/projects/panel-plugins/%name
 Packager: XFCE Team <xfce@packages.altlinux.org>
 
 Source: %name-%version.tar
-# From Fedora:
-Patch0: xfce4-datetime-plugin-0.6.1-xfce4-panel-4.7.patch
-Patch1: xfce4-datetime-plugin-0.6.1-tooltips.patch
-Patch2: xfce4-datetime-plugin-0.6.1-update-translations.patch
-
-# Based on patch from http://bugzilla.xfce.org/show_bug.cgi?id=6443
-Patch3: xfce4-datetime-plugin-0.6.1-alt-port-to-libxfce4ui.patch
-
-Patch4: xfce4-datetime-plugin-0.6.1-alt-drop-old-macros.patch
+Patch: %name-%version-%release.patch
 
 BuildRequires(pre): rpm-build-licenses
 
@@ -33,27 +25,12 @@ Requires: xfce4-panel >= 4.8
 
 %prep
 %setup
-%patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
+%patch -p1
 
 %build
-# Fix desktop file path for xfce4-panel >= 4.8
-sed -i 's|^desktopdir = \$(datadir)/xfce4/panel-plugins|desktopdir = \$(datadir)/xfce4/panel/plugins|' \
-   panel-plugin/Makefile.am
-# Fix plugindir path (xfce4-panel-4.7.patch for Makefile.in, not Makefile.am).
-sed -i 's|^plugindir = \$(libdir)/xfce4/panel-plugins/|plugindir = \$(libdir)/xfce4/panel/plugins/|' \
-  panel-plugin/Makefile.am
-# Plugin is internal (FIXME: make new patch as replacament for xfce4-panel-4.7.patch).
-sed -i 's|^X-XFCE-Internal=FALSE|X-XFCE-Internal=TRUE|' \
-  panel-plugin/datetime.desktop.in.in
-
 %xfce4reconf
 %configure \
     --disable-static \
-    --enable-final \
     --enable-debug=no
 %make_build
 
@@ -68,6 +45,11 @@ sed -i 's|^X-XFCE-Internal=FALSE|X-XFCE-Internal=TRUE|' \
 %_datadir/xfce4/panel/plugins/*.desktop
 
 %changelog
+* Fri Feb 15 2013 Mikhail Efremov <sem@altlinux.org> 0.6.2-alt1
+- Drop remained USE_GTK_TOOLTIP_API.
+- Drop obsoleted patches.
+- Updated to 0.6.2.
+
 * Mon Apr 16 2012 Mikhail Efremov <sem@altlinux.org> 0.6.1-alt4
 - Fix build: Replace BM_DEBUG_SUPPOR with XDT_FEATURE_DEBUG.
 - Rebuild against libxfce4util.so.6 (libxfce4util-4.9).
