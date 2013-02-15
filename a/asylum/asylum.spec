@@ -1,15 +1,15 @@
 BuildRequires: gcc-c++
 Name:           asylum
 Version:        0.3.2
-Release:        alt1_4
-Summary:        SDL port of the game Asylum, originally for the Archimedes
+Release:        alt1_5
+Summary:        Game involving shooting anything that moves & collecting others
 Group:          Games/Other
 # For detailed licensing, see the README
 License:        GPLv3 and Public Domain
 URL:            http://sdl-asylum.sourceforge.net
 Source0:        http://downloads.sourceforge.net/sdl-%{name}/%{name}-%{version}.tar.gz
 Source1:        %{name}.png
-Patch0:		asylum-0.3.2-paths.patch
+Patch0:         asylum-0.3.2-paths.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  libSDL_mixer-devel
@@ -24,7 +24,6 @@ revolves around shooting anything which moves, collecting anything which
 doesn't move and most importantly, finding your way to each of the eight
 pulsating neurons scattered through the immense map.
 
-
 %prep
 %setup -q
 
@@ -36,7 +35,6 @@ iconv -f iso8859-1 README -t utf8 > README.conv \
 
 # Delete bundled binary to make absolutely sure we get a new one.
 rm -f %{name}
-
 
 %build
 make %{?_smp_mflags} CFLAGS="%{optflags}" LDFLAGS="%{?__global_ldflags}"
@@ -55,7 +53,6 @@ StartupNotify=false
 Categories=Game;ActionGame;
 EOF
 
-
 %install
 mkdir -p %{buildroot}%{_bindir}
 mkdir -p %{buildroot}%{_datadir}/%{name}
@@ -67,10 +64,7 @@ install -m0755 %{name} %{buildroot}%{_bindir}
 cp -a data/* %{buildroot}%{_datadir}/%{name}
 
 install -m0644 %{SOURCE1} %{buildroot}%{_datadir}/icons/hicolor/32x32/apps
-desktop-file-install  \
-                     --dir %{buildroot}%{_datadir}/applications \
-                     %{name}.desktop
-
+desktop-file-install --dir %{buildroot}%{_datadir}/applications %{name}.desktop
 
 %files
 # Note the game is SETGID games for the hi-scores.
@@ -87,6 +81,9 @@ desktop-file-install  \
 
 
 %changelog
+* Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.2-alt1_4
 - update to new release by fcimport
 
