@@ -1,26 +1,29 @@
 Epoch: 0
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name: stax-ex
-Version: 1.7
+Version: 1.7.1
 Release: alt1_2jpp7
 Summary: StAX API extensions
 Group: Development/Java
 License: CDDL or GPLv2
 Url: https://stax-ex.dev.java.net
 
-# svn export https://svn.java.net/svn/stax-ex~svn/tags/stax-ex-1.7 stax-ex-1.7
-# find stax-ex-1.7/ -name '*.jar' -delete
-# tar czf stax-ex-1.7.tar.gz stax-ex-1.7
+# svn export https://svn.java.net/svn/stax-ex~svn/tags/stax-ex-1.7.1 stax-ex-1.7.1
+# find stax-ex-1.7.1/ -name '*.jar' -delete
+# tar czf stax-ex-1.7.1.tar.gz stax-ex-1.7.1
 Source0: %{name}-%{version}.tar.gz
 
-Patch0: %{name}-pom.patch
-
 BuildRequires: bea-stax
-BuildRequires: maven
-BuildRequires: junit
-BuildRequires: jpackage-utils
 BuildRequires: dos2unix
+BuildRequires: jpackage-utils
+BuildRequires: junit
+BuildRequires: jvnet-parent
+BuildRequires: maven
+BuildRequires: maven-enforcer-plugin
 
 Requires: bea-stax
 Requires: jpackage-utils
@@ -48,12 +51,12 @@ BuildArch: noarch
 
 
 %description javadoc
-This package contains javadoc for %{name}.
+This package contains javadoc for %%{name}.
 
 
 %prep
 %setup -q
-%patch0 -p1
+%pom_remove_dep javax.activation:activation
 
 # Convert the license to UTF-8:
 mv LICENSE.txt LICENSE.txt.tmp
@@ -99,6 +102,9 @@ cp -rp target/site/apidocs/* %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0:1.7.1-alt1_2jpp7
+- fc update
+
 * Wed Sep 19 2012 Igor Vlasenko <viy@altlinux.ru> 0:1.7-alt1_2jpp7
 - new release
 
