@@ -1,8 +1,8 @@
 Name: steam
-Version: 1.0.0.25
-Release: alt2
+Version: 1.0.0.27
+Release: alt1
 
-Summary: Installer for the Beta of the Steam software distribution service
+Summary: Installer for the Steam software distribution service
 License: Proprietary
 Group: Games/Other
 
@@ -34,10 +34,6 @@ savegame and screenshot functionality, and many social features.
 %install
 %make DESTDIR=%buildroot install
 
-if [ -f %buildroot%_sysconfdir/apt/sources.list.d/steam.list ]; then
-	%__rm %buildroot%_sysconfdir/apt/sources.list.d/steam.list
-fi
-
 %files
 %_bindir/*
 %dir %_libdir/%name
@@ -53,6 +49,9 @@ fi
 %_pixmapsdir/*
 
 %changelog 
+* Fri Feb 15 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.27-alt1
+- Version 1.0.0.27
+
 * Mon Feb 11 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.25-alt2
 - Fix end of line in desktop file
 
