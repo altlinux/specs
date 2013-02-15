@@ -1,15 +1,18 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:             apache-juddi
-Version:          3.1.3
-Release:          alt1_4jpp7
+Version:          3.1.4
+Release:          alt1_1jpp7
 Summary:          Client API for UDDI
 Group:            Development/Java
 License:          ASL 2.0
 URL:              http://juddi.apache.org/
 
-# svn export http://svn.apache.org/repos/asf/juddi/tags/juddi-3.1.3/ apache-juddi
-# tar cafJ apache-juddi-3.1.3.tar.xz apache-juddi
+# svn export http://svn.apache.org/repos/asf/juddi/tags/juddi-3.1.4/ apache-juddi
+# tar cafJ apache-juddi-3.1.4.tar.xz apache-juddi
 Source0:          %{name}-%{version}.tar.xz
 
 Patch1:           0001-Build-only-client-module.patch
@@ -45,7 +48,7 @@ Requires:         jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q -n %{name}
@@ -93,6 +96,9 @@ cp -rp target/site/apidocs/* $RPM_BUILD_ROOT%{_javadocdir}/%{name}
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 3.1.4-alt1_1jpp7
+- fc update
+
 * Wed Sep 05 2012 Igor Vlasenko <viy@altlinux.ru> 3.1.3-alt1_4jpp7
 - new release
 
