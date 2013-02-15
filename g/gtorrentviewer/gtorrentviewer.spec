@@ -1,11 +1,12 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/curl-config libgtk+2-devel
+BuildRequires: /usr/bin/curl-config /usr/bin/glib-gettextize libgtk+2-devel
 # END SourceDeps(oneline)
+%define fedora 18
 Name:		gtorrentviewer
 Version:	0.2b
-Release:	alt4_25
+Release:	alt4_26
 Summary:	A GTK2-based viewer and editor for BitTorrent meta files
-Group:		Networking/File transfer
+Group:		Networking/WWW
 License:	GPL+
 URL:		http://gtorrentviewer.sourceforge.net/
 Source0:	http://downloads.sf.net/gtorrentviewer/GTorrentViewer-%{version}.tar.gz
@@ -31,7 +32,8 @@ download.
 %setup -q -n GTorrentViewer-%{version}
 
 # Let drag and drop work with URIs as well as files (#206262)
-%patch0 -p1
+# Also drop ".png" suffix from icon filename, as per Icon Theme spec
+%patch0
 
 # mainwindow.c requires ceil() from libm (#564928)
 %patch1 -p1
@@ -56,7 +58,11 @@ make %{?_smp_mflags}
 make install DESTDIR=%{buildroot} INSTALL="install -p"
 rm -f %{buildroot}%{_datadir}/GTorrentViewer/README
 desktop-file-install \
+%if 0%{?fedora} < 19 && 0%{?rhel} < 4
 	--vendor fedora \
+%else
+	--vendor "" \
+%endif
 	--add-category X-Fedora \
 	--delete-original \
 	--dir %{buildroot}%{_datadir}/applications \
@@ -71,12 +77,19 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %doc AUTHORS ChangeLog COPYING README
 %{_bindir}/gtorrentviewer
 %{_datadir}/GTorrentViewer
+%if 0%{?fedora} < 19 && 0%{?rhel} < 4
 %{_datadir}/applications/fedora-gtorrentviewer.desktop
+%else
+%{_datadir}/applications/gtorrentviewer.desktop
+%endif
 %{_datadir}/pixmaps/gtorrentviewer.png
 %{_datadir}/pixmaps/gtorrentviewer.xpm
 %{_mandir}/man1/gtorrentviewer.1*
 
 %changelog
+* Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_26
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2b-alt4_25
 - update to new release by fcimport
 
