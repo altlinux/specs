@@ -1,6 +1,6 @@
 Name: rpm-build-python3
-Version: 0.1.0
-Release: alt5
+Version: 0.1.1
+Release: alt1
 
 %define python3_version %(LC_ALL=C python3 -c 'python3 -c 'import sys; print("{0}.{1}".format(sys.version_info[0],sys.version_info[1]))' 2>/dev/null || echo 2.7)
 %define python3_libdir %_target_libdir/python%python3_version
@@ -68,6 +68,10 @@ install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-byteco
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Fri Feb 15 2013 Dmitry V. Levin <ldv@altlinux.org> 0.1.1-alt1
+- python3.env: export RPM_PYTHON3 if %%__python3 is defined.
+- python3.{prov,req}: parametrize python3 exec path.
+
 * Tue Apr 03 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.1.0-alt5
 - Add py3_provides,py3_requires macros (ALT #27153)
 
