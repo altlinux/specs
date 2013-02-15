@@ -1,8 +1,11 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:		truezip
-Version:	7.5.5
-Release:	alt1_6jpp7
+Version:	7.6.6
+Release:	alt1_1jpp7
 Summary:	Java based VFS for treating archive files as virtual directories
 
 Group:		Development/Java
@@ -14,10 +17,6 @@ URL:		http://truezip.java.net/
 Source0:	%{name}-%{version}.tar.gz
 Source1:	http://www.eclipse.org/legal/epl-v10.html
 
-# Set maven.compiler source and target to 1.7
-# Fix groupId for findbugs
-# Add jsr-305 as dependency
-Patch0:		%{name}-pom.patch
 
 BuildArch:	noarch
 
@@ -57,6 +56,7 @@ Requires:	%{name}-driver-tzp = %{version}-%{release}
 Requires:	%{name}-driver-zip = %{version}-%{release}
 Requires:	%{name}-extension-parent = %{version}-%{release}
 Requires:	%{name}-extension-jmx-jul = %{version}-%{release}
+Requires:	%{name}-extension-pace = %{version}-%{release}
 Requires:	%{name}-file = %{version}-%{release}
 Requires:	%{name}-kernel = %{version}-%{release}
 Requires:	%{name}-path = %{version}-%{release}
@@ -192,6 +192,20 @@ Add the JAR artifact of this module to the run time class path to
 make its file system manager and I/O pool service available for
 service location in the client API modules.
 
+%package extension-pace
+Group: Development/Java
+Summary:	TrueZip PaceManager Extension
+Requires:	jpackage-utils
+Requires:	%{name}-extension-parent = %{version}-%{release}
+Requires:	%{name}-driver-file = %{version}-%{release}
+
+%description extension-pace
+This module constrains the number of mounted archive files in order to
+save some heap space. It provides a JMX interface for monitoring and
+management. Add the JAR artifact of this module to the run time class
+path to make its services available for service location in the client
+API modules.
+
 %package file
 Group: Development/Java
 Summary:	TrueZip File*
@@ -276,7 +290,7 @@ Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
 %setup -q
@@ -285,7 +299,16 @@ find -type f -name *.zip -delete
 find -type f -name *.jar -delete
 find -type f -name *.class -delete
 
-%patch0
+# Parent has changed to net.java.truecommons:truecommons-parent
+# which isn't in Fedora, but older parent is
+%pom_set_parent de.schlichtherle:oss-parent:9
+
+# Fix findbugs groupId (switch for new dep)
+%pom_remove_dep com.google.code.findbugs:annotations
+%pom_add_dep net.sourceforge.findbugs:annotations . "<optional>true</optional>"
+
+# Add jsr-305 as dependency for javax.annotation.concurrent
+%pom_add_dep org.jsr-305:ri
 
 
 %build
@@ -318,14 +341,16 @@ for sub in file http tar tzp zip; do
     %add_maven_depmap JPP.%{name}-%{name}-driver-${sub}.pom %{name}/%{name}-driver-${sub}.jar -f driver-${sub}
 done
 
-# truezip-extension-jmx-jul is exceptional
+# truezip-extensions are exceptional
 install -pm 644 %{name}-extension/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-extension.pom
 %add_maven_depmap JPP.%{name}-%{name}-extension.pom -f extension
 
-cp -p %{name}-extension/%{name}-extension-jmx-jul/target/%{name}-extension-jmx-jul-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-extension-jmx-jul.jar
+for ext in extension-jmx-jul extension-pace; do
+    cp -p %{name}-extension/%{name}-${ext}/target/%{name}-${ext}-%{version}.jar %{buildroot}%{_javadir}/%{name}/%{name}-${ext}.jar
 
-install -pm 644 %{name}-extension/%{name}-extension-jmx-jul/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-extension-jmx-jul.pom
-%add_maven_depmap JPP.%{name}-%{name}-extension-jmx-jul.pom %{name}/%{name}-extension-jmx-jul.jar -f extension-jmx-jul
+    install -pm 644 %{name}-extension/%{name}-${ext}/pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}-${ext}.pom
+    %add_maven_depmap JPP.%{name}-%{name}-${ext}.pom %{name}/%{name}-${ext}.jar -f ${ext}
+done
 
 
 #JAVADOCS
@@ -382,6 +407,11 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}.pom
 %{_mavenpomdir}/JPP.%{name}-%{name}-extension-jmx-jul.pom
 %{_mavendepmapfragdir}/%{name}-extension-jmx-jul
 
+%files extension-pace
+%{_javadir}/%{name}/%{name}-extension-pace.jar
+%{_mavenpomdir}/JPP.%{name}-%{name}-extension-pace.pom
+%{_mavendepmapfragdir}/%{name}-extension-pace
+
 %files file
 %{_javadir}/%{name}/%{name}-file.jar
 %{_mavenpomdir}/JPP.%{name}-%{name}-file.pom
@@ -409,6 +439,9 @@ install -pm 644 pom.xml %{buildroot}%{_mavenpomdir}/JPP.%{name}-%{name}.pom
 
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 7.6.6-alt1_1jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 7.5.5-alt1_6jpp7
 - new version
 
