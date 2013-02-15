@@ -1,17 +1,20 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:	SimplyHTML		
-Version:	0.13.1
-Release:	alt1_7jpp7
+Version:	0.16.5
+Release:	alt1_1jpp7
 Summary:	Application and a java component for rich text processing
 
 Group:		Development/Java
 License:	GPLv2 and BSD
 URL:		http://simplyhtml.sourceforge.net/
-Source0:	http://downloads.sourceforge.net/simplyhtml/%{name}_src_0_13_1.tar.gz
+Source0:	http://downloads.sourceforge.net/simplyhtml/%{name}_src_0_16_05.tar.gz
 Source1:	simplyhtml.sh
 Patch0:	simplyhtml-build.xml-classpath.patch
-Patch1:	simplythml-manifest-classpath.patch
+Patch1:	simplyhtml-manifest-classpath.patch
 
 
 BuildRequires:	ant
@@ -43,10 +46,10 @@ Requires:	jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-This package contains the API documentation for %{name}.
+This package contains the API documentation for %%{name}.
 
 %prep
-%setup -q -n simplyhtml-0_13_1
+%setup -q -n simplyhtml-0_16_05
 %patch0 -p1
 %patch1 -p1
 find -name '*.class' -exec rm -f '{}' \;
@@ -81,7 +84,7 @@ ln -s simplyhtmlhelp-%{version}.jar %{buildroot}%{_javadir}/%{name}/simplyhtmlhe
 install -pD -m755 -T %{SOURCE1} %{buildroot}%{_bindir}/%(basename %{SOURCE1})
 
 mkdir -p %{buildroot}%{_javadocdir}/%{name}-%{version}
-cp -a dist/api/* %{buildroot}%{_javadocdir}/%{name}-%{version}
+cp -a dist/help/* %{buildroot}%{_javadocdir}/%{name}-%{version}
 ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
@@ -100,6 +103,9 @@ ln -s %{name}-%{version} %{buildroot}%{_javadocdir}/%{name}
 
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 0.16.5-alt1_1jpp7
+- fc update
+
 * Mon Sep 17 2012 Igor Vlasenko <viy@altlinux.ru> 0.13.1-alt1_7jpp7
 - new version
 
