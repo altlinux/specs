@@ -1,7 +1,10 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires(pre): rpm-build-java
+# END SourceDeps(oneline)
 BuildRequires: /proc
 BuildRequires: jpackage-compat
 Name:           netty
-Version:        3.5.8
+Version:        3.5.11
 Release:        alt1_1jpp7
 Summary:        An asynchronous event-driven network application framework and tools for Java
 
@@ -59,7 +62,7 @@ Requires:  jpackage-utils
 BuildArch: noarch
 
 %description javadoc
-%{summary}.
+%%{summary}.
 
 %prep
 %setup -q -n %{name}-%{version}.Final
@@ -106,6 +109,9 @@ install -pm 644 pom.xml $RPM_BUILD_ROOT/%{_mavenpomdir}/JPP-%{name}.pom
 %{_javadocdir}/%{name}
 
 %changelog
+* Wed Feb 13 2013 Igor Vlasenko <viy@altlinux.ru> 3.5.11-alt1_1jpp7
+- fc update
+
 * Mon Oct 08 2012 Igor Vlasenko <viy@altlinux.ru> 3.5.8-alt1_1jpp7
 - new version
 
