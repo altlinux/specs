@@ -1,6 +1,6 @@
 Name: rpm-build-python
-Version: 0.36.0
-Release: alt4
+Version: 0.36.1
+Release: alt1
 
 # redefine python_libdir for 0.29.alt2 is buggy 
 %define python_libdir %_target_libdir/python%__python_version
@@ -85,6 +85,11 @@ unset RPM_PYTHON
 %python_tooldir/rpm-build
 
 %changelog
+* Fri Feb 15 2013 Dmitry V. Levin <ldv@altlinux.org> 0.36.1-alt1
+- python.{prov,req}.files: reintroduced optimization from 0.36.0-alt3.
+- python.prov.files: skip all files that cannot be provided due to
+  rpmbuild restrictions.
+
 * Wed Mar 21 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.36.0-alt4
 - Take %%_python3_path into account
 

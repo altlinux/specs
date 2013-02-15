@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.2
+Version: 0.1.3
 Release: alt1
 
 %define python3_version %(LC_ALL=C python3 -c 'python3 -c 'import sys; print("{0}.{1}".format(sys.version_info[0],sys.version_info[1]))' 2>/dev/null || echo 2.7)
@@ -68,6 +68,11 @@ install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-byteco
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Fri Feb 15 2013 Dmitry V. Levin <ldv@altlinux.org> 0.1.3-alt1
+- python3.{prov,req}.files: skip everything from /usr/lib*/python2*.
+- python3.prov.files: skip all files that cannot be provided due to
+  rpmbuild restrictions.
+
 * Fri Feb 15 2013 Dmitry V. Levin <ldv@altlinux.org> 0.1.2-alt1
 - macros.d/python3:
   + added %%__python3 macro;
