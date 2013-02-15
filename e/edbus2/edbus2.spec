@@ -2,7 +2,7 @@
 %def_disable static
 
 Name: %{_name}2
-Version: 1.7.99
+Version: 1.7.99.83479
 %ifdef beta
 Release: alt1.%beta
 %else
@@ -15,7 +15,7 @@ Group: System/Libraries
 Url: http://www.enlightenment.org/
 
 #VCS: git://git.enlightenment.fr/vcs/svn/IN-EFL/edbus.git
-Source: http://download.enlightenment.org/releases/%name-%version.tar
+Source: http://download.enlightenment.org/releases/%_name-%version.tar.bz2
 
 %{?_enable_static:BuildPreReq: glibc-devel-static}
 
@@ -61,9 +61,9 @@ This package contains static library required for development statically linked
 
 %prep
 %ifdef beta
-%setup -q -n %name-%version.%beta
+%setup -n %_name-%version.%beta
 %else
-%setup -q -n %name-%version
+%setup -n %_name-%version
 %endif
 
 %build
@@ -71,7 +71,7 @@ This package contains static library required for development statically linked
 %configure \
 	%{subst_enable static}
 %make_build
-%make doc
+#%make doc
 
 %install
 %make_install DESTDIR=%buildroot install
@@ -93,6 +93,9 @@ This package contains static library required for development statically linked
 %endif
 
 %changelog
+* Fri Feb 15 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.99.83479-alt1
+- new version
+
 * Mon Jan 21 2013 Yuri N. Sedunov <aris@altlinux.org> 1.7.99-alt1
 - first build for Sisyphus
 
