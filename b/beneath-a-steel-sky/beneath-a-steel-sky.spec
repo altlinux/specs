@@ -3,7 +3,7 @@ BuildRequires: unzip
 # END SourceDeps(oneline)
 Name:           beneath-a-steel-sky
 Version:        1.3
-Release:        alt4_4
+Release:        alt4_5
 Summary:        Beneath a Steel Sky - Adventure Game
 Group:          Games/Other
 # For further discussion on distribution rights see:
@@ -33,32 +33,28 @@ available in the %{name}-cd package. The CD version contains
 additional / longer cutscenes and voice acting, but also is much larger: the CD
 version ways in at 70 MB where as this version is only 8 MB.
 
-
 %prep
 %setup -q -c
 
-
 %build
 # Nothing to build data only
-
 
 %install
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/%{name}
 install -p -m 644 sky.* $RPM_BUILD_ROOT%{_datadir}/%{name}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
-
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 
 %files
 %doc readme.txt
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 
-
 %changelog
+* Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.3-alt4_4
 - update to new release by fcimport
 
