@@ -1,6 +1,6 @@
 Name: gdb
 Version: 7.5.0.20121002
-Release: alt2
+Release: alt3
 
 Summary: A GNU source-level debugger for C, C++ and other languages
 License: GPLv3+
@@ -508,41 +508,52 @@ for f in */Makefile.am; do
 	popd
 done
 
+%define _configure_script ../configure
+%define configure_opts \\\
+	--with-gdb-datadir=%_libdir/gdb \\\
+	--with-separate-debug-dir=/usr/lib/debug \\\
+	--enable-gdb-build-warnings=,-Wno-unused \\\
+	--disable-werror \\\
+	--disable-sim \\\
+	--disable-rpath \\\
+	--with-system-readline \\\
+	--with-lzma \\\
+	--without-libexpat-prefix \\\
+	--without-rpm \\\
+	--without-libunwind \\\
+	--enable-64-bit-bfd \\\
+	%nil
+export \
+	ac_cv_have_x=${ac_cv_have_x='have_x=yes ac_x_includes=%_x11includedir ac_x_libraries=%_x11libdir'} \
+	%{?!_enable_tui:ac_cv_search_tgetent='none required'} \
+	#
+
 %define buildtarget build-%_target
 rm -rf %buildtarget
 mkdir %buildtarget
 pushd %buildtarget
 
-%define _configure_script ../configure
-export \
-	ac_cv_have_x=${ac_cv_have_x='have_x=yes ac_x_includes=%_x11includedir ac_x_libraries=%_x11libdir'} \
-	%{?!_enable_tui:ac_cv_search_tgetent='none required'} \
-	#
-%configure \
-	--with-gdb-datadir=%_libdir/gdb \
-	--with-separate-debug-dir=/usr/lib/debug \
-	--enable-gdb-build-warnings=,-Wno-unused \
-	--disable-werror \
-	--disable-sim \
-	--disable-rpath \
-	--with-system-readline \
-	--with-lzma \
-	--without-libexpat-prefix \
-	--without-rpm \
-	--without-libunwind \
-	--enable-64-bit-bfd \
-	%subst_enable tui \
-	#
-
+%configure %configure_opts %{subst_enable tui}
 %make_build
 %make_build -C gdb libgdb.a
 %make_build info MAKEINFOFLAGS=--no-split
-grep -q '#define HAVE_ZLIB_H 1' gdb/config.h
+grep -Fq '#define HAVE_ZLIB_H 1' gdb/config.h
 
 popd #%buildtarget
 
+rm -rf light
+mkdir light
+pushd light
+
+%configure %configure_opts --disable-tui --without-expat --without-python
+%make_build
+grep -Fq '#define HAVE_ZLIB_H 1' gdb/config.h
+
+popd #light
+
 %install
 %makeinstall_std -C %buildtarget
+install -pm755 light/gdb/gdb %buildroot%_bindir/gdb-light
 
 install -pm755 gdb/gdb_gcore.sh %buildroot%_bindir/gcore
 install -pm644 %_sourcedir/gdb-gstack.man %buildroot%_man1dir/gstack.1
@@ -579,6 +590,9 @@ popd
 %_libdir/lib*.a
 
 %changelog
+* Fri Feb 15 2013 Dmitry V. Levin <ldv@altlinux.org> 7.5.0.20121002-alt3
+- Packaged a lightweigted build of gdb as %_bindir/gdb-light.
+
 * Wed Oct 10 2012 Dmitry V. Levin <ldv@altlinux.org> 7.5.0.20121002-alt2
 - Disabled few patches that appeared to be too Fedora specific (closes: #27818).
 
