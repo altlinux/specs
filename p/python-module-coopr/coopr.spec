@@ -1,7 +1,7 @@
 %define oname coopr
 Name: python-module-%oname
 Version: 3.3
-Release: alt1.svn20130213
+Release: alt2.svn20130213
 Summary: COmmon Optimization Python Repository 
 License: BSD
 Group: Development/Python
@@ -508,6 +508,7 @@ Requires: %name-sucasa = %version-%release
 Requires: %name-core = %version-%release
 Requires: %name-extras = %version-%release
 Requires: %name-openopt = %version-%release
+Requires: %name-dae = %version-%release
 #Requires: %name-os = %version-%release
 %py_requires pyutilib.dev.runtests pyutilib.th pyutilib.component.app
 %py_requires pyutilib.component.loader pyutilib.autotest
@@ -798,6 +799,9 @@ mv %buildroot%_bindir/OSSolverService \
 %python_sitelibdir/%oname/dae/test*
 
 %changelog
+* Fri Feb 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt2.svn20130213
+- Added requirement on %name-dae for %name-tests
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3-alt1.svn20130213
 - New snapshot
 
