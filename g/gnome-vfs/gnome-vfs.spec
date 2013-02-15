@@ -30,7 +30,7 @@
 
 Name: gnome-vfs
 Version: %ver_major.4
-Release: alt4
+Release: alt5
 Serial: 1
 
 Summary: The GNOME virtual file-system libraries
@@ -71,6 +71,8 @@ Patch14: gnome-vfs-2.20.0-uuid-label-mount.patch
 # (fc) 2.18.0.1-2mdv resolve mount point fstab symlinks (Ubuntu)
 Patch15: gnome-vfs-2.20.0-resolve-fstab-symlinks.patch
 Patch16: gnome-vfs-2.24.4-alt-link.patch
+
+Patch17: 0002-dont-use-smbc_remove_unused_server.patch
 
 # https://bugzilla.redhat.com/show_bug.cgi?id=333041
 # https://bugzilla.redhat.com/show_bug.cgi?id=33524
@@ -246,6 +248,7 @@ This package contains command line tools for GNOME VFS.
 %patch14 -p1 -b .uuid-label-mount
 %patch15 -p1 -b .resolve-fstab-symlinks
 %patch16 -p1
+%patch17 -p1
 
 # send to upstream
 %patch300 -p1 -b .ignore-certain-mount-points
@@ -255,7 +258,7 @@ This package contains command line tools for GNOME VFS.
 %build
 mkdir -p %buildroot%_datadir/dbus-1/services/
 #export ac_cv_prog_AWK=/bin/awk
-./autogen.sh
+NOCONFIGURE=1 ./autogen.sh
 %configure \
         %{subst_enable static} \
         %{subst_enable howl} \
@@ -263,6 +266,7 @@ mkdir -p %buildroot%_datadir/dbus-1/services/
         %{subst_enable hal} \
         %{subst_enable cdda} \
         %{subst_enable samba} \
+        --with-samba-includes=$(pkg-config --variable=includedir smbclient) \
         %{subst_enable openssl} \
         %{subst_enable gnutls} \
         %{subst_enable fam} \
@@ -363,6 +367,10 @@ fi
 %exclude %vfsmodulesdir/*.la
 
 %changelog
+* Fri Feb 15 2013 Alexey Shabalin <shaba@altlinux.ru> 1:2.24.4-alt5
+- rebuild with new libsmbclient
+- don't use the anymore the smbc_remove_unused_server (patch17)
+
 * Mon May 21 2012 Yuri N. Sedunov <aris@altlinux.org> 1:2.24.4-alt4
 - fixed build
 
