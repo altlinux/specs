@@ -1,6 +1,6 @@
 Name: sphinx
 Version: 2.0.6
-Release: alt1
+Release: alt2
 Summary: Free open-source SQL full-text search engine
 
 Group: Text tools
@@ -8,7 +8,7 @@ License: GPLv2+
 Url: http://sphinxsearch.com
 Source0: http://sphinxsearch.com/downloads/%name-%version.tar.gz
 Source1: %name.init
-Patch0: sphinx-client-static.patch
+Source2: %name.unit
 Packager: Dmitriy Kulik <lnkvisitor@altlinux.org>
 
 BuildRequires: libMySQL-devel postgresql-devel libexpat-devel gcc-c++
@@ -63,7 +63,6 @@ Sphinx search engine, http://sphinxsearch.com
 
 %prep
 %setup -q
-#%patch0 -p1
 
 # Fix wrong-file-end-of-line-encoding
 sed -i 's/\r//' api/ruby/spec/sphinx/sphinx_test.sql
@@ -86,6 +85,7 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 
 # Install sphinx initscript
 install -p -D -m 0755 %SOURCE1 %buildroot%_initdir/searchd
+install -p -D -m 0644 %SOURCE2 %buildroot%_unitdir/searchd.service
 
 # Create /var/log/sphinx
 mkdir -p %buildroot%_var/log/sphinx
@@ -110,7 +110,7 @@ sed -i 's/\/var\/lib\/log\/query.log/\/var\/log\/sphinx\/query.log/g' \
 sed -i 's/\/var\/lib\/log\/searchd.pid/\/var\/run\/sphinx\/searchd.pid/g' \
 %buildroot%_sysconfdir/sphinx/sphinx.conf
 
-sed -i 's/\/var\/lib\/data\/test1/\/var\/lib\/sphinx\/test1/g' \
+sed -i 's|/var/lib/data|/var/lib/sphinx|g' \
 %buildroot%_sysconfdir/sphinx/sphinx.conf
 
 # Create /etc/logrotate.d/sphinx
@@ -147,7 +147,8 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %config(noreplace) %attr(644,root,_sphinx) %_sysconfdir/sphinx/sphinx.conf
 %exclude %_sysconfdir/sphinx/*.conf.dist
 %exclude %_sysconfdir/sphinx/example.sql
-%_initdir/searchd
+%_initdir/*
+%_unitdir/*
 %config(noreplace) %_sysconfdir/logrotate.d/sphinx
 %_bindir/*
 %dir %attr(775,root,_sphinx) %_var/log/sphinx
@@ -167,6 +168,10 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 %_libdir/libsphinxclient.a
 
 %changelog
+* Fri Feb 15 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.0.6-alt2
+- Added systemd service
+- Fix init
+
 * Mon Nov 05 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.0.6-alt1
 - 2.0.6
 
@@ -175,7 +180,7 @@ make install DESTDIR=%buildroot INSTALL="%__install -p -c"
 
 * Sun Jun 17 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 2.0.4-alt1
 - 2.0.4
-- compiled with libstemmer
+- Compiled with libstemmer
 
 * Sat Mar 26 2011 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.9.9-alt4
 - Fix libsphixclient-devel-static package (closes: #24798)
