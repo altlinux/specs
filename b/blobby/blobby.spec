@@ -2,18 +2,17 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++ unzip
 # END SourceDeps(oneline)
-%global prerel rc1
+%global prerel rc3
 
 Name:           blobby
 Version:        1.0
-Release:        alt2_0.2.rc1
+Release:        alt2_0.4.%{prerel}
 Summary:        Volley-ball game
 Group:          Games/Other
 License:        GPLv2+
 URL:            http://blobby.sourceforge.net
 Source0:        http://downloads.sourceforge.net/%{name}/%{name}2-linux-%{version}%{prerel}.tar.gz
 Source1:        blobby.desktop
-Patch0:         blobby-1.0rc1-gcc47.patch
 BuildRequires:  libSDL-devel libphysfs-devel zlib-devel ctest cmake boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel zip
 BuildRequires:  ImageMagick desktop-file-utils icon-theme-hicolor
 Source44: import.info
@@ -24,14 +23,13 @@ Blobby Volley 2 is the continuation of this lovely game.
 
 %prep
 %setup -q -n %{name}-%{version}%{prerel}
-%patch0 -p1 -b .gcc47
 
 %build
 %{fedora_cmake} .
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 
 # Icon
 unzip -o -j data/gfx.zip gfx/ball01.bmp
@@ -40,9 +38,7 @@ install -p -m 644 -D blobby.png $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/a
 
 # Desktop file
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install   \
-        --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-        %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 
 %files
 %doc AUTHORS README ChangeLog COPYING TODO
@@ -52,6 +48,9 @@ desktop-file-install   \
 %{_datadir}/applications/*.desktop
 
 %changelog
+* Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.4.rc3
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.2.rc1
 - update to new release by fcimport
 
