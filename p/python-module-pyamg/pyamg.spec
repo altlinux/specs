@@ -1,7 +1,7 @@
 %define oname pyamg
 Name: python-module-%oname
 Version: 2.0.5
-Release: alt1
+Release: alt2
 Summary: PyAMG: Algebraic Multigrid Solvers in Python
 License: BSD
 Group: Development/Python
@@ -72,6 +72,7 @@ cp -fR Docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %exclude %python_sitelibdir/*/testing
 %exclude %python_sitelibdir/*/tests
 %exclude %python_sitelibdir/*/*/tests
+%exclude %python_sitelibdir/*/*/example*
 %exclude %python_sitelibdir/*/pickle
 
 %files docs
@@ -84,8 +85,12 @@ cp -fR Docs/build/pickle %buildroot%python_sitelibdir/%oname/
 %python_sitelibdir/*/testing
 %python_sitelibdir/*/tests
 %python_sitelibdir/*/*/tests
+%python_sitelibdir/*/*/example*
 
 %changelog
+* Fri Feb 15 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.5-alt2
+- Moved examples into tests subpackage
+
 * Thu Feb 14 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.0.5-alt1
 - Initial build for Sisyphus
 
