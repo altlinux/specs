@@ -5,8 +5,8 @@ BuildRequires: libGL-devel libGLU-devel libSDL-devel
 
 Name:           atomorun
 Version:        1.1
-Release:        alt5_0.13.pre2
-Summary:        Jump&Run game where you have to flee an exploding nuclear bomb
+Release:        alt5_0.14.%{prever}
+Summary:        Jump & Run game where you have to flee an exploding nuclear bomb
 Group:          Games/Other
 License:        GPL+
 URL:            http://atomorun.whosme.de/index.php
@@ -23,31 +23,24 @@ Source44: import.info
 Atomorun is a OpenGL Jump&Run game where you have to flee an exploding
 nuclear bomb.
 
-
 %prep
 %setup -q -n %{name}-%{version}_%{prever}
 %patch0 -p1
-
 
 %build
 %configure
 make %{?_smp_mflags}
 
-
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%makeinstall_std
 rm $RPM_BUILD_ROOT%{_datadir}/%{name}/pixmaps/atomorun_winicon.ico
 rm -rf $RPM_BUILD_ROOT%{_prefix}/doc/%{name}
 
-# below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-  %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps
 install -p -m 644 pixmaps/%{name}_icon.png \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/48x48/apps/%{name}.png
-
 
 %files
 %doc AUTHORS ChangeLog COPYING README TODO
@@ -56,8 +49,10 @@ install -p -m 644 pixmaps/%{name}_icon.png \
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 
-
 %changelog
+* Fri Feb 15 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.14.pre2
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt5_0.13.pre2
 - update to new release by fcimport
 
