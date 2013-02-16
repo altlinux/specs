@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.63
-Release: alt6
+Version: 3.0.64
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 63
+%define kernel_stable_version 64
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -83,6 +83,7 @@ Release: alt6
 %def_enable watchdog
 %def_enable regulator
 %def_enable mfd
+%def_disable spi
 %def_enable mtd
 %def_enable mmc
 %def_enable media
@@ -190,7 +191,7 @@ Patch0068: linux-%kernel_branch.42-fix-drivers-acpi-apei--ghes.patch
 
 Patch0071: linux-%kernel_branch.51-fix-drivers-ata--ahci.patch
 Patch0072: linux-%kernel_branch.62-fix-drivers-ata--ata_generic.patch
-Patch0073: linux-%kernel_branch.51-fix-drivers-ata--ata_piix.patch
+Patch0073: linux-%kernel_branch.63-fix-drivers-ata--ata_piix.patch
 Patch0074: linux-%kernel_branch.42-fix-drivers-ata--libata.patch
 Patch0075: linux-%kernel_branch.43-fix-drivers-ata--pata_amd.patch
 Patch0076: linux-%kernel_branch.43-fix-drivers-ata--pata_mpiix.patch
@@ -287,8 +288,7 @@ Patch0221: linux-%kernel_branch.42-fix-drivers-firmware--edd.patch
 Patch0222: linux-%kernel_branch.51-fix-drivers-firmware--efivars.patch
 Patch0223: linux-%kernel_branch.42-fix-drivers-firmware--iscsi_ibft.patch
 
-Patch0231: linux-%kernel_branch.62-fix-drivers-gpio--rdc321x-gpio.patch
-Patch0232: linux-%kernel_branch.62-fix-drivers-gpio--sch_gpio.patch
+Patch0231: linux-%kernel_branch.62-fix-drivers-gpio--sch_gpio.patch
 
 Patch0241: linux-%kernel_branch.44-fix-drivers-gpu-drm.patch
 Patch0242: linux-%kernel_branch.44-fix-drivers-gpu-drm--drm.patch
@@ -365,12 +365,7 @@ Patch0393: linux-%kernel_branch.57-fix-drivers-media-video-gspca--pac7302.patch
 
 Patch0401: linux-%kernel_branch.42-fix-drivers-message-fusion.patch
 
-Patch0411: linux-%kernel_branch.62-fix-drivers-mfd--ab8500-core.patch
-Patch0412: linux-%kernel_branch.62-fix-drivers-mfd--ab8500-gpadc.patch
-Patch0413: linux-%kernel_branch.62-fix-drivers-mfd--abx500-core.patch
-Patch0414: linux-%kernel_branch.62-fix-drivers-mfd--lpc_sch.patch
-Patch0415: linux-%kernel_branch.62-fix-drivers-mfd--wm831x-core.patch
-Patch0416: linux-%kernel_branch.62-fix-drivers-mfd--wm831x-spi.patch
+Patch0411: linux-%kernel_branch.62-fix-drivers-mfd--lpc_sch.patch
 
 Patch0421: linux-%kernel_branch.50-fix-drivers-misc--hpilo.patch
 Patch0422: linux-%kernel_branch.42-fix-drivers-misc--rts_pstor.patch
@@ -410,7 +405,7 @@ Patch0467: linux-%kernel_branch.46-fix-drivers-net--qlge.patch
 Patch0468: linux-%kernel_branch.44-fix-drivers-net--sfc.patch
 Patch0469: linux-%kernel_branch.56-fix-drivers-net--skge.patch
 Patch0470: linux-%kernel_branch.50-fix-drivers-net--smsguicv.patch
-Patch0471: linux-%kernel_branch.51-fix-drivers-net--tg3.patch
+Patch0471: linux-%kernel_branch.64-fix-drivers-net--tg3.patch
 Patch0472: linux-%kernel_branch.42-fix-drivers-net--tlan.patch
 Patch0473: linux-%kernel_branch.42-fix-drivers-net--vmxnet3.patch
 Patch0474: linux-%kernel_branch.42-fix-drivers-net-benet--be2net.patch
@@ -459,8 +454,6 @@ Patch0546: linux-%kernel_branch.43-fix-drivers-platform--intel_oaktrail.patch
 Patch0547: linux-%kernel_branch.56-fix-drivers-platform--samsung-laptop.patch
 
 Patch0550: linux-%kernel_branch.42-fix-drivers-pnp.patch
-
-Patch0561: linux-%kernel_branch.62-fix-drivers-regulator--ab8500.patch
 
 Patch0571: linux-%kernel_branch.42-fix-drivers-rtc--rtc-m41t80.patch
 
@@ -544,7 +537,7 @@ Patch0684: linux-%kernel_branch.42-fix-drivers-video-via.patch
 
 Patch0691: linux-%kernel_branch.42-fix-drivers-virtio--virtio_ballon.patch
 
-Patch0701: linux-%kernel_branch.49-fix-drivers-watchdog--hpwdt.patch
+Patch0701: linux-%kernel_branch.63-fix-drivers-watchdog--hpwdt.patch
 Patch0702: linux-%kernel_branch.51-fix-drivers-watchdog--iTCO_wdt.patch
 
 Patch0711: linux-%kernel_branch.42-fix-firmware--vicam.patch
@@ -586,7 +579,7 @@ Patch0761: linux-%kernel_branch.42-fix-init--calibrate.patch
 
 Patch0771: linux-%kernel_branch.42-fix-ipc--mqueue.patch
 
-Patch0780: linux-%kernel_branch.57-fix-kernel.patch
+Patch0780: linux-%kernel_branch.63-fix-kernel.patch
 Patch0781: linux-%kernel_branch.42-fix-kernel--cgroup.patch
 Patch0782: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
 Patch0783: linux-%kernel_branch.49-fix-kernel--events.patch
@@ -601,7 +594,7 @@ Patch0790: linux-%kernel_branch.57-fix-lib.patch
 Patch0791: linux-%kernel_branch.62-fix-lib--btree.patch
 Patch0792: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
-Patch0800: linux-%kernel_branch.62-fix-mm.patch
+Patch0800: linux-%kernel_branch.64-fix-mm.patch
 Patch0801: linux-%kernel_branch.58-fix-mm--compaction.patch
 Patch0802: linux-%kernel_branch.62-fix-mm--huge_memory.patch
 Patch0803: linux-%kernel_branch.43-fix-mm--hugetlb.patch
@@ -623,7 +616,7 @@ Patch0823: linux-%kernel_branch.62-fix-net--dns_resolver.patch
 Patch0824: linux-%kernel_branch.42-fix-net--wimax.patch
 Patch0825: linux-%kernel_branch.42-fix-net--x25.patch
 Patch0826: linux-%kernel_branch.42-fix-net-8021q--vlan-core.patch
-Patch0827: linux-%kernel_branch.58-fix-net-bridge--bridge.patch
+Patch0827: linux-%kernel_branch.64-fix-net-bridge--bridge.patch
 Patch0828: linux-%kernel_branch.42-fix-net-ceph.patch
 Patch0829: linux-%kernel_branch.62-fix-net-core.patch
 Patch0830: linux-%kernel_branch.46-fix-net-ipv4.patch
@@ -760,7 +753,7 @@ Patch1203: linux-%kernel_branch.43-feat-kernel-power-tuxonice.patch
 Patch1211: linux-%kernel_branch.42-feat-lib--llist.patch
 
 Patch1221: linux-%kernel_branch.42-feat-mm--slqb.patch
-Patch1222: linux-%kernel_branch.43-feat-mm--uksm.patch
+Patch1222: linux-%kernel_branch.57-feat-mm--uksm.patch
 Patch1223: linux-%kernel_branch.58-feat-mm--zcache.patch
 
 Patch1231: linux-%kernel_branch-feat-net--netatop.patch
@@ -1141,23 +1134,6 @@ Summary: Linux Watchdog Timer driver modules
 %description -n kernel-modules-watchdog-%flavour
 This package contains Watchdog Timer driver modules for the Linux kernel
 package %name-%version-%release.
-%endif
-
-
-%if_enabled mfd
-%package -n kernel-modules-mfd-%flavour
-Summary: Linux multifunction device drivers
-%kernel_modules_package_std_body mfd
-
-%description -n kernel-modules-mfd-%flavour
-Multifunction devices embed several functions (e.g. GPIOs, touchscreens,
-keyboards, current regulators, power management chips, etc...) in one single
-integrated circuit. They appear as one single device to the main system through
-the data bus and the MFD framework allows for sub devices (a.k.a. functions)
-to appear as discrete platform devices.
-MFDs are typically found on embedded platforms.
-This package contains multifunction device drivers for the Linux kernel package
-%name-%version-%release.
 %endif
 
 
@@ -1648,8 +1624,8 @@ cd linux-%version
 
 # fix-drivers-gpio--*
 %patch0231 -p1
-%patch0232 -p1
 
+# fix-drivers-gpu-*
 %patch0241 -p1
 %patch0242 -p1
 %patch0243 -p1
@@ -1735,13 +1711,8 @@ cd linux-%version
 
 %patch0401 -p1
 
-# fix-drivers-mfd-*
+# fix-drivers-mfd--*
 %patch0411 -p1
-%patch0412 -p1
-%patch0413 -p1
-%patch0414 -p1
-%patch0415 -p1
-%patch0416 -p1
 
 # fix-drivers-misc-*
 %patch0421 -p1
@@ -1838,8 +1809,8 @@ cd linux-%version
 %patch0550 -p1
 
 # fix-drivers-regulator--*
-%patch0561 -p1
 
+# fix-drivers-rtc--*
 %patch0571 -p1
 
 # fix-drivers-scsi-*
@@ -2308,7 +2279,8 @@ config_disable \
 	%{?_disable_hamradio:HAMRADIO} \
 	%{?_disable_w1:W1} \
 	%{?_disable_watchdog:WATCHDOG} \
-	%{?_disable_mfd:MFD_SUPPORT} \
+	%{?_disable_spi:SPI} \
+	%{?_disable_mfd:MFD_\.*} \
 	%{?_disable_regulator:REGULATOR} \
 	%{?_disable_mtd:MTD} \
 	%{?_disable_media:MEDIA_SUPPORT} \
@@ -2585,7 +2557,6 @@ gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/{message/fusion,scsi{,/devi
 mv scsi-base.rpmmodlist scsi-base.rpmmodlist~
 gen_rpmmodfile infiniband %buildroot%modules_dir/kernel/{drivers/{infiniband,scsi/scsi_transport_srp.ko},net/{9p/9pnet_rdma.ko,rds,sunrpc/xprtrdma}}
 gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/ipmi,{acpi/acpi_ipmi,hwmon/i{bm,pmi}*}.ko}
-%{?_enable_edac:gen_rpmmodfile edac %buildroot%modules_dir/kernel/drivers/edac}
 %{?_enable_atm:gen_rpmmodfile atm %buildroot%modules_dir/kernel/{drivers{,/usb},net}/atm}
 %{?_enable_drm:gen_rpmmodfile drm %buildroot%modules_dir/kernel/drivers/gpu/drm}
 %{?_enable_fddi:gen_rpmmodfile fddi %buildroot%modules_dir/kernel/{drivers/net/{defxx.ko,skfp},net/802/fddi.ko}}
@@ -2596,10 +2567,9 @@ gen_rpmmodfile ipmi %buildroot%modules_dir/kernel/drivers/{acpi/acpi_ipmi,char/i
 %{?_enable_usb_gadget:gen_rpmmodfile usb-gadget %buildroot%modules_dir/kernel/drivers/usb/gadget}
 %{?_enable_video:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/video/* | grep -xv '%modules_dir/kernel/drivers/video/uvesafb.ko' > video.rpmmodlist}
 %{?_enable_watchdog:gen_rpmmodlist %buildroot%modules_dir/kernel/drivers/watchdog/* | grep -xv '%modules_dir/kernel/drivers/watchdog/softdog.ko' > watchdog.rpmmodlist}
-for i in %{?_enable_ide:ide} %{?_enable_media:media} %{?_enable_mtd:mtd} %{?_enable_mfd:mfd} %{?_enable_w1:w1}; do
+for i in %{?_enable_edac:edac} %{?_enable_ide:ide} %{?_enable_media:media} %{?_enable_mtd:mtd} %{?_enable_w1:w1}; do
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/$i
 done
-%{?_enable_mfd:grep -Ev '^kernel/drivers/(mfd|video|watchdog|input/touchscreen)/' %buildroot%modules_dir/modules.dep | sed -n '/ kernel\/drivers\/mfd\//s|^\(.*\):.*$|%modules_dir/\1|p' >> mfd.rpmmodlist}
 for i in %{?_enable_joystick:joystick} %{?_enable_lirc:lirc} %{?_enable_tablet:tablet} %{?_enable_touchscreen:touchscreen}; do
 	gen_rpmmodfile $i %buildroot%modules_dir/kernel/drivers/input/$i
 done
@@ -2650,8 +2620,6 @@ sed 's/^/%%exclude &/' *.rpmmodlist > exclude-drivers.rpmmodlist
 %{?_enable_w1:%kernel_modules_package_post w1}
 
 %{?_enable_watchdog:%kernel_modules_package_post watchdog}
-
-%{?_enable_mfd:%kernel_modules_package_post mfd}
 
 %{?_enable_mtd:%kernel_modules_package_post mtd}
 
@@ -2826,8 +2794,6 @@ done)
 %{?_enable_w1:%kernel_modules_package_files w1}
 
 %{?_enable_watchdog:%kernel_modules_package_files watchdog}
-
-%{?_enable_mfd:%kernel_modules_package_files mfd}
 
 %{?_enable_mtd:%kernel_modules_package_files mtd}
 
@@ -3072,6 +3038,30 @@ done)
 
 
 %changelog
+* Sat Feb 16 2013 Led <led@altlinux.ru> 3.0.64-alt2
+- updated:
+  + feat-mm--uksm
+
+* Fri Feb 15 2013 Led <led@altlinux.ru> 3.0.64-alt1
+- 3.0.64
+- removed:
+  + fix-drivers-gpio--rdc321x-gpio
+  + fix-drivers-mfd--ab8500-core
+  + fix-drivers-mfd--ab8500-gpadc
+  + fix-drivers-mfd--abx500-core
+  + fix-drivers-mfd--wm831x-core
+  + fix-drivers-mfd--wm831x-spi
+  + fix-drivers-regulator--ab8500
+- updated:
+  + fix-drivers-ata--ata_piix
+  + fix-drivers-net--tg3
+  + fix-drivers-watchdog--hpwdt
+  + fix-kernel
+  + fix-mm
+  + fix-net-bridge--bridge
+- disabled spi
+- removed kernel-modules-mfs-* subpackage
+
 * Thu Feb 14 2013 Led <led@altlinux.ru> 3.0.63-alt6
 - updated:
   + fix-fs-xfs
