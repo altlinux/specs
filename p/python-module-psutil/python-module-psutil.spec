@@ -1,8 +1,8 @@
 %define oname psutil
 
 Name: python-module-%oname
-Version: 0.4.1
-Release: alt1.1
+Version: 0.6.1
+Release: alt1
 
 Summary: A process utilities module for Python
 
@@ -46,6 +46,9 @@ Windows task manager.
 %python_sitelibdir/*.egg-info
 
 %changelog
+* Sat Feb 16 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.6.1-alt1
+- Version 0.6.1 (ALT #28561)
+
 * Thu Apr 12 2012 Vitaly Kuznetsov <vitty@altlinux.ru> 0.4.1-alt1.1
 - Rebuild to remove redundant libpython2.7 dependency
 
