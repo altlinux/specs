@@ -11,7 +11,7 @@
 
 Name: gnome-control-center
 Version: %ver_major.3
-Release: alt2
+Release: alt3
 
 Summary: GNOME Control Center
 License: GPLv2+
@@ -191,6 +191,9 @@ you'll want to install this package.
 %_datadir/pkgconfig/gnome-keybindings.pc
 
 %changelog
+* Sat Feb 16 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt3
+- rebuilt against libcolord.so.2
+
 * Mon Dec 17 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt2
 - updated to 44a5f16d9
 
