@@ -5,18 +5,18 @@
 
 %define _libexecdir %_prefix/libexec
 %define _icccolordir %_datadir/color/icc
+%define _localstatedir %_var
 
 Name: colord
-Version: 0.1.27
+Version: 0.1.29
 Release: alt1
 
 Summary: Color daemon
 License: GPLv2+
 Group: Graphics
-
 URL: http://www.freedesktop.org/software/%name/
+
 Source: http://www.freedesktop.org/software/%name/releases/colord-%version.tar.xz
-Patch1: %name-0.1.25-alt-localstatedir.patch
 
 %define colord_group %name
 %define colord_user %name
@@ -29,7 +29,7 @@ BuildRequires: glib2-devel >= %glib_ver
 BuildRequires: docbook-utils gtk-doc intltool libdbus-devel libgudev-devel libudev-devel
 BuildRequires: liblcms2-devel >= %lcms_ver libpolkit-devel >= 0.103
 BuildRequires: libsqlite3-devel libusb-devel libgusb-devel systemd-devel libsystemd-login-devel
-%{?_enable_introspection:BuildRequires: gobject-introspection-devel}
+%{?_enable_introspection:BuildRequires: gobject-introspection-devel libgusb-gir-devel}
 %{?_enable_vala:BuildRequires: vala-tools}
 %{?_enable_print_profiles:BuildRequires: argyllcms}
 
@@ -96,10 +96,8 @@ This may be useful for CMYK soft-proofing or for extra device support.
 
 %prep
 %setup
-%patch1 -p1 -b .var
 
 %build
-%autoreconf
 %configure --disable-static \
 	--disable-rpath \
 	%{subst_enable reverse} \
@@ -112,11 +110,11 @@ This may be useful for CMYK soft-proofing or for extra device support.
 %install
 %makeinstall_std
 
-# databases
-touch %buildroot%_localstatedir/%name/mapping.db
-touch %buildroot%_localstatedir/%name/storage.db
+mkdir -p %buildroot%_localstatedir/lib/{%name,color}/icc
 
-mkdir -p %buildroot%_localstatedir/{%name,color}/icc
+# databases
+touch %buildroot%_localstatedir/lib/%name/mapping.db
+touch %buildroot%_localstatedir/lib/%name/storage.db
 
 %find_lang %name
 
@@ -128,6 +126,7 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 %files -f %name.lang
 %_bindir/*
 %config %_sysconfdir/%name.conf
+%_datadir/glib-2.0/schemas/org.freedesktop.ColorHelper.gschema.xml
 %_libexecdir/%name
 %_libexecdir/colord-session
 %_sysconfdir/dbus-1/system.d/org.freedesktop.ColorManager.conf
@@ -137,11 +136,14 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 %_datadir/dbus-1/services/org.freedesktop.ColorHelper.service
 %_datadir/polkit-1/actions/org.freedesktop.color.policy
 /lib/udev/rules.d/*.rules
+
 %dir %_libdir/colord-sensors
 %_libdir/colord-sensors/libcolord_sensor_dummy.so
 %_libdir/colord-sensors/libcolord_sensor_huey.so
 %_libdir/colord-sensors/libcolord_sensor_colorhug.so
 %_libdir/colord-sensors/libcolord_sensor_argyll.so
+%_libdir/colord-sensors/libcolord_sensor_dtp94.so
+
 %dir %_libdir/colord-plugins
 %_libdir/colord-plugins/libcd_plugin_camera.so
 %_libdir/colord-plugins/libcd_plugin_scanner.so
@@ -149,11 +151,11 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 %_man1dir/cd-create-profile.1.*
 %_man1dir/colormgr.*
 %_man1dir/cd-fix-profile.*
-%attr(775,root,%colord_group) %dir %_localstatedir/%name
-%dir %_localstatedir/%name/icc
-%dir %_localstatedir/color
-%dir %_localstatedir/color/icc
-%ghost %_localstatedir/%name/*.db
+%attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name
+%attr(755,%colord_user,%colord_group) %dir %_localstatedir/lib/%name/icc
+%dir %_localstatedir/lib/color
+%dir %_localstatedir/lib/color/icc
+%ghost %_localstatedir/lib/%name/*.db
 %systemd_unitdir/*.service
 %_sysconfdir/bash_completion.d/colormgr-completion.bash
 
@@ -212,18 +214,31 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 
 %files -n lib%name
 %_libdir/libcolord.so.*
+%_libdir/libcolordprivate.so.*
+%_libdir/libcolorhug.so.*
+%_libdir/libdtp94.so.*
+%_libdir/libhuey.so.*
+%_libdir/libmunki.so.*
 
 %files -n lib%name-devel
 %_includedir/colord-1/
 %_libdir/lib%name.so
 %_libdir/pkgconfig/%name.pc
+%_libdir/libcolordprivate.so
+%_libdir/libcolorhug.so
+%_libdir/libdtp94.so
+%_libdir/libhuey.so
+%_libdir/libmunki.so
+%_pkgconfigdir/colorhug.pc
 
 %if_enabled introspection
 %files -n lib%name-gir
 %_typelibdir/Colord-1.0.typelib
+%_typelibdir/ColorHug-1.0.typelib
 
 %files -n lib%name-gir-devel
 %_girdir/Colord-1.0.gir
+%_girdir/ColorHug-1.0.gir
 %endif
 
 %if_enabled vala
@@ -233,6 +248,10 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 
 
 %changelog
+* Sat Feb 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.29-alt1
+- 0.1.29
+- redefined %%_localstatedir to %%_var and removed corresponding patch
+
 * Tue Jan 08 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.27-alt1
 - 0.1.27
 - no more required shared-color-profiles
@@ -297,3 +316,4 @@ mkdir -p %buildroot%_localstatedir/{%name,color}/icc
 
 * Thu Apr 14 2011 Victor Forsiuk <force@altlinux.org> 0.1.5-alt1
 - Initial build.
+
