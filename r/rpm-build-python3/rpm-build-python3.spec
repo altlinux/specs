@@ -1,5 +1,5 @@
 Name: rpm-build-python3
-Version: 0.1.3
+Version: 0.1.4
 Release: alt1
 
 %define python3_version %(LC_ALL=C python3 -c 'python3 -c 'import sys; print("{0}.{1}".format(sys.version_info[0],sys.version_info[1]))' 2>/dev/null || echo 2.7)
@@ -68,6 +68,10 @@ install -pD -m755 brp-bytecompile_python3 %buildroot%_rpmlibdir/brp.d/096-byteco
 %_rpmlibdir/python3.prov.files
 
 %changelog
+* Sat Feb 16 2013 Dmitry V. Levin <ldv@altlinux.org> 0.1.4-alt1
+- python3.prov.py: changed to use sysconfig instead of hardcoded suffix.
+- macros.d/python3: added %%_python3_extension_suffix macro.
+
 * Fri Feb 15 2013 Dmitry V. Levin <ldv@altlinux.org> 0.1.3-alt1
 - python3.{prov,req}.files: skip everything from /usr/lib*/python2*.
 - python3.prov.files: skip all files that cannot be provided due to
