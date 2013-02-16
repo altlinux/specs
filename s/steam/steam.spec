@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.27
+Version: 1.0.0.28
 Release: alt1
 
 Summary: Installer for the Steam software distribution service
@@ -15,8 +15,9 @@ ExclusiveArch: %ix86
 Source0: http://repo.steampowered.com/%name/pool/%name/s/%name/%{name}_%version.tar.gz
 Patch0: %name-%version-alt.patch
 
-Requires: libGL
 Requires: glibc >= 2.15
+Requires: libGL
+Requires: mozilla-plugin-adobe-flash
 
 BuildRequires: python-module-distribute
 BuildRequires: xterm
@@ -49,6 +50,10 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/*
 
 %changelog 
+* Sat Feb 16 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.28-alt1
+- Version 1.0.0.28
+- Added require on mozilla-plugin-adobe-flash
+
 * Fri Feb 15 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.27-alt1
 - Version 1.0.0.27
 
