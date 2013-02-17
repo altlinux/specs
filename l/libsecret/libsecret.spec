@@ -1,4 +1,4 @@
-%define ver_major 0.11
+%define ver_major 0.13
 %define api_ver 1
 
 %def_disable static
@@ -22,7 +22,7 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libgcrypt-devel gtk-doc intltool xsltproc
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel}
 # for check
-BuildRequires: /proc dbus-tools-gui python-module-dbus  python-module-pygobject
+BuildRequires: /proc xvfb-run dbus-tools-gui python-module-dbus python-module-pygobject libgjs
 
 %description
 libsecrets is a client for the Secret Service DBus API. The Secret
@@ -91,7 +91,7 @@ GObject introspection devel data for %name.
 
 %check
 # required X11
-#%%make check
+xvfb-run %make check
 
 %files -f %name.lang
 %_bindir/secret-tool
@@ -120,6 +120,10 @@ GObject introspection devel data for %name.
 
 
 %changelog
+* Sun Feb 17 2013 Yuri N. Sedunov <aris@altlinux.org> 0.13-alt1
+- 0.13
+- made %%check using xvfb-run
+
 * Tue Oct 16 2012 Yuri N. Sedunov <aris@altlinux.org> 0.11-alt1
 - 0.11
 
