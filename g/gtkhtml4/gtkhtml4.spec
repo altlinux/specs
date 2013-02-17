@@ -5,7 +5,7 @@
 %define api_ver 4.0
 
 Name: gtkhtml4
-Version: %ver_major.2
+Version: %ver_major.3
 Release: alt1
 
 Summary: GtkHTML is a HTML rendering/editing library
@@ -125,6 +125,9 @@ statically linked with GtkHTML.
 %endif
 
 %changelog
+* Sun Feb 17 2013 Yuri N. Sedunov <aris@altlinux.org> 4.6.3-alt1
+- 4.6.3
+
 * Sun Jan 13 2013 Yuri N. Sedunov <aris@altlinux.org> 4.6.2-alt1
 - 4.6.2
 
