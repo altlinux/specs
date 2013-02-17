@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.64
-Release: alt2
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -83,8 +83,9 @@ Release: alt2
 %def_enable watchdog
 %def_enable regulator
 %def_enable mfd
-%def_disable spi
+%def_enable spi
 %def_enable mtd
+%def_disable ezx_pcap
 %def_enable mmc
 %def_enable media
 %def_enable sound
@@ -680,7 +681,8 @@ Patch1021: linux-%kernel_branch.57-feat-crypto--blowfish-x86_64.patch
 Patch1022: linux-%kernel_branch.57-feat-crypto--sha1-ssse3.patch
 
 Patch1031: linux-%kernel_branch-feat-drivers-block--cloop.patch
-Patch1032: linux-%kernel_branch.42-feat-drivers-block--zram.patch
+Patch1032: linux-%kernel_branch.63-feat-drivers-block--rxdsk.patch
+Patch1033: linux-%kernel_branch.42-feat-drivers-block--zram.patch
 
 Patch1040: linux-%kernel_branch.57-feat-drivers-devfreq.patch
 
@@ -700,9 +702,10 @@ Patch1093: linux-%kernel_branch.57-feat-drivers-input-touchscreen--tsc40.patch
 
 Patch1101: linux-%kernel_branch.42-feat-drivers-md--dm-raid45.patch
 
-Patch1111: linux-%kernel_branch.56-feat-drivers-misc--fsa9480.patch
-Patch1112: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
-Patch1113: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
+Patch1111: linux-%kernel_branch.63-feat-drivers-misc--emlog.patch
+Patch1112: linux-%kernel_branch.56-feat-drivers-misc--fsa9480.patch
+Patch1113: linux-%kernel_branch.42-feat-drivers-misc--rts_pstor.patch
+Patch1114: linux-%kernel_branch.42-feat-drivers-misc--xvmalloc.patch
 
 Patch1121: linux-%kernel_branch.57-feat-drivers-scsi--mvumi.patch
 
@@ -2054,6 +2057,7 @@ cd linux-%version
 # feat-drivers-block--*
 %patch1031 -p1
 %patch1032 -p1
+%patch1033 -p1
 
 # feat-drivers-devfreq
 %patch1040 -p1
@@ -2083,6 +2087,7 @@ cd linux-%version
 %patch1111 -p1
 %patch1112 -p1
 %patch1113 -p1
+%patch1114 -p1
 
 # feat-drivers-scsi--*
 %patch1121 -p1
@@ -2283,6 +2288,7 @@ config_disable \
 	%{?_disable_mfd:MFD_\.*} \
 	%{?_disable_regulator:REGULATOR} \
 	%{?_disable_mtd:MTD} \
+	%{?_disable_ezx_pcap:EZX_PCAP} \
 	%{?_disable_media:MEDIA_SUPPORT} \
 	%{?_disable_mmc:MMC} \
 	%{?_disable_wireless:WLAN WIRELESS CFG80211 WIMAX} \
@@ -3038,6 +3044,20 @@ done)
 
 
 %changelog
+* Sun Feb 17 2013 Led <led@altlinux.ru> 3.0.64-alt4
+- updated:
+  + feat-drivers-block--zram
+- added:
+  + feat-drivers-block--rxdsk
+  + feat-drivers-misc--emlog
+
+* Sat Feb 16 2013 Led <led@altlinux.ru> 3.0.64-alt3
+- updated:
+  + feat-drivers-video--bootsplash
+- disabled USB_LIBUSUAL
+- enabled spi
+- I2C=y
+
 * Sat Feb 16 2013 Led <led@altlinux.ru> 3.0.64-alt2
 - updated:
   + feat-mm--uksm
