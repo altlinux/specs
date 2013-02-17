@@ -1,37 +1,35 @@
 Group: System/Servers
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libSM-devel libgio-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libmatekbdui) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(polkit-gobject-1)
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize gcc-c++ libICE-devel libgio-devel pkgconfig(dbus-1) pkgconfig(fontconfig) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libpulse) pkgconfig(libpulse-mainloop-glib) pkgconfig(nss) pkgconfig(polkit-gobject-1)
 # END SourceDeps(oneline)
 BuildRequires: libXext-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-settings-daemon
-Version:        1.5.4
-Release:        alt1_3
+Version:        1.5.5
+Release:        alt1_1
 Summary:        MATE Desktop settings daemon
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-Requires:       gsettings-desktop-schemas
 Requires:       mate-icon-theme
 
+BuildRequires:  libclutter-gst-devel
+BuildRequires:  libdbus-glib-devel
+BuildRequires:  gtk2-devel
+BuildRequires:  gsettings-desktop-schemas-devel
+BuildRequires:  gstreamer-devel
+BuildRequires:  gst-plugins-devel
 BuildRequires:  icon-naming-utils
+BuildRequires:  libSM-devel
+BuildRequires:  libmatekbd-devel
+BuildRequires:  libmatenotify-devel
+BuildRequires:  libxklavier-devel
 BuildRequires:  mate-common
-BuildRequires:  pkgconfig(clutter-gst-1.0)
-BuildRequires:  pkgconfig(dbus-glib-1)
-BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(gsettings-desktop-schemas)
-BuildRequires:  pkgconfig(gstreamer-0.10)
-BuildRequires:  pkgconfig(gstreamer-plugins-base-0.10)
-BuildRequires:  pkgconfig(libmatekbd)
-BuildRequires:  pkgconfig(libmatenotify)
-BuildRequires:  pkgconfig(libxklavier)
-BuildRequires:  pkgconfig(mate-desktop-2.0)
-BuildRequires:  pkgconfig(nss)
-BuildRequires:  pkgconfig(polkit-agent-1)
-BuildRequires:  pkgconfig(polkit-gtk-mate-1)
-BuildRequires:  pkgconfig(sm)
+BuildRequires:  mate-doc-utils
+BuildRequires:  mate-desktop-devel
+BuildRequires:  mate-polkit-devel
+BuildRequires:  nss-devel
 Source44: import.info
-Patch33: mate-settings-daemon-keyboard-icon.patch
 Requires: dconf
 
 %description
@@ -52,7 +50,6 @@ under it.
 %prep
 %setup -q
 NOCONFIGURE=1 ./autogen.sh
-%patch33 -p1
 
 
 %build
@@ -85,16 +82,19 @@ find ${RPM_BUILD_ROOT} -type f -name "*.la" -exec rm -f {} ';'
 %{_datadir}/dbus-1/services/org.mate.SettingsDaemon.service
 %{_datadir}/dbus-1/system-services/org.mate.SettingsDaemon.DateTimeMechanism.service
 %{_datadir}/icons/mate/*/*/*
-%{_datadir}/mate-settings-daemon/
+%{_datadir}/mate-settings-daemon
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
 %{_datadir}/polkit-1/actions/org.mate.settingsdaemon.datetimemechanism.policy
+%{_datadir}/MateConf/gsettings/mate-settings-daemon.convert
 
 %files devel
 %{_includedir}/mate-settings-daemon/
 %{_libdir}/pkgconfig/mate-settings-daemon.pc
 
-
 %changelog
+* Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt1_1
+- new fc release
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_3
 - new fc release
 

@@ -1,26 +1,24 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize libICE-devel libSM-devel libgio-devel pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-3.0)
+BuildRequires: /usr/bin/glib-gettextize libICE-devel libSM-devel libgio-devel pkgconfig(gdk-2.0) pkgconfig(gdk-3.0) pkgconfig(gdk-x11-2.0) pkgconfig(gdk-x11-3.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           libmatekbd
-Version:        1.5.0
-Release:        alt1_2
+Version:        1.5.1
+Release:        alt1_1
 Summary:        Libraries for mate kbd
 License:        LGPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
 BuildRequires:  desktop-file-utils
-BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(libxklavier)
+BuildRequires:  gsettings-desktop-schemas-devel
+BuildRequires:  gtk2-devel
+BuildRequires:  libxklavier-devel
 BuildRequires:  mate-common
-BuildRequires:  pkgconfig(gsettings-desktop-schemas)
-
-Requires:       gsettings-desktop-schemas
+BuildRequires:  mate-doc-utils
 Source44: import.info
 Requires: iso-codes
-
 
 %description
 Libraries for matekbd
@@ -39,7 +37,14 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %build
-%configure --disable-static
+%configure \
+   --disable-static          \
+   --with-gtk=2.0            \
+   --disable-schemas-compile \
+   --with-x                  \
+   --with-gnu-ld             
+   
+  
 make %{?_smp_mflags} V=1
 
 
@@ -50,10 +55,10 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 #desktop-file-install									\
-#	--remove-category="MATE"							\
-#	--add-category="X-Mate"								\
-#	--delete-original								\
-#	--dir=%{buildroot}%{_datadir}/applications					\
+#        --remove-category="MATE"							\
+#        --add-category="X-Mate"								\
+#        --delete-original								\
+#        --dir=%{buildroot}%{_datadir}/applications					\
 #%{buildroot}%{_datadir}/applications/matekbd-indicator-plugins-capplet.desktop
 
 
@@ -61,20 +66,24 @@ find %{buildroot} -name '*.la' -exec rm -fv {} ';'
 
 
 %files -f %{name}.lang
-%doc AUTHORS COPYING.LIB README
-%{_datadir}/libmatekbd/
+%doc AUTHORS COPYING README
+%{_datadir}/libmatekbd
 %{_datadir}/glib-2.0/schemas/org.mate.peripherals-keyboard-xkb.gschema.xml
 %{_libdir}/libmatekbd.so.4*
 %{_libdir}/libmatekbdui.so.4*
+%{_datadir}/MateConf/gsettings/matekbd.convert
 
 %files devel
-%{_includedir}/libmatekbd/
+%{_includedir}/libmatekbd
 %{_libdir}/pkgconfig/libmatekbd.pc
 %{_libdir}/pkgconfig/libmatekbdui.pc
 %{_libdir}/libmatekbdui.so
 %{_libdir}/libmatekbd.so
 
 %changelog
+* Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_1
+- new fc release
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
 - new fc release
 
