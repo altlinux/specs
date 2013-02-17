@@ -6,8 +6,8 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: xmonad-contrib
-Version: 0.10
-Release: alt5
+Version: 0.11
+Release: alt2
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
 Group: Development/Haskell
@@ -50,6 +50,12 @@ own extensions.
 %files -f %name-files.all
 
 %changelog
+* Sun Feb 17 2013 Denis Smirnov <mithraen@altlinux.ru> 0.11-alt2
+- fix build (thanks to Ivan A. Melnikov)
+
+* Fri Jan 18 2013 Denis Smirnov <mithraen@altlinux.ru> 0.11-alt1
+- 0.11
+
 * Tue Dec 25 2012 Denis Smirnov <mithraen@altlinux.ru> 0.10-alt5
 - rebuild
 
