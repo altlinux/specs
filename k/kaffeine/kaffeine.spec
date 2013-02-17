@@ -10,7 +10,7 @@
 Name: kaffeine
 Version: 0.8.8
 %define beta %nil
-Release: alt8
+Release: alt9
 
 Group: Video
 Summary: A Xine-based Media Player for KDE
@@ -163,6 +163,9 @@ export PATH=%qtdir/bin:%kdedir/bin:$PATH
 %endif
 
 %changelog
+* Sun Feb 17 2013 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt9
+- Fix closing during saving session.
+
 * Sun Oct 14 2012 Roman Savochenko <rom_as@altlinux.ru> 0.8.8-alt8
 - Release TDE version 3.5.13.1
 
