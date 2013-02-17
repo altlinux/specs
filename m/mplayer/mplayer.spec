@@ -11,7 +11,7 @@
 %define lname mplayer
 %define Name MPlayer
 %define rel 35
-%define subrel 9
+%define subrel 10
 
 #---------------------- BEGIN OF PARAMETERS -------------------------------------
 
@@ -1235,6 +1235,11 @@ install -D -m 644 %{SOURCE2} %buildroot/%_desktopdir/%{name}-console.desktop
 
 
 %changelog
+* Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt35.32772.10
+- NMU: dropped StartupNotify=true from mplayer-svn-r32603-desktop.patch
+  as this is not implemented in current gmplayer.
+  Thanks to Alexei V. Mezin.
+
 * Tue Nov 13 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt35.32772.9
 - added mplayer-console.desktop - a mime handler for the console mplayer.
   Nowadays even mc use mime to launch applications ;) (closes: 27953)
