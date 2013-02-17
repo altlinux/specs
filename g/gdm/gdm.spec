@@ -26,7 +26,7 @@
 
 Name: gdm
 Version: %ver_major.2
-Release: alt4
+Release: alt5
 
 Summary: The GNOME Display Manager
 License: GPLv2+
@@ -53,6 +53,7 @@ Patch7: gdm-3.1.92-alt-Init.patch
 Patch9: gdm-3.2.2-alt-link.patch
 Patch10: gdm-3.2.1.1-alt-invalid_user_shell.patch
 Patch11: gdm-3.6.2-alt-runtimedir-perms.patch
+Patch12: gdm-autologin-session-logout.patch
 
 # from configure.ac
 %define dbus_glib_ver 0.74
@@ -213,6 +214,7 @@ Install this package for use with GNOME desktop.
 %patch9 -p1 -b .link
 %patch10 -p1 -b .shells
 %patch11 -p1 -b .runtimedir
+%patch12 -p1
 
 # just copy our PAM config files to %default_pam_config directory
 cp %SOURCE10 %SOURCE11 %SOURCE12 %SOURCE13 data/pam-%default_pam_config/
@@ -379,6 +381,10 @@ xvfb-run %make check
 %endif
 
 %changelog
+* Sun Feb 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt5
+- fixed relogin if autologin enabled (ALT #28475)(BGO 682467)
+  patch: http://git.gnome.org/browse/gdm/commit/?h=gnome-3-6&id=12ba97b9741a9f1691f2ef7417871c148dd9fa09
+
 * Wed Feb 13 2013 Michael Shigorin <mike@altlinux.org> 3.6.2-alt4
 - NMU: fixed /var/run/gdm permissions which were blocking
   proper pam_xauth execution; thanks ldv@ (closes: #28549)
