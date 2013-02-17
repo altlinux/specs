@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.64
-Release: alt4
+Version: 3.0.65
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 64
+%define kernel_stable_version 65
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -80,6 +80,7 @@ Release: alt4
 %def_enable tablet
 %def_enable touchscreen
 %def_enable lirc
+%def_disable ub
 %def_enable watchdog
 %def_enable regulator
 %def_enable mfd
@@ -595,7 +596,7 @@ Patch0790: linux-%kernel_branch.57-fix-lib.patch
 Patch0791: linux-%kernel_branch.62-fix-lib--btree.patch
 Patch0792: linux-%kernel_branch.42-fix-lib--genalloc.patch
 
-Patch0800: linux-%kernel_branch.64-fix-mm.patch
+Patch0800: linux-%kernel_branch.65-fix-mm.patch
 Patch0801: linux-%kernel_branch.58-fix-mm--compaction.patch
 Patch0802: linux-%kernel_branch.62-fix-mm--huge_memory.patch
 Patch0803: linux-%kernel_branch.43-fix-mm--hugetlb.patch
@@ -718,9 +719,10 @@ Patch1136: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8192u.patch
 Patch1137: linux-%kernel_branch.43-feat-drivers-net-wireless-rtl8712.patch
 Patch1138: linux-%kernel_branch.56-feat-drivers-net-wireless-rtlwifi--rtl8192de.patch
 
-Patch1141: linux-%kernel_branch.56-feat-drivers-platform--samsung-q10.patch
-Patch1142: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
-Patch1143: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
+Patch1141: linux-%kernel_branch.63-feat-drivers-platform--omnibook.patch
+Patch1142: linux-%kernel_branch.56-feat-drivers-platform--samsung-q10.patch
+Patch1143: linux-%kernel_branch.42-feat-drivers-platform--thinkpad_ec.patch
+Patch1144: linux-%kernel_branch.42-feat-drivers-platform--tp_smapi.patch
 
 Patch1151: linux-%kernel_branch.57-feat-drivers-usb-storage--rts5139.patch
 Patch1152: linux-%kernel_branch.42-feat-drivers-usb-usbip.patch
@@ -2106,6 +2108,7 @@ cd linux-%version
 %patch1141 -p1
 %patch1142 -p1
 %patch1143 -p1
+%patch1144 -p1
 
 # feat-drivers-usb-*
 %patch1151 -p1
@@ -2283,6 +2286,7 @@ config_disable \
 	%{?_disable_fddi:FDDI} \
 	%{?_disable_hamradio:HAMRADIO} \
 	%{?_disable_w1:W1} \
+	%{?_disable_ub:BLK_DEV_UB USB_LIBUSUAL} \
 	%{?_disable_watchdog:WATCHDOG} \
 	%{?_disable_spi:SPI} \
 	%{?_disable_mfd:MFD_\.*} \
@@ -3044,6 +3048,16 @@ done)
 
 
 %changelog
+* Sun Feb 17 2013 Led <led@altlinux.ru> 3.0.65-alt1
+- 3.0.65
+- updated:
+  + fix-mm
+- disabled ub (BLK_DEV_UB)
+
+* Sun Feb 17 2013 Led <led@altlinux.ru> 3.0.64-alt5
+- added:
+  + feat-drivers-platform--omnibook
+
 * Sun Feb 17 2013 Led <led@altlinux.ru> 3.0.64-alt4
 - updated:
   + feat-drivers-block--zram
