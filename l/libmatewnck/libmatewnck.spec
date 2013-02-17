@@ -3,8 +3,8 @@ BuildRequires: /usr/bin/gdk-pixbuf-csource /usr/bin/gtkdocize /usr/bin/pkg-confi
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Name:           libmatewnck
-Version:        1.5.0
-Release:        alt1_1
+Version:        1.5.1
+Release:        alt1_0
 Summary:        MATE Desktop Window Navigator Construction Kit libraries
 
 Group:          System/Libraries
@@ -65,6 +65,9 @@ find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 %{_datadir}/gir-1.0/Matewnck-1.0.gir
 
 %changelog
+* Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_0
+- new version
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - use F19 import base
 
