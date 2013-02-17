@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/glib-gettextize
 
 Name:           mate-menu-editor
 Version:        1.5.0
-Release:        alt1_0
+Release:        alt2_0
 Summary:        Menu editor for the MATE desktop
 
 Group:          File tools
@@ -24,7 +24,7 @@ BuildRequires:  python-module-pygtk-devel
 BuildRequires:  mate-menus-devel
 BuildRequires:  intltool
 BuildRequires:  mate-common
-Requires:       pygtk2 python-module-mate-mateconf
+Requires:       pygtk2
 Requires:       mate-menus
 
 Provides:		mozo
@@ -65,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/icons/hicolor/256x256/apps/mozo.png
 
 %changelog
+* Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
+- dropped obsolete dependencies on mate 1.4.x stuff
+
 * Mon Feb 04 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
 - new version
 
