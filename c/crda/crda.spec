@@ -1,7 +1,7 @@
 Summary: Regulatory compliance agent for 802.11 wireless networking
 Name: crda
 Version: 1.1.2
-Release: alt1.2013.01.11
+Release: alt1.2013.02.13
 License: ISC
 Group: Networking/Other
 Source: %name-%version.tar
@@ -33,16 +33,19 @@ http://wireless.kernel.org/en/developers/Regulatory/
 %setup -c
 %setup -T -D -a 1
 %patch0 -p1 -b .setregdomain
+cd crda-%version
+%patch1 -p1 -b .notalt
 
 %build
+export CFLAGS="%optflags"
 # Use our own signing key to generate regulatory.bin
 cd wireless-regdb
-make %{?_smp_mflags} CFLAGS="%optflags" maintainer-clean
-make %{?_smp_mflags} CFLAGS="%optflags" REGDB_PRIVKEY=key.priv.pem REGDB_PUBKEY=key.pub.pem
+make %{?_smp_mflags} maintainer-clean
+make %{?_smp_mflags} REGDB_PRIVKEY=key.priv.pem REGDB_PUBKEY=key.pub.pem
 # Build CRDA using the new key and regulatory.bin from above
 cd ../crda-%version
 cp ../wireless-regdb/key.pub.pem pubkeys
-make %{?_smp_mflags} CFLAGS="%optflags" REG_BIN=../wireless-regdb/regulatory.bin
+make %{?_smp_mflags} REG_BIN=../wireless-regdb/regulatory.bin V=1
 
 %install
 cd crda-%version
@@ -71,6 +74,10 @@ install -D -pm 0644 %SOURCE3 %buildroot%_man1dir/setregdomain.1
 %doc wireless-regdb/README.wireless-regdb wireless-regdb/LICENSE.wireless-regdb
 
 %changelog
+* Sun Feb 17 2013 Terechkov Evgenii <evg@altlinux.org> 1.1.2-alt1.2013.02.13
+- wireless-regdb tag master-2013-02-13
+- Fix build with libnl3
+
 * Fri Jan 18 2013 Terechkov Evgenii <evg@altlinux.org> 1.1.2-alt1.2013.01.11
 - wireless-regdb tag master-2013-01-11
 
