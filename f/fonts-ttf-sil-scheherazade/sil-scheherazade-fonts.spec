@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-sil-scheherazade
 Version:        1.005
-Release:        alt1_1
+Release:        alt1_3
 Summary:        An Arabic script unicode font
 
 Group:          System/Fonts/True type
@@ -94,6 +94,9 @@ fi
 %doc *.txt
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.005-alt1_3
+- update to new release by fcimport
+
 * Thu Jan 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.005-alt1_1
 - update to new release by fcimport
 
