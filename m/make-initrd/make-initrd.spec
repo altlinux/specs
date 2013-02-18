@@ -1,5 +1,5 @@
 Name: make-initrd
-Version: 0.8.0
+Version: 0.8.1
 Release: alt1
 
 Summary: Creates an initramfs image
@@ -120,6 +120,13 @@ Mdadm module for %name
 %install
 %make_install DESTDIR=%buildroot install
 
+%triggerin -- %name < 0.8.1-alt1
+c="%_sysconfdir/initrd.mk"
+if [ -s "$c" ] && ! grep -qs '^AUTODETECT[[:space:]]*=[[:space:]]*all[[:space:]]*' "$c"; then
+	printf -- 'make-initrd: Migrating to new autodetect scheme ...\n' >&2
+	sed -i -e 's/^\(AUTODETECT[[:space:]]*=.*\)$/# \1\nAUTODETECT = all/' "$c"
+fi
+
 %files
 %dir %_sysconfdir/initrd.mk.d
 %config(noreplace) %_sysconfdir/initrd.mk.d/*.mk.example
@@ -160,6 +167,11 @@ Mdadm module for %name
 %_datadir/%name/features/mdadm
 
 %changelog
+* Mon Feb 18 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.1-alt1
+- Rewrite guess modules.
+- initrd: Export RD_TIMESTAMP.
+- initrd: Fix root=HEX in cmdline (thx Sergey Vlasov and Alex Karpov).
+
 * Fri Jan 25 2013 Alexey Gladkov <legion@altlinux.ru> 0.8.0-alt1
 - Add possibility of do not set root=, if the booting on the same
   system as creation of initrd.
