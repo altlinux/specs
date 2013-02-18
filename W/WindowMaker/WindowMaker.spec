@@ -12,7 +12,7 @@
 
 Name: WindowMaker
 Version: 0.95.4
-Release: alt3
+Release: alt4
 Packager: %packager
 
 Summary: A window manager for the X Window System
@@ -301,6 +301,9 @@ rm -rf %buildroot%_mandir/cs
 %_bindir/wmsetbg
 
 %changelog
+* Mon Feb 18 2013 Andrey Bergman <vkni@altlinux.org> 0.95.4-alt4
+- Corrected configuration files in altlinux directory.
+
 * Fri Jan 18 2013 Andrey Bergman <vkni@altlinux.org> 0.95.4-alt3
 - Relocated GNUstep directory.
 
