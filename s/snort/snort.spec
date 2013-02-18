@@ -1,7 +1,7 @@
 Summary:   An intrusion detection system
 Name:      snort
 Version:   2.9.3.1
-Release: alt2
+Release: alt3
 License: %gpl2only
 Group:     Security/Networking
 Url:       http://www.snort.org
@@ -334,6 +334,9 @@ echo
 %doc doc/faq.* doc/snort_manual.*
 
 %changelog
+* Mon Feb 18 2013 Timur Aitov <timonbl4@altlinux.org> 2.9.3.1-alt3
+- set unified2 output by default
+
 * Mon Jan 28 2013 Timur Aitov <timonbl4@altlinux.org> 2.9.3.1-alt2
 - fix snort.conf
 
