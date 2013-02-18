@@ -6,7 +6,7 @@ BuildRequires(pre): rpm-macros-mate-conf
 Summary: Mate user file sharing
 Name: mate-user-share
 Version: 1.5.0
-Release: alt1_0
+Release: alt2_0
 License: GPLv2+
 Group: System/Libraries
 URL: http://pub.mate-desktop.org
@@ -32,10 +32,6 @@ BuildRequires: mate-common
 Requires: httpd
 Requires: obex-data-server
 Requires: apache2-mod_dnssd
-
-Requires(post): mate-conf
-Requires(pre): mate-conf
-Requires(preun): mate-conf
 
 %description
 mate-user-share is a small package that binds together various free
@@ -79,6 +75,9 @@ rm -f %buildroot%_libdir/caja/extensions-2.0/libcaja-share-extension.la
 %{_libdir}/caja/extensions-2.0/*.so
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
+- cleaned up dependencies
+
 * Sun Feb 03 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
 - new version
 
