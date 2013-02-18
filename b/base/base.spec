@@ -1,6 +1,6 @@
 Name: base
 Version: 1.4.5
-Release: alt4
+Release: alt5
 
 Summary: BASE - Basic Analysis and Security Engine
 License: GPLv2
@@ -11,9 +11,11 @@ Url: http://secureideas.sourceforge.net/
 Source0: %name-%version.tar
 Source1: nginx.conf
 
+Patch1: base-1.4.5-alt-font-path.patch
+
 BuildArch: noarch
 
-Requires: php5-adodb
+Requires: php5-adodb fonts-ttf-dejavu pear-Image_Graph
 
 %description
 BASE is the Basic Analysis and Security Engine.  It is based on the code 
@@ -46,6 +48,8 @@ BASE with nginx support.
 
 %prep
 %setup
+
+%patch1 -p2
 
 %define _worldmap_target_dir usr/share/pear/Image/Graph/Images/Maps
 %define _php_files_target_dir usr/share/base-%{version}
@@ -96,6 +100,9 @@ install -Dpm 644 %SOURCE1 %buildroot/%_sysconfdir/nginx/sites-available.d/base.c
 %_sysconfdir/nginx/sites-available.d/base.conf
 
 %changelog
+* Mon Feb 18 2013 Timur Aitov <timonbl4@altlinux.org> 1.4.5-alt5
+- add Requires for build graphs
+
 * Fri Jan 25 2013 Timur Aitov <timonbl4@altlinux.org> 1.4.5-alt4
 - base, base-nginx - noarch now
 
