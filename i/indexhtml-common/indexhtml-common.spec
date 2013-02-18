@@ -1,7 +1,7 @@
 %define _indexhtmldir %_defaultdocdir/indexhtml
 
 Name: indexhtml-common
-Version: 0.6.1
+Version: 0.6.2
 Release: alt1
 
 Summary: indexhtml-common
@@ -38,6 +38,9 @@ ln -s $(relative %_sbindir/indexhtml-update %_sysconfdir/firsttime.d/indexhtml) 
 %_sysconfdir/firsttime.d/*
 
 %changelog
+* Mon Feb 18 2013 Artem Zolochevskiy <azol@altlinux.ru> 0.6.2-alt1
+- indexhtml-update adapted to work with /etc/locale.conf (closes: 28528)
+
 * Thu Oct 29 2009 Artem Zolochevskiy <azol@altlinux.ru> 0.6.1-alt1
 - indexhtml-update: better diagnostics, minor cleanup (thx Michael Shigorin)
 
