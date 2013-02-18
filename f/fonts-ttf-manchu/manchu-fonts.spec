@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-manchu
 Version:        2.006
-Release:        alt3_5
+Release:        alt3_6
 Summary:        A Manchu OpenType (TrueType-flavored) font
 
 Group:          System/Fonts/True type
@@ -27,7 +27,7 @@ A Manchu OpenType (TrueType-flavored) font
 which allows you write and read Manchu script articles correctly.
 
 %prep
-%setup -q -c %{oldname}
+%setup -n %{oldname}-%{version} -q -c %{oldname}
 sed -i 's/\r//' GNU\ GENERAL\ PUBLIC\ LICENSE.txt
 
 %build
@@ -85,10 +85,12 @@ fi
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
 %{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc GNU\ GENERAL\ PUBLIC\ LICENSE.txt
 
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 2.006-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.006-alt3_5
 - update to new release by fcimport
 
