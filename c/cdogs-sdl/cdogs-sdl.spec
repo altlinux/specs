@@ -1,6 +1,6 @@
 Name:           cdogs-sdl
 Version:        0.4
-Release:        alt4_9
+Release:        alt4_11
 Summary:        C-Dogs is an arcade shoot-em-up
 Group:          Games/Other
 License:        GPLv2+
@@ -23,16 +23,14 @@ C-Dogs came with several built in missions and dogfight maps. This version
 does too. The author of the DOS version of C-Dogs was Ronny Wester. We would
 like to thank Ronny for releasing the C-Dogs sources to the public.
 
-
 %prep
 %setup -q
 %patch0 -p1 -z .64bit
 %patch1 -p1 -z .cfg
 %patch2 -p1 -z .open
 sed -i 's/\r//' doc/original_readme.txt
-# stop this from getting installed as %doc
+# stop this from getting installed as %%doc
 rm doc/INSTALL
-
 
 %build
 pushd src
@@ -40,16 +38,13 @@ make %{?_smp_mflags} DATADIR=%{_datadir}/cdogs-data \
   CFLAGS="$RPM_OPT_FLAGS -fsigned-char" I_AM_CONFIGURED=yes cdogs
 popd
 
-
 %install
 # DIY, as make install wants to install the data too, and thats in another rpm
 mkdir -p $RPM_BUILD_ROOT%{_bindir}
 install -m 755 src/cdogs $RPM_BUILD_ROOT%{_bindir}
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
-  --dir $RPM_BUILD_ROOT%{_datadir}/applications \
-   %{SOURCE1}
+desktop-file-install --dir $RPM_BUILD_ROOT%{_datadir}/applications %{SOURCE1}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -85,14 +80,15 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
     done ||:
 fi
 
-
 %files
 %doc doc/*
 %{_bindir}/cdogs
 %{_datadir}/applications/%{name}.desktop
 
-
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt4_11
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.4-alt4_9
 - update to new release by fcimport
 
