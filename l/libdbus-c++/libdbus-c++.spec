@@ -1,23 +1,33 @@
 # -*- mode: rpm-spec; coding: utf-8 -*-
 %def_disable static
 
-%define examples_dir %_prefix/src/%name-%version
-
 Summary: A C++ bindings for libdbus and libdbus-glib
 Name: libdbus-c++
-Version: 0.5.0
-Release: alt11.qa2
+Version: 0.9.0
+Release: alt1
 License: LGPLv2.1
 Group: System/Libraries
 URL: http://www.freedesktop.org/wiki/Software/dbus-c++
 Packager: Evgeny Sinelnikov <sin@altlinux.ru>
 
-Source0: dbus-c++-%version.tar.bz2
-
-# Automatically added by buildreq on Tue Jan 08 2008
-BuildRequires: doxygen gcc-c++ libdbus-devel libexpat-devel glib2-devel
-
 Provides: %name-etersoft = %version-%release
+
+Source0: dbus-c++-%version.tar.bz2
+# SuSE
+Patch1: libdbus-c++-gcc47.patch
+Patch2: libdbus-c++-nodocdatetime.patch
+Patch3: libdbus-c++-noreturn.patch
+Patch4: libdbus-c++-pthread.patch
+# ALT
+Patch10: libdbus-c++-0.9.0-alt-linking.patch
+Patch11: libdbus-c++-0.9.0-alt-is_running.patch
+Patch12: libdbus-c++-0.9.0-alt-enable_auth.patch
+Patch13: libdbus-c++-0.9.0-alt-enable_anon.patch
+
+# Automatically added by buildreq on Mon Feb 18 2013 (-bi)
+# optimized out: elfutils fontconfig fontconfig-devel glib2-devel libatk-devel libatkmm-devel libcairo-devel libcairomm-devel libdbus-c++ libdbus-devel libfreetype-devel libgdk-pixbuf libgdk-pixbuf-devel libgio-devel libglibmm-devel libgtk+2-devel libpango-devel libpangomm-devel libsigc++2-devel libstdc++-devel libsystemd-daemon libwayland-client libwayland-server pkg-config python-base ruby ruby-stdlibs
+#BuildRequires: cups-filters doxygen fonts-ttf-dejavu gcc-c++ glibc-devel-static graphviz libdbus-c++-devel libexpat-devel libgtkmm2-devel rpm-build-ruby
+BuildRequires: doxygen gcc-c++ glibc-devel libexpat-devel libdbus-devel libgtkmm2-devel
 
 %description
 This package contains C++ bindings for libdbus and libdbus-glib, provides
@@ -57,44 +67,39 @@ Example programs which make use of libdbus-c++
 
 %prep
 %setup -q -n dbus-c++
+%patch1 -p0
+%patch2 -p0
+%patch3 -p0
+%patch4 -p0
+#
+%patch10 -p0
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+./bootstrap
 
 %build
-./autogen.sh
-
 %configure \
+	   --disable-ecore \
 	   --enable-glib \
 	   --enable-doxygen-docs \
+	   --enable-examples \
 	   %{subst_enable static} \
 	   #
-
+%make -C src libdbus-c++-1.la
 %make_build
+rm -rf libdbus-c*%{version}-doc
+tar xvfj libdbus-c*%{version}-doc.tar.bz2
 
 %install
-%makeinstall_std
-
-# install apidocs manually
-mkdir -p %buildroot%_defaultdocdir/%name-%version
-cp -pr AUTHORS TODO doc/html %buildroot%_defaultdocdir/%name-%version
-mkdir -p %buildroot%examples_dir
-cp -pr config.{status,sub} Makefile{,.in,.am} missing install-sh %buildroot%examples_dir/
-cp -pr examples/ %buildroot%examples_dir/
-for d in %buildroot%examples_dir/examples/*/.libs; do
-    (cd $d; mv -f * ../;);
-#    rm -rf $d;
-done
-find %buildroot%examples_dir/ -type f -print0 | \
-     xargs -0 sed -i -e 's,%_builddir/dbus-c++,%examples_dir,g'
-
-%clean
+%make -C src DESTDIR=%buildroot install-libLTLIBRARIES
+%makeinstall
+make -C examples clean
 
 %files
-%doc %_defaultdocdir/%name-%version/AUTHORS
-%doc %_defaultdocdir/%name-%version/TODO
+%doc AUTHORS
+%doc TODO
 %_libdir/libdbus*.so.*
-# The package does not own its own docdir subdirectory.
-# The line below is added by repocop to fix this bug in a straightforward way. 
-# Another way is to rewrite the spec to use relative doc paths.
-%dir %_docdir/libdbus-c++-%version 
 
 %files devel
 %_libdir/libdbus*.so
@@ -109,13 +114,16 @@ find %buildroot%examples_dir/ -type f -print0 | \
 %endif
 
 %files apidocs
-%doc %_defaultdocdir/%name-%version/html
-%exclude %_defaultdocdir/%name-%version/html/Makefile.am
+%doc libdbus-c*%{version}-doc/doc/html
 
 %files examples
-%examples_dir
+%doc examples
 
 %changelog
+* Mon Feb 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.9.0-alt1
+- new version
+- merge patches from SuSE
+
 * Thu Nov 25 2010 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt11.qa2
 - rebuild using girar-nmu to require/provide setversion 
   by request of mithraen@

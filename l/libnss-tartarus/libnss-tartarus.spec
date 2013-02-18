@@ -2,7 +2,7 @@
 
 Name: libnss-tartarus
 Version: 0.1.1
-Release: alt3.5
+Release: alt3.6
 
 Summary: NSS library module for Tartarus
 
@@ -112,6 +112,9 @@ update_chrooted all
 %dir %_var/run/tnscd
 
 %changelog
+* Mon Feb 18 2013 Sergey V Turchin <zerg@altlinux.org> 0.1.1-alt3.6
+- rebuilt with new libdbus-c++
+
 * Sun Feb 10 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.1.1-alt3.5
 - Rebuilt with Boost 1.53.0
 
