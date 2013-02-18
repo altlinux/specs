@@ -1,6 +1,6 @@
 Name: FlightCrew
 Version: 0.7.2
-Release: alt1
+Release: alt2
 Summary: EPUB validation tool
 
 Group: File tools
@@ -112,6 +112,9 @@ cd BUILD
 
 
 %changelog
+* Mon Feb 18 2013 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.7.2-alt2
+- Rebuild with boost1.53.0
+
 * Mon Dec 03 2012 Dmitriy Kulik <lnkvisitor@altlinux.org> 0.7.2-alt1
 - Port to ALT Linux
 
