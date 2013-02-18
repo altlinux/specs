@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt1
+Release: alt2
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -51,13 +51,12 @@ Provides: %name-core = %version-%release
 Requires: mate-mime-data
 
 # components
-Requires: mate-corba
-Requires: mate-vfs
+#Requires: mate-corba
+#Requires: mate-vfs
+#Requires: python-corba
 Requires: mate-dialogs
 Requires: mate-polkit
 Requires: mate-settings-daemon
-Requires: python-corba
-Requires: python-mate
 
 # MATE Desktop Core
 Requires: mate-session >= %session_ver
@@ -74,7 +73,7 @@ Requires: mate-menus >= %ver_major
 
 # MATE Utilities
 #Requires: mate-search-tool >= %ver_major
-#Requires: mate-system-monitor >= %ver_major
+Requires: mate-system-monitor >= %ver_major
 Requires: mate-charmap
 Requires: mate-calc >= %ver_major
 
@@ -86,7 +85,7 @@ Requires: mate-terminal >= %terminal_ver
 ## Default archiving tool
 Requires: mate-file-archiver
 ## Default text editor
-#Requires: mate-text-editor
+Requires: mate-text-editor
 
 # Look & Feel
 ## Default themes
@@ -146,8 +145,8 @@ Requires: mate-applets
 
 # Utilities
 Requires: mate-utils >= %ver_major
-Requires: mate-conf-editor 
-#Requires: dconf-editor >= 0.10
+#Requires: mate-conf-editor
+Requires: dconf-editor >= 0.10
 
 ## Let's have nice notifications
 Requires: mate-notification-daemon
@@ -172,7 +171,7 @@ Requires: parcellite
 # A quick previewer for Nautilus
 #Requires: sushi
 # Menu editor
-#Requires: mate-menu-editor
+Requires: mate-menu-editor
 
 # Look & Feel
 ## All default themes
@@ -363,6 +362,9 @@ itself).
 #%files a11y
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2
+- dropped dependencies on obsolete mate 1.4 packages
+
 * Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1
 - dropped mate-icon-theme-faenza
 - bumped to 1.5
