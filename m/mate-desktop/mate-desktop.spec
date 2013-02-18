@@ -1,24 +1,24 @@
 Group: System/Libraries
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
+BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtkdocize libgio-devel pkgconfig(gdk-pixbuf-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0) pkgconfig(unique-3.0) pkgconfig(x11) pkgconfig(xrandr)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Summary:	Shared code for mate-panel, mate-session, mate-file-manager, etc
 Name:		mate-desktop
-Version:	1.5.5
-Release:	alt2_1
+Version:	1.5.6
+Release:	alt1_1
 URL:		http://mate-desktop.org
 Source0:	http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 Source1:	user-dirs-update-mate.desktop
 
 License:	GPLv2+ and LGPLv2+ and MIT
 
-BuildRequires:	mate-common
-BuildRequires:	pkgconfig(libstartup-notification-1.0)
-BuildRequires:	pkgconfig(mate-doc-utils)
-BuildRequires:	pkgconfig(unique-1.0)
-BuildRequires:	pkgconfig(gsettings-desktop-schemas)
 BuildRequires:	desktop-file-utils
+BuildRequires:  gsettings-desktop-schemas-devel
+BuildRequires:  mate-common
+BuildRequires:  mate-doc-utils
+BuildRequires:  libstartup-notification-devel
+BuildRequires:  libunique-devel
 
 Requires:	lib%{name} = %{version}-%{release}
 Requires:	altlinux-freedesktop-menu-common
@@ -60,8 +60,8 @@ NOCONFIGURE=1 ./autogen.sh
 
 
 %build
-
-%configure --enable-gnucat					\
+%configure \
+        --enable-gnucat				                \
 	--disable-scrollkeeper					\
 	--disable-static					\
 	--disable-schemas-compile				\
@@ -104,6 +104,7 @@ mkdir -p %buildroot%{_datadir}/mate-about
 %{_datadir}/glib-2.0/schemas/org.mate.*.gschema.xml
 %{_mandir}/man1/mate-about.1*
 %{_datadir}/pixmaps/gnu-cat*
+%{_datadir}/MateConf/gsettings/mate-desktop.convert
 
 %files -n libmate-desktop
 %{_libdir}/libmate-desktop-2.so.*
@@ -116,6 +117,9 @@ mkdir -p %buildroot%{_datadir}/mate-about
 
 
 %changelog
+* Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.6-alt1_1
+- new fc release
+
 * Fri Jan 11 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.5-alt2_1
 - fixed default background
 
