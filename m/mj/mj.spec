@@ -1,14 +1,7 @@
-Summary(sv): Mah-Jong-program med nätmöjlighet
-Summary(sv): Mah-Jong-program med nätmöjlighet
-Summary(sv): Mah-Jong-program med nätmöjlighet
-Summary(sv): Mah-Jong-program med nätmöjlighet
-Summary(sv): Mah-Jong-program med nätmöjlighet
-Summary(sv): Mah-Jong-program med nätmöjlighet
-Summary(sv): Mah-Jong-program med nätmöjlighet
-BuildRequires: kde4games-core
+BuildRequires: libkmahjongg4-common
 Name:        mj
 Version:     1.12
-Release:     alt4_2
+Release:     alt4_4
 Summary:     Mah-Jong program with network option
 Summary(sv): Mah-Jong-program med nätmöjlighet
 
@@ -28,7 +21,7 @@ Source1:     remove-non-GPL.sh
 
 BuildRequires: perl
 BuildRequires: gtk2-devel
-BuildRequires: libkmahjongg4-common
+BuildRequires: libkmahjongglib4
 BuildRequires: inkscape
 BuildRequires: ImageMagick
 BuildRequires: desktop-file-utils
@@ -134,6 +127,9 @@ fi
 
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.12-alt4_4
+- fc update
+
 * Mon Oct 15 2012 Igor Vlasenko <viy@altlinux.ru> 1.12-alt4_2
 - fixed build
 
