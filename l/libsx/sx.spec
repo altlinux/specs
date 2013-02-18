@@ -7,19 +7,18 @@ BuildRequires(pre): rpm-build-python
 
 Summary: Tool to extract reports and run plug-ins against those extracted reports
 Name: libsx
-Version: 2.13
+Version: 2.14
 Release: alt1_1
 URL: http://fedorahosted.org/sx
 # tar.gz archive created from a tagged git tree:
 # $ git clone http://git.fedorahosted.org/git/sx.git
 # $ cd sx
-# $ git archive --format=tar --prefix=sx-2.13/ sx-2.13 | gzip > sx-2.13.tar.gz
+# $ git archive --format=tar --prefix=sx-2.14/ sx-2.14 | gzip > sx-2.14.tar.gz
 Source0: %{oldname}-%{version}.tar.gz
 License: GPLv2
 Group: System/Libraries
 BuildArch: noarch
 BuildRequires: python-devel python-module-setuptools
-Requires: python-module-pycurl
 Source44: import.info
 Provides: sx = %{version}-%{release}
 
@@ -32,7 +31,7 @@ sysreport/sosreports but has been expanded to include any report that
 has a class defined.
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 
 %build
 %{__python} setup.py build
@@ -49,6 +48,9 @@ has a class defined.
 
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 2.14-alt1_1
+- update to new release by fcimport
+
 * Wed Dec 12 2012 Igor Vlasenko <viy@altlinux.ru> 2.13-alt1_1
 - update to new release by fcimport
 
