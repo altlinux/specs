@@ -1,8 +1,8 @@
 %define _altdata_dir %_datadir/alterator
 
 Name: alterator-snort
-Version: 0.2.3
-Release: alt3
+Version: 0.2.4
+Release: alt1
 License: %gpl2plus
 Group: System/Configuration/Other
 Summary: Alterator module for snort administration
@@ -42,6 +42,9 @@ touch %buildroot/%_sysconfdir/cron.d/%name
 %ghost %_sysconfdir/cron.d/%name
 
 %changelog
+* Mon Feb 18 2013 Timur Aitov <timonbl4@altlinux.org> 0.2.4-alt1
+- Get password for mysql from barnyard config
+
 * Fri Jan 25 2013 Timur Aitov <timonbl4@altlinux.org> 0.2.3-alt3
 - Add barnyard2-mysql requires (instead snort-mysql)
 
