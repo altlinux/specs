@@ -1,6 +1,6 @@
 Name: barnyard2
 Version: 1.11
-Release: alt2
+Release: alt3
 
 Summary: Snort Log Backend
 License: GPLv2
@@ -9,9 +9,11 @@ Group: Networking/Other
 Url: https://github.com/firnsy/barnyard2
 
 Source0: %name-%version.tar
-Source1: barnyard2
+Source1: barnyard2.init
 
 Patch1: barnyard2-1.11-alt-confpath.patch
+Patch2: barnyard2-1.11-alt-default_output.patch
+Patch3: barnyard2-1.11-alt-fix-create-pidfile.patch
 
 BuildRequires: libpcap-devel
 
@@ -40,6 +42,8 @@ barnyard2 binary compiled with mysql support.
 %setup
 
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
 
 %build
 autoreconf --install
@@ -71,6 +75,11 @@ install -Dpm 644 schemas/create_mysql %buildroot%_datadir/%name/schemas/create_m
 %_datadir/%name/schemas/create_mysql
 
 %changelog
+* Mon Feb 18 2013 Timur Aitov <timonbl4@altlinux.org> 1.11-alt3
+- set output database by default
+- fix barnayrd2 init script
+- fix create pidfile
+
 * Fri Jan 25 2013 Timur Aitov <timonbl4@altlinux.org> 1.11-alt2
 - barnyard2-mysql - noarch now
 
