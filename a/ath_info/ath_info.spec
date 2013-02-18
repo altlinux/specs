@@ -1,15 +1,15 @@
+Group: File tools
 Name:		ath_info
 Version:	0
-Release:	alt2_0.5.20100708svn
+Release:	alt2_0.7.20130214svn
 Summary:	Tool to get detailed information from Atheros WLAN cards
 
-Group:		File tools
 License:	GPLv2
 URL:		http://madwifi-project.org/wiki/UserDocs/AthInfo
 # The source tarball was generated with:
-# svn export -r 4093 http://madwifi-project.org/svn/ath_info/trunk ath_info-20100708
-# tar -Jcf ath_info-20100708.tar.xz ath_info-20100708/
-Source0:	ath_info-20100708.tar.xz
+# svn export -r 4151 http://madwifi-project.org/svn/ath_info/trunk ath_info-20130214
+# tar -Jcf ath_info-20130214.tar.xz ath_info-20130214/
+Source0:	ath_info-20130214.tar.xz
 Source44: import.info
 
 %description
@@ -20,7 +20,7 @@ identify chipset versions, it is useful to attach ath_info output to bug
 reports for the ath5k driver.
 
 %prep
-%setup -q -n ath_info-20100708
+%setup -q -n ath_info-20130214
 
 %build
 make PREFIX=%{_prefix} CFLAGS="%{optflags}" %{?_smp_mflags}
@@ -34,6 +34,9 @@ make install PREFIX=%{_prefix} DESTDIR=%{buildroot}
 %{_mandir}/man8/ath_info.*
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.7.20130214svn
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0-alt2_0.5.20100708svn
 - update to new release by fcimport
 
