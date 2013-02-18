@@ -1,6 +1,6 @@
 Name: FlightGear-data
-Version: 2.8.0
-Release: alt1
+Version: 2.10.0
+Release: alt2
 
 Summary: Data pack for FlightGear open-source flight simulator
 License: GPL
@@ -8,10 +8,13 @@ Group: Games/Arcade
 
 Url: http://www.flightgear.org
 Packager: Michael Shigorin <mike@altlinux.org>
-Source: %name-%version.tar.bz2
+Source: %name-%version.tar
 
 AutoReqProv: no
 Provides: fgfs-data = %version-%release
+# to avoid data lurking w/o binaries
+# NB: release intentionally left out
+Requires: FlightGear = %version
 
 BuildArch: noarch
 
@@ -67,6 +70,15 @@ find %buildroot -name 'Thumbs.db*' -print -delete
 %_docdir/FlightGear-%version
 
 %changelog
+* Tue Feb 19 2013 Michael Shigorin <mike@altlinux.org> 2.10.0-alt2
+- avoid double compression
+
+* Tue Feb 19 2013 Michael Shigorin <mike@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
+* Sun Sep 09 2012 Michael Shigorin <mike@altlinux.org> 2.8.0-alt2
+- added non-strict dependency on the main package to avoid lurking data
+
 * Sat Aug 18 2012 Michael Shigorin <mike@altlinux.org> 2.8.0-alt1
 - 2.8.0
 
