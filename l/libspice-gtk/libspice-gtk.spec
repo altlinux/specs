@@ -11,7 +11,7 @@
 %def_with gtk3
 
 Name: libspice-gtk
-Version: 0.14
+Version: 0.18
 Release: alt1
 Summary: A GTK widget for SPICE clients
 
@@ -34,7 +34,7 @@ Requires: hwdatabase >= 0.3.31-alt1
 BuildRequires: hwdatabase >= 0.3.31-alt1
 
 BuildRequires: gcc-c++ gtk-doc intltool
-BuildRequires: libjpeg-devel libpixman-devel libssl-devel zlib-devel
+BuildRequires: libjpeg-devel libpixman-devel >= 0.17.7 libssl-devel zlib-devel
 BuildRequires: spice-protocol >= 0.10.1
 BuildRequires: libgio-devel libcairo-devel
 BuildRequires: libcelt051-devel >= 0.5.1.1
@@ -339,6 +339,9 @@ cd ..
 %endif
 
 %changelog
+* Mon Feb 18 2013 Alexey Shabalin <shaba@altlinux.ru> 0.18-alt1
+- 0.18
+
 * Mon Sep 24 2012 Alexey Shabalin <shaba@altlinux.ru> 0.14-alt1
 - 0.14
 
