@@ -5,8 +5,8 @@
 %def_with systemd
 
 Name: gnome-shell
-Version: %ver_major.2
-Release: alt3
+Version: %ver_major.3
+Release: alt1
 
 Summary: Window management and application launching for GNOME
 Group: Graphical desktop/GNOME
@@ -14,8 +14,8 @@ License: GPLv2+
 Url: http://live.gnome.org/GnomeShell
 Packager: GNOME Maintainers Team <gnome at packages.altlinux.org>
 
-Source: %name-%version.tar
-#Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
+#Source: %name-%version.tar
+Source: http://ftp.gnome.org/pub/gnome/sources/%name/%ver_major/%name-%version.tar.xz
 Patch1: %name-3.5.92-alt-gir.patch
 # use gnome3-applications.menu
 Patch2: %name-3.5.91-avoid-alt-menus.patch
@@ -31,7 +31,7 @@ Requires: polkit-gnome >= 0.105
 
 %define clutter_ver 1.11.11
 %define gjs_ver 1.33.2
-%define mutter_ver 3.6.2
+%define mutter_ver 3.6.3
 %define gtk_ver 3.5.9
 %define gio_ver 2.31.6
 %define gstreamer_ver 0.11.92
@@ -186,6 +186,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Sun Feb 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
+- 3.6.3
+
 * Thu Dec 20 2012 Yuri N. Sedunov <aris@altlinux.org> 3.6.2-alt3
 - added missed gnome-control-center-devel to buildreqs and packaged
   keybindings files
