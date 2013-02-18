@@ -1,6 +1,6 @@
 Name: iw
 Version: 3.8
-Release: alt1
+Release: alt2
 
 Summary: nl80211 based CLI configuration utility for wireless devices
 License: BSD-style
@@ -26,7 +26,8 @@ required.
 %setup
 
 %build
-%make_build V=1 CFLAGS="%optflags"
+export CFLAGS="%optflags"
+%make_build V=1
 
 %install
 %makeinstall_std V=1
@@ -37,6 +38,9 @@ required.
 %doc README COPYING
 
 %changelog
+* Sun Feb 17 2013 Terechkov Evgenii <evg@altlinux.org> 3.8-alt2
+- Build with libnl3 (thanks to sem@)
+
 * Fri Jan 18 2013 Terechkov Evgenii <evg@altlinux.org> 3.8-alt1
 - 3.8
 
