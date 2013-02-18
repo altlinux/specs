@@ -8,7 +8,7 @@ BuildRequires: perl(IO/Socket.pm) perl(Time/HiRes.pm)
 
 Name:           cave9
 Version:        0.4
-Release:        alt3_4
+Release:        alt3_6
 Summary:        3d game of cave exploration
 
 Group:          Games/Other
@@ -19,7 +19,7 @@ Source1:        http://cave9.googlecode.com/files/cave9_data-4.tgz
 Source2:        cave9.desktop
 
 BuildRequires:  libSDL_image-devel libSDL_net-devel libSDL_ttf-devel libGL-devel desktop-file-utils fontpackages-devel
-Requires:       fonts-ttf-cave9-mutante = %{?serial:%serial:}%{version}-%{release}
+Requires:       fonts-ttf-cave9-mutante
 Source44: import.info
 Patch33: cave9-0.4-alt-as-needed.patch
 
@@ -74,9 +74,7 @@ ln -s %{_fontconfig_templatedir}/%{fontconf} \
 ln -s ../fonts/ttf/cave9/mutante.ttf $RPM_BUILD_ROOT/usr/share/cave9/hud.ttf
 
 mv data/README.txt data_README.txt
-desktop-file-install                     \
-  --dir=${RPM_BUILD_ROOT}%{_datadir}/applications         \
-  %{SOURCE2}
+desktop-file-install --dir=${RPM_BUILD_ROOT}%{_datadir}/applications  %{SOURCE2}
 # generic fedora font import transformations
 # move fonts to corresponding subdirs if any
 for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
@@ -119,6 +117,9 @@ fi
 %{_datadir}/applications/cave9.desktop
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_6
+- update to new release by fcimport
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.4-alt3_4
 - applied repocop patches
 
