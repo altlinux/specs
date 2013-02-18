@@ -1,8 +1,8 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: rpm-build-altlinux-compat
-Version: 1.7.24
-Release: alt2
+Version: 1.7.25
+Release: alt1
 
 Summary: ALT Linux compatibility and extensions in rpm build
 
@@ -108,6 +108,11 @@ Command rpmbph from etersoft-build-utils will do it automatically.
 %endif
 
 %changelog
+* Mon Feb 18 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.25-alt1
+- intro macro _cupslibdir for /usr/lib/cups
+- intro macro _sudoersdir for /etc/sudoers.d
+- distr_vendor: fix ArchLinux package extension
+
 * Sat Feb 02 2013 Vitaly Lipatov <lav@altlinux.ru> 1.7.24-alt2
 - do not use ifndef in spec
 
