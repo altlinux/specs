@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.65
-Release: alt1
+Release: alt2
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -632,7 +632,7 @@ Patch0837: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_pptp.patch
 Patch0838: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_sip.patch
 Patch0839: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_snmp_basic.patch
 Patch0840: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_tftp.patch
-Patch0841: linux-%kernel_branch.53-fix-net-ipv6.patch
+Patch0841: linux-%kernel_branch.63-fix-net-ipv6.patch
 Patch0842: linux-%kernel_branch.43-fix-net-ipv6-netfilter--nf_conntrack_ipv6.patch
 Patch0843: linux-%kernel_branch.42-fix-net-ipv6--ip6_tunnel.patch
 Patch0844: linux-%kernel_branch.43-fix-net-iucv--af_iucv.patch
@@ -2238,12 +2238,19 @@ sed -i '/^CONFIG_LOCALVERSION=/s/=.*$/="-%flavour-%krelease"/' .config
 sed -i '/^CONFIG_NR_CPUS=/s/^\(.*=\).*$/\14/' .config
 %endif
 
-%ifarch %intel_64
-config_disable CPU_SUP_AMD
+%ifarch %intel_64 %intel_32
+config_disable CPU_SUP_\.*
+config_enable CPU_SUP_INTEL
 %endif
 
-%ifarch %amd_64
-config_disable CPU_SUP_INTEL
+%ifarch %amd_64 %amd_32
+config_disable CPU_SUP_\.*
+config_enable CPU_SUP_AMD
+%endif
+
+%ifarch %via_64 %via_32
+config_disable CPU_SUP_\.*
+config_enable CPU_SUP_CENTAUR
 %endif
 
 %ifarch %ix86
@@ -3048,6 +3055,10 @@ done)
 
 
 %changelog
+* Mon Feb 18 2013 Led <led@altlinux.ru> 3.0.65-alt2
+- updated:
+  + fix-net-ipv6
+
 * Sun Feb 17 2013 Led <led@altlinux.ru> 3.0.65-alt1
 - 3.0.65
 - updated:
