@@ -1,5 +1,5 @@
 Name: mosh
-Version: 1.2.1
+Version: 1.2.3
 Release: alt1
 Summary: Mobile shell that supports roaming and intelligent local echo
 
@@ -8,7 +8,7 @@ Group: Networking/Remote access
 Url: http://mosh.mit.edu/
 Source: https://github.com/downloads/keithw/mosh/mosh-%version.tar
 
-BuildRequires: gcc-c++ protobuf-compiler libprotobuf-devel libutempter-devel zlib-devel ncurses-devel perl-IO-Tty
+BuildRequires: gcc-c++ protobuf-compiler libprotobuf-devel libutempter-devel zlib-devel ncurses-devel perl-IO-Tty libssl-devel
 
 Requires: openssh-clients
 
@@ -40,6 +40,9 @@ Mosh is a remote terminal application that supports:
 %_mandir/man1/mosh-server.1.gz
 
 %changelog
+* Mon Feb 18 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 1.2.3-alt1
+- version 1.2.3
+
 * Mon May 28 2012 Sergey Alembekov <rt@altlinux.ru> 1.2.1-alt1
 - version 1.2.1
 
