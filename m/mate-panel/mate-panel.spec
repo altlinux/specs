@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 %define _libexecdir %_prefix/libexec
 Name:           mate-panel
 Version:        1.5.4
-Release:        alt1_1
+Release:        alt2_1
 Summary:        MATE Desktop panel applets
 #libs are LGPLv2+ applications GPLv2+
 License:        GPLv2+
@@ -90,6 +90,8 @@ desktop-file-install \
         --dir=%{buildroot}%{_datadir}/applications \
 %{buildroot}%{_datadir}/applications/mate-panel.desktop
 
+rm -f %{buildroot}%{_libexecdir}/mate-panel/mate-panel-add
+
 %find_lang %{name}
 
 
@@ -126,6 +128,9 @@ desktop-file-install \
 
 
 %changelog
+* Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt2_1
+- dropped mate-panel-add script
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.4-alt1_1
 - new fc release
 
