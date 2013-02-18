@@ -4,7 +4,7 @@ BuildRequires: gcc-c++ python-devel
 # END SourceDeps(oneline)
 Name:		aqsis
 Version:	1.8.2
-Release:	alt1_1.1
+Release:	alt1_3
 Summary:	Open source 3D rendering solution adhering to the RenderMan standard
 Group:		Video
 
@@ -15,15 +15,15 @@ Source0:	http://downloads.sourceforge.net/aqsis/aqsis-%{version}.tar.gz
 BuildRequires:  desktop-file-utils
 
 BuildRequires:  bison >= 1.35.0
-BuildRequires:  boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel >= 1.34.0
-BuildRequires:  ctest cmake >= 2.6.3
+BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel
+BuildRequires: ctest cmake
 BuildRequires:  doxygen
 BuildRequires:  flex >= 2.5.4
 BuildRequires:  libfltk-devel >= 1.1.0 libfltk-devel
 BuildRequires:  libjpeg-devel
-BuildRequires:  libtiffxx-devel libtiff-devel >= 3.7.1
+BuildRequires: libtiffxx-devel libtiff-devel
 BuildRequires:  libpng-devel
-BuildRequires:  xsltproc libxslt
+BuildRequires: xsltproc libxslt
 BuildRequires:  qt4-devel >= 4.6.2
 #BuildRequires:  tinyxml-devel
 BuildRequires:  openexr-devel
@@ -58,11 +58,11 @@ for shaders written using the RenderMan shading language, a texture
 pre-processor for optimizing textures and a RIB processor.
 
 
-%package -n aqsis-libs
+%package libs
 Summary:        Library files for Aqsis Renderer
 Group:          System/Libraries
 
-%description -n aqsis-libs
+%description libs
 Aqsis is a cross-platform photo-realistic 3D rendering solution,
 adhering to the RenderMan interface standard defined by Pixar
 Animation Studios.
@@ -189,7 +189,7 @@ desktop-file-install --vendor "" --delete-original \
 %{_bindir}/teqser
 
 
-%files -n aqsis-libs
+%files libs
 %dir %{_sysconfdir}/%{name}
 ## Do not use noreplace with aqsis release
 ## This may definitly change in future releases.
@@ -219,6 +219,9 @@ desktop-file-install --vendor "" --delete-original \
 
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.8.2-alt1_3
+- fc update
+
 * Fri Nov 30 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.8.2-alt1_1.1
 - Rebuilt with Boost 1.52.0
 
