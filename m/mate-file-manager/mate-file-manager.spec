@@ -4,8 +4,8 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdoc
 %define _libexecdir %_prefix/libexec
 Name:       mate-file-manager
 Summary:    File manager for MATE
-Version:    1.5.2
-Release:    alt1_1
+Version:    1.5.3
+Release:    alt1_0
 License:    GPLv2+ and LGPLv2+
 Group:      Graphical desktop/Other
 URL:        http://mate-desktop.org
@@ -143,6 +143,9 @@ $RPM_BUILD_ROOT%{_datadir}/applications/*.desktop
 
 
 %changelog
+* Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_0
+- new version
+
 * Tue Dec 04 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.2-alt1_1
 - new fc release
 

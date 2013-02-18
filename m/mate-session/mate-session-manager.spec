@@ -1,21 +1,20 @@
-Group: Graphical desktop/Other
+BuildRequires(pre): browser-plugins-npapi-devel
+Group: Graphical desktop/MATE
 # BEGIN SourceDeps(oneline):
 BuildRequires: libICE-devel libSM-devel libXau-devel libXext-devel libwrap-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-3.0) pkgconfig(ice) pkgconfig(xau) pkgconfig(xext) pkgconfig(xrender) pkgconfig(xtst) xorg-xtrans-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %define oldname mate-session-manager
 Name:           mate-session
-Version:        1.5.0
-Release:        alt2_2
+Version:        1.5.1
+Release:        alt1_0
 Summary:        MATE Desktop session manager
 License:        GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{oldname}-%{version}.tar.xz
 Requires:       gsettings-desktop-schemas
 
-# PATCH-FIX-UPSTREAM mate-session-manager-1.5.0-fix_schema.patch - taken from upstream
-# Fix a broken schema that makes session manager segfault and break suspend/hibernation
-Patch0:         mate-session-manager-1.5.0-fix_schema.patch
+Patch0:         mate-session-manager-cflags.patch
 
 BuildRequires:  desktop-file-utils
 BuildRequires:  pkgconfig(gtk+-2.0)
@@ -32,7 +31,6 @@ BuildRequires:  pkgconfig(pangox)
 Source44: import.info
 Provides: mate-session-manager = %version-%release
 Provides: mate-session-xsession = %version-%release
-Patch33: mate-session-manager-cflags.patch
 Source45: MATE64.png
 
 %description
@@ -43,7 +41,6 @@ full-featured user session.
 %prep
 %setup -n %{oldname}-%{version} -q
 %patch0 -p1
-%patch33 -p1
 
 %build
 NOCONFIGURE=1 ./autogen.sh
@@ -124,6 +121,7 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-session-properties.svg
 %{_datadir}/glib-2.0/schemas/org.mate.session.gschema.xml
 %{_datadir}/xsessions/mate.desktop
+%{_datadir}/MateConf/gsettings/mate-session.convert
 
 %_bindir/*
 %_iconsdir/hicolor/64x64/apps/mate.png
@@ -133,6 +131,9 @@ install -pD -m644 %SOURCE45 %buildroot%_iconsdir/hicolor/64x64/apps/mate.png
 
 
 %changelog
+* Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt1_0
+- new version
+
 * Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_2
 - new fc release
 
