@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ perl(IO/Handle.pm)
 %define _hardened_build 1
 Name:             fuse-zfs
 Version:          0.7.0
-Release:          alt1_8
+Release:          alt1_10
 Summary:          ZFS ported to Linux FUSE
 Group:            System/Base
 License:          CDDL
@@ -16,7 +16,8 @@ Source02:         zfs-fuse.scrub
 Source03:         zfs-fuse.sysconfig
 Source04:         zfs-fuse-helper
 Patch0:           zfs-fuse-0.7.0-umem.patch
-BuildRequires:    libfuse-devel libaio-devel scons zlib-devel libssl-devel libattr-devel
+Patch1:           zfs-fuse-0.7.0-stack.patch
+BuildRequires:    libfuse-devel libaio-devel scons zlib-devel libssl-devel libattr-devel prelink
 Requires:         fuse >= 2.7.4-1
 # (2010 karsten@redhat.com) zfs-fuse doesn't have s390(x) implementations for atomic instructions
 ExcludeArch:      s390
@@ -35,6 +36,7 @@ operating system.
 %setup -n %{oldname}-%{version} -q
 
 %patch0 -p0
+%patch1 -p1
 
 f=LICENSE
 %{__mv} $f $f.iso88591
@@ -59,6 +61,11 @@ scons debug=1 install install_dir=%{buildroot}%{_bindir} man_dir=%{buildroot}%{_
 %{__install} -Dp -m 0755 %{SOURCE2} %{buildroot}%{_sysconfdir}/cron.weekly/98-%{oldname}-scrub
 %{__install} -Dp -m 0644 %{SOURCE3} %{buildroot}%{_sysconfdir}/sysconfig/%{oldname}
 %{__install} -Dp -m 0755 %{SOURCE4} %{buildroot}%{_bindir}/zfs-fuse-helper
+
+#set stack not executable, BZ 911150
+for i in zdb zfs zfs-fuse zpool ztest; do
+       /usr/bin/execstack -c %{buildroot}%{_bindir}/$i
+done
 
 mkdir -p -m 0755 %buildroot%_initdir
 install -D -m 0755 %SOURCE45 %buildroot%_initdir/zfs-fuse
@@ -113,6 +120,9 @@ fi
 %config(noreplace) %_initdir/zfs-fuse
 
 %changelog
+* Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_10
+- update to new release by fcimport
+
 * Tue Feb 05 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt1_8
 - update to new release by fcimport
 
