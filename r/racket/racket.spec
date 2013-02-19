@@ -1,7 +1,11 @@
-%define sover 5.1
+%define _disable_ld_as_needed 1
+%define _disable_ld_no_undefined 1
+%define debug_package %nil
+
+%define sover 5.3.3
 Name: racket
-Version: 5.1
-Release: alt3
+Version: 5.3.3
+Release: alt1
 
 Summary: Racket programming language
 
@@ -23,6 +27,9 @@ Obsoletes: plt < %version-%release
 BuildPreReq: gcc-c++ zlib-devel libjpeg-devel libpng-devel
 BuildPreReq: libcairo-devel libXaw-devel libXext-devel libXft-devel
 BuildPreReq: gcc-fortran libpango-devel /proc chrpath
+BuildPreReq: desktop-file-utils libffi-devel libgc-devel
+BuildPreReq: libgtk+2-devel libgtkglext-devel libwxGTK2.9-devel
+BuildPreReq: libssl-devel zlib-devel 
 
 Requires: lib%name = %version-%release
 
@@ -88,6 +95,8 @@ Depending on how you look at it, Racket is
 
 This package contains development files of Racket.
 
+%define __arch_install_post %nil
+
 %prep
 %setup
 
@@ -103,12 +112,19 @@ __EOF__
 
 %build
 pushd src
+#sed -i "s|^\(LIBRACKET_DEP\)=.*|\1=\"$PWD/racket/libmzgc.la -lgc\"|" \
+#	configure
+%ifarch %ix86
+%add_optflags -march=i686 -mtune=i686
+%endif
 %configure \
 	--docdir=%_docdir/%name-%version \
 	--enable-shared \
-	--enable-pthread
-#sed -i 's|^\(INSTALL_STRIP_PROGRAM.*\)\-s|\1|' $(find ./ -name Makefile)
-#sed -i 's|^\(STRIP.*\)|\1 = echo|' $(find ./ -name Makefile)
+	--enable-pthread \
+	--enable-gl \
+	--enable-xrender \
+	--enable-xft \
+	--enable-docs=no
 %make_build
 popd
 
@@ -123,9 +139,6 @@ install -p -m644 README %buildroot%_docdir/%name-%version/
 install -pD -m644 %SOURCE1 %buildroot%_niconsdir/drscheme.png
 install -pD -m644 drscheme.desktop \
 	%buildroot%_desktopdir/drscheme.desktop
-
-chrpath -d %buildroot%_bindir/%name
-chrpath -d %buildroot%_bindir/g%name
 
 %files
 %doc %dir %_docdir/%name-%version
@@ -150,6 +163,12 @@ chrpath -d %buildroot%_bindir/g%name
 %_includedir/*
 
 %changelog
+* Mon Feb 18 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3.3-alt1
+- Version 5.3.3
+
+* Mon Sep 10 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.3-alt1
+- Version 5.3
+
 * Wed Aug 29 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 5.1-alt3
 - Fixed build with new glibc
 
