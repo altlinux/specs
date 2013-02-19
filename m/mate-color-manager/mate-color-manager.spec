@@ -1,23 +1,17 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/docbook2man /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/mateconftool-2 libcups-devel libsane-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(lcms) pkgconfig(libcanberra-gtk) pkgconfig(sane-backends) pkgconfig(x11)
+BuildRequires: /usr/bin/docbook2man /usr/bin/glib-gettextize /usr/bin/gtkdocize gcc-c++ libcups-devel libexif-devel libgio-devel libsane-devel pkgconfig(exiv2) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(lcms) pkgconfig(libcanberra-gtk) pkgconfig(libexif) pkgconfig(sane-backends) pkgconfig(x11)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 %{!?python_sitelib: %define python_sitelib %(python -c "from distutils.sysconfig import get_python_lib; print get_python_lib()")}
 
 Summary:   Color management tools for MATE
 Name:      mate-color-manager
-Version:   1.3.0
-Release:   alt1_3
+Version:   1.5.0
+Release:   alt1_0
 License:   GPLv2+
 Group:     File tools
 URL:       https://github.com/NiceandGently/mate-color-manager
 Source0:   https://github.com/downloads/NiceandGently/mate-color-manager/%{name}-%{version}.tar.xz
-
-#for fc17
-Patch0:		mate-color-manager_fc17_mcm-prefs.patch
-#for all version
-Patch1:		mate-color-manager_Do_not_use_the_deprecated_pango_cairo_font_map_create_context.patch
-Patch2:		mate-color-manager_fix_desktop-files.patch
 
 Requires:  color-filesystem rpm-macros-color >= 1-7
 Requires:  mate-icon-theme
@@ -47,7 +41,6 @@ BuildRequires: libtiffxx-devel libtiff-devel
 BuildRequires: libcanberra-devel
 BuildRequires: mate-common
 BuildRequires: gtk-doc
-BuildRequires: mate-conf-devel
 BuildRequires: libmatenotify-devel
 Source44: import.info
 
@@ -57,12 +50,9 @@ and generate color profiles in the MATE desktop.
 
 %prep
 %setup -q
-%patch0 -p1 -b .mate-color-manager_fc17_mcm-prefs
-%patch1 -p1 -b .mate-color-manager_Do_not_use_the_deprecated_pango_cairo_font_map_create_context
-%patch2 -p1 -b .mate-color-manager_fix_desktop-files
-NOCONFIGURE=1 ./autogen.sh
 
 %build
+NOCONFIGURE=1 ./autogen.sh
 %configure --disable-scrollkeeper --disable-schemas-install
 make %{?_smp_mflags}
 
@@ -79,29 +69,6 @@ mkdir -p %buildroot%{_var}/lib/color
 
 %find_lang %name --all-name
 
-%post
-export MATECONF_CONFIG_SOURCE=`mateconftool-2 --get-default-source`
-mateconftool-2 --makefile-install-rule \
-        %{_sysconfdir}/mateconf/schemas/mate-color-manager.schemas >/dev/null || :
-touch --no-create %{_datadir}/icons/mate
-
-%pre
-if [ "$1" -gt 1 ]; then
-    export MATECONF_CONFIG_SOURCE=`mateconftool-2 --get-default-source`
-    mateconftool-2 --makefile-uninstall-rule \
-      %{_sysconfdir}/mateconf/schemas/mate-color-manager.schemas &> /dev/null || :
-fi
-
-%preun
-if [ "$1" -eq 0 ]; then
-    export MATECONF_CONFIG_SOURCE=`mateconftool-2 --get-default-source`
-    mateconftool-2 --makefile-uninstall-rule \
-      %{_sysconfdir}/mateconf/schemas/mate-color-manager.schemas &> /dev/null || :
-fi
-
-%postun
-touch --no-create %{_datadir}/icons/mate
-
 %files -f %{name}.lang
 %doc AUTHORS COPYING NEWS README
 /lib/udev/rules.d/*.rules
@@ -117,18 +84,26 @@ touch --no-create %{_datadir}/icons/mate
 %{_datadir}/omf/mate-color-manager
 %{_datadir}/icons/mate/*/*/*.png
 %{_datadir}/icons/mate/scalable/*/*.svg*
-%config(noreplace) %{_sysconfdir}/mateconf/schemas/*.schemas
 %{_datadir}/applications/mcm-prefs.desktop
 %{_datadir}/applications/mcm-import.desktop
 %{_sysconfdir}/xdg/autostart/*.desktop
 %{_datadir}/dbus-1/services/org.mate.ColorManager.service
 %{_sbindir}/mcm-install-system-wide
 %{_datadir}/polkit-1/actions/org.mate.color.policy
+/usr/libexec/mcm-helper-exiv
+%{_datadir}/MateConf/gsettings/org.mate.color-manager.gschema.migrate
+%{_datadir}/applications/mcm-picker.desktop
+%{_datadir}/dbus-1/interfaces/org.mate.ColorManager.xml
+%{_datadir}/glib-2.0/schemas/org.mate.color-manager.gschema.xml
+
 
 # this is probably better in a shared package
 %dir %{_var}/lib/color
 
 %changelog
+* Tue Feb 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
+- updated to 1.5
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_3
 - added mate-desktop-1.5.0-alt-settings.patch - font settings
 
