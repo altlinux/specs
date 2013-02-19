@@ -1,6 +1,6 @@
 Name: SimGear
-Version: 2.8.0
-Release: alt2.1
+Version: 2.10.0
+Release: alt1
 
 Summary: Simulator Construction Tools
 License: GPL
@@ -16,7 +16,7 @@ Patch1: SimGear-2.8.0-alt-boost-1.51.0-compatibility.patch
 # optimized out: cmake-modules libGL-devel libICE-devel libOpenThreads-devel libSM-devel libX11-devel libXau-devel libXext-devel libopenal-devel libstdc++-devel xorg-kbproto-devel xorg-xproto-devel
 BuildRequires: boost-devel-headers cmake gcc-c++ libGLU-devel libOpenSceneGraph-devel libXi-devel libXt-devel libalut-devel libapr1-devel zlib-devel
 
-BuildRequires: cmake libapr1-devel
+BuildRequires: cmake libapr1-devel libsubversion-devel
 
 %description
 SimGear is a set of open-source libraries designed to be used
@@ -57,6 +57,10 @@ This package contains header files for SimGear.
 %_includedir/simgear
 
 %changelog
+* Mon Feb 18 2013 Michael Shigorin <mike@altlinux.org> 2.10.0-alt1
+- 2.10
+- added svn client support to fetch scenery
+
 * Wed Nov 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt2.1
 - Rebuilt with -fPIC
 

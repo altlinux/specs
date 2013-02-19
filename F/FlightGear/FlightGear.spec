@@ -1,8 +1,6 @@
-%define branch 2.8
-
 Name: FlightGear
-Version: 2.8.0
-Release: alt1.2
+Version: 2.10.0
+Release: alt2
 
 Summary: open-source flight simulator
 License: GPL
@@ -27,7 +25,7 @@ Patch3: flightgear-2.6.0-fedora-format.patch
 Patch4: flightgear-2.6.0-fedora-snprintf.patch
 Patch5: FlightGear-2.8.0-alt-Boost.patch
 
-Requires: fgfs-data >= %branch
+Requires: fgfs-data = %version
 #Requires: fgrun >= 1.6.1
 
 # Automatically added by buildreq on Sat Mar 03 2012
@@ -69,6 +67,10 @@ done
 # argh
 sed -i 's,/lib/FlightGear,/share/flightgear,' CMakeLists.txt
 
+# a glitch in 2.10.0:
+# http://www.mail-archive.com/flightgear-devel@lists.sourceforge.net/msg39430.html
+rm -f src/Include/version.h
+
 %build
 %cmake
 %make_build -C BUILD VERBOSE=1
@@ -100,6 +102,14 @@ rm -rf %buildroot%_datadir/locale
 %_desktopdir/%name.desktop
 
 %changelog
+* Tue Feb 19 2013 Michael Shigorin <mike@altlinux.org> 2.10.0-alt2
+- dropped stale version.h stating it's 2.8.0 still
+  (so fgroot data version was being mistreated)
+- clarified data version dependency to be strict
+
+* Mon Feb 18 2013 Michael Shigorin <mike@altlinux.org> 2.10.0-alt1
+- 2.10.0
+
 * Wed Nov 21 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0-alt1.2
 - Fixed build
 
