@@ -7,7 +7,7 @@ BuildRequires: libsystemd-login-devel
 %define fedora 18
 Name:           mate-screensaver
 Version:        1.5.1
-Release:        alt2_2
+Release:        alt3_2
 Summary:        MATE Screensaver
 License:        GPLv2+ and LGPLv2+
 URL:            http://pub.mate-desktop.org
@@ -22,7 +22,6 @@ Requires:       mate-power-manager
 Patch0:        %{name}-1.5.1-only_allow_one_instance.patch
 
 BuildRequires:  gtk2-devel
-BuildRequires:  libmateui-devel
 BuildRequires:  libdbus-glib-devel
 BuildRequires:  libxml2-devel
 BuildRequires:  mate-menus-devel
@@ -149,6 +148,9 @@ install -m 755 %name-chkpwd-helper %buildroot%_libexecdir/%name/
 
 
 %changelog
+* Tue Feb 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt3_2
+- dropped obsolete dependencies
+
 * Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.1-alt2_2
 - new fc release
 
