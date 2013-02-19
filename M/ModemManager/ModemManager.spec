@@ -1,12 +1,12 @@
-#define git_date .git20111208
-%define git_date %nil
+%define git_date .git20130215
+#define git_date %nil
 
 %define dbus_version 1.1
 %define libdbus_glib_version 0.76
 %define libgudev_version 143
 
 Name: ModemManager
-Version: 0.5.4.0
+Version: 0.6.0.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -71,9 +71,12 @@ make check
 
 # Not needed to be packaged now.
 # Maybe to package it later as the devel subpackage.
-%exclude %_includedir/mm/mm-modem.h
+%exclude %_includedir/mm/ModemManager.h
 
 %changelog
+* Tue Feb 19 2013 Mikhail Efremov <sem@altlinux.org> 0.6.0.0-alt1.git20130215
+- upstream git snapshot (MM_06 branch).
+
 * Sun Sep 16 2012 Mikhail Efremov <sem@altlinux.org> 0.5.4.0-alt1
 - Updated to 0.5.4.0.
 
