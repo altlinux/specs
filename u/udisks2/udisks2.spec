@@ -6,16 +6,16 @@
 %def_enable introspection
 
 Name: %{_name}2
-Version: 2.0.1
-Release: alt2
+Version: 2.0.92
+Release: alt1
 
 Summary: Disk Management Service (Second Edition)
 License: GPLv2+
 Group: System/Libraries
 Url: http://www.freedesktop.org/wiki/Software/%_name
 
-Source: %_name-%version.tar
-#Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
+#Source: %_name-%version.tar
+Source: http://udisks.freedesktop.org/releases/%_name-%version.tar.bz2
 Patch1: %_name-1.92.0-alt-udiskd_dir.patch
 
 Obsoletes: %_name
@@ -34,11 +34,11 @@ BuildRequires: libgio-devel >= %glib_ver
 BuildRequires: libpolkit-devel >= %polkit_ver
 BuildRequires: libatasmart-devel >= %libatasmart_ver
 BuildRequires: libudev-devel libgudev-devel >= %udev_ver
-BuildRequires: libacl-devel systemd-devel libsystemd-login-devel
+BuildRequires: libacl-devel systemd-devel libsystemd-login-devel libsystemd-daemon-devel
 %{?_enable_introspection:BuildRequires: gobject-introspection-devel >= %gi_ver}
 
 Requires: /lib/udev/rules.d /usr/sbin/cryptsetup mdadm
-Requires: dbus >= %dbus_ver ntfsprogs parted gdisk acl
+Requires: dbus >= %dbus_ver ntfsprogs parted gdisk parted acl
 
 %description
 The udisks project provides a daemon, tools and libraries to access
@@ -153,6 +153,9 @@ touch %buildroot%_localstatedir/lib/%name/mtab
 %endif
 
 %changelog
+* Tue Feb 19 2013 Yuri N. Sedunov <aris@altlinux.org> 2.0.92-alt1
+- 2.0.92
+
 * Thu Dec 20 2012 Yuri N. Sedunov <aris@altlinux.org> 2.0.1-alt2
 - a time to obsolete old udisks
 
