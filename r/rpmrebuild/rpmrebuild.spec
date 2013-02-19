@@ -1,5 +1,5 @@
 Name: rpmrebuild
-Version: 2.8
+Version: 2.9
 Release: alt1
 License: GPLv2+
 Group: Development/Other
@@ -51,6 +51,9 @@ Rpmrebuild plugin for automatically un-prelinking package content.
 %_mandir/*/*/un_prelink.plug*
 %prefix/lib/%name/plugins/un_prelink*
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 2.9-alt1
+- Autobuild version bump to 2.9
+
 * Sun Jul 22 2012 Fr. Br. George <george@altlinux.ru> 2.8-alt1
 - Autobuild version bump to 2.8
 
