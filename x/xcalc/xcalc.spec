@@ -1,6 +1,6 @@
 Name: xcalc
-Version: 1.0.4.1
-Release: alt1.1
+Version: 1.0.5
+Release: alt1
 Summary: Scientific calculator for X
 Group: System/X11
 Url: http://xorg.freedesktop.org
@@ -19,7 +19,7 @@ Xcalc is a scientific calculator desktop accessory that can emulate a TI-30
 or an HP-10C.
 
 %prep
-%setup -q -n %name-%version
+%setup -n %name-%version
 
 %build
 %autoreconf
@@ -36,6 +36,9 @@ or an HP-10C.
 %_mandir/man1/xcalc.*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1
+- Autobuild version bump to 1.0.5
+
 * Tue Apr 12 2011 Fr. Br. George <george@altlinux.ru> 1.0.4.1-alt1.1
 - Recalculate buildreq
 
