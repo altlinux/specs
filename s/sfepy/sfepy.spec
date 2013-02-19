@@ -1,6 +1,6 @@
 Name: sfepy
-Version: 2012.2
-Release: alt3.git20120830
+Version: 2012.4
+Release: alt1.git20130203
 Summary: Simple finite elements in Python (SfePy)
 License: New BSD License
 Group: Sciences/Mathematics
@@ -161,6 +161,9 @@ cp -fR doc/_build/pickle %buildroot%python_sitelibdir/%name/
 %python_sitelibdir/%name/examples
 
 %changelog
+* Tue Feb 19 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.4-alt1.git20130203
+- Version 2012.4
+
 * Sun Feb 03 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2012.2-alt3.git20120830
 - Rebuilt
 
