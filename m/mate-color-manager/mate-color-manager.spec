@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/docbook2man /usr/bin/glib-gettextize /usr/bin/gtkdocize 
 Summary:   Color management tools for MATE
 Name:      mate-color-manager
 Version:   1.5.0
-Release:   alt1_0
+Release:   alt2_0
 License:   GPLv2+
 Group:     File tools
 URL:       https://github.com/NiceandGently/mate-color-manager
@@ -18,7 +18,6 @@ Requires:  mate-icon-theme
 Requires:  shared-mime-info
 Requires:  shared-color-profiles
 Requires:  yelp
-Requires:  mate-conf
 
 BuildRequires: gtk2-devel >= 2.16.0
 BuildRequires: scrollkeeper
@@ -101,6 +100,9 @@ mkdir -p %buildroot%{_var}/lib/color
 %dir %{_var}/lib/color
 
 %changelog
+* Tue Feb 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
+- dropped obsolete mateconf dependencies
+
 * Tue Feb 19 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_0
 - updated to 1.5
 
