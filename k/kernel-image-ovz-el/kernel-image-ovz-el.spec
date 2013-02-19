@@ -1,6 +1,6 @@
 Name: kernel-image-ovz-el
 Version: 2.6.32
-Release: alt80
+Release: alt81
 
 %define kernel_base_version	%version
 %define kernel_extra_version	%nil
@@ -44,9 +44,12 @@ Group: System/Kernel and hardware
 Url: http://wiki.openvz.org/Download/kernel/
 Packager: Kernel Maintainers Team <kernel@packages.altlinux.org>
 
-Patch0: %name-%version-%release.patch
+Source11: config-x86
+Source12: config-x86_64
+Patch0: patch-042stab074.4-combined
+Patch1: %name-%version-%release.patch
 
-ExclusiveArch: i586 x86_64
+ExclusiveArch: i586 i686 x86_64
 
 ExclusiveOS: Linux
 
@@ -349,9 +352,12 @@ in the kernel and update the documentation to reflect these changes.
 %prep
 %setup -cT -n kernel-image-%flavour-%kversion-%krelease
 rm -rf kernel-source-%kernel_base_version
-tar -jxf %kernel_src/kernel-source-%kernel_base_version.tar.bz2
+tar -xf %kernel_src/kernel-source-%kernel_base_version.tar.*
 %setup -D -T -n kernel-image-%flavour-%kversion-%krelease/kernel-source-%kernel_base_version
 %patch0 -p1
+%patch1 -p1
+
+install -m 0644 %SOURCE11 %SOURCE12 ./
 
 # this file should be usable both with make and sh (for broken modules
 # which do not use the kernel makefile system)
@@ -371,7 +377,13 @@ echo "Building Kernel $KernelVer"
 
 %make_build mrproper
 
-cp -vf config-%_target_cpu .config
+cp -vf \
+%ifarch %ix86
+	config-x86 \
+%else
+	config-%_target_cpu \
+%endif
+	.config
 
 %make_build oldconfig
 %make_build include/linux/version.h
@@ -413,7 +425,7 @@ done
 %ifarch x86_64
 ln -s asm-x86 asm-x86_64
 %else
-%ifarch i586
+%ifarch %ix86
 ln -s asm-x86 asm-i386
 %endif
 %endif
@@ -481,7 +493,7 @@ KbuildFiles="
 	scripts/bin2c
 	scripts/gcc-version.sh
 	scripts/recordmcount.pl
-%ifarch i586
+%ifarch %ix86
 	scripts/gcc-x86_32-has-stack-protector.sh
 %else
 %ifarch x86_64
@@ -604,6 +616,11 @@ find %buildroot%_docdir/kernel-doc-%base_flavour-%version/DocBook \
 %endif # staging
 
 %changelog
+* Tue Feb 19 2013 Led <led@altlinux.ru> 2.6.32-alt81
+- Update to 042stab074.4
+- enabled FB_UVESA
+- added ipt_NETFLOW 1.8
+
 * Fri Feb 08 2013 Led <led@altlinux.ru> 2.6.32-alt80
 - Update to 042stab072.10
 - removed obsoleted %%post[un]_kernel_modules macros
