@@ -1,5 +1,5 @@
 Name: python-module-icalendar
-Version: 2.2
+Version: 3.3
 Release: alt1
 Summary: iCalendar parser/generator
 License: GPLv2.1
@@ -33,6 +33,9 @@ iCalendar is a parser/generator of iCalendar files
 %python_sitelibdir_noarch/%modulename-*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 3.3-alt1
+- Autobuild version bump to 3.3
+
 * Tue Nov 08 2011 Fr. Br. George <george@altlinux.ru> 2.2-alt1
 - Autobuild version bump to 2.2
 
