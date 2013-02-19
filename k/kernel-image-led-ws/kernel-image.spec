@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.65
-Release: alt3
+Release: alt4
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -585,7 +585,7 @@ Patch0761: linux-%kernel_branch.42-fix-init--calibrate.patch
 
 Patch0771: linux-%kernel_branch.42-fix-ipc--mqueue.patch
 
-Patch0780: linux-%kernel_branch.63-fix-kernel.patch
+Patch0780: linux-%kernel_branch.65-fix-kernel.patch
 Patch0781: linux-%kernel_branch.42-fix-kernel--cgroup.patch
 Patch0782: linux-%kernel_branch.42-fix-kernel--cgroup_freezer.patch
 Patch0783: linux-%kernel_branch.49-fix-kernel--events.patch
@@ -3065,6 +3065,10 @@ done)
 
 
 %changelog
+* Tue Feb 19 2013 Led <led@altlinux.ru> 3.0.65-alt4
+- updated:
+  + fix-kernel
+
 * Tue Feb 19 2013 Led <led@altlinux.ru> 3.0.65-alt3
 - added:
   + fix-drivers-mfd--ab8500-core
