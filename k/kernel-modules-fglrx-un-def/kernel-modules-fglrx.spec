@@ -1,6 +1,6 @@
 %define module_name	fglrx
 %define module_version	9.012
-%define module_release alt1
+%define module_release alt2
 
 %define flavour                un-def
 BuildRequires(pre): rpm-build-kernel
@@ -53,6 +53,7 @@ Patch11: fglrx-3.4.6-old_rsp.patch
 Patch12: fglrx-3.5.2-build.patch
 %endif
 Patch13: fglrx-3.7.patch
+Patch14: fglrx-build-3.8.patch
 
 %description
 Kernel drivers for AMD/ATI Proprietary Linux Catalyst(tm) software suite
@@ -98,6 +99,11 @@ tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 %patch13 -p0
 %endif
 
+%if "%kversion" >= "3.8"
+%patch14 -p0
+%endif
+
+
 sed -i 's|COMPAT_ALLOC_USER_SPACE|arch_compat_alloc_user_space|' kcl_ioctl.c
 
 %build
@@ -117,6 +123,9 @@ install -p -m644 fglrx.ko $RPM_BUILD_ROOT/%module_dir
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Feb 20 2013  Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.9.012-alt2
+- build fixed with kernel 3.8
 
 * Tue Jan 22 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 1.0.9.012-alt1
 - 9.012
