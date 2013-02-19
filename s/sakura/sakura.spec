@@ -1,6 +1,6 @@
 Name: sakura
 Version: 2.4.2
-Release: alt1
+Release: alt2
 
 Summary: Terminal emulator application
 License: GPL
@@ -16,6 +16,9 @@ Patch1: sakura-system-config-file.patch
 # Automatically added by buildreq on Tue Apr 13 2010
 BuildRequires: cmake gcc-c++ libvte-devel perl-podlators rpm-build-xdg
 BuildRequires: desktop-file-utils
+
+Requires: fonts-bitmap-terminus
+Conflicts: libfreetype < 2.4.10-alt2
 
 %description
 Sakura is a lightweight and easy to use terminal emulator for X windowing 
@@ -51,6 +54,9 @@ desktop-file-install --dir %buildroot%_desktopdir \
 %_man1dir/*
 
 %changelog
+* Tue Feb 19 2013 Mykola Grechukh <gns@altlinux.ru> 2.4.2-alt2
+- default font fixed
+
 * Mon Aug 01 2011 Mykola Grechukh <gns@altlinux.ru> 2.4.2-alt1
 - new version.
 
