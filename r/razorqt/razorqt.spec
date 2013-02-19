@@ -2,7 +2,7 @@
 
 Name: razorqt
 Version: 0.5.2
-Release: alt1
+Release: alt2
 
 Summary: Razor-qt is a toolbox-like desktop environment based on Qt
 License: GPLv2
@@ -259,6 +259,7 @@ as a Desktop Environment.
 Summary: Razor-qt lightdm greeter
 Group: Graphical desktop/Other
 Requires: lightdm
+Provides: lightdm-greeter
 
 %description -n lightdm-razorqt-greeter
 A LightDM greeter that uses the Razor-qt and Qt libraries,
@@ -290,6 +291,11 @@ SCRIPT:
 exec /usr/bin/startrazor
 _EOF_
 install -pDm644 08razorqt %buildroot%_sysconfdir/X11/wmsession.d/08razorqt
+
+cd %buildroot
+# Add alternatives for xgreeters
+mkdir -p ./%_altdir
+printf '%_datadir/xgreeters/lightdm-default-greeter.desktop\t%_datadir/xgreeters/lightdm-razor-greeter.desktop\t400\n' >./%_altdir/lightdm-razor-greeter
 
 %files
 
@@ -425,10 +431,15 @@ install -pDm644 08razorqt %buildroot%_sysconfdir/X11/wmsession.d/08razorqt
 
 %files -n lightdm-razorqt-greeter
 %_bindir/razor-lightdm-greeter
+%_altdir/lightdm-razor-greeter
 %_datadir/xgreeters/lightdm-razor-greeter.desktop
 %_datadir/razor/razor-lightdm-greeter/
 
 %changelog
+* Tue Feb 19 2013 Michael Shigorin <mike@altlinux.org> 0.5.2-alt2
+- fixed greeter Provides: so that can be actually used
+  (somewhat related to #28524)
+
 * Thu Feb 07 2013 Michael Shigorin <mike@altlinux.org> 0.5.2-alt1
 - 0.5.2
 - added lightdm greeter subpackage (thx zerg@ for reminder)
