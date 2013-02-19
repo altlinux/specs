@@ -1,5 +1,5 @@
 Name: xedit
-Version: 1.2.0
+Version: 1.2.1
 Release: alt1
 
 Summary: Simple text editor for X
@@ -18,7 +18,7 @@ BuildRequires: libXaw-devel
 Simple text editor for X
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -38,6 +38,9 @@ Simple text editor for X
 %_x11x11libdir/%name/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.2.1-alt1
+- Autobuild version bump to 1.2.1
+
 * Wed Nov 03 2010 Fr. Br. George <george@altlinux.ru> 1.2.0-alt1
 - Autobuild version bump to 1.2.0
 
