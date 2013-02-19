@@ -1,12 +1,14 @@
-Summary: GPT partitioning and MBR repair software
 Name: gptfdisk
-Version: 0.8.5
+Version: 0.8.6
 Release: alt1
+
+Summary: GPT partitioning and MBR repair software
 License: GPLv2
 Group: System/Configuration/Hardware
-Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
-URL: http://www.rodsbooks.com/gdisk
+
+Url: http://www.rodsbooks.com/gdisk
 Source: http://www.rodsbooks.com/gdisk/%name-%version.tar.gz
+Packager: Slava Dubrovskiy <dubrsl@altlinux.ru>
 
 BuildRequires: gcc-c++ libuuid-devel libpopt-devel libicu-devel ncurses-devel
 
@@ -80,6 +82,9 @@ install -D fixparts.8 %buildroot%_man8dir/fixparts.8
 
 
 %changelog
+* Tue Feb 19 2013 Michael Shigorin <mike@altlinux.org> 0.8.6-alt1
+- New version
+
 * Thu Aug 02 2012 Slava Dubrovskiy <dubrsl@altlinux.org> 0.8.5-alt1
 - New version
 
