@@ -1,6 +1,6 @@
 Name: editres
-Version: 1.0.5
-Release: alt1.1
+Version: 1.0.6
+Release: alt1
 
 Summary: a dynamic resource editor for X Toolkit applications
 License: MIT/X11
@@ -20,7 +20,7 @@ BuildRequires: pkg-config xorg-proto-devel xorg-util-macros
 Editres is a tool that allows users and application developers to view the full widget hierarchy of any X Toolkit application that speaks the Editres protocol. In addition, editres will help the user construct resource specifications, allow the user to apply the resource to the application and view the results dynamically. Once the user is happy with a resource specification editres will append the resource string to the user's X Resources file.
 
 %prep
-%setup -q
+%setup
 
 %build
 %autoreconf
@@ -38,6 +38,9 @@ Editres is a tool that allows users and application developers to view the full 
 %_x11appconfdir/*
 
 %changelog
+* Thu Feb 14 2013 Fr. Br. George <george@altlinux.ru> 1.0.6-alt1
+- Autobuild version bump to 1.0.6
+
 * Tue Apr 12 2011 Fr. Br. George <george@altlinux.ru> 1.0.5-alt1.1
 - Recalculate buildreq
 
