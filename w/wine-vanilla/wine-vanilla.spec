@@ -1,5 +1,5 @@
 Name: wine-vanilla
-Version: 1.5.23
+Version: 1.5.24
 Release: alt1
 
 Summary: Wine - environment for running Windows 16/32/64 bit applications
@@ -342,6 +342,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %exclude %_libdir/wine/libwinecrt0.a
 
 %changelog
+* Tue Feb 19 2013 Vitaly Lipatov <lav@altlinux.ru> 1.5.24-alt1
+- new version 1.5.24
+
 * Wed Feb 06 2013 Vitaly Lipatov <lav@altlinux.ru> 1.5.23-alt1
 - new version 1.5.23, requires wine-gecko 1.9
 
