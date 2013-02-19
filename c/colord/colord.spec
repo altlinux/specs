@@ -8,7 +8,7 @@
 %define _localstatedir %_var
 
 Name: colord
-Version: 0.1.29
+Version: 0.1.30
 Release: alt1
 
 Summary: Color daemon
@@ -216,9 +216,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/libcolord.so.*
 %_libdir/libcolordprivate.so.*
 %_libdir/libcolorhug.so.*
-%_libdir/libdtp94.so.*
-%_libdir/libhuey.so.*
-%_libdir/libmunki.so.*
+%_libdir/libdtp94-private.so.*
+%_libdir/libhuey-private.so.*
+%_libdir/libmunki-private.so.*
 
 %files -n lib%name-devel
 %_includedir/colord-1/
@@ -226,9 +226,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 %_libdir/pkgconfig/%name.pc
 %_libdir/libcolordprivate.so
 %_libdir/libcolorhug.so
-%_libdir/libdtp94.so
-%_libdir/libhuey.so
-%_libdir/libmunki.so
+%_libdir/libdtp94-private.so
+%_libdir/libhuey-private.so
+%_libdir/libmunki-private.so
 %_pkgconfigdir/colorhug.pc
 
 %if_enabled introspection
@@ -248,6 +248,9 @@ touch %buildroot%_localstatedir/lib/%name/storage.db
 
 
 %changelog
+* Mon Feb 18 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.30-alt1
+- 0.1.30
+
 * Sat Feb 16 2013 Yuri N. Sedunov <aris@altlinux.org> 0.1.29-alt1
 - 0.1.29
 - redefined %%_localstatedir to %%_var and removed corresponding patch
