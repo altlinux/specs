@@ -1,5 +1,5 @@
 Name: xfce4-weather-plugin
-Version: 0.8.2
+Version: 0.8.3
 Release: alt1
 
 Summary: Weather plugin for the XFce panel
@@ -16,7 +16,7 @@ BuildRequires(pre): rpm-build-licenses
 BuildPreReq: rpm-build-xfce4 xfce4-dev-tools
 BuildPreReq: libxfce4util-devel libxfce4ui-devel libxfce4panel-devel
 
-BuildRequires: intltool libxml2-devel
+BuildRequires: intltool libxml2-devel libsoup-devel libupower-devel
 
 Requires: xfce4-panel >= 4.8.0
 
@@ -46,6 +46,9 @@ Requires: xfce4-panel >= 4.8.0
 %_liconsdir/*.png
 
 %changelog
+* Tue Feb 19 2013 Mikhail Efremov <sem@altlinux.org> 0.8.3-alt1
+- Updated to 0.8.3.
+
 * Wed Sep 12 2012 Mikhail Efremov <sem@altlinux.org> 0.8.2-alt1
 - Updated to 0.8.2.
 
