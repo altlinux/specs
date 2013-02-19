@@ -3,7 +3,7 @@
 %define rname sflphone-client-kde
 Name: sflphone-client-kde4
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Group: Communications
 Summary: KDE client for SFLphone
@@ -77,6 +77,7 @@ Requires: %name-common = %EVR
 %_K4iconsdir/hicolor/*/apps/%rname.*
 %_K4apps/%rname/
 %_K4apps/plasma/plasmoids/org.kde.plasma.applet.sflphone/
+%_K4apps/plasma/services/sflphone.operations
 %_K4srv/plasma-*-sflphone.desktop
 %_K4cfg/%rname.kcfg
 
@@ -92,5 +93,8 @@ Requires: %name-common = %EVR
 %_K4libdir/libqtsflphone.so.*
 
 %changelog
+* Tue Feb 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt2
+- fix package files
+
 * Tue Feb 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1
 - initial build
