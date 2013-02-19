@@ -12,7 +12,7 @@
 %define debug %nil
 
 Name: wine
-Version: 1.5.23
+Version: 1.5.24
 Release: alt1
 Epoch: 1
 
@@ -285,12 +285,12 @@ rm -rf %buildroot%_mandir/*.UTF-8
 # link to wine for backward compatibility
 %_bindir/wineprefixcreate
 %_bindir/ieinstall
-%_bindir/ieuninstall
 %_bindir/winetricks
 %_bindir/wineregdiff
 %_bindir/setnethasp
 %_bindir/winelog
 %_bindir/winesplash
+%_bindir/winefar
 
 %_bindir/wineconsole
 %_bindir/wineserver
@@ -324,7 +324,6 @@ rm -rf %buildroot%_mandir/*.UTF-8
 %_datadir/desktop-directories/wine.directory
 %_iconsdir/*
 %dir %_datadir/wine/
-%_datadir/wine/ies4linux/
 %_datadir/wine/skel/
 %_datadir/wine/menu.directory
 %_datadir/wine/winesplash.xpm
@@ -436,6 +435,9 @@ rm -rf %buildroot%_mandir/*.UTF-8
 
 
 %changelog
+* Wed Feb 20 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.24-alt1
+- new version 1.5.24
+
 * Wed Feb 06 2013 Vitaly Lipatov <lav@altlinux.ru> 1:1.5.23-alt1
 - new build 1.5.23 (use wine-gecko 1.9)
 
