@@ -21,7 +21,7 @@
 
 Name: kernel-image-%flavour
 Version: 3.0.65
-Release: alt2
+Release: alt3
 
 %define kernel_req %nil
 %define kernel_prov %nil
@@ -124,9 +124,9 @@ Release: alt2
 
 %define allocator SLAB
 
-%Extra_modules vboxhost 4.1.24
-#Extra_modules vboxguest 4.1.22
-#Extra_modules fglrx 8.97.100.3
+%Extra_modules vboxhost 4.2.6
+#Extra_modules vboxguest 4.2.6
+#Extra_modules fglrx 8.97.100.7
 #Extra_modules netatop 0.1.1
 
 %define strip_mod_opts --strip-unneeded -R .comment
@@ -367,7 +367,9 @@ Patch0393: linux-%kernel_branch.57-fix-drivers-media-video-gspca--pac7302.patch
 
 Patch0401: linux-%kernel_branch.42-fix-drivers-message-fusion.patch
 
-Patch0411: linux-%kernel_branch.62-fix-drivers-mfd--lpc_sch.patch
+Patch0411: linux-%kernel_branch.63-fix-drivers-mfd--ab8500-core.patch
+Patch0412: linux-%kernel_branch.62-fix-drivers-mfd--lpc_sch.patch
+Patch0413: linux-%kernel_branch.63-fix-drivers-mfd--twl4030-core.patch
 
 Patch0421: linux-%kernel_branch.50-fix-drivers-misc--hpilo.patch
 Patch0422: linux-%kernel_branch.42-fix-drivers-misc--rts_pstor.patch
@@ -431,13 +433,14 @@ Patch0501: linux-%kernel_branch.43-fix-drivers-net-wireless-brcm80211--brcmfmac.
 Patch0502: linux-%kernel_branch.42-fix-drivers-net-wireless-libertas--libertas_spi.patch
 Patch0503: linux-%kernel_branch.56-fix-drivers-net-wireless-mwifiex--mwifiex.patch
 Patch0504: linux-%kernel_branch.56-fix-drivers-net-wireless-mwifiex--mwifiex_sdio.patch
-Patch0505: linux-%kernel_branch.53-fix-drivers-net-wireless-rt2x00.patch
-Patch0506: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
-Patch0507: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi.patch
-Patch0508: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192ce.patch
-Patch0509: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192cu.patch
-Patch0510: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192se.patch
-Patch0511: linux-%kernel_branch.56-fix-drivers-net-wireless-wl12xx--wl12xx.patch
+Patch0505: linux-%kernel_branch.63-fix-drivers-net-wireless-orinoco--orinoco_usb.patch
+Patch0506: linux-%kernel_branch.53-fix-drivers-net-wireless-rt2x00.patch
+Patch0507: linux-%kernel_branch.43-fix-drivers-net-wireless-rtl8192e.patch
+Patch0508: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi.patch
+Patch0509: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192ce.patch
+Patch0510: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192cu.patch
+Patch0511: linux-%kernel_branch.56-fix-drivers-net-wireless-rtlwifi--rtl8192se.patch
+Patch0512: linux-%kernel_branch.56-fix-drivers-net-wireless-wl12xx--wl12xx.patch
 
 Patch0521: linux-%kernel_branch.42-fix-drivers-parport--parport_pc.patch
 
@@ -524,13 +527,14 @@ Patch0664: linux-%kernel_branch.42-fix-drivers-usb-host--uhci-hcd.patch
 Patch0665: linux-%kernel_branch.61-fix-drivers-usb-host--xhci-hcd.patch
 Patch0666: linux-%kernel_branch.42-fix-drivers-usb-misc--usbtest.patch
 Patch0667: linux-%kernel_branch.42-fix-drivers-usb-mon.patch
-Patch0668: linux-%kernel_branch.42-fix-drivers-usb-serial--ftdi_sio.patch
-Patch0669: linux-%kernel_branch.42-fix-drivers-usb-serial--ipw.patch
-Patch0670: linux-%kernel_branch.42-fix-drivers-usb-serial--pl2303.patch
-Patch0671: linux-%kernel_branch.42-fix-drivers-usb-serial--usbserial.patch
-Patch0672: linux-%kernel_branch.42-fix-drivers-usb-storage--ums-realtek.patch
-Patch0673: linux-%kernel_branch.42-fix-drivers-usb-usbip--usbip-host.patch
-Patch0674: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
+Patch0668: linux-%kernel_branch.63-fix-drivers-usb-otg--twl6030-usb.patch
+Patch0669: linux-%kernel_branch.42-fix-drivers-usb-serial--ftdi_sio.patch
+Patch0670: linux-%kernel_branch.42-fix-drivers-usb-serial--ipw.patch
+Patch0671: linux-%kernel_branch.42-fix-drivers-usb-serial--pl2303.patch
+Patch0672: linux-%kernel_branch.42-fix-drivers-usb-serial--usbserial.patch
+Patch0673: linux-%kernel_branch.42-fix-drivers-usb-storage--ums-realtek.patch
+Patch0674: linux-%kernel_branch.42-fix-drivers-usb-usbip--usbip-host.patch
+Patch0675: linux-%kernel_branch.42-fix-drivers-usb-wusbcore--wusbcore-cbaf.patch
 
 Patch0681: linux-%kernel_branch.42-fix-drivers-video--intelfb.patch
 Patch0682: linux-%kernel_branch.43-fix-drivers-video--xgifb.patch
@@ -619,36 +623,37 @@ Patch0824: linux-%kernel_branch.42-fix-net--wimax.patch
 Patch0825: linux-%kernel_branch.42-fix-net--x25.patch
 Patch0826: linux-%kernel_branch.42-fix-net-8021q--vlan-core.patch
 Patch0827: linux-%kernel_branch.64-fix-net-bridge--bridge.patch
-Patch0828: linux-%kernel_branch.42-fix-net-ceph.patch
-Patch0829: linux-%kernel_branch.62-fix-net-core.patch
-Patch0830: linux-%kernel_branch.46-fix-net-ipv4.patch
-Patch0831: linux-%kernel_branch.51-fix-net-ipv4-netfilter--iptable_nat.patch
-Patch0832: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat.patch
-Patch0833: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_amanda.patch
-Patch0834: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_ftp.patch
-Patch0835: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_h323.patch
-Patch0836: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_irc.patch
-Patch0837: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_pptp.patch
-Patch0838: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_sip.patch
-Patch0839: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_snmp_basic.patch
-Patch0840: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_tftp.patch
-Patch0841: linux-%kernel_branch.63-fix-net-ipv6.patch
-Patch0842: linux-%kernel_branch.43-fix-net-ipv6-netfilter--nf_conntrack_ipv6.patch
-Patch0843: linux-%kernel_branch.42-fix-net-ipv6--ip6_tunnel.patch
-Patch0844: linux-%kernel_branch.43-fix-net-iucv--af_iucv.patch
-Patch0845: linux-%kernel_branch.43-fix-net-iucv--iucv.patch
-Patch0846: linux-%kernel_branch.42-fix-net-mac80211.patch
-Patch0847: linux-%kernel_branch.51-fix-net-netfilter--nf_conntrack.patch
-Patch0848: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ecache.patch
-Patch0849: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ftp.patch
-Patch0850: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_netlink.patch
-Patch0851: linux-%kernel_branch.51-fix-net-netfilter-ipset.patch
-Patch0852: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
-Patch0853: linux-%kernel_branch.61-fix-net-rds--rds_rdma.patch
-Patch0854: linux-%kernel_branch.51-fix-net-sched.patch
-Patch0855: linux-%kernel_branch.42-fix-net-sctp.patch
-Patch0856: linux-%kernel_branch.43-fix-net-sunrpc.patch
-Patch0857: linux-%kernel_branch.58-fix-net-xfrm--xfrm_policy.patch
+Patch0828: linux-%kernel_branch.63-fix-net-caif--caif_socket.patch
+Patch0829: linux-%kernel_branch.42-fix-net-ceph.patch
+Patch0830: linux-%kernel_branch.62-fix-net-core.patch
+Patch0831: linux-%kernel_branch.46-fix-net-ipv4.patch
+Patch0832: linux-%kernel_branch.51-fix-net-ipv4-netfilter--iptable_nat.patch
+Patch0833: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat.patch
+Patch0834: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_amanda.patch
+Patch0835: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_ftp.patch
+Patch0836: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_h323.patch
+Patch0837: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_irc.patch
+Patch0838: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_pptp.patch
+Patch0839: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_sip.patch
+Patch0840: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_snmp_basic.patch
+Patch0841: linux-%kernel_branch.51-fix-net-ipv4-netfilter--nf_nat_tftp.patch
+Patch0842: linux-%kernel_branch.63-fix-net-ipv6.patch
+Patch0843: linux-%kernel_branch.43-fix-net-ipv6-netfilter--nf_conntrack_ipv6.patch
+Patch0844: linux-%kernel_branch.42-fix-net-ipv6--ip6_tunnel.patch
+Patch0845: linux-%kernel_branch.43-fix-net-iucv--af_iucv.patch
+Patch0846: linux-%kernel_branch.43-fix-net-iucv--iucv.patch
+Patch0847: linux-%kernel_branch.42-fix-net-mac80211.patch
+Patch0848: linux-%kernel_branch.51-fix-net-netfilter--nf_conntrack.patch
+Patch0849: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ecache.patch
+Patch0850: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_ftp.patch
+Patch0851: linux-%kernel_branch.42-fix-net-netfilter--nf_conntrack_netlink.patch
+Patch0852: linux-%kernel_branch.51-fix-net-netfilter-ipset.patch
+Patch0853: linux-%kernel_branch.42-fix-net-netfilter-ipvs--ipvs.patch
+Patch0854: linux-%kernel_branch.61-fix-net-rds--rds_rdma.patch
+Patch0855: linux-%kernel_branch.51-fix-net-sched.patch
+Patch0856: linux-%kernel_branch.42-fix-net-sctp.patch
+Patch0857: linux-%kernel_branch.43-fix-net-sunrpc.patch
+Patch0858: linux-%kernel_branch.58-fix-net-xfrm--xfrm_policy.patch
 
 Patch0860: linux-%kernel_branch.42-fix-scripts.patch
 
@@ -1718,6 +1723,8 @@ cd linux-%version
 
 # fix-drivers-mfd--*
 %patch0411 -p1
+%patch0412 -p1
+%patch0413 -p1
 
 # fix-drivers-misc-*
 %patch0421 -p1
@@ -1792,6 +1799,7 @@ cd linux-%version
 %patch0509 -p1
 %patch0510 -p1
 %patch0511 -p1
+%patch0512 -p1
 
 # fix-drivers-parport--*
 %patch0521 -p1
@@ -1894,6 +1902,7 @@ cd linux-%version
 %patch0672 -p1
 %patch0673 -p1
 %patch0674 -p1
+%patch0675 -p1
 
 # fix-drivers-video-*
 %patch0681 -p1
@@ -2018,6 +2027,7 @@ cd linux-%version
 %patch0855 -p1
 %patch0856 -p1
 %patch0857 -p1
+%patch0858 -p1
 
 %patch0860 -p1
 
@@ -3055,9 +3065,19 @@ done)
 
 
 %changelog
+* Tue Feb 19 2013 Led <led@altlinux.ru> 3.0.65-alt3
+- added:
+  + fix-drivers-mfd--ab8500-core
+  + fix-drivers-mfd--twl4030-core
+  + fix-drivers-net-wireless-orinoco--orinoco_usb
+  + fix-drivers-usb-otg--twl6030-usb
+  + fix-net-caif--caif_socket
+- vboxhost 4.2.6
+
 * Mon Feb 18 2013 Led <led@altlinux.ru> 3.0.65-alt2
 - updated:
   + fix-net-ipv6
+- enabled CPU_SUP_CENTAUR
 
 * Sun Feb 17 2013 Led <led@altlinux.ru> 3.0.65-alt1
 - 3.0.65
