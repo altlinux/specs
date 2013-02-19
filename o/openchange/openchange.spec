@@ -5,7 +5,7 @@
 
 Name: openchange
 Version: 1.0
-Release: alt2
+Release: alt2.1
 Group: Networking/Mail
 Summary: Provides access to Microsoft Exchange servers using native protocols
 License: GPLv3+ and Public Domain
@@ -20,8 +20,8 @@ BuildRequires: libtevent-devel
 BuildRequires: libldb-devel
 BuildRequires: libtdb-devel
 BuildRequires: bison
-BuildRequires: samba4-devel
-BuildRequires: samba4-pidl
+BuildRequires: samba-devel >= 4.0.0
+BuildRequires: samba-pidl
 BuildRequires: libical-devel
 BuildRequires: libpopt-devel
 BuildRequires: libmagic-devel
@@ -238,6 +238,9 @@ rm -f %buildroot%_bindir/check_fasttransfer
 %endif
 
 %changelog
+* Mon Feb 18 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0-alt2.1
+- rebuild
+
 * Tue Jan 15 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0-alt2
 - fix http://tracker.openchange.org/issues/397
 - fix http://tracker.openchange.org/issues/398
