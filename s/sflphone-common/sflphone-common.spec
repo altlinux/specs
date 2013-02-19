@@ -2,7 +2,7 @@
 
 Name: sflphone-common
 Version: 1.2.2
-Release: alt1
+Release: alt2
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -62,8 +62,8 @@ popd
 %install
 %makeinstall
 
-[ -e %buildroot/%_libdir/sflphoned ] && \
-    mv %buildroot/%_libdir/sflphoned %buildroot/%_libdir/sflphone/
+[ -e %buildroot/usr/lib/sflphoned ] && \
+    mv %buildroot/usr/lib/sflphoned %buildroot/%_libdir/sflphone/
 
 %files
 %doc AUTHORS COPYING README
@@ -73,5 +73,8 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Tue Feb 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt2
+- fix packaging sflphoned
+
 * Tue Feb 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt1
 - initial build
