@@ -2,7 +2,7 @@
 
 Name: gnustep-dbuskit
 Version: 0.3.2
-Release: alt2.git20121111
+Release: alt3.git20121111
 Summary: GNUstep interface to the DBUS data transport mechanism
 License: LGPLv2.1+
 Group: Development/Objective-C
@@ -113,10 +113,12 @@ buildIt $libDBusKit
 	GNUSTEP_INSTALLATION_DOMAIN=SYSTEM
 
 pushd %buildroot%_libdir
+lib=$(ls *.so.*.*)
 for i in *.so*; do
 	rm -f $i
 	mv GNUstep/Frameworks/DBusKit.framework/Versions/Current/$i ./
-	ln -s $i GNUstep/Frameworks/DBusKit.framework/Versions/Current/
+	ln -s %_libdir/$lib \
+		GNUstep/Frameworks/DBusKit.framework/Versions/Current/$i
 done
 popd
 
@@ -142,6 +144,9 @@ popd
 %_docdir/GNUstep
 
 %changelog
+* Wed Feb 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt3.git20121111
+- Fixed links for libraries
+
 * Mon Dec 31 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.3.2-alt2.git20121111
 - Rebuilt with libobjc2 instead of libobjc
 
