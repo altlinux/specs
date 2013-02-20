@@ -32,19 +32,18 @@ BuildRequires: jpackage-compat
 #
 
 Name:           swingx
-Version:        1.6
-Release:        alt4_1jpp6
+Version:        1.6.5
+Release:        alt1_0jpp6
 Summary:        Extensions to the Swing GUI toolkit
 
 Group:          Development/Java
 License:        LGPL
-URL:            https://swingx.dev.java.net/
+URL:            https://swingx.java.net/
 
-Source0:        https://swingx.dev.java.net/files/documents/2981/144879/swingx-1.6-src.zip
+Source0:        swingx-project-%version.zip
 
 Source1:        %{name}-settings.xml
 Source2:        %{name}-jpp-depmap.xml
-Patch0:         swingx-pom.patch
 
 
 BuildRequires: jpackage-utils >= 0:5.0.0
@@ -54,6 +53,8 @@ BuildRequires: maven-surefire-provider-junit4
 #BuildRequires: mojo-maven2-plugin-emma
 BuildRequires: jhlabs-filters
 BuildRequires: junit4
+BuildRequires: metainf-services
+BuildRequires: mockito
 
 Requires: jpackage-utils >= 0:5.0.0
 Requires: jhlabs-filters
@@ -91,13 +92,12 @@ BuildArch: noarch
 %{summary}. 
 
 %prep
-%setup -q -n %{name}-%{version}-src 
+%setup -q -n swingx-project-%version
 cp -p %{SOURCE1} settings.xml
 sed -i -e "s|<url>__JPP_URL_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
 sed -i -e "s|<url>__JAVADIR_PLACEHOLDER__</url>|<url>file://`pwd`/external_repo</url>|g" settings.xml
 sed -i -e "s|<url>__MAVENREPO_DIR_PLACEHOLDER__</url>|<url>file://`pwd`/.m2/repository</url>|g" settings.xml
 sed -i -e "s|<url>__MAVENDIR_PLUGIN_PLACEHOLDER__</url>|<url>file:///usr/share/maven2/plugins</url>|g" settings.xml
-%patch0 -b .orig
 mkdir external_repo
 ln -s %{_javadir} external_repo/JPP
 
@@ -118,7 +118,7 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 
 # jar
 %__mkdir_p %{buildroot}%{_javadir}
-%__install -m 644 target/%{name}-%{version}.jar %{buildroot}%{_javadir}
+%__install -m 644 %{name}-*/target/%{name}-*-%{version}.jar %{buildroot}%{_javadir}
 (cd %{buildroot}%{_javadir} && for jar in *-%{version}*; do \
 %__ln_s ${jar} ${jar/-%{version}/}; done)
 
@@ -144,6 +144,12 @@ mvn-jpp -Dmaven.compile.source=1.5 -Dmaven.compile.target=1.5 -Dmaven.javadoc.so
 %{_javadocdir}/%{name} 
 
 %changelog
+* Thu Feb 28 2013 Paul Wolneykien <manowar@altlinux.ru> 1.6.5-alt1_0jpp6
+- Install all target JARs.
+- Add "metainf-services" and "mockito" to the set of build requisites.
+- Remove the unused POM patch
+- Fresh up to v1.6.5.
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 1.6-alt4_1jpp6
 - fixed build
 
