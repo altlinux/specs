@@ -1,5 +1,5 @@
 Name: eepm
-Version: 1.1.8
+Version: 1.2.2
 Release: alt1
 
 Summary: Etersoft EPM package manager
@@ -51,11 +51,41 @@ install -m 0644 bash_completion/serv %buildroot%_sysconfdir/bash_completion.d/se
 %_bindir/eepm
 %_bindir/upm
 %_bindir/serv
+%_bindir/cerv
 %_bindir/distr_info
 %_datadir/%name/
 %_sysconfdir/bash_completion.d/serv
 
 %changelog
+* Wed Feb 20 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.2-alt1
+- epm-checkpkg: add experimental case instead function call
+- epm-simulate: accept Exiting on user Command (Fedora 17)
+- epm-checkpkg: add support for check installed package integrity
+- epm: do not add to pkg_files if filename has not dot (it is not package file)
+
+* Tue Feb 19 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.1-alt1
+- initial support for kernel-update
+- add support ipkg on OpenWRT
+- add support homebrew on MacOS
+- add check for separate_installed
+- small fixes
+
+* Thu Feb 14 2013 Vitaly Lipatov <lav@altlinux.ru> 1.2.0-alt1
+- epm-reinstall: fallback to install if the command is the same
+- epm-install: realize already installed with is_installed for any distro
+- epm-install: allow nodeps and force to pacman commands
+- epm-query: optimize, use --short
+- epm-simulate: fix for yum without --assumeno
+- epm-packages: add short support for pacman
+- epm-remove: add --nodeps support for dpkg
+
+* Tue Feb 12 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.9-alt1
+- fix install with dpkg
+- add initial release-upgrade command
+- add more pacman commands
+- epm-packages: add --short support for dpkg and rpm
+- add cerv alias for serv support
+
 * Mon Feb 11 2013 Vitaly Lipatov <lav@altlinux.ru> 1.1.8-alt1
 - add epm programs command (lists installed programs, detected by desktop files)
 - add initial support for short output (just package name, without version-release)
