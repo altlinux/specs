@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/convert /usr/bin/pngtopnm /usr/bin/rsvg-convert /usr/bin/scrollkeeper-config pkgconfig(avahi-client) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libnotify)
+BuildRequires: /usr/bin/convert /usr/bin/glib-gettextize /usr/bin/pngtopnm /usr/bin/rsvg-convert /usr/bin/scrollkeeper-config pkgconfig(avahi-client) pkgconfig(glib-2.0) pkgconfig(gobject-2.0) pkgconfig(gtk+-2.0) pkgconfig(libnotify)
 # END SourceDeps(oneline)
+%define fedora 19
 Name:           pioneers
 Version:        14.1
-Release:        alt1_2
+Release:        alt1_4
 Summary:        Turnbased board strategy game (colonize an island)
 Group:          Games/Other
 License:        GPLv2+
@@ -62,45 +63,14 @@ make install DESTDIR=$RPM_BUILD_ROOT
 rm $RPM_BUILD_ROOT%{_datadir}/pixmaps/%{name}/splash.png
 
 # Reinstall the .desktop files
-desktop-file-install  --delete-original \
+desktop-file-install --delete-original \
+%if 0%{?fedora} && 0%{?fedora} < 19
+   \
+%endif
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}.desktop \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-editor.desktop \
   $RPM_BUILD_ROOT%{_datadir}/applications/%{name}-server.desktop
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %check
@@ -121,9 +91,14 @@ fi
 %{_datadir}/pixmaps/%{name}
 %{_datadir}/omf/%{name}
 %{_datadir}/gnome/help/%{name}
-%{_mandir}/man6/%{name}*.6.*
+%{_mandir}/man6/%{name}*.6*
+%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/applications/%{name}-server.desktop
+%else
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/applications/%{name}-server.desktop
+%endif
 %{_datadir}/pixmaps/%{name}.png
 %{_datadir}/pixmaps/%{name}-server.png
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
@@ -133,12 +108,19 @@ fi
 
 %files editor
 %{_bindir}/%{name}-editor
+%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}-editor.desktop
+%else
+%{_datadir}/applications/%{name}-editor.desktop
+%endif
 %{_datadir}/pixmaps/%{name}-editor.png
 %{_datadir}/icons/hicolor/48x48/apps/%{name}-editor.png
 %{_datadir}/icons/hicolor/scalable/apps/%{name}-editor.svg
 
 %changelog
+* Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 14.1-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 14.1-alt1_2
 - update to new release by fcimport
 
