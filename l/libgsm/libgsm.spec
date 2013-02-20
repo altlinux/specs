@@ -1,6 +1,6 @@
 Name: libgsm
 Version: 1.0.13
-Release: alt6
+Release: alt7
 
 Summary: GSM audio encoding/decoding library
 License: Free/Copyright Technische Universitaet Berlin
@@ -57,6 +57,9 @@ sed -i "s!ROOT)/lib!ROOT)/%_lib!" Makefile
 install -d %buildroot{%_bindir,%_mandir/man{1,3},%_includedir,%_libdir}
 %makeinstall INSTALL_ROOT=%buildroot
 
+mkdir -p %buildroot%_includedir/gsm
+ln -s ../gsm.h %buildroot%_includedir/gsm/gsm.h
+
 echo .so toast.1 >%buildroot%_man1dir/tcat.1
 echo .so toast.1 >%buildroot%_man1dir/untoast.1
 
@@ -77,6 +80,9 @@ echo .so toast.1 >%buildroot%_man1dir/untoast.1
 %_libdir/%name.a
 
 %changelog
+* Wed Feb 20 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.13-alt7
+- add symlink %_includedir/gsm/gsm.h (ALT #28579)
+
 * Fri Jan 25 2013 Denis Smirnov <mithraen@altlinux.ru> 1.0.13-alt6
 - fix requires in subpackages
 
