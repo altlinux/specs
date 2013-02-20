@@ -6,7 +6,7 @@
 %define pkg_libdir %_libdir/%hsc_name-%hsc_version/lib/%h_pkg_name-%version
 
 Name: %f_pkg_name
-Version: 0.1.3.1
+Version: 0.1.3.2
 Release: alt1
 License: BSD3
 Packager: Denis Smirnov <mithraen@altlinux.ru>
@@ -46,6 +46,9 @@ window;
 %files -f %name-files.all
 
 %changelog
+* Wed Feb 20 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.3.2-alt1
+- 0.1.3.2
+
 * Fri Feb 08 2013 Denis Smirnov <mithraen@altlinux.ru> 0.1.3.1-alt1
 - 0.1.3.1
 
