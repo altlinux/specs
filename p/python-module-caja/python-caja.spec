@@ -5,7 +5,7 @@ BuildRequires: /usr/bin/gtkdocize /usr/bin/pkg-config /usr/bin/xsltproc
 %define oldname python-caja
 Name:           python-module-caja
 Version:        1.5.0
-Release:        alt2_0
+Release:        alt3_0
 Summary:        Python bindings for Caja
 
 Group:          Development/C
@@ -26,6 +26,7 @@ Requires:       mate-file-manager >= 1.1.0
 
 Obsoletes: 		caja-python
 Provides:  		python-caja
+%py_provides caja
 
 %description
 Python bindings for Caja
@@ -70,6 +71,9 @@ find $RPM_BUILD_ROOT -name '*.la' -delete
 %{_datadir}/doc/*
 
 %changelog
+* Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3_0
+- added py_provides caja
+
 * Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
 - dropped BR: python-module-mate-devel
 
