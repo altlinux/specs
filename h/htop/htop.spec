@@ -3,7 +3,7 @@
 %def_enable taskstats
 
 Name: htop
-Version: 1.0.1
+Version: 1.0.2
 Release: alt1
 
 Summary: Interactive ncurses-based process viewer for Linux
@@ -13,6 +13,7 @@ Group: Monitoring
 Url: http://htop.sourceforge.net
 Source0: http://heanet.dl.sourceforge.net/sourceforge/%name/%name-%version.tar.gz
 Source1: %name.ru.1
+Source100: %name.watch
 Patch: htop-0.8.3-alt-desktop.patch
 Packager: Ilya Evseev <evseev@altlinux.ru>
 
@@ -73,6 +74,12 @@ rm -r %buildroot%_pixmapsdir/
 %_niconsdir/%name.*
 
 %changelog
+* Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 1.0.2-alt1
+- new version (watch file uupdate)
+
+* Wed May 09 2012 Michael Shigorin <mike@altlinux.org> 1.0.1-alt2
+- added watch file
+
 * Sun Apr 22 2012 Michael Shigorin <mike@altlinux.org> 1.0.1-alt1
 - 1.0.1
 
