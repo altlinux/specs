@@ -1,8 +1,8 @@
 %def_disable static
 
 Name: vips
-Version: 7.30.3
-Release: alt1.4
+Version: 7.30.7
+Release: alt1
 %define majorver %(echo %version |cut -d. -f1,2)
 
 Packager: Victor Forsiuk <force@altlinux.org>
@@ -14,7 +14,6 @@ Group: Graphics
 Url: http://www.vips.ecs.soton.ac.uk
 Source0: %name-%version.tar.gz
 Source100: vips.watch
-Patch: vips-7.30.3-alt-pkgconfig.patch
 
 BuildPreReq: libxml2-devel
 # Automatically added by buildreq on Sat Oct 08 2011
@@ -70,7 +69,6 @@ Static libraries for developing statically linked VIPS applications.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -109,6 +107,10 @@ Static libraries for developing statically linked VIPS applications.
 # - package python bindings
 
 %changelog
+* Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 7.30.7-alt1
+- new version (watch file uupdate)
+- dropped patch (merged upstream)
+
 * Sun Oct 28 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 7.30.3-alt1.4
 - Rebuilt with libmatio 1.5.0
 
