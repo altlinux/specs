@@ -1,9 +1,11 @@
 %define mate_plugins compiz-annotate compiz-blur compiz-clone compiz-commands compiz-core compiz-cube compiz-dbus compiz-decoration compiz-fade compiz-fs compiz-mateconf compiz-glib compiz-matecompat compiz-ini compiz-inotify compiz-minimize compiz-move compiz-obs compiz-place compiz-png compiz-regex compiz-resize compiz-rotate compiz-scale compiz-screenshot compiz-svg compiz-switcher compiz-video compiz-water compiz-wobbly compiz-zoom gwd
 %define default_plugins animation,core,dbus,decoration,expo,glib,matecompat,imgjpeg,move,place,png,regex,resize,scale,session,svg,switcher,text,wall,wobbly,workarounds
 
+%def_disable mateconf
+
 Name: compiz
 Version: 0.8.8
-Release: alt8
+Release: alt9
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -91,7 +93,7 @@ RPM macros for sawfish-related packages
 	--enable-gtk \
 	--enable-mate \
 	--enable-marco \
-	--enable-mateconf \
+	%{subst_enable mateconf} \
 	--enable-mate-keybindings \
 	--enable-kde \
 	--enable-kde4 \
@@ -111,6 +113,7 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 
 %find_lang %name
 
+%if_enabled mateconf
 %post mate
 %mateconf_schema_upgrade %mate_plugins
 
@@ -118,13 +121,17 @@ install -pD -m644 %name-core.rpmmacros %buildroot%_rpmmacrosdir/%name-core
 if [ $1 = 0 ]; then
 %mateconf_schema_remove %mate_plugins
 fi
+%endif
+
 
 %files -f %name.lang
 %doc AUTHORS COPYING COPYING.GPL COPYING.MIT README TODO NEWS
 %_bindir/%name
 %dir %_libdir/%name
 %_libdir/*.so.*
+%if_enabled mateconf
 %exclude %_libdir/%name/libmateconf.so
+%endif
 %exclude %_libdir/%name/libmatecompat.so
 %exclude %_libdir/%name/libglib.so
 %exclude %_libdir/%name/libkconfig.so
@@ -136,9 +143,11 @@ fi
 %exclude %_datadir/%name/glib.xml
 
 %files mate
+%if_enabled mateconf
 %_sysconfdir/mateconf/schemas/*.schemas
 %exclude %_sysconfdir/mateconf/schemas/*kconfig.schemas
 %_libdir/%name/libmateconf.so
+%endif
 %_libdir/%name/libmatecompat.so
 %_libdir/%name/libglib.so
 %_libdir/window-manager-settings/*.so
@@ -170,6 +179,9 @@ fi
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Tue Feb 19 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt9
+- disable mateconf
+
 * Thu Dec 06 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt8
 - build for mate
 - fix build with kde4.10
