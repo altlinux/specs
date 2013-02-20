@@ -1,6 +1,6 @@
 Name: fontconfig
 Version: 2.10.91
-Release: alt2
+Release: alt3
 
 Summary: Font configuration and customization library and utilities
 Group: System/Configuration/Other
@@ -57,6 +57,16 @@ for f in $(ls %buildroot%_datadir/%name/conf.avail/1*.conf | sed -ne 's|\(.*/\)\
 	ln -sf ../../../%_datadir/%name/conf.avail/$f %buildroot%_sysconfdir/fonts/conf.d/$f
 done
 
+# add compatibility symlinks
+find %buildroot/%_datadir/%name/conf.avail/ -type f -name \*.conf | sed -e 's|^.*/||' | \
+while read CONF ; do
+    ln -s `relative %_datadir/%name/conf.avail/$CONF %_sysconfdir/fonts/conf.avail/$CONF` %buildroot/%_sysconfdir/fonts/conf.avail/$CONF
+done
+find %buildroot/%_sysconfdir/fonts/conf.avail/ -type f -name \*.conf | sed -e 's|^.*/||' | \
+while read CONF ; do
+    ln -s `relative %_sysconfdir/fonts/conf.avail/$CONF %_datadir/%name/conf.avail/$CONF` %buildroot/%_datadir/%name/conf.avail/$CONF
+done
+
 %post
 [ -n "$DURING_INSTALL" ] || %_sysconfdir/firsttime.d/%name
 
@@ -98,6 +108,9 @@ find -L %_sysconfdir/fonts/conf.d -type l -delete
 %docdir/%name-devel*
 
 %changelog
+* Wed Feb 20 2013 Sergey V Turchin <zerg@altlinux.org> 2.10.91-alt3
+- add compatibility config symlinks (ALT #28555)
+
 * Wed Feb 13 2013 Valery Inozemtsev <shrek@altlinux.ru> 2.10.91-alt2
 - updated to master git.72b0480
 
