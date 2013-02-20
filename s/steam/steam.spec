@@ -1,5 +1,5 @@
 Name: steam
-Version: 1.0.0.28
+Version: 1.0.0.29
 Release: alt1
 
 Summary: Installer for the Steam software distribution service
@@ -50,6 +50,9 @@ savegame and screenshot functionality, and many social features.
 %_pixmapsdir/*
 
 %changelog 
+* Wed Feb 20 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.29-alt1
+- Version 1.0.0.29
+
 * Sat Feb 16 2013 Nazarov Denis <nenderus@altlinux.org> 1.0.0.28-alt1
 - Version 1.0.0.28
 - Added require on mozilla-plugin-adobe-flash
