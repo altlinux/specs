@@ -1,9 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: libSDL-devel
 # END SourceDeps(oneline)
+%define fedora 19
 Name:           dd2
 Version:        0.2.2
-Release:        alt2_8
+Release:        alt2_10
 Summary:        Dodgin' Diamond 2 - Shoot'em up arcade game
 Group:          Games/Other
 License:        GPLv2+
@@ -46,58 +47,34 @@ mv $RPM_BUILD_ROOT%{_datadir}/%{name}/%{name}-hiscore \
 
 # below is the desktop file and icon stuff.
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
-desktop-file-install             \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+              \
+%endif
   --dir $RPM_BUILD_ROOT%{_datadir}/applications \
   %{SOURCE1}
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps
 install -p -m 644 %{SOURCE2} \
   $RPM_BUILD_ROOT%{_datadir}/icons/hicolor/24x24/apps/%{name}.png
-# generic fedora font import transformations
-# move fonts to corresponding subdirs if any
-for fontpatt in OTF TTF TTC otf ttf ttc pcf pcf.gz bdf afm pfa pfb; do
-    case "$fontpatt" in 
-	pcf*|bdf*) type=bitmap;;
-	tt*|TT*) type=ttf;;
-	otf|OTF) type=otf;;
-	afm*|pf*) type=type1;;
-    esac
-    find $RPM_BUILD_ROOT/usr/share/fonts -type f -name '*.'$fontpatt | while read i; do
-	j=`echo "$i" | sed -e s,/usr/share/fonts/,/usr/share/fonts/$type/,`;
-	install -Dm644 "$i" "$j";
-	rm -f "$i";
-	olddir=`dirname "$i"`;
-	mv -f "$olddir"/{encodings.dir,fonts.{dir,scale,alias}} `dirname "$j"`/ 2>/dev/null ||:
-	rmdir -p "$olddir" 2>/dev/null ||:
-    done
-done
-# kill invalid catalogue links
-if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
-    find -L $RPM_BUILD_ROOT/etc/X11/fontpath.d -type l -print -delete ||:
-    # relink catalogue
-    find $RPM_BUILD_ROOT/usr/share/fonts -name fonts.dir | while read i; do
-	pri=10;
-	j=`echo $i | sed -e s,$RPM_BUILD_ROOT/usr/share/fonts/,,`; type=${j%%%%/*}; 
-	pre_stem=${j##$type/}; stem=`dirname $pre_stem|sed -e s,/,-,g`;
-	case "$type" in 
-	    bitmap) pri=10;;
-	    ttf|ttf) pri=50;;
-	    type1) pri=40;;
-	esac
-	ln -s /usr/share/fonts/$j $RPM_BUILD_ROOT/etc/X11/fontpath.d/"$stem:pri=$pri"
-    done ||:
-fi
 
 
 %files
 %doc AUTHORS ChangeLog COPYING NEWS README TODO
 %attr(2711,root,games) %{_bindir}/%{name}
 %{_datadir}/%{name}
+%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}.desktop
+%else
+%{_datadir}/applications/%{name}.desktop
+%endif
 %{_datadir}/icons/hicolor/24x24/apps/%{name}.png
 %config(noreplace) %attr (0664,root,games) %{_var}/games/%{name}-hiscore
 
 
 %changelog
+* Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.2-alt2_8
 - update to new release by fcimport
 
