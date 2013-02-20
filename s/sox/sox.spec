@@ -1,10 +1,10 @@
 Name: sox
 Summary: A general purpose sound file conversion tool
-Version: 14.4.0
+Version: 14.4.1
 Release: alt1
 License: LGPL
 Group: Sound
-BuildRequires: glibc-devel-static libalsa-devel libao-devel libavformat-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel rpm-build-ruby
+BuildRequires: glibc-devel-static libalsa-devel libao-devel libavformat-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl7-devel libmad-devel libmagic-devel libopencore-amrnb-devel libopencore-amrwb-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel
 BuildRequires: ladspa_sdk libalsa-devel libao-devel libavformat-devel libflac-devel libgomp-devel libgsm-devel libid3tag-devel liblame-devel libltdl-devel libmad-devel libmagic-devel libpng-devel libpulseaudio-devel libsndfile-devel libvorbis-devel libwavpack-devel
 BuildRequires: libopencore-amrnb-devel libopencore-amrwb-devel
 Packager: Denis Smirnov <mithraen@altlinux.org>
@@ -397,6 +397,9 @@ chmod 755 %buildroot%_bindir/%{name}play
 %files play
 
 %changelog
+* Wed Feb 20 2013 Denis Smirnov <mithraen@altlinux.ru> 14.4.1-alt1
+- 14.4.1
+
 * Fri Oct 12 2012 Denis Smirnov <mithraen@altlinux.ru> 14.4.0-alt1
 - 14.4.0
 
