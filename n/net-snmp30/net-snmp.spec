@@ -7,7 +7,7 @@
 
 Name: %_name%abiversion
 Version: 5.7.2
-Release: alt1
+Release: alt2
 
 Summary: Tools and servers for the SNMP protocol
 License: BSD-like
@@ -567,6 +567,9 @@ echo "===== start test ====="
 %python_sitelibdir/netsnmp*
 
 %changelog
+* Wed Feb 20 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.7.2-alt2
+- Rebuild with new libnl
+
 * Thu Feb 07 2013 Slava Dubrovskiy <dubrsl@altlinux.org> 5.7.2-alt1
 - 5.7.2 release
 - Update patches from V5-7-patches branch
