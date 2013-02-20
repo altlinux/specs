@@ -1,7 +1,7 @@
 # NOTE: do not use clean_spec or rpmcs for this spec
 
 Name: etersoft-build-utils
-Version: 2.0.22
+Version: 2.0.23
 Release: alt1
 
 Summary: A set of rpm build utilities from Etersoft
@@ -17,7 +17,7 @@ Source: ftp://updates.etersoft.ru/pub/Etersoft/Sisyphus/sources/tarball/%name-%v
 
 BuildArchitectures: noarch
 
-%define altcompat_ver 1.7.19
+%define altcompat_ver 1.7.25
 
 # Buildreqs note: C compiler is required by rpm-build; we do not require C++ here
 BuildRequires: rpm-build-compat >= %altcompat_ver
@@ -68,6 +68,21 @@ RECOMMENDED packages: gcc-c++ perl-libwww ccache elinks mutt hasher curl
 %config(noreplace) %_sysconfdir/eterbuild/repos/*
 
 %changelog
+* Thu Feb 21 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.23-alt1
+- big pkgrepl rewrite
+- fix add ia32-libs for old deb targets
+- rpmpkg: print output in one line
+- estrlist: add support for input from stdio (with - as the first arg), add uniq alias
+- rpmcs: do not replace /var/lib
+- rpmbph: add support for new macros since rpm-build-compat 1.7.25
+- hasher: fix verbosity when print apt.conf
+- rpmbph: run rpmcs when translate to non ALT
+- introduce emkimage for run make in mkimage-profiles
+- pkgrepl: add many rules for ArchLinux
+- add mark_file_to_remove for mark tmp. files and remove it if failed
+- rpmreqs: remove apt apt-repo reqs due eepm
+- estrlist: improve help
+
 * Tue Feb 12 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.22-alt1
 - update pkgrepls
 - rpmbph, repl: fix for add 32bit requires for x86_64 Fedora/Ubuntu
