@@ -1,6 +1,6 @@
 Name:    kde4-regular
 Version: 4.10
-Release: alt6
+Release: alt7
 
 Group: Graphical desktop/KDE
 Summary: KDE4 common collection
@@ -48,6 +48,7 @@ Requires: konversation
 Requires: kde4-smb4k
 Requires: choqok
 Requires: kde4-telepathy
+Requires: sflphone-client-kde4
 Requires: kde4-kopete-antispam
 Requires: kde4-ktorrent
 Requires: bluedevil
@@ -80,6 +81,9 @@ K Desktop Environment 4 сборный пакет,
 %files
 
 %changelog
+* Wed Feb 20 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt7
+- add sflphone-client-kde4
+
 * Mon Feb 11 2013 Sergey V Turchin <zerg@altlinux.org> 4.10-alt6
 - add appmenu-qt4
 
