@@ -1,7 +1,7 @@
 Summary: IPsec-Tools package use the IPsec functionality in the linux-2.5+ kernels.
 Name: ipsec-tools
 Version: 0.8.0
-Release: alt1
+Release: alt2
 URL: http://ipsec-tools.sourceforge.net/
 License: BSD
 Group: Security/Networking
@@ -110,7 +110,8 @@ sed -i 's|-Werror||g' configure*
 	--enable-security-context \
 	--enable-audit \
 	--enable-gssapi \
-	--with-libpam
+	--with-libpam \
+	--enable-adminport=yes
 
 %make
 
@@ -172,6 +173,9 @@ install -p -m0644 %SOURCE5 %buildroot%_sysconfdir/pam.d/racoon
 
 
 %changelog
+* Wed Feb 20 2013 Denis Baranov <baraka@altlinux.ru> 0.8.0-alt2
+- add compile option enable-adminport=yes
+
 * Thu Dec 29 2011 Alexey Shabalin <shaba@altlinux.ru> 0.8.0-alt1
 - 0.8.0
 - enable ipv6
