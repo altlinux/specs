@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-gettextize /usr/bin/gtk-builder-convert libICE-deve
 Summary:        Terminal emulator for MATE
 Name:           mate-terminal
 Version:        1.5.0
-Release:        alt1_1
+Release:        alt1_3
 License:        GPLv3+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
@@ -22,6 +22,7 @@ BuildRequires: rarian-compat
 BuildRequires: librarian-devel
 BuildRequires: libvte-devel
 BuildRequires: gsettings-desktop-schemas-devel
+Requires: mate-desktop
 Source44: import.info
 Provides: xvt
 
@@ -71,6 +72,9 @@ EOF
 %_altdir/%name
 
 %changelog
+* Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_3
+- new fc release
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - new fc release
 

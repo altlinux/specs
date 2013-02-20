@@ -1,13 +1,13 @@
 Serial: 1
 Group: Graphical desktop/Other
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
+BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/update-mime-database libICE-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gio-2.0) pkgconfig(gio-unix-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk) pkgconfig(libxml-2.0) pkgconfig(pango) pkgconfig(xcursor) pkgconfig(xft) pkgconfig(xi) xorg-kbproto-devel
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-%define fedora 18
+%define fedora 19
 Name:           mate-control-center
-Version:        1.5.3
-Release:        alt1_3
+Version:        1.5.4
+Release:        alt1_1
 Summary:        MATE Desktop control-center
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
@@ -60,7 +60,6 @@ Group: Development/C
 Summary:        Development files for mate-settings-daemon
 Requires:       %{name}%{?_isa} = %{?serial:%serial:}%{version}-%{release}
 Requires: libslab-devel
-
 %description devel
 Development files for mate-control-center
 
@@ -92,7 +91,8 @@ MATE Control Center configures system settings such as themes, keyboards shortcu
 
 %build
 NOCONFIGURE=1 ./autogen.sh
-%configure --disable-static          \
+%configure \
+           --disable-static          \
            --disable-schemas-compile \
            --disable-update-mimedb   \
            --disable-scrollkeeper
@@ -106,11 +106,11 @@ make DESTDIR=%{buildroot} install
 find %{buildroot} -name '*.la' -exec rm -rf {} ';'
 find %{buildroot} -name '*.a' -exec rm -rf {} ';'
 
-desktop-file-install									\
-	--remove-category="MATE"							\
-	--add-category="X-Mate"								\
-	--delete-original								\
-	--dir=%{buildroot}%{_datadir}/applications					\
+desktop-file-install                                                       \
+        --remove-category="MATE"                                           \
+        --add-category="X-Mate"                                            \
+        --delete-original                                                  \
+        --dir=%{buildroot}%{_datadir}/applications                         \
 %{buildroot}%{_datadir}/applications/*.desktop
 
 # delete mime cache
@@ -122,7 +122,20 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %files -f %{name}.lang
 %doc AUTHORS COPYING README
 %config %{_sysconfdir}/xdg/menus/matecc.menu
-%{_bindir}/mate-*
+%{_bindir}/mate-about-me
+%{_bindir}/mate-appearance-properties
+%{_bindir}/mate-at-properties
+%{_bindir}/mate-control-center
+%{_bindir}/mate-default-applications-properties
+%{_bindir}/mate-display-properties
+%{_bindir}/mate-font-viewer
+%{_bindir}/mate-keybinding-properties
+%{_bindir}/mate-keyboard-properties
+%{_bindir}/mate-mouse-properties
+%{_bindir}/mate-network-properties
+%{_bindir}/mate-thumbnail-font
+%{_bindir}/mate-typing-monitor
+%{_bindir}/mate-window-properties
 %{_libdir}/libmate-window-settings.so.*
 %{_libdir}/window-manager-settings/
 %{_sbindir}/mate-display-properties-install-systemwide
@@ -131,12 +144,12 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_datadir}/icons/hicolor/*/apps/*.png
 %{_datadir}/icons/hicolor/scalable/apps/mate-*.svg
 %{_datadir}/glib-2.0/schemas/org.mate.*.xml
-%{_datadir}/mate-control-center/
+%{_datadir}/mate-control-center
 %{_datadir}/mate/cursor-fonts/*.pcf
-%{_datadir}/mate/help/mate-control-center/
+%{_datadir}/mate/help/mate-control-center
 %{_datadir}/mime/packages/mate-theme-package.xml
 %{_datadir}/thumbnailers/mate-font-viewer.thumbnailer
-%{_datadir}/omf/mate-control-center/
+%{_datadir}/omf/mate-control-center
 %{_datadir}/polkit-1/actions/org.mate.randr.policy
 %{_datadir}/MateConf/gsettings/mate-control-center.convert
 
@@ -144,7 +157,7 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_libdir}/libslab.so.*
 
 %files devel
-%{_includedir}/mate-window-settings-2.0/
+%{_includedir}/mate-window-settings-2.0
 %{_libdir}/pkgconfig/mate-window-settings-2.0.pc
 %{_libdir}/libmate-window-settings.so
 %{_datadir}/pkgconfig/mate-default-applications.pc
@@ -156,6 +169,9 @@ rm %{buildroot}%{_datadir}/applications/mimeinfo.cache
 %{_libdir}/pkgconfig/libslab.pc
 
 %changelog
+* Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.5.4-alt1_1
+- new fc release
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1:1.5.3-alt1_3
 - new fc release
 

@@ -6,21 +6,20 @@ BuildRequires: libcanberra-gtk2-devel
 %define _libexecdir %_prefix/libexec
 Name:           mate-window-manager
 Version:        1.5.3
-Release:        alt1_2
+Release:        alt1_4
 Summary:        MATE Desktop window manager
 License:        LGPLv2+ and GPLv2+
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
 
-#Upstream patch to fix update of GSettings enum preferences 
-#patch0: fix_gsettings_update.patch
+Patch0: mwm_commits_rollup.patch
 
 BuildRequires: desktop-file-utils
 BuildRequires: gsettings-desktop-schemas-devel
 BuildRequires: gtk2-devel
 BuildRequires: libcanberra-devel
 BuildRequires: libSM-devel
-BuildRequires: libsoup-devel
+BuildRequireS: libsoup-devel
 BuildRequires: libXdamage-devel
 BuildRequires: mate-common
 BuildRequires: mate-dialogs
@@ -65,6 +64,7 @@ Internal library for MATE Window Manager.
 
 %prep
 %setup -q
+%patch0 -p1
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
@@ -73,10 +73,11 @@ Internal library for MATE Window Manager.
 NOCONFIGURE=1 ./autogen.sh
 
 %build
-%configure --disable-static         \
-           --disable-scrollkeeper   \
-           --with-gnu-ld            \
-           --with-gtk=2.0           \
+%configure --disable-static           \
+           --disable-scrollkeeper     \
+           --disable-schemas-compile  \
+           --with-gnu-ld              \
+           --with-gtk=2.0             \
            --with-x
 
 make %{?_smp_mflags} V=1
@@ -115,7 +116,7 @@ desktop-file-install                                \
 %{_datadir}/marco/
 %{_datadir}/mate-control-center/keybindings/50-marco*.xml
 %{_datadir}/mate/help/creating-marco-themes/C/creating-marco-themes.xml
-%{_datadir}/mate/wm-properties/
+%{_datadir}/mate/wm-properties
 %{_datadir}/glib-2.0/schemas/org.mate.marco.gschema.xml
 %{_datadir}/MateConf/gsettings/marco.convert
 %{_libdir}/libmarco-private.so.0*
@@ -138,6 +139,9 @@ desktop-file-install                                \
 
 
 %changelog
+* Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_4
+- new fc release
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.3-alt1_2
 - new fc release
 
