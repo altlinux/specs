@@ -1,7 +1,8 @@
+%define fedora 19
 Name: pipepanic
 Version: 0.1.3
-Release: alt4_11
-Summary: A pipe connecting game       
+Release: alt4_13
+Summary: A pipe connecting game
 
 Group: Games/Other
 License: GPLv2+
@@ -72,7 +73,10 @@ install -m 644 PipepanicIcon64.png %{buildroot}%{_datadir}/icons/hicolor/64x64/a
 
 # Install desktop file
 mkdir -p %{buildroot}%{_datadir}/applications
-desktop-file-install          \
+desktop-file-install \
+%if 0%{?fedora} && 0%{?fedora} < 19
+           \
+%endif
   --dir %{buildroot}%{_datadir}/applications \
   %{SOURCE1}
 
@@ -84,11 +88,18 @@ desktop-file-install          \
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 %{_datadir}/icons/hicolor/48x48/apps/%{name}.png
 %{_datadir}/icons/hicolor/64x64/apps/%{name}.png
+%if 0%{?fedora} && 0%{?fedora} < 19
 %{_datadir}/applications/%{name}.desktop
+%else
+%{_datadir}/applications/%{name}.desktop
+%endif
 %doc AUTHORS ChangeLog COPYING COPYING-ARTWORK README
 
 
 %changelog
+* Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_13
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt4_11
 - update to new release by fcimport
 
