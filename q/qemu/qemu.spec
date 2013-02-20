@@ -36,13 +36,15 @@
 %def_enable aio
 %def_enable blobs
 %def_enable uuid
-%def_enable smartcard
 %def_enable smartcard_nss
 %def_enable usb_redir
 %def_disable opengl
 %def_enable guest_agent
+%def_enable tools
 %def_enable spice
 %def_enable libiscsi
+%def_disable seccomp
+%def_disable glusterfs
 
 %define audio_drv_list %{?_enable_oss:oss} %{?_enable_alsa:alsa} %{?_enable_sdl:sdl} %{?_enable_esound:esd} %{?_enable_pulseaudio:pa}
 %define audio_card_list ac97 es1370 sb16 adlib cs4231a gus hda
@@ -50,6 +52,8 @@
 %define _group vmusers
 %define rulenum 90
 %define _libexecdir /usr/libexec
+%define _localstatedir /var
+%define _sharedstatedir /var
 
 %global target_list_system %nil
 %global target_list_user %nil
@@ -123,8 +127,8 @@
 # }}}
 
 Name: qemu
-Version: 1.2.0
-Release: alt3
+Version: 1.4.0
+Release: alt1
 
 Summary: QEMU CPU Emulator
 License: GPL/LGPL/BSD
@@ -150,6 +154,7 @@ BuildRequires: glibc-devel-static zlib-devel-static glib2-devel-static
 BuildRequires: texinfo perl-podlators libattr-devel libcap-devel libcap-ng-devel
 BuildRequires: zlib-devel libcurl-devel libpci-devel glibc-kernheaders
 BuildRequires: ipxe-roms-qemu vgabios seabios libfdt-devel
+BuildRequires: libpixman-devel >= 0.18.4
 %{?_enable_sdl:BuildRequires: libSDL-devel libX11-devel }
 %{?_enable_curses:BuildRequires: libncurses-devel}
 %{?_enable_bluez:BuildRequires: libbluez-devel}
@@ -162,13 +167,15 @@ BuildRequires: ipxe-roms-qemu vgabios seabios libfdt-devel
 %{?_enable_vnc_png:BuildRequires: libpng-devel}
 %{?_enable_vde:BuildRequires: libvde-devel}
 %{?_enable_aio:BuildRequires: libaio-devel}
-%{?_enable_spice:BuildRequires: libspice-server-devel >= 0.8.2 spice-protocol}
+%{?_enable_spice:BuildRequires: libspice-server-devel >= 0.12.0 spice-protocol >= 0.12.2}
 %{?_enable_uuid:BuildRequires: libuuid-devel}
 %{?_enable_smartcard_nss:BuildRequires: libnss-devel >= 3.12.8}
-%{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.3.4}
+%{?_enable_usb_redir:BuildRequires: libusbredir-devel >= 0.5}
 %{?_enable_opengl:BuildRequires: libGL-devel libX11-devel}
 %{?_enable_guest_agent:BuildRequires: glib2-devel python-base}
 %{?_enable_libiscsi:BuildRequires: libiscsi-devel >= 1.3.0}
+%{?_enable_seccomp:BuildRequires: libseccomp-devel >= 1.0.0}
+%{?_enable_glusterfs:BuildRequires: glusterfs3-devel}
 
 %description
 QEMU is a fast processor emulator using dynamic translation to achieve
@@ -207,6 +214,8 @@ This package contains common files for qemu.
 Summary: QEMU CPU Emulator - full system emulation
 Group: Emulators
 Requires: %name-common = %version-%release
+Provides: qemu-kvm  = %version-%release
+Obsoletes: qemu-kvm < %version-%release
 
 %description system
 Full system emulation.  In this mode, QEMU emulates a full system
@@ -282,6 +291,31 @@ good emulation speed by using dynamic translation.
 
 This is an auxiliary package.
 
+%package -n libcacard
+Summary: CA Card library
+Group: System/Libraries
+License: LGPLv2.1+
+
+%description -n libcacard
+Common Access Card (CAC) emulation library.
+
+%package -n libcacard-devel
+Summary: CAC Emulation devel
+Group: Development/C
+Requires: libcacard = %version-%release
+License: LGPLv2.1+
+
+%description -n libcacard-devel
+CAC emulation development files.
+
+%package -n libcacard-tools
+Summary: CAC Emulation tools
+Group: Development/Other
+Requires: libcacard = %version-%release
+
+%description -n libcacard-tools
+CAC emulation tools.
+
 %prep
 %setup
 %patch -p1
@@ -301,7 +335,6 @@ export CFLAGS="%optflags"
 	--disable-system \
 	--enable-nptl \
 	--enable-guest-base \
-	--disable-smartcard \
 	--disable-smartcard-nss \
 	--disable-usb-redir \
 	--disable-linux-aio
@@ -355,12 +388,13 @@ sed -i '/cpu_model =/ s,arm926,any,' linux-user/main.c
 	--enable-fdt \
 	--enable-kvm \
 	--enable-nptl \
-	%{subst_enable smartcard} \
+	--with-system-pixman \
 	%{?_enable_smartcard_nss:--enable-smartcard-nss} \
 	%{?_enable_usb_redir:--enable-usb-redir} \
 	%{subst_enable opengl} \
 	%{subst_enable libiscsi} \
 	%{?_disable_guest_agent:--disable-guest-agent} \
+	%{subst_enable tools} \
 	--enable-guest-base \
 	--enable-pie
 
@@ -379,8 +413,9 @@ install -m644 Changelog LICENSE TODO %buildroot%docdir/
 find -regex '.*linux-user/qemu.*\.static' -exec install -m755 '{}' %buildroot%_bindir ';'
 %endif
 
-mv %buildroot%_bindir/qemu-system-x86_64 %buildroot%_bindir/qemu-std-system-x86_64
-ln -s %_bindir/qemu-std-system-x86_64 %buildroot%_bindir/qemu
+ln -s %_bindir/qemu-system-x86_64 %buildroot%_bindir/qemu
+ln -s %_bindir/qemu-system-x86_64 %buildroot%_bindir/kvm
+ln -s %_bindir/qemu-system-x86_64 %buildroot%_bindir/qemu-kvm
 
 rm -f %buildroot%_bindir/check-*
 rm -f %buildroot%_sysconfdir/udev/rules.d/*
@@ -431,11 +466,6 @@ ln -s ../vgabios/VGABIOS-lgpl-latest.stdvga.bin %buildroot%_datadir/%name/vgabio
 ln -s ../vgabios/VGABIOS-lgpl-latest.vmware.bin %buildroot%_datadir/%name/vgabios-vmware.bin
 ln -s ../../../usr/lib/seabios/bios.bin %buildroot%_datadir/%name/bios.bin
 
-cd %buildroot
-# Add alternatives for qemu-kvm
-mkdir -p ./%_altdir
-printf '%_bindir/qemu-system-x86_64\t%_bindir/qemu-std-system-x86_64\t50\n' >./%_altdir/qemu
-
 %check
 %make V=1 check
 
@@ -473,13 +503,15 @@ fi
 /lib/systemd/kvm-modules-load
 
 %files system
-%_altdir/qemu
 %_bindir/qemu
+%_bindir/qemu-kvm
+%_bindir/kvm
 %_bindir/qemu*system*
 
 %files user
 %_bindir/qemu-*
 %exclude %_bindir/qemu*system*
+%exclude %_bindir/qemu-kvm
 %if_enabled binfmt_misc
 %exclude %_bindir/qemu-*.static
 %endif
@@ -497,7 +529,6 @@ fi
 %_bindir/qemu-img
 %_bindir/qemu-io
 %_bindir/qemu-nbd
-%_bindir/vscclient
 %_bindir/virtfs-proxy-helper
 %_man1dir/virtfs-proxy-helper.*
 %_libexecdir/qemu-bridge-helper
@@ -515,7 +546,21 @@ fi
 %dir %docdir/
 %docdir/LICENSE
 
+%files -n libcacard
+%_libdir/libcacard.so.*
+
+%files -n libcacard-devel
+%_includedir/cacard
+%_pkgconfigdir/libcacard.pc
+%_libdir/libcacard.so
+
+%files -n libcacard-tools
+%_bindir/vscclient
+
 %changelog
+* Mon Feb 18 2013 Alexey Shabalin <shaba@altlinux.ru> 1.4.0-alt1
+- 1.4.0
+
 * Mon Dec 24 2012 Ivan Ovcherenko <asdus@altlinux.org> 1.2.0-alt3
 - Rebuild with Flattened Device Tree support.
 

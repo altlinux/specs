@@ -1,6 +1,6 @@
 Name: SPICE
-Version: 0.12.0
-Release: alt2
+Version: 0.12.2
+Release: alt1
 Summary: Implements the SPICE protocol
 Group: Graphical desktop/Other
 License: LGPLv2+
@@ -19,6 +19,7 @@ BuildRequires: libXfixes-devel libXrandr-devel libXext-devel libX11-devel libXin
 BuildRequires: libalsa-devel libcelt051-devel libjpeg-devel libpixman-devel zlib-devel
 BuildRequires: libssl-devel libsasl2-devel python-module-pyparsing
 BuildRequires: libcacard-devel >= 0.1.2
+BuildRequires: glib2-devel >= 2.22
 
 %description
 The Simple Protocol for Independent Computing Environments (SPICE) is
@@ -69,6 +70,8 @@ using spice-server, you will need to install spice-server-devel.
 tar -xf %SOURCE2 
 tar -xf %SOURCE3 -C spice-common
 %patch1 -p1
+# version in .tarball-version file
+echo "%version" > .tarball-version
 
 %build
 rm -f GITVERSION
@@ -102,6 +105,9 @@ rm -f %buildroot%_libdir/libspice-server.la
 %_pkgconfigdir/spice-server.pc
 
 %changelog
+* Mon Feb 18 2013 Alexey Shabalin <shaba@altlinux.ru> 0.12.2-alt1
+- upstream snapshot
+
 * Thu Feb 14 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.12.0-alt2
 - Build for armh too
 

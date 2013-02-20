@@ -59,7 +59,7 @@
 %def_without hal
 %def_with yajl
 %def_without sanlock
-
+%def_with fuse
 
 %endif #server_drivers
 
@@ -95,8 +95,8 @@
 %def_with sasl
 
 Name: libvirt
-Version: 1.0.0
-Release: alt2
+Version: 1.0.2
+Release: alt1
 Summary: Library providing a simple API virtualization
 License: LGPLv2+
 Group: System/Libraries
@@ -140,6 +140,7 @@ Requires: libvirt-client = %version-%release
 %{?_with_esx:BuildRequires: libcurl-devel}
 %{?_with_hyperv:BuildRequires: libwsman-devel}
 %{?_with_audit:BuildRequires: libaudit-devel}
+%{?_with_fuse:BuildRequires: libfuse-devel >= 2.8.6}
 
 BuildRequires: bridge-utils libblkid-devel
 BuildRequires: libgcrypt-devel libgnutls-devel
@@ -490,6 +491,7 @@ sed -i 's/virnetsockettest //' tests/Makefile.am
 		--with-qemu-user=%qemu_user \
 		--with-qemu-group=%qemu_group \
 		--with-xml-catalog-file=/etc/sgml/catalog \
+		--with-sysctl=check \
 		%{subst_with libvirtd} \
 		%{subst_with avahi} \
 		%{subst_with xen} \
@@ -518,6 +520,7 @@ sed -i 's/virnetsockettest //' tests/Makefile.am
 		%{subst_with hal} \
 		%{subst_with yajl} \
 		%{subst_with sanlock} \
+		%{subst_with fuse} \
 		%{subst_with dbus} \
 		%{subst_with polkit} \
 		%{subst_with capng} \
@@ -611,9 +614,11 @@ if [ $1 -eq 1 ]; then
     fi
 fi
 %post_service libvirtd
+%post_service virtlockd
 
 %preun daemon
 %preun_service libvirtd
+%preun_service virtlockd
 
 %if_with network
 %post daemon-config-network
@@ -669,6 +674,7 @@ fi
 
 %config(noreplace) %_sysconfdir/sysconfig/libvirt-guests
 %_initdir/libvirt-guests
+%_libexecdir/libvirt-guests.sh
 %systemd_unitdir/libvirt-guests.service
 
 %dir %_localstatedir/lib/libvirt
@@ -682,11 +688,22 @@ fi
 %dir %attr(0700, root, root) %_sysconfdir/libvirt/nwfilter
 %config(noreplace) %_sysconfdir/sysconfig/libvirtd
 %config /lib/tmpfiles.d/libvirtd.conf
-%systemd_unitdir/libvirtd.service
+%_unitdir/libvirtd.service
 %_initdir/libvirtd
 %config(noreplace) %_sysconfdir/libvirt/libvirtd.conf
-%config(noreplace) %_sysconfdir/sysctl.d/libvirtd
+/lib/sysctl.d/*
 %config(noreplace) %_sysconfdir/logrotate.d/libvirtd
+
+#virtlockd
+%config(noreplace) %_sysconfdir/libvirt/qemu-lockd.conf
+%_initdir/virtlockd
+%config(noreplace) %_sysconfdir/sysconfig/virtlockd
+%_unitdir/virtlockd.service
+%_unitdir/virtlockd.socket
+%_libdir/%name/lock-driver/lockd.so
+%_sbindir/virtlockd
+%_datadir/augeas/lenses/libvirt_lockd.aug
+%_datadir/augeas/lenses/tests/test_libvirt_lockd.aug
 
 %if_with storage_disk
 %_libexecdir/libvirt_parthelper
@@ -841,6 +858,9 @@ fi
 %doc examples/python
 
 %changelog
+* Wed Feb 20 2013 Alexey Shabalin <shaba@altlinux.ru> 1.0.2-alt1
+- 1.0.2
+
 * Thu Nov 08 2012 Alexey Shabalin <shaba@altlinux.ru> 1.0.0-alt2
 - build libvirt-daemon-driver-interface package
 

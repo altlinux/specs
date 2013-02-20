@@ -1,5 +1,5 @@
 Name: seabios
-Version: 1.7.1
+Version: 1.7.2
 Release: alt1
 Summary: Open-source legacy BIOS implementation
 
@@ -35,6 +35,9 @@ install -m 0644 out/bios.bin %buildroot%_libexecdir/%name
 %_libexecdir/%name/bios.bin
 
 %changelog
+* Tue Feb 19 2013 Alexey Shabalin <shaba@altlinux.ru> 1.7.2-alt1
+- 1.7.2
+
 * Fri Sep 28 2012 Alexey Shabalin <shaba@altlinux.ru> 1.7.1-alt1
 - 1.7.1
 
