@@ -1,15 +1,15 @@
 %def_without floppyd
 
 Name: mtools
-Version: 4.0.17
-Release: alt3
+Version: 4.0.18
+Release: alt1
 
 Summary: Programs for accessing FAT formatted media without mounting it
 License: GPLv3
 Group: File tools
 
 Url: http://www.gnu.org/software/mtools/intro.html
-Source0: %url/%name-%version.tar.bz2
+Source0: %url/%{name}-%{version}.tar.gz
 Source1: floppyd.xinetd
 Source100: mtools.watch
 Packager: Michael Shigorin <mike@altlinux.org>
@@ -126,6 +126,9 @@ find %buildroot -name floppyd\* -print0 | xargs -r0 rm -fv --
 # - review, rediff and send upstream patch1, patch2
 
 %changelog
+* Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 4.0.18-alt1
+- new version (watch file uupdate)
+
 * Tue Jul 10 2012 Michael Shigorin <mike@altlinux.org> 4.0.17-alt3
 - added Requires: glibc-gconv-modules (closes: #27525)
 
