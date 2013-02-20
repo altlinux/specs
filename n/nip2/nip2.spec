@@ -1,6 +1,6 @@
 Name: nip2
-Version: 7.30.1
-Release: alt1.1
+Version: 7.30.2
+Release: alt1
 
 Packager: Victor Forsiuk <force@altlinux.org>
 
@@ -12,8 +12,6 @@ Url: http://www.vips.ecs.soton.ac.uk
 Source0: %{name}-%{version}.tar.gz
 Source1: %name.xpm
 Source100: nip2.watch
-
-Patch: nip2-7.30.1-gentoo-types.patch
 
 Requires: vips >= 7.8.6
 Provides: nip = %version
@@ -39,7 +37,6 @@ Documentation for %name.
 
 %prep
 %setup
-%patch -p1
 
 %build
 %autoreconf
@@ -72,6 +69,10 @@ cp -a doc/html doc/pdf %buildroot%_docdir/%name/
 # - look into uninstalled /usr/share/mime/*
 
 %changelog
+* Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 7.30.2-alt1
+- new version (watch file uupdate)
+- dropped gentoo patch
+
 * Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 7.30.1-alt1.1
 - adapted gentoo patch to fix FTBFS (https://bugs.gentoo.org/437446)
 
