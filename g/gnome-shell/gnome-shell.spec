@@ -5,7 +5,7 @@
 %def_with systemd
 
 Name: gnome-shell
-Version: %ver_major.3
+Version: %ver_major.3.1
 Release: alt1
 
 Summary: Window management and application launching for GNOME
@@ -186,6 +186,9 @@ rm -f %buildroot%_libdir/%name/*.la
 %_datadir/gtk-doc/html/st/
 
 %changelog
+* Thu Feb 21 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3.1-alt1
+- 3.6.3.1
+
 * Sun Feb 17 2013 Yuri N. Sedunov <aris@altlinux.org> 3.6.3-alt1
 - 3.6.3
 
