@@ -2,7 +2,7 @@
 
 %define module_name	dahdi
 %define module_version	2.6.1
-%define module_release alt2
+%define module_release alt3
 
 %define flavour	std-def
 BuildRequires(pre): rpm-build-kernel
@@ -53,6 +53,10 @@ Patch2: dahdi-remove-spinlock_unlocked.patch
 Patch3: dahdi-build-3.2.patch
 %endif
 
+%if "%kversion" >= "3.8"
+Patch4: dahdi-build-3.8.patch
+%endif
+
 %description
 dahdi modules, that needed for all Digium hardware, and some compatible
 devices for telephony.
@@ -74,6 +78,9 @@ rm -rf kernel-source-%module_name-%module_version
 tar -jxvf %kernel_src/kernel-source-%module_name-%module_version.tar.bz2
 
 %setup -D -T -n kernel-source-%module_name-%module_version
+%if "%kversion" >= "3.8"
+%patch4 -p0
+%endif
 
 %build
 pushd dahdi
@@ -177,6 +184,9 @@ popd
 %changelog
 * %(date "+%%a %%b %%d %%Y") %{?package_signer:%package_signer}%{!?package_signer:%packager} %version-%release
 - Build for kernel-image-%flavour-%kversion-%krelease.
+
+* Wed Feb 20 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 2.6.1-alt3
+- build with kernel 3.8 fixed
 
 * Mon Dec 17 2012 Gleb F-Malinovskiy <glebfm@altlinux.org> 2.6.1-alt2
 - new template
