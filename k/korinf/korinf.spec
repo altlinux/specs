@@ -1,5 +1,5 @@
 Name: korinf
-Version: 2.0.1
+Version: 2.0.2
 Release: alt1
 
 Summary: Korinf multidistro build system
@@ -17,7 +17,7 @@ Source: %name-%version.tar
 BuildArchitectures: noarch
 
 Requires: eepm >= 1.0
-Requires: etersoft-build-utils >= 2.0.21
+Requires: etersoft-build-utils >= 2.0.23
 Requires: alien >= 8.86-alt3
 
 %description
@@ -44,6 +44,14 @@ This package contains Korinf multidistro build system.
 %_datadir/eterbuild/korinf/
 
 %changelog
+* Thu Feb 21 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.2-alt1
+- filelist: will output one big package for FreeBSD, ArchLinux, Gentoo, Solaris, Windows
+- big update etc/lists
+- introduce new convert_archlinux, which makes nice pkgs with depends: can build wine
+- need etersoft-build-utils 2.0.23 version
+- log: use 22 instead 2 status code
+- replace nxclient with opennx
+
 * Thu Feb 07 2013 Vitaly Lipatov <lav@altlinux.ru> 2.0.1-alt1
 - convert: drop non lib requires only for wine on Ubuntu
 - update lists: add Ubuntu 12.10, Debian 7, Fedora 18
