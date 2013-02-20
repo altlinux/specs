@@ -1,5 +1,5 @@
 Name: galculator
-Version: 2.0
+Version: 2.1
 Release: alt1
 
 Summary: GTK 2 based scientific calculator
@@ -46,12 +46,15 @@ rm -rf %buildroot%_pixmapsdir/
 %_liconsdir/%name.xpm
 %_datadir/%name
 %_man1dir/*
-%doc AUTHORS ChangeLog NEWS README THANKS TODO
+%doc AUTHORS ChangeLog NEWS README THANKS
 
 # TODO:
 # - 32x32 and 16x16? (%%_niconsdir and %%_miconsdir)
 
 %changelog
+* Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 2.1-alt1
+- new version (watch file uupdate)
+
 * Tue Oct 23 2012 Michael Shigorin <mike@altlinux.org> 2.0-alt1
 - new version (watch file uupdate)
   + it wants gtk3, don't believe the README
