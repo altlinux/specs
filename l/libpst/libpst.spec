@@ -1,5 +1,5 @@
 Name: libpst
-Version: 0.6.55
+Version: 0.6.58
 Release: alt1
 
 Summary: Tools for conversion of Outlook files to mailbox and other formats
@@ -15,6 +15,7 @@ BuildRequires(pre): rpm-build-licenses
 
 # Automatically added by buildreq on Tue Aug 04 2009
 BuildRequires: ImageMagick-tools boost-python-devel gcc-c++ libgd2-devel
+BuildRequires: libgsf-devel
 
 %define pkgdocdir %_docdir/%name-%version
 
@@ -97,6 +98,9 @@ Developer's documentation for libpst
 %exclude %pkgdocdir/[A-Z]*
 
 %changelog
+* Wed Feb 20 2013 Michael Shigorin <mike@altlinux.org> 0.6.58-alt1
+- new version (watch file uupdate)
+
 * Thu Aug 23 2012 Michael Shigorin <mike@altlinux.org> 0.6.55-alt1
 - new version (watch file uupdate)
 
