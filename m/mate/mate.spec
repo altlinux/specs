@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt2
+Release: alt3
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -46,14 +46,9 @@ A set of virtual packages for MATE Desktop version 3 installation.
 Summary: MATE Desktop minimal installer
 Group: Graphical desktop/MATE
 Provides: %name-core = %version-%release
-
-# expired: should be dropped and replaced w/gio and shared-mime-info
-Requires: mate-mime-data
+Provides: %name-mini = %version-%release
 
 # components
-#Requires: mate-corba
-#Requires: mate-vfs
-#Requires: python-corba
 Requires: mate-dialogs
 Requires: mate-polkit
 Requires: mate-settings-daemon
@@ -192,8 +187,17 @@ Requires: mate-bluetooth
 Requires: mate-file-manager-sendto
 Requires: mate-file-manager-open-terminal
 Requires: mate-file-manager-image-converter
+Requires: mate-file-manager-extensions
 Requires: mate-netspeed
 Requires: python-module-caja
+Requires: mate-backgrounds
+
+Requires: mate-document-viewer-caja
+Requires: mate-document-viewer-djvu
+Requires: mate-document-viewer-pixbuf
+Requires: mate-document-viewer-impress
+Requires: mate-document-viewer-xps
+Requires: mate-document-viewer-dvi
 
 Provides: mate-desktop-environment = %version
 
@@ -215,10 +219,11 @@ This virtual package installs spell checking dictionary for russian language
 
 ## =========================================================================
 
-%package full
+%package maxi
 Summary: MATE Desktop full installer
 Group: Graphical desktop/MATE
 Requires: %name-default = %version-%release
+Provides: %name-full = %version
 
 # Sound & graphics & video
 ## All Rhythmbox plugins
@@ -268,7 +273,14 @@ Requires: consolehelper
 ## 3D screensavers
 #Requires: mate-screensaver-modules-xscreensaver-gl
 
-%description full
+Requires: mate-file-manager-dropbox
+Requires: mate-file-manager-share
+#Requires: mate-keyring-pam
+Requires: mate-system-log
+Requires: mate-user-share
+
+
+%description maxi
 This virtual package installs full MATE Desktop except components from
 mate-mobile and mate-a11y packages.
 
@@ -355,13 +367,16 @@ itself).
 %files minimal
 %files default
 #%files default-ru
-#%files full
+%files maxi
 #%files office
 #%files office-ru
 #%files office-light
 #%files a11y
 
 %changelog
+* Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3
+- added missing dependencies.
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2
 - dropped dependencies on obsolete mate 1.4 packages
 
