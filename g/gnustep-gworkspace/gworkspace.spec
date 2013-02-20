@@ -1,6 +1,6 @@
 Name: gnustep-gworkspace
 Version: 0.9.2
-Release: alt1.git20130127
+Release: alt2.git20130127
 Summary: The GNUstep Workspace Manager of which the most visible part is the filebrowser
 License: GPLv2+
 Group: Graphical desktop/GNUstep
@@ -9,6 +9,7 @@ Packager: Eugeny A. Rostovtsev (REAL) <real at altlinux.org>
 
 # https://github.com/gnustep/gnustep-gworkspace.git
 Source: %name-%version.tar
+Source1: %name.menu
 
 BuildPreReq: gcc-objc gnustep-make-devel gnustep-base-devel /proc
 BuildPreReq: libgnustep-objc2-devel libgnustep-pdfkit-devel
@@ -115,12 +116,15 @@ for j in MDKit Operation Inspector FSNode; do
 done
 popd
 
+install -Dp -m644 %SOURCE1 %buildroot%_menudir/%name
+
 %files
 %doc ChangeLog README TODO
 %_bindir/*
 %_libdir/GNUstep
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Versions/?/Headers
 %exclude %_libdir/GNUstep/Frameworks/*.framework/Headers
+%_menudir/*
 
 %files -n lib%name
 %_libdir/*.so.*
@@ -135,6 +139,9 @@ popd
 %doc Documentation/*
 
 %changelog
+* Wed Feb 20 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt2.git20130127
+- Added menu file (thinx kostyalamer@)
+
 * Wed Jan 30 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 0.9.2-alt1.git20130127
 - Version 0.9.2
 
