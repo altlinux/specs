@@ -1,11 +1,9 @@
 %define mate_plugins compiz-annotate compiz-blur compiz-clone compiz-commands compiz-core compiz-cube compiz-dbus compiz-decoration compiz-fade compiz-fs compiz-mateconf compiz-glib compiz-matecompat compiz-ini compiz-inotify compiz-minimize compiz-move compiz-obs compiz-place compiz-png compiz-regex compiz-resize compiz-rotate compiz-scale compiz-screenshot compiz-svg compiz-switcher compiz-video compiz-water compiz-wobbly compiz-zoom gwd
 %define default_plugins animation,core,dbus,decoration,expo,glib,matecompat,imgjpeg,move,place,png,regex,resize,scale,session,svg,switcher,text,wall,wobbly,workarounds
 
-%def_disable mateconf
-
 Name: compiz
 Version: 0.8.8
-Release: alt9
+Release: alt10
 Summary: OpenGL window and compositing manager
 License: MIT/X11 GPL
 Group: System/X11
@@ -23,8 +21,7 @@ BuildRequires: libdbus-glib-devel libmetacity-devel librsvg-devel
 BuildRequires: libwnck-devel xsltproc libxslt-devel xorg-xextproto-devel kde4libs-devel kde4base-workspace-devel
 BuildRequires: kdebase-devel libdbus-tqt-devel libtqt-devel libpng-devel
 
-BuildRequires: libfuse-devel
-BuildRequires: mate-conf-devel mate-window-manager-devel mate-control-center-devel mate-desktop-devel
+BuildRequires: libfuse-devel libstartup-notification-devel
 
 %description
 Compiz is an OpenGL compositing manager that use GLX_EXT_texture_from_pixmap
@@ -91,9 +88,9 @@ RPM macros for sawfish-related packages
 	--with-default-plugins="%default_plugins" \
 	--enable-librsvg \
 	--enable-gtk \
-	--enable-mate \
+	--disable-mate \
 	--enable-marco \
-	%{subst_enable mateconf} \
+	--disable-mateconf \
 	--enable-mate-keybindings \
 	--enable-kde \
 	--enable-kde4 \
@@ -142,21 +139,24 @@ fi
 %exclude %_datadir/%name/matecompat.xml
 %exclude %_datadir/%name/glib.xml
 
+%if_enabled mate
 %files mate
 %if_enabled mateconf
 %_sysconfdir/mateconf/schemas/*.schemas
 %exclude %_sysconfdir/mateconf/schemas/*kconfig.schemas
 %_libdir/%name/libmateconf.so
+%_datadir/%name/mateconf.xml
+%_libdir/window-manager-settings/libcompiz.so
 %endif
 %_libdir/%name/libmatecompat.so
 %_libdir/%name/libglib.so
-%_libdir/window-manager-settings/*.so
+%_libdir/window-manager-settings/libmarco.so
 %_desktopdir/%name.desktop
-%_datadir/%name/mateconf.xml
 %_datadir/%name/matecompat.xml
 %_datadir/%name/glib.xml
 %_datadir/mate-control-center/keybindings/*.xml
 %_datadir/mate/wm-properties/%name-wm.desktop
+%endif
 
 %files gtk
 %_bindir/gtk-window-decorator
@@ -179,6 +179,9 @@ fi
 %_rpmmacrosdir/%name-core
 
 %changelog
+* Thu Feb 21 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt10
+- disable mate too: it requires mateconf
+
 * Tue Feb 19 2013 Gleb F-Malinovskiy <glebfm@altlinux.org> 0.8.8-alt9
 - disable mateconf
 
