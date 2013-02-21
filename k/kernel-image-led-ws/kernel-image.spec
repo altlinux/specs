@@ -20,13 +20,13 @@
 %define flavour %base_flavour-%sub_flavour
 
 Name: kernel-image-%flavour
-Version: 3.0.65
-Release: alt4
+Version: 3.0.66
+Release: alt1
 
 %define kernel_req %nil
 %define kernel_prov %nil
 %define kernel_branch 3.0
-%define kernel_stable_version 65
+%define kernel_stable_version 66
 %define kernel_extra_version .%kernel_stable_version
 #define kernel_extra_version %nil
 
@@ -330,7 +330,7 @@ Patch0304: linux-%kernel_branch.42-fix-drivers-i2c-busses--scx200_acb.patch
 Patch0310: linux-%kernel_branch.42-fix-drivers-ide.patch
 
 Patch0321: linux-%kernel_branch.43-fix-drivers-idle--i7300_idle.patch
-Patch0322: linux-%kernel_branch.53-fix-drivers-idle--intel_idle.patch
+Patch0322: linux-%kernel_branch.65-fix-drivers-idle--intel_idle.patch
 
 Patch0331: linux-%kernel_branch.42-fix-drivers-infiniband-core.patch
 Patch0332: linux-%kernel_branch.42-fix-drivers-infiniband-hw-cxgb4.patch
@@ -3065,6 +3065,12 @@ done)
 
 
 %changelog
+* Thu Feb 21 2013 Led <led@altlinux.ru> 3.0.66-alt1
+- 3.0.66
+- updated:
+  + fix-drivers-idle--intel_idle
+- USB_EHCI_HCD=y (x86_64)
+
 * Tue Feb 19 2013 Led <led@altlinux.ru> 3.0.65-alt4
 - updated:
   + fix-kernel
