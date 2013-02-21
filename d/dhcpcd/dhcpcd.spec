@@ -1,6 +1,6 @@
 Name: dhcpcd
 Epoch: 1
-Version: 5.6.6
+Version: 5.6.7
 Release: alt1
 
 Summary: DHCP Client
@@ -65,6 +65,9 @@ fi
 /lib/%name/%name-run-hooks
 
 %changelog
+* Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 1:5.6.7-alt1
+- Updated to 5.6.7.
+
 * Thu Dec 27 2012 Mikhail Efremov <sem@altlinux.org> 1:5.6.6-alt1
 - Patch from upstream:
     + Preserve the space in static routes on the command line.
