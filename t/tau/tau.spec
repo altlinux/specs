@@ -2,8 +2,8 @@
 %define mpidir %_libdir/%mpiimpl
 
 Name: tau
-Version: 2.21.4
-Release: alt2
+Version: 2.22.1
+Release: alt1
 Summary: TAU Portable Profiling Package
 License: BSD-like
 Group: Development/Tools
@@ -26,7 +26,7 @@ BuildRequires(pre): rpm-build-java rpm-build-python
 BuildPreReq: java-devel-default libgmp-devel gcc-c++ gcc-fortran
 BuildPreReq: openpdt libopenpdt-devel libpapi-devel chrpath
 BuildPreReq: jflex postgresql-devel libscalasca-devel binutils-devel
-BuildPreReq: libgomp-devel libotf-devel zlib-devel
+BuildPreReq: libgomp-devel libotf-devel zlib-devel google-gson
 BuildPreReq: libstdc++-devel libsz0-devel python-devel mysql-connector-java
 BuildPreReq: jfreechart jcommon swing-layout postgresql-jdbc xerces-j2 junit
 
@@ -329,6 +329,7 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 %exclude %_bindir/tau_load.sh
 %exclude %_bindir/tau_throttle.sh
 %exclude %_bindir/tauinc.pl
+%exclude %_bindir/*.awk
 %python_sitelibdir/%name
 %_sysconfdir/*
 %_man1dir/*
@@ -345,6 +346,7 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 
 %files -n lib%name
 %_libdir/*.so.*
+%_libdir/wrappers
 
 %files -n lib%name-common
 %_bindir/tau_opari
@@ -392,6 +394,9 @@ rm -f %buildroot%_libdir/*/*.so %buildroot%_bindir/tau_ebs2otf.pl \
 %exclude %_javadir/jargs.jar
 
 %changelog
+* Thu Feb 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.22.1-alt1
+- Version 2.22.1
+
 * Mon Oct 01 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.21.4-alt2
 - Avoid conflict with h2
 
