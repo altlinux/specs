@@ -2,7 +2,7 @@
 
 Name: sflphone-common
 Version: 1.2.2
-Release: alt2
+Release: alt3
 
 Group: System/Servers
 Summary: SIP and IAX2 compatible softphone - Core
@@ -23,6 +23,7 @@ BuildRequires: gcc-c++ glibc-devel libSDL-devel libalsa-devel libavformat-devel 
 BuildRequires: libgsm-devel libopencore-amrnb-devel libpcre-devel libpulseaudio-devel libsamplerate-devel
 BuildRequires: libspeex-devel libssl-devel libswscale-devel libuuid-devel libv4l-devel libyaml-devel
 BuildRequires: libzrtpcpp-devel perl-Pod-Parser python-devel
+BuildRequires: libudev-devel libavdevice-devel libswscale-devel
 
 %description
 SFLphone is meant to be a robust enterprise-class desktop phone.
@@ -56,7 +57,8 @@ CFLAGS="-fPIC" CC=gcc %configure
 %make dep
 %make
 popd
-%configure
+%configure \
+    --enable-video
 %make_build
 
 %install
@@ -73,6 +75,9 @@ popd
 %_mandir/man1/sflphoned.1*
 
 %changelog
+* Thu Feb 21 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt3
+- enable video support
+
 * Tue Feb 19 2013 Sergey V Turchin <zerg@altlinux.org> 1.2.2-alt2
 - fix packaging sflphoned
 
