@@ -2,7 +2,7 @@
 
 Name: mate
 Version: %ver_major.0
-Release: alt3
+Release: alt4
 
 Summary: MATE Desktop installers
 License: %gpl2plus
@@ -69,7 +69,7 @@ Requires: mate-menus >= %ver_major
 # MATE Utilities
 #Requires: mate-search-tool >= %ver_major
 Requires: mate-system-monitor >= %ver_major
-Requires: mate-charmap
+Requires: mate-character-map
 Requires: mate-calc >= %ver_major
 
 # Applications
@@ -278,7 +278,9 @@ Requires: mate-file-manager-share
 #Requires: mate-keyring-pam
 Requires: mate-system-log
 Requires: mate-user-share
-
+Requires: mate-mplayer
+Requires: mate-file-manager-actions
+Requires: mate-file-manager-terminal
 
 %description maxi
 This virtual package installs full MATE Desktop except components from
@@ -374,6 +376,11 @@ itself).
 #%files a11y
 
 %changelog
+* Thu Feb 21 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt4
+- added Requires: mate-mplayer
+  Requires: mate-file-manager-actions
+  Requires: mate-file-manager-terminal
+
 * Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3
 - added missing dependencies.
 
