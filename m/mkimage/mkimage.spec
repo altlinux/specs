@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.6
+Version: 0.2.7
 Release: alt1
 
 Summary: Simple image creator
@@ -34,6 +34,14 @@ files (called `templates').
 %doc examples doc/README.ru
 
 %changelog
+* Thu Feb 21 2013 Michael Shigorin <mike@altlinux.org> 0.2.7-alt1
+- mki-copy-efiboot: essentially rewritten again
+  + avoid undefined EFI_CERT variable error
+  + copy EFI shell if requested
+  + complement refind with elilo (for UEFI SB case)
+  + added locale submenu to refind
+  + put certificate in itw own directory
+
 * Tue Jan 15 2013 Alexey Gladkov <legion@altlinux.ru> 0.2.6-alt1
 mki-print-uris: Guarantee newline at the end.
 mki-pack-isoboot: make xorriso *read* the config (thx Michael Shigorin).
