@@ -1,13 +1,13 @@
-%define nm_version 0.9.6.0
-%define nm_applet_version 0.9.6.0
+%define nm_version 0.9.8.0
+%define nm_applet_version 0.9.8.0
 %define git_date %nil
 #define git_date .git20110314
 %define ppp_version 2.4.5
 %define gtkver 3
 
 Name: NetworkManager-pptp
-Version: 0.9.6.0
-Release: alt2%git_date
+Version: 0.9.8.0
+Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
 Summary:  NetworkManager VPN plugin for pptp
@@ -60,7 +60,7 @@ NetworkManager panel applet.
 	--localstatedir=%_var \
 	--with-pppd-plugin-dir=%_libdir/pppd/%ppp_version \
 	--with-gtkver=%gtkver \
-	--enable-more-warnings=no
+	--enable-more-warnings=error
 %make_build
 
 %install
@@ -92,6 +92,12 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt1
+- Treat warrnings as errors again.
+- Conditionally enable 'usepeerdns' pppd option (by GalaxyMaster)
+    (closes: #27665).
+- Updated to 0.9.8.0.
+
 * Mon Oct 08 2012 Mikhail Efremov <sem@altlinux.org> 0.9.6.0-alt2
 - Fix build: temporary don't treat warrnings as errors.
 

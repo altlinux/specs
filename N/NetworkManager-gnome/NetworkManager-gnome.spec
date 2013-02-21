@@ -1,10 +1,10 @@
-%define nm_version 0.9.7.997
+%define nm_version 0.9.8.0
 #define git_date .git20120315
 %define git_date %nil
 %define gtkver 3
 
 Name: NetworkManager-gnome
-Version: 0.9.7.997
+Version: 0.9.8.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: Graphical desktop/GNOME
@@ -121,6 +121,7 @@ fi
 %_libexecdir/NetworkManager/nm-applet-migration-tool
 %_datadir/GConf/gsettings/nm-applet.convert
 %_datadir/glib-2.0/schemas/org.gnome.nm-applet.gschema.xml
+%doc %_man1dir/*.*
 
 %_datadir/applications/*.desktop
 %dir %_datadir/gnome-vpn-properties
@@ -144,6 +145,9 @@ fi
 %_datadir/gir-1.0/NMGtk-1.0.gir
 
 %changelog
+* Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt1
+- Updated to 0.9.8.0.
+
 * Thu Feb 14 2013 Mikhail Efremov <sem@altlinux.org> 0.9.7.997-alt1
 - Treat warrnings as errors.
 - Updated to 0.9.7.997 (0.9.8-beta2).

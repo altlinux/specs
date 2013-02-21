@@ -13,7 +13,7 @@
 %def_enable introspection
 
 Name: NetworkManager
-Version: 0.9.7.997
+Version: 0.9.8.0
 Release: alt1%git_date
 License: %gpl2plus
 Group: System/Configuration/Networking
@@ -240,7 +240,6 @@ fi
 %_bindir/nm-online
 %_bindir/nmcli
 %_libdir/pppd/%ppp_version/nm-pppd-plugin.so
-%_datadir/NetworkManager
 %_datadir/dbus-1/system-services/*.service
 %doc %_man1dir/*.*
 %doc %_man5dir/*.*
@@ -264,11 +263,10 @@ fi
 /lib/udev/rules.d/*
 %_datadir/polkit-1/actions/*.policy
 %_sysconfdir/NetworkManager/dispatcher.d/*
+%_datadir/bash-completion/completions/*
 %config(noreplace) %_sysconfdir/sysconfig/%name
 %{?_enable_systemd:/lib/systemd/system/%name.service}
 %{?_enable_systemd:/lib/systemd/system/%name-wait-online.service}
-
-%exclude %_mandir/manx/nm-settings.xml
 
 %files devel
 %doc %_datadir/gtk-doc/html/%name
@@ -316,6 +314,9 @@ fi
 %exclude %_libdir/pppd/%ppp_version/*.la
 
 %changelog
+* Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 0.9.8.0-alt1
+- Updated to 0.9.8.0.
+
 * Wed Feb 13 2013 Mikhail Efremov <sem@altlinux.org> 0.9.7.997-alt1
 - Updated ALT support.
 - etcnet-alt: Remove trailing whitespace from NM_CONTROLLED value.
