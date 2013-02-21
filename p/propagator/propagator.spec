@@ -2,7 +2,7 @@
 %def_with splash
 
 Name: propagator
-Version: 20130314
+Version: 20130315
 Release: alt1
 
 Summary: 'Early userspace' set of binaries
@@ -37,6 +37,9 @@ make \
 %_sbindir/propagator
 
 %changelog
+* Thu Feb 21 2013 Michael Shigorin <mike@altlinux.org> 20130315-alt1
+- complete the /bin/plymouth existence check started in 20101130-alt6
+
 * Thu Feb 14 2013 Anton V. Boyarshinov <boyarsh@altlinux.ru> 20130314-alt1
 - rewrite net devices probing
 
