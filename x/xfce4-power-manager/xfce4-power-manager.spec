@@ -1,6 +1,6 @@
 Name: xfce4-power-manager
 Version: 1.2.0
-Release: alt2
+Release: alt3
 Summary: Power management for the Xfce desktop environment
 Summary (ru_RU.UTF8): Утилита расширенного управления питанием для Xfce
 
@@ -66,6 +66,9 @@ scaling.
 %_mandir/man?/*
 
 %changelog
+* Thu Feb 21 2013 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt3
+- Don't allow systemd to handle suspend/hibernate events.
+
 * Thu Aug 30 2012 Mikhail Efremov <sem@altlinux.org> 1.2.0-alt2
 - Don't control disk's spin speed.
 - Don't try to use internel documentation.
