@@ -1,40 +1,38 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/asn1Parser /usr/bin/gcov /usr/bin/genhtml /usr/bin/glib-genmarshal /usr/bin/gtkdocize /usr/bin/lcov /usr/bin/pkg-config /usr/bin/valgrind libpam0-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-no-export-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-3.0) valgrind-devel
+BuildRequires: /usr/bin/asn1Parser /usr/bin/gcov /usr/bin/genhtml /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/gtkdocize /usr/bin/lcov /usr/bin/pkg-config /usr/bin/valgrind libgio-devel libpam0-devel pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gmodule-no-export-2.0) pkgconfig(gobject-2.0) pkgconfig(gthread-2.0) pkgconfig(gtk+-2.0) pkgconfig(gtk+-3.0)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
 Summary:        Framework for managing passwords and other secrets
 Name:           mate-keyring
 Version:        1.5.0
-Release:        alt1_2
+Release:        alt1_4
 License:        GPLv2+ and LGPLv2+
 Group:          System/Libraries
 URL:            http://mate-desktop.org
 Source0:        http://pub.mate-desktop.org/releases/1.5/%{name}-%{version}.tar.xz
-# upstream commits
-# https://github.com/mate-desktop/mate-keyring/commit/0269af132af17ecea87f869cda26100cd9b724a8
-# https://github.com/mate-desktop/mate-keyring/commit/de7a2884feb7acd6abcd7f0bcb7eac963c787f4f
-Patch0:         upstream_commits.patch
 
+#Latest fixes from upstream
+Patch0: mk_commits_rollup.patch
 
-BuildRequires:  pkgconfig(gtk+-2.0)
-BuildRequires:  pkgconfig(dbus-1)
-BuildRequires:  pkgconfig(mate-keyring-1)
-BuildRequires:  pkgconfig(libtasn1)
-BuildRequires:  libtasn1-utils
-BuildRequires:  libgcrypt-devel
-BuildRequires:  pam-devel
-BuildRequires:  mate-common
-BuildRequires:  libcap-devel
-
-Requires: libmatekeyring
+BuildRequires: libdbus-devel
+BuildRequires: gtk2-devel
+BuildRequires: lcov
+Buildrequires: libcap-devel
+Buildrequires: libgcrypt-devel
+BuildRequires: libtasn1-devel
+BuildRequires: libtasn1-utils
+BuildRequires: mate-common
+BuildRequires: pam-devel
+BuildRequires: valgrind-devel
 Source44: import.info
 Patch33: mate-keyring-1.3.0-alt-fix-pc.patch
+Patch34: mate-keyring-1.5.0-alt-linkage.patch
 # why is gnome-keyring-daemon setuid root?
 # https://bugzilla.redhat.com/show_bug.cgi?id=668831
-Patch34: mate-keyring-file-caps.patch
+Patch35: mate-keyring-file-caps.patch
 # gnome keyring pam module is starting gnome-keyring with the wrong SELinux context.
 # https://bugzilla.redhat.com/show_bug.cgi?id=684225
-Patch35: gnome-keyring-2.91.93-pam-selinux.patch
+Patch36: mate-keyring-1.5.0-pam-selinux.patch
 Source45: start-gnome-keyring-in-mate
 Source46: start-gnome-keyring-in-mate.desktop
 
@@ -64,22 +62,29 @@ Shared library for MATE Desktop pam auth
 
 
 %prep
-%setup -q -n mate-keyring-%{version}
+#%setup -q -n mate-keyring-%{version}
+%setup -q
 %patch0 -p1
 %patch33 -p1
 %patch34 -p1
 %patch35 -p1
+%patch36 -p1
 NOCONFIGURE=1 ./autogen.sh
 
 %build
-%configure --disable-static \
-           --with-gtk=2.0 \
-           --enable-pam \
-           --with-pam-dir=/%{_lib}/security \
-           --with-root-certs=/usr/share/ca-certificates
+%configure \
+   --disable-static                    \
+   --with-gtk=2.0                      \
+   --with-gnu-ld                       \
+   --disable-schemas-compile           \
+   --enable-gcov                       \
+   --enable-valgrind                   \
+   --libexecdir=/usr/libexec           \
+   --with-pam-dir=%_pam_modules_dir \
+   --with-root-certs=/usr/share/ca-certificates
 
 # avoid unneeded direct dependencies
-sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
+#sed -i -e 's! -shared ! -Wl,--as-needed\0!g' libtool
 
 make %{?_smp_mflags} V=1
 
@@ -123,7 +128,8 @@ chmod 0755 %{buildroot}%{_bindir}/mate-keyring-daemon
 
 
 %files pam
-/%{_lib}/security/pam_mate_keyring.so
+%doc AUTHORS COPYING COPYING.LIB README
+%_pam_modules_dir/pam_mate_keyring.so
 
 %files devel
 %doc %{_datadir}/gtk-doc/html/mate-gck/
@@ -135,6 +141,9 @@ chmod 0755 %{buildroot}%{_bindir}/mate-keyring-daemon
 %{_libdir}/pkgconfig/*
 
 %changelog
+* Wed Feb 20 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_4
+- new fc release
+
 * Fri Nov 16 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_2
 - use F19 import base
 
