@@ -8,7 +8,7 @@
 
 Name: musl
 Version: 0.9.9
-Release: alt4
+Release: alt5
 Group: System/Libraries
 Summary: musl libc - new standard library
 License: MIT
@@ -114,6 +114,11 @@ echo "%musl_dir/lib" > %buildroot%_sysconfdir/ld.so.conf.d/%name-%_lib.conf
 
 
 %changelog
+* Thu Feb 21 2013 Led <led@altlinux.ru> 0.9.9-alt5
+- updated from upstream's SCM:
+  + added mkostemp, mkstemps, and mkostemps functions
+  + added arpa/ftp.h
+
 * Mon Feb 18 2013 Led <led@altlinux.ru> 0.9.9-alt4
 - updated from upstream's SCM
 
