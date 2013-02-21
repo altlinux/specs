@@ -2,10 +2,10 @@
 %define mpidir %_libdir/%mpiimpl
 
 %define somver 0
-%define sover %somver.2.6
+%define sover %somver.2.9
 Name: hypre
-Version: 2.8.0b
-Release: alt5
+Version: 2.9.0b
+Release: alt1
 Summary: Scalable algorithms for solving linear systems of equations
 License: LGPL v2.1
 Group: Sciences/Mathematics
@@ -19,11 +19,11 @@ Requires: lib%name-devel = %version-%release
 
 BuildRequires(pre): rpm-build-python rpm-build-java /proc
 BuildPreReq: gcc-fortran gcc-c++ %mpiimpl-devel emacs24-nox
-BuildPreReq: liblapack-devel w3c-libwww-devel
-BuildPreReq: libsuperlu-devel babel
+BuildPreReq: liblapack-devel w3c-libwww-devel doc++ netpbm
+BuildPreReq: libsuperlu-devel babel cmake texlive-base-bin
 BuildPreReq: java-devel-default libchasm-devel chasm python-devel
 BuildPreReq: libnumpy-devel libxml2-devel python-module-libxml2
-BuildPreReq: libltdl-devel
+BuildPreReq: libltdl-devel ghostscript-classic
 
 %description
 The goal of the Scalable Linear Solvers project is to develop scalable
@@ -100,75 +100,45 @@ cd src
 
 FLAGS="%optflags %optflags_shared -I%_includedir/numpy"
 %add_optflags $FLAGS
-%configure \
-	--without-examples \
-	--with-MPI \
-	--with-MPI-include=%mpidir/include \
-	--with-MPI-libs="mpi_f90 mpi_f77 mpi mpi_cxx" \
-	--with-MPI-lib-dirs="%mpidir/lib" \
-	--with-timing \
-	--without-openmp \
-	--with-babel \
-	--with-chasm=%prefix \
-	--with-blas-libs=-lopenblas \
-	--with-blas-lib-dirs=%_libdir \
-	--with-lapack \
-	--with-mli \
-	--with-fei \
-	--with-superlu \
-	CC="mpicc $FLAGS" \
-	CXX="mpicxx $FLAGS" \
-	F77="mpif77 $FLAGS" \
-	MPI_PREFIX=%mpidir
-sed -i 's|^\(HYPRE_INSTALL_DIR\).*|\1 = %buildroot%prefix|' \
-	config/Makefile.config
-sed -i 's|^\(HYPRE_LIB_INSTALL\).*|\1 = %buildroot%_libdir|' \
-	config/Makefile.config
-sed -i 's|^\(HYPRE_INC_INSTALL\).*|\1 = %buildroot%_includedir/%name|' \
-	config/Makefile.config
-mkdir -p hypre/lib
-pushd FEI_mv/femli
-%make_build all CC="mpicc $FLAGS" CXX="mpicxx $FLAGS" F77="mpif77 $FLAGS"
+
+mkdir BUILD
+pushd BUILD
+cmake \
+%ifarch x86_64
+	-DLIB_SUFFIX=64 \
+%endif
+	-DHYPRE_SHARED:BOOL=ON \
+	-DCMAKE_INSTALL_PREFIX=%prefix \
+	-DCMAKE_C_FLAGS="%optflags" \
+	-DCMAKE_CXX_FLAGS="%optflags" \
+	-DCMAKE_Fortran_FLAGS="%optflags" \
+	-DCMAKE_VERBOSE_MAKEFILE:BOOL=ON \
+	-DCMAKE_STRIP:FILEPATH="/bin/echo" \
+	-DHYPRE_INSTALL_PREFIX:PATH=%buildroot%prefix \
+	-DMPIDIR=%mpidir \
+	-DSOMVER=%somver \
+	-DSOVER=%sover \
+	..
+%make_build
 popd
-%make_build all
+
+%make_build -C docs html
 
 %install
 source %mpidir/bin/mpivars.sh
 export OMPI_LDFLAGS="-Wl,--as-needed,-rpath=%mpidir/lib -L%mpidir/lib"
 
-pushd src
+pushd src/BUILD
 
-%makeinstall_std
-install -m644 hypre/lib/* %buildroot%_libdir
+%make install
+
+install -d %buildroot%_includedir/%name
+mv %buildroot%_includedir/*.h %buildroot%_includedir/%name/
 
 install -d %buildroot%_docdir/lib%name-devel-doc
-rm -f ../src/docs/Makefile
-cp -fR ../src/docs/* %buildroot%_docdir/lib%name-devel-doc/
+cp -fR ../../docs/* %buildroot%_docdir/lib%name-devel-doc/
+cp -fR ../docs/HYPRE_ref_manual %buildroot%_docdir/lib%name-devel-doc/
 rm -f %buildroot%_libdir/libsidl*
-popd
-
-# shared libraries
-
-pushd %buildroot%_libdir
-LIBS="$(ls *.a|sed 's|\.a||'|sort)"
-mkdir tmp
-pushd tmp
-for i in $LIBS; do
-	if [ "$i" != "libbHYPREClient-F" -a "$i" != "libbHYPREClient-CX" ]
-	then
-		ar x ../$i.a
-		mpic++ -shared * -L.. $ADDLIB \
-			-lsidl -llapack -lopenblas \
-			-Wl,-rpath,%mpidir/lib \
-			-Wl,-soname,$i.so.%somver -o ../$i.so.%sover
-		ln -s $i.so.%sover ../$i.so.%somver
-		ln -s $i.so.%somver ../$i.so
-		rm -f *
-		ADDLIB="-lHYPRE"
-	fi
-done
-popd
-rmdir tmp
 popd
 
 %files
@@ -188,6 +158,9 @@ popd
 %_docdir/lib%name-devel-doc
 
 %changelog
+* Thu Feb 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9.0b-alt1
+- Version 2.9.0b
+
 * Sat Aug 11 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.8.0b-alt5
 - Built with OpenBLAS instead of GotoBLAS2
 
