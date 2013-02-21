@@ -25,7 +25,7 @@
 
 Name: %oname-%scalar_type
 Version: 3.3_p5
-Release: alt1
+Release: alt2
 Summary: Portable, Extensible Toolkit for Scientific Computation (%scalar_type scalars)
 License: BSD
 Group: Sciences/Mathematics
@@ -641,6 +641,7 @@ PYPATH="\`echo \$PYPATH|sed 's|:%python_sitelibdir/%oname-%alttype/python||g'\`"
 PYPATH="\`echo \$PYPATH|sed 's|:%ldir/python||g'\`"
 PYPATH="\`echo \$PYPATH|sed 's|:%python_sitelibdir/%oname-%scalar_type/python||g'\`"
 export PYTHONPATH="\$PYPATH:%ldir/python"
+export PKG_CONFIG_PATH=%ldir/lib/pkgconfig
 EOF
 chmod +x %buildroot%_bindir/%name.sh
 
@@ -788,6 +789,9 @@ sed -i 's|\(\-lpetsc\)|-L%ldir/lib \1|' \
 %ldir/sources
 
 %changelog
+* Thu Feb 21 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p5-alt2
+- Added PKG_CONFIG_PATH into %_bindir/%name.sh
+
 * Thu Jan 31 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 3.3_p5-alt1
 - Version 3.3-p5
 
