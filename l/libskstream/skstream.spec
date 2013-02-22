@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/zip gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3)
+BuildRequires: /usr/bin/zip gcc-c++
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname skstream
 Name:           libskstream
 Version:        0.3.9
-Release:        alt1_1
+Release:        alt1_2
 Summary:        C++ I/O library for WorldForge clients/servers
 
 Group:          Development/C++
@@ -36,7 +36,7 @@ Libraries and header files for developing applications that use skstream.
 
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 %patch1 -p0
 
 
@@ -77,6 +77,9 @@ rm -rf $RPM_BUILD_ROOT%{_libdir}/%{oldname}-%{version}
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.9-alt1_1
 - update to new release by fcimport
 
