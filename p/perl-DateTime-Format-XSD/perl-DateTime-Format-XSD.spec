@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Convert/NLS_DATE_FORMAT.pm) perl(DBI.pm) perl(Date/Manip.pm) perl(DateTime.pm) perl(DateTime/Duration.pm) perl(DateTime/Event/ICal.pm) perl(DateTime/Format/Builder.pm) perl(DateTime/Infinite.pm) perl(DateTime/LeapSecond.pm) perl(DateTime/Span.pm) perl(DateTime/TimeZone.pm) perl(DateTime/TimeZone/Floating.pm) perl(DateTime/TimeZone/UTC.pm) perl(Fcntl.pm) perl(File/Spec/Functions.pm) perl(List/MoreUtils.pm) perl(Math/BigInt.pm) perl(Module/Build.pm) perl(Module/Pluggable.pm) perl(Params/Validate.pm) perl(Test/MockTime.pm) perl(Test/NoWarnings.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-XSD
 Version:        0.2
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Format DateTime according to xsd:dateTime
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -17,7 +17,7 @@ BuildRequires:  perl(Test/More.pm)
 Requires:       perl(DateTime/Format/ISO8601.pm)
 
 #Not autodetermined.
-Provides:       perl(DateTime/Format/XSD.pm) = %{version}
+Provides:       perl(DateTime::Format::XSD) = %{version}
 Source44: import.info
 
 %description
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_5
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.2-alt2_4
 - moved to Sisyphus (Tapper dep)
 
