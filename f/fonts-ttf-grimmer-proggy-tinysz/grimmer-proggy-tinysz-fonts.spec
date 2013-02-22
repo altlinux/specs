@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name: fonts-ttf-grimmer-proggy-tinysz
 Version: 1.0
-Release: alt3_7
+Release: alt3_8
 License: MIT
 URL: http://proggyfonts.com/
 Source0: http://proggyfonts.com/download/ProggyTinySZ.ttf.zip
@@ -85,6 +85,9 @@ fi
 %doc Licence.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_7
 - update to new release by fcimport
 
