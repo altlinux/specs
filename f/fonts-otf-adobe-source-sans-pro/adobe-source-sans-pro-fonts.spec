@@ -1,14 +1,14 @@
+Group: System/Fonts/True type
 # BEGIN SourceDeps(oneline):
 BuildRequires: unzip
 # END SourceDeps(oneline)
-Group: System/Fonts/True type
 %define oldname adobe-source-sans-pro-fonts
 %global fontname source-sans-pro
 %global fontconf 63-%{fontname}.conf
 
 Name:           fonts-otf-adobe-source-sans-pro
 Version:        1.034
-Release:        alt1_1
+Release:        alt1_2
 Summary:        A set of OpenType fonts designed for user interfaces
 
 License:        OFL
@@ -90,6 +90,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.034-alt1_2
+- update to new release by fcimport
+
 * Mon Nov 05 2012 Igor Vlasenko <viy@altlinux.ru> 1.034-alt1_1
 - fc import
 
