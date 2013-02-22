@@ -7,7 +7,7 @@ BuildRequires: python unzip
 
 Name:		fonts-ttf-oflb-prociono
 Version:	20090715
-Release:	alt3_5
+Release:	alt3_6
 Summary:	A text roman with standard and discretionary ligatures, class-based kerning 
 Group:		System/Fonts/True type
 License:	Public Domain
@@ -100,6 +100,9 @@ fi
 %doc LICENSE
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20090715-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20090715-alt3_5
 - update to new release by fcimport
 
