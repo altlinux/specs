@@ -1,7 +1,7 @@
 %add_optflags %optflags_shared
 Name:           libyubikey
 Version:        1.9
-Release:        alt1_1
+Release:        alt1_2
 Summary:        C library for decrypting and parsing Yubikey One-time passwords
 
 Group:          Development/C
@@ -53,6 +53,9 @@ export LD_LIBRARY_PATH=${RPM_BUILD_DIR}/%{name}-%{version}/.libs
 %{_libdir}/libyubikey.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_2
+- update to new release by fcimport
+
 * Wed Oct 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.9-alt1_1
 - update to new release by fcimport
 
