@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-artemisia
 Version: 20070415
-Release: alt3_15
+Release: alt3_16
 Summary: GFS Artemisia fonts
 
 Group:     System/Fonts/True type
@@ -34,7 +34,7 @@ The typeface has been digitised by George D. Matthiopoulos.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 chmod 0644 *.txt
 for txt in *.txt ; do
@@ -106,6 +106,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_16
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20070415-alt3_15
 - update to new release by fcimport
 
