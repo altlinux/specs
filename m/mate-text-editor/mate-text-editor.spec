@@ -6,7 +6,7 @@ BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/glib-m
 Summary:  Text editor for the MATE desktop
 Name:     mate-text-editor
 Version:  1.5.0
-Release:  alt1_1
+Release:  alt2_1
 License:  GPLv2+
 Group:    Editors
 URL:      http://mate-desktop.org
@@ -24,7 +24,7 @@ BuildRequires: iso-codes-devel
 #BuildRequires: libattr-devel
 BuildRequires: libSM-devel
 BuildRequires: mate-common
-BuildRequires: mate-conf-devel
+#BuildRequires: mate-conf-devel
 BuildRequires: mate-doc-utils
 BuildRequires: pango-devel
 BuildRequires: python-module-pygobject-devel
@@ -117,6 +117,9 @@ desktop-file-install --delete-original             \
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_1
+dropped obsolete mate-conf BR:
+
 * Sun Feb 17 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt1_1
 - new fc release
 
