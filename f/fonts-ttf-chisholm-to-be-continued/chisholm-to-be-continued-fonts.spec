@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-chisholm-to-be-continued
 Version:        20090124
-Release:        alt3_7
+Release:        alt3_8
 Summary:        Decorative Sans Serif Font
 
 Group:          System/Fonts/True type
@@ -24,7 +24,7 @@ Source44: import.info
 To Be Continued is a decorative/graffiti sans-serif font.
 
 %prep
-%setup -q -c %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q -c %{oldname}-%{version}
 
 %build
 
@@ -88,6 +88,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20090124-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20090124-alt3_7
 - update to new release by fcimport
 
