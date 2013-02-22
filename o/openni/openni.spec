@@ -6,7 +6,7 @@ BuildRequires: python-modules-xml python-devel
 
 Name:           openni
 Version:        1.3.2.1
-Release:        alt1_6
+Release:        alt1_7%{?gitrev}
 Summary:        Library for human-machine Natural Interaction
 
 Group:          System/Libraries
@@ -45,8 +45,8 @@ Group:          Development/C
 Requires:       %{name} = %{version}-%{release}
 
 %description    devel
-The %%{name}-devel package contains libraries and header files for
-developing applications that use %%{name}.
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 
 %package        java
@@ -59,8 +59,8 @@ Requires:       java
 Requires:       jpackage-utils
 
 %description    java
-The %%{name}-java package contains a Java JNI library for
-developing applications that use %%{name} in Java.
+The %{name}-java package contains a Java JNI library for
+developing applications that use %{name} in Java.
 
 
 %package        doc
@@ -69,7 +69,7 @@ Group:          Documentation
 BuildArch:      noarch
 
 %description    doc
-The %%{name}-doc package contains the automatically generated API documentation
+The %{name}-doc package contains the automatically generated API documentation
 for OpenNI.
 
 
@@ -79,7 +79,7 @@ Group:          Development/Tools
 Requires:       %{name} = %{version}-%{release}
 
 %description    examples
-The %%{name}-examples package contains example programs for OpenNI.
+The %{name}-examples package contains example programs for OpenNI.
 
 %prep
 %setup -q -n %{name}-%{version}
@@ -188,6 +188,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2.1-alt1_7
+- update to new release by fcimport
+
 * Wed Jan 23 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.2.1-alt1_6
 - update to new release by fcimport
 
