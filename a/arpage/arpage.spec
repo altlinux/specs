@@ -1,9 +1,9 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ pkgconfig(gthread-2.0) pkgconfig(libxml++-2.6)
+BuildRequires: /usr/bin/glib-gettextize gcc-c++ pkgconfig(gthread-2.0)
 # END SourceDeps(oneline)
 Name:		arpage
 Version:	0.3.3
-Release:	alt2_10
+Release:	alt2_11
 Summary:	A JACK MIDI arpeggiator
 
 Group:		Sound
@@ -16,7 +16,7 @@ Patch1:		%{name}-gcc47.patch
 
 BuildRequires:	libjack-devel
 BuildRequires:	libgtkmm2-devel
-BuildRequires:	intltool libxml++-devel
+BuildRequires:	intltool libxml++2-devel
 BuildRequires:	desktop-file-utils
 Source44: import.info
 
@@ -62,6 +62,9 @@ install -m 644 %{_builddir}/%{name}-%{version}/src/arpage.png %{buildroot}%{_dat
 %{_datadir}/icons/hicolor/32x32/apps/%{name}.png
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_11
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3.3-alt2_10
 - update to new release by fcimport
 
