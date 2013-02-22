@@ -1,12 +1,9 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/runtest /usr/bin/ttmkfdir /usr/bin/vptovf gcc-c++ libICE-devel libSM-devel libX11-devel unzip
-# END SourceDeps(oneline)
 %define oldname wqy-unibit-fonts
 %global fontname wqy-unibit
 
 Name:           fonts-bitmap-wqy-unibit
 Version:        1.1.0
-Release:        alt3_11
+Release:        alt3_12
 Summary:        WenQuanYi Unibit Bitmap Font
 
 Group:          System/Fonts/True type
@@ -93,6 +90,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt3_12
+- update to new release by fcimport
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.0-alt3_11
 - update to new release by fcimport
 
