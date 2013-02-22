@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-myanmar3-unicode
 Version: 3.00
-Release: alt3_7
+Release: alt3_8
 Summary: Myanmar3 unicode font
 
 Group:   System/Fonts/True type
@@ -27,7 +27,7 @@ Myanmar3 unicode font from Myanmar Unicode &
 NLP Research Center.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 unzip -j -L -q %{SOURCE0}
 
 %build
@@ -91,6 +91,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.00-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.00-alt3_7
 - update to new release by fcimport
 
