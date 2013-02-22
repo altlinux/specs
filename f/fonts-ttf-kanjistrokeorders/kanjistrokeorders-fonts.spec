@@ -11,7 +11,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-kanjistrokeorders
 Version: 3.000
-Release: alt1_1
+Release: alt1_2
 Summary: Font to view stroke order diagrams for Kanji, Kana and etc
 License: BSD
 Group:   System/Fonts/True type
@@ -31,7 +31,7 @@ order numbers to show up: 100pt seems to be the minimum usable size.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 sed -i 's#\r##g' copyright.txt
 sed -i 's#\r##g' readme_en_v%{version}.txt
 
@@ -95,6 +95,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.000-alt1_2
+- update to new release by fcimport
+
 * Fri Nov 09 2012 Igor Vlasenko <viy@altlinux.ru> 3.000-alt1_1
 - update to new release by fcimport
 
