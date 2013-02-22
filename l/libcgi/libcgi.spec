@@ -14,7 +14,7 @@
 
 Name:           libcgi
 Version:        1.0
-Release:        alt3_13
+Release:        alt3_14
 Summary:        CGI easy as C
 
 Group:          System/Libraries
@@ -33,7 +33,7 @@ LibCGI is a library written from scratch to easily make CGI applications in C.
 %package devel
 Summary:        Header files and libraries for LibCGI development
 Group:          Development/C
-Requires:       libcgi = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
 The libcgi-devel package contains the header files and libraries needed
@@ -124,6 +124,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_14
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_13
 - update to new release by fcimport
 
