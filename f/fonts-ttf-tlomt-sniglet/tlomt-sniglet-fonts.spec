@@ -8,7 +8,7 @@ BuildRequires: unzip
 Name:		fonts-ttf-tlomt-sniglet
 Summary:	A rounded, sans-serif font useful for headlines
 Version:	1.000
-Release:	alt3_5
+Release:	alt3_6
 # License attribution confirmed by author
 # See: sniglet-license-confirmation-email.txt
 License:	OFL
@@ -82,6 +82,9 @@ fi
 %doc sniglet-license-confirmation-email.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.000-alt3_5
 - update to new release by fcimport
 
