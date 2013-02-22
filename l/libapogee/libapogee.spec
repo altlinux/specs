@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name: libapogee
 Version: 2.2
-Release: alt2_8
+Release: alt2_9
 Summary: Library for Apogee CCD Cameras
 
 %define majorver 2
@@ -33,7 +33,7 @@ Apogee library is used by applications to control Apogee CCDs.
 %package devel
 Summary: Libraries, includes, etc. used to develop an application with %{name}
 Group: Development/C
-Requires: libapogee = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 %description devel
 These are the header files needed to develop a %{name} application
 
@@ -64,6 +64,9 @@ make install DESTDIR=%{buildroot}
 %{_libdir}/*.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_8
 - update to new release by fcimport
 
