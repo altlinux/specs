@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-sil-charis-compact
 Version: 4.106
-Release: alt3_5
+Release: alt3_6
 Summary: A version of Charis SIL with tighter line spacing
 
 Group:     System/Fonts/True type
@@ -111,6 +111,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.106-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.106-alt3_5
 - update to new release by fcimport
 
