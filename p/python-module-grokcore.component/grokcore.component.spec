@@ -1,7 +1,7 @@
 %define oname grokcore.component
 Name: python-module-%oname
-Version: 2.4
-Release: alt2.1
+Version: 2.5
+Release: alt1
 Summary: Grok-like configuration for basic components (adapters, utilities, subscribers)
 License: ZPL
 Group: Development/Python
@@ -57,6 +57,9 @@ mv %buildroot%python_sitelibdir_noarch/* \
 %python_sitelibdir/*/*/test*
 
 %changelog
+* Fri Feb 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.5-alt1
+- Version 2.5
+
 * Thu Oct 20 2011 Vitaly Kuznetsov <vitty@altlinux.ru> 2.4-alt2.1
 - Rebuild with Python-2.7
 
