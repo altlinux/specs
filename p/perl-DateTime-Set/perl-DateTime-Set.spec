@@ -4,7 +4,7 @@ BuildRequires: perl(DateTime/Duration.pm) perl(DateTime/Infinite.pm) perl(Params
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Set
 Version:        0.28
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Datetime sets and set math
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -59,6 +59,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.28-alt2_12
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.28-alt2_11
 - moved to Sisyphus (Tapper dep)
 
