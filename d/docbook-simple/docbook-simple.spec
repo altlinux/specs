@@ -1,9 +1,6 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: perl(English.pm)
-# END SourceDeps(oneline)
 Name: docbook-simple
 Version: 1.1
-Release: alt3_11
+Release: alt3_12
 Group: Text tools
 Summary: Simplified DocBook is a small subset of the DocBook XML DTD
 License: Freely redistributable without restriction
@@ -24,7 +21,7 @@ Source44: import.info
 %description
 Simplified DocBook is an attempt to provide a proper subset of DocBook
 that is simultaneously smaller and still useful. Documents written in
-the subset must be 100%% legal DocBook documents. This is a subset for
+the subset must be 100% legal DocBook documents. This is a subset for
 single documents (articles, white papers, etc.), so there's no need
 for books or sets, just 'articles'. Simplified DocBook documents are 
 viewable in online browsers if styled with CSS. (it's XML not SGML).
@@ -143,6 +140,9 @@ if [ "$1" = 0 ]; then
 fi
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_12
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt3_11
 - update to new release by fcimport
 
