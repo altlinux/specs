@@ -1,11 +1,11 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3)
+BuildRequires: gcc-c++ perl(AutoLoader.pm) perl(overload.pm) perl-devel perl-podlators pkgconfig(atlascpp-0.6) pkgconfig(glib-2.0) pkgconfig(mercator-0.3) pkgconfig(skstream-0.3) pkgconfig(wfmath-1.0)
 # END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %define oldname eris
 Name:           liberis
 Version:        1.3.21
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Client-side session layer for Atlas-C++
 
 Group:          Development/C++
@@ -44,7 +44,7 @@ Libraries and header files for developing applications that use Eris.
 
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 
 
 %build
@@ -84,6 +84,9 @@ make %{?_smp_mflags} check
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.21-alt1_2
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.21-alt1_1
 - new release
 
