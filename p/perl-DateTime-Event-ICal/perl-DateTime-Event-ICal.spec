@@ -4,7 +4,7 @@ BuildRequires: perl(DateTime/Set.pm) perl(DateTime/Span.pm) perl(DateTime/SpanSe
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Event-ICal
 Version:        0.10
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Perl DateTime extension for computing rfc2445 recurrences
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_10
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt2_9
 - moved to Sisyphus (Tapper dep)
 
