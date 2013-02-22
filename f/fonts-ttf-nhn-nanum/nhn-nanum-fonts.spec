@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(English.pm) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname nhn-nanum-fonts
 %global fontname nhn-nanum
@@ -14,7 +14,7 @@ publisher is NHN Corporation.
 
 Name:		fonts-ttf-nhn-nanum
 Version:	3.020
-Release:	alt5_7
+Release:	alt5_8
 Summary:	Nanum family of Korean TrueType fonts
 
 Group:		System/Fonts/True type
@@ -51,7 +51,7 @@ This package consists of files used by other %{oldname} packages.
 Group: System/Fonts/True type
 Version:	1.100
 Summary:	Nanum fonts Brush font faces
-Requires:	%{name}-common
+Requires:	%{name}-common = %{common_version}-%{release}
 
 %description -n fonts-ttf-nhn-nanum-brush
 %common_desc
@@ -67,7 +67,7 @@ This package consists of the Nanum fonts Brush font faces.
 %package -n fonts-ttf-nhn-nanum-gothic
 Group: System/Fonts/True type
 Summary:	Nanum fonts Gothic font faces
-Requires:	%{name}-common
+Requires:	%{name}-common = %{common_version}-%{release}
 
 %description -n fonts-ttf-nhn-nanum-gothic
 %common_desc
@@ -85,7 +85,7 @@ This package consists of the Nanum fonts Gothic font faces.
 %package -n fonts-ttf-nhn-nanum-myeongjo
 Group: System/Fonts/True type
 Summary:	Nanum fonts Myeongjo font faces
-Requires:	%{name}-common
+Requires:	%{name}-common = %{common_version}-%{release}
 
 %description -n fonts-ttf-nhn-nanum-myeongjo
 %common_desc
@@ -104,7 +104,7 @@ This package consists of the Nanum fonts Myeongjo font faces.
 Group: System/Fonts/True type
 Version:	1.100
 Summary:	Nanum fonts Pen font faces
-Requires:	%{name}-common
+Requires:	%{name}-common = %{common_version}-%{release}
 
 %description -n fonts-ttf-nhn-nanum-pen
 %common_desc
@@ -118,7 +118,7 @@ This package consists of the Nanum fonts Pen font faces.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 cp -p %{SOURCE5} COPYING
 
 
@@ -189,6 +189,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.020-alt5_8
+- update to new release by fcimport
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 3.020-alt5_7
 - applied repocop patches
 
