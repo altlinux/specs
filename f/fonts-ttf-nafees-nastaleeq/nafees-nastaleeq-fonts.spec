@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-nafees-nastaleeq
 Version:        1.02
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Nafees nastaleeq font for writing Urdu in the Nastaleeq script
 
 Group:          System/Fonts/True type
@@ -33,7 +33,7 @@ one of the finest calligraphers of Pakistan. Nafees Nastaa.'leeq\
 OTF contains approximately 1,000 glyphs, including about 26 ligatures. 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 #Fix RHBZ#490830 while not fixed upstream
@@ -99,6 +99,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.02-alt2_4
 - update to new release by fcimport
 
