@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-tabish-eeyek
 Version:        1.0
-Release:        alt3_3
+Release:        alt3_4
 Summary:        Font for Meetei Mayek script
 
 Group:          System/Fonts/True type
@@ -26,7 +26,7 @@ Source44: import.info
 A TrueType Font, which allows you to read and write in Meetei Mayek script.
 
 %prep
-%setup -q -c Eeyek_Unicode
+%setup -n %{oldname}-%{version} -q -c Eeyek_Unicode
 for file in Eeyek_Unicode/copying.txt; do
  sed "s|\r||g" $file > $file.new && \
  touch -r $file $file.new && \
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_3
 - update to new release by fcimport
 
