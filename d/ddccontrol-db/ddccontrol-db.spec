@@ -15,7 +15,7 @@
 Name:             ddccontrol-db
 URL:              http://ddccontrol.sourceforge.net/
 Version:          20061014
-Release:          alt1_3.20120904git%(echo e8cc385a6321e7c99783150001193ec6e9e0c436 | cut -c -8)
+Release:          alt1_4.%{git_suffix}
 # Agreed by usptream to be GPLv2+
 # http://sourceforge.net/mailarchive/message.php?msg_id=29762202
 License:          GPLv2+
@@ -28,9 +28,7 @@ Patch0:           %{name}-autopoint.patch
 BuildRequires:    gettext gettext-devel libtool perl(XML/Parser.pm)
 BuildArch:        noarch
 Source44: import.info
-# dell3011 https://bugzilla.altlinux.org/show_bug.cgi?id=27551
-Patch33: ddccontrol-db-0.4.2-dell3011.patch
-Patch34: ddccontrol-db-0.4.2-russian.patch
+Patch33: ddccontrol-db-0.4.2-russian.patch
 Conflicts: ddccontrol < 0.4.2-alt15
 
 %description
@@ -39,9 +37,9 @@ DDC/CU control database for DDCcontrol.
 %prep
 %setup -q
 %patch0 -p1 -b .autopoint
-%patch34 -p2
 
 ./autogen.sh
+%patch33 -p2
 
 %build
 %configure
@@ -56,6 +54,9 @@ make install DESTDIR=%{buildroot}
 %{_datadir}/%{name}
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_4.20120904git%(echo e8cc385a6321e7c99783150001193ec6e9e0c436 | cut -c -8)
+- update to new release by fcimport
+
 * Wed Dec 19 2012 Igor Vlasenko <viy@altlinux.ru> 20061014-alt1_3.20120904gite8cc385a
 - fc import for more frequent updates
 
