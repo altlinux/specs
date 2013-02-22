@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-HTML-Tiny
 Version:        1.05
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Lightweight, dependency free HTML/XML generation
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -44,6 +44,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_13
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.05-alt2_12
 - moved to Sisyphus (Tapper dep)
 
