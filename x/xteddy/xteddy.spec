@@ -3,7 +3,7 @@ BuildRequires: libICE-devel libSM-devel
 # END SourceDeps(oneline)
 Name:           xteddy
 Version:        2.0.1
-Release:        alt5_11
+Release:        alt5_12
 Summary:        Tool to sit around silently, look cute, and make you smile
 
 Group:          Games/Other
@@ -66,6 +66,9 @@ EOF
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt5_12
+- update to new release by fcimport
+
 * Wed Jan 23 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt5_11
 - update to new release by fcimport
 
