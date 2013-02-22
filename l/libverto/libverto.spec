@@ -2,7 +2,7 @@ Group: Development/C
 %add_optflags %optflags_shared
 Name:           libverto
 Version:        0.2.5
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Main loop abstraction library
 
 License:        MIT
@@ -33,7 +33,7 @@ glib will support signal in the future.
 %package        devel
 Group: Development/C
 Summary:        Development files for %{name}
-Requires:       libverto = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -42,7 +42,7 @@ developing applications that use %{name}.
 %package        glib
 Group: Development/C
 Summary:        glib module for %{name}
-Requires:       libverto = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    glib
 Module for %{name} which provides integration with glib.
@@ -52,8 +52,8 @@ This package does NOT yet provide %{name}-module-base.
 %package        glib-devel
 Group: Development/C
 Summary:        Development files for %{name}-glib
-Requires:       libverto-glib = %{version}-%{release}
-Requires:       libverto-devel = %{version}-%{release}
+Requires:       %{name}-glib%{?_isa} = %{version}-%{release}
+Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
 
 %description    glib-devel
 The %{name}-glib-devel package contains libraries and header files for
@@ -62,7 +62,7 @@ developing applications that use %{name}-glib.
 %package        libevent
 Group: Development/C
 Summary:        libevent module for %{name}
-Requires:       libverto = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides:       %{name}-module-base = %{version}-%{release}
 
 %description    libevent
@@ -71,8 +71,8 @@ Module for %{name} which provides integration with libevent.
 %package        libevent-devel
 Group: Development/C
 Summary:        Development files for %{name}-libevent
-Requires:       libverto-libevent = %{version}-%{release}
-Requires:       libverto-devel = %{version}-%{release}
+Requires:       %{name}-libevent%{?_isa} = %{version}-%{release}
+Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
 
 %description    libevent-devel
 The %{name}-libevent-devel package contains libraries and header files for
@@ -81,7 +81,7 @@ developing applications that use %{name}-libevent.
 %package        tevent
 Group: Development/C
 Summary:        tevent module for %{name}
-Requires:       libverto = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides:       %{name}-module-base = %{version}-%{release}
 
 %description    tevent
@@ -93,8 +93,8 @@ and signal.
 %package        tevent-devel
 Group: Development/C
 Summary:        Development files for %{name}-tevent
-Requires:       libverto-tevent = %{version}-%{release}
-Requires:       libverto-devel = %{version}-%{release}
+Requires:       %{name}-tevent%{?_isa} = %{version}-%{release}
+Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
 
 %description    tevent-devel
 The %{name}-tevent-devel package contains libraries and header files for
@@ -104,7 +104,7 @@ developing applications that use %{name}-tevent.
 %package        libev
 Group: Development/C
 Summary:        libev module for %{name}
-Requires:       libverto = %{version}-%{release}
+Requires:       %{name}%{?_isa} = %{version}-%{release}
 Provides:       %{name}-module-base = %{version}-%{release}
 
 %description    libev
@@ -116,8 +116,8 @@ and signal.
 %package        libev-devel
 Group: Development/C
 Summary:        Development files for %{name}-libev
-Requires:       libverto-libev = %{version}-%{release}
-Requires:       libverto-devel = %{version}-%{release}
+Requires:       %{name}-libev%{?_isa} = %{version}-%{release}
+Requires:       %{name}-devel%{?_isa} = %{version}-%{release}
 
 %description    libev-devel
 The %{name}-libev-devel package contains libraries and header files for
@@ -183,6 +183,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %endif
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt1_2
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.5-alt1_1
 - update to new release by fcimport
 
