@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/gawk pkgconfig(glib-2.0)
 Summary: Network abstraction library
 Name: netembryo
 Version: 0.1.1
-Release: alt2_3
+Release: alt2_4%{?git:.%{rev}git}
 License: LGPLv2+
 Group: Development/C
 %if %{?git:1}0
@@ -35,7 +35,7 @@ It provides an uniform access to the following protocols:
 %package devel
 Summary: Netembryo development library and headers
 Group: Development/C
-Requires: netembryo = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 The netembryo-devel package contains the header files and some
@@ -63,6 +63,9 @@ documentation needed to develop application with netembryo.
 %{_libdir}/pkgconfig/libnetembryo*.pc
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.1-alt2_3
 - update to new release by fcimport
 
