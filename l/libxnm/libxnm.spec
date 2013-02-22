@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libxnm
 Version:        0.1.3
-Release:        alt3_7
+Release:        alt3_8
 Summary:        A library for parsing the XNM format
 
 Group:          System/Libraries
@@ -24,7 +24,7 @@ and communicating of complex data structures
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libxnm = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -57,6 +57,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1.3-alt3_7
 - update to new release by fcimport
 
