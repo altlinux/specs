@@ -1,7 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
-# END SourceDeps(oneline)
 %define oldname lklug-fonts
 %global fontname lklug
 %global cvsdate 20090803
@@ -12,7 +8,7 @@ Name:	fonts-ttf-lklug
 # update versions on file changes. When in doubt use the timestamp of the most
 # recent file as version.
 Version:	0.6
-Release:	alt3_8.20090803cvs
+Release:	alt3_9.%{cvsdate}cvs
 Summary:	Fonts for Sinhala language
 Group:	System/Fonts/True type
 License:	GPLv2
@@ -35,7 +31,7 @@ Haralambous and are in GPL. OTF tables are added by Anuradha
 Ratnaweera and Harshani Devadithya.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 make
@@ -96,6 +92,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_9.20090803cvs
+- update to new release by fcimport
+
 * Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt3_8.20090803cvs
 - update to new release by fcimport
 
