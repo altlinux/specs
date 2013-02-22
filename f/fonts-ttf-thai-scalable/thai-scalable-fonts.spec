@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/runtest /usr/bin/ttmkfdir /usr/bin/vptovf gcc-c++ libICE-devel libSM-devel libX11-devel unzip
+BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/ttmkfdir /usr/bin/vptovf
 # END SourceDeps(oneline)
 %define oldname thai-scalable-fonts
 %define fontname thai-scalable
@@ -12,7 +12,7 @@ BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mk
 
 Name:      fonts-ttf-thai-scalable
 Version:   0.5.0
-Release:   alt2_5
+Release:   alt2_6
 Summary:   Thai TrueType fonts
 Group:     System/Fonts/True type
 License:   GPLv2+ and Bitstream Vera
@@ -295,6 +295,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_6
+- update to new release by fcimport
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.5.0-alt2_5
 - update to new release by fcimport
 
