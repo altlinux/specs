@@ -13,7 +13,7 @@ BuildRequires(pre): rpm-build-python
 
 Name:    xgridfit
 Version: 2.2
-Release: alt2_8.a.20100725cvs
+Release: alt2_9%{?patchlevel:.%{patchlevel}}%{?alphatag:.%{alphatag}}
 Summary: Font hinting tool
 
 # This is where we drop fontforge
@@ -28,7 +28,7 @@ BuildArch: noarch
 
 BuildRequires:   python-devel
 
-Requires:        %{_bindir}/xsltproc fontforge libxml2-python
+Requires:        %{_bindir}/xsltproc fontforge
 Requires(post):  %{_bindir}/xmlcatalog
 Requires(preun): %{_bindir}/xmlcatalog
 Source44: import.info
@@ -45,7 +45,7 @@ Open-Source font editor, to do so.
 Group:    Documentation
 Summary:  Font hinting tool use documentation
 # Does not really make sense without the tool itself
-Requires: xgridfit = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 
 %description doc
 Xgridfit font hinting tool user documentation.
@@ -103,6 +103,9 @@ xmlcatalog --noout --del \
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_9.a.20100725cvs
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_8.a.20100725cvs
 - update to new release by fcimport
 
