@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-ttf-yanone-kaffeesatz
 Version: 20100514
-Release: alt3_4
+Release: alt3_5
 Summary: Yanone Kaffeesatz decorative fonts
 
 Group:     System/Fonts/True type
@@ -30,7 +30,7 @@ short runs of text.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 install -m 0644 -p %{SOURCE2} .
 
 
@@ -95,6 +95,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20100514-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20100514-alt3_4
 - update to new release by fcimport
 
