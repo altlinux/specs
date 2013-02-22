@@ -6,7 +6,7 @@ BuildRequires: chrpath
 Summary:	Shared functions for Ayatana indicators
 Name:		libindicator
 Version:	0.4.94
-Release:	alt1_3
+Release:	alt1_4
 License:	GPLv3
 Group:		System/Libraries
 URL:		https://launchpad.net/libindicator
@@ -33,7 +33,7 @@ Ayatana indicators system.
 %package	devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	libindicator = %{version}-%{release}
+Requires:	%{name}%{?_isa} = %{version}-%{release}
 
 %description	devel
 The %{name}-devel package contains libraries and header files for
@@ -60,7 +60,7 @@ tools for the GTK+3 build of %{name}.
 %package	gtk3-devel
 Summary:	Development files for %{name}-gtk3
 Group:		Development/C
-Requires:	libindicator-gtk3 = %{version}-%{release}
+Requires:	%{name}-gtk3%{?_isa} = %{version}-%{release}
 
 %description	gtk3-devel
 The %{name}-gtk3-devel package contains libraries and header files for
@@ -99,10 +99,9 @@ find %{buildroot} -regex ".*\.la$" | xargs rm -f --
 # this dummy indicator is fairly useless, it's not shipped in Ubuntu
 rm -f %{buildroot}%{_libdir}/libdummy-indicator*.so
 # kill rpath
-for i in %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin}/*; do
+for i in `find %buildroot{%_bindir,%_libdir,/usr/libexec,/usr/lib,/usr/sbin} -type f -perm -111`; do
 	chrpath -d $i ||:
 done
-	    
 
 %files
 %doc COPYING
@@ -136,6 +135,9 @@ done
 %{_libdir}/pkgconfig/indicator3-0.4.pc
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.94-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.94-alt1_3
 - update to new release by fcimport
 
