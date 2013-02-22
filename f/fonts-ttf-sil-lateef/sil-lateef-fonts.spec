@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-sil-lateef
 Version:        1.001
-Release:        alt3_4
+Release:        alt3_5
 Summary:        An Arabic script unicode font
 
 Group:          System/Fonts/True type
@@ -28,7 +28,7 @@ poet. It is intended to be an appropriate style for use in Sindhi and other
 languages of the South Asian region.
 
 %prep
-%setup -q -c %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q -c %{oldname}-%{version}
 
 
 %build
@@ -96,6 +96,9 @@ fi
 %doc *.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.001-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.001-alt3_4
 - update to new release by fcimport
 
