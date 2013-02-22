@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-tlomt-junction
 Version:        2.0
-Release:        alt3_7
+Release:        alt3_8
 Summary:        A humanist sans serif font
 
 Group:          System/Fonts/True type
@@ -29,7 +29,7 @@ typeface. It combines the best of both worlds.
 Old style and lining figures are included.
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 for file in *.txt ; do
  sed 's|\r||g' "$file" > "$file.new" && \
@@ -99,6 +99,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0-alt3_7
 - update to new release by fcimport
 
