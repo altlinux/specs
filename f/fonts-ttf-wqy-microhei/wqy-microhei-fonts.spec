@@ -9,7 +9,7 @@
 
 Name:           fonts-ttf-wqy-microhei
 Version:        0.2.0
-Release:        alt3_0.10.beta
+Release:        alt3_0.11.beta
 Summary:        Compact Chinese fonts derived from Droid
 
 Group:          System/Fonts/True type
@@ -93,6 +93,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_0.11.beta
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt3_0.10.beta
 - update to new release by fcimport
 
