@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-musica
 Version:        2.52
-Release:        alt3_5
+Release:        alt3_6
 Summary:        A font for musical symbols
 
 Group:          System/Fonts/True type
@@ -28,7 +28,7 @@ Musical Notation.
 
 It was created by George Douros.
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 
 %build
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_5
 - update to new release by fcimport
 
