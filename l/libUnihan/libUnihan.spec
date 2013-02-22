@@ -2,14 +2,6 @@
 BuildRequires(pre): rpm-macros-fedora-compat
 BuildRequires: gcc-c++
 # END SourceDeps(oneline)
-Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C 函式庫
-Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
-Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C 函式庫
-Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
-Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
-Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C 函式庫
-Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
-Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C 函式庫
 %add_optflags %optflags_shared
 ###
 # This file is generated, please modified the .spec.in file instead!
@@ -18,14 +10,14 @@ Name:           libUnihan
 %define         libUnihan_ver_major 0
 %define         libUnihan_ver_minor 5
 Version:        %{libUnihan_ver_major}.%{libUnihan_ver_minor}.3
-Release:        alt4_8
+Release:        alt4_9
 Group:          System/Libraries
 License:        LGPLv2+
 Summary:        C library for Unihan character database in fifth normal form 
 Summary(zh_CN): 用于符合第五正规化之统汉字(Unihan)数据库的 C 库文件
 Summary(zh_TW): 用於符合第五正規化之統漢字(Unihan)資料庫的 C 函式庫
 
-BuildRequires:  glib2-devel libsqlite3-devel ctest cmake >= 2.4
+BuildRequires:  glib2-devel libsqlite3-devel ctest cmake
 
 URL:            http://sourceforge.net/projects/libunihan
 Source0:        http://downloads.sourceforge.net/libunihan/%{name}-%{version}-Source.tar.gz
@@ -42,7 +34,7 @@ normal form (5NF).
 Summary:    Development files of libUnihan
 Group:      Development/C
 License:        LGPLv2+
-Requires:       libUnihan = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
 Development files of libUnihan such as header files.
@@ -52,8 +44,7 @@ Summary:    The libUnihan C API documents in Doxygen style
 Group:      Documentation
 License:        LGPLv2+
 BuildRequires:  doxygen
-Requires:       libUnihan = %{version}-%{release}
-BuildArch: noarch
+Requires:       %{name} = %{version}-%{release}
 
 %description doc
 The libUnihan C API documents in Doxygen style.
@@ -91,6 +82,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %doc doc/html
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_9
+- update to new release by fcimport
+
 * Sat Jan 26 2013 Igor Vlasenko <viy@altlinux.ru> 0.5.3-alt4_8
 - applied repocop patches
 
