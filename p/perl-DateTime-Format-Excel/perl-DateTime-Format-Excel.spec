@@ -1,6 +1,6 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(DBI.pm) perl(Date/Manip.pm) perl(DateTime/Duration.pm) perl(DateTime/Format/Builder.pm) perl(DateTime/LeapSecond.pm) perl(Math/BigInt.pm) perl(Module/Build.pm) perl(Params/Validate.pm) perl(Test/NoWarnings.pm) perl-devel perl-podlators
+BuildRequires: perl(Module/Build.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 %global pkgname DateTime-Format-Excel
 
@@ -8,7 +8,7 @@ Summary:	Convert between DateTime and Excel dates
 Name:		perl-DateTime-Format-Excel 
 Epoch:		1
 Version:	0.31
-Release:	alt2_7
+Release:	alt2_8
 # lib/DateTime/Format/Excel.pm -> GPL+ or Artistic
 License:	GPL+ or Artistic 
 Group:		Development/Perl
@@ -54,6 +54,9 @@ make test
 %{perl_vendor_privlib}/DateTime/
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.31-alt2_8
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1:0.31-alt2_7
 - moved to Sisyphus (Tapper dep)
 
