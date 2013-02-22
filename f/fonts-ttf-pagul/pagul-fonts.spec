@@ -9,7 +9,7 @@ BuildRequires: python unzip
 
 Name:           fonts-ttf-pagul
 Version:        1.0
-Release:        alt3_4
+Release:        alt3_5
 Summary:        Font for Saurashtra script
 
 Group:          System/Fonts/True type
@@ -26,7 +26,7 @@ Source44: import.info
 A TrueType Font, which allows you to read and write in Saurashtra Script.
 
 %prep
-%setup -q -c T
+%setup -n %{oldname}-%{version} -q -c T
 for file in License.txt; do
  sed "s|\r||g" $file > $file.new && \
  touch -r $file $file.new && \
@@ -103,6 +103,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_4
 - update to new release by fcimport
 
