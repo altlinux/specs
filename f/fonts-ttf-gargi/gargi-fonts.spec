@@ -7,7 +7,7 @@ BuildRequires: python
 
 Name:           fonts-ttf-gargi
 Version:        1.9
-Release:        alt3_7
+Release:        alt3_8
 Summary:        A Devanagari font
 
 Group:          System/Fonts/True type
@@ -102,6 +102,9 @@ fi
 %doc Changelog COPYING
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3_8
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.9-alt3_7
 - update to new release by fcimport
 
