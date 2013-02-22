@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: /usr/bin/runtest gcc-c++ libICE-devel libSM-devel libX11-devel unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname jomolhari-fonts
 %global	fontname jomolhari
@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/runtest gcc-c++ libICE-devel libSM-devel libX11-devel un
 
 Name:		fonts-ttf-jomolhari
 Version:	0.003
-Release:	alt3_15
+Release:	alt3_16
 Summary:	Jomolhari a Bhutanese style font for Tibetan and Dzongkha
 
 Group:		System/Fonts/True type
@@ -30,7 +30,7 @@ Unicode and the Chinese encoding for Tibetan.
 The font supports the standard combinations used in most texts.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 # Empty build section
@@ -94,6 +94,9 @@ fi
 %doc FONTLOG.txt OFL-FAQ.txt OFL.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_16
+- update to new release by fcimport
+
 * Sun Nov 25 2012 Igor Vlasenko <viy@altlinux.ru> 0.003-alt3_15
 - update to new release by fcimport
 
