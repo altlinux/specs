@@ -9,7 +9,7 @@ BuildRequires: glib2-devel libSDL-devel libesd-devel libgtk+2-devel libncurses-d
 Summary:	A drug dealing game
 Name:		dopewars
 Version:	1.5.12
-Release:	alt1_11.1033svn
+Release:	alt1_12.%{rel}svn
 URL:		http://dopewars.sourceforge.net/
 License:	GPLv2+
 Group:		Games/Other
@@ -47,7 +47,7 @@ switches (via dopewars -h) for further information.
 %package sdl
 Summary:	SDL sound support for dopewars
 Group:		Games/Other
-Requires:	dopewars = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 %description sdl
 This package adds a plugin to dopewars to allow sound to be output via.
 the Simple DirectMedia Layer mixer (SDL_mixer).
@@ -104,6 +104,9 @@ rm -rf %{buildroot}%{_docdir}
 %{_libdir}/dopewars/libsound_sdl.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_12.1033svn
+- update to new release by fcimport
+
 * Sun Jul 29 2012 Igor Vlasenko <viy@altlinux.ru> 1.5.12-alt1_11.1033svn
 - new release
 
