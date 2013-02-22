@@ -4,7 +4,7 @@
 
 Name:           fonts-otf-oflb-roadstencil
 Version:        1.0
-Release:        alt3_12
+Release:        alt3_13
 Summary:        Roadstencil Fonts
 
 Group:          System/Fonts/True type
@@ -84,6 +84,9 @@ fi
 %doc  License.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_13
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt3_12
 - update to new release by fcimport
 
