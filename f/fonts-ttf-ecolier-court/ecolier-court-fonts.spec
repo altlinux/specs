@@ -12,7 +12,7 @@ this package.
 
 Name:    fonts-ttf-ecolier-court
 Version: 20070702
-Release: alt3_15
+Release: alt3_16
 Summary: Schoolchildren cursive fonts
 
 Group:     System/Fonts/True type
@@ -71,7 +71,7 @@ commonly used by schoolchildren notepads.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 iconv -f iso-8859-15 -t utf-8 %{SOURCE2} > lisez_moi.txt
 touch -r %{SOURCE2} lisez_moi.txt
 for txt in *.txt ; do
@@ -145,6 +145,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20070702-alt3_16
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20070702-alt3_15
 - update to new release by fcimport
 
