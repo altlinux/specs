@@ -5,7 +5,7 @@ BuildRequires: perl(CPAN.pm) perl(Catalyst/Controller.pm) perl(Catalyst/ScriptRu
 Name:           perl-Test-WWW-Mechanize-Catalyst
 Summary:        Test::WWW::Mechanize for Catalyst
 Version:        0.58
-Release:        alt2_1
+Release:        alt2_2
 License:        GPL+ or Artistic
 Group:          Development/Perl
 Source0:        http://search.cpan.org/CPAN/authors/id/B/BO/BOBTFISH/Test-WWW-Mechanize-Catalyst-%{version}.tar.gz
@@ -77,6 +77,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.58-alt2_2
+- update to new release by fcimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 0.58-alt2_1
 - moved to Sisyphus
 
