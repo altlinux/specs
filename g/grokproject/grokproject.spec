@@ -1,5 +1,5 @@
 Name: grokproject
-Version: 2.7
+Version: 2.9
 Release: alt1
 Summary: Creates complete skeleton for a new Grok web application
 License: ZPL
@@ -64,6 +64,9 @@ This package contains tests for grokproject.
 %python_sitelibdir/*/*/*/*/tests
 
 %changelog
+* Fri Feb 22 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.9-alt1
+- Version 2.9
+
 * Wed Sep 12 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 2.7-alt1
 - Version 2.7
 
