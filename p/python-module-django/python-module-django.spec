@@ -1,4 +1,4 @@
-%define version 1.4.3
+%define version 1.4.5
 %define release alt1
 %define origname Django
 %setup_python_module django
@@ -167,6 +167,9 @@ install -m 0755 extras/django_bash_completion %buildroot/%_sysconfdir/bash_compl
 %python_sitelibdir/%modulename/db/backends/sqlite3/
 
 %changelog
+* Fri Feb 22 2013 Aleksey Avdeev <solo@altlinux.ru> 1.4.5-alt1
+- Version 1.4.5
+
 * Wed Feb 13 2013 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.4.3-alt1
 - Version 1.4.3
 
