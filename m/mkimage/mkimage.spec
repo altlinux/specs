@@ -1,5 +1,5 @@
 Name: mkimage
-Version: 0.2.7
+Version: 0.2.8
 Release: alt1
 
 Summary: Simple image creator
@@ -20,13 +20,13 @@ ISO images out of a user-supplied set of configuration
 files (called `templates').
 
 %prep
-%setup -q
+%setup
 
 %build
 %make_build
 
 %install
-%make_install install DESTDIR=%buildroot
+%makeinstall_std
 
 %files
 %_bindir/*
@@ -34,6 +34,10 @@ files (called `templates').
 %doc examples doc/README.ru
 
 %changelog
+* Fri Feb 22 2013 Michael Shigorin <mike@altlinux.org> 0.2.8-alt1
+- example{3,4}: updated for current make-initrd (see #28578)
+- minor spec cleanup
+
 * Thu Feb 21 2013 Michael Shigorin <mike@altlinux.org> 0.2.7-alt1
 - mki-copy-efiboot: essentially rewritten again
   + avoid undefined EFI_CERT variable error
