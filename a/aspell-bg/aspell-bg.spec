@@ -4,7 +4,7 @@ Summary: Bulgarian dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 4.1
-Release: alt2_7
+Release: alt2_8
 License: GPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -37,6 +37,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.1-alt2_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.1-alt2_7
 - update to new release by fcimport
 
