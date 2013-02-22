@@ -2,7 +2,7 @@ Name: hunspell-shs
 Summary: Shuswap hunspell dictionaries
 %define upstreamid 20090828
 Version: 0.%{upstreamid}
-Release: alt2_4
+Release: alt2_5
 Group: Text tools
 Source: http://secpewt.sd73.bc.ca/hunspell/hunspell-shs-ca.tar.gz
 URL: http://secpewt.sd73.bc.ca/wordlist
@@ -30,6 +30,9 @@ cp -p hunspell/shs_CA.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20090828-alt2_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20090828-alt2_4
 - update to new release by fcimport
 
