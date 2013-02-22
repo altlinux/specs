@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-ns-tiza-chalk
 Version:        20080210
-Release:        alt3_5
+Release:        alt3_6
 Summary:        Chalky slab-serif fonts
 
 Group:          System/Fonts/True type
@@ -27,7 +27,7 @@ It supports diacritics in addition to the basic latin set of characters.
 The font was created by Pablo Caro.
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 chmod 0644 *.txt
 for txt in *.txt ; do
@@ -100,6 +100,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20080210-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20080210-alt3_5
 - update to new release by fcimport
 
