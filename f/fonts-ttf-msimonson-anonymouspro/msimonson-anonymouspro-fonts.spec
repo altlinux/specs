@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-msimonson-anonymouspro
 Version:        1.002.001
-Release:        alt4_4
+Release:        alt4_5
 Summary:        A coding-friendly monospace font
 
 Group:          System/Fonts/True type
@@ -107,6 +107,9 @@ fi
 %doc *.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.002.001-alt4_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.002.001-alt4_4
 - update to new release by fcimport
 
