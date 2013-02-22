@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Date/Manip.pm) perl(DateTime/Duration.pm) perl(Module/Build.pm) perl-devel perl-podlators
+BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-DB2
 Version:        0.05
-Release:        alt2_12
+Release:        alt2_13
 Summary:        Parse and format DB2 dates and times
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_13
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.05-alt2_12
 - moved to Sisyphus (Tapper dep)
 
