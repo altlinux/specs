@@ -4,7 +4,7 @@ BuildRequires: perl(File/Spec/Functions.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-File-Pid
 Version:        1.01
-Release:        alt3_10
+Release:        alt3_11
 Summary:        Pid File Manipulation
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -45,6 +45,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_11
+- update to new release by fcimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.01-alt3_10
 - moved to Sisyphus
 
