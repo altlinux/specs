@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-otf-gdouros-analecta
 Version:        2.52
-Release:        alt3_4
+Release:        alt3_5
 Summary:        An ecclesiastic scripts font
 
 Group:          System/Fonts/True type
@@ -28,7 +28,7 @@ Specials, Gothic and Deseret.
 It was created by George Douros.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 
 %build
@@ -92,6 +92,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.52-alt3_4
 - update to new release by fcimport
 
