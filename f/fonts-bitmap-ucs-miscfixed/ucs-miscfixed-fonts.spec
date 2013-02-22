@@ -4,7 +4,7 @@
 
 Name: fonts-bitmap-ucs-miscfixed
 Version: 0.3
-Release: alt1_9
+Release: alt1_10
 License: Public Domain
 URL: http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html
 Source0: http://www.cl.cam.ac.uk/~mgk25/download/ucs-fonts.tar.gz
@@ -22,7 +22,7 @@ locations such as terminals.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 rm helvR12.bdf
 
 %build
@@ -85,6 +85,9 @@ fi
 %doc README	
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.3-alt1_9
 - update to new release by fcimport
 
