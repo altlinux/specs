@@ -1,12 +1,13 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: gcc-c++ libcrystalhd-devel
 # END SourceDeps(oneline)
+%add_optflags %optflags_shared
 %global date 20120405
 
 Summary:        Broadcom Crystal HD device interface library
 Name:           libcrystalhd
 Version:        3.10.0
-Release:        alt1_2
+Release:        alt1_3
 License:        LGPLv2
 Group:          System/Libraries
 #Source:         http://www.broadcom.com/docs/support/crystalhd/crystalhd_linux_20100703.zip
@@ -37,7 +38,7 @@ bcm970015 hardware.
 %package devel
 Summary:       Development libs for libcrystalhd
 Group:         Development/C
-Requires:      libcrystalhd = %{version}-%{release}
+Requires:      %{name} = %{version}-%{release}
 
 %description devel
 Development libraries needed to build applications against libcrystalhd.
@@ -47,7 +48,7 @@ Summary:       Firmware for the Broadcom Crystal HD video decoder
 License:       Redistributable, no modification permitted
 BuildArch:     noarch
 Group:         System/Kernel and hardware
-Requires:      libcrystalhd = %{version}-%{release}
+Requires:      %{name} = %{version}-%{release}
 
 %description -n firmware-crystalhd
 Firmwares for the Broadcom Crystal HD (bcm970012 and bcm970015)
@@ -60,7 +61,7 @@ video decoders.
 %package -n gstreamer-plugin-crystalhd
 Summary:       Gstreamer crystalhd decoder plugin
 Group:         Sound
-Requires:      libcrystalhd = %{version}-%{release}
+Requires:      %{name} = %{version}-%{release}
 Requires:      gst-plugins-base
 BuildRequires: gstreamer-devel >= %{_gst}
 BuildRequires: gst-plugins-devel >= %{_gstpb}
@@ -128,6 +129,9 @@ install -pm 0644 driver/linux/20-crystalhd.rules \
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt1_3
+- update to new release by fcimport
+
 * Tue Aug 28 2012 Igor Vlasenko <viy@altlinux.ru> 3.10.0-alt1_2
 - new release
 
