@@ -4,7 +4,7 @@ Summary: Croatian dictionaries for Aspell
 Name: aspell-%{lang}
 #Epoch: 50
 Version: 0.51
-Release: alt2_11
+Release: alt2_12
 License: LGPLv2
 Group: Text tools
 URL: http://aspell.net/
@@ -34,6 +34,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_datadir}/aspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.51-alt2_12
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.51-alt2_11
 - update to new release by fcimport
 
