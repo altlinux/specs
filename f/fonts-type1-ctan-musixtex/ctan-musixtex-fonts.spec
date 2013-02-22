@@ -4,7 +4,7 @@
 
 Name:           fonts-type1-ctan-musixtex
 Version:        1.13
-Release:        alt2_6
+Release:        alt2_7
 Summary:        Type 1 versions of MusiXTeX fonts
 Group:          System/Fonts/True type
 License:        LPPL
@@ -71,6 +71,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.13-alt2_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.13-alt2_6
 - update to new release by fcimport
 
