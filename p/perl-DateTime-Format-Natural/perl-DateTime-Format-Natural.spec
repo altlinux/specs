@@ -4,7 +4,7 @@ BuildRequires: perl(DateTime/TimeZone.pm) perl(File/Spec/Functions.pm) perl-deve
 # END SourceDeps(oneline)
 Name:           perl-DateTime-Format-Natural
 Version:        1.01
-Release:        alt2_1
+Release:        alt2_2
 Summary:        Create machine readable date/time with natural parsing logic
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -78,6 +78,9 @@ done
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_2
+- update to new release by fcimport
+
 * Mon Dec 10 2012 Igor Vlasenko <viy@altlinux.ru> 1.01-alt2_1
 - moved to Sisyphus
 
