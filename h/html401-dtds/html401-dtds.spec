@@ -9,7 +9,7 @@ Group: Other
 
 Name:           html401-dtds
 Version:        4.01
-Release:        alt1_19991224.12.2
+Release:        alt1_%{date}.12.3
 Summary:        HTML 4.01 document type definitions
 
 # W3C Software License for DTDs etc:
@@ -22,7 +22,7 @@ Source99:       %{name}-prepare-tarball.sh
 Patch0:         %{name}-catalog.patch
 
 BuildArch:      noarch
-Requires:       xml-common sgml-common
+Requires: xml-common sgml-common
 Requires(post): /usr/bin/install-catalog
 Requires(preun): /usr/bin/install-catalog
 Source44: import.info
@@ -73,6 +73,9 @@ cd -
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.3
+- update to new release by fcimport
+
 * Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 4.01-alt1_19991224.12.2
 - initial fc import
 
