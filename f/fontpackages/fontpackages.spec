@@ -1,14 +1,14 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires: perl(Font/TTF/Font.pm) perl(Unicode/UCD.pm)
 # END SourceDeps(oneline)
-%define fedora 16
+%define fedora 19
 %global spectemplatedir %{_sysconfdir}/rpmdevtools/
 %global ftcgtemplatedir %{_datadir}/fontconfig/templates/
 %global rpmmacrodir     %{_sysconfdir}/rpm/
 
 Name:    fontpackages
 Version: 1.44
-Release: alt4_5
+Release: alt4_6
 Summary: Common directory and macro definitions used by font packages
 
 Group:     System/Configuration/Other
@@ -41,6 +41,7 @@ including the correct permissions for the directories.
 Group: System/Configuration/Other
 Summary: Templates and macros used to create font packages
 
+Requires: rpmdevtools
 Requires: fontconfig
 Requires: rpm-macros-fontpackages rpm-build-fonts xorg-font-encodings
 
@@ -125,6 +126,9 @@ rm -rf %buildroot%{spectemplatedir}
 %{ftcgtemplatedir}/*txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.44-alt4_5
 - update to new release by fcimport
 
