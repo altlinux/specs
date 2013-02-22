@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-yanone-tagesschrift
 Version:        20050524
-Release:        alt3_6
+Release:        alt3_7
 Summary:        A serif decorative latin font
 
 Group:          System/Fonts/True type
@@ -28,7 +28,7 @@ runs of text.
 It was created in a font-workshop at the university of Weimar in 2005.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 
 %build
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20050524-alt3_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20050524-alt3_6
 - update to new release by fcimport
 
