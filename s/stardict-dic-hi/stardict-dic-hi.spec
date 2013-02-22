@@ -1,6 +1,6 @@
 Name:           stardict-dic-hi
 Version:        3.0.1
-Release:        alt2_9
+Release:        alt2_10
 Summary:        Hindi dictionary for stardict
 
 Group:          Text tools
@@ -41,6 +41,9 @@ chmod 644 README
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.0.1-alt2_9
 - update to new release by fcimport
 
