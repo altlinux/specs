@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-oflb-smonohand
 Version:        20090423
-Release:        alt3_5
+Release:        alt3_6
 Summary:        A handwritten monospace font
 
 Group:          System/Fonts/True type
@@ -85,6 +85,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20090423-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20090423-alt3_5
 - update to new release by fcimport
 
