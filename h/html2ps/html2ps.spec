@@ -2,7 +2,7 @@
 %define my_subversion b7
 Name:           html2ps
 Version:        1.0
-Release:        alt2_0.11.b7
+Release:        alt2_0.12.%{my_subversion}
 Summary:        HTML to PostScript converter
 
 Group:          Publishing
@@ -22,7 +22,7 @@ Patch3:         %{name}-1.0b7-Remove-deprecated-variable.patch
 BuildArch:      noarch
 BuildRequires:  desktop-file-utils
 # Depend on paperconf directly (instead of libpaper package) for rpmlint sake
-Requires:       /usr/bin/tex texlive-generic-recommended /usr/bin/dvips texlive-generic-recommended ghostscript-utils ghostscript /usr/bin/paperconf
+Requires: /usr/bin/tex texlive-generic-recommended /usr/bin/dvips texlive-generic-recommended ghostscript-utils ghostscript /usr/bin/paperconf
 # not autodetected since they are called by require not at the beginning of 
 # line
 Requires:       perl(LWP/UserAgent.pm) perl(HTTP/Cookies.pm) perl(HTTP/Request.pm)
@@ -102,6 +102,9 @@ desktop-file-install --vendor="fedora"               \
 %{_datadir}/applications/*xhtml2ps.desktop
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.12.b7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0-alt2_0.11.b7
 - update to new release by fcimport
 
