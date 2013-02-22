@@ -18,7 +18,7 @@ Eritrean languages (Amharic, Blin, GeE.ez, Harari, MeE.en, Tigre, Tigrinyaa..).
 
 Name:    fonts-ttf-senamirmir-washra
 Version: 4.1
-Release: alt3_8
+Release: alt3_9
 Summary: Fonts for the GeE.ez (Ethiopic) script
 
 Group:   System/Fonts/True type
@@ -195,7 +195,7 @@ This package consists of the a.'Ethiopic Zelana.' font.
 
 
 %prep
-%setup -c -q
+%setup -n %{oldname}-%{version} -c -q
 for txt in *.txt ; do
    fold -s $txt > $txt.new
    sed -i 's/\r//' $txt.new
@@ -271,6 +271,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.1-alt3_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4.1-alt3_8
 - update to new release by fcimport
 
