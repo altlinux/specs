@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(English.pm) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname madan-fonts
 %global fontname madan
@@ -7,7 +7,7 @@ BuildRequires: gcc-c++ perl(English.pm) unzip
 
 Name: fonts-ttf-madan
 Version: 2.000
-Release: alt3_9
+Release: alt3_10
 Summary: Font for Nepali language
 Group: System/Fonts/True type
 License: GPL+
@@ -29,7 +29,7 @@ This package provides the Madan font for Nepali made by the
 Madan Puraskar Pustakalaya project.
 
 %prep
-%setup -c -q
+%setup -n %{oldname}-%{version} -c -q
 for file in madan/license.txt; do
  sed "s|\r||g" $file > $file.new && \
  touch -r $file $file.new && \
@@ -102,6 +102,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_10
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 2.000-alt3_9
 - update to new release by fcimport
 
