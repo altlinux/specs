@@ -4,7 +4,7 @@ BuildRequires: perl(DBD/DBM.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Database
 Version:        1.11
-Release:        alt3_5
+Release:        alt3_6
 Summary:        Database handles ready for testing
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -61,6 +61,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.11-alt3_6
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.11-alt3_5
 - moved to Sisyphus (Tapper dep)
 
