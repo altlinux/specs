@@ -5,7 +5,7 @@ BuildRequires: perl(File/Spec/Functions.pm) perl(Log/Log4perl/Util.pm) perl-deve
 Summary:	Typical installation tasks for system administrators
 Name:		perl-Sysadm-Install
 Version:	0.42
-Release:	alt1_1
+Release:	alt1_2
 License:	GPL+ or Artistic
 Group:		Development/Perl
 URL:		http://search.cpan.org/dist/Sysadm-Install/
@@ -76,6 +76,9 @@ find %{buildroot} -type f -name .packlist -exec rm -f {} ';'
 %{perl_vendor_privlib}/Sysadm/
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1_2
+- update to new release by fcimport
+
 * Wed Jan 30 2013 Igor Vlasenko <viy@altlinux.ru> 0.42-alt1_1
 - update to new release by fcimport
 
