@@ -15,7 +15,7 @@ but some have also been improved by the project.
 
 Name:		fonts-ttf-vlgothic
 Version:	20121230
-Release:	alt1_2
+Release:	alt1_4
 Summary:	Japanese TrueType font
 
 License:	mplus and BSD
@@ -39,8 +39,6 @@ This package provides the monospace VLGothic font.
 %package -n fonts-ttf-vlgothic-p
 Summary:	Proportional Japanese TrueType font
 Group:		System/Fonts/True type
-Obsoletes:	VLGothic-fonts-proportional < 20090204-1
-Provides:	VLGothic-fonts-proportional = %{version}-%{release}
 Obsoletes:	%{oldname}-common < 20121230-2
 Provides:	%{oldname}-common = %{version}-%{release}
 
@@ -121,6 +119,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20121230-alt1_4
+- update to new release by fcimport
+
 * Thu Jan 17 2013 Igor Vlasenko <viy@altlinux.ru> 20121230-alt1_2
 - update to new release by fcimport
 
