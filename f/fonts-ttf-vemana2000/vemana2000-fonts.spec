@@ -1,14 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/afm2tfm /usr/bin/fc-cache /usr/bin/fontforge /usr/bin/mkfontdir /usr/bin/mkfontscale /usr/bin/mktexlsr /usr/bin/runtest /usr/bin/ttmkfdir /usr/bin/vptovf cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel
-# END SourceDeps(oneline)
 %define oldname vemana2000-fonts
 %global fontname vemana2000
 %global fontconf 69-%{fontname}.conf
 
 Name: fonts-ttf-vemana2000
 Version: 1.1.3
-Release: alt3_4
+Release: alt3_5
 Summary: Unicode compliant OpenType font for Telugu
 
 Group: System/Fonts/True type
@@ -84,6 +80,9 @@ fi
 %doc ChangeLog COPYRIGHT COPYING AUTHORS README
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt3_5
+- update to new release by fcimport
+
 * Wed Nov 21 2012 Igor Vlasenko <viy@altlinux.ru> 1.1.3-alt3_4
 - update to new release by fcimport
 
