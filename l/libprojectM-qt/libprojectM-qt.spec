@@ -5,13 +5,13 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:		libprojectM-qt
 Version:	2.0.1
-Release:	alt2_6
+Release:	alt2_7
 Summary:	The Qt frontend to the projectM visualization plugin
 Group:		Sound
 License:	GPLv2+
 URL:		http://projectm.sourceforge.net/
 Source0:	http://downloads.sourceforge.net/projectm/%{name}-%{version}.tar.bz2
-BuildRequires:	ctest cmake qt4-devel libprojectM-devel = %{version}
+BuildRequires: ctest cmake qt4-devel libprojectM-devel = %{version}
 Source44: import.info
 
 %description
@@ -22,7 +22,7 @@ preset playlists for projectM-jack and projectM-pulseaudio.
 %package	devel
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	libprojectM-qt = %{version}-%{release}
+Requires:	%{name} = %{version}-%{release}
 
 %description	devel
 projectM-qt is a GUI designed to enhance the projectM user and preset writer
@@ -54,6 +54,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/*.pc
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.1-alt2_6
 - update to new release by fcimport
 
