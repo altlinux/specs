@@ -13,7 +13,7 @@ This package provides the free Korean TrueType fonts.
 
 Name:           fonts-ttf-baekmuk
 Version:        2.2
-Release:        alt2_34
+Release:        alt2_35
 Summary:        Free Korean TrueType fonts
 
 Group:          System/Fonts/True type
@@ -104,7 +104,7 @@ Headline is Korean TrueType font in Black face.
 %package -n fonts-ttf-baekmuk-ghostscript
 Summary:        Ghostscript files for Korean Baekmuk TrueType fonts
 Group:          System/Fonts/True type
-Requires:       ghostscript-utils ghostscript >= 8.63-4
+Requires: ghostscript-utils ghostscript
 Requires:       fonts-ttf-baekmuk-batang = %{version}-%{release}
 Requires:       fonts-ttf-baekmuk-dotum = %{version}-%{release}
 Requires:       fonts-ttf-baekmuk-gulim = %{version}-%{release}
@@ -216,6 +216,9 @@ if [ -d $RPM_BUILD_ROOT/etc/X11/fontpath.d ]; then
 fi
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_35
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt2_34
 - update to new release by fcimport
 
