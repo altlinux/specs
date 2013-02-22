@@ -3,7 +3,7 @@ BuildRequires: /usr/bin/perl perl(Encode.pm)
 # END SourceDeps(oneline)
 Name:		atool
 Version:	0.39.0
-Release:	alt1_1
+Release:	alt1_2
 Summary:	A perl script for managing file archives of various types
 
 Group:		Archiving/Other
@@ -31,11 +31,16 @@ ace, arj, rpm, cpio, arc, 7z, alzip.
 %prep
 %setup -q
 
+# Convert to UTF-8 while keeping the original timestamp
+iconv -f iso8859-1 -t utf-8 NEWS -o tmp
+touch -r NEWS tmp
+mv -f tmp NEWS
+chmod 0644 NEWS
+
+
 %build
 %configure
 make %{?_smp_mflags}
-mv NEWS NEWS.old
-iconv -f iso-8859-1 -t UTF-8 -o NEWS NEWS.old
 
 
 %install
@@ -47,6 +52,9 @@ make install DESTDIR=$RPM_BUILD_ROOT
 %{_mandir}/man1/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.39.0-alt1_2
+- update to new release by fcimport
+
 * Mon Oct 01 2012 Igor Vlasenko <viy@altlinux.ru> 0.39.0-alt1_1
 - update to new release by fcimport
 
