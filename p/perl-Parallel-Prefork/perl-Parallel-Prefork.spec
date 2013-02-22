@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(Exporter.pm) perl(Fcntl.pm) pe
 # END SourceDeps(oneline)
 Name:           perl-Parallel-Prefork
 Version:        0.13
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Simple prefork server framework
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_5
+- update to new release by fcimport
+
 * Mon Jan 21 2013 Igor Vlasenko <viy@altlinux.ru> 0.13-alt2_4
 - import for Sisyphus (required for RT)
 
