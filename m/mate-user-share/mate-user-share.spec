@@ -2,11 +2,10 @@
 BuildRequires: /usr/bin/glib-genmarshal /usr/bin/glib-gettextize /usr/bin/pkg-config /usr/sbin/httpd /usr/sbin/httpd2 libICE-devel libSM-devel libX11-devel libgio-devel pkgconfig(dbus-1) pkgconfig(gdk-x11-2.0) pkgconfig(gio-2.0) pkgconfig(glib-2.0) pkgconfig(gtk+-2.0) pkgconfig(libcanberra-gtk)
 # END SourceDeps(oneline)
 %define _libexecdir %_prefix/libexec
-BuildRequires(pre): rpm-macros-mate-conf
 Summary: Mate user file sharing
 Name: mate-user-share
 Version: 1.5.0
-Release: alt2_0
+Release: alt3_0
 License: GPLv2+
 Group: System/Libraries
 URL: http://pub.mate-desktop.org
@@ -75,6 +74,9 @@ rm -f %buildroot%_libdir/caja/extensions-2.0/libcaja-share-extension.la
 %{_libdir}/caja/extensions-2.0/*.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt3_0
+- cleaned up obsolete mate-conf BR:
+
 * Mon Feb 18 2013 Igor Vlasenko <viy@altlinux.ru> 1.5.0-alt2_0
 - cleaned up dependencies
 
