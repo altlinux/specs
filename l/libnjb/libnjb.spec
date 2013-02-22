@@ -7,7 +7,7 @@ BuildRequires: /usr/bin/doxygen libncurses-devel
 
 Name:		libnjb
 Version:	2.2.7
-Release:	alt3_3
+Release:	alt3_4
 Summary:	A software library for talking to the Creative Nomad Jukeboxes and Dell DJs
 URL:		http://libnjb.sourceforge.net/
 
@@ -15,7 +15,7 @@ Group:		System/Libraries
 Source0:	http://download.sourceforge.net/%{name}/%{name}-%{version}.tar.gz
 License:	BSD
 Requires:	udev
-BuildRequires:	libusb-compat-devel libusb-devel
+BuildRequires: libusb-compat-devel libusb-devel
 BuildRequires:	zlib-devel
 BuildRequires:	ncurses-devel
 BuildRequires:	doxygen
@@ -28,7 +28,7 @@ Creative Nomad Jukebox line of MP3 players.
 %package examples
 Summary:        Example programs for libnjb
 Group:          Sound
-Requires:       libnjb = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description examples
 This package provides example programs for communicating with the
@@ -37,7 +37,7 @@ Creative Nomad Jukebox and Dell DJ line of MP3 players.
 %package devel
 Summary:        Development files for libnjb
 Group:          System/Libraries
-Requires:       libnjb = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 # doc subpackage removed in newer releases, and included
 # in the -devel package.
 Provides:	libnjb-doc
@@ -93,6 +93,9 @@ touch -r configure.ac \
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2.7-alt3_3
 - update to new release by fcimport
 
