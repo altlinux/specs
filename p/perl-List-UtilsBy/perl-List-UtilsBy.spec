@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl(File/stat.pm) perl(Scalar/Util.pm) perl-de
 # END SourceDeps(oneline)
 Name:           perl-List-UtilsBy
 Version:        0.09
-Release:        alt2_3
+Release:        alt2_4
 Summary:        Higher-order list utility functions
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -48,6 +48,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_4
+- update to new release by fcimport
+
 * Tue Jul 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.09-alt2_3
 - update to new release by fcimport
 
