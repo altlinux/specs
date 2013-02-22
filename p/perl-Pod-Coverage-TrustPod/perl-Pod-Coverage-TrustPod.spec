@@ -4,7 +4,7 @@ BuildRequires: perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Pod-Coverage-TrustPod
 Version:        0.100002
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Allow a module's pod to contain Pod::Coverage hints
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -53,6 +53,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.100002-alt2_5
+- update to new release by fcimport
+
 * Mon Nov 26 2012 Igor Vlasenko <viy@altlinux.ru> 0.100002-alt2_4
 - sisyphus release
 
