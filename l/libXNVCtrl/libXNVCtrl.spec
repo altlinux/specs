@@ -1,14 +1,14 @@
 %add_optflags %optflags_shared
 Name:           libXNVCtrl
 Version:        169.12
-Release:        alt2_7
+Release:        alt2_8
 Summary:        Library providing the NV-CONTROL API
 Group:          System/Libraries
 License:        GPLv2+
 URL:            ftp://download.nvidia.com/XFree86/nvidia-settings/
 Source0:        ftp://download.nvidia.com/XFree86/nvidia-settings/nvidia-settings-%{version}.tar.gz
 Patch0:         libXNVCtrl-imake.patch
-BuildRequires:  xorg-cf-files gccmakedep imake libX11-devel libXext-devel
+BuildRequires: xorg-cf-files gccmakedep imake libX11-devel libXext-devel
 Source44: import.info
 
 %description
@@ -22,7 +22,7 @@ themselves.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libXNVCtrl = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -67,6 +67,9 @@ mv $RPM_BUILD_ROOT%{_includedir}/X11/extensions \
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 169.12-alt2_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 169.12-alt2_7
 - update to new release by fcimport
 
