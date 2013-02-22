@@ -4,7 +4,7 @@ BuildRequires: perl(Exporter.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Hash-Flatten
 Version:        1.19
-Release:        alt3_7
+Release:        alt3_8
 Summary:        Flatten/unflatten complex data hashes
 License:        GPLv2
 Group:          Development/Perl
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_8
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 1.19-alt3_7
 - moved to Sisyphus (Tapper dep)
 
