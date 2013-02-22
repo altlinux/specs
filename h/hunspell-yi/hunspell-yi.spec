@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-yi
 Summary: Yiddish hunspell dictionaries
 Version: 1.1
-Release: alt2_5
+Release: alt2_6
 Group: Text tools
 Source: http://extensions.services.openoffice.org/e-files/3975/1/%{name}-%{version}.oxt
 URL: http://extensions.services.openoffice.org/en/project/dict-yi
@@ -32,6 +32,9 @@ cp -p dictionaries/yi.dic $RPM_BUILD_ROOT/%{_datadir}/myspell/yi_US.dic
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.1-alt2_5
 - update to new release by fcimport
 
