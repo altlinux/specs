@@ -10,7 +10,7 @@ a wide range of Latin-based alphabets.
 
 Name:           fonts-ttf-sil-gentium
 Version:        1.02
-Release:        alt5_13
+Release:        alt5_14
 Summary:        SIL Gentium fonts
 
 Group:          System/Fonts/True type
@@ -133,6 +133,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.02-alt5_14
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.02-alt5_13
 - update to new release by fcimport
 
