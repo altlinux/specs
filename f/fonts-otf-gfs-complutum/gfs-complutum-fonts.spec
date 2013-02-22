@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-complutum
 Version: 20070413
-Release: alt3_16
+Release: alt3_17
 Summary: GFS Complutum Greek font
 
 Group:     System/Fonts/True type
@@ -53,7 +53,7 @@ is now available for general use.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 chmod 0644 *.txt
 for txt in *.txt ; do
@@ -125,6 +125,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20070413-alt3_17
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20070413-alt3_16
 - update to new release by fcimport
 
