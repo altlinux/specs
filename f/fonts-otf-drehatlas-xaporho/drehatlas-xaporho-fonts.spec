@@ -8,7 +8,7 @@ BuildRequires: unzip
 
 Name:		fonts-otf-drehatlas-xaporho
 Version:	1.0.3.3
-Release:	alt3_6
+Release:	alt3_7
 Summary:	A Latin typeface that is sharp and angular
 Group:		System/Fonts/True type
 License:	OFL
@@ -24,7 +24,7 @@ The Xaporho font was originally inspired by the logo of a hobby rock band named
 Xaporho.
 
 %prep
-%setup -q -c %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q -c %{oldname}-%{version}
 cd drehatlas-fonts-%{metapkgver}/Xaporho-%{version}
 # Wrap the license file at 80 chars
 fold -s LICENSE > LICENSE.new
@@ -91,6 +91,9 @@ fi
 %doc drehatlas-fonts-%{metapkgver}/Xaporho-%{version}/LICENSE drehatlas-fonts-%{metapkgver}/Xaporho-%{version}/FONTLOG
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.3.3-alt3_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.3.3-alt3_6
 - update to new release by fcimport
 
