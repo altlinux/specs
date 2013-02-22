@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 
 Name:           grfcodec
 Version:        6.0.1
-Release:        alt1_1
+Release:        alt1_2%{?prever}
 Summary:        A suite of programs to modify Transport Tycoon Deluxe's GRF files
 Group:          Development/Tools
 License:        GPLv2+
@@ -13,7 +13,7 @@ URL:            http://dev.openttdcoop.org/projects/grfcodec
 Source0:        http://binaries.openttd.org/extra/grfcodec/%{version}/grfcodec-%{version}-source.tar.xz
 #Source0:        http://binaries.openttd.org/extra/grfcodec-nightly/%{prever}/grfcodec-nightly-%{prever}-source.tar.xz
 
-BuildRequires:  boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel libpng-devel
+BuildRequires: boost-devel boost-filesystem-devel boost-wave-devel boost-graph-parallel-devel boost-math-devel boost-mpi-devel boost-program_options-devel boost-signals-devel boost-intrusive-devel boost-asio-devel libpng-devel
 Obsoletes:      nforenum < 4.0.0-2
 Provides:       nforenum = 4.0.0-2
 Source44: import.info
@@ -50,11 +50,14 @@ make install DESTDIR=%{buildroot}
 %doc docs/*.txt
 %{_bindir}/grf*
 %{_bindir}/nforenum
-%{_mandir}/man1/grf*.1.*
-%{_mandir}/man1/nforenum.1.*
+%{_mandir}/man1/grf*.1*
+%{_mandir}/man1/nforenum.1*
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_2
+- update to new release by fcimport
+
 * Tue Oct 09 2012 Igor Vlasenko <viy@altlinux.ru> 6.0.1-alt1_1
 - update to new release by fcimport
 
