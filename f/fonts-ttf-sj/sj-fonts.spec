@@ -9,7 +9,7 @@ BuildRequires: python
 
 Name:          fonts-ttf-sj
 Version:       2.0.2
-Release:       alt3_8
+Release:       alt3_9
 Summary:       Two fonts by Steve Jordi released under the GPL
 
 Group:         System/Fonts/True type
@@ -67,7 +67,7 @@ Handwriting font by Steve Jordi covering latin glyphs.
 %{_fontbasedir}/*/%{_fontstem}/SteveHand.ttf
 
 %prep
-%setup -q -c %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q -c %{oldname}-%{version}
 
 %build
 fontforge -lang=ff -script "-" Delphine.sfd SteveHand.sfd <<EOF
@@ -137,6 +137,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.0.2-alt3_8
 - update to new release by fcimport
 
