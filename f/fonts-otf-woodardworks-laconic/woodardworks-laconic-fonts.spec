@@ -8,7 +8,7 @@ BuildRequires: unzip
 Name:		fonts-otf-woodardworks-laconic
 Summary:	An artistic and minimal sans-serif font family
 Version:	001.001
-Release:	alt3_7
+Release:	alt3_8
 License:	OFL
 Group:		System/Fonts/True type
 Source0:	http://www.woodardworks.com/laconic.zip
@@ -106,6 +106,9 @@ fi
 %doc laconic_eula.pdf
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 001.001-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 001.001-alt3_7
 - update to new release by fcimport
 
