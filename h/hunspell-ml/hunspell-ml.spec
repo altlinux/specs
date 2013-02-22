@@ -1,7 +1,7 @@
 Name: hunspell-ml
 Summary: Malayalam hunspell dictionaries
 Version: 0.1
-Release: alt2_8
+Release: alt2_9
 Source: http://download.savannah.gnu.org/releases/smc/Spellchecker/ooo-hunspell-ml-%{version}.tar.bz2
 Group: Text tools
 URL: http://download.savannah.gnu.org/releases/smc/Spellchecker/
@@ -29,6 +29,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.1-alt2_8
 - update to new release by fcimport
 
