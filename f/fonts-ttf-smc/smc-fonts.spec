@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(English.pm) unzip
-# END SourceDeps(oneline)
 %define oldname smc-fonts
 %define	fontname	smc
 
@@ -11,7 +8,7 @@ traditional and new Malayalam Script.
 
 Name:		fonts-ttf-smc
 Version:	5.0.1
-Release:	alt1_4
+Release:	alt1_5
 Summary:	Open Type Fonts for Malayalam script
 Group:		System/Fonts/True type
 License:	GPLv3+ with exceptions and GPLv2+ with exceptions and GPLv2+ and  GPLv2 and GPL+
@@ -230,6 +227,9 @@ fi
 %doc ChangeLog 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_5
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 5.0.1-alt1_4
 - update to new release by fcimport
 
