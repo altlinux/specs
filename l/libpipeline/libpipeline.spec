@@ -1,14 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: cmake gcc-c++ guile18-devel libglibmm-devel
-# END SourceDeps(oneline)
 %add_optflags %optflags_shared
 %global gnulib_ver 20120404-stable
 
 Summary: A pipeline manipulation library
 Name: libpipeline
 Version: 1.2.2
-Release: alt1_2
+Release: alt1_3
 License: GPLv3+
 Group: Development/C
 URL: http://libpipeline.nongnu.org/
@@ -65,6 +61,9 @@ rm $RPM_BUILD_ROOT/%{_libdir}/libpipeline.la
 %{_mandir}/man3/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_3
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 1.2.2-alt1_2
 - update to new release by fcimport
 
