@@ -4,13 +4,13 @@ BuildRequires: /usr/bin/doxygen
 %add_optflags %optflags_shared
 Name:		libtelnet
 Version:	0.21
-Release:	alt1_2
+Release:	alt1_4
 Summary:	TELNET protocol parsing framework
 
 Group:		System/Libraries
 License:	Public Domain
 URL:		http://github.com/elanthis/libtelnet
-Source0:	http://cloud.github.com/downloads/elanthis/libtelnet/libtelnet-%{version}.tar.gz
+Source0:	http://cloud.github.com/downloads/seanmiddleditch/libtelnet/libtelnet-%{version}.tar.gz
 
 BuildRequires: zlib-devel
 BuildRequires: doxygen
@@ -26,15 +26,15 @@ MSSP protocols used by MUD servers and clients.
 %package devel
 Summary: Header files for libtelnet
 Group: Development/C
-Requires: libtelnet = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 Header files for developing applications making use of libtelnet.
 
 %package utils
 Summary: TELNET utility programs from libtelnet
-Group: Networking/Other
-Requires: libtelnet = %{version}-%{release}
+Group: Networking/WWW
+Requires: %{name} = %{version}-%{release}
 
 %description utils
 Provides three utilities based on the libtelnet library.
@@ -69,6 +69,9 @@ rm "$RPM_BUILD_ROOT%{_libdir}"/*.la
 %{_bindir}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.21-alt1_2
 - update to new release by fcimport
 
