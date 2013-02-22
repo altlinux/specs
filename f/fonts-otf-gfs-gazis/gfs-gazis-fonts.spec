@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-gazis
 Version: 20091008
-Release: alt3_4
+Release: alt3_5
 Summary: An 18th century Greek typeface
 
 Group:     System/Fonts/True type
@@ -41,7 +41,7 @@ GFS Gazis has been digitally designed by George D. Matthiopoulos.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 chmod 0644 *.txt
 for txt in *.txt ; do
@@ -113,6 +113,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20091008-alt3_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20091008-alt3_4
 - update to new release by fcimport
 
