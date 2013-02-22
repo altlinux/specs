@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libirman
 Version:        0.4.5
-Release:        alt3_7
+Release:        alt3_8
 Summary:        Library for IRMAN hardware
 
 Group:          System/Libraries
@@ -25,7 +25,7 @@ A library for accessing the IRMAN hardware from Linux and other Unix systems.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libirman = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -64,6 +64,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt3_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.4.5-alt3_7
 - update to new release by fcimport
 
