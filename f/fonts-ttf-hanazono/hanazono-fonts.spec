@@ -12,7 +12,7 @@ BuildRequires: unzip
 
 Name:		fonts-ttf-hanazono
 Version:	20120421
-Release:	alt1_1
+Release:	alt1_2
 Summary:	Japanese Mincho-typeface TrueType font
 
 Group:		System/Fonts/True type
@@ -46,7 +46,7 @@ also supports character sets:
  - Kanji characters in Adobe-Japan1-6
 
 %prep
-%setup -q -T -c -a 0
+%setup -n %{oldname}-%{version} -q -T -c -a 0
 
 
 %build
@@ -105,6 +105,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20120421-alt1_2
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 20120421-alt1_1
 - update to new release by fcimport
 
