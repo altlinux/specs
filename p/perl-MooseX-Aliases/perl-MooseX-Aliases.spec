@@ -4,7 +4,7 @@ BuildRequires: perl(Moose/Exporter.pm) perl(Scalar/Util.pm) perl-devel perl-podl
 # END SourceDeps(oneline)
 Name:           perl-MooseX-Aliases
 Version:        0.10
-Release:        alt3_5
+Release:        alt3_6
 Summary:        Easy aliasing of methods and attributes in Moose
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -63,6 +63,9 @@ RELEASE_TESTING=1 make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_6
+- update to new release by fcimport
+
 * Tue Dec 11 2012 Igor Vlasenko <viy@altlinux.ru> 0.10-alt3_5
 - moved to Sisyphus (Tapper dep)
 
