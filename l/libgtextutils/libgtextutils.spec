@@ -4,7 +4,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:		libgtextutils
 Version:	0.6
-Release:	alt2_8
+Release:	alt2_9
 Summary:	Assaf Gordon text utilities    
 
 Group:		System/Libraries
@@ -20,7 +20,7 @@ Text utilities library used by the fastx_toolkit, from the Hannon Lab
 %package       devel
 Summary:       Development files for %{name}
 Group:	       Development/C
-Requires:      libgtextutils = %{version}-%{release}
+Requires:      %{name} = %{version}-%{release}
 
 %description   devel
 The %{name}-devel package contains libraries and header files for
@@ -55,6 +55,9 @@ find %{buildroot} -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/gtextutils.pc
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.6-alt2_8
 - update to new release by fcimport
 
