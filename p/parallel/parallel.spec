@@ -1,5 +1,5 @@
 Name: parallel
-Version: 20130122
+Version: 20130222
 Release: alt1
 
 Summary: A shell tool for executing jobs in parallel
@@ -13,9 +13,10 @@ Packager: Michael Shigorin <mike@altlinux.org>
 
 # Automatically added by buildreq on Sun Oct 23 2011
 # optimized out: alternatives apt apt-repo-tools ash ash-static cpio cpio-static cvs cvsps dbus dbus-tools-gui diffstat ed elfutils faketime find-static fontconfig gear git-core gitk gnupg groff-base groff-ps hasher hwclock iptables iputils ipv6calc less libgpg-error libncurses-devel lzop mkfontscale module-init-tools nfs-utils openssh-clients openssh-common perl-Encode perl-Pod-Escapes perl-Pod-Simple perl-podlators pkg-config python-base python-devel python-module-Pygments python-module-distribute python-module-docutils python-module-sphinx raptor rpcbind rpm-build-compat rpm-utils rsync setarch shadow-groups shared-mime-info sisyphus_check srpmcmp strace su sysvinit-utils tcl termutils time tk unzip vim-common vim-minimal vitmp vixie-cron xsltproc xxd xz
-BuildRequires: GConf aptitude bzr cdrkit-utils desktop-file-utils dev86 elinks etersoft-build-utils girar-utils git-cvs iproute2 isomd5sum kernel-build-tools lftp man mc mkfontdir mkimage net-tools passwd perl-Digest-SHA perl-Pod-Parser perl-Unicode-Map perl-Unicode-Map8 perl-devel recode rpm-build-mozilla.org schedutils screen subversion telnet tla tree vim-console virtualbox vzfree wget xauth xlsfonts zsh
+BuildRequires: GConf aptitude cdrkit-utils desktop-file-utils dev86 elinks etersoft-build-utils girar-utils git-cvs iproute2 isomd5sum kernel-build-tools lftp man mc mkfontdir mkimage net-tools passwd perl-Digest-SHA perl-Pod-Parser perl-Unicode-Map perl-Unicode-Map8 perl-devel recode rpm-build-mozilla.org schedutils screen subversion telnet tla tree vim-console virtualbox vzfree wget xauth xlsfonts zsh
 
 BuildRequires: perl-podlators perl-devel
+#BuildRequires: bzr
 BuildArch: noarch
 
 %description
@@ -42,6 +43,10 @@ rm -r %buildroot%_defaultdocdir/%name/
 %_man1dir/*
 
 %changelog
+* Fri Feb 22 2013 Michael Shigorin <mike@altlinux.org> 20130222-alt1
+- new version (watch file uupdate)
+- dropped bzr from BR
+
 * Tue Jan 22 2013 Michael Shigorin <mike@altlinux.org> 20130122-alt1
 - new version (watch file uupdate)
 
