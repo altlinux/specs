@@ -1,6 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(English.pm) unzip
-# END SourceDeps(oneline)
 %define oldname culmus-fonts
 %define fontname culmus
 %define fontconf 65-%{fontname}
@@ -12,7 +9,7 @@ Hebrew from the Culmus project.
 
 Name:           fonts-ttf-culmus
 Version:        0.121
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Fonts for Hebrew from Culmus project
 
 Group:          System/Fonts/True type
@@ -266,7 +263,7 @@ Requires:       fonts-ttf-culmus-common = %{version}-%{release}
 
 %prep
 %setup -q -n %{fontname}-%{version}
-%setup -c -q -a 15
+%setup -n %{oldname}-%{version} -c -q -a 15
 mv %{fontname}-%{version}/* .
 mv %{fontname}-type1-0.121/* .
 
@@ -371,6 +368,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.121-alt2_5
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 0.121-alt2_4
 - update to new release by fcimport
 
