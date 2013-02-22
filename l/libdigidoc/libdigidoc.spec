@@ -5,7 +5,7 @@ BuildRequires: gcc-c++
 %add_optflags %optflags_shared
 Name:           libdigidoc
 Version:        2.7.0
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Library for handling digitally signed documents
 
 Group:          System/Libraries
@@ -13,11 +13,11 @@ License:        LGPLv2+
 URL:            http://code.google.com/p/esteid/
 Source0:        http://esteid.googlecode.com/files/%{name}-%{version}.tar.bz2
 
-BuildRequires:  ctest cmake
+BuildRequires: ctest cmake
 BuildRequires:  libxml2-devel
 BuildRequires:  libssl-devel
 BuildRequires:  zlib-devel
-Requires:       opensc
+Requires:       opensc%{?_isa}
 Source44: import.info
 
 %description
@@ -29,7 +29,7 @@ It allows to create, sign, verify, and modify digidoc XML containers.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libdigidoc = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description devel
 The %{name}-devel package contains libraries and header files for
@@ -65,6 +65,9 @@ make install DESTDIR=$RPM_BUILD_ROOT -C %{_target_platform}
 %{_libdir}/*.so
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.7.0-alt2_4
 - update to new release by fcimport
 
