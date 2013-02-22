@@ -4,7 +4,7 @@ BuildRequires: libexpat-devel
 %add_optflags %optflags_shared
 Name:           libisds
 Version:        0.7
-Release:        alt1_1
+Release:        alt1_2
 Summary:        Library for accessing the Czech Data Boxes
 Group:          System/Libraries
 License:        LGPLv3
@@ -33,8 +33,8 @@ Group:          Development/C
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
-The %%{name}-devel package contains libraries and header files for
-developing applications that use %%{name}.
+The %{name}-devel package contains libraries and header files for
+developing applications that use %{name}.
 
 %prep
 %setup -q
@@ -67,6 +67,9 @@ rm -rf client/.deps
 %doc client specification
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_2
+- update to new release by fcimport
+
 * Wed Jan 09 2013 Igor Vlasenko <viy@altlinux.ru> 0.7-alt1_1
 - update to new release by fcimport
 
