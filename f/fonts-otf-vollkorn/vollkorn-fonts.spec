@@ -1,36 +1,41 @@
+# BEGIN SourceDeps(oneline):
+BuildRequires: unzip
+# END SourceDeps(oneline)
 %define oldname vollkorn-fonts
-%define fontname vollkorn
-%define fontconf 64-%{fontname}.conf
-
-%define archivename Vollkorn
+%global fontname vollkorn
+%global fontconf 64-%{fontname}.conf
 
 Name:           fonts-otf-vollkorn
-Version:        1.008
-Release:        alt3_7
-Summary:        A serif latin font with good readability
+Version:        2.1
+Release:        alt1_2
+Summary:        A serif Latin font with good readability
 
 Group:          System/Fonts/True type
-License:        CC-BY
-URL:            http://www.grafikfritze.de/?p=43
-#http://www.grafikfritze.de/download.php?download=1
-Source0:        %{fontname}.otf
+License:        OFL
+URL:            http://friedrichalthausen.de/?page_id=411
+Source0:        http://friedrichalthausen.de/Vollkorn-%{version}.zip
 Source1:        %{oldname}-fontconfig.conf
-Source2:        %{archivename}.pdf
 
 BuildArch:      noarch
 BuildRequires:  fontpackages-devel
 Source44: import.info
 
 %description
-Serif latin OTF font by Friedrich Althausen with focus on good readability.
+Serif Latin font by Friedrich Althausen with focus on good readability.
 Because of this it is relatively dark and strong and has emphasized serifs. 
-Vollkorn will especially work good in reading-sizes with its familiar and 
+Vollkorn will especially work well in body type sizes with its familiar and 
 smooth overall picture.
 
 %prep
-%setup -q -c -T
-install -m 0644 -p %{SOURCE2} .
+%setup -n %{oldname}-%{version} -q -c -T
+unzip -j -L -q %{SOURCE0}
+for file in *.txt ; do
+ sed 's|\r||g' "$file" | fold -s > "$file.new" && \
+ touch -r "$file" "$file.new" && \
+ mv "$file.new" "$file"
+done
 
+ 
 %build
 
 
@@ -38,7 +43,7 @@ install -m 0644 -p %{SOURCE2} .
 rm -fr %{buildroot}
 
 install -m 0755 -d %{buildroot}%{_fontdir}
-install -m 0644 -p %{SOURCE0} %{buildroot}%{_fontdir}
+install -m 0644 -p *.ttf %{buildroot}%{_fontdir}
 
 install -m 0755 -d %{buildroot}%{_fontconfig_templatedir} \
                    %{buildroot}%{_fontconfig_confdir}
@@ -86,14 +91,15 @@ fi
 %files
 %{_fontconfig_templatedir}/%{fontconf}
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}
-%{_fontbasedir}/*/%{_fontstem}/*.otf
+%{_fontbasedir}/*/%{_fontstem}/*.ttf
 
-%doc *.pdf
-
-%dir %{_fontbasedir}/*/%{_fontstem}
+%doc *.txt
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.1-alt1_2
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.008-alt3_7
 - update to new release by fcimport
 
