@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-ubuntu-title
 Version:        002.000
-Release:        alt3_5
+Release:        alt3_6
 Summary:        A titling decorative font to create the lettering of the Ubuntu logo
 
 Group:          System/Fonts/True type
@@ -91,6 +91,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 002.000-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 002.000-alt3_5
 - update to new release by fcimport
 
