@@ -5,7 +5,7 @@ Name: hunspell-ss
 Summary: Swati hunspell dictionaries
 %define upstreamid 20091030
 Version: 0.%{upstreamid}
-Release: alt2_4
+Release: alt2_5
 Source: http://extensions.services.openoffice.org/e-files/3137/0/dict-ss_ZA-2009.10.30.oxt
 Group: Text tools
 URL: http://www.translate.org.za/
@@ -42,6 +42,9 @@ cp -p *.dic *.aff $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20091030-alt2_4
 - update to new release by fcimport
 
