@@ -4,7 +4,7 @@ BuildRequires: perl(Symbol.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Test-Without-Module
 Version:        0.17
-Release:        alt2_11
+Release:        alt2_12
 Summary:        Test fallback behavior in absence of modules
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -50,6 +50,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2_12
+- update to new release by fcimport
+
 * Fri Dec 21 2012 Igor Vlasenko <viy@altlinux.ru> 0.17-alt2_11
 - update to new release by fcimport
 
