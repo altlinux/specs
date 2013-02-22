@@ -1,5 +1,5 @@
 # BEGIN SourceDeps(oneline):
-BuildRequires: gcc-c++ perl(English.pm) unzip
+BuildRequires: unzip
 # END SourceDeps(oneline)
 %define oldname sil-padauk-fonts
 %global fontname sil-padauk
@@ -14,7 +14,7 @@ The font is a smart font using a Graphite description.
 
 Name:    fonts-ttf-sil-padauk
 Version: 2.8
-Release: alt1_2
+Release: alt1_3
 Summary: A font for Burmese and the Myanmar script
 
 Group:   System/Fonts/True type
@@ -48,7 +48,7 @@ Padauk Book family font.
 
 %common_desc
 
-%files -n %{?fontname:%fontname}%{!?fontname:%oldname}-book-fonts
+%files -n sil-padauk-book-fonts
 %{_fontconfig_templatedir}/%{fontconf}-book.conf
 %config(noreplace) %{_fontconfig_confdir}/%{fontconf}-book.conf
 %{_fontbasedir}/*/%{_fontstem}/Padauk-book*.ttf
@@ -116,6 +116,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_3
+- update to new release by fcimport
+
 * Mon Dec 03 2012 Igor Vlasenko <viy@altlinux.ru> 2.8-alt1_2
 - update to new release by fcimport
 
