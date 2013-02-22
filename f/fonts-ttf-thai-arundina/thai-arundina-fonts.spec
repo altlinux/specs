@@ -17,7 +17,7 @@ compatibility and OpenType conformance.
 
 Name:		fonts-ttf-thai-arundina
 Version:	0.2.0
-Release:	alt2_2
+Release:	alt2_3
 Summary:	Thai Arundina fonts
 
 Group:		System/Fonts/True type
@@ -173,6 +173,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_3
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_2
 - update to new release by fcimport
 
