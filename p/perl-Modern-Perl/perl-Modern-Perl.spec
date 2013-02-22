@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(Test/More.pm) perl(mro.pm) perl-devel perl-podlators
+BuildRequires: perl(Test/More.pm) perl-base perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Modern-Perl
 Version:        1.03
-Release:        alt2_4
+Release:        alt2_5
 Summary:        Enable all of the features of Modern Perl with one command
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -41,6 +41,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_5
+- update to new release by fcimport
+
 * Tue Jul 31 2012 Igor Vlasenko <viy@altlinux.ru> 1.03-alt2_4
 - update to new release by fcimport
 
