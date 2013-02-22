@@ -1,14 +1,10 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-build-python rpm-macros-fedora-compat
-BuildRequires: /usr/bin/python-config /usr/bin/runtest binutils-devel cmake elfutils-devel gcc-c++ libICE-devel libSM-devel libX11-devel libelf-devel perl(IPC/Open2.pm) python-devel unzip
-# END SourceDeps(oneline)
 %define oldname pothana2000-fonts
 %global fontname pothana2000
 %global fontconf 69-%{fontname}.conf
 
 Name: fonts-ttf-pothana2000
 Version: 1.3.3
-Release: alt3_4
+Release: alt3_5
 Summary: Unicode compliant OpenType font for Telugu
 
 Group: System/Fonts/True type
@@ -84,6 +80,9 @@ fi
 %doc ChangeLog COPYRIGHT COPYING AUTHORS README
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt3_5
+- update to new release by fcimport
+
 * Tue Nov 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.3-alt3_4
 - update to new release by fcimport
 
