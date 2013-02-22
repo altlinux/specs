@@ -6,7 +6,7 @@ BuildRequires: gcc-c++
 %define oldname cminpack
 Name:           libcminpack
 Version:        1.3.0
-Release:        alt1_2
+Release:        alt1_3
 Summary:        Solver for nonlinear equations and nonlinear least squares problems
 
 Group:          Development/C
@@ -14,7 +14,7 @@ License:        BSD
 URL:            http://devernay.free.fr/hacks/cminpack/cminpack.html
 Source0:        http://devernay.free.fr/hacks/cminpack/%{oldname}-%{version}.tar.gz
 
-BuildRequires:  ctest cmake
+BuildRequires: ctest cmake
 BuildRequires:  gcc-fortran
 Source44: import.info
 Provides: cminpack = %{version}-%{release}
@@ -63,6 +63,9 @@ make -C build install DESTDIR=%{buildroot}
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_3
+- update to new release by fcimport
+
 * Wed Dec 26 2012 Igor Vlasenko <viy@altlinux.ru> 1.3.0-alt1_2
 - initial fc import
 
