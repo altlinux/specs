@@ -3,7 +3,7 @@ BuildRequires: perl(Proc/Simple.pm) perl(Tk.pm)
 # END SourceDeps(oneline)
 Name: alevt
 Version: 1.6.2
-Release: alt2_20.1
+Release: alt2_21
 Summary: Teletext decoder/browser
 Group: Video
 License: GPLv2
@@ -63,6 +63,9 @@ desktop-file-install \
 %doc README CHANGELOG COPYRIGHT
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.6.2-alt2_21
+- update to new release by fcimport
+
 * Thu Oct 04 2012 Eugeny A. Rostovtsev (REAL) <real at altlinux.org> 1.6.2-alt2_20.1
 - Rebuilt with libpng15
 
