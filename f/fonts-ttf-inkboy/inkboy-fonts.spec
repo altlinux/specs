@@ -6,7 +6,7 @@ BuildRequires: unzip
 %global fontconf 65-%{fontname}.conf
 Name:           fonts-ttf-inkboy
 Version:        20070624
-Release:        alt3_8
+Release:        alt3_9
 Summary:        A clean and usable latin fantasy font
 Group:          System/Fonts/True type
 License:        OFL
@@ -20,7 +20,7 @@ Source44: import.info
 This is a clean and usable latin fantasy font.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 
 %build
 for i in FONTLOG.txt OFL.txt OFL-FAQ.txt; do
@@ -102,6 +102,9 @@ fi
 %doc FONTLOG.txt OFL.txt OFL-FAQ.txt
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20070624-alt3_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20070624-alt3_8
 - update to new release by fcimport
 
