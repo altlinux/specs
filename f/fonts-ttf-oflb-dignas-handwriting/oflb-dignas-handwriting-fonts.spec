@@ -4,7 +4,7 @@
 
 Name:           fonts-ttf-oflb-dignas-handwriting
 Version:        20031109
-Release:        alt3_5
+Release:        alt3_6
 Summary:        Handwriting font
 
 Group:          System/Fonts/True type
@@ -22,7 +22,7 @@ Phranzysko's sister handwriting.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 cp %{SOURCE0} .
 
 
@@ -85,6 +85,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20031109-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20031109-alt3_5
 - update to new release by fcimport
 
