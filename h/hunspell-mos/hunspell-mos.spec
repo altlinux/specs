@@ -5,7 +5,7 @@ Name: hunspell-mos
 Summary: Mossi hunspell dictionaries
 %define upstreamid 20101130
 Version: 0.%{upstreamid}
-Release: alt2_4
+Release: alt2_5
 Group: Text tools
 Source: http://www.abcburkina.net/ancien/documents/lingu/DicoMoore.zip
 URL: http://www.abcburkina.net/content/view/377/48/lang,fr
@@ -31,6 +31,9 @@ cp -p mos_BF.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.20101130-alt2_5
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.20101130-alt2_4
 - update to new release by fcimport
 
