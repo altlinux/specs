@@ -4,7 +4,7 @@
 Summary: RTSP/RTP client library
 Name: libnemesi
 Version: 0.7.0
-Release: alt3_0.3.20110215git
+Release: alt3_0.4.%{?git}git
 License: LGPLv2+
 Group: Development/C
 %if %{?git:1}0
@@ -42,7 +42,7 @@ between ease of use and flexibility.
 %package devel
 Summary: Nemesi development library and headers
 Group: Development/C
-Requires: libnemesi = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 
 %description devel
 The libnemesi-devel package contains the header files and some
@@ -98,6 +98,9 @@ sed -i 's|^runpath_var=LD_RUN_PATH|runpath_var=DIE_RPATH_DIE|g' libtool
 %{_bindir}/nemesi_loop_stream
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_0.4.20110215git
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.7.0-alt3_0.3.20110215git
 - update to new release by fcimport
 
