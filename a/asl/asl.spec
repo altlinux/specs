@@ -6,12 +6,12 @@
 #
 # Spec file for Fedora modified by Eric Smith <eric@brouhaha.com>
 
-%global patchlevel bld83
+%global patchlevel bld84
 
 Name:           asl
 URL:            http://john.ccac.rwth-aachen.de:8000/as/index.html
 Version:        1.42
-Release:        alt2_0.11.bld83
+Release:        alt2_0.13.%{patchlevel}
 Group:          Development/Tools
 License:        GPLv2+
 Summary:        Macro Assembler AS
@@ -20,7 +20,7 @@ Patch0:         asl-Makefile.def.patch
 Patch1:         asl-sysdefs.h.patch
 Patch2:         asl-install.sh.patch
 Patch3:         asl-Makefile-DESTDIR.patch
-BuildRequires:  /usr/bin/latex texlive-latex-recommended
+BuildRequires: /usr/bin/latex texlive-latex-recommended texlive-latex-recommended
 Source44: import.info
 
 %description
@@ -82,6 +82,9 @@ done
 %lang(de) %doc doc/as-DE.html doc/as-DE.txt doc/as-DE.ps doc/as-DE.pdf doc/as-DE.dvi
 
 %changelog -n asl
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.13.bld84
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1.42-alt2_0.11.bld83
 - update to new release by fcimport
 
