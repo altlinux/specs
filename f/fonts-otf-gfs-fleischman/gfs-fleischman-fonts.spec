@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-fleischman
 Version: 20080303
-Release: alt3_9
+Release: alt3_10
 Summary: GFS Fleischman majuscule Greek font
 
 Group:     System/Fonts/True type
@@ -46,7 +46,7 @@ It has been designed by George D. Matthiopoulos.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 chmod 0644 *.txt
 for txt in *.txt ; do
@@ -118,6 +118,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20080303-alt3_10
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20080303-alt3_9
 - update to new release by fcimport
 
