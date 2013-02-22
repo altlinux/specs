@@ -1,6 +1,6 @@
 Name:      arc
 Version:   5.21o
-Release:   alt2_11
+Release:   alt2_12
 Summary:   Arc archiver
 Group:     Archiving/Other
 License:   GPL+
@@ -36,6 +36,9 @@ install -m 0644 arc.1 %{buildroot}%{_mandir}/man1/
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 5.21o-alt2_12
+- update to new release by fcimport
+
 * Mon Aug 27 2012 Igor Vlasenko <viy@altlinux.ru> 5.21o-alt2_11
 - update to new release by fcimport
 
