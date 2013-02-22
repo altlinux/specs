@@ -9,7 +9,7 @@ BuildRequires: unzip
 
 Name:    fonts-otf-gfs-didot-classic
 Version: 20080702
-Release: alt3_10
+Release: alt3_11
 Summary: GFS Didot Classic Greek font
 
 Group:     System/Fonts/True type
@@ -42,7 +42,7 @@ for general use.
 
 
 %prep
-%setup -q -c -T
+%setup -n %{oldname}-%{version} -q -c -T
 unzip -j -L -q %{SOURCE0}
 chmod 0644 *.txt
 for txt in *.txt ; do
@@ -114,6 +114,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20080702-alt3_11
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20080702-alt3_10
 - update to new release by fcimport
 
