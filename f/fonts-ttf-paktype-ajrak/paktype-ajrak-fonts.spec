@@ -1,7 +1,3 @@
-# BEGIN SourceDeps(oneline):
-BuildRequires(pre): rpm-macros-fedora-compat
-BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-devel python-devel unzip
-# END SourceDeps(oneline)
 %define oldname paktype-ajrak-fonts
 %global fontname paktype-ajrak
 %global fontconf 67-paktype
@@ -9,7 +5,7 @@ BuildRequires: /usr/bin/runtest cmake gcc-c++ libICE-devel libSM-devel libX11-de
 
 Name:	fonts-ttf-paktype-ajrak
 Version:     4.0
-Release:     alt1_2
+Release:     alt1_3
 Summary:     Fonts for Arabic from PakType
 
 Group:	System/Fonts/True type
@@ -26,7 +22,7 @@ The paktype-ajrak-fonts package contains fonts for the display of \
 Arabic from the PakType by Lateef Sagar.
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 rm -rf Code
 # get rid of the white space (' ')
 mv PakType\ Ajrak.ttf PakType_Ajrak.ttf
@@ -95,6 +91,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_3
+- update to new release by fcimport
+
 * Sat Nov 24 2012 Igor Vlasenko <viy@altlinux.ru> 4.0-alt1_2
 - update to new release by fcimport
 
