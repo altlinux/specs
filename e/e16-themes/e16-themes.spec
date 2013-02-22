@@ -1,7 +1,7 @@
 Summary:   Themes for Enlightenment, DR16
 Name:      e16-themes
 Version:   1.0.1
-Release:   alt1_3
+Release:   alt1_4
 License:   MIT with advertising
 Group:     Graphical desktop/Other
 URL:       http://www.enlightenment.org/
@@ -48,6 +48,9 @@ done
 %{_datadir}/e16/themes
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_4
+- update to new release by fcimport
+
 * Thu Dec 20 2012 Igor Vlasenko <viy@altlinux.ru> 1.0.1-alt1_3
 - fc import
 
