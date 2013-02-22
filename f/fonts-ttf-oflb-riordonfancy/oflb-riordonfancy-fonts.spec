@@ -7,7 +7,7 @@ BuildRequires: unzip
 
 Name:           fonts-ttf-oflb-riordonfancy
 Version:        4
-Release:        alt3_6
+Release:        alt3_7
 Summary:        A stylized font
 
 Group:          System/Fonts/True type
@@ -26,7 +26,7 @@ Thurman. It includes all ASCII glyphs, most Latin-1 glyphs, a number of Latin
 Extended glyphs, the interrobang (a..), and the snowman (a'.).
 
 %prep
-%setup -qc
+%setup -n %{oldname}-%{version} -qc
 
 %build
 rm RiordonFancy.ttf
@@ -102,6 +102,9 @@ fi
 %dir %{_fontbasedir}/*/%{_fontstem}
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 4-alt3_7
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 4-alt3_6
 - update to new release by fcimport
 
