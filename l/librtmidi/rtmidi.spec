@@ -6,7 +6,7 @@ Group: Development/C
 %define oldname rtmidi
 Name:       librtmidi
 Version:    1.0.15
-Release:    alt1_4.1
+Release:    alt1_5.1
 Summary:    Library for realtime MIDI input/output (ALSA support)
 # Request to send in changes is considered optional.
 License:    MIT
@@ -110,6 +110,9 @@ rm -f %{buildroot}%{_docdir}/%{oldname}-devel-%{version}/readme
 %{_libdir}/lib%{oldname}-jack.so.*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.15-alt1_5.1
+- update to new release by fcimport
+
 * Thu Feb 07 2013 Igor Vlasenko <viy@altlinux.ru> 1.0.15-alt1_4.1
 - initial fc import
 
