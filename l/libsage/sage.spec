@@ -5,7 +5,7 @@ BuildRequires: gcc-c++ libGL-devel libICE-devel libSM-devel libX11-devel
 %define oldname sage
 Name:           libsage
 Version:        0.2.0
-Release:        alt2_8
+Release:        alt2_9
 Summary:        OpenGL extensions library using SDL
 
 Group:          Development/C++
@@ -26,7 +26,7 @@ checking for and loading OpenGL extensions in an application.
 %package devel
 Summary:        Development files for sage
 Group:   Development/C++
-Requires: sage = %{version}-%{release}
+Requires: %{name} = %{version}-%{release}
 Provides: sage-devel = %{version}-%{release}
 
 
@@ -36,7 +36,7 @@ Libraries and header files for developing applications that use sage.
 
 
 %prep
-%setup -q -n %{oldname}-%{version}
+%setup -n %{oldname}-%{version} -q
 touch -r configure.ac configure.ac.stamp
 %patch0 -p0
 touch -r configure.ac.stamp configure.ac
@@ -70,10 +70,13 @@ make %{?_smp_mflags} check
 %{_includedir}/%{oldname}
 %{_libdir}/lib%{oldname}.so
 %{_libdir}/pkgconfig/*.pc
-%{_mandir}/man3/*.3.*
+%{_mandir}/man3/*.3*
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_9
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 0.2.0-alt2_8
 - update to new release by fcimport
 
