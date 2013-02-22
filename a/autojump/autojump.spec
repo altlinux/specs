@@ -1,7 +1,7 @@
 Requires: bash-completion
 Name:           autojump
 Version:        21.1.2
-Release:        alt2_2
+Release:        alt2_3
 
 Summary:        A fast way to navigate your filesystem from the command line
 
@@ -77,6 +77,9 @@ ln -s %{name} $RPM_BUILD_ROOT%{_bindir}/%{name}.py
 %{_datadir}/zsh/site-functions/_j
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 21.1.2-alt2_3
+- update to new release by fcimport
+
 * Sat Feb 02 2013 Igor Vlasenko <viy@altlinux.ru> 21.1.2-alt2_2
 - added R: bash-completion (closes: 28500)
 
