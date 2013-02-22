@@ -4,7 +4,7 @@ BuildRequires: perl(CGI/Util.pm) perl(CPAN.pm) perl(Config.pm) perl(Fcntl.pm) pe
 # END SourceDeps(oneline)
 Name:           perl-CGI-PSGI
 Version:        0.15
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Enable your CGI.pm aware applications to adapt PSGI protocol
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -49,6 +49,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.15-alt1_5
 - update to new release by fcimport
 
