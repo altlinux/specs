@@ -4,7 +4,7 @@ BuildRequires: perl(CPAN.pm) perl(Config.pm) perl(DBIx/Class/Core.pm) perl-devel
 # END SourceDeps(oneline)
 Name:           perl-DBIx-Class-IntrospectableM2M
 Version:        0.001001
-Release:        alt1_3
+Release:        alt1_4
 Summary:        Introspect many-to-many shortcuts
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -46,6 +46,9 @@ make test
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.001001-alt1_4
+- update to new release by fcimport
+
 * Tue Jul 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.001001-alt1_3
 - update to new release by fcimport
 
