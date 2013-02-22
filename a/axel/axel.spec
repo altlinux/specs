@@ -1,9 +1,9 @@
 Name:		axel		
 Version:	2.4
-Release:	alt2_7
+Release:	alt2_8
 Summary:	Accelerated download client
 
-Group:		Networking/Other
+Group:		Networking/WWW
 License:	GPLv2+
 URL:		http://axel.alioth.debian.org/
 Source0:	http://alioth.debian.org/frs/download.php/3015/%{name}-%{version}.tar.gz
@@ -44,6 +44,9 @@ install -m 755 -p %{name} %{buildroot}%{_bindir}
 %{_mandir}/zh_CN/man1/axel.1*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_8
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.4-alt2_7
 - update to new release by fcimport
 
