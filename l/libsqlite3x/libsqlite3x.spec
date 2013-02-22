@@ -8,7 +8,7 @@ BuildRequires: gcc-c++
 %global namesq3 libsq3
 Name:           libsqlite3x
 Version:        %{veryear}%{vermon}%{verday}
-Release:        alt3_12
+Release:        alt3_13
 Summary:        A C++ Wrapper for the SQLite3 embeddable SQL database engine
 
 Group:          System/Libraries
@@ -32,7 +32,7 @@ with sqlite3 databases that uses exceptions.
 %package        devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libsqlite3x = %{version}-%{release}
+Requires:       %{name} = %{version}-%{release}
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -41,7 +41,7 @@ developing applications that use %{name}.
 %package -n     %{namesq3}
 Summary:        A C++ Wrapper for the SQLite3 embeddable SQL database engine
 Group:          Development/C
-Requires:       libsq3 = %{version}-%{release}
+Requires:       %{namesq3} = %{version}-%{release}
 
 %description -n %{namesq3}
 sqlite3 is a slick embedded SQL server written in C. It's easy to use,
@@ -51,7 +51,7 @@ with sqlite3 databases that does not use exceptions.
 %package -n     %{namesq3}-devel
 Summary:        Development files for %{name}
 Group:          Development/C
-Requires:       libsq3 = %{version}-%{release}
+Requires:       %{namesq3} = %{version}-%{release}
 
 %description -n %{namesq3}-devel
 The %{namesq3}-devel package contains libraries and header files for
@@ -102,6 +102,9 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_libdir}/pkgconfig/libsq3.pc
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_13
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 20071018-alt3_12
 - update to new release by fcimport
 
