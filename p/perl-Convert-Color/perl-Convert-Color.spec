@@ -1,10 +1,10 @@
 # BEGIN SourceDeps(oneline):
 BuildRequires(pre): rpm-build-perl
-BuildRequires: perl(List/Util.pm) perl-devel perl-podlators
+BuildRequires: perl(Convert/Color/HueBased.pm) perl(List/Util.pm) perl-devel perl-podlators
 # END SourceDeps(oneline)
 Name:           perl-Convert-Color
 Version:        0.08
-Release:        alt1_5
+Release:        alt1_6
 Summary:        Color space conversions and named lookups
 License:        GPL+ or Artistic
 Group:          Development/Perl
@@ -49,6 +49,9 @@ find $RPM_BUILD_ROOT -depth -type d -exec rmdir {} 2>/dev/null \;
 %{perl_vendor_privlib}/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_6
+- update to new release by fcimport
+
 * Tue Jul 31 2012 Igor Vlasenko <viy@altlinux.ru> 0.08-alt1_5
 - update to new release by fcimport
 
