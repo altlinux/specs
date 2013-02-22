@@ -10,7 +10,7 @@
 
 Name:    fonts-ttf-apanov-heuristica
 Version: 0.2.2
-Release: alt3_5
+Release: alt3_6
 Epoch:   1
 Summary: A serif latin & cyrillic font
 
@@ -33,7 +33,7 @@ font that was released to the TeX Users Group under a liberal license.
 
 
 %prep
-%setup -q -c
+%setup -n %{oldname}-%{version} -q -c
 for txt in *.txt ; do
    fold -s $txt > $txt.new
    sed -i 's/\r//' $txt.new
@@ -103,6 +103,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 1:0.2.2-alt3_6
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 1:0.2.2-alt3_5
 - update to new release by fcimport
 
