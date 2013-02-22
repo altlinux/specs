@@ -4,7 +4,7 @@ BuildRequires: unzip
 Name: hunspell-ro
 Summary: Romanian hunspell dictionaries
 Version: 3.3.7
-Release: alt1_3
+Release: alt1_4
 Source: http://downloads.sourceforge.net/rospell/ro_RO.%{version}.zip
 Group: Text tools
 URL: http://rospell.sourceforge.net/
@@ -31,6 +31,9 @@ cp -p ro_RO.* $RPM_BUILD_ROOT/%{_datadir}/myspell
 %{_datadir}/myspell/*
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 3.3.7-alt1_4
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 3.3.7-alt1_3
 - update to new release by fcimport
 
