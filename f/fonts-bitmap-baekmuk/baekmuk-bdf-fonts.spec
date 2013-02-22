@@ -7,7 +7,7 @@ BuildRequires: fontpackages-devel
 
 Name:           fonts-bitmap-baekmuk
 Version:        2.2
-Release:        alt3_12
+Release:        alt3_13
 Summary:        Korean bitmap fonts
 
 Group:          System/Fonts/True type
@@ -94,6 +94,9 @@ fi
 
 
 %changelog
+* Fri Feb 22 2013 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_13
+- update to new release by fcimport
+
 * Fri Jul 27 2012 Igor Vlasenko <viy@altlinux.ru> 2.2-alt3_12
 - update to new release by fcimport
 
